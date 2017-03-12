@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55CF31FC43
-	for <e@80x24.org>; Sun, 12 Mar 2017 09:15:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B46081FC43
+	for <e@80x24.org>; Sun, 12 Mar 2017 09:15:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933828AbdCLJP0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 05:15:26 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:37618 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933310AbdCLJPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 05:15:24 -0400
-Received: by mail-it0-f53.google.com with SMTP id g138so17569993itb.0
-        for <git@vger.kernel.org>; Sun, 12 Mar 2017 01:15:23 -0800 (PST)
+        id S933848AbdCLJP6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 05:15:58 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:36200 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933837AbdCLJPz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2017 05:15:55 -0400
+Received: by mail-io0-f195.google.com with SMTP id 68so10791454ioh.3
+        for <git@vger.kernel.org>; Sun, 12 Mar 2017 01:15:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=JLXcITP9HtgSc7uub2o5001y2snfr1Yc52F2+VuzgVM=;
-        b=QkInvceGHJkcQi46v4DLFffNnKC0h0N+Fz008J46hmtW1/I4/nKWkTKwGUKade7x6h
-         +NMqMKm2JcrixrJVY/ks85z6GTdSMCuVxGt8wZncns5cE5FfPnYI3ene0ZEBpZ2siL5N
-         iAWlXyQEK9oPzNrG3HEp2gfA0GOXpE6l8IKDOM9vIXZMxW5ajAPIsjrtRuijQ0pfh+P5
-         v68nrlpaxNoBGK37xr060SkjH3qP6A3j4fqRtnGq+RUmqVrnvUnuB6K4rU55RJaqspSv
-         dW8k86k/0WjJaVzJxLzKkSXhraX4Mg57Y16X/g03c4nI0lGBmxMfJhTtMG+/MjekLxPG
-         fKwg==
+        bh=yBY5+jO/oXa4BMz7yy5QbMjMrye8aSXPBEXKO1MXM1M=;
+        b=NJ7z3Bi0+jHXPzvGXzWrz7OTA9sJ4wRRURokCEJLypXJseOd5wxL3xKtltPSNOS2a1
+         sWn6sN3wTAirGe28nJLWroRhALF5jxjcycji3AvxYPUozmjMCr14api+QQIoNTIUW16u
+         FnNp1VLuirWjgM8jmCt59Nfx8NDYBqnrc0GEPQaZypAypvrSdVLU8Wii/dPb5cp0RL+Z
+         5Pa7uqcS60Te8zMLgE7z6hjIJllmn5kU7xPYHYo9m8CxEU4IQVbCjjF6nMdde8+rvPKZ
+         uV3nY1FAsQmSox+9D1ws5pILG2iqf5e/OtkN+JcRdu8jE0SIFEIZ/rufPrfpGlIA3Erw
+         OwkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JLXcITP9HtgSc7uub2o5001y2snfr1Yc52F2+VuzgVM=;
-        b=qjJUQJU4LcF2RAaXoZeqGso90elfPckaYhO/8Jdc0jWVWmHFNDQnZtLDl3K2JQgpsZ
-         LfOqY43WWGhkw6yFLkhRFk0JRSYPZMxZkLzXB/+EnLon4ikduIfXINJLj1PUc/WCz6lC
-         pI7Zm3BOHbZLNVRyvF0BFmWD7HRoeeHPuqZLCBGV8D1kqwboPMwYNgxKBpVU/tAxOyj5
-         eSmxYkHes3APYae0myfQLSnHny27gUStg6VwRgorC7j5Rot57lGoFpkANSpo9FsYVato
-         Zi8r1HMBXbQOW4kW0Ou9bkn+8pHEDdOtvoPUDLdb+gpaR+/Ukmmg9a69+ZVLndySaAJ0
-         6T1Q==
-X-Gm-Message-State: AFeK/H2BrmNTiMN0iUXyoPrngrnLTULmh4OLAeHlCzfBtggQocQ3/zA4eXr25eKrw+JleIUZswH7FYZbskcuKA==
-X-Received: by 10.36.103.9 with SMTP id u9mr5803033itc.91.1489310123086; Sun,
- 12 Mar 2017 01:15:23 -0800 (PST)
+        bh=yBY5+jO/oXa4BMz7yy5QbMjMrye8aSXPBEXKO1MXM1M=;
+        b=mCRKxsyRdj4CbwTlYGasyJci9ZiC9nRAEqsQjpFFTxMcLrwiV2a/gFWP54qS05/pdn
+         K+x0EbjB1itib2MqrpeUPpxbks/14MTCmL1QOAt7BSx1tZZM+48mEM8YFEYk8K76m5og
+         G/MBt2SNm3R3bmCQMCfFo3z3PqHwLNchIu1M7v1rrjCapI4m31gz6+88njLjhGph3zdY
+         0/Vt9zM535nX+ZJhxw/0PZk2zFi8VpCyzaOesQzpG9c3mIXnpml9g5BWw2ZyF82RkCDA
+         SI11nkQceYN55Aycs5C5Kphn0QX+1B7l72y1/mtYyzuXVdLPHMWUwBOaWAp54sOwC9yf
+         WrRA==
+X-Gm-Message-State: AMke39kYdM82tZjaPHjr6liQROt082wBx5YCZiTc2Le58A32oKw7uR//3uXDwiKTyXRdNxGLMz3L9Sk00NuDHg==
+X-Received: by 10.107.200.139 with SMTP id y133mr25428046iof.147.1489310154340;
+ Sun, 12 Mar 2017 01:15:54 -0800 (PST)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sun, 12 Mar 2017 01:15:02 -0800 (PST)
-In-Reply-To: <xmqqefy3w6k0.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.130.208 with HTTP; Sun, 12 Mar 2017 01:15:33 -0800 (PST)
+In-Reply-To: <xmqq4lyzw5az.fsf@gitster.mtv.corp.google.com>
 References: <20170310124247.jvrmmcz2pbv4qf3o@sigill.intra.peff.net>
- <20170311120855.16756-1-avarab@gmail.com> <CACBZZX4AJqvtZQdZZFU8+1So5G9F11_SN4=za+8p=KYim9SFSQ@mail.gmail.com>
- <xmqqefy3w6k0.fsf@gitster.mtv.corp.google.com>
+ <20170311120855.16756-1-avarab@gmail.com> <xmqq4lyzw5az.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sun, 12 Mar 2017 10:15:02 +0100
-Message-ID: <CACBZZX52UYdGa1--wAz+beHNCMST4NoopJvFg68hLDaeaq=DNQ@mail.gmail.com>
+Date:   Sun, 12 Mar 2017 10:15:33 +0100
+Message-ID: <CACBZZX6pvjn8_BGhK8+3LyJpVWSjE9utvHuYzGLC5YZeDj5ykg@mail.gmail.com>
 Subject: Re: [PATCH] tag: Implicitly supply --list given another list-like option
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
@@ -65,27 +64,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 12, 2017 at 3:51 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Sun, Mar 12, 2017 at 4:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->>> Junio: This will merge conflict with my in-flight --no-contains
->>> patch. I can re-send either one depending on which you want to accept
->>> first, this patch will need an additional test for --no-contains. I
->>> just wanted to get this on the ML for review before the --no-contains
->>> patch hit "master".
+>> Change these invocations which currently error out without the -l, to
+>> behave as if though -l was provided:
+>>
+>>     git tag -l [--contains|--points-at|--[no-]merged] <commit>
 >
-> I haven't looked at the patch text of this one closely yet, but I
-> think the goals of both make sense, so we would eventually want to
-> have them both.
+> Shouldn't this be
 >
-> I also think that "if you said --contains, --merged, etc. you are
-> already asking to give you a list and cannot be creating a new one",
-> which is the topic of this patch, makes sense even if nobody were
-> interested in asking "--no-contains".
+>         git tag -l [[--[no-]contains|--points-at|--[no-]merged] <commit>]=
+ [<pattern>]
 >
-> So perhaps you would want this applied first, so that existing three
-> can already benefit from "implicit --list" before waiting for the
-> other one?
+> i.e. if you are giving <commit> you need how that commit is used in
+> filtering, but you do not have to give any such filter when listing,
+> and <pattern>, when given, is used to further limit the output, but
+> it also is optional.
+>
+>> Subject: Re: [PATCH] tag: Implicitly supply --list given another list-li=
+ke option
+>
+> s/Implicit/implicit/ (ask "git shortlog --no-merges" over recent history)
+>
+>> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+>> index 525737a5d8..c80d9e11ba 100644
+>> --- a/Documentation/git-tag.txt
+>> +++ b/Documentation/git-tag.txt
+>> @@ -94,6 +94,9 @@ OPTIONS
+>>       lists all tags. The pattern is a shell wildcard (i.e., matched
+>>       using fnmatch(3)).  Multiple patterns may be given; if any of
+>>       them matches, the tag is shown.
+>> ++
+>> +We supply this option implicitly if any other list-like option is
+>> +provided. E.g. `--contains`, `--points-at` etc.
+>
+> Who are "we"?
+>
+>         When any option that only makes sense in the list mode
+>         (e.g. `--contains`) is given, the command defaults to
+>         the `--list` mode.
+>
+> By the way, do we catch it as a command line error when options like
+> `--points-at` are given when we are creating a new tag?
+>
+>> diff --git a/builtin/tag.c b/builtin/tag.c
+>> index ad29be6923..6ab65bcf6b 100644
+>> --- a/builtin/tag.c
+>> +++ b/builtin/tag.c
+>> @@ -454,6 +454,12 @@ int cmd_tag(int argc, const char **argv, const char=
+ *prefix)
+>>       }
+>>       create_tag_object =3D (opt.sign || annotate || msg.given || msgfil=
+e);
+>>
+>> +     /* We implicitly supply --list with --contains, --points-at,
+>> +        --merged and --no-merged, just like git-branch */
+>
+>         /*
+>          * We write multi-line comments like this,
+>          * without anything other than slash-asterisk or
+>          * asterisk-slash on the first and last lines.
+>          */
+>
+>> +     if (filter.with_commit || filter.points_at.nr || filter.merge_comm=
+it)
+>> +             cmdmode =3D 'l';
+>
+> Don't we want to make sure we do the defaulting only upon !cmdmode?
+> Doesn't this start ignoring
+>
+>         tag -a -m foo --points-at HEAD bar
+>
+> as an error otherwise?
+>
+>> +     /* Just plain "git tag" is like "git tag --list" */
+>>       if (argc =3D=3D 0 && !cmdmode)
+>>               cmdmode =3D 'l';
+>
+>> @@ -486,12 +492,6 @@ int cmd_tag(int argc, const char **argv, const char=
+ *prefix)
+>>       }
+>>       if (filter.lines !=3D -1)
+>>               die(_("-n option is only allowed with -l."));
+>> -     if (filter.with_commit)
+>> -             die(_("--contains option is only allowed with -l."));
+>> -     if (filter.points_at.nr)
+>> -             die(_("--points-at option is only allowed with -l."));
+>> -     if (filter.merge_commit)
+>> -             die(_("--merged and --no-merged option are only allowed wi=
+th -l"));
+>
+> And I do not think removal of these check is a good idea at all.
+> Perhaps you were too focused on '-l' that you forgot that people may
+> be giving an explicit option like -a or -s, in which case these
+> error checks are still very sensible things to have, no?
 
-Yes, let's do this one first. I'll address the comments that have come
-up & just make this all part of one series on top of JK's patches.
+I'll fix this up and make sure to do more sanity checks with the
+different option combinations before resending.
