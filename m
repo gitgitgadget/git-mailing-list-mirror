@@ -2,65 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D5F3202C1
-	for <e@80x24.org>; Sun, 12 Mar 2017 20:36:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BE3D202C1
+	for <e@80x24.org>; Sun, 12 Mar 2017 20:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935320AbdCLUgf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 16:36:35 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:6280 "EHLO smtp2-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934692AbdCLUge (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 16:36:34 -0400
-Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
-        by smtp2-g21.free.fr (Postfix) with ESMTPS id 992D2200382
-        for <git@vger.kernel.org>; Sun, 12 Mar 2017 21:36:32 +0100 (CET)
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH] l10n: add framework for localizing the manpages
-Date:   Sun, 12 Mar 2017 21:36:32 +0100
-Message-ID: <12214955.EmB7ja1MbS@cayenne>
-User-Agent: KMail/5.2.3 (Linux/4.9.0-2-amd64; KDE/5.28.0; x86_64; ; )
-In-Reply-To: <20170312200248.3610-2-jn.avila@free.fr>
-References: <20170312200248.3610-1-jn.avila@free.fr> <20170312200248.3610-2-jn.avila@free.fr>
+        id S935444AbdCLUyL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 16:54:11 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:33901 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934692AbdCLUyJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2017 16:54:09 -0400
+Received: by mail-lf0-f42.google.com with SMTP id z15so34855652lfd.1
+        for <git@vger.kernel.org>; Sun, 12 Mar 2017 13:54:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=JvGwQiNE0qbYhx6f7FUtdxpoLkNYnqJXzZbfN71rK6s=;
+        b=JcxkvAtKZvwKVzBI2imtYFQQZ9w1VTcr5btIZVzZeRlBUeAbIMvdH0bgZ73NK1Jo4J
+         v9vouZD/DpbDLY1hHqLyBEJq6dobUkmbovqyFdojwm1BkO8iP3W9yd0W+vq0a1HT6JUK
+         V2UikuXFu9dXKLDy2TAtb4yEs2pbR81csgcjcsqMK6pdHA5J8EYnRX6ZUZKk0xrtHQpS
+         qKpPBg1yyJCbamasi4A+PQCqlBubjWpUVZTXs+PRWchPuZJsjT97FuhgfaSaLEOWkVpN
+         IDUy3ojw8wICCXz8D2dxb7QFgdEi1eKPNErfwN7btheGicRq6pFxdUBswlYMUP82NkWI
+         qx9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=JvGwQiNE0qbYhx6f7FUtdxpoLkNYnqJXzZbfN71rK6s=;
+        b=PaqOkurzwrrtoqfCPkMbyGV8JQmeZdzNd4K2jGKicqABlk65Am9ij3Jcyp+gdtdp5V
+         b5yySYKii5wpIqrEA9HCvyDpuTYJqRaia1pjuLlKVN35p56JiUZWv9/Q9nDeihqhVM8F
+         5tv7/DbFTgfBRU4hDi/ImSGdMBLc+k3T6D6Ddfjxici6+TDzo3JA5fZkY+ok5W2leztV
+         TkHEy1v6sJLzNKsaBWyn3jVv6OKU38Gh4agNlh6rVwNqJEdXi+tLEFT38izrWZmibJDE
+         LSU6W4uRsyzVF3iTomnJR30h7DRWAADtrNyrALQl30oO1yL4izE8AqTauQ9KfZNamI/x
+         F3Cg==
+X-Gm-Message-State: AMke39k+HiplSXV/M/NqB7Sc+lSxlRUNTb5ayP8KR1aIIq2pMLTtCmW2vqNEIzLre9Zs9hk7rtBTlXbjPD+Mlg==
+X-Received: by 10.25.225.216 with SMTP id l85mr7006573lfk.129.1489352047076;
+ Sun, 12 Mar 2017 13:54:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Received: by 10.25.150.19 with HTTP; Sun, 12 Mar 2017 13:54:06 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 12 Mar 2017 21:54:06 +0100
+Message-ID: <CAP8UFD13UBQLYZcrWfosTciFRvHpNdYVNc-TPpHoX6xPM3bzUg@mail.gmail.com>
+Subject: Draft of Git Rev News edition 25
+To:     git <git@vger.kernel.org>
+Cc:     Thomas Ferris Nicolaisen <tfnico@gmail.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Joey Hess <id@joeyh.name>, Dan Shumow <danshu@microsoft.com>,
+        Marc Stevens <marc.stevens@cwi.nl>,
+        Johan Hovold <johan@kernel.org>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch is only a preview and a request for comment. The tool used to 
-perform the localization of manpages is po4a (po for anything). This tool 
-digests the asciidoc source files and writes a pot file, and then merges back 
-the po files into translated asciidoc files, for further processing.
+Hi,
 
-The choice of this workflow is driven by two concerns: manage the tracking of 
-the changes in the original files and provide the translators with a format of 
-file that they already use. Moreover, I plan to upload the po files to web 
-translation platforms such as transifex or weblate to take advantage of crowd 
-translation.
+A draft of a new Git Rev News edition is available here:
 
-In this patch, only one manpage is generated for the git-add command in 
-french. po4a already supports extending to other languages, and merges all the 
-strings from multiple source manpages into one big pot file. In the next 
-version, two files will be included so that the sharing of common strings is 
-shown. There are some enhancement needed for better support of other output 
-formats.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-25.md
 
-One problem with this setup is that we don't know before hand which files will 
-be generated from the po files and the source files. This depends on the level 
-of completion of translation for each language and each target file. To 
-circumvent this, the makefile calls itself recursively after running po4a, so 
-that the generated files can be enumerated in the downstream targets.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-It would be understandable that the git devel list would not like to be 
-spammed by the traffic generated by this new activity.If the present proposition 
-is accepted,  I'm open to any modus operandi for submitting the changes.
+  https://github.com/git/git.github.io/issues/231
 
-Thanks for reading.
+You can also reply to this email.
+
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
+
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Thomas, Jakub, Markus and myself plan to publish this edition on
+Wednesday March 15th.
+
+Thanks,
+Christian.
