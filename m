@@ -6,215 +6,174 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B80B202C1
-	for <e@80x24.org>; Mon, 13 Mar 2017 00:36:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D232202C1
+	for <e@80x24.org>; Mon, 13 Mar 2017 02:43:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755893AbdCMAgz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 20:36:55 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50351 "EHLO
+        id S1755804AbdCMCnr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 22:43:47 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58849 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755840AbdCMAgs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 20:36:48 -0400
+        with ESMTP id S1755703AbdCMCnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2017 22:43:45 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C80146EE12;
-        Sun, 12 Mar 2017 20:36:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B332E6F49B;
+        Sun, 12 Mar 2017 22:43:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lJ4YxvzKp2PYHp56BfmoYB4y9WI=; b=nortiq
-        Efe0hkuULO+LdKTYFK4/4YApo5ZFFDupZksCkGla0MV5qcdUYTpdNd+32Yi7Yq2Q
-        R/7X6S6zNFG1Pdku5U4KhCIze/chGz6XNFTKdFqy0qnn5SyH9X30SyBnHVOdMNVE
-        qVXOD0U7FhvZWVZNxM1KNLWTzhLl9qiBFmxdo=
+        :content-type; s=sasl; bh=9JWNH3yRd/JpSJRJOGOTJjPLIBg=; b=HugC/8
+        afXAGo01wC2FKtPsHEBmJNItm0VELhUXD++Sws3F8zjADMh8kJTrqmXLqJnotiHo
+        Rr8TWLWkEVQ4onrqvTQjimfkc2fN3xFgwu+YgUlmBHotfGodp5Rj+YExu9iH/Ih/
+        JBoY0Nqx8eZErXrekLaQEV432FvTdajl9S7iM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UL+JgWSjoBJZKiNLlYQCIOFUDULPDiWg
-        l79pR/yoVjY9vHUQ4Z8drM+72G/jDvNyKFX4OigT6OyrL3rJWYoPAAF8asYiopCL
-        3ViAoPQa6pvdwEjO0LNj48fh7LuXghS71jR/1eEExaGjtfNI1FCd0t1n47vleB6V
-        yeZBqqb4tpM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF0116EE11;
-        Sun, 12 Mar 2017 20:36:41 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=m3qQ9f4DX9S9oMKdntcYIyDg7pYTUKJv
+        xmF79csEnozMjHCd1bF87raXFdlUqx4EbVNWqU99WQg5hFhxuFqESZ46gw/H/2G/
+        amT7o1d/LpyayhljRdpsczDxHlEJUMjq0PHju6Y37zMUiFU9pe4swpPjXUPuwIyN
+        5cqe7rLYogc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC8986F49A;
+        Sun, 12 Mar 2017 22:43:43 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 20B716EE10;
-        Sun, 12 Mar 2017 20:36:41 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 264966F499;
+        Sun, 12 Mar 2017 22:43:43 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Nikhil Benesch <nikhil.benesch@gmail.com>
-Cc:     git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
-Subject: Re: [PATCH 1/1] archive: learn to include submodules in output archive
-References: <20170312075404.23951-1-nikhil.benesch@gmail.com>
-        <20170312075404.23951-2-nikhil.benesch@gmail.com>
-Date:   Sun, 12 Mar 2017 17:36:39 -0700
-In-Reply-To: <20170312075404.23951-2-nikhil.benesch@gmail.com> (Nikhil
-        Benesch's message of "Sun, 12 Mar 2017 03:54:04 -0400")
-Message-ID: <xmqqtw6yt3l4.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH 1/2] pathspec: allow querying for attributes
+References: <20170309210756.105566-1-bmwill@google.com>
+        <20170309210756.105566-2-bmwill@google.com>
+Date:   Sun, 12 Mar 2017 19:43:41 -0700
+In-Reply-To: <20170309210756.105566-2-bmwill@google.com> (Brandon Williams's
+        message of "Thu, 9 Mar 2017 13:07:55 -0800")
+Message-ID: <xmqqo9x5uc9u.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 20441598-0785-11E7-8758-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: DF582E54-0796-11E7-8701-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nikhil Benesch <nikhil.benesch@gmail.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> This commit is a revival of Lars Hjemli's 2009 patch to provide an
-> option to include submodules in the output of `git archive`.
->
-> The `--recurse-submodules` option (named consistently with fetch, clone,
-> and ls-files) will recursively traverse submodules in the repository and
-> consider their contents for inclusion in the output archive, subject to
-> any pathspec filters. Like other commands that have learned
-> `--recurse-submodules`, submodules that have not been checked out will
-> not be traversed.
->
-> Signed-off-by: Nikhil Benesch <nikhil.benesch@gmail.com>
-> ---
+> +struct attr_check *attr_check_dup(const struct attr_check *check)
+> +{
+> +	struct attr_check *ret;
+> +
+> +	if (!check)
+> +		return NULL;
+> +
+> +	ret = attr_check_alloc();
+> +
+> +	ret->nr = check->nr;
+> +	ret->alloc = check->alloc;
+> +	ALLOC_ARRAY(ret->items, ret->nr);
+> +	COPY_ARRAY(ret->items, check->items, ret->nr);
+> +
+> +	return ret;
+> +}
 
-I'll let others comment on the proposed log message.
+Because an attr_check instance cannot be shared and used by multiple
+threads, we expect that the callers that go multi-thread to copy
+pathspec to each worker, and preload_index(), which is an existing
+example of such a caller, already does so with copy_pathspec().
 
-> diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-> index cfa1e4ebe..f223f9e05 100644
-> --- a/Documentation/git-archive.txt
-> +++ b/Documentation/git-archive.txt
-> @@ -11,8 +11,8 @@ SYNOPSIS
->  [verse]
->  'git archive' [--format=<fmt>] [--list] [--prefix=<prefix>/] [<extra>]
->  	      [-o <file> | --output=<file>] [--worktree-attributes]
-> -	      [--remote=<repo> [--exec=<git-upload-archive>]] <tree-ish>
-> -	      [<path>...]
-> +	      [--recurse-submodules] [--remote=<repo> [--exec=<git-upload-archive>]]
-> +	      <tree-ish> [<path>...]
+Makes sense.
 
-With the reflowing of lines it was not immediately obvious, but the
-only change is to addd [--recurse-submodules] in front of the
-existing [--remote=<repo>] option.  It would have probably made more
-sense to add new things at the end, just because these options can
-be given in any order.
+> @@ -565,26 +653,47 @@ void parse_pathspec(struct pathspec *pathspec,
+>  
+>  void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
+>  {
+> -	int i;
+> +	int i, j;
+>  
+>  	*dst = *src;
+>  	ALLOC_ARRAY(dst->items, dst->nr);
+>  	COPY_ARRAY(dst->items, src->items, dst->nr);
+>  
+>  	for (i = 0; i < dst->nr; i++) {
+> -		dst->items[i].match = xstrdup(src->items[i].match);
+> -		dst->items[i].original = xstrdup(src->items[i].original);
+> +		struct pathspec_item *d = &dst->items[i];
+> +		struct pathspec_item *s = &src->items[i];
+> +
+> +		d->match = xstrdup(s->match);
+> +		d->original = xstrdup(s->original);
+> +
+> +		ALLOC_ARRAY(d->attr_match, d->attr_match_nr);
+> +		COPY_ARRAY(d->attr_match, s->attr_match, d->attr_match_nr);
+> +		for (j = 0; j < d->attr_match_nr; j++) {
+> +			const char *value = s->attr_match[j].value;
+> +			if (value)
+> +				d->attr_match[j].value = xstrdup(value);
 
-> +--recurse-submodules::
-> +	Recursively include the contents of any checked-out submodules in
-> +	the archive.
+We have xstrdup_or_null(), which may help here.
 
-OK.  
+> +		}
+> +
+> +		d->attr_check = attr_check_dup(s->attr_check);
+>  	}
+>  }
+>  
+>  void clear_pathspec(struct pathspec *pathspec)
+>  {
+> -	int i;
+> +	int i, j;
+>  
+>  	for (i = 0; i < pathspec->nr; i++) {
+>  		free(pathspec->items[i].match);
+>  		free(pathspec->items[i].original);
+> +
+> +		for (j = 0; j < pathspec->items[j].attr_match_nr; j++)
+> +			free(pathspec->items[i].attr_match[j].value);
+> +		free(pathspec->items[i].attr_match);
+> +
+> +		if (pathspec->items[i].attr_check)
+> +			attr_check_free(pathspec->items[i].attr_check);
+>  	}
+> +
+>  	free(pathspec->items);
+>  	pathspec->items = NULL;
+>  	pathspec->nr = 0;
 
-A question to the submodule folks: Is "checked-out" the right terminology
-in this context?  I am wondering if we have reached more official set
-of words to express submodule states discussed in [*1*].
+OK, makes sense.
 
-> -	if (S_ISDIR(mode) || S_ISGITLINK(mode)) {
-> -		if (args->verbose)
-> -			fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
-> -		err = write_entry(args, sha1, path.buf, path.len, mode);
-> -		if (err)
-> -			return err;
-> -		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
-> -	}
-> -
->  	if (args->verbose)
->  		fprintf(stderr, "%.*s\n", (int)path.len, path.buf);
-> -	return write_entry(args, sha1, path.buf, path.len, mode);
-> +	err = write_entry(args, sha1, path.buf, path.len, mode);
-> +	if (err)
-> +		return err;
-> +	if (S_ISDIR(mode) || (S_ISGITLINK(mode) && args->recurse_submodules &&
-> +			      !add_submodule_odb(path_without_prefix)))
-> +		return READ_TREE_RECURSIVE;
-> +	return 0;
-
-So, we used to (and without the option we still) stop recursing when
-we see a gitlink after asking write_entry() to write the path itself
-out, but with the option, we keep going.
-
-How does pathspec limiting work with this codepath?  If you have a
-superproject with a regular file "sub/README" that belongs to the
-superproject itself, and a submodule at "sub/module/", what makes
-sure that this command
-
-    $ git archive --recurse-submodules HEAD -- 'sub/R*' 'sub/module/lib/'
-
-looks only in 'lib/' part of the submodule?
-
-> diff --git a/t/t5005-archive-submodules.sh b/t/t5005-archive-submodules.sh
+> diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.sh
 > new file mode 100755
-> index 000000000..747e38627
+> index 000000000..b5e5a0607
 > --- /dev/null
-> +++ b/t/t5005-archive-submodules.sh
-> @@ -0,0 +1,112 @@
+> +++ b/t/t6135-pathspec-with-attrs.sh
+> @@ -0,0 +1,181 @@
 > +#!/bin/sh
 > +
-> +test_description='git archive can include submodule content'
-> +
+> +test_description='test labels in pathspecs'
 > +. ./test-lib.sh
 > +
-> +add_file()
-> +{
+> +test_expect_success 'setup a tree' '
+> +	cat <<-EOF >expect &&
 
-Style.  A shell function begins like so (see Documentation/CodingGuidelines):
+Minor style nit. Quote the 'EOF' marker and you signal to readers
+that what they'll see are literally the values, and they do not have
+to worry about $variable_interpolation.  I.e.
 
-	add_file () {
+	cat <<-\EOF >expect &&
 
-> +	git add $1 &&
+> +test_expect_success 'fail if attr magic is used places not implemented' '
+> +	# The main purpose of this test is to check that we actually fail
+> +	# when you attempt to use attr magic in commands that do not implement
+> +	# attr magic. This test does not advocate git-add to stay that way,
+> +	# though, but git-add is convenient as it has its own internal pathspec
+> +	# parsing.
 
-Put dq around "$1" to make it easier to reuse, even if you know you
-only happen to use pathnames without any $IFS whitespace characters.
+That's thought-provoking ;-) Would it help to add a test-pathspec
+helper, similar to test-config helper, that serves as a vehicle to
+test this?
 
-I think all of these comments apply to the other shell function you
-added to this file..
-
-> +test_expect_success 'by default, submodules are not included' '
-> +	echo "File 1" >1 &&
-> +	add_file 1 &&
-> +	add_submodule 2 3 &&
-> +	add_submodule 4 5 &&
-> +	cat <<EOF >expected &&
-> +1
-> +2/
-> +4/
-> +EOF
-
-Use <<-EOF to allow you to indent your here-doc data.  Also when
-your here-doc data does not need any $variable_interpolation, quote
-the end marker to help reduce reviewer's mental burden, i.e.
-
-	cat <<-\EOF >expected &&
-	1
-	2/
-	4/
-	EOF
-
-The same comment applies to other tests (I won't even repeat this).
-
-> +	git archive HEAD >normal.tar &&
-> +	tar -tf normal.tar >actual &&
-
-Lose "-" from "-tf"; that's the canonical and the most portable way
-to spell the option to "tar".
-
-> +test_expect_success 'packed submodules are supported' '
-> +	msg=$(cd 2 && git repack -ad && git count-objects) &&
-> +	test "$msg" = "0 objects, 0 kilobytes" &&
-> +	git archive --recurse-submodules HEAD >packed.tar &&
-> +	tar -tf packed.tar >actual &&
-> +	test_cmp expected actual
+> +	test_must_fail git add ":(attr:labelB)" 2>actual &&
+> +	test_i18ngrep "unsupported magic" actual
 > +'
 
-I am not sure how packing would be expected to break anything, but
-an extra test may not hurt.
-
-I notice that you only test the case where the submodule's ".git" 
-is embedded in its working tree (as opposed to ".git" being a
-"gitdir:" file that points at the real location of the repository,
-somewhere inside ".git/modules/" of the superproject).  You probably
-want to make sure that also works, too.
-
-I also notice that you do not use any pathspec in your "git archive"
-invocation.  You'd want to make sure that works as expected.
-
 Thanks.
-
-
-[Reference]
-
-*1* <20170209020855.23486-1-sbeller@google.com>
