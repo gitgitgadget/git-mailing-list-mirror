@@ -2,101 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAE0B1FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 14:55:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D18A71FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 15:13:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752274AbdCMOzO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 10:55:14 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:33562 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751920AbdCMOzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 10:55:13 -0400
-Received: by mail-wm0-f51.google.com with SMTP id v203so8660539wmg.0
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 07:55:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=xnFhtt90bNt732oO2zUyM+dqcehfmf/GHzjCmI7Sqmw=;
-        b=VE24tk/b4h9BrJf8Oe3o4NIGNQ6sW81d/Jy3KZT27iXcr/NsTndaH2W41X5ubucqT7
-         rtqsz4c8pGccgbdar82r+SP+2c6av/kLSbzgzScEk9yMc2nqAQ/96iJMX/6U5I0UpqeZ
-         YH3jh5OICggA1ZXF9nlmw/Nv31RIFhSuuNHEeBZfDtm259hP0RkTkIcPL/v67QwcV6PB
-         4lMK8VezxVfsfET2nIPomOPUIx62OjxfFaIE+XSr+guQKKv9YnoXoS2C4xabHAkkxOSv
-         CNCjxRz9Zi8qCSyjL52Nb6+wMY++RrNwMM3qzJtrLZf+8EBQ74AGPQVGEpvLMUDMJJiK
-         qsAw==
-X-Gm-Message-State: AFeK/H2QBa7PMbU/9xxCcSlViOFmxF8Mg3ELBgF0vwqTI0Zvduya+qfD2R+NbAxdlNAwSA==
-X-Received: by 10.28.196.68 with SMTP id u65mr10895112wmf.8.1489416911012;
-        Mon, 13 Mar 2017 07:55:11 -0700 (PDT)
-Received: from caroline.localdomain (nat-pool-brq-t.redhat.com. [213.175.37.10])
-        by smtp.gmail.com with ESMTPSA id q5sm25509593wrd.32.2017.03.13.07.55.08
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Mar 2017 07:55:09 -0700 (PDT)
-Received: by caroline.localdomain (Postfix, from userid 1000)
-        id 7971712054D; Mon, 13 Mar 2017 15:55:08 +0100 (CET)
-Date:   Mon, 13 Mar 2017 15:55:08 +0100
-From:   Martin Kletzander <mk@linux.com>
-To:     git@vger.kernel.org
-Subject: Possible tiny bug in reset's error message
-Message-ID: <20170313145508.GA3222@wheatley>
+        id S1751141AbdCMPN1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 11:13:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43196 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751269AbdCMPN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 11:13:26 -0400
+Received: (qmail 14569 invoked by uid 109); 13 Mar 2017 15:13:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 15:13:25 +0000
+Received: (qmail 18681 invoked by uid 111); 13 Mar 2017 15:13:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 11:13:35 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Mar 2017 11:13:22 -0400
+Date:   Mon, 13 Mar 2017 11:13:22 -0400
+From:   Jeff King <peff@peff.net>
+To:     Dan Shumow <danshu@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        Marc Stevens <marc.stevens@cwi.nl>
+Subject: Re: [PATCH] Put sha1dc on a diet
+Message-ID: <20170313151322.ouryghyb5orkpk5g@sigill.intra.peff.net>
+References: <alpine.LFD.2.20.1702281621050.22202@i7.lan>
+ <xmqq7f48hm8g.fsf@gitster.mtv.corp.google.com>
+ <CA+55aFx1wAS-nHS2awuW2waX=cvig4UoZqmN5H3v93yDE7ukyQ@mail.gmail.com>
+ <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net>
+ <CA+55aFwf3sxKW+dGTMjNAeHMOf=rvctEQohm+rbhEb=e3KLpHw@mail.gmail.com>
+ <20170301203427.e5xa5ej3czli7c3o@sigill.intra.peff.net>
+ <CA+55aFz4ixVKVURki8FeXjL5H51A_cQXsZpzKJ-N9n574Yy1rg@mail.gmail.com>
+ <CY1PR0301MB21073D82F4A6AB0DAD8BF1FCC4280@CY1PR0301MB2107.namprd03.prod.outlook.com>
+ <xmqq1suge1jn.fsf@gitster.mtv.corp.google.com>
+ <CY1PR0301MB2107112BCC2DECD215E70549C42A0@CY1PR0301MB2107.namprd03.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <CY1PR0301MB2107112BCC2DECD215E70549C42A0@CY1PR0301MB2107.namprd03.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sat, Mar 04, 2017 at 01:07:16AM +0000, Dan Shumow wrote:
 
-when I was trying to learn some details about various types of resets, I
-found out that the default reset type is --mixed, but not specifying it
-is not the same as specifying it.  That's mostly because there are some
-checks for reset_type before setting it to default value.  Since one of
-the checks seem deliberate, I'm rather asking here before sending wrong
-patch.
+> You are very welcome.  Thank you for the warm welcome.  As it turns
+> out, Marc and I are working on the simplifications / removal of c99
+> and performance upstream in our GitHub repo.  I am happy to help for
+> any GitHub specific customizations that are needed as well.  But for
+> now, lets see if we can get you everything you want upstream -- I
+> think that's the most simple.
 
-The "bug" I am talking about is:
+I've been watching the repo at:
 
-  $ g reset -p --mixed
-  fatal: --patch is incompatible with --{hard,mixed,soft}
-  $ g reset -p
-  No changes.
+  https://github.com/cr-marcstevens/sha1collisiondetection
 
-Despite the fact that `git help reset` says:
+The work on the feature/performance branch seems to be producing good
+results. The best timings I got show sha1dc (with checks enabled) at
+1.75x block-sha1, which is pretty good. That was using your
+ad744c8b7a841d2afcb2d4c04f8952d9005501be.
 
-  If <mode> is omitted, defaults to "--mixed".
+Curiously, the performance gets worse after that. Even more curious, the
+bad performance bisects to a merge, and it performs worse than either
+side of the merge.
 
+Try this:
 
-The reason why I'm rather asking is the part of the code that handles
-the warning message for:
+  # mine is a 1.2GB linux packfile, but anything big should do
+  file=/some/large/file
 
-  $ git reset --mixed -- path
-  warning: --mixed with paths is deprecated; use 'git reset -- <paths>'
-  instead.
+  # the merge with the funny behavior
+  merge=55d1db0980501e582f6cd103a04f493995b1df78
 
-Specifically:
-	/* git reset tree [--] paths... can be used to
-	 * load chosen paths from the tree into the index without
-	 * affecting the working tree nor HEAD. */
-	if (pathspec.nr) {
-		if (reset_type == MIXED)
-			warning(_("--mixed with paths is deprecated; use 'git reset -- <paths>' instead."));
-		else if (reset_type != NONE)
-			die(_("Cannot do %s reset with paths."),
-					_(reset_type_names[reset_type]));
-	}
+  for i in $merge^ $merge^2 $merge; do
+    git checkout $i &&
+    rm -f bin/* &&
+    make &&
+    time bin/sha1dcsum $file
+  done
 
-See how NONE and MIXED are both purposefully checked?
+I get:
 
-So my question is, should reset_type be set to MIXED if it was not
-specified on the command-line before all these checks?  If not, what's
-the reason for that?
+  [$merge^, the feature/performance branch before the merge]
+  real	0m3.391s
+  user	0m3.304s
+  sys	0m0.084s
 
-Have a nice day,
-Martin
+  [$merge^2, the master branch before the merge]
+  real	0m5.272s
+  user	0m5.164s
+  sys	0m0.096s
+
+  [$merge, the merge of the two]
+  real	0m7.038s
+  user	0m6.924s
+  sys	0m0.104s
+
+So that's odd. Looking at the diff, I don't see anything that obviously
+jumps out as a mis-merge.
+
+Feel free to tell me "stop looking at that branch; it's a work in
+progress". But I think the results from $merge^ (ad744c8b7) are getting
+good enough to consider moving forward with integrating it into git.
+
+-Peff
