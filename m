@@ -1,130 +1,239 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.3 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61470201C2
-	for <e@80x24.org>; Mon, 13 Mar 2017 11:13:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DA7F201C2
+	for <e@80x24.org>; Mon, 13 Mar 2017 11:14:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752851AbdCMLNI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 07:13:08 -0400
-Received: from ws154.zone31-163-188.zaural.ru ([31.163.188.154]:44305 "HELO
-        zaural.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
-        id S1752838AbdCMLNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 07:13:04 -0400
-X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Mar 2017 07:13:03 EDT
-Date:   Mon, 13 Mar 2017 11:12:49 -0000
-Message-ID: <148940356971.30107.13314617873218753416@zaural.ru>
+        id S1752527AbdCMLOi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 07:14:38 -0400
+Received: from kolab.intevation.de ([212.95.107.133]:38455 "EHLO
+        kolab.intevation.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751527AbdCMLOg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 07:14:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by kolab.intevation.de (Postfix) with ESMTP id 769E6625C0
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 12:14:34 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at intevation.de
+Received: from kolab.intevation.de ([127.0.0.1])
+        by localhost (kolab.intevation.de [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id q7ZqwWkYycza for <git@vger.kernel.org>;
+        Mon, 13 Mar 2017 12:14:33 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by kolab.intevation.de (Postfix) with ESMTP id 2023762706
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 12:14:32 +0100 (CET)
+Received: from ploto.hq.intevation.de (ploto.hq.intevation.de [192.168.11.18])
+        (Authenticated sender: bernhard.reiter@intevation.de)
+        by kolab.intevation.de (Postfix) with ESMTPSA id EE093625C0;
+        Mon, 13 Mar 2017 12:14:31 +0100 (CET)
+From:   "Bernhard E. Reiter" <bernhard.reiter@intevation.de>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Stable GnuPG interface, git should use GPGME
+Date:   Mon, 13 Mar 2017 12:14:17 +0100
+User-Agent: KMail/1.9.10 (enterprise35 20150610.75555ff)
+Cc:     Git Mailing List <git@vger.kernel.org>, gnupg-devel@gnupg.org
+References: <201703101100.15214.bernhard.reiter@intevation.de> <CA+55aFxk7F103LADnmwc8wFySYQNiK6TcCQ0WSj+UTP-GihgcQ@mail.gmail.com>
+In-Reply-To: <CA+55aFxk7F103LADnmwc8wFySYQNiK6TcCQ0WSj+UTP-GihgcQ@mail.gmail.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-To:     "git" <git@vger.kernel.org>
-Content-Type: application/zip; name="498.zip"
-From:   <alison_fitzsimmons@sd33.bc.ca>
-Content-Transfer-Encoding: base64
-Reply-To: <alison_fitzsimmons@sd33.bc.ca>
-Subject: 63146 git
-Importance: High
-Content-Disposition: attachment
+Content-Type: multipart/signed;
+  boundary="nextPart3706125.QiT7mOZBRn";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Message-Id: <201703131214.31588.bernhard.reiter@intevation.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-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
-UwAAAMgUAAAAAA==
+--nextPart3706125.QiT7mOZBRn
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+Am Freitag 10 M=C3=A4rz 2017 19:54:19 schrieb Linus Torvalds:
+> On Fri, Mar 10, 2017 at 2:00 AM, Bernhard E. Reiter
+
+> > please consider using libgpgme interfacing to GnuPG, because the gpg
+> > command-line interface is not considered an official API to GnuPG by the
+> > GnuPG-devs and thus potentially unstable.
+>
+> Quite frankly, I will NAK this just based on previous bad experiences
+> with using "helpful" libraries.
+>
+> Maybe you can lay my worries to rest, but the problems with libraries
+> in this context tend to be
+
+As gpgme is not just a helpful library, but the official API to GnuPG, it i=
+s=20
+well supported by the GnuPG-Initiative itself and stable. Still there could=
+=20
+be problems and of course in some situations the disadvantages outweigh the=
+=20
+advantages. On the other hand we have seen a number of systematic problems=
+=20
+with "just calling gpg" that libgpgme tries to provide a solution to.
+
+So it is too early to say that libgpgme would be right choice for git to me=
+,=20
+but it should be seriously considered. Grateful that you have written down=
+=20
+some of your concern, let me try give you some pointers.
+
+>  - hard to personalize.
+>
+>    At least right now, we just allow people to set their gpg binary.
+> I'm betting that the library would pick whatever random preferred
+> version, and in the process possibly screwed us.
+>
+>    Example: what if somebody is actually using another pgp
+> implementation entirely for some reason, and is just scripting around
+> it?
+
+>    Or maybe he's using the regular gnupg, but using different keys for
+> different projects (using "--homedir"). That's trivial with the
+> current model. How trivial is that with a library?
+
+https://www.gnupg.org/documentation/manuals/gpgme/Engine-Configuration.html
+"
+You can change the configuration of a backend engine, and thus change the=20
+executable program and configuration directory to be used. You can make the=
+se=20
+changes the default or set them for some contexts individually.=20
+"
+
+Using a completely different OpenPGP implementation maybe a potential use c=
+ase=20
+for keeping a configuration option around. I did not deeply examine what gi=
+t=20
+really needs. Usually a different implementation will have quite a differen=
+t=20
+command line interface, so it may require substaintial work to come up with=
+ a=20
+wrapper about that other OpenPGP implementation to provide the same command=
+=20
+line interface as GnuPG.
+
+>  - existing configuration
+>
+>    This is the main problem I've seen in the past. Using the "ssh"
+> _program_ is easy. You add your keys, your config files, whatever, and
+> it "just works" (or rather, you fight it once and it definitely
+> doesn't "just" work, but then you copy your .ssh directory around for
+> the rest of your and forget how it ever worked, but it does).
+
+gpgme via gpg uses the existing configuration files (which you can also rea=
+d=20
+and modify with gpgconf for implementiong GUIs).
+
+>  - UI
+>
+>    For things like gpg, the UI is traditionally horrible. But there
+> tends to be various things like password agents that help with caching
+> passwords and/or add a graphical UI to get the password when
+> necessary.
+
+As the gpg binary itself speaks to gpg-agent, this is fully integrated when=
+=20
+used via gpgme. Our GPA and Kleopatra GUIs work fine with gpgme and others =
+as=20
+well, because they call come together in the deeper engine functions of=20
+GnuPG.
+
+>  - library versioning.
+>
+>    I don't know why, but I've never *ever* met a library developer who
+> realized that libraries were all about stable API's, and the library
+> users don't want to fight different versions.
+
+In my experience Werner (the lead GnuPG developers) is quite reasonable abo=
+ut=20
+keeping APIs stable (he often goes out of his way to keep even the command=
+=20
+line version stable, maybe he shouldn't do that to the command line options=
+=20
+so you are more motivated to go to this official API gpgme. >:) )
+
+>    And to make matters worse, the different versions (particularly if
+> you end up having to use a development version due to bugs or required
+> features etc) are always made horribly bad to even detect at
+> built-time automatically with simple #ifdef etc, so now you have to do
+> autoconf crap etc.
+
+https://www.gnupg.org/documentation/manuals/gpgme/Library-Version-Check.html
+"
+The function gpgme_check_version has four purposes. It can be used to retri=
+eve=20
+the version number of the library. In addition it can verify that the versi=
+on=20
+number is higher than a certain required version number. In either case, th=
+e=20
+function initializes some sub-systems, and for this reason alone it must be=
+=20
+invoked early in your program, before you make use of the other functions i=
+n=20
+GPGME. The last purpose is to run selftests.
+
+As a side effect for W32 based systems, the socket layer will get initializ=
+ed.=20
+"
+
+> Now, it may be that the pgpme library "just works" across
+> architectures and handles all of the above situations as gracefully as
+> the external program does. In that case - but _ONLY_ in that case -
+> would a switch-over to the library possibly be a good thing.
+
+At least gpgme aims to fulfill these goals (and is used on many=20
+architectures).
+
+> I'd be pleasantly surprised. But I *would* be surprised, because every
+> time I've seen that "library vs program" model, I've seen the above
+> issues.
+
+Your concerns are understandable, I've seen similiar problems with "library=
+ vs=20
+program" and the unix tools box approach gives a number of lessons on how t=
+o=20
+losely couple components. Thanks again for taking the time and writing them=
+=20
+down. I've given you some pointers why gpgme indeed could be different and=
+=20
+may be an improvement for git (or other applications). I guess one of the=20
+next steps would be for someone to look for specific points or try gpgme fo=
+r=20
+git purposes. Me and gnupg-devel@ are happy to take your questions or get=20
+feedback.
+
+Regards,
+Bernhard
+
+
+=2D-=20
+www.intevation.de/~bernhard (CEO)     +49 541 33 508 3-3
+Intevation GmbH, Osnabr=C3=BCck, Germany; Amtsgericht Osnabr=C3=BCck, HRB 1=
+8998
+Owned and run by Frank Koormann, Bernhard Reiter, Dr. Jan-Oliver Wagner
+
+--nextPart3706125.QiT7mOZBRn
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAABCAAGBQJYxn8JAAoJEDxD9Mjv9dQqtxIH/1nj0/HvMdHqaMz4VJjCnxq3
+caN0iZwmcGL6y9fco/5j8VgDynEhif2sAT+7E7G0+fxDIH9oLdV8+sAe9fW7aogo
+MfMFQ1OEFeFFpgM4r9/WompzFyclI6bF+UB3vVP2GRJeK8FEb5lU3uM70nyG2n9O
+jW3GDGZSJJ0AmGfuwa/nBYvKO+CIT/SVENMjqUklaQbEmLVwDODJRCjvrh5PCugQ
+/Zpxi2c10ZA/bx+JEdrCALJ0CM0N4NZXAtNulxfddspcxQDDuvUy9O17YSqvSbAX
+luvkws4d0JVjjIy9AgLNFFjB+aPEUoeDrqGRaAInk48djW0tUGQ5KXsMpVWk/RY=
+=nvLY
+-----END PGP SIGNATURE-----
+
+--nextPart3706125.QiT7mOZBRn--
