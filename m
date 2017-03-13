@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A82FD20373
-	for <e@80x24.org>; Mon, 13 Mar 2017 21:44:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F69920373
+	for <e@80x24.org>; Mon, 13 Mar 2017 21:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754015AbdCMVn7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 17:43:59 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:34047 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753633AbdCMVny (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 17:43:54 -0400
-Received: by mail-pg0-f41.google.com with SMTP id 77so70561973pgc.1
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 14:43:53 -0700 (PDT)
+        id S1754037AbdCMVoA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 17:44:00 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:34063 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753920AbdCMVn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 17:43:57 -0400
+Received: by mail-pg0-f52.google.com with SMTP id 77so70562748pgc.1
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 14:43:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vCEwXfK8iQla/9/ZrbyrZ8Q0SBdOOBBgju2l1d/Om7g=;
-        b=MPc/mQQrDCtlCbGQD5192uypYoHwRx2gK1taiO04Qu0aiW5gvbvk3id9BNWlJGuYWF
-         6s85IXW4PoRk+mZ7G5zmdAKDq1I/NzD4tr73N1p0tJ55EWItnrpL4EokSt8nppc3dJkx
-         l2pbsRfrKcxYq6FZlVwj/2D23mBNi7jZ/hhmFXr3bvHcL0sRMc++Brtfwx4YZNBb31BT
-         f9D2/JeZqaeIEWOx7jm8wziKAh45d4V2xpXRiVtCFyNuPKqrXKw/ND11atBmH617YiBH
-         FMCW2UDnQKignUOqpdZCosVwzGsesjZeCVB0822fi9b63DENf+eDt1lEKYeUOaIN1nnk
-         DQDQ==
+        bh=E+2etXjI35UGdX2l2zdAwpoa0NqeGAuTa+G75t5yjvY=;
+        b=BnGEptcck+GW9Cb68Dy4rx1uSeF8ElZZEQKqTochro00dC/qs3ffdvMH0GTjFDAa84
+         QuN9DbKID7n0niMsIvp27ALrpspTx/c4Ph8k25QFa3WGJnJsdBQHWf+c1/Z/QINLWENA
+         7WcL5pgq4JqK++8LpdVpNYwXEfuSXCbeW+OOBBmhE202AaKR/KZoKfAp54YFB+ajl892
+         RYRC65DSaliGlyyWg5gqg2GO8JLFOzaD0rV5spVsuuiXv9aTDvIX4Ul/aW55fVPTukyr
+         8Ya686bfPDPt7MV4W96/BaAxLMvOkxPjqrOaeFZ6gW9D0FpvZM4nPkxvBPfo4a5TmC6V
+         vo7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vCEwXfK8iQla/9/ZrbyrZ8Q0SBdOOBBgju2l1d/Om7g=;
-        b=rwUU9yICLod1iz62iG3Yxr8m4TXHR+HSNiIo5qIamu8/8lrQg2cAocw7g59EM5p1PS
-         tdbUZVknCwzBCB/oWHnUEffmcGC9wA2kp6iMyoOeHEI/sT0Bt9zre98gBETtIv7Cr66u
-         KmghMm996+3UDIXGoo+Sap34kcarPmn+8TYvh7g6HG4k2dkgBopaXiTzHQZOEvn3tG0H
-         uVKMEplO2+vpo8CKXsGQ5k+jXpOUdb+ty/vrje4/zFd98UPss/2bgFnk4LPICi09Itd2
-         srtDH163au8PDy/LBshdhYuVlBcUda/Nuqr1DAj/W2cVqFtNsTlU9raCqUnYPob9QmfP
-         Z5lA==
-X-Gm-Message-State: AMke39nK2ierMNFv9ns5Jkwx90JS4Juv5WB0IslBhkNlwvmqAEhZRR+5ueOIo6sX64nSAGu/
-X-Received: by 10.99.5.82 with SMTP id 79mr39502106pgf.8.1489441433242;
-        Mon, 13 Mar 2017 14:43:53 -0700 (PDT)
+        bh=E+2etXjI35UGdX2l2zdAwpoa0NqeGAuTa+G75t5yjvY=;
+        b=acQQRMp9q3vrdWcZok+hnfbQqE4w9v1KLA1bZcEd62nZHV9tiB2dGPxdKG7ev1m1hw
+         qgnPGG0ooxuZJ2p8LYs5j+CXebEZJW0R5O2e3yEIZwe/pxC0G6CEMY6CFCljKibbTmT0
+         z7jjkTm+1uVfXyqsB44rArhrcDLjt8LRvmeAJbMn2b0itlyI0xj3dFxX0GySao6Uo6Az
+         KjFL+M/tpLUFpglsAaTDQ4UVjJVmn66MbqxE6wFn/5VU7UOxh4LpVTrmXCmtYAN7cxx+
+         //tD1iTS69Xo1e80X+oIDZNTL/j3CEKwjG9acOwHfPNQ2Mb/hG2OVZIheMJMWYNqtqkD
+         gRnA==
+X-Gm-Message-State: AMke39ndvrA8xACxxHIsjezKMXh7rtc8HXTcQcVDF2bOlGPh73IaA2PrNMLkSK42YZ0aNn/a
+X-Received: by 10.99.6.76 with SMTP id 73mr39233235pgg.83.1489441436059;
+        Mon, 13 Mar 2017 14:43:56 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id 129sm34525937pgj.59.2017.03.13.14.43.51
+        by smtp.gmail.com with ESMTPSA id 129sm34525937pgj.59.2017.03.13.14.43.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 13 Mar 2017 14:43:52 -0700 (PDT)
+        Mon, 13 Mar 2017 14:43:55 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         gitster@pobox.com
-Subject: [PATCH v3 05/10] submodule: decouple url and submodule existence
-Date:   Mon, 13 Mar 2017 14:43:36 -0700
-Message-Id: <20170313214341.172676-6-bmwill@google.com>
+Subject: [PATCH v3 07/10] clone: add --submodule-spec=<pathspec> switch
+Date:   Mon, 13 Mar 2017 14:43:38 -0700
+Message-Id: <20170313214341.172676-8-bmwill@google.com>
 X-Mailer: git-send-email 2.12.0.246.ga2ecc84866-goog
 In-Reply-To: <20170313214341.172676-1-bmwill@google.com>
 References: <20170309012345.180702-1-bmwill@google.com>
@@ -61,186 +62,213 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently the submodule.<name>.url config option is used to determine
-if a given submodule exists and is interesting to the user.  This
-however doesn't work very well because the URL is a config option for
-the scope of a repository, whereas the existence of a submodule is an
-option scoped to the working tree.
+The new switch passes the pathspec to `git submodule update
+--init-active` which is called after the actual clone is done.
 
-In a future with worktree support for submodules, there will be multiple
-working trees, each of which may only need a subset of the submodules
-checked out.  The URL (which is where the submodule repository can be
-obtained) should not differ between different working trees.
+Additionally this configures the submodule.active option to
+be the given pathspec, such that any future invocation of
+`git submodule update --init-active` will keep up
+with the pathspec.
 
-It may also be convenient for users to more easily specify groups of
-submodules they are interested in as apposed to running "git submodule
-init <path>" on each submodule they want checked out in their working
-tree.
-
-To this end two config options are introduced, submodule.active and
-submodule.<name>.active.  The submodule.active config holds a pathspec
-that specifies which submodules should exist in the working tree.  The
-submodule.<name>.active config is a boolean flag used to indicate if
-that particular submodule should exist in the working tree.
-
-Given these multiple ways to check for a submodule's existence the more
-fine-grained submodule.<name>.active option has the highest order of
-precedence followed by the pathspec check against submodule.active. To
-ensure backwards compatibility, if neither of these options are set git
-falls back to checking the submodule.<name>.url option to determine a
-submodule's existence.
+Based on a patch by Stefan Beller <sbeller@google.com>
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/config.txt       | 15 ++++++++++--
- submodule.c                    | 36 ++++++++++++++++++++++++---
- t/t7413-submodule-is-active.sh | 55 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 100 insertions(+), 6 deletions(-)
+ Documentation/git-clone.txt | 23 ++++++++++-----
+ builtin/clone.c             | 36 +++++++++++++++++++++--
+ t/t7400-submodule-basic.sh  | 70 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 120 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 5e5c2ae5f..d2d79b9d4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2920,8 +2920,9 @@ submodule.<name>.url::
- 	The URL for a submodule. This variable is copied from the .gitmodules
- 	file to the git config via 'git submodule init'. The user can change
- 	the configured URL before obtaining the submodule via 'git submodule
--	update'. After obtaining the submodule, the presence of this variable
--	is used as a sign whether the submodule is of interest to git commands.
-+	update'. If neither submodule.<name>.active or submodule.active are
-+	set, the presence of this variable is used as a fallback to indicate
-+	whether the submodule is of interest to git commands.
- 	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index 35cc34b2f..9692eab30 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -15,7 +15,8 @@ SYNOPSIS
+ 	  [--dissociate] [--separate-git-dir <git dir>]
+ 	  [--depth <depth>] [--[no-]single-branch]
+ 	  [--recursive | --recurse-submodules] [--[no-]shallow-submodules]
+-	  [--jobs <n>] [--] <repository> [<directory>]
++	  [--submodule-spec <pathspec>] [--jobs <n>] [--]
++	  <repository> [<directory>]
  
- submodule.<name>.update::
-@@ -2959,6 +2960,16 @@ submodule.<name>.ignore::
- 	"--ignore-submodules" option. The 'git submodule' commands are not
- 	affected by this setting.
+ DESCRIPTION
+ -----------
+@@ -217,12 +218,20 @@ objects from the source repository into a pack in the cloned repository.
  
-+submodule.<name>.active::
-+	Boolean value indicating if the submodule is of interest to git
-+	commands.  This config option takes precedence over the
-+	submodule.active config option.
+ --recursive::
+ --recurse-submodules::
+-	After the clone is created, initialize all submodules within,
+-	using their default settings. This is equivalent to running
+-	`git submodule update --init --recursive` immediately after
+-	the clone is finished. This option is ignored if the cloned
+-	repository does not have a worktree/checkout (i.e. if any of
+-	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
++	After the clone is created, initialize and clone all submodules
++	within, using their default settings. This is equivalent to
++	running `git submodule update --recursive --init` immediately
++	after the clone is finished. This option is ignored if the
++	cloned repository does not have a worktree/checkout (i.e.  if
++	any of `--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
 +
-+submodule.active::
-+	A repeated field which contains a pathspec used to match against a
-+	submodule's path to determine if the submodule is of interest to git
-+	commands.
-+
- submodule.fetchJobs::
- 	Specifies how many submodules are fetched/cloned at the same time.
- 	A positive integer allows up to that number of submodules fetched
-diff --git a/submodule.c b/submodule.c
-index 0a2831d84..2b33bd70f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -217,13 +217,41 @@ void gitmodules_config_sha1(const unsigned char *commit_sha1)
- int is_submodule_initialized(const char *path)
- {
- 	int ret = 0;
--	const struct submodule *module = NULL;
-+	char *key;
-+	const struct string_list *sl;
-+	const struct submodule *module = submodule_from_path(null_sha1, path);
++--submodule-spec::
++	After the clone is created, initialize and clone specified
++	submodules within, using their default settings. It is possible
++	to give multiple specifications by giving this argument multiple
++	times. This is equivalent to configuring `submodule.active`
++	and then running `git submodule update --init-active`
++	immediately after the clone is finished.
  
--	module = submodule_from_path(null_sha1, path);
-+	/* early return if there isn't a path->module mapping */
-+	if (!module)
-+		return 0;
+ --[no-]shallow-submodules::
+ 	All submodules which are cloned will be shallow with a depth of 1.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 3f63edbbf..c6731379b 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -56,6 +56,16 @@ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
+ static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+ static int option_dissociate;
+ static int max_jobs = -1;
++static struct string_list submodule_spec;
 +
-+	/* submodule.<name>.active is set */
-+	key = xstrfmt("submodule.%s.active", module->name);
-+	if (!git_config_get_bool(key, &ret)) {
-+		free(key);
-+		return ret;
-+	}
-+	free(key);
++static int submodule_spec_cb(const struct option *opt, const char *arg, int unset)
++{
++	if (unset)
++		return -1;
 +
-+	sl = git_config_get_value_multi("submodule.active");
++	string_list_append((struct string_list *)opt->value, arg);
++	return 0;
++}
  
--	if (module) {
--		char *key = xstrfmt("submodule.%s.url", module->name);
-+	if (sl) {
-+		struct pathspec ps;
-+		struct argv_array args = ARGV_ARRAY_INIT;
-+		const struct string_list_item *item;
+ static struct option builtin_clone_options[] = {
+ 	OPT__VERBOSITY(&option_verbosity),
+@@ -112,6 +122,9 @@ static struct option builtin_clone_options[] = {
+ 			TRANSPORT_FAMILY_IPV4),
+ 	OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
+ 			TRANSPORT_FAMILY_IPV6),
++	OPT_CALLBACK(0, "submodule-spec", &submodule_spec, N_("<pathspec>"),
++			N_("clone specific submodules. Pass multiple times for complex pathspecs"),
++			submodule_spec_cb),
+ 	OPT_END()
+ };
+ 
+@@ -733,13 +746,21 @@ static int checkout(int submodule_progress)
+ 	err |= run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1),
+ 			   sha1_to_hex(sha1), "1", NULL);
+ 
+-	if (!err && option_recursive) {
++	if (!err && (option_recursive || submodule_spec.nr > 0)) {
+ 		struct argv_array args = ARGV_ARRAY_INIT;
+-		argv_array_pushl(&args, "submodule", "update", "--init", "--recursive", NULL);
++		argv_array_pushl(&args, "submodule", "update", NULL);
 +
-+		for_each_string_list_item(item, sl) {
-+			argv_array_push(&args, item->string);
++		if (submodule_spec.nr > 0)
++			argv_array_pushf(&args, "--init-active");
++		else
++			argv_array_pushf(&args, "--init");
+ 
+ 		if (option_shallow_submodules == 1)
+ 			argv_array_push(&args, "--depth=1");
+ 
++		if (option_recursive)
++			argv_array_pushf(&args, "--recursive");
++
+ 		if (max_jobs != -1)
+ 			argv_array_pushf(&args, "--jobs=%d", max_jobs);
+ 
+@@ -887,6 +908,17 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		option_no_checkout = 1;
+ 	}
+ 
++	if (submodule_spec.nr > 0) {
++		struct string_list_item *item;
++		struct strbuf sb = STRBUF_INIT;
++		for_each_string_list_item(item, &submodule_spec) {
++			strbuf_addf(&sb, "submodule.active=%s",
++				    item->string);
++			string_list_append(&option_config,
++					   strbuf_detach(&sb, NULL));
 +		}
++	}
 +
-+		parse_pathspec(&ps, 0, 0, 0, args.argv);
-+		ret = match_pathspec(&ps, path, strlen(path), 0, NULL, 1);
-+
-+		argv_array_clear(&args);
-+		clear_pathspec(&ps);
-+	} else {
- 		char *value = NULL;
-+		key = xstrfmt("submodule.%s.url", module->name);
+ 	if (!option_origin)
+ 		option_origin = "origin";
  
- 		ret = !git_config_get_string(key, &value);
- 
-diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
-index f18e0c925..c41b899ab 100755
---- a/t/t7413-submodule-is-active.sh
-+++ b/t/t7413-submodule-is-active.sh
-@@ -28,4 +28,59 @@ test_expect_success 'is-active works with urls' '
- 	git -C super submodule--helper is-active sub1
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index cc348b807..c2e198a92 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1189,4 +1189,74 @@ test_expect_success 'submodule init --active and update' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'is-active works with submodule.<name>.active config' '
-+	git -C super config --bool submodule.sub1.active "false" &&
-+	test_must_fail git -C super submodule--helper is-active sub1 &&
++test_expect_success 'clone --submodule-spec works' '
++	test_when_finished "rm -rf multisuper_clone" &&
++	cat >expected <<-\EOF &&
++	 sub0 (test2)
++	-sub1
++	-sub2
++	-sub3
++	EOF
 +
-+	git -C super config --bool submodule.sub1.active "true" &&
-+	git -C super config --unset submodule.sub1.URL &&
-+	git -C super submodule--helper is-active sub1 &&
-+
-+	git -C super config submodule.sub1.URL ../sub &&
-+	git -C super config --unset submodule.sub1.active
++	git clone --recurse-submodules --submodule-spec="sub0" multisuper multisuper_clone &&
++	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	test_cmp actual expected
 +'
 +
-+test_expect_success 'is-active works with basic submodule.active config' '
-+	git -C super config --add submodule.active "." &&
-+	git -C super config --unset submodule.sub1.URL &&
++test_expect_success 'clone with multiple --submodule-spec options' '
++	test_when_finished "rm -rf multisuper_clone" &&
++	cat >expect <<-\EOF &&
++	-sub0
++	 sub1 (test2)
++	-sub2
++	 sub3 (test2)
++	EOF
 +
-+	git -C super submodule--helper is-active sub1 &&
-+	git -C super submodule--helper is-active sub2 &&
-+
-+	git -C super config submodule.sub1.URL ../sub &&
-+	git -C super config --unset-all submodule.active
++	git clone --recurse-submodules \
++		  --submodule-spec="." \
++		  --submodule-spec ":(exclude)sub0" \
++		  --submodule-spec ":(exclude)sub2" \
++		  multisuper multisuper_clone &&
++	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success 'is-active correctly works with paths that are not submodules' '
-+	test_must_fail git -C super submodule--helper is-active not-a-submodule &&
++test_expect_success 'clone and subsequent updates correctly auto-initialize submodules' '
++	test_when_finished "rm -rf multisuper_clone" &&
++	cat <<-\EOF >expect &&
++	-sub0
++	 sub1 (test2)
++	-sub2
++	 sub3 (test2)
++	EOF
 +
-+	git -C super config --add submodule.active "." &&
-+	test_must_fail git -C super submodule--helper is-active not-a-submodule &&
++	cat <<-\EOF >expect2 &&
++	-sub0
++	 sub1 (test2)
++	-sub2
++	 sub3 (test2)
++	-sub4
++	 sub5 (test2)
++	EOF
 +
-+	git -C super config --unset-all submodule.active
-+'
++	git clone --recurse-submodules \
++		  --submodule-spec="." \
++		  --submodule-spec ":(exclude)sub0" \
++		  --submodule-spec ":(exclude)sub2" \
++		  --submodule-spec ":(exclude)sub4" \
++		  multisuper multisuper_clone &&
 +
-+test_expect_success 'is-active works with exclusions in submodule.active config' '
-+	git -C super config --add submodule.active "." &&
-+	git -C super config --add submodule.active ":(exclude)sub1" &&
++	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	test_cmp expect actual &&
 +
-+	test_must_fail git -C super submodule--helper is-active sub1 &&
-+	git -C super submodule--helper is-active sub2 &&
-+
-+	git -C super config --unset-all submodule.active
-+'
-+
-+test_expect_success 'is-active with submodule.active and submodule.<name>.active' '
-+	git -C super config --add submodule.active "sub1" &&
-+	git -C super config --bool submodule.sub1.active "false" &&
-+	git -C super config --bool submodule.sub2.active "true" &&
-+
-+	test_must_fail git -C super submodule--helper is-active sub1 &&
-+	git -C super submodule--helper is-active sub2 &&
-+
-+	git -C super config --unset-all submodule.active &&
-+	git -C super config --unset submodule.sub1.active &&
-+	git -C super config --unset submodule.sub2.active
++	git -C multisuper submodule add ../sub1 sub4 &&
++	git -C multisuper submodule add ../sub1 sub5 &&
++	git -C multisuper commit -m "add more submodules" &&
++	# obtain the new superproject
++	git -C multisuper_clone pull &&
++	git -C multisuper_clone submodule update --init-active &&
++	git -C multisuper_clone submodule status |cut -c1,43- >actual &&
++	test_cmp expect2 actual
 +'
 +
  test_done
