@@ -2,131 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF20420311
-	for <e@80x24.org>; Mon, 13 Mar 2017 17:24:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A573B202F8
+	for <e@80x24.org>; Mon, 13 Mar 2017 17:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753550AbdCMRY1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 13:24:27 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:36580 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751401AbdCMRYZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 13:24:25 -0400
-Received: by mail-pg0-f43.google.com with SMTP id g2so48818028pge.3
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 10:24:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Kvh91ZenIfl2pxkOTt7M46fr+q9NbJOLsahTo3tC994=;
-        b=jxK6SGR/+f40sMJgyXE2Qf5ab/opVmMXPooqFiY1TVN7XO3dGoVAT5L72PC3MXrsKE
-         5jZUr3jBYgB41hKHQ5Ohgx7UiCj5tGMhjjSa+4hA2Tc0bH+iXA2Yp+vukqxLBSCyjWyW
-         DpEBAED/GBXPWHtsCemIz2AkZQCZhpl/cI2Ep3G3xMRpR88e44fjPc0Aq5aOzsCjY9Hu
-         bVyjpiVHlQzoeupvpH7uQCQfKfj5WgTz8UNHiGS1xXmtrMbYO3ZJYB4xjH/b5+bHYIJ9
-         8bvClJ8E9yx0aKZX+83wAAXwaft8nVjLe3pcmMsmb64UeKCyhS3EMlyiJIYDPmkGuBxE
-         Swkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Kvh91ZenIfl2pxkOTt7M46fr+q9NbJOLsahTo3tC994=;
-        b=X5Y+5WEnq1R8K+48qDxy3PSlEOU3vLEfn16LnCW9h19Qys4nMdHnjJHTd/A+H5bzAI
-         HZC3Y9Wl9gZCzK/QWDksrk+2ZRI+FNeu33VaAjlxiEVoTemp4QvhM68CapeF79BF+wPO
-         E27ai5eRwFY0wTQToX7tz7qwrFyaaXAppKRE+wptpOnqfS2qe92QeDA3uQDKT+zALiWF
-         TACF3D9icVI8QOdcGoEsbbo5Jqpt3epKqgV6AvfxamV1eEml8flMjhqFTiaWD3QXUV+l
-         EMLZVafoUpw9VA+kBuTpzZGXJpFlPcVio12t1vFNB1qmppduT8hpxsHCoxjOF9mcQ62j
-         1VfA==
-X-Gm-Message-State: AMke39nCR5NYWxbBBRMPjqb4NbCXAf4/AiTbXeVGu58GMGKldpCgCHcUZGvZzclLrQR159yW
-X-Received: by 10.99.103.133 with SMTP id b127mr38685266pgc.29.1489425864184;
-        Mon, 13 Mar 2017 10:24:24 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:ac5e:90c6:a609:7ab8])
-        by smtp.gmail.com with ESMTPSA id 10sm33805057pfs.113.2017.03.13.10.24.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Mar 2017 10:24:23 -0700 (PDT)
-Date:   Mon, 13 Mar 2017 10:24:21 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        novalis@novalis.org, sandals@crustytoothpaste.net,
-        hvoigt@hvoigt.net, jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: Re: [PATCH 12/17] update submodules: add submodule_move_head
-Message-ID: <20170313172421.GA66601@google.com>
-References: <20170306205919.9713-1-sbeller@google.com>
- <20170309221543.15897-1-sbeller@google.com>
- <20170309221543.15897-13-sbeller@google.com>
- <20170309233709.GD52558@google.com>
- <xmqqo9x7ug2j.fsf@gitster.mtv.corp.google.com>
+        id S1754496AbdCMRcL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 13:32:11 -0400
+Received: from mout.web.de ([217.72.192.78]:55310 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753728AbdCMRcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 13:32:09 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MgfJz-1cYoSR2S87-00NvmM; Mon, 13
+ Mar 2017 18:31:56 +0100
+Subject: Re: fatal: Could not get current working directory: Permission denied
+ | affected 2.10,2.11,2.12, but not 1.9.5 |
+To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+References: <elvahoiwfqayelbskykd@qjih>
+ <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
+ <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <bolnkqijewdhfhyoqodf@zfyt>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <b9dc5b05-46e6-a3d7-2fb0-638bff2da676@web.de>
+Date:   Mon, 13 Mar 2017 18:31:38 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo9x7ug2j.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <bolnkqijewdhfhyoqodf@zfyt>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:FL21Z4aZFGUXPQmFiWKcKiRMaQxPKCe5ZPmPKR8CAAui7XkciNV
+ x3b+4z3+YpA4Kq4o1GR0WLe97I3uBwW6IK/OZJ4kV/YWroMNmAgg+tNQunvJ6zdmdrKQSJQ
+ T8AJjL/cqv/BsWvlqxjh6PhZN74PsPb401DDaRdO9bckuZjQppX9cnUtzPBP4WUzhc86pOw
+ /haH+FUh8uJ9Y6j5nrSFw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PyTEqa8Dzi8=:jnf1bWesiXn4oIGP4TtHe8
+ NK/UsJWGArECfXd5A/CAEn+mWxJf2ORY6n3Jjro5sIddH8R123vGe3favgH1B1gPlAW8p/E2N
+ uJmWvzPfkUr5dAjEOAAfXuNmDZRur4qDZOHxKnSMPisZN71S1HEs8Zao1xGjHHpI0grLdb7V2
+ 9JS4nZTngYvYstoUC1zxPzEh8LTfdJpazyCpEuQaCQTi0B6uIRml+8kdpGm76K+nscQYab/go
+ iJpd2thh4NX/UXjYE5T56HbCv8+vZAwxGrcrpkCD+2UDe1U17M32GIMLoXGG2aUcgMGfoWnwP
+ yl8A+TG9sfKyXZ/HZ21QBbiY3wKUJHZIrO+oYT3CJMyhBBsNNwAqoN/Cf/nDGiIvcwsEwT4aU
+ VsidbCdBdXrq57CoLzti6yYIW60ikxLrlwKX/YoPVf1B+ecKPQ7hf1/w3N3Logp7zrMwqpoBM
+ dbiqMgxcAP7q040u6ZqdGQWp18AsqTtvGu0jq59yoKN6bx0/9bg6Zq/WfYuKSt1F+pUWsPYJ1
+ kzEweGZ5b/TzFY2IPamJGkQobZQqx3+uCEs7fsmcwgyfQFY+0YdSV8fsfkovs0hyWAzI1vAmg
+ sXSYNZ/SRRxiXRS+zPbRmKUdMmd9DlKMnwXhlxiGRJpsAE0ej63z1aYWRZuJsVED2VyZT3c5u
+ 74/kQAaC8m0fjGfVKWMlD373jlmqe/ezFGw7eJIB/ZpKJ+0NiR4mcb6h7oHOObO2G+TN6ZtAC
+ UjN0e2OhGiQarwPeMeip5uVPnxBXPMq7hTUa/aoMGJsJ5bVgC93uxgUkzVeYr+bw4fw7xdREc
+ 5Qa24rQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/11, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
+Am 13.03.2017 um 13:23 schrieb Zenobiusz Kunegunda:
+> Tested on ZFS filesystem
 > 
-> >> diff --git a/submodule.c b/submodule.c
-> >> index 0b2596e88a..bc5fecf8c5 100644
-> >> --- a/submodule.c
-> >> +++ b/submodule.c
-> >> @@ -1239,6 +1239,141 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
-> >>  	return ret;
-> >>  }
-> >>  
-> >> +static int submodule_has_dirty_index(const struct submodule *sub)
-> >> +{
-> >> +	struct child_process cp = CHILD_PROCESS_INIT;
-> >> +
-> >> +	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
-> >> +
-> >> +	cp.git_cmd = 1;
-> >> +	argv_array_pushl(&cp.args, "diff-index", "--quiet", \
-> >> +					"--cached", "HEAD", NULL);
-> >
-> > The formatting of this line is a little odd.  Also you can drop the
-> > backslash.
 > 
-> Heh.  I think I saw and pointed out the same during the review of
-> the previous round X-<.  It is a bit disappointing.
 > 
-> >> +static void submodule_reset_index(const char *path)
-> >> +{
-> >> +	struct child_process cp = CHILD_PROCESS_INIT;
-> >> +	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
-> >> +
-> >> +	cp.git_cmd = 1;
-> >> +	cp.no_stdin = 1;
-> >> +	cp.dir = path;
-> >> +
-> >> +	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
-> >> +	argv_array_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
-> >> +
-> >> +	argv_array_push(&cp.args, EMPTY_TREE_SHA1_HEX);
+>     [test0@s0]:<~>$ mkdir '232222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222'
+>     [test0@s0]:<~>$ cd 232222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222/
+>     [test0@s0]:<~/232222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222>$ git status
+>     fatal: Unable to read current working directory: Permission denied
 > 
-> Somewhat related; will this use of --super-prefix be affected when
-> we split it into two for "adjust pathspec" prefix and "adjust
-> output" prefix?
+>     [test0@s0]:<~/232222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222>$ git blahblahblah
+>     fatal: Unable to read current working directory: Permission denied
+> 
+> 
+> But when I create directory with same name (232...) as it's subdirectory everything works as expected inside that subdirectory.
 
-Maybe? From what we discussed we can have 'super_prefix' maintain its
-current meaning (Path from root of parent down to the submodule) while
-adding a new env var or option to pass the 'prefix' variable to the
-child process (Path from root of parent to the directory the original
-cmd was executed in).
+Earlier I checked on UFS.  Now I tried the above commands on ZFS,
+but they work as expected:
 
-So this shouldn't be affected unless we decide to change the semantics
-of 'super_prefix'.
+  $ git status
+  fatal: Not a git repository (or any parent up to mount point /src)
+  Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
 
-And I'm always torn on how best to do naming for the newer
-functionality.  I think the easiest thing to do would be to have a
---prefix option to pass the 'prefix' from one process to the next, but
-I'm sure there are other opinions on the matter.
+Git checks out if it's in a git repository and if the current
+working directory isn't one then it goes to the parent directories
+recursively until it finds the root of a repo or a file system
+boundary or / (root).
 
--- 
-Brandon Williams
+You can see where your invocation goes to with:
+
+	$ strace git status 2>&1 >/dev/null | grep chdir
+
+René
