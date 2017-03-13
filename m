@@ -2,108 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5341FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 17:23:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF20420311
+	for <e@80x24.org>; Mon, 13 Mar 2017 17:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754488AbdCMRXB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 13:23:01 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:36209 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752004AbdCMRWy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 13:22:54 -0400
-Received: by mail-qt0-f193.google.com with SMTP id n37so7043728qtb.3
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 10:22:53 -0700 (PDT)
+        id S1753550AbdCMRY1 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 13:24:27 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:36580 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751401AbdCMRYZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 13:24:25 -0400
+Received: by mail-pg0-f43.google.com with SMTP id g2so48818028pge.3
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 10:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=O3kWyHC1Z85Xh4/uyZlxt7WdvXFQrEfMtqJ+ZoVS68g=;
-        b=EFuxknjGs2D5dIRXU28lGR31Rj33lZVkMbA+BdkTL0s+2gzt275SRuB3b3TO8u/aDf
-         1po/SSM5YWPaYthFgktSNdgeSaqIGs6VKd86wRrCvWmv/21x8nGwDcoLUCkwlUL4+dEV
-         6ToqBXNhe8WGiNDTbTgv4Ua6zBY7G4YTn08QQ3tlJP2+0zK0arII1zvFx4+KwKD8eaoz
-         GAl3a8mkTefJuENYTMc8hyuwpGNLl9qmEVdHkJR5SqsBD3x2NHmtvNeUx4ADWEdIirvZ
-         rYM8fPSx/03yByw3dFRBq3eafr8ObNBkUkmU1XlbhT8h8Ub5D7qKiXMIAWdhU6pPvMil
-         2KoA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Kvh91ZenIfl2pxkOTt7M46fr+q9NbJOLsahTo3tC994=;
+        b=jxK6SGR/+f40sMJgyXE2Qf5ab/opVmMXPooqFiY1TVN7XO3dGoVAT5L72PC3MXrsKE
+         5jZUr3jBYgB41hKHQ5Ohgx7UiCj5tGMhjjSa+4hA2Tc0bH+iXA2Yp+vukqxLBSCyjWyW
+         DpEBAED/GBXPWHtsCemIz2AkZQCZhpl/cI2Ep3G3xMRpR88e44fjPc0Aq5aOzsCjY9Hu
+         bVyjpiVHlQzoeupvpH7uQCQfKfj5WgTz8UNHiGS1xXmtrMbYO3ZJYB4xjH/b5+bHYIJ9
+         8bvClJ8E9yx0aKZX+83wAAXwaft8nVjLe3pcmMsmb64UeKCyhS3EMlyiJIYDPmkGuBxE
+         Swkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references;
-        bh=O3kWyHC1Z85Xh4/uyZlxt7WdvXFQrEfMtqJ+ZoVS68g=;
-        b=B0AFjUahQQjsJplS5mD7+RccKFIQ2y9LOvmrS+w1J4oSVWy+qZJhg2Qp/5fhedgu9+
-         XSF9fOwgCPrCUq7E3kI9ESVoz9aEsamDLqpl9itE8bj+D0QMo441lABCu7Nr6n6dv1Dh
-         ThACxPYrcYMUTynbOQtCRDJJp3bqVfrsUzCLUuVCQN0+u/Ls4Y3qZQ/AiuCUoV0OYHTy
-         jSlr7UPLLghTdMpsxqFCWjrV/YBqMw4baYyCKhGrBfCWgpAwNTxiDFh+gaIyOAlj1lfN
-         m+zX1loPLaUjTjPHVnLBNTNA2u8iMBRHH/zkfYxGumgaTEyh8h1LSNgbYY0uJhDTn266
-         BtNw==
-X-Gm-Message-State: AMke39nVYEHvjcBX+oBiHcD7A4gCM+u2XJZmydBMNDiif/ejm75T4/NBuLvMReVgT63ttQ==
-X-Received: by 10.200.41.176 with SMTP id 45mr36332425qts.26.1489425772208;
-        Mon, 13 Mar 2017 10:22:52 -0700 (PDT)
-Received: from mango1.eduroam.cornell.edu (nat-128-84-124-0-821.cit.cornell.edu. [128.84.127.53])
-        by smtp.googlemail.com with ESMTPSA id n19sm12579114qtn.35.2017.03.13.10.22.51
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Mar 2017 10:22:51 -0700 (PDT)
-From:   Devin Lehmacher <lehmacdj@gmail.com>
-To:     git@vger.kernel.org
-Subject: [GSoC][PATCH 2/3] credential-cache.c: Make git use XDG_CACHE_HOME for credentials
-Date:   Mon, 13 Mar 2017 13:22:31 -0400
-Message-Id: <20170313172232.96678-3-lehmacdj@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170313172232.96678-1-lehmacdj@gmail.com>
-References: <20170313172232.96678-1-lehmacdj@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Kvh91ZenIfl2pxkOTt7M46fr+q9NbJOLsahTo3tC994=;
+        b=X5Y+5WEnq1R8K+48qDxy3PSlEOU3vLEfn16LnCW9h19Qys4nMdHnjJHTd/A+H5bzAI
+         HZC3Y9Wl9gZCzK/QWDksrk+2ZRI+FNeu33VaAjlxiEVoTemp4QvhM68CapeF79BF+wPO
+         E27ai5eRwFY0wTQToX7tz7qwrFyaaXAppKRE+wptpOnqfS2qe92QeDA3uQDKT+zALiWF
+         TACF3D9icVI8QOdcGoEsbbo5Jqpt3epKqgV6AvfxamV1eEml8flMjhqFTiaWD3QXUV+l
+         EMLZVafoUpw9VA+kBuTpzZGXJpFlPcVio12t1vFNB1qmppduT8hpxsHCoxjOF9mcQ62j
+         1VfA==
+X-Gm-Message-State: AMke39nCR5NYWxbBBRMPjqb4NbCXAf4/AiTbXeVGu58GMGKldpCgCHcUZGvZzclLrQR159yW
+X-Received: by 10.99.103.133 with SMTP id b127mr38685266pgc.29.1489425864184;
+        Mon, 13 Mar 2017 10:24:24 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:ac5e:90c6:a609:7ab8])
+        by smtp.gmail.com with ESMTPSA id 10sm33805057pfs.113.2017.03.13.10.24.22
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Mar 2017 10:24:23 -0700 (PDT)
+Date:   Mon, 13 Mar 2017 10:24:21 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        novalis@novalis.org, sandals@crustytoothpaste.net,
+        hvoigt@hvoigt.net, jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: Re: [PATCH 12/17] update submodules: add submodule_move_head
+Message-ID: <20170313172421.GA66601@google.com>
+References: <20170306205919.9713-1-sbeller@google.com>
+ <20170309221543.15897-1-sbeller@google.com>
+ <20170309221543.15897-13-sbeller@google.com>
+ <20170309233709.GD52558@google.com>
+ <xmqqo9x7ug2j.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo9x7ug2j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-credential-cache will now use the socket
-$XDG_CACHE_HOME/git/credential/socket if there is not already a socket
-at ~/.git-credential-cache/socket. This ensures that if another process
-already created a socket at the old location it will be used over the
-new one if it exists.
+On 03/11, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> >> diff --git a/submodule.c b/submodule.c
+> >> index 0b2596e88a..bc5fecf8c5 100644
+> >> --- a/submodule.c
+> >> +++ b/submodule.c
+> >> @@ -1239,6 +1239,141 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+> >>  	return ret;
+> >>  }
+> >>  
+> >> +static int submodule_has_dirty_index(const struct submodule *sub)
+> >> +{
+> >> +	struct child_process cp = CHILD_PROCESS_INIT;
+> >> +
+> >> +	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
+> >> +
+> >> +	cp.git_cmd = 1;
+> >> +	argv_array_pushl(&cp.args, "diff-index", "--quiet", \
+> >> +					"--cached", "HEAD", NULL);
+> >
+> > The formatting of this line is a little odd.  Also you can drop the
+> > backslash.
+> 
+> Heh.  I think I saw and pointed out the same during the review of
+> the previous round X-<.  It is a bit disappointing.
+> 
+> >> +static void submodule_reset_index(const char *path)
+> >> +{
+> >> +	struct child_process cp = CHILD_PROCESS_INIT;
+> >> +	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
+> >> +
+> >> +	cp.git_cmd = 1;
+> >> +	cp.no_stdin = 1;
+> >> +	cp.dir = path;
+> >> +
+> >> +	argv_array_pushf(&cp.args, "--super-prefix=%s/", path);
+> >> +	argv_array_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
+> >> +
+> >> +	argv_array_push(&cp.args, EMPTY_TREE_SHA1_HEX);
+> 
+> Somewhat related; will this use of --super-prefix be affected when
+> we split it into two for "adjust pathspec" prefix and "adjust
+> output" prefix?
 
-Signed-off-by: Devin Lehmacher <lehmacdj@gmail.com>
----
- credential-cache.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+Maybe? From what we discussed we can have 'super_prefix' maintain its
+current meaning (Path from root of parent down to the submodule) while
+adding a new env var or option to pass the 'prefix' variable to the
+child process (Path from root of parent to the directory the original
+cmd was executed in).
 
-diff --git a/credential-cache.c b/credential-cache.c
-index cc8a6ee19..75c917de7 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -83,6 +83,19 @@ static void do_cache(const char *socket, const char *action, int timeout,
- 	strbuf_release(&buf);
- }
- 
-+static char* get_socket_path(void) {
-+	char *home_socket;
-+
-+	home_socket = expand_user_path("~/.git_credential_cache/socket");
-+	if (home_socket)
-+		if (file_exists(home_socket))
-+			return home_socket;
-+		else
-+			free(home_socket);
-+
-+	return xdg_cache_home("credential/socket");
-+}
-+
- int cmd_main(int argc, const char **argv)
- {
- 	char *socket_path = NULL;
-@@ -106,7 +119,7 @@ int cmd_main(int argc, const char **argv)
- 	op = argv[0];
- 
- 	if (!socket_path)
--		socket_path = expand_user_path("~/.git-credential-cache/socket");
-+		socket_path = get_socket_path();
- 	if (!socket_path)
- 		die("unable to find a suitable socket path; use --socket");
- 
+So this shouldn't be affected unless we decide to change the semantics
+of 'super_prefix'.
+
+And I'm always torn on how best to do naming for the newer
+functionality.  I think the easiest thing to do would be to have a
+--prefix option to pass the 'prefix' from one process to the next, but
+I'm sure there are other opinions on the matter.
+
 -- 
-2.11.0
-
+Brandon Williams
