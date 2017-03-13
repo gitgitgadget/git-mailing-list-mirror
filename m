@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DB0D1FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 17:23:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5341FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 17:23:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754475AbdCMRW7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 13:22:59 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:36211 "EHLO
+        id S1754488AbdCMRXB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 13:23:01 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:36209 "EHLO
         mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754443AbdCMRWy (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1752004AbdCMRWy (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 13 Mar 2017 13:22:54 -0400
-Received: by mail-qt0-f193.google.com with SMTP id n37so7043747qtb.3
+Received: by mail-qt0-f193.google.com with SMTP id n37so7043728qtb.3
         for <git@vger.kernel.org>; Mon, 13 Mar 2017 10:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references;
-        bh=eMwY/fe7yV1Yaba1lybyWSvc+Y7hFrb/08q7Iz78SFE=;
-        b=jXD6Repmh7VUVUWvTDFnPhSkvOZJ2n0N73lPQa9y08X4QbccvKE93Gxzab/LzNQEtn
-         MpLfcIQ4xUDxojuT+2LlbCLfo0ug89QhcE+KhaL8o03kukr8zZeCA1Z9ODDSKYEdzMec
-         tPiCmpvlNouwn0nF2EGthRAeJ1tT9930vbcDlDob3B03FNVNm6LqFDog90jwf2dY/vMI
-         bc2Et0VIKmIwFvtrVn66OlHvwFHkMeY+nzx7gOS0uLeQuTwReG1nm2mBb8NDFOipEhxP
-         WYsPeph+vdHjBvlGmbkdwMZTIIie5/+qrN9cdoPaM9hlq5z1mLGtt0iFwfMmy5eioWpA
-         VvoA==
+        bh=O3kWyHC1Z85Xh4/uyZlxt7WdvXFQrEfMtqJ+ZoVS68g=;
+        b=EFuxknjGs2D5dIRXU28lGR31Rj33lZVkMbA+BdkTL0s+2gzt275SRuB3b3TO8u/aDf
+         1po/SSM5YWPaYthFgktSNdgeSaqIGs6VKd86wRrCvWmv/21x8nGwDcoLUCkwlUL4+dEV
+         6ToqBXNhe8WGiNDTbTgv4Ua6zBY7G4YTn08QQ3tlJP2+0zK0arII1zvFx4+KwKD8eaoz
+         GAl3a8mkTefJuENYTMc8hyuwpGNLl9qmEVdHkJR5SqsBD3x2NHmtvNeUx4ADWEdIirvZ
+         rYM8fPSx/03yByw3dFRBq3eafr8ObNBkUkmU1XlbhT8h8Ub5D7qKiXMIAWdhU6pPvMil
+         2KoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references;
-        bh=eMwY/fe7yV1Yaba1lybyWSvc+Y7hFrb/08q7Iz78SFE=;
-        b=iIv4d8a9eZNfxzLrVimFTzHZzMxZtd5O6Sk8eZ9Y7MGr31t6lS+l7TKPdfckH2dX0Y
-         JgfYehSUUuek1WZzp1EH248o/nltJaeIurfyL+0lO1uaWzo5FLb47KzXs3WZv+Ry40II
-         jTekpOkIdz2Xvjg+CbyyGrJUkUdDqSA+0lDGQZ1ZmYL5fb3GV+Z3xDWtVfGi0EOfpP47
-         iQpmbcISVRo9ZI2tjyloPTgU821+nAA36Nf4J9oRhSa9B9f+ez/V4Nrd0RviGmxoup5u
-         /V1ZJgXVwyIg2yZN9csc/NlGe33vRAoeqGwYHYpJxV3/cUUg6wpFG8PfcMMy3LirEpQh
-         o2Rw==
-X-Gm-Message-State: AMke39lySGGhzdVsjU7Zo5s0vjZAIIPQquK/A7FZ7QDizXYn/qXeYOHW6usrkYUxE5OfcA==
-X-Received: by 10.200.55.57 with SMTP id o54mr36225250qtb.78.1489425772794;
+        bh=O3kWyHC1Z85Xh4/uyZlxt7WdvXFQrEfMtqJ+ZoVS68g=;
+        b=B0AFjUahQQjsJplS5mD7+RccKFIQ2y9LOvmrS+w1J4oSVWy+qZJhg2Qp/5fhedgu9+
+         XSF9fOwgCPrCUq7E3kI9ESVoz9aEsamDLqpl9itE8bj+D0QMo441lABCu7Nr6n6dv1Dh
+         ThACxPYrcYMUTynbOQtCRDJJp3bqVfrsUzCLUuVCQN0+u/Ls4Y3qZQ/AiuCUoV0OYHTy
+         jSlr7UPLLghTdMpsxqFCWjrV/YBqMw4baYyCKhGrBfCWgpAwNTxiDFh+gaIyOAlj1lfN
+         m+zX1loPLaUjTjPHVnLBNTNA2u8iMBRHH/zkfYxGumgaTEyh8h1LSNgbYY0uJhDTn266
+         BtNw==
+X-Gm-Message-State: AMke39nVYEHvjcBX+oBiHcD7A4gCM+u2XJZmydBMNDiif/ejm75T4/NBuLvMReVgT63ttQ==
+X-Received: by 10.200.41.176 with SMTP id 45mr36332425qts.26.1489425772208;
         Mon, 13 Mar 2017 10:22:52 -0700 (PDT)
 Received: from mango1.eduroam.cornell.edu (nat-128-84-124-0-821.cit.cornell.edu. [128.84.127.53])
-        by smtp.googlemail.com with ESMTPSA id n19sm12579114qtn.35.2017.03.13.10.22.52
+        by smtp.googlemail.com with ESMTPSA id n19sm12579114qtn.35.2017.03.13.10.22.51
         for <git@vger.kernel.org>
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Mar 2017 10:22:52 -0700 (PDT)
+        Mon, 13 Mar 2017 10:22:51 -0700 (PDT)
 From:   Devin Lehmacher <lehmacdj@gmail.com>
 To:     git@vger.kernel.org
-Subject: [GSoC][PATCH 3/3] Update documentation to reflect new socket location
-Date:   Mon, 13 Mar 2017 13:22:32 -0400
-Message-Id: <20170313172232.96678-4-lehmacdj@gmail.com>
+Subject: [GSoC][PATCH 2/3] credential-cache.c: Make git use XDG_CACHE_HOME for credentials
+Date:   Mon, 13 Mar 2017 13:22:31 -0400
+Message-Id: <20170313172232.96678-3-lehmacdj@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170313172232.96678-1-lehmacdj@gmail.com>
 References: <20170313172232.96678-1-lehmacdj@gmail.com>
@@ -60,24 +60,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+git-credential-cache will now use the socket
+$XDG_CACHE_HOME/git/credential/socket if there is not already a socket
+at ~/.git-credential-cache/socket. This ensures that if another process
+already created a socket at the old location it will be used over the
+new one if it exists.
+
 Signed-off-by: Devin Lehmacher <lehmacdj@gmail.com>
 ---
- Documentation/git-credential-cache.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ credential-cache.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-credential-cache.txt b/Documentation/git-credential-cache.txt
-index 96208f822..4b9db3856 100644
---- a/Documentation/git-credential-cache.txt
-+++ b/Documentation/git-credential-cache.txt
-@@ -34,7 +34,8 @@ OPTIONS
+diff --git a/credential-cache.c b/credential-cache.c
+index cc8a6ee19..75c917de7 100644
+--- a/credential-cache.c
++++ b/credential-cache.c
+@@ -83,6 +83,19 @@ static void do_cache(const char *socket, const char *action, int timeout,
+ 	strbuf_release(&buf);
+ }
  
- 	Use `<path>` to contact a running cache daemon (or start a new
- 	cache daemon if one is not started). Defaults to
--	`~/.git-credential-cache/socket`. If your home directory is on a
-+	`~/.git-credential-cache/socket` if it exists and otherwise
-+    `$XDG_CACHE_HOME/git/credential/socket`. If your home directory is on a
- 	network-mounted filesystem, you may need to change this to a
- 	local filesystem. You must specify an absolute path.
++static char* get_socket_path(void) {
++	char *home_socket;
++
++	home_socket = expand_user_path("~/.git_credential_cache/socket");
++	if (home_socket)
++		if (file_exists(home_socket))
++			return home_socket;
++		else
++			free(home_socket);
++
++	return xdg_cache_home("credential/socket");
++}
++
+ int cmd_main(int argc, const char **argv)
+ {
+ 	char *socket_path = NULL;
+@@ -106,7 +119,7 @@ int cmd_main(int argc, const char **argv)
+ 	op = argv[0];
+ 
+ 	if (!socket_path)
+-		socket_path = expand_user_path("~/.git-credential-cache/socket");
++		socket_path = get_socket_path();
+ 	if (!socket_path)
+ 		die("unable to find a suitable socket path; use --socket");
  
 -- 
 2.11.0
