@@ -2,75 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9D6720373
-	for <e@80x24.org>; Mon, 13 Mar 2017 21:29:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F84E20373
+	for <e@80x24.org>; Mon, 13 Mar 2017 21:31:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753540AbdCMV3x (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 17:29:53 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:33409 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751374AbdCMV3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 17:29:50 -0400
-Received: by mail-it0-f46.google.com with SMTP id w124so8513701itb.0
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 14:29:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=5UFyF2qCQwvh6sA5EtD6g67Fc9KuItVXWgWMAG9LS8c=;
-        b=b/+5ouGEhd854Td5U3TuDn5v7m5OwimdGmBgj9o2tSOZjJGzJXLkPX+CgYdrFu5pPs
-         FEFY3dgfZjhomQsCQHsaKP48PUPGjeKBQLmULYH1kRqHAY46M7oueJvcqTCZbH/JVFyh
-         g5XF6UFf8NDPFqCBGWKREtEj8U0fiPmG6h1ZI8Pg7+G49ew3qwzHJIJz+WKswrSzGWT4
-         jN7vN9haZgZiOD5UyNN3rtFmZjNdVy/GWvMuucfe8wxC3fJ3b/sff3sExiJ6W9bCQZhW
-         q53N/Cn9GAuWrjdvVqWON6uBYT/z65CmmVOvFXgqh0oRgtJoSlAyn65m/vSKDQn03bqN
-         6SAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=5UFyF2qCQwvh6sA5EtD6g67Fc9KuItVXWgWMAG9LS8c=;
-        b=llwYxnObLMPWlQehKHlgEq1adjZPYCrnPTWLHFX10FnhTh4mYkcxm/VY1WDPdCz4RY
-         BhW5yL81DcADbzndQMcldvVtGocuI6DVU2QVaHBvlFmwJRpzB/dF0hjXzdcakJLu3Uwq
-         nZdRTDSbd6T9woV0j6cb3Yr4WxE0ywZix+7AO7tCddKN/uMJAiiEqow9pdZvhI1u1iv3
-         8KsHrm9UrzwkvUY2WTMvW3YGASSzxf1lBf+zzPg8XvWR56DM7DbJSwhaVSvjOCwCQOUi
-         IOMrP+xCSNR29/DZeH0cdrV0ay2t1oc6ezmMEdwcKXJjgyBuy/OXspjuC7BwBrCfKVIb
-         cOsg==
-X-Gm-Message-State: AFeK/H2k4MJ3cLUdBN8nBimtDPpUHWzELKX+JFu1OXTynlKkYy+Kpdlhkzjgayor6oY81Wuuz8xMxWOvRrijVQ==
-X-Received: by 10.36.169.69 with SMTP id x5mr11942415iti.37.1489440588788;
- Mon, 13 Mar 2017 14:29:48 -0700 (PDT)
+        id S1754149AbdCMVbv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 17:31:51 -0400
+Received: from mout.web.de ([212.227.15.3]:55214 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754110AbdCMVbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 17:31:45 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M1Wxd-1byrgN31ej-00tPX5; Mon, 13
+ Mar 2017 22:31:26 +0100
+Subject: Re: fatal: Could not get current working directory: Permission denied
+ | affected 2.10,2.11,2.12, but not 1.9.5 |
+To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+References: <elvahoiwfqayelbskykd@qjih>
+ <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
+ <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de>
+Date:   Mon, 13 Mar 2017 22:31:09 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.107.19.75 with HTTP; Mon, 13 Mar 2017 14:29:28 -0700 (PDT)
-In-Reply-To: <xmqqmvcorjyo.fsf@gitster.mtv.corp.google.com>
-References: <20170313201104.GA32821@workstation> <xmqqmvcorjyo.fsf@gitster.mtv.corp.google.com>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Mon, 13 Mar 2017 14:29:28 -0700
-X-Google-Sender-Auth: R0s4rnnESuktj3Uw_rp-ZfNJ4Ts
-Message-ID: <CAPc5daVRX_-bJ_2reDLKJin9PNfy6EjbD14T=Mpx=9P8xzdmuw@mail.gmail.com>
-Subject: Re: Possible git blame bug?
-To:     Domagoj Stolfa <domagoj.stolfa@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <ogwsaxvtiqlsiwojzxul@owpk>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:QaSOlIiunRS/RHqKTFdya08dXM6kZpPPDyShv5q3dTEcDCrXYJk
+ TxJd2t5e4uAkJ/e+ddTTPmxWOZ5vZRpDbbIazISn3iZhZ+fncSP3zZw6/pvGtWy76m5v3hF
+ yy3zNE80ABvx2G1HjrOTnGOHE2ckKvgaaXpT9DLsvao1hr5LsESBumbQ57HxBY99cUqbNTx
+ cOtio/QjX54ZnnGnGkbIA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mpzHe+NHGTc=:Pj3a8eWNQ91t6rW88BIHjh
+ nCiCXa2HdwgmrAy4oTIOZwznH7n6i9TD68KuEaxjMwCociqVU96/BxbcpWXTuyDQfSR9JKHZe
+ YRPf8h4S2APN2LQsWQXZ3mwhRVGPYd9XJ7EnZJ92REPTSMoxj62VXDtB/hGhiOH7zMZPBvcO9
+ R5u1hU4nza/kJWq/etl9ZckxOf+Th6olbos2F1waWJ+nwF1SajyKy0G4qbsB0c3IidbEZ5VDk
+ O6Kf4PkrQrq3BoHTDkONC28mw3WGGFRWL4K1TczzuUJxJdAUCTUnPdaMM7mqyjf9xyQrunzDf
+ Sx/THKrwA8k+hw6gfuJCBgPUfJ5oENELmhCsYzCl/3bwwtThuHf4wEVyTAorFLUXmf7jFkWUp
+ MD4I6gklJun4w/Uzl9ojUfbZMLUxpwOMd0Q1CC7bQx0PGjGXW6lDWNEXACQTJ7YVMAgncM7SH
+ uP/EZEuWvRnV+aTSwhg/8qOMMuPAatssCcFIZRYJY82f2ezsE0VL45Z3opBD6vrl6A53wXWM3
+ b3O5/9904m8yElzpoLUwpbnLSrQhvZx67rc0cUf597Bw7NYMgA2fH5JycIkSE/azNh0WG26J/
+ b4z69Kn0U5GZ+jLlYjOXzySa1HTcEsZPtyqmsExtqVxZsHYmxQ20vm1tjIC0GPTB1xFBCCSL/
+ dEuo+ErcemB5DSAH+lidmiu9LQN7jKCkp9BmM4nTdnFozzbT2aGnP4bUsAaDKBtrDDxKrcGph
+ /7pSE6O5cMNADuDJSayt/fUpuQSHtFC/AjG6ipY7lTwfHVbdIpWE3sLIZXUVmqmj8z8GfX/D6
+ C/NpLC4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 13, 2017 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Domagoj Stolfa <domagoj.stolfa@gmail.com> writes:
+Am 13.03.2017 um 14:23 schrieb Zenobiusz Kunegunda:
+> Bisecting: 0 revisions left to test after this (roughly 0 steps)
+> [a26bc613a64ac2c7ee69a50675e61b004a26382d] pretty.c: make git_pretty_formats_config return -1 on git_config_string failure
 >
->> The question is whether this is a bug or not, as --since=<year> might not be a
->> valid filter.
->
-> I do not think blame ever was designed to work with --since, so that
-> is indeed the case.
+> This is what I found with git bisect
 
-Actually, I do see that we had a cut-off based on rev->max_age since we
-introduced it at cee7f245 ("git-pickaxe: blame rewritten.", 2006-10-19).
+Strange, I don't think git_pretty_formats_config() is even called by git 
+status.
 
-I do not know offhand if --since=2000 _means_ --since=2000-01-01 or something
-completely different, though.
+René
