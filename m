@@ -2,92 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B73091FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 18:34:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F1101FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 18:37:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752226AbdCMSeu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 14:34:50 -0400
-Received: from mail-yw0-f182.google.com ([209.85.161.182]:33877 "EHLO
-        mail-yw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751777AbdCMSes (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 14:34:48 -0400
-Received: by mail-yw0-f182.google.com with SMTP id p77so64799567ywg.1
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 11:34:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=R+y1ebDqljIFxu/AKcX7DHSYebIYUY9zmpTCzKyWaL8=;
-        b=dZWR8ppiVUTDTNW4gwsoyNV4MtFxkHHcjLhhVOy8YwZlYBNzq/B2FrKcSb92C0Vgka
-         Y3qvXUlKbnTEiqN/n9Nx/qM+s56twmOf3fNRu/u86W/hyL9JbkmDP3ZTqMW3O91SPlN+
-         A1DnTRV57i0VnzP2mzy1oEA3hwoYdBKrndeN+kOpZc0AVRIgujV1f8BmwIlx4lLfyTJN
-         xCd1Ax6ILxo+hsxabbr5FdGOeu8JPRcPnv7zZkLnViqpzuGpoLlTT+1cROfOhNU0pZ2C
-         7aFtwE6N1ASn0XwMTYHp8YSSy8st3oFi6qcW0FrTQX7Iz1k+1tcarOwC4c7dRYgvJIqe
-         6WSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=R+y1ebDqljIFxu/AKcX7DHSYebIYUY9zmpTCzKyWaL8=;
-        b=AxnxrYNl/5TcD97SBmrqypZ41LHzuTnozVG8tCVZjbTBcu2PcOGstGH9LHA+IpLXel
-         ri8v3fDWeZATgoP0vTacUl8fS46sJ4UQiV9h2Uvr/ldFzh7kKVmuN2w0qaW7gsV/ZZbi
-         GicaQ4OpN+hQxW4N0KHXLdUWulJ0ALczguujK1J5tuahC0/4eeDkpi5yP6xsbe41c50I
-         3rgXvgMT+mAhh8DB6k8hUIKMWMN+p3j8cE+qSU/pv15BlGKrqaGd1I5ubuMSqmf6IIxv
-         8ux3Fp7misAW+ebu1DCmZsPQETL5Oq6adSXocGaQlZ0dXMMIA2h1Z+h+Aq5Es1vWM6ts
-         uQBg==
-X-Gm-Message-State: AFeK/H0zx3oNJAVeVICJ4HWlQqQXYrSL92xXx0dJioqvc6BJQAEqTB1wBlPL0cmA1o4eMolRwnyhmho9JhAf2w==
-X-Received: by 10.37.26.7 with SMTP id a7mr1778622yba.18.1489430087329; Mon,
- 13 Mar 2017 11:34:47 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.37.174.26 with HTTP; Mon, 13 Mar 2017 11:34:16 -0700 (PDT)
-In-Reply-To: <20170313174804.GH26789@aiede.mtv.corp.google.com>
-References: <20170304011251.GA26789@aiede.mtv.corp.google.com>
- <91a34c5b-7844-3db2-cf29-411df5bcf886@noekeon.org> <20170313174804.GH26789@aiede.mtv.corp.google.com>
-From:   ankostis <ankostis@gmail.com>
-Date:   Mon, 13 Mar 2017 19:34:16 +0100
-Message-ID: <CA+dhYEViN4-boZLN+5QJyE7RtX+q6a92p0C2O6TA53==BZfTrQ@mail.gmail.com>
-Subject: Re: RFC: Another proposed hash function transition plan
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     The Keccak Team <keccak@noekeon.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, bmwill@google.com,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1752113AbdCMShR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 14:37:17 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:36841 "EHLO
+        homiemail-a17.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751563AbdCMShP (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Mar 2017 14:37:15 -0400
+Received: from homiemail-a17.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id 8E3C82B206E;
+        Mon, 13 Mar 2017 11:37:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+        :subject:from:to:cc:date:in-reply-to:references:content-type
+        :mime-version:content-transfer-encoding; s=novalis.org; bh=B5QC/
+        0lvI9hxi/DR+I8jnZpevjc=; b=o0Pkpp2L7xiAnHjjKAI7d2cKOpbSjHVYiEyP3
+        VhjtOT48UJsTCMOfCpOQVXTU+ZHWE5uZizx+5c8477x5AuyIC7HBqhVhkgVNCU6s
+        ABpkhTKBhrx88SeQMHk33bYnLfd+ySytU8C9E3JN/ry8VeIllNQRPe4ldizZkLCW
+        hP/12Q=
+Received: from corey (gzac12-mdf2-1.aoa.twosigma.com [208.77.215.155])
+        (using TLSv1 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id 4000E2B206A;
+        Mon, 13 Mar 2017 11:37:14 -0700 (PDT)
+Message-ID: <1489430233.10192.56.camel@novalis.org>
+Subject: Re: bug?: git reset --mixed ignores deinitialized submodules
+From:   David Turner <novalis@novalis.org>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Mon, 13 Mar 2017 14:37:13 -0400
+In-Reply-To: <CAGZ79kZmWaobW9e4iPY05y0N6PLcFphGnZmDHtrGKeV0Up70vg@mail.gmail.com>
+References: <1489180018.10192.45.camel@novalis.org>
+         <CAGZ79kZmWaobW9e4iPY05y0N6PLcFphGnZmDHtrGKeV0Up70vg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.4-1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 13 March 2017 at 18:48, Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Hi,
->
-> The Keccak Team wrote:
->
-> > We have read your transition plan to move away from SHA-1 and noticed
-> > your intent to use SHA3-256 as the new hash function in the new Git
-> > repository format and protocol. Although this is a valid choice, we
-> > think that the new SHA-3 standard proposes alternatives that may also be
-> > interesting for your use cases.  As designers of the Keccak function
-> > family, we thought we could jump in the mail thread and present these
-> > alternatives.
->
-> I indeed had some reservations about SHA3-256's performance.  The main
-> hash function we had in mind to compare against is blake2bp-256.  This
-> overview of other functions to compare against should end up being
-> very helpful.
+On Mon, 2017-03-13 at 10:51 -0700, Stefan Beller wrote:
+> On Fri, Mar 10, 2017 at 1:06 PM, David Turner <novalis@novalis.org>
+> wrote:
+> > Git reset --mixed ignores submodules which are not
+> > initialized.=C2=A0=C2=A0I've
+> > attached a demo script.
+> >=20
+> > On one hand, this matches the documentation ("Resets the index but
+> > not
+> > the working tree").=C2=A0=C2=A0But on the other hand, it kind of does=
+n't:
+> > "(i.e.,
+> > the changed files are preserved but not marked for commit)".
+> >=20
+> > It's hard to figure out what a mixed reset should do.=C2=A0=C2=A0It w=
+ould be
+> > weird for it to initialize the submodule.=C2=A0=C2=A0Maybe it should =
+just
+> > refuse
+> > to run?=C2=A0=C2=A0Maybe there should be an option for it to initiali=
+ze the
+> > submodule for you?=C2=A0=C2=A0Maybe it should drop a special-purpose =
+file
+> > that
+> > git understands to be a submodule change?=C2=A0=C2=A0For instance (an=
+d this
+> > is
+> > insane, but, like, maybe worth considering) it could use extended
+> > filesystem attributes, where available.
+> >=20
+> > #!/bin/bash
+> > mkdir demo
+> > cd demo
+> >=20
+> > git init main
+> >=20
+> > (
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0git init sub1 &&
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0cd sub1 &&
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0dd if=3D/dev/urandom =
+of=3Df bs=3D40 count=3D1 &&
+>=20
+> We prefer reproducability in tests, so if we take this into
+> a (regression) test later we may want to
+> =C2=A0=C2=A0=C2=A0=C2=A0s/dd.../echo "determinism!" >f/
 
-What if some of us need this extra difficulty, and don't mind about
-the performance tax,
-because we need to refer to hashes 10 or 30 years from now,
-or even in the Post Quantum era?
+Yeah, that was leftover from some previous version of this script, I
+think.   This wasn't intended to be a t/ test, since I don't know what
+the right answer is -- just a demo in case my prose was unclear.
 
-Thanks,
-  Kostis
+> > # commit that change on main,=C2=A0=C2=A0deinit the submodule and do =
+a mixed
+> > reset
+> > (
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0cd main &&
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0git add sub1 &&
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0git commit -m 'update=
+ sub1' &&
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0git submodule deinit =
+sub1 &&
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0git reset --mixed HEA=
+D^ &&
+>=20
+> As of now most commands (including reset)
+> are unaware of submodules to begin with.
+> They are ignored in most cases, i.e. git-status
+> has some tack-on to (pseudo-)report changes
+> in submodules, but it's not really builtin.
+>=20
+> A submodule that is not initialized
+> ( i.e. submodule.<name>.url is unset) ought
+> to not be touched at all. This is spelled out in
+> the man page for "submodule update" only at this
+> point.
+>=20
+>=20
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0git status # change t=
+o sub1 is lost
+>=20
+> The change is not really lost, as you can get it via
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0git checkout HEAD@{1}
+> =C2=A0=C2=A0=C2=A0=C2=A0git submodule update --init
+
+Sure, the commit isn't lost entirely.  But a mixed reset is often used
+to mean "go back to before I committed", and here, that's not precisely
+what's happening.  In other words, it's not confusing to the user.
+
+> This works most of the time, but it is unreliable as the
+> submodule may have had some gc inbetween which
+> threw away important objects.
+
+Sure; that's a separate issue.
+
+> Steping back a bit, rereading the subject line,
+> what do you think is the bug here?
+>=20
+> * git-status not reporting about uninitialized submodules?
+
+Here, I think git-status is correctly reporting the state of the repo.
+
+> * git reset --mixed not touching the submodule worktree
+
+Yes, possibly.
+
+> * lack of --recurse-submodules in git-reset? (and that not
+> =C2=A0 being default, see prior point)
+
+Or possibly this.
+
+> * submodules being in detached HEAD all the time?
+
+In this case, the submodule is not initialized, so it is not in any
+state at all.
+
+
+For me, the bug (if any) is the bad user experience of doing a mixed
+reset and expecting to be able to commit (possibly with some git-add
+operations) from there and get back something like the commit to which
+the user had git-reset. =20
+
+That's why I have the question mark there -- it's not clear that this
+is a reasonable expectation.
+
