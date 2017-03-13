@@ -2,68 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89E47201C2
-	for <e@80x24.org>; Mon, 13 Mar 2017 06:37:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3ED0E201C2
+	for <e@80x24.org>; Mon, 13 Mar 2017 06:52:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751228AbdCMGhI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 02:37:08 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35035 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750882AbdCMGhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 02:37:06 -0400
-Received: by mail-pg0-f65.google.com with SMTP id g2so12655911pge.2
-        for <git@vger.kernel.org>; Sun, 12 Mar 2017 23:37:05 -0700 (PDT)
+        id S1751036AbdCMGwN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 02:52:13 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36593 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750839AbdCMGwL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 02:52:11 -0400
+Received: by mail-pg0-f66.google.com with SMTP id 25so17175010pgy.3
+        for <git@vger.kernel.org>; Sun, 12 Mar 2017 23:52:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:to:cc:subject:date:in-reply-to:references;
-        bh=sQjCm/MYpoCWBfdddwusfUG9rFhdhkV1ncBTIyw73Ek=;
-        b=Eu6WcrLGRSJms4Oa+IZw6CHX93Zrqux/c0g1EMMshQaHXXVdmBStLtykqUNqSABM0i
-         l0Xrb3lKeuN5a8IU9p6BihKhs9wtrEXQIiCkHA8Z8XPXHomd8vMz5obt68Vr+GW2jwhC
-         TpBfQiccdfy9DmajxhWXxEPnMVHbZxWE3ABUsDFqgXN42cuZEGTS7rF24VavE6mnuZrp
-         r8uAOMb+7RtJA8SmurOxQUFMuqHqntl+OvqRVkUNJMplqGWriNLa9EfIvJelqthCnmYi
-         YJhV/xkYs5cPGCNqBgYsWhhPNW3sxzWmD6xcHEqRGwktLxfGc44HGyqN0dqCdD3/l50k
-         SXPQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=kfuHMLV2ulDQyyDlv5UNAGwH4/zhT8upp1Cc3jRbA/Y=;
+        b=lJhzoFZU/YQqqf6VbdXecR7ZQx4FSEYccQCV5s8dDJsvpzvzH2Zq9ad1CmM2LQ7x53
+         LiWdUqLDWqiee/3PtGXS9WSq9kzHfrBWxZ1aQO6ajE1rNOc6OTiEoQ4vE/uy0EKpgYdT
+         tEarVo7aXwi79UdUSuECjALq0lokc3rBWS0U9A1VmVk+LuSseKV6UMQIMIpRgmqf9SxI
+         p+pw+5nnXOMSLcNCWWXOt0qwzyddoJJOP96bhYEl68oBt3YaFa/ZK7ZvBc7tFf7btKLX
+         vsVWut7uWYCiFIi7x9wGZQ31CA3G1PEayYdubyHBi9UkeUVwr0QKxDbBxYXm1ehlV+v5
+         Cchg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:to:cc:subject:date:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sQjCm/MYpoCWBfdddwusfUG9rFhdhkV1ncBTIyw73Ek=;
-        b=ewKJsXzLc+C4a1LUdK9N6KdDsqsTAkTVaq4yT+iqmSkt+q/2fOdK3TIzn4Cm5dpkYc
-         NEkfe3H1zZl8jHHeoL4wxBpYUZ5R4ofsV8AoijrGPvF4OALt5TffuUqKunKgnxqsPcmW
-         KRIMIRAk2BLmfW+zoARy51YRvsNSDYciPX0HHPp9lCnovKLHLaq+y1buGtBAAtdNorGe
-         EyEDsdRX14yBVABg0z6lX4Mgn/XHcGaaOI2OQrJZGYqSGKsQpmYpaJ81o5saMpHIIjAM
-         0bxIDmaeGzHIbb/iMP/qw3HOH17SN+bdrZknAO6jfpt03pWik7rguoDnRvwpwlENEBiy
-         Bqyw==
-X-Gm-Message-State: AMke39kMfk2ZUVxo6aKN1gAkIicISZ+/4g7eQCIdn6as2c3dnSO6trFJwkjQxF1LbIv2ig==
-X-Received: by 10.84.150.129 with SMTP id h1mr44871324plh.86.1489387025396;
-        Sun, 12 Mar 2017 23:37:05 -0700 (PDT)
+        bh=kfuHMLV2ulDQyyDlv5UNAGwH4/zhT8upp1Cc3jRbA/Y=;
+        b=q/rFoD1bf0mRB4BesRxCzSAF1jjoxpFxjl4D3+CDyPSPrlUtfA1MCYMysHn7TQ0dtU
+         EUAMd0blVRG3MHdqBOKpilU5/n02Sfek62Fh2xLFVcNBlxZEhAZtMQH8qnU1I+dJrDPz
+         F/2k2+3JFS5FzvjECfNFy2Oz+xT0Ky8BGiFJpl9aj7rhcAb7UQqNtBodabIIaP8iMG86
+         asjTRic8s6o89gFtttD8zyx9khXep/RQQTVPkalIC4aR0mFplTW0aydWQzBXUnBMgHt/
+         z0ElRvV62HR/8igNMOvEEPtwoKEtonVUMHt7JXCKi30yAUOZOtGL05EhOu/8BIGTuXqQ
+         KkdA==
+X-Gm-Message-State: AMke39k21pVFAXBORLnfD1DSCsrWVxrmrDniGyquLniDxww51a0m9BfeOkwiLUe7+1vvdg==
+X-Received: by 10.84.232.131 with SMTP id i3mr46207792plk.172.1489387930229;
+        Sun, 12 Mar 2017 23:52:10 -0700 (PDT)
 Received: from localhost.localdomain ([47.11.2.204])
-        by smtp.gmail.com with ESMTPSA id u82sm31250551pfd.7.2017.03.12.23.37.01
+        by smtp.gmail.com with ESMTPSA id x63sm31400402pgb.30.2017.03.12.23.52.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 12 Mar 2017 23:37:04 -0700 (PDT)
-Message-ID: <58c63e10.5585620a.a224d.11cd@mx.google.com>
-X-Google-Original-Message-ID: <20170313063648.9026-1-Prathamesh>
-From:   pc44800@gmail.com
-X-Google-Original-From: Prathamesh
+        Sun, 12 Mar 2017 23:52:09 -0700 (PDT)
+From:   Prathamesh <pc44800@gmail.com>
 To:     gitster@pobox.com
 Cc:     christian.couder@gmail.com, git@vger.kernel.org, jdl@jdl.com,
         Prathamesh <pc44800@gmail.com>
 Subject: [PATCH v3] t2027: avoid using pipes
-Date:   Mon, 13 Mar 2017 12:06:48 +0530
+Date:   Mon, 13 Mar 2017 12:21:48 +0530
+Message-Id: <20170313065148.10707-1-pc44800@gmail.com>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <xmqqk27tub1g.fsf@gitster.mtv.corp.google.com>
-References: <xmqqk27tub1g.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <58c63e10.5585620a.a224d.11cd@mx.google.com>
+References: <58c63e10.5585620a.a224d.11cd@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-
-From: Prathamesh <pc44800@gmail.com>
 
 Whenever a git command is present in the upstream of a pipe, its failure
 gets masked by piping and hence it should be avoided for testing the
