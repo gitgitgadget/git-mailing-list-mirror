@@ -2,107 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1787920373
-	for <e@80x24.org>; Mon, 13 Mar 2017 20:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53F0B20373
+	for <e@80x24.org>; Mon, 13 Mar 2017 20:12:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753987AbdCMULv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 16:11:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60165 "EHLO mout.gmx.net"
+        id S1754185AbdCMUMf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 16:12:35 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50428 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752234AbdCMULt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 16:11:49 -0400
-Received: from virtualbox ([95.208.58.29]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M4jbN-1c2GJN3Eqb-00z0OG; Mon, 13
- Mar 2017 21:11:40 +0100
-Date:   Mon, 13 Mar 2017 21:11:26 +0100 (CET)
+        id S1754148AbdCMUM2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 16:12:28 -0400
+Received: from virtualbox ([95.208.58.29]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQRWm-1cfhm43GgO-00TmlW; Mon, 13
+ Mar 2017 21:12:20 +0100
+Date:   Mon, 13 Mar 2017 21:12:18 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v6 11/12] t1309: document cases where we would want early
- config not to die()
+Subject: [PATCH v6 12/12] setup.c: mention unresolved problems
 In-Reply-To: <cover.1489435755.git.johannes.schindelin@gmx.de>
-Message-ID: <6ee7c8c03f0f537a8ad9da733be1494fbf2e498d.1489435755.git.johannes.schindelin@gmx.de>
+Message-ID: <bdfa3845b81531863941e6a97c28eb1afa62dd2c.1489435755.git.johannes.schindelin@gmx.de>
 References: <cover.1489098170.git.johannes.schindelin@gmx.de> <cover.1489435755.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lK1RJkHGqW3dGxPCudpxoiKmKHZV/YegQ5RBCe3XXXCadbllGrz
- C57ui7Bu50TmOn6Ila13MlM3H2Qar5/1lJl1F4A6X5PMNnBfWyNLtidKGFWCIINUuux60Yu
- upoEMU/azcs7bR45H9M9Ap3vDUvKqcWCrvEeRTbxEa4PAIPYDgOEJKah0QFSc7btrIriGnA
- uYL297OjfQgRY5xHwRn9w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NUT2PUJm59M=:a8i97wkJp0PSTU3C7P26Kj
- x3dGrWFdQTpEbHW6rh47NE/vpEqhUl/CX+HCvub27cHAOjfQfU8IFsnc5V8PN4BThvf0BDVgK
- erJEPSPmxOHxmWDD/5AYdugnIVlYkpFjpbuPFP/LcYGLzC/SRblkyAPQQVb94Va+QcRr39jSx
- qi9INRVQClBwmVpznaM9yk4Vw9I07f6QA1nitCHPX/U/7lFK/J3c/dqDZyEjbaS6aH3cBH9vE
- nxUBV/bMhR/GdNd1Qd0cFZkBGu0iIHU0WefPzX+PDSiGW+nukhZjhks+H5I62RFB4zJdn00gC
- qiApf4cx7Q/hKVukkOqp1s44Zcg0rqd6nbEARJFLPEupylOcUYEJti6my7wDyFg6GMIeZ1HQv
- EZfh52cdDp8SqZoNrBRVVsVyqF0TMVs/345KWAdMXhdEQBSkHo0cCiPU3g9ITu2gR6BGQFrpt
- 80pF/g4kPH7NhDGgZcSTN7kHDiuhjSalzM1o/BqKgDVtwwl4h1f5bLVaz7uJeAfsba+eP7ync
- PPTZQ2ZPQ+3C3izmCoZ9gb65XCijkrUfeuWhKmVlNCfZtAn4Tcf+pnuzuAItQw1EjiKqmJ/tL
- OGDIebLawlSe4vqkToZxOr3ea011OKuD4a9MmhaVsFhGPTeiMVztCgylZbaqG/yevN7d4u9+d
- MU8WCHcccXUCzLYOlnUXQamBQvedP4LWUboVY392LdlDPw1Z48NuytO1mpucFoGHOVqyh+U8y
- UBwEUaMnE1+jkwVVVbWbtQC7FZCOvTSNBV3Du0MjinifqqDydfrbSdwntJQjlSTtpW6JGSEk3
- C7HnX7o
+X-Provags-ID: V03:K0:XNl+8pZjJFa+M9C37ps4khjD+TeHzYibx09kLkb9fMIK1heI+PU
+ QSKmVXZGpBI2aw4+0UTwlN6f8vv/mDeW6bSJ/EZuht/jr0MlIUWpS1Tf6kgqj4iGv30jO4D
+ 1bIkZ39Vd0YwKWzXeZ33rxt+Omh1JIFhx4zqNN/+3+B1Wq96nOGq8U9z3CjhU1je/63viLM
+ VPOqPc+UIRdgj0DSo0XPg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g7HL0QaHHp0=:MSL0ObppO+7vxkO4wUJp9X
+ umkqsLvJTQai7vSKuPVXO4Q+2lVL66toLAd/o3URTJu8aJWTN8dAJPvGLY3OQq0Sl7orEOlVw
+ 9SMnXp45rLWYxH8+rmKf5mJUwze+Dj22P9CiCVthHAgPHxF2eNa5Hy2NE+BmrL9tNUHnydq3s
+ Bb7+aDuBtRbh/GlTB+uC8cQXZroTLGgQAX+QSjaEM2BYvcN0q7krTwY3h9tUoK2RqLCvpqCpD
+ ATVpbLwQf+LLTnRDJmOXw89JyTibqIuBFGqAuHmUvdZ7aGdWt6qCKdXL3xEZ7ZucAIPlWbGe1
+ 02INThPmP0luwryy1sfW0nnaiJqC1iaQpj04W46mLqmUTbM5Rf5W/ONqhCQKQSdp7kIY6fYB4
+ FXURep3ByX4PiMjWRLDllphewSiIBA+AcH5iwlNUUfaxnxiBwGuV6XEZ8C6ThW1IVTWyCWdP3
+ 3fckcs2/RlZfGuopgUFrqTYv7+IqYgpCkQR8UY9v4L1Ru22+nKacJ2TEy+BU2YJzb9fC8S8R2
+ sDJkeQTk46k1ultudTw5VndNM3HcnpnwGqKOykp3E7H99Ld51HrUTVbFRzmin4B/B8qoI7ADT
+ hlqY3KI4XOw3t23AeXOZ4potgPjabXD1l0hOl2U3k0FEY+t8a75hURNkFAXwTntwBZmk5nbpA
+ RnjiCw6sxqnw55yhr8TEFurCmt9stlT0BYIje/aD1QOOTuF689y/Wynd9P94rJUoh9v4ltmuu
+ vNwlZiR8peRzTOAwjQQNUpx85RvnVnuyh7f3qOQDeAlNUMQkGNdUTj7L0NAQa6wOm/zNstcfG
+ IsqZ7Za
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King came up with a couple examples that demonstrate how the new
-read_early_config() that looks harder for the current .git/ directory
-could die() in an undesirable way.
+During the review of the `early-config` patch series, two issues have
+been identified that have been with us forever.
 
-Let's add those cases to the test script, to document what we would like
-to happen when early config encounters problems.
+The idea of that patch series was to fix the hard-coded (and sometimes
+wrong) .git/config path when looking for the pager configurations. To
+that end, the patches refactor the helper functions behind the
+functionality of setup_git_directory(), to make it reusable without
+changing any global state. Not to change said functionality.
+
+So let's just mark the identified problems for later so that we do not
+forget them.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t1309-early-config.sh | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ setup.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
-index 0c55dee514c..027eca63a3c 100755
---- a/t/t1309-early-config.sh
-+++ b/t/t1309-early-config.sh
-@@ -47,4 +47,29 @@ test_expect_success 'ceiling #2' '
- 	test xdg = "$(cat output)"
- '
+diff --git a/setup.c b/setup.c
+index f31abf8a990..64f922a9378 100644
+--- a/setup.c
++++ b/setup.c
+@@ -531,6 +531,7 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
+ 	ssize_t len;
  
-+test_with_config ()
-+{
-+	rm -rf throwaway &&
-+	git init throwaway &&
-+	(
-+		cd throwaway &&
-+		echo "$*" >.git/config &&
-+		test-config read_early_config early.config
-+	)
-+}
-+
-+test_expect_success 'ignore .git/ with incompatible repository version' '
-+	test_with_config "[core]repositoryformatversion = 999999" 2>err &&
-+	grep "warning:.* Expected git repo version <= [1-9]" err
-+'
-+
-+test_expect_failure 'ignore .git/ with invalid repository version' '
-+	test_with_config "[core]repositoryformatversion = invalid"
-+'
-+
-+
-+test_expect_failure 'ignore .git/ with invalid config' '
-+	test_with_config "["
-+'
-+
- test_done
+ 	if (stat(path, &st)) {
++		/* NEEDSWORK: discern between ENOENT vs other errors */
+ 		error_code = READ_GITFILE_ERR_STAT_FAILED;
+ 		goto cleanup_return;
+ 	}
+@@ -902,6 +903,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 		if (!gitdirenv) {
+ 			if (die_on_error ||
+ 			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
++				/* NEEDSWORK: fail if .git is not file nor dir */
+ 				if (is_git_directory(dir->buf))
+ 					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
+ 			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED)
 -- 
 2.12.0.windows.1.7.g94dafc3b124
-
-
