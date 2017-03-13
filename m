@@ -2,110 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8676220375
-	for <e@80x24.org>; Mon, 13 Mar 2017 21:27:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9D6720373
+	for <e@80x24.org>; Mon, 13 Mar 2017 21:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753000AbdCMV1i (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 17:27:38 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53985 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751687AbdCMV1h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 17:27:37 -0400
-Received: from virtualbox ([95.208.58.29]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LZz01-1cO7qw1App-00liu6; Mon, 13
- Mar 2017 22:27:31 +0100
-Date:   Mon, 13 Mar 2017 22:27:30 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     David Aguilar <davvid@gmail.com>,
-        Christophe Macabiau <christophemacabiau@gmail.com>,
-        Git ML <git@vger.kernel.org>
-Subject: Re: [PATCH] difftool: handle changing symlinks in dir-diff mode
-In-Reply-To: <xmqqlgs9rprt.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703132204410.3767@virtualbox>
-References: <alpine.DEB.2.20.1703072332370.3767@virtualbox> <20170313175640.14106-1-davvid@gmail.com> <xmqqlgs9rprt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753540AbdCMV3x (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 17:29:53 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:33409 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751374AbdCMV3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 17:29:50 -0400
+Received: by mail-it0-f46.google.com with SMTP id w124so8513701itb.0
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 14:29:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=5UFyF2qCQwvh6sA5EtD6g67Fc9KuItVXWgWMAG9LS8c=;
+        b=b/+5ouGEhd854Td5U3TuDn5v7m5OwimdGmBgj9o2tSOZjJGzJXLkPX+CgYdrFu5pPs
+         FEFY3dgfZjhomQsCQHsaKP48PUPGjeKBQLmULYH1kRqHAY46M7oueJvcqTCZbH/JVFyh
+         g5XF6UFf8NDPFqCBGWKREtEj8U0fiPmG6h1ZI8Pg7+G49ew3qwzHJIJz+WKswrSzGWT4
+         jN7vN9haZgZiOD5UyNN3rtFmZjNdVy/GWvMuucfe8wxC3fJ3b/sff3sExiJ6W9bCQZhW
+         q53N/Cn9GAuWrjdvVqWON6uBYT/z65CmmVOvFXgqh0oRgtJoSlAyn65m/vSKDQn03bqN
+         6SAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=5UFyF2qCQwvh6sA5EtD6g67Fc9KuItVXWgWMAG9LS8c=;
+        b=llwYxnObLMPWlQehKHlgEq1adjZPYCrnPTWLHFX10FnhTh4mYkcxm/VY1WDPdCz4RY
+         BhW5yL81DcADbzndQMcldvVtGocuI6DVU2QVaHBvlFmwJRpzB/dF0hjXzdcakJLu3Uwq
+         nZdRTDSbd6T9woV0j6cb3Yr4WxE0ywZix+7AO7tCddKN/uMJAiiEqow9pdZvhI1u1iv3
+         8KsHrm9UrzwkvUY2WTMvW3YGASSzxf1lBf+zzPg8XvWR56DM7DbJSwhaVSvjOCwCQOUi
+         IOMrP+xCSNR29/DZeH0cdrV0ay2t1oc6ezmMEdwcKXJjgyBuy/OXspjuC7BwBrCfKVIb
+         cOsg==
+X-Gm-Message-State: AFeK/H2k4MJ3cLUdBN8nBimtDPpUHWzELKX+JFu1OXTynlKkYy+Kpdlhkzjgayor6oY81Wuuz8xMxWOvRrijVQ==
+X-Received: by 10.36.169.69 with SMTP id x5mr11942415iti.37.1489440588788;
+ Mon, 13 Mar 2017 14:29:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:tKacijiS7902Nol203Jn5HikXYyVQklZxvFLUptOJWdK74Et44R
- m9t7/tr4oDFV5t5ktH1yhiFgIUnAACHz/HDPDtOvVbsaC/a9W/1r4cnx8Tv8WnNTwR9kQs2
- /ixsOWP+NK7M0oV2zkbwAYvacTfvjn3M8a29oMLyb0s5g2D9Evnsuwo1jcnHVWy9/5phRs2
- hDsbz83errqUjFqbVry4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3KcGv4iAMyo=:NGsM27lbRqPXkkhxwv290P
- VbAyCJ0kOPrt+xa9b8fjkfFUvThCcqWeUhTRUlWMcmRII28k2cFcxEBcFCfOjmLsoKZiQnSEm
- I+4i95ougwHaQbdgFL5DUUip3A0pcuyUPiaSqSqD2pjzbFdj9c5pC2CJagCqc/e+KLDBWwsUl
- EwX7APkVCjdJoYCSHkV81axPijYpsapMu2taV2wSgAYZNfv79y/EA/pyjadbKHPB1Pcoq1nVA
- E44skDL60oV/9HiboAA/YIL6Cs4W/B1glMMcne0/jtYT9FqWcVStuEOv2L9Z54qCwBewPm5s/
- J5fT+hsfDsfmpc36CD3Omxu23sO+6HIfKoc5I1UHDO2DO5T+1eG9m51xqmZUkpNo8BpOvPqgJ
- xwHwG9gYHHyp5K99vew8geoGG3rqFdvuUI2qAg8pj4v6xLeaAhD0MxUz7/IvrFNUv70Fo+cRK
- oC93JFcUfFcwsFvhHy4s7ebqCB0jqpCdFOZfYSm8qxvd3Qq2gZu7vatAtUi5/dRaOpHG14k7i
- NsFJi+V+T2xgUcLR+S2+Dv9RaRtTfL/taOQMZHt5mbblqT4ZmVY5wwhf34ZLdsOnNRdufuHjB
- 4Q8ofbdcsGgCcQoWG9c+9NbhxhyiN5EM24USPEiAgEEPpWly/WcJcS6/iMCLUEPNO4tvreIzD
- oDHk4dWP0mqxs2Upyrl+1wVF72N6ykSCTxzS8bODHGQE7zO1yzFZk+OqG8b9XjOzLpbaoOAfM
- 3uA58hohIUIDW6vP7KxtmMmj8139mbQ7Gkw+FtDBgJIL+Po1LnXByO4RsfMfTCD1WdEpix0Fp
- 1igSJ8Y
+Received: by 10.107.19.75 with HTTP; Mon, 13 Mar 2017 14:29:28 -0700 (PDT)
+In-Reply-To: <xmqqmvcorjyo.fsf@gitster.mtv.corp.google.com>
+References: <20170313201104.GA32821@workstation> <xmqqmvcorjyo.fsf@gitster.mtv.corp.google.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Mon, 13 Mar 2017 14:29:28 -0700
+X-Google-Sender-Auth: R0s4rnnESuktj3Uw_rp-ZfNJ4Ts
+Message-ID: <CAPc5daVRX_-bJ_2reDLKJin9PNfy6EjbD14T=Mpx=9P8xzdmuw@mail.gmail.com>
+Subject: Re: Possible git blame bug?
+To:     Domagoj Stolfa <domagoj.stolfa@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Mon, Mar 13, 2017 at 1:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Domagoj Stolfa <domagoj.stolfa@gmail.com> writes:
+>
+>> The question is whether this is a bug or not, as --since=<year> might not be a
+>> valid filter.
+>
+> I do not think blame ever was designed to work with --since, so that
+> is indeed the case.
 
-On Mon, 13 Mar 2017, Junio C Hamano wrote:
+Actually, I do see that we had a cut-off based on rev->max_age since we
+introduced it at cee7f245 ("git-pickaxe: blame rewritten.", 2006-10-19).
 
-> David Aguilar <davvid@gmail.com> writes:
-> 
-> > +static int create_symlink_file(struct cache_entry* ce, struct checkout* state)
-> 
-> Asterisk sticks to variable, not type.
-
-If only we had tools to format the code so that authors as well as
-reviewers could concentrate on essential parts of the patches :-)
-
-> > +	 * into the checkout state's path.
-> > +	 */
-> > +	struct strbuf path = STRBUF_INIT;
-> > +	struct strbuf link = STRBUF_INIT;
-> > +
-> > +	int ok = 0;
-> > +
-> > +	if (strbuf_readlink(&link, ce->name, ce_namelen(ce)) == 0) {
-> > +		strbuf_add(&path, state->base_dir, state->base_dir_len);
-> > +		strbuf_add(&path, ce->name, ce_namelen(ce));
-> > +
-> > +		write_file_buf(path.buf, link.buf, link.len);
-> 
-> This does "write content into symlink stand-in file", but why?
-
-From the commit message:
-
-	> Detect the null object ID for symlinks in dir-diff so that
-	> difftool can prepare temporary files that matches how git
-	> handles symlinks.
-
-The obvious connection: when core.symlinks = false, Git already falls back
-to writing plain files with the link target as contents. This function
-does the same, for the same motivation: it is the best we can do in this
-case.
-
-> Also, I am not sure if strbuf_readlink() can unconditionally used
-> here.  On a filesystem without symbolic link, the working tree
-> entity that corresponds to the ce that represents a symlink is a
-> stand-in regular file, so shouldn't we be opening it as a regular
-> file and reading its contents in that case?
-
-I think you are right, we cannot simply call strbuf_readlink(), we would
-have to check the core_symlinks variable to maybe read the file contents
-instead.
-
-But then, it may not be appropriate to read the worktree to begin with...
-see my reply to the patch that I will send out in a couple of minutes.
-
-Ciao,
-Johannes
+I do not know offhand if --since=2000 _means_ --since=2000-01-01 or something
+completely different, though.
