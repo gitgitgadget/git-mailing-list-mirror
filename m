@@ -2,118 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9224B1FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 18:48:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BF4C1FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 18:51:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751740AbdCMSsn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 14:48:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43332 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750961AbdCMSsm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 14:48:42 -0400
-Received: (qmail 28458 invoked by uid 109); 13 Mar 2017 18:48:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 18:48:40 +0000
-Received: (qmail 20530 invoked by uid 111); 13 Mar 2017 18:48:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 14:48:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Mar 2017 14:48:37 -0400
-Date:   Mon, 13 Mar 2017 14:48:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Devin Lehmacher <lehmacdj@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH 1/3] path.c: Add xdg_cache_home to get paths under
- XDG_CACHE_HOME
-Message-ID: <20170313184837.wnluuyflbx63cwlm@sigill.intra.peff.net>
-References: <20170313172232.96678-1-lehmacdj@gmail.com>
- <20170313172232.96678-2-lehmacdj@gmail.com>
-MIME-Version: 1.0
+        id S1753587AbdCMSv6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 14:51:58 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:34939 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753401AbdCMSv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 14:51:56 -0400
+Received: by mail-it0-f42.google.com with SMTP id m27so34393697iti.0
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 11:51:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=auvik.com; s=google;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=QoSBlJljpI8DFLnEQCAEUBQo9NDyqi3MoMPCkPckjWk=;
+        b=amF/oZFkbzYWntJNizpDF1+wUNlfX1UaT0eqIxYfEhYP6ePOk0UXAy9iy6Iy2cs1ce
+         nyw0f9VQ51+yPtqocNo/uIyDM1rq0h/KL/qEZFTlB93aSVqM7x2F+wbxBjYqKc/v1NCP
+         st7Qn+ulDJrDGWv6/mUvIb1pqhbk8EHJ0YQJY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=QoSBlJljpI8DFLnEQCAEUBQo9NDyqi3MoMPCkPckjWk=;
+        b=PdvVaMryyOIXHgEgsZ7o+MAa6RjNJQrKQ1TIRU9OxJ3TW5KzxEUaC1Dnq+EoxE8Xbi
+         OxfTUun484tbTQYrI6zKcGS2bP0M//DOS3XpzDJCXn0NUbPZkm2NX6TwpZGDTmXbNofr
+         pbpgy/vLzoKtFwIh8lOKXPx+vcWvJysFak6TcvG+SKmb7ZpFe3PQA+WcolKERO3aAk+U
+         6DO7ndOFsYUchqpY0o4VsXQnrYt2EkIVyLxU/oQ4tEUlQO+bLSUKkR4uIUBRWNmVu32R
+         VmiaAEuzC4gg9KXE6xT7XIzbl7lNr0rGG2Q71qkOvhAaRQH8keWoftrDatA9p6KUoSo+
+         2VTA==
+X-Gm-Message-State: AFeK/H07/Rd7uVJfvAdCmlg570Xe+5GtgiZ47K36Wm30/AbLIBBCTAoKQcsmVZMZtHQggWJI
+X-Received: by 10.36.204.136 with SMTP id x130mr12456432itf.93.1489431115083;
+        Mon, 13 Mar 2017 11:51:55 -0700 (PDT)
+Received: from [10.0.40.22] ([206.174.182.138])
+        by smtp.gmail.com with ESMTPSA id h15sm4001611ita.20.2017.03.13.11.51.53
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Mar 2017 11:51:53 -0700 (PDT)
+From:   Anthony Scian <ascian@auvik.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170313172232.96678-2-lehmacdj@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: 'git add --patch' no longer allows you to select files before
+ selecting patches 
+Message-Id: <DF55CDE6-E556-4C07-B661-0F5AA00D306E@auvik.com>
+Date:   Mon, 13 Mar 2017 14:51:52 -0400
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3259)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 13, 2017 at 01:22:30PM -0400, Devin Lehmacher wrote:
+Similarly the patch sub-command in =E2=80=98git add =E2=80=94interactive=E2=
+=80=99 goes immediately to selecting patches starting with the first =
+file.
+Is there a git configuration that would being back the old behaviour? =
+Why was this changed?
 
-> Subject: Re: [GSoC][PATCH 1/3] path.c: Add xdg_cache_home to get paths under XDG_CACHE_HOME
+here is a sample interaction that shows the =E2=80=98r=E2=80=99 =
+sub-command still retains the desired behaviour of asking what files to =
+involve but the =E2=80=98p=E2=80=99
+sub-command immediately assumes all files are important and starts =
+stepping through all the patches=E2=80=A6
 
-It's nice to keep subject lines succinct, as people will skim through
-them in "shortlog" or "log --oneline" output for years to come. Of
-course, you should not make them _too_ succinct, but I think there is a
-lot of extra detail here.
+:~$ brew list
+... git ...
+:~$ which git
+/usr/local/bin/git
+:~$ git version
+git version 2.12.0
+:~$=20
+:~$  git add --interactive
+           staged     unstaged path
+  1:    unchanged       +43/-2 =
+core/src/main/scala/com/company/npl/planner/TrAc.scala
+  2:    unchanged        +4/-4 =
+core/src/main/scala/com/company/npl/tools/AnFu.scala
+  3:    unchanged      +59/-12 =
+core/src/main/scala/com/company/npl/tools/CoFu.scala
+  4:    unchanged        +7/-1 =
+module/reports/src/main/scala/com/company/npl/reports/ReStCo.scala
+  5:    unchanged      +10/-23 =
+runtime/src/main/npl/migrationSchemas/schema_for_migration_to_W4.npl
+  6:    unchanged        +5/-3 =
+runtime/src/main/scala/com/company/npl/table/adapter/InPe.scala
+  7:    unchanged      +39/-82 =
+runtime/src/main/scala/com/company/npl/table/migrations/schema_for_W4.scal=
+a
+  8:    unchanged       +14/-1 =
+ui/modules/admin/app/assets/javascripts/defs/de_sub.js
 
-Probably:
+*** Commands ***
+  1: status	  2: update	  3: revert	  4: add untracked
+  5: patch	  6: diff	  7: quit	  8: help
+What now> r
+           staged     unstaged path
+  1:    unchanged       +43/-2 =
+core/src/main/scala/com/company/npl/planner/TrAc.scala
+  2:    unchanged        +4/-4 =
+core/src/main/scala/com/company/npl/tools/AnFu.scala
+  3:    unchanged      +59/-12 =
+core/src/main/scala/com/company/npl/tools/CoFu.scala
+  4:    unchanged        +7/-1 =
+module/reports/src/main/scala/com/company/npl/reports/ReStCo.scala
+  5:    unchanged      +10/-23 =
+runtime/src/main/npl/migrationSchemas/schema_for_migration_to_W4.npl
+  6:    unchanged        +5/-3 =
+runtime/src/main/scala/com/company/npl/table/adapter/InPe.scala
+  7:    unchanged      +39/-82 =
+runtime/src/main/scala/com/company/npl/table/migrations/schema_for_W4.scal=
+a
+  8:    unchanged       +14/-1 =
+ui/modules/admin/app/assets/javascripts/defs/de_sub.js
+Revert>> 5
+           staged     unstaged path
+  1:    unchanged       +43/-2 =
+core/src/main/scala/com/company/npl/planner/TrAc.scala
+  2:    unchanged        +4/-4 =
+core/src/main/scala/com/company/npl/tools/AnFu.scala
+  3:    unchanged      +59/-12 =
+core/src/main/scala/com/company/npl/tools/CoFu.scala
+  4:    unchanged        +7/-1 =
+module/reports/src/main/scala/com/company/npl/reports/ReStCo.scala
+* 5:    unchanged      +10/-23 =
+runtime/src/main/npl/migrationSchemas/schema_for_migration_to_W4.npl
+  6:    unchanged        +5/-3 =
+runtime/src/main/scala/com/company/npl/table/adapter/InPe.scala
+  7:    unchanged      +39/-82 =
+runtime/src/main/scala/com/company/npl/table/migrations/schema_for_W4.scal=
+a
+  8:    unchanged       +14/-1 =
+ui/modules/admin/app/assets/javascripts/defs/de_sub.js
+Revert>> 7
+           staged     unstaged path
+  1:    unchanged       +43/-2 =
+core/src/main/scala/com/company/npl/planner/TrAc.scala
+  2:    unchanged        +4/-4 =
+core/src/main/scala/com/company/npl/tools/AnFu.scala
+  3:    unchanged      +59/-12 =
+core/src/main/scala/com/company/npl/tools/CoFu.scala
+  4:    unchanged        +7/-1 =
+module/reports/src/main/scala/com/company/npl/reports/ReStCo.scala
+* 5:    unchanged      +10/-23 =
+runtime/src/main/npl/migrationSchemas/schema_for_migration_to_W4.npl
+  6:    unchanged        +5/-3 =
+runtime/src/main/scala/com/company/npl/table/adapter/InPe.scala
+* 7:    unchanged      +39/-82 =
+runtime/src/main/scala/com/company/npl/table/migrations/schema_for_W4.scal=
+a
+  8:    unchanged       +14/-1 =
+ui/modules/admin/app/assets/javascripts/defs/de_sub.js
+Revert>>=20
+reverted 2 paths
 
-  path.c: add xdg_cache_home
+*** Commands ***
+  1: status	  2: update	  3: revert	  4: add untracked
+  5: patch	  6: diff	  7: quit	  8: help
+What now> p
+diff --git a/core/src/main/scala/com/company/npl/planner/TrAc.scala =
+b/core/src/main/scala/com/company/npl/planner/TrAc.scala
+index 938cdc2a1b..669dc5f95b 100644
+--- a/core/src/main/scala/com/company/npl/planner/TrAc.scala
++++ b/core/src/main/scala/com/company/npl/planner/TrAc.scala
+@@ -24,8 +24,7 @@ import com.company.npl.tools.CoFu
+  */
+ case class TrAc(action: View with Generator, when: View, exceptWhen: =
+Option[View], required: Boolean) {
+   private def mergeAction(rhs: TrAc): View with Generator =3D action =
+match {
+-    case Always | Never =3D>
+-      rhs.action
++    case Always | Never =3D> rhs.action
+     case _ =3D>
+       require(rhs.action =3D=3D Always || rhs.action =3D=3D Never)
+       action
+Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]? q
 
-would suffice in this case (not also that we usually do not start
-with a capital letter).
+*** Commands ***
+  1: status	  2: update	  3: revert	  4: add untracked
+  5: patch	  6: diff	  7: quit	  8: help
+What now> q
+Bye.
+:~$
 
-> This is necessary to make it posible to use XDG_CACHE_HOME for caches in
-> the XDG standard. I modeled this after the very similar xdg_config_home
-> function for obtaining paths to functions under XDG_CONFIG_HOME
 
-I think this covers what it needs to, which is good. I'd usually try to
-avoid starting the message with "this", as it it can be a bit vague (and
-assumes that the body is shown next to the subject, which is not always
-the case).
 
-I'd have probably written it like:
-
-  We already have xdg_config_home() to help us format paths in
-  XDG_CONFIG_HOME. Let's provide a similar xdg_cache_home() to do the
-  same thing for XDG_CACHE_HOME.
-
-or something. I admit this is bikeshedding, but since you're new I feel
-like I get to spout off about commit message style. :)
-
-> +char *xdg_cache_home(const char *filename)
-> +{
-> +	const char *home, *cache_home;
-> +
-> +	assert(filename);
-> +	cache_home = getenv("XDG_CACHE_HOME");
-> +	if (cache_home && *cache_home)
-> +		return mkpathdup("%s/git/%s", cache_home, filename);
-> +
-> +	home = getenv("HOME");
-> +	if (home)
-> +		return mkpathdup("%s/.cache/git/%s", home, filename);
-> +	return NULL;
-> +}
-
-This looks fine, as it comes from xdg_config_home(). It does make me
-wonder if the two should be sharing a common implementation, with a
-signature like:
-
-  char *xdg_generic_home(const char *env,
-			 const char *fallback,
-			 const char *filename);
-
-and then the two functions do:
-
-  return xdg_generic_home("XDG_CACHE_HOME", ".cache", filename);
-
-For two the duplication is not so bad, but I wonder if there are other
-xdg paths we'd care about.
-
-And one final note. I notice that we return NULL if the user has no
-HOME. But I'm not sure most callers are prepared to handle this. E.g.,
-if you have no ident set and no HOME, then we will pass NULL to lstat().
-On Linux at least that just gets you EFAULT, but I wouldn't be surprised
-if it's a segfault on other systems (probably at least Windows, where we
-have an lstat wrapper that calls strlen on the filename).
-
-This is not at all a new thing with your patch, but it might be worth
-considering while we are thinking about expanding this interface. I'm
-not sure if the callers should be more careful, of it the function
-should promise to either die() or return a non-NULL value.
-
--Peff
