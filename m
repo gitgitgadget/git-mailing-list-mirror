@@ -2,74 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BDCF1FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 17:20:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CCD31FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 17:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753668AbdCMRU0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 13:20:26 -0400
-Received: from mout.gmx.net ([212.227.17.22]:60990 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753501AbdCMRUZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 13:20:25 -0400
-Received: from virtualbox ([95.208.58.29]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MW9TR-1clVhO1T4L-00XNtY; Mon, 13
- Mar 2017 18:19:59 +0100
-Date:   Mon, 13 Mar 2017 18:19:57 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v5 09/11] Test read_early_config()
-In-Reply-To: <xmqqa88tymys.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703131819160.3767@virtualbox>
-References: <cover.1488897111.git.johannes.schindelin@gmx.de>        <cover.1489098170.git.johannes.schindelin@gmx.de>        <72b36d27cefc0060f170b33f19cf504bb0338c1c.1489098170.git.johannes.schindelin@gmx.de>
- <xmqqa88tymys.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:px739x0db+Db5+5NS98uRQ4XhGa4TSekD0QeL+TqZaMDpNMEP05
- /Tdl57l10O9N4labps60WyLTU1ztV4KHBpvCDGD6qMMkOhe944V0poPL/abQ3bSKjrArP+C
- jF+SPswGwQmMozdmIFplTNREScpqFkOUuIZkovqrZgTGctF9AvCMyZys0iGCRrQN/qGA+Xv
- ulWFKj6IXymKpB+hFZ4yA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:odwdXRx3lZ8=:CEsd55WBd4PTZfIJY15z4y
- o8Sz21VtgaPOZQmuZ+BFJrQqtiCBFJayLlO4NQOLnmndTnR1/ykVh1Ec0GasHpt6rai3uEFiZ
- ec7GJnEI//g4A3UMW453XgPTex7O17076xOZHxnDndxJd+6hVJ/CCMn09yehzODu5NXLxoqvL
- cBIA0u/kUI9+xNuN5RjSLw90ewoNyh78dkXG4DQNUoAWk3GBYOe7fwaL5u2zdBLerUsPDaAu5
- 75odL7ODDmwkDoFJRT4wHfJABH2EoMmGW7rhpvHR1EDneaG7ZSboIMsy4B9h8rYnyZx4BTqgQ
- VPEB2DQeZVeJynPQruyI9Bq9eZbvM0lufux1tOPspc+Y1T2uuJ6z/tr2MtoqpA69H5kxhCT23
- OavsIkRgeEeK7uOgz+7cQRd1FczFvugDHzDpSkTdLUFZK/Q07pSvEGFn91i0maLBo68JzgkdV
- aQlkfg7uc1KcJq5G7s9R2/7fkYQltjG9uGWRC/Xd2fYgCqgcQ1irqq2QKqJLnEs6Di7u9cE4s
- Xb+CP5XOHV7pKA5e3ZvZDuU5BrkA3+VJ6rJMdSunVtk/kFAIDjHI0+w7/QTfOJu3jbo8U3giw
- VGLyaAydFJPlUsdNYW5Gt5SLyXdvidA/nZzbe/tUILsaRILbgpWa1Idm8D/mJ6ElFVpSB5Wbh
- /RrRFY9PbNgSyjUXQUSaxSvVIrYNmN4mub32NH/pRbXH/cH2RVNxzGMcXpArCBOB3HXTfPE6s
- maeOgHT4MLEjkMScJba9OYvqPAZttZCWEPxoE4w5AEg56VebEvLGo8dSGyzGd/3nJzoT2By0O
- qU70Wvk
+        id S1754432AbdCMRWx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 13:22:53 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:36200 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752966AbdCMRWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 13:22:52 -0400
+Received: by mail-qt0-f195.google.com with SMTP id n37so7043634qtb.3
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 10:22:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id;
+        bh=XH1y4plGRqpASqmXDGz7BgT9raERZiRi0ajOFyXSJxQ=;
+        b=n965XAgRT71YpKBbZ8wMcjXJ0R0SKiyKeyUO9KN5hpBtRxFKs0AATFH094K3S98qjW
+         9EkAfxkZWQohoL78JGWTFWTUokNX2PxM2q7evEt7gWahVQzmmgX9sIdCY1/k+Qz95Q2S
+         IioXxdlBfM2JYIUR1eZmQw9B1apBzRGmaFDe//8Dndlfr/SPsJGQvEBwtytMYc8//JOR
+         ObYTF2Gm6IbL154tazZjM3Y0lih0HmOLVuvhRwhe3GrCRCmn7m9zzKMt22ze3wmKHK+L
+         pIMDLZ15KYV64EljsL6jFL1BZeSXf4CJVbYbvHR13BHDKTMa7XDbAZC1GaDWfVilX88D
+         A2Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id;
+        bh=XH1y4plGRqpASqmXDGz7BgT9raERZiRi0ajOFyXSJxQ=;
+        b=TJO9z45PK91nVJ3udFPBmdQSCHsRparLkMg8beLjSHn4lNM/Rp7r11J99I94wmUzL6
+         2/GYxv2aduKnKsaMfLwuDYU2klMAGeEmXKFqfzRVDsMSZjycJbHJfjL5c/fJOtqkYVYY
+         J5+N1UQWh17cq2ezCO810Hi/B+4YH3oP1X6XqF2OnNS87F95h+A5kpsULPerN6TZxPDm
+         7xRNVyiIkZqmBbiFUfUOCQfVyDwT04rKenSDjPwcbLpuQP+5nhTwcAJBszgHqTNTbg/j
+         mLRJcRhE41AMD5vjW3WuYrd8lgSGuXah1Ij9x7hD1EYEUXErfEFPhpKtwGKDLnlsbogT
+         6lkA==
+X-Gm-Message-State: AMke39kTVDXNyu0fQIKnY3gNnphdVpHQmBXICmW+tjNcPx7VbE5/GjhTR0nWSXIqweOd6w==
+X-Received: by 10.237.37.229 with SMTP id y34mr34381112qtc.30.1489425770844;
+        Mon, 13 Mar 2017 10:22:50 -0700 (PDT)
+Received: from mango1.eduroam.cornell.edu (nat-128-84-124-0-821.cit.cornell.edu. [128.84.127.53])
+        by smtp.googlemail.com with ESMTPSA id n19sm12579114qtn.35.2017.03.13.10.22.50
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Mar 2017 10:22:50 -0700 (PDT)
+From:   Devin Lehmacher <lehmacdj@gmail.com>
+To:     git@vger.kernel.org
+Subject: [GSoC][PATCH 0/3] Move ~/.git-credential-cache to ~/.cache/git
+Date:   Mon, 13 Mar 2017 13:22:29 -0400
+Message-Id: <20170313172232.96678-1-lehmacdj@gmail.com>
+X-Mailer: git-send-email 2.11.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Patches for my Microproject. I took into consideration the feedback I
+recieved on an earlier email thread and now look for a socket at the old
+default location before creating a new socket in $XDG_CACHE_HOME.
 
-On Fri, 10 Mar 2017, Junio C Hamano wrote:
+Documentation/git-credential-cache.txt |  3 ++-
+cache.h                                |  7 +++++++
+credential-cache.c                     | 15 ++++++++++++++-
+path.c                                 | 15 +++++++++++++++
+4 files changed, 38 insertions(+), 2 deletions(-)
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > Subject: Re: [PATCH v5 09/11] Test read_early_config()
-> 
-> Let's retitle it to
-> 
-> 	t1309: test read_early_config()
-
-I specifically avoided that, as it would sound as if I modified t1309. But
-I *added* that file.
-
-Ciao,
-Dscho
