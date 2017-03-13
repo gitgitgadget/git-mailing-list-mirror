@@ -2,68 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F84E20373
-	for <e@80x24.org>; Mon, 13 Mar 2017 21:31:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD69E20373
+	for <e@80x24.org>; Mon, 13 Mar 2017 21:33:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754149AbdCMVbv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 17:31:51 -0400
-Received: from mout.web.de ([212.227.15.3]:55214 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754110AbdCMVbp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 17:31:45 -0400
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M1Wxd-1byrgN31ej-00tPX5; Mon, 13
- Mar 2017 22:31:26 +0100
-Subject: Re: fatal: Could not get current working directory: Permission denied
- | affected 2.10,2.11,2.12, but not 1.9.5 |
-To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
-References: <elvahoiwfqayelbskykd@qjih>
- <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
- <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de>
-Date:   Mon, 13 Mar 2017 22:31:09 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1753046AbdCMVdO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 17:33:14 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52091 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752503AbdCMVdN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 17:33:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 60589857CC;
+        Mon, 13 Mar 2017 17:33:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=t7dqxGtkbjcJ2yurm7JSfFZqq+s=; b=NfbBUM
+        wO3mFmKm/mW0AtF5EWI82XC6Hk4LC7O7eFXtXvLTItnKeAV2lDOmaYJm/1VkOL0L
+        MEPRc47qlu9xqfbuEjFL5M8VU2Iq10JU+oHxNnUUmNxVNoKJI2gLrYz0UPL/Ste1
+        1o4VyGRZ0LligqP2j2V6neKdG/uIGGoxboMQs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=i9eWnwidWGAr6QbcqNTtkEgGmeFl3olW
+        Y0CCD6OdjSOLqDpenGilkR4oYn/czA1roxePWPwpnCnTh+9c42nYWWTgcPWyMgYY
+        o4fq5HKtE9MJV2TpBVw5N2paROEoods4P89voBFZcqxqpeJgldyQSR13aVxnyiO4
+        zQbyT3e1LGY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A0F4857CB;
+        Mon, 13 Mar 2017 17:33:11 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BD623857CA;
+        Mon, 13 Mar 2017 17:33:10 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     David Aguilar <davvid@gmail.com>,
+        Christophe Macabiau <christophemacabiau@gmail.com>,
+        Git ML <git@vger.kernel.org>
+Subject: Re: [PATCH] difftool: handle changing symlinks in dir-diff mode
+References: <alpine.DEB.2.20.1703072332370.3767@virtualbox>
+        <20170313175640.14106-1-davvid@gmail.com>
+        <xmqqlgs9rprt.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1703132204410.3767@virtualbox>
+Date:   Mon, 13 Mar 2017 14:33:09 -0700
+In-Reply-To: <alpine.DEB.2.20.1703132204410.3767@virtualbox> (Johannes
+        Schindelin's message of "Mon, 13 Mar 2017 22:27:30 +0100 (CET)")
+Message-ID: <xmqqinncrhey.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <ogwsaxvtiqlsiwojzxul@owpk>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:QaSOlIiunRS/RHqKTFdya08dXM6kZpPPDyShv5q3dTEcDCrXYJk
- TxJd2t5e4uAkJ/e+ddTTPmxWOZ5vZRpDbbIazISn3iZhZ+fncSP3zZw6/pvGtWy76m5v3hF
- yy3zNE80ABvx2G1HjrOTnGOHE2ckKvgaaXpT9DLsvao1hr5LsESBumbQ57HxBY99cUqbNTx
- cOtio/QjX54ZnnGnGkbIA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mpzHe+NHGTc=:Pj3a8eWNQ91t6rW88BIHjh
- nCiCXa2HdwgmrAy4oTIOZwznH7n6i9TD68KuEaxjMwCociqVU96/BxbcpWXTuyDQfSR9JKHZe
- YRPf8h4S2APN2LQsWQXZ3mwhRVGPYd9XJ7EnZJ92REPTSMoxj62VXDtB/hGhiOH7zMZPBvcO9
- R5u1hU4nza/kJWq/etl9ZckxOf+Th6olbos2F1waWJ+nwF1SajyKy0G4qbsB0c3IidbEZ5VDk
- O6Kf4PkrQrq3BoHTDkONC28mw3WGGFRWL4K1TczzuUJxJdAUCTUnPdaMM7mqyjf9xyQrunzDf
- Sx/THKrwA8k+hw6gfuJCBgPUfJ5oENELmhCsYzCl/3bwwtThuHf4wEVyTAorFLUXmf7jFkWUp
- MD4I6gklJun4w/Uzl9ojUfbZMLUxpwOMd0Q1CC7bQx0PGjGXW6lDWNEXACQTJ7YVMAgncM7SH
- uP/EZEuWvRnV+aTSwhg/8qOMMuPAatssCcFIZRYJY82f2ezsE0VL45Z3opBD6vrl6A53wXWM3
- b3O5/9904m8yElzpoLUwpbnLSrQhvZx67rc0cUf597Bw7NYMgA2fH5JycIkSE/azNh0WG26J/
- b4z69Kn0U5GZ+jLlYjOXzySa1HTcEsZPtyqmsExtqVxZsHYmxQ20vm1tjIC0GPTB1xFBCCSL/
- dEuo+ErcemB5DSAH+lidmiu9LQN7jKCkp9BmM4nTdnFozzbT2aGnP4bUsAaDKBtrDDxKrcGph
- /7pSE6O5cMNADuDJSayt/fUpuQSHtFC/AjG6ipY7lTwfHVbdIpWE3sLIZXUVmqmj8z8GfX/D6
- C/NpLC4
+Content-Type: text/plain
+X-Pobox-Relay-ID: A7FE3108-0834-11E7-AFEE-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.03.2017 um 14:23 schrieb Zenobiusz Kunegunda:
-> Bisecting: 0 revisions left to test after this (roughly 0 steps)
-> [a26bc613a64ac2c7ee69a50675e61b004a26382d] pretty.c: make git_pretty_formats_config return -1 on git_config_string failure
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> > +	if (strbuf_readlink(&link, ce->name, ce_namelen(ce)) == 0) {
+>> > +		strbuf_add(&path, state->base_dir, state->base_dir_len);
+>> > +		strbuf_add(&path, ce->name, ce_namelen(ce));
+>> > +
+>> > +		write_file_buf(path.buf, link.buf, link.len);
+>> 
+>> This does "write content into symlink stand-in file", but why?
 >
-> This is what I found with git bisect
+> From the commit message:
+>
+> 	> Detect the null object ID for symlinks in dir-diff so that
+> 	> difftool can prepare temporary files that matches how git
+> 	> handles symlinks.
 
-Strange, I don't think git_pretty_formats_config() is even called by git 
-status.
+Yes I read what the proposed log message said, and noticed that
+symbolic link is _always_ written as a regular file.
 
-René
+I was questioning why.  I know Git falls back to such behaviour when
+the filesystem does not support symbolic links.  "Why do so
+unconditionally, even when the filesystem does?" was the question.
+
+> The obvious connection: when core.symlinks = false, Git already falls back
+> to writing plain files with the link target as contents. This function
+> does the same, for the same motivation: it is the best we can do in this
+> case.
+
+And that "obvious connection" does not answer the question.
