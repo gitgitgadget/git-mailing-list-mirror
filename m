@@ -2,139 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BA8D20373
-	for <e@80x24.org>; Mon, 13 Mar 2017 20:11:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A20320373
+	for <e@80x24.org>; Mon, 13 Mar 2017 20:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753444AbdCMULL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 16:11:11 -0400
-Received: from mail-wr0-f172.google.com ([209.85.128.172]:35957 "EHLO
-        mail-wr0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751874AbdCMULJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 16:11:09 -0400
-Received: by mail-wr0-f172.google.com with SMTP id u108so110971361wrb.3
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 13:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=eLTcRa+dKM27BdTD+qL5j9cCH+O+CdjmDAcrWCPqyME=;
-        b=XtTaei2E4dDKDsb8tKpWaaqz//vY5otxu+gbfxkHKp5SSLTkULdW9AAQeXfm1TCn1Q
-         P4qckTSwzjs7A4FK+C1FbMZN+zi0E8mxVVogGKYRVfPhv9l65I8Hf7FaX1aqooczr4y6
-         rZKTdUcA5iLZToxvntw/MHBXugxLpbZ/zNG500k93MR/nMArvdJVVqx571ATz7KZKTSW
-         HqsIkUVMFAKURppDCCnfIs9Nn55a7UKFwyyj0GBNRQtRVO1NkMy5+4LHNwsWNWxxboEk
-         VeIJaeh1QGMjywDfVqEI5kcKyynzjp7yk6ZfiLFcaMuL5q8mZSj8jY75xuMwVt3MGd9c
-         DClw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=eLTcRa+dKM27BdTD+qL5j9cCH+O+CdjmDAcrWCPqyME=;
-        b=CgRHV573LhO7qYGLdD/mGBvR0VA0TZx4szXVteARrJ04wGt0rgqehcJ6gX/8OwdWDa
-         8AaB82g4OibFh8M0/K3Mv2+hIwTFpestxVPV1Ovxoxuf7kERbTfGeIAZi/suoC+rocYE
-         9TT0gnAcBOyTgM/2ewwH/RkC3nfNltgz0PMbCqO/1bSb+rGg10O85POvie4zOeq8TsDQ
-         lMZPp5xmPK0fJiBZG2hGBcLXA/pl3dlEjOyjMgbLm9+FjTamhtO9bqxa50Rfyprf+y9O
-         SQ4dHyPvmQRtCbs5lhSJsU67vwEM8PV/3dcUgLYUxpJCDFCuDkO6hdGHQXOYiPZ44v1Z
-         H9IA==
-X-Gm-Message-State: AMke39loLaHhKgKsZhussan2K16WiEjfFnu+Q/t0lteBF/V/6pAuiUiDNQeR0Ss/6KrKsg==
-X-Received: by 10.223.143.14 with SMTP id p14mr27678692wrb.120.1489435867274;
-        Mon, 13 Mar 2017 13:11:07 -0700 (PDT)
-Received: from workstation ([213.149.51.172])
-        by smtp.gmail.com with ESMTPSA id v1sm26188284wra.65.2017.03.13.13.11.06
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Mar 2017 13:11:06 -0700 (PDT)
-Date:   Mon, 13 Mar 2017 21:11:04 +0100
-From:   Domagoj Stolfa <domagoj.stolfa@gmail.com>
+        id S1753464AbdCMULT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 16:11:19 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58817 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751874AbdCMULR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 16:11:17 -0400
+Received: from virtualbox ([95.208.58.29]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSZ6u-1cdVsP1Njg-00RbW3; Mon, 13
+ Mar 2017 21:11:01 +0100
+Date:   Mon, 13 Mar 2017 21:10:45 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
-Subject: Possible git blame bug?
-Message-ID: <20170313201104.GA32821@workstation>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: [PATCH v6 05/12] Introduce the discover_git_directory() function
+In-Reply-To: <cover.1489435755.git.johannes.schindelin@gmx.de>
+Message-ID: <0bfe47c18ef3c156dc7aa1b201a97b84070c515c.1489435755.git.johannes.schindelin@gmx.de>
+References: <cover.1489098170.git.johannes.schindelin@gmx.de> <cover.1489435755.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="HlL+5n6rz5pIUxbD"
-Content-Disposition: inline
-User-Agent: Mutt/1.8.0 (2017-02-23)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:dekL+6RFes+X2cnZ+63GvnPLM81AqK03FMH8PShL9W50gt8HVc0
+ D+0uBMPGJkJngWZrEctPPgAtqGoedYLBxfi8DmmbjKAXG8iInxvl+PV/i9PjafmWlH6Ugy8
+ ZfhOLWJAwBIG8ALHFpsCv3FEeh6pqYag7x8gP58ZGss+nx0k8Q5dSaO38GrwG89s/B9VmdQ
+ DRlRo68kYDlaVdCrsXNuA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XI3F/pBWAFA=:F8x+MtNOnK52UfIj/MLIxX
+ RgVNHxMR1V+0WkDwJhyVmNDSPKdVvqZx5udSgPrF9l47o8z8/VjaeTlGq9KEvlHXMZmKg1gfn
+ fkpihr9OSZNiAxXxj3EF/wqMJwMJQi11U/G22uLFZIARi7eWDjK8igIofWuPPPcYsU1NsFkR3
+ 8FwAWTfNd2FqPwV3DNgCj6UdryWJV49AGMHACk1XpV2nuX0VFKuHVTxZAfRMJP8V8Qx+INNeS
+ eLiAbvCC5Pw/b929gkQaRG0lTphxOJC60zA0mXIVE5SNBM0W3tuB3qaHZ+QK0A4m1P+WnHGR/
+ 0vfqPsuNPIetYDRmmodXdsNFm14TFvjAqwDPVX1UsDzQ7kg5xGg3yWNqMvWVvvocDyglbN6CI
+ coSx1AS0TIVzlFVr8pKFnunWsxWWw41JkKeGRl5U0R1qhw1fVPtyQSQfGFC+PQlGU5PP+T/Fw
+ RASWPJDgFLEZ256y2QVfpphF22/UVx6TM8P1mS58QXkpeIoUZ6zvWAkTtx6pmHz+8FtPUBBx6
+ qxFlra0bWgFJYCLMlRkdJlQFwHQq/FEHSvhwFrEJYDCwRaYLS2pVweCRuP18P7sZckXrqW5cz
+ //9M6JvQDz060WBDQNHt1fM4wCv0b+Tk6r7cSZljEhwkvHLvn7NbYieeuuHYUAX7yGgOOdaIp
+ JlJX12XaJRuMVHHMVYoW+LxK+u3VLPKVCaayiHKciSRpkmsiuTnKzryKf+mEg5eueiBpA2v1o
+ KQ4vqlq4VFy9l41hFqjI72fcgNPM9pvGa+iGgJaKLiGLYXXiafnc/6kO0/h/59elFH3Rl/dir
+ bwjvkQx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We modified the setup_git_directory_gently_1() function earlier to make
+it possible to discover the GIT_DIR without changing global state.
 
---HlL+5n6rz5pIUxbD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+However, it is still a bit cumbersome to use if you only need to figure
+out the (possibly absolute) path of the .git/ directory. Let's just
+provide a convenient wrapper function with an easier signature that
+*just* discovers the .git/ directory.
 
-Hello,
+We will use it in a subsequent patch to fix the early config.
 
-yesterday I came across sort of a weird behaviour with git-blame. It would
-appear when one queries the git blame on a specific file, such as:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ cache.h |  7 +++++++
+ setup.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+)
 
-$ git blame <file> --since=3D<year>
+diff --git a/cache.h b/cache.h
+index 8c0e6442076..086bd9fa433 100644
+--- a/cache.h
++++ b/cache.h
+@@ -518,6 +518,13 @@ extern void set_git_work_tree(const char *tree);
+ #define ALTERNATE_DB_ENVIRONMENT "GIT_ALTERNATE_OBJECT_DIRECTORIES"
+ 
+ extern void setup_work_tree(void);
++/*
++ * Find GIT_DIR of the repository that contains the current working directory,
++ * without changing the working directory or other global state. The result is
++ * appended to gitdir. The return value is either NULL if no repository was
++ * found, or pointing to the path inside gitdir's buffer.
++ */
++extern const char *discover_git_directory(struct strbuf *gitdir);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+ extern char *prefix_path(const char *prefix, int len, const char *path);
+diff --git a/setup.c b/setup.c
+index 99a722ed5f9..411e8342972 100644
+--- a/setup.c
++++ b/setup.c
+@@ -924,6 +924,49 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+ 	}
+ }
+ 
++const char *discover_git_directory(struct strbuf *gitdir)
++{
++	struct strbuf dir = STRBUF_INIT, err = STRBUF_INIT;
++	size_t gitdir_offset = gitdir->len, cwd_len;
++	struct repository_format candidate;
++
++	if (strbuf_getcwd(&dir))
++		return NULL;
++
++	cwd_len = dir.len;
++	if (setup_git_directory_gently_1(&dir, gitdir) <= 0) {
++		strbuf_release(&dir);
++		return NULL;
++	}
++
++	/*
++	 * The returned gitdir is relative to dir, and if dir does not reflect
++	 * the current working directory, we simply make the gitdir absolute.
++	 */
++	if (dir.len < cwd_len && !is_absolute_path(gitdir->buf + gitdir_offset)) {
++		/* Avoid a trailing "/." */
++		if (!strcmp(".", gitdir->buf + gitdir_offset))
++			strbuf_setlen(gitdir, gitdir_offset);
++		else
++			strbuf_addch(&dir, '/');
++		strbuf_insert(gitdir, gitdir_offset, dir.buf, dir.len);
++	}
++
++	strbuf_reset(&dir);
++	strbuf_addf(&dir, "%s/config", gitdir->buf + gitdir_offset);
++	read_repository_format(&candidate, dir.buf);
++	strbuf_release(&dir);
++
++	if (verify_repository_format(&candidate, &err) < 0) {
++		warning("ignoring git dir '%s': %s",
++			gitdir->buf + gitdir_offset, err.buf);
++		strbuf_release(&err);
++		return NULL;
++	}
++
++	return gitdir->buf + gitdir_offset;
++}
++
+ const char *setup_git_directory_gently(int *nongit_ok)
+ {
+ 	static struct strbuf cwd = STRBUF_INIT;
+-- 
+2.12.0.windows.1.7.g94dafc3b124
 
-it will blame the entire file on some commit of that year, regardless of the
-fact whether the commit has actually touched that file or not.
 
-This seems consistent across all the tested systems: FreeBSD, macOS, Ubuntu=
- and
-Fedora.
-
-An example of the blame can be seen:
-
-$ git blame tcp_output.c
-cd0bc69e2fdd (wollman  1995-09-22 20:05:58 +0000   29)  *       @(#)tcp_out=
-put.c        8.4 (Berkeley) 5/24/95
-
-compared to:
-
-$ git blame tcp_output.c --since=3D2017
-^e19f2a27ed8 (Domagoj Stolfa 2017-03-12 20:43:01 +0100   29)  * @(#)tcp_out=
-put.c        8.4 (Berkeley) 5/24/95
-
-$ git blame tcp_output.c --since=3D2016
-^e4bdb83e76c (jceel    2016-03-13 19:50:17 +0000   29)  *       @(#)tcp_out=
-put.c        8.4 (Berkeley) 5/24/95
-
-$ git blame tcp_output.c --since=3D2015
-^d749a6e6c70 (pfg      2015-03-13 18:42:43 +0000   29)  *       @(#)tcp_out=
-put.c        8.4 (Berkeley) 5/24/95
-
-Of course, specifiying
-
-$ git blame --since=3D1.1.2017
-
-gives correct results, as expected.
-
-The question is whether this is a bug or not, as --since=3D<year> might not=
- be a
-valid filter. However, this might surprise a lot of users and mislead
-development. I would personally like to see this behaviour changed to eithe=
-r a
-blank report, a report of that year(making it a valid filter), but certainl=
-y not
-blaming it on commits that have never touched that file.
-
---=20
-Best regards,
-Domagoj Stolfa
-
---HlL+5n6rz5pIUxbD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEHQB+y96lmmv+IXofwxT+ikb0YU4FAljG/NcACgkQwxT+ikb0
-YU7qGgf6Ar7IAIzLgEONy1uaW4O44J8UUAnp8D6FpcRs+CByO8Y9RQlIazN3o9nW
-sk2P5O2H76syjolj+fIADPmfm65KEZFc5wUiwBtAwM4vXqeTntb3vbiKsobxzBaT
-ijUtcTsdJ7jZIsCefbzOyc3jIpRtJiCIG3fs30GLOxueQpGKtOfew3m1KDk1iuqD
-pSlL6miQLzIACbw+J/cSR5VdRXlW5YjkdwgswIkVjA5LGVbQYOX3DMXr/z8Mt0Cg
-b3unbbgnd/hLX4G7AmOxUAHeHPbMCcdDUA6zZ8hWJJ52LYUGfJcsQhdg058PTPk1
-QpfQCl+pB3KK3RpbwXpFrs2D5jStlw==
-=ZQEB
------END PGP SIGNATURE-----
-
---HlL+5n6rz5pIUxbD--
