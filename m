@@ -2,80 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB1E820373
-	for <e@80x24.org>; Mon, 13 Mar 2017 21:00:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A50320373
+	for <e@80x24.org>; Mon, 13 Mar 2017 21:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751720AbdCMVA2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 17:00:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43577 "EHLO cloud.peff.net"
+        id S1752206AbdCMVE0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 17:04:26 -0400
+Received: from mout.gmx.net ([212.227.17.21]:65256 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750871AbdCMVA1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 17:00:27 -0400
-Received: (qmail 4993 invoked by uid 109); 13 Mar 2017 21:00:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 21:00:26 +0000
-Received: (qmail 23513 invoked by uid 111); 13 Mar 2017 21:00:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 17:00:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Mar 2017 17:00:23 -0400
-Date:   Mon, 13 Mar 2017 17:00:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     Marc Stevens <Marc.Stevens@cwi.nl>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Dan Shumow <danshu@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Put sha1dc on a diet
-Message-ID: <20170313210023.bumtp6wyw6blmymp@sigill.intra.peff.net>
-References: <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net>
- <CY1PR0301MB2107112BCC2DECD215E70549C42A0@CY1PR0301MB2107.namprd03.prod.outlook.com>
- <20170313151322.ouryghyb5orkpk5g@sigill.intra.peff.net>
- <CY1PR0301MB2107B3C5131D5DC7F91A0147C4250@CY1PR0301MB2107.namprd03.prod.outlook.com>
- <CY1PR0301MB2107876B6E47FBCF03AB1EA1C4250@CY1PR0301MB2107.namprd03.prod.outlook.com>
- <20170313194848.2z2dlgpomu6e3dkh@sigill.intra.peff.net>
- <1e6a592f-7da1-8043-0b29-0bb7c8cda3f3@cwi.nl>
- <CA+55aFyNi2uHwd9nzjy3dOu2L1A0jPN6AD43WKj-05km1GNtRQ@mail.gmail.com>
- <161775901.3349663.1489438074825.JavaMail.zimbra@cwi.nl>
+        id S1750902AbdCMVEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 17:04:25 -0400
+Received: from virtualbox ([95.208.58.29]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZ8fw-1cX6B6229c-00KyWE; Mon, 13
+ Mar 2017 22:04:12 +0100
+Date:   Mon, 13 Mar 2017 22:04:11 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     David Aguilar <davvid@gmail.com>,
+        Christophe Macabiau <christophemacabiau@gmail.com>,
+        Git ML <git@vger.kernel.org>
+Subject: Re: [PATCH] difftool: handle changing symlinks in dir-diff mode
+In-Reply-To: <xmqqlgs9rprt.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1703132200290.3767@virtualbox>
+References: <alpine.DEB.2.20.1703072332370.3767@virtualbox> <20170313175640.14106-1-davvid@gmail.com> <xmqqlgs9rprt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <161775901.3349663.1489438074825.JavaMail.zimbra@cwi.nl>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:XyKvpVSTZMaVNCxT74zd0pIHpIuYHzQaYLFYaJAQ4fqpBlYLQW5
+ YWJBohL44S4Hov5e8RrsAWcmwKZbTQRfeZqxHuEmbPPf/cwn75014pGcr3hrwvw0KMo/pkd
+ gB/y7Z8peF3cnjwWcqGaSyUVE8v3774az0i28q83QV40C8DpBq09sauqxg7Ibj3rvBf5x4Y
+ S1l3FRZlap4bDTeCc1jEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YX+rR+sZaSQ=:hkQ9r0j7DmsZ5DJp/KOt9d
+ Xvo4ELXep1yBJGs4PlkMZzPDjedURgzbDG6qwiC/L1SGasFDTbiZTBylALXC6YkGT8eEAkEmJ
+ 7pl4MiZGNvWNXkNypiOFVaXkWIyVXuifd1kqBpIJpYsEwSAdH2HgFnIcrQCUVwNT7Q5nmortl
+ H4b/OD5kt5ttFhFlzl29RpsRYQHDuiN3EfhZh1fbNndumpUqF64Zno1A6fkfcZOJcfgKLgbhV
+ Pdf1c1myjrqxOkUTP/KYTWs5TjGy8AEEL/L1gfQlOjWE7IMijZSTzwAQHuG1jPAdOb7YFgdxP
+ QG8pWyHB5GqvOJ21224xwfDtW9ZlxWPDJY/Qd0fg/8WPmysKhldTvWyGJ0zosmWiVDS/vr47w
+ 3nULWASU7b6DRAUj9OtVmS1LP0Uwgf/7IK5uVdY4dGKhQzwnKm+vH36TedzpgOWFH77+jyoT0
+ TdfEdbBt9+qTRG5N8qHr3F2jowTgOT+KDbodYtaNPW4mcHV2zNBfktI6tEhnqsJ6l/JxL1kiS
+ SVE3WP80QsHhVEVThEKhdLL5SMbhXKaThE3UkyY1E2botYb31uyT4wQ2fElVquDCBLnZUUU9E
+ UyJT91C31V/1YGgS/xkoD8ZegbR6E5G0HtF3KFdsSBu3WnjfEK90sUbfJJCwsN7GHcfkkZknw
+ 6nQdJHgNSWg9icQ5tgzQnTv4Dg7sUs7HB+Fukgk4kegYtunMxzjCq10RzPi/0RXX+CUdc7ae/
+ xhyoAm9h+gVi30E+efBxRX8at/pO8Wsc7Lk2IJmAMmDGJo9n9eRvxUr8RQvnaPu9O11B/gHWK
+ Fn/8Hj2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 13, 2017 at 09:47:54PM +0100, Marc Stevens wrote:
+Hi Junio,
 
-> Linus:
-> I would be surprised, the dependencies should be automatically determined.
+On Mon, 13 Mar 2017, Junio C Hamano wrote:
+
+> David Aguilar <davvid@gmail.com> writes:
 > 
-> BTW Did you make local changes to this perf branch?
+> > Detect the null object ID for symlinks in dir-diff so that difftool
+> > can prepare temporary files that matches how git handles symlinks.
+> >
+> > Previously, a null object ID would crash difftool.  We now detect null
+> > object IDs and write the symlink's content into the temporary symlink
+> > stand-in file.
+> >
+> > Original-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Signed-off-by: David Aguilar <davvid@gmail.com>
+> > ---
+> 
+> I would have appreciated (and I suspect other reviewers would, too)
+> a bit of back-story wrt how "Original-patch-by" resulted in this
+> patch after the three-dashes line.  It is perfectly fine if you two
+> coordinated privately; I mostly wanted to hear something like "Dscho
+> has been working on this and I asked him if it is OK to take over
+> his WIP to produce a quick-fix we can ship on the maint branch, here
+> is the result of that collaboration."  IOW, the person who is named
+> as the original author is fine to be named like so (I care only
+> because I do not think we saw the "original" here on the list).
 
-I can reproduce it with:
+The story is more like: Johannes started working on this but got pulled
+away by other tasks and sent out a link to the initial patch, along with a
+note that he hopes to be able to get back to working on that patch before
+long (but of course he did not get the chance):
 
-  cd sha1collisiondetection
-  git clean -dqfx ;# make sure we are starting from scratch
+http://public-inbox.org/git/alpine.DEB.2.20.1703072332370.3767@virtualbox/
 
-  git checkout 9c8e73cadb35776d3310e3f8ceda7183fa75a39f
-  make
-  bin/sha1dcsum $file
+There was no private exchange. I am happy that David picked up the
+project.
 
-  git checkout 55d1db0980501e582f6cd103a04f493995b1df78
-  make
-  bin/sha1dcsum $file
-
-The final call to sha1dcsum will report a collision, even though the
-first one did not.
-
-It also reproduces with the original snippet I posted. I didn't notice
-because I was just collecting the timings then (and I originally noticed
-the problem on the versions I had pulled into Git, where it works as
-expected; but then I am just pulling in the two source files, without
-all of the libtool magic).
-
--Peff
+Ciao,
+Johannes
