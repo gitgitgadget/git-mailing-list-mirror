@@ -2,97 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E53B11FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 19:01:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AF5F1FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 19:03:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754321AbdCMTBQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 15:01:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43347 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753829AbdCMTBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 15:01:15 -0400
-Received: (qmail 29249 invoked by uid 109); 13 Mar 2017 19:01:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 19:01:14 +0000
-Received: (qmail 20636 invoked by uid 111); 13 Mar 2017 19:01:24 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 13 Mar 2017 15:01:24 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Mar 2017 15:01:11 -0400
-Date:   Mon, 13 Mar 2017 15:01:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Devin Lehmacher <lehmacdj@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH 2/3] credential-cache.c: Make git use
- XDG_CACHE_HOME for credentials
-Message-ID: <20170313190111.64vzo7v3b3aty2dt@sigill.intra.peff.net>
-References: <20170313172232.96678-1-lehmacdj@gmail.com>
- <20170313172232.96678-3-lehmacdj@gmail.com>
+        id S1754598AbdCMTDN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 15:03:13 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51140 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754539AbdCMTCs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 15:02:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA66783803;
+        Mon, 13 Mar 2017 15:02:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4OzFFTEk5n7IzEqf+qCi+TP1drI=; b=WPQooz
+        yD6hCDA6o1Whqq523uwY0+07whggqDfQqntG9XrDAv+bychTYhsErr+UvYbNptag
+        42ZV8nyIygKM1Nu/ft70ybTpaA2im1/uZ/KcbDpV4NN2cgd2ni91ETAJ+zoLAyq0
+        MPEYJmV7puxfDP9vixTAnw/le5QHucaFg+pIM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vUocGOGJPj59yEvO0aosmPQ8kNM8gaJC
+        Tb1t5BWh+ZKXkGKiTdJmFZhjKURnTfMOeA4iN9kooQ66mJGPPi1c73ZRZpJNnxmg
+        jLMwYm7mdM+V11ladVrqMDYtS9xhHNFuJFeD1MbAznxQlHvWTmttTlPpFwwtOcE9
+        I/WlRWutoP8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC73483802;
+        Mon, 13 Mar 2017 15:02:41 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1EE9683801;
+        Mon, 13 Mar 2017 15:02:41 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Christophe Macabiau <christophemacabiau@gmail.com>,
+        Git ML <git@vger.kernel.org>
+Subject: Re: [PATCH] difftool: handle changing symlinks in dir-diff mode
+References: <alpine.DEB.2.20.1703072332370.3767@virtualbox>
+        <20170313175640.14106-1-davvid@gmail.com>
+Date:   Mon, 13 Mar 2017 12:02:40 -0700
+In-Reply-To: <20170313175640.14106-1-davvid@gmail.com> (David Aguilar's
+        message of "Mon, 13 Mar 2017 10:56:40 -0700")
+Message-ID: <xmqqh92xrodr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170313172232.96678-3-lehmacdj@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: A1E73C66-081F-11E7-A4DA-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 13, 2017 at 01:22:31PM -0400, Devin Lehmacher wrote:
+David Aguilar <davvid@gmail.com> writes:
 
-> Subject: Re: [GSoC][PATCH 2/3] credential-cache.c: Make git use XDG_CACHE_HOME for credentials
+> -		if (S_ISLNK(lmode)) {
+> +		if (S_ISLNK(lmode) && !is_null_oid(&loid)) {
+>  			char *content = read_sha1_file(loid.hash, &type, &size);
+>  			add_left_or_right(&symlinks2, src_path, content, 0);
+>  			free(content);
+>  		}
+>  
+> -		if (S_ISLNK(rmode)) {
+> +		if (S_ISLNK(rmode) && !is_null_oid(&roid)) {
+>  			char *content = read_sha1_file(roid.hash, &type, &size);
+>  			add_left_or_right(&symlinks2, dst_path, content, 1);
+>  			free(content);
 
-Another subject nitpick. :)
+On this part I didn't comment in my previous message, but what is
+the implication of omitting add-left-or-right and not registering
+this symbolic link modified in the working tree to the symlinks2
+table?
 
-Saying "Make git" is just extraneous. All commits make git do something.
+I am wondering if these should be more like
 
-Likewise "for credentials" doesn't say much. Perhaps "for socket" would
-be more descriptive.
+	if (S_ISLNK(lmode) {
+		char *content = get_symlink(src_path, &loid);
+		add_left_or_right(&symlinks2, src_path, content, 0);
+                free(content);
+	}                
 
-I'm not sure we are entirely consistent here, but I'd probably say just
-"credential-cache" (not "credential-cache.c"). My rule of thumb is to
-mention the C file if it's an internal thing: a cleanup, a new
-function, etc. And use the command-name if it's something user-visible.
+with get_symlink() helper that does
 
-So all together:
+ - if the object name is not 0{40}, read from the object store
 
-  Subject: credential-cache: use XDG_CACHE_HOME for socket
+ - if the object name is 0{40}, that means we need to read the real
+   contents from the working tree file, so do the "readlink(2) if
+   symbolic link is supported, otherwise open/read/close the stub
+   file sitting there" thing.
 
-is shorter and more descriptive (IMHO).
+Similary to the right hand side tree.
 
-> git-credential-cache will now use the socket
-> $XDG_CACHE_HOME/git/credential/socket if there is not already a socket
-> at ~/.git-credential-cache/socket. This ensures that if another process
-> already created a socket at the old location it will be used over the
-> new one if it exists.
+Discarding "content" after reading feels wasteful, as that is the
+information we would be using when populating the rstate and lstaten
+working trees later in the loop, but that would probably need a
+larger surgery to the code to optimize, I would imagine.
 
-This tells us what, but not much about "why". Probably the reason is
-something simple, like "using standards is better than not". But the
-commit message should say that.
 
-> +static char* get_socket_path(void) {
-> +	char *home_socket;
-> +
-> +	home_socket = expand_user_path("~/.git_credential_cache/socket");
-> +	if (home_socket)
-> +		if (file_exists(home_socket))
-> +			return home_socket;
-> +		else
-> +			free(home_socket);
-
-Please use braces for nested ifs. I know that C resolves a dangling-else
-like this as you've indented it (as opposed to attaching the else to the
-outer "if"), but it is unnecessarily confusing. Just one set of braces:
-
-  if (home_socket) {
-	if (file_exists(home_socket);
-		return home_socket;
-	else
-		free(home_socket);
-  }
-
-is sufficient.
-
--Peff
