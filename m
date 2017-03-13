@@ -6,174 +6,107 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D232202C1
-	for <e@80x24.org>; Mon, 13 Mar 2017 02:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3AA8202C1
+	for <e@80x24.org>; Mon, 13 Mar 2017 03:10:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755804AbdCMCnr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Mar 2017 22:43:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58849 "EHLO
+        id S1755849AbdCMDKZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Mar 2017 23:10:25 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60411 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755703AbdCMCnp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Mar 2017 22:43:45 -0400
+        with ESMTP id S1755792AbdCMDKX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Mar 2017 23:10:23 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B332E6F49B;
-        Sun, 12 Mar 2017 22:43:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AD9C571D7B;
+        Sun, 12 Mar 2017 23:10:21 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9JWNH3yRd/JpSJRJOGOTJjPLIBg=; b=HugC/8
-        afXAGo01wC2FKtPsHEBmJNItm0VELhUXD++Sws3F8zjADMh8kJTrqmXLqJnotiHo
-        Rr8TWLWkEVQ4onrqvTQjimfkc2fN3xFgwu+YgUlmBHotfGodp5Rj+YExu9iH/Ih/
-        JBoY0Nqx8eZErXrekLaQEV432FvTdajl9S7iM=
+        :content-type; s=sasl; bh=5DSDB+wqaVpEYbN4Ht70dAgeQA0=; b=QhKNp3
+        mhC1vSPEe6D+8pEeTARfHLROao+ueSjfAjmvXgGUKwwwg+xRnojGexmskCqd26+Q
+        qTNP8xftUwI/e2oTdoB7ZSWZKF0mWxkvY5FOD8fiG2JowFF4XBf1LUHL0Eth4AXS
+        Zl0zFLTDfKT6OxbqDYvS659410YCgY3wiywis=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=m3qQ9f4DX9S9oMKdntcYIyDg7pYTUKJv
-        xmF79csEnozMjHCd1bF87raXFdlUqx4EbVNWqU99WQg5hFhxuFqESZ46gw/H/2G/
-        amT7o1d/LpyayhljRdpsczDxHlEJUMjq0PHju6Y37zMUiFU9pe4swpPjXUPuwIyN
-        5cqe7rLYogc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AC8986F49A;
-        Sun, 12 Mar 2017 22:43:43 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=SmAaGUxqCHAFh9AQfqQa+kr4o5XooNHZ
+        o81ywGIWmaeiUunky0IpfRNiTeYvdq7XBBCH/nD8oaePlLusaiNxMge3Xy06GsIM
+        BVpRNqHvW0HrNqCfIk25VbKN6o7LLq2vjYKgDgWjjY+VF4UNmr3UtXKt6xtXdCGw
+        Wt2Xfs5slX0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A5FA671D7A;
+        Sun, 12 Mar 2017 23:10:21 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 264966F499;
-        Sun, 12 Mar 2017 22:43:43 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 153F471D79;
+        Sun, 12 Mar 2017 23:10:21 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 1/2] pathspec: allow querying for attributes
-References: <20170309210756.105566-1-bmwill@google.com>
-        <20170309210756.105566-2-bmwill@google.com>
-Date:   Sun, 12 Mar 2017 19:43:41 -0700
-In-Reply-To: <20170309210756.105566-2-bmwill@google.com> (Brandon Williams's
-        message of "Thu, 9 Mar 2017 13:07:55 -0800")
-Message-ID: <xmqqo9x5uc9u.fsf@gitster.mtv.corp.google.com>
+To:     Prathamesh Chavan <pc44800@gmail.com>
+Cc:     christian.couder@gmail.com, git@vger.kernel.org, jdl@jdl.com
+Subject: Re: [Patch v2] t2027: avoid using pipes
+References: <CAP8UFD1xQnR8aWVRqu1_k2qhEcR2fOdyHT51aUyq9EdFg7f7Xw@mail.gmail.com>
+        <20170310083611.7374-1-pc44800@gmail.com>
+Date:   Sun, 12 Mar 2017 20:10:19 -0700
+In-Reply-To: <20170310083611.7374-1-pc44800@gmail.com> (Prathamesh Chavan's
+        message of "Fri, 10 Mar 2017 14:06:11 +0530")
+Message-ID: <xmqqk27tub1g.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DF582E54-0796-11E7-8701-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 97C8EAC0-079A-11E7-A445-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Prathamesh Chavan <pc44800@gmail.com> writes:
 
-> +struct attr_check *attr_check_dup(const struct attr_check *check)
-> +{
-> +	struct attr_check *ret;
-> +
-> +	if (!check)
-> +		return NULL;
-> +
-> +	ret = attr_check_alloc();
-> +
-> +	ret->nr = check->nr;
-> +	ret->alloc = check->alloc;
-> +	ALLOC_ARRAY(ret->items, ret->nr);
-> +	COPY_ARRAY(ret->items, check->items, ret->nr);
-> +
-> +	return ret;
-> +}
+> From: Prathamesh <pc44800@gmail.com>
 
-Because an attr_check instance cannot be shared and used by multiple
-threads, we expect that the callers that go multi-thread to copy
-pathspec to each worker, and preload_index(), which is an existing
-example of such a caller, already does so with copy_pathspec().
+Your e-mail header says 
 
-Makes sense.
+	From: Prathamesh Chavan <pc44800@gmail.com>
 
-> @@ -565,26 +653,47 @@ void parse_pathspec(struct pathspec *pathspec,
->  
->  void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
->  {
-> -	int i;
-> +	int i, j;
->  
->  	*dst = *src;
->  	ALLOC_ARRAY(dst->items, dst->nr);
->  	COPY_ARRAY(dst->items, src->items, dst->nr);
->  
->  	for (i = 0; i < dst->nr; i++) {
-> -		dst->items[i].match = xstrdup(src->items[i].match);
-> -		dst->items[i].original = xstrdup(src->items[i].original);
-> +		struct pathspec_item *d = &dst->items[i];
-> +		struct pathspec_item *s = &src->items[i];
-> +
-> +		d->match = xstrdup(s->match);
-> +		d->original = xstrdup(s->original);
-> +
-> +		ALLOC_ARRAY(d->attr_match, d->attr_match_nr);
-> +		COPY_ARRAY(d->attr_match, s->attr_match, d->attr_match_nr);
-> +		for (j = 0; j < d->attr_match_nr; j++) {
-> +			const char *value = s->attr_match[j].value;
-> +			if (value)
-> +				d->attr_match[j].value = xstrdup(value);
+and you probably have "[user] name = Prathamesh" somewhere in your
+config, and I think that is why we see the above line in format-patch
+output and on your sign-off.  If you really prefer to be known as a
+person with a single name (without Chavan) to the community, that is
+fine, but if that is not the case, perhaps you'd want to review your
+config and fix this.
 
-We have xstrdup_or_null(), which may help here.
+> Whenever a git command is present in the upstream of a pipe, its failure
+> gets masked by piping and hence it should be avoided for testing the
+> upstream git command. By writing out the output of the git command to
+> a file, we can test the exit codes of both the commands as a failure exit
+> code in any command is able to stop the && chain.
 
-> +		}
-> +
-> +		d->attr_check = attr_check_dup(s->attr_check);
->  	}
->  }
->  
->  void clear_pathspec(struct pathspec *pathspec)
->  {
-> -	int i;
-> +	int i, j;
->  
->  	for (i = 0; i < pathspec->nr; i++) {
->  		free(pathspec->items[i].match);
->  		free(pathspec->items[i].original);
-> +
-> +		for (j = 0; j < pathspec->items[j].attr_match_nr; j++)
-> +			free(pathspec->items[i].attr_match[j].value);
-> +		free(pathspec->items[i].attr_match);
-> +
-> +		if (pathspec->items[i].attr_check)
-> +			attr_check_free(pathspec->items[i].attr_check);
->  	}
-> +
->  	free(pathspec->items);
->  	pathspec->items = NULL;
->  	pathspec->nr = 0;
+OK.
 
-OK, makes sense.
+> Signed-off-by: Prathamesh <pc44800@gmail.com>
 
-> diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.sh
-> new file mode 100755
-> index 000000000..b5e5a0607
-> --- /dev/null
-> +++ b/t/t6135-pathspec-with-attrs.sh
-> @@ -0,0 +1,181 @@
-> +#!/bin/sh
-> +
-> +test_description='test labels in pathspecs'
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'setup a tree' '
-> +	cat <<-EOF >expect &&
+> diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+> index 848da5f36..a3e77fee5 100755
+> --- a/t/t2027-worktree-list.sh
+> +++ b/t/t2027-worktree-list.sh
+> @@ -31,7 +31,8 @@ test_expect_success '"list" all worktrees from main' '
+>  	test_when_finished "rm -rf here && git worktree prune" &&
+>  	git worktree add --detach here master &&
+>  	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
+> -	git worktree list | sed "s/  */ /g" >actual &&
+> +	git worktree list >out &&
+> +	sed "s/  */ /g" <out >actual &&
+>  	test_cmp expect actual
+>  '
 
-Minor style nit. Quote the 'EOF' marker and you signal to readers
-that what they'll see are literally the values, and they do not have
-to worry about $variable_interpolation.  I.e.
+We'll have "out" as a new leftover file, but it probably would not
+make too much of a difference.  We already leave 'expect' and 'actual'
+in the working tree as known crufts.  
 
-	cat <<-\EOF >expect &&
+Just FYI, if you want to clean them, there is already when_finished
+in this piece (and others) so you could do
 
-> +test_expect_success 'fail if attr magic is used places not implemented' '
-> +	# The main purpose of this test is to check that we actually fail
-> +	# when you attempt to use attr magic in commands that do not implement
-> +	# attr magic. This test does not advocate git-add to stay that way,
-> +	# though, but git-add is convenient as it has its own internal pathspec
-> +	# parsing.
+    -test_when_finished "rm -rf here && git worktree prune" &&
+    -test_when_finished "rm -rf here out actual expect && git worktree prune" &&
 
-That's thought-provoking ;-) Would it help to add a test-pathspec
-helper, similar to test-config helper, that serves as a vehicle to
-test this?
+When a test fails, when_finished is not run, so this will not
+interfere with necessary debugging effort when/if somebody breaks
+"git worktree" and this test starts failing.
 
-> +	test_must_fail git add ":(attr:labelB)" 2>actual &&
-> +	test_i18ngrep "unsupported magic" actual
-> +'
-
-Thanks.
