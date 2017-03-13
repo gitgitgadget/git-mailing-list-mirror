@@ -2,172 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DED21FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 16:40:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD8D21FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 17:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754238AbdCMQkQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 12:40:16 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:35700 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932150AbdCMQj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 12:39:56 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id 5ED9360877; Mon, 13 Mar 2017 16:39:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489423179;
-        bh=Y0L2AUSHCH76bsxWQO/pWuSc23KHYTn/iUQ5fyFw0+Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=oSQtSZcaGvoVGG+pd8IF8Jt2ameJerMCCfOdVdGiVe02fJ7JqOEreO1Ex0d6Zu5O3
-         qgYiK7rLxvHoNVEXMdTwxBJU2NZEL9j3C1M/M6TOfW52ZibiUDH2oEm+z95JxXGzjm
-         EOWEmaOZrUpC/FrOiimG4ECCaiqbljelj8yYe8lQ=
-Received: from mfick1-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S1754244AbdCMRL3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 13:11:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57068 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753451AbdCMRL1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 13:11:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 67B9F7FEDD;
+        Mon, 13 Mar 2017 13:11:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=qWfp9BgUTqrG9jrwI91KMPJKd7A=; b=mgekWo
+        9DULnYGR12yHe30rZMmwO25qDMQMElqCQOfss4RbS50+Y1KvpI3+daiYNmwt5881
+        ZbtzHUDY+J4pRxA9b0z7hMSPf936XC6Q0m6izUqw2V6LEe9zRV8IGbXoE7DvrOvG
+        Ttr319c80V9nG3yy9507YJOQpk/6Z98clnM3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vbaKbFqkCN/tn2PsDSVssHwUEB8Z1kF3
+        l/Kh6X/bfkG/OrzmobS2Qo7EFNgP7k7KpmgaUyrXixkrHPd3r7yyazuYwQ66gzvp
+        QHdlyTAOOSoBf2Pmx0P4qcN50cqUKVeunDioTWndqm1Dh4JnwmuE37kG8tTWGS0K
+        SETr4PHxX5o=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 617D47FEDC;
+        Mon, 13 Mar 2017 13:11:25 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C4A4B60805;
-        Mon, 13 Mar 2017 16:39:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1489423178;
-        bh=Y0L2AUSHCH76bsxWQO/pWuSc23KHYTn/iUQ5fyFw0+Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Ag5y7AwnMTQnOf2MNLFxzLNr8Mcyd77GVcpu4hzEgClqj35RLcSfgVg7ykU/gH6ix
-         4XuzhWrHoWrpdq4WZzHW8nL4n5SvCtROBoSU4xKKIASSy9cWybJQLrBoFQOCz5QQNg
-         LkkNAj+Jbvob8J8lLxiuMKjvhIGlA6QwflXaBkWw=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C4A4B60805
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, James Melvin <jmelvin@codeaurora.org>,
-        git@vger.kernel.org, nasserg@codeaurora.org, sbeller@google.com
-Subject: Re: [PATCH v2] repack: Add option to preserve and prune old pack files
-Date:   Mon, 13 Mar 2017 10:39:37 -0600
-Message-ID: <2062422.zvngdQjy4d@mfick1-lnx>
-User-Agent: KMail/4.8.5 (Linux/3.2.0-106-generic; KDE/4.8.5; x86_64; ; )
-In-Reply-To: <xmqqbmt6v0cf.fsf@gitster.mtv.corp.google.com>
-References: <20170310220020.2666-1-jmelvin@codeaurora.org> <20170312122418.e544nrmqniycqouc@sigill.intra.peff.net> <xmqqbmt6v0cf.fsf@gitster.mtv.corp.google.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D31277FEDA;
+        Mon, 13 Mar 2017 13:11:24 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Vegard Nossum <vegard.nossum@oracle.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [RFC][PATCH] index-pack: add testcases found using AFL
+References: <20170310151556.18490-1-vegard.nossum@oracle.com>
+        <20170310190641.i7geazhrlmzzfna6@sigill.intra.peff.net>
+        <CACBZZX5fGU9C-z94KbMAs_AegOSGtq8nbrkRe-NxBCHYsDswkA@mail.gmail.com>
+        <20170312123212.3rnqyx3dvi5yppk5@sigill.intra.peff.net>
+        <xmqq7f3uuzuu.fsf@gitster.mtv.corp.google.com>
+        <ee3f01f0-2dc1-f919-223c-dad6032fa396@oracle.com>
+Date:   Mon, 13 Mar 2017 10:11:23 -0700
+In-Reply-To: <ee3f01f0-2dc1-f919-223c-dad6032fa396@oracle.com> (Vegard
+        Nossum's message of "Mon, 13 Mar 2017 12:07:32 +0100")
+Message-ID: <xmqqbmt5t83o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 168A7994-0810-11E7-847C-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sunday, March 12, 2017 11:03:44 AM Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> > I can think of one downside of a time-based solution,
-> > though: if you run multiple gc's during the time
-> > period, you may end up using a lot of disk space (one
-> > repo's worth per gc). But that's a fundamental tension
-> > in the problem space; the whole point is to waste disk
-> > to keep helping old processes.
-> 
-> Yes.  If you want to help a process that mmap's a packfile
-> and wants to keep using it for N seconds, no matter how
-> many times somebody else ran "git repack" while you are
-> doing your work within that timeframe, you somehow need
-> to make sure the NFS server knows the file is still in
-> use for that N seconds.
-> 
-> > But you may want a knob that lets you slide between
-> > those two things. For instance, if you kept a sliding
-> > window of N sets of preserved packs, and ejected from
-> > one end of the window (regardless of time), while
-> > inserting into the other end. James' existing patch is
-> > that same strategy with a hardcoded window of "1".
-> 
-> Again, yes.  But then the user does not get any guarantee
-> of how long-living a process the user can have without
-> getting broken by the NFS server losing track of a
-> packfile that is still in use.  My suggestion for the
-> "expiry" based approach is essentially that I do not see
-> a useful tradeoff afforded by having such a knob.
-> > The other variable you can manipulate is whether to gc
-> > in the first place. E.g., don't gc if there are N
-> > preserved sets (or sets consuming more than N bytes, or
-> > whatever). You could do that check outside of git
-> > entirely (or in an auto-gc hook, if you're using it).
-> Yes, "don't gc/repack more than once within N seconds" may
-> also be an alternative and may generally be more useful
-> by covering general source of wastage coming from doing
-> gc too frequently, not necessarily limited to preserved
-> pack accumulation.
+Vegard Nossum <vegard.nossum@oracle.com> writes:
 
-As someone who helps manage a Gerrit server for several 
-thousand repos, all on the same NFS disks, a time based 
-expiry seems unpractical, and not something that I am very 
-interested in having.  I favor the simpler (single for now) 
-repacking cycle approach, and it is what we have been using 
-for almost 6 months now successfully, without suffering any 
-more stale file handle exceptions.
+> However, I think it's more useful to think of these testcases not as
+> "binary test that nobody knows what they are doing", but as "(sometimes
+> invalid) packfiles which tickle interesting code paths in the packfile
+> parser".
+>
+> With this perspective it becomes clearer that while they were generated
+> from the code, they also in a sense describe the packfile format itself.
 
-While time is indeed the factor that is going to determine 
-whether someone is going to see the stale file handles or 
-not, on a server (which is what this feature is aimed at), 
-this is secondary in my mind to predictability about space 
-utilization.  I have no specific minimum time that I can 
-reason about, i.e. I cannot reasonably say "I want all 
-operations that last less than 1 hour, 1 min, or 1 second... 
-to succeed".  I don't really want ANY failures, and I am 
-willing to sacrifice some disk space to prevent as many as 
-possible.  So the question to me is "How much disk space am 
-I willing to sacrifice?", not "How long do I want operations 
-to be able to last?".  The only way that time enters my 
-equation is to compare it to how long repacking takes, i.e. 
-I want the preserved files cleaned up on the next repack.   
-So effectively I am choosing a repacking cycle based 
-approach, so that I can reasonably predict the extra disk 
-space that I need to reserve for my collection of repos.  
-With a single cycle, I am effectively doubling the "static" 
-size of repos.  
+I do agree with these two paragraphs (that is why I said that
+continuously running fuzzer tests on the codebase would have value),
+and I really appreciate the effort.
 
-To achieve this predictability with a time based approach 
-requires coordination between the expiry setting and the 
-repacking time cycle.  This coordination is extra effort for 
-me, with no apparent gain.  It is also an additional risk 
-that I don't want to have.  If I decide to bump up how often 
-I run repacking, and I forget to reduce the expiry time, my 
-disk utilization will grow and potentially cause serious 
-issues for all my repositories (since they share the same 
-volume).  This problem is even more difficult if I decide to 
-use a usage (instead of time) based algorithm to determine 
-when I repack.
+> I did a few experiments in changing the code of the packfile reader in
+> various small ways (e.g. deleting a check, reordering some code) to see
+> the effects of the testcases found by fuzzing, and I have to admit it
+> was fairly disappointing. The testcases I added did not catch a single
+> buggy change, whereas the other testcases did catch many of them.
 
-Admittedly, a repacking cycle based approach happens to be 
-very easy and practical when it is a "single" cycle.  If I 
-determine eventually empirically that a single cycle is not 
-long enough for my server, I don't know what I will do?  
-Perhaps I would then want a switch that preserves the repos 
-for another cycle?  Maybe it could work the way that log 
-rotation works, add a number to the end of each file name for 
-each preserved cycle?  This option seems preferable to me 
-than a time based approach because it makes it more obvious 
-what the impact on disk utilization will be.  However, so 
-far in practice, this does not seem necessary.
+In short, the summary of the above three paragraphs is that we still
+do believe the general approach of using fuzzer has value, but your
+experiment indicates that data presented in the patch in this thread
+weren't particularly good examples to demonstrate the merit?
 
-I don't really see a good use case for a time based expiry 
-(other than "this is how it was done for other things in 
-git").  Of course, that doesn't mean such a use case doesn't 
-exist, but I don't support adding a feature unless I really 
-understand why and how someone would want to use it.  I 
-think that a time based expiry should only be added if 
-someone has a specific use case they expect to achieve with 
-it, and they actually plan to use it that way, not just for 
-uniformity. 
-
-One might even eventually decide that some of the other 
-current use cases for time based expiries should be 
-converted to cycle based expiries; I suspect server admins 
-will have fewer surprises that way,
-
--Martin
-
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
 
