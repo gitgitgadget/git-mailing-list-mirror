@@ -2,83 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59D741FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 18:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BB6A202F8
+	for <e@80x24.org>; Mon, 13 Mar 2017 18:33:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751651AbdCMSa3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 14:30:29 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:33988 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751141AbdCMSa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 14:30:28 -0400
-Received: by mail-pg0-f45.google.com with SMTP id 77so66850322pgc.1
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 11:30:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GbbbtgtwdLT4EXUogkKqWi+ytJJalPW2VlvhZZDpUNo=;
-        b=KhXXmFT7bl2zUhecnvdQ+SzzNaFJCXO29ASdQpE9/g8Q09e0X65GTdengZizPGMTBi
-         T3Z1hhvBqGLpgJyz5BewAQ9nS5Kob1Ub4T8rhQeZVNDnixo75KUwETHcpReYRxPSYF2M
-         cMCjumz8I8HKGC2+vL8MWKT5b3Dp2MaYX1ghjl4ghQyEBk1fmkhtj8HSS+ZJZzDAHkoc
-         GgFUVYpoqnXAXLXT2CmD5CqkX/spUv6yNSVEcgjH+qmgUAUvz0Y7t0Jb8vuN6H0kYl7U
-         lGqRdFqlVQVXfQW88dg83NvwG1wXzBdQpLv1Yw1mYAAe+beahNSR20UjLlEgJV+xQvzz
-         RDBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GbbbtgtwdLT4EXUogkKqWi+ytJJalPW2VlvhZZDpUNo=;
-        b=gZOXOBlvDM3qxEnXMKiJa2SBtwoYo1ueJI2cil1v9FiG80yip1PPZELtGN/CUYLZOI
-         LQlQY42aMTrKhinBDgQqKeY6H9UbfluWKi4p0Yb+zJwACtyzRpUhGQvKTalUJpCjbMk4
-         tqkFhod7OHzB41OX1KaJfFCjqTJyaMA+eeFsxBreWdF4eG8PXFqyx69PkNkHBaGIxjsd
-         QuqoAIF/xt4EOrLulH9BogqVo8Os3qquHcc4rY/jnvDyVt/XVYNCd25mvlhWj/L9bwbW
-         2EWd22qyDeF3Hqrx9g81hSe3cekmSrXdGFPhUtANezZIHSuP3ntUb3+IpzD7FAQjtzEk
-         q/pw==
-X-Gm-Message-State: AMke39kP6+sTapNYjlsn5WjAOyTjnMaxpDmI6v2daeQJekk6T0IZ1XA/34zrx16EVEKBATVS8mvDjlkT6EkmFH5B
-X-Received: by 10.99.178.9 with SMTP id x9mr37657633pge.48.1489429826690; Mon,
- 13 Mar 2017 11:30:26 -0700 (PDT)
+        id S1753998AbdCMSd3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 14:33:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52325 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753550AbdCMScl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 14:32:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EA14983242;
+        Mon, 13 Mar 2017 14:32:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9aEZhJ7D9JU3+18jXAAgKH1x150=; b=x32oAn
+        ODts+5XQQFpOD/6KHUxmyt0jSSVXK/vxR1OebJ6SLy1QJ5lOlmyGXXIPr/qvZ1Xq
+        iFZvQzpFCUYP0nQDw0tyZiMG2a1HXThm83v0QHvxpXIIvz3iYdXr9EueauzklYJn
+        uQ0JR/hPWJ4WG0xBZgnC0cATY48GGpdBHn3So=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fLOXSieEKpY7WNvkJorNFK8EIrjKWnMd
+        AsJp0So7gPRBgYz4zHGWZIt3A3XsmfOZDMMEoxvItQCrNN22gU93Xh7MPbvCnpiS
+        u7a7ZXMNPdnYdrcZq9jIM0vnKp4nJ+sVE6Zo/VvMUxfG/KCHxIMIg+rJJ/Kxh+i5
+        zHYr77xdAlg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E0A4883241;
+        Mon, 13 Mar 2017 14:32:39 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 471E88323F;
+        Mon, 13 Mar 2017 14:32:39 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Aguilar <davvid@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Christophe Macabiau <christophemacabiau@gmail.com>,
+        Git ML <git@vger.kernel.org>
+Subject: Re: [PATCH] difftool: handle changing symlinks in dir-diff mode
+References: <alpine.DEB.2.20.1703072332370.3767@virtualbox>
+        <20170313175640.14106-1-davvid@gmail.com>
+Date:   Mon, 13 Mar 2017 11:32:38 -0700
+In-Reply-To: <20170313175640.14106-1-davvid@gmail.com> (David Aguilar's
+        message of "Mon, 13 Mar 2017 10:56:40 -0700")
+Message-ID: <xmqqlgs9rprt.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Mon, 13 Mar 2017 11:30:26 -0700 (PDT)
-In-Reply-To: <xmqqo9x5uc9u.fsf@gitster.mtv.corp.google.com>
-References: <20170309210756.105566-1-bmwill@google.com> <20170309210756.105566-2-bmwill@google.com>
- <xmqqo9x5uc9u.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Mar 2017 11:30:26 -0700
-Message-ID: <CAGZ79kYbkpjxJihZMh8W1sutjP1WtSE4FjXU3v-eFPYx0Pu_-g@mail.gmail.com>
-Subject: Re: [PATCH 1/2] pathspec: allow querying for attributes
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6FEDA956-081B-11E7-8336-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> +test_expect_success 'fail if attr magic is used places not implemented' '
->> +     # The main purpose of this test is to check that we actually fail
->> +     # when you attempt to use attr magic in commands that do not implement
->> +     # attr magic. This test does not advocate git-add to stay that way,
->> +     # though, but git-add is convenient as it has its own internal pathspec
->> +     # parsing.
+David Aguilar <davvid@gmail.com> writes:
+
+> Detect the null object ID for symlinks in dir-diff so that difftool can
+> prepare temporary files that matches how git handles symlinks.
 >
-> That's thought-provoking ;-) Would it help to add a test-pathspec
-> helper, similar to test-config helper, that serves as a vehicle to
-> test this?
+> Previously, a null object ID would crash difftool.  We now detect null
+> object IDs and write the symlink's content into the temporary symlink
+> stand-in file.
+>
+> Original-patch-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
 
-I think that is a very good idea; looking through files mentioned by
-"ls t/ |grep pathspec" most of the tests for pathspecs are done with
-git-log currently, which also helps with DWIM checking, e.g. if the
-pathspec part can be interpreted as a ref instead.
+I would have appreciated (and I suspect other reviewers would, too)
+a bit of back-story wrt how "Original-patch-by" resulted in this
+patch after the three-dashes line.  It is perfectly fine if you two
+coordinated privately; I mostly wanted to hear something like "Dscho
+has been working on this and I asked him if it is OK to take over
+his WIP to produce a quick-fix we can ship on the maint branch, here
+is the result of that collaboration."  IOW, the person who is named
+as the original author is fine to be named like so (I care only
+because I do not think we saw the "original" here on the list).
 
-So I wonder if such a test-pathspec helper would first only cover this
-test case of not supporting pathspecs, which sounds a bit counter intuitive.
+> +static int create_symlink_file(struct cache_entry* ce, struct checkout* state)
 
-Thanks,
-Stefan
+Asterisk sticks to variable, not type.
+
+> +{
+> +	/*
+> +	 * Dereference a worktree symlink and writes its contents
+
+s/writes/write/
+
+> +	 * into the checkout state's path.
+> +	 */
+> +	struct strbuf path = STRBUF_INIT;
+> +	struct strbuf link = STRBUF_INIT;
+> +
+> +	int ok = 0;
+> +
+> +	if (strbuf_readlink(&link, ce->name, ce_namelen(ce)) == 0) {
+> +		strbuf_add(&path, state->base_dir, state->base_dir_len);
+> +		strbuf_add(&path, ce->name, ce_namelen(ce));
+> +
+> +		write_file_buf(path.buf, link.buf, link.len);
+
+This does "write content into symlink stand-in file", but why?  A
+symbolic link that is not changed on the right-hand side of the
+comparison (i.e. S_ISLNK(rmode) && !is_null_oid(&roid)) would go to
+checkout_entry() which
+
+ - creates a symbolic link, on a filesystem that supports symlink; or
+ - writes the stand-in file on a filesystem that does not.
+
+which is the right thing.  It seems that the other side of "if (!use_wt_file())"
+if/elseif/... cascade also does the right thing manually.
+
+Shouldn't this helper also do the same (i.e. create symlink and fall
+back to stand-in)?
+
+Also, I am not sure if strbuf_readlink() can unconditionally used
+here.  On a filesystem without symbolic link, the working tree
+entity that corresponds to the ce that represents a symlink is a
+stand-in regular file, so shouldn't we be opening it as a regular
+file and reading its contents in that case?
+
