@@ -2,95 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53F0B20373
-	for <e@80x24.org>; Mon, 13 Mar 2017 20:12:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFEFD20373
+	for <e@80x24.org>; Mon, 13 Mar 2017 20:13:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754185AbdCMUMf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 16:12:35 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50428 "EHLO mout.gmx.net"
+        id S1754275AbdCMUNI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 16:13:08 -0400
+Received: from fester.cwi.nl ([192.16.191.27]:37654 "EHLO fester.cwi.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754148AbdCMUM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 16:12:28 -0400
-Received: from virtualbox ([95.208.58.29]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQRWm-1cfhm43GgO-00TmlW; Mon, 13
- Mar 2017 21:12:20 +0100
-Date:   Mon, 13 Mar 2017 21:12:18 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: [PATCH v6 12/12] setup.c: mention unresolved problems
-In-Reply-To: <cover.1489435755.git.johannes.schindelin@gmx.de>
-Message-ID: <bdfa3845b81531863941e6a97c28eb1afa62dd2c.1489435755.git.johannes.schindelin@gmx.de>
-References: <cover.1489098170.git.johannes.schindelin@gmx.de> <cover.1489435755.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753717AbdCMUNG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 16:13:06 -0400
+Received: from fester.cwi.nl (fester.cwi.nl [192.16.191.27])
+        by fester.cwi.nl (8.14.4/8.12.3) with ESMTP id v2DKCerA021638;
+        Mon, 13 Mar 2017 21:12:40 +0100
+Received: from [192.168.4.61] (541FB48C.cm-5-8c.dynamic.ziggo.nl [84.31.180.140])
+        (authenticated bits=0)
+        by fester.cwi.nl (8.14.4/8.12.3) with ESMTP id v2DKCdYP021630
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+        Mon, 13 Mar 2017 21:12:40 +0100
+Subject: Re: [PATCH] Put sha1dc on a diet
+To:     Jeff King <peff@peff.net>, Dan Shumow <danshu@microsoft.com>
+References: <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net>
+ <CA+55aFwf3sxKW+dGTMjNAeHMOf=rvctEQohm+rbhEb=e3KLpHw@mail.gmail.com>
+ <20170301203427.e5xa5ej3czli7c3o@sigill.intra.peff.net>
+ <CA+55aFz4ixVKVURki8FeXjL5H51A_cQXsZpzKJ-N9n574Yy1rg@mail.gmail.com>
+ <CY1PR0301MB21073D82F4A6AB0DAD8BF1FCC4280@CY1PR0301MB2107.namprd03.prod.outlook.com>
+ <xmqq1suge1jn.fsf@gitster.mtv.corp.google.com>
+ <CY1PR0301MB2107112BCC2DECD215E70549C42A0@CY1PR0301MB2107.namprd03.prod.outlook.com>
+ <20170313151322.ouryghyb5orkpk5g@sigill.intra.peff.net>
+ <CY1PR0301MB2107B3C5131D5DC7F91A0147C4250@CY1PR0301MB2107.namprd03.prod.outlook.com>
+ <CY1PR0301MB2107876B6E47FBCF03AB1EA1C4250@CY1PR0301MB2107.namprd03.prod.outlook.com>
+ <20170313194848.2z2dlgpomu6e3dkh@sigill.intra.peff.net>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+From:   Marc Stevens <marc.stevens@cwi.nl>
+Message-ID: <1e6a592f-7da1-8043-0b29-0bb7c8cda3f3@cwi.nl>
+Date:   Mon, 13 Mar 2017 21:12:34 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XNl+8pZjJFa+M9C37ps4khjD+TeHzYibx09kLkb9fMIK1heI+PU
- QSKmVXZGpBI2aw4+0UTwlN6f8vv/mDeW6bSJ/EZuht/jr0MlIUWpS1Tf6kgqj4iGv30jO4D
- 1bIkZ39Vd0YwKWzXeZ33rxt+Omh1JIFhx4zqNN/+3+B1Wq96nOGq8U9z3CjhU1je/63viLM
- VPOqPc+UIRdgj0DSo0XPg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:g7HL0QaHHp0=:MSL0ObppO+7vxkO4wUJp9X
- umkqsLvJTQai7vSKuPVXO4Q+2lVL66toLAd/o3URTJu8aJWTN8dAJPvGLY3OQq0Sl7orEOlVw
- 9SMnXp45rLWYxH8+rmKf5mJUwze+Dj22P9CiCVthHAgPHxF2eNa5Hy2NE+BmrL9tNUHnydq3s
- Bb7+aDuBtRbh/GlTB+uC8cQXZroTLGgQAX+QSjaEM2BYvcN0q7krTwY3h9tUoK2RqLCvpqCpD
- ATVpbLwQf+LLTnRDJmOXw89JyTibqIuBFGqAuHmUvdZ7aGdWt6qCKdXL3xEZ7ZucAIPlWbGe1
- 02INThPmP0luwryy1sfW0nnaiJqC1iaQpj04W46mLqmUTbM5Rf5W/ONqhCQKQSdp7kIY6fYB4
- FXURep3ByX4PiMjWRLDllphewSiIBA+AcH5iwlNUUfaxnxiBwGuV6XEZ8C6ThW1IVTWyCWdP3
- 3fckcs2/RlZfGuopgUFrqTYv7+IqYgpCkQR8UY9v4L1Ru22+nKacJ2TEy+BU2YJzb9fC8S8R2
- sDJkeQTk46k1ultudTw5VndNM3HcnpnwGqKOykp3E7H99Ld51HrUTVbFRzmin4B/B8qoI7ADT
- hlqY3KI4XOw3t23AeXOZ4potgPjabXD1l0hOl2U3k0FEY+t8a75hURNkFAXwTntwBZmk5nbpA
- RnjiCw6sxqnw55yhr8TEFurCmt9stlT0BYIje/aD1QOOTuF689y/Wynd9P94rJUoh9v4ltmuu
- vNwlZiR8peRzTOAwjQQNUpx85RvnVnuyh7f3qOQDeAlNUMQkGNdUTj7L0NAQa6wOm/zNstcfG
- IsqZ7Za
+In-Reply-To: <20170313194848.2z2dlgpomu6e3dkh@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During the review of the `early-config` patch series, two issues have
-been identified that have been with us forever.
+Indeed, I've committed a fix, and a small bug fix for the new code just now.
 
-The idea of that patch series was to fix the hard-coded (and sometimes
-wrong) .git/config path when looking for the pager configurations. To
-that end, the patches refactor the helper functions behind the
-functionality of setup_git_directory(), to make it reusable without
-changing any global state. Not to change said functionality.
+The merge incorrectly removed some control logic,
+which caused more unnecessary checks to happen.
+I already marked this in the PR, but committed a fix only today.
 
-So let's just mark the identified problems for later so that we do not
-forget them.
+BTW as noted in the Readme, the theoretic false positive probability is
+<<2^-90, almost non-existent.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- setup.c | 2 ++
- 1 file changed, 2 insertions(+)
+Best regards,
+Marc Stevens
 
-diff --git a/setup.c b/setup.c
-index f31abf8a990..64f922a9378 100644
---- a/setup.c
-+++ b/setup.c
-@@ -531,6 +531,7 @@ const char *read_gitfile_gently(const char *path, int *return_error_code)
- 	ssize_t len;
- 
- 	if (stat(path, &st)) {
-+		/* NEEDSWORK: discern between ENOENT vs other errors */
- 		error_code = READ_GITFILE_ERR_STAT_FAILED;
- 		goto cleanup_return;
- 	}
-@@ -902,6 +903,7 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
- 		if (!gitdirenv) {
- 			if (die_on_error ||
- 			    error_code == READ_GITFILE_ERR_NOT_A_FILE) {
-+				/* NEEDSWORK: fail if .git is not file nor dir */
- 				if (is_git_directory(dir->buf))
- 					gitdirenv = DEFAULT_GIT_DIR_ENVIRONMENT;
- 			} else if (error_code != READ_GITFILE_ERR_STAT_FAILED)
--- 
-2.12.0.windows.1.7.g94dafc3b124
+
+On 3/13/2017 8:48 PM, Jeff King wrote:
+> On Mon, Mar 13, 2017 at 07:42:17PM +0000, Dan Shumow wrote:
+>
+>> Marc just made a commit this morning fixing problems with the merge.
+>> Please give the latest in feature/performance a try, as that seems to
+>> eliminate the problem.
+> Yeah, b17728507 makes the problem go away for me. Thanks.
+>
+> FWIW, I have all sha1s on github.com running through this right now
+> (actually, the ad744c8b7 version), and logging any false-positives on
+> the collision detection. Nothing so far, after a few hours.
+>
+> -Peff
+
