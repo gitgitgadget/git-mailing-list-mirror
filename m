@@ -2,77 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8061F1FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 14:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50C851FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 14:46:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751359AbdCMOWJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 10:22:09 -0400
-Received: from mail-ot0-f170.google.com ([74.125.82.170]:33909 "EHLO
-        mail-ot0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751356AbdCMOWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 10:22:07 -0400
-Received: by mail-ot0-f170.google.com with SMTP id o24so113172453otb.1
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 07:22:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ibsX/IXfUWs8VoFhHzAyCc0HK9FcJ55QopmSdbB5vhQ=;
-        b=BQIz+OSl+hY2T+IZvsV1kvg+cszJFRb/buauzde6BPD9wDTorvemjQA+/Ah2bHVxfk
-         B4L8wlLsfdo4h4cfk6km3wUanv+hujFe6rjjQvt9ia1YH3n7NVUv1EOi4TiA/MPGMu8h
-         HJoJNO6tA1ugEPv0MTraVGd5a/HMCI2SVfPrES/vM15SYWRtDdQDAvJxlLY6iIY+Av8N
-         GxMPRzQ61Cv0OT8rGHOi6nMYAX4J2WWhZVwa1kbPLBjXqYElW5iVPqIef1pOwgybzPBA
-         nwObFu7G0SQeLtfQnGVNpws8fyx7wxeerYA82byzySvvTvUvITWHp4YebzMv1Mz21uT4
-         OiXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ibsX/IXfUWs8VoFhHzAyCc0HK9FcJ55QopmSdbB5vhQ=;
-        b=cyEKEdaXvQ7d6n1boQZJ43w6amND0eaKG9hXMq5MFP5ErtojujU5mU8sZpyBSJXOzS
-         vmR++2/x4L6W99Dz0csApAPjIAT+7vFi9tfap/v/OFd4VMl3Oym4CiPjeX+XFLetj2cg
-         UhwWWFFqCJX5FznK2CCBmElnXl2sVBCD/K9Uo9qO9pxDJ0jIKYD9kV0xJk30qEYhgpLs
-         A1DCqvJd3NLklEjshHWfjpZvFdchtyAUG69M4E9iZ9dTAdeuJLlzEJw5EVaK5wk1YlqE
-         mOSI5Fnd4IGHkak1hUjbOKauYsiIsKI4kUy+35ENA9ts28Yc1stkrT53hs7cFHO40zHA
-         vLBA==
-X-Gm-Message-State: AFeK/H3yrKn6Zz8W72hlaKrB4lLj5iuax40brWxM2V0sB6O6g7gFMFGIyKVnAzIDf9nqqzzdl6criUUbboog/g==
-X-Received: by 10.157.89.143 with SMTP id u15mr16996461oth.176.1489414926309;
- Mon, 13 Mar 2017 07:22:06 -0700 (PDT)
+        id S1753071AbdCMOpx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 10:45:53 -0400
+Received: from ext-scottmail.afnoc.af.mil ([131.9.253.48]:55054 "EHLO
+        SCOTT-MAIL4.AFNOC.AF.MIL" rhost-flags-OK-FAIL-OK-OK)
+        by vger.kernel.org with ESMTP id S1751548AbdCMOps (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Mar 2017 10:45:48 -0400
+X-Greylist: delayed 672 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Mar 2017 10:45:48 EDT
+Received-SPF: pass (us.af.mil: domain of us.af.mil designates 131.15.70.111 as permitted sender) client-ip=131.15.70.111; envelope-from=roger.collins@us.af.mil; helo=us.af.mil;
+Received: from us.af.mil (unknown [131.15.70.111]) by SCOTT-MAIL4.AFNOC.AF.MIL with smtp
+        (TLS: TLSv1/SSLv3,256bits,DHE-RSA-AES256-SHA)
+         id 1d6a_b95b_9d7ab28c_49b2_4497_af71_29f90aff3720;
+        Mon, 13 Mar 2017 14:34:33 +0000
+Received: from ([131.15.68.156])
+        by 52tdkp-mr-005.us.af.mil with ESMTP with TLS id 9ML2FN1.196573176;
+        Mon, 13 Mar 2017 08:34:24 -0600
+Received: from 52ZHTX-D04-02B.AREA52.AFNOAPPS.USAF.MIL (131.27.55.17) by
+ 52TDKP-D02-02A.area52.afnoapps.usaf.mil (131.15.68.156) with Microsoft SMTP
+ Server (TLS) id 14.3.319.2; Mon, 13 Mar 2017 08:34:23 -0600
+Received: from 52ZHTX-D03-05E.AREA52.AFNOAPPS.USAF.MIL ([169.254.5.15]) by
+ 52ZHTX-D04-02B.area52.afnoapps.usaf.mil ([169.254.2.36]) with mapi id
+ 14.03.0319.002; Mon, 13 Mar 2017 10:34:23 -0400
+From:   "COLLINS, ROGER W GG-12 USAF NASIC/SCPW" <roger.collins@us.af.mil>
+To:     Stefan Beller <sbeller@google.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Git Vendor Support
+Thread-Topic: Git Vendor Support
+Thread-Index: AdKZuP7shJETug9HRl2RJzx5l85V8AALwoaAAAa4SYA=
+Date:   Mon, 13 Mar 2017 14:34:23 +0000
+Message-ID: <C81F618483B6A04381181BA5435FB9706CFF7611@52ZHTX-D03-05E.area52.afnoapps.usaf.mil>
+References: <C81F618483B6A04381181BA5435FB9706A70191B@52ZHTX-D03-05E.area52.afnoapps.usaf.mil>
+ <CAGZ79kY1Z_Bj3AJU3G2A60XULSAKDEkwmC74JxiANTPHXo0Bng@mail.gmail.com>
+In-Reply-To: <CAGZ79kY1Z_Bj3AJU3G2A60XULSAKDEkwmC74JxiANTPHXo0Bng@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [131.27.49.14]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Received: by 10.157.66.23 with HTTP; Mon, 13 Mar 2017 07:22:05 -0700 (PDT)
-From:   Christian Jaeger <chrjae@gmail.com>
-Date:   Mon, 13 Mar 2017 14:22:05 +0000
-Message-ID: <CAEjYwfWP50JGd7HmP4hVq=Fob3nV0xqc9AuJ0wHreq4HTeSsWw@mail.gmail.com>
-Subject: [ANNOUNCE] git-sign, simple scripts to generate and verify securely
- signed Git checkouts
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi
-
-Mostly as a proof of concept, I've created two scripts to sign and
-verify Git checkouts (I'm saying checkouts since it (both for
-simplicity, and probably trust) is based on the working directory
-contents, not the tree referred to by the signed commit). Like some
-other such solutions, this adds secure hashes to the signed tag
-message. There are two drawbacks and one advantage versus other
-solutions:
-
-- meant for small repositories only (each file in the repository takes
-up a line in the tag message)
-- relatively hacky, e.g. newlines in file names may be problematic,
-doesn't currently use gpg's --status-fd or --with-colons, and doesn't
-check git config
-+ easily verifiable scripts, checking can even be done manually (hence
-no need for casual users to (blindly) trust third party code)
-
-https://github.com/pflanze/git-sign
-
-Christian.
+VGhhbmtzIGZvciB0aGUgcmVwbHkhDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZy
+b206IFN0ZWZhbiBCZWxsZXIgW21haWx0bzpzYmVsbGVyQGdvb2dsZS5jb21dIA0KU2VudDogRnJp
+ZGF5LCBNYXJjaCAxMCwgMjAxNyAxMTo0OCBBTQ0KVG86IENPTExJTlMsIFJPR0VSIFcgR0ctMTIg
+VVNBRiBOQVNJQy9TQ1BXIDxyb2dlci5jb2xsaW5zQHVzLmFmLm1pbD4NCkNjOiBnaXRAdmdlci5r
+ZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogR2l0IFZlbmRvciBTdXBwb3J0DQoNCk9uIEZyaSwgTWFy
+IDEwLCAyMDE3IGF0IDg6MTMgQU0sIENPTExJTlMsIFJPR0VSIFcgR0ctMTIgVVNBRiBOQVNJQy9T
+Q1BXIDxyb2dlci5jb2xsaW5zQHVzLmFmLm1pbD4gd3JvdGU6DQo+IEFMQ09OLA0KPg0KPiBJcyB0
+aGVyZSBpcyBhIHNwZWNpZmljIGdyb3VwIG9yIHZlbmRvciBiYWNraW5nIEdpdD8NCg0KaHR0cHM6
+Ly9zZmNvbnNlcnZhbmN5Lm9yZy8gdGFrZXMgY2FyZSBvZiB0aGUgZmluYW5jaWFsIG5lZWRzIG9m
+IHRoZSBjb21tdW5pdHkuDQoNCj4gYWN0aXZlIHN1cHBvcnQNCg0KSSBndWVzcyBjb21wYW5pZXMg
+dGhhdCBtYWtlIG1vbmV5IHByaW1hcmlseSB2aWEgR2l0IGhvc3RpbmcgKGUuZy4gb25lIG9mIEdp
+dGh1YiwgR2l0TGFiLCBBdGxhc3NpYW4sIEJpdGJ1Y2tldCkgKm1heSogYmUgaW50ZXJlc3RlZCBp
+biBhY3RpdmUgc3VwcG9ydC4NCg0KVGhhbmtzLA0KU3RlZmFuDQo=
