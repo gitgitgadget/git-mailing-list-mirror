@@ -2,203 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEC021FC43
-	for <e@80x24.org>; Mon, 13 Mar 2017 18:23:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9F6D1FC43
+	for <e@80x24.org>; Mon, 13 Mar 2017 18:25:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752284AbdCMSXg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 14:23:36 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:35372 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751703AbdCMSXb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 14:23:31 -0400
-Received: by mail-pg0-f45.google.com with SMTP id b129so66925333pgc.2
-        for <git@vger.kernel.org>; Mon, 13 Mar 2017 11:23:30 -0700 (PDT)
+        id S1752001AbdCMSZC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 14:25:02 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:34992 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750808AbdCMSZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 14:25:00 -0400
+Received: by mail-pg0-f43.google.com with SMTP id b129so66955328pgc.2
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 11:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=F7Ej8dznBekfaF0ePsn0XNgA9A01qUfRFsT/38vwkUM=;
-        b=KOkWiqK7XlAtPYRb7mBBgos97VNjXhWGbHbGf/rkV3C3f5ciw3KVXzqG3Af/oy/42+
-         St+P45rE9n8ZjLSyafcTEG1bnKiN6teaXtl4JDR8DQ9uTRTOlhHeCegUSyYXMMM3wknX
-         O05JJ8A3ICj3whGlEatgA79hytk6bbA+3kQ3IDmBbKDMz+hrn89r0FgszUHu+A/xAjJL
-         G3BQuapMh06XdFxP7LcBLLRYZjWt/b2jcr16E4o2uuqwRkXMsgkHZahpFqbExZoT+XQ8
-         Spb29X53ordM3AGERSb/yCkt02AqRCi3QBzL2RxA6E/bVpDh5R3GiD5KoKbvwzY4Bq2f
-         0iSA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kKfkqYEs4QvOSLRR3SjQ/Uh/VxIr2eQPEmg/U+WlP8s=;
+        b=KpFp81LtKiSTG7dfjnyC6FJE8purbyJ2sNo/pxUaeZvNkKPJXqBekpB69MGCukhjcO
+         9kcgOYMPwllzQPLgH7NvrnLofnCVTNGTJjPVA2PL26/bff5m/+sH1Q20/BHDwXxRQPHI
+         qsvgq7nothoyGG/stEgLqUEtnspm2Wo/Dv6O2ZETUE0yoFwtK2uZhSjaki+guKnwSXGL
+         j3C/aW/F/Gjvcohc+iw2g9x6ElDgLoqJg3to6+0XavdwWayHkO6MUrVLhSemXsCmVn7s
+         sysSsiP8d74zwmvAJc2374gU62ERx/AyCupKyoPGI3IAT1cfA9OvADp+a8qSIkrMQyf2
+         nCHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=F7Ej8dznBekfaF0ePsn0XNgA9A01qUfRFsT/38vwkUM=;
-        b=NZiNTjtxEk/2DhJycfUu/SKfXzZQOdnUtRLLw1HPUPQWSYZV18Ux2AHjfY+r6IujZ9
-         kHwRk3rIkyXyVd2AREO0DxATlXAJIMbphZp+nqDOsZoDw6bCkaNzKwuKvOe0MYef69x/
-         AqW1TBwEJX6SBZv7fuN/r672nLCWD8HX88OGX549YRR391tgzuk5L3GYkHmd0CGcz+3o
-         aYX8Jyg5UvAKWakd6ei83IxjIBZ8ROIktIi1kAVfn6tKia2XZVbCoB+vECSLl0WRjMpu
-         oFTmdScxcHR2lxR+1ULTrZ3LU+C0yY2DbRECJuXEP7KbyfTCw933E70ob5QX/rqKf6qm
-         W0og==
-X-Gm-Message-State: AMke39mdXk55eRZ7PxotvIzcRp2YOA11rlpFLTfHDxkwENtzcBb6JFSXPS0joCIgHxjUhOFj
-X-Received: by 10.84.136.34 with SMTP id 31mr49229687plk.52.1489429410125;
-        Mon, 13 Mar 2017 11:23:30 -0700 (PDT)
-Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id z4sm22875320pge.49.2017.03.13.11.23.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 13 Mar 2017 11:23:29 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
-        pclouds@gmail.com, jonathantanmy@google.com
-Subject: [PATCH v3 2/2] pathspec: allow escaped query values
-Date:   Mon, 13 Mar 2017 11:23:22 -0700
-Message-Id: <20170313182322.27539-3-bmwill@google.com>
-X-Mailer: git-send-email 2.12.0.246.ga2ecc84866-goog
-In-Reply-To: <20170313182322.27539-1-bmwill@google.com>
-References: <20170310185908.171589-1-bmwill@google.com>
- <20170313182322.27539-1-bmwill@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kKfkqYEs4QvOSLRR3SjQ/Uh/VxIr2eQPEmg/U+WlP8s=;
+        b=kjz0N4I09MZwLa5VfQ4cyoZFTwR8C+QmaqycFr2hb1Jq65Bn4NQRP+ZiPkEqJ2LJFM
+         9ywMIEItJvVusHy4vWQkZUnOHkM8pxeHRemVImrxkC2bVQVAq9oDvpWRW6bwY7An0p0i
+         +2T3hXSFzZr9vCLkf8KcJ4al7msW/N1uR7DWaK8Rqk1xMBeJx2NTXrTja2bqToIqwTDx
+         edDpexQk/M6y4q/U2y20sA/wDLkbkh7/pxszpX9XwKNowezPbQbuBEHPoG34ShSidX4r
+         LH++ExqRQWk4tCXSjKGpCrGZ/sgAdn5Pma/6Bh0W/p9K0RUTeT7mWLgzLZxBfzxVNOLo
+         Q0CA==
+X-Gm-Message-State: AMke39mKyEVdK6Vevl+BR80hJLCvNTGB+HctUGa9roySxBcEWljy2jHE4/UUq3cIExIIOk2BCOc8xpGHMeS+6UlB
+X-Received: by 10.99.98.6 with SMTP id w6mr38361093pgb.223.1489429499254; Mon,
+ 13 Mar 2017 11:24:59 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.187.5 with HTTP; Mon, 13 Mar 2017 11:24:58 -0700 (PDT)
+In-Reply-To: <20170310211348.18887-1-me@vtolstov.org>
+References: <20170310193040.16816-1-me@vtolstov.org> <20170310211348.18887-1-me@vtolstov.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Mar 2017 11:24:58 -0700
+Message-ID: <CAGZ79kbLr=aSu-g83obmj3XCMMYbuody6Q_FreCmQcqpyX+_rQ@mail.gmail.com>
+Subject: Re: [GSoC] Discussion of "Submodule related work" project
+To:     Valery Tolstov <me@vtolstov.org>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In our own .gitattributes file we have attributes such as:
+> So... I thought those items listed in "Submodule related work" are
+> considered too small to be complete projects separately, and they
+> are just "subprojects" of bigger project (maybe I have this thought
+> because I can't estimate complexity before truly digging in).
 
-    *.[ch] whitespace=indent,trail,space
+When writing these points, I was not sure about the complexity
+myself, but rather I wanted to produce a lot of different potential
+projects, which can be discussed if they sound exciting and are
+of good size.
 
-When querying for attributes we want to be able to ask for the exact
-value, i.e.
+> In your response you talk about them as independent projects...
+> This means I can take only any one of them as starting point for
+> my proposal? Or maybe I misunderstood you?
 
-    git ls-files :(attr:whitespace=indent,trail,space)
+Well I think some of them are too small to stand alone for a full GSoC
+project. Others have a good size and complexity for GSoC already.
 
-should work, but the commas are used in the attr magic to introduce
-the next attr, such that this query currently fails with
+> If it is true, than i'll try to take sh->C transition for submodule
+> command,
 
-fatal: Invalid pathspec magic 'trail' in ':(attr:whitespace=indent,trail,space)'
+For shell -> C transitions, see
+65e1449614d
+b7d2a15b9f5
+307de75c4
+dec034a34e
+as all of them are rewrites from sh -> C for different commands.
+You might find common patterns (e.g. what is all needed for a conversion,
+such as slight updates to tests or documentation; certainly updating
+the build process in the Makefile, and of course the code translated).
 
-This change allows escaping characters by a backslash, such that the query
+Most of these conversions, start out with a patch that is quite a literal
+translation and then afterwards add in optimizations.
 
-    git ls-files :(attr:whitespace=indent\,trail\,space)
+Another approach for the conversion is outlined in73c2779f42
+(builtin-am: implement skeletal builtin am).  I am not sure how
+easy this approach is for a submodule specific command.
 
-will match all path that have the value "indent,trail,space" for the
-whitespace attribute. To accomplish this, we need to modify two places.
-First `parse_long_magic` needs to not stop early upon seeing a comma or
-closing paren that is escaped. As a second step we need to remove any
-escaping from the attr value.
+> and as addirional part of my whole project also this:
+> https://public-inbox.org/git/1488913150.8812.0@smtp.yandex.ru/T/
 
-Based on a patch by Stefan Beller <sbeller@google.com>
+Yeah, that is also a good task :) Thanks for bringing it up.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- pathspec.c                     | 52 ++++++++++++++++++++++++++++++++++++++----
- t/t6135-pathspec-with-attrs.sh | 19 +++++++++++++++
- 2 files changed, 67 insertions(+), 4 deletions(-)
+> Does it sound good? If does, then I'll begin to work on my proposal.
 
-diff --git a/pathspec.c b/pathspec.c
-index 608511c52..303efda83 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -89,6 +89,51 @@ static void prefix_magic(struct strbuf *sb, int prefixlen, unsigned magic)
- 	strbuf_addf(sb, ",prefix:%d)", prefixlen);
- }
- 
-+static size_t strcspn_escaped(const char *s, const char *stop)
-+{
-+	const char *i;
-+
-+	for (i = s; *i; i++) {
-+		/* skip the escaped character */
-+		if (i[0] == '\\' && i[1]) {
-+			i++;
-+			continue;
-+		}
-+
-+		if (strchr(stop, *i))
-+			break;
-+	}
-+	return i - s;
-+}
-+
-+static inline int invalid_value_char(const char ch)
-+{
-+	if (isalnum(ch) || strchr(",-_", ch))
-+		return 0;
-+	return -1;
-+}
-+
-+static char *attr_value_unescape(const char *value)
-+{
-+	const char *src;
-+	char *dst, *ret;
-+
-+	ret = xmallocz(strlen(value));
-+	for (src = value, dst = ret; *src; src++, dst++) {
-+		if (*src == '\\') {
-+			if (!src[1])
-+				die(_("Escape character '\\' not allowed as "
-+				      "last character in attr value"));
-+			src++;
-+		}
-+		if (invalid_value_char(*src))
-+			die("cannot use '%c' for value matching", *src);
-+		*dst = *src;
-+	}
-+	*dst = '\0';
-+	return ret;
-+}
-+
- static void parse_pathspec_attr_match(struct pathspec_item *item, const char *value)
- {
- 	struct string_list_item *si;
-@@ -131,10 +176,9 @@ static void parse_pathspec_attr_match(struct pathspec_item *item, const char *va
- 			if (attr[attr_len] != '=')
- 				am->match_mode = MATCH_SET;
- 			else {
-+				const char *v = &attr[attr_len + 1];
- 				am->match_mode = MATCH_VALUE;
--				am->value = xstrdup(&attr[attr_len + 1]);
--				if (strchr(am->value, '\\'))
--					die(_("attr spec values must not contain backslashes"));
-+				am->value = attr_value_unescape(v);
- 			}
- 			break;
- 		}
-@@ -239,7 +283,7 @@ static const char *parse_long_magic(unsigned *magic, int *prefix_len,
- 	const char *nextat;
- 
- 	for (pos = elem + 2; *pos && *pos != ')'; pos = nextat) {
--		size_t len = strcspn(pos, ",)");
-+		size_t len = strcspn_escaped(pos, ",)");
- 		int i;
- 
- 		if (pos[len] == ',')
-diff --git a/t/t6135-pathspec-with-attrs.sh b/t/t6135-pathspec-with-attrs.sh
-index 3f06fcf8d..77b8cef66 100755
---- a/t/t6135-pathspec-with-attrs.sh
-+++ b/t/t6135-pathspec-with-attrs.sh
-@@ -178,4 +178,23 @@ test_expect_success 'abort on asking for wrong magic' '
- 	test_must_fail git ls-files . ":(attr:!label=foo)"
- '
- 
-+test_expect_success 'check attribute list' '
-+	cat <<-EOF >>.gitattributes &&
-+	* whitespace=indent,trail,space
-+	EOF
-+	git ls-files ":(attr:whitespace=indent\,trail\,space)" >actual &&
-+	git ls-files >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'backslash cannot be the last character' '
-+	test_must_fail git ls-files ":(attr:label=foo\\ labelA=bar)" 2>actual &&
-+	test_i18ngrep "not allowed as last character in attr value" actual
-+'
-+
-+test_expect_success 'backslash cannot be used as a value' '
-+	test_must_fail git ls-files ":(attr:label=f\\\oo)" 2>actual &&
-+	test_i18ngrep "for value matching" actual
-+'
-+
- test_done
--- 
-2.12.0.246.ga2ecc84866-goog
+Sure.
 
+Thanks,
+Stefan
