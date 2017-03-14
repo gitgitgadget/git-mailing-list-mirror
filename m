@@ -7,54 +7,53 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC11520951
-	for <e@80x24.org>; Tue, 14 Mar 2017 21:46:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67B2520953
+	for <e@80x24.org>; Tue, 14 Mar 2017 21:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751853AbdCNVq5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 17:46:57 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:36024 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751239AbdCNVqx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 17:46:53 -0400
-Received: by mail-pg0-f42.google.com with SMTP id g2so79008151pge.3
-        for <git@vger.kernel.org>; Tue, 14 Mar 2017 14:46:53 -0700 (PDT)
+        id S1752010AbdCNVq7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 17:46:59 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:32993 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750965AbdCNVq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 17:46:56 -0400
+Received: by mail-pg0-f45.google.com with SMTP id n190so7621797pga.0
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 14:46:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=oESNxshky/2hB2RwQWILlVeOSE1QSewr3/tnR4m3E/g=;
-        b=ege8BLCaEbJgTDCeNJNUHNLBZtga4GT24/VGtaEYZzKH+pbYVeqVkJ6Fcb7Zp/9cF6
-         0Jbx7ccbuasBu9hfVfTPokZhWh0DqUjIeWsu3SP8ucYF70a4DEHoXPo7F0a7GxZKOC4g
-         jbpENRIsUrnskGR0PA8r/gNhY5xhY3dyEsubC/n2MOGzR9XiRIzq0MzCw4oDkhy5qpz5
-         UwLMuJQe27dwBNtnDIjiD6AGKd4sJE3c/xy46cptt5U2Z+px8WjVF9DZY3jp7R+DCD7d
-         qlns+oOR5B8XFTQRrx4DuotD/J0mUgEbAcmUdxUEfFpkEnS1ibxxirwoJnrhiC83aQz0
-         Fj8A==
+        bh=wH8fqDcr/dk62+/PAT29m0fS6KGSgnU1d/+DZIyIY7Q=;
+        b=S0SY3KLOINSymZRfIYGK9NuVQwWfEeLsgJ9/twEM0ofEtUWIp6oWGj1Nq/GbH3VQNm
+         gThEP5yzxNpINu63zaM7GciNiNseFYUu4BlOmPA1r29QAmaZzoxK5alJeaIkJT6uljAt
+         oWmGLZmZ2TjNEFTt9G+FhwSzg5MZQhDtvUpEVstxESn52tChuvgiCEVi3c4kFxJgQGu1
+         RKu9VuIeG9uEVgjWhBwhSrO+wYYPW5R3u3xT+o2epHfI51CxRgky0A/pSh5OoWCcPexi
+         AHSDDFWtx4OI5br1eWIboZTfgafazlfUJqG5hJV3+5UUuiAddHk78uQUd8SvfSJbpA/E
+         Kv2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=oESNxshky/2hB2RwQWILlVeOSE1QSewr3/tnR4m3E/g=;
-        b=BkvZMhZyiBAGqtVyzZdtw82mMJ90pTfvttrQyT9cSTiZYO5f+tSvaJGW+v4Qqymmj9
-         031rqJbr7NhBRO/r1NZMIFuYSXk5jHsmMkMWXhYmyQRuevL4e82lQJOviSnW8AaphMpQ
-         gLDiHxo9XFImfNPNRhS8G988qWbmPBulONr192/sjaWF2bGQe2tzQO9js6TcD4NY5/iQ
-         6ElTQBZSz6kuWg+WvgZZkG083fpcg3Fr6DTr4iX4YWQeApXuF2+ANUgJ0OZtrDd31S7d
-         Ie6OYVOngCWqIhkmYVolgiqyT2bZHIg6FlavLrVdl55FiC/QLhw9ijvkltqVb0YIYx0w
-         x3tA==
-X-Gm-Message-State: AMke39mZ4o2pK+90P2LVTGNik4vqlLN9BfnQkRq+8e1aOz27daHqUeycXj1h+xQuhjYSoUqF
-X-Received: by 10.99.241.83 with SMTP id o19mr45446305pgk.81.1489528012486;
-        Tue, 14 Mar 2017 14:46:52 -0700 (PDT)
+        bh=wH8fqDcr/dk62+/PAT29m0fS6KGSgnU1d/+DZIyIY7Q=;
+        b=VZQewJW31zGGYOwQ7jYH7gezlYytDdkkqxnzi9fhZ1kSpV4RHr1+EtrLXLbXoB1Ea0
+         L2h/lP65ffUcNR93BGAe4qqCzsjKIWZCMwNbE+mgV5qqVFBLjTTbiolNuBwtvTwWs91E
+         AZEYG+EFHr00kU5/xUBX9vQRp3lDb67B6k7/NpWLD8GS1jIIXXAQOiFeecNBoppFaxd1
+         Iizp0WuLTj/K1AGE7vy0O5X6fGdxapkgdOTpjLIcqwbN33CGAmDzeAm8xxVryWEsV4rw
+         v+uY0urEbO6ZBl0VnWeQoxKgqjxv+s/Mj4nc3EKPbpYurvIfeQNtpU3vPJgLkVvfRM25
+         sh/A==
+X-Gm-Message-State: AMke39n1OwfCFXAk9XH4Izt/8YN8CXvysGabATHn0SEHqt+XzNKbg6zJIsHZpgahgJFnRkNS
+X-Received: by 10.99.163.110 with SMTP id v46mr44558852pgn.171.1489528014612;
+        Tue, 14 Mar 2017 14:46:54 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:8559:2c0d:dab3:f802])
-        by smtp.gmail.com with ESMTPSA id m6sm40258303pfm.22.2017.03.14.14.46.51
+        by smtp.gmail.com with ESMTPSA id 187sm40329149pff.17.2017.03.14.14.46.53
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Mar 2017 14:46:51 -0700 (PDT)
+        Tue, 14 Mar 2017 14:46:54 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com, gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
-        jrnieder@gmail.com, ramsay@ramsayjones.plus.com,
-        Valery Tolstov <me@vtolstov.org>
-Subject: [PATCH 02/19] submodule--helper.c: remove duplicate code
-Date:   Tue, 14 Mar 2017 14:46:25 -0700
-Message-Id: <20170314214642.7701-3-sbeller@google.com>
+        jrnieder@gmail.com, ramsay@ramsayjones.plus.com
+Subject: [PATCH 04/19] lib-submodule-update.sh: do not use ./. as submodule remote
+Date:   Tue, 14 Mar 2017 14:46:27 -0700
+Message-Id: <20170314214642.7701-5-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.49.g0cfd38c5f6.dirty
 In-Reply-To: <20170314214642.7701-1-sbeller@google.com>
 References: <20170309221543.15897-1-sbeller@google.com>
@@ -64,71 +63,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Valery Tolstov <me@vtolstov.org>
+Adding the repository itself as a submodule does not make sense in the
+real world. In our test suite we used to do that out of convenience in
+some tests as the current repository has easiest access for setting up
+'just a submodule'.
 
-Remove code fragment from module_clone that duplicates functionality
-of connect_work_tree_and_git_dir in dir.c
+However this doesn't quite test the real world, so let's do not follow
+this pattern any further and actually create an independent repository
+that we can use as a submodule.
 
-Signed-off-by: Valery Tolstov <me@vtolstov.org>
-Reviewed-by: Brandon Williams <bmwill@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+When using './.' as the remote the superproject and submodule share the
+same objects, such that testing if a given sha1 is a valid commit works
+in either repository.  As running commands in an unpopulated submodule
+fall back to the superproject, this happens in `reset_work_tree_to`
+to determine if we need to populate the submodule. Fix this bug by
+checking in the actual remote now.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/submodule--helper.c | 22 ++--------------------
- 1 file changed, 2 insertions(+), 20 deletions(-)
+ t/lib-submodule-update.sh | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 899dc334e3..86bafe1660 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -579,9 +579,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	const char *name = NULL, *url = NULL, *depth = NULL;
- 	int quiet = 0;
- 	int progress = 0;
--	FILE *submodule_dot_git;
- 	char *p, *path = NULL, *sm_gitdir;
--	struct strbuf rel_path = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct string_list reference = STRING_LIST_INIT_NODUP;
- 	char *sm_alternate = NULL, *error_strategy = NULL;
-@@ -653,27 +651,12 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 		strbuf_reset(&sb);
- 	}
+diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+index 5df528ea81..c0d6325133 100755
+--- a/t/lib-submodule-update.sh
++++ b/t/lib-submodule-update.sh
+@@ -37,6 +37,17 @@
+ #
  
--	/* Write a .git file in the submodule to redirect to the superproject. */
--	strbuf_addf(&sb, "%s/.git", path);
--	if (safe_create_leading_directories_const(sb.buf) < 0)
--		die(_("could not create leading directories of '%s'"), sb.buf);
--	submodule_dot_git = fopen(sb.buf, "w");
--	if (!submodule_dot_git)
--		die_errno(_("cannot open file '%s'"), sb.buf);
--
--	fprintf_or_die(submodule_dot_git, "gitdir: %s\n",
--		       relative_path(sm_gitdir, path, &rel_path));
--	if (fclose(submodule_dot_git))
--		die(_("could not close file %s"), sb.buf);
--	strbuf_reset(&sb);
--	strbuf_reset(&rel_path);
-+	/* Connect module worktree and git dir */
-+	connect_work_tree_and_git_dir(path, sm_gitdir);
+ create_lib_submodule_repo () {
++	git init submodule_update_sub1 &&
++	(
++		cd submodule_update_sub1 &&
++		echo "expect" >>.gitignore &&
++		echo "actual" >>.gitignore &&
++		echo "x" >file1 &&
++		echo "y" >file2 &&
++		git add .gitignore file1 file2 &&
++		git commit -m "Base inside first submodule" &&
++		git branch "no_submodule"
++	) &&
+ 	git init submodule_update_repo &&
+ 	(
+ 		cd submodule_update_repo &&
+@@ -49,7 +60,7 @@ create_lib_submodule_repo () {
+ 		git branch "no_submodule" &&
  
--	/* Redirect the worktree of the submodule in the superproject's config */
- 	p = git_pathdup_submodule(path, "config");
- 	if (!p)
- 		die(_("could not get submodule directory for '%s'"), path);
--	git_config_set_in_file(p, "core.worktree",
--			       relative_path(path, sm_gitdir, &rel_path));
- 
- 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
- 	git_config_get_string("submodule.alternateLocation", &sm_alternate);
-@@ -689,7 +672,6 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	free(error_strategy);
- 
- 	strbuf_release(&sb);
--	strbuf_release(&rel_path);
- 	free(sm_gitdir);
- 	free(path);
- 	free(p);
+ 		git checkout -b "add_sub1" &&
+-		git submodule add ./. sub1 &&
++		git submodule add ../submodule_update_sub1 sub1 &&
+ 		git config -f .gitmodules submodule.sub1.ignore all &&
+ 		git config submodule.sub1.ignore all &&
+ 		git add .gitmodules &&
+@@ -162,7 +173,7 @@ reset_work_tree_to () {
+ 		test_must_be_empty actual &&
+ 		sha1=$(git rev-parse --revs-only HEAD:sub1) &&
+ 		if test -n "$sha1" &&
+-		   test $(cd "sub1" && git rev-parse --verify "$sha1^{commit}")
++		   test $(cd "../submodule_update_sub1" && git rev-parse --verify "$sha1^{commit}")
+ 		then
+ 			git submodule update --init --recursive "sub1"
+ 		fi
 -- 
 2.12.0.rc1.49.g0cfd38c5f6.dirty
 
