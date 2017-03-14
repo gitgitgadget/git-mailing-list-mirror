@@ -2,86 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF29D20951
-	for <e@80x24.org>; Tue, 14 Mar 2017 22:14:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0766120951
+	for <e@80x24.org>; Tue, 14 Mar 2017 22:17:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750982AbdCNWOt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 18:14:49 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33351 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750760AbdCNWOs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 18:14:48 -0400
-Received: by mail-pg0-f46.google.com with SMTP id n190so7876661pga.0
-        for <git@vger.kernel.org>; Tue, 14 Mar 2017 15:14:47 -0700 (PDT)
+        id S1752501AbdCNWRI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 18:17:08 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:35071 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752143AbdCNWRG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 18:17:06 -0400
+Received: by mail-pg0-f48.google.com with SMTP id b129so96642694pgc.2
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 15:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=bbxUhN8a5xteP9l85CwfISUObGyQ/14DE/+FZ5HyQS4=;
-        b=M7jyN3/Xf0ZK1IhitVwHNJo/NouObSKYS6+d2ljh43N3L8KrX2WRPTvsfAqmSHWR2v
-         pMfbk4Wzc5Hi5Vu+01eI0p0WdPr0SwYy/KZHm+wkUGKrlZ4HY2hyZ0wyG2BoBkMAB5hA
-         DPlGok9RoHAnx0ngg6CtGl63GuY4C0INmYa4euxYXd8whRUNThRgqkV3gUUdDPGK/mAR
-         x972cDt2OlCUOhTUrRgqjAUttw1EyGA3Gr9Wb8vh6FF4ghJDeEv+ZkH5OfZSPlpB9VrT
-         xvNLupYWnxlhDic254H8PF0X3yuFKAn3m06IBc/0Bu8VygLK9ZDhYQlH3VHanH8XY3+Q
-         YeMQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BKlY/ZQaaSTkURIWgo7U8yIrX325sb62iVPxkJDOa1c=;
+        b=RLclogjSIfrnuXdzXl3XqbWpukvH+mH9APwJ2+SUUbAMiUSj1Emv5sf84q/dullP1Z
+         USByLHz9DTPKw3Z+MUIAvnJkqIRs2Fyog3VN3wFv/UyHMnpB0U9EVkPE7yF79BvApQQ6
+         vpeJsRt3vemuYw+dNP/uDbbGS2y0Fe61lzCYAUDZ8VjHhDQmLjwFu3bDzbQ/g2dHozDM
+         /THr1qm1+xrN97lM75T9D30kv3nZE2E7CPZthFRgw7dML6s642EnCkE+OgujN5qdoM7v
+         cjyYT7exDJAv52Vg42LHHXlfFzMJoSbamgIB7kifJR03owYim78nX8LScc/XHnGKk+/e
+         i0Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=bbxUhN8a5xteP9l85CwfISUObGyQ/14DE/+FZ5HyQS4=;
-        b=EjdRxMDe53xElmkvtKosaN7Vsjl0DIRFNb854c8Y/cFo0TbO0j+SDbjhgo/XoCY2dr
-         Hh1K76FY4IVzgzQ85eMZqEirXT7+Rxm5lqpSkoRUPMSVgZvzUn768I3Qz6QdX869iHtA
-         DLQMm+LWS4vRCvsO5aUl8tAbmHsNWf8HuCBayrj1V6PEZjRtv5ipX19VTLIcSysEq+QL
-         jda/ft/HZ8B+lj3V+vog6KORZkiUCDmn42Mxp3LMTlkFCZlVb/SW6M/rgaVKYBW1F2iX
-         qFUdobpFyZylYpxBcni6s6hMXGhILkbdzvtTHaUWxZ/UA+zgLwY15g7eGDRziHvwaSL/
-         lS7A==
-X-Gm-Message-State: AFeK/H1TZyNY/ZlvwDB1HBYU/o3NVBd2RAjIN6e9nArZTHFSC7hwVu4etaU12vSozpWuwwFM
-X-Received: by 10.84.175.67 with SMTP id s61mr2641559plb.126.1489529687467;
-        Tue, 14 Mar 2017 15:14:47 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:8559:2c0d:dab3:f802])
-        by smtp.gmail.com with ESMTPSA id g29sm40405290pfg.37.2017.03.14.15.14.46
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BKlY/ZQaaSTkURIWgo7U8yIrX325sb62iVPxkJDOa1c=;
+        b=KZakYqVh7UhP0rxZwBnI65URUnRmVBj0eaYfNqsNR2yutEb4iHZu2L1zFV1uRgGY2k
+         URkQUrS/6ReBgI/8a6uXox3zJCtwXmLW3fhefp9V0bs44o8Ns40AWQ3ZW/TN76woznG+
+         QLhzZTRblTTmud3UDyfOfp8KgR8RFi5XnFjoB/qvhYGfkWjwJWaeYsrdXLc5zlJHqwiw
+         /ca95UqnabY8tF10RLFE3yV2SYjAkn+Ksbw+mk+JuU2Uf5YIEWurTNymWG5vjr4nY+/u
+         OvQQSOQE3llcQpbEckwSPf9O0V4EmTs+ejYzVcdKisjCSla8HN5D0hwhM26T4pElyz8i
+         t66w==
+X-Gm-Message-State: AMke39lzRUR5sgVyazjWCrpF1aUHAwmIgPq5utLJl4W42DQGUZ7xLGw61BWrvVONk7sFSPUf
+X-Received: by 10.98.72.199 with SMTP id q68mr46818338pfi.152.1489529824655;
+        Tue, 14 Mar 2017 15:17:04 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:491b:baa8:63f0:3cf1])
+        by smtp.gmail.com with ESMTPSA id 90sm40351190pfl.24.2017.03.14.15.17.03
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Mar 2017 15:14:46 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule-config: correct error reporting for invalid ignore value
-Date:   Tue, 14 Mar 2017 15:14:40 -0700
-Message-Id: <20170314221440.18259-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.264.gd6db3f2165.dirty
+        Tue, 14 Mar 2017 15:17:03 -0700 (PDT)
+Date:   Tue, 14 Mar 2017 15:17:02 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3 00/10] decoupling a submodule's existence and its url
+Message-ID: <20170314221702.GA168037@google.com>
+References: <20170309012345.180702-1-bmwill@google.com>
+ <20170313214341.172676-1-bmwill@google.com>
+ <xmqqh92vh70l.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh92vh70l.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As 'var' contains the whole value we get error messages that repeat
-the section and key currently:
+On 03/14, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > changes in v3:
+> >
+> > * Droped a patch which tried to use a more accurate URL for deinit.  It didn't
+> >   really fit inside the scope of this series.  It may be something we want to
+> >   revisit later though.
+> >
+> > * The --init-active flag now ensure that all submodules which are configured to
+> >   be 'active' (either via 'submodule.active' or 'submodule.<name>.active') go
+> >   through the initialization phase and have their relevent info copied over to
+> >   the config.
+> 
+> Aside from comments I sent already to the individual patches, I
+> think overall this coherently adds a nicer way to keep track of
+> which submodules are of interest (and which are not) than what we
+> traditionally had.  I'll queue it on 'pu', awaiting further
+> polishing (if necessary).
 
-warning: Invalid parameter 'true' for config option 'submodule.submodule.plugins/hooks.ignore.ignore'
+I've just started looking at your comments and I expect I'll do at least
+one more round of polish.
 
-Fix this by only giving the section name in the warning.
+Thanks for taking a look!
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule-config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/submodule-config.c b/submodule-config.c
-index 93453909cf..bb069bc097 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -333,7 +333,7 @@ static int parse_config(const char *var, const char *value, void *data)
- 			 strcmp(value, "all") &&
- 			 strcmp(value, "none"))
- 			warning("Invalid parameter '%s' for config option "
--					"'submodule.%s.ignore'", value, var);
-+					"'submodule.%s.ignore'", value, name.buf);
- 		else {
- 			free((void *) submodule->ignore);
- 			submodule->ignore = xstrdup(value);
 -- 
-2.12.0.264.gd6db3f2165.dirty
-
+Brandon Williams
