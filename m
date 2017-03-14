@@ -2,108 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ED9B201C2
-	for <e@80x24.org>; Tue, 14 Mar 2017 15:26:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD0B2201C2
+	for <e@80x24.org>; Tue, 14 Mar 2017 16:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751765AbdCNP0Q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 11:26:16 -0400
-Received: from smtpo.poczta.interia.pl ([217.74.65.205]:35397 "EHLO
-        smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753217AbdCNP0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 11:26:02 -0400
-Date:   Tue, 14 Mar 2017 16:25:50 +0100
-From:   Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
-Subject: Re: fatal: Could not get current working directory: Permission
- denied | affected 2.10,2.11,2.12, but not 1.9.5 |
-To:     =?iso-8859-1?b?UmVu6Q==?= Scharfe <l.s.r@web.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-X-Mailer: interia.pl/pf09
-In-Reply-To: <b9dc5b05-46e6-a3d7-2fb0-638bff2da676@web.de>
-References: <elvahoiwfqayelbskykd@qjih>
-        <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
-        <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <bolnkqijewdhfhyoqodf@zfyt>
-        <b9dc5b05-46e6-a3d7-2fb0-638bff2da676@web.de>
-X-Originating-IP: 89.64.255.37
-Message-Id: <jwwousyentaeeuvbaznm@xjvs>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
-        s=biztos; t=1489505150;
-        bh=Z4frglTOzn2bTcU1xLcG7WS9jw5/Ws6I/apHVJAHENQ=;
-        h=Date:From:Subject:To:Cc:X-Mailer:In-Reply-To:References:
-         X-Originating-IP:Message-Id:MIME-Version:Content-Type:
-         Content-Transfer-Encoding;
-        b=j1JpgG9K+pNOZHpEtBDWdGxVrmh08+XlPfbTX1/lKV1fDw+3jRnNUoCDVWxf3Td9R
-         /lNfZLDHl0I0YSQkwtrJiZRw+bx2MPf8u3sHu1IpYbFzm58i5+3UowXEeBi2bTwu8I
-         9kZXtr87LTg+47nEWG/aHtuadSuzJQdZgn/RncP0=
+        id S1751213AbdCNQCU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 12:02:20 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:38267 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751125AbdCNQCF (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 14 Mar 2017 12:02:05 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id 5EA0D209F7;
+        Tue, 14 Mar 2017 12:02:04 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 14 Mar 2017 12:02:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+        :date:from:message-id:subject:to:x-me-sender:x-me-sender
+        :x-sasl-enc:x-sasl-enc; s=mesmtp; bh=n10l80/7ZhoxahUOg/y4Lnfpi2g
+        =; b=Y+U9C/nkmsZleJr/QLklnk7C+bAxfvnj8zxuQYcBSsyqhNj1jtWOT8AxTD6
+        Y2f2wpyzF1OhKlvyFbJNoGkmjwl4ce0owE9uZXp1TQywr3NvzjgROL0sLhikvRpz
+        /3YCcpZRToftIEgcNaailbyyZNdUMyRAj1/CaCueJy/i/SBE=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:date:from:message-id:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=smtpout; bh=n1
+        0l80/7ZhoxahUOg/y4Lnfpi2g=; b=HV+Dmz/ufsMc8ltd6sYhch1pCMnuE8XPkk
+        traGhUSmd7UnTdC0dDx2UAHKuNJ+nH/yG5a6CP+V/gO/CVB+YwiFM9mzFfMJ6J8p
+        8DV8hNxH3d/DMtqjYr1PY90zsjwvm74D6a4EeCLdpSUBGk2DvMKSi7E3lAWL/Gtx
+        HUbxe2inM=
+X-ME-Sender: <xms:_BPIWDGGW5tAvheFETGhld9V3pfu8bizH-0VRw-eya-fkWvVZhBhPg>
+X-Sasl-enc: eOQa5tFz1bboGno7gwaLSKyE04Kh921Pg+D4sxmIR5nb 1489507323
+Received: from localhost (skimbleshanks.math.uni-hannover.de [130.75.46.4])
+        by mail.messagingengine.com (Postfix) with ESMTPA id ECB752428D;
+        Tue, 14 Mar 2017 12:02:03 -0400 (EDT)
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+To:     git@vger.kernel.org
+Cc:     Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] git-status: make porcelain more robust
+Date:   Tue, 14 Mar 2017 17:02:02 +0100
+Message-Id: <54df68bd46f7a417e77eb71b636f6f7afd4fce75.1489507239.git.git@drmicha.warpmail.net>
+X-Mailer: git-send-email 2.12.0.384.g157040b11f.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Output of=20
+git status provides a porcelain mode for porcelain writers with a
+supposedly stable (plumbing) interface.
+7a76c28ff2 ("status: disable translation when --porcelain is used", 2014-03-20)
+made sure that ahead/behind info is not translated (i.e. is stable).
 
-truss git status 2>&1 >/dev/null |grep chdir
+Make sure that the remaining two strings (initial commit, detached head)
+are stable, too.
 
-is empty when git status fails.
+These changes are for the v1 porcelain interface. While we do have a perfectly
+stable v2 porcelain interface now, some tools (such as
+powerline-gitstatus) are written against v1 and profit from fixing v1
+without any changes on their side.
 
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ wt-status.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Also git status succeeded when run as root.Od: "Ren=C3=A9 Scharfe" &lt;l.s.=
-r@web.de>
-Do: "Zenobiusz Kunegunda" &lt;zenobiusz.kunegunda@interia.pl>;=20
-Wys=C5=82ane: 18:32 Poniedzia=C5=82ek 2017-03-13
-Temat: Re: fatal: Could not get current working directory: Permission denie=
-d | affected 2.10,2.11,2.12, but not 1.9.5 |
+diff --git a/wt-status.c b/wt-status.c
+index d47012048f..234e77a6d6 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1730,12 +1730,14 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 		return;
+ 	branch_name = s->branch;
+ 
++#define LABEL(string) (s->no_gettext ? (string) : _(string))
++
+ 	if (s->is_initial)
+-		color_fprintf(s->fp, header_color, _("Initial commit on "));
++		color_fprintf(s->fp, header_color, LABEL(N_("Initial commit on ")));
+ 
+ 	if (!strcmp(s->branch, "HEAD")) {
+ 		color_fprintf(s->fp, color(WT_STATUS_NOBRANCH, s), "%s",
+-			      _("HEAD (no branch)"));
++			      LABEL(N_("HEAD (no branch)")));
+ 		goto conclude;
+ 	}
+ 
+@@ -1760,8 +1762,6 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+ 	if (!upstream_is_gone && !num_ours && !num_theirs)
+ 		goto conclude;
+ 
+-#define LABEL(string) (s->no_gettext ? (string) : _(string))
+-
+ 	color_fprintf(s->fp, header_color, " [");
+ 	if (upstream_is_gone) {
+ 		color_fprintf(s->fp, header_color, LABEL(N_("gone")));
+-- 
+2.12.0.384.g157040b11f.dirty
 
->=20
->> Am 13.03.2017 um 13:23 schrieb Zenobiusz Kunegunda:
->> Tested on ZFS filesystem
->>=20
->>=20
->>=20
->>     [test0@s0]:&lt;~>$ mkdir '232222222222222222222222222222222222222222=
-222222222222222222222222222222222222222222222222222222222222222222222222222=
-'
->>     [test0@s0]:&lt;~>$ cd 2322222222222222222222222222222222222222222222=
-22222222222222222222222222222222222222222222222222222222222222222222222/
->>     [test0@s0]:&lt;~/232222222222222222222222222222222222222222222222222=
-222222222222222222222222222222222222222222222222222222222222222222>$ git st=
-atus
->>     fatal: Unable to read current working directory: Permission denied
->>=20
->>     [test0@s0]:&lt;~/232222222222222222222222222222222222222222222222222=
-222222222222222222222222222222222222222222222222222222222222222222>$ git bl=
-ahblahblah
->>     fatal: Unable to read current working directory: Permission denied
->>=20
->>=20
->> But when I create directory with same name (232...) as it's subdirectory=
- everything works as expected inside that subdirectory.
->=20
-> Earlier I checked on UFS.  Now I tried the above commands on ZFS,
-> but they work as expected:
->=20
->   $ git status
->   fatal: Not a git repository (or any parent up to mount point /src)
->   Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not se=
-t).
->=20
-> Git checks out if it's in a git repository and if the current
-> working directory isn't one then it goes to the parent directories
-> recursively until it finds the root of a repo or a file system
-> boundary or / (root).
->=20
-> You can see where your invocation goes to with:
->=20
-> 	$ strace git status 2>&amp;1 >/dev/null | grep chdir
->=20
-> Ren=C3=A9
->=20
->=20
-=
