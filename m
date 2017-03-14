@@ -2,58 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3CBE20951
-	for <e@80x24.org>; Tue, 14 Mar 2017 21:47:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52C0220951
+	for <e@80x24.org>; Tue, 14 Mar 2017 21:47:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752884AbdCNVru (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 17:47:50 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:35338 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752157AbdCNVrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 17:47:05 -0400
-Received: by mail-pg0-f52.google.com with SMTP id b129so96370206pgc.2
-        for <git@vger.kernel.org>; Tue, 14 Mar 2017 14:47:04 -0700 (PDT)
+        id S1752848AbdCNVrt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 17:47:49 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:33027 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752191AbdCNVrG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 17:47:06 -0400
+Received: by mail-pg0-f50.google.com with SMTP id n190so7623457pga.0
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 14:47:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nBgA1+UaRdEMk27yLOambNg5lwC9uMQqqX+uY+5Nf70=;
-        b=i7VIG69Ow+IQ/5KEBJQShyxdcjC+iWIoO7mfn4zwGpgIcTGK2flu253SRPD7i9Mdg5
-         CY2GBu4ORPmv4pYet4hJB7b3iQAQi8tNlYnvkCOQkT9UHBNsZXaUdz4pDcMMHCfEqnaN
-         /dcQyElogQdg5yV2FyY7xIlsRiKYo51RpsmS8pDdzfyLwri7rBBzC9BzYwvsCmhS7zzl
-         WQ2ydWH/ujqCtawjyKkYAOx1attBSvREPZQddhljWEN4c3MPC9NDZ61ODN0isEFydKDR
-         TjbRL2kLYERfgLE7Yjyk5X8mwq64SqvVRHviCRWivJapjGzyfwjV/y1NX1dRfOPL5Fgg
-         X7iw==
+        bh=E88GWhqiN4aUzKRWzQKQy5f237l2BFwosCTG989X6N8=;
+        b=F5/5WYbc75MmzupkkePSVVvQuRz597VCpBq/gMMI7KZvG7Rr2q0sbgfoPqeu2DfkLM
+         9Bb1plRuoJ1lL94XY5W2Hw7rqnGlyWLRzjH+VqoMX0I6MO+b19wR0ljeA2M9nEa8He7L
+         uJBJVfSeNqGx9oQYSRExZVzSFp6IeTTsP2V5WocfmGsB++GYcD7OmAcPuK/4pNpnZQgy
+         WAZoA2/7UGE71v4LWwGzTiumVi7tOUvM1lvsF44Fl/dWZdRHMgRu53zJWOrpXGfo2ipk
+         hn1g61nRqWGsKi60a9P5jlK6FyVvrXOIUG94Mp8FnnJKpfWDan5rTgc8+B7EusBHc3bB
+         bssw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=nBgA1+UaRdEMk27yLOambNg5lwC9uMQqqX+uY+5Nf70=;
-        b=rzgXotgN7/rHALzs88EB/Nx4kVXQILgr+fcBXChZh8ynx5DgmFGlNK12EJrPHm1G7A
-         acloo8rTdi2u/Bf/j+CK3drJJOxGzn+7XlrVTMuO18QDSso6+kO2+HTU6tfoF7dFe+iE
-         LNDD0jf2yKaL4aD4UU8M/Lw+5LxwxmiFlXTDY+u0SEtgG+QoIXUAFkY0AM8tASFhDdet
-         hngEKN3m0qku21nzY7IbBXK/xYQw95SmKzam/qlrj/VkL1my5YE/Pn0cdbhLN8/81Ywt
-         xKXgrLPJGVQVhBSHMpTODtFpgbIDucWSjxOUTxKk7WKEhszbKjycathMmjR4da62wbl7
-         aF+w==
-X-Gm-Message-State: AMke39n/o0hWSynbWf41N2ct2g3NWBEWJUMhkw1ZW+mO3utpkFFp7JR37EUHkFeTw7m/9gPV
-X-Received: by 10.84.228.201 with SMTP id y9mr58689504pli.42.1489528024101;
-        Tue, 14 Mar 2017 14:47:04 -0700 (PDT)
+        bh=E88GWhqiN4aUzKRWzQKQy5f237l2BFwosCTG989X6N8=;
+        b=FLoLWG284SfE89WakrNwr34ta8FMuT7CeX3cncU9x4YDZHzQmDofUuaCkwfJiwaVx/
+         S5JbK5iifwiev6sFAn7YIKl8b3sNi4zILvitkYIMJXVXrtLAPV0t9sUYxF714O88MwH3
+         lazLvZ4uhkT0/KQYkVFl8WGaEFE1duEU/0H/oNIEI/D359PWNyiCeC8BswsrXtbsabb1
+         3sbeaoxeI/bRy1Qlw4ZIHoE2eHNcLj0r1BED5dfoFx566osbKoFJhsmetSbm+AVCuhwL
+         KsGMvA/SqVnspkl5e34jvl/24VDmbaYNGS7vHIiq46j6B1ZuwElXwIFJjzpuEVdEaBr0
+         tdwg==
+X-Gm-Message-State: AMke39nuJC7vpS3l+3CbTI+zKzBHJLuJhpdifOL2neEooD9CE0lYszOrC02tsTId5rPJo05b
+X-Received: by 10.99.224.69 with SMTP id n5mr45672449pgj.113.1489528025324;
+        Tue, 14 Mar 2017 14:47:05 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:8559:2c0d:dab3:f802])
-        by smtp.gmail.com with ESMTPSA id p66sm40304450pfb.88.2017.03.14.14.47.03
+        by smtp.gmail.com with ESMTPSA id n8sm40648586pgd.5.2017.03.14.14.47.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 14 Mar 2017 14:47:03 -0700 (PDT)
+        Tue, 14 Mar 2017 14:47:04 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com, gitster@pobox.com
 Cc:     git@vger.kernel.org, bmwill@google.com, novalis@novalis.org,
         sandals@crustytoothpaste.net, hvoigt@hvoigt.net,
         jrnieder@gmail.com, ramsay@ramsayjones.plus.com
-Subject: [PATCH 12/19] update submodules: move up prepare_submodule_repo_env
-Date:   Tue, 14 Mar 2017 14:46:35 -0700
-Message-Id: <20170314214642.7701-13-sbeller@google.com>
+Subject: [PATCH 13/19] submodule.c: get_super_prefix_or_empty
+Date:   Tue, 14 Mar 2017 14:46:36 -0700
+Message-Id: <20170314214642.7701-14-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.49.g0cfd38c5f6.dirty
 In-Reply-To: <20170314214642.7701-1-sbeller@google.com>
 References: <20170309221543.15897-1-sbeller@google.com>
@@ -63,64 +62,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a later patch we need to prepare the submodule environment with
-another git directory, so split up the function.
+In a later patch we need to use the super_prefix, and
+in case it is NULL we can just assume it is empty.
+Create a helper function for this.
 
-Also move it up in the file such that we do not need to declare the
-function later before using it.
+We already have some use cases for this helper function,
+convert them, too.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ submodule.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index 8b2c0212be..0b2596e88a 100644
+index 0b2596e88a..3501497a78 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -356,6 +356,23 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
+@@ -1239,6 +1239,14 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+ 	return ret;
  }
  
-+static void prepare_submodule_repo_env_no_git_dir(struct argv_array *out)
++static const char *get_super_prefix_or_empty()
 +{
-+	const char * const *var;
-+
-+	for (var = local_repo_env; *var; var++) {
-+		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
-+			argv_array_push(out, *var);
-+	}
++	const char *s = get_super_prefix();
++	if (!s)
++		s = "";
++	return s;
 +}
 +
-+void prepare_submodule_repo_env(struct argv_array *out)
-+{
-+	prepare_submodule_repo_env_no_git_dir(out);
-+	argv_array_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
-+			 DEFAULT_GIT_DIR_ENVIRONMENT);
-+}
-+
- /* Helper function to display the submodule header line prior to the full
-  * summary output. If it can locate the submodule objects directory it will
-  * attempt to lookup both the left and right commits and put them into the
-@@ -1390,18 +1407,6 @@ int parallel_submodules(void)
- 	return parallel_jobs;
- }
+ static int find_first_merges(struct object_array *result, const char *path,
+ 		struct commit *a, struct commit *b)
+ {
+@@ -1438,11 +1446,8 @@ static void relocate_single_git_dir_into_superproject(const char *prefix,
+ 		die(_("could not create directory '%s'"), new_git_dir);
+ 	real_new_git_dir = real_pathdup(new_git_dir);
  
--void prepare_submodule_repo_env(struct argv_array *out)
--{
--	const char * const *var;
+-	if (!prefix)
+-		prefix = get_super_prefix();
 -
--	for (var = local_repo_env; *var; var++) {
--		if (strcmp(*var, CONFIG_DATA_ENVIRONMENT))
--			argv_array_push(out, *var);
--	}
--	argv_array_pushf(out, "%s=%s", GIT_DIR_ENVIRONMENT,
--			 DEFAULT_GIT_DIR_ENVIRONMENT);
--}
--
- /*
-  * Embeds a single submodules git directory into the superprojects git dir,
-  * non recursively.
+ 	fprintf(stderr, _("Migrating git directory of '%s%s' from\n'%s' to\n'%s'\n"),
+-		prefix ? prefix : "", path,
++		get_super_prefix_or_empty(), path,
+ 		real_old_git_dir, real_new_git_dir);
+ 
+ 	relocate_gitdir(path, real_old_git_dir, real_new_git_dir);
+@@ -1513,8 +1518,7 @@ void absorb_git_dir_into_superproject(const char *prefix,
+ 		if (flags & ~ABSORB_GITDIR_RECURSE_SUBMODULES)
+ 			die("BUG: we don't know how to pass the flags down?");
+ 
+-		if (get_super_prefix())
+-			strbuf_addstr(&sb, get_super_prefix());
++		strbuf_addstr(&sb, get_super_prefix_or_empty());
+ 		strbuf_addstr(&sb, path);
+ 		strbuf_addch(&sb, '/');
+ 
 -- 
 2.12.0.rc1.49.g0cfd38c5f6.dirty
 
