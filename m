@@ -2,80 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 764F820373
-	for <e@80x24.org>; Tue, 14 Mar 2017 18:17:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16DE8201C2
+	for <e@80x24.org>; Tue, 14 Mar 2017 18:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750915AbdCNSRN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 14:17:13 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:33307 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750819AbdCNSRM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 14:17:12 -0400
-Received: by mail-pg0-f52.google.com with SMTP id n190so5627023pga.0
-        for <git@vger.kernel.org>; Tue, 14 Mar 2017 11:17:11 -0700 (PDT)
+        id S1750948AbdCNSkS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 14:40:18 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:35441 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750904AbdCNSkR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 14:40:17 -0400
+Received: by mail-pg0-f46.google.com with SMTP id b129so94592997pgc.2
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 11:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=gMzcUOJPdxnfeK3N+yTHFF5xPDl9nc3ksgZNWRHdKWc=;
-        b=XWbukGvo9SwVg5vyNgpOxrttAMM8y7yiDgyP7Rk3cZ+fX+d0SNxCy6WkSEUseFA2zV
-         Dt4ulLAP9MKbXDgZaVO80iXWmMDOZlnIcaeSIwWWZUBjFF+mHlscQ2SwLmoyjG6AIuaG
-         2H4jxsOErOZSOg/Ijq7tMNOQ/NjxZQZi0kvopbgPs6o5mCAcijcp4wJf6+rowC8sWojN
-         i0QARXqChsviMhLQqv34qI2OJFvK/LOpyY8xS4vteMIacG21/8KVj6Hj4JM9BRVfzBTi
-         UmFrOp608Yvu7dxCaU7raCAKsjEQ60CKqb50eaVrhXWrFTvFJXuydifLVQ+fWElY4dpG
-         0PYA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=JKkBvH2sU0RbYIUYmsHBpUiazPcKt8qymQDBbrPsDm4=;
+        b=gY76EbDWI/QDUbBnWT0yktB6UrdbElF6WfEtEbPuQM+1E/O2NHwRhdAmzecS2m6h6y
+         VCzUyOhzashpfw6Ha9VGM/bqaiGrqSBI2YM+AlrhzlGXwYQ0vPguHjVAyoWze2vg1zn8
+         tfwhptWBzTecJ6bIAoHmjLeqxbZby1niOxoP6XA5Bs8OWZTgABcgt/Csi6BK6G3sWEPe
+         wySn838+JYlznIVkLEaCTa8BJOdLmPeTU3ij1mNztE0Fj0A7WofMyMEqdv45PWwnhkSh
+         XueMPcUrAgjF/djvMV44UE3t5GFDc87eIVARazeLnWsPYxMx8C/FIMla2ayRX6MhnLXg
+         IyoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=gMzcUOJPdxnfeK3N+yTHFF5xPDl9nc3ksgZNWRHdKWc=;
-        b=UnrcmmD/p5uIxasTj+t2FatN/0YFudgnUpvI8OoXT8QBYpnmki1xs90w0V/5tRCQkv
-         n7hWP+ZA46M6Z3ri4LnQskV053hscONuYrEufZKQfqrFNIdc4Xfusq61y/LQMhj30VrD
-         PZ2Of8fU85hWh7HB30gVgQ3z5iUTOkpyFBpdwpJb/eEte/XMV0rjZ1L9RXAbPsS/vd0G
-         iu0LSsTrieMcI2f4bOcTcO+cd/Xpk+W9+pewSuAoVyYmPwIWdqIkRyO4VxleTr5gY5t0
-         7zEPXMVpYBQpp8DMgHMdalvvcXmDY5GuaE8hDYsz63BAxM4unpV3azJICv4h0HOPshyM
-         88fA==
-X-Gm-Message-State: AMke39k7td0Plcx7M2xcr+wSpgM23zCLSR0KTFhQFBvZ+PR3Lx03yKnZdp+zIriRontOoHr2
-X-Received: by 10.84.229.10 with SMTP id b10mr57665198plk.148.1489515430430;
-        Tue, 14 Mar 2017 11:17:10 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:4ccf:4726:3691:3d8a])
-        by smtp.gmail.com with ESMTPSA id r89sm39953369pfe.6.2017.03.14.11.17.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Mar 2017 11:17:09 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Mar 2017, #05; Mon, 13)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq37egn6fs.fsf@gitster.mtv.corp.google.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <660cc8fe-6386-11e5-8827-8acfe6644397@google.com>
-Date:   Tue, 14 Mar 2017 11:17:09 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=JKkBvH2sU0RbYIUYmsHBpUiazPcKt8qymQDBbrPsDm4=;
+        b=MC468isBpNVb/vIq5LcyJAqJb10Wc0WF/QzPt7hP97i2BXYFhToXAd0paOJMOIVtgN
+         y4UqbUu03ezTEk9KDstbfl1eSUN5G5s7Owr5uhH1//Ii2UzGaDLXEtO2HTNngkVvkGiA
+         GVOp0Q1k8Ony8o9MM1a+SmRLCEJBnuhmweJrfOsJ368S3UsoPFlqkGP15spJX5qKTtGB
+         1+lR5aGZchlvESfDO02HRh0Geh6jY80TGnvqfm0CeMxBR/5QTPrutKSRUcC6sxqyy8Yo
+         oQXeAkQGLA3UT0TRyA8oU6Xn4bkedYkF5mLOza4vI4o0ihjRwIu6F56iSrT124W6aSVR
+         D6qw==
+X-Gm-Message-State: AMke39maVAF1L6QeJ1/mRC8YIhmLtUUz6AffBVAoLSVdvdKnD9VQMbi+YB0hafHkWnnDWIn+6CveEx4TbRgOCUYW
+X-Received: by 10.99.98.6 with SMTP id w6mr44819160pgb.223.1489516816382; Tue,
+ 14 Mar 2017 11:40:16 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq37egn6fs.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.187.5 with HTTP; Tue, 14 Mar 2017 11:40:15 -0700 (PDT)
+In-Reply-To: <xmqq4lyvka1i.fsf@gitster.mtv.corp.google.com>
+References: <20170309012345.180702-1-bmwill@google.com> <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-5-bmwill@google.com> <xmqq4lyvka1i.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 14 Mar 2017 11:40:15 -0700
+Message-ID: <CAGZ79kZ20Jy_A8SPJte7U0iZZB97P0Sn_PqAMfwp40sAj6Y=RA@mail.gmail.com>
+Subject: Re: [PATCH v3 04/10] submodule--helper clone: check for configured
+ submodules using helper
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/13/2017 03:43 PM, Junio C Hamano wrote:
-> * jt/mark-tree-uninteresting-for-uninteresting-commit (2017-02-28) 3 commits
->  - upload-pack: compute blob reachability correctly
->  - revision: exclude trees/blobs given commit
->  - revision: unify {tree,blob}_objects in rev_info
+On Tue, Mar 14, 2017 at 11:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Williams <bmwill@google.com> writes:
 >
->  The revision/object traversal machinery did not mark all tree and
->  blob objects that are contained in an uninteresting commit as
->  uninteresting, because that is quite costly.  Instead, it only
->  marked those that are contained in an uninteresting boundary commit
->  as uninteresting.
+>> -     /*
+>> -      * Looking up the url in .git/config.
+>> -      * We must not fall back to .gitmodules as we only want
+>> -      * to process configured submodules.
+>> -      */
+>> -     strbuf_reset(&sb);
+>> -     strbuf_addf(&sb, "submodule.%s.url", sub->name);
+>> -     git_config_get_string(sb.buf, &url);
+>> -     if (!url) {
+>> +     /* Check if the submodule has been initialized. */
+>> +     if (!is_submodule_initialized(ce->name)) {
+>>               next_submodule_warn_missing(suc, out, displaypath);
+>>               goto cleanup;
+>>       }
+>> @@ -835,7 +827,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+>>               argv_array_push(&child->args, "--depth=1");
+>>       argv_array_pushl(&child->args, "--path", sub->path, NULL);
+>>       argv_array_pushl(&child->args, "--name", sub->name, NULL);
+>> -     argv_array_pushl(&child->args, "--url", url, NULL);
+>> +     argv_array_pushl(&child->args, "--url", sub->url, NULL);
 >
->  Retracted?
+> Even without this patch, we already had an instance of struct submodule
+> available in this function, so the query to .git/config this patch removed
+> was unnecessary?
+>
+> I am wondering what was meant by the comment "We must not fall back to..."
+> that is being removed---is that because sub->url can come from .gitmodules
+> that is in-tree, not from .git/config?
 
-Yes, this is retracted.
+Yes. We want to check for the submodule being "initialized", i.e.
+having a url in .git/config. (and the struct submodule reads in both .git/config
+and .gitmodules and overlays them with a given precedence order)
+
+>  If that is the case, doesn't the
+> change in this hunk change behaviour from using the URL the user prefers
+> to using the URL the upstream suggests, overriding user's configuration?
+
+The mentioned precedence makes sure to have the right order:
+
+    /* Overlay the parsed .gitmodules file with .git/config */
+    gitmodules_config();
+    git_config(submodule_config, NULL);
+
+such that the sub->url is correct as a URL, but not correct as a boolean
+indicator if the submodule is "initialized".
