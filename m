@@ -6,93 +6,79 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 116DE20373
-	for <e@80x24.org>; Mon, 13 Mar 2017 23:31:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 687AD20373
+	for <e@80x24.org>; Tue, 14 Mar 2017 00:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754181AbdCMXbk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 19:31:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51928 "EHLO
+        id S1753449AbdCNACW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 20:02:22 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50298 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751486AbdCMXbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 19:31:39 -0400
+        with ESMTP id S1752099AbdCNACU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 20:02:20 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 83DC5849B1;
-        Mon, 13 Mar 2017 19:31:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C792784F46;
+        Mon, 13 Mar 2017 20:02:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ow1eBuY16thGuzjHW/IZDX8BSiU=; b=SQIOfN
-        FOkciEoB/ZVu6NGUs/+e6KIv6Qk6k1Ff3YjCaiHvVRjZFRViSgGZSxxCikJNWnqg
-        9287pl7ghWrsoqMReL8WvU+5Js9b1n5sxf2YgpTO9UpUGp71jPgiVCH+HyJn58pF
-        4vF7PoInL2q62Z0TwdxHUWmYThY2p5gzcuaMo=
+        :content-type; s=sasl; bh=EbzyNyfmYPK1fZytkZUNV49080U=; b=CSmvJj
+        ScY97qrv8J/mQlPLr0IKpcOq2ocOKZbqG4/3U8R+Fz+rAHnU6eMAIDuuDqC0AXGR
+        VEtGslQktYZQT5oo64pYInlNumcOhgDC9qvvUcUhCxfYmrtNOpXJUIJOoJ5WxwFw
+        CV9uFoeJhFTt6jto7cwTo4Ho9qSt5/NYlIEAE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uAf5NVr5/Xwo5OTYqhCKy6qk/7wT7kXp
-        e8+n7EhUIMMLtLnbyUbpElouSfgQI7T5M36AZzYrlQj6eOFUvQ5n6e/+r2pS9ZDT
-        GVR98yfTsMr1XW+/X2qD6tDO/OOzLwHKuCZ5JOlwG/bYWnSF/BYD4bhc4diFqMen
-        Vt4opI9VQY8=
+        :content-type; q=dns; s=sasl; b=IBc8IwipJvGjLtvhqgj97PhtAnL8K2uM
+        YQg0BJLeB57PqM2XU1Bpzzbzb9veq4cUVmQc3RNCKaSF8hSte0DXw58xOoj61281
+        XuLvLV5UNkYfQ+7X3O/m1/nMGPRGoDMz7gj3II3BeRuP2vxInI+MdkBX6gNsg9O9
+        5qfcEDv3UBQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7D0DD849B0;
-        Mon, 13 Mar 2017 19:31:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF3E284F45;
+        Mon, 13 Mar 2017 20:02:18 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CA464849AF;
-        Mon, 13 Mar 2017 19:31:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 383FB84F44;
+        Mon, 13 Mar 2017 20:02:18 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v5 10/11] setup_git_directory_gently_1(): avoid die()ing
-References: <cover.1488897111.git.johannes.schindelin@gmx.de>
-        <cover.1489098170.git.johannes.schindelin@gmx.de>
-        <a1e24f1b31773f4d2f7f06ab7d5870e920211d51.1489098170.git.johannes.schindelin@gmx.de>
-        <xmqqefy5yn4k.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1703131826330.3767@virtualbox>
-        <xmqqzigpq7qp.fsf@gitster.mtv.corp.google.com>
-        <xmqqvardq66u.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1703132244400.3767@virtualbox>
-Date:   Mon, 13 Mar 2017 16:31:35 -0700
-In-Reply-To: <alpine.DEB.2.20.1703132244400.3767@virtualbox> (Johannes
-        Schindelin's message of "Mon, 13 Mar 2017 22:46:27 +0100 (CET)")
-Message-ID: <xmqqlgs8lpns.fsf@gitster.mtv.corp.google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Mar 2017, #05; Mon, 13)
+References: <xmqq37egn6fs.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kaXnHhKA=XumfxHFUbuEs3AGz2h65Jf8ufcOWqp3Mu20g@mail.gmail.com>
+Date:   Mon, 13 Mar 2017 17:02:17 -0700
+In-Reply-To: <CAGZ79kaXnHhKA=XumfxHFUbuEs3AGz2h65Jf8ufcOWqp3Mu20g@mail.gmail.com>
+        (Stefan Beller's message of "Mon, 13 Mar 2017 16:01:24 -0700")
+Message-ID: <xmqqh92wlo8m.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3388345C-0845-11E7-8631-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 7D17D646-0849-11E7-A06F-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Mon, 13 Mar 2017, Junio C Hamano wrote:
+>>
+>> * sb/rev-parse-show-superproject-root (2017-03-08) 1 commit
+>>  - rev-parse: add --show-superproject-working-tree
+>>
+>>  From a working tree of a repository, a new option of "rev-parse"
+>>  lets you ask if the repository is used as a submodule of another
+>>  project, and where the root level of the working tree of that
+>>  project (i.e. your superproject) is.
+>>
+>>  Almost there, but documentation needs a bit more work.
 >
->> When a patch series is refactoring an existing function to be used
->> in different codepaths, an existing issue inherited from the
->> original code (e.g. perhaps an existing error checking that is
->> looser than ideal) may have been OK in the original context (e.g.
->> perhaps it died and refused to run until the user corrected the
->> repository), and it still is OK in the codepath that uses the
->> refactored building blocks to replace the original code, but it may
->> not be acceptable to leave the issue in the original code when a new
->> caller calls the refactored building block (e.g. perhaps the
->> refactoring made it possible for a caller to ask the function not to
->> die and instead act on different kinds of errors in different ways).
->
-> In this case, ...
+> Care to clarify what parts of docs you mean?
+> https://public-inbox.org/git/xmqqr327z5rn.fsf@gitster.mtv.corp.google.com/
+> sounded like the topic is done.
 
-It becomes somewhat irritating when you get combative and defensive
-unnecessarily.  We already established this case is OK two messages
-ago, I think.
+Thanks for spotting a leftover comment I wrote about v3; what is
+queued is v4 that addresses the issues I found in that version.
 
-The above is only to make sure that people cannot take the "issues
-in the original is OK to leave outside the scope of a new series" in
-my message out of context and treat it as a general rule to justify
-their sloppy patches in the future.  We need to see if issues
-inherited from the original is necessary to fix before refactoring
-even begins on case-by-case basis, seeing what the requirement of
-the new code that uses the refactored code.  And the case-by-case
-thing we already did for _this_ case.
+Will update its status to "Will merge to 'next'", which means
+reviewers (including me) are encouraged to take another look for the
+last time with fresh eyes.
 
+Thanks.
