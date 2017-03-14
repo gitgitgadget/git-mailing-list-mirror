@@ -2,138 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90E8E20951
-	for <e@80x24.org>; Tue, 14 Mar 2017 23:47:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A55720953
+	for <e@80x24.org>; Tue, 14 Mar 2017 23:50:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751079AbdCNXrI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 19:47:08 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:45106 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750909AbdCNXrH (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 14 Mar 2017 19:47:07 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9DBC6280AD;
-        Tue, 14 Mar 2017 23:47:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1489535225;
-        bh=kSWSd+Lq3lDxZ0u/PUE5eSD3voEuHh2PoaBccdZhXfQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UMAkAIB0diRZXRgo3DeW3Om/WgtP6GFEKDICwhG7/02Yheq6FrRmp9MpwjJ+gVSrS
-         muQLpIk5xUYYTef33kG1PnvPAxXCoCPoILJlZ3qy+du2+Wkdc9bzy5+BWVTWb4NzsB
-         XDOioY/u/yXbgNlcKz9PMYEhOLeQqQ0tpSB8PbPpvp7aCgsJ5z/rYy3E55Ud09P4S7
-         5gxYd2ADvbcV9fyFlhNru9szHebw/QcWOCqeJuvnKAP0zNcfnIkZ0fHy9QdHA7Zpzc
-         ECbeXVQplMOMqnNba96PijUu6aQ5wTZNSvZ2nWXCifZFXVvYgIyGOEkco7vHE0sXUZ
-         MaGnrrLGggqZ0mqwnPdmzqx2cEW1EVPfmWzEVOiTIYNdxgxKt1taq73oRxb0LUHlBT
-         Sb3Lr2B86FbcnP1qhBkCWU/GylbfcfcxsEF6Jfq83f6p1jzW/1J++Qx9QvIF5nQim9
-         8lnPQ5vTXtX2AuJ8wOGDyf4/Ej5v63sd/B+1uvOR1KAehFpN1Y2
-Date:   Tue, 14 Mar 2017 23:46:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] Move SHA-1 implementation selection into a header
- file
-Message-ID: <20170314234659.wamzgpqu2aikghci@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-References: <20170311222818.518541-1-sandals@crustytoothpaste.net>
- <20170314184126.GJ26789@aiede.mtv.corp.google.com>
- <20170314201424.vccij5z2ortq4a4o@sigill.intra.peff.net>
- <xmqq1stzio5b.fsf@gitster.mtv.corp.google.com>
- <1fce97df-7eb8-79d5-b96b-2086746bf19d@ramsayjones.plus.com>
+        id S1750914AbdCNXuk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 19:50:40 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:33643 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750815AbdCNXuj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 19:50:39 -0400
+Received: by mail-pg0-f49.google.com with SMTP id n190so791531pga.0
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 16:50:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fhNeiKF3Z9FgIuCqIjIt1BnTyYh73v/0ShGMsacO1Kk=;
+        b=rbyNEI3Ck+Ef9RdVo52YUIxzkMH3DdTbDEBXHcCcmm3lYThc15Y707Mkfc8+XwyA9y
+         WpsSTCUStX4Bja9JA/d5KAUqpYwl7zt5UL/R2VcoDq8rRfs7ET2Bqaa/73ZcNzWaJfFC
+         z0yvTyG3eI5YhvHQifkF7YW4QlzbYedythoLerzZw74TqqwWleL5TxjoeoZglmpEOKS7
+         0Ck/zE2yOvDbybtgaltTHCtSvGDmlERBOH+WXhwVGvoIADV0VZL4UnrqM6uv1FgZurqa
+         H7pFVo4eEk0D9PuXFLX/7OrjPawUx2oFPO6hwoqJpYx+zj5d+n46ZrfZOLMjUCQ6615E
+         dhzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fhNeiKF3Z9FgIuCqIjIt1BnTyYh73v/0ShGMsacO1Kk=;
+        b=ajmvv1cnsUuilgCwFrsU0Z+puNtn8AfG7RwmxOfK8KS0IM0xrXQ+r0VShU9/Ywdymv
+         pbiI/qAFnKujZqeWcN5/x8KgKl6wbjaLQMo4H19QVfJDvgD9wfrOB+gM+WeCXSQLqmMA
+         6himKf+ZbLQZfBzM2bVYcD4Er3p2rRZYhtKLAR3nNQj+GkYAOl6M8yYqVJJPOlrkUOMl
+         AmdbSEefQ1NKHI1fVYUDhOxHT8HyUNKsQr/CnQLOw8TN68nvPWvHxCE5IM2XTaQl84TO
+         24uQAe04AEwyP8cC6P5LHYMG0RRSYnSb+vfcuiCzxqZCutQB7zmWmZ5AoB0TrpB4/zbQ
+         iAWQ==
+X-Gm-Message-State: AFeK/H2OvGOmEpGNpAJ9k7gaomJVd6E6aVaMVkkA+43Fx1/eb4usKzO+Y6duhUhfi0oJiBOA
+X-Received: by 10.98.8.206 with SMTP id 75mr331422pfi.198.1489535438190;
+        Tue, 14 Mar 2017 16:50:38 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:491b:baa8:63f0:3cf1])
+        by smtp.gmail.com with ESMTPSA id z4sm140493pge.49.2017.03.14.16.50.36
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 14 Mar 2017 16:50:37 -0700 (PDT)
+Date:   Tue, 14 Mar 2017 16:50:36 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3 03/10] submodule sync: use submodule--helper is-active
+Message-ID: <20170314235036.GF168037@google.com>
+References: <20170309012345.180702-1-bmwill@google.com>
+ <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-4-bmwill@google.com>
+ <xmqq8to7kamv.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="egeayzs54z7ezjwe"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1fce97df-7eb8-79d5-b96b-2086746bf19d@ramsayjones.plus.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170113 (1.7.2)
+In-Reply-To: <xmqq8to7kamv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 03/14, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  git-submodule.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/git-submodule.sh b/git-submodule.sh
+> > index ab233712d..e2d08595f 100755
+> > --- a/git-submodule.sh
+> > +++ b/git-submodule.sh
+> > @@ -1111,7 +1111,7 @@ cmd_sync()
+> >  			;;
+> >  		esac
+> >  
+> > -		if git config "submodule.$name.url" >/dev/null 2>/dev/null
+> > +		if git submodule--helper is-active "$sm_path"
+> >  		then
+> >  			displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+> >  			say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+> 
+> This is not a problem this patch introduces, but the loop this hunk
+> is in seems a bit inefficient.  It maps the sm_path to its name and
+> then asks .gitmodules the URL the upstream suggests to clone it from,
+> munges it with a large case statement and discards all of that if
+> the module is not active.
+> 
+> Adding this patch on top would be a way to remove the inefficiency
+> and one level of nesting while at it, I think, but I may have missed
+> something, so please double check, and if you agree that this is a
+> good way to go, please do so as a preparatory clean-up.
+> 
+> Thanks.
 
---egeayzs54z7ezjwe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yeah you're right, some of that work can be avoided.  I'll do the
+code cleanup in a prep patch and then convert submodule sync to use the
+is-active subcommand.
 
-On Tue, Mar 14, 2017 at 11:42:20PM +0000, Ramsay Jones wrote:
->=20
->=20
-> On 14/03/17 20:44, Junio C Hamano wrote:
-> > OK, then I'll queue this.  The selection still goes to BASIC_CFLAGS
-> > so the dependencies for re-compilation should be right, I'd think.
-> >=20
-> > -- >8 --
-> > From: "brian m. carlson" <sandals@crustytoothpaste.net>
-> > Date: Sat, 11 Mar 2017 22:28:18 +0000
-> > Subject: [PATCH] hash.h: move SHA-1 implementation selection into a hea=
-der file
-> >=20
-> > Many developers use functionality in their editors that allows for quick
-> > syntax checks, including warning about questionable constructs.  This
-> > functionality allows rapid development with fewer errors.  However, such
-> > functionality generally does not allow the specification of
-> > project-specific defines or command-line options.
-> >=20
-> > Since the SHA1_HEADER include is not defined in such a case, developers
-> > see spurious errors when using these tools.  Furthermore, while using a
-> > macro as the argument to #include is permitted by C11, it isn't
-> > permitted by C89 and C99, and there are known implementations which
-> > reject it.
->=20
-> C99 certainly allows a macro argument to #include (see, 6.10.2-4; there
-> is also an example in 6.10.2-8).
->=20
-> I can't remember if it's allowed in C89/C90 (I think it is). I only
-> have immediate access to the C99 and C11 standards (and I can't be
-> bothered to search), so I can't say for sure.
+> 
+>  git-submodule.sh | 19 +++++++++++--------
+>  1 file changed, 11 insertions(+), 8 deletions(-)
+> 
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index e2d08595f0..dcdd36fa64 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -1089,6 +1089,12 @@ cmd_sync()
+>  	while read mode sha1 stage sm_path
+>  	do
+>  		die_if_unmatched "$mode" "$sha1"
+> +
+> +		if ! git submodule--helper is-active "$sm_path"
+> +		then
+> +			continue
+> +		fi
+> +
+>  		name=$(git submodule--helper name "$sm_path")
+>  		url=$(git config -f .gitmodules --get submodule."$name".url)
+>  
+> @@ -1111,14 +1117,12 @@ cmd_sync()
+>  			;;
+>  		esac
+>  
+> -		if git submodule--helper is-active "$sm_path"
+> -		then
+> -			displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+> -			say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+> -			git config submodule."$name".url "$super_config_url"
+> +		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+> +		say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+> +		git config submodule."$name".url "$super_config_url"
+>  
+> -			if test -e "$sm_path"/.git
+> -			then
+> +		if test -e "$sm_path"/.git
+> +		then
+>  			(
+>  				sanitize_submodule_env
+>  				cd "$sm_path"
+> @@ -1131,7 +1135,6 @@ cmd_sync()
+>  					eval cmd_sync
+>  				fi
+>  			)
+> -			fi
+>  		fi
+>  	done
+>  }
 
-You're right.  I only have access to N1124 (the C99 final draft), but it
-does allow that.  I could have sworn it was new in C11.  I'm pretty
-certain it isn't allowed in C89, but I don't have access to that
-standard.
-
-I know there have been reasonably standards-conforming compilers that
-have rejected it in the past, but I can't remember which ones (I think
-they were for proprietary Unices).
-
-Junio, do you want to amend the commit message before you merge it?
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---egeayzs54z7ezjwe
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljIgPMACgkQv1NdgR9S
-9otquw//abzRp3IPOt0NSOcqIHZ0LU6M+AtOOkb8CMdEDFwEa+9f+I5tjqgORiPn
-FUJt3uiByw0CdquO1a0rEQGEy6GQY72Dk/Im90TvmuM+DCmII2whAg7l/NdLiD6S
-Cw7H/e7/PQVwKF8KS7jddGshgKI1yoQXHAYFB2mhDP+lL9dBvzXPOaBNSB9725G7
-5O9dFr5Dlj5uXWxDaoPymwsoymlROjN9dn86t9uAsbJDhp1oCEYbtErx0XXNF/3v
-OfIIHAW6h82p1Pz6wR64lo1dhQemrYlUqBRgyIHCubPVgufMGir7MN1okXMidwGp
-qeJbgJtVfB+zffLbR2n9e14jrrKQ4rlTGz+dFEynPmnQlgaBy975VHe0IKWxrEa/
-repHncBzKgVInGxtZVs7UgJl83/V3dmNwMp6Pc0wZUHWee2+pZXhanYBY37ccMz8
-/12BWEGSWZ6NvZf5Taqr3vMsLAEdBsTDLtjy/9w1KVjwMIY2NoYNB0xPLZ98aUjg
-x2OuSz6ORTM9QBAMUplOdhBBg2dv+bNE2Qxx7rlhsCMeNv372MXZB/4JhzEKmlP7
-EnIIRmIQZtQh6bMXF2TC2NDJBAf+V8HVH06dMr/dfgB4r2ZHeq1u/HTzuTlwehfc
-0NpsHgXcPtTa/h5Q66GCSkg1ASwfe1s066RijhMI+A+KVYzx678=
-=u95c
------END PGP SIGNATURE-----
-
---egeayzs54z7ezjwe--
+-- 
+Brandon Williams
