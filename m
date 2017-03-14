@@ -2,83 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 687AD20373
-	for <e@80x24.org>; Tue, 14 Mar 2017 00:02:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F13C20373
+	for <e@80x24.org>; Tue, 14 Mar 2017 00:33:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753449AbdCNACW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Mar 2017 20:02:22 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50298 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752099AbdCNACU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Mar 2017 20:02:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C792784F46;
-        Mon, 13 Mar 2017 20:02:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EbzyNyfmYPK1fZytkZUNV49080U=; b=CSmvJj
-        ScY97qrv8J/mQlPLr0IKpcOq2ocOKZbqG4/3U8R+Fz+rAHnU6eMAIDuuDqC0AXGR
-        VEtGslQktYZQT5oo64pYInlNumcOhgDC9qvvUcUhCxfYmrtNOpXJUIJOoJ5WxwFw
-        CV9uFoeJhFTt6jto7cwTo4Ho9qSt5/NYlIEAE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IBc8IwipJvGjLtvhqgj97PhtAnL8K2uM
-        YQg0BJLeB57PqM2XU1Bpzzbzb9veq4cUVmQc3RNCKaSF8hSte0DXw58xOoj61281
-        XuLvLV5UNkYfQ+7X3O/m1/nMGPRGoDMz7gj3II3BeRuP2vxInI+MdkBX6gNsg9O9
-        5qfcEDv3UBQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF3E284F45;
-        Mon, 13 Mar 2017 20:02:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 383FB84F44;
-        Mon, 13 Mar 2017 20:02:18 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Mar 2017, #05; Mon, 13)
-References: <xmqq37egn6fs.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kaXnHhKA=XumfxHFUbuEs3AGz2h65Jf8ufcOWqp3Mu20g@mail.gmail.com>
-Date:   Mon, 13 Mar 2017 17:02:17 -0700
-In-Reply-To: <CAGZ79kaXnHhKA=XumfxHFUbuEs3AGz2h65Jf8ufcOWqp3Mu20g@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 13 Mar 2017 16:01:24 -0700")
-Message-ID: <xmqqh92wlo8m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7D17D646-0849-11E7-A06F-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+        id S1752748AbdCNAdL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Mar 2017 20:33:11 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:32800 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750846AbdCNAdK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Mar 2017 20:33:10 -0400
+Received: by mail-qk0-f193.google.com with SMTP id j127so39441466qke.0
+        for <git@vger.kernel.org>; Mon, 13 Mar 2017 17:33:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=IjJsiaGQfEAzl5+dyarBFTS15soaMQLNpAz2oK6LNvw=;
+        b=c4bpGm6l6eMbqHpO/x2HjWXra2xQFIpkSbPDxTJL1qB3yEQcMfRFdXweH8GclFM9PU
+         Vo1pIqtTFH4wGSfvzPhWwsM9ELK7eQiHsRqHiNe6zILbwrlUXn9VFwMn27l7/4931vTP
+         siMoUzu54x6DJ4kMuztEVST42v4tE/2M00AF1fnmP7RZUe1W4ywifm6TbrHUEikMMb3Z
+         IykLE/ZLtDretlIRM41nass4No2hyL0epHLKOuTNbbuaZlyHnVUtR0ki+cdVbWyE6+I2
+         +3+s6ksBAY9GDYDEMFrKfuVJ2yosmMrdWB9B72A9uXSxM2mgU2IORiyJ0b8ZEbzzITo3
+         V9LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=IjJsiaGQfEAzl5+dyarBFTS15soaMQLNpAz2oK6LNvw=;
+        b=jBKUHCt2uFptZJFYkmZuLPrCMfjObkDOF1gIGDBU+7yZ3DBiCNzERyyszt9AUox4J9
+         Kmwlbh9X8lJsgC76LIKFhjdIafTkkpXeMdlwxr+NN00EHRb0oBwaRhjjz/sjqGEs0/hF
+         Ri0oGVK5c1ceLuED2+oCujRCPutvZeZdu4FvoNZKqL8e5FPymYqA2igB14IJcBtb/SIz
+         Gbi+ERq27BRwtPQkYIa3D2M7/M1fMFXmlVoNVoFX4TAj4eTjRGf3l57AZ5E5rxljoqyP
+         RAeeiu4rW0ZpzqxAa0ktVwIDE32+uS5zkBTywSDoMnPC2hvHuV76541gYDttmASscRBS
+         3kww==
+X-Gm-Message-State: AMke39l37hSnFYCFRByPsGCqZucLislX4QzuI8nhjPhqWLlzU4sWXdn613PL1ssZyPC5hQ==
+X-Received: by 10.55.64.74 with SMTP id n71mr32833292qka.250.1489451588969;
+        Mon, 13 Mar 2017 17:33:08 -0700 (PDT)
+Received: from mango1.eduroam.cornell.edu (nat-128-84-124-0-329.cit.cornell.edu. [128.84.125.73])
+        by smtp.googlemail.com with ESMTPSA id z196sm13327954qkb.11.2017.03.13.17.33.08
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 13 Mar 2017 17:33:08 -0700 (PDT)
+From:   Devin Lehmacher <lehmacdj@gmail.com>
+To:     lehmacdj@gmail.com, gitster@pobox.com
+Cc:     git@vger.kernel.org
+Subject: [GSoC][PATCH/RFC v3 0/3] Fix commit messages, check if socket is socket
+Date:   Mon, 13 Mar 2017 20:32:43 -0400
+Message-Id: <20170314003246.71586-1-lehmacdj@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <xmqqa88orgjd.fsf@gitster.mtv.corp.google.com>
+References: <xmqqa88orgjd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+I fixed all of the commit messages and the weird indentation.
+I also now check that the socket is actually a socket.
 
->>
->> * sb/rev-parse-show-superproject-root (2017-03-08) 1 commit
->>  - rev-parse: add --show-superproject-working-tree
->>
->>  From a working tree of a repository, a new option of "rev-parse"
->>  lets you ask if the repository is used as a submodule of another
->>  project, and where the root level of the working tree of that
->>  project (i.e. your superproject) is.
->>
->>  Almost there, but documentation needs a bit more work.
->
-> Care to clarify what parts of docs you mean?
-> https://public-inbox.org/git/xmqqr327z5rn.fsf@gitster.mtv.corp.google.com/
-> sounded like the topic is done.
+What do you think of the function is_socket? Is it general enough to be put
+in dir.h or unix_socket.h for use in other files? Or should it be left as is?
 
-Thanks for spotting a leftover comment I wrote about v3; what is
-queued is v4 that addresses the issues I found in that version.
-
-Will update its status to "Will merge to 'next'", which means
-reviewers (including me) are encouraged to take another look for the
-last time with fresh eyes.
-
-Thanks.
+- Devin
