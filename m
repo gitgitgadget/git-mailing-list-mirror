@@ -2,70 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3753620951
-	for <e@80x24.org>; Tue, 14 Mar 2017 22:05:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6102320951
+	for <e@80x24.org>; Tue, 14 Mar 2017 22:09:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750982AbdCNWF4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 18:05:56 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62863 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750760AbdCNWFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 18:05:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4383D6D5EF;
-        Tue, 14 Mar 2017 18:05:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VNkx1CO14h+k1GhbX4ZSs57XVDc=; b=lUTTGj
-        c3f8uuY6T1PRXIY+F+HF8AKS99cT5hNQvHpTgKKOjjInPoy/gFRqeBWyCQc/kcow
-        VvCZ+KjSE4Lrt15YruWCyvZufNIrk2ew8Xj66UK3h40zVKBE0PdeEuePAYxW1nFs
-        PXQoiv/qinFRgt9my4xWld7FO0cOgOYZ6yay0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XjgG9in0exIt2xs3jRxWmZgALd5XZ3Tu
-        ECSa14pLEog3HZYa1ZC2RuoZrTAitVAcNxatNa5PH7olzXZMPez8rlWIjU9YLKmS
-        MWo6afbN96oxzR+LEj/TdAH2oTm617QBITxv7K0+AIEzGs5/JlMq84ze2WNxjT25
-        DCyc++M4CNY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D7FD6D5EE;
-        Tue, 14 Mar 2017 18:05:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A98DF6D5ED;
-        Tue, 14 Mar 2017 18:05:53 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] git-status: make porcelain more robust
-References: <54df68bd46f7a417e77eb71b636f6f7afd4fce75.1489507239.git.git@drmicha.warpmail.net>
-Date:   Tue, 14 Mar 2017 15:05:52 -0700
-In-Reply-To: <54df68bd46f7a417e77eb71b636f6f7afd4fce75.1489507239.git.git@drmicha.warpmail.net>
-        (Michael J. Gruber's message of "Tue, 14 Mar 2017 17:02:02 +0100")
-Message-ID: <xmqq8to7h5tr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751158AbdCNWJm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 18:09:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44240 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751061AbdCNWJl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 18:09:41 -0400
+Received: (qmail 5846 invoked by uid 109); 14 Mar 2017 22:09:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Mar 2017 22:09:40 +0000
+Received: (qmail 29838 invoked by uid 111); 14 Mar 2017 22:09:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 14 Mar 2017 18:09:51 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Mar 2017 18:09:37 -0400
+Date:   Tue, 14 Mar 2017 18:09:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Wincent Colaiuta <win@wincent.com>,
+        Mislav =?utf-8?B?TWFyb2huacSH?= <mislav.marohnic@gmail.com>
+Subject: Re: [PATCH] add--interactive: do not expand pathspecs with ls-files
+Message-ID: <20170314220937.xg6isonertnykx4y@sigill.intra.peff.net>
+References: <20170314163024.et2cp5e3imrrrf7k@sigill.intra.peff.net>
+ <xmqqd1djh5xl.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 646635FC-0902-11E7-88C0-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqd1djh5xl.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, Mar 14, 2017 at 03:03:34PM -0700, Junio C Hamano wrote:
 
-> git status provides a porcelain mode for porcelain writers with a
-> supposedly stable (plumbing) interface.
-> 7a76c28ff2 ("status: disable translation when --porcelain is used", 2014-03-20)
-> made sure that ahead/behind info is not translated (i.e. is stable).
->
-> Make sure that the remaining two strings (initial commit, detached head)
-> are stable, too.
+> Jeff King <peff@peff.net> writes:
+> 
+> > We can improve this by skipping "ls-files" completely, and
+> > just feeding the original pathspecs to the diff commands.
+> > This solution was discussed in 2010:
+> >
+> >   http://public-inbox.org/git/20100105041438.GB12574@coredump.intra.peff.net/
+> >
+> > but at the time the diff code's pathspecs were more
+> > primitive than those used by ls-files (e.g., they did not
+> > support globs). Making the change would have caused a
+> > user-visible regression, so we didn't.
+> 
+> Heh.  The change and the reasoning are both obviously correct, but
+> how did you find this?  Do you have a pile of "old patches that
+> should be resurrected when time is right" and this was picked out of
+> it, or did you see somebody else hit the same thing recently and
+> then went back to the archive?
 
-It seems to me that 7a76c28ff2 already missed these strings, and
-their _() markings survive to this day.  Thanks for spotting and
-fixing.
+The latter.  Mislav reported it to me off-list earlier today, and I
+generated the patch. But after scratching my head at the familiarity and
+especially wondering if there was some reason to use "ls-files" here, I
+dug up the linked thread. The fact that the patches are identical is
+just coincidence (though it's such a simple change that it seems highly
+likely).
+
+> >      So this takes us one step closer to working correctly
+> >      with files whose names contain wildcard characters, but
+> >      it's likely that others remain (e.g., if "git add -i"
+> >      feeds the selected paths to "git add").
+> 
+> We didn't run with --literal-pathspecs which was a bug, but I
+> suspect that it didn't exist back then ;-).
+
+Yep. I think judiciously inserting "--literal-pathspecs" is probably the
+correct fix. In an earlier thread (that I linked elsewhere from the
+discussion here) I suggested just setting $GIT_LITERAL_PATHSPECS to 1.
+But that is probably a bad idea. As this patch shows, we do still
+sometimes feed the original non-expanded pathspec to some commands.
+
+I left that as potential low-hanging fruit for somebody who cares more
+(the trickiest part is probably not the fix, but coming up with a test
+case).
+
+-Peff
