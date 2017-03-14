@@ -2,177 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D42620951
-	for <e@80x24.org>; Tue, 14 Mar 2017 20:44:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C259820951
+	for <e@80x24.org>; Tue, 14 Mar 2017 21:00:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752859AbdCNUow (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 16:44:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58107 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751201AbdCNUov (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 16:44:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DB8E46C41B;
-        Tue, 14 Mar 2017 16:44:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=PxlQB0eXMex40Mcmsmvf0bnhcHM=; b=La/Adu
-        +wwlTj3gSbvYstmFP4XUSR40fI77fmANZIQtvOzOkfBAEZd70fard78KDtw2DKqz
-        VfTZVp3uwcxbD6OlE2Ta25SGR8VDOvNN/E6MlplhDtI2NJI9TSl/0A63yEwRumzu
-        /LE9R6zxPwR8v/7zIPOL+/hxZ7cF2WaUM2Q8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rj3B26etVdzkbS8cIkNeYNTvCIaVycFL
-        wCJLr8+gZoPmNmV6MU6S/1y1aboiDYOM/DALnghUWd31qd/g7YrC2yrp3ocv7MRj
-        Ff7yJl5f17nPd98P8NIJKWGIFN6EehymGFptlqIUb4bCCXeJojEbRCIbdbgiezuq
-        78F1YR0VyHQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D47B46C419;
-        Tue, 14 Mar 2017 16:44:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 417236C418;
-        Tue, 14 Mar 2017 16:44:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] Move SHA-1 implementation selection into a header file
-References: <20170311222818.518541-1-sandals@crustytoothpaste.net>
-        <20170314184126.GJ26789@aiede.mtv.corp.google.com>
-        <20170314201424.vccij5z2ortq4a4o@sigill.intra.peff.net>
-Date:   Tue, 14 Mar 2017 13:44:48 -0700
-In-Reply-To: <20170314201424.vccij5z2ortq4a4o@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 14 Mar 2017 16:14:24 -0400")
-Message-ID: <xmqq1stzio5b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753175AbdCNVAp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 17:00:45 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:32862 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753165AbdCNVAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 17:00:44 -0400
+Received: by mail-io0-f178.google.com with SMTP id f84so8053558ioj.0
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 14:00:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sN+3zB6vCnsBs7QnRdhzbS0InoyqV6ezfKEmmj/dhvY=;
+        b=BsX4t6nnFBTjCrTA9DijTZIZCLeTMD90CT7rfn62JWgbPDeqaIDFqEoVXFMxH+Jdkx
+         KdDCdCHZZpDXqnYHNndEaqsU64AJkiNqiKGKg2vZyc1aAvhjiWFbh4SQkHm9WHdshQJr
+         hqJs3uhyk3ruGa9QAJYIQpBHf+EEKpfqiCp1DV/sjcqZlSyZa3Q9rCIaAInnzi3Y9Yc+
+         Ufk3Xi9v2IG1bcC9Zf1zDT1xjDHTUCZtxePeeu0FTbgrD8olIAb0miQrHaJwXrahU108
+         onMpiNnk0mp6ICekTvGC7zhQHiya4aesXPSinDbQUvblxZXGm+tCqqTvxdGlu/Y3VGWy
+         kCuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sN+3zB6vCnsBs7QnRdhzbS0InoyqV6ezfKEmmj/dhvY=;
+        b=ECdJ9J2cPGDa5W8w2SHo0kE0VrIa8RSSXbTgk3OBoSCY5f9gdiqanaAOikW9QF34o6
+         brMF/k6umQBnyyO0OVXbGxXgqBzR/k6o8U3ku1MQcgFWahpC67vjFQK5dglxJIaxmA0H
+         J0QHSxPV4STN5NnQZU22bjMTVHRnEPwiQna2WroeHlpAl5plOa+8aLHGFzKfHYwa9KVR
+         JWDUg7x7K8K2AXJXU9/h9e+O9KSaryAsw1xWtNLXZmti3QpQ3lrXSrEd8doSzXXzuRVL
+         oRqQJq2uQbP06m6lcQLCaBONYhtKCChlSfGvDMTblt23Wmxh0RCk06IyrhmA2T2lD1Is
+         6S5g==
+X-Gm-Message-State: AFeK/H1qzKjFdQ53TvjAQwCXV9jzJ29sN6eVYaTnVFFd85Wu8/dpYbYR8BTdIjs9m/NZsm0u3VkBVQOCnk7EqA==
+X-Received: by 10.107.200.139 with SMTP id y133mr2124823iof.147.1489525242498;
+ Tue, 14 Mar 2017 14:00:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 10F948B0-08F7-11E7-83C0-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.107.130.208 with HTTP; Tue, 14 Mar 2017 14:00:21 -0700 (PDT)
+In-Reply-To: <xmqq1su2ujsf.fsf@gitster.mtv.corp.google.com>
+References: <20170312200248.3610-1-jn.avila@free.fr> <20170312200248.3610-2-jn.avila@free.fr>
+ <xmqq1su2ujsf.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 14 Mar 2017 22:00:21 +0100
+Message-ID: <CACBZZX4EGfBAu0M0y4xboVAtWf5N07XY8s40npQ1hN3rbgqmSw@mail.gmail.com>
+Subject: Re: [PATCH] l10n: add framework for localizing the manpages
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jean-Noel Avila <jn.avila@free.fr>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-OK, then I'll queue this.  The selection still goes to BASIC_CFLAGS
-so the dependencies for re-compilation should be right, I'd think.
+On Mon, Mar 13, 2017 at 1:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jean-Noel Avila <jn.avila@free.fr> writes:
 
--- >8 --
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Date: Sat, 11 Mar 2017 22:28:18 +0000
-Subject: [PATCH] hash.h: move SHA-1 implementation selection into a header file
+Jean: Comments on the patch:
 
-Many developers use functionality in their editors that allows for quick
-syntax checks, including warning about questionable constructs.  This
-functionality allows rapid development with fewer errors.  However, such
-functionality generally does not allow the specification of
-project-specific defines or command-line options.
+- Firstly thanks for working on this. When I hacked up the initial po
+support in v1.7.8-rc2-1-g5e9637c629 I always meant to try out po4a,
+but never got around to it. It's much easier than I thought.
+- Consider submitting a more minimal patch that doesn't have the giant
+fr.po (or just some minor cut version) as the tip of the series, to
+make this easier to review
+- The git-add.txt file is hardcoded in po4a.conf, won't this file need
+to be generated in some final version of this series?
 
-Since the SHA1_HEADER include is not defined in such a case, developers
-see spurious errors when using these tools.  Furthermore, while using a
-macro as the argument to #include is permitted by C11, it isn't
-permitted by C89 and C99, and there are known implementations which
-reject it.
+> This shows that even after adding just _one_ new option to the
+> command, the whole thing need to be re-translated (the SYNOPSIS
+> section may be a bad example, as not much is subject to i18n,
+> though).  If each paragraph of the description section becomes a
+> single string that need to be re-translated, as we can see below, I
+> am not sure if it really helps the translators.  A mere single
+> rephrasing of a word in a large paragraph would have to result in
+> the entire paragraph to be translated again?
+>
+> [...]
+>
+> It almost makes me suggest that a totally different approach might
+> be more manageable.  For example, we can pick one version of a
+> source file (say, "v2.12.0:Documentation/git-add.txt"), have it
+> fully translated to the target languages, _and_ make it a convention
+> to record the original blob object name at the end of the translated
+> file.  Perhaps "Documentation/l10n/fr/git-add.txt" may record the
+> result of such translation effort.
+>
+> And then, when somebody wants to update the translation for v2.13.0,
+> perhaps
+>
+>     git diff --color-words $old_blob v2.13.0:Documentation/git-add.txt
+>
+> (where $old_blob is taken from Documentation/l10n/fr/git-add.txt)
+> can be examined and then Documentation/l10n/fr/git-add.txt can be
+> adjusted to match the changes between the two versions.  After that,
+> update the "source" blob object name in the translation.
+>
+> So, I dunno.  I like the goal and appreciate the effort to get to
+> that goal.  I am not sure what the best approach would be and the
+> sample translation mechanism I see in this patch makes me doubt that
+> it is the best approach.
 
-Instead of using SHA1_HEADER, create a hash.h header and use #if
-and #elif to select the desired header.  Have the Makefile pass an
-appropriate option to help the header select the right implementation to
-use.
+Junio: The concerns about long strings being altered & needing to be
+translated is something already addressed by the gettext toolchain.
+Your existing translations turn "fuzzy", and you can see a
+before/after version of what changed in popular tools.
 
-[jc: make BLK_SHA1 the fallback default as discussed on list,
-e.g. <20170314201424.vccij5z2ortq4a4o@sigill.intra.peff.net>; also
-remove SHA1_HEADER and SHA1_HEADER_SQ that are no longer used].
+The proposal to do something like "git diff --words" is suboptimal
+because it just gives you the same things these gettext tools give
+you, but more importantly even though it's pretty feature similar in
+theory you lose the advantage of plug-in integration with any
+arbitrary gettext tool, e.g. the transifex or weblate tools Jean
+mentioned.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Makefile | 12 +++++-------
- cache.h  |  2 +-
- hash.h   | 14 ++++++++++++++
- 3 files changed, 20 insertions(+), 8 deletions(-)
+Also, having done a lot of translations myself (although not for Git,
+just the translation infra), it's a huge advantage to be able to
+partially translate certain things out of order (e.g. parts of
+git-add.txt), and even have different people do different parts. This
+is trivial and you get out of the box support for it with the gettext
+tooling, but not if we just have git-add.txt translated in its
+entirety to e.g. French & record what the blob sha1 was.
 
-diff --git a/Makefile b/Makefile
-index 8e4081e061..25c21f08b1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1387,19 +1387,19 @@ ifdef APPLE_COMMON_CRYPTO
- endif
- 
- ifdef BLK_SHA1
--	SHA1_HEADER = "block-sha1/sha1.h"
- 	LIB_OBJS += block-sha1/sha1.o
-+	BASIC_CFLAGS += -DSHA1_BLK
- else
- ifdef PPC_SHA1
--	SHA1_HEADER = "ppc/sha1.h"
- 	LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
-+	BASIC_CFLAGS += -DSHA1_PPC
- else
- ifdef APPLE_COMMON_CRYPTO
- 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
--	SHA1_HEADER = <CommonCrypto/CommonDigest.h>
-+	BASIC_CFLAGS += -DSHA1_APPLE
- else
--	SHA1_HEADER = <openssl/sha.h>
- 	EXTLIBS += $(LIB_4_CRYPTO)
-+	BASIC_CFLAGS += -DSHA1_OPENSSL
- endif
- endif
- endif
-@@ -1591,7 +1591,6 @@ endif
- 
- # Shell quote (do not use $(call) to accommodate ancient setups);
- 
--SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
- ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
- ETC_GITATTRIBUTES_SQ = $(subst ','\'',$(ETC_GITATTRIBUTES))
- 
-@@ -1624,8 +1623,7 @@ PERLLIB_EXTRA_SQ = $(subst ','\'',$(PERLLIB_EXTRA))
- # from the dependency list, that would make each entry appear twice.
- LIBS = $(filter-out %.o, $(GITLIBS)) $(EXTLIBS)
- 
--BASIC_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' \
--	$(COMPAT_CFLAGS)
-+BASIC_CFLAGS += $(COMPAT_CFLAGS)
- LIB_OBJS += $(COMPAT_OBJS)
- 
- # Quote for C
-diff --git a/cache.h b/cache.h
-index 61fc86e6d7..f98c95bf2a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -10,8 +10,8 @@
- #include "trace.h"
- #include "string-list.h"
- #include "pack-revindex.h"
-+#include "hash.h"
- 
--#include SHA1_HEADER
- #ifndef platform_SHA_CTX
- /*
-  * platform's underlying implementation of SHA-1; could be OpenSSL,
-diff --git a/hash.h b/hash.h
-new file mode 100644
-index 0000000000..f0d9ddd0c2
---- /dev/null
-+++ b/hash.h
-@@ -0,0 +1,14 @@
-+#ifndef HASH_H
-+#define HASH_H
-+
-+#if defined(SHA1_PPC)
-+#include "ppc/sha1.h"
-+#elif defined(SHA1_APPLE)
-+#include <CommonCrypto/CommonDigest.h>
-+#elif defined(SHA1_OPENSSL)
-+#include <openssl/sha.h>
-+#else /* SHA1_BLK */
-+#include "block-sha1/sha1.h"
-+#endif
-+
-+#endif
+I think this series is on the right track, and that po4a is the right
+tool for the job.
