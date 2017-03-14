@@ -2,111 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16DE8201C2
-	for <e@80x24.org>; Tue, 14 Mar 2017 18:40:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 469AB201C2
+	for <e@80x24.org>; Tue, 14 Mar 2017 18:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750948AbdCNSkS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 14:40:18 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:35441 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750904AbdCNSkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 14:40:17 -0400
-Received: by mail-pg0-f46.google.com with SMTP id b129so94592997pgc.2
-        for <git@vger.kernel.org>; Tue, 14 Mar 2017 11:40:17 -0700 (PDT)
+        id S1751057AbdCNSla (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 14:41:30 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:32868 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750796AbdCNSl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 14:41:29 -0400
+Received: by mail-pf0-f193.google.com with SMTP id v190so20170877pfb.0
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 11:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=JKkBvH2sU0RbYIUYmsHBpUiazPcKt8qymQDBbrPsDm4=;
-        b=gY76EbDWI/QDUbBnWT0yktB6UrdbElF6WfEtEbPuQM+1E/O2NHwRhdAmzecS2m6h6y
-         VCzUyOhzashpfw6Ha9VGM/bqaiGrqSBI2YM+AlrhzlGXwYQ0vPguHjVAyoWze2vg1zn8
-         tfwhptWBzTecJ6bIAoHmjLeqxbZby1niOxoP6XA5Bs8OWZTgABcgt/Csi6BK6G3sWEPe
-         wySn838+JYlznIVkLEaCTa8BJOdLmPeTU3ij1mNztE0Fj0A7WofMyMEqdv45PWwnhkSh
-         XueMPcUrAgjF/djvMV44UE3t5GFDc87eIVARazeLnWsPYxMx8C/FIMla2ayRX6MhnLXg
-         IyoQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=uNKxFybFcyNYAuhYHhfIX8kHxMYa1B9H85TC8Dvcbkk=;
+        b=h5Fcax+IEGo5GCCv++dh1OQP1VAvYPC2/gAgv/u8P1CRC+2MC/E0v1dnYYsMG+DygQ
+         gb1givK2WsH9Y1b7BLj/SqinS3y/nDufYyO55rzaghua/1GlcYM/ADsmA4UvZ8Wvspw6
+         xvQrnVz+Bgf7W9eBaHFUnt8vUpMKKndqSGaCZRIAivy0knGvzfg3/baHh5A1yI8MLZe3
+         OcLbWoaLwRJ0w17NVoLCH9SE+GpoewtIv38UwzCMQQK4V5ZJLOuihlxgAaxDDHxSD3Gx
+         P7smBU0r/0khXjQZ3U/1dIOBtBn1p8Gw3/9otjljj5tZLKsKk47BuuFnb6OnFJeud651
+         b3+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=JKkBvH2sU0RbYIUYmsHBpUiazPcKt8qymQDBbrPsDm4=;
-        b=MC468isBpNVb/vIq5LcyJAqJb10Wc0WF/QzPt7hP97i2BXYFhToXAd0paOJMOIVtgN
-         y4UqbUu03ezTEk9KDstbfl1eSUN5G5s7Owr5uhH1//Ii2UzGaDLXEtO2HTNngkVvkGiA
-         GVOp0Q1k8Ony8o9MM1a+SmRLCEJBnuhmweJrfOsJ368S3UsoPFlqkGP15spJX5qKTtGB
-         1+lR5aGZchlvESfDO02HRh0Geh6jY80TGnvqfm0CeMxBR/5QTPrutKSRUcC6sxqyy8Yo
-         oQXeAkQGLA3UT0TRyA8oU6Xn4bkedYkF5mLOza4vI4o0ihjRwIu6F56iSrT124W6aSVR
-         D6qw==
-X-Gm-Message-State: AMke39maVAF1L6QeJ1/mRC8YIhmLtUUz6AffBVAoLSVdvdKnD9VQMbi+YB0hafHkWnnDWIn+6CveEx4TbRgOCUYW
-X-Received: by 10.99.98.6 with SMTP id w6mr44819160pgb.223.1489516816382; Tue,
- 14 Mar 2017 11:40:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=uNKxFybFcyNYAuhYHhfIX8kHxMYa1B9H85TC8Dvcbkk=;
+        b=XWvQa9DMpQxCXWYy6fEWKfbjQHwd9YpTqN5gmj5uJdTWeLVGQKOcI2NotSxo8U5LyH
+         57eJAqqPA4waVMFyDqF/3k5UCs+TmS7IvjQwrIp5BBCyf7oOIpiZeaWDOfzr5W1oWtv+
+         KUFywz9BzZcJUx8FU72itPyw52Vh8dP8p4/eZyMB8++ijuLjGnHcqiq4IrC/UWQzylxp
+         FnTIlHM+9fbWk81Qsc9ox8oWucjD4e+eHrT6lHQxwnT0Z8CVb6KBiMM2CpDu6d9MZBVH
+         Ci5bF4hRDYuEfFtacXuHmnX0JmGZSLX2pvWb15VVPOoNnadJ9bjelSWpVImBJWuHKDLE
+         uCgA==
+X-Gm-Message-State: AMke39mVNgpWk2Bo3HCTBnEbYViTFGa1J6ry0Ny0hSF7Uwkt+9Rf0MUQ/uzu/uYJb0hNLA==
+X-Received: by 10.84.129.3 with SMTP id 3mr58714977plb.150.1489516888378;
+        Tue, 14 Mar 2017 11:41:28 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:44b6:c180:5bab:cbd2])
+        by smtp.gmail.com with ESMTPSA id j62sm40208372pgc.54.2017.03.14.11.41.27
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 14 Mar 2017 11:41:27 -0700 (PDT)
+Date:   Tue, 14 Mar 2017 11:41:26 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] Move SHA-1 implementation selection into a header
+ file
+Message-ID: <20170314184126.GJ26789@aiede.mtv.corp.google.com>
+References: <20170311222818.518541-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Tue, 14 Mar 2017 11:40:15 -0700 (PDT)
-In-Reply-To: <xmqq4lyvka1i.fsf@gitster.mtv.corp.google.com>
-References: <20170309012345.180702-1-bmwill@google.com> <20170313214341.172676-1-bmwill@google.com>
- <20170313214341.172676-5-bmwill@google.com> <xmqq4lyvka1i.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Mar 2017 11:40:15 -0700
-Message-ID: <CAGZ79kZ20Jy_A8SPJte7U0iZZB97P0Sn_PqAMfwp40sAj6Y=RA@mail.gmail.com>
-Subject: Re: [PATCH v3 04/10] submodule--helper clone: check for configured
- submodules using helper
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170311222818.518541-1-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 14, 2017 at 11:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Williams <bmwill@google.com> writes:
->
->> -     /*
->> -      * Looking up the url in .git/config.
->> -      * We must not fall back to .gitmodules as we only want
->> -      * to process configured submodules.
->> -      */
->> -     strbuf_reset(&sb);
->> -     strbuf_addf(&sb, "submodule.%s.url", sub->name);
->> -     git_config_get_string(sb.buf, &url);
->> -     if (!url) {
->> +     /* Check if the submodule has been initialized. */
->> +     if (!is_submodule_initialized(ce->name)) {
->>               next_submodule_warn_missing(suc, out, displaypath);
->>               goto cleanup;
->>       }
->> @@ -835,7 +827,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
->>               argv_array_push(&child->args, "--depth=1");
->>       argv_array_pushl(&child->args, "--path", sub->path, NULL);
->>       argv_array_pushl(&child->args, "--name", sub->name, NULL);
->> -     argv_array_pushl(&child->args, "--url", url, NULL);
->> +     argv_array_pushl(&child->args, "--url", sub->url, NULL);
->
-> Even without this patch, we already had an instance of struct submodule
-> available in this function, so the query to .git/config this patch removed
-> was unnecessary?
->
-> I am wondering what was meant by the comment "We must not fall back to..."
-> that is being removed---is that because sub->url can come from .gitmodules
-> that is in-tree, not from .git/config?
+Hi,
 
-Yes. We want to check for the submodule being "initialized", i.e.
-having a url in .git/config. (and the struct submodule reads in both .git/config
-and .gitmodules and overlays them with a given precedence order)
+brian m. carlson wrote:
 
->  If that is the case, doesn't the
-> change in this hunk change behaviour from using the URL the user prefers
-> to using the URL the upstream suggests, overriding user's configuration?
+[...]
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -10,8 +10,8 @@
+>  #include "trace.h"
+>  #include "string-list.h"
+>  #include "pack-revindex.h"
+> +#include "hash.h"
+>  
+> -#include SHA1_HEADER
 
-The mentioned precedence makes sure to have the right order:
+For what it's worth, the bazel build tool doesn't like this
+'#include SHA1_HEADER' either.  Your fix looks like a straightforward
+fix and we never encouraged directly customizing SHA1_HEADER.
 
-    /* Overlay the parsed .gitmodules file with .git/config */
-    gitmodules_config();
-    git_config(submodule_config, NULL);
+The other approaches discussed may also work but they don't add
+anything for my application (nor yours, I'd think).  Conditional
+#includes are a pretty normal thing so I am fine with this more
+straightforward change.  So
 
-such that the sub->url is correct as a URL, but not correct as a boolean
-indicator if the submodule is "initialized".
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+That said, if someone is excited about one of the other approaches
+then I don't object to them.
+
+Thanks,
+Jonathan
