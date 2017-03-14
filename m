@@ -2,99 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DB64201C2
-	for <e@80x24.org>; Tue, 14 Mar 2017 18:06:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA076201C2
+	for <e@80x24.org>; Tue, 14 Mar 2017 18:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751707AbdCNSGi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Mar 2017 14:06:38 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56127 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750744AbdCNSGg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Mar 2017 14:06:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DD4869CE1;
-        Tue, 14 Mar 2017 14:06:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/ZREt83021MkuG+5Y6oUb7bDNWQ=; b=dirnAO
-        4fkrFTfTtR/56qZZQYYsX2UGfoBLLZZ64nCsqRTNqeXMlBCVuKTSt/pkvDiwBhv4
-        9bKA4juq2lVbO02HrWdEdk37cZ1B6fpLDtsqIByOFiN7OUSdXTnzulihDtWAYOrV
-        2/uFA5npnmqifGUMbkJApvqtj9CZ6xkhN1CdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HHMwhLH+gKCZ/0xwGW+C2QVOyV+fcuYG
-        NfL7rP02qYzXb1fsDt8aHAFTo3A8sxOct+vwHfa4Mr2+lQCqMsInbAD0T36Y4FU7
-        H0+7GD2HXVopt8l1M1tB8d2l5ukJZPReBZ5iyJJqkzkLQ0hl3sbkGR5azm0e6ULz
-        Y21HP6HLjbE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 55D1069CE0;
-        Tue, 14 Mar 2017 14:06:35 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ABDB669CDF;
-        Tue, 14 Mar 2017 14:06:34 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v3 04/10] submodule--helper clone: check for configured submodules using helper
-References: <20170309012345.180702-1-bmwill@google.com>
-        <20170313214341.172676-1-bmwill@google.com>
-        <20170313214341.172676-5-bmwill@google.com>
-Date:   Tue, 14 Mar 2017 11:06:33 -0700
-In-Reply-To: <20170313214341.172676-5-bmwill@google.com> (Brandon Williams's
-        message of "Mon, 13 Mar 2017 14:43:35 -0700")
-Message-ID: <xmqq4lyvka1i.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751055AbdCNSQc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Mar 2017 14:16:32 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35032 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750948AbdCNSQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Mar 2017 14:16:31 -0400
+Received: by mail-pf0-f178.google.com with SMTP id j5so73822091pfb.2
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 11:16:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=rnxOxCZ2jWb5Q4tG7/MJQYkleu48oERPa1BYLkL72yg=;
+        b=QHAKFRJJG9Mk3C3DItj+tur4Te+RI6F8MF/2Gfc6stQMh2+I2GjhjFmUoxm+AdGbEj
+         WgzMH8q3GmWhQGqMbdm5JjDc5zEaceoiqXFE+CcYjisKTSlwIHjEnhSp4Se/8BV2NPzO
+         H2wMda3bqOy7wFYGKP7UuI5N+ELQNMmtaTPBKAE9bjdxF1PqWyWSY1KAdiEsibbD/rex
+         gZWH4afGUnfjh3l8hEWreyrL9E1j9UWHKwGS6p8fU2i7aYUFcCXHYeOXvoDz7iNn7A+H
+         A6U9W4n2GDRr4E97SGamHC26Y/7uAF8ztjoNBwV6r8d2rUQZ4Opg3qc1wNgBG0kv4xS7
+         Nsvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=rnxOxCZ2jWb5Q4tG7/MJQYkleu48oERPa1BYLkL72yg=;
+        b=XaYx2WKQPvkeseHEuCCs+vNbiBSGlT0yMecmMhqJHwCKgV4meXOk2ncMByPdJzkvgV
+         z5nQIW20P1Tm8CCsNE2yW8fHcVvsL+PLKzGaEygrr3vjAP7jF2/MJojfGz2gqM1N+RLO
+         D8tfyCds9g0r9JLbW8IapZCUsc1TWop7jxKf0pdZniQiM+2QRIlNuRuisAY7q5b8gSZc
+         k0ZYqvfqXJ2jTTb4mf+ePtVddSwnryDTFponOJmYVRmGvdGR5g4eeGYL39xdi2BGtc0U
+         68xtN8miAgiXLv/dyDgpyJsm2ECKAbR30iNHWQm09wZWEPWnfExLck3iJq5fXlrqybGK
+         QSeg==
+X-Gm-Message-State: AMke39k2rx3Jenfoa7GiLMDbpqAq9e8Z5ImNJw1bvSlriwwnDz6rA1XEqq9OZ0nzzbrEKQTiRXZH2920fVrTz+Cd
+X-Received: by 10.99.98.6 with SMTP id w6mr44711985pgb.223.1489515389991; Tue,
+ 14 Mar 2017 11:16:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F5C6094A-08E0-11E7-AC00-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.100.187.5 with HTTP; Tue, 14 Mar 2017 11:16:29 -0700 (PDT)
+In-Reply-To: <xmqqd1djkay4.fsf@gitster.mtv.corp.google.com>
+References: <20170309012345.180702-1-bmwill@google.com> <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-3-bmwill@google.com> <xmqqd1djkay4.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 14 Mar 2017 11:16:29 -0700
+Message-ID: <CAGZ79kZ6noz7RGbmNwg=NhuWYH=KbNPYUWL7We9YjbHn6uf2Jg@mail.gmail.com>
+Subject: Re: [PATCH v3 02/10] submodule status: use submodule--helper is-active
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+On Tue, Mar 14, 2017 at 10:46 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Williams <bmwill@google.com> writes:
+>
+>> Signed-off-by: Brandon Williams <bmwill@google.com>
+>> ---
+>>  git-submodule.sh | 3 +--
+>>  1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 136e26a2c..ab233712d 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -1010,14 +1010,13 @@ cmd_status()
+>>       do
+>>               die_if_unmatched "$mode" "$sha1"
+>>               name=$(git submodule--helper name "$sm_path") || exit
+>> -             url=$(git config submodule."$name".url)
+>>               displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+>>               if test "$stage" = U
+>>               then
+>>                       say "U$sha1 $displaypath"
+>>                       continue
+>>               fi
+>> -             if test -z "$url" ||
+>> +             if ! git submodule--helper is-active "$sm_path" ||
+>>               {
+>>                       ! test -d "$sm_path"/.git &&
+>>                       ! test -f "$sm_path"/.git
+>
+> The $name is no longer used after this step in cmd_status function,
+> as the sole purpose of learning the name from the path was so that
+> we can ask if the submodule has .URL defined and the query is done
+> by name, not path.
+>
+> This actually raises a question.
+>
+> Shouldn't "submodule--helper is-active" ask about submodule while
+> identifying the submodule in question by name?  Or do all (or most
+> of) the callers start from path and ask is-active on them so that it
+> is handier to let them ask by path?
 
-> -	/*
-> -	 * Looking up the url in .git/config.
-> -	 * We must not fall back to .gitmodules as we only want
-> -	 * to process configured submodules.
-> -	 */
-> -	strbuf_reset(&sb);
-> -	strbuf_addf(&sb, "submodule.%s.url", sub->name);
-> -	git_config_get_string(sb.buf, &url);
-> -	if (!url) {
-> +	/* Check if the submodule has been initialized. */
-> +	if (!is_submodule_initialized(ce->name)) {
->  		next_submodule_warn_missing(suc, out, displaypath);
->  		goto cleanup;
->  	}
-> @@ -835,7 +827,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
->  		argv_array_push(&child->args, "--depth=1");
->  	argv_array_pushl(&child->args, "--path", sub->path, NULL);
->  	argv_array_pushl(&child->args, "--name", sub->name, NULL);
-> -	argv_array_pushl(&child->args, "--url", url, NULL);
-> +	argv_array_pushl(&child->args, "--url", sub->url, NULL);
+A similar observation can be made, when looking at
+submodule_from_name and submodule_from_path
+(both defined in submodule-config.h)
 
-Even without this patch, we already had an instance of struct submodule
-available in this function, so the query to .git/config this patch removed
-was unnecessary?
+submodule_from_name has only one real world use case in code,
+which I suspect is even a bug.
 
-I am wondering what was meant by the comment "We must not fall back to..."
-that is being removed---is that because sub->url can come from .gitmodules
-that is in-tree, not from .git/config?  If that is the case, doesn't the
-change in this hunk change behaviour from using the URL the user prefers
-to using the URL the upstream suggests, overriding user's configuration?
+That line was last touched with 851e18c3859a (submodule: use new config
+API for worktree configurations). but the original mechanism comes
+from 7dce19d374 (fetch/pull: Add the --recurse-submodules option).
 
-> @@ -845,7 +837,6 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
->  		argv_array_push(&child->args, suc->depth);
->  
->  cleanup:
-> -	free(url);
->  	strbuf_reset(&displaypath_sb);
->  	strbuf_reset(&sb);
+There we take the path as name and if a real name exists, the name
+is overwritten with the real name, i.e.
+
+    name = name_for_path(path) ? name_for_path(path) : path;
+
+which IMHO is overly accepting and we should just die in case of
+!name_for_path.
+
+So to answer your original question, I think the codebase currently
+thinks by_path is handier, the name is a mere internal field in
+"struct submodule", useful for looking up its git dir.
+
+Thanks,
+Stefan
