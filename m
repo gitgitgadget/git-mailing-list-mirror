@@ -2,94 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC8FB202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 16:15:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB0CA202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 16:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751177AbdCOQP3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 12:15:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61466 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751014AbdCOQOj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 12:14:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 839F37BFE9;
-        Wed, 15 Mar 2017 12:14:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IfdlMuGVMmwoWk6+ho/Nh5mb7nQ=; b=RENIhZ
-        A08AsAn3252826QtUJtDT0pYgPsJtYI8ZrB2CPqIdtcPY4gKIez7zsx25KsL3JDw
-        mO0bGKRPZ9D8c9qToWgrQXPEPV+zYQG7u6tdgEVstZBnFD0TpOZrtofHQqjdP+IB
-        okhL5MZc6PdxZsdL81OQmce5l0OhRuCPRtChU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=d/V7onASsbghWwRh/h6nHGeko5lm0T5b
-        yRKDm0EPJNTj4ktSs+1ng28sgncNx4InORvix6F/9QO6zK2rQZm9WBa3l6vHVUyL
-        rwbWDblyWQtAJP03vMrdMbS51Mqv//b3VtKnLegYZussL0lFkWP8IJ/Gym8RGU7v
-        9VeUHJTziV4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DB137BFE8;
-        Wed, 15 Mar 2017 12:14:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DC6177BFE7;
-        Wed, 15 Mar 2017 12:14:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@drmicha.warpmail.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFD PATCH 3/3] name-rev: Allow lightweight tags and branch refs
-References: <cover.1489581340.git.git@drmicha.warpmail.net>
-        <db54f291407ef34080fe9e8c9dbdd482b4b3698d.1489581340.git.git@drmicha.warpmail.net>
-Date:   Wed, 15 Mar 2017 09:14:35 -0700
-In-Reply-To: <db54f291407ef34080fe9e8c9dbdd482b4b3698d.1489581340.git.git@drmicha.warpmail.net>
-        (Michael J. Gruber's message of "Wed, 15 Mar 2017 14:15:10 +0100")
-Message-ID: <xmqqmvcmfrf8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751495AbdCOQNu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 12:13:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44631 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751480AbdCOQNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 12:13:12 -0400
+Received: (qmail 14003 invoked by uid 109); 15 Mar 2017 16:13:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 16:13:11 +0000
+Received: (qmail 14313 invoked by uid 111); 15 Mar 2017 16:13:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 12:13:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 12:13:08 -0400
+Date:   Wed, 15 Mar 2017 12:13:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     Florian Adamus <florian-adamus@gmx.de>, git@vger.kernel.org
+Subject: Re: Commiting files larger than 4 GB on Windows
+Message-ID: <20170315161308.sbyoxzst7ffcu6qs@sigill.intra.peff.net>
+References: <trinity-9f703269-6f73-4f6d-b90b-45e09e1c094c-1489582854278@3capp-gmx-bs66>
+ <179b5d92-ee96-c2df-dbd8-eb96f7bbdb24@virtuell-zuhause.de>
+ <20170315155952.x2tpiudi6rbqidvi@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 7C100CE4-099A-11E7-8E7F-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170315155952.x2tpiudi6rbqidvi@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Wed, Mar 15, 2017 at 11:59:52AM -0400, Jeff King wrote:
 
-> Consider the following:
-> ...
-> "git describe past present future" gives
->
-> past
-> past-1-g5ad942f
-> future
->
-> because (as documented) it does not consider lightweight tags, and thus
-> has to describe present from the past.
->
-> "git describe --tags past present future" gives
->
-> past
-> present
-> future
+> I agree that detecting the situation in the meantime is a good idea.
+> The patch above probably handles the bulk-checkin code path, I'd guess.
+> It might be nice to have similar checks in other places, too:
 > 
-> because (as documented) it does consider lightweight tags.
->
-> "git describe --contains past present future" gives
->
-> past^0
-> future~1
-> future^0
+>   - when reading from an existing packfile
+> 
+>     Looks like we may already have such a check in
+>     unpack_object_header_buffer().
+> 
+>   - when taking in new objects via index-pack or unpack-objects (to
+>     catch a fetch of a too-big object)
+> 
+>     I think index-pack.c:unpack_raw_entry() would want a similar check
+>     to what is in unpack_object_header_buffer().
 
-Nice illustration to convince anybody that "git describe --tags
---contains" should give "past present future" (or "past^0 present
-future^0").  I am not sure if it is a good idea in general to change
-the output to include "present" when "--tags" is not given, though.
+Here are the results of a few quick experiments using two versions of
+git, one built for 32-bit and one for 64-bit:
 
-For _this_ example, it does give us a more useful result, but the
-example was to constructed to illustrate the case where the new
-behaviour is more useful, and does not serve to convince us that it
-won't have negative impact X-<.
+  $ git init
+  $ dd if=/dev/zero of=foo.zero bs=1M count=4097
+  $ git32 add foo.zero
+  fatal: Cannot handle files this big
+
+That comes from the xsize_t() wrapper. I guess it wouldn't trigger on
+Windows, though, because it is measuring size_t, not "unsigned long" (on
+my 32-bit build they are the same, of course).
+
+  $ git64 add foo.zero
+  $ git32 cat-file blob :foo.zero
+  error: bad object header
+  fatal: packed object df6f032f301d1ce40477eefa505f2fac1de5e243 (stored in .git/objects/pack/pack-57d422f19904e9651bec43d10b7a9cd882de48ac.pack) is corrupt
+
+So we notice, which is good. This is the message from
+unpack_object_header_buffer(). It might be worth improving the error
+message to mention the integer overflow.
+
+And here's what index-pack looks like:
+
+  $ git32 index-pack --stdin <.git/objects/pack/*.pack
+  fatal: pack has bad object at offset 12: inflate returned -5
+
+It's good that we notice, but the error message isn't great. What
+happens is that we overflow the size integer, allocate a too-small
+buffer, and then zlib complains when we run out of buffer but there's
+still content to inflate. We probably ought to notice the integer
+overflow in the first place and complain there.
+
+-Peff
