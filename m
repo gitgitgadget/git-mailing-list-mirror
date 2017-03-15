@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9BD202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 21:35:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6699D202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 21:36:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754069AbdCOVfp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 17:35:45 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44842 "EHLO cloud.peff.net"
+        id S1754074AbdCOVfr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 17:35:47 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44843 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752358AbdCOVfD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 17:35:03 -0400
-Received: (qmail 4049 invoked by uid 109); 15 Mar 2017 21:28:21 -0000
+        id S1754065AbdCOVfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 17:35:46 -0400
+Received: (qmail 4060 invoked by uid 109); 15 Mar 2017 21:28:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 21:28:21 +0000
-Received: (qmail 12745 invoked by uid 111); 15 Mar 2017 21:28:33 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 21:28:59 +0000
+Received: (qmail 13904 invoked by uid 111); 15 Mar 2017 21:29:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 17:28:33 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 17:28:18 -0400
-Date:   Wed, 15 Mar 2017 17:28:18 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 17:29:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 17:28:56 -0400
+Date:   Wed, 15 Mar 2017 17:28:56 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 3/6] sha1_file.c: make pack-name helper globally accessible
-Message-ID: <20170315212818.yitqbv3dfvfb6t3u@sigill.intra.peff.net>
+Subject: [PATCH 4/6] index-pack: drop fixed-size buffer for pack filenames
+Message-ID: <20170315212856.fetjp5cyu4l6juc7@sigill.intra.peff.net>
 References: <20170315212617.6x57bvltinuozv4q@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,90 +37,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We provide sha1_pack_name() and sha1_pack_index_name(), but
-the more generic form (which takes its own strbuf and an
-arbitrary extension) is only used to implement the other
-two.  Let's make it available, but clean up a few things:
+We write the name of the pack filename into a fixed-size
+buffer using snprintf(), but do not check the return value.
+As a result, a very long object directory could cause us to
+quietly truncate the pack filename (leading to a corrupted
+repository, as the packfile would be missing its .pack
+extension).
 
-  1. Name it odb_pack_name(), as the original
-     sha1_get_pack_name() is long but not all that
-     descriptive.
-
-  2. Switch the strbuf argument to the beginning, so that it
-     matches similar path-building functions like
-     git_path_buf().
-
-  3. Clean up the out-dated docstring and move it to the
-     public declaration.
+We can use odb_pack_name() to fix this (and make the code
+simpler, too).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- cache.h     |  9 +++++++++
- sha1_file.c | 17 ++++++-----------
- 2 files changed, 15 insertions(+), 11 deletions(-)
+ builtin/index-pack.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 68ad06e15..97896e2e5 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1639,6 +1639,15 @@ extern void pack_report(void);
-  */
- extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
- 
-+/*
-+ * Generate the filename to be used for a pack file with checksum "sha1" and
-+ * extension "ext". The result is written into the strbuf "buf", overwriting
-+ * any existing contents. A pointer to buf->buf is returned as a convenience.
-+ *
-+ * Example: odb_pack_name(out, sha1, "idx") => ".git/objects/pack/pack-1234..idx"
-+ */
-+extern char *odb_pack_name(struct strbuf *buf, const unsigned char *sha1, const char *ext);
-+
- /*
-  * Create a pack .keep file in the object database's pack directory, for
-  * a pack with checksum "sha1". The return value is a file descriptor opened
-diff --git a/sha1_file.c b/sha1_file.c
-index 2ee3c617a..56ef09cd3 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -277,31 +277,26 @@ static const char *alt_sha1_path(struct alternate_object_database *alt,
- 	return buf->buf;
- }
- 
--/*
-- * Return the name of the pack or index file with the specified sha1
-- * in its filename.  *base and *name are scratch space that must be
-- * provided by the caller.  which should be "pack" or "idx".
-- */
--static char *sha1_get_pack_name(const unsigned char *sha1,
--				struct strbuf *buf,
--				const char *which)
-+ char *odb_pack_name(struct strbuf *buf,
-+		     const unsigned char *sha1,
-+		     const char *ext)
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 187c0550c..b6e7ac331 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1384,13 +1384,9 @@ static void finalize_file(const char *final_name, const char *curr_name,
+ 			  unsigned char *sha1, const char *ext)
  {
- 	strbuf_reset(buf);
- 	strbuf_addf(buf, "%s/pack/pack-%s.%s", get_object_directory(),
--		    sha1_to_hex(sha1), which);
-+		    sha1_to_hex(sha1), ext);
- 	return buf->buf;
- }
- 
- char *sha1_pack_name(const unsigned char *sha1)
- {
- 	static struct strbuf buf = STRBUF_INIT;
--	return sha1_get_pack_name(sha1, &buf, "pack");
-+	return odb_pack_name(&buf, sha1, "pack");
- }
- 
- char *sha1_pack_index_name(const unsigned char *sha1)
- {
- 	static struct strbuf buf = STRBUF_INIT;
--	return sha1_get_pack_name(sha1, &buf, "idx");
-+	return odb_pack_name(&buf, sha1, "idx");
- }
- 
- struct alternate_object_database *alt_odb_list;
+ 	if (final_name != curr_name) {
+-		char name[PATH_MAX];
+-		if (!final_name) {
+-			snprintf(name, sizeof(name), "%s/pack/pack-%s.%s",
+-				 get_object_directory(), sha1_to_hex(sha1),
+-				 ext);
+-			final_name = name;
+-		}
++		struct strbuf buf = STRBUF_INIT;
++		if (!final_name)
++			final_name = odb_pack_name(&buf, sha1, ext);
+ 		if (finalize_object_file(curr_name, final_name))
+ 			die(_("cannot store %s file"), ext);
+ 	} else if (from_stdin)
 -- 
 2.12.0.613.g6e7c52a0d
 
