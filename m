@@ -2,93 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F216202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 21:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0291202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 22:05:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754122AbdCOV7R (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 17:59:17 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:34507 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754000AbdCOV7Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 17:59:16 -0400
-Received: by mail-pf0-f177.google.com with SMTP id v190so14586663pfb.1
-        for <git@vger.kernel.org>; Wed, 15 Mar 2017 14:59:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZjTrF/B0t3AemP1b5Vg032oNfP0UGbbpbzOsVuw99kI=;
-        b=VMcDlM5vXMa7+l7eSaFsgSCSw4EbGbjf67aTCTppuC/qPknMXeV1ssdO5XSjVfK4MJ
-         R5AUj6iNtBUHOrU6jcrUykdHYGAVMFY3vyjB+P5GgV15VHz7RxCIsufP0jzHrwI+KZ+8
-         4G1osXcaEE/uCJQwMqUQS9MLUxtBiza73z4bDMguP/kThB5l1YKBckefLDFz8fkNHBG0
-         IkNkRFtjEblL7LdDIh1OCRGBpCNorueXM489d2T0583YSL9TR2KlVGzpEmvmshN5Bq4A
-         xiNFPDhKIaOWVdSFdqRDW1N91auELwJ8evc6yg8g8zwVdOL0wD1nWeBS0Scy74XbsHrX
-         Z67Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZjTrF/B0t3AemP1b5Vg032oNfP0UGbbpbzOsVuw99kI=;
-        b=OX7VFvnAiu4oy8KEf/3Ebh06R/SFD7LC4fdrwymDuP+REHEbmuVeaPD1uHKUip5RgA
-         zMDmQ5sGeoWlLJ0Q3CPXNmscugIdHm+UAzJ3KZ1fG86/eb+iCaiJ2In9yF1424wZbnbm
-         0M6cG2CLxxnt7g57s/jrTZt13lcVWTqddmujTbZ4d6y+lBd68PRC+WH6BeFlWSLHD+IP
-         +tKTrVWYEx93GJ6DiqVA7+dmG5b6pAG8IRrg58tl0Ws6l3CjT7Ii7BTdY6H+rflgmx5V
-         XIYtLTi9NfT3Ew+HQs99ZoWgqbZQ3gicHe341WTI1pT/quqJqMpVv3oXmzNZsxtUC32z
-         o35g==
-X-Gm-Message-State: AFeK/H1KU5cmSnkbTgWtJfphqUZ00YIy/yzaXG7siLcQtk51bqfnnV1guCfWumCSXo3jqmGh
-X-Received: by 10.84.233.193 with SMTP id m1mr7639181pln.118.1489615155161;
-        Wed, 15 Mar 2017 14:59:15 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:e5fd:c660:1f84:47a3])
-        by smtp.gmail.com with ESMTPSA id m3sm6102567pfc.66.2017.03.15.14.59.13
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Mar 2017 14:59:14 -0700 (PDT)
-Date:   Wed, 15 Mar 2017 14:59:13 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v3 10/10] submodule add: respect submodule.active and
- submodule.<name>.active
-Message-ID: <20170315215913.GF159137@google.com>
-References: <20170309012345.180702-1-bmwill@google.com>
- <20170313214341.172676-1-bmwill@google.com>
- <20170313214341.172676-11-bmwill@google.com>
- <xmqqefxziqrj.fsf@gitster.mtv.corp.google.com>
+        id S1751277AbdCOWFX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 18:05:23 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:55088 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752566AbdCOWFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 18:05:21 -0400
+Received: from [10.0.2.15] ([146.90.175.94])
+        by avasout01 with smtp
+        id wN3w1u00222aPyA01N3xDu; Wed, 15 Mar 2017 22:03:57 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=BZKo6vl2 c=1 sm=1 tr=0
+ a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
+ a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=TmrUauzZN01w56_5tKYA:9 a=QEXdDO2ut3YA:10
+ a=q92HNjYiIAC_jH7JDaYf:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 1/6] index-pack: factor out pack/idx finalization
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20170315212617.6x57bvltinuozv4q@sigill.intra.peff.net>
+ <20170315212733.73cw22dm36oc5im4@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <f42ba0f5-a879-f63f-1cbd-de268da05966@ramsayjones.plus.com>
+Date:   Wed, 15 Mar 2017 22:03:56 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqefxziqrj.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170315212733.73cw22dm36oc5im4@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/14, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > +	if git config --get submodule.active >/dev/null
-> > +	then
-> > +		# If the submodule being adding isn't already covered by the
-> > +		# current configured pathspec, set the submodule's active flag
-> > +		if ! git submodule--helper is-active "$sm_path"
-> > +		then
-> > +			git config --add submodule."$sm_name".active "true"
-> > +		fi
-> > +	else
-> > +		git config --add submodule."$sm_name".active "true"
-> > +	fi
-> 
-> Why "--add"?  That's a way to add new entry for multi-valued
-> configuration, but you do not care if the old value (if existed)
-> were false or true---you want to replace it to true here, no?
 
-Correct, that was a leftover bit from a previous version of the patch.
-Will fix.
 
--- 
-Brandon Williams
+On 15/03/17 21:27, Jeff King wrote:
+> The procedure for moving the ".pack" and the ".idx" files
+> into place is the same. Rather than repeat the code, let's
+> factor it into a helper function.
+> 
+> This has the added benefit of clarifying the lifetime of
+> "final_pack_name". In the original code it is sometimes
+> redirected to our reusable "name" buffer; after we reuse
+> that buffer, the contents are nonsense (but nobody looks at
+> it, so this is not a bug, just a maintenance issue). In the
+> new code, the pointer modification is contained in the
+> helper function.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/index-pack.c | 40 +++++++++++++++++++---------------------
+>  1 file changed, 19 insertions(+), 21 deletions(-)
+> 
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index f4b87c6c9..187c0550c 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1380,6 +1380,23 @@ static void fix_unresolved_deltas(struct sha1file *f)
+>  	free(sorted_by_pos);
+>  }
+>  
+> +static void finalize_file(const char *final_name, const char *curr_name,
+> +			  unsigned char *sha1, const char *ext)
+> +{
+> +	if (final_name != curr_name) {
+> +		char name[PATH_MAX];
+> +		if (!final_name) {
+> +			snprintf(name, sizeof(name), "%s/pack/pack-%s.%s",
+> +				 get_object_directory(), sha1_to_hex(sha1),
+> +				 ext);
+> +			final_name = name;
+> +		}
+> +		if (finalize_object_file(curr_name, final_name))
+> +			die(_("cannot store %s file"), ext);
+> +	} else if (from_stdin)
+> +		chmod(final_name, 0444);
+> +}
+> +
+>  static void final(const char *final_pack_name, const char *curr_pack_name,
+>  		  const char *final_index_name, const char *curr_index_name,
+>  		  const char *keep_name, const char *keep_msg,
+> @@ -1422,27 +1439,8 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+>  		}
+>  	}
+>  
+> -	if (final_pack_name != curr_pack_name) {
+> -		if (!final_pack_name) {
+> -			snprintf(name, sizeof(name), "%s/pack/pack-%s.pack",
+> -				 get_object_directory(), sha1_to_hex(sha1));
+> -			final_pack_name = name;
+> -		}
+> -		if (finalize_object_file(curr_pack_name, final_pack_name))
+> -			die(_("cannot store pack file"));
+> -	} else if (from_stdin)
+> -		chmod(final_pack_name, 0444);
+> -
+> -	if (final_index_name != curr_index_name) {
+> -		if (!final_index_name) {
+> -			snprintf(name, sizeof(name), "%s/pack/pack-%s.idx",
+> -				 get_object_directory(), sha1_to_hex(sha1));
+> -			final_index_name = name;
+> -		}
+> -		if (finalize_object_file(curr_index_name, final_index_name))
+> -			die(_("cannot store index file"));
+> -	} else
+> -		chmod(final_index_name, 0444);
+
+Is from_stdin always true if final_index_name == curr_index_name?
+Was the original asymmetry deliberate?
+
+> +	finalize_file(final_pack_name, curr_pack_name, sha1, "pack");
+> +	finalize_file(final_index_name, curr_index_name, sha1, "idx");
+>  
+>  	if (!from_stdin) {
+>  		printf("%s\n", sha1_to_hex(sha1));
+> 
+
+ATB,
+Ramsay Jones
+
