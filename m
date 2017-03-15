@@ -2,90 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6297C202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 15:59:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A333202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 16:02:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753893AbdCOP6y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 11:58:54 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61550 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753175AbdCOP6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 11:58:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 621CC76908;
-        Wed, 15 Mar 2017 11:57:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bEQo5Bbai6qM29XWmZpj82RaTZc=; b=f7JkP2
-        toqJFfG1yeCN7r7OLbsjZlftfgDYmKVHFSvlfOpMZOQ3/mMT43wgLqGgIElCEPKO
-        DcKzo88Yo/VDN9SxkdPeHNBl3gBRd/KQHPEUY/sYcjdPrr7yuIiwS5TvPA4mV5kF
-        Fl8OYymp0H7j7EvZwsHo/FJbd0vKyR/9Nbouc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eYzpbDFob+mh7FGFkemhmvZO4eC7q7e7
-        24BelfjYR8X68HkjRamnfwqBSgu7SHyZ5G4L1+V91XbXfODQbwQVLTtFmQw2oWC1
-        RMtBDghoun0g4bBVGDbLm3+lplft1VG8+F3E82BFuxEBUDX/Tc3PWFm6EdPsm2p1
-        GA8AgEn2N80=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B6ED76907;
-        Wed, 15 Mar 2017 11:57:38 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEAEA76906;
-        Wed, 15 Mar 2017 11:57:37 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] Move SHA-1 implementation selection into a header file
-References: <20170311222818.518541-1-sandals@crustytoothpaste.net>
-        <20170314184126.GJ26789@aiede.mtv.corp.google.com>
-        <20170314201424.vccij5z2ortq4a4o@sigill.intra.peff.net>
-        <xmqq1stzio5b.fsf@gitster.mtv.corp.google.com>
-        <1fce97df-7eb8-79d5-b96b-2086746bf19d@ramsayjones.plus.com>
-        <20170314234659.wamzgpqu2aikghci@genre.crustytoothpaste.net>
-        <dd285cb9-c7c7-e945-1fa2-7eb58d83ea06@ramsayjones.plus.com>
-Date:   Wed, 15 Mar 2017 08:57:36 -0700
-In-Reply-To: <dd285cb9-c7c7-e945-1fa2-7eb58d83ea06@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Wed, 15 Mar 2017 00:15:39 +0000")
-Message-ID: <xmqqvarafs7j.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753218AbdCOQCK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 12:02:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44619 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754004AbdCOQAw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 12:00:52 -0400
+Received: (qmail 13134 invoked by uid 109); 15 Mar 2017 15:59:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 15:59:55 +0000
+Received: (qmail 22169 invoked by uid 111); 15 Mar 2017 16:00:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 12:00:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 11:59:52 -0400
+Date:   Wed, 15 Mar 2017 11:59:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     Florian Adamus <florian-adamus@gmx.de>, git@vger.kernel.org
+Subject: Re: Commiting files larger than 4 GB on Windows
+Message-ID: <20170315155952.x2tpiudi6rbqidvi@sigill.intra.peff.net>
+References: <trinity-9f703269-6f73-4f6d-b90b-45e09e1c094c-1489582854278@3capp-gmx-bs66>
+ <179b5d92-ee96-c2df-dbd8-eb96f7bbdb24@virtuell-zuhause.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1CA84D4A-0998-11E7-914E-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <179b5d92-ee96-c2df-dbd8-eb96f7bbdb24@virtuell-zuhause.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Wed, Mar 15, 2017 at 02:48:57PM +0100, Thomas Braun wrote:
 
-> On 14/03/17 23:46, brian m. carlson wrote:
->>>>
->>>> Since the SHA1_HEADER include is not defined in such a case, developers
->>>> see spurious errors when using these tools.  Furthermore, while using a
->>>> macro as the argument to #include is permitted by C11, it isn't
->>>> permitted by C89 and C99, and there are known implementations which
->>>> reject it.
->>>
->
->> Junio, do you want to amend the commit message before you merge it?
->
-> Yes, please! ;-)
+> I can not comment on the git-lfs issues. The issue that you can not
+> properly use files larger than 4GB on windows (no matter if 32bit or
+> 64bit) is known, see my findings from May last year [1]. Unfortunately
+> nobody, including me, did find time to fix the underlying issue
+> properly.
 
-If only you were a few hours quicker.
+I suspect the fix is going to be quite involved. The use of "unsigned
+long" for object sizes is all over the code base.
 
-Let me see how bad the fallout is to revert the merge to 'next' and
-merge an amended version in.
+> My band-aid patch from [1]
+> 
+> diff --git a/pack-write.c b/pack-write.c
+> index 33293ce..ebb8b0a 100644
+> --- a/pack-write.c
+> +++ b/pack-write.c
+> @@ -313,6 +313,9 @@ int encode_in_pack_object_header(enum object_type type, uintmax_t size, unsigned
+>         if (type < OBJ_COMMIT || type > OBJ_REF_DELTA)
+>                 die("bad type %d", type);
+> 
+> +       if (bitsizeof(unsigned long) != bitsizeof(uintmax_t) && size > (unsigned long) size)
+> +               die("Cannot handle files this big");
+> +
+>         c = (type << 4) | (size & 15);
+>         size >>= 4;
+>         while (size) {
+> 
+> would at least tell the user much earlier about the problem. I can
+> submit the above diff as proper patch if it is deemed a worthy change.
 
-I _think_ the whole "Furthermore" sentence can go, since nobody
-complained since cef661fc ("Add support for alternate SHA1 library
-implementations.", 2005-04-21) started using the Makefile construct.
+I agree that detecting the situation in the meantime is a good idea.
+The patch above probably handles the bulk-checkin code path, I'd guess.
+It might be nice to have similar checks in other places, too:
 
-Thanks.
+  - when reading from an existing packfile
+
+    Looks like we may already have such a check in
+    unpack_object_header_buffer().
+
+  - when taking in new objects via index-pack or unpack-objects (to
+    catch a fetch of a too-big object)
+
+    I think index-pack.c:unpack_raw_entry() would want a similar check
+    to what is in unpack_object_header_buffer().
+
+-Peff
