@@ -2,135 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59BD4202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 17:11:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D8DF202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 17:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752195AbdCORIt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 13:08:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44665 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750780AbdCORId (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 13:08:33 -0400
-Received: (qmail 17852 invoked by uid 109); 15 Mar 2017 17:08:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 17:08:32 +0000
-Received: (qmail 19698 invoked by uid 111); 15 Mar 2017 17:08:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 13:08:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 13:08:29 -0400
-Date:   Wed, 15 Mar 2017 13:08:29 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git-clone --config order & fetching extra refs during initial
- clone
-Message-ID: <20170315170829.7gp44typsyrlw6kg@sigill.intra.peff.net>
-References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
- <20170225205052.j3p7obbf4onf6cbf@sigill.intra.peff.net>
- <xmqqd1e3xx4c.fsf@gitster.mtv.corp.google.com>
- <20170227211217.73gydlxb2qu2sp3m@sigill.intra.peff.net>
- <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
+        id S1751563AbdCORqA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 13:46:00 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35916 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751270AbdCORp7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 13:45:59 -0400
+Received: by mail-pg0-f41.google.com with SMTP id g2so12293836pge.3
+        for <git@vger.kernel.org>; Wed, 15 Mar 2017 10:45:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/TVyhrZRGjc9q0jKfvORGxO7R3pBhaEyIx2quiX9PZI=;
+        b=Bg+ZKMpfZ7JnMUr+d9qCalcd4E+fGP/Yas2vksFlmm2XRUcjQJG/6m3iit1VIh1vbG
+         w/6CJKJK6+i6dcJ564wJcOG9ZkAMPR5CzuDiqR2F1sDRV3w7vaqs2WYkvviDsmYxvwq1
+         LJSTFywp7O2hM6hcP4/knPtNbXyTDmyhyEjzTAYdWl4MQ0F+Rn6v5Gg33J4PKhpS5J8O
+         CkbWCKjlZJGpBaBdfaNjTgGaWHfvyFlPrRY9XqdvB/CBUuWTKAGlc/08Z4t5UQe7AhYJ
+         f5C2mLm6N4m7zw2SKaNFkBnEqOFcKwRJjaEyyLr9XC07b2J7B+cDQ2yM9XrTOnI9BQ8/
+         LjYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/TVyhrZRGjc9q0jKfvORGxO7R3pBhaEyIx2quiX9PZI=;
+        b=TLFLk0VdZ5gFfRjsq9Dfl+mZhWhBek6arnYedfb7XOzGbda6m6Dmn+rjP9JSj1i/eR
+         LqGsqT6EMdXep9rdZk01bvG+wv2LE0TmgTwXXpXSXStF/JmYlgQaAEVq4Uo1RkC72QZ5
+         5zOkUF6X5VV+o0A0Z7b2IT9nrCjq1Ygv+pi//0uWS7drs50X1+/aPMaGloGziykwwf/k
+         3z/ZP9RibRwzpGdZnEEqydhfE+zfJdFza3eB3OUvgWyxgo2ewhmMl6mW3N8evvqX5qb8
+         sji554R4zvxGWh+6gUFUvVFLTiHBXQGNoDE3DFwS5txhzche2sm3XXeenF2AxX7Zgobm
+         ZgKQ==
+X-Gm-Message-State: AFeK/H14JvdVKEt7KJkk0220qVlSrT78dzPfo+HSOU0wT7CZXXkQ++OWlRz3OoUWkoOqguSr
+X-Received: by 10.99.115.68 with SMTP id d4mr4919724pgn.146.1489599514340;
+        Wed, 15 Mar 2017 10:38:34 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:e5fd:c660:1f84:47a3])
+        by smtp.gmail.com with ESMTPSA id s13sm5551751pfd.46.2017.03.15.10.38.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Mar 2017 10:38:32 -0700 (PDT)
+Date:   Wed, 15 Mar 2017 10:38:31 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jens Lehmann <Jens.Lehmann@web.de>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 05/10] submodule: decouple url and submodule existence
+Message-ID: <20170315173831.GB159137@google.com>
+References: <20170309012345.180702-1-bmwill@google.com>
+ <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-6-bmwill@google.com>
+ <CAGZ79kaqNUV_Wa_9-PSTf=NU7EcKASHqk6NcmGZSX5r610Zdew@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
+In-Reply-To: <CAGZ79kaqNUV_Wa_9-PSTf=NU7EcKASHqk6NcmGZSX5r610Zdew@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 11, 2017 at 01:41:34AM +0100, SZEDER Gábor wrote:
-
-> >>  static struct ref *wanted_peer_refs(const struct ref *refs,
-> >> -             struct refspec *refspec)
-> >> +             struct refspec *refspec, unsigned int refspec_count)
+On 03/13, Stefan Beller wrote:
+> + cc Jens, FYI.
+> 
+> Once upon a time I brought up different addressing/activating mechanism for
+> submodules and I remember Jens having some uneasy thoughts about
+> that back in the day. This series addresses the user confusion and documentation
+> better than what I had back then.
+> 
+> On Mon, Mar 13, 2017 at 2:43 PM, Brandon Williams <bmwill@google.com> wrote:
+> > Currently the submodule.<name>.url config option is used to determine
+> > if a given submodule exists and is interesting to the user.  This
+> > however doesn't work very well because the URL is a config option for
+> > the scope of a repository, whereas the existence of a submodule is an
+> > option scoped to the working tree.
 > >
-> > Most of the changes here and elsewhere are just about passing along
-> > multiple refspecs instead of a single, which makes sense.
+> > In a future with worktree support for submodules, there will be multiple
+> > working trees, each of which may only need a subset of the submodules
+> > checked out.  The URL (which is where the submodule repository can be
+> > obtained) should not differ between different working trees.
+> >
+> > It may also be convenient for users to more easily specify groups of
+> > submodules they are interested in as apposed to running "git submodule
+> > init <path>" on each submodule they want checked out in their working
+> > tree.
+> >
+> > To this end two config options are introduced, submodule.active and
+> > submodule.<name>.active.  The submodule.active config holds a pathspec
+> > that specifies which submodules should exist in the working tree.  The
+> > submodule.<name>.active config is a boolean flag used to indicate if
+> > that particular submodule should exist in the working tree.
+> >
+> > Given these multiple ways to check for a submodule's existence the more
+> > fine-grained submodule.<name>.active option has the highest order of
+> > precedence followed by the pathspec check against submodule.active. To
+> > ensure backwards compatibility, if neither of these options are set git
+> > falls back to checking the submodule.<name>.url option to determine a
+> > submodule's existence.
+> >
 > 
-> The new parameter should perhaps be renamed to 'refspec_nr', though,
-> as '_nr' suffix seems to be more common in the codebase than '_count'.
-
-Yeah, agreed.
-
-> > Though if I'm bikeshedding, I'd probably have written the whole thing
-> > with an argv_array and avoided counting at all.
 > 
-> Yeah, I did notice that you love argv_array :)  I had to raise an
-> eyebrow recently while looking at send-pack and how it uses argv_array
-> to read refspecs from stdin into an array.  I think argv_array feels a
-> bit out of place in both cases.  Yes, it does exactly what's needed.
-> However, it's called *argv*_array, indicating that its contents is
-> destined to become the options of some command.  But that's not the
-> case in these two cases, we are not dealing with arguments to a
-> command, these are just arrays of strings.
-
-In my mind, "argv" is synonymous with "NULL-terminated array of
-strings". If the name is the only thing keeping it from wider use, I'd
-much prefer us to give it a more generic name. All I really care about
-is simplifying memory management. :)
-
-> However, leveraging get_remote() makes it moot anyway.
-
-Even better.
-
-> > I do also notice that right _after_ this parsing, we use remote_get(),
-> > which is supposed to give us this config anyway. Which makes me wonder
-> > if we could just reorder this to put remote_get() first, and then read
-> > the resulting refspecs from remote->fetch.
 > 
-> Though get_remote() does give us this config, at this point the
-> default fetch refspec has not been configured yet, therefore it's not
-> included in the resulting remote->fetch array.  The default refspec is
-> set in write_refspec_config(), but that's called only about two
-> screenfulls later.  So there is a bit of extra work to do in order to
-> leverage get_remote()'s parsing.
 > 
-> I think the simplest way is to keep parsing the default fetch refspec
-> manually, and then append it to the remote->fetch array.  Definitely
-> shorter and simpler than that parsing in the current patch.
-> Alternatively, we could set the default fetch refspec in the
-> configuration temporarily, only for the duration of the get_remote()
-> call, but it feels a bit too hackish...
-
-Yeah, I think manually combining the two here is fine. Though I won't
-complain if you want to look into setting the config earlier. If the
-refactoring isn't too bad, it would probably provide the nicest outcome.
-
-> However, the tests should also check that refs matching the default
-> fetch refspec are transferred, too, i.e. that the clone has something
-> under refs/remotes/origin/ as well.  Case in point is using the result
-> of get_remote(): at first I naively set out to use remote->fetch
-> as-is, which didn't include the default fetch refspec, hence didn't
-> fetch refs/heads/master, but the test succeeded nonetheless.
-
-Good point.
-
-> > If we wanted to be thorough, we could also check that the feature works
-> > correctly with "--origin" (I think it does).
+> >
+> > +submodule.<name>.active::
+> > +       Boolean value indicating if the submodule is of interest to git
+> > +       commands.  This config option takes precedence over the
+> > +       submodule.active config option.
 > 
-> I think it works, but I'm not quite sure what you mean with "works
-> correctly with --origin".
-> 
-> So just to be clear: the behaviour depends on whether the remote name
-> given in '-c remote.<name>.fetch=<refspec>' matches the name given to
-> the '--origin=<name>'.  If they match, then refs matching the
-> additional refspec are transferred, too.  That's good.  However, if
-> the two remote names don't match, then refs matching the additional
-> refspec are NOT transferred.  I think this is good, too, because only
-> the origin remote should be cloned, whatever it is called, and in this
-> case that additional refspec belongs to a different remote.
+> ... which itself takes precedence over the (deprecated) .URL
+> We conveniently do not talk about the URL here anymore.
+> But! We need to change submodule.<name>.URL now?
 
-Yes, exactly. Mostly I was suggesting that if you do "--origin=foo",
-then we do not fetch items named "remote.origin.fetch" (i.e., that the
-code correctly uses the origin variable and not the hard-coded name
-"origin").
+yeah this patch introduces a change to the documentation for URL to
+indicate the change.
 
--Peff
+-- 
+Brandon Williams
