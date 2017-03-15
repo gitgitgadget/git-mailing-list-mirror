@@ -2,67 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A380620951
-	for <e@80x24.org>; Wed, 15 Mar 2017 04:51:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 728A520323
+	for <e@80x24.org>; Wed, 15 Mar 2017 06:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751145AbdCOEvy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 00:51:54 -0400
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:33221 "EHLO
-        mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750848AbdCOEvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 00:51:53 -0400
-Received: by mail-vk0-f48.google.com with SMTP id d188so3051818vka.0
-        for <git@vger.kernel.org>; Tue, 14 Mar 2017 21:51:53 -0700 (PDT)
+        id S1751008AbdCOGsX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 02:48:23 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:35141 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750815AbdCOGsX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 02:48:23 -0400
+Received: by mail-it0-f51.google.com with SMTP id m27so60673349iti.0
+        for <git@vger.kernel.org>; Tue, 14 Mar 2017 23:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=RcYH8q3W3YCpBcOgYTyZJbx4fEU17yXUa4eXy7oUeR8=;
-        b=UoX/md7K9q7+Iwac1Q/UQkKjRIqes+uTqPC9Dkkq/PYJA2eRNZrVLZjD3yDp1wtN/v
-         iu2++eIbmxOZ7F34jgkeosmA9N4engHvCBCkmOT0rFqJ8JkKfIpDfav3ms53RXLbWNtV
-         uMUOEDPb5/ACjl8WfX8Hyyy5kj019yunOizgOp0+qrOCPW/psgnKyOW7prIKZt3SnbHk
-         W0IWH8nxfgjGT0B2+79EQnZ4uNMImIIqxNy39csideaqoT1NwxhTU5og3yX1jNyAtXin
-         P8129891BgAppdRhhgF+hbZWSxpgd5ZJjPHp1PTAJqNg5PcMp+aMM0eCIXJC01HbqjkP
-         YUlQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=GTYEpRQ5os51cGOl/QDk0y3ffNK3F30r+TpaMbeykvs=;
+        b=twtlOPImA9T73TI9OPeFm56mMOO46xhlat0nr8TUpQHMEKlYBYAJbD2lygtkQOoKEc
+         NVf5j59HP4pb7LSQWSPhHVB9M6SDEPrjzMjOW5aFyS4QECRoSkE4+gPBzqOkvYeh5kLO
+         1EI5xOITTyshCS4n2uFgjgPl35vhPrMh1Z+lIVoDssdbdUJgAAJesl8Mn0F3iOKqHnd8
+         W0VcsDiSW5/mQIP0wLtb5w3n4eruDjDUzLxfPHcT70JfY79VdjyTX/+zNrQ+TLDwpSHH
+         VOlcVR05lzx+Hz7bfgptXGFWzjQ5478F8bbFvR2OXaQ4gKzO4J1Tj5eSCTsR2d9A6HRp
+         wRmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=RcYH8q3W3YCpBcOgYTyZJbx4fEU17yXUa4eXy7oUeR8=;
-        b=DH5voLV03LvgRnkCmy6PDdGHCmBa0f8F3dGVSD4twBO9lak/fpUqNwEEp7veWVXPdM
-         YMeImPs01S86zlYVFicpt2iQHr8aR1D9OHrwA34DdYHC02c55LT6v2sw+0bM66WM+Awt
-         dMn7owQIpNt3ABnR6n9MVm0GVIcw/I3Hj5JHB/29ke0AKVWOfGmZ299edldCLvHrOyy3
-         ii7Fqhk9iRVfpB/Kp8P7HDD+uBecdKhCPqbxnXKLJCYlNyNgawkAG9lJfyvTgQASOc4d
-         6nV7CzysL67R6d4R/DLCk0wMd1iT871GZCN5RXimqgTuvF6AGg6nQ2YSLnJ/FPqN7Wyo
-         YfXA==
-X-Gm-Message-State: AFeK/H2kR9UFGlKiSIGESeJ7DBWRmYV5iUhqhIZt7lZuD7/fx4L9VMI9Zn6o8AdkFyt2mHpZeQvbJH7KHGxGPg==
-X-Received: by 10.31.106.198 with SMTP id f189mr369923vkc.149.1489553512376;
- Tue, 14 Mar 2017 21:51:52 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=GTYEpRQ5os51cGOl/QDk0y3ffNK3F30r+TpaMbeykvs=;
+        b=csWuCHZwFTs3giAZEoxHtMSUxttDXpnE1qsoPNeGtn/SObC2BOZpGF3EF3CauJyrvM
+         rKQXRl2BVJbH1lNaqEHnAOurK+oXz1I6tv+3cQCYja27/ptdnCONGXYWZrEsZrkHPZZ+
+         p30iP66XkDLdZrgut9ySsvCSgC9N0GbFA7wLYfvVLpJiL5lAePRB72TayZmuOAW3CmHI
+         DPIMtwV90IXBMwMvYke9yo7xTvyWS6COn5Ef08sxio6fiebdJWlpQY7K5FGz9+QsMLjP
+         BENob0HjxJb0CwnMa77lHCB4/eUZGhcmP//jAYnk++wVdqo6HOVSxGXzXDQoTUvOehxh
+         +YkQ==
+X-Gm-Message-State: AFeK/H0oYSi6mL1HETFyDhBC6nZi14/6O7Vp6QWPRx5IlcCfoahiwlG5aXbfRk81RxCGCVF+Is3GRx+LF4Zvpg==
+X-Received: by 10.36.58.76 with SMTP id m73mr20643209itm.17.1489560501594;
+ Tue, 14 Mar 2017 23:48:21 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.31.8.135 with HTTP; Tue, 14 Mar 2017 21:51:12 -0700 (PDT)
-From:   =?UTF-8?B?RMWpbmcgxJDhurduZyBNaW5o?= <dungdm93@gmail.com>
-Date:   Wed, 15 Mar 2017 11:51:12 +0700
-Message-ID: <CACHUE0-MyuL+8wvt1BeKMtxNUdg7AK0bDAg4BSeoj5aHjLARMQ@mail.gmail.com>
-Subject: [Bug] Unicode display
-To:     git@vger.kernel.org
+Received: by 10.79.38.19 with HTTP; Tue, 14 Mar 2017 23:48:21 -0700 (PDT)
+In-Reply-To: <CACHUE0-MyuL+8wvt1BeKMtxNUdg7AK0bDAg4BSeoj5aHjLARMQ@mail.gmail.com>
+References: <CACHUE0-MyuL+8wvt1BeKMtxNUdg7AK0bDAg4BSeoj5aHjLARMQ@mail.gmail.com>
+From:   Chris Packham <judge.packham@gmail.com>
+Date:   Wed, 15 Mar 2017 19:48:21 +1300
+Message-ID: <CAFOYHZDEoDrX-R=GOm6VJ9d4x-UuOzVfnCwb0zkPezkoL=WLdA@mail.gmail.com>
+Subject: Re: [Bug] Unicode display
+To:     =?UTF-8?B?RMWpbmcgxJDhurduZyBNaW5o?= <dungdm93@gmail.com>
+Cc:     GIT <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Git team,
+Hi,
 
-Thank you all for create a great tool.
-Last week, I updated the last version of git (2.12.0 x64-Windows) and
-all Unicode characters are display un-correctly. You can see:
-http://imgur.com/a/eriKQ
+On Wed, Mar 15, 2017 at 5:51 PM, D=C5=A9ng =C4=90=E1=BA=B7ng Minh <dungdm93=
+@gmail.com> wrote:
+> Hi Git team,
+>
+> Thank you all for create a great tool.
+> Last week, I updated the last version of git (2.12.0 x64-Windows) and
+> all Unicode characters are display un-correctly. You can see:
+> http://imgur.com/a/eriKQ
+>
 
--- 
-Dzung Dang Minh - Software Engineer
-Email: dungdm93@gmail.com
-Phone: (+84) 94.505.1024
-Skype: dungdm93
+Looks like the same issue as
+https://github.com/git-for-windows/git/issues/1087 doesn't appear to
+have a fix yet but you might want to keep an eye on the progress of
+the issue.
