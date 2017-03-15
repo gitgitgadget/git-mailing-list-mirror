@@ -2,86 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47D92202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 18:30:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD3AF202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 18:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752010AbdCOS37 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 14:29:59 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64733 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751358AbdCOS3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 14:29:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5441D782B3;
-        Wed, 15 Mar 2017 14:29:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RWlG/SWQPA/iC5gx6k0c200U6pA=; b=eURDpc
-        O2R9B7L4WhljQifkaKeMDFjAyuZ4FoGXuiRnZmy1iLbrDzvCkn1G59LU2MBjauKt
-        oJlGwLvUSuxotiQ3WaTJhnF6nILjBRsSz0AV1NYs27UZD5p+QLAVvOK0KM/sOIZJ
-        q40plLBmfZWxqWIpmTyWQ4IBRJKWSzVlUxXT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZL0Z9pXOcewgvV968XE92imPNZhLPfyU
-        I/LGzacwbZYdSWs5agLGWE1OUEjEMWt8pEN4/+ZinTEIVtS7tCJFxzyC4cwH29GZ
-        X97cruVjNygvcKMj1rp9xknyj0sl2QmBFQ5voTednTkagINA3bq3hldi3KY+av1Y
-        pqIEv5iWb04=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 47D3A782B2;
-        Wed, 15 Mar 2017 14:29:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B3A84782B1;
-        Wed, 15 Mar 2017 14:29:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] submodule-config: correct error reporting for invalid ignore value
-References: <20170314221440.18259-1-sbeller@google.com>
-Date:   Wed, 15 Mar 2017 11:29:32 -0700
-In-Reply-To: <20170314221440.18259-1-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 14 Mar 2017 15:14:40 -0700")
-Message-ID: <xmqqefxyfl6b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752035AbdCOS3I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 14:29:08 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:32907 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750877AbdCOS23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 14:28:29 -0400
+Received: by mail-pg0-f46.google.com with SMTP id n190so12848459pga.0
+        for <git@vger.kernel.org>; Wed, 15 Mar 2017 11:28:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=FLUTaPn4nPAf4HDHfyajz0Vp4ShWkG9xuifCX9nByDM=;
+        b=JJsL0ylN6Z4+y8wTIWRHqfzCIcK19XHBhbcLS36j1RM+OagQxMoGKaJCXidDGEGZAn
+         3Z1u11+59tMoPTAHSZvugqTQS2Nl9MdC7m450FvzG97CFjnFo0gFM9bhwEPHLSetgqBv
+         GviUdPeDZIIIf3AQDRtsb4+iNzurjSO4NZpmLTdSZf24Fe9PCcQZtowSqHIgE6OflcC3
+         ZvrPDk4QdlsK2y6Bvi6O5E86oWjXQr462sQLRS35gHPtSXO52sturAyXwqgAg/k6Emsu
+         8nrzqg5Z7Ae3HcoyFZRNkLGovGd/L4Y12Ycft5bKIvN2cSwx6oclUeuPbHmN5XhGGq86
+         F2mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=FLUTaPn4nPAf4HDHfyajz0Vp4ShWkG9xuifCX9nByDM=;
+        b=QvwBipw3zsoImerzkOQshwst2qiBds8sv9ukjzKy0Rv7Y0oABUaAWc2PHDvf1G3+Fq
+         sbOg8FdwrPiN725rYeba5OVnsKFRI2zuzOiicMIyar6w/hUzZPDyErxRbv1ue7zwdEnI
+         1nUp6XGsIvF8A+eJCcK+6P6zoHi/P0Tqi74bKiLklxxE2AN1PmHvX9wfxFNn7EFF9Q+I
+         ROCUcPkrIrAZ1U5cVKkBa7Xsxbrr/6jAAQFYzNlyX4OK7v29JFCdauWmVEJZQ8FqT+KY
+         j3sRhzBWPZCXqfE+MsZ8VIM1VxuE+UgmYulkvuvaG2CmtCgwJ4zMKlecDPZFWU0nCX4N
+         3Wbw==
+X-Gm-Message-State: AFeK/H3j2aEKHYcgeGLPNVRJO4joSL0qnNDwqABlgdb9oTFRRjbDFjCRkOKWGsj7wMM4aTXhY8yLAUvTHwLuLJHI
+X-Received: by 10.98.20.8 with SMTP id 8mr5363039pfu.10.1489602508260; Wed, 15
+ Mar 2017 11:28:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5626A4D0-09AD-11E7-809A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.100.187.5 with HTTP; Wed, 15 Mar 2017 11:28:27 -0700 (PDT)
+In-Reply-To: <0ae83f7f-e178-31b3-87ea-324e3f00d469@free.fr>
+References: <20170312200248.3610-1-jn.avila@free.fr> <20170312200248.3610-2-jn.avila@free.fr>
+ <xmqq1su2ujsf.fsf@gitster.mtv.corp.google.com> <0ae83f7f-e178-31b3-87ea-324e3f00d469@free.fr>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 15 Mar 2017 11:28:27 -0700
+Message-ID: <CAGZ79kbZp_aMNsChE2AEHcVcokKRdkMKqUdwjanYi2jyO=mapg@mail.gmail.com>
+Subject: Re: [PATCH] l10n: add framework for localizing the manpages
+To:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Mar 15, 2017 at 12:58 AM, Jean-No=C3=ABl Avila <jn.avila@free.fr> w=
+rote:
 
-> As 'var' contains the whole value we get error messages that repeat
-> the section and key currently:
+> The use of po files introduces tools to automatically mark the
+> paragraphs that need to be retranslated or if the translation was near
+> enough to be reviewed (entries are translated with the approaching
+> translation and marked as "fuzzy"). Using po, it is also possible to use
+> translation memories (such as the po file for the programs).
 >
-> warning: Invalid parameter 'true' for config option 'submodule.submodule.plugins/hooks.ignore.ignore'
->
-> Fix this by only giving the section name in the warning.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  submodule-config.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/submodule-config.c b/submodule-config.c
-> index 93453909cf..bb069bc097 100644
-> --- a/submodule-config.c
-> +++ b/submodule-config.c
-> @@ -333,7 +333,7 @@ static int parse_config(const char *var, const char *value, void *data)
->  			 strcmp(value, "all") &&
->  			 strcmp(value, "none"))
->  			warning("Invalid parameter '%s' for config option "
-> -					"'submodule.%s.ignore'", value, var);
-> +					"'submodule.%s.ignore'", value, name.buf);
 
-Obviously correct.  Nobody seems to have complained about this since
-it was first written in 2.6 days, which is a bit sad, though.
+Well for writing code exactly, we often rely on commit messages
+of the past, which is not available to users of the po tool IIUC.
+Sometimes we have commits rewording the Documentation to
+point out a subtle detail. Specifically for these changes
+it would be good to have the reason for the change in Documentation
+available for translators.
 
-Thanks.
+(Just a passerby note)
+
+Thanks,
+Stefan
