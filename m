@@ -2,121 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 451E4202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 21:38:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70715202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 21:42:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752027AbdCOViW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 17:38:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44856 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751416AbdCOViW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 17:38:22 -0400
-Received: (qmail 4957 invoked by uid 109); 15 Mar 2017 21:38:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 21:38:21 +0000
-Received: (qmail 31330 invoked by uid 111); 15 Mar 2017 21:38:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 17:38:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 17:38:18 -0400
-Date:   Wed, 15 Mar 2017 17:38:18 -0400
-From:   Jeff King <peff@peff.net>
+        id S1752996AbdCOVmb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 17:42:31 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:34623 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751848AbdCOVmb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 17:42:31 -0400
+Received: by mail-pg0-f52.google.com with SMTP id 141so14872327pgd.1
+        for <git@vger.kernel.org>; Wed, 15 Mar 2017 14:42:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LDcvpcH1QiOraTKgbyW+3EmBZTqj+KMuhbL0NCXB3D4=;
+        b=ZnpW25441ek9sJIlmIM2gfLyIn6fhiN/AJ4LEEU1P3B2qsievwsmhtw0wOchZxotuG
+         D2ecwmG9DtCfmTooLAF5n+VCH1cSFhJCX2su55BJLa6cjbMjh5yashQqDf8Nwn6PTP33
+         uyFurvssbFQMLskGoINhupDqhdW9irBwASUq+GoAEX2Kb0PwgcSUPJ7HAEVV9LgsXhVa
+         DObiFM9abe0Bd16nUnjCgHd+Pt+Y236r1lQ0TG6+4uOSyDvKGMACNsXQJHgbJhQdJMFF
+         xejLCbnqDh3kTTk6BrgFqwNTQvD96MO2mhz5tbBQJHi9xSjaH/vf8m+7CdAiJ2gdmLFd
+         eldg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LDcvpcH1QiOraTKgbyW+3EmBZTqj+KMuhbL0NCXB3D4=;
+        b=PgxxS5L9JLmw1TlYrxlDGp5omL24I8OPox/PRQVZTq99YKF+VR2g84Tpbl6+Lh1sD+
+         +AGBCHrH0BL0DK4siZut+sYBayMk73QwGWNTAoyO0kAv/FJiT5Oc3cjIgO5t0sETXEFM
+         TvPVrjAckQ21PQmV8lYddsR1rK/2JQ8YMWMeHsbhvfnxG+2P5hvVBUBfyt22y+P4AcrW
+         H/vLioEPZKKKuGY9Z0hcsfxQpxLfnBa6TEC209kb6NNlFN04tjhxVGK1AsGZKLj0RhCX
+         I5vdpMfomT0vanCKC+HCEPJOPfmBIWUumiuE5FLqgIn8ztU2xFvHJXXjtUSU7naUVKz8
+         6DGA==
+X-Gm-Message-State: AFeK/H3jwU6GiB1PjqC1Tw4sPhfNgY5879yba24szUKIgrFC0zVsFC5liaD4QzuiKb81u768
+X-Received: by 10.98.112.134 with SMTP id l128mr6256462pfc.81.1489614149513;
+        Wed, 15 Mar 2017 14:42:29 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:e5fd:c660:1f84:47a3])
+        by smtp.gmail.com with ESMTPSA id n29sm3345874pfi.101.2017.03.15.14.42.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Mar 2017 14:42:28 -0700 (PDT)
+Date:   Wed, 15 Mar 2017 14:42:27 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/3] rev-parse: simplify parsing of ref options
-Message-ID: <20170315213818.qfccs2atfijngaxr@sigill.intra.peff.net>
-References: <20170315200521.qwcm5tqcdzkbwp3x@sigill.intra.peff.net>
- <20170315200802.r4un6p5admfu4h34@sigill.intra.peff.net>
- <xmqq8to6dz76.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3 06/10] submodule update: add `--init-active` switch
+Message-ID: <20170315214227.GD159137@google.com>
+References: <20170309012345.180702-1-bmwill@google.com>
+ <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-7-bmwill@google.com>
+ <xmqqr31ziroz.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq8to6dz76.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqr31ziroz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 15, 2017 at 02:09:33PM -0700, Junio C Hamano wrote:
-
-> Jeff King <peff@peff.net> writes:
+On 03/14, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> > This actually drops the last caller for for_each_branch_ref(). I'm not
-> > sure if we shoulder consider cleaning up the proliferation of
-> > for_each_ref() helpers.
+> > +static void module_list_active(struct module_list *list)
+> > +{
+> > +	int i;
+> > +
+> > +	if (read_cache() < 0)
+> > +		die(_("index file corrupt"));
+> > +
+> > +	gitmodules_config();
+> > +
+> > +	for (i = 0; i < active_nr; i++) {
+> > +		const struct cache_entry *ce = active_cache[i];
+> > +
+> > +		if (!S_ISGITLINK(ce->ce_mode) ||
+> > +		    !is_submodule_initialized(ce->name))
+> > +			continue;
 > 
-> That is certainly a good thing to do (but outside this series).
-> 
-> I am wondering if "git diff" could have chosen a better way to
-> arrange deleted and inserted lines.  The first two if statements
-> in the preimage corresponds to the new opt-with-value(branches)
-> thing, the next two are repalced by opt-with-value(tags), an
-> odd-man-out "--glob=" thing is replaced with handle_ref_opt(NULL),
-> and then two "--remotes" thing are paired with the final
-> opt-with-value(remotes) thing.  
-> 
-> That would break the usual expectation of seeing all "-" first and
-> then "+" when there is no intervening " " context lines, so such an
-> output might break tools, though (I do not think "git apply" would
-> choke).
+> This, because "is_submodule_initialized()" is not "is it
+> initialized?" but "is it interesting?", will catch a submodule
+> that used to be uninteresting but has become interesting (e.g. a new
+> submodule added to somewhere in "lib/" when submodule.active lists
+> "lib/" as one of the pathspecs to match interesting submodules) and
+> automatically updates it.
 
-I think in this case you could still show it better with context lines
-between. Something like:
+Yes, is_submodule_initialized should be renamed to something more
+descriptive (is_submodule_active, or something) in a follow on series
+because it is doing a check to see which submodule's the user finds
+interesting.
 
-@@ -749,42 +758,20 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				for_each_ref_in("refs/bisect/good", anti_reference, NULL);
- 				continue;
- 			}
--			if (skip_prefix(arg, "--branches=", &arg)) {
--				for_each_glob_ref_in(show_reference, arg,
--					"refs/heads/", NULL);
--				clear_ref_exclusion(&ref_excludes);
--				continue;
--			}
--			if (!strcmp(arg, "--branches")) {
--				for_each_branch_ref(show_reference, NULL);
--				clear_ref_exclusion(&ref_excludes);
-+			if (opt_with_value(arg, "--branches", &arg)) {
-+				handle_ref_opt(arg, "refs/heads/");
- 				continue;
- 			}
--			if (skip_prefix(arg, "--tags=", &arg)) {
--				for_each_glob_ref_in(show_reference, arg,
--					"refs/tags/", NULL);
--				clear_ref_exclusion(&ref_excludes);
--			if (!strcmp(arg, "--tags")) {
--				for_each_tag_ref(show_reference, NULL);
--				clear_ref_exclusion(&ref_excludes);
-+			if (opt_with_value(arg, "--tags", &arg)) {
-+				handle_ref_opt(arg, "refs/tags/");
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--glob=", &arg)) {
--				for_each_glob_ref(show_reference, arg, NULL);
--				clear_ref_exclusion(&ref_excludes);
-+				handle_ref_opt(arg, NULL);
- 				continue;
- 			}
--			if (skip_prefix(arg, "--remotes=", &arg)) {
--				for_each_glob_ref_in(show_reference, arg,
--					"refs/remotes/", NULL);
--				clear_ref_exclusion(&ref_excludes);
--			if (!strcmp(arg, "--remotes")) {
--				for_each_remote_ref(show_reference, NULL);
--				clear_ref_exclusion(&ref_excludes);
-+			if (opt_with_value(arg, "--remotes", &arg)) {
-+				handle_ref_opt(arg, "refs/remotes/");
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--exclude=", &arg)) {
-
-I have no idea what heuristic might generate that diff, though. Using
---patience and --histogram does provided different results than Myers
-for this case, but none produces the output above. The other two try to
-push the new "--branches" lines up as a replacement for "--branches=",
-but then you get a clump of "--branches", "--tags=", and "--tags".
-
--Peff
+-- 
+Brandon Williams
