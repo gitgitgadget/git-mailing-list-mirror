@@ -2,86 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67C08202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 15:21:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6297C202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 15:59:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751959AbdCOPTP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 11:19:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44599 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752220AbdCOPS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 11:18:57 -0400
-Received: (qmail 10478 invoked by uid 109); 15 Mar 2017 15:18:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 15:18:56 +0000
-Received: (qmail 10902 invoked by uid 111); 15 Mar 2017 15:19:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 11:19:07 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 11:18:53 -0400
-Date:   Wed, 15 Mar 2017 11:18:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     Robert Dailey <rcdailey.lists@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: git pretty format: "%+b" not working with "%w" in front of it?
-Message-ID: <20170315151853.c3mn7xyc5fqmkkn4@sigill.intra.peff.net>
-References: <CAHd499BP-iaXJDNg+4RWB9GaQ1xW8ZnH0oysWSa7u_DCSWFFDg@mail.gmail.com>
+        id S1753893AbdCOP6y (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 11:58:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61550 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753175AbdCOP6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 11:58:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 621CC76908;
+        Wed, 15 Mar 2017 11:57:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bEQo5Bbai6qM29XWmZpj82RaTZc=; b=f7JkP2
+        toqJFfG1yeCN7r7OLbsjZlftfgDYmKVHFSvlfOpMZOQ3/mMT43wgLqGgIElCEPKO
+        DcKzo88Yo/VDN9SxkdPeHNBl3gBRd/KQHPEUY/sYcjdPrr7yuIiwS5TvPA4mV5kF
+        Fl8OYymp0H7j7EvZwsHo/FJbd0vKyR/9Nbouc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eYzpbDFob+mh7FGFkemhmvZO4eC7q7e7
+        24BelfjYR8X68HkjRamnfwqBSgu7SHyZ5G4L1+V91XbXfODQbwQVLTtFmQw2oWC1
+        RMtBDghoun0g4bBVGDbLm3+lplft1VG8+F3E82BFuxEBUDX/Tc3PWFm6EdPsm2p1
+        GA8AgEn2N80=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5B6ED76907;
+        Wed, 15 Mar 2017 11:57:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BEAEA76906;
+        Wed, 15 Mar 2017 11:57:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] Move SHA-1 implementation selection into a header file
+References: <20170311222818.518541-1-sandals@crustytoothpaste.net>
+        <20170314184126.GJ26789@aiede.mtv.corp.google.com>
+        <20170314201424.vccij5z2ortq4a4o@sigill.intra.peff.net>
+        <xmqq1stzio5b.fsf@gitster.mtv.corp.google.com>
+        <1fce97df-7eb8-79d5-b96b-2086746bf19d@ramsayjones.plus.com>
+        <20170314234659.wamzgpqu2aikghci@genre.crustytoothpaste.net>
+        <dd285cb9-c7c7-e945-1fa2-7eb58d83ea06@ramsayjones.plus.com>
+Date:   Wed, 15 Mar 2017 08:57:36 -0700
+In-Reply-To: <dd285cb9-c7c7-e945-1fa2-7eb58d83ea06@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Wed, 15 Mar 2017 00:15:39 +0000")
+Message-ID: <xmqqvarafs7j.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHd499BP-iaXJDNg+4RWB9GaQ1xW8ZnH0oysWSa7u_DCSWFFDg@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1CA84D4A-0998-11E7-914E-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 15, 2017 at 09:08:10AM -0500, Robert Dailey wrote:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-> $ git log
-> 
-> commit 7ffb909bb8f38607e3d6d9f3504a66ca978f0ac2
-> Author: Robert Dailey <robert@ziosk.com>
-> Date:   Mon Dec 12 11:01:00 2016 -0600
-> 
->     Add initial skeleton files & a few interfaces for new kizi/sc16 stuff
-> 
->     This is still FAR from complete....
-> 
-> 
-> I want to generate changelogs, using github markdown list format. I
-> tried doing that using this command:
-> 
-> $ git log --pretty=format:"* %s%n%w(100,2,2)%+b"
-> 
-> However, the 2nd newline is not inserted:
-> 
-> * Add initial skeleton files & a few interfaces for new kizi/sc16 stuff
->    This is still FAR from complete....
-> 
-> The format I'm expecting is:
-> 
-> * Add initial skeleton files & a few interfaces for new kizi/sc16 stuff
-> 
->   This is still FAR from complete....
+> On 14/03/17 23:46, brian m. carlson wrote:
+>>>>
+>>>> Since the SHA1_HEADER include is not defined in such a case, developers
+>>>> see spurious errors when using these tools.  Furthermore, while using a
+>>>> macro as the argument to #include is permitted by C11, it isn't
+>>>> permitted by C89 and C99, and there are known implementations which
+>>>> reject it.
+>>>
+>
+>> Junio, do you want to amend the commit message before you merge it?
+>
+> Yes, please! ;-)
 
-Hmm. I think the leading newline is added, but it gets eaten by the
-wrapping code. If I run your example in a debugger, we enter
-strbuf_add_wrapped_text() with:
+If only you were a few hours quicker.
 
-  buf = "* the subject line\n"
-  text = "\nthe body text"
-  indent1=2, indent2=2, width=100
+Let me see how bad the fallout is to revert the merge to 'next' and
+merge an amended version in.
 
-Which looks right.  But the wrapping code seems to treat blank lines
-oddly. I can't quite figure out what it's _trying_ to do, but if there's
-one blank line, it gets converted into a space (and thus the weird
-three-space indent you see). But if there are two, they are both
-preserved!
+I _think_ the whole "Furthermore" sentence can go, since nobody
+complained since cef661fc ("Add support for alternate SHA1 library
+implementations.", 2005-04-21) started using the Makefile construct.
 
-So I think the line-wrapping code is simply buggy, and you are not doing
-anything wrong. But maybe I am missing some subtle case.
-
--Peff
+Thanks.
