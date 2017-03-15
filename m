@@ -6,108 +6,54 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 069A9202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 20:29:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7D5C202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 20:43:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753532AbdCOU3b (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 16:29:31 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:34364 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753484AbdCOU33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 16:29:29 -0400
-Received: by mail-pg0-f53.google.com with SMTP id 141so14130378pgd.1
-        for <git@vger.kernel.org>; Wed, 15 Mar 2017 13:29:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=RUEk1KtX70O8TggIluR2p+h41awK9T1/WsCitbgxBwc=;
-        b=HqSnFpB9akbWLpuc35Wc67ClqRpegg3P7HyhwuD8ygx4Ms2xADSYprqrS13H3PIb1A
-         sEFGxvuGUjH4t0zLo5vAwX0hYWai+H/TmYzvib75IcozAVa3iB0kbmq6zMPCsNPiZPgg
-         VdRVvnnCucMub9a7TCe5APwnRmxyjWXH/3ifxtvoAXlQCpRIWzyiD6QvKIChx2cCZiMC
-         LOTufJnRLdQXKsuQYLMLWxgG/SA+xRgZ2CKBiSF7cM0wI7sMww/XDa1YcAuIOwJ7FkpU
-         88ItELjVwMsny5ZksRYsAAizvHgCp03A/khsjtWwa5jG4kqSmGEe5ojqPH+TzgzIPFDw
-         5Z8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=RUEk1KtX70O8TggIluR2p+h41awK9T1/WsCitbgxBwc=;
-        b=iD9XCdz24nBsCd/mD/8cZ2AKEZXpp6BgfvLn7rOzgYadvtq02X7d7qGbvSfRb5v3UZ
-         gH+xzzIf0mUJkb8SJntcw6EcIQ6j26S7u35Pm87w4/oGZVO7XOExdKA/z+ORIPUwMsud
-         nAC0l4S4pVbC32ahRBwHnLiJXKRe8F54MrMqqy0Lv0lt4zRz1ALfNG69i7tzlXTv4uv2
-         Z9aEC9SgdGL+iT/Hevj63DLi5UWZYoXt6P72vhVdoKPwdiOVJFRGzQaSxq2FuXxLzWOp
-         GAPBT5ZQa4HpN/Je9ji4O4xlOWGR81ZAFtxL2+aT6AmSiIyXGHC9cpKKvr4dOizOwXdp
-         LM8w==
-X-Gm-Message-State: AFeK/H1IyKcMop4FUNQNgYP6oGDkcjtFDhLYCGGaPoJoCja2udXSqZoxafb5V8I8orFFDa0m/EL/c4+0BjL4RFHd
-X-Received: by 10.99.134.199 with SMTP id x190mr5682713pgd.194.1489609299991;
- Wed, 15 Mar 2017 13:21:39 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Wed, 15 Mar 2017 13:21:39 -0700 (PDT)
-In-Reply-To: <xmqqh92ue2ra.fsf@gitster.mtv.corp.google.com>
-References: <20170314221440.18259-1-sbeller@google.com> <xmqqefxyfl6b.fsf@gitster.mtv.corp.google.com>
- <xmqqh92ue2ra.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Mar 2017 13:21:39 -0700
-Message-ID: <CAGZ79kb4rd27rwkYXjerTc=oXUOuo=wb9SOk8vvoMJTEmkRvWw@mail.gmail.com>
-Subject: Re: [PATCH] submodule-config: correct error reporting for invalid
- ignore value
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1751935AbdCOUnq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 16:43:46 -0400
+Received: from forward10m.cmail.yandex.net ([5.255.216.203]:44284 "EHLO
+        forward10m.cmail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751480AbdCOUnp (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Mar 2017 16:43:45 -0400
+Received: from smtp2j.mail.yandex.net (smtp2j.mail.yandex.net [IPv6:2a02:6b8:0:801::ac])
+        by forward10m.cmail.yandex.net (Yandex) with ESMTP id 7BB2D22C10;
+        Wed, 15 Mar 2017 23:43:36 +0300 (MSK)
+Received: from smtp2j.mail.yandex.net (localhost.localdomain [127.0.0.1])
+        by smtp2j.mail.yandex.net (Yandex) with ESMTP id 3F13C3EC1215;
+        Wed, 15 Mar 2017 23:43:32 +0300 (MSK)
+Received: by smtp2j.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id Qz2N7jS1Eh-hT1Olt3v;
+        Wed, 15 Mar 2017 23:43:31 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vtolstov.org; s=mail; t=1489610612;
+        bh=XaId1bDvnZZ9lGOYuDv4ViT+bJXSSyB+ZuiaJrrl+hU=;
+        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
+        b=jnWNRMnzrW3N7/M5UZPMABlGBrMTtQkywxXrjsOJKoXv6yxQABHWoR/pjNjzjS4a6
+         rSYOI1G8dy7Wx/S0Eql2aEIj4ORhUoGAcGjIERIlDtptoAsNAWZRF9tjUUC1EusfF2
+         HGLs94TAyTFPgxYlZ2yScV5Wf7BImR8McNN5KAsM=
+Authentication-Results: smtp2j.mail.yandex.net; dkim=pass header.i=@vtolstov.org
+X-Yandex-ForeignMX:  US
+X-Yandex-Suid-Status: 1 0,1 0,1 0,1 0,1 1130000030716801
+From:   Valery Tolstov <me@vtolstov.org>
+To:     sbeller@google.com
+Cc:     bmwill@google.com, christian.couder@gmail.com, git@vger.kernel.org,
+        me@vtolstov.org
+Subject: Re: [GSoC] Discussion of "Submodule related work" project
+Date:   Wed, 15 Mar 2017 23:43:24 +0300
+Message-Id: <20170315204324.9875-1-me@vtolstov.org>
+X-Mailer: git-send-email 2.12.0.192.gbdb9d28a5
+In-Reply-To: <CAGZ79kbLr=aSu-g83obmj3XCMMYbuody6Q_FreCmQcqpyX+_rQ@mail.gmail.com>
+References: <CAGZ79kbLr=aSu-g83obmj3XCMMYbuody6Q_FreCmQcqpyX+_rQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 15, 2017 at 12:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Stefan Beller <sbeller@google.com> writes:
->>
->>> As 'var' contains the whole value we get error messages that repeat
->>> the section and key currently:
->>>
->>> warning: Invalid parameter 'true' for config option 'submodule.submodule.plugins/hooks.ignore.ignore'
->>>
->>> Fix this by only giving the section name in the warning.
->>>
->>> Signed-off-by: Stefan Beller <sbeller@google.com>
->>> ---
->>>  submodule-config.c | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/submodule-config.c b/submodule-config.c
->>> index 93453909cf..bb069bc097 100644
->>> --- a/submodule-config.c
->>> +++ b/submodule-config.c
->>> @@ -333,7 +333,7 @@ static int parse_config(const char *var, const char *value, void *data)
->>>                       strcmp(value, "all") &&
->>>                       strcmp(value, "none"))
->>>                      warning("Invalid parameter '%s' for config option "
->>> -                                    "'submodule.%s.ignore'", value, var);
->>> +                                    "'submodule.%s.ignore'", value, name.buf);
->>
->> Obviously correct.
->
-> But isn't this even more obviously correct?
->
->         warning("invalid parameter '%s' for option %s", value, var);
->
-
-Yes. I considered this when writing the patch. It is also obviously correct.
-The difference is whether you relay funny capitalization to the error message,
-which I thought we might not want to do?
-
-git grep warning yields e.g.
-diff.c:                 warning(_("Unknown value for 'diff.submodule'
-config variable: '%s'"),
-diff.c:                 warning(_("Found errors in 'diff.dirstat'
-config variable:\n%s"),
-
-So I conclude that we want to present normalized capitalization for
-config options
-for error messages.
+I have a thought. At the moment when submodule command is already translated
+to C, possibly we want to rename submodule--helper.c, and maybe hide
+some of it's functions from subcommands list. Is there any examples of
+similar situation that already happened before?
+Don't quite sure about this.
 
 Thanks,
-Stefan
+  Valery Tolstov
