@@ -2,107 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 312A2202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 22:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F24C202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 23:10:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754119AbdCOW6e (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 18:58:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61420 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753814AbdCOW6F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 18:58:05 -0400
-X-Greylist: delayed 377 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Mar 2017 18:58:05 EDT
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 25068802D8;
-        Wed, 15 Mar 2017 18:50:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=tZQf
-        whDT95/GaoUkBKWOuMBIQfY=; b=sKqhdYbza8/nHjgpe0mQOUM8d8fbyHyo2Mi8
-        fLzDitd8QsVgVkwcOVNS/cqRDZUlC7JrfBlvvxiJHdATAA+31OnYSzvGwjOGZ8FN
-        73/fkDcviF5Odl6ra+evRGF8zWvSOKyWb3NV6n4j/MLUFl+IcDEV2hp1LyY4hjt6
-        eRXDQd0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        wVCi37bpVUyVE0qFHhvxgtPB/KQ0kF+g6pYomYPgrFfq1UaXlTmU1JV3cfhsGIjz
-        0tAf8hlMFmlydUcsR5JvAi7BT2s2pd4N1y0i6X+5vNA9x31JSAMq8WwPvuYA2HJ/
-        5LyIu+3YjmVLzKprSov7wQAkwBXKXE9MW61tWtGY3Wk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1E7CA802D7;
-        Wed, 15 Mar 2017 18:50:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 794B9802D6;
-        Wed, 15 Mar 2017 18:50:48 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 1/2] name-rev: refactor logic to see if a new candidate is a better name
-Date:   Wed, 15 Mar 2017 15:50:44 -0700
-Message-Id: <20170315225045.15788-2-gitster@pobox.com>
-X-Mailer: git-send-email 2.12.0-306-g4a9b9b32d4
-In-Reply-To: <20170315225045.15788-1-gitster@pobox.com>
-References: <xmqqd1die00j.fsf@gitster.mtv.corp.google.com>
- <20170315225045.15788-1-gitster@pobox.com>
-X-Pobox-Relay-ID: D50A0D2C-09D1-11E7-A33E-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+        id S1753833AbdCOXIt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 19:08:49 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:32964 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753878AbdCOXIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 19:08:37 -0400
+Received: by mail-pg0-f45.google.com with SMTP id n190so15738382pga.0
+        for <git@vger.kernel.org>; Wed, 15 Mar 2017 16:08:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=FGxBVqUjXOWND9eZ4fJzocRGmlFawPjjjxVyCGxr9ik=;
+        b=IYFWR1nuE4QvgXXf0rfGvRYfbnGL2aC3RPymfXyGfzyo8nHvorqD0BjeYqSCcrQJ4s
+         zgQ0/iqLIDlbR3irREuL8x8U8XLrUZcrrW75NL8olhpyZ9Xr7q8DFhNuJOf41gbqvm1b
+         U9jw5yGoo2vI9BbfN+cB4LptMizQCGR8mRanQt5dSJVfxYoZOvRSMhd1/EkLy37xucSO
+         c0XIjSgSzqoJkpQY0fLvR1oHNYA3/uLt9wPje6OaQ6lOitW1OLpsunKiI4j8sNuz+W5r
+         P3CjuMF6uYkOisCgShSlJnoVi88UaYjBZ1f3PBFHU4I1hFqSkG2MvefRfvhosTVQGtpW
+         ulVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=FGxBVqUjXOWND9eZ4fJzocRGmlFawPjjjxVyCGxr9ik=;
+        b=Lzmp5eOs+yRgCdSw5OekIgbOESGUEw6N2hv+5vW59NVC72MJMGTNRUYKT6NTvozNue
+         6+zgv8BK7l+Uw8E9xzAXVJ4K5XunZB1+hIqoF6Xx/Sck8uIr/o/MQvI1AzTAfvWrqwod
+         C5RuWXyCVODMWDWq8RkbbKFZIzkIRevnbhlNUTDPpGU8Y8mUndKmz0CAdfidp+gXWBv7
+         Gr53bseYbBAGTDOKpEnc1qUr9c81IeZnnI4eccxhHywVM/zsYgsGslSB8LpgHZhBEyqr
+         ZDIIzs1rDwcB1BZtH3F+trVt1SYqeN847ije6fqg3QXrW8x1bGaa56WYNJUHSiXrP6VC
+         rWMg==
+X-Gm-Message-State: AFeK/H2xmSURYwAy+oEnrzPF5Em+iCWI0M7FXGOz8PJImsMgCqWf8aI2zJ6jRZaRSd59gNub
+X-Received: by 10.98.74.154 with SMTP id c26mr6693876pfj.73.1489619316330;
+        Wed, 15 Mar 2017 16:08:36 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:e5fd:c660:1f84:47a3])
+        by smtp.gmail.com with ESMTPSA id t67sm6214860pfd.76.2017.03.15.16.08.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Mar 2017 16:08:35 -0700 (PDT)
+Date:   Wed, 15 Mar 2017 16:08:34 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3 07/10] clone: add --submodule-spec=<pathspec> switch
+Message-ID: <20170315230834.GH159137@google.com>
+References: <20170309012345.180702-1-bmwill@google.com>
+ <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-8-bmwill@google.com>
+ <xmqqmvcnir8m.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqmvcnir8m.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we encounter a new ref that could describe the commit we are
-looking at, we compare the name that is formed using that ref and
-the name we found so far and pick a better one.
+On 03/14, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
+> 
+> > The new switch passes the pathspec to `git submodule update
+> > --init-active` which is called after the actual clone is done.
+> >
+> > Additionally this configures the submodule.active option to
+> > be the given pathspec, such that any future invocation of
+> > `git submodule update --init-active` will keep up
+> > with the pathspec.
+> >
+> > Based on a patch by Stefan Beller <sbeller@google.com>
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> >  Documentation/git-clone.txt | 23 ++++++++++-----
+> >  builtin/clone.c             | 36 +++++++++++++++++++++--
+> >  t/t7400-submodule-basic.sh  | 70 +++++++++++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 120 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> > index 35cc34b2f..9692eab30 100644
+> > --- a/Documentation/git-clone.txt
+> > +++ b/Documentation/git-clone.txt
+> > @@ -15,7 +15,8 @@ SYNOPSIS
+> >  	  [--dissociate] [--separate-git-dir <git dir>]
+> >  	  [--depth <depth>] [--[no-]single-branch]
+> >  	  [--recursive | --recurse-submodules] [--[no-]shallow-submodules]
+> > -	  [--jobs <n>] [--] <repository> [<directory>]
+> > +	  [--submodule-spec <pathspec>] [--jobs <n>] [--]
+> > +	  <repository> [<directory>]
+> 
+> Hmph.  Can we then make "--recurse-submodules" an obsolete way to
+> spell "--submodule-spec ."?  I am not actively suggesting to
+> deprecate it; I am trying to see if there are semantic differences
+> between the two.
 
-Factor the comparison logic out to a separate helper function, while
-keeping the current logic the same (i.e. a name that is based on an
-older tag is better, and if two tags of the same age can reach the
-commit, the one with fewer number of hops to reach the commit is
-better).
+We can if you think that would be better.  That way if at clone time you
+say "I want the submodules too" that your default config tracks all
+submodules even new ones yet to be added.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/name-rev.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+> 
+> I am also wondering "--recurse-submodules=<pathspec>" would be a
+> better UI, instead of introducing yet another option.
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index cd89d48b65..f64c71d9bc 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -20,6 +20,17 @@ static long cutoff = LONG_MAX;
- /* How many generations are maximally preferred over _one_ merge traversal? */
- #define MERGE_TRAVERSAL_WEIGHT 65535
- 
-+static int is_better_name(struct rev_name *name,
-+			  const char *tip_name,
-+			  unsigned long taggerdate,
-+			  int generation,
-+			  int distance)
-+{
-+	return (name->taggerdate > taggerdate ||
-+		(name->taggerdate == taggerdate &&
-+		 name->distance > distance));
-+}
-+
- static void name_rev(struct commit *commit,
- 		const char *tip_name, unsigned long taggerdate,
- 		int generation, int distance,
-@@ -45,9 +56,8 @@ static void name_rev(struct commit *commit,
- 		name = xmalloc(sizeof(rev_name));
- 		commit->util = name;
- 		goto copy_data;
--	} else if (name->taggerdate > taggerdate ||
--			(name->taggerdate == taggerdate &&
--			 name->distance > distance)) {
-+	} else if (is_better_name(name, tip_name, taggerdate,
-+				  generation, distance)) {
- copy_data:
- 		name->tip_name = tip_name;
- 		name->taggerdate = taggerdate;
+Yeah we could do that, have --recurse-submodules be a repeated option
+and if you don't specify a value it defaults to "."
+
+Any thoughts on this Stefan?
+
+> 
+> > @@ -217,12 +218,20 @@ objects from the source repository into a pack in the cloned repository.
+> >  
+> >  --recursive::
+> >  --recurse-submodules::
+> > -	After the clone is created, initialize all submodules within,
+> > -	using their default settings. This is equivalent to running
+> > -	`git submodule update --init --recursive` immediately after
+> > -	the clone is finished. This option is ignored if the cloned
+> > -	repository does not have a worktree/checkout (i.e. if any of
+> > -	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
+> > +	After the clone is created, initialize and clone all submodules
+> > +	within, using their default settings. This is equivalent to
+> > +	running `git submodule update --recursive --init` immediately
+> > +	after the clone is finished. This option is ignored if the
+> > +	cloned repository does not have a worktree/checkout (i.e.  if
+> > +	any of `--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
+> 
+> With reflowing it is unnecessarily harder to spot what got changed.
+> "and clone" is inserted, "--init" and "--recursive" were swapped.
+> Any other changes?
+
+No other changes, it just reads a little bit clearer now IMO.
+
+> 
+> > diff --git a/builtin/clone.c b/builtin/clone.c
+> > index 3f63edbbf..c6731379b 100644
+> > --- a/builtin/clone.c
+> > +++ b/builtin/clone.c
+> > @@ -56,6 +56,16 @@ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
+> >  static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+> >  static int option_dissociate;
+> >  static int max_jobs = -1;
+> > +static struct string_list submodule_spec;
+> > +
+> > +static int submodule_spec_cb(const struct option *opt, const char *arg, int unset)
+> > +{
+> > +	if (unset)
+> > +		return -1;
+> > +
+> > +	string_list_append((struct string_list *)opt->value, arg);
+> > +	return 0;
+> > +}
+> 
+> Hmph,  doesn't OPT_STRING_LIST work for this thing?
+
+You're right, I'll change to that.
+
 -- 
-2.12.0-306-g4a9b9b32d4
-
+Brandon Williams
