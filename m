@@ -2,167 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F24C202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 23:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57314202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 23:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753833AbdCOXIt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 19:08:49 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:32964 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753878AbdCOXIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 19:08:37 -0400
-Received: by mail-pg0-f45.google.com with SMTP id n190so15738382pga.0
-        for <git@vger.kernel.org>; Wed, 15 Mar 2017 16:08:36 -0700 (PDT)
+        id S1753797AbdCOX01 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 19:26:27 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33216 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750819AbdCOXZ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 19:25:56 -0400
+Received: by mail-pf0-f174.google.com with SMTP id w189so15375029pfb.0
+        for <git@vger.kernel.org>; Wed, 15 Mar 2017 16:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FGxBVqUjXOWND9eZ4fJzocRGmlFawPjjjxVyCGxr9ik=;
-        b=IYFWR1nuE4QvgXXf0rfGvRYfbnGL2aC3RPymfXyGfzyo8nHvorqD0BjeYqSCcrQJ4s
-         zgQ0/iqLIDlbR3irREuL8x8U8XLrUZcrrW75NL8olhpyZ9Xr7q8DFhNuJOf41gbqvm1b
-         U9jw5yGoo2vI9BbfN+cB4LptMizQCGR8mRanQt5dSJVfxYoZOvRSMhd1/EkLy37xucSO
-         c0XIjSgSzqoJkpQY0fLvR1oHNYA3/uLt9wPje6OaQ6lOitW1OLpsunKiI4j8sNuz+W5r
-         P3CjuMF6uYkOisCgShSlJnoVi88UaYjBZ1f3PBFHU4I1hFqSkG2MvefRfvhosTVQGtpW
-         ulVw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VT5pjnWf+bnj/D6oIppCLp1FkwBAvZtxuTRiwYATx2Y=;
+        b=or5WCB9vSHDz4AzulXB7qt1+ULzJZKAHkNey2/9rRcH6KY8dC9T7hRIa2faqEKb4sH
+         cvPGhYlSf9e39SsdPQAbSrqfsO82KEDqLNHnBpA2c9x8hKd86ytquOmB6tgwHFYVqds1
+         pYGjJ7F2MjJbp94JdVHOLgsfalRVgxI8DQpap5Rv5XcPtXuf53AtOg1DM+KwDeT0qGX1
+         P0ZeG0a8C10yq1/ibejKmB5TT+0qf0Q7Aert8jwxxQulx2EPbC2r4us5MIRBWLb3ccr6
+         uWVIoZmcsHYj8EpM6s2pfOA/UgzVWNN11lU3VSHR65DKKbORcnkhj4ohrOQbvWyynZL/
+         cNMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FGxBVqUjXOWND9eZ4fJzocRGmlFawPjjjxVyCGxr9ik=;
-        b=Lzmp5eOs+yRgCdSw5OekIgbOESGUEw6N2hv+5vW59NVC72MJMGTNRUYKT6NTvozNue
-         6+zgv8BK7l+Uw8E9xzAXVJ4K5XunZB1+hIqoF6Xx/Sck8uIr/o/MQvI1AzTAfvWrqwod
-         C5RuWXyCVODMWDWq8RkbbKFZIzkIRevnbhlNUTDPpGU8Y8mUndKmz0CAdfidp+gXWBv7
-         Gr53bseYbBAGTDOKpEnc1qUr9c81IeZnnI4eccxhHywVM/zsYgsGslSB8LpgHZhBEyqr
-         ZDIIzs1rDwcB1BZtH3F+trVt1SYqeN847ije6fqg3QXrW8x1bGaa56WYNJUHSiXrP6VC
-         rWMg==
-X-Gm-Message-State: AFeK/H2xmSURYwAy+oEnrzPF5Em+iCWI0M7FXGOz8PJImsMgCqWf8aI2zJ6jRZaRSd59gNub
-X-Received: by 10.98.74.154 with SMTP id c26mr6693876pfj.73.1489619316330;
-        Wed, 15 Mar 2017 16:08:36 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:e5fd:c660:1f84:47a3])
-        by smtp.gmail.com with ESMTPSA id t67sm6214860pfd.76.2017.03.15.16.08.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 15 Mar 2017 16:08:35 -0700 (PDT)
-Date:   Wed, 15 Mar 2017 16:08:34 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v3 07/10] clone: add --submodule-spec=<pathspec> switch
-Message-ID: <20170315230834.GH159137@google.com>
-References: <20170309012345.180702-1-bmwill@google.com>
- <20170313214341.172676-1-bmwill@google.com>
- <20170313214341.172676-8-bmwill@google.com>
- <xmqqmvcnir8m.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VT5pjnWf+bnj/D6oIppCLp1FkwBAvZtxuTRiwYATx2Y=;
+        b=TJXUIw1gfQ0m7GZGr9oOO/KLCsviXw7RuaUEvmBTP2sGpUrY9SBL32DV66Eb4ciLbv
+         vfR5fM4nUAPNmScTzBMEHFfDIXpPR4TOpd9/BzqH3/5OMYymak8DYW/TAdNIZBxc/Ffl
+         KIjAK431lHoum36ZFXzzpPAlVkqQ8z0kyiYGuWp5pm9tBVvutXbmn/GLdnNcayVMx7Um
+         jFkaPZ8Y/igPLwteliuxStsNkTYyc2Jezt5PlSGZI1FHhao5+d7weBvby4kpNcMWrKjV
+         oV0oGPbFj0Jq8VecMtMVRincj7+h3OewBY52+wNxDJ5fmRRaXn2D+NYV6LVpA78YjpuT
+         M90w==
+X-Gm-Message-State: AFeK/H1+XEYZgEGxf59ARZWltNFSGCuFlUrY9COcvAB6v61fs42FFBQgxEtv98Xm8e4szTyLy0Z3kL44sVdX9ZsF
+X-Received: by 10.84.195.129 with SMTP id j1mr7867010pld.88.1489620355391;
+ Wed, 15 Mar 2017 16:25:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqmvcnir8m.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.187.5 with HTTP; Wed, 15 Mar 2017 16:25:54 -0700 (PDT)
+In-Reply-To: <20170315230834.GH159137@google.com>
+References: <20170309012345.180702-1-bmwill@google.com> <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-8-bmwill@google.com> <xmqqmvcnir8m.fsf@gitster.mtv.corp.google.com>
+ <20170315230834.GH159137@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 15 Mar 2017 16:25:54 -0700
+Message-ID: <CAGZ79kbqcGe30-FO4jAzx1wmJBF1dg5O5zYAK5mOFOfQk3PULQ@mail.gmail.com>
+Subject: Re: [PATCH v3 07/10] clone: add --submodule-spec=<pathspec> switch
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/14, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > The new switch passes the pathspec to `git submodule update
-> > --init-active` which is called after the actual clone is done.
-> >
-> > Additionally this configures the submodule.active option to
-> > be the given pathspec, such that any future invocation of
-> > `git submodule update --init-active` will keep up
-> > with the pathspec.
-> >
-> > Based on a patch by Stefan Beller <sbeller@google.com>
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> >  Documentation/git-clone.txt | 23 ++++++++++-----
-> >  builtin/clone.c             | 36 +++++++++++++++++++++--
-> >  t/t7400-submodule-basic.sh  | 70 +++++++++++++++++++++++++++++++++++++++++++++
-> >  3 files changed, 120 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> > index 35cc34b2f..9692eab30 100644
-> > --- a/Documentation/git-clone.txt
-> > +++ b/Documentation/git-clone.txt
-> > @@ -15,7 +15,8 @@ SYNOPSIS
-> >  	  [--dissociate] [--separate-git-dir <git dir>]
-> >  	  [--depth <depth>] [--[no-]single-branch]
-> >  	  [--recursive | --recurse-submodules] [--[no-]shallow-submodules]
-> > -	  [--jobs <n>] [--] <repository> [<directory>]
-> > +	  [--submodule-spec <pathspec>] [--jobs <n>] [--]
-> > +	  <repository> [<directory>]
-> 
-> Hmph.  Can we then make "--recurse-submodules" an obsolete way to
-> spell "--submodule-spec ."?  I am not actively suggesting to
-> deprecate it; I am trying to see if there are semantic differences
-> between the two.
+On Wed, Mar 15, 2017 at 4:08 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 03/14, Junio C Hamano wrote:
+>> Brandon Williams <bmwill@google.com> writes:
+>>
+>> > The new switch passes the pathspec to `git submodule update
+>> > --init-active` which is called after the actual clone is done.
+>> >
+>> > Additionally this configures the submodule.active option to
+>> > be the given pathspec, such that any future invocation of
+>> > `git submodule update --init-active` will keep up
+>> > with the pathspec.
+>> >
+>> > Based on a patch by Stefan Beller <sbeller@google.com>
+>> >
+>> > Signed-off-by: Brandon Williams <bmwill@google.com>
+>> > ---
+>> >  Documentation/git-clone.txt | 23 ++++++++++-----
+>> >  builtin/clone.c             | 36 +++++++++++++++++++++--
+>> >  t/t7400-submodule-basic.sh  | 70 +++++++++++++++++++++++++++++++++++++++++++++
+>> >  3 files changed, 120 insertions(+), 9 deletions(-)
+>> >
+>> > diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+>> > index 35cc34b2f..9692eab30 100644
+>> > --- a/Documentation/git-clone.txt
+>> > +++ b/Documentation/git-clone.txt
+>> > @@ -15,7 +15,8 @@ SYNOPSIS
+>> >       [--dissociate] [--separate-git-dir <git dir>]
+>> >       [--depth <depth>] [--[no-]single-branch]
+>> >       [--recursive | --recurse-submodules] [--[no-]shallow-submodules]
+>> > -     [--jobs <n>] [--] <repository> [<directory>]
+>> > +     [--submodule-spec <pathspec>] [--jobs <n>] [--]
+>> > +     <repository> [<directory>]
+>>
+>> Hmph.  Can we then make "--recurse-submodules" an obsolete way to
+>> spell "--submodule-spec ."?  I am not actively suggesting to
+>> deprecate it; I am trying to see if there are semantic differences
+>> between the two.
+>
+> We can if you think that would be better.  That way if at clone time you
+> say "I want the submodules too" that your default config tracks all
+> submodules even new ones yet to be added.
+>
+>>
+>> I am also wondering "--recurse-submodules=<pathspec>" would be a
+>> better UI, instead of introducing yet another option.
+>
+> Yeah we could do that, have --recurse-submodules be a repeated option
+> and if you don't specify a value it defaults to "."
+>
+> Any thoughts on this Stefan?
 
-We can if you think that would be better.  That way if at clone time you
-say "I want the submodules too" that your default config tracks all
-submodules even new ones yet to be added.
+I think when I first tried to tackle this problem, I realized that the recursing
+beyond the first level is orthogonal to the selection of submodules in the
+first level.
 
-> 
-> I am also wondering "--recurse-submodules=<pathspec>" would be a
-> better UI, instead of introducing yet another option.
+Consider the following submodules
 
-Yeah we could do that, have --recurse-submodules be a repeated option
-and if you don't specify a value it defaults to "."
+    /sub1
+    /sub1/nestedA
+    /sub2
+    /sub2/nestedB
 
-Any thoughts on this Stefan?
+To select sub1
+  git clone --submodule-spec=sub1
 
-> 
-> > @@ -217,12 +218,20 @@ objects from the source repository into a pack in the cloned repository.
-> >  
-> >  --recursive::
-> >  --recurse-submodules::
-> > -	After the clone is created, initialize all submodules within,
-> > -	using their default settings. This is equivalent to running
-> > -	`git submodule update --init --recursive` immediately after
-> > -	the clone is finished. This option is ignored if the cloned
-> > -	repository does not have a worktree/checkout (i.e. if any of
-> > -	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
-> > +	After the clone is created, initialize and clone all submodules
-> > +	within, using their default settings. This is equivalent to
-> > +	running `git submodule update --recursive --init` immediately
-> > +	after the clone is finished. This option is ignored if the
-> > +	cloned repository does not have a worktree/checkout (i.e.  if
-> > +	any of `--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
-> 
-> With reflowing it is unnecessarily harder to spot what got changed.
-> "and clone" is inserted, "--init" and "--recursive" were swapped.
-> Any other changes?
+To select sub1 +nestedA
+  git clone --submodule-spec=sub1 --recurse-submodules
 
-No other changes, it just reads a little bit clearer now IMO.
+To select sub1+sub2
+  git clone --submodule-spec=. --no-recurse-submodules
 
-> 
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index 3f63edbbf..c6731379b 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -56,6 +56,16 @@ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
-> >  static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
-> >  static int option_dissociate;
-> >  static int max_jobs = -1;
-> > +static struct string_list submodule_spec;
-> > +
-> > +static int submodule_spec_cb(const struct option *opt, const char *arg, int unset)
-> > +{
-> > +	if (unset)
-> > +		return -1;
-> > +
-> > +	string_list_append((struct string_list *)opt->value, arg);
-> > +	return 0;
-> > +}
-> 
-> Hmph,  doesn't OPT_STRING_LIST work for this thing?
+How to select sub1+nestedA+sub2, but not nestedB
+  not possible in one command
 
-You're right, I'll change to that.
+I wonder if we want to be able to differentiate these cases at all,
+I guess if you want sub1, you also care about nestedB ?
 
--- 
-Brandon Williams
+(Or is there any way to recurse pathspecs,
+which could be gitattributes)
+
+That said, I optimized for the complex case, which we might not have
+and a combination into one switch makes sense, such that
+  git clone --recurse-submodules=<pathspec>
+is sufficient and turns on recursion beyond the first level.
+
+Thanks,
+Stefan
