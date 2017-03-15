@@ -1,131 +1,160 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=1.6 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19354202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 14:13:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B700202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 14:38:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752663AbdCOONs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 10:13:48 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:36647 "EHLO
-        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750977AbdCOOM5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 10:12:57 -0400
-Received: by mail-vk0-f47.google.com with SMTP id t8so9062430vke.3
-        for <git@vger.kernel.org>; Wed, 15 Mar 2017 07:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=If6GrwKTVcfI4KdiiTSHYp/UeOxTLNuHC0zA/4I3Wwc=;
-        b=bnHPGOk/VRPq8mgcau/VbDRlbaZZve2onturCwPS+732cj+oj6QHNxBCTU8NiGRmdb
-         /6n6TmvpgV6AcV4RNAaJ6xTFmD2uzFrk3/fkK3sysJsWvYVYZsGTLOA9ejnX5pLDZZgf
-         bp2t6aiugdSGwUejuPT9UnoMLH3V7o6Xbsxw5VA4luCOMB1nEHRF+Ff6fgMVqCQ3PQiF
-         aUZhlpsBg8K8ijcsIEYIX7E7mj6kRTHt7QHMLnXHKj5uRWFRG/FH4gGrzZpMvvxCNn1I
-         vQUMGmY+I6Y7/HRn1GSNmF5UDXRqEpPyRVEjujTxYWAtnU7OtHXLN1/wp0JLADgBb3AQ
-         reuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=If6GrwKTVcfI4KdiiTSHYp/UeOxTLNuHC0zA/4I3Wwc=;
-        b=dsGtYTZmAfeF/QHgim5otarGV9agA1aLekn5Lpec0mvB3tZi+dQAfvgVErze4OhyZS
-         DI66hVY1EeXjleGYbVDx5mynliZYkKWp6FhIFdNZSGgOHp4B6A9q9ojfpxOt60OWYjcd
-         0QgWgytXPeJUDPYLcXvk50n7EGk94leS2Fj9BguqRSkwqABaW3e3AGgDgMLHScvpizLv
-         oQtTO+1BzHSXCZsCphGuMUU0lYzWZsV5yLW3NN6LKUTaYKRX8ahHD1MWM5yWO7vdVcbM
-         6cn2WKJdOVor8Q9g9xmBRhqxIAw2e7YZ0lL5ZyUsdRwphC3KS92wEEwfN4g+j3obA+hK
-         SdUA==
-X-Gm-Message-State: AFeK/H06PBuX1I9beLctRnvhRtJ8VOBcxlkf7VJWjsUfsSETYhYISM5uaimbN7xFNveAvTOXlIJ5fLkXkK10Sw==
-X-Received: by 10.31.110.138 with SMTP id j132mr1007564vkc.103.1489587176206;
- Wed, 15 Mar 2017 07:12:56 -0700 (PDT)
+        id S1753918AbdCOOhF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 10:37:05 -0400
+Received: from ws105.zone31-163-158.zaural.ru ([31.163.158.105]:44860 "HELO
+        zaural.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S1751787AbdCOOfi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 10:35:38 -0400
+X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Mar 2017 10:35:37 EDT
+Importance: High
+Date:   Wed, 15 Mar 2017 14:35:28 -0000
+Content-Disposition: attachment
+From:   <richardprice@bjpinsure.com>
+Content-Type: application/zip; name="EMAIL_52553731_git.zip"
 MIME-Version: 1.0
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.176.82.136 with HTTP; Wed, 15 Mar 2017 07:12:55 -0700 (PDT)
-In-Reply-To: <xmqqy3wm1bkm.fsf@junio-linux.mtv.corp.google.com>
-References: <CAHd499CfJnPtLmi8qzr=_jrfCgMw85MOUv-wPKmAHFUyDFXhRA@mail.gmail.com>
- <xmqqy3wm1bkm.fsf@junio-linux.mtv.corp.google.com>
-From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Wed, 15 Mar 2017 09:12:55 -0500
-X-Google-Sender-Auth: bcmeGWq2fL-mJUybZ_YDz9RKo6s
-Message-ID: <CAHd499Bf-Y5uuZKPO5dOaJqYJ7ZGhG0nX7nQmw7+KO8tZr8eMQ@mail.gmail.com>
-Subject: Re: Finding a tag that introduced a submodule change
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: 
+Message-ID: <148958852864.25821.9254352338317054336@zaural.ru>
+Reply-To: <richardprice@bjpinsure.com>
+Content-Transfer-Encoding: base64
+To:     "git" <git@vger.kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 3, 2017 at 12:04 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Robert Dailey <rcdailey.lists@gmail.com> writes:
->
->> Sometimes I run into a situation where I need to find out which
->> release of the product a submodule change was introduced in. This is
->> nontrivial, since there are no tags in the submodule itself.
->
-> Does your superproject rewind the commit in the submodule project as
-> it goes forward?  That is, is this property guaranteed to hold by
-> your project's discipline:
->
->         Given any two commits C1 and C2 in the superproject, and the
->         commit in the submodule bound to C1's and C2's tree (call
->         them S1 and S2, respectively), if C1 is an ancestor of C2,
->         then S1 is the same as S2 or an ancestor of S2.
->
-> If so, I think you can do a bisection of the history in the
-> superproject.  Pick an old commit in the superproject that binds an
-> old commit from the submodule that does not have the change and call
-> it "good".  Similarly pick a new one in the superproject that binds
-> a newer commit from the submodule that does have the change, and
-> call it "bad".  Then do
->
->         $ git bisect start $bad $good -- $path_to_submodule
->
-> which would suggest you to test commits that change what commit is
-> bound at the submodule's path.
->
-> When testing each of these commits, you would see if the commit
-> bound at the submodule's path has the change or not.
->
->         $ current=$(git rev-parse HEAD:$path_to_submodule)
->
-> would give you the object name of that commit, and then
->
->         $ git -C $path_to_submodule merge-base --is-ancestor $change $current
->
-> would tell you if the $change you are interested in is already
-> contained in that $current commit.  Then you say "git bisect good"
-> if $current is too old to contain the $change, and "git bisect bad"
-> if $current is sufficiently new and contains the $change, to
-> continue.
->
-> If your superproject rewinds the commit in the submodule as it goes
-> forward, e.g. an older commit in the superproject used submodule
-> commit from day X, but somebody who made yesterday's commit in the
-> superproject realized that that submodule commit was broken and used
-> an older commit in the submodule from day (X-1), then you cannot
-> bisect.  In such a case, I think you would essentially need to check
-> all superproject commits that changed the commit bound at the
-> submodule's path.
->
->         $ git rev-list $bad..$good -- $path_to_submodule
->
-> would give a list of such commits, and you would do the "merge-base"
-> check for all them to see which ones have and do not have the
-> $change (replace "HEAD" with the commit you are testing in the
-> computation that gives you $current).
-
-
-Hi Junio, my apologies for the very late response.
-
-I really like your idea, however unfortunately often times people on
-my team accidentally rewind the submodule. However your latter
-suggestion about just doing merge-base on each change would be a
-worthy solution to try. Thank you very much, I will certainly give
-this a try!!
+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
+AAEAUwAAAHkbAAAAAA==
