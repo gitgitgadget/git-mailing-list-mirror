@@ -2,93 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85092202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 22:31:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB2820953
+	for <e@80x24.org>; Wed, 15 Mar 2017 22:47:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753983AbdCOWb2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 18:31:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44892 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753031AbdCOWah (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 18:30:37 -0400
-Received: (qmail 8552 invoked by uid 109); 15 Mar 2017 22:30:36 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 22:30:36 +0000
-Received: (qmail 30142 invoked by uid 111); 15 Mar 2017 22:30:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 15 Mar 2017 18:30:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Mar 2017 18:30:33 -0400
-Date:   Wed, 15 Mar 2017 18:30:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/6] index-pack: factor out pack/idx finalization
-Message-ID: <20170315223033.phxiksglwjm3j556@sigill.intra.peff.net>
-References: <20170315212617.6x57bvltinuozv4q@sigill.intra.peff.net>
- <20170315212733.73cw22dm36oc5im4@sigill.intra.peff.net>
- <f42ba0f5-a879-f63f-1cbd-de268da05966@ramsayjones.plus.com>
- <20170315222223.qyrxb6ey3rz3omt4@sigill.intra.peff.net>
+        id S1754252AbdCOWqt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 18:46:49 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:35445 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754189AbdCOWqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 18:46:08 -0400
+Received: by mail-pg0-f48.google.com with SMTP id b129so15446217pgc.2
+        for <git@vger.kernel.org>; Wed, 15 Mar 2017 15:46:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DTJW1SvTs7kjoGkn4w/hjfcr1xfM22OwblbZtfw09n4=;
+        b=Gs3rY/bnJMx+tI9Rd5ZyhKYv5ivlzr5C90C8jqYwlZ2jrJa2Q5CXckxMgXaKVm2lL1
+         lFFu9y184AbCCmA7xug9sAvH1DoiHTnGO3wAgWGL06nBGuJT8AE5hd9lMlNgby3qLur1
+         pRyMEjbYmUdPrrUXG0mm+7zhBaXfmAUzWUVaEh+g5XMZftVddEYWtUxooA72d0/TCuu9
+         iAKxkjkZYkccHj8SofctrpLOVRH8/u22BwuvnW/m5VkxacEyuGihroFeT/Ux0yxEeOW4
+         sQlgYiQWO10mmvW/h0l8vaqEXIO/ohzXoF/guhSfj2ZCie5gqAPX+eKqbJF1GUgLgorx
+         zInw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DTJW1SvTs7kjoGkn4w/hjfcr1xfM22OwblbZtfw09n4=;
+        b=ujnIqR9LYafgREbg/frepmt6dB8f3oF3DbjLEDC68Hyzt79E2FxBXPfkY0RN1Ym+s4
+         XyP9xEnQbDJyDDipdNUPdnX4emmkgplKmzLWW4ijr982V3rTaG9tHF6lfoH2yCIuY3v5
+         bU740l6QbJALeuoVLFZFP5OiK1gX2t2oRBFI1WfGQhvQX4FfBCUfBqkX/ptuw6FZArcQ
+         0Fm2htIici5/OhO+Yrul/IPK48avoRMj4h97SzcJ6D1Iur82pSiJwLn6xyHz7Cmwb59m
+         y0rOnyxf8dESE7Y3JHHykKTw8WlfmYiyXqQk1evC43DWpyc/FtlX/91gC42u8v2sQbIZ
+         e/2A==
+X-Gm-Message-State: AFeK/H27Hij5Jd+i7A9aV/muniMdAznTJ8dGQ+DLYnoeqM5T98iNDcHU2DgvArOyZTr8zhiI
+X-Received: by 10.84.236.9 with SMTP id q9mr7705235plk.96.1489617966811;
+        Wed, 15 Mar 2017 15:46:06 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:e5fd:c660:1f84:47a3])
+        by smtp.gmail.com with ESMTPSA id s87sm6194037pfa.29.2017.03.15.15.46.05
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Mar 2017 15:46:05 -0700 (PDT)
+Date:   Wed, 15 Mar 2017 15:46:04 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH v3 09/10] submodule--helper init: set
+ submodule.<name>.active
+Message-ID: <20170315224604.GG159137@google.com>
+References: <20170309012345.180702-1-bmwill@google.com>
+ <20170313214341.172676-1-bmwill@google.com>
+ <20170313214341.172676-10-bmwill@google.com>
+ <xmqqinnbiqzs.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170315222223.qyrxb6ey3rz3omt4@sigill.intra.peff.net>
+In-Reply-To: <xmqqinnbiqzs.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 15, 2017 at 06:22:23PM -0400, Jeff King wrote:
-
-> Then we'd expect the newly-created .idx to have mode 0444, but it
-> doesn't. So yeah, I think the distinction does matter.
+On 03/14, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> I'm not sure if the best path is to include that flag in the
-> finalize_file() helper, or just ditch the helper.  Its main purpose was
-> cleanup so that the odb_pack_name() refactor didn't have to happen
-> twice. But after that refactor, the amount of shared code is relatively
-> small.
+> > When initializing a submodule set the submodule.<name>.active config to
+> > true to indicate that the submodule is active.
+> >
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > ---
+> 
+> Hmph.  When you do
+> 
+> 	git clone --submodule-spec=lib/
+> 
+> and resulting repository says "submodule.active = lib/", you are
+> saying that you are interested in anything in "lib/", now or in the
+> future--that is the point of 08/10.
+> 
+> It is unclear what your desire would be for a submodule that was
+> bound to somewhere in "lib/" in the superproject when you cloned
+> when it later gets moved outside "lib/".  With changes up to 08/10,
+> that submodule will no longer be interesting, but with this 09/10,
+> when recursing clone will activate it upon the initial clone, the
+> submodule is explicitly marked as active by its name, so no matter
+> where it gets moved later, it will remain to be interesting.
+> 
+> I am not sure if that is a desired behaviour.
 
-I think I'm leaning towards just ditching the helper. The resulting
-change looks pretty good:
+I'm going to blame my poor commit msg for this.
 
-@@ -1423,22 +1424,16 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 	}
- 
- 	if (final_pack_name != curr_pack_name) {
--		if (!final_pack_name) {
--			snprintf(name, sizeof(name), "%s/pack/pack-%s.pack",
--				 get_object_directory(), sha1_to_hex(sha1));
--			final_pack_name = name;
--		}
-+		if (!final_pack_name)
-+			final_pack_name = odb_pack_name(&name, sha1, "pack");
- 		if (finalize_object_file(curr_pack_name, final_pack_name))
- 			die(_("cannot store pack file"));
- 	} else if (from_stdin)
- 		chmod(final_pack_name, 0444);
- 
- 	if (final_index_name != curr_index_name) {
--		if (!final_index_name) {
--			snprintf(name, sizeof(name), "%s/pack/pack-%s.idx",
--				 get_object_directory(), sha1_to_hex(sha1));
--			final_index_name = name;
--		}
-+		if (!final_index_name)
-+			final_index_name = odb_pack_name(&name, sha1, "idx");
- 		if (finalize_object_file(curr_index_name, final_index_name))
- 			die(_("cannot store index file"));
- 	} else
+Essentially it would be nice if when a user explicitly says "I want to
+init submodule b" that we obey and do just that.  What this patch does
+is allow for a user to do that and the "submodule.<name>.active" config
+option will only be set to 'true' in the event that that the submodule
+isn't already marked as being active/interesting by some other means.
+So if we did
 
-And we just end up sharing the same name buffer (and the "keep" code
-path can use the same one, too).
+  git clone --submodule-spec=lib/
 
-I'll wait until tomorrow to collect any more comments and then send out
-a re-roll.
+then each module under 'lib/' won't have their submodule.<name>.active
+config set since submodule.active=lib/ already encompasses them.
 
-Thanks for reading so carefully.
 
--Peff
+But if no submodule-spec was given then it would default to all
+submodules and set every submodule's submodule.<name>.active config to
+true.
+
+I'll add a few tests to illustrate this.
+
+> 
+> >  builtin/submodule--helper.c | 7 +++++++
+> >  1 file changed, 7 insertions(+)
+> >
+> > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> > index a3acc9e4c..b669ed031 100644
+> > --- a/builtin/submodule--helper.c
+> > +++ b/builtin/submodule--helper.c
+> > @@ -361,6 +361,13 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
+> >  		die(_("No url found for submodule path '%s' in .gitmodules"),
+> >  			displaypath);
+> >  
+> > +	/* Set active flag for the submodule being initialized */
+> > +	if (!is_submodule_initialized(path)) {
+> > +		strbuf_reset(&sb);
+> > +		strbuf_addf(&sb, "submodule.%s.active", sub->name);
+> > +		git_config_set_gently(sb.buf, "true");
+> > +	}
+> > +
+> >  	/*
+> >  	 * Copy url setting when it is not set yet.
+> >  	 * To look up the url in .git/config, we must not fall back to
+
+-- 
+Brandon Williams
