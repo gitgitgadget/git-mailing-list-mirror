@@ -2,110 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6379020323
-	for <e@80x24.org>; Wed, 15 Mar 2017 09:34:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 506E420323
+	for <e@80x24.org>; Wed, 15 Mar 2017 09:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752783AbdCOJeA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 05:34:00 -0400
-Received: from mail-ua0-f172.google.com ([209.85.217.172]:34902 "EHLO
-        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752530AbdCOJd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 05:33:58 -0400
-Received: by mail-ua0-f172.google.com with SMTP id q7so5912328uaf.2
-        for <git@vger.kernel.org>; Wed, 15 Mar 2017 02:33:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=af9oJtk+SYnpqh83Mcx5tNNwwdx8Ee7OE61kHf0Gg/0=;
-        b=VMlHuPWtgx9cntVp5M6WeSqts4ktg8tK3f2CcvX4TUKEP3aAyDVDJXPeZRjRGHeELy
-         3tbhtzcDS53i+FS/h7eU0DqwmxmhdS3o+28bmA20LjBeyp4xD/bScIu2PRrymbV5jKdo
-         yeRzCUh1IZS6oLuU+63yOZxrjfwDx1ZKTifuIDeDLm0uFNGGiIsA4liHV7EuL0h6tqx1
-         M9wrsdx5kz2HmIorASeFsF2xn5AG6IRlOmTdNR9GJIR7DqDkN/g6UQHXrRVm99Z0pWBp
-         H2JdMZUAJOa+2C0VK1LGk5g4R1ASU1/6qmcSWlFa6AEN1tvZBhjOxuYSPn1xzfTFl31R
-         XBTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=af9oJtk+SYnpqh83Mcx5tNNwwdx8Ee7OE61kHf0Gg/0=;
-        b=V0oU0uuUsx2GX2ZuSdh0PQz2ksmsovMsrcYKpMj52hpSyamDNA2TO/aaolcaO2bXym
-         U1ujbPTrOqCw3L13cGFWHTmdWHQwVKAnjcTjQiyCupb8Zw7sF0qmr/3WnSmy8HiyB0Uj
-         cWxlpnR62TSekIZVuNsDOs+WwvGGfYyV0hbaDlpIV0bEMbiF8utPXzdwsF19HgW8ojvr
-         JurZ0pufCxETMqWIBj0udlAaSxkDkwOOEVUpRWfy31bN+DUqL5IMfT5iT0XFFqJ3iDYO
-         AeNDUYc6bU/mr3wxrHBnFiuP0xG9du7W3h22GIAh/WEQ8PUA+LTppnj5r197hBw9hDEz
-         QnOQ==
-X-Gm-Message-State: AFeK/H0EH1Je87d5U9JGTLyJsgQXhZAuhDbxbi8XqMQCj1iHxef+tk1AyHQdQTAWYmtlrB8uFz9NEW3Diz0uRQ==
-X-Received: by 10.176.0.240 with SMTP id 103mr866195uaj.114.1489570436836;
- Wed, 15 Mar 2017 02:33:56 -0700 (PDT)
+        id S1752730AbdCOJod (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 05:44:33 -0400
+Received: from smtpo.poczta.interia.pl ([217.74.65.205]:41949 "EHLO
+        smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752669AbdCOJoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 05:44:32 -0400
+Date:   Wed, 15 Mar 2017 10:44:24 +0100
+From:   Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+Subject: Re: fatal: Could not get current working directory: Permission
+ denied | affected 2.10,2.11,2.12, but not 1.9.5 |
+To:     =?iso-8859-1?b?UmVu6Q==?= Scharfe <l.s.r@web.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+X-Mailer: interia.pl/pf09
+In-Reply-To: <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de>
+References: <elvahoiwfqayelbskykd@qjih>
+        <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
+        <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
+        <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de> <tskgutqgpyszzedvyfra@prol>
+        <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de>
+X-Originating-IP: 89.64.255.37
+Message-Id: <ffntuqzgjgcfhebokbty@eduj>
 MIME-Version: 1.0
-Received: by 10.176.87.218 with HTTP; Wed, 15 Mar 2017 02:33:56 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-Date:   Wed, 15 Mar 2017 15:03:56 +0530
-Message-ID: <CAME+mvW1x6fnGKt1_auGOp+wFYFR=Y_Qhxfd50E7KFe6t+X4kw@mail.gmail.com>
-Subject: GSoC Project | Submodules related work
-To:     git <git@vger.kernel.org>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        bmwill@google.com, me@vtolstov.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
+        s=biztos; t=1489571064;
+        bh=ubRWNjDNYJdJBxBmyjIp/tAcBt404mghiLAvyvTH6cM=;
+        h=Date:From:Subject:To:Cc:X-Mailer:In-Reply-To:References:
+         X-Originating-IP:Message-Id:MIME-Version:Content-Type:
+         Content-Transfer-Encoding;
+        b=XNEwu3s0VlovqaLhrZVgWz5RKtlmEL+88mImQ9qAYUmdf6YmaLrF6+OCWJUnLKf8H
+         45RpKs5KYp8OVFQTlgUelOouLb4hK0bl3CgCZoMF4wMhnRZzia5kpnsezcZ1W/PQ+g
+         fu3Zhf9xlbXDNA8Y8WE8LU94m+CrKdchwsbKQBYA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey everyone,
+Od: "Ren=C3=A9 Scharfe" &lt;l.s.r@web.de>
+Do: "Zenobiusz Kunegunda" &lt;zenobiusz.kunegunda@interia.pl>;=20
+Wys=C5=82ane: 18:59 Wtorek 2017-03-14
+Temat: Re: fatal: Could not get current working directory: Permission denie=
+d | affected 2.10,2.11,2.12, but not 1.9.5 |
 
-I am Prathamesh. I am studying Computer Science and Engineering at IIT
-Kharagpur. I am interested to participate in Google Summer of Code 2017
-under Git organization. I attempted "Avoid pipes in git related commands
-for test suite" as my microproject[1].
+>=20
+>> Am 14.03.2017 um 08:44 schrieb Zenobiusz Kunegunda:
+>> Od: "Ren=C3=A9 Scharfe" &lt;l.s.r@web.de> Do: "Zenobiusz Kunegunda"
+>> &lt;zenobiusz.kunegunda@interia.pl>; Wys=C5=82ane: 22:31 Poniedzia=C5=82=
+ek
+>> 2017-03-13 Temat: Re: fatal: Could not get current working directory:
+>> Permission denied | affected 2.10,2.11,2.12, but not 1.9.5 |
+>>
+>>>
+>>>> Am 13.03.2017 um 14:23 schrieb Zenobiusz Kunegunda: Bisecting: 0
+>>>> revisions left to test after this (roughly 0 steps)
+>>>> [a26bc613a64ac2c7ee69a50675e61b004a26382d] pretty.c: make
+>>>> git_pretty_formats_config return -1 on git_config_string failure
+>>>>
+>>>> This is what I found with git bisect
+>>>
+>>> Strange, I don't think git_pretty_formats_config() is even called
+>>> by git status.
+>>>
+>>> Ren=C3=A9
+>>>
+>>>
+>>
+>>
+>> a26bc613a64ac2c7ee69a50675e61b004a26382d - is actually working
+>> revision
+>>
+>> The question is - is git history linear enough for git bisect to
+>> produce any useful result? Gitk produces rather complicated diagram.
+>> Especially for year 2014. I'm not sure about reliability of this
+>> method. Or maybe it should be used in a specific way I'm not aware
+>> of. If you have any advices how to use it in this specific case,
+>> please let me know.
+>=20
+> Ah, right, I didn't pay enough attention, sorry.  Step 0 is the last=20
+> one, but you need to rate it as good or bad before reset presents the=20
+> result.  History is not really linear in git's own repository.  But if=20
+> you didn't reset bisect's status you may still be able to finish it by=20
+> running "git bisect good a26bc613" now.
+>=20
+> (And if that doesn't work then at least you now have a much quicker way=20
+> to check using the long directory name..)
+>=20
+> Ren=C3=A9
+>=20
+>=20
 
-As a part of GSoC, I would like to work on git submodules. The projects I
-have looked up are:
-        1. "git -C sub add ." might behave just like "git add sub"
-        2. Teach "git -C <submodule-path> status" in an unpopulated
-           submodule to report the submodule being unpopulated, do not
-           fall back to the superproject.
-        3. Teach "git log -- <path/into/submodule/and/further>" to behave
-           like "git -C <path/into/submodule> log -- <and/further>"
+Oh, my bad. Haven't been using git bisect for quiet a while and forgot to r=
+ate.
+Ok, so I did bisect again
 
-I went through the series of mail (related to projects 1 and 2)[2] for
-getting a better picture of the projects. I think as the projects are
-quite interrelated together, these may make a complete GSoC project.
+$ git bisect bad
+7333ed1788b4f2b162a35003044d77a716732a1f is the first bad commit
+commit 7333ed1788b4f2b162a35003044d77a716732a1f
+Author: Ren=C3=A9 Scharfe <l.s.r@web.de>
+Date:   Mon Jul 28 20:26:40 2014 +0200
 
-Also the conclusions which I was able to make from the mails[2] are:
+    setup: convert setup_git_directory_gently_1 et al. to strbuf
+   =20
+    Convert setup_git_directory_gently_1() and its helper functions
+    setup_explicit_git_dir(), setup_discovered_git_dir() and
+    setup_bare_git_dir() to use a struct strbuf to hold the current working
+    directory.  Replacing the PATH_MAX-sized buffer used before removes a
+    path length limition on some file systems.  The functions are converted
+    all in one go because they all read and write the variable cwd.
+   =20
+    Signed-off-by: Rene Scharfe <l.s.r@web.de>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-1. We are catching commands typed by the user in an unpopulated or
-   even an uninitialized submodule.
+:100644 100644 0a22f8bd1d631fe5f0afe1d84162ca4064a00e4f 937dad503c28681d7c2=
+1f5dc300ea943cfe5b17a M	setup.c
 
-2. We first check if we are present in the superproject's root dir.
-   If .git dir is present we check for the presence of .gitmodules file,
-   from which we can check the path give is inside some submodule.
-   *When .git file containing just a .gitlink is present then, I am not
-   sure but even in this case the root folder contains .gitmodules
-   file in the case of submodules(Please correct me here, if I'm going
-   wrong), then we may still carry the same procedure as above.
-
-3. Once we can detect whether the $cwd is in a submodule, we can output
-   "The submodule 'sub' is not initialized. To init ..." for all the
-   commands which doesn't initialize and populate the submodule.
-
-4. As similar detection could be used in the third project listed above,
-   hence I even wished to include it.
-
-What are your suggestions about these projects? Also, will it be
-rational to consider it as one complete project for GSoC?
-I think this might interfere with Valery's proposal[3] of shell to C
-conversion of submodule related codes. What do you all think?
-If it does interfere, then can we both work out on something common?
-
-Thanks,
-Prathamesh
-
-[1]: https://public-inbox.org/git/20170313065148.10707-1-pc44800@gmail.com/T/#u
-[2]: https://public-inbox.org/git/CAGZ79kYW1zS3-9AYPaiUfBGTFygyg1ZVd3YyOctp3gihfEpHeg@mail.gmail.com/T/#u
-[3]: https://public-inbox.org/git/20170310211348.18887-1-me@vtolstov.org/T/#u
+$ git bisect log
+git bisect start
+# bad: [b260d265e189728b26e50506ac6ffab6a7d588da] Git 2.2
+git bisect bad b260d265e189728b26e50506ac6ffab6a7d588da
+# good: [83332636f575f00edff8f3afb15a2f96885bf417] Git 1.9.5
+git bisect good 83332636f575f00edff8f3afb15a2f96885bf417
+# good: [9181365b856a63f8c5486ad0fe48f1cd60852da3] Merge branch 'maint-1.8.=
+5' into maint-1.9
+git bisect good 9181365b856a63f8c5486ad0fe48f1cd60852da3
+# good: [9181365b856a63f8c5486ad0fe48f1cd60852da3] Merge branch 'maint-1.8.=
+5' into maint-1.9
+git bisect good 9181365b856a63f8c5486ad0fe48f1cd60852da3
+# good: [ba655d15b58ab2a00032b74e5b2617a0b658a01f] Merge branch 'sk/mingw-m=
+ain'
+git bisect good ba655d15b58ab2a00032b74e5b2617a0b658a01f
+# bad: [88e7dff93d7010bb2974f8e1599a4e53c73e18f3] Merge branch 'jk/prune-to=
+p-level-refs-after-packing'
+git bisect bad 88e7dff93d7010bb2974f8e1599a4e53c73e18f3
+# good: [8a7b034d6d451491dbcfaebc3d4ed4f08c756822] add tests for `git_confi=
+g_get_string_const()`
+git bisect good 8a7b034d6d451491dbcfaebc3d4ed4f08c756822
+# bad: [f655651e09b9fa7bf8ff13f1b4a5b16c7956e4cf] Merge branch 'rs/strbuf-g=
+etcwd'
+git bisect bad f655651e09b9fa7bf8ff13f1b4a5b16c7956e4cf
+# good: [aa544bfbc6eb11e4f0471f3144d3e3ac75c0e4a9] Sync with 2.0.4
+git bisect good aa544bfbc6eb11e4f0471f3144d3e3ac75c0e4a9
+# good: [212d781c967317a05a704609ddf3ffc8a09f8590] Merge branch 'jk/fix-pro=
+file-feedback-build'
+git bisect good 212d781c967317a05a704609ddf3ffc8a09f8590
+# good: [44ceb79f84b0f339147d2d44e4bb50cc472be03e] Merge branch 'jk/pretty-=
+empty-format'
+git bisect good 44ceb79f84b0f339147d2d44e4bb50cc472be03e
+# bad: [4d3ab44d26c47d100cec39d0ef9ed9746eb7e454] use xgetcwd() to set $GIT=
+_DIR
+git bisect bad 4d3ab44d26c47d100cec39d0ef9ed9746eb7e454
+# bad: [251277acdf8c8dee59bdd0e9e7b7e3502226cf9d] abspath: use strbuf_getcw=
+d() to remember original working directory
+git bisect bad 251277acdf8c8dee59bdd0e9e7b7e3502226cf9d
+# good: [d13a0a97e097c6a601bafc529a716477cc94dc20] unix-sockets: use strbuf=
+_getcwd()
+git bisect good d13a0a97e097c6a601bafc529a716477cc94dc20
+# bad: [7333ed1788b4f2b162a35003044d77a716732a1f] setup: convert setup_git_=
+directory_gently_1 et al. to strbuf
+git bisect bad 7333ed1788b4f2b162a35003044d77a716732a1f
+# first bad commit: [7333ed1788b4f2b162a35003044d77a716732a1f] setup: conve=
+rt setup_git_directory_gently_1 et al. to strbuf
+=
