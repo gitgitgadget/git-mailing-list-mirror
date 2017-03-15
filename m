@@ -2,189 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EAAC202C1
-	for <e@80x24.org>; Wed, 15 Mar 2017 21:30:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E679202C1
+	for <e@80x24.org>; Wed, 15 Mar 2017 21:31:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751935AbdCOVaT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 17:30:19 -0400
-Received: from mail-ua0-f179.google.com ([209.85.217.179]:35330 "EHLO
-        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751416AbdCOVaS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 17:30:18 -0400
-Received: by mail-ua0-f179.google.com with SMTP id q7so15816313uaf.2
-        for <git@vger.kernel.org>; Wed, 15 Mar 2017 14:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Wtw/bA/7rs7E/n1PFKShPIZlrZG3H/adFn23twdT/Lc=;
-        b=sBJOVw8pkT9RHfyZQOAEoCIEjEpa6/70P/swUGSD/rEejIe0PDqdbgIxSOBe83G0wH
-         zVoV8Yopoj1Ks7Lyx3ZfDzZjLOXCukZ+Qc7inyllPuxBrLxJ9kRPecio3CYwaYxDtMmB
-         AMvoZJAoEjQEKHpGvMMK6pfvqXhEMV521Fm+ZvJ6ulEPjaxlBwuqCLnbkllyKZWH0buf
-         ibi4V0OIMn4HYwC1io9opXMFxLOAGdbn6GJd+zZ/JfirbIlSbwRiX4DjE5VrBqQxlIV8
-         8ap1AMMgAApMIOkXswa++qsJzNKV86Xy/+DrCHH8C0YYoD9+UIAqlD0OxpXxGUH03b0n
-         FisA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Wtw/bA/7rs7E/n1PFKShPIZlrZG3H/adFn23twdT/Lc=;
-        b=L1ZVyf0r1iwdcrO4G5WFDr3vu9IvrL41KAixf2quZEFQsN0eacrIZyBmwcitybrbmt
-         9lIUt0dXP/+wYeiHZQMJ3QQD2kwonwDFcAbs1yQUMTSX3XToQH+AqyYzTklZCXfUkL0w
-         dVVwBBaeFYrDYtayMtzljYQueC/uqFm/EFb4A0YldVHNSRUKTXCeYrypcfNj/SpapOae
-         7j/52Xi0fWdsPssk3mJ/2T68GU2jA0YeSB3bX89LuxvHQAJAB5OsKX/9z/pvooM9yooq
-         yaoeZivXjGw7WpEonfJm5pWeOeqOuYR8na5Tx+T8ZVk2inNAx/EgWMw7m+G1H/Ahc5Q6
-         bzKw==
-X-Gm-Message-State: AFeK/H1GOkmGpG76PwIcYrjJ/03UEDNszAHsIpD3jCajiDRrXg5VevLA76Za/78m/N8QDnExGQfNj0xOTiIh0A==
-X-Received: by 10.176.74.27 with SMTP id q27mr499272uae.4.1489613332269; Wed,
- 15 Mar 2017 14:28:52 -0700 (PDT)
+        id S1752996AbdCOVbX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Mar 2017 17:31:23 -0400
+Received: from mout.web.de ([212.227.17.11]:49945 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751884AbdCOVbU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Mar 2017 17:31:20 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Mb90x-1cUomL1dBD-00Kd0f; Wed, 15
+ Mar 2017 22:30:46 +0100
+Subject: Re: fatal: Could not get current working directory: Permission denied
+ | affected 2.10,2.11,2.12, but not 1.9.5 |
+To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+References: <elvahoiwfqayelbskykd@qjih>
+ <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
+ <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
+ <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de> <tskgutqgpyszzedvyfra@prol>
+ <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de> <ffntuqzgjgcfhebokbty@eduj>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <7f25def4-9943-ae59-a649-b4348a79890e@web.de>
+Date:   Wed, 15 Mar 2017 22:30:26 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.176.87.218 with HTTP; Wed, 15 Mar 2017 14:28:51 -0700 (PDT)
-In-Reply-To: <CAGZ79kbfNBbHgc4FrGoNNc54p65-xkQUQ6X3Ef9Ew9pioMzz7w@mail.gmail.com>
-References: <CAME+mvW1x6fnGKt1_auGOp+wFYFR=Y_Qhxfd50E7KFe6t+X4kw@mail.gmail.com>
- <CAGZ79kbfNBbHgc4FrGoNNc54p65-xkQUQ6X3Ef9Ew9pioMzz7w@mail.gmail.com>
-From:   Prathamesh <pc44800@gmail.com>
-Date:   Thu, 16 Mar 2017 02:58:51 +0530
-Message-ID: <CAME+mvX6EH+R6xRiCCYAg_gaguv4yeFD1T765+q7F8YMppeOhw@mail.gmail.com>
-Subject: Re: GSoC Project | Submodules related work
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Valery Tolstov <me@vtolstov.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <ffntuqzgjgcfhebokbty@eduj>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:kdJ0FRXT0IiPQvJJTzTFpLh9h7w4MFJksbRw83e1TQr/+TiVj4C
+ PtCnV73A71oWHG1uTbQHCEIwU9yB+nh13A+OJJ4Kw3E3kBlpiBIC58NTIRpN3sZDMW+J88R
+ EkSrz85uaobjyYWSbZaO+Y+aKuUHxxV6b6tJ9Tx06J/DDMP1ZgKDozRdH3k6NEhAcnJEppe
+ 2Ic+yAM9+Hg88ECM0naBg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IF9sFbYethI=:svY4Ewvx9qGSoFZaETULen
+ qFHzCr69Q4niVWEic8UmTSNdhRixKCdEji8WSJ7psE9LiVjuknV/rip3lMqO6m9p+y+jLlP/g
+ 7IebwZ7FRonYoDlqo7dYz1RXXOO2ZYxSxw4yS/P63gekJwRcdZy6cXq+x5lcKx4EN8wF4B5bc
+ tSQcUzp7DDje6By989ky9pVox6nLIDcOPQ+zvRq9ZC+vgEAbxiRa/M0+JktZKERLZ85JuWy7/
+ BanNcy09SRWdP3FqtqOcDBlOfZyijqEciQB+OtRd5jrgAcRNwG7/7L26mE/yTr0zQ8H0O4g8H
+ O7AM6h21FVMSQRLi3Ojl/Icrxn5MHFQWWXXQdHoOutIkiJ9AL+oVN/819uJtIhmw2j27Mun7t
+ 1DVNRrdUupo8XJFMNoL/7ASa5zBg4CuPXbmLWFDodxWu7RBlqXxLpQldTzN2otzfIEnWwyVDJ
+ 4XiV0Lt72/3gdPyUAaib9BUPVePwqXaYlpLNGYhDSOoa9o721Fy5rpz4wq5or12S0PD5BMwYX
+ JwNPBt+XpYSNeZK9QzRrwMuVDWJW2xI2/7CVRYBI+mte52LQKK4UPzJSVaesAWrewacJUeWxI
+ EXglQkIfzHuJbhjz/ZiPf/4dmsEy35+8cq1EOTK2XeYXCWKc9Oc2X9mFg56xCezd+Jb2BYXbi
+ sVeC99mdBsnpvoAYI5/iKg6sWPV3FnvHLlEzBrWK6GhAlwuMMuKngOHY9AIkt6/MhfgWpimxb
+ PqSnweIJVIAGWcalhW6XiiXGZuiNbmmSpbe2Fp4FKWp44sp/Cpb8JEHisetaTp5jHyoamvndD
+ l9WV8o1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> Also the conclusions which I was able to make from the mails[2] are:
->>
->> 1. We are catching commands typed by the user in an unpopulated or
->>    even an uninitialized submodule.
+Am 15.03.2017 um 10:44 schrieb Zenobiusz Kunegunda:
+> $ git bisect bad
+> 7333ed1788b4f2b162a35003044d77a716732a1f is the first bad commit
+> commit 7333ed1788b4f2b162a35003044d77a716732a1f
+> Author: René Scharfe <l.s.r@web.de>
+> Date:   Mon Jul 28 20:26:40 2014 +0200
 >
-> What do you mean by catch here?
+>     setup: convert setup_git_directory_gently_1 et al. to strbuf
 
-By catching commands, I meant that we identify that the user has entered
-the command in an unpopulated or uninitialized submodule and respond
-to the user accordingly.
+That's what I half-suspected, and I think by now I got an idea.  Here's 
+a test program:
 
->
-> What happens is that Git is summoned in e.g. path/super/sub/ and when
-> Git wakes up, it has to find out what is going on, e.g. where the repo
-> is that it should work on.
->
-> (0) it checks if it is inside the .git dir by looking for files like
-> HEAD, config
->     objects/.)
-> 1) It looks if there is a ".git" file or directory in the current directory.
-> 2) if that is not the case go up one directory and check again.
->     repeat this step until either the repo is found or a filesystem boundary
->     is reached.
->
-> And as uninitialized submodules do not have a .git, we'll find the
-> superproject repository. Once the superproject is found, the
-> subcommand itself is invoked. (e.g. cmd_add for "git add", in
-> builtin/add.c; the function signature is just like main() except that
-> it has an additional prefix parameter, which indicates the path
-> from where we ended up at to the original invokation point,
-> i.e. when invoked in  path/super/sub/, and the superproject
-> was found at path/super/, the prefix is sub/.
->
->> 2. We first check if we are present in the superproject's root dir.
->
-> After the repo discovery as described above we're in a root of
-> *a* repository, and we have a prefix, which may or may not be
-> an uninitialized submodule.
->
->>     we check for the presence of .gitmodules file,
->
-> We have an API for that. :)
-> See submodule-config.h#submodule_from_path that
-> either returns a struct submodule or NULL if there is no
-> submodule.
->
-> However to detect if there is a submodule, we can to check two
-> things: if there is a .gitmodules entry and if there is a gitlink entry
-> recorded in the tree. Depending on the command we'd want to
-> do one before the other. e.g. git-add most likely doesn't need to
-> load .gitmodules, but may have the objects already loaded.
-> So checking if a given path is a submodule is cheap compared
-> to loading the .gitmodules file, so we'd probably want to do the
-> cheap thing first.
+	#include <errno.h>
+	#include <limits.h>
+	#include <stdio.h>
+	#include <string.h>
+	#include <unistd.h>
 
-Adding to this, we may use here this functions is_submodule_populated()
-and is_submodule_initialized() from submodule.c
+	int main(int argc, char **argv)
+	{
+		char buf[PATH_MAX];
+		int last_errno = 0;
+		size_t len;
 
->
->>    from which we can check the path give is inside some submodule.
->>    *When .git file containing just a .gitlink is present then, I am not
->>    sure but even in this case the root folder contains .gitmodules
->>    file in the case of submodules(Please correct me here, if I'm going
->>    wrong), then we may still carry the same procedure as above.
->
-> I think even when the .gitmodules file is missing, we want to have
-> some sort of warning here, as it is a confusing state to run git
-> from an uninitialized gitlink'd repository. The user may assume they
-> run the command in the gitlink'd repo, so it may be better to bail out.
+		for (len = 0; len <= PATH_MAX; len++) {
+			errno = 0;
+			getcwd(buf, len);
+			if (errno != last_errno) {
+				printf("len = %lu, errno = %d, %s\n",
+					len, errno, strerror(errno));
+			}
+			last_errno = errno;
+		}
+		return 0;
+	}
 
-Can you please give an example of such situation ? I would like to
-reproduce it and think further.
-(As even in the case where the superproject is initialized using gitlink,
-.gitmodules is in the same folder as that of the .git file containing
-GIT_DIR path)
+It runs getcwd(2) with buffer sizes from 0 to PATH_MAX and reports when 
+the error code changes along the way.  Let's call it test_getcwd.  And 
+here's what I get on FreeBSD 10.3:
 
->
->>
->> 3. Once we can detect whether the $cwd is in a submodule, we can output
->>    "The submodule 'sub' is not initialized. To init ..." for all the
->>    commands which doesn't initialize and populate the submodule.
->
-> It depends on the command what we want to do; for most commands
-> this seems to be the right choice. For git-log we need to do a different
-> thing, as you mention in 4)
->
->> 4. As similar detection could be used in the third project listed above,
->>    hence I even wished to include it.
->>
->> What are your suggestions about these projects? Also, will it be
->> rational to consider it as one complete project for GSoC?
->
-> I think it is sensible to consider enhancing multiple commands, as
-> one command is a very small bite for a GSoC project.
-> And once you have the first command done, you'd generally know
-> the vibe and the next commands ought to be easier. (though we'd
-> still need to figure out different outcomes, e.g. step 3 or 4 as above).
->
+	$ mkdir /tmp/a
+	$ cd /tmp/a
 
-Thank you for your suggestions. I will also look into more such cases
-where I may enhance multiple commands so as to expand my project.
+	$ chmod 100 /tmp/a
+	$ test_getcwd
+	len = 0, errno = 22, Invalid argument
+	len = 1, errno = 34, Result too large
+	len = 7, errno = 0, No error: 0
 
->> I think this might interfere with Valery's proposal[3] of shell to C
->> conversion of submodule related codes. What do you all think?
->
-> I do not think there is interference with Valery's proposal, as this
-> proposal would mostly work in builtin/{add,log,commit}.c
-> (cmd_status is in builtin/commit.c for whatever reason)
-> whereas Valery's proposal would mostly revolve around working
-> in git-submodule.sh (deleting lines there) and
-> builtin/submodule--helper.c (adding the deleted lines back here;
-> in another language)
->
->> If it does interfere, then can we both work out on something common?
->
-> I really do not see a lot of interference of these 2 proposals.
+	$ chmod 000 /tmp/a
+	$ test_getcwd
+	len = 0, errno = 22, Invalid argument
+	len = 1, errno = 34, Result too large
+	len = 2, errno = 13, Permission denied
+	len = 7, errno = 0, No error: 0
 
-Thank you for confirming that. Now I may carry-on working on my
-proposal for the project :) Also if it possible, I would like to
-work on a smaller task related to my project first, as it will help me
-understand about the project more, and which also will help me write
-my proposal for the project.
+So if we don't have execute permission and our buffer is at least one 
+char long but still too small then we get EACCES (13).  If we don't have 
+read permissions and our buffer is big enough then the call succeeds. 
+strbuf_getcwd() expects to get ERANGE (34) and nothing else when the 
+buffer is too small.
 
-Thanks,
-Prathamesh
+I'd say it's a bug in FreeBSD -- reporting permission denied or success 
+based on the size of the supplied buffer makes no sense to me, at least.
+
+The initial buffer size used by strbuf_getcwd() is 128, so you should be 
+fine as long as the absolute path to your repository is shorter than 
+that.  You should also be fine if you have execute permissions on the 
+directory.
+
+And here I'm puzzled again -- you probably have sufficient permissions 
+set up for your user, right?  What does the test program report for your 
+problematic repository and its parent directories?
+
+René
