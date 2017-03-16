@@ -2,85 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E27120951
-	for <e@80x24.org>; Thu, 16 Mar 2017 10:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0D7420951
+	for <e@80x24.org>; Thu, 16 Mar 2017 11:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751357AbdCPK2Z (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 06:28:25 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:33151 "EHLO
-        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751130AbdCPK2Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 06:28:25 -0400
-Received: by mail-lf0-f46.google.com with SMTP id a6so18165862lfa.0
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 03:28:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=aBz/8VlA46pwNmKEArzIo5gvmnUvGUcBPgwva64oCxk=;
-        b=II/5jAKGJRNmtMgZCe3ArsMReRQ50kqqvjQFWZFe8pDkUDw28+/zXg1Wku3p2SaCfw
-         YWNox9jpqcAq/47UV8l7QfGnh271j4Ai3izBR5Uz3kCcD8W9EN7vmmavNcVlgzWHyt+u
-         PZb5E9/3flsIR6w5CkvFW33y/HdQaXKtfYC1AXk/mcA2Envu2LePIlF4+cPLhQExD5k5
-         3GUD9nj7br7un/b6m5aNaVkrdcZ3owfvi1W32cC4X7bNAGo6h4H6R2k6oc6V7gGhjo7m
-         WQ55wJ3c/v2oyPD4MtS65wXJt3RtvIHvNtbWT24KGcZ8LTulWKH5XxRZhaujyGZ2E+Wc
-         Zf2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=aBz/8VlA46pwNmKEArzIo5gvmnUvGUcBPgwva64oCxk=;
-        b=bzxc83nWKmrrkKTOOQdG378kjnG2RGoK/neRt/3FgpnZT6iYX/9Hy58vKQvRWrcsZw
-         dvpF4D3VmrRikh9ELBiQGeYo4/58aryhmYN80uOYlX0cgmxYotKx+Yer4rGwfz3IhKXb
-         QLka/2ZipXTBmPpXEBXduVxbEykyIKqVQfkf48QN1M2imA6tgT1a0+YqpyOvimax2u8g
-         xW6/fice6wq0Y8fjVwFpqjyyf48n3cQYTR4HifAdztU9rkcgTi6POVNt6zvTXa7O8tmX
-         YtBUL9QYXFA06imgNDBO0DBLfrcpZSSgG5Rbyfoa7v0Z+y8mOYTWBKfqObFRT3GF5ja3
-         Pnjg==
-X-Gm-Message-State: AFeK/H20nvMyzwiAdvSeftU+RsNlHEQh8DmSKMNjFi8xDD3mYIqazsdLtmMOx1oPlYEHsRJ0iMKjBPnvkFEbvQ==
-X-Received: by 10.46.15.9 with SMTP id 9mr2790820ljp.108.1489660102787; Thu,
- 16 Mar 2017 03:28:22 -0700 (PDT)
+        id S1751964AbdCPLY4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 07:24:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45058 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751353AbdCPLYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 07:24:55 -0400
+Received: (qmail 25478 invoked by uid 109); 16 Mar 2017 11:24:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 11:24:50 +0000
+Received: (qmail 24368 invoked by uid 111); 16 Mar 2017 11:25:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 07:25:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Mar 2017 07:24:47 -0400
+Date:   Thu, 16 Mar 2017 07:24:47 -0400
+From:   Jeff King <peff@peff.net>
+To:     Devin Lehmacher <lehmacdj@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Makefile: escape ' in bin-wrappers rule
+Message-ID: <20170316112447.meosrjddumkjrfiu@sigill.intra.peff.net>
+References: <20170316061738.26760-1-lehmacdj@gmail.com>
 MIME-Version: 1.0
-Received: by 10.25.145.30 with HTTP; Thu, 16 Mar 2017 03:28:02 -0700 (PDT)
-In-Reply-To: <20170315225045.15788-1-gitster@pobox.com>
-References: <xmqqd1die00j.fsf@gitster.mtv.corp.google.com> <20170315225045.15788-1-gitster@pobox.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 16 Mar 2017 03:28:02 -0700
-Message-ID: <CA+P7+xqa4Ku7M5ZjrHNpeetnAguZpjz920L=Q5+7mb2A0rFywQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Teach name-rev to pay more attention to lightweight tags
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Michael J Gruber <git@drmicha.warpmail.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170316061738.26760-1-lehmacdj@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 15, 2017 at 3:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Here is a reroll of what I did in
->
->     http://public-inbox.org/git/xmqqd1die00j.fsf@gitster.mtv.corp.google.com/
->
-> Junio C Hamano (2):
->   name-rev: refactor logic to see if a new candidate is a better name
->   name-rev: favor describing with tags and use committer date to tiebreak
->
->  builtin/name-rev.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++------
->  t/t4202-log.sh     |  2 +-
->  2 files changed, 57 insertions(+), 8 deletions(-)
->
-> --
-> 2.12.0-306-g4a9b9b32d4
->
+On Thu, Mar 16, 2017 at 02:17:38AM -0400, Devin Lehmacher wrote:
 
-This looks like an improvement to me. It may be that someone comes up
-with a better definition for is_better_name() but it's definitely much
-easier to do so now as it's easier to understand what the logic is
-when it's separated out.
+> If the pwd contains a ' escape it as '\'' so that git will not fail
+> while building on a path containing '.
 
-Thanks,
-Jake
+I think this only fixes half the problem...
+
+> diff --git a/Makefile b/Makefile
+> index ed68700ac..5cf5d8537 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2276,7 +2276,7 @@ all:: $(NO_INSTALL)
+>  bin-wrappers/%: wrap-for-bin.sh
+>  	@mkdir -p bin-wrappers
+>  	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+> -	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+> +	     -e 's|@@BUILD_DIR@@|$(shell pwd | sed -e "s/'/'\\\''/g")|' \
+
+This escapes the single-quote against the shell run by make. But it does
+a blind text substitution inside the wrap-for-bin script itself, which
+means it's subject to another round of expansion. E.g.:
+
+  $ git clone git foo\'git
+  $ cd foo\'git
+  $ make bin-wrappers/git
+  GIT_VERSION = 2.12.0.623.g86ec6c963
+  /bin/sh: 4: Syntax error: Unterminated quoted string
+  Makefile:2296: recipe for target 'bin-wrappers/git' failed
+  make: *** [bin-wrappers/git] Error 2
+
+  $ git am /your/patch
+  $ make bin-wrappers/git
+  GIT_VERSION = 2.12.0.624.gc9787fbf0
+      GEN bin-wrappers/git
+  $ bin-wrappers/git
+  bin-wrappers/git: 16: bin-wrappers/git: Syntax error: "fi" unexpected
+
+So you'd need an extra layer of quoting. And then to top it all off,
+passing backslashes through sed requires _another_ layer of quoting.
+Something like this:
+
+diff --git a/Makefile b/Makefile
+index 17e381f0c..9c1357a77 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2292,10 +2292,15 @@ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+ all:: $(NO_INSTALL)
+ 
++PWD = $(shell pwd)
++PWD_SQ = $(subst ','\'',$(PWD))
++PWD_SQ_SED = $(subst \,\\,$(PWD_SQ))
++PWD_SQ_SED_SQ = $(subst ','\'',$(PWD_SQ_SED))
++
+ bin-wrappers/%: wrap-for-bin.sh
+ 	@mkdir -p bin-wrappers
+ 	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+-	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
++	     -e 's|@@BUILD_DIR@@|$(PWD_SQ_SED_SQ)|' \
+ 	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))|' < $< > $@ && \
+ 	chmod +x $@
+ 
+
+That at least gets me as far as building a runnable git. I wouldn't be
+surprised if there are other gotchas, though. Running "make test" dies
+in t0060 due to similar substitutions.
+
+I guess if somebody is really determined they can try to fix every spot.
+But at some point I wonder if the answer is "if it hurts, don't do it".
+
+-Peff
