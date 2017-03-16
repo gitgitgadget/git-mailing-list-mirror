@@ -2,72 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 238CB20323
-	for <e@80x24.org>; Thu, 16 Mar 2017 16:47:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17C2A20323
+	for <e@80x24.org>; Thu, 16 Mar 2017 17:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754301AbdCPQrr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 12:47:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51864 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753095AbdCPQrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 12:47:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FD2668DA2;
-        Thu, 16 Mar 2017 12:47:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LZriExLDLPOnhF/rbk8qEpRyWBg=; b=jpOy38
-        gGo2l1dWcDqaqPNPeW0aAN0HNNE8P01VSOy0KInNeYglFDIYwGnjT/xSVEsZUgod
-        /kgnidNa5ES1Hw8SucBMjAD2SxaVBIGwNP+uhsaVkIXytFvAvBE11U8T4YHp7221
-        tZ1v0psDVnOOEDVIkX6I6tz0+GaJ2SWbYHrQo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oN7yYxNqLnPBIDyRnu6U0zLa2w5UbHpt
-        eUMQlF+t/FMCyuNuqZrv0UkDFQlt9SetuozYKVCb1AlA/qKJPcdKztnBWpohxgb/
-        5FpTt1YRHgLYefm2PenSHOFq7xGAROStCGuRAf41pEgEmQpLsPtrWZPzmlAVn/ic
-        kkMGlS8ohUg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3870368DA1;
-        Thu, 16 Mar 2017 12:47:16 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A7F4068D9D;
-        Thu, 16 Mar 2017 12:47:15 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: [PATCH v3 09/10] submodule--helper init: set submodule.<name>.active
-References: <20170309012345.180702-1-bmwill@google.com>
-        <20170313214341.172676-1-bmwill@google.com>
-        <20170313214341.172676-10-bmwill@google.com>
-        <xmqqinnbiqzs.fsf@gitster.mtv.corp.google.com>
-        <20170315224604.GG159137@google.com>
-Date:   Thu, 16 Mar 2017 09:47:14 -0700
-In-Reply-To: <20170315224604.GG159137@google.com> (Brandon Williams's message
-        of "Wed, 15 Mar 2017 15:46:04 -0700")
-Message-ID: <xmqq4lytcgod.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1754466AbdCPRFH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 13:05:07 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:34810 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751960AbdCPRFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 13:05:06 -0400
+Received: from [10.0.2.15] ([146.90.175.94])
+        by avasout01 with smtp
+        id wh331u00722aPyA01h341f; Thu, 16 Mar 2017 17:03:04 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=BZKo6vl2 c=1 sm=1 tr=0
+ a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
+ a=IkcTkHD0fZMA:10 a=OJpt_-zRAPkoagTw4_cA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v2 2/5] sha1_file.c: make pack-name helper globally
+ accessible
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20170316142647.t6tthkcgon3rpg4m@sigill.intra.peff.net>
+ <20170316142706.kt56a43phiuhhra7@sigill.intra.peff.net>
+ <20170316143152.gdeaprlsercvwmiw@sigill.intra.peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <fefb69e1-325d-5ec6-0954-1445ce8ad9be@ramsayjones.plus.com>
+Date:   Thu, 16 Mar 2017 17:03:03 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 36014686-0A68-11E7-B4B0-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20170316143152.gdeaprlsercvwmiw@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
 
-> So if we did
->
->   git clone --submodule-spec=lib/
->
-> then each module under 'lib/' won't have their submodule.<name>.active
-> config set since submodule.active=lib/ already encompasses them.
 
-Ah, OK.  That removes my worries ;-)  Thanks for an explanation.
+On 16/03/17 14:31, Jeff King wrote:
+> On Thu, Mar 16, 2017 at 10:27:06AM -0400, Jeff King wrote:
+> 
+>> -/*
+>> - * Return the name of the pack or index file with the specified sha1
+>> - * in its filename.  *base and *name are scratch space that must be
+>> - * provided by the caller.  which should be "pack" or "idx".
+>> - */
+>> -static char *sha1_get_pack_name(const unsigned char *sha1,
+>> -				struct strbuf *buf,
+>> -				const char *which)
+>> + char *odb_pack_name(struct strbuf *buf,
+>> +		     const unsigned char *sha1,
+>> +		     const char *ext)
+>>  {
+>>  	strbuf_reset(buf);
+>>  	strbuf_addf(buf, "%s/pack/pack-%s.%s", get_object_directory(),
+>> -		    sha1_to_hex(sha1), which);
+>> +		    sha1_to_hex(sha1), ext);
+>>  	return buf->buf;
+>>  }
+> 
+> Incidentally, this entire function could be implemented as:
+> 
+>   return git_path_buf(buf, "objects/pack/pack-%s.%s",
+>                       sha1_to_hex(sha1), ext);
+> 
+> as the git_path() functions are smart enough to replace "objects/" with
+> the true object directory when necessary. I don't know if people find
+> that more or less readable. Since it's buried in a helper function, I
+> doubt it matters much either way. The git_path functions do also do some
+> path normalization, which might be of value.
+
+Hmm, I don't have strong feelings either way.
+
+However, I note that the only normalization going on (that I can see)
+is to remove .//* from the beginning of the resulting string. I don't
+know why, but I guess it is to cater to people using the various
+GIT_ environment variables doing things like:
+
+   $ GIT_OBJECT_DIRECTORY=./my-objects git ....
+
+It has always puzzled me slightly, why the git_path functions do this
+normalization, but (for example) setup_git_env(), git_path_from_env(),
+get_common_dir(), ... don't! ;-)
+
+ATB,
+Ramsay Jones
+
 
