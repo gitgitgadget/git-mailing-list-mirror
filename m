@@ -6,53 +6,53 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3EE820323
-	for <e@80x24.org>; Thu, 16 Mar 2017 16:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EABFC20323
+	for <e@80x24.org>; Thu, 16 Mar 2017 16:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753862AbdCPQUe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 12:20:34 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65402 "EHLO
+        id S1755069AbdCPQaH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 12:30:07 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60052 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753269AbdCPQUd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 12:20:33 -0400
+        with ESMTP id S1754032AbdCPQaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 12:30:05 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EE9EF688FF;
-        Thu, 16 Mar 2017 12:20:30 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E25B83D45;
+        Thu, 16 Mar 2017 12:30:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iqGCc+x5GeAn/pJMKfDuqKsaXco=; b=Sb0sOs
-        zTno3SaDTu7iWy2X6x6yNf5kltPE6/jLuN/b21QVy1tw++gMGBpqNdHNBOPlGtbc
-        b0w4gOrtbU/r8v8GZh7s9K8MDSvo/JEfWX18jXKYps03m3KLBMLbaFHOxhSUHXxq
-        DkdR0fBH2yx6vj0PJZkFk4eBvWOr1KaNHCsl4=
+        :content-type; s=sasl; bh=s/hGce2FDnEyb1T27LCg6YQbvFY=; b=Pffj4o
+        BTXUfKbBMUkZoH9EabDelyqfs3lQ2Jtb2uyEUvWiClxicg7SomxsUv6PBq1mY4LW
+        gPpkd8H03QYk6XIPOKiOI5PVTpsvps7Te+APDk7LYvP/Gy96uh3jC8KEaXEfKIJR
+        U1q03VO6zZ4x5BBaBAV7ZSLH+3ONQpnp2AJMU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bcXQQk/XWs5GXciSLt7YG79kNDWcA/e5
-        13TPv6lsvwcB3+U7kTckCGV0RV2i4rg9LxAsbZwzEwjZw0PBaxdbn0PHyP3Wd+Wl
-        V2wjKHDqd9ydLoRzXHTULea6uFZTh1v0Nl8nP0naSuNg/aqBe6dCyR9A0XLeiZnI
-        LGXAlW+ES7U=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E690B688FE;
-        Thu, 16 Mar 2017 12:20:30 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=TP4wrSUafPL9qw2WQIHjnle341Ui4Y5c
+        hAWRm/PY1K36Uwo4QnGwErOsEZA4svXV74l4zlDRW4eQcCjcg6xEi7ii8EhFzrtI
+        mMwhOQHQWyGwpJI+XOZSGsT9eP6+J30l0MRk4Ss8E1qbDjm12y59Z/zfp9PLa6RN
+        YC7mAyOFQxE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 63AD283D43;
+        Thu, 16 Mar 2017 12:30:02 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3B1C3688FD;
-        Thu, 16 Mar 2017 12:20:30 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F208383D40;
+        Thu, 16 Mar 2017 12:29:59 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Devin Lehmacher <lehmacdj@gmail.com>
+To:     Devin Lehmacher <lehmacdj@gmail.com>, Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v4 3/4] credential-cache: use XDG_CACHE_HOME for socket
+Subject: Re: [GSoC][PATCH v4 4/4] credential-cache: add tests for XDG functionality
 References: <20170314003246.71586-4-lehmacdj@gmail.com>
         <20170316051827.97198-1-lehmacdj@gmail.com>
-        <20170316051827.97198-4-lehmacdj@gmail.com>
-Date:   Thu, 16 Mar 2017 09:20:29 -0700
-In-Reply-To: <20170316051827.97198-4-lehmacdj@gmail.com> (Devin Lehmacher's
-        message of "Thu, 16 Mar 2017 01:18:26 -0400")
-Message-ID: <xmqqd1dhchwy.fsf@gitster.mtv.corp.google.com>
+        <20170316051827.97198-5-lehmacdj@gmail.com>
+Date:   Thu, 16 Mar 2017 09:29:58 -0700
+In-Reply-To: <20170316051827.97198-5-lehmacdj@gmail.com> (Devin Lehmacher's
+        message of "Thu, 16 Mar 2017 01:18:27 -0400")
+Message-ID: <xmqq8to5chh5.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 791520CC-0A64-11E7-850E-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: CCAE7818-0A65-11E7-885A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,55 +60,90 @@ X-Mailing-List: git@vger.kernel.org
 
 Devin Lehmacher <lehmacdj@gmail.com> writes:
 
-> +	If your home directory is on a network-mounted filesystem, you
-> +	may need to change this to a local filesystem. You must specify
-> +	an absolute path.
+> @@ -20,4 +21,67 @@ helper_test_timeout cache --timeout=1
+>  # our socket, leaving us with no way to access the daemon.
+>  git credential-cache exit
+>  
+> +# we need to use rm -rf here since sometimes the daemon hasn't finished
+> +# cleaning up after itself and rmdir fails
 
-Nicely explained. 
+Hmmmm.  Peff, do you have ideas on better ways to do this (or
+explanation why this is the best we could do)?
 
-If a socket cannot be created in "~/.git-credential-cache", existing
-users would have created a symbolic link that points at a local
-directory.  With XDG_CACHE_HOME mechanism, they would just set the
-variable to directly point at a local directory and there is no need
-for symlink trick, on the other hand.
+> +test_expect_success 'credential-cache --socket option overrides default location' '
+> +	test_when_finished "rm -rf \"$HOME\"/dir/" &&
+> +	check approve "cache --socket \"$HOME/dir/socket\"" <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	test -S "$HOME/dir/socket" &&
+> +	git credential-cache exit
+> +'
+> +
+> +XDG_CACHE_HOME="$HOME/xdg"
+> +export XDG_CACHE_HOME
+> +# test behavior when XDG_CACHE_HOME is set
+> +helper_test cache
+> +
+> +test_expect_success "use custom XDG_CACHE_HOME if set and default sockets are not created" '
+> +	test -S "$XDG_CACHE_HOME/git/credential/socket" &&
+> +	test_path_is_missing "$HOME/.git-credential-cache/socket" &&
+> +	test_path_is_missing "$HOME/.cache/git/credential/socket" &&
+> +	git credential-cache exit
+> +'
+> +unset XDG_CACHE_HOME
+> +
+> +test_expect_success "use custom XDG_CACHE_HOME even if xdg socket exists" '
+> +	check approve cache <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	test -S "$HOME/.cache/git/credential/socket" &&
+> +	XDG_CACHE_HOME="$HOME/xdg" &&
+> +	export XDG_CACHE_HOME &&
+> +	check approve cache <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	test -S "$HOME/xdg/git/credential/socket" &&
+> +	git credential-cache exit &&
+> +	unset XDG_CACHE_HOME
 
-Which points us back to the observation I made in my review on the
-previous step.
+This unset will not run if any of the above steps since it was set
+and exported fails.  It probably should be in test_when_finished and
+should use safe_unset shell function instead.
 
-> +static char *get_socket_path(void)
-> +{
-> +	char *old_credential_dir, *socket;
-> +	old_credential_dir = expand_user_path("~/.git-credential-cache");
-> +	if (old_credential_dir && directory_exists(old_credential_dir))
-> +		socket = expand_user_path("~/.git-credential-cache/socket");
-> +	else
-> +		socket = xdg_cache_home("credential/socket");
-> +	free(old_credential_dir);
-> +	return socket;
-> +}
+> +'
+> +
+> +# we need to use rm -rf here since sometimes the daemon hasn't finished
+> +# cleaning up after itself and rmdir fails
+> +test_expect_success 'use user socket if user directory exists' '
+> +	test_when_finished "rm -rf \"$HOME/.git-credential-cache/\"" &&
+> +	mkdir -p -m 700 "$HOME/.git-credential-cache/" &&
+> +	check approve cache <<-\EOF &&
+> +	protocol=https
+> +	host=example.com
+> +	username=store-user
+> +	password=store-pass
+> +	EOF
+> +	test -S "$HOME/.git-credential-cache/socket" &&
 
-As we do not want to use the dir.c::directory_exists(), which is
-meant to be used for working tree files, we can do something like
-this instead:
+We should also test that the XDG location is not touched at the same
+time that the traditional directory was used for the socket.
 
-static char *get_socket_path(void)
-{
-	struct stat st;
-	char *path;
+> +	git credential-cache exit
+> +'
 
-	path = expand_user_path("~/.git-credential-cache");
-	if (path && !stat(path, &st) && S_ISDIR(st.st_mode))) {
-		free(path);
-		path = expand_user_path("~/.git-credential-cache/socket");
-	} else {
-		path = xdg_cache_home("credential/socket");
-	}                
-	return path;
-}
+This last test should be replicated to also check the case where we
+have a symbolic link at ~/.git-credential-cache that points at a
+directory.
 
-The duplication of "~/.git-credential-cache" bothers me somewhat and
-perhaps people can suggest better ways to get rid of the dup.
-
-Other than that, makes sense to me.
+>  test_done
 
 Thanks.
