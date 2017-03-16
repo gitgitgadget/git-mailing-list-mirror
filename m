@@ -2,76 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 722C120323
-	for <e@80x24.org>; Thu, 16 Mar 2017 19:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23D9120323
+	for <e@80x24.org>; Thu, 16 Mar 2017 19:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752389AbdCPTDi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 15:03:38 -0400
-Received: from mail-lf0-f46.google.com ([209.85.215.46]:33778 "EHLO
-        mail-lf0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752288AbdCPTDh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 15:03:37 -0400
-Received: by mail-lf0-f46.google.com with SMTP id a6so24433945lfa.0
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 12:03:36 -0700 (PDT)
+        id S1752247AbdCPTGg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 15:06:36 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:33576 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751954AbdCPTGf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 15:06:35 -0400
+Received: by mail-pg0-f46.google.com with SMTP id n190so29543075pga.0
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 12:06:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xYpfSoye9/blM41mBa1J2WIBR+Cdhlkr34K8WN0XasY=;
-        b=VkzM6Cvn4W1Mbg24j+g0XRW/ydHLdTAFFlJVvQ0Eu4cIDToTrU4bzkD3BIeAOl2B4V
-         Hg8AZ9MgNwcf2C4wxwttr0fxQHh/75+hAPtWJyYYYWAWSobu6k40Q04taRWXnY7ajryc
-         3n+P8H19oFNas+Eu90MW2Xli7LHJrO1ZOeL3BRLPAVq+J+aiOMF8Ay2O97/GmmsezIDz
-         x+YbpkkLbxKbcTrsPfD6STNRnXO8oJnC9FrYUMA1jWdqiPWPGscTst56v1opqKyHuj1+
-         QMglA3lOfKljhcyYZvXP1oxVs3mC8Qfp8bXzxgrF1YENAhvrUq7qnxm0Vp4Vps7amjUw
-         mhjg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rfyZSD1+aVNHfQSKN+HKe4ahK3QmUswPSvMoDJdsxaE=;
+        b=qyVQrichN8+uRexYDjW9arEs2w4cqyy5npJbUdiGteSd/11One+Os9AEP3ie5Kr8uC
+         OIBo/BxhsNQwE0dOXMSqN7ma8mGV0kcaboobTY/WzjFz5PfPrVuHefz6mcRyhHxMKzlq
+         m3v9aSylz1G1VxpNiqu8dpbTN4CrILoPtkx4SbLcCf9a9CuNmv1yJ3uA6i+uOEatkFVH
+         vAGwFrSkGLKSaGJXTzcJQCgPiA1eMdtEmMfestz7/U3Um9l7USsv/smVw3sblC9ybDfy
+         iAQ52SXcBzsydjP9rdVpv81YJOLn5juct0k/MKV34xjsu+0aeGD5gNWb29GNZBOnJYAc
+         H4Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xYpfSoye9/blM41mBa1J2WIBR+Cdhlkr34K8WN0XasY=;
-        b=bSMFMWKCj24oc781lKK7/nSy5ghClBXAcYZuO+k0NXRhziWQ2XoSlAAC7DzrW8qaRE
-         2j0tPhtU2WF+c7YegjFqq+/o0ouMjXoR3YfESGZjOtDalOL7/sBi5IqxU79HHOtpiRMB
-         SZh7YkWrvhNKHVrwdaGFp2W8OT71/SAGDbvD2Sf0mxQDRUSM20IGXsSy8Ms+waQkO3ZI
-         toqek46nw7tUHVENgH4r+5pGzkLhizzxiyfgiur8pC1b+aLCLUH8sBH4xfTN6S0HUyVP
-         X3E19Q0i8iYu6SRYJKtl/E6dIITTix2qT8ZLHHT9Ei1nnv7nfS7skYrGteAVmSQ/GBR1
-         ghoA==
-X-Gm-Message-State: AFeK/H23ewq4x2b65wlbmHchz5U2SzX1gfyLEbxx4g2i87yDWmpRrxO0sxzk8L/yfBBC8zJSOuHvqFSKqsC1gQ==
-X-Received: by 10.46.71.16 with SMTP id u16mr3513607lja.106.1489691015281;
- Thu, 16 Mar 2017 12:03:35 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.150.19 with HTTP; Thu, 16 Mar 2017 12:03:34 -0700 (PDT)
-In-Reply-To: <xmqqo9x1aw44.fsf@gitster.mtv.corp.google.com>
-References: <20170313200854.6905-1-souravcristiano502@gmail.com>
- <CAP8UFD3toXk36wmJu+EeBnTvCa0yHWqCmQOfoJ0+2QTs8MpB-A@mail.gmail.com> <xmqqo9x1aw44.fsf@gitster.mtv.corp.google.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 16 Mar 2017 20:03:34 +0100
-Message-ID: <CAP8UFD0Exw4GPeat+xCgJdgd1E0dy0tu8JVpzkq=DnvGWArFDQ@mail.gmail.com>
-Subject: Re: [PATCH]v2 adding built-in driver for javascript
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     sourav mondal <souravcristiano502@gmail.com>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rfyZSD1+aVNHfQSKN+HKe4ahK3QmUswPSvMoDJdsxaE=;
+        b=fCKzHjyfRLYWqlnw62gPSmfh4eIxzcNZNgKtDm6b7XzTLJqvHBuiaPvTjITET3dXnb
+         fX/Rl5S+Hhq29zfCKhWeqIflIJ4M2JcpIZ3df6Y6PhrVokUpq+8cDbKGtKgkJLWXNIYL
+         M1UmMb2Xj1zB/ZtT/bVu57osuVZqSWZK9y4sKhjcrLCJtVZQxQGADwtd84Q1rCGTpvl7
+         KAOJ/ZBw+/iTzZaEtBZrxXDYW6xHegY+0OkCmbDOFSuaobYRZvqQCDHSWWxovKhsLbS9
+         tYi+YjS4+Zq9KKC/Rh3uHwaxI828XSP90OJMy1yaYwSeDO4kRlQUjLkHexkzGtyR5aH7
+         Dv+Q==
+X-Gm-Message-State: AFeK/H3qftIeyCosMJENcsIj+m1MvFrePuf5tpYbycOViTsm9ZNOe1Ju7BpWxXX1qF69Je9U
+X-Received: by 10.98.137.152 with SMTP id n24mr12293397pfk.43.1489691193910;
+        Thu, 16 Mar 2017 12:06:33 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:5992:ad5b:4930:50b4])
+        by smtp.gmail.com with ESMTPSA id k76sm12040575pfg.42.2017.03.16.12.06.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 16 Mar 2017 12:06:32 -0700 (PDT)
+Date:   Thu, 16 Mar 2017 12:06:31 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        sourav mondal <souravcristiano502@gmail.com>,
         git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH]v2 adding built-in driver for javascript
+Message-ID: <20170316190631.GA168812@google.com>
+References: <20170313200854.6905-1-souravcristiano502@gmail.com>
+ <CAP8UFD3toXk36wmJu+EeBnTvCa0yHWqCmQOfoJ0+2QTs8MpB-A@mail.gmail.com>
+ <xmqqo9x1aw44.fsf@gitster.mtv.corp.google.com>
+ <CAP8UFD0Exw4GPeat+xCgJdgd1E0dy0tu8JVpzkq=DnvGWArFDQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD0Exw4GPeat+xCgJdgd1E0dy0tu8JVpzkq=DnvGWArFDQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 16, 2017 at 7:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
->
->> On Mon, Mar 13, 2017 at 9:08 PM, sourav mondal
->> <souravcristiano502@gmail.com> wrote:
->>> javascript is one of the famous langugae,it's needs a built-in driver.
->>
->> Please use "Javascript" instead of "javascript".
->
-> While we are typo-spotting ;-) Wikipedia seems to prefer to spell it
-> "JavaScript".
+On 03/16, Christian Couder wrote:
+> On Thu, Mar 16, 2017 at 7:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Christian Couder <christian.couder@gmail.com> writes:
+> >
+> >> On Mon, Mar 13, 2017 at 9:08 PM, sourav mondal
+> >> <souravcristiano502@gmail.com> wrote:
+> >>> javascript is one of the famous langugae,it's needs a built-in driver.
+> >>
+> >> Please use "Javascript" instead of "javascript".
+> >
+> > While we are typo-spotting ;-) Wikipedia seems to prefer to spell it
+> > "JavaScript".
+> 
+> Yeah thanks, and while at it, the "v2" in the subject should be inside
+> the square brackets around "PATCH".
 
-Yeah thanks, and while at it, the "v2" in the subject should be inside
-the square brackets around "PATCH".
+You can use the --reroll-count <n> option to format-patch to have format
+patch place the v<n> inside the bracketed PATCH section.
+
+-- 
+Brandon Williams
