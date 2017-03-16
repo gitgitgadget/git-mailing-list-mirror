@@ -2,107 +2,296 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8632C20953
-	for <e@80x24.org>; Thu, 16 Mar 2017 22:30:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D55520323
+	for <e@80x24.org>; Thu, 16 Mar 2017 22:36:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752978AbdCPWaL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 18:30:11 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52516 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752193AbdCPWaK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 18:30:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E5E616D515;
-        Thu, 16 Mar 2017 18:29:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=t2Hbn6b/V0zZSlIgbRLtEbwNpkA=; b=NZ1jdn
-        snERHAmGoMsiMkHoDS6ry55few/ydLZmoQPkYkdAjBfrqspnqmlgn32p14OzsIpM
-        rpFBMkyr6iG5Ilm2LAREav30CZskfGZmFCpYFK8JrO/goRZtar01FimVqZBrT7P5
-        uDsDg7S0fEbKOUyZVB9aCJFOTKqdbCxGjXc+s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=IXm9AYSnpZaHEyLvVecj01O/nPWMtTAM
-        zj42fDahBocO+wX0OlrB6sN7BqVJIqdwynb/IsxPtPxApddz/rrp/8cxnax2bTt7
-        Z8QoDkZ/G5bhX8uMaSn3l/xYRCPPL519vu3oW3GFrp6TGcVjBKL7TjPjEabb2KKX
-        92yf5BU1nRY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DB50A6D514;
-        Thu, 16 Mar 2017 18:29:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 37D456D513;
-        Thu, 16 Mar 2017 18:29:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: sequencer "edit" command always issues a warning
-References: <20170316131534.4vpbub3vmde7maua@sigill.intra.peff.net>
-Date:   Thu, 16 Mar 2017 15:29:07 -0700
-In-Reply-To: <20170316131534.4vpbub3vmde7maua@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 16 Mar 2017 09:15:34 -0400")
-Message-ID: <xmqqy3w4ama4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F86F178C-0A97-11E7-8798-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+        id S1754051AbdCPWgy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 18:36:54 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:36084 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751801AbdCPWgw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 18:36:52 -0400
+Received: by mail-pf0-f170.google.com with SMTP id o126so30676529pfb.3
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 15:36:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=U9gFfLETkSBc1uN8M4mjM4XhOQM9UZLctSvyNAVrdMM=;
+        b=fJULJvywEBU1iHL5AuJWvDW9qbJ+dKt9Xw+/gUEos0TUO1Z3YykibA+lIBn2j0VFQl
+         LyFy9pfsQBK2NUcPJUsKu2GG9M+c5ZQ4r4/5fe7FWCQPSfcxlt1F7boJN28CmV6U74k3
+         /k2jUxK/DpB7hxKU054zvnir7dUI3IR2knmFjvefluTUs4gIPQRP00Cnu5rIiWoVa2QF
+         a9sZ20ewPKxnj5nDzBPJGvE3+JolXDgk7iRRa9TtGF7yoIZF6FfblV88CLtZNwLOUdaY
+         GlDnCcqRWAE44OJu3bEmoyoPxlgZ43+Nf4qbv7A3XlWOuNUHBrVGpsp8f/fNPmIuGEAy
+         LR2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=U9gFfLETkSBc1uN8M4mjM4XhOQM9UZLctSvyNAVrdMM=;
+        b=GHC3Ikp/BEA5YIosrhayEc/uOFbq+6iqb+Bcg60IkJaCeTP6PR7k+2gA4+K2COxtFy
+         YlSvyvRhKpcQNUCQx3siAqxtsVc+a3Vux58/1mQtnR+3Awcu+b/XT7Bckb4vIRuAXfb0
+         vvgR6VXtRHSMWFZBpfQdOZo91GTvuTfBMHiUth6l+6bqFXSq6yLxjqRzGzQLLKI1oqAz
+         vq7DNmR31t0S41u4xzz6Lu0MkmXHXA/F8CgUMyxairJvm+7+a/fO8B0a9Dfd3N6AXj7R
+         5NrH177JrRzxHK5UA6TaoarybTzlXYr7ZGaAqEsyAsER7Ql5D1LQ5dXib5qZkHGCBub1
+         5kYA==
+X-Gm-Message-State: AFeK/H2tedxkzVfB+XmVxFXeq59Pcb3x1Hq3khejYfdfVj8wB0WqLtTE9Zb6P2E9/8Gc8nGU
+X-Received: by 10.84.233.134 with SMTP id l6mr15393497plk.49.1489703407633;
+        Thu, 16 Mar 2017 15:30:07 -0700 (PDT)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id t5sm12520946pgb.36.2017.03.16.15.30.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 16 Mar 2017 15:30:06 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
+        gitster@pobox.com
+Subject: [PATCH v4 06/10] submodule: decouple url and submodule interest
+Date:   Thu, 16 Mar 2017 15:29:48 -0700
+Message-Id: <20170316222952.53801-7-bmwill@google.com>
+X-Mailer: git-send-email 2.12.0.367.g23dc2f6d3c-goog
+In-Reply-To: <20170316222952.53801-1-bmwill@google.com>
+References: <20170313214341.172676-1-bmwill@google.com>
+ <20170316222952.53801-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Currently the submodule.<name>.url config option is used to determine if
+a given submodule is of interest to the user.  This ends up being
+cumbersome in a world where we want to have different submodules checked
+out in different worktrees or a more generalized mechanism to select
+which submodules are of interest.
 
-> I was rebasing with the new built-in sequencer code today, and I was
-> surprised to see the use of warning() here:
->
->   $ git rebase -i
->   [set one commit to 'edit']
->   warning: stopped at 6ce6b914a... odb_pack_keep(): stop generating keepfile name
->   You can amend the commit now, with
->     [...more instructions...]
->
-> It alarmed me for a minute until I realized that no, this is nothing to
-> be alarmed about, but just git doing exactly what I told it to do.
->
-> The original just wrote:
->
->   Stopped at 6ce6b914a... odb_pack_keep(): stop generating keepfile name
->
-> It would be easy to switch back:
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 1f729b053..8183a83c1 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1997,7 +1997,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
->  			if (item->command == TODO_EDIT) {
->  				struct commit *commit = item->commit;
->  				if (!res)
-> -					warning(_("stopped at %s... %.*s"),
-> +					fprintf(stderr,
-> +						_("Stopped at %s...  %.*s"),
->  						short_commit_name(commit),
->  						item->arg_len, item->arg);
->  				return error_with_patch(commit,
->
-> and that would match most of the other messages that the command issues,
-> which use a bare fprintf() and start with a capital letter. But I'm not
-> sure if there was some reason to treat this one differently.
+In a future with worktree support for submodules, there will be multiple
+working trees, each of which may only need a subset of the submodules
+checked out.  The URL (which is where the submodule repository can be
+obtained) should not differ between different working trees.
 
-I doubt there was.  At least, I didn't think I read any rationale
-for switching in logs or in-code comments.
+It may also be convenient for users to more easily specify groups of
+submodules they are interested in as apposed to running "git submodule
+init <path>" on each submodule they want checked out in their working
+tree.
 
-If we stop due to conflicting changes during a "rebase -i" or a
-range "cherry-pick/revert" session, warning() might make sense, but
-I agree with you that stopping at "edit" is an expected thing.  If
-we had info("stopped at...") that may be appropriate, but writing it
-out to stderr is just fine, I would think.
+To this end two config options are introduced, submodule.active and
+submodule.<name>.active.  The submodule.active config holds a pathspec
+that specifies which submodules should exist in the working tree.  The
+submodule.<name>.active config is a boolean flag used to indicate if
+that particular submodule should exist in the working tree.
 
-Thanks for spotting.
+Its important to note that submodule.active functions differently than
+the other configuration options since it takes a pathspec.  This allows
+users to adopt at least two new workflows:
+
+  1. Submodules can be grouped with a leading directory, such that a
+     pathspec e.g. 'lib/' would cover all library-ish modules to allow
+     those who are interested in library-ish modules to set
+     "submodule.active = lib/" just once to say any and all modules in
+     'lib/' are interesting.
+
+  2. Once the pathspec-attribute feature is invented, users can label
+     submodules with attributes to group them, so that a broad pathspec
+     with attribute requirements, e.g. ':(attr:lib)', can be used to say
+     any and all modules with the 'lib' attribute are interesting.
+     Since the .gitattributes file, just like the .gitmodules file, is
+     tracked by the superproject, when a submodule moves in the
+     superproject tree, the project can adjust which path gets the
+     attribute in .gitattributes, just like it can adjust which path has
+     the submodule in .gitmodules.
+
+Neither of these two additional configuration options solve the problem
+of wanting different submodules checked out in different worktrees
+because multiple worktrees share .git/config.  Only once per-worktree
+configurations become a reality can this be solved, but this is a
+necessary preparatory step for that future.
+
+Given these multiple ways to check if a submodule is of interest, the
+more fine-grained submodule.<name>.active option has the highest order
+of precedence followed by the pathspec check against submodule.active.
+To ensure backwards compatibility, if neither of these options are set,
+git falls back to checking the submodule.<name>.url option to determine
+if a submodule is interesting.
+
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ Documentation/config.txt       | 15 ++++++++++--
+ submodule.c                    | 50 ++++++++++++++++++++++++++++++++------
+ t/t7413-submodule-is-active.sh | 55 ++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 110 insertions(+), 10 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5e5c2ae5f..d2d79b9d4 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2920,8 +2920,9 @@ submodule.<name>.url::
+ 	The URL for a submodule. This variable is copied from the .gitmodules
+ 	file to the git config via 'git submodule init'. The user can change
+ 	the configured URL before obtaining the submodule via 'git submodule
+-	update'. After obtaining the submodule, the presence of this variable
+-	is used as a sign whether the submodule is of interest to git commands.
++	update'. If neither submodule.<name>.active or submodule.active are
++	set, the presence of this variable is used as a fallback to indicate
++	whether the submodule is of interest to git commands.
+ 	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+ 
+ submodule.<name>.update::
+@@ -2959,6 +2960,16 @@ submodule.<name>.ignore::
+ 	"--ignore-submodules" option. The 'git submodule' commands are not
+ 	affected by this setting.
+ 
++submodule.<name>.active::
++	Boolean value indicating if the submodule is of interest to git
++	commands.  This config option takes precedence over the
++	submodule.active config option.
++
++submodule.active::
++	A repeated field which contains a pathspec used to match against a
++	submodule's path to determine if the submodule is of interest to git
++	commands.
++
+ submodule.fetchJobs::
+ 	Specifies how many submodules are fetched/cloned at the same time.
+ 	A positive integer allows up to that number of submodules fetched
+diff --git a/submodule.c b/submodule.c
+index 0a2831d84..ad2779ee7 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -212,25 +212,59 @@ void gitmodules_config_sha1(const unsigned char *commit_sha1)
+ }
+ 
+ /*
++ * NEEDSWORK: With the addition of different configuration options to determine
++ * if a submodule is of interests, the validity of this function's name comes
++ * into question.  Once the dust has settled and more concrete terminology is
++ * decided upon, come up with a more proper name for this function.  One
++ * potential candidate could be 'is_submodule_active()'.
++ *
+  * Determine if a submodule has been initialized at a given 'path'
+  */
+ int is_submodule_initialized(const char *path)
+ {
+ 	int ret = 0;
+-	const struct submodule *module = NULL;
++	char *key = NULL;
++	char *value = NULL;
++	const struct string_list *sl;
++	const struct submodule *module = submodule_from_path(null_sha1, path);
+ 
+-	module = submodule_from_path(null_sha1, path);
++	/* early return if there isn't a path->module mapping */
++	if (!module)
++		return 0;
+ 
+-	if (module) {
+-		char *key = xstrfmt("submodule.%s.url", module->name);
+-		char *value = NULL;
++	/* submodule.<name>.active is set */
++	key = xstrfmt("submodule.%s.active", module->name);
++	if (!git_config_get_bool(key, &ret)) {
++		free(key);
++		return ret;
++	}
++	free(key);
+ 
+-		ret = !git_config_get_string(key, &value);
++	/* submodule.active is set */
++	sl = git_config_get_value_multi("submodule.active");
++	if (sl) {
++		struct pathspec ps;
++		struct argv_array args = ARGV_ARRAY_INIT;
++		const struct string_list_item *item;
+ 
+-		free(value);
+-		free(key);
++		for_each_string_list_item(item, sl) {
++			argv_array_push(&args, item->string);
++		}
++
++		parse_pathspec(&ps, 0, 0, NULL, args.argv);
++		ret = match_pathspec(&ps, path, strlen(path), 0, NULL, 1);
++
++		argv_array_clear(&args);
++		clear_pathspec(&ps);
++		return ret;
+ 	}
+ 
++	/* fallback to checking if the URL is set */
++	key = xstrfmt("submodule.%s.url", module->name);
++	ret = !git_config_get_string(key, &value);
++
++	free(value);
++	free(key);
+ 	return ret;
+ }
+ 
+diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
+index f18e0c925..ea1644b58 100755
+--- a/t/t7413-submodule-is-active.sh
++++ b/t/t7413-submodule-is-active.sh
+@@ -28,4 +28,59 @@ test_expect_success 'is-active works with urls' '
+ 	git -C super submodule--helper is-active sub1
+ '
+ 
++test_expect_success 'is-active works with submodule.<name>.active config' '
++	test_when_finished "git -C super config --unset submodule.sub1.active" &&
++	test_when_finished "git -C super config submodule.sub1.URL ../sub" &&
++
++	git -C super config --bool submodule.sub1.active "false" &&
++	test_must_fail git -C super submodule--helper is-active sub1 &&
++
++	git -C super config --bool submodule.sub1.active "true" &&
++	git -C super config --unset submodule.sub1.URL &&
++	git -C super submodule--helper is-active sub1
++'
++
++test_expect_success 'is-active works with basic submodule.active config' '
++	test_when_finished "git -C super config submodule.sub1.URL ../sub" &&
++	test_when_finished "git -C super config --unset-all submodule.active" &&
++
++	git -C super config --add submodule.active "." &&
++	git -C super config --unset submodule.sub1.URL &&
++
++	git -C super submodule--helper is-active sub1 &&
++	git -C super submodule--helper is-active sub2
++'
++
++test_expect_success 'is-active correctly works with paths that are not submodules' '
++	test_when_finished "git -C super config --unset-all submodule.active" &&
++
++	test_must_fail git -C super submodule--helper is-active not-a-submodule &&
++
++	git -C super config --add submodule.active "." &&
++	test_must_fail git -C super submodule--helper is-active not-a-submodule
++'
++
++test_expect_success 'is-active works with exclusions in submodule.active config' '
++	test_when_finished "git -C super config --unset-all submodule.active" &&
++
++	git -C super config --add submodule.active "." &&
++	git -C super config --add submodule.active ":(exclude)sub1" &&
++
++	test_must_fail git -C super submodule--helper is-active sub1 &&
++	git -C super submodule--helper is-active sub2
++'
++
++test_expect_success 'is-active with submodule.active and submodule.<name>.active' '
++	test_when_finished "git -C super config --unset-all submodule.active" &&
++	test_when_finished "git -C super config --unset submodule.sub1.active" &&
++	test_when_finished "git -C super config --unset submodule.sub2.active" &&
++
++	git -C super config --add submodule.active "sub1" &&
++	git -C super config --bool submodule.sub1.active "false" &&
++	git -C super config --bool submodule.sub2.active "true" &&
++
++	test_must_fail git -C super submodule--helper is-active sub1 &&
++	git -C super submodule--helper is-active sub2
++'
++
+ test_done
+-- 
+2.12.0.367.g23dc2f6d3c-goog
+
