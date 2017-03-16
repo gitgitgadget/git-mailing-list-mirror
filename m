@@ -2,96 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D93420953
-	for <e@80x24.org>; Thu, 16 Mar 2017 22:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84A9420953
+	for <e@80x24.org>; Thu, 16 Mar 2017 22:08:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752756AbdCPWHs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 18:07:48 -0400
-Received: from mail-by2nam01on0095.outbound.protection.outlook.com ([104.47.34.95]:39487
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752122AbdCPWHq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 18:07:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=iBws3+lF9SzUsOZl/pzTWVVsKIg92H1Y1xyvzmyAszs=;
- b=a0KWINELKKPrsGCdXx/Xg+ydVT40cMX4PFpn3vs5R5iUWJy/w/IxtbeBIwigAw0j6PLAjlZjw0Yb630JWkS1NmfZG1wkwlec+7KvCAxO0YOTZQCmWCTsvgXsXpKuq/SoOdK72POAcO+SmSTwRhA0Yr46X3yefws2+CZQD5NQfUk=
-Received: from CY1PR0301MB2107.namprd03.prod.outlook.com (10.164.2.153) by
- CY1PR0301MB2105.namprd03.prod.outlook.com (10.164.2.151) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.961.17; Thu, 16 Mar 2017 22:07:43 +0000
-Received: from CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) by
- CY1PR0301MB2107.namprd03.prod.outlook.com ([10.164.2.153]) with mapi id
- 15.01.0961.022; Thu, 16 Mar 2017 22:07:43 +0000
-From:   Dan Shumow <danshu@microsoft.com>
-To:     Jeff King <peff@peff.net>, Marc Stevens <Marc.Stevens@cwi.nl>
-CC:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S1752684AbdCPWIP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 18:08:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45461 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752122AbdCPWIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 18:08:14 -0400
+Received: (qmail 2652 invoked by uid 109); 16 Mar 2017 22:08:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 22:08:13 +0000
+Received: (qmail 4139 invoked by uid 111); 16 Mar 2017 22:08:25 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 18:08:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Mar 2017 18:08:10 -0400
+Date:   Thu, 16 Mar 2017 18:08:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Git Mailing List <git@vger.kernel.org>
-Subject: RE: [PATCH] Put sha1dc on a diet
-Thread-Topic: [PATCH] Put sha1dc on a diet
-Thread-Index: AQHSkiMIUGTsYtffFU+WRTsYHJQFFqGAUwj9gAAB7oCAABGiAIAABgQAgAAFjoCAADN5AIAAEf1ggABBsMWAAujfkIAPEkAAgAA0EQGAABacoIAAAkiAgAAGowCAAAIWAIAAB8kAgAADfYCAAAQxgIAEhp4AgAA+nQCAAAA8YA==
-Date:   Thu, 16 Mar 2017 22:07:43 +0000
-Message-ID: <CY1PR0301MB2107A6C40342CC8F25D0F661C4260@CY1PR0301MB2107.namprd03.prod.outlook.com>
-References: <20170301195302.3pybakmjqztosohj@sigill.intra.peff.net>
- <CY1PR0301MB2107876B6E47FBCF03AB1EA1C4250@CY1PR0301MB2107.namprd03.prod.outlook.com>
- <20170313194848.2z2dlgpomu6e3dkh@sigill.intra.peff.net>
- <1e6a592f-7da1-8043-0b29-0bb7c8cda3f3@cwi.nl>
- <CA+55aFyNi2uHwd9nzjy3dOu2L1A0jPN6AD43WKj-05km1GNtRQ@mail.gmail.com>
- <161775901.3349663.1489438074825.JavaMail.zimbra@cwi.nl>
- <20170313210023.bumtp6wyw6blmymp@sigill.intra.peff.net>
- <1392458356.3351662.1489439723458.JavaMail.zimbra@cwi.nl>
- <2006239187.136016.1489688534478.JavaMail.zimbra@cwi.nl>
- <20170316220620.ihq4ulg4t6m7ktrh@sigill.intra.peff.net>
-In-Reply-To: <20170316220620.ihq4ulg4t6m7ktrh@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: peff.net; dkim=none (message not signed)
- header.d=none;peff.net; dmarc=none action=none header.from=microsoft.com;
-x-originating-ip: [2001:4898:80e8::7ac]
-x-microsoft-exchange-diagnostics: 1;CY1PR0301MB2105;7:5wD6sNknQPmuourlS1oZOTMgV7hHAm32f2Yzj32doPOrjdu6985p1s+nPoeQDpIkGqNH2Mb12jC7K+PH6V3wB8gmTNyQAlijNOdjwGJO+mvtyM2YWNqsGvscD60eS/EhoqNKY5eZXp63ceNE/2bmxejGSOzCyb951qjO5RNH7Y+CaLOm3UBGXzCDfcZnqfMdiVDS1xsNGHKfjJHm7UjO9hVy3vRB3HrOjcdO/GrAh+TJ0FT/OXp+AwTUH1nH/yO9N4sDNtUZetaqDOND7GQBXs67TnHZa9JnuTgdynHSPIww3kz/nL7Nk4EoXcujIpLuXu76wGkd4liFm9fJm9FLvbJ8wVwgJ/bi99DDEVAjLyA=
-x-ms-office365-filtering-correlation-id: 66d2348b-5ffe-45cd-3127-08d46cb8ded7
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(48565401081);SRVR:CY1PR0301MB2105;
-x-microsoft-antispam-prvs: <CY1PR0301MB21058763016811DC5BAE70A2C4260@CY1PR0301MB2105.namprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(9452136761055)(100324003535756);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040375)(601004)(2401047)(5005006)(8121501046)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041248)(20161123560025)(20161123564025)(20161123558025)(20161123562025)(20161123555025)(6072148);SRVR:CY1PR0301MB2105;BCL:0;PCL:0;RULEID:;SRVR:CY1PR0301MB2105;
-x-forefront-prvs: 024847EE92
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39450400003)(39860400002)(39840400002)(24454002)(13464003)(377454003)(122556002)(38730400002)(3660700001)(2900100001)(305945005)(54356999)(10090500001)(102836003)(6246003)(50986999)(7736002)(76176999)(6116002)(3280700002)(189998001)(10290500002)(5005710100001)(4326008)(33656002)(2906002)(8656002)(7696004)(9686003)(54906002)(6506006)(229853002)(6436002)(55016002)(81166006)(99286003)(74316002)(86362001)(8676002)(25786008)(8936002)(77096006)(5660300001)(53936002)(93886004)(53546008)(2950100002)(32563001)(473944003);DIR:OUT;SFP:1102;SCL:1;SRVR:CY1PR0301MB2105;H:CY1PR0301MB2107.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Subject: [PATCH 2/5] sha1dc: adjust header includes for git
+Message-ID: <20170316220810.orlbvop53fj4g5wg@sigill.intra.peff.net>
+References: <20170316220456.m4yz2kbvzv6waokn@sigill.intra.peff.net>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2017 22:07:43.2790
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY1PR0301MB2105
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170316220456.m4yz2kbvzv6waokn@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-R3JlYXQhIEtlZXAgdXMgcG9zdGVkIGlmIHRoZXJlIGlzIGFueXRoaW5nIGVsc2UgdGhhdCB5b3Ug
-d291bGQgbGlrZSBmcm9tIHRoZSBjb2RlLiAgT3IgYW55d2F5IHdlIGNhbiBtYWtlIHRoZSBwcm9j
-ZXNzIGdvIG1vcmUgc21vb3RobHkuDQoNClRoYW5rcywNCkRhbg0KDQoNCi0tLS0tT3JpZ2luYWwg
-TWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZmIEtpbmcgW21haWx0bzpwZWZmQHBlZmYubmV0XSANClNl
-bnQ6IFRodXJzZGF5LCBNYXJjaCAxNiwgMjAxNyAzOjA2IFBNDQpUbzogTWFyYyBTdGV2ZW5zIDxN
-YXJjLlN0ZXZlbnNAY3dpLm5sPg0KQ2M6IExpbnVzIFRvcnZhbGRzIDx0b3J2YWxkc0BsaW51eC1m
-b3VuZGF0aW9uLm9yZz47IERhbiBTaHVtb3cgPGRhbnNodUBtaWNyb3NvZnQuY29tPjsgSnVuaW8g
-QyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPjsgR2l0IE1haWxpbmcgTGlzdCA8Z2l0QHZnZXIu
-a2VybmVsLm9yZz4NClN1YmplY3Q6IFJlOiBbUEFUQ0hdIFB1dCBzaGExZGMgb24gYSBkaWV0DQoN
-Ck9uIFRodSwgTWFyIDE2LCAyMDE3IGF0IDA3OjIyOjE0UE0gKzAxMDAsIE1hcmMgU3RldmVucyB3
-cm90ZToNCg0KPiBUb2RheSBJIG1lcmdlZCB0aGUgcGVyZi1icmFuY2ggaW50byBtYXN0ZXIgYWZ0
-ZXIgY29kZSByZXZpZXcgYW5kIGNvcnJlY3RuZXNzIHRlc3RpbmcuDQo+IFNvIG1hc3RlciBpcyBu
-b3cgbW9yZSBwZXJmb3JtYW50IGFuZCBzYWZlIHRvIHVzZS4NCg0KR3JlYXQsIHRoYW5rIHlvdSAo
-YW5kIERhbikgc28gbXVjaCBmb3IgYWxsIHlvdXIgd29yay4gV2UncmUgbG9va2luZyBhdCBpbnRl
-Z3JhdGluZyB0aGlzIHZlcnNpb24gaW4gYSBuZWFyYnkgdGhyZWFkLg0KDQotUGVmZg0K
+We can replace system includes with git-compat-util.h or
+cache.h (and should make sure it is included first in all C
+files).  And we can drop includes from headers entirely, as
+every C file should include git-compat-util.h itself.
+
+We will add in new include guards around the header files,
+though (otherwise you get into trouble including both
+sha1dc/sha1.h and cache.h).
+
+And finally, we'll use the full "sha1dc/" path for including
+related files. This isn't strictly necessary, but makes the
+expected resolution more obvious.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The cache.h thing is necessary if we want to use sha1_to_hex() later
+(which I think we should).
+
+ sha1dc/sha1.c      | 10 +++-------
+ sha1dc/sha1.h      |  6 ++++--
+ sha1dc/ubc_check.c |  4 ++--
+ sha1dc/ubc_check.h |  2 --
+ 4 files changed, 9 insertions(+), 13 deletions(-)
+
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index 8d12b832b..da516c14c 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -5,13 +5,9 @@
+ * https://opensource.org/licenses/MIT
+ ***/
+ 
+-#include <string.h>
+-#include <memory.h>
+-#include <stdio.h>
+-#include <stdlib.h>
+-
+-#include "sha1.h"
+-#include "ubc_check.h"
++#include "cache.h"
++#include "sha1dc/sha1.h"
++#include "sha1dc/ubc_check.h"
+ 
+ 
+ /* 
+diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
+index e867724c0..8a5bf0847 100644
+--- a/sha1dc/sha1.h
++++ b/sha1dc/sha1.h
+@@ -4,13 +4,13 @@
+ * See accompanying file LICENSE.txt or copy at
+ * https://opensource.org/licenses/MIT
+ ***/
++#ifndef SHA1DC_SHA1_H
++#define SHA1DC_SHA1_H
+ 
+ #if defined(__cplusplus)
+ extern "C" {
+ #endif
+ 
+-#include <stdint.h>
+-
+ /* uses SHA-1 message expansion to expand the first 16 words of W[] to 80 words */
+ /* void sha1_message_expansion(uint32_t W[80]); */
+ 
+@@ -103,3 +103,5 @@ int  SHA1DCFinal(unsigned char[20], SHA1_CTX*);
+ #if defined(__cplusplus)
+ }
+ #endif
++
++#endif /* SHA1DC_SHA1_H */
+diff --git a/sha1dc/ubc_check.c b/sha1dc/ubc_check.c
+index 27d0976da..089dd4743 100644
+--- a/sha1dc/ubc_check.c
++++ b/sha1dc/ubc_check.c
+@@ -24,8 +24,8 @@
+ // ubc_check has been verified against ubc_check_verify using the 'ubc_check_test' program in the tools section
+ */
+ 
+-#include <stdint.h>
+-#include "ubc_check.h"
++#include "git-compat-util.h"
++#include "sha1dc/ubc_check.h"
+ 
+ static const uint32_t DV_I_43_0_bit 	= (uint32_t)(1) << 0;
+ static const uint32_t DV_I_44_0_bit 	= (uint32_t)(1) << 1;
+diff --git a/sha1dc/ubc_check.h b/sha1dc/ubc_check.h
+index b349bed92..b64c306d7 100644
+--- a/sha1dc/ubc_check.h
++++ b/sha1dc/ubc_check.h
+@@ -27,8 +27,6 @@
+ extern "C" {
+ #endif
+ 
+-#include <stdint.h>
+-
+ #define DVMASKSIZE 1
+ typedef struct { int dvType; int dvK; int dvB; int testt; int maski; int maskb; uint32_t dm[80]; } dv_info_t;
+ extern dv_info_t sha1_dvs[];
+-- 
+2.12.0.623.g86ec6c963
+
