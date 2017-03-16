@@ -2,100 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE4C20323
-	for <e@80x24.org>; Thu, 16 Mar 2017 22:59:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 082A320323
+	for <e@80x24.org>; Thu, 16 Mar 2017 23:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754426AbdCPW7n (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 18:59:43 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50319 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752582AbdCPW7m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 18:59:42 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwW8p-1c9Lio0t4h-018OFL; Thu, 16
- Mar 2017 23:59:37 +0100
-Date:   Thu, 16 Mar 2017 23:59:35 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org
-Subject: Re: sequencer "edit" command always issues a warning
-In-Reply-To: <20170316131534.4vpbub3vmde7maua@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1703162358520.3767@virtualbox>
-References: <20170316131534.4vpbub3vmde7maua@sigill.intra.peff.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753997AbdCPXZc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 19:25:32 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:35080 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752676AbdCPXZa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 19:25:30 -0400
+Received: by mail-pg0-f54.google.com with SMTP id b129so32060344pgc.2
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 16:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oMHE6nKjVEfyQL8HdJwx22qxqfER+EigaOokoDb5mLI=;
+        b=b+IFHMXEN8kbTFHZM+NxKLUuXadSp7yPIWkuKBNYICe2V6X717wzsQu3a1bRWa9Cvj
+         7Kjsdg/LF7xNBuLfo7HE0OffBukMq9pQWSX6aBUz1DF5A7S9YfDxWMAxZFXcrDRZgL9s
+         C3DFgn6hIcm1kElmTtL9iAa8tgi7Rw2ePjVATQagTZDnbVXzpxCW5lqOuz3vLeOHIUgN
+         gRzKwGQh69TSU1Yb2JZH7lkNkMCKUfeuu+ZN75uCKoQrL6UdJTj6l6Nwz2l4lxz/3F3S
+         nQoWbJkKaZcZ7SNoo8klF3y55UW1sa6IX6szRfstsftYt/pU4DYQhhniRvurMQGzLcsI
+         7Kng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oMHE6nKjVEfyQL8HdJwx22qxqfER+EigaOokoDb5mLI=;
+        b=sA5PaZbFAgRChtCc1ck3LCTlyUPhFwY5nV0jiGKW+KNH1N5K3KGpYHu8kv895QA1W1
+         1mHdJB4hz/HdFP83eupeuaaae9/ybSrdiNKt4JKuQZm22tp4YMrEL23ZE3VQiYv40G7E
+         6JuDIb4f3RYX8QEtq7r5Mquuq+mq4Qqn1gTwfmwe1Ee92/K/SCZ/tuCocrmYMCMCIS4L
+         wKbcdUpDMMAAiTtSA0pQpQl5NX+fF+yG0j2ABqF9NwNlfWx6hJuvbxT7Xh2j/3yBiaxV
+         xAcuwGHNyz82W6UJnxCAUqWTZp+RduOc3uyVWkdw7uJQs1iLEaGtIxmhx95UyHEAqcHU
+         8qSQ==
+X-Gm-Message-State: AFeK/H2qbLffbt/TRfc7Q9RJTtT3zquEPClVg9q6wbOIvtntH/Ft3QzvTYcHeR39taHL5S3HhVS3CuvaG1TN1M+s
+X-Received: by 10.84.239.8 with SMTP id w8mr15737541plk.73.1489706696028; Thu,
+ 16 Mar 2017 16:24:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:tju5ZHVDXbTp5P7YW9TOZQeMn84R9Nq7J8JFlvYXFgK1mwmfVT0
- 59iSALg03UWOuOUYZZfbdf4mIEhq7mrwYjNjw60uqJtwlrFId5TBSwwGA7d4N6UdItJX2zx
- fzEGMtgFgD/b3BbJZO+3t0//eFjqkSKc91+rt67g3kr2riEaC2lcjvDwu1MHOaU0n6dqy0c
- mb1BUwjKRZQlwuLud/PxA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:32ZEgClytFU=:eG7jgJ4mw6qfCJUgg5rsw7
- Dww4QIlF8gb5cqpMT9/Q0+KZCa78mPGpxyu4UiqDQm92TQjzQz9jA2C5DtEpuSujMw5nrQ463
- 7xH7fHA3Ri9rFnKOGA0ndd10KQ6J3Yr3xqsyZ/NiQrVAF/7zWax9i0jVTtMAJ710qQDFc6jtG
- 3rcWzhSpTRKkdRQYW/snhUyLkDPnw8hvkUZ6ooQQqr8Xwl3Oyl3uD5YKd/MpX6cWDai0exCRp
- z5NZFPmK4G0PKBt3Y9nxpHVM1hmhrnrsZlIorUVIcGk4zXgRQTdhPPJ80XKcEy3/2KkOWqr2c
- qxIKtycRY97DiAyWwfYdlnb6WrH1iEuAgnwHkVYOBnMuvIYdSSb7qIImOcw+24/PeM3Yj0i2e
- 8U1k4HKVBHADPj1pdpvtmdtsFht7WGah+YJ6FAg7YKLOEPpuJ+Diib6P+947G+KKJjPT8Yyrn
- TssZJmA6B2DAcEaHUchTGmmiUnW5CgJ5A8sRfsSMIIQ8GaRYsSGQSKFtls54MK+zO75M6wO/n
- zZl3dcb0p/52TnJRx/AXAbRDAon7M/mM2e3u9nAew1Jkw/ZKO/CtnRfUOt0iFLwnFDhVyh9M1
- e4Tq7tiCZfrvgdQ7CQZuCJJbnl/cA/unk1H/JAaVDS5CON38IH97plMQ0zfaHy371Af2CMOHL
- zd73dXAD6V0X2+y8+wW3XuqNpFC3m4+xjqtf4hzpzzBZNDgWYHclRINCWdFMbxunEN1kMULuD
- SabYlbR5z7vi3z5bq7mllaY02k6sdybusvVXTC6YKwkHAiEQndB4kIQmyoS+EPCSEIj4CPlu0
- +h61BXq+gFY8eLi1uUi2WyuMXXliA==
+Received: by 10.100.187.5 with HTTP; Thu, 16 Mar 2017 16:24:55 -0700 (PDT)
+In-Reply-To: <20170316222952.53801-4-bmwill@google.com>
+References: <20170313214341.172676-1-bmwill@google.com> <20170316222952.53801-1-bmwill@google.com>
+ <20170316222952.53801-4-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 16 Mar 2017 16:24:55 -0700
+Message-ID: <CAGZ79kaP9ob+qvso=pV=PPaB5guaW18w297xA+bfDFASV0zibg@mail.gmail.com>
+Subject: Re: [PATCH v4 03/10] submodule sync: skip work for inactive submodules
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Thu, Mar 16, 2017 at 3:29 PM, Brandon Williams <bmwill@google.com> wrote:
+> Sync does some work determining what URLs should be used for a submodule
+> but then throws this work away if the submodule isn't active.  Instead
+> perform the activity check earlier and skip inactive submodule in order
+> to avoid doing unnecessary work.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
 
-On Thu, 16 Mar 2017, Jeff King wrote:
+> +               # skip inactive submodules
+> +               if ! git config "submodule.$name.url" >/dev/null 2>/dev/null
 
-> I was rebasing with the new built-in sequencer code today, and I was
-> surprised to see the use of warning() here:
-> 
->   $ git rebase -i
->   [set one commit to 'edit']
->   warning: stopped at 6ce6b914a... odb_pack_keep(): stop generating keepfile name
->   You can amend the commit now, with
->     [...more instructions...]
-> 
-> It alarmed me for a minute until I realized that no, this is nothing to
-> be alarmed about, but just git doing exactly what I told it to do.
-> 
-> The original just wrote:
-> 
->   Stopped at 6ce6b914a... odb_pack_keep(): stop generating keepfile name
-> 
-> It would be easy to switch back:
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 1f729b053..8183a83c1 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1997,7 +1997,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
->  			if (item->command == TODO_EDIT) {
->  				struct commit *commit = item->commit;
->  				if (!res)
-> -					warning(_("stopped at %s... %.*s"),
-> +					fprintf(stderr,
-> +						_("Stopped at %s...  %.*s"),
->  						short_commit_name(commit),
->  						item->arg_len, item->arg);
->  				return error_with_patch(commit,
-> 
-> and that would match most of the other messages that the command issues,
-> which use a bare fprintf() and start with a capital letter. But I'm not
-> sure if there was some reason to treat this one differently.
+As a stand alone patch, this would look good to me.
+But with the goal of this patch series in mind (which is to add
+more options to enable a submodules "active" state), this
+should rather be "submodule--helper is-active" here?
 
-I do not recall why I chose warning(); probably just an oversight on my
-part. Your patch looks good.
 
-Ciao,
-Dscho
+> +               then
+> +                       continue
+> +               fi
+> +
+
+The changes below here are just de-dented, no behavioral change?
+
+>
+> -               if git config "submodule.$name.url" >/dev/null 2>/dev/null
+> +               displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+> +               say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+> +               git config submodule."$name".url "$super_config_url"
+> +
+> +               if test -e "$sm_path"/.git
+>                 then
+> -                       displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+> -                       say "$(eval_gettext "Synchronizing submodule url for '\$displaypath'")"
+> -                       git config submodule."$name".url "$super_config_url"
+> +               (
+> +                       sanitize_submodule_env
+> +                       cd "$sm_path"
+> +                       remote=$(get_default_remote)
+> +                       git config remote."$remote".url "$sub_origin_url"
+>
+> -                       if test -e "$sm_path"/.git
+> +                       if test -n "$recursive"
+>                         then
+> -                       (
+> -                               sanitize_submodule_env
+> -                               cd "$sm_path"
+> -                               remote=$(get_default_remote)
+> -                               git config remote."$remote".url "$sub_origin_url"
+> -
+> -                               if test -n "$recursive"
+> -                               then
+> -                                       prefix="$prefix$sm_path/"
+> -                                       eval cmd_sync
+> -                               fi
+> -                       )
+> +                               prefix="$prefix$sm_path/"
+> +                               eval cmd_sync
+>                         fi
+> +               )
