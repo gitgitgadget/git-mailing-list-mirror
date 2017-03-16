@@ -2,96 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB7FB20323
-	for <e@80x24.org>; Thu, 16 Mar 2017 22:58:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE4C20323
+	for <e@80x24.org>; Thu, 16 Mar 2017 22:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754312AbdCPW6X (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 18:58:23 -0400
-Received: from mail-pf0-f179.google.com ([209.85.192.179]:35766 "EHLO
-        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753642AbdCPW6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 18:58:21 -0400
-Received: by mail-pf0-f179.google.com with SMTP id x63so25441029pfx.2
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 15:58:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=w3lCXAT4ju/9zqTGtpwmde6Zt8AOn5q8A39Ivw/5hQg=;
-        b=AIrwcFwTdBfk9zCPnq+Oy3xWorTICaqE7NSESltVLnQ3fC7J74uwO8zBel3fXi1HiX
-         576rOindravk3yXeyyTlHX/z74tymY8tJL9paDLfo5DyHc/ttrZXAR5RTEUz1oBKLtMe
-         LKnyX3W1DSz8OXcMhtNzn359ZEF5kmjVRmjOJfdR9MxM54z87ECFiOKaGid8cWumDpzj
-         fQitRP9y6ENx+aWCkrx8DJ9k2+TEXYMAgavfTgu2Azcj9LrCOJqTo93SJEXHgFUcRqoU
-         7U0QUEvMjz93dvbbl3qnAIScAZSlcPA7sneACRRLGgRccu0nXl+rWum6JKk11n5jZUVb
-         kvBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=w3lCXAT4ju/9zqTGtpwmde6Zt8AOn5q8A39Ivw/5hQg=;
-        b=Dsj9aiLrKRSZFHSMM+7f4F0e0vHLQAC0QzGkbB/f1MvV0haeY6+ywqzJdiza9Vyty4
-         kfSAhHrll5I27edOv7MXQGKgDMZLtba0mApew8fovqzNG4pYa/6uqDhTY4IVyroXTjy/
-         jHTwAjdp1GRXdBmEfs2jZbivtA9IHul6aXpb+7vPQ0a6Su20yNc+jkB6fK32oM9qaiyz
-         9TS10UI7rrEtmViFrpmAVHfBZEfOnylJKWfaXMg7SI8EJ54LdS6gFiXl04FVu4KysEno
-         TLYXJUb6HzDC0tuyr92IENrVw6LeC8BD0+IoDSmh5G7vhMczb4H9wHGhuxgPqPc31gD7
-         GRmw==
-X-Gm-Message-State: AFeK/H0D4fXCn0gqxAIqCu0vVE4iHxKTajVDlU/iuw43F+s97iM3BpTn7dJJ51gpI/uAwdOh
-X-Received: by 10.98.13.16 with SMTP id v16mr13072113pfi.38.1489704501233;
-        Thu, 16 Mar 2017 15:48:21 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:8d11:eba5:7754:a587])
-        by smtp.gmail.com with ESMTPSA id x10sm12481548pfi.21.2017.03.16.15.48.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Mar 2017 15:48:20 -0700 (PDT)
-Subject: Re: Proposal for "fetch-any-blob Git protocol" and server design
-To:     Junio C Hamano <gitster@pobox.com>
-References: <ffd92ad9-39fe-c76b-178d-6e3d6a425037@google.com>
- <xmqqinnafml4.fsf@gitster.mtv.corp.google.com>
- <90381e66-d91f-6412-6294-701f5f780645@google.com>
- <xmqq7f3oc45v.fsf@gitster.mtv.corp.google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, markbt@efaref.net,
-        git@jeffhostetler.com
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <3c89fee5-2226-6760-f2fd-222432230612@google.com>
-Date:   Thu, 16 Mar 2017 15:48:19 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1754426AbdCPW7n (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 18:59:43 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50319 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752582AbdCPW7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 18:59:42 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwW8p-1c9Lio0t4h-018OFL; Thu, 16
+ Mar 2017 23:59:37 +0100
+Date:   Thu, 16 Mar 2017 23:59:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org
+Subject: Re: sequencer "edit" command always issues a warning
+In-Reply-To: <20170316131534.4vpbub3vmde7maua@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1703162358520.3767@virtualbox>
+References: <20170316131534.4vpbub3vmde7maua@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <xmqq7f3oc45v.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:tju5ZHVDXbTp5P7YW9TOZQeMn84R9Nq7J8JFlvYXFgK1mwmfVT0
+ 59iSALg03UWOuOUYZZfbdf4mIEhq7mrwYjNjw60uqJtwlrFId5TBSwwGA7d4N6UdItJX2zx
+ fzEGMtgFgD/b3BbJZO+3t0//eFjqkSKc91+rt67g3kr2riEaC2lcjvDwu1MHOaU0n6dqy0c
+ mb1BUwjKRZQlwuLud/PxA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:32ZEgClytFU=:eG7jgJ4mw6qfCJUgg5rsw7
+ Dww4QIlF8gb5cqpMT9/Q0+KZCa78mPGpxyu4UiqDQm92TQjzQz9jA2C5DtEpuSujMw5nrQ463
+ 7xH7fHA3Ri9rFnKOGA0ndd10KQ6J3Yr3xqsyZ/NiQrVAF/7zWax9i0jVTtMAJ710qQDFc6jtG
+ 3rcWzhSpTRKkdRQYW/snhUyLkDPnw8hvkUZ6ooQQqr8Xwl3Oyl3uD5YKd/MpX6cWDai0exCRp
+ z5NZFPmK4G0PKBt3Y9nxpHVM1hmhrnrsZlIorUVIcGk4zXgRQTdhPPJ80XKcEy3/2KkOWqr2c
+ qxIKtycRY97DiAyWwfYdlnb6WrH1iEuAgnwHkVYOBnMuvIYdSSb7qIImOcw+24/PeM3Yj0i2e
+ 8U1k4HKVBHADPj1pdpvtmdtsFht7WGah+YJ6FAg7YKLOEPpuJ+Diib6P+947G+KKJjPT8Yyrn
+ TssZJmA6B2DAcEaHUchTGmmiUnW5CgJ5A8sRfsSMIIQ8GaRYsSGQSKFtls54MK+zO75M6wO/n
+ zZl3dcb0p/52TnJRx/AXAbRDAon7M/mM2e3u9nAew1Jkw/ZKO/CtnRfUOt0iFLwnFDhVyh9M1
+ e4Tq7tiCZfrvgdQ7CQZuCJJbnl/cA/unk1H/JAaVDS5CON38IH97plMQ0zfaHy371Af2CMOHL
+ zd73dXAD6V0X2+y8+wW3XuqNpFC3m4+xjqtf4hzpzzBZNDgWYHclRINCWdFMbxunEN1kMULuD
+ SabYlbR5z7vi3z5bq7mllaY02k6sdybusvVXTC6YKwkHAiEQndB4kIQmyoS+EPCSEIj4CPlu0
+ +h61BXq+gFY8eLi1uUi2WyuMXXliA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/16/2017 02:17 PM, Junio C Hamano wrote:
-> Yeah, the example was solely to see how the system was to be
-> extended, as one of the selling point of the proposal was:
->
->     > === Endpoint support for forward compatibility
->     >
->     > This "server" endpoint requires that the first line be understood, but
->     > will ignore any other lines starting with words that it does not
->     > understand. This allows new "commands" to be added (distinguished by
->     > their first lines) and existing commands to be "upgraded" with
->     > backwards compatibility.
+Hi Peff,
 
-<snip>
+On Thu, 16 Mar 2017, Jeff King wrote:
 
->
-> And the lack of "capability negotiation" is substituted by "assume
-> the better server, fallback to lower common denominator by detecting
-> errors"?
+> I was rebasing with the new built-in sequencer code today, and I was
+> surprised to see the use of warning() here:
+> 
+>   $ git rebase -i
+>   [set one commit to 'edit']
+>   warning: stopped at 6ce6b914a... odb_pack_keep(): stop generating keepfile name
+>   You can amend the commit now, with
+>     [...more instructions...]
+> 
+> It alarmed me for a minute until I realized that no, this is nothing to
+> be alarmed about, but just git doing exactly what I told it to do.
+> 
+> The original just wrote:
+> 
+>   Stopped at 6ce6b914a... odb_pack_keep(): stop generating keepfile name
+> 
+> It would be easy to switch back:
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 1f729b053..8183a83c1 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1997,7 +1997,8 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+>  			if (item->command == TODO_EDIT) {
+>  				struct commit *commit = item->commit;
+>  				if (!res)
+> -					warning(_("stopped at %s... %.*s"),
+> +					fprintf(stderr,
+> +						_("Stopped at %s...  %.*s"),
+>  						short_commit_name(commit),
+>  						item->arg_len, item->arg);
+>  				return error_with_patch(commit,
+> 
+> and that would match most of the other messages that the command issues,
+> which use a bare fprintf() and start with a capital letter. But I'm not
+> sure if there was some reason to treat this one differently.
 
-Yes. I probably should have mentioned that this "forward compatibility" 
-is limited - it does not include any potential new feature intending to 
-reduce the size of the request. I was thinking more of this being able 
-to be extended to, for example, add "hint" lines that certain blobs come 
-from certain commits, or add "have" lines to present blobs that might be 
-good delta bases (and even if the server doesn't understand these lines, 
-its output is still correct).
+I do not recall why I chose warning(); probably just an oversight on my
+part. Your patch looks good.
+
+Ciao,
+Dscho
