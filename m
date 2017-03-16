@@ -2,78 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FEC320953
-	for <e@80x24.org>; Thu, 16 Mar 2017 20:24:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00C5520323
+	for <e@80x24.org>; Thu, 16 Mar 2017 20:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752051AbdCPUYm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 16:24:42 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:36402 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751957AbdCPUYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 16:24:41 -0400
-Received: by mail-pg0-f46.google.com with SMTP id g2so30254599pge.3
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 13:24:04 -0700 (PDT)
+        id S1751954AbdCPU0o (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 16:26:44 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:38255 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751960AbdCPU0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 16:26:43 -0400
+Received: by mail-it0-f43.google.com with SMTP id m27so2169772iti.1
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 13:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version;
-        bh=Wa4cERawlh/pASxq/MK+H1FAysnr1BCPclZi8S387HA=;
-        b=WtMlSFDIoivR+JN+JStN3UwQT5wahYVTBMzbF0nVjjuk99FNdBY8OIrcf8EpuQOMR1
-         uivY+pBS60FILvr8KiABlvnByDLNd3srh+gkPYmf3agZ4X5ZY2re+YLvWJyFXSaMV0Fz
-         7ydLX0/Qcr+AVXEqHh5/Bq2FPMIVQhaV/txEAG7zySWHTu57qNok3qDri6JBatWQl7vn
-         Qe8hi+dNXArFDAmvb3m4A/XFPOaOTlHfn0e15YkEhJCnmx5E3QBCQ1FktlGkNtg6gqS/
-         5cdEJJ6FVPErT/+CVegS0tLbQRdXHvg3xhwKadaMGoNfSaH46dO6fvE82tyjhoOa8t9w
-         RuvA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=j/1SYWHHHmj72w+b44YSMKR+GlyPRFiSIYKCq8Oc8wM=;
+        b=hoRNEpDxhdTR+WDJPhrqfwbzfKcQL/s43sx+NQSzY4W3hGDg229KleWxqaJ7qQji5p
+         mOgh928Z2uAj1j1snh774z+tLxPIaFpVMDgzj9O5phKIkdznGfWIvIAelvcAGsNPKzxe
+         wGC6PbUlWnx1H1sdYjtLA1q3ECzWzorLdlEguNKEPc1uU3WeWnArkZvGZJA1YjbK6gTD
+         VXcJ1VTY5deA9oJKg+qd0yO9tuUUN+Oa6VDs+r632azM06TQ1nTfcbcYZCRcAiuoL29a
+         NZ7pXqw5U+d1Fi/31yn4gLs1N+FeCpB4YxrWg6GuIXrOfRmz5XFUpRWyn/MFGR0erRrB
+         6UAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :user-agent:mime-version;
-        bh=Wa4cERawlh/pASxq/MK+H1FAysnr1BCPclZi8S387HA=;
-        b=A14tAXmSlanFYQhCYMbroCBiEx8MffBrY80A6pxwXlvzlWjcMxc7C70wAOH9zVwxRf
-         vmK3yt0fP1NTXdpviNp9UD2schPoZim88pjtQxeqzA2kP8ah+0XEF5PNBjdZEdMYw7vQ
-         jlDTbu03nU3HvF3i7Y/u/iDun5fVJRwHYNHnk0e2wBIdA0cjH19QPLwsCvlAMipAhz3E
-         Ioy+qIYfzgM/fqfJR2w5/B8PfT7fyGOxWJOAKzJChE3+P5KFDHLDiqt65+yYhpnTbiTv
-         YU9djQwnl0fLS8jZa5PJIYUwHkfXV/GghxYp+ZCAOcyYaOIBNvkEffVP6znlzFOkCIV2
-         Zdaw==
-X-Gm-Message-State: AFeK/H2XamcAy6ebZi/knKh31pAWjTonCAyrmpqf+Sor1TTr6NvPJrNfrZ9enK61c5dvGw==
-X-Received: by 10.84.191.165 with SMTP id a34mr14658230pld.62.1489695843977;
-        Thu, 16 Mar 2017 13:24:03 -0700 (PDT)
-Received: from i7.lan (c-73-11-52-149.hsd1.or.comcast.net. [73.11.52.149])
-        by smtp.gmail.com with ESMTPSA id z27sm12230562pfg.38.2017.03.16.13.24.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Mar 2017 13:24:03 -0700 (PDT)
-Date:   Thu, 16 Mar 2017 13:24:02 -0700 (PDT)
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-X-X-Sender: torvalds@i7.lan
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 0/2] Re-integrate sha1dc
-Message-ID: <alpine.LFD.2.20.1703161315310.18484@i7.lan>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=j/1SYWHHHmj72w+b44YSMKR+GlyPRFiSIYKCq8Oc8wM=;
+        b=bTUNTQi4y1ukhPnxq0l0xbmQ7Pt0BLlhvR6XmBGGgC58gnU4HZ6RLVQMogwDFZwJeM
+         po0soG01EM6es/L4KFOxFDFgjpJnPYondXrbuf0ER9V68OsSDSoDIYDxXCD3ENGfaEbG
+         sWxzOL0isUmUlTKycWd6qFPYnf+F034VpMxsjBNmF5NKTnwIvNhlXvg5E4KtTfeCTItH
+         WekN53q4eQIGgOG3jpZ9GcUYVD648Y1BbPmpb7SqC5zbktBRDnX4aqj4QaB3WVdVYU/n
+         vgPKKkLKDFmF6QW0kA9hzYNLVXYThO/Y6gFsvBSdkJfr+KcqW5SyzHfHJQSvK5bzU4OA
+         V/TA==
+X-Gm-Message-State: AFeK/H1ZVpIDZJXsU0281e5aePU+eVYinz53AarQvg0W/tPm5J6Wdb1xGkRM4KqD1v9pHPr8lOypk0ZAP06VcA==
+X-Received: by 10.107.178.137 with SMTP id b131mr11243167iof.50.1489695979141;
+ Thu, 16 Mar 2017 13:26:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Received: by 10.107.136.102 with HTTP; Thu, 16 Mar 2017 13:26:18 -0700 (PDT)
+In-Reply-To: <CA+55aFzVB2gAXJ2rn3vPDtCJU7Rgozs0e_HhnK-nFziixCCfFQ@mail.gmail.com>
+References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com>
+ <20170316194110.756ipu7xud2s3w2m@sigill.intra.peff.net> <CA+55aFzp_dxevLEbRVWCmbx=zY=8hwqEBKK=Pcs7Au+rdg4pRQ@mail.gmail.com>
+ <xmqqbmt1atta.fsf@gitster.mtv.corp.google.com> <CA+55aFzVB2gAXJ2rn3vPDtCJU7Rgozs0e_HhnK-nFziixCCfFQ@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 16 Mar 2017 13:26:18 -0700
+X-Google-Sender-Auth: q22z_Lk1Rn7Xsw6gl9R1DidDi4U
+Message-ID: <CA+55aFyo2ap2SDbaeSC6=Av26sNP7KdxqzYZDW+MW-M5p5o0AQ@mail.gmail.com>
+Subject: Re: USE_SHA1DC is broken in pu
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Mar 16, 2017 at 12:51 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+>
+> I'll send a patch on top of 'next', which already has the header file changes.
 
-I suspect the first patch will not make it to the list since it's over 
-100kB in size, but oh well.. Junio and Jeff will see it.
+Patches sent. It all looked fairly straightforward to me, but maybe I
+missed something.
 
-This is sent as two patches, just to have the original upstream code as a 
-first step, and then the second patch does the small modifications to 
-integrate it with git.
-
-It "WorksForMe(tm)" and the integration patches are now fairly trivial, 
-since upstream already did the dieting and some of the semantic changes to 
-gits more traditional C code.
-
-I did leave the C++ wrapper lines that the sha1dc header files have grown 
-in the meantime, I debated removing them but felt that "closer to 
-upstream" was worth it.
-
-               Linus
+                     Linus
