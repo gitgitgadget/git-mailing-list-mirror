@@ -2,256 +2,212 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 162FB20323
-	for <e@80x24.org>; Thu, 16 Mar 2017 20:33:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0311C20323
+	for <e@80x24.org>; Thu, 16 Mar 2017 20:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753342AbdCPUdL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 16:33:11 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34894 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752122AbdCPUdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 16:33:09 -0400
-Received: by mail-pg0-f68.google.com with SMTP id g2so7225611pge.2
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 13:33:08 -0700 (PDT)
+        id S1751960AbdCPUqt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 16:46:49 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35354 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751531AbdCPUqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 16:46:48 -0400
+Received: by mail-pf0-f180.google.com with SMTP id x63so24182770pfx.2
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 13:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version;
-        bh=HArrqqDECmGmjj3TjfEPmWgCbvRg1/+TBxW1/sMP2Sg=;
-        b=IwXlGZH1Jd2s+LE2gzaFK4edjJzFjQY03+cdS4uR6P9laQM8HrXuosfYBV5nCpkDAa
-         sWbkaJQXbDRBECiPliuA47xXYU/k6w7E+HOabi8v4tstLJTttjhhbJ5+J9ASx1XQBdZL
-         LeZx5zK/EAnp11MA4QPMfU4eOxlF7W1IQkSUUt91VLQpG098Hz8lCzRkX8aG8cBHG0LX
-         jCYzPbohMBScgToJ6J2CMPHWbS3aF8/sJVSqZEa47X3vM4X5r/QcSWqEvE5VMXLxCSjG
-         gcqR06tRLNqFdAVXX60ibPfB2h+9KP5NG5ZFrw/kbIy7bQ/Sv0/oEpCmy/sDNMuneUOL
-         7GHQ==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1lRrxIDlSMM9fnEHKADnMl45vtDhxczde65j9eEwR8E=;
+        b=q7JcQgUkxKnLudAGmZeBt0YeA70L1Tr2RnyTjtTYhOXyqusCaco+hb4lFsbIYEaaIB
+         o9PuKbEbLqBjcYAjy91teSCB4AEXX8TGrbe91A1MiHvLFN80pAaWXW8JHa6LC+dfWLeh
+         nXVvKPP+DRZ9WYG0EmHAmSkvrmh6mcsFE2yEBzgDgcjcHNZFmjJ3WBxCe49yMhxxUZTL
+         mZP+4OEjd0kiHMZ1hMh8TuUTk2zGOSmTgjVHvlYaabz6ByFQ04erjofsgDxnvLzCIoGc
+         MCZVdyUQihHvegN8+5voYjFibfEDPDaR9PI02hE5tsX9ht8HPa4aTuYNqIA/tBD4y7WZ
+         UiuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :user-agent:mime-version;
-        bh=HArrqqDECmGmjj3TjfEPmWgCbvRg1/+TBxW1/sMP2Sg=;
-        b=h4p+KmFBMuM9Xdyx8r/60jzEayCRM/dHIuYD0GtMHt3pK+TLVGzJOY1VbssA7Ko7r0
-         CKxupuKcIqU99miFQgKVPb7dcRGH37id7GOzFC+HLZW1aDAK2EYnlyTBGR8kbhGt0giQ
-         uDBGOVhcSoWS8iIGNpb2MklmyIL3StZRWCKBJpJvRp/PSag+I9YKmc3kJMO7dXkcI1AL
-         Xa2E7SjojARCbSzr/jotjiAQA96/4ZwZcuW/9xdK2eCtYf7FXJKvcsIPR12YYSiRkm5S
-         YRs7Pt0ib4QftHVJqsqlOVzewPu05sjaUUFmHLONxJbeQELDxdo86JQQTkXu39pj1UGB
-         QfWg==
-X-Gm-Message-State: AFeK/H3Hqt3cCLbEy3h4bS5G+Tq7Q8OGhBWRKlDlk2m7ocyIvGcLk55KWJUvqVTnBR5Nzw==
-X-Received: by 10.99.62.4 with SMTP id l4mr10832810pga.172.1489695930617;
-        Thu, 16 Mar 2017 13:25:30 -0700 (PDT)
-Received: from i7.lan (c-73-11-52-149.hsd1.or.comcast.net. [73.11.52.149])
-        by smtp.gmail.com with ESMTPSA id 197sm12216939pfv.19.2017.03.16.13.25.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Mar 2017 13:25:30 -0700 (PDT)
-Date:   Thu, 16 Mar 2017 13:25:29 -0700 (PDT)
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-X-X-Sender: torvalds@i7.lan
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 2/2] Integrate the sha1dc code with the git build
-Message-ID: <alpine.LFD.2.20.1703161325081.18484@i7.lan>
-User-Agent: Alpine 2.20 (LFD 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=1lRrxIDlSMM9fnEHKADnMl45vtDhxczde65j9eEwR8E=;
+        b=BK+yrCms/U1T1eQYaR9Q1WTr9sLnKMlikajI8VdyRh0CZ+xKsQLv8WDp2Gq0p+lZad
+         1x6tnMgFq/k7LdKKIkRHrzNmFKx3mZjsyo1KGadn9PHNck1qDOaUJdngcG7A7R2zC9Qe
+         H/B8EsDfiYdrmpUw1zg0rGXPojJlUzOMQOM7dADUbQryS5m1XKkPixFHBWbjpWs+IFOn
+         QysRlQK/ciG6/HmnAvCVsJuuYxQ2UV6Jr4mPP3RRz1Ch9K7i8QigfxuXxgM4xkPmTnI8
+         WBuvEAalF7ZFWvOd3H0kmfYeKA3YnAz8yeIcdp/2YbUjuDBFdE10YS1XayOU6ntgnbW8
+         StXw==
+X-Gm-Message-State: AFeK/H1iiDHPQ8wN63g/JfrKCFeUJeRgLBSssgK9KrR+NqvVxgpFPXrVwj86KzWYgBBE1oIW
+X-Received: by 10.84.130.67 with SMTP id 61mr14906868plc.115.1489697206746;
+        Thu, 16 Mar 2017 13:46:46 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:29bb:161:bf0d:8070])
+        by smtp.gmail.com with ESMTPSA id x21sm12346858pgf.15.2017.03.16.13.46.45
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 16 Mar 2017 13:46:45 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com, jrnieder@gmail.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: [PATCH v2] short status: improve reporting for submodule changes
+Date:   Thu, 16 Mar 2017 13:46:44 -0700
+Message-Id: <20170316204644.11616-1-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.269.g1a05a5734c.dirty
+In-Reply-To: <CAGZ79kZ7rWw=q6a2AomTw20DsU1h+7ou4i8A14a2bcg+asRwLA@mail.gmail.com>
+References: <CAGZ79kZ7rWw=q6a2AomTw20DsU1h+7ou4i8A14a2bcg+asRwLA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+While we already have a porcelain2 layer for git-status, that is accurate
+for submodules, users still like the way they are are used to of
+'status -s'.
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 16 Mar 2017 13:08:38 -0700
-Subject: [PATCH 2/2] Integrate the sha1dc code with the git build
+As a submodule has more state than a file potentially, we need more letters
+indicating these states, we'll go with lower 'm' and single '?' for now.
 
-This adds the proper magic to actually build the sha1dc code as part of
-git when USE_SHA1DC is enabled.
+When there the recorded commit doesn't differ from the submodule HEAD
+(which we still want to treat as "M", because that can be dealt with
+in the superproject), we can have different types of change in the
+submodule. The lower case 'm' indicates that there are changes to tracked
+files in the submodule. It signals that the --recurse-submodules option
+is needed for e.g. adding or committing these changes. The " ?" also
+differentiates an untracked file in the submodule from a regular
+untracked file.
 
-This includes
+While making these changes, we need to make sure to not break porcelain
+level 1, which uses the same code as the short printing function.
 
- - adjusting the sha1dc include directives for git use
-
- - adding the proper USE_SHA1DC logic to the Makefile
-
- - adding the SHA1DC case to the "hash.h" header
-
- - adding the proper "git platform" wrappers for the SHA1 interface
-
-Much of this comes from Jeff King's previous integration effort, with
-modifications for the new world order of hash.h.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Makefile           | 10 ++++++++++
- hash.h             |  2 ++
- sha1dc/sha1.c      | 33 +++++++++++++++++++++++++--------
- sha1dc/sha1.h      | 18 ++++++++++++++++--
- sha1dc/ubc_check.c |  4 ++--
- sha1dc/ubc_check.h |  2 --
- 6 files changed, 55 insertions(+), 14 deletions(-)
+ Documentation/git-status.txt |  8 ++++++++
+ t/t7506-status-submodule.sh  | 24 ++++++++++++++++++++++++
+ wt-status.c                  | 15 +++++++++++++--
+ wt-status.h                  |  1 +
+ 4 files changed, 46 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index a5a11e721..186ce17f2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -140,6 +140,10 @@ all::
- # Define PPC_SHA1 environment variable when running make to make use of
- # a bundled SHA1 routine optimized for PowerPC.
- #
-+# Define USE_SHA1DC to unconditionally enable the collision-detecting sha1
-+# algorithm. This is slower, but may detect attempted collision attacks.
-+# Takes priority over other *_SHA1 knobs.
-+#
- # Define SHA1_MAX_BLOCK_SIZE to limit the amount of data that will be hashed
- # in one call to the platform's SHA1_Update(). e.g. APPLE_COMMON_CRYPTO
- # wants 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined.
-@@ -1383,6 +1387,11 @@ ifdef APPLE_COMMON_CRYPTO
- 	SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
- endif
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index ba873657cf..b182b16c48 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -181,6 +181,12 @@ in which case `XY` are `!!`.
+     !           !    ignored
+     -------------------------------------------------
  
-+ifdef USE_SHA1DC
-+	LIB_OBJS += sha1dc/sha1.o
-+	LIB_OBJS += sha1dc/ubc_check.o
-+	BASIC_CFLAGS += -DSHA1DC
-+else
- ifdef BLK_SHA1
- 	LIB_OBJS += block-sha1/sha1.o
- 	BASIC_CFLAGS += -DSHA1_BLK
-@@ -1400,6 +1409,7 @@ else
- endif
- endif
- endif
-+endif
++Submodules have more state to it, such that it reports instead:
++		M    the submodule has a different HEAD than recorded
++		m    the submodule has modified content
++		?    the submodule has untracked files
++
++
+ If -b is used the short-format status is preceded by a line
  
- ifdef SHA1_MAX_BLOCK_SIZE
- 	LIB_OBJS += compat/sha1-chunked.o
-diff --git a/hash.h b/hash.h
-index f0d9ddd0c..b9e7e34fc 100644
---- a/hash.h
-+++ b/hash.h
-@@ -3,6 +3,8 @@
+     ## branchname tracking info
+@@ -210,6 +216,8 @@ field from the first filename).  Third, filenames containing special
+ characters are not specially formatted; no quoting or
+ backslash-escaping is performed.
  
- #if defined(SHA1_PPC)
- #include "ppc/sha1.h"
-+#elif defined(SHA1DC)
-+#include "sha1dc/sha1.h"
- #elif defined(SHA1_APPLE)
- #include <CommonCrypto/CommonDigest.h>
- #elif defined(SHA1_OPENSSL)
-diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-index 8d12b832b..76a8d1a85 100644
---- a/sha1dc/sha1.c
-+++ b/sha1dc/sha1.c
-@@ -5,14 +5,9 @@
- * https://opensource.org/licenses/MIT
- ***/
++Any submodule changes are reported as modified `M` instead of `m` or single `?`.
++
+ Porcelain Format Version 2
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
  
--#include <string.h>
--#include <memory.h>
--#include <stdio.h>
--#include <stdlib.h>
--
--#include "sha1.h"
--#include "ubc_check.h"
--
-+#include "git-compat-util.h"
-+#include "sha1dc/sha1.h"
-+#include "sha1dc/ubc_check.h"
+diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+index d31b34da83..98dff01947 100755
+--- a/t/t7506-status-submodule.sh
++++ b/t/t7506-status-submodule.sh
+@@ -50,6 +50,15 @@ test_expect_success 'status with modified file in submodule (porcelain)' '
+ 	EOF
+ '
  
- /* 
-    Because Little-Endian architectures are most common,
-@@ -1790,3 +1785,25 @@ int SHA1DCFinal(unsigned char output[20], SHA1_CTX *ctx)
- 	output[19] = (unsigned char)(ctx->ihv[4]);
- 	return ctx->found_collision;
++test_expect_success 'status with modified file in submodule (short)' '
++	(cd sub && git reset --hard) &&
++	echo "changed" >sub/foo &&
++	git status --short >output &&
++	diff output - <<-\EOF
++	 m sub
++	EOF
++'
++
+ test_expect_success 'status with added file in submodule' '
+ 	(cd sub && git reset --hard && echo >foo && git add foo) &&
+ 	git status >output &&
+@@ -64,6 +73,14 @@ test_expect_success 'status with added file in submodule (porcelain)' '
+ 	EOF
+ '
+ 
++test_expect_success 'status with added file in submodule (short)' '
++	(cd sub && git reset --hard && echo >foo && git add foo) &&
++	git status --short >output &&
++	diff output - <<-\EOF
++	 m sub
++	EOF
++'
++
+ test_expect_success 'status with untracked file in submodule' '
+ 	(cd sub && git reset --hard) &&
+ 	echo "content" >sub/new-file &&
+@@ -83,6 +100,13 @@ test_expect_success 'status with untracked file in submodule (porcelain)' '
+ 	EOF
+ '
+ 
++test_expect_success 'status with untracked file in submodule (short)' '
++	git status --short >output &&
++	diff output - <<-\EOF
++	 ? sub
++	EOF
++'
++
+ test_expect_success 'status with added and untracked file in submodule' '
+ 	(cd sub && git reset --hard && echo >foo && git add foo) &&
+ 	echo "content" >sub/new-file &&
+diff --git a/wt-status.c b/wt-status.c
+index a52d342695..080d97f272 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1664,9 +1664,19 @@ static void wt_shortstatus_status(struct string_list_item *it,
+ 		color_fprintf(s->fp, color(WT_STATUS_UPDATED, s), "%c", d->index_status);
+ 	else
+ 		putchar(' ');
+-	if (d->worktree_status)
++	if (d->worktree_status) {
++		if (!s->submodule_porcelain1 &&
++		    (d->dirty_submodule || d->new_submodule_commits)) {
++			/* It is a submodule, and we're not in plumbing mode. */
++			if (d->new_submodule_commits)
++				d->worktree_status = 'M';
++			else if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
++				d->worktree_status = 'm';
++			else if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
++				d->worktree_status = '?';
++		}
+ 		color_fprintf(s->fp, color(WT_STATUS_CHANGED, s), "%c", d->worktree_status);
+-	else
++	} else
+ 		putchar(' ');
+ 	putchar(' ');
+ 	if (s->null_termination) {
+@@ -1811,6 +1821,7 @@ static void wt_porcelain_print(struct wt_status *s)
+ 	s->relative_paths = 0;
+ 	s->prefix = NULL;
+ 	s->no_gettext = 1;
++	s->submodule_porcelain1 = 1;
+ 	wt_shortstatus_print(s);
  }
-+
-+static const char collision_message[] =
-+"The SHA1 computation detected evidence of a collision attack;\n"
-+"refusing to process the contents.";
-+
-+void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
-+{
-+	if (SHA1DCFinal(hash, ctx))
-+		die(collision_message);
-+}
-+
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *vdata, unsigned long len)
-+{
-+	const char *data = vdata;
-+	/* We expect an unsigned long, but sha1dc only takes an int */
-+	while (len > INT_MAX) {
-+		SHA1DCUpdate(ctx, data, INT_MAX);
-+		data += INT_MAX;
-+		len -= INT_MAX;
-+	}
-+	SHA1DCUpdate(ctx, data, len);
-+}
-diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
-index e867724c0..37ee415da 100644
---- a/sha1dc/sha1.h
-+++ b/sha1dc/sha1.h
-@@ -9,8 +9,6 @@
- extern "C" {
- #endif
  
--#include <stdint.h>
--
- /* uses SHA-1 message expansion to expand the first 16 words of W[] to 80 words */
- /* void sha1_message_expansion(uint32_t W[80]); */
- 
-@@ -100,6 +98,22 @@ void SHA1DCUpdate(SHA1_CTX*, const char*, size_t);
- /* returns: 0 = no collision detected, otherwise = collision found => warn user for active attack */
- int  SHA1DCFinal(unsigned char[20], SHA1_CTX*); 
- 
-+
-+/*
-+ * Same as SHA1DCFinal, but convert collision attack case into a verbose die().
-+ */
-+void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
-+
-+/*
-+ * Same as SHA1DCUpdate, but adjust types to match git's usual interface.
-+ */
-+void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
-+
-+#define platform_SHA_CTX SHA1_CTX
-+#define platform_SHA1_Init SHA1DCInit
-+#define platform_SHA1_Update git_SHA1DCUpdate
-+#define platform_SHA1_Final git_SHA1DCFinal
-+
- #if defined(__cplusplus)
- }
- #endif
-diff --git a/sha1dc/ubc_check.c b/sha1dc/ubc_check.c
-index 27d0976da..089dd4743 100644
---- a/sha1dc/ubc_check.c
-+++ b/sha1dc/ubc_check.c
-@@ -24,8 +24,8 @@
- // ubc_check has been verified against ubc_check_verify using the 'ubc_check_test' program in the tools section
- */
- 
--#include <stdint.h>
--#include "ubc_check.h"
-+#include "git-compat-util.h"
-+#include "sha1dc/ubc_check.h"
- 
- static const uint32_t DV_I_43_0_bit 	= (uint32_t)(1) << 0;
- static const uint32_t DV_I_44_0_bit 	= (uint32_t)(1) << 1;
-diff --git a/sha1dc/ubc_check.h b/sha1dc/ubc_check.h
-index b349bed92..b64c306d7 100644
---- a/sha1dc/ubc_check.h
-+++ b/sha1dc/ubc_check.h
-@@ -27,8 +27,6 @@
- extern "C" {
- #endif
- 
--#include <stdint.h>
--
- #define DVMASKSIZE 1
- typedef struct { int dvType; int dvK; int dvB; int testt; int maski; int maskb; uint32_t dm[80]; } dv_info_t;
- extern dv_info_t sha1_dvs[];
+diff --git a/wt-status.h b/wt-status.h
+index 54fec77032..620e4d2ae4 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -70,6 +70,7 @@ struct wt_status {
+ 	int display_comment_prefix;
+ 	int relative_paths;
+ 	int submodule_summary;
++	int submodule_porcelain1;
+ 	int show_ignored_files;
+ 	enum untracked_status_type show_untracked_files;
+ 	const char *ignore_submodule_arg;
 -- 
-2.12.0.434.g76f8c11c1
+2.12.0.269.g1a05a5734c.dirty
 
