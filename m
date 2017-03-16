@@ -2,76 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDAB620959
-	for <e@80x24.org>; Thu, 16 Mar 2017 22:43:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CE2920323
+	for <e@80x24.org>; Thu, 16 Mar 2017 22:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752820AbdCPWnR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 18:43:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51985 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751389AbdCPWnQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 18:43:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0B0CE695BF;
-        Thu, 16 Mar 2017 18:43:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8tU1riYpD4/KdCEasAyNBp2YTCc=; b=HUClJc
-        ExPRfsT8YJBB0hu/1ZrCFu/2O7Wj2xzd7tRK90jgLKT4LhMOwOSZ4acDXoiDdPWM
-        cTPwtgGoCx9XpBc26T33G/y2qSJ1Gou0PLXILCpkyOQlNqAVCioaCsHdjpKD7KaY
-        u8IXl/zZk9r5LgxhKoTwlKTZuKcmZr1DOQ3CQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=C8Ak3OfcQpT+KBR8kxanIQd2rOptgnXw
-        oyuC/o5jhvAqq+d3qn2F3Xq7kkRprRuedqHQbgQRCZFK/j0YjL+J83QdFTjtLi4f
-        10COUv+6UrGLsZn7aRtBTGkh+A2b9dHsuUP/g5rPNdjHpadQT2QoQUvj/H0JDgGD
-        ulczqoxbaWQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03A2C695BD;
-        Thu, 16 Mar 2017 18:43:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6821F695BC;
-        Thu, 16 Mar 2017 18:43:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/5] Makefile: add USE_SHA1DC knob
-References: <20170316220456.m4yz2kbvzv6waokn@sigill.intra.peff.net>
-        <20170316220911.43zernzq643m5mmk@sigill.intra.peff.net>
-Date:   Thu, 16 Mar 2017 15:43:13 -0700
-In-Reply-To: <20170316220911.43zernzq643m5mmk@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 16 Mar 2017 18:09:12 -0400")
-Message-ID: <xmqqtw6salmm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752357AbdCPWvk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 18:51:40 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34317 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750899AbdCPWvk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 18:51:40 -0400
+Received: by mail-pg0-f66.google.com with SMTP id b5so7535291pgg.1
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 15:51:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=f45BNqnhcntA1pW6YE69I1HnJr52fxGNGv+S38KcK+k=;
+        b=WBogTlK9rS+yxe52TJSGeloGjAVl61WVoZhQ4aP7xY2qd8Tob4PYkonBOQy0K7yCaf
+         UQRfsw9aPxy5p1pNnO1hT2dvZ8B8pb7Ej4uWAM56NI6JyNgLC68W9Aawz/6rNgzD09Ud
+         dCtm/JNdY9Pkq98heE7rnFKv+yqihWJu+UtGaHUTUDLL19uxlwuCebm3S7ySJzHR9dD3
+         L5CeYWzochjPw2FcOW5+auSKBK4rcWQRRW3gxyy9uuxKVnyzMToUQNCZTbFDcsKHbQ6C
+         /7sfnybThzlGyjSpUDMemRou22N76+GgmOr8Ajrpef93Tk6e4+LJJcF08fo6VFWV0rem
+         yAgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=f45BNqnhcntA1pW6YE69I1HnJr52fxGNGv+S38KcK+k=;
+        b=L3F3F3wJCcr0QFzkAB7QP+pi9D8rIMFSxyg/TZNavfjr+NHshLBiAq4W9xBWWcDln8
+         ot+upt6eUBa/YtSw+OdtpQh2BGECnAVswYwWJ34Uz9aK/ypNY4PSTccEf8VaRuvWAoZY
+         O3W2gtOtnS3SNQHfp/wmNFwcIm723T5Yos4enTdcHvv4eCVX0+2pUpF00bHBKbwcny2p
+         aTyuP2oXy7oDhmGoC4tBhW4v/jIOLU883N05kir3mbEq+1Iz+QluHRTpQukO6FXLhilq
+         Czd7KL++oGNjNz07exQVv+/etlVeAuw1mV4l/ANQlJSLEdAsCLuKZbVtZC5g6FigvQha
+         bLnw==
+X-Gm-Message-State: AFeK/H0nBZIokZr9lWKEGZNchaau6I+vnAnanWXtRUgHpUjSnB2kqCJkfv7YZusNzMzddQ==
+X-Received: by 10.98.80.1 with SMTP id e1mr12688152pfb.250.1489704670941;
+        Thu, 16 Mar 2017 15:51:10 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:61c9:f866:d5e4:4761])
+        by smtp.gmail.com with ESMTPSA id w20sm12577243pgc.18.2017.03.16.15.51.10
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 16 Mar 2017 15:51:10 -0700 (PDT)
+Date:   Thu, 16 Mar 2017 15:51:08 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH] wt-status.c: improve readability for wt_shortstatus_print
+Message-ID: <20170316225108.GB9135@aiede.mtv.corp.google.com>
+References: <20170316213619.30678-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F0CDC06C-0A99-11E7-B95A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170316213619.30678-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Stefan Beller wrote:
 
-> +ifdef USE_SHA1DC
-> +	LIB_OBJS += sha1dc/sha1.o
-> +	LIB_OBJS += sha1dc/ubc_check.o
-> +	BASIC_CFLAGS += -DSHA1_SHA1DC
+> Subject: wt-status.c: improve readability for wt_shortstatus_print
 
-The name of this CPP symbol is one difference between this and
-Linus's version.  Wouldn't "-DSHA1_DC" make more sense?
+Maybe:
 
-Another difference is that your version adds USE_SHA1DC to
-GIT-BUILD-OPTIONS in patch 5/5; I thought GIT-CFLAGS forces
-rebuilding and that was sufficient, but GIT-BUILD-OPTIONS is
-available to tests for introspection, so adding it is needed
-for that reason.
+	wt-status: simplify by using for_each_string_list_item
 
+	Improve readability by using the for_each_string_list_item helper
+	instead of manually iterating with an integer counter.
 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  wt-status.c | 20 +++++---------------
+>  1 file changed, 5 insertions(+), 15 deletions(-)
+
+I like the diffstat. :)
+
+With or without a clarified commit message,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
