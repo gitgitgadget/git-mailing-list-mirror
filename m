@@ -6,72 +6,89 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ECF020323
-	for <e@80x24.org>; Thu, 16 Mar 2017 14:27:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D68E420323
+	for <e@80x24.org>; Thu, 16 Mar 2017 14:27:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751997AbdCPO0y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 10:26:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45106 "EHLO cloud.peff.net"
+        id S1752031AbdCPO1F (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 10:27:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45107 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751899AbdCPO0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 10:26:53 -0400
-Received: (qmail 4618 invoked by uid 109); 16 Mar 2017 14:26:50 -0000
+        id S1751478AbdCPO1E (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 10:27:04 -0400
+Received: (qmail 4625 invoked by uid 109); 16 Mar 2017 14:27:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 14:26:50 +0000
-Received: (qmail 15435 invoked by uid 111); 16 Mar 2017 14:27:02 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 14:27:03 +0000
+Received: (qmail 15856 invoked by uid 111); 16 Mar 2017 14:27:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 10:27:02 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Mar 2017 10:26:47 -0400
-Date:   Thu, 16 Mar 2017 10:26:47 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 16 Mar 2017 10:27:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Mar 2017 10:27:00 -0400
+Date:   Thu, 16 Mar 2017 10:27:00 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 0/5] minor pack-name cleanups
-Message-ID: <20170316142647.t6tthkcgon3rpg4m@sigill.intra.peff.net>
-References: <20170315212617.6x57bvltinuozv4q@sigill.intra.peff.net>
+Subject: [PATCH v2 1/5] move odb_* declarations out of git-compat-util.h
+Message-ID: <20170316142700.llf6zpiss5l4xurs@sigill.intra.peff.net>
+References: <20170316142647.t6tthkcgon3rpg4m@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170315212617.6x57bvltinuozv4q@sigill.intra.peff.net>
+In-Reply-To: <20170316142647.t6tthkcgon3rpg4m@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's a re-roll of the series from:
+These functions were originally conceived as wrapper
+functions similar to xmkstemp(). They were later moved by
+463db9b10 (wrapper: move odb_* to environment.c,
+2010-11-06). The more appropriate place for a declaration is
+in cache.h.
 
-  http://public-inbox.org/git/20170315212617.6x57bvltinuozv4q@sigill.intra.peff.net/
+While we're at it, let's add some basic docstrings.
 
-The general gist is the same, but there are a number of changes:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ cache.h           | 12 ++++++++++++
+ git-compat-util.h |  2 --
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-  - I dropped the first patch factoring out finalize_file(), as Ramsay
-    pointed out a subtle difference between the index and pack handling.
-
-  - I added an extra patch on top (5/5 here) to get the same
-    pointer-aliasing safety that the factored-out function got us
-    (more so, actually, as it protects keep_msg, too).
-
-  - I re-ordered the odb_pack_keep() cleanup before the odb_pack_name()
-    cleanups, which lets us do the latter in one swoop (and avoids
-    explaining "well, we can't do .keep yet, because..." in the commit
-    message)
-
-  - The original had two patches doing the odb_pack_name() conversion.
-    Now that it has fewer caveats, I felt comfortable lumping it all
-    into one (patch 4/5 here).
-
-  [1/5]: move odb_* declarations out of git-compat-util.h
-  [2/5]: sha1_file.c: make pack-name helper globally accessible
-  [3/5]: odb_pack_keep(): stop generating keepfile name
-  [4/5]: replace snprintf with odb_pack_name()
-  [5/5]: index-pack: make pointer-alias fallbacks safer
-
- builtin/index-pack.c | 31 +++++++++++++++----------------
- cache.h              | 21 +++++++++++++++++++++
- environment.c        |  6 ++----
- fast-import.c        | 26 +++++++++++++-------------
- git-compat-util.h    |  2 --
- sha1_file.c          | 17 ++++++-----------
- 6 files changed, 57 insertions(+), 46 deletions(-)
+diff --git a/cache.h b/cache.h
+index c95826971..68ad06e15 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1634,6 +1634,18 @@ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ 
+ extern void pack_report(void);
+ 
++/*
++ * Create a temporary file rooted in the object database directory.
++ */
++extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
++
++/*
++ * Create a pack .keep file in the object database's pack directory, for
++ * a pack with checksum "sha1". The return value is a file descriptor opened
++ * for writing, or -1 on error. The name of the keep file is written to "name".
++ */
++extern int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1);
++
+ /*
+  * mmap the index file for the specified packfile (if it is not
+  * already mmapped).  Return 0 on success.
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e626851fe..8a4a3f85e 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -798,8 +798,6 @@ extern FILE *xfopen(const char *path, const char *mode);
+ extern FILE *xfdopen(int fd, const char *mode);
+ extern int xmkstemp(char *template);
+ extern int xmkstemp_mode(char *template, int mode);
+-extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
+-extern int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1);
+ extern char *xgetcwd(void);
+ extern FILE *fopen_for_writing(const char *path);
+ 
+-- 
+2.12.0.623.g86ec6c963
 
