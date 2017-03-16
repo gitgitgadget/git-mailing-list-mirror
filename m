@@ -2,96 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69853202C1
-	for <e@80x24.org>; Thu, 16 Mar 2017 01:32:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FFBC202C1
+	for <e@80x24.org>; Thu, 16 Mar 2017 04:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750868AbdCPBcF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Mar 2017 21:32:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59111 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750788AbdCPBcE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Mar 2017 21:32:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9273A81E6A;
-        Wed, 15 Mar 2017 21:32:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hHIONa50Lz1+HVGkr+7dpPMavwA=; b=yFkoub
-        cnjhc1hY3X03sYr8Ww7ML+hH34Dn5DcB1BySRkg7kIU2sp7UP8IlvIPFSP1pvoH1
-        hUifF7Ty1lbEkLbbs3YoZsEbDF6HfJn+YshPnzvpEPEA83swgjxvtdP+USfwzTQV
-        KlNB9Vi6Xiz+tWYoGqlm/xXvMwBTJyR/bvan8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D4vzEl3l2AIkrETmeHfFXj2Xy4W/w9Yw
-        bSx9EChiBiyVBIT06CELT0UPztEVwI6aVnvs2/JnBlBgBPm6MzEv54wqCFHC+iXn
-        1g5BJ54RmjYdiphxobhulUttRwgkj31br5uAd6mgxp4bo0OI6CmdKU7IlxUv93cb
-        qVoYO49+1fU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B66181E67;
-        Wed, 15 Mar 2017 21:32:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB4E581E65;
-        Wed, 15 Mar 2017 21:32:01 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     jrnieder@gmail.com, git@vger.kernel.org, jeffhost@microsoft.com
-Subject: Re: [RFC PATCH] short status: improve reporting for submodule changes
-References: <20170316003332.30918-1-sbeller@google.com>
-Date:   Wed, 15 Mar 2017 18:31:59 -0700
-In-Reply-To: <20170316003332.30918-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 15 Mar 2017 17:33:32 -0700")
-Message-ID: <xmqqvarac8hc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1750952AbdCPEtM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 00:49:12 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:33702 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750858AbdCPEtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 00:49:11 -0400
+Received: by mail-pg0-f41.google.com with SMTP id n190so19198290pga.0
+        for <git@vger.kernel.org>; Wed, 15 Mar 2017 21:49:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=I509VBJnmPsiqktnp6jv1PZyg3lL23wj2U0VclXZPJ4=;
+        b=M6Z9NxW8TRksFwcy7X8nHLXbqLFlgAEdFqA+VuevwhfYlTdbc4Qe+VL4kiEaHzaTjs
+         w0eF/sJq84LQl2mVEs0vywYcvDoTdPSKovTsiVE1m+VskPbXiUBZH6eNVW6PM/4B/6oD
+         pyc4seOL9BPwV7UhEEgX7KLxB+KfLxA2zjPVwblAnCCqWkIDbs3e+ToZ+qA++Ed643Qo
+         o24Rgr93Gp45Y51MbLNbTP+AFR7XkmySAX5vP2yx0Eb1WrDupM2V1KHqsyWNagwVSLCV
+         77/Qjm3rGxh82jsIh8qpYb6bQpkUsyKWf795YqFBIT37l7SMhzkSdvl1Xk5aHAz40Z0n
+         Qldw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=I509VBJnmPsiqktnp6jv1PZyg3lL23wj2U0VclXZPJ4=;
+        b=I+KYybYXCD5bvPqs4YKrLYsyh1MuLvPMzrEbulmjIZmOvw2hpmm57vNCPgBY2DoLjG
+         Upbrf6EHb4ToQf0EMLoALvz3Har3ZQF7KozA1VEYj8TcxZr8YU6+SC/Rbvk77jXvDwKi
+         pdylQ8gFpvyiPog6Sx93xZyVrImkEfxPjUZqmhGsef/J/eLLjBpf4SEJxdvXrP2IqAGQ
+         Hph9N+YrLL/0A4bRRsRfZK11G/R3i0T5n/hHBHYakEDl+Q1Kb5sGtSG86nFoawIiTqJp
+         vWb/Bdzl/s7RCQ+jCkRKcV+03M4VOZyWmUi9FwmT0mSCIiOSDT4LdUe5baFN+PgTuQz/
+         0j7g==
+X-Gm-Message-State: AFeK/H1depXT0O5CO1mKLyVSCfVAS1gIl4XBFDBWwYp8uIOfe8Wp26/B6SycKYYRSdY7cOui
+X-Received: by 10.99.47.199 with SMTP id v190mr7679711pgv.26.1489639750344;
+        Wed, 15 Mar 2017 21:49:10 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:e5fd:c660:1f84:47a3])
+        by smtp.gmail.com with ESMTPSA id d68sm7129441pfj.92.2017.03.15.21.49.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 15 Mar 2017 21:49:08 -0700 (PDT)
+Date:   Wed, 15 Mar 2017 21:49:07 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] submodule.c: fix an 'using integer as NULL pointer'
+ warning
+Message-ID: <20170316044907.GI159137@google.com>
+References: <2134ffee-f144-1fb3-7e0e-325fd2873ba9@ramsayjones.plus.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5AC4434A-09E8-11E7-914F-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2134ffee-f144-1fb3-7e0e-325fd2873ba9@ramsayjones.plus.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On 03/16, Ramsay Jones wrote:
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+> 
+> Hi Brandon,
+> 
+> If you need to re-roll your 'bw/submodule-is-active' branch, could
+> you please squash this into the relevant patch (commit 20d59ab335,
+> "submodule: decouple url and submodule existence", 13-03-2017).
 
-> While we already have a porcelain2 layer for git-status, that is accurate
-> for submodules, users still like the way they are are used to of
-> 'status -s'.
->
-> As a submodule has more state than a file potentially, we'll look at all
-> cases:
->
->    ------ new submodule commits
->  /  ----- modified files
->  | /   -- untracked files
->  | |  /
->  | | |   current / proposed reporting
->  0 0 0     "  "     "  "
->  0 0 1     " M"     " ?"
->  0 1 0     " M"     " m"
->  0 1 1     " M"     " m"
->  1 0 0     " M"     " M"
->  1 0 1     " M"     " M"
->  1 1 0     " M"     " M"
->  1 1 1     " M"     " M"
+Thanks for catching this, I've squashed it into my local branch and I'm
+planning on sending out a reroll in a day or so.
 
-You are essentialy saying that there are three levels, 1. with
-commit level difference, 2. the same commit with local mods, 3. no
-mods but with crufts, and instead of wasting 8 letters to express
-all combinations, the highest level is reported, right?  That sounds
-OK to me.  I am not sure if "?" is a good letter to use (doesn't it
-usually mean it is an untracked cruft?), though.
+> 
+> Thanks!
+> 
+> ATB,
+> Ramsay Jones
+> 
+>  submodule.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/submodule.c b/submodule.c
+> index 800283154..a77d11cc4 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -245,7 +245,7 @@ int is_submodule_initialized(const char *path)
+>  			argv_array_push(&args, item->string);
+>  		}
+>  
+> -		parse_pathspec(&ps, 0, 0, 0, args.argv);
+> +		parse_pathspec(&ps, 0, 0, NULL, args.argv);
+>  		ret = match_pathspec(&ps, path, strlen(path), 0, NULL, 1);
+>  
+>  		argv_array_clear(&args);
+> -- 
+> 2.12.0
 
-Does the commit level difference really mean "has new commits"?  It
-probably is not new problem but an old mistake inherited from the
-current code, but I suspect that you're just comparing the commit
-bound in the index of the superproject and the HEAD commit in the
-submodule, in which case "newness" does not matter a bit---"is it
-the same or different?" is the question you are asking, I would
-think.
-
-
+-- 
+Brandon Williams
