@@ -2,83 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3609A20323
-	for <e@80x24.org>; Thu, 16 Mar 2017 18:54:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E240D20323
+	for <e@80x24.org>; Thu, 16 Mar 2017 18:56:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753352AbdCPSyt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 14:54:49 -0400
-Received: from mail-lf0-f45.google.com ([209.85.215.45]:34888 "EHLO
-        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752440AbdCPSys (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 14:54:48 -0400
-Received: by mail-lf0-f45.google.com with SMTP id j90so24370437lfk.2
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 11:54:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=52Gth14CkCqPzlHaOahblwEWXpOjrHM3wdw6t6mOoLY=;
-        b=gV6XIGrPyRKQigKsog6HOH+SfG1RBxaFEd6yKRpzJma3bVWAuCYHrRZwdo5QM+meGH
-         hXlmGWzQSa/jW46IvC5zCe/zZkUFc5VxtPnACFQdOFAKF5821bLPQONvZzHLcIy9jxSD
-         ZoNKoWQHgUGNBPh//WQhn4+FlcHUKFACBp0Jh8INoNIP30qvdStQMrtz2GYwrSZjCGHW
-         05AzFWXN2Qkg7gD3GrYFPzouT1HUGOBl6U6f/4WY9AacH9K3EeU+WpfnCNKelRWDJcFd
-         a6qtkZIuSyYxHwsoO0IqnqGz2MoCNQI+a1kAUSxMiLG+/QTTqbPzeS7gyEzQTvzaDCFL
-         jLfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=52Gth14CkCqPzlHaOahblwEWXpOjrHM3wdw6t6mOoLY=;
-        b=YxR7VkF3Mgrd/oe4eMM7o08x1PjYVfwihKTy6OLn3QF2A+RLO3OuOCz1vzVjRE2o1A
-         ocLX5ySIV0mlHmCotf/SMv8HREuPF/ROroJd+ta486fptTWgXeOt7lwPNAZnyHDrMHp9
-         Bbr/hXjdpAMGAZK3WOuS/1gKpnNSA3hX7J+CHHgooNbCAovUWvdE8Kw7e+1SRxzxZNCd
-         qsmUSpj56GZaKMiEkm8rRRojg6g8el1GrKIRTC/fCqAOJV3JQyfCY4+z3+j0B0/jZ6Ed
-         BdKiWu6++m3nmKd4XQj8lrj5W4kO2va7Vk2iiQ2loUI+rI9ZZpjjt+fDQMl9b2woYplF
-         Zx4A==
-X-Gm-Message-State: AFeK/H12a9YJ+rsMF4u+1+nOuuBsyxdUT7iSrNk7Hv1r5RDmCukXJnibfvzbws2n6ExhU//MkLbWv08txwpTcw==
-X-Received: by 10.46.71.16 with SMTP id u16mr3497995lja.106.1489690486446;
- Thu, 16 Mar 2017 11:54:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.150.19 with HTTP; Thu, 16 Mar 2017 11:54:46 -0700 (PDT)
-In-Reply-To: <20170313200854.6905-1-souravcristiano502@gmail.com>
-References: <20170313200854.6905-1-souravcristiano502@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 16 Mar 2017 19:54:46 +0100
-Message-ID: <CAP8UFD3toXk36wmJu+EeBnTvCa0yHWqCmQOfoJ0+2QTs8MpB-A@mail.gmail.com>
+        id S1752119AbdCPS4r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 14:56:47 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54671 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751979AbdCPS4q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 14:56:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E38996ABA5;
+        Thu, 16 Mar 2017 14:56:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pC7GKv8Me5hZhNfiUIzs+838UQ8=; b=YBm3F2
+        B2TzXya0UbpBpm7meS+tGWh1K+Qd8byKeSbC3VUeEsBAbt7KAeGxIoTiqMkmd2zF
+        slS6HaDSlBwP9+HTklurZw6CwD77d4pDuNzMfUZckus0jmaSKXe4lsu8Vi6eaqwp
+        buBv8l1vqVt7liO0hN+gCKep1EQaXDF6olSTk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=EROnS+4+BJckal/JpCJasbMNmO4fw9vn
+        2aUB5PClDl006c455v45rwGERpwz+ih3t/cM34YtB3i3g8XNsd2v8x6Yil05HJE7
+        ca3YNr2ilsD/yb6vwU1iRAj+oRhSGB0lMvEvrjpEOjHCe9eg0KHm/jr9ir//caRT
+        nwlMYfGWy5A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DBC0C6ABA4;
+        Thu, 16 Mar 2017 14:56:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A7226ABA3;
+        Thu, 16 Mar 2017 14:56:44 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     sourav mondal <souravcristiano502@gmail.com>,
+        git <git@vger.kernel.org>
 Subject: Re: [PATCH]v2 adding built-in driver for javascript
-To:     sourav mondal <souravcristiano502@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+References: <20170313200854.6905-1-souravcristiano502@gmail.com>
+        <CAP8UFD3toXk36wmJu+EeBnTvCa0yHWqCmQOfoJ0+2QTs8MpB-A@mail.gmail.com>
+Date:   Thu, 16 Mar 2017 11:56:43 -0700
+In-Reply-To: <CAP8UFD3toXk36wmJu+EeBnTvCa0yHWqCmQOfoJ0+2QTs8MpB-A@mail.gmail.com>
+        (Christian Couder's message of "Thu, 16 Mar 2017 19:54:46 +0100")
+Message-ID: <xmqqo9x1aw44.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4C75DA78-0A7A-11E7-84A8-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 13, 2017 at 9:08 PM, sourav mondal
-<souravcristiano502@gmail.com> wrote:
-> javascript is one of the famous langugae,it's needs a built-in driver.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Please use "Javascript" instead of "javascript".
-There is a typo in "language" above, also maybe "it needs" instead of
-"it's needs", and please add a blank space before it.
+> On Mon, Mar 13, 2017 at 9:08 PM, sourav mondal
+> <souravcristiano502@gmail.com> wrote:
+>> javascript is one of the famous langugae,it's needs a built-in driver.
+>
+> Please use "Javascript" instead of "javascript".
 
-> As it was not present in the userdiff & this leads to the patch.
-
-Maybe "," instead of "&".
-
->         first line consists of some of the well used javascript keywords.statements
-
-"First" instead of "first" and no space before it, but a space and an
-uppercase letter at the beginning of "statements".
-
-> in js use one or many keywords like variable declaration, function definition, logical opreation etc.The
-
-Typo in "opreation" and please add a space before "The".
-
-I am stopping here but there are also typos and things to improve in
-the rest of the commit message.
+While we are typo-spotting ;-) Wikipedia seems to prefer to spell it
+"JavaScript".
