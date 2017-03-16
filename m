@@ -2,148 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EABFC20323
-	for <e@80x24.org>; Thu, 16 Mar 2017 16:30:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00B0720323
+	for <e@80x24.org>; Thu, 16 Mar 2017 16:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755069AbdCPQaH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 12:30:07 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60052 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754032AbdCPQaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 12:30:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E25B83D45;
-        Thu, 16 Mar 2017 12:30:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=s/hGce2FDnEyb1T27LCg6YQbvFY=; b=Pffj4o
-        BTXUfKbBMUkZoH9EabDelyqfs3lQ2Jtb2uyEUvWiClxicg7SomxsUv6PBq1mY4LW
-        gPpkd8H03QYk6XIPOKiOI5PVTpsvps7Te+APDk7LYvP/Gy96uh3jC8KEaXEfKIJR
-        U1q03VO6zZ4x5BBaBAV7ZSLH+3ONQpnp2AJMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TP4wrSUafPL9qw2WQIHjnle341Ui4Y5c
-        hAWRm/PY1K36Uwo4QnGwErOsEZA4svXV74l4zlDRW4eQcCjcg6xEi7ii8EhFzrtI
-        mMwhOQHQWyGwpJI+XOZSGsT9eP6+J30l0MRk4Ss8E1qbDjm12y59Z/zfp9PLa6RN
-        YC7mAyOFQxE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 63AD283D43;
-        Thu, 16 Mar 2017 12:30:02 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F208383D40;
-        Thu, 16 Mar 2017 12:29:59 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Devin Lehmacher <lehmacdj@gmail.com>, Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v4 4/4] credential-cache: add tests for XDG functionality
-References: <20170314003246.71586-4-lehmacdj@gmail.com>
-        <20170316051827.97198-1-lehmacdj@gmail.com>
-        <20170316051827.97198-5-lehmacdj@gmail.com>
-Date:   Thu, 16 Mar 2017 09:29:58 -0700
-In-Reply-To: <20170316051827.97198-5-lehmacdj@gmail.com> (Devin Lehmacher's
-        message of "Thu, 16 Mar 2017 01:18:27 -0400")
-Message-ID: <xmqq8to5chh5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753301AbdCPQfR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 12:35:17 -0400
+Received: from mail-it0-f41.google.com ([209.85.214.41]:38509 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755171AbdCPQfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 12:35:10 -0400
+Received: by mail-it0-f41.google.com with SMTP id m27so50608831iti.1
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 09:35:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Aq6C6Zd42DrrQnzhNYIwUcs/+YZHloEvnNbJRfz9o/0=;
+        b=aw2i4GeJzK9FnoS25zgvXdpXXs12o+vhe4LKmt3QJYn6YdEbfQcgaOAWmA1cHg1Je1
+         IruNOnmXSXin/JHO9qj5PbaSYYGOBTqQbQ/KCF5dqKCz8kJ6A3qUqjJbMZ6SMF3IS9dm
+         F8Y//Yo+zYPNiT2gan/Ujiev5k5hdrkRrCn2CSJgTdjkEdYbWvjsTGTNZfvUfWFyyFmR
+         5hnQixe6UsRslkl3mkcToFdIJ7zc3fPvgjbRvyjOaLKzkyBg2ZBAGuyj3FLZehPgn6xk
+         25Lg9Pl7NPnKt+HepTdUxeaI4o5Wjl+jJDSi8V0B3XSEqrEeTZBG430Te9k84wpNMgrn
+         HcFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Aq6C6Zd42DrrQnzhNYIwUcs/+YZHloEvnNbJRfz9o/0=;
+        b=s+T+2H1zfqtIJQ4w23n9016Cf2uiONOPLb/+4b6BeBGYZeB01N+hixnJAZVETsvBt2
+         UTIH8tvgx2Dno3f+rktap8Sr+lxtj0gM50a10ayIP1NNTRlRX1cuBg+z3Zb4fEYY+84O
+         LL5bECcjSzH4adYkI+82RrzxO0Sk18w3zP3Njt25LQiv3leXM+M473BZPSqtYErQmLv9
+         jFCLTIiimqrwq7mVKhv6tHFjGM3jeeqTNBJugbD9zwRwu91cJC+cGZ8YJpXS9uVk5SaE
+         HwZNzfkS4UdFizg56/jgbjir/CrbbcI8LLcS5WIf4NfCu6mugnGtISq2ej1ctoJsOHFH
+         9Ogg==
+X-Gm-Message-State: AFeK/H3VhtC64AqYK9Ngj8XjMiFhBWWDrMGGsuxtg2025WojbKgCPw+gY1HckKbZIJb8LKH8jbBlSffD+FGC6w==
+X-Received: by 10.107.19.222 with SMTP id 91mr11898353iot.211.1489682095749;
+ Thu, 16 Mar 2017 09:34:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CCAE7818-0A65-11E7-885A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.79.144.198 with HTTP; Thu, 16 Mar 2017 09:34:55 -0700 (PDT)
+From:   Okash Khawaja <okash.khawaja@gmail.com>
+Date:   Thu, 16 Mar 2017 16:34:55 +0000
+Message-ID: <CAOtcWM3mrQEqDnjMipzea7Kp+VueBFsZDL2zcJ=y0wgj9N4Vjw@mail.gmail.com>
+Subject: Viewing untracked+stashed files in git stash show
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Devin Lehmacher <lehmacdj@gmail.com> writes:
+Hi,
 
-> @@ -20,4 +21,67 @@ helper_test_timeout cache --timeout=1
->  # our socket, leaving us with no way to access the daemon.
->  git credential-cache exit
->  
-> +# we need to use rm -rf here since sometimes the daemon hasn't finished
-> +# cleaning up after itself and rmdir fails
+If you have some untracked files and your run `git stash -u`. Then
+`git stash show` doesn't show the untracked files. Is there a flag
+that can be passed to git stash show to report untracked files?
 
-Hmmmm.  Peff, do you have ideas on better ways to do this (or
-explanation why this is the best we could do)?
-
-> +test_expect_success 'credential-cache --socket option overrides default location' '
-> +	test_when_finished "rm -rf \"$HOME\"/dir/" &&
-> +	check approve "cache --socket \"$HOME/dir/socket\"" <<-\EOF &&
-> +	protocol=https
-> +	host=example.com
-> +	username=store-user
-> +	password=store-pass
-> +	EOF
-> +	test -S "$HOME/dir/socket" &&
-> +	git credential-cache exit
-> +'
-> +
-> +XDG_CACHE_HOME="$HOME/xdg"
-> +export XDG_CACHE_HOME
-> +# test behavior when XDG_CACHE_HOME is set
-> +helper_test cache
-> +
-> +test_expect_success "use custom XDG_CACHE_HOME if set and default sockets are not created" '
-> +	test -S "$XDG_CACHE_HOME/git/credential/socket" &&
-> +	test_path_is_missing "$HOME/.git-credential-cache/socket" &&
-> +	test_path_is_missing "$HOME/.cache/git/credential/socket" &&
-> +	git credential-cache exit
-> +'
-> +unset XDG_CACHE_HOME
-> +
-> +test_expect_success "use custom XDG_CACHE_HOME even if xdg socket exists" '
-> +	check approve cache <<-\EOF &&
-> +	protocol=https
-> +	host=example.com
-> +	username=store-user
-> +	password=store-pass
-> +	EOF
-> +	test -S "$HOME/.cache/git/credential/socket" &&
-> +	XDG_CACHE_HOME="$HOME/xdg" &&
-> +	export XDG_CACHE_HOME &&
-> +	check approve cache <<-\EOF &&
-> +	protocol=https
-> +	host=example.com
-> +	username=store-user
-> +	password=store-pass
-> +	EOF
-> +	test -S "$HOME/xdg/git/credential/socket" &&
-> +	git credential-cache exit &&
-> +	unset XDG_CACHE_HOME
-
-This unset will not run if any of the above steps since it was set
-and exported fails.  It probably should be in test_when_finished and
-should use safe_unset shell function instead.
-
-> +'
-> +
-> +# we need to use rm -rf here since sometimes the daemon hasn't finished
-> +# cleaning up after itself and rmdir fails
-> +test_expect_success 'use user socket if user directory exists' '
-> +	test_when_finished "rm -rf \"$HOME/.git-credential-cache/\"" &&
-> +	mkdir -p -m 700 "$HOME/.git-credential-cache/" &&
-> +	check approve cache <<-\EOF &&
-> +	protocol=https
-> +	host=example.com
-> +	username=store-user
-> +	password=store-pass
-> +	EOF
-> +	test -S "$HOME/.git-credential-cache/socket" &&
-
-We should also test that the XDG location is not touched at the same
-time that the traditional directory was used for the socket.
-
-> +	git credential-cache exit
-> +'
-
-This last test should be replicated to also check the case where we
-have a symbolic link at ~/.git-credential-cache that points at a
-directory.
-
->  test_done
-
-Thanks.
+Thanks,
+Okash
