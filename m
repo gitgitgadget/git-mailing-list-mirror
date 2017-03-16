@@ -2,75 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6A6020323
-	for <e@80x24.org>; Thu, 16 Mar 2017 19:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D11320323
+	for <e@80x24.org>; Thu, 16 Mar 2017 19:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752558AbdCPTsG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 15:48:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50147 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752494AbdCPTsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 15:48:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B8D356B498;
-        Thu, 16 Mar 2017 15:41:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=inolIPmXt3lTRGr8fzXgonr/qtM=; b=mRcqK6
-        kNo+7RBWdBw+x6Dl9jFETrLKfes4YEqzLiNuhH+xEidqPSRQSGYrb0PMyGHxm7Ch
-        aRRMKdiZqYTAQxr14bg7UXuhoOU5jPLs+94VjnNkIV0tD10uGiUylr1JU7miHClF
-        wkuhXlYZ4muHqIill6xGetc0NLP4V9ORNUELs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Sfgv/WxB/hpl8UrPcppVLr3FBQXU3lVK
-        jbQGJkOenm3ktirol64tnPYC9sOYAfZVJSrRUJIDpGqFQ1BaOlHHkVNcp1SyrEfY
-        T9qIEQMcI/vK/fkT8EHcswvHNJJhr05dPRslQALJDWAydGZK0ScirHe1X0gSGISH
-        g6rCC85oYJs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AFD386B497;
-        Thu, 16 Mar 2017 15:41:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0ADBF6B496;
-        Thu, 16 Mar 2017 15:41:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Linus Torvalds <torvalds@linux-foundation.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: USE_SHA1DC is broken in pu
-References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com>
-Date:   Thu, 16 Mar 2017 12:41:53 -0700
-In-Reply-To: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com>
-        (Linus Torvalds's message of "Thu, 16 Mar 2017 12:22:00 -0700")
-Message-ID: <xmqqfuidau0u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752844AbdCPTvt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 15:51:49 -0400
+Received: from mail-it0-f46.google.com ([209.85.214.46]:33203 "EHLO
+        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752578AbdCPTvs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 15:51:48 -0400
+Received: by mail-it0-f46.google.com with SMTP id w124so6623833itb.0
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 12:51:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=575venuVEy+4UYHVA9Cll9O7RwZ26zvyM1D6PGbrmts=;
+        b=Hy5FsiV10Ryiy/ME+zh9yBqvwDc3jr6s6JQb+HYW9fEfEKRNVi+FMte7LzzhK49VD+
+         Gis6GdbYrJlCOa1YDN3RveGbFwWcUL17NG1WAVGwGVRfOZ6WDTmyNDCxcYX80A3lF+W7
+         +aeVtGqfAZYqK5DsrjojTJp0ovQ9fJYRD9QcFa4iNT2uJcWqXhsZqVKlE5kSFFPMNWXA
+         99uW24dNfUO8ItHs0rON+DnThSpp0f2bc/rWY0TM4JFr8VZtMkbrMm7P7apLSV7XLeQv
+         iaLBGHhLpuxNBvNRD8uBEgO8A3w/k9PGmFFBk5o1TjC1x4R8CKkxfKaVpS1AcYqT0aPA
+         /qBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=575venuVEy+4UYHVA9Cll9O7RwZ26zvyM1D6PGbrmts=;
+        b=QH8Mf+4QbLfKW9CqYCZZuS/3uokgUoff/kCRlElqoCkeIfS4L9S9NcdpPXW3gx2fsf
+         54Sq6xc4hsUvaLTXEYENHaUnAXBI9Ud9Aq/GyH6tMplYqmbSibS/IVlX+BLe93VMNHwC
+         3pmJGiRD/y8Wl8K4OJhDCAM7Mj4UTrzV+VC6avsK75IPYAZ78XKYq2nJt91fgR7ntZQq
+         96hCP7OyDWb/8mlxynIIz7u2xffdRyz6Jiuni84lPzY7Gl+rICLAq6eRYcMVN3g9UqXE
+         yTcMIcqCUn9PKBviqzBzzJdnHbyTltO351fODVIBWV0jXHXrfiOU48LYQJxuo9gZLVo3
+         G6Gg==
+X-Gm-Message-State: AFeK/H2BqTn7hEu5DUsgv+ry4haDI7sMigiDz/hC5i/VqL2I1CgC8qUWplieFps1Osx/NnET7C88UFimRb8KSQ==
+X-Received: by 10.36.204.137 with SMTP id x131mr11691828itf.35.1489693882578;
+ Thu, 16 Mar 2017 12:51:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9C307518-0A80-11E7-8031-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.107.136.102 with HTTP; Thu, 16 Mar 2017 12:51:22 -0700 (PDT)
+In-Reply-To: <xmqqbmt1atta.fsf@gitster.mtv.corp.google.com>
+References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com>
+ <20170316194110.756ipu7xud2s3w2m@sigill.intra.peff.net> <CA+55aFzp_dxevLEbRVWCmbx=zY=8hwqEBKK=Pcs7Au+rdg4pRQ@mail.gmail.com>
+ <xmqqbmt1atta.fsf@gitster.mtv.corp.google.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 16 Mar 2017 12:51:22 -0700
+X-Google-Sender-Auth: mZhr8PJkVAUKTSCSI0c8w2-hPy0
+Message-ID: <CA+55aFzVB2gAXJ2rn3vPDtCJU7Rgozs0e_HhnK-nFziixCCfFQ@mail.gmail.com>
+Subject: Re: USE_SHA1DC is broken in pu
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
-
-> I think there's a semantic merge error and it clashes with
-> f18f816cb158 ("hash.h: move SHA-1 implementation selection into a
-> header file").
+On Thu, Mar 16, 2017 at 12:46 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Suggested possible merge resolution attached.
->
->                    Linus
+> That's easy to answer.  What we have on 'pu' is a fair game for
+> wholesale replacement.  That is the whole point of not merging
+> topics in flux to 'next' and declaring that 'pu' will constantly
+> rewind.
 
-Obviously I have not been paying much attention to the current shape
-of that topic, awaiting the real thing X-<.
+Ok.
 
-I am hoping that we can make the "hash.h" thing graduate soon to
-'master' and then queue the real thing on top, but in the meantime I
-should have made sure the current one still does the right thing.
+I'll send a patch on top of 'next', which already has the header file changes.
 
-Thanks.
+                 Linus
