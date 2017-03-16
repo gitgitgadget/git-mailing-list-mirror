@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 385B020953
-	for <e@80x24.org>; Thu, 16 Mar 2017 22:38:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2915520953
+	for <e@80x24.org>; Thu, 16 Mar 2017 22:38:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754643AbdCPWi0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 18:38:26 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34461 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754297AbdCPWiZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 18:38:25 -0400
-Received: by mail-pg0-f50.google.com with SMTP id 141so31656035pgd.1
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 15:38:19 -0700 (PDT)
+        id S1754665AbdCPWik (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 18:38:40 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:36527 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753346AbdCPWii (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 18:38:38 -0400
+Received: by mail-pf0-f173.google.com with SMTP id o126so30697132pfb.3
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 15:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=x7a7bd6JO0Dt34cNcq7FW8vB3jn4yn6QELMEmQuB064=;
-        b=n17Y4TfuNfcIV74l2Nykg/gMbhlAaBSLWZtzUItYlKNnq32vzZEVmC5nF2sw3jiuIJ
-         9jdMnG+CVfKlv8hN4WLxupWTJj3ygPNYUkKWyhRbfW8THbFJhvB0CtMGW8OSzKl3vqDu
-         b+8+yaLxsTMPFdV+hXSSUT2RLnMwnjeDtZ9U5G8XMaHiFvSJpRTsjg1QPH8pwQWfiAml
-         L5EaqTnx1g5kGviXSlIfnn1oZxWM5sIyUKN+4p/UHEXMvyMQz391nCcFMyLIWe/lxkF5
-         jdotq7fNv93TAg+Kst3R3QENBEevu2/DjiIFkst8nJgQuY6eiAfuF70O/xty778ijDqd
-         VJ7Q==
+        bh=LZVZpX/lITymXbF/KfDcunmFePIqbjHD2hcqVopnP/E=;
+        b=bnWh4rAkDpMc9oXbU3UZo1GLl/4Qj0Dl6pX4EONNUEhTVrzgSYCHTMNsED3lvcMN1G
+         9D0prmsM8PHTQmN+ODqd3vHoCFpntYWKPD3FhpYavlBB6XMntLDh8xzkGZIqA/jgDVWH
+         WyWn62XD8CySECDhe+zZaNfGUfw8VX89hCF4BrIZqayCvrw01nEKcLLlYyz9Tpj8gau/
+         0WfC2WQC//lHCdDW3YZ6V6YawxxKaeYfoNWnvWoicAkdW06SCOU9KjD1hv19A4Byfn2p
+         DJ6u1TM0S/ab2aRaJao9ATUoGjYA/CA+QuCP4GUrkbcj6RvG0gPpG8fNDM0doUEBvRZw
+         9cQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=x7a7bd6JO0Dt34cNcq7FW8vB3jn4yn6QELMEmQuB064=;
-        b=S8afcAArdTuHMMq0RI50j8tF6qOx1i9tjfgn8wz83dysTizCmy/fr2Dmc8cJ4yssbt
-         5qFHCkUjb5bT29kTRgBLU37lBFRPYhWDGRWeQqG0i/Gr1FWbZ8b0FM6TjUdTz6PxUs0n
-         Qdi/kBtcAHmnG+F6nC4PZ+QhdvKiXtH4KFB1d3d72ujcVAWqrLuvB8mG7AHxqmh9VZYI
-         nkjo1EnL1wgUq+GPgyjCWa8edO+ES0PU5ylufSW0cOs7mzTii9zl+gtlmjwkezS7Zr2G
-         mBKM4Qe2LeI4FUf7wETSq/H42uo93pTaKyr9/M7QocPb5/TFswfletouciKPBSO7qMVo
-         T7cQ==
-X-Gm-Message-State: AFeK/H3974mRYFCKRPs2RnMOn5X2+iES1i5o1Ndpj28Mj/ZKv/PDruDk19++gf8sGxvQha1n
-X-Received: by 10.99.229.5 with SMTP id r5mr12641951pgh.206.1489703409338;
-        Thu, 16 Mar 2017 15:30:09 -0700 (PDT)
+        bh=LZVZpX/lITymXbF/KfDcunmFePIqbjHD2hcqVopnP/E=;
+        b=ZLW9abmN1OhCb8tl6Ce/r5u7vlp+PnwDVz7gTHl92xMAyKxrapVI0ZDmXfBgrtD+bx
+         dgpHghPslbtLgxRwGC8Y3X5hKhLIlNp+WXCwF4oXDnrxxxlCl857P9K7MpW3eUSu3dFu
+         WvInZMK/Shcq4tsCCnNprjg4rlVT2ZEG8HRKUUHwN4zIb0OiA0MCI8fFJvQHfnDccVH7
+         hosYBxiEM2UP40Z8BVdJsjKjA45CaYHXWhnpfH5DLXl5rmzc353Bzc/W+b1eGD8lpGDE
+         lbLvRTwcSlMZlD6gmM6eqtWbQpPEh+5D9IBipchbco3XluxZbHRIQi/hWAUMAnXowvdM
+         1bwA==
+X-Gm-Message-State: AFeK/H0fw7eBLoKq2RDUPnTALUGg0EUWrcL4+FsjQs2sY/Y7m1KsD/yz9+91Airkhpm2U1R/
+X-Received: by 10.99.171.75 with SMTP id k11mr12581539pgp.98.1489703400172;
+        Thu, 16 Mar 2017 15:30:00 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id t5sm12520946pgb.36.2017.03.16.15.30.07
+        by smtp.gmail.com with ESMTPSA id t5sm12520946pgb.36.2017.03.16.15.29.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 16 Mar 2017 15:30:08 -0700 (PDT)
+        Thu, 16 Mar 2017 15:29:59 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         gitster@pobox.com
-Subject: [PATCH v4 07/10] submodule init: initialize active submodules
-Date:   Thu, 16 Mar 2017 15:29:49 -0700
-Message-Id: <20170316222952.53801-8-bmwill@google.com>
+Subject: [PATCH v4 01/10] submodule--helper: add is-active subcommand
+Date:   Thu, 16 Mar 2017 15:29:43 -0700
+Message-Id: <20170316222952.53801-2-bmwill@google.com>
 X-Mailer: git-send-email 2.12.0.367.g23dc2f6d3c-goog
 In-Reply-To: <20170316222952.53801-1-bmwill@google.com>
 References: <20170313214341.172676-1-bmwill@google.com>
@@ -62,161 +61,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach `submodule init` to initialize submodules which have been
-configured to be active by setting 'submodule.active' with a pathspec.
+The definition of which submodules are of interest by the user
+is tied to the configuration submodule.<name>.url; when it is
+set to a non-empty string, it is of interest.  We'd want to be
+able to later change this definition, but there are many places
+that explicitly check this condition in the scripted Porcelain.
 
-Now if no path arguments are given and 'submodule.active' is configured,
-`init` will initialize all submodules which have been configured to be
-active.  If no path arguments are given and 'submodule.active' is not
-configured, then `init` will retain the old behavior of initializing all
-submodules.
-
-This allows users to record more complex patterns as it saves retyping
-them whenever you invoke update.
+Introduce the "is-active" subcommand to "submodule--helper", so
+that the exact definition of what submodule is of interest can
+be centrally defined (and changed in later steps).  In a few
+patches that follow, this helper is used to replace the explicit
+checks of the configuration variable in scripts.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- Documentation/git-submodule.txt |  4 ++-
- builtin/submodule--helper.c     | 36 +++++++++++++++++++++++++-
- t/t7400-submodule-basic.sh      | 57 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 95 insertions(+), 2 deletions(-)
+ builtin/submodule--helper.c    | 11 +++++++++++
+ t/t7413-submodule-is-active.sh | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
+ create mode 100755 t/t7413-submodule-is-active.sh
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index e05d0cdde..74bc6200d 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -129,7 +129,9 @@ init [--] [<path>...]::
- 	repository will be assumed to be upstream.
- +
- Optional <path> arguments limit which submodules will be initialized.
--If no path is specified, all submodules are initialized.
-+If no path is specified and submodule.active has been configured, submodules
-+configured to be active will be initialized, otherwise all submodules are
-+initialized.
- +
- When present, it will also copy the value of `submodule.$name.update`.
- This command does not alter existing information in .git/config.
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f38e332c5..e95738b42 100644
+index 15a5430c0..5fe7e23b1 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -270,6 +270,34 @@ static int module_list_compute(int argc, const char **argv,
- 	return result;
+@@ -1127,6 +1127,16 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
  
-+static void module_list_active(struct module_list *list)
++static int is_active(int argc, const char **argv, const char *prefix)
 +{
-+	int i;
-+
-+	if (read_cache() < 0)
-+		die(_("index file corrupt"));
++	if (argc != 2)
++		die("submodule--helper is-active takes exactly 1 arguments");
 +
 +	gitmodules_config();
 +
-+	for (i = 0; i < active_nr; i++) {
-+		const struct cache_entry *ce = active_cache[i];
-+
-+		if (!S_ISGITLINK(ce->ce_mode) ||
-+		    !is_submodule_initialized(ce->name))
-+			continue;
-+
-+		ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
-+		list->entries[list->nr++] = ce;
-+		while (i + 1 < active_nr &&
-+		       !strcmp(ce->name, active_cache[i + 1]->name))
-+			/*
-+			 * Skip entries with the same name in different stages
-+			 * to make sure an entry is returned only once.
-+			 */
-+			i++;
-+	}
++	return !is_submodule_initialized(argv[1]);
 +}
 +
- static int module_list(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -417,7 +445,13 @@ static int module_init(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, module_init_options,
- 			     git_submodule_helper_usage, 0);
+ #define SUPPORT_SUPER_PREFIX (1<<0)
  
--	if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
-+	/*
-+	 * If there are no path args and submodule.active is set then,
-+	 * by default, only initialize 'active' modules.
-+	 */
-+	if (!argc && git_config_get_value_multi("submodule.active"))
-+		module_list_active(&list);
-+	else if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
- 		return 1;
+ struct cmd_struct {
+@@ -1146,6 +1156,7 @@ static struct cmd_struct commands[] = {
+ 	{"init", module_init, SUPPORT_SUPER_PREFIX},
+ 	{"remote-branch", resolve_remote_submodule_branch, 0},
+ 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
++	{"is-active", is_active, 0},
+ };
  
- 	for (i = 0; i < list.nr; i++)
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index c09ce0d4c..fbbe932d1 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1130,5 +1130,62 @@ test_expect_success 'submodule helper list is not confused by common prefixes' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup superproject with submodules' '
-+	git init sub1 &&
-+	test_commit -C sub1 test &&
-+	test_commit -C sub1 test2 &&
-+	git init multisuper &&
-+	git -C multisuper submodule add ../sub1 sub0 &&
-+	git -C multisuper submodule add ../sub1 sub1 &&
-+	git -C multisuper submodule add ../sub1 sub2 &&
-+	git -C multisuper submodule add ../sub1 sub3 &&
-+	git -C multisuper commit -m "add some submodules"
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/t/t7413-submodule-is-active.sh b/t/t7413-submodule-is-active.sh
+new file mode 100755
+index 000000000..f18e0c925
+--- /dev/null
++++ b/t/t7413-submodule-is-active.sh
+@@ -0,0 +1,31 @@
++#!/bin/sh
++
++test_description='Test submodule--helper is-active
++
++This test verifies that `git submodue--helper is-active` correclty identifies
++submodules which are "active" and interesting to the user.
 +'
 +
-+cat >expect <<-EOF
-+-sub0
-+ sub1 (test2)
-+ sub2 (test2)
-+ sub3 (test2)
-+EOF
++. ./test-lib.sh
 +
-+test_expect_success 'submodule update --init with a specification' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	pwd=$(pwd) &&
-+	git clone file://"$pwd"/multisuper multisuper_clone &&
-+	git -C multisuper_clone submodule update --init . ":(exclude)sub0" &&
-+	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
-+	test_cmp expect actual
++test_expect_success 'setup' '
++	git init sub &&
++	test_commit -C sub initial &&
++	git init super &&
++	test_commit -C super initial &&
++	git -C super submodule add ../sub sub1 &&
++	git -C super submodule add ../sub sub2 &&
++	git -C super commit -a -m "add 2 submodules at sub{1,2}"
 +'
 +
-+test_expect_success 'submodule update --init with submodule.active set' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	pwd=$(pwd) &&
-+	git clone file://"$pwd"/multisuper multisuper_clone &&
-+	git -C multisuper_clone config submodule.active "." &&
-+	git -C multisuper_clone config --add submodule.active ":(exclude)sub0" &&
-+	git -C multisuper_clone submodule update --init &&
-+	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
-+	test_cmp expect actual
++test_expect_success 'is-active works with urls' '
++	git -C super submodule--helper is-active sub1 &&
++	git -C super submodule--helper is-active sub2 &&
++
++	git -C super config --unset submodule.sub1.URL &&
++	test_must_fail git -C super submodule--helper is-active sub1 &&
++	git -C super config submodule.sub1.URL ../sub &&
++	git -C super submodule--helper is-active sub1
 +'
 +
-+test_expect_success 'submodule update and setting submodule.<name>.active' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	pwd=$(pwd) &&
-+	git clone file://"$pwd"/multisuper multisuper_clone &&
-+	git -C multisuper_clone config --bool submodule.sub0.active "true" &&
-+	git -C multisuper_clone config --bool submodule.sub1.active "false" &&
-+	git -C multisuper_clone config --bool submodule.sub2.active "true" &&
-+
-+	cat >expect <<-\EOF &&
-+	 sub0 (test2)
-+	-sub1
-+	 sub2 (test2)
-+	-sub3
-+	EOF
-+	git -C multisuper_clone submodule update &&
-+	git -C multisuper_clone submodule status |cut -c 1,43- >actual &&
-+	test_cmp expect actual
-+'
- 
- test_done
++test_done
 -- 
 2.12.0.367.g23dc2f6d3c-goog
 
