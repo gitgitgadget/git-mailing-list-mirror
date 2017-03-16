@@ -2,155 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D260320323
-	for <e@80x24.org>; Thu, 16 Mar 2017 15:43:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD0920323
+	for <e@80x24.org>; Thu, 16 Mar 2017 16:09:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752282AbdCPPn1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 11:43:27 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:36561 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752397AbdCPPnX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 11:43:23 -0400
-Received: from [10.0.2.15] ([146.90.175.94])
-        by avasout01 with smtp
-        id wfiu1u00422aPyA01fivSF; Thu, 16 Mar 2017 15:42:55 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=BZKo6vl2 c=1 sm=1 tr=0
- a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
- a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=HLzkxIz-MOltCUS6aKUA:9 a=QEXdDO2ut3YA:10
- a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2 5/5] index-pack: make pointer-alias fallbacks safer
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20170316142647.t6tthkcgon3rpg4m@sigill.intra.peff.net>
- <20170316142720.377auysntqu7ozdz@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <93f87c64-5752-06a2-9350-c867f8abe06a@ramsayjones.plus.com>
-Date:   Thu, 16 Mar 2017 15:42:54 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1752709AbdCPQJJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 12:09:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54377 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752698AbdCPQJI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 12:09:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2BA51839A7;
+        Thu, 16 Mar 2017 12:09:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z9fOVxHDbMOXpWGn6J9j0W+JfD0=; b=VleW/L
+        rCieJ2qijIvqCCRkd04OYAu874qO4BjyMMUzF9gbSbCr54lDKuwQkR1Sl3L3Zi4t
+        DQmmWmE3bF+O3omvVfDf5HEvsdXwowjPoB8JfcROsI0ZNuyQCOv3h0Mj778p5gwh
+        H8SNR5FQZjdag5M8K4eS7NPFr0rXXlyYjkSz8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QYFy0dZnWnNOLPwZmRhKfm3w7bz81RJU
+        SZ5oWajP4ZY0PMxqCBrkkjD2v7OamdnOWNz9ff6zjY4yj2CnMpoXdk8yxJacv8gc
+        O8+O+IxNWcA0+6YpAj/9oJQSYE/hrvBZ9iBTTGQl+WvAUiBGbYhnIKBDnbpBFcQT
+        Oi7WhuqjrfY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 24A33839A6;
+        Thu, 16 Mar 2017 12:09:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 95285839A3;
+        Thu, 16 Mar 2017 12:09:06 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Devin Lehmacher <lehmacdj@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v4 2/4] dir: add directory_exists
+References: <20170314003246.71586-4-lehmacdj@gmail.com>
+        <20170316051827.97198-1-lehmacdj@gmail.com>
+        <20170316051827.97198-3-lehmacdj@gmail.com>
+Date:   Thu, 16 Mar 2017 09:09:05 -0700
+In-Reply-To: <20170316051827.97198-3-lehmacdj@gmail.com> (Devin Lehmacher's
+        message of "Thu, 16 Mar 2017 01:18:25 -0400")
+Message-ID: <xmqqlgs5cify.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170316142720.377auysntqu7ozdz@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: E19B7D32-0A62-11E7-8D4E-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Devin Lehmacher <lehmacdj@gmail.com> writes:
+
+> +int directory_exists(const char *path)
+> +{
+> +	struct stat sb;
+> +	int ret = lstat(path, &sb);
+> +	return ret == 0 && S_ISDIR(sb.st_mode);
+> +}
+
+I am not a great fan of using file_exists() [*1*] on anything other
+than paths in the working tree (i.e. in preparation for checking
+things out of or into the index), as paths inside .git/ and paths
+outside have different requirements.  One of the difference is if it
+makes sense to use stat(2) or lstat(2) for a check like this
+function does.  For working tree entities, which file_exists() and
+friends are designed for, we absolutely should use lstat(2).  The
+"RelNotes" symbolic link at the top level of the project must be
+known as a symbolic link and a question "is this a directory?" on it
+must be answered "no", for example.
+
+But there is no fundamental reason ~/.git-credential-cache (or
+anything outside the working tree) must be S_ISDIR().  If the user
+wanted to have the real directory elsewhere and point at it with
+a symbolic link ~/.git-credential-cache, we should allow it.
+
+If we need a helper function to see if a path in the working tree is
+a directory, adding this new helper function to dir.c (which is
+about the paths in the working tree) and use lstat(2) in it is the
+right thing to do.  But I do not think it should be used to check if
+~/.git-credential-cache directory, which is not a filesystem entity
+in a working tree, exists.
+
+IOW, I do not think this patch helps the topic of this series.  Drop
+this patch from the series and have a similar code (but use stat(2)
+instead of lstat(2)) directly inside get_socket_path()'s in the next
+patch, perhaps?
 
 
-On 16/03/17 14:27, Jeff King wrote:
-> The final() function accepts a NULL value for certain
-> parameters, and falls back to writing into a reusable "name"
-> buffer, and then either:
-> 
->   1. For "keep_name", requiring all uses to do "keep_name ?
->      keep_name : name.buf". This is awkward, and it's easy
->      to accidentally look at the maybe-NULL keep_name.
-> 
->   2. For "final_index_name" and "final_pack_name", aliasing
->      those pointers to the "name" buffer. This is easier to
->      use, but the aliased pointers become invalid after the
->      buffer is reused (this isn't a bug now, but it's a
->      potential pitfall).
-> 
-> One way to make this safer would be to introduce an extra
-> pointer to do the aliasing, and have its lifetime match the
-> validity of the "name" buffer. But it's still easy to
-> accidentally use the wrong name (i.e., to use
-> "final_pack_name" instead of the aliased pointer).
-> 
-> Instead, let's use three separate buffers that will remain
-> valid through the function. That makes it safe to alias the
-> pointers and use them consistently. The extra allocations
-> shouldn't matter, as this function is not performance
-> sensitive.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/index-pack.c | 20 ++++++++++++--------
->  1 file changed, 12 insertions(+), 8 deletions(-)
-> 
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index dcb346ab7..88d205f85 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -1386,7 +1386,9 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
->  		  unsigned char *sha1)
->  {
->  	const char *report = "pack";
-> -	struct strbuf name = STRBUF_INIT;
-> +	struct strbuf pack_name = STRBUF_INIT;
-> +	struct strbuf index_name = STRBUF_INIT;
-> +	struct strbuf keep_name_buf = STRBUF_INIT;
->  	int err;
->  
->  	if (!from_stdin) {
-> @@ -1402,13 +1404,13 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
->  		int keep_fd, keep_msg_len = strlen(keep_msg);
->  
->  		if (!keep_name)
-> -			odb_pack_name(&name, sha1, "keep");
-> +			keep_name = odb_pack_name(&keep_name_buf, sha1, "keep");
->  
-> -		keep_fd = odb_pack_keep(keep_name ? keep_name : name.buf);
-> +		keep_fd = odb_pack_keep(keep_name);
->  		if (keep_fd < 0) {
->  			if (errno != EEXIST)
->  				die_errno(_("cannot write keep file '%s'"),
-> -					  keep_name ? keep_name : name.buf);
-> +					  keep_name);
->  		} else {
->  			if (keep_msg_len > 0) {
->  				write_or_die(keep_fd, keep_msg, keep_msg_len);
-> @@ -1416,14 +1418,14 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
->  			}
->  			if (close(keep_fd) != 0)
->  				die_errno(_("cannot close written keep file '%s'"),
-> -					  keep_name ? keep_name : name.buf);
-> +					  keep_name);
->  			report = "keep";
->  		}
->  	}
->  
->  	if (final_pack_name != curr_pack_name) {
->  		if (!final_pack_name)
-> -			final_pack_name = odb_pack_name(&name, sha1, "pack");
-> +			final_pack_name = odb_pack_name(&pack_name, sha1, "pack");
->  		if (finalize_object_file(curr_pack_name, final_pack_name))
->  			die(_("cannot store pack file"));
->  	} else if (from_stdin)
-> @@ -1431,7 +1433,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
->  
->  	if (final_index_name != curr_index_name) {
->  		if (!final_index_name)
-> -			final_index_name = odb_pack_name(&name, sha1, "idx");
-> +			final_index_name = odb_pack_name(&index_name, sha1, "idx");
->  		if (finalize_object_file(curr_index_name, final_index_name))
->  			die(_("cannot store index file"));
->  	} else
-> @@ -1458,7 +1460,9 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
->  		}
->  	}
->  
-> -	strbuf_release(&name);
-> +	strbuf_release(&index_name);
-> +	strbuf_release(&pack_name);
-> +	strbuf_release(&keep_name_buf);
->  }
->  
->  static int git_index_pack_config(const char *k, const char *v, void *cb)
-> 
+[Footnote]
 
-Yep, much better.
-
-ATB,
-Ramsay Jones
-
+*1* ... and friends, like safe_create_leading_directories().
 
