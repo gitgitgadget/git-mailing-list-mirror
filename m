@@ -2,91 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 844B020951
-	for <e@80x24.org>; Fri, 17 Mar 2017 17:23:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B1120951
+	for <e@80x24.org>; Fri, 17 Mar 2017 17:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751180AbdCQRXD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 13:23:03 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:35976 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751115AbdCQRXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 13:23:01 -0400
-Received: by mail-pg0-f52.google.com with SMTP id g2so46061211pge.3
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 10:22:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GozL0oZWzKdr/mJaKMR2WAsVOadH0Z5KbWwqwTZ0aWU=;
-        b=IN9KZTLyIx/Lr0HaHRLpulq7SabWx0aGCm/vxzkv0DRxtg902HUphtd6rWor1q5bEO
-         tofgvpQqdbsTq1KQzAERjXtcqb1ndqWpgCOh7zLe92TnsVVP5Oczrwp0TzZeCxhthaj+
-         6gEi7VNVRMo/TBKOfB3RXRp6qJdNZaF+/4hBwUASwxs/B9Y6Z0vxPQdqJqVMZ315osKa
-         6X46qAf2yO8vYYRgF5DS/psAX5xgasAEqpKynhO7Bunlixg+bf2eIW3jv6u6sQ/T0HUQ
-         xroPfvpr1j3G0O8L0OleFnnzji+fGA3GbfyIpiEdhdEkVVGoIb758gEcm9zhtIA308HV
-         cIJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GozL0oZWzKdr/mJaKMR2WAsVOadH0Z5KbWwqwTZ0aWU=;
-        b=gkQhqwho6iUG4EwxGTfwjG9Y9AO/nFOmuqaNTzYIh+dzb1p7+GzUTv4TE90QvayQOF
-         Fzox3RFNpvNn3NtCqx/mhwZEgNmVDE1/OP8ynA9fer9uEsf5OikN6zCX7XGdoab2uaXI
-         /8fDhOt1TH/BQOztuNIlkOOuW/CdK/Xm0FWgzWyBzQkgOhLbj5k6piWPUsj3GR/vFGfL
-         rEGJo15/ge2ODG4rlCXAiZ3bnC6gB62wUWEPg28+dDCKBMGjPAezx0k07ViPiguwwXWb
-         0uG9DD30y1czFDoHvIb1gm6LahfE9WEam9DeuHDYBFjegrjNILHfWWBUBwLQXpaOTAsD
-         45cQ==
-X-Gm-Message-State: AFeK/H3I74OZFRXnsf3H37S7GkQV/SS+9eSpl/rezfdnwXXrHxhEFJpisuvxSEs+nN+lmHLmcdyt/oY3mDHbet14
-X-Received: by 10.84.239.8 with SMTP id w8mr21480344plk.73.1489771377574; Fri,
- 17 Mar 2017 10:22:57 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Fri, 17 Mar 2017 10:22:57 -0700 (PDT)
-In-Reply-To: <20170316222952.53801-10-bmwill@google.com>
-References: <20170313214341.172676-1-bmwill@google.com> <20170316222952.53801-1-bmwill@google.com>
- <20170316222952.53801-10-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 17 Mar 2017 10:22:57 -0700
-Message-ID: <CAGZ79kbUC+R1bB64N=wQZrjxdTfA5OzC-i9sU0ymHtKgRVPu=w@mail.gmail.com>
-Subject: Re: [PATCH v4 09/10] submodule--helper init: set submodule.<name>.active
+        id S1751133AbdCQRe3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 13:34:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52554 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751127AbdCQRe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 13:34:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EAA7178E8B;
+        Fri, 17 Mar 2017 13:28:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jzlryj/sEWlw0JqBRhN67HtFzDs=; b=N4w/WX
+        xjfoOiZz4/38HimxjTf1bl6iMzSNGyvC2wo/U1n/Q22J3YQ1BZT5Z2zFalyxuIVZ
+        QjzkS18VV/1CwbcbVoqwfDm8Z0PmUcJ+LWhLy+2xF4608V/Tg2zjzjQ5TI4Rl1bM
+        +Tn8oQiHfAYufAZ8+Gu2EgdskEmwxCo85arkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=QifC0RSQs8D27kNhGAHPCvCg+A6PGdqf
+        WuzD/csh15XB8cTOHIxMvUA+jneN/K8vuSbEo2Rh7ZZBNKLIxeasAhISUiMX2nbb
+        3IBtpR3bbqyUDNqbt1R6vTNARMqRKmlix+9lHaBRqB5voNeywZwrHif9D8mVxtEE
+        ZZnVb0YEhj4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E27C978E8A;
+        Fri, 17 Mar 2017 13:28:32 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 57E9578E88;
+        Fri, 17 Mar 2017 13:28:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v4 03/10] submodule sync: skip work for inactive submodules
+References: <20170313214341.172676-1-bmwill@google.com>
+        <20170316222952.53801-1-bmwill@google.com>
+        <20170316222952.53801-4-bmwill@google.com>
+        <CAGZ79kaP9ob+qvso=pV=PPaB5guaW18w297xA+bfDFASV0zibg@mail.gmail.com>
+        <xmqq8to4a2xv.fsf@gitster.mtv.corp.google.com>
+        <20170317065823.GA101452@google.com>
+Date:   Fri, 17 Mar 2017 10:28:31 -0700
+In-Reply-To: <20170317065823.GA101452@google.com> (Brandon Williams's message
+        of "Thu, 16 Mar 2017 23:58:23 -0700")
+Message-ID: <xmqq8to395j4.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24A14146-0B37-11E7-9E7E-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 16, 2017 at 3:29 PM, Brandon Williams <bmwill@google.com> wrote:
-> When initializing a submodule set the submodule.<name>.active config to
-> true if the module hasn't already been configured to be active by some
-> other means (e.g. a pathspec set in submodule.active).
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  builtin/submodule--helper.c |  7 +++++++
->  t/t7400-submodule-basic.sh  | 11 +++++++++++
->  2 files changed, 18 insertions(+)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index e95738b42..a574596cb 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -361,6 +361,13 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
->                 die(_("No url found for submodule path '%s' in .gitmodules"),
->                         displaypath);
->
-> +       /* Set active flag for the submodule being initialized */
-> +       if (!is_submodule_initialized(path)) {
-> +               strbuf_reset(&sb);
-> +               strbuf_addf(&sb, "submodule.%s.active", sub->name);
+Brandon Williams <bmwill@google.com> writes:
 
-In case a reroll is needed, you could mark this location with
+> ...  But this line is removed in the next patch anyways so it
+> probably doesn't matter much.
 
-    /*
-     * NEEDSWORK: in a multi-working-tree world we need to set
-     * this per-worktree here.
-     */
+Right ;-)
