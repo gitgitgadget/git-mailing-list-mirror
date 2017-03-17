@@ -2,175 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10D5320951
-	for <e@80x24.org>; Fri, 17 Mar 2017 12:37:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FDDF20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 12:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751096AbdCQMhC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 08:37:02 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:34593 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751017AbdCQMg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 08:36:57 -0400
-Received: by mail-qt0-f196.google.com with SMTP id x35so9248111qtc.1
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 05:36:38 -0700 (PDT)
+        id S1751287AbdCQMjj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 08:39:39 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:33257 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751087AbdCQMjh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 08:39:37 -0400
+Received: by mail-it0-f42.google.com with SMTP id w124so11867900itb.0
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 05:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=tN58uwB9TXV0CzPhg9UZsLPeo19EehmD6lRjLmIAXcI=;
-        b=ayq7VUqCSzFAZoB59nN6hIEbjoqeqG8FzsvfF+FJehOYuoCJ/S2ZyVXZefS0Guc/FL
-         5Mm4v8ZDF1h3gHR8MuUuebbAQDjIB03T3PC/+21zJ9eSUdqUv7vaXaV6l7rwcnRkbFMu
-         8Gb6+jAtn4u1HNT+uUwigMo3FzYGlbtE1xckUWFU3eKSiBn+4R+gJlC9uFYcSEcwX6Z3
-         qp/jdQCacnVcQKbDbExvuJ4ykfCaN/HD8O53Och4hR7mLaJhuH1Wp3JydVRE0llc7MV1
-         +tI2xEGn5GdVodwE60fIzsL8fkMZetO9wf4L7a0u0GYwUBabZuWN9v2cw2FmXUilwRla
-         7l3g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Kq60LdE4xT2t8EXtYsWaz81bZ+9MeD9RvMwMcT/Z5H8=;
+        b=XNi5yPs34L3IxCNnV6hec10QKW2AtrtO0o17vJ6AW3IOlZHKcDie//gN0YeRbjs+fk
+         z7F78EaXKdUqHg0VkqdSJqVBjp90s9QUDz6T9GiAY2OQHpVECdXy9EBNzgV0K+AvbOY4
+         gf7+iGpTNY4ed/a/4OrLn2mzx/m+mHZ5qMcAJ3KT8b8nW/TsiHzgRJPdqzd14I6lQR6N
+         DZjy+5UUhrIEDg+1qtruCkj5aqgNpOJArKjzMDC8/FaXanqvoyYS0+tZ7UoOvvegAK0G
+         usM4064D3IWHx6zMvJoFLVnBe+l3pxP2jsFP6dZLOgz9iAESLYr6dY7SQEDD6mAZ360/
+         q2kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=tN58uwB9TXV0CzPhg9UZsLPeo19EehmD6lRjLmIAXcI=;
-        b=uECFzHKCeT/OmCD+oJqznv4MxlD2QxwHbOxCFy1hEA4U/Y/xeu00XfL1rKrwDFj/2d
-         TP7XzN8GFA/1+pfzEL+u+3Q88TNYq2oEjUIL6mwc9r3tsHysMJWgmo3z8wyG86VBXbOh
-         VZpt3s22tY526qLIbLzY/wyVd+kA3BqavWiClSoczTLZwUxQoHf1h3mRQHPQ0ivm2sDt
-         rKTvNQKeL40kwgOx6h6D21sf86H7G4pTmsB3ss3YfbZ4ByQGBASSMdFBaVsloxHtyszu
-         0+QAbxNzFknPpGHfzmkks3d0jAHTAGowyvUK0hO1is/Wt3czK3g4UTPRPVPBA0WGdl/m
-         IEiw==
-X-Gm-Message-State: AFeK/H1H9MG4decCKNNqzuUGcKgdI6N5axCwn6AlZejtwpzDTLjbcTVYE9DxAqJ7B1NsCQ==
-X-Received: by 10.237.41.7 with SMTP id s7mr12743209qtd.64.1489754197971;
-        Fri, 17 Mar 2017 05:36:37 -0700 (PDT)
-Received: from mango1.eduroam.cornell.edu (nat-128-84-124-0-116.cit.cornell.edu. [128.84.124.116])
-        by smtp.googlemail.com with ESMTPSA id h33sm5811607qtc.42.2017.03.17.05.36.37
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Mar 2017 05:36:37 -0700 (PDT)
-From:   Devin Lehmacher <lehmacdj@gmail.com>
-To:     lehmacdj@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Subject: [GSoC][PATCH v6 3/3] credential-cache: add tests for XDG functionality
-Date:   Fri, 17 Mar 2017 08:36:34 -0400
-Message-Id: <20170317123634.10863-3-lehmacdj@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170317123634.10863-1-lehmacdj@gmail.com>
-References: <20170317025315.84548-3-lehmacdj@gmail.com>
- <20170317123634.10863-1-lehmacdj@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Kq60LdE4xT2t8EXtYsWaz81bZ+9MeD9RvMwMcT/Z5H8=;
+        b=nDX3IV1ts+Uc7mWHt3QuPEUHW+cfiswp5gM9qQDtMNFgCfZia6oxNd0JYHUk+bFgj/
+         xKEDtZG/J/sj9KlLs0Gd79SA5ExM+4DTxGFYi0mJUreZkhJgfNbN0ltogDFQQgXA0II9
+         zzDamCFt6x/n6ILp5+W1alXNQih1i1toTls2LSZ+ESm7Z23mcgKG+qiaZGA5apRf1nDJ
+         I0t6CfLAUg2GlS2ijS0aEmTLQLYyhuHSJlszPDfRyjSamZ51WJPs+njqEiHAgSVtYMH2
+         QB4EoBMqI9QqsQOgjNUEkhoq7J1yn283bN80TzjT7ETFcZE4BY74vYl9a/i67AsOYvmj
+         f9MA==
+X-Gm-Message-State: AFeK/H0Bh/gtgaMLDT2X6Tw52eMzkuytIWvpQ/zHKNTQBNog6zBkSWCwaa0SIPfvz+YeW000sRUjxZcsx7L5hw==
+X-Received: by 10.107.149.7 with SMTP id x7mr14073162iod.167.1489752496673;
+ Fri, 17 Mar 2017 05:08:16 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.144.198 with HTTP; Fri, 17 Mar 2017 05:08:16 -0700 (PDT)
+In-Reply-To: <CAOtcWM1jExsj_L4HRm194F57bt9LPuf8fFSpyuGWiPG7U_4v8A@mail.gmail.com>
+References: <CAOtcWM3mrQEqDnjMipzea7Kp+VueBFsZDL2zcJ=y0wgj9N4Vjw@mail.gmail.com>
+ <295db01e-6252-6acc-88d8-d2f366397ea0@atlas-elektronik.com> <CAOtcWM1jExsj_L4HRm194F57bt9LPuf8fFSpyuGWiPG7U_4v8A@mail.gmail.com>
+From:   Okash Khawaja <okash.khawaja@gmail.com>
+Date:   Fri, 17 Mar 2017 12:08:16 +0000
+Message-ID: <CAOtcWM2wg3_uV=THi_PUSVcD8rXMwbd-ZDcTxC=YXvgpP1g_vw@mail.gmail.com>
+Subject: Re: Viewing untracked+stashed files in git stash show
+To:     stefan.naewe@atlas-elektronik.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Devin Lehmacher <lehmacdj@gmail.com>
----
- t/t0301-credential-cache.sh | 93 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 93 insertions(+)
+Hi,
 
-diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-index 82c841121..fd92533ac 100755
---- a/t/t0301-credential-cache.sh
-+++ b/t/t0301-credential-cache.sh
-@@ -12,7 +12,100 @@ test -z "$NO_UNIX_SOCKETS" || {
- # don't leave a stale daemon running
- trap 'code=$?; git credential-cache exit; (exit $code); die' EXIT
- 
-+# test that the daemon works with no special setup
- helper_test cache
-+
-+test_expect_success 'socket defaults to ~/.cache/git/credential/socket' '
-+	test_when_finished "
-+		git credential-cache exit &&
-+		rmdir -p .cache/git/credential/
-+	" &&
-+	test_path_is_missing "$HOME/.git-credential-cache" &&
-+	test -S "$HOME/.cache/git/credential/socket"
-+'
-+
-+XDG_CACHE_HOME="$HOME/xdg"
-+export XDG_CACHE_HOME
-+# test behavior when XDG_CACHE_HOME is set
-+helper_test cache
-+
-+test_expect_success "use custom XDG_CACHE_HOME if set and default sockets are not created" '
-+	test_when_finished "git credential-cache exit" &&
-+	test -S "$XDG_CACHE_HOME/git/credential/socket" &&
-+	test_path_is_missing "$HOME/.git-credential-cache/socket" &&
-+	test_path_is_missing "$HOME/.cache/git/credential/socket"
-+'
-+unset XDG_CACHE_HOME
-+
-+test_expect_success 'credential-cache --socket option overrides default location' '
-+	test_when_finished "
-+		git credential-cache exit --socket \"\$HOME/dir/socket\" &&
-+		rmdir \"\$HOME/dir\"
-+	" &&
-+	check approve "cache --socket \"\$HOME/dir/socket\"" <<-\EOF &&
-+	protocol=https
-+	host=example.com
-+	username=store-user
-+	password=store-pass
-+	EOF
-+	test -S "$HOME/dir/socket"
-+'
-+
-+test_expect_success "use custom XDG_CACHE_HOME even if xdg socket exists" '
-+	test_when_finished "
-+		git credential-cache exit &&
-+		sane_unset XDG_CACHE_HOME
-+	" &&
-+	check approve cache <<-\EOF &&
-+	protocol=https
-+	host=example.com
-+	username=store-user
-+	password=store-pass
-+	EOF
-+	test -S "$HOME/.cache/git/credential/socket" &&
-+	XDG_CACHE_HOME="$HOME/xdg" &&
-+	export XDG_CACHE_HOME &&
-+	check approve cache <<-\EOF &&
-+	protocol=https
-+	host=example.com
-+	username=store-user
-+	password=store-pass
-+	EOF
-+	test -S "$XDG_CACHE_HOME/git/credential/socket"
-+'
-+
-+test_expect_success 'use user socket if user directory exists' '
-+	test_when_finished "
-+		git credential-cache exit &&
-+		rmdir \"\$HOME/.git-credential-cache/\"
-+	" &&
-+	mkdir -p -m 700 "$HOME/.git-credential-cache/" &&
-+	check approve cache <<-\EOF &&
-+	protocol=https
-+	host=example.com
-+	username=store-user
-+	password=store-pass
-+	EOF
-+	test -S "$HOME/.git-credential-cache/socket"
-+'
-+
-+test_expect_success SYMLINKS 'use user socket if user directory is a symlink to a directory' '
-+	test_when_finished "
-+		git credential-cache exit &&
-+		rmdir \"\$HOME/dir/\" &&
-+		rm \"\$HOME/.git-credential-cache\"
-+	" &&
-+	mkdir -p -m 700 "$HOME/dir/" &&
-+	ln -s "$HOME/dir" "$HOME/.git-credential-cache" &&
-+	check approve cache <<-\EOF &&
-+	protocol=https
-+	host=example.com
-+	username=store-user
-+	password=store-pass
-+	EOF
-+	test -S "$HOME/.git-credential-cache/socket"
-+'
-+
- helper_test_timeout cache --timeout=1
- 
- # we can't rely on our "trap" above working after test_done,
--- 
-2.11.0
+On Fri, Mar 17, 2017 at 9:50 AM, Okash Khawaja <okash.khawaja@gmail.com> wrote:
+> Hi,
+>
+> On Fri, Mar 17, 2017 at 8:20 AM,  <stefan.naewe@atlas-elektronik.com> wrote:
+>> Am 16.03.2017 um 17:34 schrieb Okash Khawaja:
+>>> Hi,
+>>>
+>>> If you have some untracked files and your run `git stash -u`. Then
+>>> `git stash show` doesn't show the untracked files. Is there a flag
+>>> that can be passed to git stash show to report untracked files?
+>>
+>> Not for 'git stash' but you can use 'git show stash@{0}^3
+>
+> Okay that's fine as long as you know. But the first thing that comes
+> to your mind is that you've lost those untracked files. Is there a
+> reason why git stash show doesn't show those files?
 
+Here's some more interesting behaviour when stashing untracked files.
+
+Add new files (untracked) + modify some tracked files -> `git stash
+-u` -> modify the stashed files in a way that `git stash pop` will
+fail -> `git stash pop` -> it fails so now you would expect none of
+the stashed files restored but instead the untracked stashed files
+reappear.
+
+This combined with the fact that `git stash show` doesn't show
+untracked files suggest that untracked files go into an undefined (or
+at least undocumented) state when it comes to git stash. Is that
+something that needs to be looked at?
