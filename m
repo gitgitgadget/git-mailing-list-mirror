@@ -2,93 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4ED720951
-	for <e@80x24.org>; Fri, 17 Mar 2017 23:29:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC82820951
+	for <e@80x24.org>; Fri, 17 Mar 2017 23:30:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751191AbdCQX3K (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 19:29:10 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:35419 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751183AbdCQX3K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 19:29:10 -0400
-Received: by mail-pf0-f174.google.com with SMTP id x63so38071483pfx.2
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 16:28:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2ymkGytZjN9SV+tkdT3BQt9b7oB/UWPZ5rFNbl/HDg0=;
-        b=ggdOnct3tqX2YGRcWgEe5qmy3yXNnknYOfb3Wz/5X+KbhNPkKfB/e+ba0SNr3kxSQg
-         cx61B1d3BfXYCZwPVlX/r/8UPRVwjDisNJggCe9crPq/IH4EDEjQ1m6eeNdY2O0gYhpu
-         TA/8/Wrej/1/6B5T17hyg6vsXNofJVq/MzYzKdzqpLUEe1r6iE3IX52x9jCKYzVfLfSs
-         bHZJs5hSgjo4uiQoNp4HTdiIy9gGuNiWKRbOhZXr2ZKhNHQYHCcgk28YLNc4ueU3GXl5
-         8cEp03tkxRiyy4jqhCmE2dO5ANZG8Fdd0nXmYZ+lMHs+uoO6kSdakWhPwBnJDlw6QdWa
-         ReTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2ymkGytZjN9SV+tkdT3BQt9b7oB/UWPZ5rFNbl/HDg0=;
-        b=PTkeBslQcpkw3Atcerj+57Eml9a1xR4jZ6dOxhr058He3D0ueTu4wiLxLG3ITEc2Tw
-         7f2wK6mSJfMQM7E4Av1tPZcs2QscyTsGIYH/79QydK9/Q3+VIoIlOneswfYcTuIiF9l6
-         PU08ZcAO7LkUPFNVxrE//8aw3m0A0SKo098WDxYz0l3F98ad8CBLgs5ojMo6gkGSdPaj
-         HfwxJhZTV9I68jdAXs9OyPQXz+0U61penvfCyksD28cbRpB+QjE2k+tqXaY7wXa6VHs1
-         n/q56d69lWGGHe88c6bDRpRRFZ1MjARi9Z02rQk/mDTKzv721phzIp2rjj63VI/ZZrOM
-         8GeQ==
-X-Gm-Message-State: AFeK/H1x55L3TpxvHYYAJ5f0gqsMH1NkLoX0QxjwSLQydyx5eW/DjQ6/G+WainV43zPKauzbsDxrZhJjDoxTqA4c
-X-Received: by 10.84.172.193 with SMTP id n59mr23007843plb.63.1489791850094;
- Fri, 17 Mar 2017 16:04:10 -0700 (PDT)
+        id S1751132AbdCQXar (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 19:30:47 -0400
+Received: from mout.web.de ([212.227.15.3]:55380 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751087AbdCQXaq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 19:30:46 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M0hcE-1bvWeO2QpS-00umcI; Sat, 18
+ Mar 2017 00:21:34 +0100
+Subject: Re: [PATCH] receive-pack: simplify run_update_post_hook()
+To:     Jeff King <peff@peff.net>
+References: <ac1c0cfc-b1de-37be-23b3-98ef1081ec4a@web.de>
+ <20170317222320.nsg3yk3nopjadr5t@sigill.intra.peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f61a1089-833b-2883-deab-f97cb77cef96@web.de>
+Date:   Sat, 18 Mar 2017 00:21:11 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Fri, 17 Mar 2017 16:04:09 -0700 (PDT)
-In-Reply-To: <20170317225532.GR26789@aiede.mtv.corp.google.com>
-References: <20170317222842.GP26789@aiede.mtv.corp.google.com>
- <20170317225110.13417-1-sbeller@google.com> <20170317225532.GR26789@aiede.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 17 Mar 2017 16:04:09 -0700
-Message-ID: <CAGZ79kaL=mHsqURqrnUMav8W=Hr960PHw6WDoBncVZA4AjmsJA@mail.gmail.com>
-Subject: Re: [PATCH] Documentation/git-worktree: use working tree for trees on
- the file system
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170317222320.nsg3yk3nopjadr5t@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Sjnq2qfjG40tugRctyat568t5glMK3sB9UPrF73Yjz6JgEAQ8jc
+ hy8IyrCdvuPVlIlGHZNHmQZJrImi6bWG41zuxkxyrLTWFrqGBlYbMS6wPdGy6lcCgQntLRe
+ jGREd3bF8Ch2dnA4cmy84TqN2FftRczHyrinJ7Sk3C3bwlwYwZ12DL7/js+Mc+96XO3rrC7
+ PtkHs93z07pw61Pv7Icqg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LceKNmwN46k=:I+xcC7FNQztqmQ2PMepDBB
+ tWN1VDGJ1B7CZ3h70xcyO+oJxaVLasqZ9cubM14xdaJ5ocP39gO8qshd/E4gXuGxWPRRM4P5p
+ I9RSWyznBiucceIUHOZu2yS3MRCQg7dzCRN06vQqz/n7Rmun5LY/UFar7ROCtpuK9mg5PmtZl
+ Jo9881DBzxyWbjZWmA62tI3CshWZYOqmeH2pbvGo0RjZO4I7AUMsCjIjn0E1xuDIru/23KTSp
+ OoQSO0mwejTBvac2uPhdVwIrbw/Rr9ajTqJ51OcTCtFjYqBfuyjJMSNZFtRSgsQCYgQABV0l4
+ eDJ60gZ/sTIIhltcuSfJHSyYuIaW4R6/H6uyIyqQrpw82WtQXF6WfIoCgJEUjwZ3aM5xNf7fY
+ NEbiSbp984ZP64Tgsw+AIthovWqQ2dm0DPNYA1N2Pc8D5JW0KdjMt6weRcgnTef+Mk+AgsDLI
+ gXs+l7ZKh1m3SgfkZBls+mRT6KiWl8cQZAMpY84w++l6g433/4YDyOxqL1JLHTX1Lg7xCEosR
+ 9fYWA5+0Qmy9DePkKvHzA2Qtsl/FIbfKTy/lCIobbBQebJXcAKP7+YPv2dMEM59+Nmkuili2l
+ VIpIUZr1ML5kXgfw0H22dEfCl9G8q1XkJDLw+lXX0uAYl+5QGPxd6pzDlsf/I8H0AdsGuUoOK
+ Nnj7dgR2kWtUNWMGcubUIflgyS9sL6hgAvyi592KYlNBmD9KG7imjVFpHd0pVHL9mnXlePyL7
+ TSXWm2cFzMHN0dUk/QW+g3Nrq49FCSU3zIUjCvlQn+UxtUU8ThkTACYstgpfp3IP3FJSQgklG
+ 0vtwdQ3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 17, 2017 at 3:55 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
+Am 17.03.2017 um 23:23 schrieb Jeff King:
+> On Fri, Mar 17, 2017 at 11:02:13PM +0100, René Scharfe wrote:
 >
-> Stefan Beller wrote:
+>> Instead of counting the arguments to see if there are any and then
+>> building the full command use a single loop and add the hook command
+>> just before the first argument.  This reduces duplication and overall
+>> code size.
 >
->> If I recall correctly, "worktree" is the feature/command, and
->> "working tree" is an instance in the file system, even when you only
->> have one working tree.
+> Yeah, I agree one loop is nicer.
 >
-> I'm not sure I agree with this distinction.  "worktree" is just a
-> short name for "working tree".
+>> -	argv_array_push(&proc.args, hook);
+>>  	for (cmd = commands; cmd; cmd = cmd->next) {
+>>  		if (cmd->error_string || cmd->did_not_exist)
+>>  			continue;
+>> +		if (!proc.args.argc)
+>> +			argv_array_push(&proc.args, hook);
+>>  		argv_array_push(&proc.args, cmd->ref_name);
+>>  	}
+>> +	if (!proc.args.argc)
+>> +		return;
 >
-> Unfortunately gitglossary(7) doesn't make this clear at all --- it
-> uses the term worktree a few times (and appears to mean "working tree"
-> when it does --- e.g.
+> It looks at first like the result leaks, because you have to realize
+> that the push will modify proc.args.argc. I wonder if:
 >
->         Pathspecs are used on the command line of [...] and many other
->         commands to limit the scope of operations to some subset of
->         the tree or worktree.
+>   argv_array_push(&proc.args, hook);
+>   for (cmd = commands; cmd; cmd = cmd->next) {
+> 	if (!cmd->error_string && !cmd->did_not_exist)
+> 		argv_array_push(&proc.args, cmd->ref_name);
+>   }
 >
-> ) but never defines it.
+>   if (proc.args.argc == 1) {
+> 	argv_array_clear(&proc.args);
+> 	return;
+>   }
 >
+> would be more obvious (at the cost of a pointless malloc in the corner
+> case. I can live with it either way.
 
-So maybe it's time to look for volunteers for a cleanup patch. ;)
-I tried finding the discussion on worktree vs "working tree"
-and did not succeed. :/
+Sure, that's even simpler.  I don't know how often the no-args branch 
+would be taken and if the extra allocation would even matter -- that's 
+why I tried to avoid it -- but probably the answers are not often and 
+not much.  The only test case that hits it is for the deletion of a 
+non-existent ref.
 
-Maybe Duy has a better memory there.
-
-Thanks,
-Stefan
+René
