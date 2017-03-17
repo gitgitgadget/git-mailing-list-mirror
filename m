@@ -2,98 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4DB20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 15:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42E7820951
+	for <e@80x24.org>; Fri, 17 Mar 2017 15:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751297AbdCQPNe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 11:13:34 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:47217 "EHLO
+        id S1751246AbdCQPNd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 11:13:33 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59928 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751087AbdCQPNa (ORCPT
+        by vger.kernel.org with ESMTP id S1751049AbdCQPNa (ORCPT
         <rfc822;git@vger.kernel.org>); Fri, 17 Mar 2017 11:13:30 -0400
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 2ED682045A;
-        Fri, 17 Mar 2017 11:12:37 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 9E6A420A2D;
+        Fri, 17 Mar 2017 11:12:35 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 17 Mar 2017 11:12:37 -0400
+  by compute1.internal (MEProxy); Fri, 17 Mar 2017 11:12:35 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=l5Kgr+/9gcv6p7cX0T
-        VMvUWGQcs=; b=iFMuPPKt2Qm1cm1HLctw+7qWOSkTFpYZQ5TKPsytMPf63zXtut
-        d3mg/zerk3pm7arcsovveXWP8y7r0/pJlTlGkXgBS4oTWVta8b7sNAsygjYT4uN3
-        vSK5UwwOObLNqI/Zbyw2+GiWwQABmvVBeWFHhEcXNLQvuNNZwI5OxaGsxu7zOqTp
-        xWF1ca4Od2Bavlxkk1f2qgwWcw5+aFJ+UUqewR35kdKdFm2CYdzUDXIRRRVIW2yH
-        TCynS0jy0g9v2z3NmI7dwZMT3FthzSHIqPsyA2jVC8AgH5bJTpLWAx2CMXqaqppN
-        SB4Hq6klti/zj4rhAVWHRTBDq54na0JdHPmw==
+        :date:from:message-id:subject:to:x-me-sender:x-me-sender
+        :x-sasl-enc:x-sasl-enc; s=fm1; bh=4326dU871pVXdzevD9Mriy8+IfU=; b=
+        InhkIbwf6sy9jXBqZg0kfwuh11u3/e9/dMuvKTgAJ03PDlqvHqvXlZq2mEmOvhF3
+        gD4HSHWrsJAZhkm55MMJt5u/VEnmccedjQk/rvnsi/UKQ1yigzUbm3ANBgMrDiLh
+        KODLHgp3fxY8VasHORSVuAtwjWyiabQY2pqzoLk9AU9TMtPdfOGriRwiwRF7/lL6
+        C0DRaGBGcBBauJWf8UTGOPvilIMt9wHw3CWgSmxN46wLVzE4YQ9RnvohtxE+2383
+        L7ImigfkpGeI7YY0ZwSqb8nBlPQHQMXi7zBBNOxmJOXCYAjOTPa+64WQhWegkm3N
+        I9HVS1vmJttMGTcvqfM1OQ==
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
-        fm1; bh=l5Kgr+/9gcv6p7cX0TVMvUWGQcs=; b=h/51kfJM9+X4oxIY9Tt/wDJ3
-        pYItzsEQOAkNyqdF1DRr8E9bTlVTWwhXK9lQaW3MXQ8C6HecdE94joHm5OLiUwJ8
-        3qXkjka4UB9OSglX070ELbywvoclLaFp53vYVTLP6Ya/t2hz8ColbBaCP9L33R8x
-        KDqxtYjzkhDVix1Tk9pKbw7+D74CRWg49HJEtYj74Su7qnzDFph1i4IEPHxKRNm8
-        J/kJLRnnD9A0sfbWvY8DIBRzuB2GZWHismm4iWKItwQuTEF44r1zl+RkDrdQCJLu
-        2TUCRmMq3lI57HFliF8VMmfXwUemiYhYgm+HlJOYYjzLyVMiBnvS1d6Ta3jilg==
-X-ME-Sender: <xms:5fzLWD2Z7PZbdhUKIpII_HiyvrwNdPUSnmthUcId6vLwvbkM0ykmEw>
-X-Sasl-enc: V5zvDbSwLkTxcMUAWtyhbSQVgVcBUHuZUVVg+kGYgZFx 1489763556
+        messagingengine.com; h=cc:date:from:message-id:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=4326dU
+        871pVXdzevD9Mriy8+IfU=; b=nvh4pJeRhy2F3ru439AzmmAnxE5uC4GCNAw/ct
+        L/O7vjbS56v+2H//SjiDLev1ctvEVm6iIsIyk6SuLJiDQpfrN1gUMDQDDH+KdNjQ
+        ftr4fTDBrkwH9cG1AFHwqta8j45niZBNS7HBlc/+6TYYcA/JoERA9/eInNlMbsbF
+        lqEwf/gAMVRIlbFNS38hbWdk9j/26c4jj4PtnsCd35m/4TWfta1Gy+Q2tmcLfb6Q
+        BZjGmJd34fFLoTH/28+qqg4J/nd+UflA/pmVYFpp1DhYJSg0K6rR6jusxYrJjfoG
+        qyKjP90iBKOiBmlmII7cHvWE3/+kWRwH6Jdzs3VD350vkj5A==
+X-ME-Sender: <xms:4_zLWKO7VB03_jfUP_nxtVjeksRT0S-KBLKxd2vb9WaP15SuKGLQMw>
+X-Sasl-enc: qvf25DzTCXvq6I67efo0TkWx91baCwNu4yDD0ynXnxQ4 1489763555
 Received: from localhost (dslb-178-011-152-175.178.011.pools.vodafone-ip.de [178.11.152.175])
-        by mail.messagingengine.com (Postfix) with ESMTPA id A84FF240A5;
-        Fri, 17 Mar 2017 11:12:36 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 2FFDF244D9;
+        Fri, 17 Mar 2017 11:12:35 -0400 (EDT)
 From:   Michael J Gruber <git@drmicha.warpmail.net>
 To:     git@vger.kernel.org
 Cc:     Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH 2/2] l10n: de: translate describe debug terms
-Date:   Fri, 17 Mar 2017 16:12:33 +0100
-Message-Id: <faa3afab66e0cd2f3851c41415ce08aa3c53f42b.1489763302.git.git@drmicha.warpmail.net>
+Subject: [PATCH 1/2] describe: localize debug output fully
+Date:   Fri, 17 Mar 2017 16:12:32 +0100
+Message-Id: <105f48ad2ae1aa9c88ce6088e6b304294bec0835.1489763302.git.git@drmicha.warpmail.net>
 X-Mailer: git-send-email 2.12.0.484.g92f9ab2bc1
-MIME-Version: 1.0
-In-Reply-To: <105f48ad2ae1aa9c88ce6088e6b304294bec0835.1489763302.git.git@drmicha.warpmail.net>
-References: <105f48ad2ae1aa9c88ce6088e6b304294bec0835.1489763302.git.git@drmicha.warpmail.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+git describe --debug localizes all debug messages but not the terms
+head, lightweight, annotated that it outputs for the candidates.
+Localize them, too.
+
+Also, increase the width of that field to create room for the translated
+terms.
+
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
-Junio: this is just a l10n-followup to the previous code patch ;)
+Ralf: this is just the context for the following l10-de patch
 
- po/de.po | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ builtin/describe.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/po/de.po b/po/de.po
-index e9c86f5488..913db393dc 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -7530,7 +7530,19 @@ msgstr "git describe [<Optionen>] [<Commit-Angabe>...]"
- msgid "git describe [<options>] --dirty"
- msgstr "git describe [<Optionen>] --dirty"
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 76c18059bf..1a760c16f9 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -49,7 +49,7 @@ struct commit_name {
+ };
  
--#: builtin/describe.c:217
-+#: builtin/describe.c:52
-+msgid "head"
-+msgstr "Branch"
-+
-+#: builtin/describe.c:52
-+msgid "lightweight"
-+msgstr "nicht-annotiert"
-+
-+#: builtin/describe.c:52
-+msgid "annotated"
-+msgstr "annotiert"
-+
-+#: builtin/describe.c:249
- #, c-format
- msgid "annotated tag %s not available"
- msgstr "annotiertes Tag %s ist nicht verfügbar"
+ static const char *prio_names[] = {
+-	"head", "lightweight", "annotated",
++	N_("head"), N_("lightweight"), N_("annotated"),
+ };
+ 
+ static int commit_name_cmp(const struct commit_name *cn1,
+@@ -396,8 +396,8 @@ static void describe(const char *arg, int last_one)
+ 	if (debug) {
+ 		for (cur_match = 0; cur_match < match_cnt; cur_match++) {
+ 			struct possible_tag *t = &all_matches[cur_match];
+-			fprintf(stderr, " %-11s %8d %s\n",
+-				prio_names[t->name->prio],
++			fprintf(stderr, " %-15s %8d %s\n",
++				_(prio_names[t->name->prio]),
+ 				t->depth, t->name->path);
+ 		}
+ 		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
 -- 
 2.12.0.484.g92f9ab2bc1
 
