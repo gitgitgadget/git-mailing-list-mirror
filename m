@@ -2,88 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EFB120951
-	for <e@80x24.org>; Fri, 17 Mar 2017 16:49:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6796D20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 16:53:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751224AbdCQQtB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 12:49:01 -0400
-Received: from mail.fairlystable.org ([216.151.3.163]:42722 "EHLO
-        mail.fairlystable.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751202AbdCQQs7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 12:48:59 -0400
-Received: from [174.25.131.71] (helo=localhost)
-        by mail.fairlystable.org with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-        (Exim 4.72)
-        (envelope-from <jrayhawk@fairlystable.org>)
-        id 1cov3c-0000cz-Ca; Fri, 17 Mar 2017 09:48:52 -0700
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="pgp-sha256"; boundary="===============5288623328790535978=="
-MIME-Version: 1.0
-Content-Disposition: inline
-To:     Junio C Hamano <gitster@pobox.com>,
-        "Michael Haggerty" <mhagger@alum.mit.edu>
-From:   Joe Rayhawk <jrayhawk@freedesktop.org>
-In-Reply-To: <xmqqo9wz9b68.fsf@gitster.mtv.corp.google.com>
+        id S1751251AbdCQQxk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 12:53:40 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:34926 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751169AbdCQQxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 12:53:39 -0400
+Received: by mail-pg0-f42.google.com with SMTP id b129so45537845pgc.2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 09:53:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6VvxTLoWWHbpmwk5co+bYFMzMKqDiBnKkWLD/cUjdlQ=;
+        b=tyN/aMz0Un3ijZ4rvG8HWuvapgtneW9n5PubwtxufnJ4QS8cZfs2+OunxayvfFEonB
+         xf/sr9yGLw1thvJFlIMXLU/+e7b0W5rJeeKhzipkEAmOo2513OcjtDAKrKbPjjMFpejf
+         MccBQ0kh+ONCTmmCEfTfv7Bnhhb9pzYmlayacwuyhY8E1hCEa7bSkUbYkuegwWbSEzfV
+         GuyHU2TU9jtewfI8gmHH8vmzMmb+N/7n1FSgOXRd1kVcvGUTRG5omOHJ8VlYvSl7tmxy
+         tf5qXtwCHu3cYxg9ah+hY+eN1biz5q76d1sYzCcmE7uFrAzjsajUt66LsRS+gLV5fivV
+         dRdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6VvxTLoWWHbpmwk5co+bYFMzMKqDiBnKkWLD/cUjdlQ=;
+        b=ck39DgyTzsq8xUodFvJ5fFkaORPIBBPG44UayAV0yyUoeKGSeRUJkS7wtPo+g4CkMq
+         jvgF0GsVD93mqQy1beP0YUBIX5YMSZVlptQivy+tsQSdsgQFd8dcEN3ISw2Tt1VxXDBW
+         P+JcnIYIU99Pn2y3zPBgAmKNVqcOb6eTKRmt3aC4YurfTL84kQAieGGrHzKMjOp2KdlE
+         dPwDk+cdvrNW08wHFsl7tcDgWbaqfnQrCicEokngwy+mrSG4KL+5HQtLZnONmAIpvk/v
+         4XUFP6JbBMrHP7wA3sYq59Cmhr5fgdkdtGv+w/Aiy9tKv4/k8pVe7wA3OIDs+I4RCW/X
+         w/ZQ==
+X-Gm-Message-State: AFeK/H2wmuwAw/AS/Fy5NXUFbuyZz/kaC2q8KH3O6v79N7IPzKJnqsg4lh0I0YGECcD3Bw==
+X-Received: by 10.99.153.1 with SMTP id d1mr17374281pge.44.1489769617904;
+        Fri, 17 Mar 2017 09:53:37 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:cc9f:ca23:5f26:6394])
+        by smtp.gmail.com with ESMTPSA id m12sm17996025pgc.46.2017.03.17.09.53.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 17 Mar 2017 09:53:37 -0700 (PDT)
+Date:   Fri, 17 Mar 2017 09:53:35 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     yanke131415 <yanke131415@gmail.com>
 Cc:     git@vger.kernel.org
-References: <148971018136.2144.12683278043600094739@richardiv.omgwallhack.org>
- <195b30d7-9ea2-7a9b-79ca-41b7bb890a30@alum.mit.edu>
- <xmqqo9wz9b68.fsf@gitster.mtv.corp.google.com>
-Message-ID: <148976932628.2144.11216577266857568258@richardiv.omgwallhack.org>
-User-Agent: alot/0.3.6
-Subject: Re: Shared repositories no longer securable against privilege escalation
-Date:   Fri, 17 Mar 2017 09:48:46 -0700
+Subject: Re: why patch to the gitk no replay?
+Message-ID: <20170317165335.GM26789@aiede.mtv.corp.google.com>
+References: <e7d6f518-51aa-92fa-e685-7cde019d6e5b@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e7d6f518-51aa-92fa-e685-7cde019d6e5b@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---===============5288623328790535978==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-Quoting Junio C Hamano (2017-03-17 08:26:39)
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> I _think_ the real bug is that somehow a user got a wrong impression
-> that directly underneath $GIT_DIR/ is somehow different from its
-> subdirectory and it is OK to make the directory unwritable.  I do
-> not think we never intended to give such a promise, but there may be
-> a documentation bug that gives the wrong impression, which we may
-> have to fix.
+yanke131415 wrote:
 
-Actually, yeah, that's a useful outcome I can steelman out of this
-email: given that git init --shared has always introduced trivially
-exploitable security escalations, it should probably either be changed
-to use sane permissions or have its documentation changed to mention
-that, at least on base POSIX, using --shared to share a repository
-between multiple UIDs literally eliminates the purpose of having
-multiple UIDs.
+>     I send a patch to gitk
+> project(git://ozlabs.org/~paulus/gitk)with the target email address
+> paulus@ozlabs.org. But several days later No replay of this patch i
+> receive, is the  email address i send patch wrong? Anyone who knows?
 
---===============5288623328790535978==
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Description: signature
-Content-Type: application/pgp-signature; name="signature.asc"; charset="us-ascii"
+Sending to this mailing list (and cc-ing Paul) is more likely to work.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE0W3/Ls5On90y4dmX35w74P7tvu8FAljME2oACgkQ35w74P7t
-vu/zIw//ZDtdLDtu9YLIGxQJKUGboOpuZeBfwowwLPzouYMip2jVvO4EUrE54Yvj
-DBMGGf5stoCsB4pexZZbsi9z49jpgIgvAdOaLA2budTb/eiCuNCeJWqcqr6xHoHI
-HwOIPFDKijrXs5MJaX3AC8v7nCjkB1Wz5sJnGUsxzmwgEitg1GPI40HSCSbxjNzW
-RbwpGMEUc14Dd63tSniQJml+vAYA78UKfrmB650vrms1Lf6D47t15xPTv/nRalLa
-3IGwmW+6738XXZ/rw8Awj4TjoL8jQ4k/ZCOMWHW4SPakuoGx233/YCHsNlOyrFWX
-r3g7DtXo6uX2OKp3Q3pnvgTFdXreYCEDBtQXmBKLAyVYqlGO37hqkVliMQZPc3Qz
-z9rOgStEQdM2xm79jouOfgcAayoZMrHGuUD7MfF++G/Nt+VAyj+M9XT5N1qk4MNc
-jPt5IU65TecbLghISkZz5e0TIdaGYmJmqyyRrEixPC8sMpzf9B+9kgYe+hgnNwU2
-l/Wef0fGxXkbhItw30X9RcU5+7LG/gZEhEmzOo7fS1M4yp1MBSnDNLv/Yvi5eFPD
-u9t3GWDL+OVvoZgGIGcdeHQxftYxqOAMtGVF1hoE4PZ5id0QfQJJaDLSlD66Vsm6
-3fbggDYsT26C1u/5lfgxQYvjCME5nLlY1Uenw8omnJZCRzTJqHM=
-=+P0d
------END PGP SIGNATURE-----
-
---===============5288623328790535978==--
+Hope that helps,
+Jonathan
