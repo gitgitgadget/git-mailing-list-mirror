@@ -2,102 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 682532095C
-	for <e@80x24.org>; Fri, 17 Mar 2017 22:09:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7401D20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 22:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751185AbdCQWJh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 18:09:37 -0400
-Received: from mout.web.de ([217.72.192.78]:60598 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751101AbdCQWJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 18:09:36 -0400
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LlneG-1cFwBY1zhg-00ZMx7; Fri, 17
- Mar 2017 23:02:36 +0100
-X-Mozilla-News-Host: news://news.public-inbox.org:119
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] receive-pack: simplify run_update_post_hook()
-Message-ID: <ac1c0cfc-b1de-37be-23b3-98ef1081ec4a@web.de>
-Date:   Fri, 17 Mar 2017 23:02:13 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751185AbdCQWWL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 18:22:11 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:33356 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751096AbdCQWWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 18:22:10 -0400
+Received: by mail-pf0-f169.google.com with SMTP id e129so4224242pfh.0
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 15:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=VzrXDlAKyRU/vEuU///kb0vuaGY1DTbaFzluKDsgrTg=;
+        b=BvQPKHOX3KWY3HkrwKQx2puso201a83jbY41ZkI3d1ek7JKbldsVzXMRTzI1xxfmcN
+         l2F0o/QYHSaJXE//b9I7HDtUBMkfQPZCRy8FZnzn9ApsiL2pqpDuc44jx1zErI9mABWr
+         jmzFzLfPKJF6vVjX2yRZ/XMygODSvghpfRaoiiu2SbKqoHEpttAtJfIw36EwZ6FEY0Ez
+         0Bc4oi5Qf9C+4AiqiiolsuDUyqY/4yeXK+Y+p3crNScT+ge2bSSaiUKRcdGIbllS7LMA
+         wlPgBiwF/leduuG2MUTQCWD8lwVQFUUHXnYD+61k7+oAEyQuwj68qzoqftspntaJ8q29
+         7f+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=VzrXDlAKyRU/vEuU///kb0vuaGY1DTbaFzluKDsgrTg=;
+        b=MUQQ9MMOL9IHtteVuibfCttiYxDXi4KoXJfZ9FfmH6mCLmAgzRSL9EJudb20mlvUVO
+         QSNpZOuQjEcOU7DZzTyxMhKj9wIIimZL53GYkbCd7rytxsz7cP3uThJVEIYCkRmkdhrU
+         mDHV7yAEWHXYKfp+KTzgjj8jBRgjl8uodAgiKQ0w/fzZ6O0Fnt2E8NJ0hg4mhm2Vxb3y
+         4R93wVev0EONN6T9FtwhjxpRXpbprH4pYG6jUz9J41o1ErYaqjWVlT37MjuNyLKisvzN
+         exBcKRlYSqD1SvgxT+klZW+hIuKOrQoJYD8+c30wA3KtgpjrJsHMwrEOYuYX2j17RyFJ
+         Y4wA==
+X-Gm-Message-State: AFeK/H0TuFRzPeRos3MRqJfJQ49IelfYuTWy0DW0wCW7sg3XovaPu6RNhEMQTG3MAx+9/PbW9VEFPfbhj8CB1r+1
+X-Received: by 10.99.119.139 with SMTP id s133mr7351656pgc.194.1489787929075;
+ Fri, 17 Mar 2017 14:58:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:d5XVuVAD/bebDRkZ5OXZmUtGNXlzx002cyxFt32BS87iTKSNPsZ
- +4M2RGGYd7BCLp4SyTIDb4jo95bbZy0cfkVYT2Ok619GzMhGOrfVVK2wnBQFDTpr4ITnMPu
- p9RFTHj8untg7NtZFKuGAnqUm4HozEz2aU8MlRPQpyeaiemLPKd3ghslyjjrCLwucl/UByh
- ojut38eZoZmO+wEU8N2UQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4vRm7NMZKLI=:yK3vWTOp6LhCfof4OO20qi
- VC1HwD0dO9hBE+dlH9htYr0k6zIs+uCAyqUOUTChUxFzGeJGvjClqgwEkkOtgg0dHKtde/Ohj
- ckXm7h6MN9YRJSqFBWqK8iV/YBNUasaWaf4POp8Kwmj0xAIBn6djXh1v2R/D/p8Wy5SpEhgxl
- YPfyHC2XA5JX0Wlobv6aC+HDBbMJgc8Zh0zvSnwPRy8U4q05vmz0DL9Sr+hIn2d/26CuBMLwC
- N/vQM0qWoLtuWpst0x/W6TMM0QJjl3aG8IuhfhC5cCOG491dLgb7IRpAn1qn5tSROT6p1DPo1
- saZWnirCiU7llNWdY5Y3pb0PoFglJipS9X0Q6Y+/y1KVfkw4mcH1VI0BZ+UBPbX0SlMl/tFg/
- YVZpPw53ovD3PUQz8LP8ja0sgRuIUt5EF+BLVmdbzImqZ0MKjR8a5vEcQmDvcRgF7HMHD4oYs
- LmNt8LVtHQUrLUmIg5er4FPd7ycNxMOg6g52sDuneWLzpshr1TUraMhv/OFqyOvO14Yhivpbm
- 5asDP8fpFPAcKrpYyvR+kAKReNPYmk4D/wZYMeAKSgK6grxF27dmMTPUIFuMTP7S973F86yq1
- koCcgJ4+Buhm1C7dmVgvZI8JnZgs3t7eZByl9e2loDN2B8mzq9/X7cgD16OSKMF3jSen1CQWR
- emfncnpnIbf1RBov1fUG8j/u6NkGowDJE79KAL9V9VZ54CA3HI/UfnofSm/FjQqBo1MdB1p94
- GXl6ZDzmWz6DFksyOVAtII02e48Oky6eB0fUzFs8W0j6+A7EiRceYWJR7u9lhUsAD0S7QN/DD
- hFgF9z3
+Received: by 10.100.187.5 with HTTP; Fri, 17 Mar 2017 14:58:48 -0700 (PDT)
+In-Reply-To: <xmqqmvcj61j2.fsf@gitster.mtv.corp.google.com>
+References: <CAPUVn2u0Uos2mT5+4ejj8m0okNK6XwerL6ce2miHfhtuEs-ZnQ@mail.gmail.com>
+ <xmqqmvcj61j2.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 17 Mar 2017 14:58:48 -0700
+Message-ID: <CAGZ79kZQsauBfoTjyqm+-+LjyyEc2Ykj5exUY5KdErEzFH0GMA@mail.gmail.com>
+Subject: Re: Bug with .gitignore and branch switching
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Nevada Sanchez <sanchez.nevada@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of counting the arguments to see if there are any and then
-building the full command use a single loop and add the hook command
-just before the first argument.  This reduces duplication and overall
-code size.
+On Fri, Mar 17, 2017 at 2:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> We've discussed the lack of "untracked but precious" class a few
+> times on the list in the past, but I do not recall the topic came up
+> in the recent past.  It perhaps is because nobody found that class
+> useful enough so far.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/receive-pack.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+My gut reaction on reading the bug report was that the root cause is
+git-checkout doing the wrong thing by default. (cf. Git-Merge-2017,
+"What=E2=80=99s Wrong With Git?", I am not sure if the video is yet availab=
+le)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 83492af05f..fb2a090a0c 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1128,25 +1128,22 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- static void run_update_post_hook(struct command *commands)
- {
- 	struct command *cmd;
--	int argc;
- 	struct child_process proc = CHILD_PROCESS_INIT;
- 	const char *hook;
- 
- 	hook = find_hook("post-update");
--	for (argc = 0, cmd = commands; cmd; cmd = cmd->next) {
--		if (cmd->error_string || cmd->did_not_exist)
--			continue;
--		argc++;
--	}
--	if (!argc || !hook)
-+	if (!hook)
- 		return;
- 
--	argv_array_push(&proc.args, hook);
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (cmd->error_string || cmd->did_not_exist)
- 			continue;
-+		if (!proc.args.argc)
-+			argv_array_push(&proc.args, hook);
- 		argv_array_push(&proc.args, cmd->ref_name);
- 	}
-+	if (!proc.args.argc)
-+		return;
- 
- 	proc.no_stdin = 1;
- 	proc.stdout_to_stderr = 1;
--- 
-2.12.0
+One argument in that talk was that Git promises to do "work on multiple
+branches in parallel (context-switched, single threaded)", and git-checkout
+is the apparent command to switch to another context (branch).
+However by putting away only tracked content, we miss
+doing a proper context switch for untracked and ignored files.
 
+That partial switch has advantages in the typical use case, e.g.
+* compiled objects in the worktree may not need to be recompiled.
+* no need to do work for the untracked files (e.g. move to a special
+  location).
+
+Both these reasons argue for performance, instead of "correctness"
+in the sense of "easy-to-understand commands for top level principles".
+
+And in that talk the presenter concluded that git-stash was only invented
+to circumvent these "correctness" problems, such that if git-checkout
+were to also (de)populate the untracked and ignored files on branch
+switch we would not need git-stash, because git-checkout did it for you
+already. And by the omission of git-stash and an apparent
+easier-to-understand git-checkout the whole git suite would become
+easier for users.
+
+I further conclude that when git-checkout were to behave "correct" as
+outlined above, then this class of bug reports would not occur.
+
+Just food for thought.
+
+Thanks,
+Stefan
