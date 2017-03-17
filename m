@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C16320951
-	for <e@80x24.org>; Fri, 17 Mar 2017 22:43:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB96B20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 22:43:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751196AbdCQWna (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 18:43:30 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33260 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751248AbdCQWna (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 18:43:30 -0400
-Received: by mail-pg0-f46.google.com with SMTP id n190so49697130pga.0
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 15:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ppp1w13jcYMkEFEsnUhWx+0Aqtj3dNqEVDq+TQeRVfM=;
-        b=ifP9t1e8dLnCJf4Zy4By/RaQfoBfQZe0l/J4L92D4QrDHHBCijdvoMo43fv7aSmLM7
-         kIJN8Iz2wMUBJ0WKHq3Q81cf5HHw7Mq8PGjpORSX6e7rmdJ7+UPqP/C7pfCnqv3AVah/
-         sg4hu3n8k1oLoHbuZqKfHXmRBeRlcnkwKJD67cUFK8lHkIROzkNuu5gaWWKpVwkFCMqe
-         EB2SIC/yB3pVv5afycKYkIqh9474VFNxv4khI7ZW2eev/Pr/WBxQNLlFi0v0Ch9YxNwS
-         rG11ooCCX4c9maTFRFAaco2umwS1BMchLry+Sz/m9fDS0F8Gmh8Vp2XEBifdbUwNO4TZ
-         AemQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ppp1w13jcYMkEFEsnUhWx+0Aqtj3dNqEVDq+TQeRVfM=;
-        b=VRM8XsdukGOJ3py4lBZVYT25PmDph56iXODdShhArKmY4A3P0e1lOETXX/RfULtznB
-         qoC1W7x6tWc+L4sbqXy6qPZ/4Bb90LlDhs/lT770oqEXtQ9gafx36fpJC9c5di4sUKcu
-         WzRAz4QoUV9UTbEcrYpmJD1+UVR7LKVAvnO8fQOA8Fh4Iwm29FBV6wZz8u0+UYDWekbj
-         NEueTYF4KLX4r8XIpLC4m6osQMOTHWFk11qxnHqQVTLLk9wdzHwwcrPn1EtqzfsXz6c9
-         P0s8LdIKCIYhs5AhedQZhh7Hut3wlXqJV35eHDRnFhU3ur0kyF9NL8ndt29+1+teMZbC
-         CtYw==
-X-Gm-Message-State: AFeK/H0aqpkgTH7/Lrzst8UUkNVW/wRmyF5KMKpaJBcVNJVYHsFvrK0We0H6OIzInSxGrIYs
-X-Received: by 10.98.42.151 with SMTP id q145mr19113420pfq.175.1489790554318;
-        Fri, 17 Mar 2017 15:42:34 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:c001:d329:ba91:25ca])
-        by smtp.gmail.com with ESMTPSA id z25sm6053084pfi.28.2017.03.17.15.42.33
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Mar 2017 15:42:33 -0700 (PDT)
-Date:   Fri, 17 Mar 2017 15:42:32 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Rahul Bedarkar <rahul.bedarkar@imgtec.com>, git@vger.kernel.org
-Subject: Re: [PATCH] grep: fix build with no thread support
-Message-ID: <20170317224232.GE63813@google.com>
-References: <1489729656-17709-1-git-send-email-rahul.bedarkar@imgtec.com>
- <xmqqy3w37ptd.fsf@gitster.mtv.corp.google.com>
- <20170317184701.GB110341@google.com>
- <20170317223741.qwfh2zw37y3jbeev@sigill.intra.peff.net>
+        id S1751331AbdCQWnq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 18:43:46 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59515 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751269AbdCQWnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 18:43:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 14C1578B32;
+        Fri, 17 Mar 2017 18:43:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=ic8T8Hc4Adlklb+Lw3OTEzeoSng=; b=imDDuO
+        XGRN0BdOXuAQ9uLv/p5mkgPHQCa5AnZrRmIc8n39hJ+7yeZx6mhiQ24RlCb6Kzxa
+        jdQ9uFYiWTYLHpheezi4n7SONfDKpIytgP/5kRDiwImoj+lIsFrGuNNHARQ5/M5v
+        bJzWOBKGFBaX/a8kJXRzkfClIUgvJ8/xTf5Ws=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=MW9AG+fubh9u9+mgFF3C3YhOZcxDokBe
+        96eK58tDRS5SJ5UMP3Ggog0klpy0VH6blcTPuVwOcb9u2gcxMs0inn1WLHc4Djfa
+        FXOLe5xT8wQuDwUAH89IbQV3ybFHy3wTIDq+08xHXE5e+HY2gC0lU9lDC1tEP43k
+        61nkxW7BytY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D09378B31;
+        Fri, 17 Mar 2017 18:43:44 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 71A5A78B30;
+        Fri, 17 Mar 2017 18:43:43 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Luke Diamand <luke@diamand.org>
+Subject: Re: [PATCH 2/2] name-rev: favor describing with tags and use committer date to tiebreak
+References: <xmqqd1die00j.fsf@gitster.mtv.corp.google.com>
+        <20170315225045.15788-1-gitster@pobox.com>
+        <20170315225045.15788-3-gitster@pobox.com>
+        <9AE7ADCA-97F9-4857-AC55-76C4BD822C25@gmail.com>
+        <xmqqy3w48nif.fsf@gitster.mtv.corp.google.com>
+        <xmqqshmc8n09.fsf@gitster.mtv.corp.google.com>
+        <015A7026-960F-450C-9276-AAC3A0B11207@gmail.com>
+        <xmqqd1df961c.fsf@gitster.mtv.corp.google.com>
+Date:   Fri, 17 Mar 2017 15:43:42 -0700
+In-Reply-To: <xmqqd1df961c.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Fri, 17 Mar 2017 10:17:35 -0700")
+Message-ID: <xmqqa88j5xsx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170317223741.qwfh2zw37y3jbeev@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2C86730A-0B63-11E7-BA35-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/17, Jeff King wrote:
-> On Fri, Mar 17, 2017 at 11:47:01AM -0700, Brandon Williams wrote:
-> 
-> > While taking a look at this bug I discovered that the test suite doesn't
-> > pass 100% of the test when compiled with the NO_PTHREADS option. The
-> > following tests seem to be failing:
-> > 
-> > t1060-object-corruption.sh                       (Wstat: 256 Tests: 13 Failed: 3)
-> >   Failed tests:  7-9
-> >   Non-zero exit status: 1
-> > t5306-pack-nobase.sh                             (Wstat: 256 Tests: 4 Failed: 1)
-> >   Failed test:  4
-> >   Non-zero exit status: 1
-> > t5504-fetch-receive-strict.sh                    (Wstat: 256 Tests: 12 Failed: 2)
-> >   Failed tests:  4-5
-> >   Non-zero exit status: 1
-> > t5530-upload-pack-error.sh                       (Wstat: 256 Tests: 10 Failed: 1)
-> >   Failed test:  10
-> >   Non-zero exit status: 1
-> > 
-> > I didn't take a close look at it but this would seem to indicate that we
-> > don't worry to much about systems without pthreads support.  Just food
-> > for thought.
-> 
-> Hmm. We used to. What version did you test? Everything passes for me at
-> 0281e487f^ (after that it fails to build). So AFAICT v2.12.0 is the
-> first release which does not work with NO_PTHREADS.
-> 
-> -Peff
+Junio C Hamano <gitster@pobox.com> writes:
 
-The version I ran tests on was what the master branch was pointing to a
-day or so ago:
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> ...
+>> Following your explanation this patch looks good to me and this fixes the
+>> test failure. TBH I never thought about the difference of these commands
+>> before. "rev" and "ref" sound so similar although they denote completely 
+>> different things.
+>
+> Thanks for testing.
+> ...
+> Hence, I would really prefer not to commit mine myself.  I'd rather
+> see somebody from git-p4 circle to come up with a version that is
+> more in line with the way things are done in the existing code and
+> send a tested version for me to apply.
 
-v2.12.0-264-gd6db3f216
+Tentatively I queued my hack together with the name-rev thing on
+'pu', and Travis seems to be OK with the result.  
 
--- 
-Brandon Williams
+It would be nice if we can "fix" the use of "name-rev HEAD" in "git
+p4" sooner rather than later.  If the code truly uses it to figure
+out what branch we are currently on and acts on it, as the name of
+that function suggests, it may be easy to construct a testcase where
+the code without the fix does a wrong thing (e.g. have two branches
+pointing at the same commit, and tell "git p4" to act on the one
+that sorts later in the "git branch --list" output; the command
+would act as if it were working on the other branch), and shows that
+the patch fixes that problem.  That would be a bug worth fixing
+quickly regardless of the "name-rev" change michael wanted to make.
+
+Thanks.
+
