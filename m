@@ -2,91 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2ED52095C
-	for <e@80x24.org>; Fri, 17 Mar 2017 15:27:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B6D320951
+	for <e@80x24.org>; Fri, 17 Mar 2017 16:13:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751645AbdCQP1D (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 11:27:03 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53427 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751641AbdCQP1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 11:27:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C7066778A1;
-        Fri, 17 Mar 2017 11:26:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=of8B/cO2dkjHbSVsUf/PNB0PW7M=; b=fdg9Uj
-        wEdCVOaCOHIiCS+OAiJUfX8KubGWozD0XEe+i3CkRD5UBOPUWQJCR7le8GcaSuXT
-        tSqOe3dQfjalT+chNeRGqtTkvW04r2Uw/mewdt12tEvtg/YPR8g7OEiSuqdVvG79
-        94pjqPAwauswMVl10Nd6Mmoc8hqnE9wiDDnMs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hTVX47cndqw/MyKEDffthBM2LKn7wG1C
-        8dzDoC1im+ZGnCCLZ8hg9wWK0sxPdhKcWvpoTi0GCcYGJeL7qmDs7dVfR9KCRXCr
-        ZWktbEj3iYd+ZvbcX741rSONxYqtV3s96eG58O6WttYJvGc47EuaOKARoVH+vvpe
-        +fAdMVgTwow=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C0043778A0;
-        Fri, 17 Mar 2017 11:26:40 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 34B7377898;
-        Fri, 17 Mar 2017 11:26:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Joe Rayhawk <jrayhawk@freedesktop.org>, git@vger.kernel.org
-Subject: Re: Shared repositories no longer securable against privilege escalation
-References: <148971018136.2144.12683278043600094739@richardiv.omgwallhack.org>
-        <195b30d7-9ea2-7a9b-79ca-41b7bb890a30@alum.mit.edu>
-Date:   Fri, 17 Mar 2017 08:26:39 -0700
-In-Reply-To: <195b30d7-9ea2-7a9b-79ca-41b7bb890a30@alum.mit.edu> (Michael
-        Haggerty's message of "Fri, 17 Mar 2017 13:07:36 +0100")
-Message-ID: <xmqqo9wz9b68.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751088AbdCQQNE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 12:13:04 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:41249 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751065AbdCQQND (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 12:13:03 -0400
+Received: from [10.0.2.15] ([146.90.175.94])
+        by avasout01 with smtp
+        id x4CZ1u00322aPyA014CabJ; Fri, 17 Mar 2017 16:12:34 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=BZKo6vl2 c=1 sm=1 tr=0
+ a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=9Wbz0odb7UIUuQdXHHoA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [GSoC][PATCH v5 2/3] credential-cache: use XDG_CACHE_HOME for
+ socket
+To:     Devin Lehmacher <lehmacdj@gmail.com>
+References: <20170316051827.97198-5-lehmacdj@gmail.com>
+ <20170317025315.84548-1-lehmacdj@gmail.com>
+ <20170317025315.84548-2-lehmacdj@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <2952fc80-a313-4193-64b6-072b7ccdef4f@ramsayjones.plus.com>
+Date:   Fri, 17 Mar 2017 16:12:33 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E40231E-0B26-11E7-9456-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <20170317025315.84548-2-lehmacdj@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> (I can't resist pointing out that the *real* bug is storing special
-> references like `HEAD` in the top level of $GIT_DIR, but that can't be
-> changed now.)
 
-If you call that "pointing out", I can't resist pointing out that
-you are utterly *wrong* ;-)
+On 17/03/17 02:53, Devin Lehmacher wrote:
+> Make git-credential-cache follow the XDG base path specification by
+> default. This increases consistency with other applications and helps
+> keep clutter out of users' home directories.
+> 
+> Check the old socket location, ~/.git-credential-cache/, and use
+> ~/.git-credential-cache/socket if that directory exists rather than
+> forcing users who have used `git credential-cache` before to migrate to
+> the new XDG compliant location.
+> Otherwise use the socket $XDG_CACHE_HOME/git/credential/socket following
+> XDG base path specification. Use the subdirectory credential/ in case
+> other files are cached under $XDG_CACHE_HOME/git/ in the future and to
+> make the socket's purpose clear.
+> 
+> Signed-off-by: Devin Lehmacher <lehmacdj@gmail.com>
+> ---
+>  Documentation/git-credential-cache.txt | 11 +++++++----
+>  credential-cache.c                     | 15 ++++++++++++++-
+>  2 files changed, 21 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/git-credential-cache.txt b/Documentation/git-credential-cache.txt
+> index 96208f822..2b8582639 100644
+> --- a/Documentation/git-credential-cache.txt
+> +++ b/Documentation/git-credential-cache.txt
+> @@ -33,10 +33,13 @@ OPTIONS
+>  --socket <path>::
+>  
+>  	Use `<path>` to contact a running cache daemon (or start a new
+> -	cache daemon if one is not started). Defaults to
+> -	`~/.git-credential-cache/socket`. If your home directory is on a
+> -	network-mounted filesystem, you may need to change this to a
+> -	local filesystem. You must specify an absolute path.
+> +	cache daemon if one is not started).
+> +	Defaults to `$XDG_CACHE_HOME/git/credential/socket` unless
 
-For one thing, HEAD.lock being the only reported case does not mean
-"special refs" is the only thing, and more importantly, it will stay
-to be the only thing, that would want to write directly underneath
-$GIT_DIR directory.  We may want to add a feature to store push
-certificates whenever a signed push is made, and we are free to
-decide that directly underneath $GIT_DIR is the place to do so.
+or $HOME/.cache/git/credential/socket if $XDG_CACHE_HOME is not set.
+I don't have a good suggestion to re-word this paragraph. (I just
+spent ten minutes trying!).
 
-Also, with your same logic, you could also say that the real bug is
-not in the refs subsystem but is in the lockfile subsystem.  If it
-did not use $GIT_DIR/$thing.lock when locking $GIT_DIR/$thing, and
-instead it used $GIT_DIR/lock/$thing to do so, you wouldn't have
-needed to be able to create $GIT_DIR/HEAD.lock.
+Hmm, git-credential-store doesn't mention the $HOME/.config/git/credentials
+outside of the files section. (In particular, not as part of the --file
+option description).
 
-I _think_ the real bug is that somehow a user got a wrong impression
-that directly underneath $GIT_DIR/ is somehow different from its
-subdirectory and it is OK to make the directory unwritable.  I do
-not think we never intended to give such a promise, but there may be
-a documentation bug that gives the wrong impression, which we may
-have to fix.
+> +	`~/.git-credential-cache/` exists in which case
+> +	`~/.git-credential-cache/socket` is used instead.
+> +	If your home directory is on a network-mounted filesystem, you
+> +	may need to change this to a local filesystem. You must specify
+> +	an absolute path.
 
-We do try to make sure that in a read-only repository $GIT_DIR/ and
-everything underneath can be read-only (and if that is not the case,
-you found a bug), but even in that case, we do not special case
-$GIT_DIR/ itself and its subdirectories.
+ATB,
+Ramsay Jones
+
