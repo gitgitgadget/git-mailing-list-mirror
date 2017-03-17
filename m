@@ -2,131 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55BD720951
-	for <e@80x24.org>; Fri, 17 Mar 2017 19:55:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B6B320951
+	for <e@80x24.org>; Fri, 17 Mar 2017 20:30:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751262AbdCQTz3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 15:55:29 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:35543 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751251AbdCQTz1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 15:55:27 -0400
-Received: by mail-pg0-f44.google.com with SMTP id b129so48077995pgc.2
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 12:55:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=sGH5+NcImgOItcKcILQP9qqKeG8mLa/W918RCUjniHo=;
-        b=VXSGRaMYL/+nATlQVzQ93nQscDvsyyDYMVZFQHAG+41mXl2kaOz+CvxiboWaLlGlr9
-         qscC0qVz4J2SUod6DAEbI3rxta7vmAoT6zOQwJDhA/YVB8GQ8NjgSwHVNp/WzeGZhZli
-         EfYgzZRGWFCb9nB/zauwV3A02FJjxlpcUuRCy6WlbFhgzJuHsPjpX3iM9SLGlM1BkPTJ
-         cZjtQTMArrhTb9aCfPfRUyNIUhtWhhXz9/SE/aFtgj+OUIJBWRETlJ8YnqYFP4mJzeRT
-         mI3c4soXp26rEpZRNNCO7evGTwUdiFR3/Pyb7Xiuwg+TH4UZA9H/KYCsJb0SfM+GIJ+p
-         uA+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sGH5+NcImgOItcKcILQP9qqKeG8mLa/W918RCUjniHo=;
-        b=n31E+YjnDK+tofn+02yXSHga2N3PU6yUHqCUQearNv2nhEM0X+pdunzEWiSF0q/XGQ
-         wvXby0jfLTqMVswpXWqg4NfOwX9Oqr9NyWXe6VtM6HTLYPigG/7adYOwmw/4qI41QW0n
-         WpXH49NoAyMAlme6Ep2v38Ss0jevkw+ACyAQUSyjzr3v7RY3b5gIVdmgDDSKon+lECtm
-         WZnqGBQLtGOv2/SOEv6y+BWFrvRd5IgbdGoFNnXgWFf6CETjJZ1d2bbT5KLX6xj3uam4
-         Aw3VWVDqupgRGswUgXr7IFYqv4Od4CznLp5RQ6cLsDODO6Twwh7DfIfdJTVh+ip0+yDD
-         D0+w==
-X-Gm-Message-State: AFeK/H37L/cHEg00r/rFxckBug5hRVb7dEVo5p1iTfgDn2F7xd15iGuoiv9uXTTvl/5QHM+BmfJKGN38gQwYMhjV
-X-Received: by 10.98.44.15 with SMTP id s15mr18712562pfs.161.1489779912121;
- Fri, 17 Mar 2017 12:45:12 -0700 (PDT)
+        id S1751293AbdCQUaf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 16:30:35 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52501 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751250AbdCQUad (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 16:30:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BC07F7B11D;
+        Fri, 17 Mar 2017 16:30:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8TOmagk+fz/i3Rj66gws2WrR2qc=; b=Ukr83T
+        P0eNZsLvYEh+PdQP4ldi42Pq08SThojchiZ4K+pHBojvG4LIkme9pRG4/dc3xpnc
+        zCdetrX5AJGVP6exqq9XSgfEjHxveOkMRrFJkwBZBIAqiHCD3WTTP2sWyXUh/X28
+        RePcWy0Jqajzr5RQd3+OuVKnWa9wb5+2vB84c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PqdoYpmqcVNQE8GYHZcKH0MIsLzjqQ++
+        fZ+HZTYPGsxJf9OLKNBUO3vwpz6DyNc0YX+GHFolxNONsCXDSFWets1yutfryA1u
+        tv6Bui3BQpq2GezA5hMo6UsU1yeLTBGdan0F4le20dOLOw4fE7O/7r9QmP/Cap7o
+        lo/BDgaxrWg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B47387B11C;
+        Fri, 17 Mar 2017 16:30:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22A717B11B;
+        Fri, 17 Mar 2017 16:30:31 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 2/5] setup: allow for prefix to be passed to git commands
+References: <20170314221100.24856-1-bmwill@google.com>
+        <20170317172257.4690-1-bmwill@google.com>
+        <20170317172257.4690-3-bmwill@google.com>
+        <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
+        <xmqq60j77lx3.fsf@gitster.mtv.corp.google.com>
+        <20170317192103.GE110341@google.com>
+Date:   Fri, 17 Mar 2017 13:30:30 -0700
+In-Reply-To: <20170317192103.GE110341@google.com> (Brandon Williams's message
+        of "Fri, 17 Mar 2017 12:21:03 -0700")
+Message-ID: <xmqqy3w363yx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.180.134 with HTTP; Fri, 17 Mar 2017 12:45:11 -0700 (PDT)
-In-Reply-To: <f6588ace-eecc-118d-ef26-70bc21dcc4d4@web.de>
-References: <elvahoiwfqayelbskykd@qjih> <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de>
- <hpulcgxossrwvfbbcvcl@zndn> <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de>
- <ogwsaxvtiqlsiwojzxul@owpk> <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de>
- <tskgutqgpyszzedvyfra@prol> <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de>
- <ffntuqzgjgcfhebokbty@eduj> <7f25def4-9943-ae59-a649-b4348a79890e@web.de> <f6588ace-eecc-118d-ef26-70bc21dcc4d4@web.de>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 17 Mar 2017 12:45:11 -0700
-Message-ID: <CAGZ79kbpPBN21mbN2F20ikr6dXrKEcY=msqymaG8TOujeQF0jw@mail.gmail.com>
-Subject: Re: fatal: Could not get current working directory: Permission denied
- | affected 2.10,2.11,2.12, but not 1.9.5 |
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 90C48518-0B50-11E7-A43A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 17, 2017 at 12:34 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Am 15.03.2017 um 22:30 schrieb Ren=C3=A9 Scharfe:
->> Am 15.03.2017 um 10:44 schrieb Zenobiusz Kunegunda:
->>> $ git bisect bad
->>> 7333ed1788b4f2b162a35003044d77a716732a1f is the first bad commit
->>> commit 7333ed1788b4f2b162a35003044d77a716732a1f
->>> Author: Ren=C3=A9 Scharfe <l.s.r@web.de>
->>> Date:   Mon Jul 28 20:26:40 2014 +0200
->>>
->>>     setup: convert setup_git_directory_gently_1 et al. to strbuf
->>
->> That's what I half-suspected, and I think by now I got an idea.  Here's
->> a test program:
->
-> And here's a patch for letting strbuf_getcwd() use the same getcwd(3)
-> extension that pwd(1) uses.  It avoids the need to guess the path's
-> length and thus reduces the chance of stumbling over strange error
-> codes.  I wonder if it helps in your case.
->
-> Ren=C3=A9
->
-> ---
->  strbuf.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/strbuf.c b/strbuf.c
-> index ace58e7367..4c02801edd 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -442,6 +442,14 @@ int strbuf_getcwd(struct strbuf *sb)
->  {
->         size_t oldalloc =3D sb->alloc;
->         size_t guessed_len =3D 128;
-> +       char *cwd;
-> +
-> +       cwd =3D getcwd(NULL, 0);
+Brandon Williams <bmwill@google.com> writes:
 
-from my local man pages:
+> ...  I was being cautious with this patch since git didn't currently
+> read GIT_PREFIX.
 
-  As  an extension to the POSIX.1-2001 standard, Linux (libc4, libc5,
-glibc) getcwd()
-  allocates the buffer dynamically using malloc(3) if buf is NULL.  In
-this case, the
-  allocated buffer has the length size unless size is zero, when buf
-is allocated as big
-  as necessary.  The caller should free(3) the returned buffer.
+Ahh, I forgot about that.  Processes we spawn do expect GIT_PREFIX
+to tell them where the original $cwd was and they also do expect
+that "git" invoked by them would not be affected by GIT_PREFIX
+environment variable.  So we cannot change that now.
 
-This sounds specific to Linux (though I am reading Linux man pages,
-which claim this; Also it seems I might have misread it as it also states
-"The pathname is returned as the function result and via the
-argument buf, if present.").
+If you recurse into sub-sub module, it is likely that you would want
+to update the TOPLEVEL_PREFIX relative to that sub-sub module you
+are descending into.
 
-Looking further:
+That probably also means that processes we spawn now need to also
+pay attention to TOPLEVEL_PREFIX in addition to GIT_PREFIX, and we
+should NOT re-export what we got from TOPLEVEL_PREFIX to GIT_PREFIX.
+I.e. if a "git" process started from src/ subdirectory of the
+superproject that goes into module/sub1/ submodule, top-level prefix
+may export ../src/ to point at the original location, but the
+process that is running in the submodule will be running at the root
+level of the submodule working tree, so its prefix should be NULL or
+"", no?
 
-  These functions are often used to save the location of the current
-  working directory for the purpose of returning to it later.  Opening the
-  current directory (".")  and  calling  fchdir(2)  to return is
-usually a faster
-  and more reliable alternative when sufficiently many file descriptors are
-  available, especially on platforms other than Linux.
+Adjusting pathspec and other file references on the caller's side,
+instead of exporting toplevel-prefix to have them adjusted by the
+callee, started to smell more and more like an easier/more correct
+approach to me, but perhaps I haven't thought things deeply enough.
 
-Not sure if that opens another door here?
+I dunno.
 
-Thanks,
-Stefan
