@@ -6,82 +6,107 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E11420951
+	by dcvr.yhbt.net (Postfix) with ESMTP id 233EC20951
 	for <e@80x24.org>; Fri, 17 Mar 2017 17:09:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751107AbdCQRJn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 13:09:43 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59257 "EHLO
+        id S1751150AbdCQRJs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 13:09:48 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55665 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750999AbdCQRJm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 13:09:42 -0400
+        with ESMTP id S1751131AbdCQRJr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 13:09:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1AF9178B6D;
-        Fri, 17 Mar 2017 13:09:40 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D54CB750E5;
+        Fri, 17 Mar 2017 13:09:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:in-reply-to:references; s=sasl; bh=zKkK
-        RLye9L5mP5W6g6ejwPqfeqo=; b=KcakebLMXoUEMgLMALenVZBcrfAnAjT1rjuW
-        wF5q1kJIN9WFhasrzgE0zi4NQAnYQ2fQ5edLLQKFo9OEOEkYpNRTvxdxZJNI+dtU
-        2ehEruTmVENpnBCkJtbXIeuWVQ4m/qu8eZxgmPH5iIUA0Km7RoaOSF/KV4A710DI
-        UzBQs2A=
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=aEp9
+        X3qFYWKqZR74qknkFz/DumI=; b=ttQlLh1dan85yKrH2FsCYshl8Xs22ZK9G/WE
+        pqlBW/3y3OK+PCyK6Iz4Adq7EhDM5NT/Jo4uAFhql+uX1mcZSlHirq3bbrmDEGBM
+        7rJUp2oaq6mDuoaGolvC+9Y9TirjnxogA1h8iPjhcHKqxax7cploG2bV3n+0dLPO
+        EVku8QQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
-        rJIscOip0/manihnqJ3UGKvqTOvO6jpvMU0T3HAynJBQrz7N+Gcq5eFUjsvJ7gd5
-        OnUUGrHc94OFYstaRjKObjLqr0EUXjkIvMTjPprbPWN9Zs10sYlbCr8q/vohPgtR
-        hKSaK5tO99/GeAj2sQ+r4XVTB2Zg4X7O0COBcrr1k0c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1189F78B6C;
-        Fri, 17 Mar 2017 13:09:40 -0400 (EDT)
+        bjZ7i6izmTooipzdnoTuhoM1NZwkLm1URTaR8MxKmYmEwUDKnJDkFlvnfIxQFtdF
+        pa7OQdJVejCPPB36CgPZc9d6Gi88QUFLL0X39OaPWK1FZ7bQWsH7jm1m7+sQhOdN
+        hn5kkId9idZtD42CvUGJTuHYCshOykA7rQHUFGB7JLM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CDB3F750E4;
+        Fri, 17 Mar 2017 13:09:45 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 64DDB78B69;
-        Fri, 17 Mar 2017 13:09:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 305BA750E3;
+        Fri, 17 Mar 2017 13:09:45 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [RFC PATCH 0/3] Git integration update for DC-SHA1
-Date:   Fri, 17 Mar 2017 10:09:35 -0700
-Message-Id: <20170317170938.20593-1-gitster@pobox.com>
+Subject: [PATCH 3/3] Makefile: make DC_SHA1 the default
+Date:   Fri, 17 Mar 2017 10:09:38 -0700
+Message-Id: <20170317170938.20593-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.12.0-317-g32c43f595f
-In-Reply-To: <20170317111814.tkzeqfyr3aiyxsxr@sigill.intra.peff.net>
+In-Reply-To: <20170317170938.20593-1-gitster@pobox.com>
 References: <20170317111814.tkzeqfyr3aiyxsxr@sigill.intra.peff.net>
-X-Pobox-Relay-ID: 8157615C-0B34-11E7-9A3E-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+ <20170317170938.20593-1-gitster@pobox.com>
+X-Pobox-Relay-ID: 84C9A944-0B34-11E7-A82A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here are three patches to replace the last two patches from your
-series.
+We used to use the SHA1 implementation from the OpenSSL library by
+default.  As we are trying to be careful against collision attacks
+after the recent "shattered" announcement, switch the default to
+encourage people to use DC_SHA1 implementation instead.  Those who
+want to use the implementation from OpenSSL can explicitly ask for
+it by OPENSSL_SHA1=YesPlease when running "make".
 
- - The Makefile knob is named DC_SHA1, not USE_SHA1DC; this is to
-   keep it consistent with existing BLK_SHA1 and PPC_SHA1.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
- - The CPP macro is called SHA1_DC, not SHA1_SHA1DC; again this is
-   for consistency with SHA1_BLK and SHA1_PPC.
-
- - Switch the default from OpenSSL's implementation to DC_SHA1.
-   Those who want OpenSSL's one can ask with OPENSSL_SHA1.
-
-Jeff King (2):
-  Makefile: add DC_SHA1 knob
-  t0013: add a basic sha1 collision detection test
-
-Junio C Hamano (1):
-  Makefile: make DC_SHA1 the default
-
- Makefile                |  19 +++++++++++++++++--
- hash.h                  |   2 ++
- sha1dc/sha1.c           |  20 ++++++++++++++++++++
- sha1dc/sha1.h           |  15 +++++++++++++++
- t/t0013-sha1dc.sh       |  19 +++++++++++++++++++
- t/t0013/shattered-1.pdf | Bin 0 -> 422435 bytes
- 6 files changed, 73 insertions(+), 2 deletions(-)
- create mode 100755 t/t0013-sha1dc.sh
- create mode 100644 t/t0013/shattered-1.pdf
-
+diff --git a/Makefile b/Makefile
+index fc9d89498b..fd4421eeb8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -146,6 +146,9 @@ all::
+ # algorithm. This is slower, but may detect attempted collision attacks.
+ # Takes priority over other *_SHA1 knobs.
+ #
++# Define OPENSSL_SHA1 environment variable when running make to link
++# with the SHA1 routine from openssl library.
++#
+ # Define SHA1_MAX_BLOCK_SIZE to limit the amount of data that will be hashed
+ # in one call to the platform's SHA1_Update(). e.g. APPLE_COMMON_CRYPTO
+ # wants 'SHA1_MAX_BLOCK_SIZE=1024L*1024L*1024L' defined.
+@@ -1390,10 +1393,9 @@ ifdef APPLE_COMMON_CRYPTO
+ 	SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
+ endif
+ 
+-ifdef DC_SHA1
+-	LIB_OBJS += sha1dc/sha1.o
+-	LIB_OBJS += sha1dc/ubc_check.o
+-	BASIC_CFLAGS += -DSHA1_DC
++ifdef OPENSSL_SHA1
++	EXTLIBS += $(LIB_4_CRYPTO)
++	BASIC_CFLAGS += -DSHA1_OPENSSL
+ else
+ ifdef BLK_SHA1
+ 	LIB_OBJS += block-sha1/sha1.o
+@@ -1407,8 +1409,10 @@ ifdef APPLE_COMMON_CRYPTO
+ 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+ 	BASIC_CFLAGS += -DSHA1_APPLE
+ else
+-	EXTLIBS += $(LIB_4_CRYPTO)
+-	BASIC_CFLAGS += -DSHA1_OPENSSL
++	DC_SHA1 := YesPlease
++	LIB_OBJS += sha1dc/sha1.o
++	LIB_OBJS += sha1dc/ubc_check.o
++	BASIC_CFLAGS += -DSHA1_DC
+ endif
+ endif
+ endif
 -- 
 2.12.0-317-g32c43f595f
 
