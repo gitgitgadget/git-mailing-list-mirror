@@ -2,150 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B47820951
-	for <e@80x24.org>; Fri, 17 Mar 2017 22:28:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA7D120951
+	for <e@80x24.org>; Fri, 17 Mar 2017 22:29:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751271AbdCQW2y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 18:28:54 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:36493 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751047AbdCQW2x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 18:28:53 -0400
-Received: by mail-pf0-f169.google.com with SMTP id o126so43067034pfb.3
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 15:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hgJl6z/yqsjWoFHrZ6uMZL4jCZo0qP1XyvZkDAu8qnA=;
-        b=mCITZ8yKL4uHZQvvh0T2EasqELx+chHDxavXkS9b8wCrPSxy5oizsEkHt93eoF3I22
-         6MP7XnEuwWRoy0w+7CgRUxGuZ1suttDZsWBq0asQyGaKPDajd9YLIrMYz9BviQxjV+wx
-         +mLaHP1XAbBv5rHeBCofldsLJO9yI+stO0RGfb+PAdbASGRsK3X3h9bJEIR51SXg63Gj
-         4T1T4n00BT53lmuukau3XJ55IQDTkhGAlRjbvDDqhrGX/ekkBs7sqMeIk5gVUSzb73YP
-         ds0/CQA5ngL+yYbxD7dht0sR+YuEtenWziwctwKF9FPFg0fYiWiZAE7SMhbPltFXoQ/N
-         yjKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hgJl6z/yqsjWoFHrZ6uMZL4jCZo0qP1XyvZkDAu8qnA=;
-        b=uXa2+gaUpXcglJ5JH4h/lmMKz9w4CpgWIpLUa+b1ZsS2ExgzHzPNRH5iytcAkYK/ZX
-         2nwUWQ8DwbnxHc/dijlyYh8KQESy+91j12FbKZYjJjPrxZgVVtVjbWg2bLeMSE55iZw0
-         nmeDvEzAJiyEj6Y9DYBFJmS0HSXY4jH/d0kMTvVsD6ZP4I5OKrOs5JN3i6djkvg9zJm5
-         mXyQ1ssYLRyefaypN6ZURL125GUPHD1efp3iVwoVIiqmAyzjLyBC9XbfKeF80fLJbdg/
-         cccVW4K+QntPuHTsNx3no40gTILUxHBWTcHtFjZdCI2P6pOzjPhwGKWOMFx/vn4GQx75
-         LWZg==
-X-Gm-Message-State: AFeK/H38aomPFfh9wxqoAKwO+I3Es7GgpTxYnh+onSsPItFOXrIPNoO7C6keItkn5mYIDp35
-X-Received: by 10.99.173.69 with SMTP id y5mr18621837pgo.35.1489789731789;
-        Fri, 17 Mar 2017 15:28:51 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:c001:d329:ba91:25ca])
-        by smtp.gmail.com with ESMTPSA id t70sm18470531pfe.64.2017.03.17.15.28.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Mar 2017 15:28:50 -0700 (PDT)
-Date:   Fri, 17 Mar 2017 15:28:49 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 07/10] submodule init: initialize active submodules
-Message-ID: <20170317222849.GD63813@google.com>
-References: <20170313214341.172676-1-bmwill@google.com>
- <20170316222952.53801-1-bmwill@google.com>
- <20170316222952.53801-8-bmwill@google.com>
- <CAGZ79ka-rQ3YtdduAMYf-XYitKMfX2iEVh4wfR1vD6RzqhHDzw@mail.gmail.com>
+        id S1751318AbdCQW3H (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 18:29:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46232 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751061AbdCQW3H (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 18:29:07 -0400
+Received: (qmail 3668 invoked by uid 109); 17 Mar 2017 22:29:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 22:29:06 +0000
+Received: (qmail 7404 invoked by uid 111); 17 Mar 2017 22:29:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 18:29:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Mar 2017 18:29:02 -0400
+Date:   Fri, 17 Mar 2017 18:29:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: fatal: Could not get current working directory: Permission
+ denied | affected 2.10,2.11,2.12, but not 1.9.5 |
+Message-ID: <20170317222902.isndsmzy43btxh4i@sigill.intra.peff.net>
+References: <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de>
+ <ogwsaxvtiqlsiwojzxul@owpk>
+ <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de>
+ <tskgutqgpyszzedvyfra@prol>
+ <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de>
+ <ffntuqzgjgcfhebokbty@eduj>
+ <7f25def4-9943-ae59-a649-b4348a79890e@web.de>
+ <f6588ace-eecc-118d-ef26-70bc21dcc4d4@web.de>
+ <CAGZ79kbpPBN21mbN2F20ikr6dXrKEcY=msqymaG8TOujeQF0jw@mail.gmail.com>
+ <250f6b35-03c3-1fa8-8b6b-dfdc42660d8c@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79ka-rQ3YtdduAMYf-XYitKMfX2iEVh4wfR1vD6RzqhHDzw@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <250f6b35-03c3-1fa8-8b6b-dfdc42660d8c@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/17, Stefan Beller wrote:
-> On Thu, Mar 16, 2017 at 3:29 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Teach `submodule init` to initialize submodules which have been
-> > configured to be active by setting 'submodule.active' with a pathspec.
-> >
-> > Now if no path arguments are given and 'submodule.active' is configured,
-> > `init` will initialize all submodules which have been configured to be
-> > active.  If no path arguments are given and 'submodule.active' is not
-> > configured, then `init` will retain the old behavior of initializing all
-> > submodules.
-> >
-> > This allows users to record more complex patterns as it saves retyping
-> > them whenever you invoke update.
-> >
-> > Signed-off-by: Brandon Williams <bmwill@google.com>
-> > ---
-> 
-> 
-> > @@ -417,7 +445,13 @@ static int module_init(int argc, const char **argv, const char *prefix)
-> >         argc = parse_options(argc, argv, prefix, module_init_options,
-> >                              git_submodule_helper_usage, 0);
-> >
-> > -       if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
-> > +       /*
-> > +        * If there are no path args and submodule.active is set then,
-> > +        * by default, only initialize 'active' modules.
-> > +        */
-> > +       if (!argc && git_config_get_value_multi("submodule.active"))
-> > +               module_list_active(&list);
-> > +       else if (module_list_compute(argc, argv, prefix, &pathspec, &list) < 0)
-> >                 return 1;
-> 
-> I would rather reuse module_list_compute and then post-process the list
-> to filter out inactive submodules iff "submodule.active" is set as that seems
-> cleaner and performance is not a pressing issue here?
+On Fri, Mar 17, 2017 at 10:07:18PM +0100, René Scharfe wrote:
 
-Ok, Can do.  Shouldn't be very hard to do that.
+> >   As  an extension to the POSIX.1-2001 standard, Linux (libc4, libc5,
+> > glibc) getcwd()
+> >   allocates the buffer dynamically using malloc(3) if buf is NULL.  In
+> > this case, the
+> >   allocated buffer has the length size unless size is zero, when buf
+> > is allocated as big
+> >   as necessary.  The caller should free(3) the returned buffer.
+> > 
+> > This sounds specific to Linux (though I am reading Linux man pages,
+> > which claim this; Also it seems I might have misread it as it also states
+> > "The pathname is returned as the function result and via the
+> > argument buf, if present.").
+> 
+> I'm only interested in FreeBSD for now, as that's the platform Zenobiusz
+> reported the issue on and I haven't been able to reproduce it, so this is
+> still a bit exploratory, but hopefully getting closer.  This extension is
+> used in the first version of pwd(1) in FreeBSD's repo, comitted 1994-05-26,
+> so it was supported there basically forever.
+> 
+> The oldest version I found that's using the extention is NetBSD's pwd(1),
+> which was committed 1993-03-21 and carries a SCCS timestamp of 1991-02-20.
+> Visual Studio .NET 2003 supports it as well.
 
-> 
-> >
-> > +static void module_list_active(struct module_list *list)
-> > +{
-> > +       int i;
-> > +
-> > +       if (read_cache() < 0)
-> > +               die(_("index file corrupt"));
-> > +
-> > +       gitmodules_config();
-> 
-> Here we also need to have
-> 
->   git_config(submodule_config, NULL);
-> 
-> such that is_submodule_initialized works correctly,
-> I would assume?
+My big question is what happens on other platforms when they see a NULL
+(but 0-sized) buffer. Any reasonable implementation would just return
+ERANGE and we'd fall back to the existing code. But we often have to deal with unreasonable ones.
 
-No I don't think so.  is_submodule_initialized doesn't need them to be
-overlayed, it just needs the .gitmodules mappings.
+So do we need a "my OS understands getcwd(NULL)" build knob?
 
-> 
-> > +
-> > +       for (i = 0; i < active_nr; i++) {
-> > +               const struct cache_entry *ce = active_cache[i];
-> > +
-> > +               if (!S_ISGITLINK(ce->ce_mode) ||
-> > +                   !is_submodule_initialized(ce->name))
-> > +                       continue;
-> > +
-> > +               ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
-> > +               list->entries[list->nr++] = ce;
-> > +               while (i + 1 < active_nr &&
-> > +                      !strcmp(ce->name, active_cache[i + 1]->name))
-> > +                       /*
-> > +                        * Skip entries with the same name in different stages
-> > +                        * to make sure an entry is returned only once.
-> > +                        */
-> > +                       i++;
-> > +       }
-> > +}
-
--- 
-Brandon Williams
+-Peff
