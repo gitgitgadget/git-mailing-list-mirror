@@ -2,78 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B33720951
-	for <e@80x24.org>; Fri, 17 Mar 2017 22:36:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D34B420951
+	for <e@80x24.org>; Fri, 17 Mar 2017 22:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751222AbdCQWgZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 18:36:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52567 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751182AbdCQWgY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 18:36:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 941B178A61;
-        Fri, 17 Mar 2017 18:36:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gpk4oiOf7+QB3VrGyHfULpTs2Nw=; b=KoVAh3
-        +58u2VP3pthIhRQibMjLH0VDTCYVgFUe1VWvKf8U8sJoCQLJX2tjEdlZB+s9eeEu
-        OrNTqYGfWriLqNtDj9bscfYeWFosqXOAMVNQpomnUEqaVeo2ndG4s1NfhnTiR46B
-        GC/OQZ7INJTiI4qD9IR5yVxRCDjdYhGK43q0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xuSfNLXS1UOje7VzuKhcTaYt5fxxYkFz
-        MgKqW7E44anPOZ5JofgIHEXKkQN6oL6J2xxrlGPAOG/W5N3RrAx8tZhhb4JAQyeI
-        q/ezPQfiMZ19pYTiDfPiX2rgGtwLfo9ahI3EPlKsilziBHaP2F1oxQx+uq9VOX+a
-        BwRPwLDIFBY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 89F6478A5F;
-        Fri, 17 Mar 2017 18:36:22 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6E1C78A5E;
-        Fri, 17 Mar 2017 18:36:21 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Nevada Sanchez <sanchez.nevada@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug with .gitignore and branch switching
-References: <CAPUVn2u0Uos2mT5+4ejj8m0okNK6XwerL6ce2miHfhtuEs-ZnQ@mail.gmail.com>
-        <xmqqmvcj61j2.fsf@gitster.mtv.corp.google.com>
-        <20170317220213.GO26789@aiede.mtv.corp.google.com>
-Date:   Fri, 17 Mar 2017 15:36:20 -0700
-In-Reply-To: <20170317220213.GO26789@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Fri, 17 Mar 2017 15:02:13 -0700")
-Message-ID: <xmqqefxv5y57.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751243AbdCQWjl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 18:39:41 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46247 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751196AbdCQWjk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 18:39:40 -0400
+Received: (qmail 4265 invoked by uid 109); 17 Mar 2017 22:37:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 22:37:45 +0000
+Received: (qmail 7480 invoked by uid 111); 17 Mar 2017 22:37:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 18:37:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Mar 2017 18:37:41 -0400
+Date:   Fri, 17 Mar 2017 18:37:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Rahul Bedarkar <rahul.bedarkar@imgtec.com>, git@vger.kernel.org
+Subject: Re: [PATCH] grep: fix build with no thread support
+Message-ID: <20170317223741.qwfh2zw37y3jbeev@sigill.intra.peff.net>
+References: <1489729656-17709-1-git-send-email-rahul.bedarkar@imgtec.com>
+ <xmqqy3w37ptd.fsf@gitster.mtv.corp.google.com>
+ <20170317184701.GB110341@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 25526C98-0B62-11E7-AA0F-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170317184701.GB110341@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Fri, Mar 17, 2017 at 11:47:01AM -0700, Brandon Williams wrote:
 
-> The most recent example I can find is 2010:
-> http://public-inbox.org/git/4C6A1C5B.4030304@workspacewhiz.com/.
->
-> It also came up in 2007:
-> http://public-inbox.org/git/C0E9F681E68D48EB8989022D11FEE3D1@ntdev.corp.microsoft.com/
-> Earlier in that year it even made the "What's not in 1.5.2" list.
-> http://public-inbox.org/git/11793556383977-git-send-email-junkio@cox.net/
->
-> Perhaps those references could be a useful starting point for an
-> interested person's thinking.
+> While taking a look at this bug I discovered that the test suite doesn't
+> pass 100% of the test when compiled with the NO_PTHREADS option. The
+> following tests seem to be failing:
+> 
+> t1060-object-corruption.sh                       (Wstat: 256 Tests: 13 Failed: 3)
+>   Failed tests:  7-9
+>   Non-zero exit status: 1
+> t5306-pack-nobase.sh                             (Wstat: 256 Tests: 4 Failed: 1)
+>   Failed test:  4
+>   Non-zero exit status: 1
+> t5504-fetch-receive-strict.sh                    (Wstat: 256 Tests: 12 Failed: 2)
+>   Failed tests:  4-5
+>   Non-zero exit status: 1
+> t5530-upload-pack-error.sh                       (Wstat: 256 Tests: 10 Failed: 1)
+>   Failed test:  10
+>   Non-zero exit status: 1
+> 
+> I didn't take a close look at it but this would seem to indicate that we
+> don't worry to much about systems without pthreads support.  Just food
+> for thought.
 
-Thanks for links.  It seems that my thinking back in 1.5.3 timeperiod
-was to introduce "precious" attribute.
+Hmm. We used to. What version did you test? Everything passes for me at
+0281e487f^ (after that it fails to build). So AFAICT v2.12.0 is the
+first release which does not work with NO_PTHREADS.
 
-I noticed that among the four-message "What's not in 1.5.2" series,
-3/4 has a large discussion that may be relevant to Brandon's
-"submodule is-active" thing.
+-Peff
