@@ -2,144 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CAAE20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 21:27:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 015AC20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 21:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751320AbdCQV1G (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 17:27:06 -0400
-Received: from mout.web.de ([212.227.15.3]:60413 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751170AbdCQV0M (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 17:26:12 -0400
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M40na-1byoFa2CRO-00rVtq; Fri, 17
- Mar 2017 22:07:40 +0100
-Subject: Re: fatal: Could not get current working directory: Permission denied
- | affected 2.10,2.11,2.12, but not 1.9.5 |
+        id S1751259AbdCQVhD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 17:37:03 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:35391 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751179AbdCQVhC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 17:37:02 -0400
+Received: by mail-pf0-f174.google.com with SMTP id x63so37211848pfx.2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 14:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=b/JedPuzFiuP57wjPIkP1v7YjH0VlfJYxEl3Mxkiwmo=;
+        b=Q6oAqFVggvL8SWHLQmZG0TM9pI7bNduXqQtFgOZmN++nBFaJ6Zqo3Ead9AZJyjO7TB
+         bN5odVMyS8j86N8ArITEgjIuV1IeG/Z7TOaMd+ZAgG6wS2snAfkJXpgwVAN3DW/1ULFV
+         qTS8SXqxQPKdxVTyoGVBPvpjpWgwjNbfR18JBJXTHKxG0/VpF+gXX9wlzyH60uDUC8jv
+         Wso7eEgkIbxUudxUr2mPS37ELKyB4xlAinW+t577pMkDH4vSxYub5E8032y5v3qnlx9Q
+         SXc4jDp22ktj0BSxnbdVue5es3ifH/sNeZ297x3MUQ7hzRPMErK+O4uL8J6xOHWBZD35
+         cT/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=b/JedPuzFiuP57wjPIkP1v7YjH0VlfJYxEl3Mxkiwmo=;
+        b=hm//1fdKDeg6ag5van19KX6mMCMZu21yvi+58pqVTPeMPXnEE39q+69ij6n224sEh+
+         zD+REtJb+cl1gdTPBONjWGUAT24VZwHJCWwbUvNpmQGcNN1uPNrnPUHR0Iy6ZBhgecAm
+         l17YxgBVZLlTvl+hhV7RGusclIxf/mEbFeQmS9gAc0aJTWbaKZN6uCFZAjZbFqM9kFXo
+         9VFj8RDK9pL4oUXVxWCtCWsVH57TBUrbPGzMEZPpoIlVMrHTnBHU7uqNL1Ymczm4dKtk
+         20z6UgXL1swQifWotr3lLN4fhPEXLFYNTVNCZ+LP/RH0ycLwNuWfWDAvqaJX10z6VezA
+         S+Cg==
+X-Gm-Message-State: AFeK/H1oO3ZZGmjRJ0rJOsxLj4ybXRYnGXGBXMAyKa59nNmmpTdCcra4ESNrGOCHGAIAvVpO
+X-Received: by 10.84.177.36 with SMTP id w33mr22392756plb.105.1489786096625;
+        Fri, 17 Mar 2017 14:28:16 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:c001:d329:ba91:25ca])
+        by smtp.gmail.com with ESMTPSA id p77sm18555190pfj.99.2017.03.17.14.28.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 17 Mar 2017 14:28:15 -0700 (PDT)
+Date:   Fri, 17 Mar 2017 14:28:14 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Stefan Beller <sbeller@google.com>
-References: <elvahoiwfqayelbskykd@qjih>
- <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
- <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
- <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de> <tskgutqgpyszzedvyfra@prol>
- <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de> <ffntuqzgjgcfhebokbty@eduj>
- <7f25def4-9943-ae59-a649-b4348a79890e@web.de>
- <f6588ace-eecc-118d-ef26-70bc21dcc4d4@web.de>
- <CAGZ79kbpPBN21mbN2F20ikr6dXrKEcY=msqymaG8TOujeQF0jw@mail.gmail.com>
-Cc:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <250f6b35-03c3-1fa8-8b6b-dfdc42660d8c@web.de>
-Date:   Fri, 17 Mar 2017 22:07:18 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 08/10] clone: teach --recurse-submodules to optionally
+ take a pathspec
+Message-ID: <20170317212814.GB63813@google.com>
+References: <20170313214341.172676-1-bmwill@google.com>
+ <20170316222952.53801-1-bmwill@google.com>
+ <20170316222952.53801-9-bmwill@google.com>
+ <CAGZ79kbvxpAEzVnNYRQ7VqzY30_oH4FGw3cH0TCwzCwCfy3HZw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kbpPBN21mbN2F20ikr6dXrKEcY=msqymaG8TOujeQF0jw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:iGmQaMmS7Z3GbpAuuVlH9TIaDjuzMR4baBcM01qZFgrKnX6NjK6
- GRfykvWIzWAbsHwQk4+xahDGTtAXtKZrIrQykS5W2loWqRsmmTmQOKsu/F7/9PFlHiZv0s9
- tpmJt//S+OsdMWScjIXo6l/AKuy8bw8ZsugwAVk5i+PBdr/FS4fjAhCAWdd5JpChdEKxAgJ
- cofJJ1Sgf3IsJ63W2dW0A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:H4Wen7p/Gb4=:z+22cIL8etA+/+8B2KVHMj
- 295sXY6bO/T3d5D8hxvFNpBZc6O65LkPXYfXVhnqWnhuLGkUVeXkLjPVWRYtGnyTC41J1lXvg
- RoFu/BOhNTGJidrb6DpUxuzT/NqhovjWKgE9dK8gBrUuencuOBKQcoOAYERIxFfPzcXadIIbZ
- Sut5sKtpzv269fr4YCvyqVG1oto+WeZ2y/gbl744TF1N4gI1nZOInRBN2aNoF0DIhHaxXqnm7
- h9fCdP1n1kIHuLk8FJUB1dkgFJTetPzDFbVsXBdm9kvJOEoA5VT5YQ7a5PyypxUt0G8v9pgXf
- LczbpE7Y4Axv4DNiGucBg3RR3S0Qc81BwoiktOFY204Ks78qWhXyjhXb36W7u6QDOLbpM/tmA
- BWKtmEqqeOnWnGYy4ox+3lMJQR40Cj95uKFAZkvoPxqOnQXsuCsOyAf2GeUvtI/ySE52RwXvf
- gd/ejEZadzVhfFrpLIzaRDjjKNm2pc+oB50WTMHl9ws+UAXaKBfA67DsJ3yHkAJCobB4LF3iW
- MOxpjFIxuamR7SH0CE0vznacnF4sWtutL9x4fFQXWNwaf+xO2sFysViiU9K0DUtqNwsxb4tXv
- 3G+Bizi/S33XuMhW+45QSCZ5rihwJR/u8Y0LYoLMmAq5p2vctnXC7ruTnFdSORqEKGi3dhuKl
- asC0ieXp/pBAkTBFW1kWk+OiTcvFUeZdzn43q23oPnxgUFkh+w7YMAo3nPDuVfEQE2mCAYCqh
- nJoAj1snGa6DClxBuaQVoSRe+TEHFG5tDq8yH0adqxfC9GaEDqo8FRA4FW0mJZaGIo/6iaxRZ
- rhnANhe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbvxpAEzVnNYRQ7VqzY30_oH4FGw3cH0TCwzCwCfy3HZw@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.03.2017 um 20:45 schrieb Stefan Beller:
-> On Fri, Mar 17, 2017 at 12:34 PM, René Scharfe <l.s.r@web.de> wrote:
->> Am 15.03.2017 um 22:30 schrieb René Scharfe:
->>> Am 15.03.2017 um 10:44 schrieb Zenobiusz Kunegunda:
->>>> $ git bisect bad
->>>> 7333ed1788b4f2b162a35003044d77a716732a1f is the first bad commit
->>>> commit 7333ed1788b4f2b162a35003044d77a716732a1f
->>>> Author: René Scharfe <l.s.r@web.de>
->>>> Date:   Mon Jul 28 20:26:40 2014 +0200
->>>>
->>>>     setup: convert setup_git_directory_gently_1 et al. to strbuf
->>>
->>> That's what I half-suspected, and I think by now I got an idea.  Here's
->>> a test program:
->>
->> And here's a patch for letting strbuf_getcwd() use the same getcwd(3)
->> extension that pwd(1) uses.  It avoids the need to guess the path's
->> length and thus reduces the chance of stumbling over strange error
->> codes.  I wonder if it helps in your case.
->>
->> René
->>
->> ---
->>  strbuf.c | 8 ++++++++
->>  1 file changed, 8 insertions(+)
->>
->> diff --git a/strbuf.c b/strbuf.c
->> index ace58e7367..4c02801edd 100644
->> --- a/strbuf.c
->> +++ b/strbuf.c
->> @@ -442,6 +442,14 @@ int strbuf_getcwd(struct strbuf *sb)
->>  {
->>         size_t oldalloc = sb->alloc;
->>         size_t guessed_len = 128;
->> +       char *cwd;
->> +
->> +       cwd = getcwd(NULL, 0);
->
-> from my local man pages:
->
->   As  an extension to the POSIX.1-2001 standard, Linux (libc4, libc5,
-> glibc) getcwd()
->   allocates the buffer dynamically using malloc(3) if buf is NULL.  In
-> this case, the
->   allocated buffer has the length size unless size is zero, when buf
-> is allocated as big
->   as necessary.  The caller should free(3) the returned buffer.
->
-> This sounds specific to Linux (though I am reading Linux man pages,
-> which claim this; Also it seems I might have misread it as it also states
-> "The pathname is returned as the function result and via the
-> argument buf, if present.").
+On 03/17, Stefan Beller wrote:
+> On Thu, Mar 16, 2017 at 3:29 PM, Brandon Williams <bmwill@google.com> wrote:
+> > Teach clone --recurse-submodules to optionally take a pathspec argument
+> > which describes which submodules should be recursively initialized and
+> > cloned.  If no pathspec is provided, --recurse-submodules will
+> > recursively initialize and clone all submodules by using a default
+> > pathspec of ".".  In order to construct more complex pathspecs,
+> > --recurse-submodules can be given multiple times.
+> >
+> > Additionally this configures the 'submodule.active' configuration option
+> > to be the given pathspec, such that any future invocation of `git
+> > submodule update` will keep up with the pathspec.
+> 
+>   Additionally the switch '--recurse' is removed from the Documentation
+>   as well as marked hidden in the options array, to streamline the options
+>   for submodules.  A simple '--recurse' doesn't convey what is being
+>   recursed, e.g. it could mean directories or trees (c.f. ls-tree)
+>   In a lot of other commands we already have '--recurse-submodules'
+>   to mean recursing into submodules, so advertise this spelling here
+>   as the genuine option.
+> 
+> would also be worth mentioning?
+> 
 
-I'm only interested in FreeBSD for now, as that's the platform Zenobiusz 
-reported the issue on and I haven't been able to reproduce it, so this 
-is still a bit exploratory, but hopefully getting closer.  This 
-extension is used in the first version of pwd(1) in FreeBSD's repo, 
-comitted 1994-05-26, so it was supported there basically forever.
+Yeah I can just add this into the commit msg.
 
-The oldest version I found that's using the extention is NetBSD's 
-pwd(1), which was committed 1993-03-21 and carries a SCCS timestamp of 
-1991-02-20.  Visual Studio .NET 2003 supports it as well.
+> 
+> >  static int option_no_checkout, option_bare, option_mirror, option_single_branch = -1;
+> > -static int option_local = -1, option_no_hardlinks, option_shared, option_recursive;
+> > +static int option_local = -1, option_no_hardlinks, option_shared;
+> >  static int option_shallow_submodules;
+> >  static int deepen;
+> >  static char *option_template, *option_depth, *option_since;
+> > @@ -56,6 +56,22 @@ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
+> >  static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
+> >  static int option_dissociate;
+> >  static int max_jobs = -1;
+> > +static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
+> > +
+> > +static int recurse_submodules_cb(const struct option *opt,
+> > +                                const char *arg, int unset)
+> > +{
+> > +       if (unset)
+> > +               return -1;
+> > +
+> > +       if (arg)
+> > +               string_list_append((struct string_list *)opt->value, arg);
+> > +       else
+> 
+> in this case I'd rather set the removed (int) option_recursive, because, then
+> we would not need to sort and remove duplicates later on.
+> Instead we can pass the string list literally to the config setter.
+> (and in case option_recursive is set, we add an additional single
+> "." then)
 
-> Looking further:
->
->   These functions are often used to save the location of the current
->   working directory for the purpose of returning to it later.  Opening the
->   current directory (".")  and  calling  fchdir(2)  to return is
-> usually a faster
->   and more reliable alternative when sufficiently many file descriptors are
->   available, especially on platforms other than Linux.
->
-> Not sure if that opens another door here?
+That's just one more thing to worry about though.  This felt a little
+bit cleaner than doing more special casing.
 
-Reducing the use of absolute paths may be a good idea in general, but 
-that would probably require major changes.  And Windows doesn't seem to 
-offer fchdir() at all; I don't know if it has an equivalent function 
-that could be used to build a replacement.
+> 
+> > +               string_list_append((struct string_list *)opt->value,
+> > +                                  (const char *)opt->defval);
+> > +
+> > +       return 0;
+> > +}
+> >
+> 
+> >
+> > -       if (!err && option_recursive) {
+> > +       if (!err && (option_recurse_submodules.nr > 0)) {
+> 
+> Well, checks like these would become more tangled.
+> So maybe we could set option_recursive unconditionally
+> in the callback (unless unset was given, then we reset it to 0)
+> and later have a check if we need to add "." (when the string list
+> is empty).
+> 
+> Speaking of unset, this seems like a regression here, as the callback
+> would error out to "git clone --no-recurse", which is a valid use case
+> currently? (Searching for "git clone --no-recurse" yields no results
+> via Google, so maybe this use case is not so valid)
+> 
+> To get the behavior as is for unset we could just clear the string
+> list instead of returning -1.
 
-René
+Yeah I can do that.
+
+> 
+> Thanks,
+> Stefan
+
+-- 
+Brandon Williams
