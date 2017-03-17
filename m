@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D80C220951
-	for <e@80x24.org>; Fri, 17 Mar 2017 22:45:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8078B20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 22:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751299AbdCQWpV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 18:45:21 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:35663 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751182AbdCQWpU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 18:45:20 -0400
-Received: by mail-pg0-f47.google.com with SMTP id b129so49626003pgc.2
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 15:45:20 -0700 (PDT)
+        id S1751297AbdCQWpa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 18:45:30 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:34253 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751182AbdCQWp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 18:45:29 -0400
+Received: by mail-pf0-f176.google.com with SMTP id p189so20024423pfp.1
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 15:45:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RVYyiWhecI1ttKioJQpHMV5DWCgFEXU8nkuFUhzYRV0=;
-        b=faRk1t3J0XXVcSsvzxQomHoAco8cURCOWE3dazU7v2clj9HLu/cb5nWK3ZSL20hLo3
-         bnpUqKW58V/hKwxBWm/IFGUSTplcxszCULnjJvQJU0T4Gtm+w3uKDuLF7AyYunyy6yzv
-         T0dubX4aMuShWFWy667CR8dDzJ0Trmdx7aYmgLDl/Ejy8K6ECfe6poKnQQTyWB7T6HEC
-         ibXXKutDLzJ59s6KYyCFDmH5tmYcQVZdKagwclziwCEwYH86Q0a0aj7G8brUBacIEubL
-         T5uSn+cGTjEs2MUYTu3uxw1Hb+eKRJxT1hlEdoOLf8jfC1DIlSOXHoC/piUScPksaemL
-         YSaQ==
+        bh=63KCTix55xC9mVj14CNqsBMnFsyLGixqnWa+FQ12YuE=;
+        b=FDLUqLybQd3Han8RRgtWbycoKpFRKmnEwkVUbUEYj6dPkjL/UDti15NwYRQZRBrDqu
+         Di9RmYuuw4yODOWLzbU77FRGWt192fNHYsQF8ksnPndsv0xQmLu/xGXLJGpLPUKR4We8
+         +PNTe6hJJHPBa9nP6z5a3U8rAJuKaOFLGSWhhk3LXogj8LB6zSM4rR7WAshadug8RvsA
+         PWPfwooEqa9qm+uxh7ZtvtyzrA08BccxBte82zDpC3QND3+0DLzFDfBQ+jqAE22i2jha
+         BOfoSlo8TtHisCq/FIY7FoI5EqqEqU1G0HCfAVdacE9MPFWn/ZC5b2hsEmHx+lIEdjtF
+         3RRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RVYyiWhecI1ttKioJQpHMV5DWCgFEXU8nkuFUhzYRV0=;
-        b=dvrr1hOuuiq81mii5lQlox8wpsO5cZo0JfjFQ2/IPt9i9aVtGAHJGyrbn1b21YhxtN
-         HAH6OafUETivJod3x6oT3l4nqmOiM9RdKADtYhujRNIchaHZ1RSuWqm6zCMGeaVde4p8
-         CreiBJrrS/UdHEFnUyu1BGYCclkRW3g7Rzwd9Zjy1J/AkUy3cLHVxoRpDN++HY1C9z2F
-         dlOBklFtDpnZ40JzkhXYaQSY82XgMO1X1ASHVUK7NOVkhjRPD5rpi7lsPD/ViD33/3FN
-         w20hUd8uYIsztL2gkcovuKVTdpwiy0kjj+zitzJ2rKuvYwvDVfnUwAXhu1VfF7WuLJ8c
-         SLyQ==
-X-Gm-Message-State: AFeK/H24q9EBgxQk/FdL+e5O5skcBkk2mTMyzngwTEv2RuDh3f1ACM/5YJ6VhyChppLToRm5
-X-Received: by 10.99.247.17 with SMTP id x17mr18721910pgh.5.1489790308136;
-        Fri, 17 Mar 2017 15:38:28 -0700 (PDT)
+        bh=63KCTix55xC9mVj14CNqsBMnFsyLGixqnWa+FQ12YuE=;
+        b=hB/gLibxZhe8xWoSRuH9rQaEUsGmdtUYxME8jbQPr/IFi4Cn4tuYRHezfKIQ2lG+NJ
+         qvp8rI6ICkvBuDPjT19wDHQMdt7Sj79c52+FsHADaGQ5vizLJlt0iT+qvHRfA5ahkaOl
+         vEiPsHBCt1YhL8JCCe4fFqYlH/8gP13U4Ro/PHOtS64m9F6J71Dxe+5FH/k81LdZAaN+
+         8vdjjlSPL8XhbPZEGwBEWeXqoXHAk6HkcmvXTcmmIywHf/kmKY+RM4zzTy7mxEmYyp8h
+         Efkhln2C2hEr9hwr1wG7ZruDuQIyzeeGIQ2NwAVwbwuhivki7xi9CropvtZo1YVjdOsd
+         g1Uw==
+X-Gm-Message-State: AFeK/H2RWdPSho7R++591lsztfLyJasopm7Tm3+KFxz7rMRgHajrb/F3DvbNXZAjl9BCOOc1
+X-Received: by 10.98.152.91 with SMTP id q88mr19400546pfd.69.1489790302029;
+        Fri, 17 Mar 2017 15:38:22 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id d3sm18699763pfc.51.2017.03.17.15.38.26
+        by smtp.gmail.com with ESMTPSA id d3sm18699763pfc.51.2017.03.17.15.38.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 17 Mar 2017 15:38:26 -0700 (PDT)
+        Fri, 17 Mar 2017 15:38:21 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         gitster@pobox.com
-Subject: [PATCH v5 09/10] submodule--helper init: set submodule.<name>.active
-Date:   Fri, 17 Mar 2017 15:38:04 -0700
-Message-Id: <20170317223805.95271-10-bmwill@google.com>
+Subject: [PATCH v5 05/10] submodule--helper clone: check for configured submodules using helper
+Date:   Fri, 17 Mar 2017 15:38:00 -0700
+Message-Id: <20170317223805.95271-6-bmwill@google.com>
 X-Mailer: git-send-email 2.12.0.367.g23dc2f6d3c-goog
 In-Reply-To: <20170317223805.95271-1-bmwill@google.com>
 References: <20170316222952.53801-1-bmwill@google.com>
@@ -62,59 +62,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When initializing a submodule set the submodule.<name>.active config to
-true if the module hasn't already been configured to be active by some
-other means (e.g. a pathspec set in submodule.active).
+Use the 'is_submodule_initialized()' helper to check for configured
+submodules instead of manually checking for the submodule's URL in the
+config.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/submodule--helper.c | 12 ++++++++++++
- t/t7400-submodule-basic.sh  | 11 +++++++++++
- 2 files changed, 23 insertions(+)
+ builtin/submodule--helper.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 65208faa7..7700d8948 100644
+index 5fe7e23b1..f38e332c5 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -357,6 +357,18 @@ static void init_submodule(const char *path, const char *prefix, int quiet)
- 			displaypath);
+@@ -759,7 +759,6 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	struct strbuf displaypath_sb = STRBUF_INIT;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *displaypath = NULL;
+-	char *url = NULL;
+ 	int needs_cloning = 0;
  
- 	/*
-+	 * NEEDSWORK: In a multi-working-tree world, this needs to be
-+	 * set in the per-worktree config.
-+	 *
-+	 * Set active flag for the submodule being initialized
-+	 */
-+	if (!is_submodule_initialized(path)) {
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "submodule.%s.active", sub->name);
-+		git_config_set_gently(sb.buf, "true");
-+	}
-+
-+	/*
- 	 * Copy url setting when it is not set yet.
- 	 * To look up the url in .git/config, we must not fall back to
- 	 * .gitmodules, so look it up directly.
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 3af1c00ff..cf77a3a35 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -1256,4 +1256,15 @@ test_expect_success 'clone and subsequent updates correctly auto-initialize subm
- 	test_cmp expect2 actual
- '
+ 	if (ce_stage(ce)) {
+@@ -793,15 +792,8 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 		goto cleanup;
+ 	}
  
-+test_expect_success 'init properly sets the config' '
-+	test_when_finished "rm -rf multisuper_clone" &&
-+	git clone --recurse-submodules="." \
-+		  --recurse-submodules=":(exclude)sub0" \
-+		  multisuper multisuper_clone &&
-+
-+	git -C multisuper_clone submodule init -- sub0 sub1 &&
-+	git -C multisuper_clone config --get submodule.sub0.active &&
-+	test_must_fail git -C multisuper_clone config --get submodule.sub1.active
-+'
-+
- test_done
+-	/*
+-	 * Looking up the url in .git/config.
+-	 * We must not fall back to .gitmodules as we only want
+-	 * to process configured submodules.
+-	 */
+-	strbuf_reset(&sb);
+-	strbuf_addf(&sb, "submodule.%s.url", sub->name);
+-	git_config_get_string(sb.buf, &url);
+-	if (!url) {
++	/* Check if the submodule has been initialized. */
++	if (!is_submodule_initialized(ce->name)) {
+ 		next_submodule_warn_missing(suc, out, displaypath);
+ 		goto cleanup;
+ 	}
+@@ -835,7 +827,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 		argv_array_push(&child->args, "--depth=1");
+ 	argv_array_pushl(&child->args, "--path", sub->path, NULL);
+ 	argv_array_pushl(&child->args, "--name", sub->name, NULL);
+-	argv_array_pushl(&child->args, "--url", url, NULL);
++	argv_array_pushl(&child->args, "--url", sub->url, NULL);
+ 	if (suc->references.nr) {
+ 		struct string_list_item *item;
+ 		for_each_string_list_item(item, &suc->references)
+@@ -845,7 +837,6 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 		argv_array_push(&child->args, suc->depth);
+ 
+ cleanup:
+-	free(url);
+ 	strbuf_reset(&displaypath_sb);
+ 	strbuf_reset(&sb);
+ 
 -- 
 2.12.0.367.g23dc2f6d3c-goog
 
