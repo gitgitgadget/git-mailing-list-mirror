@@ -2,92 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FDDF20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 12:39:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C61A620951
+	for <e@80x24.org>; Fri, 17 Mar 2017 13:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751287AbdCQMjj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 08:39:39 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:33257 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751087AbdCQMjh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 08:39:37 -0400
-Received: by mail-it0-f42.google.com with SMTP id w124so11867900itb.0
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 05:39:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Kq60LdE4xT2t8EXtYsWaz81bZ+9MeD9RvMwMcT/Z5H8=;
-        b=XNi5yPs34L3IxCNnV6hec10QKW2AtrtO0o17vJ6AW3IOlZHKcDie//gN0YeRbjs+fk
-         z7F78EaXKdUqHg0VkqdSJqVBjp90s9QUDz6T9GiAY2OQHpVECdXy9EBNzgV0K+AvbOY4
-         gf7+iGpTNY4ed/a/4OrLn2mzx/m+mHZ5qMcAJ3KT8b8nW/TsiHzgRJPdqzd14I6lQR6N
-         DZjy+5UUhrIEDg+1qtruCkj5aqgNpOJArKjzMDC8/FaXanqvoyYS0+tZ7UoOvvegAK0G
-         usM4064D3IWHx6zMvJoFLVnBe+l3pxP2jsFP6dZLOgz9iAESLYr6dY7SQEDD6mAZ360/
-         q2kQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Kq60LdE4xT2t8EXtYsWaz81bZ+9MeD9RvMwMcT/Z5H8=;
-        b=nDX3IV1ts+Uc7mWHt3QuPEUHW+cfiswp5gM9qQDtMNFgCfZia6oxNd0JYHUk+bFgj/
-         xKEDtZG/J/sj9KlLs0Gd79SA5ExM+4DTxGFYi0mJUreZkhJgfNbN0ltogDFQQgXA0II9
-         zzDamCFt6x/n6ILp5+W1alXNQih1i1toTls2LSZ+ESm7Z23mcgKG+qiaZGA5apRf1nDJ
-         I0t6CfLAUg2GlS2ijS0aEmTLQLYyhuHSJlszPDfRyjSamZ51WJPs+njqEiHAgSVtYMH2
-         QB4EoBMqI9QqsQOgjNUEkhoq7J1yn283bN80TzjT7ETFcZE4BY74vYl9a/i67AsOYvmj
-         f9MA==
-X-Gm-Message-State: AFeK/H0Bh/gtgaMLDT2X6Tw52eMzkuytIWvpQ/zHKNTQBNog6zBkSWCwaa0SIPfvz+YeW000sRUjxZcsx7L5hw==
-X-Received: by 10.107.149.7 with SMTP id x7mr14073162iod.167.1489752496673;
- Fri, 17 Mar 2017 05:08:16 -0700 (PDT)
+        id S1751213AbdCQNoF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 09:44:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:45884 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751061AbdCQNoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 09:44:03 -0400
+Received: (qmail 31174 invoked by uid 109); 17 Mar 2017 13:42:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 13:42:06 +0000
+Received: (qmail 3022 invoked by uid 111); 17 Mar 2017 13:42:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 09:42:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Mar 2017 09:42:03 -0400
+Date:   Fri, 17 Mar 2017 09:42:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Devin Lehmacher <lehmacdj@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [GSoC][PATCH v6 2/3] credential-cache: use XDG_CACHE_HOME for
+ socket
+Message-ID: <20170317134203.6hqzfblyse2jrzdp@sigill.intra.peff.net>
+References: <20170317025315.84548-3-lehmacdj@gmail.com>
+ <20170317123634.10863-1-lehmacdj@gmail.com>
+ <20170317123634.10863-2-lehmacdj@gmail.com>
 MIME-Version: 1.0
-Received: by 10.79.144.198 with HTTP; Fri, 17 Mar 2017 05:08:16 -0700 (PDT)
-In-Reply-To: <CAOtcWM1jExsj_L4HRm194F57bt9LPuf8fFSpyuGWiPG7U_4v8A@mail.gmail.com>
-References: <CAOtcWM3mrQEqDnjMipzea7Kp+VueBFsZDL2zcJ=y0wgj9N4Vjw@mail.gmail.com>
- <295db01e-6252-6acc-88d8-d2f366397ea0@atlas-elektronik.com> <CAOtcWM1jExsj_L4HRm194F57bt9LPuf8fFSpyuGWiPG7U_4v8A@mail.gmail.com>
-From:   Okash Khawaja <okash.khawaja@gmail.com>
-Date:   Fri, 17 Mar 2017 12:08:16 +0000
-Message-ID: <CAOtcWM2wg3_uV=THi_PUSVcD8rXMwbd-ZDcTxC=YXvgpP1g_vw@mail.gmail.com>
-Subject: Re: Viewing untracked+stashed files in git stash show
-To:     stefan.naewe@atlas-elektronik.com
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170317123634.10863-2-lehmacdj@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Mar 17, 2017 at 08:36:33AM -0400, Devin Lehmacher wrote:
 
-On Fri, Mar 17, 2017 at 9:50 AM, Okash Khawaja <okash.khawaja@gmail.com> wrote:
-> Hi,
->
-> On Fri, Mar 17, 2017 at 8:20 AM,  <stefan.naewe@atlas-elektronik.com> wrote:
->> Am 16.03.2017 um 17:34 schrieb Okash Khawaja:
->>> Hi,
->>>
->>> If you have some untracked files and your run `git stash -u`. Then
->>> `git stash show` doesn't show the untracked files. Is there a flag
->>> that can be passed to git stash show to report untracked files?
->>
->> Not for 'git stash' but you can use 'git show stash@{0}^3
->
-> Okay that's fine as long as you know. But the first thing that comes
-> to your mind is that you've lost those untracked files. Is there a
-> reason why git stash show doesn't show those files?
+> Make git-credential-cache follow the XDG base path specification by
+> default. This increases consistency with other applications and helps
+> keep clutter out of users' home directories.
+> 
+> Check the old socket location, ~/.git-credential-cache/, and use
+> ~/.git-credential-cache/socket if that directory exists rather than
+> forcing users who have used `git credential-cache` before to migrate to
+> the new XDG compliant location.
+> Otherwise use the socket $XDG_CACHE_HOME/git/credential/socket following
+> XDG base path specification. Use the subdirectory credential/ in case
+> other files are cached under $XDG_CACHE_HOME/git/ in the future and to
+> make the socket's purpose clear.
 
-Here's some more interesting behaviour when stashing untracked files.
+Makes sense.
 
-Add new files (untracked) + modify some tracked files -> `git stash
--u` -> modify the stashed files in a way that `git stash pop` will
-fail -> `git stash pop` -> it fails so now you would expect none of
-the stashed files restored but instead the untracked stashed files
-reappear.
+> +static char *get_socket_path(void)
+> +{
+> +	struct stat sb;
+> +	char *old_dir, *socket;
+> +	old_dir = expand_user_path("~/.git-credential-cache");
+> +	if (old_dir && !stat(old_dir, &sb) && S_ISDIR(sb.st_mode))
+> +		socket = xstrfmt("%s/socket", old_dir);
+> +	else
+> +		socket = xdg_cache_home("credential/socket");
+> +	free(old_dir);
+> +	return socket;
+> +}
 
-This combined with the fact that `git stash show` doesn't show
-untracked files suggest that untracked files go into an undefined (or
-at least undocumented) state when it comes to git stash. Is that
-something that needs to be looked at?
+The implementation looks nice and clean.
+
+-Peff
