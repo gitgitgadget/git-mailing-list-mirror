@@ -2,127 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECD9C20323
-	for <e@80x24.org>; Fri, 17 Mar 2017 04:08:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F330920323
+	for <e@80x24.org>; Fri, 17 Mar 2017 05:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751314AbdCQEIp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 00:08:45 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36385 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751010AbdCQEIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 00:08:44 -0400
-Received: by mail-pf0-f196.google.com with SMTP id r137so4016550pfr.3
-        for <git@vger.kernel.org>; Thu, 16 Mar 2017 21:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Mj0NgG6P/PgZxtFoSGWC+zWxtizbJ+5+wkbr3CBWg0c=;
-        b=f5w4rXy9307h1zWnnclyEi4GOFYnkX6ymC4K8TcUval1vkKik8BIZEjTdHx3RJnH0w
-         Chy7M1atvVcDuUSQ7v47g4y/CBKSq06ELkWp3eDcuQWzB/TPuWsHJreTCQ2icT8TQF07
-         AbiHm0b7lZlit0/+fhV+f38yZeI8fpVYrbUgmEslnNcXxpGCy0CKT9I6ftWMv1k3Oil8
-         0YSZK2v7jWNvL7jK7YuRYr8J36RyE1h2pBa91Cmng3RQPANxOfiQJS4ngUoLv5kGvs8C
-         5TDUlH8oLxB6hJcwJcnLLffDNShMbww5VbsHrGhFj0oGSjL/P95fRmHTkRX24or9M/Y3
-         yLBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=Mj0NgG6P/PgZxtFoSGWC+zWxtizbJ+5+wkbr3CBWg0c=;
-        b=B+JNaUF9qRziyxWbypn4AtL7Qtug7oo+QISYwAKheTSTlukHv8FNhBPNyd5ovklPvQ
-         CNjfufmaoelgFLAcbAiryaINi0XkzpdX3y8bEuNFwGTbvL0D2PGjpY7EnC0znqEsmufs
-         LNtXdv9EA4k843lQabF3guI739+UyyrCRbIkkvxrjRIzX6oRQiqoj72xrFLhBzPZRmAv
-         +1E6WOtpCGKNRo+Bb1A6ZN/KOLF33W8nnZt8LzoBO9SH4SlFqhoD+5L5/7heKN0qD3VG
-         1Y4EXhjqof3beRExU/TjudcMr14dFW+XyISWgfIqaOcJ2Nl0YxFcv8TfB3728oYXiDXs
-         NB+w==
-X-Gm-Message-State: AFeK/H0k1W4EXMt8CBM0WjzAF3jXPIk5r7tgrSXiJbTegc7Dk/G63uaae8OGMeLJlvDeFA==
-X-Received: by 10.84.231.141 with SMTP id g13mr11545419plk.157.1489723630852;
-        Thu, 16 Mar 2017 21:07:10 -0700 (PDT)
-Received: from [10.33.249.33] ([132.188.112.190])
-        by smtp.gmail.com with ESMTPSA id c11sm13258366pfe.68.2017.03.16.21.07.09
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 16 Mar 2017 21:07:10 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH 2/2] name-rev: favor describing with tags and use committer date to tiebreak
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170315225045.15788-3-gitster@pobox.com>
-Date:   Fri, 17 Mar 2017 12:07:06 +0800
-Cc:     git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-Content-Transfer-Encoding: 7bit
-Message-Id: <9AE7ADCA-97F9-4857-AC55-76C4BD822C25@gmail.com>
-References: <xmqqd1die00j.fsf@gitster.mtv.corp.google.com> <20170315225045.15788-1-gitster@pobox.com> <20170315225045.15788-3-gitster@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1750967AbdCQFWR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 01:22:17 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63505 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750877AbdCQFWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 01:22:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A55B6D756;
+        Fri, 17 Mar 2017 01:22:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vzdJEAScZNvRE6wqtwureNsVzoY=; b=L29dIX
+        mmQjFJ5L5ugc0tG0HYNqs/Ty4O61iuvV2JqLNL6scaU43zs4zusDCKw+39H3cg/a
+        qGTnl5qYm65jSS0+p97CxhMd0pagdi/CWTfWVRCZAD4WvOl684ZN9SbjPHi92jm1
+        QtPgtmj9yhaFtrsvJFGd8O01GT9Jphq5BrjLY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wX414EP7eirHxkiTBdYQzWvx5cOoV+MM
+        QIP2KjCYtYkd1upLvTe6knd3shPmYl7nlcort4X9kIwXV0E70dJik8gJEGsTb2Om
+        lGuMB2ZRgpoVnFAe+6BqJrxF+JA+lqzSEKbal7AiOpWuGeW+MVKHvUM5DZebGX3W
+        Ed0gxRZmW48=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 833606D755;
+        Fri, 17 Mar 2017 01:22:14 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E4FE26D753;
+        Fri, 17 Mar 2017 01:22:13 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/2] Re-integrate sha1dc
+References: <alpine.LFD.2.20.1703161315310.18484@i7.lan>
+        <20170316220456.m4yz2kbvzv6waokn@sigill.intra.peff.net>
+        <20170316221044.ij5yuifmohktn6cl@sigill.intra.peff.net>
+        <xmqq37ecc134.fsf@gitster.mtv.corp.google.com>
+        <20170317001416.bthqvjbf554zhrj5@sigill.intra.peff.net>
+Date:   Thu, 16 Mar 2017 22:22:12 -0700
+In-Reply-To: <20170317001416.bthqvjbf554zhrj5@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 16 Mar 2017 20:14:16 -0400")
+Message-ID: <xmqqlgs4a35n.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: ADDD42EA-0AD1-11E7-86F1-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-> On 16 Mar 2017, at 06:50, Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> "git name-rev" assigned a phony "far in the future" date to tips of
-> refs that are not pointing at tag objects, and favored names based
-> on a ref with the oldest date.  This made it almost impossible for
-> an unannotated tags and branches to be counted as a viable base,
-> which was especially problematic when the command is run with the
-> "--tags" option.  If an unannotated tag that points at an ancient
-> commit and an annotated tag that points at a much newer commit
-> reaches the commit that is being named, the old unannotated tag was
-> ignored.
-> 
-> Update the "taggerdate" field of the rev-name structure, which is
-> initialized from the tip of ref, to have the committer date if the
-> object at the tip of ref is a commit, not a tag, so that we can
-> optionally take it into account when doing "is this name better?"
-> comparison logic.
-> 
-> When "name-rev" is run without the "--tags" option, the general
-> expectation is still to name the commit based on a tag if possible,
-> but use non-tag refs as fallback, and tiebreak among these non-tag
-> refs by favoring names with shorter hops from the tip.  The use of a
-> phony "far in the future" date in the original code was an effective
-> way to ensure this expectation is held: a non-tag tip gets the same
-> "far in the future" timestamp, giving precedence to tags, and among
-> non-tag tips, names with shorter hops are preferred over longer
-> hops, without taking the "taggerdate" into account.  As we are
-> taking over the "taggerdate" field to store the committer date for
-> tips with commits:
-> 
-> (1) keep the original logic when comparing names based on two refs
->     both of which are from refs/tags/;
-> 
-> (2) favoring a name based on a ref in refs/tags/ hierarchy over
->     a ref outside the hierarchy;
-> 
-> (3) between two names based on a ref both outside refs/tags/, give
->     precedence to a name with shorter hops and use "taggerdate"
->     only to tie-break.
-> 
-> A change to t4202 is a natural consequence.  The test creates a
-> commit on a branch "side" and points at it with an unannotated tag
-> "refs/tags/side-2".  The original code couldn't decide which one to
-> favor at all, and gave a name based on a branch (simply because
-> refs/heads/side sorts earlier than refs/tags/side-2).  Because the
-> updated logic is taught to favor refs in refs/tags/ hierarchy, the
-> the test is updated to expect to see tags/side-2 instead.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
+> On Thu, Mar 16, 2017 at 03:23:59PM -0700, Junio C Hamano wrote:
+>
+>> I am wondering if we should queue another one for .travis.yml on top
+>> to force use of USE_SHA1DC=YesPlease during the tests.  I expect
+>> that we'd be encouraging its use for ordinary users without any
+>> specific needs in the release notes in 2.13 release.
+>
+> I don't think it would buy us much. There's not really any way for this
+> build to interact with the rest of the code in any interesting way, so
+> either it works as a SHA-1 implementation or it doesn't. If you just
+> want it exercised, I'll say that it's powering all of github.com right
+> now.
+>
+> I did wonder if we should ship with it as the default (instead of
+> openssl). It's definitely slower, but maybe widespread safety is a good
+> thing. OTOH, I think we have a fair bit of time before we see any
+> real-life collisions, just given the time and expense of generating
+> them.
 
-A quick bisect indicates that this patch might break 
-t9807-git-p4-submit.sh 8 and 13. I haven't looked into
-it further, yet.
+My .travis.yml suggestion was about testing with SHA1DC in
+preparation for making it the default.  That would give us another
+incentive to keep an eye on its performance, too, before we make it
+the default in Makefile, at which time the forced selection in the
+travis configuration can be removed.
 
-https://travis-ci.org/git/git/jobs/211948406#L2152
-https://travis-ci.org/git/git/jobs/211948406#L2460
+Thanks.
 
-Non-JS: https://s3.amazonaws.com/archive.travis-ci.org/jobs/211948406/log.txt
 
-- Lars
