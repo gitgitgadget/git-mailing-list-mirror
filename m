@@ -2,78 +2,46 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,URI_HEX shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7408A2095B
-	for <e@80x24.org>; Fri, 17 Mar 2017 10:01:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F127A2095B
+	for <e@80x24.org>; Fri, 17 Mar 2017 10:51:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751712AbdCQKBV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 06:01:21 -0400
-Received: from mail-lf0-f48.google.com ([209.85.215.48]:36055 "EHLO
-        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751031AbdCQJ7X (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 05:59:23 -0400
-Received: by mail-lf0-f48.google.com with SMTP id y193so30912746lfd.3
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 02:57:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=tyobbhGKcq10PcWcQWBWbHj16+vh8kH4vbfa0WI6V9M=;
-        b=bCigqbTqKLrC8c3X44UYD9DiW0hQAwoZXydJ50y/QracEqOKKqax9ZEpUjB1IItQU5
-         09gWmYo30h3m+GXFdS6TQX7hCrYkb2oHEP/hGPnGyEzkzA9tYff8EBY5WFbSKu+UDfl5
-         F4OJvoxK9GB2ygCwM8gbQRc4sZoiLDvD1Sg8H9ML8tJQL3jpS1LT0HAQfdl+zMmmlbN+
-         PCOnxcowWyW0rreWyckhgk27zO0+7hxYmnzLiQN9+N5OQAXNvoFhYofSIrg3bh1j7qzf
-         2c+vFR3+vHT3SggNVe9FkSIC5bQsd0AjXiL4nOgXF66DzyKLklywABJ6A50JOrxSt11C
-         X2Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=tyobbhGKcq10PcWcQWBWbHj16+vh8kH4vbfa0WI6V9M=;
-        b=AREgISPDRfMKgBuieFk/73yW2Jj2eBsmXDcDRlJoy6glTOIGwRRYwNT1SlKYMaW6yJ
-         bQCgc87VJATeWteR+CjKN3W9mzxJW6JY1aoa0+heaYkXphtajXGqjLpwH2kv/gobAmRa
-         Wnyuh0ew96TeU6cZasnuExTCX1Ol4Xkjcl5Do2yEybFmhtdvxG4BCchy7bIVx7TphuWM
-         OlWDLpTwn713do+9tDzw70zYkvFNF1vS3I8szPxm5qE0x3MRhThOokfaAyZ/x5Yh/dnd
-         LieIPZo5DBVjyfJkI9vuktoxpzYECjzV0PIemKZWWDeL4a2HXF2TsQAfCAMQe73Xp/h5
-         Mahg==
-X-Gm-Message-State: AFeK/H0kJ8jFT71LCX3El7Yoi2wOAs//Wd/EhTunKwiF9zYzDFo/SL2JT5QAJcxhSbhacRKrXdgZzUqUalsB5g==
-X-Received: by 10.46.15.9 with SMTP id 9mr4674159ljp.108.1489742929346; Fri,
- 17 Mar 2017 02:28:49 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.33.9 with HTTP; Fri, 17 Mar 2017 02:28:28 -0700 (PDT)
-From:   Vish Gite <vishgite@gmail.com>
-Date:   Fri, 17 Mar 2017 14:58:28 +0530
-Message-ID: <CA+vHbJL5QMmtzRjQ8tV9Ntrh8=2bspPLeu=34RVFeDTVUhEuWw@mail.gmail.com>
-Subject: File names are considered case insensitive in a folder. (aBcd.py
- ==AbcD.py) Inbox x
+        id S1751082AbdCQKvI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 06:51:08 -0400
+Received: from mwork.nabble.com ([162.253.133.43]:60081 "EHLO mwork.nabble.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750999AbdCQKvH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 06:51:07 -0400
+X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Mar 2017 06:51:07 EDT
+Received: from mjim.nabble.com (unknown [162.253.133.84])
+        by mwork.nabble.com (Postfix) with ESMTP id 49BAC3394EED2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 03:42:08 -0700 (MST)
+Date:   Fri, 17 Mar 2017 03:42:08 -0700 (MST)
+From:   florencewillburn <stellafrancis255@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Message-ID: <1489747328302-7657469.post@n2.nabble.com>
+In-Reply-To: <1483005524545-7657460.post@n2.nabble.com>
+References: <1474279264052-7657453.post@n2.nabble.com> <1483005524545-7657460.post@n2.nabble.com>
+Subject: Re: How can I make a best dissertation paper?
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-
-Git 2.10.1 on Apple mac is treating different(uppercase/lowercase)
-files as same name(e.g ABCD.py and abcd.py)
-
-In a project where file name is same but case is different, either
-ABCD.py or abcd.py. There is always one of these files is modified.
-
-Below is the git version on my mac.
-snappy:myproject$ git version
-git version 2.10.1 (Apple Git-78)
-
-Where as git 2.7.4 on Linux Ubuntu xenial is treating ABCD.py and
-abcd.py as different files.
-
-To reproduce the issue on mac. Clone a project that has two files in
-same directory with same name but different case. ClassTest.py and
-classtest.py
+Dissertation writing is not a simple task and students must need best
+guidelines to complete the writing task without any worry.  Term paper
+writing service reviews <http://essaywriting-servicereviews.com/>   offer
+quality reviews for students to choose best writing help. 
 
 
-Thanks,
-Vishnu
+
+--
+View this message in context: http://git.661346.n2.nabble.com/How-can-I-make-a-best-dissertation-paper-tp7657453p7657469.html
+Sent from the git mailing list archive at Nabble.com.
