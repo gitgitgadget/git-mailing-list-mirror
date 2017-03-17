@@ -2,86 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08CD620951
-	for <e@80x24.org>; Fri, 17 Mar 2017 19:18:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8107F20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 19:18:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751189AbdCQTST (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 15:18:19 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:34861 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751222AbdCQTSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751222AbdCQTSU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 15:18:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54368 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751239AbdCQTSQ (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 17 Mar 2017 15:18:16 -0400
-Received: by mail-pg0-f43.google.com with SMTP id b129so47694370pgc.2
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 12:17:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=IkYuUNUp3WEDGL40m6iesc6RS1/aoF4GK55DRzuY51o=;
-        b=AIX4LLJwklfpT4bFr/yO0WyxWBGsmtrjs5o9eVG0mDRrUX34gbxeINyohQ6wELjb4i
-         hT5Y2j1IA1gK9TZzYPkaT23AKT9+2OO6ehwFw4Du2JUO1qgqx68XPN+SYb5Dgn7RFTZc
-         7DHRuLKxtwPxAVntQQGeC1PzO6RF8xfoHZwFsY53bDLq3msVDgQotn3bofTfG/DVqevZ
-         V2tSG+qrOlVPoHytfHqDs5zAlWV/HjM4ct3JHJ9C9TQm5J3DAFG0sKkz1DGKeWmHIfMi
-         kbonTDZR63vm8AkOYKZyWFm+5oN/zMY4opIcMcUI7CGIv3aFJhp8XTL45M1Wh3xcmCvo
-         bk9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=IkYuUNUp3WEDGL40m6iesc6RS1/aoF4GK55DRzuY51o=;
-        b=UWkSW/DszYwzLEoFr5vrhqVZJDqrNwSF2NAr5Supq4QVXKEiU8uxEb3WKqW+WvCtFH
-         f723Be1J05gfhEH+t8K7DB7w30C2FxJseBPCkhg32y9AhZQLbnBWJorBSEDqtWhKGRp5
-         cPaeloO4YA5YTf1Ezj+sXgfBDOtHPOAaE2kGWUNHPJJOgifimycNomGyvV/3JYyVrFHC
-         k9xNaJ8C5pDoRJTphorszDDyDc/NgOwZ+nMaaIX7TFSTW9gr4tb2w2KSgwU6uZ2O3rL6
-         mp+9TK/mNEj2FUJIYwirRFZccfqD1y5/wsKAy+J8rTzK5yo4mcRo4QAmjqvlsrLhBbNE
-         8XXw==
-X-Gm-Message-State: AFeK/H2nSlX/f4PVJhKEiuDqx8H9FBo4OIfJj7FzC52YDIfz5NNSVn7mjhKD+Ewp7D495qprHx+Tz2n5IFwiz5p2
-X-Received: by 10.99.140.69 with SMTP id q5mr17493642pgn.179.1489777840143;
- Fri, 17 Mar 2017 12:10:40 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Fri, 17 Mar 2017 12:10:39 -0700 (PDT)
-In-Reply-To: <20170317190856.GC110341@google.com>
-References: <20170314221100.24856-1-bmwill@google.com> <20170317172257.4690-1-bmwill@google.com>
- <20170317172257.4690-3-bmwill@google.com> <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
- <20170317190856.GC110341@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 17 Mar 2017 12:10:39 -0700
-Message-ID: <CAGZ79kaTNVZBZg5jiVzAKdu96pENcRJmvZ1WR37TP2MXLR-nUg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] setup: allow for prefix to be passed to git commands
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C02876771;
+        Fri, 17 Mar 2017 15:17:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=szHCwf9Eh9JODIvKUMdhAzWmEBE=; b=TsT0lf
+        qT+MLvkJ9RuHW1uyu8y46CKe6IsbmglwIf6HTknViof60V6+IoHW3svMQEJIBaLs
+        xwqib8N1dDz+vdWyMbRJqfGwpsnh/cArwNjPvEb5UTarPriIu4ps02U+sqXh93M0
+        c19Yt8V9Ad5h1EfCFHytCv3KCubhQRMYHtuvU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=c4bI5Qy7IgJj3vj0pm208ZFC2vSY/XDm
+        gMUC/yaD41saSTAxLHbGM1CA+UjqiBspBItqamj2cG1VuyXlGP2Yg8n31X/P/C8/
+        NAlwNsJOvnjIKtIuJTmJ3YcOVuFJJigkb8TERugElDyhsDxxQR0jekQLxwINPE+L
+        tTX/ICmZsy4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13E8F76770;
+        Fri, 17 Mar 2017 15:17:30 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5A2C37676F;
+        Fri, 17 Mar 2017 15:17:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
         Jeff King <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v3 2/5] setup: allow for prefix to be passed to git commands
+References: <20170314221100.24856-1-bmwill@google.com>
+        <20170317172257.4690-1-bmwill@google.com>
+        <20170317172257.4690-3-bmwill@google.com>
+        <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
+Date:   Fri, 17 Mar 2017 12:17:28 -0700
+In-Reply-To: <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 17 Mar 2017 12:07:46 -0700")
+Message-ID: <xmqq60j77lx3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5D07E616-0B46-11E7-8927-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 17, 2017 at 12:08 PM, Brandon Williams <bmwill@google.com> wrote:
-> On 03/17, Stefan Beller wrote:
->> >         prefix = setup_git_directory_gently_1(nongit_ok);
->> > +       env_prefix = getenv(GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
->> > +
->> > +       if (env_prefix)
->> > +               prefix = env_prefix;
->> > +
->> >         if (prefix)
->> >                 setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
->>
->> so we load that GIT_TOPLEVEL_PREFIX_ENVIRONMENT prefix
->> first, such that we essentially copy it into GIT_PREFIX_ENVIRONMENT,
->> such that e.g. aliased commands will know about the superprefix, too.
->
-> I don't follow, this doesn't have anything to do with super-prefix.
->
+Stefan Beller <sbeller@google.com> writes:
 
-s/superprefix/prefix as passed in via GIT_TOPLEVEL_PREFIX_ENVIRONMENT/
+>>         prefix = setup_git_directory_gently_1(nongit_ok);
+>> +       env_prefix = getenv(GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
+>> +
+>> +       if (env_prefix)
+>> +               prefix = env_prefix;
+>> +
+>>         if (prefix)
+>>                 setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
+>
+> so we load that GIT_TOPLEVEL_PREFIX_ENVIRONMENT prefix
+> first, such that we essentially copy it into GIT_PREFIX_ENVIRONMENT,
+> such that e.g. aliased commands will know about the superprefix, too.
 
-sorry for the confusion.
+If the aliased commands or anything else spawned from this process
+is happy with GIT_PREFIX set to the outside of the current
+repository, doing this setenv() is OK.  If you are in ~/dir1, and
+your repository is in ~/repos/repo1, and if you somehow had a way
+to run your "git" inside ~/repos/repo1 without doing any chdir(2),
+then you are essentially setting ../../dir1/ as GIT_PREFIX for that
+"git" invocation (this has nothing to do with submodules).
+
+But if your "git" is fine with GIT_PREFIX pointing outside the root
+level of the working tree of the current repository like that, do we
+even need a separate toplevel prefix environment, I have to wonder?
+
+That is, if this "if TOPLEVEL_PREFIX environment is there, set it to
+local variable prefix and export it as GIT_PREFIX" is expected to
+work correctly for anything that would inherit that GIT_PREFIX, then
+we should be able to invoke the "git" that got TOPLEVEL_PREFIX
+without setting that environment, but instead setting the same value
+to GIT_PREFIX and we should get the same behaviour, no?
+
