@@ -2,97 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42E7820951
-	for <e@80x24.org>; Fri, 17 Mar 2017 15:13:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2ED52095C
+	for <e@80x24.org>; Fri, 17 Mar 2017 15:27:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751246AbdCQPNd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 11:13:33 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:59928 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751049AbdCQPNa (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Mar 2017 11:13:30 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 9E6A420A2D;
-        Fri, 17 Mar 2017 11:12:35 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 17 Mar 2017 11:12:35 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
-        :date:from:message-id:subject:to:x-me-sender:x-me-sender
-        :x-sasl-enc:x-sasl-enc; s=fm1; bh=4326dU871pVXdzevD9Mriy8+IfU=; b=
-        InhkIbwf6sy9jXBqZg0kfwuh11u3/e9/dMuvKTgAJ03PDlqvHqvXlZq2mEmOvhF3
-        gD4HSHWrsJAZhkm55MMJt5u/VEnmccedjQk/rvnsi/UKQ1yigzUbm3ANBgMrDiLh
-        KODLHgp3fxY8VasHORSVuAtwjWyiabQY2pqzoLk9AU9TMtPdfOGriRwiwRF7/lL6
-        C0DRaGBGcBBauJWf8UTGOPvilIMt9wHw3CWgSmxN46wLVzE4YQ9RnvohtxE+2383
-        L7ImigfkpGeI7YY0ZwSqb8nBlPQHQMXi7zBBNOxmJOXCYAjOTPa+64WQhWegkm3N
-        I9HVS1vmJttMGTcvqfM1OQ==
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:date:from:message-id:subject:to
-        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=4326dU
-        871pVXdzevD9Mriy8+IfU=; b=nvh4pJeRhy2F3ru439AzmmAnxE5uC4GCNAw/ct
-        L/O7vjbS56v+2H//SjiDLev1ctvEVm6iIsIyk6SuLJiDQpfrN1gUMDQDDH+KdNjQ
-        ftr4fTDBrkwH9cG1AFHwqta8j45niZBNS7HBlc/+6TYYcA/JoERA9/eInNlMbsbF
-        lqEwf/gAMVRIlbFNS38hbWdk9j/26c4jj4PtnsCd35m/4TWfta1Gy+Q2tmcLfb6Q
-        BZjGmJd34fFLoTH/28+qqg4J/nd+UflA/pmVYFpp1DhYJSg0K6rR6jusxYrJjfoG
-        qyKjP90iBKOiBmlmII7cHvWE3/+kWRwH6Jdzs3VD350vkj5A==
-X-ME-Sender: <xms:4_zLWKO7VB03_jfUP_nxtVjeksRT0S-KBLKxd2vb9WaP15SuKGLQMw>
-X-Sasl-enc: qvf25DzTCXvq6I67efo0TkWx91baCwNu4yDD0ynXnxQ4 1489763555
-Received: from localhost (dslb-178-011-152-175.178.011.pools.vodafone-ip.de [178.11.152.175])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 2FFDF244D9;
-        Fri, 17 Mar 2017 11:12:35 -0400 (EDT)
-From:   Michael J Gruber <git@drmicha.warpmail.net>
-To:     git@vger.kernel.org
-Cc:     Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH 1/2] describe: localize debug output fully
-Date:   Fri, 17 Mar 2017 16:12:32 +0100
-Message-Id: <105f48ad2ae1aa9c88ce6088e6b304294bec0835.1489763302.git.git@drmicha.warpmail.net>
-X-Mailer: git-send-email 2.12.0.484.g92f9ab2bc1
+        id S1751645AbdCQP1D (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 11:27:03 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53427 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751641AbdCQP1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 11:27:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C7066778A1;
+        Fri, 17 Mar 2017 11:26:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=of8B/cO2dkjHbSVsUf/PNB0PW7M=; b=fdg9Uj
+        wEdCVOaCOHIiCS+OAiJUfX8KubGWozD0XEe+i3CkRD5UBOPUWQJCR7le8GcaSuXT
+        tSqOe3dQfjalT+chNeRGqtTkvW04r2Uw/mewdt12tEvtg/YPR8g7OEiSuqdVvG79
+        94pjqPAwauswMVl10Nd6Mmoc8hqnE9wiDDnMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hTVX47cndqw/MyKEDffthBM2LKn7wG1C
+        8dzDoC1im+ZGnCCLZ8hg9wWK0sxPdhKcWvpoTi0GCcYGJeL7qmDs7dVfR9KCRXCr
+        ZWktbEj3iYd+ZvbcX741rSONxYqtV3s96eG58O6WttYJvGc47EuaOKARoVH+vvpe
+        +fAdMVgTwow=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C0043778A0;
+        Fri, 17 Mar 2017 11:26:40 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 34B7377898;
+        Fri, 17 Mar 2017 11:26:40 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Joe Rayhawk <jrayhawk@freedesktop.org>, git@vger.kernel.org
+Subject: Re: Shared repositories no longer securable against privilege escalation
+References: <148971018136.2144.12683278043600094739@richardiv.omgwallhack.org>
+        <195b30d7-9ea2-7a9b-79ca-41b7bb890a30@alum.mit.edu>
+Date:   Fri, 17 Mar 2017 08:26:39 -0700
+In-Reply-To: <195b30d7-9ea2-7a9b-79ca-41b7bb890a30@alum.mit.edu> (Michael
+        Haggerty's message of "Fri, 17 Mar 2017 13:07:36 +0100")
+Message-ID: <xmqqo9wz9b68.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E40231E-0B26-11E7-9456-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git describe --debug localizes all debug messages but not the terms
-head, lightweight, annotated that it outputs for the candidates.
-Localize them, too.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-Also, increase the width of that field to create room for the translated
-terms.
+> (I can't resist pointing out that the *real* bug is storing special
+> references like `HEAD` in the top level of $GIT_DIR, but that can't be
+> changed now.)
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Ralf: this is just the context for the following l10-de patch
+If you call that "pointing out", I can't resist pointing out that
+you are utterly *wrong* ;-)
 
- builtin/describe.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+For one thing, HEAD.lock being the only reported case does not mean
+"special refs" is the only thing, and more importantly, it will stay
+to be the only thing, that would want to write directly underneath
+$GIT_DIR directory.  We may want to add a feature to store push
+certificates whenever a signed push is made, and we are free to
+decide that directly underneath $GIT_DIR is the place to do so.
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 76c18059bf..1a760c16f9 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -49,7 +49,7 @@ struct commit_name {
- };
- 
- static const char *prio_names[] = {
--	"head", "lightweight", "annotated",
-+	N_("head"), N_("lightweight"), N_("annotated"),
- };
- 
- static int commit_name_cmp(const struct commit_name *cn1,
-@@ -396,8 +396,8 @@ static void describe(const char *arg, int last_one)
- 	if (debug) {
- 		for (cur_match = 0; cur_match < match_cnt; cur_match++) {
- 			struct possible_tag *t = &all_matches[cur_match];
--			fprintf(stderr, " %-11s %8d %s\n",
--				prio_names[t->name->prio],
-+			fprintf(stderr, " %-15s %8d %s\n",
-+				_(prio_names[t->name->prio]),
- 				t->depth, t->name->path);
- 		}
- 		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
--- 
-2.12.0.484.g92f9ab2bc1
+Also, with your same logic, you could also say that the real bug is
+not in the refs subsystem but is in the lockfile subsystem.  If it
+did not use $GIT_DIR/$thing.lock when locking $GIT_DIR/$thing, and
+instead it used $GIT_DIR/lock/$thing to do so, you wouldn't have
+needed to be able to create $GIT_DIR/HEAD.lock.
 
+I _think_ the real bug is that somehow a user got a wrong impression
+that directly underneath $GIT_DIR/ is somehow different from its
+subdirectory and it is OK to make the directory unwritable.  I do
+not think we never intended to give such a promise, but there may be
+a documentation bug that gives the wrong impression, which we may
+have to fix.
+
+We do try to make sure that in a read-only repository $GIT_DIR/ and
+everything underneath can be read-only (and if that is not the case,
+you found a bug), but even in that case, we do not special case
+$GIT_DIR/ itself and its subdirectories.
