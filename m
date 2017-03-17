@@ -2,138 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35EAB20323
-	for <e@80x24.org>; Fri, 17 Mar 2017 02:08:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EC4D20323
+	for <e@80x24.org>; Fri, 17 Mar 2017 02:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752338AbdCQCHx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Mar 2017 22:07:53 -0400
-Received: from mail.fairlystable.org ([216.151.3.163]:32928 "EHLO
-        mail.fairlystable.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751956AbdCQCHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Mar 2017 22:07:52 -0400
-X-Greylist: delayed 6267 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Mar 2017 22:07:37 EDT
-Received: from [174.25.131.71] (helo=localhost)
-        by mail.fairlystable.org with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-        (Exim 4.72)
-        (envelope-from <jrayhawk@fairlystable.org>)
-        id 1cofff-0002bC-BS; Thu, 16 Mar 2017 17:23:07 -0700
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="pgp-sha256"; boundary="===============2191712739524319927=="
-MIME-Version: 1.0
-Content-Disposition: inline
-To:     git@vger.kernel.org
-Message-ID: <148971018136.2144.12683278043600094739@richardiv.omgwallhack.org>
-From:   Joe Rayhawk <jrayhawk@freedesktop.org>
-User-Agent: alot/0.3.6
-Subject: Shared repositories no longer securable against privilege escalation
-Date:   Thu, 16 Mar 2017 17:23:01 -0700
+        id S1751712AbdCQCyP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Mar 2017 22:54:15 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:33820 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751081AbdCQCyO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Mar 2017 22:54:14 -0400
+Received: by mail-qt0-f195.google.com with SMTP id x35so8085822qtc.1
+        for <git@vger.kernel.org>; Thu, 16 Mar 2017 19:53:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=rr7wT6QXdCK/npHpItaa+etFnBJwia06AqUfIfvSCSg=;
+        b=kxaIQlaVcjQ3ApDJI1JlCiX5Bji13MAvVCpp1YCTmiuomA/Z1fYD3VsrjGSa6Kfsw7
+         uZwp7ZHGfWSYElxoEmeB+i4LSfySeZmtKa4/QunEv0Uyludo2Ml2h7d20lghsn9HOkRw
+         Q0rDK0bomN/Tmo0SYV9NGeTtTw6FmLx5FigeRduHRvS0NloyZUGi0rxdUZFW3z8uqXiR
+         7REb6Wh7M2vAwUAzfRgx1kdRvjlqS45dfoPu8FdvQV/omjcsjDBHMmDvTJXayl6QjR8O
+         g9N0f3KmmSIRyH7f8Ut5QOtryNADKhWL1ZBYk690dntHOAIBJ4pUnhGdPagqoErgfhUd
+         tfJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=rr7wT6QXdCK/npHpItaa+etFnBJwia06AqUfIfvSCSg=;
+        b=L5Y/fSAcFbviZxJh3KKr1+94a7na4KSrkJJLuhD5eGI2/nyJp6i6sBUXzFTkbIBzln
+         hMdVk1vz62HoKgPPEtCd0Ny/OC6NFbt7tHW40iJT8BLzw6Zx3mgALL9pRFGQL0BGtbZu
+         qRAbMocGDCI0umuVbYQ1jNOwgO2IxbubN5qL6Qb7ThYfYZ7pigkD48qH4J9A8vpPj1iQ
+         2wKox6cK8rFj07/IufP20gYRP+zTtuWSkg5DlKvHJpfRQQ9zEvVadkP/qcgfCNbH6sB9
+         cIw9/8RBb/yXYWTV+Sb0LxanqVv/OWNbWC06W8HQDPzi1srBlNyPKU62lajfXvMVc8U8
+         Pkfg==
+X-Gm-Message-State: AFeK/H3XsJOb1NLVc66q5nOxRsMld9AdNTMZ1yAGKoXMXQUoiIXlaWrVsNEnR/L/u0VTYw==
+X-Received: by 10.237.38.194 with SMTP id q60mr12368426qtd.84.1489719196841;
+        Thu, 16 Mar 2017 19:53:16 -0700 (PDT)
+Received: from mango1.eduroam.cornell.edu (nat-128-84-124-0-116.cit.cornell.edu. [128.84.124.116])
+        by smtp.googlemail.com with ESMTPSA id r30sm5009007qtc.66.2017.03.16.19.53.16
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 16 Mar 2017 19:53:16 -0700 (PDT)
+From:   Devin Lehmacher <lehmacdj@gmail.com>
+To:     lehmacdj@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+Subject: [GSoC][PATCH v5 1/3] path.c: add xdg_cache_home
+Date:   Thu, 16 Mar 2017 22:53:13 -0400
+Message-Id: <20170317025315.84548-1-lehmacdj@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170316051827.97198-5-lehmacdj@gmail.com>
+References: <20170316051827.97198-5-lehmacdj@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---===============2191712739524319927==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+We already have xdg_config_home to format paths relative to
+XDG_CONFIG_HOME. Let's provide a similar function xdg_cache_home to do
+the same for paths relative to XDG_CACHE_HOME.
 
-Git has started requiring write access to the root of bare repositories
-in order to create /HEAD.lock. This is a major security problem in
-shared environments as it also entails control over the /config link
-i.e. core.hooksPath. Permission to write objects and update refs should
-be entirely separate from permission to edit hook execution logic.
+Signed-off-by: Devin Lehmacher <lehmacdj@gmail.com>
+---
+ cache.h |  7 +++++++
+ path.c  | 15 +++++++++++++++
+ 2 files changed, 22 insertions(+)
 
-Given that /HEAD is not dynamically modified in the normal lifetimes of
-bare repositories, /HEAD.lock creation failure should probably be, at
-worst, an ignorable soft failure. Alternatively, some form of stale
-lockfile handling (currently there is none) could be made to work with
-a writable HEAD.lock in a read-only bare repository.
+diff --git a/cache.h b/cache.h
+index c95826971..66761bc56 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1169,6 +1169,13 @@ extern int is_ntfs_dotgit(const char *name);
+  */
+ extern char *xdg_config_home(const char *filename);
+ 
++/**
++ * Return a newly allocated string with the evaluation of
++ * "$XDG_CACHE_HOME/git/$filename" if $XDG_CACHE_HOME is non-empty, otherwise
++ * "$HOME/.cache/git/$filename". Return NULL upon error.
++ */
++extern char *xdg_cache_home(const char *filename);
++
+ /* object replacement */
+ #define LOOKUP_REPLACE_OBJECT 1
+ #define LOOKUP_UNKNOWN_OBJECT 2
+diff --git a/path.c b/path.c
+index efcedafba..22248436b 100644
+--- a/path.c
++++ b/path.c
+@@ -1272,6 +1272,21 @@ char *xdg_config_home(const char *filename)
+ 	return NULL;
+ }
+ 
++char *xdg_cache_home(const char *filename)
++{
++	const char *home, *cache_home;
++
++	assert(filename);
++	cache_home = getenv("XDG_CACHE_HOME");
++	if (cache_home && *cache_home)
++		return mkpathdup("%s/git/%s", cache_home, filename);
++
++	home = getenv("HOME");
++	if (home)
++		return mkpathdup("%s/.cache/git/%s", home, filename);
++	return NULL;
++}
++
+ GIT_PATH_FUNC(git_path_cherry_pick_head, "CHERRY_PICK_HEAD")
+ GIT_PATH_FUNC(git_path_revert_head, "REVERT_HEAD")
+ GIT_PATH_FUNC(git_path_squash_msg, "SQUASH_MSG")
+-- 
+2.11.0
 
-Obigatory HEAD.lock creation was introduced in the following commit:
-
-commit 92b1551b1d407065f961ffd1d972481063a0edcc
-Author: Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Mon Apr 25 15:56:07 2016 +0200
-
-    refs: resolve symbolic refs first
-
-Test case:
-
-root@richardiv:~# GIT_DIR=3D/tmp/test.git git init --bare --shared=3Dgroup
-Initialized empty shared Git repository in /tmp/test.git/
-root@richardiv:~# cd /tmp/test.git
-root@richardiv:/tmp/test.git# touch git-daemon-export-ok packed-refs
-root@richardiv:/tmp/test.git# mkdir -p info logs branches
-root@richardiv:/tmp/test.git# find refs info branches objects logs         =
- -type d -print0 | xargs -0 chmod 2775
-root@richardiv:/tmp/test.git# find refs info branches logs HEAD packed-refs=
- -type f -print0 | xargs -0 chmod 0664
-root@richardiv:/tmp/test.git# find objects                                 =
- -type f -print0 | xargs -0 --no-run-if-empty chmod 0644
-root@richardiv:/tmp/test.git# find refs info branches objects logs HEAD pac=
-ked-refs -print0 | xargs -0 chgrp git-test
-root@richardiv:/tmp/test.git# chown root.root . config description git-daem=
-on-export-ok hooks
-root@richardiv:/tmp/test.git# chmod 0644 config description git-daemon-expo=
-rt-ok
-root@richardiv:/tmp/test.git# chmod 00755 . hooks
-root@richardiv:/tmp/test.git# sudo -i -u user1
-user1@richardiv:~$ git clone /tmp/test.git
-Cloning into 'test'...
-warning: You appear to have cloned an empty repository.
-done.
-user1@richardiv:~$ cd test
-user1@richardiv:~/test$ touch test
-user1@richardiv:~/test$ git add test
-user1@richardiv:~/test$ git commit -m test test
-[master (root-commit) ff21d72] test
- 1 file changed, 0 insertions(+), 0 deletions(-)
-create mode 100644 test
-user1@richardiv:~/test$ git push
-Counting objects: 3, done.
-Writing objects: 100% (3/3), 206 bytes | 0 bytes/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-remote: error: cannot lock ref 'HEAD': Unable to create '/tmp/test.git/HEAD=
-.lock': Permission denied
-To /tmp/test.git
- ! [remote rejected] master -> master (failed to update ref)
-error: failed to push some refs to '/tmp/test.git'
-user1@richardiv:~/test$ logout
-root@richardiv:/tmp/test.git# chgrp git-test .
-root@richardiv:/tmp/test.git# chmod 2775 .
-root@richardiv:/tmp/test.git# sudo -s -u user1
-user1@richardiv:/tmp/test.git$ mv config config-old
-user1@richardiv:/tmp/test.git$ touch config # POWER ALMIGHTY
-user1@richardiv:/tmp/test.git$
-
-Please CC me on this thread; I am not on the mailing list.
-
-
---===============2191712739524319927==
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-Content-Description: signature
-Content-Type: application/pgp-signature; name="signature.asc"; charset="us-ascii"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE0W3/Ls5On90y4dmX35w74P7tvu8FAljLLDsACgkQ35w74P7t
-vu/AFw/+JIKahCTesYSyHeALs4CYwM2iHuwkKoml+dw3rcbCkLe87Y2LGcD6vpMd
-IrZQBCvNfpNpN2+PrCswhAaxMRwRmh9iLps2oTFhqR0AmPA5deP6f0zzvKjK5mbz
-z33LveA11Dh0ydcqsMSpFF3gipwd2tWK6Jor06E2JYX7oBUn+jArjCf2uNRz5kpJ
-WCbfJyqbJ4dILA3P+YgCFpT2841A0plqA8m/jBheTVnmG04Rs9jb4YjBHvQyq9E3
-AEQHa3yJCfKCLjH7DxYiGeIJAsm6XhfRmCpvWXYMiq3EyLhwRL63zrrjgUOXD8rh
-XHmaUjjDxQdD41/Q3ZwKKh9cvNpDIJ/8Hdh970n397sn1cuVNVlikLmnm3rLuybr
-UOlfwgKlmT+CjNp0QndCbfQZqv6Q+0tsNCnHd9N6Yb5Ky1xDyoEuIN7A6+JdAEx/
-UwxhI9q+n4ooV+1uyuNVsUAuk7tvCZ98OJiV8Qy9Tf5iYH31yKpLNPRAWjKu2b8n
-yEVfekSFKZmELaMFRzStaDSdJ1S3vhqCJkaFSa/NJmczkVftB/WQnatiqb2pS6PF
-tOV6KDv4G6bg5L6loY1aBP6vX3fSdc8zlyyayWznXkGoKPfbw+F6m1T2zc8HfA/p
-/9ssS6ZBahq44+enaGqg/mR7PLkuBGOAk7H/mDzQ2n5kMdlQCrE=
-=w1ni
------END PGP SIGNATURE-----
-
---===============2191712739524319927==--
