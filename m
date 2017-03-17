@@ -2,108 +2,280 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1BDF20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 17:17:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FC6520951
+	for <e@80x24.org>; Fri, 17 Mar 2017 17:23:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751185AbdCQRRo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 13:17:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55056 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751057AbdCQRRn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 13:17:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A41478CFC;
-        Fri, 17 Mar 2017 13:17:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=eIsFyOs5D9Rz3W8BHD+4x2r0+Pw=; b=QG9g97
-        sEP8nGBUPEKxm2Av36VjF+LPaF5gRz/oxxRgMhaiSTTzYu+ltOX3enXuhxTex+aK
-        DbHsl9sgP4g5rmR0JokCCNhj4Yi/vI37Ukf33o1wjv2bBmhmsVBY0s3UcFSDASfW
-        gmV6AaMYwDBgK6Gya9XFLYZWRLAHh39YRlY6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OanH6iDCStaWUUQBxLghru8yavYYuZpa
-        K0XVomWl71yZHnG0iu2VbYz+QOmMg7w2uD4xxcR0MlFRwArKsSI4XqwVPudNks9b
-        Xib6bIoIGaNVxF6qgFxlH0EdkJfQ7M0Cdbnck4Kb4gAWXia8Yh5eIJMmKF0MB6xl
-        nMS+94ZkAoI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1206578CFB;
-        Fri, 17 Mar 2017 13:17:37 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FE6078CFA;
-        Fri, 17 Mar 2017 13:17:36 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH 2/2] name-rev: favor describing with tags and use committer date to tiebreak
-References: <xmqqd1die00j.fsf@gitster.mtv.corp.google.com>
-        <20170315225045.15788-1-gitster@pobox.com>
-        <20170315225045.15788-3-gitster@pobox.com>
-        <9AE7ADCA-97F9-4857-AC55-76C4BD822C25@gmail.com>
-        <xmqqy3w48nif.fsf@gitster.mtv.corp.google.com>
-        <xmqqshmc8n09.fsf@gitster.mtv.corp.google.com>
-        <015A7026-960F-450C-9276-AAC3A0B11207@gmail.com>
-Date:   Fri, 17 Mar 2017 10:17:35 -0700
-In-Reply-To: <015A7026-960F-450C-9276-AAC3A0B11207@gmail.com> (Lars
-        Schneider's message of "Sat, 18 Mar 2017 01:09:50 +0800")
-Message-ID: <xmqqd1df961c.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9DB8452C-0B35-11E7-9E59-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+        id S1751286AbdCQRXL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 13:23:11 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:32798 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751282AbdCQRXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 13:23:08 -0400
+Received: by mail-pg0-f46.google.com with SMTP id n190so46311786pga.0
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 10:23:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=vGKFTTNo3f5TKUz8L5/fL2oUGsmOpFVArttcTLC/LAw=;
+        b=Ai2tMM2KViQMGr8r9SzYmGBRyFq72G4GTbBMSOGQMbiiywvXx6HbqYfI+CnGEhySQ6
+         Nyb1v7DCBt6addG4VfC8JzThQYMxLKmbpR0c9RUj7oIn2+seEWjIveqTNh3/Fx1GLsFP
+         SML4QHVydATk91DtPv2GdkpfEsawQw1AvWcnU60EkMxsGj7+lqOCxBiXpjEntGDjiwhL
+         a+CuzA6utRIB0qKrF94cSFCAjNFdPkDHgf7hiHHA8OpATChTg3oBqs85vAROH6cMUMpx
+         4ciikumlTNP6srqyiGh0JdxfxxUrmJO/pf9fZsYTELawigfJLvqbKvDdddrLqNnW04ab
+         pRiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=vGKFTTNo3f5TKUz8L5/fL2oUGsmOpFVArttcTLC/LAw=;
+        b=j9UlCY1HJaP0Ta1mG9IdTYoYw1tu+Zs0V92z4EAuVkKJ+OgwSd4J1CnkyxQa9oMEyl
+         5W1D1Mhmt9QvXveAlQkAkFor4PukgMkKaGGqJ6jP8CO+HK13YY47zWo/TBfFu5Pw1Qvq
+         Yjsi1UoJWxZOwiRtlL3HoRr1p72NPRmJnBM+hbpiDmlCcq+ugqU0p7jz2gPLdDTDaRWU
+         zebvQKHeCdOqlMSUJMT/llgEUGwMfU0e54ESezrPkYovWiw+0uJQFlXk+NhnvDrlIlyq
+         xGfAtEjqaJl5fqw9eRZtaTzMGFGIxI6cd12BLLlTDYW09tNzkxtcmk/HWNRlUOvD+fLC
+         nVJw==
+X-Gm-Message-State: AFeK/H1zrJe404Hpihu/CZS3Nzxp8E8+ubte08Yg14Ki2F4DCkUQqkj4oZsHx+YLmKgjne5M
+X-Received: by 10.84.141.1 with SMTP id 1mr21654392plu.178.1489771386876;
+        Fri, 17 Mar 2017 10:23:06 -0700 (PDT)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id 197sm17978861pfv.19.2017.03.17.10.23.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 17 Mar 2017 10:23:05 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
+        gitster@pobox.com, peff@peff.net, johannes.schindelin@gmx.de,
+        pclouds@gmail.com
+Subject: [PATCH v3 3/5] grep: fix bug when recursing with relative pathspec
+Date:   Fri, 17 Mar 2017 10:22:55 -0700
+Message-Id: <20170317172257.4690-4-bmwill@google.com>
+X-Mailer: git-send-email 2.12.0.367.g23dc2f6d3c-goog
+In-Reply-To: <20170317172257.4690-1-bmwill@google.com>
+References: <20170314221100.24856-1-bmwill@google.com>
+ <20170317172257.4690-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+When using the --recurse-submodules flag with a relative pathspec which
+includes "..", an error is produced inside the child process spawned for
+a submodule.  When creating the pathspec struct in the child, the ".."
+is interpreted to mean "go up a directory" which causes an error stating
+that the path ".." is outside of the repository.
 
->> git-p4.py | 2 +-
->> 1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/git-p4.py b/git-p4.py
->> index eab319d76e..351d1ab58e 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -582,7 +582,7 @@ def currentGitBranch():
->>         # on a detached head
->>         return None
->>     else:
->> -        return read_pipe(["git", "name-rev", "HEAD"]).split(" ")[1].strip()
->> +        return read_pipe(["git", "symbolic-ref", "HEAD"]).strip()[11:]
->> 
->> def isValidGitDir(path):
->>     return git_dir(path) != None
->
-> Following your explanation this patch looks good to me and this fixes the
-> test failure. TBH I never thought about the difference of these commands
-> before. "rev" and "ref" sound so similar although they denote completely 
-> different things.
+While it is true that ".." is outside the scope of the submodule, it is
+confusing to a user who originally invoked the command where ".." was
+indeed still inside the scope of the superproject.  Since the child
+process launched for the submodule has some context that it is operating
+underneath a superproject, this error could be avoided.
 
-Thanks for testing.
+This patch fixes the bug by passing the 'prefix' to the child process.
+Now each child process that works on a submodule has two points of
+reference to the superproject: (1) the 'super_prefix' which is the path
+from the root of the superproject down to root of the submodule and (2)
+the 'prefix' which is the path from the root of the superproject down to
+the directory where the user invoked the git command.
 
-The above was done merely to point out the problematic place and a
-possible solution.  As I am not familiar with the code in git-p4.py,
-I didn't even try to check if the code already has a helper function
-that strips "refs/heads/" from the beginning of the string (iow, I
-am not happy with the [11:]).  I didn't and don't like the fact that
-this function now runs "symbolic-ref HEAD" twice but I didn't try to
-see if there are more suitable and idiomatic ways to do this with a
-single invocation.
+With these two pieces of information a child process can correctly
+interpret the pathspecs provided by the user as well as being able to
+properly format its output relative to the directory the user invoked
+the original command from.
 
-Hence, I would really prefer not to commit mine myself.  I'd rather
-see somebody from git-p4 circle to come up with a version that is
-more in line with the way things are done in the existing code and
-send a tested version for me to apply.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ builtin/grep.c                     | 39 ++++++++++++--------
+ t/t7814-grep-recurse-submodules.sh | 75 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 99 insertions(+), 15 deletions(-)
 
-Thanks.
-
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 4694e68f3..b5d846393 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -310,10 +310,7 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+ {
+ 	struct strbuf pathbuf = STRBUF_INIT;
+ 
+-	if (opt->relative && opt->prefix_length) {
+-		quote_path_relative(filename + tree_name_len, opt->prefix, &pathbuf);
+-		strbuf_insert(&pathbuf, 0, filename, tree_name_len);
+-	} else if (super_prefix) {
++	if (super_prefix) {
+ 		strbuf_add(&pathbuf, filename, tree_name_len);
+ 		strbuf_addstr(&pathbuf, super_prefix);
+ 		strbuf_addstr(&pathbuf, filename + tree_name_len);
+@@ -321,6 +318,13 @@ static int grep_sha1(struct grep_opt *opt, const unsigned char *sha1,
+ 		strbuf_addstr(&pathbuf, filename);
+ 	}
+ 
++	if (opt->relative && opt->prefix_length) {
++		char *name = strbuf_detach(&pathbuf, NULL);
++		quote_path_relative(name + tree_name_len, opt->prefix, &pathbuf);
++		strbuf_insert(&pathbuf, 0, name, tree_name_len);
++		free(name);
++	}
++
+ #ifndef NO_PTHREADS
+ 	if (num_threads) {
+ 		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, sha1);
+@@ -345,12 +349,14 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 
++	if (super_prefix)
++		strbuf_addstr(&buf, super_prefix);
++	strbuf_addstr(&buf, filename);
++
+ 	if (opt->relative && opt->prefix_length) {
+-		quote_path_relative(filename, opt->prefix, &buf);
+-	} else {
+-		if (super_prefix)
+-			strbuf_addstr(&buf, super_prefix);
+-		strbuf_addstr(&buf, filename);
++		char *name = strbuf_detach(&buf, NULL);
++		quote_path_relative(name, opt->prefix, &buf);
++		free(name);
+ 	}
+ 
+ #ifndef NO_PTHREADS
+@@ -399,13 +405,12 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
+ }
+ 
+ static void compile_submodule_options(const struct grep_opt *opt,
+-				      const struct pathspec *pathspec,
++				      const char **argv,
+ 				      int cached, int untracked,
+ 				      int opt_exclude, int use_index,
+ 				      int pattern_type_arg)
+ {
+ 	struct grep_pat *pattern;
+-	int i;
+ 
+ 	if (recurse_submodules)
+ 		argv_array_push(&submodule_options, "--recurse-submodules");
+@@ -523,9 +528,8 @@ static void compile_submodule_options(const struct grep_opt *opt,
+ 
+ 	/* Add Pathspecs */
+ 	argv_array_push(&submodule_options, "--");
+-	for (i = 0; i < pathspec->nr; i++)
+-		argv_array_push(&submodule_options,
+-				pathspec->items[i].original);
++	for (; *argv; argv++)
++		argv_array_push(&submodule_options, *argv);
+ }
+ 
+ /*
+@@ -549,6 +553,11 @@ static int grep_submodule_launch(struct grep_opt *opt,
+ 	prepare_submodule_repo_env(&cp.env_array);
+ 	argv_array_push(&cp.env_array, GIT_DIR_ENVIRONMENT);
+ 
++	if (opt->relative && opt->prefix_length)
++		argv_array_pushf(&cp.env_array, "%s=%s",
++				 GIT_TOPLEVEL_PREFIX_ENVIRONMENT,
++				 opt->prefix);
++
+ 	/* Add super prefix */
+ 	argv_array_pushf(&cp.args, "--super-prefix=%s%s/",
+ 			 super_prefix ? super_prefix : "",
+@@ -1236,7 +1245,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 
+ 	if (recurse_submodules) {
+ 		gitmodules_config();
+-		compile_submodule_options(&opt, &pathspec, cached, untracked,
++		compile_submodule_options(&opt, argv + i, cached, untracked,
+ 					  opt_exclude, use_index,
+ 					  pattern_type_arg);
+ 	}
+diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+index 67247a01d..5b6eb3a65 100755
+--- a/t/t7814-grep-recurse-submodules.sh
++++ b/t/t7814-grep-recurse-submodules.sh
+@@ -227,6 +227,81 @@ test_expect_success 'grep history with moved submoules' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'grep using relative path' '
++	test_when_finished "rm -rf parent sub" &&
++	git init sub &&
++	echo "foobar" >sub/file &&
++	git -C sub add file &&
++	git -C sub commit -m "add file" &&
++
++	git init parent &&
++	echo "foobar" >parent/file &&
++	git -C parent add file &&
++	mkdir parent/src &&
++	echo "foobar" >parent/src/file2 &&
++	git -C parent add src/file2 &&
++	git -C parent submodule add ../sub &&
++	git -C parent commit -m "add files and submodule" &&
++
++	# From top works
++	cat >expect <<-\EOF &&
++	file:foobar
++	src/file2:foobar
++	sub/file:foobar
++	EOF
++	git -C parent grep --recurse-submodules -e "foobar" >actual &&
++	test_cmp expect actual &&
++
++	# Relative path to top
++	cat >expect <<-\EOF &&
++	../file:foobar
++	file2:foobar
++	../sub/file:foobar
++	EOF
++	git -C parent/src grep --recurse-submodules -e "foobar" -- .. >actual &&
++	test_cmp expect actual &&
++
++	# Relative path to submodule
++	cat >expect <<-\EOF &&
++	../sub/file:foobar
++	EOF
++	git -C parent/src grep --recurse-submodules -e "foobar" -- ../sub >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'grep from a subdir' '
++	test_when_finished "rm -rf parent sub" &&
++	git init sub &&
++	echo "foobar" >sub/file &&
++	git -C sub add file &&
++	git -C sub commit -m "add file" &&
++
++	git init parent &&
++	mkdir parent/src &&
++	echo "foobar" >parent/src/file &&
++	git -C parent add src/file &&
++	git -C parent submodule add ../sub src/sub &&
++	git -C parent submodule add ../sub sub &&
++	git -C parent commit -m "add files and submodules" &&
++
++	# Verify grep from root works
++	cat >expect <<-\EOF &&
++	src/file:foobar
++	src/sub/file:foobar
++	sub/file:foobar
++	EOF
++	git -C parent grep --recurse-submodules -e "foobar" >actual &&
++	test_cmp expect actual &&
++
++	# Verify grep from a subdir works
++	cat >expect <<-\EOF &&
++	file:foobar
++	sub/file:foobar
++	EOF
++	git -C parent/src grep --recurse-submodules -e "foobar" >actual &&
++	test_cmp expect actual
++'
++
+ test_incompatible_with_recurse_submodules ()
+ {
+ 	test_expect_success "--recurse-submodules and $1 are incompatible" "
+-- 
+2.12.0.367.g23dc2f6d3c-goog
 
