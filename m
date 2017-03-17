@@ -6,120 +6,83 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B9BC20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 17:23:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51A3D20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 17:23:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751284AbdCQRXN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 13:23:13 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:36043 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751282AbdCQRXL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 13:23:11 -0400
-Received: by mail-pg0-f54.google.com with SMTP id g2so46064087pge.3
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 10:23:06 -0700 (PDT)
+        id S1751273AbdCQRXG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 13:23:06 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35629 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751198AbdCQRXD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 13:23:03 -0400
+Received: by mail-pg0-f41.google.com with SMTP id b129so46206237pgc.2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 10:23:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=0mHBHsUECPAZzUZYTpg9t/FX0Smd96CUV6tZAR3pgBw=;
-        b=v5d0VmriwOmu6WBKmMwzFv45+zEnbUbMqv4DsIkuqLn92CfQCPHKVwpHP6NRDjOFX9
-         BEM//Caj2mGAEZIsxUJ/ZwnRvQBYh9mnMt0kaMajQ1+HAU8/0refgrfkyfI1XZ99VVB6
-         mE9HAt/Iwbniw7w2vZYu2HqC88C/110ZZPPaRNg/qAXI+Uz/KLG03kJQI4t3Y7+xCGl3
-         VyXIfT8588GgKqvlEsR94xx6EeP0bE/QOe7ubK0Se8qEWNlPopnbtXOs6khqpPEiw7wh
-         dahif5tvS8TnM7JLRLicrNvj/T1OrMaQFgxVACfgEUskEe2XcjVftvY7yZkJr/ckQctq
-         502Q==
+        bh=c1DFBDGM/zz2YoYm7cVk8dpeHRznjfSKSIv56AE7Fns=;
+        b=cZlHIOzLWeYxRYfCKOsxGzd3NDuLPJ+8ZYlPr8v/XoCWIAhwgSqSpyDXxjmFTKpKHE
+         FtBGB5FMlkN/vwideauGBY7U0mrWpGTo9JspJeIiqES2ZRE0lwSUwyxsT61BS78D+AzN
+         FxB7qnFTrTkyxriNjwhnstzB1t2LnyM5HpYnIvzxhs5dI1y81GWEu6vgZfve71OCEdPd
+         y71R7AXP+J2yQHOqkGPgaJJSLI0CveXmPTYsTWwdRvY+IDjXsJ7Gb9ca/UtcDMc+nV2q
+         GUu2rt++bMkhOeJs8wZ3rXV2gc7lmoZPTMtsmzVCAzrq+Bt6Or44LXqssF4MlXGSb64y
+         TJ9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=0mHBHsUECPAZzUZYTpg9t/FX0Smd96CUV6tZAR3pgBw=;
-        b=py0/W63+9cRWb7y6//TzM/mdEMXJSudTLDmbIOK90wbYj5jVn3NcWwvL7W6nDEsnze
-         GUWCO5k1gzwAgsFvXGICpSvgiCLFzO2o81+glu7sjlX+9qSWDf0ovNzYI/HUPW1z8Nr9
-         omxpZF6WEq9QBxqXo+5IuNPMMvayTSIo9Lttc45wP8NQTU+42nAxAM2ZQWtMHRezIlG/
-         HJK7LCxQz7Y2yn1MHBLLG9pK47+B4nx2HUJs6qfnu0CvmoGTupNoL+7KcQ3OS1u9bGM9
-         Bdhtg4Lm9qqGJBClid8b3ZxKKoHgeNAHHEpGxfcoSz6+6qiObLNupWMrZADT5Hyk43gK
-         /nZQ==
-X-Gm-Message-State: AFeK/H3JxbEXM6c7dGgwNFtEMlh84owBhIxYzPgLdFJHthB5cS36nzUn58/DL5I+UbpMjB/p
-X-Received: by 10.84.192.107 with SMTP id b98mr21558615pld.160.1489771385257;
-        Fri, 17 Mar 2017 10:23:05 -0700 (PDT)
+        bh=c1DFBDGM/zz2YoYm7cVk8dpeHRznjfSKSIv56AE7Fns=;
+        b=JSj0YYCA4mt9o5dnq7wzDsQDq4TlvrO1jNbX0bnQKHaMabPEPQIMRHBZidt4HNkNza
+         SqtfWZzHAZHWNHaYZT5uN61KrKlaBVtJOysyendbomiaBPdpMBAERUebSLZ1o2TK9sg4
+         qmmVWS4mTuhOvrjS6wYVAh8kltDPQavjF426/EYPaVbacM9Elhgngt8dn5/h6aQmJ5+t
+         sxN0gu/+mYgxOsq7cK4cDkucqId+lS59AieC2tpXoQ849YLs3/4/QiVz7Xp+C+kgaTDQ
+         kQ+pfgkKlYv6uQa410wVn1gKcaC4pNveu3eSxD5+1bc/MlCtKUyYk7AL2ZnQSMedUl0S
+         cAIg==
+X-Gm-Message-State: AFeK/H3yKQVSJv+fGsONGGUFZNSMboXYR26fvI9obsJL40nWJ4XE1mvPMiAWFvkFrmi1Ve11
+X-Received: by 10.99.101.131 with SMTP id z125mr17075499pgb.218.1489771382344;
+        Fri, 17 Mar 2017 10:23:02 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id 197sm17978861pfv.19.2017.03.17.10.23.03
+        by smtp.gmail.com with ESMTPSA id 197sm17978861pfv.19.2017.03.17.10.23.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 17 Mar 2017 10:23:04 -0700 (PDT)
+        Fri, 17 Mar 2017 10:23:01 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, sbeller@google.com,
         gitster@pobox.com, peff@peff.net, johannes.schindelin@gmx.de,
         pclouds@gmail.com
-Subject: [PATCH v3 2/5] setup: allow for prefix to be passed to git commands
-Date:   Fri, 17 Mar 2017 10:22:54 -0700
-Message-Id: <20170317172257.4690-3-bmwill@google.com>
+Subject: [PATCH v3 0/5] recursing submodules with relative pathspec (grep and ls-files)
+Date:   Fri, 17 Mar 2017 10:22:52 -0700
+Message-Id: <20170317172257.4690-1-bmwill@google.com>
 X-Mailer: git-send-email 2.12.0.367.g23dc2f6d3c-goog
-In-Reply-To: <20170317172257.4690-1-bmwill@google.com>
+In-Reply-To: <20170314221100.24856-1-bmwill@google.com>
 References: <20170314221100.24856-1-bmwill@google.com>
- <20170317172257.4690-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a future patch child processes which act on submodules need a little
-more context about the original command that was invoked.  This patch
-teaches git to use the prefix stored in `GIT_INTERNAL_TOPLEVEL_PREFIX`
-instead of the prefix that was potentally found during the git directory
-setup process.
+Changes in v3:
+* Added sign-off to the patches where it was missing.
+* slight tweak to the style and commit msgs of a few patches.
+* broke up the last patch (for ls-files) into a typo fix followed by fixing the
+  bug itself.  This was to make the diff easier to review.
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- cache.h | 1 +
- git.c   | 2 --
- setup.c | 7 ++++++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+Brandon Williams (5):
+  grep: fix help text typo
+  setup: allow for prefix to be passed to git commands
+  grep: fix bug when recursing with relative pathspec
+  ls-files: fix typo in variable name
+  ls-files: fix bug when recursing with relative pathspec
 
-diff --git a/cache.h b/cache.h
-index 8c0e64420..7d253a078 100644
---- a/cache.h
-+++ b/cache.h
-@@ -410,6 +410,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_WORK_TREE_ENVIRONMENT "GIT_WORK_TREE"
- #define GIT_PREFIX_ENVIRONMENT "GIT_PREFIX"
- #define GIT_SUPER_PREFIX_ENVIRONMENT "GIT_INTERNAL_SUPER_PREFIX"
-+#define GIT_TOPLEVEL_PREFIX_ENVIRONMENT "GIT_INTERNAL_TOPLEVEL_PREFIX"
- #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
- #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
- #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
-diff --git a/git.c b/git.c
-index 33f52acbc..8ff44f081 100644
---- a/git.c
-+++ b/git.c
-@@ -361,8 +361,6 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 	if (!help && get_super_prefix()) {
- 		if (!(p->option & SUPPORT_SUPER_PREFIX))
- 			die("%s doesn't support --super-prefix", p->cmd);
--		if (prefix)
--			die("can't use --super-prefix from a subdirectory");
- 	}
- 
- 	if (!help && p->option & NEED_WORK_TREE)
-diff --git a/setup.c b/setup.c
-index 8f64fbdfb..0d76b9828 100644
---- a/setup.c
-+++ b/setup.c
-@@ -939,9 +939,14 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
- 
- const char *setup_git_directory_gently(int *nongit_ok)
- {
--	const char *prefix;
-+	const char *prefix, *env_prefix;
- 
- 	prefix = setup_git_directory_gently_1(nongit_ok);
-+	env_prefix = getenv(GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
-+
-+	if (env_prefix)
-+		prefix = env_prefix;
-+
- 	if (prefix)
- 		setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
- 	else
+ builtin/grep.c                         | 41 +++++++++++--------
+ builtin/ls-files.c                     | 41 ++++++++++---------
+ cache.h                                |  1 +
+ git.c                                  |  2 -
+ setup.c                                |  7 +++-
+ t/t3007-ls-files-recurse-submodules.sh | 39 ++++++++++++++++++
+ t/t7814-grep-recurse-submodules.sh     | 75 ++++++++++++++++++++++++++++++++++
+ 7 files changed, 167 insertions(+), 39 deletions(-)
+
 -- 
 2.12.0.367.g23dc2f6d3c-goog
 
