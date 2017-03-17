@@ -2,101 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 533A820951
-	for <e@80x24.org>; Fri, 17 Mar 2017 15:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFB2B20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 15:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751208AbdCQO7v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 10:59:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:45929 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751213AbdCQO6q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 10:58:46 -0400
-Received: (qmail 3290 invoked by uid 109); 17 Mar 2017 14:50:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 14:50:42 +0000
-Received: (qmail 3421 invoked by uid 111); 17 Mar 2017 14:50:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 17 Mar 2017 10:50:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Mar 2017 10:50:39 -0400
-Date:   Fri, 17 Mar 2017 10:50:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: [BUG] "git stash -- path" reports wrong unstaged changes
-Message-ID: <20170317145039.dmcb3qyqbzfvtmgz@sigill.intra.peff.net>
+        id S1751345AbdCQPFF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 11:05:05 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:52526 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751143AbdCQPEX (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 17 Mar 2017 11:04:23 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id D7ECC20503;
+        Fri, 17 Mar 2017 11:04:20 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 17 Mar 2017 11:04:20 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=warpmail.net; h=cc
+        :content-transfer-encoding:content-type:date:from:message-id
+        :mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc
+        :x-sasl-enc; s=fm1; bh=Q42t6cQ0KuK3YJ3mNWwi15QsoY8=; b=iN0M6z9lW
+        Cm7pKUVRDrOUI7DKgfBANHUuTyrcMBhAmePPD9uk9++vCD6kEZ1o/aE6OnpcjcSp
+        OyN+vuknD0zo7aje3fuWoM7drUX2zckWuitGNMm2kb/cDvA8RMOhZtcDSJ5b/uF5
+        ZSEEieCSODonZUZM09XKjip29SJocFY6awTIdql7jnLq8O0mNZ6uHd5tiJr8kv6T
+        KLNLhVTBkULYuL5l6JIk4tZc0mYyEhY36xuKCq23dwBBpFKK3idvog2WvlwA5Uu6
+        hEeuwyLlsL6ixmvsr4SsVHZKkoptfCX7xski14pik+2ghCNmLbMF1MFZPMfgFvN3
+        wZqrumHkmcn2A==
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=Q42t6cQ0KuK3YJ3mNW
+        wi15QsoY8=; b=mRI2FM0MR0h+pMzYJzbYkDFoq4PhSYxcOiJiXE01CpeORj8HEe
+        FAd0Ji7y6N8XZIHpQLESRMcufuwvcIfPhHT//gGwsbuL33XMhQlRe39gsLL048ZC
+        OZmIHkxPqj+TSlFoq825KQ5uzubEP+w84vxbV9j8mYqd62qarK0VRhJ4LlLqjOe3
+        ItsitJB6mkIfooToLh7KJvCJ0kIjifMqzs7bCGZWrHQry1ZZinJEICcQ42LLKDuR
+        GvEKLCfBlsfXqLdlHz/M+ZBkVO426L5aePgtiEv4pBkN2AS3kLDAZWsB4wh7QINp
+        tE24hdtCxnUQmZzEAMrVZGYdcKyKYlv37nIQ==
+X-ME-Sender: <xms:9PrLWHTpn7JLrOLFkPLLihFcN4wOwP32mtLAVOuEx8nc97FWm_P1uw>
+X-Sasl-enc: TiXmX90HNDwBiX1UDE3utu1ApWkiBbc5TI/AAUHgU7B7 1489763060
+Received: from localhost (dslb-178-011-152-175.178.011.pools.vodafone-ip.de [178.11.152.175])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 646912436A;
+        Fri, 17 Mar 2017 11:04:20 -0400 (EDT)
+From:   Michael J Gruber <git@drmicha.warpmail.net>
+To:     git@vger.kernel.org
+Cc:     Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: [PATCH] l10n: de: lower case after semi-colon
+Date:   Fri, 17 Mar 2017 16:04:19 +0100
+Message-Id: <ae12d1eaac8cec63bbfe0eae3b428b781fd34d30.1489762895.git.git@drmicha.warpmail.net>
+X-Mailer: git-send-email 2.12.0.484.g92f9ab2bc1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I used "git stash -- path" for the first time today and happened to
-notice an oddity. If I run:
-
-	git init -q repo
-	cd repo
-	
-	for i in one two; do
-		echo content >$i
-		git add $i
-	done
-	git commit -qm base
-	
-	for i in one two; do
-		echo change >$i
-	done
-	git stash -- one
-
-it says:
-
-  Saved working directory and index state WIP on master: 20cfadf base
-  Unstaged changes after reset:
-  M	one
-  M	two
-
-Even though "one" no longer has unstaged changes.
-
-If I run with GIT_TRACE=1, that message is generated by:
-
-  git reset -- one
-
-which makes sense. At that stage we've just reset the index, but the
-working tree file still has modifications. In the non-pathspec case we
-run "git reset --hard", which takes care of the index and the working
-tree.
-
-It's really "checkout-index" that cleans the working tree, but it
-doesn't have porcelain finery like an "Unstaged changes" message. I
-think the patch below would fix it, but I wonder if we can do it in a
-way that doesn't involve calling diff-files twice.
-
--Peff
-
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
-diff --git a/git-stash.sh b/git-stash.sh
-index 9c70662cc..9a4bb503a 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -299,10 +299,15 @@ push_stash () {
- 	then
- 		if test $# != 0
- 		then
--			git reset ${GIT_QUIET:+-q} -- "$@"
-+			git reset -q -- "$@"
- 			git ls-files -z --modified -- "$@" |
- 			git checkout-index -z --force --stdin
- 			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
-+			if test -z "$GIT_QUIET" && ! git diff-files --quiet
-+			then
-+				say "$(gettext "Unstaged changes after reset:")"
-+				git diff-files --name-status
-+			fi
- 		else
- 			git reset --hard ${GIT_QUIET:+-q}
- 		fi
+Just a minor thing. I'm wondering about lower/upper case
+at the beginning of the line, though. Do we have a rule for de.po?
+
+ po/de.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/po/de.po b/po/de.po
+index e9c86f5488..f8215945e7 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -7599,7 +7599,7 @@ msgid ""
+ "more than %i tags found; listed %i most recent\n"
+ "gave up search at %s\n"
+ msgstr ""
+-"mehr als %i Tags gefunden; Führe die ersten %i auf\n"
++"mehr als %i Tags gefunden; führe die ersten %i auf\n"
+ "Suche bei %s aufgegeben\n"
+ 
+ #: builtin/describe.c:396
+-- 
+2.12.0.484.g92f9ab2bc1
+
