@@ -2,55 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B409C20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 19:08:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08CD620951
+	for <e@80x24.org>; Fri, 17 Mar 2017 19:18:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751283AbdCQTHy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 15:07:54 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:36261 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751200AbdCQTHx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 15:07:53 -0400
-Received: by mail-pf0-f175.google.com with SMTP id o126so41316052pfb.3
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 12:07:47 -0700 (PDT)
+        id S1751189AbdCQTST (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 15:18:19 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:34861 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751222AbdCQTSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 15:18:16 -0400
+Received: by mail-pg0-f43.google.com with SMTP id b129so47694370pgc.2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 12:17:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=WPtse0bVBjXWQ9JMJIi1BN0pqW2d9jT6LTgSSs5Z0WI=;
-        b=BeeyYClaSKIjLqS3sDnNA/05GHuKqDL++//t2/oWhQ/qUMtdMhhZk26lHpbpi3rnMi
-         HX8/29+PxTgcJZ0YedolBu7kI9HN+UQ1+FbkdSTXRsmjQLBRdsH2liG4fxAQjqF2Z2H7
-         /h7XG77RkOUryNgfoM8JkA2pS7anzzD8nnzwbYx1P7KplvmOrt5HJGRjqDUr0+6yCX40
-         Wvhv/22siIoDg85B+9UkUchoIfaye2W755ybNWUGyeUhNovFQsFKbj735mXot4NDc/Ru
-         rCJysFSBXZpWz6Re5JRWCHwRiiZikBhh9td0xVMDRagO2UuB0llQVovztTN2xnycBlWt
-         /vsg==
+        bh=IkYuUNUp3WEDGL40m6iesc6RS1/aoF4GK55DRzuY51o=;
+        b=AIX4LLJwklfpT4bFr/yO0WyxWBGsmtrjs5o9eVG0mDRrUX34gbxeINyohQ6wELjb4i
+         hT5Y2j1IA1gK9TZzYPkaT23AKT9+2OO6ehwFw4Du2JUO1qgqx68XPN+SYb5Dgn7RFTZc
+         7DHRuLKxtwPxAVntQQGeC1PzO6RF8xfoHZwFsY53bDLq3msVDgQotn3bofTfG/DVqevZ
+         V2tSG+qrOlVPoHytfHqDs5zAlWV/HjM4ct3JHJ9C9TQm5J3DAFG0sKkz1DGKeWmHIfMi
+         kbonTDZR63vm8AkOYKZyWFm+5oN/zMY4opIcMcUI7CGIv3aFJhp8XTL45M1Wh3xcmCvo
+         bk9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=WPtse0bVBjXWQ9JMJIi1BN0pqW2d9jT6LTgSSs5Z0WI=;
-        b=gOhyIFeIqMyVCRvascRrPaU3leC+OUnSQKetiRNti2ug68HEdhIcI5cJpszB+FvM09
-         rtualR2YcfIEdKxt1x2V6mxd5qWyX4x0w2MS2eUqLAJI4wHKcPwjRpH6JwmPW7U9jRD7
-         Yocw+2Y3lDWjnwziR0YtK2JWOTr4pINbAsy00KKWUYDeDKGUaX7QG6mKpgvmxDaifAFV
-         DVYgPikSdDzXjw76OveRemGfxXn6sLk1HFwCx4s7vYvnIBkynC8eIlBL+i0BuQbphOnZ
-         u/eG3q893/PtNCGt1H+/8vhitvNChL6P7Wo15c7lV1ruMtBPE/YRVKoY7jDBajU87j17
-         FY5g==
-X-Gm-Message-State: AFeK/H19wmAVywOoox0ahC3qPEQiLQortq1yTrMIP6XAwejmhnaenQ/z/V6HcrY6SKgLNy5IqBs/s83WoWVGFGec
-X-Received: by 10.84.239.8 with SMTP id w8mr22037703plk.73.1489777666754; Fri,
- 17 Mar 2017 12:07:46 -0700 (PDT)
+        bh=IkYuUNUp3WEDGL40m6iesc6RS1/aoF4GK55DRzuY51o=;
+        b=UWkSW/DszYwzLEoFr5vrhqVZJDqrNwSF2NAr5Supq4QVXKEiU8uxEb3WKqW+WvCtFH
+         f723Be1J05gfhEH+t8K7DB7w30C2FxJseBPCkhg32y9AhZQLbnBWJorBSEDqtWhKGRp5
+         cPaeloO4YA5YTf1Ezj+sXgfBDOtHPOAaE2kGWUNHPJJOgifimycNomGyvV/3JYyVrFHC
+         k9xNaJ8C5pDoRJTphorszDDyDc/NgOwZ+nMaaIX7TFSTW9gr4tb2w2KSgwU6uZ2O3rL6
+         mp+9TK/mNEj2FUJIYwirRFZccfqD1y5/wsKAy+J8rTzK5yo4mcRo4QAmjqvlsrLhBbNE
+         8XXw==
+X-Gm-Message-State: AFeK/H2nSlX/f4PVJhKEiuDqx8H9FBo4OIfJj7FzC52YDIfz5NNSVn7mjhKD+Ewp7D495qprHx+Tz2n5IFwiz5p2
+X-Received: by 10.99.140.69 with SMTP id q5mr17493642pgn.179.1489777840143;
+ Fri, 17 Mar 2017 12:10:40 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Fri, 17 Mar 2017 12:07:46 -0700 (PDT)
-In-Reply-To: <20170317172257.4690-3-bmwill@google.com>
+Received: by 10.100.187.5 with HTTP; Fri, 17 Mar 2017 12:10:39 -0700 (PDT)
+In-Reply-To: <20170317190856.GC110341@google.com>
 References: <20170314221100.24856-1-bmwill@google.com> <20170317172257.4690-1-bmwill@google.com>
- <20170317172257.4690-3-bmwill@google.com>
+ <20170317172257.4690-3-bmwill@google.com> <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
+ <20170317190856.GC110341@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 17 Mar 2017 12:07:46 -0700
-Message-ID: <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
+Date:   Fri, 17 Mar 2017 12:10:39 -0700
+Message-ID: <CAGZ79kaTNVZBZg5jiVzAKdu96pENcRJmvZ1WR37TP2MXLR-nUg@mail.gmail.com>
 Subject: Re: [PATCH v3 2/5] setup: allow for prefix to be passed to git commands
 To:     Brandon Williams <bmwill@google.com>
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
@@ -64,23 +64,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->         prefix = setup_git_directory_gently_1(nongit_ok);
-> +       env_prefix = getenv(GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
-> +
-> +       if (env_prefix)
-> +               prefix = env_prefix;
-> +
->         if (prefix)
->                 setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
+On Fri, Mar 17, 2017 at 12:08 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 03/17, Stefan Beller wrote:
+>> >         prefix = setup_git_directory_gently_1(nongit_ok);
+>> > +       env_prefix = getenv(GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
+>> > +
+>> > +       if (env_prefix)
+>> > +               prefix = env_prefix;
+>> > +
+>> >         if (prefix)
+>> >                 setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
+>>
+>> so we load that GIT_TOPLEVEL_PREFIX_ENVIRONMENT prefix
+>> first, such that we essentially copy it into GIT_PREFIX_ENVIRONMENT,
+>> such that e.g. aliased commands will know about the superprefix, too.
+>
+> I don't follow, this doesn't have anything to do with super-prefix.
+>
 
-so we load that GIT_TOPLEVEL_PREFIX_ENVIRONMENT prefix
-first, such that we essentially copy it into GIT_PREFIX_ENVIRONMENT,
-such that e.g. aliased commands will know about the superprefix, too.
+s/superprefix/prefix as passed in via GIT_TOPLEVEL_PREFIX_ENVIRONMENT/
 
-ok, sounds reasonable to me; though I do not use this feature,
-so my judgement is not as good.
-
-Do we need a test for this behavior?
-
-Thanks,
-Stefan
+sorry for the confusion.
