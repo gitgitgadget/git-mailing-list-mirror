@@ -2,117 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2EAC20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 23:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6FD620951
+	for <e@80x24.org>; Fri, 17 Mar 2017 23:52:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751183AbdCQXqZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 19:46:25 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:33428 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751065AbdCQXqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 19:46:24 -0400
-Received: by mail-pg0-f42.google.com with SMTP id n190so50180490pga.0
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 16:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0lhPPbxbg5pGIh4qxl+FF2qIzS7e2WAcq0/CjNZn1qc=;
-        b=UQzMOvgbLyjp6u4YJfwa0ioil/Xzgsj2BYEDVAj642kvCGeyDRIUQ53g/XGsJ2TVZW
-         JFlylsZ+C3jdcwO+DJyfqW14PcSb4qTQTjoFQOImAa3x16dtiA2QU1gRBsNaUdIJtG8c
-         urdTE6cP6uwbLoN8pFfgLp19S+UdYMLf8+P8OOVpfDY8GRu4DHFciJQUwkfBPgtwaw32
-         xPXqWbE/PpTAwhmYrAbOxZ5UzOAPi6hp3MfGKRDMks4+WUFY56W7tyEkiQ4q3/YNc10J
-         T6sVmJypWEtR4OdygeEY95Fsh3QltxntXf1hnDKY6Gvl8Mwg+AAXBw73ZRFK21nBBJRx
-         kyEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0lhPPbxbg5pGIh4qxl+FF2qIzS7e2WAcq0/CjNZn1qc=;
-        b=Gxs1tXeXNxJPiOA70LIx9tvoL0Kj8W4cJAQQ1C4VG16+khtjyryQrDIPXKY39i7Uhi
-         QBfT8lB/TZG3lVJcDQdJB7to1xo+AJvROhsf3NjR6mBDpgzrG6Lgnik2A71kbCa5WDXE
-         +119ehmahki40I2zJycN5zC8eC6ujvFyMAS4HTnXE3//qtVYIWdGd7FfhN4qKaTg+RKH
-         PosrsrYPIJE5N1B2PW4TxGOsQzLd/ys9lWHFakZKU0eApAnG18H2U4LfLUlNEFDMFzw/
-         6ptz5ap5rQQIvcuHcqtuitARD/UYuVqpsajhBIQw1zZpKVUdYMkqKB3xa6RYoVOX/lVW
-         DiSQ==
-X-Gm-Message-State: AFeK/H1uTPV4EM5OIy+4+kNJUMkdQ+XGWNI9BvX+qxnK5527M24oMVLzeZxbZa2EypT9cz1R
-X-Received: by 10.98.46.130 with SMTP id u124mr19696803pfu.204.1489793888730;
-        Fri, 17 Mar 2017 16:38:08 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:c001:d329:ba91:25ca])
-        by smtp.gmail.com with ESMTPSA id n29sm16075538pfi.101.2017.03.17.16.38.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 17 Mar 2017 16:38:07 -0700 (PDT)
-Date:   Fri, 17 Mar 2017 16:38:06 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] run-command: fix segfault when cleaning forked async
- process
-Message-ID: <20170317233806.GG63813@google.com>
-References: <20170317232004.xqs5f2q2swa3b5bq@sigill.intra.peff.net>
+        id S1751248AbdCQXw6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 19:52:58 -0400
+Received: from mout.web.de ([212.227.17.11]:49352 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751047AbdCQXw5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 19:52:57 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lnj7L-1cHsNh2DQl-00hySs; Sat, 18
+ Mar 2017 00:52:50 +0100
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] shortlog: don't set after_subject to an empty string
+Message-ID: <209e03fd-07ae-8e06-3da6-52093495db43@web.de>
+Date:   Sat, 18 Mar 2017 00:52:28 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170317232004.xqs5f2q2swa3b5bq@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:nHnEEsAh/zIvDzRp0OEsL55waMVXux5dlaAAws8fIOsu938uHg6
+ GEMyZhAVMEImCY9MW5B2yze0JzbCQnhhSwPGz/NKCwHQE6yzwKlS53z9Yp83yPvARD3D8Mt
+ g1gnoG4PxaUSrYh5/RRfjwiBdDAUYp/vJbuqwuDgnenUrr6MyLwoWrUd5baoCFuALe+ya2+
+ tpUuJK+JE/ZeHXYSmDZNw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QLTnPOkANOY=:f4kImCRX6CsQfv9rArxxoy
+ SR0qjGmuOPxUcl3B0XQhL8efuS46CtwRMcIUt8j/BU0FwcwhXQc9K4FeZLeIaSXjebVhFO5VC
+ tI95bAutNoZ7Yc5hcJrTEcic514oif0attmdjdKjHrjFexvpPcyRop8EF0KAJ0iL/nHX0lqik
+ /f6iTlDSOyWgzM/9/D6BBjfdTeR6FTa1rlRejS6D7bPqnTeMG8T5TwpKc6KOPhSE3T53zvpdh
+ ET80RH0X35iwHbRi8tka/OGhbMfiQpDIKm9nVKAAtW6Sws3Q9HVYi8ENAOKVr6u2awO4mA3Xf
+ 8MdmaN2mRwu2+hNOj8UBMaqpll3DIHKq8B4PW3k8al1x+e3F9Q6ZHONT9pNUSvrKUHViDk3Wm
+ yxEkqDuQOaqkXcTHZAh31QrmpQ/KVf08Ad0U95o7RnGp9YHT5Z0lCFmPdjIfHu0eVno/IHjyK
+ 1LR7aWVq8UbqYe/BuG4k/VZuo7Z//n9QREmz3rl685K4ceggnHJiXpYsMRKqrt7EYnEV8vuPi
+ dPEB3uTXnDglzhE0kBIDQDCYdkjyXHwE9dpW4ev7EEAEWCutqtyaZvFh6+WjE+5QTxsQYeQ0v
+ T7ly5nTF/IgbPeEdGGBbDMF5HLDKW159BMGlfKl6R6yJEUDsWuwv4LLgaLI032ADmO0lPmApE
+ 5rUHy2/9XdGJP5slDcJRx/oLG9nRViOkIcWPamkIp3+pzI7oN2SmXwWjdh/2RKMK3ISWUc+bO
+ 6ZvuCld24yNacTLzKKK3FGEqRbZiVuO+pskb2qPn+ECXTv9iHmflm61qQ1HkUi4JTo6O25qC5
+ IZlZfZY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/17, Jeff King wrote:
-> Callers of the run-command API may mark a child as
-> "clean_on_exit"; it gets added to a list and killed when the
-> main process dies.  Since commit 46df6906f
-> (execv_dashed_external: wait for child on signal death,
-> 2017-01-06), we respect an extra "wait_after_clean" flag,
-> which we expect to find in the child_process struct.
-> 
-> When Git is built with NO_PTHREADS, we start "struct
-> async" processes by forking rather than spawning a thread.
-> The resulting processes get added to the cleanup list but
-> they don't have a child_process struct, and the cleanup
-> function ends up dereferencing NULL.
-> 
-> We should notice this case and assume that the processes do
-> not need to be waited for (i.e., the same behavior they had
-> before 46df6906f).
-> 
-> Reported-by: Brandon Williams <bmwill@google.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> This is a regression in v2.12.0, though there is no hurry to get it into
-> v2.12.1 unless your grep patches go in, too. Without them you can't
-> actually build with NO_PTHREADS anyway.
-> 
-> However, applied directly on top of 46df6906f (which predates the build
-> breakage), you can easily see the test failures with NO_PTHREADS and
-> that this fixes them.
-> 
->  run-command.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/run-command.c b/run-command.c
-> index 5227f78ae..574b81d3e 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -48,7 +48,7 @@ static void cleanup_children(int sig, int in_signal)
->  
->  		kill(p->pid, sig);
->  
-> -		if (p->process->wait_after_clean) {
-> +		if (p->process && p->process->wait_after_clean) {
->  			p->next = children_to_wait_for;
->  			children_to_wait_for = p;
->  		} else {
+The string after_subject is added to a strbuf by pp_title_line() if
+it's not NULL.  Adding an empty string has the same effect as not
+adding anything, but the latter is easier, so don't bother changing
+the context member from NULL to "".
 
-Looks good to me! Thanks for tracking that down so quickly.  I'm glad it
-was a quick fix.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/shortlog.c | 1 -
+ 1 file changed, 1 deletion(-)
 
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index f78bb4818d..7cff1839fc 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -149,7 +149,6 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+ 	ctx.fmt = CMIT_FMT_USERFORMAT;
+ 	ctx.abbrev = log->abbrev;
+ 	ctx.print_email_subject = 1;
+-	ctx.after_subject = "";
+ 	ctx.date_mode.type = DATE_NORMAL;
+ 	ctx.output_encoding = get_log_output_encoding();
+ 
 -- 
-Brandon Williams
+2.12.0
+
