@@ -2,141 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A1FD20951
-	for <e@80x24.org>; Fri, 17 Mar 2017 17:48:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A88A20951
+	for <e@80x24.org>; Fri, 17 Mar 2017 17:53:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751182AbdCQRrY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 13:47:24 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:34839 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751116AbdCQRrW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 13:47:22 -0400
-Received: by mail-pf0-f177.google.com with SMTP id x63so35054174pfx.2
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 10:46:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=575oc9nBNbsP2GeO1IlDEHCXWwDckDHUat5arxUEJJI=;
-        b=A6XvPyuaZQNeubSRBROK+qqvVaX7B+vJ7D5Wu6pHdo3pLiWRWmw2/p2fPPAx8CHYKC
-         EAofKeyYLSqLstgKnbq/EfuUbDDU4JaSHshZm7Kts100z7+Y2oUSgCcRur9goBijf78S
-         gSb2pZ6JRBJSkQ54vnizqRipo9SdrfSQqB52KefAuFXbUuvOwqiEc+STdK4lZ/xwD7aD
-         gVHOkMVRiJ354r3cm9ilNIp6BjBG6Qq3dHu1iqXCIGkYKbHynJjnni1T9Gpg3qVvz/oU
-         r9aX4XfFK/wibFScCSIO34GH9/eQa+eBkliFotfqEYwSmOs3mmp9WCglLtrSmaVCV6uX
-         vZTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=575oc9nBNbsP2GeO1IlDEHCXWwDckDHUat5arxUEJJI=;
-        b=EFs0WNCFkANXZO+8aXHeo1VUSSziqyolUEoykpwjh1Nbw4vRqqLxuuz6hZUaqUFaHb
-         YYDMJzsEb693XQ5iJe8Vz0LtSlLbJnYdkGCSXGGZbwjTLN87hqqTb67uUy3lgy91Xkla
-         nJ2UveM1+p67EXXvjMqf5o4jKM2vLn6VCaWbU5nQ4dSdR6B3mMpCfz+64shPLPMF2axS
-         0AUZD1kh6qHxIw9PNwF7VtOvrxwy5/SpNLc6Kg4YVj+e1RMfN9rBtLrVMBnlIskJhUH3
-         b6rLkxzo7RME7y8SyIMCUJfWD4RQUABBHQj2mmKarFS6S4bCyCZRJEixJ9yZeY/puJd6
-         BD8A==
-X-Gm-Message-State: AFeK/H2rcLyNzRx6eepsbAsPXyu3boWLzor1UnKUoQRTWq75obFp5yNOQrEtDGgz7MvFk8jaPIaWpaT/JbXPhAdr
-X-Received: by 10.84.172.193 with SMTP id n59mr21363943plb.63.1489772259416;
- Fri, 17 Mar 2017 10:37:39 -0700 (PDT)
+        id S1751182AbdCQRx3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 13:53:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57261 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751236AbdCQRx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 13:53:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C32D758B4;
+        Fri, 17 Mar 2017 13:53:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5yhSZvoPQGjh+n19LPWz/NJtV6c=; b=yBn2OF
+        6T4PtVsGpNTPxemhNxx74sXzmu8Y+9o1Hejl7XNdzo/ds0xjTP6e6LJrg1rbGveB
+        ReNy00jaFjnGdbbzzRGsZVbpwG8jvGeKOeGtc8dNK8zJnrksOPr7KxCp38UoviUw
+        PqChPr3NhXaLsTV1sw8UoTEXDJA9+7mMrPXEQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Hsjd2pFMjnCvAsKtWApj9sP8rqJZ6P36
+        2AQgWfEWulpvNGDp6v1z2ppQRek7jJB/npbUs2Zs7WBVVJ8TlhtjvgHhQYJ/vykR
+        Qj5NAQEOdL1WdJQdLrYZXToRMFsNAQEeswMCWmsK5zfmcxJKFe46Nr8rEDtp1o/5
+        TQHhVNa6i3w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 03638758B3;
+        Fri, 17 Mar 2017 13:53:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6F449758B2;
+        Fri, 17 Mar 2017 13:53:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rahul Bedarkar <rahul.bedarkar@imgtec.com>
+Cc:     <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH] grep: fix build with no thread support
+References: <1489729656-17709-1-git-send-email-rahul.bedarkar@imgtec.com>
+Date:   Fri, 17 Mar 2017 10:53:18 -0700
+In-Reply-To: <1489729656-17709-1-git-send-email-rahul.bedarkar@imgtec.com>
+        (Rahul Bedarkar's message of "Fri, 17 Mar 2017 11:17:36 +0530")
+Message-ID: <xmqqy3w37ptd.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.187.5 with HTTP; Fri, 17 Mar 2017 10:37:38 -0700 (PDT)
-In-Reply-To: <20170316222952.53801-9-bmwill@google.com>
-References: <20170313214341.172676-1-bmwill@google.com> <20170316222952.53801-1-bmwill@google.com>
- <20170316222952.53801-9-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 17 Mar 2017 10:37:38 -0700
-Message-ID: <CAGZ79kbvxpAEzVnNYRQ7VqzY30_oH4FGw3cH0TCwzCwCfy3HZw@mail.gmail.com>
-Subject: Re: [PATCH v4 08/10] clone: teach --recurse-submodules to optionally
- take a pathspec
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9B01D9F6-0B3A-11E7-9ECA-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 16, 2017 at 3:29 PM, Brandon Williams <bmwill@google.com> wrote:
-> Teach clone --recurse-submodules to optionally take a pathspec argument
-> which describes which submodules should be recursively initialized and
-> cloned.  If no pathspec is provided, --recurse-submodules will
-> recursively initialize and clone all submodules by using a default
-> pathspec of ".".  In order to construct more complex pathspecs,
-> --recurse-submodules can be given multiple times.
->
-> Additionally this configures the 'submodule.active' configuration option
-> to be the given pathspec, such that any future invocation of `git
-> submodule update` will keep up with the pathspec.
+Rahul Bedarkar <rahul.bedarkar@imgtec.com> writes:
 
-  Additionally the switch '--recurse' is removed from the Documentation
-  as well as marked hidden in the options array, to streamline the options
-  for submodules.  A simple '--recurse' doesn't convey what is being
-  recursed, e.g. it could mean directories or trees (c.f. ls-tree)
-  In a lot of other commands we already have '--recurse-submodules'
-  to mean recursing into submodules, so advertise this spelling here
-  as the genuine option.
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 2c727ef..4373d79 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -183,11 +183,13 @@ static void *run(void *arg)
+>  		if (!w)
+>  			break;
+>  
+> -		opt->output_priv = w;
+> -		if (w->source.type == GREP_SOURCE_SUBMODULE)
+> +		if (w->source.type == GREP_SOURCE_SUBMODULE) {
+> +			opt->output_priv = &w->out;
+>  			hit |= grep_submodule_launch(opt, &w->source);
+> -		else
+> +		} else {
+> +			opt->output_priv = w;
+>  			hit |= grep_source(opt, &w->source);
+> +		}
+>  		grep_source_clear_data(&w->source);
+>  		work_done(w);
+>  	}
 
-would also be worth mentioning?
+This is not a part of the "fix" but merely a code clean-up, right?
+Just double-checking.
 
+> @@ -538,7 +540,7 @@ static int grep_submodule_launch(struct grep_opt *opt,
+>  	int status, i;
+>  	const char *end_of_base;
+>  	const char *name;
+> -	struct work_item *w = opt->output_priv;
+> +	struct strbuf *w = opt->output_priv;
+>  
+>  	end_of_base = strchr(gs->name, ':');
+>  	if (gs->identifier && end_of_base)
 
->  static int option_no_checkout, option_bare, option_mirror, option_single_branch = -1;
-> -static int option_local = -1, option_no_hardlinks, option_shared, option_recursive;
-> +static int option_local = -1, option_no_hardlinks, option_shared;
->  static int option_shallow_submodules;
->  static int deepen;
->  static char *option_template, *option_depth, *option_since;
-> @@ -56,6 +56,22 @@ static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
->  static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
->  static int option_dissociate;
->  static int max_jobs = -1;
-> +static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
-> +
-> +static int recurse_submodules_cb(const struct option *opt,
-> +                                const char *arg, int unset)
-> +{
-> +       if (unset)
-> +               return -1;
-> +
-> +       if (arg)
-> +               string_list_append((struct string_list *)opt->value, arg);
-> +       else
+OK, so the new code points output_priv at a strbuf; work_item
+contains an "out" strbuf, and that was why the original code was
+passing one, but this codepath does not need a full work_item to
+work with.  Is that what is going on?
 
-in this case I'd rather set the removed (int) option_recursive, because, then
-we would not need to sort and remove duplicates later on.
-Instead we can pass the string list literally to the config setter.
-(and in case option_recursive is set, we add an additional single
-"." then)
+> @@ -593,10 +595,10 @@ static int grep_submodule_launch(struct grep_opt *opt,
+>  	 * child process.  A '0' indicates a hit, a '1' indicates no hit and
+>  	 * anything else is an error.
+>  	 */
+> -	status = capture_command(&cp, &w->out, 0);
+> +	status = capture_command(&cp, w, 0);
 
-> +               string_list_append((struct string_list *)opt->value,
-> +                                  (const char *)opt->defval);
-> +
-> +       return 0;
-> +}
->
+And this is consistent with the above change.
 
->
-> -       if (!err && option_recursive) {
-> +       if (!err && (option_recurse_submodules.nr > 0)) {
+>  	if (status && (status != 1)) {
+>  		/* flush the buffer */
+> -		write_or_die(1, w->out.buf, w->out.len);
+> +		write_or_die(1, w->buf, w->len);
 
-Well, checks like these would become more tangled.
-So maybe we could set option_recursive unconditionally
-in the callback (unless unset was given, then we reset it to 0)
-and later have a check if we need to add "." (when the string list
-is empty).
+So is this.
 
-Speaking of unset, this seems like a regression here, as the callback
-would error out to "git clone --no-recurse", which is a valid use case
-currently? (Searching for "git clone --no-recurse" yields no results
-via Google, so maybe this use case is not so valid)
+>  		die("process for submodule '%s' failed with exit code: %d",
+>  		    gs->name, status);
+>  	}
+> @@ -641,19 +643,19 @@ static int grep_submodule(struct grep_opt *opt, const unsigned char *sha1,
+>  	} else
+>  #endif
+>  	{
+> -		struct work_item w;
+> +		struct grep_source gs;
+>  		int hit;
+> +		struct strbuf outbuf = STRBUF_INIT;
+>  
+> -		grep_source_init(&w.source, GREP_SOURCE_SUBMODULE,
+> +		grep_source_init(&gs, GREP_SOURCE_SUBMODULE,
+>  				 filename, path, sha1);
 
-To get the behavior as is for unset we could just clear the string
-list instead of returning -1.
+Likewise for w.source that happened to have grep_source, but passing
+a bare grep_source is sufficient for the purpose of this codepath,
+without giving it to w.source?  
 
-Thanks,
-Stefan
+I didn't look at code that this patch does not touch, but if
+anything still looks at w.out and w.source and expect these to
+contain the string accumulated in the strbuf and the grep source the
+work item is working on, they will get broken by this change, no?
+
+The first hunk that had a pure clean-up shows that w->source being
+the correct grep source seems to matter.
+
+> -		strbuf_init(&w.out, 0);
+> -		opt->output_priv = &w;
+> -		hit = grep_submodule_launch(opt, &w.source);
+> +		opt->output_priv = &outbuf;
+> +		hit = grep_submodule_launch(opt, &gs);
+>  
+> -		write_or_die(1, w.out.buf, w.out.len);
+> +		write_or_die(1, outbuf.buf, outbuf.len);
+>  
+> -		grep_source_clear(&w.source);
+> -		strbuf_release(&w.out);
+> +		grep_source_clear(&gs);
+> +		strbuf_release(&outbuf);
+>  		return hit;
+>  	}
+>  }
