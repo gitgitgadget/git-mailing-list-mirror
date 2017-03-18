@@ -2,100 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0162095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 17:50:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF14A2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 17:54:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751671AbdCRRuS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 13:50:18 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62656 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751655AbdCRRuR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 13:50:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C0558321C;
-        Sat, 18 Mar 2017 13:49:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ov0ye08YYbZ9
-        aOV2hhNeA1lFSyM=; b=BTSLKHRAj5JveRjS6RmMzyMlKiCAOSFGavj21hNhtRof
-        JCsZUsdAYUzwSFBYKvMc7gMGbR1wDotM9dbXSjfPBtjYXFVEv3wDyllnminG1083
-        sIGwhcv+NBE/5wlPPe+CWiRuu+FnQjsZobPNy0wIVLrpCVj9its2Soap47jRz48=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pzRGFJ
-        JzEMBQpE158O2BsIuTsd+Xbu5OH2HHmzGbZpBhj3nFdd7RQ+7siM7z0fS3jIRkdh
-        HRmD98GxcoxGwTVOeD5KFHvKgq1McHRCojUw7Fn8jzEXIPG9pbTRQ85MzP2aeRCW
-        PYkjU5dnN85h7VhP1MRO5fgud8GXTtzAynNNc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 753278321B;
-        Sat, 18 Mar 2017 13:49:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D18CF8321A;
-        Sat, 18 Mar 2017 13:49:58 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 0/4] Kill manual ref parsing code in worktree.c
-References: <20170216120302.5302-1-pclouds@gmail.com>
-        <20170318100206.5980-1-pclouds@gmail.com>
-Date:   Sat, 18 Mar 2017 10:49:57 -0700
-In-Reply-To: <20170318100206.5980-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Sat, 18 Mar 2017 17:02:02 +0700")
-Message-ID: <xmqqd1de4gqi.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4DDAF68E-0C03-11E7-A20A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1751685AbdCRRyS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 13:54:18 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:31379 "EHLO smtp2-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751562AbdCRRyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 13:54:18 -0400
+Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 26A572003F9;
+        Sat, 18 Mar 2017 18:54:15 +0100 (CET)
+From:   Jean-Noel Avila <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Cc:     Jean-Noel Avila <jn.avila@free.fr>
+Subject: [PATCH v2 1/2] l10n: Introduce framework for localizing man pages
+Date:   Sat, 18 Mar 2017 18:53:52 +0100
+Message-Id: <20170318175353.24578-1-jn.avila@free.fr>
+X-Mailer: git-send-email 2.12.0
+In-Reply-To: <20170312200248.3610-1-jn.avila@free.fr>
+References: <20170312200248.3610-1-jn.avila@free.fr>
+In-Reply-To: <20170312200248.3610-1-jn.avila@free.fr>
+References: <20170312200248.3610-1-jn.avila@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Providing git in localized version is a good step for general adoption
+of the tool. But as of now, if one needs to refer to the manual pages,
+they are still confronted to english. The aim is to provide
+documentation to users in their own language.
 
-> v3 is a rebased version on latest nd/files-backend-git-dir [1]. Since
-> that series added a bunch of new refs_* functions, v2's 02/05 and
-> 04/05 are removed. The new 01/04 could be an indepedent fix, but at
-> test-ref-store.c requires it, so I put it here. More tests are added
-> now that we have test-ref-store.c (yay!)
+signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+---
+ Documentation/Makefile  | 23 +++++++++++++++++++++--
+ Documentation/po4a.conf |  5 +++++
+ 2 files changed, 26 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/po4a.conf
 
-I think the corresponding ones were queued on a separate topic
-nd/worktree-kill-parse-ref that is based on nd/files-backend-git-dir
-but I do not mind making these 4 patches just part of the latter
-topic.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index b5be2e2d3..1f71c0b80 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,4 +1,5 @@
+ # Guard against environment variables
++MAN1_L10N_TXT =
+ MAN1_TXT =
+ MAN5_TXT =
+ MAN7_TXT =
+@@ -10,6 +11,7 @@ OBSOLETE_HTML =
+ MAN1_TXT += $(filter-out \
+ 		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+ 		$(wildcard git-*.txt))
++MAN1_L10N_TXT += $(wildcard po/*/man1/git-*.txt)
+ MAN1_TXT += git.txt
+ MAN1_TXT += gitk.txt
+ MAN1_TXT += gitremote-helpers.txt
+@@ -86,6 +88,7 @@ DOC_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
+ DOC_MAN1 = $(patsubst %.txt,%.1,$(MAN1_TXT))
+ DOC_MAN5 = $(patsubst %.txt,%.5,$(MAN5_TXT))
+ DOC_MAN7 = $(patsubst %.txt,%.7,$(MAN7_TXT))
++DOC_MAN1_L10N = $(patsubst %.txt,%.1,$(MAN1_L10N_TXT))
+ 
+ prefix ?= $(HOME)
+ bindir ?= $(prefix)/bin
+@@ -209,6 +212,7 @@ endif
+ 
+ ifneq ($(findstring $(MAKEFLAGS),s),s)
+ ifndef V
++	QUIET_PO4A      = @echo '   ' PO4A $@;
+ 	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+ 	QUIET_XMLTO	= @echo '   ' XMLTO $@;
+ 	QUIET_DB2TEXI	= @echo '   ' DB2TEXI $@;
+@@ -229,11 +233,20 @@ all: html man
+ 
+ html: $(DOC_HTML)
+ 
+-man: man1 man5 man7
++man: man1 man5 man7 man_l10n
+ man1: $(DOC_MAN1)
+ man5: $(DOC_MAN5)
+ man7: $(DOC_MAN7)
+ 
++man_l10n: po4a man1_p_l10n
++po4a: po4a.conf
++	$(QUIET_PO4A)po4a po4a.conf
++
++man1_p_l10n: po4a
++	$(MAKE) man1_l10n
++
++man1_l10n: $(DOC_MAN1_L10N)
++
+ info: git.info gitman.info
+ 
+ pdf: user-manual.pdf
+@@ -247,6 +260,11 @@ install-man: man
+ 	$(INSTALL) -m 644 $(DOC_MAN1) $(DESTDIR)$(man1dir)
+ 	$(INSTALL) -m 644 $(DOC_MAN5) $(DESTDIR)$(man5dir)
+ 	$(INSTALL) -m 644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
++	$(MAKE) install-man-l10n
++
++install-man-l10n: $(DOC_MAN1_L10N)
++	$(INSTALL) -d -m 755 $(DESTDIR)$(mandir)/$(firstword $(subst /man1/, ,$(subst po/,,$<)))/man1
++	$(INSTALL) -m 644 $< $(DESTDIR)$(mandir)$(subst po,,$<)
+ 
+ install-info: info
+ 	$(INSTALL) -d -m 755 $(DESTDIR)$(infodir)
+@@ -323,6 +341,7 @@ clean:
+ 	$(RM) technical/*.html technical/api-index.txt
+ 	$(RM) $(cmds_txt) $(mergetools_txt) *.made
+ 	$(RM) manpage-base-url.xsl
++	$(RM) po/*/*.1 po/*/*.txt
+ 
+ $(MAN_HTML): %.html : %.txt asciidoc.conf
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+@@ -339,7 +358,7 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
+ 
+ %.1 %.5 %.7 : %.xml manpage-base-url.xsl
+ 	$(QUIET_XMLTO)$(RM) $@ && \
+-	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
++	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) -o $(dir $<) man $<
+ 
+ %.xml : %.txt asciidoc.conf
+ 	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+diff --git a/Documentation/po4a.conf b/Documentation/po4a.conf
+new file mode 100644
+index 000000000..b6ee8b4a6
+--- /dev/null
++++ b/Documentation/po4a.conf
+@@ -0,0 +1,5 @@
++[po4a_langs] fr
++[po4a_paths] po/documentation.pot $lang:po/documentation.$lang.po
++[options] opt: " -k 80"
++
++[type: asciidoc] ./git-add.txt $lang:./po/$lang/man1/git-add.txt
+-- 
+2.12.0
 
-Will send comments on individual patches separately.
-
-Thanks. =20
-
->
-> [1] http://public-inbox.org/git/%3C20170318020337.22767-1-pclouds@gmail=
-.com%3E/
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
->   environment.c: fix potential segfault by get_git_common_dir()
->   refs: introduce get_worktree_ref_store()
->   worktree.c: kill parse_ref() in favor of refs_resolve_ref_unsafe()
->   refs: kill set_worktree_head_symref()
->
->  branch.c                               |  15 ++---
->  environment.c                          |   2 +
->  refs.c                                 |  32 +++++++++++
->  refs.h                                 |  12 +---
->  refs/files-backend.c                   |  44 --------------
->  t/helper/test-ref-store.c              |  19 ++++++
->  t/t1407-worktree-ref-store.sh (new +x) |  52 +++++++++++++++++
->  worktree.c                             | 102 +++++++++----------------=
---------
->  worktree.h                             |   2 +-
->  9 files changed, 143 insertions(+), 137 deletions(-)
->  create mode 100755 t/t1407-worktree-ref-store.sh
