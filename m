@@ -2,156 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BADF20323
-	for <e@80x24.org>; Sat, 18 Mar 2017 10:22:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F275C20323
+	for <e@80x24.org>; Sat, 18 Mar 2017 10:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751105AbdCRKWE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 06:22:04 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34615 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750971AbdCRKWC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 06:22:02 -0400
-Received: by mail-pf0-f194.google.com with SMTP id o126so11324397pfb.1
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:21:15 -0700 (PDT)
+        id S1751397AbdCRKeQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 06:34:16 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:33949 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751030AbdCRKeN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 06:34:13 -0400
+Received: by mail-wm0-f46.google.com with SMTP id 196so12064368wmm.1
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HmzfUmxhTQmRxWy8VBDpcE+mKNBAaKf7vbikw/qDpwE=;
-        b=tJuX3uu+3sOa3lW3fjYdu3ujGqWtnLETW+6TXufWl2+b8qYg0Y8RS8R5a43AhQ1uZy
-         BvTPtgv9AGOOt+u85n5N9qgQz50twHrLRqeRaD7HPRDyWqmps/deZ2Mt8A6UR+CKpaeE
-         afJIXyjJmSq5wh2fYUdJpFg3ZnOw8kIgxZfUzc0JhBOVhA8/Yr5qaSgcWE+tQcl7jC3z
-         8NOyNZXqnml4BycRF6rQTixKtJHg8sXFhmG3pCuVYDazUYDVR5bsrU5g1dMaTWk8gNC/
-         SUxgaWpnERiQH3HEKMMsHqsMHswfZK8nU4Sz04EhmDdtVbJ3p1+THV+TPB/317xoqPV1
-         9pGQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=FZuKUr0gyJ9WAe0bvaZ46ks8bP5WyeT2NNDuVk7h56A=;
+        b=Y4/4Yx4yuWlno84G6W3bXjo1leHvUq1JgYqTdqgMa6c07ymvg+C2qYdNo9JoElkZC2
+         aodaGYBcat6BJcKhaQjiharVzhLh63DZXTbQuLHyV8NmaDq48V45nIA3HeMoA12Ivkkj
+         vQEhdU86Bb0L1LhdWcY9CvuB06xZGzTXvQcgtOpQrhNJMLOMp5WdRsvqfc6tYbDvl9nE
+         KvKuNmyZfHMrowty/1e1mhGKPMPwtKPwlFp2aouyqYr2400+D6tijDRn1C9FzjBaa1ZJ
+         WxE+Dks+GySnt43MtWNYN5X4df769DdNVbENmlQihNeJ/5sZZb4nCP6mSaZeTJVlfLRd
+         w9jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=HmzfUmxhTQmRxWy8VBDpcE+mKNBAaKf7vbikw/qDpwE=;
-        b=MZoz9A7nIaT451AD/vVGX6oVglWdmOaoK2MlWdf4u7S0cND4VMQuRia3/Ma0MrGqfT
-         c9pHsAcUhzE/0dyhbWrkwFKFbSVkA3vcS2o4eX54zY06ll3DeQ0z3RotnNVImasVBUtr
-         x2kKSanJjgxvBeN9431ur38j7IXbVHb7FLGnnYpHNNI2mcFMglcXn+sRKWyBt/8qvd2N
-         ztgkcTHzSo8LqYA5+9Ep5zd+F2X8eM/nOYF+hr87DWmzRnmsTQO2pywe00GhK+BwKNqA
-         G8Vy2ORJuL/0bPbbAEu7pd/nK5sHFNFNvN2/spoOe3Z31Q3ITFHgalItyE3PpFoYxfD8
-         gTCA==
-X-Gm-Message-State: AFeK/H0YD+eYSauHnnkOp5/ASZgjP9J9hECBjY3AgmajN7YSOvY+6zsrhIppxdGsgCq82g==
-X-Received: by 10.98.58.136 with SMTP id v8mr22293314pfj.230.1489831966642;
-        Sat, 18 Mar 2017 03:12:46 -0700 (PDT)
-Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id y5sm21931074pgy.28.2017.03.18.03.12.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Mar 2017 03:12:46 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 17:12:41 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
+         :references:mime-version:content-transfer-encoding;
+        bh=FZuKUr0gyJ9WAe0bvaZ46ks8bP5WyeT2NNDuVk7h56A=;
+        b=UzJTOKPttMt63RehHVVZJO/24H9JgZBpyDVOPwfkLc4q1Tr+psyH3T3O69hizUwTAv
+         x99/ZfwiBniSzZdf9khoFHv8LYDlfEB7G6q2N14jmQ5Qirz71njQsKBgNkLYZujaikJV
+         ZI9Jy6mc+ou/f4wBriTB7RvxtT8M01oGb7AheELhsVkHV7IDNiy+wNEdc0zwKDMXCvJl
+         x6vn9qlE5or0ys9oHOf0JVN5JpJERLQHxRIVhIn11fThMdXPBRGGHU/BJ1rMrk9zWoF2
+         P89D1UTm0tR+Z4fpDUNMH7af5drcKFqPiPjgGnjOe9D2oeKtkMRxhwWnTnLMb91PH56H
+         tr7A==
+X-Gm-Message-State: AFeK/H085rRZeqYOVdeKs4dAMg5wEEeFUsVtW5RhBMiOtLj7J52Nn2kulcc6b6XxQUTFrg==
+X-Received: by 10.28.216.208 with SMTP id p199mr2114257wmg.44.1489833201110;
+        Sat, 18 Mar 2017 03:33:21 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id j34sm13007928wre.7.2017.03.18.03.33.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 18 Mar 2017 03:33:20 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 08/12] refs: remove dead for_each_*_submodule()
-Date:   Sat, 18 Mar 2017 17:11:49 +0700
-Message-Id: <20170318101153.6901-9-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170318101153.6901-1-pclouds@gmail.com>
-References: <20170217141908.18012-1-pclouds@gmail.com>
- <20170318101153.6901-1-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 1/8] tag: Remove a TODO item from the test suite
+Date:   Sat, 18 Mar 2017 10:32:49 +0000
+Message-Id: <20170318103256.27141-2-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170318103256.27141-1-avarab@gmail.com>
+References: <20170318103256.27141-1-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These are used in revision.c. After the last patch they are replaced
-with the refs_ version. Delete them (except for_each_remote_ref_submodule
-which is still used by submodule.c)
----
- refs.c | 24 ------------------------
- refs.h |  9 ---------
- 2 files changed, 33 deletions(-)
+Change the test for "git tag -l" to not have an associated TODO
+comment saying that it should return non-zero if there's no tags.
 
-diff --git a/refs.c b/refs.c
-index 5fc47ff5f0..1f2f870084 100644
---- a/refs.c
-+++ b/refs.c
-@@ -316,12 +316,6 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
- 	return refs_for_each_tag_ref(get_main_ref_store(), fn, cb_data);
+This was added in commit ef5a6fb597 ("Add test-script for git-tag",
+2007-06-28) when the tests for "tag" were initially added, but at this
+point changing this would be inconsistent with how "git tag" is a
+synonym for "git tag -l", and would needlessly break external code
+that relies on this porcelain command.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t7004-tag.sh | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index b4698ab5f5..876ccfc830 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -16,7 +16,6 @@ tag_exists () {
+ 	git show-ref --quiet --verify refs/tags/"$1"
  }
  
--int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_tag_ref(get_submodule_ref_store(submodule),
--				     fn, cb_data);
--}
--
- int refs_for_each_branch_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
- 	return refs_for_each_ref_in(refs, "refs/heads/", fn, cb_data);
-@@ -332,12 +326,6 @@ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
- 	return refs_for_each_branch_ref(get_main_ref_store(), fn, cb_data);
- }
+-# todo: git tag -l now returns always zero, when fixed, change this test
+ test_expect_success 'listing all tags in an empty tree should succeed' '
+ 	git tag -l &&
+ 	git tag
+@@ -136,7 +135,6 @@ test_expect_success \
+ 	'listing a tag using a matching pattern should output that tag' \
+ 	'test $(git tag -l mytag) = mytag'
  
--int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_branch_ref(get_submodule_ref_store(submodule),
--					fn, cb_data);
--}
--
- int refs_for_each_remote_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
- 	return refs_for_each_ref_in(refs, "refs/remotes/", fn, cb_data);
-@@ -1263,11 +1251,6 @@ int for_each_ref(each_ref_fn fn, void *cb_data)
- 	return refs_for_each_ref(get_main_ref_store(), fn, cb_data);
- }
- 
--int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_ref(get_submodule_ref_store(submodule), fn, cb_data);
--}
--
- int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
- 			 each_ref_fn fn, void *cb_data)
- {
-@@ -1289,13 +1272,6 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsig
- 			       prefix, fn, 0, flag, cb_data);
- }
- 
--int for_each_ref_in_submodule(const char *submodule, const char *prefix,
--			      each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_ref_in(get_submodule_ref_store(submodule),
--				    prefix, fn, cb_data);
--}
--
- int for_each_replace_ref(each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(get_main_ref_store(),
-diff --git a/refs.h b/refs.h
-index 0572473ef7..e06db37118 100644
---- a/refs.h
-+++ b/refs.h
-@@ -259,15 +259,6 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
- 
--int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
--int for_each_ref_submodule(const char *submodule,
--			   each_ref_fn fn, void *cb_data);
--int for_each_ref_in_submodule(const char *submodule, const char *prefix,
--		each_ref_fn fn, void *cb_data);
--int for_each_tag_ref_submodule(const char *submodule,
--			       each_ref_fn fn, void *cb_data);
--int for_each_branch_ref_submodule(const char *submodule,
--				  each_ref_fn fn, void *cb_data);
- int for_each_remote_ref_submodule(const char *submodule,
- 				  each_ref_fn fn, void *cb_data);
- 
+-# todo: git tag -l now returns always zero, when fixed, change this test
+ test_expect_success \
+ 	'listing tags using a non-matching pattern should suceed' \
+ 	'git tag -l xxx'
 -- 
-2.11.0.157.gd943d85
+2.11.0
 
