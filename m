@@ -2,51 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F275C20323
-	for <e@80x24.org>; Sat, 18 Mar 2017 10:34:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B413120323
+	for <e@80x24.org>; Sat, 18 Mar 2017 10:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751397AbdCRKeQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 06:34:16 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:33949 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751030AbdCRKeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 06:34:13 -0400
-Received: by mail-wm0-f46.google.com with SMTP id 196so12064368wmm.1
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:33:21 -0700 (PDT)
+        id S1751437AbdCRKeb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 06:34:31 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33230 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751117AbdCRKeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 06:34:14 -0400
+Received: by mail-wr0-f194.google.com with SMTP id g10so12229440wrg.0
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FZuKUr0gyJ9WAe0bvaZ46ks8bP5WyeT2NNDuVk7h56A=;
-        b=Y4/4Yx4yuWlno84G6W3bXjo1leHvUq1JgYqTdqgMa6c07ymvg+C2qYdNo9JoElkZC2
-         aodaGYBcat6BJcKhaQjiharVzhLh63DZXTbQuLHyV8NmaDq48V45nIA3HeMoA12Ivkkj
-         vQEhdU86Bb0L1LhdWcY9CvuB06xZGzTXvQcgtOpQrhNJMLOMp5WdRsvqfc6tYbDvl9nE
-         KvKuNmyZfHMrowty/1e1mhGKPMPwtKPwlFp2aouyqYr2400+D6tijDRn1C9FzjBaa1ZJ
-         WxE+Dks+GySnt43MtWNYN5X4df769DdNVbENmlQihNeJ/5sZZb4nCP6mSaZeTJVlfLRd
-         w9jw==
+        bh=UE4DQzRE3BSQyVC9gb4uIHAP9hw/RGXkscp6zMxZPhE=;
+        b=GP0O62Od57orkz3CxUDLnwn3tk/lGNpSJIJOA9f4Fq5toPAOWZCsqNGOIyp7zkcu/x
+         diJUV8hehPp3Y6s5xZbUHqmX9VOGZDmKTk9pHIQ8FwWWGhU2qXrMqO3XSu7pkxRG5K1T
+         QA9JZt0mlzr13MXVR5pFAaBykyXG1X4NqPH3564ObLzXm+2ViW4DEtHrAomvvx//0mMh
+         zOTcvDFxhC/Ga/su+3F7yccxusHSd6FriTjNBSit65zf4wfTwzRCz8M8p9DUgEzdxcZK
+         L/oBRl5gR2gUPghwgQ721ZziYd5wH05pmBTBSNDOlN8E7J6ogc/ls2OOkV3VcMw+E839
+         kz8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FZuKUr0gyJ9WAe0bvaZ46ks8bP5WyeT2NNDuVk7h56A=;
-        b=UzJTOKPttMt63RehHVVZJO/24H9JgZBpyDVOPwfkLc4q1Tr+psyH3T3O69hizUwTAv
-         x99/ZfwiBniSzZdf9khoFHv8LYDlfEB7G6q2N14jmQ5Qirz71njQsKBgNkLYZujaikJV
-         ZI9Jy6mc+ou/f4wBriTB7RvxtT8M01oGb7AheELhsVkHV7IDNiy+wNEdc0zwKDMXCvJl
-         x6vn9qlE5or0ys9oHOf0JVN5JpJERLQHxRIVhIn11fThMdXPBRGGHU/BJ1rMrk9zWoF2
-         P89D1UTm0tR+Z4fpDUNMH7af5drcKFqPiPjgGnjOe9D2oeKtkMRxhwWnTnLMb91PH56H
-         tr7A==
-X-Gm-Message-State: AFeK/H085rRZeqYOVdeKs4dAMg5wEEeFUsVtW5RhBMiOtLj7J52Nn2kulcc6b6XxQUTFrg==
-X-Received: by 10.28.216.208 with SMTP id p199mr2114257wmg.44.1489833201110;
-        Sat, 18 Mar 2017 03:33:21 -0700 (PDT)
+        bh=UE4DQzRE3BSQyVC9gb4uIHAP9hw/RGXkscp6zMxZPhE=;
+        b=c7EQt51ZWgUYHsLSM+g1NLQ5CQ35oHJGzkpcgCf1QnzKG2YcrdqpNwcIv/Y1QXWoPH
+         YU+SOwJ3eZrVmIHMgVVzASU0OAF1OiGWtJN+sYYrggC1EMSTO6MAhFcTrUtfNqe/E+qh
+         dZwycU3xvK5s3jdmx21mRMaJDWKkt/LGMElk0V2YkAZb6Y5iM5kanjek6V03OSdCim7U
+         N3lDt2eNuC9R6ZVPW6hveq6RFHO08PoHesC3GovN7UM9RWqkdq7fsZCbRsaoI+0ML2H+
+         qyJRDDjuYeGbFtC5jNIkNG33tn8lAAlDDTASHnhVvvXef9wMJ6lwOETgtbW0cnG8Df+P
+         Rn5Q==
+X-Gm-Message-State: AFeK/H2zlzRXVroa55nhyNP6SilJ9f+HYDr17ECZsG4ZPiWPmz2xmORackeS/ngpHgK1yg==
+X-Received: by 10.223.129.230 with SMTP id 93mr16520665wra.41.1489833223979;
+        Sat, 18 Mar 2017 03:33:43 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j34sm13007928wre.7.2017.03.18.03.33.19
+        by smtp.gmail.com with ESMTPSA id j34sm13007928wre.7.2017.03.18.03.33.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 18 Mar 2017 03:33:20 -0700 (PDT)
+        Sat, 18 Mar 2017 03:33:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Tom Grennan <tmgrennan@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/8] tag: Remove a TODO item from the test suite
-Date:   Sat, 18 Mar 2017 10:32:49 +0000
-Message-Id: <20170318103256.27141-2-avarab@gmail.com>
+Subject: [PATCH 5/8] tag: Implicitly supply --list given the -n option
+Date:   Sat, 18 Mar 2017 10:32:53 +0000
+Message-Id: <20170318103256.27141-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170318103256.27141-1-avarab@gmail.com>
 References: <20170318103256.27141-1-avarab@gmail.com>
@@ -72,40 +72,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the test for "git tag -l" to not have an associated TODO
-comment saying that it should return non-zero if there's no tags.
+Change the "tag" command to treat the "-n" invocation as a list-like
+option in addition to --contains, --points-at etc.
 
-This was added in commit ef5a6fb597 ("Add test-script for git-tag",
-2007-06-28) when the tests for "tag" were initially added, but at this
-point changing this would be inconsistent with how "git tag" is a
-synonym for "git tag -l", and would needlessly break external code
-that relies on this porcelain command.
+Most of the work for this was done in my preceding "tag: Implicitly
+supply --list given another list-like option", but I've split off this
+patch since it's more contentious. Now invocations these invocations
+will be synonymous:
+
+    git tag -n 100
+    git tag -n --list 100
+
+Whereas before the former would die. This doesn't technically
+introduce any more ambiguity than change to the other list-like
+options, but it does introduce the possibility for more confusion
+since instead of the latter of these dying:
+
+    git tag -n100
+    git tag -n 100
+
+It now works entirely differently, i.e. invokes list mode with a
+filter for "100".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7004-tag.sh | 2 --
- 1 file changed, 2 deletions(-)
+ Documentation/git-tag.txt |  9 +++++----
+ builtin/tag.c             |  2 +-
+ t/t7004-tag.sh            | 17 ++++++++++++++++-
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 2acd3b6beb..e7793afad1 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -82,10 +82,11 @@ OPTIONS
+ 
+ -n<num>::
+ 	<num> specifies how many lines from the annotation, if any,
+-	are printed when using -l.
+-	The default is not to print any annotation lines.
+-	If no number is given to `-n`, only the first line is printed.
+-	If the tag is not annotated, the commit message is displayed instead.
++	are printed when using -l. Implies `--list`.
+++
++The default is not to print any annotation lines.
++If no number is given to `-n`, only the first line is printed.
++If the tag is not annotated, the commit message is displayed instead.
+ 
+ -l::
+ --list::
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 3483636e59..2da28a5ce6 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -457,7 +457,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (!cmdmode && !create_tag_object) {
+ 		if (argc == 0)
+ 			cmdmode = 'l';
+-		else if (filter.with_commit || filter.points_at.nr || filter.merge_commit)
++		else if (filter.with_commit || filter.points_at.nr || filter.merge_commit || filter.lines != -1)
+ 			cmdmode = 'l';
+ 	}
+ 
 diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index b4698ab5f5..876ccfc830 100755
+index 5c94932f0f..ba1ab1f21c 100755
 --- a/t/t7004-tag.sh
 +++ b/t/t7004-tag.sh
-@@ -16,7 +16,6 @@ tag_exists () {
- 	git show-ref --quiet --verify refs/tags/"$1"
- }
+@@ -639,6 +639,11 @@ test_expect_success \
+ 	git tag -n0 -l tag-one-line >actual &&
+ 	test_cmp expect actual &&
  
--# todo: git tag -l now returns always zero, when fixed, change this test
- test_expect_success 'listing all tags in an empty tree should succeed' '
- 	git tag -l &&
- 	git tag
-@@ -136,7 +135,6 @@ test_expect_success \
- 	'listing a tag using a matching pattern should output that tag' \
- 	'test $(git tag -l mytag) = mytag'
++	git tag -n0 | grep "^tag-one-line" >actual &&
++	test_cmp expect actual &&
++	git tag -n0 tag-one-line >actual &&
++	test_cmp expect actual &&
++
+ 	echo "tag-one-line    A msg" >expect &&
+ 	git tag -n1 -l | grep "^tag-one-line" >actual &&
+ 	test_cmp expect actual &&
+@@ -652,6 +657,17 @@ test_expect_success \
+ 	test_cmp expect actual
+ '
  
--# todo: git tag -l now returns always zero, when fixed, change this test
++test_expect_success 'The -n 100 invocation means -n --list 100, not -n100' '
++	>expect &&
++	git tag -n 100 >actual &&
++	test_cmp expect actual &&
++
++	git tag -m "A msg" 100 &&
++	echo "100             A msg" >expect &&
++	git tag -n 100 >actual &&
++	test_cmp expect actual
++'
++
  test_expect_success \
- 	'listing tags using a non-matching pattern should suceed' \
- 	'git tag -l xxx'
+ 	'listing the zero-lines message of a non-signed tag should succeed' '
+ 	git tag -m "" tag-zero-lines &&
+@@ -1495,7 +1511,6 @@ test_expect_success 'mixing incompatibles modes and options is forbidden' '
+ 	test_must_fail git tag -a -s -m -F &&
+ 	test_must_fail git tag -a -s -m -F -l &&
+ 	test_must_fail git tag -l -v &&
+-	test_must_fail git tag -n 100 &&
+ 	test_must_fail git tag -n 100 -v &&
+ 	test_must_fail git tag -l -m msg &&
+ 	test_must_fail git tag -l -F some file &&
 -- 
 2.11.0
 
