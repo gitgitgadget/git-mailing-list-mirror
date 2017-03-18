@@ -2,85 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB8A92095E
-	for <e@80x24.org>; Sat, 18 Mar 2017 23:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15E192095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 23:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751312AbdCRXLy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 19:11:54 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63908 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751283AbdCRXLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 19:11:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7CC7B6301E;
-        Sat, 18 Mar 2017 19:11:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=s459qRPJU77x8vo0pUho/LUgst8=; b=bBlprv
-        6ZES8CQDBQB/otL78nqHEaQNOyv1EThZSDV09709UhslxyhAagSCnf87Daes62qK
-        T1AnqQlwVBmDccb/4ouEP1qggx2LUIGHZQsyX4HmR4kJbnJ9NugP2Zr+RrH0dQoU
-        BMiVFGhDUq5zSxA0YuKmruZYHYZSm71cefM2M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=C5qukKlbSPUsvmWsRCKgOOVrSSjgzksu
-        2WBDGkT37rDpInxFx0ly9py4asiiueoZ2zIm99cfCW3trrtXYgpNa0aSOLaFB3Ad
-        hbLO3kunJygLio+L50VQjrhRufY2liohCo69TeBOJQfyldUCizIcM7krbM9D9DIV
-        bGOuWVq4GJo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74FD26301D;
-        Sat, 18 Mar 2017 19:11:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1751318AbdCRXPK (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 19:15:10 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:46252 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751306AbdCRXPI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 18 Mar 2017 19:15:08 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D59B66301C;
-        Sat, 18 Mar 2017 19:11:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Lang <david@lang.hm>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Is there a way to have a local version of a header file?
-References: <nycvar.QRO.7.75.62.1703180724490.3797@qynat-yncgbc>
-        <CACBZZX5FMdjuxxNru+XfTQdSXEQ_b0OP2rngGZLf1sSHR_D8Ng@mail.gmail.com>
-        <nycvar.QRO.7.75.62.1703180750460.3797@qynat-yncgbc>
-        <CACBZZX7G=C84kz4n26VTnWWUTKRv1rVvms=8AvELtMSCviu1kQ@mail.gmail.com>
-        <xmqqzigi31fl.fsf@gitster.mtv.corp.google.com>
-        <nycvar.QRO.7.75.62.1703181539310.3797@qynat-yncgbc>
-Date:   Sat, 18 Mar 2017 16:11:50 -0700
-In-Reply-To: <nycvar.QRO.7.75.62.1703181539310.3797@qynat-yncgbc> (David
-        Lang's message of "Sat, 18 Mar 2017 15:40:08 -0700 (PDT)")
-Message-ID: <xmqqy3w2yybt.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 454F4BA0-0C30-11E7-B846-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 43014280B2;
+        Sat, 18 Mar 2017 21:20:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1489872001;
+        bh=VDRzm9rDcpMlVKT9VzC+P7AfyyS/Gd+ScXtF/5hft98=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=tHL4Ne7y1mUiqA3m7VqpiNbEr4kDmMpTRQ5HK7/LvS3pupHfoefIdSvIaeIgDIC7s
+         cLKXLH3Qj4QJayP+v7lY7T7DlTESDSW/vVYITTzZ/PgmuZ0SetejWwaZP79dtg+IwW
+         VcUWVyD3sNJ9L0AioeXBSslInUggPodIu6m7hMTosqfYk3N8SAaasG46WS4xDdG5PC
+         CY3+MQ6WyhL1usPO1AZwFB81gl+AGHmSn2+zMU5aH9lPMWkwal9PjYjUQiiupnoc5t
+         +Qjz9ayJe3pKMHy+Q/KS82sZHpHVJFcI/dHwxF2Uj9O5KU8KOS//PBKdTX9kH9m8Ca
+         ZJ0zQU+fY5BZ1ThzrxmVLb/qDTy1oC0IU8u7ciyD6EJWBmW1ob9R3WI35sDDuNBQLZ
+         rBPlRpEQqeHcjRCOkS0+L8T9qtGlbdV2C2OH3BHQMyinBxIStvZIa5fzp1yW/2Xk0P
+         07RwJIkwdISTgjK/9WfewYuoHslHk69jtN1pZqDl1qf21ulwrE8
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 05/20] builtin/pull: convert portions to struct object_id
+Date:   Sat, 18 Mar 2017 21:19:39 +0000
+Message-Id: <20170318211954.564030-6-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170318211954.564030-1-sandals@crustytoothpaste.net>
+References: <20170318211954.564030-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Lang <david@lang.hm> writes:
+Convert the caller of sha1_array_append to struct object_id.
 
->> Ship a config.h.sample file, have a Makefile rule that is forced to
->> run before any compilation happens that checks if config.h exists
->> and then created it if missing by copying config.h.sample over, and
->> then all other source files can include config.h without having to
->> know anything about config.h.sample's existence.
->>
->> Did I miss something?
->
-> There is no makefile with the arduino IDE/build system :-(
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/pull.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-How does "the build system" you want to make it work with actually
-work?  Is it incapable of "compiling" a "source file" into an
-"object file" that happens to be a text using an arbitrary
-"compiler"?
-
-I was hoping that readers are imaginative enough to replace Makefile
-with whatever way things are normally built with when reading my
-message, and the reader can just replace "source file" with
-"config.h.sample", "compiler" with "test -f config.h || cat
-config.h.sample >config.h" and "object file" with "config.h".
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 3ecb881b0b..a9f7553f30 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -335,16 +335,16 @@ static void get_merge_heads(struct sha1_array *merge_heads)
+ 	const char *filename = git_path("FETCH_HEAD");
+ 	FILE *fp;
+ 	struct strbuf sb = STRBUF_INIT;
+-	unsigned char sha1[GIT_SHA1_RAWSZ];
++	struct object_id oid;
+ 
+ 	if (!(fp = fopen(filename, "r")))
+ 		die_errno(_("could not open '%s' for reading"), filename);
+ 	while (strbuf_getline_lf(&sb, fp) != EOF) {
+-		if (get_sha1_hex(sb.buf, sha1))
++		if (get_oid_hex(sb.buf, &oid))
+ 			continue;  /* invalid line: does not start with SHA1 */
+ 		if (starts_with(sb.buf + GIT_SHA1_HEXSZ, "\tnot-for-merge\t"))
+ 			continue;  /* ref is not-for-merge */
+-		sha1_array_append(merge_heads, sha1);
++		sha1_array_append(merge_heads, oid.hash);
+ 	}
+ 	fclose(fp);
+ 	strbuf_release(&sb);
