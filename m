@@ -2,76 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBEC62095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 17:42:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DBC22095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 17:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751828AbdCRRmO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 13:42:14 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57578 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751653AbdCRRmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 13:42:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C82E287281;
-        Sat, 18 Mar 2017 13:42:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=usE5JloETXakfNdfCAr/2odevhI=; b=rVuzbM
-        7X/6gNzMPqPKL8NXUxpPQ9s3xNLKRPitc/6pF/jPBzAR6Qyg2FwNFBHiaAMfsQBU
-        k8IbmDAUdb6VfdNMA0MBv/EeyI9jOdnZZb0vgu1LNNXLL1TdHZi2hUYjew1i3yaE
-        S4lNNof07GMOu3MH9l+2ZZAxHpForKju7hwmY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j2jSyCSiTYqWw1u4N6b4smNpEyGup057
-        VCEdSebb56CMlVj/Hp3ChcIBUB/eFY+KoWHceOjIwWIe5ghAa6wbVne7d+qK+f05
-        EDbMKWA2OIpHz40BIAB60VC0AoODzYjYoQMnV98VYyXHLCr9kwHx7JkfaAX0gi4L
-        aOYZDUHSm5g=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFDBB87280;
-        Sat, 18 Mar 2017 13:42:11 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D4058727F;
-        Sat, 18 Mar 2017 13:42:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        git <git@vger.kernel.org>, Pranit Bauva <pranit.bauva@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Carlos =?utf-8?Q?Mart=C3=ADn?= Nieto <cmn@dwim.me>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: GSoC 2017: application open, deadline = February 9, 2017
-References: <vpq1svtstud.fsf@anie.imag.fr>
-        <CACsJy8D+VKGEtq6yMe+ZhfxKX2peCVXGZfZFckkZF_L=bWBqTg@mail.gmail.com>
-Date:   Sat, 18 Mar 2017 10:42:10 -0700
-In-Reply-To: <CACsJy8D+VKGEtq6yMe+ZhfxKX2peCVXGZfZFckkZF_L=bWBqTg@mail.gmail.com>
-        (Duy Nguyen's message of "Sat, 18 Mar 2017 16:01:50 +0700")
-Message-ID: <xmqqk27m4h3h.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751782AbdCRRpC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 13:45:02 -0400
+Received: from mail-vk0-f65.google.com ([209.85.213.65]:36411 "EHLO
+        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751695AbdCRRpC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 13:45:02 -0400
+Received: by mail-vk0-f65.google.com with SMTP id d188so7192956vka.3
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 10:45:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bxF35VL/r5LgGjycgKslcYJ5BkvEd6dn7F81OxLvBGc=;
+        b=QdOa0JcfoJiMNea8Pvd/CfXfEB1NHbhcpR+05YQFqUxjULTy5PORb6A3ZIgDO/hcpw
+         pNflT/6S3aN5I8Pv0MAv9i8mFJ7zyUgqkx+/Xb85W1yQ9yatjt7K1atGrAJ7adtuXgSw
+         DMQUs848a/w9JK1Jg7UctuMfSH7k4X9hBkmyG7Q3wWyff+x0OxcGqls+RwtRF6kEMxal
+         lrg5Zu2V3YNJtidRPbWPxsJNPx+tqBpKfrPUdZyewF22gauX49Hxqid8up+0HhacJ5TY
+         c9zeNfkwF4gemSl/6542DN8kEzbk1w7Og6aKBgk36G10eiQk9He/Eres13vrDES4JoX/
+         7S/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bxF35VL/r5LgGjycgKslcYJ5BkvEd6dn7F81OxLvBGc=;
+        b=bu8ov+T6AJGmi3Rgnq/8XzGuX5K6wfbqKLptavm1JdOcB0mau4mI6t2aYUuXsFwqKU
+         TXSknNcYb61ulOy7Sd3zzWlKYQg0XvakZuXPMPtRNtln+sLZFLqEe/N4D0nEkGu0PnnB
+         w9Z+uUe/OmnLaVpX4oSJ5LrU1HhoHGvRRRhrIRQooUIeZG2VhakfFZ6ru4Lx3lNiDQpV
+         n4Y5xv5vibGtVxjw9ND93R8hHksWifgAEVMtsuteniKb0cNRGI5E/5pciLrrtj7/nzWb
+         6CuJclyB7WFD/d4bTlXX/0oLwCnxcrK8adkHJnCSy4Lu1NTJl2tvzDrdShZUPTNwvYpa
+         w60g==
+X-Gm-Message-State: AFeK/H2j4J9Omx/MURxsDmEtwnvMlgZtZMQ8KZfMydwLOOLvopinCpyB4O6u02IvXN8DmO5pUJivzGkN0gT+5g==
+X-Received: by 10.31.217.7 with SMTP id q7mr6669611vkg.32.1489859100501; Sat,
+ 18 Mar 2017 10:45:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 371A0DE6-0C02-11E7-9820-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.176.7.150 with HTTP; Sat, 18 Mar 2017 10:45:00 -0700 (PDT)
+In-Reply-To: <20170318151239.17196-1-szeder.dev@gmail.com>
+References: <20170318151239.17196-1-szeder.dev@gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Sat, 18 Mar 2017 18:45:00 +0100
+Message-ID: <CAM0VKjknLpCyQfY+ie3sfGemwhyad3Tk-5fHdeTSz2-WTw7NoQ@mail.gmail.com>
+Subject: Re: [PATCH] pickaxe: fix segfault with '-S<...> --pickaxe-regex'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Sat, Mar 18, 2017 at 4:12 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> Make sure that the buffer size is reduced on each iteration as the
+> buffer pointer is advanced, thus maintaining the correct end of buffer
+> location.
+>
+> The new test is flaky, I've never seen it fail on my Linux box, but
+> this is expected according to db5dfa331 (regex: -G<pattern> feeds a
+> non NUL-terminated string to regexec() and fails, 2016-09-21).  And
+> based on that commit message I would expect the new test without the
+> fix to fail reliably on Windows.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>
+>  diffcore-pickaxe.c      | 5 ++++-
+>  t/t4062-diff-pickaxe.sh | 5 +++++
+>  2 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+> index 9795ca1c1..03f84b714 100644
+> --- a/diffcore-pickaxe.c
+> +++ b/diffcore-pickaxe.c
+> @@ -85,8 +85,11 @@ static unsigned int contains(mmfile_t *mf, regex_t *re=
+gexp, kwset_t kws)
+>                        !regexec_buf(regexp, data, sz, 1, &regmatch, flags=
+)) {
+>                         flags |=3D REG_NOTBOL;
+>                         data +=3D regmatch.rm_eo;
+> -                       if (*data && regmatch.rm_so =3D=3D regmatch.rm_eo=
+)
+> +                       sz -=3D regmatch.rm_eo;
+> +                       if (*data && regmatch.rm_so =3D=3D regmatch.rm_eo=
+) {
+>                                 data++;
+> +                               sz--;
+> +                       }
+>                         cnt++;
+>                 }
+>
+> diff --git a/t/t4062-diff-pickaxe.sh b/t/t4062-diff-pickaxe.sh
+> index f0bf50bda..7c4903f49 100755
+> --- a/t/t4062-diff-pickaxe.sh
+> +++ b/t/t4062-diff-pickaxe.sh
+> @@ -19,4 +19,9 @@ test_expect_success '-G matches' '
+>         test 4096-zeroes.txt =3D "$(cat out)"
+>  '
+>
+> +test_expect_success '-S --pickaxe-regex' '
+> +       git diff --name-only -S0 --pickaxe-regex HEAD^ >out &&
+> +       verbose test 4096-zeroes.txt =3D "$(cat out)"
+> +'
+> +
+>  test_done
 
-> Probably too late for GSoc 2017, but another idea for microproject (or
-> microprojects) is make use of dir-iterator.h more. For recursive
-> directory walking, this would make the code easier to read and
-> potentially avoid too deep recursion. There are three or four of them,
-> I think.
+Hang on, this new test does fail because of a segfault _with_ the fix
+on Travis 64bit Linux and OSX builds.
 
-Throw it on the microproject idea page anyway, as it is likely that
-the leftover bits will be migrated to the page created for the next
-year and that way we won't forget.
+Oh, well.
