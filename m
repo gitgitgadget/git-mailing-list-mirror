@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4412095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 23:18:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB8D2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 23:30:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751317AbdCRXSx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 19:18:53 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56484 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751298AbdCRXSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 19:18:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D235185C81;
-        Sat, 18 Mar 2017 19:03:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=824irtALuYDDQX6bXG9HOckgScg=; b=dzlMmy
-        ZpYfodvIEKjmjo4MjX77nQyDsjHJ2MnStT+2XyiFqFek+HWeDH3EPUtU84FifjeV
-        s5sotpl6slH3nE4RJDigdVqPgJ3ykPEfZX0RgL4Iu9+2nexURSahSW6sDJmOyCkk
-        Vq5in5TUM7G5hDzOxuD1goNyhfka1J2ZO776g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=I3KN5BEbGTRurG2Znq/n1pRrpphc1zdQ
-        HYlw+5plD585A+q9wYxMij5um1jPBRmlGcFVCdDl2kmhGIr588Kux3KjkoWDF51i
-        GNsgiPoaMf76MikxCX6yfcdB7JHlxlE17Eigi6JJBYvdGaSjGzJ5rX9l6C4OaeW2
-        Jyd8NsiO4FM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C914185C80;
-        Sat, 18 Mar 2017 19:03:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4A48285C7D;
-        Sat, 18 Mar 2017 19:03:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jean-Noel Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] l10n: Introduce framework for localizing man pages
-References: <20170312200248.3610-1-jn.avila@free.fr>
-        <20170312200248.3610-1-jn.avila@free.fr>
-        <20170318175353.24578-1-jn.avila@free.fr>
-        <xmqqfuia1ifx.fsf@gitster.mtv.corp.google.com>
-Date:   Sat, 18 Mar 2017 16:03:50 -0700
-In-Reply-To: <xmqqfuia1ifx.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Sat, 18 Mar 2017 12:41:22 -0700")
-Message-ID: <xmqq37ea192h.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751195AbdCRXab (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 19:30:31 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:35115 "EHLO
+        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751045AbdCRXaa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 19:30:30 -0400
+Received: by mail-vk0-f44.google.com with SMTP id x75so56258822vke.2
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 16:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=i4FqtaD2jZeF9q6T2NruEU1v4xFiT60EqACb0rfPe1s=;
+        b=u3zsZBHGmnin5CLYX05aSb+N25cuODM85JE7WXPmqV3Yyug7BKOaLr2cBmh56kgo51
+         fCrvoXXvXMXA9aX4H8iN/kEPlPD1fBrgQwfKbxARkJQenLcbpqE4wrMFEf90uvMgyxde
+         gxUFX7z96lpJhBJ3yiS1UEUarjILYMfDp6OG48fldIGvactHMhTeEjbAGyZoZDFNexkl
+         NHQYUzt7+10lxGpoSuzFrkbKQAw6tX94Hi6L8vp3cURgGg2tBX3IliUdWzg73RgwJQDr
+         wznaFK9WCk17nkwzNVoMqm4ecT3rZ1jlGY0b5ZNzq+dEqv99hBsjliDMTu4WBRMfrFJU
+         GpDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=i4FqtaD2jZeF9q6T2NruEU1v4xFiT60EqACb0rfPe1s=;
+        b=nhbZa5k2suHnx35kE2BGZdVAf/yCLqJM07VuJ/pvIgqxw2O05IQO5yFoCAFzDHB0DP
+         rTxIL2kuMNRVqOIYd4Na8Tvit81fDnkiXHg4cQgoR4SjOr+kNp4EH0n2ZggdL8pvrg8t
+         m8plCBm8md2D9SMHUzNlbsKjkeCCXVHl3RYsFxfcAR4LZ+9ms7NR3NuBodEFHEMAin50
+         osuE4oWNNZguVdf/PfDfwmgP1CEARwYQgbFmuHL/KnUC1ew/mQ9ZyPZUIm+DvdnKcJNi
+         VTHGmFbQlSfXPCcOssdvie4/IK0xwMr5AK8VKM6SDf7SNdI49MNCASgKVOyC1cR19myi
+         zfbw==
+X-Gm-Message-State: AFeK/H3gx/3fe4Y79QkfgO9zqclYqwfUmQsUNKYLEBOAXgWsvVRySXfet+er/TrAkTlYNlcsXgsR1Z7A3ErGcQ==
+X-Received: by 10.31.1.7 with SMTP id 7mr8613235vkb.0.1489879392646; Sat, 18
+ Mar 2017 16:23:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 26DDD8AE-0C2F-11E7-96E6-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.176.6.199 with HTTP; Sat, 18 Mar 2017 16:22:32 -0700 (PDT)
+In-Reply-To: <xmqqy3w2yybt.fsf@gitster.mtv.corp.google.com>
+References: <nycvar.QRO.7.75.62.1703180724490.3797@qynat-yncgbc>
+ <CACBZZX5FMdjuxxNru+XfTQdSXEQ_b0OP2rngGZLf1sSHR_D8Ng@mail.gmail.com>
+ <nycvar.QRO.7.75.62.1703180750460.3797@qynat-yncgbc> <CACBZZX7G=C84kz4n26VTnWWUTKRv1rVvms=8AvELtMSCviu1kQ@mail.gmail.com>
+ <xmqqzigi31fl.fsf@gitster.mtv.corp.google.com> <nycvar.QRO.7.75.62.1703181539310.3797@qynat-yncgbc>
+ <xmqqy3w2yybt.fsf@gitster.mtv.corp.google.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Sat, 18 Mar 2017 18:22:32 -0500
+Message-ID: <CAJZjrdVxT7G+Cn+1_vqPBCtMOALmR_542jvP7nXXuvs74ko5qg@mail.gmail.com>
+Subject: Re: Is there a way to have a local version of a header file?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     David Lang <david@lang.hm>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Arduino is basically a simplified/streamlined cross-compilation
+toolchain with very tightly coupled IDE integration.
 
-> Jean-Noel Avila <jn.avila@free.fr> writes:
->
->> Providing git in localized version is a good step for general adoption
->> of the tool. But as of now, if one needs to refer to the manual pages,
->> they are still confronted to english. The aim is to provide
->> documentation to users in their own language.
->
-> Please outline how the end result looks like here.  Where are the
-> localized man pages installed?  Do installers get to choose to build
-> and install the localization for some but not all languages and if
-> so how?  etc.
->
->> signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
->
-> s/sign/Sign/;
->
->> -man: man1 man5 man7
->> +man: man1 man5 man7 man_l10n
->
-> Hmmm, at least in the early days of the topic, I'd prefer that "make
-> doc" and "make install" I need to run dozens of times a day from the
-> toplevel not to require po4a.
->
-> Thanks.
+I'd just provide a .sample and tell people what to do with it in the
+README. The alternative is to provide config.h as is and tell people
+to use "git update-index --assume-unchanged" immediately after cloning
+to ignore changes to the file, but this is prone to people
+accidentally committing credentials.
 
-Travis seems to have failed.  Perhaps something like this is needed,
-at least?
-
- .travis.yml | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.travis.yml b/.travis.yml
-index 591cc57b80..719e5cdb00 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -20,6 +20,7 @@ addons:
-     - language-pack-is
-     - git-svn
-     - apache2
-+    - po4a
- 
- env:
-   global:
+On Sat, Mar 18, 2017 at 6:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> David Lang <david@lang.hm> writes:
+>
+>>> Ship a config.h.sample file, have a Makefile rule that is forced to
+>>> run before any compilation happens that checks if config.h exists
+>>> and then created it if missing by copying config.h.sample over, and
+>>> then all other source files can include config.h without having to
+>>> know anything about config.h.sample's existence.
+>>>
+>>> Did I miss something?
+>>
+>> There is no makefile with the arduino IDE/build system :-(
+>
+> How does "the build system" you want to make it work with actually
+> work?  Is it incapable of "compiling" a "source file" into an
+> "object file" that happens to be a text using an arbitrary
+> "compiler"?
+>
+> I was hoping that readers are imaginative enough to replace Makefile
+> with whatever way things are normally built with when reading my
+> message, and the reader can just replace "source file" with
+> "config.h.sample", "compiler" with "test -f config.h || cat
+> config.h.sample >config.h" and "object file" with "config.h".
