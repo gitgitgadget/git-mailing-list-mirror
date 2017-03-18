@@ -2,61 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27ABF2095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 18:42:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87E4F2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 18:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751660AbdCRSmP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 14:42:15 -0400
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:35943 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751253AbdCRSmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 14:42:15 -0400
-Received: by mail-wr0-f174.google.com with SMTP id u108so69717815wrb.3
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 11:42:13 -0700 (PDT)
+        id S1751695AbdCRSmT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 14:42:19 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:34286 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751661AbdCRSmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 14:42:16 -0400
+Received: by mail-wm0-f65.google.com with SMTP id u132so8112352wmg.1
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 11:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=CqcHXw8Pyw2LPxTleEdOulOCkAcpV4iZMcW8tgEnEUU=;
-        b=fLoOoiOqsJL8+Ya10eBLKIGhGMgiscZiIFHc5cPeM+nf4w0GETW3+tX8Kud/yhqmiI
-         B6fhqM0ZHGUZnmnc2uKUEGomqT/mSr3abSwSBL1Ni+gOU3cXdAnKEQ9U4tWO5emXTwaS
-         RrXmlSY7dr3cY2Vjmzz+uW8Mz0J+CcDiVU0vvNkik0IM7E7XqwsIOrP4dNbFM9D8rHFi
-         7MbIdEXcK+pNwTBR2WPVQjW56SdK3v07Ow042E7oJ4sJHY9lzyKS3RXY6rQB0CTLvmWT
-         0faY3dlHpkD/3SAfNt5rBybJH95yLPRFGLwJDi8KqY+kA3pcCjbkcgbWVu+X4aGiJMme
-         mpYQ==
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=aQaKInknjnz7EIxRRK6Cwej2q5psvVvFnPu4AoPVThA=;
+        b=d8CzNpKPQ5RqHcQeMO6xZOZsLmy3En24F4uP+T04LbXwKKbSkkqVThH+whjqf3qGdH
+         MMozCTSTWo8oYIbD4auNdgFWDf4fPUg4pTR3C5ZhOYzIxdOjNlSO4NGscb8syxAxhHjo
+         /kZ3B7y/iSExOKGqnL2ZdwvI7++mNYnR4zCIDZ7yQs1zByja85m+S7RjUaXGA2KkKuwt
+         cvsjPAwlLP9sBWjcuVniJMy/+feEieEXATI0zgNDc3xfgzvl6qv6bG+2HNNPLt1Xe/Vk
+         X1g3HMIswtqvEV7+vsOrG+o+nytSWRIRJunmu16QEGmPCcSgGvYJWfjGO5au1bYt2DRX
+         P4/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=CqcHXw8Pyw2LPxTleEdOulOCkAcpV4iZMcW8tgEnEUU=;
-        b=AL46jdhUjnC/cCE3W2C7a0gKnP+nfGcSBvR3DZwgYiWudgrJV1I/EX38QjFY22mEmk
-         HHs374pVPHo4d0/K8TNTHv9kTByxP615wQSieFqq439iuSF9Yj9zbC4b8WW1KrH7SSqb
-         lSNvoRcp72J6/cpNEKGxH4pnLkrKNkDdTCcdYgZUVmDnnGWrX4keN09JqHBM0mAte/KI
-         2CLq56M+CVLis30xYN+fe+wpiXcoeilRrjes/ZFbpjCBII8/BgjTTSmyAcFUhvU+N63F
-         faUG+mt8rJmfZ384YW3nOqaU5/mbez6Y32ZygoiHnqkGFJijIIDnjOcUXZvgbTwutXt2
-         5hgw==
-X-Gm-Message-State: AFeK/H1jxX4OaoctH3X4Uin+g22j86d4XIxBpoRE2Ob4+bbPZKzdBdyV2Dcq6ohbNaDmGg==
-X-Received: by 10.223.168.80 with SMTP id l74mr18878889wrc.184.1489862532759;
-        Sat, 18 Mar 2017 11:42:12 -0700 (PDT)
+         :references:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=aQaKInknjnz7EIxRRK6Cwej2q5psvVvFnPu4AoPVThA=;
+        b=m8UQq94RVxEZzjR2SSnWk5KuaVujbtTdguw0JcaBqzLxvfI1aq/wpgLhMjdHY/Goe2
+         N5X1BD9/34l68OeX4fumpU5n5GcmxsX4k0HXZI1SeFXinZkSqvCk40mGc4fh2QMXm9u2
+         RMpLy29KBJBPojJrKCRXciEzJcXM+nriFpcWQOTwALeqQnVrnDPPLq/vF7wCCMiiITyl
+         Nl15BYntecQVAbT6Jch3Pid1gl3+MAq6VQjARLmQ23fv+gW9JCnAl1vBKeuZTH56tuEz
+         zXra3hDk8YySP1ZAHEDCY3ejyHpqZFh12gx7DW9SjOgYSSbReCiD7itJdgLAB7zCllse
+         e31Q==
+X-Gm-Message-State: AFeK/H2rp8PcO6gaLEmAIjOaETPqKe9TCo8Ec2KYXxIvfCnMuZCxBjxjo3wE/BWr9BOLvw==
+X-Received: by 10.28.9.213 with SMTP id 204mr3515989wmj.89.1489862534478;
+        Sat, 18 Mar 2017 11:42:14 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e16sm8026263wra.62.2017.03.18.11.42.11
+        by smtp.gmail.com with ESMTPSA id e16sm8026263wra.62.2017.03.18.11.42.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 18 Mar 2017 11:42:11 -0700 (PDT)
+        Sat, 18 Mar 2017 11:42:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/2] doc/SubmittingPatches: A couple of minor improvements
-Date:   Sat, 18 Mar 2017 18:42:01 +0000
-Message-Id: <20170318184203.16890-1-avarab@gmail.com>
+Subject: [PATCH 1/2] doc/SubmittingPatches: clarify the casing convention for "area: change..."
+Date:   Sat, 18 Mar 2017 18:42:02 +0000
+Message-Id: <20170318184203.16890-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170318184203.16890-1-avarab@gmail.com>
+References: <20170318184203.16890-1-avarab@gmail.com>
 In-Reply-To: <xmqqvar6310x.fsf@gitster.mtv.corp.google.com>
 References: <xmqqvar6310x.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
@@ -67,26 +70,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 18, 2017 at 7:14 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> I'll retitle s/Remove/remove/ so that "git shortlog --no-merges"
-> would look more consistent, though.
+Amend the section which describes how the first line of the subject
+should look like to say that the ":" in "area: " shouldn't be treated
+like a full stop for the purposes of letter casing.
 
-I already found a few grammar / phrasing issues with the commit
-messages, so I'll just change this on my side for a resend.
+Change the two subject examples to make this new paragraph clearer,
+i.e. "unstar" is not a common word, and "git-cherry-pick.txt" is a
+much longer string than "githooks.txt". Pick two recent commits from
+git.git that fit better for the description.
 
-But I noticed that this casing rule wasn't documented in
-SubmittingPatches, so here's a patch for that, and while I'm at it
-another small improvement that I've been meaning to make to it based
-on a local alias I have.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/SubmittingPatches | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-Ævar Arnfjörð Bjarmason (2):
-  doc/SubmittingPatches: clarify the casing convention for "area:
-    change..."
-  doc/SubmittingPatches: show how to get a CLI commit summary
-
- Documentation/SubmittingPatches | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
-
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 3faf7eb884..9ef624ce38 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -98,12 +98,17 @@ should skip the full stop.  It is also conventional in most cases to
+ prefix the first line with "area: " where the area is a filename or
+ identifier for the general area of the code being modified, e.g.
+ 
+-  . archive: ustar header checksum is computed unsigned
+-  . git-cherry-pick.txt: clarify the use of revision range notation
++  . doc: clarify distinction between sign-off and pgp-signing
++  . githooks.txt: improve the intro section
+ 
+ If in doubt which identifier to use, run "git log --no-merges" on the
+ files you are modifying to see the current conventions.
+ 
++It's customary to start the remainder of the first line after "area: "
++with a lower-case letter. E.g. "doc: clarify...", not "doc:
++Clarify...", or "githooks.txt: improve...", not "githooks.txt:
++Improve...".
++
+ The body should provide a meaningful commit message, which:
+ 
+   . explains the problem the change tries to solve, iow, what is wrong
 -- 
 2.11.0
 
