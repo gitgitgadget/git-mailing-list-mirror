@@ -2,157 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDD5B20323
-	for <e@80x24.org>; Sat, 18 Mar 2017 11:10:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B31A20323
+	for <e@80x24.org>; Sat, 18 Mar 2017 11:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751438AbdCRLK0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 07:10:26 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36630 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750990AbdCRLKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 07:10:25 -0400
-Received: by mail-pf0-f193.google.com with SMTP id r137so7580849pfr.3
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 04:08:54 -0700 (PDT)
+        id S1751406AbdCRLdx (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 07:33:53 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37710 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751320AbdCRLdw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 07:33:52 -0400
+Received: by mail-wm0-f41.google.com with SMTP id n11so33112858wma.0
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 04:33:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=s3+dO7OAZBujhjV1IO7FtKdEWJKbUW4Ru9C9AQ+p9n4=;
-        b=DtzBZJW75sgqYargxIslvLOwl2wchm2ch6Mkjb+HnI7YX9FNU6e2f+et2Yjvg1IrqB
-         sfb9V/WNgzpjGCWyq4vA+JfElQtuZRWpDqtZdXMiGLuNhADgIxMkKaX5eIWp6anATLM5
-         4+abWaJATlnwHzMEOv+UGnk38RrMSYa8/UfdU+gksKzR6SkXTc5jsoFEu51rERTHZt0A
-         Rskv8XZtrg7ubnM9SVr05dE4jaREoDctWWjLpVlpD/QF2HunMrUf3AW6KegYYX4p6+JN
-         /nVCs1YFKvypcGRXnWR70w6jBItwC54a4ElHN7LCIw8gZsb4SSiuqj7kuMYnIIahpxGF
-         F8wA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZXo3JXHIeqb1wfDDQz2FBujdi8K5oRCEmwxwIwESDwQ=;
+        b=Ob+c/kuVHQ3aSTbCN18ALbfNQdbLoLANA/8A13rldJL5vBbW+Ih37EIqNpr9LfRrHK
+         ybDs6iv/8GT1mfkhH1eBW3m65gP0XQF7wP/pAPsUBweYtI2yWk8kc0YudfzzdZ7T3L4L
+         +GPD8+WMVFGMwn+1aUlALB3CYcqh5uzKK6EtZJEV3PfJpSBSGc9PwVRQ+8ZrjlCWcq/s
+         rE5EgCIhZS9aNHc5nWxnThTPXpupMi3Jgml6FXv0xMLRx5EQPpMmsbAOKi3BpzaL0/CG
+         x4OW4ifiDrttpxj9ulhenGuaafpW23ANniaiQetW+1h7T7B09Ik4G2Vv8aFQT/G+OrDN
+         1WXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=s3+dO7OAZBujhjV1IO7FtKdEWJKbUW4Ru9C9AQ+p9n4=;
-        b=r9DCFwTa5eCkTYDOPvTSUCjyk4C6H+j0XbcumoVuCwIb1jJr+xMe8qKaw9HsLDJo+J
-         tOCL3IKqW34spskow3l/JIR6BDY7Cp1ICUDGwm9YPSOYyx9IUxBkr/azot+U6NJoQKSM
-         fd/DloKdGgaxk4nHs/M0dQyXfbjNoXNgKBzoOWOHfc2x22sa1W9a/Ie0EsOuPvrknxm6
-         z95npai2wIiMgbM0z+2LXmoB91kd//X/jR+Qk02hQIQQd0z4mrzVYpl5CFQc6sWxRABX
-         9Xfa0z6MvkYhPNHws93jUqCYsAGscOsmZvCTo9E7G/xDIAuGJCBSDv/hkeOTom7Fr3Yy
-         rm+w==
-X-Gm-Message-State: AFeK/H3JPu9O2llOzq2D9bB9GJpA+DQpU7h2iSP3h/G0KiIEwTr6uOr0fyN0Fi3g27MGxw==
-X-Received: by 10.84.233.200 with SMTP id m8mr25845509pln.92.1489831349424;
-        Sat, 18 Mar 2017 03:02:29 -0700 (PDT)
-Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id c1sm21730440pfk.112.2017.03.18.03.02.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Mar 2017 03:02:28 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 17:02:24 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ZXo3JXHIeqb1wfDDQz2FBujdi8K5oRCEmwxwIwESDwQ=;
+        b=h0rlGBFXZP1do+e5O7pVe+kR+Q1G751AQS2noJF6JWyYfuu0tdlNv0ZL9+AfGPrByR
+         iEAlUx0K2xo/CyYk+N6myJxs3fNzoVM10b5H/pJR9BCz33upASxidm4+wvfI9ifVTxcZ
+         ywVqVxEPgoKx5tBdxGLWXh1pqa0/ufJWGD2E3YYjgUb+n5pqfYyu2gk4K+8KID/7kvSH
+         15gESUz3gH08Ze3cEEiBLk24m58Ahf9SrSsiZ3mtSx9K4H543zSfovhhRoE0e3fAyoaR
+         dV84TThJxQjZuyZb7vEmL4zRyLH5+Y9wXy02A3wnle8b8kI0ndWaloLu5ZA2M7qcQp62
+         61Ug==
+X-Gm-Message-State: AFeK/H2BPSilrOS44D9sX4viZtzAB4q/zWZZ2vcyvAvH6r5waSGVFlq4s/GHlBikgP1gFw==
+X-Received: by 10.28.51.140 with SMTP id z134mr2286291wmz.55.1489833190133;
+        Sat, 18 Mar 2017 03:33:10 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id j34sm13007928wre.7.2017.03.18.03.33.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 18 Mar 2017 03:33:09 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v3 2/4] refs: introduce get_worktree_ref_store()
-Date:   Sat, 18 Mar 2017 17:02:04 +0700
-Message-Id: <20170318100206.5980-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170318100206.5980-1-pclouds@gmail.com>
-References: <20170216120302.5302-1-pclouds@gmail.com>
- <20170318100206.5980-1-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/8] Various changes to the "tag" command
+Date:   Sat, 18 Mar 2017 10:32:48 +0000
+Message-Id: <20170318103256.27141-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-files-backend at this point is still aware of the per-repo/worktree
-separation in refs, so it can handle a linked worktree.
+This series incorporates and replaces all the "tag" patches I have
+floating around the list, and adds a lot in the mix which discovered
+while working on the initial two patches, but which made sense as
+separate patches.
 
-Some refs operations are known not working when current files-backend is
-used in a linked worktree (e.g. reflog). Tests will be written when
-refs_* functions start to be called with worktree backend to verify that
-they work as expected.
+It's based no top of Jeff's gitster/jk/ref-filter-flags-cleanup.
 
-Note: accessing a worktree of a submodule remains unaddressed. Perhaps
-after get_worktrees() can access submodule (or rather a new function
-get_submodule_worktrees(), that lists worktrees of a submodule), we can
-update this function to work with submodules as well.
----
- refs.c | 32 ++++++++++++++++++++++++++++++++
- refs.h |  2 ++
- 2 files changed, 34 insertions(+)
+I'm bundling this all together because a lot of these patches touch
+the exact same code, and in other cases subsequent patches make use of
+test suite improvements I made earlier in the series. So although some
+could be split out entirely (e.g. the --point-at patch), I'd like to
+just present them all for review together & split out any if there's
+strong objections to basing them on top of each other.
 
-diff --git a/refs.c b/refs.c
-index 77a39f8b17..6695140cfe 100644
---- a/refs.c
-+++ b/refs.c
-@@ -10,6 +10,7 @@
- #include "object.h"
- #include "tag.h"
- #include "submodule.h"
-+#include "worktree.h"
- 
- /*
-  * List of all available backends
-@@ -1593,6 +1594,37 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- 	return refs;
- }
- 
-+struct ref_store *get_worktree_ref_store(const struct worktree *wt)
-+{
-+	struct ref_store *refs;
-+	unsigned int refs_all_capabilities =
-+		REF_STORE_READ | REF_STORE_WRITE |
-+		REF_STORE_ODB | REF_STORE_MAIN;
-+
-+	if (wt->is_current)
-+		return get_main_ref_store();
-+
-+	/*
-+	 * We share the same hash map with submodules for
-+	 * now. submodule paths are always relative (to topdir) while
-+	 * worktree paths are always absolute. No chance of conflict.
-+	 */
-+	refs = lookup_submodule_ref_store(wt->path);
-+	if (refs)
-+		return refs;
-+
-+	if (wt->id)
-+		refs = ref_store_init(git_common_path("worktrees/%s", wt->id),
-+				      refs_all_capabilities);
-+	else
-+		refs = ref_store_init(get_git_common_dir(),
-+				      refs_all_capabilities);
-+
-+	if (refs)
-+		register_submodule_ref_store(refs, wt->path);
-+	return refs;
-+}
-+
- void base_ref_store_init(struct ref_store *refs,
- 			 const struct ref_storage_be *be)
- {
-diff --git a/refs.h b/refs.h
-index 49e97d7d5f..6df69a2adb 100644
---- a/refs.h
-+++ b/refs.h
-@@ -5,6 +5,7 @@ struct object_id;
- struct ref_store;
- struct strbuf;
- struct string_list;
-+struct worktree;
- 
- /*
-  * Resolve a reference, recursively following symbolic refererences.
-@@ -655,5 +656,6 @@ struct ref_store *get_main_ref_store(void);
-  * submodule==NULL.
-  */
- struct ref_store *get_submodule_ref_store(const char *submodule);
-+struct ref_store *get_worktree_ref_store(const struct worktree *wt);
- 
- #endif /* REFS_H */
+I think this series changes addresses all the points brought up by
+Junio/Jeff about my previous patches, except there's no extensive
+discussion of how the filtering mechanism works in general as pointed
+out by Junio in <xmqqwpbvumrk.fsf@gitster.mtv.corp.google.com>.
+
+I think it makes sense to have that, but in the interest of getting
+something out the door I'm not working on that for now.
+
+Ævar Arnfjörð Bjarmason (8):
+  tag: Remove a TODO item from the test suite
+  tag: Refactor the options handling code to be less bizarro
+  tag: Change  misleading --list <pattern> documentation
+  tag: Implicitly supply --list given another list-like option
+  tag: Implicitly supply --list given the -n option
+  ref-filter: Add --no-contains option to tag/branch/for-each-ref
+  tag: Add tests for --with and --without
+  tag: Change --point-at to default to HEAD
+
+ Documentation/git-branch.txt           |  15 ++-
+ Documentation/git-for-each-ref.txt     |   6 +-
+ Documentation/git-tag.txt              |  44 ++++---
+ builtin/branch.c                       |   4 +-
+ builtin/for-each-ref.c                 |   3 +-
+ builtin/tag.c                          |  36 ++++--
+ contrib/completion/git-completion.bash |   4 +-
+ parse-options.h                        |   4 +-
+ ref-filter.c                           |  19 ++-
+ ref-filter.h                           |   1 +
+ t/t3201-branch-contains.sh             |  51 +++++++-
+ t/t6302-for-each-ref-filter.sh         |  16 +++
+ t/t7004-tag.sh                         | 226 +++++++++++++++++++++++++++++++--
+ 13 files changed, 371 insertions(+), 58 deletions(-)
+
 -- 
-2.11.0.157.gd943d85
+2.11.0
 
