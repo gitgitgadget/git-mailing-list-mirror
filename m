@@ -2,87 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5878A2095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 22:45:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 409DB2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 22:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751277AbdCRWpj convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 18 Mar 2017 18:45:39 -0400
-Received: from smtpfb2-g21.free.fr ([212.27.42.10]:49657 "EHLO
-        smtpfb2-g21.free.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751289AbdCRWpj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 18:45:39 -0400
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
-        by smtpfb2-g21.free.fr (Postfix) with ESMTP id 4CB0BB63895
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 23:18:56 +0100 (CET)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
-        by smtp2-g21.free.fr (Postfix) with ESMTPS id B2EFA200398
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 23:17:10 +0100 (CET)
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] l10n: Introduce framework for localizing man pages
-Date:   Sat, 18 Mar 2017 23:17:10 +0100
-Message-ID: <1595815.mnbOBApe2i@cayenne>
-User-Agent: KMail/5.2.3 (Linux/4.9.0-2-amd64; KDE/5.28.0; x86_64; ; )
-In-Reply-To: <xmqqfuia1ifx.fsf@gitster.mtv.corp.google.com>
-References: <20170312200248.3610-1-jn.avila@free.fr> <20170318175353.24578-1-jn.avila@free.fr> <xmqqfuia1ifx.fsf@gitster.mtv.corp.google.com>
+        id S1751284AbdCRWsp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 18:48:45 -0400
+Received: from mail-it0-f41.google.com ([209.85.214.41]:36062 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751218AbdCRWsp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 18:48:45 -0400
+Received: by mail-it0-f41.google.com with SMTP id w124so56052014itb.1
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 15:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=a2FgFCpL0ho6kWmGM6hjy3akrIkPMWfWzBSzanvUrts=;
+        b=vFKqdjFK2koAex8xJ3Xz3848v/rU2GlfSugg1uF8Gdxc8SBcK2PLE9FSCJs+gdoYqZ
+         pOCu1K/rPmijRJeOcM2FNb+uUuhxPU+sLtpkufWIQQBrvzFUU1rFdXHTm3vjKI6c3acH
+         0eEnF0LKvUW6ooBKfz21d5oZ3jwDXhvYjgVAD9ibt0jhW4usWCJ0IR96kTGryvaDkjz4
+         pCjUKNM8UZ9mfKwR9HHp8Xx7vdvCRXnQIGeBUSv8cRYGzaAfYC1C51O3zFXrJoPNCcHA
+         mojrworIO7vudj+SH2Bh1GyHFey+sEpot/1SPLxXOt/uOJyWuT+FKVvzXByBSt6yBfkc
+         DvKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=a2FgFCpL0ho6kWmGM6hjy3akrIkPMWfWzBSzanvUrts=;
+        b=ZCv4oiLRJOOBhaqlLv1ChrLbpxoJiJ7csd4o72YGf//2UlFWB5s1zXiBC2m0BCiDl+
+         53pjuR2tUvaUO7kHitdsVxbJi4miAf+GGullYbTBG4gWt6v/PHP6B1Z+98mDWgQ4Q+F9
+         UQsqAt6ZRGYyEgzEBaUtF6MeCZvk6ZjYDqDSGuNfu3H0GbtkJ0fO1JyAlGsCIOkle3zN
+         NLJmTa82dD4SjvvqPGbPoVb6SX3J1uB6NWYets+QntBmW3vJUKOHvy2pOY8RAYGxpGJo
+         V5VMBTzdIqa7OvDhg9hvwQyDySj5i55+S6zXIBAaDbWH5fYXJX/Zkm9yP/+MHjw9b2ya
+         pykw==
+X-Gm-Message-State: AFeK/H25teQE3eDNAUoQEfq5EWOw3Wt4hoRKcLJS3TBg2zU0vwkT0S5lqUVXrWiYWuxJoVfuQcTXSku8kzXGnA==
+X-Received: by 10.36.224.195 with SMTP id c186mr4557572ith.24.1489877275815;
+ Sat, 18 Mar 2017 15:47:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="iso-8859-1"
+Received: by 10.107.130.208 with HTTP; Sat, 18 Mar 2017 15:47:35 -0700 (PDT)
+In-Reply-To: <20170318222311.9993-1-dennis@kaarsemaker.net>
+References: <451E4A46-BA43-41A5-9E68-DE0D89BE676A@csh.rit.edu> <20170318222311.9993-1-dennis@kaarsemaker.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 18 Mar 2017 23:47:35 +0100
+Message-ID: <CACBZZX5j1dYk8aeRED7T7iJ=b32aFUpfUWPpMpmtofBL3QnVXQ@mail.gmail.com>
+Subject: Re: [PATCH] send-email: Net::SMTP::SSL is obsolete, use only when necessary
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le samedi 18 mars 2017, 12:41:22 CET Junio C Hamano a écrit :
-> Jean-Noel Avila <jn.avila@free.fr> writes:
-> > Providing git in localized version is a good step for general adoption
-> > of the tool. But as of now, if one needs to refer to the manual pages,
-> > they are still confronted to english. The aim is to provide
-> > documentation to users in their own language.
-> 
-> Please outline how the end result looks like here.  Where are the
-> localized man pages installed?  Do installers get to choose to build
-> and install the localization for some but not all languages and if
-> so how?  etc.
-> 
-> > signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
-> 
-> s/sign/Sign/;
-> 
-> > -man: man1 man5 man7
-> > +man: man1 man5 man7 man_l10n
-> 
-> Hmmm, at least in the early days of the topic, I'd prefer that "make
-> doc" and "make install" I need to run dozens of times a day from the
-> toplevel not to require po4a.
-> 
-> Thanks.
+On Sat, Mar 18, 2017 at 11:23 PM, Dennis Kaarsemaker
+<dennis@kaarsemaker.net> wrote:
+> Net::SMTP itself can do the necessary SSL and STARTTLS bits just fine
+> since version 1.28, and Net::SMTP::SSL is now deprecated. Since 1.28
+> isn't that old yet, keep the old code in place and use it when
+> necessary.
+>
+> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+> ---
+>  Note: I've only been able to test the starttls bits. None of the smtp servers
+>  I use actually use ssl, only starttls.
+>
+>  git-send-email.perl | 52 ++++++++++++++++++++++++++++++++++------------------
+>  1 file changed, 34 insertions(+), 18 deletions(-)
+>
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index eea0a517f7..e247ea39dd 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1353,10 +1353,12 @@ EOF
+>                         die __("The required SMTP server is not properly defined.")
+>                 }
+>
+> +               require Net::SMTP;
+> +               my $use_net_smtp_ssl = $Net::SMTP::VERSION lt "1.28";
+> +               $smtp_domain ||= maildomain();
+> +
 
-Fair enough. 
+While Net::SMTP is unlikely to change its versioning scheme, let's use
+comparisons via the version module here in case they do change it to
+something silly, and this ends up introducing a bug.
 
-Anyway, now I see  there's a take away from the discussion thread. Right now 
-the man pages are tagged with the actual version of git, because the 
-documentation is supposed to change at the same pace as the code. But that may 
-not be true for translations, In this case, the automatic running of po4a will 
-generate fuzzy matches which are not going to be used in the translated texts, 
-leading to patchworked manpages, depending on the level of acceptance of 
-untranslated entities.
+E.g. 04.00 would be considered a higher version by CPAN than 1.28, but
+not by this code:
 
-If we want to freeze the translated manpages at a given version of git until a 
-new version of the manpages is fully translated, we'll have to commit the 
-translated .txt and force in some way the version to freeze (not using the 
-generic asciidoc target of the Makefile).  But, that may drag the version of 
-translations far behind the original if translation is stalled.
+    $ perl -wE 'my ($x, $y) = @ARGV; my ($vx, $vy) = map {
+version->parse($_) } ($x, $y); say $vx < $vy ? "vlower" : "vhigher";
+say $x lt $y ? "slower" : "shigher"' 04.00 1.28
+    vhigher
+    slower
 
-Or maybe people will not be so upset by mixed language manpages when the 
-translation is lagging, but will prefer to have a "best available translation" 
-of up-to-date pages. Plus that would be managed automatically by po4a's level 
-of translation threshold to effectively generate a translated man page as long 
-as the untranslated parts are still sparse in the mixed-up text.
+If we grep ::VERSION we can find other cases where we've gotten this
+wrong, unlikely to bite us in practice, but version.pm is in core (so
+core that you don't even need to use/require it), so let's do this
+better for new code.
 
-For now, I keep this last option.
+
+>[...]
+> +                                       if ($smtp->code != 220) {
+> +                                               die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
+
+Here a new message you're adding gets __(), makes sense.
+
+> +                                       }
+> +                                       require Net::SMTP::SSL;
+>                                         $smtp = Net::SMTP::SSL->start_SSL($smtp,
+>                                                                           ssl_verify_params())
+>                                                 or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
+> -                                       $smtp_encryption = '';
+> -                                       # Send EHLO again to receive fresh
+> -                                       # supported commands
+> -                                       $smtp->hello($smtp_domain);
+> -                               } else {
+> -                                       die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
+>                                 }
+> +                               else {
+> +                                       $smtp->starttls(ssl_verify_params())
+> +                                               or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
+> +                               }
+
+I see you just copied that from above but I wonder if it makes sense
+to just mark both occurrences with __() too while we're at it.
