@@ -2,177 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBB422095D
-	for <e@80x24.org>; Sat, 18 Mar 2017 02:14:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF2D42095D
+	for <e@80x24.org>; Sat, 18 Mar 2017 02:14:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751272AbdCRCOB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 22:14:01 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35776 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751121AbdCRCN7 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751292AbdCRCOC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 22:14:02 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62511 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751072AbdCRCN7 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 17 Mar 2017 22:13:59 -0400
-Received: by mail-pf0-f196.google.com with SMTP id x63so10220794pfx.2
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 19:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aoBWalB6fj/WELsfAYXu8NHUZCcTvfFWtosXj0cmu88=;
-        b=hLPWekm8V6Tq5/pxhgD06LXNCO7IaVsvy1Y7fBjtILKfQbE0mm7KEy4dgE6e3ssxDr
-         2rNfmbDyZ3tJKu/pMwE1F4Wnb7dNM6hXmdQ1RyjfUQTl3/cS0A0pIscFepzSZ0ysMxiz
-         TGWEju0Expi9pPPtFDI28wXymqwoLmzXwN7/pfhP+58Ni/6YHA3KNnKhllE5unMEEeaS
-         RG8yYK8yaWJYtlrZ2WFJKrqmh2RW5x+Qbl6uROJc2ypUeaHfJKBuoGNqaII6wZ0OKcEX
-         DJV/FVqlUYqT58tXDpaI5vZx5bv2K57Y0iEu3qh534LgXunMNBiNmkDd85Y7dXzQuoV8
-         bx9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aoBWalB6fj/WELsfAYXu8NHUZCcTvfFWtosXj0cmu88=;
-        b=Zo90f6j/YYzoPuy4ZmirjEdYw53tiup5rh0d+TaRYYk/v2H3jFymu8SmR9VJs+ZUq6
-         tZVRrwH942r2g/pwK0fW8BKC7k0THoMeYK54gHlDYlKJAURLIriBPIJnOj59GA7KphD/
-         gWoOp5sEmmBD4HUG97uUd4lmj8zGsRml8gPKA+//G/vCgsKA9WOABLPZhaFjk/s47YR4
-         7ITmKB8rffCQiKKDIidwBGL2PA2uZmAIXpbQNPLJu4aiJelEfH5rGG24E24kqDNtXTA+
-         zHlLmU6GYySkeDoEstzFr5kN87W1v+dfz4aPo51y8VV2emo0/U4DbmEMghdKuG4jzoBj
-         uAmg==
-X-Gm-Message-State: AFeK/H3MAyzpwW+6srJgMBhiP+Lu3fTbH8OdRpzcgGz8E9DWjuoecYw2Z94IJZ5ZbhKg4A==
-X-Received: by 10.98.152.91 with SMTP id q88mr20168748pfd.69.1489802760956;
-        Fri, 17 Mar 2017 19:06:00 -0700 (PDT)
-Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id 73sm19150468pfj.31.2017.03.17.19.05.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Mar 2017 19:06:00 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 09:05:54 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v6 19/27] refs: rename get_ref_store() to get_submodule_ref_store() and make it public
-Date:   Sat, 18 Mar 2017 09:03:29 +0700
-Message-Id: <20170318020337.22767-20-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170318020337.22767-1-pclouds@gmail.com>
-References: <20170222140450.30886-1-pclouds@gmail.com>
- <20170318020337.22767-1-pclouds@gmail.com>
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B4417E283;
+        Fri, 17 Mar 2017 21:36:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Eek5C+4BCmpk1yPq4OvbpOWVQQ0=; b=NowNrF
+        SS7BmtjoaX5/sgyFdlOgsU2K7QfBqatod4e5ear6pLenHQ58eOgUrV1VkzgdGoix
+        H+V45FyCg3Bs+BariqJD4cMYSCQGS7Ke1Q4vtQFGgweiE/JKfwlB5joUam2fyPer
+        hM2FkOUiHkY3XooyAGNKngwlPd7MU6bm9K5fQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=c52i8auAPaKUIUhF1zMbP7XMs2wb00qD
+        fBaDKin7doc7E9NhE+gW0P3ZmWSGXJvaeBpxtc8q0+r8E2AawKHf6af5BYu06MVe
+        D6dV8m7tAbzqSTeHx7C0IpUyBqNuC/CRQq8TrsdhsvyNRQqeYxmvDMv0ATBt7Yeh
+        22AIJvvzjCA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63F7C7E282;
+        Fri, 17 Mar 2017 21:36:45 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CA6487E280;
+        Fri, 17 Mar 2017 21:36:44 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     pclouds@gmail.com, jrnieder@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/git-worktree: use working tree for trees on the file system
+References: <20170317222842.GP26789@aiede.mtv.corp.google.com>
+        <20170317225110.13417-1-sbeller@google.com>
+Date:   Fri, 17 Mar 2017 18:36:43 -0700
+In-Reply-To: <20170317225110.13417-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 17 Mar 2017 15:51:10 -0700")
+Message-ID: <xmqq60j75psk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 584CC6B6-0B7B-11E7-A0D3-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function is intended to replace *_submodule() refs API. It provides
-a ref store for a specific submodule, which can be operated on by a new
-set of refs API.
+Stefan Beller <sbeller@google.com> writes:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- refs.c               | 12 ++++++++----
- refs.h               | 11 +++++++++++
- refs/refs-internal.h | 12 ------------
- 3 files changed, 19 insertions(+), 16 deletions(-)
+> -List details of each worktree.  The main worktree is listed first, followed by
+> -each of the linked worktrees.  The output details include if the worktree is
+> -bare, the revision currently checked out, and the branch currently checked out
+> -(or 'detached HEAD' if none).
+> +List details of each working tree.  The main working tree is listed first,
+> +followed by each of the linked working trees.  The output details include if
+> +the working tree is bare, the revision currently checked out, and the branch
+> +currently checked out (or 'detached HEAD' if none).
 
-diff --git a/refs.c b/refs.c
-index 305ab71249..b179fb3106 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1171,7 +1171,7 @@ int head_ref(each_ref_fn fn, void *cb_data)
- static int do_for_each_ref(const char *submodule, const char *prefix,
- 			   each_ref_fn fn, int trim, int flags, void *cb_data)
- {
--	struct ref_store *refs = get_ref_store(submodule);
-+	struct ref_store *refs = get_submodule_ref_store(submodule);
- 	struct ref_iterator *iter;
- 
- 	if (!refs)
-@@ -1344,10 +1344,10 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
- 		/* We need to strip off one or more trailing slashes */
- 		char *stripped = xmemdupz(submodule, len);
- 
--		refs = get_ref_store(stripped);
-+		refs = get_submodule_ref_store(stripped);
- 		free(stripped);
- 	} else {
--		refs = get_ref_store(submodule);
-+		refs = get_submodule_ref_store(submodule);
- 	}
- 
- 	if (!refs)
-@@ -1463,13 +1463,17 @@ static void register_submodule_ref_store(struct ref_store *refs,
- 		    submodule);
- }
- 
--struct ref_store *get_ref_store(const char *submodule)
-+struct ref_store *get_submodule_ref_store(const char *submodule)
- {
- 	struct strbuf submodule_sb = STRBUF_INIT;
- 	struct ref_store *refs;
- 	int ret;
- 
- 	if (!submodule || !*submodule) {
-+		/*
-+		 * FIXME: This case is ideally not allowed. But that
-+		 * can't happen until we clean up all the callers.
-+		 */
- 		return get_main_ref_store();
- 	}
- 
-diff --git a/refs.h b/refs.h
-index a6cd12267f..e6d8f67895 100644
---- a/refs.h
-+++ b/refs.h
-@@ -562,5 +562,16 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- int ref_storage_backend_exists(const char *name);
- 
- struct ref_store *get_main_ref_store(void);
-+/*
-+ * Return the ref_store instance for the specified submodule. For the
-+ * main repository, use submodule==NULL; such a call cannot fail. For
-+ * a submodule, the submodule must exist and be a nonbare repository,
-+ * otherwise return NULL. If the requested reference store has not yet
-+ * been initialized, initialize it first.
-+ *
-+ * For backwards compatibility, submodule=="" is treated the same as
-+ * submodule==NULL.
-+ */
-+struct ref_store *get_submodule_ref_store(const char *submodule);
- 
- #endif /* REFS_H */
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 0cca280b5c..f20dde39ee 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -646,18 +646,6 @@ struct ref_store {
- void base_ref_store_init(struct ref_store *refs,
- 			 const struct ref_storage_be *be);
- 
--/*
-- * Return the ref_store instance for the specified submodule. For the
-- * main repository, use submodule==NULL; such a call cannot fail. For
-- * a submodule, the submodule must exist and be a nonbare repository,
-- * otherwise return NULL. If the requested reference store has not yet
-- * been initialized, initialize it first.
-- *
-- * For backwards compatibility, submodule=="" is treated the same as
-- * submodule==NULL.
-- */
--struct ref_store *get_ref_store(const char *submodule);
--
- const char *resolve_ref_recursively(struct ref_store *refs,
- 				    const char *refname,
- 				    int resolve_flags,
--- 
-2.11.0.157.gd943d85
+I do not think this is correct.
+
+Think of a "worktree" something that roughly corresponds to
+different location you can refer to with $GIT_DIR.
+
+A $GIT_DIR may be a true repository.  Or it may be borrowing many of
+the things from its primary repository.  Even though "git worktree"
+Porcelain may not currently be equipped to create a "bare" $GIT_DIR,
+there is no fundamental reason that a secondary "worktree" must have
+a working tree, i.e. a "worktree" could be a "bare" one (it would be
+the first use of per-worktree config; a secondary worktree that is a
+bare can be made by borrowing from the primary worktree that has a
+working tree).
+
+Now, what does "git worktree list" enumearate?  It does not list
+"working trees"; its output are list of things, each of which you
+could point at with $GIT_DIR and work with.
 
