@@ -2,132 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 409DB2095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 22:48:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBD4F2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 22:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751284AbdCRWsp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 18:48:45 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:36062 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751218AbdCRWsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 18:48:45 -0400
-Received: by mail-it0-f41.google.com with SMTP id w124so56052014itb.1
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 15:47:56 -0700 (PDT)
+        id S1751269AbdCRWyp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 18:54:45 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35644 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751181AbdCRWyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 18:54:44 -0400
+Received: by mail-wr0-f195.google.com with SMTP id u108so13647464wrb.2
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 15:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=a2FgFCpL0ho6kWmGM6hjy3akrIkPMWfWzBSzanvUrts=;
-        b=vFKqdjFK2koAex8xJ3Xz3848v/rU2GlfSugg1uF8Gdxc8SBcK2PLE9FSCJs+gdoYqZ
-         pOCu1K/rPmijRJeOcM2FNb+uUuhxPU+sLtpkufWIQQBrvzFUU1rFdXHTm3vjKI6c3acH
-         0eEnF0LKvUW6ooBKfz21d5oZ3jwDXhvYjgVAD9ibt0jhW4usWCJ0IR96kTGryvaDkjz4
-         pCjUKNM8UZ9mfKwR9HHp8Xx7vdvCRXnQIGeBUSv8cRYGzaAfYC1C51O3zFXrJoPNCcHA
-         mojrworIO7vudj+SH2Bh1GyHFey+sEpot/1SPLxXOt/uOJyWuT+FKVvzXByBSt6yBfkc
-         DvKQ==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=NaRfLd3VdsyzhPsGguN7Q1LT5lJZrzGWJ/JF8T8aK/E=;
+        b=til3oTBupDjT+lZWJU2ECDzNdjaeH2xwurnh1sj2TKOHGjb+yzMwBXxomRfHY8p83Q
+         IhpGE9bKi8Na1v8T1GgQmxPoKeipE8QI9AQzMTG0GaSRV1w3ACyhNrcAHYirLUuxbKDQ
+         zILZuk6lYGILqSt7JlGrwgwacJ7w18fg5DxedjAUTCR843Js47s6RQ/+gHVWmRRUj/Fy
+         vJFV22xGZh4KnHgHcDLbRYhpryaPdQCQf6Umk2P6/HXuEU7x98lJIX+u56pCBp7fThcz
+         yxC7u/wXwCgPtMpHlX07eHb/I9bhkXCr34U1xUth3PGC0M3f7pppYEnXxy05pXAqnIYC
+         lpYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=a2FgFCpL0ho6kWmGM6hjy3akrIkPMWfWzBSzanvUrts=;
-        b=ZCv4oiLRJOOBhaqlLv1ChrLbpxoJiJ7csd4o72YGf//2UlFWB5s1zXiBC2m0BCiDl+
-         53pjuR2tUvaUO7kHitdsVxbJi4miAf+GGullYbTBG4gWt6v/PHP6B1Z+98mDWgQ4Q+F9
-         UQsqAt6ZRGYyEgzEBaUtF6MeCZvk6ZjYDqDSGuNfu3H0GbtkJ0fO1JyAlGsCIOkle3zN
-         NLJmTa82dD4SjvvqPGbPoVb6SX3J1uB6NWYets+QntBmW3vJUKOHvy2pOY8RAYGxpGJo
-         V5VMBTzdIqa7OvDhg9hvwQyDySj5i55+S6zXIBAaDbWH5fYXJX/Zkm9yP/+MHjw9b2ya
-         pykw==
-X-Gm-Message-State: AFeK/H25teQE3eDNAUoQEfq5EWOw3Wt4hoRKcLJS3TBg2zU0vwkT0S5lqUVXrWiYWuxJoVfuQcTXSku8kzXGnA==
-X-Received: by 10.36.224.195 with SMTP id c186mr4557572ith.24.1489877275815;
- Sat, 18 Mar 2017 15:47:55 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sat, 18 Mar 2017 15:47:35 -0700 (PDT)
-In-Reply-To: <20170318222311.9993-1-dennis@kaarsemaker.net>
-References: <451E4A46-BA43-41A5-9E68-DE0D89BE676A@csh.rit.edu> <20170318222311.9993-1-dennis@kaarsemaker.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 18 Mar 2017 23:47:35 +0100
-Message-ID: <CACBZZX5j1dYk8aeRED7T7iJ=b32aFUpfUWPpMpmtofBL3QnVXQ@mail.gmail.com>
-Subject: Re: [PATCH] send-email: Net::SMTP::SSL is obsolete, use only when necessary
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=NaRfLd3VdsyzhPsGguN7Q1LT5lJZrzGWJ/JF8T8aK/E=;
+        b=OC+kuPJy4QDW3+OTvRuvtr5znBZgHrbzudtEVFFh3RZpT3Wx5B4z9/xVmKWLkNuZB0
+         EmIKjIQwyi2iIan5z7VRDTk2hFhnvQasjEuV3DSxnnVUV4bHGqXoZN26hIMwiWDVkmvT
+         5KzUJoV2tMPgZva0nUi6PkfyokFuVjz9OUN6frw8sR9009e5eVGX3Ell2EKjkn6Y3SeU
+         NaLpoWmDtnJtfu9JJ7wwnkb3Yx3lUfPtiFvKmRJ5hNg23pjvawlWrfdtc1KViiDVVndi
+         IpCoVI4BgkDgGj4skUZtOgq0uj/RzE+m7y+iog0QDDG/DOScRv9byCwME+bp/zaTHOZ0
+         azzw==
+X-Gm-Message-State: AFeK/H3B+kCeN9wp615PSePlcPuG/XDlHUzah8OnzupM7S8geH/FTc30hoKlAD1SslF2CQ==
+X-Received: by 10.223.174.164 with SMTP id y33mr18742718wrc.166.1489877674599;
+        Sat, 18 Mar 2017 15:54:34 -0700 (PDT)
+Received: from [192.168.1.80] ([145.129.9.233])
+        by smtp.gmail.com with ESMTPSA id m188sm7729436wma.27.2017.03.18.15.54.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 18 Mar 2017 15:54:33 -0700 (PDT)
+Message-ID: <1489877673.24742.1.camel@kaarsemaker.net>
+Subject: Re: How do I make 'git diff --no-index' follow symlinks?
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Date:   Sat, 18 Mar 2017 23:54:33 +0100
+In-Reply-To: <xmqqk27m1ixf.fsf@gitster.mtv.corp.google.com>
+References: <CACBZZX6Bknimu26in8YG7TbsL3hEpmXTYwQAZQ5xK-DFoSatEg@mail.gmail.com>
+         <xmqqk27m1ixf.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 18, 2017 at 11:23 PM, Dennis Kaarsemaker
-<dennis@kaarsemaker.net> wrote:
-> Net::SMTP itself can do the necessary SSL and STARTTLS bits just fine
-> since version 1.28, and Net::SMTP::SSL is now deprecated. Since 1.28
-> isn't that old yet, keep the old code in place and use it when
-> necessary.
->
-> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> ---
->  Note: I've only been able to test the starttls bits. None of the smtp servers
->  I use actually use ssl, only starttls.
->
->  git-send-email.perl | 52 ++++++++++++++++++++++++++++++++++------------------
->  1 file changed, 34 insertions(+), 18 deletions(-)
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index eea0a517f7..e247ea39dd 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1353,10 +1353,12 @@ EOF
->                         die __("The required SMTP server is not properly defined.")
->                 }
->
-> +               require Net::SMTP;
-> +               my $use_net_smtp_ssl = $Net::SMTP::VERSION lt "1.28";
-> +               $smtp_domain ||= maildomain();
-> +
+On Sat, 2017-03-18 at 12:30 -0700, Junio C Hamano wrote:
+> Sounds like
+> 
+>     https://public-inbox.org/git/20161111201958.2175-1-dennis@kaarsemaker.net/
+> 
+> to me.  A key message in the thread may be:
+> 
+>     https://public-inbox.org/git/alpine.DEB.2.20.1611121106110.3746@virtualbox/
 
-While Net::SMTP is unlikely to change its versioning scheme, let's use
-comparisons via the version module here in case they do change it to
-something silly, and this ends up introducing a bug.
+Sorry for the delay in sending v3. I've had a serious case of
+Lennonitis (Life is what happens to you while you're busy making other
+plans).
 
-E.g. 04.00 would be considered a higher version by CPAN than 1.28, but
-not by this code:
-
-    $ perl -wE 'my ($x, $y) = @ARGV; my ($vx, $vy) = map {
-version->parse($_) } ($x, $y); say $vx < $vy ? "vlower" : "vhigher";
-say $x lt $y ? "slower" : "shigher"' 04.00 1.28
-    vhigher
-    slower
-
-If we grep ::VERSION we can find other cases where we've gotten this
-wrong, unlikely to bite us in practice, but version.pm is in core (so
-core that you don't even need to use/require it), so let's do this
-better for new code.
-
-
->[...]
-> +                                       if ($smtp->code != 220) {
-> +                                               die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
-
-Here a new message you're adding gets __(), makes sense.
-
-> +                                       }
-> +                                       require Net::SMTP::SSL;
->                                         $smtp = Net::SMTP::SSL->start_SSL($smtp,
->                                                                           ssl_verify_params())
->                                                 or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
-> -                                       $smtp_encryption = '';
-> -                                       # Send EHLO again to receive fresh
-> -                                       # supported commands
-> -                                       $smtp->hello($smtp_domain);
-> -                               } else {
-> -                                       die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
->                                 }
-> +                               else {
-> +                                       $smtp->starttls(ssl_verify_params())
-> +                                               or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
-> +                               }
-
-I see you just copied that from above but I wonder if it makes sense
-to just mark both occurrences with __() too while we're at it.
+D.
