@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87E4F2095B
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D4DE2095B
 	for <e@80x24.org>; Sat, 18 Mar 2017 18:42:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751695AbdCRSmT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 14:42:19 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34286 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751661AbdCRSmQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 14:42:16 -0400
-Received: by mail-wm0-f65.google.com with SMTP id u132so8112352wmg.1
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 11:42:15 -0700 (PDT)
+        id S1751778AbdCRSmV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 14:42:21 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36048 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751671AbdCRSmS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 14:42:18 -0400
+Received: by mail-wr0-f195.google.com with SMTP id l37so13190926wrc.3
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 11:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=aQaKInknjnz7EIxRRK6Cwej2q5psvVvFnPu4AoPVThA=;
-        b=d8CzNpKPQ5RqHcQeMO6xZOZsLmy3En24F4uP+T04LbXwKKbSkkqVThH+whjqf3qGdH
-         MMozCTSTWo8oYIbD4auNdgFWDf4fPUg4pTR3C5ZhOYzIxdOjNlSO4NGscb8syxAxhHjo
-         /kZ3B7y/iSExOKGqnL2ZdwvI7++mNYnR4zCIDZ7yQs1zByja85m+S7RjUaXGA2KkKuwt
-         cvsjPAwlLP9sBWjcuVniJMy/+feEieEXATI0zgNDc3xfgzvl6qv6bG+2HNNPLt1Xe/Vk
-         X1g3HMIswtqvEV7+vsOrG+o+nytSWRIRJunmu16QEGmPCcSgGvYJWfjGO5au1bYt2DRX
-         P4/Q==
+        bh=yNDamqA4aKMMXHB+MdwOQ5WeYbBOXgZxtAW8RS6mIyg=;
+        b=Ojqllia5nq4tXkil16HV6gD+d/gPrK0G9HR3nrutSaKPneupf9UaUHjvCpuS4PJXtw
+         Otak84wgQL5yh0RS62CgXI8fSxusx3BU+ehIPfw2shmD9Ru01cRChLjthtHbN1SdSTey
+         HfbDHez6Dn/MG9bOdOj1jG1qlrF3+vFQmil8LGvThPLDMIkf93IqC/Qj9axLtrTAGK3A
+         JaIjr9w0OpiAnhPLoEIowYkFBq2uyGmYrIlzq7MuFzA6WugAkIBCxWXg15eSL/+eNc9s
+         Hb/+i6CnUYJ3tOcJtzdolF0bbUto7tN1+dEx5VLp6MET5+0zbuJ3XHzZABAD27hUwMpX
+         IuMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=aQaKInknjnz7EIxRRK6Cwej2q5psvVvFnPu4AoPVThA=;
-        b=m8UQq94RVxEZzjR2SSnWk5KuaVujbtTdguw0JcaBqzLxvfI1aq/wpgLhMjdHY/Goe2
-         N5X1BD9/34l68OeX4fumpU5n5GcmxsX4k0HXZI1SeFXinZkSqvCk40mGc4fh2QMXm9u2
-         RMpLy29KBJBPojJrKCRXciEzJcXM+nriFpcWQOTwALeqQnVrnDPPLq/vF7wCCMiiITyl
-         Nl15BYntecQVAbT6Jch3Pid1gl3+MAq6VQjARLmQ23fv+gW9JCnAl1vBKeuZTH56tuEz
-         zXra3hDk8YySP1ZAHEDCY3ejyHpqZFh12gx7DW9SjOgYSSbReCiD7itJdgLAB7zCllse
-         e31Q==
-X-Gm-Message-State: AFeK/H2rp8PcO6gaLEmAIjOaETPqKe9TCo8Ec2KYXxIvfCnMuZCxBjxjo3wE/BWr9BOLvw==
-X-Received: by 10.28.9.213 with SMTP id 204mr3515989wmj.89.1489862534478;
-        Sat, 18 Mar 2017 11:42:14 -0700 (PDT)
+        bh=yNDamqA4aKMMXHB+MdwOQ5WeYbBOXgZxtAW8RS6mIyg=;
+        b=knUTcNh1lnX/EOexPoOf8hX2EmzVttQI34l5hGhUF089zP/w+/OqHju7fZAnQQJCfJ
+         Q7ULwI9/HdO5hMvx3jOBVldWgFfL8Ir4GgtZzIAO8FJvS2B9lIY67DL6lt0qskpNkbPO
+         ZYIZtsVkZLnL/HRq9rq+fHPMB8xaryUEwSTYcFzijaixuWLexzr306M6/x6/FKGgB07I
+         IqklpNkdvZNiRWdy3mbVp+mVMr+cF2tQN+VUSEFmD02x8zfu+7NHbvKlHAnBtsEYRQtG
+         8OmOOUOX+Qjetvw/5bas+1AQfJZNbslI/3/dh5EuG1WRDr+JWvAUNLEhdKgcMqwPgnsM
+         gMRQ==
+X-Gm-Message-State: AFeK/H0ajBD3YR/0QXY9MUvTaZKuPPM7wO5iSOuqD4vGBvnM3BM8yUzPFhr0U07UCTPGxA==
+X-Received: by 10.223.183.46 with SMTP id l46mr18488027wre.89.1489862536051;
+        Sat, 18 Mar 2017 11:42:16 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e16sm8026263wra.62.2017.03.18.11.42.13
+        by smtp.gmail.com with ESMTPSA id e16sm8026263wra.62.2017.03.18.11.42.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 18 Mar 2017 11:42:13 -0700 (PDT)
+        Sat, 18 Mar 2017 11:42:15 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/2] doc/SubmittingPatches: clarify the casing convention for "area: change..."
-Date:   Sat, 18 Mar 2017 18:42:02 +0000
-Message-Id: <20170318184203.16890-2-avarab@gmail.com>
+Subject: [PATCH 2/2] doc/SubmittingPatches: show how to get a CLI commit summary
+Date:   Sat, 18 Mar 2017 18:42:03 +0000
+Message-Id: <20170318184203.16890-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170318184203.16890-1-avarab@gmail.com>
 References: <20170318184203.16890-1-avarab@gmail.com>
@@ -70,44 +70,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the section which describes how the first line of the subject
-should look like to say that the ":" in "area: " shouldn't be treated
-like a full stop for the purposes of letter casing.
-
-Change the two subject examples to make this new paragraph clearer,
-i.e. "unstar" is not a common word, and "git-cherry-pick.txt" is a
-much longer string than "githooks.txt". Pick two recent commits from
-git.git that fit better for the description.
+Amend the section which describes how to get a commit summary to show
+how do to that with "git show", currently the documentation only shows
+how to do that with gitk.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/SubmittingPatches | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ Documentation/SubmittingPatches | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 3faf7eb884..9ef624ce38 100644
+index 9ef624ce38..78c8e36a4b 100644
 --- a/Documentation/SubmittingPatches
 +++ b/Documentation/SubmittingPatches
-@@ -98,12 +98,17 @@ should skip the full stop.  It is also conventional in most cases to
- prefix the first line with "area: " where the area is a filename or
- identifier for the general area of the code being modified, e.g.
+@@ -134,8 +134,17 @@ with the subject enclosed in a pair of double-quotes, like this:
+     noticed that ...
  
--  . archive: ustar header checksum is computed unsigned
--  . git-cherry-pick.txt: clarify the use of revision range notation
-+  . doc: clarify distinction between sign-off and pgp-signing
-+  . githooks.txt: improve the intro section
+ The "Copy commit summary" command of gitk can be used to obtain this
+-format.
++format, or this invocation of "git show":
  
- If in doubt which identifier to use, run "git log --no-merges" on the
- files you are modifying to see the current conventions.
- 
-+It's customary to start the remainder of the first line after "area: "
-+with a lower-case letter. E.g. "doc: clarify...", not "doc:
-+Clarify...", or "githooks.txt: improve...", not "githooks.txt:
-+Improve...".
++    git show -s --date=format:%Y-%m-%d --pretty='commit %h ("%s", %ad)' <commit>
 +
- The body should provide a meaningful commit message, which:
++To turn that into a handy alias:
++
++    git config --global alias.git-commit-summary "show -s --date=format:%Y-%m-%d --pretty='commit %h (\"%s\", %ad)'"
++
++And then to get the commit summary:
++
++    git git-commit-summary <commit>
  
-   . explains the problem the change tries to solve, iow, what is wrong
+ (3) Generate your patch using Git tools out of your commits.
+ 
 -- 
 2.11.0
 
