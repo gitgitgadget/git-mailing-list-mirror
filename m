@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D54192095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 21:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0778F2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 21:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751295AbdCRVbU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 17:31:20 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:46196 "EHLO
+        id S1751297AbdCRVbW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 17:31:22 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:46194 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751253AbdCRVbI (ORCPT
+        by vger.kernel.org with ESMTP id S1751275AbdCRVbI (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 18 Mar 2017 17:31:08 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8CA08280AF;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BF7D4280B0;
         Sat, 18 Mar 2017 21:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1489872000;
-        bh=yLNnRP2glEFqCNZJ8WwpSK27tqDX0lGqbttO7JZQ9Bo=;
+        bh=BnqHsPsNuaOhV0i3WWfeytg3ePPFASKYd9vRIa10E8c=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FGWeTXgyluWdRL4rPzyeVUsYg1zQXlpwdQJUwQcKgo596lq12Pp8FU9h+vFNOV+Z7
-         Ft+vfeVh2XCjPnTkP5VRUMtMjqE7vm1KxfTQSHjQRmc46DpxIvM70CkfBR76gzu0Ka
-         mFEp3ZicPPEfUtksdbIw5fxDfz5V5SrebhOI+IJkBOutZnvkULQ5Og6h6PFlMHeJBM
-         hYKF0WTLeO3wwbUaryllm8+LEd6LO8HjN6/RKdyXyE6ZWCDGLuIdGJnlo7vHJC802d
-         kYqUCKBljoPmn4hvpw5EWk/tsDVOJh3UwplZk5aq+jD4Q5VVH4hntnngMBkeREo83A
-         kQ24wAzPYcTQ0dazs0d3Vo49s8wDm9BWpaJ2bgY2ovYS5tSLanBfg0adsaWnFx43xh
-         mxZy7W9J6ytuowlDASS/FC0CnhgdqUY33XHRwWrgwz8wkuxO+WeTmKeclPTAEvqXCd
-         S3olKA1yYXwj9L75F9m6yQVZs1Rdkppn87+d4QmVkDm74uklZWU
+        b=uFKoWCtPepjlsxcMva9jTRABc6z7fvf3zYGcjGiJ+NZ+2xJxUz+9AXuwCSjxnNOMT
+         2biWgCVfwJ2T03STDMTrTP/PHIyDE5XMl2k2tEE5eocsUkvcvZ+y+QQt9optlsF2VE
+         bkhsQxuvLVMAwX95K6IQTQitsbBEnvD+h52FERCm0RfeTFJb63PzNLbk1IRKRrh2K5
+         OgJqNPwmiuYz7UP7y8VCVncBv3u8jcAu6AzdiadxuzSPTR/IVqNEsh8JeVdK8orHFo
+         tsHyLBDCTSptuhyvwME74HpMQ9cbHuyuHZtK7dlVBIK1kn18ftk99FAWE661ZgEwwX
+         QmS6fqHqfKKfXZ3y19ciU96zaZYK/3i677mQyTze5kw8GUpVFAe7sMg7Cslpic1E5W
+         GNOqhyR4YAxeARFHgfy+fyBDRBanP/QtRa4Ap0B6/zR9SbxxQyzHpzovoNn4E1Izc0
+         T9bzTA3SePZCjoNc7UV3h+LK11cC/DEWbFuiVqp1LkFsO7qlBp4
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 02/20] Convert GIT_SHA1_HEXSZ used for allocation to GIT_MAX_HEXSZ
-Date:   Sat, 18 Mar 2017 21:19:36 +0000
-Message-Id: <20170318211954.564030-3-sandals@crustytoothpaste.net>
+Subject: [PATCH 03/20] Convert GIT_SHA1_RAWSZ used for allocation to GIT_MAX_RAWSZ
+Date:   Sat, 18 Mar 2017 21:19:37 +0000
+Message-Id: <20170318211954.564030-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170318211954.564030-1-sandals@crustytoothpaste.net>
 References: <20170318211954.564030-1-sandals@crustytoothpaste.net>
@@ -49,190 +49,140 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Since we will likely be introducing a new hash function at some point,
-and that hash function might be longer than 40 hex characters, use the
-constant GIT_MAX_HEXSZ, which is designed to be suitable for
-allocations, instead of GIT_SHA1_HEXSZ.  This will ease the transition
-down the line by distinguishing between places where we need to allocate
-memory suitable for the largest hash from those where we need to handle
-the current hash.
+and that hash function might be longer than 20 bytes, use the constant
+GIT_MAX_RAWSZ, which is designed to be suitable for allocations, instead
+of GIT_SHA1_RAWSZ.  This will ease the transition down the line by
+distinguishing between places where we need to allocate memory suitable
+for the largest hash from those where we need to handle the current
+hash.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- bisect.c              | 2 +-
- builtin/blame.c       | 4 ++--
- builtin/merge-index.c | 2 +-
- builtin/merge.c       | 2 +-
- builtin/rev-list.c    | 2 +-
- diff.c                | 4 ++--
- hex.c                 | 2 +-
- sha1_file.c           | 2 +-
- sha1_name.c           | 6 +++---
- transport.c           | 2 +-
- 10 files changed, 14 insertions(+), 14 deletions(-)
+ builtin/patch-id.c     | 2 +-
+ builtin/receive-pack.c | 2 +-
+ cache.h                | 2 +-
+ patch-ids.c            | 2 +-
+ patch-ids.h            | 2 +-
+ sha1_file.c            | 4 ++--
+ sha1_name.c            | 4 ++--
+ wt-status.h            | 2 +-
+ 8 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 30808cadf7..21c3e34636 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -682,7 +682,7 @@ static int is_expected_rev(const struct object_id *oid)
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index a84d0003a3..81552e02e4 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -55,7 +55,7 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
  
- static int bisect_checkout(const unsigned char *bisect_rev, int no_checkout)
+ static void flush_one_hunk(struct object_id *result, git_SHA_CTX *ctx)
  {
--	char bisect_rev_hex[GIT_SHA1_HEXSZ + 1];
-+	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
+-	unsigned char hash[GIT_SHA1_RAWSZ];
++	unsigned char hash[GIT_MAX_RAWSZ];
+ 	unsigned short carry = 0;
+ 	int i;
  
- 	memcpy(bisect_rev_hex, sha1_to_hex(bisect_rev), GIT_SHA1_HEXSZ + 1);
- 	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-diff --git a/builtin/blame.c b/builtin/blame.c
-index f7aa95f4ba..07506a3e45 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1890,7 +1890,7 @@ static void emit_porcelain(struct scoreboard *sb, struct blame_entry *ent,
- 	int cnt;
- 	const char *cp;
- 	struct origin *suspect = ent->suspect;
--	char hex[GIT_SHA1_HEXSZ + 1];
-+	char hex[GIT_MAX_HEXSZ + 1];
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 83492af05f..f61efd5eed 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1165,7 +1165,7 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
+ 	const char *dst_name;
+ 	struct string_list_item *item;
+ 	struct command *dst_cmd;
+-	unsigned char sha1[GIT_SHA1_RAWSZ];
++	unsigned char sha1[GIT_MAX_RAWSZ];
+ 	int flag;
  
- 	oid_to_hex_r(hex, &suspect->commit->object.oid);
- 	printf("%s %d %d %d\n",
-@@ -1928,7 +1928,7 @@ static void emit_other(struct scoreboard *sb, struct blame_entry *ent, int opt)
- 	const char *cp;
- 	struct origin *suspect = ent->suspect;
- 	struct commit_info ci;
--	char hex[GIT_SHA1_HEXSZ + 1];
-+	char hex[GIT_MAX_HEXSZ + 1];
- 	int show_raw_time = !!(opt & OUTPUT_RAW_TIMESTAMP);
+ 	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
+diff --git a/cache.h b/cache.h
+index cb301d8d7d..5cdd9cd229 100644
+--- a/cache.h
++++ b/cache.h
+@@ -968,7 +968,7 @@ extern char *sha1_pack_index_name(const unsigned char *sha1);
+ extern const char *find_unique_abbrev(const unsigned char *sha1, int len);
+ extern int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len);
  
- 	get_commit_info(suspect->commit, &ci, 1);
-diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index 2d1b6db6bd..c99443b095 100644
---- a/builtin/merge-index.c
-+++ b/builtin/merge-index.c
-@@ -9,7 +9,7 @@ static int merge_entry(int pos, const char *path)
+-extern const unsigned char null_sha1[GIT_SHA1_RAWSZ];
++extern const unsigned char null_sha1[GIT_MAX_RAWSZ];
+ extern const struct object_id null_oid;
+ 
+ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
+diff --git a/patch-ids.c b/patch-ids.c
+index ce285c2e0c..fa8f11de82 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -71,7 +71,7 @@ static int init_patch_id_entry(struct patch_id *patch,
+ 			       struct commit *commit,
+ 			       struct patch_ids *ids)
  {
- 	int found;
- 	const char *arguments[] = { pgm, "", "", "", path, "", "", "", NULL };
--	char hexbuf[4][GIT_SHA1_HEXSZ + 1];
-+	char hexbuf[4][GIT_MAX_HEXSZ + 1];
- 	char ownbuf[4][60];
+-	unsigned char header_only_patch_id[GIT_SHA1_RAWSZ];
++	unsigned char header_only_patch_id[GIT_MAX_RAWSZ];
  
- 	if (pos >= active_nr)
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 7554b8d412..a2cceea3fb 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1296,7 +1296,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	if (verify_signatures) {
- 		for (p = remoteheads; p; p = p->next) {
- 			struct commit *commit = p->item;
--			char hex[GIT_SHA1_HEXSZ + 1];
-+			char hex[GIT_MAX_HEXSZ + 1];
- 			struct signature_check signature_check;
- 			memset(&signature_check, 0, sizeof(signature_check));
+ 	patch->commit = commit;
+ 	if (commit_patch_id(commit, &ids->diffopts, header_only_patch_id, 1))
+diff --git a/patch-ids.h b/patch-ids.h
+index 0f34ea11ea..b9e5751f8e 100644
+--- a/patch-ids.h
++++ b/patch-ids.h
+@@ -3,7 +3,7 @@
  
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 0aa93d5891..bcf77f0b8a 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -212,7 +212,7 @@ static void print_var_int(const char *var, int val)
- static int show_bisect_vars(struct rev_list_info *info, int reaches, int all)
- {
- 	int cnt, flags = info->flags;
--	char hex[GIT_SHA1_HEXSZ + 1] = "";
-+	char hex[GIT_MAX_HEXSZ + 1] = "";
- 	struct commit_list *tried;
- 	struct rev_info *revs = info->revs;
+ struct patch_id {
+ 	struct hashmap_entry ent;
+-	unsigned char patch_id[GIT_SHA1_RAWSZ];
++	unsigned char patch_id[GIT_MAX_RAWSZ];
+ 	struct commit *commit;
+ };
  
-diff --git a/diff.c b/diff.c
-index a628ac3a95..330b640c68 100644
---- a/diff.c
-+++ b/diff.c
-@@ -398,7 +398,7 @@ static struct diff_tempfile {
- 	 */
- 	const char *name;
- 
--	char hex[GIT_SHA1_HEXSZ + 1];
-+	char hex[GIT_MAX_HEXSZ + 1];
- 	char mode[10];
- 
- 	/*
-@@ -4219,7 +4219,7 @@ const char *diff_aligned_abbrev(const struct object_id *oid, int len)
- 	 * uniqueness across all objects (statistically speaking).
- 	 */
- 	if (abblen < GIT_SHA1_HEXSZ - 3) {
--		static char hex[GIT_SHA1_HEXSZ + 1];
-+		static char hex[GIT_MAX_HEXSZ + 1];
- 		if (len < abblen && abblen <= len + 2)
- 			xsnprintf(hex, sizeof(hex), "%s%.*s", abbrev, len+3-abblen, "..");
- 		else
-diff --git a/hex.c b/hex.c
-index eab7b626ee..28b44118cb 100644
---- a/hex.c
-+++ b/hex.c
-@@ -85,7 +85,7 @@ char *oid_to_hex_r(char *buffer, const struct object_id *oid)
- char *sha1_to_hex(const unsigned char *sha1)
- {
- 	static int bufno;
--	static char hexbuffer[4][GIT_SHA1_HEXSZ + 1];
-+	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
- 	bufno = (bufno + 1) % ARRAY_SIZE(hexbuffer);
- 	return sha1_to_hex_r(hexbuffer[bufno], sha1);
- }
 diff --git a/sha1_file.c b/sha1_file.c
-index 29bbc5f427..cc6b93c8a9 100644
+index cc6b93c8a9..657666b815 100644
 --- a/sha1_file.c
 +++ b/sha1_file.c
-@@ -3764,7 +3764,7 @@ static int for_each_file_in_obj_subdir(int subdir_nr,
- 		strbuf_addf(path, "/%s", de->d_name);
- 
- 		if (strlen(de->d_name) == GIT_SHA1_HEXSZ - 2)  {
--			char hex[GIT_SHA1_HEXSZ+1];
-+			char hex[GIT_MAX_HEXSZ+1];
- 			struct object_id oid;
- 
- 			snprintf(hex, sizeof(hex), "%02x%s",
+@@ -1611,7 +1611,7 @@ static void mark_bad_packed_object(struct packed_git *p,
+ 		if (!hashcmp(sha1, p->bad_object_sha1 + GIT_SHA1_RAWSZ * i))
+ 			return;
+ 	p->bad_object_sha1 = xrealloc(p->bad_object_sha1,
+-				      st_mult(GIT_SHA1_RAWSZ,
++				      st_mult(GIT_MAX_RAWSZ,
+ 					      st_add(p->num_bad_objects, 1)));
+ 	hashcpy(p->bad_object_sha1 + GIT_SHA1_RAWSZ * p->num_bad_objects, sha1);
+ 	p->num_bad_objects++;
+@@ -3918,7 +3918,7 @@ static int check_stream_sha1(git_zstream *stream,
+ 			     const unsigned char *expected_sha1)
+ {
+ 	git_SHA_CTX c;
+-	unsigned char real_sha1[GIT_SHA1_RAWSZ];
++	unsigned char real_sha1[GIT_MAX_RAWSZ];
+ 	unsigned char buf[4096];
+ 	unsigned long total_read;
+ 	int status = Z_OK;
 diff --git a/sha1_name.c b/sha1_name.c
-index cda9e49b12..964201bc26 100644
+index 964201bc26..3db166b40b 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -15,7 +15,7 @@ typedef int (*disambiguate_hint_fn)(const unsigned char *, void *);
- 
+@@ -16,11 +16,11 @@ typedef int (*disambiguate_hint_fn)(const unsigned char *, void *);
  struct disambiguate_state {
  	int len; /* length of prefix in hex chars */
--	char hex_pfx[GIT_SHA1_HEXSZ + 1];
-+	char hex_pfx[GIT_MAX_HEXSZ + 1];
- 	unsigned char bin_pfx[GIT_SHA1_RAWSZ];
+ 	char hex_pfx[GIT_MAX_HEXSZ + 1];
+-	unsigned char bin_pfx[GIT_SHA1_RAWSZ];
++	unsigned char bin_pfx[GIT_MAX_RAWSZ];
  
  	disambiguate_hint_fn fn;
-@@ -80,7 +80,7 @@ static void update_candidates(struct disambiguate_state *ds, const unsigned char
- static void find_short_object_filename(struct disambiguate_state *ds)
- {
- 	struct alternate_object_database *alt;
--	char hex[GIT_SHA1_HEXSZ];
-+	char hex[GIT_MAX_HEXSZ];
- 	static struct alternate_object_database *fakeent;
+ 	void *cb_data;
+-	unsigned char candidate[GIT_SHA1_RAWSZ];
++	unsigned char candidate[GIT_MAX_RAWSZ];
+ 	unsigned candidate_exists:1;
+ 	unsigned candidate_checked:1;
+ 	unsigned candidate_ok:1;
+diff --git a/wt-status.h b/wt-status.h
+index 54fec77032..6018c627b1 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -80,7 +80,7 @@ struct wt_status {
+ 	int hints;
  
- 	if (!fakeent) {
-@@ -509,7 +509,7 @@ int find_unique_abbrev_r(char *hex, const unsigned char *sha1, int len)
- const char *find_unique_abbrev(const unsigned char *sha1, int len)
- {
- 	static int bufno;
--	static char hexbuffer[4][GIT_SHA1_HEXSZ + 1];
-+	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
- 	char *hex = hexbuffer[bufno];
- 	bufno = (bufno + 1) % ARRAY_SIZE(hexbuffer);
- 	find_unique_abbrev_r(hex, sha1, len);
-diff --git a/transport.c b/transport.c
-index 417ed7f19f..8a90b0c29b 100644
---- a/transport.c
-+++ b/transport.c
-@@ -447,7 +447,7 @@ static int print_one_push_status(struct ref *ref, const char *dest, int count,
+ 	enum wt_status_format status_format;
+-	unsigned char sha1_commit[GIT_SHA1_RAWSZ]; /* when not Initial */
++	unsigned char sha1_commit[GIT_MAX_RAWSZ]; /* when not Initial */
  
- static int measure_abbrev(const struct object_id *oid, int sofar)
- {
--	char hex[GIT_SHA1_HEXSZ + 1];
-+	char hex[GIT_MAX_HEXSZ + 1];
- 	int w = find_unique_abbrev_r(hex, oid->hash, DEFAULT_ABBREV);
- 
- 	return (w < sofar) ? sofar : w;
+ 	/* These are computed during processing of the individual sections */
+ 	int commitable;
