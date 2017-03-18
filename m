@@ -2,134 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69C6C2095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 17:08:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A73C2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 17:18:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751444AbdCRRIt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 13:08:49 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:35984 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751320AbdCRRIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 13:08:49 -0400
-Received: by mail-it0-f49.google.com with SMTP id w124so52133081itb.1
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 10:08:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=+6yohXYNB3MG0yV3/Eh1sjtbrUsupJDuOhshgjQDsYk=;
-        b=GClnk1f/bE2+dj7Fwjltz9HijdM39H1WYaXUv9TFzwnkBEzt6Xzt/xPu398zxcknyY
-         C1TJKUpMqCcJgsd0KQZSIN0BH3jEnAM9ggxmFYGHxkEx3tb75nU0865pEVluuAO062dn
-         lncKcIz7RCY3yTuRmzLXb0ktJU5ejtchYW9bz/RsXC/K5U4AZD8KQ0bwiL0lToQ9C5VW
-         MauSj8ENbRbiD85dOfqkTAMj/SX609Ye6vltksIVhjLYuRL9jdLxUg6s9i8ItvS+iljl
-         YeFtamvF27o3Phbnh2es58bwYHGJiIho1G+3KW4DW6B/GlsI4vi5ghinY0WPnnhbFpuh
-         z+kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+6yohXYNB3MG0yV3/Eh1sjtbrUsupJDuOhshgjQDsYk=;
-        b=fAj+iFmOm200JXKz6yNxdyAEh/NblQ9SqJMi/KGYnxd/az2COA1zeCSOLEZKQ9tvwJ
-         lcRWcOttp1W9Pxpcw/A2CB1K3euAo0Ru+SS0Z0Dj3fzORy6iKjOp2/birc9bPUVR1aRw
-         D7q0iZk3e/AgxL4C5Hp/wNKqxF5SK4pIc/NyqMGPtlcee7fe4o4cRHCj5qgj1pWciIY/
-         uJClJeK6/7B8BVcbFIw6ZI+HnAtpZJPNEt1QcyzgzDvM3Kvbxzbv8u/HnGzVFpu65prn
-         wGhoMVPHezq/EFc8K3LUfAhsFaUJl6UruiuImNTR9biXe7s8FB7OcdLhoqKIq72WNfQZ
-         GF/w==
-X-Gm-Message-State: AFeK/H3941UL9PG8+CqDkS5ZBikGcS5g2oGUs9GWAOC/vjTuAWfdjRMKLKDVP8xzl7NxEP0tzbgBXOmXLgHF3w==
-X-Received: by 10.36.224.195 with SMTP id c186mr3753910ith.24.1489856927773;
- Sat, 18 Mar 2017 10:08:47 -0700 (PDT)
+        id S1751671AbdCRRSG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 13:18:06 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54209 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751666AbdCRRSF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 13:18:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C29686CAD;
+        Sat, 18 Mar 2017 13:12:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=TASxLAByWNxr
+        lpaUcCXACgIkFmI=; b=fwIYLjeO4uDgaCTFreVKJ+IPiiKTzz3jlDJCQ0zNpwg2
+        PMPWaK2nhq8EThy1MYjIiveZKnUqLsb5s0fJ3IQX9aSuxPxUPEZki758HK60qL0/
+        eWSyzM5Iin4I6yPIQz7Q8p5qsPizWt1EJDN0D2pQ4YMy7w8wS8UZJmgMxhrdIrs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=XW+L2q
+        meDNuixq/Jo53PUK10r7IFIIHyekGiwiBx7H3Axlh3HAqjf/3rnBW0VzspVLHHlA
+        RZZiJjRvr0WVAkNENqJhtN6VwxGaye32OvqS32WapSDbVbIlwHXiN+RmApA/qRBR
+        eBTnJp7n3ZLkCbfYZPLG/kmfowMQ2K+nHGi38=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C80B86CAC;
+        Sat, 18 Mar 2017 13:12:09 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ADCC486CAA;
+        Sat, 18 Mar 2017 13:12:08 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] receive-pack: simplify run_update_post_hook()
+References: <ac1c0cfc-b1de-37be-23b3-98ef1081ec4a@web.de>
+        <20170317222320.nsg3yk3nopjadr5t@sigill.intra.peff.net>
+Date:   Sat, 18 Mar 2017 10:12:07 -0700
+In-Reply-To: <20170317222320.nsg3yk3nopjadr5t@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 17 Mar 2017 18:23:20 -0400")
+Message-ID: <xmqqshma4ihk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sat, 18 Mar 2017 10:08:27 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.75.62.1703180750460.3797@qynat-yncgbc>
-References: <nycvar.QRO.7.75.62.1703180724490.3797@qynat-yncgbc>
- <CACBZZX5FMdjuxxNru+XfTQdSXEQ_b0OP2rngGZLf1sSHR_D8Ng@mail.gmail.com> <nycvar.QRO.7.75.62.1703180750460.3797@qynat-yncgbc>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 18 Mar 2017 18:08:27 +0100
-Message-ID: <CACBZZX7G=C84kz4n26VTnWWUTKRv1rVvms=8AvELtMSCviu1kQ@mail.gmail.com>
-Subject: Re: Is there a way to have a local version of a header file?
-To:     David Lang <david@lang.hm>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 04BDF582-0BFE-11E7-893A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 18, 2017 at 3:58 PM, David Lang <david@lang.hm> wrote:
-> On Sat, 18 Mar 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> On Sat, Mar 18, 2017 at 3:29 PM, David Lang <david@lang.hm> wrote:
->>>
->>> for an embedded project built inside the Arduino IDE, (alternate firmwa=
-re
->>> for a home automation project) there is a need to set a number of
->>> parameters
->>> that we really don't want in the main repo (wifi network IDs/passwords)
->>>
->>> right now, we have these things set as #defines in a header file.
->>>
->>> We need to distribute a base version of this file for new people to get
->>> started.
->>>
->>> Is there any way to have git define a file in such a way that if it
->>> doesn't
->>> exist in the worktree it gets populated, but if it does exist it doesn'=
-t
->>> get
->>> overwritten? (as I type this, I'm thinking a trigger may work, but we
->>> need
->>> it to work on Linux, Windows and OSX)
->>>
->>> Any thoughts on a sane way to handle this situation?
->>
->>
->> There's no sane way to do what you're describing without renaming the
->> file.
->>
->> But the sanest way to do this is to have a config.h.example
->>
->> Then you have "/config.h" in the .gitignore file.
->>
->> And you tell the users to copy the *.example file to *.h, and your
->> program then includes the *.h file.
->>
->> If you wanted to provide defaults you could just #include the
->> config.h.example first, so #defines in the *.h file would clobber
->> those in the *.example.
->
->
-> That's what we currently have (user_config.h and user_config_override.h)
->
-> I was hoping to not have the situation where downloading and trying to
-> compile will complain about a missing include file (if the users don't co=
-py
-> user_config_override_example.h to user_config_override.h) while letting u=
-s
-> do a .gitignore on user_config_override.h
->
-> for many people using this project, this is the first time they have ever
-> compiled anything, and we have the typical set of people not reading
-> instructions :-/
->
-> Darn, I was hoping that the scenario of needing to have a config file
-> provided in the repo, while not overwriting local changes to it was commo=
-n
-> enough that there were some tricks available. This is a little harder as =
-the
-> running code doesn't have a filesystem so we are limited to what we can d=
-o
-> in the compiler and git (no makefile even, the Arduino folks consider tha=
-t
-> too complicated, it just slurps up all .ino files in a directory and
-> compiles them)
+Jeff King <peff@peff.net> writes:
 
-There might be some way I haven't thought of, in particular maybe you
-can use gitattributes to define a custom diff/merge driver that always
-reports no changes, or some ways to (ab)use the index to make git
-ignore any changes to the file.
+> On Fri, Mar 17, 2017 at 11:02:13PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>> Instead of counting the arguments to see if there are any and then
+>> building the full command use a single loop and add the hook command
+>> just before the first argument.  This reduces duplication and overall
+>> code size.
+>
+> Yeah, I agree one loop is nicer.
+>
+>> -	argv_array_push(&proc.args, hook);
+>>  	for (cmd =3D commands; cmd; cmd =3D cmd->next) {
+>>  		if (cmd->error_string || cmd->did_not_exist)
+>>  			continue;
+>> +		if (!proc.args.argc)
+>> +			argv_array_push(&proc.args, hook);
+>>  		argv_array_push(&proc.args, cmd->ref_name);
+>>  	}
+>> +	if (!proc.args.argc)
+>> +		return;
+>
+> It looks at first like the result leaks, because you have to realize
+> that the push will modify proc.args.argc.=20
+
+Hmph, I needed to read the original twice to imagine how a paranoid
+person can fear leaks.  The return condition says "if args array is
+empty, just return" and the thing being empty is an enough indication
+to think nothing is leaking, at least for me.
+
+Having said that, I'd admit that the "always push hook and then
+clean up before returning if it turns out there is nothing to call
+the hook for" is what I would have wrote if I were doing this, but
+I'm inclined to think that is not because I would have thought of
+both versions and picked the better one, but because I wouldn't have
+noticed the "optimization opportunity" Ren=C3=A9 spotted here (not that I
+think an extra alloc would matter).
+
+I'll queue the patch as-is, at least for now.
+
+Thanks.
+
+> I wonder if:
+>
+>   argv_array_push(&proc.args, hook);
+>   for (cmd =3D commands; cmd; cmd =3D cmd->next) {
+> 	if (!cmd->error_string && !cmd->did_not_exist)
+> 		argv_array_push(&proc.args, cmd->ref_name);
+>   }
+>
+>   if (proc.args.argc =3D=3D 1) {
+> 	argv_array_clear(&proc.args);
+> 	return;
+>   }
+>
+> would be more obvious (at the cost of a pointless malloc in the corner
+> case. I can live with it either way.
+>
+> -Peff
