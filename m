@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1C8720323
-	for <e@80x24.org>; Sat, 18 Mar 2017 10:12:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF9E020323
+	for <e@80x24.org>; Sat, 18 Mar 2017 10:12:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751395AbdCRKMk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 06:12:40 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35191 "EHLO
+        id S1751341AbdCRKMd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 06:12:33 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35109 "EHLO
         mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751367AbdCRKMg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 06:12:36 -0400
-Received: by mail-pg0-f65.google.com with SMTP id g2so13141922pge.2
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:12:36 -0700 (PDT)
+        with ESMTP id S1751164AbdCRKM3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 06:12:29 -0400
+Received: by mail-pg0-f65.google.com with SMTP id g2so13141202pge.2
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P9n2Q27ZrkkZ/yI1BTOhL6+4B9UVwVcWnIwZT6b/9Hk=;
-        b=TCI/FkozHanmlnnV1TbuYPKRMm/T8SYsr+Yv5kNzx/ZqDS1yWxEIJM7olZ9BsbFPsI
-         oCx5a+u0bWcssqJbSn5UMI6Cu0PY4AEG6Cu+OCcNlqYx8e/g4aLJ3vX76FKYBQfieCob
-         V/qy0O/Bh/X+OG6EMgdgXsKYMQd3F3ObRh70zzzsu2/XB6xkrb5BKgS3ZMeT2mEGjeAM
-         clWR0ja8iwciFf6tnqU+Rr9JgimUcvUJZobojNikX2BwS4uTEaJk4MTAJv1F/aPS9mlg
-         2Yp80YIRh2fd5/D1ObVlZdiXZLTb9IzA/4niN+QkWdQMFSn6xY+3hlEKIzDPuBJ65t3P
-         AqXQ==
+        bh=NeQNfei5FVa7r88w6FPHjO6bJGE+cRv9NXn+mP8nnyE=;
+        b=Oi1L68jxYhEUgWVBD20ZNkZW+cFNVY0cOY0ir8V04lgo+wMg/wnA/zs6xuWAq0ms16
+         C4c4zfUEhrX3ukSz6H5Kk7gDepc3Lj11aan45WcPb5OHUsSV3ihorlC8xMiju7KHy6ke
+         psRlERf9oMiKEGPWt05uikNAdAK7KTJ0VkBQiXwL4nPSvgbaorLLNMtPSklonK6dXQ1T
+         r3lZjulgeq+bEbPQn5+Npydk/vYXyl0RNLJMkCKNy9BxZ9bvbVAKVWN67RORKWJHwBwP
+         4py09m2jNlEM5zPiByMpey+uugzX98Fn5XKbSP3qfIjxvQ67W6WrjtBpfJM07kYMWpZu
+         2z4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=P9n2Q27ZrkkZ/yI1BTOhL6+4B9UVwVcWnIwZT6b/9Hk=;
-        b=P253tSnGFxMtKrDR8mvjwAXUWpD5lxdFFyyj8DQJotPuLFWYqOz3BQK7FLh2OsqFqQ
-         0fZ8ztCiePq9jNw9FEhv4l0evioOU6B3HSvPa8Lgj7ZwO94YzwOouRA3hMlxCQgCmNBp
-         E98Vv4Q4G8h+3/0vjzqzR4/1DaEc0JktN7GjpTBo5p8gjXZTQJk9pKj9Gj+8yU9irqnP
-         KFSmxQInNB9w0pJvdMEgSksRsxMuoAGU/MNGk9zU5QNoHHs0rhc3iQ110EsaVSSyvyCk
-         eG8xNLA6Hr1fRIlaKIr6EjDzdCKg93UplHchfJW2INQVDtnBmvwbTIgsLtbTz52SPj+O
-         Ca0w==
-X-Gm-Message-State: AFeK/H1/1WQwZqdQjPmmEIfGzR21FGx1ghq5zc9lZJXR+YA2PjdtVudjWlFnpXlH0Ge+vA==
-X-Received: by 10.84.143.195 with SMTP id 61mr26308206plz.46.1489831955405;
-        Sat, 18 Mar 2017 03:12:35 -0700 (PDT)
+        bh=NeQNfei5FVa7r88w6FPHjO6bJGE+cRv9NXn+mP8nnyE=;
+        b=sRPPqIa4ErY71zeOkoa6/XgKAh8xw9P8PrF7Jn4fa1ZgP3AyIuwCJy2NBg2JLi9oeM
+         7J/Ak4i/RqCOTDfWEkbE5RD8MKDnnAEjyulESV61lTx8450lNY94uRf9W12VpGrrLfPS
+         cW01x7AhsyRFOlPL3eFiP58UbJ27wOtalRU1Jbrpfg6xrEZVv0IQuVajwiVz2ApfLibd
+         SlSO1DGffjqduA6WGO7s1uKz9JtYYMH1Nh1zlHwvUI1mR7/JBOtEFw3JNcpJmJybcpEv
+         /mq64OkzE3SSTihUe48GxEl2V6bilYWWpriG/kfk1M4hQx7HaP6wneDVyGQk4hshFLsv
+         I2ow==
+X-Gm-Message-State: AFeK/H2/LDJ/iaAs00ckS6DHzZuk89SJXc37bcIRRCZBShWt5UT71NfERrebA5bJfikOhA==
+X-Received: by 10.84.238.207 with SMTP id l15mr146186pln.90.1489831932318;
+        Sat, 18 Mar 2017 03:12:12 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id 20sm7466748pgg.52.2017.03.18.03.12.31
+        by smtp.gmail.com with ESMTPSA id 23sm21820665pfw.94.2017.03.18.03.12.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Mar 2017 03:12:34 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 17:12:29 +0700
+        Sat, 18 Mar 2017 03:12:11 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 17:12:07 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 06/12] refs: add refs_head_ref()
-Date:   Sat, 18 Mar 2017 17:11:47 +0700
-Message-Id: <20170318101153.6901-7-pclouds@gmail.com>
+Subject: [PATCH v2 02/12] revision.c: refactor add_index_objects_to_pending()
+Date:   Sat, 18 Mar 2017 17:11:43 +0700
+Message-Id: <20170318101153.6901-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170318101153.6901-1-pclouds@gmail.com>
 References: <20170217141908.18012-1-pclouds@gmail.com>
@@ -68,65 +68,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The core code is factored out and take 'struct index_state *' instead so
+that we can reuse it to add objects from index files other than .git/index
+in the next patch.
 ---
- refs.c | 19 +++++++++----------
- refs.h |  2 ++
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ revision.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index a38149d84a..5fc47ff5f0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1208,27 +1208,26 @@ int refs_rename_ref_available(struct ref_store *refs,
- 	return ok;
+diff --git a/revision.c b/revision.c
+index 7ff61ff5f7..98146f179f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1263,13 +1263,13 @@ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
+ 
  }
  
--int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
-+int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+-void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
++static void do_add_index_objects_to_pending(struct rev_info *revs,
++					    struct index_state *istate)
  {
- 	struct object_id oid;
- 	int flag;
+ 	int i;
  
--	if (submodule) {
--		if (resolve_gitlink_ref(submodule, "HEAD", oid.hash) == 0)
--			return fn("HEAD", &oid, 0, cb_data);
--
--		return 0;
--	}
--
--	if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag))
-+	if (!refs_read_ref_full(refs, "HEAD", RESOLVE_REF_READING,
-+				oid.hash, &flag))
- 		return fn("HEAD", &oid, flag, cb_data);
+-	read_cache();
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
+ 		struct blob *blob;
  
- 	return 0;
+ 		if (S_ISGITLINK(ce->ce_mode))
+@@ -1282,13 +1282,19 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
+ 					     ce->ce_mode, ce->name);
+ 	}
+ 
+-	if (active_cache_tree) {
++	if (istate->cache_tree) {
+ 		struct strbuf path = STRBUF_INIT;
+-		add_cache_tree(active_cache_tree, revs, &path);
++		add_cache_tree(istate->cache_tree, revs, &path);
+ 		strbuf_release(&path);
+ 	}
  }
  
-+int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
 +{
-+	return refs_head_ref(get_submodule_ref_store(submodule), fn, cb_data);
++	read_cache();
++	do_add_index_objects_to_pending(revs, &the_index);
 +}
 +
- int head_ref(each_ref_fn fn, void *cb_data)
+ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
+ 			    int exclude_parent)
  {
--	return head_ref_submodule(NULL, fn, cb_data);
-+	return refs_head_ref(get_main_ref_store(), fn, cb_data);
- }
- 
- /*
-diff --git a/refs.h b/refs.h
-index 447381d378..0572473ef7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -233,6 +233,8 @@ typedef int each_ref_fn(const char *refname,
-  * modifies the reference also returns a nonzero value to immediately
-  * stop the iteration. Returned references are sorted.
-  */
-+int refs_head_ref(struct ref_store *refs,
-+		  each_ref_fn fn, void *cb_data);
- int refs_for_each_ref(struct ref_store *refs,
- 		      each_ref_fn fn, void *cb_data);
- int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
 -- 
 2.11.0.157.gd943d85
 
