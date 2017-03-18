@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 661482095D
-	for <e@80x24.org>; Sat, 18 Mar 2017 02:05:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F324C2095D
+	for <e@80x24.org>; Sat, 18 Mar 2017 02:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751378AbdCRCFr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Mar 2017 22:05:47 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33696 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751087AbdCRCFc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Mar 2017 22:05:32 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 79so3349296pgf.0
-        for <git@vger.kernel.org>; Fri, 17 Mar 2017 19:04:39 -0700 (PDT)
+        id S1751382AbdCRCFs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Mar 2017 22:05:48 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35056 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751202AbdCRCFi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Mar 2017 22:05:38 -0400
+Received: by mail-pg0-f68.google.com with SMTP id g2so12084458pge.2
+        for <git@vger.kernel.org>; Fri, 17 Mar 2017 19:05:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=VOD0kMhKG7R2mM7kGPUkVUYUF9eK4iMYT/pPAt+cprU=;
-        b=dkE1+Pt921wkicWbI+DgTLeCggqXTcf0CflxNeJudHuw5ufp9ZqcvVtgl8RtBlCZbP
-         UBU0WSgaxWobK0ccV+yMRpoIac/DQTALGzQ5XjZPPzrbt39skww9HBF2y/5m9nkYAV90
-         IS2WxKQqTQvEB9y3nod8HPzUVWcK8a2lGXmtBwnQWDUGnqpT9FVCHjm5RB2QRC6HIZg6
-         tWWAlmUhENiy+HPuz9pUNfF+3pu79QOA4UW9Ma/cicCz0M6euaHFbo/61RTAlqyZb3BC
-         H2ArPlT7FQbkGcpXVgj06cTLaQbkfTxJ6u9YjGLzY2qDW6xjIbo69CS5ykGIxoX8kcqS
-         xZzw==
+        bh=rGL68L5lyractkQ7KuDg2+AXUXrEoXhCrvXsKLePEds=;
+        b=HzuaBVj/C3vNsc0s8ri1y4kQseut9K0JWMZW5dNX8kW4XtHVvRKtIgjF9OEPTC1pSA
+         txzEDkBqBs7JDWAuZ+ZZlSS2W504+mKqegox7sXeyx0AwECcjzALmmNChLvnr4dgAIM7
+         SU/7gCa2XYkqkP3BhcTfbdRqB9I13gAbG1JO2m9w9wZEXZj2mpnVjWTSJjtTJQcWlavS
+         gKrFwfRYplga2nIOlzEmEs6HrWjIZcC3WH8BYroIw2gy61RocDeAv+19ZISdF1GW5pza
+         FEz8+gQd2qm3KJn2ldElvsv/cl2hPutc65DZqo8Z2IQ2tQGhjZlWL3CjhkWeeY0Nl7Bg
+         oqBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=VOD0kMhKG7R2mM7kGPUkVUYUF9eK4iMYT/pPAt+cprU=;
-        b=GQHfNmSmfIEify6U+pV+lmpK9iWBflMfgbiFJkE1IpVm8SX//CoqD1fsgO7Fa8ocvW
-         CIFolc2p92ToK+utQQQzjJ0nActTQanytLP1AV9PEAbFbutOBuebDUI4UkCvBcQvw9yi
-         +8j96tttE0FbWtcn8ps9pTgW39bagelgzcNCs+WmiX/6Ssn+Rd7jxkH5BSXcQHtFUBqZ
-         xZl++aszJa89Ldtqy2K/WEFy+Qwe9DnqM1JnHg7j7QqmTr+gugUlP1OzA+Ump6xKEaP8
-         eKJcutBKmkf265d/g1j87znJMcewk83T0+JnPD1ToVpvM7/7gtoHiaFQvuazA4j+JnBG
-         5rzw==
-X-Gm-Message-State: AFeK/H1SW7wb29QuXf1+tGkqnD2C6CXayEd+PdwlyFwYMZnFwizVNZt+6Kzcwhe/zv0HFQ==
-X-Received: by 10.98.219.2 with SMTP id f2mr17776661pfg.23.1489802679272;
-        Fri, 17 Mar 2017 19:04:39 -0700 (PDT)
+        bh=rGL68L5lyractkQ7KuDg2+AXUXrEoXhCrvXsKLePEds=;
+        b=kmMFY4iEmsvjHPaHj5JIvIWTBZEPs+yySpzwZDSpAmlbsod5i3HBE73Siheb0OaWp+
+         TxYHZQ7Xc8NJsA24GWlpe7911ANKklH+H+irsbH3U1vcvH3OHzAV7lSE9tWNW6Hl41us
+         jzcknxWZLVHfFQsShvS/U4/ey9HyyDSrAJ7HQRarbup8Bk2FeDW0bCmViyGhQfuDJBGZ
+         wjyLhVTwVr9y/g2pZWBcXH01kmvYHz4OWkReHtJJA49mO7Zq37e6cpLUCmuIvWs6r7hH
+         iPnqV7BJ4LVZ6NahUiyWlfsbxVqmaZjnFHpFWM7ZcRTNIMPshA32w2LD5admzI5XZofk
+         teVQ==
+X-Gm-Message-State: AFeK/H3URbXzMasbEfa39bL3wu+a8EDSf75/tVasPSEw7IGqrFwLCDXTYoSyNCHdDE7tcA==
+X-Received: by 10.99.143.18 with SMTP id n18mr14185212pgd.12.1489802736766;
+        Fri, 17 Mar 2017 19:05:36 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id n189sm19105547pfn.108.2017.03.17.19.04.35
+        by smtp.gmail.com with ESMTPSA id 185sm19094383pfg.13.2017.03.17.19.05.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Mar 2017 19:04:38 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 09:04:32 +0700
+        Fri, 17 Mar 2017 19:05:36 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 09:05:30 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v6 06/27] files-backend: convert git_path() to strbuf_git_path()
-Date:   Sat, 18 Mar 2017 09:03:16 +0700
-Message-Id: <20170318020337.22767-7-pclouds@gmail.com>
+Subject: [PATCH v6 15/27] refs.c: make get_main_ref_store() public and use it
+Date:   Sat, 18 Mar 2017 09:03:25 +0700
+Message-Id: <20170318020337.22767-16-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170318020337.22767-1-pclouds@gmail.com>
 References: <20170222140450.30886-1-pclouds@gmail.com>
@@ -73,333 +73,210 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git_path() and friends are going to be killed in files-backend.c in near
-future. And because there's a risk with overwriting buffer in
-git_path(), let's convert them all to strbuf_git_path(). We'll have
-easier time killing/converting strbuf_git_path() then because we won't
-have to worry about memory management again.
+get_ref_store() will soon be renamed to get_submodule_ref_store().
+Together with future get_worktree_ref_store(), the three functions
+provide an appropriate ref store for different operation modes. New APIs
+will be added to operate directly on ref stores.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs/files-backend.c | 130 ++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 97 insertions(+), 33 deletions(-)
+ refs.c               | 36 ++++++++++++++++++------------------
+ refs.h               |  3 +++
+ refs/files-backend.c |  2 +-
+ 3 files changed, 22 insertions(+), 19 deletions(-)
 
+diff --git a/refs.c b/refs.c
+index 11c460c5e9..404d3b62b5 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1314,7 +1314,7 @@ const char *resolve_ref_recursively(struct ref_store *refs,
+ /* backend functions */
+ int refs_init_db(struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->init_db(refs, err);
+ }
+@@ -1322,7 +1322,7 @@ int refs_init_db(struct strbuf *err)
+ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+ 			       unsigned char *sha1, int *flags)
+ {
+-	return resolve_ref_recursively(get_ref_store(NULL), refname,
++	return resolve_ref_recursively(get_main_ref_store(), refname,
+ 				       resolve_flags, sha1, flags);
+ }
+ 
+@@ -1428,7 +1428,7 @@ static struct ref_store *ref_store_init(const char *submodule)
+ 	return refs;
+ }
+ 
+-static struct ref_store *get_main_ref_store(void)
++struct ref_store *get_main_ref_store(void)
+ {
+ 	struct ref_store *refs;
+ 
+@@ -1491,14 +1491,14 @@ void base_ref_store_init(struct ref_store *refs,
+ /* backend functions */
+ int pack_refs(unsigned int flags)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->pack_refs(refs, flags);
+ }
+ 
+ int peel_ref(const char *refname, unsigned char *sha1)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->peel_ref(refs, refname, sha1);
+ }
+@@ -1506,7 +1506,7 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ int create_symref(const char *ref_target, const char *refs_heads_master,
+ 		  const char *logmsg)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->create_symref(refs, ref_target, refs_heads_master,
+ 				       logmsg);
+@@ -1515,7 +1515,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->transaction_commit(refs, transaction, err);
+ }
+@@ -1525,14 +1525,14 @@ int verify_refname_available(const char *refname,
+ 			     const struct string_list *skip,
+ 			     struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->verify_refname_available(refs, refname, extra, skip, err);
+ }
+ 
+ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 	struct ref_iterator *iter;
+ 
+ 	iter = refs->be->reflog_iterator_begin(refs);
+@@ -1543,7 +1543,7 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
+ 				void *cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->for_each_reflog_ent_reverse(refs, refname,
+ 						     fn, cb_data);
+@@ -1552,14 +1552,14 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn,
+ int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn,
+ 			void *cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->for_each_reflog_ent(refs, refname, fn, cb_data);
+ }
+ 
+ int reflog_exists(const char *refname)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->reflog_exists(refs, refname);
+ }
+@@ -1567,14 +1567,14 @@ int reflog_exists(const char *refname)
+ int safe_create_reflog(const char *refname, int force_create,
+ 		       struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->create_reflog(refs, refname, force_create, err);
+ }
+ 
+ int delete_reflog(const char *refname)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->delete_reflog(refs, refname);
+ }
+@@ -1586,7 +1586,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 		  reflog_expiry_cleanup_fn cleanup_fn,
+ 		  void *policy_cb_data)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->reflog_expire(refs, refname, sha1, flags,
+ 				       prepare_fn, should_prune_fn,
+@@ -1596,21 +1596,21 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ int initial_ref_transaction_commit(struct ref_transaction *transaction,
+ 				   struct strbuf *err)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->initial_transaction_commit(refs, transaction, err);
+ }
+ 
+ int delete_refs(struct string_list *refnames, unsigned int flags)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->delete_refs(refs, refnames, flags);
+ }
+ 
+ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
+ {
+-	struct ref_store *refs = get_ref_store(NULL);
++	struct ref_store *refs = get_main_ref_store();
+ 
+ 	return refs->be->rename_ref(refs, oldref, newref, logmsg);
+ }
+diff --git a/refs.h b/refs.h
+index 2d6b6263fc..a6cd12267f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -2,6 +2,7 @@
+ #define REFS_H
+ 
+ struct object_id;
++struct ref_store;
+ struct strbuf;
+ struct string_list;
+ 
+@@ -560,4 +561,6 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
+ 
+ int ref_storage_backend_exists(const char *name);
+ 
++struct ref_store *get_main_ref_store(void);
++
+ #endif /* REFS_H */
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 6282e5868f..54e698dcea 100644
+index 43d8ddac93..351934d36e 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2319,6 +2319,7 @@ enum {
- static void try_remove_empty_parents(const char *refname, unsigned int flags)
- {
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
- 	char *p, *q;
- 	int i;
- 
-@@ -2340,14 +2341,19 @@ static void try_remove_empty_parents(const char *refname, unsigned int flags)
- 		if (q == p)
- 			break;
- 		strbuf_setlen(&buf, q - buf.buf);
--		if ((flags & REMOVE_EMPTY_PARENTS_REF) &&
--		    rmdir(git_path("%s", buf.buf)))
-+
-+		strbuf_reset(&sb);
-+		strbuf_git_path(&sb, "%s", buf.buf);
-+		if ((flags & REMOVE_EMPTY_PARENTS_REF) && rmdir(sb.buf))
- 			flags &= ~REMOVE_EMPTY_PARENTS_REF;
--		if ((flags & REMOVE_EMPTY_PARENTS_REFLOG) &&
--		    rmdir(git_path("logs/%s", buf.buf)))
-+
-+		strbuf_reset(&sb);
-+		strbuf_git_path(&sb, "logs/%s", buf.buf);
-+		if ((flags & REMOVE_EMPTY_PARENTS_REFLOG) && rmdir(sb.buf))
- 			flags &= ~REMOVE_EMPTY_PARENTS_REFLOG;
- 	}
- 	strbuf_release(&buf);
-+	strbuf_release(&sb);
- }
- 
- /* make sure nobody touched the ref, and unlink */
-@@ -2509,11 +2515,16 @@ static int files_delete_refs(struct ref_store *ref_store,
-  */
- #define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
- 
--static int rename_tmp_log_callback(const char *path, void *cb)
-+struct rename_cb {
-+	const char *tmp_renamed_log;
-+	int true_errno;
-+};
-+
-+static int rename_tmp_log_callback(const char *path, void *cb_data)
- {
--	int *true_errno = cb;
-+	struct rename_cb *cb = cb_data;
- 
--	if (rename(git_path(TMP_RENAMED_LOG), path)) {
-+	if (rename(cb->tmp_renamed_log, path)) {
- 		/*
- 		 * rename(a, b) when b is an existing directory ought
- 		 * to result in ISDIR, but Solaris 5.8 gives ENOTDIR.
-@@ -2521,7 +2532,7 @@ static int rename_tmp_log_callback(const char *path, void *cb)
- 		 * but report EISDIR to raceproof_create_file() so
- 		 * that it knows to retry.
- 		 */
--		*true_errno = errno;
-+		cb->true_errno = errno;
- 		if (errno == ENOTDIR)
- 			errno = EISDIR;
- 		return -1;
-@@ -2532,20 +2543,26 @@ static int rename_tmp_log_callback(const char *path, void *cb)
- 
- static int rename_tmp_log(const char *newrefname)
- {
--	char *path = git_pathdup("logs/%s", newrefname);
--	int ret, true_errno;
-+	struct strbuf path = STRBUF_INIT;
-+	struct strbuf tmp = STRBUF_INIT;
-+	struct rename_cb cb;
-+	int ret;
- 
--	ret = raceproof_create_file(path, rename_tmp_log_callback, &true_errno);
-+	strbuf_git_path(&path, "logs/%s", newrefname);
-+	strbuf_git_path(&tmp, TMP_RENAMED_LOG);
-+	cb.tmp_renamed_log = tmp.buf;
-+	ret = raceproof_create_file(path.buf, rename_tmp_log_callback, &cb);
- 	if (ret) {
- 		if (errno == EISDIR)
--			error("directory not empty: %s", path);
-+			error("directory not empty: %s", path.buf);
- 		else
- 			error("unable to move logfile %s to %s: %s",
--			      git_path(TMP_RENAMED_LOG), path,
--			      strerror(true_errno));
-+			      tmp.buf, path.buf,
-+			      strerror(cb.true_errno));
- 	}
- 
--	free(path);
-+	strbuf_release(&path);
-+	strbuf_release(&tmp);
- 	return ret;
- }
- 
-@@ -2586,10 +2603,17 @@ static int files_rename_ref(struct ref_store *ref_store,
- 	int flag = 0, logmoved = 0;
- 	struct ref_lock *lock;
- 	struct stat loginfo;
--	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
-+	struct strbuf sb_oldref = STRBUF_INIT;
-+	struct strbuf sb_newref = STRBUF_INIT;
-+	struct strbuf tmp_renamed_log = STRBUF_INIT;
-+	int log, ret;
- 	struct strbuf err = STRBUF_INIT;
--	int ret;
- 
-+	strbuf_git_path(&sb_oldref, "logs/%s", oldrefname);
-+	strbuf_git_path(&sb_newref, "logs/%s", newrefname);
-+	strbuf_git_path(&tmp_renamed_log, TMP_RENAMED_LOG);
-+
-+	log = !lstat(sb_oldref.buf, &loginfo);
- 	if (log && S_ISLNK(loginfo.st_mode)) {
- 		ret = error("reflog for %s is a symlink", oldrefname);
- 		goto out;
-@@ -2611,7 +2635,7 @@ static int files_rename_ref(struct ref_store *ref_store,
- 		goto out;
- 	}
- 
--	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG))) {
-+	if (log && rename(sb_oldref.buf, tmp_renamed_log.buf)) {
- 		ret = error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
- 			    oldrefname, strerror(errno));
- 		goto out;
-@@ -2693,16 +2717,19 @@ static int files_rename_ref(struct ref_store *ref_store,
- 	log_all_ref_updates = flag;
- 
-  rollbacklog:
--	if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
-+	if (logmoved && rename(sb_newref.buf, sb_oldref.buf))
- 		error("unable to restore logfile %s from %s: %s",
- 			oldrefname, newrefname, strerror(errno));
- 	if (!logmoved && log &&
--	    rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
-+	    rename(tmp_renamed_log.buf, sb_oldref.buf))
- 		error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
- 			oldrefname, strerror(errno));
--
- 	ret = 1;
-  out:
-+	strbuf_release(&sb_newref);
-+	strbuf_release(&sb_oldref);
-+	strbuf_release(&tmp_renamed_log);
-+
- 	return ret;
- }
- 
-@@ -2875,18 +2902,24 @@ int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
- 	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
- 				  git_committer_info(0), msg);
- 	if (result) {
-+		struct strbuf sb = STRBUF_INIT;
- 		int save_errno = errno;
- 
-+		strbuf_git_path(&sb, "logs/%s", refname);
- 		strbuf_addf(err, "unable to append to '%s': %s",
--			    git_path("logs/%s", refname), strerror(save_errno));
-+			    sb.buf, strerror(save_errno));
-+		strbuf_release(&sb);
- 		close(logfd);
- 		return -1;
- 	}
- 	if (close(logfd)) {
-+		struct strbuf sb = STRBUF_INIT;
- 		int save_errno = errno;
- 
-+		strbuf_git_path(&sb, "logs/%s", refname);
- 		strbuf_addf(err, "unable to append to '%s': %s",
--			    git_path("logs/%s", refname), strerror(save_errno));
-+			    sb.buf, strerror(save_errno));
-+		strbuf_release(&sb);
- 		return -1;
- 	}
- 	return 0;
-@@ -3106,22 +3139,32 @@ int set_worktree_head_symref(const char *gitdir, const char *target, const char
- static int files_reflog_exists(struct ref_store *ref_store,
- 			       const char *refname)
- {
-+	struct strbuf sb = STRBUF_INIT;
- 	struct stat st;
-+	int ret;
- 
- 	/* Check validity (but we don't need the result): */
- 	files_downcast(ref_store, 0, "reflog_exists");
- 
--	return !lstat(git_path("logs/%s", refname), &st) &&
--		S_ISREG(st.st_mode);
-+	strbuf_git_path(&sb, "logs/%s", refname);
-+	ret = !lstat(sb.buf, &st) && S_ISREG(st.st_mode);
-+	strbuf_release(&sb);
-+	return ret;
- }
- 
- static int files_delete_reflog(struct ref_store *ref_store,
- 			       const char *refname)
- {
-+	struct strbuf sb = STRBUF_INIT;
-+	int ret;
-+
- 	/* Check validity (but we don't need the result): */
- 	files_downcast(ref_store, 0, "delete_reflog");
- 
--	return remove_path(git_path("logs/%s", refname));
-+	strbuf_git_path(&sb, "logs/%s", refname);
-+	ret = remove_path(sb.buf);
-+	strbuf_release(&sb);
-+	return ret;
- }
- 
- static int show_one_reflog_ent(struct strbuf *sb, each_reflog_ent_fn fn, void *cb_data)
-@@ -3177,7 +3220,9 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
- 	/* Check validity (but we don't need the result): */
- 	files_downcast(ref_store, 0, "for_each_reflog_ent_reverse");
- 
--	logfp = fopen(git_path("logs/%s", refname), "r");
-+	strbuf_git_path(&sb, "logs/%s", refname);
-+	logfp = fopen(sb.buf, "r");
-+	strbuf_release(&sb);
- 	if (!logfp)
- 		return -1;
- 
-@@ -3283,7 +3328,9 @@ static int files_for_each_reflog_ent(struct ref_store *ref_store,
- 	/* Check validity (but we don't need the result): */
- 	files_downcast(ref_store, 0, "for_each_reflog_ent");
- 
--	logfp = fopen(git_path("logs/%s", refname), "r");
-+	strbuf_git_path(&sb, "logs/%s", refname);
-+	logfp = fopen(sb.buf, "r");
-+	strbuf_release(&sb);
- 	if (!logfp)
- 		return -1;
- 
-@@ -3365,12 +3412,15 @@ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_st
- {
- 	struct files_reflog_iterator *iter = xcalloc(1, sizeof(*iter));
- 	struct ref_iterator *ref_iterator = &iter->base;
-+	struct strbuf sb = STRBUF_INIT;
- 
- 	/* Check validity (but we don't need the result): */
- 	files_downcast(ref_store, 0, "reflog_iterator_begin");
- 
- 	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable);
--	iter->dir_iterator = dir_iterator_begin(git_path("logs"));
-+	strbuf_git_path(&sb, "logs");
-+	iter->dir_iterator = dir_iterator_begin(sb.buf);
-+	strbuf_release(&sb);
- 	return ref_iterator;
- }
- 
-@@ -3708,6 +3758,7 @@ static int files_transaction_commit(struct ref_store *ref_store,
- 	char *head_ref = NULL;
- 	int head_type;
- 	struct object_id head_oid;
-+	struct strbuf sb = STRBUF_INIT;
- 
- 	assert(err);
- 
-@@ -3829,7 +3880,9 @@ static int files_transaction_commit(struct ref_store *ref_store,
- 			if (!(update->type & REF_ISPACKED) ||
- 			    update->type & REF_ISSYMREF) {
- 				/* It is a loose reference. */
--				if (unlink_or_msg(git_path("%s", lock->ref_name), err)) {
-+				strbuf_reset(&sb);
-+				strbuf_git_path(&sb, "%s", lock->ref_name);
-+				if (unlink_or_msg(sb.buf, err)) {
- 					ret = TRANSACTION_GENERIC_ERROR;
- 					goto cleanup;
- 				}
-@@ -3849,7 +3902,9 @@ static int files_transaction_commit(struct ref_store *ref_store,
- 
- 	/* Delete the reflogs of any references that were deleted: */
- 	for_each_string_list_item(ref_to_delete, &refs_to_delete) {
--		if (!unlink_or_warn(git_path("logs/%s", ref_to_delete->string)))
-+		strbuf_reset(&sb);
-+		strbuf_git_path(&sb, "logs/%s", ref_to_delete->string);
-+		if (!unlink_or_warn(sb.buf))
- 			try_remove_empty_parents(ref_to_delete->string,
- 						 REMOVE_EMPTY_PARENTS_REFLOG);
- 	}
-@@ -3857,6 +3912,7 @@ static int files_transaction_commit(struct ref_store *ref_store,
- 	clear_loose_ref_cache(refs);
- 
- cleanup:
-+	strbuf_release(&sb);
- 	transaction->state = REF_TRANSACTION_CLOSED;
- 
- 	for (i = 0; i < transaction->nr; i++) {
-@@ -4123,14 +4179,22 @@ static int files_reflog_expire(struct ref_store *ref_store,
- 
- static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
- {
-+	struct strbuf sb = STRBUF_INIT;
-+
- 	/* Check validity (but we don't need the result): */
- 	files_downcast(ref_store, 0, "init_db");
- 
- 	/*
- 	 * Create .git/refs/{heads,tags}
+@@ -3166,7 +3166,7 @@ int set_worktree_head_symref(const char *gitdir, const char *target, const char
+ 	 * backends. This function needs to die.
  	 */
--	safe_create_dir(git_path("refs/heads"), 1);
--	safe_create_dir(git_path("refs/tags"), 1);
-+	strbuf_git_path(&sb, "refs/heads");
-+	safe_create_dir(sb.buf, 1);
-+
-+	strbuf_reset(&sb);
-+	strbuf_git_path(&sb, "refs/tags");
-+	safe_create_dir(sb.buf, 1);
-+
-+	strbuf_release(&sb);
- 	return 0;
- }
+ 	struct files_ref_store *refs =
+-		files_downcast(get_ref_store(NULL), 0, "set_head_symref");
++		files_downcast(get_main_ref_store(), 0, "set_head_symref");
  
+ 	static struct lock_file head_lock;
+ 	struct ref_lock *lock;
 -- 
 2.11.0.157.gd943d85
 
