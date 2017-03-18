@@ -2,156 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 331202095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 18:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF0BE2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 18:44:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751785AbdCRSn1 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 14:43:27 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:36048 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751780AbdCRSn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 14:43:26 -0400
-Received: by mail-wm0-f41.google.com with SMTP id n11so36846465wma.1
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 11:43:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0gJ6KwLiCq8g7lUL+beZipnRA82paSmhe6B1AG1UYt8=;
-        b=G0XBKLZbgxzS9SWOvAX0/mseQFohvS6l4O6pRCM7RK5M4RLzkP5kUyMRmnBHVGjXva
-         DuZAKVcOkqF3eKFhVwWfyME37bZM1MmjJ3Aw/B7EgKm7MGZxJ6javGIvOzVVxiJ4wfWN
-         Zod/mOBe/OljHfcc6aBjTJ9rcvP2E+6vWRD4HEAV4IUUlJePfnxQlXdNqrNdulLxgj15
-         H8CHwAmIxUqmaRmaom0EP6vGWU60b5lKRr3ZpL7KFbmdyvGHJ5+AWb0oqAUvdeusiOfD
-         G/7k6rbqHvYDZsMl3CrIi4NO+Jt1+MCDH/K4eTBsbF2UFA05ohwpea562K9lGOWg3kNQ
-         Jn6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0gJ6KwLiCq8g7lUL+beZipnRA82paSmhe6B1AG1UYt8=;
-        b=BcecQAbaCZGUl6CsSe2BcOui6X4/cBr1/dEJf5S+ueayqXQB8E3DGT62rIiG6RCd7d
-         ePW6YIw5UHOPBSna/ZjliGtBATDJAlrLZ+uPXbDT7zi+w288NDviAU8D+N+2u+QzqlS2
-         T//YaKCmwfPENwrEHShYs5oJUuPk9oX+U0JRvs8wePRPDkdbA12CO5bjx1ERoVRfe+oE
-         mVR2a1/IdlcIPsL8xLXG8mKhz0jVsC7DkQIklLw/8n2vLB8sDg3DZiusjoCx9MNtI5Zy
-         dR7nrca+uO86RcozkGWQaGpZenj2K944Lweteb30tr+KzEyZZsztcy/YhlZKrkdfQfyZ
-         FBEQ==
-X-Gm-Message-State: AFeK/H0B3yY5skq6SO6XEUvBmEWyX0xgOtlCkZw8ZeZvccsghkV855JSpLJx62QASHFF/w==
-X-Received: by 10.28.209.75 with SMTP id i72mr3221074wmg.31.1489862202788;
-        Sat, 18 Mar 2017 11:36:42 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id 36sm14383390wrk.57.2017.03.18.11.36.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Mar 2017 11:36:42 -0700 (PDT)
-Date:   Sat, 18 Mar 2017 18:36:58 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] "git stash -- path" reports wrong unstaged changes
-Message-ID: <20170318183658.GC27158@hank>
-References: <20170317145039.dmcb3qyqbzfvtmgz@sigill.intra.peff.net>
+        id S1751826AbdCRSoc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 14:44:32 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60799 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751665AbdCRSob (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 14:44:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CDA5D87DCA;
+        Sat, 18 Mar 2017 14:43:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=0wBjhqtJmXq7
+        i3Pmcek+CTsnyqI=; b=Cb7uAq350YmUhLSP61gkNHi5tanL53E3GbXfh/EnlUNs
+        R2QeUkd0Tqsl4dpWmQNazr6rsqElW2jdvXz08BIax/qv1myM1D48PemNs8HcO1hk
+        aJ0sq3vj7tWJxvn81EnqxcVMt8XQBuhamHzfZlGzicuwzIY2NO9w2+ZDYPG/+0M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=q0seFT
+        VCGxGzZVYzkMsu49TzZRfrY7UZLFkfzJ6h9R2E/CUo6mX0GnvMxdI+EZ7HX74wqO
+        U8MTcnP5PKr9c6Ns5RuOjXIqylzQV9fwEe5pzwAdKi/ybMDgH4D3apO57wtXFtM9
+        ILnQoY38smBZEsFE3r58dBDN+Izi2xUUXOkEk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C44B887DC9;
+        Sat, 18 Mar 2017 14:43:48 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14F2F87DC8;
+        Sat, 18 Mar 2017 14:43:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>
+Subject: Re: [PATCH 3/8] tag: Change  misleading --list <pattern> documentation
+References: <20170318103256.27141-1-avarab@gmail.com>
+        <20170318103256.27141-4-avarab@gmail.com>
+Date:   Sat, 18 Mar 2017 11:43:47 -0700
+In-Reply-To: <20170318103256.27141-4-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 18 Mar 2017 10:32:51 +0000")
+Message-ID: <xmqqmvci2zoc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170317145039.dmcb3qyqbzfvtmgz@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D2A9B614-0C0A-11E7-A611-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/17, Jeff King wrote:
-> I used "git stash -- path" for the first time today and happened to
-> notice an oddity. If I run:
-> 
-> 	git init -q repo
-> 	cd repo
-> 	
-> 	for i in one two; do
-> 		echo content >$i
-> 		git add $i
-> 	done
-> 	git commit -qm base
-> 	
-> 	for i in one two; do
-> 		echo change >$i
-> 	done
-> 	git stash -- one
-> 
-> it says:
-> 
->   Saved working directory and index state WIP on master: 20cfadf base
->   Unstaged changes after reset:
->   M	one
->   M	two
-> 
-> Even though "one" no longer has unstaged changes.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-Yeah, this is clearly not right.  Thanks for catching this before it
-got into any release.
+> However, documenting this as "-l <pattern>" was never correct, as
+> these both worked before Jeff's change:
+>
+>     git tag -l 'v*'
+>     git tag 'v*' -l
 
-> If I run with GIT_TRACE=1, that message is generated by:
-> 
->   git reset -- one
-> 
-> which makes sense. At that stage we've just reset the index, but the
-> working tree file still has modifications. In the non-pathspec case we
-> run "git reset --hard", which takes care of the index and the working
-> tree.
-> 
-> It's really "checkout-index" that cleans the working tree, but it
-> doesn't have porcelain finery like an "Unstaged changes" message. I
-> think the patch below would fix it, but I wonder if we can do it in a
-> way that doesn't involve calling diff-files twice.
-> 
-> -Peff
-> 
-> ---
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 9c70662cc..9a4bb503a 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -299,10 +299,15 @@ push_stash () {
->  	then
->  		if test $# != 0
->  		then
-> -			git reset ${GIT_QUIET:+-q} -- "$@"
-> +			git reset -q -- "$@"
->  			git ls-files -z --modified -- "$@" |
->  			git checkout-index -z --force --stdin
->  			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
-> +			if test -z "$GIT_QUIET" && ! git diff-files --quiet
-> +			then
-> +				say "$(gettext "Unstaged changes after reset:")"
-> +				git diff-files --name-status
-> +			fi
->  		else
->  			git reset --hard ${GIT_QUIET:+-q}
->  		fi
+Actually, we do not particularly care about the latter, and quite
+honestly, I'd prefer we do not advertise and encourage the latter.
+Most Git commands take dashed options first and then non-dashed
+arguments, and so should "git tag".  A more important example to
+show why "-l <pattern>" that pretends <pattern> is an argument to
+the option is wrong is this:
 
-This would mean the user gets something like in your case above:
+	git tag -l --merged X 'v*'
 
-    Unstaged changes after reset:
-     M	two
+and this one
 
-As a user that doesn't know the internal implementation of push_stash,
-this would make me wonder why git stash would mention a file that is
-not provided as pathspec, but not the one that was provided in the
-pathspec argument.
+>     git tag --list 'v*rc*' '*2.8*'
 
-I think one option would be to to just keep quiet about the exact
-changes that git stash push makes, similar to what we do in the
---include-untracked and in the -p case.  The other option would be to
-find the files that are affected and print them, but that would
-probably be a bit too noisy especially in cases such as
-git stash push -- docs/*.
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index 74fc82a3c0..d36cd51fe2 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -118,6 +118,18 @@ test_expect_success 'listing all tags if one exist=
+s should succeed' '
+>  	git tag
+>  '
+> =20
+> +cat >expect <<EOF
+> +mytag
+> +EOF
+> +test_expect_success 'Multiple -l or --list options are equivalent to o=
+ne -l option' '
+> +	git tag -l -l >actual &&
+> +	test_cmp expect actual &&
+> +	git tag --list --list >actual &&
+> +	test_cmp expect actual &&
+> +	git tag --list -l --list >actual &&
+> +	test_cmp expect actual
+> +'
 
-Also from reading the code in the -p case, when --keep-index is given,
-the git reset there doesn't respect $GIT_QUIET at all, and also
-doesn't respect the pathspec argument, which seems like another bug.
-I can submit a patch series for those, but I won't get to it before
-tomorrow :)
+OK.  I do not care too deeply about this one, but somebody may want
+to tighten up the command line parsing to detect conflicting or
+duplicated cmdmode as an error in the future, and at that time this
+will require updating.  I am not sure if we want to promise that
+giving multiple -l will keep working.
+
+> +test_expect_success 'tag -l can accept multiple patterns interleaved w=
+ith -l or --list options' '
+> +	git tag -l "v1*" "v0*" >actual &&
+
+This is good thing to promise that we will keep it working.
+
+> +	test_cmp expect actual &&
+> +	git tag -l "v1*" --list "v0*" >actual &&
+> +	test_cmp expect actual &&
+> +	git tag -l "v1*" "v0*" -l --list >actual &&
+> +	test_cmp expect actual
+
+I'd prefer we do *not* promise that it will keep working if you give
+pattern and then later any dashed-option like -l to the command by
+having tests like these.
+
+Thanks.
