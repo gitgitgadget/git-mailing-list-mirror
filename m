@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFAF220323
-	for <e@80x24.org>; Sat, 18 Mar 2017 10:34:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC3F920323
+	for <e@80x24.org>; Sat, 18 Mar 2017 10:34:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751443AbdCRKee (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 06:34:34 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36473 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751208AbdCRKeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 06:34:13 -0400
-Received: by mail-wr0-f195.google.com with SMTP id l37so12174849wrc.3
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:33:59 -0700 (PDT)
+        id S1751441AbdCRKed (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 06:34:33 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36275 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751105AbdCRKeO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 06:34:14 -0400
+Received: by mail-wm0-f68.google.com with SMTP id x124so6815010wmf.3
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4QQGOR9JzPrGeT1/41apSLiWfJkhk3i89vI2tZ9CB7w=;
-        b=Q91TXPOag/yTbG5RVWzWR25T22pHyU7bKIPIJh2ciFP/iMlLnU293WfXcF8l0lTG9l
-         ImeiFoOuUqMj3on32QRT1tVYtDO2pyzqnNaxNb5MtzPu334XEb0+HkSOY70FLzi1Xuvi
-         u4y1PCWCTBDX+Kgxaf+q5G8bL6co27qmGQf0UcA0mVm0ms0zGdSPWJxcO04OfaEaZiOF
-         uAVTGIQyafsbH8FTer28As2zmqqWbVMTYcGx8KWKrnHD80JEBcWBliEr4LUlVEjJH3bL
-         S08pU5nk7sRQwGnybgwPY441CED4SiVsl/tnUCjF+yiLaNapbv5IS+N4O/I8VEp0iJ7r
-         WDHQ==
+        bh=/0Yafzc20o1QNVs8TVRSdwLRdcNByIw3SrNHD37WSjA=;
+        b=SmZ5OpriGFvJU0g75DYfqHakZxfe9tZOk0WxaaNz0upUY46GWIMs8p6Q+Di802s993
+         GZe3unuDzX7t8yiGgqfjEcLeyNQ21RXhEQLSPCZNoAZ9njzKy6pZ9N/QQ06GqlS64LvY
+         iVohGzby8RiseUt6UaRquvCBAvIVbZHvSoZxsAumdCGy6DztrE5MZvKkRtl0ZDCQ/Wyx
+         V96UihO0qIs6SfZlac4CC/LoYKykZ5SVJXPGNvuIXgE75kf6ah+tMTSJClQeC5xJHmlZ
+         5he5/IqacAtLTUVjaA66W/tiCZnyhBwO5MjOvv7HP8zHJAcCWM/u8g9LWfPcwNUE8jeT
+         UrJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4QQGOR9JzPrGeT1/41apSLiWfJkhk3i89vI2tZ9CB7w=;
-        b=m/da+fLfqk5aGZlwnOQqQc62vzwVe50vTa1yZOiLhg0PpL9nRlIO8J3bvfgx5Hmq9g
-         LtdQjGXSTTPKzBUXDeWYTZ8fbXpl5fl5aXVyZ5yr9Sb0tMWhiymmkSbmjj+AdDh43Ox1
-         GgOJcBp5Fn3akC4hQsUMXsEzF5ZgoPm/TEI1UG4DGcG0CSFy/g5NTwMGXOP21Ech8RCz
-         uR7z37n9TH+V7ruzkaMNTCK/KGCvhQrDKJYdPFySJh/rNMLkKZtCaVG+GcRCOxfs98Fd
-         VkWqPIn0BOgOPyI2m/vJ+5LOmJYiY7ai5t7TChC0HW1fP0NO+uNRndGnjMNSPowR5HoA
-         yifA==
-X-Gm-Message-State: AFeK/H2aXsVM78/5f/buHglNXKOcEWTfz2JW0U/ibzBxi5EX9R2QYmKL4WU7+iSxmj3uPA==
-X-Received: by 10.223.157.38 with SMTP id k38mr14310510wre.156.1489833238519;
-        Sat, 18 Mar 2017 03:33:58 -0700 (PDT)
+        bh=/0Yafzc20o1QNVs8TVRSdwLRdcNByIw3SrNHD37WSjA=;
+        b=kR1GuVuG6Apf3Rvn4/tJuirr0WEj374MftPf2R8kXxDELm9xm+hrkStnskdEtnlcQN
+         wdn4ZoM596SHfOh8VSp5QRdOepAmgKvJX0RGNtkRnWDh5jlouOZYZqFQF6LBhhjKJn5H
+         deHiZ198cDNeEGclyrR7uAK15JzHnGm0vsw3Ruv2tfb1RJE5Fytz653utUOw2TD25Q6z
+         URcQibb1gKECvBDyJHjPy2JVe0ulCWQI7oOkSWAGivr7uiesuGHdrXm9ZOJ66V7C/Sqm
+         zuX1e9/kfTKGrsfiksu8tFyvFZB7H05F3zuihEb5BErZWFaeFIEAQP1XyDjnNrgFacYB
+         mnzQ==
+X-Gm-Message-State: AFeK/H1emiW/jmFIK0fUEWtY9EG9Jz+Rj4gvFHmKBry8BrXLpeJVgGDtV6iG+i72R9MLRA==
+X-Received: by 10.28.84.18 with SMTP id i18mr2242852wmb.12.1489833214015;
+        Sat, 18 Mar 2017 03:33:34 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j34sm13007928wre.7.2017.03.18.03.33.57
+        by smtp.gmail.com with ESMTPSA id j34sm13007928wre.7.2017.03.18.03.33.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 18 Mar 2017 03:33:57 -0700 (PDT)
+        Sat, 18 Mar 2017 03:33:33 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Tom Grennan <tmgrennan@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 8/8] tag: Change --point-at to default to HEAD
-Date:   Sat, 18 Mar 2017 10:32:56 +0000
-Message-Id: <20170318103256.27141-9-avarab@gmail.com>
+Subject: [PATCH 3/8] tag: Change  misleading --list <pattern> documentation
+Date:   Sat, 18 Mar 2017 10:32:51 +0000
+Message-Id: <20170318103256.27141-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170318103256.27141-1-avarab@gmail.com>
 References: <20170318103256.27141-1-avarab@gmail.com>
@@ -72,72 +72,116 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the --points-at option to default to HEAD for consistency with
-its siblings --contains, --merged etc. which default to HEAD. This
-changes behavior added in commit ae7706b9ac (tag: add --points-at list
-option, 2012-02-08).
+Change the documentation for --list so that it's described as a
+toggle, not as an option that takes a <pattern> as an argument.
+
+Junio initially documented this in b867c7c23a ("git-tag: -l to list
+tags (usability).", 2006-02-17), but later Jeff King changed "tag" to
+accept multiple patterns in 588d0e834b ("tag: accept multiple patterns
+for --list", 2011-06-20).
+
+However, documenting this as "-l <pattern>" was never correct, as
+these both worked before Jeff's change:
+
+    git tag -l 'v*'
+    git tag 'v*' -l
+
+One would expect an option that was documented like that to only
+accept:
+
+    git tag --list
+    git tag --list 'v*rc*'
+
+And after Jeff's change, one that took multiple patterns:
+
+    git tag --list 'v*rc*' --list '*2.8*'
+
+But since it's actually a toggle all of these work as well, and
+produce identical output to the last example above:
+
+    git tag --list 'v*rc*' '*2.8*'
+    git tag --list 'v*rc*' '*2.8*' --list --list --list
+    git tag --list 'v*rc*' '*2.8*' --list -l --list -l --list
+
+Now the documentation is more in tune with how the "branch" command
+describes its --list option since commit cddd127b9a ("branch:
+introduce --list option", 2011-08-28).
+
+Change the test suite to assert that these invocations work for the
+cases that weren't already being tested for.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-tag.txt | 3 ++-
- builtin/tag.c             | 3 ++-
- t/t7004-tag.sh            | 8 +++++++-
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ Documentation/git-tag.txt | 16 +++++++++-------
+ t/t7004-tag.sh            | 21 +++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index d0b506f120..1d66348b6a 100644
+index 525737a5d8..848e8c1b73 100644
 --- a/Documentation/git-tag.txt
 +++ b/Documentation/git-tag.txt
-@@ -136,7 +136,8 @@ This option is only applicable when listing tags without annotation lines.
- 	not specified). Implies `--list`.
+@@ -87,13 +87,15 @@ OPTIONS
+ 	If no number is given to `-n`, only the first line is printed.
+ 	If the tag is not annotated, the commit message is displayed instead.
  
- --points-at <object>::
--	Only list tags of the given object. Implies `--list`.
-+	Only list tags of the given object (HEAD if not
-+	specified). Implies `--list`.
+--l <pattern>::
+---list <pattern>::
+-	List tags with names that match the given pattern (or all if no
+-	pattern is given).  Running "git tag" without arguments also
+-	lists all tags. The pattern is a shell wildcard (i.e., matched
+-	using fnmatch(3)).  Multiple patterns may be given; if any of
+-	them matches, the tag is shown.
++-l::
++--list::
++	Activate the list mode. `git tag <pattern>` would try to create a
++	tag, use `git tag --list <pattern>` to list matching branches, (or
++	all if no pattern is given).
+++
++Running "git tag" without arguments also lists all tags. The pattern
++is a shell wildcard (i.e., matched using fnmatch(3)). Multiple
++patterns may be given; if any of them matches, the tag is shown.
  
- -m <msg>::
- --message=<msg>::
-diff --git a/builtin/tag.c b/builtin/tag.c
-index f91ae171b7..300f831fb1 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -433,7 +433,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			     N_("field name to sort on"), &parse_opt_ref_sorting),
- 		{
- 			OPTION_CALLBACK, 0, "points-at", &filter.points_at, N_("object"),
--			N_("print only tags of the object"), 0, parse_opt_object_name
-+			N_("print only tags of the object"), PARSE_OPT_LASTARG_DEFAULT,
-+			parse_opt_object_name, (intptr_t) "HEAD"
- 		},
- 		OPT_STRING(  0 , "format", &format, N_("format"), N_("format to use for the output")),
- 		OPT_BOOL('i', "ignore-case", &icase, N_("sorting and filtering are case insensitive")),
+ --sort=<key>::
+ 	Sort based on the key given.  Prefix `-` to sort in
 diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index f7ff4e034b..112d96b4ce 100755
+index 74fc82a3c0..d36cd51fe2 100755
 --- a/t/t7004-tag.sh
 +++ b/t/t7004-tag.sh
-@@ -1601,7 +1601,8 @@ do
- 	"
- 	test_expect_success "Doing 'git tag --list-like $option <commit> <pattern> is permitted" "
- 		git tag -n $option HEAD HEAD &&
--		git tag $option HEAD HEAD
-+		git tag $option HEAD HEAD &&
-+		git tag $option
- 	"
- done
- 
-@@ -1613,6 +1614,11 @@ test_expect_success '--points-at can be used in non-list mode' '
- 	test_cmp expect actual
+@@ -118,6 +118,18 @@ test_expect_success 'listing all tags if one exists should succeed' '
+ 	git tag
  '
  
-+test_expect_success '--points-at is a synonym for --points-at HEAD' '
-+	git tag --points-at >actual &&
++cat >expect <<EOF
++mytag
++EOF
++test_expect_success 'Multiple -l or --list options are equivalent to one -l option' '
++	git tag -l -l >actual &&
++	test_cmp expect actual &&
++	git tag --list --list >actual &&
++	test_cmp expect actual &&
++	git tag --list -l --list >actual &&
 +	test_cmp expect actual
 +'
 +
- test_expect_success '--points-at finds lightweight tags' '
- 	echo v4.0 >expect &&
- 	git tag --points-at v4.0 >actual &&
+ test_expect_success 'listing all tags if one exists should output that tag' '
+ 	test $(git tag -l) = mytag &&
+ 	test $(git tag) = mytag
+@@ -336,6 +348,15 @@ test_expect_success 'tag -l can accept multiple patterns' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'tag -l can accept multiple patterns interleaved with -l or --list options' '
++	git tag -l "v1*" "v0*" >actual &&
++	test_cmp expect actual &&
++	git tag -l "v1*" --list "v0*" >actual &&
++	test_cmp expect actual &&
++	git tag -l "v1*" "v0*" -l --list >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'listing tags in column' '
+ 	COLUMNS=40 git tag -l --column=row >actual &&
+ 	cat >expected <<\EOF &&
 -- 
 2.11.0
 
