@@ -7,207 +7,94 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F288920323
-	for <e@80x24.org>; Sat, 18 Mar 2017 10:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 000FB20323
+	for <e@80x24.org>; Sat, 18 Mar 2017 10:34:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751471AbdCRKei (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 06:34:38 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35882 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751452AbdCRKeg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 06:34:36 -0400
-Received: by mail-pg0-f68.google.com with SMTP id 81so5105141pgh.3
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:34:35 -0700 (PDT)
+        id S1751449AbdCRKee (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 06:34:34 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36369 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751164AbdCRKeN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 06:34:13 -0400
+Received: by mail-wm0-f68.google.com with SMTP id x124so6815798wmf.3
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6GtjH+wmYrcfpvj81mKSKWuHkPqgqkFGau93Bj1vgXo=;
-        b=lLXjNO7u1jTqVezKdNsiuvXJTK8NVzqa7iQNnvlDxuRcTvIRxM5q/nnYAnp61S+WL0
-         9kJeK4zoYRB5IEcLkMZxecHo/y0xUG9V/7M2pbCcbcrVIm4qEc12H0F6Gva1xmDZ6n+Q
-         71NUWK7wQNVg9AyN0MiEn30J6/PC7DFktolRMoVwhO2b5t80Og1ytUYEpBxgKEAV9Cdt
-         hempv4E+LybHKBrozXsoFq8wX2uQhZ8Nib4USscwy7GEmHFTvpLqGLkIEQpDkJKDtLFA
-         lMWa5Go1PFtukafxjRgAf8FsGTl4Qp/reIAA2zU0CWZ7ywMDfRa6sFekCp675HPTPT1f
-         OLdQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=gp6zAbnITL18zM0tZBmxOaNlLE+nNlRZ3p4rcmjjfjQ=;
+        b=QL68KcrhK/K9JYBFMkFo2WiqF18C9sA9E3Zkvw9jHlAZ7GweaYFStMxqkCy+zOlb/k
+         +ru6o+6saptlZqxamJwHkEikVTQ2W42vdumhvkhFmHSJEmWPXIdq8GtyVRdxfRo9PrPr
+         zJjZhIlaJwmxIJveT6ypBFHqJzyw0CCN1sNVk9+Sq17z6o+V59HH4vlqp9IIsQeMlOET
+         yVIbtXWnhFYiTGPu8TPUQBHGznxbCN71LSE0+6mk3Wde4qgwiKFzvIN60FGVRiN56fnb
+         Cifl7TkEcAY/Ew+X8/LTvHh4qe+O4+5GeqN8O92ojnhWvJOhwFbGCccX9Xu7gEXglTLU
+         0HlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6GtjH+wmYrcfpvj81mKSKWuHkPqgqkFGau93Bj1vgXo=;
-        b=JbHGi3RRTut4zCQW2vze9NsvLm+PhAbWf5BPlMOXxW51R4JrpXi3As5KgOsjXTQX/X
-         Cv0BIeEVXRrXo01zrsBBmiQJ//ZzkWUDovwA7NjYUy0e5Oovljb7l75sb18MorZJaExX
-         oIjgR4TZ/Vv3mfTRn7NNATNP8g1h7pbCBk6UwpM9e5+K0J1ENw4pIUAxTzuFA8IwErlm
-         otlj3AlZQ9EdSWdBBF0GDVN+ZTlGTXdMnIGyzvVy9m+CEyKi1wkzXYHQtjOMLwcHcvJE
-         8E91PJ6UITyxETs15qM4k0VFI7svFal/oVMXw3R8dXzlIgDjbvLtifvbW/1ikeN4G++V
-         Cmcg==
-X-Gm-Message-State: AFeK/H3XtDirRz6CECNwvHlm+zlFWo6UL6zaHqb1UugtaP/IR6OVBzRrCwCH/NMIG3mmCA==
-X-Received: by 10.99.94.71 with SMTP id s68mr20386620pgb.181.1489831360474;
-        Sat, 18 Mar 2017 03:02:40 -0700 (PDT)
-Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id b70sm21741661pfc.100.2017.03.18.03.02.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Mar 2017 03:02:39 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 17:02:35 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
+         :references:mime-version:content-transfer-encoding;
+        bh=gp6zAbnITL18zM0tZBmxOaNlLE+nNlRZ3p4rcmjjfjQ=;
+        b=LIMOGSSn5JSWMOLQCek9FneDFIhfb9LnJgoRtZj0MV9/LWZLJKkLajvMADXXQFjP5o
+         vlIiE/pEU2/VWze3JyRKLUTE4/+xAOZ/PTv1QyzBL1up/XZE4VjW0No66DxQmcxjJDir
+         vgWmzgXvaTCiE14YqJ1069bUrsNZkz5Xk8Wjm3D3HGLTeWrlB1S+ZAXpnfUVoI7O169n
+         uN1BRgQCnLzJ+nddPSwvAqWyyfw8fUIn18JPnvOW43z9EtSYa+bqkVHbCh7honrtI5/l
+         1kokEM1OKx5WkXrbfPSG+J/JTLaAcrw2RU9E4sQz7AwVP2/QJi7h8UTNfgSvZPfyLnlu
+         7dGw==
+X-Gm-Message-State: AFeK/H1zGqWY+84lE79LIGm+szbxkEqq9V4P875hKeTDpQ9AJ2S2uI9qkmcDU6JmayZoIg==
+X-Received: by 10.28.88.2 with SMTP id m2mr2209116wmb.12.1489833233522;
+        Sat, 18 Mar 2017 03:33:53 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id j34sm13007928wre.7.2017.03.18.03.33.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 18 Mar 2017 03:33:52 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v3 4/4] refs: kill set_worktree_head_symref()
-Date:   Sat, 18 Mar 2017 17:02:06 +0700
-Message-Id: <20170318100206.5980-5-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170318100206.5980-1-pclouds@gmail.com>
-References: <20170216120302.5302-1-pclouds@gmail.com>
- <20170318100206.5980-1-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 7/8] tag: Add tests for --with and --without
+Date:   Sat, 18 Mar 2017 10:32:55 +0000
+Message-Id: <20170318103256.27141-8-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170318103256.27141-1-avarab@gmail.com>
+References: <20170318103256.27141-1-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-70999e9cec (branch -m: update all per-worktree HEADs - 2016-03-27)
-added this function in order to update HEADs of all relevant
-worktrees, when a branch is renamed.
+Change the test suite to test for these options. Before this change
+there were no tests for this at all. This change doesn't exhaustively
+test for them as well as their --contains and --no-contains aliases,
+but at least it's something.
 
-It, as a public ref api, kind of breaks abstraction when it uses
-internal functions of files backend. With the introduction of
-refs_create_symref(), we can move back pretty close to the code before
-70999e9cec, where create_symref() was used for updating HEAD.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- branch.c                      | 12 ++++++------
- refs.h                        | 10 ----------
- refs/files-backend.c          | 44 -------------------------------------------
- t/t1407-worktree-ref-store.sh | 12 ++++++++++++
- 4 files changed, 18 insertions(+), 60 deletions(-)
+ t/t7004-tag.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/branch.c b/branch.c
-index 0b949b7fb2..69d5eea84b 100644
---- a/branch.c
-+++ b/branch.c
-@@ -353,18 +353,18 @@ int replace_each_worktree_head_symref(const char *oldref, const char *newref,
- 	int i;
- 
- 	for (i = 0; worktrees[i]; i++) {
-+		struct ref_store *refs;
-+
- 		if (worktrees[i]->is_detached)
- 			continue;
- 		if (worktrees[i]->head_ref &&
- 		    strcmp(oldref, worktrees[i]->head_ref))
- 			continue;
- 
--		if (set_worktree_head_symref(get_worktree_git_dir(worktrees[i]),
--					     newref, logmsg)) {
--			ret = -1;
--			error(_("HEAD of working tree %s is not updated"),
--			      worktrees[i]->path);
--		}
-+		refs = get_worktree_ref_store(worktrees[i]);
-+		if (refs_create_symref(refs, "HEAD", newref, logmsg))
-+			ret = error(_("HEAD of working tree %s is not updated"),
-+				    worktrees[i]->path);
- 	}
- 
- 	free_worktrees(worktrees);
-diff --git a/refs.h b/refs.h
-index 6df69a2adb..447381d378 100644
---- a/refs.h
-+++ b/refs.h
-@@ -402,16 +402,6 @@ int refs_create_symref(struct ref_store *refs, const char *refname,
- 		       const char *target, const char *logmsg);
- int create_symref(const char *refname, const char *target, const char *logmsg);
- 
--/*
-- * Update HEAD of the specified gitdir.
-- * Similar to create_symref("relative-git-dir/HEAD", target, NULL), but
-- * this can update the main working tree's HEAD regardless of where
-- * $GIT_DIR points to.
-- * Return 0 if successful, non-zero otherwise.
-- * */
--int set_worktree_head_symref(const char *gitdir, const char *target,
--			     const char *logmsg);
--
- enum action_on_err {
- 	UPDATE_REFS_MSG_ON_ERR,
- 	UPDATE_REFS_DIE_ON_ERR,
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 4242486118..62d8e0713a 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3163,50 +3163,6 @@ static int files_create_symref(struct ref_store *ref_store,
- 	return ret;
- }
- 
--int set_worktree_head_symref(const char *gitdir, const char *target, const char *logmsg)
--{
--	/*
--	 * FIXME: this obviously will not work well for future refs
--	 * backends. This function needs to die.
--	 */
--	struct files_ref_store *refs =
--		files_downcast(get_main_ref_store(),
--			       REF_STORE_WRITE,
--			       "set_head_symref");
--
--	static struct lock_file head_lock;
--	struct ref_lock *lock;
--	struct strbuf head_path = STRBUF_INIT;
--	const char *head_rel;
--	int ret;
--
--	strbuf_addf(&head_path, "%s/HEAD", absolute_path(gitdir));
--	if (hold_lock_file_for_update(&head_lock, head_path.buf,
--				      LOCK_NO_DEREF) < 0) {
--		struct strbuf err = STRBUF_INIT;
--		unable_to_lock_message(head_path.buf, errno, &err);
--		error("%s", err.buf);
--		strbuf_release(&err);
--		strbuf_release(&head_path);
--		return -1;
--	}
--
--	/* head_rel will be "HEAD" for the main tree, "worktrees/wt/HEAD" for
--	   linked trees */
--	head_rel = remove_leading_path(head_path.buf,
--				       absolute_path(get_git_common_dir()));
--	/* to make use of create_symref_locked(), initialize ref_lock */
--	lock = xcalloc(1, sizeof(struct ref_lock));
--	lock->lk = &head_lock;
--	lock->ref_name = xstrdup(head_rel);
--
--	ret = create_symref_locked(refs, lock, head_rel, target, logmsg);
--
--	unlock_ref(lock); /* will free lock */
--	strbuf_release(&head_path);
--	return ret;
--}
--
- static int files_reflog_exists(struct ref_store *ref_store,
- 			       const char *refname)
- {
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-index 04d1e9d177..5df06f3556 100755
---- a/t/t1407-worktree-ref-store.sh
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -37,4 +37,16 @@ test_expect_success 'resolve_ref(<per-worktree-ref>)' '
- 	test_cmp expected actual
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 428e21c369..f7ff4e034b 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1592,7 +1592,7 @@ test_expect_success 'mixing incompatibles modes and options is forbidden' '
+ 	test_must_fail git tag --contains --no-contains
  '
  
-+test_expect_success 'create_symref(FOO, refs/heads/master)' '
-+	$RWT create-symref FOO refs/heads/master nothing &&
-+	echo refs/heads/master >expected &&
-+	git -C wt symbolic-ref FOO >actual &&
-+	test_cmp expected actual &&
-+
-+	$RMAIN create-symref FOO refs/heads/wt-master nothing &&
-+	echo refs/heads/wt-master >expected &&
-+	git symbolic-ref FOO >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
+-for option in --contains --no-contains --merged --no-merged --points-at
++for option in --contains --with --no-contains --without --merged --no-merged --points-at
+ do
+ 	test_expect_success "mixing incompatible modes with $option is forbidden" "
+ 		test_must_fail git tag -d $option HEAD &&
 -- 
-2.11.0.157.gd943d85
+2.11.0
 
