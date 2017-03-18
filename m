@@ -2,106 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D4DE2095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 18:42:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 331202095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 18:43:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751778AbdCRSmV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 14:42:21 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:36048 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751671AbdCRSmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 14:42:18 -0400
-Received: by mail-wr0-f195.google.com with SMTP id l37so13190926wrc.3
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 11:42:17 -0700 (PDT)
+        id S1751785AbdCRSn1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 14:43:27 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:36048 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751780AbdCRSn0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 14:43:26 -0400
+Received: by mail-wm0-f41.google.com with SMTP id n11so36846465wma.1
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 11:43:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=yNDamqA4aKMMXHB+MdwOQ5WeYbBOXgZxtAW8RS6mIyg=;
-        b=Ojqllia5nq4tXkil16HV6gD+d/gPrK0G9HR3nrutSaKPneupf9UaUHjvCpuS4PJXtw
-         Otak84wgQL5yh0RS62CgXI8fSxusx3BU+ehIPfw2shmD9Ru01cRChLjthtHbN1SdSTey
-         HfbDHez6Dn/MG9bOdOj1jG1qlrF3+vFQmil8LGvThPLDMIkf93IqC/Qj9axLtrTAGK3A
-         JaIjr9w0OpiAnhPLoEIowYkFBq2uyGmYrIlzq7MuFzA6WugAkIBCxWXg15eSL/+eNc9s
-         Hb/+i6CnUYJ3tOcJtzdolF0bbUto7tN1+dEx5VLp6MET5+0zbuJ3XHzZABAD27hUwMpX
-         IuMA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0gJ6KwLiCq8g7lUL+beZipnRA82paSmhe6B1AG1UYt8=;
+        b=G0XBKLZbgxzS9SWOvAX0/mseQFohvS6l4O6pRCM7RK5M4RLzkP5kUyMRmnBHVGjXva
+         DuZAKVcOkqF3eKFhVwWfyME37bZM1MmjJ3Aw/B7EgKm7MGZxJ6javGIvOzVVxiJ4wfWN
+         Zod/mOBe/OljHfcc6aBjTJ9rcvP2E+6vWRD4HEAV4IUUlJePfnxQlXdNqrNdulLxgj15
+         H8CHwAmIxUqmaRmaom0EP6vGWU60b5lKRr3ZpL7KFbmdyvGHJ5+AWb0oqAUvdeusiOfD
+         G/7k6rbqHvYDZsMl3CrIi4NO+Jt1+MCDH/K4eTBsbF2UFA05ohwpea562K9lGOWg3kNQ
+         Jn6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=yNDamqA4aKMMXHB+MdwOQ5WeYbBOXgZxtAW8RS6mIyg=;
-        b=knUTcNh1lnX/EOexPoOf8hX2EmzVttQI34l5hGhUF089zP/w+/OqHju7fZAnQQJCfJ
-         Q7ULwI9/HdO5hMvx3jOBVldWgFfL8Ir4GgtZzIAO8FJvS2B9lIY67DL6lt0qskpNkbPO
-         ZYIZtsVkZLnL/HRq9rq+fHPMB8xaryUEwSTYcFzijaixuWLexzr306M6/x6/FKGgB07I
-         IqklpNkdvZNiRWdy3mbVp+mVMr+cF2tQN+VUSEFmD02x8zfu+7NHbvKlHAnBtsEYRQtG
-         8OmOOUOX+Qjetvw/5bas+1AQfJZNbslI/3/dh5EuG1WRDr+JWvAUNLEhdKgcMqwPgnsM
-         gMRQ==
-X-Gm-Message-State: AFeK/H0ajBD3YR/0QXY9MUvTaZKuPPM7wO5iSOuqD4vGBvnM3BM8yUzPFhr0U07UCTPGxA==
-X-Received: by 10.223.183.46 with SMTP id l46mr18488027wre.89.1489862536051;
-        Sat, 18 Mar 2017 11:42:16 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e16sm8026263wra.62.2017.03.18.11.42.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 18 Mar 2017 11:42:15 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] doc/SubmittingPatches: show how to get a CLI commit summary
-Date:   Sat, 18 Mar 2017 18:42:03 +0000
-Message-Id: <20170318184203.16890-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170318184203.16890-1-avarab@gmail.com>
-References: <20170318184203.16890-1-avarab@gmail.com>
-In-Reply-To: <xmqqvar6310x.fsf@gitster.mtv.corp.google.com>
-References: <xmqqvar6310x.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0gJ6KwLiCq8g7lUL+beZipnRA82paSmhe6B1AG1UYt8=;
+        b=BcecQAbaCZGUl6CsSe2BcOui6X4/cBr1/dEJf5S+ueayqXQB8E3DGT62rIiG6RCd7d
+         ePW6YIw5UHOPBSna/ZjliGtBATDJAlrLZ+uPXbDT7zi+w288NDviAU8D+N+2u+QzqlS2
+         T//YaKCmwfPENwrEHShYs5oJUuPk9oX+U0JRvs8wePRPDkdbA12CO5bjx1ERoVRfe+oE
+         mVR2a1/IdlcIPsL8xLXG8mKhz0jVsC7DkQIklLw/8n2vLB8sDg3DZiusjoCx9MNtI5Zy
+         dR7nrca+uO86RcozkGWQaGpZenj2K944Lweteb30tr+KzEyZZsztcy/YhlZKrkdfQfyZ
+         FBEQ==
+X-Gm-Message-State: AFeK/H0B3yY5skq6SO6XEUvBmEWyX0xgOtlCkZw8ZeZvccsghkV855JSpLJx62QASHFF/w==
+X-Received: by 10.28.209.75 with SMTP id i72mr3221074wmg.31.1489862202788;
+        Sat, 18 Mar 2017 11:36:42 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id 36sm14383390wrk.57.2017.03.18.11.36.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 18 Mar 2017 11:36:42 -0700 (PDT)
+Date:   Sat, 18 Mar 2017 18:36:58 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] "git stash -- path" reports wrong unstaged changes
+Message-ID: <20170318183658.GC27158@hank>
+References: <20170317145039.dmcb3qyqbzfvtmgz@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170317145039.dmcb3qyqbzfvtmgz@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the section which describes how to get a commit summary to show
-how do to that with "git show", currently the documentation only shows
-how to do that with gitk.
+On 03/17, Jeff King wrote:
+> I used "git stash -- path" for the first time today and happened to
+> notice an oddity. If I run:
+> 
+> 	git init -q repo
+> 	cd repo
+> 	
+> 	for i in one two; do
+> 		echo content >$i
+> 		git add $i
+> 	done
+> 	git commit -qm base
+> 	
+> 	for i in one two; do
+> 		echo change >$i
+> 	done
+> 	git stash -- one
+> 
+> it says:
+> 
+>   Saved working directory and index state WIP on master: 20cfadf base
+>   Unstaged changes after reset:
+>   M	one
+>   M	two
+> 
+> Even though "one" no longer has unstaged changes.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/SubmittingPatches | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+Yeah, this is clearly not right.  Thanks for catching this before it
+got into any release.
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 9ef624ce38..78c8e36a4b 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -134,8 +134,17 @@ with the subject enclosed in a pair of double-quotes, like this:
-     noticed that ...
- 
- The "Copy commit summary" command of gitk can be used to obtain this
--format.
-+format, or this invocation of "git show":
- 
-+    git show -s --date=format:%Y-%m-%d --pretty='commit %h ("%s", %ad)' <commit>
-+
-+To turn that into a handy alias:
-+
-+    git config --global alias.git-commit-summary "show -s --date=format:%Y-%m-%d --pretty='commit %h (\"%s\", %ad)'"
-+
-+And then to get the commit summary:
-+
-+    git git-commit-summary <commit>
- 
- (3) Generate your patch using Git tools out of your commits.
- 
--- 
-2.11.0
+> If I run with GIT_TRACE=1, that message is generated by:
+> 
+>   git reset -- one
+> 
+> which makes sense. At that stage we've just reset the index, but the
+> working tree file still has modifications. In the non-pathspec case we
+> run "git reset --hard", which takes care of the index and the working
+> tree.
+> 
+> It's really "checkout-index" that cleans the working tree, but it
+> doesn't have porcelain finery like an "Unstaged changes" message. I
+> think the patch below would fix it, but I wonder if we can do it in a
+> way that doesn't involve calling diff-files twice.
+> 
+> -Peff
+> 
+> ---
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 9c70662cc..9a4bb503a 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -299,10 +299,15 @@ push_stash () {
+>  	then
+>  		if test $# != 0
+>  		then
+> -			git reset ${GIT_QUIET:+-q} -- "$@"
+> +			git reset -q -- "$@"
+>  			git ls-files -z --modified -- "$@" |
+>  			git checkout-index -z --force --stdin
+>  			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
+> +			if test -z "$GIT_QUIET" && ! git diff-files --quiet
+> +			then
+> +				say "$(gettext "Unstaged changes after reset:")"
+> +				git diff-files --name-status
+> +			fi
+>  		else
+>  			git reset --hard ${GIT_QUIET:+-q}
+>  		fi
 
+This would mean the user gets something like in your case above:
+
+    Unstaged changes after reset:
+     M	two
+
+As a user that doesn't know the internal implementation of push_stash,
+this would make me wonder why git stash would mention a file that is
+not provided as pathspec, but not the one that was provided in the
+pathspec argument.
+
+I think one option would be to to just keep quiet about the exact
+changes that git stash push makes, similar to what we do in the
+--include-untracked and in the -p case.  The other option would be to
+find the files that are affected and print them, but that would
+probably be a bit too noisy especially in cases such as
+git stash push -- docs/*.
+
+Also from reading the code in the -p case, when --keep-index is given,
+the git reset there doesn't respect $GIT_QUIET at all, and also
+doesn't respect the pathspec argument, which seems like another bug.
+I can submit a patch series for those, but I won't get to it before
+tomorrow :)
