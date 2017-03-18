@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AF3120323
-	for <e@80x24.org>; Sat, 18 Mar 2017 10:12:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1C8720323
+	for <e@80x24.org>; Sat, 18 Mar 2017 10:12:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751364AbdCRKMg (ORCPT <rfc822;e@80x24.org>);
+        id S1751395AbdCRKMk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 06:12:40 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35191 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751367AbdCRKMg (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 18 Mar 2017 06:12:36 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34114 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751160AbdCRKM3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 06:12:29 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o126so11305901pfb.1
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:12:07 -0700 (PDT)
+Received: by mail-pg0-f65.google.com with SMTP id g2so13141922pge.2
+        for <git@vger.kernel.org>; Sat, 18 Mar 2017 03:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=zYFx18RAUpJAtwU1/z648Siq8YdEKQbbYaGQ4UWkbXI=;
-        b=I6JvP4z2vAE+Xlvc1cu9Ep0fThKEXnguTSKQpsfs5SKwsOeUcLQc7rjlmDGN63JxWc
-         +7rTTvYJ8qAo8LQjPF21tJ6bsEaQuXvp5YaoRBHyRu2uxzjArs28ax9X/WYRALBOOuel
-         RLnnLmIBmvGXR9FtCJW85ao+jIH32tcSvIbRtvuIyZzHiyFM3wDJIZAs/P0OF6FM6Yw5
-         zEZOexMSGbKfS7qKAdTiSPY8vuPPYNMHQRSrW1L/5J3qffIK5Oby1nvVbF2+M/VgiTtW
-         S2dkkJV2XrYI5IC/rkgmf0ECmN/ywyd3aAl9LIfGD/bI3TPvqLT/OGm91UjRmW0lC42Y
-         TBXA==
+        bh=P9n2Q27ZrkkZ/yI1BTOhL6+4B9UVwVcWnIwZT6b/9Hk=;
+        b=TCI/FkozHanmlnnV1TbuYPKRMm/T8SYsr+Yv5kNzx/ZqDS1yWxEIJM7olZ9BsbFPsI
+         oCx5a+u0bWcssqJbSn5UMI6Cu0PY4AEG6Cu+OCcNlqYx8e/g4aLJ3vX76FKYBQfieCob
+         V/qy0O/Bh/X+OG6EMgdgXsKYMQd3F3ObRh70zzzsu2/XB6xkrb5BKgS3ZMeT2mEGjeAM
+         clWR0ja8iwciFf6tnqU+Rr9JgimUcvUJZobojNikX2BwS4uTEaJk4MTAJv1F/aPS9mlg
+         2Yp80YIRh2fd5/D1ObVlZdiXZLTb9IzA/4niN+QkWdQMFSn6xY+3hlEKIzDPuBJ65t3P
+         AqXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=zYFx18RAUpJAtwU1/z648Siq8YdEKQbbYaGQ4UWkbXI=;
-        b=Qsd6fiMrYb5geLccI57hYZXxCxPUhyzDbg1Uh80/iRB1T/tnQiMubrM4a9N9qrGZhq
-         LNPE3sr18wFmG7TmyU3LRVYe9yUAYBntsWcTQiR+n85aAOiZ3KjmWptsj1Sq3suWzZNX
-         XMpLkbn39MSWsnKJLtYQ2fjIC5elArKYDX0xRb7aaLRwFffGMqlGoEos8mRyYX/1e8aV
-         ZO3fKwyzlKtLAJieWdKj7FiIdRvQlW7Vje3TjZTIhjNKBpT5XPmY0R4CttxVE9wcuQJ6
-         tI0C9KfyGxmVCh6lhyqPOznSe5KgNsxXtB2SO3JIgyEs7XtPCk+Fo9VINSeackwNtKBW
-         EYXw==
-X-Gm-Message-State: AFeK/H290cFpe3K1gsfmIlbIW0om98kKzJYg91KkO6yRzBhEMu+aT1oKijS9odD1atgCDg==
-X-Received: by 10.99.112.77 with SMTP id a13mr11285811pgn.7.1489831926690;
-        Sat, 18 Mar 2017 03:12:06 -0700 (PDT)
+        bh=P9n2Q27ZrkkZ/yI1BTOhL6+4B9UVwVcWnIwZT6b/9Hk=;
+        b=P253tSnGFxMtKrDR8mvjwAXUWpD5lxdFFyyj8DQJotPuLFWYqOz3BQK7FLh2OsqFqQ
+         0fZ8ztCiePq9jNw9FEhv4l0evioOU6B3HSvPa8Lgj7ZwO94YzwOouRA3hMlxCQgCmNBp
+         E98Vv4Q4G8h+3/0vjzqzR4/1DaEc0JktN7GjpTBo5p8gjXZTQJk9pKj9Gj+8yU9irqnP
+         KFSmxQInNB9w0pJvdMEgSksRsxMuoAGU/MNGk9zU5QNoHHs0rhc3iQ110EsaVSSyvyCk
+         eG8xNLA6Hr1fRIlaKIr6EjDzdCKg93UplHchfJW2INQVDtnBmvwbTIgsLtbTz52SPj+O
+         Ca0w==
+X-Gm-Message-State: AFeK/H1/1WQwZqdQjPmmEIfGzR21FGx1ghq5zc9lZJXR+YA2PjdtVudjWlFnpXlH0Ge+vA==
+X-Received: by 10.84.143.195 with SMTP id 61mr26308206plz.46.1489831955405;
+        Sat, 18 Mar 2017 03:12:35 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id 73sm21851001pfj.31.2017.03.18.03.12.03
+        by smtp.gmail.com with ESMTPSA id 20sm7466748pgg.52.2017.03.18.03.12.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Mar 2017 03:12:06 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 17:12:01 +0700
+        Sat, 18 Mar 2017 03:12:34 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sat, 18 Mar 2017 17:12:29 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 01/12] revision.h: new flag in struct rev_info wrt. worktree-related refs
-Date:   Sat, 18 Mar 2017 17:11:42 +0700
-Message-Id: <20170318101153.6901-2-pclouds@gmail.com>
+Subject: [PATCH v2 06/12] refs: add refs_head_ref()
+Date:   Sat, 18 Mar 2017 17:11:47 +0700
+Message-Id: <20170318101153.6901-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170318101153.6901-1-pclouds@gmail.com>
 References: <20170217141908.18012-1-pclouds@gmail.com>
@@ -68,38 +68,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The revision walker can walk through per-worktree refs like HEAD or
-SHA-1 references in the index. These currently are from the current
-worktree only. This new flag is added to change rev-list behavior in
-this regard:
-
-When single_worktree is set, only current worktree is considered. When
-it is not set (which is the default), all worktrees are considered.
-
-The default is chosen so because the two big components that rev-list
-works with are object database (entirely shared between worktrees) and
-refs (mostly shared). It makes sense that default behavior goes per-repo
-too instead of per-worktree.
-
-The flag will eventually be exposed as a rev-list argument with
-documents. For now it stays internal until the new behavior is fully
-implemented.
 ---
- revision.h | 1 +
- 1 file changed, 1 insertion(+)
+ refs.c | 19 +++++++++----------
+ refs.h |  2 ++
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/revision.h b/revision.h
-index 9fac1a607d..c851b94ad8 100644
---- a/revision.h
-+++ b/revision.h
-@@ -88,6 +88,7 @@ struct rev_info {
- 			topo_order:1,
- 			simplify_merges:1,
- 			simplify_by_decoration:1,
-+			single_worktree:1,
- 			tag_objects:1,
- 			tree_objects:1,
- 			blob_objects:1,
+diff --git a/refs.c b/refs.c
+index a38149d84a..5fc47ff5f0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1208,27 +1208,26 @@ int refs_rename_ref_available(struct ref_store *refs,
+ 	return ok;
+ }
+ 
+-int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+ {
+ 	struct object_id oid;
+ 	int flag;
+ 
+-	if (submodule) {
+-		if (resolve_gitlink_ref(submodule, "HEAD", oid.hash) == 0)
+-			return fn("HEAD", &oid, 0, cb_data);
+-
+-		return 0;
+-	}
+-
+-	if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag))
++	if (!refs_read_ref_full(refs, "HEAD", RESOLVE_REF_READING,
++				oid.hash, &flag))
+ 		return fn("HEAD", &oid, flag, cb_data);
+ 
+ 	return 0;
+ }
+ 
++int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return refs_head_ref(get_submodule_ref_store(submodule), fn, cb_data);
++}
++
+ int head_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return head_ref_submodule(NULL, fn, cb_data);
++	return refs_head_ref(get_main_ref_store(), fn, cb_data);
+ }
+ 
+ /*
+diff --git a/refs.h b/refs.h
+index 447381d378..0572473ef7 100644
+--- a/refs.h
++++ b/refs.h
+@@ -233,6 +233,8 @@ typedef int each_ref_fn(const char *refname,
+  * modifies the reference also returns a nonzero value to immediately
+  * stop the iteration. Returned references are sorted.
+  */
++int refs_head_ref(struct ref_store *refs,
++		  each_ref_fn fn, void *cb_data);
+ int refs_for_each_ref(struct ref_store *refs,
+ 		      each_ref_fn fn, void *cb_data);
+ int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
 -- 
 2.11.0.157.gd943d85
 
