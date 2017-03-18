@@ -2,122 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DBC22095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 17:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0162095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 17:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751782AbdCRRpC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 13:45:02 -0400
-Received: from mail-vk0-f65.google.com ([209.85.213.65]:36411 "EHLO
-        mail-vk0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751695AbdCRRpC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Mar 2017 13:45:02 -0400
-Received: by mail-vk0-f65.google.com with SMTP id d188so7192956vka.3
-        for <git@vger.kernel.org>; Sat, 18 Mar 2017 10:45:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bxF35VL/r5LgGjycgKslcYJ5BkvEd6dn7F81OxLvBGc=;
-        b=QdOa0JcfoJiMNea8Pvd/CfXfEB1NHbhcpR+05YQFqUxjULTy5PORb6A3ZIgDO/hcpw
-         pNflT/6S3aN5I8Pv0MAv9i8mFJ7zyUgqkx+/Xb85W1yQ9yatjt7K1atGrAJ7adtuXgSw
-         DMQUs848a/w9JK1Jg7UctuMfSH7k4X9hBkmyG7Q3wWyff+x0OxcGqls+RwtRF6kEMxal
-         lrg5Zu2V3YNJtidRPbWPxsJNPx+tqBpKfrPUdZyewF22gauX49Hxqid8up+0HhacJ5TY
-         c9zeNfkwF4gemSl/6542DN8kEzbk1w7Og6aKBgk36G10eiQk9He/Eres13vrDES4JoX/
-         7S/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bxF35VL/r5LgGjycgKslcYJ5BkvEd6dn7F81OxLvBGc=;
-        b=bu8ov+T6AJGmi3Rgnq/8XzGuX5K6wfbqKLptavm1JdOcB0mau4mI6t2aYUuXsFwqKU
-         TXSknNcYb61ulOy7Sd3zzWlKYQg0XvakZuXPMPtRNtln+sLZFLqEe/N4D0nEkGu0PnnB
-         w9Z+uUe/OmnLaVpX4oSJ5LrU1HhoHGvRRRhrIRQooUIeZG2VhakfFZ6ru4Lx3lNiDQpV
-         n4Y5xv5vibGtVxjw9ND93R8hHksWifgAEVMtsuteniKb0cNRGI5E/5pciLrrtj7/nzWb
-         6CuJclyB7WFD/d4bTlXX/0oLwCnxcrK8adkHJnCSy4Lu1NTJl2tvzDrdShZUPTNwvYpa
-         w60g==
-X-Gm-Message-State: AFeK/H2j4J9Omx/MURxsDmEtwnvMlgZtZMQ8KZfMydwLOOLvopinCpyB4O6u02IvXN8DmO5pUJivzGkN0gT+5g==
-X-Received: by 10.31.217.7 with SMTP id q7mr6669611vkg.32.1489859100501; Sat,
- 18 Mar 2017 10:45:00 -0700 (PDT)
+        id S1751671AbdCRRuS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 13:50:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62656 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751655AbdCRRuR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Mar 2017 13:50:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7C0558321C;
+        Sat, 18 Mar 2017 13:49:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=ov0ye08YYbZ9
+        aOV2hhNeA1lFSyM=; b=BTSLKHRAj5JveRjS6RmMzyMlKiCAOSFGavj21hNhtRof
+        JCsZUsdAYUzwSFBYKvMc7gMGbR1wDotM9dbXSjfPBtjYXFVEv3wDyllnminG1083
+        sIGwhcv+NBE/5wlPPe+CWiRuu+FnQjsZobPNy0wIVLrpCVj9its2Soap47jRz48=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pzRGFJ
+        JzEMBQpE158O2BsIuTsd+Xbu5OH2HHmzGbZpBhj3nFdd7RQ+7siM7z0fS3jIRkdh
+        HRmD98GxcoxGwTVOeD5KFHvKgq1McHRCojUw7Fn8jzEXIPG9pbTRQ85MzP2aeRCW
+        PYkjU5dnN85h7VhP1MRO5fgud8GXTtzAynNNc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 753278321B;
+        Sat, 18 Mar 2017 13:49:59 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D18CF8321A;
+        Sat, 18 Mar 2017 13:49:58 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 0/4] Kill manual ref parsing code in worktree.c
+References: <20170216120302.5302-1-pclouds@gmail.com>
+        <20170318100206.5980-1-pclouds@gmail.com>
+Date:   Sat, 18 Mar 2017 10:49:57 -0700
+In-Reply-To: <20170318100206.5980-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+ =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
+        Duy"'s message of "Sat, 18 Mar 2017 17:02:02 +0700")
+Message-ID: <xmqqd1de4gqi.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.176.7.150 with HTTP; Sat, 18 Mar 2017 10:45:00 -0700 (PDT)
-In-Reply-To: <20170318151239.17196-1-szeder.dev@gmail.com>
-References: <20170318151239.17196-1-szeder.dev@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Sat, 18 Mar 2017 18:45:00 +0100
-Message-ID: <CAM0VKjknLpCyQfY+ie3sfGemwhyad3Tk-5fHdeTSz2-WTw7NoQ@mail.gmail.com>
-Subject: Re: [PATCH] pickaxe: fix segfault with '-S<...> --pickaxe-regex'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Git mailing list <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4DDAF68E-0C03-11E7-A20A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 18, 2017 at 4:12 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
-> Make sure that the buffer size is reduced on each iteration as the
-> buffer pointer is advanced, thus maintaining the correct end of buffer
-> location.
->
-> The new test is flaky, I've never seen it fail on my Linux box, but
-> this is expected according to db5dfa331 (regex: -G<pattern> feeds a
-> non NUL-terminated string to regexec() and fails, 2016-09-21).  And
-> based on that commit message I would expect the new test without the
-> fix to fail reliably on Windows.
->
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->
->  diffcore-pickaxe.c      | 5 ++++-
->  t/t4062-diff-pickaxe.sh | 5 +++++
->  2 files changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-> index 9795ca1c1..03f84b714 100644
-> --- a/diffcore-pickaxe.c
-> +++ b/diffcore-pickaxe.c
-> @@ -85,8 +85,11 @@ static unsigned int contains(mmfile_t *mf, regex_t *re=
-gexp, kwset_t kws)
->                        !regexec_buf(regexp, data, sz, 1, &regmatch, flags=
-)) {
->                         flags |=3D REG_NOTBOL;
->                         data +=3D regmatch.rm_eo;
-> -                       if (*data && regmatch.rm_so =3D=3D regmatch.rm_eo=
-)
-> +                       sz -=3D regmatch.rm_eo;
-> +                       if (*data && regmatch.rm_so =3D=3D regmatch.rm_eo=
-) {
->                                 data++;
-> +                               sz--;
-> +                       }
->                         cnt++;
->                 }
->
-> diff --git a/t/t4062-diff-pickaxe.sh b/t/t4062-diff-pickaxe.sh
-> index f0bf50bda..7c4903f49 100755
-> --- a/t/t4062-diff-pickaxe.sh
-> +++ b/t/t4062-diff-pickaxe.sh
-> @@ -19,4 +19,9 @@ test_expect_success '-G matches' '
->         test 4096-zeroes.txt =3D "$(cat out)"
->  '
->
-> +test_expect_success '-S --pickaxe-regex' '
-> +       git diff --name-only -S0 --pickaxe-regex HEAD^ >out &&
-> +       verbose test 4096-zeroes.txt =3D "$(cat out)"
-> +'
-> +
->  test_done
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Hang on, this new test does fail because of a segfault _with_ the fix
-on Travis 64bit Linux and OSX builds.
+> v3 is a rebased version on latest nd/files-backend-git-dir [1]. Since
+> that series added a bunch of new refs_* functions, v2's 02/05 and
+> 04/05 are removed. The new 01/04 could be an indepedent fix, but at
+> test-ref-store.c requires it, so I put it here. More tests are added
+> now that we have test-ref-store.c (yay!)
 
-Oh, well.
+I think the corresponding ones were queued on a separate topic
+nd/worktree-kill-parse-ref that is based on nd/files-backend-git-dir
+but I do not mind making these 4 patches just part of the latter
+topic.
+
+Will send comments on individual patches separately.
+
+Thanks. =20
+
+>
+> [1] http://public-inbox.org/git/%3C20170318020337.22767-1-pclouds@gmail=
+.com%3E/
+>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+>   environment.c: fix potential segfault by get_git_common_dir()
+>   refs: introduce get_worktree_ref_store()
+>   worktree.c: kill parse_ref() in favor of refs_resolve_ref_unsafe()
+>   refs: kill set_worktree_head_symref()
+>
+>  branch.c                               |  15 ++---
+>  environment.c                          |   2 +
+>  refs.c                                 |  32 +++++++++++
+>  refs.h                                 |  12 +---
+>  refs/files-backend.c                   |  44 --------------
+>  t/helper/test-ref-store.c              |  19 ++++++
+>  t/t1407-worktree-ref-store.sh (new +x) |  52 +++++++++++++++++
+>  worktree.c                             | 102 +++++++++----------------=
+--------
+>  worktree.h                             |   2 +-
+>  9 files changed, 143 insertions(+), 137 deletions(-)
+>  create mode 100755 t/t1407-worktree-ref-store.sh
