@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E90C72095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 21:22:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BC9B2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 21:22:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751207AbdCRVWi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 17:22:38 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:46152 "EHLO
+        id S1751208AbdCRVWk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 17:22:40 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:46140 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751115AbdCRVWe (ORCPT
+        by vger.kernel.org with ESMTP id S1751174AbdCRVWe (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 18 Mar 2017 17:22:34 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B74AF280BA;
-        Sat, 18 Mar 2017 21:20:03 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1351D280BE;
+        Sat, 18 Mar 2017 21:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1489872003;
-        bh=00IIZJ1/YjglkC8YAqWxY+MI5U9T5TCFcqhx1B5/ihA=;
+        s=default; t=1489872005;
+        bh=e5+Nu2jSBoY6FpjbdlfKniN9lCKFgB+WBAvSCLY5eBU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=02gCOtmvb2Z2uKpMPIEdSdLV5DIMF94SGH726koD4KhVEmpQ119b5R/LVJnwKeZl8
-         x+TXyJw+E1a36Da3FRkAmtArzruTEGRlTrXWeKxygSxAmh/zajka5515XtNhY66TMv
-         GUgP4b/L4DeHzDBF4f+r4NXJWuKMsvcKK9W2z2JjSH8DrVpeDAwa2eKDegSZOjVwsx
-         zs2vx0g4KfMsLDLuJ+WCKf5hB6Gd2xZCAd2siXYYADdIJ7xQcS0NXCPHvw7r+sv2RH
-         e1qVeOGNxM7LeJ+dDGYKdJos2p30aTHjoCWEMXWkVTzsAC9mpu++9RQOkJ7w0phVE1
-         ktcevUpaEipMT3RSkUOazA6ApfSV8NpCKD6nVxw45Nb353Fye1ZK/gZBet134St9iZ
-         Gh8GaewbmHHlZKP1uv2OKmRBoETMGqaUxf0AkkwocS+54YhFZf8/0s1alk7TCPPz/f
-         6pplkKu1OPQV9FnTBpRD1ltU6zHRlQAO8LAJyqjgHEIR5Sn+t4F
+        b=mBikCWXP5P7A1AaPg92AdofG5NJdSfQ/hB5UItbwAA8NZVdbQdBRbvQ2hfcE1l7Sq
+         x6RUcOYkHuu9Lv87PwCtVwOrY8XrYcoOlHzCghFBWRSWxUdgtRb5pL8a7kTDmUgeW9
+         Yjm0oOwkTxSRhufoX8w9vEe/XS1zBqwOULjAtan+r4E/QsKQPlUXfzEilQk2d9OF5o
+         Mdq6dbSwj+Ys1M/UYc4hLr4G949C9WKW+QQF21oiSMeeVEatM+OBXuYRV8lImno7Qu
+         oAcWuf8OHwpu+6C2M8QLScgLEGGzS2tGEdl0jjruMXgzvslRPUrL8xdQnrD6TYbxmk
+         nnBslO5O8zjLTSEd8tgrA+twF9SkSn5plrmGpy5n6RoUqgUuaSfo1Um3toxsrlePSs
+         wPf64PL2RXhCOIGmn6r4REeUo+Gn5E6NzLKADRHeEFZa1wHdN8i9zlRq/4u7/KRig/
+         A7uOdF/NxXZlpscy1c1QgjpZsVpmDdJO/kW2qiuvvddaa71ATF8
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 13/20] builtin/pull: convert to struct object_id
-Date:   Sat, 18 Mar 2017 21:19:47 +0000
-Message-Id: <20170318211954.564030-14-sandals@crustytoothpaste.net>
+Subject: [PATCH 17/20] Convert sha1_array_lookup to take struct object_id
+Date:   Sat, 18 Mar 2017 21:19:51 +0000
+Message-Id: <20170318211954.564030-18-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170318211954.564030-1-sandals@crustytoothpaste.net>
 References: <20170318211954.564030-1-sandals@crustytoothpaste.net>
@@ -48,224 +48,146 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert virtually all uses of unsigned char [20] to struct object_id.
-Leave all the arguments that come from struct sha1_array, as these will
-be converted in a later patch.
+Convert this function by changing the declaration and definition and
+applying the following semantic patch to update the callers:
+
+@@
+expression E1, E2;
+@@
+- sha1_array_lookup(E1, E2.hash)
++ sha1_array_lookup(E1, &E2)
+
+@@
+expression E1, E2;
+@@
+- sha1_array_lookup(E1, E2->hash)
++ sha1_array_lookup(E1, E2)
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/pull.c | 72 +++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 36 insertions(+), 36 deletions(-)
+ bisect.c                   | 7 +++----
+ builtin/pack-objects.c     | 2 +-
+ fsck.c                     | 2 +-
+ ref-filter.c               | 4 ++--
+ sha1-array.c               | 4 ++--
+ sha1-array.h               | 2 +-
+ t/helper/test-sha1-array.c | 2 +-
+ 7 files changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index a9f7553f30..704ce1f042 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -515,7 +515,7 @@ static int run_fetch(const char *repo, const char **refspecs)
-  * "Pulls into void" by branching off merge_head.
-  */
- static int pull_into_void(const unsigned char *merge_head,
--		const unsigned char *curr_head)
-+		const struct object_id *curr_head)
- {
- 	/*
- 	 * Two-way merge: we treat the index as based on an empty tree,
-@@ -526,7 +526,7 @@ static int pull_into_void(const unsigned char *merge_head,
- 	if (checkout_fast_forward(EMPTY_TREE_SHA1_BIN, merge_head, 0))
- 		return 1;
- 
--	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
-+	if (update_ref("initial pull", "HEAD", merge_head, curr_head->hash, 0, UPDATE_REFS_DIE_ON_ERR))
- 		return 1;
- 
- 	return 0;
-@@ -647,7 +647,7 @@ static const char *get_tracking_branch(const char *remote, const char *refspec)
-  * current branch forked from its remote tracking branch. Returns 0 on success,
-  * -1 on failure.
-  */
--static int get_rebase_fork_point(unsigned char *fork_point, const char *repo,
-+static int get_rebase_fork_point(struct object_id *fork_point, const char *repo,
- 		const char *refspec)
- {
- 	int ret;
-@@ -678,7 +678,7 @@ static int get_rebase_fork_point(unsigned char *fork_point, const char *repo,
- 	if (ret)
- 		goto cleanup;
- 
--	ret = get_sha1_hex(sb.buf, fork_point);
-+	ret = get_oid_hex(sb.buf, fork_point);
- 	if (ret)
- 		goto cleanup;
- 
-@@ -691,24 +691,24 @@ static int get_rebase_fork_point(unsigned char *fork_point, const char *repo,
-  * Sets merge_base to the octopus merge base of curr_head, merge_head and
-  * fork_point. Returns 0 if a merge base is found, 1 otherwise.
-  */
--static int get_octopus_merge_base(unsigned char *merge_base,
--		const unsigned char *curr_head,
-+static int get_octopus_merge_base(struct object_id *merge_base,
-+		const struct object_id *curr_head,
- 		const unsigned char *merge_head,
--		const unsigned char *fork_point)
-+		const struct object_id *fork_point)
- {
- 	struct commit_list *revs = NULL, *result;
- 
--	commit_list_insert(lookup_commit_reference(curr_head), &revs);
-+	commit_list_insert(lookup_commit_reference(curr_head->hash), &revs);
- 	commit_list_insert(lookup_commit_reference(merge_head), &revs);
--	if (!is_null_sha1(fork_point))
--		commit_list_insert(lookup_commit_reference(fork_point), &revs);
-+	if (!is_null_oid(fork_point))
-+		commit_list_insert(lookup_commit_reference(fork_point->hash), &revs);
- 
- 	result = reduce_heads(get_octopus_merge_bases(revs));
- 	free_commit_list(revs);
- 	if (!result)
- 		return 1;
- 
--	hashcpy(merge_base, result->item->object.oid.hash);
-+	oidcpy(merge_base, &result->item->object.oid);
- 	return 0;
+diff --git a/bisect.c b/bisect.c
+index a25d008693..f193257509 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -499,8 +499,7 @@ struct commit_list *filter_skipped(struct commit_list *list,
+ 	while (list) {
+ 		struct commit_list *next = list->next;
+ 		list->next = NULL;
+-		if (0 <= sha1_array_lookup(&skipped_revs,
+-					   list->item->object.oid.hash)) {
++		if (0 <= sha1_array_lookup(&skipped_revs, &list->item->object.oid)) {
+ 			if (skipped_first && !*skipped_first)
+ 				*skipped_first = 1;
+ 			/* Move current to tried list */
+@@ -790,9 +789,9 @@ static void check_merge_bases(int no_checkout)
+ 		const struct object_id *mb = &result->item->object.oid;
+ 		if (!oidcmp(mb, current_bad_oid)) {
+ 			handle_bad_merge_base();
+-		} else if (0 <= sha1_array_lookup(&good_revs, mb->hash)) {
++		} else if (0 <= sha1_array_lookup(&good_revs, mb)) {
+ 			continue;
+-		} else if (0 <= sha1_array_lookup(&skipped_revs, mb->hash)) {
++		} else if (0 <= sha1_array_lookup(&skipped_revs, mb)) {
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf(_("Bisecting: a merge base must be tested\n"));
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index dca1b68e69..028c7be9a2 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2677,7 +2677,7 @@ static int loosened_object_can_be_discarded(const struct object_id *oid,
+ 		return 0;
+ 	if (mtime > unpack_unreachable_expiration)
+ 		return 0;
+-	if (sha1_array_lookup(&recent_objects, oid->hash) >= 0)
++	if (sha1_array_lookup(&recent_objects, oid) >= 0)
+ 		return 0;
+ 	return 1;
  }
- 
-@@ -717,16 +717,16 @@ static int get_octopus_merge_base(unsigned char *merge_base,
-  * fork point calculated by get_rebase_fork_point(), runs git-rebase with the
-  * appropriate arguments and returns its exit status.
-  */
--static int run_rebase(const unsigned char *curr_head,
-+static int run_rebase(const struct object_id *curr_head,
- 		const unsigned char *merge_head,
--		const unsigned char *fork_point)
-+		const struct object_id *fork_point)
- {
- 	int ret;
--	unsigned char oct_merge_base[GIT_SHA1_RAWSZ];
-+	struct object_id oct_merge_base;
- 	struct argv_array args = ARGV_ARRAY_INIT;
- 
--	if (!get_octopus_merge_base(oct_merge_base, curr_head, merge_head, fork_point))
--		if (!is_null_sha1(fork_point) && !hashcmp(oct_merge_base, fork_point))
-+	if (!get_octopus_merge_base(&oct_merge_base, curr_head, merge_head, fork_point))
-+		if (!is_null_oid(fork_point) && !oidcmp(&oct_merge_base, fork_point))
- 			fork_point = NULL;
- 
- 	argv_array_push(&args, "rebase");
-@@ -756,8 +756,8 @@ static int run_rebase(const unsigned char *curr_head,
- 	argv_array_push(&args, "--onto");
- 	argv_array_push(&args, sha1_to_hex(merge_head));
- 
--	if (fork_point && !is_null_sha1(fork_point))
--		argv_array_push(&args, sha1_to_hex(fork_point));
-+	if (fork_point && !is_null_oid(fork_point))
-+		argv_array_push(&args, oid_to_hex(fork_point));
- 	else
- 		argv_array_push(&args, sha1_to_hex(merge_head));
- 
-@@ -770,8 +770,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- {
- 	const char *repo, **refspecs;
- 	struct sha1_array merge_heads = SHA1_ARRAY_INIT;
--	unsigned char orig_head[GIT_SHA1_RAWSZ], curr_head[GIT_SHA1_RAWSZ];
--	unsigned char rebase_fork_point[GIT_SHA1_RAWSZ];
-+	struct object_id orig_head, curr_head;
-+	struct object_id rebase_fork_point;
- 
- 	if (!getenv("GIT_REFLOG_ACTION"))
- 		set_reflog_message(argc, argv);
-@@ -794,8 +794,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (file_exists(git_path("MERGE_HEAD")))
- 		die_conclude_merge();
- 
--	if (get_sha1("HEAD", orig_head))
--		hashclr(orig_head);
-+	if (get_oid("HEAD", &orig_head))
-+		oidclr(&orig_head);
- 
- 	if (!opt_rebase && opt_autostash != -1)
- 		die(_("--[no-]autostash option is only valid with --rebase."));
-@@ -805,15 +805,15 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		if (opt_autostash != -1)
- 			autostash = opt_autostash;
- 
--		if (is_null_sha1(orig_head) && !is_cache_unborn())
-+		if (is_null_oid(&orig_head) && !is_cache_unborn())
- 			die(_("Updating an unborn branch with changes added to the index."));
- 
- 		if (!autostash)
- 			require_clean_work_tree(N_("pull with rebase"),
- 				_("please commit or stash them."), 1, 0);
- 
--		if (get_rebase_fork_point(rebase_fork_point, repo, *refspecs))
--			hashclr(rebase_fork_point);
-+		if (get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
-+			oidclr(&rebase_fork_point);
- 	}
- 
- 	if (run_fetch(repo, refspecs))
-@@ -822,11 +822,11 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (opt_dry_run)
+diff --git a/fsck.c b/fsck.c
+index 6682de1de5..24daedd6cc 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -280,7 +280,7 @@ static int report(struct fsck_options *options, struct object *object,
  		return 0;
  
--	if (get_sha1("HEAD", curr_head))
--		hashclr(curr_head);
-+	if (get_oid("HEAD", &curr_head))
-+		oidclr(&curr_head);
+ 	if (options->skiplist && object &&
+-			sha1_array_lookup(options->skiplist, object->oid.hash) >= 0)
++			sha1_array_lookup(options->skiplist, &object->oid) >= 0)
+ 		return 0;
  
--	if (!is_null_sha1(orig_head) && !is_null_sha1(curr_head) &&
--			hashcmp(orig_head, curr_head)) {
-+	if (!is_null_oid(&orig_head) && !is_null_oid(&curr_head) &&
-+			oidcmp(&orig_head, &curr_head)) {
- 		/*
- 		 * The fetch involved updating the current branch.
- 		 *
-@@ -837,15 +837,15 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 	if (msg_type == FSCK_FATAL)
+diff --git a/ref-filter.c b/ref-filter.c
+index d3dcb53dd5..4ee7ebcda3 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1684,14 +1684,14 @@ static const struct object_id *match_points_at(struct sha1_array *points_at,
+ 	const struct object_id *tagged_oid = NULL;
+ 	struct object *obj;
  
- 		warning(_("fetch updated the current branch head.\n"
- 			"fast-forwarding your working tree from\n"
--			"commit %s."), sha1_to_hex(orig_head));
-+			"commit %s."), oid_to_hex(&orig_head));
+-	if (sha1_array_lookup(points_at, oid->hash) >= 0)
++	if (sha1_array_lookup(points_at, oid) >= 0)
+ 		return oid;
+ 	obj = parse_object(oid->hash);
+ 	if (!obj)
+ 		die(_("malformed object at '%s'"), refname);
+ 	if (obj->type == OBJ_TAG)
+ 		tagged_oid = &((struct tag *)obj)->tagged->oid;
+-	if (tagged_oid && sha1_array_lookup(points_at, tagged_oid->hash) >= 0)
++	if (tagged_oid && sha1_array_lookup(points_at, tagged_oid) >= 0)
+ 		return tagged_oid;
+ 	return NULL;
+ }
+diff --git a/sha1-array.c b/sha1-array.c
+index 26e596b264..1082b3dc11 100644
+--- a/sha1-array.c
++++ b/sha1-array.c
+@@ -26,11 +26,11 @@ static const unsigned char *sha1_access(size_t index, void *table)
+ 	return array[index].hash;
+ }
  
--		if (checkout_fast_forward(orig_head, curr_head, 0))
-+		if (checkout_fast_forward(orig_head.hash, curr_head.hash, 0))
- 			die(_("Cannot fast-forward your working tree.\n"
- 				"After making sure that you saved anything precious from\n"
- 				"$ git diff %s\n"
- 				"output, run\n"
- 				"$ git reset --hard\n"
--				"to recover."), sha1_to_hex(orig_head));
-+				"to recover."), oid_to_hex(&orig_head));
- 	}
+-int sha1_array_lookup(struct sha1_array *array, const unsigned char *sha1)
++int sha1_array_lookup(struct sha1_array *array, const struct object_id *oid)
+ {
+ 	if (!array->sorted)
+ 		sha1_array_sort(array);
+-	return sha1_pos(sha1, array->oid, array->nr, sha1_access);
++	return sha1_pos(oid->hash, array->oid, array->nr, sha1_access);
+ }
  
- 	get_merge_heads(&merge_heads);
-@@ -853,10 +853,10 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 	if (!merge_heads.nr)
- 		die_no_merge_candidates(repo, refspecs);
+ void sha1_array_clear(struct sha1_array *array)
+diff --git a/sha1-array.h b/sha1-array.h
+index 7b06fbf1c1..4cc55b15af 100644
+--- a/sha1-array.h
++++ b/sha1-array.h
+@@ -11,7 +11,7 @@ struct sha1_array {
+ #define SHA1_ARRAY_INIT { NULL, 0, 0, 0 }
  
--	if (is_null_sha1(orig_head)) {
-+	if (is_null_oid(&orig_head)) {
- 		if (merge_heads.nr > 1)
- 			die(_("Cannot merge multiple branches into empty head."));
--		return pull_into_void(*merge_heads.sha1, curr_head);
-+		return pull_into_void(*merge_heads.sha1, &curr_head);
- 	}
- 	if (opt_rebase && merge_heads.nr > 1)
- 		die(_("Cannot rebase onto multiple branches."));
-@@ -865,7 +865,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		struct commit_list *list = NULL;
- 		struct commit *merge_head, *head;
+ void sha1_array_append(struct sha1_array *array, const struct object_id *sha1);
+-int sha1_array_lookup(struct sha1_array *array, const unsigned char *sha1);
++int sha1_array_lookup(struct sha1_array *array, const struct object_id *oid);
+ void sha1_array_clear(struct sha1_array *array);
  
--		head = lookup_commit_reference(orig_head);
-+		head = lookup_commit_reference(orig_head.hash);
- 		commit_list_insert(head, &list);
- 		merge_head = lookup_commit_reference(merge_heads.sha1[0]);
- 		if (is_descendant_of(merge_head, list)) {
-@@ -873,7 +873,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			opt_ff = "--ff-only";
- 			return run_merge();
- 		}
--		return run_rebase(curr_head, *merge_heads.sha1, rebase_fork_point);
-+		return run_rebase(&curr_head, *merge_heads.sha1, &rebase_fork_point);
- 	} else {
- 		return run_merge();
- 	}
+ typedef int (*for_each_sha1_fn)(const unsigned char sha1[20],
+diff --git a/t/helper/test-sha1-array.c b/t/helper/test-sha1-array.c
+index 181c36e0a5..3680511849 100644
+--- a/t/helper/test-sha1-array.c
++++ b/t/helper/test-sha1-array.c
+@@ -23,7 +23,7 @@ int cmd_main(int argc, const char **argv)
+ 		} else if (skip_prefix(line.buf, "lookup ", &arg)) {
+ 			if (get_oid_hex(arg, &oid))
+ 				die("not a hexadecimal SHA1: %s", arg);
+-			printf("%d\n", sha1_array_lookup(&array, oid.hash));
++			printf("%d\n", sha1_array_lookup(&array, &oid));
+ 		} else if (!strcmp(line.buf, "clear"))
+ 			sha1_array_clear(&array);
+ 		else if (!strcmp(line.buf, "for_each_unique"))
