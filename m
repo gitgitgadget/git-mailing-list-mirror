@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F403E2095B
-	for <e@80x24.org>; Sat, 18 Mar 2017 21:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 746EF2095B
+	for <e@80x24.org>; Sat, 18 Mar 2017 21:22:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751187AbdCRVWq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Mar 2017 17:22:46 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:46158 "EHLO
+        id S1751222AbdCRVWr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Mar 2017 17:22:47 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:46154 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751181AbdCRVWf (ORCPT
+        by vger.kernel.org with ESMTP id S1751180AbdCRVWf (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 18 Mar 2017 17:22:35 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7D6EB280C1;
-        Sat, 18 Mar 2017 21:20:06 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BCCDA280BD;
+        Sat, 18 Mar 2017 21:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1489872006;
-        bh=sAJDBsiN6lnvkThkoneoOfjXZMg5YkAFqmTtbo+8OEM=;
+        s=default; t=1489872004;
+        bh=muXS/VTgUYniBU/B61cVhFC39EMbQVb0Z2IDpuafE2Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kmpeE+SW5EEo5wDjgBBxCiw8eYXMlY/1RIb4ramw+TYRi1zGBdhquCX6q9uBN3ra1
-         dFEzJEW/cDlGErvsTBBEkkO3raQMSY8K3CyW6xRvnH1AfjiqcpbcJKuoPnoiD7Fgj1
-         jlDI+skD5FiXWvh+30OXxhhiFFFuRMreX8gP4SSA5RvKKrjb0bX0eamJ8Py4n5lDs8
-         veHM7mkIxVjY/zT4oKQmbuZDjyZaHgHA6UtJ99ClE5V9Iclmwl+O9/71IipJfMPygA
-         iWbZIMAZn7TbXENFF0+1tg7YHSGAo6T2XyHH/XvgOEBZvSCRCnNU7zxGYAWKyyf9q4
-         hs7mkpeX1B+gCAgyVcGMERyrz8DitTw++n+YbQMc3IjakMpq/UwI88X/L1KugtL5Oq
-         MEo7Wiy3FWr61KuZm5cBunvTyTbNfUavwf1hCCGchL3AJU5tm/Nk65YxQ0IGnNUWcS
-         wubh3az582wlkUiQXpc5uyL3RdzPoHD270gPlkkKILWEPkTlZO2
+        b=B6+RhSvUiZ5QNCGq6t66cyHgY+FpXTDIYMaDOgh/BfWZrhYxti0ZaO0DBpaTE1vJT
+         SwCP/4HHpAnCD7+205dAMz042px6UHWM1mhf/329+OEkroFzilt6G9MKaPLCzRjOBm
+         hH8+W1JOAlNckebAWuhb+LyWFipROGyWoWwcDqe9w6P58rocSVx8XrUGBnSPWiydIU
+         iVyl84mjMcnnSn/8heLJz03zUKCk3vXHKAANKCRa2W6jBWdfJZTW44yZCNLLzpgmSJ
+         AjiA6RQFENxbyIZtT1tpQiWXTdK/1hIeqb+xW1r1CJKmPaMpDytmjq0J5AtSb8Ozon
+         zIdlKhxAp2dvAVTeUjw5y2iiM3l7UgNIpMJ5dnyvBqx/V8aGukNVNO/i1Hw6T9kUqX
+         jWTZ4cKPsNdzn/pXaZDQY9T4IqreUAB125VVQWAdvqYLCuWNA5AG4A/bj9L5WTRH6W
+         x30bK0RDfCVVLqCZWrsCt/FTC0zok9vPqdJyB0djjyv6FPbaciy
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 20/20] Documentation: update and rename api-sha1-array.txt
-Date:   Sat, 18 Mar 2017 21:19:54 +0000
-Message-Id: <20170318211954.564030-21-sandals@crustytoothpaste.net>
+Subject: [PATCH 16/20] Convert remaining callers of sha1_array_lookup to object_id
+Date:   Sat, 18 Mar 2017 21:19:50 +0000
+Message-Id: <20170318211954.564030-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170318211954.564030-1-sandals@crustytoothpaste.net>
 References: <20170318211954.564030-1-sandals@crustytoothpaste.net>
@@ -48,117 +48,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the structure and functions have changed names, update the code
-examples and the documentation.  Rename the file to match the new name
-of the API.
+There are a very small number of callers which don't already use struct
+object_id.  Convert them.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- .../{api-sha1-array.txt => api-oid-array.txt}      | 44 +++++++++++-----------
- 1 file changed, 22 insertions(+), 22 deletions(-)
- rename Documentation/technical/{api-sha1-array.txt => api-oid-array.txt} (61%)
+ bisect.c               | 14 +++++++-------
+ builtin/pack-objects.c | 16 ++++++++--------
+ ref-filter.c           | 22 +++++++++++-----------
+ 3 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/Documentation/technical/api-sha1-array.txt b/Documentation/technical/api-oid-array.txt
-similarity index 61%
-rename from Documentation/technical/api-sha1-array.txt
-rename to Documentation/technical/api-oid-array.txt
-index dcc52943a5..b0c11f868d 100644
---- a/Documentation/technical/api-sha1-array.txt
-+++ b/Documentation/technical/api-oid-array.txt
-@@ -1,7 +1,7 @@
--sha1-array API
-+oid-array API
- ==============
- 
--The sha1-array API provides storage and manipulation of sets of SHA-1
-+The oid-array API provides storage and manipulation of sets of object
- identifiers. The emphasis is on storage and processing efficiency,
- making them suitable for large lists. Note that the ordering of items is
- not preserved over some operations.
-@@ -9,10 +9,10 @@ not preserved over some operations.
- Data Structures
- ---------------
- 
--`struct sha1_array`::
-+`struct oid_array`::
- 
--	A single array of SHA-1 hashes. This should be initialized by
--	assignment from `SHA1_ARRAY_INIT`.  The `sha1` member contains
-+	A single array of object IDs. This should be initialized by
-+	assignment from `OID_ARRAY_INIT`.  The `oid` member contains
- 	the actual data. The `nr` member contains the number of items in
- 	the set.  The `alloc` and `sorted` members are used internally,
- 	and should not be needed by API callers.
-@@ -20,22 +20,22 @@ Data Structures
- Functions
- ---------
- 
--`sha1_array_append`::
--	Add an item to the set. The sha1 will be placed at the end of
-+`oid_array_append`::
-+	Add an item to the set. The object ID will be placed at the end of
- 	the array (but note that some operations below may lose this
- 	ordering).
- 
--`sha1_array_lookup`::
--	Perform a binary search of the array for a specific sha1.
-+`oid_array_lookup`::
-+	Perform a binary search of the array for a specific object ID.
- 	If found, returns the offset (in number of elements) of the
--	sha1. If not found, returns a negative integer. If the array is
--	not sorted, this function has the side effect of sorting it.
-+	object ID. If not found, returns a negative integer. If the array
-+	is not sorted, this function has the side effect of sorting it.
- 
--`sha1_array_clear`::
-+`oid_array_clear`::
- 	Free all memory associated with the array and return it to the
- 	initial, empty state.
- 
--`sha1_array_for_each_unique`::
-+`oid_array_for_each_unique`::
- 	Efficiently iterate over each unique element of the list,
- 	executing the callback function for each one. If the array is
- 	not sorted, this function has the side effect of sorting it. If
-@@ -47,25 +47,25 @@ Examples
- --------
- 
- -----------------------------------------
--int print_callback(const unsigned char sha1[20],
-+int print_callback(const struct object_id *oid,
- 		    void *data)
- {
--	printf("%s\n", sha1_to_hex(sha1));
-+	printf("%s\n", oid_to_hex(oid));
- 	return 0; /* always continue */
+diff --git a/bisect.c b/bisect.c
+index 886e630884..a25d008693 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -754,9 +754,9 @@ static void handle_bad_merge_base(void)
+ 	exit(1);
  }
  
- void some_func(void)
+-static void handle_skipped_merge_base(const unsigned char *mb)
++static void handle_skipped_merge_base(const struct object_id *mb)
  {
--	struct sha1_array hashes = SHA1_ARRAY_INIT;
--	unsigned char sha1[20];
-+	struct sha1_array hashes = OID_ARRAY_INIT;
+-	char *mb_hex = sha1_to_hex(mb);
++	char *mb_hex = oid_to_hex(mb);
+ 	char *bad_hex = oid_to_hex(current_bad_oid);
+ 	char *good_hex = join_sha1_array_hex(&good_revs, ' ');
+ 
+@@ -787,16 +787,16 @@ static void check_merge_bases(int no_checkout)
+ 	result = get_merge_bases_many(rev[0], rev_nr - 1, rev + 1);
+ 
+ 	for (; result; result = result->next) {
+-		const unsigned char *mb = result->item->object.oid.hash;
+-		if (!hashcmp(mb, current_bad_oid->hash)) {
++		const struct object_id *mb = &result->item->object.oid;
++		if (!oidcmp(mb, current_bad_oid)) {
+ 			handle_bad_merge_base();
+-		} else if (0 <= sha1_array_lookup(&good_revs, mb)) {
++		} else if (0 <= sha1_array_lookup(&good_revs, mb->hash)) {
+ 			continue;
+-		} else if (0 <= sha1_array_lookup(&skipped_revs, mb)) {
++		} else if (0 <= sha1_array_lookup(&skipped_revs, mb->hash)) {
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf(_("Bisecting: a merge base must be tested\n"));
+-			exit(bisect_checkout(mb, no_checkout));
++			exit(bisect_checkout(mb->hash, no_checkout));
+ 		}
+ 	}
+ 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index dfeacd5c37..dca1b68e69 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2670,14 +2670,14 @@ static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1)
+  */
+ static struct sha1_array recent_objects;
+ 
+-static int loosened_object_can_be_discarded(const unsigned char *sha1,
++static int loosened_object_can_be_discarded(const struct object_id *oid,
+ 					    unsigned long mtime)
+ {
+ 	if (!unpack_unreachable_expiration)
+ 		return 0;
+ 	if (mtime > unpack_unreachable_expiration)
+ 		return 0;
+-	if (sha1_array_lookup(&recent_objects, sha1) >= 0)
++	if (sha1_array_lookup(&recent_objects, oid->hash) >= 0)
+ 		return 0;
+ 	return 1;
+ }
+@@ -2686,7 +2686,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ {
+ 	struct packed_git *p;
+ 	uint32_t i;
+-	const unsigned char *sha1;
 +	struct object_id oid;
  
- 	/* Read objects into our set */
--	while (read_object_from_stdin(sha1))
--		sha1_array_append(&hashes, sha1);
-+	while (read_object_from_stdin(oid.hash))
-+		oid_array_append(&hashes, &oid);
+ 	for (p = packed_git; p; p = p->next) {
+ 		if (!p->pack_local || p->pack_keep)
+@@ -2696,11 +2696,11 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ 			die("cannot open pack index");
  
- 	/* Check if some objects are in our set */
--	while (read_object_from_stdin(sha1)) {
--		if (sha1_array_lookup(&hashes, sha1) >= 0)
-+	while (read_object_from_stdin(oid.hash)) {
-+		if (oid_array_lookup(&hashes, &oid) >= 0)
- 			printf("it's in there!\n");
+ 		for (i = 0; i < p->num_objects; i++) {
+-			sha1 = nth_packed_object_sha1(p, i);
+-			if (!packlist_find(&to_pack, sha1, NULL) &&
+-			    !has_sha1_pack_kept_or_nonlocal(sha1) &&
+-			    !loosened_object_can_be_discarded(sha1, p->mtime))
+-				if (force_object_loose(sha1, p->mtime))
++			nth_packed_object_oid(&oid, p, i);
++			if (!packlist_find(&to_pack, oid.hash, NULL) &&
++			    !has_sha1_pack_kept_or_nonlocal(oid.hash) &&
++			    !loosened_object_can_be_discarded(&oid, p->mtime))
++				if (force_object_loose(oid.hash, p->mtime))
+ 					die("unable to force loose object");
+ 		}
+ 	}
+diff --git a/ref-filter.c b/ref-filter.c
+index 9c82b5b9d6..d3dcb53dd5 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1677,22 +1677,22 @@ static int filter_pattern_match(struct ref_filter *filter, const char *refname)
+  * the need to parse the object via parse_object(). peel_ref() might be a
+  * more efficient alternative to obtain the pointee.
+  */
+-static const unsigned char *match_points_at(struct sha1_array *points_at,
+-					    const unsigned char *sha1,
+-					    const char *refname)
++static const struct object_id *match_points_at(struct sha1_array *points_at,
++					       const struct object_id *oid,
++					       const char *refname)
+ {
+-	const unsigned char *tagged_sha1 = NULL;
++	const struct object_id *tagged_oid = NULL;
+ 	struct object *obj;
+ 
+-	if (sha1_array_lookup(points_at, sha1) >= 0)
+-		return sha1;
+-	obj = parse_object(sha1);
++	if (sha1_array_lookup(points_at, oid->hash) >= 0)
++		return oid;
++	obj = parse_object(oid->hash);
+ 	if (!obj)
+ 		die(_("malformed object at '%s'"), refname);
+ 	if (obj->type == OBJ_TAG)
+-		tagged_sha1 = ((struct tag *)obj)->tagged->oid.hash;
+-	if (tagged_sha1 && sha1_array_lookup(points_at, tagged_sha1) >= 0)
+-		return tagged_sha1;
++		tagged_oid = &((struct tag *)obj)->tagged->oid;
++	if (tagged_oid && sha1_array_lookup(points_at, tagged_oid->hash) >= 0)
++		return tagged_oid;
+ 	return NULL;
+ }
+ 
+@@ -1772,7 +1772,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	if (!filter_pattern_match(filter, refname))
+ 		return 0;
+ 
+-	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
++	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid, refname))
+ 		return 0;
  
  	/*
-@@ -75,6 +75,6 @@ void some_func(void)
- 	 * Instead, this will sort once and then skip duplicates
- 	 * in linear time.
- 	 */
--	sha1_array_for_each_unique(&hashes, print_callback, NULL);
-+	oid_array_for_each_unique(&hashes, print_callback, NULL);
- }
- -----------------------------------------
