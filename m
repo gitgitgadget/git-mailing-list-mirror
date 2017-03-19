@@ -2,65 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D04CA20323
-	for <e@80x24.org>; Sun, 19 Mar 2017 21:33:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EC572095E
+	for <e@80x24.org>; Sun, 19 Mar 2017 22:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752172AbdCSVdj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Mar 2017 17:33:39 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:57720 "EHLO bsmtp.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751228AbdCSVdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Mar 2017 17:33:38 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp.bon.at (Postfix) with ESMTPSA id 3vmXPq39Kzz5tlF;
-        Sun, 19 Mar 2017 22:33:35 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 0337E4278;
-        Sun, 19 Mar 2017 22:33:33 +0100 (CET)
-Subject: Re: Is there a way to have a local version of a header file?
-To:     Samuel Lijin <sxlijin@gmail.com>
-References: <nycvar.QRO.7.75.62.1703180724490.3797@qynat-yncgbc>
- <CACBZZX5FMdjuxxNru+XfTQdSXEQ_b0OP2rngGZLf1sSHR_D8Ng@mail.gmail.com>
- <nycvar.QRO.7.75.62.1703180750460.3797@qynat-yncgbc>
- <CACBZZX7G=C84kz4n26VTnWWUTKRv1rVvms=8AvELtMSCviu1kQ@mail.gmail.com>
- <xmqqzigi31fl.fsf@gitster.mtv.corp.google.com>
- <nycvar.QRO.7.75.62.1703181539310.3797@qynat-yncgbc>
- <xmqqy3w2yybt.fsf@gitster.mtv.corp.google.com>
- <CAJZjrdVxT7G+Cn+1_vqPBCtMOALmR_542jvP7nXXuvs74ko5qg@mail.gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, David Lang <david@lang.hm>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <5d06ba31-bec1-0172-cb00-10b4d2c4e648@kdbg.org>
-Date:   Sun, 19 Mar 2017 22:33:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1752101AbdCSWI7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Mar 2017 18:08:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60182 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751228AbdCSWI6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Mar 2017 18:08:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 34DC56ECB6;
+        Sun, 19 Mar 2017 18:08:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=BvjbEiW5Ozcj4ISiNWu2uMfAEA0=; b=wCM4Tq
+        Iw8e1vlcE2MiBLPHCz0MtKpDUCipyBOceQUDEOpPXMpvTPMCTtIp4aV/XX/4LTub
+        xko+Nh9BeDi6vYlK0b4yy4zKU2m5JP83uL6cTXEUGxyNX2rMfa4flQtCvHwv3Un7
+        Sz7zXEv6VYTd584fzoGzCc1zpfGXTluuxqmvI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=A1XRgCwpzqUiJw12TEeafmAi1xVb+a7B
+        5Kp0t7/HYj3EW28tGHG32kmkTquWat/nyI8PhR84vPa3Dg6+ZhhNm9bTz5/uLGWm
+        z2m/KrYKaMWeLp1kzgHNQ+zW8ItZItqJ+BJjUcEQiADQXcMAdW+6zxBxqf2lTM8f
+        sFHQitjPF3U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2BB666ECB5;
+        Sun, 19 Mar 2017 18:08:56 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8CF8F6ECB4;
+        Sun, 19 Mar 2017 18:08:55 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 0/2] diff --no-index: support symlinks and pipes
+References: <20170318210038.22638-1-dennis@kaarsemaker.net>
+Date:   Sun, 19 Mar 2017 15:08:54 -0700
+In-Reply-To: <20170318210038.22638-1-dennis@kaarsemaker.net> (Dennis
+        Kaarsemaker's message of "Sat, 18 Mar 2017 22:00:36 +0100")
+Message-ID: <xmqqo9wwzzpl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAJZjrdVxT7G+Cn+1_vqPBCtMOALmR_542jvP7nXXuvs74ko5qg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A4DF8E84-0CF0-11E7-8024-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.03.2017 um 00:22 schrieb Samuel Lijin:
-> I'd just provide a .sample and tell people what to do with it in the
-> README. The alternative is to provide config.h as is and tell people
-> to use "git update-index --assume-unchanged" immediately after cloning
-> to ignore changes to the file, but this is prone to people
-> accidentally committing credentials.
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-Please do not suggest to use --assume-unchanged. It is not intended for 
-this purpose, and if used in the way you suggest, it will sooner or 
-later bite back.
+> Normal diff provides arguably better output: the diff of the output of the
+> commands. This series makes it possible for git diff --no-index to follow
+> symlinks and read from pipes, mimicking the behaviour of normal diff.
+>
+> v1: http://public-inbox.org/git/20161111201958.2175-1-dennis@kaarsemaker.net/
+> v2: http://public-inbox.org/git/20170113102021.6054-1-dennis@kaarsemaker.net/
+>
+> Changes since v2, prompted by feedback from Junio:
+>
+> - A --derefence option was added and the default is no longer to dereference
+>   symlinks.
 
---assume-unchanged is a promise to Git that you do not change the file. 
-If you break the promise, you get what you deserve ;)
-
--- Hannes
+I do agree that it makes sense to have --[no-]dereference options,
+but I do not think it was my feedback and suggestion to make it
+optional (not default) to dereference, so please do not blame me for
+that choice.
 
