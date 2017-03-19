@@ -2,93 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8079720323
-	for <e@80x24.org>; Sun, 19 Mar 2017 19:17:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96C9420323
+	for <e@80x24.org>; Sun, 19 Mar 2017 20:24:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752412AbdCSTRe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Mar 2017 15:17:34 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:45283 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752357AbdCSTRb (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Mar 2017 15:17:31 -0400
-X-AuditID: 12074412-4a3ff70000000b04-95-58ced7e232bf
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 39.DC.02820.2E7DEC85; Sun, 19 Mar 2017 15:11:30 -0400 (EDT)
-Received: from [192.168.69.190] (p5B105D72.dip0.t-ipconnect.de [91.16.93.114])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2JJBRLf014057
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sun, 19 Mar 2017 15:11:28 -0400
-Subject: Re: [PATCH v6 03/27] files-backend: delete dead code in
- files_init_db()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170222140450.30886-1-pclouds@gmail.com>
- <20170318020337.22767-1-pclouds@gmail.com>
- <20170318020337.22767-4-pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <fe71b052-d0ef-061e-4adb-405cc87428de@alum.mit.edu>
-Date:   Sun, 19 Mar 2017 20:11:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
-MIME-Version: 1.0
-In-Reply-To: <20170318020337.22767-4-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42IRYndR1H10/VyEwdEFKhZdV7qZLBp6rzBb
-        9C/vYrNY8vA1s0X3lLeMFjOvWlts3tzO4sDusXPWXXaPDx/jPBZsKvXoaj/C5nHxkrLH/qXb
-        2Dw+b5ILYI/isklJzcksSy3St0vgyvj2TragkbPix8mfrA2Ma9m7GDk4JARMJNo+WnQxcnII
-        Cexgkjh6SqqLkQvIPscksXXTETaQGmGBIInbW5VBakQE0iQWT37PDFE/gVGi5wATSD2zwA1G
-        iUsTPzKBJNgEdCUW9TSD2bwC9hLfPjcwgtgsAqoS585MYQWxRQVCJOYsfMAIUSMocXLmExYQ
-        m1PAXGLLu+dgcWYBdYk/8y4xQ9jyEs1bZzNPYOSfhaRlFpKyWUjKFjAyr2KUS8wpzdXNTczM
-        KU5N1i1OTszLSy3SNdPLzSzRS00p3cQICXOhHYzrT8odYhTgYFTi4b1x6VyEEGtiWXFl7iFG
-        SQ4mJVHef+pAIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8aqeAcrwpiZVVqUX5MClpDhYlcd6f
-        i9X9hATSE0tSs1NTC1KLYLIyHBxKErwfrwE1ChalpqdWpGXmlCCkmTg4QYbzAA2fC1LDW1yQ
-        mFucmQ6RP8WoKCXOuxMkIQCSyCjNg+uFpaFXjOJArwjz6gCTkhAPMIXBdb8CGswENHjZjTMg
-        g0sSEVJSDYxOchWyPRbvmhR/yPsvrpJPt2Fkn/J1wRyHeMkXdfJxEo0MGyMuZj+YvXG6uQK/
-        ttmBsrN/DXPPRR5LOea2aXPqBdYdv+M8im4eq7Zdf0J/x4T8fW/chavTbuTf/nnwjsg85Ud5
-        1s/2NDzu7F52/7pyrgvP9c8X+HqbbJbGB6movnA+l8s+YY0SS3FGoqEWc1FxIgC1zpLAHgMA
-        AA==
+        id S1752520AbdCSUYI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Mar 2017 16:24:08 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:34995 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752249AbdCSUYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Mar 2017 16:24:06 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u108so15714028wrb.2
+        for <git@vger.kernel.org>; Sun, 19 Mar 2017 13:23:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/AisuhQz6qfAMAsNvAp7j0ko6CZHKf92+0N8AWwCazM=;
+        b=ZbsuBBUw3pWS9HIpvLpdnTCyQ/1QFberkDJWCKldZpPrjZ6KIINRM2vKBZPC00oq/B
+         gGyURa+DlU4Vf4h7T4nEVBBxSTPkr83myGQL7MzOCsFW2/VZaCVNOIdr7HNPUda8xM2V
+         2n9/c5gcAz0ezh2JbaqMmhfEoeaevwDW4bFU2i+UC2qeJ1KxTsRIlov20AAhusj20LRW
+         2l34WEldr5E+vacSkGG+knNay5gE66sWRDPcQ/qX+O5l8HJwW/z+SE6hEvrzWNOWBP/e
+         hgNtTo6MSxNLSp+WDguVbEA1LNjrPYWEZGWKe0+RMlMFb2KBKG3ltR/vfzLk3rzKqHYo
+         pCtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/AisuhQz6qfAMAsNvAp7j0ko6CZHKf92+0N8AWwCazM=;
+        b=lQSC03+JqY4Yw8cWBL5ILGqSg6wwBuVOqPliQDCAMSFap84eNpbagfVHI1LBPDcf2I
+         0MC5O4mDjmyGyHptHZApVXiZ3zbHyvsgeHLnuNCyAXYXBsZUb2QzZije7FncwcxVtomA
+         dHrv1rtxqn1tqy6mFMFG4J3Iy9Z1MyShP5mw/XLSU01De8renJmM9tjeLPltpyvKuBuT
+         9u4NWEbn5g8nE9ZVQYR8qF/UKGt0h7UEmfB9468VhahHHJJ8Q40yo8leQSct+UKzzkic
+         6VsABaZgpwTdPbeRnFaLBI4LHeys7levZP4YkGb6EofPuFfEGLybEBzt2CR8COcmM7Vp
+         GfQw==
+X-Gm-Message-State: AFeK/H251T+csgdgCQU8mWJQIKOSYpddDlDE7SI5cGQ6vxoo1ix91TE0sdkPwIIaZ0nQ/w==
+X-Received: by 10.223.180.68 with SMTP id v4mr21069876wrd.37.1489955019580;
+        Sun, 19 Mar 2017 13:23:39 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id o15sm18149945wra.61.2017.03.19.13.23.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 19 Mar 2017 13:23:39 -0700 (PDT)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH/RFC 1/3] stash: show less information for stash push -- <pathspec>
+Date:   Sun, 19 Mar 2017 20:23:49 +0000
+Message-Id: <20170319202351.8825-2-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.12.0.483.gad4152297
+In-Reply-To: <20170319202351.8825-1-t.gummerer@gmail.com>
+References: <20170318183658.GC27158@hank>
+ <20170319202351.8825-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/18/2017 03:03 AM, Nguyễn Thái Ngọc Duy wrote:
-> safe_create_dir() can do adjust_shared_perm() internally, and init-db
-> has always created 'refs' in shared mode since the beginning,
-> af6e277c5e (git-init-db: initialize shared repositories with --shared -
-> 2005-12-22). So this code looks like extra adjust_shared_perm calls are
-> unnecessary.
-> 
-> And they are. But let's see why there are here in the first place.
-> 
-> This code was added in 6fb5acfd8f (refs: add methods to init refs db -
-> 2016-09-04). From the diff alone this looks like a faithful refactored
-> code from init-db.c. But there is a subtle difference:
-> 
-> Between the safe_create_dir() block and adjust_shared_perm() block in
-> the old init-db.c, we may copy/recreate directories from the repo
-> template. So it makes sense that adjust_shared_perm() is re-executed
-> then to fix potential permission screwups.
-> 
-> After 6fb5acfd8f, refs dirs are created after template is copied. Nobody
-> will change directory permission again. So the extra adjust_shared_perm()
-> is redudant. Delete them.
+When using git stash push -- <pathspec> in the following sequence:
 
-LGTM. Thanks for the careful research.
+       git init -q repo
+       cd repo
 
-Michael
+       for i in one two; do
+               echo content >$i
+               git add $i
+       done
+       git commit -qm base
 
+       for i in one two; do
+               echo change >$i
+       done
+       git stash -- one
+
+it shows:
+
+   Saved working directory and index state WIP on master: 20cfadf base
+   Unstaged changes after reset:
+    M   one
+    M   two
+
+Even though "one" no longer has unstaged changes.
+
+It really is enough for the user to know that the stash is created,
+without bothering them with the internal details of what's happening.
+Always pass the -q flag to git clean and git reset in the pathspec case,
+to avoid unnecessary and potentially confusing output.
+
+Reported-by: Jeff King <peff@peff.net>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ git-stash.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 9c70662cc8..59f055e27b 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -299,10 +299,10 @@ push_stash () {
+ 	then
+ 		if test $# != 0
+ 		then
+-			git reset ${GIT_QUIET:+-q} -- "$@"
++			git reset -q -- "$@"
+ 			git ls-files -z --modified -- "$@" |
+ 			git checkout-index -z --force --stdin
+-			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
++			git clean --force -q -d -- "$@"
+ 		else
+ 			git reset --hard ${GIT_QUIET:+-q}
+ 		fi
+-- 
+2.12.0.483.gad4152297
 
