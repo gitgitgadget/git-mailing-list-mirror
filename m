@@ -2,95 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EEF22095B
-	for <e@80x24.org>; Sun, 19 Mar 2017 09:10:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B182095B
+	for <e@80x24.org>; Sun, 19 Mar 2017 09:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751289AbdCSJKf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Mar 2017 05:10:35 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34701 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751266AbdCSJKe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Mar 2017 05:10:34 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o126so13466459pfb.1
-        for <git@vger.kernel.org>; Sun, 19 Mar 2017 02:10:02 -0700 (PDT)
+        id S1751286AbdCSJ3c (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Mar 2017 05:29:32 -0400
+Received: from mail-ot0-f178.google.com ([74.125.82.178]:34571 "EHLO
+        mail-ot0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751181AbdCSJ3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Mar 2017 05:29:30 -0400
+Received: by mail-ot0-f178.google.com with SMTP id o24so117339794otb.1
+        for <git@vger.kernel.org>; Sun, 19 Mar 2017 02:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MyRu5ONbKQ6U6otX1zui7bb07XB9B49PjpMckFY7tdQ=;
-        b=PEgtmG0wpuA2Y8hyttKsgpOxfqSReMD43VM1YOsr5/hDtjLJeZ/xSrzCsvwfh8aF4L
-         ejV255cBXa5+EfXkCBNFsOq0mFet9qEEuKrxfvf+sZ97pUHWTB+B4h1m6D23SesAlLhw
-         Sp3w4cDr3AzkfVVrjwzbNrjQUgwdU2zeRxspVwQUnlPnrDOkc1z4VjeQYZe9vY5MGcnA
-         3sV1OoD3QSoVVDKIK8VAJsWyJf3cA9KGXoh+irzyoH7aHZgIDcgEeoyYomXRk/ZbARGu
-         oEE1NHq0qnYoSqtkk67cb4n+3dB8/wJp5r7uMINHhBA+TvVS4VFFOeYqXq110IJEb4+q
-         JrcA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xfPXKTGKFjObo/kQGhkxbr025H9cB1JMEf5u9xXjNow=;
+        b=hTHlsD58KVFNNNmDHBKwYYWd19d2YgMq8XTtXa2nRGeFKyY/NYzTUVNljhkRyk2UPS
+         WBEIFmGfbMmE2ZovdC/zXwDB7tL71XbnMnqIWzsFzsmRIMpdKfDTz8nEeEexvzd/z3+V
+         6IIri5oOhYnnCObvGDStE2L+S5/2L1fP5BukMW4uPPWIyGN7AZfw+y6uDK8+aLQwsLS/
+         oaFpk274w04R5DTw6Py4RwLP+SVlWSvgdKePZtSVqNiY7N394x2bdalMKj10EW0lWOiU
+         1WXprGvqORfCdDCPZ0XvcECeEb0UwRBk3RG+PMj/5nDITNjQiB8IYWz2nPIKxsjD4RKF
+         1mXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MyRu5ONbKQ6U6otX1zui7bb07XB9B49PjpMckFY7tdQ=;
-        b=eVqYGMOBOWNlckPHgHTequFWsFU29bMapaUCqDASo5ff0GkIeuTmDrLX5FBNa41bH/
-         0pkEmumq4hs2+0FWzPZ7lcfAF9llXI81cFjsL7s4U8C7pkH6wwc/hvf78XOMMUhpIcNM
-         zTr/8vvYZb1zlXJUDgQjp0fXXa1dma+oWz6LBgFHa6MoHIB0u8k6Nkv0nmk/oWIVmSiP
-         IKABQgY7dxzNaMMtIygfi/wCP+RPI0oWTCepsP4UmBSbFbMO7Lm/YN+fexNlj2s5biqB
-         LFrIsExohm+sWtWZ708qnRYnxZboO9jKIbm5aeUfBNyyTP3pvCsT0KYgVrqQuL6vmwz4
-         M52A==
-X-Gm-Message-State: AFeK/H0vvUxM0BBdZ3Oxkcbmig4Zk3BTMAopDKFhWW7yjNmx55hWvtN+2GhF+JjxQXIGgw==
-X-Received: by 10.98.204.195 with SMTP id j64mr25797818pfk.213.1489914072648;
-        Sun, 19 Mar 2017 02:01:12 -0700 (PDT)
-Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id u64sm14067960pfk.113.2017.03.19.02.01.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 19 Mar 2017 02:01:11 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 19 Mar 2017 16:01:04 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] git-commit.txt: list post-rewrite in HOOKS section
-Date:   Sun, 19 Mar 2017 16:01:02 +0700
-Message-Id: <20170319090102.5203-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xfPXKTGKFjObo/kQGhkxbr025H9cB1JMEf5u9xXjNow=;
+        b=o5DYBQ0vDSQY4L6awnmJZcGfqAHC3lHfFIBiuywzbNa9e0SenOOUsH7MF4TG9uE57b
+         MbTtxnZep3SpBe5+ovwH0LJLycR/mpXJbgA2qHXe5IhM6uT/i3QEPg+e8Bae4X0QF6qz
+         dbNbU18gCbz6feKIF3TFwek60qdqlWvK4qSIgp2Nro72K8IxPhNu8gZRaqvQw/o4amTH
+         fVyEeWIaA0WIMvuvh1A9i6qKmMWFV2ZoGl1PhmBZ8QPowaAE+eafGGipOQvhJQ8kDBwz
+         HXkbZFK30fYfZklgu0dAS7q/uO5Bb90g1A+FI0ZDpipEQ0RQ+CM0KA9KufuBjmG3KZt4
+         oc8w==
+X-Gm-Message-State: AFeK/H3ligE+ckHX24+22XegomviG3xRSjdZjEsY/NVppzXpZSxlAlcO3QW1tJA6J3Zi7Va7MQis/k46YeDdZg==
+X-Received: by 10.157.36.202 with SMTP id z68mr5038848ota.271.1489915207963;
+ Sun, 19 Mar 2017 02:20:07 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.74.158.84 with HTTP; Sun, 19 Mar 2017 02:19:37 -0700 (PDT)
+In-Reply-To: <20170318223409.13441-1-avarab@gmail.com>
+References: <20170318223409.13441-1-avarab@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 19 Mar 2017 16:19:37 +0700
+Message-ID: <CACsJy8CV=9PoH6QHCeznJ4DFLJN5w1a74X3f4raqrh4zBzCe4Q@mail.gmail.com>
+Subject: Re: [PATCH] rev-parse: match @{u}, @{push} and ^{<type>} case-insensitively
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Conrad Irwin <conrad.irwin@gmail.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Jeff King <peff@peff.net>, Richard Hansen <rhansen@bbn.com>,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The hook was added in a86ed83cce (Merge branch 'tr/notes-display' -
-2010-03-24), which updated githooks.txt but not git-commit.txt.
+On Sun, Mar 19, 2017 at 5:34 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index ba11b9c95e..55bde6ea65 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -96,7 +96,8 @@ some output processing may assume ref names in UTF-8.
+>    refers to the branch that the branch specified by branchname is set to=
+ build on
+>    top of (configured with `branch.<name>.remote` and
+>    `branch.<name>.merge`).  A missing branchname defaults to the
+> -  current one.
+> +  current one. Both '@\{upstream\}', '@\{u\}' are case-insensitive, so e=
+.g.
+> +  '@\{UPSTREAM\}', '@\{U\}' or '@\{Upstream\}' also work.
 
-git-commit.txt was later updated in e858af6d50 (commit: document a
-couple of options - 2012-06-08). Since this commit focused on command
-line options, this section was probably forgotten.
-
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/git-commit.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 25dcdcc289..ed0f5b94b3 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -463,7 +463,7 @@ order).  See linkgit:git-var[1] for details.
- HOOKS
- -----
- This command can run `commit-msg`, `prepare-commit-msg`, `pre-commit`,
--and `post-commit` hooks.  See linkgit:githooks[5] for more
-+`post-commit` and `post-rewrite` hooks.  See linkgit:githooks[5] for more
- information.
- 
- FILES
--- 
-2.11.0.157.gd943d85
-
+Since this change makes @{everything} case-insensitive and there's no
+new one on the horizon, can we just say "everything in @{..} is
+case-insensitive unless otherwise specified" and not updating every
+@{case}? It sets a new common rule for these @{}, which I think is
+good (easier to remember as a user).
+--=20
+Duy
