@@ -6,104 +6,100 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4174720323
-	for <e@80x24.org>; Sun, 19 Mar 2017 20:38:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 750392095E
+	for <e@80x24.org>; Sun, 19 Mar 2017 20:50:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752357AbdCSUi0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Mar 2017 16:38:26 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60118 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752131AbdCSUiZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Mar 2017 16:38:25 -0400
-X-AuditID: 1207440f-141ff70000003517-4e-58ceec3f5f36
+        id S1752655AbdCSUuu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Mar 2017 16:50:50 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:45873 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752366AbdCSUut (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Mar 2017 16:50:49 -0400
+X-AuditID: 12074412-4a3ff70000000b04-b1-58ceee78864d
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 03.3F.13591.F3CEEC85; Sun, 19 Mar 2017 16:38:23 -0400 (EDT)
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 90.5E.02820.87EEEC85; Sun, 19 Mar 2017 16:47:54 -0400 (EDT)
 Received: from [192.168.69.190] (p5B105D72.dip0.t-ipconnect.de [91.16.93.114])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2JKcJLr018271
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2JKlmUJ018711
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sun, 19 Mar 2017 16:38:21 -0400
-Subject: Re: [PATCH v6 11/27] refs.c: introduce get_main_ref_store()
+        Sun, 19 Mar 2017 16:47:50 -0400
+Subject: Re: [PATCH v6 16/27] path.c: move some code out of
+ strbuf_git_path_submodule()
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>, git@vger.kernel.org
 References: <20170222140450.30886-1-pclouds@gmail.com>
  <20170318020337.22767-1-pclouds@gmail.com>
- <20170318020337.22767-12-pclouds@gmail.com>
+ <20170318020337.22767-17-pclouds@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <511a2789-0f4e-2e65-94a9-eaaff858aa76@alum.mit.edu>
-Date:   Sun, 19 Mar 2017 21:38:19 +0100
+Message-ID: <45b2b743-4eb0-3511-a48f-1a4725d67c36@alum.mit.edu>
+Date:   Sun, 19 Mar 2017 21:47:48 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <20170318020337.22767-12-pclouds@gmail.com>
+In-Reply-To: <20170318020337.22767-17-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1LV/cy7CoP+jmUXXlW4mi4beK8wW
-        /cu72CyWPHzNbNE95S2jxcyr1habN7ezOLB77Jx1l93jw8c4jwWbSj262o+weVy8pOyxf+k2
-        No/Pm+QC2KO4bFJSczLLUov07RK4Mu4v2MpUcImj4vxW/wbGf2xdjJwcEgImEltezmbtYuTi
-        EBLYwSTRvG8zE4Rzjkliw+l5jCBVwgIuEqcW9TCB2CICaRKLJ79nhiiayCixY9NEdhCHWeAG
-        o8SliR/BqtgEdCUW9TSD2bwC9hJrvhxgAbFZBFQllrZsAtstKhAiMWfhA0aIGkGJkzOfgNVw
-        ClhIHJv0AyzOLKAu8WfeJWYIW16ieets5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5urmJmTnF
-        qcm6xcmJeXmpRbomermZJXqpKaWbGCHhzr+DsWu9zCFGAQ5GJR7eG5fORQixJpYVV+YeYpTk
-        YFIS5f2nDhTiS8pPqcxILM6ILyrNSS0+xCjBwawkwrvhIVCONyWxsiq1KB8mJc3BoiTOq75E
-        3U9IID2xJDU7NbUgtQgmK8PBoSTBO+8VUKNgUWp6akVaZk4JQpqJgxNkOA/Q8GsgNbzFBYm5
-        xZnpEPlTjIpS4ry/XgIlBEASGaV5cL2wdPSKURzoFWHe7yDtPMBUBtf9CmgwE9DgZTfOgAwu
-        SURISTUwTpOc0J5ZoaKx2ZtJvsg5d9+BfTqCnU9y+rq/TrevyJk/WUc9sD+28KjDK+mV+39/
-        791x0qpiabZk0KVLYqc/n1r8UXPtHa/Nx8uefV0lfqT/5/SXDy7671tTa6ncyNhn8vHHa4mF
-        B7YX/Z2qsfv0wse+suYVbGvzHPz+KwiJT9V+f7jg7ZzUbiWW4oxEQy3mouJEAMVWeuEiAwAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1K16dy7C4N0kI4uuK91MFg29V5gt
+        +pd3sVksefia2aJ7yltGi5lXrS02b25ncWD32DnrLrvHh49xHgs2lXp0tR9h87h4Sdlj/9Jt
+        bB6fN8kFsEdx2aSk5mSWpRbp2yVwZXTveMhY0MtZceHCYfYGxonsXYwcHBICJhKtR1W7GLk4
+        hAR2MElcbd/CCOGcY5L4eqiLqYuRk0NYIFJi84RbbCC2iECaxOLJ75khiiYySpx6sZQFxGEW
+        uMEocWniR7AONgFdiUU9zWA2r4C9xMX7cxlBbBYBVYnXB3azgtiiAiEScxY+YISoEZQ4OfMJ
+        C4jNKWAh0bnnEVgNs4C6xJ95l5ghbHmJ5q2zmScw8s9C0jILSdksJGULGJlXMcol5pTm6uYm
+        ZuYUpybrFicn5uWlFuma6eVmluilppRuYoSEu9AOxvUn5Q4xCnAwKvHw3rh0LkKINbGsuDL3
+        EKMkB5OSKO8/daAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd4ND4FyvCmJlVWpRfkwKWkOFiVx
+        3p+L1f2EBNITS1KzU1MLUotgsjIcHEoSvBVvgRoFi1LTUyvSMnNKENJMHJwgw3mAhv94AzK8
+        uCAxtzgzHSJ/ilFRSpz3I0hCACSRUZoH1wtLR68YxYFeEeYNBlnBA0xlcN2vgAYzAQ1eduMM
+        yOCSRISUVANjo5yI6SuTz2uqNuSsYgqQXihYPG93lsDuGf+Sj3z6ONNj/btqdwPbI98uK9qL
+        H9V7IvitMXJ37Abn8PlB76/PObpXlrf8WOS5XKePPxy8L1yL6bT6UduodupmY7Rx483dQkum
+        sm35dXbNVT2WYyy3N0pXqrnEs9Z+UzG/EXc/oMhpudVezvxFSizFGYmGWsxFxYkAija7PSID
+        AAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 03/18/2017 03:03 AM, Nguyễn Thái Ngọc Duy wrote:
+> refs is learning to avoid path rewriting that is done by
+> strbuf_git_path_submodule(). Factor out this code so it could be reused
+> by refs*
+
+Is the "*" on the previous line is a typo, or did you want to add a
+footnote, or ...?
+
 > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
->  refs.c | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
+>  path.c      | 35 +++++++----------------------------
+>  submodule.c | 36 ++++++++++++++++++++++++++++++++++++
+>  submodule.h |  1 +
+>  3 files changed, 44 insertions(+), 28 deletions(-)
 > 
-> diff --git a/refs.c b/refs.c
-> index e7606716dd..2637353b72 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1456,15 +1456,23 @@ static struct ref_store *ref_store_init(const char *submodule)
->  	return refs;
->  }
+> [...]
+> diff --git a/submodule.c b/submodule.c
+> index 3200b7bb2b..3c445f274e 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1596,3 +1596,39 @@ const char *get_superproject_working_tree(void)
 >  
-> +static struct ref_store *get_main_ref_store(void)
-> +{
-> +	struct ref_store *refs;
+>  	return ret;
+>  }
 > +
-> +	if (main_ref_store)
-> +		return main_ref_store;
-> +
-> +	refs = ref_store_init(NULL);
-> +	return refs;
-> +}
-> +
+> +/*
+> + * Given a submodule path (as in the index), return the repository
+> + * path of that submodule in 'buf'. Return -1 on error or when the
+> + * submodule is not initialized.
+> + */
 
-I still [1] think that `refs` here is an unnecessary temporary variable.
-And even after your "kill register_ref_store" patch I think it is
-superfluous and the function could look like
-
-static struct ref_store *get_main_ref_store(void)
-{
-	if (!main_ref_store)
-		main_ref_store = ref_store_init(NULL);
-
-	return main_ref_store;
-}
+Thanks for writing a docstring, but given that this is a public
+function, I think it is preferred to put the docstring in the header file.
 
 > [...]
 
 Michael
 
-[1]
-http://public-inbox.org/git/0bef1e49-e96b-1666-9b88-f4262c2aeeba@alum.mit.edu/
