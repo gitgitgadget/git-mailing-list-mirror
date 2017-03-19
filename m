@@ -2,108 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DADED20323
-	for <e@80x24.org>; Sun, 19 Mar 2017 20:35:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4174720323
+	for <e@80x24.org>; Sun, 19 Mar 2017 20:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752616AbdCSUfq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Mar 2017 16:35:46 -0400
-Received: from avasout01.plus.net ([84.93.230.227]:47242 "EHLO
-        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752609AbdCSUfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Mar 2017 16:35:43 -0400
-Received: from [10.0.2.15] ([146.90.175.94])
-        by avasout01 with smtp
-        id xwb11u00722aPyA01wb2KN; Sun, 19 Mar 2017 20:35:03 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=BZKo6vl2 c=1 sm=1 tr=0
- a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
- a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=e2-a8QnzKVL_YJ6qN-QA:9 a=QEXdDO2ut3YA:10
- a=6kGIvZw6iX1k4Y-7sg4_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v6 02/27] files-backend: make files_log_ref_write() static
-To:     Michael Haggerty <mhagger@alum.mit.edu>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        id S1752357AbdCSUi0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Mar 2017 16:38:26 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60118 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752131AbdCSUiZ (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Mar 2017 16:38:25 -0400
+X-AuditID: 1207440f-141ff70000003517-4e-58ceec3f5f36
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 03.3F.13591.F3CEEC85; Sun, 19 Mar 2017 16:38:23 -0400 (EDT)
+Received: from [192.168.69.190] (p5B105D72.dip0.t-ipconnect.de [91.16.93.114])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2JKcJLr018271
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sun, 19 Mar 2017 16:38:21 -0400
+Subject: Re: [PATCH v6 11/27] refs.c: introduce get_main_ref_store()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>, git@vger.kernel.org
 References: <20170222140450.30886-1-pclouds@gmail.com>
  <20170318020337.22767-1-pclouds@gmail.com>
- <20170318020337.22767-3-pclouds@gmail.com>
- <a949cc96-34a4-fb5d-06c6-e124f6c025aa@alum.mit.edu>
+ <20170318020337.22767-12-pclouds@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <dda96cdb-ec10-cb46-96e9-576062d90841@ramsayjones.plus.com>
-Date:   Sun, 19 Mar 2017 20:35:01 +0000
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <511a2789-0f4e-2e65-94a9-eaaff858aa76@alum.mit.edu>
+Date:   Sun, 19 Mar 2017 21:38:19 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+ Icedove/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <a949cc96-34a4-fb5d-06c6-e124f6c025aa@alum.mit.edu>
+In-Reply-To: <20170318020337.22767-12-pclouds@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1LV/cy7CoP+jmUXXlW4mi4beK8wW
+        /cu72CyWPHzNbNE95S2jxcyr1habN7ezOLB77Jx1l93jw8c4jwWbSj262o+weVy8pOyxf+k2
+        No/Pm+QC2KO4bFJSczLLUov07RK4Mu4v2MpUcImj4vxW/wbGf2xdjJwcEgImEltezmbtYuTi
+        EBLYwSTRvG8zE4Rzjkliw+l5jCBVwgIuEqcW9TCB2CICaRKLJ79nhiiayCixY9NEdhCHWeAG
+        o8SliR/BqtgEdCUW9TSD2bwC9hJrvhxgAbFZBFQllrZsAtstKhAiMWfhA0aIGkGJkzOfgNVw
+        ClhIHJv0AyzOLKAu8WfeJWYIW16ieets5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5urmJmTnF
+        qcm6xcmJeXmpRbomermZJXqpKaWbGCHhzr+DsWu9zCFGAQ5GJR7eG5fORQixJpYVV+YeYpTk
+        YFIS5f2nDhTiS8pPqcxILM6ILyrNSS0+xCjBwawkwrvhIVCONyWxsiq1KB8mJc3BoiTOq75E
+        3U9IID2xJDU7NbUgtQgmK8PBoSTBO+8VUKNgUWp6akVaZk4JQpqJgxNkOA/Q8GsgNbzFBYm5
+        xZnpEPlTjIpS4ry/XgIlBEASGaV5cL2wdPSKURzoFWHe7yDtPMBUBtf9CmgwE9DgZTfOgAwu
+        SURISTUwTpOc0J5ZoaKx2ZtJvsg5d9+BfTqCnU9y+rq/TrevyJk/WUc9sD+28KjDK+mV+39/
+        791x0qpiabZk0KVLYqc/n1r8UXPtHa/Nx8uefV0lfqT/5/SXDy7671tTa6ncyNhn8vHHa4mF
+        B7YX/Z2qsfv0wse+suYVbGvzHPz+KwiJT9V+f7jg7ZzUbiWW4oxEQy3mouJEAMVWeuEiAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 19/03/17 19:10, Michael Haggerty wrote:
-> On 03/18/2017 03:03 AM, Nguyễn Thái Ngọc Duy wrote:
->> Created in 5f3c3a4e6f (files_log_ref_write: new function - 2015-11-10)
->> but probably never used outside refs-internal.c
->>
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->> ---
->>  refs/files-backend.c | 3 +++
->>  refs/refs-internal.h | 4 ----
->>  2 files changed, 3 insertions(+), 4 deletions(-)
->>
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 50188e92f9..0a6d2bf6bc 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -165,6 +165,9 @@ static struct ref_entry *create_dir_entry(struct files_ref_store *ref_store,
->>  					  const char *dirname, size_t len,
->>  					  int incomplete);
->>  static void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
->> +static int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
->> +			       const unsigned char *new_sha1, const char *msg,
->> +			       int flags, struct strbuf *err);
->>  
->>  static struct ref_dir *get_ref_dir(struct ref_entry *entry)
->>  {
->> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
->> index fa93c9a32e..f732473e1d 100644
->> --- a/refs/refs-internal.h
->> +++ b/refs/refs-internal.h
->> @@ -228,10 +228,6 @@ struct ref_transaction {
->>  	enum ref_transaction_state state;
->>  };
->>  
->> -int files_log_ref_write(const char *refname, const unsigned char *old_sha1,
->> -			const unsigned char *new_sha1, const char *msg,
->> -			int flags, struct strbuf *err);
->> -
->>  /*
->>   * Check for entries in extras that are within the specified
->>   * directory, where dirname is a reference directory name including
->>
+On 03/18/2017 03:03 AM, Nguyễn Thái Ngọc Duy wrote:
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  refs.c | 16 ++++++++++++----
+>  1 file changed, 12 insertions(+), 4 deletions(-)
 > 
-> You changed the declaration, but the definition still makes the function
-> non-static.
+> diff --git a/refs.c b/refs.c
+> index e7606716dd..2637353b72 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1456,15 +1456,23 @@ static struct ref_store *ref_store_init(const char *submodule)
+>  	return refs;
+>  }
+>  
+> +static struct ref_store *get_main_ref_store(void)
+> +{
+> +	struct ref_store *refs;
+> +
+> +	if (main_ref_store)
+> +		return main_ref_store;
+> +
+> +	refs = ref_store_init(NULL);
+> +	return refs;
+> +}
+> +
 
-Actually, this is a static symbol, since it's 'static-ness' derives
-from the above forward declaration.
+I still [1] think that `refs` here is an unnecessary temporary variable.
+And even after your "kill register_ref_store" patch I think it is
+superfluous and the function could look like
 
-However, as I said in a previous email, this tickles sparse to issue
-a warning. In addition, simply adding 'static' to the definition
-(ie simply _don't_ do the forward declaration) is less work! :-D
+static struct ref_store *get_main_ref_store(void)
+{
+	if (!main_ref_store)
+		main_ref_store = ref_store_init(NULL);
 
-ATB,
-Ramsay Jones
+	return main_ref_store;
+}
 
+> [...]
 
+Michael
+
+[1]
+http://public-inbox.org/git/0bef1e49-e96b-1666-9b88-f4262c2aeeba@alum.mit.edu/
