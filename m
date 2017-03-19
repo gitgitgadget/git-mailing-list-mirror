@@ -7,122 +7,221 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC69820323
-	for <e@80x24.org>; Sun, 19 Mar 2017 13:53:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B002320323
+	for <e@80x24.org>; Sun, 19 Mar 2017 14:26:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751787AbdCSNx2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Mar 2017 09:53:28 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:37650 "EHLO
+        id S1751990AbdCSO04 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Mar 2017 10:26:56 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:35457 "EHLO
         mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751705AbdCSNx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Mar 2017 09:53:26 -0400
-Received: by mail-it0-f49.google.com with SMTP id g138so70567628itb.0
-        for <git@vger.kernel.org>; Sun, 19 Mar 2017 06:53:25 -0700 (PDT)
+        with ESMTP id S1751824AbdCSO04 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Mar 2017 10:26:56 -0400
+Received: by mail-it0-f49.google.com with SMTP id y18so8827069itc.0
+        for <git@vger.kernel.org>; Sun, 19 Mar 2017 07:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=k7X+LZ0mIathOsXhVP7KW332YNS+7ekqdLBalF2nmCs=;
-        b=gCdlBdMAagjv5ejBcTq0KtMnVm4tUka2UkwqO5bED+eOLdnyykJt8Yo6nkR/cm+SvD
-         wzYsprdI0xg5nZU+vxTQxQY2dKjVLG5PHxGe/40El0V8UQbJ7q1uXAW3uEtRcPp6aVYZ
-         9lLAzrd/XiP9phvMkmGwOk4NBuLE2X6QUH5EhBQY735GikaJ2gtoI7Bp5LJm3hAGrqM/
-         wLTu3jCrpy+L2u/ncOKKlr9L9cudsJQVN8I5kcgfjER02YMNbWtJI1EZrg23pBriQZjZ
-         qqk65ZWtDswpXJZpZZNSKR3AZ+WWKTzmkAzWshQG3pxDUGdUmrhxlhqlYML/gySDHkml
-         Dudg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jVBu/exmoIRaTZIUfVavVBWJX7Npv5anuidAPjQtV9o=;
+        b=c2AbG+VR4FDbZ/0G72EM8wUPOaL8EWQBOj05PCzMbzKRyUG1IoPEiF2TTwy3Ba8CyT
+         rDWnJYz92sub2kuT4pjjh6X7tQytB8d1groaP4rmyO5FrGGkOhtMaUnF8uYR4blglJYM
+         BKl5p/XWefmL6ghRX37SyefAsBfnQ/d+qd8KCBNYmNeCHB2Fj32+UGPsuZVjhm7L8OVZ
+         pzl6vi8XSivTFr7301u8Iwm+KJuHLTzTHZVOZWMaYXo53qlYVqpRnjl8ZIoWoG7zPDZm
+         HGp6N+Ro2EZYb/ypMk7JYsgFbLECeJoj0S6jMhp5zabCurbAEMuody/VtDjm0fthAtjD
+         xfaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=k7X+LZ0mIathOsXhVP7KW332YNS+7ekqdLBalF2nmCs=;
-        b=WZyTdEqcK+//Y1huOAu5wZmUlb+O9V77xNGa+ZmCDbtvXPwJOaYnFt6jxFim0qZhmd
-         XCm0rBcQ6fjbSLLi8J6a0+IIpTS4NQqclK/YsQk6eOt3jLNIQETfCpsDFPEjRmMxyewT
-         7TRsxGiN8rx/2U1eHYo63wxChWiNRLegbxAGWnwz/5I/AehRYBWpzI7aPEVshx8u3kdj
-         7rOECj8Oxl9FiUrIn0R8n7L2+G2Om2DooFk6aFpA9o+t2w2qhl2EZ7YKRcMGEFooM+n2
-         eKEGlEfMZSvY5/ioqFfaIWq9jCC8oMLcEuRAHnYnRrDgLH1yCGeyTUW6lcw7jaCSHWMz
-         4TPA==
-X-Gm-Message-State: AFeK/H0Z1Y7MszleMa/1Tl7wTKDMSsAqdAwsNGzjUUEpz2d03e+f8/xe8KcoTzF5Sy1Qqvv+vWdNr37HwQczdw==
-X-Received: by 10.36.90.144 with SMTP id v138mr6565423ita.24.1489931034401;
- Sun, 19 Mar 2017 06:43:54 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jVBu/exmoIRaTZIUfVavVBWJX7Npv5anuidAPjQtV9o=;
+        b=MBpzPj5RiFHnA8tOxR9ozS/5KAdi5Dh+iKifzFR1gaWtR2Roo/90zdycdnY67DYNF7
+         hLowlnesTR/KP5ascH1UERMzLgHlT9Uye/isepquOv7u7Pxvnwl4/V0hDYly++Wkbv84
+         bVo01J2dWdHX6pvs66ATVLkYyrrpnkevmhjBkT/yaO9JwU/jeP8x/tjOVFiumWMo15L3
+         Y6aOe2xn5gVA0GmKKu/NO/Jn0L2SNg6s6VtzHTthx5rF9CMWLJeGE3n3a3HTCeHTZQTD
+         IdtJ1+eNgmQsZi5aUc/gWOQGqeOV2BxT7mqWkQvvg2/q5ZnFIPBmDR30EdYALSFHQAmd
+         D9GQ==
+X-Gm-Message-State: AFeK/H2dwgUNDLWqHrBGqrk5+QaIFUUU52SUoB/zAnJzaF0zEFqGJNLtpmhWw0FiG3SwbA7rw5oAuMJj4u8NXA==
+X-Received: by 10.107.150.201 with SMTP id y192mr26956262iod.33.1489933614504;
+ Sun, 19 Mar 2017 07:26:54 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sun, 19 Mar 2017 06:43:33 -0700 (PDT)
-In-Reply-To: <20170319131845.tl6o3t2nwicj2rug@genre.crustytoothpaste.net>
-References: <CACsJy8Du+WWWkx3wqRJYA=cyTdro=OOD7GWaFi29=h1_9yC+LQ@mail.gmail.com>
- <vpqa88hlghm.fsf@anie.imag.fr> <20170319131845.tl6o3t2nwicj2rug@genre.crustytoothpaste.net>
+Received: by 10.107.130.208 with HTTP; Sun, 19 Mar 2017 07:26:33 -0700 (PDT)
+In-Reply-To: <xmqqtw6pzarq.fsf@gitster.mtv.corp.google.com>
+References: <20170318223409.13441-1-avarab@gmail.com> <xmqqtw6pzarq.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sun, 19 Mar 2017 14:43:33 +0100
-Message-ID: <CACBZZX4FksU6NujPZ_3GZ45EQ+KdJj5G2sajtRipE1wbaA3URA@mail.gmail.com>
-Subject: Re: Add configuration options for some commonly used command-line options
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Sun, 19 Mar 2017 15:26:33 +0100
+Message-ID: <CACBZZX5P3eWxF0qMoi4u+Suct61PXP-hS+gd0s7b+hmMvJpS=w@mail.gmail.com>
+Subject: Re: [PATCH] rev-parse: match @{u}, @{push} and ^{<type>} case-insensitively
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Conrad Irwin <conrad.irwin@gmail.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>, Richard Hansen <rhansen@bbn.com>,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 19, 2017 at 2:18 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Sun, Mar 19, 2017 at 11:15:33AM +0100, Matthieu Moy wrote:
->> I think the main problem is indeed "stop the users from shooting
->> themselves in the foot". Many command-line options change the behavior
->> completely so allowing users to enable them by default means allowing
->> the users to change Git in such a way that scripts calling it are
->> broken.
->>
->> This also doesn't help when troublshouting an issue as these options are
->> typically something set once and for all and which you forget about.
->> This typically leads to discussion in Q&A forums like:
->>
->> A: Can you run "git foo"?
->> B: Here's the result: ...
->> A: I don't understand, I can't reproduce here.
->>
->> just because B has a CLI option enabled by default.
->>
->> This is the same reasoning that leads Git to forbid aliasing an existing
->> command to something else.
->>
->> OTOH, we already have almost "enable such or such option by default"
->> with aliases. People who always run "git am" with "-3" can write
->>
->> [alias]
->>         a3 = am -3
->>
->> and just run "git a3".
+On Sun, Mar 19, 2017 at 1:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+> > Change the revision parsing logic to match @{upstream}, @{u}, @{push},
+> > ^{commit}, ^{tree} etc. case-insensitively. All of these cases
+> > currently emit "unknown revision or path not in the working tree"
+> > errors.
+> >
+> > This change makes them equivalent to their lower-case versions, and
+> > consistent with other revision format specifications, e.g. 'master@{6
+> > hours ago}', which is equivalent to 'master@{6 HoUrS aGo}'.
+>
+> Approxidate is not just case insensitive, but it takes random
+> non-word characters (e.g. a dot and a slash in "@{4.minutes/}") that
+> are not spaces at word boundaries, and I do not think you want to
+> accept @{.Upstream.} for consistency.
+>
+> It is an odd-man-out and "consistency" with it is a nonsense
+> justification.
 
-I can't find the E-Mail chain now but this has been discussed on-list
-a while ago. I.e. having some getopt support to say for the push
-command, that the --rebase option can also come from the config, i.e.
-in this case the pull.rebase option.
 
-IIRC the consensus was that such a facility would allow commands or
-individual options to say "this command/option is configurable", thus
-of course all plumbing utilities would be unconfigurable, but
-porcelain scripts would be configurable by default, with some
-exceptions.
+I'm not suggesting that we make all the options accept garbage like
+the date option in the name of consistency.
 
-> I tend to agree here.  At work, we have code that wants git status
-> --porcelain to be empty.  If a user added -b to all of their git status
-> calls (to make -s output more helpful), that would break a lot of
-> tooling.  It's much better if they create an alias, since that doesn't
-> affect automated tools.
+I found it helpful to make a table out of this. Key CI =3D Case
+Insensitive (now)?, CIP =3D Case Insensitive Possible (without
+ambiguities)?, AG =3D Accepts Garbage (.e.g. @{./.4.minutes./.})?
 
-With the caveat I noted above this would be a complete non-issue, i.e.
-we'd just pass some option to the getopt for --porcelain which would
-disable any other option slurping up its configuration from a config
-file.
+Before this patch:
 
-> I expect developers of things such as fugitive would dislike such a
-> feature as well.  I get the impression our existing config file options
-> already make life difficult enough.
+|----------------+-----+------+-----|
+| What?          | CI? | CIP? | AG? |
+|----------------+-----+------+-----|
+| sha1           | Y   | -    | N   |
+| describeOutput | N   | N    | N   |
+| refname        | N   | N    | N   |
+| @{<date>}      | Y   | Y    | Y   |
+| @{<n>}         | N/A | N/A  | N   |
+| @{<n>}         | N/A | N/A  | N   |
+| @{upstream}    | N   | Y    | N   |
+| @{push}        | N   | Y    | N   |
+| ^{<type>}      | N   | Y    | N   |
+| ^{/regex}      | N   | N    | N   |
+|----------------+-----+------+-----|
 
-I don't know if this is what Duy has in mind, but the facility I've
-described is  purely an internal code reorganization issue. I.e. us
-not having to write custom code for each bultin every time we want to
-take an option from the command line || config.
+After:
 
-It does make it *easier* to flag more options as "this is
-configurable", but whether that flag is turned on for each
-command/option is just something we could discuss on-list on a
-case-by-case basis.
+|----------------+-----+------+-----|
+| What?          | CI? | CIP? | AG? |
+|----------------+-----+------+-----|
+| sha1           | Y   | -    | N   |
+| describeOutput | N   | N    | N   |
+| refname        | N   | N    | N   |
+| @{<date>}      | Y   | Y    | Y   |
+| @{<n>}         | N/A | N/A  | N   |
+| @{<n>}         | N/A | N/A  | N   |
+| @{upstream}    | Y   | -    | N   |
+| @{push}        | Y   | -    | N   |
+| ^{<type>}      | Y   | -    | N   |
+| ^{/regex}      | N   | N    | N   |
+|----------------+-----+------+-----|
+
+I.e. now we have 3x forms that could without any ambiguity be case
+insensitive, this patch makes that so. We have one option that's very
+loose about accepting garbage (@{<date>}). I don't see any reason to
+try to pursue making the other options accept similar garbage.
+
+>
+> > The use-case for this is being able to hold the shift key down while
+> > typing @{u} on certain keyboard layouts, which makes the sequence
+> > easier to type, and reduces cases where git throws an error at the
+> > user where it could do what he means instead.
+>
+> This, on the hand, is a sane justification that can be sympathized.
+
+
+It's the reason I wrote the patch, and I'm not using consistency as
+some argument for the change, I just had to take an inventory of all
+these special forms and found out that these were the odd ones out in
+the sense that everything else that can be case insensitive is.
+
+>
+> > The objection from Junio at the time[2] was that by lower-casing
+> > {...}:
+> >
+> >     [The door would be closed on] allow[ing] @{/regexp} to find a
+> >     reflog entry that matches the given pattern, and in such a use
+> >     case we would certainly want to take the pattern in a case
+> >     sensitive way.
+> >
+> > This appears to be an objection related to the code structure at the
+> > time,...
+>
+> This objection, which is not about code structure but about design,
+> still applies, I would think, if your justification is "consistency
+> by making everything case-insensitive".
+>
+> Whoever is doing @{/<pattern>} cannot add the feature in a case
+> sensitive way without violating the declaration you are making here:
+> "everything inside @{...} is case-insensitive".
+
+That's a quote from Duy's E-Mail. I don't think we should document
+document anything like that, and my patch doesn't do that.
+
+It is a legit question whether we document things as "unless otherwise
+noted everything's case insensitive", and then list the exceptions, or
+"unless otherwise noted everything's case sensitive", and then list
+the exceptions. My patch does the former, Duy was suggesting the
+latter.
+
+I don't have any strong preference for either really, but neither
+locks us into any future promises. It's just a matter of how the
+current documentation phrases things.
+
+>
+> And if you extend that declaration to say "everything inside ^{...},
+> too, is case-insensitive", I think it already is broken as I think
+> "^{/<pattern>}" is case sensitive, by the way.
+
+Yes, I agree that phrasing things like Duy suggested offhand in that
+E-Mail would be broken.
+
+> So don't pretend that this is about consistency.  You are making a
+> choice for one class of strings that can go inside @{...} and the
+> choice does not depend on the case sensitivity of different classes
+> of strings that can go the same place.
+
+I think this too is really just a reply to what Duy said...
+
+> [...]
+> I think "immediately after typing '{', you often have SHIFT
+> pressed", even though it may sound lame, is a much better
+> justification.  At least, it is an honest one.  And I do not mind
+> too much if the way this feature is sold to the users were "these
+> keywards inside @{...} can be spelled in any case: push, upstream.
+> Type names in the peel-onion operator ^{<type>} can be too", not as
+> a general rule but as special cases.  Unlike end-user supplied
+> strings taken from an unbounded set (e.g. /<search patterns>), there
+> is no strong reason to insist that a set of keywords taken from a
+> limited vocabulary has to be spelled in one case, as long as it does
+> not introduce ambiguity or limit our possible future.  It's not like
+> we may want to keep the door open to make @{push} and @{PUSH} mean
+> different things later.
+
+*nod*
+
+> Even in that case, however, I'd strongly prefer to spell all the
+> examples in lowercase and declare that lowercase is the canonical
+> spelling in our documentation.  What I want to avoid is to have
+> three Git textbooks, that use @{UPSTREAM}, @{Upstream}, and
+> @{upstream} in their samples and descriptions, and have the readers
+> waste their time wondering, and waste our time by asking here, where
+> the different preferences of the authors of these three books come
+> from and which one the canonical way to spell it is.
+
+So do you mean you'd like me to change the documentation to be more
+like "While this is canonically lower case this form is case
+insensitive so e.g. so-and-so also work" ?
