@@ -7,221 +7,144 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B002320323
-	for <e@80x24.org>; Sun, 19 Mar 2017 14:26:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC02420323
+	for <e@80x24.org>; Sun, 19 Mar 2017 14:43:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751990AbdCSO04 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Mar 2017 10:26:56 -0400
-Received: from mail-it0-f49.google.com ([209.85.214.49]:35457 "EHLO
-        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751824AbdCSO04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Mar 2017 10:26:56 -0400
-Received: by mail-it0-f49.google.com with SMTP id y18so8827069itc.0
-        for <git@vger.kernel.org>; Sun, 19 Mar 2017 07:26:55 -0700 (PDT)
+        id S1751993AbdCSOnv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Mar 2017 10:43:51 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35040 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751787AbdCSOns (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Mar 2017 10:43:48 -0400
+Received: by mail-wm0-f66.google.com with SMTP id z133so10454484wmb.2
+        for <git@vger.kernel.org>; Sun, 19 Mar 2017 07:43:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jVBu/exmoIRaTZIUfVavVBWJX7Npv5anuidAPjQtV9o=;
-        b=c2AbG+VR4FDbZ/0G72EM8wUPOaL8EWQBOj05PCzMbzKRyUG1IoPEiF2TTwy3Ba8CyT
-         rDWnJYz92sub2kuT4pjjh6X7tQytB8d1groaP4rmyO5FrGGkOhtMaUnF8uYR4blglJYM
-         BKl5p/XWefmL6ghRX37SyefAsBfnQ/d+qd8KCBNYmNeCHB2Fj32+UGPsuZVjhm7L8OVZ
-         pzl6vi8XSivTFr7301u8Iwm+KJuHLTzTHZVOZWMaYXo53qlYVqpRnjl8ZIoWoG7zPDZm
-         HGp6N+Ro2EZYb/ypMk7JYsgFbLECeJoj0S6jMhp5zabCurbAEMuody/VtDjm0fthAtjD
-         xfaQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ozmhaq+reCO1HoR/n7zCriMPsL6N861gwQWaoaoB0+k=;
+        b=KIV+LvRp7T7C+4l0GWDK3zo9azYlmdQrz3t7uo4xtkda6Ho7BS7rOfV2n1IPZ/HKXd
+         l658B/KwcbRDFBii+Nr67BZqUScPOo4WaC1wpSwhFS2Zj89lBs9G5OSbhQpNwZdl3iyw
+         uoLzuSVXgmdADKiD0KiBCq7vJYY3iMmCknv9psUXtzer0Ivo6xUzqyFL0ribo1+0rkML
+         AW5ez3hIbrPyICLtWXmFsMzB81Ek98Vt/n4eaZ3xHWKQbTvYlYx3gSsv6V0wSHSYD1cl
+         CRotBed0oQ6DJU/TIVRNObrTg4z6DmQCa2vrVvNndW0Rp7PBN4sjvjaS2W5hzjFtHRVv
+         1wbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jVBu/exmoIRaTZIUfVavVBWJX7Npv5anuidAPjQtV9o=;
-        b=MBpzPj5RiFHnA8tOxR9ozS/5KAdi5Dh+iKifzFR1gaWtR2Roo/90zdycdnY67DYNF7
-         hLowlnesTR/KP5ascH1UERMzLgHlT9Uye/isepquOv7u7Pxvnwl4/V0hDYly++Wkbv84
-         bVo01J2dWdHX6pvs66ATVLkYyrrpnkevmhjBkT/yaO9JwU/jeP8x/tjOVFiumWMo15L3
-         Y6aOe2xn5gVA0GmKKu/NO/Jn0L2SNg6s6VtzHTthx5rF9CMWLJeGE3n3a3HTCeHTZQTD
-         IdtJ1+eNgmQsZi5aUc/gWOQGqeOV2BxT7mqWkQvvg2/q5ZnFIPBmDR30EdYALSFHQAmd
-         D9GQ==
-X-Gm-Message-State: AFeK/H2dwgUNDLWqHrBGqrk5+QaIFUUU52SUoB/zAnJzaF0zEFqGJNLtpmhWw0FiG3SwbA7rw5oAuMJj4u8NXA==
-X-Received: by 10.107.150.201 with SMTP id y192mr26956262iod.33.1489933614504;
- Sun, 19 Mar 2017 07:26:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ozmhaq+reCO1HoR/n7zCriMPsL6N861gwQWaoaoB0+k=;
+        b=bRogyu8rfpAhjY/k+KIGLw+B79lYYV6t4zeboETqRDkGuDmFhOkdHVUEr5AGtTQPIo
+         oOqM2vOQdmI9gJJZRmEfYSWXCZ/0aMIfaOn30NW7DagyKEAgZWJWJrs5zzg6ksiOVPg4
+         Wr5dz2/pmlrtk1MszEJpHYlTpNwL9XzXXB5Jm4ayhTZJXUKOZzty9b3eWXbACjEyje4a
+         uCNqQe8xoJ72xBN09VReCBDsRQHhH+O2rUubWxXdeHhxir0SIqxkxtQBEfeISp8jzZur
+         IMfmKlpk0we28/nqUNLNq5pXF6R9EKG8irivX6+ZNEnp3JQBR/iSQe+A/s5DXopuM4Bs
+         EYJw==
+X-Gm-Message-State: AFeK/H3AbFA+oCnbYsM1wtusa+cyJ6PgN6TmCZXGXZ10Z1UcVI+Ev+Fe5ZMSXsE1aQ1G5Q==
+X-Received: by 10.28.107.13 with SMTP id g13mr5338439wmc.117.1489934215156;
+        Sun, 19 Mar 2017 07:36:55 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id 134sm7960705wmj.6.2017.03.19.07.36.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 19 Mar 2017 07:36:54 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johan Herland <johan@herland.net>,
+        Ramkumar Ramachandra <artagnon@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] push: Re-include "push.default=tracking" in the documentation
+Date:   Sun, 19 Mar 2017 14:36:36 +0000
+Message-Id: <20170319143636.23810-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <xmqqint5l4i9.fsf@gitster.mtv.corp.google.com>
+References: <xmqqint5l4i9.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sun, 19 Mar 2017 07:26:33 -0700 (PDT)
-In-Reply-To: <xmqqtw6pzarq.fsf@gitster.mtv.corp.google.com>
-References: <20170318223409.13441-1-avarab@gmail.com> <xmqqtw6pzarq.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sun, 19 Mar 2017 15:26:33 +0100
-Message-ID: <CACBZZX5P3eWxF0qMoi4u+Suct61PXP-hS+gd0s7b+hmMvJpS=w@mail.gmail.com>
-Subject: Re: [PATCH] rev-parse: match @{u}, @{push} and ^{<type>} case-insensitively
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Conrad Irwin <conrad.irwin@gmail.com>,
-        Sitaram Chamarty <sitaramc@gmail.com>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>, Richard Hansen <rhansen@bbn.com>,
-        "Brian M . Carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Mar 19, 2017 at 1:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
+Change the documentation for push.tracking=* to re-include a mention
+of what "tracking" does.
+
+The "tracking" option was renamed to "upstream" back in
+53c4031 ("push.default: Rename 'tracking' to 'upstream'", 2011-02-16),
+this section was then subsequently rewritten in 87a70e4 ("config doc:
+rewrite push.default section", 2013-06-19) to remove any mention of
+"tracking".
+
+Maybe we should just warn or die nowadays if this option is in the
+config, but I had some old config of mine use this option, I'd
+forgotten that it was a synonym, and nothing in git's documentation
+mentioned that.
+
+That's bad, either we shouldn't support it at all, or we should
+document what it does. This patch does the latter.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Thu, Oct 6, 2016 at 8:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Sorry, I wasn't paying attention to this thread.
+
+And neither was I it would appear, and for a much longer time...
+
+> It seems that 87a70e4ce8 ("config doc: rewrite push.default
+> section", 2013-06-19) removed that mention by accident?  The log
+> message of the commit does not say it actively wanted to remove
+> mention of `tracking` and/or why it wanted to do so, so I agree that
+> resurrecting that parenthetical mention is the easiest course of
+> action at this point.
 >
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> However.
 >
-> > Change the revision parsing logic to match @{upstream}, @{u}, @{push},
-> > ^{commit}, ^{tree} etc. case-insensitively. All of these cases
-> > currently emit "unknown revision or path not in the working tree"
-> > errors.
-> >
-> > This change makes them equivalent to their lower-case versions, and
-> > consistent with other revision format specifications, e.g. 'master@{6
-> > hours ago}', which is equivalent to 'master@{6 HoUrS aGo}'.
+> With today's description of push.default choices, each of which is a
+> full fledged paragraph, I no longer have the objection I had in
 >
-> Approxidate is not just case insensitive, but it takes random
-> non-word characters (e.g. a dot and a slash in "@{4.minutes/}") that
-> are not spaces at word boundaries, and I do not think you want to
-> accept @{.Upstream.} for consistency.
+>     https://public-inbox.org/git/7vip6dgmx2.fsf@alter.siamese.dyndns.org/
 >
-> It is an odd-man-out and "consistency" with it is a nonsense
-> justification.
-
-
-I'm not suggesting that we make all the options accept garbage like
-the date option in the name of consistency.
-
-I found it helpful to make a table out of this. Key CI =3D Case
-Insensitive (now)?, CIP =3D Case Insensitive Possible (without
-ambiguities)?, AG =3D Accepts Garbage (.e.g. @{./.4.minutes./.})?
-
-Before this patch:
-
-|----------------+-----+------+-----|
-| What?          | CI? | CIP? | AG? |
-|----------------+-----+------+-----|
-| sha1           | Y   | -    | N   |
-| describeOutput | N   | N    | N   |
-| refname        | N   | N    | N   |
-| @{<date>}      | Y   | Y    | Y   |
-| @{<n>}         | N/A | N/A  | N   |
-| @{<n>}         | N/A | N/A  | N   |
-| @{upstream}    | N   | Y    | N   |
-| @{push}        | N   | Y    | N   |
-| ^{<type>}      | N   | Y    | N   |
-| ^{/regex}      | N   | N    | N   |
-|----------------+-----+------+-----|
-
-After:
-
-|----------------+-----+------+-----|
-| What?          | CI? | CIP? | AG? |
-|----------------+-----+------+-----|
-| sha1           | Y   | -    | N   |
-| describeOutput | N   | N    | N   |
-| refname        | N   | N    | N   |
-| @{<date>}      | Y   | Y    | Y   |
-| @{<n>}         | N/A | N/A  | N   |
-| @{<n>}         | N/A | N/A  | N   |
-| @{upstream}    | Y   | -    | N   |
-| @{push}        | Y   | -    | N   |
-| ^{<type>}      | Y   | -    | N   |
-| ^{/regex}      | N   | N    | N   |
-|----------------+-----+------+-----|
-
-I.e. now we have 3x forms that could without any ambiguity be case
-insensitive, this patch makes that so. We have one option that's very
-loose about accepting garbage (@{<date>}). I don't see any reason to
-try to pursue making the other options accept similar garbage.
-
+> against having `tracking` as a separate bullet item.  If we add
 >
-> > The use-case for this is being able to hold the shift key down while
-> > typing @{u} on certain keyboard layouts, which makes the sequence
-> > easier to type, and reduces cases where git throws an error at the
-> > user where it could do what he means instead.
+>     * `tracking` - a deprecated synonym for `upstream`; do not use this.
 >
-> This, on the hand, is a sane justification that can be sympathized.
+> to today's list, it would stand out as something different from
+> others and it will not cause the confusion I feared in the
+> discussion we had in early 2013.  As Jonathan Nieder argued in the
+> thread back then, having it as one of the bullet point would help
+> people locate it without using "search" \C-s or / feature.
 
+Makes senes. Here's a re-send that fixes this. I slighly changed the
+wording you suggested to be consistent with the other existing cases
+in config.txt:
+    
+    5 matches for "eprecated.*for" in buffer: config.txt
+       2328:	This is a deprecated synonym for `repack.writeBitmaps`.
+       2462:* `tracking` - This is a deprecated synonym for `upstream`.
+       2813:	Deprecated alias for 'sendemail.smtpEncryption = ssl'.
+       2853:	Deprecated alias for `sendemail.signedoffbycc`.
+       3180:	Deprecated alias for `versionsort.suffix`.  Ignored if
 
-It's the reason I wrote the patch, and I'm not using consistency as
-some argument for the change, I just had to take an inventory of all
-these special forms and found out that these were the odd ones out in
-the sense that everything else that can be case insensitive is.
+ Documentation/config.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
->
-> > The objection from Junio at the time[2] was that by lower-casing
-> > {...}:
-> >
-> >     [The door would be closed on] allow[ing] @{/regexp} to find a
-> >     reflog entry that matches the given pattern, and in such a use
-> >     case we would certainly want to take the pattern in a case
-> >     sensitive way.
-> >
-> > This appears to be an objection related to the code structure at the
-> > time,...
->
-> This objection, which is not about code structure but about design,
-> still applies, I would think, if your justification is "consistency
-> by making everything case-insensitive".
->
-> Whoever is doing @{/<pattern>} cannot add the feature in a case
-> sensitive way without violating the declaration you are making here:
-> "everything inside @{...} is case-insensitive".
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index eccc012672..988659e16c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2459,6 +2459,8 @@ push.default::
+   pushing to the same repository you would normally pull from
+   (i.e. central workflow).
+ 
++* `tracking` - This is a deprecated synonym for `upstream`.
++
+ * `simple` - in centralized workflow, work like `upstream` with an
+   added safety to refuse to push if the upstream branch's name is
+   different from the local one.
+-- 
+2.11.0
 
-That's a quote from Duy's E-Mail. I don't think we should document
-document anything like that, and my patch doesn't do that.
-
-It is a legit question whether we document things as "unless otherwise
-noted everything's case insensitive", and then list the exceptions, or
-"unless otherwise noted everything's case sensitive", and then list
-the exceptions. My patch does the former, Duy was suggesting the
-latter.
-
-I don't have any strong preference for either really, but neither
-locks us into any future promises. It's just a matter of how the
-current documentation phrases things.
-
->
-> And if you extend that declaration to say "everything inside ^{...},
-> too, is case-insensitive", I think it already is broken as I think
-> "^{/<pattern>}" is case sensitive, by the way.
-
-Yes, I agree that phrasing things like Duy suggested offhand in that
-E-Mail would be broken.
-
-> So don't pretend that this is about consistency.  You are making a
-> choice for one class of strings that can go inside @{...} and the
-> choice does not depend on the case sensitivity of different classes
-> of strings that can go the same place.
-
-I think this too is really just a reply to what Duy said...
-
-> [...]
-> I think "immediately after typing '{', you often have SHIFT
-> pressed", even though it may sound lame, is a much better
-> justification.  At least, it is an honest one.  And I do not mind
-> too much if the way this feature is sold to the users were "these
-> keywards inside @{...} can be spelled in any case: push, upstream.
-> Type names in the peel-onion operator ^{<type>} can be too", not as
-> a general rule but as special cases.  Unlike end-user supplied
-> strings taken from an unbounded set (e.g. /<search patterns>), there
-> is no strong reason to insist that a set of keywords taken from a
-> limited vocabulary has to be spelled in one case, as long as it does
-> not introduce ambiguity or limit our possible future.  It's not like
-> we may want to keep the door open to make @{push} and @{PUSH} mean
-> different things later.
-
-*nod*
-
-> Even in that case, however, I'd strongly prefer to spell all the
-> examples in lowercase and declare that lowercase is the canonical
-> spelling in our documentation.  What I want to avoid is to have
-> three Git textbooks, that use @{UPSTREAM}, @{Upstream}, and
-> @{upstream} in their samples and descriptions, and have the readers
-> waste their time wondering, and waste our time by asking here, where
-> the different preferences of the authors of these three books come
-> from and which one the canonical way to spell it is.
-
-So do you mean you'd like me to change the documentation to be more
-like "While this is canonically lower case this form is case
-insensitive so e.g. so-and-so also work" ?
