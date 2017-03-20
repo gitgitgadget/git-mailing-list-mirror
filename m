@@ -2,79 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9297C20958
-	for <e@80x24.org>; Mon, 20 Mar 2017 19:39:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A921320958
+	for <e@80x24.org>; Mon, 20 Mar 2017 19:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755905AbdCTTiG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 15:38:06 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54992 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755696AbdCTTh4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 15:37:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C31E27C117;
-        Mon, 20 Mar 2017 15:37:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nf5l3cYqH6uslPHaRHLcwn+c3eo=; b=Ape4eB
-        i09yNxbJxJUP4ZnCPcaJTXomdPj88DNM1v0uaZzfDLHdQ+i3Gc5Vd0S+tkcEuzYW
-        x63cZdczujcx2E/hE2q1lufB02PCtKkYnR330k/GC1H7Fnzq5evyrnqhVxvi1HNg
-        C82ARuWmi43/41yh8dG+ZoNJJLGuVZzgc5OZE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Xu0QLo9FnZemfRuTGXefzWDISZaPbnec
-        YFKOv2BhIyh+x47KHJjUTrbxp2s+PWui7ALxfzZ+Cpoeaa6SGgyA3CvInv+hJX12
-        HoPS3fTqOl69NkKE/K9PNXauOSpisDmS+0AayjkFzpJrsT6KchJo3HVGJzPlUjfm
-        0+WXt8GcWLQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC9777C116;
-        Mon, 20 Mar 2017 15:37:11 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 265B47C115;
-        Mon, 20 Mar 2017 15:37:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     jrnieder@gmail.com, git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH 0/2] use "working trees" instead of "worktree" in our API
-References: <20170320185038.GU26789@aiede.mtv.corp.google.com>
-        <20170320192225.18928-1-sbeller@google.com>
-Date:   Mon, 20 Mar 2017 12:37:09 -0700
-In-Reply-To: <20170320192225.18928-1-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 20 Mar 2017 12:22:23 -0700")
-Message-ID: <xmqqy3vzvixm.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S932102AbdCTTlk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 15:41:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47999 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756101AbdCTTku (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 15:40:50 -0400
+Received: (qmail 17915 invoked by uid 109); 20 Mar 2017 19:14:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Mar 2017 19:14:07 +0000
+Received: (qmail 5005 invoked by uid 111); 20 Mar 2017 19:14:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Mar 2017 15:14:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Mar 2017 15:14:03 -0400
+Date:   Mon, 20 Mar 2017 15:14:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Add configuration options for some commonly used command-line
+ options
+Message-ID: <20170320191403.wn65gyoime2lrubu@sigill.intra.peff.net>
+References: <CACsJy8Du+WWWkx3wqRJYA=cyTdro=OOD7GWaFi29=h1_9yC+LQ@mail.gmail.com>
+ <vpqa88hlghm.fsf@anie.imag.fr>
+ <20170319131845.tl6o3t2nwicj2rug@genre.crustytoothpaste.net>
+ <CACBZZX4FksU6NujPZ_3GZ45EQ+KdJj5G2sajtRipE1wbaA3URA@mail.gmail.com>
+ <CACsJy8CQzo9K8N3xH_HJq=NjJVOUG9wawC4Mg+UuyFRZCPBpFw@mail.gmail.com>
+ <20170320173237.GA188475@google.com>
+ <xmqq7f3jwzdo.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9CA1BED6-0DA4-11E7-97A8-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7f3jwzdo.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Mon, Mar 20, 2017 at 11:56:35AM -0700, Junio C Hamano wrote:
 
->> For what it's worth, this conversation makes me think it was a mistake
->> to call this construct a worktree.
->
-> So the way forward is to purge the use of "worktree" meaning actual working trees?
+> One thing we may want to consider is why we have to even worry about
+> scripts getting broken.  It is because people script around
+> Porcelain, and that is because we have been too eager to improve
+> Porcelain while neglecting plumbing for too long, to the point that
+> some things are only doable with Porcelain (or doing the same with
+> plumbing while possible are made too cumbersome).  I find it quite
+> disturbing that nobody brought that up as an issue that needs to be
+> addressed in this entire thread.
 
-GIT_WORK_TREE environment would have be a victim of this clean-up,
-so is setup_work_tree(), together with numerous in-code comment
-about "work tree".
+I think there is a chicken-and-egg problem there. The plumbing _wasn't_
+there, so people started using porcelain in their scripts, which made us
+hesitant to change it. That fact that it doesn't break makes script
+writers think it's OK. And now we're stuck with things like "log" and
+"diff" as pseudo-plumbing, unless we want to take a strong stand and say
+"you're doing it wrong, even though there was no other way to do it
+until now".
 
-While I would say that we would certainly pick one and stick to it
-if we were inventing Git from scratch today and just started caring
-the distinction between core.bare and not, I am not sure how far we
-would want to go, and what's the expected payoff of doing this
-clean-up would be, given that we are starting from today's world.
+Unless you want to follow the usual deprecation schedule by introducing
+new plumbing commands to fill in the gaps, waiting, and then proceeding
+to change the porcelain. But I think that's isomorphic with the other
+solutions. I.e., out of:
 
-So, I dunno.  If the response and list concensus to Jonathan's
-earlier comment came up with a better name for the newer "worktree"
-concept, we may not have to even worry about this and instead can
-just declare "these are used interchangeably".
+  1. git rev-list
+  2. GIT_PLUMBING=1 git log
+  3. git command log
+
+They are all doing the exact same thing: running a log-like command
+without any config or cross-version changes. It's just a matter of
+syntax. One of the nice things about (2) and (3) is that you don't have
+to invent a new plumbing-ish name for each command.
+
+-Peff
