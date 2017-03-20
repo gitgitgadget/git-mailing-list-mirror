@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0D9B2090A
-	for <e@80x24.org>; Mon, 20 Mar 2017 21:57:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA44420958
+	for <e@80x24.org>; Mon, 20 Mar 2017 22:05:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753860AbdCTV5k (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 17:57:40 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35476 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753165AbdCTV5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 17:57:38 -0400
-Received: by mail-io0-f173.google.com with SMTP id z13so38533175iof.2
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 14:57:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=X7XwDdgqGki3/SMYZppmp2yLI5vlfuCw/cdzsCnZp1A=;
-        b=de4aO7xE6uQREj5V1fSVpLnNaifl7in25PC4CU9AdhJPamV1aLed3e0UhJm7XG8btW
-         xRU9827cuKp+EECh8ozMpNPB7uAbdE/ZxyC+XeGvpB77lM8DlEr08GBK/ln/HsW4E6gQ
-         UEhjDdoFX+bG1uN63mGXXfT+dqXUpKCkFuYAZHLozysL+pPMmzR4oRK4A7OysoDuMHAq
-         WXdJwAK8YSQ4SAC9xSP65IAgt/he7/LsMlQxjhvKO3Y47Ebks69QiAdJYxYuSdffrIS1
-         nWJPhs8GHrSO5m8F6vgbI0sbsM4o4ncdsfZFkn1xV5TBCt5/cYcA4iQ8KxNCkdUgyMhI
-         +Prg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=X7XwDdgqGki3/SMYZppmp2yLI5vlfuCw/cdzsCnZp1A=;
-        b=mjzZO4hq+p1WgGl/jdMIDAI5CUQnAOCyyqG1le6YguD0qDAYiaPOTa4zn348+2dgcV
-         4aiza5Gw0ebumb7x/UZ7bgGhJgd3qgyZbaaBspfkqquHPuH2a+mH3sCsFIR85iVxc/fi
-         lv+UfPNmoXHS1m1DxMaYsFOMAM8YTtJZVXVTg6pTvpnQ/4uEh/6GmqW89YOtFB6/6ILz
-         j3qGsRYViIyFvENjrXBcP9XmKmECTLpV9NI9lIu9aisEfirggYz3G0UDDUPK2J6viatB
-         pVQEyEH+ynmiWW+4JUb/Qgn37OiN07Z8JmEGfe/cuD9+xLrQUIemMAURUE1uHSkMmEeh
-         EWeA==
-X-Gm-Message-State: AFeK/H2YeuB1Q53oSyUBgJ9YJcJxD5f6xR0KnXVSNqiyue3fAnQHYgzyynPTkXRmbQMwImDYFChbMwiV1EwXmQ==
-X-Received: by 10.107.200.139 with SMTP id y133mr3243419iof.147.1490047044304;
- Mon, 20 Mar 2017 14:57:24 -0700 (PDT)
+        id S1755584AbdCTWF3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 18:05:29 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56219 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753724AbdCTWF2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 18:05:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 616D67E0BB;
+        Mon, 20 Mar 2017 18:05:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=LZhI3jUrDo12XuKaErgU855v05M=; b=cRwd5I
+        oUumjP2KUSXqeTPOpChKReEqCOna730aWzTzlkBWwwQCe+amK3K4CFD1HG1GQgMR
+        rsPuqORaTLpNEhtS5wZCHeEoqn07zyYICIYBs8/5e/KK8/8QAsgGCVTgH6W11GlI
+        eiH8OwIyrm4YdyiGlNsgyO3iBX9iy4Oda9/uA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iEwBuUdFjWgv2AIsqmsZNqw8iPSBznvv
+        Il9bEYmn6Bn9Ttk87sDsfU9Uwdms2iuGJesBm6GazYwijFCjUa55PrRpXpqKRLDj
+        Let8rlZc+FVAdUc0ajB7ocnr2GZw7IcZCvf7IbgauwHwfowtd3p98EBmiC6saJ9J
+        0qaSopdqgxA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 576FF7E0BA;
+        Mon, 20 Mar 2017 18:05:27 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B56DA7E0B8;
+        Mon, 20 Mar 2017 18:05:26 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jean-Noel Avila <jn.avila@free.fr>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
+References: <20170312200248.3610-1-jn.avila@free.fr>
+        <20170320210225.13046-1-jn.avila@free.fr>
+        <20170320210225.13046-3-jn.avila@free.fr>
+Date:   Mon, 20 Mar 2017 15:05:24 -0700
+In-Reply-To: <20170320210225.13046-3-jn.avila@free.fr> (Jean-Noel Avila's
+        message of "Mon, 20 Mar 2017 22:02:25 +0100")
+Message-ID: <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 20 Mar 2017 14:57:03 -0700 (PDT)
-In-Reply-To: <xmqq7f3jwzdo.fsf@gitster.mtv.corp.google.com>
-References: <CACsJy8Du+WWWkx3wqRJYA=cyTdro=OOD7GWaFi29=h1_9yC+LQ@mail.gmail.com>
- <vpqa88hlghm.fsf@anie.imag.fr> <20170319131845.tl6o3t2nwicj2rug@genre.crustytoothpaste.net>
- <CACBZZX4FksU6NujPZ_3GZ45EQ+KdJj5G2sajtRipE1wbaA3URA@mail.gmail.com>
- <CACsJy8CQzo9K8N3xH_HJq=NjJVOUG9wawC4Mg+UuyFRZCPBpFw@mail.gmail.com>
- <20170320173237.GA188475@google.com> <xmqq7f3jwzdo.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 20 Mar 2017 22:57:03 +0100
-Message-ID: <CACBZZX59KXPOEjiUKtZLN6zjO_xpiWve7Xga6q-53J2LwvfZyw@mail.gmail.com>
-Subject: Re: Add configuration options for some commonly used command-line options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 52CFB3DE-0DB9-11E7-9D48-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2017 at 7:56 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> One thing we may want to consider is why we have to even worry about
-> scripts getting broken.  It is because people script around
-> Porcelain, and that is because we have been too eager to improve
-> Porcelain while neglecting plumbing for too long, to the point that
-> some things are only doable with Porcelain (or doing the same with
-> plumbing while possible are made too cumbersome).  I find it quite
-> disturbing that nobody brought that up as an issue that needs to be
-> addressed in this entire thread.
+Jean-Noel Avila <jn.avila@free.fr> writes:
 
-I very much doubt this describes anything but a tiny number of cases
-where people are using the porcelain as an API.
+> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+> ---
+>  Documentation/po/documentation.fr.po | 1095 ++++++++++++++++++++++++++++++++++
+>  Documentation/po/documentation.pot   |  787 ++++++++++++++++++++++++
+>  2 files changed, 1882 insertions(+)
+>  create mode 100644 Documentation/po/documentation.fr.po
+>  create mode 100644 Documentation/po/documentation.pot
 
-People aren't going through the process of trying to find out how to
-do something with a plumbing command, and then failing and falling
-back to a porcelain command because the plumbing isn't complete
-enough. They just use the porcelain because they're familiar with it
-and scripting it works for them.
+This sounds more like
 
-E.g. I just looked at both major Emacs modes for git now, magit &
-vc-git, neither use "mktag", they just shell out to "git tag" for
-making tags. I just went to the git-scm.com website and looked at one
-open source GUI client I could "git clone", Giggle. It just shells out
-to e.g. "git commit" to make commits, not "git commit-tree". The other
-commands they're using are porcelain too. If they've used some
-plumbing it's probably by sheer accident. E.g. they use ls-tree which
-is plumbing, but don't use for-each-ref.
+Subject: l10n: add fr localization for git-add manual pages
 
-What's that Google SRE-ism again? Something like "People use the
-reliability you provide them with in practice, not what you
-advertise". Our porcelain is very stable, and so people use it as a
-stable API, and not just for trivial scripts.
+to me.  The actual part of this patch that adds "git-add" is the
+addition of Documentation/po/documentation.pot, and from that point
+of view, this patch may want to be further split into two.
 
-Which I think has some big implications for how we maintain the
-porcelain & plumbing. Since people *will* use the porcelain, probably
-no matter what we advertise to them or how good the plumbing is.
+But more importantly, aren't we essentially adding an equivalent of
+
+	cd Documentation && cat git-*.txt
+
+to our codebase?
+
+Surely we cannot avoid having a copy of all messages that are to be
+translated using msgid/msgstr based approach, and we already do so
+for end-user-facing in-program strings, but it just feels a bit too
+much having to carry a duplicate (and slightly a stale) copy of the
+entire documentation set around.  For N languages, we'll have an
+equivalent for N copies of the English text, in addition to the
+translated documentation.
+
+I am wondering if Documentation/po part should be a separate
+repository, with a dedicated i18n/l10n coordinator.  Would it make
+it easier for (1) those who write code and doc without knowing other
+languages, (2) those who update .pot and coordinate the l10n effort
+for the documentation and (3) those who translate them if we keep
+them in a single repository?
+
