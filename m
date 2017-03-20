@@ -2,110 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7B92090A
-	for <e@80x24.org>; Mon, 20 Mar 2017 20:03:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D29C02090A
+	for <e@80x24.org>; Mon, 20 Mar 2017 20:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756083AbdCTTsh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 15:48:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51753 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756106AbdCTTsG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 15:48:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5ED747F45B;
-        Mon, 20 Mar 2017 15:42:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KW8Z5z2Wx5LyPqrPm5WjiELVYW0=; b=h0WBJa
-        UGThalZpXj2m+UqVe0az8Dl1We1upwYt5vwkEhslszgB2jr7se5qNopyhp8qLlsB
-        UTQuJYtg+FFMbjlKqV4OQXr5TUhjX7jHjs6tNdP3luvOoPlDqeQIw6UTwJH5jQBd
-        3qwqjd2S/1HRyND7EJ7lcjmdVe6lgtinhwW64=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mvY5rM238FtYAlKDWwTHpeCegkQJEfQc
-        7W3CXovGa7b8jfSrdvI1hkjRL1KJplrNDCVpXMmvBn34qgKRT0jsI0P3rhrd9U1K
-        9Xe/Ovgp3pKJ6g5MBbp3rguoId6LdREMAASQOkPjAxIZXFoBLTqFBoR1ccdHT0ib
-        tZPmKzf4wso=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 579327F45A;
-        Mon, 20 Mar 2017 15:42:20 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BF8A97F457;
-        Mon, 20 Mar 2017 15:42:19 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH/RFC 1/3] stash: show less information for stash push -- <pathspec>
-References: <20170318183658.GC27158@hank>
-        <20170319202351.8825-1-t.gummerer@gmail.com>
-        <20170319202351.8825-2-t.gummerer@gmail.com>
-        <xmqqk27jx2ej.fsf@gitster.mtv.corp.google.com>
-        <20170320184855.x7m2gxwdqdt3lnet@sigill.intra.peff.net>
-Date:   Mon, 20 Mar 2017 12:42:18 -0700
-In-Reply-To: <20170320184855.x7m2gxwdqdt3lnet@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 20 Mar 2017 14:48:55 -0400")
-Message-ID: <xmqqtw6nvip1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1756135AbdCTUFI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 16:05:08 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:36312 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755674AbdCTUEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 16:04:54 -0400
+Received: by mail-it0-f51.google.com with SMTP id w124so100817719itb.1
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 13:04:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=82bWegDwv+kSrgQh4W5c+9K2V3E2bakhDcddaEDQByY=;
+        b=BQd+vy843SwcCIksrQJwaWRAI1ux1ZyXGQaDl+LIN/TbUIWQHqHK6hqHGgIlehAZ68
+         Z7meoFNcaoqfhSixOJli2IJYfjP6yr/aKpd84Pj5KDaGt7jp9Z3V33a2CbrljFtl3EQO
+         21qYbtyb9eTTw92Z+8ZuoyM9sBN5hC9nYQ/cL+bFpKaBAybk4saYfFp46jxBXvvst/RR
+         Ugf1nnxUhIxMU418XUqmykv4GA0/itl2u/w3iNDkdF88VvYVvE3jIql9ogsP2BeX0/Z5
+         Alup9GWqYK5rNRbHh89HjvrfRth3Yu2VhknWeo0MW0hlxqizdqiSlWiFya0PUaqW0ELQ
+         byvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=82bWegDwv+kSrgQh4W5c+9K2V3E2bakhDcddaEDQByY=;
+        b=uT7RGmMNvNn6khZ817Tizhc4nztG3jS05XJbia27YWXgLjDu/tQtXMC7nU68fmPPKX
+         vpEVzkOuAsNFq9DR9/we3SLQSBjXydl/WEajwzw0nbHXMBzJGVwFoyRRnJ1x+nHqsuzf
+         Sru1cZ6f0oo09LAD9Siwbc/wRMycFM5/OPx0Le4s0BLHySfXo0fmCee5g/emgs8Ww9Lg
+         OiEjw/A9bea3a1741g5jP1IsJLXC2QSiisTGHtCxMgK2DK7+Zh2SDZ17/EhYACNRQW4o
+         X9LXUoIERQeguCfYZeK9S83NJawOShiMxAIKFWAVz87qb+xlC5S0zx223Tn+pelcAyzv
+         RUuA==
+X-Gm-Message-State: AFeK/H2K0kmvm6IqIFPb35zFOjYXpUWkltHHxTq9VbwvI8cp50GHMZuJ1I8xP43eloq+484OsSbUxfwPR/rNGQ==
+X-Received: by 10.107.200.139 with SMTP id y133mr2821376iof.147.1490040293250;
+ Mon, 20 Mar 2017 13:04:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 54960EF2-0DA5-11E7-B4F3-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.107.130.208 with HTTP; Mon, 20 Mar 2017 13:04:32 -0700 (PDT)
+In-Reply-To: <20170320195209.oyivf2ta3m3kg264@sigill.intra.peff.net>
+References: <20170318103256.27141-1-avarab@gmail.com> <20170318103256.27141-7-avarab@gmail.com>
+ <20170320042519.srtavoxhm3fln5mw@sigill.intra.peff.net> <CACBZZX6FWjG1bXrk+ee8y=T5=ovxxybfrGzkkDxjskwDzhKPuA@mail.gmail.com>
+ <20170320195209.oyivf2ta3m3kg264@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 20 Mar 2017 21:04:32 +0100
+Message-ID: <CACBZZX5GErSBsiCz0Y2SgtvckcPE51ekfUgBpvYjNF1u44piMA@mail.gmail.com>
+Subject: Re: [PATCH 6/8] ref-filter: Add --no-contains option to tag/branch/for-each-ref
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Hjemli <hjemli@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Mon, Mar 20, 2017 at 10:51:16AM -0700, Junio C Hamano wrote:
+On Mon, Mar 20, 2017 at 8:52 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Mar 20, 2017 at 10:32:47AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
->> > diff --git a/git-stash.sh b/git-stash.sh
->> > index 9c70662cc8..59f055e27b 100755
->> > --- a/git-stash.sh
->> > +++ b/git-stash.sh
->> > @@ -299,10 +299,10 @@ push_stash () {
->> >  	then
->> >  		if test $# != 0
->> >  		then
->> > -			git reset ${GIT_QUIET:+-q} -- "$@"
->> > +			git reset -q -- "$@"
->> >  			git ls-files -z --modified -- "$@" |
->> >  			git checkout-index -z --force --stdin
->> > -			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
->> > +			git clean --force -q -d -- "$@"
->> >  		else
->> >  			git reset --hard ${GIT_QUIET:+-q}
->> >  		fi
->> 
->> Yup, we only said "HEAD is now at ..." in the non-pathspec case (and
->> we of course still do).  We didn't report changes to which paths
->> have been reverted in (or which new paths are removed from) the
->> working tree to the original state (and we of course still don't).
->> 
->> The messages from reset and clean that reports these probably do not
->> need to be shown by default to the users (they can always check with
->> "git stash show" when they are curious or when they want to double
->> check).
+>> > I think the more relevant comparison is "--no-merged", and it behaves
+>> > the same way as your new --no-contains. I don't think I saw this
+>> > subtlety in the documentation, though. It might be worth mentioning
+>> > (unless I just missed it).
+>>
+>> For --contains we explicitly document "contain the specified commit",
+>> i.e. you couldn't expect this to list tree-test, and indeed it
+>> doesn't:
+>>
+>>     $ git tag tree-test master^{tree}
+>>     $ git tag -l --contains master '*test*'
 >
-> I'm not sure if you are arguing here that the non-pathspec case should
-> move to an unconditional "-q", too, to suppress the "HEAD is now at"
-> message.  But I think that is a good suggestion. It would make the two
-> cases consistent, and it is not really adding anything of value (it is
-> always just HEAD, and if you do not provide a custom message, the
-> short-sha1 and subject are already in the "Saved..." line above).
+> Right, "--contains" cannot have a commit inside a tree, so we were
+> correct to skip the computation entirely. But does that mean that
+> "--no-contains" should be the complement of that, or should it only
+> include tags whose "contains" can be computed in the first place?
+>
+> IOW, I don't think --contains or --merged are interesting here; they
+> give the right answer by skipping the computation. The question is what
+> the "--no-" variants should do.
 
-I wasn't suggesting it (I was just saying that these extra messages
-are not something we found necessary for consistency with the
-original codepath when we added the pathspec support).  I wasn't
-even thinking about what the original codepath did, i.e. when the
-command is run without pathspec.
+I think both should only ever find commits. I only came up with this
+tree/blob scenario for the purposes of tests, but it would make the
+command less useful & way slower in practice. E.g. now you want to
+find what to revert to and some blob tag shows up.
 
-I too suspect that most of the ${GIT_QUIET:+-q} can just become an
-unconditional -q as you do.
+>> However the --[no-]merged option says "reachable [...] from the
+>> specified commit", which seems to me to be a bit more ambiguous as to
+>> whether you could expect it to print tree/blob tags.
+>
+> I suspect that --no-merged behaves the way it does because it originally
+> came from git-branch, where you only have commits in the first place.
+> The other commands only learned about it during the move to ref-filter,
+> and nobody thought about this corner case.
+>
+> So we could just treat it like a bug and fix it.  But I doubt anybody
+> cares that much in practice either way, so documenting it as "any use of
+> --contains, --no-contains, --no-merged, or --merged requires that the
+> ref in question be a commit" is fine, too.
 
-
+It's fixed in my soon-to-be resent series.
