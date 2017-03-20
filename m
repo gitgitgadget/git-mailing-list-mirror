@@ -2,96 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 881E02095B
-	for <e@80x24.org>; Mon, 20 Mar 2017 14:29:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 993A32095B
+	for <e@80x24.org>; Mon, 20 Mar 2017 14:57:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755059AbdCTO3U (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 10:29:20 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:49844 "EHLO
-        alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754295AbdCTO3K (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Mar 2017 10:29:10 -0400
-X-AuditID: 1207440e-ccbff7000000340b-b1-58cfe73322fb
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 94.35.13323.337EFC85; Mon, 20 Mar 2017 10:29:08 -0400 (EDT)
-Received: from [192.168.69.190] (p57906F9B.dip0.t-ipconnect.de [87.144.111.155])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2KET43M002938
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 20 Mar 2017 10:29:05 -0400
-Subject: Re: [PATCH v6 17/27] refs: move submodule code out of files-backend.c
-To:     Duy Nguyen <pclouds@gmail.com>
-References: <20170222140450.30886-1-pclouds@gmail.com>
- <20170318020337.22767-1-pclouds@gmail.com>
- <20170318020337.22767-18-pclouds@gmail.com>
- <3738362d-6c76-cba7-824a-d689bbe290c6@alum.mit.edu>
- <CACsJy8CHjSMV1qOAB-7-F562jx+3XKtQOjuPOFz0wu-pYR3aeA@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        David Turner <novalis@novalis.org>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <77d37131-535d-c4ed-0785-1b7cf91f01ad@alum.mit.edu>
-Date:   Mon, 20 Mar 2017 15:29:04 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
-MIME-Version: 1.0
-In-Reply-To: <CACsJy8CHjSMV1qOAB-7-F562jx+3XKtQOjuPOFz0wu-pYR3aeA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphleLIzCtJLcpLzFFi42IRYndR1DV5fj7CYPIKSYuuK91MFg29V5gt
-        +pd3sVksefia2aJ7yltGi5lXrS02b25ncWD32DnrLrvHh49xHgs2lXp0tR9h87h4Sdlj/9Jt
-        bB6fN8kFsEdx2aSk5mSWpRbp2yVwZXSsqyx4xFnx4vhVxgbG7+xdjJwcEgImEmu/NLF1MXJx
-        CAnsYJL4fOcNSxcjB5BzgUniBxNIjbCAn8T+Kd2sILaIgJLEm45tzBD1fUwSB+bcBWtmFpjF
-        JHFx7yI2kCo2AV2JRT3NYN28AvYSX9ZeB9vGIqAqsXTVF7C4qECIxJyFDxghagQlTs58AraY
-        UyBQ4s5/sHJmAXWJP/MuMUPY8hLb385hnsDIPwtJxywkZbOQlC1gZF7FKJeYU5qrm5uYmVOc
-        mqxbnJyYl5dapGusl5tZopeaUrqJERLofDsY29fLHGIU4GBU4uFdceV8hBBrYllxZe4hRkkO
-        JiVR3qe3gUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeI1BcrwpiZVVqUX5MClpDhYlcV61Jep+
-        QgLpiSWp2ampBalFMFkZDg4lCV7RR0CNgkWp6akVaZk5JQhpJg5OkOE8QMObQGp4iwsSc4sz
-        0yHypxgVpcR53zwASgiAJDJK8+B6YYnoFaM40CvCvGtB2nmASQyu+xXQYCagwctunAEZXJKI
-        kJJqYIyJfWf5yfViT3xJ/O7p77P8dje/CV94hFHN5oza6QeGhTlOf1MWxEUe0IuxPv51Y2OY
-        jmHX9cc77YVz+6bezZhuUbHV51PEmWtqCxzvfn905XfJ8xeP7NtaN0QZTQtYp3b4b2nz+f8P
-        fTVmzvDSKxbb/HrG3B+Nzg4yZ49lXxU65+CosGLb5glKLMUZiYZazEXFiQC5oh0WHwMAAA==
+        id S1755519AbdCTO4n (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 10:56:43 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35003 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754472AbdCTO42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 10:56:28 -0400
+Received: by mail-pf0-f194.google.com with SMTP id n11so6365720pfg.2
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 07:56:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=6q6N364+lSv2XL8QnmlKAPYNGNAdEeF5fnldMxtXsG0=;
+        b=q/OB1Y/t2BFzWn3EibTDnboy3fksswqDq/GUgMFgUDUszIBBiVV57ZY1uIN2XJtnRZ
+         GcNOOnUIBJniMOFu6DPp9qxbUYuerpSFRXqZqhWpVcdkF1ZUhnoJ4/maxjuUpI8x5XAK
+         exHsSAUr1gfDWGAWMtVLui03VU1bl9ujISBu/Qn2GMB2Dm+o1c1StFC54aAYZda+4Rgq
+         KnLT6RW1O76gu813y4LNDLj2SGk9CpUymMuirfH/74n3uGpVGMcF7ST+kYfA/D9cHwX+
+         JETeAPU8XvmjmsDjH2YC7k8rp6ZwBj4XILYR9eWTi0DtxeT4WgFjZZG2gs2sWMRG9MC3
+         497A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=6q6N364+lSv2XL8QnmlKAPYNGNAdEeF5fnldMxtXsG0=;
+        b=ozXqFBle52HdEOUiehVW4+bx/lq2PgXyF2dXnHkCkUgB4R8o2ZxamFtqUb0zq8VA4z
+         0NAjtz6vsY7/1mMComreHglUf/0UWm+L6M36B/j+Q7UqQSZzIsqqF5fnE/qxlcvihvm/
+         qNXor3S1bx+w1EhpA2hHBF044LjzH/9EEnGCfPWR1RhmEOZV0hz13U0zC1CSOpk+fmfk
+         qEDLxXbT08/nbBEmYkZdm/LIaA/LwVGvXMzaVbobMvCTbMTQuBCqAVGlfRnEqNsWQi8q
+         LZRSUDWYhzu7OZqbFNesxO+qW1ySfKmENdvrSvHmrtd0wcApCsRIbYfprmfGjsXhTEKx
+         1TqQ==
+X-Gm-Message-State: AFeK/H1zjmITEhxWC/WjOEDp7M/Ci7vgKqOlx3DbsvBJbOVwSRmmBKizE718KCrmzFyKjg==
+X-Received: by 10.98.32.24 with SMTP id g24mr34460113pfg.115.1490021787262;
+        Mon, 20 Mar 2017 07:56:27 -0700 (PDT)
+Received: from localhost.localdomain ([202.78.234.44])
+        by smtp.gmail.com with ESMTPSA id e2sm34125590pga.61.2017.03.20.07.56.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Mar 2017 07:56:26 -0700 (PDT)
+From:   sourav mondal <souravcristiano502@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sourav mondal <souravcristiano502@gmail.com>
+Subject: [PATCH v3] adding built-in driver for javascript
+Date:   Mon, 20 Mar 2017 20:26:05 +0530
+Message-Id: <20170320145605.8375-1-souravcristiano502@gmail.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/20/2017 01:09 PM, Duy Nguyen wrote:
-> On Mon, Mar 20, 2017 at 4:05 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> [...]
->>> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
->>> index f732473e1d..dfa1817929 100644
->>> --- a/refs/refs-internal.h
->>> +++ b/refs/refs-internal.h
->>> @@ -482,12 +482,11 @@ struct ref_store;
->>>  /* refs backends */
->>>
->>>  /*
->>> - * Initialize the ref_store for the specified submodule, or for the
->>> - * main repository if submodule == NULL. These functions should call
->>> - * base_ref_store_init() to initialize the shared part of the
->>> - * ref_store and to record the ref_store for later lookup.
->>> + * Initialize the ref_store for the specified gitdir. These functions
->>> + * should call base_ref_store_init() to initialize the shared part of
->>> + * the ref_store and to record the ref_store for later lookup.
->>
->> Maybe mention that the function will make its own copy of `gitdir`?
-> 
-> I would think that's the default/sane behavior and not need to be
-> mentioned? A function that keeps a pointer even after it exits, now
-> that's something that must be documented.
+JavaScript is one of the famous langugae, it needs a built-in driver. As it was not present in the userdiff, this leads to the patch.
+First line consists of some of the well used javascript keywords. Statements in js use one or many keywords like variable declaration, function definition, logical opreation etc. The following line is for statements of type object.method() & it is expected to end any statement using ";". The word_regex in js is usual alpha-numeric. Last two line shows all the different types of operators in js and different types of number system used in js are also defined.
 
-I guess you're right, and I hope that everybody really documents such cases.
+Signed-off-by: sourav mondal <souravcristiano502@gmail.com>
+---
 
-Michael
+I'm working on "Add more built-in driver for userdiff" as my microproject for Gsoc17. This patch is for javascript which is one of the popular language at this time. I'm willing to add more driver for other laguage that isn't present in userdiff.c and again I'm willing to participate in Gsoc17 with git. I'm eager to know about this patch.
+
+thanks & regards
+sourav
+
+ userdiff.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/userdiff.c b/userdiff.c
+index 8b732e4..2f8e078 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -160,6 +160,16 @@ IPATTERN("css",
+ 	 "-?[_a-zA-Z][-_a-zA-Z0-9]*" /* identifiers */
+ 	 "|-?[0-9]+|\\#[0-9a-fA-F]+" /* numbers */
+ ),
++PATTERNS("javascript",
++	 /* keywords/patterns*/
++	 "^[ \t]*(var|if|else|for|do|while|switch|case|function|break|continue|new|return|class|super|instanceof)"
++	 "^[ \t]*(([a-zA-Z_][a-zA-Z0-9])*[ \t]*\\.?[a-zA-Z_]*\\(\\)[ \t]*);$",
++	 /* word_regex */
++	 "[a-zA-Z_][a-zA-Z0-9]*"
++	 "|[-+0-9.eE]+|0[bB]?|[xX]?|o?[0-9a-fA-F]+"
++	 "|[==-+*/%<>&|!**=^]="
++	 "|--|\\+\\+|<<=?|>>>?=?|&&|\|\|"
++),
+ { "default", NULL, -1, { NULL, 0 } },
+ };
+ #undef PATTERNS
+-- 
+2.9.3
 
