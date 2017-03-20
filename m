@@ -2,78 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44F9B2095B
-	for <e@80x24.org>; Mon, 20 Mar 2017 12:31:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F39C2095B
+	for <e@80x24.org>; Mon, 20 Mar 2017 12:36:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754216AbdCTMbU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 08:31:20 -0400
-Received: from mail-ot0-f180.google.com ([74.125.82.180]:34717 "EHLO
-        mail-ot0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754198AbdCTMbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 08:31:18 -0400
-Received: by mail-ot0-f180.google.com with SMTP id o24so130628721otb.1
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 05:30:33 -0700 (PDT)
+        id S1753852AbdCTKlh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 06:41:37 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:35433 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753664AbdCTKkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 06:40:43 -0400
+Received: by mail-wm0-f43.google.com with SMTP id u132so59726211wmg.0
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 03:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Yx6obwpHNjwlnTn+zJ1NvEEw2/LjYn0ZQBreyCduxLk=;
-        b=k45ajg+rPq/naLCS2DNywd8ipauEinFiwwpfW5+fGRMilvVNKaz9Di4jdjos3fddnM
-         rOrjgmVvv42+qcVLUBo+XnAJKQrTGXorTzTfzpUEOXPZXtxCpm+RhObFEkW5P0DYeMEk
-         A/H7LKYbL8xfgbbqr9KJJiE85BEWXhhGLAFI0k/t4Z+TPzYdGvprnACGPNgrIGAUxBec
-         qJ+cXkWnopkUVoAbL3qpebe0Ns7VrEwMD+DdAcMUwNW8BZh7FF9zYnSuA3Xp5AiIbCl5
-         aDvwPweJV0NUCoQsTtJgB75WtNrRFUH+6TpVwfWuQ90vJWGp+DPOjW+WRxWOEyoKPcXm
-         QdJA==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=y5RVcmG7MAsq+Hbzf3aEhIZKmujdZJXVbG3NyXL9oPs=;
+        b=2BFIrp2VQeXdySIUmIpGt38OcFaOtEfrx5B/BkhZ7s2u/is4RABw3x42Tdl6crA1Bk
+         sj4QxVox+JiUcJq3mgvnMa2FOsgJKTUVORT54zyem9KQaGkHCTMKRooXfXEFxDQk4qZq
+         CadYh5sEJblsFsbsiolbubE4AvYRoqRbWnTs3P+P1315M3uONK3U9yylRLeHDssAUzHj
+         RASG44UrPhDyrYnGfrjzXP+4ONLXTUXgozBiuFD2h72r2sq0kWAX+C3mXbQ3mv7xYV3V
+         zBnCLar5UCHWGtIIM/UKQyHTYvoFph8VMOv++wpC0OBPvq3f1UPBbJ3YKx+80HZD7A5Q
+         Qh1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Yx6obwpHNjwlnTn+zJ1NvEEw2/LjYn0ZQBreyCduxLk=;
-        b=kOOK1bGLPSjVpjBa1O2WtTQ91JZHyDM/LcWYLvXbiZ1a0o9NBNhAhuI5HNg5hN/6cN
-         8XLKgYpccoyyfR0dyxiFW8yCrlKGYy77HiNmOFi3knE1U9eM4r7Qce6bzXZQC/wpl3iR
-         BeRtTbbrfkDLqPYjsWEWCAh+rgnNZID4JWrd8kn2DR6Z3tnqD9R2Hfq3DcXFYMeJ0Udu
-         sOPNzdLfIvBSwvD/SqaQjo8Prs9Yw6ptL1lh4eLC/03jWWUjziDaqA2smGXhPIc/vY0O
-         DReRaN/gtQjRJbQ1F1PS5fOa1eOpIoSpyFOl9EiIvmVb02K6Ii2TSToNpAUPZItuFy9w
-         mwig==
-X-Gm-Message-State: AFeK/H1Fq9JBE2Kss5tUc4FzvgCMW6JTYCASwgGPNb+LKUdK8jyU154b/m0EbHBB8+rV6HWEAW+V1YQtcnKQXQ==
-X-Received: by 10.157.46.137 with SMTP id w9mr15935035ota.225.1490011345691;
- Mon, 20 Mar 2017 05:02:25 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Mon, 20 Mar 2017 05:01:55 -0700 (PDT)
-In-Reply-To: <b841a674-7b2b-420d-7faa-e5b836fb534e@alum.mit.edu>
-References: <20170216120302.5302-1-pclouds@gmail.com> <20170318100206.5980-1-pclouds@gmail.com>
- <20170318100206.5980-3-pclouds@gmail.com> <b841a674-7b2b-420d-7faa-e5b836fb534e@alum.mit.edu>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 20 Mar 2017 19:01:55 +0700
-Message-ID: <CACsJy8B85TH0DOViEmfh8mOz_u7rVotKJa-HYk6TJ81kvV4xPg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] refs: introduce get_worktree_ref_store()
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=y5RVcmG7MAsq+Hbzf3aEhIZKmujdZJXVbG3NyXL9oPs=;
+        b=CSsUkLk52RII7ATs88ymDpZPxXEOUvdSmDRaC7yn1yqCWHC+zsZtGQWo9skrf+HrK9
+         /X0jNCm3++AgfjnJshYqrzDBXxWpZNLy7LTKgXmpXZzAt8k1NAQ7ESwWXATJHEE7wI9y
+         VLN+m7KMB624NbBLYSzMq0KPXrFoO5Y4sRUVvdthBZDgmdValAMw7uzUAtz+ycpQp91E
+         yYBsFXvSIBtfKDYzIVJPM3M1HGxHWagLeSTtLVV2nlBvnU8f1VgCZJn/nvm/v6+Wgj3J
+         x98ZsncUWUQytIvUJstdIkekYps/uE4hAgAD7hAf/2TMnr/JXPQWFlf0Do5Y4aKSVPst
+         +ZeQ==
+X-Gm-Message-State: AFeK/H3hnCazBvPdd7c8tpVg0YHx78eMmUqjI2yTYmj2rnx3xHbG043v8ghG78ZM9CkU1Q==
+X-Received: by 10.28.208.7 with SMTP id h7mr9448844wmg.79.1490006406164;
+        Mon, 20 Mar 2017 03:40:06 -0700 (PDT)
+Received: from seahawk (proxy-gw-l.booking.com. [5.57.20.8])
+        by smtp.gmail.com with ESMTPSA id 53sm20288374wrt.52.2017.03.20.03.40.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 Mar 2017 03:40:05 -0700 (PDT)
+Message-ID: <1490006404.15470.12.camel@kaarsemaker.net>
+Subject: Re: [PATCH v3 0/2] diff --no-index: support symlinks and pipes
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Mon, 20 Mar 2017 11:40:04 +0100
+In-Reply-To: <xmqqo9wwzzpl.fsf@gitster.mtv.corp.google.com>
+References: <20170318210038.22638-1-dennis@kaarsemaker.net>
+         <xmqqo9wwzzpl.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2017 at 1:59 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> I guess I can hold my nose and accept storing worktree and submodule
-> `ref_store`s together in a single hashmap
+On Sun, 2017-03-19 at 15:08 -0700, Junio C Hamano wrote:
+> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+> 
+> > Normal diff provides arguably better output: the diff of the output of the
+> > commands. This series makes it possible for git diff --no-index to follow
+> > symlinks and read from pipes, mimicking the behaviour of normal diff.
+> > 
+> > v1: http://public-inbox.org/git/20161111201958.2175-1-dennis@kaarsemaker.net/
+> > v2: http://public-inbox.org/git/20170113102021.6054-1-dennis@kaarsemaker.net/
+> > 
+> > Changes since v2, prompted by feedback from Junio:
+> > 
+> > - A --derefence option was added and the default is no longer to dereference
+> >   symlinks.
+> 
+> I do agree that it makes sense to have --[no-]dereference options,
+> but I do not think it was my feedback and suggestion to make it
+> optional (not default) to dereference, so please do not blame me for
+> that choice.
 
-Release your nose, I'll add a new hashmap :) But while we're here,
-what are your thoughts about moving submodule-specific to submodule.c?
-That includes the hashmap, get_submodule_ref_store() and all other
-submodule stuff, to submodule.c where submodule-specific stuff stays.
-The same for worktree stuff, to worktree.c. That keeps refs.c to core
-refs business. And the hashmap can be used for more than just refs.
-For example, submodule has configs, and worktree also has bunch of
-other stuff that I would like to just cache and not readdir() and
-parse every time.
+Then I misinterpreted your message at 
+http://public-inbox.org/git/xmqqk29yedkv.fsf@gitster.mtv.corp.google.com/
+No blame inteded, my apologies for coming across as blaming.
+
 -- 
-Duy
+Dennis Kaarsemaker
+http://www.kaarsemaker.net
