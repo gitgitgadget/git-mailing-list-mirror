@@ -2,114 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D29C02090A
-	for <e@80x24.org>; Mon, 20 Mar 2017 20:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 423E62090A
+	for <e@80x24.org>; Mon, 20 Mar 2017 20:07:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756135AbdCTUFI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 16:05:08 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:36312 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755674AbdCTUEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 16:04:54 -0400
-Received: by mail-it0-f51.google.com with SMTP id w124so100817719itb.1
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 13:04:54 -0700 (PDT)
+        id S1756583AbdCTUHo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 16:07:44 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:35521 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753218AbdCTUHn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 16:07:43 -0400
+Received: by mail-pf0-f194.google.com with SMTP id n11so7497259pfg.2
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 13:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=82bWegDwv+kSrgQh4W5c+9K2V3E2bakhDcddaEDQByY=;
-        b=BQd+vy843SwcCIksrQJwaWRAI1ux1ZyXGQaDl+LIN/TbUIWQHqHK6hqHGgIlehAZ68
-         Z7meoFNcaoqfhSixOJli2IJYfjP6yr/aKpd84Pj5KDaGt7jp9Z3V33a2CbrljFtl3EQO
-         21qYbtyb9eTTw92Z+8ZuoyM9sBN5hC9nYQ/cL+bFpKaBAybk4saYfFp46jxBXvvst/RR
-         Ugf1nnxUhIxMU418XUqmykv4GA0/itl2u/w3iNDkdF88VvYVvE3jIql9ogsP2BeX0/Z5
-         Alup9GWqYK5rNRbHh89HjvrfRth3Yu2VhknWeo0MW0hlxqizdqiSlWiFya0PUaqW0ELQ
-         byvQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BzP07YCzs09Hs5YC9ZpoTNCO0l+qmjHKN+VpPN7bBIU=;
+        b=t+8ZtvmyRFVEIDmVOAgqVUrSNH10Gd4zon2Ba5mslBEjJnXOiDd8nBNQjjbuMLMab3
+         MBP/irqsNaL7toLZsUazqYjLERGkp+t4TppPYnrm7gdbrAASNSQxP9SRQDAhYTfBD0eg
+         NztD3fzkzaATAUGBREosSh3UZSO5nYdSk1LGIpqkAN8/8cGmwD4xSlUdnVTojW1g/NcN
+         +KBl5NpKUWRrcEN7QFGecTsQn4PD5/c11ReRq6mmHtPY7Y85NBGrTQmuU/3MXxV6IA8J
+         G9PrqT+0TLn8yg4xBcEuDN9ol5DyU/6PeQmeJ28hxuI0o99l748u3zt3+KzTLqB2zk+W
+         gelg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=82bWegDwv+kSrgQh4W5c+9K2V3E2bakhDcddaEDQByY=;
-        b=uT7RGmMNvNn6khZ817Tizhc4nztG3jS05XJbia27YWXgLjDu/tQtXMC7nU68fmPPKX
-         vpEVzkOuAsNFq9DR9/we3SLQSBjXydl/WEajwzw0nbHXMBzJGVwFoyRRnJ1x+nHqsuzf
-         Sru1cZ6f0oo09LAD9Siwbc/wRMycFM5/OPx0Le4s0BLHySfXo0fmCee5g/emgs8Ww9Lg
-         OiEjw/A9bea3a1741g5jP1IsJLXC2QSiisTGHtCxMgK2DK7+Zh2SDZ17/EhYACNRQW4o
-         X9LXUoIERQeguCfYZeK9S83NJawOShiMxAIKFWAVz87qb+xlC5S0zx223Tn+pelcAyzv
-         RUuA==
-X-Gm-Message-State: AFeK/H2K0kmvm6IqIFPb35zFOjYXpUWkltHHxTq9VbwvI8cp50GHMZuJ1I8xP43eloq+484OsSbUxfwPR/rNGQ==
-X-Received: by 10.107.200.139 with SMTP id y133mr2821376iof.147.1490040293250;
- Mon, 20 Mar 2017 13:04:53 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BzP07YCzs09Hs5YC9ZpoTNCO0l+qmjHKN+VpPN7bBIU=;
+        b=F+ZznyMkvcePVuh5Gpx/IB6D4Ym6ZdGp0NfFAF7LvnX22CsSSTgbdQy2666ojWb7tg
+         QcsIRobUld8GxOaR9jgjtbUIaj+opijLfXSExjDnhbAzxFi3r4kU/KHz6yL4OKFjSpaB
+         y9AXD0VmEusbCUFB94xVUqsi40NBJqcIl+mFw4NKcqbmZyjhPgIzBFA2GkZ1f+jsM6He
+         lBKTbineyT9X1HMeRnQeGA3EfwpUi23DBJ0tBG88T5EZ8oeq6iGoY4HJsGzV1ghc4lyF
+         G+wXc6wWxyuyoobOkczbUA0b/pdBhhY07tsGNlF74kwZT2WeRqeYOvjLc0mpF7AgHOLf
+         ApsQ==
+X-Gm-Message-State: AFeK/H0UIdnLBI30SHEV/WcSeYSh7nEK34EQGOIzwQ+4e4wPpnzOHVThj76t7rm9xeN9cA==
+X-Received: by 10.98.200.19 with SMTP id z19mr35592728pff.223.1490040054252;
+        Mon, 20 Mar 2017 13:00:54 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:1478:9e4b:5dd1:a569])
+        by smtp.gmail.com with ESMTPSA id j62sm35063776pgc.54.2017.03.20.13.00.53
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 20 Mar 2017 13:00:53 -0700 (PDT)
+Date:   Mon, 20 Mar 2017 13:00:52 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, pclouds@gmail.com
+Subject: Re: [PATCH 2/2] revparse: introduce --is-inside-working-tree
+Message-ID: <20170320200052.GW26789@aiede.mtv.corp.google.com>
+References: <20170320185038.GU26789@aiede.mtv.corp.google.com>
+ <20170320192225.18928-1-sbeller@google.com>
+ <20170320192225.18928-3-sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 20 Mar 2017 13:04:32 -0700 (PDT)
-In-Reply-To: <20170320195209.oyivf2ta3m3kg264@sigill.intra.peff.net>
-References: <20170318103256.27141-1-avarab@gmail.com> <20170318103256.27141-7-avarab@gmail.com>
- <20170320042519.srtavoxhm3fln5mw@sigill.intra.peff.net> <CACBZZX6FWjG1bXrk+ee8y=T5=ovxxybfrGzkkDxjskwDzhKPuA@mail.gmail.com>
- <20170320195209.oyivf2ta3m3kg264@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 20 Mar 2017 21:04:32 +0100
-Message-ID: <CACBZZX5GErSBsiCz0Y2SgtvckcPE51ekfUgBpvYjNF1u44piMA@mail.gmail.com>
-Subject: Re: [PATCH 6/8] ref-filter: Add --no-contains option to tag/branch/for-each-ref
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Lars Hjemli <hjemli@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Carlos Rica <jasampler@gmail.com>,
-        Samuel Tardieu <sam@rfc1149.net>,
-        Tom Grennan <tmgrennan@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170320192225.18928-3-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2017 at 8:52 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Mar 20, 2017 at 10:32:47AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> > I think the more relevant comparison is "--no-merged", and it behaves
->> > the same way as your new --no-contains. I don't think I saw this
->> > subtlety in the documentation, though. It might be worth mentioning
->> > (unless I just missed it).
->>
->> For --contains we explicitly document "contain the specified commit",
->> i.e. you couldn't expect this to list tree-test, and indeed it
->> doesn't:
->>
->>     $ git tag tree-test master^{tree}
->>     $ git tag -l --contains master '*test*'
->
-> Right, "--contains" cannot have a commit inside a tree, so we were
-> correct to skip the computation entirely. But does that mean that
-> "--no-contains" should be the complement of that, or should it only
-> include tags whose "contains" can be computed in the first place?
->
-> IOW, I don't think --contains or --merged are interesting here; they
-> give the right answer by skipping the computation. The question is what
-> the "--no-" variants should do.
+Hi,
 
-I think both should only ever find commits. I only came up with this
-tree/blob scenario for the purposes of tests, but it would make the
-command less useful & way slower in practice. E.g. now you want to
-find what to revert to and some blob tag shows up.
+Stefan Beller wrote:
 
->> However the --[no-]merged option says "reachable [...] from the
->> specified commit", which seems to me to be a bit more ambiguous as to
->> whether you could expect it to print tree/blob tags.
+> This behaves the same as 'is-inside-worktree' and supersedes it.
+> See prior patch for discussion of "working tree" vs. "worktree"
 >
-> I suspect that --no-merged behaves the way it does because it originally
-> came from git-branch, where you only have commits in the first place.
-> The other commands only learned about it during the move to ref-filter,
-> and nobody thought about this corner case.
->
-> So we could just treat it like a bug and fix it.  But I doubt anybody
-> cares that much in practice either way, so documenting it as "any use of
-> --contains, --no-contains, --no-merged, or --merged requires that the
-> ref in question be a commit" is fine, too.
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  Documentation/git-rev-parse.txt | 4 ++--
+>  builtin/rev-parse.c             | 3 ++-
+>  2 files changed, 4 insertions(+), 3 deletions(-)
 
-It's fixed in my soon-to-be resent series.
+This is less invasive than the previous patch and can probably stand
+alone.  Some of the same nits apply:
+
+* tests?
+
+* documentation would need to warn people that this option is new, for
+  now. In fact it's even tempting to make --is-inside-working-tree
+  the hidden/discouraged one for a while, until script authors can
+  count on git having had it available for a while, and only then
+  encourage its use.
+
+Thanks and hope that helps,
+Jonathan
