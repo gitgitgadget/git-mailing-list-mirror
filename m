@@ -2,98 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA44420958
-	for <e@80x24.org>; Mon, 20 Mar 2017 22:05:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E0BE20958
+	for <e@80x24.org>; Mon, 20 Mar 2017 22:14:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755584AbdCTWF3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 18:05:29 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56219 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753724AbdCTWF2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 18:05:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 616D67E0BB;
-        Mon, 20 Mar 2017 18:05:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LZhI3jUrDo12XuKaErgU855v05M=; b=cRwd5I
-        oUumjP2KUSXqeTPOpChKReEqCOna730aWzTzlkBWwwQCe+amK3K4CFD1HG1GQgMR
-        rsPuqORaTLpNEhtS5wZCHeEoqn07zyYICIYBs8/5e/KK8/8QAsgGCVTgH6W11GlI
-        eiH8OwIyrm4YdyiGlNsgyO3iBX9iy4Oda9/uA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iEwBuUdFjWgv2AIsqmsZNqw8iPSBznvv
-        Il9bEYmn6Bn9Ttk87sDsfU9Uwdms2iuGJesBm6GazYwijFCjUa55PrRpXpqKRLDj
-        Let8rlZc+FVAdUc0ajB7ocnr2GZw7IcZCvf7IbgauwHwfowtd3p98EBmiC6saJ9J
-        0qaSopdqgxA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 576FF7E0BA;
-        Mon, 20 Mar 2017 18:05:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1755805AbdCTWOh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 18:14:37 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:46688 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1755760AbdCTWOg (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Mar 2017 18:14:36 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B56DA7E0B8;
-        Mon, 20 Mar 2017 18:05:26 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jean-Noel Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
-References: <20170312200248.3610-1-jn.avila@free.fr>
-        <20170320210225.13046-1-jn.avila@free.fr>
-        <20170320210225.13046-3-jn.avila@free.fr>
-Date:   Mon, 20 Mar 2017 15:05:24 -0700
-In-Reply-To: <20170320210225.13046-3-jn.avila@free.fr> (Jean-Noel Avila's
-        message of "Mon, 20 Mar 2017 22:02:25 +0100")
-Message-ID: <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D29AC280AD;
+        Mon, 20 Mar 2017 22:14:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1490048074;
+        bh=21iWI2BUqhVQslfP7+YvwAVtLyr253ss+qvaVgA76Ds=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=z/LRMblDqGBgZ+bYyMm1dFKldPmW5VbbMSjS2DLJ//rVaEBTJ5UJ4tKn/6TtjIYkn
+         GgbNS9KaxCX5A0U6OiotozEh7LBRz9MhfoOY78QOwMgSCTMqupk7UMVL50pmkuH5e2
+         zXL6Fx+OPgYqtZBtjqXixtVdLNjpzIh3S4bAtyc36RAmwGN1lSRRzvB5LJj1thinTO
+         9b2mOHcFxPDt/wZ5sdutoTENNCFOCKuqPjIk81aAtUVgTJdgNJcuiuD0BCFXJ39TAV
+         ZQKBJaRvZRI78yYzXVm3j6+wzMg/WdhW08T0jG9yAp4bnzHSPqaNJ2JsTjV3uL+NLb
+         8qBqn4vGUoMqXWA3grzjDEyD7d5XA/06D2Ja34ySmJoX8xhthHvvCej8l4bPPvPTkG
+         uAvBtlnIzHsXlsCpe8SZZEWNhYIatraJKzwvCJGyyr9FYg6R7E3l2KhzIO4CUWXyVD
+         /30fPe3a4XnNKtkZ401ZU1xE9CR3hu8QA7K701TzxWY+yD6BIyt
+Date:   Mon, 20 Mar 2017 22:14:29 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Alex Hoffman <spec@gal.ro>, git <git@vger.kernel.org>
+Subject: Re: [PATCH] Correct compile errors when DEBUG_BISECT=1 after
+ supporting other hash algorithms
+Message-ID: <20170320221429.qefqowtwe2ptvgdg@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>, Alex Hoffman <spec@gal.ro>,
+        git <git@vger.kernel.org>
+References: <CAMX8fZU-HeKzd8VYh8R=U8f8V-px+4V==M3CJSS677K0ErwPtA@mail.gmail.com>
+ <CAGZ79kY1g-4c+GXZy3p-q=MsBY94esxsfs2=OPuhOH_o5oGc_Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 52CFB3DE-0DB9-11E7-9D48-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6dagtxm64rr3yrxu"
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kY1g-4c+GXZy3p-q=MsBY94esxsfs2=OPuhOH_o5oGc_Q@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noel Avila <jn.avila@free.fr> writes:
 
-> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
-> ---
->  Documentation/po/documentation.fr.po | 1095 ++++++++++++++++++++++++++++++++++
->  Documentation/po/documentation.pot   |  787 ++++++++++++++++++++++++
->  2 files changed, 1882 insertions(+)
->  create mode 100644 Documentation/po/documentation.fr.po
->  create mode 100644 Documentation/po/documentation.pot
+--6dagtxm64rr3yrxu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This sounds more like
+On Mon, Mar 20, 2017 at 11:11:17AM -0700, Stefan Beller wrote:
+> +cc Brian
+>=20
+> On Sun, Mar 19, 2017 at 2:33 PM, Alex Hoffman <spec@gal.ro> wrote:
+> > ---
+> >  bisect.c | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/bisect.c b/bisect.c
+> > index 30808cadf..6feed8533 100644
+> > --- a/bisect.c
+> > +++ b/bisect.c
+> > @@ -131,7 +131,7 @@ static void show_list(const char *debug, int
+> > counted, int nr,
+> >                 unsigned flags =3D commit->object.flags;
+> >                 enum object_type type;
+> >                 unsigned long size;
+> > -               char *buf =3D read_sha1_file(commit->object.sha1, &type=
+, &size);
+> > +               char *buf =3D read_sha1_file(commit->object.oid.hash,
+> > &type, &size);
+> >                 const char *subject_start;
+> >                 int subject_len;
+> >
+> > @@ -143,10 +143,10 @@ static void show_list(const char *debug, int
+> > counted, int nr,
+> >                         fprintf(stderr, "%3d", weight(p));
+> >                 else
+> >                         fprintf(stderr, "---");
+> > -               fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.=
+sha1));
+> > +               fprintf(stderr, " %.*s", 8,
+> > sha1_to_hex(commit->object.oid.hash));
 
-Subject: l10n: add fr localization for git-add manual pages
+I think here we want to write
 
-to me.  The actual part of this patch that adds "git-add" is the
-addition of Documentation/po/documentation.pot, and from that point
-of view, this patch may want to be further split into two.
+fprintf(stderr, " %.*s", 8, oid_to_hex(&commit->object.oid));
 
-But more importantly, aren't we essentially adding an equivalent of
+> >                 for (pp =3D commit->parents; pp; pp =3D pp->next)
+> >                         fprintf(stderr, " %.*s", 8,
+> > -                               sha1_to_hex(pp->item->object.sha1));
+> > +                               sha1_to_hex(pp->item->object.oid.hash));
 
-	cd Documentation && cat git-*.txt
+And here, as well.
 
-to our codebase?
+> >
+> >                 subject_len =3D find_commit_subject(buf, &subject_start=
+);
+> >                 if (subject_len)
 
-Surely we cannot avoid having a copy of all messages that are to be
-translated using msgid/msgstr based approach, and we already do so
-for end-user-facing in-program strings, but it just feels a bit too
-much having to carry a duplicate (and slightly a stale) copy of the
-entire documentation set around.  For N languages, we'll have an
-equivalent for N copies of the English text, in addition to the
-translated documentation.
+Otherwise, I think this looks good.
 
-I am wondering if Documentation/po part should be a separate
-repository, with a dedicated i18n/l10n coordinator.  Would it make
-it easier for (1) those who write code and doc without knowing other
-languages, (2) those who update .pot and coordinate the l10n effort
-for the documentation and (3) those who translate them if we keep
-them in a single repository?
+I'm sorry I didn't catch this earlier, but I didn't even realize we had
+this option, or I would have tested it.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
+--6dagtxm64rr3yrxu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljQVEUACgkQv1NdgR9S
+9ou0vhAAubt1ky4wH8tyqrqu6V9NeCRREbU4SZxm+UNU0b5Jj83XgzZiRtHrVrh5
+vr0j1qRjPbpAGaYcC7SDQ0Jin38LCB98RvLOZk0F48hA+DVuVTT2NEC8nTe6O7L6
+qoq0tXTRPk/dF/oIOd1aBvyDnELKlYTkwUpOCz1Sj++IyL4/gaPkVFPzTmrwWfrX
+Fs5fu+srgErehuxriQQVES6fENhVPY6Na8eivgJOSeLgXPlLFHWiG1/rjwrlfJOh
+gAIQZe21lInXecNmJRweFxer60GJd9pur8Kaq9zEG0uzE0VZjMCcGDVWa50MT5go
+ZwJlpIbAx1Vh+gOqGKSYxmC8IsDzIcZJP1GV9lF3MC7+3jvb5052eWzexF3HrFaf
+N5FCBdXFT3Wv1WZQzNsOYV5hUGpvg7kcOvW0fW/Dm0EH5ZP75PmsbvJxODBzowFm
+L/bFgxRSWBdmfWTi5Y7yQIL/DamopNmhq1MIpsmp59HCfCDM1ddwFd1xrVV+l5NK
+ppq3EQDrKgEMaSirEsF+jDpxsLPV+gwWXVDIdo5GpVa5vit8VRV5s2KP1XwWj0r1
+zA1/YCGdeUGILZbzsbpNRjPyvFGkMPo2sr7pfSLHmRLdd6nBhkGXlIrsn7Vnx8Nr
+i0jFTmKIqMzikya3vLWUqRjUmY+MjLwfcsNJrUrczWl2jB96Sw4=
+=qJnM
+-----END PGP SIGNATURE-----
+
+--6dagtxm64rr3yrxu--
