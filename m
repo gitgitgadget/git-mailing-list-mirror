@@ -2,95 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B36920958
-	for <e@80x24.org>; Mon, 20 Mar 2017 17:41:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEC3220958
+	for <e@80x24.org>; Mon, 20 Mar 2017 17:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755337AbdCTRlv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 13:41:51 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:34218 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754443AbdCTRlu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 13:41:50 -0400
-Received: by mail-pf0-f177.google.com with SMTP id p189so45690025pfp.1
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 10:41:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=d3IHFzu04iEqBaYtjDf6TQ226WEGQsPFT8TKZliALuI=;
-        b=quUwgz2Mc+ofCLfp6jk4Un8N2lzwXn6U3SqUgrioBf2BJ3TcCd5UEyIHuk5xF205FV
-         cOf703QSXNyuvD/BQWehkmPghCPkB0bFX706/bhpY3GNVkuBGou/lHoYPlHlcNf6+nME
-         n8wbF56iLGR0UafjHA4+1pzz4/kfdx4QGmJ8QUOBjPojP29d6oQ9pP0drPzQi7Gd1RnX
-         TzgwFiKgM+6rPIAzOqIo0NsXDqgu1vZgIssxJbCbp1m0nVcUEa4Wbpqo+Y7hygCZRN0L
-         HQEsgW7J+7pK6ur3bG1i1CrWaEWsvTkmDpcOqBc4DfdJ0t7t6PSikfGueF2ICbrvkeSN
-         Xo2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=d3IHFzu04iEqBaYtjDf6TQ226WEGQsPFT8TKZliALuI=;
-        b=nNGMrqtTpobzgmywbjJos0f6LazTW3spGCJ2RMRWLjUQyhAG9Um/ioWY+HRMpmDX9J
-         ZoLMSGwIxHuuiAx3z7tj4VWfKyNagAaJHbk7q8z/mXVElzCICMKRUigwrAWK/5mYoclg
-         JQIT/ul/5JddsvoTcx7MBMYIXtx6lZJQJw2hMRj8NGTigqX/8VAg3n4JQpJTThKdvT4v
-         ox21w/FXLwdC2pH540kdVT0nPl+mWX1kXEoVnO7yHdOMuDQvRJLVieculAvR7Y65s8Hu
-         Ejti7cZ7tnC7s8MY6U8jWrWPkSUgQdMZ9LivvgTj5oFoLQlDR0WotmCpaEmt2CAuwLuw
-         m8+w==
-X-Gm-Message-State: AFeK/H0IDaY0ZEZSKK1bQIEAcW9yy8nd3I+6VTNBtSFn4flWMUSSGSxbb/IFqrqF/gl7Z0Lf7JgKQxBcl9eTpSpZ
-X-Received: by 10.98.101.7 with SMTP id z7mr5820677pfb.81.1490031708669; Mon,
- 20 Mar 2017 10:41:48 -0700 (PDT)
+        id S1753283AbdCTRm5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 13:42:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47827 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753217AbdCTRm4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 13:42:56 -0400
+Received: (qmail 11502 invoked by uid 109); 20 Mar 2017 17:42:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Mar 2017 17:42:44 +0000
+Received: (qmail 3685 invoked by uid 111); 20 Mar 2017 17:42:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Mar 2017 13:42:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Mar 2017 13:42:40 -0400
+Date:   Mon, 20 Mar 2017 13:42:40 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        David Turner <novalis@novalis.org>, git@vger.kernel.org
+Subject: Re: [PATCH 04/20] refs_verify_refname_available(): implement once
+ for all backends
+Message-ID: <20170320174240.gykldqzbqyva6kbs@sigill.intra.peff.net>
+References: <cover.1490026594.git.mhagger@alum.mit.edu>
+ <22abd274bfdada94b3654a811ee209822640765f.1490026594.git.mhagger@alum.mit.edu>
 MIME-Version: 1.0
-Received: by 10.100.162.161 with HTTP; Mon, 20 Mar 2017 10:41:48 -0700 (PDT)
-In-Reply-To: <20170320164154.xBcU6rG0C%pickfire@riseup.net>
-References: <20170320164154.xBcU6rG0C%pickfire@riseup.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 20 Mar 2017 10:41:48 -0700
-Message-ID: <CAGZ79kbF+O6tgn-4ivmOza3QGA4oFyJS=9eGHYZ1HQgw6+rEtQ@mail.gmail.com>
-Subject: Re: GSoC Project | Convert interactive rebase to C
-To:     Ivan Tham <pickfire@riseup.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <22abd274bfdada94b3654a811ee209822640765f.1490026594.git.mhagger@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2017 at 9:41 AM, Ivan Tham <pickfire@riseup.net> wrote:
-> Hi everyone,
->
-> I am Ivan Tham. Currently studying in Computer Science in APIIT Malaysia. I am
-> interested particapate in Google Summer of Code 2017 under git organization. I
-> would like to attempt "Add more builtin patterns for userdiff" particularly for
-> shell for my microproject.
+On Mon, Mar 20, 2017 at 05:33:09PM +0100, Michael Haggerty wrote:
 
-I'd love to see proper shell support!
-Although there is already some support for shell (by looking at diffs
-on our test
-suite) ? So I am not sure what there is left to do? Can you clarify what you're
-trying there?
+> It turns out that we can now implement
+> `refs_verify_refname_available()` based on the other virtual
+> functions, so there is no need for it to be defined at the backend
+> level. Instead, define it once in `refs.c` and remove the
+> `files_backend` definition.
 
-> I am interested to work on "Convert interactive rebase to C"
+Does this mean that backends can no longer provide storage for
+D/F-conflicted refnames (i.e., "refs/foo" and "refs/foo/bar")? It looks
+like the global verify_refname_available() has that logic baked in.
 
-+cc Johannes, who recently worked on rebase and the sequencer.
+I know that was a complex subject because of the potential compatibility
+issues (e.g., fetching from a server with a more capable backend), but
+I'd just worry we are shutting a door on some options. OTOH, it probably
+wouldn't be that hard for the global function to check a flag specific
+to the ref_store, and allow such refs when it is set.
 
->  aiming to port
-> most builtins stuff to C in which we can reduce the size of git. Additionally,
-> I would also like to convert scripts to builtins as an additional milestone.
->
-> What do you think of these projects? Would it collide with
-> [Valery Tolstov's Shell to Builtins proposal][0]?
+>  int refs_verify_refname_available(struct ref_store *refs,
+>  				  const char *refname,
+> -				  const struct string_list *extra,
+> +				  const struct string_list *extras,
+>  				  const struct string_list *skip,
+>  				  struct strbuf *err)
+>  {
+> [...]
+> +		/*
+> +		 * We are still at a leading dir of the refname (e.g.,
+> +		 * "refs/foo"; if there is a reference with that name,
+> +		 * it is a conflict, *unless* it is in skip.
+> +		 */
+> +		if (skip && string_list_has_string(skip, dirname.buf))
+> +			continue;
+> +
+> +		if (!refs_read_raw_ref(refs, dirname.buf, oid.hash, &referent, &type)) {
+> +			strbuf_addf(err, "'%s' exists; cannot create '%s'",
+> +				    dirname.buf, refname);
+> +			goto cleanup;
+> +		}
 
-Curious why all people ask about colliding with Valerys proposal here?
-I do not think it would collide, as submodules and rebase are very different
-areas of the code base.
+We don't really care about reading the ref value here; we just care if
+it exists. Does that matter for efficiency (e.g., for the files backend
+it's a stat() versus an open/read/close)? I guess the difference only
+matters when it _does_ exist, which is the uncommon error case.
 
-Thanks,
-Stefan
+(Also, I suspect the loose ref cache always just reads everything in the
+current code, though with the iterator approach in theory we could stop
+doing that).
 
->
-> [0]: https://public-inbox.org/git/1489145258.10535.0@smtp.yandex.ru/
->
+-Peff
