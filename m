@@ -2,136 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2CFC20958
-	for <e@80x24.org>; Mon, 20 Mar 2017 22:20:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03BE820958
+	for <e@80x24.org>; Mon, 20 Mar 2017 22:32:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755290AbdCTWUs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 18:20:48 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:63479 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755257AbdCTWUq (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Mar 2017 18:20:46 -0400
-X-AuditID: 12074414-807ff70000002bfd-ab-58d055bcbf82
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 1A.65.11261.CB550D85; Mon, 20 Mar 2017 18:20:44 -0400 (EDT)
-Received: from [192.168.69.190] (p57906F9B.dip0.t-ipconnect.de [87.144.111.155])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2KMKfmf030910
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Mon, 20 Mar 2017 18:20:42 -0400
-Subject: Re: [PATCH 04/20] refs_verify_refname_available(): implement once for
- all backends
-To:     Jeff King <peff@peff.net>
-References: <cover.1490026594.git.mhagger@alum.mit.edu>
- <22abd274bfdada94b3654a811ee209822640765f.1490026594.git.mhagger@alum.mit.edu>
- <20170320174240.gykldqzbqyva6kbs@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
+        id S1754780AbdCTWch (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 18:32:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52453 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1753439AbdCTWcg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 18:32:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BD0C815DF;
+        Mon, 20 Mar 2017 18:32:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=T5R5IVlGzVOYYgeeeFi+i6A4Fd4=; b=O6aZyX
+        vFGOlIdIPfBicOkyw2/yXeCm64MppVcJCWODtCM0Xx9orHfLSv8Eh8wlf65RJ2CM
+        25QOZ4/YX5l+sOpmg8HH64ErfVld1rPG2yYtPwmPdpkfBePn9tW4xivsDaMvFozB
+        Pfe2Lvib28CEh9LpDW0DPOLD69O5IcxuS5rmY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Jda5bmIBqVz3Tu8vpH8NOE+8FaBTj17P
+        KosVAz6+Q/s4D2JvNbQZoRbwtWwMoK3XoECsmCTJOos7tSyhTyLyEGdPSoMyFCh6
+        Y18bQDTklVrocFWMzsTL4wXYXZRGjITZKuWWZ/K1p1J1TQDSBkoODfMRquDyquuR
+        HYQQ2SOx2sY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 75330815DE;
+        Mon, 20 Mar 2017 18:32:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD2A1815DD;
+        Mon, 20 Mar 2017 18:32:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        David Turner <novalis@novalis.org>, Jeff King <peff@peff.net>,
         git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <6ff4a9f9-23a5-89c9-f478-00449132d410@alum.mit.edu>
-Date:   Mon, 20 Mar 2017 23:20:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+Subject: Re: [PATCH 00/20] Separate `ref_cache` into a separate module
+References: <cover.1490026594.git.mhagger@alum.mit.edu>
+Date:   Mon, 20 Mar 2017 15:32:31 -0700
+In-Reply-To: <cover.1490026594.git.mhagger@alum.mit.edu> (Michael Haggerty's
+        message of "Mon, 20 Mar 2017 17:33:05 +0100")
+Message-ID: <xmqqk27jtw8w.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170320174240.gykldqzbqyva6kbs@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPIsWRmVeSWpSXmKPExsUixO6iqLsn9EKEwZJ+LYuuK91MFg29V5gt
-        ljx8zWzRPeUto8WPlh5mB1aPnbPusnt0tR9h83jWu4fR4+IlZY/Pm+QCWKO4bFJSczLLUov0
-        7RK4Mr6v2sVWcEqy4taXvWwNjKtFuhg5OSQETCTO3zrF2MXIxSEksINJ4sar9WwQzgUmiWX3
-        F7GAVAkLxEosOjOZFcQWEZCV+H54I1THIUaJ3ZOaWUAcZoHtjBIvby5gB6liE9CVWNTTzARi
-        8wrYSyz885IZxGYRUJVYcPsx2CRRgRCJOQsfMELUCEqcnPkEbBungIvEioY2NhCbWUBd4s+8
-        S8wQtrzE9rdzmCcw8s9C0jILSdksJGULGJlXMcol5pTm6uYmZuYUpybrFicn5uWlFula6OVm
-        luilppRuYoSEs8gOxiMn5Q4xCnAwKvHwrrhyPkKINbGsuDL3EKMkB5OSKG+V74UIIb6k/JTK
-        jMTijPii0pzUYqDfOZiVRHhrPYByvCmJlVWpRfkwKWkOFiVx3m+L1f2EBNITS1KzU1MLUotg
-        sjIcHEoSvAtCgBoFi1LTUyvSMnNKENJMHJwgw3mAhv8IBhleXJCYW5yZDpE/xagoJc5rCdIs
-        AJLIKM2D64Wlm1eM4kCvCPOeBKniAaYquO5XQIOZgAYvu3EGZHBJIkJKqoFxbZKOcNiiF7vr
-        M8/c//X1153vwl+j+UpmzjVfIx9raZSzn7mat8xAcqupxpHqAwrvdqf57Cv+/M4iYfEyKVnT
-        fR8P1LXJbGl4KnZSYrH4z2MPmUUPP2cKFHyxd3uX3lPDeycL74mHvf71oHVHz9Tv5778ThLd
-        dbIlYDF/e9o1nvlMZWbbmLRvKLEUZyQaajEXFScCABKeFGISAwAA
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C147C2C-0DBD-11E7-97A3-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/20/2017 06:42 PM, Jeff King wrote:
-> On Mon, Mar 20, 2017 at 05:33:09PM +0100, Michael Haggerty wrote:
-> 
->> It turns out that we can now implement
->> `refs_verify_refname_available()` based on the other virtual
->> functions, so there is no need for it to be defined at the backend
->> level. Instead, define it once in `refs.c` and remove the
->> `files_backend` definition.
-> 
-> Does this mean that backends can no longer provide storage for
-> D/F-conflicted refnames (i.e., "refs/foo" and "refs/foo/bar")? It looks
-> like the global verify_refname_available() has that logic baked in.
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-The `verify_refname_available()` function implements the "no D/F
-conflict" policy. But it's called from the backends, not from the common
-code, and nobody says that a backend needs to call the function.
+> Michael Haggerty (20):
+>   get_ref_dir(): don't call read_loose_refs() for "refs/bisect"
+>   refs_read_raw_ref(): new function
+>   refs_ref_iterator_begin(): new function
+>   refs_verify_refname_available(): implement once for all backends
+>   refs_verify_refname_available(): use function in more places
+>   Rename `add_ref()` to `add_ref_entry()`
+>   Rename `find_ref()` to `find_ref_entry()`
+>   Rename `remove_entry()` to `remove_entry_from_dir()`
+>   refs: split `ref_cache` code into separate files
+>   ref-cache: introduce a new type, ref_cache
+>   refs: record the ref_store in ref_cache, not ref_dir
+>   ref-cache: use a callback function to fill the cache
+>   refs: handle "refs/bisect/" in `loose_fill_ref_dir()`
+>   do_for_each_entry_in_dir(): eliminate `offset` argument
+>   get_loose_ref_dir(): function renamed from get_loose_refs()
+>   get_loose_ref_cache(): new function
+>   cache_ref_iterator_begin(): make function smarter
+>   commit_packed_refs(): use reference iteration
+>   files_pack_refs(): use reference iteration
+>   do_for_each_entry_in_dir(): delete function
 
-> [...]
->>  int refs_verify_refname_available(struct ref_store *refs,
->>  				  const char *refname,
->> -				  const struct string_list *extra,
->> +				  const struct string_list *extras,
->>  				  const struct string_list *skip,
->>  				  struct strbuf *err)
->>  {
->> [...]
->> +		/*
->> +		 * We are still at a leading dir of the refname (e.g.,
->> +		 * "refs/foo"; if there is a reference with that name,
->> +		 * it is a conflict, *unless* it is in skip.
->> +		 */
->> +		if (skip && string_list_has_string(skip, dirname.buf))
->> +			continue;
->> +
->> +		if (!refs_read_raw_ref(refs, dirname.buf, oid.hash, &referent, &type)) {
->> +			strbuf_addf(err, "'%s' exists; cannot create '%s'",
->> +				    dirname.buf, refname);
->> +			goto cleanup;
->> +		}
-> 
-> We don't really care about reading the ref value here; we just care if
-> it exists. Does that matter for efficiency (e.g., for the files backend
-> it's a stat() versus an open/read/close)? I guess the difference only
-> matters when it _does_ exist, which is the uncommon error case.
+These mostly seem to be ref-cache but there is one mention of "refs
+cache", and also the topic cover says ref_cache.  Which one is the
+canonical one?  I'd assume it is "ref-cache" (or "ref cache").
 
-Yes, I assume that the conflict cases are unusual so I wasn't worrying
-too much about their performance.
+The reason I am asking is because I wanted to give the three
+"Rename" ones an "<area>:" prefix, and then noticed that the
+shortlog output looked somewhat incoherent.
 
-Not quite so obvious is that the new code sometimes checks for conflicts
-against both loose and packed references in situations where the old
-code only checked against packed references. Specifically, this happens
-when the code has just read, or locked, or failed to find a loose
-reference, so it could infer that there are no loose references that
-could conflict. I don't think that will be noticeable, because it is the
-reading of the whole `packed-refs` file that is a big expensive
-operation that it is important to avoid. Anyway, later patches (i.e.,
-after there is a `packed_ref_store`) can switch back to checking only
-packed references and get back the old optimization.
-
-> (Also, I suspect the loose ref cache always just reads everything in the
-> current code, though with the iterator approach in theory we could stop
-> doing that).
-
-The loose ref cache reads directories into the cache lazily,
-breadth-first. So it reads all of the entries in the directories leading
-to the reference being looked up, but no others. When iterating, it
-reads the parent directories of the prefix that is being iterated over
-plus the whole subtree under the prefix, and that's it (though this
-optimization is not yet wired through to `git for-each-ref`).
-
-Michael
-
+Thanks.
