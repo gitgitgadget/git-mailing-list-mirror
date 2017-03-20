@@ -2,102 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81E5E20958
-	for <e@80x24.org>; Mon, 20 Mar 2017 16:18:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6B9820958
+	for <e@80x24.org>; Mon, 20 Mar 2017 16:33:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755416AbdCTQS0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 12:18:26 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:37478 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755421AbdCTQSW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 12:18:22 -0400
-Received: by mail-it0-f53.google.com with SMTP id g138so101692151itb.0
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 09:18:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=fDj9xUtU0v6YQ9/xoIWqiSuu4Xdj4150uQ1HYeyoc/Y=;
-        b=ftzRdVtA7vAjx3ZMXQv65g9tWrP5IrketWflWRyhvZk0pt/oX6ephh54k5csfWHQm9
-         rDqXQIFblKdNhpgU6GglRTXq15xBY02bge8RmHuEedvYKuIpIxKpyePfaQvLkd6hyJ5M
-         vqWoClI83qkv6oHiHPnza+tFGbv5YS6oThNJikgdwaU6nOoNKg8jZLMDgJF0B4vxoENq
-         A2X0MKjQnC7XtPMQ6WjsYZ+yDS6N5E4YKRI7YOW9MN46V/oGPCokQXebYf+8YEm7CLju
-         Pxbc0WQj38lyKJLtgtucOUKpZVZw7Lbwk3dyvT+OCpqIAyMQUuYRojJzMWn31nR2pjgh
-         hzCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=fDj9xUtU0v6YQ9/xoIWqiSuu4Xdj4150uQ1HYeyoc/Y=;
-        b=IfnQf15zP73U0zpKovyLx55zEH0VpdwiuE7c2AW4FIdpeJtNwZkZE3uNK6GZ4EDZPT
-         tOmB82CbxHpp66Mi5bfODR6IZ7gNGoUIVnYDw81UahpSe2URBWm9bVYpXemUZHd0Xhp0
-         nocAabREYo1GJPxwROuIkuoQ0YCVGbvUJJVa0ggqMd5xE6IgiEDBzTDiyzr2kOatpgcw
-         mK8AL36assMm15XSJaLlhEtFYkY4f6b66ZPJdcEWr6L+RldvpaIWy/mnhqQTNfbJIELD
-         SdRh832GavKpv7oUBTCojOw+CyuAe8lVmymCBtpptgWOFH7OEKqAXQL48Eu2i8FU35Vo
-         3gzQ==
-X-Gm-Message-State: AFeK/H3GDnKZWQhszgwFVy/ekR+kGPxVDvAivyg4zntAzAaUwubU7AASjq70crASk9HMfrBERfCYn9IQQZOeug==
-X-Received: by 10.36.76.11 with SMTP id a11mr1782037itb.60.1490026163307; Mon,
- 20 Mar 2017 09:09:23 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 20 Mar 2017 09:09:02 -0700 (PDT)
-In-Reply-To: <20170320034443.wq2uf4yabsxh2nji@sigill.intra.peff.net>
-References: <20170318103256.27141-1-avarab@gmail.com> <20170318103256.27141-4-avarab@gmail.com>
- <xmqqmvci2zoc.fsf@gitster.mtv.corp.google.com> <20170320034443.wq2uf4yabsxh2nji@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 20 Mar 2017 17:09:02 +0100
-Message-ID: <CACBZZX5V3fMpwUCFr8vXMsxkXpz353-BOtaANYvnu9Qnz1GSQg@mail.gmail.com>
-Subject: Re: [PATCH 3/8] tag: Change misleading --list <pattern> documentation
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Lars Hjemli <hjemli@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Carlos Rica <jasampler@gmail.com>,
-        Samuel Tardieu <sam@rfc1149.net>,
-        Tom Grennan <tmgrennan@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        id S1755264AbdCTQdk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 12:33:40 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:55611 "EHLO
+        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753245AbdCTQdi (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Mar 2017 12:33:38 -0400
+X-AuditID: 12074411-4d7ff700000005a9-b9-58d0045ef58b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 49.A9.01449.E5400D85; Mon, 20 Mar 2017 12:33:35 -0400 (EDT)
+Received: from bagpipes.fritz.box (p57906F9B.dip0.t-ipconnect.de [87.144.111.155])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2KGXV9A010511
+        (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+        Mon, 20 Mar 2017 12:33:33 -0400
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH 00/20] Separate `ref_cache` into a separate module
+Date:   Mon, 20 Mar 2017 17:33:05 +0100
+Message-Id: <cover.1490026594.git.mhagger@alum.mit.edu>
+X-Mailer: git-send-email 2.11.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEIsWRmVeSWpSXmKPExsUixO6iqJvAciHCYN0HdouuK91MFg29V5gt
+        bq+Yz2yx5OFrZovuKW8ZLX609DA7sHn8ff+ByWPnrLvsHl3tR9g8nvXuYfS4eEnZ4/MmuQC2
+        KC6blNSczLLUIn27BK6Mrxd2shZ8Uaz4tHQyUwPjfukuRk4OCQETiT2b37KB2EICO5gkJq6Q
+        6mLkArJPMUm0fnvHApJgE9CVWNTTzARiiwioSUxsO8QCUsQs8IhR4ur8u+xdjBwcwgJOEhu+
+        iIDUsAioSpyeNAmsnlfAXGJLTwMjxDJ5iV1tF1knMHItYGRYxSiXmFOaq5ubmJlTnJqsW5yc
+        mJeXWqRrqpebWaKXmlK6iRESHII7GGeclDvEKMDBqMTDy3D9fIQQa2JZcWXuIUZJDiYlUd6n
+        t4FCfEn5KZUZicUZ8UWlOanFhxglOJiVRHirXgLleFMSK6tSi/JhUtIcLErivHxL1P2EBNIT
+        S1KzU1MLUotgsjIcHEoSvFf+ATUKFqWmp1akZeaUIKSZODhBhvMADVf/AzK8uCAxtzgzHSJ/
+        ilGX41fPsTdMQix5+XmpUuK8F34DFQmAFGWU5sHNgUX1K0ZxoLeEeWt/AVXxABMC3KRXQEuY
+        gJYsu3EGZElJIkJKqoFx+l693VOF2257TVNde0vyykxt0RZZT/52GYHcQz4McQf6dTK/Ca1s
+        W//m3L3Ak9uY7asqNsne/82l3jUvQE/fc6v31bbWf4uE96+971Id/inl2OrOR00GbfNuLU+6
+        HnRGxtHvplP6xJmy8pMkZ65Xu2tw8GnNvWez+ScyPX3rc9hZ/g+vm6eeEktxRqKhFnNRcSIA
+        RxOMJcUCAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2017 at 4:44 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Mar 18, 2017 at 11:43:47AM -0700, Junio C Hamano wrote:
->
->> > +test_expect_success 'Multiple -l or --list options are equivalent to one -l option' '
->> > +   git tag -l -l >actual &&
->> > +   test_cmp expect actual &&
->> > +   git tag --list --list >actual &&
->> > +   test_cmp expect actual &&
->> > +   git tag --list -l --list >actual &&
->> > +   test_cmp expect actual
->> > +'
->>
->> OK.  I do not care too deeply about this one, but somebody may want
->> to tighten up the command line parsing to detect conflicting or
->> duplicated cmdmode as an error in the future, and at that time this
->> will require updating.  I am not sure if we want to promise that
->> giving multiple -l will keep working.
->
-> I think it's expected to work under the usual last-one-wins option
-> parsing. A more subtle case is that:
->
->   git tag -l -d foo
->
-> would override "-l" with "-d". That's reasonable under the same rule as
-> long as the user knows that the two are mode-selectors. I don't think we
-> make that explicit in the documentation, though, so perhaps it isn't
-> something users should rely on.
+I had a window of opportunity last week to hack intensely on Git, with
+the following goals:
 
-That hasn't been the case since v1.8.5 (v1.8.4-rc0-12-g1158826394).
-Now supplying multiple CMDMODE invocations will die.
+* Separate `ref_cache` out of `files_ref_cache`.
 
-It is the case that we still need to manually check any pseudo-cmdmode
-switches like "tag -a" (bool) v.s. "tag -l" (cmdmode). We check that
-particular combination, but we doubtless have bugs like that in other
-commands.
+* Separate a new `packed_ref_cache` class out of `files_ref_cache`.
+  Change the latter to use an instance of the former for all of its
+  interactions with the `packed-refs` file.
+
+* Mmap `packed-refs` files rather than reading-and-parsing.
+
+* Use the mmapped version of the `packed-refs` file as the "cache"
+  rather than using a separate `ref_cache`.
+
+* (And the main goal): Avoid reading and parsing the *whole
+  `packed-refs` file* (as we do now) every time any part of it is
+  needed. Instead, use binary search to find the reference and/or
+  range of references that we want, and parse the info out of the
+  mmapped image on the fly.
+
+I've completed a draft of an epic 48-patch series implementing all of
+the above points on my GitHub fork [1] as branch
+`wip/mmap-packed-refs`. It dramatically speeds up performance and
+reduces memory usage for some tasks in repositories with very many
+packed references.
+
+But the later parts of that series aren't completely polished yet, and
+such a large patch series would be indigestible anyway, so here I
+submit the first part...
+
+This patch series extracts a `ref_cache` module out of
+`files_ref_cache`, and goes some way to disentangling those two
+modules, which until now were overly intimate with each other:
+
+* Remove `verify_refname_available()` from the refs VTABLE, instead
+  implementing it in a generic way that uses only the usual refs API
+  to talk to the `ref_store`.
+
+* Split `ref_cache`-related code into a new module,
+  `refs/ref-cache.{c,h}`. Encapsulate the data structure in a new
+  class, `struct ref_cache`.
+
+* Change the lazy-filling mechanism of `ref_cache` to call back to its
+  backing `ref_store` via a callback function rather than calling
+  `read_loose_refs()` directly.
+
+* Move the special handling of `refs/bisect/` from `ref_cache` to
+  `files_ref_store`.
+
+* Make `cache_ref_iterator_begin()` smarter, and change external users
+  to iterate via this interface instead of using
+  `do_for_each_entry_in_dir()`.
+
+Even after this patch series, the modules are still too intimate for
+my taste, but I think this is a big step forward, and it is enough to
+allow the other changes that I've been working on.
+
+These patches depend on Duy's nd/files-backend-git-dir branch, v6 [2].
+They are also available from my GitHub fork [1] as branch
+`separate-ref-cache`.
+
+Happily, this patch series actually removes a few more lines than it
+adds, mostly thanks to the simpler `verify_refname_available()`
+implementation.
+
+Michael
+
+[1] https://github.com/mhagger/git
+[2] http://public-inbox.org/git/20170318020337.22767-1-pclouds@gmail.com/
+
+Michael Haggerty (20):
+  get_ref_dir(): don't call read_loose_refs() for "refs/bisect"
+  refs_read_raw_ref(): new function
+  refs_ref_iterator_begin(): new function
+  refs_verify_refname_available(): implement once for all backends
+  refs_verify_refname_available(): use function in more places
+  Rename `add_ref()` to `add_ref_entry()`
+  Rename `find_ref()` to `find_ref_entry()`
+  Rename `remove_entry()` to `remove_entry_from_dir()`
+  refs: split `ref_cache` code into separate files
+  ref-cache: introduce a new type, ref_cache
+  refs: record the ref_store in ref_cache, not ref_dir
+  ref-cache: use a callback function to fill the cache
+  refs: handle "refs/bisect/" in `loose_fill_ref_dir()`
+  do_for_each_entry_in_dir(): eliminate `offset` argument
+  get_loose_ref_dir(): function renamed from get_loose_refs()
+  get_loose_ref_cache(): new function
+  cache_ref_iterator_begin(): make function smarter
+  commit_packed_refs(): use reference iteration
+  files_pack_refs(): use reference iteration
+  do_for_each_entry_in_dir(): delete function
+
+ Makefile             |    1 +
+ refs.c               |  111 ++++-
+ refs.h               |    2 +-
+ refs/files-backend.c | 1229 +++++++-------------------------------------------
+ refs/ref-cache.c     |  523 +++++++++++++++++++++
+ refs/ref-cache.h     |  267 +++++++++++
+ refs/refs-internal.h |   22 +-
+ 7 files changed, 1066 insertions(+), 1089 deletions(-)
+ create mode 100644 refs/ref-cache.c
+ create mode 100644 refs/ref-cache.h
+
+-- 
+2.11.0
+
