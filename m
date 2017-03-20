@@ -2,93 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEC3220958
-	for <e@80x24.org>; Mon, 20 Mar 2017 17:43:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAA3B20958
+	for <e@80x24.org>; Mon, 20 Mar 2017 17:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753283AbdCTRm5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 13:42:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47827 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753217AbdCTRm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 13:42:56 -0400
-Received: (qmail 11502 invoked by uid 109); 20 Mar 2017 17:42:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Mar 2017 17:42:44 +0000
-Received: (qmail 3685 invoked by uid 111); 20 Mar 2017 17:42:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 20 Mar 2017 13:42:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Mar 2017 13:42:40 -0400
-Date:   Mon, 20 Mar 2017 13:42:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org
-Subject: Re: [PATCH 04/20] refs_verify_refname_available(): implement once
- for all backends
-Message-ID: <20170320174240.gykldqzbqyva6kbs@sigill.intra.peff.net>
-References: <cover.1490026594.git.mhagger@alum.mit.edu>
- <22abd274bfdada94b3654a811ee209822640765f.1490026594.git.mhagger@alum.mit.edu>
+        id S1755729AbdCTRoC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 13:44:02 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36498 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755673AbdCTRn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 13:43:57 -0400
+Received: by mail-pf0-f182.google.com with SMTP id o126so68887964pfb.3
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 10:43:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=QV38nndu68oDcXUO8InmvSn/7URl3OzHuosT90ggzsI=;
+        b=BCM6QwQoJi01k/VAS7mnx4SP/aPpl+XAdr3pKmQ6kUc41HNTqq+by2sfJ7/bxOG7k2
+         dyIpE4f5rSCsQw4xEs4WhKj1rv/fb5Jd2S33cAXu0987Egy+rJKdmTcnOVbAbT100g1F
+         V3Zff2aI7BvvyvB2wqdkmYDeIb0V9Vn5Fd4czkym1pjK1UO3X44MZHZ57F1gdcEgRc7X
+         Vklb+mS1WaU3yP2QpeJB+DuCP4CIM2ux0XcAlU2Cr5EDxjtI0LeVDlbjdbQbKltBxDvE
+         67sLvZddRTMAKLG86d1eXI8CRewOdQwIfuIt+MgneUWYlKneLyJAsgZIwwyt9x0ygYaa
+         aFfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=QV38nndu68oDcXUO8InmvSn/7URl3OzHuosT90ggzsI=;
+        b=mgcBbWE2rEyOO9VVTcQWKS4Wi1fH0tJj53EUhVlcOHQhNmCR7rPIcLHGLSp9yvTbz2
+         47uJth3kyZ5gakCPxPEXrmKndya6RHR3fKee/HaSw7wdzv+Xh8AN96XTQdH0B4Io6dBv
+         519sGoGWIzh8sumGCoKbv5H9dOSAwNd3OrBYyuXzolYxrAtLqQc666WswdcWgms8kpqj
+         QB/1+KZCc1rp5KqiYZtexhSYVwbQ3iZ0YG1IQ3dVBwY7ZYFLOP085nF0eC2ko93lziK9
+         iuXVJwWR1nuYZ4gGSon4STuErr/AwxzqtRUHXr7YLs/1Q7L/czirW7fWPre2ln/vWpCr
+         0XIQ==
+X-Gm-Message-State: AFeK/H2Abeps/6I6Ab44ElPsUvf1nN0eP42NjPE9NDLSNwbWuqXLx8HPsp9193v3+TltMv8nArLZHlZSfP8SV/Zo
+X-Received: by 10.84.128.75 with SMTP id 69mr6920734pla.111.1490031836344;
+ Mon, 20 Mar 2017 10:43:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <22abd274bfdada94b3654a811ee209822640765f.1490026594.git.mhagger@alum.mit.edu>
+Received: by 10.100.162.161 with HTTP; Mon, 20 Mar 2017 10:43:55 -0700 (PDT)
+In-Reply-To: <oaotoa$qkp$1@blaine.gmane.org>
+References: <oaotoa$qkp$1@blaine.gmane.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 20 Mar 2017 10:43:55 -0700
+Message-ID: <CAGZ79kY7bCt_3Fse_Qi43Aej=MgN1ABLTx7eLmPCs+aP2e9ZwQ@mail.gmail.com>
+Subject: Re: Regression: Reword during rebase -i does not seem to trigger
+ commit-msg hook anymore
+To:     Sebastian Schuberth <sschuberth@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2017 at 05:33:09PM +0100, Michael Haggerty wrote:
+On Mon, Mar 20, 2017 at 8:50 AM, Sebastian Schuberth
+<sschuberth@gmail.com> wrote:
+> Hi,
+>
+> I'm using
+>
+> $ git --version
+> git version 2.12.0.windows.1
+>
+> With this version, when I do a "reword" during an inteactive rebase session,
+> the commit-msg hook doe snot seem to be triggered anymore. This was
+> particularly useful to let Gerrit's commit-msg hook add missing ChangeId
+> footers.
+>
+> I can work-aorund the issue by doing an "edit" and "commit --amend".
+>
+> Is anyone else seeing this?
 
-> It turns out that we can now implement
-> `refs_verify_refname_available()` based on the other virtual
-> functions, so there is no need for it to be defined at the backend
-> level. Instead, define it once in `refs.c` and remove the
-> `files_backend` definition.
+In 2.12 RelNotes:
 
-Does this mean that backends can no longer provide storage for
-D/F-conflicted refnames (i.e., "refs/foo" and "refs/foo/bar")? It looks
-like the global verify_refname_available() has that logic baked in.
+ * "git rebase -i" starts using the recently updated "sequencer" code.
 
-I know that was a complex subject because of the potential compatibility
-issues (e.g., fetching from a server with a more capable backend), but
-I'd just worry we are shutting a door on some options. OTOH, it probably
-wouldn't be that hard for the global function to check a flag specific
-to the ref_store, and allow such refs when it is set.
-
->  int refs_verify_refname_available(struct ref_store *refs,
->  				  const char *refname,
-> -				  const struct string_list *extra,
-> +				  const struct string_list *extras,
->  				  const struct string_list *skip,
->  				  struct strbuf *err)
->  {
-> [...]
-> +		/*
-> +		 * We are still at a leading dir of the refname (e.g.,
-> +		 * "refs/foo"; if there is a reference with that name,
-> +		 * it is a conflict, *unless* it is in skip.
-> +		 */
-> +		if (skip && string_list_has_string(skip, dirname.buf))
-> +			continue;
-> +
-> +		if (!refs_read_raw_ref(refs, dirname.buf, oid.hash, &referent, &type)) {
-> +			strbuf_addf(err, "'%s' exists; cannot create '%s'",
-> +				    dirname.buf, refname);
-> +			goto cleanup;
-> +		}
-
-We don't really care about reading the ref value here; we just care if
-it exists. Does that matter for efficiency (e.g., for the files backend
-it's a stat() versus an open/read/close)? I guess the difference only
-matters when it _does_ exist, which is the uncommon error case.
-
-(Also, I suspect the loose ref cache always just reads everything in the
-current code, though with the iterator approach in theory we could stop
-doing that).
-
--Peff
++cc Johannes
