@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 548D620958
-	for <e@80x24.org>; Mon, 20 Mar 2017 19:22:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A413520958
+	for <e@80x24.org>; Mon, 20 Mar 2017 19:23:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754851AbdCTTWq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 15:22:46 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33911 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754788AbdCTTWm (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754951AbdCTTWv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 15:22:51 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:35952 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754339AbdCTTWm (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 20 Mar 2017 15:22:42 -0400
-Received: by mail-pf0-f171.google.com with SMTP id p189so46743045pfp.1
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 12:22:36 -0700 (PDT)
+Received: by mail-pg0-f50.google.com with SMTP id g2so81647884pge.3
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 12:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=v+LXVaUZ8KktJY51fNE15Y/Culwt7y+677QZn5IUnJQ=;
-        b=pkHE5TlNrT46Pn2+xfqH9Uq4iW9/RyAHTobr3C2z1YkrlrAt/X375OPbBch470AXfx
-         VA3RYpT5C+X3ygXoJD1mKQnKP7eTsoBCuLi5RDMUlu1Z0HI5Ig+PGfdSlS1qr6BNavrG
-         06sO1YSkU2NuYPYMw63G/V8F9UKD0LitFH4+TMPeAGrCQe9VAJjZKpjlMQzHvCtNPZMe
-         fQJ3nQw4UxeF8B1+h1KHGPCu+nU9dAUtE6Qwf8yWz6zElLob0hivPot8TdK3kfmffquJ
-         XsncLIyHTsWk4zKQXygJDjTvoGyTj8Ri4oq38ZKQn7lGMowlDTJlVGztvD2kvP0FMeoS
-         qkdA==
+        bh=j8mTrid0i86SyQO6BEQEbWQ02vHPecBwcbEzMXiaX9Y=;
+        b=Ps40e4tcREQO1AFS0pK+jvhwHVXVp3edVo2k2tXFZpTy8y7KEiygi+QiFtivFKmLNf
+         vyOur+R0lMF3r2pejlZxfPfU/CjpjVihxm9VlJsuqxAQeiAU4PpzSCNZsJIMuGUZCrY3
+         uWKkizgqWCS3Hh+nm4lurualRjIHaN+9Crd0GP9qrKgMt+0Ia2yRmz2G4WL/o38mF2F5
+         hhWcy3XiGQhZqTF7PuW2eO0PiVjFrDfx4LvYUxyOZNiZYJvXf7tXMWcz8GPBtyOyXAXu
+         PQjSKA3mxktQ2KW7+5JIkYYzCoIcoYSUOhx+cwBL3R9lGxdU8FMpNd56fM6Y7pvMKMZg
+         JdzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=v+LXVaUZ8KktJY51fNE15Y/Culwt7y+677QZn5IUnJQ=;
-        b=Atcus9L//fRc6LimJJUgUO10bioaC8jMvnsDwFCSXecgGtuMZUCYaUayAGiNsW4WQL
-         TA+2ZIM401KiD+lDMsQGu6qwpmhd3vEhTMLUq27Rcoec8O98lE+AbiWKIT/J0L8JB0zd
-         4GQW8Zq8fGGN8rPZRb919WU+BzV1nvyK8gzOTb/ghAZAxEuF0Ktqu5uWHafUk4gsjwKg
-         Xe6PYPNJDxgDlp6c6OERdEzDFL1puEl7K4yPSJIenHUJkvP3fM/WbT9K61zd9h5+CbVC
-         DjicC2vrZNBc/QWs1ffem5DlCvw9FIZKStdFThBfWntBAqg1mAhV796Llf8+4fEn3Ak4
-         uUUw==
-X-Gm-Message-State: AFeK/H2f39H3+R1ThSxu+1wiC8alT7UkchCvG8NcT2C1vbRjxOR9uDSYYOYr8W80RbVpAieX
-X-Received: by 10.99.113.81 with SMTP id b17mr11665296pgn.180.1490037755378;
-        Mon, 20 Mar 2017 12:22:35 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:38a6:f549:ebc4:4d51])
-        by smtp.gmail.com with ESMTPSA id u29sm28686690pfa.123.2017.03.20.12.22.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        bh=j8mTrid0i86SyQO6BEQEbWQ02vHPecBwcbEzMXiaX9Y=;
+        b=eUA2q0Lrgn9mlZfHA4KF4jhmupLRyqxyOp/ZD+7ThnywEmx+9oxNhKD3sk0ycZlkM2
+         IE7QPIJ17Qy+c5LBpxyIJY0IOnu/pK8S/apQM5XYYSaPHnfcPOo5QVyHQlZ2b1J/TNGK
+         oLxdIa8nmxjBj1EPUnZFxV8sjkdk/OrpkZmxXSS2cUAENIA+Z/e9bx8X7XHMMsniRbV8
+         FYOAhbgsmgDTzSYKumujYKa4NCCqPiX1zNLFL2WjvtukeijjHDTanCOrYG0bTW8Op03A
+         WUG3giNRDQ9cH/YXkULKBbW5JfcIVhtp9WR/bbQ0J4qw9HPfYYOUmgZlV35q0UgqNqiF
+         3LlA==
+X-Gm-Message-State: AFeK/H0mbJ/oJVWUiI/sWgg8WQ8Rb8snkV8Ay1/PE+UedFJTPNlYAjra+HOe7i9U2Q2629j/
+X-Received: by 10.99.48.68 with SMTP id w65mr33063953pgw.203.1490037754269;
         Mon, 20 Mar 2017 12:22:34 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:38a6:f549:ebc4:4d51])
+        by smtp.gmail.com with ESMTPSA id x21sm34999129pgf.15.2017.03.20.12.22.33
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 20 Mar 2017 12:22:33 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, jrnieder@gmail.com
 Cc:     git@vger.kernel.org, pclouds@gmail.com,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 2/2] revparse: introduce --is-inside-working-tree
-Date:   Mon, 20 Mar 2017 12:22:25 -0700
-Message-Id: <20170320192225.18928-3-sbeller@google.com>
+Subject: [PATCH 1/2] git.c: introduce --working-tree superseding --work-tree
+Date:   Mon, 20 Mar 2017 12:22:24 -0700
+Message-Id: <20170320192225.18928-2-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.306.g4a9b9b32d4.dirty
 In-Reply-To: <20170320192225.18928-1-sbeller@google.com>
 References: <20170320185038.GU26789@aiede.mtv.corp.google.com>
@@ -61,44 +62,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This behaves the same as 'is-inside-worktree' and supersedes it.
-See prior patch for discussion of "working tree" vs. "worktree"
+Discussion on bf0231c661 (rev-parse: add --show-superproject-working-tree,
+2017-03-08) pointed out we are inconsistent with the naming of "working
+tree" and "worktree" even in user facing commands and documentation[1].
+
+Introduce the new --working-tree option, which is the same as
+--work-tree. As --work-tree is considered slightly incorrect[2], stop
+mentioning it in the documentation.  But we need to keep its functionality
+as it is plumbing.
+
+An alternative was considered off list to rename the newly added option
+'--show-superproject-working-tree' by dropping the part mentioning the
+working tree to side step this discussion. However we need to make sure
+that option still refers to the working tree, as a new option
+'show-superproject-git-dir' might be considered useful in the future,
+and we do not want to take the canonical '--show-superproject' now.
+
+[1] https://public-inbox.org/git/20170317222842.GP26789@aiede.mtv.corp.google.com/
+[2] https://public-inbox.org/git/xmqqo9wy4hxa.fsf@gitster.mtv.corp.google.com/
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/git-rev-parse.txt | 4 ++--
- builtin/rev-parse.c             | 3 ++-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ Documentation/git.txt | 12 ++++++------
+ git.c                 |  5 +++--
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index c40c470448..55ee3bde55 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -228,8 +228,8 @@ print a message to stderr and exit with nonzero status.
- 	When the current working directory is below the repository
- 	directory print "true", otherwise "false".
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index df0941d456..763f3b5563 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git' [--version] [--help] [-C <path>] [-c <name>=<value>]
+     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+     [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+-    [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
++    [--git-dir=<path>] [--working-tree=<path>] [--namespace=<name>]
+     [--super-prefix=<path>]
+     <command> [<args>]
  
----is-inside-work-tree::
--	When the current working directory is inside the work tree of the
-+--is-inside-working-tree::
-+	When the current working directory is inside the working tree of the
- 	repository print "true", otherwise "false".
+@@ -551,12 +551,12 @@ help ...`.
+ 	<path>`.
+ +
+ This option affects options that expect path name like `--git-dir` and
+-`--work-tree` in that their interpretations of the path names would be
++`--working-tree` in that their interpretations of the path names would be
+ made relative to the working directory caused by the `-C` option. For
+ example the following invocations are equivalent:
  
- --is-bare-repository::
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 2549643267..04da518058 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -851,7 +851,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 						: "false");
- 				continue;
+-    git --git-dir=a.git --work-tree=b -C c status
+-    git --git-dir=c/a.git --work-tree=c/b status
++    git --git-dir=a.git --working-tree=b -C c status
++    git --git-dir=c/a.git --working-tree=c/b status
+ 
+ -c <name>=<value>::
+ 	Pass a configuration parameter to the command. The value
+@@ -602,7 +602,7 @@ foo.bar= ...`) sets `foo.bar` to the empty string.
+ 	setting the `GIT_DIR` environment variable. It can be an absolute
+ 	path or relative path to current working directory.
+ 
+---work-tree=<path>::
++--working-tree=<path>::
+ 	Set the path to the working tree. It can be an absolute path
+ 	or a path relative to the current working directory.
+ 	This can also be controlled by setting the GIT_WORK_TREE
+@@ -892,7 +892,7 @@ Git so take care if using a foreign front-end.
+ 
+ `GIT_WORK_TREE`::
+ 	Set the path to the root of the working tree.
+-	This can also be controlled by the `--work-tree` command-line
++	This can also be controlled by the `--working-tree` command-line
+ 	option and the core.worktree configuration variable.
+ 
+ `GIT_NAMESPACE`::
+diff --git a/git.c b/git.c
+index 33f52acbcc..a76ff97232 100644
+--- a/git.c
++++ b/git.c
+@@ -149,9 +149,10 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
+ 			setenv(GIT_NAMESPACE_ENVIRONMENT, cmd, 1);
+ 			if (envchanged)
+ 				*envchanged = 1;
+-		} else if (!strcmp(cmd, "--work-tree")) {
++		} else if (!strcmp(cmd, "--work-tree") ||
++			   !strcmp(cmd, "--working-tree")) {
+ 			if (*argc < 2) {
+-				fprintf(stderr, "No directory given for --work-tree.\n" );
++				fprintf(stderr, "No directory given for %s.\n", cmd);
+ 				usage(git_usage_string);
  			}
--			if (!strcmp(arg, "--is-inside-work-tree")) {
-+			if (!strcmp(arg, "--is-inside-work-tree") ||
-+			    !strcmp(arg, "--is-inside-working-tree")) {
- 				printf("%s\n", is_inside_work_tree() ? "true"
- 						: "false");
- 				continue;
+ 			setenv(GIT_WORK_TREE_ENVIRONMENT, (*argv)[1], 1);
 -- 
 2.12.0.306.g4a9b9b32d4.dirty
 
