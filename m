@@ -2,110 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 405522090A
-	for <e@80x24.org>; Mon, 20 Mar 2017 20:39:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D11C2090A
+	for <e@80x24.org>; Mon, 20 Mar 2017 20:45:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753232AbdCTUjP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 16:39:15 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52271 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752673AbdCTUjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 16:39:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1C9E67CE25;
-        Mon, 20 Mar 2017 16:39:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=j2J5x/wSo0jOYOKzFDIUBNDYcFA=; b=P4Wyej
-        wzmaMBExPI0ZpNkr0a7kLVgvLz+HFYahrq+jltvgFvp4fD1NnCdKFEk7gn/c8FRc
-        zF4dclCtv6ZaNcUzaFy3YfSZ0xxsX5gdQXU8h6R6wusra5lnoMt5nXaTprs12aa5
-        8U1qfmBVRyo+Mw4KbYZYjk8wiML/ZgfSM8f3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bQYPcOB7ZohwTdI3aPmjB6hYBLS1q6c3
-        VJOYXHMf33eLqNBT4juNnadqUSoDn1ByeEs/pUYacbRg24SyKVHNSvKO6H/YotoG
-        zOGyLv7OEC/cWrlrR62LpTQSOU3mWDTn3psq5r/cQ4ddO/CTYVRaQyxH74OswTM8
-        jpsXFFBtvwI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 146FD7CE24;
-        Mon, 20 Mar 2017 16:39:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6CFA27CE23;
-        Mon, 20 Mar 2017 16:39:12 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     sourav mondal <souravcristiano502@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v1] adding word_regex for go language
-References: <20170320193555.6656-1-souravcristiano502@gmail.com>
-Date:   Mon, 20 Mar 2017 13:39:11 -0700
-In-Reply-To: <20170320193555.6656-1-souravcristiano502@gmail.com> (sourav
-        mondal's message of "Tue, 21 Mar 2017 01:05:55 +0530")
-Message-ID: <xmqqk27jvg28.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753210AbdCTUpf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 16:45:35 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:32985 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752784AbdCTUpc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 16:45:32 -0400
+Received: by mail-pg0-f52.google.com with SMTP id n190so82961518pga.0
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 13:43:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1HAy0XKTm0vGQ2AwrRL3NQlUbedasWumtanNjfa/D88=;
+        b=ZvoFP+dUEaVzJ3d7dcxQEwXjuRDhy7aAIFtmvXX3JD1DChSGEBu46qcDJuvt9tR9dB
+         b3KQ4bS7mW7XM2r35uRklkj1WTctPH6n6Dtl+uX9dTFo8UKXtRxsOS1BK6MYnaH1bcHO
+         wCRSCjgWl373vhskbAIOOmndAQbW/5HJkUSVPo1Ics+gUw1gOSzixzjqYDVgmGXCA8N8
+         iPMRjvM/yKsLDdHhSyfaSL/cXCxmcxCuVyYoT2v+tfUriO4x3F7rLcFn54PoNc4DLJhS
+         ajJNsHstka5xO9uBc3vbiLvO68hl4ClCxdJSv59GSYwme99mHXj4ctkMCySJVvB3psQ7
+         EjWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1HAy0XKTm0vGQ2AwrRL3NQlUbedasWumtanNjfa/D88=;
+        b=hgw4zEK+kaAzGbx/egSqQ/FF9Kplv5ONp741J7kPjzpr8/7u5hQrKNOAs/lyHuEz43
+         SJG1QVGlnId9wd571b8nWlZ9lFY2wVFVbgKkEcmHHA9sjpehWIjjJ4uDHWzP5voHQLJQ
+         oG76P0ds1rDen5PmcTIviTBSIRPy3C+b5/HkFd9Oll9djoDHYiJO94nwCRhl8Ghyt4hl
+         9dRKrSZSR6/lFGQCUstgfxaQpLJtiBXbzMT/zJo/yKMF/lmY5mG4bb+v3iQwbq0M93zl
+         e/stUqLbXXCHZRgv1KXzHUtQw3FKSk6tm5ugOndLaPQk5tgxTwzrp/Fh+qbzSVtJx7rK
+         B6ww==
+X-Gm-Message-State: AFeK/H0+84A11aS+377bAZJRL73ggAQtVCZOaiBhLZs514wvxtGo3PxwEVVm387jDuNYVE4mI4XtaJ4k87Tdu1qr
+X-Received: by 10.99.247.83 with SMTP id f19mr24159pgk.158.1490042120856; Mon,
+ 20 Mar 2017 13:35:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 46B0F218-0DAD-11E7-A345-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.100.162.161 with HTTP; Mon, 20 Mar 2017 13:35:20 -0700 (PDT)
+In-Reply-To: <xmqqpohbvih5.fsf@gitster.mtv.corp.google.com>
+References: <cover.1490026594.git.mhagger@alum.mit.edu> <f16c123354404088f9ffef0b0e31d4a9817cb804.1490026594.git.mhagger@alum.mit.edu>
+ <20170320174937.xkozsdruyrj44qg2@sigill.intra.peff.net> <xmqqpohbvih5.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 20 Mar 2017 13:35:20 -0700
+Message-ID: <CAGZ79kZL3MgVVErox-YoksZuoMY1mmV_D7Bq0d-h_mp9w6kg_A@mail.gmail.com>
+Subject: Re: [PATCH 09/20] refs: split `ref_cache` code into separate files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-sourav mondal <souravcristiano502@gmail.com> writes:
-
-> Subject: Re: [PATCH v1] adding word_regex for go language
-
-Perhaps clarify the title with what area this change affects, e.g.
-
-	Subject: userdiff.c: patterns for "go" language
-
-cf. Documentation/SubmittingPatches.
-
-> Go programming language is one of the promissing language now. Adding built-in driver for the same. This patch contains word_regex for go. As the language specification this has alpha-numeric and under-score for identifiers. It covers all types of number system decimal, octal, hexadecimal. Also can specify signed or usigned number by using "u or U", long number by using "l or L" and exponent term by using "e or E". The following lines cover all types of operator ex. arithmatic, logical, bitwise, assignment etc.. 
-
-Wrap long lines.  Also unless there is a good reason not to, we tend
-to write our log messsage in imperative mood, as if you are giving
-orders to the codebase to "be like so", or giving orders to a patch
-monkey to "make the code like so".
-
+On Mon, Mar 20, 2017 at 12:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> Signed-off-by: sourav mondal <souravcristiano502@gmail.com>
-> ---
+>> It might have been a bit easier to review as separate steps for that
+>> reason, but I doubt it's worth going back and re-doing. I'll take your
+>> word that nothing substantive changed.
 >
-> I'm working on go language patterns and will send it soon.
-> thanks & regards 
-> sourav
->
->  userdiff.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/userdiff.c b/userdiff.c
-> index 2f8e078..99f5539 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -148,6 +148,13 @@ PATTERNS("csharp",
->  	 "[a-zA-Z_][a-zA-Z0-9_]*"
->  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
->  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
-> +PATTERNS("go",
-> +	  /* word_regex */
-> +	 "[a-zA-Z_][a-zA-Z0-9]*"/* identifiers */
-> +	 "|[0-9eE]+[lL]?[uU]?|0[xX]?[0-9a-fA-F]+[uU]?[lL]?" /* numbers */
-> +	 "|[-+*/%<>&|!^=]="/* operators */
-> +	 "|--|\\+\\+|&&|<<=|>>=|\\|\\|"
-> +),
+> In such a case when I do not want to "take your word", I often do
+> "blame -C" on the result, setting the bottom of the range close-by.
+> I should mostly see the ^bottom lines (or with "blame -b", lines
+> intended with blanks without any commit object name).
 
-PATTERNS() takes three arguments, the name of the pattern, pattern
-and word_regex.
-
-Please do not send an incomplete patch that does not even compile
-without marking as such (i.e. request for help or early comments
-from those who are willing to help even on an incomplete work).
-
-Thanks.
-
+FYI:
+I still want to revive the series that colors moved text differently.
