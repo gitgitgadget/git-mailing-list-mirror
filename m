@@ -6,79 +6,79 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1749E20958
-	for <e@80x24.org>; Mon, 20 Mar 2017 16:06:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2FEC20958
+	for <e@80x24.org>; Mon, 20 Mar 2017 16:09:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754187AbdCTQGf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 12:06:35 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55538 "EHLO
+        id S1755282AbdCTQIy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 12:08:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50851 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754058AbdCTQFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 12:05:07 -0400
+        with ESMTP id S1755348AbdCTQIv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 12:08:51 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 06652794A6;
-        Mon, 20 Mar 2017 11:57:45 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6EEAC79560;
+        Mon, 20 Mar 2017 12:02:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=yOYXfazS4c5L
-        jTZKQe7tiYmk9Wo=; b=A70iEhqpKqRYKgWjJyr70jKqul+AlQtFh3Erkv+O12xr
-        n5VbadBcN7zZqnAxlmLW3Fw8zkvAbL/UIArU5+qcisW0BCKJ7r5uabXB20CLm3eE
-        Q7Hp0wiO5dvrz/G6I6cWL1IdgAqEiTkcMWaWRXXFw4WcvxQWv3LnLCKL+awCHjk=
+        :content-type; s=sasl; bh=Bv3/ZLnLo2SSTa5XhaYeGvQsyNQ=; b=evONoV
+        Nte9JhY0CichgSWtyk/Q7E1wmOGhlwkvPo5kb1M0ZR2o3f1L7FUyg+UjAr1MRKIO
+        X+N2qzMkFTlOUcC/l/AXv4hgMHL4CFgqJJqy3O50YL0ctWYj713gIy29Helk3McH
+        C4VDFCejZVAQjvzE+PaZn4p0ThNg04u/WguHs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=bhWjuN
-        Xx4PofPU7Ac33mmWX6WrcGbFy7uOiGqwjjAo7yLweEE5f2dCer2HhdWQcZK/H6BC
-        A1pMobmZF0VJtJT3rXDWEGIBPFKDwpGbv794MOkxYwUdggCqM35F2ez4pkqs7RGN
-        WfeNAUnIVUicbeelwHuwfgcYWWscman5ZkIzQ=
+        :content-type; q=dns; s=sasl; b=WLOKwvHQhrGe4KDZpzAYlWLUZqC10Tfn
+        R7azKHeXg73Pg4i9DHhmoeE/CVvDvc+ysbelSQ4MtnBwWe1ECIU/FsnEroKTxTCy
+        Zu8ZI/noeIzJ6C/0wzz7+T7vPNlemuLOfKv4StMjHl6qdSaMBCMfGiN0A6TlbkvO
+        UenedRV+sBQ=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F2A26794A5;
-        Mon, 20 Mar 2017 11:57:44 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6879D7955F;
+        Mon, 20 Mar 2017 12:02:06 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5140E794A4;
-        Mon, 20 Mar 2017 11:57:44 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C1A007955E;
+        Mon, 20 Mar 2017 12:02:05 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Carlos Rica <jasampler@gmail.com>,
-        Samuel Tardieu <sam@rfc1149.net>,
-        Tom Grennan <tmgrennan@gmail.com>
-Subject: Re: [PATCH 0/8] Various changes to the "tag" command
-References: <20170318103256.27141-1-avarab@gmail.com>
-        <20170320042657.25x5gmh7uz5zgwzf@sigill.intra.peff.net>
-Date:   Mon, 20 Mar 2017 08:57:43 -0700
-In-Reply-To: <20170320042657.25x5gmh7uz5zgwzf@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 20 Mar 2017 00:26:57 -0400")
-Message-ID: <xmqqefxsx7ns.fsf@gitster.mtv.corp.google.com>
+To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 0/2] diff --no-index: support symlinks and pipes
+References: <20170318210038.22638-1-dennis@kaarsemaker.net>
+        <xmqqo9wwzzpl.fsf@gitster.mtv.corp.google.com>
+        <1490006404.15470.12.camel@kaarsemaker.net>
+Date:   Mon, 20 Mar 2017 09:02:04 -0700
+In-Reply-To: <1490006404.15470.12.camel@kaarsemaker.net> (Dennis Kaarsemaker's
+        message of "Mon, 20 Mar 2017 11:40:04 +0100")
+Message-ID: <xmqqa88gx7gj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: F4A11A42-0D85-11E7-8310-FC50AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 906F0F74-0D86-11E7-B4D9-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-> On Sat, Mar 18, 2017 at 10:32:48AM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+> On Sun, 2017-03-19 at 15:08 -0700, Junio C Hamano wrote:
+> ...
+>> > - A --derefence option was added and the default is no longer to dereference
+>> >   symlinks.
+>> 
+>> I do agree that it makes sense to have --[no-]dereference options,
+>> but I do not think it was my feedback and suggestion to make it
+>> optional (not default) to dereference, so please do not blame me for
+>> that choice.
 >
->> This series incorporates and replaces all the "tag" patches I have
->> floating around the list, and adds a lot in the mix which discovered
->> while working on the initial two patches, but which made sense as
->> separate patches.
->
-> I had a few small comments, and I agree with the points that Junio
-> raised. But aside from that, it looks good to me.
+> Then I misinterpreted your message at 
+> http://public-inbox.org/git/xmqqk29yedkv.fsf@gitster.mtv.corp.google.com/
+> No blame inteded, my apologies for coming across as blaming.
 
-Thanks for catching issues I missed, and thank you to both of you to
-working their solution out quickly.  It seems that a final reroll
-will be rather an uncontroversial one that can be merged to 'next'
-and then to 'master' soonish.
+s/blame/credit/ then.  I do not too deeply care which one is the
+default, and if we were adding --no-index without any existing users
+today, I probably would suggest making it deref by default (i.e. to
+make "diff --no-index" match better what other peoples' diffs do),
+but that would be a behaviour change to existing users if done today,
+so I think what you did probably is a good thing.
 
-Thanks for working on this.
+Thanks.
