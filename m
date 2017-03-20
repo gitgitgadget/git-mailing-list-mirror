@@ -2,92 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F39C2095B
-	for <e@80x24.org>; Mon, 20 Mar 2017 12:36:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D3C12095B
+	for <e@80x24.org>; Mon, 20 Mar 2017 12:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753852AbdCTKlh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 06:41:37 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:35433 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753664AbdCTKkn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 06:40:43 -0400
-Received: by mail-wm0-f43.google.com with SMTP id u132so59726211wmg.0
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 03:40:06 -0700 (PDT)
+        id S1754113AbdCTMjY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 08:39:24 -0400
+Received: from mail-ot0-f177.google.com ([74.125.82.177]:35550 "EHLO
+        mail-ot0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753950AbdCTMiq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 08:38:46 -0400
+Received: by mail-ot0-f177.google.com with SMTP id x37so131268764ota.2
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 05:38:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=y5RVcmG7MAsq+Hbzf3aEhIZKmujdZJXVbG3NyXL9oPs=;
-        b=2BFIrp2VQeXdySIUmIpGt38OcFaOtEfrx5B/BkhZ7s2u/is4RABw3x42Tdl6crA1Bk
-         sj4QxVox+JiUcJq3mgvnMa2FOsgJKTUVORT54zyem9KQaGkHCTMKRooXfXEFxDQk4qZq
-         CadYh5sEJblsFsbsiolbubE4AvYRoqRbWnTs3P+P1315M3uONK3U9yylRLeHDssAUzHj
-         RASG44UrPhDyrYnGfrjzXP+4ONLXTUXgozBiuFD2h72r2sq0kWAX+C3mXbQ3mv7xYV3V
-         zBnCLar5UCHWGtIIM/UKQyHTYvoFph8VMOv++wpC0OBPvq3f1UPBbJ3YKx+80HZD7A5Q
-         Qh1Q==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Lgtvm5mI697o3gXwxIrRwBJnDfBloZ2Yp9yYGp9VsPw=;
+        b=tN5gG5FYq/D/0myirFMeEcCz3cCguCaZuNZCdagBcX2iyW+VkwfG+6qQFQK9higWzW
+         IwA2MOZb2yAIOAYAbWXoELNAoTZrSnYIKMc7kr554HijNsVFvwG7YnQx270N3kTWPfuf
+         bRgj5n2/fhNRwnrkDOwFWihSns+p6LCpsRnUkuBv531YMdwqQYK6GeJGkcaTj2mwGqHH
+         eo7xUH8Bc/w9jBXIH/9EmIrE81A4TlvHZx+VyYsht90209WxSa9kdjDtgdgEid1bfSX9
+         ugVDLSH3SIb2Yxv47/NhQG5GryC6DacRtV78e1DsU28MPJGlIBaNkZdmq/AX/6DIbR4N
+         Mjiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=y5RVcmG7MAsq+Hbzf3aEhIZKmujdZJXVbG3NyXL9oPs=;
-        b=CSsUkLk52RII7ATs88ymDpZPxXEOUvdSmDRaC7yn1yqCWHC+zsZtGQWo9skrf+HrK9
-         /X0jNCm3++AgfjnJshYqrzDBXxWpZNLy7LTKgXmpXZzAt8k1NAQ7ESwWXATJHEE7wI9y
-         VLN+m7KMB624NbBLYSzMq0KPXrFoO5Y4sRUVvdthBZDgmdValAMw7uzUAtz+ycpQp91E
-         yYBsFXvSIBtfKDYzIVJPM3M1HGxHWagLeSTtLVV2nlBvnU8f1VgCZJn/nvm/v6+Wgj3J
-         x98ZsncUWUQytIvUJstdIkekYps/uE4hAgAD7hAf/2TMnr/JXPQWFlf0Do5Y4aKSVPst
-         +ZeQ==
-X-Gm-Message-State: AFeK/H3hnCazBvPdd7c8tpVg0YHx78eMmUqjI2yTYmj2rnx3xHbG043v8ghG78ZM9CkU1Q==
-X-Received: by 10.28.208.7 with SMTP id h7mr9448844wmg.79.1490006406164;
-        Mon, 20 Mar 2017 03:40:06 -0700 (PDT)
-Received: from seahawk (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id 53sm20288374wrt.52.2017.03.20.03.40.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Mar 2017 03:40:05 -0700 (PDT)
-Message-ID: <1490006404.15470.12.camel@kaarsemaker.net>
-Subject: Re: [PATCH v3 0/2] diff --no-index: support symlinks and pipes
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Date:   Mon, 20 Mar 2017 11:40:04 +0100
-In-Reply-To: <xmqqo9wwzzpl.fsf@gitster.mtv.corp.google.com>
-References: <20170318210038.22638-1-dennis@kaarsemaker.net>
-         <xmqqo9wwzzpl.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Lgtvm5mI697o3gXwxIrRwBJnDfBloZ2Yp9yYGp9VsPw=;
+        b=HojiyGQzXl60mBXWd3doPJcUOkiPHmHqZKuid9tBx3NMtV2nI4u+BHdIfr6B3V2MnI
+         ctg+F8fxr2WOzklvKVZcok4as19bNDHVIOBp/Serfp4UzJBHqb/Xn1WojMsT9mVOsDAe
+         ZLSYfi1FaTjzAIc3GsUKA1U0AkNkdOF+9b2qfAJ6rbHf8kVHsfUOxgqqz2R6wNW0nyvr
+         f8KQqVuVPLItOyCnP2VNzWvNrVfgmO8hmZao92Btdbsi9pPValZhW3PawhfFaXKpGzDw
+         42a6rYyC/wb+JbB+xAr5GBzFSFGt2MX0IaGHudnqZYwdd7ZM5QsRy2vV9acq+Fixq1Nj
+         jX/g==
+X-Gm-Message-State: AFeK/H3YuV2PQa20ND/ZxZvq7WCuwZ56Kks9QhvHZXBJoTYB+nD/LJySBtyehM5zZR6s30YelhbChhdTyjEmcw==
+X-Received: by 10.157.18.132 with SMTP id g4mr15974584otg.10.1490011818585;
+ Mon, 20 Mar 2017 05:10:18 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.74.158.84 with HTTP; Mon, 20 Mar 2017 05:09:48 -0700 (PDT)
+In-Reply-To: <3738362d-6c76-cba7-824a-d689bbe290c6@alum.mit.edu>
+References: <20170222140450.30886-1-pclouds@gmail.com> <20170318020337.22767-1-pclouds@gmail.com>
+ <20170318020337.22767-18-pclouds@gmail.com> <3738362d-6c76-cba7-824a-d689bbe290c6@alum.mit.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 20 Mar 2017 19:09:48 +0700
+Message-ID: <CACsJy8CHjSMV1qOAB-7-F562jx+3XKtQOjuPOFz0wu-pYR3aeA@mail.gmail.com>
+Subject: Re: [PATCH v6 17/27] refs: move submodule code out of files-backend.c
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Stefan Beller <sbeller@google.com>,
+        David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2017-03-19 at 15:08 -0700, Junio C Hamano wrote:
-> Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
-> 
-> > Normal diff provides arguably better output: the diff of the output of the
-> > commands. This series makes it possible for git diff --no-index to follow
-> > symlinks and read from pipes, mimicking the behaviour of normal diff.
-> > 
-> > v1: http://public-inbox.org/git/20161111201958.2175-1-dennis@kaarsemaker.net/
-> > v2: http://public-inbox.org/git/20170113102021.6054-1-dennis@kaarsemaker.net/
-> > 
-> > Changes since v2, prompted by feedback from Junio:
-> > 
-> > - A --derefence option was added and the default is no longer to dereference
-> >   symlinks.
-> 
-> I do agree that it makes sense to have --[no-]dereference options,
-> but I do not think it was my feedback and suggestion to make it
-> optional (not default) to dereference, so please do not blame me for
-> that choice.
+On Mon, Mar 20, 2017 at 4:05 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> [...]
+>> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+>> index f732473e1d..dfa1817929 100644
+>> --- a/refs/refs-internal.h
+>> +++ b/refs/refs-internal.h
+>> @@ -482,12 +482,11 @@ struct ref_store;
+>>  /* refs backends */
+>>
+>>  /*
+>> - * Initialize the ref_store for the specified submodule, or for the
+>> - * main repository if submodule == NULL. These functions should call
+>> - * base_ref_store_init() to initialize the shared part of the
+>> - * ref_store and to record the ref_store for later lookup.
+>> + * Initialize the ref_store for the specified gitdir. These functions
+>> + * should call base_ref_store_init() to initialize the shared part of
+>> + * the ref_store and to record the ref_store for later lookup.
+>
+> Maybe mention that the function will make its own copy of `gitdir`?
 
-Then I misinterpreted your message at 
-http://public-inbox.org/git/xmqqk29yedkv.fsf@gitster.mtv.corp.google.com/
-No blame inteded, my apologies for coming across as blaming.
-
+I would think that's the default/sane behavior and not need to be
+mentioned? A function that keeps a pointer even after it exits, now
+that's something that must be documented.
 -- 
-Dennis Kaarsemaker
-http://www.kaarsemaker.net
+Duy
