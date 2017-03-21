@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 558AD2095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 13:00:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC69C2095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 13:00:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757426AbdCUNA4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 09:00:56 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34804 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756886AbdCUNAv (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1757326AbdCUNAz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 09:00:55 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:32902 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756962AbdCUNAv (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Mar 2017 09:00:51 -0400
-Received: by mail-wm0-f68.google.com with SMTP id u132so2771026wmg.1
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 05:59:34 -0700 (PDT)
+Received: by mail-wm0-f67.google.com with SMTP id n11so2784728wma.0
+        for <git@vger.kernel.org>; Tue, 21 Mar 2017 05:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ovNHPNDIpXqVOzkBZH7SQ16oRbH/Dt/uvKWqUpfssfE=;
-        b=lI9/L/PQO367dYc9BvN2yHv3mgC3Gb18B9xbZIFAUZkPHdFkrGVMPcmAiM+Pr3psOm
-         QvgyNYq/EKj6TAONzhXXLJDzDrzkZCsTb0xnrqRUJ0zRowS4LgCBJ5viY3Dn2qH5yPBR
-         hnNxqsWQK2ekgL7aRHvNzMWh56kWrlegWmKfd6rR+i8PCaWsh7SquzrEpfpiEtI3evdm
-         YoRrZPjo11kCBxdd3qXqJlMsnrVrySqVB5wSLuArlm9348o2c+MQ4viNEHH1jM9WFESo
-         mSYGhsQ7BdvCotW75bRMiGJAdVRv5RjGZutZLfRbie9X2vOKrLRmanypFOWnc90cIHb8
-         okYQ==
+        bh=Yb5vW3GBrytlU1iAB9X/y6F8Gs+JnLJBxo32d8oFTR4=;
+        b=uaTpN6V/fWqyMfVtm3feEUP7yk9rM7NYICpUkdf4Rq5mgvOV2+Cs+SL1ievtKqDfns
+         Gi1K8Juzj6DQ5rFfKN9Qy9uq4vNIMQ3fbYYfV6LANoEGuG/uxyCijoK0Pg20bD9WAU74
+         lsCYTeaW68V7KaDOz4HmfU2Sq/T+3yIaBJVolb8w0UvKHKJOikOwrNQi6MDJilA3E/Pd
+         iFdE7W+7bjFCRxkMX5bKyIuNUDEya7JBuKeMVgQnVWfAnG8M4YCbVW7SqcSI4UsWvHxI
+         W4CLydcfSH5hX1qRlQeVm7dWm2+Y4CsDRAGsL3CuL5kiZC4amnc+ABz/MtB72RXC/PF4
+         Wssg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ovNHPNDIpXqVOzkBZH7SQ16oRbH/Dt/uvKWqUpfssfE=;
-        b=H84a/ZPUxYlV1dyBw1TaQkOfrsxG2o2SMFtPLzzZ58s4J48CbEJ+v7C0C3f08Wam2n
-         NRGEkoXQZ8uHQUkcxvf22z9DLkjiXb8PoUhK44mo722K8ul59voEamQHtxZgycNbsX/S
-         SI/b37G8VjwbyiBB0ZjFHVNZNKREKW2HCd0y/NS4cK8wUBzsbySA8u3JvA3Y1IiRrBb0
-         4UeoOQhU/hHQUor17/GgJ/+Cz5S4+Nru1KC4r5ZsqINr+/BkOknE9om+22zIJD8nPLYB
-         LcC6Og7RjLvr6Kde0WPLu0dsUQYM7QhZRDkRr0lFA4v85I09G1ItgCLC/C6wAXCytOyM
-         FWTg==
-X-Gm-Message-State: AFeK/H2xzJe1Qsq07pxdBLyZZWuW2G06V4RnhWhWm3SdTPSbmIIrRm6SW9ojvXoKtg53PQ==
-X-Received: by 10.28.30.19 with SMTP id e19mr2641956wme.52.1490101173614;
-        Tue, 21 Mar 2017 05:59:33 -0700 (PDT)
+        bh=Yb5vW3GBrytlU1iAB9X/y6F8Gs+JnLJBxo32d8oFTR4=;
+        b=KdW3Bbz0wIBLftgdA4mQlDYfz8Whnyc7ZPMCsjmC1FSX10RzQFy9ZMyqeA7WUJUldA
+         iS0yMHExD3ISa2Rb/6hVf0RHsUO6QUW+3Ty082igMc1uNLmHbuai6VPoHCzvqeugX82X
+         2barBSYHZVB4PXuO9lHojtKGpQ+Ik2QBUyvNsn2pFE2+A6qe8jhLuUiBe+vklRm51k4n
+         cyTUkZ+jvv7fH9K5YZqYV9/T/ELfZrc+GEDArYSTIIZdK/Prh1cz+VmqCl3JP4zhrbDE
+         5qF/497at7hZo42uRmQEyucOld3XOXzJ+5K3G3abder4ZUlmbZn9cge69B2fmHXFXgwI
+         YSpA==
+X-Gm-Message-State: AFeK/H0cInhC7+gcO//ve2r7XfFwyuMVPs2Q9G5htL0q72R2/fwhDEIWlO0UyNZ5Fb1OBg==
+X-Received: by 10.28.87.6 with SMTP id l6mr2646884wmb.109.1490101189986;
+        Tue, 21 Mar 2017 05:59:49 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 63sm17555072wmg.22.2017.03.21.05.59.32
+        by smtp.gmail.com with ESMTPSA id 63sm17555072wmg.22.2017.03.21.05.59.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 21 Mar 2017 05:59:32 -0700 (PDT)
+        Tue, 21 Mar 2017 05:59:49 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 01/16] tag doc: move the description of --[no-]merged earlier
-Date:   Tue, 21 Mar 2017 12:58:46 +0000
-Message-Id: <20170321125901.10652-2-avarab@gmail.com>
+Subject: [PATCH v2 03/16] tag doc: reword --[no-]merged to talk about commits, not tips
+Date:   Tue, 21 Mar 2017 12:58:48 +0000
+Message-Id: <20170321125901.10652-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170321125901.10652-1-avarab@gmail.com>
 References: <20170321125901.10652-1-avarab@gmail.com>
@@ -73,53 +73,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the documentation for the --merged & --no-merged options earlier
-in the documentation, to sit along the other switches, and right next
-to the similar --contains and --points-at switches.
+Change the wording for the --merged and --no-merged options to talk
+about "commits" instead of "tips".
 
-It makes more sense to group the options together, not have some
-options after the like of <tagname>, <object>, <format> etc.
+This phrasing was copied from the "branch" documentation in commit
+5242860f54 ("tag.c: implement '--merged' and '--no-merged' options",
+2015-09-10). Talking about the "tip" is branch nomenclature, not
+something usually associated with tags.
 
-This was originally put there when the --merged & --no-merged options
-were introduced in 5242860f54 ("tag.c: implement '--merged' and
-'--no-merged' options", 2015-09-10). It's not apparent from that
-commit that the documentation is being placed apart from other
-options, rather than along with them, so this was likely missed in the
-initial review.
+This phrasing might lead the reader to believe that these options
+might find tags pointing to trees or blobs, let's instead be explicit
+and only talk about commits.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-tag.txt | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ Documentation/git-tag.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 525737a5d8..33f18ea5fb 100644
+index 68b0ab2410..3abf912782 100644
 --- a/Documentation/git-tag.txt
 +++ b/Documentation/git-tag.txt
-@@ -124,6 +124,11 @@ This option is only applicable when listing tags without annotation lines.
- 	Only list tags which contain the specified commit (HEAD if not
+@@ -125,11 +125,11 @@ This option is only applicable when listing tags without annotation lines.
  	specified).
  
-+--[no-]merged [<commit>]::
-+	Only list tags whose tips are reachable, or not reachable
-+	if `--no-merged` is used, from the specified commit (`HEAD`
-+	if not specified).
-+
+ --merged [<commit>]::
+-	Only list tags whose tips are reachable from the specified commit
+-	(`HEAD` if not specified).
++	Only list tags whose commits are reachable from the specified
++	commit (`HEAD` if not specified).
+ 
+ --no-merged [<commit>]::
+-	Only list tags whose tips are not reachable from the specified
++	Only list tags whose commits are not reachable from the specified
+ 	commit (`HEAD` if not specified).
+ 
  --points-at <object>::
- 	Only list tags of the given object.
- 
-@@ -173,11 +178,6 @@ This option is only applicable when listing tags without annotation lines.
- 	that of linkgit:git-for-each-ref[1].  When unspecified,
- 	defaults to `%(refname:strip=2)`.
- 
----[no-]merged [<commit>]::
--	Only list tags whose tips are reachable, or not reachable
--	if `--no-merged` is used, from the specified commit (`HEAD`
--	if not specified).
--
- CONFIGURATION
- -------------
- By default, 'git tag' in sign-with-default mode (-s) will use your
 -- 
 2.11.0
 
