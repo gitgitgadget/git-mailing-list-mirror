@@ -2,121 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 654BC2095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 15:52:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 860A12095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 15:52:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757757AbdCUPwd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 11:52:33 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34103 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757741AbdCUPwa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 11:52:30 -0400
-Received: by mail-wr0-f196.google.com with SMTP id u48so23082569wrc.1
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 08:52:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :content-transfer-encoding;
-        bh=tMUTO8Tbm+2dOnM2jhP4cWDDa5yhzfCnPdHjDjo2yq4=;
-        b=czKBBxvImFj/wdWwRrjKGs9f0KS1TlHG8IgdtjFt+YPie6t8ttvoZp611+4dKkJecb
-         7iS/E6a84gemz2qsEBVEV65p5y2jO4CPzt1snv+VwEFgEcXmohKC/exigrW1G82lcu7i
-         dFgVLDoRSxfiWyQu4M9d/3iT9fT6Xr1nxJm+47d26HNMOsjuwt0X09rAsuMBr63c670V
-         qwJatQe+5fPKthWt6zPaVLvZ516Cy8sUV/m9nXWoK9kGurTvjE+BI/gkoT8tE6Y15+r1
-         aFFZoxGyGifSfV/8feozZR4XvNfkEKGyYLzLJzk1CabptcpfCyq3zN6sXlTaTt1oQzXo
-         Bk1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=tMUTO8Tbm+2dOnM2jhP4cWDDa5yhzfCnPdHjDjo2yq4=;
-        b=GUIuzavX5PTNLNvB8id5rNejEGVnyBGgrMbCrKuhFVfCTYRxvgCin7niEbIlxlfV6k
-         DUVhYVIPReJ5qnFdwtftUFnstWem+kc4YtYCzesLV9MCBWa7kpDDZclY/uef1Vy2eUOm
-         /hhOrTp2svzNY3dmr3er45/kFEsf+H9oPSM0m1/RObK4C3auOPl+41uRaSnMx3fmnBHd
-         fO+73bSz97SWvrvQsMabISCLEguP0NbdetoID9UW11QQIHIaTCHGtqCBdP1748pElX9x
-         aip/o7gPDAf1ifRdDvHBeva7GsTVl9Zd3GTyl98jWe+l6IwLQsi/T9m4yia8GiM8NGub
-         pLjg==
-X-Gm-Message-State: AFeK/H2XLXcoERnOyUDJEKCTm/J+cr4EQ1hUPZgX4XfsIR95JB/Ue2/8vXHNTcoCGRJA6g==
-X-Received: by 10.223.136.4 with SMTP id d4mr31295074wrd.44.1490111548304;
-        Tue, 21 Mar 2017 08:52:28 -0700 (PDT)
-Received: from localhost.localdomain (x4db02660.dyn.telefonica.de. [77.176.38.96])
-        by smtp.gmail.com with ESMTPSA id i133sm18247503wmg.26.2017.03.21.08.52.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 21 Mar 2017 08:52:27 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] doc/SubmittingPatches: show how to get a CLI commit summary
-Date:   Tue, 21 Mar 2017 16:51:53 +0100
-Message-Id: <20170321155153.20753-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.12.0.460.g848adbf9b
-In-Reply-To: <20170321142154.16993-3-avarab@gmail.com>
+        id S1757637AbdCUPwJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 11:52:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50513 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1757145AbdCUPvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 11:51:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3DACF88BD4;
+        Tue, 21 Mar 2017 11:51:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=O3C8Ko4gt1HA44EZ2wsGwcgFjV0=; b=VTvdVu
+        fPjARgRxz+Va4NdgUi3R4mqXVnpiGLE7M7fmJxDAU6GRBHjIYvRfEryxbD74PUre
+        +S52SYEcQgaj72WjoLFfTl83MDDd1BPX+VhKhq1TABEterXNzgXkiu5XY/pP+O/Q
+        oWwceY03JQSM2wj7Y2bMWifpcetQh3y7p1xFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=lRmTZ+8bs7/s4tCb92EzProeCrDLbfNI
+        SdeoHU6n7Ye6qMWPEs/TXyZgdTrN/teGtxLya19jt+iVLFLxaBeFW9bDlBsTk9yh
+        +ik77Sgh91mIgireg3Vn6xV3n0CA69SoGJS2kYB72XK/ZiXLXK1CYFe2thuvNVGW
+        AiAsA1ei7FA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 363AB88BD3;
+        Tue, 21 Mar 2017 11:51:49 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C16188BD2;
+        Tue, 21 Mar 2017 11:51:48 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com
+Subject: Re: [PATCH v3 0/2] bringing attributes to pathspecs
+References: <20170310185908.171589-1-bmwill@google.com>
+        <20170313182322.27539-1-bmwill@google.com>
+        <CACsJy8BRTuH=xv_xvQPOkVaRcMXKnjgT77SXkwLkZ6aAvcTyHg@mail.gmail.com>
+Date:   Tue, 21 Mar 2017 08:51:47 -0700
+In-Reply-To: <CACsJy8BRTuH=xv_xvQPOkVaRcMXKnjgT77SXkwLkZ6aAvcTyHg@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 21 Mar 2017 17:51:29 +0700")
+Message-ID: <xmqqr31qsk4s.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4AFE856E-0E4E-11E7-9FBC-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Amend the section which describes how to get a commit summary to show
-> how do to that with "git show", currently the documentation only shows
-> how to do that with gitk.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  Documentation/SubmittingPatches | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-> index 9ef624ce38..d8c88153c1 100644
-> --- a/Documentation/SubmittingPatches
-> +++ b/Documentation/SubmittingPatches
-> @@ -134,8 +134,17 @@ with the subject enclosed in a pair of double-quotes, like this:
->      noticed that ...
->  
->  The "Copy commit summary" command of gitk can be used to obtain this
-> -format.
-> +format, or this invocation of "git show":
->  
-> +    git show -s --date=short --pretty='format:%h ("%s", %ad)' <commit>
-> +
-> +To turn that into a handy alias:
-> +
-> +    git config --global alias.git-commit-summary "show -s --date=short --pretty='format:%h (\"%s\", %ad)'"
-> +
-> +And then to get the commit summary:
-> +
-> +    git git-commit-summary <commit>
+Duy Nguyen <pclouds@gmail.com> writes:
 
-- 'tformat:' is a better fit than 'format:' in this case, because it
-  adds a trailing newline.
+> The series updated match_pathspec(), but that's only one of two
+> pathspec filtering functions. The other is tree_entry_interesting()
+> (e.g. for "git grep <tree>"). Do you have plans to support :(attr)
+> there too? "No" is a perfectly fine answer (and it will end up in my
+> forever growing backlog).
+>
+> The thing about tree_entry_interesting() is, we would want to stop
+> traversing subtrees as soon as possible. Naively implemented, we would
+> need to traverse all subtrees so we can call match_attrs(). That's not
+> great. Oii I'm rambling.. I don't know yet how to implement this thing
+> efficiently.
 
-- I actually have a pretty format alias exactly for this purpose:
+Thanks for great insights.  
 
-    pretty.commitref=tformat:%h (%s, %as)
-
-  and a shorter 'git log -1 --pretty=commitref <commit>' does the
-  trick.  Perhaps it would be worth to provide this as a builtin
-  pretty format.
-  (Of course this relies on '%as' being interpreted as short author
-  date to make the format work on its own, without the additional
-  '--date=short'.  Alas, git doesn't support this, see [1].
-  If only there were a pretty format specifier for suppressing diff
-  output, then the '-s' could go away as well.)
-
-- I find that the two subsequent 'git's in 'git git-<whatever>' look
-  strange.  However, to make this point moot right away:
-
-- I don't think SubmittingPatches is the right place to show how to
-  create and use a command alias.
-
-
-[1] - http://public-inbox.org/git/1444235305-8718-1-git-send-email-szeder@ira.uka.de/T/#u
-
+It indeed will become issue when an overly broad pathspec pattern is
+combined with an attribute requirement, e.g. ".:(attr=X)", and we
+may have to devise a way to tell that there won't be any paths with
+that satisfy the attribute requirement before descending into a tree
+as an optimization.
