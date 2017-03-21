@@ -2,62 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92E3F2095D
-	for <e@80x24.org>; Tue, 21 Mar 2017 17:01:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99C162095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 17:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933663AbdCURAy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 13:00:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48705 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933610AbdCURAQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 13:00:16 -0400
-Received: (qmail 6065 invoked by uid 109); 21 Mar 2017 17:00:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Mar 2017 17:00:09 +0000
-Received: (qmail 16462 invoked by uid 111); 21 Mar 2017 17:00:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Mar 2017 13:00:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Mar 2017 13:00:05 -0400
-Date:   Tue, 21 Mar 2017 13:00:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Andreas Krey <a.krey@gmx.de>
+        id S933396AbdCURMV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 13:12:21 -0400
+Received: from continuum.iocl.org ([217.140.74.2]:57751 "EHLO
+        continuum.iocl.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757637AbdCURLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 13:11:02 -0400
+Received: (from krey@localhost)
+        by continuum.iocl.org (8.11.3/8.9.3) id v2LH7YI19123;
+        Tue, 21 Mar 2017 18:07:34 +0100
+Date:   Tue, 21 Mar 2017 18:07:34 +0100
+From:   Andreas Krey <a.krey@gmx.de>
+To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
 Subject: Re: cherry-pick --message?
-Message-ID: <20170321170005.35ryjh4pr3jvvmx3@sigill.intra.peff.net>
-References: <20170321160520.GA15550@inner.h.apk.li>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Message-ID: <20170321170734.GI28331@inner.h.apk.li>
+References: <20170321160520.GA15550@inner.h.apk.li> <20170321170005.35ryjh4pr3jvvmx3@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170321160520.GA15550@inner.h.apk.li>
+In-Reply-To: <20170321170005.35ryjh4pr3jvvmx3@sigill.intra.peff.net>
+User-Agent: Mutt/1.4.2.1i
+X-message-flag: What did you expect to see here?
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 21, 2017 at 05:05:20PM +0100, Andreas Krey wrote:
-
-> Hi all,
+On Tue, 21 Mar 2017 13:00:05 +0000, Jeff King wrote:
+...
+> > I have an slightly unusual usecase for cherry-pick:
+> > I want to modify the commit message that is used in the process,
+> > e.g. do an d/^PROP:/ on it, but unfortunately -m does something
+> > else here.
+> > 
+...
 > 
-> I have an slightly unusual usecase for cherry-pick:
-> I want to modify the commit message that is used in the process,
-> e.g. do an d/^PROP:/ on it, but unfortunately -m does something
-> else here.
-> 
-> And there is no --message here for good reason, as cherry-pick
-> can pick multiple commits and so on. Bad for me, though.
-> 
-> So, am I down to the combo of format-patch and apply, or is there
-> an easier way? (I'd also like to end up in the same state as with
-> cherry-pick should there be conflicts.)
+> There's "cherry-pick --edit".
 
-There's "cherry-pick --edit".
+Yes, but. I'm in a toolchain, not a user. I'm a command that let
+the user cherry-pick specific things, and I need to edit out the things
+that made the original commit eligible to be picked in the first place.
 
-I had to look it up, though. For a single message I'd have probably done
-"git cherry-pick $commit && git commit --amend". For multiple I'd just
-cherry-pick them all first, then follow-up with "git rebase -i".
+Can't quite rely on the tool's user to do that. :-(
 
--Peff
+I'm not familiar with the plumbing to know where to look there.
+
+- Andreas
+
+-- 
+"Totally trivial. Famous last words."
+From: Linus Torvalds <torvalds@*.org>
+Date: Fri, 22 Jan 2010 07:29:21 -0800
