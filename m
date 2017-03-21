@@ -6,68 +6,102 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AABF2095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 18:10:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 319AD2095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 18:20:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933181AbdCUSJw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 14:09:52 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54191 "EHLO
+        id S1757701AbdCUSUt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 14:20:49 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54429 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1757490AbdCUSJM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 14:09:12 -0400
+        with ESMTP id S933674AbdCUSTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 14:19:46 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F5F16E94F;
-        Tue, 21 Mar 2017 14:09:10 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 942F06503D;
+        Tue, 21 Mar 2017 14:14:25 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=96LFuW/uIqSQAgX8QuRRpWBD3Hw=; b=RVVgSV
-        9VqVRseOwJNBSjiVvXjfSYtf+vPOLghwWrWo6h1jYWN0H47uVc7LFQTR6GWdTcef
-        zf18zUvKJ92C/ZX708m6Foe3D1hI0xzKXyF7+UoLRxudQcZWetKr2rmKDlLOBg07
-        cTrXFdAlQ5dKTc7dH4CW1NwuORFjxJd0PVqb8=
+        :content-type; s=sasl; bh=h1NiTYEfcxB076NYHHbTs3oXPOw=; b=ZFse8J
+        lEizFKRUwNu4x3bi521iKPSjTrvfmxxsOTiUC2tst3BfsnRX+Iz4SsSPs11jDJlm
+        bJHbEAWdfHO1D99C3dF+e26eyJgaWhvx272F2sHZIpEVboqpI05wjPLWPhjaYoM4
+        735EjPHrKviO7OC/yxHMvvkA8sHYL1iD0eFWw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=X416eRQ/i44iwQjo5Y1HoB3qXUFeOPvF
-        MTv5tOTmVz57P1dxW/ptqGZk2V+7Q5McHIvsvq731aTJ6sLLXYAAOTDxrpSBv0vN
-        zKfcKFAmD2nlPuz0p8+lCzqCL081VDbiaKUDSJ0+upmDZAGDBDeGHds+IeezhK6v
-        9/go2QZ3JEk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 74EEC6E94E;
-        Tue, 21 Mar 2017 14:09:10 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=YvBChhSi+3pV2qBwfVQ1FCJmw6zfYuV0
+        4zNYuAT1sPhxJ9PwheitP+WqHK31z84x0Iy1a3YnxuXMcybMwnoey7Bkb6cN2Gj9
+        y4VTN4kNnprTjiH2Uc6A65mqV4YBGkvG7Ml0K3LHzsGmpF+Br/QL9Jk7OXmb5hEi
+        qwliOMDQU4Q=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C1D76503C;
+        Tue, 21 Mar 2017 14:14:25 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BE8726E94D;
-        Tue, 21 Mar 2017 14:09:09 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 004E965035;
+        Tue, 21 Mar 2017 14:14:24 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jean-Noel Avila <jn.avila@free.fr>
+To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] l10n: Introduce framework for localizing man pages
-References: <20170312200248.3610-1-jn.avila@free.fr>
-        <20170320210225.13046-1-jn.avila@free.fr>
-        <20170320210225.13046-2-jn.avila@free.fr>
-Date:   Tue, 21 Mar 2017 11:09:08 -0700
-In-Reply-To: <20170320210225.13046-2-jn.avila@free.fr> (Jean-Noel Avila's
-        message of "Mon, 20 Mar 2017 22:02:24 +0100")
-Message-ID: <xmqqmvceqz7f.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 4/6] prefix_filename: return newly allocated string
+References: <20170321011838.rdhnbfwbigm4s4e3@sigill.intra.peff.net>
+        <20170321012847.yebhpdmk5zrizgmj@sigill.intra.peff.net>
+Date:   Tue, 21 Mar 2017 11:14:23 -0700
+In-Reply-To: <20170321012847.yebhpdmk5zrizgmj@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 20 Mar 2017 21:28:49 -0400")
+Message-ID: <xmqqinn2qyyo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 7B1AB142-0E61-11E7-BD85-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 36FBFA2E-0E62-11E7-BD40-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noel Avila <jn.avila@free.fr> writes:
+Jeff King <peff@peff.net> writes:
 
-> @@ -247,6 +260,11 @@ install-man: man
->  	$(INSTALL) -m 644 $(DOC_MAN1) $(DESTDIR)$(man1dir)
->  	$(INSTALL) -m 644 $(DOC_MAN5) $(DESTDIR)$(man5dir)
->  	$(INSTALL) -m 644 $(DOC_MAN7) $(DESTDIR)$(man7dir)
-> +	$(MAKE) install-man-l10n
+> diff --git a/worktree.c b/worktree.c
+> index 42dd3d52b..2520fc65c 100644
+> --- a/worktree.c
+> +++ b/worktree.c
+> @@ -250,16 +250,19 @@ struct worktree *find_worktree(struct worktree **list,
+>  {
+>  	struct worktree *wt;
+>  	char *path;
+> +	char *to_free;
+>  
+>  	if ((wt = find_worktree_by_suffix(list, arg)))
+>  		return wt;
+>  
+> -	arg = prefix_filename(prefix, arg);
+> +	if (prefix)
+> +		arg = to_free = prefix_filename(prefix, arg);
+>  	path = real_pathdup(arg, 1);
+>  	for (; *list; list++)
+>  		if (!fspathcmp(path, real_path((*list)->path)))
+>  			break;
+>  	free(path);
+> +	free(to_free);
+>  	return *list;
+>  }
 
-FYI.  Having this line in "install-man" target will invoke the po4a
-chain when "make install-doc" is done at the toplevel, so I added a
-SQUASH to remove it after queuing your two patches.
+worktree.c:265:6: error: to_free may be used uninitialized in this function
+---
+ worktree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks.
+diff --git a/worktree.c b/worktree.c
+index 2520fc65cc..bae787cf8d 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -250,7 +250,7 @@ struct worktree *find_worktree(struct worktree **list,
+ {
+ 	struct worktree *wt;
+ 	char *path;
+-	char *to_free;
++	char *to_free = NULL;
+ 
+ 	if ((wt = find_worktree_by_suffix(list, arg)))
+ 		return wt;
+-- 
+2.12.1-382-gc0f9c70589
+
