@@ -7,54 +7,59 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98DF32095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 18:55:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7532095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 18:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933294AbdCUSy4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 14:54:56 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:37757 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933228AbdCUSyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 14:54:23 -0400
-Received: by mail-it0-f41.google.com with SMTP id 190so13915399itm.0
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 11:54:23 -0700 (PDT)
+        id S933183AbdCUS6l (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 14:58:41 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:35959 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933918AbdCUS63 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 14:58:29 -0400
+Received: by mail-it0-f65.google.com with SMTP id 190so2526092itm.3
+        for <git@vger.kernel.org>; Tue, 21 Mar 2017 11:58:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=6tobQUrxNTI55IJN+Q+yoFvhsQWf3Em3OS9W+QJKkxw=;
-        b=sba11wetDQRQRLmiOB3qUXlPWiV0bce5YCA+/xY0RdsOnYksR2XjfAAch3rP3bJPXA
-         9FKknXAZymbwHa71f6GAzyqcLNZvWuJASPznl9WF/tWeYwJSiHqoNbnXnnrZVlNAp53d
-         d8c/cD17IjMIJfhA87HP1jqdIvUkV9Lx9UQxkiAqtfUFOpR3LqmKUU7YxXmZxKTf50e5
-         VegVGqiTC5QGN8tf/xCStYt/qexyPDjrlp/b7ZEiqcib2wMfqX+2CVkB3VdpAjbHnFfa
-         KvI0Ir33SWTlWgajqhwpErXda7wNhpgKmAQpG/ixQyac/4mLuvgMfC8068IjCjQesORQ
-         c+Kg==
+        bh=AX4FWrYZsEpAi2ROx55AyFqR5qH7UbzBesvTdbtiaRk=;
+        b=pCcLTcAzrl985sltNrtmA/4CFpWWIf8sjda8Ixl6EzQ5i0Vs/uXBWyx5InB+YZR9+j
+         7OGKiMyOoTrsj+MpSThN35ndWuM5x5+bVtvKd3b6F1PaLdAILH6VRa1Zs0/Tkb1jLJLW
+         geFcGIAc3b1hlh4Du6jAAh8QG+uOAO8rbAZHeqDA4jydMUU7b/gfPG7icfra3j4oJIrC
+         IPNb5zfazflmCPHgRNMMgrCEQ/B9qExcEX43MSdc48p3VBvV1QfDcwHhgBQNaWsVDI1N
+         hOiBqKFayzw6/u0XgI/xbqNw5Vhih34aOOOMJ7K8hpInlbv1M2gjMJsZsoODl7ZZqDWq
+         nfeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6tobQUrxNTI55IJN+Q+yoFvhsQWf3Em3OS9W+QJKkxw=;
-        b=q7A5R/Kyt8Q9e+2+vPvP6m2B5zK+OEkrPyiamSK74j7WuhR9fvc/IpTK4T8AfAZHM6
-         7uxCM0kxJJ7DGgUuqSddwYUUZkT6pW+df2PXlyRSdVTwHMHzDIzf1Yt7M34UWpbqcGhE
-         JncNL0PfWds+XdD3zG/SCLAS8N049NWFpJaDhnqNJg28NDeE5DXI4cDYW1U9w3thDLrV
-         IauC/ZzXFGUY0R1Pk5F6zH85vCERg24YiB2RgkGfW33tQtfbw+MfPqrD6ukWrZKQTPC4
-         iZMgp2KAMsP/wpe9AlI+aELgMhhe1jASx1EzbcmDV046B61p9hHuzggiHNqpTaTzVV3A
-         J7WQ==
-X-Gm-Message-State: AFeK/H3mT9N/zWRjsOdogWnJYyzf/7Z9rjoWxVh2fcnpVMz1fBUNXOsT3nwliQUL8PMCsreWbn04JfBy+uxlVA==
-X-Received: by 10.36.29.66 with SMTP id 63mr3974878itj.91.1490122064089; Tue,
- 21 Mar 2017 11:47:44 -0700 (PDT)
+        bh=AX4FWrYZsEpAi2ROx55AyFqR5qH7UbzBesvTdbtiaRk=;
+        b=GVGuSVgmTDRvFvr5HXPXvmX03IX0Or14oIRBAWA8aWYLtQEpSUTWMgUJjpTUv+nUOS
+         iF+lMPaeJ0V6umreJ4AIDDXvvl+dgm7S1chQVBdrUORgFbBDL2fxYoyw35a4BaHG4X9b
+         Csk4szZTBrB+ezzfkyQb6Tu6g2Zo3Q8VhhLUgo7wXRnxsBBtmTisr7eOD06/h6TCbQs1
+         1Tw8FcsGFvrcVwS/9IRhg4rfTGQcaSpwt28W5oM6N0OgwtWIWyhTvAMsyE3t0ukrLETx
+         5nviJ6+jbWiek9oAHplsHFcK9vYdGLGR2l+fLp9yfNZeQidmgodywKraBeLVF4gFO8XI
+         zEKA==
+X-Gm-Message-State: AFeK/H3cxeQM7zQ0zvUtkDu8QPdAfJWAL3JyXoPfzWrvPQ5/5I9xbEoPOHJGxX/Qc5XKt2X0gNQx4xV4lGJuaA==
+X-Received: by 10.36.76.11 with SMTP id a11mr4497803itb.60.1490122707783; Tue,
+ 21 Mar 2017 11:58:27 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Tue, 21 Mar 2017 11:47:23 -0700 (PDT)
-In-Reply-To: <xmqqvar2qzof.fsf@gitster.mtv.corp.google.com>
-References: <20170321155153.20753-1-szeder.dev@gmail.com> <xmqqvar2qzof.fsf@gitster.mtv.corp.google.com>
+Received: by 10.107.130.208 with HTTP; Tue, 21 Mar 2017 11:58:07 -0700 (PDT)
+In-Reply-To: <xmqqshm6pjja.fsf@gitster.mtv.corp.google.com>
+References: <20170321125901.10652-1-avarab@gmail.com> <20170321125901.10652-10-avarab@gmail.com>
+ <xmqqshm6pjja.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 21 Mar 2017 19:47:23 +0100
-Message-ID: <CACBZZX5ofE-B0AE1gDVwN=N3g-x+m=OW72BYxK8Oz7FUkBNP7Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] doc/SubmittingPatches: show how to get a CLI
- commit summary
+Date:   Tue, 21 Mar 2017 19:58:07 +0100
+Message-ID: <CACBZZX4jXtYqnsYuHRohF+zx+y0VyyRudMMYjtLuxoCziccd=w@mail.gmail.com>
+Subject: Re: [PATCH v2 09/16] tag: add more incompatibles mode tests
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Hjemli <hjemli@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,51 +67,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 21, 2017 at 6:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Tue, Mar 21, 2017 at 7:32 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->>>  The "Copy commit summary" command of gitk can be used to obtain this
->>> -format.
->>> +format, or this invocation of "git show":
->>>
->>> +    git show -s --date=3Dshort --pretty=3D'format:%h ("%s", %ad)' <com=
-mit>
->>> +
->>> +To turn that into a handy alias:
->>> +
->>> +    git config --global alias.git-commit-summary "show -s --date=3Dsho=
-rt --pretty=3D'format:%h (\"%s\", %ad)'"
->>> +
->>> +And then to get the commit summary:
->>> +
->>> +    git git-commit-summary <commit>
+>> Amend the test suite to test for more invalid uses like "-l -a"
+>> etc. This mainly tests the `(argc =3D=3D 0 && !cmdmode)` ->
+>> `((create_tag_object || force) && (cmdmode !=3D 0))` code path in
+>> builtin/tag.c.
+>
+> The second sentence is now stale, isn't it?
+I've reworded this in WIP v3 to split out the code from the text,
+making this less confusing.
 >>
->> - 'tformat:' is a better fit than 'format:' in this case, because it
->>   adds a trailing newline.
->
-> That depends on what you use it for.  I most often use mine to
-> insert the reference that flows in a sentence, not as a separate
-> displayed material, e.g.
->
->     1f6b1afe ("Git 2.12.1", 2017-03-20)
->
-> so for that purpose, not adding a trailing newline is a feature.
-
-I agree with tformat. I didn't notice this because I've been screwing
-around with my pager settings and my configuration was implicitly
-adding a newline. Do you mind fixing that up Junio, or should I
-re-send it?
-
->> - I find that the two subsequent 'git's in 'git git-<whatever>' look
->>   strange.  However, to make this point moot right away:
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  t/t7004-tag.sh | 13 +++++++++++++
+>>  1 file changed, 13 insertions(+)
 >>
->> - I don't think SubmittingPatches is the right place to show how to
->>   create and use a command alias.
->
-> These two I do agree with.
-
-I don't think it disturbs the flow of the document, and since someone
-going through SubmittingPatches is likely about to submit a patch,
-providing that one-liner is handy, not as some "here's how to add
-aliases" tutorial, but so you don't need to go and copy/paste it, add
-\'s for the "'s etc.
+>> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+>> index 63ee2cf727..958c77ab86 100755
+>> --- a/t/t7004-tag.sh
+>> +++ b/t/t7004-tag.sh
+>> @@ -1455,6 +1455,19 @@ test_expect_success 'checking that initial commit=
+ is in all tags' "
+>>
+>>  test_expect_success 'mixing incompatibles modes and options is forbidde=
+n' '
+>>       test_must_fail git tag -a &&
+>> +     test_must_fail git tag -a -l &&
+>> +     test_must_fail git tag -s &&
+>> +     test_must_fail git tag -s -l &&
+>> +     test_must_fail git tag -m &&
+>> +     test_must_fail git tag -m -l &&
+>> +     test_must_fail git tag -m "hlagh" &&
+>> +     test_must_fail git tag -m "hlagh" -l &&
+>> +     test_must_fail git tag -F &&
+>> +     test_must_fail git tag -F -l &&
+>> +     test_must_fail git tag -f &&
+>> +     test_must_fail git tag -f -l &&
+>> +     test_must_fail git tag -a -s -m -F &&
+>> +     test_must_fail git tag -a -s -m -F -l &&
+>>       test_must_fail git tag -l -v &&
+>>       test_must_fail git tag -n 100 &&
+>>       test_must_fail git tag -l -m msg &&
