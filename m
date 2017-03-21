@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B62C120958
-	for <e@80x24.org>; Tue, 21 Mar 2017 00:18:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D87F220958
+	for <e@80x24.org>; Tue, 21 Mar 2017 00:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753305AbdCUAS0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 20:18:26 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36628 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753207AbdCUASZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Mar 2017 20:18:25 -0400
-Received: by mail-pf0-f171.google.com with SMTP id o126so72554132pfb.3
-        for <git@vger.kernel.org>; Mon, 20 Mar 2017 17:18:24 -0700 (PDT)
+        id S1755749AbdCUAS5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 20:18:57 -0400
+Received: from mail-pf0-f175.google.com ([209.85.192.175]:33886 "EHLO
+        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753766AbdCUAS4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 20:18:56 -0400
+Received: by mail-pf0-f175.google.com with SMTP id p189so49388571pfp.1
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 17:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RiC37rNPR4a6uru5/EwXzzxZEL0IM2Ie7OOtTBN7fvk=;
-        b=SEiJhbmi7/TEu7UWuLyU37V8OZkKR3gcOxXyZOLhGtT1YCeqAqBU8XF9SKP+6MjTsn
-         xrA+VXiz7O6GcLmuJgp68vY+D+45pLSQi749EEEF7G/Vsmz/YvwEuZu35X/LVQbnKrtN
-         kLxikMyu4PvVr/mmze5X7noWqPFPaTbufRZpmFHY4dfJGxjw6d4wCqv18WBrW3+xW1b9
-         3Sxdk+171TyqRpTAlJ4GofmaSGYIxLj2zCazVr74Sihz/aqD+pwEtoWbU269kzmbCOx+
-         vlTbP3rXWrv5nEBTHPMChRmUricBvwTy1KnnkmwS0RAHklRd5Q5sb76PdoMPgWJLJo9E
-         ByQg==
+        bh=oKyEPhI66V9x2WikEnzYI19AFNQ58Bxr0pYc0vUy+uQ=;
+        b=lhWzHKc6uG23HT0+w/xcdk6+w6d9nqq0+b/GmLFTiO6u+Zk4aNG3B/oTvVUvrOKcR0
+         Q3RgOd33C+8v0oxTFezREmTwRx27T+9BD5ygSW12IvhXxPZJy+lUcc0mGnus5zuT9wlq
+         1Tlu5bb+Iwqty4hyM/2TmI0y+DV8e2t9n1SSwFaFER83GHf10+E7FDvSCNjVAmOTbuuz
+         DxdhaEZVnGehAnsfq6AqCWHQ923yb9v2IWvEzrK91BdamMbh/cSyxUWS0+SSN/m/ImsR
+         kU9vALgD566NVe9q/o0DuxquvmgzxprP6yhZ5La4PtRQtZh0NpVdgzNMnGsPkgzaAn3a
+         KWHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=RiC37rNPR4a6uru5/EwXzzxZEL0IM2Ie7OOtTBN7fvk=;
-        b=HbDwbJ1FRyZmUBDoT0u/FBKelcXSWEFR3Zyy3pdADWOufuznBNqU9Ta5AeQg7BN9gr
-         RMgN4/w6IhWl5LKF+lqw+ok42iS6cge8BnExyu0dUT2rstWZ3KL+ExYcPlcfnZinKedb
-         O6x7rk7x3/bo6sZDCpEOjDJzb+LeXzNf/AnnYuKsL5Jss/0T6LL1Ysn8QNww1UksKYsV
-         cX199DJ4GC5Of7oLj9F7Q4XqvMnZpa/LPdx1KyONQo3MVcUFYK6mHOg3Q8E38nafVPwa
-         qixFIKv4S84QZkyKas0umCM49ejVL5C+tscldxz+3RNCnP7qoIYcG9/+aGTQMLlqReWV
-         sLoA==
-X-Gm-Message-State: AFeK/H2qgeC5bQXgLnlKqrXwjXDQYeRl+NMNuYYvrlmv3V7VvLlCSW6PAFma5uFr4+NoPOwx
-X-Received: by 10.84.232.70 with SMTP id f6mr7078020pln.102.1490055123992;
-        Mon, 20 Mar 2017 17:12:03 -0700 (PDT)
+        bh=oKyEPhI66V9x2WikEnzYI19AFNQ58Bxr0pYc0vUy+uQ=;
+        b=aju8s5LOVsgccMPJKRRcYBdzxFgQNIsP2n6Dzq7txxdbHlP8FsetoJBqMbIERIB69i
+         R+Y7oYPom82YXSlkKbzHSDnN6AWKYZSJUVFY21/G03dgDZmkaZq0G/UIYca8Ty1CRiGZ
+         6bKvrHVuvJJ3E/5fOhWR+4bEqEi4BI0SK2H79qwoLMLgAllHO5KxND6uVj3AWkNTojyU
+         rsWscbSXSmpEpx21fLDj++l0zgDr6hnoZ9YZRXiIGgcaEbcZGtiZdtQXTPXR//dYXy9T
+         DbWsFePO5ssS7sLizYJtqVtg+T+cgQzKScC73lnFmCrOriij4pB3nhE1go2vlKe2iqeF
+         nzVQ==
+X-Gm-Message-State: AFeK/H15zMwor8EcX4JfeCITBe7O77M/F0kOiRfDtH9hxK0eR75o9/kx7xggNE7W+B8WGxyj
+X-Received: by 10.84.195.129 with SMTP id j1mr42704671pld.88.1490055126253;
+        Mon, 20 Mar 2017 17:12:06 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:38a6:f549:ebc4:4d51])
-        by smtp.gmail.com with ESMTPSA id m6sm35545336pgn.58.2017.03.20.17.12.03
+        by smtp.gmail.com with ESMTPSA id r17sm6602306pfa.13.2017.03.20.17.12.05
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 20 Mar 2017 17:12:03 -0700 (PDT)
+        Mon, 20 Mar 2017 17:12:05 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     jrnieder@gmail.com
 Cc:     git@vger.kernel.org, mfick@codeaurora.org,
         Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/3] submodule.c: port is_submodule_modified to use porcelain 2
-Date:   Mon, 20 Mar 2017 17:11:54 -0700
-Message-Id: <20170321001156.21915-2-sbeller@google.com>
+Subject: [PATCH 3/3] builtin/describe: introduce --submodule-error-as-dirty flag
+Date:   Mon, 20 Mar 2017 17:11:56 -0700
+Message-Id: <20170321001156.21915-4-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.402.g0501f7a28e
 In-Reply-To: <20170321001156.21915-1-sbeller@google.com>
 References: <20170321001156.21915-1-sbeller@google.com>
@@ -60,151 +61,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate 'is_submodule_modified' to the new porcelain format of
-git-status.
+git-describe tells you the version number you're at, or errors out, e.g.
+when you run it outside of a repository, which may happen when downloading
+a tar ball instead of using git to obtain the source code.
 
-As the old porcelain only reported ' M' for submodules, no
-matter what happened inside the submodule (untracked files,
-changes to tracked files or move of HEAD), the new API
-properly reports the different scenarios.
+To keep this property of only erroring out, when not in a repository,
+severe submodule errors must be downgraded to reporting them gently
+instead of having git-describe error out completely.
 
-In a followup patch we will make use of these finer grained
-reporting for git-status.
+This patch helps to fix the root cause in [1], which tries to work around
+this situation.
 
-While porting this to the new API, add another extension
-point that will get used in the future: When a submodule
-is broken (e.g. the .git file pointing to a wrong directory,
-not containing a git dir, as fallout of e.g. f8eaa0ba98
-(submodule--helper, module_clone: always operate on absolute
-paths, 2016-03-31)), we can chose to not die and report it
-differently.
+[1] ("Work around git describe bug for build.")
+https://gerrit-review.googlesource.com/#/c/99851/
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 85 +++++++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 49 insertions(+), 36 deletions(-)
+ builtin/describe.c  | 17 ++++++++++-------
+ t/t6120-describe.sh | 17 +++++++++++++++++
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 3200b7bb2b..81d44cb7e9 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1041,67 +1041,80 @@ int fetch_populated_submodules(const struct argv_array *options,
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 76c18059bf..569fef9ecf 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -31,13 +31,9 @@ static int have_util;
+ static struct string_list patterns = STRING_LIST_INIT_NODUP;
+ static struct string_list exclude_patterns = STRING_LIST_INIT_NODUP;
+ static int always;
++static int gentle_submodule_errors;
+ static const char *dirty;
  
- unsigned is_submodule_modified(const char *path, int ignore_untracked)
- {
--	ssize_t len;
- 	struct child_process cp = CHILD_PROCESS_INIT;
--	const char *argv[] = {
--		"status",
--		"--porcelain",
--		NULL,
--		NULL,
--	};
- 	struct strbuf buf = STRBUF_INIT;
- 	unsigned dirty_submodule = 0;
--	const char *line, *next_line;
- 	const char *git_dir;
-+	int error_code = 0;
- 
- 	strbuf_addf(&buf, "%s/.git", path);
--	git_dir = read_gitfile(buf.buf);
--	if (!git_dir)
--		git_dir = buf.buf;
--	if (!is_directory(git_dir)) {
--		strbuf_release(&buf);
--		/* The submodule is not checked out, so it is not modified */
--		return 0;
-+	git_dir = resolve_gitdir_gently(buf.buf, &error_code);
- 
-+	if (!git_dir) {
-+		switch (error_code) {
-+		case READ_GITFILE_ERR_STAT_FAILED:
-+		case READ_GITFILE_ERR_NOT_A_FILE:
-+			/* We may have an uninitialized repo here */
-+			return 0;
-+		default:
-+		case READ_GITFILE_ERR_OPEN_FAILED:
-+		case READ_GITFILE_ERR_READ_FAILED:
-+		case READ_GITFILE_ERR_INVALID_FORMAT:
-+		case READ_GITFILE_ERR_NO_PATH:
-+		case READ_GITFILE_ERR_NOT_A_REPO:
-+		case READ_GITFILE_ERR_TOO_LARGE:
-+			/*
-+			 * All these other error codes are indicating
-+			 * a broken submodule. We do not know what is
-+			 * right here. Resolve again triggering die()
-+			 * inside of the parsing.
-+			 */
-+			read_gitfile_gently(buf.buf, NULL);
-+			die("BUG: read_gitfile_gently should have died.");
-+		}
- 	}
+-/* diff-index command arguments to check if working tree is dirty. */
+-static const char *diff_index_args[] = {
+-	"diff-index", "--quiet", "HEAD", "--", NULL
+-};
+-
+ struct commit_name {
+ 	struct hashmap_entry entry;
+ 	struct object_id peeled;
+@@ -442,6 +438,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			   N_("do not consider tags matching <pattern>")),
+ 		OPT_BOOL(0, "always",        &always,
+ 			N_("show abbreviated commit object as fallback")),
++		OPT_BOOL(0, "submodule-error-as-dirty", &gentle_submodule_errors,
++			N_("show abbreviated commit object as fallback")),
+ 		{OPTION_STRING, 0, "dirty",  &dirty, N_("mark"),
+ 			N_("append <mark> on dirty working tree (default: \"-dirty\")"),
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t) "-dirty"},
+@@ -496,6 +494,12 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 		if (dirty) {
+ 			static struct lock_file index_lock;
+ 			int fd;
++			struct argv_array args = ARGV_ARRAY_INIT;
 +
- 	strbuf_reset(&buf);
++			argv_array_push(&args, "diff-index");
++			if (gentle_submodule_errors)
++				argv_array_push(&args, "--gentle-submodule-errors");
++			argv_array_pushl(&args, "--quiet", "HEAD", "--", NULL);
  
-+	argv_array_pushl(&cp.args, "status", "--porcelain=2", NULL);
- 	if (ignore_untracked)
--		argv[2] = "-uno";
-+		argv_array_push(&cp.args, "-uno");
+ 			read_cache_preload(NULL);
+ 			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
+@@ -504,8 +508,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			if (0 <= fd)
+ 				update_index_if_able(&the_index, &index_lock);
  
--	cp.argv = argv;
- 	prepare_submodule_repo_env(&cp.env_array);
- 	cp.git_cmd = 1;
- 	cp.no_stdin = 1;
- 	cp.out = -1;
- 	cp.dir = path;
- 	if (start_command(&cp))
--		die("Could not run 'git status --porcelain' in submodule %s", path);
-+		die("Could not run 'git status --porcelain=2' in submodule %s", path);
- 
--	len = strbuf_read(&buf, cp.out, 1024);
--	line = buf.buf;
--	while (len > 2) {
--		if ((line[0] == '?') && (line[1] == '?')) {
-+	while (strbuf_getwholeline_fd(&buf, cp.out, '\n') != EOF) {
-+		/* regular untracked files */
-+		if (buf.buf[0] == '?')
- 			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
--			if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
--				break;
--		} else {
--			dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
--			if (ignore_untracked ||
--			    (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED))
--				break;
-+
-+		/* regular unmerged and renamed files */
-+		if (buf.buf[0] == 'u' ||
-+		    buf.buf[0] == '1' ||
-+		    buf.buf[0] == '2') {
-+			if (buf.buf[5] == 'S') {
-+				/* nested submodule handling */
-+				if (buf.buf[6] == 'C' || buf.buf[7] == 'M')
-+					dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
-+				if (buf.buf[8] == 'U')
-+					dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
-+			} else
-+				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+-			if (!cmd_diff_index(ARRAY_SIZE(diff_index_args) - 1,
+-					    diff_index_args, prefix))
++			if (!cmd_diff_index(args.argc, args.argv, prefix))
+ 				dirty = NULL;
  		}
--		next_line = strchr(line, '\n');
--		if (!next_line)
--			break;
--		next_line++;
--		len -= (next_line - line);
--		line = next_line;
+ 		describe("HEAD", 1);
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 167491fd5b..99e5ba44b7 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -233,4 +233,21 @@ test_expect_success 'describe --contains and --no-match' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'setup and absorb a submodule' '
++	test_create_repo sub1 &&
++	test_commit -C sub1 initial &&
++	git submodule add ./sub1 &&
++	git submodule absorbgitdirs &&
++	git commit -a -m "add submodule"
++'
 +
-+		if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED &&
-+		    dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
-+				break;
- 	}
- 	close(cp.out);
- 
- 	if (finish_command(&cp))
--		die("'git status --porcelain' failed in submodule %s", path);
-+		die("'git status --porcelain=2' failed in submodule %s", path);
- 
- 	strbuf_release(&buf);
- 	return dirty_submodule;
++test_expect_success 'describe chokes on severly broken submodules' '
++	mv .git/modules/sub1/ .git/modules/sub_moved &&
++	test_must_fail git describe --dirty
++'
++test_expect_success 'describe ignoring a borken submodule' '
++	git describe --dirty --submodule-error-as-dirty >out &&
++	grep dirty out
++'
++
+ test_done
 -- 
 2.12.0.402.g4b3201c2d6.dirty
 
