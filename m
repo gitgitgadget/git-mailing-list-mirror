@@ -2,106 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16D7B2095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 21:24:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A34FA2095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 21:47:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758390AbdCUVYY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 17:24:24 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33144 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758387AbdCUVYX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 17:24:23 -0400
-Received: by mail-wr0-f194.google.com with SMTP id g10so24304785wrg.0
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 14:24:06 -0700 (PDT)
+        id S933398AbdCUVrS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 17:47:18 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:33878 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933195AbdCUVrR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 17:47:17 -0400
+Received: by mail-pf0-f180.google.com with SMTP id p189so62010142pfp.1
+        for <git@vger.kernel.org>; Tue, 21 Mar 2017 14:47:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gal-ro.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to;
-        bh=FO0bLaFAzODz0zgjQVX0h+PzMqzBl0//TI3+pS1HwYo=;
-        b=Y5GZWGjAvcdRSz4/oFdSkE21NROXyfLCT94RegOT6R7yABz6FzpF+BChcAtXTekFt4
-         QsYow3QxzAPZDneiDmk4GBQjfd2rihHSGg6Ocw9dgqpeiYTqf1aQsBLCKEWTncETpkbw
-         PQFG0bWgf9sc2glNJNfRNWXRh2YZI5tYDQ66G9mmSC3EIlyn7HTz0r3mP6J3X8fqIBcF
-         zoGDcuGV6SsUZq1wHoNFUDS6mqIn5uCH6mEvX/RwVopU7ALPW2gum/KY6ep1dt8hXG4A
-         6X/8IXGcDkjnHjsPR3dw8k7vRE6LHVXuNVbdMS44F77VaEPabeNTJqFrLHtu2c7SsTK1
-         tjng==
+        d=gmail.com; s=20161025;
+        h=from:to:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=nlOm6FoutTJ13cQh3DjyeB8/MgqnAsV7+/joqzt4L5s=;
+        b=sOpzAy5oaDrGMTqNIfkJ3okcJ0wTcbW7Oirtae6+OLB3eZn9JLns4xqSLNS2CmKcZS
+         x4eqtWDNgzCWbeNzPkJjJ51cqBPr8Iji8+JuXXUchvIG7pY3T/mF8+SpwduhqdcSsNqw
+         EqWOZcI77PxaHqkHx9oPqCTKoyvod2krtDrz02nXoeDDPB5CHng5ne44WL6iCPNJqHMT
+         +wil401FmpSNhfcEdZorOVoJFCn/+ARauMes7vO0dJ4BBgMnTEdbjU/yDenlMXpSC/dR
+         RUZhSObvhn5L1ETtzfXZ2PIi3SwBZOiUMIk3hXeSwjvjAYFO74ZMpr5sl8mS5AyXiJtu
+         XeBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to;
-        bh=FO0bLaFAzODz0zgjQVX0h+PzMqzBl0//TI3+pS1HwYo=;
-        b=swb4+ueNkJBWjeBCn5FZ3NwySyCkeP6Ir0CRn2gCfFYixbUKautK8TrTdr6bF+wmrX
-         WPAm53hw26L2J1WcNhBcCM/3wL28hCkbwujHnHkB4+iBi4Cmp2C27XCGtaeLy1qtpWjS
-         Jka7302eNnNP941M+CgNzp/KjyWxNibe5csfRmN9R1IDRaZtqw1PNTyyXED0NEGS65Rs
-         04vWUZmtyjra78Wdv9K2AmnPDCIU/8I9xW5jOF85evh3nMV1sr2i1gW4aDU6tbfbKTz+
-         j9se8y9vGZ+lrb5N6n8jt5YxCgXx/SJ72Ptb/Kqt3oISrXk+CsXmgP6ZDfaSX/9mgdzI
-         I3YQ==
-X-Gm-Message-State: AFeK/H2lDmj1I4cPACC5fQdvk8uNHV22vAyV0QsNGYZ3LUrZ+eWQszH4vxOnrxx+tbXovLiUkxK/ZdtaLXtF+A==
-X-Received: by 10.223.172.77 with SMTP id v71mr37185693wrc.131.1490131445850;
- Tue, 21 Mar 2017 14:24:05 -0700 (PDT)
+        h=x-gm-message-state:from:to:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=nlOm6FoutTJ13cQh3DjyeB8/MgqnAsV7+/joqzt4L5s=;
+        b=OpVTIMEsThEUayH9g72lSaQ8Zf/Vnf/vUnQSBNe/UtpkjejKqC0tTE7V5DEj4YgOMy
+         lB6gDk3o8l5PRPs6blcA128B/2+UGaEdQOUyv73fRhOpB7SHZCmRKpWDzZmOB8QvJysd
+         X2p4kvVnsfjmm5xou0tOwdb8aWIqdV1g1krd7lMfFk/roQL66LZ+pHZmuMtpDJVXGfMR
+         POSrcr/2TQaZOdPZHjo0kzMcFUmf7i/1To3+WVpOppMCDULFswueNOzLZ4CKYnUtB90u
+         0lct+9LepL1uYx53Mf/gtzFXQ4TwTVk+Ff1vAu/yQ5pnkf9qK9GqCGHvXi82N1agp2TF
+         Kt9A==
+X-Gm-Message-State: AFeK/H2+b+Nxxe3ZNF+ROYdLhbAv+u670qyXwSu+C9XrcGADDPN4koDPVTcOwzsVuIogMw==
+X-Received: by 10.98.15.7 with SMTP id x7mr43161068pfi.217.1490132835391;
+        Tue, 21 Mar 2017 14:47:15 -0700 (PDT)
+Received: from [192.168.1.134] (68-185-59-186.static.knwc.wa.charter.com. [68.185.59.186])
+        by smtp.gmail.com with ESMTPSA id p4sm41684554pgd.50.2017.03.21.14.47.14
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Mar 2017 14:47:14 -0700 (PDT)
+From:   Joshua Clayton <stillcompiling@gmail.com>
+To:     git@vger.kernel.org
+Subject: gitk: bug viewing diffs with the word items
+Message-ID: <8cd30c4d-f21d-142b-5444-eb9a3bba5d4f@gmail.com>
+Date:   Tue, 21 Mar 2017 14:47:12 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Received: by 10.28.107.213 with HTTP; Tue, 21 Mar 2017 14:24:05 -0700 (PDT)
-X-Originating-IP: [89.12.102.28]
-In-Reply-To: <20170320221429.qefqowtwe2ptvgdg@genre.crustytoothpaste.net>
-References: <CAMX8fZU-HeKzd8VYh8R=U8f8V-px+4V==M3CJSS677K0ErwPtA@mail.gmail.com>
- <CAGZ79kY1g-4c+GXZy3p-q=MsBY94esxsfs2=OPuhOH_o5oGc_Q@mail.gmail.com> <20170320221429.qefqowtwe2ptvgdg@genre.crustytoothpaste.net>
-From:   Alex Hoffman <spec@gal.ro>
-Date:   Tue, 21 Mar 2017 22:24:05 +0100
-X-Google-Sender-Auth: XnMTrjpyA2FTS2rqOJwzB7id028
-Message-ID: <CAMX8fZXqTfKQXxV_pZEieN=1ap8ocVnnwZUvpGuw5rWo5_Yhfg@mail.gmail.com>
-Subject: Re: [PATCH] Correct compile errors when DEBUG_BISECT=1 after
- supporting other hash algorithms
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>, Alex Hoffman <spec@gal.ro>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Brian,
+Hi.
 
-We definitely prefer the wrapper function oid_to_hex() to
-sha1_to_hex(). Thanks for feedback.
-Below is the updated patch:
+I see a bug with the diff view of gitk.
 
----
- bisect.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+when the text " <items>" or " </items>" appears
 
-diff --git a/bisect.c b/bisect.c
-index 30808cadf..7b65acbcd 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -131,7 +131,7 @@ static void show_list(const char *debug, int
-counted, int nr,
-                unsigned flags = commit->object.flags;
-                enum object_type type;
-                unsigned long size;
--               char *buf = read_sha1_file(commit->object.sha1, &type, &size);
-+               char *buf = read_sha1_file(commit->object.oid.hash,
-&type, &size);
-                const char *subject_start;
-                int subject_len;
+on one of the surrounding contexts lines in a diff,
 
-@@ -143,10 +143,10 @@ static void show_list(const char *debug, int
-counted, int nr,
-                        fprintf(stderr, "%3d", weight(p));
-                else
-                        fprintf(stderr, "---");
--               fprintf(stderr, " %.*s", 8, sha1_to_hex(commit->object.sha1));
-+               fprintf(stderr, " %.*s", 8, oid_to_hex(&commit->object.oid));
-                for (pp = commit->parents; pp; pp = pp->next)
-                        fprintf(stderr, " %.*s", 8,
--                               sha1_to_hex(pp->item->object.sha1));
-+                                       oid_to_hex(&pp->item->object.oid));
+gitk treats it as part of the "Old Version", highlighting it in red,
 
-                subject_len = find_commit_subject(buf, &subject_start);
-                if (subject_len)
--- 
-2.12.0.400.g54ad2d445.dirty
+and hiding it if "New Version" is selected
+
+I don't know if any other magic words are affected
+
+ied it with the master
+
+
+bug confirmed exists in github/git/git/master
+
+I created a small repository that shows the error for me:
+
+clone it to reproduce the behavior
+
+https://github.com/d4ddi0/gitk_diff_view
+
+
+~Joshua Clayton
+
