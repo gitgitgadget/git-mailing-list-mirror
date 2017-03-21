@@ -2,113 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 292D520958
-	for <e@80x24.org>; Mon, 20 Mar 2017 23:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B62C120958
+	for <e@80x24.org>; Tue, 21 Mar 2017 00:18:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754190AbdCTXaR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Mar 2017 19:30:17 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:46726 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753229AbdCTXaQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Mar 2017 19:30:16 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1EF03280AD;
-        Mon, 20 Mar 2017 23:22:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490052164;
-        bh=VbbRqKYUpB+AgMnc+Vzp1rtaYF/8DlYnxWeF8GpGi6Y=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VmywMLoU5cOynipS1BzeT2um5AcVtGc8wzte+Q9SoFY/vOh3ho21gvmtReLbFkJwF
-         WRfSPrVWnC1Wycq3EA8TMNFjMNgnCUeUSgc/f3WdXb2CEL3uq4tZ5p4sUokvjemVDW
-         WRnxZr/V+cMBViZdnt+3T4Rn4i+s71Kk5U0S3ecv7FKno/GEmF4freLGnIDAk1pFTj
-         eNYLUQwnHKmqyFOSrSO9eQU7rdAEy0Uw4MhB0UwRk+1PafgKkUpVcgvhzqKlloPENT
-         8cJ+SIiil47VydKcQT23yGr2iAXhia/Cyvu2MfwTPKmN0tmyQDuqPSbPLGms/prrw3
-         fuzVo6PH+jDCuZAVNzJxf7nzaFUkFhWB/IyHAngFfvAEc9Y7zXayBNy4fyGSCr2PFR
-         xGRFOyLQTby3NUGeRIVUqN6eMhMQVXH3rnpfbUqP7NxWEUGFZ98/KhY9Mr7gJs0v9n
-         cNUsJQYSZAiVxYDOoyb31h2O1feIY+ZRMuBZ6wPJYWd1UcYL1G+
-Date:   Mon, 20 Mar 2017 23:22:40 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     'git' <git@vger.kernel.org>,
-        "Jeff Hostetler (jeffhost@microsoft.com)" 
-        <Jeff.Hostetler@microsoft.com>, Ben Peart <benpeart@microsoft.com>
-Subject: Re: Safe to use stdatomic.h?
-Message-ID: <20170320232240.k3egololfj7wt5cf@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Ben Peart <peartben@gmail.com>, 'git' <git@vger.kernel.org>,
-        "Jeff Hostetler (jeffhost@microsoft.com)" <Jeff.Hostetler@microsoft.com>,
-        Ben Peart <benpeart@microsoft.com>
-References: <000801d2a1b7$1ec41620$5c4c4260$@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2wmgpnncxbpzeuvr"
-Content-Disposition: inline
-In-Reply-To: <000801d2a1b7$1ec41620$5c4c4260$@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+        id S1753305AbdCUAS0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Mar 2017 20:18:26 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:36628 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753207AbdCUASZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Mar 2017 20:18:25 -0400
+Received: by mail-pf0-f171.google.com with SMTP id o126so72554132pfb.3
+        for <git@vger.kernel.org>; Mon, 20 Mar 2017 17:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=RiC37rNPR4a6uru5/EwXzzxZEL0IM2Ie7OOtTBN7fvk=;
+        b=SEiJhbmi7/TEu7UWuLyU37V8OZkKR3gcOxXyZOLhGtT1YCeqAqBU8XF9SKP+6MjTsn
+         xrA+VXiz7O6GcLmuJgp68vY+D+45pLSQi749EEEF7G/Vsmz/YvwEuZu35X/LVQbnKrtN
+         kLxikMyu4PvVr/mmze5X7noWqPFPaTbufRZpmFHY4dfJGxjw6d4wCqv18WBrW3+xW1b9
+         3Sxdk+171TyqRpTAlJ4GofmaSGYIxLj2zCazVr74Sihz/aqD+pwEtoWbU269kzmbCOx+
+         vlTbP3rXWrv5nEBTHPMChRmUricBvwTy1KnnkmwS0RAHklRd5Q5sb76PdoMPgWJLJo9E
+         ByQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=RiC37rNPR4a6uru5/EwXzzxZEL0IM2Ie7OOtTBN7fvk=;
+        b=HbDwbJ1FRyZmUBDoT0u/FBKelcXSWEFR3Zyy3pdADWOufuznBNqU9Ta5AeQg7BN9gr
+         RMgN4/w6IhWl5LKF+lqw+ok42iS6cge8BnExyu0dUT2rstWZ3KL+ExYcPlcfnZinKedb
+         O6x7rk7x3/bo6sZDCpEOjDJzb+LeXzNf/AnnYuKsL5Jss/0T6LL1Ysn8QNww1UksKYsV
+         cX199DJ4GC5Of7oLj9F7Q4XqvMnZpa/LPdx1KyONQo3MVcUFYK6mHOg3Q8E38nafVPwa
+         qixFIKv4S84QZkyKas0umCM49ejVL5C+tscldxz+3RNCnP7qoIYcG9/+aGTQMLlqReWV
+         sLoA==
+X-Gm-Message-State: AFeK/H2qgeC5bQXgLnlKqrXwjXDQYeRl+NMNuYYvrlmv3V7VvLlCSW6PAFma5uFr4+NoPOwx
+X-Received: by 10.84.232.70 with SMTP id f6mr7078020pln.102.1490055123992;
+        Mon, 20 Mar 2017 17:12:03 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:38a6:f549:ebc4:4d51])
+        by smtp.gmail.com with ESMTPSA id m6sm35545336pgn.58.2017.03.20.17.12.03
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 20 Mar 2017 17:12:03 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     jrnieder@gmail.com
+Cc:     git@vger.kernel.org, mfick@codeaurora.org,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH 1/3] submodule.c: port is_submodule_modified to use porcelain 2
+Date:   Mon, 20 Mar 2017 17:11:54 -0700
+Message-Id: <20170321001156.21915-2-sbeller@google.com>
+X-Mailer: git-send-email 2.12.0.402.g0501f7a28e
+In-Reply-To: <20170321001156.21915-1-sbeller@google.com>
+References: <20170321001156.21915-1-sbeller@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Migrate 'is_submodule_modified' to the new porcelain format of
+git-status.
 
---2wmgpnncxbpzeuvr
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+As the old porcelain only reported ' M' for submodules, no
+matter what happened inside the submodule (untracked files,
+changes to tracked files or move of HEAD), the new API
+properly reports the different scenarios.
 
-On Mon, Mar 20, 2017 at 04:18:20PM -0400, Ben Peart wrote:
-> My college Jeff is working on a patch series to further parallelize the
-> loading of the index.  As part of that patch, it would be nice to use the
-> atomic_fetch_add function as that would be more efficient than creating a
-> mutex simply to protect a variable so that it can be incremented.  I have=
-n't
-> seen any use of atomics yet in Git, nor anything that includes
-> <stdatomic.h>.
->=20
-> GCC has supported them since 4.9 and Clang has supported them by default
-> since 3.3.  Are there any compilers currently in use by Git that don't
-> support these C11 functions?
+In a followup patch we will make use of these finer grained
+reporting for git-status.
 
-At work, we're compiling for CentOS 6 and 7.  CentOS 7 only has GCC 4.8,
-and CentOS 6 has something much older.  This is code we ship to
-customers, so we can't rely on them having devtoolset installed for
-newer GCC.
+While porting this to the new API, add another extension
+point that will get used in the future: When a submodule
+is broken (e.g. the .git file pointing to a wrong directory,
+not containing a git dir, as fallout of e.g. f8eaa0ba98
+(submodule--helper, module_clone: always operate on absolute
+paths, 2016-03-31)), we can chose to not die and report it
+differently.
 
-I could support the argument for ditching RHEL/CentOS 5 support, but I
-expect other people might disagree.  After all, we're still targeting
-C89.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ submodule.c | 85 +++++++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 49 insertions(+), 36 deletions(-)
 
---2wmgpnncxbpzeuvr
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/submodule.c b/submodule.c
+index 3200b7bb2b..81d44cb7e9 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1041,67 +1041,80 @@ int fetch_populated_submodules(const struct argv_array *options,
+ 
+ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ {
+-	ssize_t len;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+-	const char *argv[] = {
+-		"status",
+-		"--porcelain",
+-		NULL,
+-		NULL,
+-	};
+ 	struct strbuf buf = STRBUF_INIT;
+ 	unsigned dirty_submodule = 0;
+-	const char *line, *next_line;
+ 	const char *git_dir;
++	int error_code = 0;
+ 
+ 	strbuf_addf(&buf, "%s/.git", path);
+-	git_dir = read_gitfile(buf.buf);
+-	if (!git_dir)
+-		git_dir = buf.buf;
+-	if (!is_directory(git_dir)) {
+-		strbuf_release(&buf);
+-		/* The submodule is not checked out, so it is not modified */
+-		return 0;
++	git_dir = resolve_gitdir_gently(buf.buf, &error_code);
+ 
++	if (!git_dir) {
++		switch (error_code) {
++		case READ_GITFILE_ERR_STAT_FAILED:
++		case READ_GITFILE_ERR_NOT_A_FILE:
++			/* We may have an uninitialized repo here */
++			return 0;
++		default:
++		case READ_GITFILE_ERR_OPEN_FAILED:
++		case READ_GITFILE_ERR_READ_FAILED:
++		case READ_GITFILE_ERR_INVALID_FORMAT:
++		case READ_GITFILE_ERR_NO_PATH:
++		case READ_GITFILE_ERR_NOT_A_REPO:
++		case READ_GITFILE_ERR_TOO_LARGE:
++			/*
++			 * All these other error codes are indicating
++			 * a broken submodule. We do not know what is
++			 * right here. Resolve again triggering die()
++			 * inside of the parsing.
++			 */
++			read_gitfile_gently(buf.buf, NULL);
++			die("BUG: read_gitfile_gently should have died.");
++		}
+ 	}
++
+ 	strbuf_reset(&buf);
+ 
++	argv_array_pushl(&cp.args, "status", "--porcelain=2", NULL);
+ 	if (ignore_untracked)
+-		argv[2] = "-uno";
++		argv_array_push(&cp.args, "-uno");
+ 
+-	cp.argv = argv;
+ 	prepare_submodule_repo_env(&cp.env_array);
+ 	cp.git_cmd = 1;
+ 	cp.no_stdin = 1;
+ 	cp.out = -1;
+ 	cp.dir = path;
+ 	if (start_command(&cp))
+-		die("Could not run 'git status --porcelain' in submodule %s", path);
++		die("Could not run 'git status --porcelain=2' in submodule %s", path);
+ 
+-	len = strbuf_read(&buf, cp.out, 1024);
+-	line = buf.buf;
+-	while (len > 2) {
+-		if ((line[0] == '?') && (line[1] == '?')) {
++	while (strbuf_getwholeline_fd(&buf, cp.out, '\n') != EOF) {
++		/* regular untracked files */
++		if (buf.buf[0] == '?')
+ 			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-			if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-				break;
+-		} else {
+-			dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+-			if (ignore_untracked ||
+-			    (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED))
+-				break;
++
++		/* regular unmerged and renamed files */
++		if (buf.buf[0] == 'u' ||
++		    buf.buf[0] == '1' ||
++		    buf.buf[0] == '2') {
++			if (buf.buf[5] == 'S') {
++				/* nested submodule handling */
++				if (buf.buf[6] == 'C' || buf.buf[7] == 'M')
++					dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
++				if (buf.buf[8] == 'U')
++					dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
++			} else
++				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+ 		}
+-		next_line = strchr(line, '\n');
+-		if (!next_line)
+-			break;
+-		next_line++;
+-		len -= (next_line - line);
+-		line = next_line;
++
++		if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED &&
++		    dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
++				break;
+ 	}
+ 	close(cp.out);
+ 
+ 	if (finish_command(&cp))
+-		die("'git status --porcelain' failed in submodule %s", path);
++		die("'git status --porcelain=2' failed in submodule %s", path);
+ 
+ 	strbuf_release(&buf);
+ 	return dirty_submodule;
+-- 
+2.12.0.402.g4b3201c2d6.dirty
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljQZEAACgkQv1NdgR9S
-9oveEA//dp2liVTI7BLoREByGZjrL/XfkZwFHLZ4M3m2JzY/xeROjGhtEwMX4tPR
-TR8QYU+EP9vG5ubmP9FM29Zkn2WWgd6f0/TrmjbhVata3Hs4deMpTYRL2sj7COep
-FdFJBOyBPqDr99yb7ewpsYBN+oRNo6UK8sFBrnlm7KBGtncSk/3cg1nHdhEf1aKG
-lhVBp1tSCRjaAF5ZjehqMWN/GtLz1cW+XoC+6026qezm0MIMRN/LZC4rH0lQ15bn
-fC1PfXndjIPKS0EZAx0oHWoPurTgTjtvtNXlZMuHxnKtb5/ZC1G+dd1nfZypnwUH
-2WBH+uAxaXL7RXCjkDi50DrP1aUGqPvTsVHXp6k/wig1DyJUTKWzV+eAtaJmkXf7
-RC5ykEQvdI6AYvYCIy4HTnhfO0JgP9VCpO0f1HzNm+4M74xNbX/uAMb38SOq1+7s
-7OFyTjwrgNR3BYtpsJ3PQ8RuIMwUtCkaURvIULR6RG0nC9E/1TwOiU6zmoqwJp6Q
-uuEF4lfUKiUj4vZQB/dZaqLu2FEKcv5fhqAcpOUmMmbWoD2f1GF5xpRWiZlnegw/
-Avh30MjvV7WD2S3KD/EeNVU03Gxrs7f5pmN7aCUvpu+E4to1TddmbXj1nqz1Bz7r
-SdGWmUBaFeZihk1l5RQRzPekDu4/DYbWTt17OuBVBb/t1I9WBFg=
-=VgjF
------END PGP SIGNATURE-----
-
---2wmgpnncxbpzeuvr--
