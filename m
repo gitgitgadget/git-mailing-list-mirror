@@ -6,60 +6,62 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 526242095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 19:27:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5F272095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 19:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933675AbdCUT11 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 15:27:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:52841 "EHLO
+        id S933603AbdCUT1J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 15:27:09 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50273 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933640AbdCUT1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 15:27:11 -0400
+        with ESMTP id S933009AbdCUTZW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 15:25:22 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9A82C6F73A;
-        Tue, 21 Mar 2017 15:26:21 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1A7FB68113;
+        Tue, 21 Mar 2017 15:24:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=D6R7NVHvOgUT
-        /2iQ0QckekBU0Zk=; b=PGTi15yTV306EYRGd5Sq3NJYaiqJ/zuHyA5//OnSerxY
-        hb65bWp/eQpvW4iJase0nYJnGit46PfFS+DgSnHMl6FviLLgcJoCk25vsUOW12bG
-        XcwPe6Hv+MFTjTQ1wF06xzyqABB/xXwcljKrdHE2wqtlml/jjt9LXHdk4a/PSV8=
+        :content-type:content-transfer-encoding; s=sasl; bh=fGAbmpnZWkfH
+        DiZ6ZSBILUHuoQg=; b=Ir2yPjolIzOi7/tEoThe7t9lSSgUyHBYrVMjybZAfTHJ
+        6PbLQ+WdW6QbqGHOsmYwrbr7OBKlaZ5oO26MJQ0iItYRklEmHdr7oFR7vWBOwdBo
+        ASSeg6DjatM/LGN0pMUMZX/EKWJQNnOfJ64CA1b2N1tMTXC29l3J2kep6Dg3/d8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=lNmIri
-        oBZXKzug6MSl4buTVwFiSjY0F4dgW2xP4XK6LXIG3jL/dc0pDpj+0XyL718tJe7H
-        NgSZ2JKMwQBr9xOcW31Fe2dGdCb4JyrZV8JMhIADhUKnIb3Vktg3ud9m3wrzk9n9
-        HrEA3AXN7b1+AauLzGSnYFQfwLVDyCqtEP2JQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91E1E6F739;
-        Tue, 21 Mar 2017 15:26:21 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=pgCuy9
+        xfRJC59HwlotyokgDBfP4paf3Nys0Z81Yxh4Kx/DTfsAK/J7afCAkKdnAmFc9QbG
+        Vx+7IymtBRrxqVz2hgq7BaGAPf2mAW+JNBIz1h2tUwMx4Xcup4N9d2Cb4K/Xzu+y
+        pKqj1i27c79hEy6MNZsyQ0SlM+2gv0SyRO3FA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1342A68112;
+        Tue, 21 Mar 2017 15:24:27 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB40E6F738;
-        Tue, 21 Mar 2017 15:26:20 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6F89468111;
+        Tue, 21 Mar 2017 15:24:26 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Conrad Irwin <conrad.irwin@gmail.com>,
-        Sitaram Chamarty <sitaramc@gmail.com>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "Brian M . Carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] rev-parse: match @{u}, @{push} and ^{<type>} case-insensitively
-References: <20170318223409.13441-1-avarab@gmail.com>
-        <CACBZZX6g694p9WkiK75+HJCLUPwjpdQhjBrAU713KahAKm53hA@mail.gmail.com>
-Date:   Tue, 21 Mar 2017 12:26:19 -0700
-In-Reply-To: <CACBZZX6g694p9WkiK75+HJCLUPwjpdQhjBrAU713KahAKm53hA@mail.gmail.com>
+        Lars Hjemli <hjemli@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 15/16] tag: implicitly supply --list given the -n option
+References: <20170321125901.10652-1-avarab@gmail.com>
+        <20170321125901.10652-16-avarab@gmail.com>
+        <xmqq37e6piae.fsf@gitster.mtv.corp.google.com>
+        <CACBZZX7yRRTQpcFZ9eO2_+HdB979p6URE+jsXJakxw7jpnOvmA@mail.gmail.com>
+Date:   Tue, 21 Mar 2017 12:24:25 -0700
+In-Reply-To: <CACBZZX7yRRTQpcFZ9eO2_+HdB979p6URE+jsXJakxw7jpnOvmA@mail.gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 21 Mar
- 2017 20:19:34
+ 2017 20:11:15
         +0100")
-Message-ID: <xmqqpohao2hw.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqtw6mo2l2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 43860CA8-0E6C-11E7-95F4-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: FF48E6FA-0E6B-11E7-A29E-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,33 +70,32 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Sat, Mar 18, 2017 at 11:34 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n
-> <avarab@gmail.com> wrote:
+> Yeah I see now that this is rather badly explained. I'll fix this up
+> for v3. All of this worked already:
 >
->> The new starts_with_case() function is a copy of the existing adjacent
->> starts_with(), just with a tolower() in the "else if".
->> [...]
->> +int starts_with_case(const char *str, const char *prefix)
->> +{
->> +       for (; ; str++, prefix++)
->> +               if (!*prefix)
->> +                       return 1;
->> +               else if (tolower(*str) !=3D tolower(*prefix))
->> +                       return 0;
->> +}
->> +
->>  /*
+>     $ ./git tag 100
+>     $ ./git tag -n -l 100
+>     100             tag: add tests for --with and --without
+>     $ ./git tag -l -n 100
+>     100             tag: add tests for --with and --without
 >
-> One thing I'd like feedback on is whether I should be adding this to
-> strbuf.c. There are >300 uses of starts_with(), but sha1_name.c will
-> be the only one using this modified starts_with_case() function.
-> Wouldn't it be better to just add it to sha1_name.c rather than
-> expanding the strbuf API with something that'll likely be used by
-> nothing else for a while?
+> So actually thinking about it again it doesn't add any more ambiguity
+> than we had before. The change is just strictly getting rid of the
+> need for -l for consistency with --contains, --points-at etc.
+>
+> I see now that the whole thing that led me down this golden path was
+> that I was removing the failing "git tag -n 100" test,...
 
-Yeah, static inside sha1_name.c is OK; people with newer needs can
-move it later if necessary.
+Wait a minute.  I do not think I would agree with the behaviour of
+the last one, if "tag -l -n 100" is taking 100 as a pattern, not a
+numerical argument to "-n".  That sounds utterly broken.
 
-I'd have called starts_with_icase(), though.
+Is it because we use it OPT_OPTARG, which requires it to be spelled
+as "-n100" or "-n=3D100" or somesuch?
 
+In any case, it is not a new confusion this series introduces, so
+let's include it in the series, but I'd prefer to see it kept as a
+separate patch, at least for now.  Maybe somebody else have an idea
+to resolve this apparent confusion in a cleaner way.
+
+Thanks.
