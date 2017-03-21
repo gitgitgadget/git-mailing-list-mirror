@@ -2,94 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0FEB2095E
-	for <e@80x24.org>; Tue, 21 Mar 2017 20:18:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D424A20966
+	for <e@80x24.org>; Tue, 21 Mar 2017 20:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932478AbdCUUSQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 16:18:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55402 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756464AbdCUUSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 16:18:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 10F136FFF7;
-        Tue, 21 Mar 2017 16:13:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=sIF8V1Wn5Weq
-        Lt+qOe3QyblT37w=; b=bQNfrtB0tBAbFrRti/WinlDYyXfLoVPAhoj49PcXCzm0
-        g9d7n/t2eimHW3xGV6pVYuAKeQwzQRICAHw/BoWiegCqMPF/L8NN5KZw191gVMEh
-        mWYGCySZEOavteNxDYBWbzMCpudszmfRBFjfJ0ka3AzbHdG7GSzMT4hFMsqPot4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uAXWyt
-        7GAUODqQV8VLPvn0+iFJyik7c1vjg/yJE7fcWWHH+I90zMQG3idl8o0mRXXhO9/1
-        rwvEMVAzsTp2lsO6tNwwKzUPLTS5Gs7EPvwtxYDc73G01mHTpsFwcGmVYSa5FWMs
-        D0YoWUlFTaZVrb9VtwDxYwfZ0B9b4wAD5JnQ0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 08DE46FFF6;
-        Tue, 21 Mar 2017 16:13:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6FA916FFF4;
-        Tue, 21 Mar 2017 16:13:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH v2 2/2] doc/SubmittingPatches: show how to get a CLI commit summary
-References: <20170321155153.20753-1-szeder.dev@gmail.com>
-        <xmqqvar2qzof.fsf@gitster.mtv.corp.google.com>
-        <CAM0VKjmZS-mTdtBb1BDhixzWMou7h7VZSo3hpj5pk_C6i_MBnA@mail.gmail.com>
-Date:   Tue, 21 Mar 2017 13:13:04 -0700
-In-Reply-To: <CAM0VKjmZS-mTdtBb1BDhixzWMou7h7VZSo3hpj5pk_C6i_MBnA@mail.gmail.com>
-        ("SZEDER =?utf-8?Q?G=C3=A1bor=22's?= message of "Tue, 21 Mar 2017 21:01:39
- +0100")
-Message-ID: <xmqqlgryo0bz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S933676AbdCUUs3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 16:48:29 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34088 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932478AbdCUUs1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 16:48:27 -0400
+Received: by mail-wm0-f66.google.com with SMTP id u132so5273713wmg.1
+        for <git@vger.kernel.org>; Tue, 21 Mar 2017 13:48:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=9zgHs/QQ27/KmRUWbgRhfiV5RXtn0fnyoP5bj0LSY1o=;
+        b=SRdrkxPIOdx2fGHC7NOo6sFkaSPuYEz7xCEyhbaye9KoCxNU/y3Zmm2bhsv/Uvr42V
+         0B8y/t1xAf/cmasAhQycYtYYj2nA15q5Pz+tQ6olNMb+EZeJFaq91936ucUZyWjh4OaO
+         BuHL9wkKfdNzARCV6D6n7fbE95byT5bfCRtOovZw7Td8i0TsbKMQAm1ljwE7IGKOzzQJ
+         SSKMjz7318w1+XImXXjBkwD3vfhqiiAC11GLanD+t7mXegLkVxGeibdP77e2+J00rYnM
+         ky5VZipk9RZX4BfPsBzz04hyvh0o45a1edTlrI3SV8OhkOjU88KqxNazzZOA94uBPYhC
+         lO5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=9zgHs/QQ27/KmRUWbgRhfiV5RXtn0fnyoP5bj0LSY1o=;
+        b=KwtvH+pAPHK4yWCKXZL76K5W/1s1uvUjwP84Aw98rPG8i85qxLOUh2XT2RAO7kxUmW
+         jPmadg1zIqxwcahVXoy9F1mIhgTlaYDryo516EqdxyXxGhVz7yuy9q+Bup/eXGhqfBCW
+         iNraSUlNtEX72V5rhh+I1cE4ZadV86GOfzisjfMggCnLqbqq2R44N8xaKU2nTKkeMKAY
+         bS/6qFGN3+/KzTEd9rmz4J1N3XzgDtqKaAEA2m8Rc5FaoTu2zUHMnkll2XLwujmOVzIi
+         OpurhHlMS9DhRpSR4Jdg3O2OEkiM3/dwSwX4vHHuXgWMTPOqj+0FHlpXqQNVXzV88nXU
+         eakw==
+X-Gm-Message-State: AFeK/H0a8/gx2UxhnBFkogEBm683DrtEudzK2W7KGLIsRIgGApGAG3r+a1JQnCmxnZwJEQ==
+X-Received: by 10.28.137.208 with SMTP id l199mr4307264wmd.65.1490129305815;
+        Tue, 21 Mar 2017 13:48:25 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id l21sm26278638wrl.59.2017.03.21.13.48.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Mar 2017 13:48:25 -0700 (PDT)
+Date:   Tue, 21 Mar 2017 20:48:42 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH/RFC 1/3] stash: show less information for stash push --
+ <pathspec>
+Message-ID: <20170321204842.GD27158@hank>
+References: <20170318183658.GC27158@hank>
+ <20170319202351.8825-1-t.gummerer@gmail.com>
+ <20170319202351.8825-2-t.gummerer@gmail.com>
+ <xmqqk27jx2ej.fsf@gitster.mtv.corp.google.com>
+ <20170320184855.x7m2gxwdqdt3lnet@sigill.intra.peff.net>
+ <xmqqtw6nvip1.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CB1AF57E-0E72-11E7-87E8-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtw6nvip1.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On 03/20, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Mon, Mar 20, 2017 at 10:51:16AM -0700, Junio C Hamano wrote:
+> >
+> >> > diff --git a/git-stash.sh b/git-stash.sh
+> >> > index 9c70662cc8..59f055e27b 100755
+> >> > --- a/git-stash.sh
+> >> > +++ b/git-stash.sh
+> >> > @@ -299,10 +299,10 @@ push_stash () {
+> >> >  	then
+> >> >  		if test $# != 0
+> >> >  		then
+> >> > -			git reset ${GIT_QUIET:+-q} -- "$@"
+> >> > +			git reset -q -- "$@"
+> >> >  			git ls-files -z --modified -- "$@" |
+> >> >  			git checkout-index -z --force --stdin
+> >> > -			git clean --force ${GIT_QUIET:+-q} -d -- "$@"
+> >> > +			git clean --force -q -d -- "$@"
+> >> >  		else
+> >> >  			git reset --hard ${GIT_QUIET:+-q}
+> >> >  		fi
+> >> 
+> >> Yup, we only said "HEAD is now at ..." in the non-pathspec case (and
+> >> we of course still do).  We didn't report changes to which paths
+> >> have been reverted in (or which new paths are removed from) the
+> >> working tree to the original state (and we of course still don't).
+> >> 
+> >> The messages from reset and clean that reports these probably do not
+> >> need to be shown by default to the users (they can always check with
+> >> "git stash show" when they are curious or when they want to double
+> >> check).
+> >
+> > I'm not sure if you are arguing here that the non-pathspec case should
+> > move to an unconditional "-q", too, to suppress the "HEAD is now at"
+> > message.  But I think that is a good suggestion. It would make the two
+> > cases consistent, and it is not really adding anything of value (it is
+> > always just HEAD, and if you do not provide a custom message, the
+> > short-sha1 and subject are already in the "Saved..." line above).
+> 
+> I wasn't suggesting it (I was just saying that these extra messages
+> are not something we found necessary for consistency with the
+> original codepath when we added the pathspec support).  I wasn't
+> even thinking about what the original codepath did, i.e. when the
+> command is run without pathspec.
+> 
+> I too suspect that most of the ${GIT_QUIET:+-q} can just become an
+> unconditional -q as you do.
 
->> That depends on what you use it for.  I most often use mine to
->> insert the reference that flows in a sentence, not as a separate
->> displayed material, e.g.
->>
->>     1f6b1afe ("Git 2.12.1", 2017-03-20)
->>
->> so for that purpose, not adding a trailing newline is a feature.
->
-> Perhaps we are running it differently.
->
-> I use its output that way, too, usually running the command in a
-> terminal and copy-pasting its output into an editor.
-
-I do \C-u\M-!git one<ENTER> from Emacs in the middle of typing a
-sentence (where "git one" is aliased to that --format thing), and
-for this I obviously do not want the terminating newline.
-
-Of course --pretty=3Dformat:... has the opposite effect and in a
-terminal to make it easier to cut&paste you do want to have its
-output separated from the prompt string.
-
-So as I said, "That depends on what you use it for."
-
-As this is a mere example, we should just shoot for brevity instead?
-Both "--pretty=3Dformat:" and "--pretty=3Dtformat:" are much longer than
-"--format=3D", so we can just mention
-
-    git show --date=3Dshort -s --format=3D'%h ("%s", %ad)'
-
-and let the users to customize it for their needs?
+Thanks both, I do agree that passing -q unconditionally is probably
+the right thing to do.  Will do that, and also pass -q unconditionally
+to the git reset I addressed in 2/3 here in the re-roll.
