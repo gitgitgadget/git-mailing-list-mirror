@@ -2,106 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 162D92095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 19:11:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF2F2095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 19:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758136AbdCUTL5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 15:11:57 -0400
-Received: from mout.web.de ([212.227.15.14]:63831 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1758022AbdCUTL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 15:11:56 -0400
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkhQi-1cIRqu3saC-00aVpO; Tue, 21
- Mar 2017 20:05:13 +0100
-Subject: Re: fatal: Could not get current working directory: Permission denied
- | affected 2.10,2.11,2.12, but not 1.9.5 |
-To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
-References: <elvahoiwfqayelbskykd@qjih>
- <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
- <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
- <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de> <tskgutqgpyszzedvyfra@prol>
- <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de> <ffntuqzgjgcfhebokbty@eduj>
- <7f25def4-9943-ae59-a649-b4348a79890e@web.de>
- <f6588ace-eecc-118d-ef26-70bc21dcc4d4@web.de>
- <CAGZ79kbpPBN21mbN2F20ikr6dXrKEcY=msqymaG8TOujeQF0jw@mail.gmail.com>
- <250f6b35-03c3-1fa8-8b6b-dfdc42660d8c@web.de> <bcrjmkhdzucyoncxqruj@gkuh>
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3e8b756c-81bd-0a29-e032-d5733a8b3ed0@web.de>
-Date:   Tue, 21 Mar 2017 20:04:45 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1757195AbdCUTNw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 15:13:52 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:34030 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1757074AbdCUTMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 15:12:50 -0400
+Received: by mail-io0-f179.google.com with SMTP id b140so54439112iof.1
+        for <git@vger.kernel.org>; Tue, 21 Mar 2017 12:12:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4v0lpxU4Hi7UjmL6P9K2RYJSqneQbMLVM5jKG9ugAEg=;
+        b=LOYfSJeqFDx/6pMkWwWPVB4M0wrU1uJ2X9sVU6+IEMj/TiDP6oPHlYceTRSf+XTXUQ
+         PneLcfqKsBGJOfqP4pk1+s1+s27Q+n8pL9hpGmCfyQnvYSQ2M3etujifV92vKTp8kBHp
+         aZYDWonZFUgt+c2z1QfzwlPIuThpvAp9MGodPf+tQUDjNh6uNjSRR74uy4UAIuULV8KP
+         wnLAN5AD0PhYzQ9xpyi0aENXRND4SOWY6O97johTivJb+wBk141dTTI7Hn5JQHN/GvBH
+         Xh+koRBZysMDtww1SCA95v8pat14AY81apmi0LMFNJTcw3E2Tg18V6ugmrXX4exjS+xA
+         nx4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4v0lpxU4Hi7UjmL6P9K2RYJSqneQbMLVM5jKG9ugAEg=;
+        b=Z8vAnlzpjN6xpX/RO+gayhikqh0TpiLQG21kenGX0DOx+GoV+YJCB/0P6oZuzWeZ6q
+         uM+1YQT9+krDoOrRG886LN0vqfClUyhhe+5dMzXbHGpEz3X06PBO+fC9E/Hi7DXXpqOe
+         zflKfDOkSo8J66KpsS9WRH0Vm1+uvTks21w3u86pYm2S5CRZW2Rw41Q5maQ/niEf7NCH
+         nx1VNcQ1NL4f9lGJ44dVZZ98iBN7RAl2hD/VTF4EWCOe3WXTTydcdY7xRSlDULZ5yYki
+         eYyL0AorehHgVuIG/SfYJZsuhFFsHT+eA//AfWSD76v2PNv0Tjt/JreiqfETXBhPjuY8
+         9P0Q==
+X-Gm-Message-State: AFeK/H0nWv43ZSKpF8mNJT4O9/8OovRj2GUGYZaA28jpGLo0nb0sOa54e31zCApPBuxoQxpOhb98hLnXlTVSUg==
+X-Received: by 10.107.32.199 with SMTP id g190mr11148882iog.117.1490123569055;
+ Tue, 21 Mar 2017 12:12:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <bcrjmkhdzucyoncxqruj@gkuh>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:5f96xm/1plnQbWWCjxWcTn8oosug9XPNzUaRkGxF3ibmo+V69kH
- w8CfiPQvzpfi9NF4slPdqWmXAVh0AJaDiGz5VZw5+NrSmgDT2KqTI01WfiG7ckgdaBsj4W8
- agN+4laNwTezV1TY3HfjOHxbz5yl8MIG6cp9Q8m3XWi7pt0CTOryswl4pyahkpqYnX1vchC
- O0HCxdl7D91TSgKOexUJg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ewHwy2loZy8=:2+ZYNhEYqh+exvjPvaksQI
- iBq5Wf6AoyKeXG2HqwLJCn5J6pynSFL8RnOyTuzpGerbgG8a8Sj02t3wg1J9UW/QQQGw4IFn7
- SIkd2WfgfibvUV1CJAP8O/iPNRqXV3Pt2ifM3S0rR3jJgW5ZtBClrZ5E/yiDk/8KDnJseWe8Z
- Ta6dbL/lf2Kyk7N2zxHy9cq1M6XsWKDJX8pjgcIlLgIDJl5vMhd1CaJypRhkOMKwGg7r7ahir
- LUEWiudxgANNUjLEsrnXwnWTRz43sipUsH4Iyq4LydoIA2oV5fx2Y5Kq4EkfnNcjbjyph50yM
- 0elH1BVYwqmuX6hdesoEZcklqRNaulDx0yDeqbkt3qe8GQGCjAi+ikc17tvJ20JlMkD0Bl0SK
- au0DrwldH/rQQYNwCbwtj8I1eWAHFR3C8o+PqfRMMEnnb+Xn+r18ZNz0CEQrnRgAEUK0YXGya
- QRg+9IQ1EvlXBtLAQ9NshU3UE4RGYMrgB2fQCQEu5b0+kV4O6Jm2B1QpQ/xyWqjgvMshj0ytw
- MQOA6RcJvxgZWzDU1IA8CMqsE60Gpuofw4IcDd3f1X4Ne7fU2s6FR/dLcNtPIg1jImTv1mt0s
- oxs5McJrd6J5Ox0OZcmWybe4XtjO6croMWn82sHz5Yk0G1HC+SQgvJsOgOyAiDD2fY04CJe+k
- LNnbZroiJBjlbXMFrzOE8fgC8RGDPeXu31PXylkUMxQduvq1kVbvf2zKU8yFWxHMIzbSyktF7
- UESkjpiV97XRNOHYaT7uigHCWXmhjRj4359DpSNrpo/1kRyU7UpdVvOKWvTYDlh/aCXbK8duw
- B8hRToS
+Received: by 10.107.130.208 with HTTP; Tue, 21 Mar 2017 12:12:28 -0700 (PDT)
+In-Reply-To: <xmqq7f3ipikl.fsf@gitster.mtv.corp.google.com>
+References: <20170321125901.10652-1-avarab@gmail.com> <20170321125901.10652-15-avarab@gmail.com>
+ <xmqq7f3ipikl.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 21 Mar 2017 20:12:28 +0100
+Message-ID: <CACBZZX7F66PogXWPQTsMr7d0C5kcxZiG87cn4TrYwFc4U1wsYA@mail.gmail.com>
+Subject: Re: [PATCH v2 14/16] ref-filter: reflow recently changed
+ branch/tag/for-each-ref docs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Hjemli <hjemli@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.03.2017 um 14:29 schrieb Zenobiusz Kunegunda:
-> I think I found a way to reproduce this error.
-> I installed FreeBSD 10.3 under qemu with zfs partitioning.
-> Test program did not report any access errors.
-> Then I did chmod 711 /usr/home
-> Now program started reporting permission denied errors just like this:
->    $ ./a.out
->    len = 0, errno = 22, Invalid argument
->    len = 1, errno = 34, Result too large
->    len = 2, errno = 13, Permission denied
->    len = 20, errno = 0, No error: 0
+On Tue, Mar 21, 2017 at 7:53 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+>
+>> Reflow the recently changed branch/tag-for-each-ref
+>> documentation. This change shows no changes under --word-diff, except
+>> the innocuous change of moving git-tag.txt's "[--sort=3D<key>]" around
+>> slightly.
+>> ---
+>
+> Thanks.
+>
+> Needs sign-off (I could just add it back in if you tell me so ;)
 
-Yes, and I think we can take ZFS out of the equation.  As a regular user 
-I get this with UFS and for $mode values of 000, 100 or 400 (with umask 
-0022):
-
-	$ mkdir -p /tmp/a/b && cd /tmp/a/b
-
-	$ chmod $mode /tmp/a && getcwdtest
-	len = 0, errno = 22, Invalid argument
-	len = 1, errno = 34, Result too large
-	len = 2, errno = 13, Permission denied
-	len = 9, errno = 0, No error: 0
-
-Only with both read and execute/search permissions for the intermediate 
-directory I get rid of that irritating permission error for small buffers:
-
-	$ chmod 500 /tmp/a && getcwdtest
-	len = 0, errno = 22, Invalid argument
-	len = 1, errno = 34, Result too large
-	len = 9, errno = 0, No error: 0
-
-So a workaround for you would be to run "chmod a+rx" (or similar) 
-against all parent directories of your repository.  Another one would be 
-to keep the path length below 128 characters (that's the initial buffer 
-size in strbuf_getcwd()).
-
-Have you been able to test the patch I sent on Friday by any chance?
-
-Thanks,
-René
+Oops, will fix for v3.
