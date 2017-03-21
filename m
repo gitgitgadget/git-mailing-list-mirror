@@ -2,82 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48F7620323
-	for <e@80x24.org>; Tue, 21 Mar 2017 10:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4631F20323
+	for <e@80x24.org>; Tue, 21 Mar 2017 11:07:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756790AbdCUKwC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 06:52:02 -0400
-Received: from mail-ot0-f173.google.com ([74.125.82.173]:35342 "EHLO
-        mail-ot0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755348AbdCUKwB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 06:52:01 -0400
-Received: by mail-ot0-f173.google.com with SMTP id x37so149406338ota.2
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 03:52:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=/Suzr+F4PuK2P1As95BmcMy+iVBLzgykr0dDyFad8JE=;
-        b=bug64iTMYazqXRXqo8dfw2Ytizy8sChyQdla0Q3D1IzMbrRFA43GIaVXZc5gaSZ54k
-         g8z62w959PRHPgScif78m+0WFeCBi6wRnSR8hUuozEjOgSSER2f9UXULQLeTm6H6Epry
-         i+o5WdhnmGPsDupEdyJYIvoNsW4fySFo1QcUEuluSq1OEXAfgNiF/ve+QHPOMeEqacdy
-         FvcudjR3KXsXIr0RqA2ZOojq6P6esRqJwgb64Ho/HsWoe8I3e0nQT78wJpoTPjuhDuxi
-         QLA1M+4ihX6Op8Kyf1QdvFUb5dlV3A5auIniFKS2FlfGyXB5S6/gx4NJWJD+W8MEX3uj
-         gDcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=/Suzr+F4PuK2P1As95BmcMy+iVBLzgykr0dDyFad8JE=;
-        b=TyqjxzlNiCTTjD2cSTvsB5T5Bmc4hNrBA1eI9E/pRKPmIF7BEaWPc4Jn4J7znJ9ULy
-         GVah50ZjD9bdy1IvNNh7yIXRKDDloURhz3+WivFpaTE8tWxXmfz+78weqS+C3J6HssN9
-         kE38daYl//moSCrfNWugeyw81wlJE1jFyF3+BBoJMt5ExwiPLnUmEfrUqHXgadI92cBK
-         gpz4DFdqN38OsqWYgm3HK5jLN+2eLmJc5LFbXZhHeXWw9kU3Z8Dg57hR8MYY7ZnrlFJ+
-         W50nvicymuMV8Ixh02ZTdXrNJsp1kJ4aPr/ucdWErHJ9VPofLqox4BFUHWQgSL+ZlaRH
-         4JdQ==
-X-Gm-Message-State: AFeK/H2mUGoAJ/3/WRjWHKcAw/3kHlaYyTJcILrfWzq5g3cF8mB3UcAubhjWL0L5A2t5k+daDO13/kP/bn3fbg==
-X-Received: by 10.157.46.137 with SMTP id w9mr19378617ota.225.1490093519723;
- Tue, 21 Mar 2017 03:51:59 -0700 (PDT)
+        id S1756822AbdCULH2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 07:07:28 -0400
+Received: from mout.gmx.net ([212.227.17.20]:53263 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756550AbdCULH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 07:07:27 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1czfZ72Omo-009Ouo; Tue, 21
+ Mar 2017 12:07:11 +0100
+Date:   Tue, 21 Mar 2017 12:07:08 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCHv2 1/2] tests: create an interactive gdb session with the
+ 'debug' helper
+In-Reply-To: <20170318161400.19753-1-szeder.dev@gmail.com>
+Message-ID: <alpine.DEB.2.20.1703211206050.3767@virtualbox>
+References: <CAM0VKj=k8kygEPpfX+-n0ODd70A8PEYAviKosvc0D34jT02N5w@mail.gmail.com> <20170318161400.19753-1-szeder.dev@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Tue, 21 Mar 2017 03:51:29 -0700 (PDT)
-In-Reply-To: <20170313182322.27539-1-bmwill@google.com>
-References: <20170310185908.171589-1-bmwill@google.com> <20170313182322.27539-1-bmwill@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 21 Mar 2017 17:51:29 +0700
-Message-ID: <CACsJy8BRTuH=xv_xvQPOkVaRcMXKnjgT77SXkwLkZ6aAvcTyHg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] bringing attributes to pathspecs
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/mixed; BOUNDARY="8323329-2093216316-1490094431=:3767"
+X-Provags-ID: V03:K0:I/ZViSN7obl9sVwj7YuJzIeA+L33s7TW0WibBmDZD1Boluxw/CF
+ KlKM3gJa4SLirc1oF6eGwAg1LGVVFCpVI2MnyKsD9KdxBUKXrxr39OiB8/UsJAFwum3niNj
+ 9RholZueugSbGckZj5Iu/9wqlyoRRVXvq5+goT9kD0x6g8PSb8lRCrr8EIEm+Eqf9jaeWUq
+ JfF20zlmFb39E/qsw1sJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CxFV6lfmz2Q=:XLjg+08vUxVT/6FBC16ElZ
+ HX8jU+xhM3+ujHVMlLi5tDGIaOLNRMm1r/oGG0OMP1vvjb8Pn+1XJTZOmL9ERfwbO6yW2vycG
+ bJFa0fMHs/0X5vBia8TEfGeNU9zOFU9aBUGrS+S1oSZlkcC9/+TlypTIqEqzfEEQ++QV2laDL
+ zv5fvpPLV44DCjHWtYV+uykd1RK36tCuX5QwkK//O1ekcQVuTfwEGAUCdzW7ZiUqUV81d2Mry
+ E5M27O7D1Kc3aLSGyxFaRn2zd3x6+yimVA+8YQGZhRObq/IaamCt7zFzQQ+P7mQ6lAi4JwyQz
+ 5OhrvY/wJd2UeVsjLRPbRbbjGc2j7OMRJeg+LHKZbzRSWFbIKoTMUMMckjAgst+I6XhLD30ta
+ iYD9Dssna+xEOW6e8AJgdeV/y+nEjRwCn+wxmULWo5ZqAs3S8wZuzTUCz8clMSjPcRGepN3mT
+ Bf/eWOK7lmrcsPv0pPEwwE7rMNOHuiE49WYsUzQm6DEmXCvfbBgKZ/GRAEAbcsmayjwjSp9Jj
+ 6lkWrQAaM2P/5CEDtmnUfCz7sx1VNXftaPeMvYSojkLL5oEEFYmh2khrKdcGgfYH03Uu0RXzj
+ WDlQY72OL0amWQkqvPjIi4nWJvKwbEwZ1DdMYPFBTcd1xBMNy1WTZuGKCLcTXaerOmChX4MgW
+ cnSqJbMEFQQqFiA/h1ee4tOroUUrgoM3UC8iJaxMTenTuHLF+KkkGkbp4RxlS9lX1KjnIDExI
+ dvyWnlxTxxk7vouSP0OGGisOV4alTDJbVkPVxzeZv4AGx3UPWNx1Ka390L6VLH8GzpsPbw66X
+ 3LNgucGEmctNqNUiulT1Dezrj7zOA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 14, 2017 at 1:23 AM, Brandon Williams <bmwill@google.com> wrote:
-> v3 fixes some nits in style in the test script (using <<-\EOF instead of <<-EOF)
-> as well as fixing a few other minor things reported by Junio and Jonathan.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I'm slowly digging through the pile of mails in the past weeks... I
-know this has landed on 'master' (thanks!). Just wanted to check
-something.
+--8323329-2093216316-1490094431=:3767
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-The series updated match_pathspec(), but that's only one of two
-pathspec filtering functions. The other is tree_entry_interesting()
-(e.g. for "git grep <tree>"). Do you have plans to support :(attr)
-there too? "No" is a perfectly fine answer (and it will end up in my
-forever growing backlog).
+Hi G=C3=A1bor,
 
-The thing about tree_entry_interesting() is, we would want to stop
-traversing subtrees as soon as possible. Naively implemented, we would
-need to traverse all subtrees so we can call match_attrs(). That's not
-great. Oii I'm rambling.. I don't know yet how to implement this thing
-efficiently.
--- 
-Duy
+On Sat, 18 Mar 2017, SZEDER G=C3=A1bor wrote:
+
+> The 'debug' test helper is supposed to facilitate debugging by running
+> a command of the test suite under gdb.  Unfortunately, its usefulness
+> is severely limited, because that gdb session is not interactive,
+> since the test's, and thus gdb's standard input is redirected from
+> /dev/null (for a good reason, see 781f76b15 (test-lib: redirect stdin
+> of tests, 2011-12-15)).
+>=20
+> Redirect gdb's standard file descriptors from/to the test
+> environment's stdin, stdout and stderr in the 'debug' helper, thus
+> creating an interactive gdb session (even in non-verbose mode), which
+> is much, much more useful.
+
+Thank you for working on this!
+
+I meant to clean up my local patch that tried to avoid redirection
+altogether in the case of `debug`, but I never could make it elegant
+enough for my taste. Your approach is much better!
+
+ACK,
+Dscho
+--8323329-2093216316-1490094431=:3767--
