@@ -2,168 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3883E2095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 13:08:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CBA92095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 13:32:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756962AbdCUNIP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 09:08:15 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:35207 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756607AbdCUNIO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 09:08:14 -0400
-Received: by mail-wm0-f49.google.com with SMTP id u132so11687199wmg.0
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 06:08:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vrUO8HLLYFoKYbNPa0A8gMKXIo8SG/amYQKGFQPPjmU=;
-        b=FGjWHjNVlzjljKExIaZz/fjV/fXMrCC3Sb/vd6GxrXTEuLkKk7rOGyEW6Wqxk0pmjm
-         c72O1YnVkRy2CiYGzBHQd+GLlw/7iWFr+T5Fft8hSNFV5efwsbJzXiYXMzUNqgOO9LOL
-         X809vv943Z/vqtJ8NqfqWE0RmooNrBxoqjCSTfInqZteNbF64pFx55mkzCueubwivDei
-         knhqliLo8NKigP10LAqKIkKACXiuju9OMbie8lA/cEtcHhRKKkCihKfkl4sxM64V7PTd
-         scVxYepaPtO02ZypV0KGDfO7tSfDRYn46zZZfKcFeD1nVYukwd8VYi1qdVWgD+K78cBa
-         iz/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vrUO8HLLYFoKYbNPa0A8gMKXIo8SG/amYQKGFQPPjmU=;
-        b=b7ViBQRePG0RNMlovI3oHY6iR7XPCQaVINfmC7bF1k6DcjoJd3ZOwCS7G7hCXventG
-         +7jpn9oyOJSwF8X0VI/eiiYtDPFDgpLEWo2tkh46vVRO3w+JdHLktG3H9wmtwmXUgdly
-         SaQyPIE8ObiaJnIsKd8+ThczR4VoqBqPLznnbhFq7nN3+Wy4aUUnSHOqxox0ypcs88l/
-         VeAkwopjB1F1KM3pxZWhRrDIZavqoFbMor6IAHRKFiPAsnzwdQDynP4RPUlzGUbLgRLR
-         2w/MCjeBSQWXy+E+FMd0ndiz501o79nBfB9NTx6W4ZXbewxxlF+N47XZD+a21ZlLXoIp
-         Hx4A==
-X-Gm-Message-State: AFeK/H2kTMtS7K6OmnmLwKhwV3mkVpskxY3ir0rlsaWLEoBxiajFNwDa2Z8J00WpyZEyfA==
-X-Received: by 10.28.84.18 with SMTP id i18mr2847655wmb.12.1490101153477;
-        Tue, 21 Mar 2017 05:59:13 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 63sm17555072wmg.22.2017.03.21.05.59.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 21 Mar 2017 05:59:12 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Carlos Rica <jasampler@gmail.com>,
-        Samuel Tardieu <sam@rfc1149.net>,
-        Tom Grennan <tmgrennan@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 00/16] Various changes to the "tag" command & related
-Date:   Tue, 21 Mar 2017 12:58:45 +0000
-Message-Id: <20170321125901.10652-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
+        id S1757233AbdCUNbu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 09:31:50 -0400
+Received: from smtpo.poczta.interia.pl ([217.74.65.206]:41798 "EHLO
+        smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756517AbdCUNar (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 09:30:47 -0400
+Date:   Tue, 21 Mar 2017 14:29:46 +0100
+From:   Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+Subject: Re: fatal: Could not get current working directory: Permission
+ denied | affected 2.10,2.11,2.12, but not 1.9.5 |
+To:     =?iso-8859-1?b?UmVu6Q==?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <sbeller@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+X-Mailer: interia.pl/pf09
+In-Reply-To: <250f6b35-03c3-1fa8-8b6b-dfdc42660d8c@web.de>
+References: <elvahoiwfqayelbskykd@qjih>
+        <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
+        <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
+        <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de> <tskgutqgpyszzedvyfra@prol>
+        <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de> <ffntuqzgjgcfhebokbty@eduj>
+        <7f25def4-9943-ae59-a649-b4348a79890e@web.de>
+        <f6588ace-eecc-118d-ef26-70bc21dcc4d4@web.de>
+        <CAGZ79kbpPBN21mbN2F20ikr6dXrKEcY=msqymaG8TOujeQF0jw@mail.gmail.com>
+        <250f6b35-03c3-1fa8-8b6b-dfdc42660d8c@web.de>
+X-Originating-IP: 89.64.255.37
+Message-Id: <bcrjmkhdzucyoncxqruj@gkuh>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
+        s=biztos; t=1490102986;
+        bh=PGHGzOCap2+WcY1uo6xu2kfq+6dbQ0iddMWC8oqY2dE=;
+        h=Date:From:Subject:To:Cc:X-Mailer:In-Reply-To:References:
+         X-Originating-IP:Message-Id:MIME-Version:Content-Type:
+         Content-Transfer-Encoding;
+        b=QTEwWbEEfzvPstmE95v/fbiR3HG0/hOuKDZZqNssJAoy7FBwGNuc8/VKKLkD2BKGB
+         rZdZRD/ijNP20TjW4YFPQTCSeEv+jUXKVzgytjpWEIrsXVdKODQ0yljQUtliIb8Zfs
+         4QLzdPfNfb4dWv0wb8Hd/XBaHQRmMIMrJ/jWVxHU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is now 2x the size of v1. The reason is that the
-discussion for v1 brought up lots of related side-points that I fixed
-while I was at it. Most if this *could* be split off, but since a lot
-of it's modifying the same bits of code doing that would result in
-merge conflict galore, so I think it's easier to bundle it up.
 
-Comments on individual patches below:
 
-Ævar Arnfjörð Bjarmason (16):
-  tag doc: move the description of --[no-]merged earlier
-  tag doc: split up the --[no-]merged documentation
-  tag doc: reword --[no-]merged to talk about commits, not tips
+Od: "Ren=C3=A9 Scharfe" &lt;l.s.r@web.de>
+Do: "Stefan Beller" &lt;sbeller@google.com>;=20
+Wys=C5=82ane: 22:08 Pi=C4=85tek 2017-03-17
+Temat: Re: fatal: Could not get current working directory: Permission denie=
+d | affected 2.10,2.11,2.12, but not 1.9.5 |
 
-NEW: Document that --merged & --no-merged operate on commits, not
-objects. Split up the docs to document each option indepenently for
-ease of subsequent changes.
+>=20
+>> Am 17.03.2017 um 20:45 schrieb Stefan Beller:
+>> On Fri, Mar 17, 2017 at 12:34 PM, Ren=C3=A9 Scharfe  wrote:
+>>> Am 15.03.2017 um 22:30 schrieb Ren=C3=A9 Scharfe:
+>>>> Am 15.03.2017 um 10:44 schrieb Zenobiusz Kunegunda:
+>>>>> $ git bisect bad
+>>>>> 7333ed1788b4f2b162a35003044d77a716732a1f is the first bad commit
+>>>>> commit 7333ed1788b4f2b162a35003044d77a716732a1f
+>>>>> Author: Ren=C3=A9 Scharfe=20
+>>>>> Date:   Mon Jul 28 20:26:40 2014 +0200
+>>>>>
+>>>>>     setup: convert setup_git_directory_gently_1 et al. to strbuf
+>>>>
+>>>> That's what I half-suspected, and I think by now I got an idea.  Here'=
+s
+>>>> a test program:
+>>>
+>>> And here's a patch for letting strbuf_getcwd() use the same getcwd(3)
+>>> extension that pwd(1) uses.  It avoids the need to guess the path's
+>>> length and thus reduces the chance of stumbling over strange error
+>>> codes.  I wonder if it helps in your case.
+>>>
+>>> Ren=C3=A9
+>>>
+>>> ---
+>>>  strbuf.c | 8 ++++++++
+>>>  1 file changed, 8 insertions(+)
+>>>
+>>> diff --git a/strbuf.c b/strbuf.c
+>>> index ace58e7367..4c02801edd 100644
+>>> --- a/strbuf.c
+>>> +++ b/strbuf.c
+>>> @@ -442,6 +442,14 @@ int strbuf_getcwd(struct strbuf *sb)
+>>>  {
+>>>         size_t oldalloc =3D sb->alloc;
+>>>         size_t guessed_len =3D 128;
+>>> +       char *cwd;
+>>> +
+>>> +       cwd =3D getcwd(NULL, 0);
+>>
+>> from my local man pages:
+>>
+>>   As  an extension to the POSIX.1-2001 standard, Linux (libc4, libc5,
+>> glibc) getcwd()
+>>   allocates the buffer dynamically using malloc(3) if buf is NULL.  In
+>> this case, the
+>>   allocated buffer has the length size unless size is zero, when buf
+>> is allocated as big
+>>   as necessary.  The caller should free(3) the returned buffer.
+>>
+>> This sounds specific to Linux (though I am reading Linux man pages,
+>> which claim this; Also it seems I might have misread it as it also state=
+s
+>> "The pathname is returned as the function result and via the
+>> argument buf, if present.").
+>=20
+> I'm only interested in FreeBSD for now, as that's the platform Zenobiusz=20
+> reported the issue on and I haven't been able to reproduce it, so this=20
+> is still a bit exploratory, but hopefully getting closer.  This=20
+> extension is used in the first version of pwd(1) in FreeBSD's repo,=20
+> comitted 1994-05-26, so it was supported there basically forever.
+>=20
+> The oldest version I found that's using the extention is NetBSD's=20
+> pwd(1), which was committed 1993-03-21 and carries a SCCS timestamp of=20
+> 1991-02-20.  Visual Studio .NET 2003 supports it as well.
+>=20
+>> Looking further:
+>>
+>>   These functions are often used to save the location of the current
+>>   working directory for the purpose of returning to it later.  Opening t=
+he
+>>   current directory (".")  and  calling  fchdir(2)  to return is
+>> usually a faster
+>>   and more reliable alternative when sufficiently many file descriptors =
+are
+>>   available, especially on platforms other than Linux.
+>>
+>> Not sure if that opens another door here?
+>=20
+> Reducing the use of absolute paths may be a good idea in general, but=20
+> that would probably require major changes.  And Windows doesn't seem to=20
+> offer fchdir() at all; I don't know if it has an equivalent function=20
+> that could be used to build a replacement.
+>=20
+> Ren=C3=A9
+>=20
+>=20
 
-  ref-filter: make combining --merged & --no-merged an error
-
-NEW: Currently "--merged HEAD --no-merged HEAD" is just silently
-equivalent to "--no-merged HEAD". Make the former an "incompatible
-options" error.
-
-  ref-filter: add test for --contains on a non-commit
-
-NEW: Jeff suggested we should test for this. Make it so.
-
-  tag: remove a TODO item from the test suite
-
-No changes.
-
-  tag tests: fix a typo in a test description
-
-NEW: Fix a tag test typo.
-
-  for-each-ref: partly change <object> to <commit> in help
-
-NEW: Clarify the for-each-ref --help output.
-
-  tag: add more incompatibles mode tests
-
-CHANGED: I dropped the "tag: Refactor the options handling code to be
-less bizarro" patch, but these are the tests that came along with it.
-
-  tag: change misleading --list <pattern> documentation
-
-No changes.
-
-  tag: implicitly supply --list given another list-like option
-
-Changed: Typo fixes in commit message, `argc == 0 && !cmdmode` logic
-changes, code reflow, better error messages etc.
-
-  tag: change --point-at to default to HEAD
-
-Changed: Fixed up an ">expect" at the start of the test.
-
-  ref-filter: add --no-contains option to tag/branch/for-each-ref
-
-Changed: Typos/grammar in commit message, get rid of needless "else",
-tests for tree/tag blobs.
-
-  ref-filter: reflow recently changed branch/tag/for-each-ref docs
-
-NEW: Split off reflowing of documentation paragraphs from the above
-for ease of reading.
-
-  tag: implicitly supply --list given the -n option
-
-Re-arranged: I still want this included, but the consensus on the list
-wasn't as strong, so it's moved later in the series so it can be
-dropped without conflicts.
-
-  tag: add tests for --with and --without
-
-No changes.
-
- Documentation/git-branch.txt           |  33 +++--
- Documentation/git-for-each-ref.txt     |  12 +-
- Documentation/git-tag.txt              |  60 ++++++---
- builtin/branch.c                       |   5 +-
- builtin/for-each-ref.c                 |   5 +-
- builtin/tag.c                          |  27 ++--
- contrib/completion/git-completion.bash |   4 +-
- parse-options.h                        |   4 +-
- ref-filter.c                           |  30 ++++-
- ref-filter.h                           |   1 +
- t/t3200-branch.sh                      |   4 +
- t/t3201-branch-contains.sh             |  61 ++++++++-
- t/t6302-for-each-ref-filter.sh         |  20 +++
- t/t7004-tag.sh                         | 237 +++++++++++++++++++++++++++++++--
- 14 files changed, 432 insertions(+), 71 deletions(-)
-
--- 
-2.11.0
-
+I think I found a way to reproduce this error.
+I installed FreeBSD 10.3 under qemu with zfs partitioning.
+Test program did not report any access errors.
+Then I did chmod 711 /usr/home
+Now program started reporting permission denied errors just like this:
+   $ ./a.out =20
+   len =3D 0, errno =3D 22, Invalid argument
+   len =3D 1, errno =3D 34, Result too large
+   len =3D 2, errno =3D 13, Permission denied
+   len =3D 20, errno =3D 0, No error: 0
+=
