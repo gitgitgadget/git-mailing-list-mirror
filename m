@@ -2,145 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9798F2095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 19:11:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 162D92095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 19:11:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758072AbdCUTLr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 15:11:47 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:36118 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758022AbdCUTLh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 15:11:37 -0400
-Received: by mail-io0-f173.google.com with SMTP id l7so54198294ioe.3
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 12:11:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=zOkPwVq4VN5UL6cqL0cQxzDzv0EnxaUZtJpD/DRcrzg=;
-        b=c0CZu7zSrWYCf2ySsMKWQV01oFRpahqma5PinMBFqEzzVYnR7ag+EniuQibUrTGtnx
-         gwmywcfnUeicmGsWKXVeEdPkUJIIkRO7ix6XW3e3gp1lNFzzBtIrpaHa4zlg4ep+38q/
-         IHqomKa8F9YhWUiNhQa4vLquUvKO4mDw+y6GEks6DwcCs0FIOw01ESrj1iJ17Vy3zAgM
-         nRiXiTSPX2IYAzcTncSxtA6M2Hq4peOTkchr3UjJVeBoQdofdpuFbNhWHHtyEvXjur3u
-         cM1ba9u2P7Sz/ov2aqMX0Lw5pi5Mh+k7Dz5vILhA2J671Z4eY2qIZbp97Jo3vcQaA1x5
-         MS7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=zOkPwVq4VN5UL6cqL0cQxzDzv0EnxaUZtJpD/DRcrzg=;
-        b=DrM+MtZLoz2YeRkBkczGT88IHpTAvHmjQiJ79T9De7IGD6tHJZny2GqascgcVk02XJ
-         IsRc5ysLSJ/hKLzl0aShIYZ3zr8yPRKRhxKxMpaEt8MkD6xG6ViwbNiI5+BS7NFlqre+
-         9UF2QHRYjY+UCzC+xs/W5RnMapPyCcsYOVKNXYWKue8Huc6T93UmGVyuo/7YCJNP3YI+
-         Nu9+2NRskC8sdDpqCOlYTv/Nq5VekN1gAWcR1g5ZWz0Hj/HMLGLoQSAyHxJbQKY1YOOz
-         SnakY4HloRcaQnnJB/YTwqAUA0GBC4eV0EXj+SnMozG/CLcnFX/dAN4XtSyqEX4ZlfRH
-         1RJw==
-X-Gm-Message-State: AFeK/H170M50SiHG9tb0DYkfEnBwzeKC+kjF0+LKZemonKlt0ddGpxF5HDsSYPaKNg7Hm9CLgdQpbhlKWmzyxQ==
-X-Received: by 10.107.150.201 with SMTP id y192mr38960648iod.33.1490123496025;
- Tue, 21 Mar 2017 12:11:36 -0700 (PDT)
+        id S1758136AbdCUTL5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 15:11:57 -0400
+Received: from mout.web.de ([212.227.15.14]:63831 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758022AbdCUTL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 15:11:56 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkhQi-1cIRqu3saC-00aVpO; Tue, 21
+ Mar 2017 20:05:13 +0100
+Subject: Re: fatal: Could not get current working directory: Permission denied
+ | affected 2.10,2.11,2.12, but not 1.9.5 |
+To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+References: <elvahoiwfqayelbskykd@qjih>
+ <7d947891-ce40-23e7-2bc7-0f76dee53665@web.de> <hpulcgxossrwvfbbcvcl@zndn>
+ <10cc42b8-0f63-2d97-8da1-2943970d63cc@web.de> <ogwsaxvtiqlsiwojzxul@owpk>
+ <3ba0c8e3-894a-846f-ba99-dad1deba7cdf@web.de> <tskgutqgpyszzedvyfra@prol>
+ <f2ab799f-5f0a-0ce0-0625-13513bc1973d@web.de> <ffntuqzgjgcfhebokbty@eduj>
+ <7f25def4-9943-ae59-a649-b4348a79890e@web.de>
+ <f6588ace-eecc-118d-ef26-70bc21dcc4d4@web.de>
+ <CAGZ79kbpPBN21mbN2F20ikr6dXrKEcY=msqymaG8TOujeQF0jw@mail.gmail.com>
+ <250f6b35-03c3-1fa8-8b6b-dfdc42660d8c@web.de> <bcrjmkhdzucyoncxqruj@gkuh>
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <3e8b756c-81bd-0a29-e032-d5733a8b3ed0@web.de>
+Date:   Tue, 21 Mar 2017 20:04:45 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Tue, 21 Mar 2017 12:11:15 -0700 (PDT)
-In-Reply-To: <xmqq37e6piae.fsf@gitster.mtv.corp.google.com>
-References: <20170321125901.10652-1-avarab@gmail.com> <20170321125901.10652-16-avarab@gmail.com>
- <xmqq37e6piae.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 21 Mar 2017 20:11:15 +0100
-Message-ID: <CACBZZX7yRRTQpcFZ9eO2_+HdB979p6URE+jsXJakxw7jpnOvmA@mail.gmail.com>
-Subject: Re: [PATCH v2 15/16] tag: implicitly supply --list given the -n option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Lars Hjemli <hjemli@gmail.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Carlos Rica <jasampler@gmail.com>,
-        Samuel Tardieu <sam@rfc1149.net>,
-        Tom Grennan <tmgrennan@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <bcrjmkhdzucyoncxqruj@gkuh>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:5f96xm/1plnQbWWCjxWcTn8oosug9XPNzUaRkGxF3ibmo+V69kH
+ w8CfiPQvzpfi9NF4slPdqWmXAVh0AJaDiGz5VZw5+NrSmgDT2KqTI01WfiG7ckgdaBsj4W8
+ agN+4laNwTezV1TY3HfjOHxbz5yl8MIG6cp9Q8m3XWi7pt0CTOryswl4pyahkpqYnX1vchC
+ O0HCxdl7D91TSgKOexUJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ewHwy2loZy8=:2+ZYNhEYqh+exvjPvaksQI
+ iBq5Wf6AoyKeXG2HqwLJCn5J6pynSFL8RnOyTuzpGerbgG8a8Sj02t3wg1J9UW/QQQGw4IFn7
+ SIkd2WfgfibvUV1CJAP8O/iPNRqXV3Pt2ifM3S0rR3jJgW5ZtBClrZ5E/yiDk/8KDnJseWe8Z
+ Ta6dbL/lf2Kyk7N2zxHy9cq1M6XsWKDJX8pjgcIlLgIDJl5vMhd1CaJypRhkOMKwGg7r7ahir
+ LUEWiudxgANNUjLEsrnXwnWTRz43sipUsH4Iyq4LydoIA2oV5fx2Y5Kq4EkfnNcjbjyph50yM
+ 0elH1BVYwqmuX6hdesoEZcklqRNaulDx0yDeqbkt3qe8GQGCjAi+ikc17tvJ20JlMkD0Bl0SK
+ au0DrwldH/rQQYNwCbwtj8I1eWAHFR3C8o+PqfRMMEnnb+Xn+r18ZNz0CEQrnRgAEUK0YXGya
+ QRg+9IQ1EvlXBtLAQ9NshU3UE4RGYMrgB2fQCQEu5b0+kV4O6Jm2B1QpQ/xyWqjgvMshj0ytw
+ MQOA6RcJvxgZWzDU1IA8CMqsE60Gpuofw4IcDd3f1X4Ne7fU2s6FR/dLcNtPIg1jImTv1mt0s
+ oxs5McJrd6J5Ox0OZcmWybe4XtjO6croMWn82sHz5Yk0G1HC+SQgvJsOgOyAiDD2fY04CJe+k
+ LNnbZroiJBjlbXMFrzOE8fgC8RGDPeXu31PXylkUMxQduvq1kVbvf2zKU8yFWxHMIzbSyktF7
+ UESkjpiV97XRNOHYaT7uigHCWXmhjRj4359DpSNrpo/1kRyU7UpdVvOKWvTYDlh/aCXbK8duw
+ B8hRToS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 21, 2017 at 7:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> Change the "tag" command to treat the "-n" invocation as a list-like
->> option in addition to --contains, --points-at etc.
->>
->> Most of the work for this was done in my earlier "tag: Implicitly
->> supply --list given another list-like option" commit, but I've split
->> off this patch since it's more contentious. Now these will be
->> synonymous:
->>
->>     git tag -n 100
->>     git tag -n --list 100
->
-> Hmph.  I would understand if these meant the same thing:
->
->     git tag -l -n 100
->     git tag -l -n=3D100
->     git tag -l -n100
->
-> with or without "-l".  And accepting any of the above three without "-l"
-> instead of rejecting is a very good change, I would think.
->
-> I however do not understand how accepting this:
->
->     git tag -n --list 100
->
-> would be a good thing, as "100" an optional parameter to the "-n"
-> option.
->
->> Whereas before the former would die. This doesn't technically
->> introduce any more ambiguity than the aforementioned change applied to
->> th other list-like options, but it does introduce the possibility for
->> more confusion, since instead of the latter of these dying:
->>
->>     git tag -n100
->>     git tag -n 100
->>
->> It now works entirely differently, i.e. invokes list mode with a
->> filter for "100" as a pattern. I.e. it's synonymous with:
->>
->>     git tag -n --list 100
->
-> Ahhh, yuck.  OK, so in "git tag -n --list 100", 100 does not have
-> anything to do with the -n option.  It is a pattern and -n specifies
-> "just one line" by default.
->
-> Oh, boy, that is confusing.  While it is very logical.
->
-> Still I think it is OK as I can see why people who wanted to have
-> '-n' in the first place may want
->
->     git tag -n -l <pattern>
+Am 21.03.2017 um 14:29 schrieb Zenobiusz Kunegunda:
+> I think I found a way to reproduce this error.
+> I installed FreeBSD 10.3 under qemu with zfs partitioning.
+> Test program did not report any access errors.
+> Then I did chmod 711 /usr/home
+> Now program started reporting permission denied errors just like this:
+>    $ ./a.out
+>    len = 0, errno = 22, Invalid argument
+>    len = 1, errno = 34, Result too large
+>    len = 2, errno = 13, Permission denied
+>    len = 20, errno = 0, No error: 0
 
-Yeah I see now that this is rather badly explained. I'll fix this up
-for v3. All of this worked already:
+Yes, and I think we can take ZFS out of the equation.  As a regular user 
+I get this with UFS and for $mode values of 000, 100 or 400 (with umask 
+0022):
 
-    $ ./git tag 100
-    $ ./git tag -n -l 100
-    100             tag: add tests for --with and --without
-    $ ./git tag -l -n 100
-    100             tag: add tests for --with and --without
+	$ mkdir -p /tmp/a/b && cd /tmp/a/b
 
-So actually thinking about it again it doesn't add any more ambiguity
-than we had before. The change is just strictly getting rid of the
-need for -l for consistency with --contains, --points-at etc.
+	$ chmod $mode /tmp/a && getcwdtest
+	len = 0, errno = 22, Invalid argument
+	len = 1, errno = 34, Result too large
+	len = 2, errno = 13, Permission denied
+	len = 9, errno = 0, No error: 0
 
-I see now that the whole thing that led me down this golden path was
-that I was removing the failing "git tag -n 100" test, so while I was
-still wrapping my mind around this I thought I was introducing some
-*more* confusion, but really that test was just testing that it didn't
-work, as opposed to "git tag -l -n 100".
+Only with both read and execute/search permissions for the intermediate 
+directory I get rid of that irritating permission error for small buffers:
 
-I'm just going to squash this into the "tag: implicitly supply --list
-given another list-like option" patch for v3 unless you have
-objections, I think there's no reason to split this off any more than
-splitting off e.g. --points-at etc.
+	$ chmod 500 /tmp/a && getcwdtest
+	len = 0, errno = 22, Invalid argument
+	len = 1, errno = 34, Result too large
+	len = 9, errno = 0, No error: 0
+
+So a workaround for you would be to run "chmod a+rx" (or similar) 
+against all parent directories of your repository.  Another one would be 
+to keep the path length below 128 characters (that's the initial buffer 
+size in strbuf_getcwd()).
+
+Have you been able to test the patch I sent on Friday by any chance?
+
+Thanks,
+René
