@@ -2,83 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9312095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 14:31:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 805BE2095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 15:50:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932402AbdCUObM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 10:31:12 -0400
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:34349 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756517AbdCUObK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 10:31:10 -0400
-Received: by mail-wr0-f171.google.com with SMTP id l37so113297099wrc.1
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 07:31:09 -0700 (PDT)
+        id S1757495AbdCUPtk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 11:49:40 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:35979 "EHLO
+        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752625AbdCUPt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 11:49:27 -0400
+Received: by mail-vk0-f44.google.com with SMTP id j64so84047152vkg.3
+        for <git@vger.kernel.org>; Tue, 21 Mar 2017 08:49:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hgTw7aUr8fb24Hbg8mnAWfnzo30E5UfRkmItw+gZr2Y=;
-        b=sc2KPRn2krZ6zz2QjnY+CNZzEFU/ZEFDkbo3mPecPipoEjuyr+afacdigLkKHtmGn3
-         AutOudqHaO0d0Qy3AxrXyqa4+eH3zq7m3tFdRxNEn9ooTFyCJBjh93p8eOtKBYy9y1+M
-         Pjn4WNtXfLar2D5qYzmTOcxgM8I5MsUpeY+C65xomq0YkU2vivHOL2ysfz1J1LsPbNDy
-         UU53pqwpZdbPV5f4EWxSBewvPdsNyaA9RL478//7iOXx7gMXQ9uL5e8/a0qBCH5Iztj6
-         heKOPZ3JZlO13D/d4XDKPboFrPeroxUJ2nRJyBk+6luivxXbkH/oYoZEW8hSbhhNCppg
-         kvew==
+        h=sender:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=uV7ogg99Rvu/ne/nQ7iC0iXqBSmLb1Ka5r8hJjWGNvM=;
+        b=TzDWEJe2QQM73fdZBrDRNrYVjy0jVx4NSzzOIiAhNtfxV45ledsLDJAKS9NsV0UUlb
+         vPWqn8L23onOoSmEyHl6TDIJchHxTWJjVMH6oTCmh6jzNVesw4t66hNFpDR9Hpls/oby
+         cnFqTyvNRJUC/qs5ogsFZzS8LTxx5bQiXYKWPed8HhLB+CIrtrgg6Eq8y5bseMMTgll9
+         Ijv9WC9QJRvmyG7g6OxYd/omrAm0JEJB561Nz9l2YVBw3mndKJ37Z3NM4Vd+kvxrlPuc
+         TxUxSskaBk5f/6ukxhQ5u1BJdrwEy4PG2jtvYV0IjaJRbBgshuVHgWoNGYTYaXlJ4RxU
+         fq+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hgTw7aUr8fb24Hbg8mnAWfnzo30E5UfRkmItw+gZr2Y=;
-        b=NR1ut9iiA3zNfOtQFTbZ6OghdU3mTowkf7d4i7g00u9CaxMQZsZZRg1TniAbSD/TY0
-         5UDE4YjgO1040DxoTCAulps+d8tDBanRFm7otbiEkoLuN/XMAYc/qg8yawXUyA9wuFj/
-         qUvrNwWYQXVLeR5mZxZ2qTTs56yh9WFeEZIOe1JNwXVEsUTjAC2Rnk2y46A1rtUNRlay
-         sR3gHPAQFWhOgdSyXuSKpv7dRIavYTr9TMVaqXLRRLHpzj0BctRL9PmC/thAiuP3zucB
-         COktBKnmNwsCW5cZvWRr/eSz/HgN3cs5oEWmvOKXvp/UdqQRUIqzz+BFvmLG6Isc4l/7
-         ubag==
-X-Gm-Message-State: AFeK/H27OMdokdCv01gBOGXZyz/UcpNg6PWlY3bNnvcQ0zVMRRtezfDaH3SNetcsUd5brw==
-X-Received: by 10.223.144.209 with SMTP id i75mr30244702wri.51.1490106125506;
-        Tue, 21 Mar 2017 07:22:05 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id s17sm25317092wrc.25.2017.03.21.07.22.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 21 Mar 2017 07:22:04 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        h=x-gm-message-state:sender:date:from:to:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=uV7ogg99Rvu/ne/nQ7iC0iXqBSmLb1Ka5r8hJjWGNvM=;
+        b=KiaTXeq3w0uFFWY6V/SZHoK1jmhA7jJ/Hb/y7/Ikh0vicQE1uTObkhZ45+0Jzwkiw/
+         hi9Nbv2bi7KS9CM6PIIFoON2H44Fh8b0NX7ZCt/wjWjUHIIi/Q4yFg2AJc5K6iUCeQjf
+         DQY4uq8ERr1CA8/EllKOXORovmCpQHe6Od9gfhpmCsjod/ZPc88N6dGA5GMbtA7t9A8z
+         ++Kudj6fPmcbyCnWAD6HDc74hasU4jQxicfsRmcvxRgqG0vLLvaYLQDG86wah9NtBg6i
+         tZ7pKDX2ps/K5Bd/Z8Q53J9JTaEjifXboBicrLU32xo4t2/eiapiBRFjfJQUuC8+iGfn
+         bM3Q==
+X-Gm-Message-State: AFeK/H0DmBJRLLxCEvgr7CA441jOyduHBh/spjtBy6L37N+qHXJKuLkn475PmpRqndLd3Q==
+X-Received: by 10.159.36.75 with SMTP id 69mr15618687uaq.173.1490111366184;
+        Tue, 21 Mar 2017 08:49:26 -0700 (PDT)
+Received: from localhost (default-46-102-197-194.interdsl.co.uk. [46.102.197.194])
+        by smtp.gmail.com with ESMTPSA id f195sm4963649vke.8.2017.03.21.08.49.25
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 21 Mar 2017 08:49:25 -0700 (PDT)
+Date:   Tue, 21 Mar 2017 15:49:21 +0000
+From:   Roger Pau =?iso-8859-1?Q?Monn=E9?= <royger@FreeBSD.org>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 0/2] A couple of minor improvements
-Date:   Tue, 21 Mar 2017 14:21:52 +0000
-Message-Id: <20170321142154.16993-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <xmqq37ea2ykh.fsf@gitster.mtv.corp.google.com>
-References: <xmqq37ea2ykh.fsf@gitster.mtv.corp.google.com>
+Subject: Issues with git send-email and msmtp
+Message-ID: <20170321154921.3jgn4ktcop4shct2@dhcp-3-128.uk.xensource.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unchanged from v1 in my <20170318184203.16890-1-avarab@gmail.com>,
-except 2/2 changes the "show" command to use --date=short as Junio
-suggested in <xmqq37ea2ykh.fsf@gitster.mtv.corp.google.com>.
+Hello,
 
-Ævar Arnfjörð Bjarmason (2):
-  doc/SubmittingPatches: clarify the casing convention for "area:
-    change..."
-  doc/SubmittingPatches: show how to get a CLI commit summary
+I'm trying to use git send-email with msmtp, and I have added the following to
+my .gitconfig:
 
- Documentation/SubmittingPatches | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+[sendemail]
+	smtpserver = "/usr/local/bin/msmtp"
 
--- 
-2.11.0
+This seems to work fine, except that sometimes git dies unexpectedly after
+queuing a patch to msmtp:
 
+Died at /usr/local/Cellar/git/2.12.0/libexec/git-core/git-send-email line 1350, <FIN> line 3.
+
+I'm guessing there's some kind of race, because this is not 100% reproducible,
+sometimes succeeds while others simply dies with the above message. As you can
+imagine, this is specially annoying when sending patch series.
+
+Has someone seen similar issues when using send-email and msmtp? Am I missing
+something in my .gitconfig?
+
+Thanks, Roger.
+
+(please keep me in the Cc since I'm not subscribed)
