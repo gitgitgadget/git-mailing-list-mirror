@@ -2,95 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D3E420323
-	for <e@80x24.org>; Tue, 21 Mar 2017 10:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48F7620323
+	for <e@80x24.org>; Tue, 21 Mar 2017 10:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756772AbdCUKhl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 06:37:41 -0400
-Received: from mail-oi0-f44.google.com ([209.85.218.44]:34919 "EHLO
-        mail-oi0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756186AbdCUKhj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 06:37:39 -0400
-Received: by mail-oi0-f44.google.com with SMTP id a94so34954408oic.2
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 03:37:38 -0700 (PDT)
+        id S1756790AbdCUKwC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 06:52:02 -0400
+Received: from mail-ot0-f173.google.com ([74.125.82.173]:35342 "EHLO
+        mail-ot0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755348AbdCUKwB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 06:52:01 -0400
+Received: by mail-ot0-f173.google.com with SMTP id x37so149406338ota.2
+        for <git@vger.kernel.org>; Tue, 21 Mar 2017 03:52:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=DLPRSZ78eW1QQWmw84ANyQNIUzw6U7CxfX5k0yDko3U=;
-        b=MhYCiIXr72dadVl5JSXLDxwCDbqx6articK6XQuV4v4jGOTQh4SzSsSIc+6J2AqedG
-         sblDQ28shfxboEF2a7MzedioeVBfUbzEIsCWgHdeF61LvXxo/q1mN8KSGxCgIErfvoxT
-         NpmgCudvMBc3MjB/8IKyr3TeVPa2eSVOCNFZ9dB4ozGjTDHYqlpzRGgJG+A8NSjh7YEN
-         gY7Fktpw4HMeqtzavIXNONH+kRgCZDKZpIEWxVYdKoX5KkntrfMaNyZaMyWNjlFsJBlr
-         Of5uL0yp5INxYI3h6kDbfR7RUfJUVjzDwAg/DRGc036qvY7dOYPZWfwU+i9O0v8KNfo0
-         tT5A==
+        bh=/Suzr+F4PuK2P1As95BmcMy+iVBLzgykr0dDyFad8JE=;
+        b=bug64iTMYazqXRXqo8dfw2Ytizy8sChyQdla0Q3D1IzMbrRFA43GIaVXZc5gaSZ54k
+         g8z62w959PRHPgScif78m+0WFeCBi6wRnSR8hUuozEjOgSSER2f9UXULQLeTm6H6Epry
+         i+o5WdhnmGPsDupEdyJYIvoNsW4fySFo1QcUEuluSq1OEXAfgNiF/ve+QHPOMeEqacdy
+         FvcudjR3KXsXIr0RqA2ZOojq6P6esRqJwgb64Ho/HsWoe8I3e0nQT78wJpoTPjuhDuxi
+         QLA1M+4ihX6Op8Kyf1QdvFUb5dlV3A5auIniFKS2FlfGyXB5S6/gx4NJWJD+W8MEX3uj
+         gDcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=DLPRSZ78eW1QQWmw84ANyQNIUzw6U7CxfX5k0yDko3U=;
-        b=Dq3Yq24oA98uk3LLIE1GHQlTBhM/xbRYbuBQq5OlgxGBnNBuxmS7MGJEtuMvPYjAIp
-         z5/tqXHCLBqTe1zaVVgp/tSsKpoWSjE0CJedqsFnXogum5IoEoWicRPm3SGvb6kGINnM
-         aEpiesw9WJVFGMxji8X/dMZWKxufWfjXW6txzSYmVs1yIsLyfcPeRizqB+zmKW7F9pmB
-         VOe363pFw5xWU/JLr0tt9MZHoN88HJv+Wba9YBEt+mlSx7EBHxjhc7OL+AZ3fIGGDDrI
-         VfLayhjXlXgRjJq1xDNgHjIAWA0o55p5f9PKBAVCebFciTQ8A56sTTxW/g6iC0RhYd6T
-         jVRg==
-X-Gm-Message-State: AFeK/H3W6+TT0H/RK8HV55e3uPx99Ok2Q+ZVtJgNjveeFU3/9wcSjPnpi80UkbAtrHdYTt8LR/mDgruJJoK+HQ==
-X-Received: by 10.202.204.86 with SMTP id c83mr18586803oig.146.1490092658418;
- Tue, 21 Mar 2017 03:37:38 -0700 (PDT)
+        bh=/Suzr+F4PuK2P1As95BmcMy+iVBLzgykr0dDyFad8JE=;
+        b=TyqjxzlNiCTTjD2cSTvsB5T5Bmc4hNrBA1eI9E/pRKPmIF7BEaWPc4Jn4J7znJ9ULy
+         GVah50ZjD9bdy1IvNNh7yIXRKDDloURhz3+WivFpaTE8tWxXmfz+78weqS+C3J6HssN9
+         kE38daYl//moSCrfNWugeyw81wlJE1jFyF3+BBoJMt5ExwiPLnUmEfrUqHXgadI92cBK
+         gpz4DFdqN38OsqWYgm3HK5jLN+2eLmJc5LFbXZhHeXWw9kU3Z8Dg57hR8MYY7ZnrlFJ+
+         W50nvicymuMV8Ixh02ZTdXrNJsp1kJ4aPr/ucdWErHJ9VPofLqox4BFUHWQgSL+ZlaRH
+         4JdQ==
+X-Gm-Message-State: AFeK/H2mUGoAJ/3/WRjWHKcAw/3kHlaYyTJcILrfWzq5g3cF8mB3UcAubhjWL0L5A2t5k+daDO13/kP/bn3fbg==
+X-Received: by 10.157.46.137 with SMTP id w9mr19378617ota.225.1490093519723;
+ Tue, 21 Mar 2017 03:51:59 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.158.84 with HTTP; Tue, 21 Mar 2017 03:37:08 -0700 (PDT)
-In-Reply-To: <20170320185038.GU26789@aiede.mtv.corp.google.com>
-References: <20170317222842.GP26789@aiede.mtv.corp.google.com>
- <20170317225110.13417-1-sbeller@google.com> <xmqq60j75psk.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kayeSxFTJr3Q1atFgOyR74PzQyCLiejuZxh7+wTGGb=ww@mail.gmail.com>
- <xmqqbmsvx1ey.fsf@gitster.mtv.corp.google.com> <20170320185038.GU26789@aiede.mtv.corp.google.com>
+Received: by 10.74.158.84 with HTTP; Tue, 21 Mar 2017 03:51:29 -0700 (PDT)
+In-Reply-To: <20170313182322.27539-1-bmwill@google.com>
+References: <20170310185908.171589-1-bmwill@google.com> <20170313182322.27539-1-bmwill@google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 21 Mar 2017 17:37:08 +0700
-Message-ID: <CACsJy8CBmfj8wY+LQzEshJT0Ya+nmAGs=K8b1Nyr3qinvCo4kA@mail.gmail.com>
-Subject: Re: [PATCH] Documentation/git-worktree: use working tree for trees on
- the file system
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Tue, 21 Mar 2017 17:51:29 +0700
+Message-ID: <CACsJy8BRTuH=xv_xvQPOkVaRcMXKnjgT77SXkwLkZ6aAvcTyHg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] bringing attributes to pathspecs
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>, jonathantanmy@google.com
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 21, 2017 at 1:50 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Junio C Hamano wrote:
->> Stefan Beller <sbeller@google.com> writes:
->
->>> While it may be true that you can have bare worktrees; I would question
->>> why anyone wants to do this, as the only thing it provides is an
->>> additional HEAD (plus its reflog).
->>
->> A more plausible situation is you start with a bare one as the
->> primary and used to make local clones to do your work in the world
->> before "git worktree".  It would be a natural extension to your
->> workflow to instead create worktrees of of that bare one as the
->> primary worktree with secondaries with working trees.
->
-> For what it's worth, this conversation makes me think it was a mistake
-> to call this construct a worktree.
+On Tue, Mar 14, 2017 at 1:23 AM, Brandon Williams <bmwill@google.com> wrote:
+> v3 fixes some nits in style in the test script (using <<-\EOF instead of <<-EOF)
+> as well as fixing a few other minor things reported by Junio and Jonathan.
 
-For the record, I am totally confused with Junio's last line, with two
-"with"s, "worktree" and "working trees" in the same phrase :D
+I'm slowly digging through the pile of mails in the past weeks... I
+know this has landed on 'master' (thanks!). Just wanted to check
+something.
 
-> It's fine for the command to have one name and the documentation to
-> use a longer, clearer name to explain it.  What should that longer,
-> clearer name be?
+The series updated match_pathspec(), but that's only one of two
+pathspec filtering functions. The other is tree_entry_interesting()
+(e.g. for "git grep <tree>"). Do you have plans to support :(attr)
+there too? "No" is a perfectly fine answer (and it will end up in my
+forever growing backlog).
 
-No comments from me. I'll let you know that if Eric (or Junio?) didn't
-stop me, we would have had $GIT_DIR/repos now instead of
-$GIT_DIR/worktrees, just some extra confusion toppings.
+The thing about tree_entry_interesting() is, we would want to stop
+traversing subtrees as soon as possible. Naively implemented, we would
+need to traverse all subtrees so we can call match_attrs(). That's not
+great. Oii I'm rambling.. I don't know yet how to implement this thing
+efficiently.
 -- 
 Duy
