@@ -6,89 +6,62 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B50F92095B
-	for <e@80x24.org>; Tue, 21 Mar 2017 18:25:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49EC82095B
+	for <e@80x24.org>; Tue, 21 Mar 2017 18:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932754AbdCUSYf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 14:24:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48787 "EHLO cloud.peff.net"
+        id S933294AbdCURei (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 13:34:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48723 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757759AbdCUSXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 14:23:41 -0400
-Received: (qmail 11672 invoked by uid 109); 21 Mar 2017 18:23:39 -0000
+        id S932606AbdCURdm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 13:33:42 -0400
+Received: (qmail 8321 invoked by uid 109); 21 Mar 2017 17:33:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Mar 2017 18:23:39 +0000
-Received: (qmail 17843 invoked by uid 111); 21 Mar 2017 18:23:53 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Mar 2017 17:33:39 +0000
+Received: (qmail 16689 invoked by uid 111); 21 Mar 2017 17:33:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Mar 2017 14:23:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Mar 2017 14:23:35 -0400
-Date:   Tue, 21 Mar 2017 14:23:35 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 21 Mar 2017 13:33:52 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Mar 2017 13:33:35 -0400
+Date:   Tue, 21 Mar 2017 13:33:35 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
+To:     Andreas Krey <a.krey@gmx.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/6] prefix_filename: return newly allocated string
-Message-ID: <20170321182335.3yrjkhk4mxhso73j@sigill.intra.peff.net>
-References: <20170321011838.rdhnbfwbigm4s4e3@sigill.intra.peff.net>
- <20170321012847.yebhpdmk5zrizgmj@sigill.intra.peff.net>
- <xmqqinn2qyyo.fsf@gitster.mtv.corp.google.com>
+Subject: Re: cherry-pick --message?
+Message-ID: <20170321173335.n56veklbh4iginoa@sigill.intra.peff.net>
+References: <20170321160520.GA15550@inner.h.apk.li>
+ <20170321170005.35ryjh4pr3jvvmx3@sigill.intra.peff.net>
+ <20170321170734.GI28331@inner.h.apk.li>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqinn2qyyo.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <20170321170734.GI28331@inner.h.apk.li>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 21, 2017 at 11:14:23AM -0700, Junio C Hamano wrote:
+On Tue, Mar 21, 2017 at 06:07:34PM +0100, Andreas Krey wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > There's "cherry-pick --edit".
 > 
-> > diff --git a/worktree.c b/worktree.c
-> > index 42dd3d52b..2520fc65c 100644
-> > --- a/worktree.c
-> > +++ b/worktree.c
-> > @@ -250,16 +250,19 @@ struct worktree *find_worktree(struct worktree **list,
-> >  {
-> >  	struct worktree *wt;
-> >  	char *path;
-> > +	char *to_free;
-> >  
-> >  	if ((wt = find_worktree_by_suffix(list, arg)))
-> >  		return wt;
-> >  
-> > -	arg = prefix_filename(prefix, arg);
-> > +	if (prefix)
-> > +		arg = to_free = prefix_filename(prefix, arg);
-> >  	path = real_pathdup(arg, 1);
-> >  	for (; *list; list++)
-> >  		if (!fspathcmp(path, real_path((*list)->path)))
-> >  			break;
-> >  	free(path);
-> > +	free(to_free);
-> >  	return *list;
-> >  }
+> Yes, but. I'm in a toolchain, not a user. I'm a command that let
+> the user cherry-pick specific things, and I need to edit out the things
+> that made the original commit eligible to be picked in the first place.
 > 
-> worktree.c:265:6: error: to_free may be used uninitialized in this function
+> Can't quite rely on the tool's user to do that. :-(
+> 
+> I'm not familiar with the plumbing to know where to look there.
 
-Doh. I had originally written it without the "if (prefix)" and added it
-as a micro-optimization at the end.
+You can do:
 
-Still, the whole thing compiles fine for me. I find it odd that neither
-gcc nor clang notices the problem on my system. It's quite obviously
-wrong.
+  GIT_EDITOR='sed -i d/^PROP:/' git cherry-pick --edit
 
-> diff --git a/worktree.c b/worktree.c
-> index 2520fc65cc..bae787cf8d 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -250,7 +250,7 @@ struct worktree *find_worktree(struct worktree **list,
->  {
->  	struct worktree *wt;
->  	char *path;
-> -	char *to_free;
-> +	char *to_free = NULL;
+but if there's a conflict, the user has resume it with that environment
+variable set. If you can rely on the user using your tool, that might
+work. If they might run arbitrary git commands, then no.
 
-Yep, this is the right fix. Thanks.
+Probably "format-patch | sed | am -3" is your best bet if you want to
+modify the patches in transit _and_ have the user just use normal git
+tools.
 
 -Peff
