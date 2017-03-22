@@ -2,193 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E100B20958
-	for <e@80x24.org>; Wed, 22 Mar 2017 06:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9025220958
+	for <e@80x24.org>; Wed, 22 Mar 2017 07:09:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758611AbdCVG5c (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 02:57:32 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34663 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758360AbdCVG5a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 02:57:30 -0400
-Received: by mail-wm0-f68.google.com with SMTP id u132so6986870wmg.1
-        for <git@vger.kernel.org>; Tue, 21 Mar 2017 23:56:14 -0700 (PDT)
+        id S933615AbdCVHJY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 03:09:24 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:37842 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933141AbdCVHJW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 03:09:22 -0400
+Received: by mail-wm0-f41.google.com with SMTP id n11so28615370wma.0
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 00:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=8FoJbC9TsAD54EOXpMe2ohYdgIL7nTHbeIzDNuanHmM=;
-        b=fyrW3ZvxkySKPrcIsAMhpok4p9GC32MPdugv9im+rK2Ywa+ny6I2kFrJokolwMKDuE
-         kDNJ0apRq/a4geHffiJDryoNY49/mGLT3oKqaZidWtDF6IT7ze6xeYZgprqWid+NGRFl
-         yInGGyGDcstHJOH3t1IYlmdc6Af/rBAKQ3Wrn3w8bhbdn74lH6/gGnlvHV1A64AYuxPA
-         lzJWXg0LiaCfjn4m/2i7lAssOx1kfGGwyjsqpnLTsKMWIx35kY/i2G8Tqwhx7iro4kgc
-         BV1Ch2cCcgOtNFmlGwApjEYkF2i0GBYrJHSLj+LVFC3q7cd78PUpkvXwFupwMQVUQfVN
-         iSHg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=aylUekcroEX0Xxb7x/n7gjBksUEY+I4mXKOCwGjOBSE=;
+        b=Eh2arxgA/l+F0fAT2akXocNlOqxKbdFFZvaxYFUkn0Pm8R8EhSu71GE4NQbSld32Pv
+         agsfufr3lylaFVIH3CJmuVyF6m0lYGSEcN3CSkVkOAffQG7CBTEPIK0hg7W4aQHSD39+
+         IsG3F10l/T0nQfW6NqWyNnhPh/xK79zn+nT3LGGSFXCAmcnpGRme675rVonbZnYeCFaX
+         BjXIQVlpUARR0Y4W4REzXZ1Dlsu1fvDrEL0J4z6s2le+/qEBAXVLsks0zLrApcCP7SgI
+         cxFVcjzG4brvBVFJ64IoBJcdESvZM/OmX5FAnF8G7gCtjAZsu+RyOwSj8ovlaNPwFxoV
+         eqcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=8FoJbC9TsAD54EOXpMe2ohYdgIL7nTHbeIzDNuanHmM=;
-        b=ScXFGmIAXFi7+HAxrVihBbYKBNp49vU7VN9GNwr6nz6t9VUizdE6B4cUu8sEKe+yKJ
-         tUPzs8h2/ek5e442kjroWRhCs2vd8SyIM4ZxVw0WU1ZZv5tAQSW7/Eo8PZA+OZO+xT+D
-         E+T6QHZh0E8PD5jHx7DlpBaNYtXYIJ6PTXI8SCe1gstYxAGM0GhcwViKojjs37bGyMI0
-         HN3H8uzH834Q2JvOG2rEXP802MkqH+0kO5vDu/SjnFIGEp22rWNszkyuJKe67/MPdlic
-         2XsmdBBlErZox8iZnaU1xy7iHNK5DNlqt6/vNSYgIXNlJB9rB6zX9rBRDVf8YGlARB14
-         maog==
-X-Gm-Message-State: AFeK/H0CbRNv/TRUePdqIVWNPpLMWg2xZZR3CdtBQTJUwJlUbW+e9os82T4HDs1AREIb+g==
-X-Received: by 10.28.216.141 with SMTP id p135mr6296842wmg.71.1490165773285;
-        Tue, 21 Mar 2017 23:56:13 -0700 (PDT)
-Received: from slxBook4.fritz.box (p5DDB4341.dip0.t-ipconnect.de. [93.219.67.65])
-        by smtp.gmail.com with ESMTPSA id c76sm20415265wme.23.2017.03.21.23.56.12
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 21 Mar 2017 23:56:12 -0700 (PDT)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=aylUekcroEX0Xxb7x/n7gjBksUEY+I4mXKOCwGjOBSE=;
+        b=renPtk5j8vmdNKI8MBsXCfCqtxMYqYzbVr8KZHoEo/myWWISEl8uI5DwkyAMW/g8QY
+         SxBricv+Z2ZL4GPriIOY0u4T0woDpnx3WwWx3iq34w95mSFz0o8hwsHsUIKy715xfJ5A
+         iViE4AlIzclSZ3vynPsKk87AyUJ6mX7L82NSMY5GibgV+nzLrlCFcDCh3/XtLSiVf4yv
+         2rTMaNYxfU/vBF66ukdTuKxfMMcYwYWJlfGobLixGYzto6NZsNv8DQHMeGo6k4qCFlNn
+         tJNwGHJb5QDPMvoBEiLjNNkgfsgDWHHC2Mem+AvcunX9wRWMv7sSZ93bFnxaF2gulBQr
+         /eRQ==
+X-Gm-Message-State: AFeK/H1woL0ipqgQx9iZ/nLI4L/tRQjwMvPN1ReE6TBVAEC4U20p2UUMkh/xXYFlT151jw==
+X-Received: by 10.28.10.209 with SMTP id 200mr6404334wmk.126.1490166537862;
+        Wed, 22 Mar 2017 00:08:57 -0700 (PDT)
+Received: from slxbook4.fritz.box (p5DDB4341.dip0.t-ipconnect.de. [93.219.67.65])
+        by smtp.gmail.com with ESMTPSA id g43sm649836wrg.35.2017.03.22.00.08.56
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 22 Mar 2017 00:08:57 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: What's cooking in git.git (Mar 2017, #02; Fri, 3)
 From:   Lars Schneider <larsxschneider@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, gitster@pobox.com, peff@peff.net
-Subject: [PATCH v1] travis-ci: build and test Git on Windows
-Date:   Wed, 22 Mar 2017 07:56:12 +0100
-Message-Id: <20170322065612.18797-1-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.11.1
+In-Reply-To: <xmqqd1dasez2.fsf@gitster.mtv.corp.google.com>
+Date:   Wed, 22 Mar 2017 08:08:57 +0100
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <10A7B711-C5C7-4F57-AF08-E748FB35FD0C@gmail.com>
+References: <xmqqh93a6iy6.fsf@gitster.mtv.corp.google.com> <5C8A09B2-0C99-4BD9-A82B-B333EF1F155E@gmail.com> <xmqq60jmnmef.fsf@junio-linux.mtv.corp.google.com> <BA6E546F-3594-4673-A43B-7E4D4CEA8F68@gmail.com> <xmqqd1dasez2.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Most Git developers work on Linux and they have no way to know if their
-changes would break the Git for Windows build. Let's fix that by adding
-a job to TravisCI that builds and tests Git on Windows. Unfortunately,
-TravisCI does not support Windows.
 
-Therefore, we did the following:
-* Johannes Schindelin set up a Visual Studio Team Services build
-  sponsored by Microsoft and made it accessible via an Azure Function
-  that speaks a super-simple API. We made TravisCI use this API to
-  trigger a build, wait until its completion, and print the build and
-  test results.
-* A Windows build and test run takes up to 3h and TravisCI has a timeout
-  after 50min for Open Source projects. Since the TravisCI job does not
-  use heavy CPU/memory/etc. resources, the friendly TravisCI folks
-  extended the job timeout for git/git to 3h.
+> On 21 Mar 2017, at 18:43, Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> Lars Schneider <larsxschneider@gmail.com> writes:
+> 
+>> Agreed. Would it be OK to store the "delayed" bit in the cache
+>> entry itself? The extended ce_flags are stored on disk which is not
+>> necessary I think. Would a new member in the cache_entry struct be
+>> an acceptable option?
+> 
+> I'd imagine that those with thousands of cache entries in their
+> index prefer not to bloat sizeof(struct cache_entry) for something
+> like this, that is _only_ used during the write-out phase.  Would a
+> new pointer in the "struct checkout" that points at whatever data
+> structure you need (perhaps a "string_list"?) work?  As long as the
+> pointer points at a constant thing, you may not even have to loosen
+> the constness of "struct checkout *" itself?
 
-Things, that would need to be done:
-* Someone with write access to https://travis-ci.org/git/git would need
-  to add the secret token as "GFW_CI_TOKEN" variable in the TravisCI
-  repository setting [1]. Afterwards the build should just work.
+OK. I will try that and post a new round soonish.
 
-Things, that might need to be done:
-* The Windows box can only process a single build at a time. A second
-  Windows build would need to wait until the first finishes. This
-  waiting time and the build time after the wait could exceed the 3h
-  threshold. If this is a problem, then it is likely to happen every day
-  as usually multiple branches are pushed at the same time (pu/next/
-  master/maint). I cannot test this as my TravisCI account has the 50min
-  timeout. One solution could be to limit the number of concurrent
-  TravisCI jobs [2].
+> 
+>>> Within such a framework, your checkout_delayed_entries() would be a
+>>> special case for finalizing a "struct checkout" that has been in
+>>> use.  By enforcing that any "struct checkout" begins its life by a
+>>> "state = CHECKOUT_INIT" initialization and finishes its life by a
+>>> "finish_checkout(&state)" call, we will reduce risks to forget
+>>> making necessary call to checkout_delayed_entries(), I would think.
+>> 
+>> Agreed. How would you want to enforce "finish_checkout(&state)", though?
+>> By convention or by different means?
+> 
+> We can start with "convention", just like "if you did STRBUF_INIT,
+> you must do strbuf_release() at some point" has served us well, I
+> would think.
 
-[1] https://docs.travis-ci.com/user/environment-variables#Defining-Variables-in-Repository-Settings
-[2] https://docs.travis-ci.com/user/customizing-the-build#Limiting-Concurrent-Builds
+OK!
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
-
-Notes:
-    Base Ref: master
-    Web-Diff: https://github.com/larsxschneider/git/commit/322094c0a2
-    Checkout: git fetch https://github.com/larsxschneider/git travisci/win-v1 && git checkout 322094c0a2
-
- .travis.yml             | 11 ++++++++++
- ci/run-windows-build.sh | 55 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+)
- create mode 100755 ci/run-windows-build.sh
-
-diff --git a/.travis.yml b/.travis.yml
-index 591cc57b80..a7e98ae519 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -39,6 +39,17 @@ env:
- 
- matrix:
-   include:
-+    - env: Windows
-+      os: linux
-+      compiler:
-+      addons:
-+      before_install:
-+      before_script:
-+      script:
-+        - >
-+          test "$TRAVIS_REPO_SLUG" != "git/git" ||
-+          ci/run-windows-build.sh $GFW_CI_TOKEN $TRAVIS_BRANCH $(git rev-parse HEAD)
-+      after_failure:
-     - env: Linux32
-       os: linux
-       services:
-diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-new file mode 100755
-index 0000000000..324a9ea4e6
---- /dev/null
-+++ b/ci/run-windows-build.sh
-@@ -0,0 +1,55 @@
-+#!/usr/bin/env bash
-+#
-+# Script to trigger the a Git for Windows build and test run.
-+# Pass a token, the branch (only branches on https://github.com/git/git)
-+# are supported), and a commit hash.
-+#
-+
-+[ $# -eq 3 ] || (echo "Unexpected number of parameters" && exit 1)
-+
-+TOKEN=$1
-+BRANCH=$2
-+COMMIT=$3
-+
-+gfwci () {
-+	curl \
-+		-H "Authentication: Bearer $TOKEN" \
-+		--silent --retry 5 \
-+		"https://git-for-windows-ci.azurewebsites.net/api/TestNow?$1" |
-+	sed "$(printf '1s/^\xef\xbb\xbf//')"  # Remove the Byte Order Mark
-+}
-+
-+# Trigger build job
-+BUILD_ID=$(gfwci "action=trigger&branch=$BRANCH&commit=$COMMIT&skipTests=false")
-+
-+# Check if the $BUILD_ID contains a number
-+case $BUILD_ID in
-+	''|*[!0-9]*) echo $BUILD_ID && exit 1
-+esac
-+
-+echo "Visual Studio Team Services Build #${BUILD_ID}"
-+
-+# Wait until build job finished
-+STATUS=
-+RESULT=
-+while true
-+do
-+	LAST_STATUS=$STATUS
-+	STATUS=$(gfwci "action=status&buildId=$BUILD_ID")
-+	[ "$STATUS" == "$LAST_STATUS" ] || printf "\nStatus: $STATUS "
-+	printf "."
-+
-+	case $STATUS in
-+		inProgress|postponed|notStarted) sleep 10                      ;; # continue
-+		         "completed: succeeded") RESULT="success";        break;; # success
-+		                              *) echo "Unknown: $STATUS"; break;; # failure
-+	esac
-+done
-+
-+# Print log
-+echo ""
-+echo ""
-+gfwci "action=log&buildId=$BUILD_ID" | cut -c 30-
-+
-+# Set exit code for TravisCI
-+[ "$RESULT" == "success" ]
-
-base-commit: afd6726309f57f532b4b989a75c1392359c611cc
--- 
-2.11.1
-
+Thanks,
+Lars
