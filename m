@@ -2,98 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B081420323
-	for <e@80x24.org>; Wed, 22 Mar 2017 22:28:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 440A020323
+	for <e@80x24.org>; Wed, 22 Mar 2017 22:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752563AbdCVW2L (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 18:28:11 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:36137 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752424AbdCVW2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 18:28:09 -0400
-Received: by mail-pf0-f178.google.com with SMTP id o126so97173143pfb.3
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 15:28:09 -0700 (PDT)
+        id S1752424AbdCVW36 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 18:29:58 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36298 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752310AbdCVW34 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 18:29:56 -0400
+Received: by mail-pf0-f196.google.com with SMTP id r137so25023363pfr.3
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 15:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Gl6ZPpqmmHdOQpZls62B5rHykcUUoa8ziMavhmgsvUw=;
-        b=icJ7F1t+AiJ43GxdQm0Q09WPH3MNXRl3QPqPNuSCpHgR9cNoRdvf1Jq2lCXf0HiveX
-         m0HfqkoPyqBtvE5c3cpmdSEzHgxFqZ7T/0fLAOD8TZ9XRSG1umPBYRizMinlIcWc19ek
-         XOTc4SNu+6lEtTcnrtpDDEM/8fnYma49ws4bpB7vWSdILP++4rksLqEqhUXWj3J1fAYw
-         aVc4kPmHj1+d3ezX20hLswInJEqvw6M9Odu1hnKTtR6PYmW6Rk+HLhcOrgSW3Jng5heL
-         ibQERW5sZGQBFS8JGprNUHgw8b4jRB2PSVLGyb8aHJ+vsFrrng7IqYy90ahLhKKOsYqD
-         RP+Q==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ugH1kr3LuHFr9J6sWw2uAP/Ky2sjxW/OHeN9Qwnr/fk=;
+        b=mTj1tOzNCwBEy/ikvLzCExdXB5XILd6yaYscE+YdffN/srVc43cdTU+IPgTiSjiv/O
+         JwRfu+ps1EM56fCK6Eo206cvj3Ijtb8vVkwKjdJGG9QFhLonSbn5lAI2RRzN7XHBJ0Yf
+         BFfFYn0gkIpE+QrlqUKXGCr4G0he11mSp6+OQpiEYCNeagvt9V5jogAgd4oqkPVJaLM/
+         GUHy1pqs8XBDhhbNPMmLTQATJVGFjiVw2ctHdFZd5LoxEdcCCBo/cDpCBk158f5oqZUd
+         MZo5pbrMa9Z+yy20mq8pzqx7DYK9txT5j7JvfuKWzSSNidTiRiCTnIBd3vCBT79OBV0u
+         FAwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Gl6ZPpqmmHdOQpZls62B5rHykcUUoa8ziMavhmgsvUw=;
-        b=mQ1bcx9OIJG87SoTBNukdH5Q3zwmlxZH5wJT+uhrzDPgOVucAsyjPymFLIjISoS2qg
-         TsrT8+5GX8/X5xIg18Zj0hshlbGnfy9Cj+0XrXeCQxqKuaxo2SXMZXel+0cK+2syYxkk
-         EunDLqEAqlsNeyq39rpxockzrqlPZH6vRpeH/ObM8Nm/n/cCkC4FB8XGuJu9HW7KWZdO
-         mjZyslUDLHwyeCo+eFyfswALgykiAkyo6aKsiUMq1pP/fB7gAdBAU7OpIT9uSX7laO3o
-         FeE3LncVa2ddvwrgARH+pm8wAwHF1I2R8OjDHNx3V91ck4Th3FlePowcUZXcplC6Z6x7
-         WW5A==
-X-Gm-Message-State: AFeK/H1gL2ZL9/5giCDDN54oykqFXHN+xjk7MT6yu0mDf4A2ec/zD0pZGAoK0JAfUBP78vy0aeJHTYMVp2HJBbQK
-X-Received: by 10.84.231.135 with SMTP id g7mr37642499plk.12.1490221688407;
- Wed, 22 Mar 2017 15:28:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ugH1kr3LuHFr9J6sWw2uAP/Ky2sjxW/OHeN9Qwnr/fk=;
+        b=txf4G3h/569nTLLo5IzwRaTT2hHdW2mwI/AKCoHkSYnegOvbHHF9owIHrbv5g7tvUB
+         cezMgeCmmyEWG5cyP7tUQg59dq+KJbYweBpqigsTis5Q3WT5PCuyPJ44je0N1O6xRgiW
+         pj177xGlyJ1rifYRazFLuKmGZ0AA8BnYhy5m0Ow5n3cP+FE6P2wsgwYAfPkToe8BFVPW
+         0V9OXZr6KlxCE7YcELPJ6aj+xa0/MZHmW16DA7dhsPsqeWf8KfFm5saP1dF4SjVi2sr2
+         f89HCO44rMjx/vi7MPNEou16qQoQZl6kzRnhfNQb9eelZNKAp9jL4uYZCISWPw900IFU
+         DAKg==
+X-Gm-Message-State: AFeK/H2nLW7/rd863FIXdAyxP43ag0mTwak7a9MgMP8F5KU/y5BjRmxavt9t3T7aOKKXLQ==
+X-Received: by 10.99.67.130 with SMTP id q124mr46783506pga.221.1490221760710;
+        Wed, 22 Mar 2017 15:29:20 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:55f5:992d:bc78:c749])
+        by smtp.gmail.com with ESMTPSA id 80sm5486023pfh.110.2017.03.22.15.29.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 22 Mar 2017 15:29:19 -0700 (PDT)
+Date:   Wed, 22 Mar 2017 15:29:18 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, gitster@pobox.com
+Subject: Re: [PATCH v2 0/2] push options across http
+Message-ID: <20170322222918.GF26108@aiede.mtv.corp.google.com>
+References: <20170322195102.165314-1-bmwill@google.com>
+ <20170322222200.103204-1-bmwill@google.com>
 MIME-Version: 1.0
-Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 15:28:07 -0700 (PDT)
-In-Reply-To: <20170322222404.jl3smvai2a3r6tzc@sigill.intra.peff.net>
-References: <20170322213953.oddbgw5nfrvmzjgm@sigill.intra.peff.net>
- <20170322214948.12015-1-sbeller@google.com> <20170322215951.f4xbxehzvsd64c4y@sigill.intra.peff.net>
- <xmqq37e5hsg8.fsf@gitster.mtv.corp.google.com> <20170322222404.jl3smvai2a3r6tzc@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 22 Mar 2017 15:28:07 -0700
-Message-ID: <CAGZ79ka_kErObJAuJrvFxnEMsESCr_2jc+RQ1AMuWx_urWs1mQ@mail.gmail.com>
-Subject: Re: [PATCH] t7406: correct test case for submodule-update initial population
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jan Palus <jan.palus@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170322222200.103204-1-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2017 at 3:24 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Mar 22, 2017 at 03:12:07PM -0700, Junio C Hamano wrote:
->
->> >   sq=\'
->> >   test_expect_success '...' '
->> >     cat >expect <<-EOF
->> >     Execution of ${sq}false $submodulesha1${sq} ...
->> >   '
->> >
->> > but I'm not sure if that is any more readable.
->>
->> Yup, my eyes have long learned to coast over '\'' as an idiomatic
->> symbol, but I agree that it is harder to see until you get used to
->> it (and I do not think it is particularly useful skill to be able to
->> spot '\'' as a logical unit, either).  ${sq} thing may make it easier
->> to read but I think the one you did in the first quoted part in this
->> reply is good enough.
->
-> Sounds good.
->
->> -- >8 --
->> Subject: t7406: correct test case for submodule-update initial population
->>
->> There are three issues with the test:
->>
->> * The syntax of the here-doc was wrong, such that the entire test was
->>   sucked into the here-doc, which is why the test succeeded successfully.
->
-> This version looks fine except for the repetitious repetition. :)
+Brandon Williams wrote:
 
-When I wrote it, It sounded more convincing, but we can drop the
-"successfully".
+> v2 addresses Jonathan's comments from v1.
+>   * Fix a test
+>   * Add some documentation
+>   * remove short option from --push-option in git send-pack
+> 
+> Brandon Williams (2):
+>   send-pack: send push options correctly in stateless-rpc case
+>   remote-curl: allow push options
+> 
+>  Documentation/git-send-pack.txt |  6 ++++++
+>  builtin/send-pack.c             |  5 +++++
+>  remote-curl.c                   |  8 ++++++++
+>  send-pack.c                     | 20 ++++++++------------
+>  t/t5545-push-options.sh         | 33 +++++++++++++++++++++++++++++++--
+>  5 files changed, 58 insertions(+), 14 deletions(-)
 
-Thanks,
-Stefan
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Tested-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
