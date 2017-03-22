@@ -2,124 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 459AC2095D
-	for <e@80x24.org>; Wed, 22 Mar 2017 18:46:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F7832095D
+	for <e@80x24.org>; Wed, 22 Mar 2017 18:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759269AbdCVSqt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 14:46:49 -0400
-Received: from lb3-smtp-cloud2.xs4all.net ([194.109.24.29]:45593 "EHLO
-        lb3-smtp-cloud2.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751109AbdCVSqr (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Mar 2017 14:46:47 -0400
-Received: from mail.digitalbrains.com ([IPv6:2001:980:a370::3])
-        by smtp-cloud2.xs4all.net with ESMTP
-        id z6mj1u00J3J12Pc016mkya; Wed, 22 Mar 2017 19:46:45 +0100
-Received: from terrence.tun.lucas.digitalbrains.com ([2001:610:6ef:7001::2])
-        by mail.digitalbrains.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        (Exim 4.84_2)
-        (envelope-from <peter@digitalbrains.com>)
-        id 1cqlHP-0007Gj-47; Wed, 22 Mar 2017 19:46:43 +0100
-Subject: Re: Stable GnuPG interface, git should use GPGME
-To:     "Bernhard E. Reiter" <bernhard.reiter@intevation.de>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        gnupg-devel@gnupg.org, Lukas Puehringer <luk.puehringer@gmail.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-References: <201703101100.15214.bernhard.reiter@intevation.de>
- <201703131350.00139.bernhard.reiter@intevation.de>
- <13c66211-9671-5bd3-f3eb-96ffd5c39975@drmicha.warpmail.net>
- <201703171056.10468.bernhard.reiter@intevation.de>
- <87poh9p70n.fsf@wheatstone.g10code.de>
-From:   Peter Lebbing <peter@digitalbrains.com>
-Openpgp: id=8FA94E79AD6AB56EE38CE5CBAC46EFE6DE500B3E;
- url=http://digitalbrains.com/2012/openpgp-key-peter
-X-Enigmail-Draft-Status: N1110
-Message-ID: <bec6098f-3016-0a41-02b0-a4e541a66bc4@digitalbrains.com>
-Date:   Wed, 22 Mar 2017 19:46:28 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S965746AbdCVSrM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 14:47:12 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:34400 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935862AbdCVSrF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 14:47:05 -0400
+Received: by mail-pg0-f48.google.com with SMTP id 21so78470695pgg.1
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 11:47:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=we9z7Upj6tIP2K55vSri/VvXDDi8IdWh7AQ0aC/WEX0=;
+        b=kIT0LY/Da3qkxoBxf33K55ZGDwX3zYCoPF+cXpQ79HD0eBPMaWleSNW0XZnBFoJe5l
+         rO8Ezsoo02tSsJmg26hp39qaaf7O2vyxARFSm6HnRTeQ3RlBE//uFOoxn8SLb23horhl
+         9baXserCBxYmYdUUuu0rVK8kkx31ArRc4eXIlir+JdwJqalE82NglmFNR60df41rYG0V
+         WrXrLD5c+dxRQmSHAeuL7Yemsq95pjgk+ux+0Z3wVymKy7frtbaYM+Y1Joi1sTRrsVN2
+         m0xfjkA0Hu18n9OO3WUEe3A8O6UD1rs0CfR3Nd9hMbVJ5lWDLq4lEGc97BsTyuustA/x
+         JmpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=we9z7Upj6tIP2K55vSri/VvXDDi8IdWh7AQ0aC/WEX0=;
+        b=Y7FthJ32pb6DOsYU2+93iDxI/g9TJTS0tvu56OXrMKbEQ5pF+MrbjCDUb8+EvExGpb
+         F/1FT3WpkAfPlQVFZyjVxTZK3LuIX9OOVenXQldwRoFii9O1U5OHnlycx5WuwTKKgOmF
+         iWjnuusq2O44c6n2nxRDGCITIMRgTRfZMmnMPotJJ4uhCDY/Clp2ipWuga9tJLg55Ssi
+         Mk3LNUQxQzAP/7gUJCtK78eDj2cYrk+vWv6hOz6iPZykzAROi05d8fnN0T7QQ0hf4Nil
+         wCDckKbgpebWKENAZWLjFUkOEsRLOoOc4uuf/+47FMIOMAOyLm2nu66lfgkswGNzt9tS
+         T99Q==
+X-Gm-Message-State: AFeK/H3ULisVx2s2r1+GbVPM3B6jBIjqLZ8+fX4D7j7X9dG1Nk2YhI0veHba075fH91JfczzcGTU+9IZAwU0PGXQ
+X-Received: by 10.84.231.135 with SMTP id g7mr36554056plk.12.1490208424016;
+ Wed, 22 Mar 2017 11:47:04 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87poh9p70n.fsf@wheatstone.g10code.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="A3jsQsAeFFrilRldNc7TTicPWEabSrLsS"
+Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 11:47:03 -0700 (PDT)
+In-Reply-To: <20170322173528.ho43ulndlozq35tu@kalarepa>
+References: <20170322173528.ho43ulndlozq35tu@kalarepa>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Mar 2017 11:47:03 -0700
+Message-ID: <CAGZ79kYe73_iAPU7J9Z+7q_J3F6sUmbHpiC-u2G89auns3bP3Q@mail.gmail.com>
+Subject: Re: EOF test fixes (t5615/t7004)
+To:     Jan Palus <jan.palus@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---A3jsQsAeFFrilRldNc7TTicPWEabSrLsS
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On Wed, Mar 22, 2017 at 10:35 AM, Jan Palus <jan.palus@gmail.com> wrote:
+> Hi,
+>
+> attached patch fixes 2 out of 3 tests failing in my env -- missing EOF,
+> incorrectly placed "&&" after EOF. One test seems to be incorrect as it
+> fails even after fixing. I suspect the main difference between my env and
+> others is in shell used -- mksh in my case and probably bash in others.
+> Looks like bash has a nasty behavior when it encounters syntax error:
+>
+> $ cat test.sh
+> cat >/dev/null <<-\EOF
+> tagname : forged-tag
+> EOF &&
+> echo foo
+>
+> $ bash test.sh && echo success || echo failed
+> test.sh: line 4: warning: here-document at line 1 delimited by
+> end-of-file (wanted `EOF')
+> success
+>
+> # notice no "foo" printed
+>
+> $ mksh test.sh && echo success || echo failed
+> test.sh[5]: here document 'EOF' unclosed
+> failed
+>
+> Test that fails even after fixing EOFs:
+> t7004-tag.sh:verifying a forged tag with --format fail and format accordingly
+>
+> Note that I'm not subscribed to mailing list so in case of any questions
+> please mail me directly.
 
-On 22/03/17 18:15, Werner Koch wrote:
-> It actually does.  For the tasks git uses gpg you should not notice a
-> difference in gpgme between any of these versions.
+Thanks for catching these bugs!
 
-Bernhard wrote "interoperability problems between [...] key stores". I'm
-under the impression you are actually answering the question "can GPGME
-be used in the same way regardless of the GnuPG version" instead?
+Please have a look at Documentation/SubmittingPatches.
+(the most important thing is the "Sign-off-by" line indicating you
+are legally permitted to send such a patch;
+for one-off patches the format can be negotiated, but it is easier
+for maintainers to take the proper format.)
 
-> Interoperability with 1.4 is a bit cumbersome if you often add new keys=
-=2E
-> However, "gpg --export | gpg1 --import" is not too complicated.=20
+This email conveys the actual problem very well, so only a little
+change is needed to make it a proper commit message.
+(c.f. git clone git://git.kernel.org/pub/scm/git/git.git/ &&
+git -C git log)
 
-This presumes that
-
-1) Keys are only updated on the 2.1 side
-2) Keys are not deleted
-3) Secret keys are never changed
-
-right?
-
-1) is trivially solvable. 2) is trickier, but can be done.
-
-3) is because GnuPG 1.4 cannot update a secret key at all. Adding a new
-subkey fails with:
-
-gpg: key DCDFDFA4: already in secret keyring
-gpg: Total number processed: 1
-gpg:       secret keys read: 1
-gpg:  secret keys unchanged: 1
-
-You could delete before re-importing, but what if the key on the 1.4
-side is actually the newer one? You'd lose all changes. Worst case:
-updates of a single key on both sides. But that is perhaps pushing the
-limit of sane use. Perhaps not, perhaps the user likes to use two
-different frontends which use different GnuPG versions as their backend.
-
-Luckily, expiration extensions are picked up by just transferring the
-public key part of a secret key, so that does work.
-
-Peter.
-
---=20
-I use the GNU Privacy Guard (GnuPG) in combination with Enigmail.
-You can send me encrypted mail if you want some privacy.
-My key is available at <http://digitalbrains.com/2012/openpgp-key-peter>
-
-
---A3jsQsAeFFrilRldNc7TTicPWEabSrLsS
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEZQCNwiCq4qJXTWzVlp4Bj95s3KEFAljSxoQACgkQlp4Bj95s
-3KEw1Af/So3H/ASlV/1jj8MBh0BJbs1evPM2ppkPaUIMYsB4PfVahtiJLjxm4Yzj
-9oNMooB0cLqgUg0zs9A44ICbo49PNbzY8PLAofWSCEbjeyaixzT1zSfcB4lk95Fd
-zQSMFTw3sxLJJnwZeUA66pagIhmdygHsYgr/cy4LmFzxXVs3XVExCYNq44FFrbr1
-wrizjGbJT6X6ZmRNjSQRx6KVNwIoyEcALSvpVGU6gJIjd+Jx6Kw/LVMoS7ltteQs
-u8yY8muw/jMMZq1Jk0yPqR1K7bj6733UANtX2i55QZfDZIacP4+XG1ESLzDEz3oJ
-V01FYEyonbMDdZoPAspT0pHgrNk7pg==
-=n6Wo
------END PGP SIGNATURE-----
-
---A3jsQsAeFFrilRldNc7TTicPWEabSrLsS--
+Thanks,
+Stefan
