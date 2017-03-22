@@ -2,55 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55C6320323
-	for <e@80x24.org>; Wed, 22 Mar 2017 22:58:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E14CE20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 23:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753991AbdCVW6K (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 18:58:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49871 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753610AbdCVW6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 18:58:09 -0400
-Received: (qmail 643 invoked by uid 109); 22 Mar 2017 22:58:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Mar 2017 22:58:05 +0000
-Received: (qmail 1204 invoked by uid 111); 22 Mar 2017 22:58:18 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 22 Mar 2017 18:58:18 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Mar 2017 18:58:00 -0400
-Date:   Wed, 22 Mar 2017 18:58:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: How do I copy a branch & its config to a new name?
-Message-ID: <20170322225800.3h2mnnmmj2hbo36c@sigill.intra.peff.net>
-References: <CACBZZX7NDa5o1xSu4HgZ4=kG3mx3U6ja7f3E4yAkFOHDsLdMjA@mail.gmail.com>
+        id S1754499AbdCVX0x convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 22 Mar 2017 19:26:53 -0400
+Received: from vpn.innerrange.com.au ([203.122.143.146]:48569 "EHLO
+        remote.innerrange.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754493AbdCVX0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 19:26:51 -0400
+Received: from IR-CENTRAL.corp.innerrange.com ([fe80::216f:2d6c:20cc:241b]) by
+ IR-CENTRAL.corp.innerrange.com ([fe80::216f:2d6c:20cc:241b%15]) with mapi;
+ Thu, 23 Mar 2017 10:26:33 +1100
+From:   Craig McQueen <craig.mcqueen@innerrange.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Thu, 23 Mar 2017 10:26:31 +1100
+Subject: git svn and SVN property svn:original-date
+Thread-Topic: git svn and SVN property svn:original-date
+Thread-Index: AdKjYxm31vA8vIuvSOWBSyqYAq5l7w==
+Message-ID: <5500469A22567C4BAF673A6E86AFA3A40295E65B42D1@IR-CENTRAL.corp.innerrange.com>
+Accept-Language: en-US, en-AU
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, en-AU
+x-tm-as-product-ver: SMEX-11.1.0.1278-8.100.1062-22956.006
+x-tm-as-result: No--4.449700-5.000000-31
+x-tm-as-user-approved-sender: No
+x-tm-as-user-blocked-sender: No
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX7NDa5o1xSu4HgZ4=kG3mx3U6ja7f3E4yAkFOHDsLdMjA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2017 at 11:46:14PM +0100, Ævar Arnfjörð Bjarmason wrote:
+When doing "git svn dcommit", the SVN revision just has the date/time stamp of the time of the dcommit.
 
-> But both of these are really just a limited special case for what I'd
-> really like, which is given branch "foo", copy it and all its
-> configuration to a new name "bar". I.e. both of the hacks above only
-> set up the correct tracking info, but none of the other branch.*
-> variables I may have set.
+Apparently SVN revisions can have an "svn:original-date" property, which would be good to set on dcommit, to preserve the timestamp from the git repository.
 
-I thought that's what "git branch -m" was for, though I don't know how
-thorough it is about finding config that refers _to_ your branch (I know
-it handles config _for_ your branch).
+https://subversion.apache.org/docs/api/1.7/group__svn__props__revision__props.html#ga8f17351dd056149da9cb490f1daf4018
+"The svn:date property must be monotonically increasing, along with the revision number. In certain scenarios, this may pose a problem when the revision represents a commit that occurred at a time which does not fit within the sequencing required for svn:date. This can happen, for instance, when the revision represents a commit to a foreign version control system, or possibly when two Subversion repositories are combined. This property [svn:original-date] can be used to record the TRUE, original date of the commit."
 
-There might be room for improvement there.
+-- 
+Craig McQueen
 
--Peff
