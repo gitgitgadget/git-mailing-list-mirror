@@ -2,92 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A58C20323
-	for <e@80x24.org>; Wed, 22 Mar 2017 18:56:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BBF72095D
+	for <e@80x24.org>; Wed, 22 Mar 2017 18:59:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965791AbdCVS4d (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 14:56:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58206 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965787AbdCVS4b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 14:56:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1DB487ACB4;
-        Wed, 22 Mar 2017 14:56:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=755/QoCv+NSY2QLIrfO4+sbfgTA=; b=kHaD4Z
-        XjWfZjUhLqGBErUEv+wnC2W6iJ+kyHa8fMyTB33wdAsDv3u1QSKqiHoRaOfQONv6
-        8LHDfb0Pj8WMwQ73bs4sNs3sZ2FrA5zo4tZkSnOnpqVmlsri7YFRIvMozzZd46do
-        K6Ilo6KuofLfki+mv/ARyNUks9OHMe0m4WwZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jzBIcmmZ5qMVagKXcDj9h+Pdrqe3zyOi
-        vKkpACc3UDiEkKkqZCqw890wOsaYiBLkWwbetr/lwMNOnUl6J7ZR2fB0q3f3wo/9
-        yIEPRrBrIiolMoXUNAtAYcLE/hZv+Odh4rnPSGW1am3cM2C8Ao8cRF4rkj1ZqCYd
-        KkCKJxjv6AE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 172AC7ACB3;
-        Wed, 22 Mar 2017 14:56:30 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 750627ACB1;
-        Wed, 22 Mar 2017 14:56:29 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
-References: <20170312200248.3610-1-jn.avila@free.fr>
-        <20170320210225.13046-1-jn.avila@free.fr>
-        <20170320210225.13046-3-jn.avila@free.fr>
-        <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
-        <5036581a-f989-2db6-06ba-621db05c6de1@free.fr>
-        <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
-        <CAGZ79kZBq+dL7hEj108DPU5KbVeJX2nYEw88jS0Eq78GxzCabA@mail.gmail.com>
-Date:   Wed, 22 Mar 2017 11:56:28 -0700
-In-Reply-To: <CAGZ79kZBq+dL7hEj108DPU5KbVeJX2nYEw88jS0Eq78GxzCabA@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 22 Mar 2017 11:41:23 -0700")
-Message-ID: <xmqq1stpkun7.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S965832AbdCVS7L (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 14:59:11 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:33688 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965828AbdCVS7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 14:59:06 -0400
+Received: by mail-pg0-f53.google.com with SMTP id w20so9237867pgc.0
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 11:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wYMEWPBpRjZ/54gqs0AKXx9ZGFnY/wf3aORQnS8oqz0=;
+        b=Iq0ok4sfQseo7ZyHFS+HbFSXAmvX1FF4V+QOmcNgXXopkZrmwG5PNe8IWlxZYEAFSf
+         59YmZdSRrVxiFq6VIoomIqN53MV2SHWluq5Rj0bv7/M1Smsi823IVNJAjDvuttOaZPAE
+         w5HmY1B1Joh67MS7f+edhSl9F+AUgrRI+ntps2vrlQkc7jgNXW7Rs/qgxpLVIXTiCjWk
+         z7mXAkN1M92NQQeWrLLDiN9zeFfBLyqgaK/2ymnXZgQ82DmJIAtJOju5aNCwEgqNm7bO
+         0Ld23hLtUA9/K/88ZeHgBOx1QdcNuK5fabsxmy+jdGbI+12xqWjtXSnqQ1T4t+1m25vP
+         KpGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wYMEWPBpRjZ/54gqs0AKXx9ZGFnY/wf3aORQnS8oqz0=;
+        b=txCpDeGY0I+mPrM0EbdZOLzmaopc0QPc627pBPV5z2RdMWnXUKq7yb0kUw+k/WGtak
+         adFZAVPcRpCFvEOCn0y9qCZfwyfSZ7zt1pqzqSnSRM2gX8zNKXWLwMPIC4PdbvnBRUTN
+         +VhCzAEZAtGyuEw6m+GeBREXjdClirVICuHkfKPmvdQR6Bt+ie6PSKOXLEFMeUB8gfE5
+         VNzrkG/sX0GbZeUi1GmZ9AGSktvQszM56bfMNoonh+xvbKFfJo9l5/lxGsEHYUHN/iPE
+         /UMuABuoXMr2NTnznchtHxxYIvqp/GjFD/PTx2tW1jdTVVflGZJDta+TTAczGIgroo2q
+         Vbqg==
+X-Gm-Message-State: AFeK/H3e8MwAqwEgQuE75yb0GdZCQ7nWBgbr3NoAXPpe3ZOlfHYdQKUpDp6+LbhD0PbDA1FWnbLHsSdXo3rswH9M
+X-Received: by 10.99.120.5 with SMTP id t5mr14423205pgc.223.1490209144685;
+ Wed, 22 Mar 2017 11:59:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 421AD892-0F31-11E7-B5D0-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 11:59:04 -0700 (PDT)
+In-Reply-To: <xmqq1stpkun7.fsf@gitster.mtv.corp.google.com>
+References: <20170312200248.3610-1-jn.avila@free.fr> <20170320210225.13046-1-jn.avila@free.fr>
+ <20170320210225.13046-3-jn.avila@free.fr> <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
+ <5036581a-f989-2db6-06ba-621db05c6de1@free.fr> <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZBq+dL7hEj108DPU5KbVeJX2nYEw88jS0Eq78GxzCabA@mail.gmail.com> <xmqq1stpkun7.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Mar 2017 11:59:04 -0700
+Message-ID: <CAGZ79kZUAQ1sR0d0=KtkbWprO9VmpHO2SFFW7AYMS=wwaKjLtw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Mar 22, 2017 at 11:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> So we'd want to be able to say:
+>>   "get a tarball including all submodules except the superproject"
+>>   (This would produce the "optional language pack tarball")
+>
+> You do not need that.  Just go to the gitman-l10n project and grab a
+> tarball out of it.
 
-> I wonder if we could have partial functionality for these "clone and checkout"
-> fake submodules, by having e.g. the .gitmodules file telling you the URL
-> and path, but no recorded gitlink in the tree.
+Oh, I misunderstood your proposal.
+You said: We have *one* submodule for all languages, but I understood
+we'd have a submodule for *each* language.
 
-You can have such a comment in any file including .gitmodules but
-would that even be a feature?  
-
-A comment in the INSTALL file was what I had in mind, at least while
-we are getting more familiar with the proposed two project structure
-and before we commit to use the submodule mechanism to bind them
-together.
-
-> So we'd want to be able to say:
->   "get a tarball including all submodules except the superproject"
->   (This would produce the "optional language pack tarball")
-
-You do not need that.  Just go to the gitman-l10n project and grab a
-tarball out of it.
-
->   "get a tarball including the superproject and only one submodule"
->   (This would produce the "I can distribute this in locally as everyone
->   speaks the same language in the organisation" tarball)
-
-We don't need that, either, even though some other project would.
-"git archive --recurse-submodules" with properly implemented
-pathspec support will solve that.
+Thanks,
+Stefan
