@@ -2,91 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E24520323
-	for <e@80x24.org>; Wed, 22 Mar 2017 18:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92CA120323
+	for <e@80x24.org>; Wed, 22 Mar 2017 18:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965088AbdCVSCe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 14:02:34 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:32898 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934824AbdCVSCd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 14:02:33 -0400
-Received: by mail-pg0-f41.google.com with SMTP id w20so8721223pgc.0
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 11:02:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=X9EJCuBgAur8FMGGWwPTB0aH/wSIqcjCYpmsmjHq7Hw=;
-        b=sWNY8smrBUzYo8/8w/i7D+6pD1wJsm08SsFeGE3uYhDc1wDWZQQwkxx3r/+PxJv7Yb
-         r3O4UP1mOhwWjATWZfBtscgmGy9W4gVvbaTva/zRVATvWS1EyTlxCRqhH1oBp/N2sKjz
-         SK0B0EHcOKc3roj82vXtQMIMnghlAFTS9lcxyk0NkPG7Zp7FG9CjDOAq8ojTc5ZhnFyN
-         HTYxZFzIkMIp/rnAe0KSKira9nbi54TlC7T1cn7ZG7/iO/Obd/oYbMFDIIwO7k29fpeh
-         jCAm9SSGOFvTMpEavDtRfPyos/hQ5s5zUQz3Xm5P9QaQhFo3snpfT+9E0HdEDBktpLlh
-         pY+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=X9EJCuBgAur8FMGGWwPTB0aH/wSIqcjCYpmsmjHq7Hw=;
-        b=jZIHrNIfIBdKS/qIDI8Fsg1VhEzeJ3wGSA1q+h3i2pirbHtwvaJbpnPhaf1m7wYAbq
-         Rt5s1Xrg8AEBjZRGacFIzL9+ygbgOL1Qfog14FriNgTjjiQ24zCKeS4xl6VvNMsrW32P
-         2iwPrtIwtXwZlDP+aAf/duJxQ0zEFqZRZaxhWH+Ig7SNRW6/jd+JnKTdpL4GFKuvs3bV
-         avt2nWh0spRL7nNOhTsPdYwPCrRRqH/u0WexC36gaOO2PnY4s2Qz6HgmX5yPFAqisy6u
-         58CId6t5Zg4zbLVfJgdCW9/E5tvRXGnpCLrM1DYrFdV6hFJU8AUMTKt85xROFtktYSjO
-         Fb5w==
-X-Gm-Message-State: AFeK/H1h7SxcQ4MQynASKdxiNBJO6quC4CQz/XzBwSF42GxI80LfTj9SLgzBn9IW4HFQ5pUn3OOlFk1xGQ0MTFun
-X-Received: by 10.99.120.5 with SMTP id t5mr14192872pgc.223.1490205751779;
- Wed, 22 Mar 2017 11:02:31 -0700 (PDT)
+        id S965132AbdCVSMq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 14:12:46 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50921 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S935475AbdCVSMp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 14:12:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4C88F7DA2E;
+        Wed, 22 Mar 2017 14:12:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uyllWM1/Eglll+d9ufTo7PBx1C0=; b=A9v728
+        QhfT0ijlqjBVK4qXzcqD/+gKwPyvsEcUDtpSIfh4x3E3sJKpFrK7Ccellg2I4hpZ
+        A/SzqN/Q8g6uhXqasPpCHNl4yYIenwySOxwfwFrLlxmczo/piI7UXY+8nMhH5TDb
+        YcHiZ+yUqoet7xXj34NWUSYCpYfck1k4ZrJKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vPzeoC+tQUvB29gSgBSwVPm5+UJS55E9
+        Mp27cJgj1PXTjQPobqqerPyzIX/Z93nYCGzNZ+y+euklZ2MuYSPyxUb/yNcSqumY
+        DJxoEIFyQIjTebvIdzlZgWWHrapQ73tlhwMLMwZ5jKuf9fPjR5jIQwTkmN/ea6Pb
+        1M9k/Hd70g0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 431C47DA2D;
+        Wed, 22 Mar 2017 14:12:43 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 975C67DA2C;
+        Wed, 22 Mar 2017 14:12:42 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sebastian Schuberth <sschuberth@gmail.com>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] t7504: document regression: reword no longer calls commit-msg
+References: <cover.1490194846.git.johannes.schindelin@gmx.de>
+        <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de>
+        <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
+Date:   Wed, 22 Mar 2017 11:12:41 -0700
+In-Reply-To: <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
+        (Sebastian Schuberth's message of "Wed, 22 Mar 2017 16:18:54 +0100")
+Message-ID: <xmqqinn1kwo6.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 11:02:31 -0700 (PDT)
-In-Reply-To: <1490202865-31325-1-git-send-email-git@jeffhostetler.com>
-References: <1490202865-31325-1-git-send-email-git@jeffhostetler.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 22 Mar 2017 11:02:31 -0700
-Message-ID: <CAGZ79kYh0eP-dzpX58SrSRJGEr9iyOb0Q3vizsvxE81kzddwxQ@mail.gmail.com>
-Subject: Re: [PATCH 0/6] thread lazy_init_name_hash
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 245F5324-0F2B-11E7-B419-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2017 at 10:14 AM,  <git@jeffhostetler.com> wrote:
+Sebastian Schuberth <sschuberth@gmail.com> writes:
+
+> On Wed, Mar 22, 2017 at 4:01 PM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
 >
-> During our testing on the Windows source tree (3.1M
-> files, 500K folders, 450MB index), this change reduced
-> the runtime of lazy_init_name_hash() from 1.4 to 0.27
-> seconds.
+>> Noticed by Sebastian Schuberth.
+>
+> Thanks for working on the fix.
+>
+>> +# set up fake editor to replace `pick` by `reword`
+>> +cat > reword-editor <<'EOF'
+>> +#!/bin/sh
+>> +mv "$1" "$1".bup &&
+>> +sed 's/^pick/reword/' <"$1".bup >"$1"
+>> +EOF
+>
+> Maybe use
+>
+> sed -i 's/^pick/reword/' "$1"
+>
+> here to avoid renaming the input file? Not sure how portable -i for
+> sed is, though. Otherwise, maybe remove the file "$1".bup afterwards
+> to be clean?
 
-This sounds promising. :)
-A fast skim over the code makes me like the code.
+"-i" is GNUism and it is a good idea to avoid it, but cleaning after
+itself may be worth doing to avoid contaminating the working tree.
 
->  hashmap.c                           |  29 ++-
->  hashmap.h                           |  25 ++
-
-Could you add some documentation to
-Documentation/technical/api-hashmap.txt ?
-(Bonus points for migrating the documentation inline,
-c.f. discussion surrounding [1])
-
-[1] https://public-inbox.org/git/20141212212800.GA27451@peff.net/
-
->  name-hash.c                         | 490 +++++++++++++++++++++++++++++++++++-
-
-AFAICT the new threading is all implicit in name-hash and we do not expose
-its functionality or tuning knobs outside the testing helper, such that we do
-not need API documentation here, but only enough code comments to
-understand the code for maintainability?
-
-Thanks,
-Stefan
+Thanks.
