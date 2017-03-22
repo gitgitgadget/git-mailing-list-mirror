@@ -7,321 +7,328 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E14E720323
-	for <e@80x24.org>; Wed, 22 Mar 2017 17:02:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6949720323
+	for <e@80x24.org>; Wed, 22 Mar 2017 17:02:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761010AbdCVRB7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 13:01:59 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:34660 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760984AbdCVRBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 13:01:18 -0400
-Received: by mail-qk0-f194.google.com with SMTP id v127so26858015qkb.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 10:01:17 -0700 (PDT)
+        id S935494AbdCVRCL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 13:02:11 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:36373 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935555AbdCVRB0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 13:01:26 -0400
+Received: by mail-qt0-f194.google.com with SMTP id n37so26100587qtb.3
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 10:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3SwImuXz9RuDTianXEVr6vAqxRC6HuvLBMaDNEVmI38=;
-        b=pwTOS8lNXwWODlvnf8PxGYtcBHOA+UW4JkQwMJhxFHX1gNfHoAEyIcyrW247AQfmwf
-         3Ltra/b1iQ6P+2avqmvFkNymAmK20cQxw2tYJwq5iA+gK2x4rL0hXHUnrHO6+ffJHdI5
-         rQj1O4kdPCBay8kDwxTZLjI1hnZ7ICoQG1ZkJHxrZqu1ZXMGyc2xTW4Wrj8UW2Ks0zvl
-         /sQsW7m0VPiuZ6bN/UG6izF7NcjD7xOswx5s5BkMIZ+FzeZNnDCrCv6Az9COw5bnB7Q2
-         +AEX6COm38X6Ui1Z1kP3Oe4WXMPPng1O6J05ewo81VvqDOvvlkNUG6MxRtN015LJhY0I
-         bj2w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=D509r+zEkp+X/WbmbNuoZAQLYwAGmUZsvcGJfxvNeMw=;
+        b=foIiK1jHTab0R6xc5g5ewBYypM/c12CMc81g3S7vlI5RuWXy7NEgXqINhfxXpF3cIE
+         q250+Jp2ShxIJHVPXSIHcrcLFwYWAmDnlxcFF5Fx6pnqmpHEI7gngWbuy2Zvkp77kBY5
+         FyuvhkokKKmdFH+fl6GPFOTCI8JVaHHOvM5lGzCfsdS+QiV2t2YN3QNth5z+CMlRuV5N
+         PyTgdiSOTFNOYARGOFQ3dQLln5E+2eGSXy75gxWk7+x6VnU6vFoCvMIP7YPMX4hJqBnQ
+         CeOIUCJ1oTHM3wFVlRexAtMgnmOUbpodJ50cpSe5Y1PjHIaF9U+HEouRFo6+KrUm8ihO
+         xJAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3SwImuXz9RuDTianXEVr6vAqxRC6HuvLBMaDNEVmI38=;
-        b=dvEoMUxLfLm3mzezM62VT+o1MmtQjrJr6iDxGZoRESpabsULVI6PBmkBtU8+vpAu/B
-         biBiezzt8lKdb1n/L+6DD1ki9j3kZJNqJ6Uhc0tnofGu0SWwI2psEzS5XrOvdPyvBbKQ
-         xC/sGd4mCjxxZSFAnTOz3HsAtf1YkoLOtubqwU99J0y8Mzc9K1MJTHs1pXxDVIOnN4Ue
-         64oZfz8CEArq4Bvk3qhbgHutZfGhKPmaibb/SBYl2AK/GN49XjRQfVzOv2sYDYX2jlCU
-         QD4R1zJi4DF8mgiXJg+PSXnGDdum2JEkAn1qZcvecrF2rnI6OV/KpvbjTX4OHAgZd+T1
-         20HA==
-X-Gm-Message-State: AFeK/H0dU1D8lypMe38mclzdZ+nc8SN9QAGBk85+6XMAIP22ZvW9wIO5h0HgaV3C+ExD/A==
-X-Received: by 10.233.232.6 with SMTP id a6mr374881qkg.53.1490201638603;
-        Wed, 22 Mar 2017 09:53:58 -0700 (PDT)
+         :references;
+        bh=D509r+zEkp+X/WbmbNuoZAQLYwAGmUZsvcGJfxvNeMw=;
+        b=bUy3WlrcCzP2XZBMNy5HEQJpXuRaQyV1QspPWut8gJtHJsWllTxndmEv4r1VNIPh6a
+         6lTq18zrdMaiEesIFs78K22sAnr90gG4OaiW+vLYiEsmUj2kwoPHK5VAKVbjc6UUIvnU
+         5GKnepiSy9GJpS3FIaZAaXirS8KjaIBeb9k7HuR1gWyrHXyla/IQJ79ItvBAOVJzsozw
+         oEhj7/QYoxGjD+6o0i8zL93KXauhN6FSzSlKnqs31RiBXuFc8Hk/c8wCS84mWe5/C2fR
+         IjlV4RmlHH5ECgfH8t/zaffZpH/zagXK49G+Gw72T9YiXFpq1hhFIRN/pJNu2qcLzIc+
+         hDPQ==
+X-Gm-Message-State: AFeK/H0FgfF0Ae5EN2cG0+JCMn7xmtHXhLXfxybC4S7X1UB9kl8oZAmLk7xFGSxEMvexoA==
+X-Received: by 10.200.42.213 with SMTP id c21mr42968731qta.257.1490201636352;
+        Wed, 22 Mar 2017 09:53:56 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id t47sm1334588qte.45.2017.03.22.09.53.57
+        by smtp.gmail.com with ESMTPSA id t47sm1334588qte.45.2017.03.22.09.53.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 22 Mar 2017 09:53:58 -0700 (PDT)
+        Wed, 22 Mar 2017 09:53:55 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     benpeart@microsoft.com, christian.couder@gmail.com,
         larsxschneider@gmail.com
-Subject: [PATCH v1 3/3] convert: use new sub-process module for filter processes
-Date:   Wed, 22 Mar 2017 12:52:20 -0400
-Message-Id: <20170322165220.5660-4-benpeart@microsoft.com>
+Subject: [PATCH v1 2/3] sub-process: refactor the filter process code into a reusable module
+Date:   Wed, 22 Mar 2017 12:52:19 -0400
+Message-Id: <20170322165220.5660-3-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.0.gvfs.1.42.g0b7328eac2
 In-Reply-To: <20170322165220.5660-1-benpeart@microsoft.com>
 References: <20170322165220.5660-1-benpeart@microsoft.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The filter.<driver>.process code was refactored into a separate
-sub-process module to facilitate reuse in future patch series. This
-centralizes the logic in a single place to simplify maintenance. As a
-side benefit, it also improves the readability of convert.c.
+Create a new sub-process module that can be used to reduce the cost of
+starting up a sub-process for multiple commands.  It does this by
+keeping the external process running and processing all commands by
+communicating over standard input and standard output using the packet
+format (pkt-line) based protocol.  Full documentation is contained in
+Documentation/technical/api-sub-process.txt.
+
+This code is refactored from:
+
+	Commit edcc85814c ("convert: add filter.<driver>.process option", 2016-10-16)
+	keeps the external process running and processes all commands
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- convert.c | 154 ++++++++++----------------------------------------------------
- 1 file changed, 24 insertions(+), 130 deletions(-)
+ Documentation/technical/api-sub-process.txt |  55 ++++++++++++++
+ Makefile                                    |   1 +
+ sub-process.c                               | 113 ++++++++++++++++++++++++++++
+ sub-process.h                               |  46 +++++++++++
+ 4 files changed, 215 insertions(+)
+ create mode 100644 Documentation/technical/api-sub-process.txt
+ create mode 100644 sub-process.c
+ create mode 100644 sub-process.h
 
-diff --git a/convert.c b/convert.c
-index 8d652bf27c..ca8e0d26c0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -4,6 +4,7 @@
- #include "quote.h"
- #include "sigchain.h"
- #include "pkt-line.h"
-+#include "sub-process.h"
- 
- /*
-  * convert.c - convert a file when checking it out and checking it in.
-@@ -497,132 +498,30 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
- #define CAP_SMUDGE   (1u<<1)
- 
- struct cmd2process {
--	struct hashmap_entry ent; /* must be the first member! */
-+	struct subprocess_entry subprocess;
- 	unsigned int supported_capabilities;
--	const char *cmd;
--	struct child_process process;
- };
- 
--static int cmd_process_map_initialized;
--static struct hashmap cmd_process_map;
--
--static int cmd2process_cmp(const struct cmd2process *e1,
--			   const struct cmd2process *e2,
--			   const void *unused)
--{
--	return strcmp(e1->cmd, e2->cmd);
--}
--
--static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
--{
--	struct cmd2process key;
--	hashmap_entry_init(&key, strhash(cmd));
--	key.cmd = cmd;
--	return hashmap_get(hashmap, &key, NULL);
--}
--
--static int packet_write_list(int fd, const char *line, ...)
-+static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- {
--	va_list args;
- 	int err;
--	va_start(args, line);
--	for (;;) {
--		if (!line)
--			break;
--		if (strlen(line) > LARGE_PACKET_DATA_MAX)
--			return -1;
--		err = packet_write_fmt_gently(fd, "%s\n", line);
--		if (err)
--			return err;
--		line = va_arg(args, const char*);
--	}
--	va_end(args);
--	return packet_flush_gently(fd);
--}
--
--static void read_multi_file_filter_status(int fd, struct strbuf *status)
--{
--	struct strbuf **pair;
--	char *line;
--	for (;;) {
--		line = packet_read_line(fd, NULL);
--		if (!line)
--			break;
--		pair = strbuf_split_str(line, '=', 2);
--		if (pair[0] && pair[0]->len && pair[1]) {
--			/* the last "status=<foo>" line wins */
--			if (!strcmp(pair[0]->buf, "status=")) {
--				strbuf_reset(status);
--				strbuf_addbuf(status, pair[1]);
--			}
--		}
--		strbuf_list_free(pair);
--	}
--}
--
--static void kill_multi_file_filter(struct hashmap *hashmap, struct cmd2process *entry)
--{
--	if (!entry)
--		return;
--
--	entry->process.clean_on_exit = 0;
--	kill(entry->process.pid, SIGTERM);
--	finish_command(&entry->process);
--
--	hashmap_remove(hashmap, entry, NULL);
--	free(entry);
--}
--
--static void stop_multi_file_filter(struct child_process *process)
--{
--	sigchain_push(SIGPIPE, SIG_IGN);
--	/* Closing the pipe signals the filter to initiate a shutdown. */
--	close(process->in);
--	close(process->out);
--	sigchain_pop(SIGPIPE);
--	/* Finish command will wait until the shutdown is complete. */
--	finish_command(process);
--}
--
--static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
--{
--	int err;
--	struct cmd2process *entry;
-+	struct cmd2process *entry = (struct cmd2process *)subprocess;
- 	struct child_process *process;
--	const char *argv[] = { cmd, NULL };
- 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
- 	char *cap_buf;
- 	const char *cap_name;
- 
--	entry = xmalloc(sizeof(*entry));
--	entry->cmd = cmd;
--	entry->supported_capabilities = 0;
--	process = &entry->process;
--
--	child_process_init(process);
--	process->argv = argv;
--	process->use_shell = 1;
--	process->in = -1;
--	process->out = -1;
--	process->clean_on_exit = 1;
--	process->clean_on_exit_handler = stop_multi_file_filter;
--
--	if (start_command(process)) {
--		error("cannot fork to run external filter '%s'", cmd);
--		return NULL;
--	}
--
--	hashmap_entry_init(entry, strhash(cmd));
-+	process = subprocess_get_child_process(&entry->subprocess);
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
--	err = packet_write_list(process->in, "git-filter-client", "version=2", NULL);
-+	err = packet_write_list_gently(process->in, "git-filter-client", "version=2", NULL);
- 	if (err)
- 		goto done;
- 
- 	err = strcmp(packet_read_line(process->out, NULL), "git-filter-server");
- 	if (err) {
--		error("external filter '%s' does not support filter protocol version 2", cmd);
-+		error("external filter '%s' does not support filter protocol version 2", subprocess->cmd);
- 		goto done;
- 	}
- 	err = strcmp(packet_read_line(process->out, NULL), "version=2");
-@@ -632,7 +531,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	if (err)
- 		goto done;
- 
--	err = packet_write_list(process->in, "capability=clean", "capability=smudge", NULL);
-+	err = packet_write_list_gently(process->in, "capability=clean", "capability=smudge", NULL);
- 
- 	for (;;) {
- 		cap_buf = packet_read_line(process->out, NULL);
-@@ -651,7 +550,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 		} else {
- 			warning(
- 				"external filter '%s' requested unsupported filter capability '%s'",
--				cmd, cap_name
-+				subprocess->cmd, cap_name
- 			);
- 		}
- 
-@@ -661,14 +560,10 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- done:
- 	sigchain_pop(SIGPIPE);
- 
--	if (err || errno == EPIPE) {
--		error("initialization for external filter '%s' failed", cmd);
--		kill_multi_file_filter(hashmap, entry);
--		return NULL;
--	}
-+	if (err || errno == EPIPE)
-+		err = err ? err : errno;
- 
--	hashmap_add(hashmap, entry);
--	return entry;
-+	return err;
- }
- 
- static int apply_multi_file_filter(const char *path, const char *src, size_t len,
-@@ -682,22 +577,20 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	struct strbuf filter_status = STRBUF_INIT;
- 	const char *filter_type;
- 
--	if (!cmd_process_map_initialized) {
--		cmd_process_map_initialized = 1;
--		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
--		entry = NULL;
--	} else {
--		entry = find_multi_file_filter_entry(&cmd_process_map, cmd);
--	}
-+	entry = (struct cmd2process *)subprocess_find_entry(cmd);
- 
- 	fflush(NULL);
- 
- 	if (!entry) {
--		entry = start_multi_file_filter(&cmd_process_map, cmd);
--		if (!entry)
-+		entry = xmalloc(sizeof(*entry));
-+		entry->supported_capabilities = 0;
+diff --git a/Documentation/technical/api-sub-process.txt b/Documentation/technical/api-sub-process.txt
+new file mode 100644
+index 0000000000..8471875611
+--- /dev/null
++++ b/Documentation/technical/api-sub-process.txt
+@@ -0,0 +1,55 @@
++sub-process API
++===============
 +
-+		if (subprocess_start(&entry->subprocess, cmd, start_multi_file_filter_fn)) {
-+			free(entry);
- 			return 0;
++The sub-process API makes it possible to run background sub-processes
++that should run until the git command exits and communicate with it
++through stdin and stdout.  This reduces the overhead of having to fork
++a new process each time it needs to be communicated with.
++
++The sub-processes are kept in a hashmap by command name and looked up
++via the subprocess_find_entry function.  If an existing instance can not
++be found then a new process should be created and started.  When the
++parent git command terminates, all sub-processes are also terminated.
++
++This API is based on the run-command API.
++
++Data structures
++---------------
++
++* `struct subprocess_entry`
++
++The sub-process structure.  Members should not be accessed directly.
++
++Types
++-----
++
++'int(*subprocess_start_fn)(struct subprocess_entry *entry)'::
++
++	User-supplied function to initialize the sub-process.  This is
++	typically used to negoiate the interface version and capabilities.
++
++
++Functions
++---------
++
++`subprocess_start`::
++
++	Start a subprocess and add it to the subprocess hashmap.
++
++`subprocess_stop`::
++
++	Kill a subprocess and remove it from the subprocess hashmap.
++
++`subprocess_find_entry`::
++
++	Find a subprocess in the subprocess hashmap.
++
++`subprocess_get_child_process`::
++
++	Get the underlying `struct child_process` from a subprocess.
++
++`subprocess_read_status`::
++
++	Helper function to read packets looking for the last "status=<foo>"
++	key/value pair.
++
+diff --git a/Makefile b/Makefile
+index a5a11e721a..8afe733092 100644
+--- a/Makefile
++++ b/Makefile
+@@ -830,6 +830,7 @@ LIB_OBJS += streaming.o
+ LIB_OBJS += string-list.o
+ LIB_OBJS += submodule.o
+ LIB_OBJS += submodule-config.o
++LIB_OBJS += sub-process.o
+ LIB_OBJS += symlinks.o
+ LIB_OBJS += tag.o
+ LIB_OBJS += tempfile.o
+diff --git a/sub-process.c b/sub-process.c
+new file mode 100644
+index 0000000000..02050b6867
+--- /dev/null
++++ b/sub-process.c
+@@ -0,0 +1,113 @@
++/*
++ * Generic implementation of background process infrastructure.
++ */
++#include "sub-process.h"
++#include "sigchain.h"
++#include "pkt-line.h"
++
++static int subprocess_map_initialized;
++static struct hashmap subprocess_map;
++
++static int name2process_cmp(const struct subprocess_entry *e1,
++		const struct subprocess_entry *e2, const void *unused)
++{
++	return strcmp(e1->cmd, e2->cmd);
++}
++
++static void subprocess_exit_handler(struct child_process *process)
++{
++	sigchain_push(SIGPIPE, SIG_IGN);
++	/* Closing the pipe signals the filter to initiate a shutdown. */
++	close(process->in);
++	close(process->out);
++	sigchain_pop(SIGPIPE);
++	/* Finish command will wait until the shutdown is complete. */
++	finish_command(process);
++}
++
++int subprocess_start(struct subprocess_entry *entry, const char *cmd,
++		subprocess_start_fn startfn)
++{
++	int err;
++	const char *argv[] = { cmd, NULL };
++
++	if (!subprocess_map_initialized) {
++		hashmap_init(&subprocess_map, (hashmap_cmp_fn)name2process_cmp, 0);
++		subprocess_map_initialized = 1;
++	}
++
++	entry->cmd = cmd;
++
++	child_process_init(&entry->process);
++	entry->process.argv = argv;
++	entry->process.use_shell = 1;
++	entry->process.in = -1;
++	entry->process.out = -1;
++	entry->process.clean_on_exit = 1;
++	entry->process.clean_on_exit_handler = subprocess_exit_handler;
++
++	err = start_command(&entry->process);
++	if (err) {
++		error("cannot fork to run sub-process '%s'", entry->cmd);
++		return err;
++	}
++
++	err = startfn(entry);
++	if (err) {
++		error("initialization for sub-process '%s' failed", entry->cmd);
++		subprocess_stop(entry);
++		return err;
++	}
++
++	hashmap_entry_init(entry, strhash(entry->cmd));
++	hashmap_add(&subprocess_map, entry);
++
++	return 0;
++}
++
++void subprocess_stop(struct subprocess_entry *entry)
++{
++	if (!entry)
++		return;
++
++	entry->process.clean_on_exit = 0;
++	kill(entry->process.pid, SIGTERM);
++	finish_command(&entry->process);
++
++	hashmap_remove(&subprocess_map, entry, NULL);
++}
++
++struct subprocess_entry *subprocess_find_entry(const char *cmd)
++{
++	struct subprocess_entry key;
++
++	if (!subprocess_map_initialized) {
++		hashmap_init(&subprocess_map, (hashmap_cmp_fn)name2process_cmp, 0);
++		subprocess_map_initialized = 1;
++		return NULL;
++	}
++
++	hashmap_entry_init(&key, strhash(cmd));
++	key.cmd = cmd;
++	return hashmap_get(&subprocess_map, &key, NULL);
++}
++
++void subprocess_read_status(int fd, struct strbuf *status)
++{
++	struct strbuf **pair;
++	char *line;
++	for (;;) {
++		line = packet_read_line(fd, NULL);
++		if (!line)
++			break;
++		pair = strbuf_split_str(line, '=', 2);
++		if (pair[0] && pair[0]->len && pair[1]) {
++			/* the last "status=<foo>" line wins */
++			if (!strcmp(pair[0]->buf, "status=")) {
++				strbuf_reset(status);
++				strbuf_addbuf(status, pair[1]);
++			}
 +		}
- 	}
--	process = &entry->process;
-+	process = subprocess_get_child_process(&entry->subprocess);
- 
- 	if (!(wanted_capability & entry->supported_capabilities))
- 		return 0;
-@@ -737,7 +630,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	if (err)
- 		goto done;
- 
--	read_multi_file_filter_status(process->out, &filter_status);
-+	subprocess_read_status(process->out, &filter_status);
- 	err = strcmp(filter_status.buf, "success");
- 	if (err)
- 		goto done;
-@@ -746,7 +639,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	if (err)
- 		goto done;
- 
--	read_multi_file_filter_status(process->out, &filter_status);
-+	subprocess_read_status(process->out, &filter_status);
- 	err = strcmp(filter_status.buf, "success");
- 
- done:
-@@ -768,7 +661,8 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 			 * Force shutdown and restart if another blob requires filtering.
- 			 */
- 			error("external filter '%s' failed", cmd);
--			kill_multi_file_filter(&cmd_process_map, entry);
-+			subprocess_stop((struct subprocess_entry *)entry);
-+			free(entry);
- 		}
- 	} else {
- 		strbuf_swap(dst, &nbuf);
++		strbuf_list_free(pair);
++	}
++}
+diff --git a/sub-process.h b/sub-process.h
+new file mode 100644
+index 0000000000..235f1e5fa3
+--- /dev/null
++++ b/sub-process.h
+@@ -0,0 +1,46 @@
++#ifndef SUBPROCESS_H
++#define SUBPROCESS_H
++
++#include "git-compat-util.h"
++#include "hashmap.h"
++#include "run-command.h"
++
++/*
++ * Generic implementation of background process infrastructure.
++ * See Documentation/technical/api-background-process.txt.
++ */
++
++ /* data structures */
++
++struct subprocess_entry {
++	struct hashmap_entry ent; /* must be the first member! */
++	struct child_process process;
++	const char *cmd;
++};
++
++/* subprocess functions */
++
++typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
++int subprocess_start(struct subprocess_entry *entry, const char *cmd,
++		subprocess_start_fn startfn);
++
++void subprocess_stop(struct subprocess_entry *entry);
++
++struct subprocess_entry *subprocess_find_entry(const char *cmd);
++
++/* subprocess helper functions */
++
++static inline struct child_process *subprocess_get_child_process(
++		struct subprocess_entry *entry)
++{
++	return &entry->process;
++}
++
++/*
++ * Helper function that will read packets looking for "status=<foo>"
++ * key/value pairs and return the value from the last "status" packet
++ */
++
++void subprocess_read_status(int fd, struct strbuf *status);
++
++#endif
 -- 
 2.12.0.gvfs.1.42.g0b7328eac2
 
