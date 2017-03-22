@@ -2,104 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E20020323
-	for <e@80x24.org>; Wed, 22 Mar 2017 14:32:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB4820323
+	for <e@80x24.org>; Wed, 22 Mar 2017 15:02:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934685AbdCVOcx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 10:32:53 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52815 "EHLO mout.gmx.net"
+        id S1760683AbdCVPCC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 11:02:02 -0400
+Received: from mout.gmx.net ([212.227.15.15]:58175 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934312AbdCVOcv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 10:32:51 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYtId-1cdLCi2x2R-00Vj9i; Wed, 22
- Mar 2017 15:32:35 +0100
-Date:   Wed, 22 Mar 2017 15:32:34 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1760655AbdCVPCA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 11:02:00 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MexaL-1cXEwy3lZx-00Oanc; Wed, 22
+ Mar 2017 16:01:54 +0100
+Date:   Wed, 22 Mar 2017 16:01:53 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: USE_SHA1DC is broken in pu
-In-Reply-To: <xmqqh92mo06a.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703221530040.3767@virtualbox>
-References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com> <2B1DE627-11C8-4FA5-A354-76B6C475666A@gmail.com> <FFC0EFBD-C4D9-4FB8-A45D-7B10689724A1@gmail.com> <alpine.DEB.2.20.1703212105030.3767@virtualbox>
- <xmqqh92mo06a.fsf@gitster.mtv.corp.google.com>
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH 2/3] sequencer: make commit options more extensible
+In-Reply-To: <cover.1490194846.git.johannes.schindelin@gmx.de>
+Message-ID: <c0c836e1f1739af25ad875419ee6125b53ac6a1a.1490194846.git.johannes.schindelin@gmx.de>
+References: <cover.1490194846.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iResz/tptX2ebnDo6Wozk6uIIWWpUZME6ZNVL0Qut8az6elHQo3
- v5NewJx6ForuAEWAfb6oIZ2LsLnErTR9Avvgd5UzI4B9C/hj/STW0hwMmF50H+yUhI1OcwY
- WpePgG/Log/Unt0WoQzLjfQ0PwHdmbmH8Tu46//ZDZtXNU4FYBO7IFtMlUzuom647ka0W+p
- oSPXqcVrRDlUQVCqDtuCw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:M2NYkJnL/hA=:WiYiDRKXGqFOJx1EPvCvU5
- m85znQFW8QxeWpjUAgBAXLmTOo6xP5Go11X0R2VAd29OO4ncQicGJRFCR03wJL2GDGRzWhY0t
- xIHZqeMFmYj9kL7y6sS523a3378h0PYAKNcxmO0934HFxz96d5pvkH6pIejVqbivkIUlNcrOw
- oUuZ2H0QNdPn0lkDRkTBS/gUNV7fwRTon/PLxJqj20YkdImhlqm+s6JESyqf9YwPRts3DklxW
- qx94FGAaUlguMP9nYCA5/8GZC72RmWNOgdMMOK5sQ9OyWL641Z3ow/BYayAqukOUwjJgfMZZa
- qPLAX0whTvHaHTtJgt84jwCVKNtplLpt3HWlASHz252yC6r91wAQNyEkyD3RJ2dO6z/uv0B3H
- ifWRgb82ozioKti+IIxIUAsxM9GPUmrpQNYggzqfQ1S8CAg2arNkr4cMNLNcROluqkTEe5IZs
- cabSgaxH7JOT8BzGvAbszIQv8OOVfROytoO79w1EfNh9R0N6qrWAkugwK2xZOpuUTK5nx6JmT
- EW/5rzdGV8UujTiqhiCOvsrR6Zom2K1/GzFK/VLsmfsDeq2HGSXo/TPysHN9SR6jLPHyAt+pg
- QumOafW5PBAIAqw+zASNj32o1Le3xBjZDL6yRO87AX1kVBoSEgWnHA1S/NszXpbKeKgAthWXp
- hy5VA+n5HyFd5S5S8fxeMpgJl511NE+m12bS9TWnK5PYuj+GX2oLO2BsjMTGOWaqctUktABW1
- 8pUA4+rwNYcz2eVMUlnktmB2vbecJxpqdixC3SXQs5mTb2lnIs9OqnrysCN+hZKnmRTwGmTDg
- VlgQm9eHkLcAgxeCPyLeKEAPRA06A==
+X-Provags-ID: V03:K0:TO5xFclI6FjjSE/1vZa7xAZkUkAIJ8FhRw5uU8s+CK5lkXTk+54
+ wBHetFM0HYV1mjBDFF00bbifNojNQhYZJi2wzd20AzGL8hya6kVKPEJM4+2af4cZxOanUBS
+ bXs6bwhbU48pNe/Xc+/cPxHwV27yiLQbeDz4mYrE6Y4/DchpWX3QNJsZ/E++49GTAGQIrPy
+ HixWKcjBgJjzN4Pl0wQnQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Br4qvA4LzMY=:qxQ1IQTMU7SxoRxNA93c1u
+ ugQS5q51FkXdKqn/Iuglkh0rTG1m13ZX2YaB3MLiSRy/Wu4KbHU+jfcS+/Tn2IYdQI6y0J7jZ
+ YizLtNNE82Jwe0XD4V+CR0ulb8rqDdNuYL/wpNHAqTIkAI1z3/+l05YlhpHU2+RPP0G/mmT1c
+ pjfSHjskBIPHNdFVtbM3P2ctp5K4RDy8udlL+WbSEiIKcP6RK7vUTQy+DORz6XxDznQj7gIf+
+ XZzlzDmgApD9POAgOe4+Spq95rYBWv7B82CSdsEveu6pzaxVE9rlr7gkSA4GzfIWDf/8gdili
+ 0X4k3SybehkteHfchriO7Pl2qJ+FLJfb6jim5ZhLOQYMJ45vE7Yiu7znEDt2SvOheBZwIoSAR
+ PI9cOXLS8gyecMWgcOhxf9T26TBdFseEbpunFEJgaxSHoBG7TjHyLwCrUNy8YtWYzG8F7a8qO
+ /o3Q5D8VAMacNzPizjGyEXBdJ9nvjf1oeQY0hfHEs1NL5xmAAWckKGyxoNjr3/6pTvhov8Vqp
+ kwNdsuBipZEqj4VrZKztnTzgSy/ToLOTFy7vgemLFzLdSHwioiZahxgg3tHIsgjlASZvJ8MZA
+ ++dv7wltm1OuSrwh0aDxHajI/2NGG0pIZ3ZuN90T36EHK7awdJ5mBUNfc81XF3/xlsqNV+/Eu
+ npkN7AwMzUOHr3zHpXhdSRTHGTJwM7HnzFuFsiaLUfWxoa8qzFo+YGlFEraSKu52M8xurK4wN
+ jioyx5wl5a1cGDtopJadN1H0slzn+6pHbzED7hLP5V/QXMlGvm4GRBBffGtso/mmq2XKAfMbL
+ 4f7PDPt33OR5tBuMYjrOOK6puN+EQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+It was pointed out during review of the sequencer-i patch series (which
+taught the sequencer to execute an interactive rebase) that it may be
+cumbersome to keep extending the signature of the run_git_commit()
+function whenever a new commit option is needed.
 
-On Tue, 21 Mar 2017, Junio C Hamano wrote:
+While that concern had merit, back then I was reluctant to change even
+more than was already asked for (which typically introduces regressions,
+this late in the review process, which is no fun for nobody).
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Fri, 17 Mar 2017, Lars Schneider wrote:
-> >
-> >> > On 17 Mar 2017, at 11:18, Lars Schneider <larsxschneider@gmail.com>
-> >> > wrote:
-> >> > 
-> >> > Would it make sense/have value to add a job to our TravisCI build
-> >> > [1] that compiles Git in a few variations with some high profile
-> >> > switches such as USE_SHA1DC? Running all the tests for these
-> >> > variations would probably take to long but just compiling would be
-> >> > less than 2min per variation.
-> >> 
-> >> ... or just run individual tests instead of the entire test suite for
-> >> these variations (e.g. only t0013 for the USE_SHA1DC variation).
-> >
-> > The best solution may be to open a PR with .travis.yml patched to
-> > enable this flag. And then report back to he mailing list because the
-> > gentle people here are not that used to paying attention to Continuous
-> > Testing :-D
-> 
-> Actually, the best solution may be to do nothing ;-)  With the current
-> incarnation parked in 'pu' (or I may have already merged it to 'next'),
-> without any explicit VARIANT_SHA1 request to $(MAKE), we default to use
-> the DC_SHA1 variant.
-> 
-> Those who are paying attention to Travis would have noticed this by now,
-> I thought ;-).
+Now, with fresh eyes, and with an actual need, is a good time to change
+the strategy from adding individual flag parameters to coalescing them
+into a single flags parameter.
 
-I pay attention mainly to breakages, and that is already a lot to pay
-attention to. Thanks.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sequencer.c | 48 ++++++++++++++++++++++++++----------------------
+ 1 file changed, 26 insertions(+), 22 deletions(-)
 
-As to the default of seriously slowing down all SHA-1 computations: since
-you made that the default, at compile time, with no way to turn on the
-faster computation, this will have a major, negative impact. Are you
-really, really sure you want to do that?
+diff --git a/sequencer.c b/sequencer.c
+index 8183a83c1fa..1abe559fe86 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -602,6 +602,11 @@ N_("you have staged changes in your working tree\n"
+ "\n"
+ "  git rebase --continue\n");
+ 
++#define ALLOW_EMPTY (1<<0)
++#define EDIT_MSG    (1<<1)
++#define AMEND_MSG   (1<<2)
++#define CLEANUP_MSG (1<<3)
++
+ /*
+  * If we are cherry-pick, and if the merge did not result in
+  * hand-editing, we will hit this commit and inherit the original
+@@ -615,8 +620,7 @@ N_("you have staged changes in your working tree\n"
+  * author metadata.
+  */
+ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+-			  int allow_empty, int edit, int amend,
+-			  int cleanup_commit_message)
++			  int flags)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	const char *value;
+@@ -624,7 +628,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	cmd.git_cmd = 1;
+ 
+ 	if (is_rebase_i(opts)) {
+-		if (!edit) {
++		if (!(flags & EDIT_MSG)) {
+ 			cmd.stdout_to_stderr = 1;
+ 			cmd.err = -1;
+ 		}
+@@ -640,7 +644,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	argv_array_push(&cmd.args, "commit");
+ 	argv_array_push(&cmd.args, "-n");
+ 
+-	if (amend)
++	if ((flags & AMEND_MSG))
+ 		argv_array_push(&cmd.args, "--amend");
+ 	if (opts->gpg_sign)
+ 		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+@@ -648,16 +652,16 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&cmd.args, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+-	if (cleanup_commit_message)
++	if ((flags & CLEANUP_MSG))
+ 		argv_array_push(&cmd.args, "--cleanup=strip");
+-	if (edit)
++	if ((flags & EDIT_MSG))
+ 		argv_array_push(&cmd.args, "-e");
+-	else if (!cleanup_commit_message &&
++	else if (!(flags & CLEANUP_MSG) &&
+ 		 !opts->signoff && !opts->record_origin &&
+ 		 git_config_get_value("commit.cleanup", &value))
+ 		argv_array_push(&cmd.args, "--cleanup=verbatim");
+ 
+-	if (allow_empty)
++	if ((flags & ALLOW_EMPTY))
+ 		argv_array_push(&cmd.args, "--allow-empty");
+ 
+ 	if (opts->allow_empty_message)
+@@ -926,14 +930,14 @@ static void record_in_rewritten(struct object_id *oid,
+ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		struct replay_opts *opts, int final_fixup)
+ {
+-	int edit = opts->edit, cleanup_commit_message = 0;
+-	const char *msg_file = edit ? NULL : git_path_merge_msg();
++	int flags = opts->edit ? EDIT_MSG : 0, allow = 0;
++	const char *msg_file = opts->edit ? NULL : git_path_merge_msg();
+ 	unsigned char head[20];
+ 	struct commit *base, *next, *parent;
+ 	const char *base_label, *next_label;
+ 	struct commit_message msg = { NULL, NULL, NULL, NULL };
+ 	struct strbuf msgbuf = STRBUF_INIT;
+-	int res, unborn = 0, amend = 0, allow = 0;
++	int res, unborn = 0;
+ 
+ 	if (opts->no_commit) {
+ 		/*
+@@ -991,7 +995,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 			opts);
+ 		if (res || command != TODO_REWORD)
+ 			goto leave;
+-		edit = amend = 1;
++		flags |= EDIT_MSG | AMEND_MSG;
+ 		msg_file = NULL;
+ 		goto fast_forward_edit;
+ 	}
+@@ -1046,15 +1050,15 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	}
+ 
+ 	if (command == TODO_REWORD)
+-		edit = 1;
++		flags |= EDIT_MSG;
+ 	else if (is_fixup(command)) {
+ 		if (update_squash_messages(command, commit, opts))
+ 			return -1;
+-		amend = 1;
++		flags |= AMEND_MSG;
+ 		if (!final_fixup)
+ 			msg_file = rebase_path_squash_msg();
+ 		else if (file_exists(rebase_path_fixup_msg())) {
+-			cleanup_commit_message = 1;
++			flags |= CLEANUP_MSG;
+ 			msg_file = rebase_path_fixup_msg();
+ 		} else {
+ 			const char *dest = git_path("SQUASH_MSG");
+@@ -1064,7 +1068,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 					     rebase_path_squash_msg(), dest);
+ 			unlink(git_path("MERGE_MSG"));
+ 			msg_file = dest;
+-			edit = 1;
++			flags |= EDIT_MSG;
+ 		}
+ 	}
+ 
+@@ -1123,11 +1127,11 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	if (allow < 0) {
+ 		res = allow;
+ 		goto leave;
+-	}
++	} else if (allow)
++		flags |= ALLOW_EMPTY;
+ 	if (!opts->no_commit)
+ fast_forward_edit:
+-		res = run_git_commit(msg_file, opts, allow, edit, amend,
+-				     cleanup_commit_message);
++		res = run_git_commit(msg_file, opts, flags);
+ 
+ 	if (!res && final_fixup) {
+ 		unlink(rebase_path_fixup_msg());
+@@ -2154,7 +2158,7 @@ static int continue_single_pick(void)
+ 
+ static int commit_staged_changes(struct replay_opts *opts)
+ {
+-	int amend = 0;
++	int flags = ALLOW_EMPTY | EDIT_MSG;
+ 
+ 	if (has_unstaged_changes(1))
+ 		return error(_("cannot rebase: You have unstaged changes."));
+@@ -2184,10 +2188,10 @@ static int commit_staged_changes(struct replay_opts *opts)
+ 				       "--continue' again."));
+ 
+ 		strbuf_release(&rev);
+-		amend = 1;
++		flags |= AMEND_MSG;
+ 	}
+ 
+-	if (run_git_commit(rebase_path_message(), opts, 1, 1, amend, 0))
++	if (run_git_commit(rebase_path_message(), opts, flags))
+ 		return error(_("could not commit staged changes."));
+ 	unlink(rebase_path_amend());
+ 	return 0;
+-- 
+2.12.1.windows.1
 
-I thought that it was obvious that we would have at least a runtime option
-to lessen the load.
 
-Surprised,
-Johannes
