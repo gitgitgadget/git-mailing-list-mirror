@@ -2,96 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3F2C20323
-	for <e@80x24.org>; Wed, 22 Mar 2017 15:17:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB12E20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 15:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760031AbdCVPRA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 11:17:00 -0400
-Received: from mail-yw0-f169.google.com ([209.85.161.169]:34362 "EHLO
-        mail-yw0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751539AbdCVPQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 11:16:58 -0400
-Received: by mail-yw0-f169.google.com with SMTP id p77so129759058ywg.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 08:16:57 -0700 (PDT)
+        id S935361AbdCVPTI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 11:19:08 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:34991 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760132AbdCVPS5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 11:18:57 -0400
+Received: by mail-wm0-f42.google.com with SMTP id u132so39849998wmg.0
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 08:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Cm6j0iT29JVdT4OhuejLsTvdozSdMIKOgwXKz3lRcqg=;
-        b=Asw3mfE1jEbnTC56vVg3EEu7N7HJb5cKVVBijgjEsrbs6IUcUgGgFh2DvaOzo846v0
-         vbHtAAD+M+HW7ENtW+z5Lv0C+fyD/CKfC+Uuhp9afhTGa8skTTHKgjEaMujg0T9IG6+M
-         K8PhUxldrNL+/jpd5jm5Nc5z59X0zR0yVapNW+XHKzWqUa6MQ7TiNdFckpUB/nP4Lh7L
-         LpzUiVAC11G3HFIoHY1WPoJdAJy/8FwpB9h/TmiSgqE4gsy0X4QYBp61+awwTjwl0L3T
-         EMALi3G71wXtuulreQ0g4RAdZJZe8dgUGy3U4k1TPfK9IW+ES83UFswdmcyJi9og25Ha
-         w8Rg==
+        bh=w/EmUeEai6BaqoWsFY/rZKTOS0GG/p55hkSH8+4TXII=;
+        b=hyJA7o1r379QHGj+8yM/kZU/CJ9I1UZnEj+aRMmHiBYUNyIeizYby0+jm91csBhn60
+         i7TdSb+SIKoQn4/dm4ZpISwznvCy3qBsgF08yDc9w8Hrvf9h/z2KBrt8CIwZr0qyr+vz
+         BRTXJaJ9FSQ/1h1F7o69oMW8R01dLtarDcQuiLWXXugE/YVE2OIUMMUGLH9tZ1LL2Mhw
+         AMUCLfsoG83G88gQVca/BCl4g0vjtlcDMudrPnRW9gpEvRhhzED2Q8bCHrlAXtaPTEDd
+         U/pAnYSd/c0VQum7F2t+597PIQm9E4lrf3WJN3I+KXzaoPW5mLjybOMUZaQ2GSLWKm8w
+         Ccmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Cm6j0iT29JVdT4OhuejLsTvdozSdMIKOgwXKz3lRcqg=;
-        b=nZ2zB1dCvrxB9Lr73zD4JslBdUEgt2sFDWAisGtRnnfwO/lVJEoDgId22KSN8fApXX
-         v354rhRxFw0o/ciDq0/n/vWEBZXfkj7qQt1x7eMFCmHfYtlCos8mWR5f37FUhzakWqWh
-         2dUHayfPMU/9IuBZFzAzJrZEZR+n7z2w190CDFvMy/fYD1y2Lv6a8oNI70a7CaV2nSB+
-         +IntBwcpICyDVHRp+3qCFPG0u67MMGOEDi41C9EyjYnLT48KGQqW92diUptXX8xiBzCf
-         P6bXNbKI4CsilbAbyQ8ELmJhvrRjo2XXhiTkKfHRbJslG/ObQIOOeMfuIW1ekDC97PwK
-         22cQ==
-X-Gm-Message-State: AFeK/H3qscIu6F1mBj44jc43b23e5D79VWvaBESLPMZmTOLIYoPmNBMaRLWbUv2FA3/4sNek/sdfC1cbG5PpGw==
-X-Received: by 10.129.175.27 with SMTP id n27mr12265487ywh.229.1490195806570;
- Wed, 22 Mar 2017 08:16:46 -0700 (PDT)
+        bh=w/EmUeEai6BaqoWsFY/rZKTOS0GG/p55hkSH8+4TXII=;
+        b=ccHsy/iRfPTONO0Ey7lErpG3TRdS15AMm8b9wrPYD0L2QLaf7gcA9iuol6biaiaMun
+         PYQUOK4x/EnICulvrLqXKWO//Vl9gWaI1iR6Kxocv92KdVz31uVLAY1diaNiy+5xiGAQ
+         rzkACc27yjFjqaxD/RkYgD3vN+j4yTaVe33NyYoKm9uwdcOVhpwhBsLob5SnVKzaNlUj
+         B/AG2Newnps1XMRyLxU7j3Jl9OxQSwycxfVoyrl7Es3kjSVI35Nz6zxQUmfYOanPa1Fi
+         PA9fTzCESJqOXkbgObkbU2OUT4uAxwS3ccEfIOOI+UTp01GQf3q23e49n/LRGXWkRCE0
+         kMxw==
+X-Gm-Message-State: AFeK/H391zRpV224BW2lVK9NZgcgVdbP+twinJsxLV2ymB2wq1vRrQlp3tFoB156q906mek3+MeuXsggwLWvXA==
+X-Received: by 10.28.178.84 with SMTP id b81mr9045412wmf.83.1490195934998;
+ Wed, 22 Mar 2017 08:18:54 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.172.32 with HTTP; Wed, 22 Mar 2017 08:16:16 -0700 (PDT)
-In-Reply-To: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
-References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
-From:   ankostis <ankostis@gmail.com>
-Date:   Wed, 22 Mar 2017 16:16:16 +0100
-Message-ID: <CA+dhYEWo3v+ns0zt_hWu-7i-=E0g_tFaXYcv7Q0j2ozx1SCVmQ@mail.gmail.com>
-Subject: Re: [PATCH 00/10] RFC Partial Clone and Fetch
-To:     git@jeffhostetler.com
-Cc:     Git Mailing List <git@vger.kernel.org>, jeffhost@microsoft.com,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        markbt@efaref.net, benpeart@microsoft.com,
-        Jonathan Tan <jonathantanmy@google.com>
+Received: by 10.28.153.150 with HTTP; Wed, 22 Mar 2017 08:18:54 -0700 (PDT)
+In-Reply-To: <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de>
+References: <cover.1490194846.git.johannes.schindelin@gmx.de> <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Wed, 22 Mar 2017 16:18:54 +0100
+Message-ID: <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t7504: document regression: reword no longer calls commit-msg
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Jeff
+On Wed, Mar 22, 2017 at 4:01 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
 
-I read most of the valuable references you provided
-but could not find something along the lines describing inline.
+> Noticed by Sebastian Schuberth.
 
+Thanks for working on the fix.
 
-On 8 March 2017 at 19:50,  <git@jeffhostetler.com> wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
->
-> [RFC] Partial Clone and Fetch
-> =============================
->
-> This is a WIP RFC for a partial clone and fetch feature wherein the client
-> can request that the server omit various blobs from the packfile during
-> clone and fetch.  Clients can later request omitted blobs (either from a
-> modified upload-pack-like request to the server or via a completely
-> independent mechanism).
+> +# set up fake editor to replace `pick` by `reword`
+> +cat > reword-editor <<'EOF'
+> +#!/bin/sh
+> +mv "$1" "$1".bup &&
+> +sed 's/^pick/reword/' <"$1".bup >"$1"
+> +EOF
 
-Is it foreseen the server to *decide* with partial objects to serve
-And the cloning-client still to work ok?
+Maybe use
 
-My case in mind is storing confidential files in Git (server)
-that I want to publicize them to partial-cloning clients,
-for non-repudiation, by sending out trees and commits alone
-(or any non-sensitive blobs).
+sed -i 's/^pick/reword/' "$1"
 
-A possible UI would be to rely on a `.gitattributes` to specify
-which objects are to be upheld.
+here to avoid renaming the input file? Not sure how portable -i for
+sed is, though. Otherwise, maybe remove the file "$1".bup afterwards
+to be clean?
 
-
-Apologies if I'm intruding with an unrelated feature requests.
-  Kostis
+-- 
+Sebastian Schuberth
