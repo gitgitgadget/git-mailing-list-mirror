@@ -2,77 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BBF72095D
-	for <e@80x24.org>; Wed, 22 Mar 2017 18:59:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61B0220323
+	for <e@80x24.org>; Wed, 22 Mar 2017 19:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965832AbdCVS7L (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 14:59:11 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:33688 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965828AbdCVS7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 14:59:06 -0400
-Received: by mail-pg0-f53.google.com with SMTP id w20so9237867pgc.0
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 11:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wYMEWPBpRjZ/54gqs0AKXx9ZGFnY/wf3aORQnS8oqz0=;
-        b=Iq0ok4sfQseo7ZyHFS+HbFSXAmvX1FF4V+QOmcNgXXopkZrmwG5PNe8IWlxZYEAFSf
-         59YmZdSRrVxiFq6VIoomIqN53MV2SHWluq5Rj0bv7/M1Smsi823IVNJAjDvuttOaZPAE
-         w5HmY1B1Joh67MS7f+edhSl9F+AUgrRI+ntps2vrlQkc7jgNXW7Rs/qgxpLVIXTiCjWk
-         z7mXAkN1M92NQQeWrLLDiN9zeFfBLyqgaK/2ymnXZgQ82DmJIAtJOju5aNCwEgqNm7bO
-         0Ld23hLtUA9/K/88ZeHgBOx1QdcNuK5fabsxmy+jdGbI+12xqWjtXSnqQ1T4t+1m25vP
-         KpGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wYMEWPBpRjZ/54gqs0AKXx9ZGFnY/wf3aORQnS8oqz0=;
-        b=txCpDeGY0I+mPrM0EbdZOLzmaopc0QPc627pBPV5z2RdMWnXUKq7yb0kUw+k/WGtak
-         adFZAVPcRpCFvEOCn0y9qCZfwyfSZ7zt1pqzqSnSRM2gX8zNKXWLwMPIC4PdbvnBRUTN
-         +VhCzAEZAtGyuEw6m+GeBREXjdClirVICuHkfKPmvdQR6Bt+ie6PSKOXLEFMeUB8gfE5
-         VNzrkG/sX0GbZeUi1GmZ9AGSktvQszM56bfMNoonh+xvbKFfJo9l5/lxGsEHYUHN/iPE
-         /UMuABuoXMr2NTnznchtHxxYIvqp/GjFD/PTx2tW1jdTVVflGZJDta+TTAczGIgroo2q
-         Vbqg==
-X-Gm-Message-State: AFeK/H3e8MwAqwEgQuE75yb0GdZCQ7nWBgbr3NoAXPpe3ZOlfHYdQKUpDp6+LbhD0PbDA1FWnbLHsSdXo3rswH9M
-X-Received: by 10.99.120.5 with SMTP id t5mr14423205pgc.223.1490209144685;
- Wed, 22 Mar 2017 11:59:04 -0700 (PDT)
+        id S935347AbdCVTWR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 15:22:17 -0400
+Received: from siwi.pair.com ([209.68.5.199]:55793 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S935003AbdCVTWQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 15:22:16 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5E8C784614;
+        Wed, 22 Mar 2017 15:22:14 -0400 (EDT)
+Subject: Re: [PATCH 0/6] thread lazy_init_name_hash
+To:     Stefan Beller <sbeller@google.com>
+References: <1490202865-31325-1-git-send-email-git@jeffhostetler.com>
+ <CAGZ79kYh0eP-dzpX58SrSRJGEr9iyOb0Q3vizsvxE81kzddwxQ@mail.gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <90a7b4fa-67bf-6501-1da6-97883d7cde4a@jeffhostetler.com>
+Date:   Wed, 22 Mar 2017 15:22:09 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 11:59:04 -0700 (PDT)
-In-Reply-To: <xmqq1stpkun7.fsf@gitster.mtv.corp.google.com>
-References: <20170312200248.3610-1-jn.avila@free.fr> <20170320210225.13046-1-jn.avila@free.fr>
- <20170320210225.13046-3-jn.avila@free.fr> <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
- <5036581a-f989-2db6-06ba-621db05c6de1@free.fr> <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZBq+dL7hEj108DPU5KbVeJX2nYEw88jS0Eq78GxzCabA@mail.gmail.com> <xmqq1stpkun7.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 22 Mar 2017 11:59:04 -0700
-Message-ID: <CAGZ79kZUAQ1sR0d0=KtkbWprO9VmpHO2SFFW7AYMS=wwaKjLtw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAGZ79kYh0eP-dzpX58SrSRJGEr9iyOb0Q3vizsvxE81kzddwxQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2017 at 11:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> So we'd want to be able to say:
->>   "get a tarball including all submodules except the superproject"
->>   (This would produce the "optional language pack tarball")
+
+
+On 3/22/2017 2:02 PM, Stefan Beller wrote:
+> On Wed, Mar 22, 2017 at 10:14 AM,  <git@jeffhostetler.com> wrote:
+>>
+>> During our testing on the Windows source tree (3.1M
+>> files, 500K folders, 450MB index), this change reduced
+>> the runtime of lazy_init_name_hash() from 1.4 to 0.27
+>> seconds.
 >
-> You do not need that.  Just go to the gitman-l10n project and grab a
-> tarball out of it.
+> This sounds promising. :)
+> A fast skim over the code makes me like the code.
 
-Oh, I misunderstood your proposal.
-You said: We have *one* submodule for all languages, but I understood
-we'd have a submodule for *each* language.
+I forgot to mention that this was on an 8 (logical) core machine.
 
-Thanks,
-Stefan
+>
+>>  hashmap.c                           |  29 ++-
+>>  hashmap.h                           |  25 ++
+>
+> Could you add some documentation to
+> Documentation/technical/api-hashmap.txt ?
+
+Will do. Thanks.
+
+> (Bonus points for migrating the documentation inline,
+> c.f. discussion surrounding [1])
+>
+> [1] https://public-inbox.org/git/20141212212800.GA27451@peff.net/
+
+I'd like to save this for a separate effort.
+
+>
+>>  name-hash.c                         | 490 +++++++++++++++++++++++++++++++++++-
+>
+> AFAICT the new threading is all implicit in name-hash and we do not expose
+> its functionality or tuning knobs outside the testing helper, such that we do
+> not need API documentation here, but only enough code comments to
+> understand the code for maintainability?
+
+Yes, my goal was to just make it transparent to all callers.
+Especially since the main lazy_init_name_hash() function is static
+and not visible anyway.
+
+Jeff
+
