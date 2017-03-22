@@ -2,146 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 49E5120323
-	for <e@80x24.org>; Wed, 22 Mar 2017 19:30:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF56B20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 19:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935453AbdCVTaP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 15:30:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64242 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S936217AbdCVTaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 15:30:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B9B9F7E890;
-        Wed, 22 Mar 2017 15:29:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=H/LoRlF/fAMo2EoMHR+nC4IXRV4=; b=vVEvH4
-        4iFACvMvlWzEIojpCLNB43OSCN3skH5SCtktFECpJVHzeTxw7B6Lt8uI52uB8gPj
-        KrCGfzwbfTGCtvrfwoSo4x9Uto38j1qRWXq8F6kFr2++Sx6PeeBoB2brP4xN+gO7
-        c5Bb21AzV9guMbtMP+CSkYi8Sf489rsHrEyq8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cBncryNt6CTq8Do659ooRmfCLEPqsjsG
-        JO5taMYk8bZjvDpnmy0F7EN0TCMrRQAvNeyLNhUkP167hhZ7wmdu8zekwCjeOTsU
-        a19eheImDJax8tZMdLKAPR+nel5zQixjOBG2NFUXVteujuEg6QSFMYXwHMG5gX1I
-        iTWW16QeljA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1A4C7E88F;
-        Wed, 22 Mar 2017 15:29:51 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1D2DA7E88E;
-        Wed, 22 Mar 2017 15:29:51 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net
-Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
-References: <20170322065612.18797-1-larsxschneider@gmail.com>
-Date:   Wed, 22 Mar 2017 12:29:49 -0700
-In-Reply-To: <20170322065612.18797-1-larsxschneider@gmail.com> (Lars
-        Schneider's message of "Wed, 22 Mar 2017 07:56:12 +0100")
-Message-ID: <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S965932AbdCVTZy convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 22 Mar 2017 15:25:54 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:33815 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935421AbdCVTYN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 15:24:13 -0400
+Received: by mail-pg0-f45.google.com with SMTP id 21so78800413pgg.1
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 12:23:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:content-transfer-encoding:user-agent;
+        bh=YRV1X6NSVtA0JOQXBobx1okNZnPdNVVAT6oyZBIGdyw=;
+        b=jbfzZCxA3ApxZ4SbbAzoaHnTZlHUBNLu60znAFZZDua9wixBpp/J3G2uy3a3cZqaLm
+         QoKcizRbdIweKj62yn7g38o1kgv5z6o4SF994Z7I+ujel/0aCJEI1n1n4Ymk8LDZSMGm
+         CMlt/zVqCTchH3o01fN8yxUvwQsR+MsaOz3qwUWvyqfgR/yabyiys82Yzm/iWwc9ggx0
+         nncKW94FU5on9F7NtpLOluDJmm0RfWCRO8NcSW/v3/E8bq98q+fRazn7lU87lPcWgRgj
+         9VQ+9JQmRCkE4zsx98tWSiwNzM4lFTpfNU45+YWvZ6XsUM/SztDHM+d7hV6F3fgfm2G6
+         1KZA==
+X-Gm-Message-State: AFeK/H3mUO9ys9FFHUB1hEGrBm6bR/gMK1cvfc1VqRHfLrxT+Y9pD8gmx83XcLbtAQavRw==
+X-Received: by 10.84.232.135 with SMTP id i7mr37320953plk.134.1490210621919;
+        Wed, 22 Mar 2017 12:23:41 -0700 (PDT)
+Received: from darkstar ([97.107.183.15])
+        by smtp.gmail.com with ESMTPSA id l29sm5453032pfb.118.2017.03.22.12.23.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Mar 2017 12:23:41 -0700 (PDT)
+Date:   Wed, 22 Mar 2017 12:23:40 -0700
+From:   matthew@giassa.net
+To:     git@vger.kernel.org
+Subject: Question: xdiff and "pretty" (human readable) diff output
+Message-ID: <20170322192340.elg2gpvcshhk3jq3@darkstar>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EB2C6E92-0F35-11E7-8ACC-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8BIT
+User-Agent: NeoMutt/20170206 (1.7.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+Good day,
 
-> Therefore, we did the following:
-> * Johannes Schindelin set up a Visual Studio Team Services build
->   sponsored by Microsoft and made it accessible via an Azure Function
->   that speaks a super-simple API. We made TravisCI use this API to
->   trigger a build, wait until its completion, and print the build and
->   test results.
-> * A Windows build and test run takes up to 3h and TravisCI has a timeout
->   after 50min for Open Source projects. Since the TravisCI job does not
->   use heavy CPU/memory/etc. resources, the friendly TravisCI folks
->   extended the job timeout for git/git to 3h.
+I have a question with respect to how git generates "pretty" (ie: human
+readable) unified diffs. It's to my understanding that git uses its own
+(simplified/minimized) fork of libxdiff, simply referred to as "xdiff"
+[1]. Which tool/library is used to take the xdiff output and generate
+the human-readable equivalent that is rendered to the console? I have a
+program that I'm maintaining that currently tracks changes to a couple
+of "sandboxed" files, and I wanted to add a simple console UI that
+periodically shows the changes to the files over time and/or dumps the
+"pretty diff" to syslog.
 
-The benefit is that Windows CI does not have to subscribe to the
-GitHub repository to get notified (instead uses Travis as a relay
-for update notification) and the result can be seen at the same
-place as results on other platforms Travis natively support are
-shown?  
+Thank you.
 
-Very nice.
+1. "Use a *real* built-in diff generator · git/git@3443546",
+   <https://github.com/git/git/commit/3443546f6ef57fe28ea5cca232df8e400bfc3883>,
+   Accessed 2017-03-22
 
-> Things, that would need to be done:
-> * Someone with write access to https://travis-ci.org/git/git would need
->   to add the secret token as "GFW_CI_TOKEN" variable in the TravisCI
->   repository setting [1]. Afterwards the build should just work.
+--Matthew
 
-We need to make sure this does not leak to the execution log of
-Travis.
-
-For example, in https://travis-ci.org/git/git/jobs/213616973, which
-is a log of the documentation build for #1335.6 ran for the 'master'
-branch, you can see "ci/test-documentation.sh" string appearing in
-the log twice.  This comes from "script:" part, which is the same
-mechanism this patch uses to invoke the new script with sekrit on
-the command line.
-
-I am expecting that no expansion of "$GFW_CI_TOKEN" will be shown in
-the output, but I've seen an incident where an unsuspecting 'set -x'
-or '$cmd -v' revealed something that shouldn't have been made
-public.  I want to make sure we are sure that the command line this
-patch adds does not get echoed with expansion to the log.
-
-Is GFW_CI_TOKEN known to be safe without double-quote around it, by
-the way?
-
-> Things, that might need to be done:
-> * The Windows box can only process a single build at a time. A second
->   Windows build would need to wait until the first finishes.
-
-Perhaps instead of accumulating pending requests, perhaps we can
-arrange so that Travis skips a build/test request that is not even
-started yet for the same branch?  For branches that are never
-rewound, a breakage in an earlier pushout would either show in a
-later pushout of the same branch (if breakage is not fixed yet), or
-doesn't (if the later pushout was to fix that breakage), and in
-either case, it is not useful to test the earlier pushout when a
-newer one is already available for testing.  For branches that are
-constantly rewound, again, it is not useful to test the earlier
-pushout when a newer one is already available for testing.
-
-> diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-> new file mode 100755
-> index 0000000000..324a9ea4e6
-> --- /dev/null
-> +++ b/ci/run-windows-build.sh
-> @@ -0,0 +1,55 @@
-> +#!/usr/bin/env bash
-
-I know this is not a usual scripted Porcelain that must be usable by
-all users, but I do not see anything that requires bash-ism in the
-script.  Can we just do "#!/bin/sh", avoid bash-isms, and follow the
-usual coding guidelines in general?
-
-> +[ $# -eq 3 ] || (echo "Unexpected number of parameters" && exit 1)
-
-i.e.e.g "test $# = 3" || ...
-
-> +# Check if the $BUILD_ID contains a number
-> +case $BUILD_ID in
-> +	''|*[!0-9]*) echo $BUILD_ID && exit 1
-> +esac
-
-Too deep an indent of a case arm, i.e. align them with case/esac, like
-
-        case $BUILD_ID in
-        ''|*[!0-9]*) echo $BUILD_ID && exit 1
-        esac
-
-Thanks.
