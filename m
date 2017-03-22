@@ -2,99 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A33D20323
-	for <e@80x24.org>; Wed, 22 Mar 2017 17:02:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7087D20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 17:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964932AbdCVRCX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 13:02:23 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61184 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934888AbdCVQ64 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 12:58:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 22ADA794E2;
-        Wed, 22 Mar 2017 12:54:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xJ/ECD1pyWUBUFW41KAVuDIjHMo=; b=kLv1LY
-        dKFveM0WQF2O0nOUfd+Hguv2INrgJSt/bmibTnC63RFnwKnBycN1sVDx2YQdDa5J
-        UnpLchP97RmMiQAc0x52tabupBuPHExugstzGdhT/ibJbP5QwUQyo7e6Btt/6aXC
-        075nLG3NeEZ1d0ltczaB58wFMPfEQJaI6ErD0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=B403+h4C2vJi1B5IouKJ805buOCXr08D
-        P03re4K3w3gb7AgTeiKSsB6xvjAY0DyZK78inlSYrDLtHWi/+BT3LNU9+n5/x2PI
-        1hVI54PbL5+ngswPiodVDDrL72d6E9Wj460OFeecs25VZRUIcRQn5jQEGz/Q7ecj
-        GWBJAbOGqqw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 19F76794E1;
-        Wed, 22 Mar 2017 12:54:34 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7BC56794E0;
-        Wed, 22 Mar 2017 12:54:33 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alex Henrie <alexhenrie24@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] log: if --decorate is not given, default to --decorate=auto
-References: <20170321055203.26488-1-alexhenrie24@gmail.com>
-        <xmqqinn2sfdw.fsf@gitster.mtv.corp.google.com>
-        <xmqqzigemfij.fsf@gitster.mtv.corp.google.com>
-        <CAMMLpeQZXzPtN+mmtRS33vbT6hFz8p0qqjFMhz9tUHk747=Z3Q@mail.gmail.com>
-Date:   Wed, 22 Mar 2017 09:54:32 -0700
-In-Reply-To: <CAMMLpeQZXzPtN+mmtRS33vbT6hFz8p0qqjFMhz9tUHk747=Z3Q@mail.gmail.com>
-        (Alex Henrie's message of "Tue, 21 Mar 2017 23:47:23 -0600")
-Message-ID: <xmqqmvcdmeuv.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S935475AbdCVRDD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 13:03:03 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:35166 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935566AbdCVRC0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 13:02:26 -0400
+Received: by mail-qk0-f196.google.com with SMTP id o135so26887785qke.2
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 10:02:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RwunFvRb1lfXhGpHJVlnvO5CoWMVWzXsshKeMZwZZVM=;
+        b=mBlMGigsB6OQprklcaMO2waBTZW/af2+gM8plFcJMW4uS7qP4pWx3ovjItBX9Fe+pT
+         kWTDLeonoW1FRsu2C1pvch0W4ZKjVYUyluRp+1w8OZw4a0BfptFSMe9kgdRQZ+3Q2N62
+         qVbJxe/BrdyYp23JXsBYoemQMYU7xO19JywswwdLhK1l5ar6ElQEIk3FI8OUxQ09qYMZ
+         awWgBRUeKpdBiP4ELV2t86oLsiav+gbkmxAz0ghbmn84v1bjXdovJa/4o1vr/Ppb5Awd
+         O/TJltI9e1JfmLXDlIlmsfT3j/tmDExEmtcFLuBS3/HHIZ2trulrx3w9+0nUX7wNH6ut
+         FBZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=RwunFvRb1lfXhGpHJVlnvO5CoWMVWzXsshKeMZwZZVM=;
+        b=HoDYl/Jb8tM8kzgt/D8/nnb+IjRupchB1qf09GSoWqfOgmzuzSg1FMahH9N3VM7XLJ
+         nhTDEK9cpRkiY4cNhhsdFPmYVEflpy7CHf78kmAG2dCGXTTuStOer2EkamN9xmw9NXD/
+         nqNjSO7QKaRjktJtPy1bi7npN9GWvWLGLkjfbBPY35YWC6vkBqUJ6XzEyS+sGdnrpZt3
+         CQ3X56X7W1Q0KUP6YpNHUVwDxWoYSlVr7wJhvm0XNvbcSbmby+qXdxBH64INWuIHvWc9
+         ETY7zUX1P7vdobKCdprGEzy6lN6DA5JkgI8duOvk55T/+0KbFYvk9PUM2R3bAJxfftfS
+         2xFA==
+X-Gm-Message-State: AFeK/H3NJcpoqqCJ4rEi55Zg/aa7iDgJ4MeadvEmXYU7U+nejzn8mGfu8KjIOIywn5bs7Q==
+X-Received: by 10.55.170.68 with SMTP id t65mr35556552qke.303.1490201588477;
+        Wed, 22 Mar 2017 09:53:08 -0700 (PDT)
+Received: from localhost.localdomain ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id t47sm1334588qte.45.2017.03.22.09.53.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 22 Mar 2017 09:53:07 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     benpeart@microsoft.com, christian.couder@gmail.com,
+        larsxschneider@gmail.com
+Subject: [PATCH v1 0/3] Add support for downloading blobs on demand
+Date:   Wed, 22 Mar 2017 12:52:17 -0400
+Message-Id: <20170322165220.5660-1-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.12.0.gvfs.1.42.g0b7328eac2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 39717EAA-0F20-11E7-B023-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alex Henrie <alexhenrie24@gmail.com> writes:
+We have a couple of patch series we’re working on (ObjectDB/Read-Object,
+Watchman integration) where we could use the ability to have a
+background process running that can accept multiple commands thus
+avoiding the overhead of spawning a new process for every command.
 
-> 2017-03-21 16:28 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>>>  test_expect_success 'log.decorate configuration' '
->>>> -    git log --oneline >expect.none &&
->>>> +    git log --oneline --no-decorate >expect.none &&
->>>>      git log --oneline --decorate >expect.short &&
->>>>      git log --oneline --decorate=full >expect.full &&
->>>
->>> This ensures that an explicit --no-decorate from the command line
->>> does give "none" output, which we failed to do so far, and is a good
->>> change.  Don't we also need a _new_ test to ensure that "auto" kicks
->>> in without any explicit request?  Knowing the implementation that
->>> pager-in-use triggers the "auto" behaviour, perhaps testing the
->>> output from "git -p log" would be sufficient?
->>
->> BTW,
->>
->>>
->>> +static int auto_decoration_style()
->>> +{
->>> +     return (isatty(1) || pager_in_use()) ? DECORATE_SHORT_REFS : 0;
->>> +}
->>
->> FYI, I fixed this to
->>
->>         static int auto_decoration_style(void)
->>
->> while queuing to make it compile.
->
-> No problem. Do I need to submit a second version of the patch with a
-> test for `git -p log`?
+The ability to do this was added in:
 
-You do want to protect this "without an option, we default to
-'auto'" feature from future breakage, no?
+	Commit edcc85814c ("convert: add filter.<driver>.process option", 2016-10-16)
+	keeps the external process running and processes all commands
 
-Thanks.
+but it is integrated into the convert code.  This patch series takes the
+code from convert.c and refactors it into a separate “sub-process”
+module so that we can centralize and reuse this logic in other areas.
+Once the code was refactored into sub-process, convert.c was updated to
+use the new module.
+
+Ben Peart (3):
+  pkt-line: add packet_write_list_gently()
+  sub-process: refactor the filter process code into a reusable module
+  convert: use new sub-process module for filter processes
+
+ Documentation/technical/api-sub-process.txt |  55 ++++++++++
+ Makefile                                    |   1 +
+ convert.c                                   | 154 +++++-----------------------
+ pkt-line.c                                  |  19 ++++
+ pkt-line.h                                  |   1 +
+ sub-process.c                               | 113 ++++++++++++++++++++
+ sub-process.h                               |  46 +++++++++
+ 7 files changed, 259 insertions(+), 130 deletions(-)
+ create mode 100644 Documentation/technical/api-sub-process.txt
+ create mode 100644 sub-process.c
+ create mode 100644 sub-process.h
+
+-- 
+2.12.0.gvfs.1.42.g0b7328eac2
+
