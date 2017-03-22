@@ -2,157 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7DF120958
-	for <e@80x24.org>; Wed, 22 Mar 2017 08:44:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50F6F20958
+	for <e@80x24.org>; Wed, 22 Mar 2017 09:48:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758933AbdCVIoV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 04:44:21 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:55521 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1758232AbdCVIoD (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 22 Mar 2017 04:44:03 -0400
-X-AuditID: 1207440f-129ff70000003517-50-58d23916ec0f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 50.BC.13591.61932D85; Wed, 22 Mar 2017 04:43:02 -0400 (EDT)
-Received: from [192.168.69.190] (p579067DF.dip0.t-ipconnect.de [87.144.103.223])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2M8gxQ2006514
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Wed, 22 Mar 2017 04:43:00 -0400
-Subject: Re: [PATCH 18/20] commit_packed_refs(): use reference iteration
-To:     Jeff King <peff@peff.net>
-References: <cover.1490026594.git.mhagger@alum.mit.edu>
- <b8d279659c6755c5d042a3062b526e4752114c38.1490026594.git.mhagger@alum.mit.edu>
- <20170320180532.vxzra6tpf3t7qjks@sigill.intra.peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
-        git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <b49b4ae0-bcef-ce1d-62d5-f76a11e84766@alum.mit.edu>
-Date:   Wed, 22 Mar 2017 09:42:58 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1758949AbdCVJsE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 05:48:04 -0400
+Received: from smtp.ctxuk.citrix.com ([185.25.65.24]:25883 "EHLO
+        SMTP.EU.CITRIX.COM" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1758632AbdCVJrn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 05:47:43 -0400
+X-IronPort-AV: E=Sophos;i="5.36,204,1486425600"; 
+   d="scan'208";a="42899076"
+Date:   Wed, 22 Mar 2017 09:47:11 +0000
+From:   Roger Pau =?iso-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>
+To:     <git@vger.kernel.org>
+Subject: Re: Issues with git send-email and msmtp
+Message-ID: <20170322094711.g53e2ok72cxg27ab@dhcp-3-128.uk.xensource.com>
+References: <20170321154921.3jgn4ktcop4shct2@dhcp-3-128.uk.xensource.com>
 MIME-Version: 1.0
-In-Reply-To: <20170320180532.vxzra6tpf3t7qjks@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPIsWRmVeSWpSXmKPExsUixO6iqCtmeSnCYP4VS4uuK91MFg29V5gt
-        ljx8zWzRPeUto8WPlh5mB1aPnbPusnt0tR9h83jWu4fR4+IlZY/Pm+QCWKO4bFJSczLLUov0
-        7RK4Mp5Mv8FU8Eyxovn1P6YGxiPSXYycHBICJhJNa76ydjFycQgJ7GCSWDarnwXCucAk0T5n
-        LyNIlbCAh8TO3U3MILaIgKzE98MbGSGKDjFKbDv2lxnEYRbYzijx8uYCdpAqNgFdiUU9zUwg
-        Nq+AvcTpIy/YQGwWAVWJ/tNdLCC2qECIxJyFDxghagQlTs58AhbnFHCRWPruBJjNLKAu8Wfe
-        JWYIW15i+9s5zBMY+WchaZmFpGwWkrIFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9HIz
-        S/RSU0o3MULCmX8HY9d6mUOMAhyMSjy8CvIXI4RYE8uKK3MPMUpyMCmJ8rorX4oQ4kvKT6nM
-        SCzOiC8qzUktBvqdg1lJhPe9PlCONyWxsiq1KB8mJc3BoiTOq75E3U9IID2xJDU7NbUgtQgm
-        K8PBoSTBm2oO1ChYlJqeWpGWmVOCkGbi4AQZzgM0PAikhre4IDG3ODMdIn+KUVFKnDcXJCEA
-        ksgozYPrhaWbV4ziQK8I8ypYAFXxAFMVXPcroMFMQIPL9lwAGVySiJCSamCc92tRXbzb48BH
-        RfFykxcxLQ5q1tO/0Rnd0h3x9My0ginKDx0/zTh66FRE0cl12uWfG6Uqd903nnixe4FI1oul
-        edtCTMNC1JcyR16/fkb4m538j7KH2wPfxbI76KUa7pw8w0FtQ7H/TI1pe5z/SusfO57jdPi2
-        aNkBT7MXU803GXYuTOswnG2qxFKckWioxVxUnAgAOFZCXBIDAAA=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170321154921.3jgn4ktcop4shct2@dhcp-3-128.uk.xensource.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
+X-ClientProxiedBy: AMSPEX02CAS02.citrite.net (10.69.22.113) To
+ AMSPEX02CL02.citrite.net (10.69.22.126)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/20/2017 07:05 PM, Jeff King wrote:
-> On Mon, Mar 20, 2017 at 05:33:23PM +0100, Michael Haggerty wrote:
+On Tue, Mar 21, 2017 at 03:49:21PM +0000, Roger Pau Monné wrote:
+> Hello,
 > 
->> -/*
->> - * An each_ref_entry_fn that writes the entry to a packed-refs file.
->> - */
->> -static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
->> -{
->> -	enum peel_status peel_status = peel_entry(entry, 0);
->> -
->> -	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
->> -		error("internal error: %s is not a valid packed reference!",
->> -		      entry->name);
->> -	write_packed_entry(cb_data, entry->name, entry->u.value.oid.hash,
->> -			   peel_status == PEEL_PEELED ?
->> -			   entry->u.value.peeled.hash : NULL);
->> -	return 0;
->> -}
+> I'm trying to use git send-email with msmtp, and I have added the following to
+> my .gitconfig:
 > 
-> This assertion goes away. It can't be moved into write_packed_entry()
-> because the peel status is only known in the caller.
+> [sendemail]
+> 	smtpserver = "/usr/local/bin/msmtp"
 > 
-> But here:
+> This seems to work fine, except that sometimes git dies unexpectedly after
+> queuing a patch to msmtp:
 > 
->> @@ -1376,8 +1362,18 @@ static int commit_packed_refs(struct files_ref_store *refs)
->>  		die_errno("unable to fdopen packed-refs descriptor");
->>  
->>  	fprintf_or_die(out, "%s", PACKED_REFS_HEADER);
->> -	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
->> -				 write_packed_entry_fn, out);
->> +
->> +	iter = cache_ref_iterator_begin(packed_ref_cache->cache, NULL, 0);
->> +	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
->> +		struct object_id peeled;
->> +		int peel_error = ref_iterator_peel(iter, &peeled);
->> +
->> +		write_packed_entry(out, iter->refname, iter->oid->hash,
->> +				   peel_error ? NULL : peeled.hash);
->> +	}
+> Died at /usr/local/Cellar/git/2.12.0/libexec/git-core/git-send-email line 1350, <FIN> line 3.
 > 
-> Should we be checking that peel_error is only PEELED or NON_TAG?
+> I'm guessing there's some kind of race, because this is not 100% reproducible,
+> sometimes succeeds while others simply dies with the above message. As you can
+> imagine, this is specially annoying when sending patch series.
+> 
+> Has someone seen similar issues when using send-email and msmtp? Am I missing
+> something in my .gitconfig?
 
-This is a good question, and it took me a while to figure out the whole
-answer. At first I deleted this check without much thought because it
-was just an internal consistency check that should never trigger. But
-actually the story is more complicated than that.
+(switched to my @citrix.com address to prevent further bounces)
 
-Tl;dr: the old code is slightly wrong and I think the new code is correct.
+Hello,
 
-First the superficial answer: we can't `peel_error` in
-`commit_packed_refs()` as you suggested, because `ref_iterator_peel()`
-doesn't return an `enum peel_status`. It only returns 0 on OK /  nonzero
-for problems. A legitimate reference should never have a status
-`PEEL_INVALID`. That status is meant for stale packed refs that are
-hidden by more recent loose refs, which *can* legitimately point at
-objects that have since been GCed. Since `ref_iterator_peel()` is
-someday meant to be an exposed part of the API, I didn't want it to give
-out more information than pass/fail [1]. Also, the reason for a peel
-failure is not necessarily known accurately (information is lost when a
-reference is packed then the packed-refs file is read).
+Thanks for the help, and sorry to reply here (as some of you noted the
+forwarding from address with SPF was broken and messages bounced). It seems
+like this is a msmtp issue, more exactly msmtp doesn't handle SIGPIPE, and
+AFAICT this leads to crashes when the server closes the connection before msmtp
+does:
 
-So, when could the old error message have been emitted? It is when there
-is an entry in the packed-ref cache that is not `REF_KNOWS_PEELED`, and
-when the peel is attempted, the result is `PEEL_INVALID`,
-`PEEL_IS_SYMREF`, or `PEEL_BROKEN`. Since a packed ref cannot be a
-symref, `PEEL_IS_SYMREF` and `PEEL_BROKEN` can be ruled out. So we're
-left with `PEEL_INVALID`.
+* thread #1: [...] stop reason = signal SIGPIPE
+    frame #0: 0x00007fffd5c4d00a libsystem_kernel.dylib`__sendmsg + 10
+libsystem_kernel.dylib`__sendmsg:
+[...]
+(lldb) bt
+* thread #1: tid = 0x87c0f4, 0x00007fffd5c4d00a libsystem_kernel.dylib`__sendmsg + 10, queue = 'com.apple.main-thread', stop reason = signal SIGPIPE
+  * frame #0: 0x00007fffd5c4d00a libsystem_kernel.dylib`__sendmsg + 10
+    frame #1: 0x0000000101e5c69c libgnutls.30.dylib`system_writev + 41
+    frame #2: 0x0000000101e3d1ba libgnutls.30.dylib`_gnutls_io_write_flush + 428
+    frame #3: 0x0000000101e37689 libgnutls.30.dylib`_gnutls_send_tlen_int + 1222
+    frame #4: 0x0000000101e5b78a libgnutls.30.dylib`gnutls_alert_send + 124
+    frame #5: 0x0000000101e36f4f libgnutls.30.dylib`gnutls_bye + 86
+    frame #6: 0x0000000101e1e8bc msmtp`tls_close([...]) + 28 at tls.c:1736 [opt]
+    frame #7: 0x0000000101e1c382 msmtp`smtp_close([...]) + 34 at smtp.c:1905 [opt]
+    frame #8: 0x0000000101e136ab msmtp`msmtp_sendmail [inlined] msmtp_endsession([...]) + 53 at msmtp.c:555 [opt]
+    frame #9: 0x0000000101e13676 msmtp`msmtp_sendmail([...]) + 1558 at msmtp.c:1913 [opt]
+    frame #10: 0x0000000101e183e6 msmtp`main([...]) + 5094 at msmtp.c:4157 [opt]
+    frame #11: 0x00007fffd5b1e255 libdyld.dylib`start + 1
+(lldb) c
+Process 70391 resuming
+Process 70391 exited with status = 0 (0x00000000) Terminated due to signal 13
 
-How could an entry get into the packed-refs cache without
-`REF_KNOWS_PEELED`? One of the following:
+This has nothing to do with git, I probably didn't realize before because I
+guess mutt ignores this completely. I already sent a patch upstream.
 
-* It was read from a `packed-refs` file that didn't have the
-`fully-peeled` attribute. In that case, we *don't want* to emit an
-error, because the broken value is presumably masked by a loose version
-of the same reference (which we just don't happen to be packing this
-time). The old code incorrectly emits the error message in this case. It
-was probably never reported as a bug because this scenario is rare.
-
-* It was a loose reference that was just added to the packed ref cache
-by `files_packed_refs()` via `pack_if_possible_fn()` in preparation for
-being packed. The latter function refuses to pack a reference for which
-`entry_resolves_to_object()` returns false, and otherwise calls
-`peel_entry()` itself and checks the return value. So a reference added
-this way should always be `REF_KNOWS_PEELED`.
-
-Therefore, I think it is a good thing to remove this check. I'll improve
-the commit message to make this story clearer.
-
-Michael
-
-[1] We could change this policy, for example by only documenting the
-pass/fail return value externally, while distinguishing between the
-types of failure when iterating internal to the module.
-
+Roger.
