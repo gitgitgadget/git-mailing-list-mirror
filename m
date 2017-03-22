@@ -2,94 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50F6F20958
-	for <e@80x24.org>; Wed, 22 Mar 2017 09:48:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C04920958
+	for <e@80x24.org>; Wed, 22 Mar 2017 12:01:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1758949AbdCVJsE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 05:48:04 -0400
-Received: from smtp.ctxuk.citrix.com ([185.25.65.24]:25883 "EHLO
-        SMTP.EU.CITRIX.COM" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1758632AbdCVJrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 05:47:43 -0400
-X-IronPort-AV: E=Sophos;i="5.36,204,1486425600"; 
-   d="scan'208";a="42899076"
-Date:   Wed, 22 Mar 2017 09:47:11 +0000
-From:   Roger Pau =?iso-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>
-To:     <git@vger.kernel.org>
-Subject: Re: Issues with git send-email and msmtp
-Message-ID: <20170322094711.g53e2ok72cxg27ab@dhcp-3-128.uk.xensource.com>
-References: <20170321154921.3jgn4ktcop4shct2@dhcp-3-128.uk.xensource.com>
+        id S934390AbdCVMBl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 08:01:41 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:51700 "EHLO smtp6-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934397AbdCVMBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 08:01:33 -0400
+Received: from [192.168.1.112] (unknown [164.177.97.114])
+        (Authenticated sender: jn.avila)
+        by smtp6-g21.free.fr (Postfix) with ESMTPSA id E8961780333
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 13:01:29 +0100 (CET)
+Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
+References: <20170312200248.3610-1-jn.avila@free.fr>
+ <20170320210225.13046-1-jn.avila@free.fr>
+ <20170320210225.13046-3-jn.avila@free.fr>
+ <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
+To:     git <git@vger.kernel.org>
+From:   =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
+Message-ID: <5036581a-f989-2db6-06ba-621db05c6de1@free.fr>
+Date:   Wed, 22 Mar 2017 13:01:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
+In-Reply-To: <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170321154921.3jgn4ktcop4shct2@dhcp-3-128.uk.xensource.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
-X-ClientProxiedBy: AMSPEX02CAS02.citrite.net (10.69.22.113) To
- AMSPEX02CL02.citrite.net (10.69.22.126)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 21, 2017 at 03:49:21PM +0000, Roger Pau Monné wrote:
-> Hello,
-> 
-> I'm trying to use git send-email with msmtp, and I have added the following to
-> my .gitconfig:
-> 
-> [sendemail]
-> 	smtpserver = "/usr/local/bin/msmtp"
-> 
-> This seems to work fine, except that sometimes git dies unexpectedly after
-> queuing a patch to msmtp:
-> 
-> Died at /usr/local/Cellar/git/2.12.0/libexec/git-core/git-send-email line 1350, <FIN> line 3.
-> 
-> I'm guessing there's some kind of race, because this is not 100% reproducible,
-> sometimes succeeds while others simply dies with the above message. As you can
-> imagine, this is specially annoying when sending patch series.
-> 
-> Has someone seen similar issues when using send-email and msmtp? Am I missing
-> something in my .gitconfig?
+Le 20/03/2017 à 23:05, Junio C Hamano a écrit :
+> Jean-Noel Avila <jn.avila@free.fr> writes:
+>
+>> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+>> ---
+>>  Documentation/po/documentation.fr.po | 1095 ++++++++++++++++++++++++++++++++++
+>>  Documentation/po/documentation.pot   |  787 ++++++++++++++++++++++++
+>>  2 files changed, 1882 insertions(+)
+>>  create mode 100644 Documentation/po/documentation.fr.po
+>>  create mode 100644 Documentation/po/documentation.pot
+> This sounds more like
+>
+> Subject: l10n: add fr localization for git-add manual pages
+>
+> to me.  The actual part of this patch that adds "git-add" is the
+> addition of Documentation/po/documentation.pot, and from that point
+> of view, this patch may want to be further split into two.
 
-(switched to my @citrix.com address to prevent further bounces)
+The generation of the documentation.pot and the documentation.fr.po is
+already "virtually" done because that's what the po4a.conf file
+describes in the previous patch. The point is that the po4a.conf file
+for a minimum viable run of make implies that at least a language and a
+file be described.
 
-Hello,
+For documentation.po.fr, what is indeed added is the effective
+translation. So I guess we could probably split the series differently,
+with a po4a.conf and empty files, then the translation.
 
-Thanks for the help, and sorry to reply here (as some of you noted the
-forwarding from address with SPF was broken and messages bounced). It seems
-like this is a msmtp issue, more exactly msmtp doesn't handle SIGPIPE, and
-AFAICT this leads to crashes when the server closes the connection before msmtp
-does:
+>
+> But more importantly, aren't we essentially adding an equivalent of
+>
+> 	cd Documentation && cat git-*.txt
+>
+> to our codebase?
+>
+> Surely we cannot avoid having a copy of all messages that are to be
+> translated using msgid/msgstr based approach, and we already do so
+> for end-user-facing in-program strings, but it just feels a bit too
+> much having to carry a duplicate (and slightly a stale) copy of the
+> entire documentation set around.  For N languages, we'll have an
+> equivalent for N copies of the English text, in addition to the
+> translated documentation.
 
-* thread #1: [...] stop reason = signal SIGPIPE
-    frame #0: 0x00007fffd5c4d00a libsystem_kernel.dylib`__sendmsg + 10
-libsystem_kernel.dylib`__sendmsg:
-[...]
-(lldb) bt
-* thread #1: tid = 0x87c0f4, 0x00007fffd5c4d00a libsystem_kernel.dylib`__sendmsg + 10, queue = 'com.apple.main-thread', stop reason = signal SIGPIPE
-  * frame #0: 0x00007fffd5c4d00a libsystem_kernel.dylib`__sendmsg + 10
-    frame #1: 0x0000000101e5c69c libgnutls.30.dylib`system_writev + 41
-    frame #2: 0x0000000101e3d1ba libgnutls.30.dylib`_gnutls_io_write_flush + 428
-    frame #3: 0x0000000101e37689 libgnutls.30.dylib`_gnutls_send_tlen_int + 1222
-    frame #4: 0x0000000101e5b78a libgnutls.30.dylib`gnutls_alert_send + 124
-    frame #5: 0x0000000101e36f4f libgnutls.30.dylib`gnutls_bye + 86
-    frame #6: 0x0000000101e1e8bc msmtp`tls_close([...]) + 28 at tls.c:1736 [opt]
-    frame #7: 0x0000000101e1c382 msmtp`smtp_close([...]) + 34 at smtp.c:1905 [opt]
-    frame #8: 0x0000000101e136ab msmtp`msmtp_sendmail [inlined] msmtp_endsession([...]) + 53 at msmtp.c:555 [opt]
-    frame #9: 0x0000000101e13676 msmtp`msmtp_sendmail([...]) + 1558 at msmtp.c:1913 [opt]
-    frame #10: 0x0000000101e183e6 msmtp`main([...]) + 5094 at msmtp.c:4157 [opt]
-    frame #11: 0x00007fffd5b1e255 libdyld.dylib`start + 1
-(lldb) c
-Process 70391 resuming
-Process 70391 exited with status = 0 (0x00000000) Terminated due to signal 13
+True. The documentation source roughly weight 2.3MB, so each full
+translation would add up 5MB to the working copy. More , that would also
+generate another source of traffic for updates and questions from
+readers, which may not be of interest for most developpers.
 
-This has nothing to do with git, I probably didn't realize before because I
-guess mutt ignores this completely. I already sent a patch upstream.
+>
+> I am wondering if Documentation/po part should be a separate
+> repository, with a dedicated i18n/l10n coordinator.  Would it make
+> it easier for (1) those who write code and doc without knowing other
+> languages, (2) those who update .pot and coordinate the l10n effort
+> for the documentation and (3) those who translate them if we keep
+> them in a single repository?
+This is one of the points raised in the first RFC mail. Splitting this
+part would help a lot manage the translations with their own workflow,
+would not clutter the main repo with files not really needed for
+packaging and would simplify dealing with the interaction with crowd
+translation websites which can directly push translation content to a
+git repo.
 
-Roger.
+There's still the question whether the secondary repo would copy the
+original asciidocs and from there would manage them with po4a and then
+the translated asciidoc sources would be pushed back to the main repo,
+or if the main repo would still run the po4a, and only the translated po
+files would be pushed back.
+
+The first way would decouple the workflow and the tools used for
+translating from the main repo. If po4a turns out to be too adventurous
+for asciidoc (latest version tested with all the man pages, no visible
+problem), that would not impact the main repo which could still benefit
+from the job already done.
+
+The later way would allow the main repo to keep an eye on how the
+translation are up to date and decide to include them or not.
+
+In any case, there would be a copy of the original asciidoc files to the
+secondary repo, to be able to provide the source reference in the po
+files and give context to the translators.
+
+My personal preference would still go to the integration of po4a in the
+main repo, but it isn't ready yet.
+
+Thanks,
+
