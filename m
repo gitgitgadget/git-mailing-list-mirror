@@ -2,74 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDFE620323
-	for <e@80x24.org>; Wed, 22 Mar 2017 19:51:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71C0F20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 20:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935587AbdCVTvi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 15:51:38 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:35807 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934181AbdCVTvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 15:51:12 -0400
-Received: by mail-pf0-f172.google.com with SMTP id 20so48115744pfk.2
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 12:51:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=evVWaZFTNMa1a2R3CS/2zFbh8zIcfa5MUhk/z9k4sKY=;
-        b=VdX4Mlpmh/2/Og7BV65+ed8LXmYvD2xtuXYxMOGwfgBisyH2mC37xe6RqXWS1CzRdn
-         gXyDKLGZhQrSQCiadxhwgUaUDKe+0ZqzS61WYQaG4NUtfJZZ0n1+i/eQ5/mxhzMzYrln
-         3TihJKHun5eBu5c0Nty1JNENVT47GDdQKmbxTQIvDS2fhJvaNkadz4KlC8yKrgnV/+vZ
-         PghQTyUAplhNeo1qOFxEutWJkKaknzzE+19SyPGLCdHwErLm3CZ2pCTBtk9uRXI4A3MH
-         LJ92txL+KNIXJL23dOFem+7djetrP4dmrWqs4k2QNJPT9PUW7QjFvPQIKYX+rHfs99Do
-         8B7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=evVWaZFTNMa1a2R3CS/2zFbh8zIcfa5MUhk/z9k4sKY=;
-        b=eeHFtpVR/sku+paX6SCaCD5oM8uUJoBXULcYH8R5qF/l2YCjH5ZwRKjir7FV8ggFba
-         c9o+3vdjnsW5GESntKlsGY4G95QhLXXwVLOAV2N3X7bz/Cp8ka1Rp2wiD5T7wloa5pWd
-         8YkmarcT+wKW6w4F1wSyfq2AKCfMZrEBJ8Drhypp/FVrTnTCmpcROIc2vpo9dNJfOjP7
-         Iwsz/iD+iSzKBKo0Xyx8ZQLNkOWEm85pIZXtOveqqkdJgiZyVl8WKDt6I3e0va4tLPEk
-         +bWj9VFeBc1zE70c58YhoZ84+sosDvnRwSvy1MYx6Jb1j4Pg5+GqFxWUwkaCoBYZrlLf
-         beyA==
-X-Gm-Message-State: AFeK/H2ZaJo5YXHEW0h7om5NsIqHlIZb6omUizzzNoi8S+1+7ewPbbTfhVVJGxCqtPixjZCl
-X-Received: by 10.98.31.20 with SMTP id f20mr48277899pff.193.1490212270626;
-        Wed, 22 Mar 2017 12:51:10 -0700 (PDT)
-Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id h14sm5577315pgn.41.2017.03.22.12.51.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 22 Mar 2017 12:51:09 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
+        id S1751309AbdCVUIK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 16:08:10 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63992 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751027AbdCVUII (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 16:08:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 535707BAA1;
+        Wed, 22 Mar 2017 16:08:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=3PdP
+        s3rULopso8nHKS/fheh4y2A=; b=HFZCyEekJiYOXfwqsIUNuVQFGPowBYWh1HF1
+        vGtaWMpNenl7rr0bdPZAlUT2DL1tdWBuE2kmu6oufN+h5EbBhsnyUoVqpERnxRAa
+        eFB1f+0+uPbNSaHmTfSejzT/1jVKdUlvXRa3sTU9n87WSBnozgOaGJeGF3rNQ924
+        xy99KUY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references; q=dns; s=sasl; b=
+        Gvxxm9xCcsRUvIdry6G9gmFWGGPHI0sFBdGgUcub4Cl9Q578JzGERsa0lOmgPyHy
+        lOlEFr7tHf75PfjLOgkd8YScerBvcdZ2c7dm9XbcJ9X2Oomci4+Uyk5CovEE1Ov+
+        tF3Ji64wl3NAqNS3OXz8LToUgBapDMdQkcL3ArUFcPs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C6187BAA0;
+        Wed, 22 Mar 2017 16:08:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B16FD7BA9F;
+        Wed, 22 Mar 2017 16:08:06 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 0/2] push options across http
-Date:   Wed, 22 Mar 2017 12:51:00 -0700
-Message-Id: <20170322195102.165314-1-bmwill@google.com>
-X-Mailer: git-send-email 2.12.1.500.gab5fba24ee-goog
+Cc:     Jan Palus <jan.palus@gmail.com>
+Subject: [PATCH 0/3] fix "here-doc" syntax errors
+Date:   Wed, 22 Mar 2017 13:08:02 -0700
+Message-Id: <20170322200805.23837-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.12.1-430-gafd6726309
+In-Reply-To: <20170322173528.ho43ulndlozq35tu@kalarepa>
+References: <20170322173528.ho43ulndlozq35tu@kalarepa>
+X-Pobox-Relay-ID: 43762E1C-0F3B-11E7-B894-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series enables push options to be sent across http using remote-curl
+Because I'd prefer to be able to queue fixes on individual topics
+that introduced the breakages, I splitted the fixes in your two
+messages into three patches.
 
-Thanks to Jonathan Nieder for helping troubleshoot.
+Please respond to the list, saying it is OK to add your "sign-off"
+(see Documentation/SubmittingPatches) to these patches.
 
-Brandon Williams (2):
-  send-pack: send push options correctly in stateless-rpc case
-  remote-curl: allow push options
+Thanks.
 
- builtin/send-pack.c     |  5 +++++
- remote-curl.c           |  8 ++++++++
- send-pack.c             | 20 ++++++++------------
- t/t5545-push-options.sh | 30 +++++++++++++++++++++++++++++-
- 4 files changed, 50 insertions(+), 13 deletions(-)
+Jan Palus (3):
+  t5615: fix a here-doc syntax error
+  t7406: fix here-doc syntax errors
+  t7004, t7030: fix here-doc syntax errors
+
+ t/t5615-alternate-env.sh    | 1 +
+ t/t7004-tag.sh              | 8 ++++----
+ t/t7030-verify-tag.sh       | 8 ++++----
+ t/t7406-submodule-update.sh | 4 ++--
+ 4 files changed, 11 insertions(+), 10 deletions(-)
 
 -- 
-2.12.1.500.gab5fba24ee-goog
+2.12.1-430-gafd6726309
 
