@@ -2,86 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 626B520323
-	for <e@80x24.org>; Wed, 22 Mar 2017 16:56:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB4BC20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 17:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760771AbdCVQ4o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 12:56:44 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:34555 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760588AbdCVQ4n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 12:56:43 -0400
-Received: by mail-pg0-f54.google.com with SMTP id 21so77431695pgg.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 09:56:43 -0700 (PDT)
+        id S1760927AbdCVRAb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 13:00:31 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:35244 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760918AbdCVRAY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 13:00:24 -0400
+Received: by mail-qk0-f193.google.com with SMTP id o135so26880026qke.2
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 10:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KDBNctez2itQHRn6li6G/LOhyBguuLKrZukakTpgLPE=;
-        b=gLLkFicvB4gRvjxyq0l3YhlQ9R31RgtuWI8Cqcl84wdO2+7IayMRVw9o1f9NaOrsC6
-         8+iaCdqZLDFtuxNH+q1+FVvOUz4guX8AY653evr7bbKCOuK94OGIvSVya4VbhHDLcrlL
-         pM/voip2Mp3Nya7eYp9eROAc4GVPtzHSRDWExlML5VH8zpg+6PiGiGaNtB4FQptO3QIP
-         JEqSbBri1FD9VorZlPglVOI3CyXyql0aCn+bBHdS7Gmz+8n1BQ2Ou4LvH2232EmMbP1V
-         Y2pfpGa8l7DuLRAdVXh3kc7dbsPK2yhPMIomVyPJFlpVM0CYh2vd4ADpy2PdQKSp63QA
-         6XzQ==
+        bh=44OH4Do/XYx6Vo8U7fCxjF1Ktu1AyljJSrCgVGU2D0U=;
+        b=T0s93zyAOD3/I4b/GU/N/cHtmlesI9g17pMpBZ4EMhQpYi05KdQPk3AhkGUpZre1ww
+         knJ7ZPYv0WhYXiUQKjoytvP54BqmLGIs87G+lKTL4ffuX686j837nGJ36CTttvDl6qMv
+         bNO84t9gPAzlDmeQ8FcL4k2mm8jhL7IwwJkEwMGqC0rFR7dIValcDY7rxOS+AnJ+4bvv
+         XutUDY+KwpYYPUB+IRN6AJKfv+imq4ebMsqzP5+uHvoqTZlMS9NYHWTSnhgETZ2SZEEP
+         g064prWQmoP4KCSipv1fD5rPfDKO/FAbvijhXswJ9VDvO8MISewP+yDpueOCN25nWKXZ
+         17yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=KDBNctez2itQHRn6li6G/LOhyBguuLKrZukakTpgLPE=;
-        b=W4sEfhWTsGCA6gaBhMEpdTMBIPCypnfYuwKav0RkZpWnZoIIBFmqHM+GBPyzqQ95ck
-         AsSqRca/Hv2lYmJ0QUZZd0BI8rWc2RK+XwUwYK3acp0VXctbUgvcRk5tcZvgTt8GGBhq
-         xl5JZb7Iem9Pg+e83OezZFAW8ZuIHVqyog54DLhWXKx8V1c50rJ5CkC6OziLrrHYwT5t
-         Js8WtdNYwRYFs7MpKivVleFwGy0oNm5MiYRxb1Xko7QAtDQKAg5fiSUrdbswj6HIavKz
-         TN66jfWlTM/PmCUcu+gG+UXmMDdgLPtW/ApotQti7Hi2c2kmtK/8RqNgvrCQNC7i54V4
-         jJdA==
-X-Gm-Message-State: AFeK/H1e4vDATatVNMujFbNR6fiQDOdJrx1bMiHSlqbN55bh/N3hzjyXrrPsxmphOgBxWBC4
-X-Received: by 10.98.134.142 with SMTP id x136mr47843746pfd.64.1490201801917;
-        Wed, 22 Mar 2017 09:56:41 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:1959:c634:6437:385])
-        by smtp.gmail.com with ESMTPSA id 11sm315371pgf.28.2017.03.22.09.56.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Mar 2017 09:56:41 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, jrnieder@gmail.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] t3600: rename test to describe its functionality
-Date:   Wed, 22 Mar 2017 09:56:39 -0700
-Message-Id: <20170322165639.21658-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc1.47.g25804914fa.dirty
-In-Reply-To: <20170322010058.GA31294@aiede.mtv.corp.google.com>
-References: <20170322010058.GA31294@aiede.mtv.corp.google.com>
+        bh=44OH4Do/XYx6Vo8U7fCxjF1Ktu1AyljJSrCgVGU2D0U=;
+        b=RFFOH0z2g9FygFRx3BdiZhQgXsYlr5MeVqdZp49A+IXBNi+045TTrxbN8/ufFbbAta
+         +XLNmLGhFQtGQBDJfVdtckZdfkboXtDUqR8GTFAL3WhlYIj7fn81YHpWU+WjcvWqAzZs
+         +Jq6G0bqkMPl+8tdXqTtHRQ6UWHlbS4RkCVbocSWwUwrEuzOeLMlXdq2iVRxuRAsnT6Q
+         D8ZoBalCUH84deS966Nda4p9A5nep0ZgD7A5exqZiMo41WXQW/XpoYFTD4vsH/jO8/bc
+         rq81Np//aVsG2NtN7gMKOaDGJ2FX3P7JYe3BPjM0yUmpdyMxIAHYGDkobo52sKnqfNLW
+         hMmA==
+X-Gm-Message-State: AFeK/H0E/jvUHJJTpuKzbBuP+bxfLzGNFRlaT6AFR2edJ+WIeMniCdIo7Uiks3wY3Xt56Q==
+X-Received: by 10.55.142.69 with SMTP id q66mr35402596qkd.13.1490201634313;
+        Wed, 22 Mar 2017 09:53:54 -0700 (PDT)
+Received: from localhost.localdomain ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id t47sm1334588qte.45.2017.03.22.09.53.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 22 Mar 2017 09:53:53 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     benpeart@microsoft.com, christian.couder@gmail.com,
+        larsxschneider@gmail.com
+Subject: [PATCH v1 1/3] pkt-line: add packet_write_list_gently()
+Date:   Wed, 22 Mar 2017 12:52:18 -0400
+Message-Id: <20170322165220.5660-2-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.12.0.gvfs.1.42.g0b7328eac2
+In-Reply-To: <20170322165220.5660-1-benpeart@microsoft.com>
+References: <20170322165220.5660-1-benpeart@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This was an oversight in 55856a35b2 (rm: absorb a submodules git dir
-before deletion, 2016-12-27), as the body of the test changed without
-adapting the test subject.
+Add packet_write_list_gently() which writes multiple lines in a single
+call and then calls packet_flush_gently(). This is used later in this
+patch series.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- t/t3600-rm.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ pkt-line.c | 19 +++++++++++++++++++
+ pkt-line.h |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 5aa6db584c..e94da6b5f1 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -658,7 +658,7 @@ test_expect_success 'rm of a populated nested submodule with nested untracked fi
- 	test_cmp expect actual
- '
+diff --git a/pkt-line.c b/pkt-line.c
+index d4b6bfe076..fccdac1352 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+ 	return status;
+ }
  
--test_expect_success 'rm of a populated nested submodule with a nested .git directory fails even when forced' '
-+test_expect_success 'rm absorbs .git directory of nested submodule' '
- 	git reset --hard &&
- 	git submodule update --recursive &&
- 	(cd submod/subsubmod &&
++int packet_write_list_gently(int fd, const char *line, ...)
++{
++	va_list args;
++	int err;
++	va_start(args, line);
++	for (;;) {
++		if (!line)
++			break;
++		if (strlen(line) > LARGE_PACKET_DATA_MAX)
++			return -1;
++		err = packet_write_fmt_gently(fd, "%s\n", line);
++		if (err)
++			return err;
++		line = va_arg(args, const char*);
++	}
++	va_end(args);
++	return packet_flush_gently(fd);
++}
++
+ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+ {
+ 	static char packet_write_buffer[LARGE_PACKET_MAX];
+diff --git a/pkt-line.h b/pkt-line.h
+index 18eac64830..3674d04509 100644
+--- a/pkt-line.h
++++ b/pkt-line.h
+@@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int packet_write_list_gently(int fd, const char *line, ...);
+ int write_packetized_from_fd(int fd_in, int fd_out);
+ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+ 
 -- 
-2.12.0.rc1.47.g25804914fa.dirty
+2.12.0.gvfs.1.42.g0b7328eac2
 
