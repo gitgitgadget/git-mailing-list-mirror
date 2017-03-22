@@ -2,78 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ECA720323
-	for <e@80x24.org>; Wed, 22 Mar 2017 21:34:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEF2520323
+	for <e@80x24.org>; Wed, 22 Mar 2017 21:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753667AbdCVVeQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 17:34:16 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54750 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753612AbdCVVeM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 17:34:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AE9947FF67;
-        Wed, 22 Mar 2017 17:34:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uKFrz2TpNMgkRxGq9DPhWoIJoSA=; b=dBT0J1
-        48KCr1TNEF6bUwF2zWyKFqlT0ZFMziy8JGfaKBT82plyVxcQuzgBHXBaWazwTs+3
-        zUox3MywmSDUh0+gt/jSnNvwA2M2jpRQbECcF6y98pNW/+QWz3l+CuEaH12m5qS8
-        Srg0ZlRa6c0aCDd5t+GxGeMMmf9UiH+0ltGjI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DFWYUSJ0EYdhn0sx0lpsIOQD2DD4Dfb6
-        0RjIhXeAjkT71R0+BcVa1asOHp45f/CFYynzlZ+qjM9hvTqGL7W58bHiTdLyJXhp
-        b9DA9UdKaHjTv9GcSiFGd4++tCMR2k5xMysHyXH0MEvB4W4PqtNteuwpWidKu3Qe
-        OFePQXmE8/E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A608B7FF66;
-        Wed, 22 Mar 2017 17:34:04 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A6E07FF63;
-        Wed, 22 Mar 2017 17:34:03 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1753440AbdCVVdo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 17:33:44 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33165 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753407AbdCVVdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 17:33:37 -0400
+Received: by mail-wr0-f193.google.com with SMTP id 20so609452wrx.0
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:33:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Ihr64TEqhS9kkwTB4iCgVJy/3dxqe+U0KJ95p08bBbo=;
+        b=qfrFBVq02RuHXo3QT0fxze69fD88CcJwPm94DoJXyI4u5efRAfPJD18lbhCkfs0IXE
+         z3Bpse2XETkluMSFTJU2RbjEKsHqwGaji4+aqJeGgDuxrLEhpm3ajaJQwKqkDQXP9i6x
+         CYWu4VqTibfm/i4XEvC1wRNofZEON/EnXbzy9fnfy5LW++3qCA6FHpLnPLcJqmfBHCO5
+         airzbXHADVk6v03Ib9sPJ2AMRqR+RwNy5IW4YJHWHTf9QdTxefhuSKc1emMfCjGtX4/e
+         cG/XlkjyfaxSTKJXXSnlY7KNBO2B4HkGnzNjRMmct3RP9ZhERSLhhLPH46p+eEz9G2mX
+         +/TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Ihr64TEqhS9kkwTB4iCgVJy/3dxqe+U0KJ95p08bBbo=;
+        b=MIs8sewuwKSku7aRt3inStdxqJMT12xvYN+JHpfuFQq8AXpApDC01WV4Rd65K5lrHD
+         eOOGdeYRJKv/NoMkbbL8RJr1m747z+8e7yZDUspS4g8Vl9W507eiGcsbAJZ4S8g1zxK6
+         z8loBdxqCXEy8geyM480x51Dwr+4O/tB24tVCoSgaXR9YX/K16G9V2DrWwlBijB1a1KE
+         41vukOWBaFymCzeNXoPK6t0O2dNtVOaD0cyzd+YIz4z2r8dvThgejxedhDTgdYRZ4uXX
+         tAx0Mfi4/HdhKuulI/fwRUvYFRAm6G1vnAnmlx3gVkisbFJrSvQLRv0cG0tVvLu676HV
+         0xog==
+X-Gm-Message-State: AFeK/H1fhc4jcVdheH284degk2ve4sGEvK4TH8Fuyg8zMDSBim7/uv58iAafylPAvo8Ydg==
+X-Received: by 10.223.135.109 with SMTP id 42mr41650766wrz.141.1490218409521;
+        Wed, 22 Mar 2017 14:33:29 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id z88sm3292921wrb.26.2017.03.22.14.33.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Mar 2017 14:33:28 -0700 (PDT)
+Date:   Wed, 22 Mar 2017 21:33:47 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        Jan Palus <jan.palus@gmail.com>
-Subject: Re: [PATCH 2/3] t7406: fix here-doc syntax errors
-References: <20170322173528.ho43ulndlozq35tu@kalarepa>
-        <20170322200805.23837-1-gitster@pobox.com>
-        <20170322200805.23837-3-gitster@pobox.com>
-        <20170322210733.ohb7duy7bmmon6ny@sigill.intra.peff.net>
-Date:   Wed, 22 Mar 2017 14:34:02 -0700
-In-Reply-To: <20170322210733.ohb7duy7bmmon6ny@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 22 Mar 2017 17:07:33 -0400")
-Message-ID: <xmqqfui5hu7p.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] stash: don't show internal implementation details
+Message-ID: <20170322213347.GF27158@hank>
+References: <20170319202351.8825-1-t.gummerer@gmail.com>
+ <20170321221219.28041-1-t.gummerer@gmail.com>
+ <20170321221219.28041-2-t.gummerer@gmail.com>
+ <20170321221445.3jpaoce7qbshtdoq@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4576B7DE-0F47-11E7-AA3A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170321221445.3jpaoce7qbshtdoq@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 03/21, Jeff King wrote:
+> On Tue, Mar 21, 2017 at 10:12:17PM +0000, Thomas Gummerer wrote:
+> 
+> > git stash push uses other git commands internally.  Currently it only
+> > passes the -q flag to those if the -q flag is passed to git stash.  when
+> > using 'git stash push -p -q --no-keep-index', it doesn't even pass the
+> > flag on to the internal reset at all.
+> > 
+> > It really is enough for the user to know that the stash is created,
+> > without bothering them with the internal details of what's happening.
+> > Always pass the -q flag to the internal git clean and git reset
+> > commands, to avoid unnecessary and potentially confusing output.
+> > 
+> > Reported-by: Jeff King <peff@peff.net>
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> 
+> I think combining these is fine. The incorrect output with pathspecs
+> isn't mentioned anymore, but I think that's OK.
 
-> After applying this, I get a failure:
->
->   --- expect	2017-03-22 21:01:53.350721155 +0000
->   +++ actual	2017-03-22 21:01:53.346721155 +0000
->   @@ -1 +1 @@
->   -Execution of 'false $submodulesha1' failed in submodule path 'submodule'
->   +Execution of 'false 4301fd3e4110d3b6212c19aed3094150392545b9' failed in submodule path '../submodule'
->
-> At the very least, we need to drop the "\" from EOF to expand
-> $submodulesha1.
+Yeah, they felt so similar now that splitting this up in different
+patches would be a bit too noisy.
 
-Right.
+> [...]
+> 
+> > diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> > index 89877e4b52..ea8e5c7818 100755
+> > --- a/t/t3903-stash.sh
+> > +++ b/t/t3903-stash.sh
+> > @@ -663,7 +663,7 @@ test_expect_success 'stash apply shows status same as git status (relative to cu
+> >  		sane_unset GIT_MERGE_VERBOSITY &&
+> >  		git stash apply
+> >  	) |
+> > -	sed -e 1,2d >actual && # drop "Saved..." and "HEAD is now..."
+> > +	sed -e 1,1d >actual && # drop "Saved..."
+> >  	test_i18ncmp expect actual
+> >  '
+> 
+> This too, though I think "1d" would be the more usual way to say it.
 
-> But the submodule path seems wrong, too. I'm not sure if
-> the expectation is wrong, or if there's a bug. +cc Stefan
+Right thanks, I'll keep that in mind for another time. (I guess just
+changing this doesn't warrant a re-roll?)
+
+> -peff
