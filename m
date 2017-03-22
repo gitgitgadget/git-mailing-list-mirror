@@ -6,45 +6,45 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1F7E2095B
-	for <e@80x24.org>; Wed, 22 Mar 2017 01:58:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F42152095B
+	for <e@80x24.org>; Wed, 22 Mar 2017 01:59:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757314AbdCVB6b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Mar 2017 21:58:31 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52942 "EHLO
+        id S1758573AbdCVB6x (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Mar 2017 21:58:53 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51459 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751154AbdCVB6a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Mar 2017 21:58:30 -0400
+        with ESMTP id S1757867AbdCVB6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Mar 2017 21:58:22 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 14CCF6DF97;
-        Tue, 21 Mar 2017 21:58:28 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5754D6DF7C;
+        Tue, 21 Mar 2017 21:57:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:in-reply-to:references:date:message-id:mime-version
-        :content-type; s=sasl; bh=vRqH8l5IwLNXn1PhZHhZ1MZN/SY=; b=is63lR
-        cEKzCNzdOC/rsw88JPiPmeD2oJEklaKHISbr6cjMJDu1LUlqwsbrdG7EmrFntHjM
-        EYHAGm1fz62+zfTGv6XVxA25Y27l08TfBRU6W4VQLsS49/1C0kXdXVWoCmTNBkbh
-        kOxCGP33naOnxsguSK/EhukByEL7zCvVX74P8=
+        :content-type; s=sasl; bh=wehd0CGPAfjwfhoJe1rX0mvNjCI=; b=l+nmOm
+        +femimcB5DSUgk63Na3gzra9tJ8xkokGJ4l9PUFmbLkoepvoFc8XRWg83QJAj1s6
+        S5hBa0OucjYNF9kpSqqm8mnDdiRiCiwnoxGjndhm+Fr3jXrPaEMhLDa/OHzf0Twr
+        um8JPhgSyZhIAKKSKwScf/CwfxKhtJO1G4gwE=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C57C6DF94;
-        Tue, 21 Mar 2017 21:58:28 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4FB3C6DF7B;
+        Tue, 21 Mar 2017 21:57:36 -0400 (EDT)
 Received: from localhost (unknown [24.60.167.92])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 784E76DF93;
-        Tue, 21 Mar 2017 21:58:27 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CC9EE6DF79;
+        Tue, 21 Mar 2017 21:57:35 -0400 (EDT)
 From:   Kyle Meyer <kyle@kyleam.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/5] t1400: modernize style
-In-Reply-To: <20170321020155.dx5juulntg5k6fpr@sigill.intra.peff.net>
-References: <20170321005616.31324-1-kyle@kyleam.com> <20170321020155.dx5juulntg5k6fpr@sigill.intra.peff.net>
-Date:   Tue, 21 Mar 2017 21:58:26 -0400
-Message-ID: <87fui6kr7h.fsf@kyleam.com>
+Subject: Re: [PATCH 2/5] t1400: set core.logAllRefUpdates in "logged by touch" tests
+In-Reply-To: <20170321014920.qas2xbbx66zqo5lp@sigill.intra.peff.net>
+References: <20170321005616.31324-1-kyle@kyleam.com> <20170321005616.31324-3-kyle@kyleam.com> <20170321014920.qas2xbbx66zqo5lp@sigill.intra.peff.net>
+Date:   Tue, 21 Mar 2017 21:57:34 -0400
+Message-ID: <87k27ikr8x.fsf@kyleam.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0A671386-0EA3-11E7-85DF-FC50AE2156B6-24757444!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: EB9CF15A-0EA2-11E7-AC21-FC50AE2156B6-24757444!pb-smtp2.pobox.com
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=vRqH8l5IwLNXn1PhZHhZ1MZN/SY=; b=Lg8XCT1JkUnYTJtDhmiSkCcaDO9s6Klugc5mde0CBBUCvUqbhh9CZhbGNs512Ecw2XYUObbigZkPsOoycZHGV5Pya87s1UjPMWIF6xAnmrtQb/7tzkK7K2eAznJPFcfQoFdzLqMTx+vA9xaLOv3/jR9saW1iy6RhYphxqOHuI7Y=
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=wehd0CGPAfjwfhoJe1rX0mvNjCI=; b=Ej2bbdyvJ8eTtFqfqqz9Lzlqmj2ypS6BkAIFa0pQGIh4YW/MFeqfyXacLkxqdoNiKSO5Iutd3ZTHmQQyuptAMzmCAM0vJUrQqfeaRmH+6FpD29QW8xdk/OdDbsUGehWNYgo+a5ykm91hEDqWWtC340VgDU1UT51uV+H+WRkpe6w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -52,41 +52,37 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Mon, Mar 20, 2017 at 08:56:11PM -0400, Kyle Meyer wrote:
+> On Mon, Mar 20, 2017 at 08:56:13PM -0400, Kyle Meyer wrote:
 
 [...]
 
->>   * moving the here-documents for log creation into the following
->>     tests, but I don't think it's worth it because it makes already
->>     long lines even longer.
+>> I'm confused about the setup for the "logged by touch" tests.
+>> d0ab05849 (tests: remove some direct access to .git/logs, 2015-07-27)
+>> changed the setup to delete the log file itself rather than its
+>> contents.  The reflog was then recreated by using "--create-reflog" in
+>> the "create $m (logged by touch)" test.  What I don't understand is
+>> how this change fits with d0ab05849, which seems to be concerned with
+>> loosening the assumption that the logs are stored in .git/logs.
 >
-> Yeah, they're quite long. Probably something like:
+> I suspect the answer is that the conversion was incomplete. That commit
+> was done for alternate ref backends, which is an ongoing saga.
 >
->   # arguments: <from> <to> <time> <msg>
->   reflog () {
-> 	printf '%s %s %s <%s> %s +0000\t%s' \
-> 		"$1" "$2" \
-> 		"$GIT_COMMITTER_NAME" "$GIT_COMMITTER_EMAIL" \
-> 		"$3" "$4"
->   }
+> I think it's OK to leave it as-is for now. It's not clear what "logged
+> by touch" will look like for backends that don't use the filesystem.
+> Probably it will need to call "update-ref --create-reflog" to kickstart
+> it, and then further updates will automatically write to it.
 >
->   test_expect_success 'verify $m log' '
-> 	{
-> 		reflog $Z $A 1117150200 "Initial Creation" &&
-> 		reflog $A $B 1117150260 "Switch" &&
-> 		reflog $B $A 1117150860 &&
-> 	} >expect &&
-> 	test_cmp expect .git/logs/$m
->   '
+> At that point the "rm -f" would need to become "tell the backend to
+> delete this reflog". There's no command for that now, but we can add one
+> later. Until then, I suspect the "rm -f" would be a noop. That means
+> that the first --create-reflog test is failing to test what it claims,
+> but the result passes anyway.
 >
-> wouldn't be too bad. Or maybe it's worse, because the actual format is
-> all tangled up in that printf statement. ;)
->
-> I'm OK with it either way.
+> And that probably answers the question about why the conversion is
+> half-done. It was enough to get the tests to stop complaining when built
+> with an alternate ref backend. :)
 
-Heh, I didn't consider that option.  I suppose I'll stick with the
-here-document for now because, to my eyes, it seems a bit easier to
-read.
+OK, thanks for the background.
 
 -- 
 Kyle
