@@ -7,92 +7,69 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CCEE20323
-	for <e@80x24.org>; Wed, 22 Mar 2017 15:02:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B77A20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 15:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760685AbdCVPCD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 11:02:03 -0400
-Received: from mout.gmx.net ([212.227.15.18]:60964 "EHLO mout.gmx.net"
+        id S1760670AbdCVPBq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 11:01:46 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59561 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1760665AbdCVPBn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 11:01:43 -0400
+        id S1760627AbdCVPBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 11:01:41 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8NWM-1busFr2tOs-00w0OM; Wed, 22
- Mar 2017 16:01:33 +0100
-Date:   Wed, 22 Mar 2017 16:01:19 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTCDO-1ciZ5x2gic-00S7lQ; Wed, 22
+ Mar 2017 16:01:15 +0100
+Date:   Wed, 22 Mar 2017 16:01:14 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH 1/3] t7504: document regression: reword no longer calls
- commit-msg
-In-Reply-To: <cover.1490194846.git.johannes.schindelin@gmx.de>
-Message-ID: <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de>
-References: <cover.1490194846.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 0/3] rebase -i (reword): call the commit-msg hook again
+Message-ID: <cover.1490194846.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ZzVylD2Qcx8uv/6ICaF7kwrhjKpQX+bRsFMh8WDR+UlM9K+FNYq
- ykAMoSiL+Ojk0vsrtYE848BBNHMwrEAHp95WNc6L9OIDLUr9ECKlrjWSjiRSZzbxvu+b6+a
- cdv6wf7BgC7fmas7NOAV1hOwRoRwrA27S+j6OYmPniEKg7TDWihm0hx3cPkT4erfTpVdkG6
- ClnTy0sMfZT1lVNrH6iuA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KLox/C+davc=:TE71lZllp5+/2OxZGbJDr3
- duGIzYeowzm+PK4Y71uKJ4JY7jEelg3zzoRXjSKGuJthMnjS0UyJ9/9SsAflWDqEpGIQO6RQx
- 70f+Xd9Vra9FU660KLW82Dw4dZrBabL6A/MhZYeHwJE2cocXsGEjpQnqvKGnrG7aIbSWv1xmV
- DcovajjeMCB/mGA7tpQGhsLGDdYsXy/98YUp4MCDiwoCHqEZxvq0lAYlD/NFGg8MTvJydjr5K
- MPE4CLllV8OI382pIrkhfIvZ3WbEM/ynVr/dE0VEPBYDGqI/E1iqhkkp5fnxA5L3ASIODyXwQ
- 8gtqY94c4nxROFGo51Y7wbCNzHHDEZ9ginuBKI+QhLQzpVBqVI2rxTWws8Y0U30y4oB3268jP
- 1SIGsq2OCqAFJmZlvIJbpfd5MUzwemQfnrD8viamcphQAhBGoxAG+AR9PNNkAfhg3Y2TAUrxq
- eIlbQ+5G5R7rdn/SXjI8iP/sB9AS5tuL8emfMhxBkYNR98VBCee8ZZmvgRUD7tz8O+j8UyADv
- E+/w4ZEBy/oboofLPFLt9l6bKhMMZepCIp/h9aYLrestlPAo4yOCdYLSO+XcqBc6Owv2P9C+N
- K3xtSPGlcIk3jx4mMQzH68iG3Lg09ySq4HJVKvkj6Q0TvTi5PMKt3K+9a0gmplsO0LijibOm0
- 7+O3ZwyQBgcgdVtAhxzj6+yyjLTqz6vXo+my5xC64ZN0uc/+l1dRjG7xPTKpEG+PKb3BJzTPK
- rg/FmhKcSx85UjBxZ0YrGKZo8DuJyZF+XqxjTMHGDAtYG0Eui3tceUqnmtUhoNtAQ1i4WrO5M
- bpkXARTTPdB9d/eSET2jAYn1ct6GQ==
+X-Provags-ID: V03:K0:SlKwzC6DbKmBazjpM9rbtnOW5Ub/Xmx2djsWlJeP365qs8wxF6U
+ 1HeqxmcRVsO4iMrJhDDzvS4PCXGdyu/trcFczHFUikkGiGvcnWyV61CFL9Zlv3Hhsp9WMqQ
+ /zlvUmwvoP+azyCwod4+w1KycPdmNyxZUkWtlnHzI8CFDdIaYEHw8XDh69zkS163wpsjNZx
+ IOhsu5Ps+p27pQRdndS0w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lXosRSQ71ug=:OcG9nT1c/lT9p4pkOWNC62
+ 5qZw0DZt+DuEbzLY3fuYb2RMwgd2rwwT5vFe+qGaVypXDxzP7a+cYnbDbNs+QZ4QBf5Yy+G2F
+ oaGqlqlOkWnuMAf5AIfOfX7JoE79Pd5csQiXMLcOtn15Mz4pCp0KC0F+Yfovnqhtz7WpvWb8Q
+ WpvRUCmlHzBaAjWqlNpAlihs2Awsvbu/p/z+LfwtRg741TczgIWMRfAZjnDJkypeCwxxWptb3
+ KeK8a/codmaGFlxUN+u0uIgQTDEn5J5bXZZSDYvZJPgb1Ke7K+2y4Mtuo0SYRRNbz6TSRJUcg
+ I3x/pUCVhzW30l1KEja8giXGlVFZDGwEIU/LSwgozvpVl26Szb+kwsvg+BMgpjQREdyVhXmKz
+ d0a1kO0mkUeo1WMl52VSTEVzxnNFu+yqRc0+mqpEx2sqXbRSndZkugnNVqqJwidpPMTW9H0Z3
+ ZnTaRGNjE8Kyz3jEdOVZKnZ8HAHXG2L2OITye/oiIqzFvPJKWfSmD+jb9q6tb1akslGOTkB8j
+ cfoCKYFzYuv2nCpXpnNllYZ/ZTxCdyXmQtQnq69eqgALwyDVXhj9R14uMR15GBSTuu2XqgG3c
+ 64HYWbg5h2YnhPXt2ThoTOKPdk6We3RNQzSgB0RMIzDg1zGkdSI434upsE3Ja28rBsqCJKpdA
+ qfzv6Pbt37ccbASSR4DdqHjj0SxvrItM/mGwgBVDZbUiGgefsloHODl10C3z5f95k6LMlbGKn
+ aAtbxJZIZxPkXTDiG/b6xE8UcMMRLc0p/gjVVLXQieuecBqP8bxvR3u316nXXdj3nz7aXuSMm
+ IlFwiAgo1K57fcCEQWxuXmzwlbUtw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `reword` command of an interactive rebase used to call the
-commit-msg hooks, but that regressed when we switched to the
-rebase--helper backed by the sequencer.
+It is actually not only the commit-msg, but also the prepare-commit-msg
+hook...
 
-Noticed by Sebastian Schuberth.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t7504-commit-msg-hook.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+Johannes Schindelin (3):
+  t7504: document regression: reword no longer calls commit-msg
+  sequencer: make commit options more extensible
+  sequencer: allow the commit-msg hooks to run during a `reword`
 
-diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
-index 8728db61d38..c3d9ab02a3b 100755
---- a/t/t7504-commit-msg-hook.sh
-+++ b/t/t7504-commit-msg-hook.sh
-@@ -220,4 +220,21 @@ test_expect_success "hook doesn't edit commit message (editor)" '
- 
- '
- 
-+# set up fake editor to replace `pick` by `reword`
-+cat > reword-editor <<'EOF'
-+#!/bin/sh
-+mv "$1" "$1".bup &&
-+sed 's/^pick/reword/' <"$1".bup >"$1"
-+EOF
-+chmod +x reword-editor
-+REWORD_EDITOR="$(pwd)/reword-editor"
-+export REWORD_EDITOR
-+
-+test_expect_failure 'hook is called for reword during `rebase -i`' '
-+
-+	GIT_SEQUENCE_EDITOR="\"$REWORD_EDITOR\"" git rebase -i HEAD^ &&
-+	commit_msg_is "new message"
-+
-+'
-+
- test_done
+ sequencer.c                | 58 +++++++++++++++++++++++++++-------------------
+ t/t7504-commit-msg-hook.sh | 17 ++++++++++++++
+ 2 files changed, 51 insertions(+), 24 deletions(-)
+
+
+base-commit: afd6726309f57f532b4b989a75c1392359c611cc
+Published-As: https://github.com/dscho/git/releases/tag/reword-commit-msg-hook-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git reword-commit-msg-hook-v1
+
 -- 
 2.12.1.windows.1
-
 
