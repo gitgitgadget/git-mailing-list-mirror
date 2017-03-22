@@ -2,110 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A42C20323
-	for <e@80x24.org>; Wed, 22 Mar 2017 19:42:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39F1520323
+	for <e@80x24.org>; Wed, 22 Mar 2017 19:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759530AbdCVTmF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 15:42:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62057 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1759267AbdCVTkG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 15:40:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 78F4D7B464;
-        Wed, 22 Mar 2017 15:38:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=fxtfeBf0hdjZjZ+ylyxLuJTuY3I=; b=jjkiDI
-        1/o9S0E3oJeOsuynQ5aoicraRMQP0b50PcnXJD0xE7t4cF3dTrr6J/v2wRZQlm0z
-        qZx2E1JvrvoMpQ8lms3c4UTzPFoLUvPuS6aNv4JcoUr/OdPIZZEao6y8Ws8cC0cK
-        iUOS70DzgVvBRVuOzH4x1ajCag55tNnqvXZ0o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yCVKql4dOSxTy6G3/o7kKdRgtH/gNhW1
-        X7xxzkgDw+zvFaCsLuGsYLEEu5lWbLQvOGuYinP1aQyR5uG9xYouqKl9RhlOuLs4
-        G9EuaIhRWSRWpMe1ES2k2S3elpCp79Y26pB4h6m3MHC7FV5xwt0lfqFKLgDovxLR
-        U6SHPB+fznw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 71FC57B463;
-        Wed, 22 Mar 2017 15:38:44 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D6A357B462;
-        Wed, 22 Mar 2017 15:38:43 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 0/6] thread lazy_init_name_hash
-References: <1490202865-31325-1-git-send-email-git@jeffhostetler.com>
-Date:   Wed, 22 Mar 2017 12:38:42 -0700
-In-Reply-To: <1490202865-31325-1-git-send-email-git@jeffhostetler.com>
-        (git@jeffhostetler.com's message of "Wed, 22 Mar 2017 17:14:19 +0000")
-Message-ID: <xmqqshm5je4d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1759821AbdCVToX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 15:44:23 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:36429 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1759488AbdCVTn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 15:43:57 -0400
+Received: by mail-pg0-f49.google.com with SMTP id g2so111609087pge.3
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 12:43:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=BVMxi73PYzODuS8ilYGdNBz4T5j70uhHcZF7zxsYnh8=;
+        b=gNnQttL8MskXAHIcEGRff53RT9tSt25xkztEk+reX+8cSVgMfkoKNaNUkgMyBXQtMq
+         B6wBjMDDMMhuPI8w9q72dnpG08Rp0/K/NA4tZaS8SYhiAQJ4odLgom+X29TjK6o3Xx2Y
+         KcQCybSVAj8wnoe2Ry+YHmb/5ROEvERFwyQ2Gk/YUfamxDWJJHQWyVt6oHbdM6nYdvqP
+         Iup4JsVBYy+bJGNs2oVrG0CApFW3gqpQFWw++HdILUrtTGUHgEM+BLmxMcoKgS4N7zgB
+         Ap4ZgWatMHKM1ZZTdxXTfPhXOZUq3z/ULLZBHXomT0XB30KOqZWUwIya9Of+0X5S4ECg
+         zB+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=BVMxi73PYzODuS8ilYGdNBz4T5j70uhHcZF7zxsYnh8=;
+        b=SpO8kxSY+B+513aqA06JVqU0uI+KGMf/DxoI1Tts55/n8O8ePwL3hy6mNC27ihWYQ+
+         aWE5fzNJMMsUsy9+UZEnL2pTwz5EtulbA8xvdG0Cq3d8jIwadcG5uRIQ1XMqWCOYUHIs
+         AmJpTFxh53WTqHvyKICer2aRooQqu6KQRCeAozXayTs5Rpmi4DpogGb2Lv1TUc1zhZsY
+         EfgwAPIPM7yNiKhSmOu6sb1uDFVAShvQx9XBp0w+ZOwhW1bF/jUjRxpsqakYvGUSHip+
+         HAUuLQ5DCV3IVcey3eqSKRGxx8H7goNK0o+gdtLu9PDs5bgcyUkrsXYtnufQfQTsyYgt
+         HKOg==
+X-Gm-Message-State: AFeK/H2INz3u4jQyyuqkZmP7swFuQNbYYHTRRWnwQH4JlRhexxfqGFdg3d9uVuW9BI0SFXIxbrra4UpyP7Z9sByG
+X-Received: by 10.98.101.7 with SMTP id z7mr19704652pfb.81.1490211821931; Wed,
+ 22 Mar 2017 12:43:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 28B93B22-0F37-11E7-89E2-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 12:43:41 -0700 (PDT)
+In-Reply-To: <20170322192340.elg2gpvcshhk3jq3@darkstar>
+References: <20170322192340.elg2gpvcshhk3jq3@darkstar>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Mar 2017 12:43:41 -0700
+Message-ID: <CAGZ79kZ+BGG6yj_rEvjDNf3gmV5KPgvOvLfH94VdPudzbGCkyA@mail.gmail.com>
+Subject: Re: Question: xdiff and "pretty" (human readable) diff output
+To:     matthew@giassa.net
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git@jeffhostetler.com writes:
+On Wed, Mar 22, 2017 at 12:23 PM,  <matthew@giassa.net> wrote:
+> Good day,
+>
+> I have a question with respect to how git generates "pretty" (ie: human
+> readable) unified diffs. It's to my understanding that git uses its own
+> (simplified/minimized) fork of libxdiff, simply referred to as "xdiff"
+> [1].
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
->
-> This patch series is a performance optimization for
-> lazy_init_name_hash() in name-hash.c on very large
-> repositories.
->
-> This change allows lazy_init_name_hash() to optionally
-> use multiple threads when building the the_index.dir_hash
-> and the_index.name_hash hashmaps.  The original code path
-> has been preserved and is used when the repo is small or
-> the system does not have sufficient CPUs.
->
-> A helper command (t/helper/test-lazy-init-name-hash) was
-> created to demonstrate performance differences and validate
-> output.  For example, use the '-p' option to compare both
-> code paths on a large repo.
->
-> During our testing on the Windows source tree (3.1M
-> files, 500K folders, 450MB index), this change reduced
-> the runtime of lazy_init_name_hash() from 1.4 to 0.27
-> seconds.
->
-> This patch series replaces my earlier
->      * jh/memihash-opt (2017-02-17) 5 commits
-> patch series.
+correct.
 
-Ahh.  I was scratching my head trying to remember why some of these
-look so familiar.  [PATCH v2 ...] would have helped.
+> Which tool/library is used to take the xdiff output and generate
+> the human-readable equivalent that is rendered to the console?
 
-Thank you for an update.
+Git itself. Have a look at diff.c (it's only 5k lines of code ;)
 
->
-> Jeff Hostetler (6):
->   name-hash: specify initial size for istate.dir_hash table
->   hashmap: allow memihash computation to be continued
->   hashmap: Add disallow_rehash setting
->   name-hash: perf improvement for lazy_init_name_hash
->   name-hash: add test-lazy-init-name-hash
->   name-hash: add perf test for lazy_init_name_hash
->
->  Makefile                            |   1 +
->  cache.h                             |   1 +
->  hashmap.c                           |  29 ++-
->  hashmap.h                           |  25 ++
->  name-hash.c                         | 490 +++++++++++++++++++++++++++++++++++-
->  t/helper/test-lazy-init-name-hash.c | 264 +++++++++++++++++++
->  t/perf/p0004-lazy-init-name-hash.sh |  19 ++
->  7 files changed, 820 insertions(+), 9 deletions(-)
->  create mode 100644 t/helper/test-lazy-init-name-hash.c
->  create mode 100644 t/perf/p0004-lazy-init-name-hash.sh
+Maybe start with fn_out_consume which is a callback (for xdiff)
+that is responsible for pretty printing the output, i.e. transforming the
+output of xdiff according to Gits configuration.
+
+> I have a
+> program that I'm maintaining that currently tracks changes to a couple
+> of "sandboxed" files, and I wanted to add a simple console UI that
+> periodically shows the changes to the files over time and/or dumps the
+> "pretty diff" to syslog.
+
+> over time
+
+So you could use cron for that?
+
+>  "pretty diff" to syslog.
+
+So you want to modify the "pretty diff"?
+Maybe that can be archived by a custom format
+(see the git *log* man page) and doesn't require hacking.
+
+Thanks,
+Stefan
