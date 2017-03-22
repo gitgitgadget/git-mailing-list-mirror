@@ -7,91 +7,103 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 721D820323
-	for <e@80x24.org>; Wed, 22 Mar 2017 16:09:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A092A20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 16:22:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759177AbdCVQJx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 12:09:53 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63251 "EHLO mout.gmx.net"
+        id S934301AbdCVQWk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 12:22:40 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49658 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759016AbdCVQJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 12:09:51 -0400
+        id S1759122AbdCVQWi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 12:22:38 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLOMM-1cqArY3zTW-000bdL; Wed, 22
- Mar 2017 17:09:39 +0100
-Date:   Wed, 22 Mar 2017 17:09:38 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MF4iR-1cx2mo3j6h-00GE6m; Wed, 22
+ Mar 2017 17:21:14 +0100
+Date:   Wed, 22 Mar 2017 17:21:11 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Sebastian Schuberth <sschuberth@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] t7504: document regression: reword no longer calls
- commit-msg
-In-Reply-To: <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1703221704500.3767@virtualbox>
-References: <cover.1490194846.git.johannes.schindelin@gmx.de> <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de> <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
+To:     ankostis <ankostis@gmail.com>
+cc:     git@jeffhostetler.com, Git Mailing List <git@vger.kernel.org>,
+        jeffhost@microsoft.com, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>, markbt@efaref.net,
+        benpeart@microsoft.com, Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 00/10] RFC Partial Clone and Fetch
+In-Reply-To: <CA+dhYEWo3v+ns0zt_hWu-7i-=E0g_tFaXYcv7Q0j2ozx1SCVmQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1703221711180.3767@virtualbox>
+References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com> <CA+dhYEWo3v+ns0zt_hWu-7i-=E0g_tFaXYcv7Q0j2ozx1SCVmQ@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FGK10FdwM1M3QK/wIyk7oFwsT+L460SvZ3mtB4gI+VBqPGvo4wm
- Q8A1VPZuTMrvkki/s9ZaR2AuH9ZXst0d5mHar+hBTw/Mt/v8N0IEazAp/thSdw90qiBp3XB
- 8ykcIu5mWNYEM6Y0RwO0tMUcgWsMB0/qmlKgzcSrxvjl2lTbJISLHjdz2N79d7X7dDED3T6
- 8EdvMzm1+mBQL4+Ergp5w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r78x9XCS5YQ=:mDtnjaw/yyBYgjfkueGznZ
- qnL6n7SJrGKlmMQIApB9uqIdt6hu/EPe2M6/lQshug5S+Ji9IAInR19ifwIxlBaqR1C9gJx10
- 1perG4maMe4KRZrpR5KPL8zlbXkb3tOp7H0Yq8+Lx1/41CJ7BwSfqiRJWPSXIIbGxpOTXugiA
- r135Ges7mCoaR+esZyOQszK5lGOb2U9X4EF3GRgA9P2Zzq0Aep+8UB9ASnvz15wLzh3HoYBp7
- 80cDeAHz4SyxBW2icUO+pjZjzre7r74p7z1BoNYGscKZYULAn1crcvsPXYYtTN0O5FSG5Lfqs
- d4KUE+nyWvuI9DnGEIZ8OJhelTyqvB3IiyrKEMtjIG6E6ys+eh5oDRtTngofVNxtSu9JpBZSK
- WcZyY/xHrnZCvjf9yhUwQcRuyVk91FAvgeED9MIGBqxmCtn9KvDt9EAKukLIf3hGVqcikLpD7
- xi6yCYnPMp+HXt0tg0nXu7jhvtA9jvII3nCKvvDbsasoiDP+Unv5YzYTVSjd8DVfFAvcTS05a
- c/UhpS3Tm+o4VTqcH6SjEaXQUw2z8710LCRCrMfUohr3T73DbqvJCdPMIutscedoaXuze+WsG
- aCYT5vhhEVm++2pUaHay14T6qaKHR5Bj7TmPP0ZMQwOoywVWAZh1a+/00QcPt21vhSCst1tm4
- gx+Z0P7I/NLh6ErhHDcZ+y8X0nyu10OadznPZZxtDalmXSsPCQfqj1NQzFH7f78zSS8ahqLvI
- TGf5PBnlPz9MBSa29qc6J54Rzx9/OO+E31yAcwp4W0+d8booGzT++qbG2nQ3at/TDApuft2S6
- kyRodnHYGzl7312Ttku7Puh5UEDcg==
+X-Provags-ID: V03:K0:b76ICi/vgkeQ/9I7Gs+Vwg/tNcfn7dMXAjl12U1k59BbL0pS53B
+ Yih8UodMFQuuLU9rUg/AOhVgwYVRDs8kDZLpwC3WbEN1XacDf8HVqP/L7e6z4EMtZZEdqlN
+ kscosmpPqVpSP2j2u2Dt1JFtMWqVwkxqk4PZpvBMHpMXwQwIDmO0L2lT4ubJe6NddYRX/q3
+ DjsYXjYiqgWpJ/JYTTLhw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3kNJZVg+W2o=:xX62V3G2uv6jz8O1a7cM0/
+ hjLlYL6iG8ub7QzuubpDzuyKz0AfzL5ufaLTjWhX2WcmsJT/SY8DJbZoHiFlkD25zzTs501Yc
+ hTyrHoVl4sYfENwfvQKbwZHXNO6OqKvm90tGkiCfYLdrLW/WKaxjr985/Jljk0r9G0MCQrXix
+ iAEYf88SzvFxGUwiJuIiGXwvdGW93nIVFZuaK1A/nrUusKePdgrV71pUSppfO73ALkwHbNL7C
+ fL49MQPJgRV3RggPkHdFF8IwZXWrtXGxMWMjVkMO1Po4O8AxI3CR4Gkx7ryXS3io5tQZiWRhy
+ Oud/EUO65LB6F3xnGURKKo2fbUMEaIq8sAR9NTuDqH55ERHLTjj0h0OT5beDums6Sa+XFG+Ky
+ V4vZT3/cIep47oia5UGUNj02tUz4zfNUcGoBZjbuFzcj+/EUkfQWsUkJGdvTabPZ3cMWjtJrY
+ uaswLiYZjJBiuXQja5jzKkQ+UvQ1wWE7bN1eEuIRlufepAhaO/TvVNAovW84CvAxNiuK1IIvq
+ v3XFTrfIZVCbGBJocCGMAW5RVbR1Yw4cttjH73kH+JycEgcgCH111CZHpPO3YXUUH0WtRMwcl
+ a6FBMZyjamEkwZ9tABdMLlNO4L/tQNyrX3vydW5fxbvs90rGLGtOReXc3YV9OL63mmSHxZkbS
+ oXj5mBNJ8VLC5eRuMtbBfn7/siNTMg+KCmRKekza7nGYPoJ47D5UxtVohYutrG2cExw8SFuOe
+ YEgAvTfIAgwD2mlBvgMaOcKntqgzB0kxvhW8xPSrm0t4tnmVffpi42chscEk5CPh4s5A9kJzA
+ ZtiLraqazZml6lwn5wDzlk33LJAvA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Sebastian,
+Hi Kostis,
 
-On Wed, 22 Mar 2017, Sebastian Schuberth wrote:
+On Wed, 22 Mar 2017, ankostis wrote:
 
-> On Wed, Mar 22, 2017 at 4:01 PM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
+> On 8 March 2017 at 19:50,  <git@jeffhostetler.com> wrote:
+> > From: Jeff Hostetler <jeffhost@microsoft.com>
+> >
+> > [RFC] Partial Clone and Fetch
+> > =============================
+> >
+> > This is a WIP RFC for a partial clone and fetch feature wherein the
+> > client can request that the server omit various blobs from the
+> > packfile during clone and fetch.  Clients can later request omitted
+> > blobs (either from a modified upload-pack-like request to the server
+> > or via a completely independent mechanism).
 > 
-> > +# set up fake editor to replace `pick` by `reword`
-> > +cat > reword-editor <<'EOF'
-> > +#!/bin/sh
-> > +mv "$1" "$1".bup &&
-> > +sed 's/^pick/reword/' <"$1".bup >"$1"
-> > +EOF
+> Is it foreseen the server to *decide* with partial objects to serve
+> And the cloning-client still to work ok?
+
+The foreseeable use case will be to speed up clones of insanely large
+repositories by omitting blobs that are not immediately required, and let
+the client fetch them later on demand.
+
+That is all, no additional permission model or anything. In fact, we do
+not even need to ensure that blobs are reachable in our use case, as only
+trusted parties are allowed to access the server to begin with.
+
+That does not mean, of course, that there should not be an option to limit
+access to objects that are reachable.
+
+> My case in mind is storing confidential files in Git (server)
+> that I want to publicize them to partial-cloning clients,
+> for non-repudiation, by sending out trees and commits alone
+> (or any non-sensitive blobs).
 > 
-> Maybe use
+> A possible UI would be to rely on a `.gitattributes` to specify
+> which objects are to be upheld.
 > 
-> sed -i 's/^pick/reword/' "$1"
+> 
+> Apologies if I'm intruding with an unrelated feature requests.
 
-It's not portable, otherwise I would have used it. GNU sed expects an
-optional extension to be used for a backup file, and that optional
-extension needs to be specified without whitespace between it and the -i
-option. BSD sed *requires* an extension to be specified, and it has to be
-separated using white space (or is that orange space now?).
+I think this is a valid use case, and Jeff's design certainly does not
+prevent future patches to that end.
 
-So even if we could make that call portable somehow (and remember, BSD sed
-is what OSX uses), there *would be a backup file*.
-
-> here to avoid renaming the input file? Not sure how portable -i for
-> sed is, though. Otherwise, maybe remove the file "$1".bup afterwards
-> to be clean?
-
-No. The file in question is written to the .git/rebase-merge/
-subdirectory, therefore cleaned up after the rebase.
-
-In any case, this is *test* code. So I'd prefer to have the changes to the
-C code scrutinized a bit more, not the test code as long as it is obvious
-what it does.
+However, given that Jeff's use case does not require any such feature, I
+would expect the people who want those features to do the heavy lifting on
+top of his work. It is too different from the intended use case to
+reasonably ask of Jeff.
 
 Ciao,
 Johannes
