@@ -2,148 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F34C820323
-	for <e@80x24.org>; Wed, 22 Mar 2017 18:02:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E24520323
+	for <e@80x24.org>; Wed, 22 Mar 2017 18:02:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935616AbdCVSCU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 14:02:20 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50002 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934824AbdCVSCS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 14:02:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D65EB7A178;
-        Wed, 22 Mar 2017 14:02:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=YGa/CcihJ8SA
-        91VErt/iNLOdxJA=; b=M+uS6spubsMEstZlS1JRdW1u+hOoQcGzcaaVatJxO5ED
-        ywRVIfl58sKPk0DQrzLTAJcP+n4S/WVI70Z1U9BT/Mi7dYyHJFfrCcB97h3bhee5
-        xWm/NZFysoSplfKmzj4Cjp8zbq0ErXpFAu/gF4yTurCF5cpHQFnqLG/RNYWjuC0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Y+Vlrp
-        tbSmUw6qTUtn5O282Bx3V4TpJCUY8Uy1XVR39KqerLqszULUgRK/WN8bgCeOfmWo
-        F/87q4nXVgvFQE/VPeBo7N6P1Bx9UQtAS7I9YLsMeIrsKGf4aRjUjrTFAcK5kpOd
-        kZkCfPxY1Hfar6VZnBcNzcHZ/Ogxw67LspChk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE6297A177;
-        Wed, 22 Mar 2017 14:02:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 409217A176;
-        Wed, 22 Mar 2017 14:02:10 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
-References: <20170312200248.3610-1-jn.avila@free.fr>
-        <20170320210225.13046-1-jn.avila@free.fr>
-        <20170320210225.13046-3-jn.avila@free.fr>
-        <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
-        <5036581a-f989-2db6-06ba-621db05c6de1@free.fr>
-Date:   Wed, 22 Mar 2017 11:02:09 -0700
-In-Reply-To: <5036581a-f989-2db6-06ba-621db05c6de1@free.fr> (=?utf-8?Q?=22?=
- =?utf-8?Q?Jean-No=C3=ABl?=
-        Avila"'s message of "Wed, 22 Mar 2017 13:01:31 +0100")
-Message-ID: <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S965088AbdCVSCe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 14:02:34 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:32898 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934824AbdCVSCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 14:02:33 -0400
+Received: by mail-pg0-f41.google.com with SMTP id w20so8721223pgc.0
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 11:02:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=X9EJCuBgAur8FMGGWwPTB0aH/wSIqcjCYpmsmjHq7Hw=;
+        b=sWNY8smrBUzYo8/8w/i7D+6pD1wJsm08SsFeGE3uYhDc1wDWZQQwkxx3r/+PxJv7Yb
+         r3O4UP1mOhwWjATWZfBtscgmGy9W4gVvbaTva/zRVATvWS1EyTlxCRqhH1oBp/N2sKjz
+         SK0B0EHcOKc3roj82vXtQMIMnghlAFTS9lcxyk0NkPG7Zp7FG9CjDOAq8ojTc5ZhnFyN
+         HTYxZFzIkMIp/rnAe0KSKira9nbi54TlC7T1cn7ZG7/iO/Obd/oYbMFDIIwO7k29fpeh
+         jCAm9SSGOFvTMpEavDtRfPyos/hQ5s5zUQz3Xm5P9QaQhFo3snpfT+9E0HdEDBktpLlh
+         pY+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=X9EJCuBgAur8FMGGWwPTB0aH/wSIqcjCYpmsmjHq7Hw=;
+        b=jZIHrNIfIBdKS/qIDI8Fsg1VhEzeJ3wGSA1q+h3i2pirbHtwvaJbpnPhaf1m7wYAbq
+         Rt5s1Xrg8AEBjZRGacFIzL9+ygbgOL1Qfog14FriNgTjjiQ24zCKeS4xl6VvNMsrW32P
+         2iwPrtIwtXwZlDP+aAf/duJxQ0zEFqZRZaxhWH+Ig7SNRW6/jd+JnKTdpL4GFKuvs3bV
+         avt2nWh0spRL7nNOhTsPdYwPCrRRqH/u0WexC36gaOO2PnY4s2Qz6HgmX5yPFAqisy6u
+         58CId6t5Zg4zbLVfJgdCW9/E5tvRXGnpCLrM1DYrFdV6hFJU8AUMTKt85xROFtktYSjO
+         Fb5w==
+X-Gm-Message-State: AFeK/H1h7SxcQ4MQynASKdxiNBJO6quC4CQz/XzBwSF42GxI80LfTj9SLgzBn9IW4HFQ5pUn3OOlFk1xGQ0MTFun
+X-Received: by 10.99.120.5 with SMTP id t5mr14192872pgc.223.1490205751779;
+ Wed, 22 Mar 2017 11:02:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: AB75AEFA-0F29-11E7-AF83-FC50AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 11:02:31 -0700 (PDT)
+In-Reply-To: <1490202865-31325-1-git-send-email-git@jeffhostetler.com>
+References: <1490202865-31325-1-git-send-email-git@jeffhostetler.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 22 Mar 2017 11:02:31 -0700
+Message-ID: <CAGZ79kYh0eP-dzpX58SrSRJGEr9iyOb0Q3vizsvxE81kzddwxQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] thread lazy_init_name_hash
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-No=C3=ABl Avila <jn.avila@free.fr> writes:
-
->> I am wondering if Documentation/po part should be a separate
->> repository, with a dedicated i18n/l10n coordinator.  Would it make
->> it easier for (1) those who write code and doc without knowing other
->> languages, (2) those who update .pot and coordinate the l10n effort
->> for the documentation and (3) those who translate them if we keep
->> them in a single repository?
+On Wed, Mar 22, 2017 at 10:14 AM,  <git@jeffhostetler.com> wrote:
 >
-> This is one of the points raised in the first RFC mail. Splitting this
-> part would help a lot manage the translations with their own workflow,
-> would not clutter the main repo with files not really needed for
-> packaging and would simplify dealing with the interaction with crowd
-> translation websites which can directly push translation content to a
-> git repo.
+> During our testing on the Windows source tree (3.1M
+> files, 500K folders, 450MB index), this change reduced
+> the runtime of lazy_init_name_hash() from 1.4 to 0.27
+> seconds.
 
-As I was in favor of splitting it out, I was trying to gauge what
-the downside of doing so would be, especially for those who are
-doing the translation work (it is obvious that it would help
-developers who are not translators, as nothing will change for them
-if we keep this new thing as a separate project).
+This sounds promising. :)
+A fast skim over the code makes me like the code.
 
-We may still want to fill in the details (and by doing so we may
-discover it is not as easy as I make it sound to be here), but a
-rough outline of what I think we could do is:
+>  hashmap.c                           |  29 ++-
+>  hashmap.h                           |  25 ++
 
- * What you added to Documentation/po/ in these two patches becomes
-   a separate project (let's call it "gitman-l10n") and they will be
-   at the root level of the project, i.e. documentation.pot and
-   documentation.$LANG.po will sit at the top level of the working
-   tree of that project, without Documentation/po/ prefix. =20
+Could you add some documentation to
+Documentation/technical/api-hashmap.txt ?
+(Bonus points for migrating the documentation inline,
+c.f. discussion surrounding [1])
 
-   The idea is for some of us to have a checkout of "gitman-l10n"
-   project inside Documentation/po of the checkout of git.git
-   project and achieve a layout similar to what these two patches
-   from you create, but keep that optional.
+[1] https://public-inbox.org/git/20141212212800.GA27451@peff.net/
 
- * In git.git, teach Documentation/Makefile to enable "make
-   doc-l10n" and "make install-l10n" targets in "Documentation/" if
-   and only if Documentation/po/Makefile exists, and delegate these
-   two targets to it, i.e. something like:
+>  name-hash.c                         | 490 +++++++++++++++++++++++++++++++++++-
 
-   (in Documentation/Makefile)
-   ifeq ($(wildcard po/Makefile),po/Makefile)
-   doc-l10n install-l10n::
-	$(MAKE) -C po $@
-   endif
+AFAICT the new threading is all implicit in name-hash and we do not expose
+its functionality or tuning knobs outside the testing helper, such that we do
+not need API documentation here, but only enough code comments to
+understand the code for maintainability?
 
-   Certain Makefile macros Documentation/Makefile knows aboute
-   (e.g. location to install, list of pages in the man1 section) may
-   have to be exported down to Documentation/po/Makefile.
-
- * Some other Makefile targets to help i18n coordinator, e.g.
-   updating Documentation/po/documentation.pot by using the latest
-   set of Documentation/*.txt files, may also have to be added to
-   Documentation/Makefile and conditionally enabled the same way
-   (i.e. keying off of the presence of po/Makefile).
-
- * Those who work on the documentation translation and those who
-   want to build and install localized documentation will have a
-   checkout of the "gitman-l10n" project at "Documentation/po".
-   This will _eventually_ be done by making "gitman-l10n" a
-   submodule that git.git project uses, but it can start as a manual
-   "clone and checkout" without making it a submodule.  Those who do
-   not deal with localized manpages can just work with git.git
-   proper without even knowing anything about the gitman-l10n
-   project.
-
-I'd prefer to start with the "optional gitman-l10n repository is
-checked out at Documentation/po only by convention" approach, before
-committing to bind it as a submodule.  Once we got comfortable with
-cooperating between these two projects, we do want to bind them
-using the submodule mechanism, but not before.
-
-Once git.git starts binding the "gitman-l10n" project as its
-submodule at "Documentation/po", we may want to start using "git
-archive --recurse-submodules" when cutting a release tarball, when
-that option becomes usable.
-
-I'd prefer to start with the "main tarball" with "optional language
-pack tarball" approach for releases, which is more flexible to the
-end users (and less change to the workflow).  Once we gain more
-experience, we may want to produce a single ball of wax tarball as
-well (or "only a single one").
-
+Thanks,
+Stefan
