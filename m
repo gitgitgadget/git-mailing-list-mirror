@@ -2,93 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C27720323
-	for <e@80x24.org>; Wed, 22 Mar 2017 21:16:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 334B220323
+	for <e@80x24.org>; Wed, 22 Mar 2017 21:16:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751523AbdCVVQH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 17:16:07 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34720 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751502AbdCVVQF (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1751567AbdCVVQK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 17:16:10 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58616 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750972AbdCVVQF (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 22 Mar 2017 17:16:05 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o126so28648158pfb.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TEnuNKlqtyb395T8tPDJQV/yWpKE4tmJWfqczNI1RxE=;
-        b=XIxHX4RZUZcYzKhiA+zUgKgw863qLst8pC6xiUhbXOtSTRG2hPddv8ot1bwSt5J5y+
-         tImiRXSRXjKtVtoq5KQMF6LolqCcwtKPoxbukprihnvUv0CcZkVLF2TAViwDqaolN9DC
-         ptGjzTAM1mRsIJWXtHoV4Yb4WNAUFSH8n6QljZ0lm5iULe7LcsVMdTllTSl4xqni7MHo
-         6smZmSAzY7jOxXEB1EhChblJjQBHbQH9dwzLSitC5Irb+O5i8olWYC9x3ts57k74bd8C
-         ZGXHhrXT6r2jhz2EOyo4XI3sUVsjDkwysvWkKHJoDp5lsm9/jn8yK51pdaiE72ksd8h0
-         tSSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TEnuNKlqtyb395T8tPDJQV/yWpKE4tmJWfqczNI1RxE=;
-        b=snBbwNzc1ImIV1OFPWKtTWjdjMcGwGDu3ocX40v5WCbVyQ0w6o+4J76ftd32nUriBs
-         Z2WY71jaQ0Q9aRLv2Ajbp1iHtxn2bPMymFpe7zOzFsfbGdygAVmoSTcCyghNuAYHCkcL
-         lKUiLIe4QVxOJjTD672Ztn1Twq+IiaEdn84ndFODBSUWJ24phvyipIXYBrE6v7Lzwm4P
-         7Cx4JWyoXTMxEIrePsyyjlrHHLgag0radpEtZXkFOOna9Ud4WC1KG7nwfChUn2Y0TJ2e
-         O7DhLdzV6GywjWdlOGsmAySbjqg2Phf2mlLRy2gIPC/LexUeNj6asIu9ai2FnMvMD7t+
-         SfLQ==
-X-Gm-Message-State: AFeK/H0pXt8/sUYZH4OW7ppqky0B8Zlffi6CTbGioxwPt1+NpvN9kBAXTgJFRjx9mu4CnQ==
-X-Received: by 10.99.96.68 with SMTP id u65mr21911956pgb.159.1490217348595;
-        Wed, 22 Mar 2017 14:15:48 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:55f5:992d:bc78:c749])
-        by smtp.gmail.com with ESMTPSA id q194sm5688626pfq.43.2017.03.22.14.15.47
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Mar 2017 14:15:47 -0700 (PDT)
-Date:   Wed, 22 Mar 2017 14:15:46 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] send-pack: send push options correctly in
- stateless-rpc case
-Message-ID: <20170322211546.GB26108@aiede.mtv.corp.google.com>
-References: <20170322195102.165314-1-bmwill@google.com>
- <20170322195102.165314-2-bmwill@google.com>
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6E247FCAD;
+        Wed, 22 Mar 2017 17:15:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=KQTa54tlFTyJ
+        fARCQnqutLQg/go=; b=FQzsD69SiNhyszsdA2Vp3LEZTyWCF7KTRnfgPj4/sZ3D
+        RQGXHsXvzG4m8uzTIF8qAPTxRjk3aHye1MYRMBdEzrXcnJyz1zFN+nMLCboMGVqU
+        S6qCyuPWxkGyVr8hksDTfm7qoepNHXrBJ+H/bKlPoMNaHPJ1ufMq4wAkyjQWW5U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=N/6/zL
+        5ujuNQ1U4KpRWL5cWP9WVRn4dYHl1aooh7HuLIrAp3C/L2Pa5AWl3ANYVJ2OTwRU
+        69Q906FOAFaFSt9kr4iRXjcLC6vgK0iHbxCNsQQ8/I75Csb2g8PozfUD5xlwh7/3
+        gFvb+0irDNGCgV/fVe4P1fnrkll0WdByRLOCk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AF9277FCAC;
+        Wed, 22 Mar 2017 17:15:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1500B7FCAB;
+        Wed, 22 Mar 2017 17:15:10 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Hjemli <hjemli@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        Carlos Rica <jasampler@gmail.com>,
+        Samuel Tardieu <sam@rfc1149.net>,
+        Tom Grennan <tmgrennan@gmail.com>,
+        Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 10/16] tag: change misleading --list <pattern> documentation
+References: <20170321125901.10652-1-avarab@gmail.com>
+        <20170321125901.10652-11-avarab@gmail.com>
+        <xmqqo9wupixz.fsf@gitster.mtv.corp.google.com>
+        <CACBZZX70pb=h3nPKDY-rcM3rjh9SNYUzUhxA3Hu0-Jph8ODxdg@mail.gmail.com>
+Date:   Wed, 22 Mar 2017 14:15:09 -0700
+In-Reply-To: <CACBZZX70pb=h3nPKDY-rcM3rjh9SNYUzUhxA3Hu0-Jph8ODxdg@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Mar
+ 2017 20:32:46
+        +0100")
+Message-ID: <xmqqwpbhhv36.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170322195102.165314-2-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A19B703E-0F44-11E7-B88A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> "git send-pack --stateless-rpc" puts each request in a sequence of pkt-lines
-> followed by a flush-pkt. The push option code forgot about this and sends push
-> options and their terminating delimiter as ordinary pkt-lines that get their
-> length header stripped off by remote-curl before being sent to the server.
+> Yes, all of this is correct, but not relevant to what I'm describing
+> in the commit message, because I'm making a documentation change and
+> describing how you *would* expect git to work if you read the
+> *documentation*, not if you read the code.
+
+OK.
+
+>>> +-l::
+>>> +--list::
+>>> +     Activate the list mode. `git tag <pattern>` would try to create=
+ a
+>>
+>> Dont say <pattern> on this line.  It is `git tag <name>`.
 >
-> The result is multiple malformed requests, which the server rejects.
+> Makes sense, but this is something I copied as-is from git-branch.txt,
+> which then has the same issue, so v3 will have yet another related
+> patch...
+
+I think you'd rather want to make it a single patch to be applied
+and merged independently, as a fix to a documentation bug we somehow
+noticed that is unrelated to the main theme of what we were working
+to perfect ;-)
+
+>> The "-l/-d/-v" options follow the last-one-wins rule, no?  Perhaps
+>> also show how this one works in this test (while retitling it)?
+>>
+>>         git tag -d -v -l
 >
-> Fortunately send-pack --stateless-rpc already is aware of this "pkt-line within
-> pkt-line" framing for the update commands that precede push options. Handle
-> push options the same way.
->
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  send-pack.c | 20 ++++++++------------
->  1 file changed, 8 insertions(+), 12 deletions(-)
-
-This is only a hypothetical issue until the next patch though, right?
-
-For what it's worth,
-
-Tested-by: Jonathan Nieder <jrnieder@gmail.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> This will fail as tested for in "tag: add more incompatibles mode
+> tests". We weren't testing "-d" with "-l", or this combination, I'll
+> add both to the tests.
 
 Thanks.
