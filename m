@@ -2,85 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB12E20323
-	for <e@80x24.org>; Wed, 22 Mar 2017 15:19:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CC6F20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 15:51:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935361AbdCVPTI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 11:19:08 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:34991 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760132AbdCVPS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 11:18:57 -0400
-Received: by mail-wm0-f42.google.com with SMTP id u132so39849998wmg.0
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 08:18:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=w/EmUeEai6BaqoWsFY/rZKTOS0GG/p55hkSH8+4TXII=;
-        b=hyJA7o1r379QHGj+8yM/kZU/CJ9I1UZnEj+aRMmHiBYUNyIeizYby0+jm91csBhn60
-         i7TdSb+SIKoQn4/dm4ZpISwznvCy3qBsgF08yDc9w8Hrvf9h/z2KBrt8CIwZr0qyr+vz
-         BRTXJaJ9FSQ/1h1F7o69oMW8R01dLtarDcQuiLWXXugE/YVE2OIUMMUGLH9tZ1LL2Mhw
-         AMUCLfsoG83G88gQVca/BCl4g0vjtlcDMudrPnRW9gpEvRhhzED2Q8bCHrlAXtaPTEDd
-         U/pAnYSd/c0VQum7F2t+597PIQm9E4lrf3WJN3I+KXzaoPW5mLjybOMUZaQ2GSLWKm8w
-         Ccmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=w/EmUeEai6BaqoWsFY/rZKTOS0GG/p55hkSH8+4TXII=;
-        b=ccHsy/iRfPTONO0Ey7lErpG3TRdS15AMm8b9wrPYD0L2QLaf7gcA9iuol6biaiaMun
-         PYQUOK4x/EnICulvrLqXKWO//Vl9gWaI1iR6Kxocv92KdVz31uVLAY1diaNiy+5xiGAQ
-         rzkACc27yjFjqaxD/RkYgD3vN+j4yTaVe33NyYoKm9uwdcOVhpwhBsLob5SnVKzaNlUj
-         B/AG2Newnps1XMRyLxU7j3Jl9OxQSwycxfVoyrl7Es3kjSVI35Nz6zxQUmfYOanPa1Fi
-         PA9fTzCESJqOXkbgObkbU2OUT4uAxwS3ccEfIOOI+UTp01GQf3q23e49n/LRGXWkRCE0
-         kMxw==
-X-Gm-Message-State: AFeK/H391zRpV224BW2lVK9NZgcgVdbP+twinJsxLV2ymB2wq1vRrQlp3tFoB156q906mek3+MeuXsggwLWvXA==
-X-Received: by 10.28.178.84 with SMTP id b81mr9045412wmf.83.1490195934998;
- Wed, 22 Mar 2017 08:18:54 -0700 (PDT)
+        id S935464AbdCVPuF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 11:50:05 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64545 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1760250AbdCVPtu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 11:49:50 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ldq55-1cPwU63h8V-00ixjG; Wed, 22
+ Mar 2017 16:49:29 +0100
+Date:   Wed, 22 Mar 2017 16:49:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
+In-Reply-To: <20170322065612.18797-1-larsxschneider@gmail.com>
+Message-ID: <alpine.DEB.2.20.1703221641070.3767@virtualbox>
+References: <20170322065612.18797-1-larsxschneider@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.28.153.150 with HTTP; Wed, 22 Mar 2017 08:18:54 -0700 (PDT)
-In-Reply-To: <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de>
-References: <cover.1490194846.git.johannes.schindelin@gmx.de> <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de>
-From:   Sebastian Schuberth <sschuberth@gmail.com>
-Date:   Wed, 22 Mar 2017 16:18:54 +0100
-Message-ID: <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t7504: document regression: reword no longer calls commit-msg
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:TBU3qr7NfcJgkFRommlMB8ErP4HqPIYyoMPIO99Oil7og8CH8j8
+ mFcjVO8jwJwmpZazWEJTlOdGRjS0steWnswpMP+MwD6AijDYoNouvgVVOReblU9Q3z6yqCV
+ 3Zbz/deYD45UGjiA/kJEEFnPRfOgFszHXyTL5I2gPNmaXfMvMWqYq4iCU2bOzEDOuUyCzQC
+ m5oouuzFsMxczead8G2Jg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:tkG16AxIhvk=:pTS2Dxx3JadKmEhrkZK+S5
+ kAHqIJVqvZAGul4SOtKu8s1x0sHWVjTChUSaxmfdL2B1skQwcuaydluBwOc9SiIGZoQEonq5s
+ g62ZUbMxEHUA4FQWgFkMhKS8urFHmWzmcWqFue046kFGI+dN12zD/+m+LzaNZdidG7w45EYLs
+ vEoSVar4D07QRzb8/LtbR1dpZImkmtWQRgrfA4rBdopoQ/s7OmQRB8IpdrgkGap4RjpOLEPxg
+ cBMXvq7vgQmTQkDMKLfZ0cWMjaornVCgbRmPrBAO8AJCsA82Ic9q/LDibHsgr0BNNQmpOUU8b
+ yD5/wNxCZ0sFsBLfHYh1cHZvKZCXO/Q5ZWnAbmBLXEmDsO5e6VlnotluCKc/O5ar/vw3Zmkkk
+ 5HS2Vk66GWGPqpY5dq1UOZmKIjrt+yt71Q7skUh2IEKUkUuaHGuv5vlOROKPcc12v49Z/xdFh
+ JHsqL9ZPxgsREyQKJbFpcchxDzowBz5IEJn1TCPhqmdGpA1AW/sKPvoApFAsfmFj+GZTGGwJH
+ h+opL4Nnmfr58ZfN9y3+WWStYjKMPNr+v2hPPb9nzFnY1vEVRj7OS6FNRqvPoypd3asNWEGQ3
+ pJLFX2gn6L9O3+lN72UqgbE8DcBbF25WtbukVAgeK7XR7T+z91lg9iJeiHX39cBfHmWHfYbAm
+ xD4ZgTvV/WaxDx3gauQn7J6fxWdVl8yiRVvTPImjh8+ji0/bXIl+jlPZc2plzvK8TSuUDnDhI
+ DJdivL1jzxdbKRL/wW5yAgChBZ05Oa0ok8m86TPs1LQDKL+0tUNP48uebBy1xoZBvc5X4oBCH
+ uor7oxxIFNx5zy/eLxXFezT8MN9NA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2017 at 4:01 PM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
+Hi Lars,
 
-> Noticed by Sebastian Schuberth.
+On Wed, 22 Mar 2017, Lars Schneider wrote:
 
-Thanks for working on the fix.
+> Things, that might need to be done:
+> * The Windows box can only process a single build at a time. A second
+>   Windows build would need to wait until the first finishes. This
+>   waiting time and the build time after the wait could exceed the 3h
+>   threshold. If this is a problem, then it is likely to happen every day
+>   as usually multiple branches are pushed at the same time (pu/next/
+>   master/maint). I cannot test this as my TravisCI account has the 50min
+>   timeout. One solution could be to limit the number of concurrent
+>   TravisCI jobs [2].
 
-> +# set up fake editor to replace `pick` by `reword`
-> +cat > reword-editor <<'EOF'
-> +#!/bin/sh
-> +mv "$1" "$1".bup &&
-> +sed 's/^pick/reword/' <"$1".bup >"$1"
-> +EOF
+There is another possibility, too, of course: I may be able to find more
+resources and add other VMs which could be used to build and run the
+tests.
 
-Maybe use
+Of course, if those tests would not spawn billions of POSIX processes,
+things would be faster, too, and we could afford to wait for a single
+build agent.
 
-sed -i 's/^pick/reword/' "$1"
+> diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
+> new file mode 100755
+> index 0000000000..324a9ea4e6
+> --- /dev/null
+> +++ b/ci/run-windows-build.sh
+> @@ -0,0 +1,55 @@
+> +#!/usr/bin/env bash
+> +#
+> +# Script to trigger the a Git for Windows build and test run.
+> +# Pass a token, the branch (only branches on https://github.com/git/git)
+> +# are supported), and a commit hash.
+> +#
+> +
+> +[ $# -eq 3 ] || (echo "Unexpected number of parameters" && exit 1)
+> +
+> +TOKEN=$1
+> +BRANCH=$2
+> +COMMIT=$3
+> +
+> +gfwci () {
+> +	curl \
+> +		-H "Authentication: Bearer $TOKEN" \
+> +		--silent --retry 5 \
+> +		"https://git-for-windows-ci.azurewebsites.net/api/TestNow?$1" |
+> +	sed "$(printf '1s/^\xef\xbb\xbf//')"  # Remove the Byte Order Mark
+> +}
+> +
+> +# Trigger build job
+> +BUILD_ID=$(gfwci "action=trigger&branch=$BRANCH&commit=$COMMIT&skipTests=false")
+> +
+> +# Check if the $BUILD_ID contains a number
+> +case $BUILD_ID in
+> +	''|*[!0-9]*) echo $BUILD_ID && exit 1
 
-here to avoid renaming the input file? Not sure how portable -i for
-sed is, though. Otherwise, maybe remove the file "$1".bup afterwards
-to be clean?
+Error messages are delivered that way, and they do not start with digits,
+true. But maybe there is an exit status to indicate to Travis that we
+cannot decide whether the build failed or succeeded in that case? The most
+common cause for an error here is that the VM I use for testing is down
+(which happens every once in a while to save on resources, and I have to
+manually restart it)...
 
--- 
-Sebastian Schuberth
+> +echo "Visual Studio Team Services Build #${BUILD_ID}"
+
+Nice plug, thanks! ;-)
+
+> +# Wait until build job finished
+> +STATUS=
+> +RESULT=
+> +while true
+> +do
+> +	LAST_STATUS=$STATUS
+> +	STATUS=$(gfwci "action=status&buildId=$BUILD_ID")
+> +	[ "$STATUS" == "$LAST_STATUS" ] || printf "\nStatus: $STATUS "
+> +	printf "."
+> +
+> +	case $STATUS in
+> +		inProgress|postponed|notStarted) sleep 10                      ;; # continue
+> +		         "completed: succeeded") RESULT="success";        break;; # success
+> +		                              *) echo "Unknown: $STATUS"; break;; # failure
+
+Well, there are more values for the status, and we know them, but we do
+not handle them. Maybe "Unhandled status:"?
+
+> +	esac
+> +done
+> +
+> +# Print log
+> +echo ""
+> +echo ""
+> +gfwci "action=log&buildId=$BUILD_ID" | cut -c 30-
+> +
+> +# Set exit code for TravisCI
+> +[ "$RESULT" == "success" ]
+
+Very nice. Thank you so much for keeping me working on this!
+
+Ciao,
+Dscho
