@@ -2,76 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,PLING_QUERY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7219E20323
-	for <e@80x24.org>; Wed, 22 Mar 2017 13:55:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E20020323
+	for <e@80x24.org>; Wed, 22 Mar 2017 14:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759229AbdCVNzp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 09:55:45 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:38674 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751799AbdCVNzj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 09:55:39 -0400
-Received: by mail-wm0-f41.google.com with SMTP id t189so38549372wmt.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 06:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:content-transfer-encoding:subject:date:message-id:cc:to
-         :mime-version;
-        bh=2CDIOw7S9uKlntEjHDUA7gOah9VT+/sIvB74YlrVkpk=;
-        b=U4hKCwtNjNgaRE96FEt+xO+/xo2GYNgkjcyVNlToLHNKh/pC6sprojDnM5ES8vVwvF
-         XSmfS2FLGKd5D/Fp8w8dmTiShF0gWgiTVvjtsX2Dc+Iiz16Fp2TNhSgHfcJEFprl+P5D
-         A+0oQYJmmvvjL8Mkxs7SPQpscDVXlI7991kVpPrFJQpfpKmdTo579YddJRLEFyiq2fFF
-         qJyBDK/UV/1DPHsI9lvgmDSBBo/jO1u6fA4yIhtwxV7xtuk1Z08wXQjLInHfGmAc8CLj
-         DsjDBL1WazGgbSYlLOxcG6emD2ZbuUYLAzMuNIcIMzFw74clRyT+wPceeBFcTOPa8SUk
-         WD7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:content-transfer-encoding:subject:date
-         :message-id:cc:to:mime-version;
-        bh=2CDIOw7S9uKlntEjHDUA7gOah9VT+/sIvB74YlrVkpk=;
-        b=XVScHwf0cyKBcL3xcSsc/6xWzu6cl+H0Zfy59dcu5ng3yIlajyV5nFqNSh9I5a6Aqs
-         PIhI2z6lRv7DCUGNZjDBbWa0gPKdm5N1UF1OTyivPE2g2GnrxV9HxuJNWBbcG8PFN55k
-         SPzVtKNg+wThG9cuSRUWdJLpGFBNJFcLhZ3jJ3p8OZG44vOeY/wxiLteG75pWUjPLyL/
-         sNEaGa/I5Ch/a7jf8yv2eLFeDoxQdmfBVrbjmcQRwVUZqpaJJnk0ruWy4PTP7AO/tMfH
-         HgLMduwCtatve6JXSBrVtlx0dNL0kvz7WCwHN4hl+fa8l6eWdnC/fhRdYSl/UfvKXAuP
-         Qjbg==
-X-Gm-Message-State: AFeK/H22sNlxfrRD3n6+tqjuygZMr9Wy6rWa8HI+yVgXRtseOZC7y93zXeWTF22c0s2cAg==
-X-Received: by 10.28.207.14 with SMTP id f14mr7880732wmg.72.1490190937611;
-        Wed, 22 Mar 2017 06:55:37 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id w99sm1946037wrb.3.2017.03.22.06.55.36
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 22 Mar 2017 06:55:36 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Subject: Warn user about known Git Rebase bug?!
-Date:   Wed, 22 Mar 2017 14:55:36 +0100
-Message-Id: <C45FE2B3-E4B5-4988-85B4-3CCB41C9ACC3@gmail.com>
-Cc:     ulrich.haberl@autodesk.com
-To:     Git Mailing List <git@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-X-Mailer: Apple Mail (2.3124)
+        id S934685AbdCVOcx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 10:32:53 -0400
+Received: from mout.gmx.net ([212.227.17.22]:52815 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934312AbdCVOcv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 10:32:51 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYtId-1cdLCi2x2R-00Vj9i; Wed, 22
+ Mar 2017 15:32:35 +0100
+Date:   Wed, 22 Mar 2017 15:32:34 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: USE_SHA1DC is broken in pu
+In-Reply-To: <xmqqh92mo06a.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1703221530040.3767@virtualbox>
+References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com> <2B1DE627-11C8-4FA5-A354-76B6C475666A@gmail.com> <FFC0EFBD-C4D9-4FB8-A45D-7B10689724A1@gmail.com> <alpine.DEB.2.20.1703212105030.3767@virtualbox>
+ <xmqqh92mo06a.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:iResz/tptX2ebnDo6Wozk6uIIWWpUZME6ZNVL0Qut8az6elHQo3
+ v5NewJx6ForuAEWAfb6oIZ2LsLnErTR9Avvgd5UzI4B9C/hj/STW0hwMmF50H+yUhI1OcwY
+ WpePgG/Log/Unt0WoQzLjfQ0PwHdmbmH8Tu46//ZDZtXNU4FYBO7IFtMlUzuom647ka0W+p
+ oSPXqcVrRDlUQVCqDtuCw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:M2NYkJnL/hA=:WiYiDRKXGqFOJx1EPvCvU5
+ m85znQFW8QxeWpjUAgBAXLmTOo6xP5Go11X0R2VAd29OO4ncQicGJRFCR03wJL2GDGRzWhY0t
+ xIHZqeMFmYj9kL7y6sS523a3378h0PYAKNcxmO0934HFxz96d5pvkH6pIejVqbivkIUlNcrOw
+ oUuZ2H0QNdPn0lkDRkTBS/gUNV7fwRTon/PLxJqj20YkdImhlqm+s6JESyqf9YwPRts3DklxW
+ qx94FGAaUlguMP9nYCA5/8GZC72RmWNOgdMMOK5sQ9OyWL641Z3ow/BYayAqukOUwjJgfMZZa
+ qPLAX0whTvHaHTtJgt84jwCVKNtplLpt3HWlASHz252yC6r91wAQNyEkyD3RJ2dO6z/uv0B3H
+ ifWRgb82ozioKti+IIxIUAsxM9GPUmrpQNYggzqfQ1S8CAg2arNkr4cMNLNcROluqkTEe5IZs
+ cabSgaxH7JOT8BzGvAbszIQv8OOVfROytoO79w1EfNh9R0N6qrWAkugwK2xZOpuUTK5nx6JmT
+ EW/5rzdGV8UujTiqhiCOvsrR6Zom2K1/GzFK/VLsmfsDeq2HGSXo/TPysHN9SR6jLPHyAt+pg
+ QumOafW5PBAIAqw+zASNj32o1Le3xBjZDL6yRO87AX1kVBoSEgWnHA1S/NszXpbKeKgAthWXp
+ hy5VA+n5HyFd5S5S8fxeMpgJl511NE+m12bS9TWnK5PYuj+GX2oLO2BsjMTGOWaqctUktABW1
+ 8pUA4+rwNYcz2eVMUlnktmB2vbecJxpqdixC3SXQs5mTb2lnIs9OqnrysCN+hZKnmRTwGmTDg
+ VlgQm9eHkLcAgxeCPyLeKEAPRA06A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-we rebased a branch using "--preserve-merges --interactive" and were 
-surprised that the operation reported success although it silently 
-omitted commits (Git 2.12 on Windows). A little search revealed that 
-these are likely known bugs [1]. Would it make sense to print an 
-appropriate warning message if a user runs rebase with 
-"--preserve-merges --interactive"?
+On Tue, 21 Mar 2017, Junio C Hamano wrote:
 
-Thanks,
-Lars
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Fri, 17 Mar 2017, Lars Schneider wrote:
+> >
+> >> > On 17 Mar 2017, at 11:18, Lars Schneider <larsxschneider@gmail.com>
+> >> > wrote:
+> >> > 
+> >> > Would it make sense/have value to add a job to our TravisCI build
+> >> > [1] that compiles Git in a few variations with some high profile
+> >> > switches such as USE_SHA1DC? Running all the tests for these
+> >> > variations would probably take to long but just compiling would be
+> >> > less than 2min per variation.
+> >> 
+> >> ... or just run individual tests instead of the entire test suite for
+> >> these variations (e.g. only t0013 for the USE_SHA1DC variation).
+> >
+> > The best solution may be to open a PR with .travis.yml patched to
+> > enable this flag. And then report back to he mailing list because the
+> > gentle people here are not that used to paying attention to Continuous
+> > Testing :-D
+> 
+> Actually, the best solution may be to do nothing ;-)  With the current
+> incarnation parked in 'pu' (or I may have already merged it to 'next'),
+> without any explicit VARIANT_SHA1 request to $(MAKE), we default to use
+> the DC_SHA1 variant.
+> 
+> Those who are paying attention to Travis would have noticed this by now,
+> I thought ;-).
 
-[1] https://git-scm.com/docs/git-rebase#_bugs
+I pay attention mainly to breakages, and that is already a lot to pay
+attention to. Thanks.
+
+As to the default of seriously slowing down all SHA-1 computations: since
+you made that the default, at compile time, with no way to turn on the
+faster computation, this will have a major, negative impact. Are you
+really, really sure you want to do that?
+
+I thought that it was obvious that we would have at least a runtime option
+to lessen the load.
+
+Surprised,
+Johannes
