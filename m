@@ -2,106 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F7832095D
-	for <e@80x24.org>; Wed, 22 Mar 2017 18:47:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A58C20323
+	for <e@80x24.org>; Wed, 22 Mar 2017 18:56:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965746AbdCVSrM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 14:47:12 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:34400 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935862AbdCVSrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 14:47:05 -0400
-Received: by mail-pg0-f48.google.com with SMTP id 21so78470695pgg.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 11:47:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=we9z7Upj6tIP2K55vSri/VvXDDi8IdWh7AQ0aC/WEX0=;
-        b=kIT0LY/Da3qkxoBxf33K55ZGDwX3zYCoPF+cXpQ79HD0eBPMaWleSNW0XZnBFoJe5l
-         rO8Ezsoo02tSsJmg26hp39qaaf7O2vyxARFSm6HnRTeQ3RlBE//uFOoxn8SLb23horhl
-         9baXserCBxYmYdUUuu0rVK8kkx31ArRc4eXIlir+JdwJqalE82NglmFNR60df41rYG0V
-         WrXrLD5c+dxRQmSHAeuL7Yemsq95pjgk+ux+0Z3wVymKy7frtbaYM+Y1Joi1sTRrsVN2
-         m0xfjkA0Hu18n9OO3WUEe3A8O6UD1rs0CfR3Nd9hMbVJ5lWDLq4lEGc97BsTyuustA/x
-         JmpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=we9z7Upj6tIP2K55vSri/VvXDDi8IdWh7AQ0aC/WEX0=;
-        b=Y7FthJ32pb6DOsYU2+93iDxI/g9TJTS0tvu56OXrMKbEQ5pF+MrbjCDUb8+EvExGpb
-         F/1FT3WpkAfPlQVFZyjVxTZK3LuIX9OOVenXQldwRoFii9O1U5OHnlycx5WuwTKKgOmF
-         iWjnuusq2O44c6n2nxRDGCITIMRgTRfZMmnMPotJJ4uhCDY/Clp2ipWuga9tJLg55Ssi
-         Mk3LNUQxQzAP/7gUJCtK78eDj2cYrk+vWv6hOz6iPZykzAROi05d8fnN0T7QQ0hf4Nil
-         wCDckKbgpebWKENAZWLjFUkOEsRLOoOc4uuf/+47FMIOMAOyLm2nu66lfgkswGNzt9tS
-         T99Q==
-X-Gm-Message-State: AFeK/H3ULisVx2s2r1+GbVPM3B6jBIjqLZ8+fX4D7j7X9dG1Nk2YhI0veHba075fH91JfczzcGTU+9IZAwU0PGXQ
-X-Received: by 10.84.231.135 with SMTP id g7mr36554056plk.12.1490208424016;
- Wed, 22 Mar 2017 11:47:04 -0700 (PDT)
+        id S965791AbdCVS4d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 14:56:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58206 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S965787AbdCVS4b (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 14:56:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1DB487ACB4;
+        Wed, 22 Mar 2017 14:56:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=755/QoCv+NSY2QLIrfO4+sbfgTA=; b=kHaD4Z
+        XjWfZjUhLqGBErUEv+wnC2W6iJ+kyHa8fMyTB33wdAsDv3u1QSKqiHoRaOfQONv6
+        8LHDfb0Pj8WMwQ73bs4sNs3sZ2FrA5zo4tZkSnOnpqVmlsri7YFRIvMozzZd46do
+        K6Ilo6KuofLfki+mv/ARyNUks9OHMe0m4WwZU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jzBIcmmZ5qMVagKXcDj9h+Pdrqe3zyOi
+        vKkpACc3UDiEkKkqZCqw890wOsaYiBLkWwbetr/lwMNOnUl6J7ZR2fB0q3f3wo/9
+        yIEPRrBrIiolMoXUNAtAYcLE/hZv+Odh4rnPSGW1am3cM2C8Ao8cRF4rkj1ZqCYd
+        KkCKJxjv6AE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 172AC7ACB3;
+        Wed, 22 Mar 2017 14:56:30 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 750627ACB1;
+        Wed, 22 Mar 2017 14:56:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
+References: <20170312200248.3610-1-jn.avila@free.fr>
+        <20170320210225.13046-1-jn.avila@free.fr>
+        <20170320210225.13046-3-jn.avila@free.fr>
+        <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
+        <5036581a-f989-2db6-06ba-621db05c6de1@free.fr>
+        <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZBq+dL7hEj108DPU5KbVeJX2nYEw88jS0Eq78GxzCabA@mail.gmail.com>
+Date:   Wed, 22 Mar 2017 11:56:28 -0700
+In-Reply-To: <CAGZ79kZBq+dL7hEj108DPU5KbVeJX2nYEw88jS0Eq78GxzCabA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 22 Mar 2017 11:41:23 -0700")
+Message-ID: <xmqq1stpkun7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.162.161 with HTTP; Wed, 22 Mar 2017 11:47:03 -0700 (PDT)
-In-Reply-To: <20170322173528.ho43ulndlozq35tu@kalarepa>
-References: <20170322173528.ho43ulndlozq35tu@kalarepa>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 22 Mar 2017 11:47:03 -0700
-Message-ID: <CAGZ79kYe73_iAPU7J9Z+7q_J3F6sUmbHpiC-u2G89auns3bP3Q@mail.gmail.com>
-Subject: Re: EOF test fixes (t5615/t7004)
-To:     Jan Palus <jan.palus@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 421AD892-0F31-11E7-B5D0-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2017 at 10:35 AM, Jan Palus <jan.palus@gmail.com> wrote:
-> Hi,
->
-> attached patch fixes 2 out of 3 tests failing in my env -- missing EOF,
-> incorrectly placed "&&" after EOF. One test seems to be incorrect as it
-> fails even after fixing. I suspect the main difference between my env and
-> others is in shell used -- mksh in my case and probably bash in others.
-> Looks like bash has a nasty behavior when it encounters syntax error:
->
-> $ cat test.sh
-> cat >/dev/null <<-\EOF
-> tagname : forged-tag
-> EOF &&
-> echo foo
->
-> $ bash test.sh && echo success || echo failed
-> test.sh: line 4: warning: here-document at line 1 delimited by
-> end-of-file (wanted `EOF')
-> success
->
-> # notice no "foo" printed
->
-> $ mksh test.sh && echo success || echo failed
-> test.sh[5]: here document 'EOF' unclosed
-> failed
->
-> Test that fails even after fixing EOFs:
-> t7004-tag.sh:verifying a forged tag with --format fail and format accordingly
->
-> Note that I'm not subscribed to mailing list so in case of any questions
-> please mail me directly.
+Stefan Beller <sbeller@google.com> writes:
 
-Thanks for catching these bugs!
+> I wonder if we could have partial functionality for these "clone and checkout"
+> fake submodules, by having e.g. the .gitmodules file telling you the URL
+> and path, but no recorded gitlink in the tree.
 
-Please have a look at Documentation/SubmittingPatches.
-(the most important thing is the "Sign-off-by" line indicating you
-are legally permitted to send such a patch;
-for one-off patches the format can be negotiated, but it is easier
-for maintainers to take the proper format.)
+You can have such a comment in any file including .gitmodules but
+would that even be a feature?  
 
-This email conveys the actual problem very well, so only a little
-change is needed to make it a proper commit message.
-(c.f. git clone git://git.kernel.org/pub/scm/git/git.git/ &&
-git -C git log)
+A comment in the INSTALL file was what I had in mind, at least while
+we are getting more familiar with the proposed two project structure
+and before we commit to use the submodule mechanism to bind them
+together.
 
-Thanks,
-Stefan
+> So we'd want to be able to say:
+>   "get a tarball including all submodules except the superproject"
+>   (This would produce the "optional language pack tarball")
+
+You do not need that.  Just go to the gitman-l10n project and grab a
+tarball out of it.
+
+>   "get a tarball including the superproject and only one submodule"
+>   (This would produce the "I can distribute this in locally as everyone
+>   speaks the same language in the organisation" tarball)
+
+We don't need that, either, even though some other project would.
+"git archive --recurse-submodules" with properly implemented
+pathspec support will solve that.
