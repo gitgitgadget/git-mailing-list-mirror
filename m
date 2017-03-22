@@ -2,204 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 224842095D
-	for <e@80x24.org>; Wed, 22 Mar 2017 21:46:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBA142095D
+	for <e@80x24.org>; Wed, 22 Mar 2017 21:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751250AbdCVVqr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 17:46:47 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:36262 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751178AbdCVVqp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 17:46:45 -0400
-Received: by mail-pg0-f46.google.com with SMTP id g2so112630077pge.3
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:46:44 -0700 (PDT)
+        id S1751364AbdCVVrA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 17:47:00 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:34090 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751178AbdCVVq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 17:46:58 -0400
+Received: by mail-pf0-f171.google.com with SMTP id p189so73730591pfp.1
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=T89oyjNmaMmTsQDUNOpka6O5hxUFwibzvGHggRdqNpE=;
-        b=eqHAVNlE9flnyXS+TnonCucUZ2IS3FZUnjJ5AFMLlcvu+WGRUvVIDGN6UFe+oMhKPZ
-         0FzCZaIEmMOOI82G2G2dbL1j/MBuoPnwaogDI165xWePeOqtb7FtWVpvOnThtlntbomU
-         aTdz2k/IQqRewo0Rv3T9bRTzwKEUsYWzR++u0TaDQahIN8GlYUz+BZCDuVlGy8vrW+TJ
-         PVLnZ2opH+Jzzwj1MV6lp7Y0yuhxKJSszr3Fp3tIfJha2ufPD0akozsd4W7+3/6QxAQl
-         R9ruCtl005REDGVPYYuAI0zUazHiivbJ1JNX3g1rC7Y7nsaWU45/aFrQIO5cbLVMocRN
-         AKvQ==
+        bh=5t0LR/+W3nsZy1YEUxxwikrYOlFYjjvmZRSxZVo4cLw=;
+        b=Vb9vbR9tpQF/spA9TXfCMxyGop/iE8CgTN9PanGryAAYmtuWcwdO1Tf3ArfZ5IHp5m
+         Ts5avukbeNuwxlCYqNX0GRa48QtQuFGI6vykMs87l/cwWRDktbTdQDlQfZbVZoSXaju2
+         z8MrLJsSY5gF9awyxetjd+n3mJSiNZZQ340jTPHm1ryHjFvS3ucbwKcYDNz/MtcZ5uQ7
+         UemB75p0vtMI9Vmf9AAXAWhKsUy6k2l4NCT/hWTWHbm+LLv69siLGBA+SD442J5HF9mn
+         nGMsD2vsnMjNCibyEHQ+oUQlXTGfDxyhMpQHM3+7sgVy3vwCgh8S1VZ5a0v6Bzy9kIxR
+         2orQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=T89oyjNmaMmTsQDUNOpka6O5hxUFwibzvGHggRdqNpE=;
-        b=ndAa+2vuXqg8Rz+MSx8ZndmmqZgHvAZuHkngp4MUyktQ0E4hxo/099/6LskACIJR9P
-         saQHZP342jBeOhzADZk+TaHvqhPVw2bG47Gpy0evctoE0ABEqWXR4jAh3TGxuzkNQzkc
-         22HxAVep5ogt8i1zZ2xCbrbnYX6iQMql6jqYrbEHJOFX4i0GxFSuSGaXwKgW2TqjtGLE
-         2PmlZzsxIWkaEimaGSZL+H2LbHBqa0lCiaYkMsNedL+T7FcI2M1uQmZ2Uf4rqAb6drR2
-         bX4m207DQ0fiDTU5IKc48iMOM4kzSks/KFXeBxAKA5di5GoK6iTcSxabTG5O90tLPFvj
-         IIIg==
-X-Gm-Message-State: AFeK/H3Lc+LW5KuDydqt8vgNpdSe0NKXETs+tgXhg+FSKUKHzV2tKdJPM1RcpPD+biezSg==
-X-Received: by 10.84.128.15 with SMTP id 15mr26428281pla.37.1490218708721;
-        Wed, 22 Mar 2017 14:38:28 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:55f5:992d:bc78:c749])
-        by smtp.gmail.com with ESMTPSA id u69sm5722056pfg.121.2017.03.22.14.38.27
+        bh=5t0LR/+W3nsZy1YEUxxwikrYOlFYjjvmZRSxZVo4cLw=;
+        b=WSAIFgERu3MXzEcZ975eyCMo7MnfRBGTqgOymkx1OBmeb1nqEAZoO995yK4N8ObzH2
+         t9lWtVfQYE2OncaOzLF/7u0Qvj3UWJtHCGUNMWGFZkC2Gf/f2c5GabIGlVFsoO63Z9uX
+         kr8p9GACyB60W7dm9PElPXIEeE6W8koOPrdyHKVQtGlJXBKOl32Z+GTTH2upaTnlRA8J
+         Y1wBz4BQq1KO4kIKTZmP26VPGVlRT2TqM0tiadSOfIwoNOrGhnaGSZjpjDNaJlVYz5VD
+         I9ee356v3vOtGctvToPDAxl7onYBsLBSRWSGhyDVxLI3VSy66xWKdoTq56Az4cFOAbaR
+         1hwQ==
+X-Gm-Message-State: AFeK/H1GXyb66JEK3giExZCfK+qYC+654FnKSOGiVl4TLge8i526vw9V+l8nmQeXqGgoejzR
+X-Received: by 10.98.16.137 with SMTP id 9mr48781609pfq.104.1490219216683;
+        Wed, 22 Mar 2017 14:46:56 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:4506:c5a2:cf62:91cb])
+        by smtp.gmail.com with ESMTPSA id s3sm5781612pgn.55.2017.03.22.14.46.55
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Mar 2017 14:38:28 -0700 (PDT)
-Date:   Wed, 22 Mar 2017 14:38:26 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] remote-curl: allow push options
-Message-ID: <20170322213826.GC26108@aiede.mtv.corp.google.com>
-References: <20170322195102.165314-1-bmwill@google.com>
- <20170322195102.165314-3-bmwill@google.com>
+        Wed, 22 Mar 2017 14:46:55 -0700 (PDT)
+Date:   Wed, 22 Mar 2017 14:46:54 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 3/5] grep: fix bug when recursing with relative
+ pathspec
+Message-ID: <20170322214654.GC11254@google.com>
+References: <20170314221100.24856-1-bmwill@google.com>
+ <20170317172257.4690-1-bmwill@google.com>
+ <20170317172257.4690-4-bmwill@google.com>
+ <CACsJy8Cu8cgtJzDDM09GoJr5Ny+G+nP17GjZjXng6ZPQv9eXXg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170322195102.165314-3-bmwill@google.com>
+In-Reply-To: <CACsJy8Cu8cgtJzDDM09GoJr5Ny+G+nP17GjZjXng6ZPQv9eXXg@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+On 03/21, Duy Nguyen wrote:
+> On Sat, Mar 18, 2017 at 12:22 AM, Brandon Williams <bmwill@google.com> wrote:
+> > With these two pieces of information a child process can correctly
+> > interpret the pathspecs provided by the user as well as being able to
+> > properly format its output relative to the directory the user invoked
+> > the original command from.
+> 
+> This part can stand alone as a separate patch right? It would help
+> focus on the pathspec thingy first.
 
-> --- a/builtin/send-pack.c
-> +++ b/builtin/send-pack.c
-> @@ -152,6 +152,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
->  	int progress = -1;
->  	int from_stdin = 0;
->  	struct push_cas_option cas = {0};
-> +	struct string_list push_options = STRING_LIST_INIT_DUP;
+I guess it could probably be factored out, though it is necessary for it
+to work.  The issue I was running into was that when no pathspecs were
+given it would create a 'prefix' pathspec.  So if we were in directory
+'dir/' the pathspec that would get created would be:
 
-It's safe for this to be NODUP, since the strings added to it live in
-argv.
+ps.match = "dir/"
+ps.original = "dir/"
 
->  
->  	struct option options[] = {
->  		OPT__VERBOSITY(&verbose),
-> @@ -171,6 +172,9 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
->  		OPT_BOOL(0, "stateless-rpc", &stateless_rpc, N_("use stateless RPC protocol")),
->  		OPT_BOOL(0, "stdin", &from_stdin, N_("read refs from stdin")),
->  		OPT_BOOL(0, "helper-status", &helper_status, N_("print status from remote helper")),
-> +		OPT_STRING_LIST('o', "push-option", &push_options,
-> +				N_("server-specific"),
-> +				N_("option to transmit")),
+Since it also set the original field it messed up when the child tried
+to interpret the pathspecs again.  I solved this by just passing the raw
+pathspec through to the child.
 
-Does this need the short-and-sweet option name 'o'?  For this command,
-I think I'd prefer giving it no short name.
+> 
+> > @@ -399,13 +405,12 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
+> >  }
+> >
+> >  static void compile_submodule_options(const struct grep_opt *opt,
+> > -                                     const struct pathspec *pathspec,
+> > +                                     const char **argv,
+> >                                       int cached, int untracked,
+> >                                       int opt_exclude, int use_index,
+> >                                       int pattern_type_arg)
+> >  {
+> >         struct grep_pat *pattern;
+> > -       int i;
+> >
+> >         if (recurse_submodules)
+> >                 argv_array_push(&submodule_options, "--recurse-submodules");
+> 
+> Side note. It would be awesome if you could make parse_options() (or a
+> new function) do the reverse process: given a 'struct option' with
+> valid data, spit out argv_array. Less worrying about git-grep having
+> new option but not passed to subgrep by accident. You can have a new
+> flag to tell it to ignore certain options if you don't want to pass
+> all.
 
-Should this option be documented in the manpage, too?
+I thought about this for a second but didn't pursue it very far.  Mostly
+because of how you would handle options with callback routines.  Maybe
+if you want the option to be reversible you need to have an additional
+callback routine to do the conversion?  I agree that having this sort of
+functionality would be nice as it does save you from forgetting about
+passing on options to a child process.
 
-[...]
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -22,6 +22,7 @@ struct options {
->  	unsigned long depth;
->  	char *deepen_since;
->  	struct string_list deepen_not;
-> +	struct string_list push_options;
->  	unsigned progress : 1,
->  		check_self_contained_and_connected : 1,
->  		cloning : 1,
-> @@ -139,6 +140,9 @@ static int set_option(const char *name, const char *value)
->  		else
->  			return -1;
->  		return 0;
-> +	} else if (!strcmp(name, "push-option")) {
-> +		string_list_append(&options.push_options, value);
-> +		return 0;
-
-push_options has strdup_strings enabled so this takes ownership of a
-copy of value.  Good.
-
-[...]
-> --- a/t/t5545-push-options.sh
-> +++ b/t/t5545-push-options.sh
-> @@ -102,7 +102,9 @@ test_expect_success 'two push options work' '
->  	test_cmp expect upstream/.git/hooks/post-receive.push_options
->  '
->  
-> -test_expect_success 'push option denied properly by http remote helper' '\
-> +test_expect_success 'push option denied properly by http server' '
-
-Should this test use test_i18ngrep to check that the error message
-diagnoses the problem correctly instead of hitting an unrelated error
-condition?
-
-[...]
-> @@ -113,6 +115,32 @@ test_expect_success 'push option denied properly by http remote helper' '\
->  	git -C test_http_clone push origin master
->  '
->  
-> +test_expect_success 'push options work properly across http' '
-
-Nice.
-
-Tested-by: Jonathan Nieder <jrnieder@gmail.com>
-
-With whatever subset of the following changes seems sensible to you
-squashed in,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
-
-diff --git i/Documentation/git-send-pack.txt w/Documentation/git-send-pack.txt
-index a831dd0288..966abb0df8 100644
---- i/Documentation/git-send-pack.txt
-+++ w/Documentation/git-send-pack.txt
-@@ -81,6 +81,12 @@ be in a separate packet, and the list must end with a flush packet.
- 	will also fail if the actual call to `gpg --sign` fails.  See
- 	linkgit:git-receive-pack[1] for the details on the receiving end.
- 
-+--push-option=<string>::
-+	Pass the specified string as a push option for consumption by
-+	hooks on the server side.  If the server doesn't support push
-+	options, error out.  See linkgit:git-push[1] and
-+	linkgit:githooks[5] for details.
-+
- <host>::
- 	A remote host to house the repository.  When this
- 	part is specified, 'git-receive-pack' is invoked via
-diff --git i/builtin/send-pack.c w/builtin/send-pack.c
-index 6796f33687..832fd7ed0a 100644
---- i/builtin/send-pack.c
-+++ w/builtin/send-pack.c
-@@ -144,6 +144,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	unsigned force_update = 0;
- 	unsigned quiet = 0;
- 	int push_cert = 0;
-+	struct string_list push_options = STRING_LIST_INIT_NODUP;
- 	unsigned use_thin_pack = 0;
- 	unsigned atomic = 0;
- 	unsigned stateless_rpc = 0;
-@@ -152,7 +153,6 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	int progress = -1;
- 	int from_stdin = 0;
- 	struct push_cas_option cas = {0};
--	struct string_list push_options = STRING_LIST_INIT_DUP;
- 
- 	struct option options[] = {
- 		OPT__VERBOSITY(&verbose),
-@@ -166,15 +166,15 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		{ OPTION_CALLBACK,
- 		  0, "signed", &push_cert, "yes|no|if-asked", N_("GPG sign the push"),
- 		  PARSE_OPT_OPTARG, option_parse_push_signed },
-+		OPT_STRING_LIST(0, "push-option", &push_options,
-+				N_("server-specific"),
-+				N_("option to transmit")),
- 		OPT_BOOL(0, "progress", &progress, N_("force progress reporting")),
- 		OPT_BOOL(0, "thin", &use_thin_pack, N_("use thin pack")),
- 		OPT_BOOL(0, "atomic", &atomic, N_("request atomic transaction on remote side")),
- 		OPT_BOOL(0, "stateless-rpc", &stateless_rpc, N_("use stateless RPC protocol")),
- 		OPT_BOOL(0, "stdin", &from_stdin, N_("read refs from stdin")),
- 		OPT_BOOL(0, "helper-status", &helper_status, N_("print status from remote helper")),
--		OPT_STRING_LIST('o', "push-option", &push_options,
--				N_("server-specific"),
--				N_("option to transmit")),
- 		{ OPTION_CALLBACK,
- 		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
- 		  N_("require old value of ref to be at this value"),
+-- 
+Brandon Williams
