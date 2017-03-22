@@ -2,135 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DE222095D
-	for <e@80x24.org>; Wed, 22 Mar 2017 21:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 978982095D
+	for <e@80x24.org>; Wed, 22 Mar 2017 21:46:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751567AbdCVVoG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 17:44:06 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:34265 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751510AbdCVVoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 17:44:01 -0400
-Received: by mail-qk0-f195.google.com with SMTP id v127so27822217qkb.1
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:44:00 -0700 (PDT)
+        id S1751792AbdCVVqU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 17:46:20 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34885 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751178AbdCVVqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 17:46:19 -0400
+Received: by mail-wm0-f68.google.com with SMTP id z133so13186156wmb.2
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=pHB4fE4pRKan0lVYMbU5uRHTlr9mbOM6d+GQWmcKD18=;
-        b=vC9r6fH72TAqO/VKwXTZEpSK4ziLUDdGoPFLQ1g4DlrA6wiwWJyUuJx4T4dpUZwJ0j
-         Uukn0y7dcQTrEkG139gL7cQ8tkQdw/8icKnGFUi6vdjB/DGIlPVS72DicOkG5tngB2rM
-         ig87o+w2r6t+xx0hYbh7BEHlJ8sZaDRtysfd9vZyMAse4uawgQ0LN+EvZJSDMfw8PQw5
-         HTz0ghYg07vi3xG7aeQFdl8VOds0wL3uRlVD3KmwfJage8jPVFaJVctj6UVZoU8M1Qx0
-         c24ARIA78RvqiJtatJEVhQRl4RDFVd7VBOTCcMnlihh8KIzmXUpXSMq8X6UDp1NXDOw5
-         vAMg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=krT3l4+gbpGqeBUpAiYEYLNJ1EhgmiYw28vv+OBJSSY=;
+        b=ZYDcZpcfHnY0tpEK/bTEIISLXTL6IEi4gAaB+f7yiAx+2Ubj2lKLeSv3yItmWEPBqX
+         B2Cp0zEAU35AMaHXbKjHVsurdgiDK3+4FK3AkiXmRIsf8wqY1jrBb3x0wbpOQKLog9sM
+         CnAqOVedwZeKd1cbWWR4PBJyJRaeu//A4GzFhvtH4rr7gJVkUAWfLmOlwmiV+7OQ7tXs
+         TNrz0DvYmWDWJ0SNRebwkDwu1Du2QdZUC6Jgi1F9xZ8CdGj9TC0yq1Qar6Ov2+GFdZEK
+         aWn0Cj14uVgei6kCUSTq46ZUmHofuXV3AZTdui41jzudHW+yahxPbT+7FZwk9tbGzMCv
+         LetQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=pHB4fE4pRKan0lVYMbU5uRHTlr9mbOM6d+GQWmcKD18=;
-        b=A38wNdhId9eTcKf7jDOKe9ZETGsjfzRlKstJls+RSrHVyQq7CzOo+od+w3DZBtc2J/
-         CDDCw1BAIrUlMa3zW6rHB8JSaoJ9Wo4+DDZTy0zw6rHfCqr8MMfGYWsTb39oSog9lxAp
-         Bm9uXmevvnChJLNx2Zwj2rZ9dFqdzUR9lBlsTsDlBrqWLlo3b/wXqqEgskKyYRoiSlZl
-         nkdFl5PEdlwu/P12o0vbbuDf+RNnswIuuXr9qv9L2daGggQDOQYvuULTDZlDvDA3atYf
-         k+tm+PmUrkYeBlOm35zTMIyhuNzwO0hoQseGdf3mBW9IxxIWX5rWs+XHWtDWvK2xzfTs
-         PtCg==
-X-Gm-Message-State: AFeK/H39y8px7FUk2pHZZytHJDAciRH1hdP9csDqcIM4ia+qVjCm9B4hMGr42xiYTaXt9NTm
-X-Received: by 10.55.72.87 with SMTP id v84mr35748109qka.21.1490219038821;
-        Wed, 22 Mar 2017 14:43:58 -0700 (PDT)
-Received: from LykOS.localdomain ([2604:2000:8183:da00::3])
-        by smtp.gmail.com with ESMTPSA id f56sm1868993qta.14.2017.03.22.14.43.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Mar 2017 14:43:58 -0700 (PDT)
-Date:   Wed, 22 Mar 2017 17:43:57 -0400
-From:   Santiago Torres <santiago@nyu.edu>
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=krT3l4+gbpGqeBUpAiYEYLNJ1EhgmiYw28vv+OBJSSY=;
+        b=LQpkCRhNuvFlCyo/ac9TRMmP3wgHWKaFtfZyh4AXPhrn6dPX7mZbly/ivaXl4MDplv
+         iMILK/njJ2M2rzrq0Tw5Z2VuxzG8ZecHgPArU4Wr6UCfgKLO6agIjPAPkRqrY5ck7SHv
+         EymNKOAhG3mBD7FOvSoJv7jtB3RKXlPYxmH6TYwJtzR4sGgREffBAc2LDtZWUFst8Db6
+         cHkLHKjpsQRiniP9tarWRldhN3ObCgp8BRwVYMQw0EuVVZ6eg7vNfFY4b8nwPKqYuPn8
+         uFq3ltTMtfueLhMsUwt12P7hbOofOU0U2nNRXWGQJSdYZnBPKJJyg4H9EcvXu3DprKsc
+         sBtA==
+X-Gm-Message-State: AFeK/H2MJVsCZscJjnkAB2yqFEnrEuzvj/GoIPbnsEd5EMcGNzIW9vxl5Y5lE+7ZgoaF+g==
+X-Received: by 10.28.88.129 with SMTP id m123mr10428709wmb.28.1490219176916;
+        Wed, 22 Mar 2017 14:46:16 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id 36sm3299154wrk.15.2017.03.22.14.46.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Mar 2017 14:46:16 -0700 (PDT)
+Date:   Wed, 22 Mar 2017 21:46:34 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jan Palus <jan.palus@gmail.com>
-Subject: Re: [PATCH 3/3] t7004, t7030: fix here-doc syntax errors
-Message-ID: <20170322214356.5jj7dggtvgilreci@LykOS.localdomain>
-References: <20170322173528.ho43ulndlozq35tu@kalarepa>
- <20170322200805.23837-1-gitster@pobox.com>
- <20170322200805.23837-4-gitster@pobox.com>
- <20170322211003.b52cql3iwig2xqcd@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] stash: keep untracked files intact in stash -k
+Message-ID: <20170322214634.GG27158@hank>
+References: <20170319202351.8825-1-t.gummerer@gmail.com>
+ <20170321221219.28041-1-t.gummerer@gmail.com>
+ <20170321221219.28041-4-t.gummerer@gmail.com>
+ <20170321223809.c7wik5lfjylno6wn@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="rf4cdtcyqlzqm354"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170322211003.b52cql3iwig2xqcd@sigill.intra.peff.net>
+In-Reply-To: <20170321223809.c7wik5lfjylno6wn@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 03/21, Jeff King wrote:
+> On Tue, Mar 21, 2017 at 10:12:19PM +0000, Thomas Gummerer wrote:
+> 
+> > Currently when there are untracked changes in a file "one" and in a file
+> > "two" in the repository and the user uses:
+> > 
+> >     git stash push -k one
+> > 
+> > all changes in "two" are wiped out completely.  That is clearly not the
+> > intended result.  Make sure that only the files given in the pathspec
+> > are changed when git stash push -k <pathspec> is used.
+> 
+> Good description.
 
---rf4cdtcyqlzqm354
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I basically just tweaked your report here :)  thanks for that!
 
-On Wed, Mar 22, 2017 at 05:10:03PM -0400, Jeff King wrote:
-> On Wed, Mar 22, 2017 at 01:08:05PM -0700, Junio C Hamano wrote:
->=20
-> > From: Jan Palus <jan.palus@gmail.com>
-> >=20
-> > These all came as part of an earlier st/verify-tag topic that was
-> > merged to 2.12.
-> >=20
-> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> > ---
-> >=20
-> >  * This should be applied on top of 4fea72f4 ("t/t7004-tag: Add
-> >    --format specifier tests", 2017-01-17)
-> >=20
-> >  t/t7004-tag.sh        | 8 ++++----
-> >  t/t7030-verify-tag.sh | 8 ++++----
-> >  2 files changed, 8 insertions(+), 8 deletions(-)
->=20
+> > diff --git a/git-stash.sh b/git-stash.sh
+> > index 13711764a9..2fb651b2b8 100755
+> > --- a/git-stash.sh
+> > +++ b/git-stash.sh
+> > @@ -314,7 +314,9 @@ push_stash () {
+> >  
+> >  		if test "$keep_index" = "t" && test -n "$i_tree"
+> >  		then
+> > -			git read-tree --reset -u $i_tree
+> > +			git read-tree --reset $i_tree
+> > +			git ls-files -z --modified -- "$@" |
+> > +			git checkout-index -z --force --stdin
+> >  		fi
+> 
+> I briefly wondered if this needed "-q" to match the earlier commit, but
+> "checkout-index" isn't really chatty, so I don't think so (and the
+> earlier checkout-index doesn't have it either).
 
-On my side, these patches make tests fail. I'm wondering if this is an
-issue with the underlying shell (probably the version)? Let me try to
-figure out what is exactly going on here.
+Yep, I had the same thoughts here.
 
-> Like 2/3, this one also produces test failures for me. It looks like
-> "verify-tag" does not show a tag which has been forged. I'm not sure if
-> that's intentional (and the test is wrong) or a bug.=20
+> I also wondered if this could be done in a single command as:
+> 
+>   git reset -q --hard $i_tree -- "$@"
+> 
+> But "git reset" can't handle pathspecs with "--hard" (which is why the
+> similar case a few lines above uses the same commands).
 
-I see that offending code would be [1]. Changing this behavior should be
-trivial (dropping the continue), although I'm not sure if this is what
-we want?
+Yeah unfortunately, that would have made the previous patch series
+quite a bit easier :)  But here it wouldn't help anyway, as git reset
+without pathspecs can't handle a tree-ish either, right?  And we also
+want to handle the case where no pathspecs are given to git stash.
 
->=20
+> 
+> So this looks good to me.
+> 
+> > +test_expect_success 'stash -k -- <pathspec> leaves unstaged files intact' '
+> > +	git reset &&
+> > +	>foo &&
+> > +	>bar &&
+> > +	git add foo bar &&
+> > +	git commit -m "test" &&
+> > +	echo "foo" >foo &&
+> > +	echo "bar" >bar &&
+> > +	git stash -k -- foo &&
+> > +	test "",bar = $(cat foo),$(cat bar) &&
+> > +	git stash pop &&
+> > +	test foo,bar = $(cat foo),$(cat bar)
+> > +'
+> 
+> I always get nervous when I see test arguments without quotes, but I
+> think this is fine (and I couldn't see a shorter way of doing it with
+> test_cmp).
+
+Hmm yeah I basically copied this from a different test and tweaked it
+a bit to fit here.
+
 > -Peff
-
-Thanks,
--Santiago.
-
-[1] https://github.com/git/git/blob/master/builtin/verify-tag.c#L6://github=
-=2Ecom/git/git/blob/master/builtin/verify-tag.c#L67
-
---rf4cdtcyqlzqm354
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAljS8BoACgkQRo8SLOgW
-IpUJKg//azHsct2XgTdiDXTqjyASVl42M6HE1TgUzvgyFDA8pIs+YAU8BtR4+4Ua
-MaSry9Rq1emF0ZSe3r2XDzztz5DXACXcG66g+pflK/rpdwkNve22pvkDZtZi46W4
-D2weD8cADK+sVHhiEaZv/uOl78idf7mTzC3Gr6m3Cy6km0dCrMQXCgdWC9rJQ7c+
-IeQcd6P8taaAtfIC9QEMgqexFk89f4SMd1klxgPmKWgAvaVc9zOWADMU/1SCOApr
-DaqBYOEhYOuO2EKJ69hQjIBbBQoKLsXu3kkL355hXlmLTNLJy6gr9OVyFNKeTkXD
-W7cRWT9jxe06cg6+hPEXUkr9OViyRCdgxVrgCiHr48kKUr1YMFS1XYKJ74zLcKTQ
-utqwcntQmXK5sPyeougogtBFoSAHJQjlE9belWUuwzYaotrFYiD5eFns4PfXj57V
-qmVaYIn0fCP0vkCePRi0mwcn4eGO1Kw9nqHSubKR0FkVpRSDXQLuHaRFSsDhKugH
-G/szeMBxlBhXOt3FmpDDMPUyAIIQ7RdVYS6QTFnQL1InM3GXHdOWPdnoVmSun/sK
-9JcwNJu072R0+2gwtNU0OFknVYNk4mmtT5Imu7Xa8yZBPrX9QA898HQ22GN0f3tP
-Uqeb4hC5AEaA5Z/10AJrk9/q0S2g0JJjbs3cGN7TR90XFx33BQo=
-=m5NQ
------END PGP SIGNATURE-----
-
---rf4cdtcyqlzqm354--
