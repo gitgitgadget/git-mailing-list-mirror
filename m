@@ -2,110 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7225220323
-	for <e@80x24.org>; Wed, 22 Mar 2017 21:50:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2085220323
+	for <e@80x24.org>; Wed, 22 Mar 2017 21:50:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751235AbdCVVuH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 17:50:07 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:33533 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751159AbdCVVuF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 17:50:05 -0400
-Received: by mail-pg0-f49.google.com with SMTP id w20so10681896pgc.0
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:49:56 -0700 (PDT)
+        id S1751299AbdCVVuM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 17:50:12 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:35242 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751025AbdCVVuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 17:50:10 -0400
+Received: by mail-lf0-f65.google.com with SMTP id v2so15080968lfi.2
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 14:50:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SHOcmMbFsNDFWjuMiZir6xd8/Kby3vEBPbdc9dJ6wcc=;
-        b=DX6JrfONccwm/wO5khLLFdXMgwnrLsaVV/LB51e/Pwo7KpUp4FX5mkojIrLc/77HSm
-         GIzpEhmQskIlaFmRKnRg159eJr/+kUf4f1GMQcb1Wovt3D3ujtDibqD2fwWVSVc9D8x7
-         32i925Ih9ZYuH7rGrXU40T5LcTf5myfzfwcLMfObnIZlsc8zgG4Ts5ZMgrVHEFWMjAuf
-         z6c51z/YUkWmOqjNPUYMw8fiZdzI7sZiFMCkUrZBf32lPvGlrml+hwj6MFPtghzBmsEi
-         q5hBugJhibJfo9vVN4x6JJ0f6xfc+PHfXUv/cTIsGd5LDXlnQxZJfrX5xibVBU/gH3pB
-         JphA==
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=hHdCNCPzxTGFulE38t+ez0Tu8H+zwOkQ+IGdjxVXD5w=;
+        b=m6UV8vbDtVeSFJAGr70LQyzsIAVMEFbbTFI3oRiwrams/XKq8+m2IkzekKJxne8a7s
+         fd2cZ8/phhOJXbWmVCt+TpPyB1fz54vXb91rCRiI+AQy1dVE0Mdb0r/XG2muQQAwr7wk
+         M00nnVFAUaq2+gTk7RdoIyUGwTvlj/A4bPSxzxb7LRVPmJR2muTHrLJ1YiYidf3hqYEw
+         Ievn4abEK+1PY0RjVVKD5V80+eL+H+Y7CeKIrKuj6n24lIeKwWRDLeBcNy3B4zFjjuAt
+         KUYb9KdkgsaGeGjVtAJaB8bhWKKE1vcN8XMIh0jibWYOZmr+CgFOw9h/wNSdOizCzx3X
+         WEqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=SHOcmMbFsNDFWjuMiZir6xd8/Kby3vEBPbdc9dJ6wcc=;
-        b=Z368cWsdxTICxZtNqpEGC5wzENMH9P/pQXntBGIJLdc90/Ck/7XHcAEmQiJxSC7hTY
-         6QIbsHpPxa1jkzNRG5x1fV0GrmEd3hw5wk71LLK5Ppy8XHIz8ppZI9dzW3UKH3jYf4M+
-         u5W+nVE0D0wRM7HV1bcZfgpc1Y1s5K9IATwdo8p8z1by/YIi3Zir1kWWHfft4zrnOOk+
-         hXbX6xf3Climl8riNXxgNKRQHsIXMWnVfMzAnwCMRs6RAHMop7/9o3dz38507U8sXf/z
-         J0tSNIouwe9rBwLqpwPKUzuvxdaUFJOnFqpJOVLGZeOkI6PU0SgZXj9SH2BbtzqsgFYd
-         Wm3Q==
-X-Gm-Message-State: AFeK/H1n3EPYFeowYePfjp8fpRMcxOZzjuclhR6hSFvaZ19sPctmzXZ0nV3pNJiztaJD6Z4i
-X-Received: by 10.99.139.196 with SMTP id j187mr41529379pge.176.1490219390192;
-        Wed, 22 Mar 2017 14:49:50 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:1959:c634:6437:385])
-        by smtp.gmail.com with ESMTPSA id v11sm5775559pfk.32.2017.03.22.14.49.49
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 22 Mar 2017 14:49:49 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, peff@peff.net, jan.palus@gmail.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH] t7406: correct test case for submodule-update initial population
-Date:   Wed, 22 Mar 2017 14:49:48 -0700
-Message-Id: <20170322214948.12015-1-sbeller@google.com>
-X-Mailer: git-send-email 2.10.2.50.g9d09a6e.dirty
-In-Reply-To: <20170322213953.oddbgw5nfrvmzjgm@sigill.intra.peff.net>
-References: <20170322213953.oddbgw5nfrvmzjgm@sigill.intra.peff.net>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=hHdCNCPzxTGFulE38t+ez0Tu8H+zwOkQ+IGdjxVXD5w=;
+        b=YYmpHqRydgSbv/w3fpGPSUo7YyvRjnQSivyTbE5aPwFw1wErCec+889oGOEioHoEzq
+         KFnf8kPsmfBJcGlJCFy0co66O/jTbEL4WsIZ/mT9cajerNS08r+9uGXe2090SuwYpsYO
+         PTQUTocCNZZH+JoNDaOvgZaS/k60SE5JpZ+puE0VJj6Sl9/P8PAeuLNpCRHaL5dL7DYm
+         yt3HU8WfhSylDtyjBWjJKeJUcfNH20FljDhvvEX1wsqve9T+XS/PeN7G4Figckn7UgeO
+         sTbyYs1FtLJgS+aNPHXLXmMccrwiRgLH1BWW0QCQWKvP9MsNw0QeZiRf1fXVtSlB+I9T
+         ZAJw==
+X-Gm-Message-State: AFeK/H060tBtm31wAJUnXY6o8CcknKmnICV28WANfZuXswu7pOcgNPc7awTtgQnAkN4vKg==
+X-Received: by 10.25.67.16 with SMTP id q16mr11205960lfa.120.1490219408607;
+        Wed, 22 Mar 2017 14:50:08 -0700 (PDT)
+Received: from [192.168.1.26] (abrf170.neoplus.adsl.tpnet.pl. [83.8.99.170])
+        by smtp.googlemail.com with ESMTPSA id 3sm181815ljj.16.2017.03.22.14.50.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Mar 2017 14:50:07 -0700 (PDT)
+Subject: Re: [PATCH v2] builtin/describe: introduce --broken flag
+To:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <CAGZ79kYfrKRbs40UH73VCgMsJgFyh1aG5ZrYMj3O_wGdu6rSUA@mail.gmail.com>
+ <20170321225718.18633-1-sbeller@google.com>
+Cc:     git@vger.kernel.org, mfick@codeaurora.org
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <b418a7ec-a8e5-1702-1a1f-3e9c8b8a2f7e@gmail.com>
+Date:   Wed, 22 Mar 2017 22:50:01 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <20170321225718.18633-1-sbeller@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are three issues with the test:
+W dniu 21.03.2017 o 23:57, Stefan Beller pisze:
 
-* The syntax of the here-doc was wrong, such that the entire test was
-  sucked into the here-doc, which is why the test succeeded successfully.
+> --- a/Documentation/git-describe.txt
+> +++ b/Documentation/git-describe.txt
+> @@ -30,9 +30,14 @@ OPTIONS
+>  	Commit-ish object names to describe.  Defaults to HEAD if omitted.
+>  
+>  --dirty[=<mark>]::
+> -	Describe the working tree.
+> -	It means describe HEAD and appends <mark> (`-dirty` by
+> -	default) if the working tree is dirty.
+> +--broken[=<mark>]::
+> +	Describe the state of the working tree.  When the working
+> +	tree matches HEAD, the output is the same as "git describe
+> +	HEAD".  If the working tree has local modification "-dirty"
+> +	is appended to it.  If a repository is corrupt and Git
+> +	cannot determine if there is local modification, Git will
+> +	error out, unless `--broken' is given, which appends
+> +	the suffix "-broken" instead.
 
-* The variable $submodulesha1 was not expanded as it was inside a single
-  quoted string. Use double quote to expand the variable.
+The common description reads better... but unfortunately it lost
+information about the optional parameter, namely <mark>.  The
+'-dirty' is just the default for <dirty-mark>, and '-broken' is
+the default for <broken-mark>.
 
-* The redirection from the git command to the output file for comparison
-  was wrong as the -C operator from git doesn't apply to the redirect path.
-  Also we're interested in stderr of that command.
+Maybe /the suffix "-broken"/<broken-mark> suffix ('-broken' by default)/
+and similarly for "-dirty"?
 
-Noticed-by: Jan Palus <jan.palus@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-This is just one patch (for bisectability)
-it applies on e7b37caf4fe.
-
-Thanks,
-Stefan
-
- t/t7406-submodule-update.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 8c086a4..c327eb6 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -425,11 +425,11 @@ test_expect_success 'submodule update - command in .git/config catches failure -
- '
- 
- test_expect_success 'submodule update - command run for initial population of submodule' '
--	cat <<-\ EOF >expect
--	Execution of '\''false $submodulesha1'\'' failed in submodule path '\''submodule'\''
--	EOF &&
-+	cat >expect <<-\EOF &&
-+	Execution of '\'"false $submodulesha1"\'' failed in submodule path '\''submodule'\''
-+	EOF
- 	rm -rf super/submodule &&
--	test_must_fail git -C super submodule update >../actual &&
-+	test_must_fail git -C super submodule update 2>actual &&
- 	test_cmp expect actual &&
- 	git -C super submodule update --checkout
- '
+Best,
 -- 
-2.10.2.50.g9d09a6e.dirty
+Jakub Narębski
 
