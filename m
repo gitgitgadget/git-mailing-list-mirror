@@ -2,83 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C63720964
-	for <e@80x24.org>; Thu, 23 Mar 2017 14:45:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E63E20964
+	for <e@80x24.org>; Thu, 23 Mar 2017 14:55:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755514AbdCWOoW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 10:44:22 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51688 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752909AbdCWOoU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 10:44:20 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskKv-1cAoHR15ir-012Hlf; Thu, 23
- Mar 2017 15:43:36 +0100
-Date:   Thu, 23 Mar 2017 15:43:35 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] t7504: document regression: reword no longer calls
- commit-msg
-In-Reply-To: <xmqqefxpkwjf.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703231541180.3767@virtualbox>
-References: <cover.1490194846.git.johannes.schindelin@gmx.de> <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de> <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com> <alpine.DEB.2.20.1703221704500.3767@virtualbox>
- <xmqqefxpkwjf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S933890AbdCWOzz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 10:55:55 -0400
+Received: from mail-wr0-f173.google.com ([209.85.128.173]:36327 "EHLO
+        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932308AbdCWOzy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 10:55:54 -0400
+Received: by mail-wr0-f173.google.com with SMTP id u108so149212630wrb.3
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 07:55:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VFDMVeMPBgp/DdpUVfGs9S1VArZJc3GgOZPCZIpYSng=;
+        b=BDrqANWjd0Kuc0MFKMHgdbSvyfh2DAlMMA30yZLWGB0C7WCBMwUI+OAniGqFmHPyBW
+         7KurxmlDD5q6fi+nzCPAZSZM8BVafS+6Y8Gf+5qnWK6MVheyQ+cnh7GXd7d683Gted0E
+         NMaxc3ZP1LAGQBIuBWk0FLc9bPitgFNuSLkV7CRb0GsXfQ1fAhgIxvInv5asU5RVWw5l
+         oLpjMljbZpt7eAVJvyPcQ9R5Ogh8Ldj1lzSRTaaFu52/2LgM+KHor/Gnqx8n7MQa4fWS
+         1dGlNzTGfknMA+1OqCQxcPSIJtMuUjd8iadI2m8RqQ52mMwOEJVEp+4NB6+sDHUmzQUo
+         ISGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VFDMVeMPBgp/DdpUVfGs9S1VArZJc3GgOZPCZIpYSng=;
+        b=Q6F3z6YdZ5Cox8ZDc7U5wg1FhPLqtKMBQdaQZmvjRN801ClMVJO64Rfc9dJ+LJsXrG
+         t0StPmQsEuWkKh4+HWYNFPnHCtJMmkzE1OeSXgQGUFM7akembwQ0e8IZaD+a4eA3TrPx
+         4KYiul8cbcwyxG+e/0n+zMSUmh9WVuO79UlyacA6FUTMTTfoxCu9AnvcHiX2yfhHCLoq
+         K8CGfhW4wlat8tSwC3lYKlp3CeoCMdOry3QNGeeiZ0UmGw3tJ9zYDG/oEoYNHfFYDqG7
+         yXJOoXWKBStNGnQB2Omloueo9QH7BTn6d+0mLCPlG4kjUWUpTr5oAI59YTFPTSlwybHx
+         MBoQ==
+X-Gm-Message-State: AFeK/H2hucPohpbE3ref5cDUr4B27nqKZtc4qYyN+UXF1sYTpGmWSB05xGbZo26jjuTszE1dyJU7F1MHPt+Muw==
+X-Received: by 10.223.165.6 with SMTP id i6mr3231073wrb.18.1490280951979; Thu,
+ 23 Mar 2017 07:55:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FhOqs+zlQD3fwLymPvjxCrPed10Fqik5ZXpPM2cK9aG4uVxmAox
- ZlmsqWLgNd2F2H3uPaQLA0whnfUO7ZfTC4/wojma5Xs0/+/U858cJNpwSN+zFfEjJilehWJ
- t2v9uF4hgNzNkbitipjZGS3Hn/oKPC2PPQY3XB91IhEce+3mNUne/3flCgUidUokMqqHt54
- cXz7/VsuT23z+KmPoZOIg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FULqT3WWI0U=:I8ADH1h6uchKWM9UAhNcyp
- zbIxYKvBGI01Zx3nB3v8xG/Mjhfa/iDbzZtUmSOzIMEhl6/BIKHxZ4TaxTXFY8C1n0MOpxsAL
- bxQshZ1Or3lXqmAYbTKPY+NOgIk7t4ce7q/j9uKYttd4qkJK3aosKT1A0243R+UqUTyq7B3H7
- mOQCKFaZ2LX+bedgsK/p0yYt0ByJ60A0Xz7HvLrjUReUv9veIzViTjsdBZ1rDmSqm7gip0dWi
- utvEaFMBtbsWei9E/uL7PxEdhIc/LHlLdhDtP2bvayfAvCOK0vXfO7CBS+NLruaetR8ewMWMH
- yG0anaCu+TPpaivr2m3bhquJJOVfM7DQ4IV6MYnFPa/R2Z8hvjdsVo4SaMYArQLSPg8cbtR+4
- ygc/Aon3cThQatXCh5nV01f4fifLLb5YiOck4WHEgmrSVml3/gdb5m+QH9w214oUOHhHkY0m4
- N9xBi+gyg28fHxS3lNqWmMb8tyJUQ6KesyE/Br5jF0gUiW8ExxDJd8AGUb/rVoN/tQXmOHqAU
- PPdNy2MMcWAQvSR2Hq2gcGXnMz/HJR/7Hje2V/HB1xya/pTL9Yq4wYbz2YrTGCFnPsr9IGM3E
- 6b+4rEOu0BLQIGI/lpopuER26NIfKveW78eGD9kM4PNKD5uqq/x27BBXKMiUj1YYtliuz0eoY
- aBmUongPFeE3t7Mwbkqta2nyfZ9vU/DdBWLenrgeB1ac+nLffA74+KNjMwLo6thJoYqapa9jQ
- lGL4lXCdBi1Lri5pqjJkmmH2KYzu1FPwHWhwhZeXIe07rNq9uPnHHbVdJnrPqsZZt92Vooui+
- mla/cMbYsNCOvpURzwoDZxpExX4vA==
+Received: by 10.28.153.150 with HTTP; Thu, 23 Mar 2017 07:55:51 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1703231541180.3767@virtualbox>
+References: <cover.1490194846.git.johannes.schindelin@gmx.de>
+ <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de>
+ <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
+ <alpine.DEB.2.20.1703221704500.3767@virtualbox> <xmqqefxpkwjf.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703231541180.3767@virtualbox>
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+Date:   Thu, 23 Mar 2017 15:55:51 +0100
+Message-ID: <CAHGBnuOJKopxq4s0e-mw0=siOERDcLXCEF4xzERpq7usbrZa6w@mail.gmail.com>
+Subject: Re: [PATCH 1/3] t7504: document regression: reword no longer calls commit-msg
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, Mar 23, 2017 at 3:43 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-On Wed, 22 Mar 2017, Junio C Hamano wrote:
+> I know Sebastian well, and I would hope that he lends his substantial
+> competence to making sure that the changes that affect end users are
+> correct and that I do not introduce another regression.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > In any case, this is *test* code. So I'd prefer to have the changes to
-> > the C code scrutinized a bit more, not the test code as long as it is
-> > obvious what it does.
-> 
-> [...] People have strengths in different areas, and those who can spot
-> issues in tests better than the C code should not be discouraged from
-> suggesting improvements by getting scolded like this.
+If you'd really know me, you would also know that I only say something
+*if* I have to say something. I.e. me not making any remarks regarding
+the C code means I did not find any issues.
 
-I know Sebastian well, and I would hope that he lends his substantial
-competence to making sure that the changes that affect end users are
-correct and that I do not introduce another regression.
+> Besides, he is German, so I tried to spell it out clearly what I wish him
+> to do in return for my addressing his problem.
 
-Besides, he is German, so I tried to spell it out clearly what I wish him
-to do in return for my addressing his problem.
+I fail to see how this is "my" problem just because I happened to
+notice it first. While I'm grateful that you've addressed it timely, I
+believe this is a naturalness since you've introduced the regression.
 
-That was the entire reasoning behind my "scolding". I am sorry that you
-understood it to be meant negatively. It was not.
-
-Ciao,
-Johannes
+-- 
+Sebastian Schuberth
