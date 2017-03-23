@@ -2,80 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5955A20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 20:40:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58A6920958
+	for <e@80x24.org>; Thu, 23 Mar 2017 20:41:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752595AbdCWUkE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 16:40:04 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:34591 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751576AbdCWUkD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 16:40:03 -0400
-Received: by mail-io0-f172.google.com with SMTP id b140so5137270iof.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 13:40:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Jo3K1oS/CYQsK7/LV02p4hKMjuWiZSmc2cF4sfNgHT4=;
-        b=jbZv6A0OD5NLb9pPJ4lY2eGwJlkAzwwHEgBNDEEHmdlqu/NktLWbaNDQ+EEkags64g
-         4Km9Pid6t1ESj/vu0zq66UEAhaevHwTcNxgz0SWQGE4y3BjdB95QO0v6ffYr6Ok/+jt0
-         G/wKI99QjkDzAYVDui0aum8pP28LiEbCpglPb7GhSrqpnuaabVRiSsEUSZDcsqjbmD26
-         0DwrbEX6HhguTGWsK+RlZXUsHrR0P39WGT5TVh2i/K9OfNYnSpyn8PHe1i7i0I54AKwT
-         lhkEKglcQod8ggHrTo4W8h1UA6cp34USYxnlOYWhP71GyQ2ltbNV8blcFyvJC0u4EgNp
-         fEhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Jo3K1oS/CYQsK7/LV02p4hKMjuWiZSmc2cF4sfNgHT4=;
-        b=KqdSFq7+sHZ+RHorQUMu9s2jX943tEtTa56Gdq1keimWUOOS0VgvuWQnL48Aq4HrjN
-         8tVgInvPA4wNcz/c77PHedcxQGwwvw7jqa0D7m2UqANabg8kJ8JpQ31FRrMoxg4j14ne
-         8y/L8GmC8dpzvTgpJe2ecKAycqbI1r9V0gsmjkHBkbCRD5gEW7loprWx+FxmYK7XBbEc
-         K3HMuF1M6oo7lKJLJXCfp2FFtPae1Fn91LWUuWWnqenRYOq907pt68W9kzTjzNF2lPXf
-         KJVVoFmhkiYEg1jD9S8rcsgrhpjGBhgi6o9ygA4GYKydsIO3hvpm0s1hQBdYovaVYzI3
-         qGCg==
-X-Gm-Message-State: AFeK/H0NZHQppRO7o+dB+kDheH7jW4ckQ840l4OsoUmETtLcFkSrygiuagGup3t0VY5VNzYCiFQGHlySKq+d5g==
-X-Received: by 10.107.32.199 with SMTP id g190mr5093731iog.117.1490301602485;
- Thu, 23 Mar 2017 13:40:02 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Thu, 23 Mar 2017 13:39:41 -0700 (PDT)
-In-Reply-To: <xmqq4lyjeu5m.fsf@gitster.mtv.corp.google.com>
-References: <12e6fae3-a341-3dcd-0920-c3df2d54d0a8@gmail.com> <xmqq4lyjeu5m.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 23 Mar 2017 21:39:41 +0100
-Message-ID: <CACBZZX5e-p4gKSWxehhVnnSgApC9H2v_ud+1Drz-vu_OAZwCgg@mail.gmail.com>
-Subject: Re: Bug: Revert with -m 0 says no -m was given
+        id S1756064AbdCWUlT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 16:41:19 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50590 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752316AbdCWUlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 16:41:18 -0400
+Received: (qmail 18771 invoked by uid 109); 23 Mar 2017 20:41:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 20:41:16 +0000
+Received: (qmail 11090 invoked by uid 111); 23 Mar 2017 20:41:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 16:41:30 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 16:41:14 -0400
+Date:   Thu, 23 Mar 2017 16:41:14 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ulrik Sverdrup <ulrik.sverdrup@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
+Message-ID: <20170323204114.ui7jqrd3guwc3sgl@sigill.intra.peff.net>
+References: <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703231716320.3767@virtualbox>
+ <20170323180134.geoyvq7qbm5vujo6@sigill.intra.peff.net>
+ <xmqqbmsrdcz4.fsf@gitster.mtv.corp.google.com>
+ <20170323191721.7r5vrixtnx3cngdc@sigill.intra.peff.net>
+ <FE4A3F88-0B86-4069-B141-2DFB9C4E269E@gmail.com>
+ <20170323193823.gxodwqv4eshgtqbc@sigill.intra.peff.net>
+ <3CC8E237-86EA-4F35-A03E-15BED5869403@gmail.com>
+ <20170323202002.lfpuglqawz4ooruw@sigill.intra.peff.net>
+ <xmqq7f3fbury.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7f3fbury.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 23, 2017 at 7:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ulrik Sverdrup <ulrik.sverdrup@gmail.com> writes:
->
->> Git produces a misleading error when you tell it `git revert -m 0`.
->
-> Thanks.
->
-> I think this is the same issue as the one with 'cherry-pick' that
-> was reported earlier.  We have a fix in the 'master' branch already;
-> please try it out.
+On Thu, Mar 23, 2017 at 01:30:41PM -0700, Junio C Hamano wrote:
 
-Specifically, in master:
+> >> We can blacklist these branches with a regex in the travis.yml:
+> >> https://docs.travis-ci.com/user/customizing-the-build#Building-Specific-Branches
+> >
+> > I had a feeling it might be something like that. So we would all need to
+> > agree on the convention for WIP branch names. If other people like the
+> > idea, I'm happy to make a patch, but I don't want to impose my own weird
+> > conventions on everyone else.
+> 
+> I can go with any convention, but I'd be more pleased if you made
+> sure that "do not build this with CI" and "this is WIP" are kept as
+> two separate concepts, as I can see having some WIP that I do want
+> to get tested.
+> 
+> Perhaps a substring "/noci-" anywhere in the branch name, or
+> something silly like that?
 
-$ ./git revert afd6726309
-error: commit afd6726309f57f532b4b989a75c1392359c611cc is a merge but
-no -m option was given.
-fatal: revert failed
-$ ./git revert -m 0 afd6726309
-error: option `mainline' expects a number greater than zero
+Hrm, most of the point for me was _not_ having to define the two
+concepts separately. Let me try it for a while with "[ci skip]" in the
+tip commit subject, and see how painful I find that. My goal is
+eventually to turn on notifications, so I'd quickly be reminded if I
+forgot such a marker.
+
+-Peff
