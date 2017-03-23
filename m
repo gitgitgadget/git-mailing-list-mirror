@@ -3,69 +3,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27CB120958
-	for <e@80x24.org>; Thu, 23 Mar 2017 17:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 863A720958
+	for <e@80x24.org>; Thu, 23 Mar 2017 17:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933835AbdCWRki (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 13:40:38 -0400
-Received: from mout.gmx.net ([212.227.17.20]:56150 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933152AbdCWRkh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 13:40:37 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lfolq-1cPF1s1prW-00pLoF; Thu, 23
- Mar 2017 18:40:34 +0100
-Date:   Thu, 23 Mar 2017 18:40:33 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Brandon Williams <bmwill@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] sequencer: fix missing newline
-In-Reply-To: <20170323170233.50499-1-bmwill@google.com>
-Message-ID: <alpine.DEB.2.20.1703231839570.3767@virtualbox>
-References: <20170323170233.50499-1-bmwill@google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752677AbdCWRoL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 13:44:11 -0400
+Received: from avasout01.plus.net ([84.93.230.227]:35045 "EHLO
+        avasout01.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751390AbdCWRoL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 13:44:11 -0400
+Received: from [10.0.2.15] ([146.90.175.94])
+        by avasout01 with smtp
+        id zVk71u00B22aPyA01Vk8e1; Thu, 23 Mar 2017 17:44:08 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=BZKo6vl2 c=1 sm=1 tr=0
+ a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=ra_LUwB9Zvba-aZ-BCsA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] branch doc: Change `git branch <pattern>` to use
+ `<branchname>`
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20170323120326.19051-1-avarab@gmail.com>
+ <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <5d04c82c-45a4-5d5e-0317-511587ee3474@ramsayjones.plus.com>
+Date:   Thu, 23 Mar 2017 17:44:07 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:zmN4XmTaDehJIeAo9yur+yMtHiaopt6S/ZICM74YW1l/o1IaS3h
- M3JGfm7HnzCRe2+wxWNF9QVmh1jj1seXoYNL6CCt+Gf6DF/GG5AvEbBPJE/qS1EfLze5GSx
- 5wfueucQlhEa46ghLWcDvrrdiyAGWTcFHK3lceCu1PQ4GYZO34//0RsNO8LbLwNENxw/Y11
- JAbJUZwgpw6ieXAqWJ7cA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zAJC0pmjh7Y=:rJX9NuTSiIh3eZnDvhHaoo
- 3LqrZegMryasAicoHWoyW9QnOOC0tqmxXJq3YLDz1Nj7pGAB9Ej6EX80ZGbb34ExMh3PF9nCT
- lulNBOqTogQt6s60rkzZ6FlgpGbIkSPWcxP8UR3T6PpQy+0kEZ6lmC+BEXmwAaD12FJypYflO
- xvfc32vAteQXIJ+nLNWY7eII6nFFQhNS2QT4TGlA6Y9dAtP/GWansXqj+WgwLt4d66VQj+zES
- UmnTJ84VcLQBjzJ/VYc/rN/hPDOd4fS6csYp/Lib3hPNEStO2UWlIuOj3t1cnZtQFNXd1Ds2I
- vBQQzDn89CHF3ZUBdj7HYj/wOXKGYiaOvxkimmnJ0efiafRW44bZAFeUQB20uK3F5ijENeghM
- 4uBRl4iHabazUXnxnzVeCtLMukg9fEzPfc/4GZk8ZL6JEeHRg+O8jfSMFPHHn29OwO3xXH2MA
- eGiWVDlpN93L7TBjymqj+nj31t6KaP5V933IctMlpBX1y0Hrnzk/33f3VnG8W5GN1JfxOyH1U
- x63jYZe76Ja00snMtQVxsxwDK+JtzcLk/LNa+5rsJESx1VgM3AfOAyKUtVILzZuXRuxHHmyhO
- 3ql9r4nRvNo8PKqQa51XrYungERH+q3r9fhANO9waOFVHIzgrCGBcvly4N7AlFHNR9UsEY1h2
- 3vQowGznWVWvFxlPvoJ/BZwRvAyBp9tj7Zx1SvturO4GK1bRG18iIMSz9IhHGnNHKDbba3thX
- 5b9K98MlK/NzQjif3iKRFcVmb3teY/zXjP2NvtCaYeGsyz/m5gVGILfwwATXbeWarBs0Qc+FT
- 7LndT5TTqPJIP61mwI+UoQ934ATBg==
+In-Reply-To: <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brandon,
 
-On Thu, 23 Mar 2017, Brandon Williams wrote:
 
-> When using rebase --interactive where one of the lines is marked as
-> 'edit' this is the resulting output:
+On 23/03/17 17:01, Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 > 
->     Stopped at ec3b9c4...  stuffYou can amend the commit now, with
+>> Change an example for `git branch <pattern>` to say `git branch
+>> <branchname>` to be consistent with the synopsis. This changes
+>> documentation added in d8d33736b5 ("branch: allow pattern arguments",
+>> 2011-08-28).
+>>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>>  Documentation/git-branch.txt | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+>> index 092f1bcf9f..e65e5c0dee 100644
+>> --- a/Documentation/git-branch.txt
+>> +++ b/Documentation/git-branch.txt
+>> @@ -142,7 +142,7 @@ This option is only applicable in non-verbose mode.
+>>  	List both remote-tracking branches and local branches.
+>>  
+>>  --list::
+>> -	Activate the list mode. `git branch <pattern>` would try to create a branch,
+>> +	Activate the list mode. `git branch <branchname>` would try to create a branch,
+>>  	use `git branch --list <pattern>` to list matching branches.
+> 
+> This makes the description more correct.
+> 
+> I am not sure if it makes that much sense to have that sentence here
+> in the first place (after all, it is describing a behaviour of a
+> mode that is *not* the list mode), but I guess that it may be a
+> common mistake to forget to specify "-l" while asking for branches
+> that match the pattern?  If we were writing this today from scratch,
+> I would perhaps write something entirely different, e.g.
+> 
+> 	--list::
+> 		List branches.  With optional <pattern>... at the
+> 		end of the command line, list only the branches that
+> 		match any of the given patterns.  Do not forget '-l'
+> 		and say "git branch <pattern>", as it will instead
+> 		try to create a new branch whose name is <pattern>,
+> 		which is a common mistake.
 
-Ugh, I should have caught this. The warning() call implicitly adds a
-newline, the fprintf() doesn't.
+Hmm, but with git-branch -l means --create-reflog not --list.
 
-Patch is obviously good.
+I have make the mistake of using -l rather than --list several
+times ... :D
 
-Thanks,
-Dscho
+ATB,
+Ramsay Jones
+
+
