@@ -2,110 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42E0820958
-	for <e@80x24.org>; Thu, 23 Mar 2017 22:22:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6200620958
+	for <e@80x24.org>; Thu, 23 Mar 2017 22:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934719AbdCWWWl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 18:22:41 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:35936 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934707AbdCWWWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 18:22:39 -0400
-Received: by mail-io0-f178.google.com with SMTP id l7so6661942ioe.3
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:22:33 -0700 (PDT)
+        id S1756016AbdCWW2v (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 18:28:51 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:32787 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753821AbdCWW2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 18:28:50 -0400
+Received: by mail-qk0-f194.google.com with SMTP id p22so4881223qka.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ofENuUpMtUwoBg94DFDrU2TA/YyqGNFlM9kPfSXsfaM=;
-        b=TzHXN/QIwV4uGPHkf8NGPuMV22PdMPAhBnxOWEO65YXArMh4N2CretYX8OTXORd/b9
-         NA7vxH0gbh/DJgb6V1SyvkT4GECv3OLmjpxDHzhrVgug876xTitfoKMj48N41Y4hGsvD
-         SVLqGYj6j43WMGrvCqHvzIDY4UHSnY/uEuCt6/dzav2TAqQbzo4v3hLUuMT1CAosvqwP
-         TIrdrYqL96Z6zVAHQ53r4J+EoORGN5QeAysO9c9AiOkzoLkOfzgg7m8HtvQOwmdYzaco
-         YPN17R0qR1l3HXSi1z0eUwp05Oo8FB2kBfivgLXtFa8wMPCi9Vn+/DIPZ5OojaKC+mVf
-         66/Q==
+         :content-disposition:in-reply-to;
+        bh=Gn4FKlLHJIIxomgxS/yoiS8EytusPXsSJRirt+tabFo=;
+        b=Z+w5s6H8+SEQNZPPvkc0UUcwPVYHSqx3vhGJe8acODRa97KfkwO72Pdy324RYaGdO6
+         ouifbycnyhVtWc/YZp6qdOVqtThBzkkuIFUao2t5sQ0V0AGkNYxGzCEM8YBOBP5Ad8xq
+         LXIXTd17rytIbuNha4Wmbm/9PhFUAxI6CTUDspHDB9kqsRs9ihRffubekOhN/1N3ayoV
+         DSoYiXaXjlny6Dnzv7Xk8VTcj8bPSHLoZHG0jbDjX0Dp9dTCACGTIpW5HYffiQ/j+KPa
+         g7Fzvbm14JDl+tlziMZB2aGnJgDNjtme0cjXnfrAoubaEVthFnGRQnB2C2H8KkIWp6nL
+         46EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ofENuUpMtUwoBg94DFDrU2TA/YyqGNFlM9kPfSXsfaM=;
-        b=X1ZmVi7S1WjIdMpsuc63uWdn20AntP6X4WBF8/r1hSZ9CxOp/Duof6i4hYuSapaz8t
-         gDG12tPlme+TMRw36xRW+UfBInaQbWfhQF+WgheqixnWyIoUW/i6NtuQcAaLWmQ30h3U
-         rIjJ5VoFQNGsBLwLaSuIOIY4VUprZlNppaEeDkFpADKFuoNpBNQ1SUq0ARiTvndwDqWW
-         DEBwIqI25p1l4ZHiUIAISvSDvKBgKBvzN/VTRClPKrvVtbtANFrCiZptez1VzYUGFe3w
-         pOfKp6J31QymPLtt6n6XorxNfHWmWudP8KFJ9kIRSJSSZNpA/HX7K6HNfn/vyvNxzr8/
-         o9SQ==
-X-Gm-Message-State: AFeK/H3koAl+aC4NuPTp2VH+W98AeV2jgOHovSC2FUY/9YBJ9v2gBIWtj9Py/xD5UUINqw==
-X-Received: by 10.107.131.156 with SMTP id n28mr5892870ioi.39.1490307752447;
-        Thu, 23 Mar 2017 15:22:32 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:6c40:39b9:f9ab:ec6f])
-        by smtp.gmail.com with ESMTPSA id i7sm243187ioe.48.2017.03.23.15.22.31
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 15:22:31 -0700 (PDT)
-Date:   Thu, 23 Mar 2017 15:22:29 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: USE_SHA1DC is broken in pu
-Message-ID: <20170323222229.GB20794@aiede.mtv.corp.google.com>
-References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com>
- <2B1DE627-11C8-4FA5-A354-76B6C475666A@gmail.com>
- <FFC0EFBD-C4D9-4FB8-A45D-7B10689724A1@gmail.com>
- <alpine.DEB.2.20.1703212105030.3767@virtualbox>
- <xmqqh92mo06a.fsf@gitster.mtv.corp.google.com>
- <alpine.DEB.2.20.1703221530040.3767@virtualbox>
- <20170322220246.GD26108@aiede.mtv.corp.google.com>
- <alpine.DEB.2.20.1703231724350.3767@virtualbox>
+         :mime-version:content-disposition:in-reply-to;
+        bh=Gn4FKlLHJIIxomgxS/yoiS8EytusPXsSJRirt+tabFo=;
+        b=T/yhy12t/CBON989SQI0b6p+sAE+pj8UTO1GLz6XxL5RhjKUfrwhjOw9vZBYjK7thk
+         0U1k7pcRz/pnie5Hi2YU/OgCloiaeC5ER/gUfQ+H5XNl/oCsountiLjDpznyP1PA++8D
+         VfgRMDL78gWK1g22BE0cxQc0rorTX5RcovD8GQLvP1ym+RcdEaeO9v/qPdMR85n6hwHv
+         pxmkAR6HX2M+W9HqWal33cR5pI765sKNhRqIIQWLW3U3OXaSXDEpqDtNveRvRZTP/rPP
+         hMBoWEicEe9967V8p9kuYM1yDQzT6A/FP0GMECN2eSgfnwnoh5kKb03ygnEBEJAL87Jg
+         Bb3w==
+X-Gm-Message-State: AFeK/H14343+dtzTSjgOhbtHxmckWmiTMYlaxHFkNXWlsEtZYNE/3ySxiA1sq9N2A2j/Tn9b
+X-Received: by 10.55.180.70 with SMTP id d67mr4872089qkf.280.1490308128738;
+        Thu, 23 Mar 2017 15:28:48 -0700 (PDT)
+Received: from LykOS.localdomain (NYUFWA-WLESSAUTHCLIENTS-05.NATPOOL.NYU.EDU. [216.165.95.76])
+        by smtp.gmail.com with ESMTPSA id p184sm282588qkb.17.2017.03.23.15.28.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 Mar 2017 15:28:48 -0700 (PDT)
+Date:   Thu, 23 Mar 2017 18:28:47 -0400
+From:   Santiago Torres <santiago@nyu.edu>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Jan Palus <jan.palus@gmail.com>
+Subject: Re: [PATCH 3/3] t7004, t7030: fix here-doc syntax errors
+Message-ID: <20170323222846.twxktig335o4r572@LykOS.localdomain>
+References: <20170322200805.23837-1-gitster@pobox.com>
+ <20170322200805.23837-4-gitster@pobox.com>
+ <20170322211003.b52cql3iwig2xqcd@sigill.intra.peff.net>
+ <xmqq8tnxhssv.fsf@gitster.mtv.corp.google.com>
+ <20170322221556.j7uj4vvgbcubcr3b@LykOS.localdomain>
+ <20170322222230.yqqv6x4gokvb4jbz@sigill.intra.peff.net>
+ <20170322223441.w32y464jqbnxnzna@LykOS.localdomain>
+ <20170322224124.u3eax4ui3y4saxks@sigill.intra.peff.net>
+ <20170322225108.wub4bmr63hk2sp33@LykOS.localdomain>
+ <xmqqfui3ac2f.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="4uj6p6jr5haddpkp"
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1703231724350.3767@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <xmqqfui3ac2f.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin wrote:
-> On Wed, 22 Mar 2017, Jonathan Nieder wrote:
-> > Johannes Schindelin wrote:
 
->>> As to the default of seriously slowing down all SHA-1 computations:
->>> since you made that the default, at compile time, with no way to turn
->>> on the faster computation, this will have a major, negative impact.
->>> Are you really, really sure you want to do that?
->>>
->>> I thought that it was obvious that we would have at least a runtime
->>> option to lessen the load.
->>
->> It's not obvious to me.  I agree that the DC_SHA1 case can be sped up,
->> e.g. by turning off the collision detection for sha1 calculations that
->> are not part of fetching, receiving a push, or running fsck.
->
-> And in those cases, using OpenSSL instead is *even* faster.
-[...]
-> The index is 300MB. If you have to experience a sudden drop in performance
-> of `git add`, even by "only" 30%, relative to OpenSSL, it is very
-> noticeable. It is painful.
-[...]
-> It gets even worse when it comes to fetching, let alone cloning.
-[...]
-> And by "switching collision detection off", I of course refer to *not*
-> using SHA1DC's routines at all, but what would have been used originally,
-> in Git for Windows' case: (hardware-accelerated) OpenSSL.
->
-> Did I manage to clarify the problem?
+--4uj6p6jr5haddpkp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes.  Thank you for explaining.
+On Thu, Mar 23, 2017 at 03:00:08PM -0700, Junio C Hamano wrote:
+> Santiago Torres <santiago@nyu.edu> writes:
+=20
+> OK, so has everybody agreed what the next step would be?=20
 
-Sincerely,
-Jonathan
+I believe it is, although I imagine getting a confirmation from Peff
+would be adequate.
+
+> Is the patch below a good first step (I still need to get it signed
+> off)?
+
+I'm adding a signoff to the patch below.
+
+Thanks,
+-Santiago
+
+-- >8 --
+Subject: t7004, t7030: fix here-doc syntax errors
+=46rom: Santiago Torres <santiago@nyu.edu>
+
+Jan Palus noticed that some here-doc are spelled incorrectly,
+resulting the entire remainder of the test as if it were data
+slurped into the "expect" file, e.g. in this sequence
+
+	cat >expect <<EOF &&
+	... expectation ...
+	EOF
+	git $cmd_being_tested >actual &&
+	test_cmp expect actual
+
+the last command of the test is "cat" that sends everything to
+'expect' and succeeds.
+
+Fixing these issues in t7004 and t7030 reveals that "git tag -v"
+and "git verify-tag" with their --format option do not work as the
+test was expecting originally.  Instead of showing both valid tags
+and tags with incorrect signatures on their output, tags that do not
+pass verification are omitted from the output.
+
+Arguably, that is a safer behaviour, and because the format
+specifiers like %(tag) do not have a way to show if the signature
+verifies correctly, the command with the --format option cannot be
+used to get a list of tags annotated with their signature validity
+anyway.
+
+For now, let's fix the here-doc syntax and update the expectation to
+match the reality.  Maybe later when we extend the --format language
+available to "git tag -v" and "git verify-tag" to include things
+like "%(gpg:status)", we may want to change the behaviour so that
+piping a list of tag names into
+
+    xargs git verify-tag --format=3D'%(gpg:status) %(tag)'
+
+becomes a good way to produce such a list, but that is a separate
+topic.
+
+Signed-off-by: Santiago Torres <santiago@nyu.edu>
+Noticed-by: Jan Palus <jan.palus@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+---
+ t/t7004-tag.sh        | 10 ++++------
+ t/t7030-verify-tag.sh | 10 ++++------
+ 2 files changed, 8 insertions(+), 12 deletions(-)
+
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index b4698ab5f5..0581053a06 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -896,17 +896,15 @@ test_expect_success GPG 'verifying a forged tag shoul=
+d fail' '
+ '
+=20
+ test_expect_success 'verifying a proper tag with --format pass and format =
+accordingly' '
+-	cat >expect <<-\EOF
++	cat >expect <<-\EOF &&
+ 	tagname : signed-tag
+-	EOF &&
++	EOF
+ 	git tag -v --format=3D"tagname : %(tag)" "signed-tag" >actual &&
+ 	test_cmp expect actual
+ '
+=20
+-test_expect_success 'verifying a forged tag with --format fail and format =
+accordingly' '
+-	cat >expect <<-\EOF
+-	tagname : forged-tag
+-	EOF &&
++test_expect_success 'verifying a forged tag with --format should fail sile=
+ntly' '
++	>expect &&
+ 	test_must_fail git tag -v --format=3D"tagname : %(tag)" "forged-tag" >act=
+ual &&
+ 	test_cmp expect actual
+ '
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index d62ccbb98e..79864a3411 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -126,17 +126,15 @@ test_expect_success GPG 'verify multiple tags' '
+ '
+=20
+ test_expect_success 'verifying tag with --format' '
+-	cat >expect <<-\EOF
++	cat >expect <<-\EOF &&
+ 	tagname : fourth-signed
+-	EOF &&
++	EOF
+ 	git verify-tag --format=3D"tagname : %(tag)" "fourth-signed" >actual &&
+ 	test_cmp expect actual
+ '
+=20
+-test_expect_success 'verifying a forged tag with --format fail and format =
+accordingly' '
+-	cat >expect <<-\EOF
+-	tagname : 7th forged-signed
+-	EOF &&
++test_expect_success 'verifying a forged tag with --format should fail sile=
+ntly' '
++	>expect &&
+ 	test_must_fail git verify-tag --format=3D"tagname : %(tag)" $(cat forged1=
+=2Etag) >actual-forged &&
+ 	test_cmp expect actual-forged
+ '
+
+
+
+--4uj6p6jr5haddpkp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAljUTBoACgkQRo8SLOgW
+IpVyARAA2NROzvOrKpCdxntJyqlAdJYsBc3PsO5tH0NRoPfg299FUD7HnW37xnPE
+ttx1ERqOnvMjSn/DCH9p9OFz1l8dfSfKXPEBHM/7H476K8v+nAFHaTgu6FJZ1r2G
+t18jFNT2vH8dHnM5nusPIbmvVfg6yb6BmCi9fGmei8JayHscBGpFf3KbKEv8jTtc
+RvyQDD2WGRtddTUW51girSnv1Jyh3kotgJRd0rQ7Gs4PXOrDgjpbHxdZeAfGn858
+044uKrmtVgLAfK2kwaCZDHclymt61LiR8MnYkUbxsHSELa2rL74U8PkSZIXCWVLL
+b5lr/Y9QmQrA8tiDE2EbrgsEeIibRSnONBS8UdPWQPk/xYzcFrj3dWtKtH1yR8pu
+8Bi8pTb2mSGaMONlPxYM61OJZNAwcDFy9O0nppQAsf4++B5cagoSQrUn549hlHQn
+NcUAHk6zSBYcFuI/R81AjkD8/tTL1fq8syk9uDQFsXe/bkvbnvOmKWLIMQ7Tb+y7
+5uQv8oRu7DYYazxQ8EgvD5DtDZOKNA6yBBkkd18TDz8FOrDgRcCG1Ew09i1u5I7J
+cSJPKxPboFXYwvsovo6fDWpO16YLMLEyLR9rXuZqGV1wmVYt1S5Jlz1ZZkm731By
+v/TUk63CsLb195OIND8r1O4UC0c+MY2AW1lfBWWug4s69a9B8mU=
+=PMH7
+-----END PGP SIGNATURE-----
+
+--4uj6p6jr5haddpkp--
