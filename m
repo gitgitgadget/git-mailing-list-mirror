@@ -2,117 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9455B20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 16:53:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FDFC20958
+	for <e@80x24.org>; Thu, 23 Mar 2017 17:02:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756386AbdCWQxK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 12:53:10 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:33727 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756376AbdCWQxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 12:53:07 -0400
-Received: by mail-wr0-f177.google.com with SMTP id y90so33924279wrb.0
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 09:53:01 -0700 (PDT)
+        id S935068AbdCWRCn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 13:02:43 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:34835 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935057AbdCWRCk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 13:02:40 -0400
+Received: by mail-pg0-f49.google.com with SMTP id t143so60900985pgb.2
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 10:02:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=LvUF0l24Dn0j7zR3uoYUVtp4P3p/GJ0bEhTxrTKOHpY=;
-        b=JqgOkuiRWYcVAkMHmC2gJR1WzRpUdxJ40kh7zAcFX+eKjFqpsbEF1jIPrie0OhsReZ
-         bCQYoM1mY5jtHOqaIZNmgDXQIvHmMpkt/yzlIe0inhUVA56AZteK2avYDC40bbJTc+iZ
-         DLdWZGNw9CwakLX50ItAZkRTTmz0f7hZRLAWdic4WCkXpOPJwfoxNmC6MnEXDrR77neh
-         QYwPVzetohg9k4sRtu2/ddXAl37vLn1Nn7LXg4JZMXN55/WaCXS3Fbf/u+5I8eWof58V
-         1tUAXH3QEqCRuM13HEW3RXMaDMfMhFHKlBUhlITOqghellhyNVwcBnCX8CQuedJxoPB1
-         HG2A==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=tA3t5O9qfhBJy60kn1AfyiOamgWueD5lnKmkzfdH3e4=;
+        b=o2Gr0//AjpH+fvnUO9pPxTTKHNp9INfN7d5x1zxupp2hOhQqP+KNbJfmNp3nMdoOjf
+         zVs0OI08LOYz5+KJLSmyfzF2+Gr8LurST9u+dN5egANb7SBUZp1PXmFmec84cJ8d0nCY
+         EDwAiivwehsmgNToqxWtrIXzoFMtYdBaR1/BEVfFQZo3rqeSKNg0Q8XklHDNqodD+Y9i
+         s3aTxbJtZZUx3vmGEjDlciOlJkdNcFDk6X4r5GfP6VpD4ln8xOGJH/lUFPfVFKXlEKC/
+         gWCuk4Ah2arjBeXhXnih3T2aczvreWFvKO60elMGHO1lrKlR5GAqAlK06PPWpLurKZKF
+         GZXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=LvUF0l24Dn0j7zR3uoYUVtp4P3p/GJ0bEhTxrTKOHpY=;
-        b=VP2vQPjKs3PVbJ3a9DSv4qmam9lJADwjT5Ax3Cc62Bb/MliChbqUz+H7gZl0jH3fVO
-         ts1E0Pq131NCOxs1zTkVrQoqCvfnCsPQTvVX6oXGJXGLfbJxkAaGLuv0Lrgfjhj9R1dL
-         dilbvx8TYVGggyuiG6dgwMw08XRVYiHZ3nNU+rfVvNWLzsvq4GdLOFMsqWBpxmNVUvHP
-         TIzatw03GjgDMrcsBHMxNn0+G1+89fqJNF82Elw5xXgCvkIc+QYXPhJIBG3kxCOJCRBg
-         S589Ym2z9pI33f589E0F88soRNX6dbSBhDD4m69SZBQZY5PjoLGsSr1wNQBT4QrL2kny
-         H5aQ==
-X-Gm-Message-State: AFeK/H3mx0RuTulNN4i8JyGOxnh9EX/fL1iJ78z2vsGFku13Qs5pcEubeLNWvBlkr9Ry2O0lfxLtAinvUFUYmg==
-X-Received: by 10.223.134.69 with SMTP id 5mr3755339wrw.22.1490287975414; Thu,
- 23 Mar 2017 09:52:55 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.28.91.2 with HTTP; Thu, 23 Mar 2017 09:52:34 -0700 (PDT)
-In-Reply-To: <xmqqfui4f0pp.fsf@gitster.mtv.corp.google.com>
-References: <20170321055203.26488-1-alexhenrie24@gmail.com>
- <xmqqinn2sfdw.fsf@gitster.mtv.corp.google.com> <xmqqzigemfij.fsf@gitster.mtv.corp.google.com>
- <CAMMLpeQZXzPtN+mmtRS33vbT6hFz8p0qqjFMhz9tUHk747=Z3Q@mail.gmail.com>
- <xmqqmvcdmeuv.fsf@gitster.mtv.corp.google.com> <CAMMLpeR-zCpL5Gx=BoK8G9_wL2TBe-wD3VnsAShAuVVzS=Nirg@mail.gmail.com>
- <xmqqfui4f0pp.fsf@gitster.mtv.corp.google.com>
-From:   Alex Henrie <alexhenrie24@gmail.com>
-Date:   Thu, 23 Mar 2017 10:52:34 -0600
-Message-ID: <CAMMLpeRtzYM3a639DcNbhqAmz3dNkRebvQps-gusEKx+eQqPgQ@mail.gmail.com>
-Subject: Re: [PATCH] log: if --decorate is not given, default to --decorate=auto
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=tA3t5O9qfhBJy60kn1AfyiOamgWueD5lnKmkzfdH3e4=;
+        b=Lm8sQW4cORPjSjAfQluAzozktGCpurItJG+3RzXy+hmTZzUX1qqSWOckc6ZZeq9FjU
+         fMvDyQhidDjI7XtLOpOAnu/pbWmPwUUalcy8taMljz/1WtmSKOIYyrhYGo4zVhPX2UcF
+         vX/Ej52FfGnS7srb15ruSZY4AzdpZsUbHo09v+nNUn6MegZKytuk5TpdVKFmp9KTx/9O
+         OpQfON8eQ73sHnnx/z3FucpZOb81KDUg1OEj74KdgauLn5CtRmGFGEoTvAUk3+iWvQy9
+         ZrP/RZ7A1+MLCurSzX0Lg1zVPLA8eog6Dc+o3GkgvE50OmWYPxa3eNdFzL7OXq1JGqGQ
+         iWvg==
+X-Gm-Message-State: AFeK/H1gt14VNdZxUHOQZn/C2Yv1dcoa76YslbKunPz785+gMN8GynJsdvQuANPanU+FtUNv
+X-Received: by 10.99.119.140 with SMTP id s134mr4042631pgc.162.1490288559161;
+        Thu, 23 Mar 2017 10:02:39 -0700 (PDT)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id r89sm11422961pfe.6.2017.03.23.10.02.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 23 Mar 2017 10:02:38 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, johannes.schindelin@gmx.de
+Subject: [PATCH] sequencer: fix missing newline
+Date:   Thu, 23 Mar 2017 10:02:33 -0700
+Message-Id: <20170323170233.50499-1-bmwill@google.com>
+X-Mailer: git-send-email 2.12.1.500.gab5fba24ee-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-03-23 9:54 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
-> Alex Henrie <alexhenrie24@gmail.com> writes:
->
->> 2017-03-22 10:54 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
->>> Alex Henrie <alexhenrie24@gmail.com> writes:
->>>> No problem. Do I need to submit a second version of the patch with a
->>>> test for `git -p log`?
->>>
->>> You do want to protect this "without an option, we default to
->>> 'auto'" feature from future breakage, no?
->>
->> Yes, but I need to know whether you want a v2 of this patch with all
->> of the changes including the new test, or a second patch that depends
->> on the first patch and only adds the new test.
->
-> Sorry, I misunderstood the question.
->
-> In general, we prefer to have tests that protects the updated
-> behaviour in the same patch that makes code changes that brings in
-> the new behaviour, i.e. a single v2 patch with new test would be
-> more appropriate in this case.
->
-> When people work on a large bugfix, especially one that needs
-> multiple steps, we sometimes see a patch that adds new tests that
-> describe the desired behaviour as failing tests first, and then
-> subsequent patches to the code to update the behaviour flip
-> "test_expect_failure" to "test_expect_success" as they fix the
-> behaviour.  But for a small change like this one, that approach is
-> inappropriate.
->
-> When a patch that was reviewed, deemed good enough and has been
-> already merged to the 'next' branch later turns out that it needs
-> further work (like "we do need some tests"), we do such necessary
-> updates as separate follow-up patches, simply because we promise
-> that 'next' won't be rewound and are not allowed to replace patches.
-> But this one is not yet in 'next', so we can freely take a
-> replacement patch.
->
-> Hope this message makes it clear enough?
+When using rebase --interactive where one of the lines is marked as
+'edit' this is the resulting output:
 
-Yes, that makes sense. I assume that when you talk about 'next', you
-mean 'master'?
+    Stopped at ec3b9c4...  stuffYou can amend the commit now, with
 
-Unfortunately, I think I found a bug. Even when using `git -p`, the
-function pager_in_use() always returns false if the output is not a
-TTY. So, `isatty(1) || pager_in_use()` and `color_stdout_is_tty ||
-(pager_in_use() && pager_use_color)` are redundant.
+      git commit --amend
 
-If we want to use `git -p log` in a test, we'll have to change the
-behavior of pager_in_use(). Alternatively, we could use
-`GIT_PAGER_IN_USE=1 git log` instead.
+    Once you are satisfied with your changes, run
 
--Alex
+      git rebase --continue
+
+A newline character is missing at the end of the "Stopped at ..." line and
+before the "You can amend ..." line.  This patch fixes the malformed output by
+adding the missing newline character to the end of the "Stopped at ..." line.
+
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index 8183a83c1..d76dc9cb2 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1998,7 +1998,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 				struct commit *commit = item->commit;
+ 				if (!res)
+ 					fprintf(stderr,
+-						_("Stopped at %s...  %.*s"),
++						_("Stopped at %s...  %.*s\n"),
+ 						short_commit_name(commit),
+ 						item->arg_len, item->arg);
+ 				return error_with_patch(commit,
+-- 
+2.12.1.500.gab5fba24ee-goog
+
