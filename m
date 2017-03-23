@@ -2,56 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9F7920958
-	for <e@80x24.org>; Thu, 23 Mar 2017 22:34:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AFD620958
+	for <e@80x24.org>; Thu, 23 Mar 2017 22:34:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756315AbdCWWei (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 18:34:38 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38182 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752500AbdCWWeh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 18:34:37 -0400
-Received: by mail-it0-f53.google.com with SMTP id y18so287383itc.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:34:31 -0700 (PDT)
+        id S934419AbdCWWen (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 18:34:43 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:37171 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933401AbdCWWem (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 18:34:42 -0400
+Received: by mail-it0-f43.google.com with SMTP id 190so313157itm.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gRJM2s2j+xDXFzST1hfDCWYd3oceA2m2QJUPlouZEmQ=;
-        b=u72bXBD1C9ql83yEPLOfUbOTHeTKJz4bqG29de0Z8f8fI+30iWJ+0y6PWgZBf4Y8w9
-         WSGQ6asoY4Gn0Vqy6gn1i55cnxwhbI8pjY4z1WQFZKWxyzL4ztvDcYTJJ3wZPq7gFIve
-         V32Skgbt5nyaLWyGUopkU3CFNopq45FxjJcffR57WoZJlC0Uhe+6/sHqJWXrJtq7J5Vn
-         ks/RlgLmCe1o6MGicTX6W+NiZHW6DiXq0LjAyDoNEFEaPTJMTAg9xUzKigcbmJOM0/hU
-         r6ramA0ghLVq3EwpjRu48SFsCLQediVdY1FksWlGYUyfPxav5KPIuoK7Wjlegl4WlNsi
-         yh2g==
+        bh=pPA9E9Y/t8kVISFvy8C0bKbuPsjC1FqKNF/jerDCU/w=;
+        b=jRtYdl0dmBquH4FMxiCdswvHpfXjz477lTsSst9fCWFtTkOsNCTc4cm/Zp/EBmayTR
+         f6VFej2gsHwDpRbXTcLf+k9f9Po1rk2bvUdyiVvSeBWll29PTAPbQJC2kuXbyBFwY/vn
+         0JB+9+rCiUL+sLZlgH4OT+2EYLBQwpC+J6bBoJK8O4WW2laxKTWjx5lCSVdfUjDIsQG9
+         EBu9csFyoIdQ00ogS9lz7dtLhR0xtUSeQU6qUBZWXjIFgVo8r9lwc0M3Y4sgQB9xh2El
+         oqzy01F7N7Hf6kuia73bOfrBFnDe/MJk1TKJpiqNsJo18sjHw7L7IdcXjecT+YNspe+T
+         cAsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gRJM2s2j+xDXFzST1hfDCWYd3oceA2m2QJUPlouZEmQ=;
-        b=TX8wxVoBHkeFr/klcqg+QZt4SCN+ZFQ18qTGW40/tXV72U5i8D7yq0QeyNcB1ffvJ8
-         uv5Icc6OGOqtT7vEPCGGmw/kYu1DRLQPun867FbpCBO4L3o/dq+KSJM0r5Jq7kdiV9vA
-         v+Oo1ig0LIJn6xhQuj9EcWM2gG4+6mDcQq9GAShJh5BVKcX/lCnyqYNFxGcREAZ6gw4D
-         WRUTLSXaLAyD6xy+QuRR3HZP6s9vGRD7UJL6OJSJ03uHsbxTz84Ya2Y90Tj9OdISE/12
-         W74JJz0ZueWoz4z+dHjDiToz5eAOFy3ZqCr2D8H0oUlpNNjwrmTF+D8sxgVg5WwKuqlM
-         XiLQ==
-X-Gm-Message-State: AFeK/H2M4r7BcUwrcx87AzFWSH+NhOlhOB4Zr5T1Q7zfxqQP2/sI/St7ovH6Fw+DtDQG0h4j
-X-Received: by 10.36.50.82 with SMTP id j79mr111949ita.118.1490308455689;
-        Thu, 23 Mar 2017 15:34:15 -0700 (PDT)
+        bh=pPA9E9Y/t8kVISFvy8C0bKbuPsjC1FqKNF/jerDCU/w=;
+        b=kU31Bph70drAn38oHfh64bqc8r20XJtTxXlyfq22MV8o6N5906a8kVQ4ZoNp3a+50s
+         i2MsjQL+tSTBAD10q826e1B/uLcQ0JE6JthaHxZ5kSZYTUbQ8E1bNsCHCdlcZ2gL+xLC
+         JR7xwD3nfNvK3jREBPHdLGwAAhAn8/8zNpWwb+U+gym+v2lTeNUfSx8SMNe61AyXTxAD
+         06hWKsUFQLTGcrrIAxNRhSpYwqzcFi/1UD7H0IThJXN0K3b5MC/wyqZ8T3yOIQx/db/l
+         UP8g5oruAzMIaxRY4JSnJDdRzRyAuiC4iP+qMuvpsri1+gjBDRKKitkK84J6GcJ7XZVW
+         vRog==
+X-Gm-Message-State: AFeK/H3nD+9hQNRyveto23MFXYQQCeD0z+tuPl3piNXehkbBm5x3S3n0St4xPy8DteSsN2HW
+X-Received: by 10.36.90.144 with SMTP id v138mr168198ita.24.1490308462140;
+        Thu, 23 Mar 2017 15:34:22 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:c402:7caa:e939:6e82])
-        by smtp.gmail.com with ESMTPSA id u191sm19962ita.15.2017.03.23.15.34.14
+        by smtp.gmail.com with ESMTPSA id u189sm32300itf.5.2017.03.23.15.34.21
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 15:34:14 -0700 (PDT)
+        Thu, 23 Mar 2017 15:34:21 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, jrnieder@gmail.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 3/7] submodule.c: port is_submodule_modified to use porcelain 2
-Date:   Thu, 23 Mar 2017 15:33:34 -0700
-Message-Id: <20170323223338.32274-4-sbeller@google.com>
+Subject: [PATCH 7/7] submodule.c: correctly handle nested submodules in is_submodule_modified
+Date:   Thu, 23 Mar 2017 15:33:38 -0700
+Message-Id: <20170323223338.32274-8-sbeller@google.com>
 X-Mailer: git-send-email 2.12.1.438.gb674c4c09c
 In-Reply-To: <20170323223338.32274-1-sbeller@google.com>
 References: <CAGZ79kZP6JhgcFQ5+Ytc6LexpA7C4EwR-7C0QZkiWhfrRCpd6g@mail.gmail.com>
@@ -61,59 +60,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate 'is_submodule_modified' to the new porcelain format of
-git-status. This conversion attempts to convert faithfully, i.e.
-the behavior ought to be exactly the same.
-
-As the output in the parsing only distinguishes between untracked files
-and the rest, this is easy to port to the new format, as we only
-need to identify untracked files and the rest is handled in the "else"
-case.
-
-untracked files are indicated by only a single question mark instead of
-two question marks, so the conversion is easy.
+When a nested submodule has untracked files, it would be reported as
+"modified submodule" in the superproject, because submodules are not
+parsed correctly in is_submodule_modified as they are bucketed into
+the modified pile as "they are not an untracked file".
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ submodule.c                 | 16 ++++++++++++++--
+ t/t3600-rm.sh               |  2 +-
+ t/t7506-status-submodule.sh |  2 +-
+ 3 files changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index c1b7b78260..da1db90dda 100644
+index e06e52b993..0f477f3a4e 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1058,7 +1058,7 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- 	}
- 	strbuf_reset(&buf);
- 
--	argv_array_pushl(&cp.args, "status", "--porcelain", NULL);
-+	argv_array_pushl(&cp.args, "status", "--porcelain=2", NULL);
- 	if (ignore_untracked)
- 		argv_array_push(&cp.args, "-uno");
- 
-@@ -1068,10 +1068,11 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- 	cp.out = -1;
- 	cp.dir = path;
- 	if (start_command(&cp))
--		die("Could not run 'git status --porcelain' in submodule %s", path);
-+		die("Could not run 'git status --porcelain=2' in submodule %s", path);
- 
- 	while (strbuf_getwholeline_fd(&buf, cp.out, '\n') != EOF) {
--		if ((buf.buf[0] == '?') && (buf.buf[1] == '?')) {
-+		/* regular untracked files */
-+		if (buf.buf[0] == '?') {
+@@ -1075,8 +1075,20 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 		/* regular untracked files */
+ 		if (buf.buf[0] == '?')
  			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
- 			if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
- 				break;
-@@ -1085,7 +1086,7 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- 	close(cp.out);
+-		else
+-			dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
++
++		/* regular unmerged and renamed files */
++		if (buf.buf[0] == 'u' ||
++		    buf.buf[0] == '1' ||
++		    buf.buf[0] == '2') {
++			if (buf.buf[5] == 'S') {
++				/* nested submodule handling */
++				if (buf.buf[6] == 'C' || buf.buf[7] == 'M')
++					dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
++				if (buf.buf[8] == 'U')
++					dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
++			} else
++				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
++		}
  
- 	if (finish_command(&cp))
--		die("'git status --porcelain' failed in submodule %s", path);
-+		die("'git status --porcelain=2' failed in submodule %s", path);
+ 		if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
+ 		    ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) || ignore_untracked))
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index a6e5c5bd56..b58793448b 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -659,7 +659,7 @@ test_expect_success 'rm of a populated nested submodule with nested untracked fi
+ 	test -d submod &&
+ 	test -f submod/.git &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+-	test_cmp expect.modified_inside actual &&
++	test_cmp expect.modified_untracked actual &&
+ 	git rm -f submod &&
+ 	test ! -d submod &&
+ 	git status -s -uno --ignore-submodules=none >actual &&
+diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+index ad46384064..e3cdcede72 100755
+--- a/t/t7506-status-submodule.sh
++++ b/t/t7506-status-submodule.sh
+@@ -324,7 +324,7 @@ test_expect_success 'status with untracked file in nested submodule (porcelain)'
+ test_expect_success 'status with untracked file in nested submodule (short)' '
+ 	git -C super status --short >output &&
+ 	diff output - <<-\EOF
+-	 m sub1
++	 ? sub1
+ 	EOF
+ '
  
- 	strbuf_release(&buf);
- 	return dirty_submodule;
 -- 
 2.12.1.438.gb674c4c09c
 
