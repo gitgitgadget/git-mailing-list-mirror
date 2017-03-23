@@ -2,94 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0E0A20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 16:04:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4689320958
+	for <e@80x24.org>; Thu, 23 Mar 2017 16:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756057AbdCWQEj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 12:04:39 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56146 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754542AbdCWQEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 12:04:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 92D9389F2B;
-        Thu, 23 Mar 2017 12:04:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5vKdI1T1FB5U8bkYhCXSqNftTDk=; b=ZJ+LcN
-        ekI4eOhqruW4wS6vyYphWkK6lKj/xKW80bPxYPCPDu6O2Y9XG77QIUkfsWCFaiTp
-        Qm5ZSHUGIHIJaejKtJcRhkJG7x7iMwaF23wxLls/7xVxfMuqV40aNSaqlKYFOmBP
-        H/7eBtZGBgK0IsQ1ZR7uwtQ8OLU2g3N7s0d08=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=kWB9WOby+p0g/uXHeBCztv5UFopHH4ca
-        podrnhG1XNzijmHuY60DWjY9hjEKnHSxWuA6BLW2cZYP1DsbYBbGI62Iddbh/k+j
-        JvjfQtGI/zbIaSq+K0Dq0i0vBPAhh1IKVVvh8w6H2/65v43JWst1de/RbWbnmFob
-        s2qDcznq8QE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8B7C789F2A;
-        Thu, 23 Mar 2017 12:04:36 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA24689F29;
-        Thu, 23 Mar 2017 12:04:35 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH 2/3] sequencer: make commit options more extensible
-References: <cover.1490194846.git.johannes.schindelin@gmx.de>
-        <c0c836e1f1739af25ad875419ee6125b53ac6a1a.1490194846.git.johannes.schindelin@gmx.de>
-Date:   Thu, 23 Mar 2017 09:04:34 -0700
-In-Reply-To: <c0c836e1f1739af25ad875419ee6125b53ac6a1a.1490194846.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Wed, 22 Mar 2017 16:01:53 +0100
-        (CET)")
-Message-ID: <xmqqa88cf08d.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S965555AbdCWQHV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 12:07:21 -0400
+Received: from mout.gmx.net ([212.227.15.18]:62299 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965368AbdCWQHT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 12:07:19 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mcmmn-1cZ8uK0jR3-00I039; Thu, 23
+ Mar 2017 17:07:09 +0100
+Date:   Thu, 23 Mar 2017 17:07:07 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Sebastian Schuberth <sschuberth@gmail.com>
+Subject: [PATCH v2 1/3] t7504: document regression: reword no longer calls
+ commit-msg
+In-Reply-To: <cover.1490285210.git.johannes.schindelin@gmx.de>
+Message-ID: <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490285210.git.johannes.schindelin@gmx.de>
+References: <cover.1490194846.git.johannes.schindelin@gmx.de> <cover.1490285210.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 69239AC6-0FE2-11E7-BC3E-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gU8K22oHuPznEu9btaeKktB6GCetgiopHqoeUn7IUpFQCXJ8Oo1
+ cbpcli6qeip8TOqhqzXY9FqctsRVFw6TWSr8Jtkhnw5uLqW7KR6ckXOGzTtEfRPT/Hs9nmL
+ tin0KHcezCp6HYxM7XveNnfG/gihlQevcLVzqucqy4Xknwc8JAFpvcAfS6IYUQBQaKouVDj
+ v3jbymjxo+Rikirqb68Vg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YEBA/2xefh4=:DyTR2O8yvmPAhMmflISetk
+ uoK+fxGWdz4oj9X3E3apcrj57zak+tfabewtXHUXSBvmtp4kqvFwtLShR1WqS2FWydss2yS0l
+ OEN44n3UlbgPFGtuAq87V6rbfhzVuDa6HGd/Mgpo/bRDD+i5m8tpm2KbXgKV7m8/JPDIiLW5C
+ Dmc00IzulQ9D/ofNvP6a3zafJNVkGhgIT1iLsr2cuyvBz6fcQwQoV8fZgxbCVYnFy8Zrj4DZ1
+ NEUm3wvB/dznVowcNkTojFNcgwecqv8QK6ZtOfbaZLza8cRUzNgcjrb6DsocvyK5CmupY6Bg9
+ hE5QcPnE06jT2TmB1wu8EFPDt2y6lh5f7wocjFaB8oNeeqVD9XpK3ZFXqunwustTdBfne1v0L
+ rsu1XXUcpIS6ORGDTMyYiAO+oCy2aHj3kXWSL80FpmVUo7ejE8eljT5kHIec73UDy7Mj1J4Pb
+ qGYJH/qAhrf/A0g5QBG6dbX9Jd7nB5LL79nJ+CVpb8zItcjFnGLaiBQ+zRGlAE5BK2ggZCkWS
+ hkfp3H18Fw0+O7NiTnySZ44e7r9KQitmrm2QngWcB/ElDK+QKqdKPx4uzOXEAB8+VtEwuLQpl
+ oHc1DE3kMmnJVdLML+vPq14920Wi8znK1QuYK15VRp7GgCI4EkiKIwbOd955Yeg8oljgBhqDs
+ rgpDj+n9YVw06sOXTSYXq3lpZKAOHbKqf9EbpSiLg9AsVICXEsVXYU7Q22TYgSeHxPnAzld7X
+ 0Bh52lZknP2//TXaaFu8GRU5Q749CJrk/zGijNJyNQopljUkwgzrGQ5hKUrBPGRO7F3rmaBv5
+ tcUKvuabS3tXtqZqSpMGACyXo6mqA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+The `reword` command of an interactive rebase used to call the
+commit-msg hooks, but that regressed when we switched to the
+rebase--helper backed by the sequencer.
 
-> It was pointed out during review of the sequencer-i patch series (which
-> taught the sequencer to execute an interactive rebase) that it may be
-> cumbersome to keep extending the signature of the run_git_commit()
-> function whenever a new commit option is needed.
->
-> While that concern had merit, back then I was reluctant to change even
-> more than was already asked for (which typically introduces regressions,
-> this late in the review process, which is no fun for nobody).
->
-> Now, with fresh eyes, and with an actual need, is a good time to change
-> the strategy from adding individual flag parameters to coalescing them
-> into a single flags parameter.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+Noticed by Sebastian Schuberth.
 
-I think the first two paragraphs are not about explaining this
-commit.  You do not have to justify the past---some suggestions
-given during the review may end up not getting followed for
-different reasons, which may be good or bad, but what happened has
-happened, and the backstory is not useful for understanding why this
-is a good change to a reader of "git log".
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t7504-commit-msg-hook.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-What belongs to the explanation / justification for this change is
-that the interface to run_git_commit() that forces to add one
-boolean parameter whenever a new "switch" is required is cumbersome
-and it is better to use a flags word that is a collection of bits.
-When you reroll this for s/signed int/unsigned int/, please just
-describe that in the log. Having the backstory under three-dash
-lines may help reviewers who remember the original topic that
-introduced the maintenance burden this commit fixes.
+diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
+index 8728db61d38..c3d9ab02a3b 100755
+--- a/t/t7504-commit-msg-hook.sh
++++ b/t/t7504-commit-msg-hook.sh
+@@ -220,4 +220,21 @@ test_expect_success "hook doesn't edit commit message (editor)" '
+ 
+ '
+ 
++# set up fake editor to replace `pick` by `reword`
++cat > reword-editor <<'EOF'
++#!/bin/sh
++mv "$1" "$1".bup &&
++sed 's/^pick/reword/' <"$1".bup >"$1"
++EOF
++chmod +x reword-editor
++REWORD_EDITOR="$(pwd)/reword-editor"
++export REWORD_EDITOR
++
++test_expect_failure 'hook is called for reword during `rebase -i`' '
++
++	GIT_SEQUENCE_EDITOR="\"$REWORD_EDITOR\"" git rebase -i HEAD^ &&
++	commit_msg_is "new message"
++
++'
++
+ test_done
+-- 
+2.12.1.windows.1
 
-Thanks.
+
