@@ -2,80 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78DDB20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 19:30:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A766820958
+	for <e@80x24.org>; Thu, 23 Mar 2017 19:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751449AbdCWTat (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 15:30:49 -0400
-Received: from mout.web.de ([212.227.15.14]:59781 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750952AbdCWTas (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 15:30:48 -0400
-Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lpw63-1cDQBB0wJL-00fjg4; Thu, 23
- Mar 2017 20:30:42 +0100
-Subject: Re: Question: libxdiff: text-patches: internal format
-To:     matthew@giassa.net
-References: <20170323180026.7qdfdzqgyczt2s3f@darkstar>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Cc:     git@vger.kernel.org
-Message-ID: <e19893df-0f7c-cfa7-cca4-014630ccf908@web.de>
-Date:   Thu, 23 Mar 2017 20:30:41 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1752232AbdCWTa7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 15:30:59 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50213 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750952AbdCWTa6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 15:30:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC22E6710D;
+        Thu, 23 Mar 2017 15:30:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6QZxoTWao8baqoRAYQZd77juzOc=; b=RzXMNR
+        /Coq/teqMuVeVZppH0OrAiyV5BSzI9mu/08HqH9VmrYbn5Nc+xLNyi0+JO11+pYE
+        ptTGbGFCcRV7XIt/k+kzWu5U6gO6E3JaylbjzsSeFQ2Zg7SpYAoQOll0DjTjVCqL
+        x0C2kg+z0BDaprE63WOd74SigxClZ0zidXOyc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=p93sQW9Q/l6VTbl4NtU16kHe/y80NolP
+        0PX6WypGz2Pkqg0FjE2qP3IHRnau0w3D83v6UyxH9FwnCl8tzvX3sqXmhJtdYv+w
+        y3ws/aVRriJQSJlbCxzcYYecG9sQTbRdgVEqxidNEqXwb6kEXatFRivYRRkDtnsa
+        yVulU8rsVcM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D52C76710A;
+        Thu, 23 Mar 2017 15:30:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45F6467105;
+        Thu, 23 Mar 2017 15:30:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
+References: <20170322065612.18797-1-larsxschneider@gmail.com>
+        <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1703231716320.3767@virtualbox>
+        <20170323180134.geoyvq7qbm5vujo6@sigill.intra.peff.net>
+        <xmqqbmsrdcz4.fsf@gitster.mtv.corp.google.com>
+        <20170323191721.7r5vrixtnx3cngdc@sigill.intra.peff.net>
+        <FE4A3F88-0B86-4069-B141-2DFB9C4E269E@gmail.com>
+Date:   Thu, 23 Mar 2017 12:30:49 -0700
+In-Reply-To: <FE4A3F88-0B86-4069-B141-2DFB9C4E269E@gmail.com> (Lars
+        Schneider's message of "Thu, 23 Mar 2017 20:26:15 +0100")
+Message-ID: <xmqqzigbbxjq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170323180026.7qdfdzqgyczt2s3f@darkstar>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:Rz6el00mPIe/wyJbYW61vxY7hNdHKvDrRiygsvcN4SvWHua306r
- FYUhq9xXHZVyAHTcQxvt3ZsJ+FXZTKKsjuXMAxCFm+xqkTNWM5kk2IBVGctoftNeytQ5NvL
- US6O2PRpw5wyipqpVd2I6HAiF+mzXAAzhPq13kKhegJ0BThDgZlA5nhDPtVT3p4F+FqkrR8
- gn2V3mV1ugbeeJatX0EXw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:VUyy8dFY2KQ=:e50arflB4RTospoQ02xg5J
- bNG7NKIDK0v0pu3hqHuJFFUo9RRvL1NkmFKrTSo0w48V1WpEjSUrJIipts31AnCdFtvg0M2hl
- AUPeJdR4JLHWTfvu1G1WHO2pM88OV/2NLJ1TFzMx/D3zM7zupXTSfLOb/z25sUIc2cgj+FXJX
- rgvbj6RkS030DEpG/CgxMIby+caQxBc3KfixiH21PjWCoVOKrp+K8yaaCZQ4ZavhyI+je2w52
- WycKEAsrAhM3w3t5HTJn48lTxJ71mFkhJWlrWe2rynvZFmkda3den6SkuBxE2c7xWaBiQ8OTX
- nxJhkAvWshQM8AaxSLaJHzeX0r2CbNb1Kph+ycGk3vfHkz2CeXZLmzlDzx543KWIq/0W2KN2v
- btYctGJ+XdfiLP9W6eNRPlEF98fgxQVwwVsZRxKGmt7uufJeHHDNXulAljnc47w5eKutw8rkv
- HCFQ7MD5lxelNYvmfMXZ2YNqag9tDsEt2whsLbAKAwouX/cKT3RAmZp0XCbPr0GN6X96iQVLj
- JoCMSJEQIdisImbvPMtv1vyynOFDf4FAii6BHbmTo+j1HG9cNh90GMeqxS+JgiL1TZoaQvLF3
- /DKtdFB37/bva4vAsvuNP/E9aOs5fs/1OZRglj28/k1O4V8+U4kHejvP1exUzf6TuWIp+iB37
- G9bqDV4Lvq+TfUh1gODN9mGxZTkPHa8dh5vdbkHta524GHSsfTfD/4bdu31LdcM7A2qTJ2zwD
- dAWP9I2rfu/yLjJJndyVc+9bCng83hYlg/+fPhoFgnDRvM27PDLcpEtsPoaYKrG8JwYUjAGGb
- qhFkTlj
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3972E6B6-0FFF-11E7-B08D-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.03.2017 um 19:00 schrieb matthew@giassa.net:
-> Hi there,
->
-> Following up on an earlier question of mine from yesterday, is there any
-> formal documentation (save for source diving) on the internal format
-> used by libxdiff/xdiff when it generates a patch by comparing two
-> plaintext files?
->
-> I'd like to generate a human-readable "pretty" diff from the output
-> generated by libxdiff, and while the suggestion by Stefan yesterday is a
-> good idea (ie: go through diff.c), I'm trying to see if there's a
-> quicker way to pull this off. Also, I can't determine if lifting that
-> code from git would invoke LGPL licensing constraints (no problem), or
-> GPL licensing constraints (incompatible with my application). If the
-> format is easy enough to follow, I might just write my own parser,
-> provided it's a trivial task.
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Some of your questions may be answered on the homepage of LibXDiff, 
-http://www.xmailserver.org/xdiff-lib.html.  That's the original version 
-that was imported into Git long ago.  It lacks some Git-specific 
-features, but the documentation and links on the web page may still help 
-you.  The original LibXDiff is licensed under the LGPL and perhaps you 
-can use it directly already.
+> "[...] we do not provide these values to untrusted builds, 
+> triggered by pull requests from another repository."
+>
+> See: https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
 
-René
+OK, it is a releaf to see an indication that somebody over there is
+thinking.  Thanks.
+
+So we do _not_ have to turn it off; as soon as we define sekrit
+variables, they will turn it off for us ;-).
+
+>> Hrm, it does mean that people have no way to test on Windows until the
+>> branch hits pu. Which is not ideal.
+>
+> I agree it's not ideal. But I think it is an improvement to check
+> pu/next/master/maint continuously :-)
+
+I am not sure what you mean.  We are building each and every branch
+updates already, and I do not see any improvement over what we are
+doing now.  Care to elaborate?
