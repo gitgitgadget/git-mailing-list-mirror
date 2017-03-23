@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C800B20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 14:41:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C63720964
+	for <e@80x24.org>; Thu, 23 Mar 2017 14:45:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752025AbdCWOlS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 10:41:18 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62974 "EHLO mout.gmx.net"
+        id S1755514AbdCWOoW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 10:44:22 -0400
+Received: from mout.gmx.net ([212.227.15.18]:51688 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751249AbdCWOlR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 10:41:17 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9JYE-1d2dBW1TaA-00CfxL; Thu, 23
- Mar 2017 15:41:12 +0100
-Date:   Thu, 23 Mar 2017 15:41:11 +0100 (CET)
+        id S1752909AbdCWOoU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 10:44:20 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskKv-1cAoHR15ir-012Hlf; Thu, 23
+ Mar 2017 15:43:36 +0100
+Date:   Thu, 23 Mar 2017 15:43:35 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
@@ -27,30 +27,30 @@ cc:     Sebastian Schuberth <sschuberth@gmail.com>,
         Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH 1/3] t7504: document regression: reword no longer calls
  commit-msg
-In-Reply-To: <xmqqinn1kwo6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703231539410.3767@virtualbox>
-References: <cover.1490194846.git.johannes.schindelin@gmx.de> <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de> <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com>
- <xmqqinn1kwo6.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqefxpkwjf.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1703231541180.3767@virtualbox>
+References: <cover.1490194846.git.johannes.schindelin@gmx.de> <773531a3892fb78e8f70e540fc000bceb2c1bb7b.1490194846.git.johannes.schindelin@gmx.de> <CAHGBnuPL9CUincZkFR758KcZL3-Ra=n_fbsc1EQ=vio2scod5w@mail.gmail.com> <alpine.DEB.2.20.1703221704500.3767@virtualbox>
+ <xmqqefxpkwjf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:JSXpxLuwE6bb1ZmZk6W/c7SORuyGTZ1040Vxvz20hcPIMVp0GQV
- zxxD5gk9Qkm81rrbhp/43UJ3bAJ0vHUnbFTjcRgBmnU0ExnAw65TitaMRpEVTPLjuYPuy/n
- AdCEoTiyfoAE7mjFglQQPm4gzGW7lG+INHcu59MEiYhGT2hDbYKx5pkrfPZM+HVuHMJ2VdU
- cUl27XDeY5+iA+zaa4OBA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KM8yjeJNXYE=:tIkTDU18LQYj6T2kS/h+02
- 6hZaEwh+2iH92thU4AkeAA2SRnhJz/DYgb7+pPkuLkTKzpw1ixnr7FVBdnaPfcPrjb/JsAct0
- kIhVBs9kErpbq7Tqo6SCNlp4I9m7wZTNDUEwv8fJVt1PwThKNIbITHwLLX/S2ezqTMvBapKXR
- UAU8xgzNOGvz47nbcfQDXK5qXWhj06AZnpeFBRPPQXLM59rbEzRVyilDxNBKwES1iFYnIDnI4
- aq8SJGfjFj/G09CAlsyWXL4A3o6z19EFnlnERG6wtSBMcMk7kA87fwyQr2c86URDp5XkPjH51
- +sirhMBTBBHuHC2EHKAf649zQxgi5oxlVxbA6AFH0jmxxSrDwgxzulNDkljI5oQfiyn9dhmfC
- njsFkH2nZNkq9SPB8K7wGyd2FiH1fHE2/3TzOYp3VYlByN9xqhwtGzf8JmsNWgcA7Oak3LWrj
- Nnl8YtsjrdDxogpi+E8ca3ErdffdLcyhgN8AyUhpWpQofW+ym/8tXiK6/QxFxjbJEOe5CsAe3
- 1w/1roZq4Y39Vo9AqpxYRPMbLlg3Utnq2rdbtJj3t6CWPLpGTz4hOXxdwVKyoBQYz4BKbR9i9
- t7sWtxHIB/XEdyIDdUEFMCdHCci6WlwYnYsWj/7tshdR+sClXhXZR7zRBb5qvHYZtn7oRdyTu
- ZTHrU9Ts4lxBMXCIc06OTdt5aHJcNjh10/qcUetarvwD0x+cHxmV1pfPLJcwQM+1JC/3VqQ6A
- twWXYskEzGtecQaWIwPRnpUAJhLR4y5wVB5O6I81hOr8zkJhxEcyMofaHL1XJf05hJ7X4zucZ
- 9qYfraADzD4ScSC6EU3XpwrILO1Sg==
+X-Provags-ID: V03:K0:FhOqs+zlQD3fwLymPvjxCrPed10Fqik5ZXpPM2cK9aG4uVxmAox
+ ZlmsqWLgNd2F2H3uPaQLA0whnfUO7ZfTC4/wojma5Xs0/+/U858cJNpwSN+zFfEjJilehWJ
+ t2v9uF4hgNzNkbitipjZGS3Hn/oKPC2PPQY3XB91IhEce+3mNUne/3flCgUidUokMqqHt54
+ cXz7/VsuT23z+KmPoZOIg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:FULqT3WWI0U=:I8ADH1h6uchKWM9UAhNcyp
+ zbIxYKvBGI01Zx3nB3v8xG/Mjhfa/iDbzZtUmSOzIMEhl6/BIKHxZ4TaxTXFY8C1n0MOpxsAL
+ bxQshZ1Or3lXqmAYbTKPY+NOgIk7t4ce7q/j9uKYttd4qkJK3aosKT1A0243R+UqUTyq7B3H7
+ mOQCKFaZ2LX+bedgsK/p0yYt0ByJ60A0Xz7HvLrjUReUv9veIzViTjsdBZ1rDmSqm7gip0dWi
+ utvEaFMBtbsWei9E/uL7PxEdhIc/LHlLdhDtP2bvayfAvCOK0vXfO7CBS+NLruaetR8ewMWMH
+ yG0anaCu+TPpaivr2m3bhquJJOVfM7DQ4IV6MYnFPa/R2Z8hvjdsVo4SaMYArQLSPg8cbtR+4
+ ygc/Aon3cThQatXCh5nV01f4fifLLb5YiOck4WHEgmrSVml3/gdb5m+QH9w214oUOHhHkY0m4
+ N9xBi+gyg28fHxS3lNqWmMb8tyJUQ6KesyE/Br5jF0gUiW8ExxDJd8AGUb/rVoN/tQXmOHqAU
+ PPdNy2MMcWAQvSR2Hq2gcGXnMz/HJR/7Hje2V/HB1xya/pTL9Yq4wYbz2YrTGCFnPsr9IGM3E
+ 6b+4rEOu0BLQIGI/lpopuER26NIfKveW78eGD9kM4PNKD5uqq/x27BBXKMiUj1YYtliuz0eoY
+ aBmUongPFeE3t7Mwbkqta2nyfZ9vU/DdBWLenrgeB1ac+nLffA74+KNjMwLo6thJoYqapa9jQ
+ lGL4lXCdBi1Lri5pqjJkmmH2KYzu1FPwHWhwhZeXIe07rNq9uPnHHbVdJnrPqsZZt92Vooui+
+ mla/cMbYsNCOvpURzwoDZxpExX4vA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,39 +60,25 @@ Hi Junio,
 
 On Wed, 22 Mar 2017, Junio C Hamano wrote:
 
-> Sebastian Schuberth <sschuberth@gmail.com> writes:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > On Wed, Mar 22, 2017 at 4:01 PM, Johannes Schindelin
-> > <johannes.schindelin@gmx.de> wrote:
-> >
-> >> Noticed by Sebastian Schuberth.
-> >
-> > Thanks for working on the fix.
-> >
-> >> +# set up fake editor to replace `pick` by `reword`
-> >> +cat > reword-editor <<'EOF'
-> >> +#!/bin/sh
-> >> +mv "$1" "$1".bup &&
-> >> +sed 's/^pick/reword/' <"$1".bup >"$1"
-> >> +EOF
-> >
-> > Maybe use
-> >
-> > sed -i 's/^pick/reword/' "$1"
-> >
-> > here to avoid renaming the input file? Not sure how portable -i for
-> > sed is, though. Otherwise, maybe remove the file "$1".bup afterwards
-> > to be clean?
+> > In any case, this is *test* code. So I'd prefer to have the changes to
+> > the C code scrutinized a bit more, not the test code as long as it is
+> > obvious what it does.
 > 
-> "-i" is GNUism and it is a good idea to avoid it, but cleaning after
-> itself may be worth doing to avoid contaminating the working tree.
+> [...] People have strengths in different areas, and those who can spot
+> issues in tests better than the C code should not be discouraged from
+> suggesting improvements by getting scolded like this.
 
-This script is only used as *sequence* editor, i.e. for
-.git/merge-rebase/git-rebase-todo. As such, I find it valuable to have the
-original version in the same directory, and the file is cleaned up upon
-success by the `git rebase -i` command anyway.
+I know Sebastian well, and I would hope that he lends his substantial
+competence to making sure that the changes that affect end users are
+correct and that I do not introduce another regression.
 
-In that light, I am sure you agree that the current code is fine.
+Besides, he is German, so I tried to spell it out clearly what I wish him
+to do in return for my addressing his problem.
+
+That was the entire reasoning behind my "scolding". I am sorry that you
+understood it to be meant negatively. It was not.
 
 Ciao,
-Dscho
+Johannes
