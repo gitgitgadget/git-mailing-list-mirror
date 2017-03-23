@@ -2,101 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C28320958
-	for <e@80x24.org>; Thu, 23 Mar 2017 18:47:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DBBC20958
+	for <e@80x24.org>; Thu, 23 Mar 2017 19:01:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S964823AbdCWSrq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 14:47:46 -0400
-Received: from mail-pg0-f41.google.com ([74.125.83.41]:35226 "EHLO
-        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934846AbdCWSrp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 14:47:45 -0400
-Received: by mail-pg0-f41.google.com with SMTP id t143so62255023pgb.2
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 11:47:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=o+cPyPbbxpeRzoya5vXJNceaEzrYWZCvxEDlcRyR5Z0=;
-        b=ZyY/9yGokurD+m6cXtAFNttRrinBOfOiCrNujdfpqEsXfYaGPQhKUY28zRhZumei60
-         cXU+K83jik4u3zSSmyUMjsFqmoTcO3kxzhr03VuQnsWyQO+Z0eUByql50H1/nwq4UVL6
-         0slG23dexNFCYxi9nn5smgcuVtLhPEsGx6o2j/aHRL+Yx0JLRJ1aqa5GO+U07dRpN/A6
-         z3z6vTwhNaGV2Ody9pVubC8eIjNITqJthzIgSEfCOFVNcBRzO1pJNpF/JhihEJ4midIY
-         U7HoYNZOogqIiS7izkW05f5v73NBTqVQPk8b/vnjwli2macRd/KxlMPuy9Pf6FVODzyx
-         Lw6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=o+cPyPbbxpeRzoya5vXJNceaEzrYWZCvxEDlcRyR5Z0=;
-        b=NI1Rcp6MBxxU6Z0YmP46g+w9EUal9eJrCEdDsUWapEgFN17zAUejYUbI2blpizLf+B
-         XuFlVvatZTb+BUahXFx81xoBSkntrxdlCqk+mIa9rvoiq2DqPQx+30xkJIxZj9Clr6e8
-         lfKib2zDyOQEg2Nw8DAWrlRkbZB4yX+Q23lVCPa093pTbkkpdrkvJ0vu+KuOwJz7WDHs
-         3tnrTgDuffxkEYFOqA5rZOgxFR+TCnqmx49JXwsVMduSCl5Pt3hYak7mJXeZ+Uml3zvr
-         +B22HXCAzd39sOwb1vm9lzShlIcjWs3huC3ztpNEbGtQ7zbFYJ7k6RISR158I7LqYOrk
-         SLCQ==
-X-Gm-Message-State: AFeK/H1WeyJ9cj3JblTAnEp82cQf7ZTIMs02yYit9GdyOBMC1bIPUvO5YNVqOh1mfKqLMHP2JNJvI78uJ242ybQ6
-X-Received: by 10.99.119.140 with SMTP id s134mr4565338pgc.162.1490294840012;
- Thu, 23 Mar 2017 11:47:20 -0700 (PDT)
+        id S932437AbdCWTBl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 15:01:41 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58785 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752106AbdCWTBk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 15:01:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 85BB3669B8;
+        Thu, 23 Mar 2017 15:01:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fhKMTEU5j0SkkTCZYZEnWqrSrxM=; b=lOSfVl
+        rV1j9G9cE6zAqRG/Tkm8roaHkRJDVbiLlKmD21qeL/274k9ltpKNNferEUp82Tm+
+        RRHG9c5tlC68zk/SAZf7HwTMYY2DuKWTZt7xklYHynvQRzk46mNkunGJfqz0nW6c
+        aZDKsD0h3wAhbvmVKmoS+dBopQut2X1xV/tHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XcYs74nXk4XyZDRwTvo508o1aPHoAxdP
+        XpOnwbSQcVDpm9HbNFtY5e06nf3XVXjBsgvCTWEl50h+j+wDMmkPVm3/y/Ng5KUL
+        a2EvC5R4QXlb7gvuxR5oWB+CoBsj4DQ3DSQ+F5WLvgcFYUaLrTON3z1HOsjv9Css
+        C2FCu3kGfL8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7E32C669B7;
+        Thu, 23 Mar 2017 15:01:38 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DD107669B6;
+        Thu, 23 Mar 2017 15:01:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] branch doc: Change `git branch <pattern>` to use `<branchname>`
+References: <20170323120326.19051-1-avarab@gmail.com>
+        <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
+        <5d04c82c-45a4-5d5e-0317-511587ee3474@ramsayjones.plus.com>
+Date:   Thu, 23 Mar 2017 12:01:36 -0700
+In-Reply-To: <5d04c82c-45a4-5d5e-0317-511587ee3474@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Thu, 23 Mar 2017 17:44:07 +0000")
+Message-ID: <xmqqo9wrddgv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.162.161 with HTTP; Thu, 23 Mar 2017 11:47:19 -0700 (PDT)
-In-Reply-To: <xmqqo9wsfrsr.fsf@gitster.mtv.corp.google.com>
-References: <20170323004329.15892-1-sbeller@google.com> <20170323004329.15892-2-sbeller@google.com>
- <20170323005341.GH26108@aiede.mtv.corp.google.com> <xmqqo9wsfrsr.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 23 Mar 2017 11:47:19 -0700
-Message-ID: <CAGZ79kZriqCE4-9bVQTNGXEZsJi-Z+ryp3QRu-MC8Sn1kaGSdg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] submodule.c: port is_submodule_modified to use
- porcelain 2
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 245A6794-0FFB-11E7-9387-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 22, 2017 at 11:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+
+>> I am not sure if it makes that much sense to have that sentence here
+>> in the first place (after all, it is describing a behaviour of a
+>> mode that is *not* the list mode), but I guess that it may be a
+>> common mistake to forget to specify "-l" while asking for branches
+>> that match the pattern?  If we were writing this today from scratch,
+>> I would perhaps write something entirely different, e.g.
+>> 
+>> 	--list::
+>> 		List branches.  With optional <pattern>... at the
+>> 		end of the command line, list only the branches that
+>> 		match any of the given patterns.  Do not forget '-l'
+>> 		and say "git branch <pattern>", as it will instead
+>> 		try to create a new branch whose name is <pattern>,
+>> 		which is a common mistake.
 >
->> Stefan Beller wrote:
->>
->>> Migrate 'is_submodule_modified' to the new porcelain format of
->>> git-status.
->>>
->>> As the old porcelain only reported ' M' for submodules, no
->>> matter what happened inside the submodule (untracked files,
->>> changes to tracked files or move of HEAD), the new API
->>> properly reports the different scenarios.
->> [...]
->>>  submodule.c | 53 ++++++++++++++++++++++++-----------------------------
->>>  1 file changed, 24 insertions(+), 29 deletions(-)
->>
->> Neat.  Is this something that could be covered in tests, or should I
->> be patient and rely on patch 3/3 for that?
+> Hmm, but with git-branch -l means --create-reflog not --list.
+>
+> I have make the mistake of using -l rather than --list several
+> times ... :D
 
-I am not sure how to cover it in tests properly, as we do not expose this
-function to the outside directly.
-
-This function is used in only one place (diff-lib.c, in
-match_stat_with_submodule,
-which itself is used in run_diff_files and get_stat_data), which is deep down
-in the diff library.
-
->> I think this would be easier to understand if it were two patches: one
->> that switched to --porcelain=2 with no change in behavior,
-
-I don't think so as it would double the code to review.
-I'll see if I can present this conversion in an easier way.
-
-> That sounds like a sensible organization.
-
-ok.
-
-Thanks,
-Stefan
+That too.  With "Do not forget '--list'..." and it will make it
+correct again ;-).
