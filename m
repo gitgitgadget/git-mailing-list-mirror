@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1805620958
-	for <e@80x24.org>; Thu, 23 Mar 2017 22:34:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9F7920958
+	for <e@80x24.org>; Thu, 23 Mar 2017 22:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933968AbdCWWe2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 18:34:28 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:34867 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933401AbdCWWe1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 18:34:27 -0400
-Received: by mail-it0-f48.google.com with SMTP id y18so295755itc.0
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:34:26 -0700 (PDT)
+        id S1756315AbdCWWei (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 18:34:38 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:38182 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752500AbdCWWeh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 18:34:37 -0400
+Received: by mail-it0-f53.google.com with SMTP id y18so287383itc.1
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:34:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UNNxWQj+Ecdw5cTZMrsANyzP65ga+E0QOsL8z1U//LA=;
-        b=uVoWKZ1WyqNLyfWaulYRULqfcHq5nM1jlJi/icKPLZeTWxq4O/MstxxrV0gFx2cHoe
-         mhCbXPaaKGlyPwGQ4pVmFYEMJ7m0IXYdhIdArBnXZ36+bHme0lyuuUn0zall8m7vTPOe
-         XoK4ElsXXWXc3JvdKpWpm4nDPYAkBDa6OjHza05I/1HFPJ/3hvcjUv86IxE1QDfOR9Sz
-         hyJdivkzoMdPoeC7l2v/d9DyNSYf9T7kHuYuQdLlSjQcaj99/NMfdQF8BRnC7zl2mZAN
-         aCRTxcjP6fdJsYFO1tSxbOP9ayjgX/J9Myh2f7CCQT3UWL7yrag/kuQ54MdORk+5BMuH
-         aV6g==
+        bh=gRJM2s2j+xDXFzST1hfDCWYd3oceA2m2QJUPlouZEmQ=;
+        b=u72bXBD1C9ql83yEPLOfUbOTHeTKJz4bqG29de0Z8f8fI+30iWJ+0y6PWgZBf4Y8w9
+         WSGQ6asoY4Gn0Vqy6gn1i55cnxwhbI8pjY4z1WQFZKWxyzL4ztvDcYTJJ3wZPq7gFIve
+         V32Skgbt5nyaLWyGUopkU3CFNopq45FxjJcffR57WoZJlC0Uhe+6/sHqJWXrJtq7J5Vn
+         ks/RlgLmCe1o6MGicTX6W+NiZHW6DiXq0LjAyDoNEFEaPTJMTAg9xUzKigcbmJOM0/hU
+         r6ramA0ghLVq3EwpjRu48SFsCLQediVdY1FksWlGYUyfPxav5KPIuoK7Wjlegl4WlNsi
+         yh2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UNNxWQj+Ecdw5cTZMrsANyzP65ga+E0QOsL8z1U//LA=;
-        b=ognb+Drkq829tkVBJBno/Eb4wgb6jNyF6alqKJw2E9Df21yrIMUWBtuWZ6vK9IJryx
-         dujdQsZu8FsTO5lTyPfc6KYcPPUcH38UhaiG1BDToNUu8VzSlEc8Q1x63TCBMhrv18xk
-         sanWogllcPLbNqww9ji3xeNeJcks7xeR789IIILoh7BbIw/Zx6cDNcJgCKPpstinFjQy
-         XO3YcgLq2LhWH6T3/j64w7TNI0YBYBZuNhHJJ4/ECryrrx+NhAu2iEUC097ytO2zFn9t
-         Amtl5PPFpVvTc3bxMTTMFnIDFkFXx4qkY1+9sCBHr5vUputhz5KIQfUeEqzVxd79vC+S
-         ZM2g==
-X-Gm-Message-State: AFeK/H1gr3ddgsvROKglDwrgz4RSNSz9C/VwLUHqt+CxLJZ7+6dbwpbF+ED38snyccTvlLsL
-X-Received: by 10.36.139.194 with SMTP id g185mr108921ite.11.1490308460599;
-        Thu, 23 Mar 2017 15:34:20 -0700 (PDT)
+        bh=gRJM2s2j+xDXFzST1hfDCWYd3oceA2m2QJUPlouZEmQ=;
+        b=TX8wxVoBHkeFr/klcqg+QZt4SCN+ZFQ18qTGW40/tXV72U5i8D7yq0QeyNcB1ffvJ8
+         uv5Icc6OGOqtT7vEPCGGmw/kYu1DRLQPun867FbpCBO4L3o/dq+KSJM0r5Jq7kdiV9vA
+         v+Oo1ig0LIJn6xhQuj9EcWM2gG4+6mDcQq9GAShJh5BVKcX/lCnyqYNFxGcREAZ6gw4D
+         WRUTLSXaLAyD6xy+QuRR3HZP6s9vGRD7UJL6OJSJ03uHsbxTz84Ya2Y90Tj9OdISE/12
+         W74JJz0ZueWoz4z+dHjDiToz5eAOFy3ZqCr2D8H0oUlpNNjwrmTF+D8sxgVg5WwKuqlM
+         XiLQ==
+X-Gm-Message-State: AFeK/H2M4r7BcUwrcx87AzFWSH+NhOlhOB4Zr5T1Q7zfxqQP2/sI/St7ovH6Fw+DtDQG0h4j
+X-Received: by 10.36.50.82 with SMTP id j79mr111949ita.118.1490308455689;
+        Thu, 23 Mar 2017 15:34:15 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:c402:7caa:e939:6e82])
-        by smtp.gmail.com with ESMTPSA id g103sm268987iod.44.2017.03.23.15.34.19
+        by smtp.gmail.com with ESMTPSA id u191sm19962ita.15.2017.03.23.15.34.14
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 15:34:19 -0700 (PDT)
+        Thu, 23 Mar 2017 15:34:14 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, jrnieder@gmail.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 6/7] short status: improve reporting for submodule changes
-Date:   Thu, 23 Mar 2017 15:33:37 -0700
-Message-Id: <20170323223338.32274-7-sbeller@google.com>
+Subject: [PATCH 3/7] submodule.c: port is_submodule_modified to use porcelain 2
+Date:   Thu, 23 Mar 2017 15:33:34 -0700
+Message-Id: <20170323223338.32274-4-sbeller@google.com>
 X-Mailer: git-send-email 2.12.1.438.gb674c4c09c
 In-Reply-To: <20170323223338.32274-1-sbeller@google.com>
 References: <CAGZ79kZP6JhgcFQ5+Ytc6LexpA7C4EwR-7C0QZkiWhfrRCpd6g@mail.gmail.com>
@@ -61,264 +61,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If I add an untracked file to a submodule or modify a tracked file,
-currently "git status --short" treats the change in the same way as
-changes to the current HEAD of the submodule:
+Migrate 'is_submodule_modified' to the new porcelain format of
+git-status. This conversion attempts to convert faithfully, i.e.
+the behavior ought to be exactly the same.
 
-        $ git clone --quiet --recurse-submodules https://gerrit.googlesource.com/gerrit
-        $ echo hello >gerrit/plugins/replication/stray-file
-        $ sed -i -e 's/.*//' gerrit/plugins/replication/.mailmap
-        $ git -C gerrit status --short
-         M plugins/replication
+As the output in the parsing only distinguishes between untracked files
+and the rest, this is easy to port to the new format, as we only
+need to identify untracked files and the rest is handled in the "else"
+case.
 
-This is by analogy with ordinary files, where "M" represents a change
-that has not been added yet to the index.  But this change cannot be
-added to the index without entering the submodule, "git add"-ing it,
-and running "git commit", so the analogy is counterproductive.
+untracked files are indicated by only a single question mark instead of
+two question marks, so the conversion is easy.
 
-Introduce new status letters " ?" and " m" for this.  These are similar
-to the existing "??" and " M" but mean that the submodule (not the
-parent project) has new untracked files and modified files, respectively.
-The user can use "git add" and "git commit" from within the submodule to
-add them.
-
-Changes to the submodule's HEAD commit can be recorded in the index with
-a plain "git add -u" and are shown with " M", like today.
-
-To avoid excessive clutter, show at most one of " ?", " m", and " M" for
-the submodule.  They represent increasing levels of change --- the last
-one that applies is shown (e.g., " m" if there are both modified files
-and untracked files in the submodule, or " M" if the submodule's HEAD
-has been modified and it has untracked files).
-
-While making these changes, we need to make sure to not break porcelain
-level 1, which shares code with "status --short".  We only change
-"git status --short".
-
-Non-short "git status" and "git status --porcelain=2" already handle
-these cases by showing more detail:
-
-        $ git -C gerrit status --porcelain=2
-        1 .M S.MU 160000 160000 160000 305c864db28eb0c77c8499bc04c87de3f849cf3c 305c864db28eb0c77c8499bc04c87de3f849cf3c plugins/replication
-        $ git -C gerrit status
-[...]
-        modified:   plugins/replication (modified content, untracked content)
-
-Scripts caring about these distinctions should use --porcelain=2.
-
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- Documentation/git-status.txt |  9 +++++++
- t/t3600-rm.sh                | 18 ++++++++++----
- t/t7506-status-submodule.sh  | 57 ++++++++++++++++++++++++++++++++++++++++++++
- wt-status.c                  | 13 ++++++++--
- 4 files changed, 90 insertions(+), 7 deletions(-)
+ submodule.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index ba873657cf..01b457c322 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -181,6 +181,13 @@ in which case `XY` are `!!`.
-     !           !    ignored
-     -------------------------------------------------
+diff --git a/submodule.c b/submodule.c
+index c1b7b78260..da1db90dda 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1058,7 +1058,7 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 	}
+ 	strbuf_reset(&buf);
  
-+Submodules have more state and instead report
-+		M    the submodule has a different HEAD than
-+		     recorded in the index
-+		m    the submodule has modified content
-+		?    the submodule has untracked files
-+
-+
- If -b is used the short-format status is preceded by a line
+-	argv_array_pushl(&cp.args, "status", "--porcelain", NULL);
++	argv_array_pushl(&cp.args, "status", "--porcelain=2", NULL);
+ 	if (ignore_untracked)
+ 		argv_array_push(&cp.args, "-uno");
  
-     ## branchname tracking info
-@@ -210,6 +217,8 @@ field from the first filename).  Third, filenames containing special
- characters are not specially formatted; no quoting or
- backslash-escaping is performed.
+@@ -1068,10 +1068,11 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 	cp.out = -1;
+ 	cp.dir = path;
+ 	if (start_command(&cp))
+-		die("Could not run 'git status --porcelain' in submodule %s", path);
++		die("Could not run 'git status --porcelain=2' in submodule %s", path);
  
-+Any submodule changes are reported as modified `M` instead of `m` or single `?`.
-+
- Porcelain Format Version 2
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 	while (strbuf_getwholeline_fd(&buf, cp.out, '\n') != EOF) {
+-		if ((buf.buf[0] == '?') && (buf.buf[1] == '?')) {
++		/* regular untracked files */
++		if (buf.buf[0] == '?') {
+ 			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+ 			if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+ 				break;
+@@ -1085,7 +1086,7 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 	close(cp.out);
  
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 5aa6db584c..a6e5c5bd56 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -268,6 +268,14 @@ cat >expect.modified <<EOF
-  M submod
- EOF
+ 	if (finish_command(&cp))
+-		die("'git status --porcelain' failed in submodule %s", path);
++		die("'git status --porcelain=2' failed in submodule %s", path);
  
-+cat >expect.modified_inside <<EOF
-+ m submod
-+EOF
-+
-+cat >expect.modified_untracked <<EOF
-+ ? submod
-+EOF
-+
- cat >expect.cached <<EOF
- D  submod
- EOF
-@@ -421,7 +429,7 @@ test_expect_success 'rm of a populated submodule with modifications fails unless
- 	test -d submod &&
- 	test -f submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	test_cmp expect.modified actual &&
-+	test_cmp expect.modified_inside actual &&
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none >actual &&
-@@ -436,7 +444,7 @@ test_expect_success 'rm of a populated submodule with untracked files fails unle
- 	test -d submod &&
- 	test -f submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	test_cmp expect.modified actual &&
-+	test_cmp expect.modified_untracked actual &&
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none >actual &&
-@@ -621,7 +629,7 @@ test_expect_success 'rm of a populated nested submodule with different nested HE
- 	test -d submod &&
- 	test -f submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	test_cmp expect.modified actual &&
-+	test_cmp expect.modified_inside actual &&
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none >actual &&
-@@ -636,7 +644,7 @@ test_expect_success 'rm of a populated nested submodule with nested modification
- 	test -d submod &&
- 	test -f submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	test_cmp expect.modified actual &&
-+	test_cmp expect.modified_inside actual &&
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none >actual &&
-@@ -651,7 +659,7 @@ test_expect_success 'rm of a populated nested submodule with nested untracked fi
- 	test -d submod &&
- 	test -f submod/.git &&
- 	git status -s -uno --ignore-submodules=none >actual &&
--	test_cmp expect.modified actual &&
-+	test_cmp expect.modified_inside actual &&
- 	git rm -f submod &&
- 	test ! -d submod &&
- 	git status -s -uno --ignore-submodules=none >actual &&
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index d31b34da83..ad46384064 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -50,6 +50,15 @@ test_expect_success 'status with modified file in submodule (porcelain)' '
- 	EOF
- '
- 
-+test_expect_success 'status with modified file in submodule (short)' '
-+	(cd sub && git reset --hard) &&
-+	echo "changed" >sub/foo &&
-+	git status --short >output &&
-+	diff output - <<-\EOF
-+	 m sub
-+	EOF
-+'
-+
- test_expect_success 'status with added file in submodule' '
- 	(cd sub && git reset --hard && echo >foo && git add foo) &&
- 	git status >output &&
-@@ -64,6 +73,14 @@ test_expect_success 'status with added file in submodule (porcelain)' '
- 	EOF
- '
- 
-+test_expect_success 'status with added file in submodule (short)' '
-+	(cd sub && git reset --hard && echo >foo && git add foo) &&
-+	git status --short >output &&
-+	diff output - <<-\EOF
-+	 m sub
-+	EOF
-+'
-+
- test_expect_success 'status with untracked file in submodule' '
- 	(cd sub && git reset --hard) &&
- 	echo "content" >sub/new-file &&
-@@ -83,6 +100,13 @@ test_expect_success 'status with untracked file in submodule (porcelain)' '
- 	EOF
- '
- 
-+test_expect_success 'status with untracked file in submodule (short)' '
-+	git status --short >output &&
-+	diff output - <<-\EOF
-+	 ? sub
-+	EOF
-+'
-+
- test_expect_success 'status with added and untracked file in submodule' '
- 	(cd sub && git reset --hard && echo >foo && git add foo) &&
- 	echo "content" >sub/new-file &&
-@@ -271,4 +295,37 @@ test_expect_success 'diff --submodule with merge conflict in .gitmodules' '
- 	test_cmp diff_submodule_actual diff_submodule_expect
- '
- 
-+test_expect_success 'setup superproject with untracked file in nested submodule' '
-+	(
-+		cd super &&
-+		git clean -dfx &&
-+		rm .gitmodules &&
-+		git submodule add -f ./sub1 &&
-+		git submodule add -f ./sub2 &&
-+		git commit -a -m "messy merge in superproject" &&
-+		(
-+			cd sub1 &&
-+			git submodule add ../sub2 &&
-+			git commit -a -m "add sub2 to sub1"
-+		) &&
-+		git add sub1 &&
-+		git commit -a -m "update sub1 to contain nested sub"
-+	) &&
-+	echo untracked >super/sub1/sub2/untracked
-+'
-+
-+test_expect_success 'status with untracked file in nested submodule (porcelain)' '
-+	git -C super status --porcelain >output &&
-+	diff output - <<-\EOF
-+	 M sub1
-+	EOF
-+'
-+
-+test_expect_success 'status with untracked file in nested submodule (short)' '
-+	git -C super status --short >output &&
-+	diff output - <<-\EOF
-+	 m sub1
-+	EOF
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index 308cf3779e..9909fd0e57 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -431,10 +431,19 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 		}
- 		if (!d->worktree_status)
- 			d->worktree_status = p->status;
--		d->dirty_submodule = p->two->dirty_submodule;
--		if (S_ISGITLINK(p->two->mode))
-+		if (S_ISGITLINK(p->two->mode)) {
-+			d->dirty_submodule = p->two->dirty_submodule;
- 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
- 							    &p->two->oid);
-+			if (s->status_format == STATUS_FORMAT_SHORT) {
-+				if (d->new_submodule_commits)
-+					d->worktree_status = 'M';
-+				else if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
-+					d->worktree_status = 'm';
-+				else if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
-+					d->worktree_status = '?';
-+			}
-+		}
- 
- 		switch (p->status) {
- 		case DIFF_STATUS_ADDED:
+ 	strbuf_release(&buf);
+ 	return dirty_submodule;
 -- 
 2.12.1.438.gb674c4c09c
 
