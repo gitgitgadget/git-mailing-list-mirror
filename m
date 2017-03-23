@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0324620958
-	for <e@80x24.org>; Thu, 23 Mar 2017 15:29:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846C120958
+	for <e@80x24.org>; Thu, 23 Mar 2017 15:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965073AbdCWP3p (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 11:29:45 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34168 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964866AbdCWP3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 11:29:41 -0400
-Received: by mail-wr0-f193.google.com with SMTP id y90so7894968wrb.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 08:29:40 -0700 (PDT)
+        id S965088AbdCWP3t (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 11:29:49 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:36487 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S964956AbdCWP3o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 11:29:44 -0400
+Received: by mail-wr0-f195.google.com with SMTP id l37so31602645wrc.3
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 08:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Qgd8laN+YgZNan+o94DMKJKaYBey/S00ehHUUiHfq7M=;
-        b=pTn9n5SKuT755L+ojIg5kmmO9kyB7gCXB0PBkN8L5JIk312AnuoGJ5vkAfBDzDLwfh
-         eb8qnzLFL8LYHXISLgS9xE5vYTZBG6U+y2BnAEm4uMNyHW6waS+9tsIslmmIsTRaMOCD
-         1MBj/yoQGbTk1ZX9pE/S4f69gyPamMZTr8FWOSZd/3J3Eed3WPP9JrXUhMMBlaORkf8U
-         InmdOCZYxx4QtqDUVQdMGVUmLWzV4pXwfmGaUg338WMorv5n0f50cLBd0Ur6LafGtJzn
-         7vHBz+J6qW2a/XdeL1GFh8s1S7GUBjo0PvG5F8wDcicr6TWgaP3q4QMf+sQNiTQTLLZ7
-         IbAQ==
+        bh=TiWJEmKg4GONmY9wN2rGNY1tW/FWV8lubmpAUW0mYm8=;
+        b=UL0YnImrYvibhJYPpOxyE7PUnakdA0Me2+skS8N0xdh/U2KhvPaEdauSyD8GwI8Efj
+         AtHO34MdDk2MY/aGJQq4N0x/KQtPVLMvTfYWlgFpGiuuR6/rJttyvXugByBGDVEL01iV
+         4WarUrxz+qqk+mvGt48UwCmrbNuN5DFxvdhmAUyCs1hqEU9RbMUML+ew8KizijhUea1Z
+         dd2jOPVY+Wf1mbdGF5IynKxeJ4aUBrDWDe5563TTVfrBltSTlhwm3tpUlL2P+0QFjaoH
+         ZhIcEwRi/jKiZ2EgknQXPJTXBDbhW6m9WLKgF0HKBG0wnA1FHR3Q81U46OyROkeP1F0m
+         S4ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Qgd8laN+YgZNan+o94DMKJKaYBey/S00ehHUUiHfq7M=;
-        b=VhJSztTFyrcX9cGbkGuUDkrzgGC8n/I6tpsYM3QYsJKlazyonEx6TAcZb2Dm8EunG2
-         twIfwRm858K0A3gD4eeAgrLfPGP54oWmR/zgxJNMOkoJ3E5uAKVYvG8JKwJIoIG7CO5q
-         fDoaTP7M52DtdsPPbNW0ByVYfKF4/EM4hwhre6iRtA8clb9XuRAcX3Ba2X3400BNgff5
-         dTnngGl9XVsAnhCgM+3XjiWYroVWaV2w0hA4SBVPnirxIzj07ZUD4pCRvngjmVUgrtXG
-         eJMvRs6WGJotH+rl3nRAIOWxIxLUgrU/iHuu2HIUfP39qrWffsJPlXN2HiRCxJH3LLHx
-         Sntw==
-X-Gm-Message-State: AFeK/H0JXts3w9NtOObAzEwZ2PVi0ACwFs/7c9m91Leoe3Fhg+V1RVz5PI+iaPtJsXdb0g==
-X-Received: by 10.223.179.216 with SMTP id x24mr3161318wrd.171.1490282979544;
-        Thu, 23 Mar 2017 08:29:39 -0700 (PDT)
+        bh=TiWJEmKg4GONmY9wN2rGNY1tW/FWV8lubmpAUW0mYm8=;
+        b=gCHHaw3urQfhq8ykcCSAl9Oo39rPk84vcAjkmrqhfTIjzfDnvwQ/rNPjVpv1mL42IK
+         AODQHtV5vSyK4jlgAn+PpxrA7G3T7YPKixvzfNIzWMqBsAOjNhQ2hXodzcvgXoqPNxkO
+         OuGINnmaqcrc9FXOe+TmPJNNA7OQ66tjs/1GFMIFdUrojB3mDYrC8hZwYWIQGS/xh/om
+         Z0J6fH12CPOUChXJhETbwEa0Ukvy54q8AcaEkfAS01JA9IdhUsbyiTKceCc/qTqkDtUK
+         H5mdJDuK220nRWrDr9soRVv9UsJjPRLbyBT0BUiqU/9Fzk18fUUcP8Qb51aMN2+GYT3v
+         gVaA==
+X-Gm-Message-State: AFeK/H0YT+Ju3IzRadau/UYVS+0TMdYquztLTR3bqUTGTiCNhc5usR3rSTfzyyz3iJpX8w==
+X-Received: by 10.223.156.2 with SMTP id f2mr3133711wrc.176.1490282982192;
+        Thu, 23 Mar 2017 08:29:42 -0700 (PDT)
 Received: from localhost.localdomain (x4db02660.dyn.telefonica.de. [77.176.38.96])
-        by smtp.gmail.com with ESMTPSA id q135sm455057wmd.8.2017.03.23.08.29.38
+        by smtp.gmail.com with ESMTPSA id q135sm455057wmd.8.2017.03.23.08.29.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 08:29:39 -0700 (PDT)
+        Thu, 23 Mar 2017 08:29:41 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCHv2 04/14] completion: support completing fully qualified non-fast-forward refspecs
-Date:   Thu, 23 Mar 2017 16:29:14 +0100
-Message-Id: <20170323152924.23944-5-szeder.dev@gmail.com>
+Subject: [PATCHv2 07/14] completion: don't disambiguate short refs
+Date:   Thu, 23 Mar 2017 16:29:17 +0100
+Message-Id: <20170323152924.23944-8-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.12.1.485.g1616aa492
 In-Reply-To: <20170323152924.23944-1-szeder.dev@gmail.com>
 References: <20170323152924.23944-1-szeder.dev@gmail.com>
@@ -65,167 +65,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After 'git fetch <remote> <TAB>' our completion script offers refspecs
-that will fetch to a local branch with the same name as in the remote
-repository, e.g. 'master:master'.  This also completes
-non-fast-forward refspecs, i.e. after a '+' prefix like
-'+master:master', and fully qualified refspecs, e.g.
-'refs/heads/master:refs/heads/master'.  However, it does not complete
-non-fast-forward fully qualified refspecs (or fully qualified refspecs
-following any other prefix, e.g. '--option=', though currently no git
-command supports such an option, but third party git commands might).
+When the completion script lists short refs it does so using the 'git
+for-each-ref' format 'refname:short', which makes sure that all listed
+refs are unambiguous.  While disambiguating refs is technically
+correct in this case, as opposed to the cases discussed in the
+previous patch, this disambiguation involves several stat() syscalls
+for each ref, thus, unfortunately, comes at a steep cost especially on
+Windows and/or when there are a lot of refs to be listed.  A user of
+Git for Windows reported[1] 'git checkout <TAB>' taking ~11 seconds in
+a repository with just about 4000 refs.
 
-These refspecs are listed by the __git_refs2() function, which is just
-a thin wrapper iterating over __git_refs()'s output, turning each
-listed ref into a refspec.  Now, it's certainly possible to modify
-__git_refs2() and its callsite to pass an extra parameter containing
-only the ref part of the current word to be completed (to follow suit
-of the previous commit) to deal with prefixed fully qualified refspecs
-as well.  Unfortunately, keeping the current behavior unchanged in the
-"no extra parameter" case brings in a bit of subtlety, which makes the
-resulting code ugly and compelled me to write a 8-line long comment in
-the proof of concept.  Not good.  However, since the callsite has to
-be modified for proper functioning anyway, we might as well leave
-__git_refs2() as is and introduce a new helper function without
-backwards compatibility concerns.
+However, it's questionable whether ambiguous refs are really that bad
+to justify that much extra cost:
 
-Add the new function __git_complete_fetch_refspecs() that has all the
-necessary parameters to do the right thing in all cases mentioned
-above, including non-fast-forward fully qualified refspecs.  This new
-function can also easier benefit from optimizations coming later in
-this patch series.
+  - Ambiguous refs are not that common,
+  - even if a repository contains ambiguous refs, they only hurt when
+    the user actually happens to want to do something with one of the
+    ambiguous refs, and
+  - the issue can be easily circumvented by renaming those ambiguous
+    refs.
+
+  - On the other hand, apparently not that many refs are needed to
+    make refs completion unacceptably slow on Windows,
+  - and this slowness bites each and every time the user attempts refs
+    completion, even when the repository doesn't contain any ambiguous
+    refs.
+  - Furthermore, circumventing the issue might not be possible or
+    might be considerably more difficult and requires various
+    trade-offs (e.g. working in a repository with only a few selected
+    important refs while keeping a separate repository with all refs
+    for reference).
+
+Arguably, in this case the benefits of technical correctness are
+rather minor compared to the price we pay for it, and we are better
+off opting for performance over correctness.
+
+Use the 'git for-each-ref' format 'refname:strip=2' to list short refs
+to spare the substantial cost of disambiguating.
+
+This speeds up refs completion considerably.  Uniquely completing a
+branch in a repository with 100k local branches, all packed, best of
+five:
+
+  On Linux, before:
+
+    $ time __git_complete_refs --cur=maste
+
+    real    0m1.662s
+    user    0m1.368s
+    sys     0m0.296s
+
+  After:
+
+    real    0m0.831s
+    user    0m0.808s
+    sys     0m0.028s
+
+  On Windows, before:
+
+    real    0m12.457s
+    user    0m1.016s
+    sys     0m0.092s
+
+  After:
+
+    real    0m1.480s
+    user    0m1.031s
+    sys     0m0.060s
+
+[1] - https://github.com/git-for-windows/git/issues/524
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- contrib/completion/git-completion.bash | 21 ++++++++++-
- t/t9902-completion.sh                  | 68 ++++++++++++++++++++++++++++++++++
- 2 files changed, 88 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index b897cba4b..067dff823 100644
+index e129f674e..5ee35d530 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -486,6 +486,7 @@ __git_complete_refs ()
- }
- 
- # __git_refs2 requires 1 argument (to pass to __git_refs)
-+# Deprecated: use __git_complete_fetch_refspecs() instead.
- __git_refs2 ()
- {
- 	local i
-@@ -494,6 +495,24 @@ __git_refs2 ()
- 	done
- }
- 
-+# Completes refspecs for fetching from a remote repository.
-+# 1: The remote repository.
-+# 2: A prefix to be added to each listed refspec (optional).
-+# 3: The ref to be completed as a refspec instead of the current word to be
-+#    completed (optional)
-+# 4: A suffix to be appended to each listed refspec instead of the default
-+#    space (optional).
-+__git_complete_fetch_refspecs ()
-+{
-+	local i remote="$1" pfx="${2-}" cur_="${3-$cur}" sfx="${4- }"
-+
-+	__gitcomp_nl "$(
-+		for i in $(__git_refs "$remote" "" "" "$cur_") ; do
-+			echo "$i:$i"
-+		done
-+		)" "$pfx" "$cur_" "$sfx"
-+}
-+
- # __git_refs_remotes requires 1 argument (to pass to ls-remote)
- __git_refs_remotes ()
- {
-@@ -686,7 +705,7 @@ __git_complete_remote_or_refspec ()
- 	case "$cmd" in
- 	fetch)
- 		if [ $lhs = 1 ]; then
--			__gitcomp_nl "$(__git_refs2 "$remote")" "$pfx" "$cur_"
-+			__git_complete_fetch_refspecs "$remote" "$pfx" "$cur_"
+@@ -401,7 +401,7 @@ __git_refs ()
+ 			for i in HEAD FETCH_HEAD ORIG_HEAD MERGE_HEAD; do
+ 				if [ -e "$dir/$i" ]; then echo $pfx$i; fi
+ 			done
+-			format="refname:short"
++			format="refname:strip=2"
+ 			refs="refs/tags refs/heads refs/remotes"
+ 			;;
+ 		esac
+@@ -412,7 +412,7 @@ __git_refs ()
+ 			# Try to find a remote branch that matches the completion word
+ 			# but only output if the branch name is unique
+ 			local ref entry
+-			__git for-each-ref --shell --format="ref=%(refname:short)" \
++			__git for-each-ref --shell --format="ref=%(refname:strip=2)" \
+ 				"refs/remotes/" | \
+ 			while read -r entry; do
+ 				eval "$entry"
+@@ -437,7 +437,7 @@ __git_refs ()
+ 	*)
+ 		if [ "$list_refs_from" = remote ]; then
+ 			echo "HEAD"
+-			__git for-each-ref --format="%(refname:short)" \
++			__git for-each-ref --format="%(refname:strip=2)" \
+ 				"refs/remotes/$remote/" | sed -e "s#^$remote/##"
  		else
- 			__git_complete_refs --pfx="$pfx" --cur="$cur_"
- 		fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 0a41ee1ea..f641d99ec 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -912,6 +912,74 @@ test_expect_success '__git_complete_refs - suffix' '
- 	test_cmp expected out
- '
- 
-+test_expect_success '__git_complete_fetch_refspecs - simple' '
-+	sed -e "s/Z$//" >expected <<-EOF &&
-+	HEAD:HEAD Z
-+	branch-in-other:branch-in-other Z
-+	master-in-other:master-in-other Z
-+	EOF
-+	(
-+		cur= &&
-+		__git_complete_fetch_refspecs other &&
-+		print_comp
-+	) &&
-+	test_cmp expected out
-+'
-+
-+test_expect_success '__git_complete_fetch_refspecs - matching' '
-+	sed -e "s/Z$//" >expected <<-EOF &&
-+	branch-in-other:branch-in-other Z
-+	EOF
-+	(
-+		cur=br &&
-+		__git_complete_fetch_refspecs other "" br &&
-+		print_comp
-+	) &&
-+	test_cmp expected out
-+'
-+
-+test_expect_success '__git_complete_fetch_refspecs - prefix' '
-+	sed -e "s/Z$//" >expected <<-EOF &&
-+	+HEAD:HEAD Z
-+	+branch-in-other:branch-in-other Z
-+	+master-in-other:master-in-other Z
-+	EOF
-+	(
-+		cur="+" &&
-+		__git_complete_fetch_refspecs other "+" ""  &&
-+		print_comp
-+	) &&
-+	test_cmp expected out
-+'
-+
-+test_expect_success '__git_complete_fetch_refspecs - fully qualified' '
-+	sed -e "s/Z$//" >expected <<-EOF &&
-+	refs/heads/branch-in-other:refs/heads/branch-in-other Z
-+	refs/heads/master-in-other:refs/heads/master-in-other Z
-+	refs/tags/tag-in-other:refs/tags/tag-in-other Z
-+	EOF
-+	(
-+		cur=refs/ &&
-+		__git_complete_fetch_refspecs other "" refs/ &&
-+		print_comp
-+	) &&
-+	test_cmp expected out
-+'
-+
-+test_expect_success '__git_complete_fetch_refspecs - fully qualified & prefix' '
-+	sed -e "s/Z$//" >expected <<-EOF &&
-+	+refs/heads/branch-in-other:refs/heads/branch-in-other Z
-+	+refs/heads/master-in-other:refs/heads/master-in-other Z
-+	+refs/tags/tag-in-other:refs/tags/tag-in-other Z
-+	EOF
-+	(
-+		cur=+refs/ &&
-+		__git_complete_fetch_refspecs other + refs/ &&
-+		print_comp
-+	) &&
-+	test_cmp expected out
-+'
-+
- test_expect_success 'teardown after ref completion' '
- 	git branch -d matching-branch &&
- 	git tag -d matching-tag &&
+ 			__git ls-remote "$remote" HEAD \
 -- 
 2.12.1.485.g1616aa492
 
