@@ -2,88 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C2B120958
-	for <e@80x24.org>; Thu, 23 Mar 2017 20:16:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 960E820958
+	for <e@80x24.org>; Thu, 23 Mar 2017 20:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755172AbdCWUQw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 16:16:52 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56314 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1753644AbdCWUQv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 16:16:51 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B68467C1F;
-        Thu, 23 Mar 2017 16:16:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=1v6uqCufxQ7qVFEeOatcUt93/J8=; b=toG9uz
-        G+RHs4fdfT0PQC7Sl9+n6fF2cckEEoGwrHz4URAU46T6pfTCpOGtudyD5b5M+qsb
-        opOWpiOyAJNX6yf8oyMw8P3KrXc39hLK2676Qs5T5mfbnCRRWPm8hn8bNDFUMt18
-        BcZIApecz44g1o1ZyM0gTXK8UHasWx/O0Qo2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CRe9rvizTk1KFLUlLpquHOpbD3+77EDM
-        wSZso2F+xr0AYSi6+G8cPVOCh900cxZnLAZ6hvLDaZpmhuXP0rMn2OqCIJbjT4Up
-        TQiQq68J0jpip+7VguWdg7oCz45S6n925TJDFp7mbug0dhlKZ9Xp1ZHiirJJaihE
-        ggXTfIDe+/Q=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 64B3D67C1E;
-        Thu, 23 Mar 2017 16:16:50 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CAAD167C1D;
-        Thu, 23 Mar 2017 16:16:49 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1752396AbdCWUU1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 16:20:27 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50561 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751448AbdCWUU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 16:20:27 -0400
+Received: (qmail 17423 invoked by uid 109); 23 Mar 2017 20:20:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 20:20:05 +0000
+Received: (qmail 10777 invoked by uid 111); 23 Mar 2017 20:20:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 16:20:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 16:20:03 -0400
+Date:   Thu, 23 Mar 2017 16:20:03 -0400
+From:   Jeff King <peff@peff.net>
 To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
 Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
+Message-ID: <20170323202002.lfpuglqawz4ooruw@sigill.intra.peff.net>
 References: <20170322065612.18797-1-larsxschneider@gmail.com>
-Date:   Thu, 23 Mar 2017 13:16:48 -0700
-In-Reply-To: <20170322065612.18797-1-larsxschneider@gmail.com> (Lars
-        Schneider's message of "Wed, 22 Mar 2017 07:56:12 +0100")
-Message-ID: <xmqqbmsrbvf3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+ <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703231716320.3767@virtualbox>
+ <20170323180134.geoyvq7qbm5vujo6@sigill.intra.peff.net>
+ <xmqqbmsrdcz4.fsf@gitster.mtv.corp.google.com>
+ <20170323191721.7r5vrixtnx3cngdc@sigill.intra.peff.net>
+ <FE4A3F88-0B86-4069-B141-2DFB9C4E269E@gmail.com>
+ <20170323193823.gxodwqv4eshgtqbc@sigill.intra.peff.net>
+ <3CC8E237-86EA-4F35-A03E-15BED5869403@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A5AB6B4A-1005-11E7-84C4-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <3CC8E237-86EA-4F35-A03E-15BED5869403@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+On Thu, Mar 23, 2017 at 09:00:33PM +0100, Lars Schneider wrote:
 
-> Things, that would need to be done:
-> * Someone with write access to https://travis-ci.org/git/git would need
->   to add the secret token as "GFW_CI_TOKEN" variable in the TravisCI
->   repository setting [1]. Afterwards the build should just work.
+> > Ah, OK, that makes sense. So we would only have to worry about our _own_
+> > code accidentally disclosing it. But that should be easy to look for by
+> > grepping the log (did somebody do that?).
+> 
+> This is how a successful Windows build would look like:
+> https://travis-ci.org/larsxschneider/git/jobs/214391822
+> 
+> Dscho's token is not in the log.
 
-As coordinating the timing of when this happens with the timing when
-merging this topic to 'pu' happens is an unnecessary cognitive
-burden, can you make a small change to this part:
+Great, thank you for double-checking.
 
-> +      script:
-> +        - >
-> +          test "$TRAVIS_REPO_SLUG" != "git/git" ||
+> >  - I have a lot of work-in-progress branches. I put "-wip" at the end
+> >    of the branch name for my own scripts. It looks like I can put "[ci
+> >    skip]" in the commit subject to convince Travis to skip them, but
+> >    that's a little annoying. Is there any way to skip based on just the
+> >    branch name? I couldn't find one.
+> 
+> We can blacklist these branches with a regex in the travis.yml:
+> https://docs.travis-ci.com/user/customizing-the-build#Building-Specific-Branches
 
-Add
-	test -z "$GFW_CI_TOKEN" ||
+I had a feeling it might be something like that. So we would all need to
+agree on the convention for WIP branch names. If other people like the
+idea, I'm happy to make a patch, but I don't want to impose my own weird
+conventions on everyone else.
 
-here, so that the sript is not run while "Someone with write access"
-hasn't got around to doing it. 
+> Maybe TravisCI throttles your usage somehow as you push a lot of commits?
 
-> +          ci/run-windows-build.sh $GFW_CI_TOKEN $TRAVIS_BRANCH $(git rev-parse HEAD)
+Could be. Looking at:
 
-It would still be a good idea to dq all these $VARIABLE and
-$(COMMAND OUTPUT) references, as the script expects three
-parameters.
+  https://travis-ci.org/peff/git/branches
 
-> + ...
-> +[ $# -eq 3 ] || (echo "Unexpected number of parameters" && exit 1)
+It seems to timeout on over half the branches (in fact, there are only a
+few that passed all of the tests). My pattern is particularly spiky from
+Travis's perspective, because once a day I rebase everything on top of
+master and push them the whole thing in a bunch. So they 75 branches,
+all at once. That seems like it would be ripe for throttling (though I
+would much rather they just queue the builds and do them one at a time).
 
-Thanks.
+> Keep in mind, all the TravisCI compute hours are free... considering
+> that I think it is quite OK :-)
+
+I don't blame Travis at all. But if the tool does not produce reliable
+results, then I will start to ignore it. And somebody on this thread
+(not you) has been complaining repeatedly about developers ignoring CI
+results.
+
+-Peff
