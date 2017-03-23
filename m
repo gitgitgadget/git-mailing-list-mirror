@@ -2,137 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E9B820958
-	for <e@80x24.org>; Thu, 23 Mar 2017 18:19:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51E1120958
+	for <e@80x24.org>; Thu, 23 Mar 2017 18:19:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935466AbdCWSTS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 14:19:18 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34637 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933773AbdCWSTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 14:19:17 -0400
-Received: by mail-wm0-f65.google.com with SMTP id u132so817330wmg.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 11:19:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=8luw/xr9zSROQZ+adkFZ3arFayJkZoeCMqd0/d0aIsI=;
-        b=eSpowuoqHSyEOcAVEIJW0/CONBZyfVRvoYlp4LZ8jYoY/aC2mxHHwRbi6L0gt6MCbt
-         VeYJAsuE//8W59crHuTiRBnfyN1EplrdKbUYbfJjqXCB6AweXHGA3gBKaOrpDalAmbZm
-         drDR/THcKqxyZ/2svpxtYiuN9va+ZBr6VwQ5ty3OhJ5B5jZo7KEkQnJTO0kddkRH95ld
-         T1Kk5xFlPtubhoRRTXXTPZv0A0y5UDJOIAZo8JrKwpWvfeWMct0RY21O3CRMne3yLVYq
-         18X+80F7U977tldkzu/d36qsn+vxlEFu12CsowMWAwK1F1/0NPH6PtFsm6dWWX3Arwrb
-         ggcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=8luw/xr9zSROQZ+adkFZ3arFayJkZoeCMqd0/d0aIsI=;
-        b=gLkFYCinp7frGg3ZQFB/ayUfDdhRgd+SagDuqiQeFZN7QcN5GiGYdOGVS6kVk0vKJt
-         fpmu7a5Srrhq2x6XIgGmpOPgYba1D8MxEypVI+QxT3fSofXglmRkmNTcLWDCMz+O9VmX
-         78f8gu3hcwU9uNxYge7OXSmrt5JQZaMhkPfsazYx8X9x2OOmOgj3WA2Zp8w0oxJgSyUM
-         WtnrDl7XAh2XK9Sspcf4RF0xiwmnpTU6ir4IAYeeWY3cKnXAQmF3Ce3KsC1NXsAFmBQP
-         ZOQbymp0q5mgi+1lSkYxdhvhnDy0WQa0YoGZIQBVY+NuwKnw1YGca/NDp+6gGDm/fIIW
-         WuKw==
-X-Gm-Message-State: AFeK/H2D7lc0YNpObt6YtbgpavgE/Q6QgLJa7SpHRAgfOx8SgyFOV85Ar+ORYgWylU4Atw==
-X-Received: by 10.28.31.139 with SMTP id f133mr14520118wmf.25.1490293155536;
-        Thu, 23 Mar 2017 11:19:15 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id 81sm5310650wmj.9.2017.03.23.11.19.14
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 11:19:14 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.20.1703221641070.3767@virtualbox>
-Date:   Thu, 23 Mar 2017 19:19:14 +0100
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <281F3580-6FC4-40C2-95A6-D8AD2CCF2E54@gmail.com>
-References: <20170322065612.18797-1-larsxschneider@gmail.com> <alpine.DEB.2.20.1703221641070.3767@virtualbox>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+        id S935628AbdCWSTz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 14:19:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55264 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932972AbdCWSTy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 14:19:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C48D688ED1;
+        Thu, 23 Mar 2017 14:19:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nKNY+BbZa4nEj93hZYeIXTizKSc=; b=g5fQj3
+        oiaKkf8JdJZz+syer9rITzTeydRv0cuNryP+V16wqX+5FVkhkIu6OaWHBk9UuDg0
+        rddzCjPgYVrIw7PPLKCZAZlYmeHEJBlMKwpCl5sN1yn0ff1Fe8o9ba3p938FL1Gc
+        kFwzrZvf3/ADLhUZAVsC5rz3vMuIZOt2VoLF0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rQ3ZFyHR2HiKqxgkr/ZJHP3g22AlSs4p
+        HgaVQkmwDiGFjBpN88f/8ait5GVoHSMP21wEr8bFCCTxcO+7KWk4yn/LrSj/CDYN
+        xEMmrDBdMTGoseCa2gP6FQB3Q4tFj2CgCaCPX/VVTxj7cGlVXwp9s7iEWmYmVnMk
+        NNb5kyNUi7c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BB58F88ED0;
+        Thu, 23 Mar 2017 14:19:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 22E8788ECF;
+        Thu, 23 Mar 2017 14:19:52 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] sequencer: fix missing newline
+References: <20170323170233.50499-1-bmwill@google.com>
+Date:   Thu, 23 Mar 2017 11:19:50 -0700
+In-Reply-To: <20170323170233.50499-1-bmwill@google.com> (Brandon Williams's
+        message of "Thu, 23 Mar 2017 10:02:33 -0700")
+Message-ID: <xmqqzigbdfeh.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4ECCE822-0FF5-11E7-9A1B-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Brandon Williams <bmwill@google.com> writes:
 
-> On 22 Mar 2017, at 16:49, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->=20
-> Hi Lars,
->=20
-> On Wed, 22 Mar 2017, Lars Schneider wrote:
-...
->> +
->> +gfwci () {
->> +	curl \
->> +		-H "Authentication: Bearer $TOKEN" \
->> +		--silent --retry 5 \
->> +		=
-"https://git-for-windows-ci.azurewebsites.net/api/TestNow?$1" |
->> +	sed "$(printf '1s/^\xef\xbb\xbf//')"  # Remove the Byte Order =
-Mark
->> +}
->> +
->> +# Trigger build job
->> +BUILD_ID=3D$(gfwci =
-"action=3Dtrigger&branch=3D$BRANCH&commit=3D$COMMIT&skipTests=3Dfalse")
->> +
->> +# Check if the $BUILD_ID contains a number
->> +case $BUILD_ID in
->> +	''|*[!0-9]*) echo $BUILD_ID && exit 1
->=20
-> Error messages are delivered that way, and they do not start with =
-digits,
-> true. But maybe there is an exit status to indicate to Travis that we
-> cannot decide whether the build failed or succeeded in that case? The =
-most
-> common cause for an error here is that the VM I use for testing is =
-down
-> (which happens every once in a while to save on resources, and I have =
-to
-> manually restart it)...
+> When using rebase --interactive where one of the lines is marked as
+> 'edit' this is the resulting output:
+>
+>     Stopped at ec3b9c4...  stuffYou can amend the commit now, with
+>
+>       git commit --amend
+>
+>     Once you are satisfied with your changes, run
+>
+>       git rebase --continue
+>
+> A newline character is missing at the end of the "Stopped at ..." line and
+> before the "You can amend ..." line.  This patch fixes the malformed output by
+> adding the missing newline character to the end of the "Stopped at ..." line.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  sequencer.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Curl can return the HTTP code... I'll try to find a way to check for =
-this.
+Oops, obviously correct.  Thanks.
 
->=20
->> +echo "Visual Studio Team Services Build #${BUILD_ID}"
->=20
-> Nice plug, thanks! ;-)
->=20
->> +# Wait until build job finished
->> +STATUS=3D
->> +RESULT=3D
->> +while true
->> +do
->> +	LAST_STATUS=3D$STATUS
->> +	STATUS=3D$(gfwci "action=3Dstatus&buildId=3D$BUILD_ID")
->> +	[ "$STATUS" =3D=3D "$LAST_STATUS" ] || printf "\nStatus: $STATUS =
-"
->> +	printf "."
->> +
->> +	case $STATUS in
->> +		inProgress|postponed|notStarted) sleep 10                =
-      ;; # continue
->> +		         "completed: succeeded") RESULT=3D"success";     =
-   break;; # success
->> +		                              *) echo "Unknown: =
-$STATUS"; break;; # failure
->=20
-> Well, there are more values for the status, and we know them, but we =
-do
-> not handle them. Maybe "Unhandled status:"?
-
-Sure! I'll fix that in v2 :-)
-
-- Lars=
+> diff --git a/sequencer.c b/sequencer.c
+> index 8183a83c1..d76dc9cb2 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1998,7 +1998,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+>  				struct commit *commit = item->commit;
+>  				if (!res)
+>  					fprintf(stderr,
+> -						_("Stopped at %s...  %.*s"),
+> +						_("Stopped at %s...  %.*s\n"),
+>  						short_commit_name(commit),
+>  						item->arg_len, item->arg);
+>  				return error_with_patch(commit,
