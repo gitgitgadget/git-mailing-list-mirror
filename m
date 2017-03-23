@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F17020958
-	for <e@80x24.org>; Thu, 23 Mar 2017 22:34:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2AA620958
+	for <e@80x24.org>; Thu, 23 Mar 2017 22:34:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933031AbdCWWeP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 18:34:15 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:36505 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932811AbdCWWeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 18:34:13 -0400
-Received: by mail-it0-f48.google.com with SMTP id w124so270586itb.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:34:12 -0700 (PDT)
+        id S933321AbdCWWeT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 18:34:19 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:36626 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932811AbdCWWeS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 18:34:18 -0400
+Received: by mail-io0-f172.google.com with SMTP id l7so6832659ioe.3
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 15:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CFalfXT58zPCcP5RqDh3mKhHDTwTewn+bE2TpJDwafA=;
-        b=IdJoBPbsFdBxmI+vQxD67GhHFeBzoidDqkT036wugAracQp1/QsF54Y122FQmjZ9Lc
-         acK9s8g3nlPkD5mHNdm6uf7oTmYL9wXVHS7R0+6g5fyS+v+vQ88756XFat3kFLPGh0pb
-         pKeeCfkFkEMRBmD8nQo2OsC5XD2er/mg+6kZ1N3NNgRX5cXXsuD6WWfZDzkO9UZNwnMX
-         AqmtwFf2NAf4SqyLQ5id/9B8iJXQWQg3KS8Ktq/0lin9/Nz0W47aSJJ3OKIkU8jJBEtF
-         zLZEU/IVXRXvX44ftQk+UbswTXjABdaAas5a9XXDODcmjBIr01UxkGKVgFO3clfrjFUn
-         wHKQ==
+        bh=uSm/aJrfjymxP+60udetLmY0ZmvtCISssK68/NmQRgk=;
+        b=FL5vPsyWLR7ypoqIVuZomLzl6CM/Vmg9hif47IZKA9Lnctd2g8hsWRTByFxKvWvJOA
+         Bbue0/CCzNukNw1GTQ4HlaxuwE1BYp6/q7zRIn2X2lqwZMX/fThnqrhb3PNSoF+y4WO/
+         lyLQT+x9HoAfFzzYl3oqdcOa8DAMG3+d7ACGjeMFf9cKwo34CqEDnXObK1woThwjnc8y
+         wvVpfqtYsvaRu9q3iLOGmb5banZ0vRsZazFwHAsoojanPyPwmNMmJbDjVUBpq+p/LFTE
+         8x8Rb3IcHx5IiqWrIIXlwpxYewGMLKV0/OXNNLy8ys9RdupFtN3VD4t2qwLZVRWmpwyk
+         outQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=CFalfXT58zPCcP5RqDh3mKhHDTwTewn+bE2TpJDwafA=;
-        b=qxhsfUUVAOsT5D4mbkk9M7U8wdwCcYX4B8OfVfNmVt4B8nSpzlzoRdBIKEymp1179K
-         YSKE9GYnXAc22oXkUEnPRD+CvZQD+Isotey8zL/5ff8pQWtLYjeUvl6cQNKTNHzRhywi
-         YHRNvgV/Dlvq0Y0OX8FO7hWJPWTJzRXYaUU00N/aMv8pzgKWhhZ1ZpQLl27Q5l8nirQM
-         sS33MCn0JA8WeqtPyDTyzv0/8B5hh+UdtFSBfB9Qe9WJfjryYhTlSvU8gdxWIG8R1aGE
-         s8dqDKTRkhA8bXZl6d/fBimQjjWXy3RYwmNEyWnVELiOnAq+2au+i6jP+H7GNBwMyFdB
-         0HmA==
-X-Gm-Message-State: AFeK/H0PF5vj3t0yfcwqHgW40sJtVaQNryWya9UdiQxXqbvnfcA9Bhydfs0d4EVL5LC4jQpC
-X-Received: by 10.36.173.33 with SMTP id c33mr85828itf.47.1490308452213;
-        Thu, 23 Mar 2017 15:34:12 -0700 (PDT)
+        bh=uSm/aJrfjymxP+60udetLmY0ZmvtCISssK68/NmQRgk=;
+        b=B8Ytx3o3DKLh7C7hxaoGnaLjowVTtRORc7U8lgN+OF+iE3uYOcZizetWrkARC8RlAg
+         4+qpjo9/RUFhKOV7XklkzmkZ4m1mu89fCw/JpMucszM6eAFGgTwitiWQKFcykpL/m03W
+         /yZNT3G4yGudUwMVyveDNmNnhfij0Ozk7X76c413yX2XQYl3mdM1zfzL7YtbQUgs+7Ow
+         PWbat/6WQOEIOL3NBPMcpVH88quhsMJjveRUPLTSwubWpjjX2mCW3gk/9+Z5n/uSCFpc
+         ZMuOTEpL4lstX+9VhWWP/4RLt9S++fdN+9M2/4NEtNGsEadpYBpBNSWzq5NFjnQjijJF
+         YU4w==
+X-Gm-Message-State: AFeK/H0WKTHMPJZEkSoDrzRzUA0ywNmQpBIf2AwKxn75EjF//hE9jv4hT0jvpbdmsRSsAzwA
+X-Received: by 10.107.15.163 with SMTP id 35mr5001585iop.204.1490308457290;
+        Thu, 23 Mar 2017 15:34:17 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:c402:7caa:e939:6e82])
-        by smtp.gmail.com with ESMTPSA id j85sm274800iod.27.2017.03.23.15.34.11
+        by smtp.gmail.com with ESMTPSA id a22sm9543itb.29.2017.03.23.15.34.16
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 15:34:11 -0700 (PDT)
+        Thu, 23 Mar 2017 15:34:16 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, jrnieder@gmail.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/7] submodule.c: use argv_array in is_submodule_modified
-Date:   Thu, 23 Mar 2017 15:33:32 -0700
-Message-Id: <20170323223338.32274-2-sbeller@google.com>
+Subject: [PATCH 4/7] submodule.c: factor out early loop termination in is_submodule_modified
+Date:   Thu, 23 Mar 2017 15:33:35 -0700
+Message-Id: <20170323223338.32274-5-sbeller@google.com>
 X-Mailer: git-send-email 2.12.1.438.gb674c4c09c
 In-Reply-To: <20170323223338.32274-1-sbeller@google.com>
 References: <CAGZ79kZP6JhgcFQ5+Ytc6LexpA7C4EwR-7C0QZkiWhfrRCpd6g@mail.gmail.com>
@@ -61,43 +61,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-struct argv_array is easier to use and maintain
+This makes it easier for a follow up patch.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ submodule.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index 3200b7bb2b..2c667ac95a 100644
+index da1db90dda..93d6f08b50 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1043,12 +1043,6 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- {
- 	ssize_t len;
- 	struct child_process cp = CHILD_PROCESS_INIT;
--	const char *argv[] = {
--		"status",
--		"--porcelain",
--		NULL,
--		NULL,
--	};
- 	struct strbuf buf = STRBUF_INIT;
- 	unsigned dirty_submodule = 0;
- 	const char *line, *next_line;
-@@ -1066,10 +1060,10 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+@@ -1072,16 +1072,14 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 
+ 	while (strbuf_getwholeline_fd(&buf, cp.out, '\n') != EOF) {
+ 		/* regular untracked files */
+-		if (buf.buf[0] == '?') {
++		if (buf.buf[0] == '?')
+ 			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-			if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-				break;
+-		} else {
++		else
+ 			dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+-			if (ignore_untracked ||
+-			    (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED))
+-				break;
+-		}
++
++		if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
++		    ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) || ignore_untracked))
++			break;
  	}
- 	strbuf_reset(&buf);
+ 	close(cp.out);
  
-+	argv_array_pushl(&cp.args, "status", "--porcelain", NULL);
- 	if (ignore_untracked)
--		argv[2] = "-uno";
-+		argv_array_push(&cp.args, "-uno");
- 
--	cp.argv = argv;
- 	prepare_submodule_repo_env(&cp.env_array);
- 	cp.git_cmd = 1;
- 	cp.no_stdin = 1;
 -- 
 2.12.1.438.gb674c4c09c
 
