@@ -2,85 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4DCE20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 17:47:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55DB620958
+	for <e@80x24.org>; Thu, 23 Mar 2017 17:47:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754890AbdCWRrV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 13:47:21 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:35980 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751995AbdCWRrU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 13:47:20 -0400
-Received: by mail-pg0-f49.google.com with SMTP id g2so126627249pge.3
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 10:47:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=OicENhBXGBnv+Rw4uALq37cMqvgyS1PbYxCVmL+C1t4=;
-        b=KPaC03pMU6PsEZBhaLFC5ueZqrj8O+lnADEtrSNuCz0MS02Qwf8c9HYCft/U6Hl6E3
-         j34APCqfAhiDtnkKOIjk9o+GNRgDGQDWf1mkDRDNtNfBC/y6srs3+xzZyhXiZj+TLADl
-         KIW+OYDR0ELqv5FSVL9dYlXHJUyEnhCpzcvZRSb6ltEg/KVfKOgFJ8EW5qgAbF1KOtvq
-         B+CbtgsasrLscUPEruo4j87au4S/QYGKcHk2rnBEoi/FNMWtyLIzt5DLpSAcWmeRDm0G
-         gSbQuSQPEHJ0IPrCliZIV96WKPdBSB+vaP/CRI96mo7gcZNyKx88/fZ4SFGnOrPIAai7
-         uMag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OicENhBXGBnv+Rw4uALq37cMqvgyS1PbYxCVmL+C1t4=;
-        b=CiG3+RtQWeTsc1ow1fxrdgd/jKiO8GLj6ooW8GlCrh5ZSGCQEUuNLlmwG63VGTUPa6
-         dboiHud0YKDco1cY+f6VbBUin3YS1dv/4gn01xQb77FdAev06yOqv9R84F3lsrck97GE
-         eMTLY4L0mv/p4kFck1KbZadAwgJanKusliyZDABnnfjM1tWp+PNCrapPwVPcLEOsSwcC
-         Pho/eQPB3ebKFxvtsv4F4Ux/fdcZvWLgztt5RAtC3BIps1VFWhP1TK8K2pk5dlJu/axO
-         VSn+tYNwKZXIwN/gk7VYoXJyaz//FvKD1HomdZXCzTHEJAWVmPRMob5e3CFxIeaPFTA+
-         fThg==
-X-Gm-Message-State: AFeK/H2lHXUWHuai15ok15DoTuZQc1yYhZKypvNf68Rx/UpwQL8t4/UaDvr0ws+4SB/plvDg
-X-Received: by 10.99.149.6 with SMTP id p6mr4220703pgd.122.1490291238954;
-        Thu, 23 Mar 2017 10:47:18 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:5cf0:9414:795c:7600])
-        by smtp.gmail.com with ESMTPSA id p77sm11519191pfj.99.2017.03.23.10.47.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 10:47:17 -0700 (PDT)
-Date:   Thu, 23 Mar 2017 10:47:16 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] sequencer: fix missing newline
-Message-ID: <20170323174716.GA111250@google.com>
-References: <20170323170233.50499-1-bmwill@google.com>
- <alpine.DEB.2.20.1703231839570.3767@virtualbox>
+        id S933255AbdCWRrz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 13:47:55 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50360 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751995AbdCWRry (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 13:47:54 -0400
+Received: (qmail 6304 invoked by uid 109); 23 Mar 2017 17:47:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 17:47:53 +0000
+Received: (qmail 8469 invoked by uid 111); 23 Mar 2017 17:48:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 13:48:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 13:47:50 -0400
+Date:   Thu, 23 Mar 2017 13:47:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: USE_SHA1DC is broken in pu
+Message-ID: <20170323174750.xyucxmfhuc6dbrzc@sigill.intra.peff.net>
+References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com>
+ <2B1DE627-11C8-4FA5-A354-76B6C475666A@gmail.com>
+ <FFC0EFBD-C4D9-4FB8-A45D-7B10689724A1@gmail.com>
+ <alpine.DEB.2.20.1703212105030.3767@virtualbox>
+ <xmqqh92mo06a.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703221530040.3767@virtualbox>
+ <20170322220246.GD26108@aiede.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703231724350.3767@virtualbox>
+ <CA+55aFyFS2r6isdQU_i5FUQnrzjvWhZdmEVE=KmBVTrMukBbkw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1703231839570.3767@virtualbox>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CA+55aFyFS2r6isdQU_i5FUQnrzjvWhZdmEVE=KmBVTrMukBbkw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/23, Johannes Schindelin wrote:
-> Hi Brandon,
-> 
-> On Thu, 23 Mar 2017, Brandon Williams wrote:
-> 
-> > When using rebase --interactive where one of the lines is marked as
-> > 'edit' this is the resulting output:
-> > 
-> >     Stopped at ec3b9c4...  stuffYou can amend the commit now, with
-> 
-> Ugh, I should have caught this. The warning() call implicitly adds a
-> newline, the fprintf() doesn't.
-> 
-> Patch is obviously good.
+On Thu, Mar 23, 2017 at 10:16:23AM -0700, Linus Torvalds wrote:
 
-All good.  If we're keeping score for finding each others bugs, I still
-think you're winning :)
+> > If I write out an index, I should not suffer the slowdown from detecting
+> > collisions.
+> 
+> The index case is a complete red herring.
+> 
+> As already noted, the proper fix for the index case is to simply do it
+> asynchronously on read. On write, it's harder to do asynchronously,
+> but for a 300MB index file you're likely going to be doing IO in the
+> middle, so it's probably not even noticeable.
 
--- 
-Brandon Williams
+I think there were some earlier timings that show OpenSSL had a small
+but measurable improvement over block-sha1 in this massive case (and
+sha1dc is about 1.75x slower than block-sha1, so it will be a little
+worse).
+
+So I am mildly sympathetic. BUT. I mostly agree with:
+
+> But the fact is, if you don't want SHA1DC, and you have crazy special
+> cases, you just continue to build with openssl support instead. Nobody
+> else should ever have to worry about *your* crazy cases.
+
+If somebody who has such a crazy special case wants to tweak the build
+to link in a second sha1 implementation and appropriately call it from
+non-security spots, I don't have a problem with that. But IMHO that's
+the itch of the crazy-case person to scratch.
+
+  Side note: I also have a feeling that any operation that cares about
+  non-object sha1 performance is probably ripe for other, bigger
+  optimizations. If you update 300MB worth of index entries, then the
+  cost of computing a checksum over it isn't a big deal. But if you have
+  a 300MB index file and you update one entry (or you just want to read
+  one entry), maybe we ought to consider solutions that don't involve
+  the whole 300MB in the first place. I know that's a much harder change
+  because it may involve new on-disk formats. But it seems like that's
+  the right long-term path forward.
+
+-Peff
