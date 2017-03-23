@@ -2,101 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F7EA20323
-	for <e@80x24.org>; Thu, 23 Mar 2017 00:32:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E109920323
+	for <e@80x24.org>; Thu, 23 Mar 2017 00:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752581AbdCWAcf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 20:32:35 -0400
-Received: from mail-qk0-f178.google.com ([209.85.220.178]:36737 "EHLO
-        mail-qk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751833AbdCWAce (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 20:32:34 -0400
-Received: by mail-qk0-f178.google.com with SMTP id p22so28453428qka.3
-        for <git@vger.kernel.org>; Wed, 22 Mar 2017 17:32:33 -0700 (PDT)
+        id S1751540AbdCWAnh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 20:43:37 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:35788 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751350AbdCWAng (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 20:43:36 -0400
+Received: by mail-pg0-f54.google.com with SMTP id t143so48712095pgb.2
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 17:43:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Xkr3+impMxb+1sh9ANLGYwGHhWkfXaacxGar5QeebaQ=;
-        b=CZJVR02YP04dxAykbF+384LLMCDn0xKZkxvJ/J2Eqdz5xZZWP1vPMc9cNjb2eLG5RM
-         FcfsrWw9vcmTdCzL13P+n6PFbCfKQSmUW3Cke+JH04Wgn9SezN5bFHMhmbu1UNloP7rJ
-         NaUBSExrPFTA8GFtN7E6FZGbiqe3wM0zTzpu/weNk/NTwikfBBpqU941wAA4bCY7rtLu
-         97V4v4hnFCn5yQTi0tXs+yE2drMVd67GiwVTvUf7eCJXXA88VuhhTtOh0a6iVX7aTRgX
-         PVbT7XdxvoKGhgucPqJiQ6lx+gjNTVYH84BugOa51lbfprpP+ui73OVNvVQgPydSFwo2
-         Zrbg==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=znzk8P8WJe6s4stLz4/1tTkJIIqbnvKBiC2RmVQqhCI=;
+        b=KDbka5diGj/9PrTggrm+j4TDXkvuI+w2HeS1yezwdiXNFpYaNJ+Xse/fYtP6Dtje+3
+         gBDBRKTFKl2unB74omPj7Ekvf0JPa0mJNOvrXLfqI9lkO13Bdkr1ccQOzaX0ykCwExd8
+         rYm/4Ab3+dOWMx4w/qYQ5aLuTGmZJwlCwBofgk9WZhTpyWn9sE4dEOZfWj0zEIUbFyxw
+         TxqTwvofO3oyFUfDYYlcOYVXI/aYJlPMVb9A/zk2URGP3otKKQ3V65SbXJiKnH2v8LCy
+         8sx7A7Y71OZ7fwOkkMVhhZA//ntxbmyx4+tn9OXUrOJrIJ9zlY4D8kXolxYGdomXNNPn
+         uALg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Xkr3+impMxb+1sh9ANLGYwGHhWkfXaacxGar5QeebaQ=;
-        b=TFoDSOXs0rFM1eTh3yW/wDOHanCaiTbnO5tdXm8whcPMwewsu0E1tnagDSdtdq58iv
-         cIG8mCGjbaIZHb8f1X9DijC0suYkrh/P/ei11lsik6K7AiAwFoGu6/WE7EmRgs3wp9ba
-         8HTCqq5nv1SkdhlV6obwXyM5l7Sw1IJV+1t3TVTN59EdZNFmSnHSjfaE1lcu+cqNX9oB
-         YhoWu23XF2rysEYmj6LZYBsdKEHa9pFRZu1CnZnVpDVmWr+tK62fPwSOQMfBV98CmxuM
-         Z1tMXGlb65NXceugRjtKXCbZ5U4mP5QhLZBDcY3H+aUuH03AuMvTmOIscge7mD6MWZkQ
-         QIIg==
-X-Gm-Message-State: AFeK/H3xFwWAbEUFUnQt/RgVjzv61Qg4UYXjI9SR9MWnKaVchc/5iq/W6DjHoXad8SJav9O6w3qi3eYFfoTaTA==
-X-Received: by 10.55.119.65 with SMTP id s62mr37140225qkc.130.1490229152267;
- Wed, 22 Mar 2017 17:32:32 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.237.45.231 with HTTP; Wed, 22 Mar 2017 17:32:31 -0700 (PDT)
-From:   Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Date:   Wed, 22 Mar 2017 18:32:31 -0600
-Message-ID: <CAOc6etYTDyyRud9D3jubh7tC9MeyGZXONWM+=Kb+uwx0voSLpw@mail.gmail.com>
-Subject: blame --line-porcelain is providing me with funny output
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=znzk8P8WJe6s4stLz4/1tTkJIIqbnvKBiC2RmVQqhCI=;
+        b=Tl6FUmLMhLvmgyccVZcfS2OZvlqho3J4ymKkc2ptH42QUkNzZmoECVVrWTtSNhBLEJ
+         a98tcZ4TxhO71VW6fIfKpTglqWAnuhMPUn/UjPcXWRvdMAkFkqTPF9YxA2WNUNjekrEH
+         TVgma0jOMOlLOvjAgdUQg2bJ4SQpeMy+SD/HoFuSFWFGIY+yxIUIdQi1FenI6Ta66tgu
+         KXHghnwXI+RSP0QNNKAfmI9J8qgtXiuln2f0wlASqJgOSpbbBuLEiyquptx7FeDH2y2p
+         BcwAwyNQS3NPUcA3ftHaDP0mAFEbodez28hXdCETXaOSGRY2OBwekuDDjCBdHgW8Qb9m
+         Amxw==
+X-Gm-Message-State: AFeK/H1U4JsDygtKlNZJxYa/s+iCgEUCINwhrnzkcJqDTLgY6xxXsBab+jHUmVo4GA+kHm3S
+X-Received: by 10.84.245.2 with SMTP id i2mr17586919pll.131.1490229814822;
+        Wed, 22 Mar 2017 17:43:34 -0700 (PDT)
+Received: from localhost ([2620:0:1000:5b10:1959:c634:6437:385])
+        by smtp.gmail.com with ESMTPSA id r89sm6102628pfe.6.2017.03.22.17.43.34
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 22 Mar 2017 17:43:34 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, jrnieder@gmail.com,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCHv3 0/3] short status: improve reporting for submodule changes
+Date:   Wed, 22 Mar 2017 17:43:26 -0700
+Message-Id: <20170323004329.15892-1-sbeller@google.com>
+X-Mailer: git-send-email 2.12.1.432.gfe308fe33c.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, everybody!
+This comes as a series; first I'd like to refactor is_submodule_modified
+to take advantage of the new porcelain=2 plumbing switch to check for changes
+in the submodule.
 
-As part of my improvements to difflame I want to use revision
-information as provided by blame --line-porcelain so that I can avoid
-some git calls to cat-file -p to get revision information hoping that
-information would be a match. However I'm not finding that to be the
-case.
+On top of the refactoring comes the actual change, which moved the
+rewriting of the submodule change indicator letter to the collection part.
 
-$ git blame --no-progress -w --line-porcelain -L 72,72
-4e59582ff70d299f5a88449891e78d15b4b3fabe -- t/lib-submodule-update.sh
-
-3290fe6dd2a7e2bb35ac760443335dec58802ff1 72 72 1
-author Stefan Beller
-author-mail <somemail@gmail.com>
-author-time 1484160452
-author-tz -0800
-committer Junio C Hamano
-committer-mail <somemail@pobox.com>
-committer-time 1484337771
-committer-tz -0800
-summary lib-submodule-update.sh: reduce use of subshell by using "git -C"
-previous d7dffce1cebde29a0c4b309a79e4345450bf352a t/lib-submodule-update.sh
-filename t/lib-submodule-update.sh
-                       git -C sub1 checkout modifications &&
+Thanks,
+Stefan
 
 
+Stefan Beller (3):
+  submodule.c: port is_submodule_modified to use porcelain 2
+  submodule.c, is_submodule_modified: stricter checking for submodules
+  short status: improve reporting for submodule changes
 
-If we then take a look at the information on that revision using
-cat-file -p on the revision:
+ Documentation/git-status.txt |  9 +++++++
+ submodule.c                  | 58 +++++++++++++++++++++-----------------------
+ t/t3600-rm.sh                | 18 ++++++++++----
+ t/t7506-status-submodule.sh  | 24 ++++++++++++++++++
+ wt-status.c                  | 13 ++++++++--
+ 5 files changed, 84 insertions(+), 38 deletions(-)
 
-$ git cat-file -p 3290fe6dd2a7e2bb35ac760443335dec58802ff1
+-- 
+2.12.1.432.gfe308fe33c.dirty
 
-
-tree 7df89dad28ec8b08875395265a3f2e13ba180174
-parent d7dffce1cebde29a0c4b309a79e4345450bf352a
-author Stefan Beller <somemail@google.com> 1484160452 -0800
-committer Junio C Hamano <somemail@pobox.com> 1484337771 -0800
-
-(which, just in case, resembles the information provided by git
-show... but is simpler to parse with cat-file).
-
-Committer mails are matching, however author mail does not match
-between line-porcelain and cat-file. Is there a reason for that?
-
-
-Thanks in advance.
