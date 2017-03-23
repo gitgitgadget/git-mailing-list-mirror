@@ -2,85 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6029220958
-	for <e@80x24.org>; Thu, 23 Mar 2017 18:29:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C28320958
+	for <e@80x24.org>; Thu, 23 Mar 2017 18:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932117AbdCWS3B (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 14:29:01 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56382 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751929AbdCWS3B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 14:29:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C8668BA32;
-        Thu, 23 Mar 2017 14:28:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=41Wj0tx6pH3d
-        QN1iOeBS4IXScyc=; b=XPkAP1lbZalLiCK2nKa2ibv26Xrxk5rS9RWqOtpkg4vv
-        zF6xWh81vKvJN6gkKt2jiojE6X6VJgzcaizU9MNdiOvlhHINMR/40NmVE9fxB+P1
-        YF9T1DuSzmkp2lm9/VGM3/Vx/2bAlePiXdzlY3Z6MMEloPtTC5qOWuXd/GjJjTQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=H7xakT
-        xGtPzBAvKWbta18d+UpXcfLZjrj8nbGyV71hEkrDDD4s0xHrJP8rRzSctas7E0yl
-        Y10dckgPuXdKUgayeDx2EgVEIPja//ZwiIdMU2NPuGQz/kZGoAz/TAPfUrydJ/DP
-        aysTY2ff4GyqaLd+V+U1VbpjcROfprphHrkTg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 722398BA31;
-        Thu, 23 Mar 2017 14:28:54 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD2068BA30;
-        Thu, 23 Mar 2017 14:28:53 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCHv2 00/14] completion: speed up refs completion
-References: <20170323152924.23944-1-szeder.dev@gmail.com>
-Date:   Thu, 23 Mar 2017 11:28:52 -0700
-In-Reply-To: <20170323152924.23944-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Thu, 23 Mar 2017 16:29:10 +0100")
-Message-ID: <xmqqshm3dezf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S964823AbdCWSrq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 14:47:46 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:35226 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934846AbdCWSrp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 14:47:45 -0400
+Received: by mail-pg0-f41.google.com with SMTP id t143so62255023pgb.2
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 11:47:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=o+cPyPbbxpeRzoya5vXJNceaEzrYWZCvxEDlcRyR5Z0=;
+        b=ZyY/9yGokurD+m6cXtAFNttRrinBOfOiCrNujdfpqEsXfYaGPQhKUY28zRhZumei60
+         cXU+K83jik4u3zSSmyUMjsFqmoTcO3kxzhr03VuQnsWyQO+Z0eUByql50H1/nwq4UVL6
+         0slG23dexNFCYxi9nn5smgcuVtLhPEsGx6o2j/aHRL+Yx0JLRJ1aqa5GO+U07dRpN/A6
+         z3z6vTwhNaGV2Ody9pVubC8eIjNITqJthzIgSEfCOFVNcBRzO1pJNpF/JhihEJ4midIY
+         U7HoYNZOogqIiS7izkW05f5v73NBTqVQPk8b/vnjwli2macRd/KxlMPuy9Pf6FVODzyx
+         Lw6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=o+cPyPbbxpeRzoya5vXJNceaEzrYWZCvxEDlcRyR5Z0=;
+        b=NI1Rcp6MBxxU6Z0YmP46g+w9EUal9eJrCEdDsUWapEgFN17zAUejYUbI2blpizLf+B
+         XuFlVvatZTb+BUahXFx81xoBSkntrxdlCqk+mIa9rvoiq2DqPQx+30xkJIxZj9Clr6e8
+         lfKib2zDyOQEg2Nw8DAWrlRkbZB4yX+Q23lVCPa093pTbkkpdrkvJ0vu+KuOwJz7WDHs
+         3tnrTgDuffxkEYFOqA5rZOgxFR+TCnqmx49JXwsVMduSCl5Pt3hYak7mJXeZ+Uml3zvr
+         +B22HXCAzd39sOwb1vm9lzShlIcjWs3huC3ztpNEbGtQ7zbFYJ7k6RISR158I7LqYOrk
+         SLCQ==
+X-Gm-Message-State: AFeK/H1WeyJ9cj3JblTAnEp82cQf7ZTIMs02yYit9GdyOBMC1bIPUvO5YNVqOh1mfKqLMHP2JNJvI78uJ242ybQ6
+X-Received: by 10.99.119.140 with SMTP id s134mr4565338pgc.162.1490294840012;
+ Thu, 23 Mar 2017 11:47:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 91B7485C-0FF6-11E7-931F-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.100.162.161 with HTTP; Thu, 23 Mar 2017 11:47:19 -0700 (PDT)
+In-Reply-To: <xmqqo9wsfrsr.fsf@gitster.mtv.corp.google.com>
+References: <20170323004329.15892-1-sbeller@google.com> <20170323004329.15892-2-sbeller@google.com>
+ <20170323005341.GH26108@aiede.mtv.corp.google.com> <xmqqo9wsfrsr.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 23 Mar 2017 11:47:19 -0700
+Message-ID: <CAGZ79kZriqCE4-9bVQTNGXEZsJi-Z+ryp3QRu-MC8Sn1kaGSdg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] submodule.c: port is_submodule_modified to use
+ porcelain 2
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-
-> This series is the updated version of 'sg/completion-refs-speedup'.
-> It speeds up refs completion for large number of refs, partly by
-> giving up disambiguating ambiguous refs and partly by eliminating most
-> of the shell processing between 'git for-each-ref' and 'ls-remote' and
-> Bash's completion facility.  The rest is a bit of preparatory
-> reorganization, cleanup and bugfixes.
+On Wed, Mar 22, 2017 at 11:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Changes since v1:
-> ...
-> [1] - http://public-inbox.org/git/20170206181545.12869-1-szeder.dev@gma=
-il.com/
+>> Stefan Beller wrote:
+>>
+>>> Migrate 'is_submodule_modified' to the new porcelain format of
+>>> git-status.
+>>>
+>>> As the old porcelain only reported ' M' for submodules, no
+>>> matter what happened inside the submodule (untracked files,
+>>> changes to tracked files or move of HEAD), the new API
+>>> properly reports the different scenarios.
+>> [...]
+>>>  submodule.c | 53 ++++++++++++++++++++++++-----------------------------
+>>>  1 file changed, 24 insertions(+), 29 deletions(-)
+>>
+>> Neat.  Is this something that could be covered in tests, or should I
+>> be patient and rely on patch 3/3 for that?
 
-It seems Jacob Keller was the only person who was excited about
-these changes when v1 was posted?  It would be nice to see a bit
-more enthusiasm from other folks who are invested in the completion
-script, but you are the de-facto go-to person on the completion
-already, so ... ;-)
+I am not sure how to cover it in tests properly, as we do not expose this
+function to the outside directly.
 
-Will replace.  Let's advance this to 'next' soonish (say, by early
-next week).
+This function is used in only one place (diff-lib.c, in
+match_stat_with_submodule,
+which itself is used in run_diff_files and get_stat_data), which is deep down
+in the diff library.
 
-Thanks.
+>> I think this would be easier to understand if it were two patches: one
+>> that switched to --porcelain=2 with no change in behavior,
 
+I don't think so as it would double the code to review.
+I'll see if I can present this conversion in an easier way.
 
+> That sounds like a sensible organization.
+
+ok.
+
+Thanks,
+Stefan
