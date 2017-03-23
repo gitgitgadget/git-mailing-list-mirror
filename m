@@ -2,103 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5277B20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 19:36:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0467720958
+	for <e@80x24.org>; Thu, 23 Mar 2017 19:37:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752325AbdCWTgR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 15:36:17 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37537 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751365AbdCWTgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 15:36:16 -0400
-Received: by mail-wm0-f41.google.com with SMTP id n11so5016332wma.0
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 12:36:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=R9g8bXNnYtSK+ocrIfD14vhRusObMfjGxrE0zgSRjVM=;
-        b=ZnMEnQgDSjHXH6q0sxYldn6JfvZj0HzEjpz6iEvFtclXSvCg1jtKLjzDvy0vgC0r5q
-         Eihku9ZlTPRuvjXTX3ZgfDCCwsjji+DRzlSLAswv6c0hkFY/EsCL8Qt1prkpsSQCqsxd
-         Z3ev+hM0NEOhrq+JYtsSmmTFI2fC82mOSn+ePxFrz5kn3qYwgUEKYYLvb4uYKlJx9luY
-         xYa78aGGPCrta4EdWd4KTU/Fd9yCZx7P/JO4uz1GkeBLbiI55/iv1eXavl08ZLpqug03
-         RxBy5XJn89KohSq3ibc6qKahrkyU1aKETJXSjobjTEsy7I8Op3kPIN9+Wa3WnSD7Pjja
-         WHDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=R9g8bXNnYtSK+ocrIfD14vhRusObMfjGxrE0zgSRjVM=;
-        b=dMBs7rhtykFoW+0g6WCPvrgeylH6dXMIDsyj3mhnN1wEqMax4H01aLeLzvUDnW5O6L
-         mU+zxbnE8ucCRWFUZ8cmG6C7XOpojrbkJvMxZm4zEO06wnY6lgO7LqICqQm/4JvU4Jju
-         KYzfy0RBshGgDFByBcO7z48/OcyFwiBnHZjXhACftqVfyMy6sUz1UFpFm3ARdjAItD/S
-         UN85lUK0ugXz/L9XnWlWwpcBtWMI+HhdxLy+HzqcYYNY8llCt7C38qjBdiZAxZc2H/zv
-         1PdFXxTgNpKVSnYqvgy52GcJcvt6yVgc9YUuzML4A2w3wCEyo+5YNiXBWJnjt5pdZAnf
-         Lygw==
-X-Gm-Message-State: AFeK/H0BXEaSN9UbmGSR6UJaES65P/oWM/qIizHvtS0hrm0QxwixohjZC4j/2sFILdaNPA==
-X-Received: by 10.28.195.197 with SMTP id t188mr15468153wmf.61.1490297774052;
-        Thu, 23 Mar 2017 12:36:14 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB47D6.dip0.t-ipconnect.de. [93.219.71.214])
-        by smtp.gmail.com with ESMTPSA id b17sm5550767wma.33.2017.03.23.12.36.13
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 12:36:13 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <xmqqzigbbxjq.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 23 Mar 2017 20:36:12 +0100
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S1753358AbdCWThZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 15:37:25 -0400
+Received: from mout.web.de ([212.227.15.4]:52295 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751618AbdCWThY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 15:37:24 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LrYLd-1cAhJS47Wn-013Pz6; Thu, 23
+ Mar 2017 20:36:32 +0100
+Subject: Re: [PATCH] refs.c: use skip_prefix() in prettify_refname()
+To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <20170323155012.6148-1-szeder.dev@gmail.com>
+ <4382e211-63f6-811f-6f33-1cf5d2c087a8@web.de>
+ <20170323192313.ytr56pjpnillnh63@sigill.intra.peff.net>
+ <xmqqvaqzbxfx.fsf@gitster.mtv.corp.google.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <81C8DFC7-53DA-4533-8005-F6D8D643FDA2@gmail.com>
-References: <20170322065612.18797-1-larsxschneider@gmail.com> <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703231716320.3767@virtualbox> <20170323180134.geoyvq7qbm5vujo6@sigill.intra.peff.net> <xmqqbmsrdcz4.fsf@gitster.mtv.corp.google.com> <20170323191721.7r5vrixtnx3cngdc@sigill.intra.peff.net> <FE4A3F88-0B86-4069-B141-2DFB9C4E269E@gmail.com> <xmqqzigbbxjq.fsf@gitster.mtv.corp.google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <4424eeeb-7eea-ed41-c031-ba7915cb93ab@web.de>
+Date:   Thu, 23 Mar 2017 20:36:29 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqvaqzbxfx.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:dkOTrUDByIYlZkkz81H91P3+/jEKYQN6Y8EL5ba0RXxB2q5TddZ
+ +lQK3Fdxxlw4sSxeZpTwfsVz4bgGrTP8fu0taUlzTHvQ6stIpfnbWXQQm0KX9G6QDjhNxIb
+ f7juYE4L9cY09lS2WBjP7aZ8q+bhT55VdKMMAXLJMUfo4Oy3rjaS23iuOyHrfeHIjkglaLw
+ a8MCopXxvq3WvrxtBleqw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g8lFbSG0nH4=:R1hOAnSWNN9yzrTMLGcauj
+ JSknHdoKwtgtIBrt8zhJHsQ1KafbRAstDHMPA/66SfNri3qlO69FaYkdOSgsEWsQqBFMJ1R4x
+ 7L62R3y/wj1r7+5w2lMWJEpI4RDXsJOWTYqndYOE/voqCv5wckNmn3x4q0jAqz8sVXn+h0ws7
+ L9rnCngMO5aU2viBeOsPIvKXzmhRnlH8q20WkCzB3DHdLpepPs2tG7UG+ZolqVSjgmBuaL2ol
+ CiYpWwd1pA2t8MLVDIBYeYIHDrzZcU4yxHoYWjPUQgSKjMnruvt4OQ8KzW/k1H5+w0+wTnmW7
+ s3iAxG823KsTC5SxNRQaVT7+h+7EcKqTEA3YxPIsM4EZ78g+RZnR9CTD9TaQXk3SzHmS4MCNT
+ +yw6Z6GajR/pA/vhl7dMMiSa8Sr2W+h1CQ/NQU/lTf2TWUK+ZOfBzY05ENlvX1B461/1hzgED
+ RQg7Hwy5F4pm+MdaDlAvSpr2UW2Azt6UJtlyq2FFQKhW8thJl4dyxDqZj2FV5hbK1ixG3Jc+q
+ uQRQ5xh7rddH8D5W0RTYnk0Pk17T1gZWdybQoN6X1lm69CuKEn2MdB9GghsmvnqKKAAk5lx7c
+ ZYmMV/P533l97frKe/lcwMUIH2Eqz4Hj3G8KHBwjzelQAuvBNThIVjkE37aR2mc8MXaTrR6Xe
+ 70noIe1nRjVcxWJ+U72TtdVXa0dC6LuWHLKjhQI46xs5m85SLyMP9yJPCGxAH2eKpZErDlunT
+ 3ScwWeN+8shCABGFV2IFQ3KnPk8qFW41+p28llngckMUb8HfCR9qhZm3+xvsqHcimGzLvPVyW
+ GEqelm4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 23.03.2017 um 20:33 schrieb Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
+>
+>> On Thu, Mar 23, 2017 at 08:18:26PM +0100, René Scharfe wrote:
+>>
+>>> Am 23.03.2017 um 16:50 schrieb SZEDER Gábor:
+>>>> This eliminates three magic numbers.
+>>>>
+>>>> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+>>>> ---
+>>>>  refs.c | 10 +++++-----
+>>>>  1 file changed, 5 insertions(+), 5 deletions(-)
+>>>>
+>>>> diff --git a/refs.c b/refs.c
+>>>> index e7606716d..0272e332c 100644
+>>>> --- a/refs.c
+>>>> +++ b/refs.c
+>>>> @@ -366,11 +366,11 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
+>>>>
+>>>>  const char *prettify_refname(const char *name)
+>>>>  {
+>>>> -	return name + (
+>>>> -		starts_with(name, "refs/heads/") ? 11 :
+>>>> -		starts_with(name, "refs/tags/") ? 10 :
+>>>> -		starts_with(name, "refs/remotes/") ? 13 :
+>>>> -		0);
+>>>> +	if (skip_prefix(name, "refs/heads/", &name) ||
+>>>> +	    skip_prefix(name, "refs/tags/", &name) ||
+>>>> +	    skip_prefix(name, "refs/remotes/", &name))
+>>>> +		; /* nothing */
+>>>> +	return name;
+>>>
+>>> Nice, but why add the "if" when it's doing nothing?
+>>
+>> It's short-circuiting in the conditional.
+>
+> I think René meant this:
+>
+>      /* just for side effects */
+>      skip_prefix(name, "refs/heads/", &name) ||
+>      skip_prefix(name, "refs/tags/", &name) ||
+>      skip_prefix(name, "refs/remotes/", &name);
+>
+>      return name;
+>
+> which still short-sircuits, even though I do think it looks
+> strange; "correct but strange".
 
-> On 23 Mar 2017, at 20:30, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Lars Schneider <larsxschneider@gmail.com> writes:
->=20
->> "[...] we do not provide these values to untrusted builds,=20
->> triggered by pull requests from another repository."
->>=20
->> See: =
-https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-=
-in-Repository-Settings
->=20
-> OK, it is a releaf to see an indication that somebody over there is
-> thinking.  Thanks.
->=20
-> So we do _not_ have to turn it off; as soon as we define sekrit
-> variables, they will turn it off for us ;-).
->=20
->>> Hrm, it does mean that people have no way to test on Windows until =
-the
->>> branch hits pu. Which is not ideal.
->>=20
->> I agree it's not ideal. But I think it is an improvement to check
->> pu/next/master/maint continuously :-)
->=20
-> I am not sure what you mean.  We are building each and every branch
-> updates already, and I do not see any improvement over what we are
-> doing now.  Care to elaborate?
+Yes.  At least to me it looks less strange than the same lines wrapped 
+in "if ... /* nothing */".
 
-We are building each and every branch on TravisCI right now - but=20
-only on Linux and OSX. With this change we also build it on
-Windows. That should help to spot Windows related issues more
-quickly I think.
-
-- Lars
-
+René
