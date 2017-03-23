@@ -7,129 +7,126 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EDF620958
-	for <e@80x24.org>; Thu, 23 Mar 2017 16:07:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F9B120958
+	for <e@80x24.org>; Thu, 23 Mar 2017 16:07:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965557AbdCWQHZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 12:07:25 -0400
-Received: from mout.gmx.net ([212.227.15.15]:52329 "EHLO mout.gmx.net"
+        id S965571AbdCWQHj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 12:07:39 -0400
+Received: from mout.gmx.net ([212.227.17.21]:62566 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965541AbdCWQHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 12:07:20 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXI5V-1ceaws3nBV-00WEGR; Thu, 23
- Mar 2017 17:07:04 +0100
-Date:   Thu, 23 Mar 2017 17:07:03 +0100 (CET)
+        id S965540AbdCWQHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 12:07:37 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIzGn-1ct1DA3Gen-002U9Z; Thu, 23
+ Mar 2017 17:07:17 +0100
+Date:   Thu, 23 Mar 2017 17:07:17 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH v2 0/3] rebase -i (reword): call the commit-msg hook again
-In-Reply-To: <cover.1490194846.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1490285210.git.johannes.schindelin@gmx.de>
-References: <cover.1490194846.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v2 3/3] sequencer: allow the commit-msg hooks to run during
+ a `reword`
+In-Reply-To: <cover.1490285210.git.johannes.schindelin@gmx.de>
+Message-ID: <315c237eb50572f8e109ea547a2010d9f81c3aff.1490285210.git.johannes.schindelin@gmx.de>
+References: <cover.1490194846.git.johannes.schindelin@gmx.de> <cover.1490285210.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:d77uVzFHiQGzlnraSqVMoPyLv7KtoyrSbCITrVQ9EjlgPS4MDHY
- m6NSKby+5WrGBDNhy1dWZkTl7mIxxjHUKw/DwkvDK6CiuP4cea3wHl+v7K9H9Xpl257Ora+
- jmxaT51ptlnzav0vWLiJgnTigE0JAGsp3Q4YEiyuIekPGIyLQIv785SabG2/fZcz0vEEXc5
- MrjUkW2eEFskS7rPtEHXg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yeu2dRlPaUk=:zop6B7bHjfvLcSIRqWn94P
- 7WefF72PfqZ4Lui1F1XsGuUxLK2aMDvwdnqmGvgbf3u6OlBYeu+muKhwb0jLDZk8/Gk1WC8h2
- /IHfYBh/7owF+rW6McA3091ESaSGi92E+FnUWuqRcs7aGWqF82gt1ayzopj1i8WZ/3P/fshuP
- d/HBl1maodEqh7TgX4jJfte8+tY6TVNJHZxapm35W9ZPTR8bSxeph0eo7eV+1pORFDEqPkZnU
- YvFyRB7hU2hXsN/g9AmwcqcxQ5An8eiyjkr+GCvtdiNStTcLwiosofW98a7z7ngLILW9nU0AZ
- nD3mUxtY8ENtPEXXUH6ybne6DW/DSiYA3IPMJMW8h+RGwHbtUUAqfHQ4JqZS+dMT49KUOTkXS
- O6BWaZ48RN955De0MBoCVpUclZjwIYMQ4laxvsgRF3MV2nrEsWoyDfeyVMX+2+mLYj3mKtCHo
- p6wVnCw9gk2U8bE40Pf9DAtHOzBwyqnTbDNjjKZeXYMeUojPuIXfvocV0Ao6N9QYftH5yGBik
- IAblcXiO58s8m0so4iL8AixoijY9RMK6hc8u7ogzWo7QUx5RVkT4khwgfZd0qkB6w3VwSRdZl
- +B5M4x+xhPr0EUAbeUe22pcZJQU4l/nUo6Aft8UrCJZnlRhXTiS4zqDqy7aOdbIVOsQ1OvZnP
- fLfvmtGk9+OyhfAHPRY6kL/zOSg2t17HupT5cJEWjHo980XXWmvRDvz2KqeouyWOQ95u4XxJS
- HX2J90BTSkzTDBOgo2LIb8+4Ee1LiPpLKhUMs56x4Od3Ujcu5T3G+sWka5W9lEYC1Vh/36MTS
- Y66M3FN1y93uj+jxLpct/r6X3Rf0w==
+X-Provags-ID: V03:K0:sHcXDnlzyNkMOCGoDyJbv3pDsC2CWOand4KcaOnIxfKBvFA6YDW
+ b0SJYjRQiRcVRaqurB9vxxgmGi7oQix7+Z4v/eFIScWCad8kycYkFE/LqnTtpdcTYWjqed0
+ rqnHNeQqnS1LHAecsyYGjx1MUuOvYG7mK2XUWyvdJnECZ5ETpI3Ueb5vD0glX7SdWPejpOv
+ nakpMzfp5S5n8nr+I8fIQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pcbTzYvPns8=:7WpGVhZ6gZhUT2mrN5saZ5
+ T1ptpy2Bo4gN1l/CRVFmuN5lEEd8n8sOiMJuQQYwqhfTs7WJvYzIbmxOmKL3nUB+9zPuy+bPY
+ /Awr5vtq5UXxu9ER71wcBciqUeJ3X/VY2P4QYiMTMfJqTNKtegLfswIW6UipaQjIvkHnTLKBX
+ 6cp08LlSmRxhuY4J3Ho0w29oBSAj+J008uvUCcjS5AFTQiIE5WNVe/uxxuKmnOzJ+RAENuljk
+ 7TYIV0zcnsi0iLWOczRlpw6hL3lr2XRNmSVJ5JFj7PRoHcZnRmRH2Og7BVogY8BiRW2//rMbc
+ sxKHGMbPMIs8DBDJ1a3KLC6nk+4SEo6tijl3N7m54UTPMwvwyEerWDK0lcfS721vzOgWBofWR
+ zUdUwLUZ78ioOO1UZAm7+rAgdPbmRnU6QaxPMdTmijN3j6kjnOtKThEJN8u1uEcbFpatDuq4O
+ //0nylMM3iLfxrtPpbYR1CrFgBhsZl4GwuGhPEhPnfMTl2ZLyFdyrpzMKT479zBX5eVo7iv1D
+ 69soo7ni/yLr0ZEg6eGyVGlKtzuL5mQ/IhZFhc/s6rxRXTIms7l3gjaPXXoIgmNGDgBpRcwwo
+ oBY1FiqdaQBXc4Lv6AM7zgFKmwzpH1JV+rgYCnnuZ52aEqn2Mu4YpQ8kzIKe80gSn4VRGy7Gv
+ tm+VbKdqSo9W1is0DtZ7mgdzTSiG6PeuizBsc9GHEvBAJPO/6zTt973xLEBB96/PD/IBIV1Ay
+ ZUOxxfA9aJRgOxIOfYbTBFwkyn+6mPiIW78iqFxUhCYXlbV5G7fFM8XyPWT/t8igChZmo17Et
+ sy3zj+W38XXxyqVGx5GlhPadm3QhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is actually not only the commit-msg, but also the prepare-commit-msg
-hook...
+The `reword` command used to call `git commit` in a manner that asks for
+the prepare-commit-msg and commit-msg hooks to do their thing.
 
-Changes since v1:
+Converting that part of the interactive rebase to C code introduced the
+regression where those hooks were no longer run.
 
-- changed `int flags` to `unsigned int flags`
+Let's fix this.
 
-- uncuddled the if...else if... construct to not mix the "goto leave"
-  logic with the one adding the VERIFY_MSG flag
+Note: the flag is called `VERIFY_MSG` instead of the more intuitive
+`RUN_COMMIT_MSG_HOOKS` to indicate that the flag suppresses the
+`--no-verify` flag (which may do other things in the future in addition
+to suppressing the commit message hooks, too).
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ sequencer.c                | 8 ++++++--
+ t/t7504-commit-msg-hook.sh | 2 +-
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-Johannes Schindelin (3):
-  t7504: document regression: reword no longer calls commit-msg
-  sequencer: make commit options more extensible
-  sequencer: allow the commit-msg hooks to run during a `reword`
-
- sequencer.c                | 54 ++++++++++++++++++++++++++--------------------
- t/t7504-commit-msg-hook.sh | 17 +++++++++++++++
- 2 files changed, 48 insertions(+), 23 deletions(-)
-
-
-base-commit: afd6726309f57f532b4b989a75c1392359c611cc
-Published-As: https://github.com/dscho/git/releases/tag/reword-commit-msg-hook-v2
-Fetch-It-Via: git fetch https://github.com/dscho/git reword-commit-msg-hook-v2
-
-Interdiff vs v1:
-
- diff --git a/sequencer.c b/sequencer.c
- index 377af91c475..bc2fe48e65c 100644
- --- a/sequencer.c
- +++ b/sequencer.c
- @@ -621,7 +621,7 @@ N_("you have staged changes in your working tree\n"
-   * author metadata.
-   */
-  static int run_git_commit(const char *defmsg, struct replay_opts *opts,
- -			  int flags)
- +			  unsigned int flags)
-  {
-  	struct child_process cmd = CHILD_PROCESS_INIT;
-  	const char *value;
- @@ -932,7 +932,7 @@ static void record_in_rewritten(struct object_id *oid,
-  static int do_pick_commit(enum todo_command command, struct commit *commit,
-  		struct replay_opts *opts, int final_fixup)
-  {
- -	int flags = opts->edit ? EDIT_MSG : 0, allow = 0;
- +	unsigned int flags = opts->edit ? EDIT_MSG : 0, allow = 0;
-  	const char *msg_file = opts->edit ? NULL : git_path_merge_msg();
-  	unsigned char head[20];
-  	struct commit *base, *next, *parent;
- @@ -995,13 +995,11 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
-  			write_author_script(msg.message);
-  		res = fast_forward_to(commit->object.oid.hash, head, unborn,
-  			opts);
- -		if (res)
- -			goto leave;
- -		else if (command == TODO_REWORD)
- -			flags |= VERIFY_MSG;
- -		else
- +		if (res || command != TODO_REWORD)
-  			goto leave;
-  		flags |= EDIT_MSG | AMEND_MSG;
- +		if (command == TODO_REWORD)
- +			flags |= VERIFY_MSG;
-  		msg_file = NULL;
-  		goto fast_forward_edit;
-  	}
- @@ -2164,7 +2162,7 @@ static int continue_single_pick(void)
-  
-  static int commit_staged_changes(struct replay_opts *opts)
-  {
- -	int flags = ALLOW_EMPTY | EDIT_MSG;
- +	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
-  
-  	if (has_unstaged_changes(1))
-  		return error(_("cannot rebase: You have unstaged changes."));
-
+diff --git a/sequencer.c b/sequencer.c
+index ce05d61a2ae..bc2fe48e65c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -606,6 +606,7 @@ N_("you have staged changes in your working tree\n"
+ #define EDIT_MSG    (1<<1)
+ #define AMEND_MSG   (1<<2)
+ #define CLEANUP_MSG (1<<3)
++#define VERIFY_MSG  (1<<4)
+ 
+ /*
+  * If we are cherry-pick, and if the merge did not result in
+@@ -642,8 +643,9 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	}
+ 
+ 	argv_array_push(&cmd.args, "commit");
+-	argv_array_push(&cmd.args, "-n");
+ 
++	if (!(flags & VERIFY_MSG))
++		argv_array_push(&cmd.args, "-n");
+ 	if ((flags & AMEND_MSG))
+ 		argv_array_push(&cmd.args, "--amend");
+ 	if (opts->gpg_sign)
+@@ -996,6 +998,8 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		if (res || command != TODO_REWORD)
+ 			goto leave;
+ 		flags |= EDIT_MSG | AMEND_MSG;
++		if (command == TODO_REWORD)
++			flags |= VERIFY_MSG;
+ 		msg_file = NULL;
+ 		goto fast_forward_edit;
+ 	}
+@@ -1050,7 +1054,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	}
+ 
+ 	if (command == TODO_REWORD)
+-		flags |= EDIT_MSG;
++		flags |= EDIT_MSG | VERIFY_MSG;
+ 	else if (is_fixup(command)) {
+ 		if (update_squash_messages(command, commit, opts))
+ 			return -1;
+diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
+index c3d9ab02a3b..88d4cda2992 100755
+--- a/t/t7504-commit-msg-hook.sh
++++ b/t/t7504-commit-msg-hook.sh
+@@ -230,7 +230,7 @@ chmod +x reword-editor
+ REWORD_EDITOR="$(pwd)/reword-editor"
+ export REWORD_EDITOR
+ 
+-test_expect_failure 'hook is called for reword during `rebase -i`' '
++test_expect_success 'hook is called for reword during `rebase -i`' '
+ 
+ 	GIT_SEQUENCE_EDITOR="\"$REWORD_EDITOR\"" git rebase -i HEAD^ &&
+ 	commit_msg_is "new message"
 -- 
 2.12.1.windows.1
-
