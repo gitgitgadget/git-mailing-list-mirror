@@ -2,142 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C39C620964
-	for <e@80x24.org>; Thu, 23 Mar 2017 17:29:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3923720958
+	for <e@80x24.org>; Thu, 23 Mar 2017 17:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935316AbdCWR3o (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 13:29:44 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54851 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934622AbdCWR3n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 13:29:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F6938AF5F;
-        Thu, 23 Mar 2017 13:29:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=yAvQHRg8nVto
-        yyC4gnrqxS7izwY=; b=ucZ2Nuq3hQw+BBJ9QJPUE0RJQMbRad17/FkN7mUGHmBN
-        PxZrFaoFtWbf4ycr6dQLh8D0j+8dKbnExsY5D/++wC3olQr3KP6wHROOHFmp++/7
-        NtkobshCcVJexchKFuRn5ZHdiZyygoaW1G532ja0Jd2g9ACf7DjjUsqwtaZwxuc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VJJQEJ
-        XpBHleDGSppMMJsDpiPwBko22LPHwt4GfrqVCq9XMpcSyB37gjs7h4GgmXnRg4R8
-        zqEkdz0eOAXHZ1QcHLVbGrlL6LmVS4qgs5QoS7rKrUBPLzQOEZ2Mhacc9YZpiIJE
-        ScecjJWPoUko48uHEbOHVXGZHNQ7ZAOr9hQbA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 677498AF5E;
-        Thu, 23 Mar 2017 13:29:41 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C61BE8AF5C;
-        Thu, 23 Mar 2017 13:29:40 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        Carlos Rica <jasampler@gmail.com>,
-        Samuel Tardieu <sam@rfc1149.net>,
-        Tom Grennan <tmgrennan@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 12/16] tag: implicitly supply --list given another list-like option
-References: <20170323130529.11361-1-avarab@gmail.com>
-        <20170323130529.11361-13-avarab@gmail.com>
-Date:   Thu, 23 Mar 2017 10:29:39 -0700
-In-Reply-To: <20170323130529.11361-13-avarab@gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 23 Mar 2017 13:05:25 +0000")
-Message-ID: <xmqqlgrvewak.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S935332AbdCWRay (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 13:30:54 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57898 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933717AbdCWRaw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 13:30:52 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M70HF-1bvIwo4Buv-00woMK; Thu, 23
+ Mar 2017 18:30:36 +0100
+Date:   Thu, 23 Mar 2017 18:30:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Ivan Tham <pickfire@riseup.net>
+cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: Re: GSoC Project | Convert interactive rebase to C
+In-Reply-To: <20170321060526.sXz0cdJwc%pickfire@riseup.net>
+Message-ID: <alpine.DEB.2.20.1703231827060.3767@virtualbox>
+References: <20170320164154.xBcU6rG0C%pickfire@riseup.net> <CAGZ79kbF+O6tgn-4ivmOza3QGA4oFyJS=9eGHYZ1HQgw6+rEtQ@mail.gmail.com> <20170321060526.sXz0cdJwc%pickfire@riseup.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 4BF220F6-0FEE-11E7-A501-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:PGZ+jNIh/25/Olcyn06aIM6Yn7UAq9Ekj+27gOmZyYhbNeW59ZQ
+ h5Y5MVk4mfwkg59RqsvmTgRpGeeFuI2f/1s2p5/clIINfErzNpl1YSqNEtB2BnQVQeP7EUw
+ JnFNz/HnQ1AJQbm/hMGssDUNz1hKnWtwNzo1bzxGup9iVXT9FHj/qzdWl/sTlezqS7hLY5B
+ uySips1UfFsdp6jHFmrIw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:JIt6jHShDhc=:rCtlLj5t30a01MK3QWT1H8
+ JPQgGt+f9AOVhjhFxwl+4JVW5Vv+Umm1RnmFxLlAGfaF3IIwNZSIIhhHQ0yjOObpoO6bmFNVr
+ JQUSvoSS/5ukRY9wQozyXJpWzAKxfKuY4dtNV3y/AKuLb/uF3Pcw1VlP05jBazjvASuqRlRL4
+ 7lUkQR80ZDRWlLCiRkh97Jc1YCK0Gvu+WkjTAaeOiHjz/rOqGuiMPUMCnHqnSPkI1vx1SejgB
+ 42VMM+2lweX2NIkmW4zFMf5bv3A0kiOnR22bzRgFNnqn82tnP2cOfUoZ05Gf/Hi4rADoxftLC
+ hoN88UR62/m1HLsv2u3nTexXCio+Zabvv9rccq+PcgvCSBPZ6ZuhXlLXAh+RzAxZnOYmtiOhs
+ Z8KOnmL+Myq5+jeEMR+XkTpV3HJVLYk5MsuDCaCxdv0Y6ufZaVFiF6aZyMoQKs7ZySkNkpKWm
+ IyzBjSlsONqvm4bgAr7dVX3N0CUS32OlrcqjxNlKIUZelHjK5Bga3TI8B1BAoGHkKb6J7J7n8
+ UTTNizsL4m2ijZqwGUaZdzVSwTEGkasC/RsZsVhgOdrcGMfS+xVXOWJtlBTNbmYYlsv04u9IF
+ 8XsnkdK9fUlCpVDtkUJDDi9XfKC8HEY6Xe4zzrhIpkLki26BvLUWE5QikoMHjOofzernTylgG
+ 8Y/umHZNQl/oM2mKywNMiXMOngO0+y7L3gjlFB61VOpQahIiDIndDuGrd+Hq08lV2E+tPkyit
+ I4rpt1rF8F1q54pxsNZGuM7/Vk4GNqOj37Ky7eKv3Cn3RFzcs4CJv838jSwfZgEV+F8DOHcl+
+ FMyE5apjtVYSEnHHvOI3TevVekN3g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Hi Ivan,
 
-> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-> index 2640c6955c..491dba065c 100644
-> --- a/Documentation/git-tag.txt
-> +++ b/Documentation/git-tag.txt
-> @@ -82,10 +82,11 @@ OPTIONS
-> =20
->  -n<num>::
->  	<num> specifies how many lines from the annotation, if any,
-> -	are printed when using -l.
-> -	The default is not to print any annotation lines.
-> -	If no number is given to `-n`, only the first line is printed.
-> -	If the tag is not annotated, the commit message is displayed instead.
-> +	are printed when using -l. Implies `--list`.
-> ++
-> +The default is not to print any annotation lines.
-> +If no number is given to `-n`, only the first line is printed.
-> +If the tag is not annotated, the commit message is displayed instead.
+On Tue, 21 Mar 2017, Ivan Tham wrote:
 
-I thought we would want to have -n thing separate as we are much
-less sure than the others, but let's forget about that and commit
-to default to -l with -n.
+> Stefan Beller <sbeller@google.com> wrote:
+> > On Mon, Mar 20, 2017 at 9:41 AM, Ivan Tham <pickfire@riseup.net> wrote:
+> > > I am Ivan Tham. Currently studying in Computer Science in APIIT
+> > > Malaysia. I am interested particapate in Google Summer of Code 2017
+> > > under git organization. I would like to attempt "Add more builtin
+> > > patterns for userdiff" particularly for shell for my microproject.
+> >
+> > I'd love to see proper shell support!  Although there is already some
+> > support for shell (by looking at diffs on our test suite) ? So I am
+> > not sure what there is left to do? Can you clarify what you're trying
+> > there?
+> 
+> Are you sure about that? From what I had looked into userdiff.c, there
+> is no support for shell. There just a recent patch for [go patterns][0].
+> Or perhaps I should have rename it as "userdiff.c: patterns for "shell"
+> language"?
 
-Given the confusion I had during the review of the previous round, I
-would think this should clarify what it means "If no number is given
-to -n" a bit more strongly.  Namely, the behaviour we see in this
-test:
+I also could not find any shell patterns in the userdiff code...
 
-> +test_expect_success 'The -n 100 invocation means -n --list 100, not -n=
-100' '
+> > > I am interested to work on "Convert interactive rebase to C"
+> >
+> > +cc Johannes, who recently worked on rebase and the sequencer.
 
-can be a common mistake and needs to be warned about.
+Glad you are interested! Please note that large parts of the interactive
+rebase are already in C now, but there is enough work left in that corner.
 
-I'd drop "The default is not to print any annotation lines".  It is
-not just unnecessary (we make a specific mention about the default
-when we act as if an option were given even if the user doesn't
-explicitly give it, and not triggering a special feature when it is
-not asked for _is_ the default everywhere else), but is confusing,
-because it is unclear if it is talking about the default case of not
-giving any -n<num> option, or the default case of not giving <num>
-but still the -n option.
+> > > aiming to port most builtins stuff to C in which we can reduce the
+> > > size of git. Additionally, I would also like to convert scripts to
+> > > builtins as an additional milestone.
 
-Perhaps something along the lines of ...
+Careful. It is a ton of work to get the rebase -i conversion done, and
+then a ton of work to get it integrated. That will fill 3 months, very
+easily.
 
--n<num>::
-	Show the message of the annotated tag when using the
-	`--list` mode.  A number <num> can be directly attached to
-	the `-n` option (e.g. `-n100`; not `-n 100` as separate
-	arguments) to specify how many lines of the message to show.
-	Without <num>, only the first line of the message is shown.
-	For an unannotated tag that points at a commit, the commit
-	message is used instead.
+> > > What do you think of these projects? Would it collide with Valery
+> > > Tolstov's Shell to Builtins proposal?
 
-... may be less confusing?
+I missed that proposal, and could only find submodule-related mails on the
+public-inbox server. Care to provide a pointer?
 
-> @@ -1496,7 +1517,6 @@ test_expect_success 'mixing incompatibles modes a=
-nd options is forbidden' '
->  	test_must_fail git tag -l -v &&
->  	test_must_fail git tag -l -d &&
->  	test_must_fail git tag -l -v -d &&
-> -	test_must_fail git tag -n 100 &&
+> > Curious why all people ask about colliding with Valerys proposal here?
+> > I do not think it would collide, as submodules and rebase are very
+> > different areas of the code base.
 
-Hmph, wouldn't we want to instead replace it with
+Indeed ;-)
 
-	... something to set expectation ... >expect &&
-	git tag -n 100 >actual &&
-	test_cmp expect actual &&
-
-here?
-
->  	test_must_fail git tag -n 100 -v &&
->  	test_must_fail git tag -l -m msg &&
->  	test_must_fail git tag -l -F some file &&
-
-Thanks.
+Ciao,
+Johannes
