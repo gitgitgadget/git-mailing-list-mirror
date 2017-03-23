@@ -2,95 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79B6820958
-	for <e@80x24.org>; Thu, 23 Mar 2017 18:24:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6029220958
+	for <e@80x24.org>; Thu, 23 Mar 2017 18:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935833AbdCWSYi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 14:24:38 -0400
-Received: from mail-pf0-f177.google.com ([209.85.192.177]:36813 "EHLO
-        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935747AbdCWSYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 14:24:37 -0400
-Received: by mail-pf0-f177.google.com with SMTP id o126so109256717pfb.3
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 11:24:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cO5xBYFW/LzwfTVVJflhmJVyyBh25BkBfUBQxcgs2l0=;
-        b=NxbwqeKGTfE9K77iDRxZ/Z+KV9AU4/zHR7c4yOhYyomGeM4EMIeb0joshMgVQ47DL2
-         uqBvqOTT105xhHw+4EESecr1gUredJ3o/ILinT8a6gg8E6B8YeSGNxQm5DIQbSgf1P/o
-         mNkeScsAJBp+uMpBVzBGeHbduvLmDl4S7BQuTcAQGDv6N4+Lpd7h66R6YKeNrgmEqyL0
-         8hSXPonJjQB1Bth2GmxJBPgVvlUUAnan1DSNiXc8AU5kW6DthKCDAFNuuwNfibe8oAgg
-         vilYfthbMDS+W7DhXRCD4U0uBF1Yc632HSzPNnp02tnocDuxaJnY9EXdWOk9tFOR29+A
-         /irA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cO5xBYFW/LzwfTVVJflhmJVyyBh25BkBfUBQxcgs2l0=;
-        b=cmgQUnO0F5bcLexwoP5rm37iRjl64h1veWSfRXAo3bR2T53E8he7LuTm1+VpFKjPWh
-         pM9kmy7t0EvFVozos1++X5bRkci/b+KzaHyJkFUE6ISJ0pc6WHK+ObKTbH4VdZYEFLR9
-         ll2pXBQkdvIk/Di+RMybPW9mdMehRW7IKdKLGqBmQp83rMZpJ5k096+75c3Donr3bD34
-         kJ7m5EKe+u/MDQul/2ak42Of2d83EBdmnDg8EBPfwtfn79Uloy0EPFt9+qdevYATHzsU
-         pP0fIZYjj1gyN4VJmfAM36XsYdiUvAdYk0sMVXxj/wjzcfmJzqh7ELQMyfbxF0EcSTAF
-         Lq3w==
-X-Gm-Message-State: AFeK/H2gkI5+/2M26paUshN0R5ftOTJzIo9xVzg6SJEekV2OhPSLma2XB6B3bTYtUYFExfYM
-X-Received: by 10.84.233.205 with SMTP id m13mr5509611pln.49.1490293466555;
-        Thu, 23 Mar 2017 11:24:26 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:5cf0:9414:795c:7600])
-        by smtp.gmail.com with ESMTPSA id h25sm11645363pfk.119.2017.03.23.11.24.25
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 11:24:25 -0700 (PDT)
-Date:   Thu, 23 Mar 2017 11:24:24 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] sequencer: fix missing newline
-Message-ID: <20170323182424.GB111250@google.com>
-References: <20170323170233.50499-1-bmwill@google.com>
- <alpine.DEB.2.20.1703231839570.3767@virtualbox>
- <20170323174716.GA111250@google.com>
- <20170323182221.i3noikxpmrn4ymi4@sigill.intra.peff.net>
+        id S932117AbdCWS3B (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 14:29:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56382 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751929AbdCWS3B (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 14:29:01 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7C8668BA32;
+        Thu, 23 Mar 2017 14:28:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=41Wj0tx6pH3d
+        QN1iOeBS4IXScyc=; b=XPkAP1lbZalLiCK2nKa2ibv26Xrxk5rS9RWqOtpkg4vv
+        zF6xWh81vKvJN6gkKt2jiojE6X6VJgzcaizU9MNdiOvlhHINMR/40NmVE9fxB+P1
+        YF9T1DuSzmkp2lm9/VGM3/Vx/2bAlePiXdzlY3Z6MMEloPtTC5qOWuXd/GjJjTQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=H7xakT
+        xGtPzBAvKWbta18d+UpXcfLZjrj8nbGyV71hEkrDDD4s0xHrJP8rRzSctas7E0yl
+        Y10dckgPuXdKUgayeDx2EgVEIPja//ZwiIdMU2NPuGQz/kZGoAz/TAPfUrydJ/DP
+        aysTY2ff4GyqaLd+V+U1VbpjcROfprphHrkTg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 722398BA31;
+        Thu, 23 Mar 2017 14:28:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD2068BA30;
+        Thu, 23 Mar 2017 14:28:53 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCHv2 00/14] completion: speed up refs completion
+References: <20170323152924.23944-1-szeder.dev@gmail.com>
+Date:   Thu, 23 Mar 2017 11:28:52 -0700
+In-Reply-To: <20170323152924.23944-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Thu, 23 Mar 2017 16:29:10 +0100")
+Message-ID: <xmqqshm3dezf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170323182221.i3noikxpmrn4ymi4@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 91B7485C-0FF6-11E7-931F-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/23, Jeff King wrote:
-> On Thu, Mar 23, 2017 at 10:47:16AM -0700, Brandon Williams wrote:
-> 
-> > On 03/23, Johannes Schindelin wrote:
-> > > Hi Brandon,
-> > > 
-> > > On Thu, 23 Mar 2017, Brandon Williams wrote:
-> > > 
-> > > > When using rebase --interactive where one of the lines is marked as
-> > > > 'edit' this is the resulting output:
-> > > > 
-> > > >     Stopped at ec3b9c4...  stuffYou can amend the commit now, with
-> > > 
-> > > Ugh, I should have caught this. The warning() call implicitly adds a
-> > > newline, the fprintf() doesn't.
-> > > 
-> > > Patch is obviously good.
-> > 
-> > All good.  If we're keeping score for finding each others bugs, I still
-> > think you're winning :)
-> 
-> It's my bug, actually. Brown paper bag, anyone?
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-TIL I should use 'blame' before actually blaming someone ;P
+> This series is the updated version of 'sg/completion-refs-speedup'.
+> It speeds up refs completion for large number of refs, partly by
+> giving up disambiguating ambiguous refs and partly by eliminating most
+> of the shell processing between 'git for-each-ref' and 'ls-remote' and
+> Bash's completion facility.  The rest is a bit of preparatory
+> reorganization, cleanup and bugfixes.
+>
+> Changes since v1:
+> ...
+> [1] - http://public-inbox.org/git/20170206181545.12869-1-szeder.dev@gma=
+il.com/
 
--- 
-Brandon Williams
+It seems Jacob Keller was the only person who was excited about
+these changes when v1 was posted?  It would be nice to see a bit
+more enthusiasm from other folks who are invested in the completion
+script, but you are the de-facto go-to person on the completion
+already, so ... ;-)
+
+Will replace.  Let's advance this to 'next' soonish (say, by early
+next week).
+
+Thanks.
+
+
