@@ -2,74 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16DDE20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 16:52:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9455B20958
+	for <e@80x24.org>; Thu, 23 Mar 2017 16:53:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756357AbdCWQwG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 12:52:06 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54691 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1756335AbdCWQwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 12:52:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 466A08A86D;
-        Thu, 23 Mar 2017 12:51:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Jlk64mRhcytMVGunBHRYj1QLbw4=; b=Y+ga17
-        lVrnVoAcYgKvAYMCTiLWiKz50WpPW16LoPR0EeItF8ug4AFIukGC+mopKguXFNv3
-        6KGgy0q/buuFZNGVg+34vPYH/Oqq3vJTEndi90eQ42rn/DNAuFrC2Q1UTH8v31gX
-        OHc/eJsz3JArOttmhuoJ1XElHbWldCaHijxd4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gERaZQR/PiJYv2H2zDKO181A8t8+sLVw
-        EYZwX46nbCtftWrVB2FGWjLX+1Tb4IYCUsc++buzBWJHTblFRU3l2LThg+sgFqYR
-        pIu3u97xY4Mo+6Sb16P3o1brG1aiJo/KClsRVmO7j6sfssp2oKYiaaMSxIE9Mp3D
-        Lp34iLyNGVw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F5D58A86C;
-        Thu, 23 Mar 2017 12:51:53 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A8EEE8A86B;
-        Thu, 23 Mar 2017 12:51:52 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v2 3/3] sequencer: allow the commit-msg hooks to run during a `reword`
-References: <cover.1490194846.git.johannes.schindelin@gmx.de>
-        <cover.1490285210.git.johannes.schindelin@gmx.de>
-        <315c237eb50572f8e109ea547a2010d9f81c3aff.1490285210.git.johannes.schindelin@gmx.de>
-Date:   Thu, 23 Mar 2017 09:51:51 -0700
-In-Reply-To: <315c237eb50572f8e109ea547a2010d9f81c3aff.1490285210.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Thu, 23 Mar 2017 17:07:17 +0100
-        (CET)")
-Message-ID: <xmqq60j0ey1k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1756386AbdCWQxK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 12:53:10 -0400
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:33727 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756376AbdCWQxH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 12:53:07 -0400
+Received: by mail-wr0-f177.google.com with SMTP id y90so33924279wrb.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 09:53:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=LvUF0l24Dn0j7zR3uoYUVtp4P3p/GJ0bEhTxrTKOHpY=;
+        b=JqgOkuiRWYcVAkMHmC2gJR1WzRpUdxJ40kh7zAcFX+eKjFqpsbEF1jIPrie0OhsReZ
+         bCQYoM1mY5jtHOqaIZNmgDXQIvHmMpkt/yzlIe0inhUVA56AZteK2avYDC40bbJTc+iZ
+         DLdWZGNw9CwakLX50ItAZkRTTmz0f7hZRLAWdic4WCkXpOPJwfoxNmC6MnEXDrR77neh
+         QYwPVzetohg9k4sRtu2/ddXAl37vLn1Nn7LXg4JZMXN55/WaCXS3Fbf/u+5I8eWof58V
+         1tUAXH3QEqCRuM13HEW3RXMaDMfMhFHKlBUhlITOqghellhyNVwcBnCX8CQuedJxoPB1
+         HG2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=LvUF0l24Dn0j7zR3uoYUVtp4P3p/GJ0bEhTxrTKOHpY=;
+        b=VP2vQPjKs3PVbJ3a9DSv4qmam9lJADwjT5Ax3Cc62Bb/MliChbqUz+H7gZl0jH3fVO
+         ts1E0Pq131NCOxs1zTkVrQoqCvfnCsPQTvVX6oXGJXGLfbJxkAaGLuv0Lrgfjhj9R1dL
+         dilbvx8TYVGggyuiG6dgwMw08XRVYiHZ3nNU+rfVvNWLzsvq4GdLOFMsqWBpxmNVUvHP
+         TIzatw03GjgDMrcsBHMxNn0+G1+89fqJNF82Elw5xXgCvkIc+QYXPhJIBG3kxCOJCRBg
+         S589Ym2z9pI33f589E0F88soRNX6dbSBhDD4m69SZBQZY5PjoLGsSr1wNQBT4QrL2kny
+         H5aQ==
+X-Gm-Message-State: AFeK/H3mx0RuTulNN4i8JyGOxnh9EX/fL1iJ78z2vsGFku13Qs5pcEubeLNWvBlkr9Ry2O0lfxLtAinvUFUYmg==
+X-Received: by 10.223.134.69 with SMTP id 5mr3755339wrw.22.1490287975414; Thu,
+ 23 Mar 2017 09:52:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 04007FE0-0FE9-11E7-9D2A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.28.91.2 with HTTP; Thu, 23 Mar 2017 09:52:34 -0700 (PDT)
+In-Reply-To: <xmqqfui4f0pp.fsf@gitster.mtv.corp.google.com>
+References: <20170321055203.26488-1-alexhenrie24@gmail.com>
+ <xmqqinn2sfdw.fsf@gitster.mtv.corp.google.com> <xmqqzigemfij.fsf@gitster.mtv.corp.google.com>
+ <CAMMLpeQZXzPtN+mmtRS33vbT6hFz8p0qqjFMhz9tUHk747=Z3Q@mail.gmail.com>
+ <xmqqmvcdmeuv.fsf@gitster.mtv.corp.google.com> <CAMMLpeR-zCpL5Gx=BoK8G9_wL2TBe-wD3VnsAShAuVVzS=Nirg@mail.gmail.com>
+ <xmqqfui4f0pp.fsf@gitster.mtv.corp.google.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Thu, 23 Mar 2017 10:52:34 -0600
+Message-ID: <CAMMLpeRtzYM3a639DcNbhqAmz3dNkRebvQps-gusEKx+eQqPgQ@mail.gmail.com>
+Subject: Re: [PATCH] log: if --decorate is not given, default to --decorate=auto
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+2017-03-23 9:54 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+>> 2017-03-22 10:54 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
+>>> Alex Henrie <alexhenrie24@gmail.com> writes:
+>>>> No problem. Do I need to submit a second version of the patch with a
+>>>> test for `git -p log`?
+>>>
+>>> You do want to protect this "without an option, we default to
+>>> 'auto'" feature from future breakage, no?
+>>
+>> Yes, but I need to know whether you want a v2 of this patch with all
+>> of the changes including the new test, or a second patch that depends
+>> on the first patch and only adds the new test.
+>
+> Sorry, I misunderstood the question.
+>
+> In general, we prefer to have tests that protects the updated
+> behaviour in the same patch that makes code changes that brings in
+> the new behaviour, i.e. a single v2 patch with new test would be
+> more appropriate in this case.
+>
+> When people work on a large bugfix, especially one that needs
+> multiple steps, we sometimes see a patch that adds new tests that
+> describe the desired behaviour as failing tests first, and then
+> subsequent patches to the code to update the behaviour flip
+> "test_expect_failure" to "test_expect_success" as they fix the
+> behaviour.  But for a small change like this one, that approach is
+> inappropriate.
+>
+> When a patch that was reviewed, deemed good enough and has been
+> already merged to the 'next' branch later turns out that it needs
+> further work (like "we do need some tests"), we do such necessary
+> updates as separate follow-up patches, simply because we promise
+> that 'next' won't be rewound and are not allowed to replace patches.
+> But this one is not yet in 'next', so we can freely take a
+> replacement patch.
+>
+> Hope this message makes it clear enough?
 
-> @@ -996,6 +998,8 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->  		if (res || command != TODO_REWORD)
->  			goto leave;
->  		flags |= EDIT_MSG | AMEND_MSG;
-> +		if (command == TODO_REWORD)
-> +			flags |= VERIFY_MSG;
+Yes, that makes sense. I assume that when you talk about 'next', you
+mean 'master'?
 
-Good.  This looks even cleaner than what we discussed during the
-review of the previous round.  After deciding not to return early,
-we set the default set of features in flags and then further add
-verify-msg in when needed.  Much easier to understand.
+Unfortunately, I think I found a bug. Even when using `git -p`, the
+function pager_in_use() always returns false if the output is not a
+TTY. So, `isatty(1) || pager_in_use()` and `color_stdout_is_tty ||
+(pager_in_use() && pager_use_color)` are redundant.
 
+If we want to use `git -p log` in a test, we'll have to change the
+behavior of pager_in_use(). Alternatively, we could use
+`GIT_PAGER_IN_USE=1 git log` instead.
+
+-Alex
