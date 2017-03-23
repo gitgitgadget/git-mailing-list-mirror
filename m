@@ -2,131 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1735620958
-	for <e@80x24.org>; Thu, 23 Mar 2017 19:26:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78DDB20958
+	for <e@80x24.org>; Thu, 23 Mar 2017 19:30:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751554AbdCWT0U (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 15:26:20 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:38834 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751105AbdCWT0T (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 15:26:19 -0400
-Received: by mail-wm0-f41.google.com with SMTP id t189so4798274wmt.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 12:26:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=B8Ai4LrQX/4Hj0kODTmUFYJdooloxWXgb12Wxyv+HQM=;
-        b=OahsafZr+zvO9zr/WnmaPYMiIEJMzWrc3S56tqAAVe8rMLpYLMKw53AfEuDHa+UlmB
-         Zt/twmkmhkNN2u8ElsKzEX5i7uTfXf6hjS5BEI7j2qZkS0awiIa+swFuUvoVMXyZuTVQ
-         6neE12hD07NVwNWbJ6sAEqvWOnT4A547wzgyoH1nKrx5NL1bVqu+zpGmmc4ETCdFiyg5
-         1R2x1Cg9HGUjBfbw5SlvViCjBTzfjcH2qCU9/QmVPuVLKjYKYkQEVHMwQ+R6LS8bFTqp
-         UWkULjIgO36hoCCVH6NqTby7o42xUOkDEBFnQGNoM8RNINH8dbT1K6/ecEo+GTMjxq08
-         gjjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=B8Ai4LrQX/4Hj0kODTmUFYJdooloxWXgb12Wxyv+HQM=;
-        b=heIFUcefci/Cdv9+oWPHC9Z+9OAPXCEBMA+yKcDcn88RsXZTK6loP/uBTTQSJXMerE
-         BPxgh0mB7UpKcnJLFYmItvrbA/Mt1q6RwdUYEyMCHkFVZ2ZdZ46XVULUUyS7wJdfbZXf
-         uqsJVLMSzys7xZ5isPhvAHnPMmmsodv/b+C/NnHEtZJZxldigB9L34dtU5HKOxgPpeGN
-         ojdFAfzOvXzPQKCVhXzmz98L7usNE8PHMzt+YuJOWAyyXBhXXfwfL0Z+eheZAADlLrhh
-         CvrwVeCJNQGpoaQKfi6szfjUzYUmt37J4q+kDpRIqGfYUQwBRWDM8oENVbhyNGEflO8L
-         amyA==
-X-Gm-Message-State: AFeK/H33atrUmUDVggE42cvtNA4jdKX1VRTDZXMjzv/FXcoGOdyKzWvvrME7goRF1r7VOw==
-X-Received: by 10.28.74.28 with SMTP id x28mr15009070wma.131.1490297177307;
-        Thu, 23 Mar 2017 12:26:17 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB47D6.dip0.t-ipconnect.de. [93.219.71.214])
-        by smtp.gmail.com with ESMTPSA id 32sm7037360wrr.64.2017.03.23.12.26.16
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 12:26:16 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170323191721.7r5vrixtnx3cngdc@sigill.intra.peff.net>
-Date:   Thu, 23 Mar 2017 20:26:15 +0100
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <FE4A3F88-0B86-4069-B141-2DFB9C4E269E@gmail.com>
-References: <20170322065612.18797-1-larsxschneider@gmail.com> <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703231716320.3767@virtualbox> <20170323180134.geoyvq7qbm5vujo6@sigill.intra.peff.net> <xmqqbmsrdcz4.fsf@gitster.mtv.corp.google.com> <20170323191721.7r5vrixtnx3cngdc@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        id S1751449AbdCWTat (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 15:30:49 -0400
+Received: from mout.web.de ([212.227.15.14]:59781 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750952AbdCWTas (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 15:30:48 -0400
+Received: from [192.168.178.36] ([79.213.126.222]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lpw63-1cDQBB0wJL-00fjg4; Thu, 23
+ Mar 2017 20:30:42 +0100
+Subject: Re: Question: libxdiff: text-patches: internal format
+To:     matthew@giassa.net
+References: <20170323180026.7qdfdzqgyczt2s3f@darkstar>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     git@vger.kernel.org
+Message-ID: <e19893df-0f7c-cfa7-cca4-014630ccf908@web.de>
+Date:   Thu, 23 Mar 2017 20:30:41 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <20170323180026.7qdfdzqgyczt2s3f@darkstar>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Rz6el00mPIe/wyJbYW61vxY7hNdHKvDrRiygsvcN4SvWHua306r
+ FYUhq9xXHZVyAHTcQxvt3ZsJ+FXZTKKsjuXMAxCFm+xqkTNWM5kk2IBVGctoftNeytQ5NvL
+ US6O2PRpw5wyipqpVd2I6HAiF+mzXAAzhPq13kKhegJ0BThDgZlA5nhDPtVT3p4F+FqkrR8
+ gn2V3mV1ugbeeJatX0EXw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VUyy8dFY2KQ=:e50arflB4RTospoQ02xg5J
+ bNG7NKIDK0v0pu3hqHuJFFUo9RRvL1NkmFKrTSo0w48V1WpEjSUrJIipts31AnCdFtvg0M2hl
+ AUPeJdR4JLHWTfvu1G1WHO2pM88OV/2NLJ1TFzMx/D3zM7zupXTSfLOb/z25sUIc2cgj+FXJX
+ rgvbj6RkS030DEpG/CgxMIby+caQxBc3KfixiH21PjWCoVOKrp+K8yaaCZQ4ZavhyI+je2w52
+ WycKEAsrAhM3w3t5HTJn48lTxJ71mFkhJWlrWe2rynvZFmkda3den6SkuBxE2c7xWaBiQ8OTX
+ nxJhkAvWshQM8AaxSLaJHzeX0r2CbNb1Kph+ycGk3vfHkz2CeXZLmzlDzx543KWIq/0W2KN2v
+ btYctGJ+XdfiLP9W6eNRPlEF98fgxQVwwVsZRxKGmt7uufJeHHDNXulAljnc47w5eKutw8rkv
+ HCFQ7MD5lxelNYvmfMXZ2YNqag9tDsEt2whsLbAKAwouX/cKT3RAmZp0XCbPr0GN6X96iQVLj
+ JoCMSJEQIdisImbvPMtv1vyynOFDf4FAii6BHbmTo+j1HG9cNh90GMeqxS+JgiL1TZoaQvLF3
+ /DKtdFB37/bva4vAsvuNP/E9aOs5fs/1OZRglj28/k1O4V8+U4kHejvP1exUzf6TuWIp+iB37
+ G9bqDV4Lvq+TfUh1gODN9mGxZTkPHa8dh5vdbkHta524GHSsfTfD/4bdu31LdcM7A2qTJ2zwD
+ dAWP9I2rfu/yLjJJndyVc+9bCng83hYlg/+fPhoFgnDRvM27PDLcpEtsPoaYKrG8JwYUjAGGb
+ qhFkTlj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 23.03.2017 um 19:00 schrieb matthew@giassa.net:
+> Hi there,
+>
+> Following up on an earlier question of mine from yesterday, is there any
+> formal documentation (save for source diving) on the internal format
+> used by libxdiff/xdiff when it generates a patch by comparing two
+> plaintext files?
+>
+> I'd like to generate a human-readable "pretty" diff from the output
+> generated by libxdiff, and while the suggestion by Stefan yesterday is a
+> good idea (ie: go through diff.c), I'm trying to see if there's a
+> quicker way to pull this off. Also, I can't determine if lifting that
+> code from git would invoke LGPL licensing constraints (no problem), or
+> GPL licensing constraints (incompatible with my application). If the
+> format is easy enough to follow, I might just write my own parser,
+> provided it's a trivial task.
 
-> On 23 Mar 2017, at 20:17, Jeff King <peff@peff.net> wrote:
->=20
-> On Thu, Mar 23, 2017 at 12:12:15PM -0700, Junio C Hamano wrote:
->=20
->> Jeff King <peff@peff.net> writes:
->>=20
->>> For instance, if it's in the environment, can I push up a branch =
-that
->>> does "set | grep GFW_CI_TOKEN", open a PR, and see it? I don't know =
-the
->>> answer.
->>=20
->> I think the documentation said
->>=20
->>    Variables defined in repository settings are the same for all
->>    builds, and when you restart an old build, it uses the latest
->>    values. These variables are not automatically available to
->>    forks.
->>=20
->> so we should be safe as long as we do not build against PRs.
->=20
-> I think we do build against PRs now. E.g.:
->=20
->  https://travis-ci.org/git/git/builds/213896051
->=20
-> But it looks like we can turn that off.
+Some of your questions may be answered on the homepage of LibXDiff, 
+http://www.xmailserver.org/xdiff-lib.html.  That's the original version 
+that was imported into Git long ago.  It lacks some Git-specific 
+features, but the documentation and links on the web page may still help 
+you.  The original LibXDiff is licensed under the LGPL and perhaps you 
+can use it directly already.
 
-When we add a secret variable, then TravisCI will not build Pull =
-Requests
-for git/git anymore:
-
-"[...] we do not provide these values to untrusted builds,=20
-triggered by pull requests from another repository."
-
-See: =
-https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-=
-in-Repository-Settings
-
-However, I don't think that is a big deal because git/git doesn't
-support Pull Requests anyways. Plus, if a contributor is interested
-in TravisCI results, then the contributor can setup TravisCI for
-their own fork easily.
-
-
->> On the other hand, perhaps a contributor may want to build and test
->> his own PR that may affect Windows platform, and such a contributor
->> may be helped if the main repository sets things up to build against
->> PRs.
->>=20
->> I personally think it is a separate issue and we shouldn't set it up
->> to build against PRs.  If Windows CI wants to help these
->> contributors, it can give out the token to them, without relying on
->> the travis setup for the main repository.
->=20
-> Hrm, it does mean that people have no way to test on Windows until the
-> branch hits pu. Which is not ideal.
-
-I agree it's not ideal. But I think it is an improvement to check
-pu/next/master/maint continuously :-)
-
-
-Cheers,
-Lars=
+René
