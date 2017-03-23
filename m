@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58A6920958
-	for <e@80x24.org>; Thu, 23 Mar 2017 20:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6160D20958
+	for <e@80x24.org>; Thu, 23 Mar 2017 20:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756064AbdCWUlT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 16:41:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50590 "EHLO cloud.peff.net"
+        id S935385AbdCWUm5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 16:42:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50593 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752316AbdCWUlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 16:41:18 -0400
-Received: (qmail 18771 invoked by uid 109); 23 Mar 2017 20:41:16 -0000
+        id S932209AbdCWUm5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 16:42:57 -0400
+Received: (qmail 18907 invoked by uid 109); 23 Mar 2017 20:42:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 20:41:16 +0000
-Received: (qmail 11090 invoked by uid 111); 23 Mar 2017 20:41:30 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 20:42:56 +0000
+Received: (qmail 11111 invoked by uid 111); 23 Mar 2017 20:43:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 16:41:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 16:41:14 -0400
-Date:   Thu, 23 Mar 2017 16:41:14 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 16:43:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 16:42:54 -0400
+Date:   Thu, 23 Mar 2017 16:42:54 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
 Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
-Message-ID: <20170323204114.ui7jqrd3guwc3sgl@sigill.intra.peff.net>
+Message-ID: <20170323204253.etxrovhbxfmfve6s@sigill.intra.peff.net>
 References: <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
  <alpine.DEB.2.20.1703231716320.3767@virtualbox>
  <20170323180134.geoyvq7qbm5vujo6@sigill.intra.peff.net>
@@ -39,38 +39,35 @@ References: <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
  <20170323193823.gxodwqv4eshgtqbc@sigill.intra.peff.net>
  <3CC8E237-86EA-4F35-A03E-15BED5869403@gmail.com>
  <20170323202002.lfpuglqawz4ooruw@sigill.intra.peff.net>
- <xmqq7f3fbury.fsf@gitster.mtv.corp.google.com>
+ <CEE52E60-F31F-4BA9-BA79-7526EE6C5397@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq7f3fbury.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CEE52E60-F31F-4BA9-BA79-7526EE6C5397@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 23, 2017 at 01:30:41PM -0700, Junio C Hamano wrote:
+On Thu, Mar 23, 2017 at 09:39:14PM +0100, Lars Schneider wrote:
 
-> >> We can blacklist these branches with a regex in the travis.yml:
-> >> https://docs.travis-ci.com/user/customizing-the-build#Building-Specific-Branches
-> >
-> > I had a feeling it might be something like that. So we would all need to
-> > agree on the convention for WIP branch names. If other people like the
-> > idea, I'm happy to make a patch, but I don't want to impose my own weird
-> > conventions on everyone else.
+> > Could be. Looking at:
+> > 
+> >  https://travis-ci.org/peff/git/branches
+> > 
+> > It seems to timeout on over half the branches (in fact, there are only a
+> > few that passed all of the tests). My pattern is particularly spiky from
+> > Travis's perspective, because once a day I rebase everything on top of
+> > master and push them the whole thing in a bunch. So they 75 branches,
+> > all at once. That seems like it would be ripe for throttling (though I
+> > would much rather they just queue the builds and do them one at a time).
 > 
-> I can go with any convention, but I'd be more pleased if you made
-> sure that "do not build this with CI" and "this is WIP" are kept as
-> two separate concepts, as I can see having some WIP that I do want
-> to get tested.
+> Could you try to set this to 7 or less in your TravisCI?
+> https://docs.travis-ci.com/user/customizing-the-build#Limiting-Concurrent-Builds
 > 
-> Perhaps a substring "/noci-" anywhere in the branch name, or
-> something silly like that?
+> I am curious if this improves the situation.
 
-Hrm, most of the point for me was _not_ having to define the two
-concepts separately. Let me try it for a while with "[ci skip]" in the
-tip commit subject, and see how painful I find that. My goal is
-eventually to turn on notifications, so I'd quickly be reminded if I
-forgot such a marker.
+Sure, that's easy enough to try. I'll let it go for a few days with that
+and see if it improves.
 
 -Peff
