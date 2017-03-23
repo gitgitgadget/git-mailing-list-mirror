@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D9D020958
-	for <e@80x24.org>; Thu, 23 Mar 2017 13:06:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B29320958
+	for <e@80x24.org>; Thu, 23 Mar 2017 13:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754259AbdCWNGV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 09:06:21 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:32998 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932449AbdCWNGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 09:06:18 -0400
-Received: by mail-wm0-f67.google.com with SMTP id n11so16473318wma.0
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 06:06:17 -0700 (PDT)
+        id S934494AbdCWNGb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 09:06:31 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35266 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753670AbdCWNG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 09:06:29 -0400
+Received: by mail-wm0-f65.google.com with SMTP id z133so16562419wmb.2
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 06:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kGFgc4YydJ3Dqht2Jpej3uqMckTis9ukCqhdU82qLtA=;
-        b=Ai5IU94dsPxFW6BtcEomOfx7qb/E8xfSvieEvuYtYQ48foharufng9XGnQUI2sbOhh
-         JK1KuZMmfJnSUjyKHNPnOaf3ssZN77j5q3BtY5ZV6ICDDD8jawZyLt0LoBjHZRhQL9g6
-         rASnkw/kNp7U9aaQRGXeggr/YSmAT36SJENSsKZ9XZxinS1pd0uVTkY2oGUvpFIEPfHz
-         LjVQlLoeFqgWtAkIZRgWIgRkLqseiswskqJMk2I7cvlpQn4AeJsNPS1zMfc0uoSfg1pQ
-         Ob5GXtCLpIwnUH7ByOymx1JtC8z+yo+UuWJw7r1gNlyPMyGl/LK8e3uBgL2vVYrMJA9r
-         IhsA==
+        bh=aq8y1v8W9rTeUtHVseEccwh8kGLm7OnM4IDMGOw2xLA=;
+        b=RQlyee2ADIjmMvr+O024+E6qJ2Rt37ozvOROQ6OLV0y7i9fjmZYz2CioZCpIUhIC0X
+         q/L2BuKbaFncpvxGqQKga+nyYt+lVAuFC6cSw087/pA0zL0ilNOawy4LN1dVgTEC8SRR
+         mG1mLKeNUFnd6WI4HkEnsOl5eHuTYgIOFUmwYO7LjTEXpGJPd3y/GAb3XYm4fXZRXuSR
+         PJczMdOOxyEtuBL8zjCcrtVQq0aOX8XKve4U+Rfp3/xWuwlTwXmEVh4obrzRYdrgynY/
+         hPAbPU8TJnIcRWZUbeov0s8dO/CtG7K6pOzJ4xqw8hB8nRdho2Cs28id1A2gTOeCHNAu
+         rQjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kGFgc4YydJ3Dqht2Jpej3uqMckTis9ukCqhdU82qLtA=;
-        b=Rt+JEyf8hmf4XnEYQSvaZFiXp18WNqrNRF3xh4Knej4W1KFS82Eqo1/GiAeKl4GJxf
-         FP4lctGvaqTYG0DLmsG1EVvguPDfuH7rtfJMEutrlxDfVUNvje5YCrmZzU/bm1TITwzs
-         q5YI2R9ZJA8CDmAX799wK6h/C1p0F1llbwcf5j/bj7LXcOF0e3hKQcCDBjstSnAG0NcS
-         zEU4Okid3fd1zeU/HD11qDM24TVe7Wq38yRwDSXUKZmIeoxQTryVSjkMgDiT0MEcn4u6
-         j5fH+D0DCxHBEyRzUQ4l5mU5Rg0RB8wEgE/kXd/AhZug658kZMR0UwpPScC9cB+uHn2P
-         Jpdw==
-X-Gm-Message-State: AFeK/H237vhrNXQf+J8LfHK69uwYnH3zB+KNqP8Vl54buoMisksaMWGI2k+36dxnhMnVBg==
-X-Received: by 10.28.29.88 with SMTP id d85mr2746304wmd.56.1490274376168;
-        Thu, 23 Mar 2017 06:06:16 -0700 (PDT)
+        bh=aq8y1v8W9rTeUtHVseEccwh8kGLm7OnM4IDMGOw2xLA=;
+        b=ZxX1jnvoWvYuifglivPGQr3bSQo2YE8FTIANUE3Wiijj6N2QW3EaUNx7zz6hHr0x2t
+         SPf7thGgo1/mssx6oqKuDbXoG146mB8bw8a1FZEJ5PO7KMXL8i5bwbtoAe6NJzWpdNX0
+         u3XdM4srQ/YMBeSBzOZkSPvqbjtOv6be5tD8SMh4UXttj5QILWfDBi7F1onV19NImaew
+         8FYEFUsefxoXFCUs1CFkLxXIk8aOaXtMbrhZoxrmS8ZzxchpidXzv50CCgm6BtXo6oGR
+         5R/Fj7YMucywvvQzt0FS3CsOUXfSbdXPqPT6emCb8dqs2u0b02YUIIUEjDEeon6RZoFP
+         SB7Q==
+X-Gm-Message-State: AFeK/H3y8qWJsW/fEv3WRjcEUsISE2QgxLGh7S1N9P3nlCends6PK5DXZ9MrAuMeAPQm4Q==
+X-Received: by 10.28.203.197 with SMTP id b188mr3069533wmg.110.1490274387217;
+        Thu, 23 Mar 2017 06:06:27 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id h3sm5810071wrb.6.2017.03.23.06.06.14
+        by smtp.gmail.com with ESMTPSA id h3sm5810071wrb.6.2017.03.23.06.06.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Mar 2017 06:06:15 -0700 (PDT)
+        Thu, 23 Mar 2017 06:06:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 04/16] ref-filter: make combining --merged & --no-merged an error
-Date:   Thu, 23 Mar 2017 13:05:17 +0000
-Message-Id: <20170323130529.11361-5-avarab@gmail.com>
+Subject: [PATCH v3 05/16] ref-filter: add test for --contains on a non-commit
+Date:   Thu, 23 Mar 2017 13:05:18 +0000
+Message-Id: <20170323130529.11361-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170323130529.11361-1-avarab@gmail.com>
 References: <20170323130529.11361-1-avarab@gmail.com>
@@ -73,152 +73,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the behavior of specifying --merged & --no-merged to be an
-error, instead of silently picking the option that was provided last.
+Change the tag test suite to test for --contains on a tree & blob. It
+only accepts commits and will spew out "<object> is a tree, not a
+commit".
 
-Subsequent changes of mine add a --no-contains option in addition to
-the existing --contains. Providing both of those isn't an error, and
-has actual meaning.
-
-Making its cousins have different behavior in this regard would be
-confusing to the user, especially since we'd be silently disregarding
-some of their command-line input.
+It's sufficient to test this just for the "tag" and "branch" commands,
+because it covers all the machinery shared between "branch" and
+"for-each-ref".
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-branch.txt       |  6 ++++--
- Documentation/git-for-each-ref.txt |  6 ++++--
- Documentation/git-tag.txt          |  4 ++--
- ref-filter.c                       | 11 ++++++++++-
- t/t3200-branch.sh                  |  4 ++++
- t/t6302-for-each-ref-filter.sh     |  4 ++++
- t/t7004-tag.sh                     |  4 ++++
- 7 files changed, 32 insertions(+), 7 deletions(-)
+ t/t3201-branch-contains.sh | 9 +++++++++
+ t/t7004-tag.sh             | 4 +++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 092f1bcf9f..e465298571 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -215,11 +215,13 @@ start-point is either a local or remote-tracking branch.
+diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
+index 7f3ec47241..daa3ae82b7 100755
+--- a/t/t3201-branch-contains.sh
++++ b/t/t3201-branch-contains.sh
+@@ -130,6 +130,15 @@ test_expect_success 'implicit --list conflicts with modification options' '
  
- --merged [<commit>]::
- 	Only list branches whose tips are reachable from the
--	specified commit (HEAD if not specified). Implies `--list`.
-+	specified commit (HEAD if not specified). Implies `--list`,
-+	incompatible with `--no-merged`.
- 
- --no-merged [<commit>]::
- 	Only list branches whose tips are not reachable from the
--	specified commit (HEAD if not specified). Implies `--list`.
-+	specified commit (HEAD if not specified). Implies `--list`,
-+	incompatible with `--merged`.
- 
- <branchname>::
- 	The name of the branch to create or delete.
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 111e1be6f5..4d55893712 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -69,11 +69,13 @@ OPTIONS
- 
- --merged [<object>]::
- 	Only list refs whose tips are reachable from the
--	specified commit (HEAD if not specified).
-+	specified commit (HEAD if not specified),
-+	incompatible with `--no-merged`.
- 
- --no-merged [<object>]::
- 	Only list refs whose tips are not reachable from the
--	specified commit (HEAD if not specified).
-+	specified commit (HEAD if not specified),
-+	incompatible with `--merged`.
- 
- --contains [<object>]::
- 	Only list refs which contain the specified commit (HEAD if not
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 3abf912782..448fdf3743 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -126,11 +126,11 @@ This option is only applicable when listing tags without annotation lines.
- 
- --merged [<commit>]::
- 	Only list tags whose commits are reachable from the specified
--	commit (`HEAD` if not specified).
-+	commit (`HEAD` if not specified), incompatible with `--no-merged`.
- 
- --no-merged [<commit>]::
- 	Only list tags whose commits are not reachable from the specified
--	commit (`HEAD` if not specified).
-+	commit (`HEAD` if not specified), incompatible with `--merged`.
- 
- --points-at <object>::
- 	Only list tags of the given object.
-diff --git a/ref-filter.c b/ref-filter.c
-index 9c82b5b9d6..d7efae7b53 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2084,8 +2084,17 @@ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
- {
- 	struct ref_filter *rf = opt->value;
- 	unsigned char sha1[20];
-+	int no_merged = starts_with(opt->long_name, "no");
- 
--	rf->merge = starts_with(opt->long_name, "no")
-+	if (rf->merge) {
-+		if (no_merged) {
-+			return opterror(opt, "is incompatible with --merged", 0);
-+		} else {
-+			return opterror(opt, "is incompatible with --no-merged", 0);
-+		}
-+	}
-+
-+	rf->merge = no_merged
- 		? REF_FILTER_MERGED_OMIT
- 		: REF_FILTER_MERGED_INCLUDE;
- 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 9f353c0efc..fe62e7c775 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -978,6 +978,10 @@ test_expect_success '--merged catches invalid object names' '
- 	test_must_fail git branch --merged 0000000000000000000000000000000000000000
  '
  
-+test_expect_success '--merged is incompatible with --no-merged' '
-+	test_must_fail git branch --merged HEAD --no-merged HEAD
++test_expect_success 'Assert that --contains only works on commits, not trees & blobs' '
++	test_must_fail git branch --contains master^{tree} &&
++	blob=$(git hash-object -w --stdin <<-\EOF
++	Some blob
++	EOF
++	) &&
++	test_must_fail git branch --contains $blob
 +'
 +
- test_expect_success 'tracking with unexpected .fetch refspec' '
- 	rm -rf a b c d &&
- 	git init a &&
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index a09a1a46ef..d36d5dc124 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -421,4 +421,8 @@ test_expect_success 'check %(if:notequals=<string>)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '--merged is incompatible with --no-merged' '
-+	test_must_fail git for-each-ref --merged HEAD --no-merged HEAD
-+'
-+
- test_done
+ # We want to set up a case where the walk for the tracking info
+ # of one branch crosses the tip of another branch (and make sure
+ # that the latter walk does not mess up our flag to see if it was
 diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index b4698ab5f5..45790664c1 100755
+index 45790664c1..3439913488 100755
 --- a/t/t7004-tag.sh
 +++ b/t/t7004-tag.sh
-@@ -1748,6 +1748,10 @@ test_expect_success '--merged cannot be used in non-list mode' '
- 	test_must_fail git tag --merged=mergetest-2 foo
+@@ -1461,7 +1461,9 @@ test_expect_success 'mixing incompatibles modes and options is forbidden' '
+ 	test_must_fail git tag -n 100 &&
+ 	test_must_fail git tag -l -m msg &&
+ 	test_must_fail git tag -l -F some file &&
+-	test_must_fail git tag -v -s
++	test_must_fail git tag -v -s &&
++	test_must_fail git tag --contains tag-tree &&
++	test_must_fail git tag --contains tag-blob
  '
  
-+test_expect_success '--merged is incompatible with --no-merged' '
-+	test_must_fail git tag --merged HEAD --no-merged HEAD
-+'
-+
- test_expect_success '--merged shows merged tags' '
- 	cat >expect <<-\EOF &&
- 	mergetest-1
+ # check points-at
 -- 
 2.11.0
 
