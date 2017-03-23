@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6139B20958
-	for <e@80x24.org>; Thu, 23 Mar 2017 13:07:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9BAA20958
+	for <e@80x24.org>; Thu, 23 Mar 2017 13:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755470AbdCWNHI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 09:07:08 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:33800 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754013AbdCWNHD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 09:07:03 -0400
-Received: by mail-wr0-f193.google.com with SMTP id y90so7323265wrb.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 06:07:02 -0700 (PDT)
+        id S932783AbdCWNHM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 09:07:12 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:32782 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752034AbdCWNHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 09:07:06 -0400
+Received: by mail-wr0-f196.google.com with SMTP id 20so3084996wrx.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 06:07:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=55ZHZJOaPv8yKwr6MnU1F0BP+6rdPfT8TRed4gmOdEk=;
-        b=pmyTU6Ov//75xAXDSif/7rJlizxom5HoUC16gGm6Pz4rQJRwhDDbJu0CPtNDA84h9E
-         DR49YNkmTSm4UzPPBkj1mUpfsUY+0E5hHQTR1lb/I7OELeVb1woyamiyRnhre4Gd/F0G
-         nl2H1X1qX3ulQwcZjj1ZR+hBy3MLfFp2P1BwrE+zempXpmdeU+alKyH/OUgD8VOVZKCZ
-         gIhMTSXQoz6D7B2jIN444lehX3WjZYvNE4pX6ITuKPa6ENKt+yEP58RKggsUg7qmW59l
-         Dixo87SZIEmn8G37qm0RJb3bcvEZJ3EzeZ56Q+KYjbjgp7l4fmN67Jbus/Jl77iCJLCw
-         2gyQ==
+        bh=NRzauk5W0c4i3AtDmB1tB3FNvj5mK7aRwx6rTnT6lcM=;
+        b=bAg+OKBUcdBsl9VOtt9c1VQIoTz+C4NoBO+CzWtc3FtxQniTQBhQOVKbM4DH9JLfeg
+         HE53IuVFLqB6nqOxcFPCtwpR4s85+vd1ve9Az5Si56FFyUdRjYmC/IlBHhtSsVyhnV4k
+         KjlkK96DEl0mrAZpZkezqKOWRzqfFa/qaW3yvN5kP8+mZxStqIuN2wRh32iFMk4+M3y0
+         AxTB8abYt2i9/x0OFmXsYMZNJ7PoZisR74kxERWni25X6qm+QjuxcaGQZ38mW3muHBdt
+         Pe7b8xhRwdzmo0Lch6B97XenPqJkyiWFdiK8amsJKB2jdZ7k1qyvmR2N/n5E7CqQwRDO
+         OM3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=55ZHZJOaPv8yKwr6MnU1F0BP+6rdPfT8TRed4gmOdEk=;
-        b=IueDCzWHk+vehQcGJXTBJ8fEmvhychqRIqHNmEQjfnwqUVcj3UOB2JsdKH5HOJePi9
-         kYffzxFKzJN1AQ6K32xQSBS6zn6vHlMkgnXtnBpYxEXUKOdP1nArrZgUcq5DzNnOAVxe
-         7I3pRv2mEM4oFTffV0ci5AtZIQYRPJb5N17l5VW4GpXqG/cWHnk9j3oDfStSAXK1Fr8U
-         YafoSasLnVQUFqRBNcbZ+rEYdizs3iaNtJ4w/MtQrSEnr5m0qo0edn/SU9ERalrMXnhE
-         YZYjwVty332XzYqljKAeoB2+7nh1AqjTlxt/h3cqFSjNGjoN5dcssHHqAKMHXm2vXnEa
-         BxUw==
-X-Gm-Message-State: AFeK/H0xStlDEaTfBfM23m6gGxzI3iHVsehxA9NFucqA6jjwadbC4vC8wb6qvDQkrBsS2w==
-X-Received: by 10.223.154.199 with SMTP id a65mr1341245wrc.78.1490274421929;
-        Thu, 23 Mar 2017 06:07:01 -0700 (PDT)
+        bh=NRzauk5W0c4i3AtDmB1tB3FNvj5mK7aRwx6rTnT6lcM=;
+        b=FsGIptk6mrTA81lpQiRcrb78HrzvTUHwy0Cu85vG6hW5+tsu3hlXd0LwJPWALJZbu5
+         /LDTenDthAgit/WuW1/PkJT3uXUOmM7s3aMb0OdyhnxMDPa3suwAkIOtgAM0YqQYBdiB
+         w0eMt5MkhXV+It25jmWnufzGEaz82AvbMYcU+Dgjv6VmCHjq4lUK2M//Xc2nKb4gmTii
+         8ia9Pv1LQzkYsxsh0C1EEDEHpyGzO8kyx0oMLP9PUmv/8B7ooUB8LQsv/t71VRSpxocW
+         ngz14nz9cjWmGXoFgsxquIRgqae83p4lBGQZQmhjJxDmAZsmcUAIH2L762s65IBaKDa9
+         cIYg==
+X-Gm-Message-State: AFeK/H1MLtpa6lrWVqxi8kmDSMuUWk8L233iAQLg39mlOpJwDY2xTKQ7+f/UtTaCJ1wYOg==
+X-Received: by 10.223.161.78 with SMTP id r14mr2575030wrr.101.1490274405479;
+        Thu, 23 Mar 2017 06:06:45 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id h3sm5810071wrb.6.2017.03.23.06.07.00
+        by smtp.gmail.com with ESMTPSA id h3sm5810071wrb.6.2017.03.23.06.06.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Mar 2017 06:07:00 -0700 (PDT)
+        Thu, 23 Mar 2017 06:06:44 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 15/16] ref-filter: reflow recently changed branch/tag/for-each-ref docs
-Date:   Thu, 23 Mar 2017 13:05:28 +0000
-Message-Id: <20170323130529.11361-16-avarab@gmail.com>
+Subject: [PATCH v3 10/16] parse-options: add OPT_NONEG to the "contains" option
+Date:   Thu, 23 Mar 2017 13:05:23 +0000
+Message-Id: <20170323130529.11361-11-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170323130529.11361-1-avarab@gmail.com>
 References: <20170323130529.11361-1-avarab@gmail.com>
@@ -73,69 +73,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reflow the recently changed branch/tag-for-each-ref
-documentation. This change shows no changes under --word-diff, except
-the innocuous change of moving git-tag.txt's "[--sort=<key>]" around
-slightly.
+Add the OPT_NONEG flag to the "contains" option and its hidden synonym
+"with". Since this was added in commit 694a577519 ("git-branch
+--contains=commit", 2007-11-07) giving --no-{contains,with} hasn't
+been an error, but has emitted the help output since
+filter.with_commit wouldn't get set.
+
+Now git will emit "error: unknown option `no-{contains,with}'" at the
+top of the help output.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-branch.txt | 15 ++++++++-------
- Documentation/git-tag.txt    |  7 ++++---
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ parse-options.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index e4b5d5c3e1..5e175ec339 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -10,9 +10,9 @@ SYNOPSIS
- [verse]
- 'git branch' [--color[=<when>] | --no-color] [-r | -a]
- 	[--list] [-v [--abbrev=<length> | --no-abbrev]]
--	[--column[=<options>] | --no-column]
-+	[--column[=<options>] | --no-column] [--sort=<key>]
- 	[(--merged | --no-merged) [<commit>]]
--	[--contains [<commit]] [--no-contains [<commit>]] [--sort=<key>]
-+	[--contains [<commit]] [--no-contains [<commit>]]
- 	[--points-at <object>] [--format=<format>] [<pattern>...]
- 'git branch' [--set-upstream | --track | --no-track] [-l] [-f] <branchname> [<start-point>]
- 'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
-@@ -36,11 +36,12 @@ as branch creation.
+diff --git a/parse-options.h b/parse-options.h
+index dcd8a0926c..9f48f554ba 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -258,7 +258,7 @@ extern int parse_opt_passthru_argv(const struct option *, const char *, int);
+ 	  PARSE_OPT_LASTARG_DEFAULT | flag, \
+ 	  parse_opt_commits, (intptr_t) "HEAD" \
+ 	}
+-#define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, 0)
+-#define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("with", v, h, PARSE_OPT_HIDDEN)
++#define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, PARSE_OPT_NONEG)
++#define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("with", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
  
- With `--contains`, shows only the branches that contain the named commit
- (in other words, the branches whose tip commits are descendants of the
--named commit), `--no-contains` inverts it. With `--merged`, only branches merged into the named
--commit (i.e. the branches whose tip commits are reachable from the named
--commit) will be listed.  With `--no-merged` only branches not merged into
--the named commit will be listed.  If the <commit> argument is missing it
--defaults to `HEAD` (i.e. the tip of the current branch).
-+named commit), `--no-contains` inverts it. With `--merged`, only branches
-+merged into the named commit (i.e. the branches whose tip commits are
-+reachable from the named commit) will be listed.  With `--no-merged` only
-+branches not merged into the named commit will be listed.  If the <commit>
-+argument is missing it defaults to `HEAD` (i.e. the tip of the current
-+branch).
- 
- The command's second form creates a new branch head named <branchname>
- which points to the current `HEAD`, or <start-point> if given.
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 028a8ce4a9..3b018f40c8 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -12,9 +12,10 @@ SYNOPSIS
- 'git tag' [-a | -s | -u <keyid>] [-f] [-m <msg> | -F <file>]
- 	<tagname> [<commit> | <object>]
- 'git tag' -d <tagname>...
--'git tag' [-n[<num>]] -l [--contains <commit>] [--contains <commit>] [--points-at <object>]
--	[--column[=<options>] | --no-column] [--create-reflog] [--sort=<key>]
--	[--format=<format>] [--[no-]merged [<commit>]] [<pattern>...]
-+'git tag' [-n[<num>]] -l [--contains <commit>] [--contains <commit>]
-+	[--points-at <object>] [--column[=<options>] | --no-column]
-+	[--create-reflog] [--sort=<key>] [--format=<format>]
-+	[--[no-]merged [<commit>]] [<pattern>...]
- 'git tag' -v [--format=<format>] <tagname>...
- 
- DESCRIPTION
+ #endif
 -- 
 2.11.0
 
