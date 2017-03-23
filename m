@@ -2,128 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8335420958
-	for <e@80x24.org>; Thu, 23 Mar 2017 21:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C94720958
+	for <e@80x24.org>; Thu, 23 Mar 2017 21:08:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935809AbdCWVE6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 17:04:58 -0400
-Received: from mail-vk0-f41.google.com ([209.85.213.41]:35670 "EHLO
-        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935721AbdCWVEz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 17:04:55 -0400
-Received: by mail-vk0-f41.google.com with SMTP id r69so44856023vke.2
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 14:04:45 -0700 (PDT)
+        id S935628AbdCWVIS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 17:08:18 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:37387 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751499AbdCWVIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 17:08:18 -0400
+Received: by mail-it0-f51.google.com with SMTP id 190so5276317itm.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 14:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QVGbBRmmvhIRdHK9EW2puiLRbIElnoqnfTAv4uhZfw8=;
-        b=KLgrcNtI+0q2zJmWKo5sCsBeDuU/rykKjAD6LFn9yXNjwCPZ98MwAL7ATm1QRPXGIw
-         3wLzwDt3EZp58MJ9yWC2jAYQtlHC2VVyRnKOrCWl1GA8V+5+9Bo2THrI5b+Zktk+RPiF
-         ZuhBwT1SJqQIn1zL2A7Jh84sar7IV3qp1Vlp8Qsmwuz2pIQfhC5ICV5UpUfGx7RvOEdO
-         zwtLDzthwAbCyUyfV9sJYg7DjxxyWVc5R4NYOjhcAZ477nEyw7L7iEWxT/HNm/NA+gFl
-         JPMB8CeBj7gnIT7iS4tkxhChZBThkAiDtMEKkpKLkAcJfiY9aeIW7GrG1B/n0Q87ADRx
-         sP3Q==
+         :cc:content-transfer-encoding;
+        bh=Vpa4vSzpiDgtH7X8DtwrgX5zwYoVUkFsgDvNhA0IfPI=;
+        b=mIE16fqrNWh6v9iXGwIr6zHfcYF3w3OG87qcocahTF1Jv0/YlT3HRj9alYoR64EYqB
+         8ynqCkmDbb1YSmFg1hFYP0/x5pba8KBZiZNswMycN1yA3lSxscl9mNACIVF+GL/N8KeN
+         Ft24NtM+2mZg9SvhDA8EFj0onPC0ZdwfXZySBA2eShaVkJknUZXnUi/GwliRo1p50bKS
+         +dXT+SH+rmTH0C3rE6SnuWiUzGBGILCwogssURVkdwaqJLzL/PBst4IZXB9FXWR44N01
+         Fb45bqiVhJyhXZOv8w+KKTF3NtMIaMm2oJExFpPFoX+JSSr90du6ii0CSjXwWZestyCy
+         TRWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QVGbBRmmvhIRdHK9EW2puiLRbIElnoqnfTAv4uhZfw8=;
-        b=d8mQBt9kRXdiA70BrYUcM7iKM7U9L7egj3++xtht/lJTm5qMx5ycwEtg97FwKZdEso
-         hz+RLZB9qRpNxgTm35Ukm/AlNqUoUIMGzufpGl95Qasnbo1X92Oa9qrsADDM57tvXvqo
-         8PhZfi1eOy22nwHesf8GttYE1GzBCR9EqkC/CPk8tLKJxUty+i8hBAtzmAhfQy/Zmhd7
-         7+TjK+4OAt1goc5pkkMHZLnUGETzzn8vAE5rARiK0xUemnfu0pJ3wxdHEDSOzqnAfXlx
-         t1KQQFt3uYRp1VgArxMK7DzJv1QLlVOTIyVcQUbM4C+n6jL4aLMTS3Bm04xURg6A6T/Y
-         a9gA==
-X-Gm-Message-State: AFeK/H1x0pRN3+DWSyy03C14D3NH1cctvFjySGjxNPhYzU7IndfxS+SQzw6c2+DZKVdrfeAqUMAULTqfJOB19g==
-X-Received: by 10.159.38.109 with SMTP id 100mr2368042uag.63.1490303084264;
- Thu, 23 Mar 2017 14:04:44 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Vpa4vSzpiDgtH7X8DtwrgX5zwYoVUkFsgDvNhA0IfPI=;
+        b=tGl8DZRZyKouujsuPsxvs0gpUGcUtqOSp3kzCA+gDxCi8R69iRVV087UzYnaZsGu3j
+         fFv4pA9ZaDeHaQM2mOjRpLLu9PlhesVgxk1pCntNZCgTUf47PAYAeG3FfEEa5YwGECgo
+         sZQXRKfRrYu3pYiMhqL2TGwm4wvTp6ymV/lD6PyyjpalhmbrwS647TIEFd3VOgfdDB2O
+         FG5jsMDlX6WCdn+MNdM05o3IquQ+jQl0lzGPfE6wVOdBBg4tTaKuWCEdIrxjlIchDJHc
+         RN86ECEDjjWC5uqRN0BijzBaGynZU4FW+uF1GV7S1+pBbirrjmiAG81rA0s0hjEMLJh5
+         9gaQ==
+X-Gm-Message-State: AFeK/H0DAMMq6ENn3QagQM0YnkO7hslBtPQmLCRNtW6MO4zuBucQT427Yi0uAOtx3oyxKjhEmbf4BsLGXlcr5w==
+X-Received: by 10.36.224.195 with SMTP id c186mr15839901ith.24.1490303296628;
+ Thu, 23 Mar 2017 14:08:16 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.6.199 with HTTP; Thu, 23 Mar 2017 14:04:03 -0700 (PDT)
-In-Reply-To: <20170323193823.gxodwqv4eshgtqbc@sigill.intra.peff.net>
-References: <20170322065612.18797-1-larsxschneider@gmail.com>
- <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1703231716320.3767@virtualbox>
- <20170323180134.geoyvq7qbm5vujo6@sigill.intra.peff.net> <xmqqbmsrdcz4.fsf@gitster.mtv.corp.google.com>
- <20170323191721.7r5vrixtnx3cngdc@sigill.intra.peff.net> <FE4A3F88-0B86-4069-B141-2DFB9C4E269E@gmail.com>
- <20170323193823.gxodwqv4eshgtqbc@sigill.intra.peff.net>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Thu, 23 Mar 2017 16:04:03 -0500
-Message-ID: <CAJZjrdVN6W_yyAuM9Sbr0qnCtZ77Z89XbJ_s-g5V7n5+kdsV5w@mail.gmail.com>
-Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
-To:     Jeff King <peff@peff.net>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.107.130.208 with HTTP; Thu, 23 Mar 2017 14:07:55 -0700 (PDT)
+In-Reply-To: <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
+References: <20170323120326.19051-1-avarab@gmail.com> <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 23 Mar 2017 22:07:55 +0100
+Message-ID: <CACBZZX7vW0TkbrBvLvKWnY=UpHNHzzQ7wuwhEhNOjCCjzPVMjA@mail.gmail.com>
+Subject: Re: [PATCH] branch doc: Change `git branch <pattern>` to use `<branchname>`
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 23, 2017 at 2:38 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 23, 2017 at 08:26:15PM +0100, Lars Schneider wrote:
+On Thu, Mar 23, 2017 at 6:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 >
->> > I think we do build against PRs now. E.g.:
->> >
->> >  https://travis-ci.org/git/git/builds/213896051
->> >
->> > But it looks like we can turn that off.
+>> Change an example for `git branch <pattern>` to say `git branch
+>> <branchname>` to be consistent with the synopsis. This changes
+>> documentation added in d8d33736b5 ("branch: allow pattern arguments",
+>> 2011-08-28).
 >>
->> When we add a secret variable, then TravisCI will not build Pull Requests
->> for git/git anymore:
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  Documentation/git-branch.txt | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> "[...] we do not provide these values to untrusted builds,
->> triggered by pull requests from another repository."
+>> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+>> index 092f1bcf9f..e65e5c0dee 100644
+>> --- a/Documentation/git-branch.txt
+>> +++ b/Documentation/git-branch.txt
+>> @@ -142,7 +142,7 @@ This option is only applicable in non-verbose mode.
+>>       List both remote-tracking branches and local branches.
 >>
->> See: https://docs.travis-ci.com/user/environment-variables/#Defining-Variables-in-Repository-Settings
+>>  --list::
+>> -     Activate the list mode. `git branch <pattern>` would try to create=
+ a branch,
+>> +     Activate the list mode. `git branch <branchname>` would try to cre=
+ate a branch,
+>>       use `git branch --list <pattern>` to list matching branches.
 >
-> Ah, OK, that makes sense. So we would only have to worry about our _own_
-> code accidentally disclosing it. But that should be easy to look for by
-> grepping the log (did somebody do that?).
+> This makes the description more correct.
 >
->> However, I don't think that is a big deal because git/git doesn't
->> support Pull Requests anyways. Plus, if a contributor is interested
->> in TravisCI results, then the contributor can setup TravisCI for
->> their own fork easily.
->
-> Yeah, agreed. It's not like we are blocking the merge button with a
-> failing status.
->
->> > Hrm, it does mean that people have no way to test on Windows until the
->> > branch hits pu. Which is not ideal.
->>
->> I agree it's not ideal. But I think it is an improvement to check
->> pu/next/master/maint continuously :-)
->
-> Oh, I agree this is a step forward from the status quo. I just wondered
-> if we could do even better.
->
-> As a side note, I've started having travis run on all of the topic
-> branches in peff/git, with the idea to get early feedback on OS X
-> problems (and now hopefully Windows ones). My two issues so far are:
->
->   - I have a lot of work-in-progress branches. I put "-wip" at the end
->     of the branch name for my own scripts. It looks like I can put "[ci
->     skip]" in the commit subject to convince Travis to skip them, but
->     that's a little annoying. Is there any way to skip based on just the
->     branch name? I couldn't find one.
+> I am not sure if it makes that much sense to have that sentence here
+> in the first place (after all, it is describing a behaviour of a
+> mode that is *not* the list mode), but I guess that it may be a
+> common mistake to forget to specify "-l" while asking for branches
+> that match the pattern?  If we were writing this today from scratch,
+> I would perhaps write something entirely different, e.g.
 
-I think you can "safelist" (whitelist) branches to build with regexes:
-https://docs.travis-ci.com/user/customizing-the-build#Building-Specific-Branches
+I'm just doing s/pattern/branchname/ on the existing documentation. If
+you'd like to entirely reword this to make that unnecessary that
+sounds good, but makes sense that you then submit that patch & just
+drop this one, rather than me copy/pasting your proposal, sending that
+as my own patch etc...
 
->   - The OS X builds seem to regularly time out. That at least marks a
->     "!" in the build status screen instead of an "X", but it's a lot of
->     noise (and it misses the point for me, which is testing on OS X; I
->     already build regularly on Linux).
+>         --list::
+>                 List branches.  With optional <pattern>... at the
+>                 end of the command line, list only the branches that
+>                 match any of the given patterns.  Do not forget '-l'
+>                 and say "git branch <pattern>", as it will instead
+>                 try to create a new branch whose name is <pattern>,
+>                 which is a common mistake.
 
-I suspect this happens because they don't have a lot of macOS runners
-- I've seen those jobs wait for hours (even on private jobs) before a
-runner gets freed up.
+I like the old one better. It has 3 actual command examples you can
+readily see. This turns that into more prose that requires the reader
+to mentally parse most of it and mentally insert the mentioned command
+line switches into the equivalent of those 3 examples we just provided
+before.
 
-> -Peff
+> though.
+>
+> Thanks.
