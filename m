@@ -7,133 +7,123 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E549720964
-	for <e@80x24.org>; Thu, 23 Mar 2017 16:23:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1097420958
+	for <e@80x24.org>; Thu, 23 Mar 2017 16:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752412AbdCWQXS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 12:23:18 -0400
-Received: from mout.gmx.net ([212.227.15.19]:52996 "EHLO mout.gmx.net"
+        id S933388AbdCWQnh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 12:43:37 -0400
+Received: from mout.gmx.net ([212.227.17.21]:65330 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751511AbdCWQXR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 12:23:17 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M3RZI-1c05Lu0mOm-00r2Rb; Thu, 23
- Mar 2017 17:22:58 +0100
-Date:   Thu, 23 Mar 2017 17:22:51 +0100 (CET)
+        id S932210AbdCWQng (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 12:43:36 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvPgd-1c81mY0Ppb-010g7D; Thu, 23
+ Mar 2017 17:43:17 +0100
+Date:   Thu, 23 Mar 2017 17:43:15 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
-        peff@peff.net
-Subject: Re: [PATCH v1] travis-ci: build and test Git on Windows
-In-Reply-To: <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703231716320.3767@virtualbox>
-References: <20170322065612.18797-1-larsxschneider@gmail.com> <xmqqwpbhjej6.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: USE_SHA1DC is broken in pu
+In-Reply-To: <20170322220246.GD26108@aiede.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1703231724350.3767@virtualbox>
+References: <CA+55aFzJ3NFVoN6K9__nM_LWYfegxGo_YxB0OudTNBCG+qq+3Q@mail.gmail.com> <2B1DE627-11C8-4FA5-A354-76B6C475666A@gmail.com> <FFC0EFBD-C4D9-4FB8-A45D-7B10689724A1@gmail.com> <alpine.DEB.2.20.1703212105030.3767@virtualbox> <xmqqh92mo06a.fsf@gitster.mtv.corp.google.com>
+ <alpine.DEB.2.20.1703221530040.3767@virtualbox> <20170322220246.GD26108@aiede.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:mfo0v7HqbOjaODcsYW2/8fOZ4tmvHnpDVj359cBN5fOFwPtQMu0
- MfPrQ3c8eq7RqQ3NTm6maHomsXUZzuzoN8fVhit206BpK5BPTWe75pF6ICWXwPdIjkW2JJi
- 1hfA740Jlidqvjm/Ryv1JdQWXpgco1Y6LVmLwSSDcFRwihVJ4SpczsPc7y4ck+Pl9r80eu9
- rKizZjlPyLkhreNio3sdA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pl9XcSNO1js=:Io3mH2RT5HarGxD8GxEeuf
- aKljtK9v+cc/7wWhlmSrgJV1KIjZ7Wr+h//B2TGh1zQEzS9tnn3HrZQcvyXZDZBVWMm5N/MDs
- MySWvZNzXM/7704O5A7gLu+3uxg93Os+ghnTNmQHKv9LN93VZhvf1DfM2DDvrtEYzct0IGiKL
- /qKy8dW6Qx+dhO/rSOMzD6xCpQCsONUr5ruBsro5Bw8OtB44mi6pzZM6qnxhughYK99fZkrWJ
- /vh6CvbjpHHG44LThegnqtbgdI0oLdgdALgbLP0K5Mja6Cvk4kisUwK5OgXdFBFD10iLJAmoF
- y9snx6IiNxxIK0DzxBS+eTBO6x5JSGD8VnVcilliUhJseIsyr3swK54CsapKZ92bFe2DlLjxa
- Qy1oIpamNzWyubGPMawEtLT2pMhRuAf3KlJXv+v80qw/cfu4mP5vnD0UyRLJAombLG02arTbq
- WxMXZ3EFDnxlAo1uR5/Q99aSPSXN9k/anH9KS2PB2aCFmGII0ti7icnFVkTT2eyWhVVJmgKSi
- 9YpYHtbcKbN0tJeeJgIceVHyDDfeXPrKODn1JtLuCRo8t1LZgAojpayHrRjhxgyMeg6tznL66
- Moou7vj08q8O2iDIsHk7NiIXg4w3o63lskMJBz1P6wTmDWlZJWHlwgKtVWw8Gdb2jFOoW/Oc8
- h52TUttTp7ZxX2yWAFYJwtKO/Xmhns09A+EAyYhlUNWg4HyIjqqR0UdeJBcXmpFmPLFGfZJb2
- hYl9zPA3nP4LmOFfN6XbJFPtStrc00QCOzyYUPWh+n6ic6dwMuofrMzeaxVTy0V11fDN6i6vl
- 0iHAImIW8u67k0kLOKyzU1hoI4qDw==
+X-Provags-ID: V03:K0:G9ME0ixl11cpcdNLwohQ/3WGYXgPzY48ECVg2Icn4CCxxEaKYEJ
+ ZMQe8+g7Hh2+vWfOalInQ/HPURMSNMPuXV3WSsqsROdEDc8DTdKelE5GrUp9VfSKlLgLv//
+ YRdXRyepG4O1O4WDym/7++zM0/LY/ppVRWPeNaXSHJIsa5JA1qILOtaCueyUs0GicfYRXlH
+ a1SrXMcCMnt9d5RuJRVuw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NEhGJn9A2sU=:OlMf/aD73XQMIrcTiPJZdu
+ wK+yhg9robdx/RlTw6DSKf9Sh6XUSBEhzdUgdS/VH1B+Z1nh1PC61maawWgmpw2Y4RGrn0rHH
+ 6CgkgmvuXlm7k14TFqr30mjDZfHjwppUO61lTzL20TeWsF7DjzAgYHrplTN2LtsM7yoFO08Dk
+ AWjTGFmBdesauOgnEagyeWXU8QzX27WhCUR5bA66TUHozUJeSJMI7smHVQhm19uTY+t+OI54F
+ WVaKFTztlGox1bwYRS6Mrt0CyCBmcyLYOfbBfd7AAzVPZmYA/HkPAvUMu7BuKD4u9G+J1kuxG
+ R2C1UP2XjZLaDkSa1eSEknqiSJ+ddiJlbat6jwXn4hkP3VQOGJtUo1stgmYqj7ouVKcpCCF7p
+ UVSWPmB8pfSE+G1fDWtoiTZhNjfM9xmLbsKhUW+FSPsqpTfNXYd4qJdGA8B3wfzRAxT/Gn79b
+ uJjGeuaa7kpdHN4spcxirXUZPf7LtkZNqL7Y1dGCL+ZWMail2uksSmAEsR+3jJonnNTX6R3of
+ OtYuhl2FNXF8KiwGHuHpVlSK6wYmem1K7vRuKn/CS9PQGll15zOXbbxrbgOrC9W2d1s/bZrMW
+ H0tAjyar1gguQBG1pVD6oqQOq1lkxE8mWa+4tNOw6Ytp5D6JV59O8hgeJGMfFzx5W85BIQSiq
+ Io+Xugx6fQadzbFwmYtTB4NcFkxZHQmkvWkHso0kA2XJGq6Ly03OQHJ8MC3PTEOJ3t4bRD2K2
+ Bp8C94H6J0xLh4eJTMrIXh1RCuWkKFi6ra0Kg9L3cjNXl+tSzSg/CtvZIW1gp9NIW85ErBj8+
+ 1aCL0BSWusqFHSPptGmM3ThBwvSig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Jonathan,
 
-On Wed, 22 Mar 2017, Junio C Hamano wrote:
+On Wed, 22 Mar 2017, Jonathan Nieder wrote:
 
-> Lars Schneider <larsxschneider@gmail.com> writes:
+> Johannes Schindelin wrote:
 > 
-> > Therefore, we did the following:
-> > * Johannes Schindelin set up a Visual Studio Team Services build
-> >   sponsored by Microsoft and made it accessible via an Azure Function
-> >   that speaks a super-simple API. We made TravisCI use this API to
-> >   trigger a build, wait until its completion, and print the build and
-> >   test results.
-> > * A Windows build and test run takes up to 3h and TravisCI has a timeout
-> >   after 50min for Open Source projects. Since the TravisCI job does not
-> >   use heavy CPU/memory/etc. resources, the friendly TravisCI folks
-> >   extended the job timeout for git/git to 3h.
+> > As to the default of seriously slowing down all SHA-1 computations:
+> > since you made that the default, at compile time, with no way to turn
+> > on the faster computation, this will have a major, negative impact.
+> > Are you really, really sure you want to do that?
+> >
+> > I thought that it was obvious that we would have at least a runtime
+> > option to lessen the load.
 > 
-> The benefit is that Windows CI does not have to subscribe to the
-> GitHub repository to get notified (instead uses Travis as a relay
-> for update notification) and the result can be seen at the same
-> place as results on other platforms Travis natively support are
-> shown?  
+> It's not obvious to me.  I agree that the DC_SHA1 case can be sped up,
+> e.g. by turning off the collision detection for sha1 calculations that
+> are not part of fetching, receiving a push, or running fsck.
 
-Almost... Windows CI *cannot* subscribe to the GitHub repository, as only
-owners can install web hooks and give permission to update build status.
+And in those cases, using OpenSSL instead is *even* faster.
 
-But yeah, you understand correctly: this innocuous change (along with a
-ton of work I already finished on my side) allows us to let Travis trigger
-Windows build & test and to attach the log in the same place as the
-Linux/OSX results are already accessible.
+> To be clear, are you saying that this is a bad compile-time default
+> because distributors are going to leave it and end-users will end up
+> with a bad experience?  Or are you saying distributors have no good
+> alternative to choose at compile time?  Or something else?
 
-> > Things, that would need to be done:
-> > * Someone with write access to https://travis-ci.org/git/git would need
-> >   to add the secret token as "GFW_CI_TOKEN" variable in the TravisCI
-> >   repository setting [1]. Afterwards the build should just work.
-> 
-> We need to make sure this does not leak to the execution log of
-> Travis.
-> 
-> For example, in https://travis-ci.org/git/git/jobs/213616973, which
-> is a log of the documentation build for #1335.6 ran for the 'master'
-> branch, you can see "ci/test-documentation.sh" string appearing in
-> the log twice.  This comes from "script:" part, which is the same
-> mechanism this patch uses to invoke the new script with sekrit on
-> the command line.
-> 
-> I am expecting that no expansion of "$GFW_CI_TOKEN" will be shown in
-> the output, but I've seen an incident where an unsuspecting 'set -x'
-> or '$cmd -v' revealed something that shouldn't have been made
-> public.  I want to make sure we are sure that the command line this
-> patch adds does not get echoed with expansion to the log.
+What I am saying is that this should be a more fine-grained, runtime knob.
 
-Right, typically there is a way in CI setups that marks certain strings as
-secret and whenever they appear in the log, they will be blotted out.
+If I write out an index, I should not suffer the slowdown from detecting
+collisions. Because I implicitly trust myself and everything that I added
+(and everything that was checked before already). This may not matter with
+small projects. But we know a couple of real-world scenarios where this
+matters.
 
-> Is GFW_CI_TOKEN known to be safe without double-quote around it, by
-> the way?
+Imagine for example the insane repository described by my colleague Saeed
+Noursalehi at GitMerge. It is *ginormous*.
 
-Yes, it is safe without double-quotes. I generated it using:
+The index is 300MB. If you have to experience a sudden drop in performance
+of `git add`, even by "only" 30%, relative to OpenSSL, it is very
+noticeable. It is painful.
 
-	dd if=/dev/urandom bs=20 count=1 2> /dev/null | base64
+That is the reason why we spent considerable time trying to enhance
+performance of SHA-1 hashing even by as little as a couple of percentage
+points here and there. The accumulated wins are noticeable, and
+I assume that those wins are completely annihilated by the heavy-handed
+switch to detect collisions always.
 
-> > Things, that might need to be done:
-> > * The Windows box can only process a single build at a time. A second
-> >   Windows build would need to wait until the first finishes.
-> 
-> Perhaps instead of accumulating pending requests, perhaps we can
-> arrange so that Travis skips a build/test request that is not even
-> started yet for the same branch?  For branches that are never
-> rewound, a breakage in an earlier pushout would either show in a
-> later pushout of the same branch (if breakage is not fixed yet), or
-> doesn't (if the later pushout was to fix that breakage), and in
-> either case, it is not useful to test the earlier pushout when a
-> newer one is already available for testing.  For branches that are
-> constantly rewound, again, it is not useful to test the earlier
-> pushout when a newer one is already available for testing.
+It gets even worse when it comes to fetching, let alone cloning.
 
-Yes, I think we have to use some kind of "skip" status if the build failed
-to run or finish in time. But I thought that the "timeout" status would
-fulfill that desire...
+And please note that the gigantic repository I mentioned above is a
+company-internal one, i.e. the servers/repository are implicitly trusted.
+Having to pay the price of a full clone going from 12+ hours to even only
+15+ hours *hurts*. Particularly when that price is paid for no value in
+return at all: the server *already* will have checked for crafted objects.
 
-Ciao,
-Dscho
+I could imagine that this problem could be addressed to everybody's
+satisfaction by introducing a tristate config setting where the collision
+detection can be switched on & off, and then also to, say, "external" i.e.
+collision detection would be switched on whenever objects are retrieved
+from somewhere else than the local repository (e.g. git-receive-pack).
+
+If fetching or cloning from a trusted source, this config setting could be
+switched off on the command-line, otherwise left at "external".
+
+And by "switching collision detection off", I of course refer to *not*
+using SHA1DC's routines at all, but what would have been used originally,
+in Git for Windows' case: (hardware-accelerated) OpenSSL.
+
+Did I manage to clarify the problem?
+Johannes
