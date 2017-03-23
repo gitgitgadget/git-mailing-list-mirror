@@ -2,200 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2880120323
-	for <e@80x24.org>; Thu, 23 Mar 2017 00:46:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F6A720323
+	for <e@80x24.org>; Thu, 23 Mar 2017 00:54:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751749AbdCWAqR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Mar 2017 20:46:17 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53516 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751350AbdCWAqQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Mar 2017 20:46:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 040FD7E68D;
-        Wed, 22 Mar 2017 20:46:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Xl0ROehdo4pD
-        H2fB8sXoDh40dSk=; b=q4HTkZGWWDSSBTFvu34mfCvTPI2HeJmQiMaJKMqyn+As
-        D/7QvSN/8QUSxxXExBUuiU32gOpSpQoBLb8Iw0t724VcYBlkeExMTqmUdxNQG+5f
-        V15huUWdYBWVvOeZqqOBIkOkNlmGKyaoA1nvgJ/2vbgYKXCh65ph+XDYu/++y84=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=GXcnqs
-        M2tBl+65MsfiL8B091zJEbTZXlDCM6tK5PnMidlRle6Ff9J/p2IZ+NsEAvIYxy3C
-        J5CSiLxpZtHN4IGorXUirfXIawXFB5GdvwvMSAFK4wRgsjlTW4K9xTQR7SarMzeV
-        5ugNg8TQerJeCyHC6onCf3QLARTj3JJ30TNyY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F088E7E68C;
-        Wed, 22 Mar 2017 20:46:13 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 250077E689;
-        Wed, 22 Mar 2017 20:46:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Lars Hjemli <hjemli@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Carlos Rica <jasampler@gmail.com>,
-        Samuel Tardieu <sam@rfc1149.net>,
-        Tom Grennan <tmgrennan@gmail.com>,
-        Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 10/16] tag: change misleading --list <pattern> documentation
-References: <20170321125901.10652-1-avarab@gmail.com>
-        <20170321125901.10652-11-avarab@gmail.com>
-        <xmqqo9wupixz.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX70pb=h3nPKDY-rcM3rjh9SNYUzUhxA3Hu0-Jph8ODxdg@mail.gmail.com>
-        <xmqq1stpj9xv.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX4rofOquS4q0NDCb8cHOF=E7iPzFMxj3bre6CTB7=b_MA@mail.gmail.com>
-        <xmqqtw6lgd82.fsf@gitster.mtv.corp.google.com>
-        <20170322223600.huyel6j5wl644ddf@sigill.intra.peff.net>
-        <CACBZZX7kJ_G8mAYd3mN5WtP0ZLUUOuWs4hu1fhTSspWuW_O=5A@mail.gmail.com>
-Date:   Wed, 22 Mar 2017 17:46:11 -0700
-In-Reply-To: <CACBZZX7kJ_G8mAYd3mN5WtP0ZLUUOuWs4hu1fhTSspWuW_O=5A@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 23 Mar
- 2017 00:43:20
-        +0100")
-Message-ID: <xmqqd1d8hlbg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751933AbdCWAxr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Mar 2017 20:53:47 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35417 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751837AbdCWAxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Mar 2017 20:53:46 -0400
+Received: by mail-pg0-f66.google.com with SMTP id g2so33117048pge.2
+        for <git@vger.kernel.org>; Wed, 22 Mar 2017 17:53:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LXmJPxayTtoQ9FFxgdWHJ0EKijhLPIS/Sx65AeXtwPs=;
+        b=Yu3WdlwXLoQy3qQBFRmNOWx0NArhES5krBcO3HXhFpJMm6QZwkAQlKgJC5bu23tcs7
+         UcGO5P9skzzjg07sX5Fyk0HxI6JRQiRXW1U3nEwjq3Xg16eHQlNwSx+T1KPXSwNbKWeZ
+         sqksoh0x/wLxp+GdPVSbcgAlY42OeaO+1QEjwldhAEgFtQaOwH/R2d81WHDPddpXXkZf
+         m37vAYmSybkDhq5PyB/H7Sbi/7VLfobV0NlYqhKTzfaJbiekwFt7K7Dbts5mdQoz22Id
+         v7c26qdMOc8RfMItLjRVwte+ykSyhvxbVdFibD3W9KO1EDPEw6JsTMnm5zVQZmB0NIOe
+         d0Iw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LXmJPxayTtoQ9FFxgdWHJ0EKijhLPIS/Sx65AeXtwPs=;
+        b=oqeWQCg1wtei9om7tqpCaXY1e+1UkjD8KdQSsOd4QwrO0jVEJcVeAtP+DdcmNKZWa4
+         gqWBZZpL7/1KGEU2G1LzCheGr1Lm54apPihgyUSSndEXV3pkNXuio6iRzNE6x+zBwvgg
+         jiRxgUdh/RuyxBgQXfs8LsOvaC+F/dHoASKZ7qTFg9IfoAwkib631XpCLDw0t1ZC1zTW
+         A14dMdJO/q4tEQjeLD+NGo7y5QnnuzOQP111ut1L4ewJVe9UxCd6Cv+GDMJ37n9X23/H
+         wP5N9wIUbyd7JPotcPim0cTAs5noNv1EVYJlAM+R6fAyTGIsW1voGZZlrvxwPHbIUtob
+         Xnbg==
+X-Gm-Message-State: AFeK/H2p6Z9gmEJX24XNl7tePLf51BT97vYRT50VVTphb0aFUpC0chbfZ7WCAfShCAOvqw==
+X-Received: by 10.98.80.93 with SMTP id e90mr50780725pfb.7.1490230424477;
+        Wed, 22 Mar 2017 17:53:44 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:55f5:992d:bc78:c749])
+        by smtp.gmail.com with ESMTPSA id v11sm6112355pfk.32.2017.03.22.17.53.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 22 Mar 2017 17:53:43 -0700 (PDT)
+Date:   Wed, 22 Mar 2017 17:53:41 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] submodule.c: port is_submodule_modified to use
+ porcelain 2
+Message-ID: <20170323005341.GH26108@aiede.mtv.corp.google.com>
+References: <20170323004329.15892-1-sbeller@google.com>
+ <20170323004329.15892-2-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 1D624B80-0F62-11E7-B356-FC50AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170323004329.15892-2-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Stefan Beller wrote:
 
-> Junio would you be fine with just this on top:
+> Migrate 'is_submodule_modified' to the new porcelain format of
+> git-status.
 >
-> diff --git a/t/README b/t/README
-> index 4982d1c521..9e079a360a 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -379,2 +379,5 @@ Do:
->
-> + - Include tests which assert that the desired & recommended behavior
-> +   of commands is preserved.
-> +
->   - Put all code inside test_expect_success and other assertions.
-> @@ -424,2 +427,17 @@ Don't:
->
-> + - Include tests which exhaustively test for various edge cases or
-> +   unintended emergent behavior which we're not interested in
-> +   supporting in the future.
-> +
-> +   An exception to this is are cases where we don't care about
-> +   different behaviors X and Y, but we need to check that it does one
-> +   of them, and not Z.
-> +
-> +   Another exception are cases where our documentation might
-> +   unintentionally stated or implied that something was supported or
-> +   recommended, but we'd like to discourage its use going forward.
-> +
-> +   In both of the above cases please prominently comment the test
-> +   indicating that you're testing for one of these two cases.
-> +
->   - exit() within a <script> part.
+> As the old porcelain only reported ' M' for submodules, no
+> matter what happened inside the submodule (untracked files,
+> changes to tracked files or move of HEAD), the new API
+> properly reports the different scenarios.
+[...]
+>  submodule.c | 53 ++++++++++++++++++++++++-----------------------------
+>  1 file changed, 24 insertions(+), 29 deletions(-)
 
-This would probably be part of your other three-patch series for
-t/README?  With a quick read-through I spotted nothing questionable,
-but I am not 100% sure about the value of going into that level of
-details, especially with the latter one about "discourage and wean
-off of".
+Neat.  Is this something that could be covered in tests, or should I
+be patient and rely on patch 3/3 for that?
 
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 0a7ebf5358..35402ad9a0 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -350,2 +350,6 @@ test_expect_success 'tag -l can accept multiple pat=
-terns' '
->
-> +# Between around v1.7.6.1 & v2.13.0 the documentation unintentionally
-> +# implied that --list was what took the <pattern>, not that patterns
-> +# should be clustered at the very end. This test should not imply that
-> +# this is a sane thing to support.
->  test_expect_success 'tag -l can accept multiple patterns interleaved
-> with -l or --list options' '
->
-> Or do you think the "long documented but unintentional" argument isn't
-> worth a test, in which case squash this:
+I think this would be easier to understand if it were two patches: one
+that switched to --porcelain=2 with no change in behavior, and another
+that took advantage of --porcelain=2 to return richer information.  As
+is, I had trouble verifying that this isn't going to break anything
+--- there's not enough local information here and in submodule.h to
+tell what callers may rely on and I didn't audit callers.
 
-Oh, I didn't know I was given two choices and the second one does
-address the "I am not 100% sure" above ;-).
-
-> diff --git a/t/README b/t/README
-> index 9e079a360a..9f85b8d1cd 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -433,12 +433,8 @@ Don't:
->     different behaviors X and Y, but we need to check that it does one
->     of them, and not Z.
->
-> -   Another exception are cases where our documentation might
-> -   unintentionally stated or implied that something was supported or
-> -   recommended, but we'd like to discourage its use going forward.
-> -
-> -   In both of the above cases please prominently comment the test
-> -   indicating that you're testing for one of these two cases.
-> +   In that case please prominently comment the test indicating that
-> +   you're testing for one of these two cases.
->
->   - exit() within a <script> part.
-
-So for the doc part, I can go with either, but prefer the latter
-between the two.
-
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 35402ad9a0..83772f6003 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -348,19 +348,6 @@ test_expect_success 'tag -l can accept multiple pa=
-tterns' '
->         test_cmp expect actual
->  '
->
-> -# Between around v1.7.6.1 & v2.13.0 the documentation unintentionally
-> -# implied that --list was what took the <pattern>, not that patterns
-> -# should be clustered at the very end. This test should not imply that
-> -# this is a sane thing to support.
-> -test_expect_success 'tag -l can accept multiple patterns interleaved
-> with -l or --list options' '
-> -       git tag -l "v1*" "v0*" >actual &&
-> -       test_cmp expect actual &&
-
-I'd actually think "multiple patterns" should be kept, as that is
-really what we want to support forever. =20
-
-Acceptance of multiple and redundant "--list", e.g.
-
-	git tag -l --list "v1*" "v0*" >actual &&
-	test_cmp expect actual &&
-
-immediately after the above may also be something worth protecting,
-but that is how OPT_CMDMODE works in general, so it may not be
-necessary to test it specifically in a test for "tag -l".
-
-Acceptance of multiple and redundant "--list" that are given after a
-<pattern> is already given on the command line is not something we
-want to actively deprecate (it is not worth our time or effort) but
-it is not something we want to encourage, either.  So I have a
-preference for dropping the ones below.
-
-> -       git tag -l "v1*" --list "v0*" >actual &&
-> -       test_cmp expect actual &&
-> -       git tag -l "v1*" "v0*" -l --list >actual &&
-> -       test_cmp expect actual
-> -'
-> -
->  test_expect_success 'listing tags in column' '
->         COLUMNS=3D40 git tag -l --column=3Drow >actual &&
->         cat >expected <<\EOF &&
+Thanks and hope that helps,
+Jonathan
