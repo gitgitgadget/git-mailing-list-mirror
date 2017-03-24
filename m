@@ -2,83 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C6DC20958
+	by dcvr.yhbt.net (Postfix) with ESMTP id 827AF20958
 	for <e@80x24.org>; Fri, 24 Mar 2017 00:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933674AbdCXAwy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 20:52:54 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:33976 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933467AbdCXAww (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 20:52:52 -0400
-Received: by mail-pg0-f48.google.com with SMTP id 21so147941pgg.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 17:52:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=FTNB1C7LubY8mgZenhSRd4y7FcSe928j7FMV1fQqZ9o=;
-        b=DGCKRSpc8Jjfspc2WuwbyHHDgI+fvGlFl1kx/J1BmPeCyrakyrARk6isETiSyYs206
-         Z/bjDmothf7K0XKfvF0NEuBvMVnUDAV5CoYhTHG3/jhIOtX8oPaJSCREPTs2maEaHnyE
-         53OvKmMwirh1KwmYKLq7UbF8qs41kWfMwPWWUseBH2uhKHVzP5qwpj/7TF53WK1LdZS0
-         BtRjCaVaITUlKwvxqX/O6ysiQmNeOnlZjLLbCS1hb7LjBV0qjsTX8ajeMqaflqQhVbIO
-         GJVTQmRj4O691ebe2iYfxInfAT9EhXqbmINhH430Y4RfzAM9OSYqDZ9GfOjJJ64LvAMD
-         6V4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=FTNB1C7LubY8mgZenhSRd4y7FcSe928j7FMV1fQqZ9o=;
-        b=jwg9QTPPqWyym19m8jfewyjAl3/lpjjdyAzvFppzHqDMw14TPrxXDAYue5Z8K0okEQ
-         xDIwLZtaiE5i6wy3TffkQMG7yV1DI/yAdmlyoLW42NtBfC/CaU4cFbftAWTuvRwD71qZ
-         kFW6fYTx1ygoh4rLgEKoVHREp63gB00D2/1klM0BUMIERav6EDHQR49hZIeAD/LlWJ0W
-         t8ctXPanWCe102O8hNj/xN/+gstbRe30qIbt1WX8MAQ96NBAETPz4qvoouTqOtqI49Ea
-         H+vMIHASA0AC+UJgUxrzlD3u1++nBmJGlrWHAfkaNUBNYtkREh3yzaWPU+Mq3Eggrrdt
-         F4nw==
-X-Gm-Message-State: AFeK/H08kSz0kofEa5TdqVprIy2iyWWteYKyD11nLaNkl/RPDKU1TrTv+fVSvz7Z1J0U1w==
-X-Received: by 10.99.173.6 with SMTP id g6mr5673521pgf.75.1490316771392;
-        Thu, 23 Mar 2017 17:52:51 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:6c40:39b9:f9ab:ec6f])
-        by smtp.gmail.com with ESMTPSA id s27sm564180pfk.39.2017.03.23.17.52.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 17:52:51 -0700 (PDT)
-Date:   Thu, 23 Mar 2017 17:52:49 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: How do I copy a branch & its config to a new name?
-Message-ID: <20170324005249.GF20794@aiede.mtv.corp.google.com>
-References: <CACBZZX7NDa5o1xSu4HgZ4=kG3mx3U6ja7f3E4yAkFOHDsLdMjA@mail.gmail.com>
+        id S933467AbdCXAxD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 20:53:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50754 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754313AbdCXAxC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 20:53:02 -0400
+Received: (qmail 2808 invoked by uid 109); 24 Mar 2017 00:52:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 00:52:59 +0000
+Received: (qmail 13212 invoked by uid 111); 24 Mar 2017 00:53:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 20:53:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 20:52:56 -0400
+Date:   Thu, 23 Mar 2017 20:52:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] completion: offer ctags symbol names for 'git log
+ -S', '-G' and '-L:'
+Message-ID: <20170324005256.ji2wijhyqnwbpp5t@sigill.intra.peff.net>
+References: <20170323153839.24283-1-szeder.dev@gmail.com>
+ <20170323153839.24283-4-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX7NDa5o1xSu4HgZ4=kG3mx3U6ja7f3E4yAkFOHDsLdMjA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170323153839.24283-4-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Mar 23, 2017 at 04:38:39PM +0100, SZEDER GÃ¡bor wrote:
 
-Ævar Arnfjörð Bjarmason wrote:
+> Just like in the case of search patterns for 'git grep', see 29eec71f2
+> (completion: match ctags symbol names in grep patterns, 2011-10-21)),
+> a common thing to look for using 'git log -S', '-G' and '-L:' is the
+> name of a symbol.
+> 
+> Teach the completion for 'git log' to offer ctags symbol names after
+> these options, both in stuck and in unstuck forms.
 
-> I couldn't find any previous list discussion about this, but if not I
-> think something like:
->
->     git [checkout|branch] --copy src dest
->
-> Would make sense as an interface for this.
+I think this makes sense and is an improvement over the status quo.
 
-Sounds good to me. :)
+There are two gotchas with completing "-L" like this:
 
-Thanks,
-Jonathan
+  1. You still have to come up with the filename yourself for "-L".
+
+  2. The function name is actually a regex, so you can get bit when your
+     function name is a subset of another.
+
+I have a script (below) which makes this easier (and I complete its
+argument using the tags file).  It's probably too gross to even go into
+contrib, but I thought I'd share.
+
+"log -S" sometimes benefits from limiting by filename, too, but it
+depends what you're doing. I don't have a gross script for that. :)
+
+-- >8 --
+#!/usr/bin/env perl
+if (!@ARGV) {
+  print STDERR "usage: git flog [options] <function>\n";
+  exit 1;
+}
+
+my $func = pop @ARGV;
+my $file = get_file_from_tags($func);
+my $regex = '[^A-Za-z_]' . $func . '[^A-Za-z0-9_]';
+exec qw(git log), "-L:$regex:$file", @ARGV;
+exit 1;
+
+sub get_file_from_tags {
+  my $token = shift;
+
+  open(my $fh, '<', 'tags')
+    or die "unable to open tags: $!\n";
+  while (<$fh>) {
+    chomp;
+
+    # this isn't exactly right, as the Ex command may contain
+    # embedded tabs, but it's accurate for the token and filename,
+    # which come before, and probably good enough to match extension fields
+    # which come after
+    my @fields = split /\t/;
+
+    next unless $fields[0] eq $token;
+
+    # only look for functions; assumes your ctags uses the "kind"
+    # extension field. Note also that some implementations write the "kind:"
+    # header and some do not. This handles both.
+    next unless grep { /^(kind:\s*)?f$/ } @fields;
+
+    # there may be more, but we don't have any way of disambiguating,
+    # so just return the first match
+    return $fields[1];
+  }
+
+  die "unknown token: $token\n";
+}
+__END__
