@@ -7,97 +7,93 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFDCD2095E
-	for <e@80x24.org>; Fri, 24 Mar 2017 11:07:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D57F2095E
+	for <e@80x24.org>; Fri, 24 Mar 2017 11:11:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751708AbdCXLHb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 07:07:31 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:35618 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757213AbdCXLH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 07:07:27 -0400
-Received: by mail-it0-f65.google.com with SMTP id y18so1381982itc.2
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 04:07:21 -0700 (PDT)
+        id S1751407AbdCXLLM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 07:11:12 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:33728 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751421AbdCXLLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 07:11:11 -0400
+Received: by mail-io0-f176.google.com with SMTP id f84so14577598ioj.0
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 04:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QmPytgVqdVkTDKxyjcYvTWKgzF+TVfMBmZNvnBiNOuw=;
-        b=C0ddWfn4+LSyKoI5S8ZIXOfQ7LH89S/ebkMRmahNsjz2Tyi2dqVYsSiNaaFyUocCJc
-         RPiqHjYMXnNzVBFrAtgH3V9OEJhVOCWL8fu0MxBOI9JzeNwq/NZ0cWhNTESCAXY7jZt0
-         E1RKqvDKw4i4XGlCGMn1vaGvSL0LMYomlOYGg6VHyIzWNcqnuuiEQWuL9TUWQ9FmQg9W
-         H86PdX7KEGWqyvk0ob1Bl8xUfwcjMi1zMYZkwuBHPngraAdpn/tzcqp7ww+ZM5/ivl8x
-         WgZznxUlhLcF0oLRnb/Mw7TVVAMf+B0GtkEmqgG5DTQkc+O60LqUDzOugv9g+dsagOpL
-         58mQ==
+         :cc:content-transfer-encoding;
+        bh=vXlTJYDYbgcMWfAJprWU6OQRIeymF6CeVX2jazjk/PU=;
+        b=KWrIM7P8xx8JDfh5izl2GpqWkFcalqFmoBU/RRZuZG0TGsCiknPuISuIoU5abILEZH
+         Tq1Fxrs+bHXINJGf6LXgbqHZ+1sEGC8Qt4yP6PkKKTfvlfWikQGnffG6jm5AzRTa1WhC
+         xoIQ/F2zgqNOIa3NP2PPxdPMfeF5dN5G0MJRqlrguBgjbKoYgKEqsQ/5o0gh0GtS+x0j
+         aITwC3ioRZ8B4Fz62bbXQx5DJcHnvcLCyf6VM855t8LN6qWqkdrFz5+tJZ6QWvzg3rvX
+         TDBe1TleJhLJpqtHMNobBQt10rQTfcDCw7car4BRQlJkyma5A6utsQaX8v7T6DqEorUS
+         ijow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QmPytgVqdVkTDKxyjcYvTWKgzF+TVfMBmZNvnBiNOuw=;
-        b=ZEfy+NVSN3MfET/KW4xk6t8L57Kv7l4xTnBnkxapZT/bWwpXrrr6noTanNdO2II4as
-         tduKT1iApfM3RsH+3Vhm730iMv5SwdZRUd0AFWKDImigJxlIMId8Dd0dG6sqrFbCAQrP
-         Ijpb4IDYRkH8uQJP3/qxKtJQBwrNQR8MHV8Mbk4vEmvK14hVZkGSfIi7ulzGeY6e6mKs
-         mGNN2/224VxXiH19OLORqXCBS6kTzi1+QF9xYMSzyBAtlIUp7L//KRgj1whTvNFeqA4E
-         8onEnhQirEDJlETOYiCy9nmzCF5JnxMcpDZuPJNyF6iN1W2GpqzxweQOZwn5puz4eRYN
-         3xew==
-X-Gm-Message-State: AFeK/H1K49MNV+nNRPf6cWT4pprKRGeMFnU3P5JVmDMm2QQIqKMvOtODhKSubVAzfImhhX/mCMFBuHIvMclHRQ==
-X-Received: by 10.36.95.85 with SMTP id r82mr2274389itb.91.1490353621788; Fri,
- 24 Mar 2017 04:07:01 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=vXlTJYDYbgcMWfAJprWU6OQRIeymF6CeVX2jazjk/PU=;
+        b=dWWi4z60LlUPbU6cpXI7nvHMlHQoiq1pZKr0XOKhxsZMezq9QVnDW0a/L+8Nj3RvBa
+         gAibcx7BKIRE7VCXlMGGxsdtqLn+VEL0GssjT9uYglK7AHUvEMs5442HxvwmaBWx9+Vw
+         KaqFuvPVPEDYngKsARC/NVSUb+PY0R9u7McXSjZjr4wiZK79G5RkE3CFXyubZwrXbX9x
+         65+RwgiWnCG5dXIMjG5g6Meoqx7QVlwFFgtPNQSeZi8QlzjpVtjQ377yQyev7seUxGxe
+         rcRdpWv+4v+RKgraFFKQU4WDYHwQ03m+eLcdZSX0ySzuEWZ8pJzyV71UUhRLlijXf6KS
+         UHuw==
+X-Gm-Message-State: AFeK/H11hMKlz2cM1v/tjQD6uYJPE/kQy9bFdMQemwvebzifXQBCOjGLGawJw6nGWCy4AxYr8JKE5cj/E1gPtg==
+X-Received: by 10.107.150.201 with SMTP id y192mr8490208iod.33.1490353869716;
+ Fri, 24 Mar 2017 04:11:09 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Fri, 24 Mar 2017 04:06:41 -0700 (PDT)
-In-Reply-To: <xmqqtw6j8e7f.fsf_-_@gitster.mtv.corp.google.com>
-References: <20170323120326.19051-1-avarab@gmail.com> <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
- <CACBZZX7vW0TkbrBvLvKWnY=UpHNHzzQ7wuwhEhNOjCCjzPVMjA@mail.gmail.com>
- <xmqq37e3brxz.fsf@gitster.mtv.corp.google.com> <20170324004858.GE20794@aiede.mtv.corp.google.com>
- <xmqqtw6j8e7f.fsf_-_@gitster.mtv.corp.google.com>
+Received: by 10.107.130.208 with HTTP; Fri, 24 Mar 2017 04:10:49 -0700 (PDT)
+In-Reply-To: <20170324005249.GF20794@aiede.mtv.corp.google.com>
+References: <CACBZZX7NDa5o1xSu4HgZ4=kG3mx3U6ja7f3E4yAkFOHDsLdMjA@mail.gmail.com>
+ <20170324005249.GF20794@aiede.mtv.corp.google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 24 Mar 2017 12:06:41 +0100
-Message-ID: <CACBZZX5xKaOBY8nWAbnLGyRiHW0MnFsEeF5ehpVCviyWc1mb3w@mail.gmail.com>
-Subject: Re: [PATCH] branch doc: update description for `--list`
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
+Date:   Fri, 24 Mar 2017 12:10:49 +0100
+Message-ID: <CACBZZX6U0PAAK8vJxBW2VSzbtfttFUNTZhDGk=BzLxkaTn64gw@mail.gmail.com>
+Subject: Re: How do I copy a branch & its config to a new name?
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 24, 2017 at 5:56 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> The paragraph begins with a sample command line `git branch <name>`
-> that has nothing to do with the option being described.  Remove it,
-> but use the space to instead show that multiple patterns can be
-> given.
+On Fri, Mar 24, 2017 at 1:52 AM, Jonathan Nieder <jrnieder@gmail.com> wrote=
+:
+> Hi,
 >
-> Also mention the unfortunate `-l` that can be easily confused with
-> it.
+> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason wrote:
 >
-> Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-branch.txt | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
+>> I couldn't find any previous list discussion about this, but if not I
+>> think something like:
+>>
+>>     git [checkout|branch] --copy src dest
+>>
+>> Would make sense as an interface for this.
 >
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> index 6a17ca591a..514b0d0b91 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -142,8 +142,13 @@ This option is only applicable in non-verbose mode.
->         List both remote-tracking branches and local branches.
->
->  --list::
-> -       Activate the list mode. `git branch <branchname>` would try to create a branch,
-> -       use `git branch --list <pattern>` to list matching branches.
-> +       List branches.  With optional `<pattern>...`, e.g. `git
-> +       branch --list 'maint-*'`, list only the branches that match
-> +       the pattern(s).
-> ++
-> +This should not be confused with `git branch -l <branchname>`,
-> +which creates a branch named `<branchname>` with a reflog.
-> +See `--create-reflog` above for details.
-Looks good to me.
->  -v::
->  -vv::
-> --
-> 2.12.1-432-gf364f02724
->
+> Sounds good to me. :)
+
+Actually this is a bit confusing, but I think reversing the arguments
+makes sense, i.e.:
+
+    git branch -c dest [src]
+
+And similarly:
+
+    git checkout -c dest [<src>]
+
+This is confusing in that it reverses the arguments, but more useful
+in that it allows you to omit src like the other invocations of these
+commands, and you can e.g. do:
+
+    git branch -c avar/topic-2
+
+While on avar/topic to start working on avar/topic-2, which would copy
+avar/topic's state & config.
+
+I'll put this on my TODO list, but unless someone comes up with a
+compelling argument against the above I plan to make the interface
+look like that.
