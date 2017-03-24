@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 196551FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 18:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82EAA1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 18:41:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935985AbdCXSlj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 14:41:39 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34845 "EHLO
+        id S935988AbdCXSlk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 14:41:40 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34088 "EHLO
         mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934744AbdCXSl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 14:41:29 -0400
-Received: by mail-wm0-f68.google.com with SMTP id z133so2297446wmb.2
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 11:41:27 -0700 (PDT)
+        with ESMTP id S935541AbdCXSlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 14:41:21 -0400
+Received: by mail-wm0-f68.google.com with SMTP id u132so2304913wmg.1
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 11:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aq8y1v8W9rTeUtHVseEccwh8kGLm7OnM4IDMGOw2xLA=;
-        b=O6h0/vqKtgBkDM3NTpZlc6rF+Jf8ifG6NmN1DgJzI3rTqpyVTrg2PWzP9Aiv3hi/dD
-         L1TBgpOHkgtE+E9Ebw4ZbiTX2Tgo7HHh2H0Z6adL8LM/qonGWemi4W1jwPlN3xsTw0dB
-         ECEgUxjxInQ3GHotg8QLjwEv6n2GEvSAbQBBNJ3gN8iro4XwUR5kZcBlnoZWKOtj34Ee
-         fAmn/GBbSKEIBgGa/+K355KFj+sj5JhlzdgNQ4AV2XIEmLXs+gPxm5D3GtBq5ftauT/Y
-         adHWOJ1jvUONw3nEnBAytJRbwLWXdWfcLIjsQIBfKIyUkB/N1OmOfuhoEYSUfVzYWpUD
-         r40w==
+        bh=ovNHPNDIpXqVOzkBZH7SQ16oRbH/Dt/uvKWqUpfssfE=;
+        b=U6jJ+CuypFONj2kNDRkub1kOjH0fZMAj9gKcHlG3CiTOiZOHBBpYl0iHynz4+cIWT/
+         culIEjIJDkKzNvLdY8YA7/DwI/w2CBLkxNy02e9jpoyei2iZIBVltJvSYfZxyzfQZGqu
+         /X9J2JY/Guk8k1xl20warqgdfzmmQKnZZkWynfeyQSK//iTnuPjYjKU7Zn/ivcfTBaUb
+         XlDvRp8vyiO8+/MeF//Pq01K2FP7KDjNFMoiJLXa2a36rcUmzt/rBulbBEK7wUbN2cW6
+         WUlUWXulPFdpP9zNTmjbM14sPz+XEX9qsdOtqoEhFE7SD2AAFf7XKJUTHlwinTuDmgK/
+         3gOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aq8y1v8W9rTeUtHVseEccwh8kGLm7OnM4IDMGOw2xLA=;
-        b=MA9Vpu+Q6zy7e+m0xP/2DcjIIfSy4l0zF3sRIR1GPaD0VTpnqMwaoJU8wzWc6rb37x
-         eU8AI3sc4VOP1KjypZKO1u7aOzbksHThYJZYlofpMBy5z7TJhuiPQub5tzfdcViKanY/
-         d1vBeUZykGulMMrPuG6KYzdTZQ66H0NDe9MzfreblCL8THacsk2Ok4JKGmZ0rNkEJvKw
-         YEjziqp7C1jKZkAaMhz/o+omSq47JGYyESP6iPLuJBd4g5keeZ5jgGm6F7Xm0cYy0ASi
-         kqAdepnMVA2QEvonwF9nUvgsY92pgKRdd9tXb6AY7TlJ9Jg06vvox/np5yOyw8XPvd8O
-         fuyA==
-X-Gm-Message-State: AFeK/H2S+qfHGVTh4/8u546+HLEnBGjZgigo69ht48U0jSLlHrBpwpVjcRrZ75kFfGmvoQ==
-X-Received: by 10.28.136.81 with SMTP id k78mr4400516wmd.36.1490380887089;
-        Fri, 24 Mar 2017 11:41:27 -0700 (PDT)
+        bh=ovNHPNDIpXqVOzkBZH7SQ16oRbH/Dt/uvKWqUpfssfE=;
+        b=h1w51y+xmCzzKPJV0LClRzVXn3psPl86BRRGd0asi4Fj4Y8nrysH1nihpyIopk8GF9
+         xvIKoQO0oBzNzbamo9sh/eMFzc0/jDJm/VhvPrgaXVOvjNkbrNRX4P1P3ZVkO5tZDzz3
+         P8vJ6FL5+8z8GWnzKmuCuiXBjiU4bLwsAqThrwgHKEXeFV0fA0JTa45PlDWh4sqCA6fE
+         XrVshTpPld5L+SvvkEZMMCZI8uO8pvImknjhsG2zBEKKhVLPWp7pFKFO64xW3wB7MbB1
+         EbHTgbm729w/gwmY0dCygRykjuuVf7SjEwY0WmfIBCLnJ1Yl7OkQlDGvafsSPwlOBLJ0
+         jA9g==
+X-Gm-Message-State: AFeK/H0+ObaBXqS/KuhkBDj0Rr+2bhvYmoIMyDr2fRDdsv3gd88i6muBvmVmGtkZRFAgCA==
+X-Received: by 10.28.7.13 with SMTP id 13mr4454392wmh.16.1490380873965;
+        Fri, 24 Mar 2017 11:41:13 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j77sm3440560wmj.3.2017.03.24.11.41.25
+        by smtp.gmail.com with ESMTPSA id j77sm3440560wmj.3.2017.03.24.11.41.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Mar 2017 11:41:26 -0700 (PDT)
+        Fri, 24 Mar 2017 11:41:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 05/16] ref-filter: add test for --contains on a non-commit
-Date:   Fri, 24 Mar 2017 18:40:48 +0000
-Message-Id: <20170324184059.5374-6-avarab@gmail.com>
+Subject: [PATCH v4 01/16] tag doc: move the description of --[no-]merged earlier
+Date:   Fri, 24 Mar 2017 18:40:44 +0000
+Message-Id: <20170324184059.5374-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170324184059.5374-1-avarab@gmail.com>
 References: <20170324184059.5374-1-avarab@gmail.com>
@@ -73,55 +73,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the tag test suite to test for --contains on a tree & blob. It
-only accepts commits and will spew out "<object> is a tree, not a
-commit".
+Move the documentation for the --merged & --no-merged options earlier
+in the documentation, to sit along the other switches, and right next
+to the similar --contains and --points-at switches.
 
-It's sufficient to test this just for the "tag" and "branch" commands,
-because it covers all the machinery shared between "branch" and
-"for-each-ref".
+It makes more sense to group the options together, not have some
+options after the like of <tagname>, <object>, <format> etc.
+
+This was originally put there when the --merged & --no-merged options
+were introduced in 5242860f54 ("tag.c: implement '--merged' and
+'--no-merged' options", 2015-09-10). It's not apparent from that
+commit that the documentation is being placed apart from other
+options, rather than along with them, so this was likely missed in the
+initial review.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t3201-branch-contains.sh | 9 +++++++++
- t/t7004-tag.sh             | 4 +++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ Documentation/git-tag.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/t3201-branch-contains.sh b/t/t3201-branch-contains.sh
-index 7f3ec47241..daa3ae82b7 100755
---- a/t/t3201-branch-contains.sh
-+++ b/t/t3201-branch-contains.sh
-@@ -130,6 +130,15 @@ test_expect_success 'implicit --list conflicts with modification options' '
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 525737a5d8..33f18ea5fb 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -124,6 +124,11 @@ This option is only applicable when listing tags without annotation lines.
+ 	Only list tags which contain the specified commit (HEAD if not
+ 	specified).
  
- '
- 
-+test_expect_success 'Assert that --contains only works on commits, not trees & blobs' '
-+	test_must_fail git branch --contains master^{tree} &&
-+	blob=$(git hash-object -w --stdin <<-\EOF
-+	Some blob
-+	EOF
-+	) &&
-+	test_must_fail git branch --contains $blob
-+'
++--[no-]merged [<commit>]::
++	Only list tags whose tips are reachable, or not reachable
++	if `--no-merged` is used, from the specified commit (`HEAD`
++	if not specified).
 +
- # We want to set up a case where the walk for the tracking info
- # of one branch crosses the tip of another branch (and make sure
- # that the latter walk does not mess up our flag to see if it was
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 45790664c1..3439913488 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1461,7 +1461,9 @@ test_expect_success 'mixing incompatibles modes and options is forbidden' '
- 	test_must_fail git tag -n 100 &&
- 	test_must_fail git tag -l -m msg &&
- 	test_must_fail git tag -l -F some file &&
--	test_must_fail git tag -v -s
-+	test_must_fail git tag -v -s &&
-+	test_must_fail git tag --contains tag-tree &&
-+	test_must_fail git tag --contains tag-blob
- '
+ --points-at <object>::
+ 	Only list tags of the given object.
  
- # check points-at
+@@ -173,11 +178,6 @@ This option is only applicable when listing tags without annotation lines.
+ 	that of linkgit:git-for-each-ref[1].  When unspecified,
+ 	defaults to `%(refname:strip=2)`.
+ 
+---[no-]merged [<commit>]::
+-	Only list tags whose tips are reachable, or not reachable
+-	if `--no-merged` is used, from the specified commit (`HEAD`
+-	if not specified).
+-
+ CONFIGURATION
+ -------------
+ By default, 'git tag' in sign-with-default mode (-s) will use your
 -- 
 2.11.0
 
