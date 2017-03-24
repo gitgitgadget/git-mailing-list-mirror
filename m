@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 366871FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 18:41:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C780B1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 18:41:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934578AbdCXSlO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 14:41:14 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34046 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751410AbdCXSlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 14:41:12 -0400
-Received: by mail-wm0-f67.google.com with SMTP id u132so2304652wmg.1
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 11:41:11 -0700 (PDT)
+        id S935929AbdCXSlZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 14:41:25 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:33918 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935077AbdCXSlT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 14:41:19 -0400
+Received: by mail-wr0-f194.google.com with SMTP id y90so1649494wrb.1
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 11:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8ntVpQBgpY6anaNRpMRBJ1SdeoSEMyPY7NZR/b0DHVc=;
-        b=vUd1mR8tfJtkDiSKlOJThlZCKtmyRMtfNRi1p9WOxPRwR969zLmxs5v7aSrPKveX2I
-         VB3sIc3RWLtI1RqHLm7hE5Zmcgu/bgObmcyKsbdxbbrnv9CRtuqqbz2iH9qprlFWw0f4
-         dYvKfszj4YC6ryXbYRvrVAeAzhmXYhek73bI66a07o3jHU4xKlsbh3v8envf26J1NC7r
-         oAepfB/UGdCyx33CkZYWSvNWokwvvEs7LiTjJUQkoj5x5KI7ZQ8cWBo0RHUnX0Q2GyWQ
-         M9jKWSyBH6fsMUPBITci1ejY/RA7rZ2XevPXEHssJiRYRxQdZQtDWNnuztDlBmDmcDOh
-         d9nA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=rTySXPoAE4JFQqMnzfgOwSDn1jLpZf405cxkoeJliKc=;
+        b=etNlu/hGL9iUDVwLp00V5F7w+8UX/A3Ptzy8Igm/FW+eEbEVJJGDmAJEX3xSja1Pg5
+         op6FVDZygG//mrFNbnoooVPUtLTwW1dq76iowM4bS/ZK7CjQyR4ZSm5I7f24ualfCv/G
+         b8qs13lpyW1bfkCOSprzdZ0ez6gqmhPGcb2DrBVdi6Xhv/MjM8LgXUIh1mCiebbMJamX
+         FJG2jBYD2W409OqkaDRJ+IRn8jDEgTLhM4uV34zgnYZNDIYRCj6OVN5qLF2c27x+BHzG
+         JiBRlZGvMYuE2Qwm5tIQ9T1I+OMxVMdFDpl6utGK1OQnQkotUkqkOHQ4xvW9O4INctrS
+         cJdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=8ntVpQBgpY6anaNRpMRBJ1SdeoSEMyPY7NZR/b0DHVc=;
-        b=mHt8HiGhi31R04H5cTAKSGz8V8WCqrB8GmsFaLcG+hi8Asm4mAjslfUrtZG/gaj33v
-         I4fFQ3aKKDWqW7kvOczqwQczHYUDc1cPhkyM6BzRT0kiXzsYZHh6g12ekx3tKHkFE0cN
-         yQt3rjSpH/ljOe1bFw1jyv34yVFHyGaXjCbVRv5QQqUN6r/iIQb20M96rqnK5pvQjWEg
-         hWSkNHYmVUbpLiUlvA2Lr9jOkflOX97Cn1JKAzZkqn0DqwFzy69oKeDSC+GzfhR4DfPN
-         pP92Z9IblYdoBBWYqeHVvKdUKP2yn/E3YG4/QwGejIhRsS8MjWROywD5APnZtHNmrNN8
-         Yxfw==
-X-Gm-Message-State: AFeK/H1ABkFkidEbeiRn4cgBkLQ2C8Ap/PSMEx7G8eWB2FrpFkltxWzhFvI24o2cO9PTYQ==
-X-Received: by 10.28.156.69 with SMTP id f66mr4312540wme.56.1490380870482;
-        Fri, 24 Mar 2017 11:41:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=rTySXPoAE4JFQqMnzfgOwSDn1jLpZf405cxkoeJliKc=;
+        b=ufzr9kkc1QFoz/IV7vmzqJUcWdLdEasG26oLBAfjdGlYDdr5yOMyh/zdTq6pWkP53d
+         F6eMjHmD2yKq/LNL1fRStlAVZC/sshcC1kuzbgnmQ9u3nAJbhVejQW3lNK8nD7Po6ZDj
+         BcSGhU32c4kkdciyZWIG+vWy7F5SikSrFicKFK02I4uD4wxlqxrkk7TQskbHoab2whLf
+         X4WImtX20DpA2dLbu0kl6Hixue6UOQ336eUGmaAYdPO1LZdQ3JKNcVPweweJJLnZ2Ksy
+         tiq9DdtxE/SdHo96sWhhF0YzTrPqS2CmIsDBjCALQTpdhLMXU/VzhuOLZ4PmoIx+s52f
+         pMFA==
+X-Gm-Message-State: AFeK/H0BoO5eq4A72oY4cxFwXBP4f7X0UIgRA+6B0zvoac0MwEuAIeOFC7z3kEDbDArJuw==
+X-Received: by 10.223.134.229 with SMTP id 34mr9044025wry.104.1490380877321;
+        Fri, 24 Mar 2017 11:41:17 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j77sm3440560wmj.3.2017.03.24.11.41.09
+        by smtp.gmail.com with ESMTPSA id j77sm3440560wmj.3.2017.03.24.11.41.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Mar 2017 11:41:09 -0700 (PDT)
+        Fri, 24 Mar 2017 11:41:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,10 +59,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 00/16] Various changes to the "tag" command & related
-Date:   Fri, 24 Mar 2017 18:40:43 +0000
-Message-Id: <20170324184059.5374-1-avarab@gmail.com>
+Subject: [PATCH v4 02/16] tag doc: split up the --[no-]merged documentation
+Date:   Fri, 24 Mar 2017 18:40:45 +0000
+Message-Id: <20170324184059.5374-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170324184059.5374-1-avarab@gmail.com>
+References: <20170324184059.5374-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,52 +73,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hopefully the final version. This is exactly like v3 except for a
-couple of minor changes (and rebased on the latest upstream master):
+Split up the --[no-]merged documentation into documentation that
+documents each option independently. This is in line with how "branch"
+and "for-each-ref" are documented, and makes subsequent changes to
+discuss the limits & caveats of each option easier to read.
 
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-tag.txt | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-Ævar Arnfjörð Bjarmason (16):
-  tag doc: move the description of --[no-]merged earlier
-  tag doc: split up the --[no-]merged documentation
-  tag doc: reword --[no-]merged to talk about commits, not tips
-  ref-filter: make combining --merged & --no-merged an error
-  ref-filter: add test for --contains on a non-commit
-  tag: remove a TODO item from the test suite
-  tag tests: fix a typo in a test description
-  for-each-ref: partly change <object> to <commit> in help
-  tag: add more incompatibles mode tests
-
-Clarified in the commit message what code in builtin/tag.c we're
-trying to test here.
-
-  parse-options: add OPT_NONEG to the "contains" option
-  tag: change misleading --list <pattern> documentation
-
-Use the same phrasing as Junio's "branch doc: update description for
-`--list`" does when describing "git tag --list".
-
-  tag: implicitly supply --list given another list-like option
-  tag: change --point-at to default to HEAD
-  ref-filter: add --no-contains option to tag/branch/for-each-ref
-  ref-filter: reflow recently changed branch/tag/for-each-ref docs
-  tag: add tests for --with and --without
-
- Documentation/git-branch.txt           |  33 +++--
- Documentation/git-for-each-ref.txt     |  12 +-
- Documentation/git-tag.txt              |  59 +++++---
- builtin/branch.c                       |   5 +-
- builtin/for-each-ref.c                 |   5 +-
- builtin/tag.c                          |  27 ++--
- contrib/completion/git-completion.bash |   4 +-
- parse-options.h                        |   6 +-
- ref-filter.c                           |  30 +++-
- ref-filter.h                           |   1 +
- t/t3200-branch.sh                      |   4 +
- t/t3201-branch-contains.sh             |  61 +++++++-
- t/t6302-for-each-ref-filter.sh         |  20 +++
- t/t7004-tag.sh                         | 245 +++++++++++++++++++++++++++++++--
- 14 files changed, 440 insertions(+), 72 deletions(-)
-
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 33f18ea5fb..68b0ab2410 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -124,10 +124,13 @@ This option is only applicable when listing tags without annotation lines.
+ 	Only list tags which contain the specified commit (HEAD if not
+ 	specified).
+ 
+---[no-]merged [<commit>]::
+-	Only list tags whose tips are reachable, or not reachable
+-	if `--no-merged` is used, from the specified commit (`HEAD`
+-	if not specified).
++--merged [<commit>]::
++	Only list tags whose tips are reachable from the specified commit
++	(`HEAD` if not specified).
++
++--no-merged [<commit>]::
++	Only list tags whose tips are not reachable from the specified
++	commit (`HEAD` if not specified).
+ 
+ --points-at <object>::
+ 	Only list tags of the given object.
 -- 
 2.11.0
 
