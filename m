@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 819E61FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 18:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6C701FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 18:42:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965068AbdCXSlz (ORCPT <rfc822;e@80x24.org>);
+        id S965222AbdCXSl6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 14:41:58 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:35848 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965044AbdCXSlz (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Mar 2017 14:41:55 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35860 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S964821AbdCXSlx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 14:41:53 -0400
-Received: by mail-wr0-f196.google.com with SMTP id u1so1658366wra.3
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 11:41:47 -0700 (PDT)
+Received: by mail-wr0-f195.google.com with SMTP id u1so1658294wra.3
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 11:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NRzauk5W0c4i3AtDmB1tB3FNvj5mK7aRwx6rTnT6lcM=;
-        b=nsIxPBkPVZ3Tun60jp/RxCa8aebsDoey1sRe+feqB5XQWi0thlKm3HL2ZDjqNghZSr
-         IWEHW9rnHIlzq6FWXlAXBegF2WEZMDPmY7qQUozWUkAjl/4fWzRAMbG3H9UqWeCkVIB2
-         gzPt9qLuAZtNkrjNPN2XidA5FO0HJnpxKOiDvtMSEpkfokKG/IuiOD0g0aXZ3Tg5z7VD
-         xU68cpXYsuADYym0Vaybmugv1P9eEyL22d5YEaSvriWlwKCP5/KTMXhdLrgoUs6C5zQq
-         dYnFTfA8yeepI9Nv4XI7g2nN52TyzjaFBp7AINIv2LCaKvIpoybBQZTUirAQkqRHjMl+
-         lrtA==
+        bh=sPzMPaIQ4O/OdVyltoMv0aeWceLmrE7iXvBtp3jYqGQ=;
+        b=rAqL7CbEXY0TPO7seC+A+ZYVLxiZ5gzUpw6eMAOZLrf/dDFm28xVkAxDa8WhkKiFeg
+         S1BhHmPoEaa/qFuqGAraqLjI1beDcjSDp7VjbIErEaqa/uSR8J0/9yF8QuvgIjrs+gPC
+         Kdo+BK/rreowzy+EPvoydW8I9Aim7fFMBW6fH1wnYopdzUOMpeUNd7OcGxnRz2nlBvxm
+         mU7OLPS1gfUpXghW5Fio6D9mROW7qyl5J+V91RhLHlt6r77rWWjcl8vnM7iyLMD1cn8d
+         35FnUm3McfGOfRPqs1JHAQ1eibJMNs1zfYQ5AYG6WewL3Ycf6/e/naqXg/25GgurozCs
+         TWXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NRzauk5W0c4i3AtDmB1tB3FNvj5mK7aRwx6rTnT6lcM=;
-        b=NBKwJ4G0NIl3wN7NUZDumDelkqb3jBeAxS8R1wRqR/Wy5NK9qgNl9LSeOZBQnsB6jL
-         YdfEhq4yggxhHtqNZUoBV4Epe3OudQ6AAHJi+5zZa0/ui1P+sU2HM5rbt0v8C+jw+I2N
-         6oiW3DIozYNnNIXgxHiyblydl0dIIMJLQBhklyWpzni3RsXe291ehC3X4tGVCZJcxlMA
-         beUr5OQ626ey3nJFnUyy6G5hglf1boyXgmBV6pzFCvM516isL8fkPddmOYyth6i/an42
-         oDg1U5VvY/WT6kud8wD80ZZ7KAGdKEVT85RnEq6t0UIo+7njyzI7q5cmhhy01F/6LhNd
-         VcbA==
-X-Gm-Message-State: AFeK/H3FkxDXZtsXjATuZQwthP6FxsF17D8iKrOfA+p3vqaYkkUliZub2s0sqcx2/9ezkQ==
-X-Received: by 10.223.164.85 with SMTP id e21mr9257123wra.58.1490380905319;
-        Fri, 24 Mar 2017 11:41:45 -0700 (PDT)
+        bh=sPzMPaIQ4O/OdVyltoMv0aeWceLmrE7iXvBtp3jYqGQ=;
+        b=pu2n5nMfYPdap2QL1911jGMfNBzrdIqn+uiw/q3TI2yUOTQUUGFX0/OiWuc+Nfs1LW
+         LXvC5aLXeps7Hp0jHHkSp7qE0I1RxAaWQTWapcs58JkNjEVOMWKBHdKrezadwo614o6b
+         /vVq9cVYobIAGOmJBGQd2I3gsJdBFIPqKvEicQ1ITpbwYzHo9VDgODRntntB7Db8mI5+
+         OIMOlLdaV8I0SCKE/gbY7WgZ4j5bdcqF/JRagxtRLTr4bHnk+C2mr6gPRkbz23P/zXMz
+         ZUDcvxpbP+xLl+rZtEOw5QonAnC01WGuqsv9BxPwZZMZfQ+6MJGgoh4wFmeFQKWqsjng
+         eRyQ==
+X-Gm-Message-State: AFeK/H1EkG7aZOYBRyMl4hWxnaNLY5WQ6pYdWzCD5LCMua/8z3rbDlFXj6OWIrG4IVW3Lg==
+X-Received: by 10.223.163.131 with SMTP id l3mr9277447wrb.138.1490380903195;
+        Fri, 24 Mar 2017 11:41:43 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id j77sm3440560wmj.3.2017.03.24.11.41.43
+        by smtp.gmail.com with ESMTPSA id j77sm3440560wmj.3.2017.03.24.11.41.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Mar 2017 11:41:44 -0700 (PDT)
+        Fri, 24 Mar 2017 11:41:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
         Karthik Nayak <karthik.188@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 10/16] parse-options: add OPT_NONEG to the "contains" option
-Date:   Fri, 24 Mar 2017 18:40:53 +0000
-Message-Id: <20170324184059.5374-11-avarab@gmail.com>
+Subject: [PATCH v4 09/16] tag: add more incompatibles mode tests
+Date:   Fri, 24 Mar 2017 18:40:52 +0000
+Message-Id: <20170324184059.5374-10-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170324184059.5374-1-avarab@gmail.com>
 References: <20170324184059.5374-1-avarab@gmail.com>
@@ -73,34 +73,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the OPT_NONEG flag to the "contains" option and its hidden synonym
-"with". Since this was added in commit 694a577519 ("git-branch
---contains=commit", 2007-11-07) giving --no-{contains,with} hasn't
-been an error, but has emitted the help output since
-filter.with_commit wouldn't get set.
+Amend the test suite to test for more invalid uses like "-l -a"
+etc.
 
-Now git will emit "error: unknown option `no-{contains,with}'" at the
-top of the help output.
+This change tests the code path in builtin/tag.c between lines:
+
+    if (argc == 0 && !cmdmode)
+
+And:
+
+    if ((create_tag_object || force) && (cmdmode != 0))
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- parse-options.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t7004-tag.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/parse-options.h b/parse-options.h
-index dcd8a0926c..9f48f554ba 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -258,7 +258,7 @@ extern int parse_opt_passthru_argv(const struct option *, const char *, int);
- 	  PARSE_OPT_LASTARG_DEFAULT | flag, \
- 	  parse_opt_commits, (intptr_t) "HEAD" \
- 	}
--#define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, 0)
--#define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("with", v, h, PARSE_OPT_HIDDEN)
-+#define OPT_CONTAINS(v, h) _OPT_CONTAINS_OR_WITH("contains", v, h, PARSE_OPT_NONEG)
-+#define OPT_WITH(v, h) _OPT_CONTAINS_OR_WITH("with", v, h, PARSE_OPT_HIDDEN | PARSE_OPT_NONEG)
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 63ee2cf727..92af8bb7e6 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1455,8 +1455,24 @@ test_expect_success 'checking that initial commit is in all tags' "
  
- #endif
+ test_expect_success 'mixing incompatibles modes and options is forbidden' '
+ 	test_must_fail git tag -a &&
++	test_must_fail git tag -a -l &&
++	test_must_fail git tag -s &&
++	test_must_fail git tag -s -l &&
++	test_must_fail git tag -m &&
++	test_must_fail git tag -m -l &&
++	test_must_fail git tag -m "hlagh" &&
++	test_must_fail git tag -m "hlagh" -l &&
++	test_must_fail git tag -F &&
++	test_must_fail git tag -F -l &&
++	test_must_fail git tag -f &&
++	test_must_fail git tag -f -l &&
++	test_must_fail git tag -a -s -m -F &&
++	test_must_fail git tag -a -s -m -F -l &&
+ 	test_must_fail git tag -l -v &&
++	test_must_fail git tag -l -d &&
++	test_must_fail git tag -l -v -d &&
+ 	test_must_fail git tag -n 100 &&
++	test_must_fail git tag -n 100 -v &&
+ 	test_must_fail git tag -l -m msg &&
+ 	test_must_fail git tag -l -F some file &&
+ 	test_must_fail git tag -v -s &&
 -- 
 2.11.0
 
