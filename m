@@ -2,76 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B41A20964
-	for <e@80x24.org>; Thu, 23 Mar 2017 23:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65FCC2095E
+	for <e@80x24.org>; Fri, 24 Mar 2017 00:49:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756750AbdCWXt1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 19:49:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50717 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755029AbdCWXt1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 19:49:27 -0400
-Received: (qmail 30714 invoked by uid 109); 23 Mar 2017 23:49:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 23:49:25 +0000
-Received: (qmail 12860 invoked by uid 111); 23 Mar 2017 23:49:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 19:49:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 19:49:22 -0400
-Date:   Thu, 23 Mar 2017 19:49:22 -0400
-From:   Jeff King <peff@peff.net>
+        id S1756901AbdCXAtF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 20:49:05 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34178 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756828AbdCXAtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 20:49:02 -0400
+Received: by mail-pf0-f193.google.com with SMTP id o126so26291pfb.1
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 17:49:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gzVHhYvVNvbTezzSo1cdcZ0ImGOgoW0xVDMDC6zTaOg=;
+        b=UUlIBPijA114BVAN5YgRJEP/+V8+2LvvjFYS+4GhKG9xYSNwF0IUe0gJ12O3y30+XE
+         +BW5Z+aRCRmJ/vC51+h8ZaZbWUcvcvnJn07BzSiQRYNTI+FtvSTpxxU5L/mV1ql8d2Hc
+         3Sx82HGHcLTmRJeHTgU2GePRqJcCoxTv+/f21QlPpOFSEjBafZXJmhy90R/DQA671L4f
+         NKHIAI/RYnkSBg4sI2EV4Jk/Fvlw+6UK7ljCGk8tHPYCKl0SeV/LxlkoWh8kvfF9gLcX
+         OZ8NSaeLr4NiHOmmvqDxgdcht+rW7ZpWPsxI80YcRUF+qw6l34fIfTnmAci7/Sche6Cc
+         fj8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gzVHhYvVNvbTezzSo1cdcZ0ImGOgoW0xVDMDC6zTaOg=;
+        b=Nb9o5P0IhDqMCat4JrbgOkkkDzCzTS3VECrVnlee+8AJNEQRRJsNEXlyT/Bu2+0qVR
+         P3rZ+jDXlY8ijjeXQHkKY6M+ZFQpunxRISkdb7YcXYmSXoCL4nkJrdO1zbYLt5DHw/Cw
+         v4HmlCDEGe7+xGVYu5ILN2Wh9FXgvq6s1Q+/rIXWVHPDu0uyz/ggSNbhk2NZZmbdh3Kx
+         W00WW9auNBh5u1RiIxCnPiS/jkLOwn34awoCK2xd6VrgEoH2M0YGYc/6F+PRiWu6gjKr
+         bJl1FNWNezrvcY6igalktPOglnSI/fzNAPjtRIaF0oCqBM26NTvNYn27gTDH8bgosJAs
+         89DA==
+X-Gm-Message-State: AFeK/H0mK92RLV0Ql7dthqTCE7PPm/gDXRUnn5DcbjZ3iBQL9B4+j92a2LEbUsaTHTousA==
+X-Received: by 10.98.93.150 with SMTP id n22mr6118031pfj.103.1490316540572;
+        Thu, 23 Mar 2017 17:49:00 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:6c40:39b9:f9ab:ec6f])
+        by smtp.gmail.com with ESMTPSA id z62sm542482pff.88.2017.03.23.17.48.59
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 23 Mar 2017 17:48:59 -0700 (PDT)
+Date:   Thu, 23 Mar 2017 17:48:58 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org,
-        Jan Palus <jan.palus@gmail.com>
-Subject: Re: [PATCH 3/3] t7004, t7030: fix here-doc syntax errors
-Message-ID: <20170323234922.ot2vqblcnljacdtn@sigill.intra.peff.net>
-References: <20170322200805.23837-1-gitster@pobox.com>
- <20170322200805.23837-4-gitster@pobox.com>
- <20170322211003.b52cql3iwig2xqcd@sigill.intra.peff.net>
- <xmqq8tnxhssv.fsf@gitster.mtv.corp.google.com>
- <20170322221556.j7uj4vvgbcubcr3b@LykOS.localdomain>
- <20170322222230.yqqv6x4gokvb4jbz@sigill.intra.peff.net>
- <20170322223441.w32y464jqbnxnzna@LykOS.localdomain>
- <20170322224124.u3eax4ui3y4saxks@sigill.intra.peff.net>
- <20170322225108.wub4bmr63hk2sp33@LykOS.localdomain>
- <xmqqfui3ac2f.fsf@gitster.mtv.corp.google.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] branch doc: Change `git branch <pattern>` to use
+ `<branchname>`
+Message-ID: <20170324004858.GE20794@aiede.mtv.corp.google.com>
+References: <20170323120326.19051-1-avarab@gmail.com>
+ <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
+ <CACBZZX7vW0TkbrBvLvKWnY=UpHNHzzQ7wuwhEhNOjCCjzPVMjA@mail.gmail.com>
+ <xmqq37e3brxz.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqfui3ac2f.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq37e3brxz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 23, 2017 at 03:00:08PM -0700, Junio C Hamano wrote:
+Junio C Hamano wrote:
 
-> Santiago Torres <santiago@nyu.edu> writes:
-> 
-> > This sounds like a helpful addition to implement. We could update/add
-> > tests for compliance on this once the feature is addded and fix the
-> > ambiguous behavior in the tests now.
-> 
-> OK, so has everybody agreed what the next step would be?  Is the
-> patch below a good first step (I still need to get it signed off)?
+> I can go without "Do not forget ..." and everything that follows,
+> though, and if we are going to do so, then
+>
+> 	--list::
+> 		List branches.  With optional <pattern>...,
+> 		e.g. `git branch --list 'maint-*`, list only the
+> 		branches that match the pattern(s).
+>
+> would be fine.  I am not opposed to having an visually distinctive
+> example--I just do not want to have one that is wrong without
+> clearly marking it as such.
 
-Yeah, I think this is the right fix.
+I like this one.  I haven't witnessed "git branch maint-*" being a
+common mistake.
 
-> -- >8 --
-> Subject: t7004, t7030: fix here-doc syntax errors
-> From: Santiago Torres <santiago@nyu.edu>
-> 
-> Jan Palus noticed that some here-doc are spelled incorrectly,
-> resulting the entire remainder of the test as if it were data
-> slurped into the "expect" file, e.g. in this sequence
+For comparison, "git branch -l maint-*" does seem to be a common
+mistake.  It's a shame that the short-and-sweet "-l" was taken for
+that purpose.  Perhaps it's worth calling that out here?
 
-I had trouble parsing this. Perhaps:
+	--list::
+	--list <pattern>::
+		List branches.  If <pattern> is specified (e.g.,
+		"git branch --list 'maint-*'), list only the
+		branches that match the pattern.
+	+
+	This should not be confused with `git branch -l <branchname>`,
+	which creates a branch named `<branchname>` with a reflog.
+	See `--create-reflog` above for details.
 
-  resulting in the entire remainder of the test snippet being slurped
-  into the "expect" file as if it were data
-
--Peff
+Thanks,
+Jonathan
