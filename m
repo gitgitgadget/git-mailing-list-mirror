@@ -2,110 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 827AF20958
-	for <e@80x24.org>; Fri, 24 Mar 2017 00:53:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67B632095E
+	for <e@80x24.org>; Fri, 24 Mar 2017 00:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933467AbdCXAxD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Mar 2017 20:53:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50754 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754313AbdCXAxC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Mar 2017 20:53:02 -0400
-Received: (qmail 2808 invoked by uid 109); 24 Mar 2017 00:52:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 00:52:59 +0000
-Received: (qmail 13212 invoked by uid 111); 24 Mar 2017 00:53:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 23 Mar 2017 20:53:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Mar 2017 20:52:56 -0400
-Date:   Thu, 23 Mar 2017 20:52:56 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] completion: offer ctags symbol names for 'git log
- -S', '-G' and '-L:'
-Message-ID: <20170324005256.ji2wijhyqnwbpp5t@sigill.intra.peff.net>
-References: <20170323153839.24283-1-szeder.dev@gmail.com>
- <20170323153839.24283-4-szeder.dev@gmail.com>
+        id S933964AbdCXA7h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Mar 2017 20:59:37 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:33286 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755507AbdCXA7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Mar 2017 20:59:36 -0400
+Received: by mail-pf0-f179.google.com with SMTP id o190so195636pfo.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 17:59:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=09rXU3uL30fn/gOqzthJ+wkhzBRNuBJ3ElxxMBZZk0I=;
+        b=sH4z5yU9mz0Cmip3bd8Ouuw6dRv63LUy35fls7qBCa+tmzley60MyP66ij8i1NVJjr
+         mvNAHbRQHVS8v2lcnfVnNy7XqVeaVRx/9L0f0ZbxB9wgqUhWQgl45VsvFbDRWHU2X2DC
+         3xcL766Zcp20r5Heo7248nKPp5GFguj8ETSkTOUxOlL5pp44kChEKLJtuV+6RjnN0yim
+         zb0wFXhVxZj+BI5Pon7xzjwq+7GLgD1dGYJtzgvXWyZ/VYXiee8M1lS3HQEER0v8zxEw
+         AntvPrd8eWkoFlt5vUeCbADsftOPb4BcVILev+7SzyaACbAJla5t8bjxIk9QPLoJAG7Y
+         VX0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=09rXU3uL30fn/gOqzthJ+wkhzBRNuBJ3ElxxMBZZk0I=;
+        b=ikK/B+qMZ+MSr4SEABWAE/LAGEOdWXQyxULzBgjTYcXegYFrQ62hQSvyO8AhMDA8u1
+         4rM/Df8L9lM5jT/uEXpf/vOaYMRuVyM5bUK3qK75efuMwNQPub+LxGSvLEbP6UCiTYin
+         hhQcfhnEnE3QwGQ4cEcdtKSAmgG79aYHs8RwHepRhw9GfkCqlkbgX3vIUqcQ2o/OZsQc
+         IKzPLvt5jjTUDEDzjlcwNY/YgbvmfEse5yBCn1Ikuf4dKEw1HgImeOG9Mt7xI4DiQsc3
+         ERXW4VKGjnA1vgnExOZB6EkDee1/1YOfahvIXzTJHCghDZKczRbZnuqWUtrpZvuafNJx
+         N+tg==
+X-Gm-Message-State: AFeK/H3d6wsyR8jlI6/yKqCB+ifKFv3fAhN5+8e4yWExhGz9CBWcOqYJSXuvvDrVoWfQcA==
+X-Received: by 10.84.214.129 with SMTP id j1mr7045985pli.23.1490317175032;
+        Thu, 23 Mar 2017 17:59:35 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:6c40:39b9:f9ab:ec6f])
+        by smtp.gmail.com with ESMTPSA id t187sm555125pfb.116.2017.03.23.17.59.33
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 23 Mar 2017 17:59:33 -0700 (PDT)
+Date:   Thu, 23 Mar 2017 17:59:32 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] t/README: clarify the test_have_prereq documentation
+Message-ID: <20170324005932.GG20794@aiede.mtv.corp.google.com>
+References: <20170322221854.10791-1-avarab@gmail.com>
+ <20170322221854.10791-3-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170323153839.24283-4-szeder.dev@gmail.com>
+In-Reply-To: <20170322221854.10791-3-avarab@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 23, 2017 at 04:38:39PM +0100, SZEDER GÃ¡bor wrote:
+Hi,
 
-> Just like in the case of search patterns for 'git grep', see 29eec71f2
-> (completion: match ctags symbol names in grep patterns, 2011-10-21)),
-> a common thing to look for using 'git log -S', '-G' and '-L:' is the
-> name of a symbol.
-> 
-> Teach the completion for 'git log' to offer ctags symbol names after
-> these options, both in stuck and in unstuck forms.
+Ævar Arnfjörð Bjarmason wrote:
 
-I think this makes sense and is an improvement over the status quo.
+> --- a/t/README
+> +++ b/t/README
+> @@ -612,8 +612,10 @@ library for your script to use.
+>   - test_have_prereq <prereq>
+>  
+>     Check if we have a prerequisite previously set with
+> -   test_set_prereq. The most common use of this directly is to skip
+> -   all the tests if we don't have some essential prerequisite:
+> +   test_set_prereq. The most common use-case for using this directly,
+> +   as opposed to as an argument to test_expect_*, is to skip all the
+> +   tests at the start of the test script if we don't have some
+> +   essential prerequisite:
 
-There are two gotchas with completing "-L" like this:
+Nit: the hyphenated word "use-case" feels jargon-ish.  I've seen it
+more often as two separate words.  Better yet to clarify that we're
+talking about idioms and not just goals:
 
-  1. You still have to come up with the filename yourself for "-L".
+                       The most common way to use this explicitly (as opposed
+      to the implicit use when an argument is passed to test_expect_*) is to
+      skip all the tests at the start of a test script if we don't have some
+      essential prerequisite:
 
-  2. The function name is actually a regex, so you can get bit when your
-     function name is a subset of another.
+With or without such a change,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-I have a script (below) which makes this easier (and I complete its
-argument using the tags file).  It's probably too gross to even go into
-contrib, but I thought I'd share.
-
-"log -S" sometimes benefits from limiting by filename, too, but it
-depends what you're doing. I don't have a gross script for that. :)
-
--- >8 --
-#!/usr/bin/env perl
-if (!@ARGV) {
-  print STDERR "usage: git flog [options] <function>\n";
-  exit 1;
-}
-
-my $func = pop @ARGV;
-my $file = get_file_from_tags($func);
-my $regex = '[^A-Za-z_]' . $func . '[^A-Za-z0-9_]';
-exec qw(git log), "-L:$regex:$file", @ARGV;
-exit 1;
-
-sub get_file_from_tags {
-  my $token = shift;
-
-  open(my $fh, '<', 'tags')
-    or die "unable to open tags: $!\n";
-  while (<$fh>) {
-    chomp;
-
-    # this isn't exactly right, as the Ex command may contain
-    # embedded tabs, but it's accurate for the token and filename,
-    # which come before, and probably good enough to match extension fields
-    # which come after
-    my @fields = split /\t/;
-
-    next unless $fields[0] eq $token;
-
-    # only look for functions; assumes your ctags uses the "kind"
-    # extension field. Note also that some implementations write the "kind:"
-    # header and some do not. This handles both.
-    next unless grep { /^(kind:\s*)?f$/ } @fields;
-
-    # there may be more, but we don't have any way of disambiguating,
-    # so just return the first match
-    return $fields[1];
-  }
-
-  die "unknown token: $token\n";
-}
-__END__
+Thanks.
