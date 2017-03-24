@@ -2,74 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B86F320966
-	for <e@80x24.org>; Fri, 24 Mar 2017 12:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCB5A1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 12:42:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753131AbdCXMj5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 08:39:57 -0400
-Received: from siwi.pair.com ([209.68.5.199]:53171 "EHLO siwi.pair.com"
+        id S1755860AbdCXMm7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 08:42:59 -0400
+Received: from giant.haxx.se ([80.67.6.50]:54795 "EHLO giant.haxx.se"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751731AbdCXMjz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 08:39:55 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0404B84626;
-        Fri, 24 Mar 2017 08:39:53 -0400 (EDT)
-Subject: Re: [PATCH v2 0/7] thread lazy_init_name_hash
-To:     Junio C Hamano <gitster@pobox.com>
-References: <1490276825-41544-1-git-send-email-git@jeffhostetler.com>
- <xmqqh92jev8d.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5f29c3d9-0de5-385e-fda1-fb4380c7bc17@jeffhostetler.com>
-Date:   Fri, 24 Mar 2017 08:39:52 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1752232AbdCXMm5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 08:42:57 -0400
+Received: from giant.haxx.se (localhost.localdomain [127.0.0.1])
+        by giant.haxx.se (8.15.2/8.15.2/Debian-4) with ESMTPS id v2OCgm9Z007336
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 24 Mar 2017 13:42:48 +0100
+Received: from localhost (dast@localhost)
+        by giant.haxx.se (8.15.2/8.15.2/Submit) with ESMTP id v2OCgmvI007331;
+        Fri, 24 Mar 2017 13:42:48 +0100
+X-Authentication-Warning: giant.haxx.se: dast owned process doing -bs
+Date:   Fri, 24 Mar 2017 13:42:48 +0100 (CET)
+From:   Daniel Stenberg <daniel@haxx.se>
+X-X-Sender: dast@giant.haxx.se
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>, Johannes.Schindelin@gmx.de,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v2] travis-ci: build and test Git on Windows
+In-Reply-To: <CD7E9F8C-77CA-44D4-AEC8-CEACD0528E3A@gmail.com>
+Message-ID: <alpine.DEB.2.20.1703241341570.17768@tvnag.unkk.fr>
+References: <20170324113747.44991-1-larsxschneider@gmail.com> <alpine.DEB.2.20.1703241242210.17768@tvnag.unkk.fr> <CD7E9F8C-77CA-44D4-AEC8-CEACD0528E3A@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+X-fromdanielhimself: yes
 MIME-Version: 1.0
-In-Reply-To: <xmqqh92jev8d.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 24 Mar 2017, Lars Schneider wrote:
 
-
-On 3/23/2017 1:52 PM, Junio C Hamano wrote:
-> The API document update in 4/7 is a nice addition and it comes at
-> the right spot in the series, just after API enhancement is done.  I
-> gave a quick reading on it twice, and all looked reasonable.  Nicely
-> done.
-
-Thanks.
-
-> I queued the sparse things Ramsay pointed out in the form of
-> "SQUASH???" immediately that follows your original patch while
-> applying the series, so please check what I push out (when it
-> happens) and if there is no further change needed, just tell me to
-> actually squash them in, if you think these SQUASH??? patches are
-> good.  That way we do not have to have another reroll only to fix
-> these up ;-)
-
-The squashes look fine.
-
-WRT the assert() in name-hash.c, Stefan suggested converting it
-to an if-!-die form in an earlier message in this thread.  I'm OK
-with that or with removing the assert completely.
-
-> I'll need to re-read "name-hash: perf improvement for lazy_init_name_hash"
-> later again to convince myself, but during my initial read (from the
-> last round) I didn't spot anything wrong there.
+>> 2. run your own buildbot and submit data using the regular github hook and
+>>   have buildbot submit the results back (it has a plugin that can do that).
+>>   We do solaris-builds in the curl project using that method (thanks to
+>>   opencsw.org) and some additional windows-builds thanks to private
+>>   individuals.
 >
-> Thanks.
->
+> We could do that! However, the idea was to have the entire build status for 
+> all platforms in one place.
 
-Thanks,
-Jeff
+As the status is (or at least can be) passed back to github, all CI jobs are 
+shown at the same place: below each commit and each pull-request...
+
+-- 
+
+  / daniel.haxx.se
