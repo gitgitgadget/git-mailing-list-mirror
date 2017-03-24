@@ -6,131 +6,69 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAE701FC19
+	by dcvr.yhbt.net (Postfix) with ESMTP id F02781FC19
 	for <e@80x24.org>; Fri, 24 Mar 2017 21:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936317AbdCXVbi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 17:31:38 -0400
-Received: from koekblik.kaarsemaker.net ([141.138.139.206]:57574 "EHLO
+        id S936319AbdCXVbn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 17:31:43 -0400
+Received: from koekblik.kaarsemaker.net ([141.138.139.206]:57564 "EHLO
         koekblik.kaarsemaker.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936249AbdCXVbe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 17:31:34 -0400
+        with ESMTP id S936275AbdCXVb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 17:31:27 -0400
 Received: from localhost.localdomain (unknown [145.129.9.233])
-        by koekblik.kaarsemaker.net (Postfix) with ESMTP id D485380400;
-        Fri, 24 Mar 2017 22:31:21 +0100 (CET)
+        by koekblik.kaarsemaker.net (Postfix) with ESMTP id 7F8ED802D7;
+        Fri, 24 Mar 2017 22:31:13 +0100 (CET)
 From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
 To:     git@vger.kernel.org
 Cc:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: [PATCH v4 2/2] diff --no-index: support reading from pipes
-Date:   Fri, 24 Mar 2017 22:31:10 +0100
-Message-Id: <20170324213110.4331-3-dennis@kaarsemaker.net>
+Subject: [PATCH v4 0/2] diff --no-index: support symlinks and pipes
+Date:   Fri, 24 Mar 2017 22:31:08 +0100
+Message-Id: <20170324213110.4331-1-dennis@kaarsemaker.net>
 X-Mailer: git-send-email 2.12.0-488-gd3584ba
-In-Reply-To: <20170324213110.4331-1-dennis@kaarsemaker.net>
-References: <20170324213110.4331-1-dennis@kaarsemaker.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diff <(command1) <(command2) provides useful output, let's make it
-possible for git to do the same.
+git diff <(command1) <(command2) is less useful than it could be, all it outputs is:
 
-Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
----
- diff-no-index.c          |  9 +++++++++
- diff.c                   | 18 ++++++++++++++++--
- t/t4053-diff-no-index.sh | 10 ++++++++++
- t/test-lib.sh            |  4 ++++
- 4 files changed, 39 insertions(+), 2 deletions(-)
+diff --git a/dev/fd/63 b/dev/fd/62
+index 9e6542b297..9f7b2c291b 120000
+--- a/dev/fd/63
++++ b/dev/fd/62
+@@ -1 +1 @@
+-pipe:[464811685]
+\ No newline at end of file
++pipe:[464811687]
+\ No newline at end of file
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index fe48f32ddd..1262a587e5 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -83,6 +83,15 @@ static struct diff_filespec *noindex_filespec(const char *name, int mode)
- 		name = "/dev/null";
- 	s = alloc_filespec(name);
- 	fill_filespec(s, null_sha1, 0, mode);
-+	/*
-+	 * In --no-index mode, we support reading from pipes. canon_mode, called by
-+	 * fill_filespec, gets confused by this and thinks we now have subprojects.
-+	 * To help the rest of the diff machinery along, we now override what
-+	 * canon_mode says. This is done here instead of in canon_mode, because the
-+	 * rest of git does not (and should not) support pipes.
-+	 */
-+	if (S_ISFIFO(mode))
-+		s->mode = S_IFREG | ce_permissions(mode);
- 	if (name == file_from_standard_input)
- 		populate_from_stdin(s);
- 	return s;
-diff --git a/diff.c b/diff.c
-index 2afecfb939..4f74a54d74 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2765,6 +2765,11 @@ static int diff_populate_gitlink(struct diff_filespec *s, int size_only)
- 	return 0;
- }
- 
-+static int should_mmap_file_contents(struct stat *st)
-+{
-+	return S_ISREG(st->st_mode);
-+}
-+
- /*
-  * While doing rename detection and pickaxe operation, we may need to
-  * grab the data for the blob (or file) for our own in-core comparison.
-@@ -2839,9 +2844,18 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
- 		fd = open(s->path, O_RDONLY);
- 		if (fd < 0)
- 			goto err_empty;
--		s->data = xmmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
-+		if (!should_mmap_file_contents(&st)) {
-+			struct strbuf sb = STRBUF_INIT;
-+			strbuf_read(&sb, fd, 0);
-+			s->size = sb.len;
-+			s->data = strbuf_detach(&sb, NULL);
-+			s->should_free = 1;
-+		}
-+		else {
-+			s->data = xmmap(NULL, s->size, PROT_READ, MAP_PRIVATE, fd, 0);
-+			s->should_munmap = 1;
-+		}
- 		close(fd);
--		s->should_munmap = 1;
- 
- 		/*
- 		 * Convert from working tree format to canonical git format
-diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
-index 8c87bffb34..2d9b322315 100755
---- a/t/t4053-diff-no-index.sh
-+++ b/t/t4053-diff-no-index.sh
-@@ -171,4 +171,14 @@ test_expect_success SYMLINKS 'diff --no-index --no-dereference does not follow s
- 	test_cmp expect actual
- '
- 
-+test_expect_success PROCESS_SUBSTITUTION 'diff --no-index works on fifos' '
-+	cat >expect <<-EOF &&
-+		@@ -1 +1 @@
-+		-1
-+		+2
-+	EOF
-+	test_expect_code 1 git diff --no-index --dereference <(echo 1) <(echo 2) | tail -n +5 > actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 11562bde10..78f3d24651 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1128,3 +1128,7 @@ build_option () {
- test_lazy_prereq LONG_IS_64BIT '
- 	test 8 -le "$(build_option sizeof-long)"
- '
-+
-+test_lazy_prereq PROCESS_SUBSTITUTION '
-+	eval "foo=<(echo test)" 2>/dev/null
-+'
+Normal diff provides arguably better output: the diff of the output of the
+commands. This series makes it possible for git diff --no-index to follow
+symlinks and read from pipes, mimicking the behaviour of normal diff.
+
+v1: http://public-inbox.org/git/20161111201958.2175-1-dennis@kaarsemaker.net/
+v2: http://public-inbox.org/git/20170113102021.6054-1-dennis@kaarsemaker.net/
+v3: http://public-inbox.org/git/20170318210038.22638-1-dennis@kaarsemaker.net/
+
+Changes since v3:
+Using the --dereference option without being in explicit or implicit no-index
+mode is no longer silently ignored, but an error. A test has been added for
+this behaviour.
+
+Dennis Kaarsemaker (2):
+  diff --no-index: optionally follow symlinks
+  diff --no-index: support reading from pipes
+
+ Documentation/diff-options.txt |  9 +++++++
+ builtin/diff.c                 |  2 ++
+ diff-no-index.c                | 16 ++++++++++---
+ diff.c                         | 30 +++++++++++++++++++----
+ diff.h                         |  2 +-
+ t/t4011-diff-symlink.sh        |  6 +++++
+ t/t4053-diff-no-index.sh       | 54 ++++++++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh                  |  4 ++++
+ 8 files changed, 115 insertions(+), 8 deletions(-)
+
 -- 
 2.12.0-488-gd3584ba
 
