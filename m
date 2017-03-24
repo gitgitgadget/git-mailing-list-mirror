@@ -2,177 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D6FC1FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 13:28:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55C6F1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 13:58:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934762AbdCXN2V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 09:28:21 -0400
-Received: from siwi.pair.com ([209.68.5.199]:33523 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754022AbdCXN2T (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 09:28:19 -0400
-Received: from jeffhostetler.2jll4ugiwlvuzhh55dqabi0nia.bx.internal.cloudapp.net (unknown [40.76.14.28])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0126684616;
-        Fri, 24 Mar 2017 09:28:12 -0400 (EDT)
-From:   git@jeffhostetler.com
+        id S1752572AbdCXN6K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 09:58:10 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:35905 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751616AbdCXN6I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 09:58:08 -0400
+Received: by mail-lf0-f65.google.com with SMTP id n78so382533lfi.3
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 06:58:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=IM7f58BY44nHhL7D5f/UWCvHpULEnNk9xmVPIpWGyOg=;
+        b=aY/Z3JA602SGShq01Wh1oFf+JVgK1bMwu1Zs/Lm/xSdr9/tPakg6u9wm4d4lH+jYvK
+         0c48bvzxhsmyqi0b+Tmoc1uXwkP7/BF41YaUu8fV7G5KqjXVZQnAb3Vy3SiaG3cn0afB
+         stSokSUutGDnFrgZbbeRth6P3LjFiGW468vEJNENs9pHP91jHBP5aj0wpQmCVleUZlp5
+         K1WesuoeLrly+jPBrh0UXalk0281Y8nW1Qy/vr/lvjMA3sNXaQ6h2fBUv4UKmTQHZA/p
+         PnqUcQhz9DOCudXBKbSfyI+qR1cWI0g5EA5m3yQz101574OM3/c0fm05k7qhJnxzZ3zI
+         KpvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=IM7f58BY44nHhL7D5f/UWCvHpULEnNk9xmVPIpWGyOg=;
+        b=H5j/R43qXNqDeYyW3qWFbz49zjz8OK5O2U/BglRZfaUhKN0JE7blTbKlgH/Cw2c023
+         Ghz463rmDBpM02n7UfROCMN3mJZZkbmI2Uo7Pgd8dS0SbV/eQ3UEIR+YphJVeWOzCyC9
+         TA9WTsHC84zB3OJ0Iq2gf6TFymDo3d7FzO0dhqYOC1i8RSgpkSLy2L7qSpMaNvKRv/44
+         dWuAXhZ8xOjZUQBS233i1nLDbj2vZ8VxVurzb9wAkidxwQ8XrLw4IeFjWFZQwT1lXYDz
+         UDfKI3FE/E4SObt14bfTtlIpoyzb7+26GWOtBKOCknjO488BSjVPmvYn38qfQX6dvY1w
+         zg/A==
+X-Gm-Message-State: AFeK/H06ao8jlBIVs/AKD8dbqFtnGsXwvBftEHPmMmwoeobtbwxwc2i47OL4eRJWjGSobQ==
+X-Received: by 10.25.17.153 with SMTP id 25mr4589053lfr.39.1490363885603;
+        Fri, 24 Mar 2017 06:58:05 -0700 (PDT)
+Received: from [192.168.100.2] ([178.121.253.81])
+        by smtp.gmail.com with ESMTPSA id t30sm368366ljd.39.2017.03.24.06.58.04
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Mar 2017 06:58:04 -0700 (PDT)
+From:   Nikita Kunevich <nik.kunevich@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.2 \(3259\))
+Subject: [GSoC] Git CI Improvements 5 microproject
+Message-Id: <B7AD8170-0742-4B22-9C6B-EC2A5DA12929@gmail.com>
+Date:   Fri, 24 Mar 2017 16:58:02 +0300
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH] read-cache: call verify_hdr() in a background thread
-Date:   Fri, 24 Mar 2017 13:27:51 +0000
-Message-Id: <1490362071-46932-2-git-send-email-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1490362071-46932-1-git-send-email-git@jeffhostetler.com>
-References: <1490362071-46932-1-git-send-email-git@jeffhostetler.com>
+X-Mailer: Apple Mail (2.3259)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Hello, git team. My name is Nikita Kunevich. I=E2=80=99m student of =
+Belarusian State University of Informatics and Radioelectronics. I=E2=80=99=
+d like to particapate in Google Summer of Code 2017 under git =
+organization.
+I=E2=80=99m working on =E2=80=9CGit CI Improvements 5=E2=80=9D =
+microproject which is creating web page for analyzing most frequently =
+failing test using data from Travis CI.
+I=E2=80=99ll write my full application as soon as I finish microproject.=20=
 
-Teash do_read_index() in read-cache.c to call verify_hdr()
-in a background thread while the forground thread parses
-the index and builds the_index.
-
-This is a performance optimization to reduce the overall
-time required to get the index into memory.
-
-Testing on Windows (using the OpenSSL SHA1 routine) showed
-that parsing the index and computing the SHA1 take almost
-equal time, so this patch effectively reduces the startup
-time by 1/2.
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- read-cache.c | 87 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 86 insertions(+), 1 deletion(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 9054369..27c63a3 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1564,6 +1564,83 @@ static void post_read_index_from(struct index_state *istate)
- 	tweak_untracked_cache(istate);
- }
- 
-+#ifdef NO_PTHREADS
-+
-+struct verify_hdr_thread_data {
-+	struct cache_header *hdr;
-+	size_t size;
-+};
-+
-+/*
-+ * Non-threaded version does all the work immediately.
-+ * Returns < 0 on error or bad signature.
-+ */
-+static int verify_hdr_start(struct verify_hdr_thread_data *d)
-+{
-+	return verify_hdr(d->hdr, (unsigned long)d->size);
-+}
-+
-+static int verify_hdr_finish(struct verify_hdr_thread_data *d)
-+{
-+	return 0;
-+}
-+
-+#else
-+
-+#include <pthread.h>
-+
-+/*
-+ * Require index file to be larger than this threshold before
-+ * we bother using a background thread to verify the SHA.
-+ */
-+#define VERIFY_HDR_THRESHOLD    (1024)
-+
-+struct verify_hdr_thread_data {
-+	pthread_t thread_id;
-+	struct cache_header *hdr;
-+	size_t size;
-+	int result;
-+};
-+
-+/*
-+ * Thread proc to run verify_hdr() computation in a background thread.
-+ */
-+static void *verify_hdr_thread_proc(void *_data)
-+{
-+	struct verify_hdr_thread_data *d = _data;
-+	d->result = verify_hdr(d->hdr, (unsigned long)d->size);
-+	return NULL;
-+}
-+
-+/*
-+ * Threaded version starts background thread and returns zero
-+ * to indicate that we don't know the hash is bad yet.  If the
-+ * index is too small, we just do the work imediately.
-+ */
-+static int verify_hdr_start(struct verify_hdr_thread_data *d)
-+{
-+	if (d->size < VERIFY_HDR_THRESHOLD)
-+		return verify_hdr(d->hdr, (unsigned long)d->size);
-+
-+	if (pthread_create(&d->thread_id, NULL, verify_hdr_thread_proc, d))
-+		die_errno("unable to start verify_hdr_thread");
-+
-+	return 0;
-+}
-+
-+static int verify_hdr_finish(struct verify_hdr_thread_data *d)
-+{
-+	if (d->size < VERIFY_HDR_THRESHOLD)
-+		return 0;
-+
-+	if (pthread_join(d->thread_id, NULL))
-+		die_errno("unable to join verify_hdr_thread");
-+
-+	return d->result;
-+}
-+
-+#endif
-+
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int must_exist)
- {
-@@ -1574,6 +1651,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	void *mmap;
- 	size_t mmap_size;
- 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
-+	struct verify_hdr_thread_data data;
- 
- 	if (istate->initialized)
- 		return istate->cache_nr;
-@@ -1600,7 +1678,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 	close(fd);
- 
- 	hdr = mmap;
--	if (verify_hdr(hdr, mmap_size) < 0)
-+
-+	data.hdr = hdr;
-+	data.size = mmap_size;
-+	if (verify_hdr_start(&data) < 0)
- 		goto unmap;
- 
- 	hashcpy(istate->sha1, (const unsigned char *)hdr + mmap_size - 20);
-@@ -1649,6 +1730,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 		src_offset += 8;
- 		src_offset += extsize;
- 	}
-+
-+	if (verify_hdr_finish(&data) < 0)
-+		goto unmap;
-+
- 	munmap(mmap, mmap_size);
- 	return istate->cache_nr;
- 
--- 
-2.7.4
 
