@@ -2,77 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 639FC1FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 22:42:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A0321FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 22:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752856AbdCXWmM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 18:42:12 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36790 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752838AbdCXWmK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 18:42:10 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 81so598350pgh.3
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 15:42:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=tSRK79GC1dgP0JtbxnadB4Q0qXP0wNx2tnQSkhmrzgI=;
-        b=XOQVfCBV+LBJfuHztP3v5pl06LFmTdCjQVREb+Dom+9BelWp2oJO/WQQDcrCzHHb03
-         0RnsPFZ6ZKKmvCCyEmZDrUnA1s612XQBKH1nNbwX0xlKH1USaI9oyOJIBZaduYsL38F9
-         YVMZLeenRY1I0BCcx176u4j2AjL9FqfraK9mcqm1DQuKZBqcVkgke8xFBGqGinVCTKW2
-         TkSVnQZxyGAYvpnKsU9MU97ukvPFsBFtLQJ/Whw3kY2Nwv5ZUziDxXmmyAUZGVqpn9Rm
-         MUrKiNp6VBpF1yGFRqmai3WECvxL9RTUy+jQzPyzG/6YdvpUGPAONkK2YjyYMuYOjY78
-         RaQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tSRK79GC1dgP0JtbxnadB4Q0qXP0wNx2tnQSkhmrzgI=;
-        b=PMiM/Tu6BTNGeQm+au+VFDWMCDaI/9QpWhtrGbMljryZzFGPe/yeH/3R9EhDo8CPEs
-         NZ5zri3V6HnvbVvcCMZCOXQTMkYz9LGHiCoStAJOmvthRcRaT4Vr/4lgbh5hufWaE4Pq
-         MwtnCXBhr7rYdxAo1tN301t4kyQEhQAdx4m8JneY1Gh6l6FiKFojzsNyy+n92aqlcO08
-         EzrGiSGlWlx5AJIqZlYiJ3L35RGrgXAQFDwwGcf6C0hz1aOLyaRvWPxDSrA9UKmbv+BG
-         lih59JJnV0EXJVzp1tiwJIOj2Gvnyn1iY7vDh/LidcctqMQ3fOuGd0BlwHU5aqnw1+Va
-         uOrg==
-X-Gm-Message-State: AFeK/H1PEldXKEshkeMFbs2I5GlUzgRJ2aXn1wuM/q4c7BRn9I374tg8zDzgLYV/euvdAQ==
-X-Received: by 10.98.66.155 with SMTP id h27mr11685987pfd.182.1490395329449;
-        Fri, 24 Mar 2017 15:42:09 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8597:ae41:db75:6a97])
-        by smtp.gmail.com with ESMTPSA id y70sm6551689pfa.96.2017.03.24.15.42.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 15:42:08 -0700 (PDT)
-Date:   Fri, 24 Mar 2017 15:42:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 5/7] submodule.c: stricter checking for submodules in
- is_submodule_modified
-Message-ID: <20170324224207.GJ31294@aiede.mtv.corp.google.com>
-References: <20170323223338.32274-7-sbeller@google.com>
- <20170324182902.19280-1-sbeller@google.com>
- <20170324182902.19280-6-sbeller@google.com>
+        id S1752643AbdCXWwZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 18:52:25 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54185 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751503AbdCXWwX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 18:52:23 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lb5nF-1cSuYs2Tof-00kdGO; Fri, 24
+ Mar 2017 23:52:11 +0100
+Date:   Fri, 24 Mar 2017 23:52:10 +0100 (CET)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] sha1dc: safeguard against outside definitions of BIGENDIAN
+Message-ID: <856355e49e7a6016f5d1ef5f9785d94a455b5755.1490395862.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170324182902.19280-6-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:hN9lnNS6boJN5eq7hrDO+NbpAXfCT+aFehAFfDIdVJ8/4PXMJFv
+ fFTwpnVObJpw4msb7m+0ftiWsxCYvwzAjs7kvf0bs/fw7DAq9O8k9ocEShrTmJd5kDF2A60
+ v1YDTY7NYQd39mUwPuevpOqnQ4QUn974pDLaheneTEm+eG5CBvQqBQx3+nHpPUFrlxkUu7Q
+ wg3TTUqx0yEWLRVWprIpQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UwJtlbGtHhw=:/VDQbNSViDbr/FGZwrLFPN
+ dJUlMFMU0BYCokOexHQawq6RUVbiGEy8vXO2V6vwnZ6gUWz9csVul4ae08BpxTivQ8clPPI3U
+ Iyu2tzuF95BXEqImqmZXDxN180RjB9ilNi0wl8WkB29HbCxF56tEsF9ocO090L+nwiaxDzyoo
+ UUUB1jekw8CbkrvKm0T0esHz4+OcDMN15wpMZREDc3TuM7F4mSOt5WxsWK8NMQX4VZ1JZBio6
+ dgXkDrD1BV/gjZGr6gI/HQ1susGQCtHBuWCbwX/I6lPKxH+sbaP3ZdYWUr4xIlH+KlU16FuJp
+ fMW9qacURUnn3RW22/wK5q77nsTrBjGYHgqn7QRbWpYwyMr6vNi/JUOHShIVfhbUbXVqGs39Q
+ v83ZCGh+Kj7+97ZGM63A4Da5aUUK7npmxnZTVDIN1TSD3Bsqyih6jQfpKgOqW4lzwsbj9lZH0
+ V6+4oUwsNsy6AosCN+Q5ClsY8vnuNvo5fki31myeAI2srlcYbmfeMOU1zLNXEY5r3+M+FmRVt
+ Lz5QcM2gbG4i1QL2MMELY79eUNhdEipFppuj0BPt0KnUifBcOyQb/yHL85W97vzW/o38Zo7Xt
+ HQhLXIrSqnuh9SnicydJGEgomoMou8iyrdBXmOy1t41ZJiBLIvLmH2w2jKh17Fe5nSWY7V4/7
+ hYUXdVM2BgNcshPuxGiCwF1GHzSiTHJELwm4VaB5pb9m2kyvsd/MZykpdI3/4eB9sDzK9v9eb
+ I+W2LWoQnNrzYO2Zb6vXNxCIUWgzCC/e8mzvqj/a8NjNcoabQzqFTpC93EzkUcdifmQGCzoxJ
+ DCCprcIW/j8B3sxa3WwKBmxBZ9MIA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
+In sha1dc/sha1.c, we #define BIGENDIAN under certain circumstances, and
+obviously leave the door open for scenarios where our conditions do not
+catch and that constant is #defined elsewhere.
 
-> By having a stricter check in the superproject we catch errors earlier,
-> instead of spawning a child process to tell us.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+However, we did not expect that anybody would possibly #define BIGENDIAN
+to 0, indicating that the current platform is *not* big endian.
 
-Yep. :)
+This is not just a theoretical consideration: On Windows, the winsock2.h
+header file (which is used to allow Git to communicate via network) does
+indeed do this.
+
+Let's test for that circumstance, too, and byte-swap as intended in that
+case.
+
+This fixes a massive breakage on Windows where current `pu` (having
+switched on DC_SHA1 by default) breaks pretty much every single test
+case.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+Published-As: https://github.com/dscho/git/releases/tag/sha1dc-bigendian=0-v1
+Fetch-It-Via: git fetch https://github.com/dscho/git sha1dc-bigendian=0-v1
+
+	Obviously, this patch is based on `next`.
+
+ sha1dc/sha1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index 6dd0da36084..d99db4f2e1b 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -35,7 +35,7 @@
+ 
+ #define sha1_mix(W, t)  (rotate_left(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1))
+ 
+-#if defined(BIGENDIAN)
++#if defined(BIGENDIAN) && BIGENDIAN != 0
+ 	#define sha1_load(m, t, temp)  { temp = m[t]; }
+ #else
+ 	#define sha1_load(m, t, temp)  { temp = m[t]; sha1_bswap32(temp); }
+
+base-commit: c21884356fab0bc6bc5fa6abcadbda27a112a76c
+-- 
+2.12.1.windows.1
