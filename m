@@ -2,118 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA4021FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 23:28:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31C951FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 23:32:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933856AbdCXX2v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 19:28:51 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54835 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932972AbdCXX2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 19:28:50 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLj5z-1crpU73mHz-000peF; Sat, 25
- Mar 2017 00:28:44 +0100
-Date:   Sat, 25 Mar 2017 00:28:44 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/7] p0013: new test to compare SHA1DC vs OpenSSL
-In-Reply-To: <cover.1490397869.git.johannes.schindelin@gmx.de>
-Message-ID: <4c2e3b2abc84a4b4eb7b41b424f76defda550646.1490397869.git.johannes.schindelin@gmx.de>
-References: <cover.1490397869.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S934264AbdCXXcC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 19:32:02 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33647 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932972AbdCXXcA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 19:32:00 -0400
+Received: by mail-pg0-f66.google.com with SMTP id 79so753949pgf.0
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 16:32:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=t7XycStroX/DtRsb09jL5rkbS0hQls6ds8boPuB7hUI=;
+        b=Ri5FEFp7OfobEqIusZw7Je3W7cAv1abcVdXj7KWoIBQv7Hn/bcqE40dFFSPp65Q4sa
+         //H7bvqAbYa3bkPQG2Zrq4mE436LC8mtPrUXnQhjlRZPBAtNLtXGtSl1MbDF+IhuQEUj
+         ne9M3mbjxnJMPgM9stDMr00HbYFB7JdTi4XuKz2Y1B5NIlNhZFSrWeW3qU9i6ELltr2g
+         gDGP1ZKwUP3ckPYyObpkKScZYZ4mJCdDVFSI3FUvkusik7rdClwO0KCeePH8EOcCCvf+
+         6zPw7MKRrG3F08AcixDf3NZuShXKanjCFj3b0rSHQKSg6E5LZRgIDjxKo+wMGulHH3i8
+         j5cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=t7XycStroX/DtRsb09jL5rkbS0hQls6ds8boPuB7hUI=;
+        b=ijKF8DwyTzMUSEQjuJgWq6mmyt4w08JMFdJSw3wBpMkOcfEW4XFvMAZMWB2Ie5LOgf
+         uuX+FHfWBRyfjneYGHkeWVE42A1i2u1Z065sQ/6CgvLno2INOfF7QgavYn4ee0Pb6I3b
+         OMj11H2YS+9ZZb6BB1QDF3KxsGirinHfGZKnyGatlrKlpZEtotACUyrD2jv+nVu9ohVG
+         dxwsYXx5ILyCF0vuAc0u180GcMkTPK6W5nPHZYacY7fuUU+YX7kmS/oJcGPC/Urd0zkX
+         ZCkshBe7zobr20wuubat/B+ZBgsW8BIC1faMSyF/Qo4R8mVuwdh/5LCWZGZmfEF33L5O
+         xR6A==
+X-Gm-Message-State: AFeK/H2xTLLuZe96IxIi7ZohM3bKxmCrkKLWFcSwTKfZEq6Pe77VYam4jUVHDR8H4YnrOA==
+X-Received: by 10.99.36.194 with SMTP id k185mr11720088pgk.201.1490398319154;
+        Fri, 24 Mar 2017 16:31:59 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8597:ae41:db75:6a97])
+        by smtp.gmail.com with ESMTPSA id k184sm6647282pgc.23.2017.03.24.16.31.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Mar 2017 16:31:58 -0700 (PDT)
+Date:   Fri, 24 Mar 2017 16:31:56 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 7/7] submodule.c: correctly handle nested submodules in
+ is_submodule_modified
+Message-ID: <20170324233156.GL31294@aiede.mtv.corp.google.com>
+References: <20170323223338.32274-7-sbeller@google.com>
+ <20170324182902.19280-1-sbeller@google.com>
+ <20170324182902.19280-8-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:sHlyY210FLZ/S2HPxUu0MXlJVUo5MPGDKCrL6ibUZ46QnkFe/o7
- ryAwsiX5M5w3wZ6BqK2Ra/mh+L7lggecJAPO3Dn6BMtl47MmpBUVYQbRezU6F6qcTexrXTp
- SZz4zIoM4AgfbhMakQp1Q1YUdUojX9UVIFkshyPT60TYLLD2V/xFGKGxWS6xDxY8i1c+bnc
- ilQgrb1oSKzhadNbA/0zg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:WgCyIDSVLuQ=:A8ub2xzkv4nREB32SLqc2K
- S5W2SbuJflxbdb+/6Quf8gDYujd1nP+AzsY1psfO1yAr4ex6sHs1I1fAItztb+2LqFQCUfTmq
- Bs2XxWP+IHkkDQ6khm1lzozuJR9OdAM7WYhhm/BX/fK5EsDUsRGSn+isNAI9iwCILRc+sdZnE
- w8KVasJO66MdxcE/rvKSQN+JW0cAw5LNVC/sriWeO7VNTQsYJb1dWSkkgZnQzin5j7OD9cI05
- JWziuOGOihltgVyXseyi9eXuSysQS/h8VV6MQ2NySDf1U5aSIcsrgkibpqGtorLNxS84YjmAE
- lAKcmVYYquuU5MoV3jNUNWYS9PBFAS62oy/sCIUHb/wdm5yJOTyGr5yTBORZn6cGWeM+kjVTt
- k4ODNcR/t/wTcrCYiBZrIE8Uz01mV332l19PJLyBAQ2/bVKzK+0/be0kZGKBZ5iklhuUvv25v
- +WZg12CYBLZohQvw0gnvqk84PPMgiT2tXQfYyQtUwmXv8KMGrdBSSuBMjI9+4Daxp+tPPEVdM
- y1m0TQwYo9h8TiMvEWcak3OsPgZBxRV379V1/dSkWvLLVM6wTx/9VxmVgrSQCH1NM+IttoE5O
- hnTwdCWvl9GAyx/4cij5pe/QNvhPgy0SwZ8tjHVyFD1pdfI6wsG3E232LokhddhZN6rWDvAki
- wPwlzLm3+/Zjox1tZ/DBwxdWoLsWwnmNpRMW/MT+28JMr0EOICLYm7W3Vl0T8qa8q+dtejeYf
- /n6y8S02x1WiQZfOyCdsb+UEMUEJp1lUXZicSCLgSavsyjBRsmzpFQTa0tm6zUPkmQzKLX7PJ
- R77a5RXUhA2/xP90D46Zt4RLW5dyg==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170324182902.19280-8-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To demonstrate the need for the core.enableSHA1DC knob, this test
-compares the performance of the SHA-1 algorithms with collision
-detection vs OpenSSL's (that does not detect attempted collision
-attacks).
+Stefan Beller wrote:
 
-The payload size of 300MB was actually not concocted from thin air, but
-is based on the massive Windows monorepo, whose index file weighs in
-with roughly that size (and which is SHA-1'ed upon every single read and
-write).
+> When a nested submodule has untracked files, it would be reported as
+> "modified submodule" in the superproject, because submodules are not
+> parsed correctly in is_submodule_modified as they are bucketed into
+> the modified pile as "they are not an untracked file".
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  submodule.c                 | 16 ++++++++++++++--
+>  t/t3600-rm.sh               |  2 +-
+>  t/t7506-status-submodule.sh |  2 +-
+>  3 files changed, 16 insertions(+), 4 deletions(-)
+> 
+> diff --git a/submodule.c b/submodule.c
+> index 467f1de763..ec7e9b1b06 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1078,8 +1078,20 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+>  		/* regular untracked files */
+>  		if (buf.buf[0] == '?')
+>  			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+> -		else
+> -			dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+> +
+> +		/* regular unmerged and renamed files */
+> +		if (buf.buf[0] == 'u' ||
+> +		    buf.buf[0] == '1' ||
+> +		    buf.buf[0] == '2') {
+> +			if (buf.buf[5] == 'S') {
 
-On this developer's machine, this comparison shows a hefty difference:
+Can this overflow the buffer?  Submodule state is supposed to be 4
+characters, so could do
 
-	0013.1: calculate SHA-1 for 300MB (SHA1DC)    3.03(0.03+0.17)
-	0013.2: calculate SHA-1 for 300MB (OpenSSL)   0.58(0.06+0.16)
+			/*
+			 * T XY SSSS:
+			 * T = line type, XY = status, SSSS = submodule state
+			 */
+			if (buf.len < 1 + 1 + 2 + 1 + 4)
+				die("BUG: invalid status --porcelain=2 line %s",
+				    buf.buf);
 
-It is not only that ~6x slower performance is a pretty tall order, the
-absolute numbers themselves speak a very clear language: having to wait
-one second every time a file is `git add`ed is noticeable, but one can
-handwave it away. Having to wait six seconds (3 to read the index, a
-fraction of a millisecond to hash the new contents and update the
-in-memory index, then 3 seconds to write out the index) is outright
-annoying. And unnecessary, too: the content of the index is never
-crafted to cause SHA-1 collisions.
+			if (buf.buf[5] == 'S' && buf.buf[8] == 'U')
+				/* untracked file */
+				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
 
-Obviously, this test requires that Git was built with the new
-DC_AND_OPENSSL_SHA1 make flag; it is skipped otherwise.
+			if (memcmp(buf.buf + 5, "S..U", 4))
+				/* other change */
+				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+		}
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/perf/p0013-sha1dc.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
- create mode 100644 t/perf/p0013-sha1dc.sh
+> +				/* nested submodule handling */
+> +				if (buf.buf[6] == 'C' || buf.buf[7] == 'M')
+> +					dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+> +				if (buf.buf[8] == 'U')
+> +					dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+> +			} else
+> +				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+> +		}
 
-diff --git a/t/perf/p0013-sha1dc.sh b/t/perf/p0013-sha1dc.sh
-new file mode 100644
-index 00000000000..e08473ac969
---- /dev/null
-+++ b/t/perf/p0013-sha1dc.sh
-@@ -0,0 +1,23 @@
-+#!/bin/sh
-+
-+test_description="Tests performance of SHA1DC vs OpenSSL"
-+
-+. ./perf-lib.sh
-+
-+test -n "$DC_AND_OPENSSL_SHA1" || {
-+	skip_all='DC_AND_OPENSSL_SHA1 required for this test'
-+	test_done
-+}
-+
-+test_perf 'calculate SHA-1 for 300MB (SHA1DC)' '
-+	dd if=/dev/zero bs=1M count=300 |
-+	test-sha1
-+'
-+
-+test_perf 'calculate SHA-1 for 300MB (OpenSSL)' '
-+	dd if=/dev/zero bs=1M count=300 |
-+	test-sha1 --disable-sha1dc
-+'
-+
-+test_done
-+
--- 
-2.12.1.windows.1
+I get lost in these cases. What does it mean if we see S..., for
+example?
+
+As an example, if I am understanding correctly, before this patch, if
+I have a submodule-in-submodule:
+
+	$ find . -name .git
+	.git
+	sub/.git
+	sub/subsub/.git
+
+and I put a stray file in the sub-sub module:
+
+	$ echo stray-file >sub/subsub/x.o
+
+then status --porcelain=2 tells me that sub is modified:
+
+	$ git status --porcelain=2
+	1 .M S.M. [...] sub
+
+What should it say after the patch?  Is the XY field ".." or ".M"?
+
+Some tests covering these cases with --porcelain=2 and a brief mention
+in documentation may help.
+
+Thanks,
+Jonathan
+
+diff --git i/submodule.c w/submodule.c
+index ec7e9b1b06..aec1b2cdca 100644
+--- i/submodule.c
++++ w/submodule.c
+@@ -1083,13 +1083,18 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 		if (buf.buf[0] == 'u' ||
+ 		    buf.buf[0] == '1' ||
+ 		    buf.buf[0] == '2') {
+-			if (buf.buf[5] == 'S') {
+-				/* nested submodule handling */
+-				if (buf.buf[6] == 'C' || buf.buf[7] == 'M')
+-					dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+-				if (buf.buf[8] == 'U')
+-					dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-			} else
++			/*
++			 * T XY SSSS:
++			 * T = line type, XY = status, SSSS = submodule state
++			 */
++			if (buf.len < 1 + 1 + 2 + 1 + 4)
++				die("BUG: invalid status --porcelain=2 line %s",
++				    buf.buf);
++			if (buf.buf[5] == 'S' && buf.buf[8] == 'U')
++				/* untracked file */
++				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
++			if (memcmp(buf.buf + 5, "S..U", 4))
++				/* other change */
+ 				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+ 		}
+ 
