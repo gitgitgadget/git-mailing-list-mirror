@@ -2,74 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E402F1FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 17:27:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C054A1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 17:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752167AbdCXR1p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 13:27:45 -0400
-Received: from avasout04.plus.net ([212.159.14.19]:58884 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751544AbdCXR1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 13:27:36 -0400
-Received: from [10.0.2.15] ([146.90.175.94])
-        by avasout04 with smtp
-        id ztSq1u00522aPyA01tSrdL; Fri, 24 Mar 2017 17:26:52 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=Groywg9C c=1 sm=1 tr=0
- a=c4JbszTospdBBUsinAk+iw==:117 a=c4JbszTospdBBUsinAk+iw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=Gz7UVnXG6Al1THnuOnwA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-To:     Jeff Hostetler <jeffhost@microsoft.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] name-hash: add test-lazy-init-name-hash to .gitignore
-Message-ID: <fd5e41aa-27a7-e209-71c0-059605ea06d6@ramsayjones.plus.com>
-Date:   Fri, 24 Mar 2017 17:26:50 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S1751079AbdCXRdN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 13:33:13 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51125 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750721AbdCXRdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 13:33:11 -0400
+Received: (qmail 17644 invoked by uid 109); 24 Mar 2017 17:26:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 17:26:27 +0000
+Received: (qmail 483 invoked by uid 111); 24 Mar 2017 17:26:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 13:26:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Mar 2017 13:26:24 -0400
+Date:   Fri, 24 Mar 2017 13:26:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 2/4] fast-import: use xsnprintf for formatting headers
+Message-ID: <20170324172624.ddqquklvam2emn24@sigill.intra.peff.net>
+References: <20170324172246.fy5drvhzqxghu44a@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <20170324172246.fy5drvhzqxghu44a@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The stream_blob() function checks the return value of
+snprintf and dies. This is more simply done with
+xsnprintf (and matches the similar call in store_object).
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+The message the user would get is less specific, but since
+the point is that this _shouldn't_ ever happen, that's OK.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+ fast-import.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Hi Jeff,
-
-If you need to re-roll your 'jh/memihash-opt' branch, could you please
-squash this into the relevant patch (commit f25dde4fbf, "name-hash: add
-test-lazy-init-name-hash", 23-03-2017).
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
- t/helper/.gitignore | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index 5f68aa8f8..57bdd4b8e 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -12,6 +12,7 @@
- /test-hashmap
- /test-index-version
- /test-line-buffer
-+/test-lazy-init-name-hash
- /test-match-trees
- /test-mergesort
- /test-mktemp
+diff --git a/fast-import.c b/fast-import.c
+index 4e0f3f5dd..4a057e81f 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1237,9 +1237,7 @@ static void stream_blob(uintmax_t len, unsigned char *sha1out, uintmax_t mark)
+ 	sha1file_checkpoint(pack_file, &checkpoint);
+ 	offset = checkpoint.offset;
+ 
+-	hdrlen = snprintf((char *)out_buf, out_sz, "blob %" PRIuMAX, len) + 1;
+-	if (out_sz <= hdrlen)
+-		die("impossibly large object header");
++	hdrlen = xsnprintf((char *)out_buf, out_sz, "blob %" PRIuMAX, len) + 1;
+ 
+ 	git_SHA1_Init(&c);
+ 	git_SHA1_Update(&c, out_buf, hdrlen);
 -- 
-2.12.0
+2.12.1.843.g1937c56c2
+
