@@ -2,87 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C11A91FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 16:57:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 221C51FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 16:58:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936490AbdCXQ5F (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 12:57:05 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:35109 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936409AbdCXQ5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 12:57:04 -0400
-Received: by mail-wm0-f48.google.com with SMTP id u132so17840432wmg.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 09:57:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=I9lghz4nt7po1HTZZfHaF0ixEF6zPFNW2FS0+XYrF5k=;
-        b=cS3bxoE8tqRXvPo+mF11EW4JbEFUwUgQ2RQXyy+u0CsdEMjATd8HZRv57FSC5ZAflj
-         hmebN78F1Mf/APOGWRsiDsypLcorZq2TnjL1joJ4TdXifwN9aMS6cIlGdKa/o8/WjrJl
-         tLu47awCjE1sp3c4rwF8jWh3Q1Zbr0bv6hMpvrXtRXSG7Y/0QVa0dJh2MTE0r8/Jf7YW
-         kgnH5dRX4PSUX1YboXaxl8jvrlCmW1qXgvzM6FpEWnL+lkvcK/ZwTRMEDzClqGl8rCzu
-         RLG3TqIb+s2T2oMtZGIK5QueK4+puDgOSMNP/aBLnPctzZ181Ydvj0yZ6Xmj9bzrU9L4
-         Ly4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=I9lghz4nt7po1HTZZfHaF0ixEF6zPFNW2FS0+XYrF5k=;
-        b=n9XogRCAe1QO9Ai9auO3HmK15flqqm+LhoJJmUByZ/8xJ2CaHjwz+V0kRrqmhS+myO
-         uH6TBdUFSiglfoa4BM3iVvaZcz7t1LOQg2FAs5saDavPiF8OmWxKpXYooiq65C0ZSC+V
-         IE8PZIk8nuDk7JTubVMeh/viVTIE/DNRu8vCWpA4Ee+5Hyn973JTcLvKMiP+WNHRJUIV
-         5KV+bR0/PRz/oyU+bGEaodP11yBjVNE0quhKlWfM+WYjJjPDfYMsDXSi4nWHh9/dfzD8
-         sx8+QVpnC9+MqpJQcqwz4Nwmktprvz7gIXHYG+a6ghDVP4wpBrM9oEQc1dVvIlvkBDY3
-         UFjQ==
-X-Gm-Message-State: AFeK/H0rGNw7tRv40k/7BUN+T8iuggZJYToAE58Bkj0OQIofwJmpAE96H9WqhbCzGIt8NA==
-X-Received: by 10.28.180.135 with SMTP id d129mr3959922wmf.135.1490374622204;
-        Fri, 24 Mar 2017 09:57:02 -0700 (PDT)
-Received: from ban4wcb152r.ads.autodesk.com (adsknateur.autodesk.com. [132.188.32.100])
-        by smtp.gmail.com with ESMTPSA id s83sm349088wms.30.2017.03.24.09.57.01
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 09:57:01 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [GSoC] Git CI Improvements 5 microproject
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <B7AD8170-0742-4B22-9C6B-EC2A5DA12929@gmail.com>
-Date:   Fri, 24 Mar 2017 17:57:00 +0100
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7CFDD2AA-EEF6-4AF1-A9D8-4C4BAF173746@gmail.com>
-References: <B7AD8170-0742-4B22-9C6B-EC2A5DA12929@gmail.com>
-To:     Nikita Kunevich <nik.kunevich@gmail.com>
-X-Mailer: Apple Mail (2.3124)
+        id S1757362AbdCXQ6O (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 12:58:14 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56960 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1756692AbdCXQ6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 12:58:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81F4774A6E;
+        Fri, 24 Mar 2017 12:58:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Bzht7y7U0OGs9onygqHZiLYT7ZY=; b=q7YllA
+        wZYuJciZnQidl2pjkqv8VTW3fiyJ71VWySQc/ha28PXqjtXq2uGjb052C9Xn2bbT
+        HS13vX/67o29S32kdGmfpbz9IOBUCCdVo7B/BhslpJg0IK4kg9Tym+xiuC+73cy1
+        ll8wDVYNaI/zXhwAJT7r3Z/bXJFsRijVsUwBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=UtkavQ4eCr8byrjfLYL66kWOeK7XTpHw
+        PsHUrxecNJddrDI5YQxMtq6+im2sjCXk7zhkrXT0ZaqDSMlrZPsW35u2FHSoHWje
+        4iLD4/ucwHnGXYNXfNKD7IVtptp2s530bkOqAW4O4v7HhJYoPX6+pWadtq73fnPB
+        f9XSZVREqUs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7854174A6D;
+        Fri, 24 Mar 2017 12:58:10 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CB9D574A6C;
+        Fri, 24 Mar 2017 12:58:09 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net,
+        sxlijin@gmail.com
+Subject: Re: [PATCH v2] travis-ci: build and test Git on Windows
+References: <20170324113747.44991-1-larsxschneider@gmail.com>
+Date:   Fri, 24 Mar 2017 09:58:08 -0700
+In-Reply-To: <20170324113747.44991-1-larsxschneider@gmail.com> (Lars
+        Schneider's message of "Fri, 24 Mar 2017 12:37:47 +0100")
+Message-ID: <xmqqh92i8vdr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0F364442-10B3-11E7-BF03-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-> On 24 Mar 2017, at 14:58, Nikita Kunevich <nik.kunevich@gmail.com> =
-wrote:
->=20
-> Hello, git team. My name is Nikita Kunevich. I=E2=80=99m student of =
-Belarusian State University of Informatics and Radioelectronics. I=E2=80=99=
-d like to particapate in Google Summer of Code 2017 under git =
-organization.
-> I=E2=80=99m working on =E2=80=9CGit CI Improvements 5=E2=80=9D =
-microproject which is creating web page for analyzing most frequently =
-failing test using data from Travis CI.
-> I=E2=80=99ll write my full application as soon as I finish =
-microproject.=20
->=20
+> I think I addressed all issues from the v1 review (see interdiff below)
+> with one exception. The script still uses bash instead of sh. Something
+> about this does not work in sh:
+>     --output >(sed "$(printf '1s/^\xef\xbb\xbf//')" >cat >&3)
+>
+> Does anyone know how to make this sh compatible?
 
-Hi Nikita,
+Making this runnable under any shell is not a goal; if your script
+does rely on that bash-ism, then leave it as-is and mark it with
+#!/bin/bash or somesuch.
 
-I quickly hacked this: https://larsxschneider.github.io/git-ci-stats/
-Maybe it is useful to you as a starting point?!
+Thanks.
 
-Cheers,
-Lars=
