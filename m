@@ -6,101 +6,188 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A8681FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 17:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42C531FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 18:05:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933325AbdCXR5c (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 13:57:32 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64832 "EHLO
+        id S1754871AbdCXSEm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 14:04:42 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61318 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932626AbdCXR5a (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 13:57:30 -0400
+        with ESMTP id S934972AbdCXSEg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 14:04:36 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 34D03752B4;
-        Fri, 24 Mar 2017 13:57:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BB0175776;
+        Fri, 24 Mar 2017 14:04:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZquiED5oiapJ
-        t1Mf1ydeYSvOYsc=; b=GB2HhpOf0NQAPjZOzUNMomjeVKNbFulFGQdsWHdQugLc
-        W3bM52rIauUfLhb4monagMK/lnUNZm1E3R0i5ObrYYaLT4zOsA0KN16OSseQcIZ7
-        zcTZUEM0m3CBKHMu7zHHWeqh4ti3sNP5m3SchO9HgRdJlQ5BSEfBcg7zoS0tQ/w=
+        :content-type; s=sasl; bh=4sKgq49rZF1QVaAReVUackBjJcI=; b=E6iR2u
+        d741LEt+dtS/l38rxjlS+6z4FGeqObTDL9FbRvhn4FN1LCIVtg6HlgaGVmmBqhSf
+        KhL2C5m8fPFP6wGRXnJpHEDZOY3F5+wqcGnDzZKaCTTslbC+jo9KhNILFELf6gNx
+        Gg70HOrqpbymhOEhxXevyO2407LpuG7szKBbA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=yiCgdq
-        P5dwAqfq4AkiKKot5RmmnKt4AwCTJCjsy4m7R9gVN7M1htvlz2zwu/s+Z185xsQ3
-        MklyKnSR3bOQB7GjJhA899L4E0Kx7vcvT+agZT6T6J7LJS5SGM0Sg0ZSI3GjiqCN
-        10lweOKUIo+WXkeFlWB1wbzglnuYyUfKh9CtI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2C443752B3;
-        Fri, 24 Mar 2017 13:57:29 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=TPUU9HB7+uyb5sLbyTxQQmn/Rfn6EbzI
+        O5GD9RwmfJFKYlg+2x5QVds+Pc1Z99GdorBIidIvwZ9jKby2VjIJOBaD+7sq5Pex
+        CdCaGN/Vz3btY7WA/K+W3hdHQS/msmcMmvs5MSv41x3VT+/F4MlSG/DycEMpz7tG
+        9zfyH1k1wE0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 73ECC75775;
+        Fri, 24 Mar 2017 14:04:29 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81E11752B1;
-        Fri, 24 Mar 2017 13:57:28 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C8E8075773;
+        Fri, 24 Mar 2017 14:04:28 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jean-Noel Avila <jn.avila@free.fr>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
-References: <20170312200248.3610-1-jn.avila@free.fr>
-        <20170320210225.13046-1-jn.avila@free.fr>
-        <20170320210225.13046-3-jn.avila@free.fr>
-        <xmqqpohbtxi3.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX51BskROyC_Kp=-PHuqzJ4uaDpu277R0Y4qCvz=6vLUiA@mail.gmail.com>
-Date:   Fri, 24 Mar 2017 10:57:27 -0700
-In-Reply-To: <CACBZZX51BskROyC_Kp=-PHuqzJ4uaDpu277R0Y4qCvz=6vLUiA@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 24 Mar
- 2017 16:58:14
-        +0100")
-Message-ID: <xmqqziga7e2g.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org,
+        Jan Palus <jan.palus@gmail.com>
+Subject: Re: [PATCH 3/3] t7004, t7030: fix here-doc syntax errors
+References: <20170322211003.b52cql3iwig2xqcd@sigill.intra.peff.net>
+        <xmqq8tnxhssv.fsf@gitster.mtv.corp.google.com>
+        <20170322221556.j7uj4vvgbcubcr3b@LykOS.localdomain>
+        <20170322222230.yqqv6x4gokvb4jbz@sigill.intra.peff.net>
+        <20170322223441.w32y464jqbnxnzna@LykOS.localdomain>
+        <20170322224124.u3eax4ui3y4saxks@sigill.intra.peff.net>
+        <20170322225108.wub4bmr63hk2sp33@LykOS.localdomain>
+        <xmqqfui3ac2f.fsf@gitster.mtv.corp.google.com>
+        <20170323234922.ot2vqblcnljacdtn@sigill.intra.peff.net>
+        <xmqqlgru8vyt.fsf@gitster.mtv.corp.google.com>
+        <20170324164943.7vvtcj5sqadj625o@sigill.intra.peff.net>
+Date:   Fri, 24 Mar 2017 11:04:27 -0700
+In-Reply-To: <20170324164943.7vvtcj5sqadj625o@sigill.intra.peff.net> (Jeff
+        King's message of "Fri, 24 Mar 2017 12:49:43 -0400")
+Message-ID: <xmqqvaqy7dqs.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 585C2832-10BB-11E7-8864-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 52DF9BC2-10BC-11E7-B4BC-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Mon, Mar 20, 2017 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> But more importantly, aren't we essentially adding an equivalent of
->>
->>         cd Documentation && cat git-*.txt
->>
->> to our codebase?
->>
->> Surely we cannot avoid having a copy of all messages that are to be
->> translated using msgid/msgstr based approach, and we already do so
->> for end-user-facing in-program strings, but it just feels a bit too
->> much having to carry a duplicate (and slightly a stale) copy of the
->> entire documentation set around.  For N languages, we'll have an
->> equivalent for N copies of the English text, in addition to the
->> translated documentation.
->
-> As someone reading this thread from the sidelines you never elaborate
-> on why this is a problem worth solving (other than "a bit too much")
-> before everyone downthread jumped on trying to figure out how to solve
-> this out-of tree somehow.
+> It seems like t7030 should just skip_all when the GPG prereq is not
+> met (it's not wrong to mark each test that's added, but it would have
+> made this particular mistake harder).
 
-I do not particularly see the size as an issue that must be solved;
-to me, it is "nice to solve".
+I'd leave that to be done by others after the dust settles ;-).  
 
-But going back and finding this from Jean-Noel in an earlier
-message:
+Here is what I have right now (proposed log message has updates to
+match rather obvious changes to the tests).
 
-    ... This is one of the points raised in the first RFC mail. Splitting=
- this
-    part would help a lot manage the translations with their own workflow=
-,
-    would not clutter the main repo with files not really needed for
-    packaging and would simplify dealing with the interaction with crowd
-    translation websites which can directly push translation content to a
-    git repo.
+-- >8 --
+From: Santiago Torres <santiago@nyu.edu>
+Date: Thu, 23 Mar 2017 18:28:47 -0400
+Subject: [PATCH] t7004, t7030: fix here-doc syntax errors
 
-there may be other benefits we may be able to reap from such a
-split.
+Jan Palus noticed that some here-doc are spelled incorrectly,
+resulting the entire remainder of the test snippet being slurped
+into the "expect" file as if it were data, e.g. in this sequence
+
+	cat >expect <<EOF &&
+	... expectation ...
+	EOF
+	git $cmd_being_tested >actual &&
+	test_cmp expect actual
+
+the last command of the test is "cat" that sends everything to
+'expect' and succeeds.
+
+Fixing these issues in t7004 and t7030 reveals that "git tag -v"
+and "git verify-tag" with their --format option do not work as the
+test was expecting originally.  Instead of showing both valid tags
+and tags with incorrect signatures on their output, tags that do not
+pass verification are omitted from the output.  Another breakage that
+is uncovered is that these tests must be restricted to environment
+where gpg is available.
+
+Arguably, that is a safer behaviour, and because the format
+specifiers like %(tag) do not have a way to show if the signature
+verifies correctly, the command with the --format option cannot be
+used to get a list of tags annotated with their signature validity
+anyway.
+
+For now, let's fix the here-doc syntax, update the expectation to
+match the reality, and update the test prerequisite.
+
+Maybe later when we extend the --format language available to "git
+tag -v" and "git verify-tag" to include things like "%(gpg:status)",
+we may want to change the behaviour so that piping a list of tag
+names into
+
+    xargs git verify-tag --format='%(gpg:status) %(tag)'
+
+becomes a good way to produce such a list, but that is a separate
+topic.
+
+Noticed-by: Jan Palus <jan.palus@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Santiago Torres <santiago@nyu.edu>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t7004-tag.sh        | 12 +++++-------
+ t/t7030-verify-tag.sh | 12 +++++-------
+ 2 files changed, 10 insertions(+), 14 deletions(-)
+
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index b53a2e5e41..f67bbb8abc 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -847,18 +847,16 @@ test_expect_success GPG 'verifying a forged tag should fail' '
+ 	test_must_fail git tag -v forged-tag
+ '
+ 
+-test_expect_success 'verifying a proper tag with --format pass and format accordingly' '
+-	cat >expect <<-\EOF
++test_expect_success GPG 'verifying a proper tag with --format pass and format accordingly' '
++	cat >expect <<-\EOF &&
+ 	tagname : signed-tag
+-	EOF &&
++	EOF
+ 	git tag -v --format="tagname : %(tag)" "signed-tag" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'verifying a forged tag with --format fail and format accordingly' '
+-	cat >expect <<-\EOF
+-	tagname : forged-tag
+-	EOF &&
++test_expect_success GPG 'verifying a forged tag with --format should fail silently' '
++	>expect &&
+ 	test_must_fail git tag -v --format="tagname : %(tag)" "forged-tag" >actual &&
+ 	test_cmp expect actual
+ '
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index d62ccbb98e..b4b49eeb08 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -125,18 +125,16 @@ test_expect_success GPG 'verify multiple tags' '
+ 	test_cmp expect.stderr actual.stderr
+ '
+ 
+-test_expect_success 'verifying tag with --format' '
+-	cat >expect <<-\EOF
++test_expect_success GPG 'verifying tag with --format' '
++	cat >expect <<-\EOF &&
+ 	tagname : fourth-signed
+-	EOF &&
++	EOF
+ 	git verify-tag --format="tagname : %(tag)" "fourth-signed" >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'verifying a forged tag with --format fail and format accordingly' '
+-	cat >expect <<-\EOF
+-	tagname : 7th forged-signed
+-	EOF &&
++test_expect_success GPG 'verifying a forged tag with --format should fail silently' '
++	>expect &&
+ 	test_must_fail git verify-tag --format="tagname : %(tag)" $(cat forged1.tag) >actual-forged &&
+ 	test_cmp expect actual-forged
+ '
+-- 
+2.12.1-432-gf364f02724
+
