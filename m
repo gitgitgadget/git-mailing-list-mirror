@@ -2,154 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C37011FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 15:28:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2DB71FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 15:31:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966010AbdCXP2R (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 11:28:17 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:35399 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965762AbdCXP2C (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 11:28:02 -0400
-Received: by mail-qt0-f193.google.com with SMTP id r5so836787qtb.2
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 08:27:46 -0700 (PDT)
+        id S935930AbdCXPbx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 11:31:53 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:36004 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755525AbdCXPbv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 11:31:51 -0400
+Received: by mail-qt0-f173.google.com with SMTP id r45so5162327qte.3
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 08:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BduZhUViD24M9L4Gccyt2x7FnVFzxP/i6xl2RNB+izY=;
-        b=kWrDTKMRzjDfo9TwEyoOp5cdVf2uu/fKj8BC4dcpIS8raVrDjhsR05MoaYxVsrm30g
-         WZe7l+nXFiG+BQGAnAtKSYhRXhHLchddXCUclJ0gC2NqR1m9RXNj/gCwomiydQgS0bFb
-         slTBh5fvkG8mJbGddTKQc3N4hjVYh/108UUTtZKkOPSG6gk12+P7nzrnQhQVOY+8Wh+S
-         dzcIeKwFcOCJ5BoiEWTw0qYKNe5SvkfOCnvH3blU0s7xCF/BCDNwpfRRLp5z4m/RmFm4
-         xz3+Z8KSoWPGjrv9WC4B22Mzwhxc0/hFnKGwTJqRz8WJVzscAwCu9JtgO/tyaQTpUS/P
-         8Wmg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=m9piiOU5/0bZHiZHka1ls7IysVkezenj0zxhJsVyqwY=;
+        b=bWR/E3C0XC4UHsTcDxcFQFS4mGn5mzJewbZeh7MFC2FUqk9JNIx6IdvhrW1lW0hkVa
+         aUc1Y+a+uRmIYxUBIBOyGa6ktiEx2auqaD7e0spl8UuWR2LYfk1BB2AMt8VddGVq/SjU
+         +Ss3tsNv9VMqV/bFS7cNzeU7Q8EKt7f9ql+R0N+JpDPucl75RzD4krLPBccDBRb1d82t
+         A5nJVcSjirknQDX2oyHjFJQzPsUfPCwc7owr754AZ0zFjvWAobSaI4WH/vAc5eUf7PzV
+         uakGxVvsRM3L0Xc+xLW2gEUN3CVTxyV65RY1zt3iBncVsr4BZKDoAInrC1yW96BevsNj
+         MuoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=BduZhUViD24M9L4Gccyt2x7FnVFzxP/i6xl2RNB+izY=;
-        b=gYTeyMP67JEh8m8kfqUEHgdRQLwKLuz675l1CLiA69YaNNJAIvTzY4FRNpA35l6C2L
-         nfTGOMkc+mTxK8HJPyd5btb3BLIE0d1OrQem7ceoKq16l0XdDMI0rEC2LrmgPsLi2AL7
-         PKDY0MEIB/9XipVUdMzoWnxtRllk9MfrmoSfIi+vnXwdkPaKcGECiHKbzI61/LsOb/od
-         Ps455ikJuGuoGo3K60VrBYXYT0tMFJdHubco36W8HKlFNGOLVj3CJT/dQITVPw/wcRRu
-         50W+Q7F7ApRff8O8cC+ZW63GnPoKNU39Ni9NCINromtTBJv4INdv9G8EeFbqMd7NgtSF
-         wZWw==
-X-Gm-Message-State: AFeK/H3yV56ngKpZJe/dT/+6zZpNp8ARgsiHiMeBOKwfq0EJHglBRQisB8XGOHYrJk9p5A==
-X-Received: by 10.237.59.91 with SMTP id q27mr8969499qte.193.1490369259796;
-        Fri, 24 Mar 2017 08:27:39 -0700 (PDT)
-Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id d23sm1717589qta.32.2017.03.24.08.27.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 08:27:39 -0700 (PDT)
-From:   Ben Peart <peartben@gmail.com>
-X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     benpeart@microsoft.com, christian.couder@gmail.com,
-        larsxschneider@gmail.com
-Subject: [PATCH v2 1/2] pkt-line: add packet_writel() and packet_read_line_gently()
-Date:   Fri, 24 Mar 2017 11:27:21 -0400
-Message-Id: <20170324152726.14632-2-benpeart@microsoft.com>
-X-Mailer: git-send-email 2.12.0.gvfs.1.43.g876ba2a
-In-Reply-To: <20170324152726.14632-1-benpeart@microsoft.com>
-References: <20170324152726.14632-1-benpeart@microsoft.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=m9piiOU5/0bZHiZHka1ls7IysVkezenj0zxhJsVyqwY=;
+        b=gMJ+Erui0SptKl07xLzxo8e77ITfi9pNOF6EJqXRKS9YkJ+HQjizp9lV8ODutV0n3J
+         lt5s0h2ATTabJE7N4vLmgvwUTFxjPlBy4uN4a5kCv2sbuUBFP72LvY9zffX41t/e/rhA
+         sAHFEr7t7Um2f4ylmaFAhXADh3xLV7n6FxLKT3Y7v9/ikBqwosxZoNU38XFdbzpxblnz
+         wLfI/rT+21RHnbFky5yRKaokRUz78aUKpy4Jejtn/uGdg7CeqlIIunWgoIZCA9cnwHy8
+         mg6BtznHfDHpDgTUSXm03WUxZoay4UbPHS4LfPp7JwBM/XxSRANZ4XbhGz+moZlvTu2e
+         k1fw==
+X-Gm-Message-State: AFeK/H0++lx6kMymWUiQGLv+71aGGt/2/NmmAqNXRjUE8f9wN26ITL9dNvbpxXYQ90Rycc1rz1wXGid1jOgiJQ==
+X-Received: by 10.200.39.56 with SMTP id g53mr8952181qtg.134.1490369510026;
+ Fri, 24 Mar 2017 08:31:50 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.200.3.133 with HTTP; Fri, 24 Mar 2017 08:31:09 -0700 (PDT)
+In-Reply-To: <20170324150921.vwh4yqpz25ph3zxe@sigill.intra.peff.net>
+References: <CAG+Y4s8m2MqA0yAiZFzv2bAx7g5xktNRb=S-Ej0tvMwU-Un0Og@mail.gmail.com>
+ <26915be5-8749-7f66-4d60-516e7ed60adc@grubix.eu> <20170324150921.vwh4yqpz25ph3zxe@sigill.intra.peff.net>
+From:   Joan Aguilar <joan.aguilar.lorente@gmail.com>
+Date:   Fri, 24 Mar 2017 16:31:09 +0100
+Message-ID: <CAG+Y4s8WGwmP7uOsNz4GkR3tsaeB2e1qBysrs-4pqLBKYC+Grg@mail.gmail.com>
+Subject: Re: report on a possible bug: git commit -p myfile.py unexpected output
+To:     Jeff King <peff@peff.net>
+Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add packet_writel() which writes multiple lines in a single call and
-then calls packet_flush_gently(). Add packet_read_line_gently() to
-enable reading a line without dying on EOF.
+Hello Michael, hello Jeff,
 
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
----
- pkt-line.c | 31 +++++++++++++++++++++++++++++++
- pkt-line.h | 11 +++++++++++
- 2 files changed, 42 insertions(+)
+I was writing a response to Michael and I received the Email from
+Jeff, so I decided to reply to the second one, with copy to both of
+you (and the mailing list too, of course). I hope this is ok for you.
 
-diff --git a/pkt-line.c b/pkt-line.c
-index d4b6bfe076..2788aa1af6 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
- 	return status;
- }
- 
-+int packet_writel(int fd, const char *line, ...)
-+{
-+	va_list args;
-+	int err;
-+	va_start(args, line);
-+	for (;;) {
-+		if (!line)
-+			break;
-+		if (strlen(line) > LARGE_PACKET_DATA_MAX)
-+			return -1;
-+		err = packet_write_fmt_gently(fd, "%s\n", line);
-+		if (err)
-+			return err;
-+		line = va_arg(args, const char*);
-+	}
-+	va_end(args);
-+	return packet_flush_gently(fd);
-+}
-+
- static int packet_write_gently(const int fd_out, const char *buf, size_t size)
- {
- 	static char packet_write_buffer[LARGE_PACKET_MAX];
-@@ -323,6 +342,18 @@ char *packet_read_line(int fd, int *len_p)
- 	return packet_read_line_generic(fd, NULL, NULL, len_p);
- }
- 
-+int packet_read_line_gently(int fd, int *dst_len, char** dst_line)
-+{
-+	int len = packet_read(fd, NULL, NULL,
-+		packet_buffer, sizeof(packet_buffer),
-+		PACKET_READ_CHOMP_NEWLINE|PACKET_READ_GENTLE_ON_EOF);
-+	if (dst_len)
-+		*dst_len = len;
-+	if (dst_line)
-+		*dst_line = (len > 0) ? packet_buffer : NULL;
-+	return len;
-+}
-+
- char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
- {
- 	return packet_read_line_generic(-1, src, src_len, dst_len);
-diff --git a/pkt-line.h b/pkt-line.h
-index 18eac64830..cb3eda9695 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- int packet_flush_gently(int fd);
- int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+int packet_writel(int fd, const char *line, ...);
- int write_packetized_from_fd(int fd_in, int fd_out);
- int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
- 
-@@ -74,6 +75,16 @@ int packet_read(int fd, char **src_buffer, size_t *src_len, char
- char *packet_read_line(int fd, int *size);
- 
- /*
-+ * Convenience wrapper for packet_read that sets the PACKET_READ_GENTLE_ON_EOF
-+ * and CHOMP_NEWLINE options. The return value specifies the number of bytes
-+ * read into the buffer or -1 on truncated input. if the *dst_line parameter
-+ * is not NULL it will return NULL for a flush packet and otherwise points to
-+ * a static buffer (that may be overwritten by subsequent calls). If the size
-+ * parameter is not NULL, the length of the packet is written to it.
-+ */
-+int packet_read_line_gently(int fd, int *size, char** dst_line);
-+
-+/*
-  * Same as packet_read_line, but read from a buf rather than a descriptor;
-  * see packet_read for details on how src_* is used.
-  */
--- 
-2.12.0.gvfs.1.43.g876ba2a
+It works exactly as Jeff said.
 
+If I do git show --stat 96d1c24 the output is:
+user@machine:~/mygitrepo$ git show --stat 96d1c24
+commit 96d1c24*******
+Author: Joan Aguilar Lorente <joan.aguilar.lorente@gmail.com>
+Date:   Thu Mar 23 18:15:07 2017 +0100
+
+    myfile.py -> old unused methods removed...
+
+    1) mymethod1
+    2) mymethod2
+    3) mymethod3
+    4) mymethod4
+    5) mymethod5
+
+ myfile.py | 120
+---------------------------------------------------------------------------=
+---------------------------------------------
+ 1 file changed, 120 deletions(-)
+
+But if I add the flag -B (git show --stat -B 96d1c24) the last two
+lines are different (as already expected by Jeff) and match exactly
+the output of git commit I got yesterday.
+ myfile.py | 484
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++++++++++++++++++++----------------------------------------------------=
+---------------------------------------------------------------------------=
+------------------------------------
+ 1 file changed, 182 insertions(+), 302 deletions(-)
+
+The output of git show -B is, of course, like the one expected by Jeff too.
+
+Thank you! I learned a little bit about git. And most of all, I
+realize there are a lot of options and flags I am not aware of, and
+not using at all! I have to read the documentation. I am missing a lot
+of git!!
+
+I am sorry that I reported this as possible bug. I guess I was just
+confused because the "standard behavior" of "git commit" differs from
+the one of "tig" or "git show".
+
+Thank you again and I see you around.
+
+Best regards
+Joan Aguilar Lorente
+--
+Joan Aguilar Lorente
+
+
+On Fri, Mar 24, 2017 at 4:09 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Mar 24, 2017 at 03:59:07PM +0100, Michael J Gruber wrote:
+>
+>> > [master 96d1c24] myfile.py -> old unused methods removed...
+>> >  1 file changed, 182 insertions(+), 302 deletions(-)
+>> >  rewrite myfile.py (60%)
+>> [...]
+>> > myfile.py | 120
+>> > ----------------------------------------------------------------------=
+-----------------------------------------------
+>> > 1 file changed, 120 deletions(-)
+>>
+>> 182-302 =3D -120
+>>
+>> Did you make any changes in the lines that you left? Apparantly, that's
+>> what the rewrite looked like to git commit.
+>
+> Even without changes to the remaining lines, a rewrite diff would
+> consider them removed from the preimage and added again in the
+> post-image.
+>
+> The difference between the two commands is that "commit" turns on "-B"
+> break detection by default, and "git show", "tig", etc, do not.
+>
+> Looking at the actual diff with "git show -B" should show something
+> like:
+>
+>   -old
+>   -lines
+>   -that
+>   -weren't
+>   -touched
+>   -some
+>   -lines
+>   -that
+>   -were
+>   -deleted
+>   +old
+>   +lines
+>   +that
+>   +weren't
+>   +touched
+>
+> The change is the same no matter how you view it; the "-B" flag just
+> asks Git to show a non-minimal diff when the file was substantially
+> changed.
+>
+> -Peff
