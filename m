@@ -2,191 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB9161FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 12:05:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91D851FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 12:34:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935779AbdCXMFc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 08:05:32 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:34423 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934762AbdCXMFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 08:05:30 -0400
-Received: by mail-pf0-f194.google.com with SMTP id o126so81393pfb.1
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 05:05:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mriIHhl39cJ5rJOhFp55qMTTZnDR0VrxPo0b7Sj2MiA=;
-        b=uim4dG2Pr+XjiLkTKgtjUhCYzOfXCMs2NFVphQIdWPgZclJEnHSpOP5f+Q2AXL8eLI
-         YY4Vamf2jEGL03B+rXl5PP91+yhHNcvGCI/sW+UHJ/tXPyOj5lMqbJrpmTLAvtzFO71Y
-         0JjevkfJKl1SY5LV6Q2IJ6NyitrDPKhVfhMvcpe7KGOGHHfEARkGKEwyvFH1Lst8LGIf
-         HrHdKR9Vb1/H4nmGpWYIIko/J/m1oeh6qB7KuD4E91mnSkEHtDiE17PX1MaLh6QDdPXd
-         k4lVVUvXiMi9KHX+tmcHLu9B65i6T8CDuU2jTMGkhmNngr8lA11R27dy6RHmnYsaMcQF
-         JG8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=mriIHhl39cJ5rJOhFp55qMTTZnDR0VrxPo0b7Sj2MiA=;
-        b=s5WHWvBYDc2ugoJmELueQpwe0zfJlKVmxqiAoNC/aiY7aP1fh4tWNjjx1Wh5qYKfbE
-         HMUlCS52YTgUe9Qqt4G3t0gtst8Jk+prh7v9ZeGt0jTpymBsPzwGSl7yOzjfsYMQGC/Z
-         6rgDRS2GjFjUoyKxIOEnb/gsQ/B43eGGT1dP5ZP9sNRIsuJ+/Ok/KPWu4R42voVqO2oD
-         qPyGQpbjiUgo/Abq7cGeptQxwBpIIm0+BSs6FqECDsGHXGgx+0LMF1Ozy5XRVjAfjXEj
-         7KyggCzdNWdR2tAoLEJunb9q605gx4VA1d2pk02Bwe8/xF4MPe/HRivuyprvM49yG8GX
-         QvlQ==
-X-Gm-Message-State: AFeK/H2ZsSN3cgTGnEbJYWwo6eoqDjTCFuaGXO4TdUNA0pdxy1UkoOruM/Xmx8HskDy5GQ==
-X-Received: by 10.99.122.78 with SMTP id j14mr8578254pgn.52.1490357129060;
-        Fri, 24 Mar 2017 05:05:29 -0700 (PDT)
-Received: from localhost.localdomain ([47.11.0.98])
-        by smtp.gmail.com with ESMTPSA id u198sm4413318pgb.45.2017.03.24.05.04.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 05:05:28 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-To:     christian.couder@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jdl@jdl.com,
-        pc44800@gmail.com
-Subject: [GSoC][PATCH v4] t2027: avoid using pipes
-Date:   Fri, 24 Mar 2017 17:34:33 +0530
-Message-Id: <20170324120433.2890-1-pc44800@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <CAP8UFD3xOMbXgH5JATS7-cK_d0YA7Mvkk-ZpLh8sn-KYNm3wxg@mail.gmail.com>
-References: <CAP8UFD3xOMbXgH5JATS7-cK_d0YA7Mvkk-ZpLh8sn-KYNm3wxg@mail.gmail.com>
+        id S1757076AbdCXMed (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 08:34:33 -0400
+Received: from mail-sn1nam01on0127.outbound.protection.outlook.com ([104.47.32.127]:52544
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1752354AbdCXMeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 08:34:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=e/+zw+iHmceKRdXfRf7laYqQ3AGwP8yuCpV89FmsjxU=;
+ b=P/mSCRRgzXvD0X47FsZvaBlagiYwy07P75TkEpxgwI3bjU7hJcE+sp8JzXBGlju55jCFe05QezOc5ekpMVPSDqmq76EjW0D8eCDLiyJ6gpxcQGMKH697w88TpFmrdUUFDbkF+ZtN1Jl3/3VoLjl3ajN1EPfrz8D4sTgxcJdDPHc=
+Received: from BL2PR03MB323.namprd03.prod.outlook.com (10.141.68.22) by
+ BL2PR03MB321.namprd03.prod.outlook.com (10.141.68.15) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.991.14; Fri, 24 Mar 2017 12:34:26 +0000
+Received: from BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) by
+ BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) with mapi id
+ 15.01.0991.017; Fri, 24 Mar 2017 12:34:26 +0000
+From:   Ben Peart <Ben.Peart@microsoft.com>
+To:     Junio C Hamano <gitster@pobox.com>, Ben Peart <peartben@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "christian.couder@gmail.com" <christian.couder@gmail.com>,
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
+Subject: RE: [PATCH v1 1/3] pkt-line: add packet_write_list_gently()
+Thread-Topic: [PATCH v1 1/3] pkt-line: add packet_write_list_gently()
+Thread-Index: AQHSoyzlrutZb0iFXUaHpJW3Xe4PsqGhTW30gAKhmCA=
+Date:   Fri, 24 Mar 2017 12:34:25 +0000
+Message-ID: <BL2PR03MB32362E9532BFD2C895C1B73F43E0@BL2PR03MB323.namprd03.prod.outlook.com>
+References: <20170322165220.5660-1-benpeart@microsoft.com>
+        <20170322165220.5660-2-benpeart@microsoft.com>
+ <xmqqefxpjc5b.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqqefxpjc5b.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: pobox.com; dkim=none (message not signed)
+ header.d=none;pobox.com; dmarc=none action=none header.from=microsoft.com;
+x-originating-ip: [65.222.173.206]
+x-microsoft-exchange-diagnostics: 1;BL2PR03MB321;7:MVS0KtX3GjqfygzZ6Z+COa7BdFUfQRo/2/LPX3GBi++/gEgoHUr7xsqnXnYSrbwa3OQt01xXKEV/WnNYuLbI6JeuPfHQE8s1FbfNjTYankdyC4EFe5QmIns/EowCwcHpBqM7s0PytHGpVStBOP/iXBzhNHDnZXOcoyKEsgGqjPIYgBhx/Hr/Ajm2EevkoEAsKtBF7sUWHmn9niSS0bGKbLIdNd9/N8g3ZVXB23FnmTZIl2gigKf9j1qvVmVMgBSZsLfvYpb6R13pKP1EP0VTR2diM9BJIOFbab2H+V6+7ef8yMaoWlDP5On996PTfV8hulPpEPggUCPPvFew5wuR8gxZYZ9/EWeSNJ8FTYeFEyk=
+x-ms-office365-filtering-correlation-id: 26279215-f68f-4592-248a-08d472b21bc8
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254075)(48565401081);SRVR:BL2PR03MB321;
+x-microsoft-antispam-prvs: <BL2PR03MB321970E97868AB896A9132DF43E0@BL2PR03MB321.namprd03.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(9452136761055)(100324003535756);
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040375)(601004)(2401047)(5005006)(8121501046)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041248)(20161123560025)(20161123555025)(20161123564025)(20161123558025)(20161123562025)(6072148);SRVR:BL2PR03MB321;BCL:0;PCL:0;RULEID:;SRVR:BL2PR03MB321;
+x-forefront-prvs: 0256C18696
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39850400002)(39410400002)(39450400003)(39860400002)(39840400002)(13464003)(377454003)(25786009)(6246003)(6436002)(8990500004)(10090500001)(6506006)(5005710100001)(10290500002)(53546009)(39060400002)(54356999)(305945005)(2900100001)(189998001)(77096006)(4326008)(5660300001)(38730400002)(81166006)(229853002)(8676002)(122556002)(76176999)(74316002)(8936002)(86362001)(3846002)(6116002)(9686003)(54906002)(2906002)(55016002)(86612001)(33656002)(7696004)(8656002)(3280700002)(2950100002)(3660700001)(66066001)(102836003)(53936002)(99286003)(50986999)(7736002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL2PR03MB321;H:BL2PR03MB323.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:ovrnspm;PTR:InfoNoRecords;LANG:en;
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2017 12:34:25.8846
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR03MB321
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Whenever a git command is present in the upstream of a pipe, its failure
-gets masked by piping and hence it should be avoided for testing the
-upstream git command. By writing out the output of the git command to
-a file, we can test the exit codes of both the commands as a failure exit
-code in any command is able to stop the && chain.
+> -----Original Message-----
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Wednesday, March 22, 2017 4:21 PM
+> To: Ben Peart <peartben@gmail.com>
+> Cc: git@vger.kernel.org; Ben Peart <Ben.Peart@microsoft.com>;
+> christian.couder@gmail.com; larsxschneider@gmail.com
+> Subject: Re: [PATCH v1 1/3] pkt-line: add packet_write_list_gently()
+>=20
+> Ben Peart <peartben@gmail.com> writes:
+>=20
+> > Add packet_write_list_gently() which writes multiple lines in a single
+> > call and then calls packet_flush_gently(). This is used later in this
+> > patch series.
+>=20
+> I can see how it would be convenient to have a function like this.
+> I'd name it without _gently(), though.  We call something _gently() when =
+we
+> initially only have a function that dies hard on error and later want to =
+have a
+> variant that returns an error for the caller to handle.  You are starting
+> without a dying variant (which is probably a preferable way to structure =
+the
+> API).
+>=20
+> Also I am hesitant to take a function that does not take any "list"
+> type argument and yet calls itself "write_list".  IOW, I'd expect somethi=
+ng like
+> these
+>=20
+> 	write_list(int fd, const char **lines);
+> 	write_list(int fd, struct string_list *lines);
+>=20
+> given that name, and not "varargs, each of which is a line".  I am tempte=
+d to
+> suggest
+>=20
+> 	packet_writel(int fd, const char *line, ...);
+>=20
+> noticing similarity with execl(), but perhaps others may be able to come =
+up
+> with better names.
 
-Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
----
+Given there haven't been any better names suggested, I'll go ahead and upda=
+te it to be packet_writel.
 
-Hi, I am Prathamesh Chavan. This is my microproject which I have attempted 
-for Google Summer of Code for 2017.
-Also in this new version of patch I have changed sendemail.name configuration
-of the .gitconfig file with my full name and changed the description of
-commit message as asked.
-
- t/t2027-worktree-list.sh | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
-
-diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-index 848da5f36..720063bf0 100755
---- a/t/t2027-worktree-list.sh
-+++ b/t/t2027-worktree-list.sh
-@@ -20,7 +20,7 @@ test_expect_success 'rev-parse --git-common-dir on main worktree' '
- 
- test_expect_success 'rev-parse --git-path objects linked worktree' '
- 	echo "$(git rev-parse --show-toplevel)/.git/objects" >expect &&
--	test_when_finished "rm -rf linked-tree && git worktree prune" &&
-+	test_when_finished "rm -rf linked-tree actual expect && git worktree prune" &&
- 	git worktree add --detach linked-tree master &&
- 	git -C linked-tree rev-parse --git-path objects >actual &&
- 	test_cmp expect actual
-@@ -28,19 +28,21 @@ test_expect_success 'rev-parse --git-path objects linked worktree' '
- 
- test_expect_success '"list" all worktrees from main' '
- 	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
--	test_when_finished "rm -rf here && git worktree prune" &&
-+	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git worktree list | sed "s/  */ /g" >actual &&
-+	git worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success '"list" all worktrees from linked' '
- 	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
--	test_when_finished "rm -rf here && git worktree prune" &&
-+	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C here worktree list | sed "s/  */ /g" >actual &&
-+	git -C here worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -49,7 +51,7 @@ test_expect_success '"list" all worktrees --porcelain' '
- 	echo "HEAD $(git rev-parse HEAD)" >>expect &&
- 	echo "branch $(git symbolic-ref HEAD)" >>expect &&
- 	echo >>expect &&
--	test_when_finished "rm -rf here && git worktree prune" &&
-+	test_when_finished "rm -rf here actual expect && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "worktree $(git -C here rev-parse --show-toplevel)" >>expect &&
- 	echo "HEAD $(git rev-parse HEAD)" >>expect &&
-@@ -69,16 +71,17 @@ test_expect_success 'bare repo setup' '
- '
- 
- test_expect_success '"list" all worktrees from bare main' '
--	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	test_when_finished "rm -rf there out actual expect && git -C bare1 worktree prune" &&
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C bare1 worktree list | sed "s/  */ /g" >actual &&
-+	git -C bare1 worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success '"list" all worktrees --porcelain from bare main' '
--	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	test_when_finished "rm -rf there actual expect && git -C bare1 worktree prune" &&
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "worktree $(pwd)/bare1" >expect &&
- 	echo "bare" >>expect &&
-@@ -92,11 +95,12 @@ test_expect_success '"list" all worktrees --porcelain from bare main' '
- '
- 
- test_expect_success '"list" all worktrees from linked with a bare main' '
--	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	test_when_finished "rm -rf there out actual expect && git -C bare1 worktree prune" &&
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C there worktree list | sed "s/  */ /g" >actual &&
-+	git -C there worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -118,9 +122,11 @@ test_expect_success 'broken main worktree still at the top' '
- 		cd linked &&
- 		echo "worktree $(pwd)" >expected &&
- 		echo "ref: .broken" >../.git/HEAD &&
--		git worktree list --porcelain | head -n 3 >actual &&
-+		git worktree list --porcelain >out &&
-+		head -n 3 out >actual &&
- 		test_cmp ../expected actual &&
--		git worktree list | head -n 1 >actual.2 &&
-+		git worktree list >out &&
-+		head -n 1 out >actual.2 &&
- 		grep -F "(error)" actual.2
- 	)
- '
-@@ -134,7 +140,8 @@ test_expect_success 'linked worktrees are sorted' '
- 		test_commit new &&
- 		git worktree add ../first &&
- 		git worktree add ../second &&
--		git worktree list --porcelain | grep ^worktree >actual
-+		git worktree list --porcelain >out &&
-+		grep ^worktree out >actual
- 	) &&
- 	cat >expected <<-EOF &&
- 	worktree $(pwd)/sorted/main
--- 
-2.11.0
-
+>=20
+> > Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> > ---
+> >  pkt-line.c | 19 +++++++++++++++++++
+> >  pkt-line.h |  1 +
+> >  2 files changed, 20 insertions(+)
+> >
+> > diff --git a/pkt-line.c b/pkt-line.c
+> > index d4b6bfe076..fccdac1352 100644
+> > --- a/pkt-line.c
+> > +++ b/pkt-line.c
+> > @@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char
+> *fmt, ...)
+> >  	return status;
+> >  }
+> >
+> > +int packet_write_list_gently(int fd, const char *line, ...) {
+> > +	va_list args;
+> > +	int err;
+> > +	va_start(args, line);
+> > +	for (;;) {
+> > +		if (!line)
+> > +			break;
+> > +		if (strlen(line) > LARGE_PACKET_DATA_MAX)
+> > +			return -1;
+> > +		err =3D packet_write_fmt_gently(fd, "%s\n", line);
+> > +		if (err)
+> > +			return err;
+> > +		line =3D va_arg(args, const char*);
+> > +	}
+> > +	va_end(args);
+> > +	return packet_flush_gently(fd);
+> > +}
+> > +
+> >  static int packet_write_gently(const int fd_out, const char *buf,
+> > size_t size)  {
+> >  	static char packet_write_buffer[LARGE_PACKET_MAX];
+> > diff --git a/pkt-line.h b/pkt-line.h
+> > index 18eac64830..3674d04509 100644
+> > --- a/pkt-line.h
+> > +++ b/pkt-line.h
+> > @@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);  void
+> > packet_buf_write(struct strbuf *buf, const char *fmt, ...)
+> > __attribute__((format (printf, 2, 3)));  int packet_flush_gently(int
+> > fd);  int packet_write_fmt_gently(int fd, const char *fmt, ...)
+> > __attribute__((format (printf, 2, 3)));
+> > +int packet_write_list_gently(int fd, const char *line, ...);
+> >  int write_packetized_from_fd(int fd_in, int fd_out);  int
+> > write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
