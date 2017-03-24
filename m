@@ -2,122 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB5F1FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 22:56:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0B421FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 23:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966720AbdCXW4v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 18:56:51 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58585 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S966019AbdCXW4r (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 18:56:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3BABB7908C;
-        Fri, 24 Mar 2017 18:56:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WgeEUFms5NpGHukqKy29IuiUYEs=; b=E6PIQH
-        r3SAoHcHXqaw3gNzfgXAyCJgDSW22waXjBWse7Ayvv20bVXMn0f+ZqSdvk+r6wM2
-        VAIE+QZ+i+uSoSEf6nxj1/AjaLs9ZFnSYQls8auSqFZ8OJy/cjIV4wuLaAKL8U1N
-        WWYtbp9JOmZv82Yq68z0nzSIkFpNXa7lMXPZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ApQWVY9sRQCjqB0DkIStDcL2KcfHkhqP
-        IvYq4WLkIb59HlFtG8A78bS8DZWHDWI+u7h6NKX7jLzOAVOnnRkjKVtx7N2hPwFx
-        IMcVjHt0LpiAwSKv2ApaA3yntTv0nH5uZEFXktULLw29LLo1+P8okEWx5BdW4uvD
-        ptg1HKiVCVc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 346A17908B;
-        Fri, 24 Mar 2017 18:56:30 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A2BB379089;
-        Fri, 24 Mar 2017 18:56:29 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 1/2] diff --no-index: optionally follow symlinks
-References: <20170324213110.4331-1-dennis@kaarsemaker.net>
-        <20170324213110.4331-2-dennis@kaarsemaker.net>
-Date:   Fri, 24 Mar 2017 15:56:28 -0700
-In-Reply-To: <20170324213110.4331-2-dennis@kaarsemaker.net> (Dennis
-        Kaarsemaker's message of "Fri, 24 Mar 2017 22:31:09 +0100")
-Message-ID: <xmqqziga5lnn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1754161AbdCXXHD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 19:07:03 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35780 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753411AbdCXXHB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 19:07:01 -0400
+Received: by mail-pf0-f193.google.com with SMTP id n11so597978pfg.2
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 16:07:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=BN3DKiJRGFrguw05uf1RRnI6l7GOoZYBaBKnbRlhakg=;
+        b=odZuy5f026QD8pYMuyXwGEb2vHDpPN3GF/boO35NSghs2UDQXoZe19SsO5lYQg5//8
+         rt/vt+38Hx+vsdA5AvqmwZfulPGwEBA6JFJuIUQQenO/NK6W6MBtydR+w95mXA5bsGLM
+         gG7Tr78HZLiTPbvcgO/SL+T/tyqhUgl5/dju1gWCQXuQga1ScFL4mxfe9lWVCZvl5fUH
+         muVe2UhC0uenTUHGgJJgy6RjEMNLfX/ri+O/k2IupgWNzganJ52iKz9MevWUcEt4cxMz
+         I+hLMfjLOXeVgrgh0h/0DhOUfmnkWH1tkr2NrYlBJPG3oy0YrXHa838BgmcvquKkfuSA
+         u8xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=BN3DKiJRGFrguw05uf1RRnI6l7GOoZYBaBKnbRlhakg=;
+        b=L29WHDomrBAli3KLeIZogkd2WfdlUx+1iHRr5BT1uT1DLydeJ3O0ht+vZ/J7lZqFl3
+         UmCpEKGpEa4bfX0rA3K4BYPwNjDgrcq0euKX1qlf2K+/GSyBR5zXtheM5tcVhc17UXJU
+         9Bzj2gDo03Lhu5ZGPrBgEgymqA6AsoPd2xbDL4kQ2cnxyTgp3kyU4SH89E8dR/AWO1X6
+         ls9VnMe5kDRyZwp1FZVtPNTl7FDc+yZUxre354o0vkDauGVPUgDm11BmVh4ZoddN+tkV
+         cw6a0C04KW2Ynjka5cxJjBTRKPf0aFF7xliLBrpOXBO94iPSCs3Jqsz0OlxhYcg3mA1y
+         AuBw==
+X-Gm-Message-State: AFeK/H3o64PXjKF6WVWPmtWxSF1qe+xDX+IHsHr8TQXpsLoHL6HG971Spfc0Ol07vjD/1A==
+X-Received: by 10.98.78.7 with SMTP id c7mr11950918pfb.138.1490396820222;
+        Fri, 24 Mar 2017 16:07:00 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8597:ae41:db75:6a97])
+        by smtp.gmail.com with ESMTPSA id l1sm6625168pfk.8.2017.03.24.16.06.59
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Mar 2017 16:06:59 -0700 (PDT)
+Date:   Fri, 24 Mar 2017 16:06:57 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 6/7] short status: improve reporting for submodule changes
+Message-ID: <20170324230657.GK31294@aiede.mtv.corp.google.com>
+References: <20170323223338.32274-7-sbeller@google.com>
+ <20170324182902.19280-1-sbeller@google.com>
+ <20170324182902.19280-7-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E1BCBEE-10E5-11E7-AEF4-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170324182902.19280-7-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
+Stefan Beller wrote:
 
-> @@ -52,7 +52,7 @@ static int get_mode(const char *path, int *mode)
->  #endif
->  	else if (path == file_from_standard_input)
->  		*mode = create_ce_mode(0666);
-> -	else if (lstat(path, &st))
-> +	else if (dereference ? stat(path, &st) : lstat(path, &st))
->  		return error("Could not access '%s'", path);
->  	else
->  		*mode = st.st_mode;
-
-This part makes sense---when the caller tells us to stat() we
-stat(), otherwise, we lstat().
-
-> diff --git a/diff.c b/diff.c
-> index be11e4ef2b..2afecfb939 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -2815,7 +2815,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
->  		s->size = xsize_t(st.st_size);
->  		if (!s->size)
->  			goto empty;
-> -		if (S_ISLNK(st.st_mode)) {
-> +		if (S_ISLNK(s->mode)) {
-
-This change is conceptually wrong.  s->mode (often) comes from the
-index but in this codepath, after finding that s->oid is not valid
-or we want to read from the working tree instead (several lines
-before this part), we are committed to read from the working tree
-and check things with st.st_* fields, not s->mode, when we decide
-what to do with the thing we find on the filesystem, no?
-
-> @@ -2825,6 +2825,10 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
->  			s->should_free = 1;
->  			return 0;
+> +++ b/wt-status.c
+> @@ -431,10 +431,19 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
 >  		}
-> +		if (S_ISLNK(st.st_mode)) {
-> +			stat(s->path, &st);
-> +			s->size = xsize_t(st.st_size);
+>  		if (!d->worktree_status)
+>  			d->worktree_status = p->status;
+> -		d->dirty_submodule = p->two->dirty_submodule;
+> -		if (S_ISGITLINK(p->two->mode))
+> +		if (S_ISGITLINK(p->two->mode)) {
+> +			d->dirty_submodule = p->two->dirty_submodule;
+
+This is to simplify because dirty_submodule is just going to stay as 0
+in the !S_ISGITLINK(p->two->mode) case, right?
+
+>  			d->new_submodule_commits = !!oidcmp(&p->one->oid,
+>  							    &p->two->oid);
+> +			if (s->status_format == STATUS_FORMAT_SHORT) {
+> +				if (d->new_submodule_commits)
+> +					d->worktree_status = 'M';
+> +				else if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+> +					d->worktree_status = 'm';
+> +				else if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+> +					d->worktree_status = '?';
+> +			}
 > +		}
->  		if (size_only)
->  			return 0;
->  		if ((flags & CHECK_BINARY) &&
 
-I suspect that this would conflict with a recent topic.  
+Makes sense.
 
-But more importantly, this inserted code feels doubly wrong.
+This patch also goes past the right margin.  Maybe this code to compute
+d->worktree_status could be its own function?
 
- - what allows us to unconditionally do "ah, symbolic link on the
-   disk--find the target of the link, not the symbolic link itself"?
-   We do not seem to be checking '--dereference' around here.
+With or without such a change,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
- - does this code do a reasonable thing when the path is a symbolic
-   link that points at a directory?  what does it mean to grab
-   st.st_size for such a thing (and then go on to open() and xmmap()
-   it)?
-
-Puzzled.
-
-Thanks.
-
-
-   
+diff --git i/wt-status.c w/wt-status.c
+index 9909fd0e57..0375484962 100644
+--- i/wt-status.c
++++ w/wt-status.c
+@@ -407,6 +407,16 @@ static void wt_longstatus_print_change_data(struct wt_status *s,
+ 	strbuf_release(&twobuf);
+ }
+ 
++static char short_submodule_status(struct wt_status_change_data *d) {
++	if (d->new_submodule_commits)
++		return 'M';
++	if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
++		return 'm';
++	if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
++		return '?';
++	return d->worktree_status;
++}
++
+ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 					 struct diff_options *options,
+ 					 void *data)
+@@ -435,14 +445,8 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
+ 			d->dirty_submodule = p->two->dirty_submodule;
+ 			d->new_submodule_commits = !!oidcmp(&p->one->oid,
+ 							    &p->two->oid);
+-			if (s->status_format == STATUS_FORMAT_SHORT) {
+-				if (d->new_submodule_commits)
+-					d->worktree_status = 'M';
+-				else if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-					d->worktree_status = 'm';
+-				else if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+-					d->worktree_status = '?';
+-			}
++			if (s->status_format == STATUS_FORMAT_SHORT)
++				d->worktree_status = short_submodule_status(d);
+ 		}
+ 
+ 		switch (p->status) {
