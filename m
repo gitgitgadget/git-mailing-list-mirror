@@ -2,124 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03B571FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 23:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24FCC1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 23:27:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755539AbdCXXZ3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 19:25:29 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51301 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755487AbdCXXZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 19:25:27 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbdE3-1cTS2n3Hxr-00lBlA; Sat, 25
- Mar 2017 00:25:18 +0100
-Date:   Sat, 25 Mar 2017 00:25:04 +0100 (CET)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/7] t0013: test DC_AND_OPENSSL_SHA1, too
-In-Reply-To: <cover.1490397869.git.johannes.schindelin@gmx.de>
-Message-ID: <2187bcec8b1e2c61b801a04e05f58d87f683cbcf.1490397869.git.johannes.schindelin@gmx.de>
-References: <cover.1490397869.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1755558AbdCXX1I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 19:27:08 -0400
+Received: from mail-it0-f48.google.com ([209.85.214.48]:37049 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754764AbdCXX1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 19:27:06 -0400
+Received: by mail-it0-f48.google.com with SMTP id 190so5041104itm.0
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 16:27:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=mxB7X2a2e4/axI0oRMb3lnUiDWSwGmUr6CmgK9ALMvc=;
+        b=Yt76wcERkhQSVHeHuZ7FXlmq9kaNNCzxsvcpBT7t8+XFD4GRAlXp0NQTspAq2ZBLla
+         IbM0KjoBET28Y8BNfT1XnDlPo+7iBsJX49PFmvW8X2dlkXbBc3Zru+ehsiXvxkRmXR3G
+         jeJA4oEIxUjz9CrIcuK0+2d3z3k4JDk1eBYHF5KiKCvEt2XE2ZF0YJC8u2GbXrhRT0Cf
+         EJNhLVJgV2sofjGYpegVy75Mim+pOxVMt2QnRA/NyqIzesYkXpBFS3xs6AaLChkOldS4
+         /AAQVrRBIZEU39YeBcA3IZMdmRz7ss2F6pRbi6gZalx8DcNRM7PMJbV5Dk8kWi0CUONW
+         rH1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=mxB7X2a2e4/axI0oRMb3lnUiDWSwGmUr6CmgK9ALMvc=;
+        b=RWHtFsWf87FrU2hBske1pcX1G/L18c1StzVdoEkZMnwtZQeS34fDMiJjkIP9gBGcyK
+         kpbpNxBI5KRU6F3hSB7IuYkAAae9jOVSXtKmmN2Sls4sl0M2IkdQFU6eKVfVTBOaq1bT
+         wuHPFSarlRKe9YFe+9AWhC/BliAMwu2o0xpH1XWOHp9fcGqCDoJAN99vEsHLAGCnkWgZ
+         iS5Rpee3jR4QxIzW2gJPryjAds01zfiERA+bLLABBw/W1HSVYfhVMhtRcvp1iXjulvg4
+         d4BhjfYWvXqmTCjzY4JtZPqRm3cR94/Uw4ccDufmxboEyi08Xb7d9bSXT5PGIctZAga/
+         y3xw==
+X-Gm-Message-State: AFeK/H2lrWl2gDJM1AljFQxFTE+N9VcAOo4EA2kQtQwYS3KIVys5WbISFuBDv8DL4dOx9IHSFyKs/j6K8+x6yQ==
+X-Received: by 10.36.116.71 with SMTP id o68mr5986818itc.60.1490398025400;
+ Fri, 24 Mar 2017 16:27:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ggzw+Qg7SgfYiF2W+rrw4eWEE7YCmT9RQFJrglRc0N2OlG9Utgr
- T8Co7JaaI/Dws0BTSK0+Alda/HYBfAsIBjbTPIqPz16RtQhfp4EKI3xNo6hlrV4vuAxsxEz
- mXTHTQmp1yiRUbvY/00Z3FVYBazR4LgVXmIKom3Rs/ZrMth5397REqGYOIqD++vN5RYbuy4
- pyp0PNU8t35pBtOJaZh5w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:d7Srbzfrdnc=:sAinPt/4RpaL3DjUvzB51d
- mqW/QXKS3dI6gMKB+JgMB7kIMIcHx1PB9ctVdJxKBvfOldtQy3wEDykEA5DKfAmqko8AF1KMf
- r2ufgp2XAzqkAnj9a+oldPcEraQRGjznZzhEGHmVpFvv5ZrsL6CA/Vo/XeUfEK6Z9vaMm6n+r
- IcHyAVy3IMZZQFwkLAZRXj46JH6PDkLuNODGCYCR+93yR90id6xNVuY4HVpTdewqgx/p/7yXN
- KSyT2jVlYqijBzNseUbUOvjYJfeb0INQhz+9omAGa1p0glGpohbnUebKbGaZPKu3w2Air9IO7
- wOf9VX/sqvnSUEAfwoXHLK4lNQUB4srrEnbn/G/TIhedz47NEXm2xteFI08IctQvLEUjFDvvt
- 0rTmBtPGfpOXNqpSx3nWe0JAHgBfFak8S3LIcGdA7MrNDZo4LJ2GKdjYukG54k9A0dhhgcGZ0
- Di+VolAoeUYHcx3ehgrra9KvCpulA8u28cc+DtaayXHGynRV0C/tbAWskWpcmIALRHmsh3T3Q
- 0hfMZKyMKbMtlPAXQbLgSs7wbhwoqdLVKpflJDMTsYAu8HIvdJG+rEhHOg5TUUKoo9qfGcEMw
- mV5flfylhMn13axBvd81oBWijUBFfIY0IGqjl0ndjeYG4slGI2qnGQkmYRHaPdWPzlbbg64T8
- U3FoWbsYE5QAl/3sWU0ZcTnWfrJhlkN+F5KXZJnTc+TIFQoew7tOKI6LzlRIqiJbW+xF97btB
- cX2BiwPMALWMzvxq6jrXPnnU0M9MNB8lVBMYpPTwm5GLnqSkOiiP14npHqj6pSOyIWxgVY5tu
- 2dMILeJYz54iMxW9zy5QZFGAV5fVA==
+Received: by 10.107.130.208 with HTTP; Fri, 24 Mar 2017 16:26:44 -0700 (PDT)
+In-Reply-To: <xmqq4lyi74lw.fsf@gitster.mtv.corp.google.com>
+References: <xmqq4lyi74lw.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 25 Mar 2017 00:26:44 +0100
+Message-ID: <CACBZZX4DH8V7cCC9JDRai4ZFTLNHUyO-Kn5hrRFo3m9UipvWkw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Mar 2017, #10; Fri, 24)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile             |  1 +
- t/helper/test-sha1.c | 10 ++++++++++
- t/t0013-sha1dc.sh    | 10 ++++++++++
- 3 files changed, 21 insertions(+)
+On Fri, Mar 24, 2017 at 10:21 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-diff --git a/Makefile b/Makefile
-index 3e181d2f0e2..0b581357625 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2251,6 +2251,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
- 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
-+	@echo DC_AND_OPENSSL_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_AND_OPENSSL_SHA1)))'\' >>$@+
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
- endif
-diff --git a/t/helper/test-sha1.c b/t/helper/test-sha1.c
-index a1c13f54eca..27ce8869e51 100644
---- a/t/helper/test-sha1.c
-+++ b/t/helper/test-sha1.c
-@@ -8,6 +8,16 @@ int cmd_main(int ac, const char **av)
- 	int binary = 0;
- 	char *buffer;
- 
-+	if (ac > 1 && !strcmp(av[1], "--disable-sha1dc")) {
-+#ifdef SHA1_DC_AND_OPENSSL
-+		toggle_sha1dc(0);
-+#else
-+		die("Not compiled with DC_AND_OPENSSL_SHA1");
-+#endif
-+		ac--;
-+		av++;
-+	}
-+
- 	if (ac == 2) {
- 		if (!strcmp(av[1], "-b"))
- 			binary = 1;
-diff --git a/t/t0013-sha1dc.sh b/t/t0013-sha1dc.sh
-index 435a96d6108..2b529b31b4e 100755
---- a/t/t0013-sha1dc.sh
-+++ b/t/t0013-sha1dc.sh
-@@ -5,6 +5,10 @@ test_description='test sha1 collision detection'
- TEST_DATA="$TEST_DIRECTORY/t0013"
- 
- test -z "$DC_SHA1" || test_set_prereq DC_SHA1
-+test -z "$DC_AND_OPENSSL_SHA1" || {
-+	test_set_prereq DC_AND_OPENSSL_SHA1
-+	test_set_prereq DC_SHA1
-+}
- 
- test_expect_success DC_SHA1 'test-sha1 detects shattered pdf' '
- 	test_must_fail test-sha1 <"$TEST_DATA/shattered-1.pdf" 2>err &&
-@@ -12,4 +16,10 @@ test_expect_success DC_SHA1 'test-sha1 detects shattered pdf' '
- 	grep 38762cf7f55934b34d179ae6a4c80cadccbb7f0a err
- '
- 
-+test_expect_success DC_AND_OPENSSL_SHA1 'sha1dc can be turned off' '
-+	test-sha1 --disable-sha1dc <"$TEST_DATA/shattered-1.pdf" 2>err &&
-+	! test_i18ngrep collision err &&
-+	! grep 38762cf7f55934b34d179ae6a4c80cadccbb7f0a err
-+'
-+
- test_done
--- 
-2.12.1.windows.1
+> * ab/test-readme-updates (2017-03-23) 4 commits
+>  - SQUASH???
+>  - t/README: clarify the test_have_prereq documentation
+>  - t/README: change "Inside <X> part" to "Inside the <X> part"
+>  - t/README: link to metacpan.org, not search.cpan.org
+>
+>  Doc updates.
+>
+>  Waiting for a reaction to SQUASH???
 
+Sorry about the late reply. That squash looks good to me, please squash it in.
 
+> * ab/doc-submitting (2017-03-21) 3 commits
+>  - SQUASH??? remove "alias" thing
+>  - doc/SubmittingPatches: show how to get a CLI commit summary
+>  - doc/SubmittingPatches: clarify the casing convention for "area: change..."
+>
+>  Doc update.
+>
+>  Any further comments?
+
+Squashing that in looks good.
+
+> * ab/ref-filter-no-contains (2017-03-24) 16 commits
+>  - tag: add tests for --with and --without
+>  - ref-filter: reflow recently changed branch/tag/for-each-ref docs
+>  - ref-filter: add --no-contains option to tag/branch/for-each-ref
+>  - tag: change --point-at to default to HEAD
+>  - tag: implicitly supply --list given another list-like option
+>  - tag: change misleading --list <pattern> documentation
+>  - parse-options: add OPT_NONEG to the "contains" option
+>  - tag: add more incompatibles mode tests
+>  - for-each-ref: partly change <object> to <commit> in help
+>  - tag tests: fix a typo in a test description
+>  - tag: remove a TODO item from the test suite
+>  - ref-filter: add test for --contains on a non-commit
+>  - ref-filter: make combining --merged & --no-merged an error
+>  - tag doc: reword --[no-]merged to talk about commits, not tips
+>  - tag doc: split up the --[no-]merged documentation
+>  - tag doc: move the description of --[no-]merged earlier
+>
+>  "git tag/branch/for-each-ref" family of commands long allowed to
+>  filter the refs by "--contains X" (show only the refs that are
+>  descendants of X), "--merged X" (show only the refs that are
+>  ancestors of X), "--no-merged X" (show only the refs that are not
+>  ancestors of X).  One curious omission, "--no-contains X" (show
+>  only the refs that are not descendants of X) has been added to
+>  them.
+>
+>  This looks ready for 'next'.  Any comments?
+
+Looks good to me, although I would say that wouldn't I? :)
