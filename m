@@ -7,82 +7,86 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F117B1FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 23:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99A5F1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 23:25:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754798AbdCXXZK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 19:25:10 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50994 "EHLO mout.gmx.net"
+        id S1755015AbdCXXZR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 19:25:17 -0400
+Received: from mout.gmx.net ([212.227.15.15]:61976 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754629AbdCXXZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 19:25:07 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8eAd-1bwa8w307v-00wH5W; Sat, 25
- Mar 2017 00:24:57 +0100
-Date:   Sat, 25 Mar 2017 00:24:57 +0100 (CET)
+        id S1754629AbdCXXZQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 19:25:16 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsCAp-1cApE3400F-013xB0; Sat, 25
+ Mar 2017 00:25:01 +0100
+Date:   Sat, 25 Mar 2017 00:25:00 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/7] config: add the core.enablesha1dc setting
+Subject: [PATCH 4/7] t0013: do not skip the entire file wholesale without
+ DC_SHA1
 In-Reply-To: <cover.1490397869.git.johannes.schindelin@gmx.de>
-Message-ID: <7505e660d461f2a000bdb4d540346345186f42a8.1490397869.git.johannes.schindelin@gmx.de>
+Message-ID: <1f26e0320db1182d68663812378937e438d5c887.1490397869.git.johannes.schindelin@gmx.de>
 References: <cover.1490397869.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:dVS1Ktz2fRB8q9RMYsvilMXCcZFBlzVeFgS9UTewesmys+edNRA
- W46nR+OEtZolTzytm9zxLjYzbQrNLd2Gvkvt81f6IWVWPUnG6pjlUk8BlIbKEvmZmU9nPkl
- /7Z6d+7MgKp8M8mIgdyqi9hscqBUSp+hRTcAt5xrnIgT6A9rmwNRQ8UUkU9wyn/g7+eEObc
- wz16VaZII8O7KGSG4xbYw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Fs0MPS/SzrQ=:OqRnSjlYk/wwKb7hrLtbw/
- DhG8765Rz+ysQbiKP1aPuuRPCTc2RbSPMJ5q9aFEmrJJ36xsJjZ0AQXYY6jV/T394CGQamaIC
- 6O1Od2+X9CC+9PjsZbWMXVvEaktnKZ15ND/9Deh9kuv9LJ676ewkY4e3VQeKInNJoypyXNvKR
- YyE1VT57xBFmOzeAJ8RcuCTsCnSi3/wDabdH/6xXhpwie5E+xC6shSrpnqCFQjkvLlMnRu2NZ
- MBi+p7yT/NHdpf7iyZvXEdc99R2tM9NFCVToMni8/AWCLyulVhpIjwnBF5vDXOd11MR0ErJqA
- x7J+NH54MWVrZzW17u+8q4dEEEiEskQ4v5HRi1UuG5EjyTXSC3Q0ri0vQUhkT9CwSTNZEBByk
- tt5TfmPb4TN0QY2pARC028ZdYa2FRk5zcdPBtP3WB9k3Ji27KS2jgJYo7B5Ys1NNezQgzFjLh
- 8MTM6xbMZnHBVwc73pQhoHksUcyAOuHcBBOnwq7BEV3yp812vvK/VeEq4PaefwTU6aInmfRPQ
- 7jgUIzY/S8fFP+ATew97kaN4jnVOzPWRlVBBDSCCy+4S7HEkOYE6Vixn/uj+8kjViLZjpt+h5
- I/mYPzkMJKcqt2Wr4k5KDiERkafcfq1F+rY5vub9qTEXVYEYsasi+wgAZhxKz8Us2dN7kNrGc
- t0720FYPGqAUqtt+w/HgLvvnWOcwiny5ZWaFONsi1leLYRQN/mHKH5Ad5wNwRRJ40kT6xJixj
- 7gg/8EYLWXtlsC6ry8TrkbTfY95H635tmr3aq/CTzYEfYkBq9TvQQsccw9yKJJUmi/SBypupL
- cOcdqAbpAH5i+1j4jqyevun6jzbHw==
+X-Provags-ID: V03:K0:FEvHydlWFgWM8UmoGpP3pqW9NalC9cG1eGL8c3OOWin3k7zxv9d
+ O9p9S1eWPX5/dev2t5PerPPXe0nFnJdKyTIaR5e80EAxt547+Jg0JTMz3c5VPkltxPlKUt/
+ nJexmOFRH/Csi66Y25b81gQF/ZFeGOebaWELIsDzTww0LOig+G4NhgjlJ9BNMpbYdsuq58Y
+ 09bkm3FjgmRsPfY9MwR9g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cwVQPQz+07A=:KfbyC/cxW1EJeihBaRwlXb
+ n+bywKv1KQaieXKrZb2P0NTm3NvgzDHmKWSkS/psmAXWmK/jVSUqKzolTX9Ib0Bn2wHXvSDF6
+ Ib2eVUGV/zsyDBSefF4GwyguF5cpypQ38p69Bc/hSoyMTvqWO3WXWZ6w71GmW3rJuJM70baKx
+ 8prEXe6I887Pi4ezaul/BvxjiQa8O7ORyRyydCH7XTkrJe+0zj6EPlcDSVOJaV5h6TW0UfQ5q
+ /7WfhdgHJIcf1+NUsuhwqEgUm4wjU/PEywEp4qN53S1okNeJ/j3bZQ8ioNqVI30urbByj7TP8
+ D5T2zA7ggFiXrSeGg7HUzeqDcz4VAZk6eJ2GouE1ZVcaKGjrTgHKjHym/mw93w7fexh4yb3Aq
+ qrJl5cHO9mKpqWty0K+5KUKarWEDsvjm0+Ut8bvRJ0W39O0FTOtkz4/NlMy1LQSVAZQcZ+DNB
+ D/pcg9uBsyFssYLmTi6aYiYNu6OXejxUjRx18pkVgypgT5wBpBMhmpqh4aKAnhuW7SewAELhh
+ OtjxgPgsUI3jXYVj8azGdk/BJTmN2YpVVW08LkYLO1+z/WgrB94I4s7bk8tg7RTGl+gVcn8H9
+ woyVraIUwl56fmgiXRHN8MdpA1MNyKqkhlqBjUOxiNxwNBUne7AsUmvGi4+nCOVzENY/DgldL
+ Eg1YtzIVpCFxxC6aQe51Zujv4m4hCoFZyZz0ypqpmUsed30UICyjubAGWkI5pTCVC7agPb81l
+ g8ajf4dr5BZjjbusPRxDVL72BPks8XB+RiuCQantjLzCBn179IzCFNq0/Tc6/aEhFrFcXCONN
+ V6mpQ6pkrxeb0SWcmBpaCOPVLIThw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When compiled with DC_AND_OPENSSL_SHA1, this new config setting allows to
-switch from the collision-detecting SHA-1 routines (SHA1DC) to the
-noticeably faster OpenSSL ones.
+So far, there is only one test case in that script, and that case indeed
+requires that the code was compiled with with the DC_SHA1 flag.
 
-The default is still to detect collisions.
+However, we are about to add another test case to verify that the
+DC_AND_OPENSSL_SHA1 flag works correctly, too.
+
+So let's refactor the code a little.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ t/t0013-sha1dc.sh | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/config.c b/config.c
-index 1a4d85537b3..f94e2963e57 100644
---- a/config.c
-+++ b/config.c
-@@ -1205,6 +1205,14 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
+diff --git a/t/t0013-sha1dc.sh b/t/t0013-sha1dc.sh
+index 6d655cb161b..435a96d6108 100755
+--- a/t/t0013-sha1dc.sh
++++ b/t/t0013-sha1dc.sh
+@@ -4,13 +4,9 @@ test_description='test sha1 collision detection'
+ . ./test-lib.sh
+ TEST_DATA="$TEST_DIRECTORY/t0013"
  
-+	if (!strcmp(var, "core.enablesha1dc")) {
-+#ifdef DC_AND_OPENSSL_SHA1
-+		toggle_sha1dc(git_config_bool(var, value));
-+#else
-+		warning("Ignoring core.enablesha1dc='%s'", value);
-+#endif
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
+-if test -z "$DC_SHA1"
+-then
+-	skip_all='skipping sha1 collision tests, DC_SHA1 not set'
+-	test_done
+-fi
++test -z "$DC_SHA1" || test_set_prereq DC_SHA1
+ 
+-test_expect_success 'test-sha1 detects shattered pdf' '
++test_expect_success DC_SHA1 'test-sha1 detects shattered pdf' '
+ 	test_must_fail test-sha1 <"$TEST_DATA/shattered-1.pdf" 2>err &&
+ 	test_i18ngrep collision err &&
+ 	grep 38762cf7f55934b34d179ae6a4c80cadccbb7f0a err
 -- 
 2.12.1.windows.1
 
