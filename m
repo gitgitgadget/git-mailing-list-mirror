@@ -2,74 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8E331FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 23:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC80E1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 23:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935025AbdCXXwU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 19:52:20 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38757 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934843AbdCXXwP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 19:52:15 -0400
-Received: by mail-it0-f53.google.com with SMTP id y18so5363732itc.1
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 16:52:14 -0700 (PDT)
+        id S1753598AbdCXXyC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 19:54:02 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:36415 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751398AbdCXXyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 19:54:01 -0400
+Received: by mail-pg0-f43.google.com with SMTP id g2so2290894pge.3
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 16:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Dadbo83wWhM1xCK4O6xL2oKVatXx0SImpIE3iFWe6s4=;
-        b=i0s0sQquzDEAy+bQxx7hbPqNvRuwejboMUxGfVcmqAdXkoCgIehgO2Zb9a8q+Xy0Ca
-         qcBAcSSxBsOe68vTUQlt55uEvi/u6cJTpebyrImGM2LYEmkhc1F37+T31yW8TQ4Sy1gG
-         fP7gh1VDV/c9enT9MVmivFoCp6HLan0mc4ZF3LMhSBk4M7l0Xn1huH/Y80eWsZbSa/DL
-         7q4pFOPGUVLVORxjGV8ZYtm+XXtoP50AXIJyjrhuPcx/H1Xfxc9/J1JEWfIaqh/c2N5l
-         tyu7YTWpTwpriKC95M+uDVdPafHL6IEo8w/xglDtI4F11QHH3Zjj2kMNj4+uOFYsO9Ng
-         AG4w==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=P0rrOsDViab9VGDetSRQuR56Gt0klyspb4o53Y3ZqZA=;
+        b=ArVBmM+ZYTEd8HnoNCD8pMtBh08CDiwB/TlTW496OmVSxwc/zNCFwWuJ6DUeVKWZw0
+         0hIWM2tqTm8yk6bG87di64R2lXcC4aPl5OyeWx5VDeaDp6VNXhOkpBpBUZO4Htjw18DC
+         FveBAgsCF/UuxqGF7F8E6DqpDhei41uYGQXgML2Z71A0G0ioIfZq3+bARd/KnqMLnMGd
+         cbGhjU5gju9yVnqlSSWclN+2B9nuxxa9c5nqCl+S09JAkTQSLFZETyVlXHvqU6IUzmQU
+         vUvWeK+Hx0X3WczSbOOd4ghk78OCXDIIvGKuu/gBug+kD8oFUeB2VKlB0m733PK+BuQ0
+         3hNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Dadbo83wWhM1xCK4O6xL2oKVatXx0SImpIE3iFWe6s4=;
-        b=rTk5jn7c+Wck97UDnFUti0i/ZLd/2LjlGsX9j9bXDvU+1vRwcgmLt+UEPi2cj2n8Et
-         h9093k+34L+9oOrtatJEi+JgeJ3H9mwGoAw8oyCMtiKnxQhJSS+YKU6jxdyDlUFdgP9A
-         NzDhY6xthVtYI7x9CeJBU59vsbVUXmcVyF05auTy5sRiO5yPzZbEsmgKfO7xNxxrEn6r
-         mIpWcnPg3YDqxX0RaxOcBdGZi3uZMGVLHC1drFUncCSdDSIajxyOI13MoXsR41wNmqa+
-         TOEmlhTXjmSIuMAOKRFcI5uA864cElUbCcUdeFHpV9h/JUqfuA4mQWtz3AkanTYJj6Hr
-         mgjQ==
-X-Gm-Message-State: AFeK/H11M1Mo8CxnDdZfG5Yq4d7wEeykg5q+pDJYZ5YtUFs0eKyX7YP8z/+68a6ZiVNOyBnnu4pCj/2lbTGjYQ==
-X-Received: by 10.36.29.66 with SMTP id 63mr5236363itj.91.1490399533253; Fri,
- 24 Mar 2017 16:52:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=P0rrOsDViab9VGDetSRQuR56Gt0klyspb4o53Y3ZqZA=;
+        b=YLdYSCwJRBIrpmj6OqHCiDIPKIkPKvvolL8DcY/zIY/D9SETfsCn0ct482f+/LvVu7
+         oXfiVHeez7H8FBwPcJOsR1O6TJC8GdaJgDGbwvfQy5smkDMzwPVynpoyXZfe66D2ythm
+         zQL1sidPtzQGs9wlUHbJwoQHw8OwfDtpSad4i2Lfc81hEvh9mcC2BgC1oITWsHn8wecM
+         K5THTt+pMdQAzBVdyZUa98LO1PD8UvL5oZI5V046GF8+fdwzmEEkkUTfy6E6Z9Uwvc/R
+         avl+aLwo5YGMvJCIrm7fx/P2BeTwyyb8lucHM52iMnmYvtYdxVOBgAzrg4qTTy9XylUO
+         Re7g==
+X-Gm-Message-State: AFeK/H2TDK5fUB7gmNb7Uqn/LJ3jfOvI+mtyAVGZFnwKmG8SHdSSt9OQPJMDUFB9ukPx5sZF
+X-Received: by 10.98.14.81 with SMTP id w78mr12646747pfi.9.1490399639953;
+        Fri, 24 Mar 2017 16:53:59 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:3c35:65e8:559b:2627])
+        by smtp.gmail.com with ESMTPSA id 189sm6662912pgd.30.2017.03.24.16.53.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Mar 2017 16:53:59 -0700 (PDT)
+Date:   Fri, 24 Mar 2017 16:53:57 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Mar 2017, #10; Fri, 24)
+Message-ID: <20170324235357.GA26537@google.com>
+References: <xmqq4lyi74lw.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Fri, 24 Mar 2017 16:51:52 -0700 (PDT)
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 25 Mar 2017 00:51:52 +0100
-Message-ID: <CACBZZX6F47uC9jLxppgkUnwVpGV2jpzzP4kwTuqKgayCevomeA@mail.gmail.com>
-Subject: Will OpenSSL's license change impact us?
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4lyi74lw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-They're changing their license[1] to Apache 2 which unlike the current
-fuzzy compatibility with the current license[2] is explicitly
-incompatible with GPLv2[3].
+On 03/24, Junio C Hamano wrote:
+> * bw/recurse-submodules-relative-fix (2017-03-17) 5 commits
+>  - ls-files: fix bug when recursing with relative pathspec
+>  - ls-files: fix typo in variable name
+>  - grep: fix bug when recursing with relative pathspec
+>  - setup: allow for prefix to be passed to git commands
+>  - grep: fix help text typo
+> 
+>  A few commands that recently learned the "--recurse-submodule"
+>  option misbehaved when started from a subdirectory of the
+>  superproject.
 
-We use OpenSSL for SHA1 by default unless NO_OPENSSL=YesPlease.
+Anything more you think needs to be done about this?  I noticed that
+Dscho's config series hit master so I could rebase against that (as
+there is a small conflict).  Aside from that it didn't seem like there
+were many complaints with the proposed fix.
 
-This still hasn't happened, but given the lifetime of git versions
-packaged up by distros knowing sooner than later if this is going to
-be a practical problem would be good.
-
-If so perhaps we could copy the relevant subset of the code int our
-tree, or libressl's, or improve block-sha1.
-
-We also use OpenSSL for git-imap-send, AFAICT with no fallback other
-than "don't use ssl" or "use stunnel".
-
-1. https://www.openssl.org/blog/blog/2017/03/20/license/
-2. https://www.openssl.org/docs/faq.html#LEGAL2
-3. https://www.apache.org/licenses/GPL-compatibility.html
+-- 
+Brandon Williams
