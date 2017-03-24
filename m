@@ -2,100 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 989851FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 18:54:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3A6C1FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 18:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966142AbdCXSyE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 14:54:04 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34500 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965791AbdCXSyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 14:54:03 -0400
-Received: by mail-pg0-f67.google.com with SMTP id w20so1984135pgc.1
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 11:53:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=40GH2cfo+AD5bMhI0gge7Iwp0BxgfZuRvDmA0DTOMQE=;
-        b=D4PY8+tPNntl4FaDKP/DyGFpTnLINsst1R9Ohc2RdGY1WzoZC/M51ztLAU9//1JMCN
-         MTD743+J2j/Kp9QBQAEOmybjpwnThdCt3PUG6dqrA1G1SLZupKXdQ1a88+ffENo8yukw
-         lUwL85yNqeYp6MshxVMtk1Sj/Ve6EOBAjIMAUE/7YV2Ggw159U0SV5uv/jW5qJZCYNkT
-         h6V7U7Z8PISNqoRkEqYJ5r0yZNpWQDj3xj/3m9zr1xMhb+Hcp3hOtPnMMPXdYp2Cqyv9
-         yVnj217fEA1vbHzMrjTJZ8vKDSIpSRQroDTVwmVz0Y+RX2oQYnlJ524/c8bMZHohpz6+
-         iHTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=40GH2cfo+AD5bMhI0gge7Iwp0BxgfZuRvDmA0DTOMQE=;
-        b=pTQt3Gw5Wunsk/Hk+eHn5jGryg+7Ra3cMch7cq67gH0WCQgCKxfEtdLrdn4EsJ+NBe
-         gRNJHJ0Hbi8LqbJr04z8nNsqhI4XS8BFcwPphm088Cl2eqgdsu+oCz6EngMS681Duakc
-         bliz2TWq6xep/zUdDOENIQ+3eGIrIDUna76d7Ixmkd7kUv0WZ7Z5hYdm0RQuRbFiiIMv
-         pLPr11OtAeebhxSWTEcssFB/SbspNa9mLeVkSfbxqI0FDLHTcm4nSprJOMuXFSEo2Tt7
-         QbkG3lHkmIDpwfMqCXFPHS7dHh7QHh/d1vKQ9Jb9wscRIPjuH7v0WYZdLO1jc4vYzhf2
-         hW6w==
-X-Gm-Message-State: AFeK/H2E3HWQX9EwvReag37aeoOVTppyx2/iCEePzHq+QOJW3qklkXK9VV1etljchd6T8w==
-X-Received: by 10.99.56.17 with SMTP id f17mr7549344pga.228.1490381636701;
-        Fri, 24 Mar 2017 11:53:56 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8597:ae41:db75:6a97])
-        by smtp.gmail.com with ESMTPSA id 79sm6110521pge.14.2017.03.24.11.53.55
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 11:53:55 -0700 (PDT)
-Date:   Fri, 24 Mar 2017 11:53:54 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Romuald Brunet <romuald@chivil.com>, git@vger.kernel.org,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] push: allow atomic flag via configuration
-Message-ID: <20170324185354.GE31294@aiede.mtv.corp.google.com>
-References: <1490375874.745.227.camel@locke.gandi.net>
- <20170324184550.3l6mw4ybynizblsm@sigill.intra.peff.net>
+        id S966174AbdCXSzt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 14:55:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51287 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S965753AbdCXSzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 14:55:47 -0400
+Received: (qmail 24317 invoked by uid 109); 24 Mar 2017 18:55:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 18:55:46 +0000
+Received: (qmail 5947 invoked by uid 111); 24 Mar 2017 18:56:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 14:56:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Mar 2017 14:55:44 -0400
+Date:   Fri, 24 Mar 2017 14:55:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Alex Henrie <alexhenrie24@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] log: if --decorate is not given, default to
+ --decorate=auto
+Message-ID: <20170324185543.uq4clqyvbdkahbzo@sigill.intra.peff.net>
+References: <20170321055203.26488-1-alexhenrie24@gmail.com>
+ <xmqqinn2sfdw.fsf@gitster.mtv.corp.google.com>
+ <xmqqzigemfij.fsf@gitster.mtv.corp.google.com>
+ <CAMMLpeQZXzPtN+mmtRS33vbT6hFz8p0qqjFMhz9tUHk747=Z3Q@mail.gmail.com>
+ <xmqqmvcdmeuv.fsf@gitster.mtv.corp.google.com>
+ <CAMMLpeR-zCpL5Gx=BoK8G9_wL2TBe-wD3VnsAShAuVVzS=Nirg@mail.gmail.com>
+ <xmqqfui4f0pp.fsf@gitster.mtv.corp.google.com>
+ <CAMMLpeRtzYM3a639DcNbhqAmz3dNkRebvQps-gusEKx+eQqPgQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170324184550.3l6mw4ybynizblsm@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAMMLpeRtzYM3a639DcNbhqAmz3dNkRebvQps-gusEKx+eQqPgQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Mar 23, 2017 at 10:52:34AM -0600, Alex Henrie wrote:
 
-Jeff King wrote:
-> On Fri, Mar 24, 2017 at 06:17:54PM +0100, Romuald Brunet wrote:
+> Unfortunately, I think I found a bug. Even when using `git -p`, the
+> function pager_in_use() always returns false if the output is not a
+> TTY. So, `isatty(1) || pager_in_use()` and `color_stdout_is_tty ||
+> (pager_in_use() && pager_use_color)` are redundant.
+> 
+> If we want to use `git -p log` in a test, we'll have to change the
+> behavior of pager_in_use(). Alternatively, we could use
+> `GIT_PAGER_IN_USE=1 git log` instead.
 
->> Added a "push.atomic" option to git-config to allow site-specific
->> configuration of the atomic flag of git push
->
-> I don't really use --atomic myself, but this seems like a reasonable
-> thing to want, and the implementation looks cleanly done.
->
-> My one question would be whether people would want this to actually be
-> specific to a particular remote, and not just on for a given repository
-> (your "site-specific" in the description made me think of that). In that
-> case it would be better as part of the remote.* config.
+I see you ended up with a test that uses test_terminal, which is much
+better (and your patch looks good to me).
 
-I didn't receive the original patch (maybe mailing delay?) so
-commenting here.
+But I was concerned that there might be a bug in pager_in_use(), so I
+dug into it a little. I think the code there is correct; it's just
+relaying the environment variable's value. Likewise, on the setting
+side, I think the code is correct. We set the environment variable
+whenever we start the pager in setup_pager().
 
-I use --atomic sometimes, but it's tied to the specific context of
-what I'm trying to push.
+I think what is confusing is that "git -p" does _not_ mean
+"unconditionally use a pager". It means "start a pager if stdout is a
+terminal, even if this command is not usually paged". So something like
+"git -p log >actual" is correct not to trigger pager_in_use().
 
-I'd be interested to hear more about the use case.  Do you want pushes
-to be atomic opportunistically when the server supports that
-(analogous to push.gpgSign=if-asked)?
+I also double-checked the documentation, which covers this case
+accurately. So I think all is well, and there's nothing to fix. You
+might want an option for "even though stdout is not a tty pretend like a
+pager is in use", but that is exactly what GIT_PAGER_IN_USE=1 is for.
 
-This also seems likely to break scripts that rely on the current
-non-atomic behavior, so without knowing more about the use case it's
-hard to see how to proceed.
-
-Thanks and hope that helps,
-Jonathan
+-Peff
