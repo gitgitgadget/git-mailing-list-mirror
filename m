@@ -2,77 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3A051FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 19:31:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D8E41FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 19:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967009AbdCXTbF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 15:31:05 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56544 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S967061AbdCXTaE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 15:30:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7AD076A17;
-        Fri, 24 Mar 2017 15:29:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YgjiRX/CBzwiYyagKAzc+OFYTZ4=; b=xK53IX
-        pTH2nhsyZLCX8fpv0ucUMJ4tRwXeo1mDy3Z1LpKNd0KGJyu/3tsEM2wck+gc1W8J
-        KKHdXFTB9lGwbcyARMLJe9I79elXMOrJ+zMhNJ5GlvaArZDsGyCzKTgubl1ybgKc
-        u7SLZCRFuD6TfHFwlG1mrvWmmDsgRkyFBOmzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Q/buqJWBOGlgfvZseXEKl/quo1074tLK
-        ym0ylZjCO4j+xDJdxB38BV4uQjjrTJ/+XjQ62qe2u5mIBpSz3yD4z+bNUGBXBgMa
-        Ruj95ULRPWVjNIS59k9sUNREmIGgswTw87ssxxjMtP4twAwxOvqYYHgoArl6rXHc
-        oEyNQhdBBAE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BEE0176A16;
-        Fri, 24 Mar 2017 15:29:52 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1171F76A15;
-        Fri, 24 Mar 2017 15:29:52 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Romuald Brunet <romuald@chivil.com>, git@vger.kernel.org,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] push: allow atomic flag via configuration
-References: <1490375874.745.227.camel@locke.gandi.net>
-        <20170324184550.3l6mw4ybynizblsm@sigill.intra.peff.net>
-Date:   Fri, 24 Mar 2017 12:29:50 -0700
-In-Reply-To: <20170324184550.3l6mw4ybynizblsm@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 24 Mar 2017 14:45:51 -0400")
-Message-ID: <xmqqmvca79sh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S967061AbdCXTcB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 15:32:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51322 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S967185AbdCXTb4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 15:31:56 -0400
+Received: (qmail 27214 invoked by uid 109); 24 Mar 2017 19:31:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 19:31:52 +0000
+Received: (qmail 32112 invoked by uid 111); 24 Mar 2017 19:32:07 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 15:32:07 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Mar 2017 15:31:50 -0400
+Date:   Fri, 24 Mar 2017 15:31:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCHv2 07/14] completion: don't disambiguate short refs
+Message-ID: <20170324193149.pa4lrsodgmgsvidl@sigill.intra.peff.net>
+References: <20170323152924.23944-1-szeder.dev@gmail.com>
+ <20170323152924.23944-8-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 40910756-10C8-11E7-A754-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170323152924.23944-8-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Mar 23, 2017 at 04:29:17PM +0100, SZEDER Gábor wrote:
 
-> My one question would be whether people would want this to actually be
-> specific to a particular remote, and not just on for a given repository
-> (your "site-specific" in the description made me think of that). In that
-> case it would be better as part of the remote.* config.
+> However, it's questionable whether ambiguous refs are really that bad
+> to justify that much extra cost:
 
-Yeah, I had the same reaction.  
+It's not clear to me that the existing completion actually does a good
+job with disambiguation anyway.
 
-Conceptually, this sits next to remote.*.push that defines which set
-of refs are sent by default, and remote.<name>.pushAtomic does make
-sense.  If (and only if) it turns out to be cumbersome for somebody
-to set the configuration for each and every remote, it is OK to also
-add push.atomic to serve as a fallback for remote.*.pushAtomic, I
-would think, but adding only push.atomic feels somewhat backwards.
+If I have a tag and a branch named "foo", then in theory doing:
 
+  git log fo<Tab>
 
+should present me with "heads/foo" and "tags/foo" as options. But it
+doesn't seem to; it just completes "foo".
 
+But even if it did, those don't _start_ with foo, I have to go to some
+work to back up anyway. I think we are better off just completing "foo"
+and letting the command complain that it's ambiguous.
+
+So even leaving aside the performance tradeoff, that seems like a more
+sensible behavior anyway. And AFAICT, that's the behavior you'd get with
+your patch (we'd get two "foo"s, but the completion is presumably smart
+enough to handle that.
+
+> This speeds up refs completion considerably.  Uniquely completing a
+> branch in a repository with 100k local branches, all packed, best of
+> five:
+> 
+>   On Linux, before:
+> 
+>     $ time __git_complete_refs --cur=maste
+> 
+>     real    0m1.662s
+>     user    0m1.368s
+>     sys     0m0.296s
+> 
+>   After:
+> 
+>     real    0m0.831s
+>     user    0m0.808s
+>     sys     0m0.028s
+
+This is nice, though I think faster ref storage is another way to attack
+the problem. This is much simpler, though. :)
+
+-Peff
