@@ -7,86 +7,118 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99A5F1FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 23:25:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03B571FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 23:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755015AbdCXXZR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 19:25:17 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61976 "EHLO mout.gmx.net"
+        id S1755539AbdCXXZ3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 19:25:29 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51301 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754629AbdCXXZQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 19:25:16 -0400
+        id S1755487AbdCXXZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 19:25:27 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LsCAp-1cApE3400F-013xB0; Sat, 25
- Mar 2017 00:25:01 +0100
-Date:   Sat, 25 Mar 2017 00:25:00 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbdE3-1cTS2n3Hxr-00lBlA; Sat, 25
+ Mar 2017 00:25:18 +0100
+Date:   Sat, 25 Mar 2017 00:25:04 +0100 (CET)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/7] t0013: do not skip the entire file wholesale without
- DC_SHA1
+Subject: [PATCH 5/7] t0013: test DC_AND_OPENSSL_SHA1, too
 In-Reply-To: <cover.1490397869.git.johannes.schindelin@gmx.de>
-Message-ID: <1f26e0320db1182d68663812378937e438d5c887.1490397869.git.johannes.schindelin@gmx.de>
+Message-ID: <2187bcec8b1e2c61b801a04e05f58d87f683cbcf.1490397869.git.johannes.schindelin@gmx.de>
 References: <cover.1490397869.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FEvHydlWFgWM8UmoGpP3pqW9NalC9cG1eGL8c3OOWin3k7zxv9d
- O9p9S1eWPX5/dev2t5PerPPXe0nFnJdKyTIaR5e80EAxt547+Jg0JTMz3c5VPkltxPlKUt/
- nJexmOFRH/Csi66Y25b81gQF/ZFeGOebaWELIsDzTww0LOig+G4NhgjlJ9BNMpbYdsuq58Y
- 09bkm3FjgmRsPfY9MwR9g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cwVQPQz+07A=:KfbyC/cxW1EJeihBaRwlXb
- n+bywKv1KQaieXKrZb2P0NTm3NvgzDHmKWSkS/psmAXWmK/jVSUqKzolTX9Ib0Bn2wHXvSDF6
- Ib2eVUGV/zsyDBSefF4GwyguF5cpypQ38p69Bc/hSoyMTvqWO3WXWZ6w71GmW3rJuJM70baKx
- 8prEXe6I887Pi4ezaul/BvxjiQa8O7ORyRyydCH7XTkrJe+0zj6EPlcDSVOJaV5h6TW0UfQ5q
- /7WfhdgHJIcf1+NUsuhwqEgUm4wjU/PEywEp4qN53S1okNeJ/j3bZQ8ioNqVI30urbByj7TP8
- D5T2zA7ggFiXrSeGg7HUzeqDcz4VAZk6eJ2GouE1ZVcaKGjrTgHKjHym/mw93w7fexh4yb3Aq
- qrJl5cHO9mKpqWty0K+5KUKarWEDsvjm0+Ut8bvRJ0W39O0FTOtkz4/NlMy1LQSVAZQcZ+DNB
- D/pcg9uBsyFssYLmTi6aYiYNu6OXejxUjRx18pkVgypgT5wBpBMhmpqh4aKAnhuW7SewAELhh
- OtjxgPgsUI3jXYVj8azGdk/BJTmN2YpVVW08LkYLO1+z/WgrB94I4s7bk8tg7RTGl+gVcn8H9
- woyVraIUwl56fmgiXRHN8MdpA1MNyKqkhlqBjUOxiNxwNBUne7AsUmvGi4+nCOVzENY/DgldL
- Eg1YtzIVpCFxxC6aQe51Zujv4m4hCoFZyZz0ypqpmUsed30UICyjubAGWkI5pTCVC7agPb81l
- g8ajf4dr5BZjjbusPRxDVL72BPks8XB+RiuCQantjLzCBn179IzCFNq0/Tc6/aEhFrFcXCONN
- V6mpQ6pkrxeb0SWcmBpaCOPVLIThw==
+X-Provags-ID: V03:K0:ggzw+Qg7SgfYiF2W+rrw4eWEE7YCmT9RQFJrglRc0N2OlG9Utgr
+ T8Co7JaaI/Dws0BTSK0+Alda/HYBfAsIBjbTPIqPz16RtQhfp4EKI3xNo6hlrV4vuAxsxEz
+ mXTHTQmp1yiRUbvY/00Z3FVYBazR4LgVXmIKom3Rs/ZrMth5397REqGYOIqD++vN5RYbuy4
+ pyp0PNU8t35pBtOJaZh5w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:d7Srbzfrdnc=:sAinPt/4RpaL3DjUvzB51d
+ mqW/QXKS3dI6gMKB+JgMB7kIMIcHx1PB9ctVdJxKBvfOldtQy3wEDykEA5DKfAmqko8AF1KMf
+ r2ufgp2XAzqkAnj9a+oldPcEraQRGjznZzhEGHmVpFvv5ZrsL6CA/Vo/XeUfEK6Z9vaMm6n+r
+ IcHyAVy3IMZZQFwkLAZRXj46JH6PDkLuNODGCYCR+93yR90id6xNVuY4HVpTdewqgx/p/7yXN
+ KSyT2jVlYqijBzNseUbUOvjYJfeb0INQhz+9omAGa1p0glGpohbnUebKbGaZPKu3w2Air9IO7
+ wOf9VX/sqvnSUEAfwoXHLK4lNQUB4srrEnbn/G/TIhedz47NEXm2xteFI08IctQvLEUjFDvvt
+ 0rTmBtPGfpOXNqpSx3nWe0JAHgBfFak8S3LIcGdA7MrNDZo4LJ2GKdjYukG54k9A0dhhgcGZ0
+ Di+VolAoeUYHcx3ehgrra9KvCpulA8u28cc+DtaayXHGynRV0C/tbAWskWpcmIALRHmsh3T3Q
+ 0hfMZKyMKbMtlPAXQbLgSs7wbhwoqdLVKpflJDMTsYAu8HIvdJG+rEhHOg5TUUKoo9qfGcEMw
+ mV5flfylhMn13axBvd81oBWijUBFfIY0IGqjl0ndjeYG4slGI2qnGQkmYRHaPdWPzlbbg64T8
+ U3FoWbsYE5QAl/3sWU0ZcTnWfrJhlkN+F5KXZJnTc+TIFQoew7tOKI6LzlRIqiJbW+xF97btB
+ cX2BiwPMALWMzvxq6jrXPnnU0M9MNB8lVBMYpPTwm5GLnqSkOiiP14npHqj6pSOyIWxgVY5tu
+ 2dMILeJYz54iMxW9zy5QZFGAV5fVA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So far, there is only one test case in that script, and that case indeed
-requires that the code was compiled with with the DC_SHA1 flag.
-
-However, we are about to add another test case to verify that the
-DC_AND_OPENSSL_SHA1 flag works correctly, too.
-
-So let's refactor the code a little.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t0013-sha1dc.sh | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ Makefile             |  1 +
+ t/helper/test-sha1.c | 10 ++++++++++
+ t/t0013-sha1dc.sh    | 10 ++++++++++
+ 3 files changed, 21 insertions(+)
 
+diff --git a/Makefile b/Makefile
+index 3e181d2f0e2..0b581357625 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2251,6 +2251,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+ 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
++	@echo DC_AND_OPENSSL_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_AND_OPENSSL_SHA1)))'\' >>$@+
+ ifdef TEST_OUTPUT_DIRECTORY
+ 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
+ endif
+diff --git a/t/helper/test-sha1.c b/t/helper/test-sha1.c
+index a1c13f54eca..27ce8869e51 100644
+--- a/t/helper/test-sha1.c
++++ b/t/helper/test-sha1.c
+@@ -8,6 +8,16 @@ int cmd_main(int ac, const char **av)
+ 	int binary = 0;
+ 	char *buffer;
+ 
++	if (ac > 1 && !strcmp(av[1], "--disable-sha1dc")) {
++#ifdef SHA1_DC_AND_OPENSSL
++		toggle_sha1dc(0);
++#else
++		die("Not compiled with DC_AND_OPENSSL_SHA1");
++#endif
++		ac--;
++		av++;
++	}
++
+ 	if (ac == 2) {
+ 		if (!strcmp(av[1], "-b"))
+ 			binary = 1;
 diff --git a/t/t0013-sha1dc.sh b/t/t0013-sha1dc.sh
-index 6d655cb161b..435a96d6108 100755
+index 435a96d6108..2b529b31b4e 100755
 --- a/t/t0013-sha1dc.sh
 +++ b/t/t0013-sha1dc.sh
-@@ -4,13 +4,9 @@ test_description='test sha1 collision detection'
- . ./test-lib.sh
+@@ -5,6 +5,10 @@ test_description='test sha1 collision detection'
  TEST_DATA="$TEST_DIRECTORY/t0013"
  
--if test -z "$DC_SHA1"
--then
--	skip_all='skipping sha1 collision tests, DC_SHA1 not set'
--	test_done
--fi
-+test -z "$DC_SHA1" || test_set_prereq DC_SHA1
+ test -z "$DC_SHA1" || test_set_prereq DC_SHA1
++test -z "$DC_AND_OPENSSL_SHA1" || {
++	test_set_prereq DC_AND_OPENSSL_SHA1
++	test_set_prereq DC_SHA1
++}
  
--test_expect_success 'test-sha1 detects shattered pdf' '
-+test_expect_success DC_SHA1 'test-sha1 detects shattered pdf' '
+ test_expect_success DC_SHA1 'test-sha1 detects shattered pdf' '
  	test_must_fail test-sha1 <"$TEST_DATA/shattered-1.pdf" 2>err &&
- 	test_i18ngrep collision err &&
+@@ -12,4 +16,10 @@ test_expect_success DC_SHA1 'test-sha1 detects shattered pdf' '
  	grep 38762cf7f55934b34d179ae6a4c80cadccbb7f0a err
+ '
+ 
++test_expect_success DC_AND_OPENSSL_SHA1 'sha1dc can be turned off' '
++	test-sha1 --disable-sha1dc <"$TEST_DATA/shattered-1.pdf" 2>err &&
++	! test_i18ngrep collision err &&
++	! grep 38762cf7f55934b34d179ae6a4c80cadccbb7f0a err
++'
++
+ test_done
 -- 
 2.12.1.windows.1
 
