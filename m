@@ -2,80 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E4D31FC19
-	for <e@80x24.org>; Fri, 24 Mar 2017 15:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F27721FC19
+	for <e@80x24.org>; Fri, 24 Mar 2017 15:53:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936698AbdCXPt2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 11:49:28 -0400
-Received: from siwi.pair.com ([209.68.5.199]:65321 "EHLO siwi.pair.com"
+        id S965617AbdCXPxI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 11:53:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51042 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S936588AbdCXPqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 11:46:17 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id B2AF784610;
-        Fri, 24 Mar 2017 11:46:15 -0400 (EDT)
-Subject: Re: [PATCH] read-cache: call verify_hdr() in a background thread
-To:     Jeff King <peff@peff.net>
-References: <1490362071-46932-1-git-send-email-git@jeffhostetler.com>
- <1490362071-46932-2-git-send-email-git@jeffhostetler.com>
- <20170324153617.smmzju5mygqt5vux@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <1743d048-8d6b-c14e-161b-351e6d79fb95@jeffhostetler.com>
-Date:   Fri, 24 Mar 2017 11:46:14 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S935237AbdCXPxG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 11:53:06 -0400
+Received: (qmail 10242 invoked by uid 109); 24 Mar 2017 15:52:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 15:52:31 +0000
+Received: (qmail 3093 invoked by uid 111); 24 Mar 2017 15:52:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 24 Mar 2017 11:52:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Mar 2017 11:52:29 -0400
+Date:   Fri, 24 Mar 2017 11:52:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     Joan Aguilar <joan.aguilar.lorente@gmail.com>
+Cc:     Michael J Gruber <git@grubix.eu>, git@vger.kernel.org
+Subject: Re: report on a possible bug: git commit -p myfile.py unexpected
+ output
+Message-ID: <20170324155229.jw7auwikq6gig7cv@sigill.intra.peff.net>
+References: <CAG+Y4s8m2MqA0yAiZFzv2bAx7g5xktNRb=S-Ej0tvMwU-Un0Og@mail.gmail.com>
+ <26915be5-8749-7f66-4d60-516e7ed60adc@grubix.eu>
+ <20170324150921.vwh4yqpz25ph3zxe@sigill.intra.peff.net>
+ <CAG+Y4s8WGwmP7uOsNz4GkR3tsaeB2e1qBysrs-4pqLBKYC+Grg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20170324153617.smmzju5mygqt5vux@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAG+Y4s8WGwmP7uOsNz4GkR3tsaeB2e1qBysrs-4pqLBKYC+Grg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Mar 24, 2017 at 04:31:09PM +0100, Joan Aguilar wrote:
 
+> Thank you! I learned a little bit about git. And most of all, I
+> realize there are a lot of options and flags I am not aware of, and
+> not using at all! I have to read the documentation. I am missing a lot
+> of git!!
+> 
+> I am sorry that I reported this as possible bug. I guess I was just
+> confused because the "standard behavior" of "git commit" differs from
+> the one of "tig" or "git show".
 
-On 3/24/2017 11:36 AM, Jeff King wrote:
-> On Fri, Mar 24, 2017 at 01:27:51PM +0000, git@jeffhostetler.com wrote:
->
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Teash do_read_index() in read-cache.c to call verify_hdr()
->> in a background thread while the forground thread parses
->> the index and builds the_index.
->>
->> This is a performance optimization to reduce the overall
->> time required to get the index into memory.
->>
->> Testing on Windows (using the OpenSSL SHA1 routine) showed
->> that parsing the index and computing the SHA1 take almost
->> equal time, so this patch effectively reduces the startup
->> time by 1/2.
->
-> Have you considered just skipping the sha1 check on read (possibly with
-> an option)?
->
-> Its purpose is to detect disk bit-rot. Checking it for every single
-> operation may be a bit excessive, especially because it gets rewritten a
-> lot. Nobody really cared until now because they don't have index files
-> that are hundreds of megabytes.
+No problem. Thanks for a thorough report; it was easy to see what the
+problem was from reading it.
 
-Yes, we have done that in a version of the client customized
-for the virtual file system effort and have been using it
-internally without incident for quite a while.
-
-And we can get a patch for that instead (or include it with
-this one) if there's interest.
-
-I tried to limit my proposal here to increasing performance while
-preserving the existing behavior.
-
-Jeff
+-Peff
