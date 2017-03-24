@@ -2,193 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3EEDC2095E
-	for <e@80x24.org>; Fri, 24 Mar 2017 08:31:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE33C2095E
+	for <e@80x24.org>; Fri, 24 Mar 2017 10:25:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754290AbdCXI2I (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 04:28:08 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33129 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751706AbdCXI1y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 04:27:54 -0400
-Received: by mail-pf0-f196.google.com with SMTP id p189so1486349pfp.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 01:27:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=m/TbxjxMvr5L/dntDZOOCTTmnFB0A+qrbmzkjfi34Hc=;
-        b=uIMlIUqKV1iU1+tjoOawktAVAReUIeYPnCMHBJ5T9RxLMQ0JDR3j2P8dVoxH1gfkQ+
-         V4l6Qqtql2Kys7WEWuiKTZwajfjLfQMWW+70JCJc3PpDFFYvOlHzvduXMNsS/XZ8COB7
-         1PhB4KpHemYodAgNG2uEjziMyMHgaB2wxMd3M53xR3PD0kNgGltWhwnOxbrX0ZVVE48D
-         Bw5mBdJIOSOc21bUpltYuDwCrMJNqRW4dCgHBMEz3efV/tWdnBitoOo7fjJBe2OsIRH7
-         bwcQ7J5EibPp2D3mWmtMVzHhe/RpsAXU7ekGz6tr1KlEnIk5TyUVi1oBlHa+ry/IV5ns
-         Ke4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=m/TbxjxMvr5L/dntDZOOCTTmnFB0A+qrbmzkjfi34Hc=;
-        b=eM0k57uS7SNU7kJmayihMxb9cnHD3ttuWUM7h1UUwwQEH/qyvhzrCfE1ucMLquyRHq
-         fE8rH7CkLtnuEmDZLnTXsMM/XovuOvHsHiuBklT40OdpcOQGS+o/l5LHWSQyYJVnSisq
-         Lh5WsrnQcaIhPKd1K2v5p+xRJllv1RnzrkSBkyvoAR+OZXCc/dmBZ3PqkK1RbURMrDLr
-         vCyLy/0WoOr7mWgFqh1E6AzkdJ1WzrL+PSMmccsZQ2ZNif+aL3BG/RuyEmg5xIyBl3Hd
-         I52UopcL7Etu3A+7i5XbG19fD2uuPfuwAGOlMWtA6U+cWC2HbFshXE+h4yxgKgmJ+Rso
-         Uhug==
-X-Gm-Message-State: AFeK/H2B2BDxnf4dK+P1308pyBINLJi8OoRVRRIHev+m/vHu+uJjZ0mXTrcGfmwTCxVwSA==
-X-Received: by 10.99.185.91 with SMTP id v27mr7618135pgo.65.1490344073231;
-        Fri, 24 Mar 2017 01:27:53 -0700 (PDT)
-Received: from localhost.localdomain ([47.11.0.254])
-        by smtp.gmail.com with ESMTPSA id t70sm2917018pfe.64.2017.03.24.01.27.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 01:27:52 -0700 (PDT)
-From:   Prathamesh Chavan <pc44800@gmail.com>
-To:     christian.couder@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, jdl@jdl.com,
-        pc44800@gmail.com
-Subject: [GSoC][PATCH v4] t2027: avoid using pipes
-Date:   Fri, 24 Mar 2017 13:57:36 +0530
-Message-Id: <20170324082736.10301-1-pc44800@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <CAP8UFD3xOMbXgH5JATS7-cK_d0YA7Mvkk-ZpLh8sn-KYNm3wxg@mail.gmail.com>
-References: <CAP8UFD3xOMbXgH5JATS7-cK_d0YA7Mvkk-ZpLh8sn-KYNm3wxg@mail.gmail.com>
+        id S1756859AbdCXKZN convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 24 Mar 2017 06:25:13 -0400
+Received: from mail5.fer.hr ([161.53.72.235]:28910 "EHLO mail.fer.hr"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1750952AbdCXKY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 06:24:56 -0400
+Received: from POSTAR.fer.hr (2001:b68:16:250::72:237) by MAIL5.fer.hr
+ (2001:b68:16:250::72:235) with Microsoft SMTP Server (TLS) id 14.3.319.2;
+ Fri, 24 Mar 2017 11:23:58 +0100
+Received: from mail-lf0-f50.google.com (209.85.215.50) by POSTAR.fer.hr
+ (161.53.72.237) with Microsoft SMTP Server (TLS) id 14.3.319.2; Fri, 24 Mar
+ 2017 11:23:58 +0100
+Received: by mail-lf0-f50.google.com with SMTP id y193so3921871lfd.3
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 03:23:58 -0700 (PDT)
+X-Gm-Message-State: AFeK/H0J2cfrO7QIUOFU5YZOPhGg0q+B6YtRIeQRkA2Ww2nFUD7DmLx1Pb2YBGMyyITER7/L8ZYkHsW5Z7nNmg==
+X-Received: by 10.25.56.1 with SMTP id f1mr4088891lfa.83.1490351037393; Fri,
+ 24 Mar 2017 03:23:57 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.19.69 with HTTP; Fri, 24 Mar 2017 03:23:16 -0700 (PDT)
+In-Reply-To: <42d1bc3de3bc488497928b4335f1dc41@MAIL.fer.hr>
+References: <CAEPqvoxM9_Ku-1YgwNiqearUBaaYbAJcehuSwZYNNfJLQNH1_g@mail.gmail.com>
+ <8a1179dfbb7743b6b8c23570306120b7@MAIL.fer.hr> <CAEPqvozCvFqOTNPw0c1ErKoOd+Mn1WCyJr9hj6CXiWWtL93Tqw@mail.gmail.com>
+ <70bd7cfd05ae459dac94625bb78c26c3@MAIL.fer.hr> <CAEPqvoz8s=CVLABuXx-zOzryrXwr_cb39G2TYJvvFXRYzpCBFQ@mail.gmail.com>
+ <42d1bc3de3bc488497928b4335f1dc41@MAIL.fer.hr>
+From:   =?UTF-8?B?SnVyYWogT3LFoXVsacSH?= <juraj.orsulic@fer.hr>
+Date:   Fri, 24 Mar 2017 11:23:16 +0100
+X-Gmail-Original-Message-ID: <CAEPqvow38g-X0nCLwMsMW4T+uu0ouDUQNmOGZp6BG0yjwR6pTQ@mail.gmail.com>
+Message-ID: <CAEPqvow38g-X0nCLwMsMW4T+uu0ouDUQNmOGZp6BG0yjwR6pTQ@mail.gmail.com>
+Subject: Re: [git-gui] Amending doesn't preserve timestamp
+To:     Igor Djordjevic <igor.d.djordjevic@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Originating-IP: [209.85.215.50]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Prathamesh <pc44800@gmail.com>
+Hi Igor! Thanks on for thoroughly searching the mailing list and on
+your suggestions. I hope that someone will come up with a fix that
+both preserves the author details and date correctly.
 
-Whenever a git command is present in the upstream of a pipe, its failure
-gets masked by piping and hence it should be avoided for testing the
-upstream git command. By writing out the output of the git command to
-a file, we can test the exit codes of both commands as a failure exit
-code in any command will stop the && chain.
+Regards,
+Juraj
 
-Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
----
 
-Hi, I am Prathamesh Chavan. This is my microproject which I have attempted 
-for Google Summer of Code for 2017.
-Also in this new version of patch I have changed sendemail.name configuration
-of the .gitconfig file with my full name and changed the description of commit
-message as asked.
-
- t/t2027-worktree-list.sh | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
-
-diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
-index 848da5f36..720063bf0 100755
---- a/t/t2027-worktree-list.sh
-+++ b/t/t2027-worktree-list.sh
-@@ -20,7 +20,7 @@ test_expect_success 'rev-parse --git-common-dir on main worktree' '
- 
- test_expect_success 'rev-parse --git-path objects linked worktree' '
- 	echo "$(git rev-parse --show-toplevel)/.git/objects" >expect &&
--	test_when_finished "rm -rf linked-tree && git worktree prune" &&
-+	test_when_finished "rm -rf linked-tree actual expect && git worktree prune" &&
- 	git worktree add --detach linked-tree master &&
- 	git -C linked-tree rev-parse --git-path objects >actual &&
- 	test_cmp expect actual
-@@ -28,19 +28,21 @@ test_expect_success 'rev-parse --git-path objects linked worktree' '
- 
- test_expect_success '"list" all worktrees from main' '
- 	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
--	test_when_finished "rm -rf here && git worktree prune" &&
-+	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git worktree list | sed "s/  */ /g" >actual &&
-+	git worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success '"list" all worktrees from linked' '
- 	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
--	test_when_finished "rm -rf here && git worktree prune" &&
-+	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C here worktree list | sed "s/  */ /g" >actual &&
-+	git -C here worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -49,7 +51,7 @@ test_expect_success '"list" all worktrees --porcelain' '
- 	echo "HEAD $(git rev-parse HEAD)" >>expect &&
- 	echo "branch $(git symbolic-ref HEAD)" >>expect &&
- 	echo >>expect &&
--	test_when_finished "rm -rf here && git worktree prune" &&
-+	test_when_finished "rm -rf here actual expect && git worktree prune" &&
- 	git worktree add --detach here master &&
- 	echo "worktree $(git -C here rev-parse --show-toplevel)" >>expect &&
- 	echo "HEAD $(git rev-parse HEAD)" >>expect &&
-@@ -69,16 +71,17 @@ test_expect_success 'bare repo setup' '
- '
- 
- test_expect_success '"list" all worktrees from bare main' '
--	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	test_when_finished "rm -rf there out actual expect && git -C bare1 worktree prune" &&
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C bare1 worktree list | sed "s/  */ /g" >actual &&
-+	git -C bare1 worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
- test_expect_success '"list" all worktrees --porcelain from bare main' '
--	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	test_when_finished "rm -rf there actual expect && git -C bare1 worktree prune" &&
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "worktree $(pwd)/bare1" >expect &&
- 	echo "bare" >>expect &&
-@@ -92,11 +95,12 @@ test_expect_success '"list" all worktrees --porcelain from bare main' '
- '
- 
- test_expect_success '"list" all worktrees from linked with a bare main' '
--	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
-+	test_when_finished "rm -rf there out actual expect && git -C bare1 worktree prune" &&
- 	git -C bare1 worktree add --detach ../there master &&
- 	echo "$(pwd)/bare1 (bare)" >expect &&
- 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
--	git -C there worktree list | sed "s/  */ /g" >actual &&
-+	git -C there worktree list >out &&
-+	sed "s/  */ /g" <out >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -118,9 +122,11 @@ test_expect_success 'broken main worktree still at the top' '
- 		cd linked &&
- 		echo "worktree $(pwd)" >expected &&
- 		echo "ref: .broken" >../.git/HEAD &&
--		git worktree list --porcelain | head -n 3 >actual &&
-+		git worktree list --porcelain >out &&
-+		head -n 3 out >actual &&
- 		test_cmp ../expected actual &&
--		git worktree list | head -n 1 >actual.2 &&
-+		git worktree list >out &&
-+		head -n 1 out >actual.2 &&
- 		grep -F "(error)" actual.2
- 	)
- '
-@@ -134,7 +140,8 @@ test_expect_success 'linked worktrees are sorted' '
- 		test_commit new &&
- 		git worktree add ../first &&
- 		git worktree add ../second &&
--		git worktree list --porcelain | grep ^worktree >actual
-+		git worktree list --porcelain >out &&
-+		grep ^worktree out >actual
- 	) &&
- 	cat >expected <<-EOF &&
- 	worktree $(pwd)/sorted/main
--- 
-2.11.0
-
+On Thu, Mar 23, 2017 at 11:54 PM, Igor Djordjevic
+<igor.d.djordjevic@gmail.com> wrote:
+> Hi Juraj,
+>
+> On 23/03/2017 15:26, Juraj Oršulić wrote:
+>> Hello Igor (and others), I have something else to report about the
+>> commit amend functionality in git-gui, and I think it could be
+>> related to my original question. It seems that git-gui messes up
+>> international signs on amending.
+>>
+>> E.g. I use git gui to make a commit, and all is OK:
+>>
+>> commit ef24b133dda6c18b8ef01b1a38f9e049d87f2021
+>> Author: Juraj Oršulić <juraj.orsulic@fer.hr>
+>>
+>> I open git gui again, click "Amend Last Commit", press "Commit", and I
+>> get this in git log:
+>>
+>> commit 6e09ff9edcef863d92f02cf86e0307c27171aec0
+>> Author: Juraj OrÅ¡uliÄ<U+0087> <juraj.orsulic@fer.hr>
+>>
+>>
+>> Does anyone have any idea what could be the cause?
+>>
+>> I tested this on Ubuntu 16.04 and HEAD vearsion of git-gui on
+>> http://repo.or.cz/git-gui.git, currently 0.21.0.5.g5ab72.
+>
+> Yes, I can confirm this.
+>
+> git version 2.12.1.windows.1
+> git-gui version 0.21.GITGUI
+> Tcl/Tk version 8.6.6
+>
+> That said, it seems there are quite some topics about it, like [1],
+> [2], [3] and [4], but the most interesting one could be [5], having
+> some kind of a "workaround" at the end as well.
+>
+> I`ve tried replacing the "commit.tcl" file as proposed, and it seems
+> to work correctly -- just please do note that it actually reverts the
+> file in question to an older version, maybe (re)introducing other
+> bugs while fixing this specific one, so it could be something you may
+> want to investigate into a bit more before actually using it for good.
+>
+> P.S. It might be a good idea to start a new topic in situations like
+> this (send out a new e-mail instead of a reply), keeping unrelated
+> discussions separated and helping interested parties spotting the new
+> topic more easily.
+>
+> Regards,
+> Buga
+>
+> [1] https://public-inbox.org/git/588ac268-0a1b-6787-e6a1-4164e7e9a784@b-i-t.de/T/#ea05ebbde162f9c230a2cc4f7099363aed68768f6
+> [2] https://public-inbox.org/git/52E1627956F20E458D872C5961027EDC654FE17C@SGDS00759.zf-lenksysteme.net/T/#m0baea8c76e79f25bf92ca0deabe38efec2ee168d
+> [3] https://public-inbox.org/git/50913C58.2000200@drmicha.warpmail.net/T/#m72664106ad3070235ea2628b61fc6203fbb5563e
+> [4] https://public-inbox.org/git/20071212091744.GA5377@pvv.org/T/#m8490dd348389b4eea82eb1bdaab69227c946de19
+> [5] https://github.com/git-for-windows/git/issues/761
