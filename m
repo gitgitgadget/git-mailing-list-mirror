@@ -2,136 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 183D220958
-	for <e@80x24.org>; Fri, 24 Mar 2017 05:46:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EEDC2095E
+	for <e@80x24.org>; Fri, 24 Mar 2017 08:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751593AbdCXFqm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 01:46:42 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34015 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751477AbdCXFqk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 01:46:40 -0400
-Received: by mail-pg0-f67.google.com with SMTP id w20so1010094pgc.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 22:46:40 -0700 (PDT)
+        id S1754290AbdCXI2I (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 04:28:08 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33129 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751706AbdCXI1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 04:27:54 -0400
+Received: by mail-pf0-f196.google.com with SMTP id p189so1486349pfp.0
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 01:27:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=s0KAvCmp+/fRKHw+DTEYtVAiwz85tJHisZbN4GpYF+Y=;
-        b=o5tVPmL/uMC25GRn8ddeK8B4+RC6fMSH8/gvj/R+dTKrlrJL+O0muxNktJDG995zWB
-         xtM6S1SIt/psmgb5Q/tGvjllCAvBas0HdDX0XO6XN69f5t1OIC6GcBeaNKbgLHLErex5
-         In3a6PB1z29/7RqSjynk2NFDkSAzr+FHoHzXf/aolEHhlueWOyXNaQ/eRreCKFg8dDRZ
-         vXrvgKTWwoSC8eO0NCLkMoKk7z0WIBDi2/j4/NevBuktH1Sm9dlGoxUKwPltw+F6mNfu
-         1DruFN6hEQS6msXVfmZuD8wXkF9ImFTosR67iUULQLCFKH9O7fS8LIuMF+Z8+Jkk9DFG
-         Bh+g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=m/TbxjxMvr5L/dntDZOOCTTmnFB0A+qrbmzkjfi34Hc=;
+        b=uIMlIUqKV1iU1+tjoOawktAVAReUIeYPnCMHBJ5T9RxLMQ0JDR3j2P8dVoxH1gfkQ+
+         V4l6Qqtql2Kys7WEWuiKTZwajfjLfQMWW+70JCJc3PpDFFYvOlHzvduXMNsS/XZ8COB7
+         1PhB4KpHemYodAgNG2uEjziMyMHgaB2wxMd3M53xR3PD0kNgGltWhwnOxbrX0ZVVE48D
+         Bw5mBdJIOSOc21bUpltYuDwCrMJNqRW4dCgHBMEz3efV/tWdnBitoOo7fjJBe2OsIRH7
+         bwcQ7J5EibPp2D3mWmtMVzHhe/RpsAXU7ekGz6tr1KlEnIk5TyUVi1oBlHa+ry/IV5ns
+         Ke4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=s0KAvCmp+/fRKHw+DTEYtVAiwz85tJHisZbN4GpYF+Y=;
-        b=S1oSpMzi4EXGuZ50O3Me+fZ6wiy2jMzyH1KpXmmgvrGrM93uLV4rLCPnwoTVe8M5R5
-         OKphOHAG4t/B/gTnYJ56v5KVWQS+X+PgvgJKdoAVQKFqCmCOT26Nb3W5VgWVFnHs2JC0
-         6YAyIywDRm6v77Um2E6lsXmn5cdjSe609iezOHe4qycci8L/9Sg6zd73+M2On6xNH3UL
-         eHJpFtfNrFA7ngA19PX7xcY6HiRv5AC5gU5IzHJMys+HbsB8+AWmUdpmJVQfJZqucoHV
-         6lIiJw7Gfs7VUgGEg8Mrh5VFiAWsS/7vSTEuTHkxKevbu8huaJrcnGlE/mKq7P+E7qPW
-         5yAQ==
-X-Gm-Message-State: AFeK/H1kCxv/8phF+Vfz2CbjmhJhzMOm24FAY6Kh0V4GzAQWf5oo0qFa+2j91iHn8Tj/vw==
-X-Received: by 10.84.224.131 with SMTP id s3mr8542299plj.162.1490334399443;
-        Thu, 23 Mar 2017 22:46:39 -0700 (PDT)
-Received: from xavier.hsd1.ut.comcast.net ([2601:681:4101:1302::bd0])
-        by smtp.gmail.com with ESMTPSA id e70sm1706360pfh.84.2017.03.23.22.46.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Mar 2017 22:46:37 -0700 (PDT)
-From:   Alex Henrie <alexhenrie24@gmail.com>
-To:     git@vger.kernel.org, gitster@pobox.com
-Cc:     Alex Henrie <alexhenrie24@gmail.com>
-Subject: [PATCH v2] log: if --decorate is not given, default to --decorate=auto
-Date:   Thu, 23 Mar 2017 23:46:31 -0600
-Message-Id: <20170324054631.21622-1-alexhenrie24@gmail.com>
-X-Mailer: git-send-email 2.12.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=m/TbxjxMvr5L/dntDZOOCTTmnFB0A+qrbmzkjfi34Hc=;
+        b=eM0k57uS7SNU7kJmayihMxb9cnHD3ttuWUM7h1UUwwQEH/qyvhzrCfE1ucMLquyRHq
+         fE8rH7CkLtnuEmDZLnTXsMM/XovuOvHsHiuBklT40OdpcOQGS+o/l5LHWSQyYJVnSisq
+         Lh5WsrnQcaIhPKd1K2v5p+xRJllv1RnzrkSBkyvoAR+OZXCc/dmBZ3PqkK1RbURMrDLr
+         vCyLy/0WoOr7mWgFqh1E6AzkdJ1WzrL+PSMmccsZQ2ZNif+aL3BG/RuyEmg5xIyBl3Hd
+         I52UopcL7Etu3A+7i5XbG19fD2uuPfuwAGOlMWtA6U+cWC2HbFshXE+h4yxgKgmJ+Rso
+         Uhug==
+X-Gm-Message-State: AFeK/H2B2BDxnf4dK+P1308pyBINLJi8OoRVRRIHev+m/vHu+uJjZ0mXTrcGfmwTCxVwSA==
+X-Received: by 10.99.185.91 with SMTP id v27mr7618135pgo.65.1490344073231;
+        Fri, 24 Mar 2017 01:27:53 -0700 (PDT)
+Received: from localhost.localdomain ([47.11.0.254])
+        by smtp.gmail.com with ESMTPSA id t70sm2917018pfe.64.2017.03.24.01.27.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 24 Mar 2017 01:27:52 -0700 (PDT)
+From:   Prathamesh Chavan <pc44800@gmail.com>
+To:     christian.couder@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, jdl@jdl.com,
+        pc44800@gmail.com
+Subject: [GSoC][PATCH v4] t2027: avoid using pipes
+Date:   Fri, 24 Mar 2017 13:57:36 +0530
+Message-Id: <20170324082736.10301-1-pc44800@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <CAP8UFD3xOMbXgH5JATS7-cK_d0YA7Mvkk-ZpLh8sn-KYNm3wxg@mail.gmail.com>
+References: <CAP8UFD3xOMbXgH5JATS7-cK_d0YA7Mvkk-ZpLh8sn-KYNm3wxg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
----
- builtin/log.c  |  9 ++++++++-
- t/t4202-log.sh | 10 +++++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
+From: Prathamesh <pc44800@gmail.com>
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 281af8c1e..d755a5960 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -52,6 +52,11 @@ struct line_opt_callback_data {
- 	struct string_list args;
- };
+Whenever a git command is present in the upstream of a pipe, its failure
+gets masked by piping and hence it should be avoided for testing the
+upstream git command. By writing out the output of the git command to
+a file, we can test the exit codes of both commands as a failure exit
+code in any command will stop the && chain.
+
+Signed-off-by: Prathamesh Chavan <pc44800@gmail.com>
+---
+
+Hi, I am Prathamesh Chavan. This is my microproject which I have attempted 
+for Google Summer of Code for 2017.
+Also in this new version of patch I have changed sendemail.name configuration
+of the .gitconfig file with my full name and changed the description of commit
+message as asked.
+
+ t/t2027-worktree-list.sh | 35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
+
+diff --git a/t/t2027-worktree-list.sh b/t/t2027-worktree-list.sh
+index 848da5f36..720063bf0 100755
+--- a/t/t2027-worktree-list.sh
++++ b/t/t2027-worktree-list.sh
+@@ -20,7 +20,7 @@ test_expect_success 'rev-parse --git-common-dir on main worktree' '
  
-+static int auto_decoration_style(void)
-+{
-+	return (isatty(1) || pager_in_use()) ? DECORATE_SHORT_REFS : 0;
-+}
-+
- static int parse_decoration_style(const char *var, const char *value)
- {
- 	switch (git_config_maybe_bool(var, value)) {
-@@ -67,7 +72,7 @@ static int parse_decoration_style(const char *var, const char *value)
- 	else if (!strcmp(value, "short"))
- 		return DECORATE_SHORT_REFS;
- 	else if (!strcmp(value, "auto"))
--		return (isatty(1) || pager_in_use()) ? DECORATE_SHORT_REFS : 0;
-+		return auto_decoration_style();
- 	return -1;
- }
+ test_expect_success 'rev-parse --git-path objects linked worktree' '
+ 	echo "$(git rev-parse --show-toplevel)/.git/objects" >expect &&
+-	test_when_finished "rm -rf linked-tree && git worktree prune" &&
++	test_when_finished "rm -rf linked-tree actual expect && git worktree prune" &&
+ 	git worktree add --detach linked-tree master &&
+ 	git -C linked-tree rev-parse --git-path objects >actual &&
+ 	test_cmp expect actual
+@@ -28,19 +28,21 @@ test_expect_success 'rev-parse --git-path objects linked worktree' '
  
-@@ -405,6 +410,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 		if (decoration_style < 0)
- 			decoration_style = 0; /* maybe warn? */
- 		return 0;
-+	} else {
-+		decoration_style = auto_decoration_style();
- 	}
- 	if (!strcmp(var, "log.showroot")) {
- 		default_show_root = git_config_bool(var, value);
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 48b55bfd2..f57799071 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -4,6 +4,7 @@ test_description='git log'
- 
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
-+. "$TEST_DIRECTORY/lib-terminal.sh"
- 
- test_expect_success setup '
- 
-@@ -520,7 +521,7 @@ test_expect_success 'log --graph with merge' '
+ test_expect_success '"list" all worktrees from main' '
+ 	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
+-	test_when_finished "rm -rf here && git worktree prune" &&
++	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
+ 	git worktree add --detach here master &&
+ 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git worktree list | sed "s/  */ /g" >actual &&
++	git worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
  '
  
- test_expect_success 'log.decorate configuration' '
--	git log --oneline >expect.none &&
-+	git log --oneline --no-decorate >expect.none &&
- 	git log --oneline --decorate >expect.short &&
- 	git log --oneline --decorate=full >expect.full &&
- 
-@@ -576,6 +577,13 @@ test_expect_success 'log.decorate configuration' '
- 
+ test_expect_success '"list" all worktrees from linked' '
+ 	echo "$(git rev-parse --show-toplevel) $(git rev-parse --short HEAD) [$(git symbolic-ref --short HEAD)]" >expect &&
+-	test_when_finished "rm -rf here && git worktree prune" &&
++	test_when_finished "rm -rf here out actual expect && git worktree prune" &&
+ 	git worktree add --detach here master &&
+ 	echo "$(git -C here rev-parse --show-toplevel) $(git rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git -C here worktree list | sed "s/  */ /g" >actual &&
++	git -C here worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
  '
  
-+test_expect_success TTY 'log output on a TTY' '
-+	git log --oneline --decorate >expect.short &&
-+
-+	test_terminal git log --oneline >actual &&
-+	test_cmp expect.short actual
-+'
-+
- test_expect_success 'reflog is expected format' '
- 	git log -g --abbrev-commit --pretty=oneline >expect &&
- 	git reflog >actual &&
+@@ -49,7 +51,7 @@ test_expect_success '"list" all worktrees --porcelain' '
+ 	echo "HEAD $(git rev-parse HEAD)" >>expect &&
+ 	echo "branch $(git symbolic-ref HEAD)" >>expect &&
+ 	echo >>expect &&
+-	test_when_finished "rm -rf here && git worktree prune" &&
++	test_when_finished "rm -rf here actual expect && git worktree prune" &&
+ 	git worktree add --detach here master &&
+ 	echo "worktree $(git -C here rev-parse --show-toplevel)" >>expect &&
+ 	echo "HEAD $(git rev-parse HEAD)" >>expect &&
+@@ -69,16 +71,17 @@ test_expect_success 'bare repo setup' '
+ '
+ 
+ test_expect_success '"list" all worktrees from bare main' '
+-	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
++	test_when_finished "rm -rf there out actual expect && git -C bare1 worktree prune" &&
+ 	git -C bare1 worktree add --detach ../there master &&
+ 	echo "$(pwd)/bare1 (bare)" >expect &&
+ 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git -C bare1 worktree list | sed "s/  */ /g" >actual &&
++	git -C bare1 worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success '"list" all worktrees --porcelain from bare main' '
+-	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
++	test_when_finished "rm -rf there actual expect && git -C bare1 worktree prune" &&
+ 	git -C bare1 worktree add --detach ../there master &&
+ 	echo "worktree $(pwd)/bare1" >expect &&
+ 	echo "bare" >>expect &&
+@@ -92,11 +95,12 @@ test_expect_success '"list" all worktrees --porcelain from bare main' '
+ '
+ 
+ test_expect_success '"list" all worktrees from linked with a bare main' '
+-	test_when_finished "rm -rf there && git -C bare1 worktree prune" &&
++	test_when_finished "rm -rf there out actual expect && git -C bare1 worktree prune" &&
+ 	git -C bare1 worktree add --detach ../there master &&
+ 	echo "$(pwd)/bare1 (bare)" >expect &&
+ 	echo "$(git -C there rev-parse --show-toplevel) $(git -C there rev-parse --short HEAD) (detached HEAD)" >>expect &&
+-	git -C there worktree list | sed "s/  */ /g" >actual &&
++	git -C there worktree list >out &&
++	sed "s/  */ /g" <out >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -118,9 +122,11 @@ test_expect_success 'broken main worktree still at the top' '
+ 		cd linked &&
+ 		echo "worktree $(pwd)" >expected &&
+ 		echo "ref: .broken" >../.git/HEAD &&
+-		git worktree list --porcelain | head -n 3 >actual &&
++		git worktree list --porcelain >out &&
++		head -n 3 out >actual &&
+ 		test_cmp ../expected actual &&
+-		git worktree list | head -n 1 >actual.2 &&
++		git worktree list >out &&
++		head -n 1 out >actual.2 &&
+ 		grep -F "(error)" actual.2
+ 	)
+ '
+@@ -134,7 +140,8 @@ test_expect_success 'linked worktrees are sorted' '
+ 		test_commit new &&
+ 		git worktree add ../first &&
+ 		git worktree add ../second &&
+-		git worktree list --porcelain | grep ^worktree >actual
++		git worktree list --porcelain >out &&
++		grep ^worktree out >actual
+ 	) &&
+ 	cat >expected <<-EOF &&
+ 	worktree $(pwd)/sorted/main
 -- 
-2.12.0
+2.11.0
 
