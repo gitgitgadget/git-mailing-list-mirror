@@ -7,76 +7,92 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3B920958
-	for <e@80x24.org>; Fri, 24 Mar 2017 05:01:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7007A20958
+	for <e@80x24.org>; Fri, 24 Mar 2017 05:45:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751990AbdCXFBD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 01:01:03 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35511 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752648AbdCXFBB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 01:01:01 -0400
-Received: by mail-pg0-f66.google.com with SMTP id g2so843967pge.2
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 22:01:00 -0700 (PDT)
+        id S1752638AbdCXFpn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 01:45:43 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:35694 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751477AbdCXFpl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 01:45:41 -0400
+Received: by mail-wm0-f46.google.com with SMTP id u132so4661585wmg.0
+        for <git@vger.kernel.org>; Thu, 23 Mar 2017 22:45:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6U54lVnWDEa/1MZT8YYpXO8Csq9+YB6OWbxVJPY+cUg=;
-        b=Q+CNTXr4C3D83wPyv1bbdBLPEH1aw4PllQrd6qt3ssJCxnbT35XLGYL0aRiOy1AUfs
-         RvmdgEUZ8wAFwLia8SfQFFq5ZgcToJS9VUboFeEdLEFZFgxAmr9TglXOY8rkgMKjCOjN
-         GDCKZlhU2zuznldJWGxhhDpRrGcLSAMQHXmhrXS7HJdW77y7j5YFIRtQA/n3NwG2/VNK
-         +bxhOq4J8OQNAXF4X9jyOG2X9RcVuIHyHcRtoX8iVfSW+WEHsl4WO5iSau5qUyXTpTJH
-         x3Z8gCruvDoW9vEJgwvoxnNAFaq/GJjLATTQns/5EUPjLQ51oF0aL56YLpjbxlqX+y9m
-         mc+Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=7qPgeb4gzRhbAGgo3qw7H9l1UyU68JBoEVKJUY/iXn4=;
+        b=T2l8fQsGaEgpckpDR/BaQZJPnbZKY43OzRFAZtJz8wyUfMp3aHT82Io6gC+GJTHzDF
+         xrwv7qBW/HY9yiyL9EUN2zN16VeFKqs6Dvjdo4gjoAfs4EuPOP2lhk87x0Np0CWMSNOW
+         j20E25vA13JvM0CtEx+wTEe3fLDqnJ1KsGBEcsAFwaLxkSt+jq7z0gfvFvnK/Ab1sR+Y
+         qIOi0+zX7wwZm1642dxid5HH0LuxubanGi+C+7xpzjiUT2m8HoApWEUIOnCV+07R9lEr
+         GOV0EVwrk0AQPx4M8BhFzYn2Iw3lQRgHmfEPthsylN7/OvmvoQTtFvnP7li5j197k6zb
+         NHTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6U54lVnWDEa/1MZT8YYpXO8Csq9+YB6OWbxVJPY+cUg=;
-        b=PTQE3JLz13Jjcb9qusXrOTsNb6JXCeZ2QwJcuxUrMISRNwKngH6lycojVhuveAOkxF
-         w3s7EdETnbbynFh+f+T0jJDdnXkdme4S77NIl8+5S8kNYjgCDnaLJXKHUTQBG3xZA83l
-         UJ1fqVJJEZzTPpU92qWb78YxGls3kmexoK9C/Tdu4g9Ix5eMS8RbFvcNg0+2usE0y6fI
-         ZQl181Qk5iMrhsiNQf/Djp6QIHimSRFYjFrUacpF9WsckPC6vqGGB/skmHI75BtT57Dg
-         rMPggtVxI4UVLHTjFgTao8pYSHfwCfEePGz1CoCjmmWAOd/1N24lHi1fNxPLKq0sTney
-         C7yA==
-X-Gm-Message-State: AFeK/H2fXMtzXx4CSMs6PY0VmX1CMtwM7PFVifLtiREYmNYaV9G8Vl9UXBUcrGhGMCbiyw==
-X-Received: by 10.99.112.22 with SMTP id l22mr6836924pgc.94.1490331660257;
-        Thu, 23 Mar 2017 22:01:00 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:6c40:39b9:f9ab:ec6f])
-        by smtp.gmail.com with ESMTPSA id t133sm1395367pgc.24.2017.03.23.22.00.59
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 22:00:59 -0700 (PDT)
-Date:   Thu, 23 Mar 2017 22:00:30 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] branch doc: update description for `--list`
-Message-ID: <20170324050030.GA7558@aiede.mtv.corp.google.com>
-References: <20170323120326.19051-1-avarab@gmail.com>
- <xmqq1stoexmb.fsf@gitster.mtv.corp.google.com>
- <CACBZZX7vW0TkbrBvLvKWnY=UpHNHzzQ7wuwhEhNOjCCjzPVMjA@mail.gmail.com>
- <xmqq37e3brxz.fsf@gitster.mtv.corp.google.com>
- <20170324004858.GE20794@aiede.mtv.corp.google.com>
- <xmqqtw6j8e7f.fsf_-_@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7qPgeb4gzRhbAGgo3qw7H9l1UyU68JBoEVKJUY/iXn4=;
+        b=MLczurhSzzoxfNDF6r/hL1s/klA+OV/mhPwpaWIHiQSgv6emVO18ZoLIwtfPVq6OM2
+         pvkz9Ibp0FSpmhyAOs/52kohsx+589lOkTZQhMsDLE4AFvMVGVY8JCG/Iw05FNSwKxzh
+         gUoOF8onIA5XqxlhH1f9PlDzlAgWhWVklYDtnC7iBmv5SZl4EtFvzUF+KdJxBAPC/5ul
+         x4rUBedFVUQNDOn83cfEUGb2TCeCCLUapXCaYbTZP/drwFOdCNKzVv65Ilp8bqVisPWJ
+         MfzkWRkKaGf46KUz/7gHz0ilx/+AmmUch+4WsiwB+20i8A9yz7OsvH14tHrXP+QbcKGv
+         XkKw==
+X-Gm-Message-State: AFeK/H1EXgI9Q50YzIHc0Mt7gfKRdm5iV/aQmZeNkjj+FK5TsW4Hid+75SMqvgsU2dTUARBvvHNc0oKhOUXFVA==
+X-Received: by 10.28.94.194 with SMTP id s185mr1042715wmb.52.1490334339242;
+ Thu, 23 Mar 2017 22:45:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtw6j8e7f.fsf_-_@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.28.91.2 with HTTP; Thu, 23 Mar 2017 22:45:18 -0700 (PDT)
+In-Reply-To: <xmqq8tnveuqv.fsf@gitster.mtv.corp.google.com>
+References: <20170321055203.26488-1-alexhenrie24@gmail.com>
+ <xmqqinn2sfdw.fsf@gitster.mtv.corp.google.com> <xmqqzigemfij.fsf@gitster.mtv.corp.google.com>
+ <CAMMLpeQZXzPtN+mmtRS33vbT6hFz8p0qqjFMhz9tUHk747=Z3Q@mail.gmail.com>
+ <xmqqmvcdmeuv.fsf@gitster.mtv.corp.google.com> <CAMMLpeR-zCpL5Gx=BoK8G9_wL2TBe-wD3VnsAShAuVVzS=Nirg@mail.gmail.com>
+ <xmqqfui4f0pp.fsf@gitster.mtv.corp.google.com> <CAMMLpeRtzYM3a639DcNbhqAmz3dNkRebvQps-gusEKx+eQqPgQ@mail.gmail.com>
+ <xmqq8tnveuqv.fsf@gitster.mtv.corp.google.com>
+From:   Alex Henrie <alexhenrie24@gmail.com>
+Date:   Thu, 23 Mar 2017 23:45:18 -0600
+Message-ID: <CAMMLpeSawRe7SLmFPzZ+EerQvtcyvObYyv=iWMwhiRvjNPreHw@mail.gmail.com>
+Subject: Re: [PATCH] log: if --decorate is not given, default to --decorate=auto
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+2017-03-23 12:03 GMT-06:00 Junio C Hamano <gitster@pobox.com>:
+> Alex Henrie <alexhenrie24@gmail.com> writes:
+>
+>> Yes, that makes sense. I assume that when you talk about 'next', you
+>> mean 'master'?
+>
+> No, I do mean 'next'.  See "A note from the maintainer" post that
+> are sent to the list every once in a while (i.e. after a new release
+> is tagged) for the project structure.
+>
+>     https://public-inbox.org/git/xmqqy3vztypi.fsf@gitster.mtv.corp.google.com/
 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/git-branch.txt | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
+That document was very helpful, thanks.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>> If we want to use `git -p log` in a test, we'll have to change the
+>> behavior of pager_in_use(). Alternatively, we could use
+>> `GIT_PAGER_IN_USE=1 git log` instead.
+>
+> Testing "git -p" is not the goal; testing that decorate defaults to
+> auto during an interactive session is.  We could run tests under pty
+> like t7006 does using lib-terminal.sh if we really want to emulate
+> an interactive session.
+>
+> Exporting GIT_PAGER_IN_USE may be sufficient for the purpose of
+> convincing the command to be in an interactive session for this
+> test, even though it feels a bit too brittle to depend on the
+> internal implementation detail.
 
-Thanks.
+Okay, I've now written a lib-terminal test for git log. I'll send the
+revised patch momentarily.
+
+-Alex
