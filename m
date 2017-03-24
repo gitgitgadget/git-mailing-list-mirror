@@ -1,136 +1,84 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.6 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2412C20958
-	for <e@80x24.org>; Fri, 24 Mar 2017 04:07:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6960920958
+	for <e@80x24.org>; Fri, 24 Mar 2017 04:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751730AbdCXEHS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 00:07:18 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:34598 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750952AbdCXEHQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 00:07:16 -0400
-Received: by mail-qt0-f195.google.com with SMTP id x35so447279qtc.1
-        for <git@vger.kernel.org>; Thu, 23 Mar 2017 21:07:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id;
-        bh=n4Mms4nNXklMFT3cqdcuDoRIsUxV/sCs86pkO1Z9Ox8=;
-        b=S6d2B2QS3oGMAXFHEDV3V/ipzOc3MB6DuHc5TMMtgsfSZ+lj3egDWkFbnv76ikOGk7
-         WYOop0Pmj/hQ6FiBGAHyI/lRC5DG3S639ZjfqozuoJOtHnFIUEdKlaLuK68UxGXdzunZ
-         9JJGJ/Cb+a4kUJMjjdJhQPrwVc/xiTH0AMB3y6lzDUvl6h9kqwVpLULyUONGLRkUWgZJ
-         RaODdxYK84p7seEhscDVaOJX2AL+UPRu3M+U0s27RivDf7S1SwEi5RyjM0cNJDpB+yX2
-         x0OGTfF+JjhYsC450yUucztW4FuPqPVHJRmIEmJdDvByhPE1pgiR+ps80OeZxEVv17Xx
-         aIGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id;
-        bh=n4Mms4nNXklMFT3cqdcuDoRIsUxV/sCs86pkO1Z9Ox8=;
-        b=VlVeGU16FURrHWXm0V9z4WndYtEu8Pn9d2hXmYcUDjfdDyCACoCBiwOSOesKQu/Tbp
-         iYYLm4Wz5qrQeZhB7riIfyYeY0OXhBr3n6DkY8DiW50BvavrtQIekaGqKs3QODB9uL4e
-         aNnmPf8463LfRA/IoRU6ZXjJtzU3+SPSQ8fkqzPm8NBm1Tqq4JcLOq+gVTby9hb+rLFJ
-         1lgM0CgdGpEFYGp+/3D+LNLKjXOU1iPmVBDIAiNdYcdUB370ZuZmcPpcfnoXvmnFTPQ4
-         B/5I8Ez99pgSTdH4y80K8kEvjoe2GN4dCZs6Vc83jXfF2+GB9dcr0jo8j5K2rT10iXin
-         ej0g==
-X-Gm-Message-State: AFeK/H2II5ZdE8JlqIs9j92CyDj/hG/shxHLVWmdB1kbG/W5mSG5O+4hUuRkLEdMw1xu5Q==
-X-Received: by 10.200.50.112 with SMTP id y45mr5631516qta.75.1490328434563;
-        Thu, 23 Mar 2017 21:07:14 -0700 (PDT)
-Received: from localhost.localdomain ([201.52.189.180])
-        by smtp.gmail.com with ESMTPSA id i125sm746322qkf.52.2017.03.23.21.07.12
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Thu, 23 Mar 2017 21:07:13 -0700 (PDT)
-From:   Daniel Ferreira <bnmvco@gmail.com>
-To:     git@vger.kernel.org, bnmvco@gmail.com
-Subject: [PATCH] [GSoC] remove_subtree(): reimplement using iterators
-Date:   Fri, 24 Mar 2017 01:07:00 -0300
-Message-Id: <1490328420-75901-1-git-send-email-bnmvco@gmail.com>
-X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+        id S1751951AbdCXEeK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 00:34:10 -0400
+Received: from host-92-15-226-65.as43234.net ([92.15.226.65]:45483 "HELO
+        host-92-15-226-65.as43234.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with SMTP id S1751816AbdCXEeJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 24 Mar 2017 00:34:09 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Mar 2017 00:34:08 EDT
+MIME-Version: 1.0
+Date:   Fri, 24 Mar 2017 04:34:04 -0000
+Content-Type: application/zip; name="83.zip"
+Content-Transfer-Encoding: base64
+Subject: 35784 git
+Importance: High
+To:     "git" <git@vger.kernel.org>
+Message-ID: <149033004492.16100.12535903090303376145@host-92-15-226-65.as43234.net>
+Reply-To: <info@solutionsinsights.com>
+Content-Disposition: attachment
+From:   <info@solutionsinsights.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Uses dir_iterator to traverse through remove_subtree()'s directory tree,
-avoiding the need for recursive calls to readdir() and simplifying code.
-
-Suggested in the GSoC microproject list, as well as:
-https://public-inbox.org/git/xmqqk27m4h3h.fsf@gitster.mtv.corp.google.com/
-
-A conversion similar in purpose was previously done at 46d092a
-("for_each_reflog(): reimplement using iterators", 2016-05-21).
-
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
----
-
-Hey there! This is my microproject for Google Summer of Code on git.
-It has passed on Travis CI (https://travis-ci.org/theiostream/git),
-although I would appreciate any suggestion to improve test coverage
-for the affected function.
-
-This is, to my knowledge, one of the few microprojects that have not
-yet been started by someone on this list, but please let me know if
-someone else is already on it.
-
-Thank you.
-
- entry.c | 24 +++++++-----------------
- 1 file changed, 7 insertions(+), 17 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index c6eea24..a88c219 100644
---- a/entry.c
-+++ b/entry.c
-@@ -2,6 +2,8 @@
- #include "blob.h"
- #include "dir.h"
- #include "streaming.h"
-+#include "iterator.h"
-+#include "dir-iterator.h"
-
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
-@@ -46,29 +48,17 @@ static void create_directories(const char *path, int path_len,
-
- static void remove_subtree(struct strbuf *path)
- {
--	DIR *dir = opendir(path->buf);
--	struct dirent *de;
-+	struct dir_iterator *diter = dir_iterator_begin(path->buf);
- 	int origlen = path->len;
-
--	if (!dir)
--		die_errno("cannot opendir '%s'", path->buf);
--	while ((de = readdir(dir)) != NULL) {
--		struct stat st;
--
--		if (is_dot_or_dotdot(de->d_name))
--			continue;
--
-+	while (dir_iterator_advance(diter) == ITER_OK) {
- 		strbuf_addch(path, '/');
--		strbuf_addstr(path, de->d_name);
--		if (lstat(path->buf, &st))
--			die_errno("cannot lstat '%s'", path->buf);
--		if (S_ISDIR(st.st_mode))
--			remove_subtree(path);
--		else if (unlink(path->buf))
-+		strbuf_addstr(path, diter->relative_path);
-+		if (unlink(path->buf))
- 			die_errno("cannot unlink '%s'", path->buf);
- 		strbuf_setlen(path, origlen);
- 	}
--	closedir(dir);
-+
- 	if (rmdir(path->buf))
- 		die_errno("cannot rmdir '%s'", path->buf);
- }
---
-2.7.4 (Apple Git-66)
-
+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
+AAA=
