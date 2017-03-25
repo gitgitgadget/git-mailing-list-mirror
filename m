@@ -6,52 +6,51 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E80A1FC19
-	for <e@80x24.org>; Sat, 25 Mar 2017 06:03:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9F9A20958
+	for <e@80x24.org>; Sat, 25 Mar 2017 06:38:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967119AbdCYGDd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 02:03:33 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59891 "EHLO
+        id S933152AbdCYGiB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 02:38:01 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65407 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S965616AbdCYGDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 02:03:32 -0400
+        with ESMTP id S1751754AbdCYGh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 02:37:59 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 04CF47C916;
-        Sat, 25 Mar 2017 02:03:30 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5D70D7CD1E;
+        Sat, 25 Mar 2017 02:37:57 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=78Zqa32Avtw1HRebYwwCkcB8qt4=; b=nBdiBv
-        AOGZe5iPTmKFCtTnj0s/jlagt9lKCARvvLbdem01Zz9YxPxLos+eIkVJ1hZ+ZlD6
-        swvqpSgJPTdvmwyRFnbcvgaKV2PoD0uQR/CdvHWaGhT5nDzvMfvKRMUGGBTaSOzK
-        qNg72atQ2Dx5v2jdMQAfGMXCNPaAKCY2LpIxY=
+        :content-type; s=sasl; bh=0ifK+u475Fp0+KN1LAZzn6v6Dbw=; b=pYU2A+
+        aD0FZyK0yZCsg4TrD1GGyygFOIsz5CIEsAcCFWel3wsKd5ZXohf4ik7UIfKCJgaq
+        KpEQatSr9C/HLyO3ySdPQSvjLpboVb2gCioVC2UnW2N0Ob6yQp5R40gMLZMcwhUk
+        VDI5dN850JHbrIL/5LAQ4mcjrrzh/iBpql4N8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dRtJ1CYnXNz663lrMqBRJmCCQKa9+GiW
-        y+oQgXK4Yh5PkNBltarl5vCF4Evfjo14mdrAEc/16KOl9Gf6IHOQyYFa6+c2n6mJ
-        mXfQZv31gy6xt4W233SoIRnXue/vtbngKco0cCfHbbyMdpCR9lgEPpg6Vq6ly1zT
-        d6VMfMtCFtI=
+        :content-type; q=dns; s=sasl; b=Y04Uy8oTfQKmUQyeGjbo0LZ2MbaGhsUm
+        SshsRFY8tkuEgoln+/IC+hT00XCRTWaf3I55DsbOCR53l5R+fYVzZmWZQ7RrQ2eG
+        AekW9+1sZvzpZIridbu4MpPGgH4DuQhUSJ+Eb3nVGukR5SlgeIVp7EU9/G1Mry1h
+        WJ9HSS/s/A4=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1AF37C915;
-        Sat, 25 Mar 2017 02:03:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5445B7CD1D;
+        Sat, 25 Mar 2017 02:37:57 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6560F7C914;
-        Sat, 25 Mar 2017 02:03:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B1BC57CD1C;
+        Sat, 25 Mar 2017 02:37:55 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] sha1dc: safeguard against outside definitions of BIGENDIAN
-References: <856355e49e7a6016f5d1ef5f9785d94a455b5755.1490395862.git.johannes.schindelin@gmx.de>
-Date:   Fri, 24 Mar 2017 23:03:28 -0700
-In-Reply-To: <856355e49e7a6016f5d1ef5f9785d94a455b5755.1490395862.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Fri, 24 Mar 2017 23:52:10 +0100
-        (CET)")
-Message-ID: <xmqqr31l6ggf.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 0/7] PREVIEW: Introduce DC_AND_OPENSSL_SHA1 make flag
+References: <cover.1490397869.git.johannes.schindelin@gmx.de>
+Date:   Fri, 24 Mar 2017 23:37:54 -0700
+In-Reply-To: <cover.1490397869.git.johannes.schindelin@gmx.de> (Johannes
+        Schindelin's message of "Sat, 25 Mar 2017 00:24:42 +0100 (CET)")
+Message-ID: <xmqq7f3d6ev1.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C4AAFFF8-1120-11E7-BD63-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 9449655C-1125-11E7-BF66-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,114 +58,84 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-> index 6dd0da36084..d99db4f2e1b 100644
-> --- a/sha1dc/sha1.c
-> +++ b/sha1dc/sha1.c
-> @@ -35,7 +35,7 @@
->  
->  #define sha1_mix(W, t)  (rotate_left(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1))
->  
-> -#if defined(BIGENDIAN)
-> +#if defined(BIGENDIAN) && BIGENDIAN != 0
->  	#define sha1_load(m, t, temp)  { temp = m[t]; }
->  #else
->  	#define sha1_load(m, t, temp)  { temp = m[t]; sha1_bswap32(temp); }
->
-> base-commit: c21884356fab0bc6bc5fa6abcadbda27a112a76c
+> - the most important part will be the patch turning core.enableSHA1DC
+>   into a tristate: "externalOnly" or "smart" or "auto" or something
+>   indicating that it switches on collision detection only for commands
+>   that accept objects from an outside source into the local repository,
+>   such as fetch, fast-import, etc
 
-Is this change _only_ for Windows where BIGENDIAN happens to be
-defined to be 0?
+There are different uses of SHA-1 hashing in Git, and I do agree
+that depending on the use, some of them do not need the overhead for
+the collision-attack detection.  As DC_SHA1 with attack detection
+disabled may still be slower than other implementations, it may make
+sense to have a compile-time option to use DC_SHA1 for places that
+needs protection, and another implementation [*1*] for places that
+don't.
 
-If we only assume that BIGENDIAN can be either (0) Not set at all by
-platform headers, (1) Not set or set to "0" on little-endian
-systems, or (2) Set to any value other than "0" on big-endian
-systems, then the patch looks OK.
+I think the places that MUST use DC variant is anything that hashes
+content for a single object to compute its object name.  "git add"
+[*2*] that creates a new loose object, "git index-pack" that reads
+incoming pack stream over the wire, reconstitutes each object data
+while resolving delta and hash them to get their names to construct
+the .idx file and "git unpack-objects" that does the same but
+explodes the pack contents into loose objects, "git write-tree" that
+creates a new tree object given the contents of the index, etc.
 
-But it feels a bit too brittle [*1*].
+One notable exception of the above is "update-index --refresh".  We
+already have contents in the index and in the object store, and we
+are hashing the contents in the working tree to see if it hashes to
+the same value.  When the hash does not match, it won't go in to the
+object store.  When the hash does match, it either is indeed the
+same content (i.e. no collision), in which case we earlier must have
+done the collision-attack detecting hash when we added the object to
+the object store.  Or the object we have in the object store and
+what is in the working tree are different contents that hash to the
+same name, in which case the user already has colliding pair and it
+is too late to invoke collision-attack detecting variant ;-)
 
-Looking at sha1dc/sha1.c, I notice that it begins like so:
+The running checksum over the whole file csum-file.c computes does
+not have to be the collision-attack detecting kind.  This is the
+hash at the end of various files like the index, .pack .idx, etc.
+These are used to protect us against bit-flipping disks and we are
+not fighting with a clever disk that can do collision attack.  For
+that matter, some of these checksums do not even have to be SHA-1.
+If one hacks his own Git to replace SHA-1 checksum at the end of the
+index file with something faster and weaker and use it in one's
+repository, nobody else would notice nor care.  The same thing can
+be said for the .idx file.  The one at the end of .pack does get
+checked at the receiving end when it comes over the wire, so it MUST
+be SHA-1, but it does not have to be hashed with collision-attack
+detection.
 
-    /*
-       Because Little-Endian architectures are most common,
-       we only set BIGENDIAN if one of these conditions is met.
-       Note that all MSFT platforms are little endian,
-       so none of these will be defined under the MSC compiler.
-       If you are compiling on a big endian platform and your
-       compiler does not define one of these, you will have to add
-       whatever macros your tool chain defines to indicate
-       Big-Endianness.
-     */
-    #if (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
-        (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) || \
-        defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
-        defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
+The rerere database is indexed with SHA-1 of (normalized) conflict
+text.  This does not have to be hashed with the collision-attack
+detection logic.  Thanks to recent update that allows multiple pairs
+of conflict and its resolution, the subsystem is prepared to see two
+conflicts that share the same hash already (for completely different
+reasons).
 
-    #define BIGENDIAN	(1)
-
-    #endif /*ENDIANNESS SELECTION*/
-
-Notice:
-
- - It does not consider BIGENDIAN can be set from the outside (i.e.
-   it does not say "#ifndef BIGENDIAN" around the above auto
-   selection).
-
- - It considers the actual value of BIGENDIAN given from the outside
-   is expendable (i.e. if somehow the caller sets it to 2, it is
-   reset to 1 if __BYTE_ORDER and friends tells us we are on a
-   big-endian box.
-
- - It really wants to tell little endian machines not to set
-   BIGENDIAN (i.e. lack of "#else" that does "#undef BIGENDIAN").
-
-Which leads me to wonder if a more robust solution that is in line
-with the original design of sha1dc/sha1.c code may be to do an
-unconditional "#undef BIGENDIAN" before the above block, so that no
-matter what the calling environment sets BIGENDIAN to (including
-"0"), it gets ignored and we always use the auto-selection.
-
-Anyway, thanks for noticing and raising the issue.
+The hash that names a packfile is constructed by sorting all the
+names of the objects contained in the packfile and running SHA-1
+hash over it.  I think this MUST be hashed with collision-attack
+detection.  A malicious site can feed you a packfile that contains
+objects the site crafts so that the sorted object names would result
+in a collision-attack, ending up with one pack that contains a sets
+of objects different from another pack that happens to have the same
+packname, causing Git to say "Ah, this new pack must have the same
+set of objects as the pack we already have" and discard it,
+resulting in lost objects and a corrupt repository with missing
+objects.
 
 
 [Footnote]
 
-*1* The "brittle" comment is because the assumption feels a bit too
-    narrow, and if we want to solve this without assuming too much
-    (i.e. stop thinking about "I just want to fix Windows; I do not
-    care about a more general and robust solution"), I think we
-    could solve it for something that completely violates your
-    assumption.  For example, a platform where something like this
-    is used in the header to switch behaviour depending on the
-    endianness:
+*1* I think this PREVIEW hardcodes OpenSSL only for illustration and
+    that is OK for a preview.  Given the recent news on licensing,
+    however, if we want to pursue this dual hashing scheme, we must
+    consider allowing other implementations as well in the final
+    form.
 
-	/* Symbolic constants */
-	#define BIGENDIAN 0
-	#define LITTLEENDIAN 1
-	...
-
-	/* Say which one MY build is */
-	#define MYENDIAN BIGENDIAN
-	...
-
-	#if MYENDIAN == LITTLEENDIAN
-	... code for little endian systems ...
-	#else /* MYENDIAN == BIGENDIAN */
-	... code for big endian systems ...
-	#endif
-
-    would break your patch.  Such a big-endian box will end up using
-    the wrong definition of sha1_load().  The original happens to
-    choose the right definition by accident, as the header's design
-    is that MYENDIAN describes the box you are on, though.
-
-    But as my analysis of how BIGENDIAN is set in the sha1.c file
-    itself shows, I think it would be a more robust solution if we
-    made sure that we do not pay attention to BIGENDIAN coming from
-    the outside world at all, i.e. "#undef" upfront.
-
-    Another possibility would be to rename BIGENDIAN used in
-    sha1dc/sha1.c file to something a lot less generic,
-    e.g. SHA1DC_BIGENDIAN.
-
-
+*2* In this paragraph, whenever "git" command is named, I mean both
+    the command and its underlying machinery.  When I say "git
+    write-tree", for example, write_index_as_tree() obviously is
+    included.
