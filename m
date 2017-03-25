@@ -2,106 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 849021FC19
-	for <e@80x24.org>; Sat, 25 Mar 2017 01:35:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D46E1FC19
+	for <e@80x24.org>; Sat, 25 Mar 2017 02:17:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756642AbdCYBfs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 21:35:48 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33685 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756699AbdCYBfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 21:35:46 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 79so1061117pgf.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 18:35:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IXi2rNQhSMU733MS0Cq1ZRZvyCin36H8vznrBKQVgi0=;
-        b=s0+WBXJyuzFj5H4yI313GOutfaQ86f7xEwUrs4j4f5biWBQvvbzcaEwd1yeIw3dtRS
-         3Hah/FVF/DMJ2vzZcyrU8bmL5Mu2TsybEFpYezvfK760WaOLBlqlYuliDB9or2gJh1s0
-         Z1ZuZbXFNPasp7CobYuPKfhkyniviuDsH0yEqqo1QH36v1o9h7dbHZcBa28aDe6skB6H
-         APNEAG9KgCtrKaqG6rSq2eJa3ut6uoTUqNxzcUdK32GIOqhFzd94JaPUdg6jsCXRUfB+
-         jtJ+UsR4vb7g6gUVlAGW7KdJhooMu6WmbXjg4G/4HZvHMSIteqho/6cbVuCJcXLH8Eh7
-         myuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IXi2rNQhSMU733MS0Cq1ZRZvyCin36H8vznrBKQVgi0=;
-        b=YS0G4ta9mgjOjeu88GMvmjtX1rGX8ed4k6S7/nIc8FfRjfJUzjQ9ZIs6bGt3mNv/t+
-         HDWgToxPNQ76l7z40CcURK1urNCFmnQpfylpf40v14czBDwK3LImWLQzqc7T7yesftbz
-         Q4d1J8Eih3MBHPpioRvWF3aLxzRFA9hmm43XyWOz0tDItWP0/1HzjeoUr6dUBEiKg3Nx
-         7zj6A2Jd099L9csyhcXXSIWaNdfw6zTn9hIHlrabQEWcEdU6FBM5II/L1Dr46XBIarVs
-         7zt8CO0ck6RwG5gOG+/Hdg+XJtfc5bhvTj+kHnHqHmviNvn7sum5KYpYWTukd/E4SltN
-         i2JQ==
-X-Gm-Message-State: AFeK/H0XaNkNXgHa0fOB0dA1EH4PY6+nNHxG5sB4tOx1xL7euEfZbQB/hOy6nXq+a6boNA==
-X-Received: by 10.98.71.24 with SMTP id u24mr12763450pfa.180.1490405744322;
-        Fri, 24 Mar 2017 18:35:44 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8597:ae41:db75:6a97])
-        by smtp.gmail.com with ESMTPSA id t133sm6853495pgc.24.2017.03.24.18.35.43
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 18:35:43 -0700 (PDT)
-Date:   Fri, 24 Mar 2017 18:35:41 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH v7 0/7] short status: improve reporting for submodule
- changes
-Message-ID: <20170325013541.GN31294@aiede.mtv.corp.google.com>
-References: <20170324182902.19280-1-sbeller@google.com>
- <20170325003610.15282-1-sbeller@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170325003610.15282-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        id S937029AbdCYCRS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 22:17:18 -0400
+Received: from mx1.riseup.net ([198.252.153.129]:54884 "EHLO mx1.riseup.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S936815AbdCYCRQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 22:17:16 -0400
+Received: from piha.riseup.net (unknown [10.0.1.163])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "*.riseup.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
+        by mx1.riseup.net (Postfix) with ESMTPS id 2F9491A194D;
+        Sat, 25 Mar 2017 02:17:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1490408235; bh=pgXYTirKcVXbvgSu3yka82U5io5bsVczDKpet4vj8Ho=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hBY+r1twJCNeCo08UgZ+tAoTlNwOgJrCKe6/02gz8dqjMEYjbspXCa32Kv3fIQ2hv
+         3QSPCdjvMlUjzM80s4GgBY+/SzdciPvuMGmIUnzTk8pYP5x8Jzpf1LPUCS6hztpmeS
+         AOjAzkkRURa2ffseiHrLjqmyCsBmLSzRWrejACdk=
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+        (Authenticated sender: pickfire)
+        with ESMTPSA id D9BBC1C01A6
+Date:   Sat, 25 Mar 2017 10:17:03 +0800
+From:   Inaw Tham <pickfire@riseup.net>
+To:     Johannes.Schindelin@gmx.de
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: Re: Re: GSoC Project | Convert interactive rebase to C
+Message-ID: <20170325021703.Tjq7i-hO7%pickfire@riseup.net>
+References: <20170320164154.xBcU6rG0C%pickfire@riseup.net>
+ <CAGZ79kbF+O6tgn-4ivmOza3QGA4oFyJS=9eGHYZ1HQgw6+rEtQ@mail.gmail.com>
+ <20170321060526.sXz0cdJwc%pickfire@riseup.net>
+ <alpine.DEB.2.20.1703231827060.3767@virtualbox>
+In-Reply-To: <alpine.DEB.2.20.1703231827060.3767@virtualbox>
+Mail-Followup-To: sbeller@google.com, Johannes.Schindelin@gmx.de,
+ git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Tue, 21 Mar 2017, Ivan Tham wrote:
+> > Stefan Beller <sbeller@google.com> wrote:
+> > > On Mon, Mar 20, 2017 at 9:41 AM, Ivan Tham <pickfire@riseup.net> wrote:
+> > > > I am Ivan Tham. Currently studying in Computer Science in APIIT
+> > > > Malaysia. I am interested particapate in Google Summer of Code 2017
+> > > > under git organization. I would like to attempt "Add more builtin
+> > > > patterns for userdiff" particularly for shell for my microproject.
+> > >
+> > > I'd love to see proper shell support!  Although there is already some
+> > > support for shell (by looking at diffs on our test suite) ? So I am
+> > > not sure what there is left to do? Can you clarify what you're trying
+> > > there?
+> > 
+> > Are you sure about that? From what I had looked into userdiff.c, there
+> > is no support for shell. There just a recent patch for [go patterns][0].
+> > Or perhaps I should have rename it as "userdiff.c: patterns for "shell"
+> > language"?
+> 
+> I also could not find any shell patterns in the userdiff code...
 
-> v7:
-> * taken all of Jonathan minor nits, so patch 1..6 should be good to go
-> * patch 7 lacks tests and documentation (according to Jonathan...)
->   but as it is the last patch, just fixing a minor detail we can leave it off.
->
-> Junio, please take patch 1-6 as usual, I will be out until next Wednesday.
-[...]
-> Stefan Beller (8):
->   submodule.c: port is_submodule_modified to use porcelain 2
->   submodule.c: use argv_array in is_submodule_modified
->   submodule.c: convert is_submodule_modified to use
->     strbuf_getwholeline_fd
->   submodule.c: port is_submodule_modified to use porcelain 2
->   submodule.c: factor out early loop termination in
->     is_submodule_modified
->   submodule.c: stricter checking for submodules in is_submodule_modified
->   short status: improve reporting for submodule changes
->   submodule.c: correctly handle nested submodules in
->     is_submodule_modified
->
->  Documentation/git-status.txt |  9 +++++++
->  submodule.c                  | 56 ++++++++++++++++++++-----------------------
->  t/t3600-rm.sh                | 18 ++++++++++----
->  t/t7506-status-submodule.sh  | 57 ++++++++++++++++++++++++++++++++++++++++++++
->  wt-status.c                  | 13 ++++++++--
->  5 files changed, 116 insertions(+), 37 deletions(-)
+Thanks a lot for replying me, I thought no one was intereted. :D
 
-Patches 1-6 are
+> > > > I am interested to work on "Convert interactive rebase to C"
+> > >
+> > > +cc Johannes, who recently worked on rebase and the sequencer.
+> 
+> Glad you are interested! Please note that large parts of the interactive
+> rebase are already in C now, but there is enough work left in that corner.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Glad to hear that, I would really like to see interactive rebase in C.
 
-The effect of patch 7 on --porcelain=2 output is subtle enough that I
-don't feel I understand it.  I think it heads in a good direction but
-indeed, some tests could help to illustrate the desired behavior.
+> > > > aiming to port most builtins stuff to C in which we can reduce the
+> > > > size of git. Additionally, I would also like to convert scripts to
+> > > > builtins as an additional milestone.
+> 
+> Careful. It is a ton of work to get the rebase -i conversion done, and
+> then a ton of work to get it integrated. That will fill 3 months, very
+> easily.
 
-Thanks for your patient work.
-Jonathan
+My main aim is to reduce the extra dependency of perl, but planning to start
+with rebase, can I make that an optional task where I can help out after I
+had completed my main task during gsoc?
+
+> > > > What do you think of these projects? Would it collide with Valery
+> > > > Tolstov's Shell to Builtins proposal?
+> 
+> I missed that proposal, and could only find submodule-related mails on the
+> public-inbox server. Care to provide a pointer?
+> 
+> > > Curious why all people ask about colliding with Valerys proposal here?
+> > > I do not think it would collide, as submodules and rebase are very
+> > > different areas of the code base.
+> 
+> Indeed ;-)
+
+Cheers,
+Ivan Tham
