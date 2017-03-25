@@ -2,93 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22D5B1FC19
-	for <e@80x24.org>; Sat, 25 Mar 2017 00:36:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 031991FC19
+	for <e@80x24.org>; Sat, 25 Mar 2017 01:02:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936656AbdCYAgl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 20:36:41 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:32970 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935889AbdCYAgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 20:36:31 -0400
-Received: by mail-pg0-f46.google.com with SMTP id w20so2676689pgc.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 17:36:30 -0700 (PDT)
+        id S935775AbdCYBCm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 21:02:42 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:33774 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S936140AbdCYBCl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 21:02:41 -0400
+Received: by mail-lf0-f54.google.com with SMTP id h125so1914801lfe.0
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 18:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4qXztpdEtIDFYGB7u9F0avxEzDyFmfNwFXiQqwI3OmM=;
-        b=qviau0N1bf/tux9k5Gc8cwOz6oFj8vvorfJjOcgVT9XZVBKjgQI1H0PHo7fvIZe7+f
-         BmyZSr3wLOMSR4hCe/+BpjdmOBEYff9jcb7s3tH6CaxOrI33NNfzAhom4FIevTPJAi6d
-         1SzzJrcrJVunB5wZGPUncgO90J5akWi3IDWOfx99eb538SoF13qxXW8ZsAELj0+2qz1a
-         tFiRJZclZHHB1Uwf7Ad2zDeLnNOQa9Z3BEUWgPnKgZWkWYDuOwDWvbI3nID4E/s5jP6C
-         473NKsfLifXMs0mWsD7uodFC7WgwVQFSgf6os789AjcFAK4NTWcOVsOx2Z9WDwzPcoEN
-         c2MA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=FUFLxEVJdZqTS3csJaNQD+JXJl5Nq0W4T82XfXUnU/s=;
+        b=p6LTua50n5AYToYHJLe4iuWK96QpHj0qacummeQmT9UhDZuE2Jx9I3e1W6bonp8jHg
+         S87wu2hvoZrqE7UIz9BCVcObDT0x0bTLjpE2L70PWDAqGkltGXMOaMcMKMOScDOJO/Uq
+         sbOdoV0KjUZ37d6umYChN62jyecu0CDY5uOTCT/6hIIrDSmOXwAQTfWylpVX4f8FMxxn
+         HfF8vGPx3EM/NCUR3J9Mt5nLwc1WJC7wP9z+JaVmwJ/i5kdCWOgk3Yvw5tF1Q9DqG8M+
+         mW/26Y0G9OsFxwnSpg/8m6xwJtMB7/C0qd1Aj7xm8f2fBZwEb3QpeJ6TooTawap3iutR
+         ErEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=4qXztpdEtIDFYGB7u9F0avxEzDyFmfNwFXiQqwI3OmM=;
-        b=HwoflhiT6OLlRCE3M6x+QB3gXvKAj/qUeF5KFx8vSyR2WxRZQP4pQBB8gQB5T3RXou
-         KHBRzIJFnR2kVgBpV8v6FXEZJp6pa6JhHqdhxE2Gk1M9qKrZgPtzBDsHGZyGkD3f24dy
-         IBSKkp1QVhGXDk2Jg+4H/NG1+r2A03vdbbKYb08p8Y6j8j2ls8k36ouJ7lEq9OTcy094
-         OE0dGqrmkv4xeWeO3LhC4Rc3KVNK3hPNL7m2NIyzDIuAE01FW5+0znRYNmVui1eXv+lY
-         W35oNu4cvwRizCcbUiSDZwpCDCEbAC+S8Qp24pZsE5RyuqdflKFVg4CKCmhv9OlgpEvU
-         KP7w==
-X-Gm-Message-State: AFeK/H3JEs7R3LMKIwXKGEGx8gVQ/LJixqaisYZQCRNQWREcqwLVUfyE3pP9EKAQGDHMjbI2
-X-Received: by 10.98.144.69 with SMTP id a66mr12932563pfe.30.1490402184769;
-        Fri, 24 Mar 2017 17:36:24 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:3d58:2a6c:e6ff:8de9])
-        by smtp.gmail.com with ESMTPSA id m194sm6723416pga.62.2017.03.24.17.36.24
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 17:36:24 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, jrnieder@gmail.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/7] submodule.c: stricter checking for submodules in is_submodule_modified
-Date:   Fri, 24 Mar 2017 17:36:08 -0700
-Message-Id: <20170325003610.15282-6-sbeller@google.com>
-X-Mailer: git-send-email 2.12.0.rc1.49.gdeb397943c.dirty
-In-Reply-To: <20170325003610.15282-1-sbeller@google.com>
-References: <20170324182902.19280-1-sbeller@google.com>
- <20170325003610.15282-1-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=FUFLxEVJdZqTS3csJaNQD+JXJl5Nq0W4T82XfXUnU/s=;
+        b=mT2CvCEF8Ef/LpwvVsradVuzSWN+Q1t/ifOJHfLtoImTJjRwk1kQ66vKb2dtmbMWBr
+         b/mH8xCoTX8prkGzyQE6D2yIxm/u6MSZBoCBndVLPXf6Am66dG5/BYsZNYbMyr9XzIJn
+         JmbdK42wC3dmnmBawF1DwiU+THbmr4Ttqsc8sWGfYZb+bxsdXsuHkxv8xsS+m2tqumVc
+         qWb/VC/zzr0HD8nYCGiAfMSqZEW26s8Ng2Ib1GcX0IPTpS96S2zL7TG9CKyrahRVb93Z
+         dGvI4kM0905lQ/1DJcfSS11pNDdTX7zm7qpFRqHxGx/gV1GB7chH+AN5twyRsyf33tsJ
+         GzGg==
+X-Gm-Message-State: AFeK/H3aNkCNhLe1/1YZkoihZHo9Cplttl2Gf1GPL7xNOF2MLPoA6AMm4v7B6rOmHgeSOZycPGm7mFh2ha3FpQ==
+X-Received: by 10.25.219.213 with SMTP id t82mr5400611lfi.75.1490403759143;
+ Fri, 24 Mar 2017 18:02:39 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.18.73 with HTTP; Fri, 24 Mar 2017 18:02:08 -0700 (PDT)
+In-Reply-To: <CAEA2_RLZztaRwcppwS45XfXO1n_VKw5547uScOhQON=ktttW8g@mail.gmail.com>
+References: <1490328420-75901-1-git-send-email-bnmvco@gmail.com>
+ <CAGZ79kZwT-9mHTiOJ5CEjk2wDFkn6+NcogjX0=vjhsAh16ANYg@mail.gmail.com> <CAEA2_RLZztaRwcppwS45XfXO1n_VKw5547uScOhQON=ktttW8g@mail.gmail.com>
+From:   "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
+Date:   Fri, 24 Mar 2017 22:02:08 -0300
+Message-ID: <CAEA2_RJ6OjLjS5yGjvd+S0iH+Zv0Zs6StGMv3_9ON6hVzD-85A@mail.gmail.com>
+Subject: Re: [PATCH] [GSoC] remove_subtree(): reimplement using iterators
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By having a stricter check in the superproject we catch errors earlier,
-instead of spawning a child process to tell us.
+> On Fri, Mar 24, 2017 at 2:02 PM, Stefan Beller <sbeller@google.com> wrote=
+:
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> Welcome to the Git community!
 
-diff --git a/submodule.c b/submodule.c
-index 5865795b9f..fa21c7bb72 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1052,11 +1052,12 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- 	git_dir = read_gitfile(buf.buf);
- 	if (!git_dir)
- 		git_dir = buf.buf;
--	if (!is_directory(git_dir)) {
-+	if (!is_git_directory(git_dir)) {
-+		if (is_directory(git_dir))
-+			die(_("'%s' not recognized as a git repository"), git_dir);
- 		strbuf_release(&buf);
- 		/* The submodule is not checked out, so it is not modified */
- 		return 0;
--
- 	}
- 	strbuf_reset(&buf);
- 
--- 
-2.12.0.rc1.49.gdeb397943c.dirty
+Thank you!
 
+> Please use a more imperative style. (e.g. s/Uses/Use/ ...
+> s/and simplfying/which simplifies/)
+
+Thank you. Will do in a second version of this patch.
+
+> Thanks for this link. It gives good context for reviewing the change,
+> but it will not be good context to record as a commit message.
+> (When someone looks at a commit message later on, they are usually trying
+> to figure out what the author was thinking; if there were any special cas=
+es to
+> be thought about. Was performance on the authors mind? etc)
+
+> So I propose to put the link into the more informal section if a
+> reroll is needed.
+
+Perfect. I will remove it from the message.
+
+> Instead of constructing the path again here based on relative path
+> and the path parameter, I wonder if we could use
+>
+>     if (unlink(diter->path))
+>         ..
+>
+> here? Then we would not need the strbuf at all?
+
+Yes, we can! Thank you for the pointer. Will be in the next version of the
+patch.
+
+> Also we'd need to handle (empty) directories differently for removal?
+
+From what I've tested, we do not need to do it.
+
+> Do we need to check the return code of dir_iterator_advance
+> for ITER_ERROR as well?
+
+I believe not =E2=80=93 it only tries to perform an operation if we have IT=
+ER_OK. Since
+ITER_ERROR would end up in a no-op anyway I don't see how a check for it
+would be useful.
+
+>
+>
+> >         }
+> > -       closedir(dir);
+> > +
+> >         if (rmdir(path->buf))
+> >                 die_errno("cannot rmdir '%s'", path->buf);
+>
+> This would remove the "top level" directory as given by path.
+> When reading the dir-iterator code, I am not sure if this is
+> also part of the yield in dir_iterator_advance.
+
+I've tested it, and it does not yield in there.
+
+Thank you for the advice, and as stated, will submit a v2 of the patch
+in short notice.
+
+Thank you,
+Daniel.
