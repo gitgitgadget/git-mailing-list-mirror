@@ -2,118 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 662D51FC19
-	for <e@80x24.org>; Sat, 25 Mar 2017 05:47:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E80A1FC19
+	for <e@80x24.org>; Sat, 25 Mar 2017 06:03:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967205AbdCYFrS (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 01:47:18 -0400
-Received: from mout.web.de ([212.227.15.3]:51271 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967120AbdCYFrQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 01:47:16 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Le8Ca-1cO9HV3g0i-00ptIX; Sat, 25
- Mar 2017 06:47:09 +0100
-Subject: Re: [PATCH v2 1/2] pkt-line: add packet_writel() and
- packet_read_line_gently()
-To:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org
-References: <20170324152726.14632-1-benpeart@microsoft.com>
- <20170324152726.14632-2-benpeart@microsoft.com>
-Cc:     benpeart@microsoft.com, christian.couder@gmail.com,
-        larsxschneider@gmail.com
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <7a2c73c8-bb09-12ec-dd8d-99c5363f9bb4@web.de>
-Date:   Sat, 25 Mar 2017 06:47:09 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
+        id S967119AbdCYGDd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 02:03:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59891 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S965616AbdCYGDc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 02:03:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 04CF47C916;
+        Sat, 25 Mar 2017 02:03:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=78Zqa32Avtw1HRebYwwCkcB8qt4=; b=nBdiBv
+        AOGZe5iPTmKFCtTnj0s/jlagt9lKCARvvLbdem01Zz9YxPxLos+eIkVJ1hZ+ZlD6
+        swvqpSgJPTdvmwyRFnbcvgaKV2PoD0uQR/CdvHWaGhT5nDzvMfvKRMUGGBTaSOzK
+        qNg72atQ2Dx5v2jdMQAfGMXCNPaAKCY2LpIxY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dRtJ1CYnXNz663lrMqBRJmCCQKa9+GiW
+        y+oQgXK4Yh5PkNBltarl5vCF4Evfjo14mdrAEc/16KOl9Gf6IHOQyYFa6+c2n6mJ
+        mXfQZv31gy6xt4W233SoIRnXue/vtbngKco0cCfHbbyMdpCR9lgEPpg6Vq6ly1zT
+        d6VMfMtCFtI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1AF37C915;
+        Sat, 25 Mar 2017 02:03:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6560F7C914;
+        Sat, 25 Mar 2017 02:03:29 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] sha1dc: safeguard against outside definitions of BIGENDIAN
+References: <856355e49e7a6016f5d1ef5f9785d94a455b5755.1490395862.git.johannes.schindelin@gmx.de>
+Date:   Fri, 24 Mar 2017 23:03:28 -0700
+In-Reply-To: <856355e49e7a6016f5d1ef5f9785d94a455b5755.1490395862.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Fri, 24 Mar 2017 23:52:10 +0100
+        (CET)")
+Message-ID: <xmqqr31l6ggf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170324152726.14632-2-benpeart@microsoft.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:xTpLutqRKXN2l1xFhFEgtTc/uDSpOKknM4ex7UbMbq4PJGa4cqc
- A7UMtOxZ0ZoGKOOOD8qbeQbFHdn8b4ehlSIEOZYCL3nWIQEZBcoTLHkNa7zosTpMq0x27Ns
- Hx3rQuAdr800xVMj2+YjcPZ3XBzMixdNu/o5GmTaYgupNveDXBmc2soIooe/P7Bc6mTQC2L
- KAvZKvFtckj1QIGJe7Idw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XZPMse5kn5Q=:WmWtW2sLqIZJ5Jdrq1h4Nl
- AtD80xJXUQWt5X4aUBYGSs9thAkUgJvnv4AJgsXL6w9MeHtqM/Y9XksfzUpCyuwk3ml+lKUWg
- 8htvOirgt9SZYNS+biNLdP/vmiou7TPCkWHNI+tu8qRknzYAH8pI6PG6M6TdM6+AVprt28OV0
- ij/IEKErHrQV8CiSoTTH9nmO87bXJl8zauqKCFm1c9jdaCfS/yOsJX6HumkKtE0c3kby52GoS
- CFquyijMDwAHcsixvUTH9CsGyI4NKu01t/AeKt9UzUFA0gGuoJzpTTUj0lmxyn76CU7v+yO2f
- GrwcOEayt1BbDo9ls+B9C4S9HoIgg9RLPH0S0sv7QTLeNiIgWqZuUf48bRL38d7M8Q4CcdNSh
- roq7QjBAw+KEtyx5SSdSURo7APFZNpUvLpRi+cxH3aNWiHpBAZFC5GJL/zzIrMhj9PpeBLc2g
- VE/TqjL3uUn3pKpNN4Un/Ku/1w5WNXs08mjRbZXkp9X9Ipg6gjucSXq1W0r5HkhVdkuZgJom6
- pIDF/xZlvp3ja6fqIFtfKxz62z/5uwgrH6DPJn7+fRThKMiHMOBT/Vn4uHkfu4T9N/2EMh8JX
- V8PcPSatdmloSiXR5Zb5f7WKAI38opH+1pC5GpAzJQzMF/dgkrc+gZPMimqBjur7OjFDIIru0
- 7sA75PpEQDwI3U6qnOd+JYVJvkoqcvYE1Ffv6RatB97vDrzwA1vTpxjucONMd3RyR0ESBbE1A
- oy22Zd/o4HgNplacL5Rs74P0kFTO7LTA1VvbgTzMwBnxl5wOWtOm9VrWWEcJJXnoEU8WaGVQL
- wNFGN/z
+Content-Type: text/plain
+X-Pobox-Relay-ID: C4AAFFF8-1120-11E7-BD63-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-03-24 16:27, Ben Peart wrote:
-> Add packet_writel() which writes multiple lines in a single call and
-> then calls packet_flush_gently(). Add packet_read_line_gently() to
-> enable reading a line without dying on EOF.
-> 
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
->  pkt-line.c | 31 +++++++++++++++++++++++++++++++
->  pkt-line.h | 11 +++++++++++
->  2 files changed, 42 insertions(+)
-> 
-> diff --git a/pkt-line.c b/pkt-line.c
-> index d4b6bfe076..2788aa1af6 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
->  	return status;
->  }
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+> index 6dd0da36084..d99db4f2e1b 100644
+> --- a/sha1dc/sha1.c
+> +++ b/sha1dc/sha1.c
+> @@ -35,7 +35,7 @@
 >  
-> +int packet_writel(int fd, const char *line, ...)
-The name packet_writel is hard to distinguish from packet_write.
-Would packet_write_lines make more sense ?
+>  #define sha1_mix(W, t)  (rotate_left(W[t - 3] ^ W[t - 8] ^ W[t - 14] ^ W[t - 16], 1))
+>  
+> -#if defined(BIGENDIAN)
+> +#if defined(BIGENDIAN) && BIGENDIAN != 0
+>  	#define sha1_load(m, t, temp)  { temp = m[t]; }
+>  #else
+>  	#define sha1_load(m, t, temp)  { temp = m[t]; sha1_bswap32(temp); }
+>
+> base-commit: c21884356fab0bc6bc5fa6abcadbda27a112a76c
 
-> +{
-> +	va_list args;
-> +	int err;
-> +	va_start(args, line);
-> +	for (;;) {
-> +		if (!line)
-> +			break;
-> +		if (strlen(line) > LARGE_PACKET_DATA_MAX)
-> +			return -1;
-> +		err = packet_write_fmt_gently(fd, "%s\n", line);
-> +		if (err)
-> +			return err;
-> +		line = va_arg(args, const char*);
-> +	}
-> +	va_end(args);
-> +	return packet_flush_gently(fd);
-> +}
-> +
-I don't think that this va_start() is needed, even if it works.
+Is this change _only_ for Windows where BIGENDIAN happens to be
+defined to be 0?
 
-int packet_write_line(int fd, const char *lines[])
-|
-	const char *line = *lines;
-	int err;
-	while (line) {
-		if (strlen(line) > LARGE_PACKET_DATA_MAX)
-			return -1;
-		err = packet_write_fmt_gently(fd, "%s\n", line);
-		if (err)
-			return err;
-		lines++;
-		line = *lines;
-	}
-	return packet_flush_gently(fd);
-]
+If we only assume that BIGENDIAN can be either (0) Not set at all by
+platform headers, (1) Not set or set to "0" on little-endian
+systems, or (2) Set to any value other than "0" on big-endian
+systems, then the patch looks OK.
+
+But it feels a bit too brittle [*1*].
+
+Looking at sha1dc/sha1.c, I notice that it begins like so:
+
+    /*
+       Because Little-Endian architectures are most common,
+       we only set BIGENDIAN if one of these conditions is met.
+       Note that all MSFT platforms are little endian,
+       so none of these will be defined under the MSC compiler.
+       If you are compiling on a big endian platform and your
+       compiler does not define one of these, you will have to add
+       whatever macros your tool chain defines to indicate
+       Big-Endianness.
+     */
+    #if (defined(__BYTE_ORDER) && (__BYTE_ORDER == __BIG_ENDIAN)) || \
+        (defined(__BYTE_ORDER__) && (__BYTE_ORDER__ == __BIG_ENDIAN__)) || \
+        defined(__BIG_ENDIAN__) || defined(__ARMEB__) || defined(__THUMBEB__) ||  defined(__AARCH64EB__) || \
+        defined(_MIPSEB) || defined(__MIPSEB) || defined(__MIPSEB__)
+
+    #define BIGENDIAN	(1)
+
+    #endif /*ENDIANNESS SELECTION*/
+
+Notice:
+
+ - It does not consider BIGENDIAN can be set from the outside (i.e.
+   it does not say "#ifndef BIGENDIAN" around the above auto
+   selection).
+
+ - It considers the actual value of BIGENDIAN given from the outside
+   is expendable (i.e. if somehow the caller sets it to 2, it is
+   reset to 1 if __BYTE_ORDER and friends tells us we are on a
+   big-endian box.
+
+ - It really wants to tell little endian machines not to set
+   BIGENDIAN (i.e. lack of "#else" that does "#undef BIGENDIAN").
+
+Which leads me to wonder if a more robust solution that is in line
+with the original design of sha1dc/sha1.c code may be to do an
+unconditional "#undef BIGENDIAN" before the above block, so that no
+matter what the calling environment sets BIGENDIAN to (including
+"0"), it gets ignored and we always use the auto-selection.
+
+Anyway, thanks for noticing and raising the issue.
+
+
+[Footnote]
+
+*1* The "brittle" comment is because the assumption feels a bit too
+    narrow, and if we want to solve this without assuming too much
+    (i.e. stop thinking about "I just want to fix Windows; I do not
+    care about a more general and robust solution"), I think we
+    could solve it for something that completely violates your
+    assumption.  For example, a platform where something like this
+    is used in the header to switch behaviour depending on the
+    endianness:
+
+	/* Symbolic constants */
+	#define BIGENDIAN 0
+	#define LITTLEENDIAN 1
+	...
+
+	/* Say which one MY build is */
+	#define MYENDIAN BIGENDIAN
+	...
+
+	#if MYENDIAN == LITTLEENDIAN
+	... code for little endian systems ...
+	#else /* MYENDIAN == BIGENDIAN */
+	... code for big endian systems ...
+	#endif
+
+    would break your patch.  Such a big-endian box will end up using
+    the wrong definition of sha1_load().  The original happens to
+    choose the right definition by accident, as the header's design
+    is that MYENDIAN describes the box you are on, though.
+
+    But as my analysis of how BIGENDIAN is set in the sha1.c file
+    itself shows, I think it would be a more robust solution if we
+    made sure that we do not pay attention to BIGENDIAN coming from
+    the outside world at all, i.e. "#undef" upfront.
+
+    Another possibility would be to rename BIGENDIAN used in
+    sha1dc/sha1.c file to something a lot less generic,
+    e.g. SHA1DC_BIGENDIAN.
 
 
