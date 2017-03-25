@@ -2,69 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D73CC2095E
-	for <e@80x24.org>; Sat, 25 Mar 2017 19:52:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2638820966
+	for <e@80x24.org>; Sat, 25 Mar 2017 21:12:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751302AbdCYTwC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 15:52:02 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:34866 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750915AbdCYTwB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 15:52:01 -0400
-Received: by mail-it0-f42.google.com with SMTP id y18so38875338itc.0
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 12:52:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=L+/DrAIyslB5aP4Al8OV1T0NwJo6dmYPkhpfrbDC2Ec=;
-        b=J8Ou3bkMF1NEZK1mc9wc7vTM1POVwbpEhLzKh/cZ07t4IKw6M39NgLqEcvwb4wFluL
-         +pHVUGFUc0QEqzIUObsaK1Sm7/y1KDoK7ulr5rpdUteN66Fhb0cq1fADp9W+4Dh9aW4f
-         52DDtQKhELqSYLA8zEdXeH+U/NJvUIF+B8ivPiD7eebcMkkbzHYSfTwgmxjcIDkVmbBX
-         QGA4qsc0hEl8hpFVCMt0+iZLtXUPaAUtS3iCIXXpekhcSYeGCBpM6pNV5QjvP2gUS7IW
-         vUyDqa1JyoF0jChJsPe3ZHTBu0q+FjxUtJAR9x6mNWKQI36P0m2byE3msWA0E1s1cQh1
-         R0+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=L+/DrAIyslB5aP4Al8OV1T0NwJo6dmYPkhpfrbDC2Ec=;
-        b=Lh8IIQW0mixLVFNWQmjX9MX0Vj2zKCVzYaSGO3trQ/PBsam8wwUIyA3XBSpSE90b1x
-         3aCh5PbhQEtNUq2QNChGsshqfDpbeW8O0J8y/SpZycvT7PhPSHKCZl/yoEwgwTgugNxi
-         0acxQgLERTeprrzbqjWZvDHeAqWdr1ddaM6S544a93x8GLaoZ5NyE10CFqV4XiNqDT2W
-         ppAZCJwYoYQ2M2A53NHkEClw+kBiAhXhdRqSnbwY0hiVEXnsHzEHwPVBIhSS/H42TEcc
-         nnL/d2GfqPx9my7LszAZZ+0QiHz1Mzu8hZ624rO8WlikbiAItIZenIgSNhRhZ7PZVpIB
-         bILg==
-X-Gm-Message-State: AFeK/H0ydYRZ5pNBQ5S3GzG/tkrn5aVn3sbtBSkOM6hFz3tUWIFMypzzhjFwSBYm1LmhfKVwn0wJBjgCwYXzsQ==
-X-Received: by 10.36.116.71 with SMTP id o68mr3339420itc.60.1490471519996;
- Sat, 25 Mar 2017 12:51:59 -0700 (PDT)
+        id S1751147AbdCYVM2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 17:12:28 -0400
+Received: from imap.thunk.org ([74.207.234.97]:50704 "EHLO imap.thunk.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750994AbdCYVM1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 17:12:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
+        h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=TCNWXMIVL5KMDAq21NfZ5q7T8FTThGHTNpnxJU0Cilo=;
+        b=KqRV9PdjmfZvR1QX/3GEmRtcDskD/KoEmC9/p3RQoYUt7JJ3bRxI2eJo5ZK/PatEtYUYcTvpgFcakTUjaYxDd0xmkReab6HozsumcKFewduxgSNtQjpg9ZEJvovC9Pp8mB7g6oWX79CN65n1wHIIh3hW/5TAnXPBf5eiUbx76YU=;
+Received: from root (helo=callcc.thunk.org)
+        by imap.thunk.org with local-esmtp (Exim 4.84_2)
+        (envelope-from <tytso@thunk.org>)
+        id 1crsyG-0002Ib-V5; Sat, 25 Mar 2017 21:11:37 +0000
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 04CDEC01383; Sat, 25 Mar 2017 17:11:35 -0400 (EDT)
+Date:   Sat, 25 Mar 2017 17:11:35 -0400
+From:   Theodore Ts'o <tytso@mit.edu>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     demerphq <demerphq@gmail.com>, Git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: Will OpenSSL's license change impact us?
+Message-ID: <20170325211135.62sa76hlvyiexvje@thunk.org>
+References: <CACBZZX6F47uC9jLxppgkUnwVpGV2jpzzP4kwTuqKgayCevomeA@mail.gmail.com>
+ <CANgJU+UCJ9qR-pi9w3+oYjEwDdhbtNX9Nv6brj31VXvt-k-3Lw@mail.gmail.com>
+ <CACBZZX7dXsdu0bwt4Rznregw4=v=Sc3cFTQbxJcb-ynf3HXq3Q@mail.gmail.com>
+ <CANgJU+UG1JGYomyQa1FgyN8Q6SkPeEtGKEJfNETrkbtGwrMn9g@mail.gmail.com>
+ <CACBZZX4Haah8JmSG6BbfpdOA1aAxtjiuYirLH4=jt01kHL4eQA@mail.gmail.com>
+ <CANgJU+WR4L-7-r97od7ids6VK9QyO-QzAntbg7SazmPGj0yWXA@mail.gmail.com>
+ <CACBZZX5bK=emjaQ80J7QuTHXHm=nT3G80zq4xogMqC7Eq9Bs+g@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sat, 25 Mar 2017 12:51:39 -0700 (PDT)
-In-Reply-To: <7a2444f08dea1b2fe497ae7498eba44626414d29.1490397869.git.johannes.schindelin@gmx.de>
-References: <cover.1490397869.git.johannes.schindelin@gmx.de> <7a2444f08dea1b2fe497ae7498eba44626414d29.1490397869.git.johannes.schindelin@gmx.de>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 25 Mar 2017 20:51:39 +0100
-Message-ID: <CACBZZX64wCFFG9WFEmAiB7vtAfP1uwcgMx8HwA4Hx8jtF5pKOQ@mail.gmail.com>
-Subject: Re: [PATCH 2/7] Makefile: optionally compile with both SHA1DC and SHA1_OPENSSL
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX5bK=emjaQ80J7QuTHXHm=nT3G80zq4xogMqC7Eq9Bs+g@mail.gmail.com>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Mar 25, 2017 at 12:24 AM, Johannes Schindelin
-<johannes.schindelin@gmx.de> wrote:
-> The collision detection is not for free, though: when using the SHA1DC
-> code, calculating the SHA-1 takes substantially longer than using
-> OpenSSL's (in some case hardware-accelerated) SHA1-routines, and this
-> happens even when switching off the collision detection in SHA1DC's code.
+On Sat, Mar 25, 2017 at 06:51:21PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> In GPLv3 projects only, not GPLv2 projects. The paragraphs you're
+> quoting all explicitly mention v3 only, so statements like
+> "incompatible in one direction" only apply to Apache 2 && GPLv3, but
+> don't at all apply to GPLv2, which is what we're using.
 
-[...]in some case*s*[...]
+It's complicated.
+
+It's fair enough to say that the FSF adopts a copyright maximalist
+position, and by their interpretation, the two licenses are
+incompatible, and it doesn't matter whether the two pieces of code are
+linked staticaly, dynamically, or one calls the other over an RPC
+call.
+
+Not everyone agrees with their legal analysis.  May I suggest that we
+not play amateur lawyer on the mailing list, and try to settle this
+here?  Each distribution can make its own decision, which may be based
+on its legal advice, the local laws and legal precedents in which they
+operate, etc.  And indeed, different distributions have already come
+to different conclusions with respect to various license compatibility
+issues.  (Examples: dynamically linking GPL programs with OpenSSL
+libraries under the old license, distributing ZFS modules for Linux,
+etc.)
+
+We don't expect lawyers to debug edge cases in a compiler's code
+generation.  Programmers shouldn't try to parse edge cases in the law,
+or try to use a soldering iron, unless they have explicit training and
+expertise to do so.  :-)
+
+				- Ted
+
