@@ -2,83 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 067A62095E
-	for <e@80x24.org>; Sat, 25 Mar 2017 15:40:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20CDE2095E
+	for <e@80x24.org>; Sat, 25 Mar 2017 16:23:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751271AbdCYPkm convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 25 Mar 2017 11:40:42 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:26361 "EHLO smtp2-g21.free.fr"
+        id S1751382AbdCYQXu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 12:23:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51628 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751197AbdCYPkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 11:40:41 -0400
-Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
-        by smtp2-g21.free.fr (Postfix) with ESMTPS id 6293C20021B
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 16:40:39 +0100 (CET)
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
-Date:   Sat, 25 Mar 2017 16:40:39 +0100
-Message-ID: <4046320.m2qk9b67WH@cayenne>
-User-Agent: KMail/5.2.3 (Linux/4.9.0-2-amd64; KDE/5.28.0; x86_64; ; )
-In-Reply-To: <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
-References: <20170312200248.3610-1-jn.avila@free.fr> <5036581a-f989-2db6-06ba-621db05c6de1@free.fr> <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
+        id S1751374AbdCYQXu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 12:23:50 -0400
+Received: (qmail 24608 invoked by uid 109); 25 Mar 2017 16:17:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Mar 2017 16:17:08 +0000
+Received: (qmail 1092 invoked by uid 111); 25 Mar 2017 16:17:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 25 Mar 2017 12:17:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Mar 2017 12:17:06 -0400
+Date:   Sat, 25 Mar 2017 12:17:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] pretty: add extra headers and MIME boundary directly
+Message-ID: <20170325161705.wh4zueasik6iwktv@sigill.intra.peff.net>
+References: <6f3d0b54-7a9f-8088-3675-bd2980f69735@web.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6f3d0b54-7a9f-8088-3675-bd2980f69735@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le mercredi 22 mars 2017 11:02:09 CET, vous avez écrit :
-> Jean-Noël Avila <jn.avila@free.fr> writes:
-> >> I am wondering if Documentation/po part should be a separate
-> >> repository, with a dedicated i18n/l10n coordinator.  Would it make
-> >> it easier for (1) those who write code and doc without knowing other
-> >> languages, (2) those who update .pot and coordinate the l10n effort
-> >> for the documentation and (3) those who translate them if we keep
-> >> them in a single repository?
-> > 
-> > This is one of the points raised in the first RFC mail. Splitting this
-> > part would help a lot manage the translations with their own workflow,
-> > would not clutter the main repo with files not really needed for
-> > packaging and would simplify dealing with the interaction with crowd
-> > translation websites which can directly push translation content to a
-> > git repo.
-> 
-> As I was in favor of splitting it out, I was trying to gauge what
-> the downside of doing so would be, especially for those who are
-> doing the translation work (it is obvious that it would help
-> developers who are not translators, as nothing will change for them
-> if we keep this new thing as a separate project).
+On Sat, Mar 25, 2017 at 01:16:42PM +0100, RenÃ© Scharfe wrote:
 
-There's one big downside of  this splitting. The gitman-l10n project would not 
-be autonomous without the specific cloning at the particular place in the git 
-project. po4a needs the original asciidoc files to perform the transclusion of 
-the translated content into the structure of the documents. The setup that you 
-are proposing would rule out simple CI checks and would make it complicated 
-for the translators to set up their working copy and check the resulting man 
-pages.
+> Use the after_subject member of struct pretty_print_context to pass the
+> extra_headers unchanged, and construct and add the MIME boundary headers
+> directly in pretty.c::pp_title_line() instead of writing both to a
+> static buffer in log-tree.c::log_write_email_headers() first.  That's
+> easier, quicker and gets rid of said static buffer.
 
-As I see it, there's the need for the Documentation folder to be contained in 
-both project (while remaining the property of the git project). So I would 
-think the other way around: for those interested in translated the 
-documentation, some script would allow to checkout the git project inside the 
-gitman-l10n project (like a kind of library).
+I'm definitely pleased with the direction. A few comments:
 
-This would be mainly transparent for the git developers.
+> @@ -374,26 +372,9 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+>  		graph_show_oneline(opt->graph);
+>  	}
+>  	if (opt->mime_boundary) {
+> -		static char subject_buffer[1024];
+>  		static char buffer[1024];
 
-> I'd prefer to start with the "optional gitman-l10n repository is
-> checked out at Documentation/po only by convention" approach, before
-> committing to bind it as a submodule.  Once we got comfortable with
-> cooperating between these two projects, we do want to bind them
-> using the submodule mechanism, but not before.
+We still have this other buffer, which ends up in stat_sep. It should
+probably get the same treatment, though I think the module boundaries
+make it a little more awkward. We look at it in diff_flush(), which
+otherwise doesn't need to know much about the pretty-printing.
 
-Obviously, my proposition would not allow to evolve towards such a setup, but 
-is it really needed anyway ?
+Perhaps stat_sep should be a callback?
 
+> diff --git a/pretty.c b/pretty.c
+> index d0f86f5d85..56e668781a 100644
+> --- a/pretty.c
+> +++ b/pretty.c
+> @@ -1641,6 +1641,21 @@ void pp_title_line(struct pretty_print_context *pp,
+>  	if (pp->after_subject) {
+>  		strbuf_addstr(sb, pp->after_subject);
+>  	}
+> +	if (pp->print_email_subject && pp->rev && pp->rev->mime_boundary) {
+> +		strbuf_addf(sb,
+> +			    "MIME-Version: 1.0\n"
+
+In the original, this would have been in "after_subject". Which means we
+would print it even if print_email_subject is not true. Why do we need
+to check it in the new conditional?
+
+Not that I expect the behavior to be wrong either way; why would we have
+a mime boundary without setting print_email_subject? But I would think
+that "do we have a mime boundary" would be the right conditional to
+trigger printing it.
+
+-Peff
