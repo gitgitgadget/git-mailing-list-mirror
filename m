@@ -2,122 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 638151FC19
-	for <e@80x24.org>; Sat, 25 Mar 2017 00:02:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2D001FC19
+	for <e@80x24.org>; Sat, 25 Mar 2017 00:20:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935275AbdCYACG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 20:02:06 -0400
-Received: from mout.gmx.net ([212.227.17.21]:61471 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933519AbdCYACE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 20:02:04 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M81vR-1bw0Y809yb-00vhOY; Sat, 25
- Mar 2017 01:01:57 +0100
-Date:   Sat, 25 Mar 2017 01:01:55 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Re: [PATCH v2 2/3] sequencer: make commit options more extensible
-In-Reply-To: <xmqq7f3fa3oz.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1703250100340.3767@virtualbox>
-References: <cover.1490194846.git.johannes.schindelin@gmx.de>        <cover.1490285210.git.johannes.schindelin@gmx.de>        <75e2c4fe839602af19811ed3e251eb583ff6c8ad.1490285210.git.johannes.schindelin@gmx.de>
- <xmqq7f3fa3oz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S965258AbdCYAU2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 20:20:28 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:35994 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965201AbdCYAU0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 20:20:26 -0400
+Received: by mail-pf0-f182.google.com with SMTP id o126so2196085pfb.3
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 17:20:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=AiIbX9922rD4EI2w3gcaQcH6RmxsGOlQh99WAmXMuOI=;
+        b=H+4Sg1SEatD4XE7PukIoQaScmgo3C7oU0mXs5sG7Tb7obkM2Cbk9E0K9bFJfwi9ub/
+         IM9kM+mpMG1VB1EikcSTe9adcu5WIqK3Io8B0twbXUKAEyisBOktbaenCqjrbekY0bz4
+         5Z3LOAYSKGEnEtgtk6K034wJG+78PE0P5enrp/ywnxoT8h3hybgqSxbXHxVkIwbH0HNr
+         hi30JT8zU20sa8g4WrScFFbU9VDvwzzjdJ80XfTlnALXRf4We+fX6S8+odBpncnNw5rQ
+         njP3+gmy7UaUhLevRQ2w1KCGB2i+wyc75TzhTerGPpderANdaxqi2err+DtgNxbG9Lv9
+         Tdiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=AiIbX9922rD4EI2w3gcaQcH6RmxsGOlQh99WAmXMuOI=;
+        b=aich3WA27LMNbSw6JhCGCzf1EYaEURFxIpBvHTYe7HnRtS9QO7v6T7+1VO57fmDCuQ
+         8YlpGksje63CfgWubmKoVND6qC9VfSYOkRZI7Vr76goA5inHjfHs97iq+mLgBnlGjS4f
+         VpxoXCQP0utpm2T54pdDiDWMHwYPFQj+/N4lrCMZ+QKyLG55UHrYW7c6rwsF7lGzH7Zy
+         SCU9hJjfJoUlZTczzNuhknND3BQhUDpn1z8EYHHj+N3puZuw8cHD0we1ioxJ1qgnkSE2
+         KBWQn0kNIs/Nnko4wCEFL6RSWa22ZDZnHtDYlwoDhx1aGULzdf0P64or0vxsY4yp1d7h
+         2wsg==
+X-Gm-Message-State: AFeK/H0Lt72MFCSP47zfMYg817GRSfJPgQ5BsNJVnejZn50ZQ9TIyciE9akyPmksJVggWEkuwiVwt7QObjoeZoRA
+X-Received: by 10.84.241.139 with SMTP id b11mr7351014pll.107.1490400720824;
+ Fri, 24 Mar 2017 17:12:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iu+x9B4vy2UTcpWAdECb/UV9Rht1U7lVX7397yjdWNoydJQeVsg
- /5Tn5GZMuu8CGp9Yr9uEYSpXo3udpOaMsrcuCeNRjL48UiYbFmGbI6c5FVClQegu4vU9z7l
- mhcP1+0mP+AeCBTT8+FrWcXom0oeiGg7zV5VRYdnmtcW71GlYN7EpqOhlNQF1dku6mPSnm6
- 89waD9IFpBNX79bD6tZEA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wkYQOr1MYcA=:vw7Om1XEn0W9dqb3Adq7Jx
- ZqiLEYdFpTCDKn0iyohMdJlyB40d8dKVoAHlu5VWGFgZd2WZmQJMZODk5DzZvkTxT85KOo8W/
- 404YsPM8LehiZQcVBFh9kdT1UW2h6yBB1IfPNq1alYJy/C6Q4ayHdrCnWdCLWrAnMTqRVQKeM
- CKaoYWtQsH61R8G0wyEls+lDzH6Fpkuc7dumRK5sr3HTRuSQh5B0Zndik4EVU9yDKt7FU6xVY
- a6ewPEzhB5JmHmEVzPNIgfFc9UejeFU6BcK7FmVynFtf0zELJxQIBQLRaCJ5sBeLAddXjBc0C
- qhE2YhpbyPcd25cSGyQSjMnH5QZE0m59r/zxM290UAV/l/mhBgAeFOVgRDA+knT/yyk8pE9nO
- n5B754B+7FMqcMwiLNZa8fd++fecolYI/kg8cIXxu3rK9qNHY/dgSiRCMKIfCy5nbIPIoOuSU
- eL52DapHI1UdErtZg8MWriF43w/eo/4ZQk0e/sp0sBvQl2XqvUdHv/i25VHeG+if4EE0N5AuD
- xictDrJlLyeNAVJfLPqTZOASR5/k3UxihWpbj8fF+/E0nrdVF924Eji8e1BUjXe33juBqIwIC
- 1jKZKi5poxZo144TYqkZ8fbfJoHyJdZAsAV3PYc5hAipo8DYScT07XeaerihBDVAABe2mcZiI
- sprX30TemyCHF7Jkg1eQESCFLNeE+Y/B1CIAAg/AtHwtFzNdV4xNoV9EKf+nJ49DFa/OBnGos
- XcPm+OV2fS2XpVHlYaK3y+nzJqc/a0zPUGuIFSflrggJMeoaLg165s7/CU6qifYvWBmYCs5El
- aC1waKdoi7B8DZO4khlBKE+OzEPBA==
+Received: by 10.100.162.161 with HTTP; Fri, 24 Mar 2017 17:12:00 -0700 (PDT)
+In-Reply-To: <20170324223848.GH31294@aiede.mtv.corp.google.com>
+References: <20170323223338.32274-7-sbeller@google.com> <20170324182902.19280-1-sbeller@google.com>
+ <20170324182902.19280-4-sbeller@google.com> <20170324223848.GH31294@aiede.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 24 Mar 2017 17:12:00 -0700
+Message-ID: <CAGZ79kYQNqz0BKRU+Sc9XRbuw5N-0stt0Um2h4YEyKNQPLyHUw@mail.gmail.com>
+Subject: Re: [PATCH 3/7] submodule.c: convert is_submodule_modified to use strbuf_getwholeline
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, Mar 24, 2017 at 3:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> It also overlaps work a little better.
 
-On Thu, 23 Mar 2017, Junio C Hamano wrote:
+mentioned
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > @@ -926,14 +930,14 @@ static void record_in_rewritten(struct object_id *oid,
-> >  static int do_pick_commit(enum todo_command command, struct commit *commit,
-> >  		struct replay_opts *opts, int final_fixup)
-> >  {
-> > -	int edit = opts->edit, cleanup_commit_message = 0;
-> > -	const char *msg_file = edit ? NULL : git_path_merge_msg();
-> > +	unsigned int flags = opts->edit ? EDIT_MSG : 0, allow = 0;
-> > +	const char *msg_file = opts->edit ? NULL : git_path_merge_msg();
-> >  	unsigned char head[20];
-> >  	struct commit *base, *next, *parent;
-> >  	const char *base_label, *next_label;
-> >  	struct commit_message msg = { NULL, NULL, NULL, NULL };
-> >  	struct strbuf msgbuf = STRBUF_INIT;
-> > -	int res, unborn = 0, amend = 0, allow = 0;
-> > +	int res, unborn = 0;
-> > ... 
-> > @@ -1123,11 +1127,11 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
-> >  	if (allow < 0) {
-> >  		res = allow;
-> >  		goto leave;
-> > -	}
-> > +	} else if (allow)
-> > +		flags |= ALLOW_EMPTY;
-> 
-> Making "flags" unsigned was a correct change, but this is now wrong,
-> as "allow" is made unsigned by accident.
+>> Once we know all information that we care about, we can terminate
+>> the child early. In that case we do not care about its exit code as well.
+>
+> Should this say something about SIGPIPE?
 
-Right. Bummer.
+done
 
-> Perhaps something like this needs to be squashed in?
-> 
->  sequencer.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index bc2fe48e65..6c423566e6 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -932,14 +932,14 @@ static void record_in_rewritten(struct object_id *oid,
->  static int do_pick_commit(enum todo_command command, struct commit *commit,
->  		struct replay_opts *opts, int final_fixup)
->  {
-> -	unsigned int flags = opts->edit ? EDIT_MSG : 0, allow = 0;
-> +	unsigned int flags = opts->edit ? EDIT_MSG : 0;
->  	const char *msg_file = opts->edit ? NULL : git_path_merge_msg();
->  	unsigned char head[20];
->  	struct commit *base, *next, *parent;
->  	const char *base_label, *next_label;
->  	struct commit_message msg = { NULL, NULL, NULL, NULL };
->  	struct strbuf msgbuf = STRBUF_INIT;
-> -	int res, unborn = 0;
-> +	int allow, res, unborn = 0;
+> language nit: s/, no output/: neither output/
 
-I had originally moved it from there, to stay with the related flags, but
-I should just have left it there.
+done
 
-Your patch looks good, you could do even better by reverting that move
-(IIRC it was at the end of the line, and it was set to 0 by default).
+> wait_or_whine(cp->pid, cp->argv[0], 1) doesn't do that but is meant for
+> signal handling.  Maybe we should rely on SIGPIPE instead (which
+> wait_or_whine always silences) and avoid the kill() call.
 
-Ciao,
-Dscho
+done
+
+> Can there be a test for this case (i.e. having lots of untracked files
+> in the submodule so the child process fills its pipe buffer and has to
+> exit early)?
+
+done
