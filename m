@@ -2,114 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C98720966
-	for <e@80x24.org>; Sat, 25 Mar 2017 21:53:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C8D720966
+	for <e@80x24.org>; Sat, 25 Mar 2017 22:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751147AbdCYVxh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 17:53:37 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:57814 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751042AbdCYVxh (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Mar 2017 17:53:37 -0400
-Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D1BB0280AD;
-        Sat, 25 Mar 2017 21:44:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490478271;
-        bh=98Vc4TxjR2IKMEs+WIrV73gnangN8T+KKENaYWI3/L4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T9zldW66cpbAbm2ml1488RRDRJ7ChdlK3KnhHeQPZJz4hhaJ4Xi6yYjklMhrrXlAk
-         j2T8cZ0BnDhdV5RoHm0EdPZ1IXnM5d7HSeFYtA5fiFSQiWvaB25wkSyLvK0gIq9w3X
-         y1eMwEBH8SeFL2F2T+ci9VlHOjVlfaD+3WHR6BnDjjRebR8D5W9xwi56mtgfrENB1w
-         G1g66ZjirYXPaG0nfrLN8o9qxkd+oeG8t1U088S/myOBaKeUlir1pqGbCm1Kur26ye
-         ynt+XHSzY3smqWhvC3rFesCuOkfTsjd3D2heTQt1VyGPGdlv64RwkOzcn84I/k9bzu
-         +F8UdQ8lqu1zqg1/m0bRxB5VW2FyfIGZ2T1JpFNlDiU+9JSDeFy5USPTKGBeE1L57y
-         +IsaouOH8ffKgXgywpluN7GzSt/hMNmcr+4ZNbTqkMVUf1bEN3QsfDNbyv5UUloX3D
-         ytGIT8DtIGjhp8xLbpxET08YGWmP094OdcXJblvQi3g3fmDvo3m
-Date:   Sat, 25 Mar 2017 21:44:27 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Will OpenSSL's license change impact us?
-Message-ID: <20170325214427.f3kdxgrldpnar4ag@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CACBZZX6F47uC9jLxppgkUnwVpGV2jpzzP4kwTuqKgayCevomeA@mail.gmail.com>
+        id S1751212AbdCYWcj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 18:32:39 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:38107 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750915AbdCYWci (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 18:32:38 -0400
+Received: by mail-it0-f44.google.com with SMTP id y18so20956701itc.1
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 15:32:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Vl8WBhn1YOSgML2/pQ0MmdYqLwGU0u5QRdparZDnaqU=;
+        b=qSLGUW/WWSx9JFjQTHbXPjkFHKQckLd63YLn6UcICszHcEeRB6FqzpRjRhkWcqMLaR
+         Ii1FWwa/qZB9i+UYiFoba8LOYSKUaPzXa/UULZ1YNnaIFh7RIvYMhg2EAYyjTmoVIs/N
+         6vWMMd8+Ft98yzXHMmpmrtC6YAfFq9e4tBYZrg9oBUz8oPTuYZEEOyvE4ca/a6BoBnYa
+         YKIXn6YU8x2+wzZ863LYQDZPIkZOXHu5lJflsNgeqLY9H1vI6rjdix328dfhssjO4jP4
+         eRwSIczfy8PkY6DPyDHnI1oUYDwQA5YPXxU42i9JQ1/E4Uq8JAK1fD+Ko8vgjdUpk3Zy
+         cG3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Vl8WBhn1YOSgML2/pQ0MmdYqLwGU0u5QRdparZDnaqU=;
+        b=IT4yBP05hHH0HroEgMRO50q+j8leyN0o2oiXn4TipX0q+vLkVxQYMA8WgQsrE9lVn+
+         AanaUzs/pEG+bQaJxDI9bEuxQlMVrRNvv6FcHmh2XZX74T8XiCrnJdm0Ep5bwQVcULAf
+         Ihoq2d4yPT5t2f4aItUgMUiEVMbC35eA42C7GFNI06bprBk2Cp38lAZd4lFj8H4G8mkI
+         nmw04BwjyP5bFpRoQE5bosyylrnXw6deTwcjBHaaSv9/uCwMDr8fcM2yQDEAJvs15bK6
+         mFTPVnSwXu6Ca101MXJNEJ2KbQwvstL+mEBJxbs776ZdM5XSrap01SW6amhdjwhUQQhT
+         7FPw==
+X-Gm-Message-State: AFeK/H0UnTPEL6Z6pnc9SuiTUtZ6sCL8EHJSyuTWSGv8BbGy5w/ZB+sEE6poeliBJd0hyJi1VcSdvjmkrYlrEg==
+X-Received: by 10.107.150.201 with SMTP id y192mr16424575iod.33.1490481142905;
+ Sat, 25 Mar 2017 15:32:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mss5ml6w37atudxb"
-Content-Disposition: inline
-In-Reply-To: <CACBZZX6F47uC9jLxppgkUnwVpGV2jpzzP4kwTuqKgayCevomeA@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+Received: by 10.107.130.208 with HTTP; Sat, 25 Mar 2017 15:32:02 -0700 (PDT)
+In-Reply-To: <20170325213107.u2l5eunqgqbxpcbb@sigill.intra.peff.net>
+References: <CACBZZX4FksU6NujPZ_3GZ45EQ+KdJj5G2sajtRipE1wbaA3URA@mail.gmail.com>
+ <20170324231013.23346-1-avarab@gmail.com> <CACBZZX6iz5QpfpOO6s9c-GY7+ZZ2uXBxqgKfSRhU+__P0VLC5g@mail.gmail.com>
+ <20170325213107.u2l5eunqgqbxpcbb@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 25 Mar 2017 23:32:02 +0100
+Message-ID: <CACBZZX6=_Jh-emAr=g1-VQwgA4MnDpu=zSOqPK5QHAa7uef_LQ@mail.gmail.com>
+Subject: Re: [PATCH/RFC] parse-options: add facility to make options configurable
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Mar 25, 2017 at 10:31 PM, Jeff King <peff@peff.net> wrote:
+> On Sat, Mar 25, 2017 at 05:47:49PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> After looking at some of the internal APIs I'm thinking of replacing
+>> this pattern with a hashmap.c hashmap where the keys are a
+>> sprintf("%d:%s", short_name, long_name) to uniquely identify the
+>> option. There's no other obvious way to uniquely address an option. I
+>> guess I could just equivalently and more cheaply use the memory
+>> address of each option to identify them, but that seems a bit hacky.
+>
+> Rather than bolt this onto the parse-options code, what if it were a
+> separate mechanism that mapped config keys to options. E.g., imagine
+> something like:
+>
+>   struct {
+>         const char *config;
+>         const char *option;
+>         enum {
+>                 CONFIG_CMDLINE_BOOL,
+>                 CONFIG_CMDLINE_MAYBE_BOOL,
+>                 CONFIG_CMDLINE_VALUE
+>         } type;
+>   } config_cmdline_map[] =3D {
+>         { "foo.one", "one", CONFIG_CMDLINE_BOOL },
+>         { "foo.two", "two", CONFIG_CMDLINE_VALUE },
+>   };
+>
+> And then you "apply" that mapping by finding each item that's set in the
+> config, and then pretending that "--one" or "--two=3D<value>" was set on
+> the command-line, before anything the user has said. This works as long
+> as the options use the normal last-one-wins rules, the user can
+> countermand with "--no-one", etc.
+>
+> You have to write one line for each config/option mapping, but I think
+> we would need some amount of per-option anyway (i.e., I think the
+> decision was that options would have to be manually approved for use in
+> the system). So rather than a flag in the options struct, it becomes a
+> line in this mapping.
+>
+> And you get two extra pieces of flexibility:
+>
+>   1. The config names can map to option names however makes sense; we're
+>      not constrained by some programmatic rule (I think we _would_
+>      follow some general guidelines, but there are probably special
+>      cases for historic config, etc).
+>
+>   2. A command can choose to apply one or more mappings, or not. So
+>      porcelain like git-log would call:
+>
+>        struct option options[] =3D {...};
+>        apply_config_cmdline_map(revision_config_mapping, options);
+>        apply_config_cmdline_map(diff_config_mapping, options);
+>        apply_config_cmdline_map(log_mapping, options);
+>
+>      but plumbing like git-diff-tree wouldn't call any of those.
+>
+> I had in mind that apply_config_cmdline_map() would just call
+> parse_options, but I think even that is too constricting. The revision
+> and diff options don't use parse_options at all. So really, it would
+> probably be more like:
+>
+>   struct argv_array fake_args =3D ARGV_ARRAY_INIT;
+>   apply_config_cmdline_map(revision_config_mapping, &fake_args);
+>   apply_config_cmdline_map(diff_config_mapping, &fake_args);
+>   apply_config_cmdline_map(log_mapping, &fake_args);
+>   argv_array_pushv(&fake_args, argv); /* add the real ones */
+>
+> At this point we've recreated internally the related suggestion:
+>
+>   [options]
+>   log =3D --one --two=3Dwhatever
+>
+> which is the same as:
+>
+>   [log]
+>   one =3D true
+>   two =3D whatever
+>
+> So hopefully it's clear that the two are functionally equivalent, and
+> differ only in syntax (in this case we manually decided which options
+> are safe to pull from the config, but we'd have to parse the options.log
+> string, too, and we could make the same decision there).
 
---mss5ml6w37atudxb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I like the simplicity of this approach a lot. I.e. (to paraphrase it
+just to make sure we're on the same page): Skip all the complexity of
+reaching into the getopt guts, and just munge argc/argv given a config
+we can stick ahead of the getopt (struct options) spec, inject some
+options at the beginning if they're in the config, and off we go
+without any further changes to the getopt guts.
 
-On Sat, Mar 25, 2017 at 12:51:52AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> They're changing their license[1] to Apache 2 which unlike the current
-> fuzzy compatibility with the current license[2] is explicitly
-> incompatible with GPLv2[3].
->=20
-> We use OpenSSL for SHA1 by default unless NO_OPENSSL=3DYesPlease.
->=20
-> This still hasn't happened, but given the lifetime of git versions
-> packaged up by distros knowing sooner than later if this is going to
-> be a practical problem would be good.
->=20
-> If so perhaps we could copy the relevant subset of the code int our
-> tree, or libressl's, or improve block-sha1.
+There's two practical issues with this that are easy to solve with my
+current approach, but I can't find an easy solution to using this
+method.
 
-I think that most distros don't link against OpenSSL because they can't
-take advantage of the system library exception.  I don't think that's
-going to change.
+The first is that we're replacing the semantics of:
 
-If we want to consider performance-related concerns, I think the easier
-solution is using Nettle, which is LGPL 2.1.  Considering that the
-current opinions for a new hash function are moving in the direction of
-SHA-3, which Nettle has, but OpenSSL does not, I think that might be a
-better decision overall.  It was certainly the implementation I would
-use if I were to implement it.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+"If you're specifying it on the command-line, we take it from there,
+otherwise we use your config, if set, regardless of how the option
+works"
 
---mss5ml6w37atudxb
-Content-Type: application/pgp-signature; name="signature.asc"
+with:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
+"We read your config, inject options implicitly at the start of the
+command line, and then append whatever command-line you give us"
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljW5LsACgkQv1NdgR9S
-9otTCRAAih+OPF8qcUv4Vwo2JFQt+Yp6HXzwYuEYIN4E/c6q4Sf1l8MCcHTwruUZ
-OfWEJxDfIQPKb8pRToO9iimqAdcmT2jlXIBQ4XTiRTKfz/OE5IOIM1pxAeb5Oy8p
-1fywvBaBF6arfpd/QMHCn8i0U7K7YN5AWUaaA17bVCMa14BiZum9tEI2KUyUf1Pn
-Bam3OHpBNq0LvIcaivDgKHgiZ3Wlkp6Qpb9a/IPeHUC0v3Ved4b/5QjVeoxCPKvK
-fU5UoErmFjiW0GfR5QrT+J1TgOTSEYB23VHZP1+Qc1fuWYFBBciZCW4MRV8ZagIq
-CG6FKgnvgNKJVkDXL0soGfP5a1swtHCvUF0XZRaAOeVUezBQ3z7bAlTvHguK/Yow
-Hdn3uQEzxFMa5t6OkNVdo2QXBDlwmxW09LSn/aNCLk68Asy5ODPPhEHf+e+PhRjM
-2qHhEKE/MIZvU6UEG2AvI6rlSUI4YLW4jvJDx55bvVO6RgAtmG28B5we8WiG3yqb
-ZfXmrOzyxUy/a2ypFHM3PN4Kutiqn/crZu9yrDrjt6PZIj+HGGKPIvUQSoLxpAGe
-VO9AOy87oqVCLur9fZOga5Gop/8VvIkOKnaAczuQDvYhKVVYlsEdrsI9sSfJIXfG
-sYt79OP/QWDWXa/xjIgLTPu2KPOcnR4Pw4IDOZXZdg3XU9vuPAk=
-=a+0G
------END PGP SIGNATURE-----
+These two are not the same. Consider e.g. the commit.verbose config.
+With my current patch if have commit.verbose=3D1 in your config and do
+"commit --verbose" you just end up with a result equivalent to not
+having it in your config, but since the --verbose option can be
+supplied multiple times to increase verbosity with the injection
+method you'd end up with the equivalent of commit.verbose=3D2.
 
---mss5ml6w37atudxb--
+I think the semantics I've implemented are much less confusing for the
+user, i.e. you can specify an option that's configurable and know that
+you're overriding your config, not potentially joining the
+command-line with whatever's in your config. We have a lot of options
+without last-one-wins semantics.
+
+I can't think of a good way around that with your proposed approach
+that doesn't essentially get us back to something very similar to my
+patch, i.e. we'd need to parse the command-line using the options spec
+before applying our implicit config.
+
+The second issue is related, i.e. I was going to add some flag an
+option could supply to say "if I'm provided none of these other
+maybe-from-config options get to read their config". This is needed
+for hybrid plumbing/porcelain like "git status --porcelain".
+
+Let's say we wanted to add a status.branch config option, and wanted
+status.branch=3Dtrue along with "status --porcelain" not to mean "status
+--porcelain --branch", potentially breaking scripts, but "status
+--porcelain". This again needs needs the guts of the getopt parsing to
+work as far as I can tell.
