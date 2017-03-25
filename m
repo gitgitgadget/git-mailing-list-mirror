@@ -2,110 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE5382095E
-	for <e@80x24.org>; Sat, 25 Mar 2017 16:57:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28BBD2095E
+	for <e@80x24.org>; Sat, 25 Mar 2017 16:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751393AbdCYQ5K (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 12:57:10 -0400
-Received: from mout.web.de ([212.227.15.3]:60169 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751258AbdCYQ5J (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 12:57:09 -0400
-Received: from [192.168.178.36] ([79.237.59.215]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MeBVG-1cWTQ50gVq-00Prxx; Sat, 25
- Mar 2017 17:56:59 +0100
-Subject: Re: [PATCH] pretty: add extra headers and MIME boundary directly
-To:     Jeff King <peff@peff.net>
-References: <6f3d0b54-7a9f-8088-3675-bd2980f69735@web.de>
- <20170325161705.wh4zueasik6iwktv@sigill.intra.peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c5591beb-8cb2-dc19-7820-c8b9c68aad15@web.de>
-Date:   Sat, 25 Mar 2017 17:56:55 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751396AbdCYQ5r (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 12:57:47 -0400
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:32771 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751258AbdCYQ5r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 12:57:47 -0400
+Received: by mail-lf0-f47.google.com with SMTP id h125so5908641lfe.0
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 09:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ULC6PS1SYN69FfuMLFF3sVq0aCK2eGL7SzgIusxTP8w=;
+        b=a9HMoeZnSRA87RAhbqC4B95G074pP3TFR1LbLbr7ZcuRYeSfBjz9lYMCfqetRLCPPx
+         9s86Q2p9ty/yrtjPAQ8ciiNckD50Pzgk3pEw5OqJXLirEpbm5dd/5mWoQrdl7AUpXZ4g
+         xVnaeTv8PfkCPpLQWTQ3fFy6PK3OWQPFCfqZpfMtmo8e8MrpJd7g4p9oUbt081NuMknF
+         uOa09EXUUDtHAU7ggt80AaTKJZ6p/G54owSkrPc3geuEQj0mJ0iKb3C7A06NUzSVIGDE
+         me2LLuT+Nf9Daq5ehhq8oWJkVP5CK7X9sKdBtEcuNDqouskgT0Wz4ltCXVGzgmjZsQr1
+         ZfGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ULC6PS1SYN69FfuMLFF3sVq0aCK2eGL7SzgIusxTP8w=;
+        b=Whfwi0MwhRyK7LdbedtHQ77WlcUjLb4k4/es6g7PfTI4SffXqD2URzKr5/ie05IWW6
+         qrYnjsT/LgyR5VsdnCEjqZPicLdHjqk/TlNKmAFAvHktlWNkd0WqSV6YoLsNzvU73Cds
+         VaX0cy6x2AXR/L3+jOXS1W0yB23pQJi1CxAHZsMLvzbzt0EVCIswQvfTvEcDNb0TwvgZ
+         g3xGCGT8hLSP8zr/IDb8iWDFgD2sPso/tqTF5Rt+6j55FC3xlGbcmA91GQ4pnVCcWMqR
+         c/02OGa1rB16ppEFmCFpXWOtMDkxhOGOf7W81R5WAL/Cvw0tJmNZqmaJoJNww0AFlpRB
+         wr2w==
+X-Gm-Message-State: AFeK/H3vpF809anvIHq1YxG+XEcGEQLiKAf1EIK/pmTnNSfx8dHYL0rxO2bejLBLmSzhQ0yU2TbF+H6BYPfCQA==
+X-Received: by 10.25.80.86 with SMTP id z22mr6369166lfj.157.1490461064534;
+ Sat, 25 Mar 2017 09:57:44 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170325161705.wh4zueasik6iwktv@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:4Fc6HEyG9DhSTL5rVqrdgoIIUC+nyiZFzV41xv3BDLG9Oq9TnT0
- 66wtgQVxdXMxZlil93EbTyZfmIJZ+yRhpBKo+gxhxa/7wnm38PXaZFM97bsN4SgyySDSka0
- dp6qxoKEO6mSYmqnuatEK80r85ey7N1126GKb+PDXD8vx/h1HIUvwWhXmwfV1Qbo8Xqn0fe
- /Xx5ReO/uNPL6xvwVdROA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qIMPZwqrH5M=:z0o/WGh0cG6BkiMxB7B/E4
- 5poSagFWoUMKxbvBC571jUKmEYOGpt/Tq4xToAj1lZ8lYEEyPY8rFZgBt/Y7RY10jyKWNq+Ip
- J5UQeYW4rE7wFLmK5Wio0VpCGtGRUzQhODeDeF3MHZVBy4aJ70YCAtO/C7WRuFWmLpFR8q4/v
- 4tNa7/kaYsLhwSAKNacHIsC/QkApvZu3JFfCPc3KHQe10kfEEjqEYGFq0xUQ1QSraj31Jg60v
- Bo+kNFTf8u3h2ZGjmZLdewLEbaeKF3X361mYnJ4u5DrTHtVji9SzLngRA0lF6p3WgZ8ACqP8w
- nlMCwDmv/A8bnz5FgeNgZJ8I6GON8BLxwLTHhc/WM4aYYEhTG+GPi+MnpM3C97T7TBkZ/jm1N
- DIGJE1romugm4jy5IS+NdeETY9uRRKU4osNrRwdUbE1dC9too74Yd3+8ssBFsuRwcYnyNYVEW
- nLrMP4/AILfebT1I8CbQUY1QB41kgTaq7k9V9MDczmlb8oC58uQcPv6nMW1OWpQGWINUXAOGo
- ODAmlFSMAM26qhkJnIQjFMTZQbzTneGgGe/js5NgRFImJxgZlPYGElUwE1Pz0K6bcJVelXnB+
- ez3ks/ugdfUDZU4830Pi5FcxyU9nhQqM2iRK7kNta4UwfcRH2WXEfS68R1LiY811jtX52vtIV
- cTDbLkCAMDyRWTh0WMzRdxsOHGfpOzTR6KDN9ZxsYPzA1GHOqUpbskiP+q/o/RU/YF+Rc542z
- Xa1RpwoKF8ORuefwPhMMwhKhADAPewEvRn6DvUX8G7zdPbDAGXlDf2Dl8qjJbRT5t+mRlE406
- 0zaj/Gk
+Received: by 10.25.160.208 with HTTP; Sat, 25 Mar 2017 09:57:43 -0700 (PDT)
+In-Reply-To: <CACBZZX4Haah8JmSG6BbfpdOA1aAxtjiuYirLH4=jt01kHL4eQA@mail.gmail.com>
+References: <CACBZZX6F47uC9jLxppgkUnwVpGV2jpzzP4kwTuqKgayCevomeA@mail.gmail.com>
+ <CANgJU+UCJ9qR-pi9w3+oYjEwDdhbtNX9Nv6brj31VXvt-k-3Lw@mail.gmail.com>
+ <CACBZZX7dXsdu0bwt4Rznregw4=v=Sc3cFTQbxJcb-ynf3HXq3Q@mail.gmail.com>
+ <CANgJU+UG1JGYomyQa1FgyN8Q6SkPeEtGKEJfNETrkbtGwrMn9g@mail.gmail.com> <CACBZZX4Haah8JmSG6BbfpdOA1aAxtjiuYirLH4=jt01kHL4eQA@mail.gmail.com>
+From:   demerphq <demerphq@gmail.com>
+Date:   Sat, 25 Mar 2017 17:57:43 +0100
+Message-ID: <CANgJU+WR4L-7-r97od7ids6VK9QyO-QzAntbg7SazmPGj0yWXA@mail.gmail.com>
+Subject: Re: Will OpenSSL's license change impact us?
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.03.2017 um 17:17 schrieb Jeff King:
-> On Sat, Mar 25, 2017 at 01:16:42PM +0100, René Scharfe wrote:
->> @@ -374,26 +372,9 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
->>  		graph_show_oneline(opt->graph);
->>  	}
->>  	if (opt->mime_boundary) {
->> -		static char subject_buffer[1024];
->>  		static char buffer[1024];
+On 25 March 2017 at 17:35, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
+mail.com> wrote:
+> On Sat, Mar 25, 2017 at 10:43 AM, demerphq <demerphq@gmail.com> wrote:
+>>
+>>
+>> On 25 Mar 2017 10:18 a.m., "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason" <ava=
+rab@gmail.com>
+>> wrote:
+>>
+>> On Sat, Mar 25, 2017 at 9:40 AM, demerphq <demerphq@gmail.com> wrote:
+>>> On 25 March 2017 at 00:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com>
+>>> wrote:
+>>>> They're changing their license[1] to Apache 2 which unlike the current
+>>>> fuzzy compatibility with the current license[2] is explicitly
+>>>> incompatible with GPLv2[3].
+>>>
+>>> Are you sure there is an issue? From the Apache page on this:
+>>>
+>>> Apache 2 software can therefore be included in GPLv3 projects, because
+>>> the GPLv3 license accepts our software into GPLv3 works. However,
+>>> GPLv3 software cannot be included in Apache projects. The licenses are
+>>> incompatible in one direction only, and it is a result of ASF's
+>>> licensing philosophy and the GPLv3 authors' interpretation of
+>>> copyright law.
+>>>
+>>> Which seems to be the opposite of the concern you are expressing.
+>>
+>> The Apache 2 license is indeed compatible with the GPLv3, but the Git
+>> project explicitly uses GPLv2 with no "or later" clause
+>>
+>>
+>> Read the paragraph immediately (I think) after the one I quoted where th=
+ey
+>> state the situation is the same with GPL v2.
 >
-> We still have this other buffer, which ends up in stat_sep. It should
-> probably get the same treatment, though I think the module boundaries
-> make it a little more awkward. We look at it in diff_flush(), which
-> otherwise doesn't need to know much about the pretty-printing.
+> My understanding of that paragraph is that it's still laying out
+> caveats about exactly how GPLv3 is compatible with Apache 2, when it
+> is, when it isn't etc. But then it goes on to say:
 >
-> Perhaps stat_sep should be a callback?
-
-Yes, it would be nice to avoid it, but I haven't found a clean way, yet. 
-  In diff.c, where it's used, we don't have commit and rev_info 
-available (which we'd have to pass to a callback, or consume right 
-there), and that's probably how it should be.  Perhaps preparing the 
-filename in advance and passing that as a string together with 
-mime_boundary and no_inline might be the way to go.
-
->> diff --git a/pretty.c b/pretty.c
->> index d0f86f5d85..56e668781a 100644
->> --- a/pretty.c
->> +++ b/pretty.c
->> @@ -1641,6 +1641,21 @@ void pp_title_line(struct pretty_print_context *pp,
->>  	if (pp->after_subject) {
->>  		strbuf_addstr(sb, pp->after_subject);
->>  	}
->> +	if (pp->print_email_subject && pp->rev && pp->rev->mime_boundary) {
->> +		strbuf_addf(sb,
->> +			    "MIME-Version: 1.0\n"
+> """
+> Despite our best efforts, the FSF has never considered the Apache
+> License to be compatible with GPL version 2, citing the patent
+> termination and indemnification provisions as restrictions not present
+> in the older GPL license. The Apache Software Foundation believes that
+> you should always try to obey the constraints expressed by the
+> copyright holder when redistributing their work.
+> """
 >
-> In the original, this would have been in "after_subject". Which means we
-> would print it even if print_email_subject is not true. Why do we need
-> to check it in the new conditional?
+> So they're just deferring to the FSF saying it's incompatible, the
+> FSF's statement:
+> https://www.gnu.org/licenses/license-list.html#apache2 "this license
+> is not compatible with GPL version 2".
+>
+> Anyway, I'm not a lawyer. Just thought I'd send some E-Mail about this
+> since I noticed it, if it's an issue (and we could e.g. get the SFC to
+> comment, Jeff?) we might need to add e.g. some checks / macros to
+> ensure we're not compiling against an incompatible OpenSSL.
 
-No, we only would have printed it if log_write_email_headers() was 
-called to append it to the static buffer.  print_email_subject is only 
-set when we call log_write_email_headers(), so checking it makes sure 
-that we get the same behavior as before.
+Just for the record this what Apache says, with the part I was
+referring to earlier in slash style italics, and a couple of a key
+points in star style bold:
 
-> Not that I expect the behavior to be wrong either way; why would we have
-> a mime boundary without setting print_email_subject? But I would think
-> that "do we have a mime boundary" would be the right conditional to
-> trigger printing it.
+----quote----
+Apache 2 software *can therefore be included in GPLv3 projects*,
+because the GPLv3 license accepts our software into GPLv3 works.
+However, GPLv3 software cannot be included in Apache projects. *The
+licenses are incompatible in one direction only*, and it is a result
+of ASF's licensing philosophy and the GPLv3 authors' interpretation of
+copyright law.
 
-FWIW, the test suite still passes with the print_email_subject check 
-removed.  And currently only cmd_format_patch() sets mime_boundary, so 
-we don't need the check indeed.
+This licensing incompatibility applies only when some Apache project
+software becomes a derivative work of some GPLv3 software, because
+then the Apache software would have to be distributed under GPLv3.
+This would be incompatible with ASF's requirement that all Apache
+software must be distributed under the Apache License 2.0.
 
-René
+We avoid GPLv3 software because merely linking to it is considered by
+the GPLv3 authors to create a derivative work. We want to honor their
+license. Unless GPLv3 licensors relax this interpretation of their own
+license regarding linking, our licensing philosophies are
+fundamentally incompatible. /This is an identical issue for both GPLv2
+and GPLv3./
+----quote----
+
+I read that as saying that you can use Apache 2 code in GPL projects,
+but you can't use GPL code in Apache projects. Which makes sense as
+Apache 2 is more liberal than GPL.
+
+Yves
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
