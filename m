@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F25C420958
-	for <e@80x24.org>; Sat, 25 Mar 2017 08:40:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4115320958
+	for <e@80x24.org>; Sat, 25 Mar 2017 09:20:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751054AbdCYIkQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 04:40:16 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:36601 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750908AbdCYIkP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 04:40:15 -0400
-Received: by mail-lf0-f53.google.com with SMTP id x137so3570206lff.3
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 01:40:14 -0700 (PDT)
+        id S1750903AbdCYJSa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 05:18:30 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:36800 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750766AbdCYJSa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 05:18:30 -0400
+Received: by mail-it0-f53.google.com with SMTP id w124so30422675itb.1
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 02:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=YDt8AXxdt4nRJu4YvVuQguw+sCYVzXVttogmTAUo670=;
-        b=X/chVwj6msBa+BxnZtZe4t9hOFsMizsiU8pz0TDXdhlllKhzCDGkp0wLh8hOVxTqxV
-         vGdXcbFWqiGenV7dyucx2KpInn1LHFAcbBygROCHG+74PqWwqEFOMpuCNwe1eGDmf/Dy
-         eX0FAvYJ6Fnws6/0xopc6G1PnjDvCbLNjdirUt782geunlvS0EvlEORkvQiVpRu/9tD7
-         0VFN6jt2xFzsh3KFacHqrvboCXNftkG10qNZG2OSqBTS+02LipFSpcmlLRDw1/3d/qaa
-         cikeH/Ogeq374vIQlcHeNcRFht8/27JORrLba1WNAOYjyQ/OFeorXMmCCtjHte0TBcgW
-         AShg==
+        bh=55eJqrqTSbd8tr/2g11rAzpC94GmtEFotgmvg6qE+PE=;
+        b=sZQcGdTm93M3OKFDcLBFu/jFGfJYNeIjV9LQ/LC/xIZits+z5Dz7oyUDDFzMam3Gb/
+         k6ND6HVDbdgcKY4D5ZovLroa6Vv5aGoEPmoP7yiMeJgUW2TA0hqkIxmS9d5jqoMn92+b
+         mVsfSGd0f/qxRsxblCbVl/w5i5wuvf/lN+2Jbvk0qKkBUsB06H1f3/wwbLj2AQoET99F
+         qwPk7usm32yYfw5R6oZl9JCBi5Q/F84adKkuZeYePULFFo/nMRfGFYijmTInRCizJmo3
+         QYVJkkgOn7O3FkxQK6N717AP5XMtsOrkoEMFy4NltY1ZBZb5Bx9Yw33kKZZ1IuEJzgqe
+         WGdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YDt8AXxdt4nRJu4YvVuQguw+sCYVzXVttogmTAUo670=;
-        b=oP+uanA+KhmHzCJwul5Wl2JfNHHuMUo37S+1PIK6b5hOqS03JYyBLtj+Hm2k0jIBbg
-         ISs5Vyu/xwN0PaAKuoU2rtcd1lTx6nrMsWIrE5b44evjtQGvQlMsuMgL2IxVT+ZMHVew
-         RpLYyZf5lMjCFtwh+mk6EGU9/KL9A/gFecJFskSt3nH0m4LeQ0tnK14NoDXc4bw1HLJ7
-         Mwy+x9LjZmFTYPBCTAeYQxvS3S9DWkmXoNN8fXJTdDXXSmVvzHVzKcjFRA5NmyyFpH2u
-         J/kUQiTvC1AyScyuom826dYf2sle+8e0Xeyop9Ef92rhrvbmcsidoBQ/1Rafxmw4PNzZ
-         2lVA==
-X-Gm-Message-State: AFeK/H2i5d6C9lW61phbY7xm0Z7gut/n3PDFJLOOkNUyFWAeRvXIAf9kde4AHZCXueV6LMny2LWSQwKjg1K6dQ==
-X-Received: by 10.25.227.70 with SMTP id c6mr6471745lfk.106.1490431213504;
- Sat, 25 Mar 2017 01:40:13 -0700 (PDT)
+        bh=55eJqrqTSbd8tr/2g11rAzpC94GmtEFotgmvg6qE+PE=;
+        b=QCdWXMsWTUQ42tL5ivAhSNBPyREid3bsMOvWRKba04FTVyRx4VY+5rN2rZt/vqBRGQ
+         mh8+lurh6U1vT1aZYsygCh7I/9J6oZMwIQaK9h5flgY1H7Hkr7anBYoFqczac4Jww/QS
+         a4tNfjy5zmcG/MIdefcuoku0QiEJQU3xjckRon9mPoMvGvUzJtHfSDA/u186cVGUKKGR
+         sqY+boI9PERDqZZTPGYr8J0DjyrNupw+Q+5MDhtyvVeStBDuukx5DuRS0pGb/a0g4rj4
+         sYmM9LJgqvrX9aWsC8ZFBCHv0+C6ButRtWcEVxvmeNFuS+wLM2SXAsRIuLxOOk5EF2J+
+         Rmaw==
+X-Gm-Message-State: AFeK/H1qhGi+GrAXj9YBZPDawjyyHOob0q67wPuUhHnS11hTTvtQc/GYa/+GP8xOjUvn2mUzrYYmy47fNDQtSg==
+X-Received: by 10.107.200.139 with SMTP id y133mr13081514iof.147.1490433508675;
+ Sat, 25 Mar 2017 02:18:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.25.160.208 with HTTP; Sat, 25 Mar 2017 01:40:12 -0700 (PDT)
-In-Reply-To: <CACBZZX6F47uC9jLxppgkUnwVpGV2jpzzP4kwTuqKgayCevomeA@mail.gmail.com>
+Received: by 10.107.130.208 with HTTP; Sat, 25 Mar 2017 02:18:08 -0700 (PDT)
+In-Reply-To: <CANgJU+UCJ9qR-pi9w3+oYjEwDdhbtNX9Nv6brj31VXvt-k-3Lw@mail.gmail.com>
 References: <CACBZZX6F47uC9jLxppgkUnwVpGV2jpzzP4kwTuqKgayCevomeA@mail.gmail.com>
-From:   demerphq <demerphq@gmail.com>
-Date:   Sat, 25 Mar 2017 09:40:12 +0100
-Message-ID: <CANgJU+UCJ9qR-pi9w3+oYjEwDdhbtNX9Nv6brj31VXvt-k-3Lw@mail.gmail.com>
+ <CANgJU+UCJ9qR-pi9w3+oYjEwDdhbtNX9Nv6brj31VXvt-k-3Lw@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 25 Mar 2017 10:18:08 +0100
+Message-ID: <CACBZZX7dXsdu0bwt4Rznregw4=v=Sc3cFTQbxJcb-ynf3HXq3Q@mail.gmail.com>
 Subject: Re: Will OpenSSL's license change impact us?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To:     demerphq <demerphq@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
@@ -60,25 +61,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25 March 2017 at 00:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com> wrote:
-> They're changing their license[1] to Apache 2 which unlike the current
-> fuzzy compatibility with the current license[2] is explicitly
-> incompatible with GPLv2[3].
+On Sat, Mar 25, 2017 at 9:40 AM, demerphq <demerphq@gmail.com> wrote:
+> On 25 March 2017 at 00:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab=
+@gmail.com> wrote:
+>> They're changing their license[1] to Apache 2 which unlike the current
+>> fuzzy compatibility with the current license[2] is explicitly
+>> incompatible with GPLv2[3].
+>
+> Are you sure there is an issue? From the Apache page on this:
+>
+> Apache 2 software can therefore be included in GPLv3 projects, because
+> the GPLv3 license accepts our software into GPLv3 works. However,
+> GPLv3 software cannot be included in Apache projects. The licenses are
+> incompatible in one direction only, and it is a result of ASF's
+> licensing philosophy and the GPLv3 authors' interpretation of
+> copyright law.
+>
+> Which seems to be the opposite of the concern you are expressing.
 
-Are you sure there is an issue? From the Apache page on this:
+The Apache 2 license is indeed compatible with the GPLv3, but the Git
+project explicitly uses GPLv2 with no "or later" clause:
 
-Apache 2 software can therefore be included in GPLv3 projects, because
-the GPLv3 license accepts our software into GPLv3 works. However,
-GPLv3 software cannot be included in Apache projects. The licenses are
-incompatible in one direction only, and it is a result of ASF's
-licensing philosophy and the GPLv3 authors' interpretation of
-copyright law.
+$ head -n 18 COPYING
 
-Which seems to be the opposite of the concern you are expressing.
+ Note that the only valid version of the GPL as far as this project
+ is concerned is _this_ particular version of the license (ie v2, not
+ v2.2 or v3.x or whatever), unless explicitly otherwise stated.
 
-Yves
+ HOWEVER, in order to allow a migration to GPLv3 if that seems like
+ a good idea, I also ask that people involved with the project make
+ their preferences known. In particular, if you trust me to make that
+ decision, you might note so in your copyright message, ie something
+ like
 
+        This file is licensed under the GPL v2, or a later version
+        at the discretion of Linus.
 
---=20
-perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
+  might avoid issues. But we can also just decide to synchronize and
+  contact all copyright holders on record if/when the occasion arises.
+
+                        Linus Torvalds
