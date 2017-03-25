@@ -8,52 +8,52 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62B302095E
-	for <e@80x24.org>; Sat, 25 Mar 2017 18:14:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4652095E
+	for <e@80x24.org>; Sat, 25 Mar 2017 18:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751618AbdCYSOb (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 14:14:31 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:33611 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751477AbdCYSOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 14:14:30 -0400
-Received: by mail-qk0-f194.google.com with SMTP id p22so2754312qka.0
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 11:13:32 -0700 (PDT)
+        id S1751697AbdCYSUW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 14:20:22 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:36084 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751682AbdCYSUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 14:20:21 -0400
+Received: by mail-qt0-f194.google.com with SMTP id n37so2676591qtb.3
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 11:20:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=S9G6xVcp1rp5soQBOQaJ5gnQjlH3pb8lOt0U9C2Cq2c=;
-        b=NScboMp9o0tPu1oERdwWckgRAtX87HXH28JzB+mLlDrOrhLrDxc74jJ3O+KerHGya7
-         BSjdbLoqedr0rTmBiHMbsJaRzEMYflxRvR0OBu4DiJdK4VKlJhPwBa8Jn55UmoobGhQg
-         LTz6pEXJmU3iPi0F8qT3iRa9Vlz/0TQQzZfSP4E1zsVr9kbl7R1NFLQG/i4yTKkapfpA
-         ZcPiC5Yfj+y2BVVyPPqgjdJF+cRaWziE7aKi66/U4fqM1DhxgKC3uHZm2juEYuYoS5Xn
-         1NrMQJCbmtCqPiWYnfQi9KmMpLvU/VEPVlviwrEB4GS9r+qRfN0Uts9jgQVS51eOITvr
-         g5iQ==
+        bh=8ZTwts1apdBTluPiQrf76EQuq5xzKrjYiSdv+FsgsMU=;
+        b=FzTdMeyb9wD2XRLmgk+5alyrK6btqNA1/vea2bTVmuhOW6B/0J8bEv6x6b/KG0z1NJ
+         wLojQbznvR+zsffH7fK+afsL4Kfx6Y2k688YtW/z3SFX9Q8LyJ84adX4HvnSnarGfzvE
+         SydcebvT5T2E++G1OspO21lXqM3ZzFVpmUyPcbKAPPk2g/hu6h1SjxVxDuE72fS9ksy0
+         kXI9uTzXHFMTy91DoIYrlBQK/XFdXvXk0H4O+7F/+UgtK95N8XXLJsq+0Dz+7AAZFLaQ
+         5Zc9AjXL/0NJwHSrppkSi+8l3lLO1/gQyw5phpasrJ/zBPC0qy+C1u9n9lW5E67/IvBL
+         7+6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=S9G6xVcp1rp5soQBOQaJ5gnQjlH3pb8lOt0U9C2Cq2c=;
-        b=JHyIHaUSRvijxtQeRKWT2hf3e5f4iBKK+NGDFnCFJsXb4hLK7cS8C63Hb172RMpg18
-         10nNAlHHlGcIZtnoJ3i2/UxUUUDvpKNpTWhY3SXlLYOBWK1w7OXnCNj7YC9Sp3/TN/Vf
-         SDmj6yeiUHmdBdCZ4dAeVyDf4W/7INM947Y0cHpTWSHm2nmC/g8qL0qu9EBBrYAdchXb
-         QFg9ZS7aU+o5Dwc68luBaP8cDFEXUoHipzUiqamP6qljWVoJGRR/kvoRdelTADlsN+Q1
-         p+HnbwX/RWsI/M7UtC9e1N9FeKegJeijVLNzbhMLwq7nvHI8sw5r/jfyg5eDZmnGk0dw
-         C/7Q==
-X-Gm-Message-State: AFeK/H2SnOog6zZ3eSkzWAevHCMCLJhQ1tG7jm0YKuJYYKy1I/QnX/+2fegvJaT5R+J40A==
-X-Received: by 10.55.167.72 with SMTP id q69mr14122140qke.320.1490465611164;
-        Sat, 25 Mar 2017 11:13:31 -0700 (PDT)
+        bh=8ZTwts1apdBTluPiQrf76EQuq5xzKrjYiSdv+FsgsMU=;
+        b=MfmVk/+z3k+KkKEsm8OYmP+gbzhjVUHEBYzh6eiEv+nmaWFGp9jXTctJmg9ThpCBRC
+         f/vdEd2zT//povoG7Ydk9wAzBtgklDGA2sFhE12pkTt72qjXnSQOjRNwJR/iqgHKgwmj
+         zKVyi92IeOS5o6rUbe1V8b2a7A9PSAxzzux9f75Tv9h3IE2d+UpiOjHDlomQfI7085o1
+         Ljvp+y/o0S7tiwdslJpurU6qdlWs5YnA3+YvXhPPmu963OWTQum4ZA3Y5aADZamALlDK
+         94qeX720O4gxDPyMCjhjbO4z+wTDshnVxwxBRgIEkNX9LxXOni+TZ7R39JsO1Oxepz3/
+         f/XA==
+X-Gm-Message-State: AFeK/H3snD+jGnbUwnExigLZzGMUmPCiNnOcY1weR0GogYmTkOB5ylfcRjQlphWyNg/76g==
+X-Received: by 10.200.44.138 with SMTP id 10mr14657014qtw.12.1490465605914;
+        Sat, 25 Mar 2017 11:13:25 -0700 (PDT)
 Received: from localhost.localdomain ([189.103.231.223])
-        by smtp.gmail.com with ESMTPSA id 141sm4197861qkj.1.2017.03.25.11.13.27
+        by smtp.gmail.com with ESMTPSA id 141sm4197861qkj.1.2017.03.25.11.13.21
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 25 Mar 2017 11:13:30 -0700 (PDT)
+        Sat, 25 Mar 2017 11:13:24 -0700 (PDT)
 From:   Daniel Ferreira <bnmvco@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v3 2/2] [GSoC] remove_subtree(): reimplement using iterators
-Date:   Sat, 25 Mar 2017 15:12:31 -0300
-Message-Id: <1490465551-71056-3-git-send-email-bnmvco@gmail.com>
+Subject: [PATCH v3 1/2] [GSoC] dir_iterator: iterate over dir after its contents
+Date:   Sat, 25 Mar 2017 15:12:30 -0300
+Message-Id: <1490465551-71056-2-git-send-email-bnmvco@gmail.com>
 X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 In-Reply-To: <1490465551-71056-1-git-send-email-bnmvco@gmail.com>
 References: <1490465551-71056-1-git-send-email-bnmvco@gmail.com>
@@ -62,70 +62,217 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use dir_iterator to traverse through remove_subtree()'s directory tree,
-avoiding the need for recursive calls to readdir(). Simplify
-remove_subtree()'s code.
+Create an option for the dir_iterator API to iterate over a directory
+path only after having iterated through its contents. This feature was
+predicted, although not implemented by 0fe5043 ("dir_iterator: new API
+for iterating over a directory tree", 2016-06-18).
 
-A conversion similar in purpose was previously done at 46d092a
-("for_each_reflog(): reimplement using iterators", 2016-05-21).
+This is useful for recursively removing a directory and calling rmdir()
+on a directory only after all of its contents have been wiped.
+
+An "options" member has been added to the dir_iterator struct. It
+contains the "iterate_dirs_after_files" flag, that enables the feature
+when set to 1. Default behavior continues to be iterating over directory
+paths before its contents.
+
+Two inline functions have been added to dir_iterator's code to avoid
+code repetition inside dir_iterator_advance() and make code more clear.
+
+No particular functions or wrappers for setting the options struct's
+fields have been added to avoid either breaking the current dir_iterator
+API or over-engineering an extremely simple option architecture.
 
 Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
 ---
- entry.c | 32 +++++++++++---------------------
- 1 file changed, 11 insertions(+), 21 deletions(-)
+ dir-iterator.c | 100 ++++++++++++++++++++++++++++++++++++++++++++-------------
+ dir-iterator.h |   7 ++++
+ 2 files changed, 84 insertions(+), 23 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index c6eea24..670ffeb 100644
---- a/entry.c
-+++ b/entry.c
-@@ -2,6 +2,8 @@
- #include "blob.h"
- #include "dir.h"
- #include "streaming.h"
-+#include "iterator.h"
-+#include "dir-iterator.h"
+diff --git a/dir-iterator.c b/dir-iterator.c
+index 34182a9..833d56a 100644
+--- a/dir-iterator.c
++++ b/dir-iterator.c
+@@ -50,6 +50,43 @@ struct dir_iterator_int {
+ 	struct dir_iterator_level *levels;
+ };
 
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
-@@ -46,29 +48,17 @@ static void create_directories(const char *path, int path_len,
-
- static void remove_subtree(struct strbuf *path)
++static inline void push_dir_level(struct dir_iterator_int *iter, struct dir_iterator_level *level)
++{
++	level->dir_state = DIR_STATE_RECURSE;
++	ALLOC_GROW(iter->levels, iter->levels_nr + 1,
++		   iter->levels_alloc);
++	level = &iter->levels[iter->levels_nr++];
++	level->initialized = 0;
++}
++
++static inline int pop_dir_level(struct dir_iterator_int *iter, struct dir_iterator_level *level)
++{
++	return --iter->levels_nr;
++}
++
++static inline int set_iterator_data(struct dir_iterator_int *iter, struct dir_iterator_level *level)
++{
++	if (lstat(iter->base.path.buf, &iter->base.st) < 0) {
++		if (errno != ENOENT)
++			warning("error reading path '%s': %s",
++				iter->base.path.buf,
++				strerror(errno));
++		return -1;
++	}
++
++	/*
++	 * We have to set these each time because
++	 * the path strbuf might have been realloc()ed.
++	 */
++	iter->base.relative_path =
++		iter->base.path.buf + iter->levels[0].prefix_len;
++	iter->base.basename =
++		iter->base.path.buf + level->prefix_len;
++	level->dir_state = DIR_STATE_ITER;
++
++	return 0;
++}
++
+ int dir_iterator_advance(struct dir_iterator *dir_iterator)
  {
--	DIR *dir = opendir(path->buf);
--	struct dirent *de;
--	int origlen = path->len;
--
--	if (!dir)
--		die_errno("cannot opendir '%s'", path->buf);
--	while ((de = readdir(dir)) != NULL) {
--		struct stat st;
--
--		if (is_dot_or_dotdot(de->d_name))
--			continue;
--
--		strbuf_addch(path, '/');
--		strbuf_addstr(path, de->d_name);
--		if (lstat(path->buf, &st))
--			die_errno("cannot lstat '%s'", path->buf);
--		if (S_ISDIR(st.st_mode))
--			remove_subtree(path);
--		else if (unlink(path->buf))
-+	struct dir_iterator *diter = dir_iterator_begin(path->buf);
-+	diter->options.iterate_dirs_after_files = 1;
+ 	struct dir_iterator_int *iter =
+@@ -77,18 +114,16 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			}
+
+ 			level->initialized = 1;
+-		} else if (S_ISDIR(iter->base.st.st_mode)) {
++		} else if (S_ISDIR(iter->base.st.st_mode) &&
++		!iter->base.options.iterate_dirs_after_files) {
+ 			if (level->dir_state == DIR_STATE_ITER) {
+ 				/*
+ 				 * The directory was just iterated
+ 				 * over; now prepare to iterate into
+-				 * it.
++				 * it (unless an option is set for us
++				 * to do otherwise).
+ 				 */
+-				level->dir_state = DIR_STATE_RECURSE;
+-				ALLOC_GROW(iter->levels, iter->levels_nr + 1,
+-					   iter->levels_alloc);
+-				level = &iter->levels[iter->levels_nr++];
+-				level->initialized = 0;
++				push_dir_level(iter, level);
+ 				continue;
+ 			} else {
+ 				/*
+@@ -104,7 +139,7 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			 * This level is exhausted (or wasn't opened
+ 			 * successfully); pop up a level.
+ 			 */
+-			if (--iter->levels_nr == 0)
++			if (pop_dir_level(iter, level) == 0)
+ 				return dir_iterator_abort(dir_iterator);
+
+ 			continue;
+@@ -120,16 +155,33 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			de = readdir(level->dir);
+
+ 			if (!de) {
+-				/* This level is exhausted; pop up a level. */
++				/* This level is exhausted  */
+ 				if (errno) {
+ 					warning("error reading directory %s: %s",
+ 						iter->base.path.buf, strerror(errno));
++				} else if (iter->base.options.iterate_dirs_after_files) {
++					/* If we are handling dirpaths after their contents,
++					 * we have to iterate over the directory now that we'll
++					 * have finished iterating into it. */
++					level->dir = NULL;
 +
-+	while (dir_iterator_advance(diter) == ITER_OK) {
-+		if (S_ISDIR(diter->st.st_mode)) {
-+			if (rmdir(diter->path.buf))
-+				die_errno("cannot rmdir '%s'", path->buf);
-+		} else if (unlink(diter->path.buf))
- 			die_errno("cannot unlink '%s'", path->buf);
--		strbuf_setlen(path, origlen);
++					if (pop_dir_level(iter, level) == 0)
++						return dir_iterator_abort(dir_iterator);
++
++					level = &iter->levels[iter->levels_nr - 1];
++					/* Remove a trailing slash */
++					strbuf_strip_suffix(&iter->base.path, "/");
++
++					if (set_iterator_data(iter, level))
++						continue;
++
++					return ITER_OK;
+ 				} else if (closedir(level->dir))
+ 					warning("error closing directory %s: %s",
+ 						iter->base.path.buf, strerror(errno));
+
+ 				level->dir = NULL;
+-				if (--iter->levels_nr == 0)
++				if (pop_dir_level(iter, level) == 0)
+ 					return dir_iterator_abort(dir_iterator);
+ 				break;
+ 			}
+@@ -138,26 +190,26 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 				continue;
+
+ 			strbuf_addstr(&iter->base.path, de->d_name);
+-			if (lstat(iter->base.path.buf, &iter->base.st) < 0) {
+-				if (errno != ENOENT)
+-					warning("error reading path '%s': %s",
+-						iter->base.path.buf,
+-						strerror(errno));
++
++			if (set_iterator_data(iter, level))
+ 				continue;
+-			}
+
+ 			/*
+-			 * We have to set these each time because
+-			 * the path strbuf might have been realloc()ed.
++			 * If we want to iterate dirs after files, we shall
++			 * begin looking into them *before* we return the dir
++			 * itself.
+ 			 */
+-			iter->base.relative_path =
+-				iter->base.path.buf + iter->levels[0].prefix_len;
+-			iter->base.basename =
+-				iter->base.path.buf + level->prefix_len;
+-			level->dir_state = DIR_STATE_ITER;
++			if (S_ISDIR(iter->base.st.st_mode) &&
++			iter->base.options.iterate_dirs_after_files) {
++				push_dir_level(iter, level);
++				goto continue_outer_loop;
++			}
+
+ 			return ITER_OK;
+ 		}
++
++continue_outer_loop:
++		;
  	}
--	closedir(dir);
-+
- 	if (rmdir(path->buf))
- 		die_errno("cannot rmdir '%s'", path->buf);
  }
+
+@@ -190,6 +242,8 @@ struct dir_iterator *dir_iterator_begin(const char *path)
+ 	if (!path || !*path)
+ 		die("BUG: empty path passed to dir_iterator_begin()");
+
++	iter->base.options.iterate_dirs_after_files = 0;
++
+ 	strbuf_init(&iter->base.path, PATH_MAX);
+ 	strbuf_addstr(&iter->base.path, path);
+
+diff --git a/dir-iterator.h b/dir-iterator.h
+index 27739e6..4304913 100644
+--- a/dir-iterator.h
++++ b/dir-iterator.h
+@@ -38,7 +38,14 @@
+  * dir_iterator_advance() again.
+  */
+
++struct dir_iterator_options {
++	unsigned iterate_dirs_after_files : 1;
++};
++
+ struct dir_iterator {
++	/* Options for dir_iterator */
++	struct dir_iterator_options options;
++
+ 	/* The current path: */
+ 	struct strbuf path;
+
 --
 2.7.4 (Apple Git-66)
 
