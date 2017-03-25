@@ -2,167 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 699AF2095E
-	for <e@80x24.org>; Sat, 25 Mar 2017 12:14:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D82F92095E
+	for <e@80x24.org>; Sat, 25 Mar 2017 12:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751367AbdCYMOJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 08:14:09 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:33573 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751054AbdCYMOI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 08:14:08 -0400
-Received: by mail-lf0-f53.google.com with SMTP id h125so4557861lfe.0
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 05:14:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=rQVKzeBTX96X4VdS40ML5dI/iqm3nP3hTWb4+itLBmc=;
-        b=HatWMYyFOKe2Y5/cMOnEDU07SgQ2pVfRPO9LaFRR2twTi/kL+6j+n/sfJi67QSKVRD
-         nDDUAMu/KeybwuWk/upJipzAzspMx3gvtqmiJg37qWGlC9z9WSyzl1gsERdTnsN3j90L
-         dOYq+nkdrGkxJdp2ZBDjBhzCpg1mv3vEsl0RYGDE3CuM91ixVj44i5ipJv9cnHCsKeFk
-         mmY/+sG8aU5gb4y20FBYjFooDZW3syhty/KQKEIP4a5sfYzlTpFMdckYEuZ6t7o8maEI
-         2gOrdc/sdx+Gx82HNmOArrnB5pg/bi1sH4ROnjU4qn0gR+KBegpDycOVXAUXw+cc/zHn
-         PBzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=rQVKzeBTX96X4VdS40ML5dI/iqm3nP3hTWb4+itLBmc=;
-        b=E+4bKVGSA379hShRJYpszg0gFPYxzcpEdi9EEuAAuqQ07sDin55T7j58awqfGWY8M9
-         9UvHEihKXAVQ2vDFsONyyl1m8wL5wlASa7omklyEDeSfUr0sO5DET3Dzw5rav0MyDJNC
-         uY8pDqp47TvVgAvx9b2zsBMZhNBqQod4uvO1uZCEgFB+b92KtVTtcwZxkRnh6GrZPMeP
-         YDYXNfjaLyS4qnLqKApki81W1TeI6nd1jvnxqMv4/PEoqWwdjmNGUjvvX8SKIvbLqf1v
-         yOgQb9MlxN0QhLT4QWquU+/33WGD23gP0K+66tOtk3ncneAz2ymje/Qf1LiNPp/SmsQc
-         3mwA==
-X-Gm-Message-State: AFeK/H3eDRbz6a/rEZL+QSFXV4hirKb6ccv9s46aO+wyCQKb8MZqqe5/+xiNXtPNMZziklHJnpmDUWcrVm7D/g==
-X-Received: by 10.25.219.213 with SMTP id t82mr6355957lfi.75.1490444045689;
- Sat, 25 Mar 2017 05:14:05 -0700 (PDT)
+        id S1751359AbdCYMRC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 08:17:02 -0400
+Received: from mout.web.de ([212.227.15.14]:61072 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751088AbdCYMRB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 08:17:01 -0400
+Received: from [192.168.178.36] ([79.237.59.215]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0McneT-1caMEG3ypF-00Hsup; Sat, 25
+ Mar 2017 13:16:46 +0100
+X-Mozilla-News-Host: news://news.public-inbox.org:119
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] pretty: add extra headers and MIME boundary directly
+Message-ID: <6f3d0b54-7a9f-8088-3675-bd2980f69735@web.de>
+Date:   Sat, 25 Mar 2017 13:16:42 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.25.18.73 with HTTP; Sat, 25 Mar 2017 05:13:35 -0700 (PDT)
-In-Reply-To: <CACsJy8Aajf1Lb4mKC=NEUQTNy7QRK99Aont_UCRnHJfho8n+UA@mail.gmail.com>
-References: <1490441257-44727-1-git-send-email-bnmvco@gmail.com> <CACsJy8Aajf1Lb4mKC=NEUQTNy7QRK99Aont_UCRnHJfho8n+UA@mail.gmail.com>
-From:   "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
-Date:   Sat, 25 Mar 2017 09:13:35 -0300
-Message-ID: <CAEA2_RK=zMwKeidPDS9u5Ep1htb3TUeOqJ6Cfd644ira4DeXaA@mail.gmail.com>
-Subject: Re: [PATCH v2] [GSoC] remove_subtree(): reimplement using iterators
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:+8BNQTK1/ttAPR478kNZEa2Dxwqy51QNudMQwt2ous0U/FWRxWY
+ HGBGJzfL/gM7HmD9iQ4I55S78uGjoaBU0MRt4q4Ng4hiqMAknTClEzqJ/qWFxXwYcTAAGNC
+ Xu13zQh0yhyqGrSG+a7WE0/PxsDCAHKZ7CACY33sRuNiawiKFkX4slqbpcVPCZUh//MYjb1
+ J7Zlt3nIYIsstsMWp7Z8Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sHd166VAN0M=:jyGP2TIEtX5zDENz05xxVe
+ QYs2JMz1k27phJjKxhVEQyS4+3x70WGvCxHrUPVtYs+KaEwe9+uioX8spQODJcHbPdfgxn8dz
+ baO+q4En0VkU++Z4Fbm/hcSoh6FoXJTGuIC5B7n/ToD6dXijTNPq5x9Tq+7Dk491GL344T+8P
+ +HDw5xC48nMvA5MK0GK834Ya1U7v+ZHt8cRGTnqomU45CZhNqLw61PMMbLldFhQAhVsdGJuU+
+ ZNOQQgWcuWjb6KB3C4pdgfoBtVBCOUpjNTcf99dQm7PeFfasIYSMQa1gDZeuhZ042c+aXVbtD
+ rYJyb9aRO91FS4ARZJ5TOeNxFisBhfNfoK9PxihzlXDC2Oljkgrfr92Dt2Xk1cUNTAe1RV1pr
+ HcyisKKJjw2bip6aNxj6n137Xt8ErliK5FqESyCsKQYzU4JqMlaafHHkgSD2xQ8xMEQjHMsL7
+ fKM79MHRzSFoEJ9ozJtHHS1Zi+4XEGYfhzhMsu5GtYg28yWOGlzH6W2Nhczar9Cb2UTesze12
+ S1+OEquZv3XXk9p4AddkAer/ufNYz3Yvyi+pGbpAK+lzuzecdpHigX5EgiQ5wxpCYCbRjY41b
+ 3j4LmNQLw7wm94xvMKKWjbDZjfG3fqOrOxrG3M5Zw9ycqbem/YzGxsESMDncuQJgrJf1JU7iA
+ HIiSQiEDHFIGkvdYYMBgddeZGkfuy922K7e4l/E3zK5HCbShqTrJzHHPoUhmuyp5B9AXRr8um
+ EmqeipOaGOCBnxq08ZTAlT+A6+yH1mGQVWKWqMZUoSNaJ+t3BnCbNvpChXgAlXePwn/lTqBwN
+ 0TBnsRY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-You are correct, which shows that since all tests pass, we need to
-come up with better cases for this function.
+Use the after_subject member of struct pretty_print_context to pass the
+extra_headers unchanged, and construct and add the MIME boundary headers
+directly in pretty.c::pp_title_line() instead of writing both to a
+static buffer in log-tree.c::log_write_email_headers() first.  That's
+easier, quicker and gets rid of said static buffer.
 
-As for a solution, I believe that the best way to go for it is to
-dir_iterator's implementation to have an "Option to iterate over
-directory paths before vs. after their contents" (something predicted
-in the commit that created it). If it iterates over directories after
-all of its contents (currently it does so before) we just need to
-check if the entry is a directory and if so, rmdir() it. Does that
-make sense?
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/log.c |  3 ++-
+ log-tree.c    | 26 ++------------------------
+ log-tree.h    |  1 -
+ pretty.c      | 15 +++++++++++++++
+ 4 files changed, 19 insertions(+), 26 deletions(-)
 
-On Sat, Mar 25, 2017 at 8:51 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Sat, Mar 25, 2017 at 6:27 PM, Daniel Ferreira <bnmvco@gmail.com> wrote:
->> Use dir_iterator to traverse through remove_subtree()'s directory tree,
->> avoiding the need for recursive calls to readdir(). Simplify
->> remove_subtree()'s code.
->>
->> A conversion similar in purpose was previously done at 46d092a
->> ("for_each_reflog(): reimplement using iterators", 2016-05-21).
->>
->> Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
->> ---
->>
->> This is a second-version patch of the Google Summer of Code microproject for
->> refactoring recursive readdir() calls to use dir_iterator instead. v1 can be
->> found in:
->>
->> https://public-inbox.org/git/CAGZ79kZwT-9mHTiOJ5CEjk2wDFkn6+NcogjX0=vjhsAh16ANYg@mail.gmail.com/T/#mae023e7a7d7626f00e0923833c4359f5af493730
->>
->> Additionally, for debugging purposes I turned remove_subtree() into a no-op
->> and ran git tests. Some failures were at:
->>
->> * t2000-checkout-cache-clash.sh
->> * t2003-checkout-cache-mkdir.sh
->>
->> If you guys could check those files out and warn me if any additional tests
->> would be welcome, please let me know.
->>
->> Thanks.
->>
->>  entry.c | 28 +++++++---------------------
->>  1 file changed, 7 insertions(+), 21 deletions(-)
->>
->> diff --git a/entry.c b/entry.c
->> index c6eea240b..3cb92592d 100644
->> --- a/entry.c
->> +++ b/entry.c
->> @@ -2,6 +2,8 @@
->>  #include "blob.h"
->>  #include "dir.h"
->>  #include "streaming.h"
->> +#include "iterator.h"
->> +#include "dir-iterator.h"
->>
->>  static void create_directories(const char *path, int path_len,
->>                                const struct checkout *state)
->> @@ -46,29 +48,13 @@ static void create_directories(const char *path, int path_len,
->>
->>  static void remove_subtree(struct strbuf *path)
->>  {
->> -       DIR *dir = opendir(path->buf);
->> -       struct dirent *de;
->> -       int origlen = path->len;
->> -
->> -       if (!dir)
->> -               die_errno("cannot opendir '%s'", path->buf);
->> -       while ((de = readdir(dir)) != NULL) {
->> -               struct stat st;
->> -
->> -               if (is_dot_or_dotdot(de->d_name))
->> -                       continue;
->> -
->> -               strbuf_addch(path, '/');
->> -               strbuf_addstr(path, de->d_name);
->> -               if (lstat(path->buf, &st))
->> -                       die_errno("cannot lstat '%s'", path->buf);
->> -               if (S_ISDIR(st.st_mode))
->> -                       remove_subtree(path);
->> -               else if (unlink(path->buf))
->> +       struct dir_iterator *diter = dir_iterator_begin(path->buf);
->> +
->> +       while (dir_iterator_advance(diter) == ITER_OK) {
->> +               if (unlink(diter->path.buf))
->>                         die_errno("cannot unlink '%s'", path->buf);
->> -               strbuf_setlen(path, origlen);
->>         }
->> -       closedir(dir);
->> +
->>         if (rmdir(path->buf))
->>                 die_errno("cannot rmdir '%s'", path->buf);
->
-> Even though it's very nice that lots of code is deleted. This is not
-> entirely correct, is it? Before this patch, rmdir() is called for
-> every recursive remove_subtree() call. After this patch, it's only
-> called once (and likely fails unless you have no subdirectories).
->
->>  }
->> --
->> 2.12.1.433.g82305b74f.dirty
->>
->
->
->
-> --
-> Duy
+diff --git a/builtin/log.c b/builtin/log.c
+index 281af8c1ec..be564039c1 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -989,7 +989,8 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	    open_next_file(NULL, rev->numbered_files ? NULL : "cover-letter", rev, quiet))
+ 		return;
+ 
+-	log_write_email_headers(rev, head, &pp.after_subject, &need_8bit_cte);
++	log_write_email_headers(rev, head, &need_8bit_cte);
++	pp.after_subject = rev->extra_headers;
+ 
+ 	for (i = 0; !need_8bit_cte && i < nr; i++) {
+ 		const char *buf = get_commit_buffer(list[i], NULL);
+diff --git a/log-tree.c b/log-tree.c
+index 4618dd04ca..7049a17781 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -349,10 +349,8 @@ void fmt_output_email_subject(struct strbuf *sb, struct rev_info *opt)
+ }
+ 
+ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+-			     const char **extra_headers_p,
+ 			     int *need_8bit_cte_p)
+ {
+-	const char *extra_headers = opt->extra_headers;
+ 	const char *name = oid_to_hex(opt->zero_commit ?
+ 				      &null_oid : &commit->object.oid);
+ 
+@@ -374,26 +372,9 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 		graph_show_oneline(opt->graph);
+ 	}
+ 	if (opt->mime_boundary) {
+-		static char subject_buffer[1024];
+ 		static char buffer[1024];
+ 		struct strbuf filename =  STRBUF_INIT;
+ 		*need_8bit_cte_p = -1; /* NEVER */
+-		snprintf(subject_buffer, sizeof(subject_buffer) - 1,
+-			 "%s"
+-			 "MIME-Version: 1.0\n"
+-			 "Content-Type: multipart/mixed;"
+-			 " boundary=\"%s%s\"\n"
+-			 "\n"
+-			 "This is a multi-part message in MIME "
+-			 "format.\n"
+-			 "--%s%s\n"
+-			 "Content-Type: text/plain; "
+-			 "charset=UTF-8; format=fixed\n"
+-			 "Content-Transfer-Encoding: 8bit\n\n",
+-			 extra_headers ? extra_headers : "",
+-			 mime_boundary_leader, opt->mime_boundary,
+-			 mime_boundary_leader, opt->mime_boundary);
+-		extra_headers = subject_buffer;
+ 
+ 		if (opt->numbered_files)
+ 			strbuf_addf(&filename, "%d", opt->nr);
+@@ -413,7 +394,6 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 		opt->diffopt.stat_sep = buffer;
+ 		strbuf_release(&filename);
+ 	}
+-	*extra_headers_p = extra_headers;
+ }
+ 
+ static void show_sig_lines(struct rev_info *opt, int status, const char *bol)
+@@ -537,7 +517,6 @@ void show_log(struct rev_info *opt)
+ 	struct log_info *log = opt->loginfo;
+ 	struct commit *commit = log->commit, *parent = log->parent;
+ 	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : 40;
+-	const char *extra_headers = opt->extra_headers;
+ 	struct pretty_print_context ctx = {0};
+ 
+ 	opt->loginfo = NULL;
+@@ -597,8 +576,7 @@ void show_log(struct rev_info *opt)
+ 	 */
+ 
+ 	if (cmit_fmt_is_mail(opt->commit_format)) {
+-		log_write_email_headers(opt, commit, &extra_headers,
+-					&ctx.need_8bit_cte);
++		log_write_email_headers(opt, commit, &ctx.need_8bit_cte);
+ 		ctx.rev = opt;
+ 		ctx.print_email_subject = 1;
+ 	} else if (opt->commit_format != CMIT_FMT_USERFORMAT) {
+@@ -672,7 +650,7 @@ void show_log(struct rev_info *opt)
+ 	ctx.date_mode = opt->date_mode;
+ 	ctx.date_mode_explicit = opt->date_mode_explicit;
+ 	ctx.abbrev = opt->diffopt.abbrev;
+-	ctx.after_subject = extra_headers;
++	ctx.after_subject = opt->extra_headers;
+ 	ctx.preserve_subject = opt->preserve_subject;
+ 	ctx.reflog_info = opt->reflog_info;
+ 	ctx.fmt = opt->commit_format;
+diff --git a/log-tree.h b/log-tree.h
+index 48f11fb740..7f9c4f22b5 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -22,7 +22,6 @@ void format_decorations_extended(struct strbuf *sb, const struct commit *commit,
+ 			     format_decorations_extended((strbuf), (commit), (color), " (", ", ", ")")
+ void show_decorations(struct rev_info *opt, struct commit *commit);
+ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+-			     const char **extra_headers_p,
+ 			     int *need_8bit_cte_p);
+ void load_ref_decorations(int flags);
+ 
+diff --git a/pretty.c b/pretty.c
+index d0f86f5d85..56e668781a 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1641,6 +1641,21 @@ void pp_title_line(struct pretty_print_context *pp,
+ 	if (pp->after_subject) {
+ 		strbuf_addstr(sb, pp->after_subject);
+ 	}
++	if (pp->print_email_subject && pp->rev && pp->rev->mime_boundary) {
++		strbuf_addf(sb,
++			    "MIME-Version: 1.0\n"
++			    "Content-Type: multipart/mixed;"
++			    " boundary=\"%s%s\"\n"
++			    "\n"
++			    "This is a multi-part message in MIME "
++			    "format.\n"
++			    "--%s%s\n"
++			    "Content-Type: text/plain; "
++			    "charset=UTF-8; format=fixed\n"
++			    "Content-Transfer-Encoding: 8bit\n\n",
++			    mime_boundary_leader, pp->rev->mime_boundary,
++			    mime_boundary_leader, pp->rev->mime_boundary);
++	}
+ 	if (cmit_fmt_is_mail(pp->fmt)) {
+ 		strbuf_addch(sb, '\n');
+ 	}
+-- 
+2.12.2
+
