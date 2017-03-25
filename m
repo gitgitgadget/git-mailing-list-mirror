@@ -8,88 +8,124 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56D0C2095E
-	for <e@80x24.org>; Sat, 25 Mar 2017 18:13:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62B302095E
+	for <e@80x24.org>; Sat, 25 Mar 2017 18:14:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751595AbdCYSNE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 14:13:04 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:34111 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751584AbdCYSND (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 14:13:03 -0400
-Received: by mail-qk0-f193.google.com with SMTP id v127so2742775qkb.1
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 11:12:53 -0700 (PDT)
+        id S1751618AbdCYSOb (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 14:14:31 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:33611 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751477AbdCYSOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 14:14:30 -0400
+Received: by mail-qk0-f194.google.com with SMTP id p22so2754312qka.0
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 11:13:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=4bogRbtv479VQzrlb5CIgDdjcuK7xLEuYDqL1Nh+pbY=;
-        b=k4vGcd3k1kuj21ljldK0IkjecIbhsPvQUCRofv/EAHRO6BTZAL+LydQTgQ/27B5UE+
-         NGUcBiRuFyIbOR5Z4oFkwBx5Ptq7AStgUUzbMep17zVpjYUCjlQ141m7g4qeh+0Kxcgb
-         hFQzO+ciu35WpGMPeiZrt1X5E7Z4nGNphn8TsgrHio5lYhJnugH88owg0pXCgmfMRrS5
-         SPVMvU2gFaKHVKFkDGVym/53fHY4/8vyg4K+WP8OUItSdlIP/REIJeGMlK+sqoVVMQps
-         7lU2v/0uWODHGot87T/4bzxdmRyEow/xevBhoUCDQonqm2TKasAo21KXL8uFGPapQFu5
-         GACg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=S9G6xVcp1rp5soQBOQaJ5gnQjlH3pb8lOt0U9C2Cq2c=;
+        b=NScboMp9o0tPu1oERdwWckgRAtX87HXH28JzB+mLlDrOrhLrDxc74jJ3O+KerHGya7
+         BSjdbLoqedr0rTmBiHMbsJaRzEMYflxRvR0OBu4DiJdK4VKlJhPwBa8Jn55UmoobGhQg
+         LTz6pEXJmU3iPi0F8qT3iRa9Vlz/0TQQzZfSP4E1zsVr9kbl7R1NFLQG/i4yTKkapfpA
+         ZcPiC5Yfj+y2BVVyPPqgjdJF+cRaWziE7aKi66/U4fqM1DhxgKC3uHZm2juEYuYoS5Xn
+         1NrMQJCbmtCqPiWYnfQi9KmMpLvU/VEPVlviwrEB4GS9r+qRfN0Uts9jgQVS51eOITvr
+         g5iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=4bogRbtv479VQzrlb5CIgDdjcuK7xLEuYDqL1Nh+pbY=;
-        b=qAzEhmGS/IwnIsSpAOD4LmWX7TkbxTERl0Biv+QBwQ1JR+X65RlROzDI8w2ekc4BNe
-         md5v8CvQUEXw+Fbt5OSL4/EyI9S2ko329R8SwXAJ/qddtp4XADF/4SsUdUAJ88PNjcvP
-         Q/cri1E2FaLxN4vzCrPABu8FgGRe1L/Lvc8Q8/0l3DPdKxNqMIoLbjbqT/PFzy1H3zGw
-         0U86LyYxJaBbjp8LVBJ9HPXDv1n87A210idMabvzZZb3xrSs8wkNjDp8jzIhJRsNH8Iv
-         hvJVBaWjcssXD++9/dTSI3Qxos1lJCyic8wHXyqQ+sK4ls6o0xETZZI8vneu4H1ul336
-         iSBw==
-X-Gm-Message-State: AFeK/H3PvM3ycHfZ1SODQtPZZvtyZrzdNgLSMCV7yCC78myOehqU1cwKS0jih91ldUs/RQ==
-X-Received: by 10.55.184.65 with SMTP id i62mr14232458qkf.234.1490465573403;
-        Sat, 25 Mar 2017 11:12:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=S9G6xVcp1rp5soQBOQaJ5gnQjlH3pb8lOt0U9C2Cq2c=;
+        b=JHyIHaUSRvijxtQeRKWT2hf3e5f4iBKK+NGDFnCFJsXb4hLK7cS8C63Hb172RMpg18
+         10nNAlHHlGcIZtnoJ3i2/UxUUUDvpKNpTWhY3SXlLYOBWK1w7OXnCNj7YC9Sp3/TN/Vf
+         SDmj6yeiUHmdBdCZ4dAeVyDf4W/7INM947Y0cHpTWSHm2nmC/g8qL0qu9EBBrYAdchXb
+         QFg9ZS7aU+o5Dwc68luBaP8cDFEXUoHipzUiqamP6qljWVoJGRR/kvoRdelTADlsN+Q1
+         p+HnbwX/RWsI/M7UtC9e1N9FeKegJeijVLNzbhMLwq7nvHI8sw5r/jfyg5eDZmnGk0dw
+         C/7Q==
+X-Gm-Message-State: AFeK/H2SnOog6zZ3eSkzWAevHCMCLJhQ1tG7jm0YKuJYYKy1I/QnX/+2fegvJaT5R+J40A==
+X-Received: by 10.55.167.72 with SMTP id q69mr14122140qke.320.1490465611164;
+        Sat, 25 Mar 2017 11:13:31 -0700 (PDT)
 Received: from localhost.localdomain ([189.103.231.223])
-        by smtp.gmail.com with ESMTPSA id 141sm4197861qkj.1.2017.03.25.11.12.49
+        by smtp.gmail.com with ESMTPSA id 141sm4197861qkj.1.2017.03.25.11.13.27
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 25 Mar 2017 11:12:52 -0700 (PDT)
+        Sat, 25 Mar 2017 11:13:30 -0700 (PDT)
 From:   Daniel Ferreira <bnmvco@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v3 0/2] [GSoC] remove_subtree(): reimplement using iterators
-Date:   Sat, 25 Mar 2017 15:12:29 -0300
-Message-Id: <1490465551-71056-1-git-send-email-bnmvco@gmail.com>
+Subject: [PATCH v3 2/2] [GSoC] remove_subtree(): reimplement using iterators
+Date:   Sat, 25 Mar 2017 15:12:31 -0300
+Message-Id: <1490465551-71056-3-git-send-email-bnmvco@gmail.com>
 X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+In-Reply-To: <1490465551-71056-1-git-send-email-bnmvco@gmail.com>
+References: <1490465551-71056-1-git-send-email-bnmvco@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the third version of the GSoC microproject
-of refactoring remove_subtree() from recursively using
-readdir() to use dir_iterator. Below are the threads for
-other versions:
+Use dir_iterator to traverse through remove_subtree()'s directory tree,
+avoiding the need for recursive calls to readdir(). Simplify
+remove_subtree()'s code.
 
-v1: https://public-inbox.org/git/CAGZ79kZwT-9mHTiOJ5CEjk2wDFkn6+NcogjX0=vjhsAh16ANYg@mail.gmail.com/T/#mae023e7a7d7626f00e0923833c4359f5af493730
-v2: https://public-inbox.org/git/CACsJy8Dxh-QPBBLfaFWPAWUsbA9GVXA7x+mXLjEvYKhk1zOpig@mail.gmail.com/T/#t
+A conversion similar in purpose was previously done at 46d092a
+("for_each_reflog(): reimplement using iterators", 2016-05-21).
 
-Duy suggested adding features to dir_iterator might go
-beyond the intention of a microproject, but I figured I
-might go for it to learn more about the project.
+Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+---
+ entry.c | 32 +++++++++++---------------------
+ 1 file changed, 11 insertions(+), 21 deletions(-)
 
-The dir_iterator reimplementation has been tested in a
-separate binary I created (and linked with libgit.a) to
-reproduce remove_subtree()'s contents. As pointed out in the
-last thread, git's tests for this function were unable to
-catch a daunting bug I had introduced, and I still haven't
-been able to come up with a way to reproduce remove_subtree()
-being called. Any help?
+diff --git a/entry.c b/entry.c
+index c6eea24..670ffeb 100644
+--- a/entry.c
++++ b/entry.c
+@@ -2,6 +2,8 @@
+ #include "blob.h"
+ #include "dir.h"
+ #include "streaming.h"
++#include "iterator.h"
++#include "dir-iterator.h"
 
-Thank you all again for all the reviews.
+ static void create_directories(const char *path, int path_len,
+ 			       const struct checkout *state)
+@@ -46,29 +48,17 @@ static void create_directories(const char *path, int path_len,
 
-Daniel Ferreira (2):
-  dir_iterator: iterate over dir after its contents
-  remove_subtree(): reimplement using iterators
-
- dir-iterator.c | 100 ++++++++++++++++++++++++++++++++++++++++++++-------------
- dir-iterator.h |   7 ++++
- entry.c        |  32 +++++++-----------
- 3 files changed, 95 insertions(+), 44 deletions(-)
-
+ static void remove_subtree(struct strbuf *path)
+ {
+-	DIR *dir = opendir(path->buf);
+-	struct dirent *de;
+-	int origlen = path->len;
+-
+-	if (!dir)
+-		die_errno("cannot opendir '%s'", path->buf);
+-	while ((de = readdir(dir)) != NULL) {
+-		struct stat st;
+-
+-		if (is_dot_or_dotdot(de->d_name))
+-			continue;
+-
+-		strbuf_addch(path, '/');
+-		strbuf_addstr(path, de->d_name);
+-		if (lstat(path->buf, &st))
+-			die_errno("cannot lstat '%s'", path->buf);
+-		if (S_ISDIR(st.st_mode))
+-			remove_subtree(path);
+-		else if (unlink(path->buf))
++	struct dir_iterator *diter = dir_iterator_begin(path->buf);
++	diter->options.iterate_dirs_after_files = 1;
++
++	while (dir_iterator_advance(diter) == ITER_OK) {
++		if (S_ISDIR(diter->st.st_mode)) {
++			if (rmdir(diter->path.buf))
++				die_errno("cannot rmdir '%s'", path->buf);
++		} else if (unlink(diter->path.buf))
+ 			die_errno("cannot unlink '%s'", path->buf);
+-		strbuf_setlen(path, origlen);
+ 	}
+-	closedir(dir);
++
+ 	if (rmdir(path->buf))
+ 		die_errno("cannot rmdir '%s'", path->buf);
+ }
 --
 2.7.4 (Apple Git-66)
 
