@@ -2,119 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E215820966
-	for <e@80x24.org>; Sat, 25 Mar 2017 21:28:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 840A320966
+	for <e@80x24.org>; Sat, 25 Mar 2017 21:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751300AbdCYV20 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 17:28:26 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:57790 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751299AbdCYV2Y (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Mar 2017 17:28:24 -0400
-Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 37F97280AD;
-        Sat, 25 Mar 2017 21:28:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490477302;
-        bh=7i21un10DnOyFkbj3VPdP8ag5ngutv94MdWDpLvIesI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BPG2Ri8pq9BFBocR6XSv2NXws1bRKaGg6yEc1Ff8WlrSchuIRLrn/LUcYzQEqFuud
-         YJ1daewIMg8O/i7lW/L1PXVsAm2WPufi8ojIw6wj9Krg3eaAj7fMqxA1K8QsmX9H9F
-         XviCJQu60psK+4XPEBVe7Qk8KusZ8v6kWoMRjoCTSYGtd1pI1mOFBexE7z371CeBfo
-         JiX8LwGKnSRg5gQvTvF7I919DzjSHpqQjduyzYMtevkic6inMLIt2gqhc7L+f+8umx
-         RXgfBf30uf8B3MSe+YLRoDOBDr+np55zFXAW3keHSeAzDjKhV6dMXemotwYvEzuCzd
-         +9iwmj9xHhdhaP4hf7SshOuiyw+/j9ANGrxMen0cQNw2o9GaqvjaHDkKYlmZC5zATW
-         pqyot1SDIZNhWz3PLH4SOxgqE7F5C5sqVZ+1FrZF8fYL9wlNDUXE/d8ZEnKxVJ8FeF
-         Wq1qwWJBnKmSPKB06eqW3R3M2qCevECVNUd+gEuZZ0nw9qYshe5
-Date:   Sat, 25 Mar 2017 21:28:18 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH/RFC] parse-options: add facility to make options
- configurable
-Message-ID: <20170325212818.2fdxhrywm4zxmmck@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-References: <CACBZZX4FksU6NujPZ_3GZ45EQ+KdJj5G2sajtRipE1wbaA3URA@mail.gmail.com>
- <20170324231013.23346-1-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="stlapxf5wtobjd2t"
-Content-Disposition: inline
-In-Reply-To: <20170324231013.23346-1-avarab@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+        id S1751212AbdCYVa0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 17:30:26 -0400
+Received: from mail-wr0-f181.google.com ([209.85.128.181]:34228 "EHLO
+        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751119AbdCYVa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 17:30:26 -0400
+Received: by mail-wr0-f181.google.com with SMTP id l43so12551771wre.1
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 14:30:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=2v4dk0m8hN9JmKQ18Z3shwOukB1yWFvXQIlD9npzeOE=;
+        b=ujWAG5Mm8PlBGcVor0Z/tBuECVcsNmdw80/xfWE4ozNaqNm/xGrFBJcfr4+/YsNLxk
+         s0zjmhNVqlu2QcEXeSaTbrgoUNClBUFjlPvl4osP6mn3+Y+QJbFmoGWSPt5JFqzjqG3Z
+         7Ox0b1SkE4Qf5m69fJSCYJbu8WTEU/E7H2hY10V4GC0jSkPLCEVzcW2GBwxo9DoJVGOt
+         Lfa7itsmI5lWbVmvyyrKPf4O9q4d3OXoMpu+QZ6JcHrhWyqnz6UIKWcGmOwNTEZAgiHD
+         WP0DmNVl38g/J5gcM419gPP50//qfXS6dKi4rmCrCK/mOAYq1rWyRWVGPYLtpOF0fTRN
+         GBiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=2v4dk0m8hN9JmKQ18Z3shwOukB1yWFvXQIlD9npzeOE=;
+        b=G+3B4Te3gh41fts/HAl1pNvAAhJc4WE9slFxI655N29Z+JS0ELYGYenwPP6f6x6L+D
+         0eSqBZl59X7wgb/ZOSSsI0CIH8JUKOkszlwyrrolyJCi1eC6J43eVSsIESWgXpecRhgU
+         eYCEPXooFYbrOjmz/cQ6JzCp7/1VRCI1ajp3cMt/4/f9G1/L8m4gSsox4vNqa2D+OSm3
+         lQaDcK8fv+s0ydeVPeuSrMphUl8r+qQdJtIX7fFgi7pr8RTBMtCG8Pz/vAxNzSMNfqBY
+         wb7ah3S8zIr/s4jU2wIednhgUqYFH8AGDDO+EyoGGPfs1NOYTU4aWS3O4eo51Ezm2XG6
+         zj8w==
+X-Gm-Message-State: AFeK/H2RpRh7R98aHAONbMANaWTNVmMnFXvbp9ZdxFnNsMgE7RaINb1hWQXzNYst2EavIA==
+X-Received: by 10.223.139.152 with SMTP id o24mr13551895wra.61.1490477423600;
+        Sat, 25 Mar 2017 14:30:23 -0700 (PDT)
+Received: from hurricane.home ([145.129.9.233])
+        by smtp.gmail.com with ESMTPSA id h3sm8415552wrb.6.2017.03.25.14.30.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 25 Mar 2017 14:30:22 -0700 (PDT)
+Message-ID: <1490477422.29662.3.camel@kaarsemaker.net>
+Subject: Re: [PATCH v4 1/2] diff --no-index: optionally follow symlinks
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Date:   Sat, 25 Mar 2017 22:30:22 +0100
+In-Reply-To: <xmqqziga5lnn.fsf@gitster.mtv.corp.google.com>
+References: <20170324213110.4331-1-dennis@kaarsemaker.net>
+         <20170324213110.4331-2-dennis@kaarsemaker.net>
+         <xmqqziga5lnn.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, 2017-03-24 at 15:56 -0700, Junio C Hamano wrote:
 
---stlapxf5wtobjd2t
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/diff.c b/diff.c
+> > index be11e4ef2b..2afecfb939 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -2815,7 +2815,7 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+> >  		s->size = xsize_t(st.st_size);
+> >  		if (!s->size)
+> >  			goto empty;
+> > -		if (S_ISLNK(st.st_mode)) {
+> > +		if (S_ISLNK(s->mode)) {
+> 
+> This change is conceptually wrong.  s->mode (often) comes from the
+> index but in this codepath, after finding that s->oid is not valid
+> or we want to read from the working tree instead (several lines
+> before this part), we are committed to read from the working tree
+> and check things with st.st_* fields, not s->mode, when we decide
+> what to do with the thing we find on the filesystem, no?
 
-On Fri, Mar 24, 2017 at 11:10:13PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> On Sun, Mar 19, 2017 at 2:43 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
-> > I don't know if this is what Duy has in mind, but the facility I've
-> > described is  purely an internal code reorganization issue. I.e. us
-> > not having to write custom code for each bultin every time we want to
-> > take an option from the command line || config.
->=20
-> Here's an implementation of this I hacked up this evening. This is
-> very WIP as noted in the commit message / TODO comments, but it works!
-> I thought I'd send it to the list for comments on the general approach
-> before taking it much further.
+Hmm, true. It just accidentally does the right thing because s->mode
+happens to always match the expectations of this code. I will pass on
+more information into diff_populate_filespec so an explicit check can
+be done here.
 
-For what it's worth, I think this is a good design.  It makes it easy to
-add options when needed, but it doesn't override the defaults for the
-entire command, which was my concern.
+> > @@ -2825,6 +2825,10 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+> >  			s->should_free = 1;
+> >  			return 0;
+> >  		}
+> > +		if (S_ISLNK(st.st_mode)) {
+> > +			stat(s->path, &st);
+> > +			s->size = xsize_t(st.st_size);
+> > +		}
+> >  		if (size_only)
+> >  			return 0;
+> >  		if ((flags & CHECK_BINARY) &&
+> 
+> I suspect that this would conflict with a recent topic.  
 
-The potential for removing a decent amount of likely duplicative code
-also makes me happy.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+Possibly. I used the same base commit for the newer versions as that
+seems to be your preference. If there is a merge conflict, do you want
+me to rebase against current master?
 
---stlapxf5wtobjd2t
-Content-Type: application/pgp-signature; name="signature.asc"
+> But more importantly, this inserted code feels doubly wrong.
+> 
+>  - what allows us to unconditionally do "ah, symbolic link on the
+>    disk--find the target of the link, not the symbolic link itself"?
+>    We do not seem to be checking '--dereference' around here.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
+The implicit check above (which you already noted is faulty) allows us
+to do this. So fixing the check above will also involve fixing this.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljW4PIACgkQv1NdgR9S
-9ot6Yg//c1bZjpIebY/niE9ARW9mgICH1DA7qQaStTfT/5ix2ruxQRav9pd9P+hg
-fgF2SFd/3AkVFNWKTXRxE2dJb4do7DcyRkb51sNJaLTL3fuSxWUFbXPVqfpQpij7
-tzFUS7vgWAsDGX2Rnr7sbsvKljfOS+ASy3/euitY7KqYSAgu0Aq3q9h7+uzVCOkx
-KWNr5BzbYqlhNcMAtNJCiuIf+nwPoHnr5dWY0k55uEPTHYI8LKRpSFmcCotL4sLj
-1P2UQmjDUVX8LdxEfaA3WVdCrMoT9A5z+w0MCYaNE1KEambHjXPBGaSzxlqhXo4m
-Ao8oTDMBxb9x33+fiR0hw07eum+UdZ+lFQhQ3+TOrxy+Q/i+wrvQNACUbr/2GjVX
-nez9IJSiY+xy125leRXFUPahwkivpdS6Zcqv6kfiT08yKsMEsfDCk50+RadGtXac
-n2OsVeWNn8Vx7fqpDNO0dFSkaTEPC+1SlOcYlZUtk/wrSnBKru62BKdpgRRgPbDf
-TKau0L4ZVqfToqKU4SDQzUKSbrBsUI2jY8w3oRrWxXiQUcEseCkGFXZbdmqBfT+2
-V9C2byO0Wg+cVoqEdcEYf6XYcjWIDNQVj79E7xJzpFtq09OCP90kxVANWP4BRlfP
-D/Ze9S9p4SLrQgF7Xc45d5bMBp+nLmcVrqaP+xBfqYyDKlXZG3A=
-=avcF
------END PGP SIGNATURE-----
+>  - does this code do a reasonable thing when the path is a symbolic
+>    link that points at a directory?  what does it mean to grab
+>    st.st_size for such a thing (and then go on to open() and xmmap()
+>    it)?
 
---stlapxf5wtobjd2t--
+No, it does something entirely unreasonable. I hadn't even thought of
+testing with symlinks to directories, as my ulterior motive was the
+next commit that makes it work with pipes. This will be fixed.
+
+Thanks very much for the thoroughness of your review!
+
+D.
