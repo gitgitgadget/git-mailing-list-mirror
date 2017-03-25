@@ -2,129 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 031991FC19
-	for <e@80x24.org>; Sat, 25 Mar 2017 01:02:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 849021FC19
+	for <e@80x24.org>; Sat, 25 Mar 2017 01:35:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935775AbdCYBCm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Mar 2017 21:02:42 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:33774 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S936140AbdCYBCl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 21:02:41 -0400
-Received: by mail-lf0-f54.google.com with SMTP id h125so1914801lfe.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 18:02:40 -0700 (PDT)
+        id S1756642AbdCYBfs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 21:35:48 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33685 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756699AbdCYBfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Mar 2017 21:35:46 -0400
+Received: by mail-pg0-f67.google.com with SMTP id 79so1061117pgf.0
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 18:35:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=FUFLxEVJdZqTS3csJaNQD+JXJl5Nq0W4T82XfXUnU/s=;
-        b=p6LTua50n5AYToYHJLe4iuWK96QpHj0qacummeQmT9UhDZuE2Jx9I3e1W6bonp8jHg
-         S87wu2hvoZrqE7UIz9BCVcObDT0x0bTLjpE2L70PWDAqGkltGXMOaMcMKMOScDOJO/Uq
-         sbOdoV0KjUZ37d6umYChN62jyecu0CDY5uOTCT/6hIIrDSmOXwAQTfWylpVX4f8FMxxn
-         HfF8vGPx3EM/NCUR3J9Mt5nLwc1WJC7wP9z+JaVmwJ/i5kdCWOgk3Yvw5tF1Q9DqG8M+
-         mW/26Y0G9OsFxwnSpg/8m6xwJtMB7/C0qd1Aj7xm8f2fBZwEb3QpeJ6TooTawap3iutR
-         ErEw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=IXi2rNQhSMU733MS0Cq1ZRZvyCin36H8vznrBKQVgi0=;
+        b=s0+WBXJyuzFj5H4yI313GOutfaQ86f7xEwUrs4j4f5biWBQvvbzcaEwd1yeIw3dtRS
+         3Hah/FVF/DMJ2vzZcyrU8bmL5Mu2TsybEFpYezvfK760WaOLBlqlYuliDB9or2gJh1s0
+         Z1ZuZbXFNPasp7CobYuPKfhkyniviuDsH0yEqqo1QH36v1o9h7dbHZcBa28aDe6skB6H
+         APNEAG9KgCtrKaqG6rSq2eJa3ut6uoTUqNxzcUdK32GIOqhFzd94JaPUdg6jsCXRUfB+
+         jtJ+UsR4vb7g6gUVlAGW7KdJhooMu6WmbXjg4G/4HZvHMSIteqho/6cbVuCJcXLH8Eh7
+         myuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FUFLxEVJdZqTS3csJaNQD+JXJl5Nq0W4T82XfXUnU/s=;
-        b=mT2CvCEF8Ef/LpwvVsradVuzSWN+Q1t/ifOJHfLtoImTJjRwk1kQ66vKb2dtmbMWBr
-         b/mH8xCoTX8prkGzyQE6D2yIxm/u6MSZBoCBndVLPXf6Am66dG5/BYsZNYbMyr9XzIJn
-         JmbdK42wC3dmnmBawF1DwiU+THbmr4Ttqsc8sWGfYZb+bxsdXsuHkxv8xsS+m2tqumVc
-         qWb/VC/zzr0HD8nYCGiAfMSqZEW26s8Ng2Ib1GcX0IPTpS96S2zL7TG9CKyrahRVb93Z
-         dGvI4kM0905lQ/1DJcfSS11pNDdTX7zm7qpFRqHxGx/gV1GB7chH+AN5twyRsyf33tsJ
-         GzGg==
-X-Gm-Message-State: AFeK/H3aNkCNhLe1/1YZkoihZHo9Cplttl2Gf1GPL7xNOF2MLPoA6AMm4v7B6rOmHgeSOZycPGm7mFh2ha3FpQ==
-X-Received: by 10.25.219.213 with SMTP id t82mr5400611lfi.75.1490403759143;
- Fri, 24 Mar 2017 18:02:39 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.18.73 with HTTP; Fri, 24 Mar 2017 18:02:08 -0700 (PDT)
-In-Reply-To: <CAEA2_RLZztaRwcppwS45XfXO1n_VKw5547uScOhQON=ktttW8g@mail.gmail.com>
-References: <1490328420-75901-1-git-send-email-bnmvco@gmail.com>
- <CAGZ79kZwT-9mHTiOJ5CEjk2wDFkn6+NcogjX0=vjhsAh16ANYg@mail.gmail.com> <CAEA2_RLZztaRwcppwS45XfXO1n_VKw5547uScOhQON=ktttW8g@mail.gmail.com>
-From:   "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
-Date:   Fri, 24 Mar 2017 22:02:08 -0300
-Message-ID: <CAEA2_RJ6OjLjS5yGjvd+S0iH+Zv0Zs6StGMv3_9ON6hVzD-85A@mail.gmail.com>
-Subject: Re: [PATCH] [GSoC] remove_subtree(): reimplement using iterators
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=IXi2rNQhSMU733MS0Cq1ZRZvyCin36H8vznrBKQVgi0=;
+        b=YS0G4ta9mgjOjeu88GMvmjtX1rGX8ed4k6S7/nIc8FfRjfJUzjQ9ZIs6bGt3mNv/t+
+         HDWgToxPNQ76l7z40CcURK1urNCFmnQpfylpf40v14czBDwK3LImWLQzqc7T7yesftbz
+         Q4d1J8Eih3MBHPpioRvWF3aLxzRFA9hmm43XyWOz0tDItWP0/1HzjeoUr6dUBEiKg3Nx
+         7zj6A2Jd099L9csyhcXXSIWaNdfw6zTn9hIHlrabQEWcEdU6FBM5II/L1Dr46XBIarVs
+         7zt8CO0ck6RwG5gOG+/Hdg+XJtfc5bhvTj+kHnHqHmviNvn7sum5KYpYWTukd/E4SltN
+         i2JQ==
+X-Gm-Message-State: AFeK/H0XaNkNXgHa0fOB0dA1EH4PY6+nNHxG5sB4tOx1xL7euEfZbQB/hOy6nXq+a6boNA==
+X-Received: by 10.98.71.24 with SMTP id u24mr12763450pfa.180.1490405744322;
+        Fri, 24 Mar 2017 18:35:44 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8597:ae41:db75:6a97])
+        by smtp.gmail.com with ESMTPSA id t133sm6853495pgc.24.2017.03.24.18.35.43
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 24 Mar 2017 18:35:43 -0700 (PDT)
+Date:   Fri, 24 Mar 2017 18:35:41 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH v7 0/7] short status: improve reporting for submodule
+ changes
+Message-ID: <20170325013541.GN31294@aiede.mtv.corp.google.com>
+References: <20170324182902.19280-1-sbeller@google.com>
+ <20170325003610.15282-1-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170325003610.15282-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Fri, Mar 24, 2017 at 2:02 PM, Stefan Beller <sbeller@google.com> wrote=
-:
+Stefan Beller wrote:
 
-> Welcome to the Git community!
-
-Thank you!
-
-> Please use a more imperative style. (e.g. s/Uses/Use/ ...
-> s/and simplfying/which simplifies/)
-
-Thank you. Will do in a second version of this patch.
-
-> Thanks for this link. It gives good context for reviewing the change,
-> but it will not be good context to record as a commit message.
-> (When someone looks at a commit message later on, they are usually trying
-> to figure out what the author was thinking; if there were any special cas=
-es to
-> be thought about. Was performance on the authors mind? etc)
-
-> So I propose to put the link into the more informal section if a
-> reroll is needed.
-
-Perfect. I will remove it from the message.
-
-> Instead of constructing the path again here based on relative path
-> and the path parameter, I wonder if we could use
+> v7:
+> * taken all of Jonathan minor nits, so patch 1..6 should be good to go
+> * patch 7 lacks tests and documentation (according to Jonathan...)
+>   but as it is the last patch, just fixing a minor detail we can leave it off.
 >
->     if (unlink(diter->path))
->         ..
+> Junio, please take patch 1-6 as usual, I will be out until next Wednesday.
+[...]
+> Stefan Beller (8):
+>   submodule.c: port is_submodule_modified to use porcelain 2
+>   submodule.c: use argv_array in is_submodule_modified
+>   submodule.c: convert is_submodule_modified to use
+>     strbuf_getwholeline_fd
+>   submodule.c: port is_submodule_modified to use porcelain 2
+>   submodule.c: factor out early loop termination in
+>     is_submodule_modified
+>   submodule.c: stricter checking for submodules in is_submodule_modified
+>   short status: improve reporting for submodule changes
+>   submodule.c: correctly handle nested submodules in
+>     is_submodule_modified
 >
-> here? Then we would not need the strbuf at all?
+>  Documentation/git-status.txt |  9 +++++++
+>  submodule.c                  | 56 ++++++++++++++++++++-----------------------
+>  t/t3600-rm.sh                | 18 ++++++++++----
+>  t/t7506-status-submodule.sh  | 57 ++++++++++++++++++++++++++++++++++++++++++++
+>  wt-status.c                  | 13 ++++++++--
+>  5 files changed, 116 insertions(+), 37 deletions(-)
 
-Yes, we can! Thank you for the pointer. Will be in the next version of the
-patch.
+Patches 1-6 are
 
-> Also we'd need to handle (empty) directories differently for removal?
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-From what I've tested, we do not need to do it.
+The effect of patch 7 on --porcelain=2 output is subtle enough that I
+don't feel I understand it.  I think it heads in a good direction but
+indeed, some tests could help to illustrate the desired behavior.
 
-> Do we need to check the return code of dir_iterator_advance
-> for ITER_ERROR as well?
-
-I believe not =E2=80=93 it only tries to perform an operation if we have IT=
-ER_OK. Since
-ITER_ERROR would end up in a no-op anyway I don't see how a check for it
-would be useful.
-
->
->
-> >         }
-> > -       closedir(dir);
-> > +
-> >         if (rmdir(path->buf))
-> >                 die_errno("cannot rmdir '%s'", path->buf);
->
-> This would remove the "top level" directory as given by path.
-> When reading the dir-iterator code, I am not sure if this is
-> also part of the yield in dir_iterator_advance.
-
-I've tested it, and it does not yield in there.
-
-Thank you for the advice, and as stated, will submit a v2 of the patch
-in short notice.
-
-Thank you,
-Daniel.
+Thanks for your patient work.
+Jonathan
