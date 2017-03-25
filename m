@@ -2,56 +2,55 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DBAC1FC19
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73F5C1FC19
 	for <e@80x24.org>; Sat, 25 Mar 2017 00:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935852AbdCYAgX (ORCPT <rfc822;e@80x24.org>);
+        id S935927AbdCYAg1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Mar 2017 20:36:27 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:32964 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934689AbdCYAgX (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Mar 2017 20:36:23 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:33125 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935800AbdCYAgV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Mar 2017 20:36:21 -0400
-Received: by mail-pf0-f170.google.com with SMTP id o190so2336377pfo.0
-        for <git@vger.kernel.org>; Fri, 24 Mar 2017 17:36:20 -0700 (PDT)
+Received: by mail-pg0-f50.google.com with SMTP id w20so2676283pgc.0
+        for <git@vger.kernel.org>; Fri, 24 Mar 2017 17:36:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=037zKZ5J8Bm8yAkpOu51RtReDYXqhXxXcYEsTTqOCnE=;
-        b=jR9zFQbvfuQX4diMn7eHvrzSUFkAMFG186nqoQ1PeB0ZpZ1WGETyQ6DjhrEt5+Sykz
-         Dbo4iZzTF6TJGspIgKzuhSBA+04wXAojbL1hx4S0dEX0itUgQLPg4FOh1lfFxgwDYVQn
-         WIryKPpo0ls+W0O0r3ytDpGbPJCgVmgyFLDrxR2y7z7h3YikepgqXUrZuhY0SvggwkC2
-         iFa1LNuaBDwez3i13CFnirZ0NE2jer9DLc55tYmbLFN3PLS4BjY9etN48bmqwl0Ui6Kp
-         uOabMaYFKx4xIrvvtEqYPueafJTqAFQYLx9E5ndxXEs6zOMtpjIG2f8Enk/pBfAmbX8J
-         W0gA==
+        bh=mW7xvZbmb7ouqtMRBNeN4ffajwr5MHx6rrVdNkTLRx8=;
+        b=MrtIU83F37vbwOaxVxE/wG41A2dZiuPkOJPX3VpSMbbOpmGK1GTjIxAEBr0Wb2nXx8
+         /jujDAsuPHPh4yZ0OpuhYwFDLlH9ck1aQ/jAwGHksZQ1qfZkITNpErzXLpaxuzE1L2Ju
+         kk7Nc6an7Z5QfNrFjR3nvvVB3OeDnUWqdQt38DoCaHfDQUSpAgwrPsNBkLcf/WTWZdAe
+         DEDWxh/kWGhe8cDiy5FcnIzjAOx/npGtVj2c5YIo/CaKpNpC8lYNkP9nohROb9n8TjwQ
+         lhLATvRIjW8BKcBxQGp02hAXyJdwjMsav1XkNU9yylVgggQCWbis3ofcPYccdAK72SsM
+         xpUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=037zKZ5J8Bm8yAkpOu51RtReDYXqhXxXcYEsTTqOCnE=;
-        b=L2vjF+BO3g+5jLFWZeynC50ubg8e/P1c+pWgtJSuKXL06LI5SYeSR1WeOB5cymYw3O
-         hGuERs3uR9yThFTLjA8deNd0xYZepR1JYBK+z2yxnojn+wQXnDdnJ0W6LwYbq2xuYUyc
-         xEZEb0TtaVcuYhoaii75zA7rcR4JJD8VnPGGxJTQHhnBxdLzzc6gjS9nrnjyeS/tzbi7
-         gJNc8saUXhLn3CRkDwuG1o/69zraReD9bDYssU4GsT7jymBitdBs+fzY2pXOhmAppBio
-         WRuZkW1AB0z9LH2q6nPVN7u63+CIfP9//+4z513eTrx0BjXumYZSpTovTEjVShjp59aX
-         I9vg==
-X-Gm-Message-State: AFeK/H2YhEc2f8eQWWVdHTcEv62CSPY7TxNZ2iMtxljJDruAQI0srZi8pJYDWMyMdd6YFGj7
-X-Received: by 10.98.205.7 with SMTP id o7mr12602237pfg.171.1490402180309;
-        Fri, 24 Mar 2017 17:36:20 -0700 (PDT)
+        bh=mW7xvZbmb7ouqtMRBNeN4ffajwr5MHx6rrVdNkTLRx8=;
+        b=k882CPrwEMnt5LJJUVvdvqWSv7Fpuk5mqN+JdGv3XApZqBK7HJOXB4S0oKuHL7kyLe
+         DqEBO4P8MuDKo0v/uzl/3mdbRzBhssu7YBTm3RTMqX2X54/NlUOaB/B5xbyOQOrPyC0u
+         yjiOQhNYtowLMyraeJyMSYqulEE3g6EWkuEDM/2i0kLW+NC9T0wk4xNzjZQtQxb1J+hy
+         XGyONIUE1EE0DvZh6AmLly7jrJjp8WO/4++wc0feqHdd26xX0leqbr4I1bmF5UuSzkHs
+         RlZHOUzM2gKI87975a/4i6nGUJc33QyeG01USRujABOcPCAiPyZItDrwlD9lXxRTcOdQ
+         8AIQ==
+X-Gm-Message-State: AFeK/H0l14KZBGFrhe50PhNK5ZT4Et6aE1qUtagcWZaROomzi8wHNNJ01HloZwmq5kKPTv9x
+X-Received: by 10.99.185.1 with SMTP id z1mr12079344pge.165.1490402181571;
+        Fri, 24 Mar 2017 17:36:21 -0700 (PDT)
 Received: from localhost ([2620:0:1000:5b10:3d58:2a6c:e6ff:8de9])
-        by smtp.gmail.com with ESMTPSA id c1sm6736371pfk.112.2017.03.24.17.36.19
+        by smtp.gmail.com with ESMTPSA id a62sm6702681pgc.60.2017.03.24.17.36.20
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 24 Mar 2017 17:36:19 -0700 (PDT)
+        Fri, 24 Mar 2017 17:36:20 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, jrnieder@gmail.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/7] submodule.c: use argv_array in is_submodule_modified
-Date:   Fri, 24 Mar 2017 17:36:04 -0700
-Message-Id: <20170325003610.15282-2-sbeller@google.com>
+Subject: [PATCH 2/7] submodule.c: factor out early loop termination in is_submodule_modified
+Date:   Fri, 24 Mar 2017 17:36:05 -0700
+Message-Id: <20170325003610.15282-3-sbeller@google.com>
 X-Mailer: git-send-email 2.12.0.rc1.49.gdeb397943c.dirty
 In-Reply-To: <20170325003610.15282-1-sbeller@google.com>
 References: <20170324182902.19280-1-sbeller@google.com>
@@ -61,44 +60,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-struct argv_array is easier to use and maintain.
+This makes it easier for a follow up patch.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- submodule.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ submodule.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index 3200b7bb2b..2c667ac95a 100644
+index 2c667ac95a..93e3fefd39 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1043,12 +1043,6 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- {
- 	ssize_t len;
- 	struct child_process cp = CHILD_PROCESS_INIT;
--	const char *argv[] = {
--		"status",
--		"--porcelain",
--		NULL,
--		NULL,
--	};
- 	struct strbuf buf = STRBUF_INIT;
- 	unsigned dirty_submodule = 0;
- 	const char *line, *next_line;
-@@ -1066,10 +1060,10 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
- 	}
- 	strbuf_reset(&buf);
- 
-+	argv_array_pushl(&cp.args, "status", "--porcelain", NULL);
- 	if (ignore_untracked)
--		argv[2] = "-uno";
-+		argv_array_push(&cp.args, "-uno");
- 
--	cp.argv = argv;
- 	prepare_submodule_repo_env(&cp.env_array);
- 	cp.git_cmd = 1;
- 	cp.no_stdin = 1;
+@@ -1075,16 +1075,16 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
+ 	len = strbuf_read(&buf, cp.out, 1024);
+ 	line = buf.buf;
+ 	while (len > 2) {
+-		if ((line[0] == '?') && (line[1] == '?')) {
++		if ((line[0] == '?') && (line[1] == '?'))
+ 			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
+-			if (dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-				break;
+-		} else {
++		else
+ 			dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
+-			if (ignore_untracked ||
+-			    (dirty_submodule & DIRTY_SUBMODULE_UNTRACKED))
+-				break;
+-		}
++
++		if ((dirty_submodule & DIRTY_SUBMODULE_MODIFIED) &&
++		    ((dirty_submodule & DIRTY_SUBMODULE_UNTRACKED) ||
++		     ignore_untracked))
++			break;
++
+ 		next_line = strchr(line, '\n');
+ 		if (!next_line)
+ 			break;
 -- 
 2.12.0.rc1.49.gdeb397943c.dirty
 
