@@ -2,99 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC5DD20969
-	for <e@80x24.org>; Sun, 26 Mar 2017 06:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B968F1FC19
+	for <e@80x24.org>; Sun, 26 Mar 2017 07:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751227AbdCZGZK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Mar 2017 02:25:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51881 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751075AbdCZGZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Mar 2017 02:25:10 -0400
-Received: (qmail 17769 invoked by uid 109); 26 Mar 2017 06:18:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Mar 2017 06:18:29 +0000
-Received: (qmail 29026 invoked by uid 111); 26 Mar 2017 06:18:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 26 Mar 2017 02:18:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 26 Mar 2017 02:18:26 -0400
-Date:   Sun, 26 Mar 2017 02:18:26 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/7] PREVIEW: Introduce DC_AND_OPENSSL_SHA1 make flag
-Message-ID: <20170326061826.yx6nh3k2ps6uyyz6@sigill.intra.peff.net>
-References: <cover.1490397869.git.johannes.schindelin@gmx.de>
- <xmqq7f3d6ev1.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq7f3d6ev1.fsf@gitster.mtv.corp.google.com>
+        id S1751063AbdCZHMO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Mar 2017 03:12:14 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:37854 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750773AbdCZHMN (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Mar 2017 03:12:13 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 4C81620974;
+        Sun, 26 Mar 2017 03:03:07 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute5.internal (MEProxy); Sun, 26 Mar 2017 03:03:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mplew.is; h=cc
+        :date:from:message-id:subject:to:x-me-sender:x-me-sender
+        :x-sasl-enc:x-sasl-enc; s=fm1; bh=XeE/zHR8a/NXYOJmv+8rBwTNpU15z/
+        q/lGCzO/6+zTg=; b=bVnmntmHCqwYH5Rm29Oe20K/A3KIYEppoGL4h4qHSZYK1z
+        XxWO1D5wUUTdRsG0jHB8dxEaE8cES7THNcQP7KSTBWUmLNCY94LxG/s8RdFmboqu
+        GpTJYk5q8vPO/WArGeTvtLXdqhplXIoJSKx4jLzru68db8cDwhEyLk7V+oZ2ysjk
+        iV2cG7FKdvEwbdMZTTQZ96itcfhg0BXNju2cCyVIJDbGyo42IEvc1FJxSzV13j6G
+        woGASR7RXKL88crXVDg/3M7OTsmEYBv79YGlyZ1xo44t3UAoDjfkhDRdsaKcDTEg
+        x2/MjKdy4VwesfKIHHU5pzysHqqwCNd2+LJ7223w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:date:from:message-id:subject:to
+        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=XeE/zH
+        R8a/NXYOJmv+8rBwTNpU15z/q/lGCzO/6+zTg=; b=EnE8GXAkvxmt2VqVdS82Hi
+        YuoZ4tMr/X0z1kOoHvuSX2bovRmGSuIchi21iAAtZMTf0GBc6Zlbg6PGh2tYS+hu
+        A+zTPtOm0ngu4zlGDn6RP3FXFQes3L4txGf/ETyHEtZ4UNmnZwyppmAumM+WExaY
+        bofvvcPYrYqO/KLxsmRS4KVJT/1iPZsqIlP7+E2X41qNInsQ8KhEzvq53EmJn4SW
+        ahdzC16QGQ7Ph2b1MNCom/r3EEto+/jZ/c8ssMhXxscccH62Yr5s4pDh5S1u/J+n
+        sVa91PPPCXTAvLlxZZzEQXAVqyYb+m241cMnEjY74DedqjiZB5lgnAgRfB+YL+FA
+        ==
+X-ME-Sender: <xms:q2fXWMFCZoetL_tJGVRpVx491KlruptnW9Z_Z6HY4tufphq69sXZfA>
+X-Sasl-enc: s8IpJAeSnNcaXeyzZmS/H/tRLOWkHvYqWNUxOTMDjKjq 1490511786
+Received: from localhost.localdomain (unknown [64.238.189.53])
+        by mail.messagingengine.com (Postfix) with ESMTPA id A03F82436D;
+        Sun, 26 Mar 2017 03:03:06 -0400 (EDT)
+From:   Mike Lewis <mike@mplew.is>
+To:     git@vger.kernel.org
+Cc:     "David A . Greene" <greened@obbligato.org>,
+        Techlive Zheng <techlivezheng@gmail.com>,
+        James Denholm <nod.helm@gmail.com>,
+        David Aguilar <davvid@gmail.com>,
+        Charles Bailey <cbailey32@bloomberg.net>,
+        Mike Lewis <mike@mplew.is>
+Subject: [PATCH] contrib/subtree: add "--no-commit" flag for merge and pull
+Date:   Sun, 26 Mar 2017 03:02:38 -0400
+Message-Id: <20170326070238.64522-1-mike@mplew.is>
+X-Mailer: git-send-email 2.12.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 24, 2017 at 11:37:54PM -0700, Junio C Hamano wrote:
+Allows the user to verify and/or change the contents of the merge
+before committing as necessary
 
-> The hash that names a packfile is constructed by sorting all the
-> names of the objects contained in the packfile and running SHA-1
-> hash over it.  I think this MUST be hashed with collision-attack
-> detection.  A malicious site can feed you a packfile that contains
-> objects the site crafts so that the sorted object names would result
-> in a collision-attack, ending up with one pack that contains a sets
-> of objects different from another pack that happens to have the same
-> packname, causing Git to say "Ah, this new pack must have the same
-> set of objects as the pack we already have" and discard it,
-> resulting in lost objects and a corrupt repository with missing
-> objects.
+Signed-off-by: Mike Lewis <mike@mplew.is>
+---
+ contrib/subtree/git-subtree.sh | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-I don't think this case really matters for collision detection. What's
-important is what Git does when it receives a brand-new packfile that
-would overwrite an existing one. It _should_ keep the old one, under the
-usual "existing data wins" rule.
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index dec085a23..c30087485 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -29,6 +29,8 @@ onto=         try connecting new tree to an existing one
+ rejoin        merge the new branch back into HEAD
+  options for 'add', 'merge', and 'pull'
+ squash        merge subtree changes as a single commit
++ options for 'merge' and 'pull'
++no-commit     perform the merge, but don't commit
+ "
+ eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
+ 
+@@ -48,6 +50,7 @@ annotate=
+ squash=
+ message=
+ prefix=
++commit_option="--commit"
+ 
+ debug () {
+ 	if test -n "$debug"
+@@ -137,6 +140,12 @@ do
+ 	--no-squash)
+ 		squash=
+ 		;;
++	--no-commit)
++		commit_option="--no-commit"
++		;;
++	--no-no-commit)
++		commit_option="--commit"
++		;;
+ 	--)
+ 		break
+ 		;;
+@@ -815,17 +824,17 @@ cmd_merge () {
+ 	then
+ 		if test -n "$message"
+ 		then
+-			git merge -s subtree --message="$message" "$rev"
++			git merge -s subtree --message="$message" "$commit_option" "$rev"
+ 		else
+-			git merge -s subtree "$rev"
++			git merge -s subtree "$commit_option" "$rev"
+ 		fi
+ 	else
+ 		if test -n "$message"
+ 		then
+ 			git merge -Xsubtree="$prefix" \
+-				--message="$message" "$rev"
++				--message="$message" "$commit_option" "$rev"
+ 		else
+-			git merge -Xsubtree="$prefix" $rev
++			git merge -Xsubtree="$prefix" "$commit_option" $rev
+ 		fi
+ 	fi
+ }
+-- 
+2.12.2
 
-It should be easy to test, though:
-
-  $ git init tmp && cd tmp
-  $ git commit --allow-empty -m foo
-  $ git gc
-
-  $ touch -d yesterday .git/objects/pack/*
-  $ ls -l .git/objects/pack
-  -r--r--r-- 1 peff peff 1128 Mar 25 02:10 pack-7e9d64ac27adc9ce1b12774dd287ff9bd8a9345b.idx
-  -r--r--r-- 1 peff peff  153 Mar 25 02:10 pack-7e9d64ac27adc9ce1b12774dd287ff9bd8a9345b.pack
-
-  $ git index-pack --stdin <.git/objects/pack/*.pack
-  pack	7e9d64ac27adc9ce1b12774dd287ff9bd8a9345b
-
-  $ ls -l .git/objects/pack
-  -r--r--r-- 1 peff peff 1128 Mar 25 02:10 pack-7e9d64ac27adc9ce1b12774dd287ff9bd8a9345b.idx
-  -r--r--r-- 1 peff peff  153 Mar 25 02:10 pack-7e9d64ac27adc9ce1b12774dd287ff9bd8a9345b.pack
-
-Looks like the timestamps were retained. <phew> And if we use strace, we
-can see what happens:
-
-  $ strace git index-pac k--stdin <.git/objects/pack/*.pack
-  link(".git/objects/pack/tmp_pack_YSrdWU", ".git/objects/pack/pack-7e9d64ac27adc9ce1b12774dd287ff9bd8a9345b.pack") = -1 EEXIST (File exists)
-  unlink(".git/objects/pack/tmp_pack_YSrdWU") = 0
-  link(".git/objects/pack/tmp_idx_O94NNU", ".git/objects/pack/pack-7e9d64ac27adc9ce1b12774dd287ff9bd8a9345b.idx") = -1 EEXIST (File exists)
-  unlink(".git/objects/pack/tmp_idx_O94NNU") = 0
-
-This is due to the link()/EEXIST handling in finalize_object_file. It
-has a FIXME for a collision check, so we could actually detect at that
-point whether we have a real collision, or if the other side just
-happened to send us the same pack.
-
-I wouldn't be surprised if the dumb-http walker is not so careful,
-though (but the solution is to make it careful, not to worry about
-a weak hash algorithm).
-
-The rest of your email all made sense to me.
-
--Peff
