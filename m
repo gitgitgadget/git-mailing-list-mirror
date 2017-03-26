@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13EAC20966
-	for <e@80x24.org>; Sun, 26 Mar 2017 02:46:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 084F820966
+	for <e@80x24.org>; Sun, 26 Mar 2017 02:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751407AbdCZCp7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 22:45:59 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35970 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751327AbdCZCp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 22:45:57 -0400
-Received: by mail-pg0-f66.google.com with SMTP id 81so4663552pgh.3
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:45:51 -0700 (PDT)
+        id S1751296AbdCZCqj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 22:46:39 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33384 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751252AbdCZCqi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 22:46:38 -0400
+Received: by mail-pf0-f196.google.com with SMTP id p189so4078739pfp.0
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Kmb306zo9Srs/sf/Cl4AouwQ9vRKnh1SrhPWI+NBg+A=;
-        b=M3PDe5UEcV4h/szUo0CisVPKaCnc2avdaphbZiTMWY+HgMduB1Td/SZmS1oZgn9ZyW
-         lSfDpv5n2gfEAhDGBV1R/xx2eGIPNpDiAoOi81AxHs+6OV9mcvsFfhTHt1xWD2hIWZ6V
-         lxlLgCWPIh/+ULJeMfJvfqdJo6OAT0B/yAnnFBOu8BquXbCdd7SqxLSigPxub9tRhLSm
-         h80TvOzG7Nhg3CPrFtCAn9RqOb9DdyZTxph1WWytsoq2YuQw1DWEK5zuLhvQWrtnO1tS
-         XOMb3Bl5AObhLqWWRg6l714RRmYQI4MbPQZ2P2NtDho/UXuXnU/9IeEHR8tFLJtVkO04
-         sAew==
+        bh=akdNgP9CTOvQaRVrFyL/6OSatV8UOoYjFf6taERJCPY=;
+        b=cMACvvUxDU5ekL4nZr0qFHwCDCEbBOEEVfd/4GA4Uj5DbaJEumV/lgxq/72P5PR03N
+         o0at2bYcNC55A80g0qbQqQ5oUBOgm0+5UH47tKBiWta5Z9+Hpn70GIIVQGDsfm8ydeR8
+         O5M5aLeAJg6+E0zn0lX/e8KHYpyzqsL/Lp7fUn5ptfzVvLTcsiBb9sv7qY5BxFdp0TBK
+         OEu6eGZ+r4fnRTgIXshtKRniZonj9Wxys+d0tvRcnN/XZckjub73eDY+/SChgOv5ElnO
+         l/kAI8YLEb1cPZ9H4Sz9QJlmAXjJHwcvu0oLrvGYEiQwEU1tMWxFMXu8gy9TnOJowX75
+         NGpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Kmb306zo9Srs/sf/Cl4AouwQ9vRKnh1SrhPWI+NBg+A=;
-        b=lSapblAP9XTQI3p+3mxt+w7y+5tYM8KuMUFeoF15zg+2sWRGilLlK04iEgvOFwkhUA
-         eOsT91JaVQXX8eFyKdgqiTs9pJDXo/f6Th4WM98zmTKXd5mf+iMY/FCaAtWFXj2fh6kC
-         IHwXUQEED0TwJeYr0ace7Sf/vJ/2csRS4IGQyrQixJEq+JN6UBXHS750yLipEu7DdVWa
-         saSSBNidLa8VVvZWrYT7RGjpzDsdG1tmlPRJD9tNOjBYANOAC6kfNAuHzpQEhcMrtCEZ
-         ydTXKen1tKThU3DONdVVmm8ty3edI3vDaJJxeYcaQ/YEOpXV7IWLR2/hZQXaqsXeM/Vm
-         kWLA==
-X-Gm-Message-State: AFeK/H1LFYEEz1OUnCTBCeknAIo7kS9buAICAZ0qqwUYTq/RBbeoYVQe9nJ9L/wWJ65QsA==
-X-Received: by 10.99.163.2 with SMTP id s2mr17053053pge.43.1490496331448;
-        Sat, 25 Mar 2017 19:45:31 -0700 (PDT)
+        bh=akdNgP9CTOvQaRVrFyL/6OSatV8UOoYjFf6taERJCPY=;
+        b=LfxW1z/wJ3aodiVdCoYjpWQRuhAMLUNWQhkibimj+yN/kwkL93wX3P5J9fp3yPUwwJ
+         np8hM97Q8do7rrUGDUGOIZPSkiHYSHs8ZxQD7gtY3wfrWC4ftC5oowDE4uLw30C/a0GL
+         vcr4Zzg/Xxp/YsNrAtZfzvGp+SEIQYNU3cULXa851e1tC8dgKMF9Tc/c21SnDU7oGQWe
+         JOFq2n8hSLSNz9MWWVPVxSax0+L73o+UZFSlT6IC6IGvsmIxtUpTxPrTbC4x87PlYIQN
+         TxSZQn+3cO8NXfx7VOKratcJSzL7OuxWgOPaKRIJbIPjlDvFUpQYO9D3EGVYGgRVmvZP
+         7NMQ==
+X-Gm-Message-State: AFeK/H2rcYNACwyEiZ1nCgsoUKUyThK1DOk9qiidRn10szqpMoUYfvIUVeC66iW9wIdx6A==
+X-Received: by 10.99.114.16 with SMTP id n16mr14096410pgc.230.1490496344062;
+        Sat, 25 Mar 2017 19:45:44 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id x10sm12817491pff.72.2017.03.25.19.45.27
+        by smtp.gmail.com with ESMTPSA id s26sm12820717pge.33.2017.03.25.19.45.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Mar 2017 19:45:30 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:45:25 +0700
+        Sat, 25 Mar 2017 19:45:43 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:45:38 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v7 25/28] t/helper: add test-ref-store to test ref-store functions
-Date:   Sun, 26 Mar 2017 09:42:38 +0700
-Message-Id: <20170326024241.31984-26-pclouds@gmail.com>
+Subject: [PATCH v7 27/28] t1406: new tests for submodule ref store
+Date:   Sun, 26 Mar 2017 09:42:40 +0700
+Message-Id: <20170326024241.31984-28-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170326024241.31984-1-pclouds@gmail.com>
 References: <20170318020337.22767-1-pclouds@gmail.com>
@@ -75,319 +75,111 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Makefile                        |   1 +
- t/helper/.gitignore             |   1 +
- t/helper/test-ref-store.c (new) | 277 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 279 insertions(+)
- create mode 100644 t/helper/test-ref-store.c
+ t/t1406-submodule-ref-store.sh (new +x) | 95 +++++++++++++++++++++++++++++++++
+ 1 file changed, 95 insertions(+)
+ create mode 100755 t/t1406-submodule-ref-store.sh
 
-diff --git a/Makefile b/Makefile
-index a5a11e721a..5f3844e33e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -622,6 +622,7 @@ TEST_PROGRAMS_NEED_X += test-parse-options
- TEST_PROGRAMS_NEED_X += test-path-utils
- TEST_PROGRAMS_NEED_X += test-prio-queue
- TEST_PROGRAMS_NEED_X += test-read-cache
-+TEST_PROGRAMS_NEED_X += test-ref-store
- TEST_PROGRAMS_NEED_X += test-regex
- TEST_PROGRAMS_NEED_X += test-revision-walking
- TEST_PROGRAMS_NEED_X += test-run-command
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index d6e8b36798..5f68aa8f8a 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -19,6 +19,7 @@
- /test-path-utils
- /test-prio-queue
- /test-read-cache
-+/test-ref-store
- /test-regex
- /test-revision-walking
- /test-run-command
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-new file mode 100644
-index 0000000000..2d84c45ffe
+diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
+new file mode 100755
+index 0000000000..22214ebd32
 --- /dev/null
-+++ b/t/helper/test-ref-store.c
-@@ -0,0 +1,277 @@
-+#include "cache.h"
-+#include "refs.h"
++++ b/t/t1406-submodule-ref-store.sh
+@@ -0,0 +1,95 @@
++#!/bin/sh
 +
-+static const char *notnull(const char *arg, const char *name)
-+{
-+	if (!arg)
-+		die("%s required", name);
-+	return arg;
-+}
++test_description='test submodule ref store api'
 +
-+static unsigned int arg_flags(const char *arg, const char *name)
-+{
-+	return atoi(notnull(arg, name));
-+}
++. ./test-lib.sh
 +
-+static const char **get_store(const char **argv, struct ref_store **refs)
-+{
-+	const char *gitdir;
++RUN="test-ref-store submodule:sub"
 +
-+	if (!argv[0]) {
-+		die("ref store required");
-+	} else if (!strcmp(argv[0], "main")) {
-+		*refs = get_main_ref_store();
-+	} else if (skip_prefix(argv[0], "submodule:", &gitdir)) {
-+		struct strbuf sb = STRBUF_INIT;
-+		int ret;
++test_expect_success 'setup' '
++	git init sub &&
++	(
++		cd sub &&
++		test_commit first &&
++		git checkout -b new-master
++	)
++'
 +
-+		ret = strbuf_git_path_submodule(&sb, gitdir, "objects/");
-+		if (ret)
-+			die("strbuf_git_path_submodule failed: %d", ret);
-+		add_to_alternates_memory(sb.buf);
-+		strbuf_release(&sb);
++test_expect_success 'pack_refs() not allowed' '
++	test_must_fail $RUN pack-refs 3
++'
 +
-+		*refs = get_submodule_ref_store(gitdir);
-+	} else
-+		die("unknown backend %s", argv[0]);
++test_expect_success 'peel_ref(new-tag)' '
++	git -C sub rev-parse HEAD >expected &&
++	git -C sub tag -a -m new-tag new-tag HEAD &&
++	$RUN peel-ref refs/tags/new-tag >actual &&
++	test_cmp expected actual
++'
 +
-+	if (!*refs)
-+		die("no ref store");
++test_expect_success 'create_symref() not allowed' '
++	test_must_fail $RUN create-symref FOO refs/heads/master nothing
++'
 +
-+	/* consume store-specific optional arguments if needed */
++test_expect_success 'delete_refs() not allowed' '
++	test_must_fail $RUN delete-refs 0 FOO refs/tags/new-tag
++'
 +
-+	return argv + 1;
-+}
++test_expect_success 'rename_refs() not allowed' '
++	test_must_fail $RUN rename-ref refs/heads/master refs/heads/new-master
++'
 +
++test_expect_success 'for_each_ref(refs/heads/)' '
++	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
++	cat >expected <<-\EOF &&
++	master 0x0
++	new-master 0x0
++	EOF
++	test_cmp expected actual
++'
 +
-+static int cmd_pack_refs(struct ref_store *refs, const char **argv)
-+{
-+	unsigned int flags = arg_flags(*argv++, "flags");
++test_expect_success 'resolve_ref(master)' '
++	SHA1=`git -C sub rev-parse master` &&
++	echo "$SHA1 refs/heads/master 0x0" >expected &&
++	$RUN resolve-ref refs/heads/master 0 >actual &&
++	test_cmp expected actual
++'
 +
-+	return refs_pack_refs(refs, flags);
-+}
++test_expect_success 'verify_ref(new-master)' '
++	$RUN verify-ref refs/heads/new-master
++'
 +
-+static int cmd_peel_ref(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+	unsigned char sha1[20];
-+	int ret;
++test_expect_success 'for_each_reflog()' '
++	$RUN for-each-reflog | sort | cut -c 42- >actual &&
++	cat >expected <<-\EOF &&
++	HEAD 0x1
++	refs/heads/master 0x0
++	refs/heads/new-master 0x0
++	EOF
++	test_cmp expected actual
++'
 +
-+	ret = refs_peel_ref(refs, refname, sha1);
-+	if (!ret)
-+		puts(sha1_to_hex(sha1));
-+	return ret;
-+}
++test_expect_success 'for_each_reflog_ent()' '
++	$RUN for-each-reflog-ent HEAD >actual && cat actual &&
++	head -n1 actual | grep first &&
++	tail -n2 actual | head -n1 | grep master.to.new
++'
 +
-+static int cmd_create_symref(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+	const char *target = notnull(*argv++, "target");
-+	const char *logmsg = *argv++;
++test_expect_success 'for_each_reflog_ent_reverse()' '
++	$RUN for-each-reflog-ent-reverse HEAD >actual &&
++	head -n1 actual | grep master.to.new &&
++	tail -n2 actual | head -n1 | grep first
++'
 +
-+	return refs_create_symref(refs, refname, target, logmsg);
-+}
++test_expect_success 'reflog_exists(HEAD)' '
++	$RUN reflog-exists HEAD
++'
 +
-+static int cmd_delete_refs(struct ref_store *refs, const char **argv)
-+{
-+	unsigned int flags = arg_flags(*argv++, "flags");
-+	struct string_list refnames = STRING_LIST_INIT_NODUP;
++test_expect_success 'delete_reflog() not allowed' '
++	test_must_fail $RUN delete-reflog HEAD
++'
 +
-+	while (*argv)
-+		string_list_append(&refnames, *argv++);
++test_expect_success 'create-reflog() not allowed' '
++	test_must_fail $RUN create-reflog HEAD 1
++'
 +
-+	return refs_delete_refs(refs, &refnames, flags);
-+}
-+
-+static int cmd_rename_ref(struct ref_store *refs, const char **argv)
-+{
-+	const char *oldref = notnull(*argv++, "oldref");
-+	const char *newref = notnull(*argv++, "newref");
-+	const char *logmsg = *argv++;
-+
-+	return refs_rename_ref(refs, oldref, newref, logmsg);
-+}
-+
-+static int each_ref(const char *refname, const struct object_id *oid,
-+		    int flags, void *cb_data)
-+{
-+	printf("%s %s 0x%x\n", oid_to_hex(oid), refname, flags);
-+	return 0;
-+}
-+
-+static int cmd_for_each_ref(struct ref_store *refs, const char **argv)
-+{
-+	const char *prefix = notnull(*argv++, "prefix");
-+
-+	return refs_for_each_ref_in(refs, prefix, each_ref, NULL);
-+}
-+
-+static int cmd_resolve_ref(struct ref_store *refs, const char **argv)
-+{
-+	unsigned char sha1[20];
-+	const char *refname = notnull(*argv++, "refname");
-+	int resolve_flags = arg_flags(*argv++, "resolve-flags");
-+	int flags;
-+	const char *ref;
-+
-+	ref = refs_resolve_ref_unsafe(refs, refname, resolve_flags,
-+				      sha1, &flags);
-+	printf("%s %s 0x%x\n", sha1_to_hex(sha1), ref, flags);
-+	return ref ? 0 : 1;
-+}
-+
-+static int cmd_verify_ref(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+	struct strbuf err = STRBUF_INIT;
-+	int ret;
-+
-+	ret = refs_verify_refname_available(refs, refname, NULL, NULL, &err);
-+	if (err.len)
-+		puts(err.buf);
-+	return ret;
-+}
-+
-+static int cmd_for_each_reflog(struct ref_store *refs, const char **argv)
-+{
-+	return refs_for_each_reflog(refs, each_ref, NULL);
-+}
-+
-+static int each_reflog(struct object_id *old_oid, struct object_id *new_oid,
-+		       const char *committer, unsigned long timestamp,
-+		       int tz, const char *msg, void *cb_data)
-+{
-+	printf("%s %s %s %lu %d %s\n",
-+	       oid_to_hex(old_oid), oid_to_hex(new_oid),
-+	       committer, timestamp, tz, msg);
-+	return 0;
-+}
-+
-+static int cmd_for_each_reflog_ent(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+
-+	return refs_for_each_reflog_ent(refs, refname, each_reflog, refs);
-+}
-+
-+static int cmd_for_each_reflog_ent_reverse(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+
-+	return refs_for_each_reflog_ent_reverse(refs, refname, each_reflog, refs);
-+}
-+
-+static int cmd_reflog_exists(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+
-+	return !refs_reflog_exists(refs, refname);
-+}
-+
-+static int cmd_create_reflog(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+	int force_create = arg_flags(*argv++, "force-create");
-+	struct strbuf err = STRBUF_INIT;
-+	int ret;
-+
-+	ret = refs_create_reflog(refs, refname, force_create, &err);
-+	if (err.len)
-+		puts(err.buf);
-+	return ret;
-+}
-+
-+static int cmd_delete_reflog(struct ref_store *refs, const char **argv)
-+{
-+	const char *refname = notnull(*argv++, "refname");
-+
-+	return refs_delete_reflog(refs, refname);
-+}
-+
-+static int cmd_reflog_expire(struct ref_store *refs, const char **argv)
-+{
-+	die("not supported yet");
-+}
-+
-+static int cmd_delete_ref(struct ref_store *refs, const char **argv)
-+{
-+	const char *msg = notnull(*argv++, "msg");
-+	const char *refname = notnull(*argv++, "refname");
-+	const char *sha1_buf = notnull(*argv++, "old-sha1");
-+	unsigned int flags = arg_flags(*argv++, "flags");
-+	unsigned char old_sha1[20];
-+
-+	if (get_sha1_hex(sha1_buf, old_sha1))
-+		die("not sha-1");
-+
-+	return refs_delete_ref(refs, msg, refname, old_sha1, flags);
-+}
-+
-+static int cmd_update_ref(struct ref_store *refs, const char **argv)
-+{
-+	const char *msg = notnull(*argv++, "msg");
-+	const char *refname = notnull(*argv++, "refname");
-+	const char *new_sha1_buf = notnull(*argv++, "old-sha1");
-+	const char *old_sha1_buf = notnull(*argv++, "old-sha1");
-+	unsigned int flags = arg_flags(*argv++, "flags");
-+	unsigned char old_sha1[20];
-+	unsigned char new_sha1[20];
-+
-+	if (get_sha1_hex(old_sha1_buf, old_sha1) ||
-+	    get_sha1_hex(new_sha1_buf, new_sha1))
-+		die("not sha-1");
-+
-+	return refs_update_ref(refs, msg, refname,
-+			       new_sha1, old_sha1,
-+			       flags, UPDATE_REFS_DIE_ON_ERR);
-+}
-+
-+struct command {
-+	const char *name;
-+	int (*func)(struct ref_store *refs, const char **argv);
-+};
-+
-+static struct command commands[] = {
-+	{ "pack-refs", cmd_pack_refs },
-+	{ "peel-ref", cmd_peel_ref },
-+	{ "create-symref", cmd_create_symref },
-+	{ "delete-refs", cmd_delete_refs },
-+	{ "rename-ref", cmd_rename_ref },
-+	{ "for-each-ref", cmd_for_each_ref },
-+	{ "resolve-ref", cmd_resolve_ref },
-+	{ "verify-ref", cmd_verify_ref },
-+	{ "for-each-reflog", cmd_for_each_reflog },
-+	{ "for-each-reflog-ent", cmd_for_each_reflog_ent },
-+	{ "for-each-reflog-ent-reverse", cmd_for_each_reflog_ent_reverse },
-+	{ "reflog-exists", cmd_reflog_exists },
-+	{ "create-reflog", cmd_create_reflog },
-+	{ "delete-reflog", cmd_delete_reflog },
-+	{ "reflog-expire", cmd_reflog_expire },
-+	/*
-+	 * backend transaction functions can't be tested separately
-+	 */
-+	{ "delete-ref", cmd_delete_ref },
-+	{ "update-ref", cmd_update_ref },
-+	{ NULL, NULL }
-+};
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	struct ref_store *refs;
-+	const char *func;
-+	struct command *cmd;
-+
-+	setup_git_directory();
-+
-+	argv = get_store(argv + 1, &refs);
-+
-+	func = *argv++;
-+	if (!func)
-+		die("ref function required");
-+	for (cmd = commands; cmd->name; cmd++) {
-+		if (!strcmp(func, cmd->name))
-+			return cmd->func(refs, argv);
-+	}
-+	die("unknown function %s", func);
-+	return 0;
-+}
++test_done
 -- 
 2.11.0.157.gd943d85
 
