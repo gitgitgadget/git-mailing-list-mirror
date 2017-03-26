@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A73A520966
-	for <e@80x24.org>; Sun, 26 Mar 2017 02:44:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA16B20966
+	for <e@80x24.org>; Sun, 26 Mar 2017 02:44:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751338AbdCZCo2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 22:44:28 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34426 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751242AbdCZCo1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 22:44:27 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o126so4075665pfb.1
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:44:26 -0700 (PDT)
+        id S1751344AbdCZCoc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 22:44:32 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:34324 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751242AbdCZCob (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 22:44:31 -0400
+Received: by mail-pf0-f196.google.com with SMTP id o126so4074976pfb.1
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:44:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PK4344s8i8G9kABJFQAU6ZqUzGT/eP+nfevErubh2+4=;
-        b=R4WgRi+Q9hOcgfssc3aSCTyza3qre0oJJF13fsCGej37EYK8oruK9vzfBQ2NX82M78
-         ejCY2JemyIatFXmXeWnHE5GfU2gQnVfbFo+krAC0H4OnwEesMaNjSmfezdYmcvkhZc8/
-         8cJnwp+Gz8cidE8QfSukDv/087Lh8qm+4I5wwyFZyE5v5DxQPgBTlQe03A+jT8Yc3LeE
-         JZ91MR1bXX+5itVdKEor7WTxNrlZ6abCnVbsGAfqZMagpIEVVDMepTbQdeigf996ZZvN
-         9eGJz8KN7kTWiOmsji4BeVtCIRyB4NbPiBwRoopkEvpvT/ub2j5h3NOVN7ILZRZ1km7E
-         8CfA==
+        bh=rwIw6YH2xehxK1z2myg25V8Gqyniho4keTODyK/9yD0=;
+        b=EU77/OGjJk6M1FGdtKngvjna8hZ1M7JewyCk2GHK9zfyCsL6ic1HsSJ/c+WgJ5PZs7
+         cx1W2glZs3ThJOY8r51679Q/Dj59oy7ifDNp679FmOLEhTajCzBhwLurEN1LDDyHA48T
+         PKXIFd8i9EYM/BZOOhwF5poh6y632aDQlYFWW5i4/1tXMmISUhyNuDO7rOwarDbMg9DT
+         ceVIqPdgA3c/SWpOaWKFCAL3eGOLZ3k4si/A0DgrvI9Rzd71Jhm+K6p7hB+FL4f7hH0q
+         A4iPfx78uLhN0J8nzoI037aBeEmHRUx9U92RtxfLks3UYN5KcHAc3fN61tGFlyzVMi1C
+         u6Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PK4344s8i8G9kABJFQAU6ZqUzGT/eP+nfevErubh2+4=;
-        b=fqybQJLgDfQEHzhkYK60+pAzElIEKZvhY/3NUjVy+FpsJGV2IOQyT8n4vdRy8pbcRc
-         3tc/etO//+aRNUnPWzlIp2dlaoM1G7Y8j9Wp8te5cEJGIseHorlsokHSlxxDSFsgmwZM
-         SRMMnaGfPM71+Rk8Rlvd2O27/u+rz2j/oVcG8YOtwSE355QXBnKzqfvx8MyXHi1pef9B
-         qKxP7RUelPXFPBzhgQqpUDygQ4F0WM2sKi1fH7KvPx3CSZqLQCc29lPL3ZEd03Buw16M
-         CjhTIJUi+tsrQdL86N6P3ixzN+dnz7s4ZuWT1569HPWsf2z70U8KtxegeYKbMw56CO9A
-         TB6A==
-X-Gm-Message-State: AFeK/H39XB3i7vuyYy7WIqJAhuHEXdQNyaY+lljlI3e/E3UVeaDW9RoXtB9YGwr8WabewQ==
-X-Received: by 10.84.224.66 with SMTP id a2mr11273073plt.32.1490496265887;
-        Sat, 25 Mar 2017 19:44:25 -0700 (PDT)
+        bh=rwIw6YH2xehxK1z2myg25V8Gqyniho4keTODyK/9yD0=;
+        b=sRQiiXb34rxFZWNZ7GqLLrXjOtka4BmPEHw6rQu4Nnby+N/dfKOEg0gN0f6kkJ9TVi
+         F/RFbl+trx2iEbgOOPuMiHmXtyk95h3tw2I+FcKxXlRG/uM7zc0mvQ3cGvX/kTg9eVm1
+         b1vxofgUAj+yDz//B2dnqeZxSOEAbRq/PVuzVx/zRmuLpPLxBi9zKB43KjSnICe13WUD
+         bAlxZtxPHZfhMyobpKTZU2MIJm4WUsHn8Z4uP5dl49flSSNl+Nalmi2Ce1ZSDgYgym0u
+         28gKRQbV+7wrQIsanhV0STTa/bN8SxxSFY0PjN0oM+/Wq+wQ2mkPhK1Va9b6HQaq4RRc
+         euMw==
+X-Gm-Message-State: AFeK/H0rCeiR6U2F6ijm4MxrnRiJhunGyU/U0z3pzvt9DXLL2wQLclZfWRzzHnHeiiZ9Cw==
+X-Received: by 10.99.96.68 with SMTP id u65mr17392022pgb.159.1490496240888;
+        Sat, 25 Mar 2017 19:44:00 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id p24sm12836893pfd.26.2017.03.25.19.44.21
+        by smtp.gmail.com with ESMTPSA id f21sm12809338pfj.44.2017.03.25.19.43.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Mar 2017 19:44:25 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:44:20 +0700
+        Sat, 25 Mar 2017 19:44:00 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:43:54 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v7 15/28] refs.c: kill register_ref_store(), add register_submodule_ref_store()
-Date:   Sun, 26 Mar 2017 09:42:28 +0700
-Message-Id: <20170326024241.31984-16-pclouds@gmail.com>
+Subject: [PATCH v7 11/28] files-backend: remove the use of git_path()
+Date:   Sun, 26 Mar 2017 09:42:24 +0700
+Message-Id: <20170326024241.31984-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170326024241.31984-1-pclouds@gmail.com>
 References: <20170318020337.22767-1-pclouds@gmail.com>
@@ -73,93 +73,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the last function in this code (besides public API) that takes
-submodule argument and handles both main/submodule cases. Break it down,
-move main store registration in get_main_ref_store() and keep the rest
-in register_submodule_ref_store().
+Given $GIT_DIR and $GIT_COMMON_DIR, files-backend is now in charge of
+deciding what goes where (*). The end goal is to pass $GIT_DIR only. A
+refs "view" of a linked worktree is a logical ref store that combines
+two files backends together.
+
+(*) Not entirely true since strbuf_git_path_submodule() still does path
+translation underneath. But that's for another patch.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 45 ++++++++++++++++++++-------------------------
- 1 file changed, 20 insertions(+), 25 deletions(-)
+ refs/files-backend.c | 43 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 38 insertions(+), 5 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 66dc84787d..87f64271ac 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1412,29 +1412,6 @@ static struct ref_store *lookup_submodule_ref_store(const char *submodule)
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 741e52d143..9676cd32e4 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -923,7 +923,8 @@ struct files_ref_store {
+ 	 * store:
+ 	 */
+ 	const char *submodule;
+-
++	char *gitdir;
++	char *gitcommondir;
+ 	char *packed_refs_path;
+ 
+ 	struct ref_entry *loose;
+@@ -985,6 +986,8 @@ static struct ref_store *files_ref_store_create(const char *submodule)
+ {
+ 	struct files_ref_store *refs = xcalloc(1, sizeof(*refs));
+ 	struct ref_store *ref_store = (struct ref_store *)refs;
++	struct strbuf sb = STRBUF_INIT;
++	const char *gitdir = get_git_dir();
+ 
+ 	base_ref_store_init(ref_store, &refs_be_files);
+ 
+@@ -995,7 +998,11 @@ static struct ref_store *files_ref_store_create(const char *submodule)
+ 		return ref_store;
+ 	}
+ 
+-	refs->packed_refs_path = git_pathdup("packed-refs");
++	refs->gitdir = xstrdup(gitdir);
++	get_common_dir_noenv(&sb, gitdir);
++	refs->gitcommondir = strbuf_detach(&sb, NULL);
++	strbuf_addf(&sb, "%s/packed-refs", refs->gitcommondir);
++	refs->packed_refs_path = strbuf_detach(&sb, NULL);
+ 
+ 	return ref_store;
+ }
+@@ -1173,11 +1180,26 @@ static void files_reflog_path(struct files_ref_store *refs,
+ 			      const char *refname)
+ {
+ 	if (!refname) {
+-		strbuf_git_path(sb, "logs");
++		/*
++		 * FIXME: of course this is wrong in multi worktree
++		 * setting. To be fixed real soon.
++		 */
++		strbuf_addf(sb, "%s/logs", refs->gitcommondir);
+ 		return;
+ 	}
+ 
+-	strbuf_git_path(sb, "logs/%s", refname);
++	switch (ref_type(refname)) {
++	case REF_TYPE_PER_WORKTREE:
++	case REF_TYPE_PSEUDOREF:
++		strbuf_addf(sb, "%s/logs/%s", refs->gitdir, refname);
++		break;
++	case REF_TYPE_NORMAL:
++		strbuf_addf(sb, "%s/logs/%s", refs->gitcommondir, refname);
++		break;
++	default:
++		die("BUG: unknown ref type %d of ref %s",
++		    ref_type(refname), refname);
++	}
+ }
+ 
+ static void files_ref_path(struct files_ref_store *refs,
+@@ -1189,7 +1211,18 @@ static void files_ref_path(struct files_ref_store *refs,
+ 		return;
+ 	}
+ 
+-	strbuf_git_path(sb, "%s", refname);
++	switch (ref_type(refname)) {
++	case REF_TYPE_PER_WORKTREE:
++	case REF_TYPE_PSEUDOREF:
++		strbuf_addf(sb, "%s/%s", refs->gitdir, refname);
++		break;
++	case REF_TYPE_NORMAL:
++		strbuf_addf(sb, "%s/%s", refs->gitcommondir, refname);
++		break;
++	default:
++		die("BUG: unknown ref type %d of ref %s",
++		    ref_type(refname), refname);
++	}
  }
  
  /*
-- * Register the specified ref_store to be the one that should be used
-- * for submodule (or the main repository if submodule is NULL). It is
-- * a fatal error to call this function twice for the same submodule.
-- */
--static void register_ref_store(struct ref_store *refs, const char *submodule)
--{
--	if (!submodule) {
--		if (main_ref_store)
--			die("BUG: main_ref_store initialized twice");
--
--		main_ref_store = refs;
--	} else {
--		if (!submodule_ref_stores.tablesize)
--			hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 0);
--
--		if (hashmap_put(&submodule_ref_stores,
--				alloc_submodule_hash_entry(submodule, refs)))
--			die("BUG: ref_store for submodule '%s' initialized twice",
--			    submodule);
--	}
--}
--
--/*
-  * Create, record, and return a ref_store instance for the specified
-  * submodule (or the main repository if submodule is NULL).
-  */
-@@ -1448,7 +1425,6 @@ static struct ref_store *ref_store_init(const char *submodule)
- 		die("BUG: reference backend %s is unknown", be_name);
- 
- 	refs = be->init(submodule);
--	register_ref_store(refs, submodule);
- 	return refs;
- }
- 
-@@ -1457,7 +1433,25 @@ static struct ref_store *get_main_ref_store(void)
- 	if (main_ref_store)
- 		return main_ref_store;
- 
--	return ref_store_init(NULL);
-+	main_ref_store = ref_store_init(NULL);
-+	return main_ref_store;
-+}
-+
-+/*
-+ * Register the specified ref_store to be the one that should be used
-+ * for submodule. It is a fatal error to call this function twice for
-+ * the same submodule.
-+ */
-+static void register_submodule_ref_store(struct ref_store *refs,
-+					 const char *submodule)
-+{
-+	if (!submodule_ref_stores.tablesize)
-+		hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 0);
-+
-+	if (hashmap_put(&submodule_ref_stores,
-+			alloc_submodule_hash_entry(submodule, refs)))
-+		die("BUG: ref_store for submodule '%s' initialized twice",
-+		    submodule);
- }
- 
- struct ref_store *get_ref_store(const char *submodule)
-@@ -1481,6 +1475,7 @@ struct ref_store *get_ref_store(const char *submodule)
- 		return NULL;
- 
- 	refs = ref_store_init(submodule);
-+	register_submodule_ref_store(refs, submodule);
- 	return refs;
- }
- 
 -- 
 2.11.0.157.gd943d85
 
