@@ -2,129 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B968F1FC19
-	for <e@80x24.org>; Sun, 26 Mar 2017 07:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42E4C1FC19
+	for <e@80x24.org>; Sun, 26 Mar 2017 08:27:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751063AbdCZHMO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Mar 2017 03:12:14 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:37854 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750773AbdCZHMN (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Mar 2017 03:12:13 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id 4C81620974;
-        Sun, 26 Mar 2017 03:03:07 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Sun, 26 Mar 2017 03:03:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mplew.is; h=cc
-        :date:from:message-id:subject:to:x-me-sender:x-me-sender
-        :x-sasl-enc:x-sasl-enc; s=fm1; bh=XeE/zHR8a/NXYOJmv+8rBwTNpU15z/
-        q/lGCzO/6+zTg=; b=bVnmntmHCqwYH5Rm29Oe20K/A3KIYEppoGL4h4qHSZYK1z
-        XxWO1D5wUUTdRsG0jHB8dxEaE8cES7THNcQP7KSTBWUmLNCY94LxG/s8RdFmboqu
-        GpTJYk5q8vPO/WArGeTvtLXdqhplXIoJSKx4jLzru68db8cDwhEyLk7V+oZ2ysjk
-        iV2cG7FKdvEwbdMZTTQZ96itcfhg0BXNju2cCyVIJDbGyo42IEvc1FJxSzV13j6G
-        woGASR7RXKL88crXVDg/3M7OTsmEYBv79YGlyZ1xo44t3UAoDjfkhDRdsaKcDTEg
-        x2/MjKdy4VwesfKIHHU5pzysHqqwCNd2+LJ7223w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:date:from:message-id:subject:to
-        :x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=XeE/zH
-        R8a/NXYOJmv+8rBwTNpU15z/q/lGCzO/6+zTg=; b=EnE8GXAkvxmt2VqVdS82Hi
-        YuoZ4tMr/X0z1kOoHvuSX2bovRmGSuIchi21iAAtZMTf0GBc6Zlbg6PGh2tYS+hu
-        A+zTPtOm0ngu4zlGDn6RP3FXFQes3L4txGf/ETyHEtZ4UNmnZwyppmAumM+WExaY
-        bofvvcPYrYqO/KLxsmRS4KVJT/1iPZsqIlP7+E2X41qNInsQ8KhEzvq53EmJn4SW
-        ahdzC16QGQ7Ph2b1MNCom/r3EEto+/jZ/c8ssMhXxscccH62Yr5s4pDh5S1u/J+n
-        sVa91PPPCXTAvLlxZZzEQXAVqyYb+m241cMnEjY74DedqjiZB5lgnAgRfB+YL+FA
-        ==
-X-ME-Sender: <xms:q2fXWMFCZoetL_tJGVRpVx491KlruptnW9Z_Z6HY4tufphq69sXZfA>
-X-Sasl-enc: s8IpJAeSnNcaXeyzZmS/H/tRLOWkHvYqWNUxOTMDjKjq 1490511786
-Received: from localhost.localdomain (unknown [64.238.189.53])
-        by mail.messagingengine.com (Postfix) with ESMTPA id A03F82436D;
-        Sun, 26 Mar 2017 03:03:06 -0400 (EDT)
-From:   Mike Lewis <mike@mplew.is>
-To:     git@vger.kernel.org
-Cc:     "David A . Greene" <greened@obbligato.org>,
-        Techlive Zheng <techlivezheng@gmail.com>,
-        James Denholm <nod.helm@gmail.com>,
-        David Aguilar <davvid@gmail.com>,
-        Charles Bailey <cbailey32@bloomberg.net>,
-        Mike Lewis <mike@mplew.is>
-Subject: [PATCH] contrib/subtree: add "--no-commit" flag for merge and pull
-Date:   Sun, 26 Mar 2017 03:02:38 -0400
-Message-Id: <20170326070238.64522-1-mike@mplew.is>
-X-Mailer: git-send-email 2.12.2
+        id S1751324AbdCZI0x (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Mar 2017 04:26:53 -0400
+Received: from mail-ot0-f182.google.com ([74.125.82.182]:33506 "EHLO
+        mail-ot0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751227AbdCZI0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Mar 2017 04:26:51 -0400
+Received: by mail-ot0-f182.google.com with SMTP id 102so4599147otv.0
+        for <git@vger.kernel.org>; Sun, 26 Mar 2017 01:26:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=h0D+yq1NnrBoGq4gmKpBSx3NIZyqEYuADCD4F+mkMXE=;
+        b=kXQat1gZe6Xzc1IunPeev5Xme2BjYgHQ9IOSX/zKa+v2Bfv4zx/Sl5hweqF4LcidrW
+         2MeOOz1PvQ/LxVXAsUD7mr2wL0Zl+P9Dr/92g95qsQZuCmHxMCjOZ5M/Vv4Z7XTE4UHI
+         qK5QPgV6vMjryEE416HX+9CPpZofw52a6MG6xg9oVDffNQQ2u9eki1JAeP/DKiZ6T5+b
+         dxnWRm2TcOMuoGrEYvVJBucV/G1n7qoDPHArpRanB8jOXiGK9qQwYTpTWosrTkIc7R2s
+         C5NL9yuTu53iAL5EPSKkI73pEmOe8RpI0CTSJzpfoJp+tYyxA9auxRxZdG3UuKLrERet
+         xQug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=h0D+yq1NnrBoGq4gmKpBSx3NIZyqEYuADCD4F+mkMXE=;
+        b=E4Zr94Lu+wm+RsfuMDGlHBXz2Lv6qx21msyZGlBqD0BAjwHBhkC4GvlnkBx3mvSWs5
+         cJ5euwx8FAlQhXHrjOi+URdU6zZg/LqhJ7lM98pAWXJFe2wdFtEsdOLZNORHDF/Vc79k
+         bWVqNSqB7ptIadhYMUaOmlW/3/aQAlUjw3dE0Bv6BXZQRlWPsJyTXOIHF5bkJLvPMOH6
+         rjtWoxG53q5JHWZgmntOCQZND11lKtsKIuzOtnz03t28xiaLAs3TJePmAq5GIHAQI5PC
+         i5uzVkIjYF/Omr5cDO8PWNuIA6a6FKXExGECswyLPWTWbLLj949jDCf54f3EHWYN5pys
+         Bwlg==
+X-Gm-Message-State: AFeK/H1QelqTGS1QINOH8bSD81rE+HqM+eIlSUiXmuVWmlVMTcUAgGe0O3LLfG3NaiUtLWqeisKA4QLNopEvgQ==
+X-Received: by 10.157.20.151 with SMTP id d23mr8258033ote.37.1490516809784;
+ Sun, 26 Mar 2017 01:26:49 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.74.158.84 with HTTP; Sun, 26 Mar 2017 01:26:19 -0700 (PDT)
+In-Reply-To: <0d437f43-30d6-3920-5298-0c426b098c1a@alum.mit.edu>
+References: <20170216120302.5302-1-pclouds@gmail.com> <20170318100206.5980-1-pclouds@gmail.com>
+ <20170318100206.5980-3-pclouds@gmail.com> <b841a674-7b2b-420d-7faa-e5b836fb534e@alum.mit.edu>
+ <CACsJy8B85TH0DOViEmfh8mOz_u7rVotKJa-HYk6TJ81kvV4xPg@mail.gmail.com> <0d437f43-30d6-3920-5298-0c426b098c1a@alum.mit.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 26 Mar 2017 15:26:19 +0700
+Message-ID: <CACsJy8BRUXx7WcCTrgDEv++Lj+d=fWbLyysMCW3Rw_Z+QRcS_w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] refs: introduce get_worktree_ref_store()
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allows the user to verify and/or change the contents of the merge
-before committing as necessary
+On Mon, Mar 20, 2017 at 9:25 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> Instead of moving all of the `for_each_*_submodule()` functions over, I
+> encourage you to consider getting rid of them entirely and let the
+> end-users call the `refs_for_each_*()` versions of the functions. Again,
+> I'm not sure that there won't be friction in doing so, but it seems like
+> it's worth a try.
 
-Signed-off-by: Mike Lewis <mike@mplew.is>
----
- contrib/subtree/git-subtree.sh | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
-
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index dec085a23..c30087485 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -29,6 +29,8 @@ onto=         try connecting new tree to an existing one
- rejoin        merge the new branch back into HEAD
-  options for 'add', 'merge', and 'pull'
- squash        merge subtree changes as a single commit
-+ options for 'merge' and 'pull'
-+no-commit     perform the merge, but don't commit
- "
- eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
- 
-@@ -48,6 +50,7 @@ annotate=
- squash=
- message=
- prefix=
-+commit_option="--commit"
- 
- debug () {
- 	if test -n "$debug"
-@@ -137,6 +140,12 @@ do
- 	--no-squash)
- 		squash=
- 		;;
-+	--no-commit)
-+		commit_option="--no-commit"
-+		;;
-+	--no-no-commit)
-+		commit_option="--commit"
-+		;;
- 	--)
- 		break
- 		;;
-@@ -815,17 +824,17 @@ cmd_merge () {
- 	then
- 		if test -n "$message"
- 		then
--			git merge -s subtree --message="$message" "$rev"
-+			git merge -s subtree --message="$message" "$commit_option" "$rev"
- 		else
--			git merge -s subtree "$rev"
-+			git merge -s subtree "$commit_option" "$rev"
- 		fi
- 	else
- 		if test -n "$message"
- 		then
- 			git merge -Xsubtree="$prefix" \
--				--message="$message" "$rev"
-+				--message="$message" "$commit_option" "$rev"
- 		else
--			git merge -Xsubtree="$prefix" $rev
-+			git merge -Xsubtree="$prefix" "$commit_option" $rev
- 		fi
- 	fi
- }
+They are getting rid of. If you look at pu (or nd/prune-in-worktree
+actually) there's only head_ref_submodule() and
+for_each_remote_ref_submodule() left. head_ref_submodule() has no
+caller but is still there, I'll need to kill it. Killing the latter
+can be done separately since the callers in submodule.c need some
+update.
 -- 
-2.12.2
-
+Duy
