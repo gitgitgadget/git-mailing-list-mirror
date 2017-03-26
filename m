@@ -2,236 +2,296 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DAA820958
-	for <e@80x24.org>; Sun, 26 Mar 2017 12:17:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8107E20958
+	for <e@80x24.org>; Sun, 26 Mar 2017 13:45:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751355AbdCZMR1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Mar 2017 08:17:27 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35789 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751264AbdCZMR0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Mar 2017 08:17:26 -0400
-Received: by mail-wr0-f194.google.com with SMTP id p52so1962857wrc.2
-        for <git@vger.kernel.org>; Sun, 26 Mar 2017 05:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=tONvAOWkmtyvqQQItHbmHA64HryYXtfTxhNO3U0xxIc=;
-        b=nY7I2C+18/tD/O4iB8W6nk6OuFLeDBUtWt983medINGFjqu/SX/JVCO+lYUh2uOw9Y
-         ETIurLol78UvMiT1dwYj9NHmgAjamgBPvbDkJrmekqzkiw1WluWR5kFS6HCyp+wP6rWs
-         TyoKGYR3Te69ceSWE4GrKfflWzrLQ4cNM6pm+8whgxmOT414dZlOlLKlgNZhCxt8AUnF
-         ze1HN/AEyIjLa6w02DJhRYDw73Rk+IbcBBG2sdN2p37errMxSZMKi6hk6+lR0eFqE6ge
-         PKnWHc+gjlEzNI6K03AeD6B+DZaao9MMdZoY9YcJ4eVJpe9FzjZQ7Llqe8kN5wlYmgCe
-         2Nww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=tONvAOWkmtyvqQQItHbmHA64HryYXtfTxhNO3U0xxIc=;
-        b=tfJw4CUCe7q1Jj3dG+Slx84t4DE6Fu/huBFMv8eMY2YLfvtDIgzLpButTg+pZnZ9w3
-         idCumNnETzpBivSLLuTYXbApuH8IEOZDIkc+BUB03UqJ/Nm2CM+BPy3OMpzPyv/sG5l2
-         8CDQygp0Rz2U+xxmQ0np+KL0z/RFn3vyucE/GFSv4h5VVeV3GRuwYJWPML4eEq6sRZ0m
-         +7J4R3G6bOW8437x/VsSzWcjCQLkyGcBtd8AdJJEAR82iGIGlWmxLrEoe/FtXETL5KI+
-         PHTKtnCcZ0LmbGfdA65KNQKrmRoZvj37jOKi7gER419SdXJlEfh0jSMHKck34BsB3i19
-         ZFWQ==
-X-Gm-Message-State: AFeK/H0obw0yh57Y9eF85sCMqkgQsIswOmHZR5/V/lcxM1mj/m4VT2VBZ4MuPjp6dD5RJQ==
-X-Received: by 10.28.111.151 with SMTP id c23mr5483053wmi.17.1490530629060;
-        Sun, 26 Mar 2017 05:17:09 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 134sm10167638wmj.6.2017.03.26.05.17.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Mar 2017 05:17:08 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Conrad Irwin <conrad.irwin@gmail.com>,
-        Sitaram Chamarty <sitaramc@gmail.com>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "Brian M . Carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 3/3] rev-parse: match ^{<type>} case-insensitively
-Date:   Sun, 26 Mar 2017 12:16:54 +0000
-Message-Id: <20170326121654.22035-4-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170326121654.22035-1-avarab@gmail.com>
-References: <20170326121654.22035-1-avarab@gmail.com>
-In-Reply-To: <xmqq1stszxn4.fsf@gitster.mtv.corp.google.com>
-References: <xmqq1stszxn4.fsf@gitster.mtv.corp.google.com>
+        id S1751371AbdCZNl7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Mar 2017 09:41:59 -0400
+Received: from mout.web.de ([212.227.15.4]:62781 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751354AbdCZNl7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Mar 2017 09:41:59 -0400
+Received: from [192.168.178.36] ([79.237.59.215]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lb7vN-1cTZED2yuv-00ke08; Sun, 26
+ Mar 2017 15:41:16 +0200
+Subject: Re: [PATCH] pretty: add extra headers and MIME boundary directly
+To:     Jeff King <peff@peff.net>
+References: <6f3d0b54-7a9f-8088-3675-bd2980f69735@web.de>
+ <20170325161705.wh4zueasik6iwktv@sigill.intra.peff.net>
+ <c5591beb-8cb2-dc19-7820-c8b9c68aad15@web.de>
+ <20170325211149.yyvocmdfw4zbjyoi@sigill.intra.peff.net>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <9d31c27b-fecb-ac1d-2b3f-8227c93862c2@web.de>
+Date:   Sun, 26 Mar 2017 15:41:14 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170325211149.yyvocmdfw4zbjyoi@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:JdLBQL8d8dc2ch3NJcLpcS/DTlTIthH4A5icOAApsFnom3VZO4O
+ u3234uH7Wyd1Xk5Evkm4iUQ6T0KP+ikHxvB497EcEoKbrs7w/EM3laEMy159mUXs3BhCzBF
+ nwFsDg0usUek16k0r9y772fIsMR9dbcCHh/DmxLBKzipiv6HAEdMb9iqAmQg0gaguv6O05g
+ W1m6ppLneDxWay9ABOCcw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YYbl7oyRur4=:t8eNpIbiI0V2SAuRwhP/ZK
+ uJvcq95rg30gD6p1x8unXWnftb32ZORHO+sleTTE7avogs2v57AmpWw6vZTdkxqHDP4ZBCNeI
+ rTHoJGl0PuuMXI7e8AQ3h6j/0kWMBhhdCGj8qO72NXZ+Lb0yHkNlbPYTd1h4vnRxNZg1JeY5D
+ 4Li3fyQdH74kfq3oYhqv5euXDJZtE5AFIXMqwj514o1vF+laE3xHyCFFniZ02xeXzfso/A9AO
+ uh8VZ16lrw/shdovYyAL+83jcfiwJtf6w6DUJQp1tcTHN2KA4JLBDWS47Lw/ZK/EVIKyVDuam
+ pxbpxIycahcsDYmIIF3GCXMEuXwwjHdt0Ba+obh9NwxCY4g5YIuYWwmWquKb/aseOVLgELx4U
+ F0bTaTPuUd9ejmqN5bMa3tixenyMtE6EmAO2HzuD1AiDQdNqZ/IxHnogumPlfiwItF3lP5PAO
+ TQwHqc8rjyXcUkDUNQ2mX3yeok5m3t4HiU96f1F8XZCyQMxdCaghSpT0BRtG0i7RD46bblDW7
+ Plcp0VeWk/8rwEbjPagzMfzSwhvX4T29jFSoTkb/4aK1gSxAKDQAQ3hp9Yziq4590tFE7WwR4
+ 7gxv7Dbqjv5bo8JndSbnnBgdLRzNeRZ9i4+RvGcTCuuHQb8hLJ+4ZoOq/DTx1OnT8MZd8P6a2
+ XRnprW0ziqdS0S2NbiHCwZSnE8OER43aDgYbok8xgRRLeSwr4r8zP0PnhlixatDc+Yf7TseXQ
+ /OkJpzEINHXeAfcdHe64z0ovJMjqP9wnNwZo+b8C617522yA+kL67EPEKRfPoLh4/N935ZGn3
+ cpjo2ma
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the revision parsing logic to match ^{commit}, ^{tree}, ^{blob}
-etc. case-insensitively.
+Am 25.03.2017 um 22:11 schrieb Jeff King:
+> The most correct way is that the caller of log_write_email_headers() and
+> diff_flush() should have a function-local strbuf which holds the data,
+> gets passed to diff_flush() as some kind opaque context, and then is
+> freed afterwards. We don't have such a context, but if we were to abuse
+> diff_options.stat_sep _temporarily_, that would still be a lot cleaner.
+> I.e., something like this:
+> 
+>   struct strbuf stat_sep = STRBUF_INIT;
+> 
+>   /* may write into stat_sep, depending on options */
+>   log_write_email_headers(..., &stat_sep);
+>   opt->diffopt.stat_sep = stat_sep.buf;
+> 
+>   diff_flush(&opt->diffopt);
+>   opt->diffopt.stat_sep = NULL;
+>   strbuf_release(&stat_sep);
+> 
+> But it's a bit tricky because those two hunks happen in separate
+> functions, which means passing the strbuf around.
 
-Before this change supplying anything except the lower-case forms
-emits an "unknown revision or path not in the working tree"
-error. This change makes upper-case & mixed-case versions equivalent
-to the lower-case versions.
+You could have a destructor callback, called at the end of diff_flush().
 
-The rationale for this change is the same as for making @{upstream}
-and related suffixes case-insensitive in "rev-parse: match
-@{upstream}, @{u} and @{push} case-insensitively", but unlike those
-suffixes this change introduces the potential confusion of accepting
-TREE or BLOB here, but not as an argument to e.g. "cat-file -t <type>"
-or "hash-object -t <type>".
+> Anyway. Here's my attempt at the callback version of stat_sep.
+> 
+> ---
+> diff --git a/diff.c b/diff.c
+> index a628ac3a9..d061f9e18 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4819,10 +4819,9 @@ void diff_flush(struct diff_options *options)
+>  			fprintf(options->file, "%s%c",
+>  				diff_line_prefix(options),
+>  				options->line_termination);
+> -			if (options->stat_sep) {
+> -				/* attach patch instead of inline */
+> -				fputs(options->stat_sep, options->file);
+> -			}
+> +			if (options->stat_sep)
+> +				options->stat_sep(options->file,
+> +						  options->stat_sep_data);
+>  		}
+>  
+>  		for (i = 0; i < q->nr; i++) {
+> diff --git a/diff.h b/diff.h
+> index e9ccb38c2..4785f3b23 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -154,9 +154,11 @@ struct diff_options {
+>  	unsigned ws_error_highlight;
+>  	const char *prefix;
+>  	int prefix_length;
+> -	const char *stat_sep;
+>  	long xdl_opts;
+>  
+> +	void (*stat_sep)(FILE *, void *);
+> +	void *stat_sep_data;
+> +
+>  	int stat_width;
+>  	int stat_name_width;
+>  	int stat_graph_width;
+> diff --git a/log-tree.c b/log-tree.c
+> index 7049a1778..5cf825c41 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -348,6 +348,31 @@ void fmt_output_email_subject(struct strbuf *sb, struct rev_info *opt)
+>  	}
+>  }
+>  
+> +static void show_mime_attachment(FILE *out, void *data)
+> +{
+> +	struct rev_info *opt = data;
+> +	struct strbuf filename = STRBUF_INIT;
+> +
+> +	if (opt->numbered_files)
+> +		strbuf_addf(&filename, "%d", opt->nr);
+> +	else
+> +		fmt_output_commit(&filename, opt->commit_for_mime, opt);
+> +
+> +	fprintf(out,
+> +		"\n--%s%s\n"
+> +		"Content-Type: text/x-patch;"
+> +		" name=\"%s\"\n"
+> +		"Content-Transfer-Encoding: 8bit\n"
+> +		"Content-Disposition: %s;"
+> +		" filename=\"%s\"\n\n",
+> +		mime_boundary_leader, opt->mime_boundary,
+> +		filename.buf,
+> +		opt->no_inline ? "attachment" : "inline",
+> +		filename.buf);
+> +
+> +	strbuf_release(&filename);
+> +}
+> +
+>  void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+>  			     int *need_8bit_cte_p)
+>  {
+> @@ -372,27 +397,10 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+>  		graph_show_oneline(opt->graph);
+>  	}
+>  	if (opt->mime_boundary) {
+> -		static char buffer[1024];
+> -		struct strbuf filename =  STRBUF_INIT;
+>  		*need_8bit_cte_p = -1; /* NEVER */
+> -
+> -		if (opt->numbered_files)
+> -			strbuf_addf(&filename, "%d", opt->nr);
+> -		else
+> -			fmt_output_commit(&filename, commit, opt);
+> -		snprintf(buffer, sizeof(buffer) - 1,
+> -			 "\n--%s%s\n"
+> -			 "Content-Type: text/x-patch;"
+> -			 " name=\"%s\"\n"
+> -			 "Content-Transfer-Encoding: 8bit\n"
+> -			 "Content-Disposition: %s;"
+> -			 " filename=\"%s\"\n\n",
+> -			 mime_boundary_leader, opt->mime_boundary,
+> -			 filename.buf,
+> -			 opt->no_inline ? "attachment" : "inline",
+> -			 filename.buf);
+> -		opt->diffopt.stat_sep = buffer;
+> -		strbuf_release(&filename);
+> +		opt->diffopt.stat_sep = show_mime_attachment;
+> +		opt->diffopt.stat_sep_data = opt;
+> +		opt->commit_for_mime = commit;
+>  	}
+>  }
+>  
+> diff --git a/revision.h b/revision.h
+> index 14886ec92..46ca45d96 100644
+> --- a/revision.h
+> +++ b/revision.h
+> @@ -156,6 +156,7 @@ struct rev_info {
+>  	struct log_info *loginfo;
+>  	int		nr, total;
+>  	const char	*mime_boundary;
+> +	struct commit *commit_for_mime;
+>  	const char	*patch_suffix;
+>  	int		numbered_files;
+>  	int		reroll_count;
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Hmm.  I'm a fan of callbacks, but using them can make the code a bit
+hard to follow.  And void context pointers add a type safety hazard.
+Do we need to be this generic?  How about switching stat_sep to strbuf?
+fmt_output_commit() requires an allocation anyway, so why not allocate
+stat_sep as well?
+
 ---
- Documentation/revisions.txt |  5 +++++
- git-compat-util.h           |  1 +
- sha1_name.c                 | 10 +++++-----
- strbuf.c                    |  9 +++++++++
- t/t1450-fsck.sh             |  7 +++++++
- t/t1511-rev-parse-caret.sh  | 13 +++++++++++++
- 6 files changed, 40 insertions(+), 5 deletions(-)
+ diff.c     | 7 ++++---
+ diff.h     | 2 +-
+ log-tree.c | 4 +---
+ 3 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 5fe90e411d..136e26c05d 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -162,6 +162,11 @@ it does not have to be dereferenced even once to get to an object.
- +
- 'rev{caret}\{tag\}' can be used to ensure that 'rev' identifies an
- existing tag object.
-++
-+The {caret}{<type>} part is matched case-insensitively. So
-+e.g. '{caret}\{commit\}' can be equivalently specified as
-+'{caret}\{COMMIT\}', '{caret}\{Commit\}' etc., '{caret}\{tree\}' as
-+'{caret}\{TREE\}' and so forth.
+diff --git a/diff.c b/diff.c
+index a628ac3a95..a4afa8eba2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -41,7 +41,7 @@ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
+ static int diff_stat_graph_width;
+ static int diff_dirstat_permille_default = 30;
+-static struct diff_options default_diff_options;
++static struct diff_options default_diff_options = { STRBUF_INIT };
+ static long diff_algorithm;
+ static unsigned ws_error_highlight_default = WSEH_NEW;
  
- '<rev>{caret}{}', e.g. 'v0.99.8{caret}{}'::
-   A suffix '{caret}' followed by an empty brace pair
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8a4a3f85e7..4a03934ef3 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -448,6 +448,7 @@ extern void set_die_is_recursing_routine(int (*routine)(void));
- extern void set_error_handle(FILE *);
+@@ -4819,9 +4819,9 @@ void diff_flush(struct diff_options *options)
+ 			fprintf(options->file, "%s%c",
+ 				diff_line_prefix(options),
+ 				options->line_termination);
+-			if (options->stat_sep) {
++			if (options->stat_sep.len) {
+ 				/* attach patch instead of inline */
+-				fputs(options->stat_sep, options->file);
++				strbuf_write(&options->stat_sep, options->file);
+ 			}
+ 		}
  
- extern int starts_with(const char *str, const char *prefix);
-+extern int starts_with_icase(const char *str, const char *prefix);
+@@ -4842,6 +4842,7 @@ void diff_flush(struct diff_options *options)
+ 	DIFF_QUEUE_CLEAR(q);
+ 	if (options->close_file)
+ 		fclose(options->file);
++	strbuf_release(&options->stat_sep);
  
- /*
-  * If the string "str" begins with the string found in "prefix", return 1.
-diff --git a/sha1_name.c b/sha1_name.c
-index 2deb9bfdf6..107246bd2d 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -821,15 +821,15 @@ static int peel_onion(const char *name, int len, unsigned char *sha1,
- 		return -1;
+ 	/*
+ 	 * Report the content-level differences with HAS_CHANGES;
+diff --git a/diff.h b/diff.h
+index e9ccb38c26..6a537df1ab 100644
+--- a/diff.h
++++ b/diff.h
+@@ -116,6 +116,7 @@ enum diff_submodule_format {
+ };
  
- 	sp++; /* beginning of type name, or closing brace for empty */
--	if (starts_with(sp, "commit}"))
-+	if (starts_with_icase(sp, "commit}"))
- 		expected_type = OBJ_COMMIT;
--	else if (starts_with(sp, "tag}"))
-+	else if (starts_with_icase(sp, "tag}"))
- 		expected_type = OBJ_TAG;
--	else if (starts_with(sp, "tree}"))
-+	else if (starts_with_icase(sp, "tree}"))
- 		expected_type = OBJ_TREE;
--	else if (starts_with(sp, "blob}"))
-+	else if (starts_with_icase(sp, "blob}"))
- 		expected_type = OBJ_BLOB;
--	else if (starts_with(sp, "object}"))
-+	else if (starts_with_icase(sp, "object}"))
- 		expected_type = OBJ_ANY;
- 	else if (sp[0] == '}')
- 		expected_type = OBJ_NONE;
-diff --git a/strbuf.c b/strbuf.c
-index ace58e7367..7d4a59bca6 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -11,6 +11,15 @@ int starts_with(const char *str, const char *prefix)
- 			return 0;
+ struct diff_options {
++	struct strbuf stat_sep;
+ 	const char *orderfile;
+ 	const char *pickaxe;
+ 	const char *single_follow;
+@@ -154,7 +155,6 @@ struct diff_options {
+ 	unsigned ws_error_highlight;
+ 	const char *prefix;
+ 	int prefix_length;
+-	const char *stat_sep;
+ 	long xdl_opts;
+ 
+ 	int stat_width;
+diff --git a/log-tree.c b/log-tree.c
+index 7049a17781..cd4f363d9b 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -372,7 +372,6 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 		graph_show_oneline(opt->graph);
+ 	}
+ 	if (opt->mime_boundary) {
+-		static char buffer[1024];
+ 		struct strbuf filename =  STRBUF_INIT;
+ 		*need_8bit_cte_p = -1; /* NEVER */
+ 
+@@ -380,7 +379,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			strbuf_addf(&filename, "%d", opt->nr);
+ 		else
+ 			fmt_output_commit(&filename, commit, opt);
+-		snprintf(buffer, sizeof(buffer) - 1,
++		strbuf_addf(&opt->diffopt.stat_sep,
+ 			 "\n--%s%s\n"
+ 			 "Content-Type: text/x-patch;"
+ 			 " name=\"%s\"\n"
+@@ -391,7 +390,6 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			 filename.buf,
+ 			 opt->no_inline ? "attachment" : "inline",
+ 			 filename.buf);
+-		opt->diffopt.stat_sep = buffer;
+ 		strbuf_release(&filename);
+ 	}
  }
- 
-+int starts_with_icase(const char *str, const char *prefix)
-+{
-+	for (; ; str++, prefix++)
-+		if (!*prefix)
-+			return 1;
-+		else if (tolower(*str) != tolower(*prefix))
-+			return 0;
-+}
-+
- /*
-  * Used as the default ->buf value, so that people can always assume
-  * buf is non NULL and ->buf is NUL terminated even for a freshly
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 33a51c9a67..b6c1989671 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -505,6 +505,13 @@ test_expect_success 'fsck notices missing tagged object' '
- 	test_must_fail git -C missing fsck
- '
- 
-+test_expect_success 'fsck notices missing tagged object with case insensitive {blob}' '
-+	create_repo_missing tag^{BLOB} &&
-+	test_must_fail git -C missing fsck &&
-+	create_repo_missing tag^{BloB} &&
-+	test_must_fail git -C missing fsck
-+'
-+
- test_expect_success 'fsck notices ref pointing to missing commit' '
- 	create_repo_missing HEAD &&
- 	test_must_fail git -C missing fsck
-diff --git a/t/t1511-rev-parse-caret.sh b/t/t1511-rev-parse-caret.sh
-index e0a49a651f..56750f99c6 100755
---- a/t/t1511-rev-parse-caret.sh
-+++ b/t/t1511-rev-parse-caret.sh
-@@ -48,6 +48,10 @@ test_expect_success 'ref^{commit}' '
- 	git rev-parse ref >expected &&
- 	git rev-parse ref^{commit} >actual &&
- 	test_cmp expected actual &&
-+	git rev-parse ref^{COMMIT} >actual &&
-+	test_cmp expected actual &&
-+	git rev-parse ref^{CoMMiT} >actual &&
-+	test_cmp expected actual &&
- 	git rev-parse commit-tag^{commit} >actual &&
- 	test_cmp expected actual &&
- 	test_must_fail git rev-parse tree-tag^{commit} &&
-@@ -58,6 +62,10 @@ test_expect_success 'ref^{tree}' '
- 	echo $TREE_SHA1 >expected &&
- 	git rev-parse ref^{tree} >actual &&
- 	test_cmp expected actual &&
-+	git rev-parse ref^{TREE} >actual &&
-+	test_cmp expected actual &&
-+	git rev-parse ref^{TrEe} >actual &&
-+	test_cmp expected actual &&
- 	git rev-parse commit-tag^{tree} >actual &&
- 	test_cmp expected actual &&
- 	git rev-parse tree-tag^{tree} >actual &&
-@@ -67,8 +75,13 @@ test_expect_success 'ref^{tree}' '
- 
- test_expect_success 'ref^{tag}' '
- 	test_must_fail git rev-parse HEAD^{tag} &&
-+	test_must_fail git rev-parse HEAD^{TAG} &&
- 	git rev-parse commit-tag >expected &&
- 	git rev-parse commit-tag^{tag} >actual &&
-+	test_cmp expected actual &&
-+	git rev-parse commit-tag^{TAG} >actual &&
-+	test_cmp expected actual &&
-+	git rev-parse commit-tag^{Tag} >actual &&
- 	test_cmp expected actual
- '
- 
 -- 
-2.11.0
+2.12.2
 
