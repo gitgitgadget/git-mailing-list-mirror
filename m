@@ -2,157 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3983E20958
-	for <e@80x24.org>; Sun, 26 Mar 2017 16:03:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7897320958
+	for <e@80x24.org>; Sun, 26 Mar 2017 22:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751691AbdCZQDI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Mar 2017 12:03:08 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:58008 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751406AbdCZQB6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Mar 2017 12:01:58 -0400
-Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 52161280B1;
-        Sun, 26 Mar 2017 16:01:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490544113;
-        bh=vloCFYZNrWxRuB81JKVsW6w0m1QPGOwoA9F8kAvN3SI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=TWO5OY+x6JKWd0HMgoPEEkY+wz7uSbI18uzBHCiCfSrdgpbcqGSAszbl55bSi7YH8
-         KI2BJ2VS9lSl3gonQRWDT/DfVaDykt0A2dnT+T4UyJObo5ZHPvYwcSeDfuET8gGOMD
-         Z4xVrSR55FScgRxQm/uoP5HMFYU2MxzRY6pdBxCDjYCASAiDBLTEiUceFv76VRXD2/
-         N+7/Tbpew0GDuAJ8UgIv28x/vVZRKSwgq0mZrrGjPa6vxFVWDfC+CdNTQXedcspp1w
-         un8ecCispxImlBjCDcxDejJlnJhzrZsJ33BhT5vNls/6+QytnMfkCFpNjoTelpseQ/
-         YVJ4c9M00hA9PYgvE2iuodBZ3o4YXb3u0CU81k0vb2pwJ3LM4WFYBPISxkTcp/tQCg
-         4ArO2PL2o6/O9Gjw/TER9jKWRVj0CrVDwgnAHzis/Ch2r2UClWuvb/Ea6HVm0bZxHE
-         /5h2KykrOsdn06A4TW6aACZJdHJU/q7hkVD5cJo5IKvLywFThXU
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 04/21] builtin/diff: convert to struct object_id
-Date:   Sun, 26 Mar 2017 16:01:26 +0000
-Message-Id: <20170326160143.769630-5-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170326160143.769630-1-sandals@crustytoothpaste.net>
-References: <20170326160143.769630-1-sandals@crustytoothpaste.net>
+        id S1751753AbdCZWkk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Mar 2017 18:40:40 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:46996 "EHLO
+        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751711AbdCZWkg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Mar 2017 18:40:36 -0400
+X-AuditID: 1207440f-141ff70000003517-1e-58d8435ff1d9
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 21.30.13591.F5348D85; Sun, 26 Mar 2017 18:40:33 -0400 (EDT)
+Received: from [192.168.69.190] (p579076D0.dip0.t-ipconnect.de [87.144.118.208])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2QMeT1a031780
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sun, 26 Mar 2017 18:40:30 -0400
+Subject: Re: [PATCH v3 1/2] [GSoC] dir_iterator: iterate over dir after its
+ contents
+To:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org
+References: <1490465551-71056-1-git-send-email-bnmvco@gmail.com>
+ <1490465551-71056-2-git-send-email-bnmvco@gmail.com>
+Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <c9b6276a-331f-f42e-94b4-bb38109485a4@alum.mit.edu>
+Date:   Mon, 27 Mar 2017 00:40:28 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
+MIME-Version: 1.0
+In-Reply-To: <1490465551-71056-2-git-send-email-bnmvco@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKIsWRmVeSWpSXmKPExsUixO6iqJvofCPC4N4hdovHn96yWXRd6Way
+        aOi9wmzRPeUto8Xmze0sDqweO2fdZfdYsKnU4+IlZY/Pm+QCWKK4bFJSczLLUov07RK4Mmbe
+        +cpa8Iq/Yt2vb4wNjM94uhg5OSQETCQePTzO2MXIxSEksINJ4k3PG2YI5wKTxPt9u9m6GDk4
+        hAXCJOZsdwcxRQSsJa6v8QLpFRIol7jYN4cVxGYWsJE43tTLCGKzCehKLOppZgKxeQXsJZb8
+        PwFmswioSqybOI8ZxBYVCJGYs/ABI0SNoMTJmU9YQGxOAUeJv59XMELM1JPYcf0X1Hx5ie1v
+        5zBPYOSfhaRlFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdHLzSzRS00p3cQI
+        CV3+HYxd62UOMQpwMCrx8ApI3ogQYk0sK67MPcQoycGkJMrr6XA9QogvKT+lMiOxOCO+qDQn
+        tfgQowQHs5II724WoHLelMTKqtSifJiUNAeLkjiv+hJ1PyGB9MSS1OzU1ILUIpisDAeHkgRv
+        pRNQo2BRanpqRVpmTglCmomDE2Q4D9BwQZAa3uKCxNzizHSI/ClGRSlxXkeQhABIIqM0D64X
+        llpeMYoDvSLMmwZSxQNMS3Ddr4AGMwENnr3hCsjgkkSElFQDowFPS86c5o4Q89N1fL6XruaW
+        XXu9/XL3Yq37HhphfYb8kqlMF1oXH2eZHLy5t62vnvlev++D9em+1ZoXP148bplWH7xLpPOs
+        xnb+SqUvV2f2syzU4WxP239nzsdAvZwfE25wrpwXOvF/3dVrco8q3SKvG7PU7Xv60OF3Q8gV
+        Vy/xGrvf884cVmIpzkg01GIuKk4EAIGpQNgIAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/diff.c | 34 +++++++++++++++++-----------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+On 03/25/2017 07:12 PM, Daniel Ferreira wrote:
+> Create an option for the dir_iterator API to iterate over a directory
+> path only after having iterated through its contents. This feature was
+> predicted, although not implemented by 0fe5043 ("dir_iterator: new API
+> for iterating over a directory tree", 2016-06-18).
+> 
+> This is useful for recursively removing a directory and calling rmdir()
+> on a directory only after all of its contents have been wiped.
+> 
+> An "options" member has been added to the dir_iterator struct. It
+> contains the "iterate_dirs_after_files" flag, that enables the feature
+> when set to 1. Default behavior continues to be iterating over directory
+> paths before its contents.
+> 
+> Two inline functions have been added to dir_iterator's code to avoid
+> code repetition inside dir_iterator_advance() and make code more clear.
+> 
+> No particular functions or wrappers for setting the options struct's
+> fields have been added to avoid either breaking the current dir_iterator
+> API or over-engineering an extremely simple option architecture.
 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 3d64b85337..398eee00d5 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -21,7 +21,7 @@
- #define DIFF_NO_INDEX_IMPLICIT 2
- 
- struct blobinfo {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	const char *name;
- 	unsigned mode;
- };
-@@ -31,22 +31,22 @@ static const char builtin_diff_usage[] =
- 
- static void stuff_change(struct diff_options *opt,
- 			 unsigned old_mode, unsigned new_mode,
--			 const unsigned char *old_sha1,
--			 const unsigned char *new_sha1,
--			 int old_sha1_valid,
--			 int new_sha1_valid,
-+			 const struct object_id *old_oid,
-+			 const struct object_id *new_oid,
-+			 int old_oid_valid,
-+			 int new_oid_valid,
- 			 const char *old_name,
- 			 const char *new_name)
- {
- 	struct diff_filespec *one, *two;
- 
--	if (!is_null_sha1(old_sha1) && !is_null_sha1(new_sha1) &&
--	    !hashcmp(old_sha1, new_sha1) && (old_mode == new_mode))
-+	if (!is_null_oid(old_oid) && !is_null_oid(new_oid) &&
-+	    !oidcmp(old_oid, new_oid) && (old_mode == new_mode))
- 		return;
- 
- 	if (DIFF_OPT_TST(opt, REVERSE_DIFF)) {
- 		SWAP(old_mode, new_mode);
--		SWAP(old_sha1, new_sha1);
-+		SWAP(old_oid, new_oid);
- 		SWAP(old_name, new_name);
- 	}
- 
-@@ -57,8 +57,8 @@ static void stuff_change(struct diff_options *opt,
- 
- 	one = alloc_filespec(old_name);
- 	two = alloc_filespec(new_name);
--	fill_filespec(one, old_sha1, old_sha1_valid, old_mode);
--	fill_filespec(two, new_sha1, new_sha1_valid, new_mode);
-+	fill_filespec(one, old_oid->hash, old_oid_valid, old_mode);
-+	fill_filespec(two, new_oid->hash, new_oid_valid, new_mode);
- 
- 	diff_queue(&diff_queued_diff, one, two);
- }
-@@ -89,7 +89,7 @@ static int builtin_diff_b_f(struct rev_info *revs,
- 
- 	stuff_change(&revs->diffopt,
- 		     blob[0].mode, canon_mode(st.st_mode),
--		     blob[0].sha1, null_sha1,
-+		     &blob[0].oid, &null_oid,
- 		     1, 0,
- 		     path, path);
- 	diffcore_std(&revs->diffopt);
-@@ -114,7 +114,7 @@ static int builtin_diff_blobs(struct rev_info *revs,
- 
- 	stuff_change(&revs->diffopt,
- 		     blob[0].mode, blob[1].mode,
--		     blob[0].sha1, blob[1].sha1,
-+		     &blob[0].oid, &blob[1].oid,
- 		     1, 1,
- 		     blob[0].name, blob[1].name);
- 	diffcore_std(&revs->diffopt);
-@@ -160,7 +160,7 @@ static int builtin_diff_tree(struct rev_info *revs,
- 			     struct object_array_entry *ent0,
- 			     struct object_array_entry *ent1)
- {
--	const unsigned char *(sha1[2]);
-+	const struct object_id *(oid[2]);
- 	int swap = 0;
- 
- 	if (argc > 1)
-@@ -172,9 +172,9 @@ static int builtin_diff_tree(struct rev_info *revs,
- 	 */
- 	if (ent1->item->flags & UNINTERESTING)
- 		swap = 1;
--	sha1[swap] = ent0->item->oid.hash;
--	sha1[1 - swap] = ent1->item->oid.hash;
--	diff_tree_sha1(sha1[0], sha1[1], "", &revs->diffopt);
-+	oid[swap] = &ent0->item->oid;
-+	oid[1 - swap] = &ent1->item->oid;
-+	diff_tree_sha1(oid[0]->hash, oid[1]->hash, "", &revs->diffopt);
- 	log_tree_diff_flush(revs);
- 	return 0;
- }
-@@ -408,7 +408,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
- 		} else if (obj->type == OBJ_BLOB) {
- 			if (2 <= blobs)
- 				die(_("more than two blobs given: '%s'"), name);
--			hashcpy(blob[blobs].sha1, obj->oid.hash);
-+			hashcpy(blob[blobs].oid.hash, obj->oid.hash);
- 			blob[blobs].name = name;
- 			blob[blobs].mode = entry->mode;
- 			blobs++;
+This patch would be easier to read if it were split into two: one
+extracting the new functions and changing old code to use them, and a
+second adding the new functionality. As one patch, is is hard to see
+quickly which changes have what purpose.
+
+I also suggest adding a new `unsigned int flags` parameter to
+`dir_iterator_begin`. I think that's more natural, because it doesn't
+make sense to change the iteration order during an iteration. It's not
+much of a problem to change the API given that all callers are in the
+same codebase. If you were to forget to convert any callers (or if a
+different in-flight patch series were to add a new caller using the old
+call style), the compiler would complain, and the problem would be
+obvious and easy to fix.
+
+I didn't actually read the patch carefully yet because I don't have time
+this evening to seek out the interesting parts in the long diff.
+
+Michael
+
+> [...]
+
