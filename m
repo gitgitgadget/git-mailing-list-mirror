@@ -2,44 +2,44 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18E9D20958
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DF6120958
 	for <e@80x24.org>; Sun, 26 Mar 2017 16:02:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751570AbdCZQCS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Mar 2017 12:02:18 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:58062 "EHLO
+        id S1751518AbdCZQCE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Mar 2017 12:02:04 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:58060 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751522AbdCZQCF (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Mar 2017 12:02:05 -0400
+        by vger.kernel.org with ESMTP id S1751446AbdCZQCA (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Mar 2017 12:02:00 -0400
 Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5A29A280C2;
-        Sun, 26 Mar 2017 16:02:03 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7293A280B4;
+        Sun, 26 Mar 2017 16:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490544123;
-        bh=sAJDBsiN6lnvkThkoneoOfjXZMg5YkAFqmTtbo+8OEM=;
+        s=default; t=1490544114;
+        bh=SHdgkQ3cEJONHMS/XuEGZ5M0zSUvZbiXXu/CVdYyzN0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DX4/6PDQw1P28w0Ja1YvYpb3+kD6oywDOYR4jOTMK4lGM7hjt1Q/uxHyb/mP5iaGO
-         xtPVDtKcT2N6wVKGOfSzmlzjvGCwK0zOjoLTf8+88EUS8501RH+VNwQWUmi/f3ajf6
-         qwXEXj/lBoD8rDabvbKqdhrMNWrfAHnqaJeN+IkL47Sanhe2nU+69S+3xn6iTDaQha
-         lTo9Y0xa5bRoZE2vvi6frCOWbBkOQU+Na8RGfjSy8q0XdRjRe/w8mYDzqie7fNufEq
-         WNIKWCF1+YjKfYJvCDuHxXnatEboMvMvWweLX8yshhGBuY+psUbFH+BcwqyGpjSPcS
-         jnSZEMSX0gwD3CEJRIzqBCCmzc75PMdaXcH6rI0miREnZjwsCbg5z73d1Cr/sPML31
-         nCL9U4W23jitJ/T2Y4qY+bvKmFMVvk6ypjb4sb8Ok6XAySjQrccQQZAMOXFzlwC6MA
-         ObboKC9hmDroWod6RB43ijA4tiI6MU7Ua+6bsDJ4pRgvaTibr+A
+        b=lsbYZh3FsD4khLY6LB7bLe0GnKVzFiQJsiRWtOKhNcu4CpkbiccdgLp5jYEln7PVP
+         7XKOis7xyTWDA8JU6l64cVqqPT4NK2uG3pm8zp//wdOEqczGrx8tUahqZDUouAJhiG
+         oNTbTMMzHgNEs2eWOnVTMpkoZe+vcKq4vBqC8yJBlefn7ph2zCRXignQkY18tMA4O3
+         klFS2ZDamLW7w9Gg8273mmqU1Gd9ipimiXvQGhVF+YPWC+3US4PKbkte/W+tJtykWx
+         3CTvv793ONCj6ubtUYWH1SPSFUii1bFAzzt++4cLTu1artA8aEumU0HF+QdGK1DSVf
+         toRabd5r/I7HEqqMUBqzHh8Y/DzWrXVvrbWGvEGCLNU4BnHS8zWiDhCCaVHDLrqw9m
+         7cD0jncfDXDsvuW/EB+qXGnaFjItJPx6F1hYOCSIs2/7Xk823rwDTYiOrfVLtINZkY
+         s9cv0UVVk96vZOT7KE4R7L8DH/nMLE6o1yeLIKO2MrQMxDWnHH9
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 21/21] Documentation: update and rename api-sha1-array.txt
-Date:   Sun, 26 Mar 2017 16:01:43 +0000
-Message-Id: <20170326160143.769630-22-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 07/21] builtin/receive-pack: convert portions to struct object_id
+Date:   Sun, 26 Mar 2017 16:01:29 +0000
+Message-Id: <20170326160143.769630-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170326160143.769630-1-sandals@crustytoothpaste.net>
 References: <20170326160143.769630-1-sandals@crustytoothpaste.net>
@@ -48,117 +48,284 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the structure and functions have changed names, update the code
-examples and the documentation.  Rename the file to match the new name
-of the API.
+Convert some hardcoded constants into uses of parse_oid_hex.
+Additionally, convert all uses of struct command, and miscellaneous
+other functions necessary for that.  This work is necessary to be able
+to convert sha1_array_append later on.
+
+To avoid needing to specify a constant, reject shallow lines with the
+wrong length instead of simply ignoring them.
+
+Note that in queue_command we are guaranteed to have a NUL-terminated
+buffer or at least one byte of overflow that we can safely read, so the
+linelen check can be elided.  We would die in such a case, but not read
+invalid memory.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- .../{api-sha1-array.txt => api-oid-array.txt}      | 44 +++++++++++-----------
- 1 file changed, 22 insertions(+), 22 deletions(-)
- rename Documentation/technical/{api-sha1-array.txt => api-oid-array.txt} (61%)
+ builtin/receive-pack.c | 98 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 49 insertions(+), 49 deletions(-)
 
-diff --git a/Documentation/technical/api-sha1-array.txt b/Documentation/technical/api-oid-array.txt
-similarity index 61%
-rename from Documentation/technical/api-sha1-array.txt
-rename to Documentation/technical/api-oid-array.txt
-index dcc52943a5..b0c11f868d 100644
---- a/Documentation/technical/api-sha1-array.txt
-+++ b/Documentation/technical/api-oid-array.txt
-@@ -1,7 +1,7 @@
--sha1-array API
-+oid-array API
- ==============
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 116f3177a1..e3dc3e184d 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -309,8 +309,8 @@ struct command {
+ 	unsigned int skip_update:1,
+ 		     did_not_exist:1;
+ 	int index;
+-	unsigned char old_sha1[20];
+-	unsigned char new_sha1[20];
++	struct object_id old_oid;
++	struct object_id new_oid;
+ 	char ref_name[FLEX_ARRAY]; /* more */
+ };
  
--The sha1-array API provides storage and manipulation of sets of SHA-1
-+The oid-array API provides storage and manipulation of sets of object
- identifiers. The emphasis is on storage and processing efficiency,
- making them suitable for large lists. Note that the ordering of items is
- not preserved over some operations.
-@@ -9,10 +9,10 @@ not preserved over some operations.
- Data Structures
- ---------------
+@@ -723,7 +723,7 @@ static int feed_receive_hook(void *state_, const char **bufp, size_t *sizep)
+ 		return -1; /* EOF */
+ 	strbuf_reset(&state->buf);
+ 	strbuf_addf(&state->buf, "%s %s %s\n",
+-		    sha1_to_hex(cmd->old_sha1), sha1_to_hex(cmd->new_sha1),
++		    oid_to_hex(&cmd->old_oid), oid_to_hex(&cmd->new_oid),
+ 		    cmd->ref_name);
+ 	state->cmd = cmd->next;
+ 	if (bufp) {
+@@ -764,8 +764,8 @@ static int run_update_hook(struct command *cmd)
+ 		return 0;
  
--`struct sha1_array`::
-+`struct oid_array`::
+ 	argv[1] = cmd->ref_name;
+-	argv[2] = sha1_to_hex(cmd->old_sha1);
+-	argv[3] = sha1_to_hex(cmd->new_sha1);
++	argv[2] = oid_to_hex(&cmd->old_oid);
++	argv[3] = oid_to_hex(&cmd->new_oid);
+ 	argv[4] = NULL;
  
--	A single array of SHA-1 hashes. This should be initialized by
--	assignment from `SHA1_ARRAY_INIT`.  The `sha1` member contains
-+	A single array of object IDs. This should be initialized by
-+	assignment from `OID_ARRAY_INIT`.  The `oid` member contains
- 	the actual data. The `nr` member contains the number of items in
- 	the set.  The `alloc` and `sorted` members are used internally,
- 	and should not be needed by API callers.
-@@ -20,22 +20,22 @@ Data Structures
- Functions
- ---------
+ 	proc.no_stdin = 1;
+@@ -988,8 +988,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	const char *name = cmd->ref_name;
+ 	struct strbuf namespaced_name_buf = STRBUF_INIT;
+ 	const char *namespaced_name, *ret;
+-	unsigned char *old_sha1 = cmd->old_sha1;
+-	unsigned char *new_sha1 = cmd->new_sha1;
++	struct object_id *old_oid = &cmd->old_oid;
++	struct object_id *new_oid = &cmd->new_oid;
  
--`sha1_array_append`::
--	Add an item to the set. The sha1 will be placed at the end of
-+`oid_array_append`::
-+	Add an item to the set. The object ID will be placed at the end of
- 	the array (but note that some operations below may lose this
- 	ordering).
+ 	/* only refs/... are allowed */
+ 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
+@@ -1014,20 +1014,20 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 				refuse_unconfigured_deny();
+ 			return "branch is currently checked out";
+ 		case DENY_UPDATE_INSTEAD:
+-			ret = update_worktree(new_sha1);
++			ret = update_worktree(new_oid->hash);
+ 			if (ret)
+ 				return ret;
+ 			break;
+ 		}
+ 	}
  
--`sha1_array_lookup`::
--	Perform a binary search of the array for a specific sha1.
-+`oid_array_lookup`::
-+	Perform a binary search of the array for a specific object ID.
- 	If found, returns the offset (in number of elements) of the
--	sha1. If not found, returns a negative integer. If the array is
--	not sorted, this function has the side effect of sorting it.
-+	object ID. If not found, returns a negative integer. If the array
-+	is not sorted, this function has the side effect of sorting it.
+-	if (!is_null_sha1(new_sha1) && !has_sha1_file(new_sha1)) {
++	if (!is_null_oid(new_oid) && !has_object_file(new_oid)) {
+ 		error("unpack should have generated %s, "
+-		      "but I can't find it!", sha1_to_hex(new_sha1));
++		      "but I can't find it!", oid_to_hex(new_oid));
+ 		return "bad pack";
+ 	}
  
--`sha1_array_clear`::
-+`oid_array_clear`::
- 	Free all memory associated with the array and return it to the
- 	initial, empty state.
+-	if (!is_null_sha1(old_sha1) && is_null_sha1(new_sha1)) {
++	if (!is_null_oid(old_oid) && is_null_oid(new_oid)) {
+ 		if (deny_deletes && starts_with(name, "refs/heads/")) {
+ 			rp_error("denying ref deletion for %s", name);
+ 			return "deletion prohibited";
+@@ -1053,14 +1053,14 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 		}
+ 	}
  
--`sha1_array_for_each_unique`::
-+`oid_array_for_each_unique`::
- 	Efficiently iterate over each unique element of the list,
- 	executing the callback function for each one. If the array is
- 	not sorted, this function has the side effect of sorting it. If
-@@ -47,25 +47,25 @@ Examples
- --------
+-	if (deny_non_fast_forwards && !is_null_sha1(new_sha1) &&
+-	    !is_null_sha1(old_sha1) &&
++	if (deny_non_fast_forwards && !is_null_oid(new_oid) &&
++	    !is_null_oid(old_oid) &&
+ 	    starts_with(name, "refs/heads/")) {
+ 		struct object *old_object, *new_object;
+ 		struct commit *old_commit, *new_commit;
  
- -----------------------------------------
--int print_callback(const unsigned char sha1[20],
-+int print_callback(const struct object_id *oid,
- 		    void *data)
- {
--	printf("%s\n", sha1_to_hex(sha1));
-+	printf("%s\n", oid_to_hex(oid));
- 	return 0; /* always continue */
+-		old_object = parse_object(old_sha1);
+-		new_object = parse_object(new_sha1);
++		old_object = parse_object(old_oid->hash);
++		new_object = parse_object(new_oid->hash);
+ 
+ 		if (!old_object || !new_object ||
+ 		    old_object->type != OBJ_COMMIT ||
+@@ -1081,10 +1081,10 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 		return "hook declined";
+ 	}
+ 
+-	if (is_null_sha1(new_sha1)) {
++	if (is_null_oid(new_oid)) {
+ 		struct strbuf err = STRBUF_INIT;
+-		if (!parse_object(old_sha1)) {
+-			old_sha1 = NULL;
++		if (!parse_object(old_oid->hash)) {
++			old_oid = NULL;
+ 			if (ref_exists(name)) {
+ 				rp_warning("Allowing deletion of corrupt ref.");
+ 			} else {
+@@ -1094,7 +1094,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 		}
+ 		if (ref_transaction_delete(transaction,
+ 					   namespaced_name,
+-					   old_sha1,
++					   old_oid->hash,
+ 					   0, "push", &err)) {
+ 			rp_error("%s", err.buf);
+ 			strbuf_release(&err);
+@@ -1111,7 +1111,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 
+ 		if (ref_transaction_update(transaction,
+ 					   namespaced_name,
+-					   new_sha1, old_sha1,
++					   new_oid->hash, old_oid->hash,
+ 					   0, "push",
+ 					   &err)) {
+ 			rp_error("%s", err.buf);
+@@ -1187,8 +1187,8 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
+ 
+ 	dst_cmd = (struct command *) item->util;
+ 
+-	if (!hashcmp(cmd->old_sha1, dst_cmd->old_sha1) &&
+-	    !hashcmp(cmd->new_sha1, dst_cmd->new_sha1))
++	if (!oidcmp(&cmd->old_oid, &dst_cmd->old_oid) &&
++	    !oidcmp(&cmd->new_oid, &dst_cmd->new_oid))
+ 		return;
+ 
+ 	dst_cmd->skip_update = 1;
+@@ -1196,11 +1196,11 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
+ 	rp_error("refusing inconsistent update between symref '%s' (%s..%s) and"
+ 		 " its target '%s' (%s..%s)",
+ 		 cmd->ref_name,
+-		 find_unique_abbrev(cmd->old_sha1, DEFAULT_ABBREV),
+-		 find_unique_abbrev(cmd->new_sha1, DEFAULT_ABBREV),
++		 find_unique_abbrev(cmd->old_oid.hash, DEFAULT_ABBREV),
++		 find_unique_abbrev(cmd->new_oid.hash, DEFAULT_ABBREV),
+ 		 dst_cmd->ref_name,
+-		 find_unique_abbrev(dst_cmd->old_sha1, DEFAULT_ABBREV),
+-		 find_unique_abbrev(dst_cmd->new_sha1, DEFAULT_ABBREV));
++		 find_unique_abbrev(dst_cmd->old_oid.hash, DEFAULT_ABBREV),
++		 find_unique_abbrev(dst_cmd->new_oid.hash, DEFAULT_ABBREV));
+ 
+ 	cmd->error_string = dst_cmd->error_string =
+ 		"inconsistent aliased update";
+@@ -1231,10 +1231,10 @@ static int command_singleton_iterator(void *cb_data, unsigned char sha1[20])
+ 	struct command **cmd_list = cb_data;
+ 	struct command *cmd = *cmd_list;
+ 
+-	if (!cmd || is_null_sha1(cmd->new_sha1))
++	if (!cmd || is_null_oid(&cmd->new_oid))
+ 		return -1; /* end of list */
+ 	*cmd_list = NULL; /* this returns only one */
+-	hashcpy(sha1, cmd->new_sha1);
++	hashcpy(sha1, cmd->new_oid.hash);
+ 	return 0;
  }
  
- void some_func(void)
+@@ -1275,8 +1275,8 @@ static int iterate_receive_command_list(void *cb_data, unsigned char sha1[20])
+ 		if (shallow_update && data->si->shallow_ref[cmd->index])
+ 			/* to be checked in update_shallow_ref() */
+ 			continue;
+-		if (!is_null_sha1(cmd->new_sha1) && !cmd->skip_update) {
+-			hashcpy(sha1, cmd->new_sha1);
++		if (!is_null_oid(&cmd->new_oid) && !cmd->skip_update) {
++			hashcpy(sha1, cmd->new_oid.hash);
+ 			*cmd_list = cmd->next;
+ 			return 0;
+ 		}
+@@ -1303,7 +1303,7 @@ static void reject_updates_to_hidden(struct command *commands)
+ 
+ 		if (!ref_is_hidden(cmd->ref_name, refname_full.buf))
+ 			continue;
+-		if (is_null_sha1(cmd->new_sha1))
++		if (is_null_oid(&cmd->new_oid))
+ 			cmd->error_string = "deny deleting a hidden ref";
+ 		else
+ 			cmd->error_string = "deny updating a hidden ref";
+@@ -1486,23 +1486,23 @@ static struct command **queue_command(struct command **tail,
+ 				      const char *line,
+ 				      int linelen)
  {
--	struct sha1_array hashes = SHA1_ARRAY_INIT;
--	unsigned char sha1[20];
-+	struct sha1_array hashes = OID_ARRAY_INIT;
-+	struct object_id oid;
+-	unsigned char old_sha1[20], new_sha1[20];
++	struct object_id old_oid, new_oid;
+ 	struct command *cmd;
+ 	const char *refname;
+ 	int reflen;
++	const char *p;
  
- 	/* Read objects into our set */
--	while (read_object_from_stdin(sha1))
--		sha1_array_append(&hashes, sha1);
-+	while (read_object_from_stdin(oid.hash))
-+		oid_array_append(&hashes, &oid);
+-	if (linelen < 83 ||
+-	    line[40] != ' ' ||
+-	    line[81] != ' ' ||
+-	    get_sha1_hex(line, old_sha1) ||
+-	    get_sha1_hex(line + 41, new_sha1))
++	if (parse_oid_hex(line, &old_oid, &p) ||
++	    *p++ != ' ' ||
++	    parse_oid_hex(p, &new_oid, &p) ||
++	    *p++ != ' ')
+ 		die("protocol error: expected old/new/ref, got '%s'", line);
  
- 	/* Check if some objects are in our set */
--	while (read_object_from_stdin(sha1)) {
--		if (sha1_array_lookup(&hashes, sha1) >= 0)
-+	while (read_object_from_stdin(oid.hash)) {
-+		if (oid_array_lookup(&hashes, &oid) >= 0)
- 			printf("it's in there!\n");
- 
- 	/*
-@@ -75,6 +75,6 @@ void some_func(void)
- 	 * Instead, this will sort once and then skip duplicates
- 	 * in linear time.
- 	 */
--	sha1_array_for_each_unique(&hashes, print_callback, NULL);
-+	oid_array_for_each_unique(&hashes, print_callback, NULL);
+-	refname = line + 82;
+-	reflen = linelen - 82;
++	refname = p;
++	reflen = linelen - (p - line);
+ 	FLEX_ALLOC_MEM(cmd, ref_name, refname, reflen);
+-	hashcpy(cmd->old_sha1, old_sha1);
+-	hashcpy(cmd->new_sha1, new_sha1);
++	oidcpy(&cmd->old_oid, &old_oid);
++	oidcpy(&cmd->new_oid, &new_oid);
+ 	*tail = cmd;
+ 	return &cmd->next;
  }
- -----------------------------------------
+@@ -1541,12 +1541,12 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 		if (!line)
+ 			break;
+ 
+-		if (len == 48 && starts_with(line, "shallow ")) {
+-			unsigned char sha1[20];
+-			if (get_sha1_hex(line + 8, sha1))
++		if (len > 8 && starts_with(line, "shallow ")) {
++			struct object_id oid;
++			if (get_oid_hex(line + 8, &oid))
+ 				die("protocol error: expected shallow sha, got '%s'",
+ 				    line + 8);
+-			sha1_array_append(shallow, sha1);
++			sha1_array_append(shallow, oid.hash);
+ 			continue;
+ 		}
+ 
+@@ -1815,9 +1815,9 @@ static void update_shallow_info(struct command *commands,
+ 	}
+ 
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (is_null_sha1(cmd->new_sha1))
++		if (is_null_oid(&cmd->new_oid))
+ 			continue;
+-		sha1_array_append(ref, cmd->new_sha1);
++		sha1_array_append(ref, cmd->new_oid.hash);
+ 		cmd->index = ref->nr - 1;
+ 	}
+ 	si->ref = ref;
+@@ -1830,7 +1830,7 @@ static void update_shallow_info(struct command *commands,
+ 	ALLOC_ARRAY(ref_status, ref->nr);
+ 	assign_shallow_commits_to_refs(si, NULL, ref_status);
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (is_null_sha1(cmd->new_sha1))
++		if (is_null_oid(&cmd->new_oid))
+ 			continue;
+ 		if (ref_status[cmd->index]) {
+ 			cmd->error_string = "shallow update not allowed";
+@@ -1868,7 +1868,7 @@ static int delete_only(struct command *commands)
+ {
+ 	struct command *cmd;
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!is_null_sha1(cmd->new_sha1))
++		if (!is_null_oid(&cmd->new_oid))
+ 			return 0;
+ 	}
+ 	return 1;
