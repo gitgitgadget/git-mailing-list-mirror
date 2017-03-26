@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A08F20966
-	for <e@80x24.org>; Sun, 26 Mar 2017 02:45:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 948CE20966
+	for <e@80x24.org>; Sun, 26 Mar 2017 02:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751389AbdCZCpT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 22:45:19 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36127 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751364AbdCZCpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 22:45:16 -0400
-Received: by mail-pf0-f196.google.com with SMTP id r137so4067110pfr.3
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:45:10 -0700 (PDT)
+        id S1751392AbdCZCp1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 22:45:27 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33301 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751277AbdCZCp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 22:45:26 -0400
+Received: by mail-pf0-f195.google.com with SMTP id p189so4078206pfp.0
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:45:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4y222quJsSs5W1XXlYwgqcFLdSsZACEWwT9mVeNhBlc=;
-        b=GTkYGIQAEJYRw6af1QCOFaLf+78Fln1YaoqGEvPS11C6MlXKUG6/XF1hgxvOpbByOT
-         VycZqgZaUDCGv/tbxN8+AWyNnoXxyQUO/ea4U3fkuCTpr2XK8OCNDud7Mgin86fRaLI3
-         gdtd3RdHVF30t6bbLWwf6tqyeIyHodlwiWAVNrn9ZxILPHvorvwf8Z/6peJCJl5asupZ
-         s9XGrORByfTdYzg/ZktxYEFQNj0lHNwY4FPBzFlOHz7rTV1blYRIbVazOyRbxo0HrWxJ
-         sZ1dslIMkFv1RVhky2yy1ju8WsthqHLPB1TWEvCS+LdOVcZJ1fH3FQ/+2yJpPICx0S2V
-         vYsg==
+        bh=8ddc/FxDebFpZDqHbJkNdd5AXFO1oR+kLhJGUYVqZ0M=;
+        b=UBZ/2FGuTlpVGWacuGQlOrTzMdh5dugPz/xWVPPslh0Jc9OHpJa9weii7z6ZZ2+XLq
+         hGdvjAotpwrchd9r8AS3Sk7JiepJNfvL9vz3GcZV9QMl7BDpgImjLMHqRRmCmyFUGtJR
+         DBXnYNVC4fgW+uR+3Gl8Zr0kgye18YJ0i6nwiwvWJLto2dQfuBsDjUHXPtG0hSzlKtwD
+         kVxGRbKCLYBJ5cV8BYoXuEO/065z7LduVYTMrSfjZs7yMdMmo070aeyhYRBiDH+lYZrN
+         jBCPQXVEUzrDLrzM8kJn9V1hCk104gGJ/8zKc4Q3194+ZcBbJ8fgRhX9NeF6anMBuXf6
+         m3Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4y222quJsSs5W1XXlYwgqcFLdSsZACEWwT9mVeNhBlc=;
-        b=iaxKMLhpmqIm31myFMvyLafaQek86qL2dz8Rq9KSDF3+V+ZkINng7xRCc/5eQvndPi
-         WAMkR7Zkl/jAmKmXfr14A2MKzZ1t3E5EZc+ow3boI7oH2pL3ttmi39fjlLrJABEescXM
-         ECbHKNv5ZkAmHdSv4skgkMoDKCMx0+plTOe/4Stwx4X171xflEruDfFWA5ahsSaDMROh
-         vuLfiKcwNK9qJH4dOy7eHiWbkcSF5IvQCyJNyLdj03WsmErn5kEd/jsr/XG1g2ergp/x
-         lWIGAyaRvkR820LX0yBWEruk+cGEiUlgLyF7j5JM9Sf2K2iz/d3hCca9bAYx+9G74Z/H
-         vPLw==
-X-Gm-Message-State: AFeK/H0czLwVu6sXKluKwnnesmnHfgmQP+A4/FPV6HtELiHXeZ0ZvGC4VthavEH76hE+5g==
-X-Received: by 10.99.0.213 with SMTP id 204mr17091480pga.60.1490496310404;
-        Sat, 25 Mar 2017 19:45:10 -0700 (PDT)
+        bh=8ddc/FxDebFpZDqHbJkNdd5AXFO1oR+kLhJGUYVqZ0M=;
+        b=D/8HTOz6gDsnsNDmAL7LeE1DGcmHGHM2j/cf5vc0aLYFb2oaxP4wQWku/Mhanxj8gf
+         GtaNjtLlgKirQYqh3eSqiO4YUneNppufH/LSdJtKuBjf7SyAWe5rlqG4wc43Eh3KEZhv
+         dfiLwe1T7EhhyVlVtHBiF5diZF7K18Obo0IkYPWmQ6wUgoyUtmUSpch+ets+Xl0oUwah
+         Ts31d3SAagFks6L5n7Lmuqybyr0ua+zqs0xi+9Aa+DOI1I/OQVg5Ek8OjUPG6rBe6Sls
+         3J8w07vSRss2bqvPZ39ozMapGLq3fy7kygEnhlSloiyRYnMSWqSlfSK/uLFyctAFpY9o
+         tCsQ==
+X-Gm-Message-State: AFeK/H0XCuIgzrmGkY1wknsxVaxtAtlpDlXzL9ofDzGAjhgxNCINo6bsy/oeXePV65rmiw==
+X-Received: by 10.98.48.196 with SMTP id w187mr18055289pfw.179.1490496324928;
+        Sat, 25 Mar 2017 19:45:24 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id j19sm12843895pfk.4.2017.03.25.19.45.06
+        by smtp.gmail.com with ESMTPSA id n24sm12000106pgc.43.2017.03.25.19.45.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Mar 2017 19:45:09 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:45:04 +0700
+        Sat, 25 Mar 2017 19:45:24 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:45:17 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v7 22/28] refs: new transaction related ref-store api
-Date:   Sun, 26 Mar 2017 09:42:35 +0700
-Message-Id: <20170326024241.31984-23-pclouds@gmail.com>
+Subject: [PATCH v7 24/28] refs: delete pack_refs() in favor of refs_pack_refs()
+Date:   Sun, 26 Mar 2017 09:42:37 +0700
+Message-Id: <20170326024241.31984-25-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170326024241.31984-1-pclouds@gmail.com>
 References: <20170318020337.22767-1-pclouds@gmail.com>
@@ -73,187 +73,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The transaction struct now takes a ref store at creation and will
-operate on that ref store alone.
+It only has one caller, not worth keeping just for convenience.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c               | 55 ++++++++++++++++++++++++++++++++++++++++------------
- refs.h               |  9 +++++++++
- refs/refs-internal.h |  1 +
- 3 files changed, 53 insertions(+), 12 deletions(-)
+ builtin/pack-refs.c | 2 +-
+ refs.c              | 5 -----
+ refs.h              | 1 -
+ 3 files changed, 1 insertion(+), 7 deletions(-)
 
+diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
+index 39f9a55d16..b106a392a4 100644
+--- a/builtin/pack-refs.c
++++ b/builtin/pack-refs.c
+@@ -17,5 +17,5 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
+ 	};
+ 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
+ 		usage_with_options(pack_refs_usage, opts);
+-	return pack_refs(flags);
++	return refs_pack_refs(get_main_ref_store(), flags);
+ }
 diff --git a/refs.c b/refs.c
-index c103f90b35..50ea24bd75 100644
+index 50ea24bd75..ec1f563824 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -630,16 +630,20 @@ static int delete_pseudoref(const char *pseudoref, const unsigned char *old_sha1
- 	return 0;
+@@ -1602,11 +1602,6 @@ int refs_pack_refs(struct ref_store *refs, unsigned int flags)
+ 	return refs->be->pack_refs(refs, flags);
  }
  
--int delete_ref(const char *msg, const char *refname,
--	       const unsigned char *old_sha1, unsigned int flags)
-+int refs_delete_ref(struct ref_store *refs, const char *msg,
-+		    const char *refname,
-+		    const unsigned char *old_sha1,
-+		    unsigned int flags)
+-int pack_refs(unsigned int flags)
+-{
+-	return refs_pack_refs(get_main_ref_store(), flags);
+-}
+-
+ int refs_peel_ref(struct ref_store *refs, const char *refname,
+ 		  unsigned char *sha1)
  {
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
- 
--	if (ref_type(refname) == REF_TYPE_PSEUDOREF)
-+	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
-+		assert(refs == get_main_ref_store());
- 		return delete_pseudoref(refname, old_sha1);
-+	}
- 
--	transaction = ref_transaction_begin(&err);
-+	transaction = ref_store_transaction_begin(refs, &err);
- 	if (!transaction ||
- 	    ref_transaction_delete(transaction, refname, old_sha1,
- 				   flags, msg, &err) ||
-@@ -654,6 +658,13 @@ int delete_ref(const char *msg, const char *refname,
- 	return 0;
- }
- 
-+int delete_ref(const char *msg, const char *refname,
-+	       const unsigned char *old_sha1, unsigned int flags)
-+{
-+	return refs_delete_ref(get_main_ref_store(), msg, refname,
-+			       old_sha1, flags);
-+}
-+
- int copy_reflog_msg(char *buf, const char *msg)
- {
- 	char *cp = buf;
-@@ -813,11 +824,20 @@ int read_ref_at(const char *refname, unsigned int flags, unsigned long at_time,
- 	return 1;
- }
- 
--struct ref_transaction *ref_transaction_begin(struct strbuf *err)
-+struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
-+						    struct strbuf *err)
- {
-+	struct ref_transaction *tr;
- 	assert(err);
- 
--	return xcalloc(1, sizeof(struct ref_transaction));
-+	tr = xcalloc(1, sizeof(struct ref_transaction));
-+	tr->ref_store = refs;
-+	return tr;
-+}
-+
-+struct ref_transaction *ref_transaction_begin(struct strbuf *err)
-+{
-+	return ref_store_transaction_begin(get_main_ref_store(), err);
- }
- 
- void ref_transaction_free(struct ref_transaction *transaction)
-@@ -934,18 +954,20 @@ int update_ref_oid(const char *msg, const char *refname,
- 		old_oid ? old_oid->hash : NULL, flags, onerr);
- }
- 
--int update_ref(const char *msg, const char *refname,
--	       const unsigned char *new_sha1, const unsigned char *old_sha1,
--	       unsigned int flags, enum action_on_err onerr)
-+int refs_update_ref(struct ref_store *refs, const char *msg,
-+		    const char *refname, const unsigned char *new_sha1,
-+		    const unsigned char *old_sha1, unsigned int flags,
-+		    enum action_on_err onerr)
- {
- 	struct ref_transaction *t = NULL;
- 	struct strbuf err = STRBUF_INIT;
- 	int ret = 0;
- 
- 	if (ref_type(refname) == REF_TYPE_PSEUDOREF) {
-+		assert(refs == get_main_ref_store());
- 		ret = write_pseudoref(refname, new_sha1, old_sha1, &err);
- 	} else {
--		t = ref_transaction_begin(&err);
-+		t = ref_store_transaction_begin(refs, &err);
- 		if (!t ||
- 		    ref_transaction_update(t, refname, new_sha1, old_sha1,
- 					   flags, msg, &err) ||
-@@ -976,6 +998,15 @@ int update_ref(const char *msg, const char *refname,
- 	return 0;
- }
- 
-+int update_ref(const char *msg, const char *refname,
-+	       const unsigned char *new_sha1,
-+	       const unsigned char *old_sha1,
-+	       unsigned int flags, enum action_on_err onerr)
-+{
-+	return refs_update_ref(get_main_ref_store(), msg, refname, new_sha1,
-+			       old_sha1, flags, onerr);
-+}
-+
- char *shorten_unambiguous_ref(const char *refname, int strict)
- {
- 	int i;
-@@ -1607,7 +1638,7 @@ int create_symref(const char *ref_target, const char *refs_heads_master,
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
--	struct ref_store *refs = get_main_ref_store();
-+	struct ref_store *refs = transaction->ref_store;
- 
- 	return refs->be->transaction_commit(refs, transaction, err);
- }
-@@ -1726,7 +1757,7 @@ int reflog_expire(const char *refname, const unsigned char *sha1,
- int initial_ref_transaction_commit(struct ref_transaction *transaction,
- 				   struct strbuf *err)
- {
--	struct ref_store *refs = get_main_ref_store();
-+	struct ref_store *refs = transaction->ref_store;
- 
- 	return refs->be->initial_transaction_commit(refs, transaction, err);
- }
 diff --git a/refs.h b/refs.h
-index eaa31e8193..37f4aa8bd5 100644
+index 37f4aa8bd5..1a07f9d86f 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -333,6 +333,10 @@ int reflog_exists(const char *refname);
-  * exists, regardless of its old value. It is an error for old_sha1 to
-  * be NULL_SHA1. flags is passed through to ref_transaction_delete().
+@@ -297,7 +297,6 @@ void warn_dangling_symrefs(FILE *fp, const char *msg_fmt,
+  * flags: Combination of the above PACK_REFS_* flags.
   */
-+int refs_delete_ref(struct ref_store *refs, const char *msg,
-+		    const char *refname,
-+		    const unsigned char *old_sha1,
-+		    unsigned int flags);
- int delete_ref(const char *msg, const char *refname,
- 	       const unsigned char *old_sha1, unsigned int flags);
- 
-@@ -418,6 +422,8 @@ enum action_on_err {
-  * Begin a reference transaction.  The reference transaction must
-  * be freed by calling ref_transaction_free().
-  */
-+struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
-+						    struct strbuf *err);
- struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+ int refs_pack_refs(struct ref_store *refs, unsigned int flags);
+-int pack_refs(unsigned int flags);
  
  /*
-@@ -552,6 +558,9 @@ void ref_transaction_free(struct ref_transaction *transaction);
-  * ref_transaction_update(). Handle errors as requested by the `onerr`
-  * argument.
-  */
-+int refs_update_ref(struct ref_store *refs, const char *msg, const char *refname,
-+		    const unsigned char *new_sha1, const unsigned char *old_sha1,
-+		    unsigned int flags, enum action_on_err onerr);
- int update_ref(const char *msg, const char *refname,
- 	       const unsigned char *new_sha1, const unsigned char *old_sha1,
- 	       unsigned int flags, enum action_on_err onerr);
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 5f26208c2c..690498698e 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -200,6 +200,7 @@ enum ref_transaction_state {
-  * as atomically as possible.  This structure is opaque to callers.
-  */
- struct ref_transaction {
-+	struct ref_store *ref_store;
- 	struct ref_update **updates;
- 	size_t alloc;
- 	size_t nr;
+  * Flags controlling ref_transaction_update(), ref_transaction_create(), etc.
 -- 
 2.11.0.157.gd943d85
 
