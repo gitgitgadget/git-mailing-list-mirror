@@ -2,119 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9186C20958
-	for <e@80x24.org>; Sun, 26 Mar 2017 22:49:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDCCD20958
+	for <e@80x24.org>; Sun, 26 Mar 2017 22:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751493AbdCZWsr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Mar 2017 18:48:47 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:62502 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751380AbdCZWsq (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Mar 2017 18:48:46 -0400
-X-AuditID: 12074413-f4fff700000077e1-6f-58d8454bfa84
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 1F.66.30689.B4548D85; Sun, 26 Mar 2017 18:48:44 -0400 (EDT)
-Received: from [192.168.69.190] (p579076D0.dip0.t-ipconnect.de [87.144.118.208])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2QMmeuO032177
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sun, 26 Mar 2017 18:48:41 -0400
-Subject: Re: [PATCH v3 1/2] [GSoC] dir_iterator: iterate over dir after its
- contents
-To:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org
-References: <1490465551-71056-1-git-send-email-bnmvco@gmail.com>
- <1490465551-71056-2-git-send-email-bnmvco@gmail.com>
-Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <f8beff4b-8e50-99ac-715d-549ae40bba0c@alum.mit.edu>
-Date:   Mon, 27 Mar 2017 00:48:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1751577AbdCZW5B (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Mar 2017 18:57:01 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50976 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751380AbdCZW47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Mar 2017 18:56:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 89E826DD68;
+        Sun, 26 Mar 2017 18:56:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1A3IP2lUH774
+        irxpu5a/JamOr3c=; b=LZEYgj9AcUQlbmQErv+X+YtqsdlMYK9zZ24pQDbENQUY
+        qMx4usv3Fj23KsSxe7XmW2TwlLOeQtd6gKEJUk/LNCKAdAiNOCWrXiZhkIARSo/x
+        h5ifRY6YIaDpU2+90yDCNlnIgD8eFrg5SnfKEyEYNzU5SsI/3OPOXTNcgv7bGFQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=e2MzcI
+        Kunsp2fboHBfBipL+c7Po7HuKwncwybQf8q2tkpw1vgrH6voKqj8b2DkOty4Zkg/
+        AAXuZBg9YyKYI+HchjGKsy8zIxz8gQL5T3y1YWjIAagjtCXGNmlJr1B4S2g03YUs
+        MZgecwuK9DDahYVHFKcj5SSGsaj9bRfCPxiTU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 81D0A6DD65;
+        Sun, 26 Mar 2017 18:56:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E6E4A6DD64;
+        Sun, 26 Mar 2017 18:56:56 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] l10n: Add git-add.txt to localized man pages
+References: <20170312200248.3610-1-jn.avila@free.fr>
+        <5036581a-f989-2db6-06ba-621db05c6de1@free.fr>
+        <xmqqpoh9kx5q.fsf@gitster.mtv.corp.google.com>
+        <4046320.m2qk9b67WH@cayenne>
+Date:   Sun, 26 Mar 2017 15:56:55 -0700
+In-Reply-To: <4046320.m2qk9b67WH@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+        "Sat, 25 Mar 2017 16:40:39 +0100")
+Message-ID: <xmqqshlz4pfs.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <1490465551-71056-2-git-send-email-bnmvco@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsUixO6iqOvjeiPCYPkLMYvHn96yWXRd6Way
-        aOi9wmzRPeUto8Xmze0sDqweO2fdZfdYsKnU4+IlZY/Pm+QCWKK4bFJSczLLUov07RK4Mg5e
-        riqYIFRx9s0pxgbGR3xdjJwcEgImErvn7WbuYuTiEBLYwSSxe/UUdgjnApPE/m1/gRwODmGB
-        MIk5291BTBEBa4nra7xAeoUEyiUu9s1hBbGZBWwkjjf1MoLYbAK6Eot6mplAbF4Be4kXR36x
-        gdgsAqoSO+ecAKsRFQiRmLPwASNEjaDEyZlPWEBsTgFHib+fVzBCzNST2HH9F9R8eYntb+cw
-        T2Dkn4WkZRaSsllIyhYwMq9ilEvMKc3VzU3MzClOTdYtTk7My0st0jXXy80s0UtNKd3ECAlc
-        4R2Mu07KHWIU4GBU4uEVkLwRIcSaWFZcmXuIUZKDSUmU19PheoQQX1J+SmVGYnFGfFFpTmrx
-        IUYJDmYlEd7dLEDlvCmJlVWpRfkwKWkOFiVxXrUl6n5CAumJJanZqakFqUUwWRkODiUJ3mwX
-        oEbBotT01Iq0zJwShDQTByfIcB6g4dogNbzFBYm5xZnpEPlTjIpS4rxfnIESAiCJjNI8uF5Y
-        YnnFKA70ijBvB0g7DzApwXW/AhrMBDR49oYrIINLEhFSUg2M8W6JlV+aDFY0nOH3SiuccHyK
-        6IJNvFUhF8LSNXIPFXTv/3V2er/Tks4npx+t5iyd87xo1qubj7kW1NxoNuXaF/G2PeTDt7Tf
-        QV1/C3deP5tg6OZ3+PVZlzUhtQcjGoo0vkufqWjptTOd85Wp2up715J5V813JRir6K4w35ea
-        PK2ROdhq804zJZbijERDLeai4kQA1/KzRwcDAAA=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8331B47E-1277-11E7-99BD-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/25/2017 07:12 PM, Daniel Ferreira wrote:
-> Create an option for the dir_iterator API to iterate over a directory
-> path only after having iterated through its contents. This feature was
-> predicted, although not implemented by 0fe5043 ("dir_iterator: new API
-> for iterating over a directory tree", 2016-06-18).
-> 
-> This is useful for recursively removing a directory and calling rmdir()
-> on a directory only after all of its contents have been wiped.
-> 
-> An "options" member has been added to the dir_iterator struct. It
-> contains the "iterate_dirs_after_files" flag, that enables the feature
-> when set to 1. Default behavior continues to be iterating over directory
-> paths before its contents.
-> 
-> Two inline functions have been added to dir_iterator's code to avoid
-> code repetition inside dir_iterator_advance() and make code more clear.
-> 
-> No particular functions or wrappers for setting the options struct's
-> fields have been added to avoid either breaking the current dir_iterator
-> API or over-engineering an extremely simple option architecture.
-> 
-> Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-> ---
->  dir-iterator.c | 100 ++++++++++++++++++++++++++++++++++++++++++++-------------
->  dir-iterator.h |   7 ++++
->  2 files changed, 84 insertions(+), 23 deletions(-)
-> 
-> [...]
-> diff --git a/dir-iterator.h b/dir-iterator.h
-> index 27739e6..4304913 100644
-> --- a/dir-iterator.h
-> +++ b/dir-iterator.h
-> @@ -38,7 +38,14 @@
->   * dir_iterator_advance() again.
->   */
-> 
-> +struct dir_iterator_options {
-> +	unsigned iterate_dirs_after_files : 1;
-> +};
-> +
->  struct dir_iterator {
-> +	/* Options for dir_iterator */
-> +	struct dir_iterator_options options;
-> +
->  	/* The current path: */
->  	struct strbuf path;
+Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
 
-Another thing I noticed: the name of this option,
-`iterate_dirs_after_files`, is a little bit misleading. If I understand
-correctly, it doesn't make the iteration process files before
-directories within a single directory; rather, it ensures that
-subdirectories and their contents are processed before the containing
-directory. Therefore, a better name might be something like "depth_first".
+> ... So I would=20
+> think the other way around: for those interested in translated the=20
+> documentation, some script would allow to checkout the git project insi=
+de the=20
+> gitman-l10n project (like a kind of library).
+>
+> This would be mainly transparent for the git developers.
 
-I should mention that I like the overall idea to add this new feature
-and use it to simplify `remove_subtree()`.
+As long as the resulting layout would help all groups (1) developers
+who do not worry about documentation l10n (2) documentation i18n
+coordinator and transltors (3) those who build and ship binary
+packages, I personally am OK either way.
 
-Michael
+Having said that, I am not sure if I understand your "translators do
+not have a fixed version of git.git to work with and po4a cannot
+work well" as a real concern.  Wouldn't the l10n of documentation
+use a similar workflow as used for the translation of in-code
+strings we do in po/?  Namely, *.pot files are *NOT* updated by
+individual translators by picking up a random version of git.git and
+running xgettext.  Instead, i18n coordinator is the only person who
+runs xgettext to update *.pot for the upcoming release of Git being
+prepared, and then translators work off of that *.pot file.  Which
+means they do not have to worry about in-code strings that gets
+updated in the meantime; instead they work on a stable known
+snapshot of *.pot and wait for the next sync with i18n coordinator
+whose running of xgettext would update *.pot files with updated
+in-code strings.  Doesn't that workflow apply equally well for the
+documentation l10n?
 
