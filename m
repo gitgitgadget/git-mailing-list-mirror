@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A08620969
-	for <e@80x24.org>; Sun, 26 Mar 2017 02:43:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F83420966
+	for <e@80x24.org>; Sun, 26 Mar 2017 02:43:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751278AbdCZCnQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 22:43:16 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34252 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751227AbdCZCnP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 22:43:15 -0400
-Received: by mail-pg0-f68.google.com with SMTP id o123so1928970pga.1
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:43:14 -0700 (PDT)
+        id S1751296AbdCZCne (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 22:43:34 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:34228 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751293AbdCZCne (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 22:43:34 -0400
+Received: by mail-pg0-f66.google.com with SMTP id o123so1928803pga.1
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2pWtMiVPBHs8TZXprLJ+TvX2I6HW3ISu4A2Q+2yvkog=;
-        b=IS3lfnAHe9790ZMvu5g2WM1mVFZjEj9gqDTbc06P1MXPyZ28MKX0G/ttW0NOByYjaI
-         7jTtsMfNnPZHQ+mT8IJs2Z/S5bDvYCJjJjsW+iZLRRN2iLl/av/x8wfB70DbemOjkcOF
-         2CYiA0ghJPlNT0flzRg7iJGEntbtY9mD3qNksaSEZbKVdF5nioFaQrJLLwdV2ulmdxKy
-         dJVfNT9RqWy9pafSbNIemJrOqusVLKtazq5haeO92nYXGj1fcN+xqdpQoP434cxXZKpo
-         VqSff/b4VkECq3qnaxa3bS7pmRageNMwGLudkqk/hKSgBL4+Fay9j7rPodckmXaayezl
-         j8mg==
+        bh=vVuZx0qrsX66LLVeycCTLGA+IgT43nOeG6Ww1xCEU0k=;
+        b=iYtiT7IbSUGBhJ6WlS5au6ONbxvwL5mU6ppXkM4wOTRBvJ4BlP/0D2/01kodJqNKr0
+         E3Kf/EnN4frcD7Qrx76LA+kHEmxFnpmfevLj/3acCBhSP1XoYn4Kj9gbb72hshRV5fIi
+         T4ZSv5+ujKFDYEyux+5BCZUxVOlEvGfzDKv/esV95A9+CZsoDe0c4P28X2JPo5CCjzJ5
+         GSaKTgbDW9eaY/aJqPFGWdorMvVB6YXbV5neFggy3QVqSRihkOmX3hlgCcfxGoCSLAQc
+         xKyqMP75U6Y6F1POIZqHVUm4CAHCf/QeXhgLIBmNPzscaRoa6Qar+dxMUX9HJqsgZKmg
+         0+ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2pWtMiVPBHs8TZXprLJ+TvX2I6HW3ISu4A2Q+2yvkog=;
-        b=tVy5n3Pcl3os4VyVJ7CSqJg4kT3toUHtWofW//ZtzTYhsdNdpbbuLCfG5X8MsQxtyl
-         3fEGvU2CxFrfuhtkGfQNUGnvyY9ctijabwdk75av+sEsxIcDubcVlrjJTBrPynS1sfdf
-         fQNfi5gO5MI3QQKwOxDvT2lJCA0x6iCv3TZQ6ArzqaVzFeSUXHjbd31CFyGMbDRJzoYx
-         U4VbFPZbl1eb+zVXPI+qsD0haBdf+6KY30QyimMG6ugqo9+GxyH3AKsynThistSb1hLj
-         WVh8EBRV4h8WRmm3eUyegPzW/fYnNYcV7Art0lu2bwZ3Rin5vrLQcurf5tx+naE0bmKn
-         qjFA==
-X-Gm-Message-State: AFeK/H2YnwZ1Q6hEQK2Gz/g92tbt2HKTIPuYkeJup5ZmfyJ3wAwMuHcw7Vf61IlpViCArQ==
-X-Received: by 10.84.202.194 with SMTP id q2mr20752392plh.108.1490496194085;
-        Sat, 25 Mar 2017 19:43:14 -0700 (PDT)
+        bh=vVuZx0qrsX66LLVeycCTLGA+IgT43nOeG6Ww1xCEU0k=;
+        b=gOlEAxoxX6SH5QJka6lEKkzJ2S5sN9noTVeV4J/aWSWcDznkX9MW7UsmjlMNixvHEr
+         HY+LAd6HnBG5OrPU4GIJWQEDhZkpqst7/4DPMTk9Pv3QrWaYYGV8uF9btnQjBhVGqwkC
+         nqOpFTz7JjEcnkTM0+ZF/LrlQ74PinMAO3STw6oZjXDPzs01Bem0aq/Jy9ola/xrFwca
+         /RcIzdZeF4D/5CE3ev1sLOtWlBXkdAf1Kc3JAzBYAiQdHIReOXhtkiVM4MOidLj5F0Vf
+         XTwEBE+gyxQWeh68K3rGkxxv4m45YEhdhSrGJKm7eD6GDDasLTPUJO5RJgxEXbnk6K5j
+         zAnQ==
+X-Gm-Message-State: AFeK/H3Hubmnrs5w3HjIhste4eCa0fAVUHNI/JIBXLWDjy6GasfZfzPUVyQ+24gYu8JHuw==
+X-Received: by 10.98.48.196 with SMTP id w187mr18050043pfw.179.1490496187723;
+        Sat, 25 Mar 2017 19:43:07 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id c204sm12785364pfc.92.2017.03.25.19.43.09
+        by smtp.gmail.com with ESMTPSA id q194sm12794721pfq.43.2017.03.25.19.43.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Mar 2017 19:43:13 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:43:08 +0700
+        Sat, 25 Mar 2017 19:43:07 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:43:01 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v7 04/28] files-backend: delete dead code in files_init_db()
-Date:   Sun, 26 Mar 2017 09:42:17 +0700
-Message-Id: <20170326024241.31984-5-pclouds@gmail.com>
+Subject: [PATCH v7 03/28] files-backend.c: delete dead code in files_ref_iterator_begin()
+Date:   Sun, 26 Mar 2017 09:42:16 +0700
+Message-Id: <20170326024241.31984-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170326024241.31984-1-pclouds@gmail.com>
 References: <20170318020337.22767-1-pclouds@gmail.com>
@@ -73,47 +73,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-safe_create_dir() can do adjust_shared_perm() internally, and init-db
-has always created 'refs' in shared mode since the beginning,
-af6e277c5e (git-init-db: initialize shared repositories with --shared -
-2005-12-22). So this code looks like extra adjust_shared_perm calls are
-unnecessary.
-
-And they are. But let's see why there are here in the first place.
-
-This code was added in 6fb5acfd8f (refs: add methods to init refs db -
-2016-09-04). From the diff alone this looks like a faithful refactored
-code from init-db.c. But there is a subtle difference:
-
-Between the safe_create_dir() block and adjust_shared_perm() block in
-the old init-db.c, we may copy/recreate directories from the repo
-template. So it makes sense that adjust_shared_perm() is re-executed
-then to fix potential permission screwups.
-
-After 6fb5acfd8f, refs dirs are created after template is copied. Nobody
-will change directory permission again. So the extra adjust_shared_perm()
-is redudant. Delete them.
+It's not in the diff context, but files_downcast() is called before this
+check. If "refs" is NULL, we would have segfaulted before reaching the
+check here. And we should never see NULL refs in backend code (frontend
+should have caught it).
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs/files-backend.c | 4 ----
- 1 file changed, 4 deletions(-)
+ refs/files-backend.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index caeb8188fd..9a9dc4e50c 100644
+index 42c0cc14f3..caeb8188fd 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -4107,10 +4107,6 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
- 	 */
- 	safe_create_dir(git_path("refs/heads"), 1);
- 	safe_create_dir(git_path("refs/tags"), 1);
--	if (get_shared_repository()) {
--		adjust_shared_perm(git_path("refs/heads"));
--		adjust_shared_perm(git_path("refs/tags"));
--	}
- 	return 0;
- }
+@@ -1897,9 +1897,6 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	struct files_ref_iterator *iter;
+ 	struct ref_iterator *ref_iterator;
  
+-	if (!refs)
+-		return empty_ref_iterator_begin();
+-
+ 	if (ref_paranoia < 0)
+ 		ref_paranoia = git_env_bool("GIT_REF_PARANOIA", 0);
+ 	if (ref_paranoia)
 -- 
 2.11.0.157.gd943d85
 
