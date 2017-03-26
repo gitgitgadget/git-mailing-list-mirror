@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F83420966
-	for <e@80x24.org>; Sun, 26 Mar 2017 02:43:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90E5320966
+	for <e@80x24.org>; Sun, 26 Mar 2017 02:43:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751296AbdCZCne (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 22:43:34 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34228 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751293AbdCZCne (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 22:43:34 -0400
-Received: by mail-pg0-f66.google.com with SMTP id o123so1928803pga.1
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:43:23 -0700 (PDT)
+        id S1751300AbdCZCnj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 22:43:39 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:32811 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751293AbdCZCni (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 22:43:38 -0400
+Received: by mail-pf0-f194.google.com with SMTP id p189so4074941pfp.0
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:43:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vVuZx0qrsX66LLVeycCTLGA+IgT43nOeG6Ww1xCEU0k=;
-        b=iYtiT7IbSUGBhJ6WlS5au6ONbxvwL5mU6ppXkM4wOTRBvJ4BlP/0D2/01kodJqNKr0
-         E3Kf/EnN4frcD7Qrx76LA+kHEmxFnpmfevLj/3acCBhSP1XoYn4Kj9gbb72hshRV5fIi
-         T4ZSv5+ujKFDYEyux+5BCZUxVOlEvGfzDKv/esV95A9+CZsoDe0c4P28X2JPo5CCjzJ5
-         GSaKTgbDW9eaY/aJqPFGWdorMvVB6YXbV5neFggy3QVqSRihkOmX3hlgCcfxGoCSLAQc
-         xKyqMP75U6Y6F1POIZqHVUm4CAHCf/QeXhgLIBmNPzscaRoa6Qar+dxMUX9HJqsgZKmg
-         0+ZA==
+        bh=gmKrmFUkcC0mupHDIWWb3yy+0luEcfw4NH+KXU3ozQo=;
+        b=MDXlEodX5PXmzZtwqf+D6S+3J6gbD0vjoeT9QfFIZq5NeRqrZnljXp4nt7NdbC2cA1
+         GRMEj809ZJnnIH/czsHEjRe27G752l441LbrcFXBRmeOx/vQpNzCLhs+L3y6DFjrR/9w
+         7RwFf+T5yzOt2PxeBA5ZJK/kG2sPfSxYXyMX1FNP43YlZwnypespxJJO1O/zTNH9Gw4Y
+         Ro8/hdACaMZ3mAUN5cNlexiLTW/ZvYEyO69ZJZBORCBQpbY4fZxQ6+WYCWyxlvSskH9o
+         zzDtNTgtCPr8+IGK1nmdUum7XRBSS9UwPZ5QozqWdaO65oUKUJhWxGLF59q0yBIDuMzE
+         DBAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vVuZx0qrsX66LLVeycCTLGA+IgT43nOeG6Ww1xCEU0k=;
-        b=gOlEAxoxX6SH5QJka6lEKkzJ2S5sN9noTVeV4J/aWSWcDznkX9MW7UsmjlMNixvHEr
-         HY+LAd6HnBG5OrPU4GIJWQEDhZkpqst7/4DPMTk9Pv3QrWaYYGV8uF9btnQjBhVGqwkC
-         nqOpFTz7JjEcnkTM0+ZF/LrlQ74PinMAO3STw6oZjXDPzs01Bem0aq/Jy9ola/xrFwca
-         /RcIzdZeF4D/5CE3ev1sLOtWlBXkdAf1Kc3JAzBYAiQdHIReOXhtkiVM4MOidLj5F0Vf
-         XTwEBE+gyxQWeh68K3rGkxxv4m45YEhdhSrGJKm7eD6GDDasLTPUJO5RJgxEXbnk6K5j
-         zAnQ==
-X-Gm-Message-State: AFeK/H3Hubmnrs5w3HjIhste4eCa0fAVUHNI/JIBXLWDjy6GasfZfzPUVyQ+24gYu8JHuw==
-X-Received: by 10.98.48.196 with SMTP id w187mr18050043pfw.179.1490496187723;
-        Sat, 25 Mar 2017 19:43:07 -0700 (PDT)
+        bh=gmKrmFUkcC0mupHDIWWb3yy+0luEcfw4NH+KXU3ozQo=;
+        b=a4WYKE5ZlG/j5KLDoiS5B8n/ouEjvwKDYS9eeHEWR3lvBOgcYRvY0ECIjO8w8dy6CW
+         SXVo3wUX1HME7qadi57+K+4KL04ULg8ypudffX0WybQ/Ha9eXWZa3kfU4A5ncLWZPIBD
+         f72hmX60Codp8l88/BX85zOZC2SAKHvXzbTf7HoFmUaQ0gtA/n00BFqGgUMEK4Yfuoyn
+         yszFHVkWM5Bzmi0zn1DWGrwS+wpwEtouioW2/uI4ZD+FHlIwklkRtcIbG7qq9mKBPblE
+         zjkea4mf6jODrPbYigQd8CGxiWE6fmMz307juu613zxuIslghXWfJ0dwF5jcJ0uPfpOm
+         GRfQ==
+X-Gm-Message-State: AFeK/H0qQ00mj39aOD7F4cQsQ1feCYkfPLlppIT+8icymf/bdC1U00fTmAwNrbUqNY+7zA==
+X-Received: by 10.98.198.138 with SMTP id x10mr18074232pfk.85.1490496201801;
+        Sat, 25 Mar 2017 19:43:21 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id q194sm12794721pfq.43.2017.03.25.19.43.03
+        by smtp.gmail.com with ESMTPSA id p77sm12793719pfj.99.2017.03.25.19.43.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Mar 2017 19:43:07 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:43:01 +0700
+        Sat, 25 Mar 2017 19:43:21 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:43:14 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v7 03/28] files-backend.c: delete dead code in files_ref_iterator_begin()
-Date:   Sun, 26 Mar 2017 09:42:16 +0700
-Message-Id: <20170326024241.31984-4-pclouds@gmail.com>
+Subject: [PATCH v7 05/28] files-backend: add and use files_packed_refs_path()
+Date:   Sun, 26 Mar 2017 09:42:18 +0700
+Message-Id: <20170326024241.31984-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170326024241.31984-1-pclouds@gmail.com>
 References: <20170318020337.22767-1-pclouds@gmail.com>
@@ -73,30 +73,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's not in the diff context, but files_downcast() is called before this
-check. If "refs" is NULL, we would have segfaulted before reaching the
-check here. And we should never see NULL refs in backend code (frontend
-should have caught it).
+Keep repo-related path handling in one place. This will make it easier
+to add submodule/multiworktree support later.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs/files-backend.c | 3 ---
- 1 file changed, 3 deletions(-)
+ refs/files-backend.c | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 42c0cc14f3..caeb8188fd 100644
+index 9a9dc4e50c..f17daddffa 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -1897,9 +1897,6 @@ static struct ref_iterator *files_ref_iterator_begin(
- 	struct files_ref_iterator *iter;
- 	struct ref_iterator *ref_iterator;
+@@ -923,6 +923,8 @@ struct files_ref_store {
+ 	 */
+ 	const char *submodule;
  
--	if (!refs)
--		return empty_ref_iterator_begin();
++	char *packed_refs_path;
++
+ 	struct ref_entry *loose;
+ 	struct packed_ref_cache *packed;
+ };
+@@ -985,7 +987,14 @@ static struct ref_store *files_ref_store_create(const char *submodule)
+ 
+ 	base_ref_store_init(ref_store, &refs_be_files);
+ 
+-	refs->submodule = xstrdup_or_null(submodule);
++	if (submodule) {
++		refs->submodule = xstrdup(submodule);
++		refs->packed_refs_path = git_pathdup_submodule(
++			refs->submodule, "packed-refs");
++		return ref_store;
++	}
++
++	refs->packed_refs_path = git_pathdup("packed-refs");
+ 
+ 	return ref_store;
+ }
+@@ -1153,19 +1162,18 @@ static void read_packed_refs(FILE *f, struct ref_dir *dir)
+ 	strbuf_release(&line);
+ }
+ 
++static const char *files_packed_refs_path(struct files_ref_store *refs)
++{
++	return refs->packed_refs_path;
++}
++
+ /*
+  * Get the packed_ref_cache for the specified files_ref_store,
+  * creating it if necessary.
+  */
+ static struct packed_ref_cache *get_packed_ref_cache(struct files_ref_store *refs)
+ {
+-	char *packed_refs_file;
 -
- 	if (ref_paranoia < 0)
- 		ref_paranoia = git_env_bool("GIT_REF_PARANOIA", 0);
- 	if (ref_paranoia)
+-	if (refs->submodule)
+-		packed_refs_file = git_pathdup_submodule(refs->submodule,
+-							 "packed-refs");
+-	else
+-		packed_refs_file = git_pathdup("packed-refs");
++	const char *packed_refs_file = files_packed_refs_path(refs);
+ 
+ 	if (refs->packed &&
+ 	    !stat_validity_check(&refs->packed->validity, packed_refs_file))
+@@ -1184,7 +1192,6 @@ static struct packed_ref_cache *get_packed_ref_cache(struct files_ref_store *ref
+ 			fclose(f);
+ 		}
+ 	}
+-	free(packed_refs_file);
+ 	return refs->packed;
+ }
+ 
+@@ -2157,7 +2164,7 @@ static int lock_packed_refs(struct files_ref_store *refs, int flags)
+ 	}
+ 
+ 	if (hold_lock_file_for_update_timeout(
+-			    &packlock, git_path("packed-refs"),
++			    &packlock, files_packed_refs_path(refs),
+ 			    flags, timeout_value) < 0)
+ 		return -1;
+ 	/*
+@@ -2423,7 +2430,7 @@ static int repack_without_refs(struct files_ref_store *refs,
+ 		return 0; /* no refname exists in packed refs */
+ 
+ 	if (lock_packed_refs(refs, 0)) {
+-		unable_to_lock_message(git_path("packed-refs"), errno, err);
++		unable_to_lock_message(files_packed_refs_path(refs), errno, err);
+ 		return -1;
+ 	}
+ 	packed = get_packed_refs(refs);
 -- 
 2.11.0.157.gd943d85
 
