@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8610B20966
-	for <e@80x24.org>; Sun, 26 Mar 2017 02:45:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41A5220966
+	for <e@80x24.org>; Sun, 26 Mar 2017 02:45:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751287AbdCZCpp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Mar 2017 22:45:45 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33356 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751327AbdCZCpo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Mar 2017 22:45:44 -0400
-Received: by mail-pf0-f193.google.com with SMTP id p189so4078557pfp.0
-        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:45:38 -0700 (PDT)
+        id S1751406AbdCZCp5 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Mar 2017 22:45:57 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35559 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751319AbdCZCp4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Mar 2017 22:45:56 -0400
+Received: by mail-pg0-f68.google.com with SMTP id g2so4670778pge.2
+        for <git@vger.kernel.org>; Sat, 25 Mar 2017 19:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Y4ALuijeqEe/LymVDdhmZ23csh4tuKP2jw5oIfi5Fs8=;
-        b=ZI3Rdt88gOfEMjo3turYLFLSBFTYMT9xWHDstBhQCX9ZZu751SfvtdkAhMxk/PGkQD
-         /lYgMU/iV+YM0B6a6TIdF4aFDXv3AtHwIJ9uZO4alKVBa1uZbivpf+fqRxCB2Y+2zj7M
-         IqjdHDmtgyV4cPWEuwAR2EmX7iqN9hdYMgQdIFZAU+jn5lDxXKj/jzkUlNxQmehK3f68
-         cnBZJ/5DxOcpWPn4nDU/QI9bulzOr/mfmix0eg93aBJf4JzyGM0J7BchI/gBggBIVTGh
-         +OxWjSfVpHY5UtqVl2QXWKD4M2hfqNoG3UbOY8tcfdDxs7cG0ABk024jGYGF045Ru/fj
-         HxEA==
+        bh=I7LeJoYQ7JKJ/yrOC6qw7yVLl0UMdWCYgUJandrSPfI=;
+        b=QDHO9pwF8cHj2Sp1t65Gp7JgHPr+3dNyonhDstuo7snre1ULSwCIU6QJRw+a87YEqQ
+         J4J6Ua8/iIbfDFxY/gRyIHg+KigaNrDTPKa+iUr9yur7fHOg+jtcT73sFCFwC8E4uu92
+         XfWlLEIcUWsOIvFpwYZ/kZBarrV7HvjYzB27poOsszKFN4kvWMckhv7v9gCa65E1BI0G
+         RxyeNJcvO174VY/5qdWQj9jgTI92kZs0zpxb/E2o6nSyAek2l78p32b7v2pPQRd2ba2F
+         KglfXqPqyG7+LS+347oS+9gGOfy9lraOejzE9wGGlHhjl93jKikutoTB1SpUDjUXZjKh
+         PnMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Y4ALuijeqEe/LymVDdhmZ23csh4tuKP2jw5oIfi5Fs8=;
-        b=f4Rr43JzDsorUnow2terU/6iDYCPokOgg07Ab1dvSmrGd2v0KBS8zqFPms5WJJ5d6L
-         /2p/Pp3WeEaNI3D2ECBfihzd+UzsK1Vkt8X+JKb47BrW9mTg78d67G9A2WhijvcdqNsf
-         8jd5Cx3wtaESEmafXMye3oY4zPrZlwqBfB1IpjZxawLf5qh8NR4H5WqzeoqM85CRb+U9
-         77SFaOIUDumgMrLNgu1sppyd9zRdZu5dQzAlgbWEnPyu1bEmZELZO38Nh3nVouE5ZAlz
-         iil48fFQfYijKZEh/8AvTTrPY7uXhC4Spe+0hiWd4NlKd53f1P9RKkOI+y62ZvthdS0n
-         VvsA==
-X-Gm-Message-State: AFeK/H3Df771zXv2WzPKKj7DAfp1gGCtlObJXBiaz5CTDIHzFrSACm6XR7cL00EvjWOrig==
-X-Received: by 10.84.191.165 with SMTP id a34mr20851997pld.62.1490496337761;
-        Sat, 25 Mar 2017 19:45:37 -0700 (PDT)
+        bh=I7LeJoYQ7JKJ/yrOC6qw7yVLl0UMdWCYgUJandrSPfI=;
+        b=RUp4mf2kX+a8lDlR9tv1tm9DJ8Q0KyqTq/lrL3cohMYgyW9isva/dRicu1DBWsrZCO
+         mX/hFhBPZvq/J6/7QWqODMRl59O/1Wahz2B2VPvm5ORlhghJHXK8pm4pX3n1/gQMiZGW
+         WwiYL1CWUG18sfF1hqNUV2FaDjie4xUNW1h/di1NeEAqQ74xrCgUAhdMTwndbJ5sefQs
+         ktEUQrIzJ+j11etfeSo5jzEpqoDGXUBllqzMhafdcJ6fIrfvO2Q1xifNNCwAn27ehku4
+         Fq8Nmx4DFSXks2agt4/ELgT+nA/HXI8PjVEAA0ptsze36ZomHUSGGwCE+trXRcd1sLUb
+         fr3w==
+X-Gm-Message-State: AFeK/H1veXc0tHZ1CNf8uULe4FZfhtJCGPJASanHLmcnF824yqrAHHoR9dmGIRTgmoyvxA==
+X-Received: by 10.84.231.201 with SMTP id g9mr20307212pln.91.1490496350217;
+        Sat, 25 Mar 2017 19:45:50 -0700 (PDT)
 Received: from ash ([115.72.187.186])
-        by smtp.gmail.com with ESMTPSA id a21sm12582560pfc.36.2017.03.25.19.45.33
+        by smtp.gmail.com with ESMTPSA id h71sm12820627pfj.65.2017.03.25.19.45.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Mar 2017 19:45:37 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:45:31 +0700
+        Sat, 25 Mar 2017 19:45:49 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Sun, 26 Mar 2017 09:45:44 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>, novalis@novalis.org,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v7 26/28] t1405: some basic tests on main ref store
-Date:   Sun, 26 Mar 2017 09:42:39 +0700
-Message-Id: <20170326024241.31984-27-pclouds@gmail.com>
+Subject: [PATCH v7 28/28] refs.h: add a note about sorting order of for_each_ref_*
+Date:   Sun, 26 Mar 2017 09:42:41 +0700
+Message-Id: <20170326024241.31984-29-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170326024241.31984-1-pclouds@gmail.com>
 References: <20170318020337.22767-1-pclouds@gmail.com>
@@ -75,139 +75,67 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- t/t1405-main-ref-store.sh (new +x) | 123 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 123 insertions(+)
- create mode 100755 t/t1405-main-ref-store.sh
+ refs.h                         | 4 ++--
+ t/t1405-main-ref-store.sh      | 6 ++++++
+ t/t1406-submodule-ref-store.sh | 6 ++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
+diff --git a/refs.h b/refs.h
+index 1a07f9d86f..49e97d7d5f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -230,7 +230,7 @@ typedef int each_ref_fn(const char *refname,
+  * it is not safe to modify references while an iteration is in
+  * progress, unless the same callback function invocation that
+  * modifies the reference also returns a nonzero value to immediately
+- * stop the iteration.
++ * stop the iteration. Returned references are sorted.
+  */
+ int refs_for_each_ref(struct ref_store *refs,
+ 		      each_ref_fn fn, void *cb_data);
+@@ -370,7 +370,7 @@ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void
+ 
+ /*
+  * Calls the specified function for each reflog file until it returns nonzero,
+- * and returns the value
++ * and returns the value. Reflog file order is unspecified.
+  */
+ int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_data);
+ int for_each_reflog(each_ref_fn fn, void *cb_data);
 diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-new file mode 100755
-index 0000000000..77e1c130c2
---- /dev/null
+index 77e1c130c2..490521f8cb 100755
+--- a/t/t1405-main-ref-store.sh
 +++ b/t/t1405-main-ref-store.sh
-@@ -0,0 +1,123 @@
-+#!/bin/sh
-+
-+test_description='test main ref store api'
-+
-+. ./test-lib.sh
-+
-+RUN="test-ref-store main"
-+
-+test_expect_success 'pack_refs(PACK_REFS_ALL | PACK_REFS_PRUNE)' '
-+	test_commit one &&
-+	N=`find .git/refs -type f | wc -l` &&
-+	test "$N" != 0 &&
-+	$RUN pack-refs 3 &&
-+	N=`find .git/refs -type f | wc -l`
-+'
-+
-+test_expect_success 'peel_ref(new-tag)' '
-+	git rev-parse HEAD >expected &&
-+	git tag -a -m new-tag new-tag HEAD &&
-+	$RUN peel-ref refs/tags/new-tag >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'create_symref(FOO, refs/heads/master)' '
-+	$RUN create-symref FOO refs/heads/master nothing &&
-+	echo refs/heads/master >expected &&
-+	git symbolic-ref FOO >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'delete_refs(FOO, refs/tags/new-tag)' '
-+	git rev-parse FOO -- &&
-+	git rev-parse refs/tags/new-tag -- &&
-+	$RUN delete-refs 0 FOO refs/tags/new-tag &&
-+	test_must_fail git rev-parse FOO -- &&
-+	test_must_fail git rev-parse refs/tags/new-tag --
-+'
-+
-+test_expect_success 'rename_refs(master, new-master)' '
-+	git rev-parse master >expected &&
-+	$RUN rename-ref refs/heads/master refs/heads/new-master &&
-+	git rev-parse new-master >actual &&
-+	test_cmp expected actual &&
-+	test_commit recreate-master
-+'
-+
-+test_expect_success 'for_each_ref(refs/heads/)' '
+@@ -53,6 +53,12 @@ test_expect_success 'for_each_ref(refs/heads/)' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'for_each_ref() is sorted' '
 +	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
-+	cat >expected <<-\EOF &&
-+	master 0x0
-+	new-master 0x0
-+	EOF
++	sort actual > expected &&
 +	test_cmp expected actual
 +'
 +
-+test_expect_success 'resolve_ref(new-master)' '
-+	SHA1=`git rev-parse new-master` &&
-+	echo "$SHA1 refs/heads/new-master 0x0" >expected &&
-+	$RUN resolve-ref refs/heads/new-master 0 >actual &&
+ test_expect_success 'resolve_ref(new-master)' '
+ 	SHA1=`git rev-parse new-master` &&
+ 	echo "$SHA1 refs/heads/new-master 0x0" >expected &&
+diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
+index 22214ebd32..13b5454c56 100755
+--- a/t/t1406-submodule-ref-store.sh
++++ b/t/t1406-submodule-ref-store.sh
+@@ -47,6 +47,12 @@ test_expect_success 'for_each_ref(refs/heads/)' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'for_each_ref() is sorted' '
++	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
++	sort actual > expected &&
 +	test_cmp expected actual
 +'
 +
-+test_expect_success 'verify_ref(new-master)' '
-+	$RUN verify-ref refs/heads/new-master
-+'
-+
-+test_expect_success 'for_each_reflog()' '
-+	$RUN for-each-reflog | sort | cut -c 42- >actual &&
-+	cat >expected <<-\EOF &&
-+	HEAD 0x1
-+	refs/heads/master 0x0
-+	refs/heads/new-master 0x0
-+	EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'for_each_reflog_ent()' '
-+	$RUN for-each-reflog-ent HEAD >actual &&
-+	head -n1 actual | grep one &&
-+	tail -n2 actual | head -n1 | grep recreate-master
-+'
-+
-+test_expect_success 'for_each_reflog_ent_reverse()' '
-+	$RUN for-each-reflog-ent-reverse HEAD >actual &&
-+	head -n1 actual | grep recreate-master &&
-+	tail -n2 actual | head -n1 | grep one
-+'
-+
-+test_expect_success 'reflog_exists(HEAD)' '
-+	$RUN reflog-exists HEAD
-+'
-+
-+test_expect_success 'delete_reflog(HEAD)' '
-+	$RUN delete-reflog HEAD &&
-+	! test -f .git/logs/HEAD
-+'
-+
-+test_expect_success 'create-reflog(HEAD)' '
-+	$RUN create-reflog HEAD 1 &&
-+	test -f .git/logs/HEAD
-+'
-+
-+test_expect_success 'delete_ref(refs/heads/foo)' '
-+	git checkout -b foo &&
-+	FOO_SHA1=`git rev-parse foo` &&
-+	git checkout --detach &&
-+	test_commit bar-commit &&
-+	git checkout -b bar &&
-+	BAR_SHA1=`git rev-parse bar` &&
-+	$RUN update-ref updating refs/heads/foo $BAR_SHA1 $FOO_SHA1 0 &&
-+	echo $BAR_SHA1 >expected &&
-+	git rev-parse refs/heads/foo >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'delete_ref(refs/heads/foo)' '
-+	SHA1=`git rev-parse foo` &&
-+	git checkout --detach &&
-+	$RUN delete-ref msg refs/heads/foo $SHA1 0 &&
-+	test_must_fail git rev-parse refs/heads/foo --
-+'
-+
-+test_done
+ test_expect_success 'resolve_ref(master)' '
+ 	SHA1=`git -C sub rev-parse master` &&
+ 	echo "$SHA1 refs/heads/master 0x0" >expected &&
 -- 
 2.11.0.157.gd943d85
 
