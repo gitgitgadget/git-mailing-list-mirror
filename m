@@ -2,79 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E58371FCA0
-	for <e@80x24.org>; Mon, 27 Mar 2017 21:09:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E17711FCA0
+	for <e@80x24.org>; Mon, 27 Mar 2017 21:09:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752229AbdC0VI4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 17:08:56 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:36292 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751985AbdC0VIy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 17:08:54 -0400
-Received: by mail-it0-f47.google.com with SMTP id e75so35111722itd.1
-        for <git@vger.kernel.org>; Mon, 27 Mar 2017 14:08:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=2h7duSOQ5iAbFAjh64T0D2BG66avnpEBx/nSe0q4GWU=;
-        b=WSY8tpwiVZIodNGrfav1p60KomyyXXJrxGOqSE9amgD2MauTWNrkzFh9L0dpXdgtG4
-         yyoTRRl5NSH+E21DbPYvQvGACIH7CsPEG7s//GSfGmV4RxWtreK4rbjMRWWXAyfaTbf6
-         Bj0wtRy0CsZtJqH9kq9T/MMFQ1aJXsaGtiR9V7WvSa6YONr5kfl3jFGQldPcpVe1OPjN
-         tiC3DZrnXFwnYMybb/ILGBCWrHFJZXKkwObR+cdchWutPkDdNn0QX4CwwkHBX9yRBmKe
-         c5frEclrkiWTojvy4xOvb2BX0WFZXvlaZ7vSuPqAPAXPvisSy/JS8yzfMIUNIExQbYJL
-         440Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=2h7duSOQ5iAbFAjh64T0D2BG66avnpEBx/nSe0q4GWU=;
-        b=mfs683+Svrs9HiIpO09Onjsfwrvmhl/apWImYjDobeCflqEy3CFXnPjPGQsuOhA4/1
-         IN2Ss2+rBkrbe+cjYj7xiIXFHVGUWf5r1adP24tvNJ0MMfnGeWTFDEr5vAr/BwsAQyMK
-         tEQWh6XzvwvVZxasNAOuqfBPUawdWagF+uknkXjNe+3ZL2twas3Vy9Q2gF9/wQ7oUjdu
-         K7+XERYM4dCiZHTdksLxRnFqQsst+krs9QYOROk3OZDxV+iwFV4EB0Pbw/y3eGUpcAPC
-         lPtoI5zcwqMsOZMgvVSVgUIu597CSmo6Rb1cMSsSqUxR398OCSYFCFablVJN+Pi/a3cd
-         dnpA==
-X-Gm-Message-State: AFeK/H0pNPPFSahcqHtnKAFESnw08ve5BmPaLN/NicuZlK6CtMv3h/D3tb772oByR1OwTQW09ahI2GTuKsCPbw==
-X-Received: by 10.107.34.68 with SMTP id i65mr12182030ioi.147.1490648909379;
- Mon, 27 Mar 2017 14:08:29 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 27 Mar 2017 14:08:08 -0700 (PDT)
-In-Reply-To: <20170106042051.nwjiuyyp7ljhs4sr@sigill.intra.peff.net>
-References: <20170106041541.rjzzofal5hscv6yi@sigill.intra.peff.net> <20170106042051.nwjiuyyp7ljhs4sr@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 27 Mar 2017 23:08:08 +0200
-Message-ID: <CACBZZX5AnG=hpnZCG3qFkLOO0gbgvt79ZYP3-oG5VjE8p284cQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] blame: output porcelain "previous" header for each file
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+        id S1752356AbdC0VJz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 17:09:55 -0400
+Received: from siwi.pair.com ([209.68.5.199]:47905 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751898AbdC0VJx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 17:09:53 -0400
+Received: from jeffhostetler.2jll4ugiwlvuzhh55dqabi0nia.bx.internal.cloudapp.net (unknown [40.76.14.28])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id EA25384616;
+        Mon, 27 Mar 2017 17:09:51 -0400 (EDT)
+From:   git@jeffhostetler.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v2 0/2] read-cache: call verify_hdr() in a background thread
+Date:   Mon, 27 Mar 2017 21:09:37 +0000
+Message-Id: <1490648979-49580-1-git-send-email-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 6, 2017 at 5:20 AM, Jeff King <peff@peff.net> wrote:
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-> +for output in porcelain line-porcelain
-> +do
-> +       test_expect_success "generate --$output output" '
-> +               git blame --root -C --$output combined >output
-> +       '
-> +
+Version 2 of this patch series simplifies this to just
+turn off the hash verification.  Independent comments
+from Linus and Peff suggested that we could just turn
+this off and not worry about it.  So I've updated this
+patch to do that.  I added a global variable to allow
+the original code path to be used.  I also added a
+t/helper command to demonstrate the differences.
 
-The --root option isn't needed here, the tests pass if it's removed.
+On the Linux repo, the effect is rather trivial:
 
-Discovered while looking at the sorry state of our blame test suite
-vis-a-vis tests for config, no tests for blame.showroot &
-blame.blankboundary.
+    $ ~/work/gfw/t/helper/test-skip-verify-index -c 3
+    0.029884 0 [cache_nr 57994]
+    0.031035 0 [cache_nr 57994]
+    0.024308 0 [cache_nr 57994]
+    0.028409 0 avg
+    0.018359 1 [cache_nr 57994]
+    0.017025 1 [cache_nr 57994]
+    0.011087 1 [cache_nr 57994]
+    0.015490 1 avg
 
-I'll submit that eventually, but meanwhile did you mean to omit --root
-here, or is the test broken in some other way and it /should/ need
---root but doesn't?
+On my Windows source tree (450MB index), I'm seeing a
+savings of 0.6 seconds -- read_index() went from 1.2 to 0.6
+seconds.
+
+=====================
+
+This patch contains a performance optimization to run
+verify_hdr() in a background thread while the foreground
+thread parses the index.  This allows do_read_index() to
+complete faster.
+
+This idea was recently discussed on the mailing list in:
+https://public-inbox.org/git/85221b97-759f-b7a9-1256-21515d163cbf@jeffhostetler.com/
+during a discussion on sha1dc.
+
+Our testing on Windows showed that verifying the SHA1 hash
+on the index file takes approximately the same amount of time
+as parsing the file and building the array of cache_entries.
+(It could also be that having 2 threads better ammortizes the
+page faults of reading from the mmap'd file.)
+
+An earlier version of this change has been in use in GfW since December:
+https://github.com/git-for-windows/git/pull/978
+
+Jeff Hostetler (2):
+  read-cache: skip index SHA verification
+  skip_verify_index: helper test
+
+ Makefile                          |  1 +
+ cache.h                           |  5 +++
+ read-cache.c                      |  6 ++++
+ t/helper/.gitignore               |  1 +
+ t/helper/test-skip-verify-index.c | 73 +++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 86 insertions(+)
+ create mode 100644 t/helper/test-skip-verify-index.c
+
+-- 
+2.7.4
+
