@@ -6,94 +6,84 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74D291FCA0
-	for <e@80x24.org>; Mon, 27 Mar 2017 16:50:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A13251FCA0
+	for <e@80x24.org>; Mon, 27 Mar 2017 16:51:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751350AbdC0Qu0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 12:50:26 -0400
-Received: from mout.kundenserver.de ([212.227.17.24]:50413 "EHLO
+        id S1751732AbdC0Qu7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 12:50:59 -0400
+Received: from mout.kundenserver.de ([217.72.192.73]:56295 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751278AbdC0QuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 12:50:25 -0400
+        with ESMTP id S1751547AbdC0Qu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 12:50:56 -0400
 Received: from localhost ([178.11.46.195]) by mrelayeu.kundenserver.de
- (mreue101 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 0LqUEr-1cEpNZ2OY5-00e2C2; Mon, 27 Mar 2017 18:50:08 +0200
+ (mreue102 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 0MV4iD-1cdy3A2Cgn-00YRqj; Mon, 27 Mar 2017 18:50:09 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH v2 1/2] describe: localize debug output fully
-Date:   Mon, 27 Mar 2017 18:50:05 +0200
-Message-Id: <baac53f99636b00880c72daf8aec4d66a4755af2.1490633145.git.git@grubix.eu>
+Subject: [PATCH v2 2/2] l10n: de: translate describe debug terms
+Date:   Mon, 27 Mar 2017 18:50:06 +0200
+Message-Id: <685807568fdafc86707e7c99e82bf03ef8ff3a87.1490633145.git.git@grubix.eu>
 X-Mailer: git-send-email 2.12.2.584.g7becbf139a
 In-Reply-To: <xmqqpohf7opl.fsf@gitster.mtv.corp.google.com>
 References: <xmqqpohf7opl.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
 In-Reply-To: <cover.1490633145.git.git@grubix.eu>
 References: <cover.1490633145.git.git@grubix.eu>
-X-Provags-ID: V03:K0:YhOfVM7DXjV1YreflVaQv1qv7tSFPAQs0TZL9N2dN8Y7gbtKd9T
- GZiCCanAYrOeYDYfGU6ZLA1Jw41cUqPo/hEbC1VlapO+n0KyYVCdL9+oWe6jLztHJLxx+sA
- tBm0Q32DsO6C4db8NOA5A4A5NmTYrRQGqOXtu4Gkz+xgN9MYIjB47cNW9LAL1iFNQSh90SB
- MVc8CIplrTbxABGKLjniA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1xYmyKgv3+g=:CWpS6sRp7qnakQ+tWneaxW
- HL6vMUBtS58El2L/HVIjd1OwXJTzJyJEjkdIVSMfBd56tGClWHqnEYhytN2qz85SYV5QLvjEz
- bXfn4kQO9s1pBJpJNw1/xEYOHqM0K2PQ9pjaN78Wf6JIBjher1timZutVEriU9sOdmAQa8tA6
- X7MJcZjwU01Z2gYCQpkuHL08hgwYZjjY80i7xwwL8Gp6aiuFPMnFzxzv7+gAnrNV7K1wYjvSj
- bUJLYtSVO63P73nt72eTlScnJYJf4E8IFvzdsr9I6rdpau3yofyYJZudsPtzqQo1LWR46JYWP
- 3HKrzU2gFoslO3ynoHBQv6/C9Yf1vMZKHFWgbfe1hGMjAAPkpwhMfsjni2RHqSvSmRn575+b9
- 6SbMUPhLrGCpjlcSD/C3mOn13ePu9g2lolT8ah5QV0HkntUe/XP/gLMOvVQRzztfEStvYOpIj
- 7FXzU1bsjq9XUtbmGJVXO6W3+kkiRbyWEpeFZCEzbXmMbG/LQINEIPMbH95EHXEXRT86Dp7W2
- yI46ao+gpn7XqLrc5YOGwqlKQVciIifAhnw/yhurZnZxaIWeUA2qDVnczHsYuzTu3Gm3o9MuH
- SLC0yPJgKThOCxTDQC2n/ghfmgD/HftojOMB3YlNdw2VOkVQHL9zG1vQ3PkwSY1JY2uQIni6G
- iYmtFjffWVWiMbZ2e0egIm5e05/Kbmxwn1jZlN/DhwpUYbe3nUVnY1/ejEBw4j6bMwbk=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:F7t6jsxFImqPb86ZQkgO/yPgQ7tsDXX87xnnsM8n69e5izb4tIJ
+ nb/BU1oJxHNJgIEKzlf4Yf1F4Opoeecp2iyO0FNhKfsbMoR7Y/bgyeJ1yEMHnzMBaC81nfj
+ zJPHcMLwxXEE7B42IrjF8Mg86Kc7jOuW4by2cjthtBkZwsbHnTUUmghyeOwgPwVJRjV79FT
+ vI4WUoWyj3qe7sKCeoMVQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:znulihbvV2w=:8HE9pSudDHjhkBiJbCrcFU
+ xbgcClHhgcKf5McsqIpANgOM48tc8FF6CTatuN8WSsRzoUnzROdLg+28eVhvgFS1Y6oWnekuN
+ uyO45PAIxioH/9FZiftGVCEkvHAWtCnwOjMsmKklC4ri8RDwE3U3oZbAd4je4tqFNOZAlEL5p
+ XnXYP+RezjzYdGWslkfdAAKY6aNVUmhIz4m0PsNSANM3oPA0CkRb6ip5baZVPw8ljnvqpwahP
+ +T/973J+2WZgRvdHJpMxUkyFD/FaGX6IeoH0yc+NlKgEnyqqV9JVRa12D/TxKyeBjAKZ01c1b
+ gEZx16xmGdGMx6i7bhtndMWcvdS73RteDXwXZXwtK4MMA3M3eL//uTwvWoGLqTcl1Kjo31MVN
+ bkdZhz0HKCIPc3vYIRuU0ZsDlKAZB9dbxIrMoQOgmDDIKBKV/8eh5W7MdZegTJf7IMkIw3fzc
+ a8dPRJ0N6oMNYfG/PvzuA6+9laZi0NtXVb6c6JewI74zB5Jyd1HkaiD58Uzv4sFcS/692b/yl
+ muY8xVjQXt9wZCc3WgaerbzOQCNOvXTQSStvlL9kobxvHP52L062PnQiWryZKxEbRMAhGltSH
+ TKqcWafC66pMXo9cduW0YUYswfwG2jhRlQjye4LfbJs0Z6pTtkoZgLhtPVXJ8cpb+yECSFA4u
+ 5gAH9jzfW0LQQNLfOXuNp7lUOBoB8VT8Z6Ra9hPeVkCIP3gZl5Ll04z/Ko085n/Xs5TQYI6Je
+ ZEMa4muMegAY8h+X
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git describe --debug localizes all debug messages but not the terms
-head, lightweight, annotated that it outputs for the candidates.
-Localize them, too.
-
 Signed-off-by: Michael J Gruber <git@grubix.eu>
 ---
- builtin/describe.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ po/de.po | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 45adbf67d5..99e963dfe7 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -50,7 +50,7 @@ struct commit_name {
- };
+diff --git a/po/de.po b/po/de.po
+index e9c86f5488..913db393dc 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -7530,7 +7530,19 @@ msgstr "git describe [<Optionen>] [<Commit-Angabe>...]"
+ msgid "git describe [<options>] --dirty"
+ msgstr "git describe [<Optionen>] --dirty"
  
- static const char *prio_names[] = {
--	"head", "lightweight", "annotated",
-+	N_("head"), N_("lightweight"), N_("annotated"),
- };
- 
- static int commit_name_cmp(const struct commit_name *cn1,
-@@ -395,10 +395,19 @@ static void describe(const char *arg, int last_one)
- 	free_commit_list(list);
- 
- 	if (debug) {
-+		static int label_width = -1;
-+		if (label_width < 0) {
-+			int i, w;
-+			for (i = 0; i < ARRAY_SIZE(prio_names); i++) {
-+				w = strlen(_(prio_names[i]));
-+				if (label_width < w)
-+					label_width = w;
-+			}
-+		}		
- 		for (cur_match = 0; cur_match < match_cnt; cur_match++) {
- 			struct possible_tag *t = &all_matches[cur_match];
--			fprintf(stderr, " %-11s %8d %s\n",
--				prio_names[t->name->prio],
-+			fprintf(stderr, " %-*s %8d %s\n",
-+				label_width, _(prio_names[t->name->prio]),
- 				t->depth, t->name->path);
- 		}
- 		fprintf(stderr, _("traversed %lu commits\n"), seen_commits);
+-#: builtin/describe.c:217
++#: builtin/describe.c:52
++msgid "head"
++msgstr "Branch"
++
++#: builtin/describe.c:52
++msgid "lightweight"
++msgstr "nicht-annotiert"
++
++#: builtin/describe.c:52
++msgid "annotated"
++msgstr "annotiert"
++
++#: builtin/describe.c:249
+ #, c-format
+ msgid "annotated tag %s not available"
+ msgstr "annotiertes Tag %s ist nicht verfügbar"
 -- 
 2.12.2.584.g7becbf139a
 
