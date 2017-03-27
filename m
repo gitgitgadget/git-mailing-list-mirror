@@ -2,83 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C049620969
-	for <e@80x24.org>; Mon, 27 Mar 2017 05:44:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FF9C20958
+	for <e@80x24.org>; Mon, 27 Mar 2017 06:01:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751902AbdC0Fo1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 01:44:27 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57766 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751852AbdC0FoZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 01:44:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CE82371BC6;
-        Mon, 27 Mar 2017 01:44:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GpgljbUUudjmnbKTaDBV2h+3o14=; b=gzVUpx
-        qGb+ROwINa9JFqnAyWk3eNVFGI8StmTK4Kqqk1wEmmIIXqNixwG1Vj24O5NTsh96
-        mcK3S6FxU2/ElvvVH2IZN0fCa2eXeW/A8Vi3ajoIyMQtVhi6t0sr1G7qjT0+VOQV
-        9G3XR6UY3G0oJPVoen5z88Jg0HvOax8gtCOQA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QctIC3eI95B465zjn3BZiGJXm9vWTfi3
-        JvK4WYiUHWZpFiDQaqdBqtlC8w0ZHWlzL9JZwRjK+5w3zRtmcQkOeJa3HmSw7GgW
-        9KczK1HeLe8e9Kmwc13cPqWjnRmT+nJE8CoRoPNeatAJmVXLs7Hug6JfoXC1wO4W
-        SWpXQvJa61k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C665871BC5;
-        Mon, 27 Mar 2017 01:44:23 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3BCEE71BC4;
-        Mon, 27 Mar 2017 01:44:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     BongHo Lee <techcap@live.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: --no-commit option does not work.
-References: <CY4PR14MB1238A8AC2BFECB56B9B68056CB300@CY4PR14MB1238.namprd14.prod.outlook.com>
-        <CY4PR14MB1238D2E5D35E99405AA8BF61CB300@CY4PR14MB1238.namprd14.prod.outlook.com>
-Date:   Sun, 26 Mar 2017 22:44:21 -0700
-In-Reply-To: <CY4PR14MB1238D2E5D35E99405AA8BF61CB300@CY4PR14MB1238.namprd14.prod.outlook.com>
-        (BongHo Lee's message of "Sun, 26 Mar 2017 23:57:07 +0000")
-Message-ID: <xmqqfuhz2s0a.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1751652AbdC0GBb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 02:01:31 -0400
+Received: from smtpo.poczta.interia.pl ([217.74.65.206]:37932 "EHLO
+        smtpo.poczta.interia.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751465AbdC0GB3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 02:01:29 -0400
+Date:   Mon, 27 Mar 2017 07:55:19 +0200
+From:   Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+Subject: Re: [PATCH] strbuf: support long paths w/o read rights in
+ strbuf_getcwd() on FreeBSD
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?b?UmVu6Q==?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+X-Mailer: interia.pl/pf09
+In-Reply-To: <xmqq1stj4kmp.fsf@gitster.mtv.corp.google.com>
+References: <4026bc3b-2999-9daf-d6ab-10c6d007b1e7@web.de>
+        <xmqq1stj4kmp.fsf@gitster.mtv.corp.google.com>
+X-Originating-IP: 178.36.22.46
+Message-Id: <kczrpegpzxhedtxmjptr@skdf>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6E52FFDE-12B0-11E7-B261-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=interia.pl;
+        s=biztos; t=1490594120;
+        bh=YIc8C6wecmMOs/1Ve6tncfG0dPwbvUvP4DU9xTe0CNU=;
+        h=Date:From:Subject:To:Cc:X-Mailer:In-Reply-To:References:
+         X-Originating-IP:Message-Id:MIME-Version:Content-Type:
+         Content-Transfer-Encoding;
+        b=DHjCFsOxhBFi6UnoSjiR4Up2rpZQohWl7uYtSf/ppswwaXJwGNAfkJd5PiMI4fxx6
+         v/MHWtQlY4QbtIm8QQBVdGv2EX8KhOMSR8R/6SY5/oSaQF+/EaC/Kc9o2BYiXLEHZB
+         ATrEHm2Pb/CnaaqL0AQ7bjMS2iDR+3NL5pDU2XzU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-BongHo Lee <techcap@live.com> writes:
 
-> If I add --no-ff option, it works properly.
-> I think --no-commit option should be worked without --no-ff.
+Od: "Junio C Hamano" <gitster@pobox.com>
+Do: "Ren=C3=A9 Scharfe" <l.s.r@web.de>;
+Wys=C5=82ane: 2:40 Poniedzia=C5=82ek 2017-03-27
+Temat: Re: [PATCH] strbuf: support long paths w/o read rights in strbuf_get=
+cwd() on FreeBSD
 
-It is understandable that this is confusing, but --no-commit is an
-instruction not to create a new commit object.  As fast-forwarding
-to the commit that is a strict descendant of your old tip does not
-involve creation of any new commit, the command is working exactly
-as instructed.  If you say "--no-ff", you are explicitly forbidding
-the command to fast-forward, so the command attempts to create a
-(needless) new commit that is a merge, and then --no-commit stops
-the command after it prepared the tree state ready to be committed.
+>=20
+> Nicely analysed and fixed (or is the right word "worked around"?)
+>=20
+> Thanks, will queue.
+>=20
 
-So with or without --no-ff, the option and the command are working
-correctly.
 
-Having said all that, my gut feeling is that a backward incompatible
-change to make --no-commit "imply" --no-ff may not hurt too many
-existing users, but I am saying this without thinking things through.
-I may very well be missing a valid use case where --no-commit that
-does not fail but does fast-forward when the user does not give --no-ff
-is useful, so if that is the case, such a change will be breaking
-those users.
+Is this patch going to be included in next git version ( or sooner ) by any=
+ chance?
 
+Thank you, everyone,  for your attention to the problem.=
