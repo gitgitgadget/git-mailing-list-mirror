@@ -6,83 +6,151 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 079FE1FCA0
-	for <e@80x24.org>; Mon, 27 Mar 2017 17:15:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCDAA1FCA0
+	for <e@80x24.org>; Mon, 27 Mar 2017 17:47:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751574AbdC0RPr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 13:15:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54520 "EHLO
+        id S1751364AbdC0Rqy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 13:46:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59154 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751413AbdC0RPp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 13:15:45 -0400
+        with ESMTP id S1751287AbdC0Rqw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 13:46:52 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B99E37BD85;
-        Mon, 27 Mar 2017 13:15:10 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A14B27FA22;
+        Mon, 27 Mar 2017 13:45:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Z0Ekv800sfSlhMfzN+N7h6OK7+c=; b=f9jtKd
-        WGmkmkeshT4SuH2erGw1aVJrWqEzKRrnjGcWxzoLEzEqPE2S8/8HeH8L0rIiPH9t
-        GHRrAeIvrjy2YsxLYBI/zk4heTXPFZP4d7HWVdJTojizJFacZ4KFsSo5tjkwIF6k
-        sRKSs6CMC8hZesoZOwJFNcquVg9Wct5ysQjAQ=
+        :content-type:content-transfer-encoding; s=sasl; bh=ZZ1RZhiyGom3
+        S+ktgLv68cU0eXk=; b=VEbKGOh1FcBxJkWIGb2q6UhMiecjH++TaPulDoDfOCGK
+        uiZH/zNPnAWD6mwHuVbCYRAqHL53tK56j8SFfx4t6K6Xt3k5YZPR2xil5dZ7tr9w
+        Wvyic1OdqRzVG+1bBaOQwR69GtPGXGDkQIdAvr8tlCRZ6OdieSAbfWYInx/nZuw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sPFnQmx4su1W7ZUyTDn7OuHN9VDolH84
-        wjdFjPewtf/iPcKieQ3hKrETAEPPBx387pKfkyiGqJxpBNiyYoH+WRc1TMLFGODH
-        RYS7w0OJBCrEjjj9Wr3xhLe7UfrUcwZ8HxGmE4c4PQi/Q+NWw2WZZMDsiglT4KFP
-        vHjKiip+5Hk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B32567BD84;
-        Mon, 27 Mar 2017 13:15:10 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=etd1Cu
+        zbNpjFDdhDXYleSpnz9IWaSCHQSarG1BcgZApgqGZEfRZhAMGUEpKcQu2/sE6/Xa
+        bbPGhGU0euktFhW8TQRtKsmQlYf6fDCInxPEWClebB1x4neWYA/pIxVWAx0q51+v
+        cYI9321JSmTCFjB19NaT/IPx+Q7dvIKbR1mig=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 978C07FA21;
+        Mon, 27 Mar 2017 13:45:41 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D63B7BD83;
-        Mon, 27 Mar 2017 13:15:10 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C16B17FA20;
+        Mon, 27 Mar 2017 13:45:40 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/7] PREVIEW: Introduce DC_AND_OPENSSL_SHA1 make flag
-References: <cover.1490397869.git.johannes.schindelin@gmx.de>
-        <xmqq7f3d6ev1.fsf@gitster.mtv.corp.google.com>
-        <20170326061826.yx6nh3k2ps6uyyz6@sigill.intra.peff.net>
-        <xmqqinmv4ojt.fsf@gitster.mtv.corp.google.com>
-        <20170327011140.icqfc4lqlarvae6l@sigill.intra.peff.net>
-        <xmqqbmsn2qyh.fsf@gitster.mtv.corp.google.com>
-        <20170327070909.26ojhkhagf6pq3wp@sigill.intra.peff.net>
-Date:   Mon, 27 Mar 2017 10:15:07 -0700
-In-Reply-To: <20170327070909.26ojhkhagf6pq3wp@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 27 Mar 2017 03:09:09 -0400")
-Message-ID: <xmqqy3vq1w10.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Conrad Irwin <conrad.irwin@gmail.com>,
+        Sitaram Chamarty <sitaramc@gmail.com>,
+        Michael J Gruber <git@drmicha.warpmail.net>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Jeff King <peff@peff.net>, Richard Hansen <rhansen@bbn.com>,
+        "Brian M . Carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3] rev-parse: match @{upstream}, @{u} and @{push} case-insensitively
+References: <xmqqa8874l8t.fsf@gitster.mtv.corp.google.com>
+        <20170327111655.29941-1-avarab@gmail.com>
+Date:   Mon, 27 Mar 2017 10:45:39 -0700
+In-Reply-To: <20170327111655.29941-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Mon, 27 Mar 2017 11:16:55 +0000")
+Message-ID: <xmqqshly1um4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: EEA05F64-1310-11E7-A398-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 31CB0DF8-1315-11E7-BB27-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> Yeah, I think we can assume it will be possible with SHAttered levels of
-> effort. An attacker can use it to create a persistent corruption by
-> having somebody fetch from them twice. So not really that interesting an
-> attack, but it is something. I still think that ditching SHA-1 for the
-> naming is probably a better fix than worrying about SHA-1 collisions.
+> Before this change:
+>
+>     |----------------+-----+------+-----|
+>     | What?          | CI? | CIP? | AG? |
+>     |----------------+-----+------+-----|
+>     | sha1           | Y   | -    | N   |
+>     | describeOutput | N   | N    | N   |
+>     | refname        | N   | N    | N   |
+>     | @{<date>}      | Y   | Y    | Y   |
+>     | @{<n>}         | N/A | N/A  | N   |
+>     | @{-<n>}        | N/A | N/A  | N   |
+>     | @{upstream}    | N   | Y    | N   |
+>     | @{push}        | N   | Y    | N   |
+>     | ^{<type>}      | N   | Y    | N   |
+>     | ^{/regex}      | N   | N    | N   |
+>     |----------------+-----+------+-----|
+>
+> After it:
+>
+>     |----------------+-----+------+-----|
+>     | What?          | CI? | CIP? | AG? |
+>     |----------------+-----+------+-----|
+>     | sha1           | Y   | -    | N   |
+>     | describeOutput | N   | N    | N   |
+>     | refname        | N   | N    | N   |
+>     | @{<date>}      | Y   | Y    | Y   |
+>     | @{<n>}         | N/A | N/A  | N   |
+>     | @{-<n>}        | N/A | N/A  | N   |
+>     | @{upstream}    | Y   | -    | N   |
+>     | @{push}        | Y   | -    | N   |
+>     | ^{<type>}      | N   | Y    | N   |
+>     | ^{/regex}      | N   | N    | N   |
+>     |----------------+-----+------+-----|
 
-Yes, I agree with that part.  
+As we are not touching ^{<type>} or ^{/regex}, and it is obvious
+numbers do not have cases, I'll trim this down to focus only on
+things that are relevant while queuing:
 
-Our trailer checksum happens to be SHA-1 mostly because the code was
-available, not because they need to be a crypto-strong hash.  It can
-safely be changed to something other than SHA-1 that is much faster,
-if that is desired, when it is used only for bit-flip detection of
-local files like the index file.
+    Before this change:
 
-I also agree that changing the naming scheme (e.g. use the "hash" as
-a hash to choose hash-bucket but accept the fact that hashes can
-collide) is a better solution, if this "packname can collide" were
-to become real problem.
+        |----------------+-----+------+-----|
+        | What?          | CI? | CIP? | AG? |
+        |----------------+-----+------+-----|
+        | @{<date>}      | Y   | Y    | Y   |
+        | @{upstream}    | N   | Y    | N   |
+        | @{push}        | N   | Y    | N   |
+        |----------------+-----+------+-----|
+
+    After it:
+
+        |----------------+-----+------+-----|
+        | What?          | CI? | CIP? | AG? |
+        |----------------+-----+------+-----|
+        | @{<date>}      | Y   | Y    | Y   |
+        | @{upstream}    | Y   | Y    | N   |
+        | @{push}        | Y   | Y    | N   |
+        |----------------+-----+------+-----|
+
+should be sufficient to highlight that it was possible to safely
+make these two things case insensitive, and we made so. =20
+
+For that matter, I do not know the value of AG? field---it only
+serves to show that @{<approxidate>} is an odd-man out and cannot be
+used as a good example to follow, but I am too lazy to remove it ;-)
+
+> Makes sense, replaced that note with that summary. Here's hopefully a
+> final v3 with that change. I've omitted the other two patches as noted
+> in the discussion about those two, I don't think it makes sense to
+> include them.
 
 Thanks.
 
+> @@ -122,6 +123,9 @@ refs/remotes/myfork/mybranch
+>  Note in the example that we set up a triangular workflow, where we pul=
+l
+>  from one location and push to another. In a non-triangular workflow,
+>  '@\{push}' is the same as '@\{upstream}', and there is no need for it.
+> ++
+> +This suffix is accepted when spelled in uppercase, and means the same
+> +thing no matter the case.
+
+As the above text (including the original) does not explicitly say
+that lowercase spelling is canonical, the new text is prone to be
+misinterpreted that only the uppercase version is accepted.  I'll
+do s/is accepted/is also accepted/ while queuing, but please holler
+if there are better ways to phrase this.
+
+Thanks.
