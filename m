@@ -2,158 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF3841FCA0
-	for <e@80x24.org>; Mon, 27 Mar 2017 18:07:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66DD01FCA0
+	for <e@80x24.org>; Mon, 27 Mar 2017 18:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751972AbdC0SGv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 14:06:51 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:36562 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751962AbdC0SGt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 14:06:49 -0400
-Received: by mail-it0-f44.google.com with SMTP id e75so29370534itd.1
-        for <git@vger.kernel.org>; Mon, 27 Mar 2017 11:06:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ziYMJ1hbMaCV+93z5IF0Fi3qwHt4VuobN6SWiM5wWj4=;
-        b=m6SC14YSwiAwnFYnJe12T5SMuDo4Mb0UTpaJEBLkdpvssVt5B5bEl8tOgeul7dQwTX
-         X1Rxwld3easwKqe6K0ZCmFaIYLiuLtEcX84bpwtROD6zuhvLI/NVexAvFyxgBLWLHV9+
-         iN1MwMzac/ZJiCebIIaFtCeYH0A/xTXqtFhTk0bBoF9uO0291bCagksu7xw90sxBwrYl
-         259pUQccYBWKHmq58u4vky0aswT9WAxj63pAs8yzOUQgZi4JKQvei5fAlhbkdTSqiSnM
-         ey1BPkmpkY6w+49BjbhfEPLqeBN+9DrSEuJJ82ZdwtU8eOAkILuLM+2rom7dkPjUgDEq
-         f+nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ziYMJ1hbMaCV+93z5IF0Fi3qwHt4VuobN6SWiM5wWj4=;
-        b=Ap9BdmiocOyf5JvvM2mOlmvajmxC27SteYNBXIWOhUYWJ9UO8ZM0S0PYfDMCUnoPml
-         t+mACHDnNhSlfo/EYGWHXByE9HFAEIKJQitRVKibjzOpVQpvsZ4rgDhfc0w0gbMJ076i
-         fExeaohrexDMGozhIj5w3rh2sjykiR9376o2mP9O9I69dQtvyruHkApSTjbwOwNhoRvR
-         u4YbUl33R0NMYaaq5HI0xHNZ6Ujt7MtYQnFZZXnClEU/sORTly/kacXVV9Jv9twrsyQf
-         WOiXstThHKpnXVfDhpeX6GPm2QDv5G+kDt+E64EXz98HYpWiEorsojbka/aOO+Nr2Z9C
-         bs4A==
-X-Gm-Message-State: AFeK/H0LYdIlzZ39m9IVfNb3MbiBHjK6xd7UdQpe1rRpaIy/EdXBJBUZziXXvz+MfQsmX5fK10VwuD4O1ew0mw==
-X-Received: by 10.107.32.199 with SMTP id g190mr24682066iog.117.1490637972030;
- Mon, 27 Mar 2017 11:06:12 -0700 (PDT)
+        id S1751985AbdC0Sky (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 14:40:54 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52672 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751327AbdC0Skw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 14:40:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5151F8099F;
+        Mon, 27 Mar 2017 14:40:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=1oJ/GSyRWr3Z
+        5fEZ/DYoFDFSLYU=; b=ag6XA40sHYkibkzeayv7O8Ru7UlFCMQFcD6ZevsM7Svs
+        gR2aXEn2MKYFMXmDDeSA2NqW2h/+sfD/EomBCsdOpz78K5K9XuzmS+H6qzK71Mje
+        C7pdtuuq1uaAzbm84pfEwEjgkLNPM6t84jukLLS9mlwKNhZn0ao+cYC2ERdFUiU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=VAA5KD
+        3tZwcT0uchljBPjCiHjiOKvnjtaL3YMvigNEdyssVIphfvOv+IJFSKQcCzBEbgn6
+        akh2kNa778Hl8qn2A7cHyKOLmyEJoV+/ZbURT+JgkmcAFsdLO454T2CQ06dyhL+K
+        xzSCY6mcsEuh6YaZe0ESO5Tkq/nmtlC8I59iY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49B078099E;
+        Mon, 27 Mar 2017 14:40:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BC2088099D;
+        Mon, 27 Mar 2017 14:40:16 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] strbuf: support long paths w/o read rights in strbuf_getcwd() on FreeBSD
+References: <4026bc3b-2999-9daf-d6ab-10c6d007b1e7@web.de>
+        <xmqq1stj4kmp.fsf@gitster.mtv.corp.google.com>
+        <kczrpegpzxhedtxmjptr@skdf>
+Date:   Mon, 27 Mar 2017 11:40:15 -0700
+In-Reply-To: <kczrpegpzxhedtxmjptr@skdf> (Zenobiusz Kunegunda's message of
+        "Mon, 27 Mar 2017 07:55:19 +0200")
+Message-ID: <xmqqo9wm1s34.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 27 Mar 2017 11:05:51 -0700 (PDT)
-In-Reply-To: <xmqqshly1um4.fsf@gitster.mtv.corp.google.com>
-References: <xmqqa8874l8t.fsf@gitster.mtv.corp.google.com> <20170327111655.29941-1-avarab@gmail.com>
- <xmqqshly1um4.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 27 Mar 2017 20:05:51 +0200
-Message-ID: <CACBZZX5nMuQ7jumdxShynaQ_F8Av3fudbbBZ4iG2Jv9wcjh5_g@mail.gmail.com>
-Subject: Re: [PATCH v3] rev-parse: match @{upstream}, @{u} and @{push} case-insensitively
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Conrad Irwin <conrad.irwin@gmail.com>,
-        Sitaram Chamarty <sitaramc@gmail.com>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Jeff King <peff@peff.net>, Richard Hansen <rhansen@bbn.com>,
-        "Brian M . Carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D26369D4-131C-11E7-A94F-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 27, 2017 at 7:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> Before this change:
->>
->>     |----------------+-----+------+-----|
->>     | What?          | CI? | CIP? | AG? |
->>     |----------------+-----+------+-----|
->>     | sha1           | Y   | -    | N   |
->>     | describeOutput | N   | N    | N   |
->>     | refname        | N   | N    | N   |
->>     | @{<date>}      | Y   | Y    | Y   |
->>     | @{<n>}         | N/A | N/A  | N   |
->>     | @{-<n>}        | N/A | N/A  | N   |
->>     | @{upstream}    | N   | Y    | N   |
->>     | @{push}        | N   | Y    | N   |
->>     | ^{<type>}      | N   | Y    | N   |
->>     | ^{/regex}      | N   | N    | N   |
->>     |----------------+-----+------+-----|
->>
->> After it:
->>
->>     |----------------+-----+------+-----|
->>     | What?          | CI? | CIP? | AG? |
->>     |----------------+-----+------+-----|
->>     | sha1           | Y   | -    | N   |
->>     | describeOutput | N   | N    | N   |
->>     | refname        | N   | N    | N   |
->>     | @{<date>}      | Y   | Y    | Y   |
->>     | @{<n>}         | N/A | N/A  | N   |
->>     | @{-<n>}        | N/A | N/A  | N   |
->>     | @{upstream}    | Y   | -    | N   |
->>     | @{push}        | Y   | -    | N   |
->>     | ^{<type>}      | N   | Y    | N   |
->>     | ^{/regex}      | N   | N    | N   |
->>     |----------------+-----+------+-----|
->
-> As we are not touching ^{<type>} or ^{/regex}, and it is obvious
-> numbers do not have cases, I'll trim this down to focus only on
-> things that are relevant while queuing:
->
->     Before this change:
->
->         |----------------+-----+------+-----|
->         | What?          | CI? | CIP? | AG? |
->         |----------------+-----+------+-----|
->         | @{<date>}      | Y   | Y    | Y   |
->         | @{upstream}    | N   | Y    | N   |
->         | @{push}        | N   | Y    | N   |
->         |----------------+-----+------+-----|
->
->     After it:
->
->         |----------------+-----+------+-----|
->         | What?          | CI? | CIP? | AG? |
->         |----------------+-----+------+-----|
->         | @{<date>}      | Y   | Y    | Y   |
->         | @{upstream}    | Y   | Y    | N   |
->         | @{push}        | Y   | Y    | N   |
->         |----------------+-----+------+-----|
->
-> should be sufficient to highlight that it was possible to safely
-> make these two things case insensitive, and we made so.
->
-> For that matter, I do not know the value of AG? field---it only
-> serves to show that @{<approxidate>} is an odd-man out and cannot be
-> used as a good example to follow, but I am too lazy to remove it ;-)
->
->> Makes sense, replaced that note with that summary. Here's hopefully a
->> final v3 with that change. I've omitted the other two patches as noted
->> in the discussion about those two, I don't think it makes sense to
->> include them.
->
-> Thanks.
->
->> @@ -122,6 +123,9 @@ refs/remotes/myfork/mybranch
->>  Note in the example that we set up a triangular workflow, where we pull
->>  from one location and push to another. In a non-triangular workflow,
->>  '@\{push}' is the same as '@\{upstream}', and there is no need for it.
->> ++
->> +This suffix is accepted when spelled in uppercase, and means the same
->> +thing no matter the case.
->
-> As the above text (including the original) does not explicitly say
-> that lowercase spelling is canonical, the new text is prone to be
-> misinterpreted that only the uppercase version is accepted.  I'll
-> do s/is accepted/is also accepted/ while queuing, but please holler
-> if there are better ways to phrase this.
+Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl> writes:
 
-All of the above sounds good, thanks for fixing it up.
+> Od: "Junio C Hamano" <gitster@pobox.com>
+> Do: "Ren=C3=A9 Scharfe" <l.s.r@web.de>;
+> Wys=C5=82ane: 2:40 Poniedzia=C5=82ek 2017-03-27
+> Temat: Re: [PATCH] strbuf: support long paths w/o read rights in strbuf=
+_getcwd() on FreeBSD
+>
+>>=20
+>> Nicely analysed and fixed (or is the right word "worked around"?)
+>>=20
+>> Thanks, will queue.
+>
+> Is this patch going to be included in next git version ( or sooner ) by=
+ any chance?
+
+Absolutely.  Thanks for your initial report and sticking with us
+during the session to identify the root cause that led to this
+solution.
+
+Again, Ren=C3=A9, thanks for your superb analysis and solution.
