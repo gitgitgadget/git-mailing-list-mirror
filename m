@@ -2,110 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 397C91FCA0
-	for <e@80x24.org>; Mon, 27 Mar 2017 15:12:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 128A71FCA0
+	for <e@80x24.org>; Mon, 27 Mar 2017 15:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753546AbdC0PML (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 11:12:11 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53165 "EHLO mout.gmx.net"
+        id S1752895AbdC0PkC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 11:40:02 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51240 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752432AbdC0PMJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 11:12:09 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MA91t-1cynh02Pmr-00BItl; Mon, 27
- Mar 2017 17:11:35 +0200
-Date:   Mon, 27 Mar 2017 17:11:34 +0200 (CEST)
+        id S1752748AbdC0PkA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 11:40:00 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4nt7-1bw9wD0UE1-00z0zC; Mon, 27
+ Mar 2017 17:39:44 +0200
+Date:   Mon, 27 Mar 2017 17:39:43 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Inaw Tham <pickfire@riseup.net>
-cc:     git@vger.kernel.org, sbeller@google.com
-Subject: Re: Re: Re: GSoC Project | Convert interactive rebase to C
-In-Reply-To: <20170325021703.Tjq7i-hO7%pickfire@riseup.net>
-Message-ID: <alpine.DEB.2.20.1703271700130.14958@virtualbox>
-References: <20170320164154.xBcU6rG0C%pickfire@riseup.net> <CAGZ79kbF+O6tgn-4ivmOza3QGA4oFyJS=9eGHYZ1HQgw6+rEtQ@mail.gmail.com> <20170321060526.sXz0cdJwc%pickfire@riseup.net> <alpine.DEB.2.20.1703231827060.3767@virtualbox>
- <20170325021703.Tjq7i-hO7%pickfire@riseup.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] sha1dc: safeguard against outside definitions of
+ BIGENDIAN
+In-Reply-To: <xmqqwpbd46gd.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1703271739210.14958@virtualbox>
+References: <856355e49e7a6016f5d1ef5f9785d94a455b5755.1490395862.git.johannes.schindelin@gmx.de> <xmqqr31l6ggf.fsf@gitster.mtv.corp.google.com> <xmqqwpbd46gd.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:OGxo3GmKZZ8THFVm7wEbV0baCuCS4Jv6BlHN5O39V3xPjKSY20b
- HTpqgXcANgN9TyavG5EObYlmyQxICSHtk1hmEmYfdI4KOAcXm2UIRZdrLR3/mmybWM/9JZu
- dZ3jPZaaWPGj/KmRmSV2e3zR/R6U4kkLUxwS8xxmiuloHTUAk0cE8gHZOuvTFvCUwIenbYO
- 1jvEt+7A6usmycW/k/GCg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+YxrXdjfIlg=:8yPd4BdCACKlnMXbYUgOHD
- IftkGjFwZoA3axmnMfuEkL8z7ge9l7s9FcDvLoWMsS+dT0OehVXoWRm8rzxDegUyucnvN+WMY
- 0CVgDXraUheXEMDZDiUDzm9RMiBL1woTdcZ1J9XqMx2V5eWiPH9AZkN5BtkNnKoo6iXgS/OJy
- m+048vHq1l3sPHFyFWDA6c5MhzsgZhRNBtCxyIht+LIE6bT8ItGFlMxjAoNNTO0vPGBnWG8AD
- FGtHchX9+glbKOtP/2FycPMrHrBfmfaQ/FTJq1yvbO1otU1LAB5ykPCvTUiyb8sXC97UBzJmn
- 2VmfYn8Iz1QLdjmue4RElk42LSZh0xvTHhFHiKKwGaUTgqS+t2tI59X9lS8yWxbMdeuL5/K7g
- RPRLIz+Aoi1Sl4jHb8vHeetLLDQTyErPz+UbttViGhgddZQkZB0WcdHZa+Mx2546qtFAqNPFR
- WJkHXlNGT2Yab8/o8m1YMNI+B2EUWC4FqYetM92dKLKDUu3vfoDnbU1AQkIV9TDROX//sxerg
- auR/e+gOmcfETSvc+wFdjcsUAHM0vUTRKvwDH9fIidbj8VFm7Cf37GhJQLtrTte7DUcJdCudf
- AxCXQHIlqwt0u/gc4X1Iw0nSG6vjw9sOhjNL6sHhwqv9GMOGBPyhankr4AfdoSolqrCUq5C4S
- 4BlfyQ47/FFDc/JZLJzTTSkz3pH/yTzooxz/TOqJSKfL3i9+cOtgRUpDWlw4MgaH46TaGgDxh
- n7tXdIur3wTOgPXFaTcDBLW0bmBFti0roZD0RVoVn0oqGMjl35iPO+oqYjXCmZBMW85+I3p3j
- Ot8J2HO
+X-Provags-ID: V03:K0:AJ9QT2elEJ3UYR524FaeP8WkGgG7QjghUV4hC1B5Q+o+RulhwrO
+ /Yr2sjqy6Djks/deVmzVSklCXv6Za9OuJmZ/MRuF9WHlr4BJF5PrbBIWF5KwIW1iOB7A3CP
+ RYYe8PZl4NCNFW1yljgRFln/aP/7GJ0MV99TDyVYll6AOUFA0CTQgUKLCWDEnqAdj6uIL2A
+ ueY5A8nyQbEMAvtNKffGA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Se9GS0Q02zo=:bG0zT9L+zGvovyRDRws4nd
+ 3hVdhFRnn0lVlhhkuC+4QV9UXjIn11byKHnkvN+oQgybkCjFODPUDvJsxyKDS13gruicrUIH3
+ tqPx6AuSyq1Ky5d//whlHxcfs0H2NnqAW7bBdvHzZ/O1o7O2vOWo/eKuBYP9xChQbYdtBIE7G
+ qL/sAyH/8Qrylmo7UO3cp5YTUb88uKxou30wP3UbFMYNJ4NMByG7fwspAthIlLtHzEM/GDeUX
+ TKizAHKHK/1WR2GY5QNb5iZYUq7vM9/fNSrfhrLX2cK3pr6JKHpYgsp0gKEBsfo8HVX9wF8xa
+ CkhoYeUHypXDPckrpZv0NSn/Legl7d+dzeAyx0KhkAeKPN9dxnHkvrtXJw11o2NzcFoizBYMn
+ LbmPZbjfjtr0v+vbS5qpFimk3TyA8VweeDdak84Rp8EwZV+W7u2OZOc8uEbULepq612KWbZEE
+ M0k96eJgkrahEPSq1dZDnNzxTWk4dlW60CoPWHlf7cK66ED11YMqBza5EGVuM1oQuKjNX+dzr
+ qAtbncOc1l7m8oCOEBTppPs1HmqazJQ3d83D43X2kTUfDmufS+Oj5KeZ3d4ndSuQO8oCUR52C
+ oTBB6gbDtrq9I+Cxc71toISZwsqSZr07iBTn6S6B+R1KkBrtd7HBNcvMg7DHI/7dorRQkmcwV
+ kbKoXYUavwr65szsz353giZYBUU53hibijKfFNnvx1S33T1hxg9zO1tA/xdsr6sC8aYkxwMm8
+ AfDriH90coaCh+Qm9tRVLidNEPst1U+WiTucuDz1rrfkrbBrX5d9uCwTcCGlu5fF99eulGCmG
+ wraGv/V
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ivan,
+Hi Junio,
 
-On Sat, 25 Mar 2017, Inaw Tham wrote:
+On Sat, 25 Mar 2017, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > On Tue, 21 Mar 2017, Ivan Tham wrote:
-> > > Stefan Beller <sbeller@google.com> wrote:
-> > > > On Mon, Mar 20, 2017 at 9:41 AM, Ivan Tham <pickfire@riseup.net> wrote:
-> > > >
-> > > > > I am interested to work on "Convert interactive rebase to C"
-> > > >
-> > > > +cc Johannes, who recently worked on rebase and the sequencer.
-> > 
-> > Glad you are interested! Please note that large parts of the
-> > interactive rebase are already in C now, but there is enough work left
-> > in that corner.
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> Glad to hear that, I would really like to see interactive rebase in C.
-
-Please note that a notable part already made it into C in v2.12.1. There
-are still a few loose ends to tie, of course; it still makes for a great
-head start on your project, methinks.
-
-> > > > > aiming to port most builtins stuff to C in which we can reduce
-> > > > > the size of git. Additionally, I would also like to convert
-> > > > > scripts to builtins as an additional milestone.
-> > 
-> > Careful. It is a ton of work to get the rebase -i conversion done, and
-> > then a ton of work to get it integrated. That will fill 3 months, very
-> > easily.
+> > Which leads me to wonder if a more robust solution that is in line
+> > with the original design of sha1dc/sha1.c code may be to do an
+> > unconditional "#undef BIGENDIAN" before the above block, so that no
+> > matter what the calling environment sets BIGENDIAN to (including
+> > "0"), it gets ignored and we always use the auto-selection.
 > 
-> My main aim is to reduce the extra dependency of perl, but planning to
-> start with rebase, can I make that an optional task where I can help out
-> after I had completed my main task during gsoc?
+> So here is what I came up with as a replacement (this time as a
+> proper patch not a comment on a patch).
+> 
+> Dscho, could you see if this fixes your build?
 
-Sure, you can make it an optional task, and I would be very happy if you
-followed up on it even after GSoC!
-
-As far as the Perl dependency is concerned, I actually think there is only
-one serious one left: git add -i.
-
-Granted, there is send-email, but it really does not matter all that much
-these days *except* if you want to use Git to contribute to projects that
-still use a mailing list-based patch submission process (the ones that
-come to mind are: Git, Linux and Cygwin). Most Git users actually do not
-submit any patches to mailing lists, therefore I tend to ignore this one.
-
-The rest of the Perl scripts interacts with foreign SCMs (archimport,
-cvsexportcommit, cvsimport, cvsserver, and svn). I *guess* that it would
-be nice to follow up on the remote-svn work (which has not really gone
-anywhere so far, AFAICT the main driving contributor pursues different
-projects these days), but IMHO none of these are really needed to run Git.
+The Continuous Testing is back to normal, thanks.
 
 Ciao,
 Johannes
