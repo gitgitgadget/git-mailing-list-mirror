@@ -2,197 +2,262 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 372DA20969
-	for <e@80x24.org>; Mon, 27 Mar 2017 20:51:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D2EB1FCA0
+	for <e@80x24.org>; Mon, 27 Mar 2017 21:03:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752661AbdC0UvA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 16:51:00 -0400
-Received: from siwi.pair.com ([209.68.5.199]:49537 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752616AbdC0Uu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 16:50:58 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1752260AbdC0VDw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 17:03:52 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56840 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751739AbdC0VDu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 17:03:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9FD06830A9;
+        Mon, 27 Mar 2017 17:03:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Cpqls9ebRtlKtyf+Hy4mAZrzCOE=; b=aj9WUz
+        lMwbsqY+XAPoW8H4eL1ss6NDWyhuR10mjFeNNdT8eN0HRTk2I+sR8lLklpgHsqtv
+        KL07idp9nmWlLGTosJqaDFKflNGfADbpx/Gz46UDJBjedifjN5M79lOCr0r5YRaW
+        YlNM5f2tmpvtYG0AwkuLRb+ZwwU8axGzPvQJM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FpnGBPhNQy+HN37UBSt1etrA2I3UbLMs
+        IjIN6HyHXPyDZnjTJNerZhljqF0XOy6hyDzOJa9YRItIdQlIMz+UcWeEwgBqex2j
+        Irkuj5gAq5L1UV3VqQYHbosuPIh9LN/lv4KcpZ3RJIlJLbtqHHGWEiY4M3t1pxdl
+        QCw02YdH6UY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8C7F2830A7;
+        Mon, 27 Mar 2017 17:03:29 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 100E98460C;
-        Mon, 27 Mar 2017 16:50:41 -0400 (EDT)
-Subject: Re: [PATCH v2 5/7] name-hash: perf improvement for
- lazy_init_name_hash
-To:     Junio C Hamano <gitster@pobox.com>
-References: <1490276825-41544-1-git-send-email-git@jeffhostetler.com>
- <1490276825-41544-6-git-send-email-git@jeffhostetler.com>
- <xmqqinmu1n8o.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <122907b4-e689-c436-18df-27664186a8ce@jeffhostetler.com>
-Date:   Mon, 27 Mar 2017 16:50:40 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BA844830A6;
+        Mon, 27 Mar 2017 17:03:28 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Sebastian Schuberth <sschuberth@gmail.com>
+Subject: Re: [PATCH v2 2/3] sequencer: make commit options more extensible
+References: <cover.1490194846.git.johannes.schindelin@gmx.de>
+        <cover.1490285210.git.johannes.schindelin@gmx.de>
+        <75e2c4fe839602af19811ed3e251eb583ff6c8ad.1490285210.git.johannes.schindelin@gmx.de>
+        <xmqq7f3fa3oz.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1703250100340.3767@virtualbox>
+        <xmqqwpbb35e3.fsf@gitster.mtv.corp.google.com>
+Date:   Mon, 27 Mar 2017 14:03:27 -0700
+In-Reply-To: <xmqqwpbb35e3.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sun, 26 Mar 2017 17:55:16 -0700")
+Message-ID: <xmqqwpbazb34.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqinmu1n8o.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: D39D7240-1330-11E7-BC4A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
+> As this thing is about fixing a regression visible to end users, I
+> may get around to fixing things up myself, but I have other topics
+> to attend to, so...
 
-On 3/27/2017 4:24 PM, Junio C Hamano wrote:
-> git@jeffhostetler.com writes:
->
->> +/*
->> + * We use n mutexes to guard n partitions of the "istate->dir_hash"
->> + * hashtable.  Since "find" and "insert" operations will hash to a
->> + * particular bucket and modify/search a single chain, we can say
->> + * that "all chains mod n" are guarded by the same mutex -- rather
->> + * than having a single mutex to guard the entire table.  (This does
->> + * require that we disable "rehashing" on the hashtable.)
->> + *
->> + * So, a larger value here decreases the probability of a collision
->> + * and the time that each thread must wait for the mutex.
->> + */
->> +#define LAZY_MAX_MUTEX   (32)
->
-> Good thinking is very well explained in the in-code comment.
->
->> +static int handle_range_dir(
->> +	struct index_state *istate,
->> +	int k_start,
->> +	int k_end,
->> +	struct dir_entry *parent,
->> +	struct strbuf *prefix,
->> +	struct lazy_entry *lazy_entries,
->> +	struct dir_entry **dir_new_out)
->> +{
->> +	int rc, k;
->> +	int input_prefix_len = prefix->len;
->> +	struct dir_entry *dir_new;
->> +
->> +	dir_new = hash_dir_entry_with_parent_and_prefix(istate, parent, prefix);
->> +
->> +	strbuf_addch(prefix, '/');
->> +
->> +	/*
->> +	 * Scan forward in the index array for index entries having the same
->> +	 * path prefix (that are also in this directory).
->> +	 */
->> +	if (strncmp(istate->cache[k_start + 1]->name, prefix->buf, prefix->len) > 0)
->> +		k = k_start + 1;
->> +	else if (strncmp(istate->cache[k_end - 1]->name, prefix->buf, prefix->len) == 0)
->> +		k = k_end;
->> +	else {
->> +		int begin = k_start;
->> +		int end = k_end;
->> +		while (begin < end) {
->> +			int mid = (begin + end) >> 1;
->> +			int cmp = strncmp(istate->cache[mid]->name, prefix->buf, prefix->len);
->> +			if (cmp == 0) /* mid has same prefix; look in second part */
->> +				begin = mid + 1;
->> +			else if (cmp > 0) /* mid is past group; look in first part */
->> +				end = mid;
->> +			else
->> +				die("cache entry out of order");
->
-> Dying at this low level in the callchain in a worker thread made me
-> feel a little bit nervous, but even if we arrange to return to the
-> caller without doing extra computation, we would want to detect and
-> abort when the cache entries are not sorted anyway, so this hsould
-> be OK.
+So I ended up with this version before merging it to 'next'.  
 
-yeah, i wasn't sure if there was any need to complicate things
-returning this error.  the index is sorted before we get here,
-so this should never happen.
+I moved 'allow' back on the line it is declared, but left it
+uninitialized because it is unconditionally assigned to before its
+value is looked at.
 
->
->> +		}
->> +		k = begin;
->> +	}
->> +
->> +	/*
->> +	 * Recurse and process what we can of this subset [k_start, k).
->> +	 */
->> +	rc = handle_range_1(istate, k_start, k, dir_new, prefix, lazy_entries);
->> +
->> +	strbuf_setlen(prefix, input_prefix_len);
->> +
->> +	*dir_new_out = dir_new;
->> +	return rc;
->> +}
->
-> The varilable "rc" (return code?) is a lot more than return code; it
-> tells how many entries we processed and signals the caller that it
-> still needs to sweep the remainder if we didn't reach k_end.  The
-> caller of this function calls the variable to receive this
-> "processed", so I didn't find it too confusing while reading the
-> code top-down, though.
+Also the updated log message stresses more about the reason why
+piling new parameters on top is a bad practice, and it is a good
+idea to do this clean-up now.  Compared to that, the reason why this
+clean-up was not done before and left as maintenance burden is much
+less important to the readers of the log.
 
-The "rc" variable came from clear_ce_flags_dir().  I stole the
-diving logic from it and clear_ce_flags_1(), so I tried to keep
-the same name here.
+-- >8 --
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Thu, 23 Mar 2017 17:07:11 +0100
+Subject: [PATCH] sequencer: make commit options more extensible
 
-(And that reminds me, the linear search in clead_ce_flags_dir()
-could be sped up with a variation of the binary search I put in
-here.  But that's for another day.)
+So far every time we need to tweak the behaviour of run_git_commit()
+we have been adding a "int" parameter to it.  As the function gains
+parameters and different callsites having different needs, this is
+becoming a maintenance burden.  When a new knob needs to be added to
+address a specific need for a single callsite, all the other callsites
+need to add a "no, I do not want anything special with respect to the
+new knob" argument.
 
->
->> +static int handle_range_1(
->> +	struct index_state *istate,
->> +	int k_start,
->> +	int k_end,
->> +	struct dir_entry *parent,
->> +	struct strbuf *prefix,
->> +	struct lazy_entry *lazy_entries)
->> +{
->> +	int input_prefix_len = prefix->len;
->> +	int k = k_start;
->> +
->> +	while (k < k_end) {
->> +		struct cache_entry *ce_k = istate->cache[k];
->> +		const char *name, *slash;
->> +
->> +		if (prefix->len && strncmp(ce_k->name, prefix->buf, prefix->len))
->> +			break;
->
-> At first I was worried by this early return (i.e. we chop the entire
-> active_nr entries into lazy_nr_dir_threads and hand each of them a
-> range [k_start, k_end)---stopping before a thread reaches the end of
-> the range it is responsible for will leave gaps), but then realized
-> that this early return "we are done with the entries in the same
-> directory" kicks in only for recursive invocation of this function,
-> which makes it correct and perfectly fine.
->
-> I also briefly wondered if it is worth wiggling the boundary of
-> ranges for adjacent workers to align with directory boundaries, as
-> the last round of hashes done by a worker and the first round of
-> hashes done by another worker adjacent to it will be hashing for the
-> same parent directory, but I think that would be counter-productive
-> and think your "almost even" distribution would be a lot more
-> sensible.  After all, when distribution of paths is skewed, a single
-> directory may have disproportionally more (leaf) entries than the
-> remainder of the index and in such a case, we would want multiple
-> workers to share the load of hashing them, even if that means they
-> may have to hash the same leading path independently.
+Consolidate the existing four parameters into a flag word to make it
+more maintainable, as we will be adding a new one to the mix soon.
 
-I thought about various options along this, but yeah the work to
-find the end of the directory would have to be done before the
-threads started or each thread would have to tweak their endpoints
-and that might be more expensive than just repeating a few
-directory component calculations along the boundaries (and much
-more complicated).
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ sequencer.c | 48 ++++++++++++++++++++++++++----------------------
+ 1 file changed, 26 insertions(+), 22 deletions(-)
 
->
-> Nicely done.  Let's have this in 'next' and then in 'master'
-> soonish.
->
-> Thanks.
->
+diff --git a/sequencer.c b/sequencer.c
+index 8183a83c1f..677e6ef764 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -602,6 +602,11 @@ N_("you have staged changes in your working tree\n"
+ "\n"
+ "  git rebase --continue\n");
+ 
++#define ALLOW_EMPTY (1<<0)
++#define EDIT_MSG    (1<<1)
++#define AMEND_MSG   (1<<2)
++#define CLEANUP_MSG (1<<3)
++
+ /*
+  * If we are cherry-pick, and if the merge did not result in
+  * hand-editing, we will hit this commit and inherit the original
+@@ -615,8 +620,7 @@ N_("you have staged changes in your working tree\n"
+  * author metadata.
+  */
+ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+-			  int allow_empty, int edit, int amend,
+-			  int cleanup_commit_message)
++			  unsigned int flags)
+ {
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+ 	const char *value;
+@@ -624,7 +628,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	cmd.git_cmd = 1;
+ 
+ 	if (is_rebase_i(opts)) {
+-		if (!edit) {
++		if (!(flags & EDIT_MSG)) {
+ 			cmd.stdout_to_stderr = 1;
+ 			cmd.err = -1;
+ 		}
+@@ -640,7 +644,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	argv_array_push(&cmd.args, "commit");
+ 	argv_array_push(&cmd.args, "-n");
+ 
+-	if (amend)
++	if ((flags & AMEND_MSG))
+ 		argv_array_push(&cmd.args, "--amend");
+ 	if (opts->gpg_sign)
+ 		argv_array_pushf(&cmd.args, "-S%s", opts->gpg_sign);
+@@ -648,16 +652,16 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 		argv_array_push(&cmd.args, "-s");
+ 	if (defmsg)
+ 		argv_array_pushl(&cmd.args, "-F", defmsg, NULL);
+-	if (cleanup_commit_message)
++	if ((flags & CLEANUP_MSG))
+ 		argv_array_push(&cmd.args, "--cleanup=strip");
+-	if (edit)
++	if ((flags & EDIT_MSG))
+ 		argv_array_push(&cmd.args, "-e");
+-	else if (!cleanup_commit_message &&
++	else if (!(flags & CLEANUP_MSG) &&
+ 		 !opts->signoff && !opts->record_origin &&
+ 		 git_config_get_value("commit.cleanup", &value))
+ 		argv_array_push(&cmd.args, "--cleanup=verbatim");
+ 
+-	if (allow_empty)
++	if ((flags & ALLOW_EMPTY))
+ 		argv_array_push(&cmd.args, "--allow-empty");
+ 
+ 	if (opts->allow_empty_message)
+@@ -926,14 +930,14 @@ static void record_in_rewritten(struct object_id *oid,
+ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 		struct replay_opts *opts, int final_fixup)
+ {
+-	int edit = opts->edit, cleanup_commit_message = 0;
+-	const char *msg_file = edit ? NULL : git_path_merge_msg();
++	unsigned int flags = opts->edit ? EDIT_MSG : 0;
++	const char *msg_file = opts->edit ? NULL : git_path_merge_msg();
+ 	unsigned char head[20];
+ 	struct commit *base, *next, *parent;
+ 	const char *base_label, *next_label;
+ 	struct commit_message msg = { NULL, NULL, NULL, NULL };
+ 	struct strbuf msgbuf = STRBUF_INIT;
+-	int res, unborn = 0, amend = 0, allow = 0;
++	int res, unborn = 0, allow;
+ 
+ 	if (opts->no_commit) {
+ 		/*
+@@ -991,7 +995,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 			opts);
+ 		if (res || command != TODO_REWORD)
+ 			goto leave;
+-		edit = amend = 1;
++		flags |= EDIT_MSG | AMEND_MSG;
+ 		msg_file = NULL;
+ 		goto fast_forward_edit;
+ 	}
+@@ -1046,15 +1050,15 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	}
+ 
+ 	if (command == TODO_REWORD)
+-		edit = 1;
++		flags |= EDIT_MSG;
+ 	else if (is_fixup(command)) {
+ 		if (update_squash_messages(command, commit, opts))
+ 			return -1;
+-		amend = 1;
++		flags |= AMEND_MSG;
+ 		if (!final_fixup)
+ 			msg_file = rebase_path_squash_msg();
+ 		else if (file_exists(rebase_path_fixup_msg())) {
+-			cleanup_commit_message = 1;
++			flags |= CLEANUP_MSG;
+ 			msg_file = rebase_path_fixup_msg();
+ 		} else {
+ 			const char *dest = git_path("SQUASH_MSG");
+@@ -1064,7 +1068,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 					     rebase_path_squash_msg(), dest);
+ 			unlink(git_path("MERGE_MSG"));
+ 			msg_file = dest;
+-			edit = 1;
++			flags |= EDIT_MSG;
+ 		}
+ 	}
+ 
+@@ -1123,11 +1127,11 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 	if (allow < 0) {
+ 		res = allow;
+ 		goto leave;
+-	}
++	} else if (allow)
++		flags |= ALLOW_EMPTY;
+ 	if (!opts->no_commit)
+ fast_forward_edit:
+-		res = run_git_commit(msg_file, opts, allow, edit, amend,
+-				     cleanup_commit_message);
++		res = run_git_commit(msg_file, opts, flags);
+ 
+ 	if (!res && final_fixup) {
+ 		unlink(rebase_path_fixup_msg());
+@@ -2154,7 +2158,7 @@ static int continue_single_pick(void)
+ 
+ static int commit_staged_changes(struct replay_opts *opts)
+ {
+-	int amend = 0;
++	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
+ 
+ 	if (has_unstaged_changes(1))
+ 		return error(_("cannot rebase: You have unstaged changes."));
+@@ -2184,10 +2188,10 @@ static int commit_staged_changes(struct replay_opts *opts)
+ 				       "--continue' again."));
+ 
+ 		strbuf_release(&rev);
+-		amend = 1;
++		flags |= AMEND_MSG;
+ 	}
+ 
+-	if (run_git_commit(rebase_path_message(), opts, 1, 1, amend, 0))
++	if (run_git_commit(rebase_path_message(), opts, flags))
+ 		return error(_("could not commit staged changes."));
+ 	unlink(rebase_path_amend());
+ 	return 0;
+-- 
+2.12.2-430-ge0ef7fe78c
 
-Thanks
-Jeff
