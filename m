@@ -2,75 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89E7B20966
-	for <e@80x24.org>; Mon, 27 Mar 2017 08:39:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B59D20966
+	for <e@80x24.org>; Mon, 27 Mar 2017 09:31:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752044AbdC0IjF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 04:39:05 -0400
-Received: from slow1-d.mail.gandi.net ([217.70.178.86]:50957 "EHLO
-        slow1-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751751AbdC0IjD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 04:39:03 -0400
-Received: from relay3-d.mail.gandi.net (relay3-d.mail.gandi.net [217.70.183.195])
-        by slow1-d.mail.gandi.net (Postfix) with ESMTP id 1B5F947F83B
-        for <git@vger.kernel.org>; Mon, 27 Mar 2017 10:30:46 +0200 (CEST)
-Received: from [IPv6:2001:4b98:beef:a:be5f:f4ff:fe69:f6a] (locke.gandi.net [IPv6:2001:4b98:beef:a:be5f:f4ff:fe69:f6a])
-        (Authenticated sender: romuald@chivil.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 847AFA8151;
-        Mon, 27 Mar 2017 10:27:52 +0200 (CEST)
-Message-ID: <1490603272.9788.7.camel@locke.gandi.net>
-Subject: Re: [PATCH] push: allow atomic flag via configuration
-From:   Romuald Brunet <romuald@chivil.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Date:   Mon, 27 Mar 2017 10:27:52 +0200
-In-Reply-To: <xmqqmvca79sh.fsf@gitster.mtv.corp.google.com>
+        id S1751852AbdC0JbJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 05:31:09 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:38458 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751608AbdC0JbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 05:31:07 -0400
+Received: by mail-it0-f42.google.com with SMTP id y18so45948995itc.1
+        for <git@vger.kernel.org>; Mon, 27 Mar 2017 02:30:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=OEBXVW523dy4jiF0r7+Pkvf4CtL47QrLw/rnlW7fQg0=;
+        b=alsJlqLvWMKlLPuGhPYluhIGJkLKeCcPYE1Qw/U9xWFGzDvztKeNbPhAdTk2/k4uTM
+         eH8CT4CTYYc/DgvZ/H/UQsVObdj/QPR96QVjv3zWVbNTkvYYPJ0qq3YirFgmLJsv36Mi
+         xr1hS6QS53h3T0vWNAGSXbG/Nc4ntWqq3dqF67X69ei0w9uJtGqMg68k9dhL70bb//NL
+         XQsjvXbBPZyg5YeJ3+JhvLc60EhbRwi5F/ajWtcu7IRZ7MZbagY24CpLNGz1ouAdjxNo
+         PezRWNDRsXDMY+q0gQj+khm++lVHAvUzC2PadgCVBF3nlie8ub8JQLReC9HslzIyy9FE
+         tUNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=OEBXVW523dy4jiF0r7+Pkvf4CtL47QrLw/rnlW7fQg0=;
+        b=HCjvkapvJ/JfiI4qrcaWLFC5Cvy8PMvGElYcm6g0jz4aK2rTFBZvY7BQN/rVLQgcHL
+         MqkPolnOyRirxaYO7zcF6/2PAY8HH8Y6/HT1PuXhrzYuc/HDqscD7VaSSyct7B0kE+j3
+         z4lm+ZiDzh54sVgjIz2m7bocFQuJCV10M0YARdslCQDsmhUsWMxF1Gc1DXZXeY5w9Bgu
+         BEnEum/yAPCkvp1BnT8a4yQ7E4TrvoGUAODn2ByXZg6rzM/IjEzNahQ9T7E7Pbpv4fdO
+         I+llwPeJ2v51FB03E4u0kPPGHZidqKZQgauoHjxvWX/Yo0vIAfHfzyQR/OOKplCQorSr
+         RpqQ==
+X-Gm-Message-State: AFeK/H2HKXO7x99ghf9oHvA8vSankFf3TiHzJq3H1j8zpnGFgecflP3XihxXVRIz+wzqkSXUNvXnfE6NCeoBMA==
+X-Received: by 10.36.90.144 with SMTP id v138mr9486389ita.24.1490607042322;
+ Mon, 27 Mar 2017 02:30:42 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.130.208 with HTTP; Mon, 27 Mar 2017 02:30:21 -0700 (PDT)
+In-Reply-To: <1490375874.745.227.camel@locke.gandi.net>
 References: <1490375874.745.227.camel@locke.gandi.net>
-         <20170324184550.3l6mw4ybynizblsm@sigill.intra.peff.net>
-         <xmqqmvca79sh.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.4.4-3 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 27 Mar 2017 11:30:21 +0200
+Message-ID: <CACBZZX5buDHBy+aHWYVugdg=jyPgHOmgjuRx6NQTQ67k4_WU5w@mail.gmail.com>
+Subject: Re: [PATCH] push: allow atomic flag via configuration
+To:     Romuald Brunet <romuald@chivil.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On ven., 2017-03-24 at 12:29 -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> > My one question would be whether people would want this to actually be
-> > specific to a particular remote, and not just on for a given repository
-> > (your "site-specific" in the description made me think of that). In that
-> > case it would be better as part of the remote.* config.
-> 
-> Yeah, I had the same reaction.  
-> 
-> Conceptually, this sits next to remote.*.push that defines which set
-> of refs are sent by default, and remote.<name>.pushAtomic does make
-> sense.  If (and only if) it turns out to be cumbersome for somebody
-> to set the configuration for each and every remote, it is OK to also
-> add push.atomic to serve as a fallback for remote.*.pushAtomic, I
-> would think, but adding only push.atomic feels somewhat backwards.
+On Fri, Mar 24, 2017 at 6:17 PM, Romuald Brunet <romuald@chivil.com> wrote:
+> +push.atomic::
+> +       If set to true enable `--atomic` option by default.  You
+> +       may override this configuration at time of push by specifying
+> +       `--no-atomic`.
+> +
 
-Thanks for your feedback
-
-I'm mostly using single remotes that's why I didn't even think of making
-it configurable per remote. But you're right that makes more sense.
-
-I'll try to make that modification to the patch.
-
-As for my use case: I'd like to use default atomic pushes when pushing a
-new tag among our stable branch, but inevitably forgetting to rebase
-beforehand. Therefore pushing a "dangling" commit/tag
-
-
--- 
-Romuald Brunet
-
+This should also be mentioned in the --atomic documentation in
+git-push.txt itself. See e.g. the documentation for pull --rebase for
+an example of this.
