@@ -6,104 +6,127 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 877BB1FAFB
-	for <e@80x24.org>; Tue, 28 Mar 2017 19:43:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 383381FAFB
+	for <e@80x24.org>; Tue, 28 Mar 2017 19:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753468AbdC1TnA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 15:43:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53145 "EHLO cloud.peff.net"
+        id S1753707AbdC1Tp2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 15:45:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53148 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752582AbdC1Tm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 15:42:59 -0400
-Received: (qmail 11527 invoked by uid 109); 28 Mar 2017 19:42:58 -0000
+        id S1752582AbdC1Tp2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 15:45:28 -0400
+Received: (qmail 11712 invoked by uid 109); 28 Mar 2017 19:45:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 19:42:58 +0000
-Received: (qmail 18509 invoked by uid 111); 28 Mar 2017 19:43:13 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 19:45:27 +0000
+Received: (qmail 31908 invoked by uid 111); 28 Mar 2017 19:45:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 15:43:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 15:42:56 -0400
-Date:   Tue, 28 Mar 2017 15:42:56 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 15:45:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 15:45:25 -0400
+Date:   Tue, 28 Mar 2017 15:45:25 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 0/18] snprintf cleanups
-Message-ID: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
+Subject: [PATCH 01/18] do not check odb_mkstemp return value for errors
+Message-ID: <20170328194524.wmj6tg756fze3ab7@sigill.intra.peff.net>
+References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Our code base calls snprintf() into a fixed-size buffer in a bunch of
-places. Sometimes we check the result, and sometimes we accept a silent
-truncation. In some cases an overflow is easy given long input. In some
-cases it's impossible. And in some cases it depends on how big PATH_MAX
-is on your filesystem, and whether it's actually enforced. :)
+The odb_mkstemp function does not return an error; it dies
+on failure instead. But many of its callers compare the
+resulting descriptor against -1 and die themselves.
 
-This series attempts to give more predictable and consistent results by
-removing arbitrary buffer limitations. It also tries to make further
-audits of snprintf() easier by converting to xsnprintf() where
-appropriate.
+Mostly this is just pointless, but it does raise a question
+when looking at the callers: if they show the results of the
+"template" buffer after a failure, what's in it? The answer
+is: it doesn't matter, because it cannot happen.
 
-There are still some snprintf() calls left after this. A few are in code
-that's in flux, or is being cleaned up in nearby series (several of my
-recent cleanup series were split off from this). A few should probably
-remain (e.g., git-daemon will refuse to consider a repo name larger than
-PATH_MAX, which may be a reasonable defense against weird memory tricks.
-I wouldn't be sad to see this turned into a strbuf with an explicit
-length policy enforced separately, though). And there were a few that I
-just didn't get around to converting (the dumb-http walker, for example,
-but I think it may need a pretty involved audit overall).
+So let's make that clear by removing the bogus error checks.
+In bitmap_writer_finish(), we can drop the error-handling
+code entirely. In the other two cases, it's shared with the
+open() in another code path; we can just move the
+error-check next to that open() call.
 
-It's a lot of patches, but hopefully they're all pretty straightforward
-to read.
+And while we're at it, let's flesh out the function's
+docstring a bit to make the error behavior clear.
 
-  [01/18]: do not check odb_mkstemp return value for errors
-  [02/18]: odb_mkstemp: write filename into strbuf
-  [03/18]: odb_mkstemp: use git_path_buf
-  [04/18]: diff: avoid fixed-size buffer for patch-ids
-  [05/18]: tag: use strbuf to format tag header
-  [06/18]: fetch: use heap buffer to format reflog
-  [07/18]: avoid using fixed PATH_MAX buffers for refs
-  [08/18]: avoid using mksnpath for refs
-  [09/18]: create_branch: move msg setup closer to point of use
-  [10/18]: create_branch: use xstrfmt for reflog message
-  [11/18]: name-rev: replace static buffer with strbuf
-  [12/18]: receive-pack: print --pack-header directly into argv array
-  [13/18]: replace unchecked snprintf calls with heap buffers
-  [14/18]: combine-diff: replace malloc/snprintf with xstrfmt
-  [15/18]: convert unchecked snprintf into xsnprintf
-  [16/18]: transport-helper: replace checked snprintf with xsnprintf
-  [17/18]: gc: replace local buffer with git_path
-  [18/18]: daemon: use an argv_array to exec children
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/index-pack.c | 7 ++++---
+ cache.h              | 5 ++++-
+ pack-bitmap-write.c  | 2 --
+ pack-write.c         | 4 ++--
+ 4 files changed, 10 insertions(+), 8 deletions(-)
 
- bisect.c               |  8 +++++---
- branch.c               | 16 ++++++++--------
- builtin/checkout.c     |  5 ++---
- builtin/fetch.c        |  6 ++++--
- builtin/gc.c           |  8 +-------
- builtin/index-pack.c   | 22 ++++++++++++----------
- builtin/ls-remote.c    | 10 ++++++----
- builtin/name-rev.c     | 21 ++++++++++++---------
- builtin/notes.c        |  9 ++++-----
- builtin/receive-pack.c | 17 ++++++++++-------
- builtin/replace.c      | 50 +++++++++++++++++++++++++++-----------------------
- builtin/rev-parse.c    |  5 +++--
- builtin/tag.c          | 42 ++++++++++++++++++------------------------
- cache.h                |  7 +++++--
- combine-diff.c         |  7 ++++---
- daemon.c               | 38 +++++++++++++++++---------------------
- diff.c                 | 20 +++++++++++++-------
- environment.c          | 14 ++++++--------
- fast-import.c          |  9 +++++----
- grep.c                 |  4 ++--
- http.c                 | 10 +++++-----
- imap-send.c            |  2 +-
- pack-bitmap-write.c    | 14 +++++++-------
- pack-write.c           | 16 ++++++++--------
- refs.c                 | 44 ++++++++++++++++++++++++++------------------
- sha1_file.c            |  4 ++--
- submodule.c            |  2 +-
- transport-helper.c     |  5 +----
- 28 files changed, 215 insertions(+), 200 deletions(-)
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 88d205f85..49e7175d9 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -311,10 +311,11 @@ static const char *open_pack_file(const char *pack_name)
+ 			output_fd = odb_mkstemp(tmp_file, sizeof(tmp_file),
+ 						"pack/tmp_pack_XXXXXX");
+ 			pack_name = xstrdup(tmp_file);
+-		} else
++		} else {
+ 			output_fd = open(pack_name, O_CREAT|O_EXCL|O_RDWR, 0600);
+-		if (output_fd < 0)
+-			die_errno(_("unable to create '%s'"), pack_name);
++			if (output_fd < 0)
++				die_errno(_("unable to create '%s'"), pack_name);
++		}
+ 		nothread_data.pack_fd = output_fd;
+ 	} else {
+ 		input_fd = open(pack_name, O_RDONLY);
+diff --git a/cache.h b/cache.h
+index db4120c23..acad7078d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1673,7 +1673,10 @@ extern struct packed_git *find_sha1_pack(const unsigned char *sha1,
+ extern void pack_report(void);
+ 
+ /*
+- * Create a temporary file rooted in the object database directory.
++ * Create a temporary file rooted in the object database directory, or
++ * die on failure. The filename is taken from "pattern", which should have the
++ * usual "XXXXXX" trailer, and the resulting filename is written into the
++ * "template" buffer. Returns the open descriptor.
+  */
+ extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
+ 
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 970559601..44492c346 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -517,8 +517,6 @@ void bitmap_writer_finish(struct pack_idx_entry **index,
+ 
+ 	int fd = odb_mkstemp(tmp_file, sizeof(tmp_file), "pack/tmp_bitmap_XXXXXX");
+ 
+-	if (fd < 0)
+-		die_errno("unable to create '%s'", tmp_file);
+ 	f = sha1fd(fd, tmp_file);
+ 
+ 	memcpy(header.magic, BITMAP_IDX_SIGNATURE, sizeof(BITMAP_IDX_SIGNATURE));
+diff --git a/pack-write.c b/pack-write.c
+index 88bc7f9f7..19cb514ea 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -77,9 +77,9 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
+ 		} else {
+ 			unlink(index_name);
+ 			fd = open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
++			if (fd < 0)
++				die_errno("unable to create '%s'", index_name);
+ 		}
+-		if (fd < 0)
+-			die_errno("unable to create '%s'", index_name);
+ 		f = sha1fd(fd, index_name);
+ 	}
+ 
+-- 
+2.12.2.845.g55fcf8b10
+
