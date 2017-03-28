@@ -2,84 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E991D1FAFB
-	for <e@80x24.org>; Tue, 28 Mar 2017 21:49:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 209F61FAFB
+	for <e@80x24.org>; Tue, 28 Mar 2017 22:28:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932242AbdC1Vt5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 17:49:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53274 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752666AbdC1Vt4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 17:49:56 -0400
-Received: (qmail 19191 invoked by uid 109); 28 Mar 2017 21:49:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 21:49:33 +0000
-Received: (qmail 23616 invoked by uid 111); 28 Mar 2017 21:49:48 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 17:49:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 17:49:30 -0400
-Date:   Tue, 28 Mar 2017 17:49:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] strbuf: support long paths w/o read rights in
- strbuf_getcwd() on FreeBSD
-Message-ID: <20170328214930.bj4etqn5qecv45im@sigill.intra.peff.net>
-References: <4026bc3b-2999-9daf-d6ab-10c6d007b1e7@web.de>
- <CAP8UFD3pXSf+RhysULQyd2kdKSkBWdoKs+L6GPQ4jwpoeP+yOA@mail.gmail.com>
+        id S932088AbdC1W15 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 18:27:57 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:40344 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752106AbdC1W14 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 18:27:56 -0400
+X-Greylist: delayed 533 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Mar 2017 18:27:56 EDT
+Received: from hashpling.plus.com ([212.159.69.125])
+        by avasout06 with smtp
+        id 1aJA1v0022iA9hg01aJBCd; Tue, 28 Mar 2017 23:18:14 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=QoEu5R6d c=1 sm=1 tr=0
+ a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
+ a=kj9zAlcOel0A:10 a=6Iz7jQTuP9IA:10 a=BNFp--SqAAAA:8 a=opCqyV1-MSDmcaNRGOsA:9
+ a=CjuIK1q_8ugA:10 a=uj3p00XF9m0A:10 a=wCHOS_8tIzIYXQCUOVd6:22
+Received: from charles by hashpling.plus.com with local (Exim 4.84_2)
+        (envelope-from <charles@hashpling.org>)
+        id 1cszRK-00039h-LU
+        for git@vger.kernel.org; Tue, 28 Mar 2017 23:18:10 +0100
+Date:   Tue, 28 Mar 2017 23:18:10 +0100
+From:   Charles Bailey <charles@hashpling.org>
+To:     git@vger.kernel.org
+Subject: Git hackathon New York / London - call for mentors
+Message-ID: <20170328221810.GA3240@hashpling.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD3pXSf+RhysULQyd2kdKSkBWdoKs+L6GPQ4jwpoeP+yOA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 28, 2017 at 11:15:12PM +0200, Christian Couder wrote:
+Bloomberg would like to host a Git hackathon over a weekend in both New
+York and London, towards the end of April or the beginning of May.
 
-> On Sun, Mar 26, 2017 at 3:43 PM, René Scharfe <l.s.r@web.de> wrote:
-> > FreeBSD implements getcwd(3) as a syscall, but falls back to a version
-> > based on readdir(3) if it fails for some reason.  The latter requires
-> > permissions to read and execute path components, while the former does
-> > not.  That means that if our buffer is too small and we're missing
-> > rights we could get EACCES, but we may succeed with a bigger buffer.
-> >
-> > Keep retrying if getcwd(3) indicates lack of permissions until our
-> > buffer can fit PATH_MAX bytes, as that's the maximum supported by the
-> > syscall on FreeBSD anyway.  This way we do what we can to be able to
-> > benefit from the syscall, but we also won't loop forever if there is a
-> > real permission issue.
-> 
-> Sorry to be late and maybe I missed something obvious, but the above
-> and the patch seem complex to me compared with something like:
-> 
-> diff --git a/strbuf.c b/strbuf.c
-> index ace58e7367..25eadcbedc 100644
-> --- a/strbuf.c
-> +++ b/strbuf.c
-> @@ -441,7 +441,7 @@ int strbuf_readlink(struct strbuf *sb, const char
-> *path, size_t hint)
->  int strbuf_getcwd(struct strbuf *sb)
->  {
->         size_t oldalloc = sb->alloc;
-> -       size_t guessed_len = 128;
-> +       size_t guessed_len = PATH_MAX > 128 ? PATH_MAX : 128;
-> 
->         for (;; guessed_len *= 2) {
->                 strbuf_grow(sb, guessed_len);
+Crucial to the success of the weekend will be having mentors available
+in both locations who can guide people on the project. Mentors should
+have some experience with developing for Git and should be familiar with
+the process and guidelines around contributing.
 
-I think the main reason is just that we do not have to pay the price to
-allocate PATH_MAX-sized buffers when they are rarely used.
+If you are interested in being a mentor or have further questions, then
+please get in contact with me via email (either to this address or to
+cbailey32@bloomberg.net) letting me know whether you are closer to New
+York or London and if you have any date restrictions.
 
-I doubt it matters all that much in practice, though.
+Charles.
 
--Peff
+---
+
+Git was the first project for which we hosted an "Open Source Day" and
+since then we've learned a lot and would like to revisit Git again.
+
+The event will involve volunteers who are usually competent programmers
+but who don't necessarily have experience with contributing to Git,
+working to contribute to the project over two days. Typically the type
+of tasks tackled would include documentation improvements, test case
+improvements and very simple bug fixes that have previously been
+identified as "low hanging fruit".
