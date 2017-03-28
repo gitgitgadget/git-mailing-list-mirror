@@ -2,129 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 436941FCA0
-	for <e@80x24.org>; Tue, 28 Mar 2017 01:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51A851FCA0
+	for <e@80x24.org>; Tue, 28 Mar 2017 01:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753615AbdC1BFs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 21:05:48 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35345 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753565AbdC1BFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 21:05:47 -0400
-Received: by mail-pg0-f67.google.com with SMTP id g2so17037407pge.2
-        for <git@vger.kernel.org>; Mon, 27 Mar 2017 18:05:42 -0700 (PDT)
+        id S1752664AbdC1BkH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 21:40:07 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:35134 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753953AbdC1BkF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 21:40:05 -0400
+Received: by mail-wr0-f196.google.com with SMTP id p52so15262669wrc.2
+        for <git@vger.kernel.org>; Mon, 27 Mar 2017 18:39:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=bxa2/UUlIo4DdNYwvGOumiNnqXcCQuwhA/e/hWCRd8w=;
-        b=EEudaF7U3HE01hMq+cYr1lFCWSB+98vJBwvXB8ho6QuPyNqLtzo+eyJG3IYv/idvah
-         2UWkFom1sv6Vq9pMux7F4JQ2Y19ZSG8hp/OTMKVIKQLlkkVJnPVcqBwBGL/BMMI29o+i
-         hyqHz18Uxij8sh+hLLDOwYevU2wG787eQmE+fXad0sWMKx8RyWaFGIzUPKlftSh4ieQi
-         HglQq4CaMxlYIFk5L5pEs67wWPbDv8M+f8MNNdAXNxgwmQaC0A1whIldbEK39r+fFpw+
-         SmHsyuIhkVikABK6VaMoFcjyDXaLnJo3o+rv3fBo+GmLtilmHco5zLfK6eTe/spQRDGq
-         jlwQ==
+        h=from:to:cc:subject:date:message-id;
+        bh=9Vs/AD0D02AzB22MtfaqriZRjeciYbsrBMAL/s+KXm0=;
+        b=hEUoOFuR0/YzP0YDLYdxKFUypIXWkdXoR2n7bfhLgRJtZgCNNsh6VSrMxVtao/oUOG
+         JMkKUWcYhhOftntUTy/CIA9vGvioIzxsr9jpwO5yrbpBWVBAAgmgg8FZcAybCwa6EExe
+         C+n6qVlF8i0nHeJtFw7u7OZ2d2AedHlKX25lFuJp3ttTO1siQpIQ14gAxTHLURi638OH
+         3lQoRJPwQ7jafEBuz4y9G8vSiQux+SRLkusE7gzDLsliOa+RwAt6WgMPUhVcqqU9rRjd
+         IVEcoQRR6RM+dTV3t/9fDWWe4gBAnLALobr/APvDkVUARtg8GJZA9o3ikY3LruTlg+S5
+         OS3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=bxa2/UUlIo4DdNYwvGOumiNnqXcCQuwhA/e/hWCRd8w=;
-        b=Eha0NdKDHaTZ7q5cZ1XqTNmVybyN8alaitnoJJ8G5CjfRqfkVHPaHuHe94F2QgQ9Ol
-         gTJNa14eIZAe+/O7lp94ZHbXq98owiwIcSrXkeatKrVGshnZfRaP4Qbj/8l0357odPVx
-         v08uObDz+BWfVSiz+go36RvpE+vyA7KJWkDw8U/LPJDNbeX/7/uhJg9OrqjKw5I/svNL
-         QsPtTK7bn/ZsfJ0FCwd7S5hWXMLOfO6rtM8W+ZpQAfJcRP1rvBa7WD4JeR337KBZoQxr
-         YWSY+9wigcUaZMDnyeNm8o8G1Kcqw2fdhsLmdLKfqNRaBNXcFH1U/fnr2uB8ndEzRxFM
-         l01g==
-X-Gm-Message-State: AFeK/H0SezXz/rxui9Kahbm0sD1/Zc2au2BK8XsdDpbwzAEAcMmSVv8TZNfgdhUjmF3xlA==
-X-Received: by 10.84.131.79 with SMTP id 73mr31974867pld.45.1490663136157;
-        Mon, 27 Mar 2017 18:05:36 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:c051:ab1a:5a93:a0ac])
-        by smtp.gmail.com with ESMTPSA id r17sm3402332pfa.13.2017.03.27.18.05.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 27 Mar 2017 18:05:35 -0700 (PDT)
-Date:   Mon, 27 Mar 2017 18:05:33 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 7/7] submodule.c: correctly handle nested submodules in
- is_submodule_modified
-Message-ID: <20170328010533.GQ31294@aiede.mtv.corp.google.com>
-References: <20170324182902.19280-1-sbeller@google.com>
- <20170325003610.15282-1-sbeller@google.com>
- <20170325003610.15282-8-sbeller@google.com>
- <xmqqpoh2z93q.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpoh2z93q.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=9Vs/AD0D02AzB22MtfaqriZRjeciYbsrBMAL/s+KXm0=;
+        b=Eu0gb0GUOVkucnlzC7QwLqZ9FLEvmmZn4aB+IW3/5/FQf04D+Y5EAXIy+kR/O9SFZp
+         QdMp2cHHBCP5RcB9H5yW7bqi09khJ043eqRVtP/p0YlXcpYhflhNphCRah1nse6mxxBv
+         PSJkApoLdg/YV6PO0v5QJr6hoCtp8sW3mFVFlxBwcMNSCKSrD2F4qICCieE5ErmZhDwW
+         JjYhlMkRbyjSCRgq2ZXZd5fPsWqK+MqJLI2YahPpNRwzlFHH8SZeJ7/HdqJQ9+WTaT91
+         XQB5yGtp00J2ZCkvG9D+UkiSJavHV6GXsYLPzyquUPWqZJzzFKWlRDXP3M1qYn1VShfq
+         mE/Q==
+X-Gm-Message-State: AFeK/H3Q65VxnOevVXuHnlnvG4eZtJ84lz5cFStz26EacRJKhvkR3mddCbpJtMP2fUsFfg==
+X-Received: by 10.28.19.207 with SMTP id 198mr11241841wmt.49.1490665198536;
+        Mon, 27 Mar 2017 18:39:58 -0700 (PDT)
+Received: from localhost.localdomain ([178.156.154.74])
+        by smtp.gmail.com with ESMTPSA id u63sm1495889wmu.22.2017.03.27.18.39.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 27 Mar 2017 18:39:57 -0700 (PDT)
+From:   Robert Stanca <robert.stanca7@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Robert Stanca <robert.stanca7@gmail.com>
+Subject: [PATCH] [GSOC] get_non_kept_pack_filenames(): reimplement using iterators
+Date:   Tue, 28 Mar 2017 04:39:45 +0300
+Message-Id: <1490665185-11809-1-git-send-email-robert.stanca7@gmail.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+Replaces recursive traversing of opendir with dir_iterator.
 
-> Shouldn't this done as part of 4/7 where is_submodule_modified()
-> starts reading from the porcelain v2 output?  4/7 does adjust for
-> the change from double question mark (porcelain v1) to a single one
-> for untracked, but at the same time it needs to prepare for these
-> 'u' (unmerged), '1' (normal modification) and '2' (mods with rename)
-> to appear in the output, no?
->
-> IOW, with 4/7 and 7/7 done as separate steps, isn't the system
-> broken between these steps?
+Signed-off-by: Robert Stanca <robert.stanca7@gmail.com>
+---
+ builtin/repack.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-No.  Both before and after patch 4, this code has to determine two
-details from a submodule:
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 677bc7c..27a5597 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -7,6 +7,8 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "argv-array.h"
++#include "iterator.h"
++#include "dir-iterator.h"
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+@@ -86,26 +88,21 @@ static void remove_pack_on_signal(int signo)
+  */
+ static void get_non_kept_pack_filenames(struct string_list *fname_list)
+ {
+-	DIR *dir;
+-	struct dirent *e;
++	struct dir_iterator *diter = dir_iterator_begin(packdir);
+ 	char *fname;
+ 
+-	if (!(dir = opendir(packdir)))
+-		return;
+-
+-	while ((e = readdir(dir)) != NULL) {
++	while (dir_iterator_advance(diter) == ITER_OK) {
+ 		size_t len;
+-		if (!strip_suffix(e->d_name, ".pack", &len))
++		if (!strip_suffix(diter->relative_path, ".pack", &len))
+ 			continue;
+ 
+-		fname = xmemdupz(e->d_name, len);
++		fname = xmemdupz(diter->relative_path, len);
+ 
+ 		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
+ 			string_list_append_nodup(fname_list, fname);
+ 		else
+ 			free(fname);
+ 	}
+-	closedir(dir);
+ }
+ 
+ static void remove_redundant_pack(const char *dir_name, const char *base_name)
+-- 
+2.7.4
 
- 1. Does it have untracked files?
- 2. Does it have any modifications to tracked files (including
-    submodules)?
 
-Using porcelain v1 format, (1) is represented by a "??" line and (2)
-is represented by any other line. Using porcelain v2 format, (1) is
-represented by a "u" line and (2) is represented by any other line.
 
-So patch 4 does not intend to change behavior.
 
-This patch 7 is trying to do something more subtle.  Suppose I have a
-superproject 'parent', with a submodule 'parent/sub', which itself
-contains a submodule 'parent/sub/subsub'.  Now suppose I run, from
-within 'parent':
+Hi , this is my first patch submission for Git Gsoc. I ran full tests and local tests with
+prove --timer --jobs 15 ./t*pack*.sh .
 
-	echo hi >sub/subsub/stray-file
-
-Both before and after patch 4, if I run "git status" from 'parent'
-then I will learn that "sub" was modified.  "git status" within 'sub'
-would tell me that "subsub" has an untracked file.
-
-But from the end user's point of view, even when running in "parent",
-what I want to know is that there is an untracked file.  Treating it
-as a modification instead of untracked file is confusing and does
-not answer the user's actual question.  That is what patch 7 tries to
-fix.
-
-In other words, patch 7 is about changing that list of two questions
-from before.  Something like
-
- 1. Does it or any submodule contained within it have untracked files,
-    that I could add with "git add -N --recurse-submodules"?
-
- 2. Does it or any submodule contained within it have modified files,
-    that I could add with "git add -u --recurse-submodules"?
-
- 3. Does it or any submodule contained within it have a changed HEAD,
-    that I could also add with "git add -u --recurse-submodules"?
-
-Question (3) didn't come up before because when there are no nested
-submodules, the diff machinery answers it (saving us from getting the
-answer from the status --porcelain we recurse to).
-
-Thanks and hope that helps,
-Jonathan
+Have a great day,
+             Robert.
