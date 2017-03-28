@@ -2,222 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D51CD1FCA0
-	for <e@80x24.org>; Mon, 27 Mar 2017 23:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 005081FCA0
+	for <e@80x24.org>; Tue, 28 Mar 2017 00:53:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752853AbdC0Xyr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 19:54:47 -0400
-Received: from mail-bn3nam01on0139.outbound.protection.outlook.com ([104.47.33.139]:15338
-        "EHLO NAM01-BN3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1752780AbdC0Xyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 19:54:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=PR1nS/6VHll1XPY/TBENapnUABokzoGcS9fHeIqnKEE=;
- b=dHpq8mn6LdA/eFrf2ETkGqDjyLfweJdafcXCZ1DxT85zqZiNb4j+3z5dv8+u44y5P2m+RhBuS1sgzJmZTRJjOfNAkK1UQGbZheKuHGUhuX9NCkKfPkXNr751RtzzWKcRaqNhT6y15VpCDBOQjqOGUU4Vt4wpz5i1OokQue4e8qk=
-Received: from BL2PR03MB323.namprd03.prod.outlook.com (10.141.68.22) by
- BL2PR03MB324.namprd03.prod.outlook.com (10.141.68.27) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.991.14; Mon, 27 Mar 2017 23:54:36 +0000
-Received: from BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) by
- BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) with mapi id
- 15.01.0991.020; Mon, 27 Mar 2017 23:54:37 +0000
-From:   Ben Peart <Ben.Peart@microsoft.com>
-To:     Jonathan Tan <jonathantanmy@google.com>,
-        Ben Peart <peartben@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH v2 2/2] sub-process: refactor the filter process code into
- a reusable module
-Thread-Topic: [PATCH v2 2/2] sub-process: refactor the filter process code
- into a reusable module
-Thread-Index: AQHSpLMw60zJ+eylxEGVOM4/5wrlLaGpDyaAgABBFpA=
-Date:   Mon, 27 Mar 2017 23:54:36 +0000
-Message-ID: <BL2PR03MB3232F7FE70707532B5FB178F4330@BL2PR03MB323.namprd03.prod.outlook.com>
-References: <20170324152726.14632-1-benpeart@microsoft.com>
- <20170324152726.14632-4-benpeart@microsoft.com>
- <c8f85b4a-e69e-76ab-9a8d-66857968fb4d@google.com>
-In-Reply-To: <c8f85b4a-e69e-76ab-9a8d-66857968fb4d@google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: google.com; dkim=none (message not signed)
- header.d=none;google.com; dmarc=none action=none header.from=microsoft.com;
-x-originating-ip: [65.222.173.206]
-x-microsoft-exchange-diagnostics: 1;BL2PR03MB324;7:xa7peDgA7+TCdlTUj1vLWuG272v6Rj86/+vhnsOqzWqCYfL/CFRTlRIUoPN55Y35aaTI51If58dharKo8wyr3HbLf+iDQwqp08KvNV7P48sZuF7KWdFho9q0dqrd889yYDuZlBez6bXIndIUFnldHW7SPeY/cq0i5IaqdxDpknfS8Y62OlW2YhF8n4DIfeC//cOeiiVNWgpapLe+52xcgvgxOJJvmQBNwc7z1TM/dx1evHbqCT6fGFfY7/E6NbAqNW2k57g+Tc8ZntAnVpa5zL+hC4pd+gPxJp19Jj1aaGlM8MFB6z1xE7O5SgQ/3zUD3SG4OT7ys+LEnTkyjTmeQO1XwMaSvoXU7g0dZXAPu6Y=
-x-ms-office365-filtering-correlation-id: 4ba8a9c3-9e03-4af0-f965-08d4756ca02d
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254075)(48565401081)(201703131423052)(201703031133058)(201702281549052);SRVR:BL2PR03MB324;
-x-microsoft-antispam-prvs: <BL2PR03MB324D761842E16E95808137CF4330@BL2PR03MB324.namprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(9452136761055)(211936372134217);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040427)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041248)(201703131423052)(201703011903052)(201702281528052)(201703061421052)(20161123558025)(20161123564025)(20161123560025)(20161123555025)(20161123562025)(6072148);SRVR:BL2PR03MB324;BCL:0;PCL:0;RULEID:;SRVR:BL2PR03MB324;
-x-forefront-prvs: 02596AB7DA
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39400400002)(39450400003)(39410400002)(39840400002)(39860400002)(39850400002)(51914003)(24454002)(13464003)(377454003)(66066001)(229853002)(33656002)(8990500004)(10290500002)(7696004)(5005710100001)(2501003)(2950100002)(6246003)(102836003)(189998001)(5660300001)(81156014)(38730400002)(8936002)(3846002)(81166006)(10090500001)(6116002)(39060400002)(53936002)(305945005)(7736002)(77096006)(6506006)(8676002)(76176999)(86612001)(25786009)(50986999)(54356999)(6436002)(53546009)(86362001)(2906002)(3660700001)(9686003)(2900100001)(55016002)(74316002)(122556002)(3280700002)(99286003);DIR:OUT;SFP:1102;SCL:1;SRVR:BL2PR03MB324;H:BL2PR03MB323.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:ovrnspm;PTR:InfoNoRecords;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        id S1753652AbdC1Axm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Mar 2017 20:53:42 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35975 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753686AbdC1Axl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Mar 2017 20:53:41 -0400
+Received: by mail-pg0-f68.google.com with SMTP id 81so17000378pgh.3
+        for <git@vger.kernel.org>; Mon, 27 Mar 2017 17:51:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6SnCwp2jGhBOCkI3WlQShUFtzk/NULUvxX4CxmeNM0I=;
+        b=QOT4x3+/CiFYB4iqwFaW8IHWr7pTedfsZUQKm62fcW8HY5cuOta15J9I8SBg4ieDPD
+         p1IetK1jX8JTeIyDQFigT6WKJT+1mmYxJ0OKM2h3jk+WFSOSg50J2nEaiDFFRPiNjMp3
+         isrvNaSfhJtSqaHNQkITJ4xZND9yDGTAhe0u3dWQ1Q4L0t5iGrTtICsaegaYdjoYkoIo
+         39Dw/rNiSHkOhWB7RecAGsensNexIfoYXl5jHHZACWZXVeBKCJXVzTtdWmYGXy12hZ4N
+         eyvJZL8yXZ6Gx9C+klkn69MTfg5D19+De5IGaffPo072tJNVRSMLxi0zYLU1ExXw+zSZ
+         7FOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6SnCwp2jGhBOCkI3WlQShUFtzk/NULUvxX4CxmeNM0I=;
+        b=WyVb655hPSVx6JYY30a3mccfGueNJd54YLuok7W7aqeoBQPKbxIQ12pygDP/O9xc6P
+         MwJO6CLJAdXxqkJVGWFEuW8aA+RYVdWMWn0+V4CSLFF9SULHeIYIJ2+VqxUjx7Xs1skG
+         RPIYqFxaQmE1DqKFaPemlCSKio/dstSooDprf/Xe/+fv8f8JuyackfXvFP41A1sdsuWW
+         7DPEY7AoNKoXU1IDSpY1HFmYaDi27BvjOXRCKFQow7+0KowibMY+H6GVtA4Bodzl6HWu
+         3vivENA+JFnjK6pWHbM/FY5E2ci0WffkNEymYD8Ovx1VB29eiShCWcLkrwirGmHm435j
+         47LA==
+X-Gm-Message-State: AFeK/H1gYQGiTYh3RFfHvsCv2syFSpuQ1oWqlVF1ZKjU/HK4UZClZ0e1UX179p4QtPWtdw==
+X-Received: by 10.99.149.9 with SMTP id p9mr27058206pgd.112.1490662289582;
+        Mon, 27 Mar 2017 17:51:29 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:c051:ab1a:5a93:a0ac])
+        by smtp.gmail.com with ESMTPSA id c1sm3275949pfk.112.2017.03.27.17.51.28
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 27 Mar 2017 17:51:28 -0700 (PDT)
+Date:   Mon, 27 Mar 2017 17:51:26 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Romuald Brunet <romuald@chivil.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] push: allow atomic flag via configuration
+Message-ID: <20170328005126.GP31294@aiede.mtv.corp.google.com>
+References: <1490375874.745.227.camel@locke.gandi.net>
+ <20170324184550.3l6mw4ybynizblsm@sigill.intra.peff.net>
+ <xmqqmvca79sh.fsf@gitster.mtv.corp.google.com>
+ <1490603272.9788.7.camel@locke.gandi.net>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Mar 2017 23:54:36.7236
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR03MB324
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1490603272.9788.7.camel@locke.gandi.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Jonathan Tan [mailto:jonathantanmy@google.com]
-> Sent: Monday, March 27, 2017 3:00 PM
-> To: Ben Peart <peartben@gmail.com>; git@vger.kernel.org
-> Cc: Ben Peart <Ben.Peart@microsoft.com>
-> Subject: Re: [PATCH v2 2/2] sub-process: refactor the filter process code=
- into
-> a reusable module
->=20
-> On 03/24/2017 08:27 AM, Ben Peart wrote:
-> > Refactor the filter.<driver>.process code into a separate sub-process
-> > module that can be used to reduce the cost of starting up a
-> > sub-process for multiple commands.  It does this by keeping the
-> > external process running and processing all commands by communicating
-> > over standard input and standard output using the packet format (pkt-li=
-ne)
-> based protocol.
-> > Full documentation is in Documentation/technical/api-sub-process.txt.
->=20
-> Thanks - this looks like something useful to have.
+Hi,
 
-Thanks for the review and feedback.
+Romuald Brunet wrote:
+> On ven., 2017-03-24 at 12:29 -0700, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
 
->=20
-> When you create a "struct subprocess_entry" to be entered into the system=
-,
-> it is not a true "struct subprocess_entry" - it is a "struct subprocess_e=
-ntry"
-> plus some extra variables at the end. Since the sub-process hashmap is
-> keyed solely on the command, what happens if another component uses the
-> same trick (but with different extra
-> variables) when using a sub-process with the same command?
+>>> My one question would be whether people would want this to actually be
+>>> specific to a particular remote, and not just on for a given repository
+>>> (your "site-specific" in the description made me think of that). In that
+>>> case it would be better as part of the remote.* config.
+>>
+>> Yeah, I had the same reaction.
+>>
+>> Conceptually, this sits next to remote.*.push that defines which set
+>> of refs are sent by default, and remote.<name>.pushAtomic does make
+>> sense.  If (and only if) it turns out to be cumbersome for somebody
+>> to set the configuration for each and every remote, it is OK to also
+>> add push.atomic to serve as a fallback for remote.*.pushAtomic, I
+>> would think, but adding only push.atomic feels somewhat backwards.
+>
+> Thanks for your feedback
+>
+> I'm mostly using single remotes that's why I didn't even think of making
+> it configurable per remote. But you're right that makes more sense.
+>
+> I'll try to make that modification to the patch.
+>
+> As for my use case: I'd like to use default atomic pushes when pushing a
+> new tag among our stable branch, but inevitably forgetting to rebase
+> beforehand. Therefore pushing a "dangling" commit/tag
 
-Having the command be the unique key is sufficient because it gets executed=
- as a process by run_command and there can't be multiple different processe=
-s by the same name.=20
+Making it per-remote would also address my concern about scripts.
+Existing scripts may be using
 
->=20
-> I can think of at least two ways to solve this: (i) each component can ha=
-ve its
-> own sub-process hashmap, or (ii) add a component key to the hashmap. (i)
-> seems more elegant to me, but I'm not sure what the code will look like.
->=20
-> Also, I saw some minor code improvements possible (e.g. using "starts_wit=
-h"
-> when you're checking for the "status=3D<foo>" line) but I'll comment on t=
-hose
-> and look into the code more thoroughly once the questions in this e-mail =
-are
-> resolved.
->=20
-> > diff --git a/sub-process.h b/sub-process.h new file mode 100644 index
-> > 0000000000..d1492f476d
-> > --- /dev/null
-> > +++ b/sub-process.h
-> > @@ -0,0 +1,46 @@
-> > +#ifndef SUBPROCESS_H
-> > +#define SUBPROCESS_H
-> > +
-> > +#include "git-compat-util.h"
-> > +#include "hashmap.h"
-> > +#include "run-command.h"
-> > +
-> > +/*
-> > + * Generic implementation of background process infrastructure.
-> > + * See Documentation/technical/api-background-process.txt.
-> > + */
-> > +
-> > + /* data structures */
-> > +
-> > +struct subprocess_entry {
-> > +	struct hashmap_entry ent; /* must be the first member! */
-> > +	struct child_process process;
-> > +	const char *cmd;
-> > +};
->=20
-> I notice from the documentation (and from "subprocess_get_child_process"
-> below) that this is meant to be opaque, but I think this can be non-opaqu=
-e
-> (like "run-command").
->=20
-> Also, I would prefer adding a "util" pointer here instead of using it as =
-an
-> embedded struct. There is no clue here that it is embeddable or meant to =
-be
-> embedded.
->=20
+	git push $url $refs
 
-The structure is intentionally opaque to provide the benefits of encapsulat=
-ion.  Obviously, the "C" language doesn't provide any enforcement of that d=
-esign principal but we do what we can. =20
+and relying on the push to partially succeed even when some refs
+cannot be fast-forwarded.  (For example, I had such a script that did
 
-The embedded struct is following the same design pattern as elsewhere in gi=
-t (hashmap for example) simply for consistency.
+	git push my-mirror refs/remotes/origin/*:refs/heads/*
+	git push my-mirror +origin/pu:pu
 
-> > +
-> > +/* subprocess functions */
-> > +
-> > +typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
-> > +int subprocess_start(struct subprocess_entry *entry, const char *cmd,
-> > +		subprocess_start_fn startfn);
->=20
-> I'm not sure if it is useful to take a callback here - I think the caller=
- of this
-> function can just run whatever it wants after a successful subprocess_sta=
-rt.
+because the first command would fail to update pu, and then the second
+command would clean up after it.)  A configuration that globally
+changes the effect of "git push" to mean "git push --atomic" would
+break such scripts.  A per-remote configuration is tightly enough
+scoped to not be likely to cause unrelated breakage for users that run
+scripts written by others.
 
-The purpose of doing the subprocess specific initialization via a callback =
-is so that if it encounters an error (for example, it can't negotiate a com=
-mon interface version) the subprocess_start function can detect that and en=
-sure the hashmap does not contain the invalid/unusable subprocess.=20
-
->=20
-> Alternatively, if you add the "util" pointer (as I described above), then=
- it
-> makes sense to add a subprocess_get_or_start() function (and now it makes
-> sense to take the callback). This way, the data structure will own, creat=
-e, and
-> destroy all the "struct subprocess_entry" that it needs, creating a nice
-> separation of concerns.
->=20
-> > +
-> > +void subprocess_stop(struct subprocess_entry *entry);
->=20
-> (continued from above) And it would be clear that this would free
-> "entry", for example.
->=20
-> > +
-> > +struct subprocess_entry *subprocess_find_entry(const char *cmd);
-> > +
-> > +/* subprocess helper functions */
-> > +
-> > +static inline struct child_process *subprocess_get_child_process(
-> > +		struct subprocess_entry *entry)
-> > +{
-> > +	return &entry->process;
-> > +}
-> > +
-> > +/*
-> > + * Helper function that will read packets looking for "status=3D<foo>"
-> > + * key/value pairs and return the value from the last "status" packet
-> > + */
-> > +
-> > +int subprocess_read_status(int fd, struct strbuf *status);
-> > +
-> > +#endif
-> >
+Thanks and hope that helps,
+Jonathan
