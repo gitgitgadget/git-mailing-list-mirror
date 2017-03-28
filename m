@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A09231FAFB
+	by dcvr.yhbt.net (Postfix) with ESMTP id E92051FAFB
 	for <e@80x24.org>; Tue, 28 Mar 2017 19:47:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755826AbdC1TrB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 15:47:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53164 "EHLO cloud.peff.net"
+        id S1755847AbdC1TrL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 15:47:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53168 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755801AbdC1TrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 15:47:01 -0400
-Received: (qmail 11801 invoked by uid 109); 28 Mar 2017 19:46:46 -0000
+        id S1755801AbdC1TrK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 15:47:10 -0400
+Received: (qmail 11813 invoked by uid 109); 28 Mar 2017 19:46:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 19:46:46 +0000
-Received: (qmail 6716 invoked by uid 111); 28 Mar 2017 19:47:01 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 19:46:59 +0000
+Received: (qmail 7887 invoked by uid 111); 28 Mar 2017 19:47:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 15:47:01 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 15:46:44 -0400
-Date:   Tue, 28 Mar 2017 15:46:44 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 15:47:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 15:46:56 -0400
+Date:   Tue, 28 Mar 2017 15:46:56 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 11/18] name-rev: replace static buffer with strbuf
-Message-ID: <20170328194644.jbgf3do2dp6m2a3w@sigill.intra.peff.net>
+Subject: [PATCH 15/18] convert unchecked snprintf into xsnprintf
+Message-ID: <20170328194656.d4sgj67psmpnnmua@sigill.intra.peff.net>
 References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,105 +37,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When name-rev needs to format an actual name, we do so into
-a fixed-size buffer. That includes the actual ref tip, as
-well as any traversal information. Since refs can exceed
-1024 bytes, this means you can get a bogus result. E.g.,
+These calls to snprintf should always succeed, because their
+input is small and fixed. Let's use xsnprintf to make sure
+this is the case (and to make auditing for actual truncation
+easier).
+
+These could be candidates for turning into heap buffers, but
+they fall into a few broad categories that make it not worth
 doing:
 
-   git tag $(perl -e 'print join("/", 1..1024)')
-   git describe --contains HEAD^
+  - formatting single numbers is simple enough that we can
+    see the result should fit
 
-results in ".../282/283", when it should be
-".../1023/1024~1".
+  - the size of a sha1 is likewise well-known, and I didn't
+    want to cause unnecessary conflicts with the ongoing
+    process to convert these constants to GIT_MAX_HEXSZ
 
-We can solve this by using a heap buffer. We'll use a
-strbuf, which lets us write into the same buffer from our
-loop without having to reallocate.
+  - the interface for curl_errorstr is dictated by curl
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/name-rev.c | 21 ++++++++++++---------
- 1 file changed, 12 insertions(+), 9 deletions(-)
+ grep.c      |  4 ++--
+ http.c      | 10 +++++-----
+ imap-send.c |  2 +-
+ sha1_file.c |  4 ++--
+ submodule.c |  2 +-
+ 5 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 8bdc3eaa6..92a5d8a5d 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -238,10 +238,9 @@ static const char *get_exact_ref_match(const struct object *o)
- 	return NULL;
- }
- 
--/* returns a static buffer */
--static const char *get_rev_name(const struct object *o)
-+/* may return a constant string or use "buf" as scratch space */
-+static const char *get_rev_name(const struct object *o, struct strbuf *buf)
- {
--	static char buffer[1024];
- 	struct rev_name *n;
- 	struct commit *c;
- 
-@@ -258,10 +257,9 @@ static const char *get_rev_name(const struct object *o)
- 		int len = strlen(n->tip_name);
- 		if (len > 2 && !strcmp(n->tip_name + len - 2, "^0"))
- 			len -= 2;
--		snprintf(buffer, sizeof(buffer), "%.*s~%d", len, n->tip_name,
--				n->generation);
--
--		return buffer;
-+		strbuf_reset(buf);
-+		strbuf_addf(buf, "%.*s~%d", len, n->tip_name, n->generation);
-+		return buf->buf;
+diff --git a/grep.c b/grep.c
+index 0dbdc1d00..39b4b60d2 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1164,7 +1164,7 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
  	}
- }
+ 	if (opt->linenum) {
+ 		char buf[32];
+-		snprintf(buf, sizeof(buf), "%d", lno);
++		xsnprintf(buf, sizeof(buf), "%d", lno);
+ 		output_color(opt, buf, strlen(buf), opt->color_lineno);
+ 		output_sep(opt, sign);
+ 	}
+@@ -1651,7 +1651,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 				     opt->color_filename);
+ 			output_sep(opt, ':');
+ 		}
+-		snprintf(buf, sizeof(buf), "%u\n", count);
++		xsnprintf(buf, sizeof(buf), "%u\n", count);
+ 		opt->output(opt, buf, strlen(buf));
+ 		return 1;
+ 	}
+diff --git a/http.c b/http.c
+index 96d84bbed..8d94e2c63 100644
+--- a/http.c
++++ b/http.c
+@@ -1366,9 +1366,9 @@ static int handle_curl_result(struct slot_results *results)
+ 		 * FAILONERROR it is lost, so we can give only the numeric
+ 		 * status code.
+ 		 */
+-		snprintf(curl_errorstr, sizeof(curl_errorstr),
+-			 "The requested URL returned error: %ld",
+-			 results->http_code);
++		xsnprintf(curl_errorstr, sizeof(curl_errorstr),
++			  "The requested URL returned error: %ld",
++			  results->http_code);
+ 	}
  
-@@ -271,10 +269,11 @@ static void show_name(const struct object *obj,
+ 	if (results->curl_result == CURLE_OK) {
+@@ -1410,8 +1410,8 @@ int run_one_slot(struct active_request_slot *slot,
  {
- 	const char *name;
- 	const struct object_id *oid = &obj->oid;
-+	struct strbuf buf = STRBUF_INIT;
+ 	slot->results = results;
+ 	if (!start_active_slot(slot)) {
+-		snprintf(curl_errorstr, sizeof(curl_errorstr),
+-			 "failed to start HTTP request");
++		xsnprintf(curl_errorstr, sizeof(curl_errorstr),
++			  "failed to start HTTP request");
+ 		return HTTP_START_FAILED;
+ 	}
  
- 	if (!name_only)
- 		printf("%s ", caller_name ? caller_name : oid_to_hex(oid));
--	name = get_rev_name(obj);
-+	name = get_rev_name(obj, &buf);
- 	if (name)
- 		printf("%s\n", name);
- 	else if (allow_undefined)
-@@ -283,6 +282,7 @@ static void show_name(const struct object *obj,
- 		printf("%s\n", find_unique_abbrev(oid->hash, DEFAULT_ABBREV));
- 	else
- 		die("cannot describe '%s'", oid_to_hex(oid));
-+	strbuf_release(&buf);
- }
+diff --git a/imap-send.c b/imap-send.c
+index 5c7e27a89..857591660 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -964,7 +964,7 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, char *f
+ 		int gai;
+ 		char portstr[6];
  
- static char const * const name_rev_usage[] = {
-@@ -294,6 +294,7 @@ static char const * const name_rev_usage[] = {
+-		snprintf(portstr, sizeof(portstr), "%d", srvc->port);
++		xsnprintf(portstr, sizeof(portstr), "%d", srvc->port);
  
- static void name_rev_line(char *p, struct name_ref_data *data)
- {
-+	struct strbuf buf = STRBUF_INIT;
- 	int forty = 0;
- 	char *p_start;
- 	for (p_start = p; *p; p++) {
-@@ -314,7 +315,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 				struct object *o =
- 					lookup_object(sha1);
- 				if (o)
--					name = get_rev_name(o);
-+					name = get_rev_name(o, &buf);
- 			}
- 			*(p+1) = c;
+ 		memset(&hints, 0, sizeof(hints));
+ 		hints.ai_socktype = SOCK_STREAM;
+diff --git a/sha1_file.c b/sha1_file.c
+index 71063890f..43990dec7 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -3762,8 +3762,8 @@ static int for_each_file_in_obj_subdir(int subdir_nr,
+ 			char hex[GIT_SHA1_HEXSZ+1];
+ 			struct object_id oid;
  
-@@ -332,6 +333,8 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 	/* flush */
- 	if (p_start != p)
- 		fwrite(p_start, p - p_start, 1, stdout);
-+
-+	strbuf_release(&buf);
- }
+-			snprintf(hex, sizeof(hex), "%02x%s",
+-				 subdir_nr, de->d_name);
++			xsnprintf(hex, sizeof(hex), "%02x%s",
++				  subdir_nr, de->d_name);
+ 			if (!get_oid_hex(hex, &oid)) {
+ 				if (obj_cb) {
+ 					r = obj_cb(&oid, path->buf, data);
+diff --git a/submodule.c b/submodule.c
+index 3200b7bb2..e11ea7d0a 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1221,7 +1221,7 @@ static int find_first_merges(struct object_array *result, const char *path,
+ 	memset(&rev_opts, 0, sizeof(rev_opts));
  
- int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 	/* get all revisions that merge commit a */
+-	snprintf(merged_revision, sizeof(merged_revision), "^%s",
++	xsnprintf(merged_revision, sizeof(merged_revision), "^%s",
+ 			oid_to_hex(&a->object.oid));
+ 	init_revisions(&revs, NULL);
+ 	rev_opts.submodule = path;
 -- 
 2.12.2.845.g55fcf8b10
 
