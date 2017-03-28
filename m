@@ -2,82 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A27BD1FAFB
-	for <e@80x24.org>; Tue, 28 Mar 2017 20:46:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 364021FAFB
+	for <e@80x24.org>; Tue, 28 Mar 2017 21:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755914AbdC1Uqi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 16:46:38 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54711 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755908AbdC1Uqh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 16:46:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3F31472C27;
-        Tue, 28 Mar 2017 16:46:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FRgJTo86qeXvSYRoU/ETmHMoeVs=; b=WHB28F
-        +sR9QfZSeKeQMr/uBTW9gyeJjtEQUB6Gl0ya19L/OSeL5bFJMz7XXIYBydg6symu
-        XdnjdKf94JeQh35+9DPhUn1ha9N8aSjUvD4c+eJVlDjdT5BYFuCgNK5wW1c0QnWx
-        Jgf2yNCmYABm/PwZbJcWRPrzbyPeeYht9Y8NQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=T4WR+ptOr2mxKN3ACD/Z+NZGOuVJqip4
-        M3V25cRgltS560/4NkoT6UnF8e7RNHymTmIyK+CvpCMueEHGP83Bg09+SLq6sR5d
-        7gQpFrHUL6CCqfRJTcxQ47/9UmAkiG1D/ElXmkcZ/ZNJ+LRhS1NPooF1VShK5khd
-        KTL9twgez1k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 36ED072C26;
-        Tue, 28 Mar 2017 16:46:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BA37C72C23;
-        Tue, 28 Mar 2017 16:46:23 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH RFC 2/2] diff: teach diff to expand tabs in output
-References: <20170328122209.4861-1-jacob.e.keller@intel.com>
-        <20170328122209.4861-2-jacob.e.keller@intel.com>
-        <xmqqk279cjfs.fsf@gitster.mtv.corp.google.com>
-        <CA+P7+xqA9ZOfaeVg0wjgXVs=N=OJUZjjY1pahUn2xbvSQohfUQ@mail.gmail.com>
-        <20170328203814.36aiocj53wtfcjz5@sigill.intra.peff.net>
-Date:   Tue, 28 Mar 2017 13:46:19 -0700
-In-Reply-To: <20170328203814.36aiocj53wtfcjz5@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 28 Mar 2017 16:38:14 -0400")
-Message-ID: <xmqqbmslcep0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1755795AbdC1VPh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 17:15:37 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:33136 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753955AbdC1VPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 17:15:35 -0400
+Received: by mail-lf0-f65.google.com with SMTP id r36so11685913lfi.0
+        for <git@vger.kernel.org>; Tue, 28 Mar 2017 14:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nY6FzwnaP8jg+eKnr+tQgeIonkj2qgiq4ShIC3ySqFI=;
+        b=U50dQIqIa6ds0cGJBKnYRhL4Z0TA2w8uwm/twJvnnK9vPM16jCkZX4MH8NIbs17X6q
+         NqXQ7G2r+26tKsK9+EJowBf1lDgKHq9dDU2vOkvNR8zv5BUkpj2sIZv3PgVAB5wtGcGH
+         pU8yMjpDatm21q8kxqWZSJ59+Zzgih+IkfjBIYZKfHK0emzZuvozKV7CeXUzYZbgsDIg
+         XFtZF9+MEVqXJzHdeJWYZzXbo+WJiC55B/yGAvysOGptS7v4DGXqzmId6o4HcW7MRk7+
+         0ZR0hTq1fPXI+BHlEOFwM3jZ3qfQ7W+11sSaY+jQI/ueoHNC3r1hBH7uvAwyL8wa3bxb
+         G4jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nY6FzwnaP8jg+eKnr+tQgeIonkj2qgiq4ShIC3ySqFI=;
+        b=O1lt8PacjE4QZvcyaZMyzeWuP7DcuiGx7o0YWhwBYIbJA/BfJmXe28sYT+prSRiy0/
+         guy0U2x3GqIBd2RRhqafKdWPsJg1uQFXHrMv2PJq//wfmRiftuRb5xPGY1WOiqBfqEKi
+         LcTDg94YIS0w8cNToqonMBIBlSdwUDV9sw/21vE4YfKAHEOqtnxE9o/XijqRjUDN1Muy
+         Ku9yQxOpCHgHb8BzvZ+fqcvLJ8KG5t1nkx7dGjBid66AeNs1srFilTxWwmpYrX0Xd/q5
+         BnQa9q+VcVpbtjPtDbQYUOe24j5zR4HdF25KjY5GxfYpHOHGhv9N4DYbV0BoAxblM6II
+         Zmfw==
+X-Gm-Message-State: AFeK/H3iq71qarorLLxXSqySHN0JKYe0cQFDHd8vnmF9F0aqqDxFY6Nw5o7PvRK9OfethOy/de7BiI8/ilYJCA==
+X-Received: by 10.46.81.18 with SMTP id f18mr2271164ljb.136.1490735713507;
+ Tue, 28 Mar 2017 14:15:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9B14A430-13F7-11E7-B51C-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.25.150.10 with HTTP; Tue, 28 Mar 2017 14:15:12 -0700 (PDT)
+In-Reply-To: <4026bc3b-2999-9daf-d6ab-10c6d007b1e7@web.de>
+References: <4026bc3b-2999-9daf-d6ab-10c6d007b1e7@web.de>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 28 Mar 2017 23:15:12 +0200
+Message-ID: <CAP8UFD3pXSf+RhysULQyd2kdKSkBWdoKs+L6GPQ4jwpoeP+yOA@mail.gmail.com>
+Subject: Re: [PATCH] strbuf: support long paths w/o read rights in
+ strbuf_getcwd() on FreeBSD
+To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Zenobiusz Kunegunda <zenobiusz.kunegunda@interia.pl>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Sun, Mar 26, 2017 at 3:43 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
+> FreeBSD implements getcwd(3) as a syscall, but falls back to a version
+> based on readdir(3) if it fails for some reason.  The latter requires
+> permissions to read and execute path components, while the former does
+> not.  That means that if our buffer is too small and we're missing
+> rights we could get EACCES, but we may succeed with a bigger buffer.
+>
+> Keep retrying if getcwd(3) indicates lack of permissions until our
+> buffer can fit PATH_MAX bytes, as that's the maximum supported by the
+> syscall on FreeBSD anyway.  This way we do what we can to be able to
+> benefit from the syscall, but we also won't loop forever if there is a
+> real permission issue.
 
-> That also means an option to something like "expand" is tough, because
-> "first character" really means "first non-ANSI-code character".
+Sorry to be late and maybe I missed something obvious, but the above
+and the patch seem complex to me compared with something like:
 
-That is true, but once you commit to the mindset that you are
-extending "expand", then that becomes a mere part of what must be
-done, i.e. if you want your "expand" to be able to handle coloured
-input, you'd need to know how wide each segment of the input is.
-For that matter, you would also want your "expand" to pay attention
-to the differences between display- vs byte-widths of a string,
-perhaps reusing utf8_strwidth() or something.
+diff --git a/strbuf.c b/strbuf.c
+index ace58e7367..25eadcbedc 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -441,7 +441,7 @@ int strbuf_readlink(struct strbuf *sb, const char
+*path, size_t hint)
+ int strbuf_getcwd(struct strbuf *sb)
+ {
+        size_t oldalloc =3D sb->alloc;
+-       size_t guessed_len =3D 128;
++       size_t guessed_len =3D PATH_MAX > 128 ? PATH_MAX : 128;
 
-Also "the first character is special" does not have to be a "diff
-specific hack".  Your extended "expand" can take a list of
-tab-widths and the special case for highlighting diff output happens
-to take 9,8 as the "list of tab-widths" parameter (whose semantics
-is that each number in the list tells how wide the tab is, and the
-last number repeats forever, so 9,8 really means 9,8,8,8,8,...).
+        for (;; guessed_len *=3D 2) {
+                strbuf_grow(sb, guessed_len);
