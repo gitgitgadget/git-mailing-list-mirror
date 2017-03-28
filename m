@@ -2,193 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634B31FAFB
-	for <e@80x24.org>; Tue, 28 Mar 2017 23:42:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 081A41FAFB
+	for <e@80x24.org>; Tue, 28 Mar 2017 23:58:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755581AbdC1XmW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 19:42:22 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33324 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753680AbdC1XmW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 19:42:22 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 79so18153pgf.0
-        for <git@vger.kernel.org>; Tue, 28 Mar 2017 16:42:21 -0700 (PDT)
+        id S932639AbdC1X6c (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 19:58:32 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:33555 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932392AbdC1X6b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 19:58:31 -0400
+Received: by mail-pg0-f44.google.com with SMTP id x125so368536pgb.0
+        for <git@vger.kernel.org>; Tue, 28 Mar 2017 16:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ykGxgAOamIC91rP7RT0y0okcQCe2MyvuC9CqxqFhM3I=;
-        b=NJ50+s7DXnA0w3F+ISRPoaUzXswagoZM+Hs/mTG8Zs2Hy4dXi7JQUvTXuXByM5qvuR
-         L46V+xXDNjjRz1sa51GmiqIsAZ0QtnmVaIumUlBvsNysehm8+hlS1za6MJ+dN0q45kVL
-         Y/J+h+tvtTnEMy5QFTnav8ECYnkmcLeEgKy6w5bxYTzege0Uf/nlt5v4tiWEdDDpgPvB
-         a7GBM/5yto7Jlx5B4e08Va9EzXANO9GwL/uXPQThIQ5cqXdpnMWqqfmac8WbWriJpPgk
-         GVq9D+CjFQ8u+jiv0Sx/0UVGSGB1VXpf0YEysLoLZuydld/tfH49wO9rH+Vygum+B7N2
-         W55Q==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=aLmO968bZzya59lZiBZJZB9+Fs6qUQjmVHnEaqOHDo8=;
+        b=FHWvDcsDE7mdD5wCXTfRHcr+XGaEy/6RzDzJkubWUFY2PWQ5PXHh0SnzAUr4p5th4X
+         mfsUSMJFZZMJdF9BNwLUnQLI02XJkoXJ3vSr0s8Ma4wlLL8I78fEhdGESUE8soIZ22So
+         SUZsjZk5NJDxHIr/4tdN2Xh2E/eEIWGmpBRYqe4Ly6sO+IyQBfdD7EISWYKD9Sg6sZvS
+         NN6S27HLwZWU0fDQpzhwyyxrTbrHdS+t/EG1qRfQD9q0FLaT4KY43kMTknsoY8KXymGK
+         vHQwGrvChYJNZrIB9BdU6kZ9Jh+2ZiSQpedcLZxjb4TFCxRdKRishkx5Abu287u6XHgc
+         MOuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ykGxgAOamIC91rP7RT0y0okcQCe2MyvuC9CqxqFhM3I=;
-        b=f2fXaKjUCpVHWRpy754VU3oyEJIED/16KwvaIjt/p3Xvht8ATtML2WgD3OEcqybR0z
-         xzHEwI0xAb5yEDwn8NknjnHCn7XGf9Y3Rgnd2kJ7J8qBUdvJNf2SHFruLRVm7N1iOu3N
-         RkXfdwLyRphHoKlT9TIEmxHwvPaQfIYgRoRdwUfKnx0n/8Xg0l2LMewHUhNBI2Q1KaVH
-         +PlZOfEvRLMq2qMfQajtcqVxaBNyWTUZbSlaGaQtPHoDmYK/O2q53mgstFjHrAa8Si57
-         nXAMCRrvF8JkqXgMxAGOu/sYKd5IKNB6yGh76E5nzucGYj4yIry0HuGtP0T/u5uzzLKI
-         EyJA==
-X-Gm-Message-State: AFeK/H2fHaHbmc3ZOvurqm7yLZV/c4qA6G4GjuSz5nj5SdkIhuwXNXEKN71aB2W8vRzRPA==
-X-Received: by 10.98.2.21 with SMTP id 21mr34114110pfc.93.1490744540109;
-        Tue, 28 Mar 2017 16:42:20 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:6c52:4b14:15fb:ecda])
-        by smtp.gmail.com with ESMTPSA id u69sm9332566pfg.121.2017.03.28.16.42.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Mar 2017 16:42:19 -0700 (PDT)
-Date:   Tue, 28 Mar 2017 16:42:17 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] submodule.c: correctly handle nested submodules in
- is_submodule_modified
-Message-ID: <20170328234217.GU31294@aiede.mtv.corp.google.com>
-References: <20170325003610.15282-1-sbeller@google.com>
- <20170328230938.9887-1-sbeller@google.com>
- <20170328230938.9887-3-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=aLmO968bZzya59lZiBZJZB9+Fs6qUQjmVHnEaqOHDo8=;
+        b=P1q9VfgB/mNbOSVf60ow6QQD3TCt0xyLnHtLvd6QEKun6VZTzzQLDa9cP/ofbYPTxJ
+         +OQn6qy7rWg8BwDRCd0KpSqGXiBkK0eb/8cfJZQH6xC1SsK3PxiOZ/h3YfS/Z2HbISY6
+         9/bJ6Kp8inMHSIZl28CHwkeEphEGdh10LNtZ/kjfTl4C4xCYRAE1tVPmD+1rl4jFtyj3
+         B0q38OR0Wy3q9ADKKEJwuJ27+bLJS/nHyl5fg7FAdyiIncRa0qN9hG6bnDDB9WzGpsqa
+         cE3oVSIOjkoQQbcNXObt3vduLvO9bvnVJtytC5Ek+jgQaB81HH75h8Rz5OMTSnFcxc12
+         dcqQ==
+X-Gm-Message-State: AFeK/H1Q+8yodChocIpcGvEiWek+T1Dp0N8AVkzzPnI8SFZ8V2M8w1sjO36o1m9Hg4eT2OoXoqAPeNxfnevjPiKh
+X-Received: by 10.99.119.140 with SMTP id s134mr32136180pgc.162.1490745509953;
+ Tue, 28 Mar 2017 16:58:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170328230938.9887-3-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.186.196 with HTTP; Tue, 28 Mar 2017 16:58:29 -0700 (PDT)
+In-Reply-To: <20170320223418.GB188475@google.com>
+References: <20170314221100.24856-1-bmwill@google.com> <20170317172257.4690-1-bmwill@google.com>
+ <20170317172257.4690-3-bmwill@google.com> <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
+ <xmqq60j77lx3.fsf@gitster.mtv.corp.google.com> <20170317192103.GE110341@google.com>
+ <xmqqy3w363yx.fsf@gitster.mtv.corp.google.com> <20170317210031.GA63813@google.com>
+ <xmqqinn761f7.fsf@gitster.mtv.corp.google.com> <20170320223418.GB188475@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 28 Mar 2017 16:58:29 -0700
+Message-ID: <CAGZ79kbCxhs82PD7wiB6UXh2=5k_EfnFYTZYqUs-FJU2WuxDxg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] setup: allow for prefix to be passed to git commands
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
+On Mon, Mar 20, 2017 at 3:34 PM, Brandon Williams <bmwill@google.com> wrote:
+> That the gist of how I'm hoping to solve the problem.  Hopefully that was
+> clear enough to get some feedback on.
 
-> Suppose I have a superproject 'super', with two submodules 'super/sub'
-> and 'super/sub1'. 'super/sub' itself contains a submodule
-> 'super/sub/subsub'. Now suppose I run, from within 'super':
->
->     echo hi >sub/subsub/stray-file
->     echo hi >sub1/stray-file
->
-> Currently we get would see the following output in git-status:
->
->     git status --short
->      m sub
->      ? sub1
->
-> With this patch applied, the untracked file in the nested submodule is
-> turned into an untracked file on the 'super' level as well.
+Junio wrote in  "What's cooking in git.git (Mar 2017, #10; Fri, 24)"
+> I saw no particular issues myself.  Do others find this series good
+> (not just "meh--it is harmless" but I want to hear a positive "yes
+> these are good changes")?
 
-s/turned into/displayed as/
+So I reviewed them again, and I think they are good to go.
+As a followup we may want to consider this
 
->     git status --short
->      ? sub
->      ? sub1
->
-> This doesn't change the output of 'git status --porcelain=1' for nested
-> submodules, because its output is always ' M' for either untracked files
-> or local modifications no matter the nesting level of the submodule.
->
-> 'git status --porcelain=2' is affected by this change in a nested
-> submodule, though. Without this patch it would report the direct submodule
-> as modified and having no untracked files. With this patch it would report
-> untracked files. Chalk this up as a bug fix.
+diff --git a/setup.c b/setup.c
+index 56cd68ba93..bdc294091a 100644
+--- a/setup.c
++++ b/setup.c
+@@ -944,6 +944,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
+         prefix = setup_git_directory_gently_1(nongit_ok);
+         env_prefix = getenv(GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
 
-I think that's reasonable, and the documentation does a good job of
-describing it.
++        if (prefix && env_prefix)
++                die("BUG: can't invoke command in sub directory with %s set",
++                    GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
++
+         if (env_prefix)
+                 prefix = env_prefix;
+--
 
-Does this have any effect on the default mode of 'git status' (without
---short or --porcelain)?
-
-[...]
-> --- a/Documentation/git-status.txt
-> +++ b/Documentation/git-status.txt
-> @@ -187,6 +187,8 @@ Submodules have more state and instead report
->  		m    the submodule has modified content
->  		?    the submodule has untracked files
->  
-> +Note that 'm' and '?' are applied recursively, e.g. if a nested submodule
-> +in a submodule contains an untracked file, this is reported as '?' as well.
-
-Language nits:
-
-* Can simplify by leaving out "Note that ".
-* s/, e\.g\./. For example,/
-
-Should this say a brief word about rationale?  The obvious way to
-describe it would involve "git add --recurse-submodules", which alas
-doesn't exist yet.  But we could say
-
-                                              this is reported as '?' as well,
-   since the change cannot be added using "git add -u" from within any of the
-   submodules.
-
-[...]
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1078,8 +1078,27 @@ unsigned is_submodule_modified(const char *path, int ignore_untracked)
->  		/* regular untracked files */
->  		if (buf.buf[0] == '?')
->  			dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
-> -		else
-> -			dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
-> +
-> +		if (buf.buf[0] == 'u' ||
-> +		    buf.buf[0] == '1' ||
-> +		    buf.buf[0] == '2') {
-> +			/*
-> +			 * T XY SSSS:
-> +			 * T = line type, XY = status, SSSS = submodule state
-> +			 */
-> +			if (buf.len < 1 + 1 + 2 + 1 + 4)
-
-optional: Can shorten:
-
-			/* T = line type, XY = status, SSSS = submodule state */
-			if (buf.len < strlen("T XY SSSS"))
-				...
-
-That produces the same code at run time because compilers are able to
-inline the strlen of a constant.  What you already have also seems
-sensible, though.
-
-[...]
-> +				die("BUG: invalid status --porcelain=2 line %s",
-> +				    buf.buf);
-> +
-> +			/* regular unmerged and renamed files */
-> +			if (buf.buf[5] == 'S' && buf.buf[8] == 'U')
-> +				/* nested untracked file */
-> +				dirty_submodule |= DIRTY_SUBMODULE_UNTRACKED;
-> +
-> +			if (memcmp(buf.buf + 5, "S..U", 4))
-> +				/* other change */
-> +				dirty_submodule |= DIRTY_SUBMODULE_MODIFIED;
-
-sanity check: What does this do for a "2" line indicating a sub-submodule
-that has been renamed that contains an untracked file?  Do we need to
-rely on some other indication to show this as a change?
-
-Enumerating some more cases, since I keep finding myself getting lost:
-
- - if the HEAD commit of "sub" changes, we show this as " M sub".
-   What should we show if the HEAD commit of "sub/subsub" changes?
-   I think this should be " m".
-
- - if "sub" is renamed, we show this as "R  sub -> newname".
-   What should we show if "sub/subsub" is renamed?  It is tempting
-   to show this as " m".
-
- - if "sub" is deleted, we show this as "D  sub". What should we
-   show if "sub/subsub" is deleted? I think this is " m".
-
-It keeps getting more complicated, but I think this is making sense.
-
-Thanks and hope that helps,
-Jonathan
+Thanks,
+Stefan
