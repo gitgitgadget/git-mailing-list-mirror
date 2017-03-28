@@ -2,120 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51A851FCA0
-	for <e@80x24.org>; Tue, 28 Mar 2017 01:40:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 591A51FCA0
+	for <e@80x24.org>; Tue, 28 Mar 2017 05:17:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752664AbdC1BkH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Mar 2017 21:40:07 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35134 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753953AbdC1BkF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Mar 2017 21:40:05 -0400
-Received: by mail-wr0-f196.google.com with SMTP id p52so15262669wrc.2
-        for <git@vger.kernel.org>; Mon, 27 Mar 2017 18:39:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=9Vs/AD0D02AzB22MtfaqriZRjeciYbsrBMAL/s+KXm0=;
-        b=hEUoOFuR0/YzP0YDLYdxKFUypIXWkdXoR2n7bfhLgRJtZgCNNsh6VSrMxVtao/oUOG
-         JMkKUWcYhhOftntUTy/CIA9vGvioIzxsr9jpwO5yrbpBWVBAAgmgg8FZcAybCwa6EExe
-         C+n6qVlF8i0nHeJtFw7u7OZ2d2AedHlKX25lFuJp3ttTO1siQpIQ14gAxTHLURi638OH
-         3lQoRJPwQ7jafEBuz4y9G8vSiQux+SRLkusE7gzDLsliOa+RwAt6WgMPUhVcqqU9rRjd
-         IVEcoQRR6RM+dTV3t/9fDWWe4gBAnLALobr/APvDkVUARtg8GJZA9o3ikY3LruTlg+S5
-         OS3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=9Vs/AD0D02AzB22MtfaqriZRjeciYbsrBMAL/s+KXm0=;
-        b=Eu0gb0GUOVkucnlzC7QwLqZ9FLEvmmZn4aB+IW3/5/FQf04D+Y5EAXIy+kR/O9SFZp
-         QdMp2cHHBCP5RcB9H5yW7bqi09khJ043eqRVtP/p0YlXcpYhflhNphCRah1nse6mxxBv
-         PSJkApoLdg/YV6PO0v5QJr6hoCtp8sW3mFVFlxBwcMNSCKSrD2F4qICCieE5ErmZhDwW
-         JjYhlMkRbyjSCRgq2ZXZd5fPsWqK+MqJLI2YahPpNRwzlFHH8SZeJ7/HdqJQ9+WTaT91
-         XQB5yGtp00J2ZCkvG9D+UkiSJavHV6GXsYLPzyquUPWqZJzzFKWlRDXP3M1qYn1VShfq
-         mE/Q==
-X-Gm-Message-State: AFeK/H3Q65VxnOevVXuHnlnvG4eZtJ84lz5cFStz26EacRJKhvkR3mddCbpJtMP2fUsFfg==
-X-Received: by 10.28.19.207 with SMTP id 198mr11241841wmt.49.1490665198536;
-        Mon, 27 Mar 2017 18:39:58 -0700 (PDT)
-Received: from localhost.localdomain ([178.156.154.74])
-        by smtp.gmail.com with ESMTPSA id u63sm1495889wmu.22.2017.03.27.18.39.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Mar 2017 18:39:57 -0700 (PDT)
-From:   Robert Stanca <robert.stanca7@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Robert Stanca <robert.stanca7@gmail.com>
-Subject: [PATCH] [GSOC] get_non_kept_pack_filenames(): reimplement using iterators
-Date:   Tue, 28 Mar 2017 04:39:45 +0300
-Message-Id: <1490665185-11809-1-git-send-email-robert.stanca7@gmail.com>
-X-Mailer: git-send-email 2.7.4
+        id S1752848AbdC1FRe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 01:17:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52730 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752760AbdC1FRe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 01:17:34 -0400
+Received: (qmail 16255 invoked by uid 109); 28 Mar 2017 05:17:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 05:17:27 +0000
+Received: (qmail 20513 invoked by uid 111); 28 Mar 2017 05:17:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 01:17:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 01:17:23 -0400
+Date:   Tue, 28 Mar 2017 01:17:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH/RFC] parse-options: add facility to make options
+ configurable
+Message-ID: <20170328051723.h2xi2do6iclm64pi@sigill.intra.peff.net>
+References: <CACBZZX4FksU6NujPZ_3GZ45EQ+KdJj5G2sajtRipE1wbaA3URA@mail.gmail.com>
+ <20170324231013.23346-1-avarab@gmail.com>
+ <CACBZZX6iz5QpfpOO6s9c-GY7+ZZ2uXBxqgKfSRhU+__P0VLC5g@mail.gmail.com>
+ <20170325213107.u2l5eunqgqbxpcbb@sigill.intra.peff.net>
+ <CACBZZX6=_Jh-emAr=g1-VQwgA4MnDpu=zSOqPK5QHAa7uef_LQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX6=_Jh-emAr=g1-VQwgA4MnDpu=zSOqPK5QHAa7uef_LQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replaces recursive traversing of opendir with dir_iterator.
+On Sat, Mar 25, 2017 at 11:32:02PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-Signed-off-by: Robert Stanca <robert.stanca7@gmail.com>
----
- builtin/repack.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+> > So hopefully it's clear that the two are functionally equivalent, and
+> > differ only in syntax (in this case we manually decided which options
+> > are safe to pull from the config, but we'd have to parse the options.log
+> > string, too, and we could make the same decision there).
+> 
+> I like the simplicity of this approach a lot. I.e. (to paraphrase it
+> just to make sure we're on the same page): Skip all the complexity of
+> reaching into the getopt guts, and just munge argc/argv given a config
+> we can stick ahead of the getopt (struct options) spec, inject some
+> options at the beginning if they're in the config, and off we go
+> without any further changes to the getopt guts.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 677bc7c..27a5597 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -7,6 +7,8 @@
- #include "strbuf.h"
- #include "string-list.h"
- #include "argv-array.h"
-+#include "iterator.h"
-+#include "dir-iterator.h"
- 
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
-@@ -86,26 +88,21 @@ static void remove_pack_on_signal(int signo)
-  */
- static void get_non_kept_pack_filenames(struct string_list *fname_list)
- {
--	DIR *dir;
--	struct dirent *e;
-+	struct dir_iterator *diter = dir_iterator_begin(packdir);
- 	char *fname;
- 
--	if (!(dir = opendir(packdir)))
--		return;
--
--	while ((e = readdir(dir)) != NULL) {
-+	while (dir_iterator_advance(diter) == ITER_OK) {
- 		size_t len;
--		if (!strip_suffix(e->d_name, ".pack", &len))
-+		if (!strip_suffix(diter->relative_path, ".pack", &len))
- 			continue;
- 
--		fname = xmemdupz(e->d_name, len);
-+		fname = xmemdupz(diter->relative_path, len);
- 
- 		if (!file_exists(mkpath("%s/%s.keep", packdir, fname)))
- 			string_list_append_nodup(fname_list, fname);
- 		else
- 			free(fname);
- 	}
--	closedir(dir);
- }
- 
- static void remove_redundant_pack(const char *dir_name, const char *base_name)
--- 
-2.7.4
+Yep, I think that's an accurate description.
 
+> There's two practical issues with this that are easy to solve with my
+> current approach, but I can't find an easy solution to using this
+> method.
+> 
+> The first is that we're replacing the semantics of:
+> 
+> "If you're specifying it on the command-line, we take it from there,
+> otherwise we use your config, if set, regardless of how the option
+> works"
+> 
+> with:
+> 
+> "We read your config, inject options implicitly at the start of the
+> command line, and then append whatever command-line you give us"
+> 
+> These two are not the same. Consider e.g. the commit.verbose config.
+> With my current patch if have commit.verbose=1 in your config and do
+> "commit --verbose" you just end up with a result equivalent to not
+> having it in your config, but since the --verbose option can be
+> supplied multiple times to increase verbosity with the injection
+> method you'd end up with the equivalent of commit.verbose=2.
 
+Right, for anything where multiple options are meaningful, they'd have
+to give "--no-verbose" to reset the option. In a sense that's less
+friendly, because it's more manual. But it's also less magical, because
+the semantics are clear: the config option behaves exactly as if you
+gave the option on the command line. So for an OPT_STRING_LIST(), you
+could append to the list, or reset it to empty, etc, as you see fit.
 
+But I do agree that it's more manual, and probably would cause some
+confusion.
 
-Hi , this is my first patch submission for Git Gsoc. I ran full tests and local tests with
-prove --timer --jobs 15 ./t*pack*.sh .
+> I can't think of a good way around that with your proposed approach
+> that doesn't essentially get us back to something very similar to my
+> patch, i.e. we'd need to parse the command-line using the options spec
+> before applying our implicit config.
 
-Have a great day,
-             Robert.
+Yes, the semantics you gave require parsing the options first. I think
+it would be sufficient to just give each "struct option" a "seen" flag
+(rather than having it understand the config mechanism), having
+parse_options() set the flag, and then feeding the result to a separate
+config/cmdline mapping mechanism. That keeps the complexity out of the
+options code.
+
+It does tie us back in to requiring parse-options, which not all the
+options use.
+
+In a lot of cases that "seen" flag is effectively a sentinel value in
+whatever variable the option value is stored in. But some of the options
+don't have reasonable sentinel values (as you noticed with the "revert
+-m" handling recently).
+
+> The second issue is related, i.e. I was going to add some flag an
+> option could supply to say "if I'm provided none of these other
+> maybe-from-config options get to read their config". This is needed
+> for hybrid plumbing/porcelain like "git status --porcelain".
+
+Yeah, I agree you can't make that decision until you've seen the
+command-line options. I think we currently do some hairy stuff where we
+speculatively read config into a variable, and then apply the
+config-based defaults only when we know we're in non-porcelain mode (see
+status_deferred_config in builtin/commit.c).
+
+That came about because we didn't want to parse the config a second
+time. These days the deferred config should probably just be read from
+the cached configset, after we've read the other options.
+
+But I think this can be done after the full option-parsing is finished
+by applying the mapping then.  I.e., something like:
+
+    parse_options(argc, argv, options, ...);
+    if (status_format != STATUS_FORMAT_PORCELAIN)
+	apply_config_mapping(status_mapping, options);
+
+-Peff
