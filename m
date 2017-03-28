@@ -2,69 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 209F61FAFB
-	for <e@80x24.org>; Tue, 28 Mar 2017 22:28:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9D871FAFB
+	for <e@80x24.org>; Tue, 28 Mar 2017 22:34:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932088AbdC1W15 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 18:27:57 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:40344 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752106AbdC1W14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 18:27:56 -0400
-X-Greylist: delayed 533 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Mar 2017 18:27:56 EDT
-Received: from hashpling.plus.com ([212.159.69.125])
-        by avasout06 with smtp
-        id 1aJA1v0022iA9hg01aJBCd; Tue, 28 Mar 2017 23:18:14 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=QoEu5R6d c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17
- a=kj9zAlcOel0A:10 a=6Iz7jQTuP9IA:10 a=BNFp--SqAAAA:8 a=opCqyV1-MSDmcaNRGOsA:9
- a=CjuIK1q_8ugA:10 a=uj3p00XF9m0A:10 a=wCHOS_8tIzIYXQCUOVd6:22
-Received: from charles by hashpling.plus.com with local (Exim 4.84_2)
-        (envelope-from <charles@hashpling.org>)
-        id 1cszRK-00039h-LU
-        for git@vger.kernel.org; Tue, 28 Mar 2017 23:18:10 +0100
-Date:   Tue, 28 Mar 2017 23:18:10 +0100
-From:   Charles Bailey <charles@hashpling.org>
-To:     git@vger.kernel.org
-Subject: Git hackathon New York / London - call for mentors
-Message-ID: <20170328221810.GA3240@hashpling.org>
+        id S932242AbdC1Wdy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 18:33:54 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54192 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752870AbdC1Wdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 18:33:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DDBB74173;
+        Tue, 28 Mar 2017 18:33:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2Z4jbo/WJ1oiseZFUY4qoIup7Lg=; b=THGp/r
+        QfI7Z4cd3S/6tn/LUbpruQ606ce2HOTYC0xuAU1fCsBH/zDxMY1DqbkRmgzhQrAo
+        YvpRPuKEvZd/hhOMDDZXlgypfgusGqtlf2j1/eG3PzSLMf30AG/GMho5DzvF7EEe
+        RvsnF6yHjtJ0nIHKLNy7sSBLHjR5CbilkU1JA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=svO6gP4FDZmpUPYP0n1V8mzmnJmSa1j8
+        ySh2RzKa47wkIyUT+u2XkkYOrgWdhAm46Z3s3SH8b3HI4aKX4DkoZ365EqSTyGP+
+        AGbkFrC2eXcpqPAQJnRCUO7Yv6a0sS2FAFqZx6VF4Z2vVjDmYqg73pRXr4cYkeRF
+        JaHM8s4YITI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 66DAF74172;
+        Tue, 28 Mar 2017 18:33:51 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 06A6574170;
+        Tue, 28 Mar 2017 18:33:49 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/18] snprintf cleanups
+References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
+Date:   Tue, 28 Mar 2017 15:33:48 -0700
+In-Reply-To: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 28 Mar 2017 15:42:56 -0400")
+Message-ID: <xmqq60itc9pv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9D5A6B44-1406-11E7-A718-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bloomberg would like to host a Git hackathon over a weekend in both New
-York and London, towards the end of April or the beginning of May.
+Jeff King <peff@peff.net> writes:
 
-Crucial to the success of the weekend will be having mentors available
-in both locations who can guide people on the project. Mentors should
-have some experience with developing for Git and should be familiar with
-the process and guidelines around contributing.
+> It's a lot of patches, but hopefully they're all pretty straightforward
+> to read.
 
-If you are interested in being a mentor or have further questions, then
-please get in contact with me via email (either to this address or to
-cbailey32@bloomberg.net) letting me know whether you are closer to New
-York or London and if you have any date restrictions.
+Yes, quite a lot of changes.  I didn't see anything questionable in
+there.
 
-Charles.
+As to the "patch-id" thing, I find the alternate one slightly easier
+to read.  Also, exactly because this is not a performance critical
+codepath, it may be better if patch_id_add_string() filtered out
+whitespaces; that would allow the source to express things in more
+natural way, e.g.
 
----
+		patch_id_addf(&ctx, "new file mode");
+		patch_id_addf(&ctx, "%06o", p->two->mode);
+		patch_id_addf(&ctx, "--- /dev/null");
+		patch_id_addf(&ctx, "+++ b/%.*s", len2, p->two->path);
 
-Git was the first project for which we hosted an "Open Source Day" and
-since then we've learned a lot and would like to revisit Git again.
-
-The event will involve volunteers who are usually competent programmers
-but who don't necessarily have experience with contributing to Git,
-working to contribute to the project over two days. Typically the type
-of tasks tackled would include documentation improvements, test case
-improvements and very simple bug fixes that have previously been
-identified as "low hanging fruit".
+Or I may be going overboard by bringing "addf" into the mix X-<.
