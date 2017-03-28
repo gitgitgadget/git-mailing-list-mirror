@@ -2,83 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4031FCA0
-	for <e@80x24.org>; Tue, 28 Mar 2017 15:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CCBA1FCA0
+	for <e@80x24.org>; Tue, 28 Mar 2017 15:38:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932109AbdC1Pej (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 11:34:39 -0400
-Received: from mail-vk0-f46.google.com ([209.85.213.46]:35142 "EHLO
-        mail-vk0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932073AbdC1Peh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 11:34:37 -0400
-Received: by mail-vk0-f46.google.com with SMTP id r69so92510271vke.2
-        for <git@vger.kernel.org>; Tue, 28 Mar 2017 08:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RV9E5erQDatF+AfotgcHp/7uXeni1GQtuLDTfFhTUM0=;
-        b=Zr6oN0TG3mQZccLaErp2wsM5OG4VHmGMKnNzJKyf75qGMoYvAaSIXMOWvwKkBrlUS0
-         dp+CfaSD7NCe4eE/gvCpTqFvfL8p7/YolzBBG/e9+HLmTL1Um01dCw9qhDvzCBrDalhJ
-         cS4AdiOFoOU8xJvQnl7SVfTlAzMI7kB9uimaFcYm4m/2Cnfxb657F4aohBoWlAMvsJNs
-         3zHa04Li80ZyxnQQ87pm42AKTez3yYYXEE86tmQXuxuz3NdcL2MksboWEhvg9/BS0EkM
-         xk8P5hDUjNXJ27l9KUZBbJkmBH4onq2NpfUSr3Ll9seT7Y8BTaPKaONGT86j0or4s7iH
-         AP4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RV9E5erQDatF+AfotgcHp/7uXeni1GQtuLDTfFhTUM0=;
-        b=b2GqLJ7N07iuiaKnWm5m+BDX0OrJ5wm76LIrCrzOw5uoG5+bLnto0kvxhupD98lmru
-         hd7v3Su76UTxN1kJjM92JvvhO1TymcthxfynE27Glt6tVnUZqPArKwxXvrxjZ5VYr4CM
-         oB1VvEmS4znIfKRLihvQAM0A1I1WZDeLwEZcBmtQelWhGcQ4I4VNT/mKLfKTC3rG0y0N
-         9qpiKOCGdv499w9ODMzEovjFj26z4KCqoQ5h++mQky+ud8RArEiRs/M5xys2a/Gy4KQc
-         /BEmta+t0qDEXhJ074MoCuDmYIvL9IioCk0wBxJiZQv1uOjAJNuekEeCjpszaxIcA8Ag
-         Ovag==
-X-Gm-Message-State: AFeK/H1aAUaNfqKdfZqvUyW7UPgFMKsoz2jBTlUVvYV7/poWw95nUSevxpJ3w9tbje+AojowUivvi1mnROoaVQ==
-X-Received: by 10.159.48.146 with SMTP id j18mr5935384uab.156.1490715261736;
- Tue, 28 Mar 2017 08:34:21 -0700 (PDT)
+        id S1751523AbdC1Pht (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 11:37:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52944 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751091AbdC1Phs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 11:37:48 -0400
+Received: (qmail 29093 invoked by uid 109); 28 Mar 2017 15:37:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 15:37:47 +0000
+Received: (qmail 16317 invoked by uid 111); 28 Mar 2017 15:38:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 11:38:03 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 11:37:45 -0400
+Date:   Tue, 28 Mar 2017 11:37:45 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v2 1/2] read-cache: skip index SHA verification
+Message-ID: <20170328153745.yi5fb5kkfa27q36o@sigill.intra.peff.net>
+References: <1490648979-49580-1-git-send-email-git@jeffhostetler.com>
+ <1490648979-49580-2-git-send-email-git@jeffhostetler.com>
+ <20170327224408.2bzh5vfa6deni6fm@sigill.intra.peff.net>
+ <7b40fea5-8843-b95b-5ea5-c8035ea8a36e@jeffhostetler.com>
 MIME-Version: 1.0
-Received: by 10.176.93.29 with HTTP; Tue, 28 Mar 2017 08:34:21 -0700 (PDT)
-In-Reply-To: <20170324194237.td2nsiyuatexuxo2@sigill.intra.peff.net>
-References: <20170323152924.23944-1-szeder.dev@gmail.com> <20170323152924.23944-9-szeder.dev@gmail.com>
- <20170324194237.td2nsiyuatexuxo2@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Tue, 28 Mar 2017 17:34:21 +0200
-Message-ID: <CAM0VKjkMLdTzFyAdgnJsFGk4JpR-oBdnXRoeskRRSbsvT8TXcg@mail.gmail.com>
-Subject: Re: [PATCHv2 08/14] completion: let 'for-each-ref' and 'ls-remote'
- filter matching refs
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <7b40fea5-8843-b95b-5ea5-c8035ea8a36e@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 24, 2017 at 8:42 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Mar 23, 2017 at 04:29:18PM +0100, SZEDER G=C3=A1bor wrote:
->>               case "$cur_" in
->>               refs|refs/*)
->>                       format=3D"refname"
->> -                     refs=3D"${cur_%/*}"
->> +                     refs=3D("$match*" "$match*/**")
->>                       track=3D""
->
-> Working on the aforementioned patch, I noticed that for-each-ref's
-> matching is a little tricky due to its path semantics. So I wanted to
-> double-check your patterns. :) I think these should do the right thing.
+On Tue, Mar 28, 2017 at 11:27:19AM -0400, Jeff Hostetler wrote:
 
-Yeah, I always thought that it's weird that globbing in for-each-ref
-behaves differently from globbing in ls-remote or refspecs, but there
-is nothing we can do about it now.
+> > Hrm, there shouldn't be any dependency of the config on the index (and
+> > there are a handful of options which impact the index already). Did you
+> > try it and run into problems?
+> 
+> Yeah, I tried adding a new "core.verifyindex" property and the
+> corresponding global variable.  But read_index() and verify_hdr()
+> was being called BEFORE the config was loaded.  And it wasn't clear
+> how best to solve that.
+> 
+> The issue was in "git status" where cmd_status() called
+> status_init_config() which called gitmodules_config() before
+> git_config().  but gitmodules_config() called read_index(),
+> so my settings weren't loaded yet in verify_hdr().
 
-Anyway, this is why the tests added in this patch include e.g. both
-'matching-branch' and 'matching/branch'.
+Ugh, yeah, the callback-oriented interface suffers from these kind of
+dependency cycles. You can fix it by doing a limited "basic config that
+should always be loaded" git_config() call before anything else, and
+then following up with the application-level config.
+
+For something low-level that should _always_ be respected, even in
+plumbing programs, I think we're better off lazy-loading the config
+inside the function. The configset cache makes them more or less free.
+
+I.e., something like:
+
+diff --git a/read-cache.c b/read-cache.c
+index e44775182..89bbf8d1e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1376,17 +1376,23 @@ static int verify_hdr(struct cache_header *hdr, unsigned long size)
+ 	git_SHA_CTX c;
+ 	unsigned char sha1[20];
+ 	int hdr_version;
++	int do_checksum = 0;
+ 
+ 	if (hdr->hdr_signature != htonl(CACHE_SIGNATURE))
+ 		return error("bad signature");
+ 	hdr_version = ntohl(hdr->hdr_version);
+ 	if (hdr_version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < hdr_version)
+ 		return error("bad index version %d", hdr_version);
+-	git_SHA1_Init(&c);
+-	git_SHA1_Update(&c, hdr, size - 20);
+-	git_SHA1_Final(sha1, &c);
+-	if (hashcmp(sha1, (unsigned char *)hdr + size - 20))
+-		return error("bad index file sha1 signature");
++
++	git_config_get_bool("core.checksumindex", &do_checksum);
++	if (do_checksum) {
++		git_SHA1_Init(&c);
++		git_SHA1_Update(&c, hdr, size - 20);
++		git_SHA1_Final(sha1, &c);
++		if (hashcmp(sha1, (unsigned char *)hdr + size - 20))
++			return error("bad index file sha1 signature");
++	}
++
+ 	return 0;
+ }
+
+-Peff
