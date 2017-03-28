@@ -6,76 +6,69 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE3101FAFB
-	for <e@80x24.org>; Tue, 28 Mar 2017 19:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FE4E1FAFB
+	for <e@80x24.org>; Tue, 28 Mar 2017 20:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932132AbdC1T4K (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 15:56:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53213 "EHLO cloud.peff.net"
+        id S932098AbdC1UAL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 16:00:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53219 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932098AbdC1T4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 15:56:09 -0400
-Received: (qmail 12415 invoked by uid 109); 28 Mar 2017 19:56:08 -0000
+        id S1752808AbdC1UAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 16:00:11 -0400
+Received: (qmail 12661 invoked by uid 109); 28 Mar 2017 20:00:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 19:56:08 +0000
-Received: (qmail 24952 invoked by uid 111); 28 Mar 2017 19:56:23 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 20:00:10 +0000
+Received: (qmail 14078 invoked by uid 111); 28 Mar 2017 20:00:25 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 15:56:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 15:56:06 -0400
-Date:   Tue, 28 Mar 2017 15:56:06 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 16:00:25 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 16:00:07 -0400
+Date:   Tue, 28 Mar 2017 16:00:07 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 0/2] read-cache: call verify_hdr() in a background
- thread
-Message-ID: <20170328195605.xy4pnhy74s6wgwps@sigill.intra.peff.net>
-References: <20170328190732.59486-1-git@jeffhostetler.com>
- <20170328191628.dprziuhpv7khvocu@sigill.intra.peff.net>
- <35f220df-aa63-b80f-8970-429850202cdd@jeffhostetler.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2 00/21] object_id part 7
+Message-ID: <20170328200007.rlewwl6py6l7vhp6@sigill.intra.peff.net>
+References: <20170326160143.769630-1-sandals@crustytoothpaste.net>
+ <20170328073159.k3xemw6auh3iedgs@sigill.intra.peff.net>
+ <20170328111315.i6rhhy4pj6hhf4bs@genre.crustytoothpaste.net>
+ <20170328173536.ylwesrj7jbreztcy@sigill.intra.peff.net>
+ <20170328174214.t5szqndtf4bwsnhz@sigill.intra.peff.net>
+ <xmqqfuhxchqq.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <35f220df-aa63-b80f-8970-429850202cdd@jeffhostetler.com>
+In-Reply-To: <xmqqfuhxchqq.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 28, 2017 at 03:50:34PM -0400, Jeff Hostetler wrote:
+On Tue, Mar 28, 2017 at 12:40:29PM -0700, Junio C Hamano wrote:
 
-> It was a convenient way to isolate, average, and compare
-> read_index() times, but I suppose we could do something
-> like that.
+> > Here's that minor tweak, in case anybody is interested. It's less useful
+> > without that follow-on that touches "eol" more, but perhaps it increases
+> > readability on its own.
 > 
-> I did confirm that a ls-files does show a slight 0.008
-> second difference on the 58K file Linux tree when toggled
-> on or off.
+> Yup, the only thing that the original (with Brian's fix) appears to
+> be more careful about is it tries very hard to avoid setting boc
+> past eoc.  As we are not checking "boc != eoc" but doing the
+> comparison, that "careful" appearance does not give us any benefit
+> in practice, other than having to do an extra "eol ? eol+1 : eoc";
+> the result of this patch is easier to read.
+> 
+> By the way, eoc is "one past the end" of the array that begins at
+> boc, so setting a pointer to eoc+1 may technically be in violation.
+> I do not know how much it matters, though ;-)
 
-Yeah, I agree it helps isolate the change. I'm just not sure we want to
-carry a bunch of function-specific perf-testing code. And one of the
-nice things about testing a real command is that it's...a real command.
-So it's an actual improvement a user might see.
-
-> But I'm tempted to suggest that we just omit my helper exe
-> and not worry about a test -- since we don't have any test
-> repos large enough to really demonstrate the differences.
-> My concern is that that 0.008 would be lost in the noise
-> of the rest of the test and make for an unreliable result.
-
-Yeah, I think that would be fine. You _could_ write a t/perf test and
-then use your 400MB monstrosity as GIT_PERF_LARGE_REPO. But given that
-most people don't have such a thing, there's not much value over you
-just showing off the perf improvement in the commit message.
-
-We could also have a t/perf test that generates a monstrous index and
-shows that it's faster. But frankly, I don't think this is all that
-interesting as a performance regression test. It's not like there's
-something subtle about the performance improvement; we stopped computing
-the SHA-1, and (gasp!) it takes exactly one SHA-1 computation's less
-time.
-
-So just mentioning the test case and the improvement in the commit
-message is sufficient, IMHO.
+I think that is OK. We are reading a strbuf, so eoc must either be the
+first character of the PGP signature, or the terminating NUL if there
+was no signature block[1]. So it's actually _inside_ the array, and
+eoc+1 is our "one past".
 
 -Peff
+
+[1] Arguably we should bail when parse_signature() does not find a PGP
+    signature at all. We already bail with "malformed push certificate"
+    when there are other syntactic anomalies.
