@@ -2,168 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B32BA20966
-	for <e@80x24.org>; Wed, 29 Mar 2017 07:57:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A093920966
+	for <e@80x24.org>; Wed, 29 Mar 2017 08:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754050AbdC2H5B (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 03:57:01 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:58704 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753805AbdC2H5A (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Mar 2017 03:57:00 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailout.nyi.internal (Postfix) with ESMTP id AC4F520D6B;
-        Wed, 29 Mar 2017 03:56:58 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Wed, 29 Mar 2017 03:56:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mplew.is; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=yBZngN6UaBfmXFxthP
-        RE8zbOw+Ab4DSCnWMink0GONc=; b=F4MoHBkb5pBAbxhEnydoyfwJ0V9eVVARj5
-        RTj+8+hecHYueqhOjuYU7mIW1yuVdO2JRZPd3LZlM5BwtsKp9JJh/CxJhEVoqIAe
-        H4QhjIBkqzb8ldO2tnGgSGRrRc9TiU8zHoyvDokruk4/djLpDd7TkQ5N59cimExs
-        s6Ep4Lyub0uaS1Z+d3i/nTcKBgAUe1AmJI2Ci/5G/RTfkumIjdHqZzcBXr7g2Cdv
-        y0kOz2AE5WVyd2N36Iig4m6TNuWRxRsN38yJQIuoSZOgY+/JWNU597NzbrKpVJLp
-        1QC2FoKXpzS/S1xkLXyDroDoQW50N4cqoAjLjVrlXJX5UGCNu9kA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
-        fm1; bh=yBZngN6UaBfmXFxthPRE8zbOw+Ab4DSCnWMink0GONc=; b=VQUZIXk/
-        YEnoMPwVWlWCglAq0WIOPWL710N8BKeDlLT69vM42T8ghhdWHsRf00kC1BJNMJEX
-        WpZrYm40PcgLUy2lw5aoJmXXzwyrEdKGlKH9PxPJCG+c052NfN7+kIMf5Pk0ldd/
-        p/ELspS+MQ2LUAWnIIbyG1TlCW+NTh++UwOZz0eN14KyxZXjNcm9E3NWK920pr3T
-        BUDAxjY4rI/AxlROm/e3MEJZf4EVLmlAOWSUo1eFb5Qouwg5qWhyKDi8hSx9VHEm
-        DFit07xcpzis+ZQdjx5XBBlDDNwCxMqCi84b/5jbtmHK9+v0qgoyGaOLBueh9qc4
-        xMHV1FI/6qS3Bg==
-X-ME-Sender: <xms:ymjbWHSybGRAQw8jaiEN3GXY8aeSISKYdbEHW-b49Rm98QyM1lVQvg>
-X-Sasl-enc: mLrQYShnk+by13QNfP3UTpDLPGGrSQ40NpB38LR4W9d/ 1490774218
-Received: from [10.0.17.4] (unknown [64.238.189.53])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 2E051240B3;
-        Wed, 29 Mar 2017 03:56:58 -0400 (EDT)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Re: [PATCH] contrib/subtree: add "--no-commit" flag for merge and
- pull
-From:   Mike Lewis <mike@mplew.is>
-In-Reply-To: <20170329073704.vhya5gkwg7j5kchb@gmail.com>
-Date:   Wed, 29 Mar 2017 03:56:57 -0400
-Cc:     Mike Lewis <mike@mplew.is>, git@vger.kernel.org,
-        "David A . Greene" <greened@obbligato.org>,
-        Techlive Zheng <techlivezheng@gmail.com>,
-        James Denholm <nod.helm@gmail.com>,
-        Charles Bailey <cbailey32@bloomberg.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E240B4F0-41D3-4FDB-A2BE-B085CCAAA5B1@mplew.is>
-References: <20170326070238.64522-1-mike@mplew.is>
- <20170329073704.vhya5gkwg7j5kchb@gmail.com>
-To:     David Aguilar <davvid@gmail.com>
-X-Mailer: Apple Mail (2.3273)
+        id S1754471AbdC2IJU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 04:09:20 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:32831 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754231AbdC2IIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 04:08:44 -0400
+Received: by mail-wr0-f193.google.com with SMTP id u18so1001554wrc.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 01:08:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=J6SlefUMgBvEJqhJ7yg4CEZtCG7xIS5eHswl0q8Erdc=;
+        b=oJDri0HZ75eNvd9njv+zS7MEfnWITPwgJfl+giyxmNcpmnManNKseSl91kkhf8RZZw
+         vdQKLafmyVt8o7PvdBQJtP1cHH7ZXJrrEXYGjqhhG6Bd0PnEgALnLd6Oo3pCSvdFRPvy
+         S4dMaM9bbVweUwRH72HWTKbRbvVyB2UtdBoKt4em6UcoNOBhCh7UVi8/9gNkT0vvrOuI
+         VYWfsyF5luHYiRzmpHP8k1qKN6mhG4Ia4SF+cmUKMBGW3gpQno3Bxx7a/85bDoIP7STs
+         oze5aj/TeP1P/8FQhF2z22OYFyUxq51+W5O3ZotWL2beiQNLOBkhay7JNfzAL9J2K6y0
+         vQaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=J6SlefUMgBvEJqhJ7yg4CEZtCG7xIS5eHswl0q8Erdc=;
+        b=dS5GTlniXraR0htAJJyax4bZD9hoR1gxIAEVp4rSYuX5hzfXkhX6AY+DCWtaPcWfv5
+         ipVaR2vhPGv4NqV56eDPfHfO+mETEYbsYldIT+hHMc3icfu+26CVd5ZZ1hA3tATgttyR
+         efVHWXhqvpq7KeACynD6jcbY1LFri7uN5qX5DvFNJz+ZPr1q4IoiagR1BbTsGgLevuNr
+         o3YVK8iExCq/9eWQYo9zINZSQL/7U1XErDnEi5S9VtIF5RGJL+XFgP9v9Q4d27cZNTIt
+         imS8hCLtlWmA2ftCRNaw0To6E4QoFW1dS09BVR4FIc18VcQxJsixm9wVGd6TvshyEB7u
+         fJcg==
+X-Gm-Message-State: AFeK/H1Y69b/6AcebeauJt8BgoLrqzQ2ytZFRDPXdTso6FbVdLq8yl+H00thKOQaW8uoAg==
+X-Received: by 10.223.150.81 with SMTP id c17mr12992071wra.85.1490774922319;
+        Wed, 29 Mar 2017 01:08:42 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id c17sm8150629wre.30.2017.03.29.01.08.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 29 Mar 2017 01:08:41 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] read-cache: avoid git_path() race in freshen_shared_index()
+Date:   Wed, 29 Mar 2017 10:08:20 +0200
+Message-Id: <20170329080820.8084-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.12.0.339.g3df8399f7e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I had defaulted it to "--commit" just to make it absolutely clear what =
-the default was going to be, since passing the "--commit" flag to =
-`git-merge` in this case doesn=E2=80=99t change the existing behavior. =
-But you=E2=80=99re right that having the default be blank matches the =
-existing style better, so I=E2=80=99ll make a new patch.
+When performing an interactive rebase in split-index mode,
+the commit message that one should rework when squashing commits
+can contain some garbage instead of the usual concatenation of
+both of the commit messages.
 
-Regarding the "--no-no-commit"  I definitely agree it should be that =
-way, and my first attempt at this had it that way. However, `git =
-rev-parse --parseopt` seems to rewrite "--commit" to "--no-no-commit" =
-when it detects the "no-commit" option in the $OPTS_SPEC variable. =
-Essentially, you still type the argument as "--commit", but it=E2=80=99s =
-rewritten to "--no-no-commit" before it gets to the argument case block, =
-as "no-commit" is the only documented option. Documenting both the =
-"--commit" and "--no-commit" options in $OPTS_SPEC leads to the expected =
-resulting argument, but I wasn't sure if both arguments should be =
-documented, as none of the other "default" options (for instance, =
-"--no-squash") are documented in the help output. But please let me know =
-what your thoughts are, and I'll gladly update my patch.
+When bisecting it appears that 94c9b5af70 (Merge branch
+'cc/split-index-config', 2017-03-17) is the first bad commit.
 
-Mike Lewis
+But when rebasing cc/split-index-config on top of the commit it
+was merged with, the first bad commit is then c3a0082502
+(read-cache: use freshen_shared_index() in read_index_from(),
+2017-03-06).
 
-> On 29 Mar 2017, at 03:37, David Aguilar <davvid@gmail.com> wrote:
->=20
-> On Sun, Mar 26, 2017 at 03:02:38AM -0400, Mike Lewis wrote:
->> Allows the user to verify and/or change the contents of the merge
->> before committing as necessary
->>=20
->> Signed-off-by: Mike Lewis <mike@mplew.is>
->> ---
->> contrib/subtree/git-subtree.sh | 17 +++++++++++++----
->> 1 file changed, 13 insertions(+), 4 deletions(-)
->>=20
->> diff --git a/contrib/subtree/git-subtree.sh =
-b/contrib/subtree/git-subtree.sh
->> index dec085a23..c30087485 100755
->> --- a/contrib/subtree/git-subtree.sh
->> +++ b/contrib/subtree/git-subtree.sh
->> @@ -29,6 +29,8 @@ onto=3D         try connecting new tree to an =
-existing one
->> rejoin        merge the new branch back into HEAD
->>  options for 'add', 'merge', and 'pull'
->> squash        merge subtree changes as a single commit
->> + options for 'merge' and 'pull'
->> +no-commit     perform the merge, but don't commit
->> "
->> eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo =
-exit $?)"
->>=20
->> @@ -48,6 +50,7 @@ annotate=3D
->> squash=3D
->> message=3D
->> prefix=3D
->> +commit_option=3D"--commit"
->=20
-> It might be simpler to default commit_option=3D empty like the others, =
-and
-> remove the "" double quotes around "$commit_option" indicated below so
-> that the shell ignores it when it's empty.
->=20
->>=20
->> debug () {
->> 	if test -n "$debug"
->> @@ -137,6 +140,12 @@ do
->> 	--no-squash)
->> 		squash=3D
->> 		;;
->> +	--no-commit)
->> +		commit_option=3D"--no-commit"
->> +		;;
->> +	--no-no-commit)
->> +		commit_option=3D"--commit"
->> +		;;
->=20
-> "--no-no-commit" should just be "--commit" instead.
-> The real flag is called "--commit" (git help merge), so subtree
-> should follow suite by supporting "--commit" and "--no-commit" only.
->=20
->=20
->> @@ -815,17 +824,17 @@ cmd_merge () {
->> 	then
->> 		if test -n "$message"
->> 		then
->> -			git merge -s subtree --message=3D"$message" =
-"$rev"
->> +			git merge -s subtree --message=3D"$message" =
-"$commit_option" "$rev"
->                                                                  ^     =
-         ^
->> 		else
->> -			git merge -s subtree "$rev"
->> +			git merge -s subtree "$commit_option" "$rev"
->                                             ^              ^
->> 		fi
->> [...]
->=20
-> --=20
-> David
+This shows that we should be careful not to use git_path() in
+freshen_shared_index(). It is using a shared buffer that can
+too easily lead to races.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ read-cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index e447751823..2f10242c24 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1682,9 +1682,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+  */
+ static void freshen_shared_index(char *base_sha1_hex, int warn)
+ {
+-	const char *shared_index = git_path("sharedindex.%s", base_sha1_hex);
++	char *shared_index = git_pathdup("sharedindex.%s", base_sha1_hex);
+ 	if (!check_and_freshen_file(shared_index, 1) && warn)
+ 		warning("could not freshen shared index '%s'", shared_index);
++	free(shared_index);
+ }
+ 
+ int read_index_from(struct index_state *istate, const char *path)
+-- 
+2.12.0.339.g3df8399f7e.dirty
 
