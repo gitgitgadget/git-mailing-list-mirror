@@ -2,74 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15F0B20958
-	for <e@80x24.org>; Wed, 29 Mar 2017 13:36:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43EC320958
+	for <e@80x24.org>; Wed, 29 Mar 2017 13:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754231AbdC2Ngq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 09:36:46 -0400
-Received: from mail96.atlas.de ([194.156.172.86]:7039 "EHLO mail96.atlas.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752770AbdC2Ngq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 09:36:46 -0400
-X-IPAS-Result: =?us-ascii?q?A2AmBAAfuNtY/wXKxApdGQEBAQEBAQEBAQEBBwEBAQEBiF1?=
- =?us-ascii?q?Gm2GTP4QdhiICGoNiFAECAQEBAQEBAYEThRYCAQMMFxFFEAIBBgIaAiYCAgIqB?=
- =?us-ascii?q?hUQAgQBDAEHAQGaC51bgiaKSAEBAQEBAQEDAQEBAQEBAQEBH4ELh0iCaoRUF4J?=
- =?us-ascii?q?vgl8BBIkek0KdJYZei1KIGDaBJVmHLoorAQEB?=
-Received: from scesrv02.atlas.de ([10.196.202.5])
-  by MGW102FE.atlas.de with ESMTP/TLS/DHE-RSA-AES128-GCM-SHA256; 29 Mar 2017 15:36:42 +0200
-Received: by SCESRV02.atlas.de (Postfix, from userid 600)
-        id 3vtTLy4ccFz2yWQt; Wed, 29 Mar 2017 13:36:38 +0000 (UTC)
-Received: from MGW201PAR.atlas.de (unknown [10.206.101.60])
-        by SCESRV02.atlas.de (Postfix) with ESMTPS id 3vtTLt3Gvwz2yWQw
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 13:36:38 +0000 (UTC)
-Received: from msexsrv3.atlas.de ([10.200.102.58])
-  by MGW201DAT.atlas.de with ESMTP/TLS/DHE-RSA-AES256-SHA; 29 Mar 2017 15:36:38 +0200
-Received: from MSEXSRV6.atlas.de ([169.254.4.156]) by MSEXSRV3.atlas.de
- ([10.200.102.58]) with mapi id 14.03.0319.002; Wed, 29 Mar 2017 15:36:38
- +0200
-From:   <stefan.naewe@atlas-elektronik.com>
-To:     <avarab@gmail.com>, <git@vger.kernel.org>
-CC:     <gitster@pobox.com>, <peff@peff.net>, <noloader@gmail.com>
-Subject: Re: [PATCH v2] perl: regenerate perl.mak if perl -V changes
-Thread-Topic: [PATCH v2] perl: regenerate perl.mak if perl -V changes
-Thread-Index: AQHSqJEx1K2LaYraR0mDaQgfAtTgOaGrsE8A
-Date:   Wed, 29 Mar 2017 13:36:37 +0000
-Message-ID: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
-References: <20170329132924.31321-1-avarab@gmail.com>
- <20170329133359.5992-1-avarab@gmail.com>
-In-Reply-To: <20170329133359.5992-1-avarab@gmail.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.7.1
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <7C3E27BE2E97EB428D8F9D2CBD0F7DF2@atlas.de>
-Content-Transfer-Encoding: base64
+        id S1756139AbdC2N5Q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 09:57:16 -0400
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:34004 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755195AbdC2N5P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 09:57:15 -0400
+Received: by mail-lf0-f53.google.com with SMTP id z15so9054392lfd.1
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 06:57:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8Zccrhkw/Y5fEl+LgGfsWbxNzHlj+/xbpL+VSRYSuS4=;
+        b=rQOqrS2Ha/78QTM6tifKNNw4pGNm4bPiWftVTlsaKQmajZryi7DH37oEVvtlWp+eQs
+         w9th15w9HMXHKRSBfgAtb8bpZQacR8BuWURFAuT3V7xRg48OQFTfFhN6228SR81ruJm7
+         xjqBItC0dUMcWwBvl7YA0mW7WfA6UdgwfVROSnR1sYc9de24t3ShziCki2CbDQ5UoJq7
+         uyPnHe1btdjbM2pgukQAlGdIxZnvnd/YbC7zZ+PyZm5CPFgAxUe6J4avJ6ILMMPP3Sha
+         2k2611JFasC8kV6jlEb4ESsWQC7tENJMOaBS6WAEVB+bGXLFyF96HBW5Ns0E4yefWs9u
+         rf2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8Zccrhkw/Y5fEl+LgGfsWbxNzHlj+/xbpL+VSRYSuS4=;
+        b=rPrx1Ml3rntJ6nh1fmGfA4ATORxgwjjaQKESCpJ9DKmBPgEsMHI+s1HSvGzoM1aQnI
+         L110rhprAg3GiOotAp03acN6GxpGqZat+TCOX6JFOhX3qdwtGCIbGITSrGtG9ImFDrU2
+         +D30fm3u9D17W78nAmHUbrNoU1f0MTFz8dzQ6yzS2niiIfEUYwlLjeGTCvGE0+hamjeF
+         b2Kh0NanQwCS05KBapgUK+xM9H6qZmjtLQY3xVbt2ymLqT25Ttd17F/CDWjgLO7OqKL9
+         FV/Hl8J+nZFbzcEyPaudAhHZjHKYfrpMPN4plJeSue8zjisQRPEG8biC2+iUANhbfrBc
+         94GQ==
+X-Gm-Message-State: AFeK/H3Y3B9SUodJSjrQMjGdxUghgoC5mJB2gZ9nv2HhtwdefhF4kHh3r9ysB7/2XZvaag==
+X-Received: by 10.28.194.7 with SMTP id s7mr940133wmf.34.1490795833451;
+        Wed, 29 Mar 2017 06:57:13 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id m186sm8247843wmd.21.2017.03.29.06.57.12
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Mar 2017 06:57:12 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        stefan.naewe@atlas-elektronik.com,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3] perl: regenerate perl.mak if perl -V changes
+Date:   Wed, 29 Mar 2017 13:57:03 +0000
+Message-Id: <20170329135703.18860-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
+References: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-QW0gMjkuMDMuMjAxNyB1bSAxNTozMyBzY2hyaWViIMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29u
-Og0KPiBDaGFuZ2UgdGhlIHBlcmwvcGVybC5tYWsgYnVpbGQgcHJvY2VzcyBzbyB0aGF0IHRoZSBm
-aWxlIGlzIHJlLW1hZGUgaWYNCj4gdGhlIG91dHB1dCBvZiAicGVybCAtViIgY2hhbmdlcy4NCj4g
-DQo+IEJlZm9yZSB0aGlzIGNoYW5nZSB1cGRhdGluZyBlLmcuIC91c3IvYmluL3BlcmwgdG8gYSBu
-ZXcgbWFqb3IgdmVyc2lvbg0KPiB3b3VsZCBjYXVzZSB0aGUgbmV4dCAibWFrZSIgY29tbWFuZCB0
-byBmYWlsLCBzaW5jZSBwZXJsLm1hayBoYXMNCj4gaGFyZGNvZGVkIHBhdGhzIHRvIHBlcmwgbGli
-cmFyeSBwYXRocyByZXRyaWV2ZWQgZnJvbSBpdHMgZmlyc3QgcnVuLg0KPiANCj4gTm93IHRoZSBs
-b2dpYyBhZGRlZCBpbiBjb21taXQgZWU5YmUwNjc3MCAoInBlcmw6IGRldGVjdCBuZXcgZmlsZXMg
-aW4NCj4gTWFrZU1ha2VyIGJ1aWxkcyIsIDIwMTItMDctMjcpIGlzIGV4dGVuZGVkIHRvIHJlZ2Vu
-ZXJhdGlvDQoNCnMvcmVnZW5lcmF0aW8vcmVnZW5lcmF0ZS8NCg0KPiBbLi4uXQ0KDQoNCi9TDQot
-LSANCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0NCi9kZXYvcmFuZG9tIHNheXM6IEhFTFAhIEkgbmVlZCBhIHRhZ2xpbmUuIEhF
-TFAhIE5vdCBqdXN0IGFueSB0YWdsaW5lLg0KcHl0aG9uIC1jICJwcmludCAnNzM3NDY1NjY2MTZl
-MmU2ZTYxNjU3NzY1NDA2MTc0NmM2MTczMmQ2NTZjNjU2Yjc0NzI2ZjZlNjk2YjJlNjM2ZjZkJy5k
-ZWNvZGUoJ2hleCcpIiANCkdQRyBLZXkgZmluZ2VycHJpbnQgPSAyREY1IEUwMUIgMDlDMyA3NTAx
-IEJDQTkgIDk2NjYgODI5QiA0OUM1IDkyMjEgMjdBRg==
+Change the perl/perl.mak build process so that the file is regenerated
+if the output of "perl -V" changes.
+
+Before this change updating e.g. /usr/bin/perl to a new major version
+would cause the next "make" command to fail, since perl.mak has
+hardcoded paths to perl library paths retrieved from its first run.
+
+Now the logic added in commit ee9be06770 ("perl: detect new files in
+MakeMaker builds", 2012-07-27) is extended to regenerate
+perl/perl.mak if there's any change to "perl -V".
+
+This will in some cases redundantly trigger perl/perl.mak to be
+re-made, e.g. if @INC is modified in ways the build process doesn't
+care about through sitecustomize.pl, but the common case is that we
+just do the right thing and re-generate perl/perl.mak when needed.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Wed, Mar 29, 2017 at 3:36 PM,  <stefan.naewe@atlas-elektronik.com> wrote:
+> Am 29.03.2017 um 15:33 schrieb Ævar Arnfjörð Bjarmason:
+> [...]
+>> Now the logic added in commit ee9be06770 ("perl: detect new files in
+>> MakeMaker builds", 2012-07-27) is extended to regeneratio
+>
+> s/regeneratio/regenerate/
+>
+>> [...]
+>
+>
+> /S
+
+Thanks!
+
+
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index 9f8b35ad41..485c453ca2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1851,6 +1851,7 @@ perl/perl.mak: perl/PM.stamp
+ 
+ perl/PM.stamp: FORCE
+ 	@$(FIND) perl -type f -name '*.pm' | sort >$@+ && \
++	$(PERL_PATH) -V >>$@+ && \
+ 	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; } && \
+ 	$(RM) $@+
+ 
+-- 
+2.11.0
+
