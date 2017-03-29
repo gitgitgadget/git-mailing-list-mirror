@@ -2,123 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43EC320958
-	for <e@80x24.org>; Wed, 29 Mar 2017 13:57:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6856B20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 14:39:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756139AbdC2N5Q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 09:57:16 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:34004 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755195AbdC2N5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 09:57:15 -0400
-Received: by mail-lf0-f53.google.com with SMTP id z15so9054392lfd.1
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 06:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8Zccrhkw/Y5fEl+LgGfsWbxNzHlj+/xbpL+VSRYSuS4=;
-        b=rQOqrS2Ha/78QTM6tifKNNw4pGNm4bPiWftVTlsaKQmajZryi7DH37oEVvtlWp+eQs
-         w9th15w9HMXHKRSBfgAtb8bpZQacR8BuWURFAuT3V7xRg48OQFTfFhN6228SR81ruJm7
-         xjqBItC0dUMcWwBvl7YA0mW7WfA6UdgwfVROSnR1sYc9de24t3ShziCki2CbDQ5UoJq7
-         uyPnHe1btdjbM2pgukQAlGdIxZnvnd/YbC7zZ+PyZm5CPFgAxUe6J4avJ6ILMMPP3Sha
-         2k2611JFasC8kV6jlEb4ESsWQC7tENJMOaBS6WAEVB+bGXLFyF96HBW5Ns0E4yefWs9u
-         rf2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8Zccrhkw/Y5fEl+LgGfsWbxNzHlj+/xbpL+VSRYSuS4=;
-        b=rPrx1Ml3rntJ6nh1fmGfA4ATORxgwjjaQKESCpJ9DKmBPgEsMHI+s1HSvGzoM1aQnI
-         L110rhprAg3GiOotAp03acN6GxpGqZat+TCOX6JFOhX3qdwtGCIbGITSrGtG9ImFDrU2
-         +D30fm3u9D17W78nAmHUbrNoU1f0MTFz8dzQ6yzS2niiIfEUYwlLjeGTCvGE0+hamjeF
-         b2Kh0NanQwCS05KBapgUK+xM9H6qZmjtLQY3xVbt2ymLqT25Ttd17F/CDWjgLO7OqKL9
-         FV/Hl8J+nZFbzcEyPaudAhHZjHKYfrpMPN4plJeSue8zjisQRPEG8biC2+iUANhbfrBc
-         94GQ==
-X-Gm-Message-State: AFeK/H3Y3B9SUodJSjrQMjGdxUghgoC5mJB2gZ9nv2HhtwdefhF4kHh3r9ysB7/2XZvaag==
-X-Received: by 10.28.194.7 with SMTP id s7mr940133wmf.34.1490795833451;
-        Wed, 29 Mar 2017 06:57:13 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id m186sm8247843wmd.21.2017.03.29.06.57.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Mar 2017 06:57:12 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S1752315AbdC2Ojg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 10:39:36 -0400
+Received: from mout.kundenserver.de ([212.227.126.131]:54124 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751501AbdC2Oje (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 10:39:34 -0400
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue001
+ [212.227.15.167]) with ESMTPSA (Nemesis) id 0M5lMH-1bvNvr1jk9-00xuTs; Wed, 29
+ Mar 2017 16:39:26 +0200
+From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        stefan.naewe@atlas-elektronik.com,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3] perl: regenerate perl.mak if perl -V changes
-Date:   Wed, 29 Mar 2017 13:57:03 +0000
-Message-Id: <20170329135703.18860-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
-References: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Luke Diamand <luke@diamand.org>
+Subject: [PATCH v2 2/3] name-rev: favor describing with tags and use committer date to tiebreak
+Date:   Wed, 29 Mar 2017 16:39:16 +0200
+Message-Id: <516eccf0ff0df009d915c0ff2aa1a3d61ef63273.1490798142.git.git@grubix.eu>
+X-Mailer: git-send-email 2.12.2.712.gba4c48c431
+In-Reply-To: <xmqqa88j5xsx.fsf@gitster.mtv.corp.google.com>
+References: <xmqqa88j5xsx.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <cover.1490798142.git.git@grubix.eu>
+References: <cover.1490798142.git.git@grubix.eu>
+X-Provags-ID: V03:K0:gPjTanivVXis4GqaHKCvaO6RbwmmvsrBnmyX4m2ZrTj8PbiXJ8M
+ YU0bs9PFl61yGsL02uhiph1TXwV/OMBBobOq0NlNNU5kWlhXoKqH8UjfLWBI+ivHb64hg87
+ JdJeEM6/SsvEkBEhZz4ZHQ+7pVXVd3MLUxSeCvXMANX9Yf6uUdftvObzFvZIFkw+hcjK8dC
+ 1pjF9OeJmir6vgw+NXXLA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mE8bebZ1GwA=:WLCWLa1OPyt3XRlf3fc66g
+ vuP9dDcAdMAmwU3EuONcxHTw1POIhZuLzKGoliOqYNsA9jlcoUJEcdr7sxZnXYy3f4Q0Oihx1
+ eyZUFToNWhmGha440fUbv07Gftk6AxZnNE9uZdqHMUu8KkkrnF/zQzm0b67LTy8pMTrGj1nF6
+ K2GrsLcCwoMFFuuMRtFwCrtWj3WwsCpygl+mEawPEW7BxBgGvUnIY/0eGbUuU/wrLl+v07G1x
+ 46pD/xMsk2pfSioFkHGY469tAH6qJTDqtSjVwn09tEXD5zBOJytaI+QnCcoynp8nZNU1cenDN
+ EnURxWu8Jt7l/3vr+YknFcOU7UpHKLIKh7V7phe+nw5U5dyqvCRPFwP8v0nQcKm9gLRIHIohy
+ 0ypSOlDCUJIdZHXkl0iaOhSEcIA8z97VJCUODF9CKBnjSF7bLzOtQLh7tkqJ98CoRgvOalbPe
+ VKyR7qpRG5qpUE1rzIDshnUz77AIEwKbabRUB7UKbHzPOrV/xlFviFBum26Hhx5wTEQVFZOeu
+ /y4IwuSv2zi0J2Qes1XiYVMGvmfzdKUEYE6zaY/5NP2elIW6wGgZrdwW8cu7xbXYmVikPh1bK
+ i21hgAeY9LOW5fCUqsLz99tSrJPlhrS3J3uaYM391x144tKNwYSWGPT8v8BxggpXt5M0Ql6n4
+ +HZHSdiq5rDCtJds/ZPqTZWH6KJIwoGtObHBM+H1pW799S1pshII83cJpXL8mgnJLEfY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the perl/perl.mak build process so that the file is regenerated
-if the output of "perl -V" changes.
+From: Junio C Hamano <gitster@pobox.com>
 
-Before this change updating e.g. /usr/bin/perl to a new major version
-would cause the next "make" command to fail, since perl.mak has
-hardcoded paths to perl library paths retrieved from its first run.
+"git name-rev" assigned a phony "far in the future" date to tips of
+refs that are not pointing at tag objects, and favored names based
+on a ref with the oldest date.  This made it almost impossible for
+an unannotated tags and branches to be counted as a viable base,
+which was especially problematic when the command is run with the
+"--tags" option.  If an unannotated tag that points at an ancient
+commit and an annotated tag that points at a much newer commit
+reaches the commit that is being named, the old unannotated tag was
+ignored.
 
-Now the logic added in commit ee9be06770 ("perl: detect new files in
-MakeMaker builds", 2012-07-27) is extended to regenerate
-perl/perl.mak if there's any change to "perl -V".
+Update the "taggerdate" field of the rev-name structure, which is
+initialized from the tip of ref, to have the committer date if the
+object at the tip of ref is a commit, not a tag, so that we can
+optionally take it into account when doing "is this name better?"
+comparison logic.
 
-This will in some cases redundantly trigger perl/perl.mak to be
-re-made, e.g. if @INC is modified in ways the build process doesn't
-care about through sitecustomize.pl, but the common case is that we
-just do the right thing and re-generate perl/perl.mak when needed.
+When "name-rev" is run without the "--tags" option, the general
+expectation is still to name the commit based on a tag if possible,
+but use non-tag refs as fallback, and tiebreak among these non-tag
+refs by favoring names with shorter hops from the tip.  The use of a
+phony "far in the future" date in the original code was an effective
+way to ensure this expectation is held: a non-tag tip gets the same
+"far in the future" timestamp, giving precedence to tags, and among
+non-tag tips, names with shorter hops are preferred over longer
+hops, without taking the "taggerdate" into account.  As we are
+taking over the "taggerdate" field to store the committer date for
+tips with commits:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+ (1) keep the original logic when comparing names based on two refs
+     both of which are from refs/tags/;
+
+ (2) favoring a name based on a ref in refs/tags/ hierarchy over
+     a ref outside the hierarchy;
+
+ (3) between two names based on a ref both outside refs/tags/, give
+     precedence to a name with shorter hops and use "taggerdate"
+     only to tie-break.
+
+A change to t4202 is a natural consequence.  The test creates a
+commit on a branch "side" and points at it with an unannotated tag
+"refs/tags/side-2".  The original code couldn't decide which one to
+favor at all, and gave a name based on a branch (simply because
+refs/heads/side sorts earlier than refs/tags/side-2).  Because the
+updated logic is taught to favor refs in refs/tags/ hierarchy, the
+the test is updated to expect to see tags/side-2 instead.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
 
-On Wed, Mar 29, 2017 at 3:36 PM,  <stefan.naewe@atlas-elektronik.com> wrote:
-> Am 29.03.2017 um 15:33 schrieb Ævar Arnfjörð Bjarmason:
-> [...]
->> Now the logic added in commit ee9be06770 ("perl: detect new files in
->> MakeMaker builds", 2012-07-27) is extended to regeneratio
->
-> s/regeneratio/regenerate/
->
->> [...]
->
->
-> /S
+ * I am sure others can add better heurisitics in is_better_name()
+   for comparing names based on non-tag refs, and I do not mind
+   people disagreeing with the logic that this patch happens to
+   implement.  This is done primarily to illustrate the value of
+   using a separate helper function is_better_name() instead of
+   open-coding the selection logic in name_rev() function.
+Signed-off-by: Michael J Gruber <git@grubix.eu>
+---
+ builtin/name-rev.c | 53 ++++++++++++++++++++++++++++++++++++++++++++---------
+ t/t4202-log.sh     |  2 +-
+ 2 files changed, 45 insertions(+), 10 deletions(-)
 
-Thanks!
-
-
- Makefile | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/Makefile b/Makefile
-index 9f8b35ad41..485c453ca2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1851,6 +1851,7 @@ perl/perl.mak: perl/PM.stamp
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 7890f826ce..bf7ed015ae 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -13,6 +13,7 @@ typedef struct rev_name {
+ 	unsigned long taggerdate;
+ 	int generation;
+ 	int distance;
++	int from_tag;
+ } rev_name;
  
- perl/PM.stamp: FORCE
- 	@$(FIND) perl -type f -name '*.pm' | sort >$@+ && \
-+	$(PERL_PATH) -V >>$@+ && \
- 	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; } && \
- 	$(RM) $@+
+ static long cutoff = LONG_MAX;
+@@ -24,16 +25,43 @@ static int is_better_name(struct rev_name *name,
+ 			  const char *tip_name,
+ 			  unsigned long taggerdate,
+ 			  int generation,
+-			  int distance)
++			  int distance,
++			  int from_tag)
+ {
+-	return (name->taggerdate > taggerdate ||
+-		(name->taggerdate == taggerdate &&
+-		 name->distance > distance));
++	/*
++	 * When comparing names based on tags, prefer names
++	 * based on the older tag, even if it is farther away.
++	 */
++	if (from_tag && name->from_tag)
++		return (name->taggerdate > taggerdate ||
++			(name->taggerdate == taggerdate &&
++			 name->distance > distance));
++
++	/*
++	 * We know that at least one of them is a non-tag at this point.
++	 * favor a tag over a non-tag.
++	 */
++	if (name->from_tag != from_tag)
++		return from_tag;
++
++	/*
++	 * We are now looking at two non-tags.  Tiebreak to favor
++	 * shorter hops.
++	 */
++	if (name->distance != distance)
++		return name->distance > distance;
++
++	/* ... or tiebreak to favor older date */
++	if (name->taggerdate != taggerdate)
++		return name->taggerdate > taggerdate;
++
++	/* keep the current one if we cannot decide */
++	return 0;
+ }
  
+ static void name_rev(struct commit *commit,
+ 		const char *tip_name, unsigned long taggerdate,
+-		int generation, int distance,
++		int generation, int distance, int from_tag,
+ 		int deref)
+ {
+ 	struct rev_name *name = (struct rev_name *)commit->util;
+@@ -57,12 +85,13 @@ static void name_rev(struct commit *commit,
+ 		commit->util = name;
+ 		goto copy_data;
+ 	} else if (is_better_name(name, tip_name, taggerdate,
+-				  generation, distance)) {
++				  generation, distance, from_tag)) {
+ copy_data:
+ 		name->tip_name = tip_name;
+ 		name->taggerdate = taggerdate;
+ 		name->generation = generation;
+ 		name->distance = distance;
++		name->from_tag = from_tag;
+ 	} else
+ 		return;
+ 
+@@ -82,10 +111,12 @@ static void name_rev(struct commit *commit,
+ 						   parent_number);
+ 
+ 			name_rev(parents->item, new_name, taggerdate, 0,
+-				distance + MERGE_TRAVERSAL_WEIGHT, 0);
++				 distance + MERGE_TRAVERSAL_WEIGHT,
++				 from_tag, 0);
+ 		} else {
+ 			name_rev(parents->item, tip_name, taggerdate,
+-				generation + 1, distance + 1, 0);
++				 generation + 1, distance + 1,
++				 from_tag, 0);
+ 		}
+ 	}
+ }
+@@ -216,9 +247,13 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ 	}
+ 	if (o && o->type == OBJ_COMMIT) {
+ 		struct commit *commit = (struct commit *)o;
++		int from_tag = starts_with(path, "refs/tags/");
+ 
++		if (taggerdate == ULONG_MAX)
++			taggerdate = ((struct commit *)o)->date;
+ 		path = name_ref_abbrev(path, can_abbreviate_output);
+-		name_rev(commit, xstrdup(path), taggerdate, 0, 0, deref);
++		name_rev(commit, xstrdup(path), taggerdate, 0, 0,
++			 from_tag, deref);
+ 	}
+ 	return 0;
+ }
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index f577990716..4afd8135cd 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -399,7 +399,7 @@ cat > expect <<\EOF
+ | |
+ | |     Merge branch 'side'
+ | |
+-| * commit side
++| * commit tags/side-2
+ | | Author: A U Thor <author@example.com>
+ | |
+ | |     side-2
 -- 
-2.11.0
+2.12.2.712.gba4c48c431
 
