@@ -2,95 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4E520958
-	for <e@80x24.org>; Wed, 29 Mar 2017 13:20:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB7CB20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 13:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756123AbdC2NUj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 09:20:39 -0400
-Received: from mail-lf0-f51.google.com ([209.85.215.51]:35909 "EHLO
-        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755920AbdC2NUi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 09:20:38 -0400
-Received: by mail-lf0-f51.google.com with SMTP id x137so8144422lff.3
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 06:20:37 -0700 (PDT)
+        id S932289AbdC2N3i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 09:29:38 -0400
+Received: from mail-wr0-f174.google.com ([209.85.128.174]:33782 "EHLO
+        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932098AbdC2N3g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 09:29:36 -0400
+Received: by mail-wr0-f174.google.com with SMTP id w43so15589982wrb.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 06:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=15BdGRNzidp9EoYkEqhpWBUu2zIV23UhkxUMpEYY2Q0=;
-        b=dtxzRURym79o4secFmOz9XVg8obAOYeANOO/ciA9AB5N+dz8MpLgRBnzcLPZMXDlJg
-         if9YABDSSmTXeMl6lkB6zh2OIdPdc30v5mOlye4DN75rBoiuUAo87OODuheh/lV0GKAo
-         +SppzNYP+8yvHxRXqGucAlShmrDAKAWRtWz6WGo6c6+jgFv/7YqlNcRz3bOrArL2Jq6j
-         PDr6B0zv73Dm/8g31czVKSHBLGSGUq7lWoc6Pm+Kuo/1PyqOBuuz6Mt9xWWNRxQdNBN9
-         4p+Asiq5BWB170kBMc6LG3ZGwIm1FqiLJLGeOKpA8LkcK0UXN4LHcf9baVnGOSFOHzX7
-         RWgg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ldtLfP3BsyTIr7z2MDdWAN+yvbmPvnZCjutWHmkkAs8=;
+        b=gIT7UFplTLUpdRjcSo93rhpKiQlLuF1F1nkobK/vWVi0becctXO0SZ6puDAKoP1eOK
+         AaPGgFEJ36l/T8Mba6kSjOfSpMlxNuAkXL0wb4zg6wzk1+1TEy83elXTVHFnvCHXyhOK
+         nqPoqBZkdbhymTLW3IfZ/QyS6+MKJfQieuUbAzoZ2Gv1KJdFc06bKOefqIxiTyu9Qbsa
+         AWxakBpJbptaadKYu5GPq2PxlhII6wR/wmeiC9IL7d5y6lazA0JFwLdfxVPFQC7vtwar
+         gmRgyqFXxtdBT2hGqnD0R68SfKhOCJvRZM4sNFjmij+w1ru9/hoSk4nDtrQoFYDY3hOv
+         islw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=15BdGRNzidp9EoYkEqhpWBUu2zIV23UhkxUMpEYY2Q0=;
-        b=H/P9HqM/VFsnC8w8oqjPjCe7RtKLEca5ykhmiBuwS0DkP80he6sUZ0SNz3w+lpWKC1
-         vpoVOBGaE+/XzgrcDMYXWpIfgVDC0Sloo2gHurWd8CsAvrsDXg4OHIrSXeVr/JDECePK
-         6L5eafTV4EroO4mqSF+xAgAnWr8Mzh3x+jh0zFOA+kJIH1m5bicI+whJioOUVbxySCw7
-         n9f08jJX0NDGX+6p62IjvyZVqJMNltsFNCAthGb55bQ0wRxgh9Y7rZfnyny3/R7T8wK+
-         tzkklRZPyDTbNCduojOY2702hPdepD9fXZa43eC2pPzNTHg5QrkuueNIDI+0O7avcqpH
-         pxEg==
-X-Gm-Message-State: AFeK/H1g+sgjI16ZnNqnEG8NEiQCYbor2ovONBH6boUd1UgfkoZ9PscCyUIiKCtgc5a29VviZasrRNRWDn0q4Q==
-X-Received: by 10.46.71.81 with SMTP id u78mr190268lja.16.1490793636510; Wed,
- 29 Mar 2017 06:20:36 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ldtLfP3BsyTIr7z2MDdWAN+yvbmPvnZCjutWHmkkAs8=;
+        b=ty9HDmUC6d7Mklqdrd6YwCyqW57pSk6+/Sj9IxcMOytJYOW0gyWhDejyEg6peXTbfe
+         PG2C5+ltNJlxjARKZfTlZWL5Aqi89DGhOcTWbqr75OYgZ9glz+w2rNMXdnivzcbxsDe8
+         BSXDbLk7kVAtPGoxbWQSlfPmvaQXtvZC1c47LW9zTTfciO3WD9pT/bsT4ryA2HizbqWD
+         GozW0yCyuzosDGsJn8GOyhIaivsqVmRphPKSeNoJtwjRy5ttxoi5nPMEm4/a+m2V8KLs
+         q4m5vveFtJ2ag29mILk58WNPRNu7txWwCIZ80ZIlr+H+YTdEDnY8zMWHZm+Byw1fFNi5
+         yv6w==
+X-Gm-Message-State: AFeK/H1a4ASCMFIvLUmqqJoSeMiC28hKaX6CPU/n3+YUB3poeJZ+gKI+YgsPL7gDqGjKNw==
+X-Received: by 10.223.148.230 with SMTP id 93mr506248wrr.111.1490794174466;
+        Wed, 29 Mar 2017 06:29:34 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id c76sm8208222wme.23.2017.03.29.06.29.33
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Mar 2017 06:29:33 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] perl: regenerate perl.mak if perl -V changes
+Date:   Wed, 29 Mar 2017 13:29:24 +0000
+Message-Id: <20170329132924.31321-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170329021807.voys2r65knn6tdwg@sigill.intra.peff.net>
+References: <20170329021807.voys2r65knn6tdwg@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.25.150.10 with HTTP; Wed, 29 Mar 2017 06:20:36 -0700 (PDT)
-In-Reply-To: <20170328221810.GA3240@hashpling.org>
-References: <20170328221810.GA3240@hashpling.org>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 29 Mar 2017 15:20:36 +0200
-Message-ID: <CAP8UFD3xuaHaZQsCtgE-7sEXKjgsUdWSsup61xo_L4EGEsV5Jw@mail.gmail.com>
-Subject: Re: Git hackathon New York / London - call for mentors
-To:     Charles Bailey <charles@hashpling.org>
-Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Charles,
+Change the perl/perl.mak build process so that the file is re-made if
+the output of "perl -V" changes.
 
-I maybe available to mentor. I am in Paris so closer to London.
-I have no date restriction for the weekends after April 9th yet.
+Before this change updating e.g. /usr/bin/perl to a new major version
+would cause the next "make" command to fail, since perl.mak has
+hardcoded paths to perl library paths retrieved from its first run.
 
-Thanks,
-Christian.
+Now the logic added in commit ee9be06770 ("perl: detect new files in
+MakeMaker builds", 2012-07-27) is extended to regeneratio
+perl/perl.mak if there's any change to "perl -V".
 
-On Wed, Mar 29, 2017 at 12:18 AM, Charles Bailey <charles@hashpling.org> wrote:
-> Bloomberg would like to host a Git hackathon over a weekend in both New
-> York and London, towards the end of April or the beginning of May.
->
-> Crucial to the success of the weekend will be having mentors available
-> in both locations who can guide people on the project. Mentors should
-> have some experience with developing for Git and should be familiar with
-> the process and guidelines around contributing.
->
-> If you are interested in being a mentor or have further questions, then
-> please get in contact with me via email (either to this address or to
-> cbailey32@bloomberg.net) letting me know whether you are closer to New
-> York or London and if you have any date restrictions.
->
-> Charles.
->
-> ---
->
-> Git was the first project for which we hosted an "Open Source Day" and
-> since then we've learned a lot and would like to revisit Git again.
->
-> The event will involve volunteers who are usually competent programmers
-> but who don't necessarily have experience with contributing to Git,
-> working to contribute to the project over two days. Typically the type
-> of tasks tackled would include documentation improvements, test case
-> improvements and very simple bug fixes that have previously been
-> identified as "low hanging fruit".
+This will in some cases redundantly trigger perl/perl.mak to be
+re-made, e.g. if @INC is modified in ways the build process doesn't
+care about through sitecustomize.pl, but the common case is that we
+just do the right thing and re-generate perl/perl.mak when needed.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Wed, Mar 29, 2017 at 4:18 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Mar 28, 2017 at 09:03:43PM -0400, Jeffrey Walton wrote:
+>[...]
+
+At first I thought Jeffrey was running into this longstanding issue
+with the perl Makefile. Looks like not, and he just wasn't passing
+PERL_PATH correctly, but fix this related issue while it's fresh in my
+mind.
+
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index c80fec2920..c0c5510238 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1850,6 +1850,7 @@ perl/perl.mak: perl/PM.stamp
+ 
+ perl/PM.stamp: FORCE
+ 	@$(FIND) perl -type f -name '*.pm' | sort >$@+ && \
++	$(PERL_PATH) -V >$@+ && \
+ 	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; } && \
+ 	$(RM) $@+
+ 
+-- 
+2.11.0
+
