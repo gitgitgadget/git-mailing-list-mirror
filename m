@@ -2,112 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E847020966
-	for <e@80x24.org>; Wed, 29 Mar 2017 07:11:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70C5020966
+	for <e@80x24.org>; Wed, 29 Mar 2017 07:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753529AbdC2HLA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 03:11:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53429 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753430AbdC2HK7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 03:10:59 -0400
-Received: (qmail 20630 invoked by uid 109); 29 Mar 2017 07:10:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 07:10:56 +0000
-Received: (qmail 20917 invoked by uid 111); 29 Mar 2017 07:11:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 03:11:13 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Mar 2017 03:10:55 -0400
-Date:   Wed, 29 Mar 2017 03:10:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Makefile: detect errors in running spatch
-Message-ID: <20170329071055.bp7d2gwqdhspz4aq@sigill.intra.peff.net>
-References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
+        id S1753900AbdC2HhK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 03:37:10 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36724 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753640AbdC2HhK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 03:37:10 -0400
+Received: by mail-pf0-f196.google.com with SMTP id r137so904744pfr.3
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 00:37:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ABTBofbcdOSNQK9nTV9ddfyclHkADea5J+qew9ToMug=;
+        b=iI/LnZqlv5xYW2j58YmSy8D0Na+oBWt6/j/KhKMXgbYIH5dPtIAmwZSNUpqmB9sq1V
+         U3RLX9qwdYHrFuJhdIveJ/tBhiiYA7mNpiTwWDgeHEwpldo7GJ+nbB36lUWzYo4AZiY5
+         1FqUwgHQqRHuKebKPTQ3X/PJbSCCTp2OnURKl6NuymDWXxOx9opJIWXXM2BY7koaRCPp
+         x1wtxnaxnQlNKsi4GfZFPw5SCPnFlq7Y94dlpnepQsUBg+QPof6GNGcUxD/7ypNK9oJt
+         wVsHVDHXr0s7ILyjR2OSg1yBBRJTvls2pcY/2WCZTVvWpsM2gbE2FeTWdff9Hu+BczR9
+         YAfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ABTBofbcdOSNQK9nTV9ddfyclHkADea5J+qew9ToMug=;
+        b=AjxkhIdvA8SwSwgYrZGZt6RD/QDDC+QroQCehvsm5wHxAq1SeHpWyBANaol+eis1IB
+         5P5b1+YMaDS/8XTRtJ38qVkhcSSbu/9J2zLVyjs01ChgTT/HXYa2uEBT3YLnfDtpFCBd
+         48nM8bPHy9H987Jo5PZrKkRda2V7fqTj0ph9SZKPCgUuZrRT2ggmDxDyD+Q72VQgJhb9
+         V8TfJXZXVeqAH8RS/Avpur65Zeruap1kxhWD5iehDJ/qvKThHO87O1DERe+VuqrOogLW
+         Hy7w5VqtLsjrqumAhfrl1rauxbW40pGggcOJITqzbTcn4J/I3F1ApC2SmVy7mTZXnyyD
+         lWJA==
+X-Gm-Message-State: AFeK/H2JQ+ffUZt7H8hQsmI/5quQ2FREGtqm+HSiNIT+KeOkRzS7pmea+c/7gLda9gqb/w==
+X-Received: by 10.99.102.134 with SMTP id a128mr34148205pgc.215.1490773028687;
+        Wed, 29 Mar 2017 00:37:08 -0700 (PDT)
+Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
+        by smtp.gmail.com with ESMTPSA id 80sm11513087pfy.67.2017.03.29.00.37.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Mar 2017 00:37:07 -0700 (PDT)
+Date:   Wed, 29 Mar 2017 00:37:04 -0700
+From:   David Aguilar <davvid@gmail.com>
+To:     Mike Lewis <mike@mplew.is>
+Cc:     git@vger.kernel.org, "David A . Greene" <greened@obbligato.org>,
+        Techlive Zheng <techlivezheng@gmail.com>,
+        James Denholm <nod.helm@gmail.com>,
+        Charles Bailey <cbailey32@bloomberg.net>
+Subject: Re: [PATCH] contrib/subtree: add "--no-commit" flag for merge and
+ pull
+Message-ID: <20170329073704.vhya5gkwg7j5kchb@gmail.com>
+References: <20170326070238.64522-1-mike@mplew.is>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
+In-Reply-To: <20170326070238.64522-1-mike@mplew.is>
+User-Agent: NeoMutt/20161126 (1.7.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "make coccicheck" target runs spatch against each source
-file. But it does so in a for loop, so "make" never sees the
-exit code of spatch. Worse, it redirects stderr to a log
-file, so the user has no indication of any failure. And then
-to top it all off, because we touched the patch file's
-mtime, make will refuse to repeat the command because it
-think the target is up-to-date.
+On Sun, Mar 26, 2017 at 03:02:38AM -0400, Mike Lewis wrote:
+> Allows the user to verify and/or change the contents of the merge
+> before committing as necessary
+> 
+> Signed-off-by: Mike Lewis <mike@mplew.is>
+> ---
+>  contrib/subtree/git-subtree.sh | 17 +++++++++++++----
+>  1 file changed, 13 insertions(+), 4 deletions(-)
+> 
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index dec085a23..c30087485 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -29,6 +29,8 @@ onto=         try connecting new tree to an existing one
+>  rejoin        merge the new branch back into HEAD
+>   options for 'add', 'merge', and 'pull'
+>  squash        merge subtree changes as a single commit
+> + options for 'merge' and 'pull'
+> +no-commit     perform the merge, but don't commit
+>  "
+>  eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)"
+>  
+> @@ -48,6 +50,7 @@ annotate=
+>  squash=
+>  message=
+>  prefix=
+> +commit_option="--commit"
 
-So for example:
+It might be simpler to default commit_option= empty like the others, and
+remove the "" double quotes around "$commit_option" indicated below so
+that the shell ignores it when it's empty.
 
-  $ make coccicheck SPATCH=does-not-exist
-      SPATCH contrib/coccinelle/free.cocci
-      SPATCH contrib/coccinelle/qsort.cocci
-      SPATCH contrib/coccinelle/xstrdup_or_null.cocci
-      SPATCH contrib/coccinelle/swap.cocci
-      SPATCH contrib/coccinelle/strbuf.cocci
-      SPATCH contrib/coccinelle/object_id.cocci
-      SPATCH contrib/coccinelle/array.cocci
-  $ make coccicheck SPATCH=does-not-exist
-  make: Nothing to be done for 'coccicheck'.
+>  
+>  debug () {
+>  	if test -n "$debug"
+> @@ -137,6 +140,12 @@ do
+>  	--no-squash)
+>  		squash=
+>  		;;
+> +	--no-commit)
+> +		commit_option="--no-commit"
+> +		;;
+> +	--no-no-commit)
+> +		commit_option="--commit"
+> +		;;
 
-With this patch, you get:
+"--no-no-commit" should just be "--commit" instead.
+The real flag is called "--commit" (git help merge), so subtree
+should follow suite by supporting "--commit" and "--no-commit" only.
 
-  $ make coccicheck SPATCH=does-not-exist
-       SPATCH contrib/coccinelle/free.cocci
-  /bin/sh: 4: does-not-exist: not found
-  Makefile:2338: recipe for target 'contrib/coccinelle/free.cocci.patch' failed
-  make: *** [contrib/coccinelle/free.cocci.patch] Error 1
 
-It also dumps the log on failure, so any errors from spatch
-itself (like syntax errors in our .cocci files) will be seen
-by the user.
+> @@ -815,17 +824,17 @@ cmd_merge () {
+>  	then
+>  		if test -n "$message"
+>  		then
+> -			git merge -s subtree --message="$message" "$rev"
+> +			git merge -s subtree --message="$message" "$commit_option" "$rev"
+                                                                  ^              ^
+>  		else
+> -			git merge -s subtree "$rev"
+> +			git merge -s subtree "$commit_option" "$rev"
+                                             ^              ^
+>  		fi
+>  [...]
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is a verbatim repost of:
-
-  http://public-inbox.org/git/20170310083117.cbflqx7zbe4s7cqv@sigill.intra.peff.net/
-
-I think this is a strict improvement over the status quo. The
-conversation in that thread turned to possible refactorings, but since
-those didn't materialize, I think we should apply this in the meantime.
-
- Makefile | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 9f8b35ad4..9b36068ac 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2348,9 +2348,17 @@ check: common-cmds.h
- C_SOURCES = $(patsubst %.o,%.c,$(C_OBJ))
- %.cocci.patch: %.cocci $(C_SOURCES)
- 	@echo '    ' SPATCH $<; \
-+	ret=0; \
- 	for f in $(C_SOURCES); do \
--		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS); \
--	done >$@ 2>$@.log; \
-+		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
-+			{ ret=$$?; break; }; \
-+	done >$@+ 2>$@.log; \
-+	if test $$ret != 0; \
-+	then \
-+		cat $@.log; \
-+		exit 1; \
-+	fi; \
-+	mv $@+ $@; \
- 	if test -s $@; \
- 	then \
- 		echo '    ' SPATCH result: $@; \
 -- 
-2.12.2.920.gc31091ce4
+David
