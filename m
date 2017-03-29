@@ -2,98 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 081A41FAFB
-	for <e@80x24.org>; Tue, 28 Mar 2017 23:58:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B552F1FAFB
+	for <e@80x24.org>; Wed, 29 Mar 2017 00:07:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932639AbdC1X6c (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 19:58:32 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:33555 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932392AbdC1X6b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 19:58:31 -0400
-Received: by mail-pg0-f44.google.com with SMTP id x125so368536pgb.0
-        for <git@vger.kernel.org>; Tue, 28 Mar 2017 16:58:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=aLmO968bZzya59lZiBZJZB9+Fs6qUQjmVHnEaqOHDo8=;
-        b=FHWvDcsDE7mdD5wCXTfRHcr+XGaEy/6RzDzJkubWUFY2PWQ5PXHh0SnzAUr4p5th4X
-         mfsUSMJFZZMJdF9BNwLUnQLI02XJkoXJ3vSr0s8Ma4wlLL8I78fEhdGESUE8soIZ22So
-         SUZsjZk5NJDxHIr/4tdN2Xh2E/eEIWGmpBRYqe4Ly6sO+IyQBfdD7EISWYKD9Sg6sZvS
-         NN6S27HLwZWU0fDQpzhwyyxrTbrHdS+t/EG1qRfQD9q0FLaT4KY43kMTknsoY8KXymGK
-         vHQwGrvChYJNZrIB9BdU6kZ9Jh+2ZiSQpedcLZxjb4TFCxRdKRishkx5Abu287u6XHgc
-         MOuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=aLmO968bZzya59lZiBZJZB9+Fs6qUQjmVHnEaqOHDo8=;
-        b=P1q9VfgB/mNbOSVf60ow6QQD3TCt0xyLnHtLvd6QEKun6VZTzzQLDa9cP/ofbYPTxJ
-         +OQn6qy7rWg8BwDRCd0KpSqGXiBkK0eb/8cfJZQH6xC1SsK3PxiOZ/h3YfS/Z2HbISY6
-         9/bJ6Kp8inMHSIZl28CHwkeEphEGdh10LNtZ/kjfTl4C4xCYRAE1tVPmD+1rl4jFtyj3
-         B0q38OR0Wy3q9ADKKEJwuJ27+bLJS/nHyl5fg7FAdyiIncRa0qN9hG6bnDDB9WzGpsqa
-         cE3oVSIOjkoQQbcNXObt3vduLvO9bvnVJtytC5Ek+jgQaB81HH75h8Rz5OMTSnFcxc12
-         dcqQ==
-X-Gm-Message-State: AFeK/H1Q+8yodChocIpcGvEiWek+T1Dp0N8AVkzzPnI8SFZ8V2M8w1sjO36o1m9Hg4eT2OoXoqAPeNxfnevjPiKh
-X-Received: by 10.99.119.140 with SMTP id s134mr32136180pgc.162.1490745509953;
- Tue, 28 Mar 2017 16:58:29 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.186.196 with HTTP; Tue, 28 Mar 2017 16:58:29 -0700 (PDT)
-In-Reply-To: <20170320223418.GB188475@google.com>
-References: <20170314221100.24856-1-bmwill@google.com> <20170317172257.4690-1-bmwill@google.com>
- <20170317172257.4690-3-bmwill@google.com> <CAGZ79kZAZeb5rsL80dty_tRM5SDCAXVq_yATpDQREq_vV4Yj+Q@mail.gmail.com>
- <xmqq60j77lx3.fsf@gitster.mtv.corp.google.com> <20170317192103.GE110341@google.com>
- <xmqqy3w363yx.fsf@gitster.mtv.corp.google.com> <20170317210031.GA63813@google.com>
- <xmqqinn761f7.fsf@gitster.mtv.corp.google.com> <20170320223418.GB188475@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 28 Mar 2017 16:58:29 -0700
-Message-ID: <CAGZ79kbCxhs82PD7wiB6UXh2=5k_EfnFYTZYqUs-FJU2WuxDxg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/5] setup: allow for prefix to be passed to git commands
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
+        id S932516AbdC2AGz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 20:06:55 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:58664 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S932088AbdC2AGy (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 28 Mar 2017 20:06:54 -0400
+Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 6B081280AD;
+        Wed, 29 Mar 2017 00:06:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1490746012;
+        bh=vYTDAggxZXENSOWZ5mjYOZ2BuPG1VwoRIqHAYWvv/nA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iyUsuG3lHg0jrAIjg8YnjGHjBDsyDX5MR8jgWyJCLsmFP7oyiWPzo5GiXTSSyRkHe
+         VM+m8nO1QbzX9UPvQmct0XWe0w9XWloJYo9Cq4RDdCHd4tRgmO37pkViYMJWnPjd7f
+         bgoNTeuLcHeVb5BgwCZ8dyXV+eDBNsEpXTQrr6PL8EHDIYpLBRhMOgfd4B0whz8Ao9
+         /4YZprqJnmHcS3Su4+jA85ORui/Up4Qxcc4Nl60JLtlbxrFZeIoGRRxXPbzuSFG87M
+         aC9oGs7wDohKGfGuCjXKDLt1tl8Q9zy1Hk9LM078vydv3jWI2J4BB60PFnF/eVbVj3
+         KImyH3rBp4c042U5/WGF67Ne0uXiUbaJ+ZWXFEOku7Ewzu4BA6a1eF1tv9lvxyzy8X
+         RiY29JLmhDpqSfV/x/wg/hwV3LqdgWv/b329elCoWJsxxYjE2qVpzZX19U3hFgR04T
+         RmBsqJWc1Q0DhBfy5h9dulRX3k5nRzBTQcRJ11Mdk9UiNl3INgW
+Date:   Wed, 29 Mar 2017 00:06:48 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2 16/21] Make sha1_array_append take a struct object_id *
+Message-ID: <20170329000648.vb2hdqfizjqjyryr@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+References: <20170326160143.769630-1-sandals@crustytoothpaste.net>
+ <20170326160143.769630-17-sandals@crustytoothpaste.net>
+ <xmqq7f39e2gi.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="agrtclly7u5j74x6"
+Content-Disposition: inline
+In-Reply-To: <xmqq7f39e2gi.fsf@gitster.mtv.corp.google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Mar 20, 2017 at 3:34 PM, Brandon Williams <bmwill@google.com> wrote:
-> That the gist of how I'm hoping to solve the problem.  Hopefully that was
-> clear enough to get some feedback on.
 
-Junio wrote in  "What's cooking in git.git (Mar 2017, #10; Fri, 24)"
-> I saw no particular issues myself.  Do others find this series good
-> (not just "meh--it is harmless" but I want to hear a positive "yes
-> these are good changes")?
+--agrtclly7u5j74x6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So I reviewed them again, and I think they are good to go.
-As a followup we may want to consider this
+On Tue, Mar 28, 2017 at 10:27:41AM -0700, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > Convert the callers to pass struct object_id by changing the function
+> > declaration and definition and applying the following semantic patch:
+> >
+> > @@
+> > expression E1, E2, E3;
+> > @@
+> > - sha1_array_append(E1, E2[E3].hash)
+> > + sha1_array_append(E1, E2 + E3)
+> >
+> > @@
+> > expression E1, E2;
+> > @@
+> > - sha1_array_append(E1, E2.hash)
+> > + sha1_array_append(E1, &E2)
+>=20
+> I noticed something similar in the change to bisect.c while reading
+> the previous step, and I suspect that the above two rules leave
+> somewhat inconsistent and harder-to-read result.  Wouldn't it make
+> the result more readable if the former rule were
+>=20
+>     -sha1_array_append(E1, E2[E3].hash)
+>     +sha1_array_append(E1, &E2[E3])
+>=20
+>=20
+> FWIW, the bit that made me read it twice in the previous step was
+> this change
+>=20
+> -		strbuf_addstr(&joined_hexs, sha1_to_hex(array->sha1[i]));
+> +		strbuf_addstr(&joined_hexs, oid_to_hex(array->oid + i));
+>=20
+> which I would have written &(array->oid[i]) instead.
+>=20
+> After all, the original written by a human said E2[E3].hash (or
+> array->sha1[i]) because to the human's mind, E2 is a series of
+> things that can be indexed with an int E3, and even though=20
+>=20
+>     *(E2 + E3)
+>     E2[E3]
+>     E3[E2]
+>=20
+> all mean the same thing, the human decided that E2[E3] is the most
+> natural way to express this particular reference to an item in the
+> array.  &E2[E3] would keep that intention by the original author
+> better than E2 + E3.
 
-diff --git a/setup.c b/setup.c
-index 56cd68ba93..bdc294091a 100644
---- a/setup.c
-+++ b/setup.c
-@@ -944,6 +944,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
-         prefix = setup_git_directory_gently_1(nongit_ok);
-         env_prefix = getenv(GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
+I'm happy to make that change.  I'm an experienced C programmer, so a
+pointer addition seems very readable and natural to me, but if you think
+it's better or more readable as &E2[E3], I can certainly reroll.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
 
-+        if (prefix && env_prefix)
-+                die("BUG: can't invoke command in sub directory with %s set",
-+                    GIT_TOPLEVEL_PREFIX_ENVIRONMENT);
-+
-         if (env_prefix)
-                 prefix = env_prefix;
---
+--agrtclly7u5j74x6
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks,
-Stefan
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlja+pgACgkQv1NdgR9S
+9ovAwBAAvTKc8IRRdbZA6WlHDnPD1dTNudYViLe5CYkWYmIZygGnLRlJp3/vAhsX
+iBL00SocGVBFux15xL7BNdJXM69xl5doQejZqwFFDGBaEZXWtx5dkE83VMK8BmbK
+r+XCADU1DiQrQJsT2+SyBy84fIP79oGAV2e3+Kopms9XijLzm/CuNHHLQ32z0dw0
+bkf/5Ri8DOSyllBNNaXTnyj2bVlFcnpMjg6NbKlyXrvRB/+BSJqi08QuQv6350t+
+S7G982e/yfmQZrdjsvVOunvwoNhVIrmVTP20ktFeeeYBZpAE7ldFm4yii9c8SEzd
+7uKH+k4XEDvhbFwtDU4iyu7xQboE0shEAiElmBlTCRkPQdHScr6bPwbZRxUsOFTC
+jb3GiyvHz9MW9WhwRtHPMdQtGcB2iBaD9r133EmqnxwKUc9EqoF7AuOjKIN6Q5YH
+YsIwAdJoCokfBVMaftQkezgmC0rQIk9tWkQR1tdKLFpc/kVaOAIudbpxuKAGE4cT
+aHNnQsQUmqEfXwagDcbjJZq3Pn7gvsi0v8W+XiAvf4QFMH8C9n9MTKjG8RPYurwe
+GhO6S0T2NN69wwM5Zh/A5nPP+CT2wjIPAzTvqVZfw5Flk/3oj/E14V3XUAAQOJwv
+wRDHl68vO3MDTpbN4CoofxsFm+PP08bQ+QvgrKFv3rnSnOayx04=
+=XAk8
+-----END PGP SIGNATURE-----
+
+--agrtclly7u5j74x6--
