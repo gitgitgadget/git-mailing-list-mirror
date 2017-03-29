@@ -2,93 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DCDC20966
-	for <e@80x24.org>; Wed, 29 Mar 2017 07:05:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E847020966
+	for <e@80x24.org>; Wed, 29 Mar 2017 07:11:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753800AbdC2HFc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 03:05:32 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:36495 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753391AbdC2HFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 03:05:30 -0400
-Received: by mail-pf0-f176.google.com with SMTP id o126so3374878pfb.3
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 00:05:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0Mi6cvvgTrKqaZy71yh2LMK0OBp9QD/nEOoCoug7lnA=;
-        b=Mh+9xvAbRG5yLvNzRk7Vv9j0orQbckA0S9Sx8jgYbtOJpPr0eC/fF5IqYDk0w0tXcu
-         MhcjJkaM9lDcGaUXUApnJu8RPITFEr9oGDcMQlzV4pq9Hg+Mx0nk1lVIns8T/LdTEcTj
-         sN7HIhWDqzf2scrHGzUD7zYF1EHzYyct3E6qsu48bv9Bg4175brARkhaJbbA6ReKIa5/
-         slvGL9Z6uXPgaZoa9DQ7PRHE5SVRkFR4zjpOyWnN1BROLSR6GCHUM161NtUqUHOietH4
-         GAL87JL9W3PFBilXVWpvrEXwqUP78hzId7xk8nvUUXbVs5y2+eWWfVyCXrUjR3tB022C
-         28uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0Mi6cvvgTrKqaZy71yh2LMK0OBp9QD/nEOoCoug7lnA=;
-        b=MI9TX6p1ifRpnSAyRKeypVPwX8re5T6zBhDYgL6UZWRkEgTbTnwGnaR+G1OzetaUfb
-         cdXnMJbcmy365yE6psGcK5QoBw+ib2me9NKgEwNJaGtqlDBvZnimtakxLoCC24uQp/aE
-         e7MZgsO75oAyjZQHdHge35teYpPrlCe+j1G5dqsyExO3o8SiIYAvs3aJtxYuDyoIQgE7
-         7Eq2AVUoEIHrVmxMAYyuBRNxe8dDdhEREJTbgclb1PXQbTT9y4XC/Li1O1GAw9/8uWiM
-         a0xO04BTFD8P3K95D4PKIb85736GhYnNA1Lq6jANX7SSFJNKCFZ407R3Ra+Zd6ueUA9u
-         hOfQ==
-X-Gm-Message-State: AFeK/H3dch+Ex7iNYBs55G8pK7OMxZw60wE8htgoFhCsXVwnAy2wzgSA98kh525iPriXPQ==
-X-Received: by 10.99.135.193 with SMTP id i184mr33646549pge.120.1490771119588;
-        Wed, 29 Mar 2017 00:05:19 -0700 (PDT)
-Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id f84sm1628162pfa.127.2017.03.29.00.05.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Mar 2017 00:05:18 -0700 (PDT)
-Date:   Wed, 29 Mar 2017 00:05:15 -0700
-From:   David Aguilar <davvid@gmail.com>
-To:     Kirill Katsnelson <kkm@smartaction.com>
-Cc:     git@vger.kernel.org, apenwarr@gmail.com
-Subject: Re: should git-subtree ignore submodules?
-Message-ID: <20170329070515.znaox4q52q5elkxy@gmail.com>
-References: <183ca87e-1bc0-080c-3d42-87c689b9f62e@smartaction.com>
+        id S1753529AbdC2HLA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 03:11:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53429 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753430AbdC2HK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 03:10:59 -0400
+Received: (qmail 20630 invoked by uid 109); 29 Mar 2017 07:10:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 07:10:56 +0000
+Received: (qmail 20917 invoked by uid 111); 29 Mar 2017 07:11:13 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 03:11:13 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Mar 2017 03:10:55 -0400
+Date:   Wed, 29 Mar 2017 03:10:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] Makefile: detect errors in running spatch
+Message-ID: <20170329071055.bp7d2gwqdhspz4aq@sigill.intra.peff.net>
+References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <183ca87e-1bc0-080c-3d42-87c689b9f62e@smartaction.com>
-User-Agent: NeoMutt/20161126 (1.7.1)
+In-Reply-To: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 01, 2016 at 12:41:50PM -0700, Kirill Katsnelson wrote:
-> "git-subtree add" fails to add the subtree into a repository with
-> submodules, reporting that the worktree is not clean, while `git status`
-> says that everything is clean (including submodules). I tracked the problem
-> down to the command "git index HEAD" returning all submodules as having the
-> M status:
-> 
-> $ git diff-index HEAD
-> :160000 160000 d3812c9318c4d0336897fd2d666be908fa1a7953
-> d3812c9318c4d0336897fd2d666be908fa1a7953 M      ext/grpc
-> <snip more submodules>
-> $ git --version
-> git version 2.9.2.windows.1
-> 
-> I worked around the problem in my local copy of git-subtree shell script by
-> adding "--ignore-submodules=all" to the two invocations of `git diff-index`
-> in the ensure_clean() function (direct link
-> <https://github.com/git/git/blob/next/contrib/subtree/git-subtree.sh#L586>).
-> 
-> I am wondering, is this a defect in git-subtree? To my understanding, the
-> command should not care about submodules more than ensuring their worktree
-> is not in the way of new prefix, and that's a separate check. So *even if*
-> the submodule is modified, this should not be a show stopper for
-> "git-subtree add". Or am I missing some subtleties?
+The "make coccicheck" target runs spatch against each source
+file. But it does so in a for loop, so "make" never sees the
+exit code of spatch. Worse, it redirects stderr to a log
+file, so the user has no indication of any failure. And then
+to top it all off, because we touched the patch file's
+mtime, make will refuse to repeat the command because it
+think the target is up-to-date.
 
-That sounds correct to me; subtree should ignore submodules.
+So for example:
+
+  $ make coccicheck SPATCH=does-not-exist
+      SPATCH contrib/coccinelle/free.cocci
+      SPATCH contrib/coccinelle/qsort.cocci
+      SPATCH contrib/coccinelle/xstrdup_or_null.cocci
+      SPATCH contrib/coccinelle/swap.cocci
+      SPATCH contrib/coccinelle/strbuf.cocci
+      SPATCH contrib/coccinelle/object_id.cocci
+      SPATCH contrib/coccinelle/array.cocci
+  $ make coccicheck SPATCH=does-not-exist
+  make: Nothing to be done for 'coccicheck'.
+
+With this patch, you get:
+
+  $ make coccicheck SPATCH=does-not-exist
+       SPATCH contrib/coccinelle/free.cocci
+  /bin/sh: 4: does-not-exist: not found
+  Makefile:2338: recipe for target 'contrib/coccinelle/free.cocci.patch' failed
+  make: *** [contrib/coccinelle/free.cocci.patch] Error 1
+
+It also dumps the log on failure, so any errors from spatch
+itself (like syntax errors in our .cocci files) will be seen
+by the user.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is a verbatim repost of:
+
+  http://public-inbox.org/git/20170310083117.cbflqx7zbe4s7cqv@sigill.intra.peff.net/
+
+I think this is a strict improvement over the status quo. The
+conversation in that thread turned to possible refactorings, but since
+those didn't materialize, I think we should apply this in the meantime.
+
+ Makefile | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9f8b35ad4..9b36068ac 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2348,9 +2348,17 @@ check: common-cmds.h
+ C_SOURCES = $(patsubst %.o,%.c,$(C_OBJ))
+ %.cocci.patch: %.cocci $(C_SOURCES)
+ 	@echo '    ' SPATCH $<; \
++	ret=0; \
+ 	for f in $(C_SOURCES); do \
+-		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS); \
+-	done >$@ 2>$@.log; \
++		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
++			{ ret=$$?; break; }; \
++	done >$@+ 2>$@.log; \
++	if test $$ret != 0; \
++	then \
++		cat $@.log; \
++		exit 1; \
++	fi; \
++	mv $@+ $@; \
+ 	if test -s $@; \
+ 	then \
+ 		echo '    ' SPATCH result: $@; \
 -- 
-David
+2.12.2.920.gc31091ce4
