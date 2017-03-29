@@ -2,80 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A29BB20958
-	for <e@80x24.org>; Wed, 29 Mar 2017 21:37:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1079820969
+	for <e@80x24.org>; Wed, 29 Mar 2017 21:38:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932966AbdC2Vgo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 17:36:44 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63413 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933008AbdC2Vgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 17:36:31 -0400
-Received: from [192.168.178.43] ([88.71.239.83]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Me8di-1cUg2Z1a7a-00Psak; Wed, 29
- Mar 2017 23:36:09 +0200
-Subject: Re: [PATCH] Correct compile errors when DEBUG_BISECT=1 after
- supporting other hash algorithms
-To:     Alex Hoffman <spec@gal.ro>, git <git@vger.kernel.org>
-References: <CAMX8fZU-HeKzd8VYh8R=U8f8V-px+4V==M3CJSS677K0ErwPtA@mail.gmail.com>
- <CAGZ79kY1g-4c+GXZy3p-q=MsBY94esxsfs2=OPuhOH_o5oGc_Q@mail.gmail.com>
- <20170320221429.qefqowtwe2ptvgdg@genre.crustytoothpaste.net>
- <CAMX8fZXqTfKQXxV_pZEieN=1ap8ocVnnwZUvpGuw5rWo5_Yhfg@mail.gmail.com>
- <CAMX8fZXS4k5chezESM4pcaSfhG6WZ4xKxsWB0fpm4h-PQGjXwQ@mail.gmail.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>
-Message-ID: <52ac188d-1112-758e-5d02-470afc6ffa8d@gmx.net>
-Date:   Wed, 29 Mar 2017 23:36:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1753916AbdC2VfF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 17:35:05 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55924 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S932658AbdC2Vd0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 17:33:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFA7783D80;
+        Wed, 29 Mar 2017 17:33:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aM7iDx3uaBoAI9T8tfSCQbcNXsw=; b=kxPoS0
+        Wk0vgCwTr/7Ek6dyY4ql7QStTgEnOXJWjmdKWjvfV0ll4gvcL3SZy91wRyBzjvfn
+        GV3DJQHhsOyYAi0wfS9RqyJBjTJoIalSIryBYPpmcsRucVjgjGr3+JGPqHxSMXxr
+        XSnUUXCPKlJAndWP51WabUPmRv123qRQ556jw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=dsAELNbsJwQbUy1PzxZ4Y+SdrpT9relm
+        aGl2RIrpFhBDqO6MTlgD13txUaYfycwWS9cxvMDbvTTAZY2coIimuLlHd0fQqaNy
+        Gx0YZXOHIzQ33DRrPu6SrLoywsQFA2f+b/Iv5V8bgPDus0ijHqCFzU4hBSexjzSa
+        /6d2AoiyQOA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E775683D7F;
+        Wed, 29 Mar 2017 17:33:19 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4567C83D7E;
+        Wed, 29 Mar 2017 17:33:19 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] unpack-trees.c: align submodule error message to the other error messages
+References: <20170329183743.27506-1-sbeller@google.com>
+        <20170329183743.27506-2-sbeller@google.com>
+        <20170329184833.GX31294@aiede.mtv.corp.google.com>
+Date:   Wed, 29 Mar 2017 14:33:18 -0700
+In-Reply-To: <20170329184833.GX31294@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 29 Mar 2017 11:48:33 -0700")
+Message-ID: <xmqqy3vn93a9.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAMX8fZXS4k5chezESM4pcaSfhG6WZ4xKxsWB0fpm4h-PQGjXwQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:rRYqUEVWydT9BaCm0OnPOcK2WgGhpiIh2b0UmbBbALoAYQd30ps
- 52pA5GQMbcetomVLmEEeMI0Ihtp+grcP9Lwg98KqPq3wfUcSGYDZfCNp6nbi38TDUm4btaq
- WXfRlyDRzYGzRqRTjy3ylB6QEciffe5gSq/AzB+2ZzgsVsPUSOgF8KayaGC0D3w/imOxW2z
- 0szuWhgrN0dlfrVHN2wNA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:luW/khp0RYc=:sqaXlPWle8YZdEkzVeBPs9
- ozeI/JaWh9nUdl5+fOCLkvginXhcE69wfW4aJctV/y2+othuC4j8Xb1QNG8nGEKxIut5B3EFi
- PPPR4KUZmkpWKm/e7tX16ZhNVI+5ewtqNGFBFmRTMV2xyy60nXypfvreag8bT7UBXQWCfiP7h
- 9M7ntQ+CTEQmdhSGKYXOiOIFOKLTIa0S0s3zDYs1b50JPRTRToJm79sz4IevZvy+8lXEEDUSO
- rcIJhHXv5zveSSnnFQQu3b01FY3Wf1A8+Ro+BnwuzZgE2o6iAOW/q6R2mk2GjEinF0mA3HkOT
- OTDsu6S2M2xnf1ep35AvuCfveb8l8clskF6U8vQoBCOJpTD1Kjlw+LqR4ObIwv5THyijI8M3l
- uL1R6rnxN51hihbf+3zxbZntr8fseAW7XGB0NCzZ5OTi5Eu6s0plZFflUcV9wQHAuOKQj6WOj
- f4AaJgPPof77UcaXNjligCXaOve1ol3YPDZZlAcp7WIYnSB9uhjWdEO06uNxCNFy4A9BsRcnL
- Gj+y+1VVdw+8LNJykWbN7WTebNehJfCnKEoSyyVSFMK4XZo7zJxOLlA65Vt7k2RFYv5KUvOFz
- pq9QsntkFlfEM3QkhYlRKpkgRtDbGhicd2qExah5b5fAYCKoHh5KtBJSDi9k5uOairKHsOQ3G
- kR5wL25fXpCA8wrlvLqrQCxWhd/xsbFMVLHADVMZWZDVEDIJiNCQG68XqqFOaOnVZuH5FKiRL
- Roc2euc9587VbigwpeBWXhDqgIwnk8VRvDl62ISqQWxGwZ4L8KtRyKhgrB+Ps/BY9v4htsqdB
- THlDtIP
+Content-Type: text/plain
+X-Pobox-Relay-ID: 53ACF6BC-14C7-11E7-A01A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On 03/29/2017 10:02 PM, Alex Hoffman wrote:
-> Any news about this patch?
+> Stefan Beller wrote:
+>
+>> As the place holder in the error message is for multiple submodules,
+>> we don't want to encapsulate the string place holder in single quotes.
+>
+> Makes sense.
+>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  unpack-trees.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/unpack-trees.c b/unpack-trees.c
+>> index 8333da2cc9..9f386cc174 100644
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -167,7 +167,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+>>  	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
+>>  		_("The following working tree files would be removed by sparse checkout update:\n%s");
+>>  	msgs[ERROR_WOULD_LOSE_SUBMODULE] =
+>> -		_("Submodule '%s' cannot checkout new HEAD");
+>> +		_("The following submodules cannot checkout a new HEAD:\n%s");
+>
+> Nitpicking about wording: unless the user has adopted a strongly
+> object-oriented point of view, it is Git that cannot checkout a new
+> HEAD, not the submodule.
+>
+> How about:
+>
+> 		_("Cannot update submodule:\n%s")
+>
+> That's vague, but if I understand correctly the way this error gets
+> used is equally vague --- i.e., a clearer message would involve
+> finer-grained error codes.
 
-Haha nice, your initial patch is the same as mine (but mine was part of
-a bigger patch series and the v3 is probably going to have one less commit):
-https://public-inbox.org/git/1456452282-10325-4-git-send-email-s-beyer@gmx.net/
+Makes sense to me.
 
->>                 for (pp = commit->parents; pp; pp = pp->next)
->>                         fprintf(stderr, " %.*s", 8,
->> -                               sha1_to_hex(pp->item->object.sha1));
->> +                                       oid_to_hex(&pp->item->object.oid));
-
-I guess your change in continued indentation is intentional, but is it
-just my mail client or do you f*ck up tabs? (I haven't tried to apply
-the patch but it looks like it is not possible due to broken tabs.)
-
-Stephan
+Thanks for helping.
