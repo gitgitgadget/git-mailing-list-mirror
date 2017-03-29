@@ -7,94 +7,117 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E9CD20958
-	for <e@80x24.org>; Wed, 29 Mar 2017 15:53:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6578A20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 15:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932153AbdC2Pxp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 11:53:45 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:33133 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752609AbdC2Pxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 11:53:44 -0400
-Received: by mail-qk0-f193.google.com with SMTP id p22so2587895qka.0
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 08:53:43 -0700 (PDT)
+        id S932193AbdC2PyJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 11:54:09 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:34818 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932160AbdC2PyI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 11:54:08 -0400
+Received: by mail-qt0-f196.google.com with SMTP id r5so2537241qtb.2
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 08:54:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=Cj1TpgH3SurDSxv9g8z9eXoWP5mH4LB24RVVJwJ8fFY=;
-        b=I0ihA/xWWFesd5TRmKQBzu/sId1J14T9nhAZoH2S/s6V3O8bgGIu8zxYjG4g5ZLH2l
-         Y0+a/T9iswce48Sjk0hMVtPc8Y9X9jEE54bXwp8gp1IA5ifbB3vXU/HzV0I+rncgQXcr
-         NbGwIcOHDgTA4LFHs+q3pJQMDwuNEgDYozrk3ugzTIsYks5Ye7tNIn0daY8B4/v6H7/y
-         04W2gW2Lg4LALL3Qm8K+Q7iC/xM35d6Ekhfy3IqtuqX4wjYWmpGO5aF9Ty3kNnjSDS9T
-         8+bij0UBLfi9ZLukKMJxieOTRf6nbkXg1kBQFJ9Wv3d22LzEvwaNSF2hN1bub9Gei77a
-         8J/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=oPcp6BELrG51wL6HA93F0cE9gryCA90lecHXEqpyDzU=;
+        b=CCoOFRRHupSGenenW5v/61WWPoWblBFBYH5SHHIlUfipoUdzrTOSMjHtoU1TvQYKt/
+         Zn5VmPfM0FD/YM7bVOuhRROq/HNW89vGUpU70FptDoAsmi+TVbjD9UDaoydUjr0F2wm/
+         OGCevIMOpe0i5bgalwlcUeapstXRcQ/rHXbrdBM1Wiks0Xgj4DeGSffNlOAI6FWFJbf2
+         yabR2ftSHD+/FPT6Y0NCVCUNFvDLOEQSlqgTlXHoqzAY7+//y52K4QX2dusDhll9K5dX
+         9GlRSieaJFdCx6Q2R0kogvfMsQLXIgWgvW8jIvE6WfCwmc4GIG4wHhGy8iSvB5jSMsOt
+         k/BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Cj1TpgH3SurDSxv9g8z9eXoWP5mH4LB24RVVJwJ8fFY=;
-        b=KJc1yNKF0lkAzUzJgxDxazJD/3Hfc2vfbOl3sLKw/ZwlL1wuhEAwAyNYqhlZcGIpOD
-         yTBgHHMiHgV3s4fg6nHEZaEF4F9xkK2Nqvi/v49gk4Hag2IucsC5SIFwpefj2hdMF2Rp
-         FrEAzGIPdr031HfLs+w34AukojLD/fJasQLR4klTrOspnmzlYByOPW1VbGCQ8eXVgQrY
-         xOx3eC6YjskYPcIoyPX1v04Bbkx7Haelj9m7F2ummsxAJYCvtvpMa8/zrZOqK6MWyRsm
-         h48vBk5Aehc+J+inEsAKXq5esVXGrPyxufbJEtrz2Pf9m6QnujHeqUwZhuZ1q5BWSvmD
-         B7VQ==
-X-Gm-Message-State: AFeK/H2qimR0reVpx+dztwTYDhrlWmWfeTf75aeQicpJAyMDMnsbduq1cwjG80wduei0rw==
-X-Received: by 10.55.27.137 with SMTP id m9mr1153106qkh.224.1490802822669;
-        Wed, 29 Mar 2017 08:53:42 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=oPcp6BELrG51wL6HA93F0cE9gryCA90lecHXEqpyDzU=;
+        b=Ehz6q6ddJoDKgRY5qVJS54e6uCZ07IQmc1a9THekEfXvBKHj8VyzHAnmvMcACwOFsd
+         TJjh++5PlHPvk7SuuCtxLg/SQNI2fKKAdxPpyG/ZL9tfT9KcdfoLOCMrEmWJy2o70HSp
+         xIzVooaiwGVhppk/876uz+A9KRuvfrtJRxGesD9cCD60H+IMTqw6ChO3fU+ip5DatqNr
+         mWH8HUxB7VjIGNl0ps0jjXC7R7MDwqlE/YFUpLtxuJLz3szAdTgrVdaXVpBOSQoJ84Cl
+         QdIqn7duTsDxD35jI00Su2D+bu7SYwU+ygw38zD6qQi3h61xagz0ZDbpQRuShHbMcWCi
+         x1YQ==
+X-Gm-Message-State: AFeK/H1pBn+tU5WQ57z3/FifdrOMYxfRUDtLEnhUxM8Xk9iQIHZSdmfipnz4ko5yz6DJOw==
+X-Received: by 10.200.43.17 with SMTP id 17mr1199483qtu.199.1490802847210;
+        Wed, 29 Mar 2017 08:54:07 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id o92sm5148566qkh.48.2017.03.29.08.53.41
+        by smtp.gmail.com with ESMTPSA id o92sm5148566qkh.48.2017.03.29.08.54.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 29 Mar 2017 08:53:42 -0700 (PDT)
+        Wed, 29 Mar 2017 08:54:06 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v3 0/8] refactor the filter process code into a reusable module
-Date:   Wed, 29 Mar 2017 11:53:22 -0400
-Message-Id: <20170329155330.12860-1-benpeart@microsoft.com>
+Subject: [PATCH v3 2/8] convert: Update convert to use new packet_writel() function
+Date:   Wed, 29 Mar 2017 11:53:24 -0400
+Message-Id: <20170329155330.12860-3-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.1.gvfs.1.18.ge47db72
+In-Reply-To: <20170329155330.12860-1-benpeart@microsoft.com>
+References: <20170329155330.12860-1-benpeart@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Refactor the filter.<driver>.process code into a separate sub-process
-module that can be used to reduce the cost of starting up a sub-process
-for multiple commands.  It does this by keeping the external process
-running and processing all commands by communicating over standard input
-and standard output using the packet format (pkt-line) based protocol.
-Full documentation is in Documentation/technical/api-sub-process.txt.
+convert.c had it's own packet_write_list() function that can now be
+replaced with the new packet_writel() function from pkt-line.
 
-This code is refactored from:
+Signed-off-by: Ben Peart <benpeart@microsoft.com>
+---
+ convert.c | 23 ++---------------------
+ 1 file changed, 2 insertions(+), 21 deletions(-)
 
-	Commit edcc85814c ("convert: add filter.<driver>.process option", 2016-10-16)
-	keeps the external process running and processes all commands
-
-
-Ben Peart (8):
-  pkt-line: add packet_writel() and packet_read_line_gently()
-  convert: Update convert to use new packet_writel() function
-  convert: Split start_multi_file_filter into two separate functions
-  convert: Separate generic structures and variables from the filter
-    specific ones
-  convert: Update generic functions to only use generic data structures
-  convert: rename reusable sub-process functions
-  sub-process: move sub-process functions into separate files
-  convert: Update subprocess_read_status to not die on EOF
-
- Documentation/technical/api-sub-process.txt |  54 ++++++++++
- Makefile                                    |   1 +
- convert.c                                   | 159 +++++-----------------------
- pkt-line.c                                  |  31 ++++++
- pkt-line.h                                  |  11 ++
- sub-process.c                               | 120 +++++++++++++++++++++
- sub-process.h                               |  46 ++++++++
- 7 files changed, 292 insertions(+), 130 deletions(-)
- create mode 100644 Documentation/technical/api-sub-process.txt
- create mode 100644 sub-process.c
- create mode 100644 sub-process.h
-
+diff --git a/convert.c b/convert.c
+index 8d652bf27c..793c29ebfd 100644
+--- a/convert.c
++++ b/convert.c
+@@ -521,25 +521,6 @@ static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap,
+ 	return hashmap_get(hashmap, &key, NULL);
+ }
+ 
+-static int packet_write_list(int fd, const char *line, ...)
+-{
+-	va_list args;
+-	int err;
+-	va_start(args, line);
+-	for (;;) {
+-		if (!line)
+-			break;
+-		if (strlen(line) > LARGE_PACKET_DATA_MAX)
+-			return -1;
+-		err = packet_write_fmt_gently(fd, "%s\n", line);
+-		if (err)
+-			return err;
+-		line = va_arg(args, const char*);
+-	}
+-	va_end(args);
+-	return packet_flush_gently(fd);
+-}
+-
+ static void read_multi_file_filter_status(int fd, struct strbuf *status)
+ {
+ 	struct strbuf **pair;
+@@ -616,7 +597,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+-	err = packet_write_list(process->in, "git-filter-client", "version=2", NULL);
++	err = packet_writel(process->in, "git-filter-client", "version=2", NULL);
+ 	if (err)
+ 		goto done;
+ 
+@@ -632,7 +613,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	if (err)
+ 		goto done;
+ 
+-	err = packet_write_list(process->in, "capability=clean", "capability=smudge", NULL);
++	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
+ 
+ 	for (;;) {
+ 		cap_buf = packet_read_line(process->out, NULL);
 -- 
 2.12.1.gvfs.1.18.ge47db72
 
