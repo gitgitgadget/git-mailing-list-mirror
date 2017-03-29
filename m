@@ -2,112 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A57421FAFB
-	for <e@80x24.org>; Wed, 29 Mar 2017 03:41:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 919591FAFB
+	for <e@80x24.org>; Wed, 29 Mar 2017 04:32:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751977AbdC2DlK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 23:41:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53398 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751318AbdC2DlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 23:41:09 -0400
-Received: (qmail 8022 invoked by uid 109); 29 Mar 2017 03:41:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 03:41:08 +0000
-Received: (qmail 19443 invoked by uid 111); 29 Mar 2017 03:41:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 23:41:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 23:41:05 -0400
-Date:   Tue, 28 Mar 2017 23:41:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/18] snprintf cleanups
-Message-ID: <20170329034105.bfgh4tutgrmjp2lc@sigill.intra.peff.net>
-References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
- <xmqq60itc9pv.fsf@gitster.mtv.corp.google.com>
+        id S1751717AbdC2Ec3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 00:32:29 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:50140 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750954AbdC2Ec2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Mar 2017 00:32:28 -0400
+X-AuditID: 1207440d-041ff70000003721-0b-58db38d79a3f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id A5.E1.14113.7D83BD85; Wed, 29 Mar 2017 00:32:24 -0400 (EDT)
+Received: from [192.168.69.190] (p4FEDF5D2.dip0.t-ipconnect.de [79.237.245.210])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2T4WKDw001589
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Wed, 29 Mar 2017 00:32:21 -0400
+Subject: Re: [PATCH v4 1/5] dir_iterator: add helpers to dir_iterator_advance
+To:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org
+References: <1490747533-89143-1-git-send-email-bnmvco@gmail.com>
+ <1490747533-89143-2-git-send-email-bnmvco@gmail.com>
+Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <cdcbf8ce-6641-8a96-6805-b9ff6fa0f3e1@alum.mit.edu>
+Date:   Wed, 29 Mar 2017 06:32:19 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq60itc9pv.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <1490747533-89143-2-git-send-email-bnmvco@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCIsWRmVeSWpSXmKPExsUixO6iqHvD4naEwce9qhaPP71ls+i60s1k
+        0dB7hdmie8pbRovNm9tZHFg9ds66y+6xYFOpx8VLyh6fN8kFsERx2aSk5mSWpRbp2yVwZZxp
+        fsBW8Imz4vb/OYwNjNM4uhg5OSQETCQeHr7G3MXIxSEksINJ4mb7bUYI5wKTxPWzmxlBqoQF
+        fCWen37K0sXIwSEiYC1xfY0XSFhIoFzi5KYudhCbWcBG4nhTL1g5m4CuxKKeZiaQcl4Be4nz
+        X7RBwiwCqhLfp+9kBrFFBUIk5ix8AFbOKyAocXLmE7DpnAKOEu8PlEBM1JPYcf0XK4QtL7H9
+        7RzmCYz8s5B0zEJSNgtJ2QJG5lWMcok5pbm6uYmZOcWpybrFyYl5ealFukZ6uZkleqkppZsY
+        IYHLu4Px/zqZQ4wCHIxKPLw78m5FCLEmlhVX5h5ilORgUhLlPWF4O0KILyk/pTIjsTgjvqg0
+        J7X4EKMEB7OSCK++IlCONyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUgtQgmK8PBoSTB
+        m28O1ChYlJqeWpGWmVOCkGbi4AQZzgM0/D5IDW9xQWJucWY6RP4Uo6IU0GiQhABIIqM0D64X
+        llheMYoDvSLMqwBSxQNMSnDdr4AGMwENFre5BTK4JBEhJdXAGF/fdPRM148XWVXVu99tqEyM
+        ubT0YS7fDpZnTwNOcQm/4Dks0+Qwa2arhnXfbt/c/zu+LnmZdD/gde1V7xS3Jw6BE3bI77ye
+        fHj57sVvpQ7U8CpfnjAr/XrHbd6Ag+8OCEj7FMpuubwt+u3yhduqM1U7/hYlm6/MaXg947VA
+        0Dfuhqi+dZZx+5VYijMSDbWYi4oTAQtFpP0HAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 28, 2017 at 03:33:48PM -0700, Junio C Hamano wrote:
+On 03/29/2017 02:32 AM, Daniel Ferreira wrote:
+> Create inline helpers to dir_iterator_advance(). Make
+> dir_iterator_advance()'s code more legible and allow some behavior to
+> be reusable.
 
-> Jeff King <peff@peff.net> writes:
+Thanks for breaking up the patches. That makes them a lot easier to review.
+
+> Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+> ---
+>  dir-iterator.c | 65 +++++++++++++++++++++++++++++++++++++---------------------
+>  1 file changed, 42 insertions(+), 23 deletions(-)
 > 
-> > It's a lot of patches, but hopefully they're all pretty straightforward
-> > to read.
+> diff --git a/dir-iterator.c b/dir-iterator.c
+> index 34182a9..853c040 100644
+> --- a/dir-iterator.c
+> +++ b/dir-iterator.c
+> @@ -50,6 +50,43 @@ struct dir_iterator_int {
+>  	struct dir_iterator_level *levels;
+>  };
 > 
-> Yes, quite a lot of changes.  I didn't see anything questionable in
-> there.
-> 
-> As to the "patch-id" thing, I find the alternate one slightly easier
-> to read.  Also, exactly because this is not a performance critical
-> codepath, it may be better if patch_id_add_string() filtered out
-> whitespaces; that would allow the source to express things in more
-> natural way, e.g.
-> 
-> 		patch_id_addf(&ctx, "new file mode");
-> 		patch_id_addf(&ctx, "%06o", p->two->mode);
-> 		patch_id_addf(&ctx, "--- /dev/null");
-> 		patch_id_addf(&ctx, "+++ b/%.*s", len2, p->two->path);
-> 
-> Or I may be going overboard by bringing "addf" into the mix X-<.
+> +static inline void push_dir_level(struct dir_iterator_int *iter, struct dir_iterator_level *level)
+> +{
+> +	level->dir_state = DIR_STATE_RECURSE;
+> +	ALLOC_GROW(iter->levels, iter->levels_nr + 1,
+> +		   iter->levels_alloc);
+> +	level = &iter->levels[iter->levels_nr++];
+> +	level->initialized = 0;
+> +}
+> +
+> +static inline int pop_dir_level(struct dir_iterator_int *iter, struct dir_iterator_level *level)
+> +{
+> +	return --iter->levels_nr;
+> +}
 
-I think there are two things going on in your example.
+`pop_dir_level()` doesn't use its `level` argument; it can be removed.
 
-One is that obviously patch_id_addf() removes the spaces from the
-result. But we could do that now by keeping the big strbuf_addf(), and
-then just walking the result and feeding non-spaces.
+> [...]
 
-The second is that your addf means we are back to formatting everything
-into a buffer again. And it has to be dynamic to handle the final line
-there, because "len2" isn't bounded. At which point we may as well go
-back to sticking it all in one big strbuf (your example also breaks it
-down line by line, but we could do that with separte strbuf_addf calls,
-too).
+Michael
 
-Or you have to reimplement the printf format-parsing yourself, and write
-into the sha1 instead of into the buffers. But that's probably insane.
-
-I think the "no extra buffer with whitespace" combo is more like:
-
-  void patch_id_add_buf(git_SHA1_CTX *ctx, const char *buf, size_t len)
-  {
-	for (; len > 0; buf++, len--) {
-		if (!isspace(*buf))
-			git_SHA1_Update(ctx, buf, 1);
-	}
-  }
-
-  void patch_id_add_str(git_SHA1_CTX *ctx, const char *str)
-  {
-	patch_id_add_buf(ctx, strlen(str));
-  }
-
-  void patch_id_add_mode(git_SHA1_CTX *ctx, unsigned mode)
-  {
-	char buf[16]; /* big enough... */
-	int len = xsnprintf(buf, "%06o", mode);
-	patch_id_add_buf(ctx, buf, len);
-  }
-
-  patch_id_add_str(&ctx, "new file mode");
-  patch_id_add_mode(&ctx, p->two->mode);
-  patch_id_add_str(&ctx, "--- /dev/null");
-  patch_id_add_str(&ctx, "+++ b/");
-  patch_id_add_buf(&ctx, p->two->path, len2);
-
-I dunno. I wondered if feeding single bytes to the sha1 update might
-actually be noticeably slower, because I would assume that internally it
-generally copies data in larger chunks. I didn't measure it, though.
-
--Peff
