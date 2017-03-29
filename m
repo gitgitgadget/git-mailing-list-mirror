@@ -2,112 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CA2020958
-	for <e@80x24.org>; Wed, 29 Mar 2017 21:32:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A29BB20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 21:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932861AbdC2VbU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 17:31:20 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:58095 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752050AbdC2Va3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 17:30:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D440783D0E;
-        Wed, 29 Mar 2017 17:30:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lz1GL5Sdtd9IDwHvI39duaLcOK4=; b=a2UOwm
-        3JNruVibQy9Flu89a3JTV+gTbPlIT+ZLxulW+zrcHDeUUP7DVf9LO6qacaR+Csv6
-        WjJSYUprs0DaBTnBHskjK4XAqeZ+tBK/0fOMSt4yJXhTI+xG34gJJz3K+6qNdw6o
-        0oJ6aR05UWhNz44tH+qTqee2V1zAEIRJxQOIA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xsprdzSRaN07iGuVOK/LIXnD2/oFyl0X
-        gv2vtCX5360EVMo8dA5g3ZBLBK0kaD7t3VBXjRFDsvyrjxHdr6Aa/4RwnKxu44Nq
-        jeHkJ0zzPhhuHAWj+YI5cmr0/5JJF7TByuZiO5wKLp0fG0P9pWdOivEY6Yl619Z8
-        qP36vqQiljk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD57383D0D;
-        Wed, 29 Mar 2017 17:30:27 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 405D883D0A;
-        Wed, 29 Mar 2017 17:30:27 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] entry.c: submodule recursing: respect force flag correctly
-References: <20170329183743.27506-1-sbeller@google.com>
-        <20170329184519.GW31294@aiede.mtv.corp.google.com>
-Date:   Wed, 29 Mar 2017 14:30:11 -0700
-In-Reply-To: <20170329184519.GW31294@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Wed, 29 Mar 2017 11:45:19 -0700")
-Message-ID: <xmqq37dvahzw.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S932966AbdC2Vgo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 17:36:44 -0400
+Received: from mout.gmx.net ([212.227.15.19]:63413 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933008AbdC2Vgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 17:36:31 -0400
+Received: from [192.168.178.43] ([88.71.239.83]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Me8di-1cUg2Z1a7a-00Psak; Wed, 29
+ Mar 2017 23:36:09 +0200
+Subject: Re: [PATCH] Correct compile errors when DEBUG_BISECT=1 after
+ supporting other hash algorithms
+To:     Alex Hoffman <spec@gal.ro>, git <git@vger.kernel.org>
+References: <CAMX8fZU-HeKzd8VYh8R=U8f8V-px+4V==M3CJSS677K0ErwPtA@mail.gmail.com>
+ <CAGZ79kY1g-4c+GXZy3p-q=MsBY94esxsfs2=OPuhOH_o5oGc_Q@mail.gmail.com>
+ <20170320221429.qefqowtwe2ptvgdg@genre.crustytoothpaste.net>
+ <CAMX8fZXqTfKQXxV_pZEieN=1ap8ocVnnwZUvpGuw5rWo5_Yhfg@mail.gmail.com>
+ <CAMX8fZXS4k5chezESM4pcaSfhG6WZ4xKxsWB0fpm4h-PQGjXwQ@mail.gmail.com>
+From:   Stephan Beyer <s-beyer@gmx.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Stefan Beller <sbeller@google.com>
+Message-ID: <52ac188d-1112-758e-5d02-470afc6ffa8d@gmx.net>
+Date:   Wed, 29 Mar 2017 23:36:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ED246902-14C6-11E7-A111-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <CAMX8fZXS4k5chezESM4pcaSfhG6WZ4xKxsWB0fpm4h-PQGjXwQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:rRYqUEVWydT9BaCm0OnPOcK2WgGhpiIh2b0UmbBbALoAYQd30ps
+ 52pA5GQMbcetomVLmEEeMI0Ihtp+grcP9Lwg98KqPq3wfUcSGYDZfCNp6nbi38TDUm4btaq
+ WXfRlyDRzYGzRqRTjy3ylB6QEciffe5gSq/AzB+2ZzgsVsPUSOgF8KayaGC0D3w/imOxW2z
+ 0szuWhgrN0dlfrVHN2wNA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:luW/khp0RYc=:sqaXlPWle8YZdEkzVeBPs9
+ ozeI/JaWh9nUdl5+fOCLkvginXhcE69wfW4aJctV/y2+othuC4j8Xb1QNG8nGEKxIut5B3EFi
+ PPPR4KUZmkpWKm/e7tX16ZhNVI+5ewtqNGFBFmRTMV2xyy60nXypfvreag8bT7UBXQWCfiP7h
+ 9M7ntQ+CTEQmdhSGKYXOiOIFOKLTIa0S0s3zDYs1b50JPRTRToJm79sz4IevZvy+8lXEEDUSO
+ rcIJhHXv5zveSSnnFQQu3b01FY3Wf1A8+Ro+BnwuzZgE2o6iAOW/q6R2mk2GjEinF0mA3HkOT
+ OTDsu6S2M2xnf1ep35AvuCfveb8l8clskF6U8vQoBCOJpTD1Kjlw+LqR4ObIwv5THyijI8M3l
+ uL1R6rnxN51hihbf+3zxbZntr8fseAW7XGB0NCzZ5OTi5Eu6s0plZFflUcV9wQHAuOKQj6WOj
+ f4AaJgPPof77UcaXNjligCXaOve1ol3YPDZZlAcp7WIYnSB9uhjWdEO06uNxCNFy4A9BsRcnL
+ Gj+y+1VVdw+8LNJykWbN7WTebNehJfCnKEoSyyVSFMK4XZo7zJxOLlA65Vt7k2RFYv5KUvOFz
+ pq9QsntkFlfEM3QkhYlRKpkgRtDbGhicd2qExah5b5fAYCKoHh5KtBJSDi9k5uOairKHsOQ3G
+ kR5wL25fXpCA8wrlvLqrQCxWhd/xsbFMVLHADVMZWZDVEDIJiNCQG68XqqFOaOnVZuH5FKiRL
+ Roc2euc9587VbigwpeBWXhDqgIwnk8VRvDl62ISqQWxGwZ4L8KtRyKhgrB+Ps/BY9v4htsqdB
+ THlDtIP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> Stefan Beller wrote:
->
->> In case of a non-forced worktree update, the submodule movement is tested
->> in a dry run first, such that it doesn't matter if the actual update is
->> done via the force flag. However for correctness, we want to give the
->> flag is specified by the user.
->
-> "for correctness" means "to avoid races"?
+On 03/29/2017 10:02 PM, Alex Hoffman wrote:
+> Any news about this patch?
 
-Sorry, but neither explanation makes much sense to me.
+Haha nice, your initial patch is the same as mine (but mine was part of
+a bigger patch series and the v3 is probably going to have one less commit):
+https://public-inbox.org/git/1456452282-10325-4-git-send-email-s-beyer@gmx.net/
 
-The codepath the patch touches says "if the submodule is not
-populated, then checkout the submodule by switching from NULL
-(nothing checked out) to the commit bound to the index of the
-superproject; otherwise, checkout the submodule by switching from
-HEAD (what is currently checked out) to the commit in the index".
+>>                 for (pp = commit->parents; pp; pp = pp->next)
+>>                         fprintf(stderr, " %.*s", 8,
+>> -                               sha1_to_hex(pp->item->object.sha1));
+>> +                                       oid_to_hex(&pp->item->object.oid));
 
-Where does that "tested in a dry run first" come into play?
-Whatever code calls checkout_entry(), does it call it twice, first
-with a "--dry-run" option and then without one?  How does this
-codepath respond differently to these two invocations, and how does
-this change affect the way these two invocations behave?
+I guess your change in continued indentation is intentional, but is it
+just my mail client or do you f*ck up tabs? (I haven't tried to apply
+the patch but it looks like it is not possible due to broken tabs.)
 
-
-
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  entry.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/entry.c b/entry.c
->> index d2b512da90..645121f828 100644
->> --- a/entry.c
->> +++ b/entry.c
->> @@ -287,7 +287,7 @@ int checkout_entry(struct cache_entry *ce,
->>  			} else
->>  				return submodule_move_head(ce->name,
->>  					"HEAD", oid_to_hex(&ce->oid),
->> -					SUBMODULE_MOVE_HEAD_FORCE);
->> +					state->force ? SUBMODULE_MOVE_HEAD_FORCE : 0);
->
-> Looks like a good change.
->
-> This moves past the 80-column margin.  I wish there were a tool like
-> gofmt or clang-format that would take care of formatting for us.
->
-> This isn't the only place SUBMODULE_MOVE_HEAD_FORCE is used in the
-> file.  Do they need the same treatment?
->
-> Thanks,
-> Jonathan
+Stephan
