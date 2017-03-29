@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8642220958
-	for <e@80x24.org>; Wed, 29 Mar 2017 15:51:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E9CD20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 15:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752942AbdC2PvG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 11:51:06 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:36346 "EHLO
+        id S932153AbdC2Pxp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 11:53:45 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:33133 "EHLO
         mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752805AbdC2PvD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 11:51:03 -0400
-Received: by mail-qk0-f193.google.com with SMTP id r142so2576179qke.3
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 08:51:02 -0700 (PDT)
+        with ESMTP id S1752609AbdC2Pxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 11:53:44 -0400
+Received: by mail-qk0-f193.google.com with SMTP id p22so2587895qka.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 08:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id;
         bh=Cj1TpgH3SurDSxv9g8z9eXoWP5mH4LB24RVVJwJ8fFY=;
-        b=eV3V9wqZJl1HepHInjDNT11XuZuK154JYr6oVmjP7R08Nes6ANKSjVpl+50T+xGfYL
-         1Cak1CyQDyVhNN12ADTMcykaLqHj85KwLCxwmncI+pXjfEX4arBuaTm0qKUZTHL9c7h5
-         7rHaMylQPzgtJtyxw0zNAih+m85vsYThOooueVz2sYsRP293BYUa/5C93ZXCjVHYK34S
-         DIblVLvX5HXAAZUqWVEfqf+336LG9kzI+/C2GtzYgIbLIfODwdRK3VXRupdqg8u7W3qE
-         ljYKKnz32gJpHyFsdShTxLwBm7GOYssSSFKIXnMx1xvseVohvcwm3dPn5JoF0KSCXeZC
-         HA8Q==
+        b=I0ihA/xWWFesd5TRmKQBzu/sId1J14T9nhAZoH2S/s6V3O8bgGIu8zxYjG4g5ZLH2l
+         Y0+a/T9iswce48Sjk0hMVtPc8Y9X9jEE54bXwp8gp1IA5ifbB3vXU/HzV0I+rncgQXcr
+         NbGwIcOHDgTA4LFHs+q3pJQMDwuNEgDYozrk3ugzTIsYks5Ye7tNIn0daY8B4/v6H7/y
+         04W2gW2Lg4LALL3Qm8K+Q7iC/xM35d6Ekhfy3IqtuqX4wjYWmpGO5aF9Ty3kNnjSDS9T
+         8+bij0UBLfi9ZLukKMJxieOTRf6nbkXg1kBQFJ9Wv3d22LzEvwaNSF2hN1bub9Gei77a
+         8J/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
         bh=Cj1TpgH3SurDSxv9g8z9eXoWP5mH4LB24RVVJwJ8fFY=;
-        b=bQ5uaO1Q3UK1O2NY9MQdyRfq7gWibmIqmGwD1ZJpLSkoewuuUdU8+OyZM8ESe9uxys
-         dlSqSAltlhbZQ0Zk1zFGTMJtkUcHJmz5KUP6Bb4MEg+d3r7FBUaAHEOKCQkjmYuLufSI
-         hYN+Do6+FxaXloIeWx4yRWcwa74bXS3x7ZSvKjKHbQi4USy6LfYxVe0VG2LNPSmgWPzv
-         gFNmB43YnuvmxZndg0K01NbPE/bga3IfWCtt3MXCaOwMRF66OHZbHyJKhrqqaHjQx3pJ
-         k0BvVJtFIMxJl0WgE8KhzTRkBLvnd9lokGQcNgNWGxnefJ6SElu4awy7KmXCnvU0dSip
-         ZSjg==
-X-Gm-Message-State: AFeK/H3JzDNcAGArCygk0SNp2YN+21ayCn+dI4Tg8KwO3H51GG+txYrOnKRjr1Z8ah6YRw==
-X-Received: by 10.55.110.129 with SMTP id j123mr1124353qkc.309.1490802657186;
-        Wed, 29 Mar 2017 08:50:57 -0700 (PDT)
+        b=KJc1yNKF0lkAzUzJgxDxazJD/3Hfc2vfbOl3sLKw/ZwlL1wuhEAwAyNYqhlZcGIpOD
+         yTBgHHMiHgV3s4fg6nHEZaEF4F9xkK2Nqvi/v49gk4Hag2IucsC5SIFwpefj2hdMF2Rp
+         FrEAzGIPdr031HfLs+w34AukojLD/fJasQLR4klTrOspnmzlYByOPW1VbGCQ8eXVgQrY
+         xOx3eC6YjskYPcIoyPX1v04Bbkx7Haelj9m7F2ummsxAJYCvtvpMa8/zrZOqK6MWyRsm
+         h48vBk5Aehc+J+inEsAKXq5esVXGrPyxufbJEtrz2Pf9m6QnujHeqUwZhuZ1q5BWSvmD
+         B7VQ==
+X-Gm-Message-State: AFeK/H2qimR0reVpx+dztwTYDhrlWmWfeTf75aeQicpJAyMDMnsbduq1cwjG80wduei0rw==
+X-Received: by 10.55.27.137 with SMTP id m9mr1153106qkh.224.1490802822669;
+        Wed, 29 Mar 2017 08:53:42 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id p19sm5162760qtp.36.2017.03.29.08.50.56
+        by smtp.gmail.com with ESMTPSA id o92sm5148566qkh.48.2017.03.29.08.53.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 29 Mar 2017 08:50:56 -0700 (PDT)
+        Wed, 29 Mar 2017 08:53:42 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
-Cc:     benpeart@microsoft.com, christian.couder@gmail.com,
-        larsxschneider@gmail.com
+Cc:     gitster@pobox.com, benpeart@microsoft.com,
+        christian.couder@gmail.com, larsxschneider@gmail.com
 Subject: [PATCH v3 0/8] refactor the filter process code into a reusable module
-Date:   Wed, 29 Mar 2017 11:50:32 -0400
-Message-Id: <20170329155040.31224-1-benpeart@microsoft.com>
+Date:   Wed, 29 Mar 2017 11:53:22 -0400
+Message-Id: <20170329155330.12860-1-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.1.gvfs.1.18.ge47db72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
