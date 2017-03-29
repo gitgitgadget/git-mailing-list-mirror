@@ -2,70 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22C8220958
-	for <e@80x24.org>; Wed, 29 Mar 2017 17:43:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCEBD20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 17:56:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932196AbdC2Rnv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 13:43:51 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50997 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932191AbdC2Rnu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 13:43:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 28556810BF;
-        Wed, 29 Mar 2017 13:43:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=sCWHFQ5Uo86PZchrwtgXqdlHDrc=; b=mx5af+
-        qI9V8lXusehS0ms3iHVgJuC4cJsYhuAoULa97b0UuffXIDfstrUS/gtTdQVdRrwE
-        5UezdbnrfXt2dLLr2wfIDvYSnekR1pxxj6IC3heIp2yqhZk2xEEcFpIBZ/LPZ5Go
-        dJEmakTumSM2uRel8XtiwFMA7CuVnoNQaook0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j/7WkuzeDlXQ3GbFvUrnbg2HlbI5/x6i
-        5uy/zPGrXkHhW/YzFTbFTcDjR7rzst0qCRCRYZ0df86MWYAYD17gIr0o/SQKQKjg
-        YqDaiOlpracUD/5SJOk4hRWAMYqXkWDbIT/LnnImThOf2xpZfAt9kb1sCMxfzLyH
-        mhqRMddl7dc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 21044810BE;
-        Wed, 29 Mar 2017 13:43:49 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6CFC8810BD;
-        Wed, 29 Mar 2017 13:43:48 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v2 0/3] name-rev sanity
-References: <xmqqa88j5xsx.fsf@gitster.mtv.corp.google.com>
-        <cover.1490798142.git.git@grubix.eu>
-        <xmqq4lycatsu.fsf@gitster.mtv.corp.google.com>
-Date:   Wed, 29 Mar 2017 10:43:47 -0700
-In-Reply-To: <xmqq4lycatsu.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Wed, 29 Mar 2017 10:15:13 -0700")
-Message-ID: <xmqqvaqs9dws.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753026AbdC2R4U (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 13:56:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53690 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751717AbdC2R4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 13:56:19 -0400
+Received: (qmail 26918 invoked by uid 109); 29 Mar 2017 17:56:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 17:56:16 +0000
+Received: (qmail 24309 invoked by uid 111); 29 Mar 2017 17:56:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 13:56:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Mar 2017 13:56:14 -0400
+Date:   Wed, 29 Mar 2017 13:56:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] read-cache: avoid git_path() race in
+ freshen_shared_index()
+Message-ID: <20170329175614.uecvtvmzoj2wfle3@sigill.intra.peff.net>
+References: <20170329080820.8084-1-chriscool@tuxfamily.org>
+ <xmqqfuhwau6r.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 439E417E-14A7-11E7-A8CF-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfuhwau6r.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Mar 29, 2017 at 10:06:52AM -0700, Junio C Hamano wrote:
 
-> The first two applies cleanly to the same base as jc/name-rev that
-> the first two of these patches are meant to replace, but the third
-> one doesn't apply on top.  Are you depending on something newer?
+> > This shows that we should be careful not to use git_path() in
+> > freshen_shared_index(). It is using a shared buffer that can
+> > too easily lead to races.
+> 
+> The impression I get from the symptom is that after git_path() is
+> called here, before check_and_freshen_file() uses that result, it
+> (or functions it calls) uses git_path(), and the number of times it
+> does so has changed since cc/split-index-config was written on the
+> mainline, and the rotating 4-element buffer get_pathname() gives is
+> now exhausted, leading to the failure you observed.  By the way,
+> that does not sound a race to me.
+> 
+> In any case, that explains why bisect says the merge is the first
+> bad one, and cures the confused reader ;-) The use of git_path() on
+> the topic was still safe; it was a timebomb waiting to go off.  The
+> mainline started using more calls and the merge result was unsafe.
 
-Ah, of course, you are depending on your other topic ;-)
-I'll wiggle these in.
+Yeah, it looks like that is what happened. I see that Christian bisected
+the rebase to find the commit in the series that introduces the problem.
+I'm mildly curious which commit upstream created the problem[1].
+There's a reasonable chance it's some innocent-looking cleanup (possibly
+one of my recent "stop using a fixed buffer" ones).
 
-Thanks.
+But in the end it doesn't really matter. I think code like:
+
+  const char *filename = git_path(...);
+
+or
+
+  nontrivial_function(git_path(...));
+
+is an anti-pattern. It _might_ be safe, but it's really hard to tell
+without following the complete lifetime of the return value. I've been
+tempted to suggest we should abolish git_path() entirely. But it's so
+darn useful for things like unlink(git_path(...)), or other direct
+system calls.
+
+As an aside, this kind of static-buffer reuse _used_ to mean you might
+see somebody else's buffer. Which is bad enough. But since the move to
+use strbufs underneath the hood of git_path(), it may produce that
+effect or it may be a use-after-free (if the strbuf had to reallocate to
+grow in the meantime).
+
+Anyway. The fix in the patch is obviously the right thing.
+
+-Peff
+
+[1] I think we could pinpoint the upstream change that caused the bad
+    interaction by bisecting between the merge-base and the first-parent
+    of the broken merge. For each commit, cherry-pick the complete
+    series on top of it, and test the result.
