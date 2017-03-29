@@ -2,99 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1079820969
-	for <e@80x24.org>; Wed, 29 Mar 2017 21:38:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC1920958
+	for <e@80x24.org>; Wed, 29 Mar 2017 21:59:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753916AbdC2VfF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 17:35:05 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55924 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932658AbdC2Vd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 17:33:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EFA7783D80;
-        Wed, 29 Mar 2017 17:33:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aM7iDx3uaBoAI9T8tfSCQbcNXsw=; b=kxPoS0
-        Wk0vgCwTr/7Ek6dyY4ql7QStTgEnOXJWjmdKWjvfV0ll4gvcL3SZy91wRyBzjvfn
-        GV3DJQHhsOyYAi0wfS9RqyJBjTJoIalSIryBYPpmcsRucVjgjGr3+JGPqHxSMXxr
-        XSnUUXCPKlJAndWP51WabUPmRv123qRQ556jw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dsAELNbsJwQbUy1PzxZ4Y+SdrpT9relm
-        aGl2RIrpFhBDqO6MTlgD13txUaYfycwWS9cxvMDbvTTAZY2coIimuLlHd0fQqaNy
-        Gx0YZXOHIzQ33DRrPu6SrLoywsQFA2f+b/Iv5V8bgPDus0ijHqCFzU4hBSexjzSa
-        /6d2AoiyQOA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E775683D7F;
-        Wed, 29 Mar 2017 17:33:19 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4567C83D7E;
-        Wed, 29 Mar 2017 17:33:19 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] unpack-trees.c: align submodule error message to the other error messages
-References: <20170329183743.27506-1-sbeller@google.com>
-        <20170329183743.27506-2-sbeller@google.com>
-        <20170329184833.GX31294@aiede.mtv.corp.google.com>
-Date:   Wed, 29 Mar 2017 14:33:18 -0700
-In-Reply-To: <20170329184833.GX31294@aiede.mtv.corp.google.com> (Jonathan
-        Nieder's message of "Wed, 29 Mar 2017 11:48:33 -0700")
-Message-ID: <xmqqy3vn93a9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1753694AbdC2V7N (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 17:59:13 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53709 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752751AbdC2V7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 17:59:12 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfjJY-1cWKam435o-00NAmI; Wed, 29
+ Mar 2017 23:59:09 +0200
+Date:   Wed, 29 Mar 2017 23:59:08 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Andrew Witte <zezba9000@gmail.com>
+cc:     git-for-windows <git-for-windows@googlegroups.com>,
+        git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git for Windows 2.12.2
+In-Reply-To: <87642eee-7eca-447d-b726-2fa87d212288@googlegroups.com>
+Message-ID: <alpine.DEB.2.20.1703292356480.4068@virtualbox>
+References: <20170327194813.6876-1-johannes.schindelin@gmx.de> <87642eee-7eca-447d-b726-2fa87d212288@googlegroups.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 53ACF6BC-14C7-11E7-A01A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:KaQTCH8K5x6ClR38+ukIPgOxz22gpgh7393/pmV5qxNKfFEMxHd
+ YK1C3a0X3W/q/VJbBJ4tl8VYoL7lGhTOUSQDLzunDfQhK5fARiOSqDP1oBylIFD4YpUZnrY
+ d2MDcwUybtmK728OuwipNU40D28/jDoxq9X+YrxPRDGPpp+tOqTnNiwrQKiwazVfS51xF8K
+ D7nF1exKCvm+CD3FTAcrA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IkPBa4Wysdc=:enou8pzxeNVbK/V4DQ1LaT
+ TGyWcq5RojqovTZY4L7KuMF0t+WDkFF0tUBrohnql/FKahkJ7ZSs4JcOxOA9vx7epMWfm4Anv
+ 55cLCy3Bj9nBmJk4e16o5Pxx0/zDfYWvNmssSMaDzUJfLNWggVvrwruAK6QidInBKAerpyp7C
+ YFN72Zr0st7S/g+RytH0leSs8d5x8mlJaySMFKa9tZL/DR/88IVp7Ra0VGv2wkKME8ynzVoIE
+ 0yHxPV7Ik7Di7cASNnUqkoM9zr3ldT2OsvLgdD5xQUdJIOE9QXgvZ/uac8pFchHpEQX3whmOJ
+ bzGUMPz0FcKWvY9seVx917nA/i/6QBzdggbGYKY6iXbfj3yawT7lFVlEjZ1ZtVskxflM1sVqd
+ OZNudDCQW3VjWqh6zyWeyPbf4szxhjT5ORSm+kOKoGWfD2deJfuv2XF3mxEJb9cVriZVP15M/
+ lM6Bmgibm3zJvh96MYGGCz3sLQIp7rtpUOAlCTecORE81qJfwBf1uGZn0L4aqZh7kjj3v2Rvf
+ d8co/fgNl4lbnNEj7/G4qzPWBHngQOdvG3j8Q7fe63V3MNj7Nq336HA0EW4Ny13tI37432Teo
+ 3iBQtDQtPYbakS4hljNAezBgoG1OHnT7rA9c9tmXxP0RxvdcWkA3bRh/pHD8ow95Jjpqfa0my
+ NQmb1OQiZqPTJheDxtuRTncKlituKMccDJUo4U+KvSWfv4d+JW1zsvi8GqTt84h+V6yvnv98o
+ cQzucPZQTsEUx0AMVRaE23Bn5UI6VkEPLNP4ncmYR9CfUgKW5picLrCrxfQ/LxEHKFnXofpDz
+ fe1zi/l
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi Andrew,
 
-> Stefan Beller wrote:
->
->> As the place holder in the error message is for multiple submodules,
->> we don't want to encapsulate the string place holder in single quotes.
->
-> Makes sense.
->
->> Signed-off-by: Stefan Beller <sbeller@google.com>
->> ---
->>  unpack-trees.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/unpack-trees.c b/unpack-trees.c
->> index 8333da2cc9..9f386cc174 100644
->> --- a/unpack-trees.c
->> +++ b/unpack-trees.c
->> @@ -167,7 +167,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
->>  	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
->>  		_("The following working tree files would be removed by sparse checkout update:\n%s");
->>  	msgs[ERROR_WOULD_LOSE_SUBMODULE] =
->> -		_("Submodule '%s' cannot checkout new HEAD");
->> +		_("The following submodules cannot checkout a new HEAD:\n%s");
->
-> Nitpicking about wording: unless the user has adopted a strongly
-> object-oriented point of view, it is Git that cannot checkout a new
-> HEAD, not the submodule.
->
-> How about:
->
-> 		_("Cannot update submodule:\n%s")
->
-> That's vague, but if I understand correctly the way this error gets
-> used is equally vague --- i.e., a clearer message would involve
-> finer-grained error codes.
+On Wed, 29 Mar 2017, Andrew Witte wrote:
 
-Makes sense to me.
+> The git 2.12 GCM for Windows is broken. I tried doing a git clone and
+> got "*remote: HTTP Basic: Access denied*".
+> I downgraded to git 2.11.0 and everything worked fine.
 
-Thanks for helping.
+Could you test v2.12.1, too, and open a bug report at:
+https://github.com/git-for-windows/git/issues/new ?
+
+I am particularly interested in any details you can share that would help
+other developers like me to reproduce the issue.
+
+Thank you,
+Johannes
