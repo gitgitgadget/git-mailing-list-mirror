@@ -2,98 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCEBD20958
-	for <e@80x24.org>; Wed, 29 Mar 2017 17:56:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB79120958
+	for <e@80x24.org>; Wed, 29 Mar 2017 18:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753026AbdC2R4U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 13:56:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53690 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751717AbdC2R4T (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 13:56:19 -0400
-Received: (qmail 26918 invoked by uid 109); 29 Mar 2017 17:56:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 17:56:16 +0000
-Received: (qmail 24309 invoked by uid 111); 29 Mar 2017 17:56:32 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 13:56:32 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Mar 2017 13:56:14 -0400
-Date:   Wed, 29 Mar 2017 13:56:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] read-cache: avoid git_path() race in
- freshen_shared_index()
-Message-ID: <20170329175614.uecvtvmzoj2wfle3@sigill.intra.peff.net>
-References: <20170329080820.8084-1-chriscool@tuxfamily.org>
- <xmqqfuhwau6r.fsf@gitster.mtv.corp.google.com>
+        id S932327AbdC2SC2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 14:02:28 -0400
+Received: from mail-qk0-f174.google.com ([209.85.220.174]:35055 "EHLO
+        mail-qk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932276AbdC2SC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 14:02:27 -0400
+Received: by mail-qk0-f174.google.com with SMTP id r142so20082172qke.2
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 11:02:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=2+2xuIuweS3XntzIxp1lvVgRyXnz2BP10WLPmpjnun8=;
+        b=WYZ0OIaNv++rBAhEp8vvZOQqsIjQsVrAQ0KzoisshZbRFmAJtoBmNs+JlzxqzxkJZv
+         crw1VFyt2ayGVSrW1WcxWXrY3UqLn3AuQnOL4B0/xcgB7cvozhZ6DqURSZ2rESjESOhm
+         0cPJlpIfjsREa+MxLA2rotJ5vrF2dafimiXW42yZNnX4tTv3F2XaQmWpLdJ2NW5d55ha
+         BCxJL5f7MHnZ68kVMi/ovcJnPQW4kiz4hYmgWOXOSwZQCzsYT2M2zHKPfQry8Ck9GKDo
+         Gi5wMFMbdKrdbzFdGfOThkEIQY6Wm9x5OilYwrPDU4JyRlT14AtM9xTlPFuQR0CUOE0p
+         nGWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=2+2xuIuweS3XntzIxp1lvVgRyXnz2BP10WLPmpjnun8=;
+        b=aOAUeeApANJeKqUfVfCQ31CLXjEwRnGJmnGV5VtqH765Al2WjvydiYsIDM6hoWG51W
+         B2xoaU6dcNbypwVCkBrmnxMtK0vcsJcacybki8eLEBvy/vRklf+OgCZkhPkcwNlz8zkJ
+         m5AFHVlzrlEeE1fkUGXYphWJo95ieyUpOQL3GJVggneisnrjlhnoYRO4810NZkSzZxqD
+         qUN6GfOu0pErkZgogd+uO1rZz5+wvCK/GEp745KSWET+o4HvUtE8hDNL+xkgJUIllMjY
+         oUzjxTuLPXiMJxGE8WMw54vB/WAQxTUoLt/Sgj6Mi/RAMNratW2lNEoW9fR5838DT8Dh
+         PHIQ==
+X-Gm-Message-State: AFeK/H0vYUlsPwho6Y4B8lKvbBncPkeOjg+cpsTJvIJZFH/cxWCJPm4gnzfNzpUkAscLD9TMhfewD6gQVMaxtQ==
+X-Received: by 10.55.212.203 with SMTP id s72mr1914942qks.261.1490810546115;
+ Wed, 29 Mar 2017 11:02:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfuhwau6r.fsf@gitster.mtv.corp.google.com>
+Received: by 10.140.95.84 with HTTP; Wed, 29 Mar 2017 11:02:10 -0700 (PDT)
+From:   Eyal Lotem <eyal.lotem@gmail.com>
+Date:   Wed, 29 Mar 2017 21:02:10 +0300
+Message-ID: <CALA94fPqm5UnYBwqZ5fDJ=DL_9EaZeRfqHB5ZzUQt11FSz4ZMA@mail.gmail.com>
+Subject: BUG: Renaming a branch checked out in a different work tree
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 29, 2017 at 10:06:52AM -0700, Junio C Hamano wrote:
+git version: 2.7.4
+installed from Ubuntu repos:
+Ubuntu Version: 1:2.7.4-0ubuntu1
 
-> > This shows that we should be careful not to use git_path() in
-> > freshen_shared_index(). It is using a shared buffer that can
-> > too easily lead to races.
-> 
-> The impression I get from the symptom is that after git_path() is
-> called here, before check_and_freshen_file() uses that result, it
-> (or functions it calls) uses git_path(), and the number of times it
-> does so has changed since cc/split-index-config was written on the
-> mainline, and the rotating 4-element buffer get_pathname() gives is
-> now exhausted, leading to the failure you observed.  By the way,
-> that does not sound a race to me.
-> 
-> In any case, that explains why bisect says the merge is the first
-> bad one, and cures the confused reader ;-) The use of git_path() on
-> the topic was still safe; it was a timebomb waiting to go off.  The
-> mainline started using more calls and the merge result was unsafe.
+When renaming a branch checked out in a different work tree, that work
+tree's state is corrupted. Git status in that work tree then reports
+itself being on the "initial commit" with all files being in the
+staging area.
 
-Yeah, it looks like that is what happened. I see that Christian bisected
-the rebase to find the commit in the series that introduces the problem.
-I'm mildly curious which commit upstream created the problem[1].
-There's a reasonable chance it's some innocent-looking cleanup (possibly
-one of my recent "stop using a fixed buffer" ones).
-
-But in the end it doesn't really matter. I think code like:
-
-  const char *filename = git_path(...);
-
-or
-
-  nontrivial_function(git_path(...));
-
-is an anti-pattern. It _might_ be safe, but it's really hard to tell
-without following the complete lifetime of the return value. I've been
-tempted to suggest we should abolish git_path() entirely. But it's so
-darn useful for things like unlink(git_path(...)), or other direct
-system calls.
-
-As an aside, this kind of static-buffer reuse _used_ to mean you might
-see somebody else's buffer. Which is bad enough. But since the move to
-use strbufs underneath the hood of git_path(), it may produce that
-effect or it may be a use-after-free (if the strbuf had to reallocate to
-grow in the meantime).
-
-Anyway. The fix in the patch is obviously the right thing.
-
--Peff
-
-[1] I think we could pinpoint the upstream change that caused the bad
-    interaction by bisecting between the merge-base and the first-parent
-    of the broken merge. For each commit, cherry-pick the complete
-    series on top of it, and test the result.
+--
+Eyal
