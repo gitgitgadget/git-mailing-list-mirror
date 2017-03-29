@@ -2,72 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 713C120958
-	for <e@80x24.org>; Wed, 29 Mar 2017 18:40:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8A3620958
+	for <e@80x24.org>; Wed, 29 Mar 2017 18:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932299AbdC2SkX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 14:40:23 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34166 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932201AbdC2SkW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 14:40:22 -0400
-Received: by mail-pg0-f66.google.com with SMTP id o123so3878660pga.1
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 11:40:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=F1iZPuI2HB96vJm5eyljFlRz3dVNeSRneEsJTSlqBQ0=;
-        b=L9Rz40upwzUWgd+DpBRUiq8qcI8aufuQg9ZrbNUdhHn1T+n19l88bOGPRInBWCryI1
-         8CmUcOy/ZrLBH53USPuDL1ZiEb6dQiX/yKSQID2VFvbZ06ljO4LfI3lXinrw2eBfVqPN
-         p24CTNwFGb9+fboRn+i0g7EFn1F9FOfMeUpSeSp9ePCUqRn4QTaL4bdvbmk0NEnFSjG+
-         LApnNYnb4QCH6lTXR1b7al7/xz2DoA3j25aHoU5mNJdmxH6vtVJDoPy86Z2IqKFppZe3
-         eFNX380ZWReItqJvBbxfcXVXzHMX7VtF8W+cTmzkgmtW0YUqLyaUalOlRxms27ipw+V9
-         y7YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=F1iZPuI2HB96vJm5eyljFlRz3dVNeSRneEsJTSlqBQ0=;
-        b=D2YBSLt/wREDSQhdCS+L1lDqPW2cxLWfgZwdVNYA4jMolFfM0Xw53iVnHBTJHiUdTm
-         BIsJncBxJj5k433+PQYPFcDR3kixKmQJedD40dAxk8icGqEIldbJhfwq2tsIYKvjENYv
-         kBrbRayvqILzipsCDyFTU+TXjiNJkfV1PF7FBVhOURrRbkU14SXDM2oBeBu62el1K6+k
-         hDLUJJm7FfzQAuc3pNl+YuinBEKKqU8/K3WzqZScL5Xoy0k5G96JwiMBc/zFIzCmcCzP
-         RLCULPotS4U1HLcyl4YnFLcyb0E+uPiaATNBGSElFg4rXWIlGhUytLj0/dKBPavSLd3S
-         +JMQ==
-X-Gm-Message-State: AFeK/H2yLWben3HEPns0TvceV231IdsHVfWwfPWTP96IlB+DSJV7kmiGLprCylAVh5R9Gw==
-X-Received: by 10.99.112.22 with SMTP id l22mr2056420pgc.94.1490812820927;
-        Wed, 29 Mar 2017 11:40:20 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:1cae:64a4:6d7e:ad6f])
-        by smtp.gmail.com with ESMTPSA id y64sm14976393pfy.3.2017.03.29.11.40.20
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 29 Mar 2017 11:40:20 -0700 (PDT)
-Date:   Wed, 29 Mar 2017 11:40:18 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
+        id S932316AbdC2Sn5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 14:43:57 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:40037 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932201AbdC2Sn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 14:43:56 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3vtc9P2RPWz1qql5;
+        Wed, 29 Mar 2017 20:43:53 +0200 (CEST)
+Received: from localhost (dynscan01.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3vtc9P1qkPz3jgZ0;
+        Wed, 29 Mar 2017 20:43:53 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan01.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id AeRlmMzYjB92; Wed, 29 Mar 2017 20:43:52 +0200 (CEST)
+X-Auth-Info: 6eJEvSJOHdMBKJ/XDngUjxtuGy33cUsQx+D3sR3F+eWI74fFlmD42/auzD/53Gc6
+Received: from igel.home (ppp-88-217-19-158.dynamic.mnet-online.de [88.217.19.158])
+        (using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Wed, 29 Mar 2017 20:43:52 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 14BD22C3DF2; Wed, 29 Mar 2017 20:43:52 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
 To:     Eyal Lotem <eyal.lotem@gmail.com>
-Cc:     git@vger.kernel.org, Kazuki Yamaguchi <k@rhe.jp>
+Cc:     git@vger.kernel.org
 Subject: Re: BUG: Renaming a branch checked out in a different work tree
-Message-ID: <20170329184018.GV31294@aiede.mtv.corp.google.com>
 References: <CALA94fPqm5UnYBwqZ5fDJ=DL_9EaZeRfqHB5ZzUQt11FSz4ZMA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+X-Yow:  ..The TENSION mounts as I MASSAGE your RIGHT ANKLE according to
+ ancient Tibetan ACCOUNTING PROCEDURES..are you NEUROTIC yet??
+Date:   Wed, 29 Mar 2017 20:43:52 +0200
 In-Reply-To: <CALA94fPqm5UnYBwqZ5fDJ=DL_9EaZeRfqHB5ZzUQt11FSz4ZMA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        (Eyal Lotem's message of "Wed, 29 Mar 2017 21:02:10 +0300")
+Message-ID: <87d1czditz.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+cc: Kazuki Yamaguchi --- thanks for writing the fix!)
-Hi Eyal,
-
-Eyal Lotem wrote:
+On Mär 29 2017, Eyal Lotem <eyal.lotem@gmail.com> wrote:
 
 > git version: 2.7.4
 > installed from Ubuntu repos:
@@ -78,8 +64,11 @@ Eyal Lotem wrote:
 > itself being on the "initial commit" with all files being in the
 > staging area.
 
-I believe this is fixed by v2.8.3~42^2~1 (branch -m: update all
-per-worktree HEADs, 2016-03-27).
+Fixed since 2.8.3.
 
-Thanks and hope that helps,
-Jonathan
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
