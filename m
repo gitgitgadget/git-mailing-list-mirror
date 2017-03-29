@@ -6,101 +6,71 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55AA820958
-	for <e@80x24.org>; Wed, 29 Mar 2017 16:05:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F30CD20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 16:46:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752515AbdC2QFj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 12:05:39 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59635 "EHLO
+        id S1751603AbdC2Qq1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 12:46:27 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51803 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751953AbdC2QFi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 12:05:38 -0400
+        with ESMTP id S1751216AbdC2Qq0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 12:46:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 46F86849EF;
-        Wed, 29 Mar 2017 12:05:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 369F38526B;
+        Wed, 29 Mar 2017 12:46:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+k/Kkln+yqum13gt/i9hRANJEPY=; b=pahVf5
-        0BHjT3ELGx4alRkfEYQsKAqcprQ6SBLM7sUSruyKHycOZD2bf52OHPBu2LcUZ/0Q
-        7Ib9Aw7EcNtyllpUA9QAPinUX/PrrmHsxbRZpjplLczmuCch1Rie52lt92TrEi/+
-        O/dDkG2a0trXAvcuC4Z+QIqzmRnsURDdTezdk=
+        :content-type; s=sasl; bh=sZv3OBhY6micYjyLjx/avLDgyEA=; b=bHTEc7
+        aJJ3G9qOtvFz/05NXiSl32urhXS6FL6fUgeUfCk5aZElzBPtXVHjKF+sFJ1qTVcj
+        E6eh4Lzbf9g3p621DZ/BjGggL6hjRkMHr49RMKClYFpFZ5FTuVI3pEa4cgbo2iQT
+        CMHsN2tYGhxNGo3wnhgTZQDxTOK0W/0fwEzGY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=V5WklQdsNHuz87JfazS3QeWN5Qfcyq6T
-        DoeF9Oh0cRQIovcsoMq/llFhmoqsYxKHHWClRPi0HEOLqewhbOK2iX0wMM07ggvh
-        MpV+K/RUYntpTTPVhkUDAFmiZP8MzwhTFYRXlx3XOAo60PpfzOXzQgQv7ufJhbp7
-        rfVA0nsSBns=
+        :content-type; q=dns; s=sasl; b=RB+cS+cCpp76jzvr6IlGZrRfMpfZRcja
+        hZd38CASZ0CA2dERXv528wkCTlpCol68A3cDy1cM6dw7Lc4KZK2g44NaZNPe3J5H
+        RO8XE6Zto1CLggOUeRcA0aDj/E/cAaC9/K/67VimOA37nScpDE50ByOa4MiGY9v/
+        BxunJjYu3jg=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3C9DD849EE;
-        Wed, 29 Mar 2017 12:05:37 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2FA6F8526A;
+        Wed, 29 Mar 2017 12:46:24 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9D1D0849ED;
-        Wed, 29 Mar 2017 12:05:36 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99B6C85269;
+        Wed, 29 Mar 2017 12:46:23 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/18] snprintf cleanups
-References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
-        <xmqq60itc9pv.fsf@gitster.mtv.corp.google.com>
-        <20170329034105.bfgh4tutgrmjp2lc@sigill.intra.peff.net>
-Date:   Wed, 29 Mar 2017 09:05:33 -0700
-In-Reply-To: <20170329034105.bfgh4tutgrmjp2lc@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 28 Mar 2017 23:41:05 -0400")
-Message-ID: <xmqqr31gax0y.fsf@gitster.mtv.corp.google.com>
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org,
+        sbeller@google.com, pclouds@gmail.com
+Subject: Re: [PATCH v4 2/5] dir_iterator: iterate over dir after its contents
+References: <1490747533-89143-1-git-send-email-bnmvco@gmail.com>
+        <1490747533-89143-3-git-send-email-bnmvco@gmail.com>
+        <7a665631-da6a-4b9f-b9e7-750f2504eccd@alum.mit.edu>
+Date:   Wed, 29 Mar 2017 09:46:22 -0700
+In-Reply-To: <7a665631-da6a-4b9f-b9e7-750f2504eccd@alum.mit.edu> (Michael
+        Haggerty's message of "Wed, 29 Mar 2017 11:56:00 +0200")
+Message-ID: <xmqqk278av4x.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8BD3B248-1499-11E7-B5AE-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 3E58B580-149F-11E7-8412-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> On Tue, Mar 28, 2017 at 03:33:48PM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > It's a lot of patches, but hopefully they're all pretty straightforward
->> > to read.
->> 
->> Yes, quite a lot of changes.  I didn't see anything questionable in
->> there.
->> 
->> As to the "patch-id" thing, I find the alternate one slightly easier
->> to read.  Also, exactly because this is not a performance critical
->> codepath, it may be better if patch_id_add_string() filtered out
->> whitespaces; that would allow the source to express things in more
->> natural way, e.g.
->> 
->> 		patch_id_addf(&ctx, "new file mode");
->> 		patch_id_addf(&ctx, "%06o", p->two->mode);
->> 		patch_id_addf(&ctx, "--- /dev/null");
->> 		patch_id_addf(&ctx, "+++ b/%.*s", len2, p->two->path);
->> 
->> Or I may be going overboard by bringing "addf" into the mix X-<.
->
-> I think there are two things going on in your example.
->
-> One is that obviously patch_id_addf() removes the spaces from the
-> result. But we could do that now by keeping the big strbuf_addf(), and
-> then just walking the result and feeding non-spaces.
->
-> The second is that your addf means we are back to formatting everything
-> into a buffer again....
+> I also realize that I made a goof in my comments about v3 of this patch
+> series. Your new option is not choosing between "depth-first" and
+> "breadth-first". Both types of iteration are depth-first. Really it is
+> choosing between pre-order and post-order traversal. So I think it would
+> be better to name the option `DIR_ITERATOR_POST_ORDER`. Sorry about that.
 
-You are right to point out that I was blinded by the ugliness of
-words stuck together without spaces in between, which was inherited
-from the original code, and failed to see the sole point of this
-series, which is to remove truncation without adding unnecessary
-allocation and freeing.
-
-Thanks for straighten my thinking out.  I think the seeming
-ugliness, if it ever becomes a real problem, should be handled
-outside this series after the dust settles.
-
-
-
+That solicits a natural reaction from a bystander.  Would an
+IN_ORDER option also be useful?  I am not demanding it to be added
+to this series, especially if there is no immediate need, but if we
+foresee that it would also make sense for some other callers, we
+would at least want to make sure that the code after this addition
+of POST_ORDER is in a shape that is easy to add such an option
+later.
