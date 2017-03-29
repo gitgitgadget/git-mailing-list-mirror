@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB7CB20958
-	for <e@80x24.org>; Wed, 29 Mar 2017 13:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E90120958
+	for <e@80x24.org>; Wed, 29 Mar 2017 13:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932289AbdC2N3i (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 09:29:38 -0400
-Received: from mail-wr0-f174.google.com ([209.85.128.174]:33782 "EHLO
-        mail-wr0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932098AbdC2N3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 09:29:36 -0400
-Received: by mail-wr0-f174.google.com with SMTP id w43so15589982wrb.0
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 06:29:35 -0700 (PDT)
+        id S1755260AbdC2NeZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 09:34:25 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33611 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753463AbdC2NeY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 09:34:24 -0400
+Received: by mail-wr0-f196.google.com with SMTP id u18so3073409wrc.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 06:34:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ldtLfP3BsyTIr7z2MDdWAN+yvbmPvnZCjutWHmkkAs8=;
-        b=gIT7UFplTLUpdRjcSo93rhpKiQlLuF1F1nkobK/vWVi0becctXO0SZ6puDAKoP1eOK
-         AaPGgFEJ36l/T8Mba6kSjOfSpMlxNuAkXL0wb4zg6wzk1+1TEy83elXTVHFnvCHXyhOK
-         nqPoqBZkdbhymTLW3IfZ/QyS6+MKJfQieuUbAzoZ2Gv1KJdFc06bKOefqIxiTyu9Qbsa
-         AWxakBpJbptaadKYu5GPq2PxlhII6wR/wmeiC9IL7d5y6lazA0JFwLdfxVPFQC7vtwar
-         gmRgyqFXxtdBT2hGqnD0R68SfKhOCJvRZM4sNFjmij+w1ru9/hoSk4nDtrQoFYDY3hOv
-         islw==
+        bh=Cs01Zehhh9oBuBKosKiBNSI1inAZQS8D9cSroL9aV3A=;
+        b=AMsI734qzU4uMSOn9DEzoS6MJKlhb6Q6KPIbhF1acXQ+g10OfFMnOcl5ORdKVHQDiV
+         nPBrEYvPuAzuXn4akwI/CJTMdUnT6PUCtX94QP4VLi88m5yZI+CvHNOf67GMGlkfNUZ6
+         5whkndDIbORjcFMVRLVSpzR9l4ja7NCqVBeR76RfaBLHqrgJ/5kWbLAKRn5eY9N5L4qp
+         7pr+EF3LQnquvYhdrveu2Hnib27KAMypahP1ftHXOT35V02OmBxmU+iUFTfCFYi1aDUt
+         36N6NbcPJPCVOHePqrE1TLxfjKeeBUqt4xbOPyDxTp5zdByhT+dFK5JXL2YHrtyGWgsc
+         nk5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ldtLfP3BsyTIr7z2MDdWAN+yvbmPvnZCjutWHmkkAs8=;
-        b=ty9HDmUC6d7Mklqdrd6YwCyqW57pSk6+/Sj9IxcMOytJYOW0gyWhDejyEg6peXTbfe
-         PG2C5+ltNJlxjARKZfTlZWL5Aqi89DGhOcTWbqr75OYgZ9glz+w2rNMXdnivzcbxsDe8
-         BSXDbLk7kVAtPGoxbWQSlfPmvaQXtvZC1c47LW9zTTfciO3WD9pT/bsT4ryA2HizbqWD
-         GozW0yCyuzosDGsJn8GOyhIaivsqVmRphPKSeNoJtwjRy5ttxoi5nPMEm4/a+m2V8KLs
-         q4m5vveFtJ2ag29mILk58WNPRNu7txWwCIZ80ZIlr+H+YTdEDnY8zMWHZm+Byw1fFNi5
-         yv6w==
-X-Gm-Message-State: AFeK/H1a4ASCMFIvLUmqqJoSeMiC28hKaX6CPU/n3+YUB3poeJZ+gKI+YgsPL7gDqGjKNw==
-X-Received: by 10.223.148.230 with SMTP id 93mr506248wrr.111.1490794174466;
-        Wed, 29 Mar 2017 06:29:34 -0700 (PDT)
+        bh=Cs01Zehhh9oBuBKosKiBNSI1inAZQS8D9cSroL9aV3A=;
+        b=ZmV0haiN9tscL3/QtdtxzlqMOKFsR5Ipy5nb4++osGbzWP349Fd4iXR9X0lDZHF71u
+         c2z8kG6JEu4QASAHsz9gzw7GilsRCSiOt6ye/dm0bwSH1P9H2HacnGxbuw4eQTsA+ijA
+         ZkUH5qo5BsjzYvSAjHIbd0lnrzfHbIZXaZaBBDRWiix72TMtoGKtYisJ2194pH02Sm3W
+         6K+QXitR7toIGHYWN8uUBto2Wu2ZKa7LnUrKSMpiY5lMHaLL/HhtMxFqaWDvoXMIfTGc
+         CP8Q6VleOg0Rfcalw1aOse+THoemz9BKffqHmbsP5bbvZxBS3SqcS6DAV0usCKkhIamR
+         7F8Q==
+X-Gm-Message-State: AFeK/H35APZOfZz6ubjHkyz7W2EoVAs2mdp7RuXyCwHLSke0cGOwUUTtr5PAcyWtHFKV9g==
+X-Received: by 10.28.73.197 with SMTP id w188mr1465396wma.46.1490794447594;
+        Wed, 29 Mar 2017 06:34:07 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id c76sm8208222wme.23.2017.03.29.06.29.33
+        by smtp.gmail.com with ESMTPSA id k43sm9456329wrk.42.2017.03.29.06.34.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Mar 2017 06:29:33 -0700 (PDT)
+        Wed, 29 Mar 2017 06:34:06 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -54,12 +54,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jeffrey Walton <noloader@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] perl: regenerate perl.mak if perl -V changes
-Date:   Wed, 29 Mar 2017 13:29:24 +0000
-Message-Id: <20170329132924.31321-1-avarab@gmail.com>
+Subject: [PATCH v2] perl: regenerate perl.mak if perl -V changes
+Date:   Wed, 29 Mar 2017 13:33:59 +0000
+Message-Id: <20170329133359.5992-1-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170329021807.voys2r65knn6tdwg@sigill.intra.peff.net>
-References: <20170329021807.voys2r65knn6tdwg@sigill.intra.peff.net>
+In-Reply-To: <20170329132924.31321-1-avarab@gmail.com>
+References: <20170329132924.31321-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -87,27 +87,22 @@ just do the right thing and re-generate perl/perl.mak when needed.
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
 
-On Wed, Mar 29, 2017 at 4:18 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Mar 28, 2017 at 09:03:43PM -0400, Jeffrey Walton wrote:
->[...]
-
-At first I thought Jeffrey was running into this longstanding issue
-with the perl Makefile. Looks like not, and he just wasn't passing
-PERL_PATH correctly, but fix this related issue while it's fresh in my
-mind.
+Maybe this'll set some sort of record for a v2 submission, but anyway,
+this should clearly be >> not >, we don't want to overwrite the list
+of *.pm files we just added.
 
  Makefile | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/Makefile b/Makefile
-index c80fec2920..c0c5510238 100644
+index 9f8b35ad41..485c453ca2 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1850,6 +1850,7 @@ perl/perl.mak: perl/PM.stamp
+@@ -1851,6 +1851,7 @@ perl/perl.mak: perl/PM.stamp
  
  perl/PM.stamp: FORCE
  	@$(FIND) perl -type f -name '*.pm' | sort >$@+ && \
-+	$(PERL_PATH) -V >$@+ && \
++	$(PERL_PATH) -V >>$@+ && \
  	{ cmp $@+ $@ >/dev/null 2>/dev/null || mv $@+ $@; } && \
  	$(RM) $@+
  
