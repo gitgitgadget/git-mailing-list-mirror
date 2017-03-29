@@ -2,107 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFECE20958
-	for <e@80x24.org>; Wed, 29 Mar 2017 22:47:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F13420958
+	for <e@80x24.org>; Wed, 29 Mar 2017 23:09:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932609AbdC2WrL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 18:47:11 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51703 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932172AbdC2WrK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 18:47:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0398E8925A;
-        Wed, 29 Mar 2017 18:47:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ft9um7jPqUL6SF6W+vgk/1q4AVg=; b=S8I9iO
-        dFzhQ6fhTAUwsD+P6d7qA09dGPRmSCbRksnvMGTwEI/lY7X6s0RXv2TC4k++KQnL
-        6CTCSWkX5tSe2bT/SUo7Cuk7hlbpAsGXqgxflJR/wm02+L0RuBE+y2XxeRWGEEzV
-        3uQIvzTno7xNDWBPIk90GUYDIQFovxVDUlpA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=c9NhZY6349jsRLakxBZmB4uBPv6QU8nd
-        3ahtGZvOQze6TGqvkTfLp5XA9s+W6WIN5E9x/bUWQ7OqYF4SJiQ8u3WbHRD6+sGj
-        LStP2SQhCQBFVOd40Dcpn7isoHvXkyaI9XweL1FjN9oqCMDAEsGBy/GemE4uCrbm
-        LCddBFlXOn4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id F02F689259;
-        Wed, 29 Mar 2017 18:47:08 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 663ED89258;
-        Wed, 29 Mar 2017 18:47:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1753290AbdC2XJb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 19:09:31 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:32923 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754078AbdC2XJa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 19:09:30 -0400
+Received: by mail-pg0-f67.google.com with SMTP id 79so5391889pgf.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 16:09:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yGraruVa3r3FVzpN59XwZdDH6Q2H9H8Y7V3NHqTM8nU=;
+        b=TZBMnYrM/puZukR4XgC0X2GyxRPiSX0RXUn30lCIssZstDmUla6qOkHEql3FmA5c+a
+         sBkhdsRO5FRW9/G89OOYjG5QVBT+rcibrFMNLchCP5pPP2rhzmK9ql/GxlWEKIY0yJxt
+         7AnGyfEiBdU/msxkCb09W1lMCuYBvIr0TuK3meVHpdGPNqFEvQgHsOtvyFGnWC6jicxj
+         kKpLao01QsftxbjrIgZBwDMx4kcOsYaFJNKMJd9p/8IjgyaoWiHRHv7IW7vUmMF7XHuf
+         QtkAlbypYmTlz1AKcjUwS5UMz9gxIq0znRgnCK+zinKvCKS6JJQVHFcQAnWph383nX7U
+         isSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yGraruVa3r3FVzpN59XwZdDH6Q2H9H8Y7V3NHqTM8nU=;
+        b=nzka2JrpbJz8geOHh4icEfBeYtvUIb19sRTa6Bsd9WBwgMrE93EBvjwSyFixGrF4OH
+         83j0P40+OBDeEcUFwPre9lHpR8rODdPXFoYlVW6u6iy94Xi7ogVMer8tjRr+k5pUzrK1
+         DyhZJBq73L809yFJwZ2D2SvkmQvq/VM2hTMjpAEuJXjFT7Oa4ij+amve3EjOa6B8mGGd
+         It7dwh1FeoAz1ZpTuvb0D8B3u7/NXAHgyXj9xScBgcISq8UBdnoL0rwSGPn6PnioLpFE
+         WKh/R4SHT2aUxigu/ayCKTZ9FMH7SRPschHYJ039sOcPpksnf1i/w8nQh26UxZl4X7tB
+         evrA==
+X-Gm-Message-State: AFeK/H3vYZkoaNrSj7dzQfLqWHmhLWxHvQaS9+Lo1uJITLbuz4gDpHYCnlFPEg9i8k0gsg==
+X-Received: by 10.98.38.198 with SMTP id m189mr3080391pfm.124.1490828968723;
+        Wed, 29 Mar 2017 16:09:28 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:1cae:64a4:6d7e:ad6f])
+        by smtp.gmail.com with ESMTPSA id s12sm298832pgs.12.2017.03.29.16.09.27
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 29 Mar 2017 16:09:27 -0700 (PDT)
+Date:   Wed, 29 Mar 2017 16:09:25 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH] unpack-trees.c: align submodule error message to the other error messages
-References: <xmqqy3vn93a9.fsf@gitster.mtv.corp.google.com>
-        <20170329223424.4678-1-sbeller@google.com>
-Date:   Wed, 29 Mar 2017 15:47:07 -0700
-In-Reply-To: <20170329223424.4678-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 29 Mar 2017 15:34:24 -0700")
-Message-ID: <xmqq60ir8zv8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] short status: improve reporting for submodule changes
+Message-ID: <20170329230925.GY31294@aiede.mtv.corp.google.com>
+References: <20170328230938.9887-1-sbeller@google.com>
+ <20170329222616.11077-1-sbeller@google.com>
+ <20170329222616.11077-2-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A3A4E062-14D1-11E7-8D61-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170329222616.11077-2-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Stefan Beller wrote:
 
-> As the place holder in the error message is for multiple submodules,
-> we don't want to encapsulate the string place holder in single quotes.
->
 > Signed-off-by: Stefan Beller <sbeller@google.com>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 > ---
->
->> Nitpicking about wording: unless the user has adopted a strongly
->> object-oriented point of view, it is Git that cannot checkout a new
->> HEAD, not the submodule.
->> 
->> How about:
->> 
->>                 _("Cannot update submodule:\n%s")
->
->> That's vague, but if I understand correctly the way this error gets
->> used is equally vague --- i.e., a clearer message would involve
->> finer-grained error codes.
->
-> Makes sense. Here is the patch.
-> Let's roll this as its own instead of waiting for the discussion on the other
-> patch to settle.
->
-> Thanks,
-> Stefan
->
->  unpack-trees.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 8333da2cc9..0d82452f7f 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -167,7 +167,7 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
->  	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
->  		_("The following working tree files would be removed by sparse checkout update:\n%s");
->  	msgs[ERROR_WOULD_LOSE_SUBMODULE] =
-> -		_("Submodule '%s' cannot checkout new HEAD");
-> +		_("Cannot update submodule:\n%s")
+>  Documentation/git-status.txt |  11 ++++
+>  t/t3600-rm.sh                |  18 +++++--
+>  t/t7506-status-submodule.sh  | 117 +++++++++++++++++++++++++++++++++++++++++++
+>  wt-status.c                  |  17 ++++++-
+>  4 files changed, 156 insertions(+), 7 deletions(-)
 
-Missing ';'.  I'll fix locally, but the final integration result
-won't be pushed out until later tonight, as I need to redo jch and
-pu branches with a fixed version.
+Yes, this looks good.
 
-
->  
->  	opts->show_all_errors = 1;
->  	/* rejected paths may not have a static buffer */
+Thank you,
+Jonathan
