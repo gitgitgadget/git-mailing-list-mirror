@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F13420958
-	for <e@80x24.org>; Wed, 29 Mar 2017 23:09:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7536D20958
+	for <e@80x24.org>; Wed, 29 Mar 2017 23:13:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753290AbdC2XJb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 19:09:31 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:32923 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754078AbdC2XJa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 19:09:30 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 79so5391889pgf.0
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 16:09:29 -0700 (PDT)
+        id S933005AbdC2XNP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 19:13:15 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33109 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932963AbdC2XNN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 19:13:13 -0400
+Received: by mail-pg0-f65.google.com with SMTP id 79so5405684pgf.0
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 16:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=yGraruVa3r3FVzpN59XwZdDH6Q2H9H8Y7V3NHqTM8nU=;
-        b=TZBMnYrM/puZukR4XgC0X2GyxRPiSX0RXUn30lCIssZstDmUla6qOkHEql3FmA5c+a
-         sBkhdsRO5FRW9/G89OOYjG5QVBT+rcibrFMNLchCP5pPP2rhzmK9ql/GxlWEKIY0yJxt
-         7AnGyfEiBdU/msxkCb09W1lMCuYBvIr0TuK3meVHpdGPNqFEvQgHsOtvyFGnWC6jicxj
-         kKpLao01QsftxbjrIgZBwDMx4kcOsYaFJNKMJd9p/8IjgyaoWiHRHv7IW7vUmMF7XHuf
-         QtkAlbypYmTlz1AKcjUwS5UMz9gxIq0znRgnCK+zinKvCKS6JJQVHFcQAnWph383nX7U
-         isSQ==
+        bh=craYCVi2BTYSG//ZfvGfYRhlqVpUpjc5Rf1JH0LfWk0=;
+        b=jp9kPg5OK3surYCjptgvtsCYDgXdiUn+6boEQaFuoNuYVu4eiAqZItGjUQjlsMnOpx
+         TslXXB/LmFgT94OhdIrRjdLtPtMMVve/91ZbwVgG3LkTvREX8lS4yjQR02UTpUDfH7VS
+         5moLKW0FY59IUNsB1QvV0Im6FRxB5h78YZLP8Xq1+mtXRgQpf23fLbfXQsFKk4wmNO0S
+         d1GKLpIU35DrSlqLTKNFj/92lMyYcJ1Xn4KkNeLPHo80RwHupr15fu3Etyw7vvoHn1DA
+         fbKVpaeaGfIEonyFxn0IvlbboUFRwc+Rqyrs/TsnzKdxBSoadQ9q8wAFXRIV95DZ6rV8
+         vAiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yGraruVa3r3FVzpN59XwZdDH6Q2H9H8Y7V3NHqTM8nU=;
-        b=nzka2JrpbJz8geOHh4icEfBeYtvUIb19sRTa6Bsd9WBwgMrE93EBvjwSyFixGrF4OH
-         83j0P40+OBDeEcUFwPre9lHpR8rODdPXFoYlVW6u6iy94Xi7ogVMer8tjRr+k5pUzrK1
-         DyhZJBq73L809yFJwZ2D2SvkmQvq/VM2hTMjpAEuJXjFT7Oa4ij+amve3EjOa6B8mGGd
-         It7dwh1FeoAz1ZpTuvb0D8B3u7/NXAHgyXj9xScBgcISq8UBdnoL0rwSGPn6PnioLpFE
-         WKh/R4SHT2aUxigu/ayCKTZ9FMH7SRPschHYJ039sOcPpksnf1i/w8nQh26UxZl4X7tB
-         evrA==
-X-Gm-Message-State: AFeK/H3vYZkoaNrSj7dzQfLqWHmhLWxHvQaS9+Lo1uJITLbuz4gDpHYCnlFPEg9i8k0gsg==
-X-Received: by 10.98.38.198 with SMTP id m189mr3080391pfm.124.1490828968723;
-        Wed, 29 Mar 2017 16:09:28 -0700 (PDT)
+        bh=craYCVi2BTYSG//ZfvGfYRhlqVpUpjc5Rf1JH0LfWk0=;
+        b=Jf4nRP2LJ9t8K/LfnCWN5PcbnbcKTZb5AVh2XAawXTk3B1Vu6gZuFvL5fmXb36oUWm
+         eFOFLyCg4t7CZqP8Q+WEqjSoOtgiO5LLg/Q5wnpCbylnxsEAxi7TOYUApPgKjBc0YYIs
+         c8lnecoU7S4t6FcmsW6HxToxymcjDtMmlXMkH95KhX58A5V5LxePu+VWeqBANGRsNZ4L
+         znoHBmq6T8FsnRbYmjLUfpNoV3osQz7orp0/gj4tZQf4BcDbwXBowLbjDxhp5i+oT5JU
+         OSiFvhQPVRMZvbO/djfmnlaBxC3GobrzMYruXgtF2dRL7unwR9oF0R/L46OlR0fjus7N
+         EpQQ==
+X-Gm-Message-State: AFeK/H2ImMzQi2Nr6QyqFDFrsnUraApc8jCsVU5UUQZ0hNOenEiLSAy8z2KBVQsaFBY+Zg==
+X-Received: by 10.98.36.151 with SMTP id k23mr2898495pfk.53.1490829191523;
+        Wed, 29 Mar 2017 16:13:11 -0700 (PDT)
 Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:1cae:64a4:6d7e:ad6f])
-        by smtp.gmail.com with ESMTPSA id s12sm298832pgs.12.2017.03.29.16.09.27
+        by smtp.gmail.com with ESMTPSA id t5sm281686pgb.58.2017.03.29.16.13.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 29 Mar 2017 16:09:27 -0700 (PDT)
-Date:   Wed, 29 Mar 2017 16:09:25 -0700
+        Wed, 29 Mar 2017 16:13:10 -0700 (PDT)
+Date:   Wed, 29 Mar 2017 16:13:09 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] short status: improve reporting for submodule changes
-Message-ID: <20170329230925.GY31294@aiede.mtv.corp.google.com>
+Subject: Re: [PATCH 2/2] submodule.c: correctly handle nested submodules in
+ is_submodule_modified
+Message-ID: <20170329231308.GZ31294@aiede.mtv.corp.google.com>
 References: <20170328230938.9887-1-sbeller@google.com>
  <20170329222616.11077-1-sbeller@google.com>
- <20170329222616.11077-2-sbeller@google.com>
+ <20170329222616.11077-3-sbeller@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170329222616.11077-2-sbeller@google.com>
+In-Reply-To: <20170329222616.11077-3-sbeller@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,16 +69,24 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller wrote:
 
+> This bug fix also affects the default output (non-short, non-porcelain)
+> of git-status, which is not tested here.
+
+Do you have an example?  (In just the commit message would be fine, in
+tests would be even better.)
+
 > Signed-off-by: Stefan Beller <sbeller@google.com>
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 > ---
->  Documentation/git-status.txt |  11 ++++
->  t/t3600-rm.sh                |  18 +++++--
->  t/t7506-status-submodule.sh  | 117 +++++++++++++++++++++++++++++++++++++++++++
->  wt-status.c                  |  17 ++++++-
->  4 files changed, 156 insertions(+), 7 deletions(-)
+>  Documentation/git-status.txt |  2 ++
+>  submodule.c                  | 21 +++++++++++++++++++--
+>  t/t3600-rm.sh                |  2 +-
+>  t/t7506-status-submodule.sh  |  4 ++--
+>  4 files changed, 24 insertions(+), 5 deletions(-)
 
-Yes, this looks good.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Thank you,
-Jonathan
+but I would be a lot more comfortable after looking at the change to
+"git status" output.  (E.g. a test demonstrating it can happen in a
+followup change if that's simpler.)
+
+Thanks for your patient work on this.
