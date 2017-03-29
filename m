@@ -2,150 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD,UNPARSEABLE_RELAY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF45820958
-	for <e@80x24.org>; Wed, 29 Mar 2017 16:53:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DB0720969
+	for <e@80x24.org>; Wed, 29 Mar 2017 17:06:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752637AbdC2Qx5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 12:53:57 -0400
-Received: from mx1.riseup.net ([198.252.153.129]:43868 "EHLO mx1.riseup.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751818AbdC2Qx4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 12:53:56 -0400
-Received: from piha.riseup.net (unknown [10.0.1.163])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (Client CN "*.riseup.net", Issuer "COMODO RSA Domain Validation Secure Server CA" (verified OK))
-        by mx1.riseup.net (Postfix) with ESMTPS id 1D9151A2014
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 16:53:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1490806435; bh=L0hfHN8vWhFfBD7KXkcagVSPkg/2Ttz4Jxq7ri1n02A=;
-        h=From:To:Subject:Date:From;
-        b=nVR3OcbadceAGYtid7Zb89ce0MLXZ5SMUkPJzz6b1aHuQBBikUyY+/n9WZyzf0Uk+
-         QYUVMTvRYmq+0qQO0awoOkwXRp/SheLNunqSugEjFdnq7imvja10AO/w4FQ2V1ebyy
-         gT9VjIw/GNP75hgPhfMm6hJEu0RZBMaMZ02ZXZKQ=
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: pickfire)
-        with ESMTPSA id 7E0061C03BD
-From:   Ivan Tham <pickfire@riseup.net>
-To:     git@vger.kernel.org
-Subject: [PATCH] userdiff: add build-in pattern for shell
-Date:   Thu, 30 Mar 2017 00:53:31 +0800
-Message-Id: <20170329165331.17742-1-pickfire@riseup.net>
+        id S1752637AbdC2RG5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 13:06:57 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57935 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752140AbdC2RGz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 13:06:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 41A438078D;
+        Wed, 29 Mar 2017 13:06:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HgM+XfP5Y+Uj5j6bXpGh82jBMak=; b=mGuQTi
+        67FwzEaHk9t2ztZQkDM6blf24mEao1MJCIOvdwUF30Ef78akEaI87n6n/UWaIx3/
+        HuFEX1aooAuDyVRG3bLpzcpoXau6R8nu274l0jJgFJBtKVh/XIYCEUHIgEO7UVA8
+        8Rag4KAQdLF9yfHQWCQRGHwQBhLes1LldvTC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kFSfowQArbPaa58Uu635QC6DC2t4ddNH
+        xsSfYiFP6FW18bpU5MgoW4lW3gS1G83RmZDrt75DXmUizODa/knEUnbSSeDXNYYs
+        X3MNPidXIT5OntO7bTkCqLieH+rN+ys1tbGJokJ1Tx14Gwy698GwLtis9Hvbwrr3
+        ek/wxwbseHo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3ACD78078C;
+        Wed, 29 Mar 2017 13:06:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 93A4F8078B;
+        Wed, 29 Mar 2017 13:06:53 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] read-cache: avoid git_path() race in freshen_shared_index()
+References: <20170329080820.8084-1-chriscool@tuxfamily.org>
+Date:   Wed, 29 Mar 2017 10:06:52 -0700
+In-Reply-To: <20170329080820.8084-1-chriscool@tuxfamily.org> (Christian
+        Couder's message of "Wed, 29 Mar 2017 10:08:20 +0200")
+Message-ID: <xmqqfuhwau6r.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B820AA4-14A2-11E7-97ED-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shell are widely used but comes with lots of different patterns. The
-build-in pattern aim for POSIX-compatible shells with some additions:
+Christian Couder <christian.couder@gmail.com> writes:
 
-- Notably ${g//re/s} and ${g#cut}
-- "function" from bash
+> When performing an interactive rebase in split-index mode,
+> the commit message that one should rework when squashing commits
+> can contain some garbage instead of the usual concatenation of
+> both of the commit messages.
 
-Signed-off-by: Ivan Tham <pickfire@riseup.net>
----
- Documentation/gitattributes.txt |  2 ++
- t/t4034-diff-words.sh           |  1 +
- t/t4034/sh/expect               | 14 ++++++++++++++
- t/t4034/sh/post                 |  7 +++++++
- t/t4034/sh/pre                  |  7 +++++++
- userdiff.c                      |  5 +++++
- 6 files changed, 36 insertions(+)
- create mode 100644 t/t4034/sh/expect
- create mode 100644 t/t4034/sh/post
- create mode 100644 t/t4034/sh/pre
+OK, that is an understandable explanation of what problem you are
+trying to fix.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index a53d093ca..1bad72df2 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -706,6 +706,8 @@ patterns are available:
- 
- - `ruby` suitable for source code in the Ruby language.
- 
-+- `sh` suitable for source code in POSIX-compatible shells.
-+
- - `tex` suitable for source code for LaTeX documents.
- 
- 
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index 912df9122..2eb662f89 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -313,6 +313,7 @@ test_language_driver perl
- test_language_driver php
- test_language_driver python
- test_language_driver ruby
-+test_language_driver sh
- test_language_driver tex
- 
- test_expect_success 'word-diff with diff.sbe' '
-diff --git a/t/t4034/sh/expect b/t/t4034/sh/expect
-new file mode 100644
-index 000000000..e7b0a9ae3
---- /dev/null
-+++ b/t/t4034/sh/expect
-@@ -0,0 +1,14 @@
-+<BOLD>diff --git a/pre b/post<RESET>
-+<BOLD>index 7bb0d15..df3845b 100644<RESET>
-+<BOLD>--- a/pre<RESET>
-+<BOLD>+++ b/post<RESET>
-+<CYAN>@@ -1,7 +1,7 @@<RESET>
-+echo <GREEN>"<RESET>Hello world<RED>!<RESET>
-+<RED>bomb<RESET><GREEN>?"<RESET>
-+<GREEN>fork<RESET>(){ <RED>bomb<RESET><GREEN>fork<RESET>|<RED>bomb<RESET><GREEN>fork<RESET>& }
-+<RED>; bomb<RESET>
-+<RED>a<RESET><GREEN>x<RESET>=<RED>1 a<RESET><GREEN>2 x<RESET>=$((<RED>a<RESET><GREEN>x<RESET>+<RED>1<RESET><GREEN>2<RESET>)) <RED>a<RESET><GREEN>x<RESET>=$((<RED>a-1<RESET><GREEN>x-2<RESET>)) <RED>a<RESET><GREEN>x<RESET>=$((<RED>a<RESET><GREEN>x<RESET>*<RED>1<RESET><GREEN>2<RESET>)) <RED>a<RESET><GREEN>x<RESET>=$((<RED>a<RESET><GREEN>x<RESET>/<RED>1<RESET><GREEN>2<RESET>))
-+<RED>a<RESET><GREEN>x<RESET>=$(<RED>a<RESET><GREEN>x<RESET>) <RED>a<RESET><GREEN>x<RESET>=`<RED>a<RESET><GREEN>x<RESET>` <RED>a<RESET><GREEN>x<RESET>=${<RED>a<RESET><GREEN>x<RESET>#<RED>a<RESET><GREEN>x<RESET>*} <RED>a<RESET><GREEN>x<RESET>=${<RED>a<RESET><GREEN>x<RESET>%<RED>a<RESET><GREEN>x<RESET>*} <RED>a<RESET><GREEN>x<RESET>=${<RED>a<RESET><GREEN>x<RESET>//<RED>a<RESET><GREEN>x<RESET>/<RED>a<RESET><GREEN>x<RESET>}
-+command <RED>-h -v<RESET><GREEN>--help=all -q<RESET> | xargs -- echo <GREEN>2<RESET>><RED>&1 &<RESET><GREEN>/dev/null<RESET>
-+[ <RED>$a -eq $b<RESET><GREEN>$x -ne $y<RESET> ]&&echo <RED>aa<RESET><GREEN>xx<RESET>||echo <RED>bb<RESET><GREEN>yy<RESET>
-+[ "<RED>$a<RESET><GREEN>$x<RESET>"!=<RED>1<RESET><GREEN>2<RESET> ] && echo <RED>a<RESET><GREEN>x<RESET> || echo <RED>b<RESET><GREEN>y<RESET>
-diff --git a/t/t4034/sh/post b/t/t4034/sh/post
-new file mode 100644
-index 000000000..df3845b4f
---- /dev/null
-+++ b/t/t4034/sh/post
-@@ -0,0 +1,7 @@
-+echo "Hello world?"
-+fork(){ fork|fork& }
-+x=2 x=$((x+2)) x=$((x-2)) x=$((x*2)) x=$((x/2))
-+x=$(x) x=`x` x=${x#x*} x=${x%x*} x=${x//x/x}
-+command --help=all -q | xargs -- echo 2>/dev/null
-+[ $x -ne $y ]&&echo xx||echo yy
-+[ "$x"!=2 ] && echo x || echo y
-diff --git a/t/t4034/sh/pre b/t/t4034/sh/pre
-new file mode 100644
-index 000000000..7bb0d1562
---- /dev/null
-+++ b/t/t4034/sh/pre
-@@ -0,0 +1,7 @@
-+echo Hello world!
-+bomb(){ bomb|bomb& }; bomb
-+a=1 a=$((a+1)) a=$((a-1)) a=$((a*1)) a=$((a/1))
-+a=$(a) a=`a` a=${a#a*} a=${a%a*} a=${a//a/a}
-+command -h -v | xargs -- echo >&1 &
-+[ $a -eq $b ]&&echo aa||echo bb
-+[ "$a"!=1 ] && echo a || echo b
-diff --git a/userdiff.c b/userdiff.c
-index 8b732e40b..8d5127fb6 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -148,6 +148,11 @@ PATTERNS("csharp",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
-+PATTERNS("sh",
-+	 "^[ \t]*(function )?[A-Za-z_][A-Za-z_0-9]*[ \t]*()[\t]*\\{?$",
-+	 /* -- */
-+	 "(\\$|--?)?([a-zA-Z_][a-zA-Z0-9._]*|[0-9]+|#)|--" /* command/param */
-+	 "|\\$[({]|[)}]|[-+*/=!]=?|[\\]&%#/|]{1,2}|[<>]{1,3}|[ \t]#.*"),
- IPATTERN("css",
- 	 "![:;][[:space:]]*$\n"
- 	 "^[_a-z0-9].*$",
--- 
-2.12.2.609.gf7d0c115f
+>
+> When bisecting it appears that 94c9b5af70 (Merge branch
+> 'cc/split-index-config', 2017-03-17) is the first bad commit.
+>
+> But when rebasing cc/split-index-config on top of the commit it
+> was merged with, the first bad commit is then c3a0082502
+> (read-cache: use freshen_shared_index() in read_index_from(),
+> 2017-03-06).
 
+This part however doesn't help understanding the issue.  "When X but
+when Y" sounds as if you found a botched merge, but that does not
+seem to be the case.  The resulting tree after rebasing (with
+conflict resolution) is the same as the recorded merge result.  It
+could be saying that "git bisect" is buggy and does not pinpoint the
+broken commit, but this is not a commit to fix "bisect".
+
+That leaves the reader confused.
+
+> This shows that we should be careful not to use git_path() in
+> freshen_shared_index(). It is using a shared buffer that can
+> too easily lead to races.
+
+The impression I get from the symptom is that after git_path() is
+called here, before check_and_freshen_file() uses that result, it
+(or functions it calls) uses git_path(), and the number of times it
+does so has changed since cc/split-index-config was written on the
+mainline, and the rotating 4-element buffer get_pathname() gives is
+now exhausted, leading to the failure you observed.  By the way,
+that does not sound a race to me.
+
+In any case, that explains why bisect says the merge is the first
+bad one, and cures the confused reader ;-) The use of git_path() on
+the topic was still safe; it was a timebomb waiting to go off.  The
+mainline started using more calls and the merge result was unsafe.
+
+If you meant to summarise the whole two paragraphs above that I
+needed to think it through with "This shows that", I'd have to say
+that you are expecting too much from your readers.  Please be a bit
+more gentle to them.
+
+Thanks.
+
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  read-cache.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/read-cache.c b/read-cache.c
+> index e447751823..2f10242c24 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1682,9 +1682,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>   */
+>  static void freshen_shared_index(char *base_sha1_hex, int warn)
+>  {
+> -	const char *shared_index = git_path("sharedindex.%s", base_sha1_hex);
+> +	char *shared_index = git_pathdup("sharedindex.%s", base_sha1_hex);
+>  	if (!check_and_freshen_file(shared_index, 1) && warn)
+>  		warning("could not freshen shared index '%s'", shared_index);
+> +	free(shared_index);
+>  }
+>  
+>  int read_index_from(struct index_state *istate, const char *path)
