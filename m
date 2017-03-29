@@ -2,115 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E55FF20958
-	for <e@80x24.org>; Wed, 29 Mar 2017 20:47:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 577C620958
+	for <e@80x24.org>; Wed, 29 Mar 2017 21:10:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932765AbdC2Uok (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 16:44:40 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54549 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752944AbdC2UnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 16:43:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9BAB187F27;
-        Wed, 29 Mar 2017 16:43:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DEucaYI4FLm2hA18XZEspaf3WvQ=; b=xfvXfR
-        fY1rvw8CdcOeONa9I2M4Cjww/zylLSAaKg8KaHahTvhS1W4BhyzhHBoJouAbFAj5
-        NirNELefr0U6STww4c7OVl8PlIlWEPBaCupbQVOZjCtDPCA5MeGBd8zqbYTWNBd5
-        wEVak5J9H2pnPDlPtv0nkiDGQxle45diZKb4o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=MvFxziJZ6JXdNEdqeBOtnQyq8Ik8yxks
-        +NVZGr5DI43oDKARchWvMnACO5VbtfAsLzKgR5IV9rlKIRnyBmSPfPjPs36b5h6U
-        8dnaFSats11mTRmZ7mfE7VasDKNXvVmY9wKStYYPaxf0i/1mxFAXBVFsOUqfzPGI
-        wzfZq/lvb5U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 94ADE87F26;
-        Wed, 29 Mar 2017 16:43:10 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB3CD87F25;
-        Wed, 29 Mar 2017 16:43:09 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com,
-        christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: Re: [PATCH v3 7/8] sub-process: move sub-process functions into separate files
-References: <20170329155330.12860-1-benpeart@microsoft.com>
-        <20170329155330.12860-8-benpeart@microsoft.com>
-Date:   Wed, 29 Mar 2017 13:43:08 -0700
-In-Reply-To: <20170329155330.12860-8-benpeart@microsoft.com> (Ben Peart's
-        message of "Wed, 29 Mar 2017 11:53:29 -0400")
-Message-ID: <xmqqmvc3ak6b.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S933198AbdC2VJ6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 17:09:58 -0400
+Received: from mail-io0-f172.google.com ([209.85.223.172]:36080 "EHLO
+        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932728AbdC2VJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 17:09:56 -0400
+Received: by mail-io0-f172.google.com with SMTP id l7so7327622ioe.3
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 14:09:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=bF4Nfl6HYgaF92E3V7IXUc1mENcthOwW8SHEA0A1uFk=;
+        b=d/vnj8ncMp2P2kxW13UCo9ko5nCnqWe81Edd19b+T39pIg8ce3FKXg6tJSipK6O9T8
+         oJ2Rhb1qyxP5mih84AtAlcAN4a4KjzbPAMsiS0jsUSLzl+XJMx/rbZhL27H6EAH80H1p
+         xP9p/vTZLDPtxKumcsPdPPoj43uJ/ULXJLkxszfrbR6VWxLpeNoQBwIo35Cw1QaS8fFZ
+         iCpx24RmqKN+zCRhPkaFwWviW21S5mgyMTD/bUx8XUbi1tWzm/B7QorjdoD7RZkUSBci
+         Geb5uaKlOpSFgZmG94wEevlVaclgb9ogRzLctEvIeKWellXtE8q48vtbys3NzBZQmqHr
+         JCaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=bF4Nfl6HYgaF92E3V7IXUc1mENcthOwW8SHEA0A1uFk=;
+        b=kQMzM9OFnQSy7U4ImKtSPOIOL29y2qSD8C6hYsz/VRY5ExxhuTUl9yF6CmciCCdpvT
+         8qfDAem+MYnrRClRb1FeZw2b9KgLGV7klkeYgW82lgg/DiCQqYAcuyq6ScpiUM12RHTD
+         ZOEKVACM/rZtIjT7yfoMkWTOFm0cEqxZKCZ2JQfEruLSHAwu3yVKkEz1z7gT0PAjUSv+
+         9sTS8Y4rs3KbcXixe7uhrpwzLNMzYHyi7GOXOHyXGBn1qKJw3yf+2quj3tbdNy9hzSZl
+         kAlWj38HPffdTDv1BYDHYcdUGMc4jMY46UU3he1Ld1jy+ysp5cHVH9r8xeL6OdLhpfTV
+         tQaQ==
+X-Gm-Message-State: AFeK/H0rQwkL0d7vmVfiw77jKwm51OOM2jwHe6zRCJ99N/JiQG14z9AD7o5RdEtlw5BYURuPTtylEclo610PNA==
+X-Received: by 10.107.34.68 with SMTP id i65mr3220502ioi.147.1490821789769;
+ Wed, 29 Mar 2017 14:09:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 52050EA0-14C0-11E7-9A4A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.107.130.208 with HTTP; Wed, 29 Mar 2017 14:09:28 -0700 (PDT)
+In-Reply-To: <20170329181228.n4t77pashdnirl3a@sigill.intra.peff.net>
+References: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
+ <20170329135703.18860-1-avarab@gmail.com> <20170329181228.n4t77pashdnirl3a@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Wed, 29 Mar 2017 23:09:28 +0200
+Message-ID: <CACBZZX70oXn7McjavzvK5S30EXjXQhLixhb=WYbKCKYXVo1KBA@mail.gmail.com>
+Subject: Re: [PATCH v3] perl: regenerate perl.mak if perl -V changes
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        stefan.naewe@atlas-elektronik.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+On Wed, Mar 29, 2017 at 8:12 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 29, 2017 at 01:57:03PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> Change the perl/perl.mak build process so that the file is regenerated
+>> if the output of "perl -V" changes.
+>>
+>> Before this change updating e.g. /usr/bin/perl to a new major version
+>> would cause the next "make" command to fail, since perl.mak has
+>> hardcoded paths to perl library paths retrieved from its first run.
+>
+> This is one of those things that has been bugging me for years, but it
+> comes up so rarely that I have never dug into it.
 
-> +Types
-> +-----
-> +
-> +'int(*subprocess_start_fn)(struct subprocess_entry *entry)'::
-> +
-> +	User-supplied function to initialize the sub-process.  This is
-> +	typically used to negoiate the interface version and capabilities.
-> +
-> +
-> +Functions
-> +---------
-> +
-> +`subprocess_start`::
-> +
-> +	Start a subprocess and add it to the subprocess hashmap.
-> +
-> +`subprocess_stop`::
-> +
-> +	Kill a subprocess and remove it from the subprocess hashmap.
-> +
-> +`subprocess_find_entry`::
-> +
-> +	Find a subprocess in the subprocess hashmap.
-> +
-> +`subprocess_get_child_process`::
-> +
-> +	Get the underlying `struct child_process` from a subprocess.
-> +
-> +`subprocess_read_status`::
-> +
-> +	Helper function to read packets looking for the last "status=<foo>"
-> +	key/value pair.
+Glad to help. I've only run into this once a couple of days ago, made
+a mental note to fix it, and then I saw that thread...
 
-OK.
+>> Now the logic added in commit ee9be06770 ("perl: detect new files in
+>> MakeMaker builds", 2012-07-27) is extended to regenerate
+>> perl/perl.mak if there's any change to "perl -V".
+>
+> Nice. This fix is way simpler than I feared.
+>
+>> This will in some cases redundantly trigger perl/perl.mak to be
+>> re-made, e.g. if @INC is modified in ways the build process doesn't
+>> care about through sitecustomize.pl, but the common case is that we
+>> just do the right thing and re-generate perl/perl.mak when needed.
+>
+> I think that's fine. There's a related bug that the generation of
+> perl/perl.mak via recursive-make is sometimes racy. So that _might_
+> trigger more often as a result of this, but I think the solution is to
+> fix that race, not try to pretend it won't happen. :)
 
-> diff --git a/sub-process.c b/sub-process.c
-> new file mode 100644
-> index 0000000000..2c4d27c193
-> --- /dev/null
-> +++ b/sub-process.c
-> @@ -0,0 +1,116 @@
-> +/*
-> + * Generic implementation of background process infrastructure.
-> + */
-> +#include "sub-process.h"
-> +#include "sigchain.h"
-> +#include "pkt-line.h"
-> + ...
-> +void subprocess_exit_handler(struct child_process *process)
-> +{
+We'll also redundantly trigger if you upgrade to a minor new perl
+version, but I think that's squarely in "who cares" territory. This'll
+only impact people working on git, and *occasionally* they might get a
+100 ms hit when running make, as opposed to a cryptic error where
+they'll likely stare at it for a bit before running "make clean".
 
-This is not only undocumented in the above, but it does not seem to
-be necessary to be a public function.  The only thing that uses this
-is subprocess_start(), which is in this file.  Perhaps make it static?
+If we were being more pedantic we could only bust the cache on major
+perl version upgrades:
+
+    perl -e 'print substr($], 0, 5), "\n"' >>PM.stamp+
+
+Or use Config.pm:
+
+    perl -MConfig -e 'print @Config{qw(api_revision api_version)},
+"\n"' >>PM.stamp+
+
+But I think overall leaning on the side of busting the cache more
+often to avoid cryptic errors is the right choice, and we should use
+"perl -V".
