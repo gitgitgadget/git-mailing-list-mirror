@@ -6,91 +6,73 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE07F20966
-	for <e@80x24.org>; Wed, 29 Mar 2017 10:58:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 377F220966
+	for <e@80x24.org>; Wed, 29 Mar 2017 11:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756032AbdC2K6W (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 06:58:22 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:47159 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1756079AbdC2Kzx (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Mar 2017 06:55:53 -0400
-X-AuditID: 12074414-7efff70000002bfd-14-58db92b2ab6c
+        id S1752092AbdC2KpO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 06:45:14 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:52181 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752080AbdC2KoS (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Mar 2017 06:44:18 -0400
+X-AuditID: 1207440d-041ff70000003721-75-58db90009943
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id E1.34.11261.2B29BD85; Wed, 29 Mar 2017 06:55:46 -0400 (EDT)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id C3.56.14113.0009BD85; Wed, 29 Mar 2017 06:44:16 -0400 (EDT)
 Received: from [192.168.69.190] (p4FEDF5D2.dip0.t-ipconnect.de [79.237.245.210])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2TAth22017966
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2TAiE0Y017469
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Wed, 29 Mar 2017 06:55:44 -0400
-Subject: Re: [PATCH v6 18/27] files-backend: replace submodule_allowed check
- in files_downcast()
-To:     Duy Nguyen <pclouds@gmail.com>
-References: <20170222140450.30886-1-pclouds@gmail.com>
- <20170318020337.22767-1-pclouds@gmail.com>
- <20170318020337.22767-19-pclouds@gmail.com>
- <004082a0-871f-cd41-edc5-522b5c2b3b58@alum.mit.edu>
- <CACsJy8CpUzRjZG7V8a6XvzcjxhwTnAfpwYed3OSLrygUPOK66g@mail.gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>,
-        David Turner <novalis@novalis.org>
+        Wed, 29 Mar 2017 06:44:15 -0400
+Subject: Re: [PATCH v4 2/5] dir_iterator: iterate over dir after its contents
+To:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org
+References: <1490747533-89143-1-git-send-email-bnmvco@gmail.com>
+ <1490747533-89143-3-git-send-email-bnmvco@gmail.com>
+ <7a665631-da6a-4b9f-b9e7-750f2504eccd@alum.mit.edu>
+Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <a44dfc2e-8196-a782-be69-682f252d2592@alum.mit.edu>
-Date:   Wed, 29 Mar 2017 12:55:42 +0200
+Message-ID: <8eeadbe1-6a28-cee7-5dcb-5d408aac8925@alum.mit.edu>
+Date:   Wed, 29 Mar 2017 12:44:13 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8CpUzRjZG7V8a6XvzcjxhwTnAfpwYed3OSLrygUPOK66g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <7a665631-da6a-4b9f-b9e7-750f2504eccd@alum.mit.edu>
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqLt50u0Ig96pjBZdV7qZLBp6rzBb
-        9C/vYrNY8vA1s0X3lLeMFjOvWlts3tzO4sDusXPWXXaPDx/jPBZsKvXoaj/C5nHxkrLH/qXb
-        2Dw+b5ILYI/isklJzcksSy3St0vgyti13Ligjb3i48cu5gbG3axdjJwcEgImEvs+TWTqYuTi
-        EBLYwSTxd8VzRgjnApPE4sYDbF2MHBzCAkkS75oCQBpEBJQk3nRsY4ao6WOS6Jh3lAXEYRaY
-        xSRxce8iNpAqNgFdiUU9zUwgNq+AvcTindfA4iwCqhInb2xgBLFFBUIk5ix8wAhRIyhxcuYT
-        FhCbUyBQYueCN2C9zALqEn/mXWKGsOUltr+dwzyBkX8WkpZZSMpmISlbwMi8ilEuMac0Vzc3
-        MTOnODVZtzg5MS8vtUjXQi83s0QvNaV0EyMk2EV2MB45KXeIUYCDUYmHd0ferQgh1sSy4src
-        Q4ySHExKorwnDG9HCPEl5adUZiQWZ8QXleakFh9ilOBgVhLh1VcEyvGmJFZWpRblw6SkOViU
-        xHm/LVb3ExJITyxJzU5NLUgtgsnKcHAoSfAmTQRqFCxKTU+tSMvMKUFIM3FwggznARo+CaSG
-        t7ggMbc4Mx0if4pRl+PG8QNvmIRY8vLzUqXEeT9MACoSACnKKM2DmwNLUq8YxYHeEuZdAzKK
-        B5jg4Ca9AlrCBLRE3OYWyJKSRISUVAOj94NHZZleLhqfCyIDGyd/V9+hWrGteYnrT3eVnjnM
-        cbqZ3YuvcoaqKzemmmZqOshx/eOfJH5EqPhe6fvtssnLHv6ZLX/qzHzbDcLFdxOD86fs8fKw
-        d5hcf9zu3xe37XL8UVsWFPB/OhMt995/ZlfbeWalpJwHjHbOC64uPpxvOfmmxn7fn2lKLMUZ
-        iYZazEXFiQBAVCdgLQMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpileLIzCtJLcpLzFFi42IRYndR1GWYcDvCYMcLY4vHn96yWXRd6Way
+        aOi9wmzRPeUto8Xmze0sDqweO2fdZfdYsKnU4+IlZY/Pm+QCWKK4bFJSczLLUov07RK4Mm6e
+        7GIuOMZacfLZAtYGxsMsXYycHBICJhK3Tm1j6mLk4hAS2MEkseHeYjaQhJDABSaJ1W+dQGxh
+        AV+JhjNrgRo4OEQErCWur/GCqF/LKPFy5SJmkBpmARuJ4029jCA2m4CuxKKeZiYQm1fAXmLv
+        nXVgcRYBVYmbLXPB5osKhEjMWfiAEaJGUOLkzCdgB3EKOEjM/N7JAjFTT2LH9V+sELa8xPa3
+        c5gnMPLPQtIyC0nZLCRlCxiZVzHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGunlZpbopaaUbmKE
+        BC/vDsb/62QOMQpwMCrx8O7IuxUhxJpYVlyZe4hRkoNJSZT3hOHtCCG+pPyUyozE4oz4otKc
+        1OJDjBIczEoivPqKQDnelMTKqtSifJiUNAeLkjiv2hJ1PyGB9MSS1OzU1ILUIpisDAeHkgRv
+        Sh9Qo2BRanpqRVpmTglCmomDE2Q4D9DwgyA1vMUFibnFmekQ+VOMuhw3jh94wyTEkpeflyol
+        zrsZpEgApCijNA9uDizpvGIUB3pLmPcGSBUPMGHBTXoFtIQJaIm4zS2QJSWJCCmpBkauBD2l
+        NhZhZxbFzzf1Zu98PGOZf6jEVtY//75/MeK/KukT9fIOh0fii2ARe7t3zz+vl72WbPOkKFiM
+        YXH1yjdlXZqvtapO3Jgn3++3asMG0ZdLpp2vsD/q6JXIN7vx6izvjhm7Kstsz4jfmrZttqPz
+        32S9vE9mpoEvp5is/5wtf/5yv8tPrjolluKMREMt5qLiRADLH99vFQMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/26/2017 04:16 AM, Duy Nguyen wrote:
-> On Mon, Mar 20, 2017 at 4:18 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> +/* ref_store_init flags */
->>> +#define REF_STORE_READ               (1 << 0)
->>
->> I asked [1] in reply to v5 whether `REF_STORE_READ` is really necessary
->> but I don't think you replied. Surely a reference store that we can't
->> read would be useless? Can't we just assume that any `ref_store` is
->> readable and drop this constant?
-> 
-> I deleted it then I realized many lines like these
-> 
->     files_downcast(ref_store, REF_STORE_READ, "read_raw_ref");
-> 
-> would become
-> 
->     files_downcast(ref_store, 0, "read_raw_ref");
-> 
-> I think for newcomers, the former gives a better hint what the second
-> argument is than a plain zero in the latter, so I'm inclined to keep
-> it.
+On 03/29/2017 11:56 AM, Michael Haggerty wrote:
+> On 03/29/2017 02:32 AM, Daniel Ferreira wrote:
+>> [...]
+> [...]
+> The disagreement is not a surprise, because there isn't a corresponding
+> coding error in the code below that returns the directory itself in a
+> post-order iteration. The net result appears to be that there is no
+> recursion at all into subdirectories when `DIR_ITERATOR_DEPTH_FIRST` is
+> set. So due to this bug, we get neither a correct post-order iteration
+> nor a correct pre-order iteration with the new option.
 
-That's OK with me; I don't feel strongly about it.
+Correction: the second-to-last sentence should read "there is no
+recursion at all into subdirectories when `DIR_ITERATOR_DEPTH_FIRST` is
+*NOT* set.
 
 Michael
 
