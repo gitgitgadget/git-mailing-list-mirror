@@ -2,117 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 577C620958
-	for <e@80x24.org>; Wed, 29 Mar 2017 21:10:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1203320958
+	for <e@80x24.org>; Wed, 29 Mar 2017 21:13:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933198AbdC2VJ6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 17:09:58 -0400
-Received: from mail-io0-f172.google.com ([209.85.223.172]:36080 "EHLO
-        mail-io0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932728AbdC2VJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 17:09:56 -0400
-Received: by mail-io0-f172.google.com with SMTP id l7so7327622ioe.3
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 14:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bF4Nfl6HYgaF92E3V7IXUc1mENcthOwW8SHEA0A1uFk=;
-        b=d/vnj8ncMp2P2kxW13UCo9ko5nCnqWe81Edd19b+T39pIg8ce3FKXg6tJSipK6O9T8
-         oJ2Rhb1qyxP5mih84AtAlcAN4a4KjzbPAMsiS0jsUSLzl+XJMx/rbZhL27H6EAH80H1p
-         xP9p/vTZLDPtxKumcsPdPPoj43uJ/ULXJLkxszfrbR6VWxLpeNoQBwIo35Cw1QaS8fFZ
-         iCpx24RmqKN+zCRhPkaFwWviW21S5mgyMTD/bUx8XUbi1tWzm/B7QorjdoD7RZkUSBci
-         Geb5uaKlOpSFgZmG94wEevlVaclgb9ogRzLctEvIeKWellXtE8q48vtbys3NzBZQmqHr
-         JCaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bF4Nfl6HYgaF92E3V7IXUc1mENcthOwW8SHEA0A1uFk=;
-        b=kQMzM9OFnQSy7U4ImKtSPOIOL29y2qSD8C6hYsz/VRY5ExxhuTUl9yF6CmciCCdpvT
-         8qfDAem+MYnrRClRb1FeZw2b9KgLGV7klkeYgW82lgg/DiCQqYAcuyq6ScpiUM12RHTD
-         ZOEKVACM/rZtIjT7yfoMkWTOFm0cEqxZKCZ2JQfEruLSHAwu3yVKkEz1z7gT0PAjUSv+
-         9sTS8Y4rs3KbcXixe7uhrpwzLNMzYHyi7GOXOHyXGBn1qKJw3yf+2quj3tbdNy9hzSZl
-         kAlWj38HPffdTDv1BYDHYcdUGMc4jMY46UU3he1Ld1jy+ysp5cHVH9r8xeL6OdLhpfTV
-         tQaQ==
-X-Gm-Message-State: AFeK/H0rQwkL0d7vmVfiw77jKwm51OOM2jwHe6zRCJ99N/JiQG14z9AD7o5RdEtlw5BYURuPTtylEclo610PNA==
-X-Received: by 10.107.34.68 with SMTP id i65mr3220502ioi.147.1490821789769;
- Wed, 29 Mar 2017 14:09:49 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Wed, 29 Mar 2017 14:09:28 -0700 (PDT)
-In-Reply-To: <20170329181228.n4t77pashdnirl3a@sigill.intra.peff.net>
-References: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
- <20170329135703.18860-1-avarab@gmail.com> <20170329181228.n4t77pashdnirl3a@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 29 Mar 2017 23:09:28 +0200
-Message-ID: <CACBZZX70oXn7McjavzvK5S30EXjXQhLixhb=WYbKCKYXVo1KBA@mail.gmail.com>
-Subject: Re: [PATCH v3] perl: regenerate perl.mak if perl -V changes
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        id S933087AbdC2VNo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 17:13:44 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53938 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933024AbdC2VNl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 17:13:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D270283A85;
+        Wed, 29 Mar 2017 17:13:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=GAP9DUHKHiDc
+        Tkmsg/xLTHkpsJI=; b=nNcKKRRa3tCh0YkUiR+In+V+81x1reGiIEDKlc+pqr4/
+        aItiJJ4g+qGJ0HZSukpvLSpIEEk2eW97XBK3E1jXyro3Kb2HtD7LS0ldosnApVLB
+        vMegOR31jQ3BCCAvHNZRE/6UBiwjCdHxZJs6k2jbAfgjaoWLCNe+j+2jz6H0lIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ptUjKc
+        fdbuSMSXFuAb26OMjgibbAY/sNFOJxyMxVAUAZvBVuM/UZ2qfFEsRHM3/DVJ+kZ8
+        9m0vNIyQ3Nppy8w2DsmiD5bavEbWEm5QW3IzhNpf9KUMPIHlktMF5k1SHyTeXp6Q
+        m0Y2RaIPe5250QXOfoN9S88TrA4KaMmxs2BUo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB4BE83A84;
+        Wed, 29 Mar 2017 17:13:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2605C83A5D;
+        Wed, 29 Mar 2017 17:13:34 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
         Jeffrey Walton <noloader@gmail.com>,
         stefan.naewe@atlas-elektronik.com
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v3] perl: regenerate perl.mak if perl -V changes
+References: <39b203e9-c3a9-80c3-ec24-649e04ef5620@atlas-elektronik.com>
+        <20170329135703.18860-1-avarab@gmail.com>
+        <20170329181228.n4t77pashdnirl3a@sigill.intra.peff.net>
+        <CACBZZX70oXn7McjavzvK5S30EXjXQhLixhb=WYbKCKYXVo1KBA@mail.gmail.com>
+Date:   Wed, 29 Mar 2017 14:13:32 -0700
+In-Reply-To: <CACBZZX70oXn7McjavzvK5S30EXjXQhLixhb=WYbKCKYXVo1KBA@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 29 Mar
+ 2017 23:09:28
+        +0200")
+Message-ID: <xmqq7f37airn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9152947A-14C4-11E7-AA7A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 29, 2017 at 8:12 PM, Jeff King <peff@peff.net> wrote:
-> On Wed, Mar 29, 2017 at 01:57:03PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> Change the perl/perl.mak build process so that the file is regenerated
->> if the output of "perl -V" changes.
->>
->> Before this change updating e.g. /usr/bin/perl to a new major version
->> would cause the next "make" command to fail, since perl.mak has
->> hardcoded paths to perl library paths retrieved from its first run.
->
-> This is one of those things that has been bugging me for years, but it
-> comes up so rarely that I have never dug into it.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Glad to help. I've only run into this once a couple of days ago, made
-a mental note to fix it, and then I saw that thread...
+> We'll also redundantly trigger if you upgrade to a minor new perl
+> version, but I think that's squarely in "who cares" territory.
+> ...
+> But I think overall leaning on the side of busting the cache more
+> often to avoid cryptic errors is the right choice, and we should use
+> "perl -V".
 
->> Now the logic added in commit ee9be06770 ("perl: detect new files in
->> MakeMaker builds", 2012-07-27) is extended to regenerate
->> perl/perl.mak if there's any change to "perl -V".
->
-> Nice. This fix is way simpler than I feared.
->
->> This will in some cases redundantly trigger perl/perl.mak to be
->> re-made, e.g. if @INC is modified in ways the build process doesn't
->> care about through sitecustomize.pl, but the common case is that we
->> just do the right thing and re-generate perl/perl.mak when needed.
->
-> I think that's fine. There's a related bug that the generation of
-> perl/perl.mak via recursive-make is sometimes racy. So that _might_
-> trigger more often as a result of this, but I think the solution is to
-> fix that race, not try to pretend it won't happen. :)
+I'd throw it into "better safe than sorry" category.  I think we all
+like the approach this patch takes.  Let's queue it and merge it
+down soonish.
 
-We'll also redundantly trigger if you upgrade to a minor new perl
-version, but I think that's squarely in "who cares" territory. This'll
-only impact people working on git, and *occasionally* they might get a
-100 ms hit when running make, as opposed to a cryptic error where
-they'll likely stare at it for a bit before running "make clean".
+Thanks.
 
-If we were being more pedantic we could only bust the cache on major
-perl version upgrades:
-
-    perl -e 'print substr($], 0, 5), "\n"' >>PM.stamp+
-
-Or use Config.pm:
-
-    perl -MConfig -e 'print @Config{qw(api_revision api_version)},
-"\n"' >>PM.stamp+
-
-But I think overall leaning on the side of busting the cache more
-often to avoid cryptic errors is the right choice, and we should use
-"perl -V".
