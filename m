@@ -6,76 +6,101 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B337C1FAFB
-	for <e@80x24.org>; Wed, 29 Mar 2017 02:18:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C6AA1FAFB
+	for <e@80x24.org>; Wed, 29 Mar 2017 03:18:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752140AbdC2CSZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Mar 2017 22:18:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53363 "EHLO cloud.peff.net"
+        id S1751834AbdC2DSm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Mar 2017 23:18:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53388 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751785AbdC2CSY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Mar 2017 22:18:24 -0400
-Received: (qmail 2922 invoked by uid 109); 29 Mar 2017 02:18:10 -0000
+        id S1751716AbdC2DSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Mar 2017 23:18:42 -0400
+Received: (qmail 6538 invoked by uid 109); 29 Mar 2017 03:18:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 02:18:10 +0000
-Received: (qmail 5377 invoked by uid 111); 29 Mar 2017 02:18:25 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 29 Mar 2017 03:18:39 +0000
+Received: (qmail 19288 invoked by uid 111); 29 Mar 2017 03:18:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 22:18:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 22:18:07 -0400
-Date:   Tue, 28 Mar 2017 22:18:07 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 28 Mar 2017 23:18:54 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Mar 2017 23:18:37 -0400
+Date:   Tue, 28 Mar 2017 23:18:37 -0400
 From:   Jeff King <peff@peff.net>
 To:     Jeffrey Walton <noloader@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Can't locate ExtUtils/MakeMaker.pm in @INC
-Message-ID: <20170329021807.voys2r65knn6tdwg@sigill.intra.peff.net>
-References: <CAH8yC8kpKii+FNZEUqDqLcuEWBsTTnrqMHq_3VLdAzcpDSKFww@mail.gmail.com>
+Subject: Re: Git fails to build on Ubuntu Server 16.04
+Message-ID: <20170329031836.h2j3hja4ktocbv6i@sigill.intra.peff.net>
+References: <CAH8yC8kexrV8d7Tg_vCCM+GWsNH82386HEyN=XSguqZjcOuPzQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAH8yC8kpKii+FNZEUqDqLcuEWBsTTnrqMHq_3VLdAzcpDSKFww@mail.gmail.com>
+In-Reply-To: <CAH8yC8kexrV8d7Tg_vCCM+GWsNH82386HEyN=XSguqZjcOuPzQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Mar 28, 2017 at 09:03:43PM -0400, Jeffrey Walton wrote:
+On Tue, Mar 28, 2017 at 07:17:16PM -0400, Jeffrey Walton wrote:
 
-> This looks like the last issue with Git 2.12.2. This time the machine
-> is Fedora 25.
+> I configured with --enable-pthreads, and LIBS included -lpthread.
 > 
-> I configured with PERL_PATH=/usr/local/bin/perl. The local Perl was
-> built specifically for this error, and it includes
-> ExtUtils/MakeMaker.pm:
+> $ make V=1
+> gcc -I/usr/local/include -g -O2 -I. -DHAVE_ALLOCA_H
+> -I/usr/local/include -DUSE_CURL_FOR_IMAP_SEND -I/usr/local/include
+> -I/usr/local/include  -DHAVE_PATHS_H -DHAVE_STRINGS_H -DHAVE_DEV_TTY
+> -DHAVE_CLOCK_GETTIME -DHAVE_CLOCK_MONOTONIC -DHAVE_GETDELIM
+> -DSHA1_HEADER='<openssl/sha.h>'  -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"'
+> -DPAGER_ENV='"LESS=FRX LV=-c"' -o git-credential-store
+> -Wl,-rpath,/usr/local/lib -L/usr/local/lib  credential-store.o
+> common-main.o libgit.a xdiff/lib.a  -L/usr/local/lib
+> -Wl,-rpath,/usr/local/lib -lz -L/usr/local/lib
+> -Wl,-rpath,/usr/local/lib -lcrypto  -lrt
+> /usr/bin/ld: libgit.a(run-command.o): undefined reference to symbol
+> 'pthread_sigmask@@GLIBC_2.2.5'
+> //lib/x86_64-linux-gnu/libpthread.so.0: error adding symbols: DSO
+> missing from command line
+> collect2: error: ld returned 1 exit status
+> Makefile:2053: recipe for target 'git-credential-store' failed
+> make: *** [git-credential-store] Error 1
 
-I'm not sure what "configured with PERL_PATH" means exactly. If you did:
+Hmm. I can reproduce with:
 
-  PERL_PATH=/usr/local/bin/perl ./configure
+  LIBS=-lpthread ./configure --enable-pthreads
+  make
 
-then I don't think that works. The way to tell configure that you want
-to use a specific version of perl is with a command-line option:
+I think the problem is that $LIBS is meaningful to autoconf, but not to
+Git's Makefile. So it tricks autoconf into writing a blank PTHREAD_LIBS
+variable (because it can compile a pthread program without any extra
+options), but the Makefile does not include $LIBS.
 
-  ./configure --with-perl=/usr/local/bin/perl
+Just doing:
 
-When you're running make itself, you can override the default (or what
-was specified during configure) with:
+  ./configure --enable-pthreads
+  make
 
-  make PERL_PATH=/usr/local/bin/perl
+works fine. So should:
 
-Both of the latter two work for me:
+  ./configure
+  make
 
-  $ ./configure --with-perl=/perl/from/configure
-  [...]
-  $ make
-  [...]
-  /perl/from/configure Makefile.PL PREFIX='/home/peff/local/git/master' INSTALL_BASE='' --localedir='/home/peff/local/git/master/share/locale'
-  make[1]: /perl/from/configure: Command not found
+which should detect pthreads. Or just:
 
-  $ make PERL_PATH=/perl/from/make
-  [...]
-  /perl/from/make Makefile.PL PREFIX='/home/peff/local/git/master' INSTALL_BASE='' --localedir='/home/peff/local/git/master/share/locale'
-  make[1]: /perl/from/make: Command not found
+  make
 
-Obviously those are nonsense, but they quickly show that we're using the
-requested version of perl.
+as building with pthreads is the default on Linux.
+
+So depending on your perspective, it's either:
+
+  - not a bug (because we do not advertise $LIBS as a meaningful input
+    to the build process)
+
+  - a bug that the configure script respects $LIBS at all, since it is
+    not meaningful to the Makefile
+
+  - a bug that the configure script does not propagate $LIBS into
+    something the Makefile _does_ understand, like $EXTLIBS
+
+  - a bug that the Makefile does not care about $LIBS
+
+Patches welcome for any of the latter three (I do not have an opinion
+myself; I don't use autoconf at all).
 
 -Peff
