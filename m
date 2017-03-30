@@ -2,66 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91AD020966
-	for <e@80x24.org>; Thu, 30 Mar 2017 20:42:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4930220969
+	for <e@80x24.org>; Thu, 30 Mar 2017 20:44:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754800AbdC3Umc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 16:42:32 -0400
-Received: from mail-vk0-f50.google.com ([209.85.213.50]:33363 "EHLO
-        mail-vk0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754372AbdC3Umb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 16:42:31 -0400
-Received: by mail-vk0-f50.google.com with SMTP id d188so68857024vka.0
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:42:30 -0700 (PDT)
+        id S1754587AbdC3UoG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 16:44:06 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:35967 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754372AbdC3UoF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 16:44:05 -0400
+Received: by mail-wr0-f194.google.com with SMTP id k6so14035268wre.3
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:44:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kkHI2/wUR3HQ08ku55bSzIwiIyReL2wrZ/XKV57u5Ds=;
-        b=GAIsxlfZ9bzxjcmIlzCzI+bpaWi4Yongk6XrlmcqsdwhcCMrgPtgVvn4Nc3RSE7dy6
-         HE3Tf9fAdnpdpH0odkcxRkpQ8Xezhtn5tt7gOXofzjxcMHPsEzUK/c+EaxDovjeUPd7c
-         VsUc9ueilvvM+nJwJgVHs1cuX/MedaHJbCvos=
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
+         :content-transfer-encoding;
+        bh=YF54/Ydl6n0LeqqEqfFo9abrW6B4vfFlosg9QzN2EH4=;
+        b=ZbftInstCimZIwDBUGNUYZgQHOANl9Qb/EZVZ8cXBBhqPb8UdhWu2NNWq8V5WkHtIP
+         V9UqNG58RGj46vDpJwWt4dg5M/jelqRTugZ94mEm6/3Sd3rJNfwGYF+FdEaEktT8f3OM
+         CtbX6DLOpbS760Fo6IzbAVmFTsOMkAGZAbdD1T/r/AnvDeYj0W3v+WddYRksPOKfRZ9T
+         CeUiQUI9MyOgIF6plLfDZ2F9q59uAhMsuFulPtbvN+x3bRydrqwdJ5OxApFdFdRsNXq3
+         UYGfRi+DBOFBNmr+c3rRdrK4rCq7K4QR9Uq5/2ljsuwQfbC5N9StdfPdluEPvRucwcWn
+         AddQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kkHI2/wUR3HQ08ku55bSzIwiIyReL2wrZ/XKV57u5Ds=;
-        b=t8zX47RGDEp8r7SaqTooXx4zUUZnjQBg+AH0gW9Z/FuJE6E39sqFhxZqfwwBb/BKEa
-         qH82sDkp4ocpmB4H8Csex3lWfXhM7tt9KAAKB5cX7J0Q3nEmuexoZP7vNZ1Yai+DwvMK
-         Al5Ci6mEXXfU2wka6IRxOTFgS/BURcmvF/v9OO3K68Tnnr2Ei9uydtufsx+xYz2RHeNC
-         jZ76k73A96eL2Bw1n3xIPOfWB0g0Bz1oVQVY9DsJlNUAIwJ3j+mHAwiNsU1Y47ZaPjjn
-         g4yTOAwKkV5yTceoP9LsyheHLp0c+mmhASN8PinWyM0fnqilyAulkAJnq22pEM6xAIFV
-         6neA==
-X-Gm-Message-State: AFeK/H2TYNuP+YxM8LroSe1TZcABN7CSWJ0Wtma06j+V0+7xRQrwt4siBUToCpuo5c08T6SQvT3TMWAH8uh/cA==
-X-Received: by 10.31.92.20 with SMTP id q20mr770321vkb.146.1490906549786; Thu,
- 30 Mar 2017 13:42:29 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.103.125.7 with HTTP; Thu, 30 Mar 2017 13:42:09 -0700 (PDT)
-In-Reply-To: <20170330202917.24281-1-dturner@twosigma.com>
-References: <20170330202917.24281-1-dturner@twosigma.com>
-From:   Shawn Pearce <spearce@spearce.org>
-Date:   Thu, 30 Mar 2017 13:42:09 -0700
-Message-ID: <CAJo=hJvs0UKO_NLbWAi8Y8XRJJ0v5kdjf9BN0V=pN_9yYrDp7Q@mail.gmail.com>
-Subject: Re: [PATCH] http.postbuffer: make a size_t
-To:     David Turner <dturner@twosigma.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=YF54/Ydl6n0LeqqEqfFo9abrW6B4vfFlosg9QzN2EH4=;
+        b=Gh60BNVTm/qEwVtLCotiKoQZbFNHO4kWdoGhpR30UdkjkGqIb0JU9uOT6FXIoMlLnX
+         RMbXu9jh/vueYp0ybtvGr1/po5pVpysJEotnl7dx0I9UinDH1i3NHRSQyVgRxO/SwmvC
+         W0v78LDCq8rvhvrSnVHUbbgRjXi6WjGAesxc19L7IrGOmN+DPNCEs1G/umHmK5A4s5t5
+         bJQ8olAqj3FQwWQeUBFKacRuziYWVPWTe4Y+WAS7lfArKZJ1hRBADQDout3JSzmCQAbC
+         OhawlohrLQPv7NrMLHncMfl6u+Pik7XzS+Y2m+nNdM2UHwnbW63E6WZxzIIiCGE0G+y3
+         RPkw==
+X-Gm-Message-State: AFeK/H36c778hgY+r+RQRj6ynPGlRWL/Hl1Tr8iggeYoHDkeuY/rPstWDRd5Jdnl45FmIQ==
+X-Received: by 10.28.168.150 with SMTP id r144mr100753wme.43.1490906642807;
+        Thu, 30 Mar 2017 13:44:02 -0700 (PDT)
+Received: from [192.168.1.80] ([145.129.9.233])
+        by smtp.gmail.com with ESMTPSA id 68sm269198wme.7.2017.03.30.13.44.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Mar 2017 13:44:02 -0700 (PDT)
+Message-ID: <1490906641.2546.1.camel@kaarsemaker.net>
+Subject: Re: ttk error when starting git gui
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Peter van der Does <peter@avirtualhome.com>, git@vger.kernel.org
+Date:   Thu, 30 Mar 2017 22:44:01 +0200
+In-Reply-To: <4addfbdb-1289-7958-87e5-8d8caa9febfb@avirtualhome.com>
+References: <0fc69c73-73aa-5355-264b-a7c55377eec2@lanl.gov>
+         <4addfbdb-1289-7958-87e5-8d8caa9febfb@avirtualhome.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.6-1ubuntu1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 30, 2017 at 1:29 PM, David Turner <dturner@twosigma.com> wrote:
-> Unfortunately, in order to push some large repos, the http postbuffer
-> must sometimes exceed two gigabytes.  On a 64-bit system, this is OK:
-> we just malloc a larger buffer.
+On Thu, 2017-03-30 at 15:54 -0400, Peter van der Does wrote:
 
-I'm slightly curious what server you are pushing to that needs the
-entire thing buffered to compute a Content-Length, rather than using
-Transfer-Encoding: chunked. Most Git-over-HTTP should be accepting
-Transfer-Encoding: chunked when the stream exceeds postBuffer.
+> It looks like the git gui needs TCL/TK 8.6.0 or higher. Since that
+> version the command 'ttk::style theme use' has been changed, which
+> allows the command to be run without an argument and then returning the
+> current theme used.
+> I believe RHEL6 use Tk-8.5.7 but I can't be 100% sure.
+
+It does.
+
+$ rpm -q tk
+tk-8.5.7-5.el6.x86_64
+
+D.
