@@ -2,341 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE9E420966
-	for <e@80x24.org>; Thu, 30 Mar 2017 20:06:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F03C20966
+	for <e@80x24.org>; Thu, 30 Mar 2017 20:06:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934888AbdC3UGj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 16:06:39 -0400
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:34186 "EHLO
-        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934850AbdC3UGi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 16:06:38 -0400
-Received: by mail-oi0-f50.google.com with SMTP id o67so42086749oib.1
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:06:37 -0700 (PDT)
+        id S934879AbdC3UGf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 16:06:35 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36649 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934850AbdC3UGa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 16:06:30 -0400
+Received: by mail-wr0-f196.google.com with SMTP id k6so13803260wre.3
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:06:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=8rMVPP4awzGPnPQXot/G+crYk7SOAzHqI31Cz7LrmcA=;
-        b=GUiGxm2G4UZ/hilmR8M+jPcZKihbhuOx8s17tQm6AI8BOlHulrT979VvHgigiy79n+
-         zyzSL3MWB15jeXWPEdf/clSMtYgqX0BwL9ECTq1mCWAQPzyixh3bJLKHpJMVzRHj3meq
-         l4gNj+F1kb7Y1aboAzNMjDPsClVocrL8Z4H5Cu0dctePlYFYeCyRgaEgxLEHZ84Vv6rL
-         /RQN6adBuAXK6Bs6niQFshEfX7qvkO39BA8YlhOrcdKOer5jqGWTTumGWS7dCEP6yzbZ
-         H8qCN1fbi+BMwOfawlYg+UiTGyWTFy7foEu3HOnkRBF0mWXUpAjSX0STq19T5c77XJR+
-         FUOw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=O/G/rLIvTkFXIdWreSJF7DW9+HZumTf54jfjeqUDOeU=;
+        b=H9GZUV1tEWN2lU8G+jZzMmddC0Lhlj5PAXdj6Irwkf39LJ4iugxa/PwF25YS+F42WE
+         wVIgZRn4zetrxzOepLf7qulJG4XqsjE825YYBxA5rlBSSoAq+JOvy0tqnCARz6N+m9JL
+         hhRKsKZHmplHhYtGucbBwtYxAsZEhpk9AcNhFae4Z3AhLvPb22Nv+ML7K+LnZdkdNX0M
+         Pw4XqMqX0zCj+8soqFH4PmFUqZoHG7cokS9vXDH7zW4GZ/eyzXW6h7SYU1gZOfXy9Ita
+         u43kAwci3LdyYh/IKL0q60N4pP1GUb6a6KBxaOXSQ1kCWVf8/Elm+V4VRvUBjNLbpEv6
+         ZyOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc;
-        bh=8rMVPP4awzGPnPQXot/G+crYk7SOAzHqI31Cz7LrmcA=;
-        b=lel9XsshSJxaQC6k3rLGsZZIHq5uIF9LMPp6IT6Ur5NlOinmrqYZKshyDBeX7DgYEb
-         q7K9F0Lj5T3Cm3EisUnHJiU+hMaSkl7oNQr4cFPgMXXz1DA/CR904hul8VBbPeGWWbZb
-         h5IXb04SNc/UhzxJ1B3zKyRpCqNYetr4WB4OPnh7aCKvJ6KDIMiAlSbGOrQHyQSZonA0
-         uYfiQXmILXopQozcjvhrGqapOrP/KRZTa4pMJNMiZDkpvsDn/JD2GMRfdJlhRD203V/3
-         ZqBCIpyOMO1etB9YYf88/bfjBGP4ME5VlmoosCAlITUAbjdV5auLftI9MdGPTqW52VcR
-         3PZA==
-X-Gm-Message-State: AFeK/H0aRHqEtRMEnGs/FczWyNf0wIbkpnSFhnGHx7NCKx48ikA5Ft/hdmLo0nocIQ7aSDEodeJP3czIot+2JQ==
-X-Received: by 10.157.35.230 with SMTP id t93mr1132034otb.17.1490904396575;
- Thu, 30 Mar 2017 13:06:36 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=O/G/rLIvTkFXIdWreSJF7DW9+HZumTf54jfjeqUDOeU=;
+        b=UFjHwleni+eAIN1yDbZVo2Xex3Hvcup6QUghT7q/M8jLEKJ5py8ubFubqVCGM05doC
+         JbPpKdUray1gGyrUVj94/W7FP0Nk+xvTGT2FE9QBt+Op9DkEEmhlXmTubGFcVEVJuC5g
+         mhCqpkXZjA8ElUlg4htbr6fwG2bFnguOo5Ehtyu6d1Y5ARI36OBAv38S6kgxVg5Qipnd
+         yAE10AXE0XGpka1+ACjaz6cCYUGsTdkIQfPJjhFhGGxWeI5OKFhX+qXMTuQB6tiQB/qU
+         EkqUIJpuBvdeXPiJ+OmUqiQ5+lDSVLVWwKFZrLFJ3umher4HWQND7hflXyTBPKvlazf2
+         h+Zg==
+X-Gm-Message-State: AFeK/H2QFTUpr6lUQmRK56YGSTJMn8Kbg0EpklunbEbPksfvTJtRaoE7+mOHNhQG39/5Ig==
+X-Received: by 10.223.178.182 with SMTP id g51mr1341521wrd.12.1490904382779;
+        Thu, 30 Mar 2017 13:06:22 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id x131sm145728wme.28.2017.03.30.13.06.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Mar 2017 13:06:22 -0700 (PDT)
+Date:   Thu, 30 Mar 2017 21:06:48 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 0/2] read-cache: call verify_hdr() in a background
+ thread
+Message-ID: <20170330200648.GH27158@hank>
+References: <20170328190732.59486-1-git@jeffhostetler.com>
+ <20170328191628.dprziuhpv7khvocu@sigill.intra.peff.net>
+ <35f220df-aa63-b80f-8970-429850202cdd@jeffhostetler.com>
+ <20170328195605.xy4pnhy74s6wgwps@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.74.31.131 with HTTP; Thu, 30 Mar 2017 13:06:36 -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <xmqqbmskatz3.fsf@gitster.mtv.corp.google.com>
-References: <CAH8yC8kOj5a5PN4V7mj7xZPoNDr-MH-CkirxRKyfx1-qAvfpqQ@mail.gmail.com>
- <xmqqbmskatz3.fsf@gitster.mtv.corp.google.com>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Thu, 30 Mar 2017 16:06:36 -0400
-Message-ID: <CAH8yC8mMzZGebmZ23dsgY6Zkxk3w_Kpt7O6Z-0CwRQyTBF5uvg@mail.gmail.com>
-Subject: Re: git-compat-util.h:735:13: error: conflicting types for 'inet_ntop'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170328195605.xy4pnhy74s6wgwps@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 29, 2017 at 1:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeffrey Walton <noloader@gmail.com> writes:
->
->> Some more 2.12.2 testing on Solaris 11.3 x86_64:
->>
->> $ make V=1
->> gcc -o credential-store.o -c -MF ./.depend/credential-store.o.d -MQ
->> credential-store.o -MMD -MP -I/usr/local/include -m64 -m64 -I.
->> -D__EXTENSIONS__ -D__sun__ -DUSE_LIBPCRE -I/usr/local/include
->> -DHAVE_ALLOCA_H -I/usr/local/include -DUSE_CURL_FOR_IMAP_SEND
->> -I/usr/local/include -I/usr/local/include -DNO_D_TYPE_IN_DIRENT
->> -DNO_INET_NTOP -DNO_INET_PTON  -DHAVE_PATHS_H -DHAVE_LIBCHARSET_H
->
-> Looking at config.mak.uname, nothing in SunOS section seems to set
-> NO_INET_NTOP or NO_INET_PTON.  Why is your build setting them?
+On 03/28, Jeff King wrote:
+> On Tue, Mar 28, 2017 at 03:50:34PM -0400, Jeff Hostetler wrote:
+> 
+> > It was a convenient way to isolate, average, and compare
+> > read_index() times, but I suppose we could do something
+> > like that.
+> > 
+> > I did confirm that a ls-files does show a slight 0.008
+> > second difference on the 58K file Linux tree when toggled
+> > on or off.
+> 
+> Yeah, I agree it helps isolate the change. I'm just not sure we want to
+> carry a bunch of function-specific perf-testing code. And one of the
+> nice things about testing a real command is that it's...a real command.
+> So it's an actual improvement a user might see.
+> 
+> > But I'm tempted to suggest that we just omit my helper exe
+> > and not worry about a test -- since we don't have any test
+> > repos large enough to really demonstrate the differences.
+> > My concern is that that 0.008 would be lost in the noise
+> > of the rest of the test and make for an unreliable result.
+> 
+> Yeah, I think that would be fine. You _could_ write a t/perf test and
+> then use your 400MB monstrosity as GIT_PERF_LARGE_REPO. But given that
+> most people don't have such a thing, there's not much value over you
+> just showing off the perf improvement in the commit message.
 
-Thanks. It looks like the following is the culprit (from config.log).
-Am I supposed to specify the socket library, or is Autotools supposed
-to specify it?
+Sorry if this was already discussed, but we already do have a perf
+test for the index (p0002), and a corresponding helper program which
+just does read_cache() and discard_cache().  Maybe we could re-use
+that and add a second test running the same using the new config?
 
-To date, I've been specify the libraries I request, like IDN2, PCRE,
-cURL and OpenSSL.
-
-I don't recall specifying a socket library in the past, so I'm not
-sure what is supposed to happen here.
-
-Thanks in advance.
-
-**********
-
-It was created by git configure 2.12.2, which was
-generated by GNU Autoconf 2.68.  Invocation command line was
-
-  $ ./configure --enable-pthreads --with-lib=/usr/local/lib64
---with-openssl=/usr/local --with-curl=/usr/local
---with-libpcre=/usr/local --with-zlib=/usr/local
---with-perl=/usr/local/bin/perl --prefix=/usr/local
-...
-
-configure:5552: checking for inet_ntop
-configure:5552: gcc -o conftest -m64 -I/usr/local/include -m64
--Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lidn2
--lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
-Undefined            first referenced
- symbol                  in file
-inet_ntop                           /var/tmp//cc2WaWwg.o  (symbol
-belongs to implicit dependency /lib/amd64/libnsl.so.1)
-ld: fatal: symbol referencing errors
-collect2: error: ld returned 1 exit status
-configure:5552: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "git"
-| #define PACKAGE_TARNAME "git"
-| #define PACKAGE_VERSION "2.12.2"
-| #define PACKAGE_STRING "git 2.12.2"
-| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
-| #define PACKAGE_URL ""
-| #define STDC_HEADERS 1
-| #define HAVE_SYS_TYPES_H 1
-| #define HAVE_SYS_STAT_H 1
-| #define HAVE_STDLIB_H 1
-| #define HAVE_STRING_H 1
-| #define HAVE_MEMORY_H 1
-| #define HAVE_STRINGS_H 1
-| #define HAVE_INTTYPES_H 1
-| #define HAVE_STDINT_H 1
-| #define HAVE_UNISTD_H 1
-| #define HAVE_ALLOCA_H 1
-| #define HAVE_ALLOCA 1
-| /* end confdefs.h.  */
-| /* Define inet_ntop to an innocuous variant, in case <limits.h>
-declares inet_ntop.
-|    For example, HP-UX 11i <limits.h> declares gettimeofday.  */
-| #define inet_ntop innocuous_inet_ntop
-|
-| /* System header to define __stub macros and hopefully few prototypes,
-|     which can conflict with char inet_ntop (); below.
-|     Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
-|     <limits.h> exists even on freestanding compilers.  */
-|
-| #ifdef __STDC__
-| # include <limits.h>
-| #else
-| # include <assert.h>
-| #endif
-|
-| #undef inet_ntop
-|
-| /* Override any GCC internal prototype to avoid an error.
-|    Use char because int might match the return type of a GCC
-|    builtin and then its argument prototype would still apply.  */
-| #ifdef __cplusplus
-| extern "C"
-| #endif
-| char inet_ntop ();
-| /* The GNU C library defines this for functions which it implements
-|     to always fail with ENOSYS.  Some functions are actually named
-|     something starting with __ and the normal name is an alias.  */
-| #if defined __stub_inet_ntop || defined __stub___inet_ntop
-| choke me
-| #endif
-|
-| int
-| main ()
-| {
-| return inet_ntop ();
-|   ;
-|   return 0;
-| }
-configure:5552: result: no
-configure:5556: checking for inet_ntop in -lresolv
-configure:5581: gcc -o conftest -m64 -I/usr/local/include -m64
--Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lresolv
--lidn2 -lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
-Undefined            first referenced
- symbol                  in file
-inet_ntop                           /var/tmp//ccZYayyg.o  (symbol
-belongs to implicit dependency /lib/amd64/libnsl.so.1)
-ld: fatal: symbol referencing errors
-collect2: error: ld returned 1 exit status
-configure:5581: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "git"
-| #define PACKAGE_TARNAME "git"
-| #define PACKAGE_VERSION "2.12.2"
-| #define PACKAGE_STRING "git 2.12.2"
-| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
-| #define PACKAGE_URL ""
-| #define STDC_HEADERS 1
-| #define HAVE_SYS_TYPES_H 1
-| #define HAVE_SYS_STAT_H 1
-| #define HAVE_STDLIB_H 1
-| #define HAVE_STRING_H 1
-| #define HAVE_MEMORY_H 1
-| #define HAVE_STRINGS_H 1
-| #define HAVE_INTTYPES_H 1
-| #define HAVE_STDINT_H 1
-| #define HAVE_UNISTD_H 1
-| #define HAVE_ALLOCA_H 1
-| #define HAVE_ALLOCA 1
-| /* end confdefs.h.  */
-|
-| /* Override any GCC internal prototype to avoid an error.
-|    Use char because int might match the return type of a GCC
-|    builtin and then its argument prototype would still apply.  */
-| #ifdef __cplusplus
-| extern "C"
-| #endif
-| char inet_ntop ();
-| int
-| main ()
-| {
-| return inet_ntop ();
-|   ;
-|   return 0;
-| }
-configure:5590: result: no
-configure:5607: checking for inet_pton
-configure:5607: gcc -o conftest -m64 -I/usr/local/include -m64
--Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lidn2
--lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
-Undefined            first referenced
- symbol                  in file
-inet_pton                           /var/tmp//ccW0aaAg.o  (symbol
-belongs to implicit dependency /lib/amd64/libnsl.so.1)
-ld: fatal: symbol referencing errors
-collect2: error: ld returned 1 exit status
-configure:5607: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "git"
-| #define PACKAGE_TARNAME "git"
-| #define PACKAGE_VERSION "2.12.2"
-| #define PACKAGE_STRING "git 2.12.2"
-| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
-| #define PACKAGE_URL ""
-| #define STDC_HEADERS 1
-| #define HAVE_SYS_TYPES_H 1
-| #define HAVE_SYS_STAT_H 1
-| #define HAVE_STDLIB_H 1
-| #define HAVE_STRING_H 1
-| #define HAVE_MEMORY_H 1
-| #define HAVE_STRINGS_H 1
-| #define HAVE_INTTYPES_H 1
-| #define HAVE_STDINT_H 1
-| #define HAVE_UNISTD_H 1
-| #define HAVE_ALLOCA_H 1
-| #define HAVE_ALLOCA 1
-| /* end confdefs.h.  */
-| /* Define inet_pton to an innocuous variant, in case <limits.h>
-declares inet_pton.
-|    For example, HP-UX 11i <limits.h> declares gettimeofday.  */
-| #define inet_pton innocuous_inet_pton
-|
-| /* System header to define __stub macros and hopefully few prototypes,
-|     which can conflict with char inet_pton (); below.
-|     Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
-|     <limits.h> exists even on freestanding compilers.  */
-|
-| #ifdef __STDC__
-| # include <limits.h>
-| #else
-| # include <assert.h>
-| #endif
-|
-| #undef inet_pton
-|
-| /* Override any GCC internal prototype to avoid an error.
-|    Use char because int might match the return type of a GCC
-|    builtin and then its argument prototype would still apply.  */
-| #ifdef __cplusplus
-| extern "C"
-| #endif
-| char inet_pton ();
-| /* The GNU C library defines this for functions which it implements
-|     to always fail with ENOSYS.  Some functions are actually named
-|     something starting with __ and the normal name is an alias.  */
-| #if defined __stub_inet_pton || defined __stub___inet_pton
-| choke me
-| #endif
-|
-| int
-| main ()
-| {
-| return inet_pton ();
-|   ;
-|   return 0;
-| }
-configure:5607: result: no
-configure:5611: checking for inet_pton in -lresolv
-configure:5636: gcc -o conftest -m64 -I/usr/local/include -m64
--Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lresolv
--lidn2 -lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
-Undefined            first referenced
- symbol                  in file
-inet_pton                           /var/tmp//ccG2aOBg.o  (symbol
-belongs to implicit dependency /lib/amd64/libnsl.so.1)
-ld: fatal: symbol referencing errors
-collect2: error: ld returned 1 exit status
-configure:5636: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "git"
-| #define PACKAGE_TARNAME "git"
-| #define PACKAGE_VERSION "2.12.2"
-| #define PACKAGE_STRING "git 2.12.2"
-| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
-| #define PACKAGE_URL ""
-| #define STDC_HEADERS 1
-| #define HAVE_SYS_TYPES_H 1
-| #define HAVE_SYS_STAT_H 1
-| #define HAVE_STDLIB_H 1
-| #define HAVE_STRING_H 1
-| #define HAVE_MEMORY_H 1
-| #define HAVE_STRINGS_H 1
-| #define HAVE_INTTYPES_H 1
-| #define HAVE_STDINT_H 1
-| #define HAVE_UNISTD_H 1
-| #define HAVE_ALLOCA_H 1
-| #define HAVE_ALLOCA 1
-| /* end confdefs.h.  */
-|
-| /* Override any GCC internal prototype to avoid an error.
-|    Use char because int might match the return type of a GCC
-|    builtin and then its argument prototype would still apply.  */
-| #ifdef __cplusplus
-| extern "C"
-| #endif
-| char inet_pton ();
-| int
-| main ()
-| {
-| return inet_pton ();
-|   ;
-|   return 0;
-| }
-configure:5645: result: no
+> We could also have a t/perf test that generates a monstrous index and
+> shows that it's faster. But frankly, I don't think this is all that
+> interesting as a performance regression test. It's not like there's
+> something subtle about the performance improvement; we stopped computing
+> the SHA-1, and (gasp!) it takes exactly one SHA-1 computation's less
+> time.
+> 
+> So just mentioning the test case and the improvement in the commit
+> message is sufficient, IMHO.
+> 
+> -Peff
