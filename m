@@ -2,71 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1E5E1FAFB
-	for <e@80x24.org>; Thu, 30 Mar 2017 08:18:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F0541FAFB
+	for <e@80x24.org>; Thu, 30 Mar 2017 08:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933015AbdC3ISL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 04:18:11 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:53241 "EHLO
-        alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932763AbdC3ISJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 04:18:09 -0400
-X-AuditID: 1207440f-129ff70000003517-e6-58dcbf3f66a9
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id 4C.EE.13591.F3FBCD85; Thu, 30 Mar 2017 04:18:07 -0400 (EDT)
-Received: from [192.168.69.190] (p579060CC.dip0.t-ipconnect.de [87.144.96.204])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2U8I46s019037
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 30 Mar 2017 04:18:05 -0400
-Subject: Re: [PATCH v5 2/6] dir_iterator: refactor state machine model
-To:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org
-References: <1490844730-47634-1-git-send-email-bnmvco@gmail.com>
- <1490844730-47634-3-git-send-email-bnmvco@gmail.com>
-Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <8838e12a-41b9-fd31-da2c-12352fd374b8@alum.mit.edu>
-Date:   Thu, 30 Mar 2017 10:18:04 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1755159AbdC3IlH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 04:41:07 -0400
+Received: from mail-lf0-f45.google.com ([209.85.215.45]:34801 "EHLO
+        mail-lf0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754908AbdC3Ikk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 04:40:40 -0400
+Received: by mail-lf0-f45.google.com with SMTP id z15so21500003lfd.1
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 01:40:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sJyQfI8iHe41gEIOYGaumzOQ8r3gzGWNjBnEFWmSIrU=;
+        b=SF51in3H7JNdV+eguszrHMpNvlEfLTahYiLhcOQV8GiNtY+Ifd9WwNZawX8jX+s4dK
+         6JDVqPar5td5j9+U2MoeWpuJ/uhqKq2f/Sc3HNrggIWfa1isoAxBYL9IPk373jGBdD46
+         KIMBsEGx0+hqNA9qM/2EgI3OkzmX8eqysQTFhi+XGkswV3l8IGNC7z3PJOy3dIFTcHKU
+         jmT7PAuME15X9lSAftGCPACRdnmT3Aau67EUN0C9IFPmJUtGHZNfvq6xIxJ+blCSSkue
+         hyRh3K+fbRrNIdgjjvRIflXSyJgaNXTm37IGY6hQ6GwWz87gnST5Y8FHt5WwKNKLoTtd
+         yTLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sJyQfI8iHe41gEIOYGaumzOQ8r3gzGWNjBnEFWmSIrU=;
+        b=k3pubjYakHOaZRQW5p8G0ek7GJAVQKm6wiUQ0ISfmljo7OTmTqa6qSr1/eBsrmpQUp
+         uMK0fudZYSLEksDETExRE2T8Vx8bRuJN11LZ4nA1tBO9HcNwil6JGMAuanoLW8yeY+u2
+         K144Pz/uyZtvN3qFwdhTIr78iJzNvZLHxjfEz2emAGSa3lyWo0ZdWk9NH5R2yg6L6SHD
+         lOwDr2SlyEWk/8pgmhB+bZYzU71stBXxabhdQBTQdvu5RBAcXQjSJJNwUrR02jwmXqSE
+         2egEPkoM21MMxA4Q83zdJQqVTFp2mmpceDbdWni/54PrmZzaLuhdBCsj+Pai3uApZhnf
+         xtTg==
+X-Gm-Message-State: AFeK/H2Z80Qz1t1w5B7VKdhEQOXdoBL7qKIDvZr6omFCP9V4jNLNJ5xAjU/aziw4/pTSTaaXz8yolv26jMwJjw==
+X-Received: by 10.46.75.25 with SMTP id y25mr1800946lja.60.1490863238542; Thu,
+ 30 Mar 2017 01:40:38 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1490844730-47634-3-git-send-email-bnmvco@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42IRYndR1LXffyfCoLNX3+Lxp7dsFl1Xupks
-        GnqvMFt0T3nLaLF5czuLA6vHzll32T0WbCr1uHhJ2ePzJrkAligum5TUnMyy1CJ9uwSujFs/
-        uhgLvjBVnOiewNLAuJGpi5GTQ0LAROJ6+yXmLkYuDiGBHUwSXxe+ZgRJCAmcZ5K4d0y0i5GD
-        Q1jATaLpKx+IKSJgLXF9jRdERbnEtcmX2EBsZgEbieNNvWCdbAK6Eot6msHG8wrYS+xbsAos
-        ziKgKnFr00sWEFtUIERizsIHjBA1ghInZz4Bi3MKOEo8PHaLHWKmnsSO679YIWx5ie1v5zBP
-        YOSfhaRlFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdHLzSzRS00p3cQICVz+
-        HYxd62UOMQpwMCrx8FasvR0hxJpYVlyZe4hRkoNJSZR389w7EUJ8SfkplRmJxRnxRaU5qcWH
-        GCU4mJVEeO0WA+V4UxIrq1KL8mFS0hwsSuK86kvU/YQE0hNLUrNTUwtSi2CyMhwcShK8VfuA
-        GgWLUtNTK9Iyc0oQ0kwcnCDDeYCGC4HU8BYXJOYWZ6ZD5E8x6nLcOH7gDZMQS15+XqqUOC8X
-        SJEASFFGaR7cHFjCecUoDvSWMG8LSBUPMFnBTXoFtIQJaIm4zS2QJSWJCCmpBsZ+39kp6TVv
-        Hx2r1qlYPS39zMOuXqmqpY9UOiR0Iu+y+9xVDdCqDfMTOZfFXXVgm2yz0BQ5Rbb9KSkfExw6
-        f8ROz+9aNGGbiOOZRx/3OF76cDBsi+gEk63fXqzPkb8kxDHl4aygwF7nN7ZTJaxkSq8rnzf5
-        lfBi6tX0TJcrAdOsfot3v7P6sF2JpTgj0VCLuag4EQBMZtexEwMAAA==
+Received: by 10.25.150.10 with HTTP; Thu, 30 Mar 2017 01:40:38 -0700 (PDT)
+In-Reply-To: <20170329175614.uecvtvmzoj2wfle3@sigill.intra.peff.net>
+References: <20170329080820.8084-1-chriscool@tuxfamily.org>
+ <xmqqfuhwau6r.fsf@gitster.mtv.corp.google.com> <20170329175614.uecvtvmzoj2wfle3@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 30 Mar 2017 10:40:38 +0200
+Message-ID: <CAP8UFD29xWU5bHwewUSq26pVTwK-gy3uSVG2aGTCrDak3620=A@mail.gmail.com>
+Subject: Re: [PATCH] read-cache: avoid git_path() race in freshen_shared_index()
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/30/2017 05:32 AM, Daniel Ferreira wrote:
-> Remove the "initialized" member of dir_iterator_level. Replace its
-> functionality with a DIR_STATE_PUSH state in the
-> dir_iterator_level.dir_state enum.
-> 
-> This serves to remove a redundant property in the dir_iterator_level
-> struct and ease comprehension of the state machine's behavior.
+On Wed, Mar 29, 2017 at 7:56 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Mar 29, 2017 at 10:06:52AM -0700, Junio C Hamano wrote:
+>
+>> > This shows that we should be careful not to use git_path() in
+>> > freshen_shared_index(). It is using a shared buffer that can
+>> > too easily lead to races.
+>>
+>> The impression I get from the symptom is that after git_path() is
+>> called here, before check_and_freshen_file() uses that result, it
+>> (or functions it calls) uses git_path(), and the number of times it
+>> does so has changed since cc/split-index-config was written on the
+>> mainline, and the rotating 4-element buffer get_pathname() gives is
+>> now exhausted, leading to the failure you observed.  By the way,
+>> that does not sound a race to me.
+>>
+>> In any case, that explains why bisect says the merge is the first
+>> bad one, and cures the confused reader ;-) The use of git_path() on
+>> the topic was still safe; it was a timebomb waiting to go off.  The
+>> mainline started using more calls and the merge result was unsafe.
+>
+> Yeah, it looks like that is what happened. I see that Christian bisected
+> the rebase to find the commit in the series that introduces the problem.
+> I'm mildly curious which commit upstream created the problem[1].
 
-Nice.
+I bisected it to 18633e1a22 (rebase -i: use the rebase--helper
+builtin, 2017-02-09).
+This commit is indeed changing how the interactive rebase works, but
+it is not easy to see how it impact git_path() usage.
 
-Michael
+> There's a reasonable chance it's some innocent-looking cleanup (possibly
+> one of my recent "stop using a fixed buffer" ones).
+>
+> But in the end it doesn't really matter. I think code like:
+>
+>   const char *filename = git_path(...);
+>
+> or
+>
+>   nontrivial_function(git_path(...));
+>
+> is an anti-pattern. It _might_ be safe, but it's really hard to tell
+> without following the complete lifetime of the return value. I've been
+> tempted to suggest we should abolish git_path() entirely. But it's so
+> darn useful for things like unlink(git_path(...)), or other direct
+> system calls.
 
+Yeah, I am very tempted to just rewrite the commit message like this:
+
+------------
+
+When performing an interactive rebase in split-index mode,
+the commit message that one should rework when squashing commits
+can contain some garbage instead of the usual concatenation of
+both of the commit messages.
+
+Bisecting shows that c3a0082502 (read-cache: use
+freshen_shared_index() in read_index_from(), 2017-03-06) is involved,
+which points to the unsafe use of git_path() in
+freshen_shared_index().
+
+------------
+
+and change the subject to "read-cache: avoid using git_path() in
+freshen_shared_index()".
