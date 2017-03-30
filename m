@@ -2,97 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0715D20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 15:27:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CADA20966
+	for <e@80x24.org>; Thu, 30 Mar 2017 15:54:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934086AbdC3P1N (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 11:27:13 -0400
-Received: from mail-by2nam01on0122.outbound.protection.outlook.com ([104.47.34.122]:40807
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S933277AbdC3P1M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 11:27:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=VjARUUVhyHxnCiovLhHFQGoKPUOBCI2eQs/1ofkGuHk=;
- b=DT/fp4rjNr0eD/1OT6CNk9v9sRcY/eieCZMGJ87v48SosRmtVDqweYC4P40qkhjL17E3QK+i5jhBYwRvb1AgOHTW/58GbVux6ST+YWsplftKQ2+Z/ksk3SfutQZ8gmUfzP8LZj2pekCeVHPC1t1bUmwnlHS+42H8NiL0SOoPwSQ=
-Received: from BL2PR03MB323.namprd03.prod.outlook.com (10.141.68.22) by
- BL2PR03MB321.namprd03.prod.outlook.com (10.141.68.15) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.991.14; Thu, 30 Mar 2017 15:27:08 +0000
-Received: from BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) by
- BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) with mapi id
- 15.01.0991.021; Thu, 30 Mar 2017 15:27:08 +0000
-From:   Ben Peart <Ben.Peart@microsoft.com>
-To:     Junio C Hamano <gitster@pobox.com>, Ben Peart <peartben@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
-Subject: RE: [PATCH v3 7/8] sub-process: move sub-process functions into
- separate files
-Thread-Topic: [PATCH v3 7/8] sub-process: move sub-process functions into
- separate files
-Thread-Index: AQHSqKS84iqRCXgUoU62Fgt08jNmH6GsSOJrgAE5N3A=
-Date:   Thu, 30 Mar 2017 15:27:08 +0000
-Message-ID: <BL2PR03MB323086368C35192B4920BE9F4340@BL2PR03MB323.namprd03.prod.outlook.com>
-References: <20170329155330.12860-1-benpeart@microsoft.com>
-        <20170329155330.12860-8-benpeart@microsoft.com>
- <xmqqmvc3ak6b.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqmvc3ak6b.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: pobox.com; dkim=none (message not signed)
- header.d=none;pobox.com; dmarc=none action=none header.from=microsoft.com;
-x-originating-ip: [65.222.173.206]
-x-microsoft-exchange-diagnostics: 1;BL2PR03MB321;7:t70tmI5XszvvoWpF6FpdBUutuccSWcmWTuEQ7j+spaJBR7JzQ0+b5MR9pyGasBWe224y2ofD69/kyzd0Yk2eAM90eYGaWPtwy8nFVnhxTAPRzcxFWUI77Vvk0R+IIw3vtiuej/SESIQv5Vwv9J1tfFqXX1h4RYgP4QEtS/Daryq/s4ZcAA5UhcKpdRxbi0SXjCEnFuuuv0kr38yIZBh912r2DRZbx3v6FzBU4tZ5aSaij0Rvm+m9I4h3H1RMGBPTCnbBU7/IC1Hfl3HOSV9dLHBZaeCTesirLNuCrlsJUolfsQLuaDIwroe8qNj4WxfpQSYUqQSMC27nB2P/39dOvQLuiI25YxoR65/Ff4bhFL0=
-x-ms-office365-filtering-correlation-id: 06785559-d52b-4b03-e607-08d477813ae0
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254075)(48565401081)(201703131423075)(201703031133081);SRVR:BL2PR03MB321;
-x-microsoft-antispam-prvs: <BL2PR03MB3216E64FD92AB68D29CD378F4340@BL2PR03MB321.namprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(100324003535756);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040450)(601004)(2401047)(8121501046)(5005006)(93006067)(93001067)(10201501046)(3002001)(6055026)(61426038)(61427038)(6041248)(201703131423075)(201702281528075)(201703061421075)(20161123560025)(20161123555025)(20161123562025)(20161123564025)(6072148);SRVR:BL2PR03MB321;BCL:0;PCL:0;RULEID:;SRVR:BL2PR03MB321;
-x-forefront-prvs: 02622CEF0A
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39840400002)(39450400003)(39860400002)(39410400002)(39850400002)(39400400002)(3660700001)(3280700002)(8656002)(54356999)(102836003)(3846002)(6116002)(86612001)(6506006)(33656002)(25786009)(6436002)(86362001)(2906002)(50986999)(77096006)(66066001)(76176999)(8936002)(229853002)(10090500001)(5660300001)(9686003)(4326008)(2900100001)(8676002)(81166006)(38730400002)(2950100002)(6246003)(7696004)(39060400002)(53936002)(97736004)(305945005)(7736002)(74316002)(55016002)(189998001)(8990500004)(5005710100001)(54906002)(99286003)(122556002)(10290500002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL2PR03MB321;H:BL2PR03MB323.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:ovrnspm;PTR:InfoNoRecords;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Mar 2017 15:27:08.6184
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR03MB321
+        id S933975AbdC3Pya (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 11:54:30 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:35483 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933392AbdC3Py3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 11:54:29 -0400
+Received: by mail-qk0-f195.google.com with SMTP id v5so2127599qkb.2
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 08:54:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=IqbgqkQ/VOwQpYxmJiuMQhnZUTiEaHS1cSOrKYil3Yc=;
+        b=F03h8G4lNZ7e2XV/umtIbFc+z38LxW10rLW3x1Xa3dN+oV+//OUqA/4XJQ92MuQuy0
+         C36Bq+dLSTUowZASk6q80WigrVzMwv8Tl9+NTurMv95TCgsfsnfUsb6TRIf7aTXWQMA+
+         7x0gZCGsww8onPiqgPBLut8s8HOp5WJlRBT57zcQDG1wfMfGhUOGHSVEyqRoy25sICR/
+         tN1xvlVWBwM0qPlcYbc5gmgRc2o724siPG+LwSTGS8kO9flh2J20XqD2l6K5+fKh2gUW
+         5BTvr1ATJJ6TJNJSC1ist9IR21J9i5fP2WaSShyDClmRTAYkI4Zg6UdbXQOKRz00Nwyh
+         BG1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=IqbgqkQ/VOwQpYxmJiuMQhnZUTiEaHS1cSOrKYil3Yc=;
+        b=JAeKnfvDiFK6t8x9/4mKxMFf0qFwNSZ2gPQUYluGNsKWNrvGFBlKSOldA7iFO/XUxM
+         A2GWtId7hDJdjhALStMTSHJiJ0z7BQ0/8GeAsSGhdaKvUF2Up8t72iP7G6cZjWmYq/QJ
+         PRDr61ewZXzO6aDv8aFfOXsnLkkMALkwCrP8x3SPibY25r5Ai4dIuvoaOr2Ix8I4KLZY
+         UtfiyS3x+ypzID7DkkrL6bIYPwADT5UaBQ6xbIE3A3Ornaqjbk9EEP+UW+VbS9Cbu0Fn
+         n0lKkaPckPayutiijFl1Zk4pXB+nV0LYkyCNCLz7EyZCMSpFsqzajiALi/WHMbcwDnln
+         T3RQ==
+X-Gm-Message-State: AFeK/H1lKtoxRQhb9SvWrlL2Nu5ROWlK2c+J6pbTMQiSrdtyifK+J3Osae2H9+ApuuMrxA==
+X-Received: by 10.55.210.4 with SMTP id f4mr399908qkj.71.1490889267941;
+        Thu, 30 Mar 2017 08:54:27 -0700 (PDT)
+Received: from localhost.localdomain ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id k5sm1665671qtb.12.2017.03.30.08.54.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 30 Mar 2017 08:54:27 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, benpeart@microsoft.com,
+        christian.couder@gmail.com, larsxschneider@gmail.com
+Subject: [PATCH v4 0/8] refactor the filter process code into a reusable module
+Date:   Thu, 30 Mar 2017 11:54:08 -0400
+Message-Id: <20170330155417.8928-1-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.12.1.gvfs.1.18.ge47db72
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Junio C Hamano [mailto:gitster@pobox.com]
->=20
-> > diff --git a/sub-process.c b/sub-process.c new file mode 100644 index
-> > 0000000000..2c4d27c193
-> > --- /dev/null
-> > +++ b/sub-process.c
-> > @@ -0,0 +1,116 @@
-> > +/*
-> > + * Generic implementation of background process infrastructure.
-> > + */
-> > +#include "sub-process.h"
-> > +#include "sigchain.h"
-> > +#include "pkt-line.h"
-> > + ...
-> > +void subprocess_exit_handler(struct child_process *process) {
->=20
-> This is not only undocumented in the above, but it does not seem to be
-> necessary to be a public function.  The only thing that uses this is
-> subprocess_start(), which is in this file.  Perhaps make it static?
+Refactor the filter.<driver>.process code into a separate sub-process
+module that can be used to reduce the cost of starting up a sub-process
+for multiple commands.  It does this by keeping the external process
+running and processing all commands by communicating over standard input
+and standard output using the packet format (pkt-line) based protocol.
+Full documentation is in Documentation/technical/api-sub-process.txt.
 
-OK.  Missed that somehow. I'll fix it and send another patch series.
+This code is refactored from:
+
+	Commit edcc85814c ("convert: add filter.<driver>.process option", 2016-10-16)
+	keeps the external process running and processes all commands
+
+Ben Peart (8):
+  pkt-line: add packet_read_line_gently()
+  convert: move packet_write_list() into pkt-line as packet_writel()
+  convert: Split start_multi_file_filter into two separate functions
+  convert: Separate generic structures and variables from the filter
+    specific ones
+  convert: Update generic functions to only use generic data structures
+  convert: rename reusable sub-process functions
+  sub-process: move sub-process functions into separate files
+  convert: Update subprocess_read_status to not die on EOF
+
+ Documentation/technical/api-sub-process.txt |  54 ++++++++++
+ Makefile                                    |   1 +
+ convert.c                                   | 159 +++++-----------------------
+ pkt-line.c                                  |  31 ++++++
+ pkt-line.h                                  |  11 ++
+ sub-process.c                               | 120 +++++++++++++++++++++
+ sub-process.h                               |  46 ++++++++
+ 7 files changed, 292 insertions(+), 130 deletions(-)
+ create mode 100644 Documentation/technical/api-sub-process.txt
+ create mode 100644 sub-process.c
+ create mode 100644 sub-process.h
+
+-- 
+2.12.1.gvfs.1.18.ge47db72
+
