@@ -2,84 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2498E20958
-	for <e@80x24.org>; Thu, 30 Mar 2017 04:59:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8342520958
+	for <e@80x24.org>; Thu, 30 Mar 2017 06:04:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754627AbdC3E7x (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 00:59:53 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:59521 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754233AbdC3E7w (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 00:59:52 -0400
-X-AuditID: 1207440d-041ff70000003721-be-58dc90c52bcd
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id C5.D7.14113.5C09CD85; Thu, 30 Mar 2017 00:59:50 -0400 (EDT)
-Received: from [192.168.69.190] (p579060CC.dip0.t-ipconnect.de [87.144.96.204])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2U4xkJC010526
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 30 Mar 2017 00:59:48 -0400
-Subject: Re: [PATCH v4 2/5] dir_iterator: iterate over dir after its contents
-To:     Junio C Hamano <gitster@pobox.com>
-References: <1490747533-89143-1-git-send-email-bnmvco@gmail.com>
- <1490747533-89143-3-git-send-email-bnmvco@gmail.com>
- <7a665631-da6a-4b9f-b9e7-750f2504eccd@alum.mit.edu>
- <xmqqk278av4x.fsf@gitster.mtv.corp.google.com>
-Cc:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org,
-        sbeller@google.com, pclouds@gmail.com
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <e412ef09-276b-92df-d2c0-0bf2f80238d2@alum.mit.edu>
-Date:   Thu, 30 Mar 2017 06:59:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1754922AbdC3GE1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 02:04:27 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55604 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1754808AbdC3GE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 02:04:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2BDE8CA05;
+        Thu, 30 Mar 2017 02:04:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=oM1A/zK44w0+Cpg4PDOChSCC9ds=; b=pxeO3V
+        ZDr7Gq867aBq7ldL9m6rjHgfH20KRmZwK24YnZ7T0xzXXrxzZjpB51vhD9ZqUFB7
+        DhHvMYTnrtouvvk19EaCBRcQF32CQlYHWql+FBHIugjeStTUGrbYKunc1QYHx/Oi
+        mG3sV79z4Yx8BiUIRnWOUP+4EW7mOoYLSIQls=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nTzu0z3UL84eXC/gmhKAkWqbCboULAP7
+        T4O6zXTAkvp4fqiCUj6MXnYXeFf3uDK0frAsh20aXnypylORXxY1JHcTVdVOemkW
+        yrbC/S06W4DXT6GQVzJGVSp9nYG89YgusIB1THrf5KXtIOygf/X/SAPc5P8BDWwR
+        j+S+u6zcxmo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B6528CA04;
+        Thu, 30 Mar 2017 02:04:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0C1958CA03;
+        Thu, 30 Mar 2017 02:04:23 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] change default for status.submoduleSummary to true
+References: <20170330012025.22122-1-sbeller@google.com>
+Date:   Wed, 29 Mar 2017 23:04:23 -0700
+In-Reply-To: <20170330012025.22122-1-sbeller@google.com> (Stefan Beller's
+        message of "Wed, 29 Mar 2017 18:20:25 -0700")
+Message-ID: <xmqqmvc37120.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk278av4x.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixO6iqHtswp0Igw1nlC0ef3rLZtF1pZvJ
-        oqH3CrNF95S3jBabN7ezOLB67Jx1l91jwaZSj4uXlD0+b5ILYInisklJzcksSy3St0vgyti8
-        ZSZTwVf2imnLL7I0MK5g62Lk5JAQMJF4+GMjkM3FISSwg0micVkDM0hCSOA8k8T850UgtrCA
-        r0TDmbUsILaIgJrExLZDLBAN9xglDh6eD9bALJAtcfjGalYQm01AV2JRTzMTiM0rYC9x/NdR
-        RhCbRUBV4sL+nWA1ogIhEnMWPmCEqBGUODnzCdgCTgFriX+3bzBBzNST2HH9FyuELS+x/e0c
-        5gmM/LOQtMxCUjYLSdkCRuZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbpGermZJXqpKaWbGCHh
-        y7uD8f86mUOMAhyMSjy8FWtvRwixJpYVV+YeYpTkYFIS5V1SdCdCiC8pP6UyI7E4I76oNCe1
-        +BCjBAezkgiv1iegct6UxMqq1KJ8mJQ0B4uSOK/aEnU/IYH0xJLU7NTUgtQimKwMB4eSBG95
-        P9BQwaLU9NSKtMycEoQ0EwcnyHAeoOG1IDW8xQWJucWZ6RD5U4yKUuK8Ln1ACQGQREZpHlwv
-        LL28YhQHekWYtw2knQeYmuC6XwENZgIaLG5zC2RwSSJCSqqBMVroVEH8UjXnh5OOJge3qYmb
-        /NXZNo37oY5x8Fr1A77XHly2OVgpXmRjUfV4htoeTa95ah+y1l091Vq87cjayPtWBZkxs/Ju
-        viu8+eGRS7efTBbL3H4j+YVNWVsXHl/G2W2Ysc1U2alM3VVV8fi06C2czZtusZ0xec/ZLfAk
-        cu3Xrawxd4MWKLEUZyQaajEXFScCAMBCE54KAwAA
+Content-Type: text/plain
+X-Pobox-Relay-ID: B94C8040-150E-11E7-B458-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/29/2017 06:46 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> I also realize that I made a goof in my comments about v3 of this patch
->> series. Your new option is not choosing between "depth-first" and
->> "breadth-first". Both types of iteration are depth-first. Really it is
->> choosing between pre-order and post-order traversal. So I think it would
->> be better to name the option `DIR_ITERATOR_POST_ORDER`. Sorry about that.
-> 
-> That solicits a natural reaction from a bystander.  Would an
-> IN_ORDER option also be useful?  I am not demanding it to be added
-> to this series, especially if there is no immediate need, but if we
-> foresee that it would also make sense for some other callers, we
-> would at least want to make sure that the code after this addition
-> of POST_ORDER is in a shape that is easy to add such an option
-> later.
+Stefan Beller <sbeller@google.com> writes:
 
-I think IN_ORDER really only applies to *binary* trees, not arbitrary
-trees like a filesystem.
+> A user complained about the workflow with submodules:
+>> Re submodules pain, I've seen a lot of people get confused about
+>> how and when to commit submodule changes. The main thing missing
+>> in the related UIs is some way to summarize the subproject commit
+>> diff in a human readable way. Maybe last log message would be better
+>> than just sha?
+>
+> We could advise all the confused users to turn on
+> status.submoduleSummary.  However there is no downside from turning
+> it on by default apart from a slight change in behavior and bit
+> longer output of git-status and the help in git-commit.
 
-Michael
+Is "there is no downside" substantiated or just hand-waving?
+Any pros-and-cons analysis, e.g. performance implications, etc.?
 
