@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D16A20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 15:54:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 098B820966
+	for <e@80x24.org>; Thu, 30 Mar 2017 15:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934301AbdC3Pyq (ORCPT <rfc822;e@80x24.org>);
+        id S934308AbdC3Pyt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 11:54:49 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:36486 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934029AbdC3Pyq (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 30 Mar 2017 11:54:46 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:33017 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934029AbdC3Pyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 11:54:32 -0400
-Received: by mail-qk0-f196.google.com with SMTP id p22so6885987qka.0
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 08:54:31 -0700 (PDT)
+Received: by mail-qk0-f195.google.com with SMTP id r142so6889751qke.3
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 08:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qcLzqfh2e2/0i+j4OPVV3IuZMufQ5C/UAyI14hbgVjo=;
-        b=bLolCtandBEZKsvS8L9qZdGZXIWFI8wKlsrgWSeTlAMNisPDwMkE1Otme1dHxJT5aI
-         xLBDNnXFw9JtnJ/ptxMsEn0SXUEZNt9ThDoafCI0eidrsO6fWF80iGVL8cRjyXJ9DjWj
-         Es8AkbSaDicI4IJTpLMQJBJ0P8rAnIbLwu0qKOGOK7Mnuf8NOoHadrKuCPaR4SCExx9v
-         GQwS811s8aQNcgkXysZLWaVvcEkx6ilv7jVMDwbjCKqO7GgnK78nNDCTPX2G2oBIzAIv
-         DrT9i1LyiGss11ir12XFVexAGvn70pfjF7ZQ8vwWOqBMSiWJVDGnGi9eL0VyQ+RB5LJo
-         xghQ==
+        bh=rJIZ6voRQJknZBlzNWm4vbMSaow507NsIozuqvdwXUI=;
+        b=eNjcFu/emKD9x8yop63aFTnmkLellp1xHmncZ3Q76KYOoVVS4nJKVTyXBnAh1MEKDs
+         32ZIULIK6lpeRoQzWtRLLTUOuPUNVfRTJvqVDkV/SG9Acp0Pxzv9ySrSXN5ZkzGJ8bHJ
+         +89o1QfQA0pt4EuHTKlRuTMP3QvVjMY70WOtcz6tvegfJigW/nWW9ahqCztqGZUtuOiV
+         CdLGhaXcvvOk8LCJgH9tZxj3dJMTvlSkv98aWJjQjhySVGTVeCUigysfWLGPnEEMu0s1
+         TYB5g5SxCmN7fCQzAeax/hU4s3zgzW+GZkqNQOYz71lxgOhAE9at9o2phrppCfYHcF8v
+         bPkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qcLzqfh2e2/0i+j4OPVV3IuZMufQ5C/UAyI14hbgVjo=;
-        b=fyAlWTEnaoNbIjpEW5ODcG+jNptj0AtIrw770VLkEDaB/T2gNpVft4KyreGbs9T4Gv
-         qYhtichU7h+mDw0wM/yCUuoEBiDN9iwDrQumH9snL07qQ7JHfWz9+njSrgEZMzRheq8P
-         mYRXHWTFcFouITunNSyMnhMXxPY7enIMFxhpatgJJiv0rmYZqHMuK7pxqHvG8cwbHYTk
-         OPNVMo/fH6V9mnx4uve2oCrRjgvqLweJVO8//5lGajY4SyM7Pm4A6h123vJhYBSKZvx4
-         dgDlwxbfpT9kb2gCba/XHMvkwpf3on3XL+4PVh3Fwgz4SeoBtyF8zoajIiV90TFUmm28
-         pDdw==
-X-Gm-Message-State: AFeK/H2QanWoozx573MD56tj5RLkmbi1UKngQgPioTo8YfSs7C3w5mH7dRSQFdND+uzbLQ==
-X-Received: by 10.55.88.66 with SMTP id m63mr443157qkb.270.1490889270718;
-        Thu, 30 Mar 2017 08:54:30 -0700 (PDT)
+        bh=rJIZ6voRQJknZBlzNWm4vbMSaow507NsIozuqvdwXUI=;
+        b=IHnPEDHMlMp3pyODLlS2X0NHE5bZXA3OqQo6u9ZS/83Z9MZhXRJ/43D3cM1FdBLjai
+         2X0NEd+oUGav7tLUAWH9W/YrbLOdDK8/uFG2uNEaMgXxFajLgaTe+F9zjAalFQMKbwGW
+         QqkBMckTmxjYM6cxx2bB6Lluly9TR0o8sG3kGmCettKWwS/Kvn/LOON74kDOKIZ+C0iR
+         Oc8AS5gfah5NBf8Gh8FDeaDoqB6w3YrDyOylbaFPxB8CeN7zdHFlaJiNfutCh6Q80Lz7
+         uXKpPyZ/1Uh18ITM1aaSIt9QeJYf/umH+hzDzVo8aoQCHcAfSqATq9HoHS5xPeUfvPEx
+         rhPg==
+X-Gm-Message-State: AFeK/H31YX87owZTWjhVZzW10E4uLtjN0NMs/4/DOIih84lO62dmvr7+MG016Cai1t/MUg==
+X-Received: by 10.55.149.66 with SMTP id x63mr372914qkd.277.1490889274848;
+        Thu, 30 Mar 2017 08:54:34 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id k5sm1665671qtb.12.2017.03.30.08.54.29
+        by smtp.gmail.com with ESMTPSA id k5sm1665671qtb.12.2017.03.30.08.54.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 30 Mar 2017 08:54:30 -0700 (PDT)
+        Thu, 30 Mar 2017 08:54:34 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v4 2/8] convert: move packet_write_list() into pkt-line as packet_writel()
-Date:   Thu, 30 Mar 2017 11:54:11 -0400
-Message-Id: <20170330155417.8928-4-benpeart@microsoft.com>
+Subject: [PATCH v4 6/8] convert: rename reusable sub-process functions
+Date:   Thu, 30 Mar 2017 11:54:15 -0400
+Message-Id: <20170330155417.8928-8-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.1.gvfs.1.18.ge47db72
 In-Reply-To: <20170330155417.8928-1-benpeart@microsoft.com>
 References: <20170330155417.8928-1-benpeart@microsoft.com>
@@ -62,107 +62,171 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add packet_writel() which writes multiple lines in a single call and
-then calls packet_flush_gently(). Update convert.c to use the new
-packet_writel() function from pkt-line.
+Do a mechanical rename of the functions that will become the reusable
+sub-process module.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- convert.c  | 23 ++---------------------
- pkt-line.c | 19 +++++++++++++++++++
- pkt-line.h |  1 +
- 3 files changed, 22 insertions(+), 21 deletions(-)
+ convert.c | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index 8d652bf27c..793c29ebfd 100644
+index 747c0c363b..f68a7be622 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -521,25 +521,6 @@ static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap,
- 	return hashmap_get(hashmap, &key, NULL);
+@@ -507,8 +507,8 @@ struct cmd2process {
+ 	unsigned int supported_capabilities;
+ };
+ 
+-static int cmd_process_map_initialized;
+-static struct hashmap cmd_process_map;
++static int subprocess_map_initialized;
++static struct hashmap subprocess_map;
+ 
+ static int cmd2process_cmp(const struct subprocess_entry *e1,
+ 			   const struct subprocess_entry *e2,
+@@ -517,22 +517,22 @@ static int cmd2process_cmp(const struct subprocess_entry *e1,
+ 	return strcmp(e1->cmd, e2->cmd);
  }
  
--static int packet_write_list(int fd, const char *line, ...)
--{
--	va_list args;
--	int err;
--	va_start(args, line);
--	for (;;) {
--		if (!line)
--			break;
--		if (strlen(line) > LARGE_PACKET_DATA_MAX)
--			return -1;
--		err = packet_write_fmt_gently(fd, "%s\n", line);
--		if (err)
--			return err;
--		line = va_arg(args, const char*);
--	}
--	va_end(args);
--	return packet_flush_gently(fd);
--}
--
- static void read_multi_file_filter_status(int fd, struct strbuf *status)
+-static struct subprocess_entry *find_multi_file_filter_entry(const char *cmd)
++static struct subprocess_entry *subprocess_find_entry(const char *cmd)
+ {
+ 	struct subprocess_entry key;
+ 
+-	if (!cmd_process_map_initialized) {
+-		cmd_process_map_initialized = 1;
+-		hashmap_init(&cmd_process_map, (hashmap_cmp_fn)cmd2process_cmp, 0);
++	if (!subprocess_map_initialized) {
++		subprocess_map_initialized = 1;
++		hashmap_init(&subprocess_map, (hashmap_cmp_fn)cmd2process_cmp, 0);
+ 		return NULL;
+ 	}
+ 
+ 	hashmap_entry_init(&key, strhash(cmd));
+ 	key.cmd = cmd;
+-	return hashmap_get(&cmd_process_map, &key, NULL);
++	return hashmap_get(&subprocess_map, &key, NULL);
+ }
+ 
+-static void read_multi_file_filter_status(int fd, struct strbuf *status)
++static void subprocess_read_status(int fd, struct strbuf *status)
  {
  	struct strbuf **pair;
-@@ -616,7 +597,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
--	err = packet_write_list(process->in, "git-filter-client", "version=2", NULL);
-+	err = packet_writel(process->in, "git-filter-client", "version=2", NULL);
- 	if (err)
- 		goto done;
- 
-@@ -632,7 +613,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	if (err)
- 		goto done;
- 
--	err = packet_write_list(process->in, "capability=clean", "capability=smudge", NULL);
-+	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
- 
- 	for (;;) {
- 		cap_buf = packet_read_line(process->out, NULL);
-diff --git a/pkt-line.c b/pkt-line.c
-index 58842544b4..2788aa1af6 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
- 	return status;
+ 	char *line;
+@@ -552,7 +552,7 @@ static void read_multi_file_filter_status(int fd, struct strbuf *status)
+ 	}
  }
  
-+int packet_writel(int fd, const char *line, ...)
-+{
-+	va_list args;
-+	int err;
-+	va_start(args, line);
-+	for (;;) {
-+		if (!line)
-+			break;
-+		if (strlen(line) > LARGE_PACKET_DATA_MAX)
-+			return -1;
-+		err = packet_write_fmt_gently(fd, "%s\n", line);
-+		if (err)
-+			return err;
-+		line = va_arg(args, const char*);
-+	}
-+	va_end(args);
-+	return packet_flush_gently(fd);
-+}
-+
- static int packet_write_gently(const int fd_out, const char *buf, size_t size)
+-static void kill_multi_file_filter(struct subprocess_entry *entry)
++static void subprocess_stop(struct subprocess_entry *entry)
  {
- 	static char packet_write_buffer[LARGE_PACKET_MAX];
-diff --git a/pkt-line.h b/pkt-line.h
-index 12b18991f6..cb3eda9695 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- int packet_flush_gently(int fd);
- int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+int packet_writel(int fd, const char *line, ...);
- int write_packetized_from_fd(int fd_in, int fd_out);
- int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
+ 	if (!entry)
+ 		return;
+@@ -561,11 +561,11 @@ static void kill_multi_file_filter(struct subprocess_entry *entry)
+ 	kill(entry->process.pid, SIGTERM);
+ 	finish_command(&entry->process);
  
+-	hashmap_remove(&cmd_process_map, entry, NULL);
++	hashmap_remove(&subprocess_map, entry, NULL);
+ 	free(entry);
+ }
+ 
+-static void stop_multi_file_filter(struct child_process *process)
++static void subprocess_exit_handler(struct child_process *process)
+ {
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 	/* Closing the pipe signals the filter to initiate a shutdown. */
+@@ -640,16 +640,16 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
+ }
+ 
+ typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
+-int start_multi_file_filter(struct subprocess_entry *entry, const char *cmd,
++int subprocess_start(struct subprocess_entry *entry, const char *cmd,
+ 	subprocess_start_fn startfn)
+ {
+ 	int err;
+ 	struct child_process *process;
+ 	const char *argv[] = { cmd, NULL };
+ 
+-	if (!cmd_process_map_initialized) {
+-		cmd_process_map_initialized = 1;
+-		hashmap_init(&cmd_process_map, (hashmap_cmp_fn)cmd2process_cmp, 0);
++	if (!subprocess_map_initialized) {
++		subprocess_map_initialized = 1;
++		hashmap_init(&subprocess_map, (hashmap_cmp_fn)cmd2process_cmp, 0);
+ 	}
+ 
+ 	entry->cmd = cmd;
+@@ -661,7 +661,7 @@ int start_multi_file_filter(struct subprocess_entry *entry, const char *cmd,
+ 	process->in = -1;
+ 	process->out = -1;
+ 	process->clean_on_exit = 1;
+-	process->clean_on_exit_handler = stop_multi_file_filter;
++	process->clean_on_exit_handler = subprocess_exit_handler;
+ 
+ 	err = start_command(process);
+ 	if (err) {
+@@ -674,11 +674,11 @@ int start_multi_file_filter(struct subprocess_entry *entry, const char *cmd,
+ 	err = startfn(entry);
+ 	if (err) {
+ 		error("initialization for external filter '%s' failed", cmd);
+-		kill_multi_file_filter(entry);
++		subprocess_stop(entry);
+ 		return err;
+ 	}
+ 
+-	hashmap_add(&cmd_process_map, entry);
++	hashmap_add(&subprocess_map, entry);
+ 	return 0;
+ }
+ 
+@@ -693,7 +693,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	struct strbuf filter_status = STRBUF_INIT;
+ 	const char *filter_type;
+ 
+-	entry = (struct cmd2process *)find_multi_file_filter_entry(cmd);
++	entry = (struct cmd2process *)subprocess_find_entry(cmd);
+ 
+ 	fflush(NULL);
+ 
+@@ -701,7 +701,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 		entry = xmalloc(sizeof(*entry));
+ 		entry->supported_capabilities = 0;
+ 
+-		if (start_multi_file_filter(&entry->subprocess, cmd, start_multi_file_filter_fn)) {
++		if (subprocess_start(&entry->subprocess, cmd, start_multi_file_filter_fn)) {
+ 			free(entry);
+ 			return 0;
+ 		}
+@@ -746,7 +746,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	if (err)
+ 		goto done;
+ 
+-	read_multi_file_filter_status(process->out, &filter_status);
++	subprocess_read_status(process->out, &filter_status);
+ 	err = strcmp(filter_status.buf, "success");
+ 	if (err)
+ 		goto done;
+@@ -755,7 +755,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	if (err)
+ 		goto done;
+ 
+-	read_multi_file_filter_status(process->out, &filter_status);
++	subprocess_read_status(process->out, &filter_status);
+ 	err = strcmp(filter_status.buf, "success");
+ 
+ done:
+@@ -777,7 +777,8 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 			 * Force shutdown and restart if another blob requires filtering.
+ 			 */
+ 			error("external filter '%s' failed", cmd);
+-			kill_multi_file_filter((struct subprocess_entry *)entry);
++			subprocess_stop((struct subprocess_entry *)entry);
++			free(entry);
+ 		}
+ 	} else {
+ 		strbuf_swap(dst, &nbuf);
 -- 
 2.12.1.gvfs.1.18.ge47db72
 
