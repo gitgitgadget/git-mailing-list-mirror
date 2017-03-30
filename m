@@ -2,145 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14FFE20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 22:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED5C20966
+	for <e@80x24.org>; Thu, 30 Mar 2017 22:39:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932566AbdC3WiB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 18:38:01 -0400
-Received: from mail-oi0-f41.google.com ([209.85.218.41]:36671 "EHLO
-        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932201AbdC3WiA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 18:38:00 -0400
-Received: by mail-oi0-f41.google.com with SMTP id r203so45141599oib.3
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 15:37:59 -0700 (PDT)
+        id S933215AbdC3WjI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 18:39:08 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:36474 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932701AbdC3WjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 18:39:06 -0400
+Received: by mail-io0-f179.google.com with SMTP id l7so29229684ioe.3
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 15:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=DsvRbe3EM8cYMhWuteKKcivQE5M8oAnLfSofnBrf1kM=;
-        b=BUam3NECRJR495FzY/FHGH95vqpQ+hbQIpDCOwVd6DbYhR79UKYUTu/VlW160IL/E5
-         xPR8IbFyI7t377q0fTeDsxcVCGWYRFfMPa/nw3G//rjpgNu+MyVo1QKjtnHnStOWabB3
-         Lo3ghsl1o/jOILFz/r3hrmrwPpXu4aLmKD4CBrSXVoLFQ1EechZ0m0pF+teGZ71XSQWm
-         P0kmxU3Bzo+APJzRM+TtyVXgGCq2/4hOq4HrbqFG0Dsoi/MNv95lDiI0Z3tUtEAREX/w
-         90+fmQRhHxokYfzBfBlmgdaRKPnzhmPPUOV0iKAwGDiWXBc7YIU4CglUhoS48CPed5nV
-         AiAw==
+        d=retailnext.net; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=jPrIqCEkHq3QKa/+nroKZdXmofhnvMqRgyc4Lmz40Xg=;
+        b=CGZS7MOpb9TAqfQ76ytF1l+PUr2NI3LkszQO8c8uTDJG801SFgnzi4jJvXCqiqPQom
+         PXqcHJ05Pn2nIYfeO8CAwf+C7tPJhPEvGwjFWT3TTzurTF6zGJKwcVnsK7ClddkHw2aW
+         OpgWxjaNfaJk6CQE0whVBNcEweC6RKSAcIYDk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=DsvRbe3EM8cYMhWuteKKcivQE5M8oAnLfSofnBrf1kM=;
-        b=oplJ8a3CuHpLuy26Cr1DavX06iqAep8bX6H5wYvWgln10mFvJ8jlSdSbP4gx3Fr88R
-         TrpRVhZ26zFWX7L7bcS9pfzke23AQEdqtslSYWV6+9Hq4aJwYoimRoYvyCPw5ituW0SE
-         L5WWNn2GwjZ/WPc0MUgRE+quZdw3Ass7iVQMoBWz2dhMnd7Q0dsfHopSzO3XDb2Od7Tx
-         Aul02U5x6ASg6d78KelsR9icgz+wE5vrTvkfAz63PG5oqMkxQiACiuaz6Eufl/2VAVtP
-         my87eLLbMqnDvZ+rLvUmzl0VBucHvye/Voc3YZ383CaRH3gJYQ91/W0pyc72GlVFfHO5
-         jC1A==
-X-Gm-Message-State: AFeK/H2yT/Kl4CH0s3WvNsATWOWG7i8WyGBg/5N8tfikBGVra3LiakIL7YUk0tf18xdhlUUrhnqk8WSZUUeJWQ==
-X-Received: by 10.157.16.1 with SMTP id h1mr1445160ote.216.1490913478590; Thu,
- 30 Mar 2017 15:37:58 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=jPrIqCEkHq3QKa/+nroKZdXmofhnvMqRgyc4Lmz40Xg=;
+        b=IaBkrjV8gMMA6KGeRTezMPx5Xp2jstiibRRmooWWZdDASqgkkdsjyknK++xtX/HHVn
+         7HD+WtUMQcLmsbWD80pCg58VRkiblQI1sRtQtBp/K6m4PeNyaa+G1Nv+nyhFamf40NWX
+         28S+xX8uwa9wka+pmTAfSKsBmpRY1jrg8gIxRhB6k206Ran9mCfl3EzeaO5092oGB7Yf
+         /miDu3myapo1ocwPkYZ8dBbAZdmb/7mcGtVBOviIC/t6o63uckQYYIGoaRDxjOF+CheU
+         mTLFgY1LhZvTft2UDyGpSbM21KSkehbrZIBBDAgxuz1ikr0RPbgr6HgUK9/cC7cR/EDc
+         lvEA==
+X-Gm-Message-State: AFeK/H1xrrA1ov9lNabUqlC3OY+9hzpCLNCzFXxG8rYavGqtW5wvjLPBwOQtUxC44Rm52yA6L2PQs+2aaUEmUIbm
+X-Received: by 10.107.27.207 with SMTP id b198mr3448443iob.218.1490913544894;
+ Thu, 30 Mar 2017 15:39:04 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.31.131 with HTTP; Thu, 30 Mar 2017 15:37:58 -0700 (PDT)
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Thu, 30 Mar 2017 18:37:58 -0400
-Message-ID: <CAH8yC8nAYKMe21Q+QvoTvR_WnNJyn2p8DYSkzKmn_dWaeGb+4g@mail.gmail.com>
-Subject: /bin/bash: /usr/ucb/install: No such file or directory
-To:     Git List <git@vger.kernel.org>
+Received: by 10.107.164.230 with HTTP; Thu, 30 Mar 2017 15:39:04 -0700 (PDT)
+From:   Nate Mueller <nate@retailnext.net>
+Date:   Thu, 30 Mar 2017 15:39:04 -0700
+Message-ID: <CAJF7t-dqSa7tmQqNEWmg_VZ=+832nsZ-3JmSGA03qK6aY5eNTQ@mail.gmail.com>
+Subject: Issue with 2.11.0 and GIT_EXEC_PATH with multiple entries
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think this is the last of the issues for Git 2.12.2 on Solaris 11.3.
+I ran into this after upgrading to 2.11.0 through Xcode.  I assumed it
+was a packaging issue but it looks like it's been in the mainline
+since 1073094f30 (on October 29).
 
-It looks like 'install' is located in a few places, but not in
-'/usr/ucb'. I believe /usr/ucb is Solaris 9 or Solaris 10. I think the
-equivalent place to look on Solaris 11 is /usr/gnu (but I only have
-limited experience on Solaris).
+In 2.11.0, git-sh-setup switched it's call of git-sh-i18n from:
 
-solaris:~$ find /usr -name install 2>/dev/null
-/usr/share/install
-/usr/dtrace/DTT/install
-/usr/sadm/install
-/usr/gnu/bin/install
-/usr/sbin/install
+. git-sh-i18n
 
-solaris:~$ ls /usr/ucb
-/usr/ucb: No such file or directory
+to:
 
-Here's the default one based on default paths using Bash. I change the
-default shell, but not the default paths:
+. "$(git --exec-path)/git-sh-i18n"
 
-solaris:~$ sudo su -
-Oracle Corporation      SunOS 5.11      11.3    September 2015
-solaris:~# which install
-/sbin/install
+This fails for me because my GIT_EXEC_PATH is set to
+"/Library/Developer/CommandLineTools/usr/libexec/git-core:/Users/nate/.git-exec".
+If I remove the second entry git-sh-setup works just fine.
 
-Jeff
+Am I doing something wrong here?  I can't see what but I'm surprised
+that I'm the first person to hit this.
 
-************
 
-...
-Writing MYMETA.yml and MYMETA.json
-    GEN git-add--interactive
-    GEN git-archimport
-    GEN git-cvsexportcommit
-    GEN git-cvsimport
-    GEN git-cvsserver
-    GEN git-send-email
-    GEN git-svn
-    SUBDIR git-gui
-    SUBDIR gitk-git
-    SUBDIR perl
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN.pm
->blib/lib/Git/SVN.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/GlobSpec.pm
->blib/lib/Git/SVN/GlobSpec.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <private-Error.pm
->blib/lib/Error.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/I18N.pm
->blib/lib/Git/I18N.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/Editor.pm
->blib/lib/Git/SVN/Editor.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>"
-<Git/SVN/Memoize/YAML.pm >blib/lib/Git/SVN/Memoize/YAML.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/Fetcher.pm
->blib/lib/Git/SVN/Fetcher.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/Ra.pm
->blib/lib/Git/SVN/Ra.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/Utils.pm
->blib/lib/Git/SVN/Utils.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git.pm
->blib/lib/Git.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/Prompt.pm
->blib/lib/Git/SVN/Prompt.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/Migration.pm
->blib/lib/Git/SVN/Migration.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/IndexInfo.pm
->blib/lib/Git/IndexInfo.pm
-"/usr/local/bin/perl5.24.0" -pe
-"s<\Q++LOCALEDIR++\E></usr/local/share/locale>" <Git/SVN/Log.pm
->blib/lib/Git/SVN/Log.pm
-Manifying 9 pod documents
-    SUBDIR templates
-/usr/ucb/install -d -m 755 '/usr/local/bin'
-/bin/bash: /usr/ucb/install: No such file or directory
-gmake: *** [install] Error 127
+
+-- 
+Nate Mueller - Head of Engineering - RetailNext - 406-356-6283
