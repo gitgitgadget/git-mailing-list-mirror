@@ -2,74 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65F2C20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 18:27:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD08E20966
+	for <e@80x24.org>; Thu, 30 Mar 2017 18:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934520AbdC3S1H (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 14:27:07 -0400
-Received: from mail-lf0-f43.google.com ([209.85.215.43]:36729 "EHLO
-        mail-lf0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934331AbdC3S1G (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 14:27:06 -0400
-Received: by mail-lf0-f43.google.com with SMTP id x137so32792441lff.3
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 11:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=63/0AmCOuwnxWsKbGQjsXSqNNHmmdTt6jXeY2Sgyx7g=;
-        b=EWP9eZkVFxIgibnrZEMbTheOcBrv0SjS32aMng2Lxp1E1uonNZ+oY2JZT72XxaNaHw
-         kWg9G1cyJKIGpqkJ+I91ZDXO2e3GZrU9+00J666dz0zj6lps+OWa5ioL8iCUPskSGrwH
-         lYKvREnyCNzNGpmSgbYQflDGPTZKTQNNgXo3qmhLFL/7x0HUNcjVL4RVNKdRht0BdYZQ
-         FZGhfA6GCBIyG37IvRRBRtupcauK+gISPeQXIaSPRgMQqdW2iv7exzndUMda+GJqgsM8
-         HYR8mfgYbhxtU7EmDrGUtHgtPGuvjBdnFadnCsbImgtwf1Jfn3WIL17AT4PIF1MYhCiD
-         Kj+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=63/0AmCOuwnxWsKbGQjsXSqNNHmmdTt6jXeY2Sgyx7g=;
-        b=MsNDDWgFrwRhfY2CZdh+xrkljpHP9uUyXPEPzvNu4zR49EHj6q8hfo8F7+nHwrQv/8
-         H1O3gHFiA8UtDcSY+pHDBL+2y6bl5JH/cVgTSkeITmj4K8b7plOh1RdOBFercNMQX8al
-         QFz3w9f/SEiTKRDERBHueP3QZ0ERpREOPOULd0+AV9gjpx/jly6wgn6uDrcO7Kx9Aeiu
-         XiL19UUO0X06o/HQdBouvPPXMGE7MnsBAVgwLmS+X4mQlt7Mr8S9d1/wxdkYorKEY8M6
-         KNfq6+Y8GW6+ta8Dz7GPwNLG58LJJRqJi9olKf2SD4YQLLB2W8dUq99pZDlFmubxr1S7
-         c/fw==
-X-Gm-Message-State: AFeK/H3XxReLokLpRfYRWB43PHVvdIqffeEoHg1PJWVMA8lSFcTbbh8d8AyD+0OwNvOtOdRJNZIDWdWeWBvbLQ==
-X-Received: by 10.25.18.169 with SMTP id 41mr311946lfs.129.1490898424095; Thu,
- 30 Mar 2017 11:27:04 -0700 (PDT)
+        id S934210AbdC3S2z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 14:28:55 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54408 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934028AbdC3S2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 14:28:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75A526D529;
+        Thu, 30 Mar 2017 14:28:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Gbyq584PgwwE52Z9hka/UMtUeHU=; b=P410lK
+        VmlGXKPa3Nmkn7hHZzw5MKT6fQ+6jhXMi+i04YAo06BfPeJ6sq3u9G3+tyunXK25
+        FCXHoju/y0a2YDnYNUPWzPhrmAoVdncsIn2mYv3f+fyBs0Q1KKmcyHhChjTWQJr/
+        ZVhbqYOmO91MokyAvwVw8BOD22f32o38smVO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=BPrLAKQbSFJWcsTqHG9kje9x3d/V05JR
+        UY3dtdLxfyyNQqYfH5rXvJfRw551TVcf9AqVXT1lVpWOirz5cTdSLx0tUBhQVzD1
+        Ln8PSF9Y73ir53Oi/T3xybuG0FwMbwTX7Awksf/UeygJUKlMqDSsDLbiQcz7KBH6
+        U7uhmZ1mF9s=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6EA596D528;
+        Thu, 30 Mar 2017 14:28:52 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D87266D526;
+        Thu, 30 Mar 2017 14:28:51 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] submodule.c: correctly handle nested submodules in is_submodule_modified
+References: <20170328230938.9887-1-sbeller@google.com>
+        <20170329222616.11077-1-sbeller@google.com>
+        <20170329222616.11077-3-sbeller@google.com>
+        <20170329231308.GZ31294@aiede.mtv.corp.google.com>
+Date:   Thu, 30 Mar 2017 11:28:50 -0700
+In-Reply-To: <20170329231308.GZ31294@aiede.mtv.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 29 Mar 2017 16:13:09 -0700")
+Message-ID: <xmqqmvc24o0t.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.18.73 with HTTP; Thu, 30 Mar 2017 11:26:33 -0700 (PDT)
-In-Reply-To: <a738d683-0f2d-61b9-5ecf-ef8bc8f98ff6@alum.mit.edu>
-References: <1490844730-47634-1-git-send-email-bnmvco@gmail.com>
- <1490844730-47634-5-git-send-email-bnmvco@gmail.com> <a738d683-0f2d-61b9-5ecf-ef8bc8f98ff6@alum.mit.edu>
-From:   "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
-Date:   Thu, 30 Mar 2017 15:26:33 -0300
-Message-ID: <CAEA2_R+w+Pty41RykqBt0XKeNi-4eowNSc=Yh9RL=Lq+Xo=mJg@mail.gmail.com>
-Subject: Re: [PATCH v5 4/6] dir_iterator: add tests for dir_iterator API
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9678D28-1576-11E7-B453-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 30, 2017 at 5:05 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> Oh I forgot to mention, in the Git project we don't allow declarations
-> to be mixed with code. Apparently there's some ancient compiler
-> somewhere that doesn't allow it. Declarations always have to be
-> together, at the top of a block. (Compile with
-> `-Werror=declaration-after-statement` to detect this.)
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Sorry about that. I'm compiling git on clang and it has a bug that
-ignores this warning (it shows up on gcc). I'll watch out for it.
+> Stefan Beller wrote:
+>
+>> This bug fix also affects the default output (non-short, non-porcelain)
+>> of git-status, which is not tested here.
+>
+> Do you have an example?  (In just the commit message would be fine, in
+> tests would be even better.)
+>
+>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> ---
+>>  Documentation/git-status.txt |  2 ++
+>>  submodule.c                  | 21 +++++++++++++++++++--
+>>  t/t3600-rm.sh                |  2 +-
+>>  t/t7506-status-submodule.sh  |  4 ++--
+>>  4 files changed, 24 insertions(+), 5 deletions(-)
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> but I would be a lot more comfortable after looking at the change to
+> "git status" output.  (E.g. a test demonstrating it can happen in a
+> followup change if that's simpler.)
+>
+> Thanks for your patient work on this.
+
+Thank you both.  I re-read the whole thing and it feels to me that
+the topic is now ready for 'next'.
