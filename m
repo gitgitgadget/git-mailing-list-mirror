@@ -2,112 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFCD320966
-	for <e@80x24.org>; Thu, 30 Mar 2017 21:34:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8415F20966
+	for <e@80x24.org>; Thu, 30 Mar 2017 21:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933799AbdC3VeC (ORCPT <rfc822;e@80x24.org>);
+        id S933814AbdC3VeE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 17:34:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54444 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933470AbdC3VeC (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 30 Mar 2017 17:34:02 -0400
-Received: from proofpoint8.lanl.gov ([204.121.3.47]:38873 "EHLO
-        proofpoint8.lanl.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933428AbdC3VeC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 17:34:02 -0400
-Received: from pps.filterd (proofpoint8.lanl.gov [127.0.0.1])
-        by proofpoint8.lanl.gov (8.16.0.20/8.16.0.20) with SMTP id v2ULRpsq040445;
-        Thu, 30 Mar 2017 15:33:51 -0600
-Received: from mailrelay2.lanl.gov (mailrelay2.lanl.gov [128.165.4.103])
-        by proofpoint8.lanl.gov with ESMTP id 29dnaydgn7-1;
-        Thu, 30 Mar 2017 15:33:51 -0600
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mailrelay2.lanl.gov (Postfix) with ESMTP id 40564F7C402;
-        Thu, 30 Mar 2017 15:33:51 -0600 (MDT)
-X-NIE-2-Virus-Scanner: amavisd-new at mailrelay2.lanl.gov
-Received: from pn1216650.lanl.gov (pn1216650.lanl.gov [128.165.243.37])
-        by mailrelay2.lanl.gov (Postfix) with ESMTP id 29B3EF7C3FA;
-        Thu, 30 Mar 2017 15:33:51 -0600 (MDT)
-Subject: Re: ttk error when starting git gui
-To:     Peter van der Does <peter@avirtualhome.com>, git@vger.kernel.org
-References: <0fc69c73-73aa-5355-264b-a7c55377eec2@lanl.gov>
- <4addfbdb-1289-7958-87e5-8d8caa9febfb@avirtualhome.com>
-From:   David Shrader <dshrader@lanl.gov>
-Message-ID: <c4e7185d-cef9-ce1b-a944-e92e0d17249c@lanl.gov>
-Date:   Thu, 30 Mar 2017 15:33:51 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+Received: (qmail 32117 invoked by uid 109); 30 Mar 2017 21:34:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Mar 2017 21:34:00 +0000
+Received: (qmail 3354 invoked by uid 111); 30 Mar 2017 21:34:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Mar 2017 17:34:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Mar 2017 17:33:58 -0400
+Date:   Thu, 30 Mar 2017 17:33:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Rast <tr@thomasrast.ch>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] log: if --decorate is not given, default to
+ --decorate=auto
+Message-ID: <20170330213358.qjsobjcbons66skf@sigill.intra.peff.net>
+References: <20170324054631.21622-1-alexhenrie24@gmail.com>
+ <20170324183825.GD31294@aiede.mtv.corp.google.com>
+ <xmqqa88263qw.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <4addfbdb-1289-7958-87e5-8d8caa9febfb@avirtualhome.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-03-30_16:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
- malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.0.1-1702020001
- definitions=main-1703300183
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa88263qw.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Mar 30, 2017 at 11:03:51AM -0700, Junio C Hamano wrote:
 
+> With the "--decorate=auto" option becoming the default for "git
+> log", "git tbdiff" will be broken.
+> 
+> The configuration variable has been already there, so in that sense
+> this is not a new breakage (tbdiff wouldn't have worked well for
+> those with configured default).  A fix is trivial (attached).
+> 
+> I suspect that Alex's change may uncover similar breakages in
+> people's scripts.  Perhaps the topic should be cooked a bit longer
+> than other topics on 'next'?
 
-On 03/30/2017 01:54 PM, Peter van der Does wrote:
-> On 3/30/17 1:01 PM, David Shrader wrote:
->> Hello,
->>
->> I get the following error when trying to start git gui:
->>
->> Error in startup script: wrong # args: should be "ttk::style theme use
->> theme"
->>      while executing
->> "ttk::style theme use"
->>      (procedure "ttext" line 4)
->>      invoked from within
->> "ttext $ui_workdir -background white -foreground black \
->>          -borderwidth 0 \
->>          -width 20 -height 10 \
->>          -wrap none \
->>          -takefocus 1 -highlightthickness 1\
->>          ..."
->>      (file
->> "/home/dshrader/opt/toss2/common/git/2.12.2/libexec/git-core/git-gui"
->> line 3190)
->>
->> I get this error with the latest released version 2.12.2. Two older git
->> versions are also available on this system, and neither has this issue.
->> Those older versions are 1.7.1 and 2.3.3. I don't see a call to ttext in
->> those corresponding git-gui executables, so that is probably why they work.
->>
->> Here are the steps to reproduce:
->>
->> 1) cd to existing git repository
->> 2) run 'git gui' (no gui comes up, and the error is printed in the
->> terminal)
->>
->> I'm running on a RHEL6 based system. Do I have an insufficient version
->> of whatever git gui uses for graphics in the later versions of git? When
->> I try 2.12.2 on my personal workstation running Fedora 25, I don't see
->> the same issue.
->>
->> Thank you very much for your time,
->> David
->>
->
-> It looks like the git gui needs TCL/TK 8.6.0 or higher. Since that
-> version the command 'ttk::style theme use' has been changed, which
-> allows the command to be run without an argument and then returning the
-> current theme used.
-> I believe RHEL6 use Tk-8.5.7 but I can't be 100% sure.
->
-Yep, 8.5.7 is what I have on the RHEL6-based system. Thanks for the info!
-David
+I'm confused. I thought "auto" would kick in only when we are outputting
+to a terminal. Or is the problem that the "is it a terminal" check is
+fooled by $GIT_PAGER_IN_USE, because you are running "git -p tbdiff"?
 
--- 
-David Shrader
-HPC-ENV High Performance Computer Systems
-Los Alamos National Lab
-Email: dshrader <at> lanl.gov
+If so, this is the symptom of a more general problem, which is that
+a script outputting to a pager will have confused sub-processes, who do
+not know if their pipe is the pager one or not. Perhaps it is time to
+resurrect my patch from:
 
+  http://public-inbox.org/git/20150810052353.GB15441@sigill.intra.peff.net/
+
+I think it would need a Windows-specific variant, but the general idea
+is sound.
+
+-Peff
+
+PS I've been running git-tbdiff occasionally for years with log.decorate
+   set to "true". I wonder why I haven't noticed any problems.
