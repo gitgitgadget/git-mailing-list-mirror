@@ -2,89 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 953D020966
-	for <e@80x24.org>; Thu, 30 Mar 2017 19:50:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E40ED20969
+	for <e@80x24.org>; Thu, 30 Mar 2017 19:58:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934507AbdC3Tun (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 15:50:43 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:33883 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934152AbdC3Tum (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 15:50:42 -0400
-Received: by mail-wr0-f195.google.com with SMTP id w43so14971147wrb.1
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 12:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=fvKaMKVm8bgJw/QFJSdcBucbjSYFP0aVuAvv2lbH+fI=;
-        b=A29nrsyX+vKEgCJnK6OxsV5zUk6LCU3S7IPQ/izl7vRtN8IW6X3YQhBatqpxjvZSJo
-         PQRhrJpo99x8Ge2ocvprATYd944XluERSAJ+wgO+x0+74/ILrQ/LM4QFyZdmpXwnQv8+
-         oy/1q21+MW80RmSJpIXaN4FBr1X4UDeKCduH3IvfLplEbGdnK6vx73MhH7tpRFY2tVug
-         gZ4Wjggv09hVYtaBtaXqB16K29Ze7Hu0qm39Uup1vHKqhWPkxVeeNVcrOydHqN9yX0pS
-         N/kZz0tFVpritpwl/6AdePBk3F+hL/mxAbGCYH5ErhYYge69+h/2q+gjJsnb0Wszwsr5
-         ZCTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=fvKaMKVm8bgJw/QFJSdcBucbjSYFP0aVuAvv2lbH+fI=;
-        b=keN+KGLmjBvNQWILs0UhPYH46WC5U6a687x4BM5VZ42uGLtKCyHqxg3yKRUZI8hIbt
-         IzvT4bc65tKpV09o++zj+ENTgQBXxQ6pWzcDUToTcbDHIbbTTqUTi5YFZizPy/XbiSWg
-         B62QQjk7vS3IwAUT3tQ+UiTyMnYVVZyxY3obt6ik0Mb3UUXztMGq/Zw9wmx5mQ3U9anZ
-         FzlZxLYZ8lnH3J8EDuxRSOOOjbE8UZ7AzVKyisyrhAQo6UrWRAUwudoz8JCf81mD3xI+
-         8gDKJDB36+q3F15kE2/S43coHbWBgZq40Iky/x9YG4cXdpPbP9utSf+BwVLtMkNHyEvG
-         1Y9A==
-X-Gm-Message-State: AFeK/H3V4oGTz8nMCWAv5hhSOXqvzkJJfRxWwnyaB66SN6os8p9RltEJ9hqg91oeDXhE8A==
-X-Received: by 10.223.143.53 with SMTP id p50mr1280694wrb.2.1490903440355;
-        Thu, 30 Mar 2017 12:50:40 -0700 (PDT)
-Received: from arrakeen.fritz.box ([2001:a61:1002:fd01:1067:7396:5cde:c42b])
-        by smtp.gmail.com with ESMTPSA id w10sm115547wmw.14.2017.03.30.12.50.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 30 Mar 2017 12:50:39 -0700 (PDT)
-From:   Andreas Heiduk <asheiduk@gmail.com>
-To:     gitster@pobox.com, git@vger.kernel.org
-Cc:     Andreas Heiduk <asheiduk@gmail.com>
-Subject: [PATCH] Docs: Add some missing options to git-diff.txt
-Date:   Thu, 30 Mar 2017 21:49:35 +0200
-Message-Id: <1490903375-2115-1-git-send-email-asheiduk@gmail.com>
-X-Mailer: git-send-email 2.7.4
+        id S934665AbdC3T6Z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 15:58:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54370 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934524AbdC3T6Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 15:58:24 -0400
+Received: (qmail 26420 invoked by uid 109); 30 Mar 2017 19:58:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Mar 2017 19:58:22 +0000
+Received: (qmail 2142 invoked by uid 111); 30 Mar 2017 19:58:38 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Mar 2017 15:58:38 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Mar 2017 15:58:20 -0400
+Date:   Thu, 30 Mar 2017 15:58:20 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 0/2] read-cache: call verify_hdr() in a background
+ thread
+Message-ID: <20170330195820.kexvl44x7ncthlcx@sigill.intra.peff.net>
+References: <20170328190732.59486-1-git@jeffhostetler.com>
+ <20170328191628.dprziuhpv7khvocu@sigill.intra.peff.net>
+ <35f220df-aa63-b80f-8970-429850202cdd@jeffhostetler.com>
+ <20170328195605.xy4pnhy74s6wgwps@sigill.intra.peff.net>
+ <xmqqtw6a35qc.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtw6a35qc.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-diff understands "--ours", "--theirs" and "--base" for files with
-conflicts. But so far they were not documented for the central diff
-command but only for diff-files.
+On Thu, Mar 30, 2017 at 12:49:15PM -0700, Junio C Hamano wrote:
 
-Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
----
- Documentation/git-diff.txt | 8 ++++++++
- 1 file changed, 8 insertions(+)
+> Notable suggested changes I have in this one are:
+> 
+>  * I stole the numbers from the cover letter of v2 and added them at
+>    the end of the log message.
 
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index bbab35f..91ced4f 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -97,6 +97,14 @@ OPTIONS
- :git-diff: 1
- include::diff-options.txt[]
- 
-+-1 --base::
-+-2 --ours::
-+-3 --theirs::
-+-0::
-+	Diff against the "base" version, "our branch" or "their
-+	branch" respectively. The option -0 can be given to omit diff
-+	output for unmerged entries and just show "Unmerged".
-+
- <path>...::
- 	The <paths> parameters, when given, are used to limit
- 	the diff to the named paths (you can give directory
--- 
-2.7.4
+Yeah, good.
 
+>  * As the checksum is not a useless relic, but is an integrity
+>    check, I dropped the "ancient relic" from the proposed log
+>    message.  It is just that the modern disks are reliable enough to
+>    make it worthwhile to think about a trade-off this patch makes
+>    between performance and integrity.
+
+Yeah, I'd agree this is more of a tradeoff than a cleanup.
+
+>  * As it is customary, the configuration variable starts as an opt
+>    in feature.  In a few releases, perhaps we can flip the default,
+>    but we do not do so from day one.
+
+I think this is so user-invisible that it doesn't really matter much,
+but I'm OK with taking it slow.
+
+>  * Updated the code around the call to config-get-bool to avoid
+>    asking the same question twice.
+
+A few comments on that below.
+
+>  * Added minimum documentation.
+
+Yep, looks good.
+
+> By the way, are we sure we have something that validates the
+> checksum regardless of the configuration setting?  If not, we may
+> want to tweak this further so that we can force the validation from
+> "git fsck" or something.  I am not going to do that myself, but it
+> may be necessary before this graduates to 'master'.
+
+Yes, I'd agree this shouldn't graduate without the matching change to
+teach fsck to flip the switch back.
+
+> +	static int do_checksum = -1;
+> [...]
+> +	if (do_checksum < 0) {
+> +		/*
+> +		 * Since we run very early in command startup, git_config()
+> +		 * may not have been called yet and the various "core_*"
+> +		 * global variables haven't been set.  So look it up
+> +		 * explicitly.
+> +		 */
+> +		git_config_get_bool("core.checksumindex", &do_checksum);
+> +		if (do_checksum < 0)
+> +			do_checksum = 0; /* default to false */
+> +	}
+> +	if (!do_checksum)
+> +		return 0;
+
+This is basically introducing a new caching layer, but there's no way to
+invalidate it (if, say, we looked at the config once and then we knew
+that the config changed).  I think it's probably OK, because the main
+reason for the config to change is reading it before/after repository
+setup. But since this is index code, it shouldn't be called at all
+before repository setup.
+
+Still, I'm not sure the extra layer of cache is all that valuable. It
+should be a single hash lookup in the config cache (in an operation that
+otherwise reads the entire index).
+
+-Peff
