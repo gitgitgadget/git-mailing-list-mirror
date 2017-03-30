@@ -2,118 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EFDC20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 16:01:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E45E420966
+	for <e@80x24.org>; Thu, 30 Mar 2017 16:17:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934169AbdC3QB6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 12:01:58 -0400
-Received: from mail-co1nam03on0108.outbound.protection.outlook.com ([104.47.40.108]:23865
-        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S933806AbdC3QB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 12:01:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=etFdTpS26vVImJz3Ua2GU1Bkj03IhqVyK5GfuLYrFzY=;
- b=ZZQaaBper1q5YGcKuoUNKJzxSU77njBsysZsMA4mgPleNsjVptf6R8DM40KhVTh300tvyqLEgerr/tEKFaX9CJdkWNsrSRlx402Vu7pkTIW8eXd23Rn+i4YyM6SGL18JU/NVPUH0qyQCyuFPi00AmqDGxJ7MwjbBZbQx1uxzyvY=
-Received: from BL2PR03MB323.namprd03.prod.outlook.com (10.141.68.22) by
- BL2PR03MB324.namprd03.prod.outlook.com (10.141.68.27) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.991.14; Thu, 30 Mar 2017 16:01:52 +0000
-Received: from BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) by
- BL2PR03MB323.namprd03.prod.outlook.com ([10.141.68.22]) with mapi id
- 15.01.0991.021; Thu, 30 Mar 2017 16:01:52 +0000
-From:   Ben Peart <Ben.Peart@microsoft.com>
-To:     =?iso-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-        Ben Peart <peartben@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
-Subject: RE: [PATCH v2 1/2] pkt-line: add packet_writel() and
- packet_read_line_gently()
-Thread-Topic: [PATCH v2 1/2] pkt-line: add packet_writel() and
- packet_read_line_gently()
-Thread-Index: AQHSpLMw2WN94lefeEWS0KPJi8Zk+6GlDRWAgAQ2/gCABC+HgIAAHw5Q
-Date:   Thu, 30 Mar 2017 16:01:51 +0000
-Message-ID: <BL2PR03MB3237F4B369C0E00168D7291F4340@BL2PR03MB323.namprd03.prod.outlook.com>
-References: <20170324152726.14632-1-benpeart@microsoft.com>
- <20170324152726.14632-2-benpeart@microsoft.com>
- <7a2c73c8-bb09-12ec-dd8d-99c5363f9bb4@web.de>
- <BL2PR03MB3233616BE57BB7D911B1AAEF4330@BL2PR03MB323.namprd03.prod.outlook.com>
- <a5e259bd-d994-6ddb-9dae-43531ee2e875@web.de>
-In-Reply-To: <a5e259bd-d994-6ddb-9dae-43531ee2e875@web.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: web.de; dkim=none (message not signed)
- header.d=none;web.de; dmarc=none action=none header.from=microsoft.com;
-x-originating-ip: [65.222.173.206]
-x-microsoft-exchange-diagnostics: 1;BL2PR03MB324;7:RXLAJiOlc5iGvC54T6QOm4m3gE3rICJkTBKCcJ+AYpRo2dIYAVEbBNMsBTwrf/fdMda9ChwFjgKOv9lOR96DOaHwvnMXzOEn9DjERbozJXgndOBw+P3iZbaUmDhuQ4UiWe8OddhJ33/xJXH2zgu9hOCkmYZkQB8tsDNFO8rOj31VWJnMH+/FWgfWLxFVuBfVcJyXagMY7qQAC6mrFpbYDN2YUCPh0Le4brT1QmqQbNyoE8+23y0vltTBLjYL6C1XZHQPZHSlmNPnyFw5/SWOcH1WVOH4vh1IqaA8qXK/zfvdWpdj7AUXJLCJ2CC5v0EBlBO+Y/G0y4c9hRZjml6TIaHf7AvLXCaRewtfTpGVnUE=
-x-ms-office365-filtering-correlation-id: f33b2d58-eccd-4ddc-c181-08d4778614c4
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254075)(48565401081)(201703131423075)(201703031133081);SRVR:BL2PR03MB324;
-x-microsoft-antispam-prvs: <BL2PR03MB324F99F7A1F3C6494B14FE4F4340@BL2PR03MB324.namprd03.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(245156298449039);
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(61425038)(6040450)(601004)(2401047)(8121501046)(5005006)(3002001)(10201501046)(6055026)(61426038)(61427038)(6041248)(201703131423075)(201702281528075)(201703061421075)(20161123564025)(20161123560025)(20161123562025)(20161123555025)(6072148);SRVR:BL2PR03MB324;BCL:0;PCL:0;RULEID:;SRVR:BL2PR03MB324;
-x-forefront-prvs: 02622CEF0A
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39450400003)(39410400002)(39860400002)(39400400002)(39850400002)(39840400002)(57704003)(6506006)(77096006)(33656002)(86362001)(122556002)(5660300001)(86612001)(561944003)(9686003)(3660700001)(55016002)(54906002)(3280700002)(53936002)(2906002)(6436002)(25786009)(38730400002)(76176999)(50986999)(54356999)(2900100001)(7736002)(97736004)(102836003)(6116002)(3846002)(99286003)(305945005)(6246003)(2950100002)(229853002)(10090500001)(7696004)(5005710100001)(8990500004)(10290500002)(74316002)(8936002)(93886004)(4326008)(81166006)(8676002)(189998001)(2501003)(66066001)(39060400002);DIR:OUT;SFP:1102;SCL:1;SRVR:BL2PR03MB324;H:BL2PR03MB323.namprd03.prod.outlook.com;FPR:;SPF:None;MLV:ovrnspm;PTR:InfoNoRecords;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S934346AbdC3QRA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 12:17:00 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56998 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933821AbdC3QQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 12:16:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BB636AB8B;
+        Thu, 30 Mar 2017 12:16:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=kom7N+Ot+85Md968DMmJ23j0INU=; b=ReMsKR
+        BFM9G42GH5WODEWF7E9o6gu4xzh01MA28dIqqdvnQhuRqdD+/tqxxxbk/xTE/Y8m
+        C3S74GmbncCWAm7Uk7uSQ6NnLNF3pFJNvJb2GbBeyT3arCUUyf/7OrWw2iSdtg7U
+        aP9o/rQ4ftTJ6kuWP4eHyqnLgiVVO+a0bqIk0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xQ6tyMUOn2iO/xnTUD/FAOllnxonzYgQ
+        mOOrAAPntHStP2n0EvIhpPaVU3BtJCXVUejXydquslaOnwqiVwd4MZh4e4SHv3iz
+        CJMkmH2Hw0UJz8IJXe4yGwmg7PHjvRzW8rznswlHhsS7OZkj7SD0xecUqFA1ZuOO
+        Pq/7uNNtS4g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 145666AB8A;
+        Thu, 30 Mar 2017 12:16:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 731486AB88;
+        Thu, 30 Mar 2017 12:16:56 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/7] Makefile: optionally compile with both SHA1DC and SHA1_OPENSSL
+References: <cover.1490397869.git.johannes.schindelin@gmx.de>
+        <7a2444f08dea1b2fe497ae7498eba44626414d29.1490397869.git.johannes.schindelin@gmx.de>
+Date:   Thu, 30 Mar 2017 09:16:50 -0700
+In-Reply-To: <7a2444f08dea1b2fe497ae7498eba44626414d29.1490397869.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Sat, 25 Mar 2017 00:24:52 +0100
+        (CET)")
+Message-ID: <xmqq37du7n9p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Mar 2017 16:01:52.1112
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL2PR03MB324
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4B736920-1564-11E7-B039-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Torsten B=F6gershausen [mailto:tboegi@web.de]
->=20
->=20
-> Does this work ?
-> I would have expected
-> packet_writel(fd, "line one", "line two", "line n"), NULL;
->=20
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-No, that's actually not valid C syntax.
+> +#ifdef SHA1_DC_AND_OPENSSL
+> +void (*SHA1_Init_func)(SHA_CTX_union *ctx) = (void *)SHA1DCInit;
+> +void (*SHA1_Update_func)(SHA_CTX_union *ctx, const void *pointer, size_t size) =
+> +	(void *)git_SHA1DCUpdate;
+> +int (*SHA1_Final_func)(unsigned char sha1[20], SHA_CTX_union *ctx) =
+> +	(void *)git_SHA1DCFinal;
+> +
+> +void toggle_sha1dc(int enable)
+> +{
+> +	if (enable) {
+> +		SHA1_Init_func = (void *)SHA1DCInit;
+> +		SHA1_Update_func = (void *)git_SHA1DCUpdate;
+> +		SHA1_Final_func = (void *)git_SHA1DCFinal;
+> +	} else {
+> +		SHA1_Init_func = (void *)SHA1_Init;
+> +		SHA1_Update_func = (void *)SHA1_Update;
+> +		SHA1_Final_func = (void *)SHA1_Final;
+> +	}
+> +}
+> +#endif
 
-> >
-> > which requires the use of variable number of arguments.  With your
-> proposal that convenience is lost as you have to create an array of strin=
-gs
-> and pass that instead.  The usage just isn't as simple as the current mod=
-el.
-> >
-> What is wrong with
->=20
-> int packet_write_fmt_gently(int fd, const char *fmt, ...) and we use it l=
-ike
-> this:
-> if packet_write_fmt_gently(fd, "%s%s%s", "line one", "line two", "line n"=
-)
->=20
+As I understand that this is a demonstration series, the approach
+above is OK as an expedite way to illustrate one way how run-time
+switching could be done.  The approach however is not very thread
+friendly, though.
 
-Packets are not just strings; see pkt-line.h for more details but basically=
- they are a length packet, followed by the data (in this particular case a =
-string).  The packet_writel function is a convenience function to write out=
- a variable number of packetized strings followed by a flush packet.  You'r=
-e sample above would simply concatenate the three strings and then write a =
-single packet.  A very different outcome. :)
+> diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
+> index bd8bd928fb3..243c2fe0b6b 100644
+> --- a/sha1dc/sha1.h
+> +++ b/sha1dc/sha1.h
+> @@ -110,10 +110,26 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
+>   */
+>  void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
+>  
+> +#ifdef SHA1_DC_AND_OPENSSL
+> +extern void toggle_sha1dc(int enable);
+> +
+> +typedef union {
+> +	SHA1_CTX dc;
+> +	SHA_CTX openssl;
+> +} SHA_CTX_union;
 
->=20
->=20
-> (Or do we need another one like)
-> int packet_write_fmt_gently_flush(int fd, const char *fmt, ...)
->=20
-> Sorry if I am lost here
+The use of union is a good ingredient for a solution.  I would have
+chosen to do this slightly differently if I were doing it.
+
+        typedef struct {
+                int safe;
+                union {
+                        SHA1_CTX_SAFE safe;
+                        SHA1_CTX_FAST fast;
+                } u;
+        } git_SHA_CTX;
+
+        void git_SHA1_Init(git_SHA_CTX *ctx, int safe);
+	void git_SHA1_Update(git_SHA_CTX *ctx, const void *, unsigned long);
+	git_SHA1_Final(uchar [20], git_SHA_CTX *ctx);
+
+where SHA1_CTX_FAST may be chosen from the Makefile just like we
+currently choose platform_SHA_CTX.  SHA1_CTX_SAFE could also be made
+configurable but it may be OK to hardcode it to refer to SHA1_CTX of
+DC's.
+
+As you already know, I am assuming that each codepath pretty much
+knows if it needs safe or fast one (e.g. the one used in csum-file.c
+knows it does not have to), so each git_SHA_CTX is told which one to
+use when it gets initialized.
