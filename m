@@ -7,158 +7,84 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 079B620966
-	for <e@80x24.org>; Thu, 30 Mar 2017 19:49:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 953D020966
+	for <e@80x24.org>; Thu, 30 Mar 2017 19:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934720AbdC3Tth (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 15:49:37 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:36837 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934152AbdC3Ttg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 15:49:36 -0400
-Received: by mail-pg0-f45.google.com with SMTP id g2so48077728pge.3
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 12:49:35 -0700 (PDT)
+        id S934507AbdC3Tun (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 15:50:43 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:33883 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934152AbdC3Tum (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 15:50:42 -0400
+Received: by mail-wr0-f195.google.com with SMTP id w43so14971147wrb.1
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 12:50:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Ou/xayQUaw9OtWzZzkejF8YqFXgV1K0IyT5VMKgN/uY=;
-        b=UDR5xtJv0kyYER7kvkQBxu1To9nhOijfpQ2/OQDiC3EKFj9c+adKlsuWaPHegGu2MX
-         brjyYuka3ZOm/t9EyTq9tphMix0IfratfFFBzO4FxTGKe9eF+fOegY9cANEV+c8EtSKv
-         auH8k4hQtwFT3h3nj4lRGo8Cri4z3DBl2V/twsiqrW9rm+bJtcpWZaEIUid67ZmZaQV9
-         dkJgqajZiEznHcwn71iDqKBJffUyf2GjlejJbpvlkaLAHNlZn7lxE30Bl9aa0zoEnq/R
-         tGdoGR9an41D+pem88SJpJbL6dxUEHZ1RmwtZA/A275ivORbFaJaULnYqMWfqwe1AJ89
-         EAeA==
+        h=from:to:cc:subject:date:message-id;
+        bh=fvKaMKVm8bgJw/QFJSdcBucbjSYFP0aVuAvv2lbH+fI=;
+        b=A29nrsyX+vKEgCJnK6OxsV5zUk6LCU3S7IPQ/izl7vRtN8IW6X3YQhBatqpxjvZSJo
+         PQRhrJpo99x8Ge2ocvprATYd944XluERSAJ+wgO+x0+74/ILrQ/LM4QFyZdmpXwnQv8+
+         oy/1q21+MW80RmSJpIXaN4FBr1X4UDeKCduH3IvfLplEbGdnK6vx73MhH7tpRFY2tVug
+         gZ4Wjggv09hVYtaBtaXqB16K29Ze7Hu0qm39Uup1vHKqhWPkxVeeNVcrOydHqN9yX0pS
+         N/kZz0tFVpritpwl/6AdePBk3F+hL/mxAbGCYH5ErhYYge69+h/2q+gjJsnb0Wszwsr5
+         ZCTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Ou/xayQUaw9OtWzZzkejF8YqFXgV1K0IyT5VMKgN/uY=;
-        b=UU/DHeSYb1df0KerqOAXmxZ2pi63dfySJ9l9KKjon8/326gxQ3mXMZ3W61bvk84KFb
-         FxcjHY/c8RRdpuj5vEqju2SLdu8IbBm9WtTOSlO8jIYZZ4PsdX4+OywpnzVD5s4//jD9
-         vIUFtx6yxC4dswgw0F0fn20y7NI8ISSq7LNG6BACNEVfjhsXUd8B/jlc+WhsLBkGzDuo
-         Ai+Q/A6Chl2KYZtnjOrGA51/AtOPII3YX+tQGgkpV2rTHRQiiAi5ppNxcVw4ZvDGwCTo
-         F+nJh4Onih6n5+2UKzuY0fIFhd59+sPvV6fV7zhnMvh2LklVhWTMswIwlXWtdkK1bdLt
-         6JRA==
-X-Gm-Message-State: AFeK/H0D8vPNXdT0eBERyI/6Oyxe49DdYl24R6H/358ePtBri72Oxkkz7j9+AnnRj6CI8RTJNQYjN4CT26T5Gg==
-X-Received: by 10.99.120.74 with SMTP id t71mr978670pgc.184.1490903374801;
- Thu, 30 Mar 2017 12:49:34 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.166.8 with HTTP; Thu, 30 Mar 2017 12:49:14 -0700 (PDT)
-In-Reply-To: <CAKxAQzeHCpL+v=HxrVYBhb_MppSK2ffQs6f_wJCEaJEYrWCu2Q@mail.gmail.com>
-References: <20170327194813.6876-1-johannes.schindelin@gmx.de>
- <87642eee-7eca-447d-b726-2fa87d212288@googlegroups.com> <alpine.DEB.2.20.1703292356480.4068@virtualbox>
- <75e7cd5c-2813-454d-aa14-53cf1d5e6f80@googlegroups.com> <56935015-3f5e-4cb6-a4f8-7c5c47eeade3@googlegroups.com>
- <CAKxAQzeHCpL+v=HxrVYBhb_MppSK2ffQs6f_wJCEaJEYrWCu2Q@mail.gmail.com>
-From:   Mike Rappazzo <rappazzo@gmail.com>
-Date:   Thu, 30 Mar 2017 15:49:14 -0400
-Message-ID: <CANoM8SVLHRtRbW6AD9CNxEOs7KYTpvSCvLquCBchH=mjdE2w2w@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git for Windows 2.12.2
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git List <git@vger.kernel.org>, git-for-windows@googlegroups.com
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=fvKaMKVm8bgJw/QFJSdcBucbjSYFP0aVuAvv2lbH+fI=;
+        b=keN+KGLmjBvNQWILs0UhPYH46WC5U6a687x4BM5VZ42uGLtKCyHqxg3yKRUZI8hIbt
+         IzvT4bc65tKpV09o++zj+ENTgQBXxQ6pWzcDUToTcbDHIbbTTqUTi5YFZizPy/XbiSWg
+         B62QQjk7vS3IwAUT3tQ+UiTyMnYVVZyxY3obt6ik0Mb3UUXztMGq/Zw9wmx5mQ3U9anZ
+         FzlZxLYZ8lnH3J8EDuxRSOOOjbE8UZ7AzVKyisyrhAQo6UrWRAUwudoz8JCf81mD3xI+
+         8gDKJDB36+q3F15kE2/S43coHbWBgZq40Iky/x9YG4cXdpPbP9utSf+BwVLtMkNHyEvG
+         1Y9A==
+X-Gm-Message-State: AFeK/H3V4oGTz8nMCWAv5hhSOXqvzkJJfRxWwnyaB66SN6os8p9RltEJ9hqg91oeDXhE8A==
+X-Received: by 10.223.143.53 with SMTP id p50mr1280694wrb.2.1490903440355;
+        Thu, 30 Mar 2017 12:50:40 -0700 (PDT)
+Received: from arrakeen.fritz.box ([2001:a61:1002:fd01:1067:7396:5cde:c42b])
+        by smtp.gmail.com with ESMTPSA id w10sm115547wmw.14.2017.03.30.12.50.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 30 Mar 2017 12:50:39 -0700 (PDT)
+From:   Andreas Heiduk <asheiduk@gmail.com>
+To:     gitster@pobox.com, git@vger.kernel.org
+Cc:     Andreas Heiduk <asheiduk@gmail.com>
+Subject: [PATCH] Docs: Add some missing options to git-diff.txt
+Date:   Thu, 30 Mar 2017 21:49:35 +0200
+Message-Id: <1490903375-2115-1-git-send-email-asheiduk@gmail.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Forwarding to the lists, as my original message was rejected for html.
+git-diff understands "--ours", "--theirs" and "--base" for files with
+conflicts. But so far they were not documented for the central diff
+command but only for diff-files.
 
-On Thu, Mar 30, 2017 at 3:44 PM, Andrew Witte <zezba9000@gmail.com> wrote:
-> Just updated back to git 2.12.2 and git-lfs 2.0.2 and everything worked
-> fine. Wish I could have gotten more info when it happened as its happened on
-> a different computer as well. Will keep an eye out.
->
-> Also another note that I really don't like with Windows for Git since 2.12
-> is that It packages git-lfs with it. When I use the cmd it overrides the
-> other git-lfs install I have. I have to manually go and remove the old
-> git-lfs file in "program files" for things to work correctly.
->
-> On top of this git-lfs needs to be registered in the environment vars
-> because this is what the main git-lfs install does and apps Iv'e made like
-> Git-It-GUI (https://github.com/reignstudios/Git-It-GUI) invoke git-lfs
-> directly for some stuff. Because of this issue, the app will think a newer
-> version is installed thats different from what the normal git cmd reports.
-> Also doing git clone outside of the windows cmd with only git for windows
-> installed doesn't invoke git-lfs correctly as its not registered in the
-> system environment vars.  In short I don't think it should be shipped with
-> the installer as it just creates confusion.
->
-> On Thu, Mar 30, 2017 at 8:41 AM, Michael Rappazzo <rappazzo@gmail.com>
-> wrote:
->>
->> I suspect that this is a problem in the windows credential manager.  I
->> tried this on:
->>   - git 2.12.2.windows.1 => failure
->>   - git 2.12.1.windows.1 => success
->>
->> More Details:
->> I have a perl script which uses (a copy of Git.pm) to invoke the
->> credential manager.  While debugging that script, I dumped the hash that I
->> read from the credential manager:
->>
->>     $git->credential($cred, 'fill');
->>     print Data::Dumper->Dump( [ $cred ] , [ "cred" ] );
->>
->> In 2.12.2, this produces output like this:
->>
->>     $cred = {
->>       'path' => '',
->>       'protocol' => 'https',
->>       'username' => '',
->>       'host' => 'some.host.com',
->>       'password' => ''
->>     };
->>
->> In 2.12.1, this produces output like this:
->>
->>     $cred = {
->>       'path' => '',
->>       'host' => 'some.host.com',
->>       'protocol' => 'https',
->>       'password' => 'my.password',
->>       'username' => 'mrappazzo'
->>     };
->>
->> While debugging this, I did something to get it to work on 2.12.2.  After
->> downgrading to 2.12.1, I manually removed the credentials from Credential
->> Manager (in Control Panel).  After successful authentication, they were back
->> in the credential manager.  I then upgraded to 2.12.2, and I was able to
->> successfully authenticate.
->>
->> To try to recreate the problem scenario again (in 2.12.2), I cleared the
->> credentials in Credential Manager.  Reattempting to authenticate gave the
->> credentials prompt.  The output of the perl hash was missing the password
->> again (thus, reproducing the error condition).
->>
->> I hope this helps.
->> _Mike
->>
->>
->> On Wednesday, March 29, 2017 at 10:06:03 PM UTC-4, Andrew Witte wrote:
->>>
->>> I'll try to get more info tomorrow.
->>>
->>>
->>> On Wednesday, March 29, 2017 at 2:59:10 PM UTC-7, Johannes Schindelin
->>> wrote:
->>>>
->>>> Hi Andrew,
->>>>
->>>> On Wed, 29 Mar 2017, Andrew Witte wrote:
->>>>
->>>> > The git 2.12 GCM for Windows is broken. I tried doing a git clone and
->>>> > got "*remote: HTTP Basic: Access denied*".
->>>> > I downgraded to git 2.11.0 and everything worked fine.
->>>>
->>>> Could you test v2.12.1, too, and open a bug report at:
->>>> https://github.com/git-for-windows/git/issues/new ?
->>>>
->>>> I am particularly interested in any details you can share that would
->>>> help
->>>> other developers like me to reproduce the issue.
->>>>
->>>> Thank you,
->>>> Johannes
->
->
+Signed-off-by: Andreas Heiduk <asheiduk@gmail.com>
+---
+ Documentation/git-diff.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+index bbab35f..91ced4f 100644
+--- a/Documentation/git-diff.txt
++++ b/Documentation/git-diff.txt
+@@ -97,6 +97,14 @@ OPTIONS
+ :git-diff: 1
+ include::diff-options.txt[]
+ 
++-1 --base::
++-2 --ours::
++-3 --theirs::
++-0::
++	Diff against the "base" version, "our branch" or "their
++	branch" respectively. The option -0 can be given to omit diff
++	output for unmerged entries and just show "Unmerged".
++
+ <path>...::
+ 	The <paths> parameters, when given, are used to limit
+ 	the diff to the named paths (you can give directory
+-- 
+2.7.4
+
