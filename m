@@ -2,75 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED5C20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 22:39:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8611820966
+	for <e@80x24.org>; Thu, 30 Mar 2017 22:56:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933215AbdC3WjI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 18:39:08 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:36474 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932701AbdC3WjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 18:39:06 -0400
-Received: by mail-io0-f179.google.com with SMTP id l7so29229684ioe.3
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 15:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=retailnext.net; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=jPrIqCEkHq3QKa/+nroKZdXmofhnvMqRgyc4Lmz40Xg=;
-        b=CGZS7MOpb9TAqfQ76ytF1l+PUr2NI3LkszQO8c8uTDJG801SFgnzi4jJvXCqiqPQom
-         PXqcHJ05Pn2nIYfeO8CAwf+C7tPJhPEvGwjFWT3TTzurTF6zGJKwcVnsK7ClddkHw2aW
-         OpgWxjaNfaJk6CQE0whVBNcEweC6RKSAcIYDk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=jPrIqCEkHq3QKa/+nroKZdXmofhnvMqRgyc4Lmz40Xg=;
-        b=IaBkrjV8gMMA6KGeRTezMPx5Xp2jstiibRRmooWWZdDASqgkkdsjyknK++xtX/HHVn
-         7HD+WtUMQcLmsbWD80pCg58VRkiblQI1sRtQtBp/K6m4PeNyaa+G1Nv+nyhFamf40NWX
-         28S+xX8uwa9wka+pmTAfSKsBmpRY1jrg8gIxRhB6k206Ran9mCfl3EzeaO5092oGB7Yf
-         /miDu3myapo1ocwPkYZ8dBbAZdmb/7mcGtVBOviIC/t6o63uckQYYIGoaRDxjOF+CheU
-         mTLFgY1LhZvTft2UDyGpSbM21KSkehbrZIBBDAgxuz1ikr0RPbgr6HgUK9/cC7cR/EDc
-         lvEA==
-X-Gm-Message-State: AFeK/H1xrrA1ov9lNabUqlC3OY+9hzpCLNCzFXxG8rYavGqtW5wvjLPBwOQtUxC44Rm52yA6L2PQs+2aaUEmUIbm
-X-Received: by 10.107.27.207 with SMTP id b198mr3448443iob.218.1490913544894;
- Thu, 30 Mar 2017 15:39:04 -0700 (PDT)
+        id S1753694AbdC3W4k (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 18:56:40 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:65420 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750994AbdC3W4j (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 18:56:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8927B6FC5A;
+        Thu, 30 Mar 2017 18:56:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J65pNmIke6kLrcY412aEKTYhfUQ=; b=rvMKas
+        YGOEmNSs9RAB0IN8A3Y0t/YAhIjXD1QMYESGRLVLXiBY3UyCqEuWKgv5daNghtUf
+        GoWx0aqv8+r8h3AxAOGCySAofhT5oaBYyWFIXVnEckmZngwnZyyY9s6B/jln285e
+        4QC+n3FgbWX0FMJPadUtLZbxfsiNVGYHzFo0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=SGd06bI56Y2/Fr/z1Ukuf+l3Z+1uuo1G
+        QGdZnAWRKL4bwLNLvv43iJSwpO8DNOu5hIIoSAGYMCq4OqgFkNbiSTfpl+iM417q
+        OwWab8o7dkokWS7ziqDmlhMImo3MgUA7O4mFccJqkYzxnEFWSva0i/KHs/9E5kbi
+        O5qh0iGLjFM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 818736FC59;
+        Thu, 30 Mar 2017 18:56:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E78986FC58;
+        Thu, 30 Mar 2017 18:56:36 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeffrey Walton <noloader@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: /bin/bash: /usr/ucb/install: No such file or directory
+References: <CAH8yC8nAYKMe21Q+QvoTvR_WnNJyn2p8DYSkzKmn_dWaeGb+4g@mail.gmail.com>
+Date:   Thu, 30 Mar 2017 15:56:35 -0700
+In-Reply-To: <CAH8yC8nAYKMe21Q+QvoTvR_WnNJyn2p8DYSkzKmn_dWaeGb+4g@mail.gmail.com>
+        (Jeffrey Walton's message of "Thu, 30 Mar 2017 18:37:58 -0400")
+Message-ID: <xmqqshlu1iho.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.164.230 with HTTP; Thu, 30 Mar 2017 15:39:04 -0700 (PDT)
-From:   Nate Mueller <nate@retailnext.net>
-Date:   Thu, 30 Mar 2017 15:39:04 -0700
-Message-ID: <CAJF7t-dqSa7tmQqNEWmg_VZ=+832nsZ-3JmSGA03qK6aY5eNTQ@mail.gmail.com>
-Subject: Issue with 2.11.0 and GIT_EXEC_PATH with multiple entries
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 20EDB038-159C-11E7-9A8A-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I ran into this after upgrading to 2.11.0 through Xcode.  I assumed it
-was a packaging issue but it looks like it's been in the mainline
-since 1073094f30 (on October 29).
+Jeffrey Walton <noloader@gmail.com> writes:
 
-In 2.11.0, git-sh-setup switched it's call of git-sh-i18n from:
+> I think this is the last of the issues for Git 2.12.2 on Solaris 11.3.
+>
+> It looks like 'install' is located in a few places, but not in
+> '/usr/ucb'. I believe /usr/ucb is Solaris 9 or Solaris 10. I think the
+> equivalent place to look on Solaris 11 is /usr/gnu (but I only have
+> limited experience on Solaris).
+>
+> solaris:~$ find /usr -name install 2>/dev/null
+> /usr/share/install
+> /usr/dtrace/DTT/install
+> /usr/sadm/install
+> /usr/gnu/bin/install
+> /usr/sbin/install
+>
+> solaris:~$ ls /usr/ucb
+> /usr/ucb: No such file or directory
+>
+> Here's the default one based on default paths using Bash. I change the
+> default shell, but not the default paths:
+>
+> solaris:~$ sudo su -
+> Oracle Corporation      SunOS 5.11      11.3    September 2015
+> solaris:~# which install
+> /sbin/install
 
-. git-sh-i18n
+$ make INSTALL=/usr/gnu/install
 
-to:
-
-. "$(git --exec-path)/git-sh-i18n"
-
-This fails for me because my GIT_EXEC_PATH is set to
-"/Library/Developer/CommandLineTools/usr/libexec/git-core:/Users/nate/.git-exec".
-If I remove the second entry git-sh-setup works just fine.
-
-Am I doing something wrong here?  I can't see what but I'm surprised
-that I'm the first person to hit this.
-
-
-
--- 
-Nate Mueller - Head of Engineering - RetailNext - 406-356-6283
+perhaps?  Look into config.mak.uname; it probably needs an update to
+SunOS section, as we seem to only have entries up to 5.9.
