@@ -2,113 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F03C20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 20:06:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8213820966
+	for <e@80x24.org>; Thu, 30 Mar 2017 20:11:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934879AbdC3UGf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 16:06:35 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36649 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934850AbdC3UGa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 16:06:30 -0400
-Received: by mail-wr0-f196.google.com with SMTP id k6so13803260wre.3
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:06:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=O/G/rLIvTkFXIdWreSJF7DW9+HZumTf54jfjeqUDOeU=;
-        b=H9GZUV1tEWN2lU8G+jZzMmddC0Lhlj5PAXdj6Irwkf39LJ4iugxa/PwF25YS+F42WE
-         wVIgZRn4zetrxzOepLf7qulJG4XqsjE825YYBxA5rlBSSoAq+JOvy0tqnCARz6N+m9JL
-         hhRKsKZHmplHhYtGucbBwtYxAsZEhpk9AcNhFae4Z3AhLvPb22Nv+ML7K+LnZdkdNX0M
-         Pw4XqMqX0zCj+8soqFH4PmFUqZoHG7cokS9vXDH7zW4GZ/eyzXW6h7SYU1gZOfXy9Ita
-         u43kAwci3LdyYh/IKL0q60N4pP1GUb6a6KBxaOXSQ1kCWVf8/Elm+V4VRvUBjNLbpEv6
-         ZyOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=O/G/rLIvTkFXIdWreSJF7DW9+HZumTf54jfjeqUDOeU=;
-        b=UFjHwleni+eAIN1yDbZVo2Xex3Hvcup6QUghT7q/M8jLEKJ5py8ubFubqVCGM05doC
-         JbPpKdUray1gGyrUVj94/W7FP0Nk+xvTGT2FE9QBt+Op9DkEEmhlXmTubGFcVEVJuC5g
-         mhCqpkXZjA8ElUlg4htbr6fwG2bFnguOo5Ehtyu6d1Y5ARI36OBAv38S6kgxVg5Qipnd
-         yAE10AXE0XGpka1+ACjaz6cCYUGsTdkIQfPJjhFhGGxWeI5OKFhX+qXMTuQB6tiQB/qU
-         EkqUIJpuBvdeXPiJ+OmUqiQ5+lDSVLVWwKFZrLFJ3umher4HWQND7hflXyTBPKvlazf2
-         h+Zg==
-X-Gm-Message-State: AFeK/H2QFTUpr6lUQmRK56YGSTJMn8Kbg0EpklunbEbPksfvTJtRaoE7+mOHNhQG39/5Ig==
-X-Received: by 10.223.178.182 with SMTP id g51mr1341521wrd.12.1490904382779;
-        Thu, 30 Mar 2017 13:06:22 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id x131sm145728wme.28.2017.03.30.13.06.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Mar 2017 13:06:22 -0700 (PDT)
-Date:   Thu, 30 Mar 2017 21:06:48 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
-        gitster@pobox.com, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 0/2] read-cache: call verify_hdr() in a background
- thread
-Message-ID: <20170330200648.GH27158@hank>
-References: <20170328190732.59486-1-git@jeffhostetler.com>
- <20170328191628.dprziuhpv7khvocu@sigill.intra.peff.net>
- <35f220df-aa63-b80f-8970-429850202cdd@jeffhostetler.com>
- <20170328195605.xy4pnhy74s6wgwps@sigill.intra.peff.net>
+        id S934900AbdC3UL6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 16:11:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59253 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S934773AbdC3UL4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 16:11:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0147F6DE0B;
+        Thu, 30 Mar 2017 16:11:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=++8ztDXXkFBkAQLD1aBK6Ayac7o=; b=TDibV7
+        VANRELv9UoqVqualotrWsr6sEhLrVfLN7Y8IrhsaoDp2GkgtKPeqZCkHE9gCRIP+
+        VU0mzo87KtoWr43u9spoAlKTDLgFzC7G3lGEkMB9yqxK5Fbm/tvpM6n+WKN3W5C4
+        MehPyUk+mGST/L4+O/h0vWY9+lSL7cJOxuWSw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=f3+7I+DZnRWbPTeb7Eq7D4hC1nv/7LP/
+        21lssAKxL38bNUDs/cSSOU3ePSyJKlF/rmQW4ssWEnUeIfejSuZjTmnWmo3TQsKL
+        bGVwAJSqVifHXuhsshIIyWbSUOse3CCA8tR2ZFtepnZmT6+dlF3L99qdOuD8wYAU
+        fF4QRO/oVS4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EC3CB6DE09;
+        Thu, 30 Mar 2017 16:11:54 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 52A856DE06;
+        Thu, 30 Mar 2017 16:11:54 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com,
+        christian.couder@gmail.com, larsxschneider@gmail.com
+Subject: Re: [PATCH v4 0/8] refactor the filter process code into a reusable module
+References: <20170330155417.8928-1-benpeart@microsoft.com>
+Date:   Thu, 30 Mar 2017 13:11:53 -0700
+In-Reply-To: <20170330155417.8928-1-benpeart@microsoft.com> (Ben Peart's
+        message of "Thu, 30 Mar 2017 11:54:08 -0400")
+Message-ID: <xmqqpogy34om.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170328195605.xy4pnhy74s6wgwps@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1E788556-1585-11E7-929D-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/28, Jeff King wrote:
-> On Tue, Mar 28, 2017 at 03:50:34PM -0400, Jeff Hostetler wrote:
-> 
-> > It was a convenient way to isolate, average, and compare
-> > read_index() times, but I suppose we could do something
-> > like that.
-> > 
-> > I did confirm that a ls-files does show a slight 0.008
-> > second difference on the 58K file Linux tree when toggled
-> > on or off.
-> 
-> Yeah, I agree it helps isolate the change. I'm just not sure we want to
-> carry a bunch of function-specific perf-testing code. And one of the
-> nice things about testing a real command is that it's...a real command.
-> So it's an actual improvement a user might see.
-> 
-> > But I'm tempted to suggest that we just omit my helper exe
-> > and not worry about a test -- since we don't have any test
-> > repos large enough to really demonstrate the differences.
-> > My concern is that that 0.008 would be lost in the noise
-> > of the rest of the test and make for an unreliable result.
-> 
-> Yeah, I think that would be fine. You _could_ write a t/perf test and
-> then use your 400MB monstrosity as GIT_PERF_LARGE_REPO. But given that
-> most people don't have such a thing, there's not much value over you
-> just showing off the perf improvement in the commit message.
+Now 1 & 2 are as equally pleasant to read as others ;-).
 
-Sorry if this was already discussed, but we already do have a perf
-test for the index (p0002), and a corresponding helper program which
-just does read_cache() and discard_cache().  Maybe we could re-use
-that and add a second test running the same using the new config?
+Let's wait for a few days and then merge to 'next'.  I didn't see
+anything questionable.
 
-> We could also have a t/perf test that generates a monstrous index and
-> shows that it's faster. But frankly, I don't think this is all that
-> interesting as a performance regression test. It's not like there's
-> something subtle about the performance improvement; we stopped computing
-> the SHA-1, and (gasp!) it takes exactly one SHA-1 computation's less
-> time.
-> 
-> So just mentioning the test case and the improvement in the commit
-> message is sufficient, IMHO.
-> 
-> -Peff
+Thanks.
