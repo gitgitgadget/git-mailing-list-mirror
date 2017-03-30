@@ -2,95 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4721320966
-	for <e@80x24.org>; Thu, 30 Mar 2017 17:17:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49B0B20969
+	for <e@80x24.org>; Thu, 30 Mar 2017 17:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933157AbdC3RRA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 13:17:00 -0400
-Received: from proofpoint7.lanl.gov ([204.121.3.46]:36454 "EHLO
-        proofpoint7.lanl.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932582AbdC3RQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 13:16:59 -0400
-X-Greylist: delayed 950 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Mar 2017 13:16:59 EDT
-Received: from pps.filterd (proofpoint7.lanl.gov [127.0.0.1])
-        by proofpoint7.lanl.gov (8.16.0.20/8.16.0.20) with SMTP id v2UGv3wr093852
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 11:01:08 -0600
-Received: from mailrelay2.lanl.gov (mailrelay2.lanl.gov [128.165.4.103])
-        by proofpoint7.lanl.gov with ESMTP id 29dpx8w3b5-1
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 11:01:08 -0600
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by mailrelay2.lanl.gov (Postfix) with ESMTP id 29DF6F7C29C
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 11:01:08 -0600 (MDT)
-X-NIE-2-Virus-Scanner: amavisd-new at mailrelay2.lanl.gov
-Received: from pn1216650.lanl.gov (pn1216650.lanl.gov [128.165.243.37])
-        by mailrelay2.lanl.gov (Postfix) with ESMTP id 15011F7C297
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 11:01:08 -0600 (MDT)
-To:     git@vger.kernel.org
-From:   David Shrader <dshrader@lanl.gov>
-Subject: ttk error when starting git gui
-Message-ID: <0fc69c73-73aa-5355-264b-a7c55377eec2@lanl.gov>
-Date:   Thu, 30 Mar 2017 11:01:08 -0600
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S933914AbdC3RYk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 13:24:40 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56863 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933259AbdC3RYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 13:24:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DEFA66C7F8;
+        Thu, 30 Mar 2017 13:24:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=AySawW8qZsuFpnL1c9qd99MU8PQ=; b=XCu9Xe
+        MDTDpIfVDwa1C6z2tkztcky1siLZMO9r1ITkURyeDVhpzW3MFSoiqF/GL1SagN5p
+        8eo86azUSXw823KFYvoEfgcEO9ZCTwuxPKbocMngS4ItN6UFIIoDtzrXgZA/fuXn
+        M7b50iJcxGx9BYVdS0fgH7H+LexQ04AR4x7iQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Q1emJgImEzHg1WD3/nGffhXuYxkXY1//
+        gFcg6I0jbU63fSgwu2JL+MaIsO7q01mjIRjfstNnJcYNK9JZrvt23OHRELJsUISr
+        M6Hfe9fPQnQ9cT01hyWf6196c9UJzVyQfXLatQsJu8r1xUxdjzDseBUr49RPCJI4
+        DzCrEw6bjNs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D67AC6C7F7;
+        Thu, 30 Mar 2017 13:24:37 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 47F7C6C7F6;
+        Thu, 30 Mar 2017 13:24:37 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/18] snprintf cleanups
+References: <20170328194255.vf7nfzzmmzxsbn36@sigill.intra.peff.net>
+        <xmqq60itc9pv.fsf@gitster.mtv.corp.google.com>
+        <20170329034105.bfgh4tutgrmjp2lc@sigill.intra.peff.net>
+        <xmqqr31gax0y.fsf@gitster.mtv.corp.google.com>
+        <20170330062730.ycsok7skrjy5c6en@sigill.intra.peff.net>
+Date:   Thu, 30 Mar 2017 10:24:36 -0700
+In-Reply-To: <20170330062730.ycsok7skrjy5c6en@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 30 Mar 2017 02:27:30 -0400")
+Message-ID: <xmqqr31e65kb.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-03-30_14:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=15
- malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.0.1-1702020001
- definitions=main-1703300147
+Content-Type: text/plain
+X-Pobox-Relay-ID: BFE3DD54-156D-11E7-8683-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-I get the following error when trying to start git gui:
+> On Wed, Mar 29, 2017 at 09:05:33AM -0700, Junio C Hamano wrote:
+>
+>> > I think there are two things going on in your example.
+>> >
+>> > One is that obviously patch_id_addf() removes the spaces from the
+>> > result. But we could do that now by keeping the big strbuf_addf(), and
+>> > then just walking the result and feeding non-spaces.
+>> >
+>> > The second is that your addf means we are back to formatting everything
+>> > into a buffer again....
+>> 
+>> You are right to point out that I was blinded by the ugliness of
+>> words stuck together without spaces in between, which was inherited
+>> from the original code, and failed to see the sole point of this
+>> series, which is to remove truncation without adding unnecessary
+>> allocation and freeing.
+>> 
+>> Thanks for straighten my thinking out.  I think the seeming
+>> ugliness, if it ever becomes a real problem, should be handled
+>> outside this series after the dust settles.
+>
+> Yeah, the no-spaces thing should almost certainly wait.
+>
+> There is still the minor question of whether skipping the strbuf
+> entirely is nicer, even if you still have to feed it strings without
+> spaces (i.e., what I posted in my initial reply).
+>
+> I'm OK either with the series I posted, or wrapping up the alternative
+> in a commit message.
 
-Error in startup script: wrong # args: should be "ttk::style theme use 
-theme"
-     while executing
-"ttk::style theme use"
-     (procedure "ttext" line 4)
-     invoked from within
-"ttext $ui_workdir -background white -foreground black \
-         -borderwidth 0 \
-         -width 20 -height 10 \
-         -wrap none \
-         -takefocus 1 -highlightthickness 1\
-         ..."
-     (file 
-"/home/dshrader/opt/toss2/common/git/2.12.2/libexec/git-core/git-gui" 
-line 3190)
-
-I get this error with the latest released version 2.12.2. Two older git 
-versions are also available on this system, and neither has this issue. 
-Those older versions are 1.7.1 and 2.3.3. I don't see a call to ttext in 
-those corresponding git-gui executables, so that is probably why they work.
-
-Here are the steps to reproduce:
-
-1) cd to existing git repository
-2) run 'git gui' (no gui comes up, and the error is printed in the terminal)
-
-I'm running on a RHEL6 based system. Do I have an insufficient version 
-of whatever git gui uses for graphics in the later versions of git? When 
-I try 2.12.2 on my personal workstation running Fedora 25, I don't see 
-the same issue.
-
-Thank you very much for your time,
-David
-
--- 
-David Shrader
-HPC-ENV High Performance Computer Systems
-Los Alamos National Lab
-Email: dshrader <at> lanl.gov
-
+I do find the updated one easier to follow (if anything it is more
+compact); I do not think it is worth a reroll, but it is easy enough
+to replace the patch part of the original with the updated patch and
+tweak "it's easy to fix by moving to a strbuf" in its log message to
+something like "But it's easy to eliminate the allocation with a few
+helper functions, and it makes the result easier to follow", so I am
+tempted to go that route myself...
