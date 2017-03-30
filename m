@@ -2,95 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7338D20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 20:28:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDBF220966
+	for <e@80x24.org>; Thu, 30 Mar 2017 20:29:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754801AbdC3U2l (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 16:28:41 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:34823 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754750AbdC3U2k (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 16:28:40 -0400
-Received: by mail-oi0-f54.google.com with SMTP id f193so42606839oib.2
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:28:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=RP321gVLhObcKg1CY7UXuqkKjl1DZTBHaOGRe6k5iFM=;
-        b=lu0ubFX5v1/W3yjpHK7xdUvsFjIkg5lgimsDy9Hx7+I9IKxiR1bbr9U9ZbK3+71Xh1
-         0Hp0CHjtirnTPHLKdLd4JltU4gCcfer0aZq5Wdi5cd+yYDfjQrwi+a8Rz/uEk6YVV2Wz
-         jYMiicbPrF1JRJOgd3LFvTnxHcPBk8xozkXnf+aoQU1SZ9yJPTkFZt0YVvo7im48aRq2
-         t4YQh8QCXOrJ/OppGyR6Ue6FQa7G/ejWy7bD9ZoP/3dyUFI66awLStFKA+qBpN9GmMLt
-         NTI6GiCsZLHuetx/0VIwR0kIu6DusHer9eNrKCxWGmLZeLoAZZ7XDHMjhtDBDhG3/tK3
-         BBrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc;
-        bh=RP321gVLhObcKg1CY7UXuqkKjl1DZTBHaOGRe6k5iFM=;
-        b=rmR82R9fYz6BrSx+01sDGcZzYxIL2anwU7FDxuZmEjvhZvZV5VNziARFF7zgHpgZn2
-         mdOHJVZBN0uXhSmdKtrNb2ETYP5LrXoYj2fTSXWNtd7rMZmo4l//l3UhEffEDTgAl/xu
-         RbP7Fu92+pDXumnQJRptpK58uClGFgzGqQZfVF5DpfTH4ctemL+bUe3+5Y19EU+4f3Yg
-         wjuKlGmEzUozvUDh73Nc/Tx5vc7s6UPGly1ivqZMW9FPhTMFK9g0MZLW2W6VcfHVGjiY
-         v1H0i0hsycsTS8ze7F+t0RsQMg7/u9tWPl3Hh35wjZrSPPHRzEBrTiph1r2cLl2DXNyP
-         xlww==
-X-Gm-Message-State: AFeK/H0eUfMlH9Tvprq40hm/hOGbRLVG5CLBIlsZwxcU6HS2VtIUiOGnb9zeIJe+9fsBJ06J6U3ihGseFUalzQ==
-X-Received: by 10.202.206.149 with SMTP id e143mr1174803oig.158.1490905718685;
- Thu, 30 Mar 2017 13:28:38 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.31.131 with HTTP; Thu, 30 Mar 2017 13:28:38 -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <CAH8yC8mMzZGebmZ23dsgY6Zkxk3w_Kpt7O6Z-0CwRQyTBF5uvg@mail.gmail.com>
-References: <CAH8yC8kOj5a5PN4V7mj7xZPoNDr-MH-CkirxRKyfx1-qAvfpqQ@mail.gmail.com>
- <xmqqbmskatz3.fsf@gitster.mtv.corp.google.com> <CAH8yC8mMzZGebmZ23dsgY6Zkxk3w_Kpt7O6Z-0CwRQyTBF5uvg@mail.gmail.com>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Thu, 30 Mar 2017 16:28:38 -0400
-Message-ID: <CAH8yC8kJdcV+cFPTN5WXAtvB4fpbRXUR3v45YSiY0=acgguwBw@mail.gmail.com>
-Subject: Re: git-compat-util.h:735:13: error: conflicting types for 'inet_ntop'
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1754820AbdC3U3a (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 16:29:30 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:52162 "EHLO
+        hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754435AbdC3U33 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 16:29:29 -0400
+Received: from homiemail-a101.g.dreamhost.com (sub3.mail.dreamhost.com [69.163.253.7])
+        by hapkido.dreamhost.com (Postfix) with ESMTP id 7EE6282336
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:29:27 -0700 (PDT)
+Received: from homiemail-a101.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a101.g.dreamhost.com (Postfix) with ESMTP id DCAE5117E06A;
+        Thu, 30 Mar 2017 13:29:26 -0700 (PDT)
+Received: from localhost.localdomain (gzac12-mdf2-1.aoa.twosigma.com [208.77.215.155])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a101.g.dreamhost.com (Postfix) with ESMTPSA id 7E59A117E06C;
+        Thu, 30 Mar 2017 13:29:26 -0700 (PDT)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org
+Cc:     David Turner <dturner@twosigma.com>
+Subject: [PATCH] http.postbuffer: make a size_t
+Date:   Thu, 30 Mar 2017 16:29:17 -0400
+Message-Id: <20170330202917.24281-1-dturner@twosigma.com>
+X-Mailer: git-send-email 2.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 30, 2017 at 4:06 PM, Jeffrey Walton <noloader@gmail.com> wrote:
-> On Wed, Mar 29, 2017 at 1:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Jeffrey Walton <noloader@gmail.com> writes:
->>
->>> Some more 2.12.2 testing on Solaris 11.3 x86_64:
->>>
->>> $ make V=1
->>> gcc -o credential-store.o -c -MF ./.depend/credential-store.o.d -MQ
->>> credential-store.o -MMD -MP -I/usr/local/include -m64 -m64 -I.
->>> -D__EXTENSIONS__ -D__sun__ -DUSE_LIBPCRE -I/usr/local/include
->>> -DHAVE_ALLOCA_H -I/usr/local/include -DUSE_CURL_FOR_IMAP_SEND
->>> -I/usr/local/include -I/usr/local/include -DNO_D_TYPE_IN_DIRENT
->>> -DNO_INET_NTOP -DNO_INET_PTON  -DHAVE_PATHS_H -DHAVE_LIBCHARSET_H
->>
->> Looking at config.mak.uname, nothing in SunOS section seems to set
->> NO_INET_NTOP or NO_INET_PTON.  Why is your build setting them?
->
-> Thanks. It looks like the following is the culprit (from config.log).
-> Am I supposed to specify the socket library, or is Autotools supposed
-> to specify it?
->
-> To date, I've been specify the libraries I request, like IDN2, PCRE,
-> cURL and OpenSSL.
->
-> I don't recall specifying a socket library in the past, so I'm not
-> sure what is supposed to happen here.
+Unfortunately, in order to push some large repos, the http postbuffer
+must sometimes exceed two gigabytes.  On a 64-bit system, this is OK:
+we just malloc a larger buffer.
 
-It looks like adding -lnsl and -lsocket clears the issue.
+Signed-off-by: David Turner <dturner@twosigma.com>
+---
+ cache.h  |  1 +
+ config.c | 17 +++++++++++++++++
+ http.c   |  2 +-
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-Maybe Git on Solaris should test with both of the libraries, and not
-just -lsockets.
+diff --git a/cache.h b/cache.h
+index fbdf7a815a..a8c1b65db0 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1900,6 +1900,7 @@ extern int git_parse_maybe_bool(const char *);
+ extern int git_config_int(const char *, const char *);
+ extern int64_t git_config_int64(const char *, const char *);
+ extern unsigned long git_config_ulong(const char *, const char *);
++extern size_t git_config_size_t(const char *, const char *);
+ extern int git_config_bool_or_int(const char *, const char *, int *);
+ extern int git_config_bool(const char *, const char *);
+ extern int git_config_maybe_bool(const char *, const char *);
+diff --git a/config.c b/config.c
+index 1a4d85537b..7b706cf27a 100644
+--- a/config.c
++++ b/config.c
+@@ -834,6 +834,15 @@ int git_parse_ulong(const char *value, unsigned long *ret)
+ 	return 1;
+ }
+ 
++static size_t git_parse_size_t(const char *value, unsigned long *ret)
++{
++	size_t tmp;
++	if (!git_parse_signed(value, &tmp, maximum_unsigned_value_of_type(size_t)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
+ NORETURN
+ static void die_bad_number(const char *name, const char *value)
+ {
+@@ -892,6 +901,14 @@ unsigned long git_config_ulong(const char *name, const char *value)
+ 	return ret;
+ }
+ 
++size_t git_config_size_t(const char *name, const char *value)
++{
++	unsigned long ret;
++	if (!git_parse_size_t(value, &ret))
++		die_bad_number(name, value);
++	return ret;
++}
++
+ int git_parse_maybe_bool(const char *value)
+ {
+ 	if (!value)
+diff --git a/http.c b/http.c
+index 96d84bbed3..ab6080835f 100644
+--- a/http.c
++++ b/http.c
+@@ -331,7 +331,7 @@ static int http_options(const char *var, const char *value, void *cb)
+ 	}
+ 
+ 	if (!strcmp("http.postbuffer", var)) {
+-		http_post_buffer = git_config_int(var, value);
++		http_post_buffer = git_config_size_t(var, value);
+ 		if (http_post_buffer < LARGE_PACKET_MAX)
+ 			http_post_buffer = LARGE_PACKET_MAX;
+ 		return 0;
+-- 
+2.11.GIT
 
-Jeff
