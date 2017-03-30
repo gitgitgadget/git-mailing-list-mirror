@@ -2,69 +2,341 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8F4020966
-	for <e@80x24.org>; Thu, 30 Mar 2017 20:00:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE9E420966
+	for <e@80x24.org>; Thu, 30 Mar 2017 20:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934583AbdC3UAZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 16:00:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54373 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934033AbdC3UAZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 16:00:25 -0400
-Received: (qmail 26540 invoked by uid 109); 30 Mar 2017 20:00:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Mar 2017 20:00:24 +0000
-Received: (qmail 2163 invoked by uid 111); 30 Mar 2017 20:00:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 30 Mar 2017 16:00:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Mar 2017 16:00:22 -0400
-Date:   Thu, 30 Mar 2017 16:00:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG?] iconv used as textconv, and spurious ^M on added lines on
- Windows
-Message-ID: <20170330200021.c2l5jak3xb5aoxyc@sigill.intra.peff.net>
-References: <feaeade7-aeb5-fa67-ab29-9106aeadb2a6@gmail.com>
+        id S934888AbdC3UGj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 16:06:39 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:34186 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934850AbdC3UGi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 16:06:38 -0400
+Received: by mail-oi0-f50.google.com with SMTP id o67so42086749oib.1
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 13:06:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=8rMVPP4awzGPnPQXot/G+crYk7SOAzHqI31Cz7LrmcA=;
+        b=GUiGxm2G4UZ/hilmR8M+jPcZKihbhuOx8s17tQm6AI8BOlHulrT979VvHgigiy79n+
+         zyzSL3MWB15jeXWPEdf/clSMtYgqX0BwL9ECTq1mCWAQPzyixh3bJLKHpJMVzRHj3meq
+         l4gNj+F1kb7Y1aboAzNMjDPsClVocrL8Z4H5Cu0dctePlYFYeCyRgaEgxLEHZ84Vv6rL
+         /RQN6adBuAXK6Bs6niQFshEfX7qvkO39BA8YlhOrcdKOer5jqGWTTumGWS7dCEP6yzbZ
+         H8qCN1fbi+BMwOfawlYg+UiTGyWTFy7foEu3HOnkRBF0mWXUpAjSX0STq19T5c77XJR+
+         FUOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc;
+        bh=8rMVPP4awzGPnPQXot/G+crYk7SOAzHqI31Cz7LrmcA=;
+        b=lel9XsshSJxaQC6k3rLGsZZIHq5uIF9LMPp6IT6Ur5NlOinmrqYZKshyDBeX7DgYEb
+         q7K9F0Lj5T3Cm3EisUnHJiU+hMaSkl7oNQr4cFPgMXXz1DA/CR904hul8VBbPeGWWbZb
+         h5IXb04SNc/UhzxJ1B3zKyRpCqNYetr4WB4OPnh7aCKvJ6KDIMiAlSbGOrQHyQSZonA0
+         uYfiQXmILXopQozcjvhrGqapOrP/KRZTa4pMJNMiZDkpvsDn/JD2GMRfdJlhRD203V/3
+         ZqBCIpyOMO1etB9YYf88/bfjBGP4ME5VlmoosCAlITUAbjdV5auLftI9MdGPTqW52VcR
+         3PZA==
+X-Gm-Message-State: AFeK/H0aRHqEtRMEnGs/FczWyNf0wIbkpnSFhnGHx7NCKx48ikA5Ft/hdmLo0nocIQ7aSDEodeJP3czIot+2JQ==
+X-Received: by 10.157.35.230 with SMTP id t93mr1132034otb.17.1490904396575;
+ Thu, 30 Mar 2017 13:06:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <feaeade7-aeb5-fa67-ab29-9106aeadb2a6@gmail.com>
+Received: by 10.74.31.131 with HTTP; Thu, 30 Mar 2017 13:06:36 -0700 (PDT)
+Reply-To: noloader@gmail.com
+In-Reply-To: <xmqqbmskatz3.fsf@gitster.mtv.corp.google.com>
+References: <CAH8yC8kOj5a5PN4V7mj7xZPoNDr-MH-CkirxRKyfx1-qAvfpqQ@mail.gmail.com>
+ <xmqqbmskatz3.fsf@gitster.mtv.corp.google.com>
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Thu, 30 Mar 2017 16:06:36 -0400
+Message-ID: <CAH8yC8mMzZGebmZ23dsgY6Zkxk3w_Kpt7O6Z-0CwRQyTBF5uvg@mail.gmail.com>
+Subject: Re: git-compat-util.h:735:13: error: conflicting types for 'inet_ntop'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 30, 2017 at 09:35:27PM +0200, Jakub Narębski wrote:
+On Wed, Mar 29, 2017 at 1:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeffrey Walton <noloader@gmail.com> writes:
+>
+>> Some more 2.12.2 testing on Solaris 11.3 x86_64:
+>>
+>> $ make V=1
+>> gcc -o credential-store.o -c -MF ./.depend/credential-store.o.d -MQ
+>> credential-store.o -MMD -MP -I/usr/local/include -m64 -m64 -I.
+>> -D__EXTENSIONS__ -D__sun__ -DUSE_LIBPCRE -I/usr/local/include
+>> -DHAVE_ALLOCA_H -I/usr/local/include -DUSE_CURL_FOR_IMAP_SEND
+>> -I/usr/local/include -I/usr/local/include -DNO_D_TYPE_IN_DIRENT
+>> -DNO_INET_NTOP -DNO_INET_PTON  -DHAVE_PATHS_H -DHAVE_LIBCHARSET_H
+>
+> Looking at config.mak.uname, nothing in SunOS section seems to set
+> NO_INET_NTOP or NO_INET_PTON.  Why is your build setting them?
 
-> And everything would be all right... if not the fact that Git appends
-> spurious ^M to added lines in the `git diff` output.  Files use CRLF
-> end-of-line convention (the native MS Windows one).
-> 
->   $ git diff test.tex
->   diff --git a/test.tex b/test.tex
->   index 029646e..250ab16 100644
->   --- a/test.tex
->   +++ b/test.tex
->   @@ -1,4 +1,4 @@
->   -\documentclass{article}
->   +\documentclass{mwart}^M
->   
->    \usepackage[cp1250]{inputenc}
->    \usepackage{polski}
-> 
-> What gives?  Why there is this ^M tacked on the end of added lines,
-> while it is not present in deleted lines, nor in content lines?
+Thanks. It looks like the following is the culprit (from config.log).
+Am I supposed to specify the socket library, or is Autotools supposed
+to specify it?
 
-Perhaps it's trailing whitespace highlighting for added lines? You can
-add "cr-at-eol" to core.whitespace to suppress it.
+To date, I've been specify the libraries I request, like IDN2, PCRE,
+cURL and OpenSSL.
 
-I suspect in the normal case that git is doing line-ending conversion,
-but it's suppressed when textconv is in use.
+I don't recall specifying a socket library in the past, so I'm not
+sure what is supposed to happen here.
 
--Peff
+Thanks in advance.
+
+**********
+
+It was created by git configure 2.12.2, which was
+generated by GNU Autoconf 2.68.  Invocation command line was
+
+  $ ./configure --enable-pthreads --with-lib=/usr/local/lib64
+--with-openssl=/usr/local --with-curl=/usr/local
+--with-libpcre=/usr/local --with-zlib=/usr/local
+--with-perl=/usr/local/bin/perl --prefix=/usr/local
+...
+
+configure:5552: checking for inet_ntop
+configure:5552: gcc -o conftest -m64 -I/usr/local/include -m64
+-Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lidn2
+-lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
+Undefined            first referenced
+ symbol                  in file
+inet_ntop                           /var/tmp//cc2WaWwg.o  (symbol
+belongs to implicit dependency /lib/amd64/libnsl.so.1)
+ld: fatal: symbol referencing errors
+collect2: error: ld returned 1 exit status
+configure:5552: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "2.12.2"
+| #define PACKAGE_STRING "git 2.12.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define PACKAGE_URL ""
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_ALLOCA_H 1
+| #define HAVE_ALLOCA 1
+| /* end confdefs.h.  */
+| /* Define inet_ntop to an innocuous variant, in case <limits.h>
+declares inet_ntop.
+|    For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+| #define inet_ntop innocuous_inet_ntop
+|
+| /* System header to define __stub macros and hopefully few prototypes,
+|     which can conflict with char inet_ntop (); below.
+|     Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
+|     <limits.h> exists even on freestanding compilers.  */
+|
+| #ifdef __STDC__
+| # include <limits.h>
+| #else
+| # include <assert.h>
+| #endif
+|
+| #undef inet_ntop
+|
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char inet_ntop ();
+| /* The GNU C library defines this for functions which it implements
+|     to always fail with ENOSYS.  Some functions are actually named
+|     something starting with __ and the normal name is an alias.  */
+| #if defined __stub_inet_ntop || defined __stub___inet_ntop
+| choke me
+| #endif
+|
+| int
+| main ()
+| {
+| return inet_ntop ();
+|   ;
+|   return 0;
+| }
+configure:5552: result: no
+configure:5556: checking for inet_ntop in -lresolv
+configure:5581: gcc -o conftest -m64 -I/usr/local/include -m64
+-Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lresolv
+-lidn2 -lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
+Undefined            first referenced
+ symbol                  in file
+inet_ntop                           /var/tmp//ccZYayyg.o  (symbol
+belongs to implicit dependency /lib/amd64/libnsl.so.1)
+ld: fatal: symbol referencing errors
+collect2: error: ld returned 1 exit status
+configure:5581: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "2.12.2"
+| #define PACKAGE_STRING "git 2.12.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define PACKAGE_URL ""
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_ALLOCA_H 1
+| #define HAVE_ALLOCA 1
+| /* end confdefs.h.  */
+|
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char inet_ntop ();
+| int
+| main ()
+| {
+| return inet_ntop ();
+|   ;
+|   return 0;
+| }
+configure:5590: result: no
+configure:5607: checking for inet_pton
+configure:5607: gcc -o conftest -m64 -I/usr/local/include -m64
+-Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lidn2
+-lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
+Undefined            first referenced
+ symbol                  in file
+inet_pton                           /var/tmp//ccW0aaAg.o  (symbol
+belongs to implicit dependency /lib/amd64/libnsl.so.1)
+ld: fatal: symbol referencing errors
+collect2: error: ld returned 1 exit status
+configure:5607: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "2.12.2"
+| #define PACKAGE_STRING "git 2.12.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define PACKAGE_URL ""
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_ALLOCA_H 1
+| #define HAVE_ALLOCA 1
+| /* end confdefs.h.  */
+| /* Define inet_pton to an innocuous variant, in case <limits.h>
+declares inet_pton.
+|    For example, HP-UX 11i <limits.h> declares gettimeofday.  */
+| #define inet_pton innocuous_inet_pton
+|
+| /* System header to define __stub macros and hopefully few prototypes,
+|     which can conflict with char inet_pton (); below.
+|     Prefer <limits.h> to <assert.h> if __STDC__ is defined, since
+|     <limits.h> exists even on freestanding compilers.  */
+|
+| #ifdef __STDC__
+| # include <limits.h>
+| #else
+| # include <assert.h>
+| #endif
+|
+| #undef inet_pton
+|
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char inet_pton ();
+| /* The GNU C library defines this for functions which it implements
+|     to always fail with ENOSYS.  Some functions are actually named
+|     something starting with __ and the normal name is an alias.  */
+| #if defined __stub_inet_pton || defined __stub___inet_pton
+| choke me
+| #endif
+|
+| int
+| main ()
+| {
+| return inet_pton ();
+|   ;
+|   return 0;
+| }
+configure:5607: result: no
+configure:5611: checking for inet_pton in -lresolv
+configure:5636: gcc -o conftest -m64 -I/usr/local/include -m64
+-Wl,-rpath,/usr/local/lib64 -L/usr/local/lib64 conftest.c -lresolv
+-lidn2 -lcurl -lssl -lcrypto -lz -ldl -lpthread -lsocket >&5
+Undefined            first referenced
+ symbol                  in file
+inet_pton                           /var/tmp//ccG2aOBg.o  (symbol
+belongs to implicit dependency /lib/amd64/libnsl.so.1)
+ld: fatal: symbol referencing errors
+collect2: error: ld returned 1 exit status
+configure:5636: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "git"
+| #define PACKAGE_TARNAME "git"
+| #define PACKAGE_VERSION "2.12.2"
+| #define PACKAGE_STRING "git 2.12.2"
+| #define PACKAGE_BUGREPORT "git@vger.kernel.org"
+| #define PACKAGE_URL ""
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_ALLOCA_H 1
+| #define HAVE_ALLOCA 1
+| /* end confdefs.h.  */
+|
+| /* Override any GCC internal prototype to avoid an error.
+|    Use char because int might match the return type of a GCC
+|    builtin and then its argument prototype would still apply.  */
+| #ifdef __cplusplus
+| extern "C"
+| #endif
+| char inet_pton ();
+| int
+| main ()
+| {
+| return inet_pton ();
+|   ;
+|   return 0;
+| }
+configure:5645: result: no
