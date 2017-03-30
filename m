@@ -2,99 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3FD1FAFB
-	for <e@80x24.org>; Thu, 30 Mar 2017 11:07:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 079DC1FAFB
+	for <e@80x24.org>; Thu, 30 Mar 2017 11:08:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933200AbdC3LHL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 07:07:11 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:59144 "EHLO
-        alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932541AbdC3LHK (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 07:07:10 -0400
-X-AuditID: 12074411-4d7ff700000005a9-03-58dce6d8f114
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.71.01449.8D6ECD85; Thu, 30 Mar 2017 07:07:04 -0400 (EDT)
-Received: from [192.168.69.190] (p579060CC.dip0.t-ipconnect.de [87.144.96.204])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2UB71bm026280
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 30 Mar 2017 07:07:03 -0400
-Subject: Re: [PATCH v5 6/6] remove_subtree(): test removing nested directories
-To:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org
-References: <1490844730-47634-1-git-send-email-bnmvco@gmail.com>
- <1490844730-47634-7-git-send-email-bnmvco@gmail.com>
-Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <520a6bbb-5915-b51e-7292-ec67e3274f9e@alum.mit.edu>
-Date:   Thu, 30 Mar 2017 13:07:01 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S933186AbdC3LIi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 07:08:38 -0400
+Received: from mail-oi0-f45.google.com ([209.85.218.45]:34485 "EHLO
+        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932541AbdC3LIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 07:08:37 -0400
+Received: by mail-oi0-f45.google.com with SMTP id o67so27647201oib.1
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 04:08:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=HWwrrUinAIZzJ9BWeH1neLvBoOUj/pu5vvAhT9jl+s0=;
+        b=DHCmC/NKJ7bQy9P8Fi14b7yONIptEFsz11Zbzr3/+Obh0tg46z2LEFgzY4yQMK4oXF
+         rdayL/ENrxu4g1iW09UwXqKvVFEuHUa6+nbyIck2ovnYI5Jg7WxERyKPgFhsVNRzaEta
+         3t+XFpH9+cj99Xg3AmZ9R1dGdtFabIYnV5F8ePbrmiixDaEFddOIsV87fvlB1uG2arOa
+         E8CHVvYuL/3+stXcpXswU1xMA3HUQHP7VqYFyGwWg2rZtafDMVC/js+KZZCCrDkSO4Jm
+         1iyKDbRxdp9sEF7ESkU3W7ziTxoPsVyQhiAVtbJir6VL9mUPH+CAmFhNWTYUTVVpTvDt
+         efyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=HWwrrUinAIZzJ9BWeH1neLvBoOUj/pu5vvAhT9jl+s0=;
+        b=s0uxaPDJLSmw1oFqsy/Ks6ntbfg23T2t9e41ncUgYLa3PTfitPdWH+iRc5kfCam7o+
+         77fiQBHFTXmYnlvyfcK0lCtFYRbOwbLVs38LliAgPAnlkdFYGj40/IyA4amXlXnfNPBO
+         He63XPgi8xVDGI4PiJJSzELPnAh4YRdSgRpNgeG6H9Ci5zAIge7bOj9YZ+/T56NPYtwa
+         KIdKInxBBIomSG5ZzwmCHhVgtW7PNFyQro9q/Dtc3589M2++SqA1QrPJrvRuJt75wpB/
+         GvRWczUarHepD87xCDLjmd31uEM02dBwqzQ7muTCYFH8F1nUCnGkBqxCZwlrmoxjTQg5
+         lbEw==
+X-Gm-Message-State: AFeK/H1HRJumFxw/f4hP0nmC5Bn00rDND1QL4cSwbUdBeiDbFSLrbPX1nGBCvp2hodVc5LF7pFiHJkICz6GLcQ==
+X-Received: by 10.202.75.140 with SMTP id y134mr2679868oia.169.1490872116023;
+ Thu, 30 Mar 2017 04:08:36 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1490844730-47634-7-git-send-email-bnmvco@gmail.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrKIsWRmVeSWpSXmKPExsUixO6iqHvj2Z0Ig9dvOC0ef3rLZtF1pZvJ
-        oqH3CrNF95S3jBabN7ezOLB67Jx1l91jwaZSj4uXlD0+b5ILYInisklJzcksSy3St0vgynhz
-        dD9jwSruiue7OpgaGOdxdjFyckgImEj8fLaIvYuRi0NIYAeTxNQ/5xhBEkIC55kkjp4OALGF
-        BfwkJjQ3AsU5OEQErCWur/GCKCmX2LH4HzuIzSxgI3G8qReslU1AV2JRTzMTiM0rYC/xeMMW
-        NhCbRUBV4urzWawgtqhAiMSchQ8YIWoEJU7OfMICYnMKOEqcXv6TBWKmnsSO679YIWx5ie1v
-        5zBPYOSfhaRlFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdXLzSzRS00p3cQI
-        CV3BHYwzTsodYhTgYFTi4a1YeztCiDWxrLgy9xCjJAeTkijv5rl3IoT4kvJTKjMSizPii0pz
-        UosPMUpwMCuJ8HI/AcrxpiRWVqUW5cOkpDlYlMR5+Zao+wkJpCeWpGanphakFsFkZTg4lCR4
-        nz0FahQsSk1PrUjLzClBSDNxcIIM5wEaPg9seHFBYm5xZjpE/hSjopQ4706QZgGQREZpHlwv
-        LLW8YhQHekWY9zlIFQ8wLcF1vwIazAQ0WNzmFsjgkkSElFQDY/K2gANWpU+m87U8f/POukHC
-        QOeOyu7ZxxolbLbcC4w9GKsjX/xzTa5fyuH9HpNmBM55/d79RlpN5l0Pfgb+/LNydeaRJUJG
-        V+9+lJ//Xkl+u56eeo75nuWXZOJ+blaUfPHksGJhN58Pg93+kpPxoc8nXdPJirxdVuTcX8Ai
-        YZZzNnTu4vszlViKMxINtZiLihMBg6JJIwgDAAA=
+Received: by 10.74.158.70 with HTTP; Thu, 30 Mar 2017 04:08:05 -0700 (PDT)
+In-Reply-To: <1751d788-d1f1-1c97-b33b-f53dab78ef86@alum.mit.edu>
+References: <1490747533-89143-1-git-send-email-bnmvco@gmail.com>
+ <1490747533-89143-3-git-send-email-bnmvco@gmail.com> <7a665631-da6a-4b9f-b9e7-750f2504eccd@alum.mit.edu>
+ <xmqqk278av4x.fsf@gitster.mtv.corp.google.com> <e412ef09-276b-92df-d2c0-0bf2f80238d2@alum.mit.edu>
+ <xmqqinmr70uc.fsf@gitster.mtv.corp.google.com> <1751d788-d1f1-1c97-b33b-f53dab78ef86@alum.mit.edu>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 30 Mar 2017 18:08:05 +0700
+Message-ID: <CACsJy8DBa-oH3i+5P=iVr9NhJwsicZ43DO89WmvpYEQu90RrMw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/5] dir_iterator: iterate over dir after its contents
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Daniel Ferreira <bnmvco@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/30/2017 05:32 AM, Daniel Ferreira wrote:
-> Test removing a nested directory when an attempt is made to restore the
-> index to a state where it does not exist. A similar test could be found
-> previously in t/t2000-checkout-cache-clash.sh, but it did not check for
-> nested directories, which could allow a faulty implementation of
-> remove_subtree() pass the tests.
-> 
-> Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-> ---
->  t/t2000-checkout-cache-clash.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/t/t2000-checkout-cache-clash.sh b/t/t2000-checkout-cache-clash.sh
-> index de3edb5..ac10ba3 100755
-> --- a/t/t2000-checkout-cache-clash.sh
-> +++ b/t/t2000-checkout-cache-clash.sh
-> @@ -57,4 +57,15 @@ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
->  	git checkout-index -a -f --prefix=there/
->  '
->  
-> +test_expect_success 'git checkout-index -f should remove nested subtrees' '
-> +	echo content >path &&
-> +	git update-index --add path &&
-> +	rm path &&
-> +	mkdir -p path/with/nested/paths &&
-> +	echo content >path/file1 &&
-> +	echo content >path/with/nested/paths/file2 &&
-> +	git checkout-index -f -a &&
-> +	test ! -d path
-> +'
-> +
->  test_done
-> 
+On Thu, Mar 30, 2017 at 1:39 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> * DIR_ITERATOR_RECURSE -- recurse into subdirectories
+>
+> would make the set of possible options complete. If this option is not
+> set, then the iteration would be over the entries in a single directory
+> without traversing its subdirectories.
 
-It would be better for this patch to precede "remove_subtree():
-reimplement using iterators", as a slightly better proof that the change
-to using iterators doesn't change the behavior.
-
-Michael
-
+And would make it possible to use dir-iterator everywhere (except
+read_directory_recursiveky). That would be really nice :)
+-- 
+Duy
