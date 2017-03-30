@@ -2,77 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECBD120966
-	for <e@80x24.org>; Thu, 30 Mar 2017 20:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84C1120966
+	for <e@80x24.org>; Thu, 30 Mar 2017 21:04:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934179AbdC3U7f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 16:59:35 -0400
-Received: from mxo2.nje.dmz.twosigma.com ([208.77.214.162]:39290 "EHLO
-        mxo2.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754435AbdC3U7e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 16:59:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo2.nje.dmz.twosigma.com (Postfix) with ESMTP id 4CBC2100049;
-        Thu, 30 Mar 2017 20:59:32 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo2.nje.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo2.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id O2Hsmi09NL9U; Thu, 30 Mar 2017 20:59:32 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (msx.twosigma.com [172.22.2.43])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo2.nje.dmz.twosigma.com (Postfix) with ESMTPS id 3D6338002E;
-        Thu, 30 Mar 2017 20:59:32 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft7.ad.twosigma.com (172.22.2.43) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Thu, 30 Mar 2017 20:59:31 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Thu, 30 Mar 2017 20:59:31 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     Shawn Pearce <spearce@spearce.org>
-CC:     git <git@vger.kernel.org>
-Subject: RE: [PATCH] http.postbuffer: make a size_t
-Thread-Topic: [PATCH] http.postbuffer: make a size_t
-Thread-Index: AQHSqZYnXYCW+MDS6EGx8AavIUjVVqGt3bZQ
-Date:   Thu, 30 Mar 2017 20:59:31 +0000
-Message-ID: <82ec49a3ae4d402daf6113cf19c47fb0@exmbdft7.ad.twosigma.com>
-References: <20170330202917.24281-1-dturner@twosigma.com>
- <CAJo=hJvs0UKO_NLbWAi8Y8XRJJ0v5kdjf9BN0V=pN_9yYrDp7Q@mail.gmail.com>
-In-Reply-To: <CAJo=hJvs0UKO_NLbWAi8Y8XRJJ0v5kdjf9BN0V=pN_9yYrDp7Q@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.13]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
+        id S934598AbdC3VEN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 17:04:13 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:32926 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934226AbdC3VEL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 17:04:11 -0400
+Received: by mail-wr0-f194.google.com with SMTP id u18so15455746wrc.0
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 14:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=F1va71Y2ppKIKMLSuAj32DgXgGjqLrShMkU43Y63/ic=;
+        b=hT4KSZNdrL0YFwvOOfaDzFEXt1ZBV8o0n7Ik570tCCUc7b5MCU6jKwf2xTtS97cFyy
+         mxp/fKL3ysExdHgn0BAnllQQGfM5XUXpSA+JrjLVawVJ0BAEr19PJAMLo5azEUiz3Cnv
+         3dCcpINJpnclya+ONMJnoe4LigISddFLEqqBcn6YjT/1LSBLxDo+qCoPr2daovXLW181
+         /PoM9THwZNbdMgDJJRW6ISIPBlh5m3Ki8F4z0d6T2A/n1/AKOqIiCgizFmEYXT0OjVO+
+         kQV6ykHNj5rnRendblan2QeJewKX8FLuJKBK9CPrpNjpgyS1+OpbtxYRIPLkkqjDg5+p
+         LbMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=F1va71Y2ppKIKMLSuAj32DgXgGjqLrShMkU43Y63/ic=;
+        b=SxOridgqJQLrysctJVbI++vR0FFmzNLLU/2rA2DjjZ7qTiPKn6/9EWOZdw+5pIkQfR
+         OXdzir5AUWsXXWmty3Uzmwvc4xrNRisfhSuvRFDuVFmUVbNk1au8JoysXjsR9jq5Roi5
+         FylXxX8iqsTMtqLX2FKTqxxn+v8Pbl3kc1o6joSJqd2RVnXbgSDgCcyTPm6hgmw1qDfL
+         iBY6rTdmRA5Goi8xqg7p1w2m76AZ0D/qtFuIKHFGzSWqVsO3HPBATb6+qnmYSVijvJ7g
+         wMCiRP3ZOgu9NaS4xcQtKVzvx/P3weqG4kwNCDkbpfO+XPVcEeauk0427GiPVQ9qQWoe
+         cJGg==
+X-Gm-Message-State: AFeK/H0ehfuPmGqVl730zKttx0tTBX9D/hHKOWZvvHWDpTVRTDBicIwe3uc3y83/8xtMKw==
+X-Received: by 10.223.168.77 with SMTP id l71mr1444814wrc.185.1490907849747;
+        Thu, 30 Mar 2017 14:04:09 -0700 (PDT)
+Received: from localhost.localdomain (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr. [128.78.31.246])
+        by smtp.gmail.com with ESMTPSA id k32sm4117306wre.18.2017.03.30.14.04.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 30 Mar 2017 14:04:08 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2] read-cache: avoid using git_path() in freshen_shared_index()
+Date:   Thu, 30 Mar 2017 23:03:54 +0200
+Message-Id: <20170330210354.20018-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.12.0.rc0.23.g4ed838fb8d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-R2l0TGFiLiAgSSBjYW4ndCBzcGVhayB0byBvdXIgcGFydGljdWxhciBjb25maWd1cmF0aW9uIG9m
-IGl0IC0tIGJ1dCBpZiB5b3UgaGF2ZSBhIHNwZWNpZmljIHF1ZXN0aW9uIGFib3V0IHdoYXQgdGhl
-IGNvbmZpZyBpcywgSSBjYW4gYXNrIG91ciBnaXRsYWIgYWRtaW5zLg0KDQo+IC0tLS0tT3JpZ2lu
-YWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IFNoYXduIFBlYXJjZSBbbWFpbHRvOnNwZWFyY2VAc3Bl
-YXJjZS5vcmddDQo+IFNlbnQ6IFRodXJzZGF5LCBNYXJjaCAzMCwgMjAxNyA0OjQyIFBNDQo+IFRv
-OiBEYXZpZCBUdXJuZXIgPERhdmlkLlR1cm5lckB0d29zaWdtYS5jb20+DQo+IENjOiBnaXQgPGdp
-dEB2Z2VyLmtlcm5lbC5vcmc+DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0hdIGh0dHAucG9zdGJ1ZmZl
-cjogbWFrZSBhIHNpemVfdA0KPiANCj4gT24gVGh1LCBNYXIgMzAsIDIwMTcgYXQgMToyOSBQTSwg
-RGF2aWQgVHVybmVyIDxkdHVybmVyQHR3b3NpZ21hLmNvbT4NCj4gd3JvdGU6DQo+ID4gVW5mb3J0
-dW5hdGVseSwgaW4gb3JkZXIgdG8gcHVzaCBzb21lIGxhcmdlIHJlcG9zLCB0aGUgaHR0cCBwb3N0
-YnVmZmVyDQo+ID4gbXVzdCBzb21ldGltZXMgZXhjZWVkIHR3byBnaWdhYnl0ZXMuICBPbiBhIDY0
-LWJpdCBzeXN0ZW0sIHRoaXMgaXMgT0s6DQo+ID4gd2UganVzdCBtYWxsb2MgYSBsYXJnZXIgYnVm
-ZmVyLg0KPiANCj4gSSdtIHNsaWdodGx5IGN1cmlvdXMgd2hhdCBzZXJ2ZXIgeW91IGFyZSBwdXNo
-aW5nIHRvIHRoYXQgbmVlZHMgdGhlIGVudGlyZSB0aGluZw0KPiBidWZmZXJlZCB0byBjb21wdXRl
-IGEgQ29udGVudC1MZW5ndGgsIHJhdGhlciB0aGFuIHVzaW5nDQo+IFRyYW5zZmVyLUVuY29kaW5n
-OiBjaHVua2VkLiBNb3N0IEdpdC1vdmVyLUhUVFAgc2hvdWxkIGJlIGFjY2VwdGluZw0KPiBUcmFu
-c2Zlci1FbmNvZGluZzogY2h1bmtlZCB3aGVuIHRoZSBzdHJlYW0gZXhjZWVkcyBwb3N0QnVmZmVy
-Lg0K
+When performing an interactive rebase in split-index mode,
+the commit message that one should rework when squashing commits
+can contain some garbage instead of the usual concatenation of
+both of the commit messages.
+
+Bisecting shows that c3a0082502 (read-cache: use
+freshen_shared_index() in read_index_from(), 2017-03-06) is involved,
+which points to the unsafe use of git_path() in
+freshen_shared_index().
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+The only changes in this v2 compared to the previous version are
+in the title and commit message, which have been changed according
+to:
+
+http://public-inbox.org/git/CAP8UFD29xWU5bHwewUSq26pVTwK-gy3uSVG2aGTCrDak3620=A@mail.gmail.com/
+
+ read-cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index e447751823..2f10242c24 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1682,9 +1682,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+  */
+ static void freshen_shared_index(char *base_sha1_hex, int warn)
+ {
+-	const char *shared_index = git_path("sharedindex.%s", base_sha1_hex);
++	char *shared_index = git_pathdup("sharedindex.%s", base_sha1_hex);
+ 	if (!check_and_freshen_file(shared_index, 1) && warn)
+ 		warning("could not freshen shared index '%s'", shared_index);
++	free(shared_index);
+ }
+ 
+ int read_index_from(struct index_state *istate, const char *path)
+-- 
+2.12.0.rc0.23.g4ed838fb8d
+
