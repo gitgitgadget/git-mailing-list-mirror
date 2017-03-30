@@ -2,86 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 112AE20966
-	for <e@80x24.org>; Thu, 30 Mar 2017 22:04:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30D1320966
+	for <e@80x24.org>; Thu, 30 Mar 2017 22:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934266AbdC3WE0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 18:04:26 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:33969 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934191AbdC3WEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 18:04:25 -0400
-Received: by mail-oi0-f51.google.com with SMTP id o67so44621553oib.1
-        for <git@vger.kernel.org>; Thu, 30 Mar 2017 15:04:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=QcUZ1dwzrpDMOojISyE/r/ueZkB4Fxvx27dGbrXfHEQ=;
-        b=m9FJRdT6/tYyRJDow17zlSG64YQElrar+ehSP5J2PLpYFE+hSrw9OKSN8Eccasw0Yg
-         l3hmyDFUSxQV2HqD9Gn3nEEJq2Ds4kXxI6W5bv3fhqpyCB2Hi8mAwNf2Gnd1zplBvJ0R
-         LvO+5qKjBXooQITZml+TiBtNRoH5oLCDbNhWvx68PZaRvi3PGHSBmpO0esUMZRlMhGZs
-         ub+I+EIkvH4Et3ZIeUO8qTkaZE27piuPWUzQuN4YlnlUarq9AAyyl5bQw7azpd9TmX2V
-         uS8E4YNyagsLpg0DVgVxk1Fum8zuA0M5R9YSGtf8bxT4czZ0WVdl1XAq1ilHU+KM27wL
-         z/Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc;
-        bh=QcUZ1dwzrpDMOojISyE/r/ueZkB4Fxvx27dGbrXfHEQ=;
-        b=ikCcrcHSvcSBxk3TXjK98iFzxdvnLsqcF1h2V1czehLMFrvXJ0H8o0d6v/Kwb23SWp
-         uRwTcovegYClf97Hpc0YhbfUrhNX1LzdxnhfiRLErLtHdgsmxXajkh/lJJjAos9RmJNR
-         2PtELqZqqWemPAZhstOk85j+/Rc9CA9Nsnptk3R7/Us9BTM6AGo6E+HCF1lYtZL9Nwcs
-         3tqBRkkU/x0pBVfkKid++r74lojvnn6zR1iyccwxcpM1FxiLc/FTG5fulMLYWhEAAJ26
-         COKmmuK1mf1VnKSxshVPjO15JDRJiW60RdqOGyu3o5OIDk8GC28r/1/5MMZrTfdG4jpD
-         PZ4g==
-X-Gm-Message-State: AFeK/H1icHuWoz1aFwHLlyJOc2M7N0NXTd8A2AqCYtHT5Dv9oWHg1oKRVnkFts+kRAL8UOTZLc4laDRdj5EZqQ==
-X-Received: by 10.202.177.215 with SMTP id a206mr1342891oif.147.1490911464042;
- Thu, 30 Mar 2017 15:04:24 -0700 (PDT)
+        id S933470AbdC3WHh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 18:07:37 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51518 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750903AbdC3WHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 18:07:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 048AB6FF7C;
+        Thu, 30 Mar 2017 18:07:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=J8HKfSiKWqFdkXQK7kvn77PdqI0=; b=w/aDb5
+        6m1taOnzXFx/OaBvcLKaBZ9cxdwIpjW5hm8+zxnzW8MCTABlQIumjl6lnr8phUdr
+        N4DKlke8pfvey2mabBtOoWRtbuhFGCHFyK9PvcSd8Wmpc9YVxd0jaxrc4Jin19kH
+        I3hfhEhw/cjzepKtQMf1+XY3u1rBasxRcPW30=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OAPrLK4obC/IXpM8SKC9MTpMZ31RsMxv
+        4pUa8q22mHWl7epJQPn1E6JDVXCqyU09fo7hrA2Syj5BGcK4ohmKZFC+Wra56geX
+        GFsThAz7YYOj690BDD1rbnfNFVs9MEKaU4YoHOkZbrWlfTuFBeBBrL4Bh5VF/6dQ
+        XYpAIHtIFDE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EF7506FF7A;
+        Thu, 30 Mar 2017 18:07:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5C9456FF79;
+        Thu, 30 Mar 2017 18:07:34 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] http.postbuffer: make a size_t
+References: <20170330202917.24281-1-dturner@twosigma.com>
+Date:   Thu, 30 Mar 2017 15:07:33 -0700
+In-Reply-To: <20170330202917.24281-1-dturner@twosigma.com> (David Turner's
+        message of "Thu, 30 Mar 2017 16:29:17 -0400")
+Message-ID: <xmqqwpb61kre.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.31.131 with HTTP; Thu, 30 Mar 2017 15:04:23 -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <xmqq60iq31dk.fsf@gitster.mtv.corp.google.com>
-References: <CAH8yC8kOeuVjvoeg0WsSfDeakJh_es2xhYK_O_bM87DEBVcB1w@mail.gmail.com>
- <xmqq60iq31dk.fsf@gitster.mtv.corp.google.com>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Thu, 30 Mar 2017 18:04:23 -0400
-Message-ID: <CAH8yC8kEzK0seNj9GK8h5mnMDvyG9=PnChmseSuvSfvb5h+uDQ@mail.gmail.com>
-Subject: Re: Git and PCRE2 vs PCRE?
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: 47053090-1595-11E7-8CFB-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 30, 2017 at 5:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeffrey Walton <noloader@gmail.com> writes:
+David Turner <dturner@twosigma.com> writes:
+
+> Unfortunately, in order to push some large repos, the http postbuffer
+> must sometimes exceed two gigabytes.  On a 64-bit system, this is OK:
+> we just malloc a larger buffer.
 >
->> Is it possible to use PCRE2 with Git? If so, how do I tell Git to use PCRE2?
+> Signed-off-by: David Turner <dturner@twosigma.com>
+> ---
+>  cache.h  |  1 +
+>  config.c | 17 +++++++++++++++++
+>  http.c   |  2 +-
+>  3 files changed, 19 insertions(+), 1 deletion(-)
 >
-> Given that pcre2's symbols are all prefixed with pcre2_ (I only
-> checked http://www.pcre.org/current/doc/html/pcre2api.html) and we
-> do not see any hits from "git grep pcre2", I do not think you can
-> just "configure" Git to use it.  Unless pcre2 library has a drop-in
-> replacement backward compatibility mode with pcre library, that is.
->
-> It probably is possible to use PCRE2 with Git by adding similar
-> amount of code to grep.[ch] as we have support for pcre and that
-> would be the way you tell Git to use PCRE2, but I think that is
-> probably not the questino you are asking.
+> diff --git a/cache.h b/cache.h
+> index fbdf7a815a..a8c1b65db0 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1900,6 +1900,7 @@ extern int git_parse_maybe_bool(const char *);
+>  extern int git_config_int(const char *, const char *);
+>  extern int64_t git_config_int64(const char *, const char *);
+>  extern unsigned long git_config_ulong(const char *, const char *);
+> +extern size_t git_config_size_t(const char *, const char *);
+>  extern int git_config_bool_or_int(const char *, const char *, int *);
+>  extern int git_config_bool(const char *, const char *);
+>  extern int git_config_maybe_bool(const char *, const char *);
+> diff --git a/config.c b/config.c
+> index 1a4d85537b..7b706cf27a 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -834,6 +834,15 @@ int git_parse_ulong(const char *value, unsigned long *ret)
+>  	return 1;
+>  }
+>  
+> +static size_t git_parse_size_t(const char *value, unsigned long *ret)
+> +{
+> +	size_t tmp;
+> +	if (!git_parse_signed(value, &tmp, maximum_unsigned_value_of_type(size_t)))
 
-Ack, thanks Jeff and Junio. Its no big deal to me.
+I am getting these:
 
-I'm not a PCRE user, so I'm not familiar with the extra gyrations
-needed for the migration.
+config.c:840:2: error: pointer targets in passing argument 2 of 'git_parse_signed' differ in signedness [-Werror=pointer-sign]
+  if (!git_parse_signed(value, &tmp, maximum_unsigned_value_of_type(size_t)))
+  ^
 
-I'll get the original PCRE installed.
+config.c:753:12: note: expected 'intmax_t *' but argument is of type 'size_t *'
+ static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
+            ^
 
-Thanks again.
+Changing "size_t tmp" to "intmax_t tmp" squelches it but the maximum
+unsigned value of size_t type would probably overflow "intmax_t max"
+which is signed, so...
