@@ -2,116 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9934520966
-	for <e@80x24.org>; Thu, 30 Mar 2017 16:47:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68E2F20966
+	for <e@80x24.org>; Thu, 30 Mar 2017 17:01:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933175AbdC3QrS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 12:47:18 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50438 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750766AbdC3QrR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 12:47:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8DFF76B1F9;
-        Thu, 30 Mar 2017 12:47:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6EtQf7vLU2zUr+zZtTFiCwVtS24=; b=ijgslR
-        Ned/Z3aV3BL8kDpL38J56e4X5UzlF704z4rtrgOCj4XOoPFWKPler9Xnb+3U+Iyf
-        wIoK2eNeWUXFCIN4wVfpsPBtrxC0RzZ2FC8e0Kb7uLYPn9y/o2VKxjln6qQMA9WK
-        rZD8AvY0CpE8AZnrszwMduCgV/hl7GwZrImgw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Ewnt04m2UlDV8nL1BgsoNGvCd5KPzYcY
-        9YGKTnlQbM28NX/mJzO2AZVTacU720dqhSbDa1z6gp9AAs7k0m1cq5gwvGYKUQrX
-        RMw0I3g5xBFCHRNQigu7xV/Qk2nN3tBu10CF/hzZ05tkmHhRwYy9SbhRu/4nIAe3
-        20IG/cy7FC0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 80DF36B1F8;
-        Thu, 30 Mar 2017 12:47:15 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D604F6B1F7;
-        Thu, 30 Mar 2017 12:47:14 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/7] Makefile: optionally compile with both SHA1DC and SHA1_OPENSSL
-References: <cover.1490397869.git.johannes.schindelin@gmx.de>
-        <7a2444f08dea1b2fe497ae7498eba44626414d29.1490397869.git.johannes.schindelin@gmx.de>
-        <xmqq37du7n9p.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 30 Mar 2017 09:47:13 -0700
-In-Reply-To: <xmqq37du7n9p.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 30 Mar 2017 09:16:50 -0700")
-Message-ID: <xmqqvaqq67am.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S933270AbdC3RBy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 13:01:54 -0400
+Received: from mout.web.de ([212.227.17.11]:54250 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932582AbdC3RBy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 13:01:54 -0400
+Received: from birne12.local ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MOAnY-1co7fk3fQy-005YVn; Thu, 30
+ Mar 2017 19:01:48 +0200
+Subject: Re: [PATCH v2 1/2] pkt-line: add packet_writel() and
+ packet_read_line_gently()
+To:     Ben Peart <Ben.Peart@microsoft.com>,
+        Ben Peart <peartben@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20170324152726.14632-1-benpeart@microsoft.com>
+ <20170324152726.14632-2-benpeart@microsoft.com>
+ <7a2c73c8-bb09-12ec-dd8d-99c5363f9bb4@web.de>
+ <BL2PR03MB3233616BE57BB7D911B1AAEF4330@BL2PR03MB323.namprd03.prod.outlook.com>
+ <a5e259bd-d994-6ddb-9dae-43531ee2e875@web.de>
+ <BL2PR03MB3237F4B369C0E00168D7291F4340@BL2PR03MB323.namprd03.prod.outlook.com>
+Cc:     "christian.couder@gmail.com" <christian.couder@gmail.com>,
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <d8bb326c-6aec-9379-a5a6-051fa72f8d77@web.de>
+Date:   Thu, 30 Mar 2017 19:01:42 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
+ Gecko/20100101 Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 874DE8E0-1568-11E7-B116-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <BL2PR03MB3237F4B369C0E00168D7291F4340@BL2PR03MB323.namprd03.prod.outlook.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:eSGtsuxU6IPPzccxJ7trElrLNlxBYRagAiARXGCmdM3KPkNOjHG
+ 5j6F3pU+n3UREcp30POC8/q2RBbg0L3AXsDoNgt4EcUvjkxdKw+r7QJap27UFe82ZV5YQq8
+ lxh6+b7tEzQAadCio+djMNAOg5Lxy0B2wXmj+ZZItYg3bdMgntwArUJBjCNUBDgzNnHxLSx
+ vxbCCeD1OO0sxnJPj9L9A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:o8agdZWdQnw=:VrzghNslOpdPYbiil8yB5C
+ n6QMqGB2u8hkTaRH6pbHEUupoLm2jhC9IOfck9s0jIOMCL+5+6LVk5xBSkpVQ4xDpGRo6abLp
+ 6aIT7LOn/Vdsm+H68Fc3v+KJqCxUEP0kM9tPGRErdWkIVYGipSvKXtV2IQIMHKH5jvhXKw4OX
+ 0YjmoyHZ9/QGDKlV3cLM48kLtSbJ2u7i3wEx2ON0umt5htS5lFGLt0HWLO2fRJ9mbnbAaOO8J
+ GCPIvb7k57yQXb1z5ztHz4go1iQvcFI+Cdh9Ane0LZkHxchje7cmf24mHXv6tRifg5YppWbwU
+ ihK11ZJYDG0CeE2habcL4Nk+T0veDxLWBMtTwJDRZ/JbZsNEfILNnLZVF8kTQxiAZKSOsibgx
+ rWtsb/J8vGX3qKXvf7wJww6HI2/MAjNqcM2f9VlFza/kh/T5gNs2w/VXO23MRY4OyG+yJkSHM
+ eB+r9kG1g9WlA6Lb6lfWTLD+/on+0j1wP8bq45EFJg2HtGP8F6mKhA2DQOLTJyK4UM24NPb8h
+ DEzwCDb5JOUXGmYPN6/HJGhzNkW/b+veyMMl0Rv3CyuFh0SCBKIL3Ncp0Jv0Pws36aqh1h/Hz
+ vUqj67jdNd8LUbukLZbj9JgQLkgGjwbKY+4EKEbsaeRVUmV72Pz1Zk3ChS+M7Mfd06yRn5I3g
+ YzdqldJidGACakaoPGChd6t9y9VhIwaSR1ZX2nEW0DQt3VO+xNmS/p509vEPUWB8c054dFEoW
+ Twn8NDq+vyZJ51eOOmWQRY/uNOATR0dDT62eODM6I+CA9EQruobEkr9pJAh6BKPhgUXF/iW0C
+ 5EL+9XD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 30.03.17 18:01, Ben Peart wrote:
+>> From: Torsten Bögershausen [mailto:tboegi@web.de]
+>>
+>>
+>> Does this work ?
+>> I would have expected
+>> packet_writel(fd, "line one", "line two", "line n"), NULL; 
+Typo.
+Should have been:
+packet_writel(fd, "line one", "line two", "line n", NULL);
+>>
+> 
+> No, that's actually not valid C syntax.
+> 
+>>>
+>>> which requires the use of variable number of arguments.  With your
+>> proposal that convenience is lost as you have to create an array of strings
+>> and pass that instead.  The usage just isn't as simple as the current model.
+>>>
+>> What is wrong with
+>>
+>> int packet_write_fmt_gently(int fd, const char *fmt, ...) and we use it like
+>> this:
+>> if packet_write_fmt_gently(fd, "%s%s%s", "line one", "line two", "line n")
+>>
+> 
+> Packets are not just strings; see pkt-line.h for more details-
+>  but basically they are a length packet, followed by the data (in this particular case a string). 
+> The packet_writel function is a convenience function to write out a variable number of
+> packetized strings followed by a flush packet.
+> You're sample above would simply concatenate the three strings and then write a single packet. 
+> A very different outcome. :)
 
-> ...
-> The use of union is a good ingredient for a solution.  I would have
-> chosen to do this slightly differently if I were doing it.
->
->         typedef struct {
->                 int safe;
->                 union {
->                         SHA1_CTX_SAFE safe;
->                         SHA1_CTX_FAST fast;
->                 } u;
->         } git_SHA_CTX;
->
->         void git_SHA1_Init(git_SHA_CTX *ctx, int safe);
-> 	void git_SHA1_Update(git_SHA_CTX *ctx, const void *, unsigned long);
-> 	git_SHA1_Final(uchar [20], git_SHA_CTX *ctx);
->
-> where SHA1_CTX_FAST may be chosen from the Makefile just like we
-> currently choose platform_SHA_CTX.  SHA1_CTX_SAFE could also be made
-> configurable but it may be OK to hardcode it to refer to SHA1_CTX of
-> DC's.
->
-> As you already know, I am assuming that each codepath pretty much
-> knows if it needs safe or fast one (e.g. the one used in csum-file.c
-> knows it does not have to), so each git_SHA_CTX is told which one to
-> use when it gets initialized.
-
-And if we wanted to declare "git add" is always safe, we could still
-do
-
-    int sha1_safety_global_override = -1; /* unspecified */
-
-    void git_SHA1_Init(git_SHA_CTX *ctx, int safe)
-    {
-	if (sha1_safety_global_override >= 0)
-	    ctx->safe = sha1_safety_global_override;
-        else
-	    ctx->safe = safe;
-
-	if (ctx->safe)
-	    SHA1DCInit(&(ctx->u.safe));
-	else
-	    platform_SHA1_Init(&(ctx->u.fast));
-   }
-
-and then have cmd_add() in builtin/add.c to flip that global
-override bit to say "this does not have to be safe".  I personally
-do not think it is a good idea, but I am showing that it is still
-doable.  
-
-And as long as assignment to sha1_safety_global_override is done in
-a thread-friendly way, such a scheme would be more thread-friendly
-as a whole compared to the "toggle_sha1dc()" approach where each CTX
-instance does not know which side of the union it is being used us
-(which, if mixed-up, of course would lead to a funny behaviour).
-
+Got it.
