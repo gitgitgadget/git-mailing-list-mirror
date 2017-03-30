@@ -2,131 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89A3820966
-	for <e@80x24.org>; Thu, 30 Mar 2017 21:55:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 112AE20966
+	for <e@80x24.org>; Thu, 30 Mar 2017 22:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934218AbdC3VzC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 17:55:02 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59057 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1755096AbdC3VzB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Mar 2017 17:55:01 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 23AF06F261;
-        Thu, 30 Mar 2017 17:54:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=p2mOkum3TFljEVY7LGt+UKavVuU=; b=RSmyAt
-        ux60tlAXM7WsP92CQPJuqEmBAJh52S7bB2acGPF6EQBhR2kHZqh1JsREfqReS4AI
-        9CXqzahOVJmoWsVLlc6poAT2ad33Oo+KWt0N9ndXhHqxtcsVBBnQzoJU7fUfX/j8
-        oy5J09C45AEi2XkSCdDkhw3qfz1syIoPCsaa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KJVIh9x2nNWYPQvcIdTrPC6L86T5E1TX
-        QbOgLI15Oc8RhVr/m84xZzS3cu7PLsZuIlh9XmK/YBbnHrm4oQcLfdEX1OEJTxRM
-        IKBor9N4hVjNv/ibtRHn2uBZHxNtca+g5G0fQcgSHEBF8jvsixyO7+IvscLKtSCO
-        I+RbavUzJDs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C9436F260;
-        Thu, 30 Mar 2017 17:54:59 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 645B26F25F;
-        Thu, 30 Mar 2017 17:54:58 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Thomas Rast <tr@thomasrast.ch>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] log: if --decorate is not given, default to --decorate=auto
-References: <20170324054631.21622-1-alexhenrie24@gmail.com>
-        <20170324183825.GD31294@aiede.mtv.corp.google.com>
-        <xmqqa88263qw.fsf@gitster.mtv.corp.google.com>
-        <20170330213358.qjsobjcbons66skf@sigill.intra.peff.net>
-Date:   Thu, 30 Mar 2017 14:54:57 -0700
-In-Reply-To: <20170330213358.qjsobjcbons66skf@sigill.intra.peff.net> (Jeff
-        King's message of "Thu, 30 Mar 2017 17:33:58 -0400")
-Message-ID: <xmqq1ste2zwu.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S934266AbdC3WE0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 18:04:26 -0400
+Received: from mail-oi0-f51.google.com ([209.85.218.51]:33969 "EHLO
+        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S934191AbdC3WEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Mar 2017 18:04:25 -0400
+Received: by mail-oi0-f51.google.com with SMTP id o67so44621553oib.1
+        for <git@vger.kernel.org>; Thu, 30 Mar 2017 15:04:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=QcUZ1dwzrpDMOojISyE/r/ueZkB4Fxvx27dGbrXfHEQ=;
+        b=m9FJRdT6/tYyRJDow17zlSG64YQElrar+ehSP5J2PLpYFE+hSrw9OKSN8Eccasw0Yg
+         l3hmyDFUSxQV2HqD9Gn3nEEJq2Ds4kXxI6W5bv3fhqpyCB2Hi8mAwNf2Gnd1zplBvJ0R
+         LvO+5qKjBXooQITZml+TiBtNRoH5oLCDbNhWvx68PZaRvi3PGHSBmpO0esUMZRlMhGZs
+         ub+I+EIkvH4Et3ZIeUO8qTkaZE27piuPWUzQuN4YlnlUarq9AAyyl5bQw7azpd9TmX2V
+         uS8E4YNyagsLpg0DVgVxk1Fum8zuA0M5R9YSGtf8bxT4czZ0WVdl1XAq1ilHU+KM27wL
+         z/Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc;
+        bh=QcUZ1dwzrpDMOojISyE/r/ueZkB4Fxvx27dGbrXfHEQ=;
+        b=ikCcrcHSvcSBxk3TXjK98iFzxdvnLsqcF1h2V1czehLMFrvXJ0H8o0d6v/Kwb23SWp
+         uRwTcovegYClf97Hpc0YhbfUrhNX1LzdxnhfiRLErLtHdgsmxXajkh/lJJjAos9RmJNR
+         2PtELqZqqWemPAZhstOk85j+/Rc9CA9Nsnptk3R7/Us9BTM6AGo6E+HCF1lYtZL9Nwcs
+         3tqBRkkU/x0pBVfkKid++r74lojvnn6zR1iyccwxcpM1FxiLc/FTG5fulMLYWhEAAJ26
+         COKmmuK1mf1VnKSxshVPjO15JDRJiW60RdqOGyu3o5OIDk8GC28r/1/5MMZrTfdG4jpD
+         PZ4g==
+X-Gm-Message-State: AFeK/H1icHuWoz1aFwHLlyJOc2M7N0NXTd8A2AqCYtHT5Dv9oWHg1oKRVnkFts+kRAL8UOTZLc4laDRdj5EZqQ==
+X-Received: by 10.202.177.215 with SMTP id a206mr1342891oif.147.1490911464042;
+ Thu, 30 Mar 2017 15:04:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 846D7674-1593-11E7-B991-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Received: by 10.74.31.131 with HTTP; Thu, 30 Mar 2017 15:04:23 -0700 (PDT)
+Reply-To: noloader@gmail.com
+In-Reply-To: <xmqq60iq31dk.fsf@gitster.mtv.corp.google.com>
+References: <CAH8yC8kOeuVjvoeg0WsSfDeakJh_es2xhYK_O_bM87DEBVcB1w@mail.gmail.com>
+ <xmqq60iq31dk.fsf@gitster.mtv.corp.google.com>
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Thu, 30 Mar 2017 18:04:23 -0400
+Message-ID: <CAH8yC8kEzK0seNj9GK8h5mnMDvyG9=PnChmseSuvSfvb5h+uDQ@mail.gmail.com>
+Subject: Re: Git and PCRE2 vs PCRE?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> On Thu, Mar 30, 2017 at 11:03:51AM -0700, Junio C Hamano wrote:
+On Thu, Mar 30, 2017 at 5:23 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeffrey Walton <noloader@gmail.com> writes:
 >
->> With the "--decorate=auto" option becoming the default for "git
->> log", "git tbdiff" will be broken.
->> ...
-> I'm confused. I thought "auto" would kick in only when we are outputting
-> to a terminal. Or is the problem that the "is it a terminal" check is
-> fooled by $GIT_PAGER_IN_USE, because you are running "git -p tbdiff"?
-
-Interesting.  Yes, I do use 
-
-    [pager]
-	tbdiff
-
-in my ~/.gitconfig file.
-
-    $ git tbdiff ..@{-1} @{-1}..
-
-is one of the most frequently used commands in my ~/.bash_history
-these days [*1*].  I by accident has been running the 'master'
-version (not my private edition 'jch' that is a bit ahead of 'next')
-for the past few weeks, and I just switched back to using the 'jch'
-version so that I can say
-
-    $ git tbdiff ..- -..
-
-instead, and that is when I noticed we broke "tbdiff".
-
-> If so, this is the symptom of a more general problem, which is that
-> a script outputting to a pager will have confused sub-processes, who do
-> not know if their pipe is the pager one or not. Perhaps it is time to
-> resurrect my patch from:
+>> Is it possible to use PCRE2 with Git? If so, how do I tell Git to use PCRE2?
 >
->   http://public-inbox.org/git/20150810052353.GB15441@sigill.intra.peff.net/
+> Given that pcre2's symbols are all prefixed with pcre2_ (I only
+> checked http://www.pcre.org/current/doc/html/pcre2api.html) and we
+> do not see any hits from "git grep pcre2", I do not think you can
+> just "configure" Git to use it.  Unless pcre2 library has a drop-in
+> replacement backward compatibility mode with pcre library, that is.
 >
-> I think it would need a Windows-specific variant, but the general idea
-> is sound.
+> It probably is possible to use PCRE2 with Git by adding similar
+> amount of code to grep.[ch] as we have support for pcre and that
+> would be the way you tell Git to use PCRE2, but I think that is
+> probably not the questino you are asking.
 
-Yes, that might be necessary.
+Ack, thanks Jeff and Junio. Its no big deal to me.
 
+I'm not a PCRE user, so I'm not familiar with the extra gyrations
+needed for the migration.
 
-[Footnote]
+I'll get the original PCRE installed.
 
-*1* The general flow to accept a reroll of a topic "au/topic" goes
-    like this:
-
-    $ git checkout au/topic
-    $ git log master.. ;# to remind me what it was about
-    $ git checkout master... ;# to go back to the original base
-    $ Meta/CP ./+au-topic.mbox ;# run checkpatch
-    $ git am -s3c
-    $ git tbdiff ..@{-1} @{-1}..
-
-    Then if the initial N patches are identical, e.g. when the
-    output of tbdiff begins like this:
-
-     1: f6d8dfd8b6 =  1: d681cf5ada do not check odb_mkstemp return value for errors
-     2: 52dcad2c2e =  2: abf30edce4 odb_mkstemp: write filename into strbuf
-     3: 033d6ae6cb =  3: 38fceca547 odb_mkstemp: use git_path_buf
-     4: 55e3179076 !  4: 344267b632 diff: avoid fixed-size buffer for patch-ids
-        @@ ... @@
-
-    $ git rebase --onto 033d6ae6cb 38fceca547
-    $ git tbdiff ..@{-1} @{-1}..
-
-    That way, I can preserve the author and committer timestamps of
-    the earlier part that did not change.
+Thanks again.
