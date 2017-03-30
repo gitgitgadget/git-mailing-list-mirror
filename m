@@ -8,52 +8,53 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90A020958
-	for <e@80x24.org>; Thu, 30 Mar 2017 03:32:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CFB020958
+	for <e@80x24.org>; Thu, 30 Mar 2017 03:32:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932613AbdC3Dcl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Mar 2017 23:32:41 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:34512 "EHLO
+        id S932623AbdC3Dcp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Mar 2017 23:32:45 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:34546 "EHLO
         mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932113AbdC3Dck (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Mar 2017 23:32:40 -0400
-Received: by mail-qt0-f193.google.com with SMTP id x35so4657941qtc.1
-        for <git@vger.kernel.org>; Wed, 29 Mar 2017 20:32:39 -0700 (PDT)
+        with ESMTP id S932113AbdC3Dcn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Mar 2017 23:32:43 -0400
+Received: by mail-qt0-f193.google.com with SMTP id x35so4658244qtc.1
+        for <git@vger.kernel.org>; Wed, 29 Mar 2017 20:32:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=l16dL+HTbwWAlM1dY3uw/svbi5M03RvsWv9H3M+GdJE=;
-        b=CJ/aLp4BCKtWufzQxI4zOmGVOfWUYRhx18uFONjrlObi7ozhQ0TGU0TffrHjy5/pEw
-         /CNr7CHuzFD7lfcToHYzMYxyCU7m0+wiUZxZZvp2NJHHukI4tjAOGM6mRoGx9RHSh6DH
-         gVYjtijMalR0iskZgYjkZKGYkStycx4ZtUMiK/lOwXhMXRCqtm4dJXi8HlpxtBU+KHgt
-         a+eHQCJDHszEUOcZfGYilkXA31AYnlWNZnvliS1zEhTsHxVN3xo9se+Qb3OWq4HQ5HgC
-         vwxt7DYZnd5wgYw6GtXxNiucPTch3njkDD3LXbEnhqKzUVW5bt3+mX9lA8h4zhTi/zcb
-         XOxw==
+        bh=Rv9KzTi+MIDsK0s7Qa3GtR0scK6h4gRd+A1ollvKDCI=;
+        b=WXYl/zQ9CMNdSowYEpBKx3JJPWdvP2ITBV1SyVOsNOcV/CkX59xY47XtGHUpITtJsM
+         s5/PvSErTeiFbJ+uCFxnrs0eXn9K/y2Vngxuj+a/HMD1h2N/Ajc+yEn5sDWqJG+vd1Ws
+         eyH0nSsFA7U5YwverV9u9lKTT87u1B9h7L70wkU3nlqUJdP2O3CBUiQynrzI6g/yoCWl
+         KnPWXGYbbL0UbQQJ7lnSTe9HxnRJm9Wct7qdds6yZku8vTb+4mUDzJzwWcXfQLNT9pec
+         uFMLGz51gMBYH865K01fueuG4IZ98wT9sGz7YMj6+F4eEST5iMQ4xAWzr96CXbRqeqCc
+         em9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=l16dL+HTbwWAlM1dY3uw/svbi5M03RvsWv9H3M+GdJE=;
-        b=PrHA5BqsyGvfzbCrojJz0a2Zmtd/Of33puaXkQFQkijfG3Mf6uW+FpibBaJjyaGecp
-         Cc7/Y813zcum+y0K/0B2E/AhAr4p7PAyBoPPz1o4mFf9jGSWJsDfrFupUUkvA0TUf63r
-         8BtG3uvN2sNzPmvZG+DkSLfJVAU1CGwmGI0/BXuKz571cvfjLzzmuPW2n3sBfZ6Ur6Vi
-         RBzuvhnQadR6xAgZOdgHDLNfhLYARz+H/9OBIuwe1ASsmQzDISIvXpFBW+Jx6tkklRVn
-         PliD51OEuyaaP8u+xylZELlRrR1OynEWDzux/uR6CzMMquTtOoh2tPyFfoipDmCY9Udr
-         CdRA==
-X-Gm-Message-State: AFeK/H2zEShNHtvSGBOEOhopbi5z+xEx1VJfFvCpr3ZZ5IeXJFwTVE9LuWiWvlmDddnzQQ==
-X-Received: by 10.200.46.151 with SMTP id h23mr4471267qta.239.1490844758582;
-        Wed, 29 Mar 2017 20:32:38 -0700 (PDT)
+        bh=Rv9KzTi+MIDsK0s7Qa3GtR0scK6h4gRd+A1ollvKDCI=;
+        b=gugRf7vuGie1jn6HI8ZkGrdDn3xwtPY9FQQ4k2fYk0giYnEj6NCNm9GLDFAuT/e7DI
+         V9MNXxVSgedZGzT0HM4hI89Lv3cAuPcrNdC/st+4gQVg3J0K8Q96Ukoc0zZ45mitQ3Dl
+         yggdK8n38Oirj5YcJRBuX4QSbNo4CR2y1cEr30vyytKoMR9olpKW+IZXQENsZpMoQAKf
+         8+PArOzZhagrAK7fCq3kKlammawlwAgsI8XMKXd4IuMb2uUFbKgsPzuv+7VfWiymjRj8
+         6lADzMCiPSpk5hCmMnnrFpbVMFY05p6T72CFuQCH5oFrbXBYCiF6LNk3w+Tic1iSpSCq
+         FB7w==
+X-Gm-Message-State: AFeK/H22TniRSBHNSM1E9/EcQcWNcJ0WF87mARHfCHphBi8oCWFKALl10JJwYCLO37Iq/A==
+X-Received: by 10.200.3.81 with SMTP id w17mr3973267qtg.36.1490844762472;
+        Wed, 29 Mar 2017 20:32:42 -0700 (PDT)
 Received: from localhost.localdomain ([201.52.189.180])
-        by smtp.gmail.com with ESMTPSA id d136sm624095qke.32.2017.03.29.20.32.35
+        by smtp.gmail.com with ESMTPSA id d136sm624095qke.32.2017.03.29.20.32.38
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 29 Mar 2017 20:32:37 -0700 (PDT)
+        Wed, 29 Mar 2017 20:32:41 -0700 (PDT)
 From:   Daniel Ferreira <bnmvco@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
-        mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v5 4/6] dir_iterator: add tests for dir_iterator API
-Date:   Thu, 30 Mar 2017 00:32:08 -0300
-Message-Id: <1490844730-47634-5-git-send-email-bnmvco@gmail.com>
+        mhagger@alum.mit.edu, Daniel Ferreira <daniel.calibeta@gmail.com>,
+        Daniel Ferreira <bnmvco@gmail.com>
+Subject: [PATCH v5 5/6] remove_subtree(): reimplement using iterators
+Date:   Thu, 30 Mar 2017 00:32:09 -0300
+Message-Id: <1490844730-47634-6-git-send-email-bnmvco@gmail.com>
 X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 In-Reply-To: <1490844730-47634-1-git-send-email-bnmvco@gmail.com>
 References: <1490844730-47634-1-git-send-email-bnmvco@gmail.com>
@@ -62,123 +63,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create t/helper/test-dir-iterator.c, which prints relevant information
-about a directory tree iterated over with dir_iterator.
+From: Daniel Ferreira <daniel.calibeta@gmail.com>
 
-Create t/t0065-dir-iterator.sh, which tests that dir_iterator does
-iterate through a whole directory tree and that post-order directory
-iteration is correctly implemented.
+Use dir_iterator to traverse through remove_subtree()'s directory tree,
+avoiding the need for recursive calls to readdir(). Simplify
+remove_subtree()'s code.
+
+A conversion similar in purpose was previously done at 46d092a
+("for_each_reflog(): reimplement using iterators", 2016-05-21).
 
 Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
 ---
- Makefile                     |  1 +
- t/helper/test-dir-iterator.c | 32 +++++++++++++++++++++++++++++++
- t/t0065-dir-iterator.sh      | 45 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 78 insertions(+)
- create mode 100644 t/helper/test-dir-iterator.c
- create mode 100755 t/t0065-dir-iterator.sh
+ entry.c | 41 +++++++++++++++--------------------------
+ 1 file changed, 15 insertions(+), 26 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index a5a11e7..d0245f3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -607,6 +607,7 @@ TEST_PROGRAMS_NEED_X += test-ctype
- TEST_PROGRAMS_NEED_X += test-config
- TEST_PROGRAMS_NEED_X += test-date
- TEST_PROGRAMS_NEED_X += test-delta
-+TEST_PROGRAMS_NEED_X += test-dir-iterator
- TEST_PROGRAMS_NEED_X += test-dump-cache-tree
- TEST_PROGRAMS_NEED_X += test-dump-split-index
- TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
-diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
-new file mode 100644
-index 0000000..b4a148f
---- /dev/null
-+++ b/t/helper/test-dir-iterator.c
-@@ -0,0 +1,32 @@
-+#include "cache.h"
-+#include "blob.h"
-+#include "dir.h"
-+#include "streaming.h"
+diff --git a/entry.c b/entry.c
+index c6eea24..30197b2 100644
+--- a/entry.c
++++ b/entry.c
+@@ -2,6 +2,8 @@
+ #include "blob.h"
+ #include "dir.h"
+ #include "streaming.h"
 +#include "iterator.h"
 +#include "dir-iterator.h"
-+
-+int cmd_main(int argc, const char **argv) {
-+	if (argc < 2) {
-+		return 1;
-+	}
-+
-+	struct strbuf path = STRBUF_INIT;
-+	strbuf_add(&path, argv[1], strlen(argv[1]));
-+
-+	unsigned flag = 0;
-+	if (argc == 3 && strcmp(argv[2], "--post-order") == 0)
-+		flag = DIR_ITERATOR_POST_ORDER_TRAVERSAL;
-+
-+	struct dir_iterator *diter = dir_iterator_begin((&path)->buf, flag);
+
+ static void create_directories(const char *path, int path_len,
+ 			       const struct checkout *state)
+@@ -44,33 +46,20 @@ static void create_directories(const char *path, int path_len,
+ 	free(buf);
+ }
+
+-static void remove_subtree(struct strbuf *path)
++static void remove_subtree(const char *path)
+ {
+-	DIR *dir = opendir(path->buf);
+-	struct dirent *de;
+-	int origlen = path->len;
+-
+-	if (!dir)
+-		die_errno("cannot opendir '%s'", path->buf);
+-	while ((de = readdir(dir)) != NULL) {
+-		struct stat st;
+-
+-		if (is_dot_or_dotdot(de->d_name))
+-			continue;
+-
+-		strbuf_addch(path, '/');
+-		strbuf_addstr(path, de->d_name);
+-		if (lstat(path->buf, &st))
+-			die_errno("cannot lstat '%s'", path->buf);
+-		if (S_ISDIR(st.st_mode))
+-			remove_subtree(path);
+-		else if (unlink(path->buf))
+-			die_errno("cannot unlink '%s'", path->buf);
+-		strbuf_setlen(path, origlen);
++	struct dir_iterator *diter = dir_iterator_begin(path, DIR_ITERATOR_POST_ORDER_TRAVERSAL);
 +
 +	while (dir_iterator_advance(diter) == ITER_OK) {
-+		if (S_ISDIR(diter->st.st_mode))
-+			printf("[d] ");
-+		else
-+			printf("[f] ");
++		if (S_ISDIR(diter->st.st_mode)) {
++			if (rmdir(diter->path.buf))
++				die_errno("cannot rmdir '%s'", diter->path.buf);
++		} else if (unlink(diter->path.buf))
++			die_errno("cannot unlink '%s'", diter->path.buf);
+ 	}
+-	closedir(dir);
+-	if (rmdir(path->buf))
+-		die_errno("cannot rmdir '%s'", path->buf);
 +
-+		printf("(%s) %s\n", diter->relative_path, diter->path.buf);
-+	}
-+
-+	return 0;
-+}
-diff --git a/t/t0065-dir-iterator.sh b/t/t0065-dir-iterator.sh
-new file mode 100755
-index 0000000..3c8ea9a
---- /dev/null
-+++ b/t/t0065-dir-iterator.sh
-@@ -0,0 +1,45 @@
-+#!/bin/sh
-+
-+test_description='Test directory iteration.'
-+
-+. ./test-lib.sh
-+
-+ITER_SORTED_OUTPUT='[d] (a) ./dir/a
-+[d] (a/b) ./dir/a/b
-+[d] (a/b/c) ./dir/a/b/c
-+[d] (d) ./dir/d
-+[d] (d/e) ./dir/d/e
-+[d] (d/e/d) ./dir/d/e/d
-+[f] (a/b/c/d) ./dir/a/b/c/d
-+[f] (a/e) ./dir/a/e
-+[f] (b) ./dir/b
-+[f] (c) ./dir/c
-+[f] (d/e/d/a) ./dir/d/e/d/a'
-+
-+test_expect_success 'dir-iterator should iterate through all files' '
-+	mkdir -p dir &&
-+	mkdir -p dir/a/b/c/ &&
-+	date >dir/b &&
-+	date >dir/c &&
-+	mkdir -p dir/d/e/d/ &&
-+	date >dir/a/b/c/d &&
-+	date >dir/a/e &&
-+	date >dir/d/e/d/a &&
-+
-+	test-dir-iterator ./dir >it &&
-+	test "$(sort it)" == "$ITER_SORTED_OUTPUT"
-+'
-+
-+ITER_POST_ORDER_OUTPUT='[f] (a/b/c/d) ./dir2/a/b/c/d
-+[d] (a/b/c) ./dir2/a/b/c
-+[d] (a/b) ./dir2/a/b
-+[d] (a) ./dir2/a'
-+
-+test_expect_success 'dir-iterator should list files properly on post-order mode' '
-+	mkdir -p dir2/a/b/c/ &&
-+	date >dir2/a/b/c/d &&
-+
-+	test "$(test-dir-iterator ./dir2 --post-order)" == "$ITER_POST_ORDER_OUTPUT"
-+'
-+
-+test_done
--- 
++	if (rmdir(path))
++		die_errno("cannot rmdir '%s'", path);
+ }
+
+ static int create_file(const char *path, unsigned int mode)
+@@ -282,7 +271,7 @@ int checkout_entry(struct cache_entry *ce,
+ 				return 0;
+ 			if (!state->force)
+ 				return error("%s is a directory", path.buf);
+-			remove_subtree(&path);
++			remove_subtree(path.buf);
+ 		} else if (unlink(path.buf))
+ 			return error_errno("unable to unlink old '%s'", path.buf);
+ 	} else if (state->not_new)
+--
 2.7.4 (Apple Git-66)
 
