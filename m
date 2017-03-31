@@ -2,106 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,PLING_QUERY,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 196D51FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 17:32:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 266301FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 17:35:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933363AbdCaRcy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 13:32:54 -0400
-Received: from siwi.pair.com ([209.68.5.199]:36872 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933313AbdCaRcx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 13:32:53 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S933519AbdCaRfL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 13:35:11 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53342 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S933495AbdCaRfK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 13:35:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5445E7B7C2;
+        Fri, 31 Mar 2017 13:35:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Yh8q0QQjgCBOIcY+0obZ4PpSug4=; b=Xi3E5G
+        4Hsb/vErNjJ48XAsJGTyMc4BheK0ZyvEoD+qereLzhfpi9UzgTAEnJHP65CU+gKi
+        fY2pOljh5dHfUpsymMket9niguMTfBp2IMp1OFLn/SMuUQtyaYxWe73+W9yM+e3p
+        PKFhXOhlXymao+pZfGyBOIO2Di7ARjKMEVc2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CY8dmnL/ErS4PMM3JJd9ULfbbzpzfILZ
+        A8olITmXDXiGwBdqDsoD+B7Vzh0WtI2ypYtaz5TcP4S+M/FRDQYQM6FZuaQ3sNnQ
+        ldiuc9SePfbRzxiZ06p/wvJrTARZbAfwvLaKegbLyRyYdZFFzhbUYRw1AqKWRCSN
+        n8A/CRj8O04=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4DA1B7B7C1;
+        Fri, 31 Mar 2017 13:35:08 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 745F6845DB;
-        Fri, 31 Mar 2017 13:32:46 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, kewill@microsoft.com,
-        Kevin Willford <kewillf@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH] name-hash: fix buffer overrun
-Date:   Fri, 31 Mar 2017 17:32:14 +0000
-Message-Id: <20170331173214.47514-2-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170331173214.47514-1-git@jeffhostetler.com>
-References: <20170331173214.47514-1-git@jeffhostetler.com>
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB7E27B7BF;
+        Fri, 31 Mar 2017 13:35:07 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: SHA1 collision in production repo?! (probably not)
+References: <4D74C1D4-9EA7-4A17-AFC5-0B54B4A6DD0E@gmail.com>
+Date:   Fri, 31 Mar 2017 10:35:06 -0700
+In-Reply-To: <4D74C1D4-9EA7-4A17-AFC5-0B54B4A6DD0E@gmail.com> (Lars
+        Schneider's message of "Fri, 31 Mar 2017 18:05:17 +0200")
+Message-ID: <xmqqh929z6wl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 620DEB04-1638-11E7-8BC3-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Kevin Willford <kewillf@microsoft.com>
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Add check for the end of the entries for the thread partition.
-Add test for lazy init name hash with specific directory structure
+> Hi,
+>
+> I just got a report with the following output after a "git fetch" operation
+> using Git 2.11.0.windows.3 [1]:
+>
+> remote: Counting objects: 5922, done.
+> remote: Compressing objects: 100% (14/14), done.
+> error: inflate: data stream error (unknown compression method)
+> error: unable to unpack 6acd8f279a8b20311665f41134579b7380970446 header
+> fatal: SHA1 COLLISION FOUND WITH 6acd8f279a8b20311665f41134579b7380970446 !
+> fatal: index-pack failed
+>
+> I would be really surprised if we discovered a SHA1 collision in a production
+> repo. My guess is that this is somehow triggered by a network issue (see data
+> stream error). Any tips how to debug this?
 
-The lazy init hash name was causing a buffer overflow when the last
-entry in the index was multiple folder deep with parent folders that
-did not have any files in them.
+Perhaps the first thing to do is to tweak the messages in builtin/index-pack.c
+to help you identify which one of identical 5 messages is firing.
 
-This adds a test for the boundary condition of the thread partitions
-with the folder structure that was triggering the buffer overflow.
-
-The fix was to check if it is the last entry for the thread partition
-in the handle_range_dir and not try to use the next entry in the cache.
-
-Signed-off-by: Kevin Willford <kewillf@microsoft.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-
----
- name-hash.c                             |  4 +++-
- t/t3008-ls-files-lazy-init-name-hash.sh | 19 +++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
- create mode 100644 t/t3008-ls-files-lazy-init-name-hash.sh
-
-diff --git a/name-hash.c b/name-hash.c
-index cac313c..39309ef 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -342,7 +342,9 @@ static int handle_range_dir(
- 	 * Scan forward in the index array for index entries having the same
- 	 * path prefix (that are also in this directory).
- 	 */
--	if (strncmp(istate->cache[k_start + 1]->name, prefix->buf, prefix->len) > 0)
-+	if (k_start + 1 >= k_end)
-+		k = k_end;
-+	else if (strncmp(istate->cache[k_start + 1]->name, prefix->buf, prefix->len) > 0)
- 		k = k_start + 1;
- 	else if (strncmp(istate->cache[k_end - 1]->name, prefix->buf, prefix->len) == 0)
- 		k = k_end;
-diff --git a/t/t3008-ls-files-lazy-init-name-hash.sh b/t/t3008-ls-files-lazy-init-name-hash.sh
-new file mode 100644
-index 0000000..e46a11b
---- /dev/null
-+++ b/t/t3008-ls-files-lazy-init-name-hash.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+
-+test_description='Test the lazy init name hash with various folder structures'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'no buffer overflow in lazy_init_name_hash' '
-+	(
-+	    test_seq 2000 | sed "s/^/a_/"
-+	    echo b/b/b
-+	    test_seq 2000 | sed "s/^/c_/"
-+	    test_seq 50 | sed "s/^/d_/" | tr "\n" "/"; echo d
-+	) |
-+	sed "s/^/100644 $EMPTY_BLOB\t/" |
-+	git update-index --index-info &&
-+	test-lazy-init-name-hash -m
-+'
-+
-+test_done
--- 
-2.9.3
+My guess would be that the code saw an object that came over the
+wire, hashed it to learn that its object name is
+6acd8f279a8b20311665f41134579b7380970446, noticed that it locally
+already has the object with the same name, and tried to make sure
+they have identical contents (otherwise, what came over the wire is
+a successful second preimage attack).  But your loose object on disk
+you already had was corrupt and didn't inflate correctly when
+builtin/index-pack.c::compare_objects() or check_collision() tried
+to.  The code saw no data, or truncated data, or
+whatever---something different from what the other data that hashed
+down to 6acd8..., and reported a collision when there is no
+collision.
 
