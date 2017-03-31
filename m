@@ -2,30 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C9F01FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 14:12:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72A1C1FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 14:12:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933282AbdCaOMI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 10:12:08 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45182 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933261AbdCaOMH (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 31 Mar 2017 10:12:07 -0400
-X-AuditID: 12074414-7efff70000002bfd-c9-58de63b02f88
+        id S933303AbdCaOMM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 10:12:12 -0400
+Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:48983 "EHLO
+        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933266AbdCaOMI (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 Mar 2017 10:12:08 -0400
+X-AuditID: 1207440d-029ff70000003721-1e-58de63b6b635
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 1F.1A.11261.0B36ED85; Fri, 31 Mar 2017 10:12:00 -0400 (EDT)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 2E.20.14113.6B36ED85; Fri, 31 Mar 2017 10:12:06 -0400 (EDT)
 Received: from bagpipes.fritz.box (p4FEDFA60.dip0.t-ipconnect.de [79.237.250.96])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2VEBRBv010139
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2VEBRC0010139
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 31 Mar 2017 10:11:59 -0400
+        Fri, 31 Mar 2017 10:12:04 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>,
@@ -34,66 +34,220 @@ Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 16/20] get_loose_ref_cache(): new function
-Date:   Fri, 31 Mar 2017 16:11:14 +0200
-Message-Id: <fe76ca723956d8285dce8ad6e6845031a974ac36.1490966385.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 19/20] files_pack_refs(): use reference iteration
+Date:   Fri, 31 Mar 2017 16:11:17 +0200
+Message-Id: <1d131a33fd155f14908ee1d41e98be8a1309c6b9.1490966385.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1490966385.git.mhagger@alum.mit.edu>
 References: <cover.1490966385.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLIsWRmVeSWpSXmKPExsUixO6iqLsx+V6EwalNrBZrn91hsui60s1k
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDIsWRmVeSWpSXmKPExsUixO6iqLst+V6EwdXv6hZrn91hsui60s1k
         0dB7hdni9or5zBZLHr5mtuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHl3tR9g8
-        nvXuYfS4eEnZ4/MmuQD2KC6blNSczLLUIn27BK6MjraygumcFZtvtDA2MD5g72Lk5JAQMJHo
-        nHacrYuRi0NIYAeTxJMpu6Gck0wS9w7sYgapYhPQlVjU08wEYosIqElMbDvEAlLELPCGSeLA
-        ll8sIAlhAVuJRSvXgdksAqoSn/sesYLYvAJREl9+XWSCWCcvsavtIlicU8BCYt3MQ2BnCAmY
-        SyxYO4FtAiPPAkaGVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Fnq5mSV6qSmlmxghoSayg/HI
-        SblDjAIcjEo8vCe870UIsSaWFVfmHmKU5GBSEuX1DQcK8SXlp1RmJBZnxBeV5qQWH2KU4GBW
-        EuFligPK8aYkVlalFuXDpKQ5WJTEeb8tVvcTEkhPLEnNTk0tSC2CycpwcChJ8FYkATUKFqWm
-        p1akZeaUIKSZODhBhvMADV8AUsNbXJCYW5yZDpE/xagoJc7LCpIQAElklObB9cJSwStGcaBX
-        hHmnJAJV8QDTCFz3K6DBTECDLb7eBRlckoiQkmpgnPOsfla1fvqHfu6LC9Zflv6gn+Zrfcbg
-        DuPHn9KPheL9zs0rZZVgPm5X8H6ReN3iUE+zR20Vk/v89lZmi886uM02Yle0juW7mzdye3iv
-        qM54xBa81PhHeFOO+o6FJU8OHLB5ff110m9536Z2NzHrh87NkY8uhATcaZ/tabfz2kOfa1lS
-        Wx/HKbEUZyQaajEXFScCAI5zWnLgAgAA
+        nvXuYfS4eEnZ4/MmuQD2KC6blNSczLLUIn27BK6MJ/OWsBXMNKx43H+PtYGxWaOLkYNDQsBE
+        YsY25i5GLg4hgR1MEp829LBDOCeZJJ73zWDqYuTkYBPQlVjU0wxmiwioSUxsO8QCUsQs8IZJ
+        4sCWXywgCWEBF4muld/ZQGwWAVWJy1v3MoJs4BWIkvj7sR4kLCEgL7Gr7SIriM0pYCGxbuYh
+        dhBbSMBcYsHaCWwTGHkWMDKsYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI10svNLNFLTSndxAgJ
+        NN4djP/XyRxiFOBgVOLhPeF9L0KINbGsuDL3EKMkB5OSKK9vOFCILyk/pTIjsTgjvqg0J7X4
+        EKMEB7OSCC9THFCONyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUgtQgmK8PBoSTBW5EE
+        1ChYlJqeWpGWmVOCkGbi4AQZzgM0PAWkhre4IDG3ODMdIn+KUVFKnJcVJCEAksgozYPrhSWC
+        V4ziQK8I83qBVPEAkwhc9yugwUxAgy2+3gUZXJKIkJJqYEw+/evOcd8FWxNP/1fyjn+7Wn+i
+        RuDUbY9La5Mm1pjwsFgInVkrmbWBd5eO2YpXzsdmCaVzXi0/s/qd9RuZY4J748W3xpQULF7O
+        86g+SW/xkyP+91fuXfDx5N1v1xdeT5wnurdnJvNk24kstmFla8OvVKi5xC4K2sFfJ7g6Yuqe
+        qeeir+lqbbFUYinOSDTUYi4qTgQAhkr5vN8CAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extract a new function, `get_loose_ref_cache()`, from
-get_loose_ref_dir(). The function returns the `ref_cache` for the
-loose refs of a `files_ref_store`.
+Use reference iteration rather than do_for_each_entry_in_dir() in the
+definition of files_pack_refs().
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ refs/files-backend.c | 143 +++++++++++++++++++++------------------------------
+ 1 file changed, 60 insertions(+), 83 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0a16f6196c..fefc29433a 100644
+index 0ea42826c8..8420d0fc5b 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -525,7 +525,7 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
- 	}
+@@ -32,17 +32,6 @@ static int ref_resolves_to_object(const char *refname,
+ 	return 1;
+ }
+ 
+-/*
+- * Return true if the reference described by entry can be resolved to
+- * an object in the database; otherwise, emit a warning and return
+- * false.
+- */
+-static int entry_resolves_to_object(struct ref_entry *entry)
+-{
+-	return ref_resolves_to_object(entry->name,
+-				      &entry->u.value.oid, entry->flag);
+-}
+-
+ struct packed_ref_cache {
+ 	struct ref_cache *cache;
+ 
+@@ -548,11 +537,6 @@ static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs)
+ 	return refs->loose;
  }
  
 -static struct ref_dir *get_loose_ref_dir(struct files_ref_store *refs)
-+static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs)
- {
- 	if (!refs->loose) {
- 		/*
-@@ -545,7 +545,12 @@ static struct ref_dir *get_loose_ref_dir(struct files_ref_store *refs)
- 		add_entry_to_dir(get_ref_dir(refs->loose->root),
- 				 create_dir_entry(refs->loose, "refs/", 5, 1));
- 	}
--	return get_ref_dir(refs->loose->root);
-+	return refs->loose;
-+}
+-{
+-	return get_ref_dir(get_loose_ref_cache(refs)->root);
+-}
+-
+ /*
+  * Return the ref_entry for the given refname from the packed
+  * references.  If it does not exist, return NULL.
+@@ -1411,65 +1395,6 @@ struct ref_to_prune {
+ 	char name[FLEX_ARRAY];
+ };
+ 
+-struct pack_refs_cb_data {
+-	unsigned int flags;
+-	struct ref_dir *packed_refs;
+-	struct ref_to_prune *ref_to_prune;
+-};
+-
+-/*
+- * An each_ref_entry_fn that is run over loose references only.  If
+- * the loose reference can be packed, add an entry in the packed ref
+- * cache.  If the reference should be pruned, also add it to
+- * ref_to_prune in the pack_refs_cb_data.
+- */
+-static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
+-{
+-	struct pack_refs_cb_data *cb = cb_data;
+-	enum peel_status peel_status;
+-	struct ref_entry *packed_entry;
+-	int is_tag_ref = starts_with(entry->name, "refs/tags/");
+-
+-	/* Do not pack per-worktree refs: */
+-	if (ref_type(entry->name) != REF_TYPE_NORMAL)
+-		return 0;
+-
+-	/* ALWAYS pack tags */
+-	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref)
+-		return 0;
+-
+-	/* Do not pack symbolic or broken refs: */
+-	if ((entry->flag & REF_ISSYMREF) || !entry_resolves_to_object(entry))
+-		return 0;
+-
+-	/* Add a packed ref cache entry equivalent to the loose entry. */
+-	peel_status = peel_entry(entry, 1);
+-	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
+-		die("internal error peeling reference %s (%s)",
+-		    entry->name, oid_to_hex(&entry->u.value.oid));
+-	packed_entry = find_ref_entry(cb->packed_refs, entry->name);
+-	if (packed_entry) {
+-		/* Overwrite existing packed entry with info from loose entry */
+-		packed_entry->flag = REF_ISPACKED | REF_KNOWS_PEELED;
+-		oidcpy(&packed_entry->u.value.oid, &entry->u.value.oid);
+-	} else {
+-		packed_entry = create_ref_entry(entry->name, entry->u.value.oid.hash,
+-						REF_ISPACKED | REF_KNOWS_PEELED, 0);
+-		add_ref_entry(cb->packed_refs, packed_entry);
+-	}
+-	oidcpy(&packed_entry->u.value.peeled, &entry->u.value.peeled);
+-
+-	/* Schedule the loose reference for pruning if requested. */
+-	if ((cb->flags & PACK_REFS_PRUNE)) {
+-		struct ref_to_prune *n;
+-		FLEX_ALLOC_STR(n, name, entry->name);
+-		hashcpy(n->sha1, entry->u.value.oid.hash);
+-		n->next = cb->ref_to_prune;
+-		cb->ref_to_prune = n;
+-	}
+-	return 0;
+-}
+-
+ enum {
+ 	REMOVE_EMPTY_PARENTS_REF = 0x01,
+ 	REMOVE_EMPTY_PARENTS_REFLOG = 0x02
+@@ -1559,21 +1484,73 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
+ 	struct files_ref_store *refs =
+ 		files_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB,
+ 			       "pack_refs");
+-	struct pack_refs_cb_data cbdata;
+-
+-	memset(&cbdata, 0, sizeof(cbdata));
+-	cbdata.flags = flags;
++	struct ref_iterator *iter;
++	struct ref_dir *packed_refs;
++	int ok;
++	struct ref_to_prune *refs_to_prune = NULL;
+ 
+ 	lock_packed_refs(refs, LOCK_DIE_ON_ERROR);
+-	cbdata.packed_refs = get_packed_refs(refs);
++	packed_refs = get_packed_refs(refs);
 +
-+static struct ref_dir *get_loose_ref_dir(struct files_ref_store *refs)
-+{
-+	return get_ref_dir(get_loose_ref_cache(refs)->root);
++	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL, 0);
++	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
++		/*
++		 * If the loose reference can be packed, add an entry
++		 * in the packed ref cache. If the reference should be
++		 * pruned, also add it to refs_to_prune.
++		 */
++		struct ref_entry *packed_entry;
++		int is_tag_ref = starts_with(iter->refname, "refs/tags/");
++
++		/* Do not pack per-worktree refs: */
++		if (ref_type(iter->refname) != REF_TYPE_NORMAL)
++			continue;
++
++		/* ALWAYS pack tags */
++		if (!(flags & PACK_REFS_ALL) && !is_tag_ref)
++			continue;
++
++		/* Do not pack symbolic or broken refs: */
++		if (iter->flags & REF_ISSYMREF)
++			continue;
+ 
+-	do_for_each_entry_in_dir(get_loose_ref_dir(refs),
+-				 pack_if_possible_fn, &cbdata);
++		if (!ref_resolves_to_object(iter->refname, iter->oid, iter->flags))
++			continue;
++
++		/*
++		 * Create an entry in the packed-refs cache equivalent
++		 * to the one from the loose ref cache, except that
++		 * we don't copy the peeled status, because we want it
++		 * to be re-peeled.
++		 */
++		packed_entry = find_ref_entry(packed_refs, iter->refname);
++		if (packed_entry) {
++			/* Overwrite existing packed entry with info from loose entry */
++			packed_entry->flag = REF_ISPACKED;
++			oidcpy(&packed_entry->u.value.oid, iter->oid);
++		} else {
++			packed_entry = create_ref_entry(iter->refname, iter->oid->hash,
++							REF_ISPACKED, 0);
++			add_ref_entry(packed_refs, packed_entry);
++		}
++		oidclr(&packed_entry->u.value.peeled);
++
++		/* Schedule the loose reference for pruning if requested. */
++		if ((flags & PACK_REFS_PRUNE)) {
++			struct ref_to_prune *n;
++			FLEX_ALLOC_STR(n, name, iter->refname);
++			hashcpy(n->sha1, iter->oid->hash);
++			n->next = refs_to_prune;
++			refs_to_prune = n;
++		}
++	}
++	if (ok != ITER_DONE)
++		die("error while iterating over references");
+ 
+ 	if (commit_packed_refs(refs))
+ 		die_errno("unable to overwrite old ref-pack file");
+ 
+-	prune_refs(refs, cbdata.ref_to_prune);
++	prune_refs(refs, refs_to_prune);
+ 	return 0;
  }
  
- /*
 -- 
 2.11.0
 
