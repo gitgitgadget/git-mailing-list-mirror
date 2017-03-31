@@ -2,68 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,PLING_QUERY,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF86320969
-	for <e@80x24.org>; Fri, 31 Mar 2017 18:36:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE2A71FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 18:42:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751767AbdCaSgL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 14:36:11 -0400
-Received: from zandvoort.avirtualhome.com ([96.126.105.64]:56046 "EHLO
-        mail.avirtualhome.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750707AbdCaSgK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 14:36:10 -0400
-Received: from [192.168.1.161] (pool-108-40-123-60.bltmmd.fios.verizon.net [108.40.123.60])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.avirtualhome.com (Postfix) with ESMTPSA id C81D1174C2;
-        Fri, 31 Mar 2017 14:36:08 -0400 (EDT)
-To:     git@vger.kernel.org
-From:   Peter van der Does <peter@avirtualhome.com>
-Subject: [PATCH v2] git-gui: Error on systems with TK < 8.6.0
-Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>
-Message-ID: <ca09fdf0-43e5-0bc6-1fe1-9331e3820d6a@avirtualhome.com>
-Date:   Fri, 31 Mar 2017 14:36:08 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101
- Thunderbird/53.0
+        id S1752491AbdCaSma (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 14:42:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55051 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751644AbdCaSm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 14:42:29 -0400
+Received: (qmail 13715 invoked by uid 109); 31 Mar 2017 18:42:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 31 Mar 2017 18:42:26 +0000
+Received: (qmail 12362 invoked by uid 111); 31 Mar 2017 18:42:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 31 Mar 2017 14:42:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 31 Mar 2017 14:42:23 -0400
+Date:   Fri, 31 Mar 2017 14:42:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: SHA1 collision in production repo?! (probably not)
+Message-ID: <20170331184223.4im6sollr3vfahxw@sigill.intra.peff.net>
+References: <4D74C1D4-9EA7-4A17-AFC5-0B54B4A6DD0E@gmail.com>
+ <xmqqh929z6wl.fsf@gitster.mtv.corp.google.com>
+ <20170331174515.j2ruifuigskyvucc@sigill.intra.peff.net>
+ <20170331174827.zheqstwtlsqtxa6e@sigill.intra.peff.net>
+ <xmqq4ly9z4tx.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqq4ly9z4tx.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Using git-gui on systems that run a TK version below 8.6.0 results in a
-crash when checking for the current theme.
+On Fri, Mar 31, 2017 at 11:19:54AM -0700, Junio C Hamano wrote:
 
-Catch the error on those systems and use a different command to check
-for the current theme.
+> > Er, no, that's totally wrong. "status' may be holding the type. It
+> > should really be:
+> >
+> >   return status < 0 ? status : 0;
+> 
+> Sounds more like it.  The only caller will say "ah, that object is
+> not available to us---let's try packs again", which is exactly what
+> we want to happen.
 
-Signed-off-by: Peter van der Does <peter@avirtualhome.com>
----
- lib/themed.tcl | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Right. Callers cannot distinguish between "did not have it" and
+"corrupted", but that is no different than the rest of the sha1-file
+interface.
 
-diff --git a/lib/themed.tcl b/lib/themed.tcl
-index 351a712..bb4e8f2 100644
---- a/lib/themed.tcl
-+++ b/lib/themed.tcl
-@@ -248,7 +248,11 @@ proc tspinbox {w args} {
- proc ttext {w args} {
- 	global use_ttk
- 	if {$use_ttk} {
--		switch -- [ttk::style theme use] {
-+		# Handle either current Tk or older versions of 8.5
-+		if {[catch {set theme [ttk::style theme use]}]} {
-+			set theme  $::ttk::currentTheme
-+		}
-+		switch -- $theme {
- 			"vista" - "xpnative" {
- 				lappend args -highlightthickness 0 -borderwidth 0
- 			}
--- 
-2.12.2
+> There is another bug in the codepath: the assignment to *oi->typep
+> in the pre-context must guard against negative status value.  By
+> returning an error correctly like you do above, that bug becomes
+> more or less irrelevant, though.
+
+I think that is intentional. OBJ_BAD is -1 (though the callers are
+assuming that error() == OBJ_BAD). And that type gets relayed through
+sha1_object_info() as the combined type/status return value.
+
+-Peff
