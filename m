@@ -2,75 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBD4E1FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 13:51:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E8B11FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 13:51:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933187AbdCaNvl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 09:51:41 -0400
-Received: from mout.kundenserver.de ([212.227.126.130]:52681 "EHLO
+        id S933199AbdCaNv5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 09:51:57 -0400
+Received: from mout.kundenserver.de ([212.227.17.13]:62867 "EHLO
         mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932854AbdCaNvk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 09:51:40 -0400
-Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue004
- [212.227.15.167]) with ESMTPSA (Nemesis) id 0M3wRS-1c2fYH3svq-00rXXG; Fri, 31
- Mar 2017 15:51:32 +0200
+        with ESMTP id S933015AbdCaNv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 09:51:56 -0400
+Received: from localhost ([130.75.46.4]) by mrelayeu.kundenserver.de (mreue101
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 0M0z9T-1bzdHe1agR-00v8je; Fri, 31
+ Mar 2017 15:51:33 +0200
 From:   Michael J Gruber <git@grubix.eu>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Lars Schneider <larsxschneider@gmail.com>,
         Luke Diamand <luke@diamand.org>
-Subject: [PATCH v3 0/4] name-rev sanity
-Date:   Fri, 31 Mar 2017 15:51:20 +0200
-Message-Id: <cover.1490967948.git.git@grubix.eu>
+Subject: [PATCH v3 1/4] name-rev: refactor logic to see if a new candidate is a better name
+Date:   Fri, 31 Mar 2017 15:51:21 +0200
+Message-Id: <b3d7263ef7b435c6fd64f1fc820e7f6fb668adba.1490967948.git.git@grubix.eu>
 X-Mailer: git-send-email 2.12.2.739.gfc3eb97820
 In-Reply-To: <xmqqinmq65at.fsf@gitster.mtv.corp.google.com>
 References: <xmqqinmq65at.fsf@gitster.mtv.corp.google.com>
-X-Provags-ID: V03:K0:BD1TsEH79E8EywBRq7O4NRSenb6/zgdHGy8Pj4QTv4LF430fIfn
- Ovj4L7z1xa3uBAp/BPw5HKmC7vuxn4FHMmfejZIrzetasc7nvbtkqNdAsSQ0f+SvSvp63Ci
- JtICORLUcG0PdJaBG/0JtOZp70u0AsrqUkmWUV7Ovcc2hfB9bZYZzdwyiMjXf//PDZ1O6VF
- CQowf+oFLZyYUlYISRoKg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EVZfOiBRk0g=:Z8SDVUOcN06o6h7XuX/gIx
- kRq7JunQVARBg7p75W77xOzO2RvJVK0DLFmo89ITS62InV/42xFEwg2CUyUrM8NmRe/GNG42P
- /4qC1ac8R0WKSMcrAd4ktggX0pC7wCLIKiZIB+cVciDzqu19Sb4FdEN256i4796+Vcjh43XUl
- +lOtL6chw4XS+rHZQBLN96Ysg00R82FyGDkWl8CnJQmRrREG4wVl1NaDiO4afUgqvhwzphYTo
- DWyGX1P28KhqL3LQ6ED2XzG3D1x839AYtoaLRlmjiuvKTaX2bmP/cu/2SLJh7LFMPZwiepeTt
- NbPEzF7r0bZxWdFa7V4dR2Q77NJ8gmuHaEBjTrUqb3sEYivLyK7YJBhLv7NLgpj1evkrtgfU1
- UpILuF6lEq5FUdpcfsgibdBgsZ7r13uN67AreNyoaTazuwWUDjJN9eSHa5AFv2yNwj8UuEgbU
- vBN6284QfALqCwvMpcqB+y1fxpSAJ1nbeAHz8aQ2vncn6u7g6lNAkc6dG8S8acDjzpd/sdQX4
- 5IJRxdVWxqx6S++yTZRTYKFM6Cfen60Z7jiP2Itu4ZjPoTYD/xRzNKeSQPTu4PXWlLycT40X8
- C2EGziUhas/VugCFJUACpL3di5wDF7a31/01va1sPLQDg0WwncoeUAkRGIaRwmo0JkqaLrdvR
- dy5JsD33AN/4tLCgM89ov8p9cKMntW/5iWNgLEp5CqpAPC1UvtCfuIzx/EQcDR3Soh9g=
+In-Reply-To: <cover.1490967948.git.git@grubix.eu>
+References: <cover.1490967948.git.git@grubix.eu>
+X-Provags-ID: V03:K0:X1SCG5M+xujfPcYVmq/ucbpE7ZYO140NcXIwn0oDSNzcLYr9tte
+ TUvbFKJph8o+2swS7HrwX8XWivmieZGiw4Cau2MVXitEVSSzpzONCFvrSfzKxvvrakqGu4e
+ i6fIa2Vxg/yIQgkHrfHITtV9fbrsXkjqtmCoq0rjVmCr4/ECNr2BvHAnOnNPhXEbBYanPzl
+ jDMcg3r19DdrVT7lV8yEg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:h2vmocmGeII=:AqXLb0zWO8kIOxxb/aniGc
+ h95dZKy0IJ33Lcx8Q9ugS+kmnM1Sm2T/QWgviDebw8Rfiq6A53KsWlFs23ot5+L7cOeS7bc5/
+ d7uji7ZnLx9pShvcgTHojPCUZp4JgVA3eZJ1gVkP6inlF2aaLyfBSdrbIni49BIgXe4xpc5gU
+ dZjYx/qWXEbJTZYDiLm244R7esKe5NJAADr7TAjPHvUgejum8U3hpHUm8FewguI/oWkoQfNpo
+ XLXfHEeFUpI4cM2XxMU2o4AmhKJ6Ars5Z+YI1S1dTY38W0daUxhPyVexx3miYqlvfEZaD+qxn
+ lM2j6+tEK8xaiz7l/rvUbSL/UIfLnSBaIWSX2zgw25/0b8lTjIxYvUVIUvWpGcQh2ZL9KoP1U
+ NahaoeiDl87lo0gzI6Evlktb6kNnHv7gYPOUpcVrQtqnPqwsEXNPLsYA614qGRxGYAWX0ZbWN
+ Fx8c+El/ILA5fwQT9R5weg78Y74jatzG54XphmfPiJtESWJtnGWMEHwEEtKVG3DPmsrcJcgHG
+ MsT9Cq3KrAixZ3twrtTz0t9W4hj9fXNlnz4/gYM+n68WlsV22lDFfXoiLQpBHcW41sDZ/OkOt
+ 0oMS2ri5pxkfNGRlPr+1yLK+PcMANflOUnvkA8UhM84GrjqGL8RCzPHZ6dxvIKXrTW+zoMVAr
+ AxRvNN4ZLqAJVyYnKuIRH6BliV3njdsWG2cDCXrogqfVpugnD6d90e1TqT21Opc4rQ8w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3 splits the old 3/3 into name-rev and describe related parts and
-adds documentation.
+From: Junio C Hamano <gitster@pobox.com>
 
-No core dumps encountered so far ;)
+When we encounter a new ref that could describe the commit we are
+looking at, we compare the name that is formed using that ref and
+the name we found so far and pick a better one.
 
-Did I mention this is on top of mg/describe-debug-l10n (next)?
+Factor the comparison logic out to a separate helper function, while
+keeping the current logic the same (i.e. a name that is based on an
+older tag is better, and if two tags of the same age can reach the
+commit, the one with fewer number of hops to reach the commit is
+better).
 
-Junio C Hamano (2):
-  name-rev: refactor logic to see if a new candidate is a better name
-  name-rev: favor describing with tags and use committer date to
-    tiebreak
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Michael J Gruber <git@grubix.eu>
+---
+ builtin/name-rev.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-Michael J Gruber (2):
-  name-rev: provide debug output
-  describe: pass --debug down to name-rev
-
- Documentation/git-name-rev.txt |   5 ++
- builtin/describe.c             |   2 +
- builtin/name-rev.c             | 117 +++++++++++++++++++++++++++++++++++------
- t/t4202-log.sh                 |   2 +-
- 4 files changed, 108 insertions(+), 18 deletions(-)
-
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 8bdc3eaa6f..7890f826ce 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -20,6 +20,17 @@ static long cutoff = LONG_MAX;
+ /* How many generations are maximally preferred over _one_ merge traversal? */
+ #define MERGE_TRAVERSAL_WEIGHT 65535
+ 
++static int is_better_name(struct rev_name *name,
++			  const char *tip_name,
++			  unsigned long taggerdate,
++			  int generation,
++			  int distance)
++{
++	return (name->taggerdate > taggerdate ||
++		(name->taggerdate == taggerdate &&
++		 name->distance > distance));
++}
++
+ static void name_rev(struct commit *commit,
+ 		const char *tip_name, unsigned long taggerdate,
+ 		int generation, int distance,
+@@ -45,9 +56,8 @@ static void name_rev(struct commit *commit,
+ 		name = xmalloc(sizeof(rev_name));
+ 		commit->util = name;
+ 		goto copy_data;
+-	} else if (name->taggerdate > taggerdate ||
+-			(name->taggerdate == taggerdate &&
+-			 name->distance > distance)) {
++	} else if (is_better_name(name, tip_name, taggerdate,
++				  generation, distance)) {
+ copy_data:
+ 		name->tip_name = tip_name;
+ 		name->taggerdate = taggerdate;
 -- 
 2.12.2.739.gfc3eb97820
 
