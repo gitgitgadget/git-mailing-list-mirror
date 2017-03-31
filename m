@@ -2,147 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 962631FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 19:44:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE19C1FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 19:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754540AbdCaToS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 15:44:18 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:35157 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753724AbdCaToR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 15:44:17 -0400
-Received: by mail-it0-f68.google.com with SMTP id y18so3001374itc.2
-        for <git@vger.kernel.org>; Fri, 31 Mar 2017 12:44:17 -0700 (PDT)
+        id S1754600AbdCaTof (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 15:44:35 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:33427 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753702AbdCaToe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 15:44:34 -0400
+Received: by mail-lf0-f65.google.com with SMTP id r36so8205704lfi.0
+        for <git@vger.kernel.org>; Fri, 31 Mar 2017 12:44:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DkYMu2ptlhRj1VHEFeuQMoDnsehRWkMFGj1utO0nY3E=;
-        b=SM0cwTW1jDB/nalgT1cj3F8kOpESOJ5nJtXAbo3Rj12gRhnUbpsgC/XKhqNjPqDGdS
-         5C7we7rCobzbst6VhFYAb/MAgfcOIwC7jM3VnMzmB0UHhY3JHDr1pAzq4nSdaQdTHfwC
-         lQ7zpzRdj4lgFq6KpdiwHWaDIhoHpBhRKRuTziTf81NQU+5HRnv0SLJMcjgAFbtG5azi
-         0cl1drnvHXfCjbwBwIlhXvrly/xkpTVdJOgKHWP6kpge/Qi2B74zjJKYmKTfZIeBdvbr
-         KmWPP6bF9/V1F0qebewgVVZD0sVB8WZLnJLhV1bseoZlpCGR3iOTI+37Lhc2k1HkqEHA
-         bWIg==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=WelVMwnyNYn0QBtf/idFM6AuLVFTAKoIRWC+gg5zv/k=;
+        b=kuJhbIvtjE+mKHPhuhMgtCtbZ8HEe7pLE7+Hbjjjni7GVfbl/lImQhQPFj+ftzAoN8
+         b884cYjAgZEHl4jbIjaNbmNzbD0veJzR4afwVvo4/V+Lkz4lV2QXW/Hs50W/GLvAs+OP
+         0D9VzuXGPG8fwekXnRBkSlU+pbCN3pWvrl81bCcbTllqo6t75LweF2QVjvT5PkpzcDIA
+         aAz+u8D/apVpJNkVMuEjTqEw0nAIfwseDDadf2yeEr3RBHhWsqdtE56PrI0kLlF0G6ml
+         8wrUTl0asECf2ceas6CMsMgN69LsYppOIV+R+jlIheQQF9QiTNxpSwH0z7Umvy/NNwqP
+         NgYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=DkYMu2ptlhRj1VHEFeuQMoDnsehRWkMFGj1utO0nY3E=;
-        b=MuSEPPfsIQDmSkJ3sIQGAwiHUhfKCOAWhUJPr8dZ6HL1KRdPAu850UUbogsEwn4NoY
-         326GkuHSBn3g5XpsBweBRw34D2iBx0unuVqDoZQZiUMnqoW8v4CWQ9tOoxgYl2dQB3W5
-         iaW+lSlZPg1Vc0m/ikMo6OAOV1A/Fb5aIgFPHWUQ8bz1zmgfBoLbyk3ya7bEEZrEKbs+
-         byeU5A2RM/WkM7ozdUNExslSb4n6qcs8pYHdH9duCZtRHO/HEY14+vUAESE9JadTASzO
-         +KZ2RUADyQ56MzhRurU3HEc1COyLNC1MamZpiH90l8KRzN/3xIrz6x2vBKzOe3PUgOzx
-         SdwA==
-X-Gm-Message-State: AFeK/H2xM0Jx58oEB2dF8twUWjxv1lRbOl2zGHYWoZUK7L+MdwBIdh4W2LXsGXKaj69VVQ==
-X-Received: by 10.36.227.203 with SMTP id d194mr5903758ith.79.1490989456595;
-        Fri, 31 Mar 2017 12:44:16 -0700 (PDT)
-Received: from localhost (b03s17le.corenetworks.net. [64.85.162.126])
-        by smtp.gmail.com with ESMTPSA id r30sm3638300ioi.56.2017.03.31.12.44.15
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=WelVMwnyNYn0QBtf/idFM6AuLVFTAKoIRWC+gg5zv/k=;
+        b=D/AXq+TmmhxoaH1OKryita5Gy5snL3xVXa7kdNSznlwuHvQ14BkgvtLqaElwC764y4
+         jmRm2i5iboiYPCBKWroDfW2NL2bMx3NEEqdSLD+yFiXVoBfnkI8YXOcJsp0TFOG5r/i9
+         RSUEy4THHu12gLFj6e7P6ZaP1NqOL8JKqlu7+q0KxIwpiC6zldaIsNrEKwESZkLlvvxr
+         QRJLM/ToE06SnLQG82GVUzFXNYlZ3uWnMM2tr6JKIjuOXc0t/GQIDiB8P+b91XmsL/4V
+         rvR66ts1n5T0mri+R5vnYZvzogp9paFFSXxD38FXwsfUTOZeslTwuIadoNVAWOeWpIDo
+         vUdw==
+X-Gm-Message-State: AFeK/H0O8C1h//BapRzY/+gVfWHWLREICzLTysT01kLcEydf9fSir2Tq5KJvft+cQCI+iw==
+X-Received: by 10.46.14.17 with SMTP id 17mr1669020ljo.40.1490989473185;
+        Fri, 31 Mar 2017 12:44:33 -0700 (PDT)
+Received: from [192.168.1.26] (ewi127.neoplus.adsl.tpnet.pl. [83.20.232.127])
+        by smtp.googlemail.com with ESMTPSA id f21sm1086885lfa.27.2017.03.31.12.44.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Mar 2017 12:44:15 -0700 (PDT)
-Date:   Fri, 31 Mar 2017 15:44:14 -0400
-From:   Brandon McCaig <bamccaig@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: Add configuration options for some commonly used command-line
- options
-Message-ID: <20170331194414.GA22434@test-chamber-1.castopulence.org>
-Mail-Followup-To: Jeff King <peff@peff.net>,
-        Brandon Williams <bmwill@google.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CACsJy8Du+WWWkx3wqRJYA=cyTdro=OOD7GWaFi29=h1_9yC+LQ@mail.gmail.com>
- <vpqa88hlghm.fsf@anie.imag.fr>
- <20170319131845.tl6o3t2nwicj2rug@genre.crustytoothpaste.net>
- <CACBZZX4FksU6NujPZ_3GZ45EQ+KdJj5G2sajtRipE1wbaA3URA@mail.gmail.com>
- <CACsJy8CQzo9K8N3xH_HJq=NjJVOUG9wawC4Mg+UuyFRZCPBpFw@mail.gmail.com>
- <20170320173237.GA188475@google.com>
- <20170320181801.fubiyufrsyenru4b@sigill.intra.peff.net>
+        Fri, 31 Mar 2017 12:44:32 -0700 (PDT)
+Subject: Re: [BUG?] iconv used as textconv, and spurious ^M on added lines on
+ Windows
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org
+References: <feaeade7-aeb5-fa67-ab29-9106aeadb2a6@gmail.com>
+ <264c72d0-9558-fa0d-e5ee-eaca894538be@web.de>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <bbd60ab1-1309-6b1e-9b7f-09764bab5ccd@gmail.com>
+Date:   Fri, 31 Mar 2017 21:44:15 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="sm4nu43k4a2Rpi4c"
-Content-Disposition: inline
-In-Reply-To: <20170320181801.fubiyufrsyenru4b@sigill.intra.peff.net>
-X-PGP-Key: https://castopulence.org/bamccaig/castopulence.asc
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <264c72d0-9558-fa0d-e5ee-eaca894538be@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+W dniu 31.03.2017 o 14:38, Torsten Bögershausen pisze:
+> On 30.03.17 21:35, Jakub Narębski wrote:
+>> Hello,
+>>
+>> Recently I had to work on a project which uses legacy 8-bit encoding
+>> (namely cp1250 encoding) instead of utf-8 for text files (LaTeX
+>> documents).  My terminal, that is Git Bash from Git for Windows is set
+>> up for utf-8.
+>>
+>> I wanted for "git diff" and friends to return something sane on said
+>> utf-8 terminal, instead of mojibake.  There is 'encoding'
+>> gitattribute... but it works only for GUI ('git gui', that is).
+>>
+>> Therefore I have (ab)used textconv facility to convert from cp1250 of
+>> file encoding to utf-8 encoding of console.
+>>
+>> I have set the following in .gitattributes file:
+>>
+>>   ## LaTeX documents in cp1250 encoding
+>>   *.tex text diff=mylatex
+>>
+>> The 'mylatex' driver is defined as:
+>>
+>>   [diff "mylatex"]
+>>         xfuncname = "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$"
+>>         wordRegex = "\\\\[a-zA-Z]+|[{}]|\\\\.|[^\\{}[:space:]]+"
+>>         textconv  = \"C:/Program Files/Git/usr/bin/iconv.exe\" -f cp1250 -t utf-8
+>>         cachetextconv = true
+>>
+>> And everything would be all right... if not the fact that Git appends
+>> spurious ^M to added lines in the `git diff` output.  Files use CRLF
+>> end-of-line convention (the native MS Windows one).
+>>
+>>   $ git diff test.tex
+>>   diff --git a/test.tex b/test.tex
+>>   index 029646e..250ab16 100644
+>>   --- a/test.tex
+>>   +++ b/test.tex
+>>   @@ -1,4 +1,4 @@
+>>   -\documentclass{article}
+>>   +\documentclass{mwart}^M
+>>   
+>>    \usepackage[cp1250]{inputenc}
+>>    \usepackage{polski}
+>>
+>> What gives?  Why there is this ^M tacked on the end of added lines,
+>> while it is not present in deleted lines, nor in content lines?
+>>
+>> Puzzled.
+>>
+>> P.S. Git has `i18n.commitEncoding` and `i18n.logOutputEncoding`; pity
+>> that it doesn't supports in core `encoding` attribute together with
+>> having `i18n.outputEncoding`.
+>
+> Is there a chance to give us a receipt how to reproduce it?
+> A complete test script or ?
+> (I don't want to speculate, if the invocation of iconv is the problem,
+>  where stdout is not in "binary mode", or however this is called under Windows)
 
---sm4nu43k4a2Rpi4c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm sorry, I though I posted whole recipe, but I missed some details
+in the above description of the case.
 
-On Mon, Mar 20, 2017 at 02:18:01PM -0400, Jeff King wrote:
-> I think we've had similar proposals in the form of an
-> environment variable like "GIT_PLUMBING" (and your "command",
-> which I do like syntactically, would probably just end up
-> setting such an environment variable anyway).
+First, files are stored on filesystem using CRLF eol (DOS end-of-line
+convention).  Due to `core.autocrlf` they are converted to LF in blobs,
+that is in the index and in the repository.
 
-For reference, Mercurial has long had HGPLAIN with a similar
-purpose. See `hg help scripting'. I think that this is a
-generally good idea to adopt. Albeit, I think that Mercurial
-considers its command line a scriptable API, and HGPLAIN skips
-over any customization of output. That may not be the exact
-intention of this, but something related nevertheless.
+Second, a textconv with filter preserving end-of-line needs to be
+configured.  I have used `iconv`, but I suspect that the problem would
+happen also for `cat`.
 
-Instead of a subcommand I think that a command line --option
-would make better sense. It would only even save a few characters
-in *nix shells where the variable can be inlined, but could be
-more practical for MS Windows users that would need separate
-commands to manage the variable.
+In the .gitattributes file, or .git/info/attributes add, for example:
 
-Regards,
+  *.tex text diff=myconv
 
+In the .git/config configure the textconv filter, for example:
 
---=20
-Brandon McCaig <bamccaig@gmail.com> <bambams@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bambams.ca/>
-perl -E '$_=3Dq{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+  [diff "myconv"]
+         textconv  = iconv.exe -f cp1250 -t utf-8
 
+Create a file which filename matches the attribute line, and which
+uses CRLF end of line convention, and add it to Git (adding it to
+the index):
 
---sm4nu43k4a2Rpi4c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+  $ printf "foo\r\n" >foo.tex
+  $ git add foo.tex
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+Modify file (also with CRLF):
 
-iQIcBAEBAgAGBQJY3rGOAAoJEN2n1gIi5ZPy5PwQAKLVY1fWsLzvF1IOg7s8Ye9n
-QL6Y2G+h9fZIhOQmlOj9A+7yeJym5R9eRMuq6WvjIDiJdj3psP00nDwprqXGGH5E
-4oyZ3cp3HjDgWMVC1Nfhrgs4rUltdp29VEo9vxtGu2NzJv+l0L5mqzAKcGGU1l/z
-4OLNNv3aJM4s/LDcdrLTrgDZlhuV68dle04yyil2B33AV5jVgDbJK9w1afHW34oi
-VoM7lumyyLBo/+8qG8ssRPCOp14YglcftLHkOCUa6BbuXfnt0bfA0FHkdRmG4tVM
-JRy95a7VtKViRUwJ04/TOss2KTh599aZ5kVTDrPmMC1/c8DSga1SQsUOInvxsZwk
-ZYp+4M1gOWwmvVsMdUdXICPU3AFpnXaiw7zBiKcBhiQMtDUDEceum+NVNv848jRa
-C+AzUuYBQ/cLSNf4TklVI3D1a5vXHxqczB329osAf1WmT3RPBZpm1koobw5tDSCE
-DkSmgXvOnBkmBWmAwNZNyYHnvTcfMS78YYE4QUddwC0EFVxPlizyj8xXghtcqhPi
-yX7N9iwovGSB/ePpKnZcsxyf0D3R+mCTmzwX/cXN/qgZYQiQAMtGYYQ8TiAZMyEh
-38WUpIh2IE2UfkN5k7ZlSm5NJosLhw3mI4YchH6Dbj4xEoCrHY9aslYMQajd4KeP
-jewjnIkbQSB3+hwTqdTc
-=vulm
------END PGP SIGNATURE-----
+  $ printf "bar\r\n" >foo.tex
 
---sm4nu43k4a2Rpi4c--
+Check the difference
+
+  $ git diff foo.tex
+
+HTH
+-- 
+Jakub Narębski
+
