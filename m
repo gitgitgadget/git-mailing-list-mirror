@@ -2,30 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 878861FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 14:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB6511FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 14:11:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933203AbdCaOLv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 10:11:51 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:64946 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933155AbdCaOLq (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 31 Mar 2017 10:11:46 -0400
-X-AuditID: 12074412-4bbff70000000b04-53-58de63a14da1
+        id S933209AbdCaOLy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 10:11:54 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:50435 "EHLO
+        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S933135AbdCaOLj (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 Mar 2017 10:11:39 -0400
+X-AuditID: 1207440c-abdff70000002e8f-6f-58de63985862
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 39.16.02820.1A36ED85; Fri, 31 Mar 2017 10:11:45 -0400 (EDT)
+        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id A9.C9.11919.8936ED85; Fri, 31 Mar 2017 10:11:36 -0400 (EDT)
 Received: from bagpipes.fritz.box (p4FEDFA60.dip0.t-ipconnect.de [79.237.250.96])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2VEBRBn010139
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2VEBRBi010139
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 31 Mar 2017 10:11:43 -0400
+        Fri, 31 Mar 2017 10:11:34 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>,
@@ -34,60 +34,94 @@ Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 08/20] ref-cache: rename `remove_entry()` to `remove_entry_from_dir()`
-Date:   Fri, 31 Mar 2017 16:11:06 +0200
-Message-Id: <d68fe455742381b9c64fcd25130011385ef1c6a1.1490966385.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 03/20] refs_ref_iterator_begin(): new function
+Date:   Fri, 31 Mar 2017 16:11:01 +0200
+Message-Id: <840b199ad58f11a690c684ad110807ed81d3b0eb.1490966385.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1490966385.git.mhagger@alum.mit.edu>
 References: <cover.1490966385.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsUixO6iqLsw+V6EwYqXUhZrn91hsui60s1k
-        0dB7hdni9or5zBZLHr5mtuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHl3tR9g8
-        nvXuYfS4eEnZ4/MmuQD2KC6blNSczLLUIn27BK6MrUsPsBe0c1Y8W/yTuYFxD3sXIyeHhICJ
-        xPGtvSxdjFwcQgI7mCSuX7/OBOGcZJJ4f/8aC0gVm4CuxKKeZiYQW0RATWJi2yGwDmaBN0wS
-        B7b8AisSFoiUOP73PNhYFgFViQPfVrKC2LwCURIbr9xgg1gnL7Gr7SJYnFPAQmLdzENg9UIC
-        5hIL1k5gm8DIs4CRYRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrplebmaJXmpK6SZGSLAJ7WBc
-        f1LuEKMAB6MSD6+C370IIdbEsuLK3EOMkhxMSqK8vuFAIb6k/JTKjMTijPii0pzU4kOMEhzM
-        SiK8THFAOd6UxMqq1KJ8mJQ0B4uSOO/Pxep+QgLpiSWp2ampBalFMFkNDg6Bu0t6NzBKseTl
-        56UqSfAyAqNNSLAoNT21Ii0zpwShlImDE2QRD9CiBUkgi4oLEnOLM9Mh8qcYdTl+9Rx7wyQE
-        NkhKnJcVpEgApCijNA9uDix5vGIUB3pRmJcPpIoHmHjgJr0CWsIEtMTi612QJSWJCCmpBkbf
-        fV1sCQ1l3y2Sy5RCQg5PNEx3UvJY3vt+ZtKxRFkl08S3MxJe/jVtvcr60t1MoVezXCP1SzGT
-        A+/t3gaZ7qfV30sEdufFKJ7+UN85mel4rMk55UbRtVVuLuUxTx9mrUre9EFxwayt301SCprN
-        n8v9lZEVruZxenfqqcf1s7a3Eg8rpn6eo8RSnJFoqMVcVJwIAAV2LBT5AgAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrFIsWRmVeSWpSXmKPExsUixO6iqDsj+V6EwdxOa4u1z+4wWXRd6Way
+        aOi9wmxxe8V8ZoslD18zW3RPecto8aOlh9li8+Z2FgcOj7/vPzB57Jx1l91jwaZSj672I2we
+        z3r3MHpcvKTs8XmTXAB7FJdNSmpOZllqkb5dAldG+6VvbAUzBSt6dl9ga2Bs5eti5OSQEDCR
+        +Ph6IWMXIxeHkMAOJokDP5eyQTgnmSRmTV7GClLFJqArsainmQnEFhFQk5jYdogFpIhZ4A1Q
+        x5ZfLCAJYQFHidOnZ4E1sAioSvR8uAHWwCsQJbH0WD8rxDp5iV1tF8FsTgELiXUzD7GD2EIC
+        5hIL1k5gm8DIs4CRYRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRrqFebmaJXmpK6SZGSLDx7GD8
+        tk7mEKMAB6MSD+8J73sRQqyJZcWVuYcYJTmYlER5fcOBQnxJ+SmVGYnFGfFFpTmpxYcYJTiY
+        lUR4meKAcrwpiZVVqUX5MClpDhYlcV7VJep+QgLpiSWp2ampBalFMFkZDg4lCd6KJKBGwaLU
+        9NSKtMycEoQ0EwcnyHAeoOEpIDW8xQWJucWZ6RD5U4y6HLca9rxhEmLJy89LlRLnZQUpEgAp
+        yijNg5sDSxKvGMWB3hLm9QKp4gEmGLhJr4CWMAEtsfh6F2RJSSJCSqqBUbvJONSlk/nitPhk
+        3qiuL4Iz3n0zkoldMqlNbn/YnwNbHIo+KK20nFG19ri0kpu+n5Ui65+ixUIb4v4u0P/2nuNd
+        mU2oQE6BF4+Wtr/DyZNfUrwWty1a8ZP1YEnGW6Y9LOcnKM5Z03JyQp2/SkSQSO7klMgtyxY6
+        PZq/SiKu4U/yWZ7uud9slFiKMxINtZiLihMBQT20VO0CAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function's visibility is about to be increased, so give it a more
-distinctive name.
+Extract a new function from `do_for_each_ref()`. It will be useful
+elsewhere.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ refs.c               | 15 +++++++++++++--
+ refs/refs-internal.h | 11 +++++++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 6768c8c86b..b4c11afadf 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -413,7 +413,7 @@ static struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname
-  * empty by the removal.  dir must represent the top-level directory
-  * and must already be complete.
-  */
--static int remove_entry(struct ref_dir *dir, const char *refname)
-+static int remove_entry_from_dir(struct ref_dir *dir, const char *refname)
- {
- 	int refname_len = strlen(refname);
- 	int entry_index;
-@@ -2338,7 +2338,7 @@ static int repack_without_refs(struct files_ref_store *refs,
+diff --git a/refs.c b/refs.c
+index 0ed6c3c7a4..aeb704ab92 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1230,6 +1230,18 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 	return head_ref_submodule(NULL, fn, cb_data);
+ }
  
- 	/* Remove refnames from the cache */
- 	for_each_string_list_item(refname, refnames)
--		if (remove_entry(packed, refname->string) != -1)
-+		if (remove_entry_from_dir(packed, refname->string) != -1)
- 			removed = 1;
- 	if (!removed) {
- 		/*
++struct ref_iterator *refs_ref_iterator_begin(
++		struct ref_store *refs,
++		const char *prefix, int trim, int flags)
++{
++	struct ref_iterator *iter;
++
++	iter = refs->be->iterator_begin(refs, prefix, flags);
++	iter = prefix_ref_iterator_begin(iter, prefix, trim);
++
++	return iter;
++}
++
+ /*
+  * Call fn for each reference in the specified submodule for which the
+  * refname begins with prefix. If trim is non-zero, then trim that
+@@ -1247,8 +1259,7 @@ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+ 	if (!refs)
+ 		return 0;
+ 
+-	iter = refs->be->iterator_begin(refs, prefix, flags);
+-	iter = prefix_ref_iterator_begin(iter, prefix, trim);
++	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
+ 
+ 	return do_for_each_ref_iterator(iter, fn, cb_data);
+ }
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 6ee9f20dbc..545989ae7f 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -335,6 +335,17 @@ struct ref_iterator *empty_ref_iterator_begin(void);
+  */
+ int is_empty_ref_iterator(struct ref_iterator *ref_iterator);
+ 
++/*
++ * Return an iterator that goes over each reference in `refs` for
++ * which the refname begins with prefix. If trim is non-zero, then
++ * trim that many characters off the beginning of each refname. flags
++ * can be DO_FOR_EACH_INCLUDE_BROKEN to include broken references in
++ * the iteration.
++ */
++struct ref_iterator *refs_ref_iterator_begin(
++		struct ref_store *refs,
++		const char *prefix, int trim, int flags);
++
+ /*
+  * A callback function used to instruct merge_ref_iterator how to
+  * interleave the entries from iter0 and iter1. The function should
 -- 
 2.11.0
 
