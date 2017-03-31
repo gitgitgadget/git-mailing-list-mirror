@@ -6,154 +6,153 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F75E20966
-	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F15F020966
+	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935044AbdCaBkJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 21:40:09 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:59194 "EHLO
+        id S935066AbdCaBkK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 21:40:10 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:59220 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S934934AbdCaBkH (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:07 -0400
+        by vger.kernel.org with ESMTP id S935038AbdCaBkJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:09 -0400
 Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BF80E280AD;
-        Fri, 31 Mar 2017 01:40:04 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 345FD280B1;
+        Fri, 31 Mar 2017 01:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490924404;
-        bh=4+XGdB58noZZM9qhzVfcJjwy8L4FaoPZ8Hp++AnMS1Q=;
-        h=From:To:Cc:Subject:Date:From;
-        b=x9pJQnuEf1BDKxp9SttFkJwx4QFbQ2vfb4+nR6E4HJksrNRJvM1GhuagOG76jBO8E
-         Ng8NGD2s/cT8jSIFFoSV8O0KIlewJtupb46QGyAS7777wlkoQWWL1DAmvYNIxmdytU
-         DzR8viWBViRwVfYSmqbIb4j5i1c+IF7gT7UQ/d5WDAjmXUNilLUtv1XrQnEKVnVqM8
-         08driegfk9AlVYZV/8F3SOobC7H9Scn2WbCyZzYBcB9/u+mY/ka5J/jW9dOaoiiJ1a
-         Yc4kXYwUtMqup2KO36LRk9dMOdCRXM38+sh3BRYHcDWJqWGR3L/1mEzP0lppo8amkm
-         wc+oLoG+6ZAj90d6W+8EK/oBDDEe2dsHyuUVr+aAogrS34XK+YVcqkzVHIqYCzw/9K
-         7xV2kv9qo7RCmBCMNw+F8xThI1BElocJCfFnTI0U9T4URgcj6l7OykSYmC81WH8f2N
-         q5ik9axUy3qFKoBJIq3DpoZYiY4MBP/EfTgYH07Lcf2UCY3OEnz
+        s=default; t=1490924407;
+        bh=vloCFYZNrWxRuB81JKVsW6w0m1QPGOwoA9F8kAvN3SI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=gtPDaVyQoXmh2XE2gyn9xJ9uEVscpTajsYvARts6BVC8l+2HPIr2/YG37vb/ZHTX6
+         AW0O1O4slPs7TQRjNEzTEZk/r+dcyogv9Ryj/MWLN5+9kprwYvFesxkQADm/3d/o7D
+         XifFFvPd33BXVeHOL4A0aCs5kxj7Tw8s/ecNp4pB+Vm8Zei8klEXa5xAWtssIiEeXj
+         F/DBIEkHkK95GRriyk6LHqE26uiJCLDtJGH5q+DdCIByYEu3D6mCZbihZFOOMNjUkO
+         hWonuHl0ysUy/nrqbLPrpHGApcgO9QpthEIIoc9sEbdNSgXxE2FjtFJRoYYut2VmY3
+         v8zs3Yxx5vP/7hpJb0e5aRViOnqFVCs/76KnxwDrQMjqw2P0gaHy9NZUsnohh5fm7v
+         QQlgxieRV07ZQfHq22rnIVfYSt0rK+G9SlfKGHn2uAIFRcKyQTXCsy9JFeY4xRgO0c
+         xWKZHMKtKo5oLmW88tnQUgfnjoKJD6obp8YBPOOzxRpZM57yxsU
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 00/20] object_id part 7
-Date:   Fri, 31 Mar 2017 01:39:41 +0000
-Message-Id: <20170331014001.953484-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 04/20] builtin/diff: convert to struct object_id
+Date:   Fri, 31 Mar 2017 01:39:45 +0000
+Message-Id: <20170331014001.953484-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170331014001.953484-1-sandals@crustytoothpaste.net>
+References: <20170331014001.953484-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is part 7 in the continuing transition to use struct object_id.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/diff.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-This series focuses on two main areas: adding two constants for the
-maximum hash size we'll be using (which will be suitable for allocating
-memory) and converting struct sha1_array to struct oid_array.
-
-The rationale for adding separate constants for allocating memory is
-that with a new 256-bit hash function, we're going to need two different
-items: a constant for allocating memory that's as large as the largest
-hash, and a global variable telling us size the current hash is.  I've
-opted to provide GIT_MAX_RAWSZ and GIT_MAX_HEXSZ for allocating memory,
-and leave GIT_SHA1_RAWSZ and GIT_SHA1_HEXSZ as values that can be later
-replaced by the aforementioned global.
-
-Replacing struct sha1_array with struct oid_array necessarily involves
-converting the shallow code, so I did that.  The structure now handles
-objects of struct object_id.  While I renamed the documentation (since
-people will search for that), I chose not to rename the sha1-array.[ch]
-files or the test helper because I didn't think it was worth the hassle,
-especially for people who don't have rename support turned on by
-default.
-
-I chose to use Coccinelle quite a bit in this series, as it automates a
-lot of the manual work and aides in review.  There is also some use of
-Perl one-liners.
-
-This series is available at https://github.com/bk2204/git under
-object-id-part7; it may be rebased.
-
-Changes from v2:
-* Drop the patch that Junio has picked up separately.
-* Change one struct object_id * parameter from "sha1" to "oid".
-* Convert E2[E3].hash to E2[E3] instead of E2 + E3.
-
-Changes from v1:
-* Rebase on current master (no changes).
-* Remove check for empty line in queue_command.
-* Add patch 6 to fix invalid pointer arithmetic.
-
-brian m. carlson (20):
-  Define new hash-size constants for allocating memory
-  Convert GIT_SHA1_HEXSZ used for allocation to GIT_MAX_HEXSZ
-  Convert GIT_SHA1_RAWSZ used for allocation to GIT_MAX_RAWSZ
-  builtin/diff: convert to struct object_id
-  builtin/pull: convert portions to struct object_id
-  builtin/receive-pack: convert portions to struct object_id
-  fsck: convert init_skiplist to struct object_id
-  parse-options-cb: convert sha1_array_append caller to struct object_id
-  test-sha1-array: convert most code to struct object_id
-  sha1_name: convert struct disambiguate_state to object_id
-  sha1_name: convert disambiguate_hint_fn to take object_id
-  submodule: convert check_for_new_submodule_commits to object_id
-  builtin/pull: convert to struct object_id
-  sha1-array: convert internal storage for struct sha1_array to
-    object_id
-  Make sha1_array_append take a struct object_id *
-  Convert remaining callers of sha1_array_lookup to object_id
-  Convert sha1_array_lookup to take struct object_id
-  Convert sha1_array_for_each_unique and for_each_abbrev to object_id
-  Rename sha1_array to oid_array
-  Documentation: update and rename api-sha1-array.txt
-
- .../{api-sha1-array.txt => api-oid-array.txt}      |  44 +++----
- bisect.c                                           |  43 ++++---
- builtin/blame.c                                    |   4 +-
- builtin/cat-file.c                                 |  14 +--
- builtin/diff.c                                     |  40 +++---
- builtin/fetch-pack.c                               |   2 +-
- builtin/fetch.c                                    |   6 +-
- builtin/merge-index.c                              |   2 +-
- builtin/merge.c                                    |   2 +-
- builtin/pack-objects.c                             |  24 ++--
- builtin/patch-id.c                                 |   2 +-
- builtin/pull.c                                     |  98 +++++++--------
- builtin/receive-pack.c                             | 134 ++++++++++-----------
- builtin/rev-list.c                                 |   2 +-
- builtin/rev-parse.c                                |   4 +-
- builtin/send-pack.c                                |   4 +-
- cache.h                                            |  10 +-
- combine-diff.c                                     |  18 +--
- commit.h                                           |  14 +--
- connect.c                                          |   8 +-
- diff.c                                             |   4 +-
- diff.h                                             |   4 +-
- fetch-pack.c                                       |  32 ++---
- fetch-pack.h                                       |   4 +-
- fsck.c                                             |  17 +--
- fsck.h                                             |   2 +-
- hex.c                                              |   2 +-
- parse-options-cb.c                                 |   8 +-
- patch-ids.c                                        |   2 +-
- patch-ids.h                                        |   2 +-
- ref-filter.c                                       |  22 ++--
- ref-filter.h                                       |   2 +-
- remote-curl.c                                      |   4 +-
- remote.h                                           |   6 +-
- send-pack.c                                        |   6 +-
- send-pack.h                                        |   2 +-
- sha1-array.c                                       |  38 +++---
- sha1-array.h                                       |  20 +--
- sha1_file.c                                        |   6 +-
- sha1_name.c                                        |  94 ++++++++-------
- shallow.c                                          |  38 +++---
- submodule.c                                        |  66 +++++-----
- submodule.h                                        |   8 +-
- t/helper/test-sha1-array.c                         |  20 +--
- transport.c                                        |  24 ++--
- wt-status.h                                        |   2 +-
- 46 files changed, 459 insertions(+), 451 deletions(-)
- rename Documentation/technical/{api-sha1-array.txt => api-oid-array.txt} (61%)
-
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 3d64b85337..398eee00d5 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -21,7 +21,7 @@
+ #define DIFF_NO_INDEX_IMPLICIT 2
+ 
+ struct blobinfo {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	const char *name;
+ 	unsigned mode;
+ };
+@@ -31,22 +31,22 @@ static const char builtin_diff_usage[] =
+ 
+ static void stuff_change(struct diff_options *opt,
+ 			 unsigned old_mode, unsigned new_mode,
+-			 const unsigned char *old_sha1,
+-			 const unsigned char *new_sha1,
+-			 int old_sha1_valid,
+-			 int new_sha1_valid,
++			 const struct object_id *old_oid,
++			 const struct object_id *new_oid,
++			 int old_oid_valid,
++			 int new_oid_valid,
+ 			 const char *old_name,
+ 			 const char *new_name)
+ {
+ 	struct diff_filespec *one, *two;
+ 
+-	if (!is_null_sha1(old_sha1) && !is_null_sha1(new_sha1) &&
+-	    !hashcmp(old_sha1, new_sha1) && (old_mode == new_mode))
++	if (!is_null_oid(old_oid) && !is_null_oid(new_oid) &&
++	    !oidcmp(old_oid, new_oid) && (old_mode == new_mode))
+ 		return;
+ 
+ 	if (DIFF_OPT_TST(opt, REVERSE_DIFF)) {
+ 		SWAP(old_mode, new_mode);
+-		SWAP(old_sha1, new_sha1);
++		SWAP(old_oid, new_oid);
+ 		SWAP(old_name, new_name);
+ 	}
+ 
+@@ -57,8 +57,8 @@ static void stuff_change(struct diff_options *opt,
+ 
+ 	one = alloc_filespec(old_name);
+ 	two = alloc_filespec(new_name);
+-	fill_filespec(one, old_sha1, old_sha1_valid, old_mode);
+-	fill_filespec(two, new_sha1, new_sha1_valid, new_mode);
++	fill_filespec(one, old_oid->hash, old_oid_valid, old_mode);
++	fill_filespec(two, new_oid->hash, new_oid_valid, new_mode);
+ 
+ 	diff_queue(&diff_queued_diff, one, two);
+ }
+@@ -89,7 +89,7 @@ static int builtin_diff_b_f(struct rev_info *revs,
+ 
+ 	stuff_change(&revs->diffopt,
+ 		     blob[0].mode, canon_mode(st.st_mode),
+-		     blob[0].sha1, null_sha1,
++		     &blob[0].oid, &null_oid,
+ 		     1, 0,
+ 		     path, path);
+ 	diffcore_std(&revs->diffopt);
+@@ -114,7 +114,7 @@ static int builtin_diff_blobs(struct rev_info *revs,
+ 
+ 	stuff_change(&revs->diffopt,
+ 		     blob[0].mode, blob[1].mode,
+-		     blob[0].sha1, blob[1].sha1,
++		     &blob[0].oid, &blob[1].oid,
+ 		     1, 1,
+ 		     blob[0].name, blob[1].name);
+ 	diffcore_std(&revs->diffopt);
+@@ -160,7 +160,7 @@ static int builtin_diff_tree(struct rev_info *revs,
+ 			     struct object_array_entry *ent0,
+ 			     struct object_array_entry *ent1)
+ {
+-	const unsigned char *(sha1[2]);
++	const struct object_id *(oid[2]);
+ 	int swap = 0;
+ 
+ 	if (argc > 1)
+@@ -172,9 +172,9 @@ static int builtin_diff_tree(struct rev_info *revs,
+ 	 */
+ 	if (ent1->item->flags & UNINTERESTING)
+ 		swap = 1;
+-	sha1[swap] = ent0->item->oid.hash;
+-	sha1[1 - swap] = ent1->item->oid.hash;
+-	diff_tree_sha1(sha1[0], sha1[1], "", &revs->diffopt);
++	oid[swap] = &ent0->item->oid;
++	oid[1 - swap] = &ent1->item->oid;
++	diff_tree_sha1(oid[0]->hash, oid[1]->hash, "", &revs->diffopt);
+ 	log_tree_diff_flush(revs);
+ 	return 0;
+ }
+@@ -408,7 +408,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 		} else if (obj->type == OBJ_BLOB) {
+ 			if (2 <= blobs)
+ 				die(_("more than two blobs given: '%s'"), name);
+-			hashcpy(blob[blobs].sha1, obj->oid.hash);
++			hashcpy(blob[blobs].oid.hash, obj->oid.hash);
+ 			blob[blobs].name = name;
+ 			blob[blobs].mode = entry->mode;
+ 			blobs++;
