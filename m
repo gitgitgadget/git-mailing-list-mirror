@@ -2,30 +2,30 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72A1C1FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 14:12:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 011CA1FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 14:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933303AbdCaOMM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 10:12:12 -0400
+        id S933299AbdCaOML (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 10:12:11 -0400
 Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:48983 "EHLO
         alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933266AbdCaOMI (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 31 Mar 2017 10:12:08 -0400
-X-AuditID: 1207440d-029ff70000003721-1e-58de63b6b635
+        by vger.kernel.org with ESMTP id S933257AbdCaOME (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 31 Mar 2017 10:12:04 -0400
+X-AuditID: 1207440d-029ff70000003721-15-58de63b2d0f8
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 2E.20.14113.6B36ED85; Fri, 31 Mar 2017 10:12:06 -0400 (EDT)
+        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id CC.20.14113.2B36ED85; Fri, 31 Mar 2017 10:12:02 -0400 (EDT)
 Received: from bagpipes.fritz.box (p4FEDFA60.dip0.t-ipconnect.de [79.237.250.96])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2VEBRC0010139
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v2VEBRBw010139
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Fri, 31 Mar 2017 10:12:04 -0400
+        Fri, 31 Mar 2017 10:12:01 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>,
@@ -34,220 +34,241 @@ Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 19/20] files_pack_refs(): use reference iteration
-Date:   Fri, 31 Mar 2017 16:11:17 +0200
-Message-Id: <1d131a33fd155f14908ee1d41e98be8a1309c6b9.1490966385.git.mhagger@alum.mit.edu>
+Subject: [PATCH v2 17/20] cache_ref_iterator_begin(): make function smarter
+Date:   Fri, 31 Mar 2017 16:11:15 +0200
+Message-Id: <4be692203dbb726612efbafd1ea983feed350760.1490966385.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1490966385.git.mhagger@alum.mit.edu>
 References: <cover.1490966385.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDIsWRmVeSWpSXmKPExsUixO6iqLst+V6EwdXv6hZrn91hsui60s1k
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLIsWRmVeSWpSXmKPExsUixO6iqLsp+V6Ewa+NlhZrn91hsui60s1k
         0dB7hdni9or5zBZLHr5mtuie8pbR4kdLD7PF5s3tLA4cHn/ff2Dy2DnrLrvHgk2lHl3tR9g8
-        nvXuYfS4eEnZ4/MmuQD2KC6blNSczLLUIn27BK6MJ/OWsBXMNKx43H+PtYGxWaOLkYNDQsBE
-        YsY25i5GLg4hgR1MEp829LBDOCeZJJ73zWDqYuTkYBPQlVjU0wxmiwioSUxsO8QCUsQs8IZJ
-        4sCWXywgCWEBF4muld/ZQGwWAVWJy1v3MoJs4BWIkvj7sR4kLCEgL7Gr7SIriM0pYCGxbuYh
-        dhBbSMBcYsHaCWwTGHkWMDKsYpRLzCnN1c1NzMwpTk3WLU5OzMtLLdI10svNLNFLTSndxAgJ
-        NN4djP/XyRxiFOBgVOLhPeF9L0KINbGsuDL3EKMkB5OSKK9vOFCILyk/pTIjsTgjvqg0J7X4
-        EKMEB7OSCC9THFCONyWxsiq1KB8mJc3BoiTOq7ZE3U9IID2xJDU7NbUgtQgmK8PBoSTBW5EE
-        1ChYlJqeWpGWmVOCkGbi4AQZzgM0PAWkhre4IDG3ODMdIn+KUVFKnJcVJCEAksgozYPrhSWC
-        V4ziQK8I83qBVPEAkwhc9yugwUxAgy2+3gUZXJKIkJJqYEw+/evOcd8FWxNP/1fyjn+7Wn+i
-        RuDUbY9La5Mm1pjwsFgInVkrmbWBd5eO2YpXzsdmCaVzXi0/s/qd9RuZY4J748W3xpQULF7O
-        86g+SW/xkyP+91fuXfDx5N1v1xdeT5wnurdnJvNk24kstmFla8OvVKi5xC4K2sFfJ7g6Yuqe
-        qeeir+lqbbFUYinOSDTUYi4qTgQAhkr5vN8CAAA=
+        nvXuYfS4eEnZ4/MmuQD2KC6blNSczLLUIn27BK6MU/cesxQctq+Y/XAnUwPjEeMuRk4OCQET
+        ickn5rOA2EICO5gktt4062LkArJPMkncWLIBLMEmoCuxqKeZCcQWEVCTmNh2iAWkiFngDZPE
+        gS2/wIqEBbwlTp2/zgZiswioSlw8fwgszisQJfF+8TUmiG3yErvaLrKC2JwCFhLrZh5ih9hs
+        LrFg7QS2CYw8CxgZVjHKJeaU5urmJmbmFKcm6xYnJ+blpRbpGunlZpbopaaUbmKEhBrvDsb/
+        62QOMQpwMCrx8J7wvhchxJpYVlyZe4hRkoNJSZTXNxwoxJeUn1KZkVicEV9UmpNafIhRgoNZ
+        SYSXKQ4ox5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4K1IAmoULEpN
+        T61Iy8wpQUgzcXCCDOcBGp4CUsNbXJCYW5yZDpE/xagoJc7LCpIQAElklObB9cJSwStGcaBX
+        hHm9QKp4gGkErvsV0GAmoMEWX++CDC5JREhJNTC2XNT49W1xuVWUippHy/yNp1+sU3874a38
+        7Mff85rE/gvqsTc+Ox9S0zI7irGyYYvooscb36yy7533NfJwifqhfNFLVV2OBuwc2a6mO1eG
+        HGy9IhrOUpLFUnqmeb3WyslLTYIy420PlnMszK55WuL8frtCiPR7qdlzfwvsjhAUNnrxauep
+        16VKLMUZiYZazEXFiQB5+fq34AIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use reference iteration rather than do_for_each_entry_in_dir() in the
-definition of files_pack_refs().
+Change `cache_ref_iterator_begin()` to take two new arguments:
+
+* `prefix` -- to iterate only over references with the specified
+  prefix.
+
+* `prime_dir` -- to "prime" (i.e., pre-load) the cache before starting
+  the iteration.
+
+The new functionality makes it possible for
+`files_ref_iterator_begin()` to be made more ignorant of the internals
+of `ref_cache`, and `find_containing_dir()` and `prime_ref_dir()` to
+be made private.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 143 +++++++++++++++++++++------------------------------
- 1 file changed, 60 insertions(+), 83 deletions(-)
+ refs/files-backend.c | 44 +++++++++++++-------------------------------
+ refs/ref-cache.c     | 38 ++++++++++++++++++++++++++++++++++----
+ refs/ref-cache.h     | 27 +++++++++------------------
+ 3 files changed, 56 insertions(+), 53 deletions(-)
 
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0ea42826c8..8420d0fc5b 100644
+index fefc29433a..736a6c9ff7 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -32,17 +32,6 @@ static int ref_resolves_to_object(const char *refname,
- 	return 1;
- }
+@@ -1083,7 +1083,6 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 		const char *prefix, unsigned int flags)
+ {
+ 	struct files_ref_store *refs;
+-	struct ref_dir *loose_dir, *packed_dir;
+ 	struct ref_iterator *loose_iter, *packed_iter;
+ 	struct files_ref_iterator *iter;
+ 	struct ref_iterator *ref_iterator;
+@@ -1109,41 +1108,24 @@ static struct ref_iterator *files_ref_iterator_begin(
+ 	 * condition if loose refs are migrated to the packed-refs
+ 	 * file by a simultaneous process, but our in-memory view is
+ 	 * from before the migration. We ensure this as follows:
+-	 * First, we call prime_ref_dir(), which pre-reads the loose
+-	 * references for the subtree into the cache. (If they've
+-	 * already been read, that's OK; we only need to guarantee
+-	 * that they're read before the packed refs, not *how much*
+-	 * before.) After that, we call get_packed_ref_cache(), which
+-	 * internally checks whether the packed-ref cache is up to
+-	 * date with what is on disk, and re-reads it if not.
++	 * First, we call start the loose refs iteration with its
++	 * `prime_ref` argument set to true. This causes the loose
++	 * references in the subtree to be pre-read into the cache.
++	 * (If they've already been read, that's OK; we only need to
++	 * guarantee that they're read before the packed refs, not
++	 * *how much* before.) After that, we call
++	 * get_packed_ref_cache(), which internally checks whether the
++	 * packed-ref cache is up to date with what is on disk, and
++	 * re-reads it if not.
+ 	 */
  
--/*
-- * Return true if the reference described by entry can be resolved to
-- * an object in the database; otherwise, emit a warning and return
-- * false.
-- */
--static int entry_resolves_to_object(struct ref_entry *entry)
--{
--	return ref_resolves_to_object(entry->name,
--				      &entry->u.value.oid, entry->flag);
--}
+-	loose_dir = get_loose_ref_dir(refs);
 -
- struct packed_ref_cache {
- 	struct ref_cache *cache;
- 
-@@ -548,11 +537,6 @@ static struct ref_cache *get_loose_ref_cache(struct files_ref_store *refs)
- 	return refs->loose;
- }
- 
--static struct ref_dir *get_loose_ref_dir(struct files_ref_store *refs)
--{
--	return get_ref_dir(get_loose_ref_cache(refs)->root);
--}
+-	if (prefix && *prefix)
+-		loose_dir = find_containing_dir(loose_dir, prefix, 0);
 -
- /*
-  * Return the ref_entry for the given refname from the packed
-  * references.  If it does not exist, return NULL.
-@@ -1411,65 +1395,6 @@ struct ref_to_prune {
- 	char name[FLEX_ARRAY];
- };
- 
--struct pack_refs_cb_data {
--	unsigned int flags;
--	struct ref_dir *packed_refs;
--	struct ref_to_prune *ref_to_prune;
--};
--
--/*
-- * An each_ref_entry_fn that is run over loose references only.  If
-- * the loose reference can be packed, add an entry in the packed ref
-- * cache.  If the reference should be pruned, also add it to
-- * ref_to_prune in the pack_refs_cb_data.
-- */
--static int pack_if_possible_fn(struct ref_entry *entry, void *cb_data)
--{
--	struct pack_refs_cb_data *cb = cb_data;
--	enum peel_status peel_status;
--	struct ref_entry *packed_entry;
--	int is_tag_ref = starts_with(entry->name, "refs/tags/");
--
--	/* Do not pack per-worktree refs: */
--	if (ref_type(entry->name) != REF_TYPE_NORMAL)
--		return 0;
--
--	/* ALWAYS pack tags */
--	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref)
--		return 0;
--
--	/* Do not pack symbolic or broken refs: */
--	if ((entry->flag & REF_ISSYMREF) || !entry_resolves_to_object(entry))
--		return 0;
--
--	/* Add a packed ref cache entry equivalent to the loose entry. */
--	peel_status = peel_entry(entry, 1);
--	if (peel_status != PEEL_PEELED && peel_status != PEEL_NON_TAG)
--		die("internal error peeling reference %s (%s)",
--		    entry->name, oid_to_hex(&entry->u.value.oid));
--	packed_entry = find_ref_entry(cb->packed_refs, entry->name);
--	if (packed_entry) {
--		/* Overwrite existing packed entry with info from loose entry */
--		packed_entry->flag = REF_ISPACKED | REF_KNOWS_PEELED;
--		oidcpy(&packed_entry->u.value.oid, &entry->u.value.oid);
+-	if (loose_dir) {
+-		prime_ref_dir(loose_dir);
+-		loose_iter = cache_ref_iterator_begin(loose_dir);
 -	} else {
--		packed_entry = create_ref_entry(entry->name, entry->u.value.oid.hash,
--						REF_ISPACKED | REF_KNOWS_PEELED, 0);
--		add_ref_entry(cb->packed_refs, packed_entry);
+-		/* There's nothing to iterate over. */
+-		loose_iter = empty_ref_iterator_begin();
 -	}
--	oidcpy(&packed_entry->u.value.peeled, &entry->u.value.peeled);
++	loose_iter = cache_ref_iterator_begin(get_loose_ref_cache(refs),
++					      prefix, 1);
+ 
+ 	iter->packed_ref_cache = get_packed_ref_cache(refs);
+ 	acquire_packed_ref_cache(iter->packed_ref_cache);
+-	packed_dir = get_packed_ref_dir(iter->packed_ref_cache);
 -
--	/* Schedule the loose reference for pruning if requested. */
--	if ((cb->flags & PACK_REFS_PRUNE)) {
--		struct ref_to_prune *n;
--		FLEX_ALLOC_STR(n, name, entry->name);
--		hashcpy(n->sha1, entry->u.value.oid.hash);
--		n->next = cb->ref_to_prune;
--		cb->ref_to_prune = n;
+-	if (prefix && *prefix)
+-		packed_dir = find_containing_dir(packed_dir, prefix, 0);
+-
+-	if (packed_dir) {
+-		packed_iter = cache_ref_iterator_begin(packed_dir);
+-	} else {
+-		/* There's nothing to iterate over. */
+-		packed_iter = empty_ref_iterator_begin();
 -	}
--	return 0;
--}
--
- enum {
- 	REMOVE_EMPTY_PARENTS_REF = 0x01,
- 	REMOVE_EMPTY_PARENTS_REFLOG = 0x02
-@@ -1559,21 +1484,73 @@ static int files_pack_refs(struct ref_store *ref_store, unsigned int flags)
- 	struct files_ref_store *refs =
- 		files_downcast(ref_store, REF_STORE_WRITE | REF_STORE_ODB,
- 			       "pack_refs");
--	struct pack_refs_cb_data cbdata;
--
--	memset(&cbdata, 0, sizeof(cbdata));
--	cbdata.flags = flags;
-+	struct ref_iterator *iter;
-+	struct ref_dir *packed_refs;
-+	int ok;
-+	struct ref_to_prune *refs_to_prune = NULL;
++	packed_iter = cache_ref_iterator_begin(iter->packed_ref_cache->cache,
++					       prefix, 0);
  
- 	lock_packed_refs(refs, LOCK_DIE_ON_ERROR);
--	cbdata.packed_refs = get_packed_refs(refs);
-+	packed_refs = get_packed_refs(refs);
-+
-+	iter = cache_ref_iterator_begin(get_loose_ref_cache(refs), NULL, 0);
-+	while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-+		/*
-+		 * If the loose reference can be packed, add an entry
-+		 * in the packed ref cache. If the reference should be
-+		 * pruned, also add it to refs_to_prune.
-+		 */
-+		struct ref_entry *packed_entry;
-+		int is_tag_ref = starts_with(iter->refname, "refs/tags/");
-+
-+		/* Do not pack per-worktree refs: */
-+		if (ref_type(iter->refname) != REF_TYPE_NORMAL)
-+			continue;
-+
-+		/* ALWAYS pack tags */
-+		if (!(flags & PACK_REFS_ALL) && !is_tag_ref)
-+			continue;
-+
-+		/* Do not pack symbolic or broken refs: */
-+		if (iter->flags & REF_ISSYMREF)
-+			continue;
+ 	iter->iter0 = overlay_ref_iterator_begin(loose_iter, packed_iter);
+ 	iter->flags = flags;
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 38d4c31985..b3a30350d7 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -177,8 +177,17 @@ static struct ref_dir *search_for_subdir(struct ref_dir *dir,
+ 	return get_ref_dir(entry);
+ }
  
--	do_for_each_entry_in_dir(get_loose_ref_dir(refs),
--				 pack_if_possible_fn, &cbdata);
-+		if (!ref_resolves_to_object(iter->refname, iter->oid, iter->flags))
-+			continue;
-+
-+		/*
-+		 * Create an entry in the packed-refs cache equivalent
-+		 * to the one from the loose ref cache, except that
-+		 * we don't copy the peeled status, because we want it
-+		 * to be re-peeled.
-+		 */
-+		packed_entry = find_ref_entry(packed_refs, iter->refname);
-+		if (packed_entry) {
-+			/* Overwrite existing packed entry with info from loose entry */
-+			packed_entry->flag = REF_ISPACKED;
-+			oidcpy(&packed_entry->u.value.oid, iter->oid);
-+		} else {
-+			packed_entry = create_ref_entry(iter->refname, iter->oid->hash,
-+							REF_ISPACKED, 0);
-+			add_ref_entry(packed_refs, packed_entry);
-+		}
-+		oidclr(&packed_entry->u.value.peeled);
-+
-+		/* Schedule the loose reference for pruning if requested. */
-+		if ((flags & PACK_REFS_PRUNE)) {
-+			struct ref_to_prune *n;
-+			FLEX_ALLOC_STR(n, name, iter->refname);
-+			hashcpy(n->sha1, iter->oid->hash);
-+			n->next = refs_to_prune;
-+			refs_to_prune = n;
-+		}
-+	}
-+	if (ok != ITER_DONE)
-+		die("error while iterating over references");
- 
- 	if (commit_packed_refs(refs))
- 		die_errno("unable to overwrite old ref-pack file");
- 
--	prune_refs(refs, cbdata.ref_to_prune);
-+	prune_refs(refs, refs_to_prune);
+-struct ref_dir *find_containing_dir(struct ref_dir *dir,
+-				    const char *refname, int mkdir)
++/*
++ * If refname is a reference name, find the ref_dir within the dir
++ * tree that should hold refname. If refname is a directory name
++ * (i.e., it ends in '/'), then return that ref_dir itself. dir must
++ * represent the top-level directory and must already be complete.
++ * Sort ref_dirs and recurse into subdirectories as necessary. If
++ * mkdir is set, then create any missing directories; otherwise,
++ * return NULL if the desired directory cannot be found.
++ */
++static struct ref_dir *find_containing_dir(struct ref_dir *dir,
++					   const char *refname, int mkdir)
+ {
+ 	const char *slash;
+ 	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
+@@ -328,7 +337,11 @@ int do_for_each_entry_in_dir(struct ref_dir *dir,
  	return 0;
  }
  
+-void prime_ref_dir(struct ref_dir *dir)
++/*
++ * Load all of the refs from `dir` (recursively) into our in-memory
++ * cache.
++ */
++static void prime_ref_dir(struct ref_dir *dir)
+ {
+ 	/*
+ 	 * The hard work of loading loose refs is done by get_ref_dir(), so we
+@@ -494,12 +507,25 @@ static struct ref_iterator_vtable cache_ref_iterator_vtable = {
+ 	cache_ref_iterator_abort
+ };
+ 
+-struct ref_iterator *cache_ref_iterator_begin(struct ref_dir *dir)
++struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
++					      const char *prefix,
++					      int prime_dir)
+ {
++	struct ref_dir *dir;
+ 	struct cache_ref_iterator *iter;
+ 	struct ref_iterator *ref_iterator;
+ 	struct cache_ref_iterator_level *level;
+ 
++	dir = get_ref_dir(cache->root);
++	if (prefix && *prefix)
++		dir = find_containing_dir(dir, prefix, 0);
++	if (!dir)
++		/* There's nothing to iterate over. */
++		return  empty_ref_iterator_begin();
++
++	if (prime_dir)
++		prime_ref_dir(dir);
++
+ 	iter = xcalloc(1, sizeof(*iter));
+ 	ref_iterator = &iter->base;
+ 	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable);
+@@ -510,5 +536,9 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_dir *dir)
+ 	level->index = -1;
+ 	level->dir = dir;
+ 
++	if (prefix && *prefix)
++		ref_iterator = prefix_ref_iterator_begin(ref_iterator,
++							 prefix, 0);
++
+ 	return ref_iterator;
+ }
+diff --git a/refs/ref-cache.h b/refs/ref-cache.h
+index 6eecdf4276..5e7a918ac0 100644
+--- a/refs/ref-cache.h
++++ b/refs/ref-cache.h
+@@ -234,18 +234,6 @@ int remove_entry_from_dir(struct ref_dir *dir, const char *refname);
+  */
+ int add_ref_entry(struct ref_dir *dir, struct ref_entry *ref);
+ 
+-/*
+- * If refname is a reference name, find the ref_dir within the dir
+- * tree that should hold refname. If refname is a directory name
+- * (i.e., it ends in '/'), then return that ref_dir itself. dir must
+- * represent the top-level directory and must already be complete.
+- * Sort ref_dirs and recurse into subdirectories as necessary. If
+- * mkdir is set, then create any missing directories; otherwise,
+- * return NULL if the desired directory cannot be found.
+- */
+-struct ref_dir *find_containing_dir(struct ref_dir *dir,
+-				    const char *refname, int mkdir);
+-
+ /*
+  * Find the value entry with the given name in dir, sorting ref_dirs
+  * and recursing into subdirectories as necessary.  If the name is not
+@@ -253,7 +241,15 @@ struct ref_dir *find_containing_dir(struct ref_dir *dir,
+  */
+ struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname);
+ 
+-struct ref_iterator *cache_ref_iterator_begin(struct ref_dir *dir);
++/*
++ * Start iterating over references in `cache`. If `prefix` is
++ * specified, only include references whose names start with that
++ * prefix. If `prime_dir` is true, then fill any incomplete
++ * directories before beginning the iteration.
++ */
++struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
++					      const char *prefix,
++					      int prime_dir);
+ 
+ typedef int each_ref_entry_fn(struct ref_entry *entry, void *cb_data);
+ 
+@@ -279,9 +275,4 @@ int do_for_each_entry_in_dir(struct ref_dir *dir,
+  */
+ enum peel_status peel_entry(struct ref_entry *entry, int repeel);
+ 
+-/*
+- * Load all of the refs from `dir` into our in-memory cache.
+- */
+-void prime_ref_dir(struct ref_dir *dir);
+-
+ #endif /* REFS_REF_CACHE_H */
 -- 
 2.11.0
 
