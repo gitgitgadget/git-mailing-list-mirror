@@ -2,83 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC3461FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 23:18:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 811411FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 23:21:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755097AbdCaXSv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 19:18:51 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:35493 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755044AbdCaXSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 19:18:50 -0400
-Received: by mail-it0-f65.google.com with SMTP id y18so3411386itc.2
-        for <git@vger.kernel.org>; Fri, 31 Mar 2017 16:18:50 -0700 (PDT)
+        id S932960AbdCaXVV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 19:21:21 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:34264 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932756AbdCaXVU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 19:21:20 -0400
+Received: by mail-pg0-f44.google.com with SMTP id 21so83909366pgg.1
+        for <git@vger.kernel.org>; Fri, 31 Mar 2017 16:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=l3OuhhEM/pdJ9WRwvHMeKflJX2wiJuxj/0yL/xHyubA=;
-        b=Ztl2uifGCKqHEAq1YREahYKGmcwnCiQhNT4q5DWFiHEplIKB9GvA9TbpZxNBet8O15
-         a5mwtkcY7zKq9Rj+f1bIFmjj/Lkz7A5UIG8moGXQr9U7Vg15NIgheAO2IU6fjQNP9+Rs
-         dTdGVQSdQZyfmi33JFUBys4pslngPzkJyVTlAtKpqQ8U+1JC3dzN9vkLBXSaGqLipl+A
-         jCnkLaap09CmUCnPioZ55BLWxAfLJO+gLeeMEHrS/MTXdRePQ4BSHHe2iacjQi5V27TO
-         lcAqd18Y1z2ZOZC3hfy7d+c6ayGBj8bvD9cKIOeb6488b1F7p4ogNRATrsR8ZohMnira
-         km5g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MvJ1Zxsynm/DdH93MD+iY4qqGrkaQ3z2cszTE4+suy4=;
+        b=bSrEVabyNblICnd+eWl1hWMBk0nMiZ+kx5Sz01pOkGKmcMtL9irsg5jmskQO1jPsSV
+         iBVrTdznwWdsmLGzZhyDbTlbTQaZWml5KtOaQVMQ1kuL/tnlNOXMnEPB9kqjbcSk+os0
+         Q20GI+fQ6sdJ08vqH0IGjWR0ZPipnMUhJmWIVBmOEDPKeqHQqTCYfuOHoAYx5YDvmReN
+         F51Zq/9hQMRexyutZryFdhyM/eO2oFe+LSe782taChCHDpQ+0QZjlk6Kdl28UtmNwC31
+         1/vmyblXku0AHxY9OnNU8/v2v6xOCPv8JlS3p5YbQeDdq3UiHy3c794+3NGeqGWus8ca
+         bMRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=l3OuhhEM/pdJ9WRwvHMeKflJX2wiJuxj/0yL/xHyubA=;
-        b=nUqY0UA+5LNMCz0e6TFsiATzNtBQVPoGbJM+TjlROAN7ZoN+mLmkfpbWK8umgOU3Oi
-         RhJe26Mf0A54AmmaoaGLKJu6iIlzKTiGWzqxICKK26gEtVtgR1D72SUWybk1vInGImcF
-         NglYdsuicQCXydgukYaXmTghvgr5P8cB5UJxwWoWsX6P63n0sPbPTsG0pMRlsyt21ek5
-         gTTGuu0YG/mO4xJHVcTVrBTBVkhZse/yAxonE1O8YPDljmEze4fJoSeG7KEOFaj8bdnW
-         PYIXW/vMwSGFnSykrDl0P+E5/O2JoKKPao08ZAutQaBrUHA9hofgIgi1VGsbRJwbb7ah
-         aVJg==
-X-Gm-Message-State: AFeK/H1NJS0pUcydb3JOVpgZv+9FbLZaf9NbtDukGsceKkwKMauSZRrDy2+7OZXjQ0UHT/yed6tup3wAKlR0PA==
-X-Received: by 10.36.147.71 with SMTP id y68mr314066itd.85.1491002329939; Fri,
- 31 Mar 2017 16:18:49 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MvJ1Zxsynm/DdH93MD+iY4qqGrkaQ3z2cszTE4+suy4=;
+        b=gOgnINmXkitBAd/Hv2zeZi+Mf92aKP0bgKbPLncS9drvM0KaNh9AyXWYVXqM3jdMh4
+         KB7GKEF0fCGwgTmY2NRQWWpNau7joHMW1yKrkLS8G1yYz1BOdDNLVhhORyIgCv2BnhTR
+         31Mw7YXx3b1v/V+qGkI/+0oyOIZgaXMjTsQBm7Q+5O1KBEFLYEcCgcLjG/uHaCNwWuyD
+         pwmEIJYjiRcT3ZHAqRaQshGecCdJYtHJwv2ilNGlYHlnzsTsRCghXZzhgNKVlHwZTE39
+         ZtBvxWdB7Bm9Q+lnnTwk3DDgExir8hC/aOPOrioJVnZELl0n3+d09vMglr0j9IqFKFpX
+         a90Q==
+X-Gm-Message-State: AFeK/H2L8zKcAhM1o468EmWVQcZdNXiNSH/GYwk3tHvlwTbqVnrwD/BKusFWQH6vlrVmAg==
+X-Received: by 10.99.126.13 with SMTP id z13mr4049831pgc.158.1491002479902;
+        Fri, 31 Mar 2017 16:21:19 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8962:97f5:cc56:a89d])
+        by smtp.gmail.com with ESMTPSA id m69sm12431646pfc.33.2017.03.31.16.21.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 31 Mar 2017 16:21:19 -0700 (PDT)
+Date:   Fri, 31 Mar 2017 16:20:30 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] push: propagate push-options with --recurse-submodules
+Message-ID: <20170331232030.GA8741@aiede.mtv.corp.google.com>
+References: <20170331231135.195195-1-bmwill@google.com>
 MIME-Version: 1.0
-Received: by 10.107.19.75 with HTTP; Fri, 31 Mar 2017 16:18:29 -0700 (PDT)
-In-Reply-To: <xmqqy3vlw3f9.fsf@gitster.mtv.corp.google.com>
-References: <20170331173214.47514-1-git@jeffhostetler.com> <20170331173214.47514-2-git@jeffhostetler.com>
- <xmqqo9whxmrq.fsf@gitster.mtv.corp.google.com> <xmqqy3vlw3f9.fsf@gitster.mtv.corp.google.com>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Fri, 31 Mar 2017 16:18:29 -0700
-X-Google-Sender-Auth: tMWSXwwA7eBEVuHhhU3RzA2iuRY
-Message-ID: <CAPc5daWU5XDVNiYk_pTFk_qziuDr6W2XDHXXH-0oR49_KiCUYA@mail.gmail.com>
-Subject: Re: [PATCH] name-hash: fix buffer overrun
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Kevin Willford <kewillf@microsoft.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170331231135.195195-1-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 31, 2017 at 2:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Will queue with ...
->>
->>>  name-hash.c                             |  4 +++-
->>>  t/t3008-ls-files-lazy-init-name-hash.sh | 19 +++++++++++++++++++
->>>  2 files changed, 22 insertions(+), 1 deletion(-)
->>>  create mode 100644 t/t3008-ls-files-lazy-init-name-hash.sh
->>
->> ... this thing fixed by "chmod +x" (otherwise the tests won't start).
->>
->> Thanks.
->
-> Also, https://travis-ci.org/git/git/jobs/217303927 seems to say that
-> MacOS is not happy with this change.
+Hi,
 
-Ah, of course. Avoid GNUism to spell HT as "\t" in a sed script.
+Brandon Williams wrote:
+
+> Teach push --recurse-submodules to propagate push-options recursively to
+> the pushes performed in the submodules.
+
+Sounds like a good change.
+
+[...]
+> +++ b/submodule.c
+[...]
+> @@ -793,6 +794,12 @@ static int push_submodule(const char *path, int dry_run)
+>  		if (dry_run)
+>  			argv_array_push(&cp.args, "--dry-run");
+>  
+> +		if (push_options && push_options->nr) {
+> +			static struct string_list_item *item;
+
+Why static?  It would be simpler (and would use less bss) to let this
+pointer be an automatic variable instead.
+
+> +			for_each_string_list_item(item, push_options)
+> +				argv_array_pushf(&cp.args, "--push-option=%s",
+> +						 item->string);
+> +		}
+>  		prepare_submodule_repo_env(&cp.env_array);
+>  		cp.git_cmd = 1;
+>  		cp.no_stdin = 1;
+> @@ -807,7 +814,8 @@ static int push_submodule(const char *path, int dry_run)
+>  
+>  int push_unpushed_submodules(struct sha1_array *commits,
+>  			     const char *remotes_name,
+> -			     int dry_run)
+> +			     int dry_run,
+> +			     const struct string_list *push_options)
+
+nit: I wonder if dry_run should stay as the last argument.  That would
+make it closer to the idiom of have a flag word as last argument.
+
+[...]
+> +++ b/t/t5545-push-options.sh
+> @@ -142,6 +142,45 @@ test_expect_success 'push options work properly across http' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'push options and submodules' '
+
+Yay!
+
+What happens if the upstream of the parent repo supports push options
+but the upstream of the child repo doesn't?  What should happen?
+
+Thanks and hope that helps,
+Jonathan
