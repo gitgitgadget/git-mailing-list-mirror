@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FB5520969
-	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE4820966
+	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935131AbdCaBkt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 21:40:49 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:59220 "EHLO
+        id S935037AbdCaBkI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 21:40:08 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:59196 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S935068AbdCaBkM (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:12 -0400
+        by vger.kernel.org with ESMTP id S934971AbdCaBkH (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:07 -0400
 Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D4E29280B7;
-        Fri, 31 Mar 2017 01:40:09 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 42251280AE;
+        Fri, 31 Mar 2017 01:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490924409;
-        bh=KtFOepS6DyDyFKWbDioJHBzDPmSqD9ZW6OpJz+XaSwc=;
+        s=default; t=1490924405;
+        bh=UeFGT0fLVZ+xTbIBrs65peWY7O4nzaXhG337HIraDPs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JIJltgYV9VjaAy1MjVyXe+6K2thXn/gw8Wv4w8beF7U6xMN8agXK781qhtELWlp5i
-         XEZjrjrFWqojvkUN0vuM88ED/qFYoJ974sShKRIW84K7epKgg+T+yZIGPrqSR1kL40
-         J+mFVRLZ1LiUGLJ7XQ50QOizpkp+47ca8V7MTq2r7rhPXWFTZSPI9fONmcYUHQ0C4K
-         iygGR3zGZwooJqyu5SFALAsOOADnNU1js76By3QkMdMB2qrAbXsxpDmmCdbNYeBA5p
-         UwLWXiQEkVaFxCHXhrmoMbs9fVsJvA3Rj6hRCHvjqsAIBF1irxQcs+WF02t+z+9Il1
-         Xu3IrhOMedYN6SsvG7uEWAWOlOacE+BfAA4r/RZdNSR1Bp2xTFvlvVzS0tIYxqjlG/
-         3mPEEeYsq49F40M8ESY+ZlCXnl6JyGpxscDq7nP/3SoncHoA31FcE+op3ex4IKAQpx
-         tzNvxGVt9vtpYHUoSLV5P8YOhfxhRpQVvVr1BtrA5/v3ffbWGzy
+        b=VSksVdsqJilFkx25n7nTlPvqFHnFeSSF5buMqkeHq4vOkO1bwFgMcO7hYGpdJbahk
+         +J9FDGUdXnigrk94hOHT/z7wbu84uFOs5s300tJqz6E1rp+JVg2vTV51EWhjgBspK2
+         JBvs/vyroMjjKorZ1G3IqZfbeQZIH221rVGWVpvfHzqIBrA7EBX9C3Hk5vTIL3L3rK
+         RHEuVCIduDtuRNrU047iu+J27lDgHlVL2SSNRdKtm47msbrRhbOiUCYFPxY5SwfCBj
+         gJHGaE6KW/ivFi2HtF4zmEtGv36CSvUlzC8OMMwgEtpfPCOv3WB+3bbVS+/+BPvMJC
+         adFA2i/YvAQKGVi+/DABM5x2dXyeeobfbubLsQin7mgFbzFAsttLfq/+00gG36SqJC
+         mJg4/Kmj9ojjIUnd6uSlGO9zNj7x38IBGkhkIVq788zp0BcFslkTYiLEGrHFvLfbp+
+         XnpZvDlir09Jvp6M00kCGBWXjUVnrwVg5u58OyltcuwBZ1hZ7rZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 10/20] sha1_name: convert struct disambiguate_state to object_id
-Date:   Fri, 31 Mar 2017 01:39:51 +0000
-Message-Id: <20170331014001.953484-11-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 01/20] Define new hash-size constants for allocating memory
+Date:   Fri, 31 Mar 2017 01:39:42 +0000
+Message-Id: <20170331014001.953484-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170331014001.953484-1-sandals@crustytoothpaste.net>
 References: <20170331014001.953484-1-sandals@crustytoothpaste.net>
@@ -48,127 +48,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct disambiguate_state to use struct object_id by changing
-the structure definition and applying the following semantic patch:
-
-@@
-struct disambiguate_state E1;
-@@
-- E1.bin_pfx
-+ E1.bin_pfx.hash
-
-@@
-struct disambiguate_state *E1;
-@@
-- E1->bin_pfx
-+ E1->bin_pfx.hash
-
-@@
-struct disambiguate_state E1;
-@@
-- E1.candidate
-+ E1.candidate.hash
-
-@@
-struct disambiguate_state *E1;
-@@
-- E1->candidate
-+ E1->candidate.hash
-
-This conversion is needed so we can convert disambiguate_hint_fn later.
+Since we will want to transition to a new hash at some point in the
+future, and that hash may be larger in size than 160 bits, introduce two
+constants that can be used for allocating a sufficient amount of memory.
+They can be increased to reflect the largest supported hash size.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sha1_name.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ cache.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 3db166b40b..cf6f4be0c6 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -16,11 +16,11 @@ typedef int (*disambiguate_hint_fn)(const unsigned char *, void *);
- struct disambiguate_state {
- 	int len; /* length of prefix in hex chars */
- 	char hex_pfx[GIT_MAX_HEXSZ + 1];
--	unsigned char bin_pfx[GIT_MAX_RAWSZ];
-+	struct object_id bin_pfx;
+diff --git a/cache.h b/cache.h
+index db4120c233..02b6c753a3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -66,8 +66,12 @@ unsigned long git_deflate_bound(git_zstream *, unsigned long);
+ #define GIT_SHA1_RAWSZ 20
+ #define GIT_SHA1_HEXSZ (2 * GIT_SHA1_RAWSZ)
  
- 	disambiguate_hint_fn fn;
- 	void *cb_data;
--	unsigned char candidate[GIT_MAX_RAWSZ];
-+	struct object_id candidate;
- 	unsigned candidate_exists:1;
- 	unsigned candidate_checked:1;
- 	unsigned candidate_ok:1;
-@@ -37,10 +37,10 @@ static void update_candidates(struct disambiguate_state *ds, const unsigned char
- 	}
- 	if (!ds->candidate_exists) {
- 		/* this is the first candidate */
--		hashcpy(ds->candidate, current);
-+		hashcpy(ds->candidate.hash, current);
- 		ds->candidate_exists = 1;
- 		return;
--	} else if (!hashcmp(ds->candidate, current)) {
-+	} else if (!hashcmp(ds->candidate.hash, current)) {
- 		/* the same as what we already have seen */
- 		return;
- 	}
-@@ -52,14 +52,14 @@ static void update_candidates(struct disambiguate_state *ds, const unsigned char
- 	}
++/* The length in byte and in hex digits of the largest possible hash value. */
++#define GIT_MAX_RAWSZ GIT_SHA1_RAWSZ
++#define GIT_MAX_HEXSZ GIT_SHA1_HEXSZ
++
+ struct object_id {
+-	unsigned char hash[GIT_SHA1_RAWSZ];
++	unsigned char hash[GIT_MAX_RAWSZ];
+ };
  
- 	if (!ds->candidate_checked) {
--		ds->candidate_ok = ds->fn(ds->candidate, ds->cb_data);
-+		ds->candidate_ok = ds->fn(ds->candidate.hash, ds->cb_data);
- 		ds->disambiguate_fn_used = 1;
- 		ds->candidate_checked = 1;
- 	}
- 
- 	if (!ds->candidate_ok) {
- 		/* discard the candidate; we know it does not satisfy fn */
--		hashcpy(ds->candidate, current);
-+		hashcpy(ds->candidate.hash, current);
- 		ds->candidate_checked = 0;
- 		return;
- 	}
-@@ -151,7 +151,7 @@ static void unique_in_pack(struct packed_git *p,
- 		int cmp;
- 
- 		current = nth_packed_object_sha1(p, mid);
--		cmp = hashcmp(ds->bin_pfx, current);
-+		cmp = hashcmp(ds->bin_pfx.hash, current);
- 		if (!cmp) {
- 			first = mid;
- 			break;
-@@ -170,7 +170,7 @@ static void unique_in_pack(struct packed_git *p,
- 	 */
- 	for (i = first; i < num && !ds->ambiguous; i++) {
- 		current = nth_packed_object_sha1(p, i);
--		if (!match_sha(ds->len, ds->bin_pfx, current))
-+		if (!match_sha(ds->len, ds->bin_pfx.hash, current))
- 			break;
- 		update_candidates(ds, current);
- 	}
-@@ -213,12 +213,12 @@ static int finish_object_disambiguation(struct disambiguate_state *ds,
- 		 * same repository!
- 		 */
- 		ds->candidate_ok = (!ds->disambiguate_fn_used ||
--				    ds->fn(ds->candidate, ds->cb_data));
-+				    ds->fn(ds->candidate.hash, ds->cb_data));
- 
- 	if (!ds->candidate_ok)
- 		return SHORT_NAME_AMBIGUOUS;
- 
--	hashcpy(sha1, ds->candidate);
-+	hashcpy(sha1, ds->candidate.hash);
- 	return 0;
- }
- 
-@@ -332,7 +332,7 @@ static int init_object_disambiguation(const char *name, int len,
- 		ds->hex_pfx[i] = c;
- 		if (!(i & 1))
- 			val <<= 4;
--		ds->bin_pfx[i >> 1] |= val;
-+		ds->bin_pfx.hash[i >> 1] |= val;
- 	}
- 
- 	ds->len = len;
+ #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
