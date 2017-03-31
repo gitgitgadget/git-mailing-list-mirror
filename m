@@ -6,126 +6,90 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F3DC1FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 19:10:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8E921FAFB
+	for <e@80x24.org>; Fri, 31 Mar 2017 19:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753627AbdCaTKr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 15:10:47 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59317 "EHLO
+        id S1754387AbdCaTfa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 15:35:30 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52479 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750707AbdCaTKq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 15:10:46 -0400
+        with ESMTP id S1753986AbdCaTf3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 15:35:29 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B1E97CFA5;
-        Fri, 31 Mar 2017 15:10:44 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 925F97D656;
+        Fri, 31 Mar 2017 15:35:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wv37RjPMnYYjvhj03yfagvIKMMI=; b=RY8yWq
-        ICm9KcD2vK3AVWAfqZt2Z3DxFLLNVHPc+JWsQshXmic5lkuwornhZbopdhXTKaeN
-        j7wVVqAN8b0srqoSkBy02xjmfaxchl8RMeBtM9K56KM7thv44mSmyTTYRxbm5iaK
-        hMG9OadeaoARS3PqgaffqzQy13xEtO3bUFqrA=
+        :content-type; s=sasl; bh=FL9p0CjfvXC1mIo9NtLvSo0pg9o=; b=rUP+iH
+        +WTMza94VcWG4zIsVEF9BPlx5EueMcmThNYFFlURjuW/vuGQ1DmHCAElqqTzJeTq
+        OpKdgEicZP94RAUY6Hva+DAec4bbO0QBYY27PbeN4qg/UKpTCVgvOj3216yJEJmi
+        LUTW51R/4djvRyRikiuUbTChCDLLqmsuf5dhI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=u0BZhQin7edVZNGYiaQgKjk/xmbZcb3+
-        FqOXWhM344zws0aYXBfwJzaOthdhz93s1qXJyP9ZbG7HKqMWKJl3j3oVNlBWMuT5
-        HU7Z69MchbMzkI2ySgWTaSmQLjopMSqaMMdskpA8Z7ee78SeDKMG7oEnF0gj//lj
-        h4cDAolKkr0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 928857CFA4;
-        Fri, 31 Mar 2017 15:10:44 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=cgMs9kWoTEjYa3gZh/P94YqKmY7c9jjQ
+        ljByjqm2l8yjq5XnzubAETL2T/uct4APW1Cr8vwA7MwVXtf8YlVx/vHHusv6z5GE
+        ugiEnuTOVwhC7DXMITILp9zL4IaqCMA00WFtBHkBCulNIoaROwWdMvHc2+kZ8qKe
+        voTFCEBB+4U=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A7597D655;
+        Fri, 31 Mar 2017 15:35:28 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E82667CFA3;
-        Fri, 31 Mar 2017 15:10:43 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D16597D64D;
+        Fri, 31 Mar 2017 15:35:22 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v3 3/4] name-rev: provide debug output
-References: <xmqqinmq65at.fsf@gitster.mtv.corp.google.com>
-        <cover.1490967948.git.git@grubix.eu>
-        <21cf9d6f55d17463ab6eccdd78d57cf4a1b8e9e1.1490967948.git.git@grubix.eu>
-        <xmqqtw69z8vz.fsf@gitster.mtv.corp.google.com>
-        <14D0E7F4-0DC7-42ED-8DEE-B0338ECBA80D@grubix.eu>
-Date:   Fri, 31 Mar 2017 12:10:42 -0700
-In-Reply-To: <14D0E7F4-0DC7-42ED-8DEE-B0338ECBA80D@grubix.eu> (Michael
-        J. Gruber's message of "Fri, 31 Mar 2017 20:02:57 +0200")
-Message-ID: <xmqqshltxnwt.fsf@gitster.mtv.corp.google.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, peff@peff.net, kewill@microsoft.com,
+        Kevin Willford <kewillf@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] name-hash: fix buffer overrun
+References: <20170331173214.47514-1-git@jeffhostetler.com>
+        <20170331173214.47514-2-git@jeffhostetler.com>
+Date:   Fri, 31 Mar 2017 12:35:21 -0700
+In-Reply-To: <20170331173214.47514-2-git@jeffhostetler.com>
+        (git@jeffhostetler.com's message of "Fri, 31 Mar 2017 17:32:14 +0000")
+Message-ID: <xmqqo9whxmrq.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BD1FEC06-1645-11E7-B348-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 2EA96408-1649-11E7-AB6A-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@grubix.eu> writes:
+git@jeffhostetler.com writes:
 
->>What problem are you solving?  
+> From: Kevin Willford <kewillf@microsoft.com>
 >
-> Sorry, I forgot about that change and failed to mention it.
+> Add check for the end of the entries for the thread partition.
+> Add test for lazy init name hash with specific directory structure
 >
-> It makes no difference in the non-debug case which cares about the
-> Boolean only. In the debug case, I want to distinguish between
-> annotated and lightweight tags, just like describe --debug
-> does. By adding 1 via deref and passing this down, I know that an
-> annotated tag gets the value 2, a lightweight tag 1 and everything
-> else 0, just like describe --tags.
+> The lazy init hash name was causing a buffer overflow when the last
+> entry in the index was multiple folder deep with parent folders that
+> did not have any files in them.
+>
+> This adds a test for the boundary condition of the thread partitions
+> with the folder structure that was triggering the buffer overflow.
+>
+> The fix was to check if it is the last entry for the thread partition
+> in the handle_range_dir and not try to use the next entry in the cache.
+>
+> Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> ---
 
-If you want to only affect debug display, perhaps you should start
-with a patch like the attached, before adding any debug code as a
-preparatory step.  Then add your debugging thing, _WITHOUT_ the
-increment in name_rev(), that uses from_tag to choose between
-lightweight and annotated as a separate step.
+Will queue with ...
 
-When we decide that it would make sense to give precedence to
-annotated ones over lightweight ones in is_better_name(), the
-comparison can be further tweaked to actually compare values of the
-from_tag thing in *name and the current candidate.  That would have
-to be a separate step, as it changes the semantics (I suspect it
-would be a better change but it may not be).
+>  name-hash.c                             |  4 +++-
+>  t/t3008-ls-files-lazy-init-name-hash.sh | 19 +++++++++++++++++++
+>  2 files changed, 22 insertions(+), 1 deletion(-)
+>  create mode 100644 t/t3008-ls-files-lazy-init-name-hash.sh
 
-How does that sound?
+... this thing fixed by "chmod +x" (otherwise the tests won't start).
 
--- >8 --
-Subject: name-rev: allow to tell annotated and lightweight tags apart
-
-We do not use this feature yet, but from_tag that is passed around
-and kept in the rev_name structure now takes three values, instead
-of a boolean "did this come from refs/tags/ hierarchy?".  A new
-value '2' is "this is an annotated tag that came from refs/tags/
-hierarchy".
-
----
- builtin/name-rev.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index bf7ed015ae..fe2d306e7c 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -41,7 +41,7 @@ static int is_better_name(struct rev_name *name,
- 	 * We know that at least one of them is a non-tag at this point.
- 	 * favor a tag over a non-tag.
- 	 */
--	if (name->from_tag != from_tag)
-+	if (!!name->from_tag != !!from_tag)
- 		return from_tag;
- 
- 	/*
-@@ -247,8 +247,11 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
- 	}
- 	if (o && o->type == OBJ_COMMIT) {
- 		struct commit *commit = (struct commit *)o;
--		int from_tag = starts_with(path, "refs/tags/");
--
-+		int from_tag;
-+		if (starts_with(path, "refs/tags/"))
-+			from_tag = 1 + deref;
-+		else
-+			from_tag = 0;
- 		if (taggerdate == ULONG_MAX)
- 			taggerdate = ((struct commit *)o)->date;
- 		path = name_ref_abbrev(path, can_abbreviate_output);
+Thanks.
