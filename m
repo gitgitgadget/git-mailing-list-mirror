@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD18820966
-	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47B6D20966
+	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935111AbdCaBkT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 21:40:19 -0400
+        id S935104AbdCaBkS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 21:40:18 -0400
 Received: from castro.crustytoothpaste.net ([75.10.60.170]:59216 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S935038AbdCaBkO (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:14 -0400
+        by vger.kernel.org with ESMTP id S935082AbdCaBkM (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:12 -0400
 Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B1878280AF;
-        Fri, 31 Mar 2017 01:40:12 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DB50E280AD;
+        Fri, 31 Mar 2017 01:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490924412;
-        bh=ekk+DfDWYv85CFaPbjSvnHWuDd+4YYvrcntGlRM4Ne4=;
+        s=default; t=1490924410;
+        bh=6zip+PdXjdNtQmaYbWcRg+KNAx1EagFTPI9MKTaBqSA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=zrVMeWaIJZlNJ40OJBLKQM0E7zZjMaxaLaCcQc2N3lS+bBgP6luizFSFTkbdxczI3
-         302Eb0cBm093vDd+yU+hj9MOokjj0eJvl/UfKr4slL9A/AILpKcXQMyEh0Gmx9J09R
-         ZwbI+rgVnK41In1Zr6rPteV4TAEKFMsBecrznhwWkDKGTB9nbvrTN83JN1bq9kwxzj
-         AYsBtVJPEW9rhTm8ecCoS6ATl/PQZJ68Cy2oTFcfaxTPzjFVgfcJa4w1bNbUHijDV6
-         peBIrNgXlNhS64QTzhxf2Y/X54HKIIuV81xGmo48U8Su3iGZu69P3tTXfHMZxfug5U
-         zyl3Mp+33LF8Qks935q7V4LdxeN8RJkeQMHBkegWxgMLK/cIZs3GpkfiNEuT/ZTDvX
-         4oI87QGgn0NLCAmE29exjINnR2jTq/R6X8kJH7rmQ0FT4JoVSwu51ev5PU29JCgTPV
-         hCCvJyagTodfRwuui4W89rgLuFuypLK6OL2HqK2IzRpy8sNqqP4
+        b=DkUOen9sYtw2FAk7mImcNWKKlRukDIlsjV2G5cMZRb5ybGby5fJytn+VNYI76dAk4
+         rZk57TTaohXquLLRI5Pf439MqNfAs1ikV5cyGMl9HRwLs0jH+kjpDFGOtsICR1kRuR
+         Guyy81vIc7vYGYKtqRubxWPs4Xfg7FglMS/pvTaFHaqOpFYkBgayxAkcqk0e8RTuVT
+         Q5r6qyRi91+o+fhf9wsTukUHT1bbAHSLvWTeaK4ZXYqTv/yWPBt8j+dQGE6/PKeUsy
+         Y//LDY7Jw/ecEQ+Qca4JZNKtjrrPZ5InaLzm6fkZ2BD8+ZgWYHCjuIANBwv8XqRoF7
+         TWAzcHrt2yPQeXp/UZXRZMUj7SaaNmGNTiQfrarsPKdJjaotetDrlH+BbMFHGMJMof
+         VqgisdSeOnLKqPa68eWXyUPiNBgYgDhMHk5Gme4rYPtR03J5qDIpSWoCDEMYH97hVs
+         Mk3+vFljBUBybwwDJY3ejndi7os5XXcddApVryQtXFSc+5WPXhZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 15/20] Make sha1_array_append take a struct object_id *
-Date:   Fri, 31 Mar 2017 01:39:56 +0000
-Message-Id: <20170331014001.953484-16-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 12/20] submodule: convert check_for_new_submodule_commits to object_id
+Date:   Fri, 31 Mar 2017 01:39:53 +0000
+Message-Id: <20170331014001.953484-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170331014001.953484-1-sandals@crustytoothpaste.net>
 References: <20170331014001.953484-1-sandals@crustytoothpaste.net>
@@ -48,359 +48,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the callers to pass struct object_id by changing the function
-declaration and definition and applying the following semantic patch:
-
-@@
-expression E1, E2;
-@@
-- sha1_array_append(E1, E2.hash)
-+ sha1_array_append(E1, &E2)
-
-@@
-expression E1, E2;
-@@
-- sha1_array_append(E1, E2->hash)
-+ sha1_array_append(E1, E2)
+All of the callers of this function have been converted, so convert this
+function and update the callers.  This function also calls
+sha1_array_append, which we'll convert shortly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- bisect.c                   | 4 ++--
- builtin/cat-file.c         | 4 ++--
- builtin/diff.c             | 2 +-
- builtin/pack-objects.c     | 4 ++--
- builtin/pull.c             | 2 +-
- builtin/receive-pack.c     | 6 +++---
- combine-diff.c             | 2 +-
- connect.c                  | 4 ++--
- fetch-pack.c               | 8 ++++----
- fsck.c                     | 2 +-
- parse-options-cb.c         | 2 +-
- sha1-array.c               | 4 ++--
- sha1-array.h               | 2 +-
- sha1_name.c                | 2 +-
- submodule.c                | 6 +++---
- t/helper/test-sha1-array.c | 2 +-
- transport.c                | 6 ++++--
- 17 files changed, 32 insertions(+), 30 deletions(-)
+ builtin/fetch.c | 6 +++---
+ submodule.c     | 4 ++--
+ submodule.h     | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index ebaf7b05ba..886e630884 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -413,9 +413,9 @@ static int register_ref(const char *refname, const struct object_id *oid,
- 		current_bad_oid = xmalloc(sizeof(*current_bad_oid));
- 		oidcpy(current_bad_oid, oid);
- 	} else if (starts_with(refname, good_prefix.buf)) {
--		sha1_array_append(&good_revs, oid->hash);
-+		sha1_array_append(&good_revs, oid);
- 	} else if (starts_with(refname, "skip-")) {
--		sha1_array_append(&skipped_revs, oid->hash);
-+		sha1_array_append(&skipped_revs, oid);
- 	}
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index b5ad09d046..a41b892dcc 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -659,7 +659,7 @@ static int update_local_ref(struct ref *ref,
  
- 	strbuf_release(&good_prefix);
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8b85cb8cf0..8fbb667170 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -413,7 +413,7 @@ static int batch_loose_object(const struct object_id *oid,
- 			      const char *path,
- 			      void *data)
- {
--	sha1_array_append(data, oid->hash);
-+	sha1_array_append(data, oid);
- 	return 0;
- }
- 
-@@ -422,7 +422,7 @@ static int batch_packed_object(const struct object_id *oid,
- 			       uint32_t pos,
- 			       void *data)
- {
--	sha1_array_append(data, oid->hash);
-+	sha1_array_append(data, oid);
- 	return 0;
- }
- 
-diff --git a/builtin/diff.c b/builtin/diff.c
-index 398eee00d5..a5b34eb156 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -193,7 +193,7 @@ static int builtin_diff_combined(struct rev_info *revs,
- 	if (!revs->dense_combined_merges && !revs->combine_merges)
- 		revs->dense_combined_merges = revs->combine_merges = 1;
- 	for (i = 1; i < ents; i++)
--		sha1_array_append(&parents, ent[i].item->oid.hash);
-+		sha1_array_append(&parents, &ent[i].item->oid);
- 	diff_tree_combined(ent[0].item->oid.hash, &parents,
- 			   revs->dense_combined_merges, revs);
- 	sha1_array_clear(&parents);
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 16517f2637..dfeacd5c37 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2739,12 +2739,12 @@ static void record_recent_object(struct object *obj,
- 				 const char *name,
- 				 void *data)
- {
--	sha1_array_append(&recent_objects, obj->oid.hash);
-+	sha1_array_append(&recent_objects, &obj->oid);
- }
- 
- static void record_recent_commit(struct commit *commit, void *data)
- {
--	sha1_array_append(&recent_objects, commit->object.oid.hash);
-+	sha1_array_append(&recent_objects, &commit->object.oid);
- }
- 
- static void get_object_list(int ac, const char **av)
-diff --git a/builtin/pull.c b/builtin/pull.c
-index c007900ab5..183e377147 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -344,7 +344,7 @@ static void get_merge_heads(struct sha1_array *merge_heads)
- 			continue;  /* invalid line: does not start with SHA1 */
- 		if (starts_with(sb.buf + GIT_SHA1_HEXSZ, "\tnot-for-merge\t"))
- 			continue;  /* ref is not-for-merge */
--		sha1_array_append(merge_heads, oid.hash);
-+		sha1_array_append(merge_heads, &oid);
- 	}
- 	fclose(fp);
- 	strbuf_release(&sb);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index d6097ee08c..2853ea0f99 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -842,7 +842,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- 		if (si->used_shallow[i] &&
- 		    (si->used_shallow[i][cmd->index / 32] & mask) &&
- 		    !delayed_reachability_test(si, i))
--			sha1_array_append(&extra, si->shallow->oid[i].hash);
-+			sha1_array_append(&extra, &si->shallow->oid[i]);
- 
- 	opt.env = tmp_objdir_env(tmp_objdir);
- 	setup_alternate_shallow(&shallow_lock, &opt.shallow_file, &extra);
-@@ -1546,7 +1546,7 @@ static struct command *read_head_info(struct sha1_array *shallow)
- 			if (get_oid_hex(line + 8, &oid))
- 				die("protocol error: expected shallow sha, got '%s'",
- 				    line + 8);
--			sha1_array_append(shallow, oid.hash);
-+			sha1_array_append(shallow, &oid);
- 			continue;
- 		}
- 
-@@ -1817,7 +1817,7 @@ static void update_shallow_info(struct command *commands,
- 	for (cmd = commands; cmd; cmd = cmd->next) {
- 		if (is_null_oid(&cmd->new_oid))
- 			continue;
--		sha1_array_append(ref, cmd->new_oid.hash);
-+		sha1_array_append(ref, &cmd->new_oid);
- 		cmd->index = ref->nr - 1;
- 	}
- 	si->ref = ref;
-diff --git a/combine-diff.c b/combine-diff.c
-index a5b86d7eb9..c92029484c 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1535,7 +1535,7 @@ void diff_tree_combined_merge(const struct commit *commit, int dense,
- 	struct sha1_array parents = SHA1_ARRAY_INIT;
- 
- 	while (parent) {
--		sha1_array_append(&parents, parent->item->object.oid.hash);
-+		sha1_array_append(&parents, &parent->item->object.oid);
- 		parent = parent->next;
- 	}
- 	diff_tree_combined(commit->object.oid.hash, &parents, dense, rev);
-diff --git a/connect.c b/connect.c
-index 7d65c1c736..50b503da0d 100644
---- a/connect.c
-+++ b/connect.c
-@@ -153,7 +153,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 				die("protocol error: expected shallow sha-1, got '%s'", arg);
- 			if (!shallow_points)
- 				die("repository on the other end cannot be shallow");
--			sha1_array_append(shallow_points, old_oid.hash);
-+			sha1_array_append(shallow_points, &old_oid);
- 			continue;
- 		}
- 
-@@ -169,7 +169,7 @@ struct ref **get_remote_heads(int in, char *src_buf, size_t src_len,
- 		}
- 
- 		if (extra_have && !strcmp(name, ".have")) {
--			sha1_array_append(extra_have, old_oid.hash);
-+			sha1_array_append(extra_have, &old_oid);
- 			continue;
- 		}
- 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 543e8aa9e1..a2e2844318 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1042,7 +1042,7 @@ static void update_shallow(struct fetch_pack_args *args,
- 		struct object_id *oid = si->shallow->oid;
- 		for (i = 0; i < si->shallow->nr; i++)
- 			if (has_object_file(&oid[i]))
--				sha1_array_append(&extra, oid[i].hash);
-+				sha1_array_append(&extra, &oid[i]);
- 		if (extra.nr) {
- 			setup_alternate_shallow(&shallow_lock,
- 						&alternate_shallow_file,
-@@ -1060,7 +1060,7 @@ static void update_shallow(struct fetch_pack_args *args,
- 	if (!si->nr_ours && !si->nr_theirs)
- 		return;
- 	for (i = 0; i < nr_sought; i++)
--		sha1_array_append(&ref, sought[i]->old_oid.hash);
-+		sha1_array_append(&ref, &sought[i]->old_oid);
- 	si->ref = &ref;
- 
- 	if (args->update_shallow) {
-@@ -1078,9 +1078,9 @@ static void update_shallow(struct fetch_pack_args *args,
- 			return;
- 		}
- 		for (i = 0; i < si->nr_ours; i++)
--			sha1_array_append(&extra, oid[si->ours[i]].hash);
-+			sha1_array_append(&extra, &oid[si->ours[i]]);
- 		for (i = 0; i < si->nr_theirs; i++)
--			sha1_array_append(&extra, oid[si->theirs[i]].hash);
-+			sha1_array_append(&extra, &oid[si->theirs[i]]);
- 		setup_alternate_shallow(&shallow_lock,
- 					&alternate_shallow_file,
- 					&extra);
-diff --git a/fsck.c b/fsck.c
-index 8f41e692bb..6682de1de5 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -156,7 +156,7 @@ static void init_skiplist(struct fsck_options *options, const char *path)
- 			break;
- 		if (parse_oid_hex(buffer, &oid, &p) || *p != '\n')
- 			die("Invalid SHA-1: %s", buffer);
--		sha1_array_append(&skiplist, oid.hash);
-+		sha1_array_append(&skiplist, &oid);
- 		if (sorted && skiplist.nr > 1 &&
- 				oidcmp(&skiplist.oid[skiplist.nr - 2],
- 				       &oid) > 0)
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 40ece4d8c2..7baecdc864 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -106,7 +106,7 @@ int parse_opt_object_name(const struct option *opt, const char *arg, int unset)
- 		return -1;
- 	if (get_oid(arg, &oid))
- 		return error(_("malformed object name '%s'"), arg);
--	sha1_array_append(opt->value, oid.hash);
-+	sha1_array_append(opt->value, &oid);
- 	return 0;
- }
- 
-diff --git a/sha1-array.c b/sha1-array.c
-index 093d158003..26e596b264 100644
---- a/sha1-array.c
-+++ b/sha1-array.c
-@@ -2,10 +2,10 @@
- #include "sha1-array.h"
- #include "sha1-lookup.h"
- 
--void sha1_array_append(struct sha1_array *array, const unsigned char *sha1)
-+void sha1_array_append(struct sha1_array *array, const struct object_id *oid)
- {
- 	ALLOC_GROW(array->oid, array->nr + 1, array->alloc);
--	hashcpy(array->oid[array->nr++].hash, sha1);
-+	oidcpy(&array->oid[array->nr++], oid);
- 	array->sorted = 0;
- }
- 
-diff --git a/sha1-array.h b/sha1-array.h
-index c1f706acba..4e60576a82 100644
---- a/sha1-array.h
-+++ b/sha1-array.h
-@@ -10,7 +10,7 @@ struct sha1_array {
- 
- #define SHA1_ARRAY_INIT { NULL, 0, 0, 0 }
- 
--void sha1_array_append(struct sha1_array *array, const unsigned char *sha1);
-+void sha1_array_append(struct sha1_array *array, const struct object_id *oid);
- int sha1_array_lookup(struct sha1_array *array, const unsigned char *sha1);
- void sha1_array_clear(struct sha1_array *array);
- 
-diff --git a/sha1_name.c b/sha1_name.c
-index 2e38aedfa5..1316832d73 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -428,7 +428,7 @@ static int get_short_sha1(const char *name, int len, unsigned char *sha1,
- 
- static int collect_ambiguous(const struct object_id *oid, void *data)
- {
--	sha1_array_append(data, oid->hash);
-+	sha1_array_append(data, oid);
- 	return 0;
- }
- 
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+-			check_for_new_submodule_commits(ref->new_oid.hash);
++			check_for_new_submodule_commits(&ref->new_oid);
+ 		r = s_update_ref(msg, ref, 0);
+ 		format_display(display, r ? '!' : '*', what,
+ 			       r ? _("unable to update local ref") : NULL,
+@@ -675,7 +675,7 @@ static int update_local_ref(struct ref *ref,
+ 		strbuf_add_unique_abbrev(&quickref, ref->new_oid.hash, DEFAULT_ABBREV);
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+-			check_for_new_submodule_commits(ref->new_oid.hash);
++			check_for_new_submodule_commits(&ref->new_oid);
+ 		r = s_update_ref("fast-forward", ref, 1);
+ 		format_display(display, r ? '!' : ' ', quickref.buf,
+ 			       r ? _("unable to update local ref") : NULL,
+@@ -690,7 +690,7 @@ static int update_local_ref(struct ref *ref,
+ 		strbuf_add_unique_abbrev(&quickref, ref->new_oid.hash, DEFAULT_ABBREV);
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+-			check_for_new_submodule_commits(ref->new_oid.hash);
++			check_for_new_submodule_commits(&ref->new_oid);
+ 		r = s_update_ref("forced-update", ref, 1);
+ 		format_display(display, r ? '!' : '+', quickref.buf,
+ 			       r ? _("unable to update local ref") : _("forced update"),
 diff --git a/submodule.c b/submodule.c
-index 5c5c18ec3d..7912cba4f6 100644
+index 3200b7bb2b..5c5c18ec3d 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -650,7 +650,7 @@ static void collect_submodules_from_diff(struct diff_queue_struct *q,
- 		if (!S_ISGITLINK(p->two->mode))
- 			continue;
- 		commits = submodule_commits(submodules, p->two->path);
--		sha1_array_append(commits, p->two->oid.hash);
-+		sha1_array_append(commits, &p->two->oid);
- 	}
- }
- 
-@@ -817,7 +817,7 @@ static void submodule_collect_changed_cb(struct diff_queue_struct *q,
- static int add_sha1_to_array(const char *ref, const struct object_id *oid,
- 			     int flags, void *data)
- {
--	sha1_array_append(data, oid->hash);
-+	sha1_array_append(data, oid);
+@@ -821,14 +821,14 @@ static int add_sha1_to_array(const char *ref, const struct object_id *oid,
  	return 0;
  }
  
-@@ -828,7 +828,7 @@ void check_for_new_submodule_commits(struct object_id *oid)
+-void check_for_new_submodule_commits(unsigned char new_sha1[20])
++void check_for_new_submodule_commits(struct object_id *oid)
+ {
+ 	if (!initialized_fetch_ref_tips) {
+ 		for_each_ref(add_sha1_to_array, &ref_tips_before_fetch);
  		initialized_fetch_ref_tips = 1;
  	}
  
--	sha1_array_append(&ref_tips_after_fetch, oid->hash);
-+	sha1_array_append(&ref_tips_after_fetch, oid);
+-	sha1_array_append(&ref_tips_after_fetch, new_sha1);
++	sha1_array_append(&ref_tips_after_fetch, oid->hash);
  }
  
  static int add_sha1_to_argv(const unsigned char sha1[20], void *data)
-diff --git a/t/helper/test-sha1-array.c b/t/helper/test-sha1-array.c
-index b4bb97fccc..181c36e0a5 100644
---- a/t/helper/test-sha1-array.c
-+++ b/t/helper/test-sha1-array.c
-@@ -19,7 +19,7 @@ int cmd_main(int argc, const char **argv)
- 		if (skip_prefix(line.buf, "append ", &arg)) {
- 			if (get_oid_hex(arg, &oid))
- 				die("not a hexadecimal SHA1: %s", arg);
--			sha1_array_append(&array, oid.hash);
-+			sha1_array_append(&array, &oid);
- 		} else if (skip_prefix(line.buf, "lookup ", &arg)) {
- 			if (get_oid_hex(arg, &oid))
- 				die("not a hexadecimal SHA1: %s", arg);
-diff --git a/transport.c b/transport.c
-index 8a90b0c29b..e492757726 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1027,7 +1027,8 @@ int transport_push(struct transport *transport,
- 
- 			for (; ref; ref = ref->next)
- 				if (!is_null_oid(&ref->new_oid))
--					sha1_array_append(&commits, ref->new_oid.hash);
-+					sha1_array_append(&commits,
-+							  &ref->new_oid);
- 
- 			if (!push_unpushed_submodules(&commits,
- 						      transport->remote->name,
-@@ -1048,7 +1049,8 @@ int transport_push(struct transport *transport,
- 
- 			for (; ref; ref = ref->next)
- 				if (!is_null_oid(&ref->new_oid))
--					sha1_array_append(&commits, ref->new_oid.hash);
-+					sha1_array_append(&commits,
-+							  &ref->new_oid);
- 
- 			if (find_unpushed_submodules(&commits, transport->remote->name,
- 						&needs_pushing)) {
+diff --git a/submodule.h b/submodule.h
+index c8a0c9cb29..9c32b28b12 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -58,7 +58,7 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
+ 		const char *del, const char *add, const char *reset,
+ 		const struct diff_options *opt);
+ extern void set_config_fetch_recurse_submodules(int value);
+-extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
++extern void check_for_new_submodule_commits(struct object_id *oid);
+ extern int fetch_populated_submodules(const struct argv_array *options,
+ 			       const char *prefix, int command_line_option,
+ 			       int quiet, int max_parallel_jobs);
