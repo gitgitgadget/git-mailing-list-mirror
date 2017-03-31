@@ -2,96 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D52CD1FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 18:00:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 668A620969
+	for <e@80x24.org>; Fri, 31 Mar 2017 18:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933324AbdCaSAK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 14:00:10 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:35497 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933555AbdCaR7T (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 13:59:19 -0400
-Received: by mail-pg0-f42.google.com with SMTP id 81so77904051pgh.2
-        for <git@vger.kernel.org>; Fri, 31 Mar 2017 10:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6o5ZMp4JyTfi8hNuGVDCBp0l+b8kl7bGwySkEkzw9qk=;
-        b=IfRaAO5xRzr5mxt+/EjrftyNcR5Nj7JBwjw7FmGhLLp3enmgZnVYbB68t6hecGwbXg
-         c9LvwYkt0RJWxjQqN7kIDr/PJyXjQZ0WJP9BnHEQeuYiQzkcYJlx6/IB5zYbSCOshhkz
-         sxKHWEOlnfwPTHAt36YSCylVxTvdoz9vpjv+UMVSYg11aNy7X89yvo2BO0mPUoN8cWYy
-         eN5mOb2OzmzfJjd4Uf9OvOOhwodHEe/JLWfpQVhZ/aWqn7nE4qQ4cCxtTH7Ts9ulyqnW
-         w8Zbtdr1h4K3hIIpWSdw2miVGPApi1kZFljdLUNfpqGUTOcZFBXL8nXapCCSKkJs0dAa
-         EyRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6o5ZMp4JyTfi8hNuGVDCBp0l+b8kl7bGwySkEkzw9qk=;
-        b=cKcikVkJ0oGFZibr99jOBVWhelSaRhZ8zZKgb6mqq6dE9MjFaB6BuAdcG5S25GTyX5
-         g7H0nKqr3oxe7IHFrCSXPKBQf3b8vyNRxJtUJ6Opkr8BHZtM/G5WLZ82d3ZsMln6llul
-         8H49IXgtSd7cp1MGK7nNRd/DkNbCmBtYOshw7oJXcI8ANBwi1gvBefAUDo2fl0XeseaQ
-         f7vaT2Yk4qFKawQyvO8r/ExA7AkHb1fgkJNm3U27eEW3kUUdLYbS6M1+MvK7kuwrIjeE
-         f/wXhu9FXrnXoMrlVPYRNFxKUPAGI++MIk3TxTiuAIQfSEiRDaypeDKV/9jGJLXPeuF7
-         +wGQ==
-X-Gm-Message-State: AFeK/H0KqULjD0zBncRi1sdgB2uHHE/Wo0qLM8WGYXf+sOtyvdUQM3ByTlNNCsG55PRiPrcR
-X-Received: by 10.84.209.133 with SMTP id y5mr4727800plh.25.1490983157898;
-        Fri, 31 Mar 2017 10:59:17 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:240e:6326:bc58:48a9])
-        by smtp.gmail.com with ESMTPSA id n4sm11814421pfg.73.2017.03.31.10.59.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 31 Mar 2017 10:59:17 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     jacob.keller@gmail.com, daveparrish@gmail.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH] failure with diff --submodule=diff with moved nested submodule HEAD
-Date:   Fri, 31 Mar 2017 10:59:07 -0700
-Message-Id: <20170331175907.17400-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.2.511.g2abb8caf66
-In-Reply-To: <CA+P7+xoqWCpySc17104zggLgwx1mc0T+JXybrgd8sQxoQFP-PQ@mail.gmail.com>
-References: <CA+P7+xoqWCpySc17104zggLgwx1mc0T+JXybrgd8sQxoQFP-PQ@mail.gmail.com>
+        id S933302AbdCaSDP convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 31 Mar 2017 14:03:15 -0400
+Received: from mout.kundenserver.de ([217.72.192.75]:55028 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933205AbdCaSDO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 14:03:14 -0400
+Received: from MotoRolla.fritz.box ([82.83.170.190]) by
+ mrelayeu.kundenserver.de (mreue103 [212.227.15.183]) with ESMTPSA (Nemesis)
+ id 0LvQBP-1cBhuI2Rtr-010cST; Fri, 31 Mar 2017 20:03:01 +0200
+Date:   Fri, 31 Mar 2017 20:02:57 +0200
+User-Agent: K-9 Mail for Android
+In-Reply-To: <xmqqtw69z8vz.fsf@gitster.mtv.corp.google.com>
+References: <xmqqinmq65at.fsf@gitster.mtv.corp.google.com> <cover.1490967948.git.git@grubix.eu> <21cf9d6f55d17463ab6eccdd78d57cf4a1b8e9e1.1490967948.git.git@grubix.eu> <xmqqtw69z8vz.fsf@gitster.mtv.corp.google.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 8BIT
+Subject: Re: [PATCH v3 3/4] name-rev: provide debug output
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Luke Diamand <luke@diamand.org>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <14D0E7F4-0DC7-42ED-8DEE-B0338ECBA80D@grubix.eu>
+X-Provags-ID: V03:K0:mgrZv2/loN+d4szv/JQA5fODyXdgzOZw4PmdJLB5ycGbvTD9GJ4
+ B3S55bCTp7DpHfLcGt5RSu0p0ab5YUUztc0QECTbzAJ0ZKt/+bPZzRq71lW7/e8EusEW+hr
+ A3UA86vmabZ9RnHeSqS+hwKJDioBPY52NWwjMHid4wt/4eAJ1fBdgVRKv0Gjh81AXKxVzvi
+ BcdzCicM8MB19jjcMRrdA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:IAFBTkzoJXo=:oJLlVYD3740woE3kSRDnCd
+ 7MfydUeJ3M9oImoTjBDNdQ6dFfQwxdupOVsDVBCQ4L1EQMw1SlmxhjGGWV62lHBQlCbbW1jd8
+ nIFJznx+LbL2Bl7llzh6s3wPNdf4hgImi08eP4DKlmS+V1JXKshZrRfz8T3yTlzT1dYkS9Fp4
+ ufdMWgYb0pzBhyqIva1OKU9QIbKoWFkX5DF/0eVdgW8PvKhCqIAIEhpxMzM23zOQE8An+mpjL
+ PGNInrBjKWPQZtoi5beMQoVpxeF42eSVwkgaya+WxXPxnxkLz+vYeggkYnGXOW6aD2HW/QxAg
+ msWMJBUFBWrzSnxZRVun/quwcFZZL3pmT22A3aS/eDWENVVXBusMMOE4/Uv9nPV1SL5lmpw2v
+ /qH6VeikcC4dnEXfneS2sejwCWqdDb1Rx3O/UdZNhxrDlE3sNceAkHLSe+xl3WjBHGy+NC9Kz
+ eafUZnR62IaqYJJjpLvwaCWkBYih2J/+COxqQTsZSshjbmg7QRuItXpBg7IRrtE2aeU1BvGFU
+ KKMWNY2SB9C4OCcksiIf/KtuLE7WvT+a1XxAzxit3ZPNZ5ybcXyvalyhcpsMCT7u+8Eg/YD3B
+ gBCt3y1sVBtr772BmxyjE/JuUNp9627NRJH//TtSBjKIsN8mqblYJUgCNpR/Pk8aWcAWetBKu
+ R9jdtcp0sC6vStVljpjo94rYA17daUpuS8BDADEaT8tqulwMuMarfsc9d3+zqkpa9uF2yaMM8
+ os9j6c3wnT8myX7U
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fails reliable for me.
+Am 31. März 2017 18:52:16 MESZ schrieb Junio C Hamano <gitster@pobox.com>:
+>Michael J Gruber <git@grubix.eu> writes:
+>
+>> Currently, `git describe --contains --debug` does not create any
+>debug
+>> output because it does not pass the flag down to `git name-rev`,
+>which
+>> does not know that flag.
+>>
+>> Teach the latter that flag, so that the former can pass it down (in
+>> the following commit).
+>>
+>> The output is patterned after that of `git describe --debug`, with
+>the
+>> following differences:
+>>
+>> describe loops over all args to describe, then over all possible
+>> descriptions; name-rev does it the other way round. Therefore, we
+>need
+>> to amend each possible description by the arg that it is for (and we
+>> leave out the "searching to describe" header).
+>>
+>> The date cut-off for name-rev kicks in way more often than the
+>candidate
+>> number cut-off of describe, so we do not clutter the output with the
+>> cut-off.
+>>
+>> Signed-off-by: Michael J Gruber <git@grubix.eu>
+>> ---
+>
+>>  static void name_rev(struct commit *commit,
+>>  		const char *tip_name, unsigned long taggerdate,
+>>  		int generation, int distance, int from_tag,
+>> -		int deref)
+>> +		int deref, struct name_ref_data *data)
+>>  {
+>>  	struct rev_name *name = (struct rev_name *)commit->util;
+>>  	struct commit_list *parents;
+>> @@ -75,6 +88,7 @@ static void name_rev(struct commit *commit,
+>>  
+>>  	if (deref) {
+>>  		tip_name = xstrfmt("%s^0", tip_name);
+>> +		from_tag += 1;
+>
+>Why this change?  I didn't see it explained in the proposed log
+>message.  "deref" is true only when our immediate caller is the one
+>that inspected the object at the tip and found it to be a tag object
+>(i.e. not a lightweight tag or a branch).  from_tag is about "is the
+>tip within refs/tags/ hierarchy?  Yes/No?" and such a caller will
+>set it appropriately when calling us.  This function just passes it
+>down when it recursively calls itself.  
+>
+>We shouldn't be mucking with that value ourselves here, should we?
+>
+>The only case that this change may make a difference I can think of
+>is when you have a tag object pointed at from outside refs/tags
+>(e.g. refs/heads/foo is a tag object); if you are trying to change
+>the definition of "from_tag" from the current "Is the tip inside
+>refs/tags/?" to "Is the tip either inside refs/tags/ or is it a tag
+>object anywhere?", that may be a good change (I didn't think things
+>through, though), but that shouldn't be hidden inside a commit that
+>claims to only add support for debugging.
+>
+>What problem are you solving?  
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- t/t4060-diff-submodule-option-diff-format.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Sorry, I forgot about that change and failed to mention it.
 
-diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
-index 7e23b55ea4..89bced3484 100755
---- a/t/t4060-diff-submodule-option-diff-format.sh
-+++ b/t/t4060-diff-submodule-option-diff-format.sh
-@@ -746,4 +746,20 @@ test_expect_success 'diff --submodule=diff with .git file' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'setup nested submodule' '
-+	git submodule add -f ./sm2 &&
-+	git commit -a -m "add sm2" &&
-+	git -C sm2 submodule add ../sm2 &&
-+	git -C sm2 commit -a -m "nested sub"
-+'
-+
-+test_expect_success 'move nested submodule HEAD' '
-+	git -C sm2/sm2 commit --allow-empty -m "new HEAD"
-+'
-+
-+test_expect_success 'diff --submodule=diff with moved nested submodule HEAD' '
-+	git -C sm2 diff --submodule=diff >actual 2>err &&
-+	test_must_be_empty err
-+'
-+
- test_done
--- 
-2.12.2.511.g2abb8caf66
+It makes no difference in the non-debug case which cares about the Boolean only. In the debug case, I want to distinguish between annotated and lightweight tags, just like describe --debug does. By adding 1 via deref and passing this down, I know that an annotated tag gets the value 2, a lightweight tag 1 and everything else 0, just like describe --tags.
+
+>> @@ -236,7 +273,6 @@ static int name_ref(const char *path, const
+>struct object_id *oid, int flags, vo
+>>  	}
+>>  
+>>  	add_to_tip_table(oid->hash, path, can_abbreviate_output);
+>> -
+>>  	while (o && o->type == OBJ_TAG) {
+>>  		struct tag *t = (struct tag *) o;
+>>  		if (!t->tagged)
+>
+>This is a patch noise we can do without.
+>
+>Thanks.
 
