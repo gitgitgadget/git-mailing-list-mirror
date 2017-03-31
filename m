@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47B6D20966
-	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFB9120966
+	for <e@80x24.org>; Fri, 31 Mar 2017 01:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935104AbdCaBkS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Mar 2017 21:40:18 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:59216 "EHLO
+        id S935115AbdCaBkY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Mar 2017 21:40:24 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:59294 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S935082AbdCaBkM (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:12 -0400
+        by vger.kernel.org with ESMTP id S934699AbdCaBkU (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 30 Mar 2017 21:40:20 -0400
 Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DB50E280AD;
-        Fri, 31 Mar 2017 01:40:10 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 8A2C5280BB;
+        Fri, 31 Mar 2017 01:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1490924410;
-        bh=6zip+PdXjdNtQmaYbWcRg+KNAx1EagFTPI9MKTaBqSA=;
+        s=default; t=1490924413;
+        bh=muXS/VTgUYniBU/B61cVhFC39EMbQVb0Z2IDpuafE2Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=DkUOen9sYtw2FAk7mImcNWKKlRukDIlsjV2G5cMZRb5ybGby5fJytn+VNYI76dAk4
-         rZk57TTaohXquLLRI5Pf439MqNfAs1ikV5cyGMl9HRwLs0jH+kjpDFGOtsICR1kRuR
-         Guyy81vIc7vYGYKtqRubxWPs4Xfg7FglMS/pvTaFHaqOpFYkBgayxAkcqk0e8RTuVT
-         Q5r6qyRi91+o+fhf9wsTukUHT1bbAHSLvWTeaK4ZXYqTv/yWPBt8j+dQGE6/PKeUsy
-         Y//LDY7Jw/ecEQ+Qca4JZNKtjrrPZ5InaLzm6fkZ2BD8+ZgWYHCjuIANBwv8XqRoF7
-         TWAzcHrt2yPQeXp/UZXRZMUj7SaaNmGNTiQfrarsPKdJjaotetDrlH+BbMFHGMJMof
-         VqgisdSeOnLKqPa68eWXyUPiNBgYgDhMHk5Gme4rYPtR03J5qDIpSWoCDEMYH97hVs
-         Mk3+vFljBUBybwwDJY3ejndi7os5XXcddApVryQtXFSc+5WPXhZ
+        b=STXPI9TUZg/A0303FsJ0LeK1lx6m5KVSj2bCAA1oO8HBTBBtXm7NmbtyiIC+RyM46
+         hxBXWv3ssepOvadh/OI9D1lgc1YJJc2jiLeoBGOfE2rJzz4OLoNQkv4D5186B6t22U
+         BM9qzATU0tL7hx2NRaaJIzR1CU4oAkB7WW4stZ9I35WCYAM1LiQjorGq0+K/PoS64a
+         7ffxkR4ETLhHIFQe0W/FM4kaO7aNG7heZXpP2YqA7hCzl8ZmCyT+F6Lkm7CdEpq6nr
+         wYT95dTME+gYr5U0rEScSrPK8bF+HcjVdFKyTpZShy8jfyvn0GMaK/c62PQenxlYKF
+         LOqYqwNsEVVxPWoI9ZdQdmADsEzi1YDHlEPAxECsCHzDV8Wq6PKkW2V7c2eREyvG0K
+         QYd2EWUlbuNGEAXbQBfkau5ibZRs3Ijls0JVlPyQ70qXBwgSCSCoOYYyzmLzISb9Rq
+         dNoV85wqLCplgYmTayr0iEQpPBdxiZ30PvtJa3RHYM89fBABQGn
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 12/20] submodule: convert check_for_new_submodule_commits to object_id
-Date:   Fri, 31 Mar 2017 01:39:53 +0000
-Message-Id: <20170331014001.953484-13-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 16/20] Convert remaining callers of sha1_array_lookup to object_id
+Date:   Fri, 31 Mar 2017 01:39:57 +0000
+Message-Id: <20170331014001.953484-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170331014001.953484-1-sandals@crustytoothpaste.net>
 References: <20170331014001.953484-1-sandals@crustytoothpaste.net>
@@ -48,79 +48,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All of the callers of this function have been converted, so convert this
-function and update the callers.  This function also calls
-sha1_array_append, which we'll convert shortly.
+There are a very small number of callers which don't already use struct
+object_id.  Convert them.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/fetch.c | 6 +++---
- submodule.c     | 4 ++--
- submodule.h     | 2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ bisect.c               | 14 +++++++-------
+ builtin/pack-objects.c | 16 ++++++++--------
+ ref-filter.c           | 22 +++++++++++-----------
+ 3 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b5ad09d046..a41b892dcc 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -659,7 +659,7 @@ static int update_local_ref(struct ref *ref,
- 
- 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
- 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
--			check_for_new_submodule_commits(ref->new_oid.hash);
-+			check_for_new_submodule_commits(&ref->new_oid);
- 		r = s_update_ref(msg, ref, 0);
- 		format_display(display, r ? '!' : '*', what,
- 			       r ? _("unable to update local ref") : NULL,
-@@ -675,7 +675,7 @@ static int update_local_ref(struct ref *ref,
- 		strbuf_add_unique_abbrev(&quickref, ref->new_oid.hash, DEFAULT_ABBREV);
- 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
- 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
--			check_for_new_submodule_commits(ref->new_oid.hash);
-+			check_for_new_submodule_commits(&ref->new_oid);
- 		r = s_update_ref("fast-forward", ref, 1);
- 		format_display(display, r ? '!' : ' ', quickref.buf,
- 			       r ? _("unable to update local ref") : NULL,
-@@ -690,7 +690,7 @@ static int update_local_ref(struct ref *ref,
- 		strbuf_add_unique_abbrev(&quickref, ref->new_oid.hash, DEFAULT_ABBREV);
- 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
- 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
--			check_for_new_submodule_commits(ref->new_oid.hash);
-+			check_for_new_submodule_commits(&ref->new_oid);
- 		r = s_update_ref("forced-update", ref, 1);
- 		format_display(display, r ? '!' : '+', quickref.buf,
- 			       r ? _("unable to update local ref") : _("forced update"),
-diff --git a/submodule.c b/submodule.c
-index 3200b7bb2b..5c5c18ec3d 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -821,14 +821,14 @@ static int add_sha1_to_array(const char *ref, const struct object_id *oid,
- 	return 0;
+diff --git a/bisect.c b/bisect.c
+index 886e630884..a25d008693 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -754,9 +754,9 @@ static void handle_bad_merge_base(void)
+ 	exit(1);
  }
  
--void check_for_new_submodule_commits(unsigned char new_sha1[20])
-+void check_for_new_submodule_commits(struct object_id *oid)
+-static void handle_skipped_merge_base(const unsigned char *mb)
++static void handle_skipped_merge_base(const struct object_id *mb)
  {
- 	if (!initialized_fetch_ref_tips) {
- 		for_each_ref(add_sha1_to_array, &ref_tips_before_fetch);
- 		initialized_fetch_ref_tips = 1;
+-	char *mb_hex = sha1_to_hex(mb);
++	char *mb_hex = oid_to_hex(mb);
+ 	char *bad_hex = oid_to_hex(current_bad_oid);
+ 	char *good_hex = join_sha1_array_hex(&good_revs, ' ');
+ 
+@@ -787,16 +787,16 @@ static void check_merge_bases(int no_checkout)
+ 	result = get_merge_bases_many(rev[0], rev_nr - 1, rev + 1);
+ 
+ 	for (; result; result = result->next) {
+-		const unsigned char *mb = result->item->object.oid.hash;
+-		if (!hashcmp(mb, current_bad_oid->hash)) {
++		const struct object_id *mb = &result->item->object.oid;
++		if (!oidcmp(mb, current_bad_oid)) {
+ 			handle_bad_merge_base();
+-		} else if (0 <= sha1_array_lookup(&good_revs, mb)) {
++		} else if (0 <= sha1_array_lookup(&good_revs, mb->hash)) {
+ 			continue;
+-		} else if (0 <= sha1_array_lookup(&skipped_revs, mb)) {
++		} else if (0 <= sha1_array_lookup(&skipped_revs, mb->hash)) {
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf(_("Bisecting: a merge base must be tested\n"));
+-			exit(bisect_checkout(mb, no_checkout));
++			exit(bisect_checkout(mb->hash, no_checkout));
+ 		}
  	}
  
--	sha1_array_append(&ref_tips_after_fetch, new_sha1);
-+	sha1_array_append(&ref_tips_after_fetch, oid->hash);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index dfeacd5c37..dca1b68e69 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2670,14 +2670,14 @@ static int has_sha1_pack_kept_or_nonlocal(const unsigned char *sha1)
+  */
+ static struct sha1_array recent_objects;
+ 
+-static int loosened_object_can_be_discarded(const unsigned char *sha1,
++static int loosened_object_can_be_discarded(const struct object_id *oid,
+ 					    unsigned long mtime)
+ {
+ 	if (!unpack_unreachable_expiration)
+ 		return 0;
+ 	if (mtime > unpack_unreachable_expiration)
+ 		return 0;
+-	if (sha1_array_lookup(&recent_objects, sha1) >= 0)
++	if (sha1_array_lookup(&recent_objects, oid->hash) >= 0)
+ 		return 0;
+ 	return 1;
+ }
+@@ -2686,7 +2686,7 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ {
+ 	struct packed_git *p;
+ 	uint32_t i;
+-	const unsigned char *sha1;
++	struct object_id oid;
+ 
+ 	for (p = packed_git; p; p = p->next) {
+ 		if (!p->pack_local || p->pack_keep)
+@@ -2696,11 +2696,11 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+ 			die("cannot open pack index");
+ 
+ 		for (i = 0; i < p->num_objects; i++) {
+-			sha1 = nth_packed_object_sha1(p, i);
+-			if (!packlist_find(&to_pack, sha1, NULL) &&
+-			    !has_sha1_pack_kept_or_nonlocal(sha1) &&
+-			    !loosened_object_can_be_discarded(sha1, p->mtime))
+-				if (force_object_loose(sha1, p->mtime))
++			nth_packed_object_oid(&oid, p, i);
++			if (!packlist_find(&to_pack, oid.hash, NULL) &&
++			    !has_sha1_pack_kept_or_nonlocal(oid.hash) &&
++			    !loosened_object_can_be_discarded(&oid, p->mtime))
++				if (force_object_loose(oid.hash, p->mtime))
+ 					die("unable to force loose object");
+ 		}
+ 	}
+diff --git a/ref-filter.c b/ref-filter.c
+index 9c82b5b9d6..d3dcb53dd5 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1677,22 +1677,22 @@ static int filter_pattern_match(struct ref_filter *filter, const char *refname)
+  * the need to parse the object via parse_object(). peel_ref() might be a
+  * more efficient alternative to obtain the pointee.
+  */
+-static const unsigned char *match_points_at(struct sha1_array *points_at,
+-					    const unsigned char *sha1,
+-					    const char *refname)
++static const struct object_id *match_points_at(struct sha1_array *points_at,
++					       const struct object_id *oid,
++					       const char *refname)
+ {
+-	const unsigned char *tagged_sha1 = NULL;
++	const struct object_id *tagged_oid = NULL;
+ 	struct object *obj;
+ 
+-	if (sha1_array_lookup(points_at, sha1) >= 0)
+-		return sha1;
+-	obj = parse_object(sha1);
++	if (sha1_array_lookup(points_at, oid->hash) >= 0)
++		return oid;
++	obj = parse_object(oid->hash);
+ 	if (!obj)
+ 		die(_("malformed object at '%s'"), refname);
+ 	if (obj->type == OBJ_TAG)
+-		tagged_sha1 = ((struct tag *)obj)->tagged->oid.hash;
+-	if (tagged_sha1 && sha1_array_lookup(points_at, tagged_sha1) >= 0)
+-		return tagged_sha1;
++		tagged_oid = &((struct tag *)obj)->tagged->oid;
++	if (tagged_oid && sha1_array_lookup(points_at, tagged_oid->hash) >= 0)
++		return tagged_oid;
+ 	return NULL;
  }
  
- static int add_sha1_to_argv(const unsigned char sha1[20], void *data)
-diff --git a/submodule.h b/submodule.h
-index c8a0c9cb29..9c32b28b12 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -58,7 +58,7 @@ extern void show_submodule_inline_diff(FILE *f, const char *path,
- 		const char *del, const char *add, const char *reset,
- 		const struct diff_options *opt);
- extern void set_config_fetch_recurse_submodules(int value);
--extern void check_for_new_submodule_commits(unsigned char new_sha1[20]);
-+extern void check_for_new_submodule_commits(struct object_id *oid);
- extern int fetch_populated_submodules(const struct argv_array *options,
- 			       const char *prefix, int command_line_option,
- 			       int quiet, int max_parallel_jobs);
+@@ -1772,7 +1772,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	if (!filter_pattern_match(filter, refname))
+ 		return 0;
+ 
+-	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid->hash, refname))
++	if (filter->points_at.nr && !match_points_at(&filter->points_at, oid, refname))
+ 		return 0;
+ 
+ 	/*
