@@ -2,85 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,PLING_QUERY,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E611FAFB
-	for <e@80x24.org>; Fri, 31 Mar 2017 16:01:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3408420969
+	for <e@80x24.org>; Fri, 31 Mar 2017 16:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933214AbdCaQBV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 12:01:21 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63846 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S933149AbdCaQBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 12:01:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 949527A7F6;
-        Fri, 31 Mar 2017 12:01:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Rw8oIeOp2ne3dNKg+0EkkWMXTWE=; b=akHd+l
-        /sMbjybpMkXpiAb7OB7B5hYhWH96Mh0f/bCLrML7S+KFYSqGDsdeEHIAhiLpkznz
-        W9SwPgrPjfA5MQbGtO02XZgAN6k+bjL2An60a49XnzhQxv5NC/Xx1TJcA1kYGNij
-        LQmMwdCO/patqjMlFOB62oXnCXXYZkyoGr2c8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=a2Exc703UwLnFu6L5vE9URLVDzzrHUkg
-        wUN33uXKKYcsHlzzX52Iau+nEdaSfAh1bEFevnyN0lpMfYtUBdCu+oybIbh9weUa
-        F/XpGu1u8maJihbG/0GxiZau1gHdQTHUxwK8ups/N3ilbGX4kcRJa8fW+4Z5sPQ8
-        IoB80WoJ9is=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8CA347A7F5;
-        Fri, 31 Mar 2017 12:01:18 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E66AD7A7F4;
-        Fri, 31 Mar 2017 12:01:17 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        David Turner <novalis@novalis.org>, git@vger.kernel.org
-Subject: Re: [PATCH v2 00/20] Separate `ref_cache` into a separate module
-References: <cover.1490966385.git.mhagger@alum.mit.edu>
-Date:   Fri, 31 Mar 2017 09:01:16 -0700
-In-Reply-To: <cover.1490966385.git.mhagger@alum.mit.edu> (Michael Haggerty's
-        message of "Fri, 31 Mar 2017 16:10:58 +0200")
-Message-ID: <xmqq1std1lmb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 467EFB42-162B-11E7-8DBA-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+        id S933211AbdCaQFZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 12:05:25 -0400
+Received: from mail-wr0-f181.google.com ([209.85.128.181]:33843 "EHLO
+        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933182AbdCaQFY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 12:05:24 -0400
+Received: by mail-wr0-f181.google.com with SMTP id l43so112044162wre.1
+        for <git@vger.kernel.org>; Fri, 31 Mar 2017 09:05:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:subject:date:message-id:cc:to
+         :mime-version;
+        bh=zpKEiXzccS1Q4DyhKdg5LMJguPCLeRGm2lwNL9qgZUM=;
+        b=NZoewxF8HMniZL9qqHq1URQ74UxATtGUnKb8OlLX/xlqqDKa87iTcXbjtxXA2Rv9kx
+         Z9sbscGPxluhqXQC+b7gB45IW3cuTmWCC1tQIh0bbxHzstokGIC7O+C3ywo+F8XgGXV0
+         b2NH9/JKIj357RJlzSL+cj4QW6DLuKf+oNTAy0A8LgRS7MMDStxIASmTD9kavoqBVE87
+         nZQ7LF1IvVhbK11ALUmf5XRVCQN5XjlJtN6u9TbhbZQvt68j7Qm+S5lipwAp0UZYU+sG
+         L+xaGm26ORndC6bU42ZqHiUv1LodlUMB+9MMl/9aZnNQFk5mk+WSbz0yktn3mj1+tLUS
+         NPbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:subject:date
+         :message-id:cc:to:mime-version;
+        bh=zpKEiXzccS1Q4DyhKdg5LMJguPCLeRGm2lwNL9qgZUM=;
+        b=lunfmcToy9KKryk4A1C+ew28/3YjTy3kqkGno9BE39jseMdkBOfIQNKspx7a7Cd04a
+         EO0vAJctrsUt2dnhiWk+pulqrKEdLmgq/TdIG+y7S+zgoaJwHKSHeep1/N88FBVom2O+
+         Kua/Ht4eyOlbqBYr/X09cXrLQWfaC/LCdPyujHzvsdPZl+0nppyVSZX5TWaer96lqmeS
+         QeRjFV7nJSAgLvrjb8XTJ6H4pMuOEqcH+8tU30ZRaf2mIoBNtPSM3LU3PbVnkrp5lkFj
+         Z/o9MtrSI6GxnB2BrK84983JspHpDX6WKTlY/KUGRzGMWJM+CvKwI2IBWAgVevcSlbwO
+         vWhw==
+X-Gm-Message-State: AFeK/H2Fxqajz5i3Z2gxLSvp4+tzycU+GmElZwiNhu/u73dYK6gdKlQv/ZXM4cFNP0gqKg==
+X-Received: by 10.223.136.214 with SMTP id g22mr3526229wrg.37.1490976321746;
+        Fri, 31 Mar 2017 09:05:21 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id r11sm6138832wrb.16.2017.03.31.09.05.19
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 31 Mar 2017 09:05:20 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Subject: SHA1 collision in production repo?! (probably not)
+Date:   Fri, 31 Mar 2017 18:05:17 +0200
+Message-Id: <4D74C1D4-9EA7-4A17-AFC5-0B54B4A6DD0E@gmail.com>
+Cc:     Jeff King <peff@peff.net>
+To:     Git List <git@vger.kernel.org>
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Hi,
 
-> This version literally only contains a few commit message changes and
-> one minor comment changes relative to v1. The code is identical. I
-> wasn't sure whether it is even worth sending this patch series to the
-> ML again; Junio, if you'd prefer I just send a link to a published
-> branch in such cases, please let me know.
+I just got a report with the following output after a "git fetch" operation
+using Git 2.11.0.windows.3 [1]:
 
-The review on the list is not about letting me pick it up, but is
-about giving reviewing contributors a chance to comment.  I think
-for a series this important ;-) it is good that you are giving it
-multiple exposures so that people who were offline the last time can
-have a chance to look at it, even if the update is minimum.
+remote: Counting objects: 5922, done.
+remote: Compressing objects: 100% (14/14), done.
+error: inflate: data stream error (unknown compression method)
+error: unable to unpack 6acd8f279a8b20311665f41134579b7380970446 header
+fatal: SHA1 COLLISION FOUND WITH 6acd8f279a8b20311665f41134579b7380970446 !
+fatal: index-pack failed
 
-> This patch series is also available from my GitHub fork [2] as branch
-> "separate-ref-cache". These patches depend on Duy's
-> nd/files-backend-git-dir branch.
+I would be really surprised if we discovered a SHA1 collision in a production
+repo. My guess is that this is somehow triggered by a network issue (see data
+stream error). Any tips how to debug this?
 
-I am getting the impression that the files-backend thing as well as
-this topic are ready for 'next'.  Please stop me if I missed something
-in these topics (especially the other one) that needs updating
-before that happens.
+Thanks,
+Lars
 
-Thanks.
+[1] Git for Windows build based on Git v2.11.0
