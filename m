@@ -2,106 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 748F520969
-	for <e@80x24.org>; Fri, 31 Mar 2017 18:34:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF86320969
+	for <e@80x24.org>; Fri, 31 Mar 2017 18:36:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752472AbdCaSd6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 14:33:58 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53256 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751346AbdCaSd5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 14:33:57 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 96BC57C52A;
-        Fri, 31 Mar 2017 14:33:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hfqZOIjVAnPN5G4GTwzlS13cNjE=; b=OEU3cZ
-        hMFeApvgyb804NcIaicb4rjI5LlYsKkOEKVGS8PhywpkfKeUA+NOt0F0WkuqyQVE
-        SNUweycKW2czB/4sxk90oa2qiwXcrnP04UXgrMiNfJ4fcWvvGV86N/l/7NsW5oxc
-        nIuobEFD9R4cn8nTMtG6vlr6UX7+BnVCOkc04=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ktSG9H+tOsMA6T5A6huViPTmvCRXJ7UE
-        c0o+YNlPCHG2vvinnJasQJct6K3TCPBRY8MNrzcUfebOHWX9JnR/quIzgCpMoyXS
-        95booqFBam9dWbKTBRgHVWaBtbLjQwm2YRiGslIwbF0s2LHaQs55IyJm7iByhaLS
-        E9a0UJ3WGyc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8EA2F7C529;
-        Fri, 31 Mar 2017 14:33:55 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1751767AbdCaSgL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 14:36:11 -0400
+Received: from zandvoort.avirtualhome.com ([96.126.105.64]:56046 "EHLO
+        mail.avirtualhome.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750707AbdCaSgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 14:36:10 -0400
+Received: from [192.168.1.161] (pool-108-40-123-60.bltmmd.fios.verizon.net [108.40.123.60])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F1A3E7C528;
-        Fri, 31 Mar 2017 14:33:54 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: Re: [PATCH v3 3/4] name-rev: provide debug output
-References: <xmqqinmq65at.fsf@gitster.mtv.corp.google.com>
-        <cover.1490967948.git.git@grubix.eu>
-        <21cf9d6f55d17463ab6eccdd78d57cf4a1b8e9e1.1490967948.git.git@grubix.eu>
-        <xmqqtw69z8vz.fsf@gitster.mtv.corp.google.com>
-        <14D0E7F4-0DC7-42ED-8DEE-B0338ECBA80D@grubix.eu>
-        <xmqqd1cxz5gb.fsf@gitster.mtv.corp.google.com>
-Date:   Fri, 31 Mar 2017 11:33:53 -0700
-In-Reply-To: <xmqqd1cxz5gb.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Fri, 31 Mar 2017 11:06:28 -0700")
-Message-ID: <xmqqzig1xpm6.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        by mail.avirtualhome.com (Postfix) with ESMTPSA id C81D1174C2;
+        Fri, 31 Mar 2017 14:36:08 -0400 (EDT)
+To:     git@vger.kernel.org
+From:   Peter van der Does <peter@avirtualhome.com>
+Subject: [PATCH v2] git-gui: Error on systems with TK < 8.6.0
+Cc:     Pat Thoyts <patthoyts@users.sourceforge.net>
+Message-ID: <ca09fdf0-43e5-0bc6-1fe1-9331e3820d6a@avirtualhome.com>
+Date:   Fri, 31 Mar 2017 14:36:08 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101
+ Thunderbird/53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 987B3C52-1640-11E7-8F7B-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Using git-gui on systems that run a TK version below 8.6.0 results in a
+crash when checking for the current theme.
 
-> Michael J Gruber <git@grubix.eu> writes:
->
->>>The only case that this change may make a difference I can think of
->>>is when you have a tag object pointed at from outside refs/tags
->>>(e.g. refs/heads/foo is a tag object); if you are trying to change
->>>the definition of "from_tag" from the current "Is the tip inside
->>>refs/tags/?" to "Is the tip either inside refs/tags/ or is it a tag
->>>object anywhere?", that may be a good change (I didn't think things
->>>through, though), but that shouldn't be hidden inside a commit that
->>>claims to only add support for debugging.
->>>
->>>What problem are you solving?  
->>
->> Sorry, I forgot about that change and failed to mention it.
->>
->> It makes no difference in the non-debug case which cares about the
->> Boolean only. In the debug case, I want to distinguish between
->> annotated and lightweight tags, just like describe --debug does. By
->> adding 1 via deref and passing this down, I know that an annotated tag
->> gets the value 2, a lightweight tag 1 and everything else 0, just like
->> describe --tags.
->
-> So it sounds like you meant to do something else, and the
-> implementation is wrong for that something else (i.e. it wouldn't do
-> the right thing for a tag object outside refs/tags/, with or without
-> the "--debug" option passed).
+Catch the error on those systems and use a different command to check
+for the current theme.
 
-The damage seems worse, but I may be misreading the code.
+Signed-off-by: Peter van der Does <peter@avirtualhome.com>
+---
+ lib/themed.tcl | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-is_better_name() compares name->from_tag and from_tag numerically,
-because it was designed to take a boolean view of that variable.
-Now, an artificially bumped 2 gets compared with name->from_tag that
-may be 1 and gets different priority.  That artificially inflated
-value may be propagated to name->from_tag when the current tip is
-judged as a better basis for naming the object.
-
-If this change is only for debugging, perhaps inside if(data->debug)
-you added, instead of looking at from_tag, you can look at both
-from_tag and deref to choose which prio-nmes to show, without
-butchering the value in from_tag variable to affect the existing
-code that is exercised with or without --debug?
+diff --git a/lib/themed.tcl b/lib/themed.tcl
+index 351a712..bb4e8f2 100644
+--- a/lib/themed.tcl
++++ b/lib/themed.tcl
+@@ -248,7 +248,11 @@ proc tspinbox {w args} {
+ proc ttext {w args} {
+ 	global use_ttk
+ 	if {$use_ttk} {
+-		switch -- [ttk::style theme use] {
++		# Handle either current Tk or older versions of 8.5
++		if {[catch {set theme [ttk::style theme use]}]} {
++			set theme  $::ttk::currentTheme
++		}
++		switch -- $theme {
+ 			"vista" - "xpnative" {
+ 				lappend args -highlightthickness 0 -borderwidth 0
+ 			}
+-- 
+2.12.2
