@@ -2,113 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB9B720958
-	for <e@80x24.org>; Sat,  1 Apr 2017 18:31:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8122220958
+	for <e@80x24.org>; Sat,  1 Apr 2017 18:33:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751880AbdDASbm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 14:31:42 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:33162 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751791AbdDASbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 14:31:40 -0400
-Received: by mail-lf0-f54.google.com with SMTP id h125so56331394lfe.0
-        for <git@vger.kernel.org>; Sat, 01 Apr 2017 11:31:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=RCoveCzC7tX/Q56bPRUA0Huzu0HyPBl22bJK2s6QEzU=;
-        b=nnFQENVIap4uofEfwDVPCzmvrPPrEzy7BfQ7PUpAvTTvVvFds4JwTQFsfugHdXFmht
-         jtXfuGtoCwmxKhgJFNbflXKFFi1L8S+R7meUJ6n3OQWniUDj5Zy0HwhnljizclnnXucx
-         0ourXL77RffgRi3tCPyjyxI1+u6CGVdD0d0lCht32kPIK2AeBPvbsi/CrlnNNjTzfUOf
-         2cJKTe/DaHLIH2D3IejL1SaTRf1P3T6Dg1pwXAJ9Ef3YG9S+E38KbsZodUckCuI/XBjJ
-         MOPBuwhMO4fBmVoKL2gZoWSBGu4yyIA+e4051gNJ4uEIp8lSd0FD0Uru2E2PyvPJPTMC
-         aONw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=RCoveCzC7tX/Q56bPRUA0Huzu0HyPBl22bJK2s6QEzU=;
-        b=GiQmel4+pHo2K84moxzZ+VKGa/NLJOfqcAUWFodtzg/M2pMDtK3lr7JSwh8qjHBzlY
-         4EUtMn72Jc1phoCh6L0kdUtnNNcgXvaF2LW7/ODNmn49NkTbSlx5uKSjZ1Za5P47eFEN
-         1Js6kEzs10epni6L8700zE1cxD8DWw2VG0oBFyOiwcLu7uwt09m86QT8DAUWcLFCkarm
-         7RemXQ41WVduNf8fXgcxHWMIqlxD6oc90vJeRyYGqWUJqaUMhxGIF5KhdtNOCny7KSAr
-         dY2vSIgapUQVxpc8DkB5lV1mFXB56u66z+VWF+RwJLPDyzGBWQxkkIEnUCDenRY/hbz7
-         od+A==
-X-Gm-Message-State: AFeK/H07TE5IoxGLUy24wjP5spXhxofDfUg3vKUjXgWOf9qBcuPPZcMcBktZPeRp72NYkA==
-X-Received: by 10.25.76.193 with SMTP id z184mr2486070lfa.43.1491071499024;
-        Sat, 01 Apr 2017 11:31:39 -0700 (PDT)
-Received: from [192.168.1.26] (abpo61.neoplus.adsl.tpnet.pl. [83.8.56.61])
-        by smtp.googlemail.com with ESMTPSA id q71sm1609895lfe.40.2017.04.01.11.31.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 01 Apr 2017 11:31:38 -0700 (PDT)
-Subject: Re: [BUG?] iconv used as textconv, and spurious ^M on added lines on
- Windows
-To:     Jeff King <peff@peff.net>
-References: <feaeade7-aeb5-fa67-ab29-9106aeadb2a6@gmail.com>
- <20170330200021.c2l5jak3xb5aoxyc@sigill.intra.peff.net>
- <e1a6d44c-b01b-993c-6a22-e6ac0abca03c@gmail.com>
- <20170401060800.hrpqqgdx6t262c7f@sigill.intra.peff.net>
+        id S1751888AbdDASdJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 14:33:09 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64959 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751791AbdDASdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 14:33:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EB6E78BC0F;
+        Sat,  1 Apr 2017 14:33:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FYu5XDm815vIYjAsfIYaj5JXbkU=; b=ZfVw2X
+        PL7EmOJd6jZgsuF6Hrr3gYIpwWe3/z4T46d0YWJf3capp59onN9dhZKmaQ8P/OLk
+        vlpPQpaQle8OWf9uwuh/Tmq9QsYFBG4QskRqHoSOAiFr0PW68NXW/6k28irXH6ip
+        szYTvwbwSU5IXw5EqmJkHxCPwQS+G8oPO4vyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=RZsDZ7gtDFT58nnBjENVsch9hrhNS/Vm
+        TViAztWPPLy3EaPCh/l0jijzDNyXGsRGeDgNOK8N95346QVWtQCTKYdD9z8qifns
+        y7/1fjhdsCS2nz5FDNWN7vVWvEpetji6Dt62Ymrnc8AZ+lMcsiZehqzOxJtiyLRe
+        bl4LjbmX3+g=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E499A8BC0E;
+        Sat,  1 Apr 2017 14:33:07 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1BD7A8BC0D;
+        Sat,  1 Apr 2017 14:33:06 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robert Stanca <robert.stanca7@gmail.com>
 Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <63eb5546-0dce-2f69-c2f8-1e777b97c532@gmail.com>
-Date:   Sat, 1 Apr 2017 20:31:27 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+Subject: Re: [PATCH] [GSOC] prune_worktrees(): reimplement with dir_iterator
+References: <1491009687-10419-1-git-send-email-robert.stanca7@gmail.com>
+        <xmqqlgrkx3l5.fsf@gitster.mtv.corp.google.com>
+        <CAJYcaSOMkoAnW82g=moQxz0H9t7C+F++V4Ob1-UiTLiw=gm_0g@mail.gmail.com>
+Date:   Sat, 01 Apr 2017 11:33:05 -0700
+In-Reply-To: <CAJYcaSOMkoAnW82g=moQxz0H9t7C+F++V4Ob1-UiTLiw=gm_0g@mail.gmail.com>
+        (Robert Stanca's message of "Sat, 1 Apr 2017 16:29:29 +0300")
+Message-ID: <xmqq7f34ugf2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170401060800.hrpqqgdx6t262c7f@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: A65B95FA-1709-11E7-A0B6-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 01.04.2017 o 08:08, Jeff King pisze:
-> On Fri, Mar 31, 2017 at 03:24:48PM +0200, Jakub Narębski wrote:
-> 
->>> I suspect in the normal case that git is doing line-ending conversion,
->>> but it's suppressed when textconv is in use.
+Robert Stanca <robert.stanca7@gmail.com> writes:
+
+> On Sat, Apr 1, 2017 at 5:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> I would not consider this a bug if not for the fact that there is no ^M
->> without using iconv as textconv.
-> 
-> I don't think it's a bug, though. You have told Git that you will
-> convert the contents (whatever their format) into the canonical format,
-> but your program to do so includes a CR.
+>> Using dir_iterator() to make it recursive is not just overkill but
+>> is a positively wrong change, isn't it?
+>
+> Thanks for the review, and yes the commit message is misleading (my
+> bad there). I understood that remove_temp_files has no recursion
+> component to it and it removes all ".tmp-id-pack-" files from
+> /objects/pack , but shouldn't dir-iterator work even if there's no
+> recursion level?
 
-Well, I have not declared file binary with "binary = true" in diff driver
-definition, isn't it?
+The point is what should happen when somebody (perhaps a newer
+version of Git, or a third-party add-on that works with Git) adds a
+subdirectory in .git/objects/pack/ or .git/worktrees/.  The answer
+is that files and directories in such a subdirectory must not be
+touched, because prune_worktrees() or remove_temporary_files() do
+not know what these files and directories are.
 
-> 
-> We _could_ further process with other canonicalizations, but I'm not
-> sure that is a good idea (line-endings sound reasonably harmless, but
-> almost certainly we should not be doing clean/smudge filtering). And I'm
-> not sure if there would be any compatibility fallouts.
-
-Yes, gitattributes(5) defines interaction between 'text'/'eol', 'ident'
-and 'filter' attributes, but nothing about 'diff' and 'text'/'eol'.
-
-> 
-> So I think the behavior is perhaps not what you want, but it's not an
-> unreasonable one. And the solution is to define your textconv such that
-> it produces clean LF-only output. Perhaps:
-> 
->   [diff.whatever]
->   textconv = "iconv ... | tr -d '\r'"
-
-Well, either this (or equivalent using dos2unix), or using 'whitespace'
-attribute (or 'core.whitespace') with cr-at-eol.
-
-
-P.S. What do you think about Git supporting 'encoding' attribute (or
-'core.encoding' config) plus 'core.outputEncoding' in-core?
-
-Best,
--- 
-Jakub Narębski
+The dir-iterator API does not allow you to say "only scan the
+directory without recursing into the subdirectories" so your code
+ends up recursing into them, without knowing what the files and
+directories inside are (or are not).  As Peff mentioned in his
+review on the other one, if we add a knob to dir-iterator API to
+allow you to tell it not to recurse, then it would make it possible
+to do a faithful conversion from the original, but without such a
+change, you are changing the behaviour.
