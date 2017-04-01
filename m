@@ -7,77 +7,80 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 561D220958
-	for <e@80x24.org>; Sat,  1 Apr 2017 15:31:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A114F20958
+	for <e@80x24.org>; Sat,  1 Apr 2017 15:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751660AbdDAPbB (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 11:31:01 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35161 "EHLO
+        id S1751707AbdDAPbE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 11:31:04 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33751 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751574AbdDAPbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 11:31:00 -0400
-Received: by mail-wm0-f66.google.com with SMTP id z133so3993383wmb.2
-        for <git@vger.kernel.org>; Sat, 01 Apr 2017 08:31:00 -0700 (PDT)
+        with ESMTP id S1751550AbdDAPbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 11:31:03 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o81so3984401wmb.0
+        for <git@vger.kernel.org>; Sat, 01 Apr 2017 08:31:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=LAA/EOkJ/qLj2SqUXplPD5dcqD0K0TX92A/fln4Zjh0=;
-        b=EQNSE41x0dL8S7RY6j4pfhFouyF5UWkkslvNyCSg+KLAIPIWZK4Uw96wsC9Z/wgd3I
-         ulBPxxIb6SeghGQ+s8tuznGZKhpPycQbT89AB8aIpE6FjEpFFj+LUIaHqjiVoGGG7neo
-         LJcKpIKOsRcjDbDMWMQVhgThyIs1uCynqK9F0GTDNFtrCcvDcVcEsqqFS4Lyci6C8gLL
-         OKSOJs9puzWuL6xegP9dzcL2HxBUs/rKMECDL5rJeA6pgyBIdPCi2X64azWRVDcT38Xd
-         G3/vOI4stngxHzWvsNYYRTNW7DkVwhJTu/jzjh/am0z0cEXnGnh5BsGqiEQ3nJDlebjo
-         S8Uw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=o1otxjegA/alHEn3FXXcasggrW9kaRJ+k8/IkBOfpL8=;
+        b=hQzOYuWs+Q2+E/l6lb9yLc4ogYFuCs9Ox/a69KugA3vO1t3esfdAY0HbyaQblWe0t2
+         6Y2GjhrlkhNv0guBlNBZ2f8n5CmoLUAVbD3Oeiw4UrPAchQ/LvBBIqyUsw5llVUmGQlu
+         9KOc8/mJ/uWFjOWsD7dC6iMtWTW64cw2QI9Yogs0Bdnx00A55GOQxtk0oFE6PO2zUrjP
+         /oVJFVJXICP7+EdLYKIQW8wVH/F8zGlEwZsTObJtRypDsUBDNEbz+vIcF6BzWhUO6o1s
+         rTvpkRsCgDQEKiQoTsScyWd6EHoIhiadNVQvPDKLNagSO000QrBNX7tFpiHBvJT5xL+Y
+         p4Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=LAA/EOkJ/qLj2SqUXplPD5dcqD0K0TX92A/fln4Zjh0=;
-        b=Snw3hRh4uKeLvQvuoJvewJODpymQEL/rBn3k0jrZ8wRghLP+dAKH0snySDFmndcycT
-         eyVvR3OWlrTTwzVdl2X7rg/M4gfAolGbtCs5rkyWzuC+uJTG1K766yuP+v6ND2mp9aB1
-         eZzwyiweay3OuB3k7Ucq53IgCrH4nG5/Yj5uwPU90rlvvBUAmExt1YUxhNlCTPpBgksQ
-         iXQBJaP2O55TdwmwOWUE06dzwJHy7Mbepds7dayv+ILYZfNU2kMpQ/inYCqU4X8UqDgj
-         +8Cs61wsZi91jufATAYksUi6YySp8A1lXXhZ9yU6Ye5mb0hZ9Mc0EFTI9mNXOOUEJcj2
-         YGow==
-X-Gm-Message-State: AFeK/H0PbL6jNK773vIdbi82BgsQdmzfupIbdOcXlnfa33tELC3JBDYx
-        oJqJjK1ZrIerjw==
-X-Received: by 10.28.136.81 with SMTP id k78mr2663260wmd.36.1491060659289;
-        Sat, 01 Apr 2017 08:30:59 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=o1otxjegA/alHEn3FXXcasggrW9kaRJ+k8/IkBOfpL8=;
+        b=aeOb2kq6Au+422CDbyicu4k4PEaPBKOVfZRKaWHkArsRZVddWDrQgX8J1ruobqrPqn
+         joZ9jp8VumZiFDnmZA7Ce31H8IBc0yyjR6yyJ4ySuXnAeJAyl6aFyOAEJy7pWbVr2F/K
+         BRT/VghHjGPQvWzqDCuwS1jkwXxQovxGd9bMfQTAHc6bHjLeoZDJFYvBv4RKSwRUyF4d
+         fk+8AIlZbIcZgzaR2hE0dW3fN+D/f7lUQI19OUFPVBtt89RZ44B6tYdaf9CTaAl5ej6Q
+         2Xqzwpj6q0FtXJBPsJ8eY6MgY2oR0IO+fF3O7S7QANpFs4Q5uGF0iIiJqR/uRvezXDti
+         dtPg==
+X-Gm-Message-State: AFeK/H0cABkQICI3pgtKKvC3Hkz8NUqfEMuy/CT1/aXdghcnBrLxGHHW
+        0yTjphJfiH8s3w==
+X-Received: by 10.28.62.139 with SMTP id l133mr2598999wma.130.1491060662588;
+        Sat, 01 Apr 2017 08:31:02 -0700 (PDT)
 Received: from localhost.localdomain ([178.156.154.74])
-        by smtp.gmail.com with ESMTPSA id y22sm10924192wry.51.2017.04.01.08.30.58
+        by smtp.gmail.com with ESMTPSA id y22sm10924192wry.51.2017.04.01.08.31.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 01 Apr 2017 08:30:58 -0700 (PDT)
+        Sat, 01 Apr 2017 08:31:01 -0700 (PDT)
 From:   Robert Stanca <robert.stanca7@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Robert Stanca <robert.stanca7@gmail.com>
-Subject: [PATCH 1/2] [GSOC] Convert signed flags to unsigned
-Date:   Sat,  1 Apr 2017 18:30:48 +0300
-Message-Id: <20170401153049.21400-1-robert.stanca7@gmail.com>
+Subject: [PATCH 2/2] [GSOC] show_bisect_vars(): Use unsigned int instead of signed int for flags
+Date:   Sat,  1 Apr 2017 18:30:49 +0300
+Message-Id: <20170401153049.21400-2-robert.stanca7@gmail.com>
 X-Mailer: git-send-email 2.12.2.577.g38c7602c8
+In-Reply-To: <20170401153049.21400-1-robert.stanca7@gmail.com>
+References: <20170401153049.21400-1-robert.stanca7@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
- Unsigned int is a closer representation of bitflags rather than signed int that uses 1 special bit for sign.This shouldn't make much difference because rev_list_info.flags uses only 2 bits(BISECT_SHOW_ALL and REV_LIST_QUIET)
+ As rev_list_info's flag is unsigned int , var flags should have proper type.Also var cnt could be unsigned as there's no negative number of commits (all-reaches)
 
 Signed-off-by: Robert Stanca <robert.stanca7@gmail.com>
 ---
- bisect.h | 2 +-
+ builtin/rev-list.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/bisect.h b/bisect.h
-index acd12ef80..a979a7f11 100644
---- a/bisect.h
-+++ b/bisect.h
-@@ -16,7 +16,7 @@ extern struct commit_list *filter_skipped(struct commit_list *list,
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 0aa93d589..eb4af53ab 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -211,7 +211,7 @@ static void print_var_int(const char *var, int val)
  
- struct rev_list_info {
- 	struct rev_info *revs;
--	int flags;
-+	unsigned int flags;
- 	int show_timestamp;
- 	int hdr_termination;
- 	const char *header_prefix;
+ static int show_bisect_vars(struct rev_list_info *info, int reaches, int all)
+ {
+-	int cnt, flags = info->flags;
++	unsigned int cnt, flags = info->flags;
+ 	char hex[GIT_SHA1_HEXSZ + 1] = "";
+ 	struct commit_list *tried;
+ 	struct rev_info *revs = info->revs;
 -- 
 2.12.2.575.gb14f27f91.dirty
 
