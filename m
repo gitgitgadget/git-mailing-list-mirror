@@ -2,88 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85D8A20966
-	for <e@80x24.org>; Sat,  1 Apr 2017 09:03:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA46E20958
+	for <e@80x24.org>; Sat,  1 Apr 2017 12:13:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751201AbdDAJDz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 05:03:55 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55353 "EHLO cloud.peff.net"
+        id S1751436AbdDAMNO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 08:13:14 -0400
+Received: from mout.gmx.net ([212.227.17.21]:64434 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750950AbdDAJDy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 05:03:54 -0400
-Received: (qmail 392 invoked by uid 109); 1 Apr 2017 09:03:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 09:03:52 +0000
-Received: (qmail 16793 invoked by uid 111); 1 Apr 2017 09:04:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 05:04:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Apr 2017 05:03:50 -0400
-Date:   Sat, 1 Apr 2017 05:03:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        id S1751334AbdDAMNN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 08:13:13 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1FAK-1c1DMt3zWi-00tDC8; Sat, 01
+ Apr 2017 14:12:48 +0200
+Date:   Sat, 1 Apr 2017 14:12:31 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v5 4/6] dir_iterator: add tests for dir_iterator API
-Message-ID: <20170401090350.t2tlpul2hm55xt6b@sigill.intra.peff.net>
-References: <1490844730-47634-1-git-send-email-bnmvco@gmail.com>
- <1490844730-47634-5-git-send-email-bnmvco@gmail.com>
- <ab7a326c-0189-4542-76e8-649eb6e804c9@alum.mit.edu>
- <CAEA2_RL18TarW6k5keP+ADFDv+VZE+gG3e6EkCmWby7GjG-T_w@mail.gmail.com>
+        Jeff King <peff@peff.net>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] name-hash: fix buffer overrun
+In-Reply-To: <xmqqh928wyu7.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1704011411460.3742@virtualbox>
+References: <20170331173214.47514-1-git@jeffhostetler.com>        <20170331173214.47514-2-git@jeffhostetler.com>        <xmqqo9whxmrq.fsf@gitster.mtv.corp.google.com>        <xmqqy3vlw3f9.fsf@gitster.mtv.corp.google.com>       
+ <CAPc5daWU5XDVNiYk_pTFk_qziuDr6W2XDHXXH-0oR49_KiCUYA@mail.gmail.com> <xmqqh928wyu7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAEA2_RL18TarW6k5keP+ADFDv+VZE+gG3e6EkCmWby7GjG-T_w@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:g+RL1h+Qv222f6QYRJChS2ILMC4dll8adjtIPUqTQC+kQbbiJF/
+ BSUstR09HJBg6IJlE0ck4azqeQP7/AxyNrpQF7QOfMDkzkFKVrAuopw00VZKdZGEzXOmtws
+ pp6VX3a+/PoEl48N4zYI6UI6edOmZ5KFZ0j1FH70qrtVS0MDmpgjDTf6H+Y9vF+Sx9n2ZJH
+ XWsA5OapcCuPjR0/+b4sw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dk5I+GCOZ4c=:J1vF0E2S9scRZ+sWr+caNV
+ yMVLKzzUD/4niXIVL+jdRuVO58nE8xn7+75JR2jW+rqPdkNV0GcyFBxrm7OpwFZMy7nxTcUH+
+ aFsOawQHKczGjHr1nSG92mUS0+wn48QC4BNS6MYgutgwTt9Bii6RzK6PUdm0EHqBOhS6FBqIc
+ utH7qUqbRa+aQ9qnouR2t6Sm+G9qKviTvqc87+6B2ac3Zkfh7b0g/8UG2oxwfMLOIRgh7LFGR
+ QdfMvrkwIbls4ViENST7FzNuJzIyBMRdlXp3Vu9737Eck9x+Bqn2YFYedB39nJrLrXk/rdbZw
+ o86WwoF1R+sRojnz/WlA3MH13LqgNr/CSoIa3ng9tGGOovwp6U4X/8ET1N6qWGxfAT1WLwmPI
+ vy//Qx/XYZui6tAJbgAxGr3CXDGuGqjMST8lldnDXOquW9w8QG184aqmoGoYbuLO4lkaMEMAb
+ QAsDDk9hxMYR6jDtwzLdutmk60q8/e9WVnAGYEh5SGALdxadjDV9Cp8EoTWnpIQo2/9uM6yZR
+ +YIqxagyjHylclXUo4S80My0q4G3NWgt6xFpVV4yD5THswKd/jZ2t+My6Fj9CrvXRuofK4Yu5
+ 59qTH9mvoJ1ME4NutBDeN/PF2QA85JApurylKgu9lyP9awM7KDojNahCdo0+Po1G/oeCvoe7Z
+ j3w1qxtbfFNzLVLy09Y5M4s2pnIx7+IiA+WRYxWyJGBKEIjhuATK0+dwmE2g5eozNuTwrVVF5
+ jt7WMzitV4WsKhfZ3GDe4PBioYqcCVyZnGHGXuUXUFwFUer5gGo1hpVAY/FpI0/eZiyKSIi4P
+ ZDFykVi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Mar 30, 2017 at 03:25:43PM -0300, Daniel Ferreira (theiostream) wrote:
+Hi Junio,
 
-> On Thu, Mar 30, 2017 at 4:46 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> > Is there a special reason to write the date to the file as opposed to, say
-> >
-> >     touch dir/b
-> >
-> > ? (Some people use `: >dir/b` for this purpose, though I've never found
-> > out why.) If you write the date to the file, the reader will be
-> > distracted unnecessarily wondering whether the contents are important to
-> > the test.
-> >
+On Fri, 31 Mar 2017, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> There's no reason. They will be `touch`ed instead of written in a next version.
-> 
-> `:` is a bash builtin that that returns an exit code of zero and
-> produces no output. On my Mac at least:
-> 
-> bash-3.2$ type :
-> : is a shell builtin
-> bash-3.2$ type touch
-> touch is /usr/bin/touch
-> 
-> I suppose there are reasons to try to keep the most of a shell
-> script's logic within the shell itself, without involving external
-> binaries.
+> > Ah, of course. Avoid GNUism to spell HT as "\t" in a sed script.
 
-I think we actually prefer just:
+Sorry about that, I suggested this snippet to Kevin, it is my fault for
+not remembering BSD sed's idiosynchracies.
 
-  >dir/b
+Ciao,
+Johannes
 
-in our tests. The advantages over touch are:
-
-  1. It is clear that the output will be empty afterwards (whereas with
-     touch, it might just update the timestamp on an existing file).
-
-  2. It's faster, since it doesn't require an extra process.
-
-It's equivalent to ": >dir/b". I think you'll find all three forms in
-our test suite, but ">dir/b" is the most common.
-
--Peff
+P.S.: enjoy your time off!
