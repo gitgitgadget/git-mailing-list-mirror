@@ -6,133 +6,89 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6DCA2096B
-	for <e@80x24.org>; Sat,  1 Apr 2017 08:09:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAC7A20966
+	for <e@80x24.org>; Sat,  1 Apr 2017 08:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750818AbdDAIJj (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 04:09:39 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55311 "EHLO cloud.peff.net"
+        id S1750802AbdDAINC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 04:13:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55317 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750787AbdDAIJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 04:09:34 -0400
-Received: (qmail 29450 invoked by uid 109); 1 Apr 2017 08:09:33 -0000
+        id S1750724AbdDAIM6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 04:12:58 -0400
+Received: (qmail 29700 invoked by uid 109); 1 Apr 2017 08:12:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 08:09:33 +0000
-Received: (qmail 16225 invoked by uid 111); 1 Apr 2017 08:09:50 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 08:12:58 +0000
+Received: (qmail 16264 invoked by uid 111); 1 Apr 2017 08:13:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 04:09:50 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Apr 2017 04:09:32 -0400
-Date:   Sat, 1 Apr 2017 04:09:32 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 04:13:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Apr 2017 04:12:56 -0400
+Date:   Sat, 1 Apr 2017 04:12:56 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: [PATCH 2/2] index-pack: detect local corruption in collision check
-Message-ID: <20170401080931.t67jbtta4w4enui6@sigill.intra.peff.net>
-References: <20170401080349.lccextuc3l6fgs6j@sigill.intra.peff.net>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 0/5] Localise error headers
+Message-ID: <20170401081256.fupby6oo5yf7wqdz@sigill.intra.peff.net>
+References: <cover.1483354746.git.git@drmicha.warpmail.net>
+ <20170104070514.pxdthvilw66ierfz@sigill.intra.peff.net>
+ <8d0966d0-1ef1-3d1e-95f5-6e6c1ad50536@drmicha.warpmail.net>
+ <20170110090418.4egk4oflblshmjon@sigill.intra.peff.net>
+ <CAGZ79kYVc0YQ4okrTHGiYQzPqfiVAm_f7orXdkhwgf5kMPXj-w@mail.gmail.com>
+ <20170111113725.avl3wetwrfezdni2@sigill.intra.peff.net>
+ <xmqq1sw9piz5.fsf@gitster.mtv.corp.google.com>
+ <20170121142048.ygbwc65un4whhtwn@sigill.intra.peff.net>
+ <76f61fea-3d24-ec55-0cbc-64ee3d030dcf@grubix.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170401080349.lccextuc3l6fgs6j@sigill.intra.peff.net>
+In-Reply-To: <76f61fea-3d24-ec55-0cbc-64ee3d030dcf@grubix.eu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we notice that we have a local copy of an incoming
-object, we compare the two objects to make sure we haven't
-found a collision. Before we get to the actual object
-bytes, though, we compare the type and size from
-sha1_object_info().
+On Thu, Mar 30, 2017 at 05:18:59PM +0200, Michael J Gruber wrote:
 
-If our local object is corrupted, then the type will be
-OBJ_BAD, which obviously will not match the incoming type,
-and we'll report "SHA1 COLLISION FOUND" (with capital
-letters and everything). This is confusing, as the problem
-is not a collision but rather local corruption. We should
-reoprt that instead (just like we do if reading the rest of
-the object content fails a few lines later).
+> Jeff King venit, vidit, dixit 21.01.2017 15:20:
+> > On Wed, Jan 11, 2017 at 10:08:46AM -0800, Junio C Hamano wrote:
+> > 
+> >> Jeff King <peff@peff.net> writes:
+> >>
+> >>> Yes, I would think die_errno() is a no-brainer for translation, since
+> >>> the strerror() will be translated.
+> >>>
+> >>>>     apply.c:                die(_("internal error"));
+> >>>>
+> >>>> That is funny, too. I think we should substitute that with
+> >>>>
+> >>>>     die("BUG: untranslated, but what went wrong instead")
+> >>>
+> >>> Yep. We did not consistently use "BUG:" in the early days. I would say
+> >>> that "BUG" lines do not need to be translated. The point is that nobody
+> >>> should ever see them, so it seems like there is little point in giving
+> >>> extra work to translators.
+> >>
+> >> In addition, "BUG: " is relatively recent introduction to our
+> >> codebase.  Perhaps having a separate BUG(<string>) function help the
+> >> distinction further?
+> > 
+> > Yes, I think so. I have often been tempted to dump core on BUGs for
+> > further analysis. You can do that by string-matching "BUG:" from the
+> > beginning of a die message, but it's kind of gross. :)
+> > 
+> > -Peff
+> 
+> I read back the whole thread, and I'm still not sure if there's
+> consensus and how to go forward. Should we let the topic die? I don't
+> care too much personally, I just thought the mixed tranlations look
+> "unprofessional".
 
-Note that we _could_ just ignore the error and mark it as a
-non-collision. That would let you "git fetch" to replace a
-corrupted object. But it's not a very reliable method for
-repairing a repository. The earlier want/have negotiation
-tries to get the other side to omit objects we already have,
-and it would not realize that we are "missing" this
-corrupted object. So we're better off complaining loudly
-when we see corruption, and letting the user take more
-drastic measures to repair (like making a full clone
-elsewhere and copying the pack into place).
+I don't have a strong preference either way. I also don't care
+personally about the output (as I do not localize at all). My main
+concern was keeping the code simple for developers. But if consistent
+translation is important for people in other languages, I'm OK with
+whatever we need to do.
 
-Note that the test sets transfer.unpackLimit in the
-receiving repository so that we use index-pack (which is
-what does the collision check). Normally for such a small
-push we'd use unpack-objects, which would simply try to
-write the loose object, and discard the new one when we see
-that there's already an old one.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-I was surprised to see that unpack-objects doesn't do the same collision
-check. I think it relies on the loose-object precedence. But that seems
-like it misses a case: if you have a packed version of an object and
-receive a small fetch or push, we may unpack a duplicate object to its
-loose format without doing any kind of collision check.
-
-We may want to tighten that up. In the long run, I'd love to see
-unpack-objects go away in favor of teaching index-pack how to write
-loose objects. The two had very similar code once upon a time, but
-index-pack has grown a lot of feature and bugfixes over the years.
-
- builtin/index-pack.c         |  2 ++
- t/t1060-object-corruption.sh | 17 +++++++++++++++++
- 2 files changed, 19 insertions(+)
-
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 88d205f85..9f17adb37 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -809,6 +809,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 		unsigned long has_size;
- 		read_lock();
- 		has_type = sha1_object_info(sha1, &has_size);
-+		if (has_type < 0)
-+			die(_("cannot read existing object info %s"), sha1_to_hex(sha1));
- 		if (has_type != type || has_size != size)
- 			die(_("SHA1 COLLISION FOUND WITH %s !"), sha1_to_hex(sha1));
- 		has_data = read_sha1_file(sha1, &has_type, &has_size);
-diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-index 3a88d79c5..ac1f189fd 100755
---- a/t/t1060-object-corruption.sh
-+++ b/t/t1060-object-corruption.sh
-@@ -21,6 +21,14 @@ test_expect_success 'setup corrupt repo' '
- 		cd bit-error &&
- 		test_commit content &&
- 		corrupt_byte HEAD:content.t 10
-+	) &&
-+	git init no-bit-error &&
-+	(
-+		# distinct commit from bit-error, but containing a
-+		# non-corrupted version of the same blob
-+		cd no-bit-error &&
-+		test_tick &&
-+		test_commit content
- 	)
- '
- 
-@@ -108,4 +116,13 @@ test_expect_failure 'clone --local detects misnamed objects' '
- 	test_must_fail git clone --local misnamed misnamed-checkout
- '
- 
-+test_expect_success 'fetch into corrupted repo with index-pack' '
-+	(
-+		cd bit-error &&
-+		test_must_fail git -c transfer.unpackLimit=1 \
-+			fetch ../no-bit-error 2>stderr &&
-+		test_i18ngrep ! -i collision stderr
-+	)
-+'
-+
- test_done
--- 
-2.12.2.943.g91cb50fd8
+-Peff
