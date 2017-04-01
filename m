@@ -6,93 +6,128 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DA9C1FAFB
-	for <e@80x24.org>; Sat,  1 Apr 2017 05:17:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97D8D1FAFB
+	for <e@80x24.org>; Sat,  1 Apr 2017 05:27:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750841AbdDAFRH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 01:17:07 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44937 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750796AbdDAFRH (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Apr 2017 01:17:07 -0400
-X-AuditID: 12074413-f4fff700000077e1-d5-58df37cdc31e
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B4.CF.30689.DC73FD85; Sat,  1 Apr 2017 01:17:03 -0400 (EDT)
-Received: from [192.168.69.190] (p57906954.dip0.t-ipconnect.de [87.144.105.84])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v315GuZj024759
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 1 Apr 2017 01:16:59 -0400
-Subject: Re: [PATCH v2 00/20] Separate `ref_cache` into a separate module
-To:     Junio C Hamano <gitster@pobox.com>
-References: <cover.1490966385.git.mhagger@alum.mit.edu>
- <xmqq1std1lmb.fsf@gitster.mtv.corp.google.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
-        git@vger.kernel.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <13eaacf0-5923-ad33-79ed-2cec47660904@alum.mit.edu>
-Date:   Sat, 1 Apr 2017 07:16:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1750817AbdDAF1p (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 01:27:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55238 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750802AbdDAF1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 01:27:44 -0400
+Received: (qmail 19611 invoked by uid 109); 1 Apr 2017 05:27:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 05:27:42 +0000
+Received: (qmail 15645 invoked by uid 111); 1 Apr 2017 05:27:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 01:27:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Apr 2017 01:27:39 -0400
+Date:   Sat, 1 Apr 2017 01:27:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Bug in "git am" when the body starts with spaces
+Message-ID: <20170401052739.dw65gnh26izgt5u7@sigill.intra.peff.net>
+References: <CA+55aFypmFkc4gOEea-AF1kKYb3K=6nosXvYS4AMGFOQHw0ZxA@mail.gmail.com>
+ <CA+55aFwcQuxwhQ+LABmev2XRHgOqsbRm7YDYn3FDDXKMYcF-CA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq1std1lmb.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkleLIzCtJLcpLzFFi42IRYndR1D1vfj/C4NQNG4u1z+4wWXRd6Way
-        aOi9wmyx5OFrZovuKW8ZLX609DBbbN7czuLA7rFz1l12jwWbSj262o+weTzr3cPocfGSssfn
-        TXIBbFFcNimpOZllqUX6dglcGd8e/2MtWMlTsbC1lb2B8TlnFyMHh4SAicT/fWFdjFwcQgI7
-        mCQau3+wQTjnmCRetO8Acjg5hAU8JRYvn80KYosIqElMbDvEAmILCWRIHD28jAmkgVlgG5PE
-        pBePwIrYBHQlFvU0M4HYvAL2Ev9efQEbxCKgIvF+USsziC0qECIxZ+EDRogaQYmTM58ADWXn
-        4BSwlvgvAxJlFtCT2HH9FyuELS+x/e0c5gmM/LOQNMxCUjYLSdkCRuZVjHKJOaW5urmJmTnF
-        qcm6xcmJeXmpRbrmermZJXqpKaWbGCEhLryDcddJuUOMAhyMSjy8J7zvRQixJpYVV+YeYpTk
-        YFIS5f1eDBTiS8pPqcxILM6ILyrNSS0+xCjBwawkwpv4BSjHm5JYWZValA+TkuZgURLnVVui
-        7ickkJ5YkpqdmlqQWgSTleHgUJLgdTa7HyEkWJSanlqRlplTgpBm4uAEGc4DNJwVpIa3uCAx
-        tzgzHSJ/ilFRSpxXASQhAJLIKM2D64WloFeM4kCvCPNGglTxANMXXPcroMFMQIMtvt4FGVyS
-        iJCSamBszUjczc6Rbacf7Li5/ULtk8uulu+vudy5c2zy56MLGGcx+u4qvzlTzneW6tLaxCsb
-        1nz91eNVrtNWn/O07tl3Z8Yay/2FgTzsMhOYPic4cf95GZ94unpeReQiybIpkY45evy1jBNv
-        +mQlcXhXr8ibsPPPL4OZfxL8t38OUxPd9FmTY/U29nIlluKMREMt5qLiRADaqJUVHAMAAA==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+55aFwcQuxwhQ+LABmev2XRHgOqsbRm7YDYn3FDDXKMYcF-CA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/31/2017 06:01 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> This version literally only contains a few commit message changes and
->> one minor comment changes relative to v1. The code is identical. I
->> wasn't sure whether it is even worth sending this patch series to the
->> ML again; Junio, if you'd prefer I just send a link to a published
->> branch in such cases, please let me know.
-> 
-> The review on the list is not about letting me pick it up, but is
-> about giving reviewing contributors a chance to comment.  I think
-> for a series this important ;-) it is good that you are giving it
-> multiple exposures so that people who were offline the last time can
-> have a chance to look at it, even if the update is minimum.
-> 
->> This patch series is also available from my GitHub fork [2] as branch
->> "separate-ref-cache". These patches depend on Duy's
->> nd/files-backend-git-dir branch.
-> 
-> I am getting the impression that the files-backend thing as well as
-> this topic are ready for 'next'.  Please stop me if I missed something
-> in these topics (especially the other one) that needs updating
-> before that happens.
+On Fri, Mar 31, 2017 at 05:52:00PM -0700, Linus Torvalds wrote:
 
-I don't know of any remaining problems with these two patch series
-(aside from a couple of cosmetic problems that I just pointed out about
-v7 of nd/files-backend-git-dir). I'm pretty confident about both of them.
+> Ok, did a bisect, and this bisects to commit 6b4b013f1884 ("mailinfo:
+> handle in-body header continuations").
+> 
+> The continuation logic is oddly complex, and I can't follow the logic.
+> But it is completely broken in how it thinks empty lines are somehow
+> "continuations".
 
-Duy, have you looked over my patch series? Since you've been working in
-the area, your feedback would be very welcome, if you have the time for it.
+I think the continuation logic is OK. The problem is that the newline is
+never fed to check_inbody_header() at all. So the next line its state
+machine sees is the indented line, which looks like a continuation.
 
-Michael
+It seems to me that ignoring that newline is a bug, and causes other
+problems. For instance, if you have a blank line and then another
+header-looking thing (not a continuation) after, it is respected. For
+instance, running mailinfo on:
 
+  From ...mbox header...
+  From: Email Author <author@example.com>
+  Subject: email subject
+  Date: whatever
+
+  From: in-body author <author@example.com>
+
+  Subject: in-body subject
+
+  And the rest of the message.
+
+will use "in-body subject" as the subject, though I'd have thought we
+should stop parsing in-body headers as soon as we see the first in-body
+blank line (the one after the in-body "From").
+
+The blank line gets eaten by the check at the beginning of
+handle_commit_msg(), right _before_ we pass it off to the
+check_inbody_header() function.
+
+It seems like that should be more like:
+
+diff --git a/mailinfo.c b/mailinfo.c
+index a489d9d0f..6d89781eb 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -757,8 +757,10 @@ static int handle_commit_msg(struct mailinfo *mi, struct strbuf *line)
+ 	assert(!mi->filter_stage);
+ 
+ 	if (mi->header_stage) {
+-		if (!line->len || (line->len == 1 && line->buf[0] == '\n'))
++		if (!line->len || (line->len == 1 && line->buf[0] == '\n')) {
++			mi->header_stage = 0;
+ 			return 0;
++		}
+ 	}
+ 
+ 	if (mi->use_inbody_headers && mi->header_stage) {
+
+
+But that breaks a bunch of tests. It looks like the loop in handle_body
+always starts by feeding the initial header-separator (the real headers,
+not the in-body ones) to the various parsers. So that first newline
+makes us trigger "no more in-body headers" before we even start parsing
+any lines. Oops.
+
+So doing this:
+
+@@ -960,7 +962,7 @@ static void handle_body(struct mailinfo *mi, struct strbuf *line)
+ 			goto handle_body_out;
+ 	}
+ 
+-	do {
++	while (!strbuf_getwholeline(line, mi->input, '\n')) {
+ 		/* process any boundary lines */
+ 		if (*(mi->content_top) && is_multipart_boundary(mi, line)) {
+ 			/* flush any leftover */
+@@ -1013,7 +1015,7 @@ static void handle_body(struct mailinfo *mi, struct strbuf *line)
+ 
+ 		if (mi->input_error)
+ 			break;
+-	} while (!strbuf_getwholeline(line, mi->input, '\n'));
++	}
+ 
+ 	flush_inbody_header_accum(mi);
+ 
+
+on top fixes that. But that still breaks a test that has blank lines at
+the beginning of the message, before the in-body header. So probably the
+state-machine needs an extra state: sucking up pre-inbody-header
+newlines.
+
+-Peff
