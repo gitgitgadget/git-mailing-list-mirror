@@ -2,94 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 006181FAFB
-	for <e@80x24.org>; Sat,  1 Apr 2017 00:19:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF4801FAFB
+	for <e@80x24.org>; Sat,  1 Apr 2017 00:24:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754767AbdDAAT2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 20:19:28 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35860 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751605AbdDAAT1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 20:19:27 -0400
-Received: by mail-pg0-f66.google.com with SMTP id 81so20571513pgh.3
-        for <git@vger.kernel.org>; Fri, 31 Mar 2017 17:19:27 -0700 (PDT)
+        id S1754930AbdDAAYw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 20:24:52 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:35322 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754132AbdDAAYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 20:24:51 -0400
+Received: by mail-io0-f177.google.com with SMTP id z13so49272685iof.2
+        for <git@vger.kernel.org>; Fri, 31 Mar 2017 17:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7f7bJ9wQOmifGbtRtL7dBAmKhaI9eU+6KbIFrVRfr0w=;
-        b=G1ex6Yc6D4pSvEr+R73NldVcvt8Pji1gFkOgadgBqBpCaDmnGX524evmPmdStVwsRt
-         iHZ6aCIIE1SWWQmEfd0PBc+zo5OmHhGyUW0lntx6MWvF/R54hRTf7ogVoX33ce8/pQT8
-         xX4aoszcFj/lZA0fZ8iAxNIWh1sx4M3/2a9t05K/RXlFQ4RXrc/gXf7gCyabIIN5UN/e
-         eVgLBjtal2dFR/PAWBKviF5Kg6URgogCs6jw8sceYRv+EBHRQZwYMEgFwSLU8NkK8+Vw
-         0sIn1KTDb+/EenuC8xPsWr4RdEG2h+4iKFDBYCtkcxTfKPrYmJ5otnqnVOeiHyX4wSHV
-         wtRQ==
+        h=mime-version:sender:from:date:message-id:subject:to:cc;
+        bh=Pg/c17XI82RPQpC4wHGe7EoAjzqu5+elkO8rptT+Iqo=;
+        b=QdmYI4Fj/NBmZmiFM8QmhXJH9awV77k6uIuHq2IRHX0OTvFBwg5OAdEh21UmyTPek4
+         /R2h1r/s8rCB0MqFgWBQ3aTXzNG8ju6ovRSDGUrZYHcJz1jDvdZcmCIUilRYazqPo+qA
+         1vnfAzUn3MOQ4cP0WGFu3SOy7MUSjyRrRgDWP+Nr9hr2N8LkBE2TB5UeihdSVwOvOJVU
+         5cCVtLEKzox1SpndrlaQkjnSRe3uP/FHSlKSyDl7URQ+n4lIddA70lQhJuI9hF2R002Q
+         +YoPCmxyzO79rM4LBQ84HGh3QKjYpvV5EmZ4sw0VvWYhKu2VhDIS1TQvNzTA/ulSVJUm
+         /3QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7f7bJ9wQOmifGbtRtL7dBAmKhaI9eU+6KbIFrVRfr0w=;
-        b=W5TScClrjPfnEmuJ0+vrjHTq8yZBiBZ3gHXqcfEB/9POeK1tusAeUBhubhhLSKkIuI
-         6627ABK8130k6d3PSTYvyz6orcxr4ozfk67bEITZ+1NSU+1M7vUEBmN0wIY1IpY890GW
-         +RfBjHoQLv+aaFva/INII9zkJgJ3W8ztSacR55a7kSbK8B87gBPHD0Xq+zIfiNLYAd3d
-         rHnACG3+ZwL9m7cHtaV78EnzzFqnT1rtSYUc+0o4PRSENq0Kl7nje2jUP374KHsk5o7W
-         naHwrjb68ZoB7QrB75kVEFAG8Jb7gs4Fxho4pKtngM6q4t1RUukiIim8qs+Gzh97eduF
-         Lvsg==
-X-Gm-Message-State: AFeK/H0nt1kgwFUhfVge9VmSO6WslocrhEBSYWMI8FGyvXJGFeboVk6Zik84Pl0XF/025g==
-X-Received: by 10.84.241.71 with SMTP id u7mr6024230plm.104.1491005967094;
-        Fri, 31 Mar 2017 17:19:27 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8962:97f5:cc56:a89d])
-        by smtp.gmail.com with ESMTPSA id t6sm12526695pgt.8.2017.03.31.17.19.26
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 31 Mar 2017 17:19:26 -0700 (PDT)
-Date:   Fri, 31 Mar 2017 17:19:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] push: propagate push-options with
- --recurse-submodules
-Message-ID: <20170401001924.GC8741@aiede.mtv.corp.google.com>
-References: <20170331231135.195195-1-bmwill@google.com>
- <20170331235623.166408-1-bmwill@google.com>
- <20170331235623.166408-3-bmwill@google.com>
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:cc;
+        bh=Pg/c17XI82RPQpC4wHGe7EoAjzqu5+elkO8rptT+Iqo=;
+        b=p7HoXVI9eLVdvcFovx2pmIb4FLT8qoD4K7MlpbEdgRP1+ph5In8fZMHOWmhFhXsagO
+         5BzoD/iuMDtdr2wzu2qHqpahJRXiN414cKaXOt3qhiGC8ClvEevjIpWlPuaC0HC+iODB
+         xNeq1K4OTb7VMFpHf/AWPAOT5UvXpLMWMCEEtlf0kKfdRJ0S5QNEHu0dRZWb01XxZumR
+         6NosHCOwFznQXB+iNiWbO21cYPbfTE5P1BCbFNDLVIgyfVDuF9yBCWWCoWnZp/yBUF6h
+         fpViR+NHRhJfl1mWZAT2wRSy39InaoQ8CxVFa7rcSZakjKi+NtmmQR3jg8CoFdzeEO9J
+         1P/g==
+X-Gm-Message-State: AFeK/H19rxO5EmktTK8XIODtV8vV3/B1FC10m0Zfa/uR9cYW5+I3n3FIEjiTuXwcAaUQhNEo2oxRySij8O+2Ug==
+X-Received: by 10.107.136.93 with SMTP id k90mr6584519iod.224.1491006290496;
+ Fri, 31 Mar 2017 17:24:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170331235623.166408-3-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.107.136.102 with HTTP; Fri, 31 Mar 2017 17:24:49 -0700 (PDT)
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Fri, 31 Mar 2017 17:24:49 -0700
+X-Google-Sender-Auth: 32jE5DMKEAYrDnyuIVcZaerYRB4
+Message-ID: <CA+55aFypmFkc4gOEea-AF1kKYb3K=6nosXvYS4AMGFOQHw0ZxA@mail.gmail.com>
+Subject: Bug in "git am" when the body starts with spaces
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary=001a113ed5124ddccb054c0ff44c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams wrote:
+--001a113ed5124ddccb054c0ff44c
+Content-Type: text/plain; charset=UTF-8
 
-> Teach push --recurse-submodules to propagate push-options recursively to
-> the pushes performed in the submodules.
+Try applying the attached patch with
 
-Some time in the future we may want "push --recurse-submodules" to do a
-dry run pass before doing the final push, so that if it is known that
-some of the pushes wouldn't succeed (e.g. due to not being
-fast-forward, or the server not being reachable, or the server not
-supporting push options) then git could stop early instead of some
-succeeding and some failing.
+   git am 0001-Test-patch.patch
 
-But that's a larger and separate change from this one.  Users of push
---recurse-submodules today know they are effectively asking for
-multiple pushes that are not guaranteed to succeed or fail together.
+in the git repository.
 
-> Signed-off-by: Brandon Williams <bmwill@google.com>
-> ---
->  submodule.c             | 13 +++++++++++--
->  submodule.h             |  1 +
->  t/t5545-push-options.sh | 39 +++++++++++++++++++++++++++++++++++++++
->  transport.c             |  1 +
->  4 files changed, 52 insertions(+), 2 deletions(-)
+At least for me, it results in a very odd commit that has one single
+line in the commit message:
 
-For what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+    Test patch This should go in the body not in the subject line
+
+which is obviously bogus.
+
+I think the reason is that the "header continuation line" logic kicks
+in because the lines in the body start with spaces, but that's
+entirely incorrect, since
+
+ (a) we're not in an email header
+
+ (b) there's an empty line in between anyway, so no way are those body
+lines continuation lines.
+
+I didn't check how far back this goes, I guess I'll do that next. But
+I thought I'd report it here first in case somebody else goes "ahhh".
+
+                Linus
+
+--001a113ed5124ddccb054c0ff44c
+Content-Type: text/x-patch; charset=US-ASCII; name="0001-Test-patch.patch"
+Content-Disposition: attachment; filename="0001-Test-patch.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_j0yilk360
+
+RnJvbSBhZDY1Y2Y3YmE5N2FjMDcxZGExZjg0NWVjODU0MTY1ZTdiZjFlZmRmIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBMaW51cyBUb3J2YWxkcyA8dG9ydmFsZHNAbGludXgtZm91bmRh
+dGlvbi5vcmc+CkRhdGU6IEZyaSwgMzEgTWFyIDIwMTcgMTc6MTg6MTYgLTA3MDAKU3ViamVjdDog
+W1BBVENIXSBUZXN0IHBhdGNoIGV4YW1wbGUKClN1YmplY3Q6IFtQQVRDSF0gVGVzdCBwYXRjaAoK
+ICBUaGlzIHNob3VsZCBnbyBpbiB0aGUgYm9keQogIG5vdCBpbiB0aGUgc3ViamVjdCBsaW5lCi0t
+LQogTWFrZWZpbGUgfCAxICsKIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKQoKZGlmZiAt
+LWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggOWIzNjA2OGFjLi45ZjM2YzE0OWIgMTAw
+NjQ0Ci0tLSBhL01ha2VmaWxlCisrKyBiL01ha2VmaWxlCkBAIC0xLDMgKzEsNCBAQAorCiAjIFRo
+ZSBkZWZhdWx0IHRhcmdldCBvZiB0aGlzIE1ha2VmaWxlIGlzLi4uCiBhbGw6OgogCi0tIAoyLjEy
+LjIuNDAxLmc1ZDQyMzRhNDkKCg==
+--001a113ed5124ddccb054c0ff44c--
