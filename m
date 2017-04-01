@@ -2,83 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FF1E20966
-	for <e@80x24.org>; Sat,  1 Apr 2017 08:55:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85D8A20966
+	for <e@80x24.org>; Sat,  1 Apr 2017 09:03:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751334AbdDAIze (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 04:55:34 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34698 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750950AbdDAIzd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 04:55:33 -0400
-Received: by mail-io0-f181.google.com with SMTP id b140so52358504iof.1
-        for <git@vger.kernel.org>; Sat, 01 Apr 2017 01:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=g3Lvfu+OZPjhM7u6I1kn+/xVKzZXe/HdH+Bos2ViQ0Q=;
-        b=gXc28ha9xIGam534Kj4UO0VhCRwPyNHJdzojcNELukocEy2HmY+hfz5vB5h2t6j/QJ
-         9JWSrdh6z0uyvu9CKQngsXqhVP67P43XBMuLQVk3YiNUo1CX65ar9mH2uPPqe0BQtKL7
-         ksFwOuIvQc8+jkOJlgKC/CowIVmg3OYrtbE6WyHmG3f7sneNH+Gv7nkdUHJpFOwgDQLx
-         F2fTpgOGMNOo8fc7OsiVjL/5+f0nWiFbGZMkmu6SB3MQwzCVmXTxifz3iemzXFHjGo60
-         WouAM9/lAyTrG9AQRvshHr8VCK9+anXx7w3JcydUdbbzDi8KpAm+MVHHVlzF72J+3jVf
-         BSPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=g3Lvfu+OZPjhM7u6I1kn+/xVKzZXe/HdH+Bos2ViQ0Q=;
-        b=ZVanjinHEtQCqrsCIA5ClDVBK8pPFqD+GYyeJeLGePduaemnlAsneK+EoqP8N5aQJp
-         3QKY44rFKaZRoWf7iimJL77i7IHhxkK+8DM0oDKZ86GynoFOP+u1Pt89YibqPvGULesF
-         fwZ9avUUyvsDW+Sr2pWI0rAK8GCTQj5Gd4T1nftTqSOWzuD3wg8iQ4oyoQs4iEDKQdy9
-         lAQfbxuk128nte26srIG9EH2yDDUyBEyqE6B6tX4wqqvIqGuPSog8n3C1cSodeqYJ6+O
-         idE1D4Zbmytt+tap2USD7DL0O1mUNXNmgxXr7ImroPLgJ8SJP/f56559eHnT4yhPmpd9
-         vXvg==
-X-Gm-Message-State: AFeK/H2ccgTocSXBEdYLlliOts6BbOXPJB3lL2/N1b0/i7VIN7PpHc2/Dc8lnJ17OUyc0xZcAfs2Fp0Mx314Lg==
-X-Received: by 10.107.32.199 with SMTP id g190mr8435962iog.117.1491036932298;
- Sat, 01 Apr 2017 01:55:32 -0700 (PDT)
+        id S1751201AbdDAJDz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 05:03:55 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55353 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750950AbdDAJDy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 05:03:54 -0400
+Received: (qmail 392 invoked by uid 109); 1 Apr 2017 09:03:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 09:03:52 +0000
+Received: (qmail 16793 invoked by uid 111); 1 Apr 2017 09:04:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 05:04:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Apr 2017 05:03:50 -0400
+Date:   Sat, 1 Apr 2017 05:03:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 4/6] dir_iterator: add tests for dir_iterator API
+Message-ID: <20170401090350.t2tlpul2hm55xt6b@sigill.intra.peff.net>
+References: <1490844730-47634-1-git-send-email-bnmvco@gmail.com>
+ <1490844730-47634-5-git-send-email-bnmvco@gmail.com>
+ <ab7a326c-0189-4542-76e8-649eb6e804c9@alum.mit.edu>
+ <CAEA2_RL18TarW6k5keP+ADFDv+VZE+gG3e6EkCmWby7GjG-T_w@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sat, 1 Apr 2017 01:55:11 -0700 (PDT)
-In-Reply-To: <xmqqtw69vz9t.fsf@gitster.mtv.corp.google.com>
-References: <CACBZZX6FcHcY7cYs6s_pv=E43cHNmzyUY5wrcuhPWWmUixCL+g@mail.gmail.com>
- <xmqqtw69vz9t.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 1 Apr 2017 10:55:11 +0200
-Message-ID: <CACBZZX416M3YFDAACGAWCjJ4Xt0g78zpFF+iusMCarKb7SSfVw@mail.gmail.com>
-Subject: Re: Very promising results with libpcre2
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAEA2_RL18TarW6k5keP+ADFDv+VZE+gG3e6EkCmWby7GjG-T_w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 1, 2017 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> That enables the new JIT support in pcre v2:
->>
->>       s/iter    rx fixed   prx
->> rx      2.19    --  -33%  -44%
->> fixed   1.47   49%    --  -17%
->> prx     1.22   79%   20%    --
->
-> The numbers with JIT does look "interesting".
->
-> I couldn't quite tell if there are major incompatibilities in the
-> regex language itself between two versions from their documentation,
-> but assuming that there isn't (modulo bugfixes and enhancements) and
-> assuming that we are going to use their standard matcher, it may be
-> OK to just use the newer one without linking both.
+On Thu, Mar 30, 2017 at 03:25:43PM -0300, Daniel Ferreira (theiostream) wrote:
 
-There's no incompatibilities in the regex language itself (modulo bugs
-etc). So yeah, I'll prepare some patch to use v2.
+> On Thu, Mar 30, 2017 at 4:46 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> > Is there a special reason to write the date to the file as opposed to, say
+> >
+> >     touch dir/b
+> >
+> > ? (Some people use `: >dir/b` for this purpose, though I've never found
+> > out why.) If you write the date to the file, the reader will be
+> > distracted unnecessarily wondering whether the contents are important to
+> > the test.
+> >
+> 
+> There's no reason. They will be `touch`ed instead of written in a next version.
+> 
+> `:` is a bash builtin that that returns an exit code of zero and
+> produces no output. On my Mac at least:
+> 
+> bash-3.2$ type :
+> : is a shell builtin
+> bash-3.2$ type touch
+> touch is /usr/bin/touch
+> 
+> I suppose there are reasons to try to keep the most of a shell
+> script's logic within the shell itself, without involving external
+> binaries.
+
+I think we actually prefer just:
+
+  >dir/b
+
+in our tests. The advantages over touch are:
+
+  1. It is clear that the output will be empty afterwards (whereas with
+     touch, it might just update the timestamp on an existing file).
+
+  2. It's faster, since it doesn't require an extra process.
+
+It's equivalent to ": >dir/b". I think you'll find all three forms in
+our test suite, but ">dir/b" is the most common.
+
+-Peff
