@@ -2,75 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 037ED20958
-	for <e@80x24.org>; Sat,  1 Apr 2017 19:19:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9223C20958
+	for <e@80x24.org>; Sat,  1 Apr 2017 19:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752035AbdDATT2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 15:19:28 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:34805 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751956AbdDATT1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 15:19:27 -0400
-Received: by mail-pf0-f169.google.com with SMTP id 197so6652363pfv.1
-        for <git@vger.kernel.org>; Sat, 01 Apr 2017 12:19:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Y1ruX6zYOGpIQNUDgK4/H/rBT6G9xEljPufIGJJhgns=;
-        b=D4V0ta37ADtM3wQxnXaifkleIZ3YtFACq/bMqKaDl6lYlAc6oUFei8x23ugGXYLIQE
-         aqM1Uy0S+j1UI8rOu8b8vas4iSMhefPCQTGnJnHYOB+CsIR6L+78wiZQmebZCfYcqO3i
-         DvQ9H7smAoFv154b8zEBpkVQ/camIaDDUybpv0SIAoQ6MyJj05zGX07fJ2nMgFwf3mFG
-         sCOTMkx+HRc1ZKTTSnEuEMVu1SK2OiOl7MlXHs/b502yoYGhRd3s9tAAwINssZiRWNph
-         2fZW1oAKmza34QJZEbpP3M2sD0nTdMZVP4yDu9bFOsKDsBVR5SdXZnC5W1ZgGYcUjqpH
-         QKLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Y1ruX6zYOGpIQNUDgK4/H/rBT6G9xEljPufIGJJhgns=;
-        b=uGNrGT9DKafbytLMgdiJaVm5ImHouq7mYPm9suU9S+bxpHFRUBtfr36UKwX3b+15nd
-         XOG83B+l5NNDdwUOENpTOM1oljWdxlVAfMIhWVI54ABzVHL/95myAqTw6DSciE3KMlvB
-         jpxE3Bbz1f50wWxKiW0E7aR0PFjRw8ylim1ylT83miJP+n9yjsc/aobntfY/Zsjcch9b
-         U4/o5bbTmAl/0vauyxBOanyqp18taZRFnEySHBUfPqUJjVcn9oFCSVpb0cPB4fwRw+im
-         jnNNR167XJMzwlCYB2PH4GZqRxnn1SsI/IEhB+vKgJ+Op4O+1Co7Vt3HeG3pI8gYdGhU
-         I1aw==
-X-Gm-Message-State: AFeK/H0haQXisFSq2OoJw53yFrRrRTRtAs9tqbxPNCgkf0DerzfYVU+uWc8jDBg2CxDua0r9OZvkaoLs56rmBA==
-X-Received: by 10.98.59.151 with SMTP id w23mr8612992pfj.235.1491074367147;
- Sat, 01 Apr 2017 12:19:27 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.161.15 with HTTP; Sat, 1 Apr 2017 12:19:26 -0700 (PDT)
-In-Reply-To: <xmqqtw68szz1.fsf@gitster.mtv.corp.google.com>
-References: <20170401153049.21400-1-robert.stanca7@gmail.com>
- <20170401153049.21400-2-robert.stanca7@gmail.com> <xmqqtw68szz1.fsf@gitster.mtv.corp.google.com>
-From:   Robert Stanca <robert.stanca7@gmail.com>
-Date:   Sat, 1 Apr 2017 22:19:26 +0300
-Message-ID: <CAJYcaSNAB+1gth2NkTjrcBV9TXT9bRsBQhwOsQCmnudYz5bTmg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] [GSOC] show_bisect_vars(): Use unsigned int instead
- of signed int for flags
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1751899AbdDAT0d (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 15:26:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54121 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751804AbdDAT0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 15:26:32 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D70426BF0F;
+        Sat,  1 Apr 2017 15:26:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=x8xRW3PRZD4r1mIPhg/9E3C1O2w=; b=UaFcyS
+        PgbyOeDLCfBaxUSJ5cCm59wxn4KHkh4wAH+7XiFkmsuk6J9l8ho7g6pd8vj5+bUz
+        HOas8vAArMvQwon4D9+Y6Zt5aRfIchMoo/Uz4skTLPWvtPKGIuqJNOcHar9riIn6
+        DOdI/RoZBOC8e5t8WfVLPKrcGXIx4w2NWBDXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jQgEWFYisZk+QK+g1DZ8+bRvDRRlVKd5
+        CYCPFexKJl+vd4l5FwHL7pOPEuz7zrCi5CtL64S5kU2Wq/s5Cpc8S1w1tRAWfEk7
+        EFA/6cjVfEiohObbOFrQ9LoEGyUI50bZJxfAeAb7g3Wt8aI4BNlCpjGrR25fJnwr
+        Hi491F7ZeR4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D01056BF0E;
+        Sat,  1 Apr 2017 15:26:31 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1F0846BF0D;
+        Sat,  1 Apr 2017 15:26:30 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH] Documentation: make 3-way merge warning more generic
+References: <20170401133124.10479-1-sandals@crustytoothpaste.net>
+Date:   Sat, 01 Apr 2017 12:26:29 -0700
+In-Reply-To: <20170401133124.10479-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Sat, 1 Apr 2017 13:31:24 +0000")
+Message-ID: <xmqqpogwszdm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1C198A70-1711-11E7-BD80-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am used to 1change per patch so it's easier  to redo specific
-patches...if there are small changes(10 lines max) can i send them as
-1 patch?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-On Sat, Apr 1, 2017 at 10:13 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Robert Stanca <robert.stanca7@gmail.com> writes:
->
->>  As rev_list_info's flag is unsigned int , var flags should have proper type.Also var cnt could be unsigned as there's no negative number of commits (all-reaches)
->>
->> Signed-off-by: Robert Stanca <robert.stanca7@gmail.com>
->> ---
->
-> OK.  I would have squashed these two commits into one, though.
+>  With the strategies that use 3-way merge (including the default, 'recursive'),
+> -if a change is made on both branches, but later reverted on one of the
+> -branches, that change will be present in the merged result; some people find
+> -this behavior confusing.  It occurs because only the heads and the merge base
+> -are considered when performing a merge, not the individual commits.  The merge
+> -algorithm therefore considers the reverted change as no change at all, and
+> -substitutes the changed version instead.
+> +only the heads and the merge base are considered when performing a merge, not
+> +the individual commits.  This means that if a change is made on both branches,
+> +but later reverted on one of the branches, that change will be present in the
+> +merged result; some people find this behavior confusing.  The merge algorithm
+> +considers the reverted change as no change at all, and substitutes the changed
+> +version instead.
+
+I agree that it makes sense to say 3-way merge considers only three
+points upfront.  
+
+I do not think "this means" is helpful to the readers, though.  Drop
+"This means that" and instead rewrite the remainder of the paragraph
+after "present in the merged result", perhaps?
+
+	If a change is made on both branches but later reverted on
+	one of the branches, the net effect the branch that reverted
+	the change has to the project is nothing, while the net
+	effect of the other branch is to make that change.  The
+	3-way merge, i.e. "if one branch did something while the
+	other branch didn't do that something, merge result is to do
+	that something", rule keeps the change in the merge result.
+
+We do not need to say "some people find this confusing" buried in a
+long paragraph, which would not even serve the purpose of attracting
+readers' eyes by shouting "THIS MAY BE DIFFICULT, PAY ATTENTION".
+The last sentence in the original (and your version) only repeats
+the same thing without saying what the real 3-way merge rule is, and
+I think a rewrite like the above that makes it more explicit is
+easier to understand.
+
+
