@@ -6,81 +6,93 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAE611FAFB
-	for <e@80x24.org>; Sat,  1 Apr 2017 05:10:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DA9C1FAFB
+	for <e@80x24.org>; Sat,  1 Apr 2017 05:17:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750797AbdDAFKD (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 01:10:03 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:57113 "EHLO
-        alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750792AbdDAFKC (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Apr 2017 01:10:02 -0400
-X-AuditID: 1207440c-abdff70000002e8f-4a-58df3626801d
+        id S1750841AbdDAFRH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 01:17:07 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:44937 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750796AbdDAFRH (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 1 Apr 2017 01:17:07 -0400
+X-AuditID: 12074413-f4fff700000077e1-d5-58df37cdc31e
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id CA.9D.11919.6263FD85; Sat,  1 Apr 2017 01:09:59 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B4.CF.30689.DC73FD85; Sat,  1 Apr 2017 01:17:03 -0400 (EDT)
 Received: from [192.168.69.190] (p57906954.dip0.t-ipconnect.de [87.144.105.84])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v3159som024421
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v315GuZj024759
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 1 Apr 2017 01:09:55 -0400
-Subject: Re: [PATCH v7 00/28] Remove submodule from files-backend.c
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170318020337.22767-1-pclouds@gmail.com>
- <20170326024241.31984-1-pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
+        Sat, 1 Apr 2017 01:16:59 -0400
+Subject: Re: [PATCH v2 00/20] Separate `ref_cache` into a separate module
+To:     Junio C Hamano <gitster@pobox.com>
+References: <cover.1490966385.git.mhagger@alum.mit.edu>
+ <xmqq1std1lmb.fsf@gitster.mtv.corp.google.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, David Turner <novalis@novalis.org>,
+        git@vger.kernel.org
 From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <24c2d384-b719-6a36-5b65-8edf86191fdd@alum.mit.edu>
-Date:   Sat, 1 Apr 2017 07:09:54 +0200
+Message-ID: <13eaacf0-5923-ad33-79ed-2cec47660904@alum.mit.edu>
+Date:   Sat, 1 Apr 2017 07:16:56 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Icedove/45.6.0
 MIME-Version: 1.0
-In-Reply-To: <20170326024241.31984-1-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrKKsWRmVeSWpSXmKPExsUixO6iqKtudj/C4MBxJYuuK91MFg29V5gt
-        +pd3sVksefia2aJ7yltGix8tPcwWM69aW2ze3M7iwOGxc9Zddo8PH+M8Fmwq9ehqP8Lm8ax3
-        D6PHxUvKHvuXbmPz+LxJLoAjissmJTUnsyy1SN8ugSuj7fM91oJvrBX9v9+xNDDeZ+li5OSQ
-        EDCRmP30CZDNxSEksINJ4tvvW1DOOSaJJT/OMIFUCQs4Syzrv8YKYosIpEksnvyeGcQWEkiW
-        aGtsYAJpYBb4zCgx5e55RpAEm4CuxKKeZrBmXgF7iberW9lAbBYBFYmbT9vAbFGBEIk5Cx8w
-        QtQISpyc+QTsJE4Bc4ndE4+A9TILqEv8mXeJGcKWl2jeOpt5AiP/LCQts5CUzUJStoCReRWj
-        XGJOaa5ubmJmTnFqsm5xcmJeXmqRrqFebmaJXmpK6SZGSAzw7GD8tk7mEKMAB6MSD+8J73sR
-        QqyJZcWVuYcYJTmYlER5vxcDhfiS8lMqMxKLM+KLSnNSiw8xSnAwK4nwJn4ByvGmJFZWpRbl
-        w6SkOViUxHlVl6j7CQmkJ5akZqemFqQWwWRlODiUJHhTTO5HCAkWpaanVqRl5pQgpJk4OEGG
-        8wANvw5Sw1tckJhbnJkOkT/FqMtx4/iBN0xCLHn5ealS4rxrQYoEQIoySvPg5sBS1ytGcaC3
-        hHlfg1TxANMe3KRXQEuYgJZYfL0LsqQkESEl1cDI9Or5YZYLNY+LRbUZrt88JX6n9zPz1lCN
-        2o9bLS4ac9x7ZvO9baFvgL10z/m/hbZ7VeQcNq6c3uSlmffA0+Jx4bFtvWt0rhRIZL/qTQ6p
-        ldh05qPW3rbNgVHl13f8/rJyXrdDwaObsq5tt9oTZ348ffOrXLPt2m59qUk2tpPy5oq6vm11
-        ecihxFKckWioxVxUnAgA/iVY/jgDAAA=
+In-Reply-To: <xmqq1std1lmb.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupkleLIzCtJLcpLzFFi42IRYndR1D1vfj/C4NQNG4u1z+4wWXRd6Way
+        aOi9wmyx5OFrZovuKW8ZLX609DBbbN7czuLA7rFz1l12jwWbSj262o+weTzr3cPocfGSssfn
+        TXIBbFFcNimpOZllqUX6dglcGd8e/2MtWMlTsbC1lb2B8TlnFyMHh4SAicT/fWFdjFwcQgI7
+        mCQau3+wQTjnmCRetO8Acjg5hAU8JRYvn80KYosIqElMbDvEAmILCWRIHD28jAmkgVlgG5PE
+        pBePwIrYBHQlFvU0M4HYvAL2Ev9efQEbxCKgIvF+USsziC0qECIxZ+EDRogaQYmTM58ADWXn
+        4BSwlvgvAxJlFtCT2HH9FyuELS+x/e0c5gmM/LOQNMxCUjYLSdkCRuZVjHKJOaW5urmJmTnF
+        qcm6xcmJeXmpRbrmermZJXqpKaWbGCEhLryDcddJuUOMAhyMSjy8J7zvRQixJpYVV+YeYpTk
+        YFIS5f1eDBTiS8pPqcxILM6ILyrNSS0+xCjBwawkwpv4BSjHm5JYWZValA+TkuZgURLnVVui
+        7ickkJ5YkpqdmlqQWgSTleHgUJLgdTa7HyEkWJSanlqRlplTgpBm4uAEGc4DNJwVpIa3uCAx
+        tzgzHSJ/ilFRSpxXASQhAJLIKM2D64WloFeM4kCvCPNGglTxANMXXPcroMFMQIMtvt4FGVyS
+        iJCSamBszUjczc6Rbacf7Li5/ULtk8uulu+vudy5c2zy56MLGGcx+u4qvzlTzneW6tLaxCsb
+        1nz91eNVrtNWn/O07tl3Z8Yay/2FgTzsMhOYPic4cf95GZ94unpeReQiybIpkY45evy1jBNv
+        +mQlcXhXr8ibsPPPL4OZfxL8t38OUxPd9FmTY/U29nIlluKMREMt5qLiRADaqJUVHAMAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/26/2017 04:42 AM, Nguyễn Thái Ngọc Duy wrote:
-> v7 is mostly about style changes except the one bug in
-> test-ref-store.c, missing setup_git_directory().
+On 03/31/2017 06:01 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 > 
-> There's one new patch, 03/28, which maps to the "if (!refs)" deletion
-> in the interdiff.
+>> This version literally only contains a few commit message changes and
+>> one minor comment changes relative to v1. The code is identical. I
+>> wasn't sure whether it is even worth sending this patch series to the
+>> ML again; Junio, if you'd prefer I just send a link to a published
+>> branch in such cases, please let me know.
 > 
-> The one comment from v6 I haven't addressed in v7 is whether to delete
-> REF_STORE_READ. But if it is deleted, I think I'm doing it in
-> nd/worktree-kill-parse-ref, which is partly about cleanup refs code
-> anyway, to avoid another re-roll in this series.
+> The review on the list is not about letting me pick it up, but is
+> about giving reviewing contributors a chance to comment.  I think
+> for a series this important ;-) it is good that you are giving it
+> multiple exposures so that people who were offline the last time can
+> have a chance to look at it, even if the update is minimum.
+> 
+>> This patch series is also available from my GitHub fork [2] as branch
+>> "separate-ref-cache". These patches depend on Duy's
+>> nd/files-backend-git-dir branch.
+> 
+> I am getting the impression that the files-backend thing as well as
+> this topic are ready for 'next'.  Please stop me if I missed something
+> in these topics (especially the other one) that needs updating
+> before that happens.
 
-I reviewed v7 pretty carefully, and send a couple of minor comments. But
-with or without changes, it looks good to me and the whole series is
+I don't know of any remaining problems with these two patch series
+(aside from a couple of cosmetic problems that I just pointed out about
+v7 of nd/files-backend-git-dir). I'm pretty confident about both of them.
 
-Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
-
-Thanks!
+Duy, have you looked over my patch series? Since you've been working in
+the area, your feedback would be very welcome, if you have the time for it.
 
 Michael
 
