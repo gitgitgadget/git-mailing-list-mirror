@@ -2,108 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25F4B20958
-	for <e@80x24.org>; Sat,  1 Apr 2017 19:03:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50EAF20958
+	for <e@80x24.org>; Sat,  1 Apr 2017 19:11:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751904AbdDATDq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 15:03:46 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:33911 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751798AbdDATDp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 15:03:45 -0400
-Received: by mail-io0-f196.google.com with SMTP id n76so8760485ioe.1
-        for <git@vger.kernel.org>; Sat, 01 Apr 2017 12:03:45 -0700 (PDT)
+        id S1751922AbdDATL0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 15:11:26 -0400
+Received: from mail-io0-f177.google.com ([209.85.223.177]:35340 "EHLO
+        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751804AbdDATLZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 15:11:25 -0400
+Received: by mail-io0-f177.google.com with SMTP id z13so56611813iof.2
+        for <git@vger.kernel.org>; Sat, 01 Apr 2017 12:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=Dgz4TcEfgt6Z10aPvOdR7d6jPxZFwgqZsgubCr5Hirg=;
-        b=UlYa+OZ42QheoTZZuW4qLeMXoDG+DjiolLdrbVcGKUnjZUhbwawUXfVFxc+HKtEb8Y
-         StjSDczLg9bDd9jV2RavOD/9qMnWd6aD/1VY59lArjw+GApd0u5EjIRED3dHMByhzXdd
-         /GMo83+uBAKMCUor1ziL+xH2guXLCVX2pdTYm7jIFVV3+0z+d7UOaqXTHaIANyRZjF7A
-         xhOsZYmiW+V3NlGwMflwLx9AEp5ARjyZvL4AZj0GrqbMALN9l0j/jTUbIzQDMnYYeNnY
-         IJQPMP21kGG9RzdTMWZ8AjZseNG1h+zsQ2NDPQ6yQEg3qrWQl7Ki9Oe0ud0oFcqeS20e
-         V32g==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YPDtRjLbUeqrB2jpFCby7+Hh8vD/8lgGl/Dkws83aTI=;
+        b=ss9eX4koq1OOF2c6Hqr6tlgpBn9NmMDGL1/qWrqJDOSTB2MEnjgeA+NojSXi+eu7CQ
+         fqUeSltA3S2IyEkbBt/h8n148UYju5UI2opEfw5tR+6ViFZHZqALuOfPcba8j/Uy0FNT
+         k1w6pjjJyJarjsBbpDLfQY4x6dfC9dtcC0XOGtzAZw8PbypAaFaIfQ4oqK/wEYvfok4P
+         E9Lxtfye2ms5JPXI/JYNVcAz8aeFQTtqMiF88Y6LSoOdQGfUxzrPo2QwLm4QGy3I3EcY
+         9v3X0xzdgm/quYg5jPLH0zG7LU9zMKZNo28uPrd/+qEuV8FZGKrX2jSL7+bszpLUavNo
+         PQQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc;
-        bh=Dgz4TcEfgt6Z10aPvOdR7d6jPxZFwgqZsgubCr5Hirg=;
-        b=WAeOG+mGhDMc26da60JoU/LY2TWs/KMAQT05N1EeBl/fIg/2dJga56UCSbBrBtsX0d
-         La0wG3SupY9JlJ8XCuM9wyoaW128iB9fjLB+h2whUyetdPl7ImUiSfPMEp+3uHL3Tbz/
-         Vet92MYEx947NecnCmI9/vfVl0BoxapS9a4ZkPd/OtfY3aYhUL8lG4mPOpydf4VxGquC
-         zts0tLFe7mOA0VuSIwEJyQAkatLPaObYkKCoChQ8pNAElwELOTeOPUZv841dDaP2VENl
-         AlIM4SxqQpiR7Y1tLl+H/jmPbFaqWnSIB1tlQrjVIu79b4iTmq1mxByp6sedDC+IV4Y8
-         U2LQ==
-X-Gm-Message-State: AFeK/H2xUfN5pxtWeFfnlMF8/MUQsvctGCF1bkcfHmdIguB7JhmoFjEXANxJ/mAHIehcFNaow1tsUCc15FibBw==
-X-Received: by 10.107.178.137 with SMTP id b131mr9185838iof.50.1491073424786;
- Sat, 01 Apr 2017 12:03:44 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YPDtRjLbUeqrB2jpFCby7+Hh8vD/8lgGl/Dkws83aTI=;
+        b=kqszPyhEI44VWUf0Zz6aNE/iSC67Tjw5WPliWe7AShR8BElGr8Q59cbb9fnKvtf1LB
+         TxWp4dcZILi5Bljh+Ans1hc2mF5j92Ky08Y8aI21NT8i+KMJnkbZVy6ag1nLdXgr2ZYT
+         n0/DM5alsiN07yhPS9730ZNVdMxFz0Q+PX9qhI8cQP+YEVwrU4uTVohAu969Ay/I/Rm4
+         JisD20wpL7WHuYq5Hca9cthqbzTtCpLJdoTFhvnc+U35Hk+JcrzsP5gFIzaaWbMFCx6m
+         BRVAjExgDu2IVCHxomqopPokI+GdT0DWo2q4QUqKIU1Zuv/I7eGH1jhvPTSLMF+HY8/e
+         O40A==
+X-Gm-Message-State: AFeK/H2Ygz8d2zQ16SQyolHFxjgdPpvF2TefExzEek03Q3joN++0xs1LsbZYeUnRjw/bbf+y29ZN3sBQLmVGIg==
+X-Received: by 10.107.34.68 with SMTP id i65mr10376062ioi.147.1491073884286;
+ Sat, 01 Apr 2017 12:11:24 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.136.102 with HTTP; Sat, 1 Apr 2017 12:03:44 -0700 (PDT)
-In-Reply-To: <CA+55aFwcQuxwhQ+LABmev2XRHgOqsbRm7YDYn3FDDXKMYcF-CA@mail.gmail.com>
-References: <CA+55aFypmFkc4gOEea-AF1kKYb3K=6nosXvYS4AMGFOQHw0ZxA@mail.gmail.com>
- <CA+55aFwcQuxwhQ+LABmev2XRHgOqsbRm7YDYn3FDDXKMYcF-CA@mail.gmail.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Sat, 1 Apr 2017 12:03:44 -0700
-X-Google-Sender-Auth: vSLXN0Y7L-ABBFpM4_1ipp-0Zsw
-Message-ID: <CA+55aFwmNuvh_ABtnd_uxXv5HjEjN-+HMZGh_u1OjOCa4dbpmg@mail.gmail.com>
-Subject: Re: Bug in "git am" when the body starts with spaces
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary=001a114c98b4d1af73054c1f9559
+Received: by 10.107.130.208 with HTTP; Sat, 1 Apr 2017 12:11:03 -0700 (PDT)
+In-Reply-To: <xmqqbmsgugt4.fsf@gitster.mtv.corp.google.com>
+References: <CACBZZX6FcHcY7cYs6s_pv=E43cHNmzyUY5wrcuhPWWmUixCL+g@mail.gmail.com>
+ <xmqqtw69vz9t.fsf@gitster.mtv.corp.google.com> <CACBZZX416M3YFDAACGAWCjJ4Xt0g78zpFF+iusMCarKb7SSfVw@mail.gmail.com>
+ <xmqqbmsgugt4.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 1 Apr 2017 21:11:03 +0200
+Message-ID: <CACBZZX5mEMq2ZRKKc-5HxhauNRemPpN4P+wzmihO1YhZq_vJPg@mail.gmail.com>
+Subject: Re: Very promising results with libpcre2
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---001a114c98b4d1af73054c1f9559
-Content-Type: text/plain; charset=UTF-8
-
-On Fri, Mar 31, 2017 at 5:52 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
+On Sat, Apr 1, 2017 at 8:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> The continuation logic is oddly complex, and I can't follow the logic.
-> But it is completely broken in how it thinks empty lines are somehow
-> "continuations".
+>> On Sat, Apr 1, 2017 at 12:48 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>>
+>>>> That enables the new JIT support in pcre v2:
+>>>>
+>>>>       s/iter    rx fixed   prx
+>>>> rx      2.19    --  -33%  -44%
+>>>> fixed   1.47   49%    --  -17%
+>>>> prx     1.22   79%   20%    --
+>>>
+>>> The numbers with JIT does look "interesting".
+>>>
+>>> I couldn't quite tell if there are major incompatibilities in the
+>>> regex language itself between two versions from their documentation,
+>>> but assuming that there isn't (modulo bugfixes and enhancements) and
+>>> assuming that we are going to use their standard matcher, it may be
+>>> OK to just use the newer one without linking both.
+>>
+>> There's no incompatibilities in the regex language itself (modulo bugs
+>> etc). So yeah, I'll prepare some patch to use v2.
+>
+> Just to make sure that we are on the same page.  While I do not see
+> the need to link with both variants and allow users to choose
+> between them at runtime, I do not know if the whole world is ready
+> to drop pcre1 and use pcre2 (the latter of which has only been
+> around for a bit over two years).
+>
+> So we'd probably want to do
+>
+>  (1) keep USE_LIBPCRE and enable v1 when set;
+>  (2) add USE_LIBPCRE2 and enable v2 when set;
+>  (3) make sure to error out when both are set.
+>
+> or something like that.  It is tempting to allow us to say
+>
+>     make USE_LIBPCRE=3D2
+>
+> but the existing builds are likely to be depending on "is it set to
+> anything? then use PCRE1" behaviour, so we unfortunately cannot take
+> that route.
 
-The attached patch seems to work for me. Comments?
+We're on the same page, all of this makes sense, there'll be some OS's
+/ environments which for years won't be packaging pcre2 but will have
+pcre1.
 
-The logic is fairly simple: if we encounter an empty line, and we have
-pending in-body headers, we flush the pending headers, and mark us as
-no longer in header mode.
-
-The code used to just ignore empty lines when in header mode, which is
-garbage, exactly because it would happily continue accumulating more
-headers.
-
-There may be other cases this misses, but this at least seems to fix
-the case I encountered.
-
-                    Linus
-
---001a114c98b4d1af73054c1f9559
-Content-Type: text/plain; charset=US-ASCII; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_j0zmj2z20
-
-IG1haWxpbmZvLmMgfCA3ICsrKysrKy0KIDEgZmlsZSBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKyks
-IDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9tYWlsaW5mby5jIGIvbWFpbGluZm8uYwppbmRl
-eCBhNDg5ZDlkMGYuLjY4MDM3NzU4ZiAxMDA2NDQKLS0tIGEvbWFpbGluZm8uYworKysgYi9tYWls
-aW5mby5jCkBAIC03NTcsOCArNzU3LDEzIEBAIHN0YXRpYyBpbnQgaGFuZGxlX2NvbW1pdF9tc2co
-c3RydWN0IG1haWxpbmZvICptaSwgc3RydWN0IHN0cmJ1ZiAqbGluZSkKIAlhc3NlcnQoIW1pLT5m
-aWx0ZXJfc3RhZ2UpOwogCiAJaWYgKG1pLT5oZWFkZXJfc3RhZ2UpIHsKLQkJaWYgKCFsaW5lLT5s
-ZW4gfHwgKGxpbmUtPmxlbiA9PSAxICYmIGxpbmUtPmJ1ZlswXSA9PSAnXG4nKSkKKwkJaWYgKCFs
-aW5lLT5sZW4gfHwgKGxpbmUtPmxlbiA9PSAxICYmIGxpbmUtPmJ1ZlswXSA9PSAnXG4nKSkgewor
-CQkJaWYgKG1pLT5pbmJvZHlfaGVhZGVyX2FjY3VtLmxlbikgeworCQkJCWZsdXNoX2luYm9keV9o
-ZWFkZXJfYWNjdW0obWkpOworCQkJCW1pLT5oZWFkZXJfc3RhZ2UgPSAwOworCQkJfQogCQkJcmV0
-dXJuIDA7CisJCX0KIAl9CiAKIAlpZiAobWktPnVzZV9pbmJvZHlfaGVhZGVycyAmJiBtaS0+aGVh
-ZGVyX3N0YWdlKSB7Cg==
---001a114c98b4d1af73054c1f9559--
+I am very tempted though to support them in parallel, if only for ease
+of performance testing and to be able to roll out support for
+grep.patternType=3Dperl meaning pcre1 for now, but add a
+grep.patternType=3Dpcre2 for testing (and make grep.patternType=3Dpcre1
+work, with grep.patternType=3Dpcre being synonymous with
+grep.patternType=3Dperl, i.e. whatever the default is).
