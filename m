@@ -2,183 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD8731FAFB
-	for <e@80x24.org>; Sat,  1 Apr 2017 04:02:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 303601FAFB
+	for <e@80x24.org>; Sat,  1 Apr 2017 04:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750736AbdDAECp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 00:02:45 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:47567 "EHLO
-        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750703AbdDAECo (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 1 Apr 2017 00:02:44 -0400
-X-AuditID: 12074412-4bbff70000000b04-68-58df266173c1
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 96.B6.02820.1662FD85; Sat,  1 Apr 2017 00:02:42 -0400 (EDT)
-Received: from [192.168.69.190] (p57906954.dip0.t-ipconnect.de [87.144.105.84])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v3142cF9021557
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Sat, 1 Apr 2017 00:02:39 -0400
-Subject: Re: [PATCH v7 19/28] files-backend: replace submodule_allowed check
- in files_downcast()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, git@vger.kernel.org
-References: <20170318020337.22767-1-pclouds@gmail.com>
- <20170326024241.31984-1-pclouds@gmail.com>
- <20170326024241.31984-20-pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Stefan Beller <sbeller@google.com>, novalis@novalis.org
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <4e4fd98d-055d-6e2b-845d-51d3f1c2856f@alum.mit.edu>
-Date:   Sat, 1 Apr 2017 06:02:37 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1750752AbdDAEMU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 00:12:20 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51519 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750726AbdDAEMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 00:12:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 121768343D;
+        Sat,  1 Apr 2017 00:12:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3hHDHMrmRM58WvvvDd+86IytTUk=; b=vkaLLQ
+        6Op6CpoxPIzMHMP2FRz9pDcnonzeEUDExWT4JKe9tiwExLFJp4VCReaeF/1cYTtO
+        C36FKUWO3vjYgwLPytm7f4sXg9rEZS3gJ+VH2ewNDuAwBuj8k4wIZZ8LcqWv2kLY
+        U3hmv05451LcRyCfmvCvpwbCZslAjqdveWFEE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uOHK8MH1ClJuhQv2Oo+jCguW4WXQs7+R
+        USmfI4GMxbWzWWNqAIqnDbyXpV+pm8kKPYPNj5+rvL6vT2ygpYP2Qv5Uft6PZnmt
+        bfAkj4efkopF1GWXhcU6qGUHPeoYthq16e4f1muaq+KUSwhXw+90zVfoxnVqF3Wc
+        93ypgC4Vft0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E957F8343C;
+        Sat,  1 Apr 2017 00:12:17 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 526B68343B;
+        Sat,  1 Apr 2017 00:12:17 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Kevin Willford <kewillf@microsoft.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH] name-hash: fix buffer overrun
+References: <20170331173214.47514-1-git@jeffhostetler.com>
+        <20170331173214.47514-2-git@jeffhostetler.com>
+        <xmqqo9whxmrq.fsf@gitster.mtv.corp.google.com>
+        <xmqqy3vlw3f9.fsf@gitster.mtv.corp.google.com>
+        <CAPc5daWU5XDVNiYk_pTFk_qziuDr6W2XDHXXH-0oR49_KiCUYA@mail.gmail.com>
+Date:   Fri, 31 Mar 2017 21:12:16 -0700
+In-Reply-To: <CAPc5daWU5XDVNiYk_pTFk_qziuDr6W2XDHXXH-0oR49_KiCUYA@mail.gmail.com>
+        (Junio C. Hamano's message of "Fri, 31 Mar 2017 16:18:29 -0700")
+Message-ID: <xmqqh928wyu7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170326024241.31984-20-pclouds@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprBKsWRmVeSWpSXmKPExsUixO6iqJusdj/C4Ow9JouuK91MFg29V5gt
-        +pd3sVksefia2aJ7yltGix8tPcwWM69aW2ze3M7iwOGxc9Zddo8PH+M8Fmwq9ehqP8Lm8ax3
-        D6PHxUvKHvuXbmPz+LxJLoAjissmJTUnsyy1SN8ugSvj9rGvjAVtihXnjzxkbGDskepi5OSQ
-        EDCRWHPxMksXIxeHkMAOJokVVz6yQzjnmCQeTX7NAlIlLJAkseb0F2YQW0QgTWLx5PdgtpDA
-        REaJ5esjQBqYBT4zSky5e54RJMEmoCuxqKeZCcTmFbCXuPXpK1gDi4CKRMPtFawgtqhAiMSc
-        hQ8YIWoEJU7OfAK0jIODU8BC4lyzMUiYWUBd4s+8S8wQtrxE89bZzBMY+Wch6ZiFpGwWkrIF
-        jMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9HIzS/RSU0o3MUIiQGgH4/qTcocYBTgYlXh4
-        FfzuRQixJpYVV+YeYpTkYFIS5f1eDBTiS8pPqcxILM6ILyrNSS0+xCjBwawkwpv4BSjHm5JY
-        WZValA+TkuZgURLn/blY3U9IID2xJDU7NbUgtQgmK8PBoSTBK6V6P0JIsCg1PbUiLTOnBCHN
-        xMEJMpwHaPgxkBre4oLE3OLMdIj8KUZFKXGIZgGQREZpHlwvLEG9YhQHekWY96sKUBUPMLnB
-        db8CGswENNji612QwSWJCCmpBsb0K67C2bNarr8rLLR/PT3xTpTV4r7rRUvNxErjDDK2V/Uf
-        y3jxqL3AXtVNba6r4ozPXmyrFqSwzvtT5x8drLp6Tf75w5Ye6iUeG+zFYhWc/5j+DQ47ULKn
-        12Be+x33Bn+NQ5oan+IvcXerOJe73ompXeffar59opFoWz7ro44nRreYbqo7KLEUZyQaajEX
-        FScCAHncpCsrAwAA
+Content-Type: text/plain
+X-Pobox-Relay-ID: 64B16508-1691-11E7-84C7-FC50AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 03/26/2017 04:42 AM, Nguyễn Thái Ngọc Duy wrote:
-> files-backend.c is unlearning submodules. Instead of having a specific
-> check for submodules to see what operation is allowed, files backend
-> now takes a set of flags at init. Each operation will check if the
-> required flags is present before performing.
-> 
-> For now we have four flags: read, write and odb access. Main ref store
-> has all flags, obviously, while submodule stores are read-only and have
-> access to odb (*).
-> 
-> The "main" flag stays because many functions in the backend calls
-> frontend ones without a ref store, so these functions always target the
-> main ref store. Ideally the flag should be gone after ref-store-aware
-> api is in place and used by backends.
-> 
-> (*) Submodule code needs for_each_ref. Try take REF_STORE_ODB flag
-> out. At least t3404 would fail. The "have access to odb" in submodule is
-> a bit hacky since we don't know from he whether add_submodule_odb() has
-> been called.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  refs.c               | 15 +++++++---
->  refs/files-backend.c | 81 +++++++++++++++++++++++++++++++++-------------------
->  refs/refs-internal.h |  9 +++++-
->  3 files changed, 71 insertions(+), 34 deletions(-)
-> 
-> diff --git a/refs.c b/refs.c
-> index d72b48a430..241b4227b2 100644
-> --- a/refs.c
-> +++ b/refs.c
-> [...]
-> @@ -1481,7 +1486,9 @@ struct ref_store *get_ref_store(const char *submodule)
->  		return NULL;
->  	}
->  
-> -	refs = ref_store_init(submodule_sb.buf);
-> +	/* pretend that add_submodule_odb() has been called */
+Junio C Hamano <gitster@pobox.com> writes:
 
-The word "pretend" implies that the thing that follows is not true,
-whereas we hope that it *is* true. It would be better to say "assume".
+> Ah, of course. Avoid GNUism to spell HT as "\t" in a sed script.
 
-> +	refs = ref_store_init(submodule_sb.buf,
-> +			      REF_STORE_READ | REF_STORE_ODB);
->  	register_submodule_ref_store(refs, submodule);
->  
->  	strbuf_release(&submodule_sb);
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 490f05a6f4..d97a924860 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> [...]
-> @@ -994,13 +997,17 @@ static struct ref_store *files_ref_store_create(const char *gitdir)
->  }
->  
->  /*
-> - * Die if refs is for a submodule (i.e., not for the main repository).
-> - * caller is used in any necessary error messages.
-> + * Die if refs is not the main ref store. caller is used in any
-> + * necessary error messages.
->   */
->  static void files_assert_main_repository(struct files_ref_store *refs,
->  					 const char *caller)
->  {
-> -	/* This function is to be fixed up in the next patch */
-> +	if (refs->store_flags & REF_STORE_MAIN)
-> +		return;
-> +
-> +	die("BUG: unallowed operation (%s), only works "
-> +	    "on main ref store\n", caller);
+Here is what I replaced the original patch with.  Let's see how well
+it fares with Travis tonight.
 
-"Unallowed" isn't really a word; one would say "disallowed". But it
-might sound better to say
+-- >8 --
+From: Kevin Willford <kewillf@microsoft.com>
+Date: Fri, 31 Mar 2017 17:32:14 +0000
+Subject: [PATCH] name-hash: fix buffer overrun
 
-    BUG: operation %s only allowed for main ref store
+Add check for the end of the entries for the thread partition.
+Add test for lazy init name hash with specific directory structure
 
->  }
->  
->  /*
-> @@ -1009,9 +1016,9 @@ static void files_assert_main_repository(struct files_ref_store *refs,
->   * files_ref_store is for a submodule (i.e., not for the main
->   * repository). caller is used in any necessary error messages.
->   */
-> -static struct files_ref_store *files_downcast(
-> -		struct ref_store *ref_store, int submodule_allowed,
-> -		const char *caller)
-> +static struct files_ref_store *files_downcast(struct ref_store *ref_store,
-> +					      unsigned int required_flags,
-> +					      const char *caller)
+The lazy init hash name was causing a buffer overflow when the last
+entry in the index was multiple folder deep with parent folders that
+did not have any files in them.
 
-The docstring for this function needs to be updated; it still talks
-about the old `submodule_allowed` parameter.
+This adds a test for the boundary condition of the thread partitions
+with the folder structure that was triggering the buffer overflow.
 
->  {
->  	struct files_ref_store *refs;
->  
-> @@ -1021,8 +1028,9 @@ static struct files_ref_store *files_downcast(
->  
->  	refs = (struct files_ref_store *)ref_store;
->  
-> -	if (!submodule_allowed)
-> -		files_assert_main_repository(refs, caller);
-> +	if ((refs->store_flags & required_flags) != required_flags)
-> +		die("BUG: unallowed operation (%s), requires %x, has %x\n",
-> +		    caller, required_flags, refs->store_flags);
+The fix was to check if it is the last entry for the thread partition
+in the handle_range_dir and not try to use the next entry in the cache.
 
-Same comment about "unallowed". Maybe
+Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ name-hash.c                             |  4 +++-
+ t/t3008-ls-files-lazy-init-name-hash.sh | 19 +++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3008-ls-files-lazy-init-name-hash.sh
 
-    BUG: operation %s requires abilities 0x%x but only have 0x%x
-
->  
->  	return refs;
->  }
-> [...]
-
-Michael
+diff --git a/name-hash.c b/name-hash.c
+index cac313c78d..39309efb7f 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -342,7 +342,9 @@ static int handle_range_dir(
+ 	 * Scan forward in the index array for index entries having the same
+ 	 * path prefix (that are also in this directory).
+ 	 */
+-	if (strncmp(istate->cache[k_start + 1]->name, prefix->buf, prefix->len) > 0)
++	if (k_start + 1 >= k_end)
++		k = k_end;
++	else if (strncmp(istate->cache[k_start + 1]->name, prefix->buf, prefix->len) > 0)
+ 		k = k_start + 1;
+ 	else if (strncmp(istate->cache[k_end - 1]->name, prefix->buf, prefix->len) == 0)
+ 		k = k_end;
+diff --git a/t/t3008-ls-files-lazy-init-name-hash.sh b/t/t3008-ls-files-lazy-init-name-hash.sh
+new file mode 100755
+index 0000000000..971975bff4
+--- /dev/null
++++ b/t/t3008-ls-files-lazy-init-name-hash.sh
+@@ -0,0 +1,19 @@
++#!/bin/sh
++
++test_description='Test the lazy init name hash with various folder structures'
++
++. ./test-lib.sh
++
++test_expect_success 'no buffer overflow in lazy_init_name_hash' '
++	(
++	    test_seq 2000 | sed "s/^/a_/"
++	    echo b/b/b
++	    test_seq 2000 | sed "s/^/c_/"
++	    test_seq 50 | sed "s/^/d_/" | tr "\n" "/"; echo d
++	) |
++	sed -e "s/^/100644 $EMPTY_BLOB	/" |
++	git update-index --index-info &&
++	test-lazy-init-name-hash -m
++'
++
++test_done
+-- 
+2.12.2-752-g2215051a9e
 
