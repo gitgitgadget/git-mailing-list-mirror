@@ -2,159 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58C1A1FAFB
-	for <e@80x24.org>; Sat,  1 Apr 2017 00:00:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 356B41FAFB
+	for <e@80x24.org>; Sat,  1 Apr 2017 00:11:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933446AbdDAAAI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Mar 2017 20:00:08 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:34360 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933363AbdDAAAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Mar 2017 20:00:07 -0400
-Received: by mail-pg0-f51.google.com with SMTP id 21so84458241pgg.1
-        for <git@vger.kernel.org>; Fri, 31 Mar 2017 17:00:07 -0700 (PDT)
+        id S933370AbdDAAL4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Mar 2017 20:11:56 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35653 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933354AbdDAALz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Mar 2017 20:11:55 -0400
+Received: by mail-pg0-f68.google.com with SMTP id g2so20439276pge.2
+        for <git@vger.kernel.org>; Fri, 31 Mar 2017 17:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=z0i5/aQGsl09Eblq2kH0SxuaHFar4sP5xNDLxHjrRys=;
-        b=u5kUV2NCFv90VSYOXChBAdykpyB4YCnwlxSM6GEkJYixk+wlHQKBNoizHtcBnC1e/a
-         H7wKJTwf/wzgI5lX6eigZJrcnhR0NafO5g3z8PkA5NrP9VRFtsYADP8zKCSqithHW73r
-         uUY7ieLzI4gjX0Ozx6BHSffKqVKnPMOOQqwJZcxQpqWginy7vXI+3xP4yq1COHM7JXUO
-         Z2VP+K4ZGmZdr5Nr4+ddteYF0p+YD2K3cKyAmbjgg2F0RKTXANq2wbRYHqR/1DrcwSOv
-         PZFIt4/4cClK3Oo7pQQoD2oX84pJZdF1PiH67ICaJxI1nwpfMTT8UrZmoVVHCbkaebFp
-         Svmg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=S5Jpk284w2c1wA9nAN56yM/h/QCw1/alcFLJLRsi/nA=;
+        b=J5xywJMEgyDsrPPhpsdYvisHFWoyw/t9dmrXnd6nfXOQnm4Aaq0U8SWTKqBz41Qcj0
+         E+OsCNV2xlzkbuWj/JhUae6fzs9yiQi7FfQ6atlKJaFXmfnl9eU66nIrlBgon27lxP/0
+         8Oc+7dbXclUZXyLaG7B7D0KIDK12qMbiQlERde0fDt+7kL5DSeoMJ6pYE7cA8+I2e1cA
+         I3N46JBP3yQLynRoJ1d1xfJUw9Ql6azQputxP6uXkkrX7F/C7HW4EKzKSpR1MHebEXp7
+         g+37y0KgFTG9QQN+adngvE+nKf7jcZaverzxoTwwLk/W+7MUsnDu8yXVILBnGYvKcdTZ
+         tk8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=z0i5/aQGsl09Eblq2kH0SxuaHFar4sP5xNDLxHjrRys=;
-        b=gO2mnJxY5g4iVbpWBzJHNjLXnPoYAbD6RjdJLTk9BkcaTsQ07zOC7IJSDAtQlOGxSo
-         EosKQS7hz8TmPhXSagFD72nmJ7gtJ5Rrq2/9Lb2Hs/a/sCgrXprCTDm/x8/W2g5t45rq
-         O3ogD/9/wuE/gGa452rjYvGjOeBBzIXdd48XTZgY57Z3VL6AmqDnzrtArtNCdKJ6DQcO
-         Fk1QueAx0Lthj/nl1ZBt0WVtwvoDd5kuNAcDtSxa8ZikIHhKa5lQ1ziRgch5fDcyLz65
-         cXFI6PdoDHR5BxWys4GGTUgPtK33hN2ZPf5539Si8Gj1m1JyzxCGXq4YBuKLNCoggnsl
-         BnCQ==
-X-Gm-Message-State: AFeK/H2Od8stDP5qerJO9IXyFRtoTnQGZrRpL4yE3d+eqp+5Gn5kHIJ3FZVlBvjfQaqUX1Mt
-X-Received: by 10.98.34.86 with SMTP id i83mr4910684pfi.89.1491004806231;
-        Fri, 31 Mar 2017 17:00:06 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:1036:daec:97bb:16f7])
-        by smtp.gmail.com with ESMTPSA id l29sm12495034pfb.118.2017.03.31.17.00.05
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=S5Jpk284w2c1wA9nAN56yM/h/QCw1/alcFLJLRsi/nA=;
+        b=nuqjgQuMrC4q499l+5eRnD86nQ3wKv9heGdUMjrlhgd7fdyvLJ9Waa+AWpNg4czRVj
+         MkzyrqkaE8g5wOYLkKr985wZszmy1XNmKzVFLbhM0RTx1Y8DLxgLtiVzSU5W8wyGH96J
+         ZIgVWva2zH9i38ZV48qVLJMER1wRrRBVsTujWoaFrA36AwMJjDV+6UmSCXqg28dcov6O
+         zgL04dbGnoVlHGqqXnK1V1uLseO2yb/Jx+wGXTMAn8/ZEOs2F3f8awnIM8/W71etwuA/
+         OKwUfk0BKO/Anu6EMoYcUnvUC6XmoqzkZyMPm1DZRw2wIJscj691x9urVS4N3U+GqzMa
+         IHMw==
+X-Gm-Message-State: AFeK/H3CaDivd8CbJlS2zvqpMrhBQOoy0mRKE/wt0LBhj/jhoso4lMaYtgO0jbTkoQzKIg==
+X-Received: by 10.98.144.16 with SMTP id a16mr4817087pfe.247.1491005514825;
+        Fri, 31 Mar 2017 17:11:54 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:8962:97f5:cc56:a89d])
+        by smtp.gmail.com with ESMTPSA id w186sm12550332pgb.35.2017.03.31.17.11.53
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 31 Mar 2017 17:00:05 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Subject: [RFC PATCH] git-news: obtain latest news for your favorite VCS
-Date:   Fri, 31 Mar 2017 16:59:47 -0700
-Message-Id: <20170331235947.20010-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.2.576.g7be6e4ba40.dirty
+        Fri, 31 Mar 2017 17:11:54 -0700 (PDT)
+Date:   Fri, 31 Mar 2017 17:11:52 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] push: unmark a local variable as static
+Message-ID: <20170401001152.GB8741@aiede.mtv.corp.google.com>
+References: <20170331231135.195195-1-bmwill@google.com>
+ <20170331235623.166408-1-bmwill@google.com>
+ <20170331235623.166408-2-bmwill@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170331235623.166408-2-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Today when a user is interested in news regarding the Git, their favorite
-version control, it is a challenging task to find out what is actually
-happening.  If the user is using a Git in a distribution that packaged
-it nicely for them, they may find outdated information in their
-distribution using the distributions choice of relaying news.
-As Git is a fast paced project, this is not the desired behavior for
-most users. They rather prefer the latest news.
+Brandon Williams wrote:
 
-One could argue that it is OK to expect the user to read the "What's
-cooking" emails or even release notes to get a grasp of the latest
-development of Git, but these news do not quite catch the lively
-atmosphere of the mailing list with all its polite flame wars and
-opinionated arguments on why a patch is written the way it ends up in
-the release notes.
+>                         Also, clear the push_options string_list to
+> prevent memory leaking.
 
-It is time to fix the root case of this important user facing problem in
-a sensible way that doesn't confuse the user.
+That's not a real leak, right?  Is the motivation to make it not show up
+in valgrind output?
 
-Invent a new sub command 'git-news', which presents the latest news
-in a way capturing all the interesting tid-bits of the mailing list as
-well as the surrounding ecosystem.
+At first it didn't look related to the other change but then the
+connection dawned on me.
 
-As we're rushing the solution of this important problem, we did not
-consider alternatives, such that we end up solving it in a backwards
-compatible, but forwards incompatible way; clearly nobody in the future
-wants to add another command that points to different news source. This is
-why we can take the generic name 'git-news', instead of using the rather
-specialized 'git-rev-news' command that is harder to remember and type.
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  builtin/push.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- .gitignore            | 1 +
- Documentation/git.txt | 2 ++
- Makefile              | 1 +
- command-list.txt      | 1 +
- git-news.sh           | 4 ++++
- 5 files changed, 9 insertions(+)
- create mode 100755 git-news.sh
-
-diff --git a/.gitignore b/.gitignore
-index 833ef3b0b7..b2d9c1161f 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -98,6 +98,7 @@
- /git-mktag
- /git-mktree
- /git-name-rev
-+/git-news
- /git-mv
- /git-notes
- /git-p4
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index ecc1bb4bd7..f4629aa39b 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -35,6 +35,8 @@ manual page gives you an overview of the command-line command syntax.
- A formatted and hyperlinked copy of the latest Git documentation
- can be viewed at `https://git.github.io/htmldocs/git.html`.
- 
-+A more entertaining section of news can be obtained via `git-news`.
-+
- ifdef::stalenotes[]
- [NOTE]
- ============
-diff --git a/Makefile b/Makefile
-index 9f8b35ad41..32e50f30a2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -519,6 +519,7 @@ SCRIPT_SH += git-merge-octopus.sh
- SCRIPT_SH += git-merge-one-file.sh
- SCRIPT_SH += git-merge-resolve.sh
- SCRIPT_SH += git-mergetool.sh
-+SCRIPT_SH += git-news.sh
- SCRIPT_SH += git-quiltimport.sh
- SCRIPT_SH += git-rebase.sh
- SCRIPT_SH += git-remote-testgit.sh
-diff --git a/command-list.txt b/command-list.txt
-index a1fad28fd8..150b287ada 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -91,6 +91,7 @@ git-mktag                               plumbingmanipulators
- git-mktree                              plumbingmanipulators
- git-mv                                  mainporcelain           worktree
- git-name-rev                            plumbinginterrogators
-+git-news                                mainporcelain
- git-notes                               mainporcelain
- git-p4                                  foreignscminterface
- git-pack-objects                        plumbingmanipulators
-diff --git a/git-news.sh b/git-news.sh
-new file mode 100755
-index 0000000000..1707dc633e
---- /dev/null
-+++ b/git-news.sh
-@@ -0,0 +1,4 @@
-+#!/bin/sh
-+#
-+
-+/usr/bin/sensible-browser https://git.github.io/rev_news/
--- 
-2.12.2.576.g7be6e4ba40.dirty
-
+For what it's worth,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
