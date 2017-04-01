@@ -6,30 +6,29 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 050C720966
-	for <e@80x24.org>; Sat,  1 Apr 2017 08:05:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6DCA2096B
+	for <e@80x24.org>; Sat,  1 Apr 2017 08:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750842AbdDAIFZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 04:05:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55283 "EHLO cloud.peff.net"
+        id S1750818AbdDAIJj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 04:09:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55311 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750724AbdDAIFX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 04:05:23 -0400
-Received: (qmail 29122 invoked by uid 109); 1 Apr 2017 08:05:23 -0000
+        id S1750787AbdDAIJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 04:09:34 -0400
+Received: (qmail 29450 invoked by uid 109); 1 Apr 2017 08:09:33 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 08:05:23 +0000
-Received: (qmail 16194 invoked by uid 111); 1 Apr 2017 08:05:40 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 08:09:33 +0000
+Received: (qmail 16225 invoked by uid 111); 1 Apr 2017 08:09:50 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 04:05:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Apr 2017 04:05:21 -0400
-Date:   Sat, 1 Apr 2017 04:05:21 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 01 Apr 2017 04:09:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Apr 2017 04:09:32 -0400
+Date:   Sat, 1 Apr 2017 04:09:32 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Lars Schneider <larsxschneider@gmail.com>,
         Git List <git@vger.kernel.org>
-Subject: [PATCH 1/2] sha1_loose_object_info: return error for corrupted
- objects
-Message-ID: <20170401080521.ehjc6jomjd5py3lj@sigill.intra.peff.net>
+Subject: [PATCH 2/2] index-pack: detect local corruption in collision check
+Message-ID: <20170401080931.t67jbtta4w4enui6@sigill.intra.peff.net>
 References: <20170401080349.lccextuc3l6fgs6j@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,70 +39,100 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When sha1_loose_object_info() finds that a loose object file
-cannot be stat(2)ed or mmap(2)ed, it returns -1 to signal an
-error to the caller.  However, if it found that the loose
-object file is corrupt and the object data cannot be used
-from it, it stuffs OBJ_BAD into "type" field of the
-object_info, but returns zero (i.e., success), which can
-confuse callers.
+When we notice that we have a local copy of an incoming
+object, we compare the two objects to make sure we haven't
+found a collision. Before we get to the actual object
+bytes, though, we compare the type and size from
+sha1_object_info().
 
-This is due to 052fe5eac (sha1_loose_object_info: make type
-lookup optional, 2013-07-12), which switched the return to a
-strict success/error, rather than returning the type (but
-botched the return).
+If our local object is corrupted, then the type will be
+OBJ_BAD, which obviously will not match the incoming type,
+and we'll report "SHA1 COLLISION FOUND" (with capital
+letters and everything). This is confusing, as the problem
+is not a collision but rather local corruption. We should
+reoprt that instead (just like we do if reading the rest of
+the object content fails a few lines later).
 
-Callers of regular sha1_object_info() don't notice the
-difference, as that function returns the type (which is
-OBJ_BAD in this case). However, direct callers of
-sha1_object_info_extended() see the function return success,
-but without setting any meaningful values in the object_info
-struct, leading them to access potentially uninitialized
-memory.
+Note that we _could_ just ignore the error and mark it as a
+non-collision. That would let you "git fetch" to replace a
+corrupted object. But it's not a very reliable method for
+repairing a repository. The earlier want/have negotiation
+tries to get the other side to omit objects we already have,
+and it would not realize that we are "missing" this
+corrupted object. So we're better off complaining loudly
+when we see corruption, and letting the user take more
+drastic measures to repair (like making a full clone
+elsewhere and copying the pack into place).
 
-The easiest way to see the bug is via "cat-file -s", which
-will happily ignore the corruption and report whatever
-value happened to be in the "size" variable.
+Note that the test sets transfer.unpackLimit in the
+receiving repository so that we use index-pack (which is
+what does the collision check). Normally for such a small
+push we'd use unpack-objects, which would simply try to
+write the loose object, and discard the new one when we see
+that there's already an old one.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-So not only does it not fail, but running with --valgrind complains.
+I was surprised to see that unpack-objects doesn't do the same collision
+check. I think it relies on the loose-object precedence. But that seems
+like it misses a case: if you have a packed version of an object and
+receive a small fetch or push, we may unpack a duplicate object to its
+loose format without doing any kind of collision check.
 
- sha1_file.c                  | 2 +-
- t/t1060-object-corruption.sh | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+We may want to tighten that up. In the long run, I'd love to see
+unpack-objects go away in favor of teaching index-pack how to write
+loose objects. The two had very similar code once upon a time, but
+index-pack has grown a lot of feature and bugfixes over the years.
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 71063890f..368c89b5c 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2952,7 +2952,7 @@ static int sha1_loose_object_info(const unsigned char *sha1,
- 	if (status && oi->typep)
- 		*oi->typep = status;
- 	strbuf_release(&hdrbuf);
--	return 0;
-+	return (status < 0) ? status : 0;
- }
- 
- int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi, unsigned flags)
+ builtin/index-pack.c         |  2 ++
+ t/t1060-object-corruption.sh | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 88d205f85..9f17adb37 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -809,6 +809,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 		unsigned long has_size;
+ 		read_lock();
+ 		has_type = sha1_object_info(sha1, &has_size);
++		if (has_type < 0)
++			die(_("cannot read existing object info %s"), sha1_to_hex(sha1));
+ 		if (has_type != type || has_size != size)
+ 			die(_("SHA1 COLLISION FOUND WITH %s !"), sha1_to_hex(sha1));
+ 		has_data = read_sha1_file(sha1, &has_type, &has_size);
 diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
-index 3f8705139..3a88d79c5 100755
+index 3a88d79c5..ac1f189fd 100755
 --- a/t/t1060-object-corruption.sh
 +++ b/t/t1060-object-corruption.sh
-@@ -53,6 +53,13 @@ test_expect_success 'streaming a corrupt blob fails' '
+@@ -21,6 +21,14 @@ test_expect_success 'setup corrupt repo' '
+ 		cd bit-error &&
+ 		test_commit content &&
+ 		corrupt_byte HEAD:content.t 10
++	) &&
++	git init no-bit-error &&
++	(
++		# distinct commit from bit-error, but containing a
++		# non-corrupted version of the same blob
++		cd no-bit-error &&
++		test_tick &&
++		test_commit content
  	)
  '
  
-+test_expect_success 'getting type of a corrupt blob fails' '
+@@ -108,4 +116,13 @@ test_expect_failure 'clone --local detects misnamed objects' '
+ 	test_must_fail git clone --local misnamed misnamed-checkout
+ '
+ 
++test_expect_success 'fetch into corrupted repo with index-pack' '
 +	(
 +		cd bit-error &&
-+		test_must_fail git cat-file -s HEAD:content.t
++		test_must_fail git -c transfer.unpackLimit=1 \
++			fetch ../no-bit-error 2>stderr &&
++		test_i18ngrep ! -i collision stderr
 +	)
 +'
 +
- test_expect_success 'read-tree -u detects bit-errors in blobs' '
- 	(
- 		cd bit-error &&
+ test_done
 -- 
 2.12.2.943.g91cb50fd8
-
