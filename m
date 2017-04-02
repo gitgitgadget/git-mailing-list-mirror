@@ -2,146 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48A0C20966
-	for <e@80x24.org>; Sun,  2 Apr 2017 20:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4921020966
+	for <e@80x24.org>; Sun,  2 Apr 2017 22:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751854AbdDBUFo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Apr 2017 16:05:44 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:33923 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751822AbdDBUFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2017 16:05:42 -0400
-Received: by mail-qk0-f193.google.com with SMTP id 10so16968380qkh.1
-        for <git@vger.kernel.org>; Sun, 02 Apr 2017 13:05:41 -0700 (PDT)
+        id S1751194AbdDBWvB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Apr 2017 18:51:01 -0400
+Received: from mail-lf0-f54.google.com ([209.85.215.54]:36736 "EHLO
+        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750983AbdDBWvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2017 18:51:00 -0400
+Received: by mail-lf0-f54.google.com with SMTP id x137so63705266lff.3
+        for <git@vger.kernel.org>; Sun, 02 Apr 2017 15:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IT7db9dexXxcNTmGl1/4KNU7ywsaBIMok9fUdHoIh/8=;
-        b=RLNkUSlPoUVYwT+Auj8Pxg7i2v3eQjxqYO5gOHW8G8qUcc+M/78bntH3XDbpFgDic3
-         cyED8fCmzZs3v3PH0Skk7gKoAbgs8d2jGpNpujUuK5mKdkUuPVmeI6GTU8mXqgxWUZh1
-         fAQSh/0QuyLclOysSaU/LopwZI2mdEjcrGEaMAN8gXMlgs5B5fgt0TF7K894ib5u707d
-         chPBOtFqXrcICpJrrHfK1DnQibb5/Pn5KSAuIJAKlHOqH6MfgSzgM5CT0ynifqwGRAnV
-         5JZdcxcbxcq464cKYEkqjiV4Jq4SbXndyQO295s9/dprUyziHUFC+fJCdsKeiBCVvf5b
-         jE/Q==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=72VfV1rGdF8zG7qPYy1UMwvte11nx4AXU26Zz1w30ZA=;
+        b=aGc2kfAnDAAim59h5srRq8rAOVb9Kn5dU+nFPG5Z6ntdfF9hN/wnu/PkeTNyh/qTRv
+         nR8tF3Qp2DzdKOmLqpRbl9CBTFl4iysMccwm8U3ACdFqbn4GrR8m1Rp/AtEuzvKVflLB
+         2yx+f1Vuz/uq9CSq2b77LZ+GBQIBK+j/AOx4EoSDboxjwwQm5OguHTIooUPn7Y9RJ6IV
+         LqYf3UD2SRl3R4LYzV8OmLYU9woy4oyaglsdaQVMBvb2cjZD6l6b8ewbEHArqjvRXH4d
+         s/WZhQRBK7vRZNtfrqumaYBvCEWyH78oczQUh7Vxs3QrFLxMUpI53bp4XTgi86vz6Xuo
+         v/8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=IT7db9dexXxcNTmGl1/4KNU7ywsaBIMok9fUdHoIh/8=;
-        b=NDKl7fMqMzJBjHrOWHkwTxHLoUlsXcX0qa7zHDNxv7ttt9LRtW4ZSMSxzhNAvlWS9f
-         5DwSRUxbqW4gYX8yLSUdh87m3ZBzXoD3s+QjIgZ5fYb1fiOPJfFfF8+6tga/UlRw2Z/l
-         yNW5meqU9uBg06AhpaQWupe/0uRKLFxzGkb1sTKdXHz4SwtZ1FZy6tg1hX92mEj6FUUV
-         WeSuI+GlfM4Z87QGy2og+FdmQxqjKaPbm486gh9mhOpHFFSK9fcXwl+y/r06ufpUEeYk
-         MwWCr5fi7grn+iM4Io6Q149gRxw5xmLTTe1tWslG8ByygVBbDjxWyuQI57NWcc8Udqvi
-         vuHg==
-X-Gm-Message-State: AFeK/H0+p9LLUBi02psuLc0Cf3oAT7oECbokZWJAvJKhlbHp+6PToYlJvGHbHwV+XGX8Zw==
-X-Received: by 10.55.167.72 with SMTP id q69mr13437357qke.320.1491163541344;
-        Sun, 02 Apr 2017 13:05:41 -0700 (PDT)
-Received: from localhost.localdomain (186-245-85-163.user3g.veloxzone.com.br. [186.245.85.163])
-        by smtp.gmail.com with ESMTPSA id 137sm8162258qkd.19.2017.04.02.13.05.37
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 02 Apr 2017 13:05:40 -0700 (PDT)
-From:   Daniel Ferreira <bnmvco@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
-        mhagger@alum.mit.edu, Daniel Ferreira <daniel.calibeta@gmail.com>,
-        Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v7 5/5] remove_subtree(): reimplement using iterators
-Date:   Sun,  2 Apr 2017 17:03:08 -0300
-Message-Id: <1491163388-41255-6-git-send-email-bnmvco@gmail.com>
-X-Mailer: git-send-email 2.7.4 (Apple Git-66)
-In-Reply-To: <1491163388-41255-1-git-send-email-bnmvco@gmail.com>
-References: <1491163388-41255-1-git-send-email-bnmvco@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=72VfV1rGdF8zG7qPYy1UMwvte11nx4AXU26Zz1w30ZA=;
+        b=oC9h0JWpzhckemcuMXEx9PQSHyX8bVegu+2/4F2L4DLnLoGCyd2Iyqc7WRksw7T8XM
+         AjUTDpvOwUI/zj0sP0GVbfrWE2kwvNtjiIYlXyMLPxIWXcMUcl3H5C8P1Hra112Wokc9
+         xlhpqVA58NefiTAphLFSMdRM+/H88wJF82lNMxt4hTY1ghCz51OMIxK2GBm2Wq/m8B7y
+         cTwKwQcLRwKI0jJY49YG6VR69euepOfujs+ab8kXYqLfQFJWrB3tb7imroE9BzE32DD1
+         1kUN7QsxyJrFk1I16m34Qynj5d7f+w3V8XP7KzM2Fpfo/gZFmfEBXVl1CcHcC3BcIttE
+         xSYQ==
+X-Gm-Message-State: AFeK/H1xaiOnHXbmkjI9RmJK37t/1WacrWD8uW+JKHJ2F+8eq7nLrlN/FIz8Kv0nWB5JNmMTriWpf6Tj61UesA==
+X-Received: by 10.25.18.169 with SMTP id 41mr3929342lfs.129.1491173459027;
+ Sun, 02 Apr 2017 15:50:59 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.18.73 with HTTP; Sun, 2 Apr 2017 15:50:28 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1704022140420.3742@virtualbox>
+References: <CAEA2_RJEf4vjgcaux8a1KWh1-vxLLmv1--Vjf9wiEQoF+gVDtA@mail.gmail.com>
+ <CAGZ79kbyW79wToWqoL_F5n+jOFwFH=z2jY3Du2YTyv9tS9L=JA@mail.gmail.com>
+ <alpine.DEB.2.20.1703300142230.4068@virtualbox> <CAEA2_RLX+0Yz-wcdAaEj3Pp0qOKWdHu32T9Vvkk2KSFkzUx7Cw@mail.gmail.com>
+ <alpine.DEB.2.20.1704022140420.3742@virtualbox>
+From:   "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
+Date:   Sun, 2 Apr 2017 19:50:28 -0300
+Message-ID: <CAEA2_RJ31r-9ROWKKQY8JwWF0iQk9d4hdLJZdkZgRHaFGphzfg@mail.gmail.com>
+Subject: Re: [GSoC] Proposal: turn git-add--interactive.perl into a builtin
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Daniel Ferreira <daniel.calibeta@gmail.com>
+On Sun, Apr 2, 2017 at 4:43 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> We ask to accomplish a microproject before evaluating the proposals for
+> one reason: to have a good understanding how well the students would
+> interact with the project if they were accepted. As such, the
+> microprojects really are about the flow of the contribution, not to tackle
+> the project already.
+> Meaning: I would recommend staying with your microproject, in particular
+> if it is already in full swing.
 
-Use dir_iterator to traverse through remove_subtree()'s directory tree,
-avoiding the need for recursive calls to readdir(). Simplify
-remove_subtree()'s code.
+Oh, when I mentioned these bugfixes I meant I'd be willing to do those
+*plus* my microproject before the coding period begins as a "warm-up"
+to the project. I'm certainly staying with the microproject until the
+end!
 
-A conversion similar in purpose was previously done at 46d092a
-("for_each_reflog(): reimplement using iterators", 2016-05-21).
-
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
----
- entry.c | 38 ++++++++++++--------------------------
- 1 file changed, 12 insertions(+), 26 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index d2b512d..bd06f41 100644
---- a/entry.c
-+++ b/entry.c
-@@ -3,6 +3,8 @@
- #include "dir.h"
- #include "streaming.h"
- #include "submodule.h"
-+#include "iterator.h"
-+#include "dir-iterator.h"
- 
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
-@@ -45,33 +47,17 @@ static void create_directories(const char *path, int path_len,
- 	free(buf);
- }
- 
--static void remove_subtree(struct strbuf *path)
-+static void remove_subtree(const char *path)
- {
--	DIR *dir = opendir(path->buf);
--	struct dirent *de;
--	int origlen = path->len;
--
--	if (!dir)
--		die_errno("cannot opendir '%s'", path->buf);
--	while ((de = readdir(dir)) != NULL) {
--		struct stat st;
--
--		if (is_dot_or_dotdot(de->d_name))
--			continue;
--
--		strbuf_addch(path, '/');
--		strbuf_addstr(path, de->d_name);
--		if (lstat(path->buf, &st))
--			die_errno("cannot lstat '%s'", path->buf);
--		if (S_ISDIR(st.st_mode))
--			remove_subtree(path);
--		else if (unlink(path->buf))
--			die_errno("cannot unlink '%s'", path->buf);
--		strbuf_setlen(path, origlen);
-+	struct dir_iterator *diter = dir_iterator_begin(path, DIR_ITERATOR_POST_ORDER_TRAVERSAL | DIR_ITERATOR_LIST_ROOT_DIR);
-+
-+	while (dir_iterator_advance(diter) == ITER_OK) {
-+		if (S_ISDIR(diter->st.st_mode)) {
-+			if (rmdir(diter->path.buf))
-+				die_errno("cannot rmdir '%s'", diter->path.buf);
-+		} else if (unlink(diter->path.buf))
-+			die_errno("cannot unlink '%s'", diter->path.buf);
- 	}
--	closedir(dir);
--	if (rmdir(path->buf))
--		die_errno("cannot rmdir '%s'", path->buf);
- }
- 
- static int create_file(const char *path, unsigned int mode)
-@@ -312,7 +298,7 @@ int checkout_entry(struct cache_entry *ce,
- 				return 0;
- 			if (!state->force)
- 				return error("%s is a directory", path.buf);
--			remove_subtree(&path);
-+			remove_subtree(path.buf);
- 		} else if (unlink(path.buf))
- 			return error_errno("unable to unlink old '%s'", path.buf);
- 	} else if (state->not_new)
--- 
-2.7.4 (Apple Git-66)
-
+-- Daniel.
