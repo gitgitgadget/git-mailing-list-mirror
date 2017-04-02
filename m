@@ -2,143 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10EC21FAFB
-	for <e@80x24.org>; Sun,  2 Apr 2017 11:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38ABD20966
+	for <e@80x24.org>; Sun,  2 Apr 2017 13:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751772AbdDBLlO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Apr 2017 07:41:14 -0400
-Received: from mail-lf0-f53.google.com ([209.85.215.53]:35087 "EHLO
-        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751762AbdDBLlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2017 07:41:12 -0400
-Received: by mail-lf0-f53.google.com with SMTP id j90so60319561lfk.2
-        for <git@vger.kernel.org>; Sun, 02 Apr 2017 04:41:11 -0700 (PDT)
+        id S1751353AbdDBNS6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Apr 2017 09:18:58 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:33706 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751152AbdDBNS5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2017 09:18:57 -0400
+Received: by mail-pg0-f44.google.com with SMTP id x125so97947627pgb.0
+        for <git@vger.kernel.org>; Sun, 02 Apr 2017 06:18:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=FOnDcpOWF8D39UO1JLLnPi+5yFFJ8G6hEo0BHoPvMYg=;
-        b=Ls94d+FLKFrQrhvpYqHM4e7Ewmen29Mwpb4osI9PgJYaxmuIs+cnC/ZiruyRTuBPVj
-         zysYFj5CVQF8AblPc4KAUEk3KF7HIFe4Q99HxQzAvp3rn8yA/NWZQxE6yAXL4Cf5EzCV
-         kSWskThsoezDtlHDedY3YWfRoRbdsjGYI0Og+Vb0SX8qEU1aVMyc53atS4A21rKxMY3h
-         7JBYx4xx3BXFQKgKbvTohms29BltZpFnHr8VVym/4DcevykhBecieHI310noLekmfT8X
-         9Rm4AO3EAxEyyADWyWuy/xsXrbjrEiuc3Umkwk/3uq79meMY4bzHrjBIk3N7CX+ETNaE
-         5yNw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Gc9XIw9p4Gx7Tn5ZRjtLcy3jk73wYXwVoIW10kpwaoM=;
+        b=Bpy+LbxlcY7Z3GBatepDnk0f7XeOb8it2qrGuX+km/EhuzoO9PTTXYh8idMatiCur+
+         5tTwmaLa9scCvawd9dUsP+vS076IIakuJKbB21uy/r20FkmuMeiHDk2ismq+pEmd+Uhe
+         F77SBIeUQE18ElL45tTvTpdQDZNcSCF77RGDC1W0iFn+NSP6wYF2hxZGEznX9at7CjGO
+         JelZ3MWKVYcOiXLrvHihUyGM0Ia1sueZBqkQOCMg2DdT54mGAiYAvO6UyumwMzd5F+lt
+         aWKP0wRde1MCE4MzOzC6a5eVk2N3sgEkiMHsDDlGBj3sBszqh8LOqeqzvqnfDFTq1NLN
+         hSWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=FOnDcpOWF8D39UO1JLLnPi+5yFFJ8G6hEo0BHoPvMYg=;
-        b=eEmxunjc/U1rZ07HGLIAGRg9UynlyEsUlDdWwXdV2fA7ulLA4rcYAGIgYw7HwKwKnG
-         KsNqcykBOvZtHbMujEOFHuHyZo0cLhptQ0MylWQYKFNavgxpblCFOGBsYd5tF7UG8fcA
-         eb7yR9c3buDdJNmNE/+ys6HrqDsLiFjMPEO5Sv77KLDZl3tm6vr02msXFh9JZoOqcbH2
-         rLYaJxFOXlRign7itKJzgoT5+tb9tuxrCSkVAFkVtaXjRxE1k//BokCpnqV6nsu3WiLt
-         GWuEP3sa9DP0oW+O8nVb9SHVBta1kxSvD918iHE4aA09iPZ7s2BGT6VV/5EnfBUbxWxC
-         WdcQ==
-X-Gm-Message-State: AFeK/H2MOUGHJeQWrZ8nYJrr9izpu41nGLkyiB9O63uyZaChss+zPXpo9L49ws7PJPeLLA==
-X-Received: by 10.46.33.141 with SMTP id h13mr3675987lji.93.1491133270154;
-        Sun, 02 Apr 2017 04:41:10 -0700 (PDT)
-Received: from [192.168.1.26] (abpo61.neoplus.adsl.tpnet.pl. [83.8.56.61])
-        by smtp.googlemail.com with ESMTPSA id v13sm1957758lfi.6.2017.04.02.04.41.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Apr 2017 04:41:09 -0700 (PDT)
-Subject: Re: [BUG?] iconv used as textconv, and spurious ^M on added lines on
- Windows
-To:     Jeff King <peff@peff.net>
-References: <feaeade7-aeb5-fa67-ab29-9106aeadb2a6@gmail.com>
- <20170330200021.c2l5jak3xb5aoxyc@sigill.intra.peff.net>
- <e1a6d44c-b01b-993c-6a22-e6ac0abca03c@gmail.com>
- <20170401060800.hrpqqgdx6t262c7f@sigill.intra.peff.net>
- <63eb5546-0dce-2f69-c2f8-1e777b97c532@gmail.com>
- <20170402074522.4qhannjus4ynwx4i@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
-Message-ID: <3e35eda2-0240-8504-b56e-f66092cc1775@gmail.com>
-Date:   Sun, 2 Apr 2017 13:40:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Gc9XIw9p4Gx7Tn5ZRjtLcy3jk73wYXwVoIW10kpwaoM=;
+        b=uFECABuOA/LLeLKYfrrEaxVB7lhiJUJezJlWoR/iBN8X7ZiAEMT2ZvIB4x2mWcpHFi
+         t/DgPEHr+Bx4acIoHq+qKUkFN27hgmNuBYMRd3qAeIcWUUvQ0jmfuYCxgQS+YKXOUlW5
+         XQBrEj5DUSnsPBWxgGSGCKTMWkSx3T7iwp10+KgJRyncFYoIfU0d3xKypKB4RJIld2Zn
+         ltiOCBqQsD1E55OXXmOV14xezcfsrAnxR44iEESTUWhXGQQteeskgXdCSL6wpudFPfHq
+         Llyb1QRy4HpZ/zcaeQ0yKxIACSa20Bt9lt4SYa8KKtg5OALIUjTLrPboG/N0cWxIzWQP
+         k0EA==
+X-Gm-Message-State: AFeK/H12txDynO4cYHEqZTRUoE/NBdGv/KJTYSXkJHNVQV5+ZkfMGN2eQXH2g+8xoPwoBm181Kth4ruS07Y5Xg==
+X-Received: by 10.98.41.199 with SMTP id p190mr6760176pfp.266.1491139137139;
+ Sun, 02 Apr 2017 06:18:57 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170402074522.4qhannjus4ynwx4i@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.100.161.15 with HTTP; Sun, 2 Apr 2017 06:18:56 -0700 (PDT)
+In-Reply-To: <xmqqlgrjtrjl.fsf@gitster.mtv.corp.google.com>
+References: <20170401153049.21400-1-robert.stanca7@gmail.com>
+ <20170401153049.21400-2-robert.stanca7@gmail.com> <xmqqtw68szz1.fsf@gitster.mtv.corp.google.com>
+ <CAJYcaSNAB+1gth2NkTjrcBV9TXT9bRsBQhwOsQCmnudYz5bTmg@mail.gmail.com> <xmqqlgrjtrjl.fsf@gitster.mtv.corp.google.com>
+From:   Robert Stanca <robert.stanca7@gmail.com>
+Date:   Sun, 2 Apr 2017 16:18:56 +0300
+Message-ID: <CAJYcaSNJ0un1RgM3DNX=EOez5zP=Rko+BUt5SMeyBTb20K21oQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] [GSOC] show_bisect_vars(): Use unsigned int instead
+ of signed int for flags
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-W dniu 02.04.2017 o 09:45, Jeff King pisze:
-> On Sat, Apr 01, 2017 at 08:31:27PM +0200, Jakub Narębski wrote:
-> 
->> W dniu 01.04.2017 o 08:08, Jeff King pisze:
->>> On Fri, Mar 31, 2017 at 03:24:48PM +0200, Jakub Narębski wrote:
->>>
->>>>> I suspect in the normal case that git is doing line-ending conversion,
->>>>> but it's suppressed when textconv is in use.
->>>>
->>>> I would not consider this a bug if not for the fact that there is no ^M
->>>> without using iconv as textconv.
->>>
->>> I don't think it's a bug, though. You have told Git that you will
->>> convert the contents (whatever their format) into the canonical format,
->>> but your program to do so includes a CR.
->>
->> Well, I have not declared file binary with "binary = true" in diff driver
->> definition, isn't it?
-> 
-> I don't think binary has anything to do with it. A textconv filter takes
-> input (binary or not) and delivers a normalized representation to feed
-> to the diff algorithm. There's no further post-processing, and it's the
-> responsibility of the filter to deliver the bytes it wants diffed.
-> 
-> Like I said, I could see an argument for treating the filter output as
-> text to be pre-processed, but that's not how it works (and I don't think
-> it is a good idea to change it now, unless by adding an option to the
-> diff filter).
+One more quesestion regarding flags used in structures :
+for example: update_callback_data has a flags field (type int) ,
+in function void update_callback()  the field flags of that structure
+is used as param for add_file_to_index(..., data->flags)
+and this function is define as: int add_file_to_index(..., int flags)
+in read-cache.c
+The question is : If the flags field of the structure is used in
+function calls should i update flags that deep?(there are other
+cases where the field is used in nested calls )
 
-I think that actually there is something wrong.
-
-If textconv really gets normalized representation of pre-image (the index
-version) and post-image (the filesystem version), as it should I think,
-both pre-image lines ('-') and post-image lines ('+') should use CRLF,
-so there should be no warning, i.e. ^M
-
-Or textconv filter gets normalized representation (it looks this way
-when examining diff result saved to file with `git diff test.tex >test.diff`;
-I were unable to use `tr '\r' 'Q', either I got "fatal: bad config line"
-from Git, or "tr: extra operand" from tr), and somehow Git mistakes
-what is happening and writes those ^M.
-
-If I understand it correctly, if pre-image, post-image and context
-all use the same eol, there should be no warning, isn't it?
-
-> 
->> P.S. What do you think about Git supporting 'encoding' attribute (or
->> 'core.encoding' config) plus 'core.outputEncoding' in-core?
-> 
-> Supporting an "encoding" attribute to normalize file encodings in diffs
-> seems reasonable to me. But it would have to be enabled only for
-> human-readable diffs, as the result could not be applied (so the same as
-> textconv).
-
-I was thinking about human readable diffs, and 'git show <blob>', same
-as with textconv.
-
-> 
-> I don't think core.outputEncoding is necessarily a good idea. We are not
-> really equipped anything that isn't an ascii superset, as we intermingle
-> the bytes with ascii diff headers (though I think that is true of the
-> commitEncoding stuff; I assume everything breaks horribly if you tried
-> to set that to UTF-16, but I've never tried it).
-
-Well, the understanding would be that the same limitation as for 
-core.logOutputEncoding (documented if it isn't) that only encodings that
-are ASCII compatibile are supported.
- 
--- 
-Jakub Narębski
-
+On Sun, Apr 2, 2017 at 6:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Robert Stanca <robert.stanca7@gmail.com> writes:
+>
+>> I am used to 1change per patch so it's easier  to redo specific
+>> patches...if there are small changes(10 lines max) can i send them as
+>> 1 patch?
+>
+> It's not number of lines.  One line per patch does not make sense if
+> you need to make corresponding changes to two places, one line each,
+> in order to make the end result consistent.  If you change a type of
+> a structure field, and that field is assigned to a variable
+> somewhere, you would change the type of both that field and the
+> variable that receives its value at the same time in a single
+> commit, as that would be the logical unit of a smallest change that
+> still makes sense (i.e. either half of that change alone would not
+> make sense).
+>
+>
+>
