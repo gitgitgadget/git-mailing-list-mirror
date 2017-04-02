@@ -2,108 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31A6B2096C
-	for <e@80x24.org>; Sat,  1 Apr 2017 23:33:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A78320964
+	for <e@80x24.org>; Sun,  2 Apr 2017 03:30:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751999AbdDAXd2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 19:33:28 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:35296 "EHLO
-        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751952AbdDAXd1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 19:33:27 -0400
-Received: by mail-oi0-f53.google.com with SMTP id f193so94245054oib.2
-        for <git@vger.kernel.org>; Sat, 01 Apr 2017 16:33:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc;
-        bh=GhM8dnP2orqum4g6howJO3n4IWW+FBqBEKgZ7DIdGxM=;
-        b=C/SCc1GtCOa12MBWhxNkF+VQTxnC9RgN1eEL0VxLDk44siV9LV/f6b8G2p7SCwiEep
-         /ffShhCmKp6EFVy2jBBzKM3vMHwTppAqNpOvX+Ih2G5hNPjQGs3/iRdTisw69n51QIss
-         3XtH04mgs4I+Svv65K2qSIn3LeUM2RLVnUrc2/61owIzwF0WWWKEuUqVE1BNp4UVDwEF
-         hu2mjP2GNvbZVNIptBO4BqE2XznUp3TFpIJLg7ZJh7hQxe/vDgFla/6cBaTX4ullb8le
-         Af8KeCf0+e5ofdD1NgJims39o/pZOVYqrHIGdeS1xvgxWW10zc7xYQLCRG/1lUQvCjxL
-         zDOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc;
-        bh=GhM8dnP2orqum4g6howJO3n4IWW+FBqBEKgZ7DIdGxM=;
-        b=ZePvnupd/8BlUKBjmIKOwouu+WJSZW0AJPEXH1p0ADRqZHEN4bAuTEw1DLwtbbJkv2
-         jXJPX/NcMh55Sncrwv3pYLPtscEoguW2t0kru7IpQwi1iDJN8OFd3IamiC5CJqWd8qLX
-         pfU3ct0mPz+pehsb4ON7fd+gHrgKDk9egF0uSn9g978A8RCUjoAaExE4IrQngnfWyj6S
-         uU3N282AIL6FoHpdVLiT8gJl2fmQdEGENM5ZjMml9UdH5oUT+LXQKB1bbJfpSFtH1Y/Y
-         IoCuOCE/Bwr/T+ZccRS9Vnln44FRkvten12fgo6G2HT9LQH7tXBe2f5p49uoAnRPDQeC
-         nLSQ==
-X-Gm-Message-State: AFeK/H0si/rAkxZi4RySxvq1PeKAD0gIkWFNeRPHrpW3u13SKCfyqjAqzNZxdly5+B7J6GrJWXAA+z0awKOtYQ==
-X-Received: by 10.202.94.196 with SMTP id s187mr5606437oib.202.1491089606905;
- Sat, 01 Apr 2017 16:33:26 -0700 (PDT)
+        id S1750873AbdDBDa0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Apr 2017 23:30:26 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50643 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750810AbdDBDaZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Apr 2017 23:30:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7D8F16EEBB;
+        Sat,  1 Apr 2017 23:30:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EeJx47kgxqFUTJYE6ZEP45M2iBc=; b=gFcl3q
+        3yMVlB5xTlN6MXcC6evL0AfE5h1wt+fa4/wtS73Ig5aFT08/SU41l6kBs+D1Vwb1
+        lJ0bUlvnGoSmkUHaACWWqcMRInf+4z76dHFli3zPXPQAN4Pa33v0OzQ4izGucm9O
+        WE5JVqNqCevvJ7doC9MmAOYhmFqVCtdOPzrjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=py2cbn+ZK7bAHoaOyIU3zh0QkntwSBpC
+        WY0LcxahBCNIbflt4V7yIBLwU6CtIgG+uQs+Gt61/LRHqzU8U8zj+0bI/II3JFg2
+        AZa4tk9RFBOOt+O1cVjrbF8PLci6Fih+Vr7mINLVCBUN8LP15jfkWL+QBHbn0FJD
+        eHhL/9qoHks=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 750976EEBA;
+        Sat,  1 Apr 2017 23:30:24 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D8B0A6EEB9;
+        Sat,  1 Apr 2017 23:30:23 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Robert Stanca <robert.stanca7@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] [GSOC] show_bisect_vars(): Use unsigned int instead of signed int for flags
+References: <20170401153049.21400-1-robert.stanca7@gmail.com>
+        <20170401153049.21400-2-robert.stanca7@gmail.com>
+        <xmqqtw68szz1.fsf@gitster.mtv.corp.google.com>
+        <CAJYcaSNAB+1gth2NkTjrcBV9TXT9bRsBQhwOsQCmnudYz5bTmg@mail.gmail.com>
+Date:   Sat, 01 Apr 2017 20:30:22 -0700
+In-Reply-To: <CAJYcaSNAB+1gth2NkTjrcBV9TXT9bRsBQhwOsQCmnudYz5bTmg@mail.gmail.com>
+        (Robert Stanca's message of "Sat, 1 Apr 2017 22:19:26 +0300")
+Message-ID: <xmqqlgrjtrjl.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.74.31.131 with HTTP; Sat, 1 Apr 2017 16:33:26 -0700 (PDT)
-Reply-To: noloader@gmail.com
-In-Reply-To: <xmqqbmsgugt4.fsf@gitster.mtv.corp.google.com>
-References: <CACBZZX6FcHcY7cYs6s_pv=E43cHNmzyUY5wrcuhPWWmUixCL+g@mail.gmail.com>
- <xmqqtw69vz9t.fsf@gitster.mtv.corp.google.com> <CACBZZX416M3YFDAACGAWCjJ4Xt0g78zpFF+iusMCarKb7SSfVw@mail.gmail.com>
- <xmqqbmsgugt4.fsf@gitster.mtv.corp.google.com>
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Sat, 1 Apr 2017 19:33:26 -0400
-Message-ID: <CAH8yC8mxdNFdpo0ZO0+XpnuHGTpp2NCiMCSE71j2Emt8-NRYDg@mail.gmail.com>
-Subject: Re: Very promising results with libpcre2
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: B4F8E338-1754-11E7-BAE4-97B1B46B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Just to make sure that we are on the same page.  While I do not see
-> the need to link with both variants and allow users to choose
-> between them at runtime, I do not know if the whole world is ready
-> to drop pcre1 and use pcre2 (the latter of which has only been
-> around for a bit over two years).
->
-> So we'd probably want to do
->
->  (1) keep USE_LIBPCRE and enable v1 when set;
->  (2) add USE_LIBPCRE2 and enable v2 when set;
->  (3) make sure to error out when both are set.
->
-> or something like that.  It is tempting to allow us to say
->
->     make USE_LIBPCRE=2
->
-> but the existing builds are likely to be depending on "is it set to
-> anything? then use PCRE1" behaviour, so we unfortunately cannot take
-> that route.
+Robert Stanca <robert.stanca7@gmail.com> writes:
 
-Yeah, that's the question I kinda had.
+> I am used to 1change per patch so it's easier  to redo specific
+> patches...if there are small changes(10 lines max) can i send them as
+> 1 patch?
 
-> make USE_LIBPCRE=2
+It's not number of lines.  One line per patch does not make sense if
+you need to make corresponding changes to two places, one line each,
+in order to make the end result consistent.  If you change a type of
+a structure field, and that field is assigned to a variable
+somewhere, you would change the type of both that field and the
+variable that receives its value at the same time in a single
+commit, as that would be the logical unit of a smallest change that
+still makes sense (i.e. either half of that change alone would not
+make sense).
 
-I'd prefer a configure option for consistency. Maybe:
 
-    --with-pcre  # Original PCRE
-    --with-pcre1  # Alias
-    --with-pcre2  # PCRE2
 
-I prefer it because I usually do the following to see the interesting
-things that's going on:
-
-    ./configure --help
-
-Often, I find a `--with-ssl` or similar. If `--with-ssl` fails, then I
-go to the README and INSTALL to fine tune it.
-
-By the way, if you are tweaking Configure, then consider adding a
---with-perl=X, too. Its consistent, it side steps the hard coded
-/usr/bin/perl, and it signals to users its tunable.
-
-Jeff
