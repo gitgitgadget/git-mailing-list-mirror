@@ -8,115 +8,194 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB26520966
-	for <e@80x24.org>; Sun,  2 Apr 2017 20:05:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 545FA20966
+	for <e@80x24.org>; Sun,  2 Apr 2017 20:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751796AbdDBUFN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Apr 2017 16:05:13 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:35187 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751642AbdDBUFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2017 16:05:11 -0400
-Received: by mail-qt0-f193.google.com with SMTP id r5so16591862qtb.2
-        for <git@vger.kernel.org>; Sun, 02 Apr 2017 13:05:11 -0700 (PDT)
+        id S1751820AbdDBUFS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Apr 2017 16:05:18 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:33291 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751801AbdDBUFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2017 16:05:15 -0400
+Received: by mail-qt0-f194.google.com with SMTP id r45so16580348qte.0
+        for <git@vger.kernel.org>; Sun, 02 Apr 2017 13:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=Cc9CB7bpn+54MffBjdEqnjToUgLFWIkl4vs0fIAdt4k=;
-        b=WUUYVUQWi49NcNiQzgIzlXJNychCXxrW2LRd3+HVVgWLPLy7aZdvJsxO+bYdah3THu
-         4kggXkXNPusIdCeFvVpyb4sTXODryxTBJoahAK055RdExZK/uW/nWGxpC49H8E/qOOrO
-         tk8HX/ATiH918itGqef/ApF+nT04L8wEpLmFMvzDLg7Hl4eKr3pUFbf9qfNEHOHjsp3A
-         Nl/Had11TReVWexra/A7Noi+zwgB9GBTDUqYdrvb7tl1spLhtoiSneAILd7y1cjoLqZm
-         VKaL/LCyE8jQDkqX0EqcfrHgr4gUNuvx6VWq+hMMjPvo0YE6mQFvwHpBhvgxv1kMkCjK
-         /Ldw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=8Jc+JOtRIHw9Xk6klyTh/LPnA10dJLCMX029xFD7Czo=;
+        b=SMILBKbICyEjDpLrsU77rkRtE6MXXDIZkbEGT4CJUieEh0A3dO6I4ldYBL9ZTxaIet
+         moJQNl68F914ZRyqZ7h1/DcQRp0sNR4VCDMbC19gHJgNGB4JYesMfnIqwMGVrpA4djlS
+         yWaY+v1FjHfK97lxKzQBDhr+MSw97jB90v/omj0ytCwnuXftgcSmLtgf+epFNNcHLBpV
+         pYyu7d+w6iSKfqnECnuuvTchJMY870tIwkr7CU86tzFRLtDrTyWT/SKTC7ECY0IWNYjP
+         Ok4zOXIURts4IPZ5xEhs49mPlr0roVsnbT+le0xVYIPhI5vA/ny52Tl2/f4QnFYPV1Rm
+         vN1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Cc9CB7bpn+54MffBjdEqnjToUgLFWIkl4vs0fIAdt4k=;
-        b=MOvr3wZL4wVmmbFFAZ2nxnh7iXfn5go7lrp/LQJsDXYql7x9b31SaLB+6n8AZZn1gG
-         wWSiDb2iUsLHebBwh3GnTGc6iOaA21zZHOUNguuWShDUrTLJFHh0c69da15P2/1yobnV
-         dTldeM5BuxYF1bGL+CnxCiALNt2lhzuoHben8SLB0nHDSRWayiUh42hps2Zxm7EedvSf
-         yN3AEwwoO90HS093+Xfl4k304Q8P6YFyb1FcEzzaF947CvFuBLupqYy4hfvxdLjR7aN2
-         PypdWtvpCXKSR5bGxOrGmy/ahtLGQpZ6FR3e8KeRwdNxUvczpXMzxFYnfYQd+fw/77KI
-         ZGOw==
-X-Gm-Message-State: AFeK/H3dH8YXwHB+vD1sI7v7riaib41mHTqIZ1zqqTPF7pd4XS+h6JSoNDjZkmRGYsefBQ==
-X-Received: by 10.237.59.198 with SMTP id s6mr14820362qte.161.1491163510761;
-        Sun, 02 Apr 2017 13:05:10 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=8Jc+JOtRIHw9Xk6klyTh/LPnA10dJLCMX029xFD7Czo=;
+        b=R7B3fjLHUbq4Sk2Q7ytJd3XEUykzXb1XTcH+ScBtw2/mDf+luctwOlC8E/ay397Oxl
+         KrACtd4L7d7KMkSnRb6LOI7UKAqev1sB8fUI2Jf3OscDdB4WkhfdiMtfSCl9nTRAB+FU
+         Ozu0zmI0BI1KQQdQZRE1eihH2wkpCgfNoehOVTWR6bGJvWZWYFMLP0Qpx2Z8ZuQ/wVyW
+         tBwRD47wnHid8WXgwWIZ7faFuE9KG5HWzUlyWkpNa06iTE4TVvpaMDeQAgY/IJSpfb8p
+         hhHIZkm5wDN9g9MCYFfD7mnbL5tZbF1Jgp/ckOEav7AdH4qrFVXnD+OIR78GLnhMAMfC
+         nXDQ==
+X-Gm-Message-State: AFeK/H0yzSwcDflzvP0GJTTkr/ErlSDVIMOICvQriOvapNcztWyJ1uA4WiI6k1y/4blsBg==
+X-Received: by 10.200.38.72 with SMTP id v8mr14075287qtv.27.1491163514995;
+        Sun, 02 Apr 2017 13:05:14 -0700 (PDT)
 Received: from localhost.localdomain (186-245-85-163.user3g.veloxzone.com.br. [186.245.85.163])
-        by smtp.gmail.com with ESMTPSA id 137sm8162258qkd.19.2017.04.02.13.05.05
+        by smtp.gmail.com with ESMTPSA id 137sm8162258qkd.19.2017.04.02.13.05.11
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 02 Apr 2017 13:05:09 -0700 (PDT)
+        Sun, 02 Apr 2017 13:05:13 -0700 (PDT)
 From:   Daniel Ferreira <bnmvco@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v7 0/5] [GSoC] remove_subtree(): reimplement using iterators
-Date:   Sun,  2 Apr 2017 17:03:03 -0300
-Message-Id: <1491163388-41255-1-git-send-email-bnmvco@gmail.com>
+Subject: [PATCH v7 1/5] dir_iterator: add tests for dir_iterator API
+Date:   Sun,  2 Apr 2017 17:03:04 -0300
+Message-Id: <1491163388-41255-2-git-send-email-bnmvco@gmail.com>
 X-Mailer: git-send-email 2.7.4 (Apple Git-66)
+In-Reply-To: <1491163388-41255-1-git-send-email-bnmvco@gmail.com>
+References: <1491163388-41255-1-git-send-email-bnmvco@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the seventh version of a patch series that implements the GSoC
-microproject of converting a recursive call to readdir() to use dir_iterator.
+Create t/helper/test-dir-iterator.c, which prints relevant information
+about a directory tree iterated over with dir_iterator.
 
-v1: https://public-inbox.org/git/CAGZ79kZwT-9mHTiOJ5CEjk2wDFkn6+NcogjX0=vjhsAh16ANYg@mail.gmail.com/T/#t
-v2: https://public-inbox.org/git/CACsJy8Dxh-QPBBLfaFWPAWUsbA9GVXA7x+mXLjEvYKhk1zOpig@mail.gmail.com/T/#t
-v3: https://public-inbox.org/git/CAGZ79kYtpmURSQWPumobA=e3JBFjKhWCdv_LPhKCd71ZRwMovA@mail.gmail.com/T/#t
-v4: https://public-inbox.org/git/1490747533-89143-1-git-send-email-bnmvco@gmail.com/T/#e437a63e0c22c00c69b5d92977c9b438ed2b9fd3a
-v5: https://public-inbox.org/git/1490844730-47634-1-git-send-email-bnmvco@gmail.com/T/#m2323f15e45de699f2e09364f40a62e17047cf453
-v6: https://public-inbox.org/git/1491107726-21504-1-git-send-email-bnmvco@gmail.com/T/#t
+Create t/t0065-dir-iterator.sh, which tests that dir_iterator does
+iterate through a whole directory tree.
 
-I screwed up in v6 because I had introduced a bug that in case git tried to open
-a directory that did not exist using dir_iterator, the program would segfault. This
-was amended and all commits are passing the tests. Sorry for not having tested
-my changes properly.
-
-CI build: https://travis-ci.org/theiostream/git
-
-Since the changes in v6 were not reviewed, I'll just copy what was sent
-back there.
-
-> Back in v5, Michael had a number of suggestions, all of which were applied
-> to this version (including a slightly modified version of his "biggish rewrite"
-> project to make dir_iterator's state machine simpler). The only suggestion that
-> did not make it into this series was that of not traversing into subdirectories,
-> since I believe it would be better off in another series that actually required
-> that feature (that is, I do not want a series to implement a feature it will
-> not need). The same goes for Junio's thought on a flag to list *only* directories
-> and no files on the v4 discussion.
-
-> Junio and Peff's comments about how to write to files in the tests were also
-> considered, and the tests were adjusted.
-
-> I chose to squash both the state machine refactor and the addition of the
-> new flags in a single commit. I do not know whether you will feel this is
-> the right choice but it seemed natural, since most of the state machine's
-> new logic would not even make sense without encompassing the new features.
-> I am, of course, open for feedback on this decision.
-
-Daniel Ferreira (5):
-  dir_iterator: add tests for dir_iterator API
-  remove_subtree(): test removing nested directories
-  dir_iterator: add helpers to dir_iterator_advance
-  dir_iterator: refactor state machine model
-  remove_subtree(): reimplement using iterators
-
- Makefile                        |   1 +
- dir-iterator.c                  | 196 ++++++++++++++++++++++++++--------------
- dir-iterator.h                  |  28 ++++--
- entry.c                         |  38 +++-----
- refs/files-backend.c            |   2 +-
- t/helper/.gitignore             |   1 +
- t/helper/test-dir-iterator.c    |  32 +++++++
- t/t0065-dir-iterator.sh         | 109 ++++++++++++++++++++++
- t/t2000-checkout-cache-clash.sh |  11 +++
- 9 files changed, 316 insertions(+), 102 deletions(-)
+Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+---
+ Makefile                     |  1 +
+ t/helper/.gitignore          |  1 +
+ t/helper/test-dir-iterator.c | 28 +++++++++++++++++++++++
+ t/t0065-dir-iterator.sh      | 54 ++++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 84 insertions(+)
  create mode 100644 t/helper/test-dir-iterator.c
  create mode 100755 t/t0065-dir-iterator.sh
 
---
+diff --git a/Makefile b/Makefile
+index 9b36068..41ce9ab 100644
+--- a/Makefile
++++ b/Makefile
+@@ -614,6 +614,7 @@ TEST_PROGRAMS_NEED_X += test-ctype
+ TEST_PROGRAMS_NEED_X += test-config
+ TEST_PROGRAMS_NEED_X += test-date
+ TEST_PROGRAMS_NEED_X += test-delta
++TEST_PROGRAMS_NEED_X += test-dir-iterator
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-dump-split-index
+ TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
+diff --git a/t/helper/.gitignore b/t/helper/.gitignore
+index 758ed2e..a7d74d3 100644
+--- a/t/helper/.gitignore
++++ b/t/helper/.gitignore
+@@ -3,6 +3,7 @@
+ /test-config
+ /test-date
+ /test-delta
++/test-dir-iterator
+ /test-dump-cache-tree
+ /test-dump-split-index
+ /test-dump-untracked-cache
+diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
+new file mode 100644
+index 0000000..06f03fc
+--- /dev/null
++++ b/t/helper/test-dir-iterator.c
+@@ -0,0 +1,28 @@
++#include "git-compat-util.h"
++#include "strbuf.h"
++#include "iterator.h"
++#include "dir-iterator.h"
++
++int cmd_main(int argc, const char **argv) {
++	struct strbuf path = STRBUF_INIT;
++	struct dir_iterator *diter;
++
++	if (argc < 2) {
++		return 1;
++	}
++
++	strbuf_add(&path, argv[1], strlen(argv[1]));
++
++	diter = dir_iterator_begin(path.buf);
++
++	while (dir_iterator_advance(diter) == ITER_OK) {
++		if (S_ISDIR(diter->st.st_mode))
++			printf("[d] ");
++		else
++			printf("[f] ");
++
++		printf("(%s) %s\n", diter->relative_path, diter->path.buf);
++	}
++
++	return 0;
++}
+diff --git a/t/t0065-dir-iterator.sh b/t/t0065-dir-iterator.sh
+new file mode 100755
+index 0000000..b857c07
+--- /dev/null
++++ b/t/t0065-dir-iterator.sh
+@@ -0,0 +1,54 @@
++#!/bin/sh
++
++test_description='Test directory iteration.'
++
++. ./test-lib.sh
++
++cat >expect-sorted-output <<-\EOF &&
++[d] (a) ./dir/a
++[d] (a/b) ./dir/a/b
++[d] (a/b/c) ./dir/a/b/c
++[d] (d) ./dir/d
++[d] (d/e) ./dir/d/e
++[d] (d/e/d) ./dir/d/e/d
++[f] (a/b/c/d) ./dir/a/b/c/d
++[f] (a/e) ./dir/a/e
++[f] (b) ./dir/b
++[f] (c) ./dir/c
++[f] (d/e/d/a) ./dir/d/e/d/a
++EOF
++
++test_expect_success 'dir-iterator should iterate through all files' '
++	mkdir -p dir &&
++	mkdir -p dir/a/b/c/ &&
++	>dir/b &&
++	>dir/c &&
++	mkdir -p dir/d/e/d/ &&
++	>dir/a/b/c/d &&
++	>dir/a/e &&
++	>dir/d/e/d/a &&
++
++	test-dir-iterator ./dir | sort >./actual-pre-order-sorted-output &&
++	rm -rf dir &&
++
++	test_cmp expect-sorted-output actual-pre-order-sorted-output
++'
++
++cat >expect-pre-order-output <<-\EOF &&
++[d] (a) ./dir/a
++[d] (a/b) ./dir/a/b
++[d] (a/b/c) ./dir/a/b/c
++[f] (a/b/c/d) ./dir/a/b/c/d
++EOF
++
++test_expect_success 'dir-iterator should list files in the correct order' '
++	mkdir -p dir/a/b/c/ &&
++	>dir/a/b/c/d &&
++
++	test-dir-iterator ./dir >actual-pre-order-output &&
++	rm -rf dir &&
++
++	test_cmp expect-pre-order-output actual-pre-order-output
++'
++
++test_done
+-- 
 2.7.4 (Apple Git-66)
 
