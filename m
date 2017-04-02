@@ -2,79 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7899220964
-	for <e@80x24.org>; Sun,  2 Apr 2017 05:53:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61E911FAFB
+	for <e@80x24.org>; Sun,  2 Apr 2017 07:38:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750807AbdDBFr3 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 2 Apr 2017 01:47:29 -0400
-Received: from aserp1040.oracle.com ([141.146.126.69]:34524 "EHLO
-        aserp1040.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750800AbdDBFr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2017 01:47:29 -0400
-Received: from aserv0022.oracle.com (aserv0022.oracle.com [141.146.126.234])
-        by aserp1040.oracle.com (Sentrion-MTA-4.3.2/Sentrion-MTA-4.3.2) with ESMTP id v325lRJU007678
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Sun, 2 Apr 2017 05:47:28 GMT
-Received: from aserv0121.oracle.com (aserv0121.oracle.com [141.146.126.235])
-        by aserv0022.oracle.com (8.14.4/8.14.4) with ESMTP id v325lRLJ018375
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
-        for <git@vger.kernel.org>; Sun, 2 Apr 2017 05:47:27 GMT
-Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
-        by aserv0121.oracle.com (8.13.8/8.13.8) with ESMTP id v325lP9V015318
-        for <git@vger.kernel.org>; Sun, 2 Apr 2017 05:47:26 GMT
-Received: from ori.omang.mine.nu (/80.203.111.41)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Sat, 01 Apr 2017 22:47:25 -0700
-Message-ID: <1491112043.5830.11.camel@oracle.com>
-Subject: Bug: 'git config --local user.email=<alt.email>' fails silently?
-From:   Knut Omang <knut.omang@oracle.com>
-To:     git@vger.kernel.org
-Date:   Sun, 02 Apr 2017 07:47:23 +0200
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.20.5 (3.20.5-1.fc24) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-X-Source-IP: aserv0022.oracle.com [141.146.126.234]
+        id S1750844AbdDBHi2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Apr 2017 03:38:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55618 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750815AbdDBHi2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2017 03:38:28 -0400
+Received: (qmail 32061 invoked by uid 109); 2 Apr 2017 07:38:25 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 07:38:25 +0000
+Received: (qmail 23091 invoked by uid 111); 2 Apr 2017 07:38:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 03:38:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Apr 2017 03:38:23 -0400
+Date:   Sun, 2 Apr 2017 03:38:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     Knut Omang <knut.omang@oracle.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug: 'git config --local user.email=<alt.email>' fails silently?
+Message-ID: <20170402073823.tudnfftbxaa6jdo5@sigill.intra.peff.net>
+References: <1491112043.5830.11.camel@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <1491112043.5830.11.camel@oracle.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Sun, Apr 02, 2017 at 07:47:23AM +0200, Knut Omang wrote:
 
-From the documentation I would have expected 
+> From the documentation I would have expected 
+> 
+> git config --local user.email=alt.email@alt.domain
+> 
+> to create a section 
+> 
+> [user]
+> 	email=alt.email@alt.domain
+> 
+> in the local .git/config.
 
-git config --local user.email=alt.email@alt.domain
+When it sees one argument, git-config treats that argument as a key to
+be retrieved. When given two, the second is a value to be set. E.g.:
 
-to create a section 
+  $ git config foo.bar
+  $ git config foo.bar some-value
+  $ git config foo.bar
+  some-value
 
-[user]
-	email=alt.email@alt.domain
+So your command was interpreted as a request to fetch the value, which
+doesn't exist.
 
-in the local .git/config.
+> Instead it returns status 1 with no error message.
 
-Instead it returns status 1 with no error message.
+Hopefully that explains the response you saw; we do not emit an error
+message when a key isn't found, which makes it easy for scripts to do
+things like:
 
-Is this intentional?
+  value=$(git config foo.bar || echo default-value)
 
-If I add the [user] section manually, it works as expected/desired:
-my commits in that tree uses the alternate mail address.
+without being unnecessarily noisy.
 
-git --version
-git version 2.7.4
+Usually we'd catch an error like yours and complain, because the key is
+syntactically invalid ("=" is not generally allowed in key names):
 
-Thanks,
-Knut Omang
+  $ git config foo.bar=some-value
+  error: invalid key: foo.bar=some-value
 
--- 
-Knut Omang, Ph.D
-Principal Software Engineer
-Oracle Linux and Virtualization Engineering
-ORACLE Norway | Olaf Helsets vei 6 | 0694 Oslo
-Email: knut.omang@oracle.com | Phone:  +47 41 46 22 10
+But your argument actually _is_ a syntactically valid key, because of
+the dots. In a three-level key like "one.two.three", the second level
+subsection is allowed to contain any character (including "=" and more
+dots). So your "user.email=alt.email@alt.domain" tries to look up the
+config represented by:
 
+  [user "email=alt.email@alt"]
+  domain
+
+Which of course did not exist.
+
+> Is this intentional?
+
+Yes, everything is working as intended. The documentation in
+git-config(1) seems to be quite poor at describing the various operating
+modes, though.
+
+-Peff
