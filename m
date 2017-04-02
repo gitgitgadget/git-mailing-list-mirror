@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77A1220966
-	for <e@80x24.org>; Sun,  2 Apr 2017 20:05:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF0AC20966
+	for <e@80x24.org>; Sun,  2 Apr 2017 20:05:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751841AbdDBUFc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Apr 2017 16:05:32 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:35034 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751822AbdDBUFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2017 16:05:31 -0400
-Received: by mail-qk0-f196.google.com with SMTP id k139so5468471qke.2
-        for <git@vger.kernel.org>; Sun, 02 Apr 2017 13:05:30 -0700 (PDT)
+        id S1751843AbdDBUFj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Apr 2017 16:05:39 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:35944 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751822AbdDBUFi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2017 16:05:38 -0400
+Received: by mail-qk0-f193.google.com with SMTP id r140so5699406qke.3
+        for <git@vger.kernel.org>; Sun, 02 Apr 2017 13:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hjc3s3MRlBN6r/F8mwYpVVHD2QcZKf8MuhcOpW7hH8A=;
-        b=NdhjzO6EXsrkRX1QMA/I75e37D4ZYKmsURppGiYADVC8euEQurLJ9CKNC3mNqbTgWz
-         B9bZ9CLgsvwEJJLe7MQuS/08j/rTSIHRXxi0qyZGi46AcWxyJkCqwom2YvKfU4W6jqoc
-         G/xBK0ArI1Ug4/YN7Uhn3NnSmWcTmy+i+T1HpMAiiqvdtwtO2XR+c2lmg64Kb9Y/HTxP
-         S8T7WmNdoOFAd+qM9ZGceoVMo2GuJMTJqB04LYqsZE+uRoJFRCTFwBjblm1DzhYtBPa8
-         5ocg3xpYnU1gfZGFVSaD3Nag5AyL9ScN9+GxT4SiQm2T0qP0dFArJhRCaVRlEM/BHLLL
-         5qpw==
+        bh=Ib41D6wZiTz+51F0l5uNQ/StxK7IzgrfXiuBFS0+/fU=;
+        b=CGGO4yZqxwrKFWMjheZraBvbkE1PL4bw96Dg6EgoSxDi7SoIX9oS3HY54Kv6BG/5EC
+         GS0fJZsSXR4S0Av8Isx7M6rB+L5RVq7uDaNSv8IjKIB2tmUAYLxBNu4Tj+Up0eOSQIFY
+         G0jFuXz4/97geAixirwKwPSU2jxl8d0/F/xIDU01qBk4G1h/eVkiG+HbwqXZSdJiOoRX
+         7ACtt8hOty4c8MqWFD13iEOoHAqcmUtnymZIGnJ0mcTT7670vU9YxwgomJ5nbi2oCFO+
+         eku64AqdIrnH+x4IVoMuY41VcsgMaXOkiRo0wgGbMkmZandQ13VwdhrIysevJy6+6cgm
+         t9og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hjc3s3MRlBN6r/F8mwYpVVHD2QcZKf8MuhcOpW7hH8A=;
-        b=oMDZOyievxQv/6gBLj54n5M5N2wDpwTU7/UJSzvz9wD1yUJrfInUYrrRcvi7y6oHtU
-         i44HsC7zzSjF3yQ7Z7jqVXRUXtd/hQPSiFBLbQea5jO5BNR67BnZljgEalMwmD7gNt3i
-         URRUkgVgldXHKtkdSTXRe4mun5VtQxPjvhKG6FRFbU/O86bR+f7Ylqfb0KL3pFVzPR7z
-         Ff9Ni0DEWWE0SmStMmkC3SvhjhI1CKUWydhwiYTRKCDVKEPfro9SzU1OCEni4D6zIYwv
-         7zwwAUaO977hNvft26uQAyo+e3gztrngphTcclx6bA6jSCrLqhsb/TpYxnLTwFEJ8LKE
-         YUUQ==
-X-Gm-Message-State: AFeK/H2QEhzYrS6i+tT7x3e5n54bQAZMDAQUaAUBujvCUctYZaZDdmjWwfx6tBZQhh9VVg==
-X-Received: by 10.55.93.131 with SMTP id r125mr13412199qkb.282.1491163530371;
-        Sun, 02 Apr 2017 13:05:30 -0700 (PDT)
+        bh=Ib41D6wZiTz+51F0l5uNQ/StxK7IzgrfXiuBFS0+/fU=;
+        b=QioGMonas04nmgCi+G9t8HI0SVuYTft7hMiOSUA4dFlJz8wstgi99K31mjKFAEYgPD
+         +aPsX5uepir2xKNgWaPGWYbVUJP5h4nTQzygCwgijBCmOXQe73WWvWwJO04pYe6mUQMU
+         4Zx9yFwFuxHrdOkkGFIWJicK05ylRAqrU1cYajOSCYKZKyOG8WQgWnqknynY6wCNiiO/
+         PmE5N8TenkJPXcXKsnGOD85bptemlQwDc5ZyI2grqUkqUsbTh0xicp+15eK1QYjQck7S
+         Ud9jAItRnrk1ca+36hHySwkWKCYPBceSQSR6dQpFqGaWIk2raxx5I0yOv5kMK1JcfHxD
+         HU8A==
+X-Gm-Message-State: AFeK/H2tDjIbcW48OzyzrBMt5IULOjTXxX7odUUdoxDNzG0LudjoKLLUhKPAaV3d0mTorw==
+X-Received: by 10.55.31.1 with SMTP id f1mr5970774qkf.255.1491163537539;
+        Sun, 02 Apr 2017 13:05:37 -0700 (PDT)
 Received: from localhost.localdomain (186-245-85-163.user3g.veloxzone.com.br. [186.245.85.163])
-        by smtp.gmail.com with ESMTPSA id 137sm8162258qkd.19.2017.04.02.13.05.24
+        by smtp.gmail.com with ESMTPSA id 137sm8162258qkd.19.2017.04.02.13.05.30
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 02 Apr 2017 13:05:29 -0700 (PDT)
+        Sun, 02 Apr 2017 13:05:36 -0700 (PDT)
 From:   Daniel Ferreira <bnmvco@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v7 3/5] dir_iterator: add helpers to dir_iterator_advance
-Date:   Sun,  2 Apr 2017 17:03:06 -0300
-Message-Id: <1491163388-41255-4-git-send-email-bnmvco@gmail.com>
+Subject: [PATCH v7 4/5] dir_iterator: refactor state machine model
+Date:   Sun,  2 Apr 2017 17:03:07 -0300
+Message-Id: <1491163388-41255-5-git-send-email-bnmvco@gmail.com>
 X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 In-Reply-To: <1491163388-41255-1-git-send-email-bnmvco@gmail.com>
 References: <1491163388-41255-1-git-send-email-bnmvco@gmail.com>
@@ -61,120 +62,493 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create inline helpers to dir_iterator_advance(). Make
-dir_iterator_advance()'s code more legible and allow some behavior to
-be reusable.
+Perform major refactor of dir_iterator_advance(). dir_iterator has
+ceased to rely on a convoluted state machine mechanism of two loops and
+two state variables (level.initialized and level.dir_state). This serves
+to ease comprehension of the iterator mechanism and ease addition of new
+features to the iterator.
+
+Create an option for the dir_iterator API to iterate over subdirectories
+only after having iterated through their contents. This feature was
+predicted, although not implemented by 0fe5043 ("dir_iterator: new API
+for iterating over a directory tree", 2016-06-18). This is useful for
+recursively removing a directory and calling rmdir() on a directory only
+after all of its contents have been wiped.
+
+Add an option for the dir_iterator API to iterate over the root
+directory (the one it was initialized with) as well.
+
+Add the "flags" parameter to dir_iterator_create, allowing for the
+aforementioned new features to be enabled. The new default behavior
+(i.e. flags set to 0) does not iterate over directories. Flag
+DIR_ITERATOR_PRE_ORDER_TRAVERSAL iterates over a directory before doing
+so over its contents. DIR_ITERATOR_POST_ORDER_TRAVERSAL iterates over a
+directory after doing so over its contents. DIR_ITERATOR_LIST_ROOT_DIR
+iterates over the root directory. These flags do not conflict with each
+other and may be used simultaneously.
+
+Amend a call to dir_iterator_begin() in refs/files-backend.c to pass
+the flags parameter introduced.
+
+Improve t/t0065-dir-iterator.sh and t/helper/test-dir-iterator.c to
+test "post-order" and "iterate-over-root" modes.
 
 Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
 ---
- dir-iterator.c | 65 +++++++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 42 insertions(+), 23 deletions(-)
+ dir-iterator.c               | 155 +++++++++++++++++++++++++++----------------
+ dir-iterator.h               |  28 ++++++--
+ refs/files-backend.c         |   2 +-
+ t/helper/test-dir-iterator.c |   6 +-
+ t/t0065-dir-iterator.sh      |  61 ++++++++++++++++-
+ 5 files changed, 183 insertions(+), 69 deletions(-)
 
 diff --git a/dir-iterator.c b/dir-iterator.c
-index 34182a9..ce8bf81 100644
+index ce8bf81..18b7e68 100644
 --- a/dir-iterator.c
 +++ b/dir-iterator.c
-@@ -50,6 +50,43 @@ struct dir_iterator_int {
- 	struct dir_iterator_level *levels;
+@@ -4,8 +4,6 @@
+ #include "dir-iterator.h"
+ 
+ struct dir_iterator_level {
+-	int initialized;
+-
+ 	DIR *dir;
+ 
+ 	/*
+@@ -20,8 +18,11 @@ struct dir_iterator_level {
+ 	 * iteration and also iterated into):
+ 	 */
+ 	enum {
+-		DIR_STATE_ITER,
+-		DIR_STATE_RECURSE
++		DIR_STATE_PUSHED,
++		DIR_STATE_PRE_ITERATION,
++		DIR_STATE_ITERATING,
++		DIR_STATE_POST_ITERATION,
++		DIR_STATE_EXHAUSTED
+ 	} dir_state;
  };
  
-+static inline void push_dir_level(struct dir_iterator_int *iter, struct dir_iterator_level *level)
-+{
-+	level->dir_state = DIR_STATE_RECURSE;
-+	ALLOC_GROW(iter->levels, iter->levels_nr + 1,
-+		   iter->levels_alloc);
-+	level = &iter->levels[iter->levels_nr++];
-+	level->initialized = 0;
-+}
+@@ -48,15 +49,20 @@ struct dir_iterator_int {
+ 	 * that will be included in this iteration.
+ 	 */
+ 	struct dir_iterator_level *levels;
 +
-+static inline int pop_dir_level(struct dir_iterator_int *iter)
-+{
-+	return --iter->levels_nr;
-+}
++	/* Holds the flags passed to dir_iterator_begin(). */
++	unsigned flags;
+ };
+ 
+ static inline void push_dir_level(struct dir_iterator_int *iter, struct dir_iterator_level *level)
+ {
+-	level->dir_state = DIR_STATE_RECURSE;
+ 	ALLOC_GROW(iter->levels, iter->levels_nr + 1,
+ 		   iter->levels_alloc);
 +
-+static inline int set_iterator_data(struct dir_iterator_int *iter, struct dir_iterator_level *level)
-+{
-+	if (lstat(iter->base.path.buf, &iter->base.st) < 0) {
-+		if (errno != ENOENT)
-+			warning("error reading path '%s': %s",
-+				iter->base.path.buf,
-+				strerror(errno));
-+		return -1;
++	/* Push a new level */
+ 	level = &iter->levels[iter->levels_nr++];
+-	level->initialized = 0;
++	level->dir = NULL;
++	level->dir_state = DIR_STATE_PUSHED;
+ }
+ 
+ static inline int pop_dir_level(struct dir_iterator_int *iter)
+@@ -75,18 +81,35 @@ static inline int set_iterator_data(struct dir_iterator_int *iter, struct dir_it
+ 	}
+ 
+ 	/*
+-	 * We have to set these each time because
+-	 * the path strbuf might have been realloc()ed.
++	 * Check if we are dealing with the root directory as an
++	 * item that's being iterated through.
+ 	 */
+-	iter->base.relative_path =
+-		iter->base.path.buf + iter->levels[0].prefix_len;
++	if (level->dir_state != DIR_STATE_ITERATING &&
++		iter->levels_nr == 1) {
++		iter->base.relative_path = ".";
 +	}
-+
-+	/*
-+	 * We have to set these each time because
-+	 * the path strbuf might have been realloc()ed.
-+	 */
-+	iter->base.relative_path =
-+		iter->base.path.buf + iter->levels[0].prefix_len;
-+	iter->base.basename =
-+		iter->base.path.buf + level->prefix_len;
-+	level->dir_state = DIR_STATE_ITER;
-+
-+	return 0;
-+}
-+
++	else {
++		iter->base.relative_path =
++			iter->base.path.buf + iter->levels[0].prefix_len;
++	}
+ 	iter->base.basename =
+ 		iter->base.path.buf + level->prefix_len;
+-	level->dir_state = DIR_STATE_ITER;
+ 
+ 	return 0;
+ }
+ 
++/*
++ * This function uses a state machine with the following states:
++ * -> DIR_STATE_PUSHED: the directory has been pushed to the
++ * iterator traversal tree.
++ * -> DIR_STATE_PRE_ITERATION: the directory is *NOT* initialized. The
++ * dirpath has already been returned if pre-order traversal is set.
++ * -> DIR_STATE_ITERATING: the directory is initialized. We are traversing
++ * through it.
++ * -> DIR_STATE_POST_ITERATION: the directory has been iterated through.
++ * We are ready to close it.
++ * -> DIR_STATE_EXHAUSTED: the directory is closed and ready to be popped.
++ */
  int dir_iterator_advance(struct dir_iterator *dir_iterator)
  {
  	struct dir_iterator_int *iter =
-@@ -84,11 +121,7 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 				 * over; now prepare to iterate into
- 				 * it.
- 				 */
--				level->dir_state = DIR_STATE_RECURSE;
--				ALLOC_GROW(iter->levels, iter->levels_nr + 1,
--					   iter->levels_alloc);
--				level = &iter->levels[iter->levels_nr++];
--				level->initialized = 0;
-+				push_dir_level(iter, level);
- 				continue;
- 			} else {
- 				/*
-@@ -104,7 +137,7 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 			 * This level is exhausted (or wasn't opened
- 			 * successfully); pop up a level.
- 			 */
--			if (--iter->levels_nr == 0)
-+			if (pop_dir_level(iter) == 0)
- 				return dir_iterator_abort(dir_iterator);
+@@ -97,7 +120,18 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			&iter->levels[iter->levels_nr - 1];
+ 		struct dirent *de;
  
- 			continue;
-@@ -129,7 +162,7 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 						iter->base.path.buf, strerror(errno));
+-		if (!level->initialized) {
++		if (level->dir_state == DIR_STATE_PUSHED) {
++			level->dir_state = DIR_STATE_PRE_ITERATION;
++
++			if (iter->flags & DIR_ITERATOR_PRE_ORDER_TRAVERSAL) {
++				/* We may not want the root directory to be iterated over */
++				if (iter->levels_nr != 1 ||
++					(iter->flags & DIR_ITERATOR_LIST_ROOT_DIR)) {
++					set_iterator_data(iter, level);
++					return ITER_OK;
++				}
++			}
++		} else if (level->dir_state == DIR_STATE_PRE_ITERATION) {
+ 			/*
+ 			 * Note: dir_iterator_begin() ensures that
+ 			 * path is not the empty string.
+@@ -107,64 +141,35 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			level->prefix_len = iter->base.path.len;
  
- 				level->dir = NULL;
--				if (--iter->levels_nr == 0)
-+				if (pop_dir_level(iter) == 0)
- 					return dir_iterator_abort(dir_iterator);
- 				break;
- 			}
-@@ -138,23 +171,9 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
- 				continue;
- 
- 			strbuf_addstr(&iter->base.path, de->d_name);
--			if (lstat(iter->base.path.buf, &iter->base.st) < 0) {
--				if (errno != ENOENT)
--					warning("error reading path '%s': %s",
--						iter->base.path.buf,
--						strerror(errno));
--				continue;
+ 			level->dir = opendir(iter->base.path.buf);
+-			if (!level->dir && errno != ENOENT) {
+-				warning("error opening directory %s: %s",
+-					iter->base.path.buf, strerror(errno));
+-				/* Popping the level is handled below */
 -			}
+-
+-			level->initialized = 1;
+-		} else if (S_ISDIR(iter->base.st.st_mode)) {
+-			if (level->dir_state == DIR_STATE_ITER) {
++			if (!level->dir) {
+ 				/*
+-				 * The directory was just iterated
+-				 * over; now prepare to iterate into
+-				 * it.
++				 * This level wasn't opened sucessfully; pretend we
++				 * iterated through it already.
+ 				 */
+-				push_dir_level(iter, level);
++				if (errno != ENOENT) {
++					warning("error opening directory %s: %s",
++						iter->base.path.buf, strerror(errno));
++				}
++
++				level->dir_state = DIR_STATE_POST_ITERATION;
+ 				continue;
+-			} else {
+-				/*
+-				 * The directory has already been
+-				 * iterated over and iterated into;
+-				 * we're done with it.
+-				 */
+ 			}
+-		}
  
+-		if (!level->dir) {
 -			/*
--			 * We have to set these each time because
--			 * the path strbuf might have been realloc()ed.
+-			 * This level is exhausted (or wasn't opened
+-			 * successfully); pop up a level.
 -			 */
--			iter->base.relative_path =
--				iter->base.path.buf + iter->levels[0].prefix_len;
--			iter->base.basename =
--				iter->base.path.buf + level->prefix_len;
--			level->dir_state = DIR_STATE_ITER;
-+			if (set_iterator_data(iter, level))
-+				continue;
+-			if (pop_dir_level(iter) == 0)
+-				return dir_iterator_abort(dir_iterator);
+-
+-			continue;
+-		}
+-
+-		/*
+-		 * Loop until we find an entry that we can give back
+-		 * to the caller:
+-		 */
+-		while (1) {
++			level->dir_state = DIR_STATE_ITERATING;
++		} else if (level->dir_state == DIR_STATE_ITERATING) {
+ 			strbuf_setlen(&iter->base.path, level->prefix_len);
+ 			errno = 0;
+ 			de = readdir(level->dir);
  
+ 			if (!de) {
+-				/* This level is exhausted; pop up a level. */
++				/* In case of readdir() error */
+ 				if (errno) {
+ 					warning("error reading directory %s: %s",
+ 						iter->base.path.buf, strerror(errno));
+-				} else if (closedir(level->dir))
+-					warning("error closing directory %s: %s",
+-						iter->base.path.buf, strerror(errno));
++				}
+ 
+-				level->dir = NULL;
+-				if (pop_dir_level(iter) == 0)
+-					return dir_iterator_abort(dir_iterator);
+-				break;
++				level->dir_state = DIR_STATE_POST_ITERATION;
++				continue;
+ 			}
+ 
+ 			if (is_dot_or_dotdot(de->d_name))
+@@ -175,7 +180,38 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+ 			if (set_iterator_data(iter, level))
+ 				continue;
+ 
++			if (S_ISDIR(iter->base.st.st_mode)) {
++				push_dir_level(iter, level);
++				continue;
++			}
++
  			return ITER_OK;
++		} else if (level->dir_state == DIR_STATE_POST_ITERATION) {
++			if (level->dir != NULL && closedir(level->dir)) {
++				warning("error closing directory %s: %s",
++					iter->base.path.buf, strerror(errno));
++			}
++			level->dir_state = DIR_STATE_EXHAUSTED;
++
++			strbuf_setlen(&iter->base.path, level->prefix_len);
++			/*
++			 * Since we are iterating through the dirpath
++			 * after we have gone through it, we still need
++			 * to get rid of the trailing slash we appended.
++			 */
++			strbuf_strip_suffix(&iter->base.path, "/");
++
++			if (iter->flags & DIR_ITERATOR_POST_ORDER_TRAVERSAL) {
++				/* We may not want the root directory to be iterated over */
++				if (iter->levels_nr != 1 ||
++					(iter->flags & DIR_ITERATOR_LIST_ROOT_DIR)) {
++					set_iterator_data(iter, level);
++					return ITER_OK;
++				}
++			}
++		} else if (level->dir_state == DIR_STATE_EXHAUSTED) {
++			if (pop_dir_level(iter) == 0)
++				return dir_iterator_abort(dir_iterator);
  		}
+ 	}
+ }
+@@ -201,7 +237,7 @@ int dir_iterator_abort(struct dir_iterator *dir_iterator)
+ 	return ITER_DONE;
+ }
+ 
+-struct dir_iterator *dir_iterator_begin(const char *path)
++struct dir_iterator *dir_iterator_begin(const char *path, unsigned flags)
+ {
+ 	struct dir_iterator_int *iter = xcalloc(1, sizeof(*iter));
+ 	struct dir_iterator *dir_iterator = &iter->base;
+@@ -209,13 +245,16 @@ struct dir_iterator *dir_iterator_begin(const char *path)
+ 	if (!path || !*path)
+ 		die("BUG: empty path passed to dir_iterator_begin()");
+ 
++	iter->flags = flags;
++
+ 	strbuf_init(&iter->base.path, PATH_MAX);
+ 	strbuf_addstr(&iter->base.path, path);
+ 
+ 	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
+ 
+ 	iter->levels_nr = 1;
+-	iter->levels[0].initialized = 0;
++	iter->levels[0].dir = NULL;
++	iter->levels[0].dir_state = DIR_STATE_PUSHED;
+ 
+ 	return dir_iterator;
+ }
+diff --git a/dir-iterator.h b/dir-iterator.h
+index 27739e6..0e82f36 100644
+--- a/dir-iterator.h
++++ b/dir-iterator.h
+@@ -11,13 +11,12 @@
+  * Every time dir_iterator_advance() is called, update the members of
+  * the dir_iterator structure to reflect the next path in the
+  * iteration. The order that paths are iterated over within a
+- * directory is undefined, but directory paths are always iterated
+- * over before the subdirectory contents.
++ * directory is undefined.
+  *
+  * A typical iteration looks like this:
+  *
+  *     int ok;
+- *     struct iterator *iter = dir_iterator_begin(path);
++ *     struct iterator *iter = dir_iterator_begin(path, flags);
+  *
+  *     while ((ok = dir_iterator_advance(iter)) == ITER_OK) {
+  *             if (want_to_stop_iteration()) {
+@@ -38,6 +37,22 @@
+  * dir_iterator_advance() again.
+  */
+ 
++/*
++ * Possible flags for dir_iterator_begin().
++ *
++ * -> DIR_ITERATOR_PRE_ORDER_TRAVERSAL: the iterator shall return
++ * a dirpath it has found before iterating through that directory's
++ * contents.
++ * -> DIR_ITERATOR_POST_ORDER_TRAVERSAL: the iterator shall return
++ * a dirpath it has found after iterating through that directory's
++ * contents.
++ * -> DIR_ITERATOR_LIST_ROOT_DIR: the iterator shall return the dirpath
++ * of the root directory it is iterating through.
++ */
++#define DIR_ITERATOR_PRE_ORDER_TRAVERSAL (1 << 0)
++#define DIR_ITERATOR_POST_ORDER_TRAVERSAL (1 << 1)
++#define DIR_ITERATOR_LIST_ROOT_DIR (1 << 2)
++
+ struct dir_iterator {
+ 	/* The current path: */
+ 	struct strbuf path;
+@@ -57,15 +72,16 @@ struct dir_iterator {
+ };
+ 
+ /*
+- * Start a directory iteration over path. Return a dir_iterator that
+- * holds the internal state of the iteration.
++ * Start a directory iteration over path, with options specified in
++ * 'flags'. Return a dir_iterator that holds the internal state of
++ * the iteration.
+  *
+  * The iteration includes all paths under path, not including path
+  * itself and not including "." or ".." entries.
+  *
+  * path is the starting directory. An internal copy will be made.
+  */
+-struct dir_iterator *dir_iterator_begin(const char *path);
++struct dir_iterator *dir_iterator_begin(const char *path, unsigned flags);
+ 
+ /*
+  * Advance the iterator to the first or next item and return ITER_OK.
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 50188e9..c29dc68 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3346,7 +3346,7 @@ static struct ref_iterator *files_reflog_iterator_begin(struct ref_store *ref_st
+ 	files_downcast(ref_store, 0, "reflog_iterator_begin");
+ 
+ 	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable);
+-	iter->dir_iterator = dir_iterator_begin(git_path("logs"));
++	iter->dir_iterator = dir_iterator_begin(git_path("logs"), DIR_ITERATOR_PRE_ORDER_TRAVERSAL);
+ 	return ref_iterator;
+ }
+ 
+diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
+index 06f03fc..a1b8c78 100644
+--- a/t/helper/test-dir-iterator.c
++++ b/t/helper/test-dir-iterator.c
+@@ -6,6 +6,7 @@
+ int cmd_main(int argc, const char **argv) {
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct dir_iterator *diter;
++	unsigned flag = DIR_ITERATOR_PRE_ORDER_TRAVERSAL;
+ 
+ 	if (argc < 2) {
+ 		return 1;
+@@ -13,7 +14,10 @@ int cmd_main(int argc, const char **argv) {
+ 
+ 	strbuf_add(&path, argv[1], strlen(argv[1]));
+ 
+-	diter = dir_iterator_begin(path.buf);
++	if (argc == 3)
++		flag = atoi(argv[2]);
++
++	diter = dir_iterator_begin(path.buf, flag);
+ 
+ 	while (dir_iterator_advance(diter) == ITER_OK) {
+ 		if (S_ISDIR(diter->st.st_mode))
+diff --git a/t/t0065-dir-iterator.sh b/t/t0065-dir-iterator.sh
+index b857c07..ade3ee0 100755
+--- a/t/t0065-dir-iterator.sh
++++ b/t/t0065-dir-iterator.sh
+@@ -28,12 +28,28 @@ test_expect_success 'dir-iterator should iterate through all files' '
+ 	>dir/a/e &&
+ 	>dir/d/e/d/a &&
+ 
+-	test-dir-iterator ./dir | sort >./actual-pre-order-sorted-output &&
++	test-dir-iterator ./dir 1 | sort >./actual-pre-order-sorted-output &&
+ 	rm -rf dir &&
+ 
+ 	test_cmp expect-sorted-output actual-pre-order-sorted-output
+ '
+ 
++test_expect_success 'dir-iterator should iterate through all files on post-order mode' '
++	mkdir -p dir &&
++	mkdir -p dir/a/b/c/ &&
++	>dir/b &&
++	>dir/c &&
++	mkdir -p dir/d/e/d/ &&
++	>dir/a/b/c/d &&
++	>dir/a/e &&
++	>dir/d/e/d/a &&
++
++	test-dir-iterator ./dir 2 | sort >actual-post-order-sorted-output &&
++	rm -rf dir &&
++
++	test_cmp expect-sorted-output actual-post-order-sorted-output
++'
++
+ cat >expect-pre-order-output <<-\EOF &&
+ [d] (a) ./dir/a
+ [d] (a/b) ./dir/a/b
+@@ -41,14 +57,53 @@ cat >expect-pre-order-output <<-\EOF &&
+ [f] (a/b/c/d) ./dir/a/b/c/d
+ EOF
+ 
+-test_expect_success 'dir-iterator should list files in the correct order' '
++test_expect_success 'dir-iterator should list files properly on pre-order mode' '
+ 	mkdir -p dir/a/b/c/ &&
+ 	>dir/a/b/c/d &&
+ 
+-	test-dir-iterator ./dir >actual-pre-order-output &&
++	test-dir-iterator ./dir 1 >actual-pre-order-output &&
+ 	rm -rf dir &&
+ 
+ 	test_cmp expect-pre-order-output actual-pre-order-output
+ '
+ 
++cat >expect-post-order-output <<-\EOF &&
++[f] (a/b/c/d) ./dir/a/b/c/d
++[d] (a/b/c) ./dir/a/b/c
++[d] (a/b) ./dir/a/b
++[d] (a) ./dir/a
++EOF
++
++test_expect_success 'dir-iterator should list files properly on post-order mode' '
++	mkdir -p dir/a/b/c/ &&
++	>dir/a/b/c/d &&
++
++	test-dir-iterator ./dir 2 >actual-post-order-output &&
++	rm -rf dir &&
++
++	test_cmp expect-post-order-output actual-post-order-output
++'
++
++cat >expect-pre-order-post-order-root-dir-output <<-\EOF &&
++[d] (.) ./dir
++[d] (a) ./dir/a
++[d] (a/b) ./dir/a/b
++[d] (a/b/c) ./dir/a/b/c
++[f] (a/b/c/d) ./dir/a/b/c/d
++[d] (a/b/c) ./dir/a/b/c
++[d] (a/b) ./dir/a/b
++[d] (a) ./dir/a
++[d] (.) ./dir
++EOF
++
++test_expect_success 'dir-iterator should list files properly on pre-order + post-order + root-dir mode' '
++	mkdir -p dir/a/b/c/ &&
++	>dir/a/b/c/d &&
++
++	test-dir-iterator ./dir 7 >actual-pre-order-post-order-root-dir-output &&
++	rm -rf dir &&
++
++	test_cmp expect-pre-order-post-order-root-dir-output actual-pre-order-post-order-root-dir-output
++'
++
+ test_done
 -- 
 2.7.4 (Apple Git-66)
 
