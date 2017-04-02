@@ -6,94 +6,84 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61E911FAFB
-	for <e@80x24.org>; Sun,  2 Apr 2017 07:38:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3EF311FAFB
+	for <e@80x24.org>; Sun,  2 Apr 2017 07:45:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750844AbdDBHi2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Apr 2017 03:38:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55618 "EHLO cloud.peff.net"
+        id S1750953AbdDBHpZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Apr 2017 03:45:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55621 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750815AbdDBHi2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Apr 2017 03:38:28 -0400
-Received: (qmail 32061 invoked by uid 109); 2 Apr 2017 07:38:25 -0000
+        id S1750860AbdDBHpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2017 03:45:24 -0400
+Received: (qmail 32603 invoked by uid 109); 2 Apr 2017 07:45:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 07:38:25 +0000
-Received: (qmail 23091 invoked by uid 111); 2 Apr 2017 07:38:42 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 07:45:23 +0000
+Received: (qmail 23118 invoked by uid 111); 2 Apr 2017 07:45:41 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 03:38:42 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Apr 2017 03:38:23 -0400
-Date:   Sun, 2 Apr 2017 03:38:23 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 03:45:41 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Apr 2017 03:45:22 -0400
+Date:   Sun, 2 Apr 2017 03:45:22 -0400
 From:   Jeff King <peff@peff.net>
-To:     Knut Omang <knut.omang@oracle.com>
+To:     Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Bug: 'git config --local user.email=<alt.email>' fails silently?
-Message-ID: <20170402073823.tudnfftbxaa6jdo5@sigill.intra.peff.net>
-References: <1491112043.5830.11.camel@oracle.com>
+Subject: Re: [BUG?] iconv used as textconv, and spurious ^M on added lines on
+ Windows
+Message-ID: <20170402074522.4qhannjus4ynwx4i@sigill.intra.peff.net>
+References: <feaeade7-aeb5-fa67-ab29-9106aeadb2a6@gmail.com>
+ <20170330200021.c2l5jak3xb5aoxyc@sigill.intra.peff.net>
+ <e1a6d44c-b01b-993c-6a22-e6ac0abca03c@gmail.com>
+ <20170401060800.hrpqqgdx6t262c7f@sigill.intra.peff.net>
+ <63eb5546-0dce-2f69-c2f8-1e777b97c532@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1491112043.5830.11.camel@oracle.com>
+In-Reply-To: <63eb5546-0dce-2f69-c2f8-1e777b97c532@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 02, 2017 at 07:47:23AM +0200, Knut Omang wrote:
+On Sat, Apr 01, 2017 at 08:31:27PM +0200, Jakub Narębski wrote:
 
-> From the documentation I would have expected 
+> W dniu 01.04.2017 o 08:08, Jeff King pisze:
+> > On Fri, Mar 31, 2017 at 03:24:48PM +0200, Jakub Narębski wrote:
+> > 
+> >>> I suspect in the normal case that git is doing line-ending conversion,
+> >>> but it's suppressed when textconv is in use.
+> >>
+> >> I would not consider this a bug if not for the fact that there is no ^M
+> >> without using iconv as textconv.
+> > 
+> > I don't think it's a bug, though. You have told Git that you will
+> > convert the contents (whatever their format) into the canonical format,
+> > but your program to do so includes a CR.
 > 
-> git config --local user.email=alt.email@alt.domain
-> 
-> to create a section 
-> 
-> [user]
-> 	email=alt.email@alt.domain
-> 
-> in the local .git/config.
+> Well, I have not declared file binary with "binary = true" in diff driver
+> definition, isn't it?
 
-When it sees one argument, git-config treats that argument as a key to
-be retrieved. When given two, the second is a value to be set. E.g.:
+I don't think binary has anything to do with it. A textconv filter takes
+input (binary or not) and delivers a normalized representation to feed
+to the diff algorithm. There's no further post-processing, and it's the
+responsibility of the filter to deliver the bytes it wants diffed.
 
-  $ git config foo.bar
-  $ git config foo.bar some-value
-  $ git config foo.bar
-  some-value
+Like I said, I could see an argument for treating the filter output as
+text to be pre-processed, but that's not how it works (and I don't think
+it is a good idea to change it now, unless by adding an option to the
+diff filter).
 
-So your command was interpreted as a request to fetch the value, which
-doesn't exist.
+> P.S. What do you think about Git supporting 'encoding' attribute (or
+> 'core.encoding' config) plus 'core.outputEncoding' in-core?
 
-> Instead it returns status 1 with no error message.
+Supporting an "encoding" attribute to normalize file encodings in diffs
+seems reasonable to me. But it would have to be enabled only for
+human-readable diffs, as the result could not be applied (so the same as
+textconv).
 
-Hopefully that explains the response you saw; we do not emit an error
-message when a key isn't found, which makes it easy for scripts to do
-things like:
-
-  value=$(git config foo.bar || echo default-value)
-
-without being unnecessarily noisy.
-
-Usually we'd catch an error like yours and complain, because the key is
-syntactically invalid ("=" is not generally allowed in key names):
-
-  $ git config foo.bar=some-value
-  error: invalid key: foo.bar=some-value
-
-But your argument actually _is_ a syntactically valid key, because of
-the dots. In a three-level key like "one.two.three", the second level
-subsection is allowed to contain any character (including "=" and more
-dots). So your "user.email=alt.email@alt.domain" tries to look up the
-config represented by:
-
-  [user "email=alt.email@alt"]
-  domain
-
-Which of course did not exist.
-
-> Is this intentional?
-
-Yes, everything is working as intended. The documentation in
-git-config(1) seems to be quite poor at describing the various operating
-modes, though.
+I don't think core.outputEncoding is necessarily a good idea. We are not
+really equipped anything that isn't an ascii superset, as we intermingle
+the bytes with ascii diff headers (though I think that is true of the
+commitEncoding stuff; I assume everything breaks horribly if you tried
+to set that to UTF-16, but I've never tried it).
 
 -Peff
