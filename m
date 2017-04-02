@@ -2,77 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5836120964
-	for <e@80x24.org>; Sun,  2 Apr 2017 03:45:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A6B720964
+	for <e@80x24.org>; Sun,  2 Apr 2017 04:18:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750842AbdDBDpr (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Apr 2017 23:45:47 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65297 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750792AbdDBDpq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Apr 2017 23:45:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8F9EA701CD;
-        Sat,  1 Apr 2017 23:45:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=b+g2ETpLxuE+
-        NYnFAcEPitJKph4=; b=xbTKj6apuvbmIWfXRaFuY3UHyEckB7PJPDOLsFqttXHQ
-        GY2exmaBEanPnvEZzjmRvuqhvVxNr8mCGwaMZk1pGQFvw/HJK//9XMBdHxOr2aof
-        X0W07/FE5PPMIU11gQCG0cFiiIzrKDjE0GDVqAtAz+7vQH1G2sCjGIPBV8Q3gz8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JakrJY
-        TmLW1N4NZVS6apuCyRpHJYP3FRlA1jzbfHTRqltLYm6KHOAfIMKstAca0Fddm+ID
-        99yPMsk/+DW/H0lqJuw16gs6cVv/xIKdfMxiEhZr+xrQ9T3HS6BEWbY4qiWM3cJ3
-        lEtl2uiAVWT1/ciTY4+7brNhNFwnpd5dh9PcY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8439B701CC;
-        Sat,  1 Apr 2017 23:45:45 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EB23F701CB;
-        Sat,  1 Apr 2017 23:45:44 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>
-Subject: Re: Very promising results with libpcre2
-References: <CACBZZX6FcHcY7cYs6s_pv=E43cHNmzyUY5wrcuhPWWmUixCL+g@mail.gmail.com>
-        <xmqqtw69vz9t.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX416M3YFDAACGAWCjJ4Xt0g78zpFF+iusMCarKb7SSfVw@mail.gmail.com>
-        <xmqqbmsgugt4.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX5mEMq2ZRKKc-5HxhauNRemPpN4P+wzmihO1YhZq_vJPg@mail.gmail.com>
-Date:   Sat, 01 Apr 2017 20:45:43 -0700
-In-Reply-To: <CACBZZX5mEMq2ZRKKc-5HxhauNRemPpN4P+wzmihO1YhZq_vJPg@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat, 1 Apr
- 2017 21:11:03
-        +0200")
-Message-ID: <xmqq8tnjtqu0.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1750803AbdDBESp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Apr 2017 00:18:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55574 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750768AbdDBESp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Apr 2017 00:18:45 -0400
+Received: (qmail 16592 invoked by uid 109); 2 Apr 2017 04:18:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 04:18:40 +0000
+Received: (qmail 21844 invoked by uid 111); 2 Apr 2017 04:18:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sun, 02 Apr 2017 00:18:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Apr 2017 00:18:38 -0400
+Date:   Sun, 2 Apr 2017 00:18:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Bug in "git am" when the body starts with spaces
+Message-ID: <20170402041838.dzkmibc5lq37sm3h@sigill.intra.peff.net>
+References: <CA+55aFypmFkc4gOEea-AF1kKYb3K=6nosXvYS4AMGFOQHw0ZxA@mail.gmail.com>
+ <CA+55aFwcQuxwhQ+LABmev2XRHgOqsbRm7YDYn3FDDXKMYcF-CA@mail.gmail.com>
+ <CA+55aFwmNuvh_ABtnd_uxXv5HjEjN-+HMZGh_u1OjOCa4dbpmg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D9FA003E-1756-11E7-9916-FC50AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <CA+55aFwmNuvh_ABtnd_uxXv5HjEjN-+HMZGh_u1OjOCa4dbpmg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Sat, Apr 01, 2017 at 12:03:44PM -0700, Linus Torvalds wrote:
 
-> I am very tempted though to support them in parallel, if only for ease
-> of performance testing and to be able to roll out support for
-> grep.patternType=3Dperl meaning pcre1 for now, but add a
-> grep.patternType=3Dpcre2 for testing (and make grep.patternType=3Dpcre1
-> work, with grep.patternType=3Dpcre being synonymous with
-> grep.patternType=3Dperl, i.e. whatever the default is).
+> On Fri, Mar 31, 2017 at 5:52 PM, Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+> >
+> > The continuation logic is oddly complex, and I can't follow the logic.
+> > But it is completely broken in how it thinks empty lines are somehow
+> > "continuations".
+> 
+> The attached patch seems to work for me. Comments?
+> 
+> The logic is fairly simple: if we encounter an empty line, and we have
+> pending in-body headers, we flush the pending headers, and mark us as
+> no longer in header mode.
 
-Perhaps.  As long as the code doesn't get too ugly, I think we would
-survive ;-)
+Hmm. I think this may work. At first I thought it was too strict in
+always checking inbody_header_accum.len, because we want this to kick in
+always, whether there's whitespace continuation or not. But that
+accumulator has to collect preemptively, before it knows if there's
+continuation. So it will always be non-empty if we've seen _any_ header,
+and it will remain non-empty as long as we keep parsing (because any
+time we flush, we do so in order to handle another line).
 
+IOW, I think this implements the state-machine thing I wrote in my
+earlier email, because the state "are we inside in-body header parsing"
+is always reflected by having a non-empty accumulator. It is a bit
+non-obvious though.
+
+-Peff
