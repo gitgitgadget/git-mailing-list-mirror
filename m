@@ -2,93 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 160CE2096C
-	for <e@80x24.org>; Mon,  3 Apr 2017 04:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D6DB20966
+	for <e@80x24.org>; Mon,  3 Apr 2017 04:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750974AbdDCEMw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Apr 2017 00:12:52 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:33396 "EHLO
-        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750919AbdDCEMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2017 00:12:51 -0400
-Received: by mail-oi0-f53.google.com with SMTP id b187so112605360oif.0
-        for <git@vger.kernel.org>; Sun, 02 Apr 2017 21:12:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=EgM6Mf4KMPmJwS71gDlHA2aQq2+gCnNzXtU/na9Ywos=;
-        b=pbBsx09kKMS3BB3l92LrN2RQdxMGUMFJhZN/nu633QVY51aFkg79+QtMBmtfXhYG3h
-         eeqXXZd18cOAbCep9eUV3PaTv3YsFOLHhPl+Dk6i7cR8G3tw1T46km136Az+ZBej5YHO
-         E1cVclAtFMqvIg+9dM+jgobiwmSPWDpO/B3IMBey7HZpHJhwIAzBeNPjiXVj42v0uslS
-         GlfJ0nlWu1RADpz45MaRQg7wOgnsS2bYeBQzdUYEFNhgvQ2G/oXMVW8okOU/fuNqOX89
-         NgOPq+HrSve7ckYg2XXU5MqshBFyZQ7W4TCp81naeOELOtNH3+H6CKUdeTpdxlhpJZXJ
-         5aLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=EgM6Mf4KMPmJwS71gDlHA2aQq2+gCnNzXtU/na9Ywos=;
-        b=Lecvl73hfts7iMtTajk9PubDuJ79aI6/IB8flcAhSlkulAt++fsboDFo/6O3icJBNV
-         vZgrR8XEn1RDL/NlH9Xaf5V/B0IlRCLWZFotw1pTjwZpEyTFJ2iPGisTt6dLMP0ra02R
-         cfq9+7RNtRw311YFh/k69FqahWsiP52YNOcMdglkwnI3Ho4HKjrzbrffyRdbn5B4GxrC
-         7/sQ4ASrE0ZUlyHoHqYwwaS6wN4ulK2hOdgsbinTFqGSNA7uTM5qXhW2fHA9Lj0YCAcr
-         AvBe6k0o+mV4judchauidKWY0rPEpz67/zagMPBYqcbSgwa6fEw/HVS1RhJCHh08evnz
-         B2tQ==
-X-Gm-Message-State: AFeK/H1Y5VJq1MgslTMxs7o/TA4nqWq/N9mMPYyBAMJIFBC6Ur700w138mCB/Sj5nY4ag9YpyT/Km+nlVbA9cQ==
-X-Received: by 10.157.8.197 with SMTP id 63mr7660297otf.123.1491192770727;
- Sun, 02 Apr 2017 21:12:50 -0700 (PDT)
+        id S1751161AbdDCEV3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Apr 2017 00:21:29 -0400
+Received: from mout.web.de ([212.227.15.4]:55541 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750951AbdDCEV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2017 00:21:28 -0400
+Received: from [192.168.88.106] ([194.47.243.242]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0McWno-1cdE5C0EbI-00HcA0; Mon, 03
+ Apr 2017 06:21:22 +0200
+Subject: Re: [PATCH v2 1/8] ref-filter: avoid using `unsigned long` for
+ catch-all data type
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+References: <cover.1488231002.git.johannes.schindelin@gmx.de>
+ <cover.1491159939.git.johannes.schindelin@gmx.de>
+ <bf91c11bd145a2f4b049ac02c02a18e58c496834.1491159939.git.johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <342cae56-ef58-3542-202d-6dd04d5777e8@web.de>
+Date:   Mon, 3 Apr 2017 06:22:24 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
+ Gecko/20100101 Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.74.31.131 with HTTP; Sun, 2 Apr 2017 21:12:50 -0700 (PDT)
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Mon, 3 Apr 2017 00:12:50 -0400
-Message-ID: <CAH8yC8kPWuB0zYp7g_PO7x-Kn5RpzKpvbGvyV+2mt_buaJb3zQ@mail.gmail.com>
-Subject: chmod: changing permissions of `blib/arch/auto/Git': Operation not permitted
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <bf91c11bd145a2f4b049ac02c02a18e58c496834.1491159939.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:S5es0NpjjRBF8QRfi6iHFUMfXVG982IASisE5iMj5jDrYq9rq+y
+ DUHvarGW1lCXdt2FGSqhTaNzEvepYeTDM7pPwR9lPkuq1WKCZ4PrTmpXwIYy/HTX0Xn8+TX
+ /lUlK5wqJgEBkiVdV8cGcVGjgipBpc6Xcbbi8MNB6SvWwmZjI4uHbwoiaKi/PYTtXB454MZ
+ v3IiVXDbNAgyT7l3dz/bQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QxJjcUiow9o=:K0lNsca/phFkyZlk0I/Q22
+ xY5/cz7TNOfgnlAY6EsUibyQq10SwPjl9V2tn2yL3Ynp2c5/Fz2lEB36mu0epWajOEvN2D52U
+ 2DpEAW+3rZ4dfTCfhLFeAQanr4hnaM4pm+VUPY9th40A5pI5w/qzWkzAEJcvqjpdAAjBkYfZG
+ 7+jzlmczZedSAJuAlUlUbIcu57CCnwEQqVw1BUVm4h+/x3aqTnlqCiRVtBgAqDKy0hlWEfpf+
+ VqQNnMus3/smMbqHoifha1BPQPUOT1jHT9d6jnpc4w3I//QP6mh7X8N5fMlhoIGkCWDH8uKg4
+ c5KNK1TPsnVSViY6xbvNlCW6xqGFynhkxj1VBMWmoQylwtUwD0orYwbUdurrjr7unjCu92f4A
+ gtzecEfhXy+YKVaJaH3WJRE+IVtFwORmQJxNH95UxZj3VFqhskryh3ix+hqwS5VPhof13KbHn
+ E+tfM5muEZfAFBjdPYcGpYcyABScbTVAO6MdG7NmnbDKIYYLTVO8wgXdLFJfl1r/5o1CR0ePn
+ KnIGC5G7/UzT8J0pMF32gGYRzfByGmp+io5GkyCRap5nC0s7JYmAhs4hladY3sDBGnF7VhDzu
+ /05fE1absYoab5hSX6UWkE6etW5nbghfuIoOI9UaIkfx3e8pIo68LdUrzVvvaW5XuU6V77hUB
+ eGpKc/9Ku4zqEGgirZ2pOAW8/2z+QwGZudl6VXrQGgwWa8vn8+TV2yeZlCug/Wt2+6rIIHBVz
+ 4NT4hhKKHKCh+ysBzhoVA5stuaeb0jMO9rABEHsyvMkHifPYQW8nrji5gvj7E+8v+bp9nidUV
+ ZNCRa/C
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is kind of unusual. I'm seeing it under Debian 7 on a ci20 mipsel
-dev-board when building/installing Git 2.12.2:
-
-...
-317 translated messages.
-    GEN gitk-wish
-307 translated messages.
-    SUBDIR perl
-chmod: changing permissions of `blib/lib': Operation not permitted
-chmod: changing permissions of `blib/arch': Operation not
-permittedmake[2]: *** [blib/lib/.exists] Error 1
-make[2]: *** Waiting for unfinished jobs....
-
-make[2]: *** [blib/arch/.exists] Error 1
-chmod: changing permissions of `blib/arch/auto/Git': Operation not permitted
-make[2]: *** [blib/arch/auto/Git/.exists] Error 1
-chmod: changing permissions of `blib/lib/auto/Git': Operation not permitted
-make[2]: *** [blib/lib/auto/Git/.exists] Error 1
-make[1]: *** [all] Error 2
-make: *** [all] Error 2
-    SUBDIR git-gui
-    SUBDIR gitk-git
-...
 
 
-When I check permissions:
+On 02/04/17 21:06, Johannes Schindelin wrote:
+> In its `atom_value` struct, the ref-filter source code wants to store
+> different values in a field called `ul` (for `unsigned long`), e.g.
+> timestamps.
+>
+> However, as we are about to switch the data type of timestamps away from
+> `unsigned long` (because it may be 32-bit even when `time_t` is 64-bit),
+> that data type is not large enough.
+>
+> Simply change that field to use `uintmax_t` instead.
+>
+> This patch is a bit larger than the mere change of the data type
+> because the field's name was tied to its data type, which has been fixed
+> at the same time.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  ref-filter.c | 16 ++++++++--------
+>  1 file changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/ref-filter.c b/ref-filter.c
+> index 9c82b5b9d63..8538328fc7f 100644
+> --- a/ref-filter.c
+> +++ b/ref-filter.c
+> @@ -351,7 +351,7 @@ struct ref_formatting_state {
+>  struct atom_value {
+>  	const char *s;
+>  	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
+> -	unsigned long ul; /* used for sorting when not FIELD_STR */
+> +	uintmax_t value; /* used for sorting when not FIELD_STR */
+>  	struct used_atom *atom;
+>  };
+>
+> @@ -723,7 +723,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+>  		if (!strcmp(name, "objecttype"))
+>  			v->s = typename(obj->type);
+>  		else if (!strcmp(name, "objectsize")) {
+> -			v->ul = sz;
+> +			v->value = sz;
+>  			v->s = xstrfmt("%lu", sz);
+>  		}
+>  		else if (deref)
+> @@ -770,8 +770,8 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+>  			v->s = xstrdup(oid_to_hex(&commit->tree->object.oid));
+>  		}
+>  		else if (!strcmp(name, "numparent")) {
+> -			v->ul = commit_list_count(commit->parents);
+> -			v->s = xstrfmt("%lu", v->ul);
+> +			v->value = commit_list_count(commit->parents);
+> +			v->s = xstrfmt("%lu", (unsigned long)v->value);
 
-$ ls -Al git-2.12.2/perl/blib/bin/
-total 0
--rw-r--r-- 1 root root 0 Apr  3 05:06 .exists
+If we want to get rid of "%lu" at some day, we can do like this:
+v->s = xstrfmt("%" PRIuMAX, v->value);
+Or, to make clear that under all circumstances an unsigned long is big enough to
+hold the counter, for readers in the future, use something like this:
+			v->s = xstrfmt("%lu", (xulong_t)v->value);
 
-It appears one of the Git processes is creating the directory
-structure git-2.12.2/perl/... It also appears to be doing it under
-sudo/root since I build under my account.
-
-Jeff
+(this is more a reminder to myself, to send such a patch )
