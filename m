@@ -2,92 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD4B61FAFB
-	for <e@80x24.org>; Mon,  3 Apr 2017 22:48:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F08991FAFB
+	for <e@80x24.org>; Mon,  3 Apr 2017 22:50:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751944AbdDCWsm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Apr 2017 18:48:42 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:35123 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751649AbdDCWsl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2017 18:48:41 -0400
-Received: by mail-pg0-f47.google.com with SMTP id 81so133846584pgh.2
-        for <git@vger.kernel.org>; Mon, 03 Apr 2017 15:48:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=t5M1gQQXvBlJowJO8dV18LTXj5EzPGwYPqAidumakQM=;
-        b=L7m3apqEbPOHE4K1GdR40JrcEYAq5wM/iyQPGVtTuGeMwFrGR/eGRVhFbGRAWby7Gr
-         p5amaALVgGXtNGC1Iz+RXK73JSQmKNdD9Mw6W/OorRBbLZiY/3OPxh58+OvMZXfMIHlG
-         4+RBVxBAEgwLveDLreWial8degbQEjVennKSDAwSSngD2i16mzD2bBx/Zgum4YOU7b+T
-         v/ms44aZXQ0/qK/i0G05iqusAR2/ghTqt/4nDZeuuj532ygYLOecfnifOXX2EsYa6vtR
-         uQGPRf2iU9TrZ7CUzUuWss4ahKw+jUpjRIUyA3NnmMjeqiW9fL0Qvhu56jEdfp52uYta
-         kFDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=t5M1gQQXvBlJowJO8dV18LTXj5EzPGwYPqAidumakQM=;
-        b=t+3/jTAGxB9VDpOvKcue/TuRvF7SNBNkqE+OOgoGzHQATiO+rJKtYHbvVy0HZ2Gnam
-         lSiEszFC7GpGZ4jyPUNIzpa/2Eu8PzsWaxL/9z2Qeh7ZJzRAntbyLPMBM9Wb+TGp9ROt
-         yFSGJyhsPdeCEF5PzDGlMnWojySkVIKDmomTJ0ZKhUxAtbM7ZUJJopdZLsoEEvW+M8nJ
-         zApMLgps6d32kCSaxaAzxqBSm6bAdzYTjx3ZvnCqTIW+wrznjLj808BrjUHu49ts+9ag
-         BYA2mBYv6Zd8ueAfMbuJ/PCPgHKdCQh6mn4+EeIbNw0CPUe1nit5up9B7RtXQxEu4C+X
-         HDRw==
-X-Gm-Message-State: AFeK/H0qUVhkF1pqsbDkCYoeGnAGshfUO+H1cLdPsDdFFfsaWvZke96B6VVYhVGhNL4Mw35W+15kDiwshGT1vub+
-X-Received: by 10.98.137.68 with SMTP id v65mr5845079pfd.125.1491259720927;
- Mon, 03 Apr 2017 15:48:40 -0700 (PDT)
+        id S1751833AbdDCWut (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Apr 2017 18:50:49 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52356 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751628AbdDCWut (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2017 18:50:49 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mgt3g-1cht7U2CsS-00M7Pb; Tue, 04
+ Apr 2017 00:50:44 +0200
+Date:   Tue, 4 Apr 2017 00:50:43 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/8] Specify explicitly where we parse timestamps
+In-Reply-To: <1485481a-f2b3-a0a2-89f6-8f55dc241b19@web.de>
+Message-ID: <alpine.DEB.2.20.1704040048480.4268@virtualbox>
+References: <cover.1488231002.git.johannes.schindelin@gmx.de> <cover.1491159939.git.johannes.schindelin@gmx.de> <7876460edaa85d93b60c0cc1b2f9a715de97180c.1491159939.git.johannes.schindelin@gmx.de> <1485481a-f2b3-a0a2-89f6-8f55dc241b19@web.de>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.100.186.196 with HTTP; Mon, 3 Apr 2017 15:48:40 -0700 (PDT)
-In-Reply-To: <1491163388-41255-4-git-send-email-bnmvco@gmail.com>
-References: <1491163388-41255-1-git-send-email-bnmvco@gmail.com> <1491163388-41255-4-git-send-email-bnmvco@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 3 Apr 2017 15:48:40 -0700
-Message-ID: <CAGZ79kYrH73WrXyw+JypdSVfgpvduL-mUVZ3yyEUuib4BTZ9uw@mail.gmail.com>
-Subject: Re: [PATCH v7 3/5] dir_iterator: add helpers to dir_iterator_advance
-To:     Daniel Ferreira <bnmvco@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/mixed; BOUNDARY="8323329-497804122-1491259844=:4268"
+X-Provags-ID: V03:K0:eDil2k371TLOG4zZ+vhBszl22pNSHKUVCKvON/c/2D546vyqME5
+ 68eDGAW8KtyXUIDiUF4sohAWJpDiVEkulSZaSOsRHpouIT4TAGGJ6usVKECsY2s+spiWORb
+ nK6rHj9Mz86eQ5eGS0DyfLb8g08oUDExB219CJO8ljNKvGHa8ZB/2kPMzWEoPHKaWZM8qL+
+ PHN5AaNm2WQiknp4PBjuw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:twpm8Mb2nDE=:t4IfZ5h98jg/JO0oVhlEFp
+ gWuXD0pKq0rnu/GPoddzIbNGh3Lv5udS+nT4kZYrgkyRsJ+g/4GWArwlyDtUQmawTzSn0ATbP
+ h/7H1w5ozQGp8SdjeiI3Y5OvpnnHdkaa612IKawwA6AnE2A+7kCokkxRycj+SbJUBQzXLJXXk
+ UuuCuSdgZ9kuLKITi2y6mQnjVPPo99OH8aLXIRHCU2uOym4h+4Pkl+0BrnkMb5GjBbA7a1ocr
+ qCK5gR6e3Din7bwSzlF/BETEEGa7kt8H6VcuyTUQLZp3zy/9K3CrWDrEf/3NBVlz4i56pIq8T
+ R2120GIgWU7oAirMOCdVoj1qfjaWD2BUn/bQAoMEvnUK99/3r/qJzcBlwj3A7C8j7ab/r09Lv
+ TGECManuu5zmOnI9lh/6m69JAofM9qJ9gxVoil9tAvRF1cjxS1t+rbP4u5Qeqk6eWxHojxu+d
+ +7O6DvztldS7Ziz1BiJX4LjnGNqlM9CyMQvWPDnLZnRknCfxfqWKMdDYk3YwcPCkmyVHXFllp
+ UW1Drs7v7CLSAL2/r6qyIJqoXqSF6EGqlxQFSrlOjDDaBr8AUMs3x/9nW4pf4MuqqEToDGEVF
+ vsDs2ACnnwpmRFleaCFRSPneDNuvhV94IMSux0X+8Byt39DjSQ9FxS/Q59uW5aQ+ucQ/Bre4t
+ 8VUB0Z4ZEN8fQVNfgJwI7Bj0ObG2iylqGJwlwL9QsDlWys0xq0kWCdfrutpF2JkdeBnXjwxgE
+ +4+sKGXeQHNY1mkDbuNsliXZyryrR6u6tHhUnoMJ/CQAXxbaBGAKEc4LOBnuQSztqN7Mv7y5s
+ gIKb5Nq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 2, 2017 at 1:03 PM, Daniel Ferreira <bnmvco@gmail.com> wrote:
-> Create inline helpers to dir_iterator_advance(). Make
-> dir_iterator_advance()'s code more legible and allow some behavior to
-> be reusable.
->
-> Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
-> ---
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323329-497804122-1491259844=:4268
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> +static inline void push_dir_level(struct dir_iterator_int *iter, struct dir_iterator_level *level)
+Hi Torsten,
 
-Sometimes we use inline, sometimes we do not:
-$ git grep "static inline" -- *.c |wc -l
-84
-$ git grep "static inline" -- *.h |wc -l
-130
-# approximate a function definition:
-$ git grep -e "static" -- *.c  |grep "("|wc -l
-2971
+On Mon, 3 Apr 2017, Torsten B=C3=B6gershausen wrote:
 
-So I think we'd want to have the inline keyword in
-the header only (when the code is actually to be inlined).
-As a C file is one translation unit, the compiler can figure
-out best whether to inline a particular static function on
-its own.
+> []
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -319,6 +319,8 @@ extern char *gitdirname(char *);
+> >  #define PRIo32 "o"
+> >  #endif
+> >
+> > +#define parse_timestamp strtoul
+> > +
+>=20
+> Would
+> #define parse_timestamp(a,b,c)  strtoul((a),(b),(c))
+> be more strict ?
 
-The rest looks good to me,
+It would be more pedantic. But I fail to see how it would be more strict:
+once the preprocessor substituted `parse_timestamp` for whatever we
+#define'd it to, the C compiler will then validate the calls against the
+signature of the real function. That validation will be much more strict
+than merely testing for the correct number of parameters.
 
-Thanks,
-Stefan
+Ciao,
+Johannes
+--8323329-497804122-1491259844=:4268--
