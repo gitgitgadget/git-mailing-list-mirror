@@ -2,127 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 263061FAFB
-	for <e@80x24.org>; Mon,  3 Apr 2017 14:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25BFD1FAFB
+	for <e@80x24.org>; Mon,  3 Apr 2017 15:16:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752589AbdDCOqK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Apr 2017 10:46:10 -0400
-Received: from mout.kundenserver.de ([212.227.126.135]:59854 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751431AbdDCOqJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2017 10:46:09 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue003 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 0MWONS-1cacyG3B5m-00XeLi; Mon, 03 Apr 2017 16:46:02 +0200
-Subject: Re: [PATCH v3 3/4] name-rev: provide debug output
-To:     Junio C Hamano <gitster@pobox.com>
-References: <xmqqinmq65at.fsf@gitster.mtv.corp.google.com>
- <cover.1490967948.git.git@grubix.eu>
- <21cf9d6f55d17463ab6eccdd78d57cf4a1b8e9e1.1490967948.git.git@grubix.eu>
- <xmqqtw69z8vz.fsf@gitster.mtv.corp.google.com>
- <14D0E7F4-0DC7-42ED-8DEE-B0338ECBA80D@grubix.eu>
- <xmqqd1cxz5gb.fsf@gitster.mtv.corp.google.com>
- <xmqqzig1xpm6.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Luke Diamand <luke@diamand.org>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <c85bc2a1-56d8-8a02-6089-2b8cb3d39e99@grubix.eu>
-Date:   Mon, 3 Apr 2017 16:46:01 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+        id S1753640AbdDCPQV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Apr 2017 11:16:21 -0400
+Received: from mail-lf0-f51.google.com ([209.85.215.51]:34728 "EHLO
+        mail-lf0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753617AbdDCPQT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2017 11:16:19 -0400
+Received: by mail-lf0-f51.google.com with SMTP id z15so76759376lfd.1
+        for <git@vger.kernel.org>; Mon, 03 Apr 2017 08:16:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=eKqZzHKxhGxuJPxYsCiq+EdY215eSn86VvU+fpM1jwU=;
+        b=tzuP6L/vrY12UmxMS+Wm6ljGp2xgkkP8lFsayOAmYX6vGTgAQ8c16HcEXNyQ69c2P0
+         tGL8RaiBsZb80snIccsktE7+JTHhIldGKm/evZBhOVeW266hUxWU6S0heKZRaXo6HAu0
+         A1NtEYGarTun1zke3iDT1OjPsdYAAetdI556y58jD7CEXAyuartQZjCELBSrREs+LQyU
+         MBjtaFe9OP1GDPu8yoj1yqp1Y2z847+hY87QjMbcYKtmg7kNV9mSRnn1TjauPvpP5W+9
+         x8BpoEUtU5qMEmj9juaoAmC9yHSErnJgGKKmdZbIMT1xqvBlwKasMP9Pi5P+F/LOiDdA
+         vYGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=eKqZzHKxhGxuJPxYsCiq+EdY215eSn86VvU+fpM1jwU=;
+        b=cAfRVCmKklhOBx9clHeFwor4w5gjqjtx1M6m823nrJGnenZJoc7OkBumESGGv9Hoxg
+         bnL9e+rkbADWuO8z9DS6wYyl93K/pxVWL9wr9thzfEmjnmqHbJlgv29qRoXNV6xgysKK
+         vdd6+QBPZMcxAayWKcSBt8zmmzb/wzCO2zj/7mbS9JHc4Sg5wMdQTz9gNTMGkxKCVEEa
+         MCIaBBjQUh4podPT5nnKJahcVamIX1RAtsxFg2iGsG5RmKq4e68tTlDbQokn8mhKtPE4
+         KJ/fvbX0wSOnbkuKbfg0Lf9giNrLiwCVzXbP8lkB//Kk2dNyVtqFud/6Gh6s0YT00aE0
+         dsjA==
+X-Gm-Message-State: AFeK/H2kT1EZeUNQpZnRjYYyaYcRxWqAYOtibjmFCFIbH1NooEYm/APSWHeq5jyCi+KEEg==
+X-Received: by 10.25.199.65 with SMTP id x62mr5608060lff.122.1491232578315;
+        Mon, 03 Apr 2017 08:16:18 -0700 (PDT)
+Received: from [192.168.1.26] (dat136.neoplus.adsl.tpnet.pl. [83.23.19.136])
+        by smtp.googlemail.com with ESMTPSA id o13sm2594436lfe.42.2017.04.03.08.16.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Apr 2017 08:16:17 -0700 (PDT)
+Subject: Re: Terrible bad performance for it blame --date=iso -C
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
+References: <58E1F239020000A100025732@gwsmtp1.uni-regensburg.de>
+ <20170403105641.16912-1-szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <0ccc5cab-26b7-4b02-b964-452b61e92579@gmail.com>
+Date:   Mon, 3 Apr 2017 17:16:01 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqzig1xpm6.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:WKRXP4lBNhNVhPKu5bAHCk1LdnGNtcsdV5SGVyyeink7H58pDt/
- 9ho/Lg5k+VT44uBFT+7T1yQxhiPGnm3je5re6F5shlpClyH7BvLfVe0jsCdtFGtDYerR2kI
- 5TrkkeYmdawkmzAB0ArX1pX9qkf+1DVz+bo+llKW/9WPSiG4Td+Cene5JhTDJ3bBpvitkC6
- oJ6I9BDg7f8IUO4Xsm7/A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:7xW5tfTzL/c=:hbZMM79twFEH+DYXFzGitO
- 3utJxKIxAFtdZLXUy+ofHdNpzJ/fT+CLSs8nzOGR5TnuRtwuKoLDDrwcbOuonazMP39Aby+Rg
- ZEa1RugEtpmGMFgnBCiupXs/zDRMa25hkh6TfvJPLF1VbBgo25KJFxYN3YSOM1TG14NcIkneN
- a/D3SpkUmAqi+FeduxZKDN/h4D4PxhlJ5ixBTfWs4GmvZaRe0xy4ccwIybf/vc1feBhY5F5kM
- SlhpSCrffV5FottQ62TC6YiftQAtXd+N//nEDGAleSKc7nqmWlrndHAG/Zpk97aTF7FEb7+A2
- fgl41qujwIT521fkYciNPVeUfxwmF+m0pj/0kjJ2cxtkZfhqR41XgMwuQtoN58WTCemEv2QTe
- ukGI3R51SRi2ruQKVL+mFmGrqmfkyy+Rtq7Z4aaT22GgFWSn1qCqsT/V9Vfq5E43ZV4hxbSz6
- ZnRi+BtAI47rrMrzx3zEZBnpFDudR2AmJJ4P6uHc4ySPaBr1ZyNdzcCkKwbvBnSwFXuS8/fXl
- zQy9yWOvL+efdSDUOKplJmgoPCDmlMkL9G0sApWGc/lOTsF35IoLMCiiPywFAIS9JCM4zYFPd
- c1IgddbVYwBLjNd0Hg6zEwXJSrz4oTVnOktFaFnxW5/Q0pPbjV2+Ydufq5yDNhZrlXIpqL8C/
- LmQAlONmobKl612a6ODm0DpyalYFbxELClh2LZm6zKSEB1/TAPrlLxeStHu5qjiGJ59VVsjMw
- vz+yMjVH0ukZmivz
+In-Reply-To: <20170403105641.16912-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano venit, vidit, dixit 31.03.2017 20:33:
-> Junio C Hamano <gitster@pobox.com> writes:
+W dniu 03.04.2017 o 12:56, SZEDER Gábor pisze:
+> Ulrich Windl wrote:
+
+>> In the other case (for the user bored of waiting seeking for some
+>> entertainment ;-)) a "-v (verbose) option could be useful.  Or at the
+>> very least: If git is expecting that some operation will take (or
+>> already did take) a lot of time, give some message explaining why it
+>> is taking a lot of time, and maybe how to avoid that.
 > 
->> Michael J Gruber <git@grubix.eu> writes:
->>
->>>> The only case that this change may make a difference I can think of
->>>> is when you have a tag object pointed at from outside refs/tags
->>>> (e.g. refs/heads/foo is a tag object); if you are trying to change
->>>> the definition of "from_tag" from the current "Is the tip inside
->>>> refs/tags/?" to "Is the tip either inside refs/tags/ or is it a tag
->>>> object anywhere?", that may be a good change (I didn't think things
->>>> through, though), but that shouldn't be hidden inside a commit that
->>>> claims to only add support for debugging.
->>>>
->>>> What problem are you solving?  
->>>
->>> Sorry, I forgot about that change and failed to mention it.
->>>
->>> It makes no difference in the non-debug case which cares about the
->>> Boolean only. In the debug case, I want to distinguish between
->>> annotated and lightweight tags, just like describe --debug does. By
->>> adding 1 via deref and passing this down, I know that an annotated tag
->>> gets the value 2, a lightweight tag 1 and everything else 0, just like
->>> describe --tags.
->>
->> So it sounds like you meant to do something else, and the
->> implementation is wrong for that something else (i.e. it wouldn't do
->> the right thing for a tag object outside refs/tags/, with or without
->> the "--debug" option passed).
+> It already does so by default since v2.8.0, see aba37f495 (blame: add
+> support for --[no-]progress option, 2015-12-12).
 > 
-> The damage seems worse, but I may be misreading the code.
+>   $ time git blame sha1_file.c |wc -l
+>   4026
+>   
+>   real    0m1.744s
+>   user    0m1.672s
+>   sys     0m0.068s
+>   $ time git blame -C -C sha1_file.c |wc -l
+>   Blaming lines: 100% (4026/4026), done.
+>   4026
+>   
+>   real    0m3.832s
+>   user    0m3.716s
+>   sys     0m0.112s
 > 
-> is_better_name() compares name->from_tag and from_tag numerically,
-> because it was designed to take a boolean view of that variable.
-> Now, an artificially bumped 2 gets compared with name->from_tag that
-> may be 1 and gets different priority.  That artificially inflated
-> value may be propagated to name->from_tag when the current tip is
-> judged as a better basis for naming the object.
+> However, after a short peek at that commit, it only displays progress
+> by default when stderr is a terminal, which might not be the case when
+> invoked from emacs.
 
-No, I checked not to change the existing behaviour.
+Emacs (magit?) should use `git blame --porcelain`, and do its own
+progress report, just like 'git gui blame' and incremental blame mode
+of gitweb.
 
-If you look at the comment above that then you see that one of the sides
-of the comparison is a non-tag, so we compare 0 to 1 or 2, the boolean
-outcome being the same.
+Actually... there already is git-blamed - Minor mode for incremental
+blame for Git, and mo-git-blame - An interactive, iterative 'git blame'
+mode for Emacs, both available on ELPA (Emacs Lisp Package Archive).
 
-> If this change is only for debugging, perhaps inside if(data->debug)
-> you added, instead of looking at from_tag, you can look at both
-> from_tag and deref to choose which prio-nmes to show, without
-> butchering the value in from_tag variable to affect the existing
-> code that is exercised with or without --debug?
+HTH
+-- 
+Jakub Narębski
 
-What I did overlook, though, was that name-rev uses the notion "under
-refs/tags" for "being a tag".
-
-In fact, it's puzzling how different describe and name-rev proceed and
-weigh the alternatives. I didn't mean to change that.
-
-In retrospect, displaying the "same" debug information for the two
-commands doesn't make too much sense as long as they use different
-information. name-rev does-not distinguish between tag types, so why
-even display it?
-
-I think I should change 3/4 to display exactly those bits that name-rev
-actually uses for weighing different possible descriptions; they are
-differents from the "describe-bits". So please withhold 3/4 and 4/4.
-
-Michael
