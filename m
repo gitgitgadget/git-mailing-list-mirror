@@ -2,75 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30A041FAFB
-	for <e@80x24.org>; Mon,  3 Apr 2017 17:07:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0488A1FAFB
+	for <e@80x24.org>; Mon,  3 Apr 2017 17:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751957AbdDCRHQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Apr 2017 13:07:16 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:54906 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751732AbdDCRHP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Apr 2017 13:07:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A48C386CBD;
-        Mon,  3 Apr 2017 13:07:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dUp5yvIkaWThemjscqiA+b09peY=; b=P4Nhmb
-        Smlzkhoy6758nS8Tw6zbInjCaXSuatPbV0UAhQ+UhvDmClNi4whEm45bnwOzuXJb
-        EdT0uaQuawbMhR3+yuvb38gmhLF2/Ncz/R1qLariF+JoK2X5kcIER01nTNoOsbty
-        ff1L0m03O/2nhkGQROhCCdvz5raljpnFsxztg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hmxl+3f1tZBMTLMCjqqFbEfN9SS8VhVf
-        c3G2U4NjuhK7m4VJ1JqLbLYv+mb058p8AXXbKm54uKyOPvPEzY+wW3beKwcxm4u+
-        eu4cJakSpLkYfrPsPk914GMVPE5Gtty2AgbtZc97YTa9+4hbRBdreeBVZSqc06ML
-        fG0gYnuHeLE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B9D486CBC;
-        Mon,  3 Apr 2017 13:07:14 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        id S1754200AbdDCRaX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Apr 2017 13:30:23 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:51749 "EHLO
+        homiemail-a15.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752915AbdDCRaW (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Apr 2017 13:30:22 -0400
+Received: from homiemail-a15.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a15.g.dreamhost.com (Postfix) with ESMTP id 753A676C06B;
+        Mon,  3 Apr 2017 10:30:21 -0700 (PDT)
+Received: from localhost.localdomain (gzac12-mdf2-1.aoa.twosigma.com [208.77.215.155])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0A24F86CBA;
-        Mon,  3 Apr 2017 13:07:13 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 3/4] name-rev: provide debug output
-References: <xmqqinmq65at.fsf@gitster.mtv.corp.google.com>
-        <cover.1490967948.git.git@grubix.eu>
-        <21cf9d6f55d17463ab6eccdd78d57cf4a1b8e9e1.1490967948.git.git@grubix.eu>
-        <xmqqtw69z8vz.fsf@gitster.mtv.corp.google.com>
-        <14D0E7F4-0DC7-42ED-8DEE-B0338ECBA80D@grubix.eu>
-        <xmqqd1cxz5gb.fsf@gitster.mtv.corp.google.com>
-        <xmqqzig1xpm6.fsf@gitster.mtv.corp.google.com>
-        <c85bc2a1-56d8-8a02-6089-2b8cb3d39e99@grubix.eu>
-Date:   Mon, 03 Apr 2017 10:07:12 -0700
-In-Reply-To: <c85bc2a1-56d8-8a02-6089-2b8cb3d39e99@grubix.eu> (Michael
-        J. Gruber's message of "Mon, 3 Apr 2017 16:46:01 +0200")
-Message-ID: <xmqqa87xs9mn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FBB6F332-188F-11E7-B4FE-FC50AE2156B6-77302942!pb-smtp2.pobox.com
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a15.g.dreamhost.com (Postfix) with ESMTPSA id 23E1076C065;
+        Mon,  3 Apr 2017 10:30:21 -0700 (PDT)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org
+Cc:     David Turner <dturner@twosigma.com>
+Subject: [PATCH v4] http.postbuffer: allow full range of ssize_t values
+Date:   Mon,  3 Apr 2017 13:30:15 -0400
+Message-Id: <20170403173015.15327-1-dturner@twosigma.com>
+X-Mailer: git-send-email 2.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michael J Gruber <git@grubix.eu> writes:
+Unfortunately, in order to push some large repos, the http postbuffer
+must sometimes exceed two gigabytes.  On a 64-bit system, this is OK:
+we just malloc a larger buffer.
 
-> No, I checked not to change the existing behaviour.
->
-> If you look at the comment above that then you see that one of the sides
-> of the comparison is a non-tag, so we compare 0 to 1 or 2, the boolean
-> outcome being the same.
+This means that we need to use CURLOPT_POSTFIELDSIZE_LARGE to set the
+buffer size.
 
-That one I understand, but if you compare 1 and 2 (one side being a
-lightweight, the other being an annotated tag), they no longer
-compare equal, no?
+Signed-off-by: David Turner <dturner@twosigma.com>
+---
+ cache.h       |  1 +
+ config.c      | 17 +++++++++++++++++
+ http.c        |  4 ++--
+ http.h        |  2 +-
+ remote-curl.c |  6 +++---
+ 5 files changed, 24 insertions(+), 6 deletions(-)
+
+diff --git a/cache.h b/cache.h
+index fbdf7a815a..5e6747dbb4 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1900,6 +1900,7 @@ extern int git_parse_maybe_bool(const char *);
+ extern int git_config_int(const char *, const char *);
+ extern int64_t git_config_int64(const char *, const char *);
+ extern unsigned long git_config_ulong(const char *, const char *);
++extern ssize_t git_config_ssize_t(const char *, const char *);
+ extern int git_config_bool_or_int(const char *, const char *, int *);
+ extern int git_config_bool(const char *, const char *);
+ extern int git_config_maybe_bool(const char *, const char *);
+diff --git a/config.c b/config.c
+index 1a4d85537b..de5b155a4e 100644
+--- a/config.c
++++ b/config.c
+@@ -834,6 +834,15 @@ int git_parse_ulong(const char *value, unsigned long *ret)
+ 	return 1;
+ }
+ 
++static int git_parse_ssize_t(const char *value, ssize_t *ret)
++{
++	ssize_t tmp;
++	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(ssize_t)))
++		return 0;
++	*ret = tmp;
++	return 1;
++}
++
+ NORETURN
+ static void die_bad_number(const char *name, const char *value)
+ {
+@@ -892,6 +901,14 @@ unsigned long git_config_ulong(const char *name, const char *value)
+ 	return ret;
+ }
+ 
++ssize_t git_config_ssize_t(const char *name, const char *value)
++{
++	ssize_t ret;
++	if (!git_parse_ssize_t(value, &ret))
++		die_bad_number(name, value);
++	return ret;
++}
++
+ int git_parse_maybe_bool(const char *value)
+ {
+ 	if (!value)
+diff --git a/http.c b/http.c
+index 96d84bbed3..22f8167ba2 100644
+--- a/http.c
++++ b/http.c
+@@ -19,7 +19,7 @@ long int git_curl_ipresolve;
+ #endif
+ int active_requests;
+ int http_is_verbose;
+-size_t http_post_buffer = 16 * LARGE_PACKET_MAX;
++ssize_t http_post_buffer = 16 * LARGE_PACKET_MAX;
+ 
+ #if LIBCURL_VERSION_NUM >= 0x070a06
+ #define LIBCURL_CAN_HANDLE_AUTH_ANY
+@@ -331,7 +331,7 @@ static int http_options(const char *var, const char *value, void *cb)
+ 	}
+ 
+ 	if (!strcmp("http.postbuffer", var)) {
+-		http_post_buffer = git_config_int(var, value);
++		http_post_buffer = git_config_ssize_t(var, value);
+ 		if (http_post_buffer < LARGE_PACKET_MAX)
+ 			http_post_buffer = LARGE_PACKET_MAX;
+ 		return 0;
+diff --git a/http.h b/http.h
+index 02bccb7b0c..f7bd3b26b0 100644
+--- a/http.h
++++ b/http.h
+@@ -111,7 +111,7 @@ extern struct curl_slist *http_copy_default_headers(void);
+ extern long int git_curl_ipresolve;
+ extern int active_requests;
+ extern int http_is_verbose;
+-extern size_t http_post_buffer;
++extern ssize_t http_post_buffer;
+ extern struct credential http_auth;
+ 
+ extern char curl_errorstr[CURL_ERROR_SIZE];
+diff --git a/remote-curl.c b/remote-curl.c
+index e953d06f66..69b4d71e4c 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -614,7 +614,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 		 * and we just need to send it.
+ 		 */
+ 		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, gzip_body);
+-		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, gzip_size);
++		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE_LARGE, (curl_off_t) gzip_size);
+ 
+ 	} else if (use_gzip && 1024 < rpc->len) {
+ 		/* The client backend isn't giving us compressed data so
+@@ -645,7 +645,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 
+ 		headers = curl_slist_append(headers, "Content-Encoding: gzip");
+ 		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, gzip_body);
+-		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, gzip_size);
++		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE_LARGE, (curl_off_t) gzip_size);
+ 
+ 		if (options.verbosity > 1) {
+ 			fprintf(stderr, "POST %s (gzip %lu to %lu bytes)\n",
+@@ -658,7 +658,7 @@ static int post_rpc(struct rpc_state *rpc)
+ 		 * more normal Content-Length approach.
+ 		 */
+ 		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, rpc->buf);
+-		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, rpc->len);
++		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE_LARGE, (curl_off_t) rpc->len);
+ 		if (options.verbosity > 1) {
+ 			fprintf(stderr, "POST %s (%lu bytes)\n",
+ 				rpc->service_name, (unsigned long)rpc->len);
+-- 
+2.11.GIT
+
