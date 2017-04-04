@@ -2,107 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A000E20964
-	for <e@80x24.org>; Tue,  4 Apr 2017 16:39:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7E520964
+	for <e@80x24.org>; Tue,  4 Apr 2017 16:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932095AbdDDQjM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 12:39:12 -0400
-Received: from mail-pg0-f53.google.com ([74.125.83.53]:34497 "EHLO
-        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932082AbdDDQjM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 12:39:12 -0400
-Received: by mail-pg0-f53.google.com with SMTP id 21so157718762pgg.1
-        for <git@vger.kernel.org>; Tue, 04 Apr 2017 09:39:11 -0700 (PDT)
+        id S1753477AbdDDQxZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 12:53:25 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:35636 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752869AbdDDQxY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 12:53:24 -0400
+Received: by mail-pg0-f44.google.com with SMTP id 81so158038398pgh.2
+        for <git@vger.kernel.org>; Tue, 04 Apr 2017 09:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=R8oRpigeW9JGHiA5XrvqQgmS3QsosG9SOIYGX5yx5uQ=;
-        b=vP0E5mU0ESRHyiOyIcIYvxRcXxJvTLpa7374cGnBdhMArkPeNgUzfNik4B9a4vKYSB
-         oHKoCRaPv++PybskPWbsBtDHy876p0Dr1IVhoHljL8On90statB0Tdc/kBkCD8W+JU/b
-         RbZs/AYwNLm7rPeS3ur74O7lbexe7UuQsRK+VRdeJ8x7BO2zNg3sn5JIqUjBjLNBVAfD
-         fXoXr/L+Drra1gUR0U1Brw1RM5EYVU2hSRAvVLDtPHZNubxpEvcmXXIahRe1STrekSPE
-         wK5AJ+UN7jCTqk7JhxSQNxYRekD7QpvjzfEG8eVUFbd0HuORmxWqaygBZbjp/WdNtC+L
-         r/Cg==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=0s5GZqu3qwTXZtq3WUfusONaZT/b1rhfStpFNilq8I8=;
+        b=TE//6osesxupOBgOynxNeoC9H1ER7G5/Ljo333U/fWJ16qrIotkcEJFVq3qyI+ZHcC
+         WDP5YWpEIX7djPgJlkD3i1UV388I2jX5feMrMrs3+gZ0gBPi1InbaMZhaD0hd+rTpRzy
+         02s0dIP9EC9p25BrRhdLbZpGInz4ec/pgzBan2e/HY1LECCdGWr4vJkdNuclm0E/uUeu
+         aNdNG+HBF5vWZuJbWthbeM7gaN5Ngr04+SXGrulBSJrK2wLW7Z9ytKOhEyIGPXOo1T0k
+         u1A/TcY/LxW/TNdyechyF1ZJwaIHqq7stSyXp2Xgo8rbHis7kEZgjiVX3GiEfieSdAaT
+         ee6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=R8oRpigeW9JGHiA5XrvqQgmS3QsosG9SOIYGX5yx5uQ=;
-        b=SHozKfg+sQt3m63phv8rX/j+XTaJVQvUODyLz1KW0XeYbTGsjwv7FPpKuRuDPC2v5k
-         bZoHqXp9wBBG1asu5EvllOmULj+AlthionYPaeBV7zTpVmkxO/UO+NjJX3Ubh5VdCZpU
-         6/kH7L05y+6a9pIRgVCYBxynCJMUYGWCUjv37ZSjQ3vut3MztX75S5LHbu8hBe26Lhvg
-         5uwf4DsOlOZkl8SAoMFUdqBwXX9KxdRsj7NosRHD+emvvG7xWjARWfcuoPeLx+thbklR
-         173x30jdteMK85eTfErINbXa3+8X7bZ2PjL2ZD8d896fI1znu3arO8UaLjiib+M79zcP
-         FGEA==
-X-Gm-Message-State: AFeK/H32FGfEoN8C2O7FLehwUXxEU/EpmQQ+cL+hu/sFrGEnOaBcDwuwAJGRZHv/HqJIVLSw
-X-Received: by 10.99.232.21 with SMTP id s21mr25179774pgh.67.1491323951104;
-        Tue, 04 Apr 2017 09:39:11 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=0s5GZqu3qwTXZtq3WUfusONaZT/b1rhfStpFNilq8I8=;
+        b=laQ10w0Zyp7iyFaRp00sxJRDsd2rVC/Ym3ExDO5YjjVPo1pxm2/H0lWOwQYGGlSAIl
+         CxFqoyjvsM2x0HxWor5shUZrHOSqpOzbGTLUym8fcDNwFyHPZgGUtH37arQpxAgyADir
+         HtgtFlU0tTjBg1cqv6VD8fUpL0jdGPMH2gNLBVlSNK+EzId1CKZGz7seXNtxWEBualhf
+         6N+teE7aG1If37Gi5xQEBt72cMQKKJeQIMuHSyGBpYTfT7qppiH2j1NGzErx8sHN+XVN
+         wMkquUC/dcFhVCL8dbZbkNdWrquYNirQioBDCmL98X07H5T2HLvBGbzqsHYPKdlKsaTl
+         /Pdw==
+X-Gm-Message-State: AFeK/H3kCmjf7y4IiGyaYxEJrejSjWEzjal4P3VBI6oLaVLFE9kC1Oovmm/nFsktulfjQCv6
+X-Received: by 10.84.175.129 with SMTP id t1mr29930041plb.17.1491324804041;
+        Tue, 04 Apr 2017 09:53:24 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b10:c58e:393:23cb:53be])
-        by smtp.gmail.com with ESMTPSA id q64sm144568pga.56.2017.04.04.09.39.09
+        by smtp.gmail.com with ESMTPSA id n24sm32979548pgc.43.2017.04.04.09.53.22
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 04 Apr 2017 09:39:10 -0700 (PDT)
-Date:   Tue, 4 Apr 2017 09:39:09 -0700
+        Tue, 04 Apr 2017 09:53:23 -0700 (PDT)
+Date:   Tue, 4 Apr 2017 09:53:21 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] pathspec: honor `PATHSPEC_PREFIX_ORIGIN` with empty
- prefix
-Message-ID: <20170404163909.GA189807@google.com>
-References: <4650e1396a5ad006b2b4f355685e3c59efd554d6.1491297393.git.ps@pks.im>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>, frank@gevaerts.be
+Subject: Re: [RFC] dropping support for ancient versions of curl
+Message-ID: <20170404165321.GC189807@google.com>
+References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
+ <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com>
+ <20170404083341.uajswm3qdzyvzxsp@sigill.intra.peff.net>
+ <CACBZZX5D2cYf0-ob_Da0EsxRtZHfegezPtCGA10-sjfi0A+AoQ@mail.gmail.com>
+ <alpine.DEB.2.20.1704041351350.4268@virtualbox>
+ <CACBZZX6W+fbCg7xXKuM=iqnSYFENBYxYT1WJmoOvYYCBEkX=hQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <4650e1396a5ad006b2b4f355685e3c59efd554d6.1491297393.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX6W+fbCg7xXKuM=iqnSYFENBYxYT1WJmoOvYYCBEkX=hQ@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/04, Patrick Steinhardt wrote:
-> Previous to commit 5d8f084a5 (pathspec: simpler logic to prefix original
-> pathspec elements, 2017-01-04), we were always using the computed
-> `match` variable to perform pathspec matching whenever
-> `PATHSPEC_PREFIX_ORIGIN` is set. This is for example useful when passing
-> the parsed pathspecs to other commands, as the computed `match` may
-> contain a pathspec relative to the repository root. The commit changed
-> this logic to only do so when we do have an actual prefix and when
-> literal pathspecs are deactivated.
+On 04/04, Ævar Arnfjörð Bjarmason wrote:
+> On Tue, Apr 4, 2017 at 1:54 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
+> >
+> > On Tue, 4 Apr 2017, Ævar Arnfjörð Bjarmason wrote:
+> >
+> >> I think it's completely fine to include your patch as-is. At some
+> >> point we need to pass the burden of dealing with these old software
+> >> versions, saying that you should use a <10 year old library isn't
+> >> unreasonable. Anyone packaging new git on RHEL5 or derivatives can
+> >> just package a newer libcurl as well.
+> >
+> > But how much maintenance burden is it, really? Is the continued use of
+> > those #ifdef's really worth this much discussion, let alone applying a
+> > patch that may break users who have so far been happy?
+> >
+> > It would be a different thing if we had to have hacks to support old cURL
+> > versions, where we need to ship entire >10kB source files that tap into
+> > internal data structures that may, or may not have changed. Such a hack, I
+> > would be happy to discuss when we could possibly remove it.
+> >
+> > But a couple of #ifdef's? C'mon, man, we can carry this *without sweat*
+> > indefinitely ;-)
 > 
-> But this change may actually break some commands which expect passed
-> pathspecs to be relative to the repository root. One such case is `git
-> add --patch`, which now fails when using relative paths from a
-> subdirectory. For example if executing "git add -p ../foo.c" in a
-> subdirectory, the `git-add--interactive` command will directly pass
-> "../foo.c" to `git-ls-files`. As ls-files is executed at the
-> repository's root, the command will notice that "../foo.c" is outside
-> the repository and fail.
+> I don't really care about applying this patch, but I wouldn't mind
+> seeing it applied.
 > 
-> Fix the issue by again using the computed `match` variable when
-> `PATHSPEC_PREFIX_ORIGIN` is set and global literal pathspecs are
-> deactivated. Note that in contrast to previous behavior, we will now
-> always call `prefix_magic` regardless of whether a prefix is actually
-> set. But this is the right thing to do: when the `match` variable has
-> been resolved to the repository's root, it will be set to an empty
-> string. When passing the empty string directly to other commands, it
-> will result in a warning regarding deprecated empty pathspecs. By always
-> adding the prefix magic, we will end up with at least the string
-> ":(prefix:0)" and thus avoid the warning.
+> I just wanted to clarify the counteractive point that it's not unusual
+> for some (particularly corporate) environments to be compiling fresh
+> upstream releases of some software against really ancient versions of
+> other upstream libraries.
 > 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
+> But as Frank Gevaerts's reply (thanks!) which came after your reply
+> points out, this code has already been broken since v2.12.0, so it's
+> rarely used enough that nobody's reported being unable to compile git
+> 2.12.0 on e.g. CentOS 5 >2 months since release.
 > 
-> This is the second version of [1]. It fixes a bug catched by
-> Brandon when the pathspec is resolved to the empty string and
-> improves the test a bit to actually catch this issue.
+> I think this is a stronger argument for removing stuff like this. At
+> some point we're shipping code nobody's tested in combination with the
+> rest of our code. This can easily becomes a source of bugs as someone
+> e.g. compiling a new git on co5 becomes literally the first person to
+> ever test some new combination of codepaths we've added around mostly
+> unused ifdefs.
 
-This version looks good to me.  Thanks for fixing that small issue!
+I'm all for seeing a patch like this applied.  I agree that we can't
+expect the world to be running the most up-to-date version of curl but
+we should be able to select some "oldest" version we will support which
+can be bumped up every couple of years.  
+
+I mean, ensuring that you are running with an up-to-date version of curl
+is really important when it comes to all of the security fixes that have
+been made in each revision.
 
 -- 
 Brandon Williams
