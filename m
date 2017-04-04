@@ -2,151 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E353420964
-	for <e@80x24.org>; Tue,  4 Apr 2017 18:42:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE71120964
+	for <e@80x24.org>; Tue,  4 Apr 2017 20:16:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755171AbdDDSm1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 14:42:27 -0400
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:53328 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753008AbdDDSmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 14:42:25 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id E77A8100074;
-        Tue,  4 Apr 2017 18:42:23 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id ji5j_xlyW6UA; Tue,  4 Apr 2017 18:42:23 +0000 (GMT)
-Received: from exmbdft5.ad.twosigma.com (exmbdft5.ad.twosigma.com [172.22.1.56])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id D60AD80035;
-        Tue,  4 Apr 2017 18:42:23 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft5.ad.twosigma.com (172.22.1.56) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Tue, 4 Apr 2017 18:42:23 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Tue, 4 Apr 2017 18:42:23 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     Jeff King <peff@peff.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH v3] http.postbuffer: allow full range of ssize_t values
-Thread-Topic: [PATCH v3] http.postbuffer: allow full range of ssize_t values
-Thread-Index: AQHSqq1fnHwnr8jQhkWPeA0pi1V3iaGz0fcwgACnbgCAAQ/0gA==
-Date:   Tue, 4 Apr 2017 18:42:23 +0000
-Message-ID: <6488d78232be49a69260436d1c6ed44f@exmbdft7.ad.twosigma.com>
-References: <20170331172631.12024-1-dturner@twosigma.com>
- <20170401060116.b2v7tyoi7fcxwbvo@sigill.intra.peff.net>
- <34d444b673c64310baa275f821037b3e@exmbdft7.ad.twosigma.com>
- <20170404020130.76thbl5rum2gxgtn@sigill.intra.peff.net>
-In-Reply-To: <20170404020130.76thbl5rum2gxgtn@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.14]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1754744AbdDDUQG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 16:16:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:56664 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753403AbdDDUQF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 16:16:05 -0400
+Received: (qmail 30514 invoked by uid 109); 4 Apr 2017 20:16:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Apr 2017 20:16:04 +0000
+Received: (qmail 9060 invoked by uid 111); 4 Apr 2017 20:16:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Apr 2017 16:16:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Apr 2017 16:16:01 -0400
+Date:   Tue, 4 Apr 2017 16:16:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Brandon Williams <bmwill@google.com>, frank@gevaerts.be
+Subject: Re: [RFC] dropping support for ancient versions of curl
+Message-ID: <20170404201601.jhjq2x5qgcneroo4@sigill.intra.peff.net>
+References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
+ <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com>
+ <20170404083341.uajswm3qdzyvzxsp@sigill.intra.peff.net>
+ <CACBZZX5D2cYf0-ob_Da0EsxRtZHfegezPtCGA10-sjfi0A+AoQ@mail.gmail.com>
+ <alpine.DEB.2.20.1704041351350.4268@virtualbox>
+ <CACBZZX6W+fbCg7xXKuM=iqnSYFENBYxYT1WJmoOvYYCBEkX=hQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX6W+fbCg7xXKuM=iqnSYFENBYxYT1WJmoOvYYCBEkX=hQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBKZWZmIEtpbmcgW21haWx0bzpw
-ZWZmQHBlZmYubmV0XQ0KPiBTZW50OiBNb25kYXksIEFwcmlsIDMsIDIwMTcgMTA6MDIgUE0NCj4g
-VG86IERhdmlkIFR1cm5lciA8RGF2aWQuVHVybmVyQHR3b3NpZ21hLmNvbT4NCj4gQ2M6IGdpdEB2
-Z2VyLmtlcm5lbC5vcmcNCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2M10gaHR0cC5wb3N0YnVmZmVy
-OiBhbGxvdyBmdWxsIHJhbmdlIG9mIHNzaXplX3QgdmFsdWVzDQo+IA0KPiBPbiBNb24sIEFwciAw
-MywgMjAxNyBhdCAwNTowMzo0OVBNICswMDAwLCBEYXZpZCBUdXJuZXIgd3JvdGU6DQo+IA0KPiA+
-ID4gPiBVbmZvcnR1bmF0ZWx5LCBpbiBvcmRlciB0byBwdXNoIHNvbWUgbGFyZ2UgcmVwb3MsIHRo
-ZSBodHRwDQo+ID4gPiA+IHBvc3RidWZmZXIgbXVzdCBzb21ldGltZXMgZXhjZWVkIHR3byBnaWdh
-Ynl0ZXMuICBPbiBhIDY0LWJpdCBzeXN0ZW0sDQo+IHRoaXMgaXMgT0s6DQo+ID4gPiA+IHdlIGp1
-c3QgbWFsbG9jIGEgbGFyZ2VyIGJ1ZmZlci4NCj4gPiA+DQo+ID4gPiBJJ20gc3RpbGwgbm90IHN1
-cmUgd2h5IGEgMkdCIHBvc3QtYnVmZmVyIGlzIG5lY2Vzc2FyeS4gSXQgc291bmRzDQo+ID4gPiBs
-aWtlIHNvbWV0aGluZyBpcyBicm9rZW4gaW4geW91ciBzZXR1cC4gTGFyZ2UgcHVzaGVzIHNob3Vs
-ZCBiZSBzZW50DQo+IGNodW5rZWQuDQo+ID4gPg0KPiA+ID4gSSBrbm93IGJyb2tlbiBzZXR1cHMg
-YXJlIGEgZmFjdCBvZiBsaWZlLCBidXQgdGhpcyBmZWVscyBsaWtlIGENCj4gPiA+IHJlYWxseSBo
-YWNreSB3b3JrLSBhcm91bmQuDQo+ID4NCj4gPiBJJ20gbm90IHN1cmUgd2hhdCBvdGhlciB3b3Jr
-YXJvdW5kIEkgc2hvdWxkIHVzZS4gIEkgZ3Vlc3MgSSBjb3VsZCBkbw0KPiA+IG11bHRpcGxlIHB1
-c2hlcywgYnV0IG9ubHkgaWYgaW5kaXZpZHVhbCBvYmplY3RzIGFyZSB1bmRlciB0aGUgc2l6ZQ0K
-PiA+IGxpbWl0LCBhbmQgSSdtIG5vdCBzdXJlIGFsbCBvZiBtaW5lIGFyZSAobWF5YmUgSSdsbCBn
-ZXQgbHVja3kgdGhvKS4gIEkNCj4gPiBrbm93IHRoYXQgdGhpcyBpcyBhIGNvbmZpZ3VyYXRpb24g
-aXNzdWUgd2l0aCBnaXRsYWI6DQo+ID4gaHR0cHM6Ly9naXRsYWIuY29tL2dpdGxhYi1vcmcvZ2l0
-bGFiLWNlL2lzc3Vlcy8zMDMxNSBidXQgSSBkb24ndCBrbm93DQo+ID4gd2hlbiB0aGF0IHdpbGwg
-Z2V0IGZpeGVkLiAgSSBjb3VsZCBtYW51YWxseSBjb3B5IHRoZSByZXBvIHRvIHRoZQ0KPiA+IHNl
-cnZlciBhbmQgZG8gYSBsb2NhbCBwdXNoLCBidXQgSSBkb24ndCBrbm93IHRoYXQgSSBoYXZlIHRo
-ZSBuZWNlc3NhcnkNCj4gPiBwZXJtaXNzaW9ucyB0byBkbyB0aGF0LiBPciBJIGNvdWxkIGRvIHRo
-aXMsIHdoaWNoIHdvdWxkIGhvcGVmdWxseQ0KPiA+IGFjdHVhbGx5IHNvbHZlIHRoZSBwcm9ibGVt
-Lg0KPiANCj4gSSBkaWRuJ3QgdGhpbmsgd2UgaGFkIGdvdHRlbiBkZXRhaWxzIG9uIHdoYXQgd2Fz
-IGFjdHVhbGx5IGJyb2tlbi4gSXMgaXQgcmVhbGx5DQo+IHRoYXQgR2l0TGFiIGRvZXMgbm90IHN1
-cHBvcnQgY2h1bmtlZCB0cmFuc2ZlcnM/IEkga25vdyB0aGF0J3Mgd2hhdCB0aGUgaXNzdWUNCj4g
-YWJvdmUgc2F5cywgYnV0IGl0IHNvdW5kcyBsaWtlIGl0IGlzIGp1c3QgYXNzdW1pbmcgdGhhdCBp
-cyB0aGUgcHJvYmxlbSBiYXNlZCBvbg0KPiB0aGUgcmVjZW50IG1lc3NhZ2VzIHRvIHRoZSBsaXN0
-Lg0KDQpJIGFncmVlIHRoYXQgd2UgZG9uJ3Qga25vdyBmb3Igc3VyZSB3aGF0J3MgYWN0dWFsbHkg
-YnJva2VuLiAgSSB0aGluayBwcm9iYWJseSB0aGUNCkdpdExhYiBidWcgdHJhY2tlciBtaWdodCBi
-ZSB0aGUgYmV0dGVyIHBsYWNlIHRvIGZpZ3VyZSB0aGF0IG91dCwgdW5sZXNzIEdpdExhYiANCnRo
-aW5rcyB0aGV5J3JlIGhpdHRpbmcgYSBidWcgaW4gZ2l0Lg0KDQo+IElmIHRoYXQncyByZWFsbHkg
-dGhlIGlzc3VlLCB0aGVuIE9LLiBUaGF0J3MgbGFtZSwgYnV0IHNvbWV0aGluZyB0aGUgY2xpZW50
-IGhhcyB0bw0KPiB3b3JrIGFyb3VuZC4gSXQgc2VlbXMgbGlrZSBhIHByZXR0eSBiaWcgZ2FwLCB0
-aG91Z2ggKGFuZCBvbmUgSSdkIHRoaW5rIHBlb3BsZQ0KPiB3b3VsZCBoYXZlIGhpdCBiZWZvcmU7
-IHRoZSBkZWZhdWx0IHBvc3QtYnVmZmVyIGlzIG9ubHkgMU1CLiBTdXJlbHkgcGVvcGxlDQo+IHJv
-dXRpbmVseSBwdXNoIG1vcmUgdGhhbiB0aGF0IHRvIEdpdExhYiBzZXJ2ZXJzPw0KPiBTbyBJJ20g
-cmVhbGx5IHdvbmRlcmluZyBpZiB0aGVyZSBpcyBzb21ldGhpbmcgZWxzZSBnb2luZyBvbiBoZXJl
-Lg0KPiANCj4gV2hhdCBkb2VzIGl0IGxvb2sgbGlrZSB3aGVuIGl0IGZhaWxzPyBXaGF0IGRvZXMg
-R0lUX1RSQUNFX0NVUkwgbG9vayBsaWtlIChvcg0KPiBHSVRfQ1VSTF9WRVJCT1NFIGlmIHlvdXIg
-Y2xpZW50IGlzIG9sZGVyLCBidXQgcmVtZW1iZXIgdG8gc2FuaXRpemUgYW55IGF1dGgNCj4gbGlu
-ZXMpPw0KDQpVbmZvcnR1bmF0ZWx5LCB3ZSd2ZSBhbHJlYWR5IHdvcmtlZCBhcm91bmQgdGhlIHBy
-b2JsZW0gYnkgcHVzaGluZyBvdmVyIFNTSCwgDQpzbyBJIG5vIGxvbmdlciBoYXZlIGEgZmFpbGlu
-ZyBjYXNlIHRvIGV4YW1pbmUuIExhc3QgdGltZSBJIHRyaWVkLCBJIGFjdHVhbGx5IGRpZCBzb21l
-IA0KaGFja2VyeSB0byBjcmVhdGUgYSBwdXNoIHNtYWxsZXIgdGhhbiAyR0IsIGJ1dCBpdCBzdGls
-bCBmYWlsZWQgKHRoaXMgdGltZSwgd2l0aCANCiI1MDIgQmFkIEdhdGV3YXkiKS4gIFNvLCBzb21l
-dGhpbmcgaXMgY2xlYXJseSB3ZWlyZCBpbiBHaXRMYWIgbGFuZC4NCg0KSSBkaWQgc2VlICJUcmFu
-c2Zlci1FbmNvZGluZzogY2h1bmtlZCIgaW4gb25lIG9mIHRoZSByZXNwb25zZXMgZnJvbSB0aGUg
-c2VydmVyLA0KIGJ1dCBub3QgaW4gdGhlIHJlcXVlc3QgKG5vdCBzdXJlIGlmIHRoYXQncyBub3Jt
-YWwpLiBUaGUgc21hbGxlciBwdXNoIGhhZDogDQpDb250ZW50LUxlbmd0aDogMTA0ODkwODQ3Ng0K
-DQooRm9yIG1lIHRvIHB1Ymxpc2ggbG9uZ2VyIGxvZyB0cmFjZXMgcmVxdWlyZXMgYSBsZXZlbCBv
-ZiBzZWN1cml0eSByZXZpZXcgd2hpY2ggaXMgDQpwcm9iYWJseSB0b28gbXVjaCBvZiBhIGhhc3Ns
-ZSB1bmxlc3MgeW91IHRoaW5rIGl0IHdpbGwgYmUgcmVhbGx5IHVzZWZ1bCkuDQoNCj4gPiA+IFRo
-ZSB1bHRpbWF0ZSBmYXRlIG9mIHRoaXMgbnVtYmVyLCB0aG91Z2gsIGlzIHRvIGJlIGhhbmRlZCB0
-bzoNCj4gPiA+DQo+ID4gPiAgIGN1cmxfZWFzeV9zZXRvcHQoc2xvdC0+Y3VybCwgQ1VSTE9QVF9Q
-T1NURklFTERTSVpFLCBycGMtPmxlbik7DQo+ID4gPg0KPiA+ID4gd2hlcmUgdGhlIGZpbmFsIGFy
-Z3VtZW50IGlzIGludGVycHJldGVkIGFzIGEgbG9uZy4gU28gSSBzdXNwZWN0IHRoYXQNCj4gPiA+
-IG9uIDY0LWJpdCBXaW5kb3dzLCBzZXR0aW5nIGh0dHAucG9zdGJ1ZmZlciB0byAiM0ciIHdvdWxk
-IGNhdXNlIHNvbWUNCj4gPiA+IGtpbmQgb2Ygd2VpcmQgZXJyb3IgKGVpdGhlciBhIHRydW5jYXRl
-ZCBwb3N0IG9yIHNvbWUgaW50ZXJuYWwgY3VybA0KPiA+ID4gZXJyb3IgZHVlIHRvIHRoZSBuZWdh
-dGl2ZSBzaXplLCBkZXBlbmRpbmcgb24gaG93IGN1cmwgaGFuZGxlcyBpdCkuDQo+ID4NCj4gPiBB
-aCwgc28gd2Ugd291bGQgbmVlZCB0byB1c2UgQ1VSTE9QVF9QT1NURklFTERTSVpFX0xBUkdFLiAg
-V2lsbCByZS1yb2xsLg0KPiANCj4gQWgsIG5lYXQuIEkgZGlkbid0IGV2ZW4ga25vdyBhYm91dCBD
-VVJMT1BUX1BPU1RGSUVMRFNJWkVfTEFSR0UsIGFuZA0KPiB0aG91Z2h0IHdlJ2QgaGF2ZSB0byBq
-dXN0IGxpbWl0IDMyLWJpdCBwbGF0Zm9ybXMuIFRoYXQncyBhIG11Y2ggYmV0dGVyDQo+IHNvbHV0
-aW9uLg0KPiANCj4gPiA+IEkgc2F3IHRoZSBlYXJsaWVyIGl0ZXJhdGlvbiB1c2VkIGEgc2l6ZV90
-LCBidXQgeW91IHN3aXRjaGVkIGl0IGFmdGVyDQo+ID4gPiB0aGUgY29tcGlsZXINCj4gPiA+IChy
-aWdodGZ1bGx5KSBjb21wbGFpbmVkIGFib3V0IHRoZSBzaWduZWRuZXNzLiBCdXQgSSdtIG5vdCBz
-dXJlIHdoeQ0KPiA+ID4gd2Ugd291bGQgd2FudCBzc2l6ZV90IGhlcmUgaW5zdGVhZCBvZiBqdXN0
-IHVzaW5nIGdpdF9wYXJzZV91bnNpZ25lZCgpLg0KPiA+DQo+ID4gSXQgd2FzIG9yaWdpbmFsbHkg
-c2lnbmVkLiAgSSdtIG5vdCBzdXJlIHdoeSB0aGF0IHdhcywgYnV0IEkgZmlndXJlZCBpdA0KPiA+
-IHdvdWxkIGJlIHNpbXBsZXIgdG8gc2F2ZSB0aGUgZXh0cmEgYml0IGp1c3QgaW4gY2FzZS4NCj4g
-DQo+IEkgdGhpbmsgaXQgd2FzIHNpbXBseSBiZWNhdXNlIGdpdF9jb25maWdfaW50KCkgaXMgdGhl
-IGdlbmVyaWMgIm51bWJlciINCj4gcGFyc2VyLCBhbmQgbm9ib2R5IGV2ZXIgdGhvdWdodCBhYm91
-dCBpdC4NCj4gDQo+IEluIGZhY3QsIHBhc3NpbmcgYSBuZWdhdGl2ZSB2YWx1ZSB0byBjdXJsIHdv
-dWxkIGJlIGRpc2FzdHJvdXMsIGFzIGl0IHdvdWxkIHVzZQ0KPiBzdHJsZW4oKS4gSSBkb24ndCB0
-aGluayBhIG5lZ2F0aXZlIHZhbHVlIGNvdWxkIGV2ZXIgZ2V0IHRoYXQgZmFyLCB0aG91Z2guIEl0
-IGxvb2tzDQo+IGxpa2UgdGhlIGNvbmZpZyBjb2RlIHdvdWxkIHNpbGVudGx5IHR1cm4gYSBuZWdh
-dGl2ZSB2YWx1ZSBpbnRvDQo+IExBUkdFX1BBQ0tFVF9NQVguDQoNCkkgd291bGQgc3RpbGwgcHJl
-ZmVyIHRvIHByZXNlcnZlIHRoZSBiaXQganVzdCBpbiBjYXNlIHdlIGV2ZXIgZGVjaWRlIHRoYXQg
-YSBuZWdhdGl2ZSANCnZhbHVlIHNob3VsZCBoYXZlIHNvbWUgc3BlY2lhbCBtZWFuaW5nIGxhdGVy
-LiAgT2YgY291cnNlLCB0aGF0IHNwZWNpYWwgbWVhbmluZyANCndvdWxkbid0IGJlICJwYXNzIGRp
-cmVjdGx5IHRvIGN1cmwiLiAgKEFzIEkgdGhpbmsgYWJvdXQgZ2l0J3MgaHR0cCBwcm90b2NvbCwg
-YW5kIGhvdyANCmhhcmQgaXQgaXMgdG8gY2hhbmdlIGl0LCBJIGFsd2F5cyB3YW50IHRvIGxlYXZl
-IHRoZSBtYXhpbWFsIG51bWJlciBvZiBleHRyYSBiaXRzIA0KZnJlZSBwb3NzaWJsZSBmb3IgZ2Vu
-ZXJhbCBmdXR1cmUgdXNhZ2UpLg0KDQo+IElNSE8sIGNvbXBsYWluaW5nIGFib3V0IHRoZSBuZWdh
-dGl2ZSBudW1iZXIgdG8gdGhlIHVzZXIgd291bGQgYmUgYW4NCj4gaW1wcm92ZW1lbnQuDQoNClRo
-YXQgc2VlbXMgcmVhc29uYWJsZS4NCg==
+On Tue, Apr 04, 2017 at 04:06:46PM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> > But a couple of #ifdef's? C'mon, man, we can carry this *without sweat*
+> > indefinitely ;-)
+> 
+> I don't really care about applying this patch, but I wouldn't mind
+> seeing it applied.
+> 
+> I just wanted to clarify the counteractive point that it's not unusual
+> for some (particularly corporate) environments to be compiling fresh
+> upstream releases of some software against really ancient versions of
+> other upstream libraries.
+> 
+> But as Frank Gevaerts's reply (thanks!) which came after your reply
+> points out, this code has already been broken since v2.12.0, so it's
+> rarely used enough that nobody's reported being unable to compile git
+> 2.12.0 on e.g. CentOS 5 >2 months since release.
+
+Yeah, this is exactly the kind of thing I was wondering about (but was
+too lazy to actually build an ancient version of curl -- thank you,
+Frank).
+
+In this case it was a compile error, which was obvious. I'm much more
+worried about subtle interactions, or the fact that some of the ifdefs
+are around security features that get ignored. In some cases we at least
+issue a warning, but not always. E.g., we silently ignore
+http.sslcapath.  Depending what you're using it for that could fail
+closed (if you were trying to add a CA) or open (if you were trying to
+restrict to a specific CA).
+
+-Peff
