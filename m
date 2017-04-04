@@ -2,89 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EC8AB20966
-	for <e@80x24.org>; Tue,  4 Apr 2017 11:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D61C520964
+	for <e@80x24.org>; Tue,  4 Apr 2017 13:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753677AbdDDLyf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 07:54:35 -0400
-Received: from mout.gmx.net ([212.227.15.15]:55470 "EHLO mout.gmx.net"
+        id S1753586AbdDDNNt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 09:13:49 -0400
+Received: from siwi.pair.com ([209.68.5.199]:63948 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753074AbdDDLyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 07:54:33 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQ2zr-1cyxoK39rn-005HHr; Tue, 04
- Apr 2017 13:54:23 +0200
-Date:   Tue, 4 Apr 2017 13:54:08 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC] dropping support for ancient versions of curl
-In-Reply-To: <CACBZZX5D2cYf0-ob_Da0EsxRtZHfegezPtCGA10-sjfi0A+AoQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1704041351350.4268@virtualbox>
-References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net> <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com> <20170404083341.uajswm3qdzyvzxsp@sigill.intra.peff.net>
- <CACBZZX5D2cYf0-ob_Da0EsxRtZHfegezPtCGA10-sjfi0A+AoQ@mail.gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753640AbdDDNNr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 09:13:47 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 569CE846A0;
+        Tue,  4 Apr 2017 09:13:39 -0400 (EDT)
+Subject: Re: [PATCH v4 2/4] fsck: force core.checksumindex=1
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <20170403185306.36164-1-git@jeffhostetler.com>
+ <20170403185306.36164-3-git@jeffhostetler.com>
+ <CACBZZX7DFuLia8RzB908EG7+oWQiFGkFEq14bzT77A75msM98Q@mail.gmail.com>
+ <20170404022945.nmadthjzovmjplyb@sigill.intra.peff.net>
+ <CACBZZX50+Mpj-GY11KNmh+BkNkWCX3OZjHFQ3iK8c8Hib90_Xg@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <9abad913-66a6-f537-af77-8878c428b192@jeffhostetler.com>
+Date:   Tue, 4 Apr 2017 09:13:33 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1002395215-1491306863=:4268"
-X-Provags-ID: V03:K0:eF4MZBpmvIM4jM9aKMYp2MXnS9Xf5GrYOG54MOSMZScb1Q9WcoK
- 5iCJQEzFRI1xaDmE/4eS5z7jdFG1qLtZYPDYEnKsOAkZEdnk/fdpFZiKwELftVN2PZheHTJ
- v93UtMqEzUbQfz6tYn//K4LieyH9HXg+fZ/DrlaIRhj+9vJVTWLfZ64y3YSjNEBn1CxLdne
- Y0lL8oJ6b0h+amKVQoE7g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jZbsTKiJhwo=:QeL0RshNNXovoPuNPNi1yJ
- lWUuURpaZWlnAbscQMzAiNY/dVmwBb9kzfOqqK1gHhCcBOnyQm7UfuB5rKb4LXElAwkdF/AXf
- h5w3iSqtaOZwWWRDT4dkft02RbCtLMy2bdsO7Jz/hT2xPqdtTZmEIwxSCTSgEqAvbo/fggYUL
- lOZTC+mBLdQ3dJk2Ky7IKGRz4v5Zz/uesAh/VKoQrTuUKy/4j6PVJnm1yS4YVut+jxXgikZYm
- lNcYTxnXB09AD4R4ptZxyMaocymcxVqUNo857r6fG5RYMVndI8/qhLiI8guMQXEA8G2II9xwE
- eg32NXjNJFFHVDk4AB0XCHE9Q/sog0U0eDnXrZJMOenl28HWmDLYtgwg8xaMnkVNdwRN/V3zP
- NmXTUESKo3ikHljuvzDifZTYE8FQwQ8lMMtJNz20rxf1kMoPp/G5IN6k0tz4b7pCrHv7A6BZM
- QJNd6eHANiVBn3qO0QwsmvKdxkeCtezffoKtQCYrU+QNesH6b8CZ2wSCBa6Z51UkVUZqdVmyY
- NyqdLOjCSTmVi0WxBSnb8lHOuRviRwKNvNZs9AYHOnVEZLYpP7G+PaugetS39MyVHM4Wtijbm
- igYvLUw3L2FYBCfokWmu/fYGZ9RhhiT90qeL4rgJyYRKHxHfxSQQnvGVL8NYKlyZjIfcXTYoy
- ScdIJdgGkWe4hvmAKcqWwngENASSA1LgaKJj/3KZz1h5cBiFq9lEbZeGe5H/3X1QEA0PLjhGy
- OSQoWPN0d8k8RCdfJMcjIJp+AYGtAa0SPfw2hj7/NJQHPHhYq+micmqaQBhwcrAO2iGIYIOMf
- R0kS1hZ
+In-Reply-To: <CACBZZX50+Mpj-GY11KNmh+BkNkWCX3OZjHFQ3iK8c8Hib90_Xg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-1002395215-1491306863=:4268
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Hi,
+On 4/4/2017 4:23 AM, Ævar Arnfjörð Bjarmason wrote:
+> On Tue, Apr 4, 2017 at 4:29 AM, Jeff King <peff@peff.net> wrote:
+>> On Mon, Apr 03, 2017 at 10:31:03PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>>
+>>> On Mon, Apr 3, 2017 at 8:53 PM,  <git@jeffhostetler.com> wrote:
+>>>> Teach fsck to override core.checksumindex and always verify
+>>>> the index checksum when reading the index.
+>>>
+>>> Sorry to only chime in about this at v4.
+>>>
+>>> I think this patch & the documentation you added for
+>>> core.checksumindex in 1/4 would be much less confusing if you made
+>>> this a on-by-default command-line option like e.g. "full".
+>>>
+>>> With this patch nothing amends the documentation to indicate that the
+>>> core.checksumindex is magically overridden when fsck runs, I think
+>>> something like this (needs amending to integrate) on top would make
+>>> this clearer:
+>>
+>> I think that is the wrong direction to reduce confusion. We don't need
+>> more options to twiddle this flag, we need fewer. For instance, in your
+>> proposed documentation:
+>>
+>>> @@ -61,6 +61,11 @@ index file, all SHA-1 references in `refs`
+>>> namespace, and all reflogs
+>>>         object pools.  This is now default; you can turn it off
+>>>         with --no-full.
+>>>
+>>> +--[no-]checksum-index:
+>>> +       Validate the checksum at the end of the index file, on by
+>>> +       default, locally overrides any "core.checksumIndex" setting
+>>> +       unless negated. See linkgit:git-config[1].
+>>
+>> That tells us _what_ it does, but I'm left scratching my head with
+>> "why".
+>>
+>> I don't think there is any reason you would want fsck not to compute
+>> that checksum (just like there is no option to ask fsck not to check
+>> pack sha1 trailers).
+>>
+>> I would go so far as to say that the config option itself is unnecessary
+>> in this iteration of the series. I only asked for it so that we could
+>> test the verification code paths (both for correctness and performance).
+>> But if fsck can exercise the code path, we can check correctness that
+>> way. And for performance, it's probably enough to test two separate
+>> builds (which Jeff has already done).
+>>
+>> Junio also asked for the usual "add a config, and then later we'll flip
+>> the default" procedure. But IMHO that isn't necessary here. Nobody
+>> should ever care about this flag. It was largely useless to check it on
+>> every read in the first place. And if you suspect there's corruption in
+>> your repository, you should run "git fsck".
+>
+> The part that confused my & I found unintuitive is that there's a new
+> core.WHATEVER config that'll get silently overridden by a specific
+> command, git-fsck.
+>
+> Nothing else I can think of in core.* works like this, i.e. it's a
+> namespace for "applies to all of git", core.editor, core.ignoreCase
+> etc.
 
-On Tue, 4 Apr 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+My "force_core_checksum_index" global override was a bit of a hack.
+I looked at having fsck explicitly set the "core.checksumindex" config
+value (which would write to the disk in the code paths I followed)
+before it loaded the index, but if we ever find an invalid checksum,
+read_cache() would call die() and fsck would not have a chance to set
+it back in the user's config.  So I introduced the global override.
 
-> I think it's completely fine to include your patch as-is. At some
-> point we need to pass the burden of dealing with these old software
-> versions, saying that you should use a <10 year old library isn't
-> unreasonable. Anyone packaging new git on RHEL5 or derivatives can
-> just package a newer libcurl as well.
+>
+> Having git-fsck have a command-line option that's on by default as I
+> suggested is one way to get out of that confusion. It makes it a
+> special case of a CLI option overriding some config.
 
-But how much maintenance burden is it, really? Is the continued use of
-those #ifdef's really worth this much discussion, let alone applying a
-patch that may break users who have so far been happy?
+I looked at doing that, but thought it would be overkill since
+no one is likely to care about turning it off -- or rather, fsck
+should always do it whenever it reads the index.
 
-It would be a different thing if we had to have hacks to support old cURL
-versions, where we need to ship entire >10kB source files that tap into
-internal data structures that may, or may not have changed. Such a hack, I
-would be happy to discuss when we could possibly remove it.
+>
+> But yeah, another way to resolve this is to get rid of the config
+> option altogether, or document in git-config.txt that
+> core.checksumIndex is obeyed by everything except git-fsck.
+>
 
-But a couple of #ifdef's? C'mon, man, we can carry this *without sweat*
-indefinitely ;-)
+If there's no objections then, I'll just remove the config
+setting and keep the force_ global for fsck.
 
-Ciao,
-Dscho
---8323329-1002395215-1491306863=:4268--
+Jeff
+
