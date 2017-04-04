@@ -2,132 +2,255 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7E520964
-	for <e@80x24.org>; Tue,  4 Apr 2017 16:53:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BE242096C
+	for <e@80x24.org>; Tue,  4 Apr 2017 18:25:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753477AbdDDQxZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 12:53:25 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:35636 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752869AbdDDQxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 12:53:24 -0400
-Received: by mail-pg0-f44.google.com with SMTP id 81so158038398pgh.2
-        for <git@vger.kernel.org>; Tue, 04 Apr 2017 09:53:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=0s5GZqu3qwTXZtq3WUfusONaZT/b1rhfStpFNilq8I8=;
-        b=TE//6osesxupOBgOynxNeoC9H1ER7G5/Ljo333U/fWJ16qrIotkcEJFVq3qyI+ZHcC
-         WDP5YWpEIX7djPgJlkD3i1UV388I2jX5feMrMrs3+gZ0gBPi1InbaMZhaD0hd+rTpRzy
-         02s0dIP9EC9p25BrRhdLbZpGInz4ec/pgzBan2e/HY1LECCdGWr4vJkdNuclm0E/uUeu
-         aNdNG+HBF5vWZuJbWthbeM7gaN5Ngr04+SXGrulBSJrK2wLW7Z9ytKOhEyIGPXOo1T0k
-         u1A/TcY/LxW/TNdyechyF1ZJwaIHqq7stSyXp2Xgo8rbHis7kEZgjiVX3GiEfieSdAaT
-         ee6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=0s5GZqu3qwTXZtq3WUfusONaZT/b1rhfStpFNilq8I8=;
-        b=laQ10w0Zyp7iyFaRp00sxJRDsd2rVC/Ym3ExDO5YjjVPo1pxm2/H0lWOwQYGGlSAIl
-         CxFqoyjvsM2x0HxWor5shUZrHOSqpOzbGTLUym8fcDNwFyHPZgGUtH37arQpxAgyADir
-         HtgtFlU0tTjBg1cqv6VD8fUpL0jdGPMH2gNLBVlSNK+EzId1CKZGz7seXNtxWEBualhf
-         6N+teE7aG1If37Gi5xQEBt72cMQKKJeQIMuHSyGBpYTfT7qppiH2j1NGzErx8sHN+XVN
-         wMkquUC/dcFhVCL8dbZbkNdWrquYNirQioBDCmL98X07H5T2HLvBGbzqsHYPKdlKsaTl
-         /Pdw==
-X-Gm-Message-State: AFeK/H3kCmjf7y4IiGyaYxEJrejSjWEzjal4P3VBI6oLaVLFE9kC1Oovmm/nFsktulfjQCv6
-X-Received: by 10.84.175.129 with SMTP id t1mr29930041plb.17.1491324804041;
-        Tue, 04 Apr 2017 09:53:24 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:c58e:393:23cb:53be])
-        by smtp.gmail.com with ESMTPSA id n24sm32979548pgc.43.2017.04.04.09.53.22
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 04 Apr 2017 09:53:23 -0700 (PDT)
-Date:   Tue, 4 Apr 2017 09:53:21 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>, frank@gevaerts.be
-Subject: Re: [RFC] dropping support for ancient versions of curl
-Message-ID: <20170404165321.GC189807@google.com>
-References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
- <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com>
- <20170404083341.uajswm3qdzyvzxsp@sigill.intra.peff.net>
- <CACBZZX5D2cYf0-ob_Da0EsxRtZHfegezPtCGA10-sjfi0A+AoQ@mail.gmail.com>
- <alpine.DEB.2.20.1704041351350.4268@virtualbox>
- <CACBZZX6W+fbCg7xXKuM=iqnSYFENBYxYT1WJmoOvYYCBEkX=hQ@mail.gmail.com>
+        id S1754809AbdDDSZh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 14:25:37 -0400
+Received: from siwi.pair.com ([209.68.5.199]:17233 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752518AbdDDSZg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 14:25:36 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5D251846EC;
+        Tue,  4 Apr 2017 14:25:35 -0400 (EDT)
+Subject: Re: [PATCH/RFC] gitperformance: add new documentation about git
+ performance tuning
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20170403211644.26814-1-avarab@gmail.com>
+ <658ab318-43d6-6940-50e6-0b32ecd2543f@jeffhostetler.com>
+ <CACBZZX5gYeRWOY+J0E55FfzqnqP8+4JGR9f42Y+MVqUZhxt87A@mail.gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <9916fcdf-6d28-82c2-af7e-c144ac0982ca@jeffhostetler.com>
+Date:   Tue, 4 Apr 2017 14:25:34 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <CACBZZX5gYeRWOY+J0E55FfzqnqP8+4JGR9f42Y+MVqUZhxt87A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX6W+fbCg7xXKuM=iqnSYFENBYxYT1WJmoOvYYCBEkX=hQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/04, ∆var Arnfjˆr Bjarmason wrote:
-> On Tue, Apr 4, 2017 at 1:54 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> >
-> > On Tue, 4 Apr 2017, ∆var Arnfjˆr Bjarmason wrote:
-> >
-> >> I think it's completely fine to include your patch as-is. At some
-> >> point we need to pass the burden of dealing with these old software
-> >> versions, saying that you should use a <10 year old library isn't
-> >> unreasonable. Anyone packaging new git on RHEL5 or derivatives can
-> >> just package a newer libcurl as well.
-> >
-> > But how much maintenance burden is it, really? Is the continued use of
-> > those #ifdef's really worth this much discussion, let alone applying a
-> > patch that may break users who have so far been happy?
-> >
-> > It would be a different thing if we had to have hacks to support old cURL
-> > versions, where we need to ship entire >10kB source files that tap into
-> > internal data structures that may, or may not have changed. Such a hack, I
-> > would be happy to discuss when we could possibly remove it.
-> >
-> > But a couple of #ifdef's? C'mon, man, we can carry this *without sweat*
-> > indefinitely ;-)
-> 
-> I don't really care about applying this patch, but I wouldn't mind
-> seeing it applied.
-> 
-> I just wanted to clarify the counteractive point that it's not unusual
-> for some (particularly corporate) environments to be compiling fresh
-> upstream releases of some software against really ancient versions of
-> other upstream libraries.
-> 
-> But as Frank Gevaerts's reply (thanks!) which came after your reply
-> points out, this code has already been broken since v2.12.0, so it's
-> rarely used enough that nobody's reported being unable to compile git
-> 2.12.0 on e.g. CentOS 5 >2 months since release.
-> 
-> I think this is a stronger argument for removing stuff like this. At
-> some point we're shipping code nobody's tested in combination with the
-> rest of our code. This can easily becomes a source of bugs as someone
-> e.g. compiling a new git on co5 becomes literally the first person to
-> ever test some new combination of codepaths we've added around mostly
-> unused ifdefs.
 
-I'm all for seeing a patch like this applied.  I agree that we can't
-expect the world to be running the most up-to-date version of curl but
-we should be able to select some "oldest" version we will support which
-can be bumped up every couple of years.  
 
-I mean, ensuring that you are running with an up-to-date version of curl
-is really important when it comes to all of the security fixes that have
-been made in each revision.
+On 4/4/2017 11:18 AM, √Üvar Arnfj√∂r√∞ Bjarmason wrote:
+> On Tue, Apr 4, 2017 at 5:07 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+>>
+>> On 4/3/2017 5:16 PM, √Üvar Arnfj√∂r√∞ Bjarmason wrote:
+>>>
+>>> Add a new manpage that gives an overview of how to tweak git's
+>>> performance.
+>>>
+>>> There's currently no good single resource for things a git site
+>>> administrator might want to look into to improve performance for his
+>>> site & his users. This unfinished documentation aims to be the first
+>>> thing someone might want to look at when investigating ways to improve
+>>> git performance.
+>>>
+>>> Signed-off-by: √Üvar Arnfj√∂r√∞ Bjarmason <avarab@gmail.com>
+>>> ---
+>>>
+>>> I've been wanting to get something like this started for a while. It's
+>>> obviously woefully incomplete. Pointers about what to include would be
+>>> great & whether including something like this makes sense.
+>>>
+>>> Things I have on my TODO list:
+>>>
+>>>  - Add a section discussing how refs impact performance, suggest
+>>>    e.g. archiving old tags if possible, or at least run "git remote
+>>>    prune origin" regularly on clients.
+>>>
+>>>  - Discuss split index a bit, although I'm not very confident in
+>>>    describing what its pros & cons are.
+>>>
+>>>  - Should we be covering good practices for your repo going forward to
+>>>    maintain good performance? E.g. don't have some huge tree all in
+>>>    one directory (use subdirs), don't add binary (rather
+>>>    un-delta-able) content if you can help it etc.
+>>>
+>>> - The new core.checksumIndex option being discussed on-list. Which
+>>>   actually drove my to finally write this up (hrm, this sounds useful,
+>>>   but unless I was watching the list I'd probably never see it...).
+>>
+>>
+>> You might also consider core.preloadIndex.
+>
+> It's been enabled by default since 2.1.0 (299e29870b), or do you mean
+> talk about disabling it, or "this is a perf option we have on by
+> default"?
+>
+> I don't know the pros of disabling that, haven't used it myself & it's
+> not clear from the docs.
 
--- 
-Brandon Williams
+Sorry, no, don't disable it.  Maybe an ack that
+it should be on.
+
+
+>
+>> For people with very large trees, talk about sparse-checkout.
+>
+> *nod*
+>
+>> And (on Windows) core.fscache.  Or leave a place for
+>> an addendum for Windows that we can fill in later.
+>
+> I have no core.fscache in my git.git, did you mean something else?
+
+This is only in the Git for Windows tree.  It hasn't
+made it upstream yet.
+
+https://github.com/git-for-windows/git/commits/master/compat/win32/fscache.c
+
+Ignore this for now if you want and we can fill in the details
+later for you.
+
+>
+>>
+>>
+>>>
+>>>
+>>>  Documentation/Makefile           |   1 +
+>>>  Documentation/gitperformance.txt | 107
+>>> +++++++++++++++++++++++++++++++++++++++
+>>>  2 files changed, 108 insertions(+)
+>>>  create mode 100644 Documentation/gitperformance.txt
+>>>
+>>> diff --git a/Documentation/Makefile b/Documentation/Makefile
+>>> index b5be2e2d3f..528aa22354 100644
+>>> --- a/Documentation/Makefile
+>>> +++ b/Documentation/Makefile
+>>> @@ -23,6 +23,7 @@ MAN5_TXT += gitrepository-layout.txt
+>>>  MAN5_TXT += gitweb.conf.txt
+>>>
+>>>  MAN7_TXT += gitcli.txt
+>>> +MAN7_TXT += gitperformance.txt
+>>>  MAN7_TXT += gitcore-tutorial.txt
+>>>  MAN7_TXT += gitcredentials.txt
+>>>  MAN7_TXT += gitcvs-migration.txt
+>>> diff --git a/Documentation/gitperformance.txt
+>>> b/Documentation/gitperformance.txt
+>>> new file mode 100644
+>>> index 0000000000..0548d1e721
+>>> --- /dev/null
+>>> +++ b/Documentation/gitperformance.txt
+>>> @@ -0,0 +1,107 @@
+>>> +giteveryday(7)
+>>> +==============
+>>> +
+>>> +NAME
+>>> +----
+>>> +gitperformance - How to improve Git's performance
+>>> +
+>>> +SYNOPSIS
+>>> +--------
+>>> +
+>>> +A guide to improving Git's performance beyond the defaults.
+>>> +
+>>> +DESCRIPTION
+>>> +-----------
+>>> +
+>>> +Git is mostly performant by default, but ships with various
+>>> +configuration options, command-line options, etc. that might improve
+>>> +performance, but for various reasons aren't on by default.
+>>> +
+>>> +This document provides a brief overview of these features.
+>>> +
+>>> +The reader should not assume that turning on all of these features
+>>> +will increase performance, depending on the repository, workload &
+>>> +use-case turning some of them on might severely harm performance.
+>>> +
+>>> +This document serves as a starting point for things to look into when
+>>> +it comes to improving performance, not as a checklist for things to
+>>> +enable or disable.
+>>> +
+>>> +Performance by topic
+>>> +--------------------
+>>> +
+>>> +It can be hard to divide the performance features into topics, but
+>>> +most of them fall into various well-defined buckets. E.g. there are
+>>> +features that help with the performance of "git status", and couldn't
+>>> +possibly impact repositories without working copies, and then some
+>>> +that only impact the performance of cloning from a server, or help the
+>>> +server itself etc.
+>>> +
+>>> +git status
+>>> +~~~~~~~~~~
+>>> +
+>>> +Running "git status" requires traversing the working tree & comparing
+>>> +it with the index. Several configuration options can help with its
+>>> +performance, with some trade-offs.
+>>> +
+>>> +- config: "core.untrackedCache=true" (see linkgit:git-config[1]) can
+>>> +  save on `stat(2)` calls by caching the mtime of filesystem
+>>> +  directories, and if they didn't change avoid recursing into that
+>>> +  directory to `stat(2)` every file in them.
+>>> ++
+>>> +pros: Can drastically speed up "git status".
+>>> ++
+>>> +cons: There's a speed hit for initially populating & maintaining the
+>>> +cache. Doesn't work on all filesystems (see `--test-untracked-cache`
+>>> +in linkgit:git-update-index[1]).
+>>> +
+>>> +- config: "status.showUntrackedFiles=no" (see
+>>> +  linkgit:git-config[1]). Skips looking for files in the working tree
+>>> +  git doesn't already know about.
+>>> ++
+>>> +pros: Speeds up "git status" by making it do a lot less work.
+>>> ++
+>>> +cons: If there's any new & untracked files anywhere in the working
+>>> +tree they won't be noticed by git. Makes it easy to accidentally miss
+>>> +files to "git add" before committing, or files which might impact the
+>>> +code in the working tree, but which git won't know exist.
+>>> +
+>>> +git grep
+>>> +~~~~~~~~
+>>> +
+>>> +- config: "grep.patternType=perl" (see linkgit:git-config[1]) will use
+>>> +  the PCRE library when "git grep" is invoked by default. This can be
+>>> +  faster than POSIX regular expressions in many cases.
+>>> ++
+>>> +pros: Can, depending on the use-case, be faster than default "git grep".
+>>> ++
+>>> +cons: Can also be slower, and in some edge cases produce different
+>>> +results.
+>>> +
+>>> +- config: "grep.threads=*" (see linkgit:git-config[1] &
+>>> +  linkgit:git-grep[1]). Tunes the number of "git grep" worker threads.
+>>> ++
+>>> +pros: Giving this a more optimal value might result in a faster grep.
+>>> ++
+>>> +cons: It might not.
+>>> +
+>>> +Server options to help clients
+>>> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>> +
+>>> +These features can be enabled on git servers, they won't help the
+>>> +performance of the servers themselves, but will help clients that need
+>>> +to talk to those servers.
+>>> +
+>>> +- config: "repack.writeBitmaps=true" (see
+>>> +  linkgit:git-config[1]). Spend more time during repack to produce
+>>> +  bitmap index, helps clients with "fetch" & "clone" performance.
+>>> ++
+>>> +pros: Once enabled & run regularly as part of "git repack" speeds up
+>>> +"clone" and "fetch".
+>>> ++
+>>> +cons: Takes extra time during repack, requires doing full
+>>> +non-incremental repacks with `-A` or `-a`.
+>>> +
+>>> +GIT
+>>> +---
+>>> +Part of the linkgit:git[1] suite
+>>>
+>>
