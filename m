@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B10F20966
-	for <e@80x24.org>; Tue,  4 Apr 2017 10:21:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E159D20966
+	for <e@80x24.org>; Tue,  4 Apr 2017 10:22:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754200AbdDDKVy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 06:21:54 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35711 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754037AbdDDKVw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 06:21:52 -0400
-Received: by mail-pg0-f65.google.com with SMTP id g2so36191277pge.2
-        for <git@vger.kernel.org>; Tue, 04 Apr 2017 03:21:52 -0700 (PDT)
+        id S1754037AbdDDKV7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 06:21:59 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36396 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753289AbdDDKV6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 06:21:58 -0400
+Received: by mail-pg0-f68.google.com with SMTP id 81so36310817pgh.3
+        for <git@vger.kernel.org>; Tue, 04 Apr 2017 03:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=H658aHxTcg4f8tRZoUEYxLObQ64vTX7mRD8S0Jqx1/U=;
-        b=dZ4Fp1YBqXyAAWfTgqfDlV8Qae5zyvtZJU/WV6yKYEhilDWwuUXwc2YVl2EWIfo24G
-         c7KynWYUuoniwOOvGj+mjlFtGcaE0zssksCeTbRnsGz2KI7ZCrkMpmkOtdF1RcENQFKD
-         puAloAj+23eTPUi0Nx4JYdbUiCKLqKBRzPu8Yn374wbS6jEW3Wi70ZsQg90n1ViDisYS
-         LbCPxhKvgarGdgCFSS2l557yKiiw7lDtWBwfHdPjfVpw5+D/KOHohV3H7yCF/Zf5W9it
-         fSRDyBv/GfQHi5WEbxU8bkvucG/Dhbrkts9ZwxsXApe8bil7yw5vl/yX9E2gEGNMBEjB
-         S+bw==
+        bh=eSGU7IxdoO9vkgTfkSa3RLHPlTiNgC+k6hyBMDr8VNQ=;
+        b=KU3GRkpchKKbktbqXn2RSa80iIfNR7wvfu2+qQrX/318ruYLHbNH4qYl+dk+J0lG9x
+         Dw3QYGKiQZcbko7XwpAnNu9/egAeEPBLAVP5PHvksouqYZR4dq6wdxNp2Py11ZqmXgG9
+         c85UafmaA0ChL6UE0hO6bTSkmeKZmWN3pRcNTA7NOQAO1oIRGKeQ88kJi3smFvPeMWEZ
+         KX6nOhjTS8Ldn22if6dAD+aToe+RTpHmVi7d9jKd/sIpic5+HGpJK5cFVGo8xKgiY2vD
+         0zstV8mMVJFe7trRnpuGBfaZtbOqcaU9xBU0NLXuRLwvPMv5x67cs1mgN45V9ouPYAQ+
+         qYMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=H658aHxTcg4f8tRZoUEYxLObQ64vTX7mRD8S0Jqx1/U=;
-        b=Ywqy5YD2f5W2NF5V3fg7cL+rfdH3TxNYASWKsF+LuAgxv5cgFCnhzyBIimQohTVEpk
-         Z6p4eTUQ+xL2HG7MyGJxNBS5hNFRnIdchJJ4qYJZYsu3AxScuZe40HmbBUkng8VWxn0H
-         VouWBG+E1gbhI+kkqwWwqD6auHzDmgNwc2Qm/FCwVdeggGp1kjQ+gxQlEnBFW3gl9I7S
-         /K6VBmPFiEswwe8/EiXieJP5GNGhor3bs8UVCQs0GH3K96ZtfqtFwgBP5gMxZM8DVc9w
-         liyuwXrYzdyC8c6Js1w/vk0bCzJ5ta47BleIMagJoSoM1Z4AV/FgKC6ia+EnAn8G96ig
-         MLEg==
-X-Gm-Message-State: AFeK/H31lLWhRG09zrArEvzbWDwx4n7Wsti9pO3ETTCHPokIvBpBpR1fTr/BcTrt1SplcA==
-X-Received: by 10.98.49.129 with SMTP id x123mr1304979pfx.45.1491301312111;
-        Tue, 04 Apr 2017 03:21:52 -0700 (PDT)
+        bh=eSGU7IxdoO9vkgTfkSa3RLHPlTiNgC+k6hyBMDr8VNQ=;
+        b=BtklxIKjknpb+LRm2YmsonxxkjQ2KjXjwsRdonk3ZryHYNXPBaJVFZh9yTLKflOZEA
+         zvECzuYt2NNInp1c0xGnpfjCyw7WpSuQtLtxmSRfVtwREaahXsmtPs0FyxVe2pStk5kt
+         rLKkQaXpxqObtbf82+Bn38+m/QHTDbpc0EPamrjqbSGcG3kSzjvaJTxSXUxzGaj6rceI
+         p5EVifjnpDFUIp5bghgyzhPFJa3m3qPJsasnSrF9LMBeHmJASub8PeiaqJ8LfwRoFbCu
+         cNABR/fSdoRrHS8vuOU3Cdaen8FSdtqiWAwCHbJL1NadMjrjP4UfasZ4B9LYqxBbxddY
+         2Kvg==
+X-Gm-Message-State: AFeK/H2P/IIYcJwEDhgdZSue02IOevboHOYKgapcmwxBoADZ47rj4RXS5WCmA0BHux5B8Q==
+X-Received: by 10.99.51.200 with SMTP id z191mr22636226pgz.137.1491301317148;
+        Tue, 04 Apr 2017 03:21:57 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id s20sm30917932pfg.11.2017.04.04.03.21.49
+        by smtp.gmail.com with ESMTPSA id x15sm30899315pfk.68.2017.04.04.03.21.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Apr 2017 03:21:51 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Tue, 04 Apr 2017 17:21:47 +0700
+        Tue, 04 Apr 2017 03:21:56 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Tue, 04 Apr 2017 17:21:52 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 1/5] environment.c: fix potential segfault by get_git_common_dir()
-Date:   Tue,  4 Apr 2017 17:21:19 +0700
-Message-Id: <20170404102123.25315-2-pclouds@gmail.com>
+Subject: [PATCH v4 2/5] refs.c: make submodule ref store hashmap generic
+Date:   Tue,  4 Apr 2017 17:21:20 +0700
+Message-Id: <20170404102123.25315-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170404102123.25315-1-pclouds@gmail.com>
 References: <20170318100206.5980-1-pclouds@gmail.com>
@@ -71,37 +71,141 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-setup_git_env() must be called before this function to initialize
-git_common_dir so that it returns a non NULL string. And it must return
-a non NULL string or segfault can happen because all callers expect so.
-
-It does not do so explicitly though and depends on get_git_dir() being
-called first (which will guarantee setup_git_env()). Avoid this
-dependency and call setup_git_env() by itself.
-
-test-ref-store.c will hit this problem because it's very lightweight,
-just enough initialization to exercise refs code, and get_git_dir() will
-never be called until get_worktrees() is, which uses get_git_common_dir
-and hits a segfault.
+This removes the "submodule" from submodule_hash_entry and other
+function names. The goal is to reuse the same code and data structure
+for other ref store types. The first one is worktree ref stores.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- environment.c | 2 ++
- 1 file changed, 2 insertions(+)
+ refs.c | 64 ++++++++++++++++++++++++++++++++--------------------------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
 
-diff --git a/environment.c b/environment.c
-index 42dc3106d2..2986ee7200 100644
---- a/environment.c
-+++ b/environment.c
-@@ -214,6 +214,8 @@ const char *get_git_dir(void)
- 
- const char *get_git_common_dir(void)
- {
-+	if (!git_dir)
-+		setup_git_env();
- 	return git_common_dir;
+diff --git a/refs.c b/refs.c
+index ec1f563824..875e30a0b8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1450,32 +1450,32 @@ int resolve_gitlink_ref(const char *submodule, const char *refname,
+ 	return 0;
  }
  
+-struct submodule_hash_entry
++struct ref_store_hash_entry
+ {
+ 	struct hashmap_entry ent; /* must be the first member! */
+ 
+ 	struct ref_store *refs;
+ 
+-	/* NUL-terminated name of submodule: */
+-	char submodule[FLEX_ARRAY];
++	/* NUL-terminated identifier of the ref store: */
++	char name[FLEX_ARRAY];
+ };
+ 
+-static int submodule_hash_cmp(const void *entry, const void *entry_or_key,
++static int ref_store_hash_cmp(const void *entry, const void *entry_or_key,
+ 			      const void *keydata)
+ {
+-	const struct submodule_hash_entry *e1 = entry, *e2 = entry_or_key;
+-	const char *submodule = keydata ? keydata : e2->submodule;
++	const struct ref_store_hash_entry *e1 = entry, *e2 = entry_or_key;
++	const char *name = keydata ? keydata : e2->name;
+ 
+-	return strcmp(e1->submodule, submodule);
++	return strcmp(e1->name, name);
+ }
+ 
+-static struct submodule_hash_entry *alloc_submodule_hash_entry(
+-		const char *submodule, struct ref_store *refs)
++static struct ref_store_hash_entry *alloc_ref_store_hash_entry(
++		const char *name, struct ref_store *refs)
+ {
+-	struct submodule_hash_entry *entry;
++	struct ref_store_hash_entry *entry;
+ 
+-	FLEX_ALLOC_STR(entry, submodule, submodule);
+-	hashmap_entry_init(entry, strhash(submodule));
++	FLEX_ALLOC_STR(entry, name, name);
++	hashmap_entry_init(entry, strhash(name));
+ 	entry->refs = refs;
+ 	return entry;
+ }
+@@ -1487,19 +1487,19 @@ static struct ref_store *main_ref_store;
+ static struct hashmap submodule_ref_stores;
+ 
+ /*
+- * Return the ref_store instance for the specified submodule. If that
+- * ref_store hasn't been initialized yet, return NULL.
++ * Look up a ref store by name. If that ref_store hasn't been
++ * registered yet, return NULL.
+  */
+-static struct ref_store *lookup_submodule_ref_store(const char *submodule)
++static struct ref_store *lookup_ref_store_map(struct hashmap *map,
++					      const char *name)
+ {
+-	struct submodule_hash_entry *entry;
++	struct ref_store_hash_entry *entry;
+ 
+-	if (!submodule_ref_stores.tablesize)
++	if (!map->tablesize)
+ 		/* It's initialized on demand in register_ref_store(). */
+ 		return NULL;
+ 
+-	entry = hashmap_get_from_hash(&submodule_ref_stores,
+-				      strhash(submodule), submodule);
++	entry = hashmap_get_from_hash(map, strhash(name), name);
+ 	return entry ? entry->refs : NULL;
+ }
+ 
+@@ -1535,20 +1535,19 @@ struct ref_store *get_main_ref_store(void)
+ }
+ 
+ /*
+- * Register the specified ref_store to be the one that should be used
+- * for submodule. It is a fatal error to call this function twice for
+- * the same submodule.
++ * Associate a ref store with a name. It is a fatal error to call this
++ * function twice for the same name.
+  */
+-static void register_submodule_ref_store(struct ref_store *refs,
+-					 const char *submodule)
++static void register_ref_store_map(struct hashmap *map,
++				   const char *type,
++				   struct ref_store *refs,
++				   const char *name)
+ {
+-	if (!submodule_ref_stores.tablesize)
+-		hashmap_init(&submodule_ref_stores, submodule_hash_cmp, 0);
++	if (!map->tablesize)
++		hashmap_init(map, ref_store_hash_cmp, 0);
+ 
+-	if (hashmap_put(&submodule_ref_stores,
+-			alloc_submodule_hash_entry(submodule, refs)))
+-		die("BUG: ref_store for submodule '%s' initialized twice",
+-		    submodule);
++	if (hashmap_put(map, alloc_ref_store_hash_entry(name, refs)))
++		die("BUG: %s ref_store '%s' initialized twice", type, name);
+ }
+ 
+ struct ref_store *get_submodule_ref_store(const char *submodule)
+@@ -1565,7 +1564,7 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 		return get_main_ref_store();
+ 	}
+ 
+-	refs = lookup_submodule_ref_store(submodule);
++	refs = lookup_ref_store_map(&submodule_ref_stores, submodule);
+ 	if (refs)
+ 		return refs;
+ 
+@@ -1584,7 +1583,8 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+ 	/* pretend that add_submodule_odb() has been called */
+ 	refs = ref_store_init(submodule_sb.buf,
+ 			      REF_STORE_READ | REF_STORE_ODB);
+-	register_submodule_ref_store(refs, submodule);
++	register_ref_store_map(&submodule_ref_stores, "submodule",
++			       refs, submodule);
+ 
+ 	strbuf_release(&submodule_sb);
+ 	return refs;
 -- 
 2.11.0.157.gd943d85
 
