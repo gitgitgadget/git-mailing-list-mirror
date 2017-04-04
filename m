@@ -2,218 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1891B20966
-	for <e@80x24.org>; Tue,  4 Apr 2017 10:22:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B58B120966
+	for <e@80x24.org>; Tue,  4 Apr 2017 10:45:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754061AbdDDKWV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 06:22:21 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36562 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753253AbdDDKWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 06:22:19 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 81so36312292pgh.3
-        for <git@vger.kernel.org>; Tue, 04 Apr 2017 03:22:14 -0700 (PDT)
+        id S1753425AbdDDKpQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 06:45:16 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:34467 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753163AbdDDKpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 06:45:09 -0400
+Received: by mail-it0-f66.google.com with SMTP id e75so10778506itd.1
+        for <git@vger.kernel.org>; Tue, 04 Apr 2017 03:45:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EZp1w9YKHhZai6D7KgyL5KkugO/Yh/mUcmusrzeQ5fs=;
-        b=aqUV3x4HZOu5ATri9eEmUL1BL/HYeTRHv5YQuBn8t9Wm1jPxhsFxAvqt+iu3d3uFgt
-         yxyeRFnmY7xSBkfRFEhwuW5vf+zzjYgZWUM8OzYGWKvfgi8THbv6OKDyA606Cukf3F44
-         JwyF5+djRS9Od+++4JIvFW4veteb3svhn4jcVxEphIJgQOIttfuj3icv9ffhyw9qGD1m
-         nUmu3UiMmbyNb9MIjHAqrXbSYOjqFgduDsqWP8C0NEjuyzCVZHKCJ6ALEQtM6OABWatA
-         SmBwPDGRJEFXIBCaCJRunCjWyb9qepK6w7Op2g7cq5EbjAqX52qSpliZzKA/A1ccGl8O
-         wSEA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=+SWQ+a9/XCEpIxkdvnuYv1HdM/aplKVaoLuy9cHMaHI=;
+        b=YfJZWy5/GQSPHrpR4We6+j7i+eUrRecvxyn8Zr/HRE+zRGVWS6VMfcXjtz9X4vr/D/
+         aANvJpg6Zk090jzfA/leC04iLVjJz2HMwHnXHBynEjxITTMGWuSGxFpsOT2oPbgGOSd9
+         xHwd26/XBONh++HJbUTfdo7wznvXCu2dg0NVkY0VUT8JECqyazjrvva7X6n0vZHPvMDQ
+         ivA4zblGbogf4tCViG3fah/L1Ql8OqbWJY4Q084d6YGHe/xkG6cVkukEdUUDSK9byXdI
+         dZqbme3NJToTulTbhFNfy1rw27rA9ZXj7rF2Xfs81l5ll6wue2jI457+cyq8V1kDhCPS
+         1rpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EZp1w9YKHhZai6D7KgyL5KkugO/Yh/mUcmusrzeQ5fs=;
-        b=ssNJgS0llix+3VIg8/6XMfLd+pQapqh9laQVwdwMv5r8mXzF+s/oEQfG3OumJvoHjB
-         83Uuo6XrUbU3c1yN9yN9k/TpNEWN64FsgzX3jW+tqazEhHvDBt3e2C3LszZEc7HYBhRi
-         UqgxNdgYXy/lKeH4YxprNzPguHlz3oOvF/+Vv0YXQmiqhO8EbTBngLrelPnCapR0BTo2
-         UlfC/e9CAf2KbVtFik8ZdWlyfdjSNs4DlcNFztQ48f+iKeBjquSgTXwPE7XGcB5jWt2a
-         0wCNo9HV6mskneD2XmeY9hvk7MIe6wnUSa5W9ElQBj81ODh8ChJL5uGyDjYWDvVJcarg
-         rOYA==
-X-Gm-Message-State: AFeK/H1pUmpguOzwKgcNnRKe7OqEVxnG3PX06AoY8N3YSi22MLb+Fc9d7or77FukGVu4ig==
-X-Received: by 10.98.105.134 with SMTP id e128mr21818827pfc.19.1491301333926;
-        Tue, 04 Apr 2017 03:22:13 -0700 (PDT)
-Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id p18sm2965504pfj.23.2017.04.04.03.22.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Apr 2017 03:22:13 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Tue, 04 Apr 2017 17:22:09 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v4 5/5] refs: kill set_worktree_head_symref()
-Date:   Tue,  4 Apr 2017 17:21:23 +0700
-Message-Id: <20170404102123.25315-6-pclouds@gmail.com>
-X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170404102123.25315-1-pclouds@gmail.com>
-References: <20170318100206.5980-1-pclouds@gmail.com>
- <20170404102123.25315-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=+SWQ+a9/XCEpIxkdvnuYv1HdM/aplKVaoLuy9cHMaHI=;
+        b=glJbQVqqckj9buTSVLVMti0VoaN7X2ps2tn4Q6bMCdWdUiCj5dDRGrgzTDaGd/CZ26
+         YPksleNAtk4n1gMCeCq0GIz/uCJg1yMa5EGW3HigMrm57Qt4OPBwFV9uZocs2tyK0ZPl
+         soGJKgwFvn1R+laPkw3IaHCjXFMY/j4Dgb8AWwwjg8LBzstl/4sd2Hf9Skg+XfC9lSOF
+         jlDoZlzh+a/A5bU0eSUFP6kgcS7C2CBmV/7/MtpFDAAQruiWGA3MoOegD2EGd3NlTNTv
+         wgPm/33yv8l6zMSseI7D2Ja22QSI6FxUlWOqJhSQ8DyqJHvUI9vBNBUQabeCzN46eQHr
+         osgQ==
+X-Gm-Message-State: AFeK/H2oPM8jr00pJ5GJnpTPW9X5nQ6zaWTPZH3HOLCASKowUAHGIO53
+        Y3jP8JNTckNdyelZAZMYL2gH6ppi5Q==
+X-Received: by 10.36.76.16 with SMTP id a16mr10918674itb.91.1491302708268;
+ Tue, 04 Apr 2017 03:45:08 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.107.130.208 with HTTP; Tue, 4 Apr 2017 03:44:47 -0700 (PDT)
+In-Reply-To: <20170404083341.uajswm3qdzyvzxsp@sigill.intra.peff.net>
+References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
+ <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com> <20170404083341.uajswm3qdzyvzxsp@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 4 Apr 2017 12:44:47 +0200
+Message-ID: <CACBZZX5D2cYf0-ob_Da0EsxRtZHfegezPtCGA10-sjfi0A+AoQ@mail.gmail.com>
+Subject: Re: [RFC] dropping support for ancient versions of curl
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-70999e9cec (branch -m: update all per-worktree HEADs - 2016-03-27)
-added this function in order to update HEADs of all relevant
-worktrees, when a branch is renamed.
+On Tue, Apr 4, 2017 at 10:33 AM, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 04, 2017 at 10:17:51AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> On Tue, Apr 4, 2017 at 4:54 AM, Jeff King <peff@peff.net> wrote:
+>> > My feeling is that this is old enough to stop caring about. Which mean=
+s
+>> > we can drop some of the #ifdefs that clutter the HTTP code (and there'=
+s
+>> > a patch at the end of this mail dropping support for everything older
+>> > than 7.11.1). But that made wonder: how old is too old? I think it's
+>> > nice that we don't force people to upgrade to the latest version of
+>> > curl. But at some point, if you are running a 13-year-old version of
+>> > libcurl, how likely are you to run a brand new version of Git? :)
+>> >
+>> > If we declared 7.16.0 as a cutoff, we could unconditionally define
+>> > USE_CURL_MULTI, which gets rid of quite a few messy ifdefs.
+>>
+>> I don't object to this patch, but just as a general comment, in
+>> enterprise-y environments using an old OS (e.g. CentOS 5/6) & then
+>> compiling some selected packages like git based on OS libraries is
+>> quite common.
+>>
+>> E.g. at work we're running git 2.12.0 compiled against CentOS 6
+>> libraries, which has curl 7.20.1, released on
+>> Apr 14 2010. Not so long ago we were still running CentOS 5 which
+>> comes with 7.15.5 released in Aug 7 2006 which would break with your
+>> patch.
+>>
+>> Whether we support that is another question, I think it's reasonable
+>> to say that if you're compiling git on such an old system you also
+>> need to compile a libcurl instead of using the OS version. I just
+>> wanted to point out that this *does* happen, someone is going to be
+>> compiling new git releases on CentOS 5 & will be hit by this.
+>
+> Thanks, that's a very useful bit of data. According to:
+>
+>   https://access.redhat.com/support/policy/updates/errata
+>
+> RHEL5 (which as I understand it basically the same as CentOS 5 in terms
+> of packages).
 
-It, as a public ref api, kind of breaks abstraction when it uses
-internal functions of files backend. With the introduction of
-refs_create_symref(), we can move back pretty close to the code before
-70999e9cec, where create_symref() was used for updating HEAD.
+Yeah CentOS is just s/RHEL/CentOS/g across the RHEL-provided source
+packages. It's a way to use RHEL without paying for (or getting) RHEL
+support.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- branch.c                      | 12 ++++++------
- refs.h                        | 10 ----------
- refs/files-backend.c          | 44 -------------------------------------------
- t/t1407-worktree-ref-store.sh | 12 ++++++++++++
- 4 files changed, 18 insertions(+), 60 deletions(-)
+> ended its 10-year support cycle just a few days ago. That
+> would perhaps make 7.20.1 a reasonable cutoff.
 
-diff --git a/branch.c b/branch.c
-index 0b949b7fb2..69d5eea84b 100644
---- a/branch.c
-+++ b/branch.c
-@@ -353,18 +353,18 @@ int replace_each_worktree_head_symref(const char *oldref, const char *newref,
- 	int i;
- 
- 	for (i = 0; worktrees[i]; i++) {
-+		struct ref_store *refs;
-+
- 		if (worktrees[i]->is_detached)
- 			continue;
- 		if (worktrees[i]->head_ref &&
- 		    strcmp(oldref, worktrees[i]->head_ref))
- 			continue;
- 
--		if (set_worktree_head_symref(get_worktree_git_dir(worktrees[i]),
--					     newref, logmsg)) {
--			ret = -1;
--			error(_("HEAD of working tree %s is not updated"),
--			      worktrees[i]->path);
--		}
-+		refs = get_worktree_ref_store(worktrees[i]);
-+		if (refs_create_symref(refs, "HEAD", newref, logmsg))
-+			ret = error(_("HEAD of working tree %s is not updated"),
-+				    worktrees[i]->path);
- 	}
- 
- 	free_worktrees(worktrees);
-diff --git a/refs.h b/refs.h
-index 6df69a2adb..447381d378 100644
---- a/refs.h
-+++ b/refs.h
-@@ -402,16 +402,6 @@ int refs_create_symref(struct ref_store *refs, const char *refname,
- 		       const char *target, const char *logmsg);
- int create_symref(const char *refname, const char *target, const char *logmsg);
- 
--/*
-- * Update HEAD of the specified gitdir.
-- * Similar to create_symref("relative-git-dir/HEAD", target, NULL), but
-- * this can update the main working tree's HEAD regardless of where
-- * $GIT_DIR points to.
-- * Return 0 if successful, non-zero otherwise.
-- * */
--int set_worktree_head_symref(const char *gitdir, const char *target,
--			     const char *logmsg);
--
- enum action_on_err {
- 	UPDATE_REFS_MSG_ON_ERR,
- 	UPDATE_REFS_DIE_ON_ERR,
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index a5b405436f..e428d1abff 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3161,50 +3161,6 @@ static int files_create_symref(struct ref_store *ref_store,
- 	return ret;
- }
- 
--int set_worktree_head_symref(const char *gitdir, const char *target, const char *logmsg)
--{
--	/*
--	 * FIXME: this obviously will not work well for future refs
--	 * backends. This function needs to die.
--	 */
--	struct files_ref_store *refs =
--		files_downcast(get_main_ref_store(),
--			       REF_STORE_WRITE,
--			       "set_head_symref");
--
--	static struct lock_file head_lock;
--	struct ref_lock *lock;
--	struct strbuf head_path = STRBUF_INIT;
--	const char *head_rel;
--	int ret;
--
--	strbuf_addf(&head_path, "%s/HEAD", absolute_path(gitdir));
--	if (hold_lock_file_for_update(&head_lock, head_path.buf,
--				      LOCK_NO_DEREF) < 0) {
--		struct strbuf err = STRBUF_INIT;
--		unable_to_lock_message(head_path.buf, errno, &err);
--		error("%s", err.buf);
--		strbuf_release(&err);
--		strbuf_release(&head_path);
--		return -1;
--	}
--
--	/* head_rel will be "HEAD" for the main tree, "worktrees/wt/HEAD" for
--	   linked trees */
--	head_rel = remove_leading_path(head_path.buf,
--				       absolute_path(get_git_common_dir()));
--	/* to make use of create_symref_locked(), initialize ref_lock */
--	lock = xcalloc(1, sizeof(struct ref_lock));
--	lock->lk = &head_lock;
--	lock->ref_name = xstrdup(head_rel);
--
--	ret = create_symref_locked(refs, lock, head_rel, target, logmsg);
--
--	unlock_ref(lock); /* will free lock */
--	strbuf_release(&head_path);
--	return ret;
--}
--
- static int files_reflog_exists(struct ref_store *ref_store,
- 			       const char *refname)
- {
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-index 04d1e9d177..5df06f3556 100755
---- a/t/t1407-worktree-ref-store.sh
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -37,4 +37,16 @@ test_expect_success 'resolve_ref(<per-worktree-ref>)' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'create_symref(FOO, refs/heads/master)' '
-+	$RWT create-symref FOO refs/heads/master nothing &&
-+	echo refs/heads/master >expected &&
-+	git -C wt symbolic-ref FOO >actual &&
-+	test_cmp expected actual &&
-+
-+	$RMAIN create-symref FOO refs/heads/wt-master nothing &&
-+	echo refs/heads/wt-master >expected &&
-+	git symbolic-ref FOO >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-2.11.0.157.gd943d85
+FWIW these cut-offs don't have a lot to do with how long some
+installations run things like RHEL5 or CO5 actually run. RHEL5's EOP3
+phase ended days ago, but the End of Extended Life-cycle Support goes
+until late 2020, and for anyone running the CentOS flavors these dates
+matter very little, since they're about how long RedHat is supporting
+it, and if you don't have RedHat support in the first place...
 
+> I dunno. We could also just punt on the whole thing. It was nice to see
+> a bunch of #ifdefs go away, but the code they're protecting is actually
+> not that complicated. Most of them do not have an #else at all, and we
+> just silently skip features on old versions.
+>
+> I think it might be nice to declare a "too old" version, though, just so
+> we can stop adding _new_ ifdefs. Maybe 7.11.1 is that version now, and
+> in another few years we can bump to 7.16.0. :)
+
+I think it's completely fine to include your patch as-is. At some
+point we need to pass the burden of dealing with these old software
+versions, saying that you should use a <10 year old library isn't
+unreasonable. Anyone packaging new git on RHEL5 or derivatives can
+just package a newer libcurl as well.
