@@ -2,80 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C38620964
-	for <e@80x24.org>; Tue,  4 Apr 2017 21:51:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A804920964
+	for <e@80x24.org>; Tue,  4 Apr 2017 22:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754884AbdDDVvw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 17:51:52 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:33677 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754090AbdDDVvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 17:51:51 -0400
-Received: by mail-pg0-f48.google.com with SMTP id x125so164176984pgb.0
-        for <git@vger.kernel.org>; Tue, 04 Apr 2017 14:51:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=vrIbkc6mcXGRJbXMdjovWVE6Bjg30tNn0IW4YdS5Mb4=;
-        b=Men3eB9KCl+8IBHVPvwAA4QhFGCmlMPcKj+j1v9a7ytRkz03ppJp5Ev4sB1sqV2i8Z
-         keiT3kHYMnKz38oCW0o4eb/vSJkGkgg/xZTt0ToBpymC0Rx3v+liDYh/kjUeshta17Q3
-         0wDcY0plYj5zHjmq7oHaOuikyGSVL8ZRLsrjRK9VxTQwxQ7p0MLy9t157U7pha+ZtNSp
-         ins/cMTMKHOZKCb3W/Z4lTF1YPiG8N1ST2uM/7JjBGvDhlp5K/ejV5KwcBa/dTTXdBY4
-         Lr8UasKtQ/khy5/LIss+DtsyXMb7lZ/OyhGhorKg+VuflQ8DpwvqyybxZFMxEIGBIF9F
-         Tocg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=vrIbkc6mcXGRJbXMdjovWVE6Bjg30tNn0IW4YdS5Mb4=;
-        b=XHkUssC0osT2milbQNNUfIov9xUyS7+Y0zUlDkvWwfxj9a9JHb3VC6vmjUJ3fQugof
-         HVS3HsHiKVy3t+Hd8lhcYZszLg582ulHJAwcHr9NgS/eRXS3XIeptY1gb2y6fFOkzvsa
-         udAPEiIXBHcrU99zFg+6Gz0VTUSaG0UOWUJqb2034ilsfuUhH5yeiUp+WOMCD5C2IEN4
-         5BCS+3SrkzKqKw3QRQGFNsnUj0TC+94DL5botsYv4bQnhHHrcer/sf8E2W7YtCBTvKsn
-         +ogNNBMuYRMXctgfsmUwHlhnGFlkThOa6GgNyFKE7CSTIIHRZ3rs1YftRQurenYSbl7W
-         iK8w==
-X-Gm-Message-State: AFeK/H0w6hHtzO9Z5SBUA9Q3j7fKjpz1GG60hsgVT3M26PEKS0/lWNs96HnOluGYp3xpaIKSFxWegsP+tZxSYP0J
-X-Received: by 10.84.136.34 with SMTP id 31mr31572032plk.52.1491342710542;
- Tue, 04 Apr 2017 14:51:50 -0700 (PDT)
+        id S1754765AbdDDWqb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 18:46:31 -0400
+Received: from mout.gmx.net ([212.227.15.15]:61458 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753352AbdDDWqa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 18:46:30 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MV5tl-1cayc30P8f-00YTFU; Wed, 05
+ Apr 2017 00:46:18 +0200
+Date:   Wed, 5 Apr 2017 00:46:16 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Brandon Williams <bmwill@google.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>, frank@gevaerts.be
+Subject: Re: [RFC] dropping support for ancient versions of curl
+In-Reply-To: <20170404165321.GC189807@google.com>
+Message-ID: <alpine.DEB.2.20.1704050043370.4268@virtualbox>
+References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net> <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com> <20170404083341.uajswm3qdzyvzxsp@sigill.intra.peff.net> <CACBZZX5D2cYf0-ob_Da0EsxRtZHfegezPtCGA10-sjfi0A+AoQ@mail.gmail.com>
+ <alpine.DEB.2.20.1704041351350.4268@virtualbox> <CACBZZX6W+fbCg7xXKuM=iqnSYFENBYxYT1WJmoOvYYCBEkX=hQ@mail.gmail.com> <20170404165321.GC189807@google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.100.186.196 with HTTP; Tue, 4 Apr 2017 14:51:50 -0700 (PDT)
-In-Reply-To: <xmqqk27791ws.fsf@gitster.mtv.corp.google.com>
-References: <xmqqk27791ws.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Apr 2017 14:51:50 -0700
-Message-ID: <CAGZ79kZfX8zStFVDJsV=1KXh4G4K1rQ=8TTkE1w8JQq-=NcJ0g@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Mar 2017, #12; Wed, 29)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:5iVapVol8+ShLIr36jTstvWsqhoERfUWwJvuFI1kOr8gBg5MfaA
+ Sum/6GyC3vw392520aj1RAExfH5XhFxCL+2O0gTaWLeXOH4ZYBHMnLBSV63W915xskRNrma
+ YDkhaSsQQm6C/huVemPsSd44bHlkQM5RzPSZmjbeXpgBptkcHoFRQ4ddjSmIMoPu0n5lbNK
+ 43a6WzKALjGHcpc4omhbw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RkWJhDgDyRk=:NYZZp9KmRykU9iWtytN03c
+ TY4KWn76qH522gUxk4A3KJGolooTW66zp95H9/sldt3m7kNMpGTPER2nFElHNRiqLeyjRBCBI
+ W3JYtkvOsOzpYXd9XPEWfKsmGlBXR30V2CeSY6DJha5lB8qChcDKfZfk6Sa+aaUacQOk+0Jsz
+ EYtT33ZZT65bwQWdp/m1JOrmBTP3S6oE+nMr5c0Ol51U3oCjad6wkVVUPHl9vDGibvRhVn07L
+ vxR1q5akZsozxf+XyIOxfUXkKuPKxCGCsO5YmWDJ9Bu43M1joHkeIKHPhagCPhDfGrKoY3u4K
+ lBsAX7cSh5t8qwfUfsTlwfF3UHNnes+WYAZ5jI/shtZ/zYmrpuBjHElrHVDq+WMwMuxoBeZ9L
+ UFytboPPEVlyVRopga5l8MahunRRX3zsI+ZXKdUBW9mgByUd88hHxfnhHQLs+J0ZNFojyZ+/F
+ lkQWBrC3cMhVJ38KMPFCG4qL5vtOA6Z9BI/dElrMQ1j7NjvFqhnzMhqMb1gYcsbZ4LlHPekG7
+ F3iM/dEIMuisAyfa61aYAQ02P+yXu7tYdVvLIzdoWazM1At9oX04LUHR3dTK6NyKdHChK7bjw
+ JXiZcc6J8jNqzfDBJjbz5UwPHm5JipYi0qJ+NhD2gIxkw9dNgqdKznVNkGS15QVSbf68ATCcU
+ FCwDPih5rEskwn8G5cOZztfmMXgOFaqFhDbF1SD0t14ryOgCXVwLjrKCtHHLX/sJbMmTXruL1
+ w9ZTLk+n/r6chvy+P0lYmiaciytM9bgSEdHzxRf/9Bu4GicRyGExr4UHS+3SK6s4diWUo02vu
+ eRmH7Nf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * sb/submodule-short-status (2017-03-27) 7 commits
->  - submodule.c: correctly handle nested submodules in is_submodule_modified
->  - short status: improve reporting for submodule changes
->  - submodule.c: stricter checking for submodules in is_submodule_modified
->  - submodule.c: port is_submodule_modified to use porcelain 2
->  - submodule.c: convert is_submodule_modified to use strbuf_getwholeline
->  - submodule.c: factor out early loop termination in is_submodule_modified
->  - submodule.c: use argv_array in is_submodule_modified
->
->  The output from "git status --short" has been extended to show
->  various kinds of dirtyness in submodules differently; instead of to
->  "M" for modified, 'm' and '?' can be shown to signal changes only
->  to the working tree of the submodule but not the commit that is
->  checked out.
->
->  Waiting for further comments.
->  The endgame looked mostly OK.
+Hi Brandon,
 
-The last comments were by Jonathan and you agreeing this is a superb series. ;)
-http://public-inbox.org/git/20170329231308.GZ31294@aiede.mtv.corp.google.com/
+On Tue, 4 Apr 2017, Brandon Williams wrote:
+
+> I'm all for seeing a patch like this applied.  I agree that we can't
+> expect the world to be running the most up-to-date version of curl but
+> we should be able to select some "oldest" version we will support which
+> can be bumped up every couple of years.  
+> 
+> I mean, ensuring that you are running with an up-to-date version of curl
+> is really important when it comes to all of the security fixes that have
+> been made in each revision.
+
+I am not in the business of dictating to others what software they have to
+run. I am in the business of maintaining Git for Windows. And part of that
+job is to drag along code that is maybe not the most elegant, but works.
+
+The patch in question resolves such a wart. Sure, it would be a cleanup.
+Is it a huge maintenance burden to keep those few #ifdef's, though?
+Absolutely not.
+
+Ciao,
+Johannes
