@@ -2,121 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C7EE20964
-	for <e@80x24.org>; Tue,  4 Apr 2017 20:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C093120964
+	for <e@80x24.org>; Tue,  4 Apr 2017 21:09:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753062AbdDDUki (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 16:40:38 -0400
-Received: from cloud.peff.net ([104.130.231.41]:56680 "EHLO cloud.peff.net"
+        id S1754116AbdDDVJC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 17:09:02 -0400
+Received: from siwi.pair.com ([209.68.5.199]:33548 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752768AbdDDUkh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 16:40:37 -0400
-Received: (qmail 31878 invoked by uid 109); 4 Apr 2017 20:40:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Apr 2017 20:40:33 +0000
-Received: (qmail 9187 invoked by uid 111); 4 Apr 2017 20:40:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 04 Apr 2017 16:40:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Apr 2017 16:40:31 -0400
-Date:   Tue, 4 Apr 2017 16:40:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     David Turner <David.Turner@twosigma.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v3] http.postbuffer: allow full range of ssize_t values
-Message-ID: <20170404204031.geh72k6yuiky4wsw@sigill.intra.peff.net>
-References: <20170331172631.12024-1-dturner@twosigma.com>
- <20170401060116.b2v7tyoi7fcxwbvo@sigill.intra.peff.net>
- <34d444b673c64310baa275f821037b3e@exmbdft7.ad.twosigma.com>
- <20170404020130.76thbl5rum2gxgtn@sigill.intra.peff.net>
- <6488d78232be49a69260436d1c6ed44f@exmbdft7.ad.twosigma.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6488d78232be49a69260436d1c6ed44f@exmbdft7.ad.twosigma.com>
+        id S1753722AbdDDVJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 17:09:01 -0400
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id C8B5784606;
+        Tue,  4 Apr 2017 17:08:59 -0400 (EDT)
+From:   git@jeffhostetler.com
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v4 0/4] read-cache: speed up add_index_entry
+Date:   Tue,  4 Apr 2017 21:08:43 +0000
+Message-Id: <20170404210847.50860-1-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 04, 2017 at 06:42:23PM +0000, David Turner wrote:
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-> > What does it look like when it fails? What does GIT_TRACE_CURL look like (or
-> > GIT_CURL_VERBOSE if your client is older, but remember to sanitize any auth
-> > lines)?
-> 
-> Unfortunately, we've already worked around the problem by pushing over SSH, 
-> so I no longer have a failing case to examine. Last time I tried, I actually did some 
-> hackery to create a push smaller than 2GB, but it still failed (this time, with 
-> "502 Bad Gateway").  So, something is clearly weird in GitLab land.
-> 
-> I did see "Transfer-Encoding: chunked" in one of the responses from the server,
->  but not in the request (not sure if that's normal). The smaller push had: 
-> Content-Length: 1048908476
+Teach add_index_entry_with_check() and has_dir_name()
+to avoid index lookups if the given path sorts after
+the last entry in the index.
 
-The 502 makes me think it's a problem in the GitLab reverse-proxy layer
-(and also my experience debugging Git-over-HTTP weirdness on GitHub's reverse
-proxy layer, which had a number of pitfalls ;) ).
+This saves at least 2 binary searches per entry.
 
-You should be able to do a synthetic test like:
+This improves performance during checkout and read-tree because
+merge_working_tree() and unpack_trees() processes a list of already
+sorted entries.
 
-  git init
-  dd if=/dev/urandom of=foo.rand bs=1k count=1024
-  git add .
-  git commit -m 'random megabyte'
-  GIT_TRACE_CURL=/tmp/foo.out \
-    git -c http.postbuffer=0 push https://...
+This helps performance on very large repositories.
 
-You should see two POSTs to /git-receive-pack, like this:
+================
+Before and after numbers on index with 1M files.
+./p0004-read-tree.sh
+0004.2: read-tree (1003037)              3.24(2.46+0.72)
+0004.3: switch branches (3038 1003037)   7.53(5.66+1.56)
 
-  Send header: POST /peff/test.git/git-receive-pack HTTP/1.1
-  Send header: Host: github.com
-  Send header: Authorization: Basic <redacted>
-  Send header: User-Agent: git/2.12.2.952.g759391acc
-  Send header: Content-Type: application/x-git-receive-pack-request
-  Send header: Accept: application/x-git-receive-pack-result
-  Send header: Content-Length: 4
+$ ./p0004-read-tree.sh
+0004.2: read-tree (1003040)              2.45(1.79+0.61)
+0004.3: switch branches (3041 1003040)   6.65(4.22+1.60)
 
-  Send header: POST /peff/test.git/git-receive-pack HTTP/1.1
-  Send header: Host: github.com
-  Send header: Authorization: Basic <redacted>
-  Send header: User-Agent: git/2.12.2.952.g759391acc
-  Send header: Accept-Encoding: gzip
-  Send header: Content-Type: application/x-git-receive-pack-request
-  Send header: Accept: application/x-git-receive-pack-result
-  Send header: Transfer-Encoding: chunked
+================
+Before and after numbers on index with 100K files.
 
-The first is a probe to make sure we can hit the endpoint without
-sending the whole payload. And the second should pass up the 1MB
-packfile in chunks.
+./p0004-read-tree.sh
+0004.2: read-tree (103037)              0.30(0.20+0.08)
+0004.3: switch branches (3038 103037)   0.65(0.47+0.16)
 
-That would at least tell you if the problem is the chunked encoding, or
-if it's related to the size.
+$ ./p0004-read-tree.sh
+0004.2: read-tree (103040)              0.25(0.16+0.07)
+0004.3: switch branches (3041 103040)   0.58(0.44+0.13)
+================
 
-> (For me to publish longer log traces requires a level of security review which is 
-> probably too much of a hassle unless you think it will be really useful).
 
-Nah, I doubt there's much to see except "did a small chunked transfer
-work", and anything relevant you can pick out of the server response
-(but probably "502" is the extent of it).
+Jeff Hostetler (4):
+  p0004-read-tree: perf test to time read-tree
+  read-cache: add strcmp_offset function
+  test-strcmp-offset: created test for strcmp_offset
+  read-cache: speed up add_index_entry during checkout
 
-> > IMHO, complaining about the negative number to the user would be an
-> > improvement.
-> 
-> That seems reasonable.
+ Makefile                      |  1 +
+ cache.h                       |  1 +
+ read-cache.c                  | 73 ++++++++++++++++++++++++++++++++++++-
+ t/helper/.gitignore           |  1 +
+ t/helper/test-strcmp-offset.c | 64 +++++++++++++++++++++++++++++++++
+ t/perf/p0004-read-tree.sh     | 84 +++++++++++++++++++++++++++++++++++++++++++
+ t/t0065-strcmp-offset.sh      | 11 ++++++
+ 7 files changed, 234 insertions(+), 1 deletion(-)
+ create mode 100644 t/helper/test-strcmp-offset.c
+ create mode 100755 t/perf/p0004-read-tree.sh
+ create mode 100755 t/t0065-strcmp-offset.sh
 
-You can do that with:
+-- 
+2.9.3
 
-   if (http_post_buffer < 0)
-	die("negative http.postBuffer not allowed");
-
-but I was trying to suggest that using git_parse_unsigned() should
-detect that error for you. It doesn't seem to, though! The strtoumax()
-function happily converts negatives into their twos-complement
-wraparounds. We could detect it by looking for a leading "-" ourselves,
-though I wonder if anybody is relying on the "-1" behavior.
-
--Peff
