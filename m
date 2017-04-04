@@ -2,188 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBD6C1FAFB
-	for <e@80x24.org>; Mon,  3 Apr 2017 23:53:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 745EF1FAFB
+	for <e@80x24.org>; Tue,  4 Apr 2017 01:32:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751956AbdDCXxU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Apr 2017 19:53:20 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:45182 "EHLO
-        homiemail-a17.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751668AbdDCXxT (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Apr 2017 19:53:19 -0400
-Received: from homiemail-a17.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a17.g.dreamhost.com (Postfix) with ESMTP id C9B642B206D;
-        Mon,  3 Apr 2017 16:53:18 -0700 (PDT)
-Received: from localhost.localdomain (gzac12-mdf2-1.aoa.twosigma.com [208.77.215.155])
-        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a17.g.dreamhost.com (Postfix) with ESMTPSA id 6CA422B2065;
-        Mon,  3 Apr 2017 16:53:18 -0700 (PDT)
-From:   David Turner <dturner@twosigma.com>
-To:     git@vger.kernel.org
-Cc:     tboegi@web.de, David Turner <dturner@twosigma.com>
-Subject: [PATCH v5] http.postbuffer: allow full range of ssize_t values
-Date:   Mon,  3 Apr 2017 19:53:08 -0400
-Message-Id: <20170403235308.30102-1-dturner@twosigma.com>
-X-Mailer: git-send-email 2.11.GIT
+        id S1751956AbdDDBcO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Apr 2017 21:32:14 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34768 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751668AbdDDBcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Apr 2017 21:32:13 -0400
+Received: by mail-pg0-f67.google.com with SMTP id o123so33468911pga.1
+        for <git@vger.kernel.org>; Mon, 03 Apr 2017 18:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vsOA/tfyXApetd6j3asOwJtZBX6nOsmRISm8F52huyo=;
+        b=P22WUn66ntx4jjJ4AJl5uhYvbzIjq/L9GEbCPcAEDSWiX/Iaa0RTl3m7g/B9hTK8Zq
+         sG9x9lnfy/JM3jdedrz3wuaDiss6IUWiptXWa+gJesCdf1fqjFuhULGD2r7gGaoKSjGB
+         73ZNysgfe8Lf2d2yi4SBGiEvspKECldNlVGaawRJSgNeVuMcD5ftrYiXOVnUTLT0dEqL
+         V4Bip/7Ip86Tm7OKiGW4F8OqjqpZmNtqbLITMaaoivheN5/AmgJ9N0UwHVOmTABoX2rM
+         7IOUjPnDvEcDuW7etolOZV1OWAYZYN3zhup37IOMzkMem2E72Vspo78usklNHB8KWstE
+         qBsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vsOA/tfyXApetd6j3asOwJtZBX6nOsmRISm8F52huyo=;
+        b=cG3cWi0+cp9P1l0JZ3/hj9lz11ib9sL9tYzn05yAc2qitibsPF0RPBYgaz3VHUIauO
+         60b7TARL7ZRxysP2VdsLdLFC8z1HuYpk/l9ZhB3jz1NbP4CMOXG25Nys9LJRUrOkmyhu
+         T9WQK8NeNj7meR3Y7wdmnIDg7saWh2xav9Ywthh9Jz0oYkykO2cZLu9Q1RCUVDiOgYOh
+         lFMmudODBhRqnRWtFGs99Khvyu3TJdxWf+lrWHkKh2wAn8y1lW9eq1QmjzvDpsZGNuH1
+         rNMt6pbz8LLQg6sU20ONkGYpHE7A82Y+g/8SgC9reFXsyFNj+2aP8KGRzbRycsOVQIb6
+         rjoQ==
+X-Gm-Message-State: AFeK/H17mKMiHDBRFtBY5MJoLXYlDh16JlqYKJSAi3rtYrNNrVRB9jyt14Kd5DLNqPswvw==
+X-Received: by 10.98.33.218 with SMTP id o87mr6944282pfj.11.1491269532866;
+        Mon, 03 Apr 2017 18:32:12 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:81c9:69b0:17e4:e0f8])
+        by smtp.gmail.com with ESMTPSA id d1sm28033669pfa.5.2017.04.03.18.32.12
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 03 Apr 2017 18:32:12 -0700 (PDT)
+Date:   Mon, 3 Apr 2017 18:32:10 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org, tboegi@web.de
+Subject: Re: [PATCH v5] http.postbuffer: allow full range of ssize_t values
+Message-ID: <20170404013210.GD8741@aiede.mtv.corp.google.com>
+References: <20170403235308.30102-1-dturner@twosigma.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170403235308.30102-1-dturner@twosigma.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unfortunately, in order to push some large repos, the http postbuffer
-must sometimes exceed two gigabytes.  On a 64-bit system, this is OK:
-we just malloc a larger buffer.
+David Turner wrote:
 
-This means that we need to use CURLOPT_POSTFIELDSIZE_LARGE to set the
-buffer size.
+> This means that we need to use CURLOPT_POSTFIELDSIZE_LARGE to set the
+> buffer size.
 
-Signed-off-by: David Turner <dturner@twosigma.com>
----
+Neat.
 
-V5 addresses comments from Torsten Boegershausen and Ramsay Jones.  Since
-I don't have a 32-bit machine handy, it's difficult for me to check
-for compiler warnings on 32-bit machines.  Hopefully my guess as
-to the solution to Ramsay's issue will be correct.
+For completeness, it's useful to know this was added in curl 7.11.1,
+which is old enough for us to be able to count on users having it (in
+fact it was released >10 years ago).
 
-cache.h       |  1 +
- config.c      | 17 +++++++++++++++++
- http.c        |  4 ++--
- http.h        |  2 +-
- remote-curl.c | 12 +++++++++---
- 5 files changed, 30 insertions(+), 6 deletions(-)
+[...]
+> +++ b/remote-curl.c
+> @@ -531,6 +531,12 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+>  	return err;
+>  }
+>  
+> +static curl_off_t xcurl_off_t(ssize_t len) {
+> +	if (len > (curl_off_t) len)
+> +		die("Cannot handle pushes this big");
 
-diff --git a/cache.h b/cache.h
-index fbdf7a815a..5e6747dbb4 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1900,6 +1900,7 @@ extern int git_parse_maybe_bool(const char *);
- extern int git_config_int(const char *, const char *);
- extern int64_t git_config_int64(const char *, const char *);
- extern unsigned long git_config_ulong(const char *, const char *);
-+extern ssize_t git_config_ssize_t(const char *, const char *);
- extern int git_config_bool_or_int(const char *, const char *, int *);
- extern int git_config_bool(const char *, const char *);
- extern int git_config_maybe_bool(const char *, const char *);
-diff --git a/config.c b/config.c
-index 1a4d85537b..aae6dcc34e 100644
---- a/config.c
-+++ b/config.c
-@@ -834,6 +834,15 @@ int git_parse_ulong(const char *value, unsigned long *ret)
- 	return 1;
+nit: other calls to die() here and elsewhere tend to use a lowercase
+error message.
+
+More importantly, converting a value to a signed type when the value
+cannot be represented in it yields implementation-defined behavior
+(C99 section 6.3.1.3 "signed and unsigned integers").  That makes it
+fodder for over-eager optimizers.
+
+Would something like the following work?
+
+With that change,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+diff --git i/remote-curl.c w/remote-curl.c
+index b7b69e096a..cf171b1bc9 100644
+--- i/remote-curl.c
++++ w/remote-curl.c
+@@ -532,8 +532,8 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
  }
  
-+static int git_parse_ssize_t(const char *value, ssize_t *ret)
-+{
-+	intmax_t tmp;
-+	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(ssize_t)))
-+		return 0;
-+	*ret = tmp;
-+	return 1;
-+}
-+
- NORETURN
- static void die_bad_number(const char *name, const char *value)
- {
-@@ -892,6 +901,14 @@ unsigned long git_config_ulong(const char *name, const char *value)
- 	return ret;
+ static curl_off_t xcurl_off_t(ssize_t len) {
+-	if (len > (curl_off_t) len)
+-		die("Cannot handle pushes this big");
++	if (len > maximum_signed_value_of_type(curl_off_t))
++		die("cannot handle pushes this big");
+ 	return (curl_off_t) len;
  }
  
-+ssize_t git_config_ssize_t(const char *name, const char *value)
-+{
-+	ssize_t ret;
-+	if (!git_parse_ssize_t(value, &ret))
-+		die_bad_number(name, value);
-+	return ret;
-+}
-+
- int git_parse_maybe_bool(const char *value)
- {
- 	if (!value)
-diff --git a/http.c b/http.c
-index 96d84bbed3..22f8167ba2 100644
---- a/http.c
-+++ b/http.c
-@@ -19,7 +19,7 @@ long int git_curl_ipresolve;
- #endif
- int active_requests;
- int http_is_verbose;
--size_t http_post_buffer = 16 * LARGE_PACKET_MAX;
-+ssize_t http_post_buffer = 16 * LARGE_PACKET_MAX;
- 
- #if LIBCURL_VERSION_NUM >= 0x070a06
- #define LIBCURL_CAN_HANDLE_AUTH_ANY
-@@ -331,7 +331,7 @@ static int http_options(const char *var, const char *value, void *cb)
- 	}
- 
- 	if (!strcmp("http.postbuffer", var)) {
--		http_post_buffer = git_config_int(var, value);
-+		http_post_buffer = git_config_ssize_t(var, value);
- 		if (http_post_buffer < LARGE_PACKET_MAX)
- 			http_post_buffer = LARGE_PACKET_MAX;
- 		return 0;
-diff --git a/http.h b/http.h
-index 02bccb7b0c..f7bd3b26b0 100644
---- a/http.h
-+++ b/http.h
-@@ -111,7 +111,7 @@ extern struct curl_slist *http_copy_default_headers(void);
- extern long int git_curl_ipresolve;
- extern int active_requests;
- extern int http_is_verbose;
--extern size_t http_post_buffer;
-+extern ssize_t http_post_buffer;
- extern struct credential http_auth;
- 
- extern char curl_errorstr[CURL_ERROR_SIZE];
-diff --git a/remote-curl.c b/remote-curl.c
-index e953d06f66..b7b69e096a 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -531,6 +531,12 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
- 	return err;
- }
- 
-+static curl_off_t xcurl_off_t(ssize_t len) {
-+	if (len > (curl_off_t) len)
-+		die("Cannot handle pushes this big");
-+	return (curl_off_t) len;
-+}
-+
- static int post_rpc(struct rpc_state *rpc)
- {
- 	struct active_request_slot *slot;
-@@ -614,7 +620,7 @@ static int post_rpc(struct rpc_state *rpc)
- 		 * and we just need to send it.
- 		 */
- 		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, gzip_body);
--		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, gzip_size);
-+		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE_LARGE, xcurl_off_t(gzip_size));
- 
- 	} else if (use_gzip && 1024 < rpc->len) {
- 		/* The client backend isn't giving us compressed data so
-@@ -645,7 +651,7 @@ static int post_rpc(struct rpc_state *rpc)
- 
- 		headers = curl_slist_append(headers, "Content-Encoding: gzip");
- 		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, gzip_body);
--		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, gzip_size);
-+		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE_LARGE, xcurl_off_t(gzip_size));
- 
- 		if (options.verbosity > 1) {
- 			fprintf(stderr, "POST %s (gzip %lu to %lu bytes)\n",
-@@ -658,7 +664,7 @@ static int post_rpc(struct rpc_state *rpc)
- 		 * more normal Content-Length approach.
- 		 */
- 		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, rpc->buf);
--		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, rpc->len);
-+		curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE_LARGE, xcurl_off_t(rpc->len));
- 		if (options.verbosity > 1) {
- 			fprintf(stderr, "POST %s (%lu bytes)\n",
- 				rpc->service_name, (unsigned long)rpc->len);
--- 
-2.11.GIT
-
