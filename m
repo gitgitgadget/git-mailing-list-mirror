@@ -2,164 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A109020966
-	for <e@80x24.org>; Tue,  4 Apr 2017 09:17:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2471020966
+	for <e@80x24.org>; Tue,  4 Apr 2017 10:13:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753057AbdDDJRF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 05:17:05 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:35485 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752765AbdDDJRE (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 4 Apr 2017 05:17:04 -0400
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.nyi.internal (Postfix) with ESMTP id 5232420789;
-        Tue,  4 Apr 2017 05:17:03 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 04 Apr 2017 05:17:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=V+4LUiAX2Ex/ZbVSFA
-        IC4FHz5H0eTrf2lT3z2xPfuCc=; b=l3JcpaG6DWhs1TNJxE5C9mcklRrrZ8PZwl
-        I1MPiMGtfBgo0TNEc8w4b5dJ+INKmRTs5PezH52kII1S4E9tJuuxo2yzTCF80yDA
-        f4kuXLkTsD05dWz0/OsYxPe6nXvkB7WJFdQYJKuoASWjUAjWSv+21YNVhs2sRQv1
-        FzBm1xAH2PPqJY0+ahk3GtVTWDEg4KICAbk1YqBnAvGTIO5WCGpBz9ILpzPCbyc/
-        fkQCSlEyaQ/B7L1W3qQ7F5aE/EZdMMUbI59XqsYAjXoez9j/VKwzvj6p25Qw+dkA
-        /yLEKEQEsxpTcZB6PTRS+2XhLn5Og5yjzlwCsm0+WrZ5FpbF2oAg==
-X-ME-Sender: <xms:j2TjWEMvcxdyBXDFxO2_-nMN9QLNfc8s1zsNoczeecqyQ9CLCJ31_w>
-X-Sasl-enc: eLcaOotcRuVVYVcC9xn6w5brCCBOlbsmUhmC9CiT6cTt 1491297422
-Received: from localhost (unknown [46.189.27.162])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E28C67E712;
-        Tue,  4 Apr 2017 05:17:02 -0400 (EDT)
-Date:   Tue, 4 Apr 2017 11:17:57 +0200
-From:   Patrick Steinhardt <ps@pks.im>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] pathspec: always honor `PATHSPEC_PREFIX_ORIGIN` flag
-Message-ID: <20170404091757.GA4584@pks-xps>
-References: <1556910880cfce391bdca2d8f0cbcb8c71371691.1491206540.git.ps@pks.im>
- <20170403162648.GA166794@google.com>
+        id S1753666AbdDDKNJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 06:13:09 -0400
+Received: from mail-wr0-f177.google.com ([209.85.128.177]:36088 "EHLO
+        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753177AbdDDKMn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 06:12:43 -0400
+Received: by mail-wr0-f177.google.com with SMTP id w11so205988400wrc.3
+        for <git@vger.kernel.org>; Tue, 04 Apr 2017 03:12:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:newsgroups:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=1joqHFi/b9uRX+Xk+Hxtta2Vi1AbIk47sAucl4FojKo=;
+        b=BMX2+0I/LOntVT4aE7bMhB+5vp7xp1cCNhlHnsbHy4ucUcxbuIDroMcblFt2PnAazr
+         FJJgytA0/QW1N8kNY6+z0dbeXtv+MIe5T/k86IKGwGGTOltj+sKJ7kAlJEQsI4Aan9zt
+         wj+BxIJR7ZZ7GjUq+wZmnCfJbqduyrCZj4KTSihIZ3r6/Ny4/9Vh/AqfnGTTDv4bq2dr
+         /HDltHLfCHcEzy/coQqgZvvfQdsayJ4WGw7QGSN3MZkWppkfpxlDYkFhE/gVoaQroZYt
+         JPpw8aGx4TBnphyFsm3Rn16FkvLO4DDPcP5JY0CL43W2VMFRuinvbucENMx+WhS5D2y3
+         9+EQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
+         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=1joqHFi/b9uRX+Xk+Hxtta2Vi1AbIk47sAucl4FojKo=;
+        b=PHCExEXygNFuzpmmUz5hDMDwB4FbvrbUm4ppoPrlvka07uyjSbys+oRhbOumbgiPEf
+         67GT4ulxfyQTXNC0EOopQRKo3et3zPyn8nX5gzug6qT5zE1M+h4Fxry3tgIqi81uXUNM
+         i9eLGFN/N7o/N0oE6hOlbJLqGECtBLteuz/3gX/g99q+AKRjQg6uFlLBLGJiKAxlwl9p
+         mfsGU2z+ZsppRjbuYG0T5TDn6Dn5jW1dU+K+q3mPzHRtJN2IJuxSAJ6/8d3T8yf/wPPp
+         sK9LilS8E/IWHk7F4U1eI4hUJoLqtnEwQz2MF7iZMxKQtGeO2Kcu0OrHtAr0Nw5mkAx2
+         KyGg==
+X-Gm-Message-State: AFeK/H2eepGbRbFbXQgGNIe3SkaxXHkF+EzjVeALNlO5fWVomLC5TI3x/P6B8n6sSpNZkA==
+X-Received: by 10.223.139.80 with SMTP id v16mr18471829wra.133.1491300761691;
+        Tue, 04 Apr 2017 03:12:41 -0700 (PDT)
+Received: from ?IPv6:2001:778:e27f:a23:36c4:e19f:3c1:8a8? (frost.work.nullroute.eu.org. [2001:778:e27f:a23:36c4:e19f:3c1:8a8])
+        by smtp.gmail.com with ESMTPSA id e21sm13954075wma.5.2017.04.04.03.12.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 04 Apr 2017 03:12:41 -0700 (PDT)
+Subject: Re: How do you script linux GIT client to pass kerberos credential to
+ apache enabled GIT server?
+To:     ken edward <kedward777@gmail.com>, git@vger.kernel.org
+References: <CAAqgmoP2uyd5_k-JDOBpBV8ay6BueUvKkwcWAZ_C1n4=4xpECg@mail.gmail.com>
+Newsgroups: gmane.comp.version-control.git
+From:   =?UTF-8?Q?Mantas_Mikul=c4=97nas?= <grawity@gmail.com>
+Message-ID: <7ab9e033-906f-f1ec-f89a-952346e98651@gmail.com>
+Date:   Tue, 4 Apr 2017 13:12:38 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="ibTvN161/egqYuK8"
-Content-Disposition: inline
-In-Reply-To: <20170403162648.GA166794@google.com>
+In-Reply-To: <CAAqgmoP2uyd5_k-JDOBpBV8ay6BueUvKkwcWAZ_C1n4=4xpECg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2017-04-03 19:04, ken edward wrote:
+> Hello,
+> 
+> I have my git repositories behind an apache server configured with
+> kerberos. Works fine if the user is logged in on their workstation.
+> Apache gets the kerberos credential, and validates, and  then sends
+> the GIT repo being requested.
+> 
+> BUT, I want to write a script on linux that will also pass the
+> kerberos credential to the apache GIT server without having any
+> manually intervention. Seems I would create a kerberos keytab for the
+> principal and then use that to authenticate.... kinit supports
+> authenticating from a keytab using the -k -t <keytab-path> options,
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+kinit works, but I think kstart [1] is commonly used for this as well;
+takes care of automatic ticket renewal.
 
-On Mon, Apr 03, 2017 at 09:26:48AM -0700, Brandon Williams wrote:
-> On 04/03, Patrick Steinhardt wrote:
-> > Previous to commit 5d8f084a5 (pathspec: simpler logic to prefix original
-> > pathspec elements, 2017-01-04), we were always using the computed
-> > `match` variable to perform pathspec matching whenever
-> > `PATHSPEC_PREFIX_ORIGIN` is set. This is for example useful when passing
-> > the parsed pathspecs to other commands, as the computed `match` may
-> > contain a pathspec relative to the repository root. The commit changed
-> > this logic to only do so when we do have an actual prefix and when
-> > literal pathspecs are deactivated.
-> >=20
-> > But this change may actually break some commands which expect passed
-> > pathspecs to be relative to the repository root. One such case is `git
-> > add --patch`, which now fails when using relative paths from a
-> > subdirectory. For example if executing "git add -p ../foo.c" in a
-> > subdirectory, the `git-add--interactive` command will directly pass
-> > "../foo.c" to `git-ls-files`. As ls-files is executed at the
-> > repository's root, the command will notice that "../foo.c" is outside
-> > the repository and fail.
-> >=20
-> > Fix the issue by again using the computed `match` variable whenever
-> > `PATHSPEC_PREFIX_ORIGIN` is set. This restores behavior previous to
-> > 5d8f084a5 and fixes interactive add.
-> >=20
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  pathspec.c                 |  6 +++---
-> >  t/t3701-add-interactive.sh | 20 ++++++++++++++++++++
-> >  2 files changed, 23 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/pathspec.c b/pathspec.c
-> > index 303efda83..3193e45a6 100644
-> > --- a/pathspec.c
-> > +++ b/pathspec.c
-> > @@ -504,12 +504,12 @@ static void init_pathspec_item(struct pathspec_it=
-em *item, unsigned flags,
-> >  	 * Prefix the pathspec (keep all magic) and assign to
-> >  	 * original. Useful for passing to another command.
-> >  	 */
-> > -	if ((flags & PATHSPEC_PREFIX_ORIGIN) &&
-> > -	    prefixlen && !get_literal_global()) {
-> > +	if (flags & PATHSPEC_PREFIX_ORIGIN) {
-> >  		struct strbuf sb =3D STRBUF_INIT;
-> > =20
-> >  		/* Preserve the actual prefix length of each pattern */
-> > -		prefix_magic(&sb, prefixlen, element_magic);
-> > +		if (prefixlen && !get_literal_global())
-> > +			prefix_magic(&sb, prefixlen, element_magic);
-> > =20
-> >  		strbuf_addstr(&sb, match);
-> >  		item->original =3D strbuf_detach(&sb, NULL);
->=20
-> Would it just make sense to drop the requirement that prefixlen be
-> non-zero?  My problem with this change currently is the ability to get
-> an original string with is empty (ie "\0") which would cause git to
-> throw some warnings about not allowing empty strings as pathspecs if
-> they were then passed on to other processes.
+ktutil should be able to create a keytab based on your password, but
+I've had mixed luck with that. Though still probably easier than
+creating a separate instance just for batch tasks...
 
-You're right. My patch results in:
+[1]: https://www.eyrie.org/~eagle/software/kstart/
 
-$ git init repo
-$ cd repo
-$ touch file
-$ git add file
-$ git commit -mfile
-$ echo foo>file
-$ mkdir subdir
-$ cd subdir
-$ git add -p ..
-warning: empty strings as pathspecs will be made invalid...
-warning: empty strings as pathspecs will be made invalid...
-
-Dropping only the `prefixlen` condition and then unconditionally
-calling `prefix_magic` suffices to fix the actual bug. I've
-improved the test to use a pathspec which resolves to "" and
-check stderr.
-
-Thanks for catching this!
-
-Regards
-Patrick
-
---ibTvN161/egqYuK8
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEtmscHsieVjl9VyNUEXxntp6r8SwFAljjZMUACgkQEXxntp6r
-8SzTWg//QZi8kVfOB13E7Mt2bFKOjv3ofo2vNTBqBfjDk1Gn1dS1fN5ZCNS8Q7Xz
-1r/0gAnJSG2eONT7ppmf+vPL7fJPntXpgeYaarTI780Fn/28XUkkYvUxj4zVgCC6
-kI2P51u0QsuvXoRwlgyY0FuGpvNIOzpf2wX2FVrdN5CXKx4jxxBP/vgwdxYF7AzV
-CCU4OMANylnoobn0WAttEKrSesno/tEOW3b/5i0kb+QPdnhrOU4Cz4KTobTa7qRP
-Px0xgRmx6C2Is3AnyySmr6z1lZnM6Ln6Sg/UkB6c8cMO2TDG+Rg3nzIUsc2162NT
-/4xoXuuJPvZfoUQyY7aC/RTOeMrrqnLfc3bZFx84YnWlbbrPq0nMoqQjNQIWMzTO
-N1WnGXX5Akie+p6R/DE/arzzRjJ3tYoA876sCR+VmBbZj70EG1URMV3sw8kZkTeD
-yDLfciEA6+Gk4+36EKv/ygfMXzfDx7YZQzeye43ECqoPcX8XNKptbpF2rF9OZUM3
-6eLsnEwy8rAKEEM0mcOfm2ZyoiAaVW2oeDSFNUAssDxAjiB5Q7GjNdItqDXl8TKs
-vKEgDsOMp3I8eJgy333WafDD3JTOWi7uk1Y6uXJKjv6kH/0zHzZ+EjvPXyIWs7lu
-xDS9F0EwQsDFrKRiCNHDGVoKCErc5P5g/bBLlCdHUrNcYhXOmKw=
-=0eB0
------END PGP SIGNATURE-----
-
---ibTvN161/egqYuK8--
+-- 
+Mantas Mikulėnas <grawity@gmail.com>
