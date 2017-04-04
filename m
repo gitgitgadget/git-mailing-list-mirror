@@ -2,92 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2471020966
-	for <e@80x24.org>; Tue,  4 Apr 2017 10:13:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 537AA20966
+	for <e@80x24.org>; Tue,  4 Apr 2017 10:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753666AbdDDKNJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Apr 2017 06:13:09 -0400
-Received: from mail-wr0-f177.google.com ([209.85.128.177]:36088 "EHLO
-        mail-wr0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753177AbdDDKMn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Apr 2017 06:12:43 -0400
-Received: by mail-wr0-f177.google.com with SMTP id w11so205988400wrc.3
-        for <git@vger.kernel.org>; Tue, 04 Apr 2017 03:12:42 -0700 (PDT)
+        id S1753683AbdDDKNI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Apr 2017 06:13:08 -0400
+Received: from mail-oi0-f41.google.com ([209.85.218.41]:35711 "EHLO
+        mail-oi0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753403AbdDDKMy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Apr 2017 06:12:54 -0400
+Received: by mail-oi0-f41.google.com with SMTP id f193so157083881oib.2
+        for <git@vger.kernel.org>; Tue, 04 Apr 2017 03:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:newsgroups:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=1joqHFi/b9uRX+Xk+Hxtta2Vi1AbIk47sAucl4FojKo=;
-        b=BMX2+0I/LOntVT4aE7bMhB+5vp7xp1cCNhlHnsbHy4ucUcxbuIDroMcblFt2PnAazr
-         FJJgytA0/QW1N8kNY6+z0dbeXtv+MIe5T/k86IKGwGGTOltj+sKJ7kAlJEQsI4Aan9zt
-         wj+BxIJR7ZZ7GjUq+wZmnCfJbqduyrCZj4KTSihIZ3r6/Ny4/9Vh/AqfnGTTDv4bq2dr
-         /HDltHLfCHcEzy/coQqgZvvfQdsayJ4WGw7QGSN3MZkWppkfpxlDYkFhE/gVoaQroZYt
-         JPpw8aGx4TBnphyFsm3Rn16FkvLO4DDPcP5JY0CL43W2VMFRuinvbucENMx+WhS5D2y3
-         9+EQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=U0NiT4H7/i9JIgG1yqvpEJ8lBOieuNQ1PLZAKe699YQ=;
+        b=nYjC3+93lqoS71/SXVfjJamm6QrG6Y8kjv5i5cdqx6kNOIKHHueFPyH6aPugRN58Ib
+         nv0FIAFOxtDjXKAnxvPpIQzHMDl4iKeez8tSBp+0HGS9sIhSrUl1PHCfzccbFgKQFb6R
+         w1gosEinqbwR6940ogwcuW7czdtZni+tJjZcBY8KeEZcVY71I8S/G5w1crgrDnPwATZE
+         dkj2xNIpXdgdrttJnabvuKZFvxRwHEJOQ5pDv0T9UwQAdZzVLjwhWG1JwLPMYvStF1Ze
+         7/pcb/M3JuCX9Rdrrg0kPmxVEHwjgJee1gi95iDbX2bFP92847IpxE8W4EKKFc6bOAyQ
+         sMkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:newsgroups:from:message-id
-         :date:user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=1joqHFi/b9uRX+Xk+Hxtta2Vi1AbIk47sAucl4FojKo=;
-        b=PHCExEXygNFuzpmmUz5hDMDwB4FbvrbUm4ppoPrlvka07uyjSbys+oRhbOumbgiPEf
-         67GT4ulxfyQTXNC0EOopQRKo3et3zPyn8nX5gzug6qT5zE1M+h4Fxry3tgIqi81uXUNM
-         i9eLGFN/N7o/N0oE6hOlbJLqGECtBLteuz/3gX/g99q+AKRjQg6uFlLBLGJiKAxlwl9p
-         mfsGU2z+ZsppRjbuYG0T5TDn6Dn5jW1dU+K+q3mPzHRtJN2IJuxSAJ6/8d3T8yf/wPPp
-         sK9LilS8E/IWHk7F4U1eI4hUJoLqtnEwQz2MF7iZMxKQtGeO2Kcu0OrHtAr0Nw5mkAx2
-         KyGg==
-X-Gm-Message-State: AFeK/H2eepGbRbFbXQgGNIe3SkaxXHkF+EzjVeALNlO5fWVomLC5TI3x/P6B8n6sSpNZkA==
-X-Received: by 10.223.139.80 with SMTP id v16mr18471829wra.133.1491300761691;
-        Tue, 04 Apr 2017 03:12:41 -0700 (PDT)
-Received: from ?IPv6:2001:778:e27f:a23:36c4:e19f:3c1:8a8? (frost.work.nullroute.eu.org. [2001:778:e27f:a23:36c4:e19f:3c1:8a8])
-        by smtp.gmail.com with ESMTPSA id e21sm13954075wma.5.2017.04.04.03.12.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Apr 2017 03:12:41 -0700 (PDT)
-Subject: Re: How do you script linux GIT client to pass kerberos credential to
- apache enabled GIT server?
-To:     ken edward <kedward777@gmail.com>, git@vger.kernel.org
-References: <CAAqgmoP2uyd5_k-JDOBpBV8ay6BueUvKkwcWAZ_C1n4=4xpECg@mail.gmail.com>
-Newsgroups: gmane.comp.version-control.git
-From:   =?UTF-8?Q?Mantas_Mikul=c4=97nas?= <grawity@gmail.com>
-Message-ID: <7ab9e033-906f-f1ec-f89a-952346e98651@gmail.com>
-Date:   Tue, 4 Apr 2017 13:12:38 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=U0NiT4H7/i9JIgG1yqvpEJ8lBOieuNQ1PLZAKe699YQ=;
+        b=rF2VUL/vs+RaZHAni8BrgW5rFu/GMMTUxZrsAnFzBRWR2JfynUum0i7XLZ3h2qBH5G
+         +rJxZmhXtRORWRknISRlkI0LUXIE3Gix4JPnRkDCB7UxtYNflfy6CnfY1AY/Qfmqof8n
+         TIF7ghZBPl9MQaNkp+vreeoBVa6mmr10prMmvoY8NF6DK5GZXRCmukiCohQmEu9DMNyw
+         /Ou9QouoxujKhmA0AMNQShtANJKIA1luk7wGpt6YzuNMmbVUGFJQl/wP3HT/nSBSuEOK
+         5Bn7iK7zHR09ItJboi76W2MP3teeHbBBe86ZAe1q1ulHMzKGX/EGfsZPwxu6r7IjwlfE
+         UeZw==
+X-Gm-Message-State: AFeK/H0a/dkQ/2zafT4AOH9YCMbUIwc2q3fIP8x8y+G9VWuWPlIO/vter7Z8k1/N4Q80V55sTF2hMlwVptXbUQ==
+X-Received: by 10.157.46.145 with SMTP id w17mr12253710ota.225.1491300773814;
+ Tue, 04 Apr 2017 03:12:53 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAAqgmoP2uyd5_k-JDOBpBV8ay6BueUvKkwcWAZ_C1n4=4xpECg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.74.158.70 with HTTP; Tue, 4 Apr 2017 03:12:23 -0700 (PDT)
+In-Reply-To: <xmqqinmq4nkb.fsf@gitster.mtv.corp.google.com>
+References: <20170325130549.GA20618@ash> <20170330113723.20474-1-pclouds@gmail.com>
+ <20170330113723.20474-2-pclouds@gmail.com> <xmqqinmq4nkb.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 4 Apr 2017 17:12:23 +0700
+Message-ID: <CACsJy8CbOFAviPo9tCJ-4+ritd5WQboGHDyxaCxBK1UMZe0+kQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] config: resolve symlinks in conditional include's patterns
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-04-03 19:04, ken edward wrote:
-> Hello,
-> 
-> I have my git repositories behind an apache server configured with
-> kerberos. Works fine if the user is logged in on their workstation.
-> Apache gets the kerberos credential, and validates, and  then sends
-> the GIT repo being requested.
-> 
-> BUT, I want to write a script on linux that will also pass the
-> kerberos credential to the apache GIT server without having any
-> manually intervention. Seems I would create a kerberos keytab for the
-> principal and then use that to authenticate.... kinit supports
-> authenticating from a keytab using the -k -t <keytab-path> options,
+On Fri, Mar 31, 2017 at 1:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+>
+>> $GIT_DIR returned by get_git_dir() is normalized, with all symlinks
+>> resolved (see setup_work_tree function). In order to match paths (or
+>> patterns) against $GIT_DIR char-by-char, they have to be normalized
+>> too. There is a note in config.txt about this, that the user need to
+>> resolve symlinks by themselves if needed.
+>>
+>> The problem is, we allow certain path expansion, '~/' and './', for
+>> convenience and can't ask the user to resolve symlinks in these
+>> expansions. Make sure the expanded paths have all symlinks resolved.
+>
+> That sounds sensible but I fail to see why 1/2 is the right approach
+> to do this, and I must be missing something.  Wouldn't you get the
+> same result if you run realpath() yourself on expanded, after
+> receiving the return value of expand_user_path() in it?
 
-kinit works, but I think kstart [1] is commonly used for this as well;
-takes care of automatic ticket renewal.
+Because at that point I don't know what part is $HOME (i.e. valid path
+that real_path can walk through), what part is random wildcards from
+the pattern. Note that in this case we pass a wildmatch pattern to
+expand_user_path(), like ~/[ab]foo/*bar*/**. After expansion it
+becomes /home/pclouds/[ab]foo/*bar*/**. It does not feel right to let
+real_path() walk the "[ab]foo..." part. In the tests, I hit
+die("Invalid path") in strbuf_realpath(). Even if I set die_on_error()
+to avoid that, strbuf_realpath() will not return the resolved path
 
-ktutil should be able to create a keytab based on your password, but
-I've had mixed luck with that. Though still probably easier than
-creating a separate instance just for batch tasks...
+> Can you add a test to demonstrate the issue (which would need to be
+> protected with SYMLINKS prereq)?
 
-[1]: https://www.eyrie.org/~eagle/software/kstart/
-
--- 
-Mantas Mikulėnas <grawity@gmail.com>
+Will do. It may look a bit ugly though because I have to force
+setup_git_directory() to call real_path() because it doesn't always do
+that.
+--=20
+Duy
