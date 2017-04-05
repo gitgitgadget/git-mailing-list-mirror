@@ -7,41 +7,40 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BC8720966
-	for <e@80x24.org>; Wed,  5 Apr 2017 13:07:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD92E20966
+	for <e@80x24.org>; Wed,  5 Apr 2017 13:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933273AbdDENFl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 09:05:41 -0400
-Received: from sub4.mail.dreamhost.com ([69.163.253.135]:41176 "EHLO
+        id S933269AbdDENFk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 09:05:40 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:41177 "EHLO
         homiemail-a95.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S932901AbdDENE2 (ORCPT
+        by vger.kernel.org with ESMTP id S932920AbdDENE2 (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 5 Apr 2017 09:04:28 -0400
-X-Greylist: delayed 12647 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Apr 2017 09:04:28 EDT
 Received: from homiemail-a95.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a95.g.dreamhost.com (Postfix) with ESMTP id A8D8F600051B
+        by homiemail-a95.g.dreamhost.com (Postfix) with ESMTP id A7EF6600051A
         for <git@vger.kernel.org>; Wed,  5 Apr 2017 06:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=from:to
         :subject:date:message-id:in-reply-to:references; s=
-        jupiterrise.com; bh=Le8f6Ssj9tgacT8vSRMg1hgjfio=; b=adOXvmXR2QCL
-        BGJlMHn5S3Srnn5IiJwXl9BL6WfoYEuY7H+FzWPEDDxuYpY4kFX7LgyDw/PJC3Po
-        zdmv/SuOyWiT+5z225hK8+0s4uEPCnmv5sL06+9QBST7jeSE7JdDzJopa1hmOI+j
-        gYAGGtA1UnIeOtaOzPJxGGRtDbQ9zgc=
+        jupiterrise.com; bh=8fIs/M5z+h75WhkkFn0+QaytEL4=; b=cRiMcVZFIhLV
+        aMZyW0lUj9z2gK8UEUdFPp7NdRXuY5yl4G5nLDOqlyFiOfeGmqw0JA+YaQpkwPy/
+        ckJHT5exllB2JuZp5drOqzcki6FqFe4bh21kK5GflXFtfFZKQku8k684dRO/IrX6
+        O2FZJ4cqZ3IaPjTYikB2UUvMHj0ZrSY=
 Received: from merlin.tgcnet.jupiterrise.com (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
         (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: tgc99@jupiterrise.com)
-        by homiemail-a95.g.dreamhost.com (Postfix) with ESMTPSA id 718E26000504
+        by homiemail-a95.g.dreamhost.com (Postfix) with ESMTPSA id 751C96000509
         for <git@vger.kernel.org>; Wed,  5 Apr 2017 06:04:27 -0700 (PDT)
 Received: from athena.tgcnet.jupiterrise.com (athena.tgcnet [192.168.20.1])
-        by merlin.tgcnet.jupiterrise.com (Postfix) with ESMTP id 180A6612DA
+        by merlin.tgcnet.jupiterrise.com (Postfix) with ESMTP id 1A485612E2
         for <git@vger.kernel.org>; Wed,  5 Apr 2017 15:04:25 +0200 (CEST)
 Received: by athena.tgcnet.jupiterrise.com (Postfix, from userid 500)
-        id 08A0D76C7A; Wed,  5 Apr 2017 15:04:25 +0200 (CEST)
+        id 1692176C93; Wed,  5 Apr 2017 15:04:25 +0200 (CEST)
 From:   "Tom G. Christensen" <tgc@jupiterrise.com>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/7] Make NO_PERL_MAKEMAKER behave more like ExtUtils::MakeMaker
-Date:   Wed,  5 Apr 2017 15:04:18 +0200
-Message-Id: <20170405130424.13803-2-tgc@jupiterrise.com>
+Subject: [PATCH 4/7] Handle missing HTTP_CONNECTCODE in curl < 7.10.7
+Date:   Wed,  5 Apr 2017 15:04:21 +0200
+Message-Id: <20170405130424.13803-5-tgc@jupiterrise.com>
 X-Mailer: git-send-email 2.12.2
 In-Reply-To: <20170405130424.13803-1-tgc@jupiterrise.com>
 References: <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
@@ -51,34 +50,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change makes NO_PERL_MAKEMAKER behave more as ExtUtils::MakeMaker
-by installing the modules into the perl libdir and not $(prefix)/lib.
-It will default to sitelib but will allow the user to choose by setting
-the INSTALLDIRS variable which is also honored by ExtUtils::MakeMaker.
+With curl < 7.10.7 we cannot get the proxy CONNECT response code.
+As a workaround set it to zero which means no response code available.
 
 Signed-off-by: Tom G. Christensen <tgc@jupiterrise.com>
 ---
- perl/Makefile | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ http.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/perl/Makefile b/perl/Makefile
-index 15d96fcc7..ce53a240c 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -25,7 +25,12 @@ clean:
- $(makfile): PM.stamp
+diff --git a/http.c b/http.c
+index 96d84bbed..ce618bdca 100644
+--- a/http.c
++++ b/http.c
+@@ -214,8 +214,12 @@ static void finish_active_slot(struct active_request_slot *slot)
+ 		slot->results->auth_avail = 0;
+ #endif
  
- ifdef NO_PERL_MAKEMAKER
--instdir_SQ = $(subst ','\'',$(prefix)/lib)
-+perllib = site
-+ifdef INSTALLDIRS
-+perllib = $(INSTALLDIRS)
-+endif
-+perlinstdir := $(shell sh -c "$(PERL_PATH_SQ) -V:install$(perllib)lib | cut -d\' -f2")
-+instdir_SQ = $(subst ','\'',$(perlinstdir))
++#if LIBCURL_VERSION_NUM >= 0x070a07
+ 		curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CONNECTCODE,
+ 			&slot->results->http_connectcode);
++#else
++		slot->results->http_connectcode = 0;
++#endif
+ 	}
  
- modules += Git
- modules += Git/I18N
+ 	/* Run callback if appropriate */
 -- 
 2.12.2
 
