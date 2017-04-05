@@ -2,93 +2,195 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C378F20966
-	for <e@80x24.org>; Wed,  5 Apr 2017 17:49:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0076E20966
+	for <e@80x24.org>; Wed,  5 Apr 2017 17:49:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755313AbdDERrd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 13:47:33 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:32820 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753749AbdDERr1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 13:47:27 -0400
-Received: by mail-pg0-f46.google.com with SMTP id x125so11524286pgb.0
-        for <git@vger.kernel.org>; Wed, 05 Apr 2017 10:47:27 -0700 (PDT)
+        id S1754991AbdDERrc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 13:47:32 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35390 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754199AbdDERr3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 13:47:29 -0400
+Received: by mail-pf0-f180.google.com with SMTP id i5so10712002pfc.2
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 10:47:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hTU+dwXEYIohSixk+ARvN00NaJeUPCtulqtbL+RKJWE=;
-        b=HnNrIWQDEOwjOE36pONTb4+dwxxex3OW7wOAg2Y5mX5MnhDjKF651q1PItFTRUtF5Z
-         7k0HEZvrvSQhMDocBuVOOcYgbNqGwFeRVMwRCKiWbc76Z/tmZZrlY9nd6eMqw0Sj0XAE
-         XVMWvhCogOFU5HL2mWBjyVsQqdz1vX+7ykYY6qI/AMqO+0zSRuh3/yCGEe0JKDeHjrJh
-         hT8HAS6j9G8JbMrtpLIMFi6+IDWgXr3zTDseTfvWXBDtay4UZzMVZ5+MJzigW/tIj12k
-         sz24pZ64V+C3ibE5/F8BorHgLSGemynP2GJ7+i+gVZDmY8+k6n5+6oECNiRi5Ssk5E/l
-         bgtQ==
+        bh=eyUYS+taSePCzjppNadZbfsXiPNrhxPyZWBCL25GKdI=;
+        b=qBejRV7+/BWgngxiaQommXxw+dmDEjhIaJqJEzHfVBN11qCaCibEAGAGd2UqEJhYb1
+         kIfDMNMjWFTS6FUpZXnGijpaReb64QTWVQTEgHaF0BibmNP4q9b05jcg9sq+a5QIyKMt
+         33Ebb62tacvlnBeDMooPis+TnxpEwr+HJ8SpmHZYARxH03wy0ttONd1hL50yR5clurec
+         T+HKJHsHiQ90hxdU7oZ65snqW5oFe9CavL15jOO8VG80y1trBqJc0KkcTp3Q1nRnIz75
+         f988XF+/7Myx0MZfkvkL5QCdNCBCWqT8kDmQDSmwAJkoJJ42pLo1gQig8yxp+0ibtaLW
+         Lqlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hTU+dwXEYIohSixk+ARvN00NaJeUPCtulqtbL+RKJWE=;
-        b=D2emmeztvUng+7z/d65isrFy3uCa7w0Y7A/j5OCq3eQAdFNx5+xbHCpXaO0rXDz1O0
-         kr8At/NqJ0mGeKfHUk+AN/ghcWoZMC2D2S2T6o+AXJzkH20t1X1rElKgoOPMRsw6cdQV
-         e0czHKXVu2PXCI+OFkffGXFoMrzgtutTkTt2gQS62ltSoUSEoEMXwN1SREtI9LWL0dCL
-         zq8S0Yv2A+8ht8HZPeSFYFe07wdGYqvDLwZ7YOQINkUDn/NXwo1R80BIVmElzXRnE2mX
-         L3bsmyL+lKUQRZO/KSzdrbEDI9HoUAebfzDrkcOqYOEPOB5DU8gmwKIedO2N+v91sB4Q
-         3U8w==
-X-Gm-Message-State: AFeK/H1ELWfqO67PZY+8N2ce3HyExkQx4AptVwlgpa0kaOyoWPZ4CdOOzQYnKrMM96on0b8Y
-X-Received: by 10.84.233.143 with SMTP id l15mr37852646plk.93.1491414446047;
-        Wed, 05 Apr 2017 10:47:26 -0700 (PDT)
+        bh=eyUYS+taSePCzjppNadZbfsXiPNrhxPyZWBCL25GKdI=;
+        b=XowIyZKOXfNoomyh75FHDECKQt7+ZjSuRqtoqSQWK+QytqHMMNB7XVCz7A+hMLHMAc
+         YFIZ2ztbQjsUU2/UTX8E0ee431entLj5oqrmqJ2tPAw33Mzrtmfkx+eYt1aQk5zUdPRu
+         UOUsAdTT1FhHPv4CjYWha6fize7++G3faIoeFckQvLVdK/dqKUIdBI3A1jzJ77GhauLA
+         jpDOYDchsrXcXrMgrwC9Rh9P5aQuJbmPb/fYZXpLKEquHfxrrPYchiPTrbd+1noADJB3
+         eBREILMIPZfqvtG/BIAPv+0ddbam7hFLM/Hhll5txGrQcjnGNfph1OWD7PYc+tK8PXyA
+         duJA==
+X-Gm-Message-State: AFeK/H1Ozef0bBZgpgkg2yrfA/Sgn5LGFYqrQd37uPzkIb9dnyiaY1iffseHnQ1hIeYDFDNa
+X-Received: by 10.84.128.75 with SMTP id 69mr37413018pla.111.1491414449016;
+        Wed, 05 Apr 2017 10:47:29 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id m69sm38726623pfc.33.2017.04.05.10.47.24
+        by smtp.gmail.com with ESMTPSA id m69sm38726623pfc.33.2017.04.05.10.47.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Apr 2017 10:47:25 -0700 (PDT)
+        Wed, 05 Apr 2017 10:47:27 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, jrnieder@gmail.com
-Subject: [PATCH v3 0/5] propagating push-options, remote and refspec
-Date:   Wed,  5 Apr 2017 10:47:14 -0700
-Message-Id: <20170405174719.1297-1-bmwill@google.com>
+Subject: [PATCH v3 2/5] push: propagate push-options with --recurse-submodules
+Date:   Wed,  5 Apr 2017 10:47:16 -0700
+Message-Id: <20170405174719.1297-3-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.715.g7642488e1d-goog
-In-Reply-To: <20170331235623.166408-1-bmwill@google.com>
+In-Reply-To: <20170405174719.1297-1-bmwill@google.com>
 References: <20170331235623.166408-1-bmwill@google.com>
+ <20170405174719.1297-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v3 builds upon v2 by adding 3 additional patches to add functionality to also
-propagate the remote and refspec down to children process's working to push
-submodules.  The remote and refspec will only be propagated if the provided
-remote is configured. A remote provided in the form of a URL will cause the
-remote and refspec to not be propagated down to the submodules and instead the
-default remote and refspec will be used, preserving existing functionality.
-Currently the only supported LHS of a refspec must exactly match a single ref
-in the submodule (e.g. a branch name).
+Teach push --recurse-submodules to propagate push-options recursively to
+the pushes performed in the submodules.
 
-Patches [1/5] and [2/5] remain unchanged from v2.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ submodule.c             | 13 +++++++++++--
+ submodule.h             |  1 +
+ t/t5545-push-options.sh | 40 ++++++++++++++++++++++++++++++++++++++++
+ transport.c             |  1 +
+ 4 files changed, 53 insertions(+), 2 deletions(-)
 
-Brandon Williams (5):
-  push: unmark a local variable as static
-  push: propagate push-options with --recurse-submodules
-  remote: expose parse_push_refspec function
-  submodule--helper: add push-check subcommand
-  push: propagate remote and refspec with --recurse-submodules
-
- builtin/push.c                 |  5 +--
- builtin/submodule--helper.c    | 45 +++++++++++++++++++++++++
- remote.c                       |  2 +-
- remote.h                       |  1 +
- submodule.c                    | 74 +++++++++++++++++++++++++++++++++++++++---
- submodule.h                    |  5 ++-
- t/t5531-deep-submodule-push.sh | 52 +++++++++++++++++++++++++++++
- t/t5545-push-options.sh        | 40 +++++++++++++++++++++++
- transport.c                    |  4 ++-
- 9 files changed, 219 insertions(+), 9 deletions(-)
-
+diff --git a/submodule.c b/submodule.c
+index c52d6634c..de444be61 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -782,7 +782,9 @@ int find_unpushed_submodules(struct sha1_array *commits,
+ 	return needs_pushing->nr;
+ }
+ 
+-static int push_submodule(const char *path, int dry_run)
++static int push_submodule(const char *path,
++			  const struct string_list *push_options,
++			  int dry_run)
+ {
+ 	if (add_submodule_odb(path))
+ 		return 1;
+@@ -793,6 +795,12 @@ static int push_submodule(const char *path, int dry_run)
+ 		if (dry_run)
+ 			argv_array_push(&cp.args, "--dry-run");
+ 
++		if (push_options && push_options->nr) {
++			const struct string_list_item *item;
++			for_each_string_list_item(item, push_options)
++				argv_array_pushf(&cp.args, "--push-option=%s",
++						 item->string);
++		}
+ 		prepare_submodule_repo_env(&cp.env_array);
+ 		cp.git_cmd = 1;
+ 		cp.no_stdin = 1;
+@@ -807,6 +815,7 @@ static int push_submodule(const char *path, int dry_run)
+ 
+ int push_unpushed_submodules(struct sha1_array *commits,
+ 			     const char *remotes_name,
++			     const struct string_list *push_options,
+ 			     int dry_run)
+ {
+ 	int i, ret = 1;
+@@ -818,7 +827,7 @@ int push_unpushed_submodules(struct sha1_array *commits,
+ 	for (i = 0; i < needs_pushing.nr; i++) {
+ 		const char *path = needs_pushing.items[i].string;
+ 		fprintf(stderr, "Pushing submodule '%s'\n", path);
+-		if (!push_submodule(path, dry_run)) {
++		if (!push_submodule(path, push_options, dry_run)) {
+ 			fprintf(stderr, "Unable to push submodule '%s'\n", path);
+ 			ret = 0;
+ 		}
+diff --git a/submodule.h b/submodule.h
+index 8a8bc49dc..0e26430fd 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -92,6 +92,7 @@ extern int find_unpushed_submodules(struct sha1_array *commits,
+ 				    struct string_list *needs_pushing);
+ extern int push_unpushed_submodules(struct sha1_array *commits,
+ 				    const char *remotes_name,
++				    const struct string_list *push_options,
+ 				    int dry_run);
+ extern void connect_work_tree_and_git_dir(const char *work_tree, const char *git_dir);
+ extern int parallel_submodules(void);
+diff --git a/t/t5545-push-options.sh b/t/t5545-push-options.sh
+index 97065e62b..f9232f5d0 100755
+--- a/t/t5545-push-options.sh
++++ b/t/t5545-push-options.sh
+@@ -142,6 +142,46 @@ test_expect_success 'push options work properly across http' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'push options and submodules' '
++	test_when_finished "rm -rf parent" &&
++	test_when_finished "rm -rf parent_upstream" &&
++	mk_repo_pair &&
++	git -C upstream config receive.advertisePushOptions true &&
++	cp -r upstream parent_upstream &&
++	test_commit -C upstream one &&
++
++	test_create_repo parent &&
++	git -C parent remote add up ../parent_upstream &&
++	test_commit -C parent one &&
++	git -C parent push --mirror up &&
++
++	git -C parent submodule add ../upstream workbench &&
++	git -C parent/workbench remote add up ../../upstream &&
++	git -C parent commit -m "add submoule" &&
++
++	test_commit -C parent/workbench two &&
++	git -C parent add workbench &&
++	git -C parent commit -m "update workbench" &&
++
++	git -C parent push \
++		--push-option=asdf --push-option="more structured text" \
++		--recurse-submodules=on-demand up master &&
++
++	git -C upstream rev-parse --verify master >expect &&
++	git -C parent/workbench rev-parse --verify master >actual &&
++	test_cmp expect actual &&
++
++	git -C parent_upstream rev-parse --verify master >expect &&
++	git -C parent rev-parse --verify master >actual &&
++	test_cmp expect actual &&
++
++	printf "asdf\nmore structured text\n" >expect &&
++	test_cmp expect upstream/.git/hooks/pre-receive.push_options &&
++	test_cmp expect upstream/.git/hooks/post-receive.push_options &&
++	test_cmp expect parent_upstream/.git/hooks/pre-receive.push_options &&
++	test_cmp expect parent_upstream/.git/hooks/post-receive.push_options
++'
++
+ stop_httpd
+ 
+ test_done
+diff --git a/transport.c b/transport.c
+index 417ed7f19..64e60b635 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1031,6 +1031,7 @@ int transport_push(struct transport *transport,
+ 
+ 			if (!push_unpushed_submodules(&commits,
+ 						      transport->remote->name,
++						      transport->push_options,
+ 						      pretend)) {
+ 				sha1_array_clear(&commits);
+ 				die("Failed to push all needed submodules!");
 -- 
 2.12.2.715.g7642488e1d-goog
 
