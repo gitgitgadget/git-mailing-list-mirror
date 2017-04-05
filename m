@@ -2,102 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2C822096C
-	for <e@80x24.org>; Wed,  5 Apr 2017 17:39:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C378F20966
+	for <e@80x24.org>; Wed,  5 Apr 2017 17:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755744AbdDERjf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 13:39:35 -0400
-Received: from siwi.pair.com ([209.68.5.199]:44840 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753845AbdDERiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 13:38:20 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 63A5984652;
-        Wed,  5 Apr 2017 13:38:19 -0400 (EDT)
-From:   git@jeffhostetler.com
+        id S1755313AbdDERrd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 13:47:33 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:32820 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753749AbdDERr1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 13:47:27 -0400
+Received: by mail-pg0-f46.google.com with SMTP id x125so11524286pgb.0
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 10:47:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hTU+dwXEYIohSixk+ARvN00NaJeUPCtulqtbL+RKJWE=;
+        b=HnNrIWQDEOwjOE36pONTb4+dwxxex3OW7wOAg2Y5mX5MnhDjKF651q1PItFTRUtF5Z
+         7k0HEZvrvSQhMDocBuVOOcYgbNqGwFeRVMwRCKiWbc76Z/tmZZrlY9nd6eMqw0Sj0XAE
+         XVMWvhCogOFU5HL2mWBjyVsQqdz1vX+7ykYY6qI/AMqO+0zSRuh3/yCGEe0JKDeHjrJh
+         hT8HAS6j9G8JbMrtpLIMFi6+IDWgXr3zTDseTfvWXBDtay4UZzMVZ5+MJzigW/tIj12k
+         sz24pZ64V+C3ibE5/F8BorHgLSGemynP2GJ7+i+gVZDmY8+k6n5+6oECNiRi5Ssk5E/l
+         bgtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=hTU+dwXEYIohSixk+ARvN00NaJeUPCtulqtbL+RKJWE=;
+        b=D2emmeztvUng+7z/d65isrFy3uCa7w0Y7A/j5OCq3eQAdFNx5+xbHCpXaO0rXDz1O0
+         kr8At/NqJ0mGeKfHUk+AN/ghcWoZMC2D2S2T6o+AXJzkH20t1X1rElKgoOPMRsw6cdQV
+         e0czHKXVu2PXCI+OFkffGXFoMrzgtutTkTt2gQS62ltSoUSEoEMXwN1SREtI9LWL0dCL
+         zq8S0Yv2A+8ht8HZPeSFYFe07wdGYqvDLwZ7YOQINkUDn/NXwo1R80BIVmElzXRnE2mX
+         L3bsmyL+lKUQRZO/KSzdrbEDI9HoUAebfzDrkcOqYOEPOB5DU8gmwKIedO2N+v91sB4Q
+         3U8w==
+X-Gm-Message-State: AFeK/H1ELWfqO67PZY+8N2ce3HyExkQx4AptVwlgpa0kaOyoWPZ4CdOOzQYnKrMM96on0b8Y
+X-Received: by 10.84.233.143 with SMTP id l15mr37852646plk.93.1491414446047;
+        Wed, 05 Apr 2017 10:47:26 -0700 (PDT)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id m69sm38726623pfc.33.2017.04.05.10.47.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 05 Apr 2017 10:47:25 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 2/4] read-cache: add strcmp_offset function
-Date:   Wed,  5 Apr 2017 17:38:07 +0000
-Message-Id: <20170405173809.3098-3-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170405173809.3098-1-git@jeffhostetler.com>
-References: <20170405173809.3098-1-git@jeffhostetler.com>
+Cc:     Brandon Williams <bmwill@google.com>, jrnieder@gmail.com
+Subject: [PATCH v3 0/5] propagating push-options, remote and refspec
+Date:   Wed,  5 Apr 2017 10:47:14 -0700
+Message-Id: <20170405174719.1297-1-bmwill@google.com>
+X-Mailer: git-send-email 2.12.2.715.g7642488e1d-goog
+In-Reply-To: <20170331235623.166408-1-bmwill@google.com>
+References: <20170331235623.166408-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+v3 builds upon v2 by adding 3 additional patches to add functionality to also
+propagate the remote and refspec down to children process's working to push
+submodules.  The remote and refspec will only be propagated if the provided
+remote is configured. A remote provided in the form of a URL will cause the
+remote and refspec to not be propagated down to the submodules and instead the
+default remote and refspec will be used, preserving existing functionality.
+Currently the only supported LHS of a refspec must exactly match a single ref
+in the submodule (e.g. a branch name).
 
-Add strcmp_offset() function to also return the offset of the
-first change.
+Patches [1/5] and [2/5] remain unchanged from v2.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- cache.h      |  1 +
- read-cache.c | 29 +++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+Brandon Williams (5):
+  push: unmark a local variable as static
+  push: propagate push-options with --recurse-submodules
+  remote: expose parse_push_refspec function
+  submodule--helper: add push-check subcommand
+  push: propagate remote and refspec with --recurse-submodules
 
-diff --git a/cache.h b/cache.h
-index 80b6372..4d82490 100644
---- a/cache.h
-+++ b/cache.h
-@@ -574,6 +574,7 @@ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsi
- extern int discard_index(struct index_state *);
- extern int unmerged_index(const struct index_state *);
- extern int verify_path(const char *path);
-+extern int strcmp_offset(const char *s1_in, const char *s2_in, int *first_change);
- extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
- extern void adjust_dirname_case(struct index_state *istate, char *name);
- extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
-diff --git a/read-cache.c b/read-cache.c
-index 9054369..b3fc77d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -887,6 +887,35 @@ static int has_file_name(struct index_state *istate,
- 	return retval;
- }
- 
-+
-+/*
-+ * Like strcmp(), but also return the offset of the first change.
-+ */
-+int strcmp_offset(const char *s1_in, const char *s2_in, int *first_change)
-+{
-+	const unsigned char *s1 = (const unsigned char *)s1_in;
-+	const unsigned char *s2 = (const unsigned char *)s2_in;
-+	int diff = 0;
-+	int k;
-+
-+	*first_change = 0;
-+	for (k=0; s1[k]; k++)
-+		if ((diff = (s1[k] - s2[k])))
-+			goto found_it;
-+	if (!s2[k])
-+		return 0;
-+	diff = -1;
-+
-+found_it:
-+	*first_change = k;
-+	if (diff > 0)
-+		return 1;
-+	else if (diff < 0)
-+		return -1;
-+	else
-+		return 0;
-+}
-+
- /*
-  * Do we have another file with a pathname that is a proper
-  * subset of the name we're trying to add?
+ builtin/push.c                 |  5 +--
+ builtin/submodule--helper.c    | 45 +++++++++++++++++++++++++
+ remote.c                       |  2 +-
+ remote.h                       |  1 +
+ submodule.c                    | 74 +++++++++++++++++++++++++++++++++++++++---
+ submodule.h                    |  5 ++-
+ t/t5531-deep-submodule-push.sh | 52 +++++++++++++++++++++++++++++
+ t/t5545-push-options.sh        | 40 +++++++++++++++++++++++
+ transport.c                    |  4 ++-
+ 9 files changed, 219 insertions(+), 9 deletions(-)
+
 -- 
-2.9.3
+2.12.2.715.g7642488e1d-goog
 
