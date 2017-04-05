@@ -1,67 +1,55 @@
-From: "Barton" <dichotomycognition@artlover.com>
-Subject: Order our magical stuff now for the amazing prices, and we will dispatch it right away Enjoy
-Date: Thu, 3 Aug 2006 21:37:09 +0800
-Message-ID: <57327111411547.2011A7349F@TNQ5VQF5>
+From: "Rosario Graham" <wilson@ringlestone.com>
+Subject: Open something new for your self
+Date: Sun, 13 Aug 2006 21:31:38 -0700
+Message-ID: <03182711973807.F5442B252C@WTTOLOB>
 Mime-Version: 1.0
 Content-Type: text/plain;
         charset="Windows-1252"
 Content-Transfer-Encoding: 7bit
-X-From: git-owner@vger.kernel.org Thu Aug 03 15:36:20 2006
+X-From: git-owner@vger.kernel.org Mon Aug 14 05:00:00 2006
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by ciao.gmane.org with esmtp (Exim 4.43)
-	id 1G8dMi-0007Bs-Lq
-	for gcvg-git@gmane.org; Thu, 03 Aug 2006 15:35:59 +0200
+	id 1GCSgF-00014Y-7P
+	for gcvg-git@gmane.org; Mon, 14 Aug 2006 04:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932485AbWHCNfx (ORCPT <rfc822;gcvg-git@m.gmane.org>);
-	Thu, 3 Aug 2006 09:35:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932489AbWHCNfx
-	(ORCPT <rfc822;git-outgoing>); Thu, 3 Aug 2006 09:35:53 -0400
-Received: from [125.77.234.105] ([125.77.234.105]:25872 "EHLO
-	WWW-W59H9Z8SJVE.0enqcaee.net") by vger.kernel.org with ESMTP
-	id S932485AbWHCNfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Aug 2006 09:35:52 -0400
-To: <glenn@vger.kernel.org>
+	id S1751815AbWHNC7F (ORCPT <rfc822;gcvg-git@m.gmane.org>);
+	Sun, 13 Aug 2006 22:59:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751811AbWHNC67
+	(ORCPT <rfc822;git-outgoing>); Sun, 13 Aug 2006 22:58:59 -0400
+Received: from c-69-244-42-28.hsd1.ar.comcast.net ([69.244.42.28]:53263 "EHLO
+	JTS-UT48MI1L92A") by vger.kernel.org with ESMTP id S1751812AbWHNC6x
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Aug 2006 22:58:53 -0400
+To: <gc2dfa47ddihhah7@vger.kernel.org>
 X-Mailer: Microsoft Office Outlook, Build 11.0.5510
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
-Thread-Index: DGNsLDksodcR5Q3B8KI22iCaUiwzlmo0RY3h
+Thread-Index: HVy2wkAz3A2I5AWly6kArpMgtqks0Hz9d3cr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 15.8 points;
+X-Spam-Report: 15.4 points;
  *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
  *      [score: 0.5000]
- *  0.3 DNS_FROM_AHBL_RHSBL RBL: From: sender listed in dnsbl.ahbl.org
  *  4.0 URIBL_SBL Contains an URL listed in the SBL blocklist
- *      [URIs: waitfe.com]
- *  0.4 URIBL_AB_SURBL Contains an URL listed in the AB SURBL blocklist
- *      [URIs: waitfe.com]
+ *      [URIs: cancanwieldy.com]
  *  2.5 URIBL_JP_SURBL Contains an URL listed in the JP SURBL blocklist
- *      [URIs: waitfe.com]
+ *      [URIs: cancanwieldy.com]
  *  1.5 URIBL_WS_SURBL Contains an URL listed in the WS SURBL blocklist
- *      [URIs: waitfe.com]
+ *      [URIs: cancanwieldy.com]
  *  3.2 URIBL_OB_SURBL Contains an URL listed in the OB SURBL blocklist
- *      [URIs: waitfe.com]
+ *      [URIs: cancanwieldy.com]
  *  4.0 URIBL_SC_SURBL Contains an URL listed in the SC SURBL blocklist
- *      [URIs: waitfe.com]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/24724>
+ *      [URIs: cancanwieldy.com]
+ *  0.2 DRUGS_ERECTILE Refers to an erectile drug
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/25312>
 
-Nice to see you! 
-
- You always dreamt to rock hard ereections…  Every man wants it 
-
- Low prices, handy delivery, everything for your convenience. Rock hard manhood, multiple explosions and several times more semen volume 
-
- Enter here:  http://www.waitfe.com
-
-
- Unique offers on most recognized and famous brands on Earth. 
-
-Barton Burrell
-
-So he that goeth in to his neighbour's wife; whosoever toucheth her shall not be innocent. The e-mail of the species is more deadly than the mail. When he speaketh fair, believe him not: for there are seven abominations in his heart.
-
-A rolling stone gathers no moss. A stitch in time saves nine. Cultivate money and you grow rich, Cultivate mind and you raise culture When your fear cometh as desolation, and your destruction cometh as a whirlwind; when distress and anguish cometh upon you. The grass is always greener on the other side of the fence
-
-Never play leapfrog with a unicorn 
+Cialis Soft Tabs is the new impotence treatment drug that everyone is talking about. It has benefits over Viagra and other ED treatment solutions. Here goes some reasons to choose Cialis Soft Tabs: 
+1. You can mix alcohol drinks with Cialis Soft Tabs without any undesired effects. 
+2.Cialis Soft Tabs does not make you feel dizzy or make vision blurred, so you can easily drive a car or operate heavy machinery. 
+3.Cialis soft tabs works much faster than any known ED treatment solution. Cialis Soft Tabs enters the bloodstream directly instead of going through the stomach, thus you need only 15 minutes till you feel the effect. Just look at the graph below 
+If you are interested ? Just click here and Read more about it 
+http://9it1.cancanwieldy.com/ct
+AND ALSO 
+Cialis Soft Tabs formula is effective for 95% of the patients. If this treatment is not effective for you, we will refund you for every unopened pack. All you have to do is send them back, and we will immediatley refund your account! 
