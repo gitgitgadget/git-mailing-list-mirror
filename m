@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B60661FAFB
-	for <e@80x24.org>; Wed,  5 Apr 2017 10:26:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AED81FAFB
+	for <e@80x24.org>; Wed,  5 Apr 2017 10:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932260AbdDEK0A (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 06:26:00 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:32794 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753901AbdDEKYq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 06:24:46 -0400
-Received: by mail-pg0-f54.google.com with SMTP id x125so5943815pgb.0
-        for <git@vger.kernel.org>; Wed, 05 Apr 2017 03:24:46 -0700 (PDT)
+        id S1754603AbdDEKZ7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 06:25:59 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35713 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753902AbdDEKYw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 06:24:52 -0400
+Received: by mail-pf0-f195.google.com with SMTP id n11so1313528pfg.2
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 03:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6FbSc65+bWbya6K19688EL6TKYzPcSJnj1IIwT2/Qz8=;
-        b=I9CwhkrSn9oftpEpsa81mPQCiTpjorPrHtkX2Qx5F7ZaNLuJSdv+Z93dIsSiQ1IQlY
-         xIL7bimsdNDOkGTRcDb52LlACyaOmY+XAu6LLE6JIbN1B8u73mu1h3veMg7T2Yg87z6V
-         KG/e5l4tEFYElefRur7AZZprMBN1/xn9VQkLOT/l+NUKhR+ci+/4yqAyLlsqdx1RTrQj
-         klJKlWDk9v7eSCbt0BoLejk8T6itg/K8qDf1JeUQBmKB/CVL5K+xYu/lS30AXlI7hQ1D
-         bvi3NmToKB44H9yUfCnCjlWTrgKXIa98TKNqUxC/dEscObrHiTbOWoVEKhBQ1x/mDR97
-         uIHg==
+        bh=fcLSuEb5FK2o7UwyFNPogLHxW34SCoYHYSYc2Z7JC+g=;
+        b=Ia26bsgBykFPm9O50TBrs+ByXutV9aLMc0y7rQlDlP78DR5HhoheCj9LnbwO2TKZlQ
+         WA0qV0SAa16bChlWtHW9kFRSOkM8k4kHpInSm3xYDX6FnDow71tzB5nJz5PZs93Y9Yje
+         d87ba468HlqwUlrEkeLp8+6Amx65xGFsSAdUtDDM5QmtUt5QtbflA91Bs1CjoaVehcq7
+         bpclhLUO+lu7RzmWJP8A6abheENobDEtSpKSQYhL+x9apJiMMlxvwKg6XvAtOImz/gYv
+         MSxi/Y64OdNtz5nHWfFR/FLlEc2Wqw55NepcAzrXzqAmuD98pjk1yz6FKX9Ma15bni8w
+         r2Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6FbSc65+bWbya6K19688EL6TKYzPcSJnj1IIwT2/Qz8=;
-        b=Vh8G+dcrMV+NKcM3OR6OyFpTpBGHxjsFFBp7o/t76gdQdooOn3Epn5Iq3/gHHKOHCO
-         oe7vRDDH95f17hn2o3QLrCOo38gMEPQtN+XZilNlLfucInxAl5fR2ylNTOL3MKlv4M9k
-         ZkDv5201GIwm8ccNAWIeoUBINwmQPrf9ju14JDWWi90j2EYaoSh0Q3TeC5KutDix/bEg
-         d+XkKgjEfQsYwL20tRAaaQafbkkBEvRy3grkfL6P/q9BZMXxdJ19Df0e4YemsxoYqPw3
-         lkH5MneISkxSDAjD4DEk8PoOIpDeknbNBCRW4Oipqmyck1A36GSgVv2C/RAqHwtJ8lcP
-         YoAw==
-X-Gm-Message-State: AFeK/H11H7p07klVfOid0eSPV2hXYB18gIqwfjhRaGgSnxlpGrRXLrKsrlVZCkVCoGPsxA==
-X-Received: by 10.84.218.203 with SMTP id g11mr34541312plm.6.1491387885571;
-        Wed, 05 Apr 2017 03:24:45 -0700 (PDT)
+        bh=fcLSuEb5FK2o7UwyFNPogLHxW34SCoYHYSYc2Z7JC+g=;
+        b=ML5GpmVPYcCIvhipfDt+Pshko19lnqUieUFSkMKOB2zf8JpGWJ+IW43fLn57/kFaSd
+         iI2R20whv2b5kNyQhqg5qiUzygHZg+FVOsWPL5Z22Zg62zHVFGzcuAYAvzEhTc9Bg88K
+         cW5ge2vq5BnUfnpiLjT5hT5X/veuwHHHoo1RcDans0qVRwJeO1YkdhCImjB2dvTIsQBE
+         j1w0dr0TagvJMdiz8rfEE/5jodLeWrlhWcJbmtEafWcXPCEpk4rm1KjcbhJIoexVF/an
+         6WMVlhe68k1j0wdIN/8kb+0tsJnYgsjWaSP+yBhL7H6bJkovDBnJEp8vj1iynzy+gx7z
+         a1nQ==
+X-Gm-Message-State: AFeK/H18ZzqmCiH5LZvvSHZeIH8hh8jp5Xa+ExgVJ4TP0a2kabVRbxRNRJ+N0e1CLXLD9g==
+X-Received: by 10.99.97.77 with SMTP id v74mr29157377pgb.76.1491387891745;
+        Wed, 05 Apr 2017 03:24:51 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id p16sm36878623pgc.4.2017.04.05.03.24.42
+        by smtp.gmail.com with ESMTPSA id 74sm22869762pfn.102.2017.04.05.03.24.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Apr 2017 03:24:44 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 05 Apr 2017 17:24:40 +0700
+        Wed, 05 Apr 2017 03:24:50 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 05 Apr 2017 17:24:45 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, tboegi@web.de,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 1/2] path.c: and an option to call real_path() in expand_user_path()
-Date:   Wed,  5 Apr 2017 17:24:38 +0700
-Message-Id: <20170405102439.14797-1-pclouds@gmail.com>
+Subject: [PATCH v2 2/2] config: resolve symlinks in conditional include's patterns
+Date:   Wed,  5 Apr 2017 17:24:39 +0700
+Message-Id: <20170405102439.14797-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <20170330113723.20474-1-pclouds@gmail.com>
+In-Reply-To: <20170405102439.14797-1-pclouds@gmail.com>
 References: <20170330113723.20474-1-pclouds@gmail.com>
+ <20170405102439.14797-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,166 +69,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the next patch we need the ability to expand '~' to
-real_path($HOME). But we can't do that from outside because '~' is part
-of a pattern, not a true path. Add an option to expand_user_path() to do
-so.
+$GIT_DIR returned by get_git_dir() is normalized, with all symlinks
+resolved (see setup_work_tree function). In order to match paths (or
+patterns) against $GIT_DIR char-by-char, they have to be normalized
+too. There is a note in config.txt about this, that the user need to
+resolve symlinks by themselves if needed.
 
+The problem is, we allow certain path expansion, '~/' and './', for
+convenience and can't ask the user to resolve symlinks in these
+expansions. Make sure the expanded paths have all symlinks resolved.
+
+PS. The strbuf_realpath(&text, get_git_dir(), 1) is still needed because
+get_git_dir() may return relative path.
+
+Noticed-by: Torsten Bögershausen <tboegi@web.de>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- No changes in v2.
+ Tests are added in v2.
 
- builtin/commit.c   |  2 +-
- builtin/config.c   |  2 +-
- cache.h            |  2 +-
- config.c           |  8 ++++----
- credential-cache.c |  2 +-
- credential-store.c |  2 +-
- path.c             | 11 ++++++++---
- 7 files changed, 17 insertions(+), 12 deletions(-)
+ config.c                  |  6 +++---
+ t/t1305-config-include.sh | 54 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 4e288bc513..ad188fea9e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1404,7 +1404,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 
- static const char *implicit_ident_advice(void)
- {
--	char *user_config = expand_user_path("~/.gitconfig");
-+	char *user_config = expand_user_path("~/.gitconfig", 0);
- 	char *xdg_config = xdg_config_home("config");
- 	int config_exists = file_exists(user_config) || file_exists(xdg_config);
- 
-diff --git a/builtin/config.c b/builtin/config.c
-index 05843a0f96..70bfaaaa1d 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -502,7 +502,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (use_global_config) {
--		char *user_config = expand_user_path("~/.gitconfig");
-+		char *user_config = expand_user_path("~/.gitconfig", 0);
- 		char *xdg_config = xdg_config_home("config");
- 
- 		if (!user_config)
-diff --git a/cache.h b/cache.h
-index 2214d52f61..62e44bfa2f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1146,7 +1146,7 @@ typedef int create_file_fn(const char *path, void *cb);
- int raceproof_create_file(const char *path, create_file_fn fn, void *cb);
- 
- int mkdir_in_gitdir(const char *path);
--extern char *expand_user_path(const char *path);
-+extern char *expand_user_path(const char *path, int real_home);
- const char *enter_repo(const char *path, int strict);
- static inline int is_absolute_path(const char *path)
- {
 diff --git a/config.c b/config.c
-index 1a4d85537b..f036c721e6 100644
+index f036c721e6..d5ba848b65 100644
 --- a/config.c
 +++ b/config.c
-@@ -135,7 +135,7 @@ static int handle_path_include(const char *path, struct config_include_data *inc
- 	if (!path)
- 		return config_error_nonbool("include.path");
- 
--	expanded = expand_user_path(path);
-+	expanded = expand_user_path(path, 0);
- 	if (!expanded)
- 		return error("could not expand include path '%s'", path);
- 	path = expanded;
 @@ -177,7 +177,7 @@ static int prepare_include_condition_pattern(struct strbuf *pat)
  	char *expanded;
  	int prefix = 0;
  
--	expanded = expand_user_path(pat->buf);
-+	expanded = expand_user_path(pat->buf, 0);
+-	expanded = expand_user_path(pat->buf, 0);
++	expanded = expand_user_path(pat->buf, 1);
  	if (expanded) {
  		strbuf_reset(pat);
  		strbuf_addstr(pat, expanded);
-@@ -948,7 +948,7 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
- {
- 	if (!value)
- 		return config_error_nonbool(var);
--	*dest = expand_user_path(value);
-+	*dest = expand_user_path(value, 0);
- 	if (!*dest)
- 		die(_("failed to expand user dir in: '%s'"), value);
- 	return 0;
-@@ -1498,7 +1498,7 @@ static int do_git_config_sequence(config_fn_t fn, void *data)
- {
- 	int ret = 0;
- 	char *xdg_config = xdg_config_home("config");
--	char *user_config = expand_user_path("~/.gitconfig");
-+	char *user_config = expand_user_path("~/.gitconfig", 0);
- 	char *repo_config = have_git_dir() ? git_pathdup("config") : NULL;
+@@ -191,7 +191,7 @@ static int prepare_include_condition_pattern(struct strbuf *pat)
+ 			return error(_("relative config include "
+ 				       "conditionals must come from files"));
  
- 	current_parsing_scope = CONFIG_SCOPE_SYSTEM;
-diff --git a/credential-cache.c b/credential-cache.c
-index 3cbd420019..91550bfb0b 100644
---- a/credential-cache.c
-+++ b/credential-cache.c
-@@ -87,7 +87,7 @@ static char *get_socket_path(void)
- {
- 	struct stat sb;
- 	char *old_dir, *socket;
--	old_dir = expand_user_path("~/.git-credential-cache");
-+	old_dir = expand_user_path("~/.git-credential-cache", 0);
- 	if (old_dir && !stat(old_dir, &sb) && S_ISDIR(sb.st_mode))
- 		socket = xstrfmt("%s/socket", old_dir);
- 	else
-diff --git a/credential-store.c b/credential-store.c
-index 55ca1b1334..ac295420dd 100644
---- a/credential-store.c
-+++ b/credential-store.c
-@@ -168,7 +168,7 @@ int cmd_main(int argc, const char **argv)
- 	if (file) {
- 		string_list_append(&fns, file);
- 	} else {
--		if ((file = expand_user_path("~/.git-credentials")))
-+		if ((file = expand_user_path("~/.git-credentials", 0)))
- 			string_list_append_nodup(&fns, file);
- 		file = xdg_config_home("credentials");
- 		if (file)
-diff --git a/path.c b/path.c
-index 22248436bf..010c565512 100644
---- a/path.c
-+++ b/path.c
-@@ -638,8 +638,10 @@ static struct passwd *getpw_str(const char *username, size_t len)
-  * Return a string with ~ and ~user expanded via getpw*.  If buf != NULL,
-  * then it is a newly allocated string. Returns NULL on getpw failure or
-  * if path is NULL.
-+ *
-+ * If real_home is true, real_path($HOME) is used in the expansion.
-  */
--char *expand_user_path(const char *path)
-+char *expand_user_path(const char *path, int real_home)
- {
- 	struct strbuf user_path = STRBUF_INIT;
- 	const char *to_copy = path;
-@@ -654,7 +656,10 @@ char *expand_user_path(const char *path)
- 			const char *home = getenv("HOME");
- 			if (!home)
- 				goto return_null;
--			strbuf_addstr(&user_path, home);
-+			if (real_home)
-+				strbuf_addstr(&user_path, real_path(home));
-+			else
-+				strbuf_addstr(&user_path, home);
- #ifdef GIT_WINDOWS_NATIVE
- 			convert_slashes(user_path.buf);
- #endif
-@@ -723,7 +728,7 @@ const char *enter_repo(const char *path, int strict)
- 		strbuf_add(&validated_path, path, len);
+-		strbuf_add_absolute_path(&path, cf->path);
++		strbuf_realpath(&path, cf->path, 1);
+ 		slash = find_last_dir_sep(path.buf);
+ 		if (!slash)
+ 			die("BUG: how is this possible?");
+@@ -213,7 +213,7 @@ static int include_by_gitdir(const char *cond, size_t cond_len, int icase)
+ 	struct strbuf pattern = STRBUF_INIT;
+ 	int ret = 0, prefix;
  
- 		if (used_path.buf[0] == '~') {
--			char *newpath = expand_user_path(used_path.buf);
-+			char *newpath = expand_user_path(used_path.buf, 0);
- 			if (!newpath)
- 				return NULL;
- 			strbuf_attach(&used_path, newpath, strlen(newpath),
+-	strbuf_add_absolute_path(&text, get_git_dir());
++	strbuf_realpath(&text, get_git_dir(), 1);
+ 	strbuf_add(&pattern, cond, cond_len);
+ 	prefix = prepare_include_condition_pattern(&pattern);
+ 
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index e833939320..8fbc7a029f 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -3,6 +3,16 @@
+ test_description='test config file include directives'
+ . ./test-lib.sh
+ 
++# Force setup_explicit_git_dir() to run until the end. This is needed
++# by some tests to make sure real_path() is called on $GIT_DIR. The
++# caller needs to make sure git commands are run from a subdirectory
++# though or real_path() will not be called.
++force_setup_explicit_git_dir() {
++    GIT_DIR="$(pwd)/.git"
++    GIT_WORK_TREE="$(pwd)"
++    export GIT_DIR GIT_WORK_TREE
++}
++
+ test_expect_success 'include file by absolute path' '
+ 	echo "[test]one = 1" >one &&
+ 	echo "[include]path = \"$(pwd)/one\"" >.gitconfig &&
+@@ -208,6 +218,50 @@ test_expect_success 'conditional include, both unanchored, icase' '
+ 	)
+ '
+ 
++test_expect_success SYMLINKS 'conditional include, set up symlinked $HOME' '
++	mkdir real-home &&
++	ln -s real-home home &&
++	(
++		HOME="$TRASH_DIRECTORY/home" &&
++		export HOME &&
++		cd "$HOME" &&
++
++		git init foo &&
++		cd foo &&
++		mkdir sub
++	)
++'
++
++test_expect_success SYMLINKS 'conditional include, $HOME expansion with symlinks' '
++	(
++		HOME="$TRASH_DIRECTORY/home" &&
++		export HOME &&
++		cd "$HOME"/foo &&
++
++		echo "[includeIf \"gitdir:~/foo/\"]path=bar2" >>.git/config &&
++		echo "[test]two=2" >.git/bar2 &&
++		echo 2 >expect &&
++		force_setup_explicit_git_dir &&
++		git -C sub config test.two >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success SYMLINKS 'conditional include, relative path with symlinks' '
++	echo "[includeIf \"gitdir:./foo/.git\"]path=bar4" >home/.gitconfig &&
++	echo "[test]four=4" >home/bar4 &&
++	(
++		HOME="$TRASH_DIRECTORY/home" &&
++		export HOME &&
++		cd "$HOME"/foo &&
++
++		echo 4 >expect &&
++		force_setup_explicit_git_dir &&
++		git -C sub config test.four >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'include cycles are detected' '
+ 	cat >.gitconfig <<-\EOF &&
+ 	[test]value = gitconfig
 -- 
 2.11.0.157.gd943d85
 
