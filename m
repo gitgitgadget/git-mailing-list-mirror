@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D6462096C
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2C822096C
 	for <e@80x24.org>; Wed,  5 Apr 2017 17:39:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932628AbdDERjh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 13:39:37 -0400
-Received: from siwi.pair.com ([209.68.5.199]:24028 "EHLO siwi.pair.com"
+        id S1755744AbdDERjf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 13:39:35 -0400
+Received: from siwi.pair.com ([209.68.5.199]:44840 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753715AbdDERiU (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1753845AbdDERiU (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 5 Apr 2017 13:38:20 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id D1C2584651;
-        Wed,  5 Apr 2017 13:38:18 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 63A5984652;
+        Wed,  5 Apr 2017 13:38:19 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 1/4] p0004-read-tree: perf test to time read-tree
-Date:   Wed,  5 Apr 2017 17:38:06 +0000
-Message-Id: <20170405173809.3098-2-git@jeffhostetler.com>
+Subject: [PATCH v5 2/4] read-cache: add strcmp_offset function
+Date:   Wed,  5 Apr 2017 17:38:07 +0000
+Message-Id: <20170405173809.3098-3-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170405173809.3098-1-git@jeffhostetler.com>
 References: <20170405173809.3098-1-git@jeffhostetler.com>
@@ -37,134 +37,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Add strcmp_offset() function to also return the offset of the
+first change.
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p0004-read-tree.sh | 116 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 116 insertions(+)
- create mode 100755 t/perf/p0004-read-tree.sh
+ cache.h      |  1 +
+ read-cache.c | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/t/perf/p0004-read-tree.sh b/t/perf/p0004-read-tree.sh
-new file mode 100755
-index 0000000..5d8bbf5
---- /dev/null
-+++ b/t/perf/p0004-read-tree.sh
-@@ -0,0 +1,116 @@
-+#!/bin/sh
+diff --git a/cache.h b/cache.h
+index 80b6372..4d82490 100644
+--- a/cache.h
++++ b/cache.h
+@@ -574,6 +574,7 @@ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsi
+ extern int discard_index(struct index_state *);
+ extern int unmerged_index(const struct index_state *);
+ extern int verify_path(const char *path);
++extern int strcmp_offset(const char *s1_in, const char *s2_in, int *first_change);
+ extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+ extern void adjust_dirname_case(struct index_state *istate, char *name);
+ extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+diff --git a/read-cache.c b/read-cache.c
+index 9054369..b3fc77d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -887,6 +887,35 @@ static int has_file_name(struct index_state *istate,
+ 	return retval;
+ }
+ 
 +
-+test_description="Tests performance of read-tree"
++/*
++ * Like strcmp(), but also return the offset of the first change.
++ */
++int strcmp_offset(const char *s1_in, const char *s2_in, int *first_change)
++{
++	const unsigned char *s1 = (const unsigned char *)s1_in;
++	const unsigned char *s2 = (const unsigned char *)s2_in;
++	int diff = 0;
++	int k;
 +
-+. ./perf-lib.sh
++	*first_change = 0;
++	for (k=0; s1[k]; k++)
++		if ((diff = (s1[k] - s2[k])))
++			goto found_it;
++	if (!s2[k])
++		return 0;
++	diff = -1;
 +
-+test_perf_default_repo
-+test_checkout_worktree
-+
-+## usage: dir depth width files
-+make_paths () {
-+	for f in $(seq $4)
-+	do
-+		echo $1/file$f
-+	done;
-+	if test $2 -gt 0;
-+	then
-+		for w in $(seq $3)
-+		do
-+			make_paths $1/dir$w $(($2 - 1)) $3 $4
-+		done
-+	fi
-+	return 0
++found_it:
++	*first_change = k;
++	if (diff > 0)
++		return 1;
++	else if (diff < 0)
++		return -1;
++	else
++		return 0;
 +}
 +
-+fill_index () {
-+	make_paths $1 $2 $3 $4 |
-+	sed "s/^/100644 $EMPTY_BLOB	/" |
-+	git update-index --index-info
-+	return 0
-+}
-+
-+br_base=xxx_base_xxx
-+br_work1=xxx_work1_xxx
-+br_work2=xxx_work2_xxx
-+br_work3=xxx_work3_xxx
-+
-+new_dir=xxx_dir_xxx
-+
-+## (5, 10, 9) will create 999,999 files.
-+## (4, 10, 9) will create  99,999 files.
-+depth=5
-+width=10
-+files=9
-+
-+export br_base
-+export br_work1
-+export br_work2
-+export br_work3
-+
-+export new_dir
-+
-+export depth
-+export width
-+export files
-+
-+## The number of files in the xxx_base_xxx branch.
-+nr_base=$(git ls-files | wc -l)
-+export nr_base
-+
-+## Inflate the index with thousands of empty files and commit it.
-+## Turn on sparse-checkout so that we don't have to populate them
-+## later when we start switching branches.
-+test_expect_success 'inflate the index' '
-+	git reset --hard &&
-+	git branch $br_base &&
-+	git branch $br_work1 &&
-+	git checkout $br_work1 &&
-+	fill_index $new_dir $depth $width $files &&
-+	git commit -m $br_work1 &&
-+	echo $new_dir/file1 >.git/info/sparse-checkout &&
-+	git config --local core.sparsecheckout 1 &&
-+	git reset --hard
-+'
-+
-+## The number of files in the xxx_work1_xxx branch.
-+nr_work1=$(git ls-files | wc -l)
-+export nr_work1
-+
-+test_perf "read-tree work1 ($nr_work1)" '
-+	git read-tree -m $br_base $br_work1 -n
-+'
-+
-+## Alternate between base and work branches several
-+## times to measure a large change.
-+test_perf "switch base work1 ($nr_base $nr_work1)" '
-+	git checkout $br_base &&
-+	git checkout $br_work1
-+'
-+
-+## Create work2 by modifying 1 file in work1.
-+## Create work3 as an alias of work2.
-+test_expect_success 'setup work2' '
-+	git branch $br_work2 &&
-+	git checkout $br_work2 &&
-+	echo x >$new_dir/file1 &&
-+	git add $new_dir/file1 &&
-+	git commit -m $br_work2 &&
-+	git branch $br_work3
-+'
-+
-+## Alternate between work1 and work2 several times
-+## to measure a very small change.
-+test_perf "switch work1 work2 ($nr_work1)" '
-+	git checkout $br_work1 &&
-+	git checkout $br_work2
-+'
-+
-+## Alternate between branches work2 and work3 which
-+## are aliases of the same commit.
-+test_perf "switch commit aliases ($nr_work1)" '
-+	git checkout $br_work3 &&
-+	git checkout $br_work2
-+'
-+
-+test_done
+ /*
+  * Do we have another file with a pathname that is a proper
+  * subset of the name we're trying to add?
 -- 
 2.9.3
 
