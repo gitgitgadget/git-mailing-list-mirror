@@ -2,72 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DDCD20966
-	for <e@80x24.org>; Wed,  5 Apr 2017 16:05:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F95620966
+	for <e@80x24.org>; Wed,  5 Apr 2017 16:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932172AbdDEQFM convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 5 Apr 2017 12:05:12 -0400
-Received: from smtppost.atos.net ([193.56.114.166]:19695 "EHLO
-        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932102AbdDEQDs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 12:03:48 -0400
-X-Greylist: delayed 308 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Apr 2017 12:03:47 EDT
-Received: from mail1-ext.my-it-solutions.net (mail1-ext.my-it-solutions.net) by smarthost2.atos.net with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-SHA)
-         id 7ec2_9c35_6410c512_a49a_4e5f_aaae_e1a6520f1bc6;
-        Wed, 05 Apr 2017 17:58:28 +0200
-Received: from mail2-int.my-it-solutions.net ([10.92.32.13])
-        by mail1-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id v35FwSvD019263
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Wed, 5 Apr 2017 17:58:29 +0200
-Received: from DEERLM99ETTMSX.ww931.my-it-solutions.net ([10.86.142.105])
-        by mail2-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id v35FwSMK029953
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL);
-        Wed, 5 Apr 2017 17:58:28 +0200
-Received: from DEFTHW99EX6MSX.ww931.my-it-solutions.net ([169.254.13.6]) by
- DEERLM99ETTMSX.ww931.my-it-solutions.net ([10.86.142.105]) with mapi id
- 14.03.0339.000; Wed, 5 Apr 2017 17:58:28 +0200
-From:   "Franke, Knut" <knut.franke@atos.net>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-CC:     "Tom G. Christensen" <tgc@jupiterrise.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 4/7] Handle missing HTTP_CONNECTCODE in curl < 7.10.7
-Thread-Topic: [PATCH 4/7] Handle missing HTTP_CONNECTCODE in curl < 7.10.7
-Thread-Index: AQHSrhO7yFRpjwMLGESm9Qm1dLEIGqG2zT6A
-Date:   Wed, 5 Apr 2017 15:58:27 +0000
-Message-ID: <20170405155827.GE6493@science-computing.de>
-References: <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
- <20170405130424.13803-1-tgc@jupiterrise.com>
- <20170405130424.13803-5-tgc@jupiterrise.com>
- <CACBZZX4OVy0QOnPLYNY0pptvno+OJ-c6=sRtVWcT+40aaEGY2w@mail.gmail.com>
-In-Reply-To: <CACBZZX4OVy0QOnPLYNY0pptvno+OJ-c6=sRtVWcT+40aaEGY2w@mail.gmail.com>
-Accept-Language: de-DE, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.86.142.15]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-ID: <C9CE85EE5936944081A2DB5D4EB0C94C@mail.sis.atos.net>
-Content-Transfer-Encoding: 8BIT
+        id S932942AbdDEQJm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 12:09:42 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60467 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S932517AbdDEQJl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 12:09:41 -0400
+Received: from localhost.localdomain ([37.201.193.73]) by mail.gmx.com
+ (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0MH5Sw-1crxjb1JvW-00Dn3K; Wed, 05 Apr 2017 18:09:33 +0200
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.12.2(2)
+Date:   Wed,  5 Apr 2017 18:09:18 +0200
+Message-Id: <20170405160918.6216-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.12.1.windows.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
+Fcc:    Sent
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:xISHSID+RgKCdSlDMpKbHzVOBlKYfJCV8HRRSJ9M1Gz9ovBtw8Q
+ Vio+vFLlpbmWVTJFpazSCux0rN8kwmkk0HAYPceaxaS6NleoDJdzCYG2zBOhaeSwKn5HYTy
+ 9grr0YSPHMAvgBytygs9BGdOcBJ54TlTOLL+Eu8ljvoNtkxVPD0Qu2C3mUPjwKcwaoS7MdK
+ ClKCztv7YPvo2TC08pSPg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9L6/wCo/W6I=:BJCfZxiXgIYtHyz6iWmxxL
+ 9KmhsbBEz5cMKFk11XVioAErdeR47omXx3dKp+B5htXzqKvwVLmiJL2TEpkPiTdP372Qd90X9
+ u4iJ6ctS0NkfZF6v/J1pxjKvMAEzCQsW5Vq4ZRlJmt2Yv5so5bsuTrK52Nt0wSMWOQP9LL8F0
+ zsEpMYpKc+0LOgEbax9PjsMSxRGg8x1iUO3x/0EuQHONPC72boRDUrfiAG05F9GjEuZYLVwlF
+ AZo4B7xiQ/ZnjNAFqNYPt68gzlBOJ4Q/jWJiDtChmjp9OkRAuUWvtNbZ6qiLU0Oeku3z3oj/n
+ YJvbO4Ibvh0Vq19tZby0zeaJyseh35TgLK05gtuz4MMl1mD+XsTVEO0zqW476+Cx9UudhPpko
+ gDR3cqjyVJCZlYTjumf+MMy/S5ihb5ZQW/O5Z392NARtZZdLiShI6SYSJyDTCPspSo09M8uPb
+ /uFAAWx7NUN/5FEkt3ibFQ+BozPLrRawQNdL3TMAFqBaToqoaeVdDYF6hBjOBhe1BaVExL3aO
+ Zwlv0ZEVzvb+xxmbFig7K1vlEbGStU6X6QQP2H6W8D2gqRrhqLiw6TTpnOKBb2MC/2JUMUJyR
+ AaTYBIiRDHD1x38C+fm9Vmmt1soMk9hV2scb3nM4pNVQibWIM3K5Tnqy9h6r8kgHTnwQ0MTJG
+ WHvCm17HKTYxU+7sDktpC3LyXxgjq0xeAjVczMoLHn4W++n206k1sLIfT8M6MzJJeiaROJ4Z6
+ 6L36PSAx24cfTZYeFGIio7ayDOxrTadPFwofZv4eYm6SUcsKBlkfotKUIIQrM2lclVExACe7Z
+ NdRZTYv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-04-05 15:50, Ævar Arnfjörð Bjarmason wrote:
-> This effectively disables that code & this later check:
-> 
-> +               if (results->http_connectcode == 407)
-> +                       credential_reject(&proxy_auth);
-> 
-> What's the impact of not taking that branch when the proxy returns a 407?
+Dear Git users,
 
-We might be storing incorrect proxy credentials via the credential helper. If we can't get the
-proxy's connect code, we should probably invalidate proxy credentials whenever http_code indicates
-failure, since that's the only effect we'll see of a mistyped proxy password.
+It is my pleasure to announce that Git for Windows 2.12.2(2) is available from:
+
+	https://git-for-windows.github.io/
+
+Changes since Git for Windows v2.12.2 (March 27th 2017)
+
+New Features
+
+  * Portable Git is now using a custom-built SFX that is based directly
+    on 7-Zip's SFX.
+  * Git LFS was upgraded to v2.0.2.
+  * Updated the MSYS2 runtime to Cygwin 2.8.0.
+  * Git LFS can now be disabled in the first installer page (users can
+    still enable it manually, as before, of course).
+  * Comes with Git Credential Manager v1.9.1.
+
+Bug Fixes
+
+  * A potential crash in git status with lots of files was fixed.
+  * Git LFS now gets installed into the correct location.
+  * Git LFS is now configured correctly out of the box (unless
+    disabled).
+  * The http.sslCAInfo config setting is now private to the Git for
+    Windows installation that owns the file.
+  * git difftool -d no longer crashes randomly.
+
+Filename | SHA-256
+-------- | -------
+Git-2.12.2.2-64-bit.exe | 4e753b00595c0bb0d1bc50c2fea61a60a26b326d8a59aacdb79dfb087b4fc2a7
+Git-2.12.2.2-32-bit.exe | cf26129a033fa6841ab3f29cdb5593d2defb172a6d29eff0c78696340397b514
+PortableGit-2.12.2.2-64-bit.7z.exe | 4c0daba65feca2263923e3eb3f0a29b892d074712feb28a4570640d2d7f98694
+PortableGit-2.12.2.2-32-bit.7z.exe | b9c8280a3ee7f305ebc1c4e6e1c322e4d706807b837feb23a5b1a9f0ea0fdcb5
+MinGit-2.12.2.2-64-bit.zip | 3918cd9ab42c9a22aa3934463fdb536485c84e6876e9aaab74003deb43a08a36
+MinGit-2.12.2.2-32-bit.zip | 69d88aca0d801c860a0d7c93e284d9d2283bda0bc760daf0ea010d6c42b6c8a8
+Git-2.12.2.2-64-bit.tar.bz2 | f452d32b736468d8910acb35bbd937aa86cb2bb1691e4a8728e6360ba6ae1cbf
+Git-2.12.2.2-32-bit.tar.bz2 | ef9431add3ddac9e9588ede74ad77678dff794cf6b328f30c421f4b7718985bf
+
+Ciao,
+Johannes
