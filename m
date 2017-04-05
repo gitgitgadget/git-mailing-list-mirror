@@ -2,166 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F11020966
-	for <e@80x24.org>; Wed,  5 Apr 2017 13:08:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AAF720966
+	for <e@80x24.org>; Wed,  5 Apr 2017 13:41:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933214AbdDENFi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 09:05:38 -0400
-Received: from sub4.mail.dreamhost.com ([69.163.253.135]:41207 "EHLO
-        homiemail-a95.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933071AbdDENEf (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Apr 2017 09:04:35 -0400
-Received: from homiemail-a95.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a95.g.dreamhost.com (Postfix) with ESMTP id BC797600050C;
-        Wed,  5 Apr 2017 06:04:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=jupiterrise.com; h=from
-        :subject:to:references:cc:message-id:date:mime-version
-        :in-reply-to:content-type:content-transfer-encoding; s=
-        jupiterrise.com; bh=0qE7SzXuCHWco/zAyTRH1lJBS0o=; b=hobzAeKtxjtn
-        KqBP23GCSvyaPxQ48wSAFqreua2DutwymncD+PY3vYVbaQavtw78Ckft40INTBAE
-        Bvic3jOKo30cVx6+YIB4LqNWZhA3LOodAW3ixsxS7ysmTAxJfVfOYvZxyM0+BRvu
-        r/vR5G8vM0ihn+UqawcqAoXhKsHPRKw=
-Received: from merlin.tgcnet.jupiterrise.com (2-106-159-182-static.dk.customer.tdc.net [2.106.159.182])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tgc99@jupiterrise.com)
-        by homiemail-a95.g.dreamhost.com (Postfix) with ESMTPSA id 48B686000504;
-        Wed,  5 Apr 2017 06:04:34 -0700 (PDT)
-Received: from [172.18.98.35] (nat.statsbiblioteket.dk [130.225.26.33])
-        by merlin.tgcnet.jupiterrise.com (Postfix) with ESMTPSA id 98FB4612DA;
-        Wed,  5 Apr 2017 15:04:32 +0200 (CEST)
-From:   "Tom G. Christensen" <tgc@jupiterrise.com>
-Subject: Re: [RFC] dropping support for ancient versions of curl
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
- <d6ba17f0-3da9-8699-8d5c-5ebf1eaef00e@jupiterrise.com>
- <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>
-Message-ID: <4e30ae33-d508-9bb8-74e6-8204967c4538@jupiterrise.com>
-Date:   Wed, 5 Apr 2017 15:04:32 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1753823AbdDENlF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 09:41:05 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:35008 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754613AbdDENlA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 09:41:00 -0400
+Received: by mail-oi0-f68.google.com with SMTP id d2so2089588oig.2
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 06:40:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=B9lOjHSjpIhecRVUZ5S8ZKHuR9cK/oPhCfgC9dEzxbI=;
+        b=XLUN70LKfWvxkdPbhPgRQ3Gs3Dcu/4o7ZRqVoShhg6Qwibs3pFQF3b7oqzGasO0dGu
+         pr5Jv1grRcNJgYzw5+ib0PiSlsEMYIM+SJ0GLh3FmpprZwigqD1RdDKSaaDBI1AapRqv
+         WJsu8X7WeC7loApUQ6E0Z7TOnulzUuVueclFaaU/eq1inuFITTDn0RNUFvVReI39O8wF
+         4Ld4lfmFnFa+5dddUpiR/7AISqk068/q+F55m5fq3EzsSY+XBdG5prCsUWJ97r5uOe91
+         Jyl867Tu8q7SfZMLfDv8+C5+yDX3ZY1dtqRj9SmgZ4oq/U5IYLaizrgTi1bmLNZcE7tL
+         bjBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=B9lOjHSjpIhecRVUZ5S8ZKHuR9cK/oPhCfgC9dEzxbI=;
+        b=Btnjcji9IXCQ+nQKJLu2uuLBRSi6b3NpTPbp+aIKBf/SNOINmLwWCvMmt5vXnWOUN3
+         iK8SsXvK6drNrbfmt7sY5YepLWFZ6EcuTam+QCsnrODNUoc+edxqOYV76rKGbolK2s5Q
+         2H/OV5YwiywW5evJPP/RBk7PCajlUn3vAjk+6QJ6w6oRlYEa/aVIh/WtwohdQnC3ypSz
+         BesHmxgtUyFv7EUMr1sNRczsdNNd9naZ09tvjkyQ76FtA15KDwzlzBc/OKKnpaVhKdSF
+         rwD66LhXROnEGzq82k+fKmLqe+P8HG+FDK2RpTy10BZqsw/TB0zp3YQXTrzVXK9tlPPG
+         SGvw==
+X-Gm-Message-State: AFeK/H2Frcvlz23vkgrfdfyic1eWJRdVyTeBmrWfL8bRq8iKRBSPpTpAKmat2fQItZx+B5rheqlwSnYMiP9pmg==
+X-Received: by 10.202.212.196 with SMTP id l187mr14308396oig.65.1491399659183;
+ Wed, 05 Apr 2017 06:40:59 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.74.158.70 with HTTP; Wed, 5 Apr 2017 06:40:28 -0700 (PDT)
+In-Reply-To: <20170403162648.GA166794@google.com>
+References: <1556910880cfce391bdca2d8f0cbcb8c71371691.1491206540.git.ps@pks.im>
+ <20170403162648.GA166794@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 5 Apr 2017 20:40:28 +0700
+Message-ID: <CACsJy8CYzJv1RfC9-Z5gW_4a2cCX+0MbDtpgRD5kgoBDaQt67w@mail.gmail.com>
+Subject: Re: [PATCH] pathspec: always honor `PATHSPEC_PREFIX_ORIGIN` flag
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Patrick Steinhardt <ps@pks.im>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/04/17 12:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Wed, Apr 5, 2017 at 11:33 AM, Tom G. Christensen <tgc@jupiterrise.co=
-m> wrote:
-> Whoah. So my assumption in
-> <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com>
-> that nobody was compiling this & thus not reporting failures was
-> false. Rather there's an entire community & distribution mechanism
-> around patching git for older EL versions, but the patches aren't
-> making it upstream.
->
-
-The community as I know it consists of me and EPEL5 (now dead and archive=
-d).
-The packages that I build are probably only used by me and the company I=20
-work for as they are not exactly easy to find via search engines.
-EPEL5 supported git 1.8.3.2 but the Fedora git specfile still contains=20
-all the infrastructure though I cannot know if it actually got used with=20
-anything later than 1.8.3.2.
-
-I don't know of anyone that actually *needs* to use the latest git on=20
-RHEL < 5, myself included. I kept the support for RHEL < 5 because I=20
-could and it was good fun to tinker with.
-
-Also I should say that testresults are good, no problems there except a=20
-few small nits as revealed in the specfile:
-%if %{?el4:1}0
-# These tests fail with subversion 1.1.4
-export GIT_SKIP_TESTS=3D"t9140.4"
-%ifarch x86_64
-# These tests fail with subversion 1.1.4 but only on x86_64
-export GIT_SKIP_TESTS=3D"$GIT_SKIP_TESTS t9106.7 t9106.8 t9106.9 t9106.10=
-=20
-t9137.4 t9164.5 t9164.6 t9164.7 t9164.8"
-%endif
-%endif
-%if %{?el3:1}%{?el4:1}0
-# not ok 6 - url high-bit escapes
-export GIT_SKIP_TESTS=3D"$GIT_SKIP_TESTS t0110.6"
-# not ok 32 - ref name 'heads/foo' is invalid
-export GIT_SKIP_TESTS=3D"$GIT_SKIP_TESTS t1402.32"
-%endif
-%if %{?el3:1}0
-# t7800 failed 17 among 56 test(s)
-export GIT_SKIP_TESTS=3D"$GIT_SKIP_TESTS t7800"
-%endif
-
-It's been a little while since I did a build without those exclusions=20
-but I doubt much has changed.
-
-> $ grep -h -e ^Subject -e ^Date *patch
-> Date: Tue, 13 Oct 2009 11:34:11 +0200
-> Subject: [PATCH 1/7] Make NO_PERL_MAKEMAKER behave more like
-> Date: Fri, 13 Jun 2014 11:02:02 +0200
-> Subject: [PATCH 2/7] Install man pages when NO_PERL_MAKEMAKER is used
-> Date: Mon, 22 Sep 2014 13:42:50 +0200
-> Subject: [PATCH 3/7] Allow svnrdump_sim.py to be used with Python 2.2
-> Date: Tue, 8 Mar 2016 09:31:56 +0100
-> Subject: [PATCH 4/7] Handle missing HTTP_CONNECTCODE in curl < 7.10.7
-> Date: Tue, 23 Aug 2016 10:32:51 +0200
-> Subject: [PATCH 5/7] Add support for gnupg < 1.4
-> Date: Tue, 23 Aug 2016 18:15:13 +0200
-> Subject: [PATCH 6/7] Handle missing CURLINFO_SSL_DATA_{IN,OUT}
-> Date: Tue, 23 Aug 2016 18:26:54 +0200
-> Subject: [PATCH 7/7] Do not use curl_easy_strerror with curl < 7.12.0
-
-All original work done by me.
-
-> Date: Wed, 2 Feb 2011 21:24:44 -0500
-> Subject: [PATCH] Restore vc-git.el for basic compatibility on EL-5
-> Date: Mon, 23 Mar 2009 00:03:36 -0400
-> Subject: [PATCH] git-cvsimport: Ignore cvsps-2.2b1 Branches: output
->
-
-These two I can't claim credit for. They are lifted verbatim from=20
-Fedora/EPEL and as the headers reveal they were created by Todd Zullinger=
-.
-I won't submit them for inclusion since I am not familiar with nor a=20
-user of the parts they touch.
-
->> Patches can be found in the src.rpm, though I can also post them here =
-as
->> patch series, they cover more than just curl.
+On Mon, Apr 3, 2017 at 11:26 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 04/03, Patrick Steinhardt wrote:
+>> Previous to commit 5d8f084a5 (pathspec: simpler logic to prefix original
+>> pathspec elements, 2017-01-04), we were always using the computed
+>> `match` variable to perform pathspec matching whenever
+>> `PATHSPEC_PREFIX_ORIGIN` is set. This is for example useful when passing
+>> the parsed pathspecs to other commands, as the computed `match` may
+>> contain a pathspec relative to the repository root. The commit changed
+>> this logic to only do so when we do have an actual prefix and when
+>> literal pathspecs are deactivated.
 >>
->> I don't use the el3 and el4 versions much any more and el5 use will al=
-so
->> drop of now as I'm busy converting machines from el5 to el7.
+>> But this change may actually break some commands which expect passed
+>> pathspecs to be relative to the repository root. One such case is `git
+>> add --patch`, which now fails when using relative paths from a
+>> subdirectory. For example if executing "git add -p ../foo.c" in a
+>> subdirectory, the `git-add--interactive` command will directly pass
+>> "../foo.c" to `git-ls-files`. As ls-files is executed at the
+>> repository's root, the command will notice that "../foo.c" is outside
+>> the repository and fail.
+
+Oops. Sorry I missed this.
+
+>> @@ -504,12 +504,12 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
+>>        * Prefix the pathspec (keep all magic) and assign to
+>>        * original. Useful for passing to another command.
+>>        */
+>> -     if ((flags & PATHSPEC_PREFIX_ORIGIN) &&
+>> -         prefixlen && !get_literal_global()) {
+>> +     if (flags & PATHSPEC_PREFIX_ORIGIN) {
+>>               struct strbuf sb = STRBUF_INIT;
+>>
+>>               /* Preserve the actual prefix length of each pattern */
+>> -             prefix_magic(&sb, prefixlen, element_magic);
+>> +             if (prefixlen && !get_literal_global())
+>> +                     prefix_magic(&sb, prefixlen, element_magic);
+>>
+>>               strbuf_addstr(&sb, match);
+>>               item->original = strbuf_detach(&sb, NULL);
 >
-> It would be great to have them on-list, as far as I can tell they were
-> never submitted? Is there some time/administrative reason for why
-> you're not submitting them?
+> Would it just make sense to drop the requirement that prefixlen be
+> non-zero?  My problem with this change currently is the ability to get
+> an original string with is empty (ie "\0") which would cause git to
+> throw some warnings about not allowing empty strings as pathspecs if
+> they were then passed on to other processes.
 
-Well I recently took the time to clean them up with the intention of=20
-maybe finally submitting them but I never got that far.
+Good catch.
 
-The first one in the series I actually submitted many years ago but it=20
-was ultimately rejected.
+I did wonder if it's a right thing, because the result pathspec is
+':(prefix:0)'. After leaving out the magic path, you get an empty
+"path" of the pathspec, which probably should be warned because we
+wouldn't be able to handle it. For example, "git add ." at root will
+give you the path ".", not empty one. Maybe we can't handle the empty
+"path" part.
 
-I've submitted a few patches over the years to support older RHEL=20
-releases and some of them ended up being included.
+But we have an exception for this already. In "git add :/", the "path"
+of the pathspec is still empty ('/' is a magic, not "path" even if it
+looks like so) and we handle it just fine. So everything should be
+good here.
 
-> Some of these are many years old, it would
-> be great to have them on-list for wider review & included so vanilla
-> git works on these platforms.
->
-
-I just posted them now. The series was made against the v2.12.2 tag.
-
--tgc
+Patrick, please add a line or two about why you drop prefixlen when
+you re-roll (or even better, make it a separate patch; this sounds
+like an issue even before the code reorganization changes).
+-- 
+Duy
