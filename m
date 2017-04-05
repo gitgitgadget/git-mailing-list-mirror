@@ -2,123 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B60320966
-	for <e@80x24.org>; Wed,  5 Apr 2017 19:56:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A32520966
+	for <e@80x24.org>; Wed,  5 Apr 2017 20:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933376AbdDET4L (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 15:56:11 -0400
-Received: from siwi.pair.com ([209.68.5.199]:43773 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932544AbdDET4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 15:56:09 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 088D8845F2;
-        Wed,  5 Apr 2017 15:56:07 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
+        id S933173AbdDEUBA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 16:01:00 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:33011 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754199AbdDEUA7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 16:00:59 -0400
+Received: by mail-pg0-f43.google.com with SMTP id x125so14240392pgb.0
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 13:00:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=DaCFSctazocb6com16zJw1fjddzZAiI+2IVa+Cienwo=;
+        b=exgy/SyGis4F+yFxUnhSnrDe9PKH5HIDWc/P/kaiQpSj6QYrXSIPehynO07WGv2b5g
+         Dk02mAEnpi2f0v6IWYXwiHgIfoSorlVdORGlEzA4GjRqt9pr23hAm1KdXZ4Cp8beHOb5
+         meSdzQQkJLwjHSh3u4OquBmEAuacVSfyFerl+d/EyOcpqYwWz26CuWDUfyDp9iNxfFUD
+         VWSpvGkzI8RNXMY204VgMXUpyGoPBrVejqn12sBuOe78x4U+ZHsHqMHUju6BteQk1ogl
+         ZbT4Xr3XEF+ytvlpfxgNcmkzZpXEZ0EOEFK9Xd1bfuDLPYG1TyGJNf1p0agtemnkNzSZ
+         USag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=DaCFSctazocb6com16zJw1fjddzZAiI+2IVa+Cienwo=;
+        b=HoYckuTh2sjNvVUSnsuRbotT/E0WcERXTkS01GdzRgTpiR3TFg1Rv4HaZb3WT8PhBJ
+         0qqLvPIARgHVBFVOUt171zg0AsbudKaV3PIqhiiPs1ArT5e3y2ebANh0A1pFVLUN4nk5
+         hz/DUSiMERea12iZTfghkVIIuvPUn+tbXy6GfNJLJvYb4mrNuUbJoI5WQzRkA/EgH2g3
+         0eBQOSQ7/r1si+bcnIhoJaRUdPjWPGnnnazt0kXUVlgni7Fyh5bY2DAo+19DIQlORBFa
+         hnSzdjQ94IMlLDkuOnt46IQp/RUUiWJHt5G0S/PlSJNflF6ImhhATIP8/8XL/hpvQZRj
+         QvDQ==
+X-Gm-Message-State: AFeK/H0a7Zr4+Gx2m2bZszA+X8bdcwnW1re4wHGk7ivaRUnLyeI7B1eTj3NduVUW99Al+p3P7Vgjjd9ky6Xf1EBJ
+X-Received: by 10.84.232.131 with SMTP id i3mr38312488plk.172.1491422458201;
+ Wed, 05 Apr 2017 13:00:58 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.186.196 with HTTP; Wed, 5 Apr 2017 13:00:57 -0700 (PDT)
+In-Reply-To: <20170405195600.54801-2-git@jeffhostetler.com>
+References: <20170405195600.54801-1-git@jeffhostetler.com> <20170405195600.54801-2-git@jeffhostetler.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 5 Apr 2017 13:00:57 -0700
+Message-ID: <CAGZ79kYFjuESBr72f5eyv7r4XohzY4KoQU36pqHLa3CsLuKi9w@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] string-list: use ALLOC_GROW macro when reallocing string_list
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v1 2/2] p0005-status: time status on very large repo
-Date:   Wed,  5 Apr 2017 19:56:00 +0000
-Message-Id: <20170405195600.54801-3-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170405195600.54801-1-git@jeffhostetler.com>
-References: <20170405195600.54801-1-git@jeffhostetler.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On Wed, Apr 5, 2017 at 12:55 PM,  <git@jeffhostetler.com> wrote:
+> +       if (list->nr + 1 >= list->alloc)
+> +               ALLOC_GROW(list->items, list->nr+1, list->alloc);
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- t/perf/p0005-status.sh | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
- create mode 100644 t/perf/p0005-status.sh
+No need for the condition here as it is part of the macro as well.
 
-diff --git a/t/perf/p0005-status.sh b/t/perf/p0005-status.sh
-new file mode 100644
-index 0000000..4a25ba0
---- /dev/null
-+++ b/t/perf/p0005-status.sh
-@@ -0,0 +1,70 @@
-+#!/bin/sh
-+
-+test_description="Tests performance of read-tree"
-+
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+test_checkout_worktree
-+
-+## usage: dir depth width files
-+make_paths () {
-+	for f in $(seq $4)
-+	do
-+		echo $1/file$f
-+	done;
-+	if test $2 -gt 0;
-+	then
-+		for w in $(seq $3)
-+		do
-+			make_paths $1/dir$w $(($2 - 1)) $3 $4
-+		done
-+	fi
-+	return 0
-+}
-+
-+fill_index () {
-+	make_paths $1 $2 $3 $4 |
-+	sed "s/^/100644 $EMPTY_BLOB	/" |
-+	git update-index --index-info
-+	return 0
-+}
-+
-+br_work1=xxx_work1_xxx
-+
-+new_dir=xxx_dir_xxx
-+
-+## (5, 10, 9) will create 999,999 files.
-+## (4, 10, 9) will create  99,999 files.
-+depth=5
-+width=10
-+files=9
-+
-+export br_work1
-+
-+export new_dir
-+
-+export depth
-+export width
-+export files
-+
-+## Inflate the index with thousands of empty files and commit it.
-+test_expect_success 'inflate the index' '
-+	git reset --hard &&
-+	git branch $br_work1 &&
-+	git checkout $br_work1 &&
-+	fill_index $new_dir $depth $width $files &&
-+	git commit -m $br_work1 &&
-+	git reset --hard
-+'
-+
-+## The number of files in the xxx_work1_xxx branch.
-+nr_work1=$(git ls-files | wc -l)
-+export nr_work1
-+
-+test_perf "read-tree status work1 ($nr_work1)" '
-+	git read-tree HEAD &&
-+	git status
-+'
-+
-+test_done
--- 
-2.9.3
-
+Thanks for spotting this fix!
+Stefan
