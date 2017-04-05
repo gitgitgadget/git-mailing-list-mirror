@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 209BF20966
-	for <e@80x24.org>; Wed,  5 Apr 2017 21:09:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 335DE20966
+	for <e@80x24.org>; Wed,  5 Apr 2017 21:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934041AbdDEVJh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 17:09:37 -0400
-Received: from siwi.pair.com ([209.68.5.199]:35848 "EHLO siwi.pair.com"
+        id S934168AbdDEVJj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 17:09:39 -0400
+Received: from siwi.pair.com ([209.68.5.199]:15020 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755639AbdDEVJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 17:09:36 -0400
+        id S933224AbdDEVJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 17:09:38 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id C212B845D2;
-        Wed,  5 Apr 2017 17:09:34 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 57F09845D4;
+        Wed,  5 Apr 2017 17:09:35 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 1/2] string-list: use ALLOC_GROW macro when reallocing string_list
-Date:   Wed,  5 Apr 2017 21:09:19 +0000
-Message-Id: <20170405210920.56549-2-git@jeffhostetler.com>
+Subject: [PATCH v2 2/2] p0005-status: time status on very large repo
+Date:   Wed,  5 Apr 2017 21:09:20 +0000
+Message-Id: <20170405210920.56549-3-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170405210920.56549-1-git@jeffhostetler.com>
 References: <20170405210920.56549-1-git@jeffhostetler.com>
@@ -37,38 +37,88 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Use ALLOC_GROW() macro when reallocing a string_list array
-rather than simply increasing it by 32.  This is a performance
-optimization.
-
-During status on a very large repo and there are many changes,
-a significant percentage of the total run time was spent
-reallocing the wt_status.changes array.
-
-This change decreased the time in wt_status_collect_changes_worktree()
-from 125 seconds to 45 seconds on my very large repository.
-
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- string-list.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ t/perf/p0005-status.sh | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
+ create mode 100644 t/perf/p0005-status.sh
 
-diff --git a/string-list.c b/string-list.c
-index 45016ad..003ca18 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -41,10 +41,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
- 	if (exact_match)
- 		return -1 - index;
- 
--	if (list->nr + 1 >= list->alloc) {
--		list->alloc += 32;
--		REALLOC_ARRAY(list->items, list->alloc);
--	}
-+	ALLOC_GROW(list->items, list->nr+1, list->alloc);
- 	if (index < list->nr)
- 		memmove(list->items + index + 1, list->items + index,
- 				(list->nr - index)
+diff --git a/t/perf/p0005-status.sh b/t/perf/p0005-status.sh
+new file mode 100644
+index 0000000..4a25ba0
+--- /dev/null
++++ b/t/perf/p0005-status.sh
+@@ -0,0 +1,70 @@
++#!/bin/sh
++
++test_description="Tests performance of read-tree"
++
++. ./perf-lib.sh
++
++test_perf_default_repo
++test_checkout_worktree
++
++## usage: dir depth width files
++make_paths () {
++	for f in $(seq $4)
++	do
++		echo $1/file$f
++	done;
++	if test $2 -gt 0;
++	then
++		for w in $(seq $3)
++		do
++			make_paths $1/dir$w $(($2 - 1)) $3 $4
++		done
++	fi
++	return 0
++}
++
++fill_index () {
++	make_paths $1 $2 $3 $4 |
++	sed "s/^/100644 $EMPTY_BLOB	/" |
++	git update-index --index-info
++	return 0
++}
++
++br_work1=xxx_work1_xxx
++
++new_dir=xxx_dir_xxx
++
++## (5, 10, 9) will create 999,999 files.
++## (4, 10, 9) will create  99,999 files.
++depth=5
++width=10
++files=9
++
++export br_work1
++
++export new_dir
++
++export depth
++export width
++export files
++
++## Inflate the index with thousands of empty files and commit it.
++test_expect_success 'inflate the index' '
++	git reset --hard &&
++	git branch $br_work1 &&
++	git checkout $br_work1 &&
++	fill_index $new_dir $depth $width $files &&
++	git commit -m $br_work1 &&
++	git reset --hard
++'
++
++## The number of files in the xxx_work1_xxx branch.
++nr_work1=$(git ls-files | wc -l)
++export nr_work1
++
++test_perf "read-tree status work1 ($nr_work1)" '
++	git read-tree HEAD &&
++	git status
++'
++
++test_done
 -- 
 2.9.3
 
