@@ -2,123 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 335DE20966
-	for <e@80x24.org>; Wed,  5 Apr 2017 21:09:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5E6620966
+	for <e@80x24.org>; Wed,  5 Apr 2017 21:12:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934168AbdDEVJj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 17:09:39 -0400
-Received: from siwi.pair.com ([209.68.5.199]:15020 "EHLO siwi.pair.com"
+        id S934293AbdDEVMt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 17:12:49 -0400
+Received: from siwi.pair.com ([209.68.5.199]:43002 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933224AbdDEVJi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 17:09:38 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        id S1755985AbdDEVMp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 17:12:45 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 57F09845D4;
-        Wed,  5 Apr 2017 17:09:35 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
+        by siwi.pair.com (Postfix) with ESMTPSA id A2728845D0;
+        Wed,  5 Apr 2017 17:12:43 -0400 (EDT)
+Subject: Re: [PATCH v1 1/2] string-list: use ALLOC_GROW macro when reallocing
+ string_list
+To:     Jeff King <peff@peff.net>
+References: <20170405195600.54801-1-git@jeffhostetler.com>
+ <20170405195600.54801-2-git@jeffhostetler.com>
+ <20170405200954.jmjvuzwjploenbho@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 2/2] p0005-status: time status on very large repo
-Date:   Wed,  5 Apr 2017 21:09:20 +0000
-Message-Id: <20170405210920.56549-3-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170405210920.56549-1-git@jeffhostetler.com>
-References: <20170405210920.56549-1-git@jeffhostetler.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <e805dfdd-12a4-cb70-d4e6-b5af915d29b5@jeffhostetler.com>
+Date:   Wed, 5 Apr 2017 17:12:37 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <20170405200954.jmjvuzwjploenbho@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- t/perf/p0005-status.sh | 70 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
- create mode 100644 t/perf/p0005-status.sh
 
-diff --git a/t/perf/p0005-status.sh b/t/perf/p0005-status.sh
-new file mode 100644
-index 0000000..4a25ba0
---- /dev/null
-+++ b/t/perf/p0005-status.sh
-@@ -0,0 +1,70 @@
-+#!/bin/sh
-+
-+test_description="Tests performance of read-tree"
-+
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+test_checkout_worktree
-+
-+## usage: dir depth width files
-+make_paths () {
-+	for f in $(seq $4)
-+	do
-+		echo $1/file$f
-+	done;
-+	if test $2 -gt 0;
-+	then
-+		for w in $(seq $3)
-+		do
-+			make_paths $1/dir$w $(($2 - 1)) $3 $4
-+		done
-+	fi
-+	return 0
-+}
-+
-+fill_index () {
-+	make_paths $1 $2 $3 $4 |
-+	sed "s/^/100644 $EMPTY_BLOB	/" |
-+	git update-index --index-info
-+	return 0
-+}
-+
-+br_work1=xxx_work1_xxx
-+
-+new_dir=xxx_dir_xxx
-+
-+## (5, 10, 9) will create 999,999 files.
-+## (4, 10, 9) will create  99,999 files.
-+depth=5
-+width=10
-+files=9
-+
-+export br_work1
-+
-+export new_dir
-+
-+export depth
-+export width
-+export files
-+
-+## Inflate the index with thousands of empty files and commit it.
-+test_expect_success 'inflate the index' '
-+	git reset --hard &&
-+	git branch $br_work1 &&
-+	git checkout $br_work1 &&
-+	fill_index $new_dir $depth $width $files &&
-+	git commit -m $br_work1 &&
-+	git reset --hard
-+'
-+
-+## The number of files in the xxx_work1_xxx branch.
-+nr_work1=$(git ls-files | wc -l)
-+export nr_work1
-+
-+test_perf "read-tree status work1 ($nr_work1)" '
-+	git read-tree HEAD &&
-+	git status
-+'
-+
-+test_done
--- 
-2.9.3
+On 4/5/2017 4:09 PM, Jeff King wrote:
+> On Wed, Apr 05, 2017 at 07:55:59PM +0000, git@jeffhostetler.com wrote:
+>
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Use ALLOC_GROW() macro when reallocing a string_list array
+>> rather than simply increasing it by 32.  This is a performance
+>> optimization.
+>>
+>> During status on a very large repo and there are many changes,
+>> a significant percentage of the total run time was spent
+>> reallocing the wt_status.changes array.
+>>
+>> This change decreased the time in wt_status_collect_changes_worktree()
+>> from 125 seconds to 45 seconds on my very large repository.
+>
+> Oof. Looks like the original was quadratic. I'm surprised this didn't
+> bite us more often. I guess we don't usually use string-lists for big
+> lists.
 
+To be fair, I was playing with a repo with 3M files
+and I think realloc() is more efficient on Linux, so
+I'm not surprised that we haven't seen it even with
+repos the size of linux.git.
+
+>
+> Aside from the redundant size-check that Stefan pointed out, the patch
+> looks obviously correct. I grepped for "alloc +=" and "alloc =.*+' to
+> see if there were any other cases, but didn't find any. Obviously that
+> is dependent on calling the variable "alloc", but that is normal for us
+> (and it does turn up a number of cases that do allocate correctly).
+>
+> -Peff
+>
