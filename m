@@ -2,82 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18F4820966
-	for <e@80x24.org>; Wed,  5 Apr 2017 22:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5154920966
+	for <e@80x24.org>; Wed,  5 Apr 2017 23:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753730AbdDEWzD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 18:55:03 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34183 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752189AbdDEWzC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 18:55:02 -0400
-Received: by mail-wr0-f196.google.com with SMTP id w43so6531521wrb.1
-        for <git@vger.kernel.org>; Wed, 05 Apr 2017 15:55:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
-         :content-transfer-encoding;
-        bh=3uMhhGquDpwRLRneQ3bSxHg/OpwXnRI3CqRBIg2ii0Y=;
-        b=KHHhF5rVDdQJ8P2P41lhxX9TvbBGLxmO+3vaFazzDY88KJ3nVopJREpVfBXL23NlvH
-         YOxDy79WguNBz4J09iMjiq2CSxbGrvDMxx7Y5zvlwi7TtYRPnNSfwt6gycYpo+uVL4Py
-         ocQ9Zl6C4jJKomREdOiIeAcYoyFtxybuPI6Bs5BgZvmBD6Wxf65rN4u9PqS2XWWTjiQP
-         n97DXtMUk+AB779IWcJp/ENnoWOKgOzZ4zOAyBie7iKzZGthCumf3GfxD2WGKXcoEr6e
-         aRuDqizfHnBQvJDj4/AsEBgjvczoG5GuoR/FjcM0Dm8PLX//QtA+D10wQHySM+Q3R8b6
-         2zzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :mime-version:content-transfer-encoding;
-        bh=3uMhhGquDpwRLRneQ3bSxHg/OpwXnRI3CqRBIg2ii0Y=;
-        b=VARyRoFBUxiOu1wMpe9iPcvSjInWfJ4ymRGWgY+pXoOjb6A/uClGHmr8ami67RKc6+
-         /dg7OWS2qTRU2fUT1v9GN6iR6udtdbiyqPGefbP0WnIjxygBWJlLsCgsa47IXuRuBUFA
-         vzWR4AqY6RvKFM57a2kCvdbeQ4tkpRDp9DwvXTWGPlARrNTOe8l52zd75m54kNhh6SGO
-         U2ClWpPCcrr5C+5Ov6QI7Cqk27fA2HBt+pvKdF+PpRcU78+ShcqV3E4TSw2NvsYaz0Ip
-         h/5/tvwAkWoYYynMrU13HIdUtLsWV6vYwXcgwxB7wfNOuzK9Jg8ABxz6gWJ1kOK/4oJ/
-         3mJA==
-X-Gm-Message-State: AFeK/H363tD9V5ri7HfvMpYXxXHG3evbN932ji9SQk9BaAykRC7+TWMt
-        GHvHygEebz7dEA==
-X-Received: by 10.28.197.133 with SMTP id v127mr19751240wmf.120.1491432900780;
-        Wed, 05 Apr 2017 15:55:00 -0700 (PDT)
-Received: from localhost.localdomain (x590d7ced.dyn.telefonica.de. [89.13.124.237])
-        by smtp.gmail.com with ESMTPSA id w10sm23990053wmw.14.2017.04.05.15.54.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Apr 2017 15:55:00 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@jeffhostetler.com
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH v5 4/4] read-cache: speed up add_index_entry during checkout
-Date:   Thu,  6 Apr 2017 00:54:53 +0200
-Message-Id: <20170405225453.2632-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.12.2.613.g9c5b79913
-In-Reply-To: <20170405173809.3098-5-git@jeffhostetler.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1756300AbdDEXvn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 19:51:43 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56375 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1752824AbdDEXvm (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 5 Apr 2017 19:51:42 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 649B120549
+        for <git@vger.kernel.org>; Wed,  5 Apr 2017 19:51:41 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute3.internal (MEProxy); Wed, 05 Apr 2017 19:51:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=i9Ohv4xRxDw+1MH+zx
+        cnP/ShAs5sJurG0H2LAmJXMzk=; b=ruhVwVUpJrxspVjamSjmsL25vO1Y+3/Hdd
+        rITj9CtTyxQJ60FKBZn9NPZ3M22bhoq5CClhZKXavDgbTug15tkU7IbFx5MWkUP7
+        VzgHUBpv7o6trIGi4lLnSCv6M5eTf8Q5blXT27j3XFYB57O39mIfJdiicgcMBA7E
+        8XE4bWB2nnMs+6voO7FSy4MJCNsk18cN5PZ8LLCthDq7Nq75sPzbNXcQrFsHX4tT
+        kQ0Mk+6i793l9H+DiZsKXXIy7LfQpP5darNr+LJoqcmLczBvRs6sIYtCFbaeINKa
+        w6AxswQtU2ZCZ2piDz+gRRMq5vtkTvKyq0Cryvt8JfS/eMFg55hw==
+X-ME-Sender: <xms:DYPlWI9sDptsmV0V1q3jx6Lstqd673o7gUP5Z9a9Y4UQsNk3mh9-MQ>
+X-Sasl-enc: d9aJUTjnSrZKaOvv+2BRJ0teWBnCddW1RUODPFe9Dzj5 1491436301
+Received: from [10.5.101.228] (unknown [216.64.185.218])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 1995B24371
+        for <git@vger.kernel.org>; Wed,  5 Apr 2017 19:51:41 -0400 (EDT)
+From:   Dan Fabulich <dan@fabulich.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: Why does git-checkout accept a tree-ish?
+Message-Id: <EA993AC0-022C-423D-ABD7-4747FA09E7FE@fabulich.com>
+Date:   Wed, 5 Apr 2017 16:51:40 -0700
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Teach add_index_entry_with_check() and has_dir_name()
-> to see if the path of the new item is greater than the
-> last path in the index array before attempting to search
-> for it.
-> 
-> During checkout, merge_working_tree() populates the new
-> index in sorted order, so this change saves at least 2
-> lookups per file.
+I was looking back through git's history, trying to figure out why =
+git-checkout has so many features. I was struck by this commit by Junio =
+in 2005.
 
-I think the performance numbers from the cover letter should be
-included here, so they will be included in the history.
-
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+=
+https://github.com/git/git/commit/4aaa702794447d9b281dd22fe532fd61e02434e1=
 
 
+> git-checkout: revert specific paths to either index or a given =
+tree-ish.
+> When extra paths arguments are given, git-checkout reverts only those
+> paths to either the version recorded in the index or the version
+> recorded in the given tree-ish.
+>=20
+> This has been on the TODO list for quite a while.
+
+Prior to this commit, git-checkout would only switch branches; you could =
+use git-checkout-index to copy files from the index to the working tree. =
+But in this commit, git-checkout not only subsumes the functionality of =
+git-checkout-index but also learns the ability to copy files from an =
+arbitrary branch (now an arbitrary tree-ish) into the working copy *and* =
+the the index. (That was important because git-reset didn't accept =
+<paths> in 2005.)
+
+I think the "UNIX philosophy" would have advocated that a new command be =
+created to handle this case, perhaps something like git-checkout-tree. =
+(That would also have eliminated the need to use -- to disambiguate the =
+tree-ish from the paths.)
+
+And so I wonder if anybody knows just why git-checkout gained these two =
+features in one commit, without creating a separate command.
+
+I have two guesses:
+
+1) It was pretty easy for Junio to implement as part of git-checkout; =
+just 20 lines of code and a small test.
+
+2) git at the time was distributed as a collection of files, =
+git-checkout, git-reset, etc. and so there was some pressure not to =
+create a new command for fear that it would clutter the filesystem.
+
+Are those the actual reasons? (This seems like it might be a FAQ, but =
+Google failed me searching for git faqs or "why does git checkout do so =
+many things.")
+
+-Dan
+
+P.S. I would make a similar argument about adding <paths> support to =
+git-reset, rather than creating a separate command like git-unadd.
+
+=
+https://github.com/git/git/commit/2ce633b928f78224a37308f45810e76fefe8df56=
+
+It was documented a couple of weeks later on Dec 26.
+=
+https://github.com/git/git/commit/6934dec89538e054823aadcce08af040bc8dcf79=
