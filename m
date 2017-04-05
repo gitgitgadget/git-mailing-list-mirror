@@ -2,31 +2,31 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BA7320966
-	for <e@80x24.org>; Wed,  5 Apr 2017 17:39:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D6462096C
+	for <e@80x24.org>; Wed,  5 Apr 2017 17:39:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755593AbdDERjn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 13:39:43 -0400
-Received: from siwi.pair.com ([209.68.5.199]:44845 "EHLO siwi.pair.com"
+        id S932628AbdDERjh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 13:39:37 -0400
+Received: from siwi.pair.com ([209.68.5.199]:24028 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754386AbdDERiV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 13:38:21 -0400
+        id S1753715AbdDERiU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 13:38:20 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1B8CD84653;
-        Wed,  5 Apr 2017 13:38:19 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id D1C2584651;
+        Wed,  5 Apr 2017 13:38:18 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5 3/4] test-strcmp-offset: created test for strcmp_offset
-Date:   Wed,  5 Apr 2017 17:38:08 +0000
-Message-Id: <20170405173809.3098-4-git@jeffhostetler.com>
+Subject: [PATCH v5 1/4] p0004-read-tree: perf test to time read-tree
+Date:   Wed,  5 Apr 2017 17:38:06 +0000
+Message-Id: <20170405173809.3098-2-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170405173809.3098-1-git@jeffhostetler.com>
 References: <20170405173809.3098-1-git@jeffhostetler.com>
@@ -39,122 +39,129 @@ From: Jeff Hostetler <jeffhost@microsoft.com>
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                      |  1 +
- t/helper/.gitignore           |  1 +
- t/helper/test-strcmp-offset.c | 64 +++++++++++++++++++++++++++++++++++++++++++
- t/t0065-strcmp-offset.sh      | 11 ++++++++
- 4 files changed, 77 insertions(+)
- create mode 100644 t/helper/test-strcmp-offset.c
- create mode 100755 t/t0065-strcmp-offset.sh
+ t/perf/p0004-read-tree.sh | 116 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 116 insertions(+)
+ create mode 100755 t/perf/p0004-read-tree.sh
 
-diff --git a/Makefile b/Makefile
-index 9ec6065..4c4c246 100644
---- a/Makefile
-+++ b/Makefile
-@@ -631,6 +631,7 @@ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
- TEST_PROGRAMS_NEED_X += test-sha1
- TEST_PROGRAMS_NEED_X += test-sha1-array
- TEST_PROGRAMS_NEED_X += test-sigchain
-+TEST_PROGRAMS_NEED_X += test-strcmp-offset
- TEST_PROGRAMS_NEED_X += test-string-list
- TEST_PROGRAMS_NEED_X += test-submodule-config
- TEST_PROGRAMS_NEED_X += test-subprocess
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index d6e8b36..0a89531 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -25,6 +25,7 @@
- /test-sha1
- /test-sha1-array
- /test-sigchain
-+/test-strcmp-offset
- /test-string-list
- /test-submodule-config
- /test-subprocess
-diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
-new file mode 100644
-index 0000000..fe01318
---- /dev/null
-+++ b/t/helper/test-strcmp-offset.c
-@@ -0,0 +1,64 @@
-+#include "cache.h"
-+
-+struct test_data {
-+	const char *s1;
-+	const char *s2;
-+	int first_change;
-+};
-+
-+static struct test_data data[] = {
-+	{ "abc", "abc", 0 },
-+	{ "abc", "def", 0 },
-+
-+	{ "abc", "abz", 2 },
-+
-+	{ "abc", "abcdef", 3 },
-+
-+	{ "abc\xF0zzz", "abc\xFFzzz", 3 },
-+
-+	{ NULL, NULL, 0 }
-+};
-+
-+int try_pair(const char *sa, const char *sb, int first_change)
-+{
-+	int failed = 0;
-+	int offset, r_exp, r_tst;
-+	int r_exp_sign, r_tst_sign;
-+
-+	/*
-+	 * Because differnt CRTs behave differently, only rely on signs
-+	 * of the result values.
-+	 */
-+	r_exp = strcmp(sa, sb);
-+	r_exp_sign = ((r_exp < 0) ? -1 : ((r_exp == 0) ? 0 : 1));
-+
-+	r_tst = strcmp_offset(sa, sb, &offset);
-+	r_tst_sign = ((r_tst < 0) ? -1 : ((r_tst == 0) ? 0 : 1));
-+
-+	if (r_tst_sign != r_exp_sign) {
-+		error("FAIL: '%s' vs '%s', result expect %d, observed %d\n",
-+			  sa, sb, r_exp_sign, r_tst_sign);
-+		failed = 1;
-+	}
-+
-+	if (offset != first_change) {
-+		error("FAIL: '%s' vs '%s', offset expect %d, observed %d\n",
-+			  sa, sb, first_change, offset);
-+		failed = 1;
-+	}
-+
-+	return failed;
-+}
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	int failed = 0;
-+	int k;
-+
-+	for (k=0; data[k].s1; k++) {
-+		failed += try_pair(data[k].s1, data[k].s2, data[k].first_change);
-+		failed += try_pair(data[k].s2, data[k].s1, data[k].first_change);
-+	}
-+
-+	return failed;
-+}
-diff --git a/t/t0065-strcmp-offset.sh b/t/t0065-strcmp-offset.sh
+diff --git a/t/perf/p0004-read-tree.sh b/t/perf/p0004-read-tree.sh
 new file mode 100755
-index 0000000..0176c8c
+index 0000000..5d8bbf5
 --- /dev/null
-+++ b/t/t0065-strcmp-offset.sh
-@@ -0,0 +1,11 @@
++++ b/t/perf/p0004-read-tree.sh
+@@ -0,0 +1,116 @@
 +#!/bin/sh
 +
-+test_description='Test strcmp_offset functionality'
++test_description="Tests performance of read-tree"
 +
-+. ./test-lib.sh
++. ./perf-lib.sh
 +
-+test_expect_success run_helper '
-+	test-strcmp-offset
++test_perf_default_repo
++test_checkout_worktree
++
++## usage: dir depth width files
++make_paths () {
++	for f in $(seq $4)
++	do
++		echo $1/file$f
++	done;
++	if test $2 -gt 0;
++	then
++		for w in $(seq $3)
++		do
++			make_paths $1/dir$w $(($2 - 1)) $3 $4
++		done
++	fi
++	return 0
++}
++
++fill_index () {
++	make_paths $1 $2 $3 $4 |
++	sed "s/^/100644 $EMPTY_BLOB	/" |
++	git update-index --index-info
++	return 0
++}
++
++br_base=xxx_base_xxx
++br_work1=xxx_work1_xxx
++br_work2=xxx_work2_xxx
++br_work3=xxx_work3_xxx
++
++new_dir=xxx_dir_xxx
++
++## (5, 10, 9) will create 999,999 files.
++## (4, 10, 9) will create  99,999 files.
++depth=5
++width=10
++files=9
++
++export br_base
++export br_work1
++export br_work2
++export br_work3
++
++export new_dir
++
++export depth
++export width
++export files
++
++## The number of files in the xxx_base_xxx branch.
++nr_base=$(git ls-files | wc -l)
++export nr_base
++
++## Inflate the index with thousands of empty files and commit it.
++## Turn on sparse-checkout so that we don't have to populate them
++## later when we start switching branches.
++test_expect_success 'inflate the index' '
++	git reset --hard &&
++	git branch $br_base &&
++	git branch $br_work1 &&
++	git checkout $br_work1 &&
++	fill_index $new_dir $depth $width $files &&
++	git commit -m $br_work1 &&
++	echo $new_dir/file1 >.git/info/sparse-checkout &&
++	git config --local core.sparsecheckout 1 &&
++	git reset --hard
++'
++
++## The number of files in the xxx_work1_xxx branch.
++nr_work1=$(git ls-files | wc -l)
++export nr_work1
++
++test_perf "read-tree work1 ($nr_work1)" '
++	git read-tree -m $br_base $br_work1 -n
++'
++
++## Alternate between base and work branches several
++## times to measure a large change.
++test_perf "switch base work1 ($nr_base $nr_work1)" '
++	git checkout $br_base &&
++	git checkout $br_work1
++'
++
++## Create work2 by modifying 1 file in work1.
++## Create work3 as an alias of work2.
++test_expect_success 'setup work2' '
++	git branch $br_work2 &&
++	git checkout $br_work2 &&
++	echo x >$new_dir/file1 &&
++	git add $new_dir/file1 &&
++	git commit -m $br_work2 &&
++	git branch $br_work3
++'
++
++## Alternate between work1 and work2 several times
++## to measure a very small change.
++test_perf "switch work1 work2 ($nr_work1)" '
++	git checkout $br_work1 &&
++	git checkout $br_work2
++'
++
++## Alternate between branches work2 and work3 which
++## are aliases of the same commit.
++test_perf "switch commit aliases ($nr_work1)" '
++	git checkout $br_work3 &&
++	git checkout $br_work2
 +'
 +
 +test_done
