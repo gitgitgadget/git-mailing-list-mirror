@@ -2,120 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9552209F1
-	for <e@80x24.org>; Thu,  6 Apr 2017 08:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFFE0209F1
+	for <e@80x24.org>; Thu,  6 Apr 2017 08:33:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752465AbdDFIWD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 04:22:03 -0400
-Received: from mout.gmx.net ([212.227.17.20]:65299 "EHLO mout.gmx.net"
+        id S1752719AbdDFIdQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 04:33:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57386 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751713AbdDFIWA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 04:22:00 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQih7-1cWMYb2Yaz-00TzVp; Thu, 06
- Apr 2017 10:21:40 +0200
-Date:   Thu, 6 Apr 2017 10:21:38 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     git@jeffhostetler.com, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH v5 3/4] test-strcmp-offset: created test for
- strcmp_offset
-In-Reply-To: <20170405224752.2242-1-szeder.dev@gmail.com>
-Message-ID: <alpine.DEB.2.20.1704061014120.4268@virtualbox>
-References: <20170405224752.2242-1-szeder.dev@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752252AbdDFIdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 04:33:12 -0400
+Received: (qmail 28380 invoked by uid 109); 6 Apr 2017 08:33:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 08:33:07 +0000
+Received: (qmail 24119 invoked by uid 111); 6 Apr 2017 08:33:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 04:33:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Apr 2017 04:33:06 -0400
+Date:   Thu, 6 Apr 2017 04:33:06 -0400
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?TGnFoWth?= <mliska@suse.cz>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by
+ GCC 7.
+Message-ID: <20170406083305.bs3hkxp7dagajg7m@sigill.intra.peff.net>
+References: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-745214947-1491466900=:4268"
-X-Provags-ID: V03:K0:sf6TgaSQupbREMXvGzSM7tyjozDavC9A6pbwxQL+atuoslRWKTM
- 8dKEXHDW+8+8r3MS5rTewVGhyOqpDSIDQe2SPH0LaWDQL/XmLiF3Nipkk0mL+Yi6lVyk6Yu
- emIlBXXizuV3ftzA1oRyUY6WoLcQDfYhFCaW47McdfJeG0fqc/TuZZTQQGCkq+gJaqVv7CD
- wA1gE+DzrjrHndsPELKiA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:spKPdEMH87c=:Ynn8jX8WSzw+1b2OMm12RA
- kebJJ6oHrxlV6bI288qdQNSiqvzVjPGAzCXi/TvgeFnXabe78bsHorOs+/c6F7OrdQSFKQ3JL
- Gk3USSM1leIYaEwGMylvorBaSm14uc/Dc1KtXq5K93PZR7xa+AxXr+uSGq6rIBdEykPvmZX6o
- /t1QeVTwhnSkFO2jqLI4WeoNHMKWZuZLb+JKw8N7Ctr9vFtbyyUVaM8Yzit/Q/FfqAf8h4DRn
- nbeozNbQLhKJXIp67DCN3pmxRpOBy67yEO3gqmMZT7MSJnnmg23+nPRHCVABCR83CrCvBxSfo
- H97U2inrqAxyuHK5A+Q/o2sjJUdS/+XbiONrkntdVkOX83fi5wGpYai2ZIEhrVTZNWGQiuk+Q
- j/tTRWFEs0v+q82EgNHX/HSOKJgXugijvwOaHuT9Sj3ga9YcdSOaQ0ge68/TkUsd3yLw7Zr9V
- td6r7MHEKKQgY9pPi1Y1DZPPEz5rnOKLlz1akUSuJ74x4YK6+ZS58CuaxXNkEEEaijNtnJA8B
- lY4Hol6odsSZnbOJ386Q9kX76+Op/HxzC1yM27LV1rf1EWRjqdoWWa0M8UtYm4ouT/iU4Ux2I
- RzGiTzgev12luItXRmADBrG8lYmuYyjjC5YwykVNGtJ5iE9lLIiX1isJBZ/UcMbYrIOggUWyz
- c9Ks5alsBqdUjFjYTGSNWlbZ/BuF2Y60Rv6A8fQfwPJoCoUdSStmn89mJZ26/KCGnWrEzWHIa
- 14km8nAOSXUwqkluICP/B7n5uBTrDUCH69DgLrJBnLzJvRFS2xyGJfVGXYWZil7h6bVeY1Eq+
- k1BTBnU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Apr 06, 2017 at 10:02:45AM +0200, Martin Liška wrote:
 
---8323329-745214947-1491466900=:4268
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Subject: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by GCC
+>  7.
+> 
+> The use-after-scope is triggered here:
+> READ of size 8 at 0x7ffc4f674e20 thread T0
+>     #0 0x6f0b69 in finish_command /home/marxin/Programming/git/run-command.c:570
+>     #1 0x5b6101 in kill_multi_file_filter /home/marxin/Programming/git/convert.c:570
+>     #2 0x5b798a in kill_multi_file_filter /home/marxin/Programming/git/convert.c:770
 
-Hi G=C3=A1bor,
+Yeah, this is definitely a problem. Your fix works, but...
 
-On Thu, 6 Apr 2017, SZEDER G=C3=A1bor wrote:
+> @@ -600,7 +601,8 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+>  	process = &entry->process;
+>  
+>  	child_process_init(process);
+> -	process->argv = argv;
+> +	process->argv = xcalloc(2, sizeof(const char *));
+> +	process->argv[0] = cmd;
+>  	process->use_shell = 1;
+>  	process->in = -1;
+>  	process->out = -1;
 
-> I think this patch should be squashed into the previous commit;  I
-> don't see any reason why the tests should be added in a different
-> commit than the function they are testing.
+We can just do:
 
-I am of two minds there. In some cases, the newly added test demonstrates
-the intended usage, and therefore makes for a nice documentation. In other
-cases, the new test is large enough to stand on its own, i.e. to merit a
-separate patch (also to make reviewing easier).
+  argv_array_push(&process->args, cmd);
 
-In this particular case, I tend to the latter: it is large enough a patch
-that it is easier to review as a separate patch.
+here. And then it is freed automatically when finish_command() is
+called (and also if start_command never starts the process, which I
+think your patch misses).
 
-> >  t/helper/test-strcmp-offset.c | 64 +++++++++++++++++++++++++++++++++++=
-++++++++
-> >  t/t0065-strcmp-offset.sh      | 11 ++++++++
-> >  4 files changed, 77 insertions(+)
-> >  create mode 100644 t/helper/test-strcmp-offset.c
-> >  create mode 100755 t/t0065-strcmp-offset.sh
->=20
-> Sure, tests are good, but I have to wonder how this would scale in the
-> long term, when even such simple functions would get their own
-> t/helper/test-func executable and t/tNNNN-func.sh script.
-
-True. The proliferation of executables in t/helper/ got a little out of
-hand.
-
-But there is nothing preventing us from consolidating a few of them into a
-single executable, using our wonderful option parsing function with
-OPT_CMDMODE to switch between the different functions.
-
-I could see, for example, how we could consolidate all string-related
-test helpers into a single one, say, test-strings:
-
-t/helper/test-ctype.c
-t/helper/test-regex.c
-t/helper/test-strcmp-offset.c
-t/helper/test-string-list.c
-t/helper/test-line-buffer.c
-t/helper/test-urlmatch-normalization.c
-t/helper/test-wildmatch.c
-
-Also, these helpers seem to be related to index handling and could go into
-a new test-index helper:
-
-t/helper/test-dump-cache-tree.c
-t/helper/test-dump-split-index.c
-t/helper/test-dump-untracked-cache.c
-t/helper/test-index-version.c
-t/helper/test-scrap-cache-tree.c
-
-Ciao,
-Johannes
---8323329-745214947-1491466900=:4268--
+-Peff
