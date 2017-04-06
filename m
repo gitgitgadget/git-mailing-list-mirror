@@ -2,82 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C66A3209F1
-	for <e@80x24.org>; Thu,  6 Apr 2017 08:57:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9929D209F1
+	for <e@80x24.org>; Thu,  6 Apr 2017 09:19:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755909AbdDFI5i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 04:57:38 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51071 "EHLO mout.gmx.net"
+        id S932446AbdDFJTF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 05:19:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57408 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755793AbdDFI5d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 04:57:33 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lg6op-1cKZff2iXT-00pbU8; Thu, 06
- Apr 2017 10:57:28 +0200
-Date:   Thu, 6 Apr 2017 10:57:26 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Martin_Li=C5=A1ka?= <mliska@suse.cz>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
-In-Reply-To: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
-Message-ID: <alpine.DEB.2.20.1704061056020.4268@virtualbox>
-References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S932395AbdDFJTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 05:19:00 -0400
+Received: (qmail 31280 invoked by uid 109); 6 Apr 2017 09:18:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 09:18:59 +0000
+Received: (qmail 24407 invoked by uid 111); 6 Apr 2017 09:19:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 05:19:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Apr 2017 05:18:57 -0400
+Date:   Thu, 6 Apr 2017 05:18:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     "Tom G. Christensen" <tgc@jupiterrise.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 7/7] Do not use curl_easy_strerror with curl < 7.12.0
+Message-ID: <20170406091857.hl4ndn52kj2z4ujh@sigill.intra.peff.net>
+References: <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
+ <20170405130424.13803-1-tgc@jupiterrise.com>
+ <20170405130424.13803-8-tgc@jupiterrise.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-2108696474-1491469048=:4268"
-X-Provags-ID: V03:K0:4/YR5eazlgLQN/lQgWQNABQ3YqXQMgwqPsItSEVW4LuocU/+dnw
- PTpVRn830P2+Zn5IkPcrqTu1ykNpqucToQu6PokiRhjzjFPjn400Z5diBsYgPyZ2N6iHcEL
- gAW9JpBCO2VM/82KVSC1B7pHj4ElgDro8c4/6xT+h049tVx0IB2DkNnOcKVytV2TE4prMgu
- WzV6brMm9gY2ilAiLMBFw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MZh+6hVNCv0=:wfk4SyOnasKLrgPHlCBxBd
- eRim4h3uARqsB74oCptvWmEvvLl1lwshLF+9gVrS2J9+kKZcVtHGBECU0xjh5MjvjqMB0h1vK
- 1coB3NK/SxSLpUpzRh0Wat0lQbAK5y/wK7cqEBnJ9JmZroyjzaMkB2ZLa96IVYleQ1NXJFA1X
- 3MhRuRYC2wKi38l6dyoK8TOSL4hzpqhcZNS/iw41mXvApWzo02vyNvCh8sFpsKBDtqq0h5F/Y
- E+zUO7e1VE2QaUDTT38aqPnVYq8QTVrb4PTrXyrm4zDDE4s1cLFbomqIY3ey8+2fn546db98/
- Qyj2xfUqe82hpP/KX+kkRzd4TC8tl10nCxaPcRHFM6vJHhHPd6OAhb0LCQXfLFBv60agXJnQM
- 1Ep4mQMkkrVmqhMaHo+ifC/5ByFxmbGOsu0z2nJhsae3cWm9EabUUxmNBP1sKv5yJxwHdlLPh
- TWysxOTmUVCUq52CrBvfCFovCuLlLUOWMvpT18h/dP8V4h+uey8Hh+77zW4eHzKrzeUOybxhO
- 3uGyJAQNCnjFSQ+cs8SGrH7TX2TCje5IrlrDGuEfEJxCVkdSwnA962ylagEnzf+SLJH0UYDtm
- tZeVGxFOSkonVpZl+r+1IbYy77gssMHnpdA7Va5NHk81wotzTTdzV1phHxD9EpFU0aVWJWkHo
- hMShRyBEmrxKFBwHf2WFMDui9AP6s3wztn+BPK25zjo8YIzqldzTVs/VqVF/LQRFFF1W3xROy
- +s63V22/0lR6hr8Xq/adx4kpqqG72NSFekOOR0oFSsAYNNBRNpCx5sOlQjdCGQffaUlpK6qDn
- Aawpo70
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170405130424.13803-8-tgc@jupiterrise.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Apr 05, 2017 at 03:04:24PM +0200, Tom G. Christensen wrote:
 
---8323329-2108696474-1491469048=:4268
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+> Commit 17966c0a added an unguarded use of curl_easy_strerror.
+> This adds a guard so it is not used with curl < 7.12.0.
+> 
+> Signed-off-by: Tom G. Christensen <tgc@jupiterrise.com>
+> ---
+>  http.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/http.c b/http.c
+> index a46ab23af..104caaa75 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -2116,8 +2116,12 @@ static size_t fwrite_sha1_file(char *ptr, size_t eltsize, size_t nmemb,
+>  		CURLcode c = curl_easy_getinfo(slot->curl, CURLINFO_HTTP_CODE,
+>  						&slot->http_code);
+>  		if (c != CURLE_OK)
+> +#if LIBCURL_VERSION_NUM >= 0x070c00
+>  			die("BUG: curl_easy_getinfo for HTTP code failed: %s",
+>  				curl_easy_strerror(c));
+> +#else
+> +			die("BUG: curl_easy_getinfo for HTTP code failed");
+> +#endif
 
-Hi Martin,
+These kinds of interleaved conditionals make me nervous that we'll get
+something wrong (especially without braces, it's not immediately clear
+that both sides are a single statement).
 
-On Thu, 6 Apr 2017, Martin Li=C5=A1ka wrote:
+I wonder if it would be more readable to do something like:
 
-> Following patch fixes issues that can be seen with -fsanitize=3Dundefined
-> on GCC 7.
+  #if LIBCURL_VERSION_NUM < 0x070c00
+  static const char *curl_easy_strerror(CURL *curl)
+  {
+	return "[error code unavailable; curl version too old]";
+  }
+  #endif
 
-The commit message says:
+Then callers don't have to individually deal with the ifdef. It does
+mean that the user sees that kind-of ugly message, but maybe that is a
+good thing. They know they need to upgrade curl to see more details.
 
-=09Memory functions like memmove and memcpy should not be called
-=09with an argument equal to NULL.
-
-But the patch is not about the pointer arguments, it is about the size
-argument. So I would suggest to say
-
-=09Memory functions like memmove and memcpy should only be called
-=09with positive sizes.
-
-Ciao,
-Johannes
---8323329-2108696474-1491469048=:4268--
+-Peff
