@@ -2,127 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 076E91FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 20:21:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B85771FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 20:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755552AbdDFUVF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 16:21:05 -0400
-Received: from mout.web.de ([212.227.17.12]:58632 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754719AbdDFUVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 16:21:04 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lcxxc-1cE3RT1FMO-00i8Ok; Thu, 06
- Apr 2017 22:20:51 +0200
-Subject: Re: [PATCH v5 1/4] p0004-read-tree: perf test to time read-tree
-To:     git@jeffhostetler.com, git@vger.kernel.org
-References: <20170405173809.3098-1-git@jeffhostetler.com>
- <20170405173809.3098-2-git@jeffhostetler.com>
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <6937b76e-9bbf-7ce5-8605-e09f556f8a26@web.de>
-Date:   Thu, 6 Apr 2017 22:20:49 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1753821AbdDFUcS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 16:32:18 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:34349 "EHLO
+        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751180AbdDFUcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 16:32:17 -0400
+Received: by mail-oi0-f53.google.com with SMTP id d2so65174682oig.1
+        for <git@vger.kernel.org>; Thu, 06 Apr 2017 13:32:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Qn2qEy3Jt7z2Jn/2yosnF6vobzmfLY5MZCXcuYOxD5Q=;
+        b=ecfiBa7s6CvU15XesjYGw1kaYS2Qc26rnWy8LnoBl2U0+JPTfxqDFAuEm7gGTrBpME
+         QDna16duQVLgucajJL2Kw59peCY6ynAIqNajTGhbz5yQ0xHJC9st48997NNlxtbVAbA7
+         jJkNcbnqytO5VJPlO2bPRg0BXiQ3dqnX+bLuCqfOPIn259T8nmiRcr73V4NK9pBy9+sJ
+         nIcl02Vgu4FeFL0+ZVWuV05vlEPg7F8RrAA4grVWE5KDmORQuUeoN/BypvOCMaOxSaDj
+         IE6PJdhDC/27sv+yu9p7AFqeFPKa5cyIBIt5bqNKSyPr1hg3Mkjz17hVVGVJ/J/otqpd
+         m59A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Qn2qEy3Jt7z2Jn/2yosnF6vobzmfLY5MZCXcuYOxD5Q=;
+        b=jvuP6rmHadz3ES4vphLw4972hTuNCPlp2j2ejIdUrIPPe0aMGz/I4JZwRSG1bFJQZF
+         IJyLUiAPR9HKTUsUPaDol8A1UqMuEP7JKpdZynX5RpgD7/2bP6hrmHCE2NKt8nPavIRQ
+         LH8OiREx4MPxyNP3JjdOQehtGJbCYT/p7GiucSmy7GQScPUY6K/KY3ym76/NlgLg4BtQ
+         ld1KjS0nMR1dzkUx55DTabAOkxV4DsQZZR/artwYBZsq04yfrVS+gGOhmfVHhuDobT/i
+         O7jiBdR6Fr79AHlvil/1Lz70Vw3U/PrEU9KQ5tnfibwG8tqrfBGjAikGPTwguWBe2olF
+         6GMQ==
+X-Gm-Message-State: AFeK/H1ulQl82sYvEB+IEWxsRxPq5FbN+p4zg5L2Gx7BPiV/A9Nl8po4rSdNcOvt4tcyeCsx/4M2DrbdsFgKIQ==
+X-Received: by 10.202.86.12 with SMTP id k12mr17431111oib.150.1491510736113;
+ Thu, 06 Apr 2017 13:32:16 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170405173809.3098-2-git@jeffhostetler.com>
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:re1gnWyYXUEfRnYuZB6mxIW0fP5refM2QJs0W/3o6O02QbjIebX
- QAhej0RBpVB3k9RjwJaFGqyXt6pQO9Iyc6bpp5IIWFfml6nbJgShf1rFLZYHpTTRzdjCqsj
- XRlnU5uEJA0OdPg5m7z6m1GozLCQwPCxoV32Mabj8is2pHWTqEIEA/tN+kN2Xa6vQLYQcgb
- iwZ9Z8VDQUk0tPdckN0ZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:R/anHFHYjVE=:MaIct/aFSeJT4H25McJO5x
- 4gi5AIKOu8bicd0YqF+KYC8PwurjBoSOBSIIUqFm2G6LK5cCrsbkRXF2W8a247lePRCD0BpbG
- oG8G9UoS2sHufv0kOoBLoFdYd6ArO40zVDA0TpaxsUG6DCNS8m/Cx72r06hhq5cwCAh5Cnn8C
- gX2wsTyRUATYC9CRzt2lTiUukpSCL9PcHnymVIY8Bg6+Dbma5Ln4zqM13T4R7js1YMEmMU3WF
- N3SpwzC8a5kVoN+2zVCLPenwT51CKwIfyd3k7hxFSXI00ZP0xNw/QByTTldai2+PpedZziQrp
- H34wFYXjwSp2iY+QqSFvc1J1rLyc26al+i3AgOkk3LEo8sgfmniwbaARiUe1jNYCwzTTlFph5
- gpXcOVXGjjyUVSh9C9sjAg8szg9SkufgOJMB1gZmYF9eMOHyR8vL9kP6xxqzRB1HPwk99NWMy
- iTwEHezwrzrHr8qjfYR+jRsWIkIngCVuqgN5xghMAvqApWjatJF5FkHbYZ6zz2iP3vxgrKwhb
- Gk8Au1pfsccLWTYUsTUltZulA9RBxcJi3kQIJV5IqSgEewgRnaWAWyxXZb2i/+O2nyXBPQy1G
- ZhhnZnHkQjKwIvF1wLXTuRX4mhzAo4UUABu9awZx3sNw91a81ta64OFfXxtF2mBiXBBRuYXxX
- /1kVsPncQvQrnleBxSAJKyCVRPGI3ITtCLI6VW5XZHRpcPk/tW1AuyFmF6zIxMq1dWqPY+0nA
- QSuFZcjEqhqGYaZKDJ6zzpctgR9KfxLhSN0eyMiK3YO098xNequkiqKJGp4ZFCZPHtonLXIEQ
- hsGnd7l
+Received: by 10.157.25.7 with HTTP; Thu, 6 Apr 2017 13:31:55 -0700 (PDT)
+From:   Javier Domingo Cansino <javierdo1@gmail.com>
+Date:   Thu, 6 Apr 2017 22:31:55 +0200
+Message-ID: <CALZVapk4zxn-DSdMdy2q-Z0KvsBvx4MCSB5UDVOaBrBvAqw_AA@mail.gmail.com>
+Subject: Git branch deletion not based on HEAD branch anymore
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.04.2017 um 19:38 schrieb git@jeffhostetler.com:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
-> 
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  t/perf/p0004-read-tree.sh | 116 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 116 insertions(+)
->  create mode 100755 t/perf/p0004-read-tree.sh
-> 
-> diff --git a/t/perf/p0004-read-tree.sh b/t/perf/p0004-read-tree.sh
-> new file mode 100755
-> index 0000000..5d8bbf5
-> --- /dev/null
-> +++ b/t/perf/p0004-read-tree.sh
-> @@ -0,0 +1,116 @@
-> +#!/bin/sh
-> +
-> +test_description="Tests performance of read-tree"
-> +
-> +. ./perf-lib.sh
-> +
-> +test_perf_default_repo
-> +test_checkout_worktree
-> +
-> +## usage: dir depth width files
-> +make_paths () {
-> +	for f in $(seq $4)
-> +	do
-> +		echo $1/file$f
-> +	done;
-> +	if test $2 -gt 0;
-> +	then
-> +		for w in $(seq $3)
-> +		do
-> +			make_paths $1/dir$w $(($2 - 1)) $3 $4
-> +		done
-> +	fi
-> +	return 0
-> +}
+Hello,
 
-"make_paths xxx_dir_xxx 5 10 9" takes more than a minute for me.
-Providing its results as a file would be quicker but less flexible.
-The following command prints the same result in less than a second.
+I have noticed that in the "latest" versions of git, `git branch -d
+branch` instead of refusing to delete a branch that hasn't been merged
+to HEAD, it now throws a warning and deleting the local branch if it's
+present in a remote.
 
-	awk -v dir=xxx_dir_xxx -v depth=5 -v width=10 -v files=9 '
-        	function make_paths(dir, depth, width, files,  i)
-	        {
-        	        for (i = 1; i <= files; i++) {
-	                        print dir "/file" i
-        	        }
-	                if (depth > 0) {
-        	                for (i = 1; i <= width; i++) {
-	                                make_paths(dir "/dir" i, depth - 1, width, files)
-        	                }
-                	}
-	        }
-	        END {make_paths(dir, depth, width, files)}
-	' </dev/null
+Example:
+```
+> git branch -d command-runner
+warning: deleting branch 'command-runner' that has been merged to
+         'refs/remotes/origin/command-runner', but not yet merged to HEAD.
+Deleted branch command-runner (was 1716ed5).
+```
 
-It's faster because it avoids calling seq thousands of times.
+After diving in git blame for a while I have realized that "lately"
+refers to a commit done in 2009.
 
-> +
-> +fill_index () {
-> +	make_paths $1 $2 $3 $4 |
-> +	sed "s/^/100644 $EMPTY_BLOB	/" |
+Because the change is over 7 years old, I will explain what is my use case.
 
-You could add the prefix to the script above and avoid this sed call
-as well.
+The workflow I follow since I started with git is to start an exact
+replica of my working environment in a personal fork. Anything deleted
+locally is deleted remotely and viceversa. This allows me to move
+between work and home smoothly. I also use the default `git config
+push.default matching`
 
-René
+My typical day starts and ends pulling master from the central repo,
+and `git branch -d`-ing  all the branches I have in local. git would
+delete the ones that have been merged, and leave alone the ones that
+have been not been merged. Then I rebase all my branches and push the
+new master and rebased branches. Because all my local branches track
+my personal repo, all of them get deleted if I execute my scripts.
+
+I understand it's not possible / convenient anymore to go back, but
+would it be possible to have an option such as `--merged` to support
+the old usecase?
+
+-- 
+Javier Domingo Cansino
