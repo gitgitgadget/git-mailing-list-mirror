@@ -1,124 +1,178 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.2 required=3.0 tests=BAYES_50,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 011241FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 14:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B28EC1FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 15:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935319AbdDFO65 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 10:58:57 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:34547 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934355AbdDFO6z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 10:58:55 -0400
-Received: by mail-pg0-f44.google.com with SMTP id 21so38851541pgg.1
-        for <git@vger.kernel.org>; Thu, 06 Apr 2017 07:58:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=prospectsinsight-boosters-com.20150623.gappssmtp.com; s=20150623;
-        h=return-receipt-to:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding:thread-index:content-language
-         :disposition-notification-to;
-        bh=TuvGTbFmEFIDx4f9gTiCYS3bvratWTWpRIAJy6CtyRc=;
-        b=BswzFKeRCy5Zz3UwTYTCK/2MB0R0+Md2AS9fj/TgGDgpWBJ+6TghJeuy85utVqvCaR
-         KfiXKWc/rzLi9MNjPM0wCrt0abNPvbDL/2OLiBW++80mVjP35MYBtAnrThkBzMJbguEd
-         duwYfyHaWqSM8Gu6Yw9Hn1KzhPi2dIKoiw9vCXqMQHzn3vyPmKULASuRz/fP8du9jZBk
-         FR1ZCw0MO4mfs4J48oT2lWvL97HKTplUHQUdONt1P82MwRtK0DraBoxQXvzbI+2uq4uA
-         griUDbJ0kY1KX7VGOu5PFAAGIx5jX5b7Dp2hwUYy0Mc874Jyk40/0BRGGmmjntiknFWV
-         9MaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:return-receipt-to:from:to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language:disposition-notification-to;
-        bh=TuvGTbFmEFIDx4f9gTiCYS3bvratWTWpRIAJy6CtyRc=;
-        b=cn1rstJoli0y9mzjjsW5Ltz40My6BtfPfJFhJTlAAWrZHSAx7JSnxciWF3nu2sMhud
-         Qi/CjUV8a+WeIurdc5TkOWJwOa0Pb9nEc7f8KvHuMpCYHRe5PndfJaLXj6WXoqVu2bQh
-         LhbbmVXvhhBcp8I8pThj4s4Xw6X0aw6lSl8SEiYLbwNhyseqj2OR5GG49frG9Wn2WeMW
-         bHUcoOQ7zBOooP/ZP1GgPcy4ZA6c7Ib8xebez7qkhCWEkcx3S5vQLKi1sYdOhYH9thtj
-         zXeHgRJyxhdcQJ26ZG6ITmbwhYEQWbG3VVh8aWOyKeVsy7qE01YTnThUYc1409MzdEcs
-         WhMQ==
-X-Gm-Message-State: AN3rC/4+DbFzLVrqnxODAgERh1u3Qq6pBThxIi4DeOqbRsGWWTXB/0X71w6a5slBrr2e7g==
-X-Received: by 10.99.176.69 with SMTP id z5mr1453294pgo.144.1491490734458;
-        Thu, 06 Apr 2017 07:58:54 -0700 (PDT)
-Received: from userPC ([106.51.21.83])
-        by smtp.gmail.com with ESMTPSA id s3sm4476105pgn.29.2017.04.06.07.58.53
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 06 Apr 2017 07:58:53 -0700 (PDT)
-From:   "Chris Passaretti" <chris@prospectsinsight-boosters.com>
-To:     <git@vger.kernel.org>
-Subject: Game Developer Industry Lists 
-Date:   Thu, 6 Apr 2017 10:58:30 -0400
-Message-ID: <!&!AAAAAAAAAAAYAAAAAAAAABjgJ4vtsztCnYr+2pJQ7dbCgAAAEAAAAMa9AQct3dpGqdpf+9QGBqYBAAAAAA==@prospectsinsight-boosters.com>
+        id S1753730AbdDFPmm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 11:42:42 -0400
+Received: from mx2.suse.de ([195.135.220.15]:58487 "EHLO mx2.suse.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753473AbdDFPmh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 11:42:37 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx2.suse.de (Postfix) with ESMTP id 84362AB43;
+        Thu,  6 Apr 2017 15:42:35 +0000 (UTC)
+Subject: Re: [PATCH v3 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>
+References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
+ <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
+ <998bf391-7fc5-8329-db58-ef0f24517707@suse.cz>
+ <33c63fb9-281c-8fd2-66e7-b85f62f4f447@web.de>
+Cc:     git@vger.kernel.org
+From:   =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
+Message-ID: <8555c61f-2617-eec8-6dbe-87c79c6ca302@suse.cz>
+Date:   Thu, 6 Apr 2017 17:42:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AdKu5kEFVdZgWtM4SqiZAhOi8xDSOg==
-Content-Language: en-us
+In-Reply-To: <33c63fb9-281c-8fd2-66e7-b85f62f4f447@web.de>
+Content-Type: multipart/mixed;
+ boundary="------------FED35BC504D56233A26D983A"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+This is a multi-part message in MIME format.
+--------------FED35BC504D56233A26D983A
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+On 04/06/2017 02:26 PM, René Scharfe wrote:
+> Am 06.04.2017 um 11:52 schrieb Martin Liška:
+>> I'm sending (v2), where I updated commit message and wrapped 2 problematic
+>> places to newly introduced macros that do the check. Follow-up patch can
+>> change usages of memcpy and memove.
+> 
+>> diff --git a/apply.c b/apply.c
+>> index e6dbab26a..eacca29fa 100644
+>> --- a/apply.c
+>> +++ b/apply.c
+>> @@ -2802,9 +2802,9 @@ static void update_image(struct apply_state *state,
+>>  			img->line + applied_pos + preimage_limit,
+>>  			(img->nr - (applied_pos + preimage_limit)) *
+>>  			sizeof(*img->line));
+>> -	memcpy(img->line + applied_pos,
+>> -	       postimage->line,
+>> -	       postimage->nr * sizeof(*img->line));
+>> +	MEMCPY(img->line + applied_pos,
+>> +		postimage->line,
+>> +		postimage->nr * sizeof(*img->line));
+> 
+> Using the existing macro COPY_ARRAY would yield a nicer result:
+
+Yes, it's nicer. I'm sending tested version 3.
+
+Martin
+
+> 
+> 	COPY_ARRAY(img->line + applied_pos, postimage->line, postimage->nr);
+> 
+>>  	if (!state->allow_overlap)
+>>  		for (i = 0; i < postimage->nr; i++)
+>>  			img->line[applied_pos + i].flag |= LINE_PATCHED;
+>> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+>> index d449e46db..7caeeb6a6 100644
+>> --- a/builtin/ls-files.c
+>> +++ b/builtin/ls-files.c
+>> @@ -391,7 +391,7 @@ static void prune_cache(const char *prefix, size_t prefixlen)
+>>  		}
+>>  		last = next;
+>>  	}
+>> -	memmove(active_cache, active_cache + pos,
+>> +	MEMMOVE(active_cache, active_cache + pos,
+>>  		(last - pos) * sizeof(struct cache_entry *));
+>>  	active_nr = last - pos;
+>>  }
+> 
+> Perhaps we should add MOVE_ARRAY to complement COPY_ARRAY.
+> 
+> René
+> 
+
+
+--------------FED35BC504D56233A26D983A
+Content-Type: text/x-patch;
+ name="0001-Fix-nonnull-errors-reported-by-UBSAN-with-GCC-7.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename*0="0001-Fix-nonnull-errors-reported-by-UBSAN-with-GCC-7.patch"
+
+From 4784ff90b2c4cd0d78a25c8d8ed77f299686348c Mon Sep 17 00:00:00 2001
+From: marxin <mliska@suse.cz>
+Date: Wed, 5 Apr 2017 14:31:32 +0200
+Subject: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
+
+Memory functions like memmove and memcpy should only be called
+with positive sizes. That is achieved by newly introduced macro
+MEMMOVE and usage of ARRAY_COPY.
+
+Signed-off-by: Martin Liska <mliska@suse.cz>
+---
+ apply.c            |  4 +---
+ builtin/ls-files.c |  2 +-
+ git-compat-util.h  | 10 ++++++++++
+ 3 files changed, 12 insertions(+), 4 deletions(-)
+
+diff --git a/apply.c b/apply.c
+index e6dbab26a..121f3f414 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2802,9 +2802,7 @@ static void update_image(struct apply_state *state,
+ 			img->line + applied_pos + preimage_limit,
+ 			(img->nr - (applied_pos + preimage_limit)) *
+ 			sizeof(*img->line));
+-	memcpy(img->line + applied_pos,
+-	       postimage->line,
+-	       postimage->nr * sizeof(*img->line));
++	COPY_ARRAY(img->line + applied_pos, postimage->line, postimage->nr);
+ 	if (!state->allow_overlap)
+ 		for (i = 0; i < postimage->nr; i++)
+ 			img->line[applied_pos + i].flag |= LINE_PATCHED;
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index d449e46db..7caeeb6a6 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -391,7 +391,7 @@ static void prune_cache(const char *prefix, size_t prefixlen)
+ 		}
+ 		last = next;
+ 	}
+-	memmove(active_cache, active_cache + pos,
++	MEMMOVE(active_cache, active_cache + pos,
+ 		(last - pos) * sizeof(struct cache_entry *));
+ 	active_nr = last - pos;
+ }
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8a4a3f85e..b75e21cff 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1002,6 +1002,16 @@ int git_qsort_s(void *base, size_t nmemb, size_t size,
+ 		die("BUG: qsort_s() failed");			\
+ } while (0)
  
-
-Are you interested to reach the newly updated Game Developer Industry Lists
-which includes complete contact details and verified email addresses of -
-Casino Surveillance Managers, Casino Gaming Managers, Casino Owners, CEOs &
-GMs, Casino Security Managers, Tribal Commissioners, Casino Regulators,
-Internal Auditors & Investigators, Acrylic Gaming Products Manufacturers,
-Gaming Distributors, Gaming Operators, Casino Operators, Gaming Consultants,
-Laser Cutters, Gaming Equipment Suppliers, Graphic Designers, Audio/Visual,
-Electrical and Signage, Facility Design and Construction, Limousine
-Manufacturers and many more across USA, UK, Canada, Australia, Europe and
-most of the world.
-
- 
-
- 
-
- 
-
-Let me know your interest, so that I can send you few sample data for your
-reference.
-
- 
-
-Target Industry :  _____________ ;     Target Geography :  ______________;
-Target Job Title :  _________________ 
-
- 
-
-Kindly revert back to us with your target audience to get started.
-
- 
-
-Note: Samples are available as per your request.
-
- 
-
-Best Regards
-
- 
-
-Chris
-
-Online Marketing Manager
-
- 
-
-If you do not wish to receive future emails from us, please reply as 'leave
-out' 
-
- 
++static inline void *sane_memmove(void *dest, const void *src, size_t n)
++{
++	if (n > 0)
++		return memmove(dest, src, n);
++	else
++		return dest;
++}
++
++#define MEMMOVE(dest, src, n) sane_memmove(dest, src, n)
++
+ #ifndef REG_STARTEND
+ #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
+ #endif
+-- 
+2.12.2
 
 
+--------------FED35BC504D56233A26D983A--
