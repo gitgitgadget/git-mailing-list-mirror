@@ -2,74 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79C3E1FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 18:48:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF0D01FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 20:08:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755317AbdDFSsj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 14:48:39 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:36058 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753522AbdDFSsh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 14:48:37 -0400
-Received: by mail-pg0-f48.google.com with SMTP id g2so42999265pge.3
-        for <git@vger.kernel.org>; Thu, 06 Apr 2017 11:48:36 -0700 (PDT)
+        id S1754751AbdDFUId (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 16:08:33 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36285 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752825AbdDFUIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 16:08:31 -0400
+Received: by mail-wr0-f196.google.com with SMTP id o21so9299594wrb.3
+        for <git@vger.kernel.org>; Thu, 06 Apr 2017 13:08:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=xeBNqtt8fjc3y/TuCXT42YH5VDzkwOK4vC2HM/itL8c=;
-        b=Gmqns9Gea6QQap5C9+0tHO849sNthQJfhYl6FrZleAKl6ljoqzahQMxsZp5IytVaEY
-         G5aarYPsMK8rb++R89Xp70s57TwyIgG6cj5Y06CI79J+QwsmlytQHYZj5w9cBqMc2Gx2
-         /cndFdqYF4i48LLSLznFFA5TQKv0q2RZ+1cl030c4L5LSiKycdXKvBFSaCp8/cpL3zJy
-         6ZFS2bIVmM9TcEBEC91sCsRLg8354NB3yRgbsnnja/U92DcqqDvarKtXVJHY3hXfJ4It
-         1iEE+lvlr0mG3qY5ce0f6Hix/0PTloBdiygrXofRMhEM7CkQaUWYh7VklTLfxh6Jheyy
-         KYMw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6PX0y3oNp5Z4sGQpzd26RaaBdPlFHuM+DW6yLUEHYwY=;
+        b=oFuas9Jt9J4BTSAJpmKFlzwiqE+Oz+A5GsJQIP8nKYAJ5PqAhRkjMONwxxmeHyV+I2
+         Tm/qOnB072I1mxC/rL3FqBvhmPV+10A9Wd9enm/4spDUiA4q/JLsz4d5PELY2WpqxG1u
+         JyyFlrsybGTwCK7dvLt0SSKixNqwRdNSEIQmNuPNQyH0F+dTJOOuTKMe1XXyDTCl9v7e
+         B5Zpi4qPHp5kfEgfz8NmXmk4+O31CbxOYSAx4lrnXKnzaIxgJGlFC7poHW10H/P7cy06
+         DwA7FPR9YKDOfLvs5eclL7vUE21RtY5PVVBazSA1bejEmjh2rCKk2fIbc5eN1NGcrKMW
+         gEBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=xeBNqtt8fjc3y/TuCXT42YH5VDzkwOK4vC2HM/itL8c=;
-        b=l5/x7303UFDi4AAaILjZ8Nbj6Ju+IWz54tEJCUnNBEiT36cuBBnoGMbGK3B1j3TUde
-         moNTlYXvmaOssiUVNJfigcK1Ph0Scyaug2ygcjU5Jc5L1OWfKyDHkrseE+BrXPIvcT5L
-         LLVNVPTxHa/veGbbU206wnPZJUZehVTgDPI+DOZ27zxDpIPBUMM3u+yK8dsYGg7irFbW
-         XNVjIjANBM3prxnL1denzjebhXHTnKYgKDXWifNxTvQj2MXl9baB6s5q8fRAgH0S3HSC
-         H5zJvRVlDbIg+lY46ltGpR3AwMtiwmgoJiXpX37C6rXLZuJcNuaFZUH2P1gQqlMzLINd
-         cQFA==
-X-Gm-Message-State: AFeK/H0o5u1gdWA2W1AQEk9FNhwUuT61pLqX1gOwKPRaF7tIp0BJxHGsj7pYbW1kY3lxfheRN0t4n0InEbbECW9C
-X-Received: by 10.99.137.66 with SMTP id v63mr37745244pgd.183.1491504516377;
- Thu, 06 Apr 2017 11:48:36 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6PX0y3oNp5Z4sGQpzd26RaaBdPlFHuM+DW6yLUEHYwY=;
+        b=SeRvAcagaX1QyEPPRhXttZjB4Wbnx6ah5JdU/5gLlpu+VkDyuQLqbBcJcUm87FkFGa
+         kG2ozgVuusN5LEsGljcjUYgfDI6y5qK3UrLEX9wt9NmROZDaUz2Yex5OwUWcdJBuOouX
+         VkmjhdXjgJYd6WojteEwIARvDpIIxNQUyVVc/CBrs1KA95sC8aWHLOawD57N6T/YjQsy
+         feaHw/qrvjjW/Z7XGp0xk5ZhNuTmwtSWUY3b+B6JFJ4qdwpaJe+8FSXye8wO4fmnSBaW
+         lzbYHQ/9JsEWZ6bgtu+Ng6Gyw85lYGC0bkVHNLBIMP28xi0Woes4CGPxyk4xaAyTT14l
+         xL0Q==
+X-Gm-Message-State: AFeK/H3Icqtkf0KT1VbZs2JouqBPsQDrDy/LDYmRYGcciULnUgB+u878
+        am3osW9ug9CVNOUZpU8=
+X-Received: by 10.28.69.72 with SMTP id s69mr25864778wma.85.1491509309616;
+        Thu, 06 Apr 2017 13:08:29 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id m29sm3338495wrm.4.2017.04.06.13.08.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 Apr 2017 13:08:28 -0700 (PDT)
+Date:   Thu, 6 Apr 2017 23:14:53 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3 2/2] p0005-status: time status on very large repo
+Message-ID: <20170406221453.GA32223@hank>
+References: <20170406134508.31711-1-git@jeffhostetler.com>
+ <20170406134508.31711-3-git@jeffhostetler.com>
 MIME-Version: 1.0
-Received: by 10.100.186.196 with HTTP; Thu, 6 Apr 2017 11:48:35 -0700 (PDT)
-In-Reply-To: <CACBZZX7xA92e5n=E8fdGHiBHaqzRjP_MVWsaE2v=DcVmCO2r0w@mail.gmail.com>
-References: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net> <CACBZZX7xA92e5n=E8fdGHiBHaqzRjP_MVWsaE2v=DcVmCO2r0w@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 6 Apr 2017 11:48:35 -0700
-Message-ID: <CAGZ79kYByeaX0qhRhy0RDq5hvuyEhhDcgWS7GABi6Nr+k-Ekdw@mail.gmail.com>
-Subject: Re: how-to get commit content with pre-receive hook ?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Eric Belhomme <rico-ml@ricozome.net>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170406134508.31711-3-git@jeffhostetler.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>
->> But I don't know how to get the *content* of the file being submitted to run
->> my syntax check rules against it !
->>
+On 04/06, git@jeffhostetler.com wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  t/perf/p0005-status.sh | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
+>  create mode 100755 t/perf/p0005-status.sh
+> 
+> diff --git a/t/perf/p0005-status.sh b/t/perf/p0005-status.sh
+> new file mode 100755
+> index 0000000..704cebc
+> --- /dev/null
+> +++ b/t/perf/p0005-status.sh
+> @@ -0,0 +1,61 @@
+> +#!/bin/sh
+> +
+> +test_description="Tests performance of read-tree"
+> +
+> +. ./perf-lib.sh
+> +
+> +test_perf_default_repo
+> +test_checkout_worktree
+> +
+> +## usage: dir depth width files
+> +make_paths () {
+> +	for f in $(seq $4)
+> +	do
+> +		echo $1/file$f
+> +	done;
+> +	if test $2 -gt 0;
+> +	then
+> +		for w in $(seq $3)
+> +		do
+> +			make_paths $1/dir$w $(($2 - 1)) $3 $4
+> +		done
+> +	fi
+> +	return 0
+> +}
+> +
+> +fill_index () {
+> +	make_paths $1 $2 $3 $4 |
+> +	sed "s/^/100644 $EMPTY_BLOB	/" |
+> +	git update-index --index-info
+> +	return 0
+> +}
+> +
+> +br_work1=xxx_work1_xxx
+> +dir_new=xxx_dir_xxx
+> +
+> +## (5, 10, 9) will create 999,999 files.
+> +## (4, 10, 9) will create  99,999 files.
+> +depth=5
+> +width=10
+> +files=9
+> +
+> +## Inflate the index with thousands of empty files and commit it.
+> +## Use reset to actually populate the worktree.
+> +test_expect_success 'inflate the index' '
+> +	git reset --hard &&
+> +	git branch $br_work1 &&
+> +	git checkout $br_work1 &&
+> +	fill_index $dir_new $depth $width $files &&
+> +	git commit -m $br_work1 &&
+> +	git reset --hard
+> +'
+> +
+> +## The number of files in the branch.
+> +nr_work1=$(git ls-files | wc -l)
 
->     git log -p <old>..<new>
->     git diff <old>..<new>
+The above seems to be repeated (or at least very similar to what you
+have in your other series [1].  Especially in this perf test wouldn't
+it be better just use test_perf_large_repo, and let whoever runs the
+test decide what constitutes a large repository for them?
 
-or in case of the tool requiring a full worktree
+The other advantage of that would be that it is more of a real-world
+scenario, instead of a synthetic distribution of the files, which
+would give us some better results I think.
 
-    mkdir /tmp/test
-    GIT_WORKTREE=/tmp/test git checkout -f <new>
-    and then perform the check on that full tree?
+Is there anything I'm missing that would make using
+test_perf_large_repo not a good option here?
+
+[1]: http://public-inbox.org/git/20170406163442.36463-3-git@jeffhostetler.com/
+
+> +test_perf "read-tree status work1 ($nr_work1)" '
+> +	git read-tree HEAD &&
+> +	git status
+> +'
+> +
+> +test_done
+> -- 
+> 2.9.3
+> 
