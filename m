@@ -2,101 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D571A209F2
-	for <e@80x24.org>; Thu,  6 Apr 2017 18:38:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79C3E1FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 18:48:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753041AbdDFSim (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 14:38:42 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:35641 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752675AbdDFSik (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 14:38:40 -0400
-Received: by mail-it0-f50.google.com with SMTP id y18so106684809itc.0
-        for <git@vger.kernel.org>; Thu, 06 Apr 2017 11:38:40 -0700 (PDT)
+        id S1755317AbdDFSsj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 14:48:39 -0400
+Received: from mail-pg0-f48.google.com ([74.125.83.48]:36058 "EHLO
+        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753522AbdDFSsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 14:48:37 -0400
+Received: by mail-pg0-f48.google.com with SMTP id g2so42999265pge.3
+        for <git@vger.kernel.org>; Thu, 06 Apr 2017 11:48:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ZQDy69YOexbtR0B/lfm7vDf3vIK/3UUSBIDxKINCaUc=;
-        b=hnXWeC66N7CY7ikpKSNVvHUKtAVeH4075J83NWYqrZCOVy+cpHpFauDUW19o2waQaW
-         nCq9py3xbVyw3p4F/+07SLgR8aZQr3LYJiRnm+1OnVcFWNKjaNSqJL/t7uFovPvCq4Te
-         70Y198NE2sD5vYNgc0OviHBs6XDVIrPaJBgFVeWFkqVf4N7sFczsNKzUE4eMNWM93vVv
-         XuJ4oSEiQo3mH1qffB8amtNg3JliNTWqfxFdDMvKDZB/4/fCKTIxjPr371HNT0niRqnA
-         9qLOFsIUc175zXNuuf4bnfqDR6SnzjzU9AhBitaLsLNfoq5qpt0Jpo8D6DQOmgiTaHna
-         QZ2g==
+        bh=xeBNqtt8fjc3y/TuCXT42YH5VDzkwOK4vC2HM/itL8c=;
+        b=Gmqns9Gea6QQap5C9+0tHO849sNthQJfhYl6FrZleAKl6ljoqzahQMxsZp5IytVaEY
+         G5aarYPsMK8rb++R89Xp70s57TwyIgG6cj5Y06CI79J+QwsmlytQHYZj5w9cBqMc2Gx2
+         /cndFdqYF4i48LLSLznFFA5TQKv0q2RZ+1cl030c4L5LSiKycdXKvBFSaCp8/cpL3zJy
+         6ZFS2bIVmM9TcEBEC91sCsRLg8354NB3yRgbsnnja/U92DcqqDvarKtXVJHY3hXfJ4It
+         1iEE+lvlr0mG3qY5ce0f6Hix/0PTloBdiygrXofRMhEM7CkQaUWYh7VklTLfxh6Jheyy
+         KYMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ZQDy69YOexbtR0B/lfm7vDf3vIK/3UUSBIDxKINCaUc=;
-        b=j+j2i7PE832wM3X3ryjnN1STrLkomltqj6T9ICEHeDTto8bCrPlrkfJQIaA2bQch/k
-         xGTe65ojquZvgw51qZoFKBTq0lAEaOoenQ2CHz5krxg20hcv1g+ktRqiWbtlmhmpi1Ka
-         hYxlt+YKkesasyCcBYPsF4KB4GSspMlKks5Y4YPkQz+ScxL3M0KGQ3gH5/cIDda4u2Gr
-         M8Sgye3dYvdQjtdzAKE3EfSlpcPU8ByfrTOsbGgSase1hto89zgxVz9DVzCyJJDTiUKh
-         BigR6Fx6TEVmk6Zyrd98BuE411NRw56Ghhxkn2zWqqMuUEN7NYZx9CmkTCkoUERjc9xC
-         2G2A==
-X-Gm-Message-State: AFeK/H3ZFYoHtoNBB9YWzhEBzayesTfDOjC2IN26ioZ+8Jvv+pCUk5cB
-        mXJ3vSWjVeNnODVkZT/lQswvzTcruq3Knm8=
-X-Received: by 10.36.76.16 with SMTP id a16mr23286278itb.91.1491503919707;
- Thu, 06 Apr 2017 11:38:39 -0700 (PDT)
+        bh=xeBNqtt8fjc3y/TuCXT42YH5VDzkwOK4vC2HM/itL8c=;
+        b=l5/x7303UFDi4AAaILjZ8Nbj6Ju+IWz54tEJCUnNBEiT36cuBBnoGMbGK3B1j3TUde
+         moNTlYXvmaOssiUVNJfigcK1Ph0Scyaug2ygcjU5Jc5L1OWfKyDHkrseE+BrXPIvcT5L
+         LLVNVPTxHa/veGbbU206wnPZJUZehVTgDPI+DOZ27zxDpIPBUMM3u+yK8dsYGg7irFbW
+         XNVjIjANBM3prxnL1denzjebhXHTnKYgKDXWifNxTvQj2MXl9baB6s5q8fRAgH0S3HSC
+         H5zJvRVlDbIg+lY46ltGpR3AwMtiwmgoJiXpX37C6rXLZuJcNuaFZUH2P1gQqlMzLINd
+         cQFA==
+X-Gm-Message-State: AFeK/H0o5u1gdWA2W1AQEk9FNhwUuT61pLqX1gOwKPRaF7tIp0BJxHGsj7pYbW1kY3lxfheRN0t4n0InEbbECW9C
+X-Received: by 10.99.137.66 with SMTP id v63mr37745244pgd.183.1491504516377;
+ Thu, 06 Apr 2017 11:48:36 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Thu, 6 Apr 2017 11:38:19 -0700 (PDT)
-In-Reply-To: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net>
-References: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 6 Apr 2017 20:38:19 +0200
-Message-ID: <CACBZZX7xA92e5n=E8fdGHiBHaqzRjP_MVWsaE2v=DcVmCO2r0w@mail.gmail.com>
+Received: by 10.100.186.196 with HTTP; Thu, 6 Apr 2017 11:48:35 -0700 (PDT)
+In-Reply-To: <CACBZZX7xA92e5n=E8fdGHiBHaqzRjP_MVWsaE2v=DcVmCO2r0w@mail.gmail.com>
+References: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net> <CACBZZX7xA92e5n=E8fdGHiBHaqzRjP_MVWsaE2v=DcVmCO2r0w@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 6 Apr 2017 11:48:35 -0700
+Message-ID: <CAGZ79kYByeaX0qhRhy0RDq5hvuyEhhDcgWS7GABi6Nr+k-Ekdw@mail.gmail.com>
 Subject: Re: how-to get commit content with pre-receive hook ?
-To:     Eric Belhomme <rico-ml@ricozome.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Eric Belhomme <rico-ml@ricozome.net>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 6, 2017 at 4:03 PM, Eric Belhomme <rico-ml@ricozome.net> wrote:
-> Until now I ever had a quite "basic" Git usage, but now I'm working on a
-> project based on Git hooks feature.. and I'm a very beginner with Git hooks
-> !
->
-> My need consist doing a syntax check on submitted files before a 'git push'.
-> So the right hook is 'pre-receive' and I'm already able to identify the
-> files I want to check using 'git show'.
->
-> But I don't know how to get the *content* of the file being submitted to run
-> my syntax check rules against it !
->
-> I googled but most examples using pre-receive I found are doing sanity check
-> on enveloppe but never on actual content of the file !
->
-> Could someone here put me on the rails ?
->
-> Regards,
+>>
+>> But I don't know how to get the *content* of the file being submitted to run
+>> my syntax check rules against it !
+>>
 
-As documented in githooks(5), the hook gets a list of these on stdin:
+>     git log -p <old>..<new>
+>     git diff <old>..<new>
 
-    <old-value> SP <new-value> SP <ref-name> LF
+or in case of the tool requiring a full worktree
 
-That means that you can use any git command to inspect that ref range, e.g.:
-
-    git log -p <old>..<new>
-    git diff <old>..<new>
-
-Or (pseudocode):
-
-    git show <commit>:<some path> for $(git rev-list <old>..<new>)
-
-This is no different than how you'd inspect the content in your git
-repo, e.g. to get the README.md content of the master branch of
-git.git:
-
-    $ git ls-tree master|grep README
-    100644 blob f17af66a97c8097ab91f074478c4a5cb90425725    README.md
-    $ git cat-file blob f17af66a97c8097ab91f074478c4a5cb90425725|wc
-         61     397    3001
+    mkdir /tmp/test
+    GIT_WORKTREE=/tmp/test git checkout -f <new>
+    and then perform the check on that full tree?
