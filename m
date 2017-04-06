@@ -2,185 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9895320966
-	for <e@80x24.org>; Thu,  6 Apr 2017 01:16:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D9EB20966
+	for <e@80x24.org>; Thu,  6 Apr 2017 01:39:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756500AbdDFBQQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 21:16:16 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:34374 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756416AbdDFBQO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Apr 2017 21:16:14 -0400
-Received: by mail-qk0-f193.google.com with SMTP id p68so4030777qke.1
-        for <git@vger.kernel.org>; Wed, 05 Apr 2017 18:16:14 -0700 (PDT)
+        id S1756549AbdDFBji (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 21:39:38 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:36198 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756280AbdDFBjg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 21:39:36 -0400
+Received: by mail-qk0-f195.google.com with SMTP id v75so4069771qkb.3
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 18:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=espT7q9XosXrhA15eqpfu7+zUbVXqmi14Kmv2aVhkM4=;
-        b=hDKPDkFVFgq+pAkz4f+qoSVJfLEKJmxNF0gLD5PLJ5V/x0djhCo0x6tlkoz4a7ZhYG
-         hgBiMqut9b7JT49a4sXo0tvleu8ut/7P/cwMVs5IBfFzSnDZWTXEiNfREE5zc2qTFw+s
-         clwcYcQX+UMXx80QQkknChA80/1QF+vyucUPEu6j0X/WcKA+KG9xj9iSdLFTQHd6g0nl
-         m8v4MX0FczAuE6/z6XxwtYRhWQZGCGg685ULltUvAraKeYvZ8vBqGVIDmNn7NDyTpQNP
-         1sELSTXmJEBxhUpnZeby2HDOORqU+TW3RmX1d9zhFgss1Pj4eZev8GrcdC9Z0YmBLoaP
-         aOyA==
+        h=from:to:cc:subject:date:message-id;
+        bh=trsncQwnHs03c6CCWN14NaKwnQYjDe8wW7HlPQbDidI=;
+        b=blQUvh+3PiKKHMhiamavFuAGVHYyGOIWaDWg2pIFKo3Vjf7EsPG3A6PZtsmRYT/6XV
+         Bdti6C1pkmIhjig0IdP6w2+HZnuAC6lx6ImQ4SsnZrymYh7YSMSbzQG0IZgnA1GGzKro
+         726T6g8tY4jPkjkhiAx1T/Z5xoZZohZ+lh6qS1uHyCRqemD0bCyQphIW+XYqUT4HpZeE
+         mr8xC1JCvNHxN1jfy2omqdd720A+M252Z/LWLJeR7itqM4mlLuG9PXRZXWg5dehdLc7o
+         8QwExCRsCM+Z/F9nwSZnX9rhJE0fwHHTwGs4/Ed1lBdgFF4D+9Bf3A9onbAr00uT0P3R
+         6cfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:subject:message-id
-         :references:mime-version:content-disposition:in-reply-to:user-agent;
-        bh=espT7q9XosXrhA15eqpfu7+zUbVXqmi14Kmv2aVhkM4=;
-        b=WsliJjLCitL+rwXD9hxn8fJdHM6D/KN5YUvZLnbc3ufEb2+aLc7WO2+lkovdM/CrTd
-         fFkpDr6PkCF5xTeqSF0ckHCMi/nVG5BEKTlEDf4uZ1q+4GiVom9lsYSfEoIG3iCtvaZt
-         5G1f4JlHT+Z5hb1qIGSBn+P6/7Yjo81bPSGChtc1EVFTu68dtJv8vyOwBP8qLxnvE/P7
-         DfxdELst8k5xr1T8mr/0TBKxubIyYwAbB6qOvlhU0FEFoEbD16i2KEdgxcM9uS1o3+zd
-         JH50fCCuPsRQ78ILHbZFNOfb7nPVPGCU/+GNxo9X19O/OIAla7y4vufOLr/xOapQzzkJ
-         aLRw==
-X-Gm-Message-State: AFeK/H29NMqHcoN3e1c7d0t2zXHgQNe5yyee3vQh2Y98vj6KoVS1CVf0zLMITwr2VtKV7A==
-X-Received: by 10.55.151.199 with SMTP id z190mr33272080qkd.138.1491441373596;
-        Wed, 05 Apr 2017 18:16:13 -0700 (PDT)
-Received: from zaya.teonanacatl.net (pool-108-11-208-204.hrbgpa.fios.verizon.net. [108.11.208.204])
-        by smtp.gmail.com with ESMTPSA id a26sm38886qtb.28.2017.04.05.18.16.12
-        (version=TLS1_1 cipher=AES128-SHA bits=128/128);
-        Wed, 05 Apr 2017 18:16:12 -0700 (PDT)
-Date:   Wed, 5 Apr 2017 21:16:10 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "Tom G. Christensen" <tgc@jupiterrise.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC] dropping support for ancient versions of curl
-Message-ID: <20170406011610.GF25542@zaya.teonanacatl.net>
-References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
- <d6ba17f0-3da9-8699-8d5c-5ebf1eaef00e@jupiterrise.com>
- <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
- <20170406005301.4vmjkiu6qkj3g276@genre.crustytoothpaste.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="L2Brqb15TUChFOBK"
-Content-Disposition: inline
-In-Reply-To: <20170406005301.4vmjkiu6qkj3g276@genre.crustytoothpaste.net>
-User-Agent: Mutt/1.7.2 (2016-11-26)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=trsncQwnHs03c6CCWN14NaKwnQYjDe8wW7HlPQbDidI=;
+        b=W5IpE3imiReuPRt0hzDyIJvgSCImKyVNMP9Ghbjj5OPxDOWax6e9fY6VnCFOf9HR1L
+         WYYhoUJwOVbptQ29t086iTIr2jNpQgMLwBSMr5SYIIQ0guixm1Ta4TEaeAg4QFrquT3S
+         YvkJY9kGUOAMsXy5KDtEdtdzYSlS2BsBnkdTExeVGyXj/GbSiDsGEE5z7bnoiHNbsa7z
+         fqGqmkw5qQ5bMZJPjO1UTNd0PruZx3FCQfazRJcLRZQfIwr64eU/hnjlEAgiAKP4Adeh
+         lMV/ub+JGqWx/TN0DJsofxVw+tSYFpub1eUV3wnUOPx1RF+KYG8O8O2z4N5v+5jbgFwy
+         Ukpg==
+X-Gm-Message-State: AFeK/H1/BHo239dPidHESTv//3qCwuSuRZVAWJEh2zcZTmbSZqBtSFieyBwv5RQhvfE8WQ==
+X-Received: by 10.55.187.132 with SMTP id l126mr28879485qkf.236.1491442775697;
+        Wed, 05 Apr 2017 18:39:35 -0700 (PDT)
+Received: from Daniels-MacBook-Pro.local.net ([187.11.121.49])
+        by smtp.gmail.com with ESMTPSA id b78sm58718qkc.50.2017.04.05.18.39.32
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 05 Apr 2017 18:39:34 -0700 (PDT)
+From:   Daniel Ferreira <bnmvco@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
+        mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
+Subject: [PATCH v8 0/5] [GSoC] remove_subtree(): reimplement using iterators
+Date:   Wed,  5 Apr 2017 22:39:22 -0300
+Message-Id: <1491442767-54068-1-git-send-email-bnmvco@gmail.com>
+X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is the seventh version of a patch series that implements the GSoC
+microproject of converting a recursive call to readdir() to use dir_iterator.
 
---L2Brqb15TUChFOBK
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+v1: https://public-inbox.org/git/CAGZ79kZwT-9mHTiOJ5CEjk2wDFkn6+NcogjX0=vjhsAh16ANYg@mail.gmail.com/T/#t
+v2: https://public-inbox.org/git/CACsJy8Dxh-QPBBLfaFWPAWUsbA9GVXA7x+mXLjEvYKhk1zOpig@mail.gmail.com/T/#t
+v3: https://public-inbox.org/git/CAGZ79kYtpmURSQWPumobA=e3JBFjKhWCdv_LPhKCd71ZRwMovA@mail.gmail.com/T/#t
+v4: https://public-inbox.org/git/1490747533-89143-1-git-send-email-bnmvco@gmail.com/T/#e437a63e0c22c00c69b5d92977c9b438ed2b9fd3a
+v5: https://public-inbox.org/git/1490844730-47634-1-git-send-email-bnmvco@gmail.com/T/#m2323f15e45de699f2e09364f40a62e17047cf453
+v6: https://public-inbox.org/git/1491107726-21504-1-git-send-email-bnmvco@gmail.com/T/#t
+v7: https://public-inbox.org/git/1491163388-41255-1-git-send-email-bnmvco@gmail.com/T/#t
 
-brian m. carlson wrote:
-> On Wed, Apr 05, 2017 at 12:51:38PM +0200, =C6var Arnfj=F6r=F0 Bjarmason w=
-rote:
->> On Wed, Apr 5, 2017 at 11:33 AM, Tom G. Christensen <tgc@jupiterrise.com=
-> wrote:
->> Whoah. So my assumption in=20
->> <CACBZZX78oKU5HuBEqb9qLy7--wcwhC_mW6x7Q+tB4suxohSCsQ@mail.gmail.com>
->> that nobody was compiling this & thus not reporting failures was=20
->> false. Rather there's an entire community & distribution mechanism=20
->> around patching git for older EL versions, but the patches aren't=20
->> making it upstream.
->>
->> $ grep -h -e ^Subject -e ^Date *patch=20
->> Date: Tue, 13 Oct 2009 11:34:11 +0200=20
->> Subject: [PATCH 1/7] Make NO_PERL_MAKEMAKER behave more like=20
->> Date: Fri, 13 Jun 2014 11:02:02 +0200=20
->> Subject: [PATCH 2/7] Install man pages when NO_PERL_MAKEMAKER is used=20
->> Date: Mon, 22 Sep 2014 13:42:50 +0200=20
->> Subject: [PATCH 3/7] Allow svnrdump_sim.py to be used with Python 2.2=20
->> Date: Tue, 8 Mar 2016 09:31:56 +0100=20
->> Subject: [PATCH 4/7] Handle missing HTTP_CONNECTCODE in curl < 7.10.7=20
->> Date: Tue, 23 Aug 2016 10:32:51 +0200=20
->> Subject: [PATCH 5/7] Add support for gnupg < 1.4=20
->> Date: Tue, 23 Aug 2016 18:15:13 +0200=20
->> Subject: [PATCH 6/7] Handle missing CURLINFO_SSL_DATA_{IN,OUT}=20
->> Date: Tue, 23 Aug 2016 18:26:54 +0200=20
->> Subject: [PATCH 7/7] Do not use curl_easy_strerror with curl < 7.12.0=20
->> Date: Wed, 2 Feb 2011 21:24:44 -0500=20
->> Subject: [PATCH] Restore vc-git.el for basic compatibility on EL-5=20
->> Date: Mon, 23 Mar 2009 00:03:36 -0400=20
->> Subject: [PATCH] git-cvsimport: Ignore cvsps-2.2b1 Branches: output
->>
->>> Patches can be found in the src.rpm, though I can also post them here a=
-s=20
->>> patch series, they cover more than just curl.
->>>
->>> I don't use the el3 and el4 versions much any more and el5 use will als=
-o=20
->>> drop of now as I'm busy converting machines from el5 to el7.
->>
->> It would be great to have them on-list, as far as I can tell they were=
-=20
->> never submitted? Is there some time/administrative reason for why=20
->> you're not submitting them? Some of these are many years old, it would=
-=20
->> be great to have them on-list for wider review & included so vanilla=20
->> git works on these platforms.
+Travis CI build: https://travis-ci.org/theiostream/git/jobs/219111182
 
-The vc-git.el patch which I think came from the Fedora/EPEL package=20
-for EL-5 was only intended to restore functionality to support the=20
-older emacs on EL-5.  Now that EL-5 is EOL, it can (thankfully, IMO)=20
-die off.
+In this version, I applied pretty much all suggestions Michael and Stefan had
+for the patch.
 
-The git-csvimport patch looks to be in the same category (assuming it=20
-was similar to what we included in the EPEL packages for EL-5=20
-support).  It was only needed (and applied) to support older systems=20
-and wasn't something worth carrying upstream.
+Michael, regarding the patch you sent for parsing the arguments on the
+test-dir-iterator helper, I did not squash because it'd generate too many
+merge conflicts. I just preferred add your code manually. Let me know how I
+can properly credit you for it.
 
-> I'm very opposed to accepting patches for operating systems that are no=
-=20
-> longer security supported.  Having insecure systems directly or=20
-> indirectly connected to the Internet is a very bad thing, and we=20
-> shouldn't make it easier for people who want to do that.
+The only "controversial" part of this code is how I ended up caching the result
+of lstat() on the dir_iterator_level struct. Having to handle the case of the
+root directory ended up making set_iterator_data() way more complicated (having
+to handle the case of level->stat not being set by push_dir_level()), as well
+as required the introduction of st_is_set member in the level struct. This issue
+would be solved if we could lstat() the root dir on dir_iterator_begin() and
+possibly return an error there. Regardless, I appreciate other suggestions to
+make this less complex.
 
-I concur.  I (or we, the Fedora/EPEL package maintainers for git) have=20
-tried to ensure that the packages for the latest Fedora release build=20
-cleanly for all supported Fedora and EL releases.  I think that is=20
-useful for those who use CentOS/RHEL and still want to have a recent=20
-git build.
+Daniel Ferreira (5):
+  dir_iterator: add tests for dir_iterator API
+  remove_subtree(): test removing nested directories
+  dir_iterator: add helpers to dir_iterator_advance
+  dir_iterator: refactor state machine model
+  remove_subtree(): reimplement using iterators
 
-I don't see any benefit in making it easier for folks to run systems=20
-that are no longer receiving updates for critical security issues.   =20
-It's surely hard enough to support EL-6 as it ages. ;)
+ Makefile                        |   1 +
+ dir-iterator.c                  | 247 +++++++++++++++++++++++++++++-----------
+ dir-iterator.h                  |  35 ++++--
+ entry.c                         |  39 +++----
+ refs/files-backend.c            |   2 +-
+ t/helper/.gitignore             |   1 +
+ t/helper/test-dir-iterator.c    |  48 ++++++++
+ t/t0065-dir-iterator.sh         |  93 +++++++++++++++
+ t/t2000-checkout-cache-clash.sh |  11 ++
+ 9 files changed, 373 insertions(+), 104 deletions(-)
+ create mode 100644 t/helper/test-dir-iterator.c
+ create mode 100755 t/t0065-dir-iterator.sh
 
-> CentOS 6 and 7 are still in use and security supported, and I think=20
-> we should support them.  CentOS 5 is EOL, although RHEL 5 is still=20
-> supported in some cases.  RHEL 4 and earlier are definitely out of=20
-> support and we shouldn't support or consider them further.
+--
+2.7.4 (Apple Git-66)
 
-I know RHEL 5 has some extended support from Red Hat, but EPEL-5 is=20
-dead.  So from my perspective, supporting EL-5 isn't worth the effort.
-
---=20
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Statistics are like a lamp-post to a drunken man - more for leaning on
-than illumination.
-
-
---L2Brqb15TUChFOBK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-
-iQFDBAEBCAAtBQJY5ZbaJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzj4sEIAJdBmcYuVfqmN9MKIksauK0bbnGisfgaewPJ
-LD5oWpBKaQVS4eOmIS6t1S1Z060jnlVoFj34IYcUolH7o+EU2JHxiYLuuVRvJjTX
-UPb3pFTgD2A1DmYZ2N1GdzRniloqicy5Q64AyyiHXqQ2jv9Gowi3rwmu8NN+0vNA
-/nvsxduWMPXeJZxrkdjPOBI9YRkEakBKrBQAlND+SGfHoah7tcp0kusYWoprfsG3
-Tl+8CVvZUw4fwQigUxFxaVTeIWdthtDH+z9H8YqTnNKTEe7+Jzt+GcZujpNtbv7/
-1HAOoSsN8Ptk9EVgrDEFOeacazIKK600DTcIr+C2GPMQBxTO2vA=
-=cda+
------END PGP SIGNATURE-----
-
---L2Brqb15TUChFOBK--
