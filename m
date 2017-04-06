@@ -2,160 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16106209F1
-	for <e@80x24.org>; Thu,  6 Apr 2017 09:52:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89317209F1
+	for <e@80x24.org>; Thu,  6 Apr 2017 10:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754313AbdDFJwW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 05:52:22 -0400
-Received: from mx2.suse.de ([195.135.220.15]:38482 "EHLO mx2.suse.de"
+        id S1757255AbdDFKYM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 06:24:12 -0400
+Received: from mx2.suse.de ([195.135.220.15]:42251 "EHLO mx2.suse.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752825AbdDFJwT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 05:52:19 -0400
+        id S1757237AbdDFKXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 06:23:55 -0400
 X-Virus-Scanned: by amavisd-new at test-mx.suse.de
 Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 9A934AAB2;
-        Thu,  6 Apr 2017 09:52:17 +0000 (UTC)
-Subject: Re: [PATCH v2 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
-To:     Jeff King <peff@peff.net>
-References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
- <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
+        by mx2.suse.de (Postfix) with ESMTP id 2A492AB5F;
+        Thu,  6 Apr 2017 10:23:54 +0000 (UTC)
+Subject: Re: [PATCH v2 2/2] Fix stack-use-after-scope error reported by ASAN
+ by GCC 7.
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
+ <alpine.DEB.2.20.1704061051130.4268@virtualbox>
 Cc:     git@vger.kernel.org
 From:   =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
-Message-ID: <998bf391-7fc5-8329-db58-ef0f24517707@suse.cz>
-Date:   Thu, 6 Apr 2017 11:52:15 +0200
+Message-ID: <28c22c5e-677b-1554-6156-4e31cc0f0913@suse.cz>
+Date:   Thu, 6 Apr 2017 12:23:53 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
+In-Reply-To: <alpine.DEB.2.20.1704061051130.4268@virtualbox>
 Content-Type: multipart/mixed;
- boundary="------------068A9022C043A51D247AA346"
+ boundary="------------FFC06FA19F54CF690EA8876B"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 This is a multi-part message in MIME format.
---------------068A9022C043A51D247AA346
+--------------FFC06FA19F54CF690EA8876B
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-On 04/06/2017 10:34 AM, Jeff King wrote:
-> On Thu, Apr 06, 2017 at 10:02:22AM +0200, Martin Liška wrote:
+On 04/06/2017 10:55 AM, Johannes Schindelin wrote:
+> Hi Martin,
 > 
->> Subject: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
->>
->> Memory functions like memmove and memcpy should not be called
->> with an argument equal to NULL.
+> On Thu, 6 Apr 2017, Martin Liška wrote:
 > 
-> Yeah, makes sense. Your fixes are obviously correct. In other cases
-> we've added wrappers like sane_qsort() that do the size check
-> automatically. I'm not sure if we'd want to do the same here.
+>> Following patch fixes issues that can be seen with -fsanitize=address on
+>> GCC 7.
 > 
-> Either way, it probably makes sense to take this as a quick fix and
-> worry about refactoring as a possible patch on top.
-> 
-> Thanks.
-> 
-> -Peff
-> 
+> Good catch.
 
-Hello.
+Yep, actually it was me who wrote the new use-after-scope support in GCC 7.
+And I was bit pessimistic about real examples of such errors, but one popped
+up very soon.
 
-I'm sending (v2), where I updated commit message and wrapped 2 problematic
-places to newly introduced macros that do the check. Follow-up patch can
-change usages of memcpy and memove.
+> 
+> However, it may make more sense to switch to using the "args" field
+> instead of the "argv" field: it is of type "struct argv_array" and is
+> released automagically by finish_command().
+> 
+> In other words, you would use something like
+> 
+> @@ -600,7 +601,8 @@ static struct cmd2process
+> *start_multi_file_filter(struct hashmap *hashmap, cons
+>         process = &entry->process;
+> 
+>         child_process_init(process);
+> -       process->argv = argv;
+> +	argv_array_push(&process->args, cmd);
+> 
+> instead, making even for a nice LOC reduction.
+
+Done that way, survives tests.
 
 Martin
 
---------------068A9022C043A51D247AA346
+> 
+> Ciao,
+> Johannes
+> 
+
+
+--------------FFC06FA19F54CF690EA8876B
 Content-Type: text/x-patch;
- name="0001-Fix-nonnull-errors-reported-by-UBSAN-with-GCC-7.patch"
+ name="0002-Fix-stack-use-after-scope-error-reported-by-ASAN-by-.patch"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment;
- filename*0="0001-Fix-nonnull-errors-reported-by-UBSAN-with-GCC-7.patch"
+ filename*0="0002-Fix-stack-use-after-scope-error-reported-by-ASAN-by-.pa";
+ filename*1="tch"
 
-From 876cfa4f4b2e74d43b9fd93d1056b88ab2ace0cd Mon Sep 17 00:00:00 2001
+From 4e80f9bddff3c29fefb3628e0e920ca265d55e65 Mon Sep 17 00:00:00 2001
 From: marxin <mliska@suse.cz>
-Date: Wed, 5 Apr 2017 14:31:32 +0200
-Subject: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
+Date: Thu, 6 Apr 2017 11:40:24 +0200
+Subject: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by GCC
+ 7.
 
-Memory functions like memmove and memcpy should not be called
-with an argument equal to NULL.
-
-Signed-off-by: Martin Liska <mliska@suse.cz>
+The use-after-scope is triggered here:
+READ of size 8 at 0x7ffc4f674e20 thread T0
+    #0 0x6f0b69 in finish_command /home/marxin/Programming/git/run-command.c:570
+    #1 0x5b6101 in kill_multi_file_filter /home/marxin/Programming/git/convert.c:570
+    #2 0x5b798a in kill_multi_file_filter /home/marxin/Programming/git/convert.c:770
 ---
- apply.c            |  6 +++---
- builtin/ls-files.c |  2 +-
- git-compat-util.h  | 20 ++++++++++++++++++++
- 3 files changed, 24 insertions(+), 4 deletions(-)
+ convert.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index e6dbab26a..eacca29fa 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2802,9 +2802,9 @@ static void update_image(struct apply_state *state,
- 			img->line + applied_pos + preimage_limit,
- 			(img->nr - (applied_pos + preimage_limit)) *
- 			sizeof(*img->line));
--	memcpy(img->line + applied_pos,
--	       postimage->line,
--	       postimage->nr * sizeof(*img->line));
-+	MEMCPY(img->line + applied_pos,
-+		postimage->line,
-+		postimage->nr * sizeof(*img->line));
- 	if (!state->allow_overlap)
- 		for (i = 0; i < postimage->nr; i++)
- 			img->line[applied_pos + i].flag |= LINE_PATCHED;
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index d449e46db..7caeeb6a6 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -391,7 +391,7 @@ static void prune_cache(const char *prefix, size_t prefixlen)
- 		}
- 		last = next;
- 	}
--	memmove(active_cache, active_cache + pos,
-+	MEMMOVE(active_cache, active_cache + pos,
- 		(last - pos) * sizeof(struct cache_entry *));
- 	active_nr = last - pos;
- }
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8a4a3f85e..e5323f6c7 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1002,6 +1002,26 @@ int git_qsort_s(void *base, size_t nmemb, size_t size,
- 		die("BUG: qsort_s() failed");			\
- } while (0)
+diff --git a/convert.c b/convert.c
+index 8d652bf27..73eb28eb8 100644
+--- a/convert.c
++++ b/convert.c
+@@ -589,7 +589,6 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	int err;
+ 	struct cmd2process *entry;
+ 	struct child_process *process;
+-	const char *argv[] = { cmd, NULL };
+ 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
+ 	char *cap_buf;
+ 	const char *cap_name;
+@@ -600,7 +599,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	process = &entry->process;
  
-+static inline void *sane_memcpy(void *dest, const void *src, size_t n)
-+{
-+	if (n > 0)
-+		return memcpy(dest, src, n);
-+	else
-+		return dest;
-+}
-+
-+#define MEMCPY(dest, src, n) sane_memcpy(dest, src, n)
-+
-+static inline void *sane_memmove(void *dest, const void *src, size_t n)
-+{
-+	if (n > 0)
-+		return memmove(dest, src, n);
-+	else
-+		return dest;
-+}
-+
-+#define MEMMOVE(dest, src, n) sane_memmove(dest, src, n)
-+
- #ifndef REG_STARTEND
- #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
- #endif
+ 	child_process_init(process);
+-	process->argv = argv;
++	argv_array_push(&process->args, cmd);
+ 	process->use_shell = 1;
+ 	process->in = -1;
+ 	process->out = -1;
 -- 
 2.12.2
 
 
---------------068A9022C043A51D247AA346--
+--------------FFC06FA19F54CF690EA8876B--
