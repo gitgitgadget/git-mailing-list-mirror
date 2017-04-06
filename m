@@ -6,70 +6,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFFE0209F1
-	for <e@80x24.org>; Thu,  6 Apr 2017 08:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33EC4209F1
+	for <e@80x24.org>; Thu,  6 Apr 2017 08:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752719AbdDFIdQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 04:33:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57386 "EHLO cloud.peff.net"
+        id S1753677AbdDFIeb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 04:34:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57389 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752252AbdDFIdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 04:33:12 -0400
-Received: (qmail 28380 invoked by uid 109); 6 Apr 2017 08:33:07 -0000
+        id S1753351AbdDFIe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 04:34:28 -0400
+Received: (qmail 28501 invoked by uid 109); 6 Apr 2017 08:34:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 08:33:07 +0000
-Received: (qmail 24119 invoked by uid 111); 6 Apr 2017 08:33:26 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 08:34:27 +0000
+Received: (qmail 24137 invoked by uid 111); 6 Apr 2017 08:34:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 04:33:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Apr 2017 04:33:06 -0400
-Date:   Thu, 6 Apr 2017 04:33:06 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 06 Apr 2017 04:34:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Apr 2017 04:34:25 -0400
+Date:   Thu, 6 Apr 2017 04:34:25 -0400
 From:   Jeff King <peff@peff.net>
 To:     Martin =?utf-8?B?TGnFoWth?= <mliska@suse.cz>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by
- GCC 7.
-Message-ID: <20170406083305.bs3hkxp7dagajg7m@sigill.intra.peff.net>
-References: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
+Subject: Re: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
+Message-ID: <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
+References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
+In-Reply-To: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 06, 2017 at 10:02:45AM +0200, Martin Liška wrote:
+On Thu, Apr 06, 2017 at 10:02:22AM +0200, Martin Liška wrote:
 
-> Subject: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by GCC
->  7.
+> Subject: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
 > 
-> The use-after-scope is triggered here:
-> READ of size 8 at 0x7ffc4f674e20 thread T0
->     #0 0x6f0b69 in finish_command /home/marxin/Programming/git/run-command.c:570
->     #1 0x5b6101 in kill_multi_file_filter /home/marxin/Programming/git/convert.c:570
->     #2 0x5b798a in kill_multi_file_filter /home/marxin/Programming/git/convert.c:770
+> Memory functions like memmove and memcpy should not be called
+> with an argument equal to NULL.
 
-Yeah, this is definitely a problem. Your fix works, but...
+Yeah, makes sense. Your fixes are obviously correct. In other cases
+we've added wrappers like sane_qsort() that do the size check
+automatically. I'm not sure if we'd want to do the same here.
 
-> @@ -600,7 +601,8 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
->  	process = &entry->process;
->  
->  	child_process_init(process);
-> -	process->argv = argv;
-> +	process->argv = xcalloc(2, sizeof(const char *));
-> +	process->argv[0] = cmd;
->  	process->use_shell = 1;
->  	process->in = -1;
->  	process->out = -1;
+Either way, it probably makes sense to take this as a quick fix and
+worry about refactoring as a possible patch on top.
 
-We can just do:
-
-  argv_array_push(&process->args, cmd);
-
-here. And then it is freed automatically when finish_command() is
-called (and also if start_command never starts the process, which I
-think your patch misses).
+Thanks.
 
 -Peff
