@@ -2,114 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 227AA1FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 20:14:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5F11FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 20:21:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754538AbdDFUOD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 16:14:03 -0400
-Received: from mail-wr0-f171.google.com ([209.85.128.171]:35505 "EHLO
-        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752296AbdDFUOC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 16:14:02 -0400
-Received: by mail-wr0-f171.google.com with SMTP id o21so50968636wrb.2
-        for <git@vger.kernel.org>; Thu, 06 Apr 2017 13:14:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=4jb5wGlIOaivVMyaYxtNf8aKttBzqkWPl1GAYWJIZgI=;
-        b=idYBZwX0++PwQ2CPk4Vjmvds4LS3HRv08ZeULtxwvOHhjH6wmiE1dmzGJXQZHhOhDy
-         wMvTAUHJlnDrmuhNIGgdsL8jldm6vn9PN5AopdnYxgYAmXT7nRg0ULA4JZVDzugTLptF
-         fuVtzszH4F8E85IfXZj26nf6d6K40rnWj7jeo3k4Sb4TzBQjC9g/eTQI0813lyBRK/ym
-         wayKiHdsOT479336icOuO0BcUgKTeLnYA8yDyFDXpuUKOqP+LA1JwMwn9elxWIIoOLxG
-         DEw4y5rO4DVcO/Cmdk/JeprBgSuhQzRPtBIzLFMhVlvNjgvCKMHSUy8yMFO80+4htfoC
-         Km1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=4jb5wGlIOaivVMyaYxtNf8aKttBzqkWPl1GAYWJIZgI=;
-        b=T5T045C1pa5Y0LdNuDe6qeb2YMyYwEp7t7s/l9XEB40nx+NnKVN6xx/46DjNxpeJzo
-         ZusKMUeza6vlVvRLegN+2bJ6PFJaBJKkhTEUn4fKFKlJ9OBujhGtsiDPRWsz1eTFj/oo
-         0a08KFbuM6Or058l/m8OcRG9L37DyPthc2+WF5Q3fn8kEcOmLyvFdxJYa07fsNvd2oBa
-         7RXCvVQQMHQx3LRRuZ23tJ1QrBkEFxKGHOubUDaGDLKA+K1n8qN5QhYohMH53S6dG3hp
-         FkDSSjyF05V2UbzOmbOBB1Xc90cqcqNguhQHceEDncIeW0B+ZS9fmDdrDy1LfvsqLxbE
-         4Nvw==
-X-Gm-Message-State: AFeK/H3QgTp2eIV9rRPWatUXZ2/y7Fi6JvyzQN9HXyTH0csduRt5HgShvfL2JgdwrGfDzQ==
-X-Received: by 10.223.177.195 with SMTP id r3mr32185008wra.40.1491509639494;
-        Thu, 06 Apr 2017 13:13:59 -0700 (PDT)
-Received: from [192.168.5.102] ([87.116.180.64])
-        by smtp.gmail.com with ESMTPSA id 46sm3356049wru.37.2017.04.06.13.13.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Apr 2017 13:13:58 -0700 (PDT)
-Subject: Re: how-to get commit content with pre-receive hook ?
-To:     Eric Belhomme <rico-ml@ricozome.net>, git@vger.kernel.org
-References: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <0dec12a8-b3d2-41e5-4563-4bec2a6df7be@gmail.com>
-Date:   Thu, 6 Apr 2017 22:13:55 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+        id S1755546AbdDFUU7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 16:20:59 -0400
+Received: from mout.web.de ([217.72.192.78]:55624 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754719AbdDFUU5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 16:20:57 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MFtH8-1cq9tA0YRa-00Eygf; Thu, 06
+ Apr 2017 22:20:38 +0200
+Subject: Re: [PATCH v5 3/4] test-strcmp-offset: created test for strcmp_offset
+To:     git@jeffhostetler.com, git@vger.kernel.org
+References: <20170405173809.3098-1-git@jeffhostetler.com>
+ <20170405173809.3098-4-git@jeffhostetler.com>
+Cc:     gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <4da78dff-7caa-b560-8af9-f5a3dfc0bed2@web.de>
+Date:   Thu, 6 Apr 2017 22:20:35 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20170405173809.3098-4-git@jeffhostetler.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:zKQ4Zl2SmsUGkkmjCF3szY4w6xBf7b+ZGpEKi4wmMjDYYX/GNOg
+ YboWWW0tsDTnT3fM7gfNq0/JwJ0+0VifDOdHqIYqsfNpIcuCAuoRQqrnQ/jZM9vWYfO1PTh
+ dfqdOIKi+MmffBMlFzLhArogsk9fIPNW3pSc3Y4+5xZ0CF7ocCxJQpdGYJQoBU0EvmWhVv4
+ OP5VtHY/DRAVFQJHpw8aw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SfpbKcaIAZ0=:Kte1NKMkOnIAq534oxfoEf
+ cVral7TsVbVsB+u7advFOzsiuE3RPwp6XEzYdT1GNjmFAnC0O8c9ZGyJjdcHn/cWmsMWTaFG+
+ zMJAiTCO/nmEsKJJbDNENMv0eAoe4vJQzR39n6B9Ky8Ghci3z2wfyEDBt0gIVr5aUt7nkD46o
+ DjQ0qEmiCUGo0s3RSuHJl2khIQJ3C9A3vMAjcPRFzPPUE2RAchjkzxmeWHD+yktywuJ2xqQHi
+ LhP7gzbYCIE+iV5gBOv82pq4SHAHQjwdIXonclWlh4ChRDovrBWiEsQIVl/OrhR+TJ5TO1l1V
+ a3Ttn4cuXiUs42Kd4bMmo0aXbHftk4cEyPNgqSzkLcIWErEq17l8iWH7julwmg64C2V1l9lk4
+ Igm9t9DuVMx6lQx6YxSvhoSjB7ytvqlTcj8XR9E9IRU6v/OSdDclUO41Nv6QRCP4ZMpJB8A3w
+ SC90Rt0tWBu4/I/bfwORXSb0Sru3rHCaPU1JxFOFk0cat5GkRpnnIBMk0B/a+nhi6mKf57zRD
+ CHAhvA4K28eC9DOm5OgrEH+7VqYTKBHOOGHHq0jo3/o4SqEbFLtK6k1TSYuqPXkXx5CRBecpF
+ 2RndkcbZvkMeHvgMjvMOP+tjNOSpX7imtF3uKWJYdYcvw9O8iAfeZOfoTgKpjxMAnyq9Fwb7s
+ jcCits3mV4g6a1BkfgU0VjERIk1MlcHuq0O8b/xk+ZJJNU8RKWRoyna4+H2YjYvewlzWbB9F7
+ GP5YWC1oSipo1oQZYiocQszF5UQawDz7ENwQoDPFruIQWWvWHITPbhz8PqE2Cap1k/cxwVzIp
+ MXsY5ET
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Eric,
+Am 05.04.2017 um 19:38 schrieb git@jeffhostetler.com:
+> diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
+> new file mode 100644
+> index 0000000..fe01318
+> --- /dev/null
+> +++ b/t/helper/test-strcmp-offset.c
+> @@ -0,0 +1,64 @@
+> +#include "cache.h"
+> +
+> +struct test_data {
+> +	const char *s1;
+> +	const char *s2;
+> +	int first_change;
+> +};
+> +
+> +static struct test_data data[] = {
+> +	{ "abc", "abc", 0 },
+> +	{ "abc", "def", 0 },
+> +
+> +	{ "abc", "abz", 2 },
+> +
+> +	{ "abc", "abcdef", 3 },
+> +
+> +	{ "abc\xF0zzz", "abc\xFFzzz", 3 },
+> +
+> +	{ NULL, NULL, 0 }
+> +};
+> +
+> +int try_pair(const char *sa, const char *sb, int first_change)
 
-On 06/04/2017 16:03, Eric Belhomme wrote:
-> Until now I ever had a quite "basic" Git usage, but now I'm working 
-> on a project based on Git hooks feature.. and I'm a very beginner 
-> with Git hooks !
-> 
-> My need consist doing a syntax check on submitted files before a 'git 
-> push'. So the right hook is 'pre-receive' and I'm already able to 
-> identify the files I want to check using 'git show'.
-> 
-> But I don't know how to get the *content* of the file being submitted 
-> to run my syntax check rules against it !
-> 
-> I googled but most examples using pre-receive I found are doing 
-> sanity check on enveloppe but never on actual content of the file !
-> 
-> Could someone here put me on the rails ?
+This should be static, right?  Found with -Wmissing-prototypes.
 
-I`m yet another beginner with both Git hooks and Bash scripting, but 
-I`ve managed to patch something up that might give you an idea, just 
-drop it inside your "pre-receive" hook file:
+> +{
+> +	int failed = 0;
+> +	int offset, r_exp, r_tst;
+> +	int r_exp_sign, r_tst_sign;
+> +
+> +	/*
+> +	 * Because differnt CRTs behave differently, only rely on signs
 
-	while read oldrev newrev
-	do
-		for commit in $(git rev-list --reverse $oldrev..$newrev)
-		do
-			for file in $(git diff-tree --no-commit-id --name-only -r $commit)
-			do
-				echo "$(git show $commit:$file)" >&1
-			done
-		done
-	done
-	exit 1
+s/differnt/different/
 
-This should reject any push attempt, returning back *content* of each 
-changed file for each new commit.
-
-Feel free to adapt as needed, like processing/checking file content 
-instead of sending it over, allowing or rejecting the push 
-accordingly, and also handling corner cases (for example, "oldrev" 
-value of 0000... in case of a new ref creation).
-
-I guess there might be better ways (comments welcome), but this 
-should at least get you going... and I`ve learned something new as 
-well ;)
-
-Regards,
-Buga
+René
