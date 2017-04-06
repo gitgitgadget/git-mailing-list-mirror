@@ -2,141 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F1D01FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 20:37:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7E461FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 20:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752632AbdDFUho (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 16:37:44 -0400
-Received: from siwi.pair.com ([209.68.5.199]:25744 "EHLO siwi.pair.com"
+        id S1752831AbdDFUlO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 16:41:14 -0400
+Received: from siwi.pair.com ([209.68.5.199]:63386 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752173AbdDFUhn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 16:37:43 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        id S1751251AbdDFUlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 16:41:13 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id BC3FF84626;
-        Thu,  6 Apr 2017 16:37:41 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
+        by siwi.pair.com (Postfix) with ESMTPSA id 0B7768464D;
+        Thu,  6 Apr 2017 16:41:08 -0400 (EDT)
+Subject: Re: [PATCH v5 1/4] p0004-read-tree: perf test to time read-tree
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+References: <20170405173809.3098-1-git@jeffhostetler.com>
+ <20170405173809.3098-2-git@jeffhostetler.com>
+ <6937b76e-9bbf-7ce5-8605-e09f556f8a26@web.de>
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v1] unpack-trees: avoid duplicate ODB lookups during checkout
-Date:   Thu,  6 Apr 2017 20:37:32 +0000
-Message-Id: <20170406203732.47714-2-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170406203732.47714-1-git@jeffhostetler.com>
-References: <20170406203732.47714-1-git@jeffhostetler.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <6286a37f-aa22-ff70-3127-c417a6920c35@jeffhostetler.com>
+Date:   Thu, 6 Apr 2017 16:41:03 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <6937b76e-9bbf-7ce5-8605-e09f556f8a26@web.de>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach traverse_trees_recursive() to not do redundant ODB
-lookups when both directories refer to the same OID.
 
-In operations such as read-tree, checkout, and merge when
-the differences between the commits are relatively small,
-there will likely be many directories that have the same
-SHA-1.  In these cases we can avoid hitting the ODB multiple
-times for the same SHA-1.
+On 4/6/2017 4:20 PM, René Scharfe wrote:
+> Am 05.04.2017 um 19:38 schrieb git@jeffhostetler.com:
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> ---
+>>  t/perf/p0004-read-tree.sh | 116 ++++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 116 insertions(+)
+>>  create mode 100755 t/perf/p0004-read-tree.sh
+>>
+>> diff --git a/t/perf/p0004-read-tree.sh b/t/perf/p0004-read-tree.sh
+>> new file mode 100755
+>> index 0000000..5d8bbf5
+>> --- /dev/null
+>> +++ b/t/perf/p0004-read-tree.sh
+>> @@ -0,0 +1,116 @@
+>> +#!/bin/sh
+>> +
+>> +test_description="Tests performance of read-tree"
+>> +
+>> +. ./perf-lib.sh
+>> +
+>> +test_perf_default_repo
+>> +test_checkout_worktree
+>> +
+>> +## usage: dir depth width files
+>> +make_paths () {
+>> +	for f in $(seq $4)
+>> +	do
+>> +		echo $1/file$f
+>> +	done;
+>> +	if test $2 -gt 0;
+>> +	then
+>> +		for w in $(seq $3)
+>> +		do
+>> +			make_paths $1/dir$w $(($2 - 1)) $3 $4
+>> +		done
+>> +	fi
+>> +	return 0
+>> +}
+>
+> "make_paths xxx_dir_xxx 5 10 9" takes more than a minute for me.
+> Providing its results as a file would be quicker but less flexible.
+> The following command prints the same result in less than a second.
+>
+> 	awk -v dir=xxx_dir_xxx -v depth=5 -v width=10 -v files=9 '
+>         	function make_paths(dir, depth, width, files,  i)
+> 	        {
+>         	        for (i = 1; i <= files; i++) {
+> 	                        print dir "/file" i
+>         	        }
+> 	                if (depth > 0) {
+>         	                for (i = 1; i <= width; i++) {
+> 	                                make_paths(dir "/dir" i, depth - 1, width, files)
+>         	                }
+>                 	}
+> 	        }
+> 	        END {make_paths(dir, depth, width, files)}
+> 	' </dev/null
+>
+> It's faster because it avoids calling seq thousands of times.
 
-TODO This change is a first attempt to test that by comparing
-TODO the hashes of name[i] and name[i-i] and simply copying
-TODO the tree-descriptor data.  I was thinking of the n=2
-TODO case here.  We may want to extend this to the n=3 case.
+Very nice!!!  I'll give that a try.  Thanks!
 
-================
-On the Windows repo (500K trees, 3.1M files, 450MB index),
-this reduced the overall time by 0.75 seconds when cycling
-between 2 commits with a single file difference.
-
-(avg) before: 22.699
-(avg) after:  21.955
-===============
-
-================
-Using the p0004-read-tree test (posted earlier this week)
-with 1M files on Linux:
-
-before:
-$ ./p0004-read-tree.sh
-0004.5: switch work1 work2 (1003037)       11.99(8.12+3.32)
-0004.6: switch commit aliases (1003037)    11.95(8.20+3.14)
-
-after:
-$ ./p0004-read-tree.sh
-0004.5: switch work1 work2 (1003037)       11.17(7.84+2.76)
-0004.6: switch commit aliases (1003037)    11.13(7.82+2.72)
-================
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- tree-walk.c    |  8 ++++++++
- tree-walk.h    |  1 +
- unpack-trees.c | 13 +++++++++----
- 3 files changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/tree-walk.c b/tree-walk.c
-index ff77605..3b82f0e 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -92,6 +92,14 @@ void *fill_tree_descriptor(struct tree_desc *desc, const unsigned char *sha1)
- 	return buf;
- }
- 
-+void *copy_tree_descriptor(struct tree_desc *dest, const struct tree_desc *src)
-+{
-+	void *buf = xmalloc(src->size);
-+	memcpy(buf, src->buffer, src->size);
-+	init_tree_desc(dest, buf, src->size);
-+	return buf;
-+}
-+
- static void entry_clear(struct name_entry *a)
- {
- 	memset(a, 0, sizeof(*a));
-diff --git a/tree-walk.h b/tree-walk.h
-index 68bb78b..ca4032b 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -43,6 +43,7 @@ int tree_entry(struct tree_desc *, struct name_entry *);
- int tree_entry_gently(struct tree_desc *, struct name_entry *);
- 
- void *fill_tree_descriptor(struct tree_desc *desc, const unsigned char *sha1);
-+void *copy_tree_descriptor(struct tree_desc *dest, const struct tree_desc *src);
- 
- struct traverse_info;
- typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3a8ee19..50aacad 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -554,10 +554,15 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 	newinfo.df_conflicts |= df_conflicts;
- 
- 	for (i = 0; i < n; i++, dirmask >>= 1) {
--		const unsigned char *sha1 = NULL;
--		if (dirmask & 1)
--			sha1 = names[i].oid->hash;
--		buf[i] = fill_tree_descriptor(t+i, sha1);
-+		if (i > 0 && (dirmask & 1) && names[i].oid && names[i-1].oid &&
-+			!hashcmp(names[i].oid->hash, names[i-1].oid->hash)) {
-+			buf[i] = copy_tree_descriptor(&t[i], &t[i-1]);
-+		} else {
-+			const unsigned char *sha1 = NULL;
-+			if (dirmask & 1)
-+				sha1 = names[i].oid->hash;
-+			buf[i] = fill_tree_descriptor(t+i, sha1);
-+		}
- 	}
- 
- 	bottom = switch_cache_bottom(&newinfo);
--- 
-2.9.3
-
+>
+>> +
+>> +fill_index () {
+>> +	make_paths $1 $2 $3 $4 |
+>> +	sed "s/^/100644 $EMPTY_BLOB	/" |
+>
+> You could add the prefix to the script above and avoid this sed call
+> as well.
+>
+> René
+>
