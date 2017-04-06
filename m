@@ -2,54 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AED8209F1
-	for <e@80x24.org>; Thu,  6 Apr 2017 08:56:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C66A3209F1
+	for <e@80x24.org>; Thu,  6 Apr 2017 08:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756495AbdDFI4A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 04:56:00 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53002 "EHLO mout.gmx.net"
+        id S1755909AbdDFI5i (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 04:57:38 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51071 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755233AbdDFIzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 04:55:40 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHHZT-1crQU70epv-00E4UQ; Thu, 06
- Apr 2017 10:55:20 +0200
-Date:   Thu, 6 Apr 2017 10:55:17 +0200 (CEST)
+        id S1755793AbdDFI5d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 04:57:33 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lg6op-1cKZff2iXT-00pbU8; Thu, 06
+ Apr 2017 10:57:28 +0200
+Date:   Thu, 6 Apr 2017 10:57:26 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     =?UTF-8?Q?Martin_Li=C5=A1ka?= <mliska@suse.cz>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by
- GCC 7.
-In-Reply-To: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
-Message-ID: <alpine.DEB.2.20.1704061051130.4268@virtualbox>
-References: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
+Subject: Re: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
+In-Reply-To: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
+Message-ID: <alpine.DEB.2.20.1704061056020.4268@virtualbox>
+References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-2047997368-1491468735=:4268"
-Content-ID: <alpine.DEB.2.20.1704061052280.4268@virtualbox>
-X-Provags-ID: V03:K0:GqyK2GNTOlTo0z3EVgEhkPUePwezqRdsu5H0xRlOh2zfvmeMttP
- m6GwAmYvDo6eUSNFZE/3CAZWdCjfejlRxp8dfUOOMjHZlHhqQpo4Ocpc2XFuDH2cilGGNVZ
- 8ownbm4Mzn9aLjWQhfUiHr6IqWUqkf+6JVLJSqyOYq8b1AXLrLeBnciSJE/QuReFY2np4nY
- 7EV1Ks+TLyVVfHnSCP1LA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e4kuC8SdgrI=:zs9P8l+GXyz/1r0G/wViRL
- zv0jrn8x86m1/VDIxxXkT4YGhd//h99CzGA5hYFubMZ01DBa976HL/NqXi/ul5bqCT1xagElR
- jhNRKscueEnpFdLjE4gqI+1OG1FwycHH02JXebu5T55JIJ2YHVeH4tq4s5C2RfJ/ng8QLY4a1
- W4G55BiM0/1/ZP1b5vnzKbH0zvCA/8lHznQnx2z+dPoiIy5HZHpGXmK82RIDFtBHeeLWNFbYq
- NqGaOtmGdvYMoBZ5AFAq75Ka0666UP6jjN6MAnskbxYWwmUnsiRkAak7chcRfyO/j1PVVOFhs
- NsonjAZAXm4PoRtXeDfvvHST3bQS5/gKdj+vpyUxUs1JRR8Nxwej03WrLx9gGbD2Q2f+Hjj2i
- YkVSXUXt+jP4In+p+6mGhM6fQ4uyVJe8ljQY4L9beB/cBQ1plAZzh01hUz+VetPkOFRr1/4VL
- /1VHYg7sdLIHMwFFA5wH5YHfiCUgXtDVyVUwQrbLsefnvkNGQolrlpKM2VsXWSSUvcZYdLaY8
- dLgBebBzDKMNT0uxFCFIs3+DZK8KyADa3WsRJUxA/MeCVeOrMOHFzSo5ar73IiUVyQNrO+YuV
- sSbJSI/hRYMbBOU8TRb318hLOejdRhy5YGCNP1MIl4k1iAsPUn8RpnvHH4GAf+F1Q1qUjzhaY
- K8ySox0URgtNCyfA5/rhw7ePJKUmh4i+L6HmWquL6OKwOSOYzrMEqeX6Y84EVE9X/n0pIN05G
- Z0Qdlh13olYG9iAr/O2mEmprg4/m2QEewPlPQtY0lFzi02nuZmHCx3F0sAAM0ysvvXoiWbLC2
- umCEp3b
+Content-Type: multipart/mixed; BOUNDARY="8323329-2108696474-1491469048=:4268"
+X-Provags-ID: V03:K0:4/YR5eazlgLQN/lQgWQNABQ3YqXQMgwqPsItSEVW4LuocU/+dnw
+ PTpVRn830P2+Zn5IkPcrqTu1ykNpqucToQu6PokiRhjzjFPjn400Z5diBsYgPyZ2N6iHcEL
+ gAW9JpBCO2VM/82KVSC1B7pHj4ElgDro8c4/6xT+h049tVx0IB2DkNnOcKVytV2TE4prMgu
+ WzV6brMm9gY2ilAiLMBFw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MZh+6hVNCv0=:wfk4SyOnasKLrgPHlCBxBd
+ eRim4h3uARqsB74oCptvWmEvvLl1lwshLF+9gVrS2J9+kKZcVtHGBECU0xjh5MjvjqMB0h1vK
+ 1coB3NK/SxSLpUpzRh0Wat0lQbAK5y/wK7cqEBnJ9JmZroyjzaMkB2ZLa96IVYleQ1NXJFA1X
+ 3MhRuRYC2wKi38l6dyoK8TOSL4hzpqhcZNS/iw41mXvApWzo02vyNvCh8sFpsKBDtqq0h5F/Y
+ E+zUO7e1VE2QaUDTT38aqPnVYq8QTVrb4PTrXyrm4zDDE4s1cLFbomqIY3ey8+2fn546db98/
+ Qyj2xfUqe82hpP/KX+kkRzd4TC8tl10nCxaPcRHFM6vJHhHPd6OAhb0LCQXfLFBv60agXJnQM
+ 1Ep4mQMkkrVmqhMaHo+ifC/5ByFxmbGOsu0z2nJhsae3cWm9EabUUxmNBP1sKv5yJxwHdlLPh
+ TWysxOTmUVCUq52CrBvfCFovCuLlLUOWMvpT18h/dP8V4h+uey8Hh+77zW4eHzKrzeUOybxhO
+ 3uGyJAQNCnjFSQ+cs8SGrH7TX2TCje5IrlrDGuEfEJxCVkdSwnA962ylagEnzf+SLJH0UYDtm
+ tZeVGxFOSkonVpZl+r+1IbYy77gssMHnpdA7Va5NHk81wotzTTdzV1phHxD9EpFU0aVWJWkHo
+ hMShRyBEmrxKFBwHf2WFMDui9AP6s3wztn+BPK25zjo8YIzqldzTVs/VqVF/LQRFFF1W3xROy
+ +s63V22/0lR6hr8Xq/adx4kpqqG72NSFekOOR0oFSsAYNNBRNpCx5sOlQjdCGQffaUlpK6qDn
+ Aawpo70
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,37 +56,28 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-2047997368-1491468735=:4268
-Content-Type: text/plain; CHARSET=UTF-8
+--8323329-2108696474-1491469048=:4268
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <alpine.DEB.2.20.1704061052281.4268@virtualbox>
 
 Hi Martin,
 
 On Thu, 6 Apr 2017, Martin Li=C5=A1ka wrote:
 
-> Following patch fixes issues that can be seen with -fsanitize=3Daddress o=
-n
-> GCC 7.
+> Following patch fixes issues that can be seen with -fsanitize=3Dundefined
+> on GCC 7.
 
-Good catch.
+The commit message says:
 
-However, it may make more sense to switch to using the "args" field
-instead of the "argv" field: it is of type "struct argv_array" and is
-released automagically by finish_command().
+=09Memory functions like memmove and memcpy should not be called
+=09with an argument equal to NULL.
 
-In other words, you would use something like
+But the patch is not about the pointer arguments, it is about the size
+argument. So I would suggest to say
 
-@@ -600,7 +601,8 @@ static struct cmd2process
-*start_multi_file_filter(struct hashmap *hashmap, cons
-        process =3D &entry->process;
-
-        child_process_init(process);
--       process->argv =3D argv;
-+=09argv_array_push(&process->args, cmd);
-
-instead, making even for a nice LOC reduction.
+=09Memory functions like memmove and memcpy should only be called
+=09with positive sizes.
 
 Ciao,
 Johannes
---8323329-2047997368-1491468735=:4268--
+--8323329-2108696474-1491469048=:4268--
