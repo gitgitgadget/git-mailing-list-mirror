@@ -2,106 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5154920966
-	for <e@80x24.org>; Wed,  5 Apr 2017 23:51:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB01220966
+	for <e@80x24.org>; Thu,  6 Apr 2017 00:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756300AbdDEXvn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Apr 2017 19:51:43 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:56375 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1752824AbdDEXvm (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Apr 2017 19:51:42 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 649B120549
-        for <git@vger.kernel.org>; Wed,  5 Apr 2017 19:51:41 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 05 Apr 2017 19:51:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:message-id:mime-version:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc:x-sasl-enc; s=fm1; bh=i9Ohv4xRxDw+1MH+zx
-        cnP/ShAs5sJurG0H2LAmJXMzk=; b=ruhVwVUpJrxspVjamSjmsL25vO1Y+3/Hdd
-        rITj9CtTyxQJ60FKBZn9NPZ3M22bhoq5CClhZKXavDgbTug15tkU7IbFx5MWkUP7
-        VzgHUBpv7o6trIGi4lLnSCv6M5eTf8Q5blXT27j3XFYB57O39mIfJdiicgcMBA7E
-        8XE4bWB2nnMs+6voO7FSy4MJCNsk18cN5PZ8LLCthDq7Nq75sPzbNXcQrFsHX4tT
-        kQ0Mk+6i793l9H+DiZsKXXIy7LfQpP5darNr+LJoqcmLczBvRs6sIYtCFbaeINKa
-        w6AxswQtU2ZCZ2piDz+gRRMq5vtkTvKyq0Cryvt8JfS/eMFg55hw==
-X-ME-Sender: <xms:DYPlWI9sDptsmV0V1q3jx6Lstqd673o7gUP5Z9a9Y4UQsNk3mh9-MQ>
-X-Sasl-enc: d9aJUTjnSrZKaOvv+2BRJ0teWBnCddW1RUODPFe9Dzj5 1491436301
-Received: from [10.5.101.228] (unknown [216.64.185.218])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 1995B24371
-        for <git@vger.kernel.org>; Wed,  5 Apr 2017 19:51:41 -0400 (EDT)
-From:   Dan Fabulich <dan@fabulich.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
-Subject: Why does git-checkout accept a tree-ish?
-Message-Id: <EA993AC0-022C-423D-ABD7-4747FA09E7FE@fabulich.com>
-Date:   Wed, 5 Apr 2017 16:51:40 -0700
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3273)
+        id S1756299AbdDFASR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Apr 2017 20:18:17 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:35263 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756260AbdDFASP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Apr 2017 20:18:15 -0400
+Received: by mail-lf0-f42.google.com with SMTP id j90so18096126lfk.2
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 17:18:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=0OueAC6fAuRxJAOGMzJLv6gNOsGy8sx1mBhAKIWi2HI=;
+        b=k9WYNCCzCGn3rce0L0v1eiF4Njmamnqc1FL8LoJWL1v3zJXD/yKMPs271vjz/NjuXx
+         hOnSRpcobYgi7Z/NoaJQTcZXU4OkuuJIQlr2vgfKJxPRomHxBvtROS2qmE8VO34f19QW
+         D0TPCUWI4V6zmcVaC1dD/2U3TGhxv6wZ0N8IGu8eXBpBEAhWo2e5EGHal/gdh33hY8bq
+         B+EuyDzQAPVjokHrp++VI1gM2eJLF8rkziFxaNj+UeoqR2n6Gg6FPNZQ6I4J1boC61SJ
+         7sKDWHmUPcILDLqjtg8RvvnPsy1QQDsO04NA0ShBJHRY6O0U7uK5DwumNWfwZsw6zyyW
+         34cA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=0OueAC6fAuRxJAOGMzJLv6gNOsGy8sx1mBhAKIWi2HI=;
+        b=EgLwPkQgySXMfQGq8/ptfO+joayDbme2Trjl5GI49NrXZzpj2LCc4TAN7NeYbCm8Ud
+         GcnrakZA6F2gYMBpwPEf75US0VbyLc/P39un2IfD0LcsBapcFtX6keqkbMpRSjqDVQ9n
+         U9X5EYI908eNrY5WilsO7y5ZwLXjlFHFa6vXdycrWVSzyA1cLCpX+jIjl4W/p55bACy3
+         93QMGwb07c+a4kdPj4xRWZssdPX+JkQg+RL5L0fxcwepNKaWLyf9yEWKjrQXuACagMMZ
+         n6O6Sx9q5rI5FHedmD6eRkVmhMlafgWblQNK6Z6xPdxefm3MzKbiL5oOnDckkr+No4gf
+         NEEA==
+X-Gm-Message-State: AFeK/H1lJUmHNjFFK6ZjO1X/3NvVSRtYcOyVrx173e6eqTJFhqaJnHJUE+kPqFIrpwkl4wmJ5ss5bnwitGZ5lg==
+X-Received: by 10.25.77.2 with SMTP id a2mr10939033lfb.143.1491437893640; Wed,
+ 05 Apr 2017 17:18:13 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.145.30 with HTTP; Wed, 5 Apr 2017 17:17:53 -0700 (PDT)
+In-Reply-To: <20170401001924.GC8741@aiede.mtv.corp.google.com>
+References: <20170331231135.195195-1-bmwill@google.com> <20170331235623.166408-1-bmwill@google.com>
+ <20170331235623.166408-3-bmwill@google.com> <20170401001924.GC8741@aiede.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 5 Apr 2017 17:17:53 -0700
+Message-ID: <CA+P7+xq58Bc2KVb2ewBPWPj8Zyf82tJWgQeq=oFvbs0ACysvLQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] push: propagate push-options with --recurse-submodules
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was looking back through git's history, trying to figure out why =
-git-checkout has so many features. I was struck by this commit by Junio =
-in 2005.
+On Fri, Mar 31, 2017 at 5:19 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Brandon Williams wrote:
+>
+>> Teach push --recurse-submodules to propagate push-options recursively to
+>> the pushes performed in the submodules.
+>
+> Some time in the future we may want "push --recurse-submodules" to do a
+> dry run pass before doing the final push, so that if it is known that
+> some of the pushes wouldn't succeed (e.g. due to not being
+> fast-forward, or the server not being reachable, or the server not
+> supporting push options) then git could stop early instead of some
+> succeeding and some failing.
+>
+> But that's a larger and separate change from this one.  Users of push
+> --recurse-submodules today know they are effectively asking for
+> multiple pushes that are not guaranteed to succeed or fail together.
+>
 
-=
-https://github.com/git/git/commit/4aaa702794447d9b281dd22fe532fd61e02434e1=
+If you want it to be truly atomic it will require more effort than the
+above. Suppose that you do a dry-run first, and then find out
+everything will succeed. After this, you do the real pushes. But in
+between these two commands something could have changed, and you could
+still end up with a non-atomic set of pushes.
 
+I think that's ok and better than before, but it should be noted that
+you stll don't guarantee that all the pushes succeed or fail together.
 
-> git-checkout: revert specific paths to either index or a given =
-tree-ish.
-> When extra paths arguments are given, git-checkout reverts only those
-> paths to either the version recorded in the index or the version
-> recorded in the given tree-ish.
->=20
-> This has been on the TODO list for quite a while.
+I'm really not sure if you even can make these pushes work atomically
+considering they are going to different hosts.
 
-Prior to this commit, git-checkout would only switch branches; you could =
-use git-checkout-index to copy files from the index to the working tree. =
-But in this commit, git-checkout not only subsumes the functionality of =
-git-checkout-index but also learns the ability to copy files from an =
-arbitrary branch (now an arbitrary tree-ish) into the working copy *and* =
-the the index. (That was important because git-reset didn't accept =
-<paths> in 2005.)
-
-I think the "UNIX philosophy" would have advocated that a new command be =
-created to handle this case, perhaps something like git-checkout-tree. =
-(That would also have eliminated the need to use -- to disambiguate the =
-tree-ish from the paths.)
-
-And so I wonder if anybody knows just why git-checkout gained these two =
-features in one commit, without creating a separate command.
-
-I have two guesses:
-
-1) It was pretty easy for Junio to implement as part of git-checkout; =
-just 20 lines of code and a small test.
-
-2) git at the time was distributed as a collection of files, =
-git-checkout, git-reset, etc. and so there was some pressure not to =
-create a new command for fear that it would clutter the filesystem.
-
-Are those the actual reasons? (This seems like it might be a FAQ, but =
-Google failed me searching for git faqs or "why does git checkout do so =
-many things.")
-
--Dan
-
-P.S. I would make a similar argument about adding <paths> support to =
-git-reset, rather than creating a separate command like git-unadd.
-
-=
-https://github.com/git/git/commit/2ce633b928f78224a37308f45810e76fefe8df56=
-
-It was documented a couple of weeks later on Dec 26.
-=
-https://github.com/git/git/commit/6934dec89538e054823aadcce08af040bc8dcf79=
+Thanks,
+Jake
