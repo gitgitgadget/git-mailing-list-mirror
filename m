@@ -2,145 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D15E1FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 17:25:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 558101FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 17:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934327AbdDFRY6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 13:24:58 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:36638 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934049AbdDFRY5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 13:24:57 -0400
-Received: by mail-wr0-f170.google.com with SMTP id w11so66444255wrc.3
-        for <git@vger.kernel.org>; Thu, 06 Apr 2017 10:24:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=kwAki6JakLOnLNRBwREpEdByqVuViY6pBGeC/xfjM6g=;
-        b=c3jcSnwOCAVKkPiRPeNx3L3jVfmshIm6NkAQagjuh0lyYo7nYcY3hR6v0Dg8Xw4/eP
-         ZK7jERdAUhL5FpTFf2l+EIuUb4nVBtW2uVEZh3ntolAu0SWNFyPACd/Yv6BVqAdDsCs0
-         OtxuxlcjID9B5Vi7070OsMQ0QMc3WotaLNzfCrQcOxx057jMlBpzLMHQyZBku8y8rhah
-         QdVwwtI4M/1GQJalLNp1ervsZLFJEvxhvUgF/wIqQyoCmgRFcjDD/vpwpnDAJBdxSoa7
-         bEzhSTSJ6ZE6cBuzLbH+S6GpxxE3oZ/QyEAJaEUXQvlg1FYN+9ikO77mo21Pf5kn7RaF
-         bytA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=kwAki6JakLOnLNRBwREpEdByqVuViY6pBGeC/xfjM6g=;
-        b=OmUaOqD/4bKYtE8Wmah05dDLMSlAYmNSQXFq18tADGaAXiyrTMFp8fnnuUWjeHK7ix
-         Hpc+IxxoZmixO8nXpU5DRkw5DNOZo3E0R2+vfVq/BmSFAtwfph0Gecy9OSYTQieJ5MF8
-         EWq7wDZdiT+e63tpmdp3vRp0Kpo0vvsf3dx/6Ft3S/eouiJ54V1KZcueZpciUq2TkpGB
-         9ClOnyGQAvDxR2pdnbXClCBSz2794g8pH47lm5zPhQ05AP3vSdxrTGXUm2f18T07M7bC
-         jHJIjKs7aFc4Cip8Mo2LO3ydnGurxbvupHKiCTZnajC/7ENngsYAT2jJcaImGgELolG+
-         U4lw==
-X-Gm-Message-State: AFeK/H2YXlo08ygW2ZPjC3cjWrXfrIr7F8xKctcgUaN53WXNmBWn6upAPODrV1oxp22SlmkB04TzYuhJ0HF9Dg==
-X-Received: by 10.28.220.212 with SMTP id t203mr25732791wmg.62.1491499495772;
- Thu, 06 Apr 2017 10:24:55 -0700 (PDT)
+        id S934364AbdDFRcD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 13:32:03 -0400
+Received: from mout.web.de ([212.227.17.12]:56218 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S934260AbdDFRb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 13:31:57 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MHp8z-1cxYAK2UZh-003cgl; Thu, 06
+ Apr 2017 19:31:41 +0200
+Subject: Re: [PATCH v3 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
+To:     Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
+References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
+ <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
+ <998bf391-7fc5-8329-db58-ef0f24517707@suse.cz>
+ <33c63fb9-281c-8fd2-66e7-b85f62f4f447@web.de>
+ <8555c61f-2617-eec8-6dbe-87c79c6ca302@suse.cz>
+ <587b0cb9-bd66-ddf7-5cca-023df3470883@kdbg.org>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <e392e05c-2815-8cfa-eed0-bd990f8ce954@web.de>
+Date:   Thu, 6 Apr 2017 19:31:38 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.28.164.2 with HTTP; Thu, 6 Apr 2017 10:24:54 -0700 (PDT)
-In-Reply-To: <20170404204031.geh72k6yuiky4wsw@sigill.intra.peff.net>
-References: <20170331172631.12024-1-dturner@twosigma.com> <20170401060116.b2v7tyoi7fcxwbvo@sigill.intra.peff.net>
- <34d444b673c64310baa275f821037b3e@exmbdft7.ad.twosigma.com>
- <20170404020130.76thbl5rum2gxgtn@sigill.intra.peff.net> <6488d78232be49a69260436d1c6ed44f@exmbdft7.ad.twosigma.com>
- <20170404204031.geh72k6yuiky4wsw@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 6 Apr 2017 19:24:54 +0200
-Message-ID: <CAP8UFD3r7C_OcQMmtOju636okqrTB-af6CDo2jw5vGsiWcLVrg@mail.gmail.com>
-Subject: Re: [PATCH v3] http.postbuffer: allow full range of ssize_t values
-To:     Jeff King <peff@peff.net>
-Cc:     David Turner <David.Turner@twosigma.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <587b0cb9-bd66-ddf7-5cca-023df3470883@kdbg.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:IvkcUXlAI1O7+mkXVy3Au4SJU0bBNRt97AAFqEO2lob4/5AQDj6
+ UKPVJNgWEgk2c1Pyv4deigEaRlq4okEKVRlU3AhdnPeVD8F0JlvC8NJMHhddsgXcNO7S3mv
+ o+31q0n+jkeqpQfPnlY0xlUqA4tD+moBRDFnIxxSno1AKQqdS7layNPLE2yNLuPOdky0UMl
+ TOgvYi+oo6uyKrji6rbDQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AHK5CMcfCf8=:j+Gb/00u5A9a8HXIN0D6FG
+ Ov7lGQ9/swnzm2CESjvHfUuLkuuH/T7/vQCDTDBnB/67bXd4vUST9xKKP+TIxhomwpJ/y0Z3b
+ CvCEt6XAnhUZMNCBwLbq9WXIxGAse9HuKaYwf4qH+KN02EBfPRYZ5EsYr35dzsRWwY1Ecy40r
+ BHGLMQMGNWy9AY+5A+Z6NxT5ZvrdIh03NQDhYX6TkNCg2/zvvJJu9dc13sy5NMDDd8CwdhZeX
+ q74/UOBseBa1JDtMuivYB51GmXWYO7j839S6D7vKF4LysoXU+1BLplS37vX7FYguCVKABGR3f
+ 28NpklhD4nYbTruXMveaO+JeDRVU/M5exIwmiyFD6uJtRNunyEfvsyC3SejNXm2m8RKH+uXB+
+ o5Hx6Tdpxh2QOHJro72rJVGaCz9CgM/olRGkfaa/K2jNjm+3gMjXz39A7Mjo0bpxGZrazWx/7
+ 55Mgrq/Job/9p7BassqJYszLuZ0b96pNrgJ7wj6bV+3CNM68cki9WcowTspnrl6YRutWVxclf
+ dYuKvQ4qj4mdNmn6hpUrfl3bGKApKfQxbl/c+KyC4MLc4Rr1mYLS8OYmQr1WBqzZC/LNpiXYu
+ UxcWfYEAVN5H1Xs5wxEdddp478ecH+fWGuJOa/8n3TunlCWM17udqX0SueZahGRoIaCw97wwc
+ HMUW64/pUt1CCjYb9RfWdb9ICZTu6HHRzPNHJFJIr1F8JrogqFnAXsvlbNdEqANIs7OSAPnav
+ i1awh/FAvLu+Uz1Sdk7607thaa6WVYap/Vyvk21CD1wRypspZ4th1BBD/B9oZt8yecw5z9ar3
+ oDruHLH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 4, 2017 at 10:40 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 04, 2017 at 06:42:23PM +0000, David Turner wrote:
+Am 06.04.2017 um 18:33 schrieb Johannes Sixt:
+> Am 06.04.2017 um 17:42 schrieb Martin Liška:
+>> +static inline void *sane_memmove(void *dest, const void *src, size_t n)
+>> +{
+>> +    if (n > 0)
+>> +        return memmove(dest, src, n);
+>> +    else
+>> +        return dest;
+>> +}
 >
->> > What does it look like when it fails? What does GIT_TRACE_CURL look like (or
->> > GIT_CURL_VERBOSE if your client is older, but remember to sanitize any auth
->> > lines)?
->>
->> Unfortunately, we've already worked around the problem by pushing over SSH,
->> so I no longer have a failing case to examine. Last time I tried, I actually did some
->> hackery to create a push smaller than 2GB, but it still failed (this time, with
->> "502 Bad Gateway").  So, something is clearly weird in GitLab land.
->>
->> I did see "Transfer-Encoding: chunked" in one of the responses from the server,
->>  but not in the request (not sure if that's normal). The smaller push had:
->> Content-Length: 1048908476
->
-> The 502 makes me think it's a problem in the GitLab reverse-proxy layer
-> (and also my experience debugging Git-over-HTTP weirdness on GitHub's reverse
-> proxy layer, which had a number of pitfalls ;) ).
+> Huh? memmove with n == 0 is well-defined. This wrapper is pointless.
 
-Yeah, maybe.
+memmove(3) with NULL pointers is undefined.  From string.h on Debian:
 
-> You should be able to do a synthetic test like:
->
->   git init
->   dd if=/dev/urandom of=foo.rand bs=1k count=1024
->   git add .
->   git commit -m 'random megabyte'
->   GIT_TRACE_CURL=/tmp/foo.out \
->     git -c http.postbuffer=0 push https://...
->
-> You should see two POSTs to /git-receive-pack, like this:
->
->   Send header: POST /peff/test.git/git-receive-pack HTTP/1.1
->   Send header: Host: github.com
->   Send header: Authorization: Basic <redacted>
->   Send header: User-Agent: git/2.12.2.952.g759391acc
->   Send header: Content-Type: application/x-git-receive-pack-request
->   Send header: Accept: application/x-git-receive-pack-result
->   Send header: Content-Length: 4
->
->   Send header: POST /peff/test.git/git-receive-pack HTTP/1.1
->   Send header: Host: github.com
->   Send header: Authorization: Basic <redacted>
->   Send header: User-Agent: git/2.12.2.952.g759391acc
->   Send header: Accept-Encoding: gzip
->   Send header: Content-Type: application/x-git-receive-pack-request
->   Send header: Accept: application/x-git-receive-pack-result
->   Send header: Transfer-Encoding: chunked
->
-> The first is a probe to make sure we can hit the endpoint without
-> sending the whole payload. And the second should pass up the 1MB
-> packfile in chunks.
->
-> That would at least tell you if the problem is the chunked encoding, or
-> if it's related to the size.
+   extern void *memmove (void *__dest, const void *__src, size_t __n)
+        __THROW __nonnull ((1, 2));
 
-The above commands work for me using gitlab.com and the log shows:
+Sometimes we use a NULL pointer and a size of zero to represent arrays 
+with no members.  That convention is incompatible with memmove(3), but 
+the wrapper above would support it.  Checking the size instead of the 
+pointer is preferable because a positive length with NULL pointers 
+should still result in a segfault instead of a silent no-op.
 
-Send header, 0000000309 bytes (0x00000135)
-Send header: POST
-/chriscool/yet-another-test-project.git/git-receive-pack HTTP/1.1
-Send header: Authorization: Basic <redacted>
-Send header: User-Agent: git/2.12.2.625.g14da1346c9.dirty
-Send header: Host: gitlab.com
-Send header: Content-Type: application/x-git-receive-pack-request
-Send header: Accept: application/x-git-receive-pack-result
-Send header: Content-Length: 4
+(I'd still prefer a MOVE_ARRAY macro which also infers the element
+size).
 
-Send header, 0000000341 bytes (0x00000155)
-Send header: POST
-/chriscool/yet-another-test-project.git/git-receive-pack HTTP/1.1
-Send header: Authorization: Basic <redacted>
-Send header: User-Agent: git/2.12.2.625.g14da1346c9.dirty
-Send header: Host: gitlab.com
-Send header: Accept-Encoding: gzip
-Send header: Content-Type: application/x-git-receive-pack-request
-Send header: Accept: application/x-git-receive-pack-result
-Send header: Transfer-Encoding: chunked
-
-Maybe the reverse proxy doesn't like it when the push is really big.
+René
