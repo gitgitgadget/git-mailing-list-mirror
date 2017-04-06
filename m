@@ -2,118 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A577C209F1
-	for <e@80x24.org>; Thu,  6 Apr 2017 08:02:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9552209F1
+	for <e@80x24.org>; Thu,  6 Apr 2017 08:22:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756827AbdDFICv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 04:02:51 -0400
-Received: from mx2.suse.de ([195.135.220.15]:59334 "EHLO mx2.suse.de"
+        id S1752465AbdDFIWD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 04:22:03 -0400
+Received: from mout.gmx.net ([212.227.17.20]:65299 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756675AbdDFICr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 04:02:47 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 3BFFDAC62
-        for <git@vger.kernel.org>; Thu,  6 Apr 2017 08:02:46 +0000 (UTC)
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
-Subject: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by GCC
- 7.
-Message-ID: <072afb58-6159-ddeb-b7dc-40a87e8c6ae7@suse.cz>
-Date:   Thu, 6 Apr 2017 10:02:45 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751713AbdDFIWA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 04:22:00 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQih7-1cWMYb2Yaz-00TzVp; Thu, 06
+ Apr 2017 10:21:40 +0200
+Date:   Thu, 6 Apr 2017 10:21:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     git@jeffhostetler.com, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
+Subject: Re: [PATCH v5 3/4] test-strcmp-offset: created test for
+ strcmp_offset
+In-Reply-To: <20170405224752.2242-1-szeder.dev@gmail.com>
+Message-ID: <alpine.DEB.2.20.1704061014120.4268@virtualbox>
+References: <20170405224752.2242-1-szeder.dev@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------20A9FF84E8D6B1D8852C1FFF"
+Content-Type: multipart/mixed; BOUNDARY="8323329-745214947-1491466900=:4268"
+X-Provags-ID: V03:K0:sf6TgaSQupbREMXvGzSM7tyjozDavC9A6pbwxQL+atuoslRWKTM
+ 8dKEXHDW+8+8r3MS5rTewVGhyOqpDSIDQe2SPH0LaWDQL/XmLiF3Nipkk0mL+Yi6lVyk6Yu
+ emIlBXXizuV3ftzA1oRyUY6WoLcQDfYhFCaW47McdfJeG0fqc/TuZZTQQGCkq+gJaqVv7CD
+ wA1gE+DzrjrHndsPELKiA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:spKPdEMH87c=:Ynn8jX8WSzw+1b2OMm12RA
+ kebJJ6oHrxlV6bI288qdQNSiqvzVjPGAzCXi/TvgeFnXabe78bsHorOs+/c6F7OrdQSFKQ3JL
+ Gk3USSM1leIYaEwGMylvorBaSm14uc/Dc1KtXq5K93PZR7xa+AxXr+uSGq6rIBdEykPvmZX6o
+ /t1QeVTwhnSkFO2jqLI4WeoNHMKWZuZLb+JKw8N7Ctr9vFtbyyUVaM8Yzit/Q/FfqAf8h4DRn
+ nbeozNbQLhKJXIp67DCN3pmxRpOBy67yEO3gqmMZT7MSJnnmg23+nPRHCVABCR83CrCvBxSfo
+ H97U2inrqAxyuHK5A+Q/o2sjJUdS/+XbiONrkntdVkOX83fi5wGpYai2ZIEhrVTZNWGQiuk+Q
+ j/tTRWFEs0v+q82EgNHX/HSOKJgXugijvwOaHuT9Sj3ga9YcdSOaQ0ge68/TkUsd3yLw7Zr9V
+ td6r7MHEKKQgY9pPi1Y1DZPPEz5rnOKLlz1akUSuJ74x4YK6+ZS58CuaxXNkEEEaijNtnJA8B
+ lY4Hol6odsSZnbOJ386Q9kX76+Op/HxzC1yM27LV1rf1EWRjqdoWWa0M8UtYm4ouT/iU4Ux2I
+ RzGiTzgev12luItXRmADBrG8lYmuYyjjC5YwykVNGtJ5iE9lLIiX1isJBZ/UcMbYrIOggUWyz
+ c9Ks5alsBqdUjFjYTGSNWlbZ/BuF2Y60Rv6A8fQfwPJoCoUdSStmn89mJZ26/KCGnWrEzWHIa
+ 14km8nAOSXUwqkluICP/B7n5uBTrDUCH69DgLrJBnLzJvRFS2xyGJfVGXYWZil7h6bVeY1Eq+
+ k1BTBnU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------20A9FF84E8D6B1D8852C1FFF
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hello.
+--8323329-745214947-1491466900=:4268
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Following patch fixes issues that can be seen with -fsanitize=address on GCC 7.
+Hi G=C3=A1bor,
 
-Patch was tested with make test.
+On Thu, 6 Apr 2017, SZEDER G=C3=A1bor wrote:
 
-Thanks,
-Martin
+> I think this patch should be squashed into the previous commit;  I
+> don't see any reason why the tests should be added in a different
+> commit than the function they are testing.
 
---------------20A9FF84E8D6B1D8852C1FFF
-Content-Type: text/x-patch;
- name="0002-Fix-stack-use-after-scope-error-reported-by-ASAN-by-.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename*0="0002-Fix-stack-use-after-scope-error-reported-by-ASAN-by-.pa";
- filename*1="tch"
+I am of two minds there. In some cases, the newly added test demonstrates
+the intended usage, and therefore makes for a nice documentation. In other
+cases, the new test is large enough to stand on its own, i.e. to merit a
+separate patch (also to make reviewing easier).
 
-From 79dace4bdac4f571c14c7edb9b1007c155475c3f Mon Sep 17 00:00:00 2001
-From: marxin <mliska@suse.cz>
-Date: Wed, 5 Apr 2017 14:32:29 +0200
-Subject: [PATCH 2/2] Fix stack-use-after-scope error reported by ASAN by GCC
- 7.
+In this particular case, I tend to the latter: it is large enough a patch
+that it is easier to review as a separate patch.
 
-The use-after-scope is triggered here:
-READ of size 8 at 0x7ffc4f674e20 thread T0
-    #0 0x6f0b69 in finish_command /home/marxin/Programming/git/run-command.c:570
-    #1 0x5b6101 in kill_multi_file_filter /home/marxin/Programming/git/convert.c:570
-    #2 0x5b798a in kill_multi_file_filter /home/marxin/Programming/git/convert.c:770
+> >  t/helper/test-strcmp-offset.c | 64 +++++++++++++++++++++++++++++++++++=
+++++++++
+> >  t/t0065-strcmp-offset.sh      | 11 ++++++++
+> >  4 files changed, 77 insertions(+)
+> >  create mode 100644 t/helper/test-strcmp-offset.c
+> >  create mode 100755 t/t0065-strcmp-offset.sh
+>=20
+> Sure, tests are good, but I have to wonder how this would scale in the
+> long term, when even such simple functions would get their own
+> t/helper/test-func executable and t/tNNNN-func.sh script.
 
-Signed-off-by: Martin Liska <mliska@suse.cz>
----
- convert.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+True. The proliferation of executables in t/helper/ got a little out of
+hand.
 
-diff --git a/convert.c b/convert.c
-index 8d652bf27..bf4eaf10e 100644
---- a/convert.c
-+++ b/convert.c
-@@ -568,6 +568,7 @@ static void kill_multi_file_filter(struct hashmap *hashmap, struct cmd2process *
- 	entry->process.clean_on_exit = 0;
- 	kill(entry->process.pid, SIGTERM);
- 	finish_command(&entry->process);
-+	free(entry->process.argv);
- 
- 	hashmap_remove(hashmap, entry, NULL);
- 	free(entry);
-@@ -582,6 +583,7 @@ static void stop_multi_file_filter(struct child_process *process)
- 	sigchain_pop(SIGPIPE);
- 	/* Finish command will wait until the shutdown is complete. */
- 	finish_command(process);
-+	free(process->argv);
- }
- 
- static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
-@@ -589,7 +591,6 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	int err;
- 	struct cmd2process *entry;
- 	struct child_process *process;
--	const char *argv[] = { cmd, NULL };
- 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
- 	char *cap_buf;
- 	const char *cap_name;
-@@ -600,7 +601,8 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	process = &entry->process;
- 
- 	child_process_init(process);
--	process->argv = argv;
-+	process->argv = xcalloc(2, sizeof(const char *));
-+	process->argv[0] = cmd;
- 	process->use_shell = 1;
- 	process->in = -1;
- 	process->out = -1;
--- 
-2.12.2
+But there is nothing preventing us from consolidating a few of them into a
+single executable, using our wonderful option parsing function with
+OPT_CMDMODE to switch between the different functions.
 
+I could see, for example, how we could consolidate all string-related
+test helpers into a single one, say, test-strings:
 
---------------20A9FF84E8D6B1D8852C1FFF--
+t/helper/test-ctype.c
+t/helper/test-regex.c
+t/helper/test-strcmp-offset.c
+t/helper/test-string-list.c
+t/helper/test-line-buffer.c
+t/helper/test-urlmatch-normalization.c
+t/helper/test-wildmatch.c
+
+Also, these helpers seem to be related to index handling and could go into
+a new test-index helper:
+
+t/helper/test-dump-cache-tree.c
+t/helper/test-dump-split-index.c
+t/helper/test-dump-untracked-cache.c
+t/helper/test-index-version.c
+t/helper/test-scrap-cache-tree.c
+
+Ciao,
+Johannes
+--8323329-745214947-1491466900=:4268--
