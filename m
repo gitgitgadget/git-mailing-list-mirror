@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B44BD20966
-	for <e@80x24.org>; Thu,  6 Apr 2017 06:03:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC71920966
+	for <e@80x24.org>; Thu,  6 Apr 2017 06:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755415AbdDFGDC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 02:03:02 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:35849 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752699AbdDFGDA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 02:03:00 -0400
-Received: by mail-pg0-f66.google.com with SMTP id 81so6067678pgh.3
-        for <git@vger.kernel.org>; Wed, 05 Apr 2017 23:03:00 -0700 (PDT)
+        id S932226AbdDFGNA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 02:13:00 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33290 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756147AbdDFGMz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 02:12:55 -0400
+Received: by mail-pg0-f65.google.com with SMTP id 79so6144900pgf.0
+        for <git@vger.kernel.org>; Wed, 05 Apr 2017 23:12:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vWZvS5PZzAfR19XYR0qfs4s16ZW3i021h1JkqYIin+8=;
-        b=cMqTAMcfzPkSJQL6dGJdBVd1IF0rknBqeKQV8oreadGQTVBfL1e2pp9PgU8wYv3afT
-         3Mxsfr0Cj5HtIjeAJJkYDW9MpikJw3FMVobHnN16eP7HkY4MRcvTr5oa4SvOZYzjcdc5
-         3m6h/tEabY+/+82pxB2xT3uyzvAzlsXjGA78kCY1DzN2wZ2iBAoiXCO9dwcXA4AeRt+S
-         BgxTcGqrqfWcWY8+HiXlG+zWKIXLxLwhZh7Q0g6uMsgFKiWHb37lezB8CRBl0xOcDsux
-         o3kP9w5rltAh7OtKQHg9b7Fg4fZjiRdNmmBIK8W55d6jjikyci5MojGvery7KYJJL1zN
-         B7zw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=6A5IjLvgr8Iu/HcU/E8NxsZzVICLD508jeFIQKqy8YI=;
+        b=CxNny8eQWDn2/cq3sVBP6mwon5oBR+JaSOtsnUtYMRlbQsjykWZsKmSR9ytpW8K95X
+         C5rQvT4gR/tm7Cfo1DM0yUFYjI3KI84qcOQy1Czzd0Wn7QuzvLfrU+JiQgkzEfw7EsVF
+         j7QfV67eUYuUZdL5FQ5QK43leAHG295zGn8I6A1074bUCZP8aDN1daYh3tgn+gVHcnwR
+         7QwdUZQaiitXLBbm10rlqyBQA+zqHwxYYIg+BpOIRM7qSeLLwmo2tSyil6sudsAENQYM
+         YRm0/pwe7h+z2Vr5szLtS8JTzzMpr3wFqReoMrEWltVY5rcaBRWg3YF7wMTgGfjmi8CR
+         AvHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=vWZvS5PZzAfR19XYR0qfs4s16ZW3i021h1JkqYIin+8=;
-        b=rIFrtie+m+uQD7Mcx8FuQea+82kwaxfhwLHQ0dYrnaGRpqncv11rL173NdKdJyA7Za
-         don6gUTWtWaDe0PfBROWcoowZz4QPAE1kz4i1DiRgZrgD3w9OzCd2DC6ViePF2gYiINK
-         XC2V1jc9lz1sckvEo5B4vA7ipvgMLjop7C3gq5AGPGXLirYBzow/V2MNQ46eE24MT8bk
-         YL67LQJ7GSRqsiSgBsvTxS24nC8Zf4vND0YrwWdsCauccuzMuofs3kkXLiWBKmDz65Wa
-         QV5a/GSfI/BP0W1nEEc7L7vK40Y29DEB1vXXkQMICZl2d+knAmVB17I58jy7K0BpCCe8
-         fyqg==
-X-Gm-Message-State: AFeK/H0OwCKOQnqHgx6kOUirYesy83XRW8VmbafGUMMRmyzi4MaOdrFl49tBr9FgZehEew==
-X-Received: by 10.99.177.4 with SMTP id r4mr34039511pgf.16.1491458579875;
-        Wed, 05 Apr 2017 23:02:59 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=6A5IjLvgr8Iu/HcU/E8NxsZzVICLD508jeFIQKqy8YI=;
+        b=uCRvp3Fl5zif5VkCjtEoHU783J9AVfa78Tb3K9E/LSfGmJ8+C9uiQbWAgqVPcuJJWj
+         +JdPGeWS5aGKaKD/4k4QoWjw2WmmPsYCogkqC2DShoqZpkhKgnx7F2WDWW5CnrcZ5+5C
+         kiX7PSBRzlH+18gMzGCA484RRYZM6DSHjsXkQkco4YKOx/DgLR5ufPYT5i3+/5+cqE4F
+         t8n1HN8hj/zOuOg1nRE7kPm4oKtyIdWYhJviX5poy5SJFHrRKUJq3cLvs0zodRDlrhPe
+         ZF1wT4c7goVtINk1VYi/ocCZ5iax7aRzwDGwFww928bSoU/Xk6FTfroqDcFe0vyeig6e
+         1Kzg==
+X-Gm-Message-State: AFeK/H2QbL+qEY8e8uU4hzuupqSXJGvukawRGdx9VENuad/H1hH3g6SfYl6XUpHhcGXauA==
+X-Received: by 10.99.3.76 with SMTP id 73mr33839792pgd.105.1491459164894;
+        Wed, 05 Apr 2017 23:12:44 -0700 (PDT)
 Received: from localhost.localdomain ([47.11.8.91])
-        by smtp.gmail.com with ESMTPSA id e89sm1167946pfd.122.2017.04.05.23.02.53
+        by smtp.gmail.com with ESMTPSA id f81sm1253505pfe.61.2017.04.05.23.12.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Apr 2017 23:02:59 -0700 (PDT)
+        Wed, 05 Apr 2017 23:12:44 -0700 (PDT)
 From:   Prathamesh Chavan <pc44800@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =sbeller@google.com, peff@peff.net,
-        Prathamesh Chavan <pc44800@gmail.com>
+To:     pc44800@gmail.com
+Cc:     sbeller@google.com, git@vger.kernel.org, peff@peff.net
 Subject: [GSoC][PATCH v1] Disallow git commands from within unpopulated submodules
-Date:   Thu,  6 Apr 2017 11:30:53 +0530
-Message-Id: <20170406060053.4453-1-pc44800@gmail.com>
+Date:   Thu,  6 Apr 2017 11:41:07 +0530
+Message-Id: <20170406061107.6849-1-pc44800@gmail.com>
 X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170406060053.4453-1-pc44800@gmail.com>
+References: <20170406060053.4453-1-pc44800@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -105,6 +106,8 @@ https://travis-ci.org/pratham-pc/git/builds/219030999
 
 Also, the above patch was initially my GSoC project topic, but I changed
 it later on and added these bug fixes to my wishlist of the proposal.
+
+(Had to send the patch again since a typo occurred while sending previous the mail)
 
  builtin/submodule--helper.c      |  4 ----
  git.c                            |  3 +++
