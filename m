@@ -2,177 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B28EC1FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 15:42:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90A0D1FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 15:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753730AbdDFPmm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 11:42:42 -0400
-Received: from mx2.suse.de ([195.135.220.15]:58487 "EHLO mx2.suse.de"
+        id S933173AbdDFP6P (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 11:58:15 -0400
+Received: from siwi.pair.com ([209.68.5.199]:24815 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753473AbdDFPmh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 11:42:37 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx2.suse.de (Postfix) with ESMTP id 84362AB43;
-        Thu,  6 Apr 2017 15:42:35 +0000 (UTC)
-Subject: Re: [PATCH v3 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>
-References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
- <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
- <998bf391-7fc5-8329-db58-ef0f24517707@suse.cz>
- <33c63fb9-281c-8fd2-66e7-b85f62f4f447@web.de>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
-Message-ID: <8555c61f-2617-eec8-6dbe-87c79c6ca302@suse.cz>
-Date:   Thu, 6 Apr 2017 17:42:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+        id S1753899AbdDFP6N (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 11:58:13 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 5E58984647;
+        Thu,  6 Apr 2017 11:58:12 -0400 (EDT)
+Subject: Re: [PATCH v5 2/4] read-cache: add strcmp_offset function
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20170406141912.14536-1-szeder.dev@gmail.com>
+Cc:     gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <3f88c428-6d04-6ef5-f7bc-952daad2703a@jeffhostetler.com>
+Date:   Thu, 6 Apr 2017 11:58:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <33c63fb9-281c-8fd2-66e7-b85f62f4f447@web.de>
-Content-Type: multipart/mixed;
- boundary="------------FED35BC504D56233A26D983A"
+In-Reply-To: <20170406141912.14536-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a multi-part message in MIME format.
---------------FED35BC504D56233A26D983A
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
 
-On 04/06/2017 02:26 PM, René Scharfe wrote:
-> Am 06.04.2017 um 11:52 schrieb Martin Liška:
->> I'm sending (v2), where I updated commit message and wrapped 2 problematic
->> places to newly introduced macros that do the check. Follow-up patch can
->> change usages of memcpy and memove.
-> 
->> diff --git a/apply.c b/apply.c
->> index e6dbab26a..eacca29fa 100644
->> --- a/apply.c
->> +++ b/apply.c
->> @@ -2802,9 +2802,9 @@ static void update_image(struct apply_state *state,
->>  			img->line + applied_pos + preimage_limit,
->>  			(img->nr - (applied_pos + preimage_limit)) *
->>  			sizeof(*img->line));
->> -	memcpy(img->line + applied_pos,
->> -	       postimage->line,
->> -	       postimage->nr * sizeof(*img->line));
->> +	MEMCPY(img->line + applied_pos,
->> +		postimage->line,
->> +		postimage->nr * sizeof(*img->line));
-> 
-> Using the existing macro COPY_ARRAY would yield a nicer result:
 
-Yes, it's nicer. I'm sending tested version 3.
+On 4/6/2017 10:19 AM, SZEDER Gábor wrote:
+>> Add strcmp_offset() function to also return the offset of the
+>> first change.
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+>> ---
+>>  cache.h      |  1 +
+>>  read-cache.c | 29 +++++++++++++++++++++++++++++
+>>  2 files changed, 30 insertions(+)
+>>
+>> diff --git a/cache.h b/cache.h
+>> index 80b6372..4d82490 100644
+>> --- a/cache.h
+>> +++ b/cache.h
+>> @@ -574,6 +574,7 @@ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsi
+>>  extern int discard_index(struct index_state *);
+>>  extern int unmerged_index(const struct index_state *);
+>>  extern int verify_path(const char *path);
+>> +extern int strcmp_offset(const char *s1_in, const char *s2_in, int *first_change);
+>>  extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+>>  extern void adjust_dirname_case(struct index_state *istate, char *name);
+>>  extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+>> diff --git a/read-cache.c b/read-cache.c
+>> index 9054369..b3fc77d 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>
+> read-cache.c is probably not the best place for such a general string
+> utility function, though I'm not sure where its most apropriate place
+> would be.
 
-Martin
+Yeah, I looked and didn't see any place so I left it here
+near it's first usage for now.
 
-> 
-> 	COPY_ARRAY(img->line + applied_pos, postimage->line, postimage->nr);
-> 
->>  	if (!state->allow_overlap)
->>  		for (i = 0; i < postimage->nr; i++)
->>  			img->line[applied_pos + i].flag |= LINE_PATCHED;
->> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
->> index d449e46db..7caeeb6a6 100644
->> --- a/builtin/ls-files.c
->> +++ b/builtin/ls-files.c
->> @@ -391,7 +391,7 @@ static void prune_cache(const char *prefix, size_t prefixlen)
->>  		}
->>  		last = next;
->>  	}
->> -	memmove(active_cache, active_cache + pos,
->> +	MEMMOVE(active_cache, active_cache + pos,
->>  		(last - pos) * sizeof(struct cache_entry *));
->>  	active_nr = last - pos;
+>
+>> @@ -887,6 +887,35 @@ static int has_file_name(struct index_state *istate,
+>>  	return retval;
 >>  }
-> 
-> Perhaps we should add MOVE_ARRAY to complement COPY_ARRAY.
-> 
-> René
-> 
+>>
+>> +
+>> +/*
+>> + * Like strcmp(), but also return the offset of the first change.
+>
+> This comment doesn't tell us what will happen with the offset
+> parameter if it is NULL or if the two strings are equal.  I don't
+> really care about the safety check for NULL: a callsite not interested
+> in the offset should just call strcmp() instead.  I'm fine either way.
+> However, setting it to 0 when the strings are equal doesn't seem quite
+> right, does it.
 
+Good catch. I'll add a null check.
 
---------------FED35BC504D56233A26D983A
-Content-Type: text/x-patch;
- name="0001-Fix-nonnull-errors-reported-by-UBSAN-with-GCC-7.patch"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename*0="0001-Fix-nonnull-errors-reported-by-UBSAN-with-GCC-7.patch"
+When the strings are equal, I'm not sure any one value is
+better than another.  I could leave it undefined or set it
+to the length.  That might be more useful since we have it on
+hand and it might save the caller a strlen() later.
 
-From 4784ff90b2c4cd0d78a25c8d8ed77f299686348c Mon Sep 17 00:00:00 2001
-From: marxin <mliska@suse.cz>
-Date: Wed, 5 Apr 2017 14:31:32 +0200
-Subject: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
+>
+>> + */
+>> +int strcmp_offset(const char *s1_in, const char *s2_in, int *first_change)
+>> +{
+>> +	const unsigned char *s1 = (const unsigned char *)s1_in;
+>> +	const unsigned char *s2 = (const unsigned char *)s2_in;
+>> +	int diff = 0;
+>> +	int k;
+>> +
+>> +	*first_change = 0;
+>> +	for (k=0; s1[k]; k++)
+>> +		if ((diff = (s1[k] - s2[k])))
+>> +			goto found_it;
+>> +	if (!s2[k])
+>> +		return 0;
+>> +	diff = -1;
+>> +
+>> +found_it:
+>> +	*first_change = k;
+>> +	if (diff > 0)
+>> +		return 1;
+>> +	else if (diff < 0)
+>> +		return -1;
+>> +	else
+>> +		return 0;
+>> +}
+>
+> The implementation seems to me a bit long-winded, with more
+> conditional statements than necessary.  How about something like this
+> instead?  Much shorter, no goto and only half the number of
+> conditionals to reason about, leaves *first_change untouched when the
+> two strings are equal, and deals with it being NULL.
+>
+> int strcmp_offset(const char *s1, const char *s2, int *first_change)
+> {
+> 	int k;
+>
+> 	for (k = 0; s1[k] == s2[k]; k++)
+> 		if (s1[k] == '\0')
+> 			return 0;
+>
+> 	if (first_change)
+> 		*first_change = k;
+> 	return ((unsigned char *)s1)[k] - ((unsigned char *)s2)[k];
+> }
+>
 
-Memory functions like memmove and memcpy should only be called
-with positive sizes. That is achieved by newly introduced macro
-MEMMOVE and usage of ARRAY_COPY.
+Let me give that a try.  Thanks!
+Jeff
 
-Signed-off-by: Martin Liska <mliska@suse.cz>
----
- apply.c            |  4 +---
- builtin/ls-files.c |  2 +-
- git-compat-util.h  | 10 ++++++++++
- 3 files changed, 12 insertions(+), 4 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index e6dbab26a..121f3f414 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2802,9 +2802,7 @@ static void update_image(struct apply_state *state,
- 			img->line + applied_pos + preimage_limit,
- 			(img->nr - (applied_pos + preimage_limit)) *
- 			sizeof(*img->line));
--	memcpy(img->line + applied_pos,
--	       postimage->line,
--	       postimage->nr * sizeof(*img->line));
-+	COPY_ARRAY(img->line + applied_pos, postimage->line, postimage->nr);
- 	if (!state->allow_overlap)
- 		for (i = 0; i < postimage->nr; i++)
- 			img->line[applied_pos + i].flag |= LINE_PATCHED;
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index d449e46db..7caeeb6a6 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -391,7 +391,7 @@ static void prune_cache(const char *prefix, size_t prefixlen)
- 		}
- 		last = next;
- 	}
--	memmove(active_cache, active_cache + pos,
-+	MEMMOVE(active_cache, active_cache + pos,
- 		(last - pos) * sizeof(struct cache_entry *));
- 	active_nr = last - pos;
- }
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8a4a3f85e..b75e21cff 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1002,6 +1002,16 @@ int git_qsort_s(void *base, size_t nmemb, size_t size,
- 		die("BUG: qsort_s() failed");			\
- } while (0)
- 
-+static inline void *sane_memmove(void *dest, const void *src, size_t n)
-+{
-+	if (n > 0)
-+		return memmove(dest, src, n);
-+	else
-+		return dest;
-+}
-+
-+#define MEMMOVE(dest, src, n) sane_memmove(dest, src, n)
-+
- #ifndef REG_STARTEND
- #error "Git requires REG_STARTEND support. Compile with NO_REGEX=NeedsStartEnd"
- #endif
--- 
-2.12.2
-
-
---------------FED35BC504D56233A26D983A--
