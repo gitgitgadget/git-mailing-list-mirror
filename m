@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F21C1FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 16:34:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 080AA1FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 16:35:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754077AbdDFQe4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 12:34:56 -0400
-Received: from siwi.pair.com ([209.68.5.199]:19706 "EHLO siwi.pair.com"
+        id S1753276AbdDFQfA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 12:35:00 -0400
+Received: from siwi.pair.com ([209.68.5.199]:11164 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753698AbdDFQew (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 12:34:52 -0400
+        id S1753737AbdDFQex (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 12:34:53 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 689118460D;
+        by siwi.pair.com (Postfix) with ESMTPSA id 0559E8460A;
         Thu,  6 Apr 2017 12:34:51 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v6 2/3] p0004-read-tree: perf test to time read-tree
-Date:   Thu,  6 Apr 2017 16:34:41 +0000
-Message-Id: <20170406163442.36463-3-git@jeffhostetler.com>
+Subject: [PATCH v6 3/3] read-cache: speed up add_index_entry during checkout
+Date:   Thu,  6 Apr 2017 16:34:42 +0000
+Message-Id: <20170406163442.36463-4-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170406163442.36463-1-git@jeffhostetler.com>
 References: <20170406163442.36463-1-git@jeffhostetler.com>
@@ -37,135 +37,108 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
+Teach add_index_entry_with_check() and has_dir_name()
+to see if the path of the new item is greater than the
+last path in the index array before attempting to search
+for it.
+
+During checkout, merge_working_tree() populates the new
+index in sorted order, so this change will save at least 2
+binary lookups per file.  This preserves the original
+behavior but simply checks the last element before starting
+the search.
+
+This helps performance on very large repositories.
+
+================
+Before and after numbers on index with 1M files
+./p0004-read-tree.sh
+0004.2: read-tree work1 (1003037)          3.21(2.54+0.62)
+0004.3: switch base work1 (3038 1003037)   7.49(5.39+1.84)
+0004.5: switch work1 work2 (1003037)       11.91(8.38+3.00)
+0004.6: switch commit aliases (1003037)    12.22(8.30+3.06)
+
+./p0004-read-tree.sh
+0004.2: read-tree work1 (1003040)          2.40(1.65+0.73)
+0004.3: switch base work1 (3041 1003040)   6.07(4.12+1.66)
+0004.5: switch work1 work2 (1003040)       10.23(6.76+2.92)
+0004.6: switch commit aliases (1003040)    10.53(6.97+2.83)
+================
+
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p0004-read-tree.sh | 117 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 117 insertions(+)
- create mode 100755 t/perf/p0004-read-tree.sh
+ read-cache.c | 44 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 43 insertions(+), 1 deletion(-)
 
-diff --git a/t/perf/p0004-read-tree.sh b/t/perf/p0004-read-tree.sh
-new file mode 100755
-index 0000000..d56020d
---- /dev/null
-+++ b/t/perf/p0004-read-tree.sh
-@@ -0,0 +1,117 @@
-+#!/bin/sh
+diff --git a/read-cache.c b/read-cache.c
+index e8f1900..58f69b2 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -918,6 +918,21 @@ static int has_dir_name(struct index_state *istate,
+ 	int stage = ce_stage(ce);
+ 	const char *name = ce->name;
+ 	const char *slash = name + ce_namelen(ce);
++	int len_eq_last;
++	int cmp_last = 0;
 +
-+test_description="Tests performance of read-tree"
++	if (istate->cache_nr > 0) {
++		/*
++		 * Compare the entry's full path with the last path in the index.
++		 * If it sorts AFTER the last entry in the index and they have no
++		 * common prefix, then there cannot be any F/D name conflicts.
++		 */
++		cmp_last = strcmp_offset(name,
++			istate->cache[istate->cache_nr-1]->name,
++			&len_eq_last);
++		if (cmp_last > 0 && len_eq_last == 0)
++			return retval;
++	}
+ 
+ 	for (;;) {
+ 		int len;
+@@ -930,6 +945,24 @@ static int has_dir_name(struct index_state *istate,
+ 		}
+ 		len = slash - name;
+ 
++		if (cmp_last > 0) {
++			/*
++			 * If this part of the directory prefix (including the trailing
++			 * slash) already appears in the path of the last entry in the
++			 * index, then we cannot also have a file with this prefix (or
++			 * any parent directory prefix).
++			 */
++			if (len+1 <= len_eq_last)
++				return retval;
++			/*
++			 * If this part of the directory prefix (excluding the trailing
++			 * slash) is longer than the known equal portions, then this part
++			 * of the prefix cannot collide with a file.  Go on to the parent.
++			 */
++			if (len > len_eq_last)
++				continue;
++		}
 +
-+. ./perf-lib.sh
+ 		pos = index_name_stage_pos(istate, name, len, stage);
+ 		if (pos >= 0) {
+ 			/*
+@@ -1021,7 +1054,16 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+ 
+ 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
+ 		cache_tree_invalidate_path(istate, ce->name);
+-	pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
 +
-+test_perf_default_repo
-+test_checkout_worktree
-+
-+## usage: dir depth width files
-+make_paths () {
-+	for f in $(seq $4)
-+	do
-+		echo $1/file$f
-+	done;
-+	if test $2 -gt 0;
-+	then
-+		for w in $(seq $3)
-+		do
-+			make_paths $1/dir$w $(($2 - 1)) $3 $4
-+		done
-+	fi
-+	return 0
-+}
-+
-+fill_index () {
-+	make_paths $1 $2 $3 $4 |
-+	sed "s/^/100644 $EMPTY_BLOB	/" |
-+	git update-index --index-info
-+	return 0
-+}
-+
-+br_base=xxx_base_xxx
-+br_work1=xxx_work1_xxx
-+br_work2=xxx_work2_xxx
-+br_work3=xxx_work3_xxx
-+
-+new_dir=xxx_dir_xxx
-+
-+## (5, 10, 9) will create 999,999 files.
-+## (4, 10, 9) will create  99,999 files.
-+depth=5
-+width=10
-+files=9
-+
-+export br_base
-+export br_work1
-+export br_work2
-+export br_work3
-+
-+export new_dir
-+
-+export depth
-+export width
-+export files
-+
-+## The number of files in the xxx_base_xxx branch.
-+nr_base=$(git ls-files | wc -l)
-+export nr_base
-+
-+## Inflate the index with thousands of empty files and commit it.
-+## Turn on sparse-checkout so that we don't have to populate them
-+## later when we start switching branches.  Use reset --hard to
-+## quickly checkout the new HEAD with minimum actual files.
-+test_expect_success 'inflate the index' '
-+	git reset --hard &&
-+	git branch $br_base &&
-+	git branch $br_work1 &&
-+	git checkout $br_work1 &&
-+	fill_index $new_dir $depth $width $files &&
-+	git commit -m $br_work1 &&
-+	echo $new_dir/file1 >.git/info/sparse-checkout &&
-+	git config --local core.sparsecheckout 1 &&
-+	git reset --hard
-+'
-+
-+## The number of files in the xxx_work1_xxx branch.
-+nr_work1=$(git ls-files | wc -l)
-+export nr_work1
-+
-+test_perf "read-tree work1 ($nr_work1)" '
-+	git read-tree -m $br_base $br_work1 -n
-+'
-+
-+## Alternate between base and work branches several
-+## times to measure a large change.
-+test_perf "switch base work1 ($nr_base $nr_work1)" '
-+	git checkout $br_base &&
-+	git checkout $br_work1
-+'
-+
-+## Create work2 by modifying 1 file in work1.
-+## Create work3 as an alias of work2.
-+test_expect_success 'setup work2' '
-+	git branch $br_work2 &&
-+	git checkout $br_work2 &&
-+	echo x >$new_dir/file1 &&
-+	git add $new_dir/file1 &&
-+	git commit -m $br_work2 &&
-+	git branch $br_work3
-+'
-+
-+## Alternate between work1 and work2 several times
-+## to measure a very small change.
-+test_perf "switch work1 work2 ($nr_work1)" '
-+	git checkout $br_work1 &&
-+	git checkout $br_work2
-+'
-+
-+## Alternate between branches work2 and work3 which
-+## are aliases of the same commit.
-+test_perf "switch commit aliases ($nr_work1)" '
-+	git checkout $br_work3 &&
-+	git checkout $br_work2
-+'
-+
-+test_done
++	/*
++	 * If this entry's path sorts after the last entry in the index,
++	 * we can avoid searching for it.
++	 */
++	if (istate->cache_nr > 0 &&
++		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
++		pos = -istate->cache_nr - 1;
++	else
++		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+ 
+ 	/* existing match? Just replace it. */
+ 	if (pos >= 0) {
 -- 
 2.9.3
 
