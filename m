@@ -2,116 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 278861FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 14:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0499A1FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 14:33:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935049AbdDFOZI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 10:25:08 -0400
-Received: from siwi.pair.com ([209.68.5.199]:21958 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S934924AbdDFOZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 10:25:07 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 0E99B84658;
-        Thu,  6 Apr 2017 10:25:06 -0400 (EDT)
-Subject: Re: [PATCH v5 3/4] test-strcmp-offset: created test for strcmp_offset
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20170405224752.2242-1-szeder.dev@gmail.com>
- <alpine.DEB.2.20.1704061014120.4268@virtualbox>
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <afdbf105-9dee-3779-6c1b-a6c65c773f23@jeffhostetler.com>
-Date:   Thu, 6 Apr 2017 10:25:05 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S935194AbdDFOd4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 10:33:56 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:36441 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933624AbdDFOdy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 10:33:54 -0400
+Received: by mail-wr0-f194.google.com with SMTP id o21so6845297wrb.3
+        for <git@vger.kernel.org>; Thu, 06 Apr 2017 07:33:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:mime-version
+         :content-transfer-encoding;
+        bh=DLrGiO/6kk/pimoFQS2jPF8MCOnkNU1RCgOiYRcFrho=;
+        b=B/t88RV/EOR+UyUVidIIRT1U14u14ycukWonSy5JpGZlWPUfk+YSGwhkjb9Q9ns+GF
+         YLZWKTEYsroJkSiD1wpm4foqqyAd9/T1FNi9R55TzGcQw/y9hyYCsQMUqioBakVb9V3a
+         plE/iiY5GhrUrHOHxpSilL5WMJXyPT1JMwqla4aPo5vE1Q6s0myQ5YLdZKMMe86nzoct
+         MxTSrcbQHmVA6U/quwuukUncpxh/ibFAbeSa/UFl/usH9N6xZpyqDkVz0H6lT4KbWJsN
+         hIXcVR0fdOsTRo1bnvNKhT46iboU7dw+vuxWV32Kh5efaMjTYl9k5o7skEpf6MjMH8qM
+         tWMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :mime-version:content-transfer-encoding;
+        bh=DLrGiO/6kk/pimoFQS2jPF8MCOnkNU1RCgOiYRcFrho=;
+        b=nxRqPEd3IsbdFAk4m9PIsP5pynNXcqeiSJHm6WvzNpH1qxkz9NlQjmuRwT7V7FC5sE
+         JdGQMCGntw6/P+9sFAr1ZiReeVZuObKXr/vCh9s6GTDq7UMGzYVN7Z6T4rUme2SK83eJ
+         PpM1JNprl7xClHE1TpErNe8q60IJ5RZFSXg4FDe0RCdkVJBBWv24VY6shMzccTadCsb5
+         4LI7VTctRO/pZh0daPRVul7LCowogA05Su90Xz5je/LdQ2YUVq/msZGyq+bCRoFYvrCo
+         UgSkqXLRUxBqIUkz1zcK6HMwqVtowWCiN+P4wCernDzjmATUsJD3IpyOQYYQal9slZk/
+         sxRQ==
+X-Gm-Message-State: AFeK/H2Gmh6gFaPRiKORw7TKtqQQeoPw3pzayBGLSsyY3V4O+uEsAWmiIIHoE1blNR7efQ==
+X-Received: by 10.28.213.72 with SMTP id m69mr9823335wmg.9.1491489233288;
+        Thu, 06 Apr 2017 07:33:53 -0700 (PDT)
+Received: from localhost.localdomain (x590e1a8d.dyn.telefonica.de. [89.14.26.141])
+        by smtp.gmail.com with ESMTPSA id q31sm1656669wrb.3.2017.04.06.07.33.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 06 Apr 2017 07:33:52 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] status: show in-progress info for short status
+Date:   Thu,  6 Apr 2017 16:33:42 +0200
+Message-Id: <20170406143342.14770-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.12.2.613.g9c5b79913
+In-Reply-To: <2c3c8028cd057428758bb1e21a064a264936de90.1490968428.git.git@grubix.eu>
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1704061014120.4268@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> @@ -1779,6 +1780,31 @@ static void wt_shortstatus_print_tracking(struct wt_status *s)
+>  	}
+>  
+>  	color_fprintf(s->fp, header_color, "]");
+> +
+> + inprogress:
+> +	if (!s->show_inprogress)
+> +		goto conclude;
+> +	memset(&state, 0, sizeof(state));
+> +	wt_status_get_state(&state,
+> +			    s->branch && !strcmp(s->branch, "HEAD"));
+> +	if (state.merge_in_progress)
+> +		color_fprintf(s->fp, header_color, "; %s", LABEL(N_("MERGING")));
+> +	else if (state.am_in_progress)
+> +		color_fprintf(s->fp, header_color, "; %s", LABEL(N_("AM")));
+> +	else if (state.rebase_in_progress)
+> +		color_fprintf(s->fp, header_color, "; %s", LABEL(N_("REBASE-m")));
+> +	else if (state.rebase_interactive_in_progress)
+> +		color_fprintf(s->fp, header_color, "; %s", LABEL(N_("REBASE-i")));
+> +	else if (state.cherry_pick_in_progress)
+> +		color_fprintf(s->fp, header_color, "; %s", LABEL(N_("CHERRY-PICKING")));
+> +	else if (state.revert_in_progress)
+> +		color_fprintf(s->fp, header_color, "; %s", LABEL(N_("REVERTING")));
+> +	if (state.bisect_in_progress)
+
+else if?
+
+> +		color_fprintf(s->fp, header_color, "; %s", LABEL(N_("BISECTING")));
+> +	free(state.branch);
+> +	free(state.onto);
+> +	free(state.detached_from);
+> +
+>   conclude:
+>  	fputc(s->null_termination ? '\0' : '\n', s->fp);
+>  }
+
+This reminded me of a patch that I have been using for almost two
+years now...
+
+git-prompt.sh's similar long conditional chain to show the ongoing
+operation has an else-branch at the end showing "AM/REBASE".  Your
+patch doesn't add an equivalent branch.  Is this intentional or an
+oversight?
+
+I suppose it's intentional, because that "AM/REBASE" branch in the
+prompt seems to be unreachable (see below), but I never took the
+effort to actually check that (hence the "seems" and that's why I
+never submitted it).
 
 
-On 4/6/2017 4:21 AM, Johannes Schindelin wrote:
-> Hi Gábor,
->
-> On Thu, 6 Apr 2017, SZEDER Gábor wrote:
->
->> I think this patch should be squashed into the previous commit;  I
->> don't see any reason why the tests should be added in a different
->> commit than the function they are testing.
 
-Will do.
+ -- >8 --
 
->
-> I am of two minds there. In some cases, the newly added test demonstrates
-> the intended usage, and therefore makes for a nice documentation. In other
-> cases, the new test is large enough to stand on its own, i.e. to merit a
-> separate patch (also to make reviewing easier).
->
-> In this particular case, I tend to the latter: it is large enough a patch
-> that it is easier to review as a separate patch.
->
->>>  t/helper/test-strcmp-offset.c | 64 +++++++++++++++++++++++++++++++++++++++++++
->>>  t/t0065-strcmp-offset.sh      | 11 ++++++++
->>>  4 files changed, 77 insertions(+)
->>>  create mode 100644 t/helper/test-strcmp-offset.c
->>>  create mode 100755 t/t0065-strcmp-offset.sh
->>
->> Sure, tests are good, but I have to wonder how this would scale in the
->> long term, when even such simple functions would get their own
->> t/helper/test-func executable and t/tNNNN-func.sh script.
+Subject: [PATCH] bash prompt: remove unreachable ongoing "AM/REBASE" fallback
 
-I think this is the start of a larger conversation on
-how we want to handle function-level unit-testing and
-outside the scope of this patch series.
+Back in the day it was impossible to tell an ongoing 'am' and "plain"
+'rebase' (i.e. non-interactive, non-merge) apart, thus the prompt
+displayed "AM/REBASE" in those cases, see e75201963 (Improve bash
+prompt to detect various states like an unfinished merge, 2007-09-30).
+Later 3041c3243 (am: --rebasing, 2008-03-04) made it possible to tell
+those cases apart and made __git_ps1() use this right away to display
+either "AM" or "REBASE", respectively.  However, it left that
+"AM/REBASE" in an else-branch as a fallback, but it seems to have been
+impossible to reach even back then.
 
->
-> True. The proliferation of executables in t/helper/ got a little out of
-> hand.
->
-> But there is nothing preventing us from consolidating a few of them into a
-> single executable, using our wonderful option parsing function with
-> OPT_CMDMODE to switch between the different functions.
->
-> I could see, for example, how we could consolidate all string-related
-> test helpers into a single one, say, test-strings:
->
-> t/helper/test-ctype.c
-> t/helper/test-regex.c
-> t/helper/test-strcmp-offset.c
-> t/helper/test-string-list.c
-> t/helper/test-line-buffer.c
-> t/helper/test-urlmatch-normalization.c
-> t/helper/test-wildmatch.c
->
-> Also, these helpers seem to be related to index handling and could go into
-> a new test-index helper:
->
-> t/helper/test-dump-cache-tree.c
-> t/helper/test-dump-split-index.c
-> t/helper/test-dump-untracked-cache.c
-> t/helper/test-index-version.c
-> t/helper/test-scrap-cache-tree.c
+This ancient unreachable else-branch has survived to this day, remove
+it finally.
 
-This is an interesting proposal.  I could go one further and
-say we have a single "t/helper/unit-test.c" that has series
-of "t/helper/builtin/*.c" commands (using the same mechanism
-as the builtin commands in git.exe).  The question then is
-how much of the test logic and/or parameters go into the shell
-scripts.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ contrib/completion/git-prompt.sh | 2 --
+ 1 file changed, 2 deletions(-)
 
-But again, all of that is outside my scope here.
-Jeff
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index c6cbef38c..d13af41f2 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -411,8 +411,6 @@ __git_ps1 ()
+ 				r="|REBASE"
+ 			elif [ -f "$g/rebase-apply/applying" ]; then
+ 				r="|AM"
+-			else
+-				r="|AM/REBASE"
+ 			fi
+ 		elif [ -f "$g/MERGE_HEAD" ]; then
+ 			r="|MERGING"
+-- 
+2.12.2.613.g9c5b79913
 
