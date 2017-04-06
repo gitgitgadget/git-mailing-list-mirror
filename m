@@ -2,161 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF0D01FAFB
-	for <e@80x24.org>; Thu,  6 Apr 2017 20:08:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 227AA1FAFB
+	for <e@80x24.org>; Thu,  6 Apr 2017 20:14:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754751AbdDFUId (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Apr 2017 16:08:33 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36285 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752825AbdDFUIb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Apr 2017 16:08:31 -0400
-Received: by mail-wr0-f196.google.com with SMTP id o21so9299594wrb.3
-        for <git@vger.kernel.org>; Thu, 06 Apr 2017 13:08:30 -0700 (PDT)
+        id S1754538AbdDFUOD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Apr 2017 16:14:03 -0400
+Received: from mail-wr0-f171.google.com ([209.85.128.171]:35505 "EHLO
+        mail-wr0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752296AbdDFUOC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Apr 2017 16:14:02 -0400
+Received: by mail-wr0-f171.google.com with SMTP id o21so50968636wrb.2
+        for <git@vger.kernel.org>; Thu, 06 Apr 2017 13:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6PX0y3oNp5Z4sGQpzd26RaaBdPlFHuM+DW6yLUEHYwY=;
-        b=oFuas9Jt9J4BTSAJpmKFlzwiqE+Oz+A5GsJQIP8nKYAJ5PqAhRkjMONwxxmeHyV+I2
-         Tm/qOnB072I1mxC/rL3FqBvhmPV+10A9Wd9enm/4spDUiA4q/JLsz4d5PELY2WpqxG1u
-         JyyFlrsybGTwCK7dvLt0SSKixNqwRdNSEIQmNuPNQyH0F+dTJOOuTKMe1XXyDTCl9v7e
-         B5Zpi4qPHp5kfEgfz8NmXmk4+O31CbxOYSAx4lrnXKnzaIxgJGlFC7poHW10H/P7cy06
-         DwA7FPR9YKDOfLvs5eclL7vUE21RtY5PVVBazSA1bejEmjh2rCKk2fIbc5eN1NGcrKMW
-         gEBQ==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding;
+        bh=4jb5wGlIOaivVMyaYxtNf8aKttBzqkWPl1GAYWJIZgI=;
+        b=idYBZwX0++PwQ2CPk4Vjmvds4LS3HRv08ZeULtxwvOHhjH6wmiE1dmzGJXQZHhOhDy
+         wMvTAUHJlnDrmuhNIGgdsL8jldm6vn9PN5AopdnYxgYAmXT7nRg0ULA4JZVDzugTLptF
+         fuVtzszH4F8E85IfXZj26nf6d6K40rnWj7jeo3k4Sb4TzBQjC9g/eTQI0813lyBRK/ym
+         wayKiHdsOT479336icOuO0BcUgKTeLnYA8yDyFDXpuUKOqP+LA1JwMwn9elxWIIoOLxG
+         DEw4y5rO4DVcO/Cmdk/JeprBgSuhQzRPtBIzLFMhVlvNjgvCKMHSUy8yMFO80+4htfoC
+         Km1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6PX0y3oNp5Z4sGQpzd26RaaBdPlFHuM+DW6yLUEHYwY=;
-        b=SeRvAcagaX1QyEPPRhXttZjB4Wbnx6ah5JdU/5gLlpu+VkDyuQLqbBcJcUm87FkFGa
-         kG2ozgVuusN5LEsGljcjUYgfDI6y5qK3UrLEX9wt9NmROZDaUz2Yex5OwUWcdJBuOouX
-         VkmjhdXjgJYd6WojteEwIARvDpIIxNQUyVVc/CBrs1KA95sC8aWHLOawD57N6T/YjQsy
-         feaHw/qrvjjW/Z7XGp0xk5ZhNuTmwtSWUY3b+B6JFJ4qdwpaJe+8FSXye8wO4fmnSBaW
-         lzbYHQ/9JsEWZ6bgtu+Ng6Gyw85lYGC0bkVHNLBIMP28xi0Woes4CGPxyk4xaAyTT14l
-         xL0Q==
-X-Gm-Message-State: AFeK/H3Icqtkf0KT1VbZs2JouqBPsQDrDy/LDYmRYGcciULnUgB+u878
-        am3osW9ug9CVNOUZpU8=
-X-Received: by 10.28.69.72 with SMTP id s69mr25864778wma.85.1491509309616;
-        Thu, 06 Apr 2017 13:08:29 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id m29sm3338495wrm.4.2017.04.06.13.08.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Apr 2017 13:08:28 -0700 (PDT)
-Date:   Thu, 6 Apr 2017 23:14:53 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 2/2] p0005-status: time status on very large repo
-Message-ID: <20170406221453.GA32223@hank>
-References: <20170406134508.31711-1-git@jeffhostetler.com>
- <20170406134508.31711-3-git@jeffhostetler.com>
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=4jb5wGlIOaivVMyaYxtNf8aKttBzqkWPl1GAYWJIZgI=;
+        b=T5T045C1pa5Y0LdNuDe6qeb2YMyYwEp7t7s/l9XEB40nx+NnKVN6xx/46DjNxpeJzo
+         ZusKMUeza6vlVvRLegN+2bJ6PFJaBJKkhTEUn4fKFKlJ9OBujhGtsiDPRWsz1eTFj/oo
+         0a08KFbuM6Or058l/m8OcRG9L37DyPthc2+WF5Q3fn8kEcOmLyvFdxJYa07fsNvd2oBa
+         7RXCvVQQMHQx3LRRuZ23tJ1QrBkEFxKGHOubUDaGDLKA+K1n8qN5QhYohMH53S6dG3hp
+         FkDSSjyF05V2UbzOmbOBB1Xc90cqcqNguhQHceEDncIeW0B+ZS9fmDdrDy1LfvsqLxbE
+         4Nvw==
+X-Gm-Message-State: AFeK/H3QgTp2eIV9rRPWatUXZ2/y7Fi6JvyzQN9HXyTH0csduRt5HgShvfL2JgdwrGfDzQ==
+X-Received: by 10.223.177.195 with SMTP id r3mr32185008wra.40.1491509639494;
+        Thu, 06 Apr 2017 13:13:59 -0700 (PDT)
+Received: from [192.168.5.102] ([87.116.180.64])
+        by smtp.gmail.com with ESMTPSA id 46sm3356049wru.37.2017.04.06.13.13.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Apr 2017 13:13:58 -0700 (PDT)
+Subject: Re: how-to get commit content with pre-receive hook ?
+To:     Eric Belhomme <rico-ml@ricozome.net>, git@vger.kernel.org
+References: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <0dec12a8-b3d2-41e5-4563-4bec2a6df7be@gmail.com>
+Date:   Thu, 6 Apr 2017 22:13:55 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170406134508.31711-3-git@jeffhostetler.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+In-Reply-To: <955c152a-b278-ecfd-8bc7-671c3aa81dc6@ricozome.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/06, git@jeffhostetler.com wrote:
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+Hello Eric,
+
+On 06/04/2017 16:03, Eric Belhomme wrote:
+> Until now I ever had a quite "basic" Git usage, but now I'm working 
+> on a project based on Git hooks feature.. and I'm a very beginner 
+> with Git hooks !
 > 
-> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
-> ---
->  t/perf/p0005-status.sh | 61 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 61 insertions(+)
->  create mode 100755 t/perf/p0005-status.sh
+> My need consist doing a syntax check on submitted files before a 'git 
+> push'. So the right hook is 'pre-receive' and I'm already able to 
+> identify the files I want to check using 'git show'.
 > 
-> diff --git a/t/perf/p0005-status.sh b/t/perf/p0005-status.sh
-> new file mode 100755
-> index 0000000..704cebc
-> --- /dev/null
-> +++ b/t/perf/p0005-status.sh
-> @@ -0,0 +1,61 @@
-> +#!/bin/sh
-> +
-> +test_description="Tests performance of read-tree"
-> +
-> +. ./perf-lib.sh
-> +
-> +test_perf_default_repo
-> +test_checkout_worktree
-> +
-> +## usage: dir depth width files
-> +make_paths () {
-> +	for f in $(seq $4)
-> +	do
-> +		echo $1/file$f
-> +	done;
-> +	if test $2 -gt 0;
-> +	then
-> +		for w in $(seq $3)
-> +		do
-> +			make_paths $1/dir$w $(($2 - 1)) $3 $4
-> +		done
-> +	fi
-> +	return 0
-> +}
-> +
-> +fill_index () {
-> +	make_paths $1 $2 $3 $4 |
-> +	sed "s/^/100644 $EMPTY_BLOB	/" |
-> +	git update-index --index-info
-> +	return 0
-> +}
-> +
-> +br_work1=xxx_work1_xxx
-> +dir_new=xxx_dir_xxx
-> +
-> +## (5, 10, 9) will create 999,999 files.
-> +## (4, 10, 9) will create  99,999 files.
-> +depth=5
-> +width=10
-> +files=9
-> +
-> +## Inflate the index with thousands of empty files and commit it.
-> +## Use reset to actually populate the worktree.
-> +test_expect_success 'inflate the index' '
-> +	git reset --hard &&
-> +	git branch $br_work1 &&
-> +	git checkout $br_work1 &&
-> +	fill_index $dir_new $depth $width $files &&
-> +	git commit -m $br_work1 &&
-> +	git reset --hard
-> +'
-> +
-> +## The number of files in the branch.
-> +nr_work1=$(git ls-files | wc -l)
-
-The above seems to be repeated (or at least very similar to what you
-have in your other series [1].  Especially in this perf test wouldn't
-it be better just use test_perf_large_repo, and let whoever runs the
-test decide what constitutes a large repository for them?
-
-The other advantage of that would be that it is more of a real-world
-scenario, instead of a synthetic distribution of the files, which
-would give us some better results I think.
-
-Is there anything I'm missing that would make using
-test_perf_large_repo not a good option here?
-
-[1]: http://public-inbox.org/git/20170406163442.36463-3-git@jeffhostetler.com/
-
-> +test_perf "read-tree status work1 ($nr_work1)" '
-> +	git read-tree HEAD &&
-> +	git status
-> +'
-> +
-> +test_done
-> -- 
-> 2.9.3
+> But I don't know how to get the *content* of the file being submitted 
+> to run my syntax check rules against it !
 > 
+> I googled but most examples using pre-receive I found are doing 
+> sanity check on enveloppe but never on actual content of the file !
+> 
+> Could someone here put me on the rails ?
+
+I`m yet another beginner with both Git hooks and Bash scripting, but 
+I`ve managed to patch something up that might give you an idea, just 
+drop it inside your "pre-receive" hook file:
+
+	while read oldrev newrev
+	do
+		for commit in $(git rev-list --reverse $oldrev..$newrev)
+		do
+			for file in $(git diff-tree --no-commit-id --name-only -r $commit)
+			do
+				echo "$(git show $commit:$file)" >&1
+			done
+		done
+	done
+	exit 1
+
+This should reject any push attempt, returning back *content* of each 
+changed file for each new commit.
+
+Feel free to adapt as needed, like processing/checking file content 
+instead of sending it over, allowing or rejecting the push 
+accordingly, and also handling corner cases (for example, "oldrev" 
+value of 0000... in case of a new ref creation).
+
+I guess there might be better ways (comments welcome), but this 
+should at least get you going... and I`ve learned something new as 
+well ;)
+
+Regards,
+Buga
