@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF78020966
-	for <e@80x24.org>; Fri,  7 Apr 2017 12:04:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 386DB20966
+	for <e@80x24.org>; Fri,  7 Apr 2017 12:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933492AbdDGMEl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Apr 2017 08:04:41 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:33312 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933147AbdDGMEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2017 08:04:33 -0400
-Received: by mail-yb0-f194.google.com with SMTP id 206so1518419ybe.0
+        id S933529AbdDGMEn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Apr 2017 08:04:43 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:36846 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933497AbdDGMEe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2017 08:04:34 -0400
+Received: by mail-yw0-f195.google.com with SMTP id y207so1501784ywa.3
         for <git@vger.kernel.org>; Fri, 07 Apr 2017 05:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TBeDkGC9m73cXP0i6LO+N5+egFEvjbhy/4mDcRT3gmA=;
-        b=n6pysXcSSWYEr1tPXZdiC3Grw33SU9P9axcWKjqdUmSlfywahRhpnwg6xIabe8NvUx
-         eyv80r1PVf6af/OPDGlXsaI3V5byOYZpg6ZVZ8EEJ15IVtIGa731eKCkz2MT2hn1ZkF6
-         37VC6Nsw9nTshnQynWguLnI4JcLLukmWbnm+a0TPbbp8N7VgYVnFnMvLaCgWSabLgjuC
-         CKTSMjOaIEwluOobxzSTnvQUKSlmbcMYZTNlDLq8pOBgEDVOHe9msBoetgYBMyg7DcUf
-         tpfBnzXzTZXJOB75Xh0m7K9w+1EYieEjMMwhjre46vN0IqL/kl0jHZhYJAO/j21zEXcZ
-         /Hgg==
+        bh=NKW9pOUQ0uJ5s6SGw6leruLUgRibZJqbykWCUudAUXs=;
+        b=BgW471JUfckDlvGriAPt2IzWpK+wqvPt7n8cOes/hpEIAjwWo6EAaYJSxijXjSRZUJ
+         8tWYdelJ65wskWHgaOZFaVJjdSrULO01caAGbt3spW9LlS4GBe+ztio+GgcKWLMm37RG
+         T0/VVQ9T4egSOOYG5qPA7gVjMEvCpbXTpZYG1uW4dF+IPWb8LthKFUQcUMHczpEmEqKX
+         n03xbetkXgSPcCD6xoDy1Rowq0S7nmgSVMDK7OZtysn27l28QH6BQmlVKNcAFDocvtUD
+         IYKOqKeFA1wfkl7H8/6q+mIE2WzTVaD6v1omI5108VYNYVePNXEbVrWQ6zSxuJz/pkfr
+         I8QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=TBeDkGC9m73cXP0i6LO+N5+egFEvjbhy/4mDcRT3gmA=;
-        b=VeNCZFJrtKidmRdRMVwSx05S/uxdDJ0pDOcJ+8lsfcscA1jQWbNvXtLlTizHWJ5VN4
-         C7TSOsM8L49NzjuKvQhuF6vBb0hYwFSSdyy0nxrBa9H2AKPk2MX2EMfzj/xpqIWuusPc
-         eI3iMFqtVv4ASLTU27CBCgYMhUDCIypG1Zf8+UrZs0shTaUUraY3x6UPyOc4cS5RIZQm
-         nCm3ZUYBOs7x5u6IJ+BzRmp03FVrkJNCplAyzCxpxbtajp0Sg61J8mByI5wZxCb74XuK
-         DxjIs1wt0tzTmuMaGHacpmnYBNTUsaF2/N5BxUDm92iYlgkilngU6CuKEbBYvCcVBxAW
-         /5Hw==
-X-Gm-Message-State: AN3rC/67SY7OwRzr6dKZa3AI1xVLwpwSUoe0bWnT19eHEr4o3NZZDIpHngGoacO03qoF4Q==
-X-Received: by 10.37.202.213 with SMTP id a204mr2300963ybg.149.1491566672315;
-        Fri, 07 Apr 2017 05:04:32 -0700 (PDT)
+        bh=NKW9pOUQ0uJ5s6SGw6leruLUgRibZJqbykWCUudAUXs=;
+        b=n/JgZvHj9JrvGiUo4ViKmHyIOUQvHxiYVXodPrgghd+zEcWiVa1eSbyqE9CYZXgUmY
+         izJ1fLFWvysPPDsMLaFaIA7yAklmKDtlECNSBmIrv41RxRzWU2/mvFlJjLdZp8VjqSvJ
+         PYGoUbDw4ecq/thnTWzN7ddEMtj4TZgKjEYobjoOvJQki3gTBBDlmffTBb7X6cgI76WS
+         SqY85AB6+RHnOS2SsSD8ElY/FOedoQ0PINMIFjiNY+VsHh0HF2Yrf4x/rO5rxDWpIfzb
+         tQ9mPCkrryb+zIW9gNdX4zaQDtFTEEaLRalRBjb/ECNFgv6KHVCAB3cyDTkAPc3lqT6M
+         3dNA==
+X-Gm-Message-State: AFeK/H0xW7uuSoRPPdTpn6Vbm6FKlnGtLkKYHq4gbaLU6W+pavaexCVBuHdlg4Cwei362w==
+X-Received: by 10.129.182.34 with SMTP id u34mr26225951ywh.6.1491566668238;
+        Fri, 07 Apr 2017 05:04:28 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id z194sm1874038ywg.73.2017.04.07.05.04.31
+        by smtp.gmail.com with ESMTPSA id z194sm1874038ywg.73.2017.04.07.05.04.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 07 Apr 2017 05:04:31 -0700 (PDT)
+        Fri, 07 Apr 2017 05:04:27 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v5 8/8] convert: Update subprocess_read_status to not die on EOF
-Date:   Fri,  7 Apr 2017 08:03:54 -0400
-Message-Id: <20170407120354.17736-9-benpeart@microsoft.com>
+Subject: [PATCH v5 4/8] convert: Separate generic structures and variables from the filter specific ones
+Date:   Fri,  7 Apr 2017 08:03:50 -0400
+Message-Id: <20170407120354.17736-5-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.0.windows.1.33.g243d9b384c
 In-Reply-To: <20170407120354.17736-1-benpeart@microsoft.com>
 References: <20170407120354.17736-1-benpeart@microsoft.com>
@@ -62,92 +62,172 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Enable sub-processes to gracefully handle when the process dies by
-updating subprocess_read_status to return an error on EOF instead of
-dying.
+To enable future reuse of the filter.<driver>.process infrastructure,
+split the cmd2process structure into two separate parts.
 
-Update apply_multi_file_filter to take advantage of the revised
-subprocess_read_status.
+subprocess_entry will now contain the generic data required to manage
+the creation and tracking of the child process in a hashmap. Also move
+all knowledge of the hashmap into the generic functions.
+
+cmd2process is a filter protocol specific structure that is used to
+track the negotiated capabilities of the filter.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- convert.c     | 10 ++++++++--
- sub-process.c | 10 +++++++---
- sub-process.h |  2 +-
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ convert.c | 57 +++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 31 insertions(+), 26 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index baa41da760..9e181e27ad 100644
+index 404757eac9..f569026511 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -629,7 +629,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	if (err)
- 		goto done;
+@@ -496,29 +496,40 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
+ #define CAP_CLEAN    (1u<<0)
+ #define CAP_SMUDGE   (1u<<1)
  
--	subprocess_read_status(process->out, &filter_status);
-+	err = subprocess_read_status(process->out, &filter_status);
-+	if (err)
-+		goto done;
+-struct cmd2process {
++struct subprocess_entry {
+ 	struct hashmap_entry ent; /* must be the first member! */
+-	unsigned int supported_capabilities;
+ 	const char *cmd;
+ 	struct child_process process;
+ };
+ 
++struct cmd2process {
++	struct subprocess_entry subprocess; /* must be the first member! */
++	unsigned int supported_capabilities;
++};
 +
- 	err = strcmp(filter_status.buf, "success");
- 	if (err)
- 		goto done;
-@@ -638,7 +641,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	if (err)
- 		goto done;
+ static int cmd_process_map_initialized;
+ static struct hashmap cmd_process_map;
  
--	subprocess_read_status(process->out, &filter_status);
-+	err = subprocess_read_status(process->out, &filter_status);
-+	if (err)
-+		goto done;
-+
- 	err = strcmp(filter_status.buf, "success");
- 
- done:
-diff --git a/sub-process.c b/sub-process.c
-index 60bb650012..c5057cafcd 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -30,13 +30,15 @@ struct subprocess_entry *subprocess_find_entry(const char *cmd)
- 	return hashmap_get(&subprocess_map, &key, NULL);
- }
- 
--void subprocess_read_status(int fd, struct strbuf *status)
-+int subprocess_read_status(int fd, struct strbuf *status)
+-static int cmd2process_cmp(const struct cmd2process *e1,
+-			   const struct cmd2process *e2,
++static int cmd2process_cmp(const struct subprocess_entry *e1,
++			   const struct subprocess_entry *e2,
+ 			   const void *unused)
  {
- 	struct strbuf **pair;
- 	char *line;
-+	int len;
-+
- 	for (;;) {
--		line = packet_read_line(fd, NULL);
--		if (!line)
-+		len = packet_read_line_gently(fd, NULL, &line);
-+		if ((len == -1) || !line)
- 			break;
- 		pair = strbuf_split_str(line, '=', 2);
- 		if (pair[0] && pair[0]->len && pair[1]) {
-@@ -48,6 +50,8 @@ void subprocess_read_status(int fd, struct strbuf *status)
- 		}
- 		strbuf_list_free(pair);
- 	}
-+
-+	return len == -1 ? len : 0;
+ 	return strcmp(e1->cmd, e2->cmd);
  }
  
- void subprocess_stop(struct subprocess_entry *entry)
-diff --git a/sub-process.h b/sub-process.h
-index 0cf1760a0a..5a1eeeece0 100644
---- a/sub-process.h
-+++ b/sub-process.h
-@@ -41,6 +41,6 @@ static inline struct child_process *subprocess_get_child_process(
-  * key/value pairs and return the value from the last "status" packet
-  */
+-static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
++static struct subprocess_entry *find_multi_file_filter_entry(const char *cmd)
+ {
+-	struct cmd2process key;
++	struct subprocess_entry key;
++
++	if (!cmd_process_map_initialized) {
++		cmd_process_map_initialized = 1;
++		hashmap_init(&cmd_process_map, (hashmap_cmp_fn)cmd2process_cmp, 0);
++		return NULL;
++	}
++
+ 	hashmap_entry_init(&key, strhash(cmd));
+ 	key.cmd = cmd;
+-	return hashmap_get(hashmap, &key, NULL);
++	return hashmap_get(&cmd_process_map, &key, NULL);
+ }
  
--void subprocess_read_status(int fd, struct strbuf *status);
-+int subprocess_read_status(int fd, struct strbuf *status);
+ static void read_multi_file_filter_status(int fd, struct strbuf *status)
+@@ -541,7 +552,7 @@ static void read_multi_file_filter_status(int fd, struct strbuf *status)
+ 	}
+ }
  
- #endif
+-static void kill_multi_file_filter(struct hashmap *hashmap, struct cmd2process *entry)
++static void kill_multi_file_filter(struct subprocess_entry *entry)
+ {
+ 	if (!entry)
+ 		return;
+@@ -550,7 +561,7 @@ static void kill_multi_file_filter(struct hashmap *hashmap, struct cmd2process *
+ 	kill(entry->process.pid, SIGTERM);
+ 	finish_command(&entry->process);
+ 
+-	hashmap_remove(hashmap, entry, NULL);
++	hashmap_remove(&cmd_process_map, entry, NULL);
+ 	free(entry);
+ }
+ 
+@@ -571,8 +582,8 @@ static int start_multi_file_filter_fn(struct cmd2process *entry)
+ 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
+ 	char *cap_buf;
+ 	const char *cap_name;
+-	struct child_process *process = &entry->process;
+-	const char *cmd = entry->cmd;
++	struct child_process *process = &entry->subprocess.process;
++	const char *cmd = entry->subprocess.cmd;
+ 
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+@@ -627,7 +638,7 @@ static int start_multi_file_filter_fn(struct cmd2process *entry)
+ 	return err;
+ }
+ 
+-static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
++static struct cmd2process *start_multi_file_filter(const char *cmd)
+ {
+ 	int err;
+ 	struct cmd2process *entry;
+@@ -635,9 +646,9 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	const char *argv[] = { cmd, NULL };
+ 
+ 	entry = xmalloc(sizeof(*entry));
+-	entry->cmd = cmd;
++	entry->subprocess.cmd = cmd;
+ 	entry->supported_capabilities = 0;
+-	process = &entry->process;
++	process = &entry->subprocess.process;
+ 
+ 	child_process_init(process);
+ 	process->argv = argv;
+@@ -657,11 +668,11 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	err = start_multi_file_filter_fn(entry);
+ 	if (err) {
+ 		error("initialization for external filter '%s' failed", cmd);
+-		kill_multi_file_filter(hashmap, entry);
++		kill_multi_file_filter(&entry->subprocess);
+ 		return NULL;
+ 	}
+ 
+-	hashmap_add(hashmap, entry);
++	hashmap_add(&cmd_process_map, entry);
+ 	return entry;
+ }
+ 
+@@ -676,22 +687,16 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	struct strbuf filter_status = STRBUF_INIT;
+ 	const char *filter_type;
+ 
+-	if (!cmd_process_map_initialized) {
+-		cmd_process_map_initialized = 1;
+-		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
+-		entry = NULL;
+-	} else {
+-		entry = find_multi_file_filter_entry(&cmd_process_map, cmd);
+-	}
++	entry = (struct cmd2process *)find_multi_file_filter_entry(cmd);
+ 
+ 	fflush(NULL);
+ 
+ 	if (!entry) {
+-		entry = start_multi_file_filter(&cmd_process_map, cmd);
++		entry = start_multi_file_filter(cmd);
+ 		if (!entry)
+ 			return 0;
+ 	}
+-	process = &entry->process;
++	process = &entry->subprocess.process;
+ 
+ 	if (!(wanted_capability & entry->supported_capabilities))
+ 		return 0;
+@@ -762,7 +767,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 			 * Force shutdown and restart if another blob requires filtering.
+ 			 */
+ 			error("external filter '%s' failed", cmd);
+-			kill_multi_file_filter(&cmd_process_map, entry);
++			kill_multi_file_filter(&entry->subprocess);
+ 		}
+ 	} else {
+ 		strbuf_swap(dst, &nbuf);
 -- 
 2.12.0.windows.1.31.g1548525701.dirty
 
