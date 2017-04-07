@@ -2,183 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6B4820966
-	for <e@80x24.org>; Fri,  7 Apr 2017 13:57:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25D5E20966
+	for <e@80x24.org>; Fri,  7 Apr 2017 14:00:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755713AbdDGN5Q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Apr 2017 09:57:16 -0400
-Received: from siwi.pair.com ([209.68.5.199]:11781 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754055AbdDGN5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2017 09:57:14 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4287884643;
-        Fri,  7 Apr 2017 09:57:13 -0400 (EDT)
-Subject: Re: [PATCH v1] unpack-trees: avoid duplicate ODB lookups during
- checkout
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-References: <20170406203732.47714-1-git@jeffhostetler.com>
- <20170406203732.47714-2-git@jeffhostetler.com>
- <a1e08e20-7fe6-da3c-cd18-74a8bcd266e0@web.de>
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <b2952bdc-cb93-1317-58b1-a06ea4e14ee8@jeffhostetler.com>
-Date:   Fri, 7 Apr 2017 09:57:12 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+        id S933441AbdDGOAG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Apr 2017 10:00:06 -0400
+Received: from mout.kundenserver.de ([212.227.126.131]:49202 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751759AbdDGOAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2017 10:00:04 -0400
+Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
+ mrelayeu.kundenserver.de (mreue003 [212.227.15.167]) with ESMTPSA (Nemesis)
+ id 0M0e3W-1c6AUK0Hpm-00utWw; Fri, 07 Apr 2017 15:59:58 +0200
+Subject: Re: [PATCH] Documentation/git-worktree: use working tree for trees on
+ the file system
+To:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20170317222842.GP26789@aiede.mtv.corp.google.com>
+ <20170317225110.13417-1-sbeller@google.com>
+ <xmqq60j75psk.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kayeSxFTJr3Q1atFgOyR74PzQyCLiejuZxh7+wTGGb=ww@mail.gmail.com>
+ <xmqqbmsvx1ey.fsf@gitster.mtv.corp.google.com>
+ <20170320185038.GU26789@aiede.mtv.corp.google.com>
+ <CACsJy8CBmfj8wY+LQzEshJT0Ya+nmAGs=K8b1Nyr3qinvCo4kA@mail.gmail.com>
+ <xmqqvar2ska7.fsf@gitster.mtv.corp.google.com>
+ <3c16aea8-be53-ef41-d43f-7b4e8ca15d7d@drmicha.warpmail.net>
+ <xmqqd1d7ev2q.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8BNYmYarZqnERhsO8LDxdsMsviUMs3Co6C4Ed7W9OvDJQ@mail.gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Michael J Gruber <git@grubix.eu>
+Message-ID: <ee8e8671-066b-311e-8cad-31a1ab22eec7@grubix.eu>
+Date:   Fri, 7 Apr 2017 15:59:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <a1e08e20-7fe6-da3c-cd18-74a8bcd266e0@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8BNYmYarZqnERhsO8LDxdsMsviUMs3Co6C4Ed7W9OvDJQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:9lu5XZ93Ywy+Z3Wo3dbgTtKuK0B7kbCqxT/P6eQpJkywvVaReUN
+ AgJU4FEm6Uv74YN0heNUvrblgfR/VnzKZh9b4nPmQXhawlBybpoGD6IdxDRdiDwnZ4bUHc2
+ L6jY1sPCT8/XDEz501nU4pHn8QhVA4SPrp7s9+mOIvFRQECdbMQMp7D2iqvXswVK8oumkfA
+ ZHEsLeZnIu+ca/E3OMWOg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QmFh45SKVh0=:dP6S8qVo34bFvp3a64XkbX
+ zl36ZgMGa6xCExPFgD3BLCHRNvXNC8j29dj9mQLtaInxY7fLP7q2Cf7mgDlr5iUabr4UllN73
+ 4+CSeJXmlR5p0oRAi5whhd1ZnkBI8uanimJ1UkiEwbMwCPcgkbevP1H4tS2WU/8p84kOIlRT2
+ RZHZA8kG3DAyfcenwRISIPLQLjzdZyHNo/x/HbgaCSskQ/4BV6YXy0agD/5EEMd4MdDwXU/bv
+ xtP33oOm8IAlMCiLAj+UnDJuwFnOBUPk4m2fMWvbuumvo7xbp6yorkm97PV8aVtaM0TTPAQkA
+ wcfvELVwigyiVxb6RRwNqbyj5Z4QNd98N+RFdxQwO1j1Qfjm7Y31n95WcHFeDoU4APj196EPE
+ +cnSQoU4qBJOsB8aP78oNUlAotm79QD5dqxJ8VjZDQnGXHzv2lf7N+8HYlAPfnj7I6jAjxp5x
+ XzSJJvkv/WBKI4RUAIqDx2e48pz+c7e8ezhMS+7CUypLrx034Fq4dEPU4W7teRhsxSln0azuO
+ eMbRlgou4c9/4B0JE//vUjjJt8iuyOT1kyCPW09FSE10DjI80OV3mPx/w5ViagIR2Nj5x1wT0
+ jBgodRMwMF3rs4nDcJADdVYOYD8pVSoew+D9+3tOpHDRw9gpGBbDDdhbnRzUHkV5ZKTEttzsn
+ isXu7MbaHyvmypwKY42LfQUYTk1unAmGi8WamyDLy7vcRXAo7Jtn4A3N/0yFne3SEntBTlIrs
+ d1Y8O2ObVaiD8Sdh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Duy Nguyen venit, vidit, dixit 25.03.2017 13:07:
+> On Fri, Mar 24, 2017 at 12:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>
+>>> Are we at a point where we can still rename the new feature at least? If
+>>> yes, and keeping everything else is mandatory, than "workspace" or
+>>> "working space" may be a serious contender for naming the new thing.
+>>
+>> I do not have a good answer to the first question, but workspace
+>> does sound like a good name for what this feature is trying to
+>> achieve.
+>>
+> 
+> Now is not too late to rename the command from worktree to workspace
+> (and keep "worktree" as an alias that will be eventually deleted).
+> Should we do it? I would keep file names, function names... unchanged
+> though, not worth the amount of new conflicts.
 
+I guess I would go for a full change. Our technical documentation often
+merely consists of the source code, so we should reduce potential
+confusion there, too.
 
-On 4/6/2017 8:32 PM, René Scharfe wrote:
-> Am 06.04.2017 um 22:37 schrieb git@jeffhostetler.com:
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Teach traverse_trees_recursive() to not do redundant ODB
->> lookups when both directories refer to the same OID.
->>
->> In operations such as read-tree, checkout, and merge when
->> the differences between the commits are relatively small,
->> there will likely be many directories that have the same
->> SHA-1.  In these cases we can avoid hitting the ODB multiple
->> times for the same SHA-1.
->>
->> TODO This change is a first attempt to test that by comparing
->> TODO the hashes of name[i] and name[i-i] and simply copying
->> TODO the tree-descriptor data.  I was thinking of the n=2
->> TODO case here.  We may want to extend this to the n=3 case.
->>
->> ================
->> On the Windows repo (500K trees, 3.1M files, 450MB index),
->> this reduced the overall time by 0.75 seconds when cycling
->> between 2 commits with a single file difference.
->>
->> (avg) before: 22.699
->> (avg) after:  21.955
->> ===============
->>
->> ================
->> Using the p0004-read-tree test (posted earlier this week)
->> with 1M files on Linux:
->>
->> before:
->> $ ./p0004-read-tree.sh
->> 0004.5: switch work1 work2 (1003037)       11.99(8.12+3.32)
->> 0004.6: switch commit aliases (1003037)    11.95(8.20+3.14)
->>
->> after:
->> $ ./p0004-read-tree.sh
->> 0004.5: switch work1 work2 (1003037)       11.17(7.84+2.76)
->> 0004.6: switch commit aliases (1003037)    11.13(7.82+2.72)
->> ================
->>
->> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
->> ---
->>   tree-walk.c    |  8 ++++++++
->>   tree-walk.h    |  1 +
->>   unpack-trees.c | 13 +++++++++----
->>   3 files changed, 18 insertions(+), 4 deletions(-)
->>
->> diff --git a/tree-walk.c b/tree-walk.c
->> index ff77605..3b82f0e 100644
->> --- a/tree-walk.c
->> +++ b/tree-walk.c
->> @@ -92,6 +92,14 @@ void *fill_tree_descriptor(struct tree_desc *desc,
->> const unsigned char *sha1)
->>       return buf;
->>   }
->>   +void *copy_tree_descriptor(struct tree_desc *dest, const struct
->> tree_desc *src)
->> +{
->> +    void *buf = xmalloc(src->size);
->> +    memcpy(buf, src->buffer, src->size);
->> +    init_tree_desc(dest, buf, src->size);
->> +    return buf;
->> +}
->> +
->>   static void entry_clear(struct name_entry *a)
->>   {
->>       memset(a, 0, sizeof(*a));
->> diff --git a/tree-walk.h b/tree-walk.h
->> index 68bb78b..ca4032b 100644
->> --- a/tree-walk.h
->> +++ b/tree-walk.h
->> @@ -43,6 +43,7 @@ int tree_entry(struct tree_desc *, struct name_entry
->> *);
->>   int tree_entry_gently(struct tree_desc *, struct name_entry *);
->>     void *fill_tree_descriptor(struct tree_desc *desc, const unsigned
->> char *sha1);
->> +void *copy_tree_descriptor(struct tree_desc *dest, const struct
->> tree_desc *src);
->>     struct traverse_info;
->>   typedef int (*traverse_callback_t)(int n, unsigned long mask,
->> unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
->> diff --git a/unpack-trees.c b/unpack-trees.c
->> index 3a8ee19..50aacad 100644
->> --- a/unpack-trees.c
->> +++ b/unpack-trees.c
->> @@ -554,10 +554,15 @@ static int traverse_trees_recursive(int n,
->> unsigned long dirmask,
->>       newinfo.df_conflicts |= df_conflicts;
->>         for (i = 0; i < n; i++, dirmask >>= 1) {
->> -        const unsigned char *sha1 = NULL;
->> -        if (dirmask & 1)
->> -            sha1 = names[i].oid->hash;
->> -        buf[i] = fill_tree_descriptor(t+i, sha1);
->> +        if (i > 0 && (dirmask & 1) && names[i].oid && names[i-1].oid &&
->
-> Can .oid even be NULL?  (I didn't check, but it's dereferenced in the
-> sha1 assignment below, so I guess the answer is no and these two checks
-> are not needed.)
-
-yes.  i think the (dirmask&1) is hiding it for name[i].  i put both in
-the code above, but it also worked fine just testing both oid's (and
-without dirmask).
-
->
->> +            !hashcmp(names[i].oid->hash, names[i-1].oid->hash)) {
->
-> Calling oidcmp would be shorter.
-
-right.
-
->
->> +            buf[i] = copy_tree_descriptor(&t[i], &t[i-1]);
->
-> buf keeps track of the allocations that need to be freed at the end of
-> the function.  I assume these buffers are read-only.  Can you use an
-> alias here instead of a duplicate by calling init_tree_desc with the
-> predecessor's buffer and setting buf[i] to NULL?  Or even just copying
-> t[i - 1] to t[i] with an assignment?  That would be shorter and probably
-> also quicker.
-
-Yes, my first draft did that.  Just being cautious, but i'll switch it
-back since that seems to be the consensus.
-
->
->> +        } else {
->> +            const unsigned char *sha1 = NULL;
->> +            if (dirmask & 1)
->> +                sha1 = names[i].oid->hash;
->> +            buf[i] = fill_tree_descriptor(t+i, sha1);
->> +        }
->>       }
->>         bottom = switch_cache_bottom(&newinfo);
->>
-
-Thanks
-Jeff
+Michael
