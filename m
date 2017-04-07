@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8777C20966
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DB6020966
 	for <e@80x24.org>; Fri,  7 Apr 2017 12:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932939AbdDGME1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Apr 2017 08:04:27 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:33869 "EHLO
+        id S933443AbdDGME3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Apr 2017 08:04:29 -0400
+Received: from mail-yb0-f193.google.com ([209.85.213.193]:33871 "EHLO
         mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933147AbdDGMEZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2017 08:04:25 -0400
-Received: by mail-yb0-f193.google.com with SMTP id m133so2372264ybb.1
-        for <git@vger.kernel.org>; Fri, 07 Apr 2017 05:04:25 -0700 (PDT)
+        with ESMTP id S933427AbdDGME0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2017 08:04:26 -0400
+Received: by mail-yb0-f193.google.com with SMTP id m133so2372282ybb.1
+        for <git@vger.kernel.org>; Fri, 07 Apr 2017 05:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LMveWIC0CWiw3SfMKmoRR6zSLlSDVsxE7BtGYH5CXAs=;
-        b=s1qj4EcBBy7bQMoZFThDhZe0/vp/y6fHxfeW9LF/DljlJivRcVmx2JrBIhs5YLejEI
-         YALGXem4bCmzTuR0zueqKYJv5pohAPuyG/LuJOZlMbzvOlDHzF8XrRjZQcMY0hHfTSY5
-         vP0ntAZyvdzj3k1ZQqalkR+6/HaMd+O7AXEvpC/fbp53Yemswup7vVRpnk1X32enpiA2
-         G+4UJ5uwHEsBv+6YruSOOe6znZs2SDUXoYn6yjAjzTHeh3p04nu3ZOwphoCK0bA6sfi8
-         27+Ze12Di4kql5XQqt1/RG5w5dYxWJZoZ3sUZtKj38Hw8S6TWfHU13GOz+qi7LnC9XGB
-         UOYg==
+        bh=4gPUSRSVAmNbbzjpBFFanoOsQwEyepfAmujbPkdUAOE=;
+        b=RHzJoYjpcOm+kWA6yH0oKX86yjCR7SDmVF4OsujlwVJEJ4ewPX2u+eF+gLyCHqRwAx
+         Oai7TwVs0k5HtHz93Wj+if5yLJoy7oDM5uz8GmjCOKNOG8fIglOB9YboqCulney27Zww
+         KnbSuiTHSkD6pO0eM8rqGKepC0rSYepiMRdbmx5KIt/lsPeLXSU4Z8vtoWGf5A0jqIMF
+         P2CouIW0OmYCprBeG911E2YiZDA2ZfT4EM58aEcZvHcjKrFktcGRZRKI0lalMjERWDQz
+         gHw5X50wFQ1dWLEOWogvqVvuRsuJRrJ0PfZ3GZKO1y9by5t4j85tc8t2rxAPJeAun3+s
+         JErQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LMveWIC0CWiw3SfMKmoRR6zSLlSDVsxE7BtGYH5CXAs=;
-        b=CoXezP829noS5Q3Gjj23z846oRGjPCT13ppz43ccdX74zcEW9hBl/Dm9gxIxIUnZWd
-         8u0P31g1UYPUGnqYTYC5+sgvfikcSlxSfMWfHrwdZO9bhGP+iO0U0CnlTejE6JC8/sxd
-         d3ead/ih9WCWS9iZAKfA9FT7g0mvLXB+0Ro9fVXbtQAlQRK2TS19OZGd9e+/wxXCCWWE
-         ZuX/p+GibwU8cT/GC15sp2ErMR0AcyAyqxKwxTKG11O5oDtqD5jkD5NPkeV0A1kAWup5
-         aW2/rKX3QemgQtK1RLC8Ru7St0pjMqjuCOvXjhBTxY6V/Fq7D2wnO7usaygmvFWpNygC
-         jh0w==
-X-Gm-Message-State: AFeK/H0lU9mNWTnbTXmnfDTKaEG7RBJbQqSUhXBhRw5KFOjZMJZ4EOgMLXUYlcgfQRRzdg==
-X-Received: by 10.37.214.2 with SMTP id n2mr26604973ybg.67.1491566664699;
-        Fri, 07 Apr 2017 05:04:24 -0700 (PDT)
+        bh=4gPUSRSVAmNbbzjpBFFanoOsQwEyepfAmujbPkdUAOE=;
+        b=AeQLqhcf4w3KHi+BCg7r7v+5aYtL6vK/qbql31SzNapFZdbd84YKbkVnRFiwkaFoSm
+         Tl/1tbzZ9LGrFetH/d7YPKmfOLlad72o2Uv0vCkErlcJlHi1TeRHmWld4ixDrhKtAD9j
+         eDZTyGiC7exLc3qjPzco2UoUT1Nhi4WsKDO7ytvDHk8e6iQ55Quwh/yFcaEh/P70CFWX
+         9l/fu4c1qsvZ+x8k9fI0IBp+ynbqDRnGU4t7W/bROrHwcivdw3DZg2kiO+Xqw1rV5Bxn
+         TgvdzSJJlydUWrkS2ojZGtt5GiikyHFYk5/cDGiq3dzehCjVH+T016+AhVT6KHMFt/IM
+         8fMw==
+X-Gm-Message-State: AFeK/H1LcAibOLFqsXVcm/f4odSNy4kMjESH4/cf3Ef3RmAQrKWteUYVQY18xU38AC0SBg==
+X-Received: by 10.37.73.5 with SMTP id w5mr25655206yba.87.1491566665877;
+        Fri, 07 Apr 2017 05:04:25 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id z194sm1874038ywg.73.2017.04.07.05.04.23
+        by smtp.gmail.com with ESMTPSA id z194sm1874038ywg.73.2017.04.07.05.04.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 07 Apr 2017 05:04:24 -0700 (PDT)
+        Fri, 07 Apr 2017 05:04:25 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v5 1/8] pkt-line: add packet_read_line_gently()
-Date:   Fri,  7 Apr 2017 08:03:47 -0400
-Message-Id: <20170407120354.17736-2-benpeart@microsoft.com>
+Subject: [PATCH v5 2/8] convert: move packet_write_list() into pkt-line as packet_writel()
+Date:   Fri,  7 Apr 2017 08:03:48 -0400
+Message-Id: <20170407120354.17736-3-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.0.windows.1.33.g243d9b384c
 In-Reply-To: <20170407120354.17736-1-benpeart@microsoft.com>
 References: <20170407120354.17736-1-benpeart@microsoft.com>
@@ -62,59 +62,107 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add packet_read_line_gently() to enable reading a line without dying on
-EOF.
+Add packet_writel() which writes multiple lines in a single call and
+then calls packet_flush_gently(). Update convert.c to use the new
+packet_writel() function from pkt-line.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- pkt-line.c | 12 ++++++++++++
- pkt-line.h | 10 ++++++++++
- 2 files changed, 22 insertions(+)
+ convert.c  | 23 ++---------------------
+ pkt-line.c | 19 +++++++++++++++++++
+ pkt-line.h |  1 +
+ 3 files changed, 22 insertions(+), 21 deletions(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index d4b6bfe076..58842544b4 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -323,6 +323,18 @@ char *packet_read_line(int fd, int *len_p)
- 	return packet_read_line_generic(fd, NULL, NULL, len_p);
+diff --git a/convert.c b/convert.c
+index 8d652bf27c..793c29ebfd 100644
+--- a/convert.c
++++ b/convert.c
+@@ -521,25 +521,6 @@ static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap,
+ 	return hashmap_get(hashmap, &key, NULL);
  }
  
-+int packet_read_line_gently(int fd, int *dst_len, char** dst_line)
+-static int packet_write_list(int fd, const char *line, ...)
+-{
+-	va_list args;
+-	int err;
+-	va_start(args, line);
+-	for (;;) {
+-		if (!line)
+-			break;
+-		if (strlen(line) > LARGE_PACKET_DATA_MAX)
+-			return -1;
+-		err = packet_write_fmt_gently(fd, "%s\n", line);
+-		if (err)
+-			return err;
+-		line = va_arg(args, const char*);
+-	}
+-	va_end(args);
+-	return packet_flush_gently(fd);
+-}
+-
+ static void read_multi_file_filter_status(int fd, struct strbuf *status)
+ {
+ 	struct strbuf **pair;
+@@ -616,7 +597,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+-	err = packet_write_list(process->in, "git-filter-client", "version=2", NULL);
++	err = packet_writel(process->in, "git-filter-client", "version=2", NULL);
+ 	if (err)
+ 		goto done;
+ 
+@@ -632,7 +613,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	if (err)
+ 		goto done;
+ 
+-	err = packet_write_list(process->in, "capability=clean", "capability=smudge", NULL);
++	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
+ 
+ 	for (;;) {
+ 		cap_buf = packet_read_line(process->out, NULL);
+diff --git a/pkt-line.c b/pkt-line.c
+index 58842544b4..2788aa1af6 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
+ 	return status;
+ }
+ 
++int packet_writel(int fd, const char *line, ...)
 +{
-+	int len = packet_read(fd, NULL, NULL,
-+		packet_buffer, sizeof(packet_buffer),
-+		PACKET_READ_CHOMP_NEWLINE|PACKET_READ_GENTLE_ON_EOF);
-+	if (dst_len)
-+		*dst_len = len;
-+	if (dst_line)
-+		*dst_line = (len > 0) ? packet_buffer : NULL;
-+	return len;
++	va_list args;
++	int err;
++	va_start(args, line);
++	for (;;) {
++		if (!line)
++			break;
++		if (strlen(line) > LARGE_PACKET_DATA_MAX)
++			return -1;
++		err = packet_write_fmt_gently(fd, "%s\n", line);
++		if (err)
++			return err;
++		line = va_arg(args, const char*);
++	}
++	va_end(args);
++	return packet_flush_gently(fd);
 +}
 +
- char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
+ static int packet_write_gently(const int fd_out, const char *buf, size_t size)
  {
- 	return packet_read_line_generic(-1, src, src_len, dst_len);
+ 	static char packet_write_buffer[LARGE_PACKET_MAX];
 diff --git a/pkt-line.h b/pkt-line.h
-index 18eac64830..12b18991f6 100644
+index 12b18991f6..cb3eda9695 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -74,6 +74,16 @@ int packet_read(int fd, char **src_buffer, size_t *src_len, char
- char *packet_read_line(int fd, int *size);
+@@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
+ void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
+ int packet_flush_gently(int fd);
+ int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
++int packet_writel(int fd, const char *line, ...);
+ int write_packetized_from_fd(int fd_in, int fd_out);
+ int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
  
- /*
-+ * Convenience wrapper for packet_read that sets the PACKET_READ_GENTLE_ON_EOF
-+ * and CHOMP_NEWLINE options. The return value specifies the number of bytes
-+ * read into the buffer or -1 on truncated input. if the *dst_line parameter
-+ * is not NULL it will return NULL for a flush packet and otherwise points to
-+ * a static buffer (that may be overwritten by subsequent calls). If the size
-+ * parameter is not NULL, the length of the packet is written to it.
-+ */
-+int packet_read_line_gently(int fd, int *size, char** dst_line);
-+
-+/*
-  * Same as packet_read_line, but read from a buf rather than a descriptor;
-  * see packet_read for details on how src_* is used.
-  */
 -- 
 2.12.0.windows.1.31.g1548525701.dirty
 
