@@ -2,27 +2,27 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10B2920966
-	for <e@80x24.org>; Fri,  7 Apr 2017 15:25:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8986220966
+	for <e@80x24.org>; Fri,  7 Apr 2017 15:25:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753917AbdDGPZT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Apr 2017 11:25:19 -0400
-Received: from mout.web.de ([212.227.15.3]:49931 "EHLO mout.web.de"
+        id S933013AbdDGPZe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Apr 2017 11:25:34 -0400
+Received: from mout.web.de ([212.227.15.3]:58788 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752433AbdDGPZR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2017 11:25:17 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LuuC9-1bwXJs3XA9-0103aM; Fri, 07
- Apr 2017 17:25:09 +0200
-Subject: Re: [PATCH v3 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
-To:     =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>,
-        Johannes Sixt <j6t@kdbg.org>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+        id S1752433AbdDGPZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2017 11:25:32 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MYviN-1cZjgb3bnP-00VfeD; Fri, 07
+ Apr 2017 17:25:19 +0200
+Subject: [PATCH 1/2] add MOVE_ARRAY
+To:     =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>, git@vger.kernel.org
+Cc:     Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
 References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
  <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
  <998bf391-7fc5-8329-db58-ef0f24517707@suse.cz>
@@ -33,62 +33,67 @@ References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
  <357d045a-b1c5-1a73-2256-839efb543fe3@kdbg.org>
  <96beb4c6-0569-0c12-8151-462c20be6a2a@suse.cz>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <425176fe-090e-6edf-b6ba-fa77e35b3dd1@web.de>
-Date:   Fri, 7 Apr 2017 17:25:06 +0200
+Message-ID: <c4c60ec9-641d-fb2e-046a-91e08615c8f7@web.de>
+Date:   Fri, 7 Apr 2017 17:25:15 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.0
 MIME-Version: 1.0
 In-Reply-To: <96beb4c6-0569-0c12-8151-462c20be6a2a@suse.cz>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:458pBc1HJU59aYMEwo/GNTXoPHucR1J5yuWZE8XN4cS1HN2x1vh
- b0FdktFBPT5I+YVfltI/8CgstuzcWOGL2uO5bR3Fp14xiY2RbCpY9Bc9RPAMn5z8L6u+KXY
- vwpOIMT7aSeRif1oItN6Imq6xeH5ybsfdbIWG5CP+hasNJ3wFX4j8bS3flHQVR1wwc4Fmy0
- QeXlKIg/pjAtWLIjjDZOA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cZEcsOTMBf4=:L8GIyNJE8OAqmAdyOMxnv8
- g8+pM0M6EhEFh9KV/+ys9hjjmE8SlOIP1F2UssHXEUB4P3p+iazMYoDFWs3FP3oCZ4rL3ePP0
- SGQUoToxxhGU6Dr5LOFwIF1qeml52Tj9IligZd1V+QjdaDXZUt3sMQ4CyFk+qv5o7r/f0jf/u
- DSxRK9PFHohbY69CLNMhnCspFg2cISTu+IJLhy9i3RVG1Wpr1cgN6vnrigivW3CLILU3R0Nzy
- cBIT6dzVW1UQJYlkdhC6HhZgTycX0bPrJj7wC80PtZ9f+8bBHIzgilgD+/LKwWLe5IcH7U7jv
- Kd2KstuWxRmPuhIo32m/gM0gMyAT4lJcBsfPL20QW1Om8zeOOzhYzTzKxHsRoOegeZGVLKIVR
- /rjV8DlZ+rx6cHXhUJI3/g+7fZoXKPq/ujWryhoY0szOcOgSnP+eh5+RvVlyb2L5gbCTkwINn
- cDNaLIGgiRXhcXgcNtq4rQ3FB4ts5vdgF4RjSjn6499Z5lTMrOEJKXJZdEo/XcTTSEvBEwpBk
- Aaq1CtjzYwmCrdmX2IVOFA1rRo3sStjwc1aGlMQiY78rCPnvGTmJoTYiIppov3z4XQ2MiwSa2
- dT2EqqW2MbNyEzevnmu1CthdADlAW9DN9K2UF0T8WZgNrTfARMeUCjnEsPEOohVn3wvasx+cK
- KFiW4gdBvV028NVrqfoQ3AsitouwTtxU7qacOGGGKEcYLRej1J0rvTPSR+DG1PCDF6KBO3c/n
- Zqoj4ojoXd7ZIBJRxpge9Uu9GOZFa09IDKUTXQni4Tp8h7Fyu1tt8gqrmUS5L3xj4hf/ulq/p
- lW9OSLU
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:hYtIdmzxLcHJ7yWQeIBy0IT+0xfVIYp2CSvoZB789xhXf3nJdh0
+ MQNhsmLdbt4F1y8w+V1iJ0W43Ob5MI+7XPGX4KX7Ys+83H9TlvjTyHZxjUok5ma04upGiHD
+ ZFXqwlw67ErHe0b9FmRqxHLSpV7e4G0kB4/uMzXSK7C3pdVlVbLsTRCNXj+kik6Cfl9lHLm
+ Z7VM0bwwVbx3ESgIfWiJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/4QRPkrhK2E=:csbkjNbol78mF/dQVrff9h
+ 4SMKObU2AmcHXGKp+/D/L65bph9qsyzNQrXhyMhjw1dZnxHKIav6S5KGa1j+h4y88Q/qupbyf
+ CNoX+20Qr85vTl3fLk1cZSPyxlgWqNriaFjZIzitQdjtu0bKWBTPhJ36Dkg0qQv+/v3LNBDnh
+ dChPts6ilnOx75TUMFXbdY1QMioqog6+jX1NobXBN4thW2GnvUDVwx1mPL8Ki5qH9f0+Ayh5t
+ FsGyDZKul+hwGJhRdsLGr9t/dK1TjRd5h8t2j51LMkP0waidNdlBZM4jNiLINLxe6QPmPF7vH
+ FmSUUYhAAyJzG7ENpL7DzmwZtgPyU8+RtqCu4YHrxdCw6fCq/k5mBfIn/V1FFu/wpJGNGBF6L
+ ivpgbQfQdg4kcmzwDxrWzdjXN3kIDyIea6hEiU8ioku7AnUo73Fq4KsvUMGZoMW4Xb8F+cwGv
+ fBr/SH6fTci0eJiDWwmcVcyLuntYMA3LAwOeZuaZgPtKFeojkDomZnqX4ivPWMHAwVxCycDGO
+ kRCgohJJGkeGYEW0xMprPFZl4sL5iaW6ZH6MG+y6muJm7XTZkp/dE+1FSP5evKMe/kKnVtVet
+ l7ashyWrLNMOuppUVWcbY/B23P2Qf2CiN+vWBkFnkgco8s2e/XzkKhpbQvMA07PLkVAQNZ/8h
+ dn3sw/RTeVRoLM1zp1SizlbG/s1pI/CgrNdAhUHdFphLj/IzJQeQdzagVxmo2ob12qa2dJCBp
+ p55rmOWBw8Hb4BjMiK2lRo/202vDDbx+Pt+dz0KIv4BhHsKysVWj+pB3Uo7ZRyqRFYYTT78MH
+ utR5COp
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.04.2017 um 16:23 schrieb Martin Liška:
-> On 04/06/2017 10:49 PM, Johannes Sixt wrote:
->> Am 06.04.2017 um 19:31 schrieb René Scharfe:
->>> Am 06.04.2017 um 18:33 schrieb Johannes Sixt:
->>>> Am 06.04.2017 um 17:42 schrieb Martin Liška:
->>>>> +static inline void *sane_memmove(void *dest, const void *src, size_t n)
->>>>> +{
->>>>> +    if (n > 0)
->>>>> +        return memmove(dest, src, n);
->>>>> +    else
->>>>> +        return dest;
->>>>> +}
->>>>
->>>> Huh? memmove with n == 0 is well-defined. This wrapper is pointless.
->>>
->>> memmove(3) with NULL pointers is undefined.
->>
->> Then don't hide this helper behind a macro with a suspiciously similar name. Using the name sane_mmemove at the call site is preferable. memmove_or_null or something similar perhaps even more so.
->>
->> -- Hannes
->>
-> 
-> Good. There's tested v4.
+Add MOVE_ARRAY to complement COPY_ARRAY, which was added in 60566cbb.
+It provides the same convenience, safety and support for NULL pointers
+as representations of empty arrays, just as a wrapper for memmove(3)
+instead of memcpy(3).
 
-Thank you!  I'd *still* prefer MOVE_ARRAY, though.  Patches to follow.
+Inspired-by: Martin Liska <mliska@suse.cz>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ git-compat-util.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-René
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8a4a3f85e7..3266a71fb4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -812,6 +812,14 @@ static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
+ 		memcpy(dst, src, st_mult(size, n));
+ }
+ 
++#define MOVE_ARRAY(dst, src, n) move_array((dst), (src), (n), sizeof(*(dst)) + \
++	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) == sizeof(*(src))))
++static inline void move_array(void *dst, const void *src, size_t n, size_t size)
++{
++	if (n)
++		memmove(dst, src, st_mult(size, n));
++}
++
+ /*
+  * These functions help you allocate structs with flex arrays, and copy
+  * the data directly into the array. For example, if you had:
+-- 
+2.12.2
 
