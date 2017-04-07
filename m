@@ -6,61 +6,78 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D9561FAFB
-	for <e@80x24.org>; Fri,  7 Apr 2017 04:46:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2241FAFB
+	for <e@80x24.org>; Fri,  7 Apr 2017 04:48:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752639AbdDGEqd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Apr 2017 00:46:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57876 "EHLO cloud.peff.net"
+        id S1752951AbdDGEs2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Apr 2017 00:48:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57879 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751996AbdDGEqb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2017 00:46:31 -0400
-Received: (qmail 21981 invoked by uid 109); 7 Apr 2017 04:46:30 -0000
+        id S1752169AbdDGEs0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2017 00:48:26 -0400
+Received: (qmail 22178 invoked by uid 109); 7 Apr 2017 04:48:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 04:46:30 +0000
-Received: (qmail 31897 invoked by uid 111); 7 Apr 2017 04:46:48 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 04:48:26 +0000
+Received: (qmail 31918 invoked by uid 111); 7 Apr 2017 04:48:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 00:46:48 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Apr 2017 00:46:27 -0400
-Date:   Fri, 7 Apr 2017 00:46:27 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 00:48:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Apr 2017 00:48:23 -0400
+Date:   Fri, 7 Apr 2017 00:48:23 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 0/3] read-cache: speed up add_index_entry
-Message-ID: <20170407044626.ypsqnyxguw43gprm@sigill.intra.peff.net>
-References: <20170406163442.36463-1-git@jeffhostetler.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     David Turner <David.Turner@twosigma.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v3] http.postbuffer: allow full range of ssize_t values
+Message-ID: <20170407044823.cfqkd2xs2vxhgp4d@sigill.intra.peff.net>
+References: <20170331172631.12024-1-dturner@twosigma.com>
+ <20170401060116.b2v7tyoi7fcxwbvo@sigill.intra.peff.net>
+ <34d444b673c64310baa275f821037b3e@exmbdft7.ad.twosigma.com>
+ <20170404020130.76thbl5rum2gxgtn@sigill.intra.peff.net>
+ <6488d78232be49a69260436d1c6ed44f@exmbdft7.ad.twosigma.com>
+ <20170404204031.geh72k6yuiky4wsw@sigill.intra.peff.net>
+ <CAP8UFD3r7C_OcQMmtOju636okqrTB-af6CDo2jw5vGsiWcLVrg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170406163442.36463-1-git@jeffhostetler.com>
+In-Reply-To: <CAP8UFD3r7C_OcQMmtOju636okqrTB-af6CDo2jw5vGsiWcLVrg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 06, 2017 at 04:34:39PM +0000, git@jeffhostetler.com wrote:
+On Thu, Apr 06, 2017 at 07:24:54PM +0200, Christian Couder wrote:
 
-> Teach add_index_entry_with_check() and has_dir_name()
-> to avoid index lookups if the given path sorts after
-> the last entry in the index.
+> > That would at least tell you if the problem is the chunked encoding, or
+> > if it's related to the size.
 > 
-> This saves at least 2 binary searches per entry.
+> The above commands work for me using gitlab.com and the log shows:
 > 
-> This improves performance during checkout and read-tree because
-> merge_working_tree() and unpack_trees() processes a list of already
-> sorted entries.
+> Send header, 0000000309 bytes (0x00000135)
+> Send header: POST
+> /chriscool/yet-another-test-project.git/git-receive-pack HTTP/1.1
+> Send header: Authorization: Basic <redacted>
+> Send header: User-Agent: git/2.12.2.625.g14da1346c9.dirty
+> Send header: Host: gitlab.com
+> Send header: Content-Type: application/x-git-receive-pack-request
+> Send header: Accept: application/x-git-receive-pack-result
+> Send header: Content-Length: 4
+> 
+> Send header, 0000000341 bytes (0x00000155)
+> Send header: POST
+> /chriscool/yet-another-test-project.git/git-receive-pack HTTP/1.1
+> Send header: Authorization: Basic <redacted>
+> Send header: User-Agent: git/2.12.2.625.g14da1346c9.dirty
+> Send header: Host: gitlab.com
+> Send header: Accept-Encoding: gzip
+> Send header: Content-Type: application/x-git-receive-pack-request
+> Send header: Accept: application/x-git-receive-pack-result
+> Send header: Transfer-Encoding: chunked
+> 
+> Maybe the reverse proxy doesn't like it when the push is really big.
 
-Just thinking about this algorithmically for a moment. You're saving the
-binary search when the input is given in sorted order. But in other
-cases you're adding an extra strcmp() before the binary search begins.
-So it's a tradeoff.
-
-How often is the input sorted?  You save O(log n) strcmps for a "hit"
-with your patch, and one for a "miss". So it's a net win if we expect at
-least 1/log(n) of additions to be sorted (I'm talking about individual
-calls, but it should scale linearly either way over a set of n calls).
-
-I have no clue if that's a reasonable assumption or not.
+Interesting. So it is OK with the chunked encoding. It seems odd that it
+would complain about a bigger chunked encoding, but then work correctly
+with a single big buffer. But I guess it would all depend on what kind
+of buffering logic the reverse proxy uses.
 
 -Peff
