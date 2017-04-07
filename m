@@ -2,129 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9199820966
-	for <e@80x24.org>; Fri,  7 Apr 2017 16:18:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F75220966
+	for <e@80x24.org>; Fri,  7 Apr 2017 16:53:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756250AbdDGQSZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Apr 2017 12:18:25 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:35908 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755546AbdDGQSX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2017 12:18:23 -0400
-Received: by mail-lf0-f54.google.com with SMTP id s141so9124735lfe.3
-        for <git@vger.kernel.org>; Fri, 07 Apr 2017 09:18:22 -0700 (PDT)
+        id S934255AbdDGQxT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Apr 2017 12:53:19 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:33055 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755546AbdDGQxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2017 12:53:17 -0400
+Received: by mail-pg0-f54.google.com with SMTP id x125so71813383pgb.0
+        for <git@vger.kernel.org>; Fri, 07 Apr 2017 09:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=mI3x3X40Ys0JBdcx3W8raV5Hx2/bpam0xwD/3X9reW0=;
-        b=rqiBedWJQ0d/Dqj5IlJspdFzPzQSlvAEM4s2TirjGY/Qfob//Wg9JjpK+dzTlD2e4+
-         AC+OUwXryFB+rQuTFbsMM/db5rNJYQzqGj0TVgAtgCSOo9TdJkfIMG15u3E6bLmAKa30
-         mlyN5m7bVar1MwvGXCqnlmraU6kMSi/icLsrwJp2y4z2udJS5QXtxDlAncZGlYvDaxAt
-         0Em2ukZGXW/jhO/tZ5G0PWzPs2RzP3qeKivUJ5LCEaZXovKH0mQc366I/2lhvqIUlrH7
-         h9QWuP8owlftHM3d6wPM9JAo6mLHve1n9UIBc7tBB1Haf1kScHlpQ7A4i86achP1YZvs
-         vWhg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=/6JPm94D9fe3qoK2vn+UWF2kv6iJgU5+0pku6uNIqRA=;
+        b=dC9VWB9oB6U6qFCFCNN53POK/i1pvll6K5dBMoXxxaE5zRSc0ziIFEaYBivud/dQfg
+         n7M2/KB6rh0Fo1z/fR0hYMIq0zjcMlY4KPRWb9nNdkOf1ABpuKI8BSP2SWI9aIONPxXF
+         OR4V4YHVhFLbH+LZDqqRUsczDbaif3xwVHeBqw/w7/t7FZldA64N/8jGDJz4GWUtTdJm
+         2Qp2Dne8MXM52oWEf3jzZ+qousm64bQuCrj7w0xx+yqeNgIdYBs42uJ0bTYLhp7qHkQ6
+         UyOej4XHvAkBWW29Mt25zrL6j1mg82zqxe4GoK0tkEtTzkOd35rWJNR716nojgmvzBEm
+         iiLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=mI3x3X40Ys0JBdcx3W8raV5Hx2/bpam0xwD/3X9reW0=;
-        b=Cd5pxULH7bnADa0TRPu+adUIqg7csolvV5I3PL2pJWGPDAPJag5OYbGygJJwjRQzAE
-         lDdYtriH0Vfy4Aw66m6gTqTdnI16wiWjilt7WdsCE3qD0poaZyssNOkQcMUOAdQneGSg
-         S0V7ktF0IMdrojes1nrK8/CADYDwJovFdvnlGUilrlfnYQoaIwhMfMHclhyMwYktGQAn
-         0lxpvejpk3NFgh1UbP5U4bze+5k6yZIAdOegfL49/M8povXCmrw4yhw1rwp67B3Of7Nz
-         XjRuVPeY6V+gG5DdP1VFwblU96QQ5uGuVQQucl1jtPkuzT/iyFO85x4/pLZJwKbTWyOC
-         0ukw==
-X-Gm-Message-State: AFeK/H2R203WysPAaCua1Q0syX2WuoKKTb+3ITtZtzrzDDEccmgvnHjlxHlZpSGMmanu8mi0LHRWTrtY6hCAuA==
-X-Received: by 10.46.81.25 with SMTP id f25mr10759604ljb.119.1491581901816;
- Fri, 07 Apr 2017 09:18:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/6JPm94D9fe3qoK2vn+UWF2kv6iJgU5+0pku6uNIqRA=;
+        b=LCZk0eGvPROxBuDgRhs5Zbf0kcLb/fk1i1KDLh2NEZJVBF4guKuQXaNmVgg4ugO9Av
+         VzoPTDHcZKkhHjg3Uu+EJ/PPM5+0/6YKxMkV3JkqPOzXa1d1yk/8/i7K338eFQjk0hie
+         Bo9S3+Y31+NTAIs8bgFTpkymtWqmyz69jHuYjw6q4LokbJnRfAD2TEx277fHxn1pNv4B
+         y1Dd7Hd9/YtItkBMcp88s3FPLK1niwMNfSZNvN412uH4/38XhBY6YZ1LowGBSX1NpQks
+         uCjJ8WTgKHwH0soZNYNbi9txONsXRujTTaAfgJyMm8w0r9tSKQEQQxI79lGPVTK2jJ/2
+         L75w==
+X-Gm-Message-State: AFeK/H2rOGTkjR3TxIpY66JPaj4cmtOfbQhe6aYfPb8k/Fe8KBw4k3KGXMU4ZJt69h3Iq6vY
+X-Received: by 10.98.216.202 with SMTP id e193mr40476995pfg.80.1491583996761;
+        Fri, 07 Apr 2017 09:53:16 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:70c6:863c:4bc7:6d4f])
+        by smtp.gmail.com with ESMTPSA id v11sm10648190pfi.50.2017.04.07.09.53.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 07 Apr 2017 09:53:15 -0700 (PDT)
+Date:   Fri, 7 Apr 2017 09:53:14 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Joachim Durchholz <jo@durchholz.org>,
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: problem with backslash in directory name
+Message-ID: <20170407165314.GB142670@google.com>
+References: <9e3af7d6-a2c1-2673-53cc-d4c5105d9051@durchholz.org>
+ <20170407063057.yjbqavu4uiipslpc@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.25.145.30 with HTTP; Fri, 7 Apr 2017 09:18:01 -0700 (PDT)
-In-Reply-To: <xmqq8tnlz53m.fsf@gitster.mtv.corp.google.com>
-References: <2c3c8028cd057428758bb1e21a064a264936de90.1490968428.git.git@grubix.eu>
- <xmqq8tnlz53m.fsf@gitster.mtv.corp.google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 7 Apr 2017 09:18:01 -0700
-Message-ID: <CA+P7+xr37owZbCnwVKh0y_vUny9_pP380Y8sFA+7A-hv0Oc6AA@mail.gmail.com>
-Subject: Re: [PATCH] status: show in-progress info for short status
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael J Gruber <git@grubix.eu>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170407063057.yjbqavu4uiipslpc@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Mar 31, 2017 at 11:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael J Gruber <git@grubix.eu> writes:
->
->> Ordinary (long) status shows information about bisect, revert, am,
->> rebase, cherry-pick in progress, and so does git-prompt.sh. status
->> --short currently shows none of this information.
->>
->> Introduce an `--inprogress` argument to git status so that, when used with
->> `--short --branch`, in-progress information is shown next to the branch
->> information. Just like `--branch`, this comes with a config option.
->>
->> The wording for the in-progress information is taken over from
->> git-prompt.sh.
->>
->> Signed-off-by: Michael J Gruber <git@grubix.eu>
->
-> I haven't formed an opinion on the feature itself, or the way it is
-> triggered, so I won't comment on them.  I just say --porcelain (any
-> version) may (or may not) want to be extended in backward compatible
-> way (but again I haven't formed an opinion on the issue--I just know
-> and say there is an issue there that needs to be considered at this
-> point).
->
+On 04/07, Jeff King wrote:
+> On Fri, Apr 07, 2017 at 08:12:49AM +0200, Joachim Durchholz wrote:
+> 
+> > So... something inside "git submodule add" is replacing the \b with a
+> > backspace control code.
+> > [...]
+> > Whatever that "something" is, it is not doing shell expansion, otherwise it
+> > would have started an interactive calculator session.
+> 
+> Probably it's "read" which does backslash expansion, but nothing else.
+> Just grepping git-submodule.sh, some of the "read" calls should probably
+> be "read -r" (I also don't know how some of those loops would cope with
+> a submodule name that needed quoting).
 
-Personally, I would want this to become the default and not have a new
-option to trigger it. I think we could also extend the porcelain
-format to include this information as well, but I'm not too familiar
-with how the v2 format extends or not.
+So I blindly converted all "read" calls to "read -r" and tested against
+the case Joachim ran into and it seems to solve the issues.  All test
+still pass too (though that may not mean too much).
 
-Thanks,
-Jake
-
->> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
->> index 458608cc1e..103e006249 100755
->> --- a/t/t7512-status-help.sh
->> +++ b/t/t7512-status-help.sh
->> @@ -74,7 +74,6 @@ test_expect_success 'prepare for rebase conflicts' '
->>
->>
->>  test_expect_success 'status when rebase in progress before resolving conflicts' '
->> -     test_when_finished "git rebase --abort" &&
->>       ONTO=$(git rev-parse --short HEAD^^) &&
->>       test_must_fail git rebase HEAD^ --onto HEAD^^ &&
->>       cat >expected <<EOF &&
->> @@ -96,6 +95,15 @@ EOF
->>       test_i18ncmp expected actual
->>  '
->>
->> +test_expect_success 'short status when rebase in progress' '
->> +     test_when_finished "git rebase --abort" &&
->> +     cat >expected <<EOF &&
->> +## HEAD (no branch); REBASE-m
->> +UU main.txt
->> +EOF
->> +     git status --untracked-files=no --short --branch --inprogress >actual &&
->> +     test_i18ncmp expected actual
->> +'
->
-> This is not a good way to structure the test.  If the one in the
-> previous hunk is what creates a conflicted state by running
-> "rebase", check the status output from within that test, after the
-> conflicting "rebase" fails and other things the existing test checks
-> are tested.  That way, you do not have to worry about this new check
-> getting confused if the previous one fails in the middle.
->
-> Likewise for the most (if not all---I didn't check very carefully)
-> of the remaining hunks in this test script.
+-- 
+Brandon Williams
