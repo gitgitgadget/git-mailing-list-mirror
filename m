@@ -6,78 +6,80 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2241FAFB
-	for <e@80x24.org>; Fri,  7 Apr 2017 04:48:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AFF91FAFB
+	for <e@80x24.org>; Fri,  7 Apr 2017 04:54:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752951AbdDGEs2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Apr 2017 00:48:28 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57879 "EHLO cloud.peff.net"
+        id S1751938AbdDGEyb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Apr 2017 00:54:31 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57884 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752169AbdDGEs0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Apr 2017 00:48:26 -0400
-Received: (qmail 22178 invoked by uid 109); 7 Apr 2017 04:48:26 -0000
+        id S1751039AbdDGEya (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Apr 2017 00:54:30 -0400
+Received: (qmail 22706 invoked by uid 109); 7 Apr 2017 04:54:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 04:48:26 +0000
-Received: (qmail 31918 invoked by uid 111); 7 Apr 2017 04:48:45 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 04:54:30 +0000
+Received: (qmail 31948 invoked by uid 111); 7 Apr 2017 04:54:48 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 00:48:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Apr 2017 00:48:23 -0400
-Date:   Fri, 7 Apr 2017 00:48:23 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 07 Apr 2017 00:54:48 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Apr 2017 00:54:27 -0400
+Date:   Fri, 7 Apr 2017 00:54:27 -0400
 From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     David Turner <David.Turner@twosigma.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH v3] http.postbuffer: allow full range of ssize_t values
-Message-ID: <20170407044823.cfqkd2xs2vxhgp4d@sigill.intra.peff.net>
-References: <20170331172631.12024-1-dturner@twosigma.com>
- <20170401060116.b2v7tyoi7fcxwbvo@sigill.intra.peff.net>
- <34d444b673c64310baa275f821037b3e@exmbdft7.ad.twosigma.com>
- <20170404020130.76thbl5rum2gxgtn@sigill.intra.peff.net>
- <6488d78232be49a69260436d1c6ed44f@exmbdft7.ad.twosigma.com>
- <20170404204031.geh72k6yuiky4wsw@sigill.intra.peff.net>
- <CAP8UFD3r7C_OcQMmtOju636okqrTB-af6CDo2jw5vGsiWcLVrg@mail.gmail.com>
+To:     "Tom G. Christensen" <tgc@jupiterrise.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC] dropping support for ancient versions of curl
+Message-ID: <20170407045427.rqrqdt5mxzudonzo@sigill.intra.peff.net>
+References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
+ <d6ba17f0-3da9-8699-8d5c-5ebf1eaef00e@jupiterrise.com>
+ <20170406092122.titsfyxpucj6xoe4@sigill.intra.peff.net>
+ <ef64656b-12d7-a041-e1b9-ce83f8cbd2fc@jupiterrise.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD3r7C_OcQMmtOju636okqrTB-af6CDo2jw5vGsiWcLVrg@mail.gmail.com>
+In-Reply-To: <ef64656b-12d7-a041-e1b9-ce83f8cbd2fc@jupiterrise.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 06, 2017 at 07:24:54PM +0200, Christian Couder wrote:
+On Thu, Apr 06, 2017 at 06:43:06PM +0200, Tom G. Christensen wrote:
 
-> > That would at least tell you if the problem is the chunked encoding, or
-> > if it's related to the size.
-> 
-> The above commands work for me using gitlab.com and the log shows:
-> 
-> Send header, 0000000309 bytes (0x00000135)
-> Send header: POST
-> /chriscool/yet-another-test-project.git/git-receive-pack HTTP/1.1
-> Send header: Authorization: Basic <redacted>
-> Send header: User-Agent: git/2.12.2.625.g14da1346c9.dirty
-> Send header: Host: gitlab.com
-> Send header: Content-Type: application/x-git-receive-pack-request
-> Send header: Accept: application/x-git-receive-pack-result
-> Send header: Content-Length: 4
-> 
-> Send header, 0000000341 bytes (0x00000155)
-> Send header: POST
-> /chriscool/yet-another-test-project.git/git-receive-pack HTTP/1.1
-> Send header: Authorization: Basic <redacted>
-> Send header: User-Agent: git/2.12.2.625.g14da1346c9.dirty
-> Send header: Host: gitlab.com
-> Send header: Accept-Encoding: gzip
-> Send header: Content-Type: application/x-git-receive-pack-request
-> Send header: Accept: application/x-git-receive-pack-result
-> Send header: Transfer-Encoding: chunked
-> 
-> Maybe the reverse proxy doesn't like it when the push is really big.
+> On 06/04/17 11:21, Jeff King wrote:
+> > On Wed, Apr 05, 2017 at 11:33:37AM +0200, Tom G. Christensen wrote:
+> > > I don't use the el3 and el4 versions much any more and el5 use will also
+> > > drop of now as I'm busy converting machines from el5 to el7.
+> > 
+> > Thanks for sharing, that's a really interesting data point.
+> > 
+> > I'm not quite sure what to take away from it, though. Either "yes,
+> > somebody really is using Git with antique versions of curl". Or "even
+> > the antique people are giving up el4, and it might be reasonable to
+> > start requiring curl >= 7.11.0".
 
-Interesting. So it is OK with the chunked encoding. It seems odd that it
-would complain about a bigger chunked encoding, but then work correctly
-with a single big buffer. But I guess it would all depend on what kind
-of buffering logic the reverse proxy uses.
+[Aside: re-reading my second paragraph above, it sounds like I am
+ complaining that your comment wasn't clear. But you were perfectly
+ clear. It's just that with your data point I am more conflicted than
+ ever].
+
+> I know of no users of the packages that I make available other than myself
+> and my work place (only el5 and later, soon just el6 and later).
+> 
+> There is not currently any patches needed to use git on el5 with curl
+> 7.15.5. The only thing not working out of the box in 2.12.2 would be the
+> emacs integration.
+
+I think I'm leaning towards the very first patch I posted, that assumes
+7.11.0 and later. And then hold off on the others for a few years. In
+terms of "number of ifdefs removed" we could go further, but I think it
+was the first patch that removes a lot of the really questionable bits
+(like silently ignoring security-related features).
+
+> If you must drop support for old curl releases then from my perspective the
+> cutoff should be 7.19.7 at the latest since that is what ships with RHEL 6
+> and that is still supported by Red Hat.
+
+Yeah, I think 7.19.7 would be the next reasonable cutoff (it shipped in
+RHEL6, which is a reasonable standard for long-term support; and it
+catches quite a few ifdefs in our code). But I think we can give RHEL5 a
+bit more time. It just left its support window a few days ago.
 
 -Peff
