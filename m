@@ -6,67 +6,81 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 500731FAFB
-	for <e@80x24.org>; Sat,  8 Apr 2017 09:33:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A670B1FAFB
+	for <e@80x24.org>; Sat,  8 Apr 2017 09:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752046AbdDHJbh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 05:31:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58435 "EHLO cloud.peff.net"
+        id S1751397AbdDHJk0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 05:40:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58444 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751523AbdDHJbg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 05:31:36 -0400
-Received: (qmail 32222 invoked by uid 109); 8 Apr 2017 09:31:35 -0000
+        id S1751523AbdDHJkZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 05:40:25 -0400
+Received: (qmail 638 invoked by uid 109); 8 Apr 2017 09:40:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 09:31:35 +0000
-Received: (qmail 10348 invoked by uid 111); 8 Apr 2017 09:31:54 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 09:40:23 +0000
+Received: (qmail 10388 invoked by uid 111); 8 Apr 2017 09:40:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 05:31:54 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 05:31:33 -0400
-Date:   Sat, 8 Apr 2017 05:31:33 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 05:40:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 05:40:21 -0400
+Date:   Sat, 8 Apr 2017 05:40:21 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Matt McCutchen <matt@mattmccutchen.net>, git <git@vger.kernel.org>
-Subject: Re: Tools that do an automatic fetch defeat "git push
- --force-with-lease"
-Message-ID: <20170408093133.acilrs5lc3kxzpmu@sigill.intra.peff.net>
-References: <1491617750.2149.10.camel@mattmccutchen.net>
- <CA+P7+xrVe7jnqpQFvYBb25ofrNqnRspdk-M6jRuwRi5sUqCCZg@mail.gmail.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7 3/3] read-cache: speed up add_index_entry during
+ checkout
+Message-ID: <20170408094021.jdpx5l7kfv423zgj@sigill.intra.peff.net>
+References: <20170407212047.64950-1-git@jeffhostetler.com>
+ <20170407212047.64950-4-git@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+P7+xrVe7jnqpQFvYBb25ofrNqnRspdk-M6jRuwRi5sUqCCZg@mail.gmail.com>
+In-Reply-To: <20170407212047.64950-4-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 08, 2017 at 01:25:43AM -0700, Jacob Keller wrote:
+On Fri, Apr 07, 2017 at 09:20:47PM +0000, git@jeffhostetler.com wrote:
 
-> On Fri, Apr 7, 2017 at 7:15 PM, Matt McCutchen <matt@mattmccutchen.net> wrote:
-> > When I'm rewriting history, "git push --force-with-lease" is a nice
-> > safeguard compared to "git push --force", but it still assumes the
-> > remote-tracking ref gives the old state the user wants to overwrite.
-> > Tools that do an implicit fetch, assuming it to be a safe operation,
-> > may break this assumption.  In the worst case, Visual Studio Code does
-> > an automatic fetch every 3 minutes by default [1], making
-> > --force-with-lease pretty much reduce to --force.
-> >
+> This helps performance on very large repositories.
 > 
-> Isn't the point of force-with-lease to actually record a "commit" id,
-> and not pass it a branch name, but actually the sha1 you intend the
-> remote server to be at? Sure if you happen to pass it a branch or
-> remote name it will interpret it for yuou, but you should be able to
-> do something like
+> ================
+> Before and after numbers on index with 1M files
+> ./p0004-read-tree.sh
+> 0004.2: read-tree work1 (1003037)          3.21(2.54+0.62)
+> 0004.3: switch base work1 (3038 1003037)   7.49(5.39+1.84)
+> 0004.5: switch work1 work2 (1003037)       11.91(8.38+3.00)
+> 0004.6: switch commit aliases (1003037)    12.22(8.30+3.06)
 > 
-> current=$(git rev-parse origin/branch)
-> <verify current is correct and then do your rewind stuff>
-> git push --force-with-lease=$current
-> 
-> and this will work regardless of when if if you fetch in between?
+> ./p0004-read-tree.sh
+> 0004.2: read-tree work1 (1003040)          2.40(1.65+0.73)
+> 0004.3: switch base work1 (3041 1003040)   6.07(4.12+1.66)
+> 0004.5: switch work1 work2 (1003040)       10.23(6.76+2.92)
+> 0004.6: switch commit aliases (1003040)    10.53(6.97+2.83)
+> ================
 
-That's definitely the _best way to do it (modulo using "branch:$current"
-in the final command). I think Matt's point is just that the default, to
-use origin/branch, is unsafe. It's convenient when you don't have extra
-fetches, but that convenience may not be worth the potential surprise.
+By the way, you may want to try:
+
+  $ cd t/perf
+  $ ./run HEAD^ HEAD p0004-read-tree.sh
+
+which gives you the before/after in a nice table, with percentage
+changes:
+
+  Test                                       HEAD^             HEAD                  
+  -----------------------------------------------------------------------------------
+  0004.2: read-tree work1 (1003065)          2.34(1.90+0.42)   1.91(1.51+0.38) -18.4%
+  0004.3: switch base work1 (3066 1003065)   5.12(4.14+0.96)   4.45(3.55+0.88) -13.1%
+  0004.5: switch work1 work2 (1003065)       8.55(6.63+1.87)   7.78(5.76+2.00) -9.0% 
+  0004.6: switch commit aliases (1003065)    8.59(6.75+1.80)   7.64(5.92+1.70) -11.1%
+
+The results are stored for each tested version, so you can re-run just a
+single test and then re-output the results with "./aggregate.perl HEAD^
+HEAD p0004-read-tree.sh".
+
+The "run" script obviously builds each version behind the scenes, so you
+probably also want to set GIT_PERF_MAKE_OPTS as appropriate (at the very
+least "-j16" makes it more pleasant).
 
 -Peff
