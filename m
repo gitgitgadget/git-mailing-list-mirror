@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EE2720970
-	for <e@80x24.org>; Sat,  8 Apr 2017 13:26:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 256FE20970
+	for <e@80x24.org>; Sat,  8 Apr 2017 13:26:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752577AbdDHN0D (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 09:26:03 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35032 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752463AbdDHN0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 09:26:01 -0400
-Received: by mail-wm0-f65.google.com with SMTP id d79so2447985wmi.2
-        for <git@vger.kernel.org>; Sat, 08 Apr 2017 06:26:00 -0700 (PDT)
+        id S1752583AbdDHN0G (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 09:26:06 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33088 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752576AbdDHN0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 09:26:04 -0400
+Received: by mail-wr0-f193.google.com with SMTP id g19so23519192wrb.0
+        for <git@vger.kernel.org>; Sat, 08 Apr 2017 06:26:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SbCEOA3f8RplIjyyQUgj+cEf4zp1jdT2TjJ7c+2ZXNc=;
-        b=FPLJHVdlUiZsk4lYzoLjXbA+q4k0DZ8BpyDBQ+7QxPvcLnLPcKh4cGeyylIVKvJYys
-         8OLyeYVOXVyZU9QgrWezD/s9SMZ3LI0cwIC0cYPFrHJXzTgamFLhyUOmNiY27VpBkPHs
-         /NtQJMpqJvCPlwXFzzIe10Z2xaLj8PmqfeX16ulHoATVaaDQU2rev0epxieZw/BbSXS4
-         yV8YB6KUcN+zAL3pQozaX87h7aJdS1ZbDfpE0usS99JEZ5LgzNm+5YHNQwMKv6T2KjD6
-         i+Kh92x7oMp2RiVDfYMhKjOJS53yl4WeX15XEOVj2pYIGIHcOTUwkfcK8+JFDs5NeXNl
-         ZoiA==
+        bh=1EK76eUAeTwg7xQlWzWduWJlyRsJ2drtiQMIYfZFrh4=;
+        b=RDCuhf1Erj0CGFXEkqa7tXTXrSmv3hW+rsJ5bIVXDVJ3ZHcgBndfPERApM0+okKYQd
+         YdPB/3k0n9km+Bwt/4hHf2zWc9TOWJPmbPEnkZ8sCMsfKvQdz8VA0rg2SwSdgSQl5mRo
+         73flZxmyigRavJvYzxGMiox1mOsxhiMcOncPEjIZoneFYGDKibv3/Z/MBcfPdt4cJVPr
+         t9hmfj0vsbSnQLeHouPYwYMCi58IzDqP3X1EZXuGj91KUC/O4HHABLnPpS6d3UCS77V0
+         L+rZ8FhvILR2A2Oi9edIaKll+ZlVjLns61FtlTwNo3gVsNJYTKtztmajXSbpWDf75nFo
+         q9oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SbCEOA3f8RplIjyyQUgj+cEf4zp1jdT2TjJ7c+2ZXNc=;
-        b=NFJcYfGzmwSdLj+A6fvCuCcQYjvCbOhzlWcgm46OiJ2i39Ew2z64+UTjBRy0+oV1/T
-         8Nq8becIa+vp2PX+hNlO13JGh4LMkHBFl6JHoYD44j6iO7/ZjNe9Xx9uVeBBZfOzqDOF
-         U7K9CYc6h2+U+JjKPw8i2tPSYvgywhq7j6rDdX8+8giOS6FFFjNIhKX68KUq5YYKdK4r
-         UFj1B1HyWEg2oG6BGgmGTG49rMARCgwjdULc/dA9w2PW1OLcIwzRpK+Ofkqx6zn+Ukju
-         uX7q1yh6OBKA1hD3uO/7iXvH6dAydcnVJquoexXtT4ZlCheZ/ZxryMdYCdCyzatRrAB/
-         F9YQ==
-X-Gm-Message-State: AN3rC/4d21CYcr1ZlQtvV5X7BwNgS8rNdrxPaSxVyULtKxAn3yzqnM3bHSmu83Nhx5QiuA==
-X-Received: by 10.28.212.134 with SMTP id l128mr3243396wmg.34.1491657959937;
-        Sat, 08 Apr 2017 06:25:59 -0700 (PDT)
+        bh=1EK76eUAeTwg7xQlWzWduWJlyRsJ2drtiQMIYfZFrh4=;
+        b=fH4nb9nCwgU1kw4TgDrvyMuQqwFXnBvetxTq6Hzo6QisScBUqO6EORPMYojFSd8hEN
+         uMAFGPzEWTJU/KrcgmlAYrZUzRmyckFYwgwegq1qKVm8Gd78x0eNlJGMUdTbEb7+KVa6
+         GgFkqRnBE2kKU3Sv6GufiCRdG7xK0C3jZZ2QHzWoLOg9Tsmpgsx0RO4QmJhNOTVXkw9r
+         nnZGBqTK/cjuGFX1wpBvGgvVvlzDMyGdzdX5NmPoH0DOQVnJPc3J4dsZYLuABbV+8c59
+         X13I3iqLyXoND/pXDzo/6TvBFOSKtviA7Ip8n6ikqpz07+7YZR2NZ7hisTwYKD9Cgz4w
+         H9XA==
+X-Gm-Message-State: AN3rC/4W2vw7/Ij4MG+2vX5g1HcLY7RCuIpMrT7ukbpszWJVOCR8nTtW0552gYhtzMOfFQ==
+X-Received: by 10.223.169.34 with SMTP id u31mr9935871wrc.54.1491657962513;
+        Sat, 08 Apr 2017 06:26:02 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id v14sm2744864wmv.24.2017.04.08.06.25.58
+        by smtp.gmail.com with ESMTPSA id v14sm2744864wmv.24.2017.04.08.06.26.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Apr 2017 06:25:59 -0700 (PDT)
+        Sat, 08 Apr 2017 06:26:01 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 04/12] grep: add a test for backreferences in PCRE patterns
-Date:   Sat,  8 Apr 2017 13:24:58 +0000
-Message-Id: <20170408132506.5415-5-avarab@gmail.com>
+Subject: [PATCH 05/12] log: add exhaustive tests for pattern style options & config
+Date:   Sat,  8 Apr 2017 13:24:59 +0000
+Message-Id: <20170408132506.5415-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170408132506.5415-1-avarab@gmail.com>
 References: <20170408132506.5415-1-avarab@gmail.com>
@@ -73,34 +73,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test for backreferences such as (.)\1 in PCRE patterns. This
-test ensures that the PCRE_NO_AUTO_CAPTURE option isn't turned
-on. Before this change turning it on would break these sort of
-patterns, but wouldn't break any tests.
+Add exhaustive tests for how the different grep.patternType options &
+the corresponding command-line options affect git-log.
+
+Before this change it was possible to patch revision.c so that the
+--basic-regexp option was synonymous with --extended-regexp, and
+--perl-regexp wasn't recognized at all, and still have 100% of the
+test suite pass.
+
+This was because the first test being modified here, added in commit
+34a4ae55b2 ("log --grep: use the same helper to set -E/-F options as
+"git grep"", 2012-10-03), didn't actually check whether we'd enabled
+extended regular expressions as distinct from re-toggling non-fixed
+string support.
+
+Fix that by changing the pattern to a pattern that'll only match if
+--extended-regexp option is provided, but won't match under the
+default --basic-regexp option.
+
+Other potential regressions were possible since there were no tests
+for the rest of the combinations of grep.patternType configuration
+toggles & corresponding git-log command-line options. Add exhaustive
+tests for those.
+
+The patterns being passed to fixed/basic/extended/PCRE are carefully
+crafted to return the wrong thing if the grep engine were to pick any
+other matching method than the one it's told to use.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7810-grep.sh | 7 +++++++
- 1 file changed, 7 insertions(+)
+ t/t4202-log.sh | 67 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 66 insertions(+), 1 deletion(-)
 
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 53c2ca05c4..83b0ee53be 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1102,6 +1102,13 @@ test_expect_success LIBPCRE 'grep -P -w pattern' '
- 	test_cmp expected actual
- '
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 48b55bfd27..00d0585253 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -261,7 +261,13 @@ test_expect_success 'log --grep -i' '
  
-+test_expect_success PCRE 'grep -P backreferences work (the PCRE NO_AUTO_CAPTURE flag is not set)' '
-+	git grep -P -h "(?P<one>.)(?P=one)" hello_world >actual &&
-+	test_cmp hello_world actual &&
-+	git grep -P -h "(.)\1" hello_world >actual &&
-+	test_cmp hello_world actual
+ test_expect_success 'log -F -E --grep=<ere> uses ere' '
+ 	echo second >expect &&
+-	git log -1 --pretty="tformat:%s" -F -E --grep=s.c.nd >actual &&
++	git log -1 --pretty="tformat:%s" -F -E --grep="(s).c.nd" >actual &&
++	test_cmp expect actual
 +'
 +
- test_expect_success 'grep -G invalidpattern properly dies ' '
- 	test_must_fail git grep -G "a["
++test_expect_success LIBPCRE 'log -F -E --perl-regexp --grep=<pcre> uses PCRE' '
++	echo second >expect &&
++	git log -1 --pretty="tformat:%s" -F -E --perl-regexp --grep="s(?=ec)econd" >actual &&
+ 	test_cmp expect actual
  '
+ 
+@@ -279,6 +285,65 @@ test_expect_success 'log with grep.patternType configuration and command line' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'log with various grep.patternType configurations & command-lines' '
++	git init pattern-type &&
++	(
++		cd pattern-type &&
++		test_commit 1 file A &&
++		test_commit "(1|2)" file B &&
++
++		echo "(1|2)" >expect.fixed &&
++		cp expect.fixed expect.basic &&
++		cp expect.fixed expect.extended &&
++		cp expect.fixed expect.perl &&
++
++		git -c grep.patternType=fixed log --pretty=tformat:%s \
++			--grep="(1|2)" >actual.fixed &&
++		git -c grep.patternType=basic log --pretty=tformat:%s \
++			--grep="(.|.)" >actual.basic &&
++		git -c grep.patternType=extended log --pretty=tformat:%s \
++			--grep="\|2" >actual.extended &&
++		if test_have_prereq LIBPCRE
++		then
++			git -c grep.patternType=perl log --pretty=tformat:%s \
++				--grep="\((?=1)" >actual.perl
++		fi &&
++		test_cmp expect.fixed actual.fixed &&
++		test_cmp expect.basic actual.basic &&
++		test_cmp expect.extended actual.extended &&
++		if test_have_prereq LIBPCRE
++		then
++			test_cmp expect.perl actual.perl
++		fi &&
++
++		git log --pretty=tformat:%s -F \
++			--grep="(1|2)" >actual.fixed.short-arg &&
++		git log --pretty=tformat:%s -E \
++			--grep="\|2" >actual.extended.short-arg &&
++		test_cmp expect.fixed actual.fixed.short-arg &&
++		test_cmp expect.extended actual.extended.short-arg &&
++
++		git log --pretty=tformat:%s --fixed-strings \
++			--grep="(1|2)" >actual.fixed.long-arg &&
++		git log --pretty=tformat:%s --basic-regexp \
++			--grep="(.|.)" >actual.basic.long-arg &&
++		git log --pretty=tformat:%s --extended-regexp \
++			--grep="\|2" >actual.extended.long-arg &&
++		if test_have_prereq LIBPCRE
++		then
++			git log --pretty=tformat:%s --perl-regexp \
++				--grep="\((?=1)" >actual.perl.long-arg
++		fi &&
++		test_cmp expect.fixed actual.fixed.long-arg &&
++		test_cmp expect.basic actual.basic.long-arg &&
++		test_cmp expect.extended actual.extended.long-arg &&
++		if test_have_prereq LIBPCRE
++		then
++			test_cmp expect.perl actual.perl.long-arg
++		fi
++	)
++'
++
+ cat > expect <<EOF
+ * Second
+ * sixth
 -- 
 2.11.0
 
