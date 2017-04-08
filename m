@@ -2,98 +2,209 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF7D71FAFB
-	for <e@80x24.org>; Sat,  8 Apr 2017 10:59:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3EEB1FAFB
+	for <e@80x24.org>; Sat,  8 Apr 2017 11:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752519AbdDHK7I (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 06:59:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58474 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752254AbdDHK7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 06:59:06 -0400
-Received: (qmail 7921 invoked by uid 109); 8 Apr 2017 10:59:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 10:59:03 +0000
-Received: (qmail 10951 invoked by uid 111); 8 Apr 2017 10:59:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 06:59:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 06:59:01 -0400
-Date:   Sat, 8 Apr 2017 06:59:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, jo@durchholz.org
-Subject: Re: [PATCH] submodule: prevent backslash expantion in submodule names
-Message-ID: <20170408105901.2osi2zadboqxhf34@sigill.intra.peff.net>
-References: <CAGZ79ka7PEWy2iA8V9s11n2kyD=vHyS2y1K3SJzDq-5HsY7how@mail.gmail.com>
- <20170407172306.172673-1-bmwill@google.com>
+        id S1751997AbdDHLlP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 07:41:15 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:32874 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751532AbdDHLlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 07:41:13 -0400
+Received: by mail-wr0-f195.google.com with SMTP id g19so23298358wrb.0
+        for <git@vger.kernel.org>; Sat, 08 Apr 2017 04:41:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=XIvdMWwwJ7XRdFVAFjcWFdTg70/tm8GPytOkY9bzxTc=;
+        b=ObLAX33qkebKTnrfrEpCEtgZQYSJ5gj4Z0EaoRyHcNE+yxhfuz1dqOfnD44SivSieK
+         4A6Lla4Zv7Maj9yg/QoHXwCwoC0PkKDt9LrFGc52KM3jIiE4q9A1xJbWr+b38i/wj3Gj
+         d+GwqY0wEFBA5AnvXk86GKjZAgObiBkcJJkIhumS7Etk/zUoA8k9Ov24e3XnY0iDEhAP
+         3GFOEeP+399Nwp7gloGw3hOszNiLB0n+y2KAEY4QJ0g4/LMAiw8Wqw8PEEWHf38ovfXg
+         6dhJiEyK6BLUxvkLrc/qoOZ/rCHd9KXVSnfcCOkbkMC4VFJXC8lMCswskd2jEl713ec/
+         gxKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=XIvdMWwwJ7XRdFVAFjcWFdTg70/tm8GPytOkY9bzxTc=;
+        b=k8h3ruEUOxXfbnQOq+qyBClPC9bX8bcjpIucASItcG3YiYVhCNi4jl8gvQchtDzswl
+         yeB3XARDjI7G6g7pYmpScAYgH0/4GoqCPdjakiJ9HXm8wI6LJw6ifrSOoaO36WWUNsV3
+         LhgWHAj3aebjhJqFMvoyjU3bkg0+3AWQzhP9Y/HP5+lsocrApH+NLBSRjhADtbDh8ABz
+         kK/iWvua5CcsXuWUdmjfoofOid0vKQg7KLRNzsnwbBz647CSmZeyYBTTnzlTuSP7852I
+         CvzQVYMJLQSYHWix/QcdZ9j4sEK07Wd3Lch1xxHu4gW+rIWLvqUDcmDjQ+aGU74hH36i
+         hTmg==
+X-Gm-Message-State: AN3rC/7gsL1vb6JZAeEAhHZcNtSkLOzdcTUglIJkaXD8A+Sxw2MiEFQPd298tn65NO7ztQ==
+X-Received: by 10.223.133.252 with SMTP id 57mr1128166wru.94.1491651671817;
+        Sat, 08 Apr 2017 04:41:11 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id b13sm2482144wmf.6.2017.04.08.04.41.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 08 Apr 2017 04:41:10 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] push: document & test --force-with-lease with multiple remotes
+Date:   Sat,  8 Apr 2017 11:41:00 +0000
+Message-Id: <20170408114100.13743-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
+References: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170407172306.172673-1-bmwill@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 07, 2017 at 10:23:06AM -0700, Brandon Williams wrote:
+Document & test for cases where there are two remotes pointing to the
+same URL, and a background fetch & subsequent `git push
+--force-with-lease` shouldn't clobber un-updated references we haven't
+fetched.
 
-> When attempting to add a submodule with backslashes in its name 'git
-> submodule' fails in a funny way.  We can see that some of the
-> backslashes are expanded resulting in a bogus path:
-> 
-> git -C main submodule add ../sub\\with\\backslash
-> fatal: repository '/tmp/test/sub\witackslash' does not exist
-> fatal: clone of '/tmp/test/sub\witackslash' into submodule path
-> 
-> To solve this, convert calls to 'read' to 'read -r' in git-submodule.sh
-> in order to prevent backslash expantion in submodule names.
+Some editors like Microsoft's VSC have a feature to auto-fetch in the
+background, this bypasses the protections offered by
+--force-with-lease as noted in the documentation being added here.
 
-This looks sane overall, without digging into the individual read calls.
+See the 'Tools that do an automatic fetch defeat "git push
+--force-with-lease"' (<1491617750.2149.10.camel@mattmccutchen.net>)
+git mailing list thread for more details. Jakub Narębski suggested
+this method of adding another remote to bypass this edge case,
+document that & add a test for it.
 
-The reason I mentioned escaping earlier is I wondered what would happen
-when the submodule starts with a double-quote, or has a newline in the
-name. Git's normal quoting would include backslash escape sequences, and
-I wondered if we might be relying on any of these "read" calls to
-interpret them. But I don't think so, for two reasons.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-One, because that quoting also puts double-quotes around the name. So
-plain "read" would not be sufficient to de-quote for us anyway.
+On Sat, Apr 8, 2017 at 11:29 AM, Jeff King <peff@peff.net> wrote:
+> On Sat, Apr 08, 2017 at 09:35:04AM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
+>> Is it correct that you'd essentially want something that works like:
+>>
+>>     git push --force-with-lease=master:master origin master:master
+>
+> I don't think that would do anything useful. It would reject any push
+> where the remote "master" is not the same as your own master. And of
+> course if they _are_ the same, then the push is a noop.
+>
 
-And two, because these are being fed from "submodule--helper", which
-does not seem to quote in the first place.
+Yeah my whole suggestion is obviously dumb & useless. But I liked
+Jakub's suggestion to work around this, so here's docs & a test for
+that.
 
-So I think your patch is fine there. But it does raise a few concerns.
-It looks like git-submodule does not cope well with exotic filenames:
+According to my eyeballing of the MS VSC code this should work,
+i.e. it seems to do a 'fetch' here, not a 'fetch --all':
+https://github.com/Microsoft/vscode/blob/master/src/vs/workbench/parts/git/node/git.lib.ts#L505
 
-  $ git submodule add /some/repo "$(printf 'sub with\nnewline')"
-  Cloning into '/home/peff/tmp/sub with
-  newline'...
-  done.
-  error: invalid key (newline): submodule.sub with
-  newline.url
-  error: invalid key (newline): submodule.sub with
-  newline.path
-  Failed to register submodule 'sub with
-  newline'
+Of course another way is to just disable autofetching:
+https://github.com/Microsoft/vscode/blob/535a3de60023c81d75d0eac22044284f07dbcddf/extensions/git/src/autofetch.ts#L27
 
-I'm not too worried about that. It's a nonsense request, and our config
-format has no syntactic mechanism to represent that key. So tough luck.
-But what I am more worried about is:
+But having two remotes allows you to have your cake & eat it too
+without all the hassle of tag creation, which I've added to the docs
+though for completeness.
 
-  $ git submodule--helper list
-  160000 576053ed5ad378490974fabe97e4bd59633d2d1e 0	sub with
-  newline
+ Documentation/git-push.txt | 37 +++++++++++++++++++++++++++++++++++++
+ t/t5533-push-cas.sh        | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+)
 
-That's obviously nonsense that git-submodule.sh is going to choke on.
-But what happens when the filename is:
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 1624a35888..2f2e9c078b 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -210,6 +210,43 @@ or we do not even have to have such a remote-tracking branch when
+ this form is used).  If `<expect>` is the empty string, then the named ref
+ must not already exist.
+ +
++This option interacts very badly with anything that implicitly runs
++`git fetch` on the remote to be pushed to in the background. The
++protection it offers over `--force` is ensuring that subsequent
++changes your work wasn't based on aren't clobbered, but this is
++trivially defeated if some background process is updating refs in the
++background. We don't have anything except the remote tracking info to
++go by as a heuristic for refs you're expected to have seen & are
++willing to clobber.
+++
++If your editor or some other system is running `git fetch` in the
++background for you a way to mitigate this is to simply set up another
++remote:
+++
++	git remote add origin-push $(git config remote.origin.url)
++	git fetch origin-push
+++
++Now when the background process runs `git fetch origin` the references
++on `origin-push` won't be updated, and thus commands like:
+++
++	git push --force-with-lease origin
+++
++Will fail unless you manually run `git fetch origin-push`. This method
++is of course entirely defeated by something that runs `git fetch
++--all`, in that case you'd need to either disable it or do something
++more tedious like:
+++
++	git fetch              ;# update 'master' from remote
++	git tag base master    ;# mark our base point
++	git rebase -i master   ;# rewrite some commits
++	git push --force-with-lease=master:base master:master
+++
++I.e. create a `base` tag for versions of the upstream code that you've
++seen and are willing to overwrite, then rewrite history, and finally
++force push changes to `master` if the remote version is still at
++`base`, regardless of what your local `remotes/origin/master` has been
++updated to in the background.
+++
+ Note that all forms other than `--force-with-lease=<refname>:<expect>`
+ that specifies the expected current value of the ref explicitly are
+ still experimental and their semantics may change as we gain experience
+diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
+index a2c9e7439f..d38ecee217 100755
+--- a/t/t5533-push-cas.sh
++++ b/t/t5533-push-cas.sh
+@@ -229,4 +229,33 @@ test_expect_success 'new branch already exists' '
+ 	)
+ '
+ 
++test_expect_success 'background updates of REMOTE can be mitigated with a non-updated REMOTE-push' '
++	rm -rf src dst &&
++	git init --bare src.bare &&
++	test_when_finished "rm -rf src.bare" &&
++	git clone --no-local src.bare dst &&
++	test_when_finished "rm -rf dst" &&
++	(
++		cd dst &&
++		test_commit G &&
++		git remote add origin-push ../src.bare &&
++		git push origin-push master:master
++	) &&
++	git clone --no-local src.bare dst2 &&
++	test_when_finished "rm -rf dst2" &&
++	(
++		cd dst2 &&
++		test_commit H &&
++		git push
++	) &&
++	(
++		cd dst &&
++		test_commit I &&
++		git fetch origin &&
++		test_must_fail git push --force-with-lease origin-push &&
++		git fetch origin-push &&
++		git push --force-with-lease origin-push
++	)
++'
++
+ test_done
+-- 
+2.11.0
 
-  foo\n16000 <sha1> 0\t../../escaped
-
-or something. Can a malicious repository provoke git-submodule.sh to
-look at or modify files outside the repository?
-
--Peff
