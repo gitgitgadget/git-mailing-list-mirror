@@ -2,66 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3EEB1FAFB
-	for <e@80x24.org>; Sat,  8 Apr 2017 11:41:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A34F120970
+	for <e@80x24.org>; Sat,  8 Apr 2017 13:25:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751997AbdDHLlP (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 07:41:15 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:32874 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751532AbdDHLlN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 07:41:13 -0400
-Received: by mail-wr0-f195.google.com with SMTP id g19so23298358wrb.0
-        for <git@vger.kernel.org>; Sat, 08 Apr 2017 04:41:12 -0700 (PDT)
+        id S1752267AbdDHNZm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 09:25:42 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:34833 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752216AbdDHNZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 09:25:40 -0400
+Received: by mail-wr0-f196.google.com with SMTP id t20so23481908wra.2
+        for <git@vger.kernel.org>; Sat, 08 Apr 2017 06:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XIvdMWwwJ7XRdFVAFjcWFdTg70/tm8GPytOkY9bzxTc=;
-        b=ObLAX33qkebKTnrfrEpCEtgZQYSJ5gj4Z0EaoRyHcNE+yxhfuz1dqOfnD44SivSieK
-         4A6Lla4Zv7Maj9yg/QoHXwCwoC0PkKDt9LrFGc52KM3jIiE4q9A1xJbWr+b38i/wj3Gj
-         d+GwqY0wEFBA5AnvXk86GKjZAgObiBkcJJkIhumS7Etk/zUoA8k9Ov24e3XnY0iDEhAP
-         3GFOEeP+399Nwp7gloGw3hOszNiLB0n+y2KAEY4QJ0g4/LMAiw8Wqw8PEEWHf38ovfXg
-         6dhJiEyK6BLUxvkLrc/qoOZ/rCHd9KXVSnfcCOkbkMC4VFJXC8lMCswskd2jEl713ec/
-         gxKw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fonaqyz/+mUulpKf6BRhR7J8Q74EEZvSBqL7SMx+Oy0=;
+        b=m6vlfYmMwgsjsIMRYB9WeeXWeywEwiclxOQGabA2zGxz0+TNHHaX/JjFaDu4sqvpuC
+         Gib+mSl9RIW9rEp/+Ax+qits2fzg5zOeqp5HsKUL+rk6k+WTES8BUGfCR1vwJ+e+ZNOY
+         SRUdzpZU8gzJSTC0XWCNd7k/VM1wXIpoXSLvxeoQhWZAdvoLbQhgQdBxcx4bX+YAs1x9
+         sEXuJoC/fnqZE4rCpQJPzjfCDyHaLETEG9kkfuwm8XcHT1ggi1WNmQfJ9yauMPsnFer2
+         IMdeFE4oc+W5wCfqlMxP8Kz8EkyQKDbMWvMEoX9v/lIsQMGoPU4RU9XZyRdi3AdFgUV6
+         2v2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XIvdMWwwJ7XRdFVAFjcWFdTg70/tm8GPytOkY9bzxTc=;
-        b=k8h3ruEUOxXfbnQOq+qyBClPC9bX8bcjpIucASItcG3YiYVhCNi4jl8gvQchtDzswl
-         yeB3XARDjI7G6g7pYmpScAYgH0/4GoqCPdjakiJ9HXm8wI6LJw6ifrSOoaO36WWUNsV3
-         LhgWHAj3aebjhJqFMvoyjU3bkg0+3AWQzhP9Y/HP5+lsocrApH+NLBSRjhADtbDh8ABz
-         kK/iWvua5CcsXuWUdmjfoofOid0vKQg7KLRNzsnwbBz647CSmZeyYBTTnzlTuSP7852I
-         CvzQVYMJLQSYHWix/QcdZ9j4sEK07Wd3Lch1xxHu4gW+rIWLvqUDcmDjQ+aGU74hH36i
-         hTmg==
-X-Gm-Message-State: AN3rC/7gsL1vb6JZAeEAhHZcNtSkLOzdcTUglIJkaXD8A+Sxw2MiEFQPd298tn65NO7ztQ==
-X-Received: by 10.223.133.252 with SMTP id 57mr1128166wru.94.1491651671817;
-        Sat, 08 Apr 2017 04:41:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fonaqyz/+mUulpKf6BRhR7J8Q74EEZvSBqL7SMx+Oy0=;
+        b=g5xxR9DJMj4PEtK86kMWtpnYy3SVsgONsdqhMp8xLNIY0j0SiWOLo+bYPKZOmrxJAc
+         qBA1qdP0Uu2u3BV+2WdJPkuz8LFoO9zlbIHXF5Qho4baoE/WGL3F/scgQxV1d0Gn9csy
+         Tye0Fyh5eFtYFZ/W4wCwTPQjt99oTa3XJqJZqcmITcMJ8Ef1ivO6M+7qD2ycqZ5ulVOO
+         6A7pppY1JFFac22XbCyoud6nl4Uo+F+o6ROkqWxQFqyywNzbdnU38EPeWrifYuk1JjvJ
+         bpn5L5Z9y7lw3isQSyvIs1blwK9zA7eBvyu5s2fuXGE0Hu7nuVqLoM5kYE66eNqqgCO5
+         LWwA==
+X-Gm-Message-State: AFeK/H35rkrLNYQbf6V3Sw45jaW8FNlztF/RiB7i/SVPzL6c9VJ3RKZDqXAFybIza20ifA==
+X-Received: by 10.223.135.196 with SMTP id c4mr19333934wrc.109.1491657939091;
+        Sat, 08 Apr 2017 06:25:39 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b13sm2482144wmf.6.2017.04.08.04.41.10
+        by smtp.gmail.com with ESMTPSA id v14sm2744864wmv.24.2017.04.08.06.25.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Apr 2017 04:41:10 -0700 (PDT)
+        Sat, 08 Apr 2017 06:25:36 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Jakub=20Nar=C4=99bski?= <jnareb@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Matt McCutchen <matt@mattmccutchen.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] push: document & test --force-with-lease with multiple remotes
-Date:   Sat,  8 Apr 2017 11:41:00 +0000
-Message-Id: <20170408114100.13743-1-avarab@gmail.com>
+Subject: [PATCH 00/12] PCREv2 & more
+Date:   Sat,  8 Apr 2017 13:24:54 +0000
+Message-Id: <20170408132506.5415-1-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
-In-Reply-To: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
-References: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,141 +71,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Document & test for cases where there are two remotes pointing to the
-same URL, and a background fetch & subsequent `git push
---force-with-lease` shouldn't clobber un-updated references we haven't
-fetched.
+This adds PCRE v2 support, but as I was adding that I kept noticing
+other related problems to fix. It's all bundled up into the same
+series because much of it conflicts because it modifies the same test
+or other code. Notes on each patch below.
 
-Some editors like Microsoft's VSC have a feature to auto-fetch in the
-background, this bypasses the protections offered by
---force-with-lease as noted in the documentation being added here.
+Ævar Arnfjörð Bjarmason (12):
+  grep: add ability to disable threading with --threads=0 or
+    grep.threads=0
 
-See the 'Tools that do an automatic fetch defeat "git push
---force-with-lease"' (<1491617750.2149.10.camel@mattmccutchen.net>)
-git mailing list thread for more details. Jakub Narębski suggested
-this method of adding another remote to bypass this edge case,
-document that & add a test for it.
+This really has nothing to do with the rest except I'm using it to
+test non-multithreaded & threaded PCRE more easily.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+  grep: remove redundant regflags assignment under PCRE
+  Makefile & configure: reword outdated comment about PCRE
 
-On Sat, Apr 8, 2017 at 11:29 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Apr 08, 2017 at 09:35:04AM +0200, Ævar Arnfjörð Bjarmason wrote:
->
->> Is it correct that you'd essentially want something that works like:
->>
->>     git push --force-with-lease=master:master origin master:master
->
-> I don't think that would do anything useful. It would reject any push
-> where the remote "master" is not the same as your own master. And of
-> course if they _are_ the same, then the push is a noop.
->
+Just some trivial cleanups.
 
-Yeah my whole suggestion is obviously dumb & useless. But I liked
-Jakub's suggestion to work around this, so here's docs & a test for
-that.
+  grep: add a test for backreferences in PCRE patterns
+  log: add exhaustive tests for pattern style options & config
 
-According to my eyeballing of the MS VSC code this should work,
-i.e. it seems to do a 'fetch' here, not a 'fetch --all':
-https://github.com/Microsoft/vscode/blob/master/src/vs/workbench/parts/git/node/git.lib.ts#L505
+Yay, more tests!
 
-Of course another way is to just disable autofetching:
-https://github.com/Microsoft/vscode/blob/535a3de60023c81d75d0eac22044284f07dbcddf/extensions/git/src/autofetch.ts#L27
+  log: add -P as a synonym for --perl-regexp
 
-But having two remotes allows you to have your cake & eat it too
-without all the hassle of tag creation, which I've added to the docs
-though for completeness.
+We've had --perl-regexp for years, but not -P like grep, add it.
 
- Documentation/git-push.txt | 37 +++++++++++++++++++++++++++++++++++++
- t/t5533-push-cas.sh        | 29 +++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+)
+  grep & rev-list doc: stop promising libpcre for --perl-regexp
+  grep: make grep.patternType=[pcre|pcre1] a synonym for "perl"
+  test-lib: rename the LIBPCRE prerequisite to PCRE
+  grep: change the internal PCRE macro names to be PCRE1
+  grep: change the internal PCRE code & header names to be PCRE1
+  grep: add support for PCRE v2
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 1624a35888..2f2e9c078b 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -210,6 +210,43 @@ or we do not even have to have such a remote-tracking branch when
- this form is used).  If `<expect>` is the empty string, then the named ref
- must not already exist.
- +
-+This option interacts very badly with anything that implicitly runs
-+`git fetch` on the remote to be pushed to in the background. The
-+protection it offers over `--force` is ensuring that subsequent
-+changes your work wasn't based on aren't clobbered, but this is
-+trivially defeated if some background process is updating refs in the
-+background. We don't have anything except the remote tracking info to
-+go by as a heuristic for refs you're expected to have seen & are
-+willing to clobber.
-++
-+If your editor or some other system is running `git fetch` in the
-+background for you a way to mitigate this is to simply set up another
-+remote:
-++
-+	git remote add origin-push $(git config remote.origin.url)
-+	git fetch origin-push
-++
-+Now when the background process runs `git fetch origin` the references
-+on `origin-push` won't be updated, and thus commands like:
-++
-+	git push --force-with-lease origin
-++
-+Will fail unless you manually run `git fetch origin-push`. This method
-+is of course entirely defeated by something that runs `git fetch
-+--all`, in that case you'd need to either disable it or do something
-+more tedious like:
-++
-+	git fetch              ;# update 'master' from remote
-+	git tag base master    ;# mark our base point
-+	git rebase -i master   ;# rewrite some commits
-+	git push --force-with-lease=master:base master:master
-++
-+I.e. create a `base` tag for versions of the upstream code that you've
-+seen and are willing to overwrite, then rewrite history, and finally
-+force push changes to `master` if the remote version is still at
-+`base`, regardless of what your local `remotes/origin/master` has been
-+updated to in the background.
-++
- Note that all forms other than `--force-with-lease=<refname>:<expect>`
- that specifies the expected current value of the ref explicitly are
- still experimental and their semantics may change as we gain experience
-diff --git a/t/t5533-push-cas.sh b/t/t5533-push-cas.sh
-index a2c9e7439f..d38ecee217 100755
---- a/t/t5533-push-cas.sh
-+++ b/t/t5533-push-cas.sh
-@@ -229,4 +229,33 @@ test_expect_success 'new branch already exists' '
- 	)
- '
- 
-+test_expect_success 'background updates of REMOTE can be mitigated with a non-updated REMOTE-push' '
-+	rm -rf src dst &&
-+	git init --bare src.bare &&
-+	test_when_finished "rm -rf src.bare" &&
-+	git clone --no-local src.bare dst &&
-+	test_when_finished "rm -rf dst" &&
-+	(
-+		cd dst &&
-+		test_commit G &&
-+		git remote add origin-push ../src.bare &&
-+		git push origin-push master:master
-+	) &&
-+	git clone --no-local src.bare dst2 &&
-+	test_when_finished "rm -rf dst2" &&
-+	(
-+		cd dst2 &&
-+		test_commit H &&
-+		git push
-+	) &&
-+	(
-+		cd dst &&
-+		test_commit I &&
-+		git fetch origin &&
-+		test_must_fail git push --force-with-lease origin-push &&
-+		git fetch origin-push &&
-+		git push --force-with-lease origin-push
-+	)
-+'
-+
- test_done
+These combined add the support for PCRE 2. It's split up for ease of
+readability. The last one's still a bit big, and I could e.g. split up
+all the Makefile/autoconf stuff into a different patch (which wouldn't
+do anything without the code), but I thought on balance doing it this
+way made the most sense.
+
+ Documentation/config.txt           |   7 ++
+ Documentation/git-grep.txt         |   8 +-
+ Documentation/rev-list-options.txt |   6 +-
+ Makefile                           |  28 +++++-
+ builtin/grep.c                     |  26 +++++-
+ configure.ac                       |  61 ++++++++++--
+ grep.c                             | 184 ++++++++++++++++++++++++++++++-------
+ grep.h                             |  26 ++++--
+ revision.c                         |   2 +-
+ t/README                           |  16 +++-
+ t/t4202-log.sh                     |  76 ++++++++++++++-
+ t/t7810-grep.sh                    |  79 +++++++++++++---
+ t/t7812-grep-icase-non-ascii.sh    |   4 +-
+ t/t7813-grep-icase-iso.sh          |  11 ++-
+ t/test-lib.sh                      |   4 +-
+ 15 files changed, 456 insertions(+), 82 deletions(-)
+
 -- 
 2.11.0
 
