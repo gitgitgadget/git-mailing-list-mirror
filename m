@@ -6,78 +6,94 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45A921FAFB
-	for <e@80x24.org>; Sat,  8 Apr 2017 10:43:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF7D71FAFB
+	for <e@80x24.org>; Sat,  8 Apr 2017 10:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751949AbdDHKnc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 06:43:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58466 "EHLO cloud.peff.net"
+        id S1752519AbdDHK7I (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 06:59:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58474 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751684AbdDHKnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 06:43:31 -0400
-Received: (qmail 6381 invoked by uid 109); 8 Apr 2017 10:43:30 -0000
+        id S1752254AbdDHK7G (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 06:59:06 -0400
+Received: (qmail 7921 invoked by uid 109); 8 Apr 2017 10:59:03 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 10:43:30 +0000
-Received: (qmail 10907 invoked by uid 111); 8 Apr 2017 10:43:49 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 10:59:03 +0000
+Received: (qmail 10951 invoked by uid 111); 8 Apr 2017 10:59:23 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 06:43:49 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 06:43:28 -0400
-Date:   Sat, 8 Apr 2017 06:43:28 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 06:59:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 06:59:01 -0400
+Date:   Sat, 8 Apr 2017 06:59:01 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v6 0/3] read-cache: speed up add_index_entry
-Message-ID: <20170408104328.3iuvedkewygkovnb@sigill.intra.peff.net>
-References: <20170406163442.36463-1-git@jeffhostetler.com>
- <20170407044626.ypsqnyxguw43gprm@sigill.intra.peff.net>
- <6f31ee65-517e-419c-b0c1-3ccdd3f95b37@jeffhostetler.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jo@durchholz.org
+Subject: Re: [PATCH] submodule: prevent backslash expantion in submodule names
+Message-ID: <20170408105901.2osi2zadboqxhf34@sigill.intra.peff.net>
+References: <CAGZ79ka7PEWy2iA8V9s11n2kyD=vHyS2y1K3SJzDq-5HsY7how@mail.gmail.com>
+ <20170407172306.172673-1-bmwill@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <6f31ee65-517e-419c-b0c1-3ccdd3f95b37@jeffhostetler.com>
+In-Reply-To: <20170407172306.172673-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 07, 2017 at 02:27:24PM -0400, Jeff Hostetler wrote:
+On Fri, Apr 07, 2017 at 10:23:06AM -0700, Brandon Williams wrote:
 
-> > Just thinking about this algorithmically for a moment. You're saving the
-> > binary search when the input is given in sorted order. But in other
-> > cases you're adding an extra strcmp() before the binary search begins.
-> > So it's a tradeoff.
-> > 
-> > How often is the input sorted?  You save O(log n) strcmps for a "hit"
-> > with your patch, and one for a "miss". So it's a net win if we expect at
-> > least 1/log(n) of additions to be sorted (I'm talking about individual
-> > calls, but it should scale linearly either way over a set of n calls).
-> > 
-> > I have no clue if that's a reasonable assumption or not.
+> When attempting to add a submodule with backslashes in its name 'git
+> submodule' fails in a funny way.  We can see that some of the
+> backslashes are expanded resulting in a bogus path:
 > 
-> I was seeing checkout call merge_working_tree to iterate over the
-> source index/trees and call add_index_entry() for each.  For example,
-> in a "checkout -b" like operation where both sides are the same, this
-> calls keep_entry() which appends the entry to the new index array.
-> The append path should always be taken because the iteration is being
-> driven from a sorted list.
+> git -C main submodule add ../sub\\with\\backslash
+> fatal: repository '/tmp/test/sub\witackslash' does not exist
+> fatal: clone of '/tmp/test/sub\witackslash' into submodule path
 > 
-> I would think calls to add/stage individual files arrive in random
-> order, so I'm not suggesting replacing the code -- just checking the
-> end first.
+> To solve this, convert calls to 'read' to 'read -r' in git-submodule.sh
+> in order to prevent backslash expantion in submodule names.
 
-Right, what I was wondering is how much this costs in those random-order
-cases. We _know_ it speeds up the cases you care about, but I want to
-make sure that it is not making some other case worse. How often do the
-random-order cases come up, and how much are they slowed?
+This looks sane overall, without digging into the individual read calls.
 
-I suspect in practice that calls here fall into one of two camps:
-feeding a small-ish (compared to the total number of entries) set of
-paths, or feeding _every_ path. And if you are feeding every path, you
-are likely to do so in sorted order, rather than a random jumble. So it
-helps in the big cases, and the small cases are presumably small enough
-that we don't care much.
+The reason I mentioned escaping earlier is I wondered what would happen
+when the submodule starts with a double-quote, or has a newline in the
+name. Git's normal quoting would include backslash escape sequences, and
+I wondered if we might be relying on any of these "read" calls to
+interpret them. But I don't think so, for two reasons.
 
-At least that seems like a plausible line of reasoning to me. ;)
+One, because that quoting also puts double-quotes around the name. So
+plain "read" would not be sufficient to de-quote for us anyway.
+
+And two, because these are being fed from "submodule--helper", which
+does not seem to quote in the first place.
+
+So I think your patch is fine there. But it does raise a few concerns.
+It looks like git-submodule does not cope well with exotic filenames:
+
+  $ git submodule add /some/repo "$(printf 'sub with\nnewline')"
+  Cloning into '/home/peff/tmp/sub with
+  newline'...
+  done.
+  error: invalid key (newline): submodule.sub with
+  newline.url
+  error: invalid key (newline): submodule.sub with
+  newline.path
+  Failed to register submodule 'sub with
+  newline'
+
+I'm not too worried about that. It's a nonsense request, and our config
+format has no syntactic mechanism to represent that key. So tough luck.
+But what I am more worried about is:
+
+  $ git submodule--helper list
+  160000 576053ed5ad378490974fabe97e4bd59633d2d1e 0	sub with
+  newline
+
+That's obviously nonsense that git-submodule.sh is going to choke on.
+But what happens when the filename is:
+
+  foo\n16000 <sha1> 0\t../../escaped
+
+or something. Can a malicious repository provoke git-submodule.sh to
+look at or modify files outside the repository?
 
 -Peff
