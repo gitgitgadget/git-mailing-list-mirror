@@ -2,85 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8246C20970
-	for <e@80x24.org>; Sat,  8 Apr 2017 16:26:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE58E20970
+	for <e@80x24.org>; Sat,  8 Apr 2017 17:30:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752224AbdDHQ0o (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 12:26:44 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:35104 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751735AbdDHQ0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 12:26:42 -0400
-Received: by mail-it0-f46.google.com with SMTP id y18so8337353itc.0
-        for <git@vger.kernel.org>; Sat, 08 Apr 2017 09:26:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=wAsXMc8zuQAJ4WNuKw2jj9Ugd20/Yxe4cVp+hx5+N7A=;
-        b=fhHXRZwwj37AhAJYu4J2JvpZWLoYJPN7zt5/zVSGN5yfQh65We7/ze6LjPFxHgxJzf
-         B4aZwOAaHTqwd3jbGW6w1Jz5O9GLEl8FhMdoeIOtrMvECYpoUGGWwOUqFYaAb6xkLBmf
-         9BIaVJQxiQFefK8jk3F6Cq2hivw3jRQIAFJaQBZCsbgtkZhVQvSkGV8DHcL/w/t0lyR0
-         lGPnUfqsvxQwlCOKApVxILEeYYZyY6jk/386faEPbROru8Yxus+JFR3cL3iFF3u2opti
-         Vr2NT+cpoD3PaS+wo0E/NQm2mQbG4Q8C/FB9phrZE49R7BAeyTHWg1aQoRkEP1Fuqk/W
-         v9wA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=wAsXMc8zuQAJ4WNuKw2jj9Ugd20/Yxe4cVp+hx5+N7A=;
-        b=XmAtjxuo1K0RTXFvkQDY9+kVWT9A3v089bW4Nqx+FNzdWl1TmzM3kjrBjdb+bJdu73
-         rxbVlqxVx4l44GuBCy1VQAiOjeMECBBwj8Fu8PY4rf8wK8rDWTV0hu2MKdTvePKNYJoW
-         L/VqAwT4xjZhtiPlU8aTGw5bMTUYNVdsbiAA4YSqahXdKPo3W6Xu3TbbAI7FRLOAf8EQ
-         9uLhNYo1V6Ut1bGQB/LWqXlGyl+XQAgLvJ9mkEWw5LcWvH6Rct0M0WT07XK8hDxlW4fb
-         X8Mh/wY8PfIL+HCqW4yVSohxy8u/I6ykXmrJs7n5LDMJkbtH2KjtyhGd6p7+k52C2Fcl
-         Q2wA==
-X-Gm-Message-State: AN3rC/64THoE1EZJEraYU0SW3+OEBUjLFTCiORFE0VNQzPeQsbpsBTvFFud1FUulxRBsbjECH2AVju6xiZFNyg==
-X-Received: by 10.36.43.77 with SMTP id h74mr4417641ita.60.1491668801591; Sat,
- 08 Apr 2017 09:26:41 -0700 (PDT)
+        id S1753067AbdDHR3n convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 8 Apr 2017 13:29:43 -0400
+Received: from dd28836.kasserver.com ([85.13.147.76]:38068 "EHLO
+        dd28836.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751585AbdDHR2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 13:28:37 -0400
+Received: from [192.168.42.152] (dslb-188-102-145-188.188.102.pools.vodafone-ip.de [188.102.145.188])
+        by dd28836.kasserver.com (Postfix) with ESMTPSA id 410F1300074;
+        Sat,  8 Apr 2017 19:28:35 +0200 (CEST)
+To:     avarab@gmail.com (=?ISO-8859-1?Q?=C6var_Arnfj=F6r=3F_Bjarmason?=)
+Cc:     matt@mattmccutchen.net (Matt McCutchen), git@vger.kernel.org (git)
+In-Reply-To: <CACBZZX4x0kJVWSkmQa+j6yn-w3m-u8ZiXDPZ60KG+ruvhejqNQ@mail.gmail.com>
+Subject: Re: Tools that do an automatic fetch defeat "git push --force-with-lease"
+From:   lists@haller-berlin.de (Stefan Haller)
+Date:   Sat, 8 Apr 2017 19:28:35 +0200
+Message-ID: <1n46fel.1dbwuj6b61w2oM%lists@haller-berlin.de>
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Sat, 8 Apr 2017 09:26:20 -0700 (PDT)
-In-Reply-To: <CAJgfmqU+1Ex1YkP94H2amXV+oqscbQwvb-CueuCiM7-n0AAP8Q@mail.gmail.com>
-References: <CAJgfmqU+1Ex1YkP94H2amXV+oqscbQwvb-CueuCiM7-n0AAP8Q@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 8 Apr 2017 18:26:20 +0200
-Message-ID: <CACBZZX4fDu-o+ERiTyjVq2rWkXK6rjErU4KyW33qMx1_6vjMCQ@mail.gmail.com>
-Subject: Re: Feature request: --format=json
-To:     "Fred .Flintstone" <eldmannen@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
+User-Agent: MacSOUP/2.8.6b1 (Mac OS 10.12.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 8, 2017 at 6:07 PM, Fred .Flintstone <eldmannen@gmail.com> wrote:
-> $ git log --format=json
-> [{
->     "commit": "64eabf050e315a4c7a11e0c05ca163be7cf9075e",
->     "tree": "b1e977800f40bbf6de906b1fe4f2de4b4b14f0fd",
->     "author": "Tux <tux@example.com> 1490981516 +0200",
->     "committer": "Tux <tux@example.com> 1490981516 +0200",
->     "message": "This is a test commit",
->     "long_message": "This explains in more details the commit"
-> }]
+Ævar Arnfjör? Bjarmason <avarab@gmail.com> wrote:
+
+> On Sat, Apr 8, 2017 at 5:03 PM, Stefan Haller <lists@haller-berlin.de> wrote:
 >
-> This would make it easy to parse the output.
+> > Here's a rough proposal for how I would imagine this to work.
+> >
+> > For every local branch that has a remote tracking branch, git maintains
+> > a new config entry branch.*.integrated, which records the sha1 of the
+> > last upstream commit that was integrated into the local branch.
+> 
+> Can you elaborate on what "integrate" means in this context?
+> 
+> In some ways the entire point of this feature is that you're trying to
+> push over history that you don't want to integrate.
+> 
+> I.e. you're trying to force push your unrelated X over remote history
+> A, but not more recent arbitrary history B based on A which someone
+> may have just pushed.
+> 
+> I'm having a hard time imagining how anything merge/rebase/whatever
+> would place in branch.*.integrated wouldn't just be a roundabout way
+> of recording the info we now record via the tracking branch, or in
+> cases where that's auto-updated for some reason having another
+> tracking branch as my "[PATCH] push: document & test
+> --force-with-lease with multiple remotes" suggests.
 
-The git-log command isn't plumbing that's meant for machines, but the
-git-for-each-ref command is what you're most likely looking for.
+It doesn't matter whether the history you are overwriting is arbitrary,
+or whether the new history you are pushing is related or unrelated to
+what you are overwriting. What matters is whether you are aware of what
+you are overwriting.
 
-It doesn't have JSON output, but you can make e.g. --format emit
-something even more easily parsable, e.g. a version of what you have
-with each field delimited by a custom delimiter, and then split on
-that.
+I want to record all cases where the local branch is brought up to date
+with the tracking branch (or vice versa), i.e. mostly push and pull,
+because I know that after pushing or pulling, my local branch is up to
+date (in some way) with the tracking branch. If I then rewrite the local
+branch, I know it is safe to push it *if* the branch on the remote is
+still in the same state as what I recorded for last push or pull.
 
-It does have --perl, --tcl etc. options to make it easy to quote the
-fields, however there's no logic to manage the state machine JSON
-would need to omit trailing commas, whereas emitting output for
-languages like Perl where trailing commas don't matter is much easier.
+If the tracking branch is updated by fetch though, then my local branch
+is not brought up to date with the remote branch, so I may be
+overwriting stuff that appeared on the remote without me being aware of
+it.
+
+It may well be that there are better names then "integrate"; suggestions
+welcome.
+
+Your suggestion to use a second remote doesn't seem like a satisfactory
+solution to me, firstly because it's extra work and complexity for the
+user, and second because it doesn't solve the problem of working with
+more than one local branch (pulling one branch amounts to a fetch for
+the other).
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
