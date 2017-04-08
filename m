@@ -2,84 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CF011FAFB
-	for <e@80x24.org>; Sat,  8 Apr 2017 08:26:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AEC31FAFB
+	for <e@80x24.org>; Sat,  8 Apr 2017 09:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752124AbdDHI0T (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 04:26:19 -0400
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:32975 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751747AbdDHI0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 04:26:05 -0400
-Received: by mail-lf0-f44.google.com with SMTP id h125so51549743lfe.0
-        for <git@vger.kernel.org>; Sat, 08 Apr 2017 01:26:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WC+SuetC7AVVh8QUBJQlMoU9IiI42QH6a0ZexHia9wY=;
-        b=VMPOXwMdSVVtnjUc24/ggtKlAjyCcnZ8v2CRAv0niWF1MA2MUBvSO2l8MqCAS69Tdp
-         2rn1gw6Vgkew2dpTZQ0M5xuIrkVkI1cVsRWcAdUOUsQq3bo7LnjmROBRwtZKTda+Z8Ch
-         gfvJaIdTwERQBkNhd20+kfq7PFgEOUZVNR/yFDohtF8KKoiGUj/o951F7TAhCknVeUT9
-         DxtKcplURyYx3QUaEIG5MO85iToDXEJgAN0jHMJb2jpXas8NsaMWf4o4/xPkeLa96WG+
-         ufukY4nAG8vGlFmKG2Z0sOxQX+YS9lwgdu+z+wN1YDRe9R1CFwARt1parhIdbAJ9KX7i
-         /KoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WC+SuetC7AVVh8QUBJQlMoU9IiI42QH6a0ZexHia9wY=;
-        b=kyo7XRpb1tMJh2jC8v3PO0i/wyRNrSPI1J/gac7REs7Hz7UPASIIneF29uUHP3xmcM
-         exgpxI8K2Id7NH32KZxMEnYh+7cROeoe/4cjidkFnhzv9DR0f6MvuqzTOOSwAO7IiFB6
-         +GHzOsB0r3uZ0492+El7RIrVBPcEVFNUWHDwH7VuYCtTGOj9mbQn3X2nQo1wdfdXLBCx
-         NYuIvEy1Ik5JPzinT4Cy6nQMpkk+k4G0yf/zQRsLld5ZNlWQIgfbXX2X+xW+rM9Drb1q
-         pxSuyQunOhdb/hJSJkuj7Nu9X4MG0doUuhTObYOwWijYbX8BIHuqXUjCnf7WimnhX2c/
-         Qekg==
-X-Gm-Message-State: AN3rC/74DLe9rawukDIrhMQRSrv7uCAuoTHzD/Asrkg3ODFvA+OGVVzsWC8Luz9kmA2/wEZaHQDBBLko+7NShg==
-X-Received: by 10.25.24.217 with SMTP id 86mr2749802lfy.12.1491639964228; Sat,
- 08 Apr 2017 01:26:04 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.145.30 with HTTP; Sat, 8 Apr 2017 01:25:43 -0700 (PDT)
-In-Reply-To: <1491617750.2149.10.camel@mattmccutchen.net>
+        id S1752013AbdDHJ3Q (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 05:29:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58431 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751968AbdDHJ3P (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 05:29:15 -0400
+Received: (qmail 32000 invoked by uid 109); 8 Apr 2017 09:29:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 09:29:12 +0000
+Received: (qmail 10327 invoked by uid 111); 8 Apr 2017 09:29:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 05:29:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 05:29:10 -0400
+Date:   Sat, 8 Apr 2017 05:29:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Matt McCutchen <matt@mattmccutchen.net>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tools that do an automatic fetch defeat "git push
+ --force-with-lease"
+Message-ID: <20170408092910.g5wl2ew4cfu7wzft@sigill.intra.peff.net>
 References: <1491617750.2149.10.camel@mattmccutchen.net>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sat, 8 Apr 2017 01:25:43 -0700
-Message-ID: <CA+P7+xrVe7jnqpQFvYBb25ofrNqnRspdk-M6jRuwRi5sUqCCZg@mail.gmail.com>
-Subject: Re: Tools that do an automatic fetch defeat "git push --force-with-lease"
-To:     Matt McCutchen <matt@mattmccutchen.net>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+ <CACBZZX7MeX-6RHgh2Fa9+YL03mjxs8xmyE86HnVxBxjMYizcig@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX7MeX-6RHgh2Fa9+YL03mjxs8xmyE86HnVxBxjMYizcig@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 7, 2017 at 7:15 PM, Matt McCutchen <matt@mattmccutchen.net> wrote:
-> When I'm rewriting history, "git push --force-with-lease" is a nice
-> safeguard compared to "git push --force", but it still assumes the
-> remote-tracking ref gives the old state the user wants to overwrite.
-> Tools that do an implicit fetch, assuming it to be a safe operation,
-> may break this assumption.  In the worst case, Visual Studio Code does
-> an automatic fetch every 3 minutes by default [1], making
-> --force-with-lease pretty much reduce to --force.
->
+On Sat, Apr 08, 2017 at 09:35:04AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Isn't the point of force-with-lease to actually record a "commit" id,
-and not pass it a branch name, but actually the sha1 you intend the
-remote server to be at? Sure if you happen to pass it a branch or
-remote name it will interpret it for yuou, but you should be able to
-do something like
+> Is it correct that you'd essentially want something that works like:
+> 
+>     git push --force-with-lease=master:master origin master:master
 
-current=$(git rev-parse origin/branch)
-<verify current is correct and then do your rewind stuff>
-git push --force-with-lease=$current
+I don't think that would do anything useful. It would reject any push
+where the remote "master" is not the same as your own master. And of
+course if they _are_ the same, then the push is a noop.
 
-and this will work regardless of when if if you fetch in between?
+> I haven't used this feature but I'm surprised it works the way it
+> does, as you point out just having your remote refs updated isn't a
+> strong signal for wanting to clobber whatever that ref points to.
 
-Thanks,
-Jake
+The point of the --force-with-lease feature is that you would mark a
+point in time where you started some rewind-y operation (like a rebase),
+and at the end you would want to make sure nobody had moved the remote
+ref when you push over it (which needs to be a force because of the
+rewind).
+
+So the best way to use it is something like:
+
+  git fetch              ;# update 'master' from remote
+  git tag base master    ;# mark our base point
+  git rebase -i master   ;# rewrite some commits
+  git push --force-with-lease=master:base master:master
+
+That final operation will fail if somebody else pushed in the meantime.
+But obviously this workflow is a pain, because you have to manually mark
+the start of the unsafe operation with a tag.
+
+If you haven't fetched in the meantime, then origin/master is a good
+approximation of "base". But if you have fetched, then it is worthless.
+
+It would be nice if we could automatically deduce the real value of
+base. I don't think we could do it in a foolproof way, but I wonder if
+we could come close in some common circumstances. For instance, imagine
+that unsafe operations like rebase would note that "master" has an
+upstream of "origin/master", and would record a note saying "we took a
+lease for origin/master at sha1 X".
+
+One trouble with that is that you may perform several unsafe operations.
+For example, imagine it takes you multiple rebases to achieve your final
+state:
+
+  git fetch
+  git rebase -i master
+  git rebase -i master
+  git push --force-with-lease=master
+
+and that --force-with-lease now defaults to whatever lease-marker is
+left by rebase. Which marker should it respect? If the second one, then
+it's unsafe. But if the first one, then how do we deal with stale
+markers?
+
+Perhaps it would be enough to reset the markers whenever the ref is
+pushed. I haven't thought it through well enough to know whether that
+just hits more corner cases.
+
+-Peff
