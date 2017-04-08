@@ -2,92 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE58E20970
-	for <e@80x24.org>; Sat,  8 Apr 2017 17:30:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 879BF20970
+	for <e@80x24.org>; Sat,  8 Apr 2017 20:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753067AbdDHR3n convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 8 Apr 2017 13:29:43 -0400
-Received: from dd28836.kasserver.com ([85.13.147.76]:38068 "EHLO
-        dd28836.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751585AbdDHR2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 13:28:37 -0400
-Received: from [192.168.42.152] (dslb-188-102-145-188.188.102.pools.vodafone-ip.de [188.102.145.188])
-        by dd28836.kasserver.com (Postfix) with ESMTPSA id 410F1300074;
-        Sat,  8 Apr 2017 19:28:35 +0200 (CEST)
-To:     avarab@gmail.com (=?ISO-8859-1?Q?=C6var_Arnfj=F6r=3F_Bjarmason?=)
-Cc:     matt@mattmccutchen.net (Matt McCutchen), git@vger.kernel.org (git)
-In-Reply-To: <CACBZZX4x0kJVWSkmQa+j6yn-w3m-u8ZiXDPZ60KG+ruvhejqNQ@mail.gmail.com>
-Subject: Re: Tools that do an automatic fetch defeat "git push --force-with-lease"
-From:   lists@haller-berlin.de (Stefan Haller)
-Date:   Sat, 8 Apr 2017 19:28:35 +0200
-Message-ID: <1n46fel.1dbwuj6b61w2oM%lists@haller-berlin.de>
+        id S1752577AbdDHUbI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 16:31:08 -0400
+Received: from mail-lf0-f48.google.com ([209.85.215.48]:32810 "EHLO
+        mail-lf0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752489AbdDHUbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 16:31:03 -0400
+Received: by mail-lf0-f48.google.com with SMTP id h125so55442070lfe.0
+        for <git@vger.kernel.org>; Sat, 08 Apr 2017 13:31:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9GqrcrFKYtENSiyRAI9h34f2P6qd2f5yt6rQZXpORa8=;
+        b=Yq445pIP61fjL5yGx6sO6kkkkxqtGHEotdmX6XVVC1fZNtB0wTz9/cFBVCr6QGJvvg
+         ueUkTvl2ovv7nKp1uaf+E12xkcapgiZnatmHD0uBQtdoVhKx5QRxzeApBnxYrGW6bjnV
+         ZCP/ZST1zDm/M7NtR4jR8hmzNtvWhCluppq1fmiNBW384UA9w+8wshrtUYJcFtTVtT51
+         ajPh4Xx9YTsKNz8LJG/LFq1cApFVGASVD1g0zgQkUB8jDpqpgx1HmG8br2ofRNHF38Qj
+         5vN0Q4MpENvgJN4Nkhggr/jC4Xf/XzEQs0u+VyF31yCAxFpF4q5M7NjJYO3DvOLBamEE
+         +X7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9GqrcrFKYtENSiyRAI9h34f2P6qd2f5yt6rQZXpORa8=;
+        b=QVoYqBbLSEUr6ArvJihr3ZfxwU4Itz11O7AuNB6LgHzq/qRu5n6sA3Mi1ez7M6uL5I
+         91kIYuErp2akVgLireP/lt7FyPKx3lK8ObMkE1dIqPh4VU3mvBYcLIHTYwHYpSIGIde/
+         x23F/X4YihYiumx7BSqFF7xMhmOddRvVOs74GPuPfju5HmYNSwEJZWStYks44Gc0PtjS
+         zQjkaqmNSOs4F6Ntps8iYlzxle3PtNL1M6eOsIFokBJM7skZKTg0lWZL0tPiI/cZh1mo
+         gG/9q0SYE8cTduSE2HkQiNbplqDWasisGFo19vXrlKUhKTi/kjSEk908EzPHt74blAm7
+         bA4A==
+X-Gm-Message-State: AFeK/H3rhVnxyPIwOQxK2uBI3bqXf9NHfBwMaBnRVJNrwIlyFuJpzNfsTQTUYZMv1wzCBg==
+X-Received: by 10.46.5.148 with SMTP id 142mr14726351ljf.46.1491683461236;
+        Sat, 08 Apr 2017 13:31:01 -0700 (PDT)
+Received: from kicer.localnet (095160130254.rudaslaska.vectranet.pl. [95.160.130.254])
+        by smtp.googlemail.com with ESMTPSA id f72sm1819626lfk.2.2017.04.08.13.31.00
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 08 Apr 2017 13:31:00 -0700 (PDT)
+From:   "=?utf-8?B?TWljaGHFgg==?= Walenciak" <kicer86@gmail.com>
+X-Google-Original-From: =?utf-8?B?TWljaGHFgg==?= Walenciak <Kicer86@gmail.com>
+To:     git@vger.kernel.org
+Subject: broken text encoding in commit author name
+Date:   Sat, 08 Apr 2017 22:30:55 +0200
+Message-ID: <12228342.8FuY78Fyzc@kicer>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
-User-Agent: MacSOUP/2.8.6b1 (Mac OS 10.12.4)
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjör? Bjarmason <avarab@gmail.com> wrote:
+Hi
 
-> On Sat, Apr 8, 2017 at 5:03 PM, Stefan Haller <lists@haller-berlin.de> wrote:
->
-> > Here's a rough proposal for how I would imagine this to work.
-> >
-> > For every local branch that has a remote tracking branch, git maintains
-> > a new config entry branch.*.integrated, which records the sha1 of the
-> > last upstream commit that was integrated into the local branch.
-> 
-> Can you elaborate on what "integrate" means in this context?
-> 
-> In some ways the entire point of this feature is that you're trying to
-> push over history that you don't want to integrate.
-> 
-> I.e. you're trying to force push your unrelated X over remote history
-> A, but not more recent arbitrary history B based on A which someone
-> may have just pushed.
-> 
-> I'm having a hard time imagining how anything merge/rebase/whatever
-> would place in branch.*.integrated wouldn't just be a roundabout way
-> of recording the info we now record via the tracking branch, or in
-> cases where that's auto-updated for some reason having another
-> tracking branch as my "[PATCH] push: document & test
-> --force-with-lease with multiple remotes" suggests.
+since git 2.12 I'm having random problems with broken text enciding in auth=
+or=20
+name.
 
-It doesn't matter whether the history you are overwriting is arbitrary,
-or whether the new history you are pushing is related or unrelated to
-what you are overwriting. What matters is whether you are aware of what
-you are overwriting.
+As an example broken commit:
+Author: Micha=C3=85=C2=82 Walenciak <Kicer86@gmail.com>  2017-04-07 21:38:23
+Committer: Micha=C5=82 Walenciak <Kicer86@gmail.com>  2017-04-07 21:38:33
 
-I want to record all cases where the local branch is brought up to date
-with the tracking branch (or vice versa), i.e. mostly push and pull,
-because I know that after pushing or pulling, my local branch is up to
-date (in some way) with the tracking branch. If I then rewrite the local
-branch, I know it is safe to push it *if* the branch on the remote is
-still in the same state as what I recorded for last push or pull.
+good commit:=20
+Author: Micha=C5=82 Walenciak <Kicer86@gmail.com>  2017-04-08 21:21:15
+Committer: Micha=C5=82 Walenciak <Kicer86@gmail.com>  2017-04-08 21:21:15
 
-If the tracking branch is updated by fetch though, then my local branch
-is not brought up to date with the remote branch, so I may be
-overwriting stuff that appeared on the remote without me being aware of
-it.
+Broken commits are quite rare and I cannot find any rule when they happen.
+Git 2.12.2 here, Arch linux.
 
-It may well be that there are better names then "integrate"; suggestions
-welcome.
+regards
 
-Your suggestion to use a second remote doesn't seem like a satisfactory
-solution to me, firstly because it's extra work and complexity for the
-user, and second because it doesn't solve the problem of working with
-more than one local branch (pulling one branch amounts to a fetch for
-the other).
-
-
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+=2D-=20
+Micha=C5=82 Walenciak
+gmail.com kicer86
+http://kicer.sileman.net.pl
+gg: 3729519
