@@ -6,218 +6,128 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5421D209F1
-	for <e@80x24.org>; Sat,  8 Apr 2017 10:11:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04F0D1FAFB
+	for <e@80x24.org>; Sat,  8 Apr 2017 10:36:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752012AbdDHKLt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 06:11:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58454 "EHLO cloud.peff.net"
+        id S1751660AbdDHKgV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 06:36:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58462 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751772AbdDHKLr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 06:11:47 -0400
-Received: (qmail 3247 invoked by uid 109); 8 Apr 2017 10:11:44 -0000
+        id S1751397AbdDHKgT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 06:36:19 -0400
+Received: (qmail 5670 invoked by uid 109); 8 Apr 2017 10:36:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 10:11:44 +0000
-Received: (qmail 10505 invoked by uid 111); 8 Apr 2017 10:12:04 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 10:36:16 +0000
+Received: (qmail 10840 invoked by uid 111); 8 Apr 2017 10:36:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 06:12:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 06:11:42 -0400
-Date:   Sat, 8 Apr 2017 06:11:42 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 06:36:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 06:36:14 -0400
+Date:   Sat, 8 Apr 2017 06:36:14 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@jeffhostetler.com
 Cc:     git@vger.kernel.org, gitster@pobox.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v7 1/3] read-cache: add strcmp_offset function
-Message-ID: <20170408101142.iztq3lxcaayw2w6q@sigill.intra.peff.net>
+Subject: Re: [PATCH v7 2/3] p0004-read-tree: perf test to time read-tree
+Message-ID: <20170408103614.w6xhbdbslonwcr65@sigill.intra.peff.net>
 References: <20170407212047.64950-1-git@jeffhostetler.com>
- <20170407212047.64950-2-git@jeffhostetler.com>
+ <20170407212047.64950-3-git@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170407212047.64950-2-git@jeffhostetler.com>
+In-Reply-To: <20170407212047.64950-3-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 07, 2017 at 09:20:45PM +0000, git@jeffhostetler.com wrote:
+On Fri, Apr 07, 2017 at 09:20:46PM +0000, git@jeffhostetler.com wrote:
 
-> diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
-> new file mode 100644
-> index 0000000..03e1eef
-> --- /dev/null
-> +++ b/t/helper/test-strcmp-offset.c
-> @@ -0,0 +1,64 @@
-> +#include "cache.h"
-> +
-> +struct test_data {
-> +	const char *s1;
-> +	const char *s2;
-> +	size_t expected_first_change; /* or strlen() when equal */
-> +};
-> +
-> +static struct test_data data[] = {
-> +	{ "abc", "abc", 3 },
-> +	{ "abc", "def", 0 },
-> +
-> +	{ "abc", "abz", 2 },
-> +
-> +	{ "abc", "abcdef", 3 },
-> +
-> +	{ "abc\xF0zzz", "abc\xFFzzz", 3 },
-> +
-> +	{ NULL, NULL, 0 }
-> +};
+> diff --git a/t/perf/p0004-read-tree.sh b/t/perf/p0004-read-tree.sh
+> new file mode 100755
+> index 0000000..a70e969
 
-I've been thinking a bit on the comments on earlier rounds regarding C
-tests. I think in the early days, we generally had plumbing that exposed
-the C interfaces in a pretty transparent way. I.e., it was reasonable to
-unit-test update-index, because you pretty much know how input to it
-will map to the code and data structures used.
+I think p0004 is taken by your lazy-init-name-hash script already
+(which, btw, I think is missing its executable bit).
 
-These days we have more C infrastructure, and it's sometimes hard to
-tickle the exact inputs to those modules through plumbing commands. So I
-don't really object to adding module-specific helpers that make it easy
-to unit test these underlying modules.
-
-I'm not sure how I feel about sticking test data in the helpers, though.
-A higher level language like shell is actually pretty good for passing
-data around. Passing in the input makes it much easier to prod a helper
-with new test cases, see its output, run it in a debugger for a specific
-case, etc.
-
-It also integrates better with our test suite. For instance, here:
-
-> +	if (r_tst_sign != r_exp_sign) {
-> +		error("FAIL: '%s' vs '%s', result expect %d, observed %d\n",
-> +			  sa, sb, r_exp_sign, r_tst_sign);
-> +		failed = 1;
-> +	}
-> +
-> +	if (offset != expected_first_change) {
-> +		error("FAIL: '%s' vs '%s', offset expect %lu, observed %lu\n",
-> +			  sa, sb, expected_first_change, offset);
-> +		failed = 1;
-> +	}
-> +
-> +	return failed;
+> +## usage: dir depth width files
+> +fill_index() {
+> +	awk -v arg_dir=$1 -v arg_depth=$2 -v arg_width=$3 -v arg_files=$4 '
+> +		function make_paths(dir, depth, width, files, f, w) {
+> +			for (f = 1; f <= files; f++) {
+> +				print dir "/file" f
+> +			}
+> +			if (depth > 0) {
+> +				for (w = 1; w <= width; w++) {
+> +					make_paths(dir "/dir" w, depth - 1, width, files)
+> +				}
+> +			}
+> +		}
+> +		END { make_paths(arg_dir, arg_depth, arg_width, arg_files) }
+> +' </dev/null |
+> +	sed "s/^/100644 $EMPTY_BLOB	/" |
+> +	git update-index --index-info
+> +	return 0
 > +}
 
-You're essentially rebuilding a test harness just for this one function,
-and the regular test harness only knows "did anything fail", and nothing
-about specific tests.
+I saw some discussion earlier on testing synthetic versus real
+repositories. The original point of the perf test suite was to find
+performance regressions between versions. So periodically you'd run:
 
-Perhaps something like:
+  cd t/perf
+  ./run v2.10.0 HEAD
 
- t/helper/test-strcmp-offset.c | 66 +++++++----------------------------
- t/t0065-strcmp-offset.sh      | 17 +++++++--
- 2 files changed, 26 insertions(+), 57 deletions(-)
+and make sure that nothing got inexplicably slower. And for that, using
+real repositories is nice, because it's showing real user-impacting
+performance changes, not synthetic benchmarks.
 
-diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
-index 03e1eef8a..1fdf4d137 100644
---- a/t/helper/test-strcmp-offset.c
-+++ b/t/helper/test-strcmp-offset.c
-@@ -1,64 +1,22 @@
- #include "cache.h"
- 
--struct test_data {
--	const char *s1;
--	const char *s2;
--	size_t expected_first_change; /* or strlen() when equal */
--};
--
--static struct test_data data[] = {
--	{ "abc", "abc", 3 },
--	{ "abc", "def", 0 },
--
--	{ "abc", "abz", 2 },
--
--	{ "abc", "abcdef", 3 },
--
--	{ "abc\xF0zzz", "abc\xFFzzz", 3 },
--
--	{ NULL, NULL, 0 }
--};
--
--int try_pair(const char *sa, const char *sb, size_t expected_first_change)
-+int cmd_main(int argc, const char **argv)
- {
--	int failed = 0;
--	int r_exp, r_tst, r_exp_sign, r_tst_sign;
-+	int result;
- 	size_t offset;
- 
-+	if (!argv[1] || !argv[2])
-+		die("usage: %s <string1> <string2>", argv[0]);
-+
-+	result = strcmp_offset(argv[1], argv[2], &offset);
-+
- 	/*
- 	 * Because differnt CRTs behave differently, only rely on signs
- 	 * of the result values.
- 	 */
--	r_exp = strcmp(sa, sb);
--	r_exp_sign = ((r_exp < 0) ? -1 : ((r_exp == 0) ? 0 : 1));
--
--	r_tst = strcmp_offset(sa, sb, &offset);
--	r_tst_sign = ((r_tst < 0) ? -1 : ((r_tst == 0) ? 0 : 1));
--
--	if (r_tst_sign != r_exp_sign) {
--		error("FAIL: '%s' vs '%s', result expect %d, observed %d\n",
--			  sa, sb, r_exp_sign, r_tst_sign);
--		failed = 1;
--	}
--
--	if (offset != expected_first_change) {
--		error("FAIL: '%s' vs '%s', offset expect %lu, observed %lu\n",
--			  sa, sb, expected_first_change, offset);
--		failed = 1;
--	}
--
--	return failed;
--}
--
--int cmd_main(int argc, const char **argv)
--{
--	int failed = 0;
--	int k;
--
--	for (k=0; data[k].s1; k++) {
--		failed += try_pair(data[k].s1, data[k].s2, data[k].expected_first_change);
--		failed += try_pair(data[k].s2, data[k].s1, data[k].expected_first_change);
--	}
--
--	return failed;
-+	result = result < 0 ? -1 :
-+		 result > 0 ? 1 :
-+		 0;
-+	printf("%d %"PRIuMAX"\n", result, (uintmax_t)offset);
-+	return 0;
- }
-diff --git a/t/t0065-strcmp-offset.sh b/t/t0065-strcmp-offset.sh
-index 0176c8c92..8c167d24b 100755
---- a/t/t0065-strcmp-offset.sh
-+++ b/t/t0065-strcmp-offset.sh
-@@ -4,8 +4,19 @@ test_description='Test strcmp_offset functionality'
- 
- . ./test-lib.sh
- 
--test_expect_success run_helper '
--	test-strcmp-offset
--'
-+while read s1 s2 expect
-+do
-+	test_expect_success "strcmp_offset($s1, $s2)" '
-+		echo "$expect" >expect &&
-+		test-strcmp-offset "$s1" "$s2" >actual &&
-+		test_cmp expect actual
-+	'
-+done <<-EOF
-+abc abc 0 3
-+abc def -1 0
-+abc abz -1 2
-+abc abcdef -1 3
-+$(printf "abc\360zzz") $(printf "abc\377zzz") -1 3
-+EOF
- 
- test_done
+In an ideal world, people run it against their own real repositories and
+can report back to the list when they see a problem. So running the
+whole suite against your monstrous Windows repo would be a nice
+benchmark to do periodically (I shudder to think how long it might take
+to run, though).
+
+Of course, perf scripts are also a nice way to show off your
+improvements. And synthetic repos can often exaggerate the improvement
+(which is sometimes good to see changes, but also sometimes bad if
+real-world repos don't show the improvement). And they also serve as a
+reproduction case for people who don't necessarily have access to the
+extreme repo that motivated the test in the first place.
+
+But one side effect of writing the perf test the way you have it here is
+that you _can't_ easily run it against a real repo. I think the perf
+suite could provide better tools for this. You can already say "run this
+test against repo X" with GIT_PERF_REPO. But there's no way to say
+"create a synthetic repo with parameters X,Y,Z, and run against that".
+
+IOW, I think rather than having the perf-scripts themselves create the
+synthetic repo, we should have a _library_ of synthetic repos that the
+test-runners can choose from. I'm imagining a world where your repo
+setup goes into t/perf/repos/many-files.sh (which could even take your
+depth, width, and files parameters to allow experimenting), and then you
+could run "GIT_PERF_REPO=many-files ./p0004-read-tree.sh".
+
+> +br_base=xxx_base_xxx
+> +br_work1=xxx_work1_xxx
+> +br_work2=xxx_work2_xxx
+> +br_work3=xxx_work3_xxx
+
+FWIW, I really dislike the extra level of indirection here. You still
+have to consistently say $br_base everywhere. Why not just call the
+branch "br_base" in the first place?
+
+My experience has been that debugging tests is much easier when as
+little state is carried in the environment as possible. Because it's
+quite often reasonable to do:
+
+  ./t1234-whatever.sh -v -i
+  cd trash*
+  git cmd-that-failed
+
+where you can pick the final line out from the failed test output. When
+the command involves $br_base, I have to dig into the script to find out
+what's in that variable.
+
+I know that perf tests need less debugging than the regular regression
+tests, but I'd hate to see this pattern get applied liberally.
+
+-Peff
