@@ -2,100 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A149620970
-	for <e@80x24.org>; Sat,  8 Apr 2017 22:08:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30FD4209F1
+	for <e@80x24.org>; Sat,  8 Apr 2017 22:13:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752151AbdDHWIA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 18:08:00 -0400
-Received: from mail-wr0-f181.google.com ([209.85.128.181]:33279 "EHLO
-        mail-wr0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751665AbdDHWH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 18:07:59 -0400
-Received: by mail-wr0-f181.google.com with SMTP id g19so83954221wrb.0
-        for <git@vger.kernel.org>; Sat, 08 Apr 2017 15:07:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding;
-        bh=m2wrCQoiyzzyio5KPbLpVNZ8sZOTc9ZiG4sR3ndoi9w=;
-        b=f5yd4B7agsDYgpk7k1spiqy80yFecSPV5EQhlBo5QGJeQb863xm7mLpwaBFoZHOQ29
-         n3xV2NNu8ww7FybNzs5z14JmCiELOgA5KFTRvbqbrvPpRCnUTsLxoIkrAQYg7G42T4c4
-         EMtAwvDRuyFEWbYODaxVffOFzxvUXjZ46jXW3/nvd5I3e1khMS16EQz8C8S4o4qYqXeU
-         8oDIdeJApucqpyFZQ6yLyksZDaA/+8tNIzuvxaqnXZFdQ1ypzl6aVJfCtDpgf06GFTT7
-         89RMRGJSZ5iAlK5AqfY1lA3ovfO+rMnN3Ixq5yDomk3KSgSFd9PHwFdB5n2oDFQEPSsD
-         Z+Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=m2wrCQoiyzzyio5KPbLpVNZ8sZOTc9ZiG4sR3ndoi9w=;
-        b=k+8SucD3g75V2hV/YpP0kZ3QnMo3K1/IhsRKzEYFxAJXNER4B3OpzSAZ4U97GUHFhB
-         QJo8m5H98eVs1jZsTU6oHLDRA1fklK5eMcyDnIPla12Su0AWAO1Ep/71iR0ecSRBKDef
-         Bkzqdw+tSqdH5Z9AIc/Nz5vMttzAZCFMmNcA4Y35wiEA83RAfJ4l5gs77CIXzxVdrBXR
-         EX5+V+/PT7JB6UmCcgkHsoRkqHYZSX6xM67uYbj/xcbayMDIuY7m2uRx08q8kSkGWzhf
-         tZ4LqBKXUMBuvhlJ+3LNvDUkE0jPaWJo+KtMtNX3y+SIw7EW8GY7zz4/AAgvWW4dtux9
-         Osig==
-X-Gm-Message-State: AN3rC/4wXLJST1rwFKhdlh4bRl3x/UHnlOi2qwNBj9pt3g0DIG+iSsjKLP0YInIImhwAvQ==
-X-Received: by 10.223.136.165 with SMTP id f34mr16021758wrf.145.1491689277878;
-        Sat, 08 Apr 2017 15:07:57 -0700 (PDT)
-Received: from [192.168.5.102] ([87.116.180.64])
-        by smtp.gmail.com with ESMTPSA id b31sm5964671wrb.7.2017.04.08.15.07.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Apr 2017 15:07:57 -0700 (PDT)
-Subject: Re: broken text encoding in commit author name
-To:     =?UTF-8?Q?Micha=c5=82_Walenciak?= <kicer86@gmail.com>,
-        git@vger.kernel.org
-References: <12228342.8FuY78Fyzc@kicer>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <e1836f50-1318-b72f-5507-b395be02e88d@gmail.com>
-Date:   Sun, 9 Apr 2017 00:07:52 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751585AbdDHWNG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 18:13:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58684 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751466AbdDHWNF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 18:13:05 -0400
+Received: (qmail 25815 invoked by uid 109); 8 Apr 2017 22:13:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 22:13:05 +0000
+Received: (qmail 14914 invoked by uid 111); 8 Apr 2017 22:13:24 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 18:13:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 18:13:02 -0400
+Date:   Sat, 8 Apr 2017 18:13:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tools that do an automatic fetch defeat "git push
+ --force-with-lease"
+Message-ID: <20170408221302.e7sv6cy4xayr2w7o@sigill.intra.peff.net>
+References: <1491617750.2149.10.camel@mattmccutchen.net>
+ <CACBZZX7MeX-6RHgh2Fa9+YL03mjxs8xmyE86HnVxBxjMYizcig@mail.gmail.com>
+ <20170408092910.g5wl2ew4cfu7wzft@sigill.intra.peff.net>
+ <CA+P7+xqfHDVKpVKVYbB-4kjb9ja+u4GVMwkTFrj0f0n_OXZfvQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <12228342.8FuY78Fyzc@kicer>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CA+P7+xqfHDVKpVKVYbB-4kjb9ja+u4GVMwkTFrj0f0n_OXZfvQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Michał,
+On Sat, Apr 08, 2017 at 02:54:29PM -0700, Jacob Keller wrote:
 
-On 08/04/2017 22:30, Michał Walenciak wrote:
-> Hi
+> > So the best way to use it is something like:
+> >
+> >   git fetch              ;# update 'master' from remote
+> >   git tag base master    ;# mark our base point
+> >   git rebase -i master   ;# rewrite some commits
+> >   git push --force-with-lease=master:base master:master
+> [...]
 > 
-> since git 2.12 I'm having random problems with broken text enciding in author 
-> name.
+> What if we added a separate command something like:
 > 
-> As an example broken commit:
-> Author: MichaÅ Walenciak <Kicer86@gmail.com>  2017-04-07 21:38:23
-> Committer: Michał Walenciak <Kicer86@gmail.com>  2017-04-07 21:38:33
+> git create-lease
 > 
-> good commit: 
-> Author: Michał Walenciak <Kicer86@gmail.com>  2017-04-08 21:21:15
-> Committer: Michał Walenciak <Kicer86@gmail.com>  2017-04-08 21:21:15
-> 
-> Broken commits are quite rare and I cannot find any rule when they happen.
-> Git 2.12.2 here, Arch linux.
+> which you're expected to run at the start of a rewind-y operation and
+> it creates a tag (or some other ref like a tag but in a different
+> namespace) which is used by force-with-lease?
 
-For what it`s worth, looking at the timestamp of the broken commit 
-example you`ve shown, could the problem be related to amending commits?
+So then you replace that "git tag" command above with "git
+create-lease". I think it's an incremental improvement because it would
+probably record which branch you're leasing. But I think the more
+important issue is that the user needs to remember to take the lease in
+the first place. A create-lease command doesn't help that.
 
-If so, are you amending through the command line, or maybe using some 
-tool (like "git-gui")...?
+> It might be possible to generate these lease tags prior to operations
+> which modify history and then maybe having a way to list them so you
+> can select which one you meant when you try to use force-with-lease..
 
-There was a similar discussion recently[1], not sure if it`s related 
-to your case.
+So yeah, I think that is the more interesting direction. I hadn't
+considered resolving the multiple-operation ambiguity at push time. But
+I guess it would be something like "you did a rebase on sha1 X at time
+T, and then one on Y at time T+N", and you pick which one you're
+expecting. Or maybe it could even cull old leases that are still
+ancestors of your push (so old, already-pushed rebases aren't
+mentioned). I suspect that ends up being equivalent to "clear the leases
+when you push". And I think that may be converging on the "integrate"
+refs that Stefan is talking about elsewhere (or some isomorphism of it).
 
-[1] 
-https://public-inbox.org/git/CAEPqvoz8s=CVLABuXx-zOzryrXwr_cb39G2TYJvvF
-XRYzpCBFQ@mail.gmail.com/
-
-Regards,
-Buga
+-Peff
