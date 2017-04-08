@@ -6,128 +6,78 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04F0D1FAFB
-	for <e@80x24.org>; Sat,  8 Apr 2017 10:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45A921FAFB
+	for <e@80x24.org>; Sat,  8 Apr 2017 10:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751660AbdDHKgV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 06:36:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58462 "EHLO cloud.peff.net"
+        id S1751949AbdDHKnc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 06:43:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58466 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751397AbdDHKgT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 06:36:19 -0400
-Received: (qmail 5670 invoked by uid 109); 8 Apr 2017 10:36:16 -0000
+        id S1751684AbdDHKnb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 06:43:31 -0400
+Received: (qmail 6381 invoked by uid 109); 8 Apr 2017 10:43:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 10:36:16 +0000
-Received: (qmail 10840 invoked by uid 111); 8 Apr 2017 10:36:36 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 10:43:30 +0000
+Received: (qmail 10907 invoked by uid 111); 8 Apr 2017 10:43:49 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 06:36:36 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 06:36:14 -0400
-Date:   Sat, 8 Apr 2017 06:36:14 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 06:43:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 06:43:28 -0400
+Date:   Sat, 8 Apr 2017 06:43:28 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@jeffhostetler.com
+To:     Jeff Hostetler <git@jeffhostetler.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v7 2/3] p0004-read-tree: perf test to time read-tree
-Message-ID: <20170408103614.w6xhbdbslonwcr65@sigill.intra.peff.net>
-References: <20170407212047.64950-1-git@jeffhostetler.com>
- <20170407212047.64950-3-git@jeffhostetler.com>
+Subject: Re: [PATCH v6 0/3] read-cache: speed up add_index_entry
+Message-ID: <20170408104328.3iuvedkewygkovnb@sigill.intra.peff.net>
+References: <20170406163442.36463-1-git@jeffhostetler.com>
+ <20170407044626.ypsqnyxguw43gprm@sigill.intra.peff.net>
+ <6f31ee65-517e-419c-b0c1-3ccdd3f95b37@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170407212047.64950-3-git@jeffhostetler.com>
+In-Reply-To: <6f31ee65-517e-419c-b0c1-3ccdd3f95b37@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 07, 2017 at 09:20:46PM +0000, git@jeffhostetler.com wrote:
+On Fri, Apr 07, 2017 at 02:27:24PM -0400, Jeff Hostetler wrote:
 
-> diff --git a/t/perf/p0004-read-tree.sh b/t/perf/p0004-read-tree.sh
-> new file mode 100755
-> index 0000000..a70e969
+> > Just thinking about this algorithmically for a moment. You're saving the
+> > binary search when the input is given in sorted order. But in other
+> > cases you're adding an extra strcmp() before the binary search begins.
+> > So it's a tradeoff.
+> > 
+> > How often is the input sorted?  You save O(log n) strcmps for a "hit"
+> > with your patch, and one for a "miss". So it's a net win if we expect at
+> > least 1/log(n) of additions to be sorted (I'm talking about individual
+> > calls, but it should scale linearly either way over a set of n calls).
+> > 
+> > I have no clue if that's a reasonable assumption or not.
+> 
+> I was seeing checkout call merge_working_tree to iterate over the
+> source index/trees and call add_index_entry() for each.  For example,
+> in a "checkout -b" like operation where both sides are the same, this
+> calls keep_entry() which appends the entry to the new index array.
+> The append path should always be taken because the iteration is being
+> driven from a sorted list.
+> 
+> I would think calls to add/stage individual files arrive in random
+> order, so I'm not suggesting replacing the code -- just checking the
+> end first.
 
-I think p0004 is taken by your lazy-init-name-hash script already
-(which, btw, I think is missing its executable bit).
+Right, what I was wondering is how much this costs in those random-order
+cases. We _know_ it speeds up the cases you care about, but I want to
+make sure that it is not making some other case worse. How often do the
+random-order cases come up, and how much are they slowed?
 
-> +## usage: dir depth width files
-> +fill_index() {
-> +	awk -v arg_dir=$1 -v arg_depth=$2 -v arg_width=$3 -v arg_files=$4 '
-> +		function make_paths(dir, depth, width, files, f, w) {
-> +			for (f = 1; f <= files; f++) {
-> +				print dir "/file" f
-> +			}
-> +			if (depth > 0) {
-> +				for (w = 1; w <= width; w++) {
-> +					make_paths(dir "/dir" w, depth - 1, width, files)
-> +				}
-> +			}
-> +		}
-> +		END { make_paths(arg_dir, arg_depth, arg_width, arg_files) }
-> +' </dev/null |
-> +	sed "s/^/100644 $EMPTY_BLOB	/" |
-> +	git update-index --index-info
-> +	return 0
-> +}
+I suspect in practice that calls here fall into one of two camps:
+feeding a small-ish (compared to the total number of entries) set of
+paths, or feeding _every_ path. And if you are feeding every path, you
+are likely to do so in sorted order, rather than a random jumble. So it
+helps in the big cases, and the small cases are presumably small enough
+that we don't care much.
 
-I saw some discussion earlier on testing synthetic versus real
-repositories. The original point of the perf test suite was to find
-performance regressions between versions. So periodically you'd run:
-
-  cd t/perf
-  ./run v2.10.0 HEAD
-
-and make sure that nothing got inexplicably slower. And for that, using
-real repositories is nice, because it's showing real user-impacting
-performance changes, not synthetic benchmarks.
-
-In an ideal world, people run it against their own real repositories and
-can report back to the list when they see a problem. So running the
-whole suite against your monstrous Windows repo would be a nice
-benchmark to do periodically (I shudder to think how long it might take
-to run, though).
-
-Of course, perf scripts are also a nice way to show off your
-improvements. And synthetic repos can often exaggerate the improvement
-(which is sometimes good to see changes, but also sometimes bad if
-real-world repos don't show the improvement). And they also serve as a
-reproduction case for people who don't necessarily have access to the
-extreme repo that motivated the test in the first place.
-
-But one side effect of writing the perf test the way you have it here is
-that you _can't_ easily run it against a real repo. I think the perf
-suite could provide better tools for this. You can already say "run this
-test against repo X" with GIT_PERF_REPO. But there's no way to say
-"create a synthetic repo with parameters X,Y,Z, and run against that".
-
-IOW, I think rather than having the perf-scripts themselves create the
-synthetic repo, we should have a _library_ of synthetic repos that the
-test-runners can choose from. I'm imagining a world where your repo
-setup goes into t/perf/repos/many-files.sh (which could even take your
-depth, width, and files parameters to allow experimenting), and then you
-could run "GIT_PERF_REPO=many-files ./p0004-read-tree.sh".
-
-> +br_base=xxx_base_xxx
-> +br_work1=xxx_work1_xxx
-> +br_work2=xxx_work2_xxx
-> +br_work3=xxx_work3_xxx
-
-FWIW, I really dislike the extra level of indirection here. You still
-have to consistently say $br_base everywhere. Why not just call the
-branch "br_base" in the first place?
-
-My experience has been that debugging tests is much easier when as
-little state is carried in the environment as possible. Because it's
-quite often reasonable to do:
-
-  ./t1234-whatever.sh -v -i
-  cd trash*
-  git cmd-that-failed
-
-where you can pick the final line out from the failed test output. When
-the command involves $br_base, I have to dig into the script to find out
-what's in that variable.
-
-I know that perf tests need less debugging than the regular regression
-tests, but I'd hate to see this pattern get applied liberally.
+At least that seems like a plausible line of reasoning to me. ;)
 
 -Peff
