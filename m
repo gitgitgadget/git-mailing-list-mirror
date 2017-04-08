@@ -2,85 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A670B1FAFB
-	for <e@80x24.org>; Sat,  8 Apr 2017 09:40:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38F76209F1
+	for <e@80x24.org>; Sat,  8 Apr 2017 10:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751397AbdDHJk0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 05:40:26 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58444 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751523AbdDHJkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 05:40:25 -0400
-Received: (qmail 638 invoked by uid 109); 8 Apr 2017 09:40:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 09:40:23 +0000
-Received: (qmail 10388 invoked by uid 111); 8 Apr 2017 09:40:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 08 Apr 2017 05:40:43 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Apr 2017 05:40:21 -0400
-Date:   Sat, 8 Apr 2017 05:40:21 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v7 3/3] read-cache: speed up add_index_entry during
- checkout
-Message-ID: <20170408094021.jdpx5l7kfv423zgj@sigill.intra.peff.net>
-References: <20170407212047.64950-1-git@jeffhostetler.com>
- <20170407212047.64950-4-git@jeffhostetler.com>
+        id S1751949AbdDHKKd (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 06:10:33 -0400
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:36112 "EHLO
+        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751777AbdDHKKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 06:10:32 -0400
+Received: by mail-lf0-f44.google.com with SMTP id s141so16558151lfe.3
+        for <git@vger.kernel.org>; Sat, 08 Apr 2017 03:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=ow/T+rNeIZ2yDe9EkvHCt5vadBjNfmsAu4oL+jDPN0k=;
+        b=m7mcaK1vCkmIM2FcLPJphfD+sLfOXBDxkAEats893e8D7HHQrfcdS4qz/uQ8JbYfzs
+         NXZki3dKa+zj0U/AOHbkFyDSZodWxWqret+kVRIXXHqijV0FV59iZEVloTsZNO35XVSX
+         Ev4VCOe9SnQkZ09ktEI5pPy88McsUbU53nKWM1W3WauIb+03QYOUvqQ2Qz7MLyScBY3r
+         HhoU/mOUyjzG8ConFm2Lr93J26dg1I58LNi7xuk0H8sEXs7MpblVfrcaqgiMlQQ2qpb2
+         IKQnsI4KU8C70UUAtNG4ZbRhXh+kynyEG3fGdjonks//0W0Hixa8rpUW3xj6iQaVMFxV
+         6tvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=ow/T+rNeIZ2yDe9EkvHCt5vadBjNfmsAu4oL+jDPN0k=;
+        b=mGZDvI6av4Vil/q0dhPgUdFPlC3u5w4bnPlKRwUYtyapXwhAv8wp8L+lAJBSjTmCYr
+         Zt5sLWSZy2jlj0p7HufiDfj/LKeP6rz6esXHvtRRTxQLPs+tzkfP2oen+A9RZ65VAPST
+         MC1owbs+hM5B7tFUSxOBJFgMEbVAC42O5AedEVfKuVUyWKtxqdAfZ4DttIIoEgbMAMZU
+         rrTveVbIrLbLiPOTUxgRzPIpiZBn3srlMUFFtAuvALKrdXdHgCK03GrnQyYVjXrcCuy5
+         Vkv6u473R8I56lp5T7tTKgTv/dGemRzuvxq3JlpMbZgorkuDkIrCsDjbUW+SUWYk+r/V
+         wSBw==
+X-Gm-Message-State: AFeK/H3KKijzSXV/PN+I69DGftNd5d9oImNeQmT9TqfQ/7rjYCpFmX3VCCbHXTooL0jGoA==
+X-Received: by 10.25.74.146 with SMTP id x140mr15489473lfa.67.1491646230545;
+        Sat, 08 Apr 2017 03:10:30 -0700 (PDT)
+Received: from [192.168.1.26] (dcf95.neoplus.adsl.tpnet.pl. [83.23.57.95])
+        by smtp.googlemail.com with ESMTPSA id m203sm1486700lfm.28.2017.04.08.03.10.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 08 Apr 2017 03:10:29 -0700 (PDT)
+Subject: Re: Tools that do an automatic fetch defeat "git push
+ --force-with-lease"
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
+References: <1491617750.2149.10.camel@mattmccutchen.net>
+ <CACBZZX7MeX-6RHgh2Fa9+YL03mjxs8xmyE86HnVxBxjMYizcig@mail.gmail.com>
+ <20170408092910.g5wl2ew4cfu7wzft@sigill.intra.peff.net>
+Cc:     Matt McCutchen <matt@mattmccutchen.net>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Jakub_Nar=c4=99bski?= <jnareb@gmail.com>
+Message-ID: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
+Date:   Sat, 8 Apr 2017 12:10:10 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
+In-Reply-To: <20170408092910.g5wl2ew4cfu7wzft@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170407212047.64950-4-git@jeffhostetler.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 07, 2017 at 09:20:47PM +0000, git@jeffhostetler.com wrote:
+W dniu 08.04.2017 o 11:29, Jeff King pisze:
+[...]
 
-> This helps performance on very large repositories.
-> 
-> ================
-> Before and after numbers on index with 1M files
-> ./p0004-read-tree.sh
-> 0004.2: read-tree work1 (1003037)          3.21(2.54+0.62)
-> 0004.3: switch base work1 (3038 1003037)   7.49(5.39+1.84)
-> 0004.5: switch work1 work2 (1003037)       11.91(8.38+3.00)
-> 0004.6: switch commit aliases (1003037)    12.22(8.30+3.06)
-> 
-> ./p0004-read-tree.sh
-> 0004.2: read-tree work1 (1003040)          2.40(1.65+0.73)
-> 0004.3: switch base work1 (3041 1003040)   6.07(4.12+1.66)
-> 0004.5: switch work1 work2 (1003040)       10.23(6.76+2.92)
-> 0004.6: switch commit aliases (1003040)    10.53(6.97+2.83)
-> ================
+> Perhaps it would be enough to reset the markers whenever the ref is
+> pushed. I haven't thought it through well enough to know whether that
+> just hits more corner cases.
 
-By the way, you may want to try:
+I wonder if using a separate remote for pushing (with separate remote-
+-tracking branches) would be a good solution for this problem...
 
-  $ cd t/perf
-  $ ./run HEAD^ HEAD p0004-read-tree.sh
+-- 
+Jakub Narębski
 
-which gives you the before/after in a nice table, with percentage
-changes:
+ 
 
-  Test                                       HEAD^             HEAD                  
-  -----------------------------------------------------------------------------------
-  0004.2: read-tree work1 (1003065)          2.34(1.90+0.42)   1.91(1.51+0.38) -18.4%
-  0004.3: switch base work1 (3066 1003065)   5.12(4.14+0.96)   4.45(3.55+0.88) -13.1%
-  0004.5: switch work1 work2 (1003065)       8.55(6.63+1.87)   7.78(5.76+2.00) -9.0% 
-  0004.6: switch commit aliases (1003065)    8.59(6.75+1.80)   7.64(5.92+1.70) -11.1%
-
-The results are stored for each tested version, so you can re-run just a
-single test and then re-output the results with "./aggregate.perl HEAD^
-HEAD p0004-read-tree.sh".
-
-The "run" script obviously builds each version behind the scenes, so you
-probably also want to set GIT_PERF_MAKE_OPTS as appropriate (at the very
-least "-j16" makes it more pleasant).
-
--Peff
