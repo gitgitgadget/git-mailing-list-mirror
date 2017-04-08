@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 273F920970
-	for <e@80x24.org>; Sat,  8 Apr 2017 13:26:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EE2720970
+	for <e@80x24.org>; Sat,  8 Apr 2017 13:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752524AbdDHN0A (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 09:26:00 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:34279 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752463AbdDHNZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 09:25:58 -0400
-Received: by mail-wr0-f194.google.com with SMTP id u18so15463295wrc.1
-        for <git@vger.kernel.org>; Sat, 08 Apr 2017 06:25:57 -0700 (PDT)
+        id S1752577AbdDHN0D (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 09:26:03 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35032 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752463AbdDHN0B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 09:26:01 -0400
+Received: by mail-wm0-f65.google.com with SMTP id d79so2447985wmi.2
+        for <git@vger.kernel.org>; Sat, 08 Apr 2017 06:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fFohHaqiJ5ZVn5jOEUW6HQeI9d11gokgGefW9KLTjlY=;
-        b=OegQ0iv7nXC0Ln0GDtCfhQSgAkJfRnXLQksIxey4HyWNmPQIf4kZ3jNpimqoDNBZUz
-         GnfuCFmCZrfN/M0GuWsgJ/S1SQROI6Sdp4xECZqBaDJjUdQfLXQBGzJ3P2YaqeJklzpo
-         lpZ/M1tQsdXc3Jqq9qmXIT5dUdT3255qPWdItP2h+2Tt64V/kveiASrCu1AzJu/RMU2l
-         iswkO1tdWv21gpfEs3Tg7hqGk8bx+MOvuLnD2iEgRH8dAnMk5MF9mxArs2t9o2zGFocY
-         +Bdr0scq7VhqDoahgFxMhzVSloYqVvx3+E8wwhU08ZkUR2PQUkrgM08M4Byclo10p4Ae
-         MATQ==
+        bh=SbCEOA3f8RplIjyyQUgj+cEf4zp1jdT2TjJ7c+2ZXNc=;
+        b=FPLJHVdlUiZsk4lYzoLjXbA+q4k0DZ8BpyDBQ+7QxPvcLnLPcKh4cGeyylIVKvJYys
+         8OLyeYVOXVyZU9QgrWezD/s9SMZ3LI0cwIC0cYPFrHJXzTgamFLhyUOmNiY27VpBkPHs
+         /NtQJMpqJvCPlwXFzzIe10Z2xaLj8PmqfeX16ulHoATVaaDQU2rev0epxieZw/BbSXS4
+         yV8YB6KUcN+zAL3pQozaX87h7aJdS1ZbDfpE0usS99JEZ5LgzNm+5YHNQwMKv6T2KjD6
+         i+Kh92x7oMp2RiVDfYMhKjOJS53yl4WeX15XEOVj2pYIGIHcOTUwkfcK8+JFDs5NeXNl
+         ZoiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fFohHaqiJ5ZVn5jOEUW6HQeI9d11gokgGefW9KLTjlY=;
-        b=YwI9sVvnEyBTNXXZD2TvnLJQrlpCcAaQwQIiW0HkNsNf7VmLhp62pgX9HK/27bAqvs
-         v6zyC7zZbqQChrNcursMqY3YxYRNIcJpi0DKZzOtny77w0k3X33kS2mzTWeDb8KwGU16
-         xUULCspzmAvUdh6QWa4gxTILWssln8wtbwXTVCfTbwcHjVy5/gXRXZDyVTYvlSEj4thI
-         k9QGR5TtOsXMiF7VAfl8me61/LK29H6HgDc2leIeQEpe4Qo5oaZ2vuXsW5rZagGw6xb3
-         tfW2dI6h+iExDq6OzyhbRCNsql/hm4xhI49y2zh1W6FkmQV0sAOdt0Psxvze7hOcW/zo
-         Ak8g==
-X-Gm-Message-State: AFeK/H0WcEsZTN7VFrKtjFQSEz5pWhC0rGM5pt0bkSsz33UDeQRhTxEzDj8kghRspLuqvw==
-X-Received: by 10.223.149.35 with SMTP id 32mr41426778wrs.107.1491657956424;
-        Sat, 08 Apr 2017 06:25:56 -0700 (PDT)
+        bh=SbCEOA3f8RplIjyyQUgj+cEf4zp1jdT2TjJ7c+2ZXNc=;
+        b=NFJcYfGzmwSdLj+A6fvCuCcQYjvCbOhzlWcgm46OiJ2i39Ew2z64+UTjBRy0+oV1/T
+         8Nq8becIa+vp2PX+hNlO13JGh4LMkHBFl6JHoYD44j6iO7/ZjNe9Xx9uVeBBZfOzqDOF
+         U7K9CYc6h2+U+JjKPw8i2tPSYvgywhq7j6rDdX8+8giOS6FFFjNIhKX68KUq5YYKdK4r
+         UFj1B1HyWEg2oG6BGgmGTG49rMARCgwjdULc/dA9w2PW1OLcIwzRpK+Ofkqx6zn+Ukju
+         uX7q1yh6OBKA1hD3uO/7iXvH6dAydcnVJquoexXtT4ZlCheZ/ZxryMdYCdCyzatRrAB/
+         F9YQ==
+X-Gm-Message-State: AN3rC/4d21CYcr1ZlQtvV5X7BwNgS8rNdrxPaSxVyULtKxAn3yzqnM3bHSmu83Nhx5QiuA==
+X-Received: by 10.28.212.134 with SMTP id l128mr3243396wmg.34.1491657959937;
+        Sat, 08 Apr 2017 06:25:59 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id v14sm2744864wmv.24.2017.04.08.06.25.55
+        by smtp.gmail.com with ESMTPSA id v14sm2744864wmv.24.2017.04.08.06.25.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Apr 2017 06:25:55 -0700 (PDT)
+        Sat, 08 Apr 2017 06:25:59 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 03/12] Makefile & configure: reword outdated comment about PCRE
-Date:   Sat,  8 Apr 2017 13:24:57 +0000
-Message-Id: <20170408132506.5415-4-avarab@gmail.com>
+Subject: [PATCH 04/12] grep: add a test for backreferences in PCRE patterns
+Date:   Sat,  8 Apr 2017 13:24:58 +0000
+Message-Id: <20170408132506.5415-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170408132506.5415-1-avarab@gmail.com>
 References: <20170408132506.5415-1-avarab@gmail.com>
@@ -73,75 +73,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reword an outdated comment which suggests that only git-grep can use
-PCRE.
-
-This comment was added back when PCRE support was initially added in
-commit 63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09), and was true
-at the time.
-
-It hasn't been telling the full truth since git-log learned to use
-PCRE with --grep in commit 727b6fc3ed ("log --grep: accept
---basic-regexp and --perl-regexp", 2012-10-03), and more importantly
-is likely to get more inaccurate over time as more use is made of PCRE
-in other areas.
-
-Reword it to be more future-proof, and to more clearly explain that
-this enables user-initiated runtime behavior.
+Add a test for backreferences such as (.)\1 in PCRE patterns. This
+test ensures that the PCRE_NO_AUTO_CAPTURE option isn't turned
+on. Before this change turning it on would break these sort of
+patterns, but wouldn't break any tests.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile     |  6 ++++--
- configure.ac | 12 ++++++++----
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ t/t7810-grep.sh | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 9b36068ac5..23945d87cf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -24,8 +24,10 @@ all::
- # Define NO_OPENSSL environment variable if you do not have OpenSSL.
- # This also implies BLK_SHA1.
- #
--# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
--# able to use Perl-compatible regular expressions.
-+# Define USE_LIBPCRE if you have and want to use libpcre. Various
-+# commands such as like log, grep offer runtime options to use
-+# Perl-compatible regular expressions instead of standard or extended
-+# POSIX regular expressions.
- #
- # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
-diff --git a/configure.ac b/configure.ac
-index 128165529f..d09a204a7e 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -250,8 +250,10 @@ AS_HELP_STRING([--with-openssl],[use OpenSSL library (default is YES)])
- AS_HELP_STRING([],              [ARG can be prefix for openssl library and headers]),
- GIT_PARSE_WITH([openssl]))
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 53c2ca05c4..83b0ee53be 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1102,6 +1102,13 @@ test_expect_success LIBPCRE 'grep -P -w pattern' '
+ 	test_cmp expected actual
+ '
  
--# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
--# able to use Perl-compatible regular expressions.
-+# Define USE_LIBPCRE if you have and want to use libpcre. Various
-+# commands such as like log, grep offer runtime options to use
-+# Perl-compatible regular expressions instead of standard or extended
-+# POSIX regular expressions.
- #
- # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
-@@ -499,8 +501,10 @@ GIT_CONF_SUBST([NEEDS_SSL_WITH_CRYPTO])
- GIT_CONF_SUBST([NO_OPENSSL])
- 
- #
--# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
--# able to use Perl-compatible regular expressions.
-+# Define USE_LIBPCRE if you have and want to use libpcre. Various
-+# commands such as like log, grep offer runtime options to use
-+# Perl-compatible regular expressions instead of standard or extended
-+# POSIX regular expressions.
- #
- 
- if test -n "$USE_LIBPCRE"; then
++test_expect_success PCRE 'grep -P backreferences work (the PCRE NO_AUTO_CAPTURE flag is not set)' '
++	git grep -P -h "(?P<one>.)(?P=one)" hello_world >actual &&
++	test_cmp hello_world actual &&
++	git grep -P -h "(.)\1" hello_world >actual &&
++	test_cmp hello_world actual
++'
++
+ test_expect_success 'grep -G invalidpattern properly dies ' '
+ 	test_must_fail git grep -G "a["
+ '
 -- 
 2.11.0
 
