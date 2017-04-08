@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A34F120970
-	for <e@80x24.org>; Sat,  8 Apr 2017 13:25:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3203920970
+	for <e@80x24.org>; Sat,  8 Apr 2017 13:25:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752267AbdDHNZm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Apr 2017 09:25:42 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34833 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752216AbdDHNZk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Apr 2017 09:25:40 -0400
-Received: by mail-wr0-f196.google.com with SMTP id t20so23481908wra.2
-        for <git@vger.kernel.org>; Sat, 08 Apr 2017 06:25:39 -0700 (PDT)
+        id S1752435AbdDHNZv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Apr 2017 09:25:51 -0400
+Received: from mail-wr0-f195.google.com ([209.85.128.195]:34248 "EHLO
+        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752318AbdDHNZt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Apr 2017 09:25:49 -0400
+Received: by mail-wr0-f195.google.com with SMTP id u18so15463045wrc.1
+        for <git@vger.kernel.org>; Sat, 08 Apr 2017 06:25:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fonaqyz/+mUulpKf6BRhR7J8Q74EEZvSBqL7SMx+Oy0=;
-        b=m6vlfYmMwgsjsIMRYB9WeeXWeywEwiclxOQGabA2zGxz0+TNHHaX/JjFaDu4sqvpuC
-         Gib+mSl9RIW9rEp/+Ax+qits2fzg5zOeqp5HsKUL+rk6k+WTES8BUGfCR1vwJ+e+ZNOY
-         SRUdzpZU8gzJSTC0XWCNd7k/VM1wXIpoXSLvxeoQhWZAdvoLbQhgQdBxcx4bX+YAs1x9
-         sEXuJoC/fnqZE4rCpQJPzjfCDyHaLETEG9kkfuwm8XcHT1ggi1WNmQfJ9yauMPsnFer2
-         IMdeFE4oc+W5wCfqlMxP8Kz8EkyQKDbMWvMEoX9v/lIsQMGoPU4RU9XZyRdi3AdFgUV6
-         2v2w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HBbFCsErfFGyWcs0XUiWpheZf1BN7vPyg6uNOhxsBAc=;
+        b=myIrLNLDOHEp9Ts9uKr34XMe7mcnSvIyhM6L3MSE1NJ7LA5UWxjVeZDwOtnLwtV62U
+         814goRLs2ZgP6/2FNZsKMGlxz+Ts8aGkX7aJw8WIVmB/drLTlCvP5pxLvU3I1H623Zd+
+         pSUlzGj7JbjYkw6x7ks1curSManChxYrEcHpkIl2rODUxP/mftav4klxWZzbojj0DhQ6
+         vYP2j9YItmh9lBdhsfxYqxQ0GSB7nT1lM/GheVnewXJ61GzwF8COAl+IBuCW334SZPYM
+         BVwWBYDpiAJx6goNCCmB48+rrFe2WTYqxfYvUcuKl7wUAR+O8rD6rBHMN3lDmNwpvSr0
+         zgwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fonaqyz/+mUulpKf6BRhR7J8Q74EEZvSBqL7SMx+Oy0=;
-        b=g5xxR9DJMj4PEtK86kMWtpnYy3SVsgONsdqhMp8xLNIY0j0SiWOLo+bYPKZOmrxJAc
-         qBA1qdP0Uu2u3BV+2WdJPkuz8LFoO9zlbIHXF5Qho4baoE/WGL3F/scgQxV1d0Gn9csy
-         Tye0Fyh5eFtYFZ/W4wCwTPQjt99oTa3XJqJZqcmITcMJ8Ef1ivO6M+7qD2ycqZ5ulVOO
-         6A7pppY1JFFac22XbCyoud6nl4Uo+F+o6ROkqWxQFqyywNzbdnU38EPeWrifYuk1JjvJ
-         bpn5L5Z9y7lw3isQSyvIs1blwK9zA7eBvyu5s2fuXGE0Hu7nuVqLoM5kYE66eNqqgCO5
-         LWwA==
-X-Gm-Message-State: AFeK/H35rkrLNYQbf6V3Sw45jaW8FNlztF/RiB7i/SVPzL6c9VJ3RKZDqXAFybIza20ifA==
-X-Received: by 10.223.135.196 with SMTP id c4mr19333934wrc.109.1491657939091;
-        Sat, 08 Apr 2017 06:25:39 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HBbFCsErfFGyWcs0XUiWpheZf1BN7vPyg6uNOhxsBAc=;
+        b=ONvuo5AinH4ML2EACgyRCiwGDKldWweuHZ1P3PE2wkdPcQRT4RvIeBr7vtZ7FSw6ks
+         C9F5XCd0rQr/1TZ+GyiOUKBuAJ7d1Wtu3pPznJhHaJo/a7UfXSZcPH4I8zmJLy9qy6Az
+         K9ztVdjaN4gONqYD2KBLL9oOvr5gxAyg4OiQ/8hArqHSSgwaBN7HOIwaRnn6rHZwU8mI
+         9TEvcBuoBNrhdpBmtksqKqptBiniv4Prl29Rcro4uVmc6VOIX9Gyos6SiY9ym5laKfdc
+         HE9HCqLavRxWKyymqQzCUBnliqI1hfHXW1NID5IQv9L+PW+zKmvBplDupAMYlZLdnD3D
+         JkrQ==
+X-Gm-Message-State: AFeK/H07JT0ITeed7w8MgqrBH4pgLocZyuiE6XcWVVYLO000XmVbc6uYGwIxy0OROF5F6Q==
+X-Received: by 10.223.177.219 with SMTP id r27mr42845328wra.194.1491657947823;
+        Sat, 08 Apr 2017 06:25:47 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id v14sm2744864wmv.24.2017.04.08.06.25.36
+        by smtp.gmail.com with ESMTPSA id v14sm2744864wmv.24.2017.04.08.06.25.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Apr 2017 06:25:36 -0700 (PDT)
+        Sat, 08 Apr 2017 06:25:46 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,10 +59,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 00/12] PCREv2 & more
-Date:   Sat,  8 Apr 2017 13:24:54 +0000
-Message-Id: <20170408132506.5415-1-avarab@gmail.com>
+Subject: [PATCH 01/12] grep: add ability to disable threading with --threads=0 or grep.threads=0
+Date:   Sat,  8 Apr 2017 13:24:55 +0000
+Message-Id: <20170408132506.5415-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170408132506.5415-1-avarab@gmail.com>
+References: <20170408132506.5415-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,62 +73,124 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds PCRE v2 support, but as I was adding that I kept noticing
-other related problems to fix. It's all bundled up into the same
-series because much of it conflicts because it modifies the same test
-or other code. Notes on each patch below.
+Add the ability to entirely disable threading by having grep.threads=0
+in the config or --threads=0 on the command-line.
 
-Ævar Arnfjörð Bjarmason (12):
-  grep: add ability to disable threading with --threads=0 or
-    grep.threads=0
+This was made configurable in commit 89f09dd34e ("grep: add
+--threads=<num> option and grep.threads configuration",
+2015-12-15). Before that change there was no way to disable threaded
+grep other than to recompile Git.
 
-This really has nothing to do with the rest except I'm using it to
-test non-multithreaded & threaded PCRE more easily.
+It's very useful for testing & debugging to be able to entirely
+disable threading without recompiling with NO_PTHREADS=YesPlease, so
+support setting the value to 0 to disable threading.
 
-  grep: remove redundant regflags assignment under PCRE
-  Makefile & configure: reword outdated comment about PCRE
+There was no reason this wasn't the case already other than an
+implementation detail in how OPT_INTEGER() works. When it's used
+there's no way to tell the difference between an unset value & the
+default value. Use OPT_CALLBACK() instead using the same pattern as in
+commit b16a991c1b ("cherry-pick: detect bogus arguments to
+--mainline", 2017-03-15).
 
-Just some trivial cleanups.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Documentation/git-grep.txt |  4 ++--
+ builtin/grep.c             | 26 ++++++++++++++++++++++----
+ t/t7810-grep.sh            | 10 ++++++++++
+ 3 files changed, 34 insertions(+), 6 deletions(-)
 
-  grep: add a test for backreferences in PCRE patterns
-  log: add exhaustive tests for pattern style options & config
-
-Yay, more tests!
-
-  log: add -P as a synonym for --perl-regexp
-
-We've had --perl-regexp for years, but not -P like grep, add it.
-
-  grep & rev-list doc: stop promising libpcre for --perl-regexp
-  grep: make grep.patternType=[pcre|pcre1] a synonym for "perl"
-  test-lib: rename the LIBPCRE prerequisite to PCRE
-  grep: change the internal PCRE macro names to be PCRE1
-  grep: change the internal PCRE code & header names to be PCRE1
-  grep: add support for PCRE v2
-
-These combined add the support for PCRE 2. It's split up for ease of
-readability. The last one's still a bit big, and I could e.g. split up
-all the Makefile/autoconf stuff into a different patch (which wouldn't
-do anything without the code), but I thought on balance doing it this
-way made the most sense.
-
- Documentation/config.txt           |   7 ++
- Documentation/git-grep.txt         |   8 +-
- Documentation/rev-list-options.txt |   6 +-
- Makefile                           |  28 +++++-
- builtin/grep.c                     |  26 +++++-
- configure.ac                       |  61 ++++++++++--
- grep.c                             | 184 ++++++++++++++++++++++++++++++-------
- grep.h                             |  26 ++++--
- revision.c                         |   2 +-
- t/README                           |  16 +++-
- t/t4202-log.sh                     |  76 ++++++++++++++-
- t/t7810-grep.sh                    |  79 +++++++++++++---
- t/t7812-grep-icase-non-ascii.sh    |   4 +-
- t/t7813-grep-icase-iso.sh          |  11 ++-
- t/test-lib.sh                      |   4 +-
- 15 files changed, 456 insertions(+), 82 deletions(-)
-
+diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
+index 71f32f3508..7b52e3fbc4 100644
+--- a/Documentation/git-grep.txt
++++ b/Documentation/git-grep.txt
+@@ -56,8 +56,8 @@ grep.extendedRegexp::
+ 	other than 'default'.
+ 
+ grep.threads::
+-	Number of grep worker threads to use.  If unset (or set to 0),
+-	8 threads are used by default (for now).
++	Number of grep worker threads to use.  If unset, 8 threads are
++	used by default (for now). Set to 0 to disable threading.
+ 
+ grep.fullName::
+ 	If set to true, enable `--full-name` option by default.
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 65070c52fc..9478ab5dff 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -35,7 +35,7 @@ static int grep_submodule_launch(struct grep_opt *opt,
+ 				 const struct grep_source *gs);
+ 
+ #define GREP_NUM_THREADS_DEFAULT 8
+-static int num_threads;
++static int num_threads = -1;
+ 
+ #ifndef NO_PTHREADS
+ static pthread_t *threads;
+@@ -897,6 +897,24 @@ static int context_callback(const struct option *opt, const char *arg,
+ 	return 0;
+ }
+ 
++static int thread_callback(const struct option *opt,
++			   const char *arg, int unset)
++{
++	int *threads = (int*)opt->value;
++	char *end;
++
++	if (unset) {
++		*threads = GREP_NUM_THREADS_DEFAULT;
++		return 0;
++	}
++
++	*threads = strtol(arg, &end, 10);
++	if (*end || *threads < 0)
++		return opterror(opt, "invalid number of threads specified", 0);
++
++	return 0;
++}
++
+ static int file_callback(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct grep_opt *grep_opt = opt->value;
+@@ -1049,8 +1067,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			N_("show <n> context lines before matches")),
+ 		OPT_INTEGER('A', "after-context", &opt.post_context,
+ 			N_("show <n> context lines after matches")),
+-		OPT_INTEGER(0, "threads", &num_threads,
+-			N_("use <n> worker threads")),
++		OPT_CALLBACK(0, "threads", &num_threads, N_("n"),
++			N_("use <n> worker threads"), thread_callback),
+ 		OPT_NUMBER_CALLBACK(&opt, N_("shortcut for -C NUM"),
+ 			context_callback),
+ 		OPT_BOOL('p', "show-function", &opt.funcname,
+@@ -1222,7 +1240,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ #ifndef NO_PTHREADS
+ 	if (list.nr || cached || show_in_pager)
+ 		num_threads = 0;
+-	else if (num_threads == 0)
++	else if (num_threads == -1)
+ 		num_threads = GREP_NUM_THREADS_DEFAULT;
+ 	else if (num_threads < 0)
+ 		die(_("invalid number of threads specified (%d)"), num_threads);
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index cee42097b0..53c2ca05c4 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -1505,4 +1505,14 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'grep with thread options' '
++	git -c grep.threads=4 grep st.*dio &&
++	git grep --threads=4 st.*dio &&
++	git -c grep.threads=4 grep --threads=6 st.*dio &&
++	test_must_fail git -c grep.threads=-1 grep st.*dio &&
++	test_must_fail git -c grep.threads=-1 grep --threads=-1 st.*dio &&
++	test_must_fail git -c grep.threads=-1 grep --threads=1 st.*dio &&
++	test_must_fail git -c grep.threads=1 grep --threads=-1 st.*dio
++'
++
+ test_done
 -- 
 2.11.0
 
