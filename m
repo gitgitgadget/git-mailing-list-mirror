@@ -2,97 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F09C120966
-	for <e@80x24.org>; Sun,  9 Apr 2017 10:00:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1658720966
+	for <e@80x24.org>; Sun,  9 Apr 2017 10:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751961AbdDIKAT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Apr 2017 06:00:19 -0400
-Received: from zucker.schokokeks.org ([178.63.68.96]:53089 "EHLO
-        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751825AbdDIKAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2017 06:00:17 -0400
-X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Apr 2017 06:00:17 EDT
-Received: from localhost ([::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Sun, 09 Apr 2017 11:55:13 +0200
-  id 0000000000000069.0000000058EA0501.000071F5
-Date:   Sun, 9 Apr 2017 11:55:11 +0200
-From:   Simon Ruderich <simon@ruderich.org>
-To:     "=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: [PATCH] push: document & test --force-with-lease with multiple
- remotes
-Message-ID: <20170409095511.d7wewvggvirnhsbr@ruderich.org>
-References: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
- <20170408114100.13743-1-avarab@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-29173-1491731713-0001-2"
-Content-Disposition: inline
-In-Reply-To: <20170408114100.13743-1-avarab@gmail.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
+        id S1752220AbdDIKyy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Apr 2017 06:54:54 -0400
+Received: from mout.gmx.net ([212.227.15.15]:63030 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752066AbdDIKyx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Apr 2017 06:54:53 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5Lqx-1c9b2X2Z9r-00zYvM; Sun, 09
+ Apr 2017 12:54:46 +0200
+Date:   Sun, 9 Apr 2017 12:54:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Danny Sauer <danny@dannysauer.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Make git log work for git CWD outside of work tree
+In-Reply-To: <20170409022128.21337-1-danny@dannysauer.com>
+Message-ID: <alpine.DEB.2.20.1704091238560.4268@virtualbox>
+References: <20170409022128.21337-1-danny@dannysauer.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:FQeKXPfQpG1E7R0kjBDgW3pKHprmB0X9vbg4KzH+lq94uvbqiU4
+ ul63W43dwPlwhsyFvYjr0zXGljwPn2M1r69Iv4aUdjFJ8pyYYlcajQsnjMBuAUGyCBH4yiz
+ 3MNn/uifeC0u59FWlBUowjUvsXvarm8yEmnEbZUNolJKpJZ6HOje+dHwq6vUF+LWHnw1MJV
+ cK4eGhHeZ+Xy8f8RvuDWA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cd3kHT8O55A=:2Necr3Y19bYHvUzF0Aorm9
+ 14f9uoIbCDTfu6+nM3ERaaYUlnFKrioFNZDGJcNuvXIURWrdff6NttNalt1iAT9O14zF/ur3k
+ sLBs4LbB31pGklNYtZvRxmTJjMMvm+fZ6IigVkC0cj6Zh8nunGP3X6xGhVccQOuD+vuqHJBQt
+ L3t0JH9lBAAVaUkLU5Hcm7060uTewOaoBQJKmbuK8UASAax1UeF/oMw7REp7LkXvpl+Nd3Nw+
+ 9fJlyQWkNPMmdAZk+IoFgTI1KLDHvEtD/7syHaQOjX4e0achz990e1ryp8sy9kIRCfmZrFhCX
+ ZazFYLxgC/FDWHdoP6/8cbfRs+k9kPd1hHBd/IHZ5gbrHq9lsnvhdslTZvDjpISuRiRRxPznU
+ /KMSAWBDb7QuCIIxTZNzCpBeEnyGlVYl2psru/v4Xc3RyYTmUwvSQS2CndqnqwzKG+1vFWzun
+ O27KCQ9lcX2niHOyvtOf0jB1xSO98Z9TLLsWJTv7gHDOc5on5tDGyoGC8BH6Z5elZR2Z+EI7L
+ 3ilkEtxZDTs+owbIWYCM/63gS0JmlKjAeXNHzniuVvtahcbpZ7RS3Vv58KcC+qPLiADY64lYW
+ RweNBxpd+kEgZDleSULm5u4605mQPf8m8bmB6/S57TY6zydHNHSf1OVlCQBJF7sEhXtRzbvnG
+ qaY3FWW8s2SOjGmYohDA/13VdV+SapBOY7U38QgsqrgsJSbhomwkF2Wzf1vfox3ZTsYyLlbqv
+ pGbdNRcdt5CD7kxxFu0tAVTnpu/fKw1PCo6TTGNq2YZesrraFsmATIy6Cs4HxykHEsPHk5kQw
+ r1/XcDM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+Hi Danny,
 
---=_zucker.schokokeks.org-29173-1491731713-0001-2
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sat, 8 Apr 2017, Danny Sauer wrote:
 
-Hello,
+> Make git log's `--use-mailmap` argument works if the GIT_DIR &
+> GIT_WORK_TREE env vars are set and git is run from outside of work tree.
+> Without the NEED_WORK_TREE set on the log subcommand, .mailmap is
+> silently not found.
 
-I like the documentation update and test.
+A laudable goal. How about adding a test case, say, to t/t4203-mailmap.sh,
+to ensure that Git won't regress on your fix?
 
-On Sat, Apr 08, 2017 at 11:41:00AM +0000, =C6var Arnfj=F6r=F0 Bjarmason wro=
-te:
-> [snip]
->
-> ++
-> +Now when the background process runs `git fetch origin` the references
-> +on `origin-push` won't be updated, and thus commands like:
-> ++
-> +	git push --force-with-lease origin
+> diff --git a/git.c b/git.c
+> index 8ff44f0..e147f01 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -440,7 +440,7 @@ static struct cmd_struct commands[] = {
+>  	{ "init", cmd_init_db },
+>  	{ "init-db", cmd_init_db },
+>  	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
+> -	{ "log", cmd_log, RUN_SETUP },
+> +	{ "log", cmd_log, RUN_SETUP | NEED_WORK_TREE },
+>  	{ "ls-files", cmd_ls_files, RUN_SETUP | SUPPORT_SUPER_PREFIX },
+>  	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
+>  	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
 
-I think this should be origin-push.
+This may work for you, but it does not work for me, as I often call `git
+log` in a bare repository. And that call works, and it should keep
+working.
 
-Regards
-Simon
---=20
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+Instead, I think, you need to figure out why the .mailmap file is not read
+correctly when you use the GIT_DIR & GIT_WORK_TREE approach. My vague
+hunch is that you need to replace the ".mailmap" in read_mailmap()
+(defined in mailmap.c):
 
---=_zucker.schokokeks.org-29173-1491731713-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
+        err |= read_mailmap_file(map, ".mailmap", repo_abbrev);
 
------BEGIN PGP SIGNATURE-----
+by something like mkpath("%s/%s", get_git_work_tree(), ".mailmap"), but
+probably only after testing that we're not in a bare repository (which
+would also fix a bug, I suspect, as `git log` in a bare repository
+probably heeds a .mailmap file in the current directory, which is
+incorrect). I.e. something like:
 
-iQIzBAEBCgAdFiEEO7rfWMMObpFkF3n0kv79t+RMMvkFAljqBPgACgkQkv79t+RM
-MvljVg/+PtidRMJP6e0Q3DAQBQk4KkU6KoLDztr9I++jcMLk9eGxLjJnZ9OvN60I
-ZgP4iFsh7eullLeFSaStnqtOWxGUcHgKHnQcLiUV8EWq/hyM2rXL2h367H81b/ei
-DTqLCacggKnZWWzUOksEWaV2GtBQS+9QWSwiyOJK4C9OvuAIuoup6ymSVAUjk7L6
-JyEu9poiTBFZe0MGnYXgKdOJVxVlLtYdbENPuA9eXsRIcQTeG5YN6QmnVw7mmeSz
-hRuWhAK+kKNvJ2UcgaYDiVHelQWB/qlUBq17m9ydy2DcbXGH3IFClyOBL1qOc7s0
-/4Qf5nV02yhdX+bgg6S3hfRoT6vDJy54mCb6qP2zmgzemD6VD771/DhmAbfQVpUf
-npmk5g4Y5TuMDVhZ7KZ6/l9IGjZxOp+l93f/y1MKCzCUiTEI/NCU4a8ZbLgQGRmD
-HvVyksY8ux3rksNh0SHxQcDNRqXaQT5gRmP62ueKz0/oLfNqPROAKTBMQyoQS6QF
-Xt+4WCBB+oxOu/IvQYiWjPXufQ4Ev2Grj52umWgeOVXyNpplNImGRrnYgm0E0pgP
-Y8DG89C+nWwTNEZwtxqv/8G47KsJrBLyLpZnTz1OInmIug8vm7JoC+LZ/wIYDxeH
-Hc2IwokxsWCCtu8jyMLhHIJgYjBItJMGuha9BZ42XQ907/wXql0=
-=o7cX
------END PGP SIGNATURE-----
+	if (!is_bare_repository()) {
+		const char *path = mkpath("%s/%s",
+					  get_git_work_tree(), ".mailmap")
+		err |= read_mailmap_file(map, path, repo_abbrev);
+	}
 
---=_zucker.schokokeks.org-29173-1491731713-0001-2--
+But you really want to add the test case first, with
+`test_expect_failure`, to demonstrate what is currently broken, and then
+triumphantly setting it to `test_expect_success` with your patch.
+
+Ciao,
+Johannes
