@@ -2,115 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BFF91FAFB
-	for <e@80x24.org>; Sun,  9 Apr 2017 13:01:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 887ED1FAFB
+	for <e@80x24.org>; Sun,  9 Apr 2017 14:15:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752338AbdDINBc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Apr 2017 09:01:32 -0400
-Received: from zucker.schokokeks.org ([178.63.68.96]:38441 "EHLO
-        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752165AbdDINBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2017 09:01:31 -0400
-Received: from localhost ([::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Sun, 09 Apr 2017 15:01:29 +0200
-  id 0000000000000019.0000000058EA30AA.00004699
-Date:   Sun, 9 Apr 2017 15:01:26 +0200
-From:   Simon Ruderich <simon@ruderich.org>
+        id S1752243AbdDIOPk convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 9 Apr 2017 10:15:40 -0400
+Received: from vps.dannysauer.com ([72.4.146.113]:44418 "EHLO
+        smtp2.dannysauer.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752075AbdDIOPj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Apr 2017 10:15:39 -0400
+Received: from humpy.home.dannysauer.com (home.dannysauer.com [50.44.186.177])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client CN "mail.home.dannysauer.com", Issuer "Danny Sauer" (verified OK))
+        by smtp2.dannysauer.com (Postfix) with ESMTPS id 08116789C011;
+        Sun,  9 Apr 2017 09:15:38 -0500 (CDT)
+Received: from [192.168.0.230] (unknown [192.168.0.230])
+        by humpy.home.dannysauer.com (Postfix) with ESMTPS id 33B3F20807;
+        Sun,  9 Apr 2017 09:15:36 -0500 (CDT)
+Subject: Re: [PATCH] Make git log work for git CWD outside of work tree
+References: <20170409022128.21337-1-danny@dannysauer.com>
+ <alpine.DEB.2.20.1704091238560.4268@virtualbox>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     git@vger.kernel.org
-Subject: Unexpected working directory in post-receive hook in non-bare
- repository
-Message-ID: <20170409130126.uqmjop25jidhblhd@ruderich.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-18073-1491742890-0001-2"
-Content-Disposition: inline
-User-Agent: NeoMutt/20170306 (1.8.0)
+From:   Danny Sauer <danny@dannysauer.com>
+Message-ID: <413a1456-cac6-56c8-ea45-38f14cf958ae@dannysauer.com>
+Date:   Sun, 9 Apr 2017 09:15:36 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <alpine.DEB.2.20.1704091238560.4268@virtualbox>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+On 4/9/2017 5:54 AM, Johannes Schindelin wrote:
+> Hi Danny,
+>
+> On Sat, 8 Apr 2017, Danny Sauer wrote:
+>> diff --git a/git.c b/git.c
+>> index 8ff44f0..e147f01 100644
+>> --- a/git.c
+>> +++ b/git.c
+>> @@ -440,7 +440,7 @@ static struct cmd_struct commands[] = {
+>>  	{ "init", cmd_init_db },
+>>  	{ "init-db", cmd_init_db },
+>>  	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
+>> -	{ "log", cmd_log, RUN_SETUP },
+>> +	{ "log", cmd_log, RUN_SETUP | NEED_WORK_TREE },
+>>  	{ "ls-files", cmd_ls_files, RUN_SETUP | SUPPORT_SUPER_PREFIX },
+>>  	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
+>>  	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
+> This may work for you, but it does not work for me, as I often call `git
+> log` in a bare repository. And that call works, and it should keep
+> working.
 
---=_zucker.schokokeks.org-18073-1491742890-0001-2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I was wondering about that situation, but honestly I wasn't positive how
+to test it and sort of just went on the hope that the read_mailmap_blob
+mechanism would continue handling it.  So, I guess there's another test
+case which would be useful, as passing the test cases is what gave me
+that undeserved confidence. :)  And I'm going to need to read a bit more
+to figure out what a bare repository actually is...
 
-Hello,
+> Instead, I think, you need to figure out why the .mailmap file is not read
+> correctly when you use the GIT_DIR & GIT_WORK_TREE approach. My vague
+> hunch is that you need to replace the ".mailmap" in read_mailmap()
+> (defined in mailmap.c):
+>
+>         err |= read_mailmap_file(map, ".mailmap", repo_abbrev);
+>
+> by something like mkpath("%s/%s", get_git_work_tree(), ".mailmap"), but
+> probably only after testing that we're not in a bare repository (which
+> would also fix a bug, I suspect, as `git log` in a bare repository
+> probably heeds a .mailmap file in the current directory, which is
+> incorrect). I.e. something like:
+>
+> 	if (!is_bare_repository()) {
+> 		const char *path = mkpath("%s/%s",
+> 					  get_git_work_tree(), ".mailmap")
+> 		err |= read_mailmap_file(map, path, repo_abbrev);
+> 	}
 
-The following snippet reproduces the issue for me (note the
-remote: line in its output):
+That's feedback I was looking for - what's the "right" way to get the
+path to the file.  The call as-is works in any subdirectory of a
+repository, because there's some logic buried along the way which puts
+you in the top level of the repo if you started underneath.  But if
+you're outside, it does the same chdir to verify that the top level is a
+real repo and then returns you to where you started (which is perfectly
+reasonable).
 
-    git --version
+In comparing how shortlog works v/s log, the main difference I could see
+is the use of RUN_SETUP_GENTLY instead of RUN_SETUP as the flag, which
+itself seems to only differ by passing in a true value for nongit_ok in
+run_setup, ultimately leading to "some different directory checks" -
+which I somewhat got lost in due partially to not fully knowing what a
+bare repository is. :)  But changing that didn't make it work in my
+(poorly-formalized) testing.
 
-    rm -rf a b
+I'm on-board with a proper test case being the first situation which
+needs rectifying.  It's off to learn stuff for me, then.  Thanks!
 
-    git init a
-    cd a
-    echo first >data
-    git add data
-    git commit -m initial
-    cat >>.git/hooks/post-receive <<EOF
-    #!/bin/sh
-    pwd
-    EOF
-    chmod +x .git/hooks/post-receive
-    cd ..
+--Danny
 
-    git clone a b
-    cd b
-    echo second >>data
-    git add data
-    git commit -m test
-    git push origin master:not-master
-
-According to man githooks "Before Git invokes a hook, it changes
-its working directory to either the root of the working tree in a
-non-bare repository, [...]". In this case "a" is non-bare and I
-expected the command to be run in the working tree; but instead
-it's run inside .git. (This caused some confusion in my case
-because I ran "git merge" in the hook which put files in the .git
-directory and I didn't notice it at first. I know running merge
-in receive-hooks is "bad practice" but it works fine in my
-setup.)
-
-The same happens for all hooks executed by git-receive-pack:
-pre-receive, update, post-receive, post-update.
-
-Is this a documentation issue or unexpected behavior?
-
-Regards
-Simon
---=20
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
-
---=_zucker.schokokeks.org-18073-1491742890-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEO7rfWMMObpFkF3n0kv79t+RMMvkFAljqMJ8ACgkQkv79t+RM
-MvmZmBAAhTbkSStEoUAghbrLeMLAn2Vtq7sBpg43MH8zEBZb7KfuNVqAPZlMmLzO
-CREWeqoxCdGnXXFNKDPiDKej+ZE4vjhsVXoDCaViDXyKEpTKBJrER8pmkWKOJKgv
-ptNhCnb2hm2JRyhN7NppHbRGDFLtoYxoclt62iAvth8yOTewigoPHdBxEI/ybK+B
-ORYtX/CbFiNyFtyDtVgqBoDJhZVkLSi6pYKpxNYTsHnNg/AEbL2DJ5Dus9I67uJU
-mJD2qqCGkNfs6Ox2QvGPg5QQ0nrysVYKA0CXMMaSNDZTHPd2ycAR1J8SufFs3/5T
-qilCsdb+RwqnL+eNcQGItiUbdWfF3ScbdKKgOpbMopvnmMFjcyj+43RF70nGWV8A
-Ak5A3weMfdh58iFWPObp705X9Of7yKqfsFDJnlXtq08yp20vZw3FTbZsdXEH6F6X
-/dMoMqyyfLRko6Cy/AF7oVPRcS4ispWzVT3KOJ9nwr+E9Oebp6YpNNJwBweAAa/7
-7hP7OxhLJYkCpQ2bDLxRCJUEP/LGGoDiSmq36y/qZ2rduYQaIfCxBkDJWTMSJUnh
-vpLxHTdVJo8KEV3DrVQNJa0DGJV8XuZ//NefcjXJ3clhqF7vnNc5oj/0ugilL5rZ
-xrw9X7TpJ78K/DgI0SdFbfWrrT4dXvXIxCmO5ji0TMxGEqx7ZHw=
-=55q+
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-18073-1491742890-0001-2--
