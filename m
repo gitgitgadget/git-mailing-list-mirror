@@ -2,81 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0981F20966
-	for <e@80x24.org>; Sun,  9 Apr 2017 07:27:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A2B820966
+	for <e@80x24.org>; Sun,  9 Apr 2017 08:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751814AbdDIH1u (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Apr 2017 03:27:50 -0400
-Received: from mail-vk0-f48.google.com ([209.85.213.48]:35495 "EHLO
-        mail-vk0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751539AbdDIH1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2017 03:27:50 -0400
-Received: by mail-vk0-f48.google.com with SMTP id r69so96510507vke.2
-        for <git@vger.kernel.org>; Sun, 09 Apr 2017 00:27:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=DUQV82fXYsSgejKcyGOiBdJkETWcj3qdLTLdkCVq964=;
-        b=qQUWBce4wl3kQBIUltmLyYjU7Qc3ybF75eK8sy2iQ1iUYHWaLvmv07WYwdX9PnbhY6
-         HeD6ixi0WBFMOtCatUop48DGIptjX7m3w7EYfSM2jp8Jl61RcaB1WmXd0UceI65n/jtl
-         KXIeX6+n4pbzay7nXU/xUM8nYNe73IYiGwqee14l3+CV4cEyakPdUsBi10bITM5e6sc5
-         rftEmU8y15+V+iB3gmvF8tIjXIlAoi9FXxQ8vGgKJV9MmjM6Ei2+ZOhqGX3p/rpgpIqR
-         fB9YiiyL9o3jYnZglPIpCDfNRy5WAybuhH2VTvqNPj6JxKxRV+4ieubktFSgh/CJrKih
-         gtfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=DUQV82fXYsSgejKcyGOiBdJkETWcj3qdLTLdkCVq964=;
-        b=pkRJu3lG/oNLawBZ/6s9ZrOvG6t7j6RFjb4ZXQD9YKvlKxQZLHNll+Gw0MrR7gvFKf
-         IATqdO7TKzQJbCoaJIXuGTOYONBl2c3jSkmBxLnUcdBu8Ioz3V9Nnc83sK/ALp2mPltP
-         1UQZ74jE1Atpn/rURktti1BTSrYU37XHX4RnFA3Y3/foytOweJESuaYR4odQ7SegBgup
-         ow080nowpei1DKO0jEiyf704B0kroh8lHK/GoYGukmEDuSYn+oxvoHYuiOAA5QLiJyO9
-         q3tVygx0pl8TJGmyY/Nvn+fGS75e1KJjrBHwrhrA2Q7RsflxuKGrTvRjm/TCOEd1YVSu
-         c5xQ==
-X-Gm-Message-State: AFeK/H2F9wMu3OvjRIot+mIR4YOnWudk62hhDZZm1XyltwMKWXu9oxTEuu2Azc29XEK06yMsEYD5EngWTngyXQ==
-X-Received: by 10.31.161.205 with SMTP id k196mr18087382vke.170.1491722869348;
- Sun, 09 Apr 2017 00:27:49 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.4.14 with HTTP; Sun, 9 Apr 2017 00:27:28 -0700 (PDT)
-In-Reply-To: <20170317165335.GM26789@aiede.mtv.corp.google.com>
-References: <e7d6f518-51aa-92fa-e685-7cde019d6e5b@gmail.com> <20170317165335.GM26789@aiede.mtv.corp.google.com>
-From:   =?UTF-8?Q?Florian_Sch=C3=BCller?= <florian.schueller@gmail.com>
-Date:   Sun, 9 Apr 2017 09:27:28 +0200
-Message-ID: <CAHdOBFpGsL7k4Y_=g83zveichoRhe+yLGukBG7ybrO6VrN=iBw@mail.gmail.com>
-Subject: Re: why patch to the gitk no replay?
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     yanke131415 <yanke131415@gmail.com>, git@vger.kernel.org,
-        Paul Mackerras <paulus@ozlabs.org>,
-        Paul Mackerras <paulus@samba.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1751922AbdDIIip (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Apr 2017 04:38:45 -0400
+Received: from dd28836.kasserver.com ([85.13.147.76]:41292 "EHLO
+        dd28836.kasserver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751814AbdDIIin (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Apr 2017 04:38:43 -0400
+Received: from [192.168.42.152] (dslb-178-000-062-147.178.000.pools.vodafone-ip.de [178.0.62.147])
+        by dd28836.kasserver.com (Postfix) with ESMTPSA id 9133330122E;
+        Sun,  9 Apr 2017 10:38:41 +0200 (CEST)
+To:     jacob.keller@gmail.com (Jacob Keller), peff@peff.net (Jeff King)
+Cc:     avarab@gmail.com (=?ISO-8859-1?Q?=C6var_Arnfj=F6r=3F_Bjarmason?=),
+        matt@mattmccutchen.net (Matt McCutchen),
+        git@vger.kernel.org (git), gitster@pobox.com (Junio C Hamano)
+In-Reply-To: <CA+P7+xqfHDVKpVKVYbB-4kjb9ja+u4GVMwkTFrj0f0n_OXZfvQ@mail.gmail.com>
+Subject: Re: Tools that do an automatic fetch defeat "git push --force-with-lease"
+From:   lists@haller-berlin.de (Stefan Haller)
+Date:   Sun, 9 Apr 2017 10:38:41 +0200
+Message-ID: <1n47l28.1xcy707zz3evtM%lists@haller-berlin.de>
+User-Agent: MacSOUP/2.8.6b1 (Mac OS 10.12.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My patch submission (already the retry) "[PATCH 0/4] Gitk Inotify
-support" is also pending since 8th of March.
-I'm also not sure what I did wrong as I'm not used to those mailing
-list programming - or if Paul is just very busy
+Jacob Keller <jacob.keller@gmail.com> wrote:
 
-On Fri, Mar 17, 2017 at 5:53 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
+> What if we added a separate command something like:
+> 
+> git create-lease
+> 
+> which you're expected to run at the start of a rewind-y operation and
+> it creates a tag (or some other ref like a tag but in a different
+> namespace) which is used by force-with-lease?
+
+The problem with this is that it doesn't help to use "git create-lease"
+right before you start your rewind-y operation, because by that time you
+may already have fetched. You'd have to use "git create-lease" right
+after you pull or push. But at the time I pull I don't know yet whether
+I will later want to rewrite the branch, so to be sure I have to do this
+every time I pull or push, and then I'd prefer git to do it for me.
+
+> However, I think using origin/master works fine as long as you don't auto-fetch.
 >
-> yanke131415 wrote:
->
->>     I send a patch to gitk
->> project(git://ozlabs.org/~paulus/gitk)with the target email address
->> paulus@ozlabs.org. But several days later No replay of this patch i
->> receive, is the  email address i send patch wrong? Anyone who knows?
->
-> Sending to this mailing list (and cc-ing Paul) is more likely to work.
->
-> Hope that helps,
-> Jonathan
+> If you're doing it right, you can handle origin/master updates by
+> checking that your rewind-y stuff is correct for the new origin/master
+> RIGHT before you push.
+
+I'm not sure I understand what you mean by "checking that your rewind-y
+stuff is correct for the new origin/master"; does that mean manually
+inspecting origin/master to convince youself that you are not
+overwriting something new? If so, I don't think this is acceptable. It
+is probably ok to work this way if the other party only pushed commits
+on top; it's reasonable to expect that you will recognize new commits as
+ones that you haven't seen before. But what if the other party has
+rewritten the branch and squashed improvements into commits in the
+middle of it? The head commit will then look the same as before, and the
+only way to tell whether you are overwriting something new is by
+comparing the old and new hashes. So then we're back at having to
+remember what the old hash was.
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
