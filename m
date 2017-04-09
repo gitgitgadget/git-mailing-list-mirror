@@ -2,109 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1658720966
-	for <e@80x24.org>; Sun,  9 Apr 2017 10:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD68820966
+	for <e@80x24.org>; Sun,  9 Apr 2017 11:00:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752220AbdDIKyy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Apr 2017 06:54:54 -0400
-Received: from mout.gmx.net ([212.227.15.15]:63030 "EHLO mout.gmx.net"
+        id S1752288AbdDILAO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Apr 2017 07:00:14 -0400
+Received: from mail.ableton.net ([62.96.12.117]:44261 "EHLO mail.ableton.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752066AbdDIKyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2017 06:54:53 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5Lqx-1c9b2X2Z9r-00zYvM; Sun, 09
- Apr 2017 12:54:46 +0200
-Date:   Sun, 9 Apr 2017 12:54:46 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Danny Sauer <danny@dannysauer.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Make git log work for git CWD outside of work tree
-In-Reply-To: <20170409022128.21337-1-danny@dannysauer.com>
-Message-ID: <alpine.DEB.2.20.1704091238560.4268@virtualbox>
-References: <20170409022128.21337-1-danny@dannysauer.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752072AbdDILAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Apr 2017 07:00:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ableton.com; s=mail;
+        h=Content-Type:MIME-Version:Message-ID:Date:From:Subject:In-Reply-To:CC:To; bh=nm/ZMZtf5Bc8AUfOPEQP0M0Fd2mxu3ywmVCuQ01+PyQ=;
+        b=IZhHP7crBuI0EHt+XnMmFZJCe2WgG8AD8FygelYeW2099b3UBlHVRyPZNEh8pFef5GSOdhjuGm1c5sAY1PRqmgNFy1EpUOWFF0Z0Ax0cDoO/ji+F73/Z1D7+3043pfja+mdQR8s2/f6auaSedgpREEvBndg0vjVirL0XVFaMVEA=;
+Received: from moon.office.ableton.com ([10.1.15.25])
+        by mail.ableton.net with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+        (Exim 4.82)
+        (envelope-from <haller@ableton.com>)
+        id 1cxAZn-0002dn-DI; Sun, 09 Apr 2017 11:00:11 +0000
+Received: from [192.168.42.152] (178.0.62.147) by mail.office.ableton.com
+ (10.1.15.25) with Microsoft SMTP Server (TLS) id 14.3.319.2; Sun, 9 Apr 2017
+ 13:00:10 +0200
+To:     Jacob Keller <jacob.keller@gmail.com>
+CC:     Jeff King <peff@peff.net>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=3F_Bjarmason?= <avarab@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <CA+P7+xqS1Fh0aDV=QYbVMdRa=M4e-mBtjvknR=U_RShDoccNjQ@mail.gmail.com>
+Subject: Re: Tools that do an automatic fetch defeat "git push --force-with-lease"
+From:   Stefan Haller <haller@ableton.com>
+Date:   Sun, 9 Apr 2017 13:00:10 +0200
+Message-ID: <1n47so5.9e6qvf1bbqww4M%haller@ableton.com>
+Organization: Ableton
+User-Agent: MacSOUP/2.8.6b1 (Mac OS 10.12.4)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FQeKXPfQpG1E7R0kjBDgW3pKHprmB0X9vbg4KzH+lq94uvbqiU4
- ul63W43dwPlwhsyFvYjr0zXGljwPn2M1r69Iv4aUdjFJ8pyYYlcajQsnjMBuAUGyCBH4yiz
- 3MNn/uifeC0u59FWlBUowjUvsXvarm8yEmnEbZUNolJKpJZ6HOje+dHwq6vUF+LWHnw1MJV
- cK4eGhHeZ+Xy8f8RvuDWA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cd3kHT8O55A=:2Necr3Y19bYHvUzF0Aorm9
- 14f9uoIbCDTfu6+nM3ERaaYUlnFKrioFNZDGJcNuvXIURWrdff6NttNalt1iAT9O14zF/ur3k
- sLBs4LbB31pGklNYtZvRxmTJjMMvm+fZ6IigVkC0cj6Zh8nunGP3X6xGhVccQOuD+vuqHJBQt
- L3t0JH9lBAAVaUkLU5Hcm7060uTewOaoBQJKmbuK8UASAax1UeF/oMw7REp7LkXvpl+Nd3Nw+
- 9fJlyQWkNPMmdAZk+IoFgTI1KLDHvEtD/7syHaQOjX4e0achz990e1ryp8sy9kIRCfmZrFhCX
- ZazFYLxgC/FDWHdoP6/8cbfRs+k9kPd1hHBd/IHZ5gbrHq9lsnvhdslTZvDjpISuRiRRxPznU
- /KMSAWBDb7QuCIIxTZNzCpBeEnyGlVYl2psru/v4Xc3RyYTmUwvSQS2CndqnqwzKG+1vFWzun
- O27KCQ9lcX2niHOyvtOf0jB1xSO98Z9TLLsWJTv7gHDOc5on5tDGyoGC8BH6Z5elZR2Z+EI7L
- 3ilkEtxZDTs+owbIWYCM/63gS0JmlKjAeXNHzniuVvtahcbpZ7RS3Vv58KcC+qPLiADY64lYW
- RweNBxpd+kEgZDleSULm5u4605mQPf8m8bmB6/S57TY6zydHNHSf1OVlCQBJF7sEhXtRzbvnG
- qaY3FWW8s2SOjGmYohDA/13VdV+SapBOY7U38QgsqrgsJSbhomwkF2Wzf1vfox3ZTsYyLlbqv
- pGbdNRcdt5CD7kxxFu0tAVTnpu/fKw1PCo6TTGNq2YZesrraFsmATIy6Cs4HxykHEsPHk5kQw
- r1/XcDM
+Content-Type: text/plain
+X-Originating-IP: [178.0.62.147]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Danny,
+Jacob Keller <jacob.keller@gmail.com> wrote:
 
-On Sat, 8 Apr 2017, Danny Sauer wrote:
+> Agreed. You "take" a lease whenever you push to the remote or when you
+> pull from the remote and when you pull into the branch. It should
+> store something that tracks both the branch and remote branch together
+> so that you can generalize it to multiple remotes.
 
-> Make git log's `--use-mailmap` argument works if the GIT_DIR &
-> GIT_WORK_TREE env vars are set and git is run from outside of work tree.
-> Without the NEED_WORK_TREE set on the log subcommand, .mailmap is
-> silently not found.
+I don't see why it has to support multiple remotes (but then I don't
+have much experience with workflows involving multiple remotes, so I may
+well be missing something). A local branch can only have one remote
+tracking branch on one remote, and in my view --force-with-lease without
+arguments works with that remote tracking branch only. Is this view too
+simple?
 
-A laudable goal. How about adding a test case, say, to t/t4203-mailmap.sh,
-to ensure that Git won't regress on your fix?
+> It doesn't necessarily track perfectly with a branch that contains
+> extra work such as when doing pull --rebase, but maybe you have an
+> idea about that?
 
-> diff --git a/git.c b/git.c
-> index 8ff44f0..e147f01 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -440,7 +440,7 @@ static struct cmd_struct commands[] = {
->  	{ "init", cmd_init_db },
->  	{ "init-db", cmd_init_db },
->  	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
-> -	{ "log", cmd_log, RUN_SETUP },
-> +	{ "log", cmd_log, RUN_SETUP | NEED_WORK_TREE },
->  	{ "ls-files", cmd_ls_files, RUN_SETUP | SUPPORT_SUPER_PREFIX },
->  	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
->  	{ "ls-tree", cmd_ls_tree, RUN_SETUP },
+Maybe I wasn't clear enough about that in my proposal, but I propose to
+always store the commit hash of the remote tracking branch as a new
+lease after push and pull, not the local branch. This way it works
+nicely with pull --rebase and a branch that has extra local commits.
 
-This may work for you, but it does not work for me, as I often call `git
-log` in a bare repository. And that call works, and it should keep
-working.
 
-Instead, I think, you need to figure out why the .mailmap file is not read
-correctly when you use the GIT_DIR & GIT_WORK_TREE approach. My vague
-hunch is that you need to replace the ".mailmap" in read_mailmap()
-(defined in mailmap.c):
-
-        err |= read_mailmap_file(map, ".mailmap", repo_abbrev);
-
-by something like mkpath("%s/%s", get_git_work_tree(), ".mailmap"), but
-probably only after testing that we're not in a bare repository (which
-would also fix a bug, I suspect, as `git log` in a bare repository
-probably heeds a .mailmap file in the current directory, which is
-incorrect). I.e. something like:
-
-	if (!is_bare_repository()) {
-		const char *path = mkpath("%s/%s",
-					  get_git_work_tree(), ".mailmap")
-		err |= read_mailmap_file(map, path, repo_abbrev);
-	}
-
-But you really want to add the test case first, with
-`test_expect_failure`, to demonstrate what is currently broken, and then
-triumphantly setting it to `test_expect_success` with your patch.
-
-Ciao,
-Johannes
+-- 
+Stefan Haller
+Ableton
+http://www.ableton.com/
