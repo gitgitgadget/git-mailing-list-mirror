@@ -2,80 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D5FC20966
-	for <e@80x24.org>; Sun,  9 Apr 2017 09:08:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F09C120966
+	for <e@80x24.org>; Sun,  9 Apr 2017 10:00:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751970AbdDIJIw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Apr 2017 05:08:52 -0400
-Received: from mail.ableton.net ([62.96.12.117]:40827 "EHLO mail.ableton.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751814AbdDIJIv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2017 05:08:51 -0400
-X-Greylist: delayed 1805 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Apr 2017 05:08:51 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=ableton.com; s=mail;
-        h=Content-Type:MIME-Version:Message-ID:Date:From:Subject:In-Reply-To:CC:To; bh=3m9THs6xR4UZFdPYhU6LaxZCmXsJ9mlBpvNtPO3aZ08=;
-        b=fYaZMqAWNI7orqbDoMujB+TRbjuzpPSOIt3CVygVFgW0MCKnkBoAmQg3MDAHOKrjjaEssjepO4GeXTa+ng2Ckl4SJU9+Iy68gW4zBkgP4g8J/CuCzDC9IoWh6eBZfAO1701h8S3Akauurl31aQ2wzqr+CFribPdPAOaVzD0oC08=;
-Received: from moon.office.ableton.com ([10.1.15.25])
-        by mail.ableton.net with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
-        (Exim 4.82)
-        (envelope-from <haller@ableton.com>)
-        id 1cx8Mu-0005Jh-1Z; Sun, 09 Apr 2017 08:38:44 +0000
-Received: from [192.168.42.152] (178.0.62.147) by mail.office.ableton.com
- (10.1.15.25) with Microsoft SMTP Server (TLS) id 14.3.319.2; Sun, 9 Apr 2017
- 10:38:43 +0200
-To:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>
-CC:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=3F_Bjarmason?= <avarab@gmail.com>,
-        "Matt McCutchen" <matt@mattmccutchen.net>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <20170408221302.e7sv6cy4xayr2w7o@sigill.intra.peff.net>
-Subject: Re: Tools that do an automatic fetch defeat "git push --force-with-lease"
-From:   Stefan Haller <haller@ableton.com>
-Date:   Sun, 9 Apr 2017 10:38:42 +0200
-Message-ID: <1n47m37.1xocjxu1j1pyM%haller@ableton.com>
-Organization: Ableton
-User-Agent: MacSOUP/2.8.6b1 (Mac OS 10.12.4)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [178.0.62.147]
+        id S1751961AbdDIKAT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Apr 2017 06:00:19 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:53089 "EHLO
+        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751825AbdDIKAR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Apr 2017 06:00:17 -0400
+X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Sun, 09 Apr 2017 06:00:17 EDT
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Sun, 09 Apr 2017 11:55:13 +0200
+  id 0000000000000069.0000000058EA0501.000071F5
+Date:   Sun, 9 Apr 2017 11:55:11 +0200
+From:   Simon Ruderich <simon@ruderich.org>
+To:     "=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH] push: document & test --force-with-lease with multiple
+ remotes
+Message-ID: <20170409095511.d7wewvggvirnhsbr@ruderich.org>
+References: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
+ <20170408114100.13743-1-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-29173-1491731713-0001-2"
+Content-Disposition: inline
+In-Reply-To: <20170408114100.13743-1-avarab@gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> wrote:
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
 
-> > It might be possible to generate these lease tags prior to operations
-> > which modify history and then maybe having a way to list them so you
-> > can select which one you meant when you try to use force-with-lease..
-> 
-> So yeah, I think that is the more interesting direction. I hadn't
-> considered resolving the multiple-operation ambiguity at push time. But
-> I guess it would be something like "you did a rebase on sha1 X at time
-> T, and then one on Y at time T+N", and you pick which one you're
-> expecting.
+--=_zucker.schokokeks.org-29173-1491731713-0001-2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think it's wrong to think about these leases as something that you
-take before you start a rewindy operation. That's the wrong time to take
-the lease; by that time, the remote tracking branch may already contain
-new things that you haven't seen yet, so using that as a lease at that
-time will overwrite those things later. You have to take the lease at a
-time where you know that your local branch and the remote tracking
-branch are up to date with each other, which is after pull and push. And
-if you do that, there's no multiple-operation ambiguity to deal with at
-all.
+Hello,
 
-> And I think that may be converging on the "integrate" refs that Stefan is
-> talking about elsewhere (or some isomorphism of it).
+I like the documentation update and test.
 
-Does it make things clearer if we don't use the term "integrate", but
-call the config value in my proposal simply "branch.*.lease"?
+On Sat, Apr 08, 2017 at 11:41:00AM +0000, =C6var Arnfj=F6r=F0 Bjarmason wro=
+te:
+> [snip]
+>
+> ++
+> +Now when the background process runs `git fetch origin` the references
+> +on `origin-push` won't be updated, and thus commands like:
+> ++
+> +	git push --force-with-lease origin
 
+I think this should be origin-push.
 
--- 
-Stefan Haller
-Ableton
-http://www.ableton.com/
+Regards
+Simon
+--=20
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
+
+--=_zucker.schokokeks.org-29173-1491731713-0001-2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEO7rfWMMObpFkF3n0kv79t+RMMvkFAljqBPgACgkQkv79t+RM
+MvljVg/+PtidRMJP6e0Q3DAQBQk4KkU6KoLDztr9I++jcMLk9eGxLjJnZ9OvN60I
+ZgP4iFsh7eullLeFSaStnqtOWxGUcHgKHnQcLiUV8EWq/hyM2rXL2h367H81b/ei
+DTqLCacggKnZWWzUOksEWaV2GtBQS+9QWSwiyOJK4C9OvuAIuoup6ymSVAUjk7L6
+JyEu9poiTBFZe0MGnYXgKdOJVxVlLtYdbENPuA9eXsRIcQTeG5YN6QmnVw7mmeSz
+hRuWhAK+kKNvJ2UcgaYDiVHelQWB/qlUBq17m9ydy2DcbXGH3IFClyOBL1qOc7s0
+/4Qf5nV02yhdX+bgg6S3hfRoT6vDJy54mCb6qP2zmgzemD6VD771/DhmAbfQVpUf
+npmk5g4Y5TuMDVhZ7KZ6/l9IGjZxOp+l93f/y1MKCzCUiTEI/NCU4a8ZbLgQGRmD
+HvVyksY8ux3rksNh0SHxQcDNRqXaQT5gRmP62ueKz0/oLfNqPROAKTBMQyoQS6QF
+Xt+4WCBB+oxOu/IvQYiWjPXufQ4Ev2Grj52umWgeOVXyNpplNImGRrnYgm0E0pgP
+Y8DG89C+nWwTNEZwtxqv/8G47KsJrBLyLpZnTz1OInmIug8vm7JoC+LZ/wIYDxeH
+Hc2IwokxsWCCtu8jyMLhHIJgYjBItJMGuha9BZ42XQ907/wXql0=
+=o7cX
+-----END PGP SIGNATURE-----
+
+--=_zucker.schokokeks.org-29173-1491731713-0001-2--
