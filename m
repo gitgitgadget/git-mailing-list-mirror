@@ -2,94 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6064A20960
-	for <e@80x24.org>; Mon, 10 Apr 2017 20:30:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E39B20960
+	for <e@80x24.org>; Mon, 10 Apr 2017 20:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753325AbdDJUaQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 16:30:16 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:36058 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752099AbdDJUaP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 16:30:15 -0400
-Received: by mail-wr0-f196.google.com with SMTP id o21so25539710wrb.3
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 13:30:15 -0700 (PDT)
+        id S1751514AbdDJUqX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 16:46:23 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:36658 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751140AbdDJUqW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 16:46:22 -0400
+Received: by mail-pg0-f50.google.com with SMTP id g2so110008649pge.3
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 13:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id;
-        bh=/6BDvbgyTX7ORwyHml4iN/FRPBkqpN9V0mVLP1oiqZg=;
-        b=cbYEtQ5TLAIwKZD+Q3x2VGBNTKuJWtj1MEcf/QWmwUMWej6rY+js+YiQDBZ7OIjRHN
-         MtgG2lyLSFD0a/5mPgzzijh02NQ8l76RYumJDkj+nR2t/2MegCZH3o2IBNBU6uJvT5og
-         +kkVYN+Xokwkr/fRUNU2gwG3lBKIbtXdtw4fHG63GFlIrmtVWQlJv82cpAflWK36nIWk
-         aQ3EVNgtIKBb2hfAn2tqyDclK9tT6lrjDSAPMNhcahMox5+mLM3R+DqudbXHEv/EGzEx
-         +/NfngfFf3Ygdh13wtw06e58AzYCPL25nHcBrC/YUSclYmLsQ3frYhUZAO1JERS/z1rP
-         wP8Q==
+        bh=Ra1Vpl0VGMe0dJRCHzhOE4bgqqO/2upwSu31J9EFW38=;
+        b=Nz/Ct1Hqaw+ViQcTodi5VaJ1Ea/ve+VcWqt7fVqmXR8TlU3sr1BxlWLOZoDhfeGinc
+         GU7RXm6vSEg2CKAfwrOXY12jUdCyZsYMt2w8iIzpv14SOHPgt3QUhAgXGfDoiI3afdEM
+         BdigQ97jtJcgi/swg9ACZBRH4wakHEK1s5Uw8mlaWcpmOF1BxhsUZ6VC85Kda7Tst0EV
+         Q3imA3FysQ2I4edNYXeNfvPHkkwpPKAMnmWjq48jEbHRnc3ZkVlUXoX/s/MXR8q7XZ6O
+         meHkN/58n9manYmoEbHT5EH5lQD1JstH42/SvKSyMkSuLr5KmvTem1WlUSrecp4PErld
+         sJ1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/6BDvbgyTX7ORwyHml4iN/FRPBkqpN9V0mVLP1oiqZg=;
-        b=TZcYYHKfsWIU0+EVjkla3b2lcDOyICDVK6Z1DZkKQY3wKxf6X3qPYDQ84V/x8ADkhq
-         wZXRkJbg8ZcHLHP53+QCvN2++o6422ns3Wk4mYWp6i56hIIuKKLpgVrXndg2ZQ+9/e6t
-         y+fv92MDMR9kj7JBmWWQFNFZ5CEjqPvGvsm6NPOa8UYEpNzNoc90uzhfUgzaEg1g95Sr
-         wrfULqQXiNLViwCv+0Q9eXR6bEdMAYug6eQSU+Cn59BdfbWdvGg2gP23SCLcAorGLNd0
-         sOYKJkW402iHsSyx5m4YAlpm2wwm+yjCMOOkM2RIpOpmjQFw4uUVccmh6JsaGY2IDMsR
-         Wrsg==
-X-Gm-Message-State: AFeK/H0xIA+5byHVmu3FAQ+QQHUVikENGG4/bt/Ja9izMDZQEBT8sAFn0TCLSvharMYcWw==
-X-Received: by 10.223.143.107 with SMTP id p98mr31575740wrb.3.1491856214251;
-        Mon, 10 Apr 2017 13:30:14 -0700 (PDT)
-Received: from slxBook4.fritz.box (p5DDB54AB.dip0.t-ipconnect.de. [93.219.84.171])
-        by smtp.gmail.com with ESMTPSA id 65sm18794796wri.68.2017.04.10.13.30.12
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 13:30:13 -0700 (PDT)
-From:   Lars Schneider <larsxschneider@gmail.com>
+        bh=Ra1Vpl0VGMe0dJRCHzhOE4bgqqO/2upwSu31J9EFW38=;
+        b=loKHri9N6nRhYcLAZy69CkW2VdDlRQcYICOQAO+7ddaNNzlF/Hcm6SulmrpKipCglW
+         dQaa8FFJVqNrHp8boFPcOVjZoFeb/likyYqlTFKIBP2Kpfa9KSyy+JLPPEP2qmvQriUy
+         rWO+oBAO0k011lj7ibelalluNNLDPYKZwmAxE9M60JRdN0HwvAJemwy7SY2/JJunOGLz
+         PwggLu7/5phkGz3yEOqMMhXSiR226MoABoU7PsZjk30b4oJYSthrqnaTHVSVK9+XFPh2
+         dNA3H+7OR1bl0q7LgOHbIaumOKt1Iy41nm2NV0uc+Ps2J2Q1kM32dbAYrBaeVpSIGMEB
+         uGVQ==
+X-Gm-Message-State: AFeK/H3gVNgGS9WQLmqjONB6NdrGaAiUAxGHQ2Ma39fIQQpGge4B+FrlRPMKBW9elYrW5fOD
+X-Received: by 10.99.175.7 with SMTP id w7mr57900004pge.170.1491857181649;
+        Mon, 10 Apr 2017 13:46:21 -0700 (PDT)
+Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
+        by smtp.gmail.com with ESMTPSA id r90sm6709414pfl.120.2017.04.10.13.46.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 10 Apr 2017 13:46:20 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, benpeart@microsoft.com
-Subject: [PATCH v1] convert: fix return value for apply_multi_file_filter() on SIGPIPE
-Date:   Mon, 10 Apr 2017 22:30:11 +0200
-Message-Id: <20170410203011.54103-1-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.12.2
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Subject: [RFC 0/4] Implementation of fetch-blobs and fetch-refs
+Date:   Mon, 10 Apr 2017 13:46:06 -0700
+Message-Id: <cover.1491851452.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.12.2.715.g7642488e1d-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a pipe write fails and errno is set to EPIPE then we execute the
-"error" path. However, as "err" can still be 0 the return value of
-apply_multi_file_filter() would indicate success.
+My previous proposal about a possible new server endpoint that serves
+blobs and refs [1] didn't seem to garner much interest, so I thought I'd
+provide a possible implementation of that proposal as a work in
+progress.
 
-Fix this by setting "err" to the value of "errno" in case of a pipe
-write failure.
+In particular, patch 1 demonstrates that a new server endpoint that
+serves refs without the initial ref advertisement can be done in 228
+lines of code (according to "git diff --stat") while accounting for the
+various special cases that upload-pack imposes (stateless RPC, inclusion
+of an additional response when depth is requested, handling of "done" in
+request, sending a packfile directly after a response containing "ACK
+ready" without waiting for "done", and so on).
 
-Noticed-by: Ben Peart <benpeart@microsoft.com>
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
+I'm hoping that these features would be of more interest to more people.
+To that end, I'm sending these patches in the hope of showing that these
+features are useful (omitting ref advertisements help greatly when
+serving large repos, as described in the commit message of patch 1, and
+serving blobs is useful for any fetch-blob-on-demand repo scheme) and
+that my proposed way of implementing them can be done in a relatively
+uncomplicated manner (as seen in these patches).
 
-Notes:
-    Base Ref: master
-    Web-Diff: https://github.com/larsxschneider/git/commit/41a217c246
-    Checkout: git fetch https://github.com/larsxschneider/git errno-check-v1 && git checkout 41a217c246
+Patch 1-3 show what serving refs without the advertisement would look
+like from the server's and fetch-pack's points of view. Patch 4 is
+similar to some of the other blob-serving patches except that this
+contains reachability checks and that this bundles the resulting objects
+in a packfile.
 
- convert.c | 1 +
- 1 file changed, 1 insertion(+)
+[1] <ffd92ad9-39fe-c76b-178d-6e3d6a425037@google.com>
 
-diff --git a/convert.c b/convert.c
-index 8d652bf27c..586e0cdd45 100644
---- a/convert.c
-+++ b/convert.c
-@@ -753,6 +753,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 	sigchain_pop(SIGPIPE);
- 
- 	if (err || errno == EPIPE) {
-+		err = err ? err : errno;
- 		if (!strcmp(filter_status.buf, "error")) {
- 			/* The filter signaled a problem with the file. */
- 		} else if (!strcmp(filter_status.buf, "abort")) {
+Jonathan Tan (4):
+  server-endpoint: serve refs without advertisement
+  fetch-pack: refactor "want" pkt-line generation
+  fetch-pack: support new server endpoint
+  server-endpoint: serve blobs by hash
 
-base-commit: b14f27f91770e0f99f64135348977a0ce1c7993a
+ .gitignore                 |   1 +
+ Makefile                   |   3 +
+ builtin/fetch-pack.c       |  10 +-
+ fetch-pack.c               | 129 +++++++++++------
+ fetch-pack.h               |   1 +
+ server-endpoint.c          | 347 +++++++++++++++++++++++++++++++++++++++++++++
+ t/helper/.gitignore        |   1 +
+ t/helper/test-un-pkt.c     |  40 ++++++
+ t/t5573-server-endpoint.sh |  60 ++++++++
+ t/t9999-mytests.sh         | 242 +++++++++++++++++++++++++++++++
+ 10 files changed, 790 insertions(+), 44 deletions(-)
+ create mode 100644 server-endpoint.c
+ create mode 100644 t/helper/test-un-pkt.c
+ create mode 100644 t/t5573-server-endpoint.sh
+ create mode 100644 t/t9999-mytests.sh
+
 -- 
-2.12.2
+2.12.2.715.g7642488e1d-goog
 
