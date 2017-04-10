@@ -6,105 +6,72 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1F2B20966
-	for <e@80x24.org>; Mon, 10 Apr 2017 16:33:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A152820966
+	for <e@80x24.org>; Mon, 10 Apr 2017 16:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752241AbdDJQdx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 12:33:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59250 "EHLO cloud.peff.net"
+        id S1752852AbdDJQgO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 12:36:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59257 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751921AbdDJQdw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 12:33:52 -0400
-Received: (qmail 8865 invoked by uid 109); 10 Apr 2017 16:33:52 -0000
+        id S1751792AbdDJQgA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 12:36:00 -0400
+Received: (qmail 8999 invoked by uid 109); 10 Apr 2017 16:36:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 16:33:52 +0000
-Received: (qmail 26504 invoked by uid 111); 10 Apr 2017 16:34:12 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 16:36:00 +0000
+Received: (qmail 26531 invoked by uid 111); 10 Apr 2017 16:36:20 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 12:34:12 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 12:33:50 -0400
-Date:   Mon, 10 Apr 2017 12:33:50 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 12:36:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 12:35:58 -0400
+Date:   Mon, 10 Apr 2017 12:35:58 -0400
 From:   Jeff King <peff@peff.net>
-To:     Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] http: honnor empty http.proxy option to bypass proxy
-Message-ID: <20170410163350.3zqm33tgqafsp76u@sigill.intra.peff.net>
-References: <20170410151556.10054-1-ryazanov.s.a@gmail.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        David Turner <dturner@twosigma.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] t6500: don't run detached auto gc at the end of the test
+ script
+Message-ID: <20170410163557.gn3mlcalfhhncbtt@sigill.intra.peff.net>
+References: <20170410125911.6800-1-szeder.dev@gmail.com>
+ <20170410135837.2ukgksfxdlcfqldy@sigill.intra.peff.net>
+ <CAM0VKj=4Utapk9iFasChkPSdkWxB5WiHtpZGPUYKMC5LKrnGXw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170410151556.10054-1-ryazanov.s.a@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM0VKj=4Utapk9iFasChkPSdkWxB5WiHtpZGPUYKMC5LKrnGXw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2017 at 06:15:56PM +0300, Sergey Ryazanov wrote:
+On Mon, Apr 10, 2017 at 06:31:54PM +0200, SZEDER Gábor wrote:
 
-> Curl distinguish between empty proxy address and NULL proxy address. In
-> the first case it completly disable proxy usage, but if proxy address
-> option is NULL then curl attempt to determine proxy address from
-> http_proxy environment variable.
+> Indeed this seems to work, and luckily we don't need that much
+> hackery.  When there is a single variable assignment and the expansion
+> of a command substitution is assigned to the variable, then the exit
+> status is that of the command inside the command substitution, i.e.
 > 
-> According to documentation, if http.proxy configured to empty string
-> then git should bypass proxy and connects to the server directly:
+>   $ v=$(false) ; echo $?
+>   1
 > 
->     export http_proxy=http://network-proxy/
->     cd ~/foobar-project
->     git config remote.origin.proxy ""
->     git fetch
+> This means we can write this simply as:
 > 
-> Previously, proxy host was configured by one line:
+>   doesnt_matter=$(git gc --auto 9>&1)
 > 
->     curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
-> 
-> Commit 372370f (http: use credential API to handle proxy auth...) parses
-> proxy option, extracts proxy host address and additionaly updates curl
-> configuration:
-> 
->     credential_from_url(&proxy_auth, curl_http_proxy);
->     curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
-> 
-> But if proxy option is empty then proxy host field become NULL this
-> force curl to fallback to proxy configuration detection from
-> environment. This caused empty http.proxy option not working any more.
+> It's still hackery :)
 
-That makes sense. And if I understand correctly, this was a regression
-in 372370f; before that we fed curl_http_proxy directly, and it was
-either NULL or not, depending on whether we had seen the config option.
+Heh. Yeah, I would call that _more_ hackery in that it's much more
+clever. But it is shorter. :)
 
-It looks like we _still_ set CURLOPT_PROXY to curl_http_proxy, and then
-immediately afterward set it to proxy_auth.host. That should make the
-first one always a noop, I would think, and it should be removed.
+I think as long as the trickery is documented that's OK (and calling it
+doesnt_matter and explaining in the commit message is fine by me;
+hopefully that name would induce somebody to look in the history).
 
-But...
+> OTOH, this makes it possible to continue the test reliably after the
+> gc finished in the background, so we could also check that there is
+> only a single pack file left, i.e. that the detached gc did what it
+> was supposed to do.
 
-> diff --git a/http.c b/http.c
-> index 96d84bb..bf0e709 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -861,7 +861,12 @@ static CURL *get_curl_handle(void)
->  			strbuf_release(&url);
->  		}
->  
-> -		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
-> +		/*
-> +		 * Avoid setting CURLOPT_PROXY to NULL if empty http.proxy
-> +		 * option configured.
-> +		 */
-> +		if (proxy_auth.host)
-> +			curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
-
-Here that second one becomes conditional, and we rely on the earlier
-setting (but only sometimes). I would think this whole thing would be
-more clear if we dropped the first CURLOPT_PROXY call entirely, and just
-did:
-
-  /*
-   * If we parsed a null host from the URL, we must convert that
-   * back into an empty string so that curl knows we want no proxy at
-   * all (not to find the default).
-   */
-  curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host ?
-                                          proxy_auth.host : "");
+Yes, I think the test can and should check the after-gc state.
 
 -Peff
