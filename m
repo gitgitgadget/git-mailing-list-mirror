@@ -1,112 +1,156 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=1.8 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_BCC,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F20120960
-	for <e@80x24.org>; Tue, 11 Apr 2017 01:15:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0155920960
+	for <e@80x24.org>; Tue, 11 Apr 2017 05:32:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753282AbdDKBPB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 21:15:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59589 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751587AbdDKBPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 21:15:01 -0400
-Received: (qmail 9174 invoked by uid 109); 11 Apr 2017 01:14:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 01:14:57 +0000
-Received: (qmail 30576 invoked by uid 111); 11 Apr 2017 01:15:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 21:15:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 21:14:54 -0400
-Date:   Mon, 10 Apr 2017 21:14:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        Joachim Durchholz <jo@durchholz.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/2] test-lib: exhaustively insert non-alnum ASCII into
- the TRASH_DIRECTORY name
-Message-ID: <20170411011454.oteysryg4t44gebj@sigill.intra.peff.net>
-References: <20170409191117.25175-1-avarab@gmail.com>
- <20170409191117.25175-3-avarab@gmail.com>
- <CACBZZX7OfM-zivJAQMXdNarHDjAhzQhqGNZNs2QqDUyOo3AA0g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        id S1753017AbdDKFcc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 01:32:32 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:34507 "EHLO
+        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751685AbdDKFcb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 01:32:31 -0400
+Received: from tigra.domain007.com (tigra.domain007.com [192.168.2.102])
+        by hermes.domain007.com (Postfix) with SMTP id AED89D400C7;
+        Tue, 11 Apr 2017 08:32:28 +0300 (MSK)
+Date:   Mon, 10 Apr 2017 20:13:13 +0300
+From:   Konstantin Khomoutov <kostix+git@007spb.ru>
+To:     Samuel =?UTF-8?B?w4VzbHVuZA==?= <samuel@update.uu.se>
+Cc:     Konstantin Khomoutov <kostix+git@007spb.ru>
+Message-Id: <20170410201313.e69bc8798d569d85a493dc19@domain007.com>
+In-Reply-To: <a967439f-117e-1f09-6f40-7f62bc6cbae1@update.uu.se>
+References: <3563ee7a-1175-2010-7176-0339cd3e60ee@update.uu.se>
+        <20170410101336.c93a423e7d3a8594151bebef@domain007.com>
+        <a967439f-117e-1f09-6f40-7f62bc6cbae1@update.uu.se>
+X-Mailer: Sylpheed 3.5.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX7OfM-zivJAQMXdNarHDjAhzQhqGNZNs2QqDUyOo3AA0g@mail.gmail.com>
+Subject: Re: Git documentation on branching.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2017 at 01:23:32AM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Mon, 10 Apr 2017 12:24:47 +0200
+Samuel Åslund <samuel@update.uu.se> wrote:
 
-> * Most of the tests fail because git clone can't deal with cloning a
-> repo with a \r in the path. The error we produce when we try is quite
-> bad and doesn't indicate what went wrong:
+[...]
+> >> One feature with "git branch xyz" and "git checkout xyz" that is
+> >> rather obvious if you know them but bit me a little since I did
+> >> not, is that uncommitted work in progress is not affected or saved
+> >> when switching between branches.
+> > [...]
+> > But neither is uncommitted work saved anywhere when you do
+> > `svn switch` in Subversion which is analogous to `git checkout`.
+> >
+> > While I do know quite many people expect Git to somehow "preserve"
+> > their work when switching branches without having them do anything,
+> > I wonder what in Subversion workflow makes you think Git should have
+> > had the behaviour you expected?
 > 
-> $ rm -rf /tmp/git.*; mkdir /tmp/git.$(perl -e 'print chr 13') && cd
-> /tmp/git.* && git init --bare b && file b && git clone b c
-> /b/tialized empty Git repository in /tmp/git.
-> b: directory
-> Cloning into 'c'...
-> fatal: '/tmp/git. /b' does not appear to be a git repository
-> fatal: Could not read from remote repository.
+> svn switch is heavy, thus I usually checked out a new branch in
+> another directory. So probably not the Subversion workflow but rather
+> _my_ workflow in Subversion.
+
+Yes.  The equivalent thing with Git would be using its `git worktree`
+subcommand (which is a stock subcommand since some time, and previously
+was available in the form of an external script).  The said command
+basically creates another "checkout" -- a working tree and a separate
+index -- linked to the original repository.  You can have any number of
+such separate work trees, and what's checked out in them is completely
+irrelevant to the repository itself (which only keeps commits and the
+data they refer to).
+
+Note that since `git worktree` was (is?) sort of a clever hack not
+originally envisioned as one of "stock" workflows, its insufficiently
+covered by the documentation.  And while it indeed may be useful --
+sometimes it's ineed convenient to have two versions of the same
+codebase to be checked out side-by-side, -- I'd warn you against
+rushing for using `git worktree` as it appears to support what you did
+with Subversion: there is another approach to support your mindset
+which I'll explain in a moment.
+
+> Either way, your comment about peoples expectations was what I wanted
+> to address. Expectation management is the responsibility of the 
+> documentation, right?
+
+It's hard to tell -- as Ævar Arnfjörð pointed out: there are two kinds
+of documentation: manuals and books / introductory courses.  As was
+shown to you, the manual page on `git checkout` explains what it does.
+Whether that's clear right away to any newcomer, I cannot say.
+Probably not, but if we'd turn that manual page to a book it will lose
+its original meaning of being dry and to the point.
+
+I have that problem with manual pages all the time: quite often they
+are most useful on some Nth re-reading, where you approach them with
+certain working knowledge under your belt -- and suddenly certain
+things you read there "click" in your head; you did read them before
+but your mind just skimmed over them while having the impression of
+grasping the material.
+
+> I find it quite reasonable to choose whether to stash the work in 
+> progress myself before checking out another branch, but since I did
+> not expect to need to do that I didn't.
 > 
-> Please make sure you have the correct access rights
-> and the repository exists.
-> 
-> So file(1) shows it exists, a strace shows that git knows it exists at
-> some point, but something gets lost along the way.
+> I think that what made me expect Git to handle my uncommitted work is 
+> how the documentation talks about making it easy to switch between 
+> working on different features, most of the time I do not feel 
+> comfortable checking in when a feature is in a broken state and 
+> interruptions for quick fixes usually comes in those situations.
 
-It's the round-trip through the config. It writes:
+That's more complicated that it sounds.
+Consider the following things (in no particular order).
 
-  [remote "origin"]
-  url = /tmp/git.^M/b
+Sometimes "carrying your uncommitted work over" to another state of the
+codebase is precisely what you'd want to happen, and that's what
+`git checkout` does for your.  It even has a specual "I DO REALLY WANT
+IT TO HAPPEN" switch, "-m", which makes that command to try to merge
+your local modifications into what is about to be checked out if
+otherwise your changes would be in conflict with that state.
 
-into the config (where ^M is a literal CR). And then on reading it back,
-unquoted whitespace in config values is converted to spaces, which is
-why you see "git. /b" in the error message (the other ones are ugly
-because it's writing the raw CR in via printf, and your terminal
-respects it. Try "2>&1 | cat -A" when debugging this sort of thing (our
-error and warning messages clean up cruft like this already, but
-informational messages don't always go through vreportf()).
+What's with untracked files?  Sometimes they should be considered part
+of the work to be saved away before checking out another state, and
+sometimes not (`git stash` has a special switch, "-u" to make it stash
+untracked stuff as well).  What would be the default mode?  Think of
+it, and supposedly you'll come to a conclusion that either mode Git
+could implement would alienate some group of folks. ;-)
 
-Anyway, something like this would fix it (it actually adds "\r" to the
-config format, which is how we handle \n and \t; we could do it without
-touching the parsing side if we taught store_write_pair() to recognize
-that \r needs to go in double-quotes).
+Now let's consider the most interesting bit.
 
-diff --git a/config.c b/config.c
-index 1a4d85537..4a36a37ba 100644
---- a/config.c
-+++ b/config.c
-@@ -526,6 +526,9 @@ static char *parse_value(void)
- 			case 'n':
- 				c = '\n';
- 				break;
-+			case 'r':
-+				c = '\r';
-+				break;
- 			/* Some characters escape as themselves */
- 			case '\\': case '"':
- 				break;
-@@ -2172,6 +2175,9 @@ static int store_write_pair(int fd, const char *key, const char *value)
- 		case '\t':
- 			strbuf_addstr(&sb, "\\t");
- 			break;
-+		case '\r':
-+			strbuf_addstr(&sb, "\\r");
-+			break;
- 		case '"':
- 		case '\\':
- 			strbuf_addch(&sb, '\\');
+People switching from a non-distributed VC system are inherently and
+subconsciously afraid of committing anything which "is not ready".
+This is definitely a correct mindset with Subversion (which, IIUC,
+still does not implement shelving it considered for a long time)
+but not with Git.
 
--Peff
+Here, it's absolutely OK to lump together all the stuff you're
+currently working it by `git add`-ing them, `git commit` it all --
+usually putting an informal "WIP" prefix in the front of the commit
+message to indicate it's work in progress -- and then switch away to
+another branch.
+
+When back, you just to `git reset HEAD~1` to move your checked out
+branch one commit back and still having all your changes where you had
+them -- in your work tree.  You could have saved a series of N WIP
+commits if you wanted it this way for some reason, and then you'd do
+`git reset HEAD~N` to achieve the same effect.  When you record a new
+commit afterwards it will be recorded on to of what you've just reset
+your branch to -- as if those WIP commits never existed.
+
+This way your "not ready yet" changes maintained on particular branches
+are kept right there -- at the tips of those branches.
+Since Git is fine with using any commit for anything -- forking a
+branch off it or pushing it, -- it's okay if, say, your boss orders you
+to push what you've done on the "develop" branch while you have some
+WIP commits at its tip: you just push not its tip but the last "ready"
+commit on that branch.
+
+TL;DR
+Consider more possibilities ;-)
