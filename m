@@ -6,86 +6,109 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF6220966
-	for <e@80x24.org>; Mon, 10 Apr 2017 17:02:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F39A820966
+	for <e@80x24.org>; Mon, 10 Apr 2017 17:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755855AbdDJRB6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 13:01:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59276 "EHLO cloud.peff.net"
+        id S1754993AbdDJROD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 13:14:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59289 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755815AbdDJRB5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 13:01:57 -0400
-Received: (qmail 10509 invoked by uid 109); 10 Apr 2017 17:01:56 -0000
+        id S1753760AbdDJROA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 13:14:00 -0400
+Received: (qmail 11218 invoked by uid 109); 10 Apr 2017 17:13:55 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 17:01:56 +0000
-Received: (qmail 26684 invoked by uid 111); 10 Apr 2017 17:02:16 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 17:13:55 +0000
+Received: (qmail 26820 invoked by uid 111); 10 Apr 2017 17:14:15 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 13:02:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 13:01:54 -0400
-Date:   Mon, 10 Apr 2017 13:01:54 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 13:14:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 13:13:53 -0400
+Date:   Mon, 10 Apr 2017 13:13:53 -0400
 From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        David Turner <dturner@twosigma.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: [PATCH] t6500: don't run detached auto gc at the end of the test
- script
-Message-ID: <20170410170154.qwzaolflrvsduwzd@sigill.intra.peff.net>
-References: <20170410125911.6800-1-szeder.dev@gmail.com>
- <20170410135837.2ukgksfxdlcfqldy@sigill.intra.peff.net>
- <CAM0VKj=4Utapk9iFasChkPSdkWxB5WiHtpZGPUYKMC5LKrnGXw@mail.gmail.com>
- <20170410163557.gn3mlcalfhhncbtt@sigill.intra.peff.net>
- <CAM0VKjkdqjbkqOF6ucymtuBAAgBVJQ6SGe4Ep2gqVBtNp=s_CA@mail.gmail.com>
+        Danny Sauer <danny@dannysauer.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make git log work for git CWD outside of work tree
+Message-ID: <20170410171352.s7r7tzheadxjlulw@sigill.intra.peff.net>
+References: <20170409022128.21337-1-danny@dannysauer.com>
+ <alpine.DEB.2.20.1704091238560.4268@virtualbox>
+ <413a1456-cac6-56c8-ea45-38f14cf958ae@dannysauer.com>
+ <xmqqvaqdqfhe.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CLBY22j3EjR4PW3n+K6PWUzb-HCgxTVeCGpwtApZF-6g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM0VKjkdqjbkqOF6ucymtuBAAgBVJQ6SGe4Ep2gqVBtNp=s_CA@mail.gmail.com>
+In-Reply-To: <CACsJy8CLBY22j3EjR4PW3n+K6PWUzb-HCgxTVeCGpwtApZF-6g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2017 at 06:56:30PM +0200, SZEDER Gábor wrote:
+On Mon, Apr 10, 2017 at 07:01:00PM +0700, Duy Nguyen wrote:
 
-> On Mon, Apr 10, 2017 at 6:35 PM, Jeff King <peff@peff.net> wrote:
-> > On Mon, Apr 10, 2017 at 06:31:54PM +0200, SZEDER Gábor wrote:
-> 
-> >> This means we can write this simply as:
-> >>
-> >>   doesnt_matter=$(git gc --auto 9>&1)
-> >>
-> >> It's still hackery :)
+> > Similarly, if you replace "git add foo" with "git log", it still
+> > should work in the above, i.e.
 > >
-> > Heh. Yeah, I would call that _more_ hackery in that it's much more
-> > clever. But it is shorter. :)
+> >     $ export GIT_DIR=~/myproject/.git GIT_WORK_TREE=~/myproject
+> >     $ cd ~/myproject/../somewhere/else
+> >     $ git log
 > >
-> > I think as long as the trickery is documented that's OK (and calling it
-> > doesnt_matter and explaining in the commit message is fine by me;
-> > hopefully that name would induce somebody to look in the history).
+> > If Git is not chdir(2)ing to ~/myproject before calling cmd_log()
+> > in the above (again, this is my down week so I didn't and will not
+> > check with the code myself), we may want to call that a bug and fix
+> > it, so that you do not have to do anything special to get to the
+> > path of ".mailmap" that is at the top-level.
 > 
-> For the sake of self documentation and potential future users, I will
-> put it into a helper function like run_and_wait_for_detached_auto_gc()
-> or something.  Jury is still out on the proper function name (it would
-> be a shame if the funcname were longer than the command ;), but time
-> is up for today...
+> The behavior is "documented" in t1510 since f3bb8b4b84 (Merge branch
+> 'nd/setup' - 2010-12-28)
+> 
+> "11. When user's cwd is outside worktree, cwd remains unchanged,
+>     prefix is NULL."
+> 
+> This behavior probably started long before my topic though, mine was
+> more of documentation, making worktree detection more consistent. It's
+> the same case with defining GIT_DIR without GIT_WORK_TREE, I think:
+> scripts started to depend on a behavior that we did not clearly
+> define, by the time we knew what we wanted and we kept the old
+> behavior forever.
+> 
+> I think it's just safer to go with Johannes' suggestion.
+> 
+> An alternative is, when you have found out you need to read .mailmap,
+> you call setup_work_tree() then, which prepares the worktree for you
+> (including moving back to cwd) or dies if worktree does not exist, or
+> no-op if worktree has already been asked by somebody. Many commands do
+> lazy worktree initialization this way.
 
-I wonder if you could make it a general test-lib function, like:
+I think this is much more than just .mailmap, though. For instance, I
+have noticed a similar problem with .gitattributes:
 
-  run_and_wait () {
-	# we read stdout from the child only for the side effect
-	# of waiting until all child sub-processes exit, closing their
-	# fd 9.
-	does_not_matter=$("$@" 9>&1)
-  }
+  # set up a repo with an attribute
+  git init repo
+  (
+    cd repo &&
+    echo content >file &&
+    echo "file diff=sed" >.gitattributes &&
+    git add . &&
+    git commit -m foo &&
+    git config diff.sed.textconv 'sed s/^/foo:/'
+  )
 
-You could make it even more general by doing an 'eval' in the middle,
-but that is probably getting too insane. :)
+If I run:
 
-I don't know if there are other spots that would benefit from this. Most
-of the other racy stuff like this that I recall working on actually
-wanted to run two co-processes (so background something, then keep
-running the test, then ask the backgrounded task to die and wait for it
-to finish).
+  (cd repo && git log -p)
+
+the diff for "file" shows:
+
+  +foo:content
+
+as expected. But:
+
+  GIT_WORK_TREE=$PWD/repo GIT_DIR=$PWD/repo/.git git log -p
+
+doesn't (while writing this I also noticed that "git log -p file"
+doesn't work because of the DWIM lookup. That one is more debatable, but
+I still think it makes more sense to move to $GIT_WORK_TREE).
 
 -Peff
