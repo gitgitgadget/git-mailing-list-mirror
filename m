@@ -6,82 +6,78 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FBBA20960
-	for <e@80x24.org>; Mon, 10 Apr 2017 18:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47A3B20960
+	for <e@80x24.org>; Mon, 10 Apr 2017 18:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753067AbdDJSWU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 14:22:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59332 "EHLO cloud.peff.net"
+        id S1752944AbdDJSbX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 14:31:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59340 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751588AbdDJSWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 14:22:19 -0400
-Received: (qmail 15560 invoked by uid 109); 10 Apr 2017 18:22:18 -0000
+        id S1752410AbdDJSbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 14:31:23 -0400
+Received: (qmail 16126 invoked by uid 109); 10 Apr 2017 18:31:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 18:22:18 +0000
-Received: (qmail 27336 invoked by uid 111); 10 Apr 2017 18:22:37 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 18:31:22 +0000
+Received: (qmail 27449 invoked by uid 111); 10 Apr 2017 18:31:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 14:22:37 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 14:22:15 -0400
-Date:   Mon, 10 Apr 2017 14:22:15 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 14:31:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 14:31:20 -0400
+Date:   Mon, 10 Apr 2017 14:31:20 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        "Tom G. Christensen" <tgc@jupiterrise.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [RFC] dropping support for ancient versions of curl
-Message-ID: <20170410182215.figy7hm4sogwipyz@sigill.intra.peff.net>
-References: <20170404025438.bgxz5sfmrawqswcj@sigill.intra.peff.net>
- <d6ba17f0-3da9-8699-8d5c-5ebf1eaef00e@jupiterrise.com>
- <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
- <20170406005301.4vmjkiu6qkj3g276@genre.crustytoothpaste.net>
- <20170406092942.ow4mvce5miyzbgld@sigill.intra.peff.net>
- <alpine.DEB.2.20.1704071257560.4268@virtualbox>
+To:     Stefan Haller <haller@ableton.com>
+Cc:     Jacob Keller <jacob.keller@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI/?= Bjarmason <avarab@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: Tools that do an automatic fetch defeat "git push
+ --force-with-lease"
+Message-ID: <20170410183120.oa5yqwvlrdzitqci@sigill.intra.peff.net>
+References: <20170408221302.e7sv6cy4xayr2w7o@sigill.intra.peff.net>
+ <1n47m37.1xocjxu1j1pyM%haller@ableton.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.20.1704071257560.4268@virtualbox>
+In-Reply-To: <1n47m37.1xocjxu1j1pyM%haller@ableton.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 07, 2017 at 01:18:30PM +0200, Johannes Schindelin wrote:
+On Sun, Apr 09, 2017 at 10:38:42AM +0200, Stefan Haller wrote:
 
-> On Thu, 6 Apr 2017, Jeff King wrote:
+> Jeff King <peff@peff.net> wrote:
 > 
-> > And it's not like people on ancient mission-critical systems get cut
-> > off. They can still run the version of Git they were running when their
-> > OS went out of support.
+> > > It might be possible to generate these lease tags prior to operations
+> > > which modify history and then maybe having a way to list them so you
+> > > can select which one you meant when you try to use force-with-lease..
+> > 
+> > So yeah, I think that is the more interesting direction. I hadn't
+> > considered resolving the multiple-operation ambiguity at push time. But
+> > I guess it would be something like "you did a rebase on sha1 X at time
+> > T, and then one on Y at time T+N", and you pick which one you're
+> > expecting.
 > 
-> You keep baiting me, so I'll bite, after resisting the urge for so long.
+> I think it's wrong to think about these leases as something that you
+> take before you start a rewindy operation. That's the wrong time to take
+> the lease; by that time, the remote tracking branch may already contain
+> new things that you haven't seen yet, so using that as a lease at that
+> time will overwrite those things later. You have to take the lease at a
+> time where you know that your local branch and the remote tracking
+> branch are up to date with each other, which is after pull and push. And
+> if you do that, there's no multiple-operation ambiguity to deal with at
+> all.
 
-I wasn't going to respond to this, because I didn't feel like the
-discussion was going anywhere. But I ran across yet another issue
-related to this today that hadn't been mentioned yet.
+OK. I was assuming that you'd have just integrated before starting such
+a rebase, but I guess that doesn't have to be the case.
 
-Your story shows that yes, it's convenient when old libraries are
-supported. I don't dispute that. But one of my earlier points is that
-this isn't just about maintenance burden (which I agree is not huge);
-it's about whether we do a disservice to users to pretend that Git is
-even remotely tested with older versions of curl.
-
-For instance, did you know that versions of curl prior to v7.17 rely on
-any strings fed via curl_easy_setopt() remaining valid for the lifetime
-of the curl handle[1]?
-
-We have some workarounds for this in old code (for example, see the
-handling of CURLOPT_PASSWORD in http.c), but a lot of calls have been
-added since then. I think there's a very good chance there are
-use-after-free bugs when Git is compiled against an older curl.
-
-I'm concerned that we're giving users a false sense of what is
-reasonable to compile against.  You can reframe that as a maintenance
-question (we _could_ find and fix those bugs), but that changes the
-cost/benefit analysis.
-
-[1] http://public-inbox.org/git/alpine.DEB.2.00.1306180825460.24456@tvnag.unkk.fr/
+I agree that probably makes the multiple-operation stuff go away, which
+is nice. It does raise the question of when the integration point
+happens, and how we handle alternate paths through which commits may
+land in a local branch (e.g., if both you and upstream do a ff-merge of
+a particular branch). I think that would probably just end up with extra
+failures though (so erring on the side of caution). As long as those
+aren't too common (and this check would kick in only when you're doing
+--force-with-lease in the first place, so presumably not often), I think
+it'd be OK.
 
 -Peff
