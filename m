@@ -2,124 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 406C5209F1
-	for <e@80x24.org>; Mon, 10 Apr 2017 10:00:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0BAD20970
+	for <e@80x24.org>; Mon, 10 Apr 2017 10:09:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753007AbdDJKAF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 06:00:05 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34763 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751968AbdDJKAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 06:00:04 -0400
-Received: by mail-wr0-f196.google.com with SMTP id u18so20465180wrc.1
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 03:00:04 -0700 (PDT)
+        id S1752829AbdDJKJr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 06:09:47 -0400
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:33945 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752078AbdDJKJr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 06:09:47 -0400
+Received: by mail-qt0-f175.google.com with SMTP id c45so58336299qtb.1
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 03:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=D39/b+paenu3MAo5fNP3DFLg7OZpTXcnSGwKYyp7lAY=;
-        b=QTcqUMGeCz8J4jMEfS1cysbQH2CPuSdiCLo5eI75UxLbAOuNDNm1WvEZwUGqIEF6or
-         44fYiQxZ6tqRYmQKJ0jbQq7rPpV6iquz514wqh9EhtywEdc0Zp/nBUrM+RiicnDkquah
-         40s7/2/YTy8BuPFTjIk68mmkZi/BRhyZZ4OOfOv2t4Mvr3d2H3bY306Epu1uT6Tdhn7l
-         HDVDRmpIy4nTfayYTgPmLiq8DjTFkVA7AnSQRPFnPq+hqu3N50lZEaSBjYJZFM7JULmw
-         VTKmosTi1Sk7W7qrKfyb+FO+dDxRctE7CEkBjcvT7CjtJfiHhgUAKhJ70XjK63Spg3JF
-         rwtQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=7obixnzNJoBlBpHSVfpLzYs4pdVcIvsf4EZkUd2NnSE=;
+        b=YDGsyz66Ok5q2yijIg1TdwYVHGfZ6kDFq/cetNXzvzFNNNAJdlOvyewR/IpNW36WHK
+         AVFTdwTrwS0UQJplIKvHbUXna4cSitCm5WUZh6NIDihbkgtymiEB4u6x+KXbQXl8YrC0
+         NiigdrK2svGUnjd8d6UcEHNVNw7hrcBgZinF3tM+Zmxyyd/7JLGf4EdVORv/DLDx8F5D
+         pxzkyEdzP4LYeysRZj+RYOcEk0MpG97MRCsx7QBnrf9MWtQF3LMcsPZnfnHJ3pMaDHdy
+         6YQ3wdjDUcnKlhgQgqKZyUygKdG41fT4kQlokxDEAlsaxufhVOEnNdCvvCdafXNKkUpr
+         huiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=D39/b+paenu3MAo5fNP3DFLg7OZpTXcnSGwKYyp7lAY=;
-        b=qsCnSxw+L7k3zQIUPs1+0/6DW9eISFnaHltPYFquaSMBlN0Q+IzSpJ9lRaFEgd4MZ6
-         slFOt1NHNxz2kDsItiwQ4SgS7BySJpfYCMzm2TVm5J8nzeXyVrF2MVkl5eyGDLcmZPYH
-         pm9PHrmYdtyu7nv1URzuwbL933YYS2r8O6estfIwBO9p++hqfACzUFnUSxYic1Jt3evX
-         VOJGRFNpzVGBUiv2mChhJDtl6cW77fECbG/6d4f5xYcRJOxFOohqAqDUZo9Y/sJdvjtD
-         Qc9u51b4f4T0bm9fzSUE90BPII1hkZxQ5uKC3S6UFw1GIoqb42acqaF1NNbvoF+Y1HaQ
-         KFSg==
-X-Gm-Message-State: AFeK/H0PxtVWsuMp7VMsAurN2EyuLMa7zBgeGWnbRUTOyBGgpttq/uLC0YV3LrlDfJdaPg==
-X-Received: by 10.223.141.140 with SMTP id o12mr25957642wrb.69.1491818403155;
-        Mon, 10 Apr 2017 03:00:03 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id k26sm8492013wre.9.2017.04.10.03.00.01
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 03:00:02 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v3 4/4] convert: add "status=delayed" to filter process protocol
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170409191107.20547-5-larsxschneider@gmail.com>
-Date:   Mon, 10 Apr 2017 12:00:01 +0200
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Eric Wong <e@80x24.org>, ttaylorr@github.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <16331164-8E8C-4CDA-B319-AB8092BD7188@gmail.com>
-References: <20170409191107.20547-1-larsxschneider@gmail.com> <20170409191107.20547-5-larsxschneider@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=7obixnzNJoBlBpHSVfpLzYs4pdVcIvsf4EZkUd2NnSE=;
+        b=mL+PsPtQ9bNVwPUsvpGuiutA62+7aJI9e42amQZLlFPMGg+6CzOgcJck+EzfKgYDop
+         6Qxh+U1HjY4Cx96oieEMnH6RNZWInOr3rQHe1mMBEd2BuHyGsH+9jfzWF02vtaHqlSdW
+         m2Ftrp0hhjKOoZys6MX7K7ayWBhwa99Wdg7Bw+L4PBb+l+VR4HVEh3d8Oy7wvBHopFU0
+         VRHpDKqDhxKfYl28nS7DTHb/f2wyk6wJhwUcxOTM7u1Dx1sgcd637hVl/mOfLSh6WJGH
+         lZNcv1M9OUW95+7f7fKvlGspV0kslJw0wN+DWUaGAxXKkwgsxdnMTWMkd2EhK5x07Mgf
+         vQ8A==
+X-Gm-Message-State: AFeK/H0jCZtW6OTQyDJpmZ9izuGjj16cXoge5UfxmAACyF7pC9GC2/k9y8xYQ8n5m+WODxvNLx2e76vN+aYQ2g==
+X-Received: by 10.200.34.37 with SMTP id o34mr52085513qto.213.1491818985992;
+ Mon, 10 Apr 2017 03:09:45 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.237.32.164 with HTTP; Mon, 10 Apr 2017 03:09:45 -0700 (PDT)
+From:   Julian Goacher <julian.goacher@gmail.com>
+Date:   Mon, 10 Apr 2017 11:09:45 +0100
+Message-ID: <CAG_DJYk3D=sPm6rhGRD_wF4dnJqSU_M+c=NWP4Q5ExBap_-kPw@mail.gmail.com>
+Subject: Modifying a bare repo directly
 To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3124)
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi -
 
-> On 09 Apr 2017, at 21:11, Lars Schneider <larsxschneider@gmail.com> =
-wrote:
->=20
-> Some `clean` / `smudge` filters might require a significant amount of
-> time to process a single blob. During this process the Git checkout
-> operation is blocked and Git needs to wait until the filter is done to
-> continue with the checkout.
->=20
-> Teach the filter process protocol (introduced in edcc858) to accept =
-the
-> status "delayed" as response to a filter request. Upon this response =
-Git
-> continues with the checkout operation. After the checkout operation =
-Git
-> calls "finish_delayed_checkout" which queries the filter for remaining
-> blobs. If the filter is still working on the completion, then the =
-filter
-> is expected to block. If the filter has completed all remaining blobs
-> then an empty response is expected.
->=20
-> Git has a multiple code paths that checkout a blob. Support delayed
-> checkouts only in `clone` (in unpack-trees.c) and `checkout` =
-operations.
->=20
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
-> ...
-> diff --git a/convert.h b/convert.h
-> index 82871a11d5..da6c702090 100644
-> --- a/convert.h
-> +++ b/convert.h
-> @@ -42,6 +42,11 @@ extern int convert_to_git(const char *path, const =
-char *src, size_t len,
-> 			  struct strbuf *dst, enum safe_crlf checksafe);
-> extern int convert_to_working_tree(const char *path, const char *src,
-> 				   size_t len, struct strbuf *dst);
-> +extern int async_convert_to_working_tree(const char *path, const char =
-*src,
-> +					 size_t len, struct strbuf *dst,
-> +					 void *dco);
->=20
+Is it possible to modify a bare repo directly? e.g. is it possible to
+insert a file into a bare repo without first cloning a non-bare copy?
+I'm thinking along the lines of a command or sequence of commands that
+modifies the file index and then copies the file blob into /objects,
+but in a situation where the new file exists separately from the
+target repo.
 
-I don't like the void pointer here. However, "cache.h" includes =
-"convert.h" and
-therefore "convert.h" cannot include "cache.h". That's why "convert.h" =
-doesn't
-know about "struct delayed_checkout".=20
+Thanks -
 
-I just realized that I could move "struct delayed_checkout" and "enum =
-ce_delay_state"
-definition from "cache.h" to "convert.h" to solve the problem nicely.
-
-Any objection to this approach?
-
-Thanks,
-Lars=
+j/
