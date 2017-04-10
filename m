@@ -2,109 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91AF1209F1
-	for <e@80x24.org>; Mon, 10 Apr 2017 14:52:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E15F20966
+	for <e@80x24.org>; Mon, 10 Apr 2017 15:01:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753366AbdDJOwQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 10:52:16 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:33616 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751648AbdDJOwP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 10:52:15 -0400
-Received: by mail-wr0-f196.google.com with SMTP id l28so4675446wre.0
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 07:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=81Z1zmuw/MDBeY5LtBm+KLm9Pfp5uEEtiUrsNFzEEn4=;
-        b=Uc/qHTNEb+fRjVC/0Lsqer5GLmvnMkq0n7VV1xZeVxhz4sPyiICs9IB9XMbfg7NEGy
-         i2ff5ctT3WYzVwFz4yrsZED7Js3q3BQ4CyEVPuGyCCqrapAFR5w1E+ZhczZSpIH6N34H
-         uBVAEVYD6v7pOnARqW5dtrO0zxb0otsLZF/grfWEr9AkfDtaEPcrVldDUM12gb3Ly9Kb
-         zt2QSwAggSD4rOE7U8MD4rqYP1j6v+xDYLQwVPTJfZjO7i4SxJ7438PygU8x9jvxwyDj
-         l9bJpzK5c+yjD8fAHCXfns1mMdYTGB2mpg8nhvNuQ3JQFh1pQH04ZCpYJ1987xw7vkg4
-         OGtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=81Z1zmuw/MDBeY5LtBm+KLm9Pfp5uEEtiUrsNFzEEn4=;
-        b=Gb04DcRYyo+bKfD4BIj0RusYqQJ8R7sxC8W1unfLFwOTRYFCFzoI87Yaunn6I6XFwk
-         EYxvGWfkeiIm1lwXM/C7S+1Mu/YBgltZ2S0AiO8SI3EP79gf5sdx0tokaYKI7pzDTvyt
-         2GBX1DV7uFyM770wgihdoRkikEAaF/TlIXrdXz9wVllkEs64OLLhPuMeI54Y3s729oj0
-         Hm9R+0cIMY2CaS93C+78WfO2sWF4lG+1y4U1phg9JJpbG1v3wHatv59fIDE+GRyiquSo
-         OLVgLZVD5mC4ysGayCAK5z2xUci7UTWIEr6zAZhiJs/LJZJ1QF5MkbNHuTvrVe9ZhrlL
-         qkEw==
-X-Gm-Message-State: AFeK/H20bYFep2pnpdH70xGuxLYnsfCnTBq0Vw07AbOH0W3dmvXjoWMmzppgP7vQi+scLA==
-X-Received: by 10.223.172.129 with SMTP id o1mr43325510wrc.121.1491835934178;
-        Mon, 10 Apr 2017 07:52:14 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id v188sm10636772wmg.11.2017.04.10.07.52.13
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 07:52:13 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v3 4/4] convert: add "status=delayed" to filter process protocol
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170410142850.GA23068@starla>
-Date:   Mon, 10 Apr 2017 16:52:12 +0200
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        ttaylorr@github.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F4C4D5CD-5A96-404C-88D0-00BCC78A1C65@gmail.com>
-References: <20170409191107.20547-1-larsxschneider@gmail.com> <20170409191107.20547-5-larsxschneider@gmail.com> <16331164-8E8C-4CDA-B319-AB8092BD7188@gmail.com> <20170410142850.GA23068@starla>
-To:     Eric Wong <e@80x24.org>
-X-Mailer: Apple Mail (2.3124)
+        id S1753637AbdDJPA6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 11:00:58 -0400
+Received: from 5.itsy.de ([188.40.84.14]:51288 "EHLO 5.itsy.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753297AbdDJPAA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 11:00:00 -0400
+Received: from [192.168.0.13] (84-72-0-73.dclient.hispeed.ch [84.72.0.73])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by 5.itsy.de (Postfix) with ESMTPSA id A45AE64790
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 16:59:57 +0200 (CEST)
+Subject: Re: [PATCH 2/2] test-lib: exhaustively insert non-alnum ASCII into
+ the TRASH_DIRECTORY name
+References: <20170409191117.25175-3-avarab@gmail.com>
+ <20170410014712.26716-1-szeder.dev@gmail.com>
+ <CACBZZX6M2YnbOT6btqLf2RacNT0Th3Hx2jf5QR7g+KFS_DKtVQ@mail.gmail.com>
+ <CAM0VKjnwbCgCjEBr895068k4veoSGZMf8Cu7neoH=oofgWS2Cw@mail.gmail.com>
+ <CACBZZX7kMcTgKFkFN3OvVKVHU693PYhRFe6gyO4AirihNsUYmg@mail.gmail.com>
+ <20170410133856.qbmcif2it2gc6kdw@sigill.intra.peff.net>
+To:     Git Mailing List <git@vger.kernel.org>
+From:   Joachim Durchholz <jo@durchholz.org>
+Message-ID: <64121361-6f91-5988-b5e2-9278cc84067f@durchholz.org>
+Date:   Mon, 10 Apr 2017 16:59:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <20170410133856.qbmcif2it2gc6kdw@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 10.04.2017 um 15:38 schrieb Jeff King:
+> Are those bugs? Maybe. Certainly they are limitations. But are they ones
+> anybody _cares_ about?  I think this may fall under "if it hurts, don't
+> do it".
 
-> On 10 Apr 2017, at 16:28, Eric Wong <e@80x24.org> wrote:
->=20
-> Lars Schneider <larsxschneider@gmail.com> wrote:
->>> diff --git a/convert.h b/convert.h
->>> index 82871a11d5..da6c702090 100644
->>> --- a/convert.h
->>> +++ b/convert.h
->>> @@ -42,6 +42,11 @@ extern int convert_to_git(const char *path, const =
-char *src, size_t len,
->>> 			  struct strbuf *dst, enum safe_crlf checksafe);
->>> extern int convert_to_working_tree(const char *path, const char =
-*src,
->>> 				   size_t len, struct strbuf *dst);
->>> +extern int async_convert_to_working_tree(const char *path, const =
-char *src,
->>> +					 size_t len, struct strbuf *dst,
->>> +					 void *dco);
->>>=20
->>=20
->> I don't like the void pointer here. However, "cache.h" includes =
-"convert.h" and
->> therefore "convert.h" cannot include "cache.h". That's why =
-"convert.h" doesn't
->> know about "struct delayed_checkout".=20
->=20
-> You can forward declare the struct without fields in convert.h:
+It's not always possible to avoid that.
 
-OMG. Of course. Now I feel stupid.
+URLs, for example, may contain "funny characters", including multi-byte 
+characters of which the second byte is 0x0a. If they are guaranteed to 
+always be URL-encoded this isn't a problem, but then we still need to 
+make sure that URL-encoding does happen.
 
->> I just realized that I could move "struct delayed_checkout" and "enum =
-ce_delay_state"
->> definition from "cache.h" to "convert.h" to solve the problem nicely.
->>=20
->=20
-> But yeah, maybe you can reduce cache.h size, too :)
+Next source of funny characters that comes to my mind is submodules. 
+They derive their name from the URL by default, and the subdirectory 
+name as well. Again, consider the multibyte name where the second 
+character is 0x0a. Or 0x80: À (uppercase A with accent grave) happens to 
+have that byte in UTF-8 encoding, Ẁ is U+1E80 which would be encoded as 
+0x80 0x1e on an NTFS filesystem (barring additional coding steps in APIs 
+or webservices, which further complicate the situation but don't usually 
+eliminate the problem, they just shift it around).
 
-Yeah, then I will do this in the next round.
+ > If there are security bugs where a malicious input can cause us
+> to do something bad, that's something to care about. But that's very
+> different than asking "do these tests run to completion with a funny
+> input".
 
-Thanks,
-Lars=
+If the tests do not complete, git is doing something unexpected.
+That in itself is not a security hole, but there's a pretty good chance 
+that at least one of these ~230 unexpected things can be turned into 
+one, given enough time and motivation. The risk multiplies as this is 
+shell scripting, where the path from "string is misinterpreted" to 
+"string is run as a command" is considerably shorter than in other 
+languages.
