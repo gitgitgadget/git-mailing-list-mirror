@@ -6,64 +6,86 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18EEA20960
-	for <e@80x24.org>; Mon, 10 Apr 2017 22:11:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6640120960
+	for <e@80x24.org>; Mon, 10 Apr 2017 22:13:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752458AbdDJWLD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 18:11:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59481 "EHLO cloud.peff.net"
+        id S1752415AbdDJWNZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 18:13:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59484 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752151AbdDJWLC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 18:11:02 -0400
-Received: (qmail 29587 invoked by uid 109); 10 Apr 2017 22:11:01 -0000
+        id S1752155AbdDJWNY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 18:13:24 -0400
+Received: (qmail 29710 invoked by uid 109); 10 Apr 2017 22:13:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 22:11:01 +0000
-Received: (qmail 29340 invoked by uid 111); 10 Apr 2017 22:11:21 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 22:13:24 +0000
+Received: (qmail 29376 invoked by uid 111); 10 Apr 2017 22:13:44 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 18:11:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 18:10:58 -0400
-Date:   Mon, 10 Apr 2017 18:10:58 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 18:13:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 18:13:22 -0400
+Date:   Mon, 10 Apr 2017 18:13:22 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 0/3] quarantine-push loose ends
-Message-ID: <20170410221058.2ao64wedg2pa6uc2@sigill.intra.peff.net>
+Subject: [PATCH 1/3] receive-pack: drop tmp_objdir_env from run_update_hook
+Message-ID: <20170410221322.perffycei6z6ahqc@sigill.intra.peff.net>
+References: <20170410221058.2ao64wedg2pa6uc2@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20170410221058.2ao64wedg2pa6uc2@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2017 at 05:14:24PM -0400, Jeff King wrote:
+Since 722ff7f87 (receive-pack: quarantine objects until
+pre-receive accepts, 2016-10-03), we have to feed the
+pre-receive hook the tmp_objdir environment, so that git
+programs run from the hook know where to find the objects.
 
-> > Also, I think this whole thing could really do with some documentation
-> > in githooks(5). E.g. what hooks does it apply for? The test is just
-> > for pre-receive but the patch changes run_update_hook(), does it also
-> > take effect for update? Ditto the caveat about update-ref.
-> 
-> My thinking was that the cases where the effects were user-visible were
-> sufficiently insane that nobody would need to know or care when the
-> feature was in use.
+That commit modified run_update_hook() to do the same, but
+there it is a noop. By the time we get to the update hooks,
+we have already migrated the objects from quarantine, and so
+tmp_objdir_env() will always return NULL. We can drop this
+useless call.
 
-I guess it can't hurt to write about it, though. Here's that, plus a
-cleanup on the stray tmp_objdir_env() call you noticed. The final patch
-provides some safety for the ref-update case. My assumption all along
-has been that nobody would want to update random refs from inside the
-pre-receive hook. This doubles down on that by making it forbidden. I
-don't think that's a big loss, because doing so now is extremely
-dangerous. If that assumption is wrong, the correct path forward is to
-make the quarantining configurable.
+Note that the ordering here and the lack of support for the
+update hook is intentional. The update hook calls are
+interspersed with actual ref updates, and we must migrate
+the objects before any refs are updated (since otherwise
+those refs would appear broken to outside processes). So the
+only other options are:
 
-  [1/3]: receive-pack: drop tmp_objdir_env from run_update_hook
-  [2/3]: receive-pack: document user-visible quarantine effects
-  [3/3]: refs: reject ref updates while GIT_QUARANTINE_PATH is set
+  - remain in quarantine for the _first_ ref, but not the
+    others. This is sufficiently confusing that it can be
+    rejected outright.
 
- Documentation/git-receive-pack.txt | 29 +++++++++++++++++++++++++++++
- Documentation/githooks.txt         |  3 +++
- builtin/receive-pack.c             |  1 -
- refs.c                             |  6 ++++++
- t/t5547-push-quarantine.sh         | 11 +++++++++++
- 5 files changed, 49 insertions(+), 1 deletion(-)
+  - run all the individual update hooks first, then migrate,
+    then update all the refs. But this changes the repository
+    state that the update hooks see (i.e., whether or not
+    refs from the same push are updated yet or not).
+
+So the functionality is fine and remains unchanged with this
+patch; we're just cleaning up a useless and confusing line
+of code.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/receive-pack.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index aca9c33d8..b4469b3cc 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -772,7 +772,6 @@ static int run_update_hook(struct command *cmd)
+ 	proc.stdout_to_stderr = 1;
+ 	proc.err = use_sideband ? -1 : 0;
+ 	proc.argv = argv;
+-	proc.env = tmp_objdir_env(tmp_objdir);
+ 
+ 	code = start_command(&proc);
+ 	if (code)
+-- 
+2.12.2.952.g759391acc
 
