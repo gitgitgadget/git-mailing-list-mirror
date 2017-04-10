@@ -7,107 +7,92 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B98E20970
-	for <e@80x24.org>; Mon, 10 Apr 2017 12:01:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0FE620966
+	for <e@80x24.org>; Mon, 10 Apr 2017 12:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753289AbdDJMBc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 08:01:32 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:33632 "EHLO
-        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752955AbdDJMBb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 08:01:31 -0400
-Received: by mail-oi0-f49.google.com with SMTP id b187so144897521oif.0
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 05:01:31 -0700 (PDT)
+        id S1753194AbdDJMFG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 08:05:06 -0400
+Received: from mail-oi0-f65.google.com ([209.85.218.65]:33051 "EHLO
+        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751615AbdDJMFF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 08:05:05 -0400
+Received: by mail-oi0-f65.google.com with SMTP id t63so6655379oih.0
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 05:05:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=5q6NGTLeEwl0nbsI7jsCVQjhvE9w5ySufKoGft/extQ=;
-        b=LMPAizrK3HbXlkkzSPmPbkxKwgKN8Gc78yeicJzGewgV7E7XH89lptfszyEz9bVQ2p
-         /N8sdjN0OK2UO4SgOmqsizIK7Z8gTLgbV/fnD0oLSbH9dsMp/W7S8nL1OyorrtYwYxjw
-         LV1XxcuN+qB5aS5nnH4Tng5bcRG9DFvo+RSc1uQMy2qMQSTv+Y9PI3D/ZIVEYojKF/TL
-         YpdBeX1zxEgeiha0j1n2lFCiqLRJ5oeukjuf5jGsjqgP5BAMv+n0R5ADBesWt32gFyfM
-         S/dbK9og03nk/fcJMjv+vbh/3JsyhSKAJMb7VdOlJ8r0kqLYq8FWcE0Gw4xGnSdwET6S
-         EuhA==
+        bh=iDJNQ8LknVW/QSTllgN8ROOHTYUFZ9jDgiqZhzf7hPY=;
+        b=JKRb3wbaNvzTPut1BHIjiai+WtQvt/HQsBfEmteVD3uBTFCdmpZsX3XTy12fy0oRfU
+         Z6FfmfwqjLTXxD0UEVHnkIvnRfeddbx8dgwvW46E8DSp+sfA2AthDv2FDO8VXSHCpDj6
+         g39vrzyvtrNEDGehwtFPyEgT3V+jEdnvuAyJRlufSZ1K4RUayST1vFJ8kLzQYCOZEWRk
+         HXaC/QTP68iQs4EhXVDhNx6argzbzOZjbP6a2lwB+W0NaQyp9HU0U3Pgrle7QDlb3QX5
+         nGpIv+2e0pe1Mb5qQyXLd5ZznHke+H8BnfbtZ43MHbYVZTJ3pVe9SC89OdLfgJ5QMoUp
+         KCKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=5q6NGTLeEwl0nbsI7jsCVQjhvE9w5ySufKoGft/extQ=;
-        b=gj+tg9Okd7Jm3RplB/zMkHIbE5w5UymTL8iLWbxspDcWjfpgK0VCG9gsZygtQ1JfoN
-         WW6uwsiCNja4VMbwpnN5mS/kZHTzfUvaKySsPVT5QsZ/+ZBXlRVWX6ih9X7qISTNddh0
-         SUy62iFHra7lDJFxOW0PLhPCEjYEBsE1wLxrVuCOcziU+z6HMmf7SiQbhozmzeQMRaIB
-         XtJ037hdM2N4IgKcFvt/7J+GIo0MrkdWB9KtpUZfHjyPDcJ6f+HPEeHGlem3ldT3nyQF
-         2/pMZB2c8yCz2P2NWVIV8qHX9st2iCiK/JuYM2mNyWewH6lKk6gEAZ4y2p+AC6wyjLii
-         ECQQ==
-X-Gm-Message-State: AN3rC/6mQW45nO+EWpEZ1eVU3AuGH1vwecnCtp4IMUoZhU9pigoSSN0poU6opY742iuB8cDTLSD3ykrgdIsIcQ==
-X-Received: by 10.202.214.141 with SMTP id n135mr2182754oig.186.1491825690798;
- Mon, 10 Apr 2017 05:01:30 -0700 (PDT)
+        bh=iDJNQ8LknVW/QSTllgN8ROOHTYUFZ9jDgiqZhzf7hPY=;
+        b=D9M+Bm8kpu5NssK8iEidTG4p21LsLWdxN3EFGxokbD98FzYQdXgCyGRvx93gg43GTM
+         DwcUqy+01ifVyoIaJj/E7UBwKWQESRdxBOWebTysmn5seyp3CYn1FcfPdmrcuTk2Chif
+         BtGO0OLKlndm+dKjQifRoIjIEnihx99wLIEtveBVBVmIDBHnHH+a+1A3Wy7jvlOaVTm4
+         tPijmwElkQCEWJhlVYbOPIanxAPQ0HttMB7JEzCbY0/ZtAvdJLKAQFiQPlMdbaRInfRk
+         HVDq0tk49X/CEUJDSFtAHylz8+97JTpKCEsaxS8G6k8Kz81yEsdQMNpu1LVCEmN/nxy5
+         BhPA==
+X-Gm-Message-State: AN3rC/7HbCR1CnKQdhGEgM6C34NIm4KxjE2l9JMcW1kSvFsI2k3xh9SexqUSiZrpsabc6uyeMwFHU8BpXcIGNw==
+X-Received: by 10.157.46.246 with SMTP id w109mr16251895ota.225.1491825905009;
+ Mon, 10 Apr 2017 05:05:05 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.158.70 with HTTP; Mon, 10 Apr 2017 05:01:00 -0700 (PDT)
-In-Reply-To: <xmqqvaqdqfhe.fsf@gitster.mtv.corp.google.com>
-References: <20170409022128.21337-1-danny@dannysauer.com> <alpine.DEB.2.20.1704091238560.4268@virtualbox>
- <413a1456-cac6-56c8-ea45-38f14cf958ae@dannysauer.com> <xmqqvaqdqfhe.fsf@gitster.mtv.corp.google.com>
+Received: by 10.74.158.70 with HTTP; Mon, 10 Apr 2017 05:04:34 -0700 (PDT)
+In-Reply-To: <20170407192919.10209-1-bmwill@google.com>
+References: <20170407192919.10209-1-bmwill@google.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 10 Apr 2017 19:01:00 +0700
-Message-ID: <CACsJy8CLBY22j3EjR4PW3n+K6PWUzb-HCgxTVeCGpwtApZF-6g@mail.gmail.com>
-Subject: Re: [PATCH] Make git log work for git CWD outside of work tree
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Danny Sauer <danny@dannysauer.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Mon, 10 Apr 2017 19:04:34 +0700
+Message-ID: <CACsJy8D9oXDbOqEfPTuSdm0Phvwo6AxQh_Q5tG4k22_mFBT4OA@mail.gmail.com>
+Subject: Re: [PATCH] pathspec: fix segfault in clear_pathspec
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2017 at 7:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> If your arrangement is even more exotic, e.g. you have these two
-> variables set, and then are running from OUTSIDE the working tree,
-> my knee-jerk reaction is that you should get your head examined, as
-> it is totally unclear what "git add foo" would mean if you did this:
+On Sat, Apr 8, 2017 at 2:29 AM, Brandon Williams <bmwill@google.com> wrote:
+> In 'clear_pathspec()' the incorrect index parameter is used to bound an
+> inner-loop which is used to free a 'struct attr_match' value field.
+> Using the incorrect index parameter (in addition to being incorrect)
+> occasionally causes segmentation faults when attempting to free an
+> invalid pointer.  Fix this by using the correct index parameter 'i'.
 >
->     $ export GIT_DIR=~/myproject/.git GIT_WORK_TREE=~/myproject
->     $ cd ~/myproject/../somewhere/else
->     $ git add foo
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  pathspec.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> But it should still "work" in the sense that the above command
-> should notice that you are trying to add "../somewhere/else/foo" to
-> the index, which is obviously nonsense, and die with a message.
+> diff --git a/pathspec.c b/pathspec.c
+> index 303efda83..69ef86b85 100644
+> --- a/pathspec.c
+> +++ b/pathspec.c
+> @@ -724,7 +724,7 @@ void clear_pathspec(struct pathspec *pathspec)
+>                 free(pathspec->items[i].match);
+>                 free(pathspec->items[i].original);
 >
-> Similarly, if you replace "git add foo" with "git log", it still
-> should work in the above, i.e.
+> -               for (j = 0; j < pathspec->items[j].attr_match_nr; j++)
+> +               for (j = 0; j < pathspec->items[i].attr_match_nr; j++)
+
+Ouch. Perhaps this is a good time to rename 'j' to something better?
+attr_idx or attr_index, maybe.
+
+>                         free(pathspec->items[i].attr_match[j].value);
+>                 free(pathspec->items[i].attr_match);
 >
->     $ export GIT_DIR=~/myproject/.git GIT_WORK_TREE=~/myproject
->     $ cd ~/myproject/../somewhere/else
->     $ git log
+> --
+> 2.12.2.715.g7642488e1d-goog
 >
-> If Git is not chdir(2)ing to ~/myproject before calling cmd_log()
-> in the above (again, this is my down week so I didn't and will not
-> check with the code myself), we may want to call that a bug and fix
-> it, so that you do not have to do anything special to get to the
-> path of ".mailmap" that is at the top-level.
 
-The behavior is "documented" in t1510 since f3bb8b4b84 (Merge branch
-'nd/setup' - 2010-12-28)
 
-"11. When user's cwd is outside worktree, cwd remains unchanged,
-    prefix is NULL."
 
-This behavior probably started long before my topic though, mine was
-more of documentation, making worktree detection more consistent. It's
-the same case with defining GIT_DIR without GIT_WORK_TREE, I think:
-scripts started to depend on a behavior that we did not clearly
-define, by the time we knew what we wanted and we kept the old
-behavior forever.
-
-I think it's just safer to go with Johannes' suggestion.
-
-An alternative is, when you have found out you need to read .mailmap,
-you call setup_work_tree() then, which prepares the worktree for you
-(including moving back to cwd) or dies if worktree does not exist, or
-no-op if worktree has already been asked by somebody. Many commands do
-lazy worktree initialization this way.
 -- 
 Duy
