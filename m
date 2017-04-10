@@ -6,51 +6,51 @@ X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFC8920960
-	for <e@80x24.org>; Mon, 10 Apr 2017 23:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3755420960
+	for <e@80x24.org>; Mon, 10 Apr 2017 23:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753296AbdDJXtc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 19:49:32 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:34645 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752829AbdDJXta (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 19:49:30 -0400
-Received: by mail-pf0-f170.google.com with SMTP id c198so29096265pfc.1
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 16:49:30 -0700 (PDT)
+        id S1753302AbdDJXtg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 19:49:36 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:34943 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752497AbdDJXte (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 19:49:34 -0400
+Received: by mail-pf0-f180.google.com with SMTP id i5so40206864pfc.2
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 16:49:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FRG8Yb1Nu/8/PhTMon06XX8JZweVZYe3xiODnU1ySps=;
-        b=mrDDQvMiPkkpm+nvHsw83HxTOa106WIPW/tZ/bs63saZhr6Qhx9iQophjlCxSdVchO
-         po8Dw2OEA6KTi4q0H6HVPI0LZooxRfA6NRq3hbiHXxNfq/vQF/NlOsNZ3lI8eT7kIF8d
-         M3+1TzTeEjsdIVNy4BbdvFagueUeQVbaTI038OJNjcTIhOraL2moAHfy08qI+MIICn4K
-         EvcV6S8Xii6R6TurZNBeo2sEmp4nRtl9XOE3Ul7Rt410nOmn80KQ3U79A/YNJhADpN1/
-         Yy/1MH+62WdmzlS50J2wOd7UKNrv/BIH9bukvq7Fn1n0Qxl4gVYrCzwZTd+LzbsH+7gh
-         flqQ==
+        bh=/HZISRTpvYHYIp98Z09QG9oWLbCtF0AHFib4N/wAOUY=;
+        b=g79QojF1MxFZPd4sqDvVzfiK057AwBKPPwouIMC6YkjY8/uAahudPYAlcxv5zyx0gs
+         3uAS10hLRGz4zvrpFpKDsFkMRa1aTBw16qigxu/NKb8bCZVpukjXa6mzBOjhNVjuBlJ0
+         0WvWjm6yBKd17eZ4KJhAVq5f9Z1BA5hh4a/MTu8UBlNkd8wQrcD7rMcJquoNMgHlnAhb
+         kOZc78Ynj26kMJAEIA0T1HAvhaq7OejzniMAxfDZasqeRN0iB0YOitw3MlaUcdkNirku
+         9LDS6BQvdSOcgxT5rwG42RwE26/4TBJxAVO67pbOrYkZmULDziV/7VX+zpJw3q/hnnvU
+         G1nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FRG8Yb1Nu/8/PhTMon06XX8JZweVZYe3xiODnU1ySps=;
-        b=Aot16lqH009fGMj41t+my/pRrfJyS7Uzov1Ro/TrDPUc3sY/HmV3E2Tls19rU71XLV
-         vkVRfNC55C5CRKBd1J02mIhG/i0oRoVFrjZ2gj47ndgjbEeJQ7mIjpwxwwjdph9UHKZa
-         Lc1nZSMai/SRW0Zf9FEZ3VnNcIeKSDf6mWQYQjTSd5C+UxM3XdapHMwR4mS90pdebUKB
-         cOmFa4BE7rZAmd4sK7K/l9guEwhMAvCN+EkcZWj3TwmjZ89VAPtKlZzR+6KnZfgOqVQo
-         EKZPOm6KVklciyE6omHVFRtoMrSM7uEsXr7983biiR+qhq9IbGOoueXkeZqdjf1G4WKo
-         5BtQ==
-X-Gm-Message-State: AFeK/H3UAzrFBf5i42XJtQXL3XszjPXYJENFB/Xu5ToRN6JOwqdcUiG9oiEOdKBWBQ5vTBMy
-X-Received: by 10.98.147.206 with SMTP id r75mr30813852pfk.98.1491868169670;
-        Mon, 10 Apr 2017 16:49:29 -0700 (PDT)
+        bh=/HZISRTpvYHYIp98Z09QG9oWLbCtF0AHFib4N/wAOUY=;
+        b=ntBPhWuCcxETulK+3L4yDTIEEK5BWt/32kfIXiNJYwXLf6Q51X6K4gXf35ypSkJXag
+         SSe+v6/alZUeaNMfECgtErvJ8CO6AUpiWtjxWL2COQErfC8TQEsNqyo2LqaugW2Wd9rt
+         ux+yam+kxDRD9hLy2RiQZWF/nvIcpy4XGpHMsDsRS1SrW+t1RbU3LM265FADLpIr/1U+
+         loW8/GhfdMPXbpI/N5ippd5AAqQpiVEqhP3WJMdEvZPE1jkHIMTZ6DOkCz0wvexZLhfD
+         g9mte9Bp9tYfL/7Cn18NCMJGlDAUoPPw/RnBEYfm2CRJ+iVqJt2/7Nk/CcrMLFg6n6CR
+         C1ew==
+X-Gm-Message-State: AFeK/H1XRjlNkiGhj8SGv9+Jmf7CSvDW9rtzpV1gScbNjjDqh24kEpEPHAoped1zu1WP4Uyh
+X-Received: by 10.84.174.131 with SMTP id r3mr71966452plb.136.1491868173743;
+        Mon, 10 Apr 2017 16:49:33 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id x204sm26225132pgx.63.2017.04.10.16.49.28
+        by smtp.gmail.com with ESMTPSA id x204sm26225132pgx.63.2017.04.10.16.49.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 16:49:28 -0700 (PDT)
+        Mon, 10 Apr 2017 16:49:32 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 2/5] run-command: prepare argv before forking
-Date:   Mon, 10 Apr 2017 16:49:16 -0700
-Message-Id: <20170410234919.34586-3-bmwill@google.com>
+Subject: [PATCH 5/5] run-command: add note about forking and threading
+Date:   Mon, 10 Apr 2017 16:49:19 -0700
+Message-Id: <20170410234919.34586-6-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.715.g7642488e1d-goog
 In-Reply-To: <20170410234919.34586-1-bmwill@google.com>
 References: <20170410234919.34586-1-bmwill@google.com>
@@ -59,83 +59,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to avoid allocation between 'fork()' and 'exec()' the argv
-array used in the exec call is prepared prior to forking the process.
+Allocation was pushed before forking in order to avoid potential
+deadlocking when forking while multiple threads are running.  This
+deadlocking is possible when a thread (other than the one forking) has
+acquired a lock and didn't get around to releasing it before the fork.
+This leaves the lock in a locked state in the resulting process with no
+hope of it ever being released.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- run-command.c | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ run-command.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/run-command.c b/run-command.c
-index 682bc3ca5..2514b54bc 100644
+index 84c63b209..2b3249de4 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -226,18 +226,6 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
- }
+@@ -458,6 +458,14 @@ int start_command(struct child_process *cmd)
+ 		argv_array_pushv(&argv, cmd->argv);
+ 	}
  
- #ifndef GIT_WINDOWS_NATIVE
--static int execv_shell_cmd(const char **argv)
--{
--	struct argv_array nargv = ARGV_ARRAY_INIT;
--	prepare_shell_cmd(&nargv, argv);
--	trace_argv_printf(nargv.argv, "trace: exec:");
--	sane_execvpe(nargv.argv[0], (char **)nargv.argv, NULL);
--	argv_array_clear(&nargv);
--	return -1;
--}
--#endif
--
--#ifndef GIT_WINDOWS_NATIVE
- static int child_notifier = -1;
- 
- static void notify_parent(void)
-@@ -377,9 +365,20 @@ int start_command(struct child_process *cmd)
- #ifndef GIT_WINDOWS_NATIVE
- {
- 	int notify_pipe[2];
-+	struct argv_array argv = ARGV_ARRAY_INIT;
-+
- 	if (pipe(notify_pipe))
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
-+	if (cmd->git_cmd) {
-+		argv_array_push(&argv, "git");
-+		argv_array_pushv(&argv, cmd->argv);
-+	} else if (cmd->use_shell) {
-+		prepare_shell_cmd(&argv, cmd->argv);
-+	} else {
-+		argv_array_pushv(&argv, cmd->argv);
-+	}
-+
++	/*
++	 * NOTE: In order to prevent deadlocking when using threads special
++	 * care should be taken with the function calls made in between the
++	 * fork() and exec() calls.  No calls should be made to functions which
++	 * require acquiring a lock (e.g. malloc) as the lock could have been
++	 * held by another thread at the time of forking, causing the lock to
++	 * never be released in the child process.
++	 */
  	cmd->pid = fork();
  	failed_errno = errno;
  	if (!cmd->pid) {
-@@ -442,12 +441,9 @@ int start_command(struct child_process *cmd)
- 					unsetenv(*cmd->env);
- 			}
- 		}
--		if (cmd->git_cmd)
--			execv_git_cmd(cmd->argv);
--		else if (cmd->use_shell)
--			execv_shell_cmd(cmd->argv);
--		else
--			sane_execvpe(cmd->argv[0], (char *const*) cmd->argv, NULL);
-+
-+		sane_execvpe(argv.argv[0], (char *const*) argv.argv, NULL);
-+
- 		if (errno == ENOENT) {
- 			if (!cmd->silent_exec_failure)
- 				error("cannot run %s: %s", cmd->argv[0],
-@@ -480,6 +476,8 @@ int start_command(struct child_process *cmd)
- 		cmd->pid = -1;
- 	}
- 	close(notify_pipe[0]);
-+
-+	argv_array_clear(&argv);
- }
- #else
- {
 -- 
 2.12.2.715.g7642488e1d-goog
 
