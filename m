@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF51220966
-	for <e@80x24.org>; Mon, 10 Apr 2017 12:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E02BA20966
+	for <e@80x24.org>; Mon, 10 Apr 2017 12:11:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753235AbdDJMFz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 08:05:55 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:34984 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752955AbdDJMFz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 08:05:55 -0400
-Received: by mail-wr0-f193.google.com with SMTP id l44so1461844wrc.2
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 05:05:54 -0700 (PDT)
+        id S1753377AbdDJMLN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 08:11:13 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:33972 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752955AbdDJMLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 08:11:11 -0400
+Received: by mail-wr0-f196.google.com with SMTP id u18so20920390wrc.1
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 05:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=F50T8dHKUvCTf67c6HsXd5V8ovUmuPPmtOsCJXinCYQ=;
-        b=cjIoIrf5EcYojNxz/sHlKVK3MtRm/yZEORKZY64lUiHPnjTomGpHTh7GWH9SXUTyQe
-         8veXRNgZMFSlVb+HDS73GPLl9ti0bo5o3cRxh9wcyTE2lC0+LpCFJHqy9txuXuZn3H1W
-         VN7z3lZntO9XTA4r4rAggVELpmAtTSD9wKKohcLEwIbgRB8KxIk5jn3BEoh5n0hRxg8k
-         gqS1x1xYPIZJuhdsZbPKzDWl5qQhgZNQgCmkI1/hE/50JXESiY5Wy3hTjr0VROC6BExf
-         bVk2as6YrL3kSKrNtZ+niH+430k9W6FGEEPMJ3D8WH1r1S0j+s06FvNoSLJkqKKBhG0g
-         yzTg==
+        bh=Rl7M6mItNyujq3IXuoZZ8uMZtmvDR1X3031b9DgxHOY=;
+        b=ogj8NgxXUwwcXrkCRG2B8dZbeoZK7tJMVl6s2b4SXVuD8WAYprguPa9xKOxDjJpWMX
+         DRlv8ZmcVsU2FcKd5bQGxucTL7njN58eZWbFFCPm1s1lWCXQQqQQlp/effZTg02b5eFe
+         TLKjXs+bNMaoB7H3iXYsVb7kz7nxTpdWnGFvokEIm2v7l5kHivO23hLssHzSDscVMXSP
+         4ABXmM0JG5SjvmJB2KdxrEx2jOzBzGfw8q6Os9LfM2724xUzkF0ul6kswcXZGjyqcram
+         lVLea19vftW3IDd0gOWM1VBb9eBySw0DkKcQNywnSjZJbM8P7Z9TBR7QZNNK2VZ53TIW
+         AXbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
-        bh=F50T8dHKUvCTf67c6HsXd5V8ovUmuPPmtOsCJXinCYQ=;
-        b=DYjw2RDSUzTkwEC0mehNB1/hPKEoXdv1s1TPggNNVlHE6/d9nj8Iegl7RfNZ3e52RJ
-         KbrRYtZu1KrQYpdYN5+cr2SJ46JXBv3IiT39dxirUEd4DQtTSEq+Ziu7gwVuTVzXeESt
-         EAk1LzkZG9NCuWKpIzBrq4ccOmlhxAxRnI3srWqkKWec01I+6OSh+vMBa6tObMawvJs+
-         1JDxOXcWInP2kQF4eQ/CVdFkvuloKSOygWhkRAvGShsu4aYxng2kGVx51CYxxG/nC1Zn
-         o7K7SHsuAiUa00FKtz/5fL15unC5DBnuJI3dPHvMvQ6fYbW+iF9QLYCk+qf6r6wBH+dZ
-         NjSw==
-X-Gm-Message-State: AFeK/H1tBvCckgLfm2wuWO8bpIzOupO+YKwQomtIPm3WgBNFSFAfmTbfBePTksnZw1DR8w==
-X-Received: by 10.223.128.194 with SMTP id 60mr38179902wrl.175.1491825953552;
-        Mon, 10 Apr 2017 05:05:53 -0700 (PDT)
+        bh=Rl7M6mItNyujq3IXuoZZ8uMZtmvDR1X3031b9DgxHOY=;
+        b=Y6rM/+8dJoIB5YODK9IK0ZDdh2D3He0jUv/0ONnKywZsDilsHSL6ceJPjy8z+rEFr0
+         vKoP3/nxF80qv8cLfA7ERmWLUUxdyQ66vaNccglPPloR2vbynW8dU8hZQBAqp/KW7ndh
+         4j7G5zLtSROf8mhRktTWNtH/6iIeUjj4PHd5/tIIMUXIEBkCIFeObJZ2ICFqT+JzA09b
+         qaSeBDiqaI/m6LNLrPRK3V6E1qXqLK/MvrFvlXoskULh9AOB/Bz7PSY1nKJrx75cRQWy
+         HztzhU4gAz4ZklMWzbuLYTZY9JiRMG0ZkHnu/WXU9znUyCWNVb1d3GKWJLEn9B+Ynbrf
+         LGsQ==
+X-Gm-Message-State: AN3rC/45h/qHtYkFPIMkMgqBpz1lhH9b9GGCLmnAohxvBnQnONnx3u7/CVaUQ1ji1O7nNA==
+X-Received: by 10.223.177.155 with SMTP id q27mr1402060wra.23.1491826269879;
+        Mon, 10 Apr 2017 05:11:09 -0700 (PDT)
 Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id k13sm10028604wmi.28.2017.04.10.05.05.52
+        by smtp.gmail.com with ESMTPSA id m83sm10081586wmc.7.2017.04.10.05.11.09
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 05:05:52 -0700 (PDT)
+        Mon, 10 Apr 2017 05:11:09 -0700 (PDT)
 Content-Type: text/plain; charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [PATCH v5 5/8] convert: Update generic functions to only use generic data structures
+Subject: Re: [PATCH v5 6/8] convert: rename reusable sub-process functions
 From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170407120354.17736-6-benpeart@microsoft.com>
-Date:   Mon, 10 Apr 2017 14:05:52 +0200
+In-Reply-To: <20170407120354.17736-7-benpeart@microsoft.com>
+Date:   Mon, 10 Apr 2017 14:11:08 +0200
 Cc:     git@vger.kernel.org, gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <5900F7F1-89D9-433E-A6C3-0AB27C815BE6@gmail.com>
-References: <20170407120354.17736-1-benpeart@microsoft.com> <20170407120354.17736-6-benpeart@microsoft.com>
+Message-Id: <1B2A2436-8BD4-4858-BC90-BCB1617D586B@gmail.com>
+References: <20170407120354.17736-1-benpeart@microsoft.com> <20170407120354.17736-7-benpeart@microsoft.com>
 To:     Ben Peart <peartben@gmail.com>
 X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
@@ -68,78 +68,57 @@ X-Mailing-List: git@vger.kernel.org
 
 > On 07 Apr 2017, at 14:03, Ben Peart <peartben@gmail.com> wrote:
 >=20
-> Update all functions that are going to be moved into a reusable module
-> so that they only work with the reusable data structures.  Move code
-> that is specific to the filter out into the filter specific functions.
+> Do a mechanical rename of the functions that will become the reusable
+> sub-process module.
 >=20
 > Signed-off-by: Ben Peart <benpeart@microsoft.com>
 > ---
-> convert.c | 46 ++++++++++++++++++++++++++++------------------
-> 1 file changed, 28 insertions(+), 18 deletions(-)
+> convert.c | 53 +++++++++++++++++++++++++++--------------------------
+> 1 file changed, 27 insertions(+), 26 deletions(-)
 >=20
 > diff --git a/convert.c b/convert.c
-> index f569026511..747c0c363b 100644
+> index 747c0c363b..235a6a5279 100644
 > --- a/convert.c
 > +++ b/convert.c
-> @@ -576,14 +576,15 @@ static void stop_multi_file_filter(struct =
-child_process *process)
-> 	finish_command(process);
-> }
+> @@ -507,8 +507,8 @@ struct cmd2process {
+> 	unsigned int supported_capabilities;
+> };
 >=20
-> -static int start_multi_file_filter_fn(struct cmd2process *entry)
-> +static int start_multi_file_filter_fn(struct subprocess_entry =
-*subprocess)
+
+> ...
+
+>=20
+> -static void kill_multi_file_filter(struct subprocess_entry *entry)
+> +static void subprocess_stop(struct subprocess_entry *entry)
 > {
-> 	int err;
-> +	struct cmd2process *entry =3D (struct cmd2process *)subprocess;
-
-I wonder if a "subprocess_entry" should rather have a generic data =
-pointer
-for any extra information. However, this is probably bikeshedding and I =
-think
-this solution is equally good.
-
-
-> 	struct string_list cap_list =3D STRING_LIST_INIT_NODUP;
-> 	char *cap_buf;
-> 	const char *cap_name;
-> -	struct child_process *process =3D &entry->subprocess.process;
-> -	const char *cmd =3D entry->subprocess.cmd;
-> +	struct child_process *process =3D &subprocess->process;
-> +	const char *cmd =3D subprocess->cmd;
+> 	if (!entry)
+> 		return;
+> @@ -561,14 +561,14 @@ static void kill_multi_file_filter(struct =
+subprocess_entry *entry)
+> 	kill(entry->process.pid, SIGTERM);
+> 	finish_command(&entry->process);
 >=20
-> 	sigchain_push(SIGPIPE, SIG_IGN);
->=20
-> @@ -638,17 +639,21 @@ static int start_multi_file_filter_fn(struct =
-cmd2process *entry)
-> 	return err;
+> -	hashmap_remove(&cmd_process_map, entry, NULL);
+> +	hashmap_remove(&subprocess_map, entry, NULL);
+> 	free(entry);
 > }
 
 > ...
 
-> static int apply_multi_file_filter(const char *path, const char *src, =
-size_t len,
-> @@ -692,9 +698,13 @@ static int apply_multi_file_filter(const char =
+> @@ -777,7 +777,8 @@ static int apply_multi_file_filter(const char =
 *path, const char *src, size_t len
-> 	fflush(NULL);
->=20
-> 	if (!entry) {
-> -		entry =3D start_multi_file_filter(cmd);
-> -		if (!entry)
-> +		entry =3D xmalloc(sizeof(*entry));
-> +		entry->supported_capabilities =3D 0;
+> 			 * Force shutdown and restart if another blob =
+requires filtering.
+> 			 */
+> 			error("external filter '%s' failed", cmd);
+> -			kill_multi_file_filter((struct subprocess_entry =
+*)entry);
+> +			subprocess_stop((struct subprocess_entry =
+*)entry);
+> +			free(entry);
 
-If we would use a generic data pointer then we could initialize
-supported_capabilities in "start_multi_file_filter_fn".
+I think we perform a double "free" here and in subprocess_stop(), no?
+Everything else looks good to me!
 
-
-Apart from the bike shedding above this patch looks good to me.
-Minor nit: It breaks t0021 "invalid process filter must fail (and not =
-hang!)"
-test case but I assume this is corrected in a later patch.
-
-
-Cheers,
-Lars
-
-
+Thanks,
+Lars=
