@@ -2,113 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42BB820970
-	for <e@80x24.org>; Mon, 10 Apr 2017 10:21:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1468020970
+	for <e@80x24.org>; Mon, 10 Apr 2017 10:24:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752343AbdDJKVc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 06:21:32 -0400
-Received: from mail-io0-f170.google.com ([209.85.223.170]:34964 "EHLO
-        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751968AbdDJKVb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 06:21:31 -0400
-Received: by mail-io0-f170.google.com with SMTP id r16so35490261ioi.2
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 03:21:31 -0700 (PDT)
+        id S1753227AbdDJKYg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 06:24:36 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33156 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753223AbdDJKYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 06:24:35 -0400
+Received: by mail-pf0-f196.google.com with SMTP id c198so5876826pfc.0
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 03:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1Mx4p/FttC6xCRUqrW97EiuaaIxvz5jwmfg4GhLOB1k=;
-        b=NllmV4apvON40FnH2JuAnCXXj65MTnbthu3o3+GkiK3hD1DLD/ZivKZeiQJBjjVUSl
-         kJVlnZUYhAhwXBLXcm1xh1J61ZZLy5g56VBb/QC4hBrFFwfhz911pMej7twuuK37YmDB
-         Do2h5yZgzuI04L3pmT0el/y+eSxjwOoDcNRm/ZCHEETQb9hIBpDAtGwLIFMwoZLUrrEk
-         xFAzxtI1gO9ck+2Ruxrc332IOE+CZ4SQSxrHXVYN/Duz5QtQ9M9AnDE36kp16/TiMEZF
-         eeajp1do+Kze3KSuaKbjx4pXK1g1hh/w3jp4HpAMbpKZCAYA7OllD/Wx1ZdlNW22X5IX
-         yHnQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=pHVpPfujqrjisGdBLgbwaHqLuw1+xdofpYnexWrhdXc=;
+        b=OOfLODdnQ9zh+2QOHNHD2F6Ex5Op64+NmI2edsIogXeVMrClzscb20FtZNlo/1CHsc
+         G+bhc7dSHTungcsg1d66faKaGmYfVvZWOG4AVKSYC4/+rocVT1havw1zH5YxqYuknRZN
+         D+wnqCtTNek3pxhi+NPGsGWcQ7HRqzv0bh2XfUz8/1xLOZ3O8chDAOkVzWCsB/hXKeLS
+         xTajsHW3MwhTmatReUwpvXfsh6Y/3YoxbN/XioCCdq3UOWBfuZdUjv8JNIxP2GIcFUg1
+         K/+ODjsocT1THR/W5bMiFaoY8eFPLp78exNgRGBD8ORXYO2kcWDRJ3m6uqi4PbcuflYt
+         D1Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1Mx4p/FttC6xCRUqrW97EiuaaIxvz5jwmfg4GhLOB1k=;
-        b=VmenxasTYkeZQxPhi2IYayXjfub3pLC0NQezMGGFBSioaBmcAWp5e8ySFOHio+LEd5
-         hroFpv9GTRrdRGVvZcLkISp8mx5m5OHrxs8rNalMhO81VyejOSNZZqSs3ScuhqJbv9Sv
-         HLmRBygRINPS5U5eEFJYG3FMdJZD8da2mbjehiDHWypakZ3BdE7mZr23Ng3+81Utf3Fk
-         V5LrLeA8sbkE4nh2TulL+n19zR5a2l1jyWFICFECLckAnD1szCnS5xh8WrDUkOaWrUuR
-         D7JS9AbT5PRAwVhhpVjPxcURswe+U5uFKr1A9API8D1TeejflbtrZx5i/y+Rr4c3OiVh
-         qScA==
-X-Gm-Message-State: AFeK/H2/ASj/9BVrxpdF94EbvVmFAOo9WH5CJDKydifohBw3X7AcbWJuDJmsvp5god2V4bfQusXimlKfBC8tqQ==
-X-Received: by 10.107.150.201 with SMTP id y192mr56556663iod.33.1491819690786;
- Mon, 10 Apr 2017 03:21:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=pHVpPfujqrjisGdBLgbwaHqLuw1+xdofpYnexWrhdXc=;
+        b=dy7C/NQHxJqZLUS8QoVQLMumlElC2RQlyPxw8lhIhaqHNep/S0mb9G1ZDw8WUZrdNk
+         tXIRxCgKByWBRvgd6tL652xJNe4aO9oRDsGGjMd4oiX5qcNThn68IdZKxbCS77AoOrTe
+         zXaBpGHzmnsLiIP/RH0w5NS9m3wH8ketuJL1H+8qEJS9+cU0gXim/oi++FvPNYxCmLGW
+         VncIso0bDJGco76R5YteLNaDhmnwUWsVPfcIDYSQHDWZsIzjIinQfH7rrZAg9+RLJxo6
+         xoYq52Scs0zckTwMtBi25Qth1S3d/pPG7F6SfesGL9DzfiayyLQyajHeIxKDRoLTxPfN
+         WtrQ==
+X-Gm-Message-State: AFeK/H1m5m92SmmptDg9ueH0Vx+hR79hw+J0pBEQ4CXDeFowFnd8PshLI/B+GWh/fU6xug==
+X-Received: by 10.99.0.85 with SMTP id 82mr51315612pga.39.1491819874841;
+        Mon, 10 Apr 2017 03:24:34 -0700 (PDT)
+Received: from ash ([115.73.171.114])
+        by smtp.gmail.com with ESMTPSA id k26sm18082082pfk.59.2017.04.10.03.24.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Apr 2017 03:24:34 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 10 Apr 2017 17:24:29 +0700
+Date:   Mon, 10 Apr 2017 17:24:29 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Kevin Willford <kcwillford@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH 3/3] reset.c: update files when using sparse to avoid
+ data loss.
+Message-ID: <20170410102429.GB19325@ash>
+References: <20170407192357.948-1-kewillf@microsoft.com>
+ <20170407192357.948-4-kewillf@microsoft.com>
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 10 Apr 2017 03:21:10 -0700 (PDT)
-In-Reply-To: <3563ee7a-1175-2010-7176-0339cd3e60ee@update.uu.se>
-References: <3563ee7a-1175-2010-7176-0339cd3e60ee@update.uu.se>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 10 Apr 2017 12:21:10 +0200
-Message-ID: <CACBZZX5jD0AhqZ8ucdicW=6s3=HPfpPeyne6jSVbZKnQ+sRZkQ@mail.gmail.com>
-Subject: Re: Git documentation on branching.
-To:     =?UTF-8?Q?Samuel_=C3=85slund?= <samuel@update.uu.se>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170407192357.948-4-kewillf@microsoft.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2017 at 8:56 AM, Samuel =C3=85slund <samuel@update.uu.se> w=
-rote:
-> Hi all.
->
-> I just started playing around with branching in git.
-> I have been using it more or less as Subversion until now.
->
-> One feature with "git branch xyz" and "git checkout xyz" that is rather
-> obvious if you know them but bit me a little since I did not, is that
-> uncommitted work in progress is not affected or saved when switching betw=
-een
-> branches. Thus I cleaned up the directory when working with the branch an=
-d
-> now I'm trying to find a stash where I hopefully have a copy of those fil=
-es.
->
-> Would it be possible to add something in the documentation to warn others
-> that uncommitted work is not saved or affected by branching?
+On Fri, Apr 07, 2017 at 12:23:57PM -0700, Kevin Willford wrote:
+> When using the sparse checkout feature the git reset command will add
 
-The main UI in git for switching branches is "git checkout", and it's
-mentioned in the second paragraph of the documentation:
+"git reset" has three different modes. It would be good if you mention
+what mode is affected here. The tests are for --mixed only. I wonder
+if we need to do anything for --hard and --soft?
 
-"[when switching branches] local modifications to the files in the
-working tree are kept, so that they can be committed to the
-<branch>.".
+--soft touches branch SHA-1 index only, not worktree, so probably not.
 
-Did you read this and find it unclear, and if so can you elaborate on
-what the confusion was, maybe we can fix the docs with that in mind?
+--hard should be handled by unpack_trees(), I think.
 
-Or did you read some entirely different docs (what docs?) where we're
-perhaps not mentioning this as prominently?
+But it would be good to cover these in the commit message as well to
+stop readers from wondering.
 
+> entries to the index that will have the skip-worktree bit off but will
+> leave the working directory empty.  File data is lost because the index
+> version of the files has been changed but there is nothing that is in the
+> working directory.  This will cause the next status call to show either
+> deleted for files modified or deleting or nothing for files added.
+> The added files should be shown as untracked and modified files should
+> be shown as modified.
 
-> The first two hits on my google search was very informative about branchi=
-ng
-> but I did not see that specific nugget of information (I might have been
-> careless reading, but if I did not see it others will probably also miss
-> it).
->
-> Git - git-branch Documentation
-> https://git-scm.com/docs/git-branch
->
-> Git - Branches in a Nutshell
-> https://git-scm.com/book/.../Git-Branching-Branches-in-a-Nutsh...
->
-> This is my first try to contribute to the Git community, I hope it will b=
-e
-> useful to somebody.
->
-> Regards,
-> //Samuel
+Hmm.. reading --mixed documentation again ("Resets the index but not
+working tree"), I think the current behavior is expected regardless of
+skip-worktree bits.
+
+Perhaps the problem is the loss of skip-worktree bits on entries added
+by update_index_from_diff()? If the bits are at the right place, then
+it should not matter if the same version exists on worktree or not and
+"status" or "commit" should work as expected, I think.
+
+--
+Duy
