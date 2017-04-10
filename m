@@ -2,197 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 190E3209F7
-	for <e@80x24.org>; Mon, 10 Apr 2017 08:02:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A693F20970
+	for <e@80x24.org>; Mon, 10 Apr 2017 08:08:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752348AbdDJICo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 04:02:44 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:33029 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750989AbdDJICk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 04:02:40 -0400
-Received: by mail-io0-f175.google.com with SMTP id t68so52217282iof.0
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 01:02:40 -0700 (PDT)
+        id S1751864AbdDJIIu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 04:08:50 -0400
+Received: from mail-lf0-f49.google.com ([209.85.215.49]:34208 "EHLO
+        mail-lf0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751442AbdDJIIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 04:08:49 -0400
+Received: by mail-lf0-f49.google.com with SMTP id z15so66385644lfd.1
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 01:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/mddvqOs0etCNKohNEcCrC8V/6UO/bV4fAzLMaEzUE8=;
-        b=atTD57HZopuBl59417+LHcnICnhri61cc4UoqAfz/jMCVgQPSv0MENLiFVTeiK6gcF
-         FF5NMCILBbSe6pKXR6uijKKnX5J8TWcFF3TYK1lLlYiwY9GsfYU313lce3FnNaVKBlLf
-         HFggMa8cVdUVVVQauD4cnTOKwR+ycAse1H2KSYlZUq6jjtFGi3PcorOTfy1Dk7JyXsTk
-         U5/szmL8CFKRtfxlVdQOR1fwQxvG3cYFjrwk4B0tIG+8aWGeV9d7uwnrgIIg+ZlAIgYL
-         aLKexDw82xE9Kafo0WrDfDR3jKknorQQlksvMyhv1j+BVaeHBnt9BFR2xyLDu6WAJI1f
-         YJuw==
+         :cc;
+        bh=iH8t6QM9bjTR3Qr6Vmn97Fm/e1KPkyXzC1u0FWpUz+M=;
+        b=s04yMRqjFPVlZTd20NkNSlJfLrE41JbuVjN/QV7ojMTPNfQfvAy/jdOPA6f1f7Pqh/
+         G3lqdpw2y4KrgtuKchlvpwGlJ/JoT+sobcVZ+WhWVoGlAJlGnhcJn+qRcgG2vIzBj6iB
+         SmQ9bzI5zq+Scg8dhtjz/jTtGboPy4beadiastTg6Yum/T0tsJ2nWubOm5HIoKcLdSnb
+         5bZrFe08TTIV50P/v/5b95NVaMA9YRYeLa50pTUTr68dTd7ZBfbPO/NjlqzdwAsVjFXi
+         1eGZh8tQ0uBL3OfRmYFQrQ0A7fHI2H3vn9Y8VJBbv9xINELclZRGVL3QdJgbIWNZFbGR
+         AXzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/mddvqOs0etCNKohNEcCrC8V/6UO/bV4fAzLMaEzUE8=;
-        b=cKlhu3kZ+yse6DiOv3n74vg2dEh3lYZSm98Xe6FanXmLdHnLm2nXNU9ZGoRZOgkiEC
-         k9Z7PV5TRei8LhIVmsfBsR/daG9ZLKNLlsfQsvHggX64DWwmlKyBEb7Bzo5U6umN1veM
-         LcuMUECvQ3el9GZ3oDIRrGFeaVJm4UzG5zy/L7amLowoiyv/Z8AByp3zwKseiALVqjkO
-         0l8ubL7l0S0tVi6NV0kWn2JvAFlL7TK8nKRAuq+qgnH1hLhwIzrv8UX1RqIBRlKBQnA1
-         BYcwjJN0lHHiWXTOh4zL7j31k8TS5p0ARBORuOB4vsk83dw6xBVr43wGZOGK+CN95roB
-         YT9w==
-X-Gm-Message-State: AN3rC/6WlqneVMgkkkFdq4o45yRyGAag6vF+kNnSwd148Jf8uPXbgX2p
-        OncH/CR9SjUUqlaLx26f/jrqwWg9Bw==
-X-Received: by 10.36.76.16 with SMTP id a16mr10282683itb.91.1491811359673;
- Mon, 10 Apr 2017 01:02:39 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=iH8t6QM9bjTR3Qr6Vmn97Fm/e1KPkyXzC1u0FWpUz+M=;
+        b=VRqRSIS9Vr+arqh4ZbA+cl8A9KCq7oi5dCaWJyQCdSxq2jenHyjlr5oZlvuc3Vzmtk
+         coczHLYr8z6vCraLJBX/XxF9hd0DH5gVgj1B8M0Zi+l+mWbccKrFVe4zkE6QMpojPNWG
+         fapb/yTQCm1/shCHgQin/ot6oHWREFP3LFoae5CKj7wOrAKzPpSoYzKWcW3CUJMm+Epy
+         tO0pV1cLhRy1QVGft5ETJfOeVOnJQDIIxv5VdzG3ChknqGqb+/FhvNDlfdpBQR+AiSHv
+         ugo8Ewm4nEDnVH3UgT0PcUDqayjpzvy6dx89yfp7jUCNj2AKChLrRL6jVTdcOnBZyaaI
+         UaBA==
+X-Gm-Message-State: AFeK/H1ko51v2QfznP3QQxETxBXI4d/bSYbqorNeRRfnolABQPN2GRZcJ9HFxp5spt6Ntu4os5WsVweHrZ4uZA==
+X-Received: by 10.46.81.25 with SMTP id f25mr13411901ljb.119.1491811727979;
+ Mon, 10 Apr 2017 01:08:47 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.130.208 with HTTP; Mon, 10 Apr 2017 01:02:18 -0700 (PDT)
-In-Reply-To: <20170410014712.26716-1-szeder.dev@gmail.com>
-References: <20170409191117.25175-3-avarab@gmail.com> <20170410014712.26716-1-szeder.dev@gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 10 Apr 2017 10:02:18 +0200
-Message-ID: <CACBZZX6M2YnbOT6btqLf2RacNT0Th3Hx2jf5QR7g+KFS_DKtVQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] test-lib: exhaustively insert non-alnum ASCII into
- the TRASH_DIRECTORY name
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        Jeff King <peff@peff.net>,
-        Joachim Durchholz <jo@durchholz.org>,
-        Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.25.145.30 with HTTP; Mon, 10 Apr 2017 01:08:27 -0700 (PDT)
+In-Reply-To: <1n47so5.9e6qvf1bbqww4M%haller@ableton.com>
+References: <CA+P7+xqS1Fh0aDV=QYbVMdRa=M4e-mBtjvknR=U_RShDoccNjQ@mail.gmail.com>
+ <1n47so5.9e6qvf1bbqww4M%haller@ableton.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Mon, 10 Apr 2017 01:08:27 -0700
+Message-ID: <CA+P7+xq6MJa-J5cj2Om20d+g7KBretShpxH=13HWV7vFR9be8g@mail.gmail.com>
+Subject: Re: Tools that do an automatic fetch defeat "git push --force-with-lease"
+To:     Stefan Haller <haller@ableton.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=3F_Bjarmason?= <avarab@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 10, 2017 at 3:47 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
->> Change the test library to insert non-alphanumeric ASCII characters
->> into the TRASH_DIRECTORY name, that's the directory the test library
->> creates, chdirs to and runs each individual test from.
->>
->> Unless test_fails_on_unusual_directory_names=3D1 is declared before
->> importing test-lib.sh (and if perl isn't available on the system), the
->> trash directory will contain every non-alphanumeric character in
->> ASCII, in order.
+On Sun, Apr 9, 2017 at 4:00 AM, Stefan Haller <haller@ableton.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> wrote:
 >
-> At the very least there must be an easier way to disable this, e.g. a
-> command line option.
+>> Agreed. You "take" a lease whenever you push to the remote or when you
+>> pull from the remote and when you pull into the branch. It should
+>> store something that tracks both the branch and remote branch together
+>> so that you can generalize it to multiple remotes.
 >
-> This change is sure effective in smoking out bugs, but it's a major
-> annoyance during development when it comes to debugging a test.  At
-> first I could not even cd into the trash directory, because TAB
-> completing the directory name with all those non-printable characters
-> didn't work (this may be a bug in the bash-completion package).  And
-> simply copy-pasting the dirname didn't work either, because 'ls'
+> I don't see why it has to support multiple remotes (but then I don't
+> have much experience with workflows involving multiple remotes, so I may
+> well be missing something). A local branch can only have one remote
+> tracking branch on one remote, and in my view --force-with-lease without
+> arguments works with that remote tracking branch only. Is this view too
+> simple?
 >
->   trash directory.t9902-completion.??????????????????????????????? !"#$%&=
-'()*+,-:;<=3D>?@[\]^_`{|}~?
->
-> After some headscratching, Sunday night may be my excuse, I figured
-> out that 'cd tr*' works...  only to be greeted with the ugliest-ever
-> three-line(!) shell prompt.
->
-> Therefore I would say that this should not even be enabled by default
-> in test-lib.sh, so at least running a test directly from the command
-> line as ./t1234-foo.sh would considerately give us an easily
-> accessible trash directory even without any command line options.  We
-> could enable it for 'make test' by default via GIT_TEST_OPTS in
-> t/Makefile, though.
 
-This definitely needs some tweaking as you and Joachim point out. E.g.
-some capabilities check in the test suite to check if we can even
-create these sorts of paths on the local filesystem.
+I think that's fine. Thinking in terms of only one remote at a time is easier.
 
-A couple of comments on the above though:
-
-a) If we have something that's a more strict mode that makes tests
-fail due to buggy code in various scenarios, we gain the most from
-having it on by default, and having some optional mode to have devs
-e.g. disable it for manual inspection of the test directories.
-
-Most of the running of the test suite that really matters, i.e. just
-before the software is delivered to end users, is going to be running
-in some non-interactive build system preparing a package.
-
-b) I think any sort of magic like using it with 'make test', but not
-when the *.sh is manually run, will just lead to frustrating seemingly
-heisenbugs from people trying to debug the test suite when things do
-fail, i.e. you run 'make test' on some obscure platform we haven't
-fixed path bugs on, 10 fail, you manually inspect them and every one
-of them succeeds, because some --use-garbage-dirs option wasn't
-passed.
-
->> This includes all the control characters, !, [], {} etc. the "."
->> character isn't included because it's already in the directory name,
->> and nor is "/" for obvious reasons, although that would actually work,
->> we'd just create a subdirectory, which would make the tests harder to
->> inspect when they fail.i
+>> It doesn't necessarily track perfectly with a branch that contains
+>> extra work such as when doing pull --rebase, but maybe you have an
+>> idea about that?
 >
-> 1. Heh.  How an additional subdirectory would make the tests harder to
->    inspect is nothing compared to the effect of all the other
->    characters.
->
-> 2. s/i$//
->
->> This change is inspired by the "submodule: prevent backslash expantion
->> in submodule names" patch[1]. If we'd had backslashes in the
->> TRASH_DIRECTORY all along that bug would have been fixed a long time
->> ago. This will flag such issues by marking tests that currently fail
->> with "test_fails_on_unusual_directory_names=3D1", ensure that new tests
->> aren't added unless a discussion is had about why the code can't
->> handle unusual pathnames, and prevent future regressions.
->>
->> 1. <20170407172306.172673-1-bmwill@google.com>
->> ---
->>  t/README      | 12 ++++++++++++
->>  t/test-lib.sh |  4 ++++
->>  2 files changed, 16 insertions(+)
->>
->> diff --git a/t/README b/t/README
->> index ab386c3681..314dd40221 100644
->> --- a/t/README
->> +++ b/t/README
->> @@ -345,6 +345,18 @@ assignment to variable 'test_description', like thi=
-s:
->>       This test registers the following structure in the cache
->>       and tries to run git-ls-files with option --frotz.'
->>
->> +By default the tests will be run from a directory with a highly
->> +unusual filename that includes control characters, a newline, various
->> +punctuation etc., this is done to smoke out any bugs related to path
->> +handling. If for whatever reason the tests can't deal with such
->> +unusual path names, set:
->> +
->> +    test_fails_on_unusual_directory_names=3D1
->> +
->> +Before sourcing 'test-lib.sh' as described below. This option is
->> +mainly intended to grandfather in existing broken tests & code, and
->> +should usually not be used in new code, instead your tests or code
->> +probably need fixing.
->>
->>  Source 'test-lib.sh'
->>  --------------------
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 13b5696822..089ff5ac7d 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -914,6 +914,10 @@ fi
->>
->>  # Test repository
->>  TRASH_DIRECTORY=3D"trash directory.$(basename "$0" .sh)"
->> +if test -z "$test_fails_on_unusual_directory_names" -a "$(perl -e 'prin=
-t 1+1' 2>/dev/null)" =3D "2"
->> +then
->> +   TRASH_DIRECTORY=3D"$TRASH_DIRECTORY.$(perl -e 'print join q[], grep =
-{ /[^[:alnum:]]/ and !m<[./]> } map chr, 0x01..0x7f')"
->> +fi
->>  test -n "$root" && TRASH_DIRECTORY=3D"$root/$TRASH_DIRECTORY"
->>  case "$TRASH_DIRECTORY" in
->>  /*) ;; # absolute path is good
->> --
->> 2.11.0
+> Maybe I wasn't clear enough about that in my proposal, but I propose to
+> always store the commit hash of the remote tracking branch as a new
+> lease after push and pull, not the local branch. This way it works
+> nicely with pull --rebase and a branch that has extra local commits.
 >
 >
+
+Oh right. The main thing it doesn't give is that this doesn't enforce
+that your local branch *has* to have at one point prior to the push
+matched the remote branch that you're overwriting, which would be even
+more evidence that your changes are what you expect and aren't
+deleting anything unexpectedly. However, I think that's not strictly
+necessary to require that since it would also break pull-rebase
+workflow anyways.
+
+So something like:
+
+For a branch, also store its last known "lease" sha1 value, which
+updates once every time that we push that branch to the remote
+tracking branch or any time that we pull into the branch using the
+remote tracking branch.
+
+This value is what we would default to, and we only need to store the
+latest one, since that's the last known good value. If the value is
+wrong then we will error and avoid deleting work, and if it's correct,
+then we know that the remote branch is correct for this specific push
+and is safe.
+
+I think this is straight forward and reasonable approach to solve the
+problem, and makes using force-with-lease much nicer.
+
+Thanks,
+Jake
+
+> --
+> Stefan Haller
+> Ableton
+> http://www.ableton.com/
