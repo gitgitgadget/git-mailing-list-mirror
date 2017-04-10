@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D995320960
-	for <e@80x24.org>; Mon, 10 Apr 2017 21:14:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 372BB20960
+	for <e@80x24.org>; Mon, 10 Apr 2017 21:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752841AbdDJVOP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 17:14:15 -0400
-Received: from siwi.pair.com ([209.68.5.199]:36460 "EHLO siwi.pair.com"
+        id S1752897AbdDJVOT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 17:14:19 -0400
+Received: from siwi.pair.com ([209.68.5.199]:36453 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752822AbdDJVOO (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752819AbdDJVOO (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 10 Apr 2017 17:14:14 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 479BD8456A;
-        Mon, 10 Apr 2017 17:14:13 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id A33AC84569;
+        Mon, 10 Apr 2017 17:14:12 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v8 3/3] read-cache: speed up add_index_entry during checkout
-Date:   Mon, 10 Apr 2017 21:14:03 +0000
-Message-Id: <20170410211403.25126-4-git@jeffhostetler.com>
+Subject: [PATCH v8 2/3] p0006-read-tree-checkout: perf test to time read-tree
+Date:   Mon, 10 Apr 2017 21:14:02 +0000
+Message-Id: <20170410211403.25126-3-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170410211403.25126-1-git@jeffhostetler.com>
 References: <20170410211403.25126-1-git@jeffhostetler.com>
@@ -37,111 +37,250 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach add_index_entry_with_check() and has_dir_name()
-to see if the path of the new item is greater than the
-last path in the index array before attempting to search
-for it.
+Created t/perf/repos/many-files.sh to generate large, but
+artificial repositories.
 
-During checkout, merge_working_tree() populates the new
-index in sorted order, so this change will save at least 2
-binary lookups per file.  This preserves the original
-behavior but simply checks the last element before starting
-the search.
-
-This helps performance on very large repositories.
-
-This can be seen using p0006-read-tree-checkout.sh and the
-artificial repository created by t/perf/repos/many-files.sh
-with parameters (5, 10, 9).   (1M files in index.)
-
-1..7
-Test                                                             HEAD^               HEAD
-------------------------------------------------------------------------------------------------------------
-0006.2: read-tree master ballast (1000001)                       4.01(2.71+1.28)     3.24(1.84+1.38) -19.2%
-0006.3: switch between master ballast (1000001)                  8.23(5.60+2.45)     6.73(4.20+2.35) -18.2%
-0006.4: switch between ballast ballast-1 (1000001)               13.36(8.60+4.35)    11.84(7.28+4.08) -11.4%
-0006.5: switch between aliases ballast ballast-alias (1000001)   13.43(8.68+4.27)    12.09(7.28+4.37) -10.0%
-0006.6: add forward sorted items (1000001) (200000)              2.42(1.76+0.42)     2.40(1.66+0.37) -0.8%
-0006.7: add reverse sorted items (1000001) (200000)              18.59(17.96+0.33)   18.70(18.07+0.42) +0.6%
+Created t/perf/p0006-read-tree-checkout.sh to measure
+performance on various read-tree, checkout, and update-index
+operations.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- read-cache.c | 46 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 44 insertions(+), 2 deletions(-)
+ t/perf/p0006-read-tree-checkout.sh |  90 ++++++++++++++++++++++++++++
+ t/perf/repos/.gitignore            |   1 +
+ t/perf/repos/many-files.sh         | 118 +++++++++++++++++++++++++++++++++++++
+ 3 files changed, 209 insertions(+)
+ create mode 100755 t/perf/p0006-read-tree-checkout.sh
+ create mode 100644 t/perf/repos/.gitignore
+ create mode 100755 t/perf/repos/many-files.sh
 
-diff --git a/read-cache.c b/read-cache.c
-index 97f13a1..a8ef823 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -918,9 +918,24 @@ static int has_dir_name(struct index_state *istate,
- 	int stage = ce_stage(ce);
- 	const char *name = ce->name;
- 	const char *slash = name + ce_namelen(ce);
-+	size_t len_eq_last;
-+	int cmp_last = 0;
+diff --git a/t/perf/p0006-read-tree-checkout.sh b/t/perf/p0006-read-tree-checkout.sh
+new file mode 100755
+index 0000000..69425ae
+--- /dev/null
++++ b/t/perf/p0006-read-tree-checkout.sh
+@@ -0,0 +1,90 @@
++#!/bin/sh
++##
++## This test measures the performance of various read-tree
++## and checkout operations.  It is primarily interested in
++## the algorithmic costs of index operations and recursive
++## tree traversal -- and NOT disk I/O on thousands of files.
++## Therefore, it uses sparse-checkout to avoid populating
++## the ballast files.
++##
++## It expects the test repo to have certain characteristics.
++## Branches:
++## () master        := an arbitrary commit.
++## () ballast       := an arbitrary commit with a large number
++##                     of changes relative to "master".
++## () ballast-alias := a branch pointing to the same commit
++##                     as "ballast".
++## () ballast-1     := a commit with a 1 file difference from
++##                     "ballast".
++##
++## Ballast files in the repository should not appear in
++## the sparse-checkout (if present).
++##
++## See "t/perf/repos/many-files.sh" to generate some
++## synthetic data.
++## 
 +
-+	if (istate->cache_nr > 0) {
-+		/*
-+		 * Compare the entry's full path with the last path in the index.
-+		 * If it sorts AFTER the last entry in the index and they have no
-+		 * common prefix, then there cannot be any F/D name conflicts.
-+		 */
-+		cmp_last = strcmp_offset(name,
-+			istate->cache[istate->cache_nr-1]->name,
-+			&len_eq_last);
-+		if (cmp_last > 0 && len_eq_last == 0)
-+			return retval;
-+	}
- 
- 	for (;;) {
--		int len;
-+		size_t len;
- 
- 		for (;;) {
- 			if (*--slash == '/')
-@@ -930,6 +945,24 @@ static int has_dir_name(struct index_state *istate,
- 		}
- 		len = slash - name;
- 
-+		if (cmp_last > 0) {
-+			/*
-+			 * If this part of the directory prefix (including the trailing
-+			 * slash) already appears in the path of the last entry in the
-+			 * index, then we cannot also have a file with this prefix (or
-+			 * any parent directory prefix).
-+			 */
-+			if (len+1 <= len_eq_last)
-+				return retval;
-+			/*
-+			 * If this part of the directory prefix (excluding the trailing
-+			 * slash) is longer than the known equal portions, then this part
-+			 * of the prefix cannot collide with a file.  Go on to the parent.
-+			 */
-+			if (len > len_eq_last)
-+				continue;
++test_description="Tests performance of read-tree"
++
++. ./perf-lib.sh
++
++test_perf_default_repo
++
++test_expect_success 'setup' '
++	echo "sparse/*" >>.git/info/sparse-checkout &&
++	git config --local core.sparsecheckout 1 &&
++	git checkout ballast
++'
++
++nr_files=$(git ls-files | wc -l)
++
++test_perf "read-tree master ballast ($nr_files)" '
++	git read-tree -m master ballast -n
++'
++
++## Alternate between a commit with and without the ballast.
++test_perf "switch between master ballast ($nr_files)" '
++	git checkout master &&
++	git checkout ballast
++'
++
++## Alternate between 2 commits with the ballast and 1 change.
++test_perf "switch between ballast ballast-1 ($nr_files)" '
++	git checkout ballast-1 &&
++	git checkout ballast
++'
++
++## Alternate between 2 aliases for the same commit.
++test_perf "switch between aliases ballast ballast-alias ($nr_files)" '
++	git checkout ballast-alias &&
++	git checkout ballast
++'
++
++export nr_random=200000
++
++## Add random items in sorted order. These will effectively
++## get appended because "zzzz/" sorts after anything already
++## present in index.  Then delete them in reverse order, so
++## that the last is removed each time.
++test_perf "add forward sorted items ($nr_files) ($nr_random)" '
++	awk "BEGIN { for (f = 0; f <= $nr_random; f++) printf \"r_%06d\n\", f }" |
++	sed "s|^|100644 $EMPTY_BLOB	zzzz/|" |
++	git update-index --index-info &&
++	awk "BEGIN { for (f = $nr_random; f >= 0; f--) printf \"r_%06d\n\", f }" |
++	sed "s|^|000000 $EMPTY_BLOB	zzzz/|" |
++	git update-index --index-info
++'
++
++## Add random items in reverse order. These will be inserted
++## NEAR the end of the index, but not at the end.  Then delete
++## them in the opposite order, so that we remove from the middle.
++test_perf "add reverse sorted items ($nr_files) ($nr_random)" '
++	awk "BEGIN { for (f = $nr_random; f >= 0; f--) printf \"r_%06d\n\", f }" |
++	sed "s|^|100644 $EMPTY_BLOB	zzzz/|" |
++	git update-index --index-info &&
++	awk "BEGIN { for (f = 0; f <= $nr_random; f++) printf \"r_%06d\n\", f }" |
++	sed "s|^|000000 $EMPTY_BLOB	zzzz/|" |
++	git update-index --index-info
++'
++
++test_done
+diff --git a/t/perf/repos/.gitignore b/t/perf/repos/.gitignore
+new file mode 100644
+index 0000000..72e3dc3
+--- /dev/null
++++ b/t/perf/repos/.gitignore
+@@ -0,0 +1 @@
++gen-*/
+diff --git a/t/perf/repos/many-files.sh b/t/perf/repos/many-files.sh
+new file mode 100755
+index 0000000..a4c44b3
+--- /dev/null
++++ b/t/perf/repos/many-files.sh
+@@ -0,0 +1,118 @@
++#!/bin/sh
++## Generate test data repository "many-files.git" using the given parameters.
++## Usage: [-r repo] [-d depth] [-w width] [-f files]
++##
++## -r repo: path to the new repo to be generated
++## -d depth: the depth of sub-directories
++## -w width: the number of sub-directories at each level
++## -f files: the number of files created in each directory
++##
++## Note that all files will have the same SHA-1 and each
++## directory at a level will have the same SHA-1, so we
++## will potentially have a large index, but not a large
++## ODB.
++##
++## Ballast will be created under "ballast/".  Sparse-checkout
++## will be enabled so that they will not be populated by
++## default.
++
++EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
++
++set -e
++
++## (5, 10, 9) will create 999,999 ballast files.
++## (4, 10, 9) will create  99,999 ballast files.
++depth=5
++width=10
++files=9
++
++while test "$#" -ne 0
++do
++    case "$1" in
++	-r)
++	    shift;
++	    test "$#" -ne 0 || { echo 'error: -r requires an argument' >&2; exit 1; }
++	    repo=$1;
++	    shift ;;
++	-d)
++	    shift;
++	    test "$#" -ne 0 || { echo 'error: -d requires an argument' >&2; exit 1; }
++	    depth=$1;
++	    shift ;;
++	-w)
++	    shift;
++	    test "$#" -ne 0 || { echo 'error: -w requires an argument' >&2; exit 1; }
++	    width=$1;
++	    shift ;;
++	-f)
++	    shift;
++	    test "$#" -ne 0 || { echo 'error: -f requires an argument' >&2; exit 1; }
++	    files=$1;
++	    shift ;;
++	*)
++	    echo "error: unknown option '$1'" >&2; exit 1 ;;
++	esac
++done
++
++## Inflate the index with thousands of empty files.
++## usage: dir depth width files
++fill_index() {
++	awk -v arg_dir=$1 -v arg_depth=$2 -v arg_width=$3 -v arg_files=$4 '
++		function make_paths(dir, depth, width, files, f, w) {
++			for (f = 1; f <= files; f++) {
++				print dir "/file" f
++			}
++			if (depth > 0) {
++				for (w = 1; w <= width; w++) {
++					make_paths(dir "/dir" w, depth - 1, width, files)
++				}
++			}
 +		}
++		END { make_paths(arg_dir, arg_depth, arg_width, arg_files) }
++		' </dev/null |
++	sed "s/^/100644 $EMPTY_BLOB	/" |
++	git update-index --index-info
++	return 0
++}
 +
- 		pos = index_name_stage_pos(istate, name, len, stage);
- 		if (pos >= 0) {
- 			/*
-@@ -1021,7 +1054,16 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 
- 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
- 		cache_tree_invalidate_path(istate, ce->name);
--	pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
++[ -z "$repo" ] && repo=gen-many-files-$depth.$width.$files.git
 +
-+	/*
-+	 * If this entry's path sorts after the last entry in the index,
-+	 * we can avoid searching for it.
-+	 */
-+	if (istate->cache_nr > 0 &&
-+		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
-+		pos = -istate->cache_nr - 1;
-+	else
-+		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
- 
- 	/* existing match? Just replace it. */
- 	if (pos >= 0) {
++mkdir $repo
++cd $repo
++git init .
++
++## Create initial commit just to define branch.
++mkdir sparse
++touch sparse/file.txt
++echo "$depth $width $files" >sparse/repo.params
++git add sparse
++git commit -q -m params
++
++## Turn on sparse-checkout so that we don't have to populate
++## the ballast when switching branches.  Use reset --hard to
++## quickly checkout the new HEAD with minimum actual files.
++echo 'sparse/*' >>.git/info/sparse-checkout
++git config --local core.sparsecheckout 1
++git reset --hard
++
++## Inflate the index with thousands of empty files and commit.
++git checkout -b ballast
++fill_index "ballast" $depth $width $files
++git commit -q -m "ballast"
++
++## Create an alias for that commit.
++git branch "ballast-alias"
++
++nr_files=$(git ls-files | wc -l)
++
++## Modify 1 file and commit.
++git checkout -b "ballast-1"
++echo x >sparse/file.txt
++git add sparse
++git commit -q -m "ballast plus 1"
++
++## Checkout master to put repo in canonical state.
++git checkout master
++
++echo "Repository "$repo" ($depth, $width, $files) created.  Ballast $nr_files."
++exit 0
 -- 
 2.9.3
 
