@@ -2,287 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1BB620960
-	for <e@80x24.org>; Mon, 10 Apr 2017 20:46:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1CBB20960
+	for <e@80x24.org>; Mon, 10 Apr 2017 20:54:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751949AbdDJUqd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 16:46:33 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:33150 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751888AbdDJUqa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 16:46:30 -0400
-Received: by mail-pg0-f49.google.com with SMTP id x125so111446832pgb.0
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 13:46:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=y/GJntQert9pDd37OmZqiiVX21WtoEUXa+10NLP2iYk=;
-        b=YbM7+/yLc+et6nR4C6PJjObKnVoa4UCExsBDZRp9RuMSVkZ5YAJXR0z4GLhdtYUSLc
-         FsjJQ+BhX8G9ggG7qx2bSjlZIU6jOuiK3C+x/4I9SodoOIPBeOJeYQ6wiTAHNOrPk+Le
-         nlXonKmKjuqT9aHycIwfbVcZLkX8k5/18Nbrp44MmTe13jRljX7zSzb3c2z8ADp9pOAN
-         YpAru/GVM/lT1aTi+FgNKSDbbp6VoL9XjcG9o/TJEH+5iNgD+wXzjsdcgxom3XKglebH
-         yDhdGwbLJLJJj46OQKywAe4uzEt1Edkm/d+u+Ophx1n2FdhtE6iK55jSOYGKSsZoX6HZ
-         xshA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=y/GJntQert9pDd37OmZqiiVX21WtoEUXa+10NLP2iYk=;
-        b=YZrqxig4U0CHSC/3VY7VFVoT+UBad66zDQF42sbl/YOw6QERQfVck2Xv3rlHz7Cf8f
-         AX/YLZgLYEIHJtWf/G6rEzJzSSwzcJiWSGY3jH9m7TD4EWFfco+qUkT1Itr4l3ywd+uY
-         dXHINSN3mr+7wePar0tp84d955femH5iGEuvweVbdB1wOFEt0IItjHhWGRsD3l76b0fM
-         gS8Csp2JkTFfQCfYp7qKY+rlBc/GLlbTnzjXHA3oczNkTRsD7W5zMOoaFQ1M9bLtSA32
-         HassTcNNOwo00UMB0hrR0Z9bDv+CNXMxWWmtEycHKMf5xIl3u1uBfC5OVd/s2vKNcMgU
-         9vqQ==
-X-Gm-Message-State: AFeK/H1NJIMStx5f766QdKahuEm0tfenqRmoeG+0IdwlVhXQ5U9mMvOxJ4MnRYAiMCkj7Vf1
-X-Received: by 10.98.72.88 with SMTP id v85mr55171596pfa.99.1491857189480;
-        Mon, 10 Apr 2017 13:46:29 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
-        by smtp.gmail.com with ESMTPSA id r90sm6709414pfl.120.2017.04.10.13.46.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 13:46:28 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [RFC 4/4] server-endpoint: serve blobs by hash
-Date:   Mon, 10 Apr 2017 13:46:10 -0700
-Message-Id: <2cef84c6781af4b36c17968537ed4e492c4435b2.1491851452.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.12.2.715.g7642488e1d-goog
-In-Reply-To: <cover.1491851452.git.jonathantanmy@google.com>
-References: <cover.1491851452.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1491851452.git.jonathantanmy@google.com>
-References: <cover.1491851452.git.jonathantanmy@google.com>
+        id S1752746AbdDJUyg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 16:54:36 -0400
+Received: from mout.web.de ([217.72.192.78]:61655 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752155AbdDJUyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 16:54:35 -0400
+Received: from macce.local ([79.223.125.21]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LilNJ-1cMz7x3QDN-00cvep; Mon, 10
+ Apr 2017 22:54:21 +0200
+Subject: Re: [PATCH v3 4/4] convert: add "status=delayed" to filter process
+ protocol
+To:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
+References: <20170409191107.20547-1-larsxschneider@gmail.com>
+ <20170409191107.20547-5-larsxschneider@gmail.com>
+Cc:     gitster@pobox.com, peff@peff.net, e@80x24.org, ttaylorr@github.com
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <a7fd3bef-49b2-0b0a-8ca4-89e41a402661@web.de>
+Date:   Mon, 10 Apr 2017 22:54:19 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
+ Gecko/20100101 Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <20170409191107.20547-5-larsxschneider@gmail.com>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K0:ahbfmaUzl+G3uTkSabJUv4OBIqZeaZEZJxw6SsHA2F5sFXltgDT
+ 0J7Iy+ClehTD+aguPDDtT3EtZKh1VBjs8qibAPeJ8RlwDuTyk/ISPfWM2gPocdIk+P1qPAQ
+ K+mDB/3LxkxWyhLwyx27SAwRdzIJrgyGu2ZDKHDe1qVSefjBic0+2YSt9dKW8R9Cad319Mr
+ 8LpdScXQI/iorbdxqxF5A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pceBZ27907w=:8yi6I8WHa9jOUDIZ7/qLgz
+ tylt2V40kdUuSvuGB2ZgFK2iYHLbshLBOl8CDtaTmFs9xYHk37SROEH1CTwxDOciQXsPUUypF
+ IJbJuPs2JolAjEBA1hpCXaGunq9xuWDNFMUdS9jU9jkL9Khl6h+Q8YlROvBYwP2tpF6txi3Za
+ 0R4unaN+++AIywiLUojWMSI9vVky5gmsfEI7w/6QUWkvr8+QmnLx/gTzfKSxxqHs7Fiyf4RpF
+ RbpdCUibXh4jHKEn90OLs9njWsaRqUsUfruEyxVpOOtxhM6tGl+8qgjk30tqOtg5Ks5/RU3Dj
+ CBYBYvl00Icb4KtOkqBgYIdzPaXImPdurw1znflz1i2Ux/PeOI/H2lx3X/iYt2LP6zie/LywR
+ dqjto7zPT1rjBIrPqHfrKfUgpkEo7tbrKwM8sNidEIb5A1Ynca/WfRGRem7/rMireoWTQse9l
+ INWqFOXhiR0AzKX0excfqco/V7rJdvbCaizrFOygr7ei0LO1civwkXOzoubgp1rboPNwbLUDl
+ L0O7DPn5aRld+j+VZt3OhjRU++mp+X/Y6ZG7bTcuOrs7eScN9McTUtJ3C4HslCnlEpp9gc/uw
+ pcvxIuBIW/QSF+/S6hykaWxZype1JQeBxpZ6O57iG34wx2BFnyakMxAa42sEdS4ZQYaB7EuM9
+ RZhS++D3xndUekzf4ahOgv5kdCtGyQEvCUAX6ErVq0yTlGctpU9xrht/bJ+11K19j/FgIbblf
+ wmlgjF7JInU/VuQxyNw4u2xlyVepVMqaYMmjF4qi97lzYfwW/jqysWcDPfLwjPyjhGlk1F3vh
+ s+kjZ6d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Upgrade server-endpoint to also serve blobs in a packfile given their
-hashes.  Reachability checks are performed before the packfile is sent -
-both an absent blob and an unreachable blob are reported to the user in
-the same way ("not our blob").
+On 2017-04-09 21:11, Lars Schneider wrote:
+[]
+> +------------------------
+> +packet:          git> command=smudge
+> +packet:          git> pathname=path/testfile.dat
+> +packet:          git> delay-able=1
+> +packet:          git> 0000
+> +packet:          git> CONTENT
+> +packet:          git> 0000
+> +packet:          git< status=delayed
+> +packet:          git< 0000
+> +packet:          git> delay-id=1
+> +packet:          git> 0000
+> +packet:          git< status=success
+> +packet:          git< 0000
 
-Due to a bug in "rev-list" in the absence of bitmaps (discussed here
-[1]), the server repositories in tests all have bitmaps.
+(not sure if this was mentioned before)
+If a filter uses the delayed feature, I would read it as
+a response from the filter in the style:
+"Hallo Git, I need some time to process it, but as I have
+CPU capacity available, please send another blob,
+so I can chew them in parallel."
 
-[1] <20170309003547.6930-1-jonathantanmy@google.com>
+Can we save one round trip ?
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- server-endpoint.c          | 121 ++++++++++++++++++++++++++++++++++++++++++++-
- t/t5573-server-endpoint.sh |  60 ++++++++++++++++++++++
- 2 files changed, 180 insertions(+), 1 deletion(-)
- create mode 100644 t/t5573-server-endpoint.sh
+packet:          git> command=smudge
+packet:          git> pathname=path/testfile.dat
+packet:          git> delay-id=1
+packet:          git> 0000
+packet:          git> CONTENT
+packet:          git> 0000
+packet:          git< status=delayed # this means: Git, please feed more
+packet:          git> 0000
 
-diff --git a/server-endpoint.c b/server-endpoint.c
-index a9c0c7c94..870b853a6 100644
---- a/server-endpoint.c
-+++ b/server-endpoint.c
-@@ -192,6 +192,123 @@ static int fetch_ref(int stateless_rpc)
- 	return -1;
- }
- 
-+/*
-+ * Returns 1 if all blobs are reachable. If not, returns 0 and stores the hash
-+ * of one of the unreachable blobs in unreachable.
-+ */
-+static int are_all_reachable(const struct object_array *blobs, struct object_id *unreachable)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	static const char *argv[] = {
-+		"rev-list", "--objects", "--use-bitmap-index", "--stdin", "--not", "--all", "--not", NULL,
-+	};
-+	int i;
-+	char buf[41] = {0};
-+
-+	cmd.argv = argv;
-+	cmd.git_cmd = 1;
-+	cmd.in = -1;
-+	cmd.out = -1;
-+
-+	if (start_command(&cmd))
-+		goto error;
-+	
-+	for (i = 0; i < blobs->nr; i++) {
-+		write_in_full(cmd.in, sha1_to_hex(blobs->objects[i].item->oid.hash), 40);
-+		write_in_full(cmd.in, "\n", 1);
-+	}
-+	close(cmd.in);
-+	cmd.in = -1;
-+
-+	i = read_in_full(cmd.out, buf, 40);
-+	close(cmd.out);
-+	cmd.out = -1;
-+
-+	if (finish_command(&cmd))
-+		goto error;
-+
-+	if (i) {
-+		if (get_oid_hex(buf, unreachable))
-+			goto error;
-+		return 0;
-+	}
-+
-+	return 1;
-+
-+error:
-+	if (cmd.out >= 0)
-+		close(cmd.out);
-+	die("problem with running rev-list");
-+}
-+
-+static void send_blobs(const struct object_array *blobs)
-+{
-+	struct child_process cmd = CHILD_PROCESS_INIT;
-+	static const char *argv[] = {
-+		"pack-objects", "--stdout", NULL
-+	};
-+	int i;
-+
-+	cmd.argv = argv;
-+	cmd.git_cmd = 1;
-+	cmd.in = -1;
-+	cmd.out = 0;
-+
-+	if (start_command(&cmd))
-+		goto error;
-+	
-+	for (i = 0; i < blobs->nr; i++) {
-+		write_in_full(cmd.in, sha1_to_hex(blobs->objects[i].item->oid.hash), 40);
-+		write_in_full(cmd.in, "\n", 1);
-+	}
-+	close(cmd.in);
-+	cmd.in = -1;
-+
-+	if (finish_command(&cmd))
-+		goto error;
-+
-+	return;
-+
-+error:
-+	die("problem with running pack-objects");
-+}
-+
-+static int fetch_blob(void)
-+{
-+	char *line;
-+
-+	struct object_array wanted_blobs = OBJECT_ARRAY_INIT;
-+	struct object_id unreachable;
-+
-+	while ((line = packet_read_line(0, NULL))) {
-+		const char *arg;
-+		if (skip_prefix(line, "want ", &arg)) {
-+			struct object_id oid;
-+			struct object *obj;
-+			if (get_oid_hex(arg, &oid)) {
-+				packet_write_fmt(1, "ERR invalid object ID <%s>", arg);
-+				return 0;
-+			}
-+			obj = parse_object(oid.hash);
-+			if (!obj || obj->type != OBJ_BLOB) {
-+				packet_write_fmt(1, "ERR not our blob <%s>", arg);
-+				return 0;
-+			}
-+			add_object_array(obj, NULL, &wanted_blobs);
-+		}
-+	}
-+
-+	if (!are_all_reachable(&wanted_blobs, &unreachable)) {
-+		packet_write_fmt(1, "ERR not our blob <%s>", oid_to_hex(&unreachable));
-+		return 0;
-+	}
-+
-+	packet_write_fmt(1, "ACK\n");
-+	send_blobs(&wanted_blobs);
-+
-+	return 0;
-+}
-+
- static int server_endpoint_config(const char *var, const char *value, void *unused)
- {
- 	return parse_hide_refs_config(var, value, "uploadpack");
-@@ -224,5 +341,7 @@ int cmd_main(int argc, const char **argv)
- 	line = packet_read_line(0, NULL);
- 	if (!strcmp(line, "fetch-refs"))
- 		return fetch_ref(stateless_rpc);
--	die("only fetch-refs is supported");
-+	if (!strcmp(line, "fetch-blobs"))
-+		return fetch_blob();
-+	die("only fetch-refs and fetch-blobs are supported");
- }
-diff --git a/t/t5573-server-endpoint.sh b/t/t5573-server-endpoint.sh
-new file mode 100644
-index 000000000..48f052851
---- /dev/null
-+++ b/t/t5573-server-endpoint.sh
-@@ -0,0 +1,60 @@
-+#!/bin/sh
-+
-+test_description='server-endpoint'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'fetch-blobs basic' '
-+	rm -rf server client &&
-+	git init server &&
-+	(
-+		cd server &&
-+		test_commit 0 &&
-+		test_commit 1 &&
-+		git repack -a -d --write-bitmap-index
-+	) &&
-+	BLOB0=$(git hash-object server/0.t) &&
-+	BLOB1=$(git hash-object server/1.t) &&
-+	printf "000ffetch-blobs0031want %s0031want %s0000" "$BLOB0" "$BLOB1" | git server-endpoint server >out &&
-+
-+	test "$(head -1 out)" = "0008ACK" &&
-+
-+	git init client &&
-+	sed 1d out | git -C client unpack-objects &&
-+	git -C client cat-file -e "$BLOB0" &&
-+	git -C client cat-file -e "$BLOB1"
-+'
-+
-+test_expect_success 'fetch-blobs no such object' '
-+	rm -rf server client &&
-+	git init server &&
-+	(
-+		cd server &&
-+		test_commit 0 &&
-+		git repack -a -d --write-bitmap-index
-+	) &&
-+	BLOB0=$(git hash-object server/0.t) &&
-+	echo myblob >myblob &&
-+	MYBLOB=$(git hash-object myblob) &&
-+	printf "000ffetch-blobs0031want %s0031want %s0000" "$BLOB0" "$MYBLOB" | git server-endpoint server >out &&
-+
-+	test_i18ngrep "$(printf "ERR not our blob.*%s" "$MYBLOB")" out
-+'
-+
-+test_expect_success 'fetch-blobs unreachable' '
-+	rm -rf server client &&
-+	git init server &&
-+	(
-+		cd server &&
-+		test_commit 0 &&
-+		git repack -a -d --write-bitmap-index
-+	) &&
-+	BLOB0=$(git hash-object server/0.t) &&
-+	echo myblob >myblob &&
-+	MYBLOB=$(git -C server hash-object -w ../myblob) &&
-+	printf "000ffetch-blobs0031want %s0031want %s0000" "$BLOB0" "$MYBLOB" | git server-endpoint server >out &&
-+
-+	test_i18ngrep "$(printf "ERR not our blob.*%s" "$MYBLOB")" out
-+'
-+
-+test_done
--- 
-2.12.2.715.g7642488e1d-goog
+# Git feeds the next blob.
+# This may be repeated some rounds.
+# (We may want to restrict the number of rounds for Git, see below)
+# After these some rounds, the filter needs to signal:
+# no more fresh blobs please, collect some data and I can free memory
+# and after that I am able to get a fresh blob.
+packet:          git> command=smudge
+packet:          git> pathname=path/testfile.dat
+packet:          git> delay-id=2
+packet:          git> 0000
+packet:          git> CONTENT
+packet:          git> 0000
+packet:          git< status=pleaseWait
+packet:          git> 0000
+
+# Now Git needs to ask for ready blobs.
+
+> +------------------------
+> +
+> +If the filter supports the "delay" capability then it must support the
+> +"list_available_blobs" command. If Git sends this command, then the
+> +filter is expected to return a list of "delay_ids" of blobs that are
+> +available. The list must be terminated with a flush packet followed
+> +by a "success" status that is also terminated with a flush packet. If
+> +no blobs for the delayed paths are available, yet, then the filter is
+> +expected to block the response until at least one blob becomes
+> +available. The filter can tell Git that it has no more delayed blobs
+> +by sending an empty list.
+> +------------------------
+> +packet:          git> command=list_available_blobs
+> +packet:          git> 0000
+> +packet:          git< 7
+
+Is the "7" the same as the "delay-id=1" from above?
+It may be easier to understand, even if it costs some bytes, to answer instead
+packet:          git< delay-id=1
+(And at this point, may I suggest to change "delay-id" into "request-id=1" ?
+
+> +packet:          git< 13
+
+Same question here: is this the delay-id ?
+
+> +packet:          git< 0000
+> +packet:          git< status=success
+> +packet:          git< 0000
+> +------------------------
+> +
+> +After Git received the "delay_ids", it will request the corresponding
+> +blobs again. These requests contain a "delay-id" and an empty content
+> +section. The filter is expected to respond with the smudged content
+> +in the usual way as explained above.
+> +------------------------
+> +packet:          git> command=smudge
+> +packet:          git> pathname=test-delay10.a
+> +packet:          git> delay-id=0
+
+Minor question: Where does the "id=0" come from ?
+
+> +packet:          git> 0000
+> +packet:          git> 0000  # empty content!
+> +packet:          git< status=success
+> +packet:          git< 0000
+> +packet:          git< SMUDGED_CONTENT
+> +packet:          git< 0000
+> +packet:          git< 0000
+
+OK, good.
+
+The quest is: what happens next ?
+
+2 things, kind of in parallel, but we need to prioritize and serialize:
+- Send the next blob
+- Fetch ready blobs
+- And of course: ask for more ready blobs.
+(it looks as if Peff and Jakub had useful comments already,
+  so I can stop here?)
+
+
+In general, Git should not have a unlimited number of blobs outstanding,
+as memory constraints may apply.
+There may be a config variable for the number of outstanding blobs,
+(similar to the window size in other protocols) and a variable
+for the number of "send bytes in outstanding blobs"
+(similar to window size (again!) in e.g TCP)
+
+The number of outstanding blobs is may be less important, and it is more
+important to monitor the number of bytes we keep in memory in some way.
+
+Something like "we set a limit to 500K of out standng data", once we are
+above the limit, don't send any new blobs.
+
+
+
+(No, I didn't look at the code at all, this protocol discussion
+is much more interesting)
+
 
