@@ -6,28 +6,28 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6640120960
-	for <e@80x24.org>; Mon, 10 Apr 2017 22:13:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E44E20960
+	for <e@80x24.org>; Mon, 10 Apr 2017 22:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752415AbdDJWNZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 18:13:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59484 "EHLO cloud.peff.net"
+        id S1752781AbdDJWNm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 18:13:42 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59488 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752155AbdDJWNY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 18:13:24 -0400
-Received: (qmail 29710 invoked by uid 109); 10 Apr 2017 22:13:24 -0000
+        id S1752151AbdDJWNm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 18:13:42 -0400
+Received: (qmail 29721 invoked by uid 109); 10 Apr 2017 22:13:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 22:13:24 +0000
-Received: (qmail 29376 invoked by uid 111); 10 Apr 2017 22:13:44 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 22:13:42 +0000
+Received: (qmail 29394 invoked by uid 111); 10 Apr 2017 22:14:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 18:13:44 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 18:13:22 -0400
-Date:   Mon, 10 Apr 2017 18:13:22 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 18:14:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 18:13:39 -0400
+Date:   Mon, 10 Apr 2017 18:13:39 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 1/3] receive-pack: drop tmp_objdir_env from run_update_hook
-Message-ID: <20170410221322.perffycei6z6ahqc@sigill.intra.peff.net>
+Subject: [PATCH 2/3] receive-pack: document user-visible quarantine effects
+Message-ID: <20170410221339.5fs26rzca6wk73de@sigill.intra.peff.net>
 References: <20170410221058.2ao64wedg2pa6uc2@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -38,54 +38,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 722ff7f87 (receive-pack: quarantine objects until
-pre-receive accepts, 2016-10-03), we have to feed the
-pre-receive hook the tmp_objdir environment, so that git
-programs run from the hook know where to find the objects.
-
-That commit modified run_update_hook() to do the same, but
-there it is a noop. By the time we get to the update hooks,
-we have already migrated the objects from quarantine, and so
-tmp_objdir_env() will always return NULL. We can drop this
-useless call.
-
-Note that the ordering here and the lack of support for the
-update hook is intentional. The update hook calls are
-interspersed with actual ref updates, and we must migrate
-the objects before any refs are updated (since otherwise
-those refs would appear broken to outside processes). So the
-only other options are:
-
-  - remain in quarantine for the _first_ ref, but not the
-    others. This is sufficiently confusing that it can be
-    rejected outright.
-
-  - run all the individual update hooks first, then migrate,
-    then update all the refs. But this changes the repository
-    state that the update hooks see (i.e., whether or not
-    refs from the same push are updated yet or not).
-
-So the functionality is fine and remains unchanged with this
-patch; we're just cleaning up a useless and confusing line
-of code.
+Commit 722ff7f87 (receive-pack: quarantine objects until
+pre-receive accepts, 2016-10-03) changed the underlying
+details of how we take in objects. This is mostly
+transparent to the user, but there are a few things they
+might notice. Let's document them.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/receive-pack.c | 1 -
- 1 file changed, 1 deletion(-)
+ Documentation/git-receive-pack.txt | 28 ++++++++++++++++++++++++++++
+ Documentation/githooks.txt         |  3 +++
+ 2 files changed, 31 insertions(+)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index aca9c33d8..b4469b3cc 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -772,7 +772,6 @@ static int run_update_hook(struct command *cmd)
- 	proc.stdout_to_stderr = 1;
- 	proc.err = use_sideband ? -1 : 0;
- 	proc.argv = argv;
--	proc.env = tmp_objdir_env(tmp_objdir);
+diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+index 0ccd5fbc7..7267ecfbe 100644
+--- a/Documentation/git-receive-pack.txt
++++ b/Documentation/git-receive-pack.txt
+@@ -114,6 +114,8 @@ will be performed, and the update, post-receive and post-update
+ hooks will not be invoked either.  This can be useful to quickly
+ bail out if the update is not to be supported.
  
- 	code = start_command(&proc);
- 	if (code)
++See the notes on the quarantine environment below.
++
+ update Hook
+ -----------
+ Before each ref is updated, if $GIT_DIR/hooks/update file exists
+@@ -214,6 +216,32 @@ if the repository is packed and is served via a dumb transport.
+ 	exec git update-server-info
+ 
+ 
++Quarantine Environment
++----------------------
++
++When `receive-pack` takes in objects, they are placed into a temporary
++"quarantine" directory within the `$GIT_DIR/objects` directory and
++migrated into the main object store only after the `pre-receive` hook
++has completed. If the push fails before then, the temporary directory is
++removed entirely.
++
++This has a few user-visible effects and caveats:
++
++  1. Pushes which fail due to problems with the incoming pack, missing
++     objects, or due to the `pre-receive` hook will not leave any
++     on-disk data. This is usually helpful to prevent repeated failed
++     pushes from filling up your disk, but can make debugging more
++     challenging.
++
++  2. Any objects created by the `pre-receive` hook will be created in
++     the quarantine directory (and migrated only if it succeeds).
++
++  3. The `pre-receive` hook MUST NOT update any refs to point to
++     quarantined objects. Other programs accessing the repository will
++     not be able to see the objects (and if the pre-receive hook fails,
++     those refs would become corrupted).
++
++
+ SEE ALSO
+ --------
+ linkgit:git-send-pack[1], linkgit:gitnamespaces[7]
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 9565dc3fd..32343ae29 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -256,6 +256,9 @@ environment variables will not be set. If the client selects
+ to use push options, but doesn't transmit any, the count variable
+ will be set to zero, `GIT_PUSH_OPTION_COUNT=0`.
+ 
++See the section on "Quarantine Environment" in
++linkgit:git-receive-pack[1] for some caveats.
++
+ [[update]]
+ update
+ ~~~~~~
 -- 
 2.12.2.952.g759391acc
 
