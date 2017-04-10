@@ -2,187 +2,260 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABEF320970
-	for <e@80x24.org>; Mon, 10 Apr 2017 11:35:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D655320970
+	for <e@80x24.org>; Mon, 10 Apr 2017 11:40:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752955AbdDJLfU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 07:35:20 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35941 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752251AbdDJLfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 07:35:19 -0400
-Received: by mail-pf0-f194.google.com with SMTP id i5so6060031pfc.3
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 04:35:19 -0700 (PDT)
+        id S1753168AbdDJLkg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 07:40:36 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:33759 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752756AbdDJLke (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 07:40:34 -0400
+Received: by mail-io0-f176.google.com with SMTP id t68so57790903iof.0
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 04:40:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7q0fBg7x/K3PyZWUuya9oZ7PPl4BHfJSgJEjqt1UrPk=;
-        b=q8pUVRV5Az1gyk33h0c4Pftu7xIKDcgD+rf8MKMP8fWV6r0WdbmNVgDNEdVHgiaqg4
-         nXrWdryVmM84igTvZwvLHLkmF80PrOMNeSnMmrts1pBdJzeGk7joRgbND9/g7/uxt8wI
-         Ay8INZ6BJAds5u90CgIRuf7dloow7pSF8JP03GH4g8xJboyrIAa+2M5tnwmOPuloFu+N
-         WoAZ93FleH26er3/PL41GsF1jEzM1ZHo1318H5gkQ2AJ8B0LLC6hHfOPWDzHiVfo85l0
-         PiExJ5q+MLZmhUOg69L68m1NGj3vve+zAwUgN2LqsSgrWm2tFICCdSDkhovqMHBau33k
-         LAnQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=qvifA33kx4MrpIlYgXR8tPUHxZ7RZI+KuWGwMEYIsYo=;
+        b=vhMq16pLtcWF7UeWgOHl3ZR87Xhp4hJGs222Rab/WHPQZDvJ6Tz0yFcW2isvQ9yXMp
+         L00nbHeeBEXju6ugDpSGAniXIEUdasscPwc9iLWmGjjnKo0JuC+pv05G+svSCoClhgmC
+         vX/8Ygj30dU+HAq5LmrL9GA24tzS6YQTJdt8frzq74mMD6LKh7DRGxCwIcG1tP5l8zac
+         M8UaZlT2C2ySDXPF+hXUOD1mD7SDvucys72wKOcWmVcX0qeMM9HMVp6+1QldlSUXRiK4
+         AmCRb5gEpGMdpp9jYW7oHpKALeEx0Eg6Armxfdqg9oNbzis+S5ImVIlsVACTFaHpwad1
+         vwrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7q0fBg7x/K3PyZWUuya9oZ7PPl4BHfJSgJEjqt1UrPk=;
-        b=Yo/BngPqbnRNEKHMyU8h45n1ngfHmWBqLlqeZxpw0cvdKvGtF0PBDTUnsI2oWiaPTa
-         MahQ0PSFx6IxOiYJO2M9IkBCjSAS2+dSFkyCUMbS0iLDzQ1nPnj/PjF4NTvr6mYG6IZG
-         3MH9soJNq/4F4VJdJEYKDItdit/3Ul0sIL1uJkbf5iHPFDWVyDHz6A/4v9oRxwmSMInv
-         gvKMaz7o8lzUYGoaDpZo3Rbn0vuM1qGbjHb79aboZMwgsWF7tyHwHlYt1/VowG3A1Jsu
-         RAMEyqMLhjGzzP02ozy8M7o5JhAdphs8Twthi+yNUj0ns80qu/oEFCtaXg9q3ptdQNBg
-         7jww==
-X-Gm-Message-State: AFeK/H2gTMKQ57MPY8LwFIKyBAADYQWyiLbourFT5LQAUF9HtzI5Sf2XkVIcJy/2xR/hUQ==
-X-Received: by 10.98.42.14 with SMTP id q14mr22746704pfq.229.1491824118074;
-        Mon, 10 Apr 2017 04:35:18 -0700 (PDT)
-Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id z21sm2548218pfk.95.2017.04.10.04.35.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Apr 2017 04:35:17 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 10 Apr 2017 18:35:13 +0700
-Date:   Mon, 10 Apr 2017 18:35:13 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 3/3] WIP - Allow custom printf function for column
- printing
-Message-ID: <20170410113513.GB23601@ash>
-References: <20170330014238.30032-1-sbeller@google.com>
- <20170330014238.30032-4-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=qvifA33kx4MrpIlYgXR8tPUHxZ7RZI+KuWGwMEYIsYo=;
+        b=hLdfikC1JkrnbLqX9YWJciu8dPZl+3uPh5I1mwheu76WC8PGltx/S9c43vT8n71H5m
+         vQK+bGo6eJKm4SrGHO/wlJM0wJVy6Ced3cOn1RehF0d4NCGQOKcDO06gagQVH3kjO5j9
+         A5pkP2rR7nIcY7aGFW2xaxP1VNFt4SNdkNuBMvfWpo02vgvbipNcrzFWSFTakpHwwn4R
+         X0I1uHNQIcn17171ymRaA0jT7H8wb+J/oDKJtc9MWRv/IhBXEMDmJkBL0bXVscm4PAvx
+         VN5azeqmYXqmjrG0TWAkGo7tYQY5wH1sFi+VDTntFlQsT9fsdQjBQ/e0qUiz/AhtXokp
+         auyQ==
+X-Gm-Message-State: AN3rC/4KhTbzSY1Hoj2f8kkfthhtJPOTTlWq6PzmB38rsYZrf+CLLLb1
+        FHyPqow6UbweM3Y7ZKTVDpSV52QJP+UW0Gg=
+X-Received: by 10.36.173.91 with SMTP id a27mr12028824itj.60.1491824433716;
+ Mon, 10 Apr 2017 04:40:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170330014238.30032-4-sbeller@google.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Received: by 10.107.130.208 with HTTP; Mon, 10 Apr 2017 04:40:13 -0700 (PDT)
+In-Reply-To: <CAM0VKjnwbCgCjEBr895068k4veoSGZMf8Cu7neoH=oofgWS2Cw@mail.gmail.com>
+References: <20170409191117.25175-3-avarab@gmail.com> <20170410014712.26716-1-szeder.dev@gmail.com>
+ <CACBZZX6M2YnbOT6btqLf2RacNT0Th3Hx2jf5QR7g+KFS_DKtVQ@mail.gmail.com> <CAM0VKjnwbCgCjEBr895068k4veoSGZMf8Cu7neoH=oofgWS2Cw@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Mon, 10 Apr 2017 13:40:13 +0200
+Message-ID: <CACBZZX7kMcTgKFkFN3OvVKVHU693PYhRFe6gyO4AirihNsUYmg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] test-lib: exhaustively insert non-alnum ASCII into
+ the TRASH_DIRECTORY name
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>,
+        Joachim Durchholz <jo@durchholz.org>,
+        Stefan Beller <sbeller@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Mar 29, 2017 at 06:42:38PM -0700, Stefan Beller wrote:
-> Ever wondered why column.ui applies the untracked files in git-status,
-> but not for the help text comment in git-commit? Nobody wrote the code!
+On Mon, Apr 10, 2017 at 1:19 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> On Mon, Apr 10, 2017 at 10:02 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> On Mon, Apr 10, 2017 at 3:47 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com=
+> wrote:
+>>>> Change the test library to insert non-alphanumeric ASCII characters
+>>>> into the TRASH_DIRECTORY name, that's the directory the test library
+>>>> creates, chdirs to and runs each individual test from.
+>>>>
+>>>> Unless test_fails_on_unusual_directory_names=3D1 is declared before
+>>>> importing test-lib.sh (and if perl isn't available on the system), the
+>>>> trash directory will contain every non-alphanumeric character in
+>>>> ASCII, in order.
+>>>
+>>> At the very least there must be an easier way to disable this, e.g. a
+>>> command line option.
+>>>
+>>> This change is sure effective in smoking out bugs, but it's a major
+>>> annoyance during development when it comes to debugging a test.  At
+>>> first I could not even cd into the trash directory, because TAB
+>>> completing the directory name with all those non-printable characters
+>>> didn't work (this may be a bug in the bash-completion package).  And
+>>> simply copy-pasting the dirname didn't work either, because 'ls'
+>>>
+>>>   trash directory.t9902-completion.??????????????????????????????? !"#$=
+%&'()*+,-:;<=3D>?@[\]^_`{|}~?
+>
+> Btw, it seems most of the failures in t9902-completion are triggered
+> by remote URL parsing.  The trash directory's new name contains '[',
+> ']' and even "@[", all of which are treated special by
+> connect.c:host_end(), a helper function of parse_connect_url(),
+> basically breaking anything trying to e.g.:
+>
+>   git fetch "$(pwd)/other"
 
-How do you decide text width for this help text? If the output is
-terminal, we know how wide it is.
+I'm going to work on this patch so that I can report on tests by type
+of character that triggers a failure.
 
-But editors are different animal. We might use terminal width for
-text-based editors, but we won't even know if it's text or gui
-based. Or should we just go with 72 columns? I don't think we even
-enforce that anywhere now.
+> What puzzles me most is that parse_connect_url() recognizes right at
+> its beginning that a remote URL like this is not actually an URL, so
+> why does it continue parsing it as if it were one?
+>
+> A few other failures are triggered by the ':' in the trash directory's
+> name, breaking the following commonly used pattern:
+>
+>   export GIT_CEILING_DIRECTORIES=3D"$TRASH_DIRECTORY" &&
+>   cd subdir &&
+>   test-git-pretending-it's-run-outside-of-a-repository
 
-> diff --git a/wt-status.c b/wt-status.c
-> index 308cf3779e..cfba352683 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -43,12 +43,13 @@ static const char *color(int slot, struct wt_status *s)
->  	return c;
->  }
->  
-> -static void status_vprintf(struct wt_status *s, int at_bol, const char *color,
-> +static int status_vprintf(struct wt_status *s, int at_bol, const char *color,
->  		const char *fmt, va_list ap, const char *trail)
->  {
->  	struct strbuf sb = STRBUF_INIT;
->  	struct strbuf linebuf = STRBUF_INIT;
->  	const char *line, *eol;
-> +	int ret = 0;
->  
->  	strbuf_vaddf(&sb, fmt, ap);
->  	if (!sb.len) {
-> @@ -59,9 +60,9 @@ static void status_vprintf(struct wt_status *s, int at_bol, const char *color,
->  		}
->  		color_print_strbuf(s->fp, color, &sb);
->  		if (trail)
-> -			fprintf(s->fp, "%s", trail);
-> +			ret += fprintf(s->fp, "%s", trail);
->  		strbuf_release(&sb);
-> -		return;
-> +		return ret;
->  	}
->  	for (line = sb.buf; *line; line = eol + 1) {
->  		eol = strchr(line, '\n');
-> @@ -78,15 +79,16 @@ static void status_vprintf(struct wt_status *s, int at_bol, const char *color,
->  			strbuf_addstr(&linebuf, line);
->  		color_print_strbuf(s->fp, color, &linebuf);
->  		if (eol)
-> -			fprintf(s->fp, "\n");
-> +			ret += fprintf(s->fp, "\n");
->  		else
->  			break;
->  		at_bol = 1;
->  	}
->  	if (trail)
-> -		fprintf(s->fp, "%s", trail);
-> +		ret += fprintf(s->fp, "%s", trail);
->  	strbuf_release(&linebuf);
->  	strbuf_release(&sb);
-> +	return ret;
->  }
->  
->  void status_printf_ln(struct wt_status *s, const char *color,
-> @@ -834,6 +836,20 @@ static void wt_longstatus_print_submodule_summary(struct wt_status *s, int uncom
->  	strbuf_release(&summary);
->  }
->  
-> +static struct wt_status *global_wt_status_hack;
-> +static int column_status_printf(const char *fmt, ...)
-> +{
-> +	va_list ap;
-> +	struct wt_status *s = global_wt_status_hack;
-> +	int ret;
-> +
-> +	va_start(ap, fmt);
-> +	ret = status_vprintf(s, 0, "", fmt, ap, NULL);
-> +	va_end(ap);
-> +
-> +	return ret;
-> +}
-> +
->  static void wt_longstatus_print_other(struct wt_status *s,
->  				      struct string_list *l,
->  				      const char *what,
-> @@ -856,6 +872,7 @@ static void wt_longstatus_print_other(struct wt_status *s,
->  		path = quote_path(it->string, s->prefix, &buf);
->  		if (column_active(s->colopts)) {
->  			string_list_append(&output, path);
-> +			global_wt_status_hack = s;
->  			continue;
->  		}
->  		status_printf(s, color(WT_STATUS_HEADER, s), "\t");
-> @@ -876,6 +893,8 @@ static void wt_longstatus_print_other(struct wt_status *s,
->  	copts.indent = buf.buf;
->  	if (want_color(s->use_color))
->  		copts.nl = GIT_COLOR_RESET "\n";
-> +
-> +	copts._printf = column_status_printf;
+Does GIT_CEILING_DIRECTORIES support escaping somehow? E.g.
+"foo\:bar". If so maybe we could use a wrapper to set it, if not
+that's a bug in the ceiling dir feature, surely.
 
-This is kinda ugly. I think status_vprintf() can handle multi-line
-strings well. In that case maybe you just need to make
-strbuf_print_columns() return a strbuf instead, then pass the entire
-string to one status_vprintf() call.
+> I think ':' should therefore be excluded from the trash directory, too.
 
-There isn't need to abstract the printf() calls in column.c. Just
-change it unconditionally to strbuf_addf() and print the whole thing
-out to stdout in the end in print_coluns(), or pass the strbuf back
-with strbuf_print_columns().
+I think it's preferable to have some mode to use : in dirnames for
+those tests that don't fail already, to protect them against future
+regressions. Disabling the use of a tricky character like ":" invites
+future bugs & regressions.
 
-The small delay before printing the first line (because we know buffer
-everything in strbuf first) won't be an issue because we already have
-to queue all items for layout before we can print anything anyway.
+>>> After some headscratching, Sunday night may be my excuse, I figured
+>>> out that 'cd tr*' works...  only to be greeted with the ugliest-ever
+>>> three-line(!) shell prompt.
+>>>
+>>> Therefore I would say that this should not even be enabled by default
+>>> in test-lib.sh, so at least running a test directly from the command
+>>> line as ./t1234-foo.sh would considerately give us an easily
+>>> accessible trash directory even without any command line options.  We
+>>> could enable it for 'make test' by default via GIT_TEST_OPTS in
+>>> t/Makefile, though.
+>>
+>> This definitely needs some tweaking as you and Joachim point out. E.g.
+>> some capabilities check in the test suite to check if we can even
+>> create these sorts of paths on the local filesystem.
+>>
+>> A couple of comments on the above though:
+>>
+>> a) If we have something that's a more strict mode that makes tests
+>> fail due to buggy code in various scenarios, we gain the most from
+>> having it on by default
+>
+> I know, and I basically agree...
+>
+>> and having some optional mode to have devs
+>> e.g. disable it for manual inspection of the test directories.
+>
+> ... but this is just too gross to live as default outside of a CI
+> environment.
+>
+>> Most of the running of the test suite that really matters, i.e. just
+>> before the software is delivered to end users, is going to be running
+>> in some non-interactive build system preparing a package.
+>>
+>> b) I think any sort of magic like using it with 'make test', but not
+>> when the *.sh is manually run, will just lead to frustrating seemingly
+>> heisenbugs from people trying to debug the test suite when things do
+>> fail, i.e. you run 'make test' on some obscure platform we haven't
+>> fixed path bugs on, 10 fail, you manually inspect them and every one
+>> of them succeeds, because some --use-garbage-dirs option wasn't
+>> passed.
+>
+> That's not really an issue.  When a test fails during 'make test' with
+> garbage in trash dir names, the dev comes and attempts to cd into the
+> trash dir, and will be instantly reminded that non-printable
+> characters might play a role in the failure when he can't do so with
+> ordinary means.
 
->  	print_columns(&output, s->colopts, &copts);
->  	string_list_clear(&output, 0);
->  	strbuf_release(&buf);
-> -- 
-> 2.12.2.511.g2abb8caf66
-> 
+When a test fails for me I cd to t/ and re-run the test *.sh manually.
+I don't go straight to inspecting the existing trash.
+
+If those manual invocations were running in some different mode &
+succeeded that would be very confusing.
+
+In any case, I'll try to come up with something more granular, e.g. to
+categorize tests by failure type.
+
+
+
+>>>> This includes all the control characters, !, [], {} etc. the "."
+>>>> character isn't included because it's already in the directory name,
+>>>> and nor is "/" for obvious reasons, although that would actually work,
+>>>> we'd just create a subdirectory, which would make the tests harder to
+>>>> inspect when they fail.i
+>>>
+>>> 1. Heh.  How an additional subdirectory would make the tests harder to
+>>>    inspect is nothing compared to the effect of all the other
+>>>    characters.
+>>>
+>>> 2. s/i$//
+>>>
+>>>> This change is inspired by the "submodule: prevent backslash expantion
+>>>> in submodule names" patch[1]. If we'd had backslashes in the
+>>>> TRASH_DIRECTORY all along that bug would have been fixed a long time
+>>>> ago. This will flag such issues by marking tests that currently fail
+>>>> with "test_fails_on_unusual_directory_names=3D1", ensure that new test=
+s
+>>>> aren't added unless a discussion is had about why the code can't
+>>>> handle unusual pathnames, and prevent future regressions.
+>>>>
+>>>> 1. <20170407172306.172673-1-bmwill@google.com>
+>>>> ---
+>>>>  t/README      | 12 ++++++++++++
+>>>>  t/test-lib.sh |  4 ++++
+>>>>  2 files changed, 16 insertions(+)
+>>>>
+>>>> diff --git a/t/README b/t/README
+>>>> index ab386c3681..314dd40221 100644
+>>>> --- a/t/README
+>>>> +++ b/t/README
+>>>> @@ -345,6 +345,18 @@ assignment to variable 'test_description', like t=
+his:
+>>>>       This test registers the following structure in the cache
+>>>>       and tries to run git-ls-files with option --frotz.'
+>>>>
+>>>> +By default the tests will be run from a directory with a highly
+>>>> +unusual filename that includes control characters, a newline, various
+>>>> +punctuation etc., this is done to smoke out any bugs related to path
+>>>> +handling. If for whatever reason the tests can't deal with such
+>>>> +unusual path names, set:
+>>>> +
+>>>> +    test_fails_on_unusual_directory_names=3D1
+>>>> +
+>>>> +Before sourcing 'test-lib.sh' as described below. This option is
+>>>> +mainly intended to grandfather in existing broken tests & code, and
+>>>> +should usually not be used in new code, instead your tests or code
+>>>> +probably need fixing.
+>>>>
+>>>>  Source 'test-lib.sh'
+>>>>  --------------------
+>>>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>>>> index 13b5696822..089ff5ac7d 100644
+>>>> --- a/t/test-lib.sh
+>>>> +++ b/t/test-lib.sh
+>>>> @@ -914,6 +914,10 @@ fi
+>>>>
+>>>>  # Test repository
+>>>>  TRASH_DIRECTORY=3D"trash directory.$(basename "$0" .sh)"
+>>>> +if test -z "$test_fails_on_unusual_directory_names" -a "$(perl -e 'pr=
+int 1+1' 2>/dev/null)" =3D "2"
+>>>> +then
+>>>> +   TRASH_DIRECTORY=3D"$TRASH_DIRECTORY.$(perl -e 'print join q[], gre=
+p { /[^[:alnum:]]/ and !m<[./]> } map chr, 0x01..0x7f')"
+>>>> +fi
+>>>>  test -n "$root" && TRASH_DIRECTORY=3D"$root/$TRASH_DIRECTORY"
+>>>>  case "$TRASH_DIRECTORY" in
+>>>>  /*) ;; # absolute path is good
+>>>> --
+>>>> 2.11.0
+>>>
+>>>
