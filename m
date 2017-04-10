@@ -2,92 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B09320960
-	for <e@80x24.org>; Mon, 10 Apr 2017 21:05:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3CEA20960
+	for <e@80x24.org>; Mon, 10 Apr 2017 21:14:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752227AbdDJVFR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 17:05:17 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:36738 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751514AbdDJVFQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 17:05:16 -0400
-Received: by mail-pg0-f44.google.com with SMTP id g2so110207184pge.3
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 14:05:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=QDAHrQml1czOnAt3zxH+wMsBGR0/mE4jaC8trkX0tu0=;
-        b=uhLV2ZbIQWeTOPsbHZ1ZgoOSOulm01a78BqntQe9mXLYj9xVLIuiUjSFhE7eidqIgo
-         JDczrICRQdxx2EXzRrYPexUV+Vo1/G1ODhun7equoaZ2WBBGj/GT+1BQI5pVYw08QUEc
-         XxW7Jl0WqRL05Tjk69r4o4dMqr2rcYHTJhnF7avRJ75iYdBlR3HEwg4+ROcb8lzMtjz1
-         /Jonv2isY33Qu47uJui88hODNFkYvpenyF5r2WrkO4w/+m0SGS2NNWuzYNLvsgaBx3ay
-         J8/F4awYodORPj0YpVT7B3Z4Zsq+M3ivXZf/wzkn4DcBC2UWveBYsuOsna6yg6V9P7C/
-         AyVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=QDAHrQml1czOnAt3zxH+wMsBGR0/mE4jaC8trkX0tu0=;
-        b=XcmQo0I4OZ2ub/VyAskk8HFXpcw2bGKPuUgswxZTGiHgRluzScl8tJMSEWpcq5aAtZ
-         59nifbTqAwXAo6MNA48IxyhVP5IYIyOXYgW1HFKB1ecYMdXku8Hqy3d4VqI9bG2UPyPI
-         uzFkTmqwWuBzf4Fh3JSEbi9BxLv4Aq7K6oNjnWsMBOZghcrrOzqtbxYJjJC3NcudXm5K
-         4r5tMUzNxiu7d2ooBbuFbPxFw1Kp7ohCebBKV2oqBdY1GVosb/gEsvEiXoGU0NoF/gOp
-         uN5oARM0rAeoLEXkzqySdf1Wn374D8J2FTkRA6CWpPq/OMG063D0QD3isFJUUTpvZN3Q
-         +fQw==
-X-Gm-Message-State: AFeK/H1q60ntF6tBUqSOwqnYF5NMaKOw9P+drOJuOpr8xhG55gj4PcDhO2+O/vgVLhz7YZF8
-X-Received: by 10.99.109.137 with SMTP id i131mr57562096pgc.103.1491858315386;
-        Mon, 10 Apr 2017 14:05:15 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([100.96.238.13])
-        by smtp.gmail.com with ESMTPSA id k2sm26386016pga.47.2017.04.10.14.05.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 14:05:14 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
+        id S1752832AbdDJVOO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 17:14:14 -0400
+Received: from siwi.pair.com ([209.68.5.199]:36447 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752810AbdDJVON (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 17:14:13 -0400
+Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 1B1B084566;
+        Mon, 10 Apr 2017 17:14:12 -0400 (EDT)
+From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH] fetch-pack: show clearer error message upon ERR
-Date:   Mon, 10 Apr 2017 14:05:11 -0700
-Message-Id: <20170410210511.8505-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.12.2.715.g7642488e1d-goog
+Cc:     gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: [PATCH v8 1/3] read-cache: add strcmp_offset function
+Date:   Mon, 10 Apr 2017 21:14:01 +0000
+Message-Id: <20170410211403.25126-2-git@jeffhostetler.com>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20170410211403.25126-1-git@jeffhostetler.com>
+References: <20170410211403.25126-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, fetch-pack prints a confusing error message ("expected
-ACK/NAK") when the server it's communicating with sends a pkt-line
-starting with "ERR".  Replace it with a less confusing error message.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-(Git will send "ERR" lines when a "want" line references an object that
-it does not have. This is uncommon, but can happen if a repository is
-garbage-collected during a negotiation.)
+Add strcmp_offset() function to also return the offset of the
+first change.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+Add unit test and helper to verify.
+
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
+ Makefile                      |  1 +
+ cache.h                       |  1 +
+ read-cache.c                  | 20 ++++++++++++++++++++
+ t/helper/.gitignore           |  1 +
+ t/helper/test-strcmp-offset.c | 22 ++++++++++++++++++++++
+ t/t0065-strcmp-offset.sh      | 21 +++++++++++++++++++++
+ 6 files changed, 66 insertions(+)
+ create mode 100644 t/helper/test-strcmp-offset.c
+ create mode 100755 t/t0065-strcmp-offset.sh
 
-This situation has been noticed occasionally in my company - this is a
-small change that would make the situation slightly easier to
-understand.
-
- fetch-pack.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index d07d85ce3..688523bfd 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -276,6 +276,8 @@ static enum ack_type get_ack(int fd, unsigned char *result_sha1)
- 			return ACK;
- 		}
- 	}
-+	if (skip_prefix(line, "ERR ", &arg))
-+		die(_("git fetch-pack: got remote error '%s'"), arg);
- 	die(_("git fetch-pack: expected ACK/NAK, got '%s'"), line);
+diff --git a/Makefile b/Makefile
+index 9ec6065..4c4c246 100644
+--- a/Makefile
++++ b/Makefile
+@@ -631,6 +631,7 @@ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
+ TEST_PROGRAMS_NEED_X += test-sha1
+ TEST_PROGRAMS_NEED_X += test-sha1-array
+ TEST_PROGRAMS_NEED_X += test-sigchain
++TEST_PROGRAMS_NEED_X += test-strcmp-offset
+ TEST_PROGRAMS_NEED_X += test-string-list
+ TEST_PROGRAMS_NEED_X += test-submodule-config
+ TEST_PROGRAMS_NEED_X += test-subprocess
+diff --git a/cache.h b/cache.h
+index 80b6372..3c55047 100644
+--- a/cache.h
++++ b/cache.h
+@@ -574,6 +574,7 @@ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsi
+ extern int discard_index(struct index_state *);
+ extern int unmerged_index(const struct index_state *);
+ extern int verify_path(const char *path);
++extern int strcmp_offset(const char *s1, const char *s2, size_t *first_change);
+ extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+ extern void adjust_dirname_case(struct index_state *istate, char *name);
+ extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+diff --git a/read-cache.c b/read-cache.c
+index 9054369..97f13a1 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -887,6 +887,26 @@ static int has_file_name(struct index_state *istate,
+ 	return retval;
  }
  
++
++/*
++ * Like strcmp(), but also return the offset of the first change.
++ * If strings are equal, return the length.
++ */
++int strcmp_offset(const char *s1, const char *s2, size_t *first_change)
++{
++	size_t k;
++
++	if (!first_change)
++		return strcmp(s1, s2);
++
++	for (k = 0; s1[k] == s2[k]; k++)
++		if (s1[k] == '\0')
++			break;
++
++	*first_change = k;
++	return (unsigned char)s1[k] - (unsigned char)s2[k];
++}
++
+ /*
+  * Do we have another file with a pathname that is a proper
+  * subset of the name we're trying to add?
+diff --git a/t/helper/.gitignore b/t/helper/.gitignore
+index d6e8b36..0a89531 100644
+--- a/t/helper/.gitignore
++++ b/t/helper/.gitignore
+@@ -25,6 +25,7 @@
+ /test-sha1
+ /test-sha1-array
+ /test-sigchain
++/test-strcmp-offset
+ /test-string-list
+ /test-submodule-config
+ /test-subprocess
+diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
+new file mode 100644
+index 0000000..4a45a54
+--- /dev/null
++++ b/t/helper/test-strcmp-offset.c
+@@ -0,0 +1,22 @@
++#include "cache.h"
++
++int cmd_main(int argc, const char **argv)
++{
++	int result;
++	size_t offset;
++
++	if (!argv[1] || !argv[2])
++		die("usage: %s <string1> <string2>", argv[0]);
++
++	result = strcmp_offset(argv[1], argv[2], &offset);
++
++	/*
++	 * Because differnt CRTs behave differently, only rely on signs
++	 * of the result values.
++	 */
++	result = (result < 0 ? -1 :
++			  result > 0 ? 1 :
++			  0);
++	printf("%d %"PRIuMAX"\n", result, (uintmax_t)offset);
++	return 0;
++}
+diff --git a/t/t0065-strcmp-offset.sh b/t/t0065-strcmp-offset.sh
+new file mode 100755
+index 0000000..7d6d214
+--- /dev/null
++++ b/t/t0065-strcmp-offset.sh
+@@ -0,0 +1,21 @@
++#!/bin/sh
++
++test_description='Test strcmp_offset functionality'
++
++. ./test-lib.sh
++
++while read s1 s2 expect
++do
++	test_expect_success "strcmp_offset($s1, $s2)" '
++		echo "$expect" >expect &&
++		test-strcmp-offset "$s1" "$s2" >actual &&
++		test_cmp expect actual
++	'
++done <<-EOF
++abc abc 0 3
++abc def -1 0
++abc abz -1 2
++abc abcdef -1 3
++EOF
++
++test_done
 -- 
-2.12.2.715.g7642488e1d-goog
+2.9.3
 
