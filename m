@@ -2,117 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBBB920960
-	for <e@80x24.org>; Mon, 10 Apr 2017 23:50:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF5E220960
+	for <e@80x24.org>; Tue, 11 Apr 2017 00:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753122AbdDJXt5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 19:49:57 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:36100 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753309AbdDJXti (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 19:49:38 -0400
-Received: by mail-pg0-f52.google.com with SMTP id g2so111803726pge.3
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 16:49:33 -0700 (PDT)
+        id S1753453AbdDKA0N (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 20:26:13 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:35253 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753122AbdDKA0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 20:26:10 -0400
+Received: by mail-pf0-f181.google.com with SMTP id i5so40529557pfc.2
+        for <git@vger.kernel.org>; Mon, 10 Apr 2017 17:26:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=koqVjJetV3u4PMCf0qvek2eMJSSl0cfTfTbNgjd0kzM=;
-        b=UpgJ01oayQJMPLeLWVKQFONHwyf5XkUORBMt5Czlue1nsgqA3o9j+d8Kkl7UrJnLXc
-         oDekGKc5G3Q0iy8fsRSxUiXimIkmJnzk7uVW8iBymxyuYJV/ogmarDmRFK9C67ESwacr
-         17JoHMJ+rmZMo+oef+be90gxCch2hY+HER/aCHjXyU5RqVnb2/jk0e51KahMas2htT9l
-         GGhH875ZgKofEJf6t3S46yM9Ap1wy333uPJQBYuJ8jtqpqVGxTTKHZzuvoZLHrRrh6+1
-         XbaZytyIMyAbOtEiDgcOQgrmWUr9FSYahP4D4vswUgO8eQvXMwm9NRLpBDZy3QAr+SA5
-         V8Ug==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=a1Ra+AYDpVatBWesaZnvw6KEhFK/4MXQaSn1dLDdoe0=;
+        b=YZAeVMXKCeaT9dLmL2nl2e2SOZBoUcxQnDzj2exxBjBEK129cLdi3wOapJD4x3hDRg
+         ASUuLMwDXI52mRyUYDRWTWlGpdo+KKYWmKHouVLfsnkh/BAkSEjxJNEe6SM5b7n5mCL3
+         CRIawxTvhVQIJh86Cd1mKunO6kPIxsZw5YR3SE3QLxZSgjV+d1SIyEqrfJBD3UUCHvbQ
+         vrkrN/SKuHV0W3ozeS2rHQgrpKuQi64djuCo8sqN2FlOh5OMPkEfzIJFGoSk4CIx4yjR
+         eabQsJBlEQQ6NG9hg2kx3nfCAZfUW1X0IX6+7A+8Z0CIYE1zvZgDjh/WXgttLtSGcLju
+         qIiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=koqVjJetV3u4PMCf0qvek2eMJSSl0cfTfTbNgjd0kzM=;
-        b=jecVC//hjzOlJcnOdd2Qfw1LMGTc46DYKGjsdTglksuldF6ZzIbr1GNydLjIdFBQ+G
-         QKEOcLezp+t3L5HiwncZc8CNuO2lcyuY6VkMSIyf+7ZtPPegXe1sKkwzkUWGEixBYq/5
-         FfXR++xpRkJgZPvvQAc0yHKtJI5DjJZZZjj6MK8rBqArvSPJvjby3Xg+cMAOy0GPzpP1
-         zlLV9AhuZ3kugw8ara9IZdNecIKMLeRtoY+517uK/erYH0FZK0aFk6sf5aq+CSL3122g
-         ZK6fb9cKaLTIJ2A0EGCo+N5G9/bJ+mR0Crr3piQiyOixEIJ8dLvxXE5U1BNkMaAtvEJt
-         B9tQ==
-X-Gm-Message-State: AFeK/H3edrGTrwYkEXsWsCbA3PLB0Owc4mx4Q4Yq2pyjomDSgXOoU73UknWVLDK9yaWYJGJt
-X-Received: by 10.98.101.7 with SMTP id z7mr57311363pfb.81.1491868171049;
-        Mon, 10 Apr 2017 16:49:31 -0700 (PDT)
-Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id x204sm26225132pgx.63.2017.04.10.16.49.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 16:49:30 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 3/5] run-command: allocate child_err before forking
-Date:   Mon, 10 Apr 2017 16:49:17 -0700
-Message-Id: <20170410234919.34586-4-bmwill@google.com>
-X-Mailer: git-send-email 2.12.2.715.g7642488e1d-goog
-In-Reply-To: <20170410234919.34586-1-bmwill@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=a1Ra+AYDpVatBWesaZnvw6KEhFK/4MXQaSn1dLDdoe0=;
+        b=hGGzMmF6rNZra8Wwdducvd3J/6YtPqL/J6exnW0qrGXYe+3ZZNfl5xhwpGZLREMcT+
+         6eWLar2CNsviXzeAhgtsx3J+eQx76nx3Okep3TPH5SdQnjbK7xFEsQMCLzXfj5SHYTGG
+         oDGLhMEMeMNIVoimh/JdDXfkgtyYqdTJJSDNj4udYuMfSRm3Rlu3n00h5Z0ixjvRoYvY
+         cXGCOKAdXFTqBwPvtUuR5ziVt9hBRwa0WhB1/4KmIhiOpLokknpCpKlcryQXX1BT2oYq
+         /wr0aoXsiTnrOhPCnF2NcO0Vdbs6uYMGoKf4HixDXIau4R78ziZySWJny5/tQHbQLXWF
+         gbeg==
+X-Gm-Message-State: AFeK/H1koNOkvs5YzFIHw2fzqeDBma917hyWOc7/ZZ5tLrq3h90gbDWtFgnYRgJPcCNfsw==
+X-Received: by 10.99.127.12 with SMTP id a12mr59037151pgd.5.1491870369260;
+        Mon, 10 Apr 2017 17:26:09 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:dcb:fd1c:cdca:5669])
+        by smtp.gmail.com with ESMTPSA id z123sm20733109pfz.56.2017.04.10.17.26.07
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 10 Apr 2017 17:26:08 -0700 (PDT)
+Date:   Mon, 10 Apr 2017 17:26:06 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 5/5] run-command: add note about forking and threading
+Message-ID: <20170411002606.GJ8741@aiede.mtv.corp.google.com>
 References: <20170410234919.34586-1-bmwill@google.com>
+ <20170410234919.34586-6-bmwill@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170410234919.34586-6-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to avoid allocation between 'fork()' and 'exec()' open the
-stream used for the child's error handeling prior to forking.
+Hi,
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
----
- run-command.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+Brandon Williams wrote:
 
-diff --git a/run-command.c b/run-command.c
-index 2514b54bc..029d41463 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -365,11 +365,18 @@ int start_command(struct child_process *cmd)
- #ifndef GIT_WINDOWS_NATIVE
- {
- 	int notify_pipe[2];
-+	FILE *child_err = NULL;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	if (pipe(notify_pipe))
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
-+	if (cmd->no_stderr || need_err) {
-+		int child_err_fd = dup(2);
-+		set_cloexec(child_err_fd);
-+		child_err = fdopen(child_err_fd, "w");
-+	}
-+
- 	if (cmd->git_cmd) {
- 		argv_array_push(&argv, "git");
- 		argv_array_pushv(&argv, cmd->argv);
-@@ -387,11 +394,8 @@ int start_command(struct child_process *cmd)
- 		 * before redirecting the process's stderr so that all die()
- 		 * in subsequent call paths use the parent's stderr.
- 		 */
--		if (cmd->no_stderr || need_err) {
--			int child_err = dup(2);
--			set_cloexec(child_err);
--			set_error_handle(fdopen(child_err, "w"));
--		}
-+		if (child_err)
-+			set_error_handle(child_err);
- 
- 		close(notify_pipe[0]);
- 		set_cloexec(notify_pipe[1]);
-@@ -477,6 +481,8 @@ int start_command(struct child_process *cmd)
- 	}
- 	close(notify_pipe[0]);
- 
-+	if (child_err)
-+		fclose(child_err);
- 	argv_array_clear(&argv);
- }
- #else
--- 
-2.12.2.715.g7642488e1d-goog
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -458,6 +458,14 @@ int start_command(struct child_process *cmd)
+>  		argv_array_pushv(&argv, cmd->argv);
+>  	}
+>  
+> +	/*
+> +	 * NOTE: In order to prevent deadlocking when using threads special
+> +	 * care should be taken with the function calls made in between the
+> +	 * fork() and exec() calls.  No calls should be made to functions which
+> +	 * require acquiring a lock (e.g. malloc) as the lock could have been
+> +	 * held by another thread at the time of forking, causing the lock to
+> +	 * never be released in the child process.
+> +	 */
+>  	cmd->pid = fork();
 
+Why can't git use e.g. posix_spawn to avoid this?
+
+fork()-ing in a threaded context is very painful for maintainability.
+Any library function you are using could start taking a lock, and then
+you have a deadlock.  So you have to make use of a very small
+whitelisted list of library functions for this to work.
+
+The function calls you have to audit are not only between fork() and
+exec() in the normal control flow.  You have to worry about signal
+handlers, too.
+
+By comparison, posix_spawn() takes care of this all.  I really
+strongly do not want to move in the direction of more fork() in a
+multi-threaded context.  I'd rather turn off threads in the submodule
+case of grep altogether, but that shouldn't be needed:
+
+* it is possible to launch a command without fork+exec
+* if that's not suitable, then using fork introduces parallelism that
+  interacts much better with fork+exec than threads do
+
+I really don't want to go down this path.  I've said that a few times.
+I'm saying it again now.
+
+My two cents,
+Jonathan
