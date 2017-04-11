@@ -2,64 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51F0520970
-	for <e@80x24.org>; Tue, 11 Apr 2017 14:59:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDACB20970
+	for <e@80x24.org>; Tue, 11 Apr 2017 15:13:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753215AbdDKO7W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 10:59:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60021 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752506AbdDKO7V (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 10:59:21 -0400
-Received: (qmail 10426 invoked by uid 109); 11 Apr 2017 14:59:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 14:59:19 +0000
-Received: (qmail 2840 invoked by uid 111); 11 Apr 2017 14:59:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 10:59:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Apr 2017 10:59:17 -0400
-Date:   Tue, 11 Apr 2017 10:59:17 -0400
-From:   Jeff King <peff@peff.net>
-To:     Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] http: honnor empty http.proxy option to bypass proxy
-Message-ID: <20170411145917.mjhwfgc5vmgwtx5x@sigill.intra.peff.net>
-References: <20170411092050.15867-1-ryazanov.s.a@gmail.com>
- <20170411130659.ehit7jdhnk43m23g@sigill.intra.peff.net>
- <CAHNKnsRxNMS4fYTaoHSRgcTmCr+rcjVOGE1kqJGHqLTgBxdC0w@mail.gmail.com>
+        id S1752395AbdDKPNj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 11:13:39 -0400
+Received: from mail-oi0-f46.google.com ([209.85.218.46]:34860 "EHLO
+        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751875AbdDKPNi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 11:13:38 -0400
+Received: by mail-oi0-f46.google.com with SMTP id f22so143808oib.2
+        for <git@vger.kernel.org>; Tue, 11 Apr 2017 08:13:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=picussecurity.com; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5eXyu0sEeNDN2c9PRGHbUNXh+QDtaeSIvMsutcjQ4g0=;
+        b=abppvYp9cCATxVJ284OS6pdDrzIywnEczwxsu78RJKtsUl8dUIHWc1pVVfD9w9S1RR
+         Um5/7S8nI55WJTMM838iQ8viy/DND1e+VgFR1WM4CMn2IR8KVgI1WJfT3YkRt91hGm+f
+         wJFDTppvMz6snjumWGQOvgjCsxrtRRzy2oWhQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5eXyu0sEeNDN2c9PRGHbUNXh+QDtaeSIvMsutcjQ4g0=;
+        b=VtifjZZz63lRcZacbSBqHiNGZBdDxSfj+LjjiVx+TtsWlno+Mv5XFkuTcfUsVsgFlk
+         eWM74jdEfNyxf+9qWx+lAldaFff8RkERic7K419bgf09puNEXnsqeQhjSReXsWXUeuxR
+         bxD99yVgPj1BPrTUg3ZL/oX8arp9e4rsloOMZGChvOTsWL65FCcadGtMyHQRfJZFom+7
+         o+KFLYJNmGL0XLEws+nAnmWGubim8RaoV+1jQKOW9VZ3NduJJpNreAMRsQloHRMqONXh
+         /9MT0UAaJNO6ll9w65DMOs2qwHpSQ/2ZfDgt7uUf73NRNRMmiu62gD+MXTbjGRxEZxFA
+         Am7A==
+X-Gm-Message-State: AN3rC/6YePPoaHuTSo7pBfVlyBHMu5577Rysh/hVYyUBCnrrihCYv3qL4hJ9pzhGMVXiBhvJTspp+ITlQ9VDCw==
+X-Received: by 10.157.83.45 with SMTP id g45mr5878611oth.244.1491923617481;
+ Tue, 11 Apr 2017 08:13:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHNKnsRxNMS4fYTaoHSRgcTmCr+rcjVOGE1kqJGHqLTgBxdC0w@mail.gmail.com>
+Received: by 10.74.145.1 with HTTP; Tue, 11 Apr 2017 08:13:37 -0700 (PDT)
+In-Reply-To: <88df8638-9b7b-42c4-bb34-4e1a49d4c22d@grubix.eu>
+References: <CAMLReHYBVmuu5H015N1ShCD0iLNau9oLOabJhQ7xc=58rXQi+Q@mail.gmail.com>
+ <88df8638-9b7b-42c4-bb34-4e1a49d4c22d@grubix.eu>
+From:   =?UTF-8?Q?Enis_Bayramo=C4=9Flu?= <enis@picussecurity.com>
+Date:   Tue, 11 Apr 2017 18:13:37 +0300
+Message-ID: <CAMLReHYbuHmGTtBSUQq3bO=6ghz=rfP-=Eg=PvP0tkwZbM2Q1Q@mail.gmail.com>
+Subject: Re: `git status` output is very misleading after a merge on a
+ "detached HEAD"
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2017 at 05:56:56PM +0300, Sergey Ryazanov wrote:
+> Well, what do you suggest as an alternative?
+>
+> Git tells you that you are in detached state and where you came from
+> (detached from).
 
-> > I don't know _what_ "https://" should do. It's clearly bogus. But
-> > telling curl to use the defaults seems funny. In that sense, your
-> > original was much better (we'd feed it to curl, which would be free to
-> > complain).
-> >
-> 
-> I thought about this situation too. IMHO the best solution here is to
-> check host after credential_from_url() call. If host is NULL then we
-> should show warning message and exit. Then user could fix its
-> configuration.
-> 
-> Since I in any case will send v3 with grammar fixes then I could add
-> new patch to the series. This new patch will check host for NULL and
-> print warning message. Are you Ok with such solution?
+I think it'd be best if git status somehow indicated that you're no
+longer at the same commit. Maybe something like:
 
-Yeah, I think that would be fine. It pretty clearly seems like an error,
-so any behavior that isn't "quietly pretend that there is no proxy" is
-probably fine.
+$ git status
+HEAD detached from origin/master, no longer at the same commit
+nothing to commit, working directory clean
 
--Peff
+or, to be more informative
+
+HEAD detached from origin/master 1 commit ago,
+
+On Tue, Apr 11, 2017 at 5:55 PM, Michael J Gruber <git@grubix.eu> wrote:
+> Enis Bayramo=C4=9Flu venit, vidit, dixit 11.04.2017 10:57:
+>> I've encountered a very misleading output from `git status`. Here's a
+>> sequence of events that demonstrates the issue:
+>>
+>> $ git --version
+>> git version 2.12.0
+>>
+>> $ git checkout origin/master
+>>
+>> $ git status
+>> HEAD detached from origin/master
+>> nothing to commit, working directory clean
+>
+> Hmm. My Git would display "detached at" here as long as you are on the
+> commit that you detached from.
+>
+>> $ git merge --ff f3515b749be861b57fc70c2341c1234eeb0d5b87
+>>
+>> $ git status
+>> HEAD detached from origin/master
+>> nothing to commit, working directory clean
+>>
+>> $ git rev-parse origin/master
+>> e1dc1baaadee0f1aef2d5c45d068306025d11f67
+>>
+>> $ git rev-parse HEAD
+>> 786cb6dd09897e0950a2bdc971f0665a059efd33
+>>
+>> I think it's extremely misleading that `git status` simply reports
+>> "HEAD detached from origin/master" while this simply happens to be a
+>> mildly relevant fact about some past state.
+>>
+>> Thanks and regards
+>>
+>
+> Well, what do you suggest as an alternative?
+>
+> Git tells you that you are in detached state and where you came from
+> (detached from).
+>
+> Michael
