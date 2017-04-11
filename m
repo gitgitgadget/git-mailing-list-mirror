@@ -2,98 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 761A420970
-	for <e@80x24.org>; Tue, 11 Apr 2017 20:34:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A03020970
+	for <e@80x24.org>; Tue, 11 Apr 2017 20:40:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753272AbdDKUek (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 16:34:40 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60346 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752847AbdDKUej (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 16:34:39 -0400
-Received: (qmail 4118 invoked by uid 109); 11 Apr 2017 20:34:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 20:34:38 +0000
-Received: (qmail 7184 invoked by uid 111); 11 Apr 2017 20:34:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 16:34:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Apr 2017 16:34:34 -0400
-Date:   Tue, 11 Apr 2017 16:34:34 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Thomas Rast <trast@student.ethz.ch>,
-        Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH 01/12] grep: add ability to disable threading with
- --threads=0 or grep.threads=0
-Message-ID: <20170411203434.iiupo2oovzviqju5@sigill.intra.peff.net>
-References: <20170408132506.5415-1-avarab@gmail.com>
- <20170408132506.5415-2-avarab@gmail.com>
- <20170411100656.5bptxdaptc4zznan@sigill.intra.peff.net>
- <CACBZZX7vEQ5jUzX3GsD6JXe50TnRUtGmSVi7zBxwOmAQGABQ4Q@mail.gmail.com>
+        id S1753452AbdDKUkg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 16:40:36 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:32782 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752862AbdDKUkf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 16:40:35 -0400
+Received: by mail-io0-f175.google.com with SMTP id k87so2897802ioi.0
+        for <git@vger.kernel.org>; Tue, 11 Apr 2017 13:40:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=2BOVXg8UmOCtjjCKrNJz3SclZWdrVJDrAZHrSkLA8MM=;
+        b=t7Twf2RAlfS/KrtO3bnsG5nAAFktwacX4EPIjsprPmOV0BmV58qrNRQUU0TNb/oj0n
+         +qQgql6h9xSR/YHSYxN9LhhT47HvxcP0vq/s9UpMOtJq7p5oaJRg83n//HgodgggCB/x
+         WGuY47Mx3AnZL8hqK1l67d1RAyQjK9ODUVcUivpsX4e0T4RkUKN7bTbYlba9O2mrfV3X
+         cBSByTG+/SW5R61Jm8U/+WWuPTgBt3SpwbLyVze197u1sxh5Gp3upiY9oy+aE4tr+99r
+         w24GxtBiDsC+1U52cFm47iH+RkNHJ8D3s+NaOF05EFISe5O7HMSPguu8N9VI9n3lyMfN
+         J0jA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=2BOVXg8UmOCtjjCKrNJz3SclZWdrVJDrAZHrSkLA8MM=;
+        b=jDWr+dpmZlIL/cL0EzhEEwwYXOrOPvaPaSNoa411T9ftBeKCImGUJRHLOp+TNeP9i9
+         1X1I6iA1Ro2QqsHn43m6Ox60P+J2r/KGZ3dumbF20GmocLnFXQ9+rucUPmunVXlZLYqx
+         A9FFrKJz9hTLN5LO3zFk3UVxn8J3dwEwC1jYhC4938vq9Hmea8GXGu+1D9qDiaQf7/gv
+         O9MKDAufzrEdki/h7TCzahHMgpMsk0bQO7x5ZPR5cw8jPCW6qgXHL5CU8g60BVF2Nnej
+         DohJuR+cjFGZYeeYr6AXmYvz/5hg/4GgYaPmrkPsImOoAf5FGE/Wpxp3SzrjyAF8FuM7
+         SvFA==
+X-Gm-Message-State: AN3rC/7aAK3SF9i7yYHkpk/a74ekaEeCUBiq2KJM83PvE53rE9piRLdq
+        MhTebzEM+/v84ydK3w0wDgJtknEtv+whe4M=
+X-Received: by 10.36.82.144 with SMTP id d138mr19737083itb.24.1491943235025;
+ Tue, 11 Apr 2017 13:40:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX7vEQ5jUzX3GsD6JXe50TnRUtGmSVi7zBxwOmAQGABQ4Q@mail.gmail.com>
+Received: by 10.107.134.97 with HTTP; Tue, 11 Apr 2017 13:40:14 -0700 (PDT)
+In-Reply-To: <CAMLReHYbuHmGTtBSUQq3bO=6ghz=rfP-=Eg=PvP0tkwZbM2Q1Q@mail.gmail.com>
+References: <CAMLReHYBVmuu5H015N1ShCD0iLNau9oLOabJhQ7xc=58rXQi+Q@mail.gmail.com>
+ <88df8638-9b7b-42c4-bb34-4e1a49d4c22d@grubix.eu> <CAMLReHYbuHmGTtBSUQq3bO=6ghz=rfP-=Eg=PvP0tkwZbM2Q1Q@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 11 Apr 2017 22:40:14 +0200
+Message-ID: <CACBZZX7xqoZ3LboOjwvQvX3JRJFhjFC54+mfLOddLXzconrobw@mail.gmail.com>
+Subject: Re: `git status` output is very misleading after a merge on a
+ "detached HEAD"
+To:     =?UTF-8?Q?Enis_Bayramo=C4=9Flu?= <enis@picussecurity.com>
+Cc:     Michael J Gruber <git@grubix.eu>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2017 at 10:20:59PM +0200, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Apr 11, 2017 at 5:13 PM, Enis Bayramo=C4=9Flu <enis@picussecurity.c=
+om> wrote:
+>> Well, what do you suggest as an alternative?
+>>
+>> Git tells you that you are in detached state and where you came from
+>> (detached from).
+>
+> I think it'd be best if git status somehow indicated that you're no
+> longer at the same commit. Maybe something like:
+>
+> $ git status
+> HEAD detached from origin/master, no longer at the same commit
+> nothing to commit, working directory clean
 
-> I'm struggling to find a use-case where threading makes sense at all.
-> The example in the initial introduction in 5b594f457a is always slower
-> with >0 for me, and since then in 0579f91dd7 it got disabled entirely
-> for non-worktree cases.
+I'm not saying this is clear, I didn't know this until I read the code
+just now, but for what it's worth it says "detached at" if you're
+detached from BRANCH but at the same commit, and "detached from" if
+you're now on a different commit.
 
-It's a big win for me in worktree greps of linux.git:
+> or, to be more informative
+>
+> HEAD detached from origin/master 1 commit ago,
 
-  $ best-of-five git grep --threads=1 '[q]werty'
-  Attempt 1: 0.713
-  Attempt 2: 0.708
-  Attempt 3: 0.689
-  Attempt 4: 0.695
-  Attempt 5: 0.7
+In lieu of that, which would need some of the rev-list machinery to be
+invoked on every git-status, I wonder if just saying "HEAD detached &
+diverged from origin/master" wouldn't be clearer:
 
-  real	0m0.689s
-  user	0m0.560s
-  sys	0m0.248s
+diff --git a/wt-status.c b/wt-status.c
+index 308cf3779e..79c8cfd1cf 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1542,7 +1542,7 @@ static void wt_longstatus_print(struct wt_status *s)
+                                if (state.detached_at)
+                                        on_what =3D _("HEAD detached at ");
+                                else
+-                                       on_what =3D _("HEAD detached from "=
+);
++                                       on_what =3D _("HEAD detached &
+diverged from ");
+                        } else {
+                                branch_name =3D "";
+                                on_what =3D _("Not currently on any branch.=
+");
 
-  $ best-of-five git grep --threads=8 '[q]werty'
-  Attempt 1: 0.238
-  Attempt 2: 0.225
-  Attempt 3: 0.222
-  Attempt 4: 0.221
-  Attempt 5: 0.225
 
-  real	0m0.221s
-  user	0m0.936s
-  sys	0m0.356s
 
-In non-worktree cases most of the time goes to accessing objects, which
-happens under a lock. So you don't get any real parallelism, just
-overhead.
 
-> But assuming it works for someone out there, then 0 threads is clearly
-> not the same as 1. On linux.git with pcre2 grepping for [q]werty for
-> example[1]
-
-Right, my suggestion was to teach "grep" to treat --threads=1 as "do not
-spawn any other threads". I.e., to make it like the "0" case you were
-proposing, and then leave "0" as "auto-detect". There would be no way to
-spawn a _single_ thread and feed it. But why would you want to do that?
-It's always going to be strictly worse than not threading at all.
-
--Peff
+> On Tue, Apr 11, 2017 at 5:55 PM, Michael J Gruber <git@grubix.eu> wrote:
+>> Enis Bayramo=C4=9Flu venit, vidit, dixit 11.04.2017 10:57:
+>>> I've encountered a very misleading output from `git status`. Here's a
+>>> sequence of events that demonstrates the issue:
+>>>
+>>> $ git --version
+>>> git version 2.12.0
+>>>
+>>> $ git checkout origin/master
+>>>
+>>> $ git status
+>>> HEAD detached from origin/master
+>>> nothing to commit, working directory clean
+>>
+>> Hmm. My Git would display "detached at" here as long as you are on the
+>> commit that you detached from.
+>>
+>>> $ git merge --ff f3515b749be861b57fc70c2341c1234eeb0d5b87
+>>>
+>>> $ git status
+>>> HEAD detached from origin/master
+>>> nothing to commit, working directory clean
+>>>
+>>> $ git rev-parse origin/master
+>>> e1dc1baaadee0f1aef2d5c45d068306025d11f67
+>>>
+>>> $ git rev-parse HEAD
+>>> 786cb6dd09897e0950a2bdc971f0665a059efd33
+>>>
+>>> I think it's extremely misleading that `git status` simply reports
+>>> "HEAD detached from origin/master" while this simply happens to be a
+>>> mildly relevant fact about some past state.
+>>>
+>>> Thanks and regards
+>>>
+>>
+>> Well, what do you suggest as an alternative?
+>>
+>> Git tells you that you are in detached state and where you came from
+>> (detached from).
+>>
+>> Michael
