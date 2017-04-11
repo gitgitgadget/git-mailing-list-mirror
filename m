@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A74A20970
-	for <e@80x24.org>; Tue, 11 Apr 2017 17:33:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBCD520970
+	for <e@80x24.org>; Tue, 11 Apr 2017 17:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752151AbdDKRdY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 13:33:24 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:33531 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751449AbdDKRdY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 13:33:24 -0400
-Received: by mail-pf0-f194.google.com with SMTP id c198so632501pfc.0
-        for <git@vger.kernel.org>; Tue, 11 Apr 2017 10:33:23 -0700 (PDT)
+        id S1752046AbdDKRet (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 13:34:49 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:34371 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751966AbdDKRet (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 13:34:49 -0400
+Received: by mail-pg0-f47.google.com with SMTP id 21so1853441pgg.1
+        for <git@vger.kernel.org>; Tue, 11 Apr 2017 10:34:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=UFsQOoLNqsTuyrimQz3cci5BBfQt4kOD5jLIHpi0s5c=;
-        b=A+NWb7MJLRsGK1CFHoz0Gdverya4BzQevvroFAV+YTAsLhgmQGZ/nr4fMADUadgOh7
-         7lbahefyLu1NFLrBWATlXA+Apb4tQwx7JfYhzlvn2wh3q6iG8uSnXmiOhyX35YEYXk9m
-         c+6HEZ0wiKwPPqeHIPXRmiXH9D4Brg+Qy9rdXhI/9oHdThL+1tggY7OXSJEqFGgcdhGP
-         dbQRrJie4K+JoPE8KOQYop4uK2kIJpxG2QpwkR8A+jSv0qca1G2RSYyegTCCUhbnyDDY
-         bDt1qxJrVnBecU3IkBWEqQM+5Ok4jo9NCht5WuS1GQc+7ijw4n2cxOrfgv7BI1deooI2
-         Y7SA==
+        bh=yfEdujfatMXhjpmuGC++jV6zYELBq3iWcnoUiAzaeDg=;
+        b=SeCplz3G2IpZH3wpIpVtKaWofa9BW0dAMRpWfm56PQMoPYbwXQNpzV5eQpvqonGKwH
+         8gNJrTTwDI4x6eou/DdLVFzuLSmTAGfuFCHErkCEwLywx0CdTNfkjFfBzFObAnlSQaNj
+         wfHYyDqH0m9g0b6WnZvdhduOnaAjVaIwxsDOUiBbE/AUmqsn0SJv6hqrj0KV378ywlCQ
+         W+wqWttshTYujrv3kYDeKmF6wCZUe7G+Ff42w40tPFc9RgOjynj2wBSe0mZUQZL5MLzB
+         5zJraKVJQysaKespBjAN+EpDBI3Rf1ZwUhfjBiJwnnXcSAfcO5fx6T2YHat9k+0sC01u
+         BPOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UFsQOoLNqsTuyrimQz3cci5BBfQt4kOD5jLIHpi0s5c=;
-        b=QBUBq6wXSMfnDef6FpCmWit5W+Ed0JJ16bVDhktanWP3v9mKSORxs09YH3tf5Phf+4
-         tpipOrog6CxQlKvAewj08B7P2/KiQxFB6JQm7KkiSGsvpz99B1fYIPRdJvO/0m8lQUog
-         Te+2iJwdfebPImrCOBt26t+s3rK/lVKllDAvyVkNaJWfr7j3ts1YOFkTxtK44N0OVSjU
-         MU1ZlG0BUWz8/biF5pHJHcdFq/6ZCPH4efXoavpniAKV8C8SVyhNciqOTIY/BSwAcfqT
-         VpH3uHjwvJ3gcmm8B2s1xxs9TviZ8yJwaJR9DMMGtgHEmHQZTt/oITt3sVWuW7Ydntbw
-         4Y1A==
-X-Gm-Message-State: AN3rC/4Wmury6spga8DPIoVFQ628WlaisyBhOvDzUa7UIDplpm6s8In/Z9k9Lx8LL1NsQQ==
-X-Received: by 10.84.254.4 with SMTP id b4mr1258419plm.64.1491932002936;
-        Tue, 11 Apr 2017 10:33:22 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:c434:5e79:6b7e:ed6b])
-        by smtp.gmail.com with ESMTPSA id d82sm9331788pfl.124.2017.04.11.10.33.21
+        bh=yfEdujfatMXhjpmuGC++jV6zYELBq3iWcnoUiAzaeDg=;
+        b=LZBsLVKI+lf8YwAW6d/TmOuztMLonKmAGl3LZyGl3lZb7nxRfT/q6AYfPPTjhemY/G
+         Dk7D4t2u28QMLcoAiFPSyo1v5BrNLfEskCqVLXudyY7p0soJ/M9tWpbJQQrADVRj9fX3
+         NAQ39KqV6d+PyLwgsKK7bfue4ejiWkehDdSzZzQPjwB61YffE9RIaILitTKflBiwecq6
+         dz4LIusIScj2lMB8YwMAl8N+VLnwu9au6l0TN+jRlcZFHO91zTo1LXPQB50u726GlhgV
+         Yd20ZmfI+GuPkKyKew/CjcQR/kqzGleM/q80Yv1y4T5WJufI7ZRfPckmnMEzT/vxSo4w
+         RwPg==
+X-Gm-Message-State: AN3rC/4tYJUWwOqX8yKM2mBQIHBZkyiyFhB8t+Mre5/ARf9vZUANTkz4RKR5m7qMJYMBzZ4N
+X-Received: by 10.98.210.2 with SMTP id c2mr1129612pfg.83.1491932088173;
+        Tue, 11 Apr 2017 10:34:48 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:9591:6d62:26a:6d59])
+        by smtp.gmail.com with ESMTPSA id k88sm31769797pfj.79.2017.04.11.10.34.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 11 Apr 2017 10:33:22 -0700 (PDT)
-Date:   Tue, 11 Apr 2017 10:33:20 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
+        Tue, 11 Apr 2017 10:34:46 -0700 (PDT)
+Date:   Tue, 11 Apr 2017 10:34:45 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Eric Wong <e@80x24.org>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH 5/5] run-command: add note about forking and threading
-Message-ID: <20170411173320.GM8741@aiede.mtv.corp.google.com>
+Message-ID: <20170411173445.GF36152@google.com>
 References: <20170410234919.34586-1-bmwill@google.com>
  <20170410234919.34586-6-bmwill@google.com>
  <20170411002606.GJ8741@aiede.mtv.corp.google.com>
@@ -67,27 +66,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong wrote:
+On 04/11, Eric Wong wrote:
 > Jonathan Nieder <jrnieder@gmail.com> wrote:
-
->> Why can't git use e.g. posix_spawn to avoid this?
->
+> > Why can't git use e.g. posix_spawn to avoid this?
+> 
 > posix_spawn does not support chdir, and it seems we run non-git
 > commands so no using "git -C" for those.
 
-On the other hand, a number of the non-git commands we run are in a
-shell.  At the cost of a wasted shell process, other commands can
-be spawned using posix_spawn by passing the chosen directory and
-command to
+This is actually the biggest reason why I didn't go down that route from
+the start.  I didn't want to dig through each and every user of
+run-command and verify that removing chdir wouldn't break them (or add
+in some other way to do it).
 
-	sh -c 'cd "$1" && shift && exec "$@"' -
+> 
+> > fork()-ing in a threaded context is very painful for maintainability.
+> > Any library function you are using could start taking a lock, and then
+> > you have a deadlock.  So you have to make use of a very small
+> > whitelisted list of library functions for this to work.
+> 
+> Completely agreed.
 
-[...]
+Yes it is difficult to get right, but it seems very doable to just do
+all of the heavy-lifting prior to fork/exec making it easier to just use
+async-safe between the fork/exec in the child.
+
+> 
+> On the other hand, I believe we should make run-command
+> vfork-compatible (and Brandon's series is a big (but incomplete)
+> step in the (IMHO) right direction); as anything which is
+> vfork-safe would also be safe in the presence of threads+(plain) fork.
+> With vfork; the two processes share heap until execve.
+
+I haven't looked to much into vfork, one of the benefits of vfork is
+that it is slightly more preferment than vanilla fork correct?  What are
+some of the other benefits of using vfork over fork?
+
+> 
 > I posted some notes about it last year:
->
+> 
 >   https://public-inbox.org/git/20160629200142.GA17878@dcvr.yhbt.net/
+> 
+> > The function calls you have to audit are not only between fork() and
+> > exec() in the normal control flow.  You have to worry about signal
+> > handlers, too.
+> 
+> Yes, all that auditing is necessary for vfork; too, but totally
+> doable.  The mainline Ruby implementation has been using vfork
+> for spawning subprocesses for several years, now; and I think the
+> ruby-core developers (myself included) have fixed all the
+> problems with it; even in multi-threaded code which calls malloc.
 
-Thanks for these notes.
-
-Sincerely,
-Jonathan
+-- 
+Brandon Williams
