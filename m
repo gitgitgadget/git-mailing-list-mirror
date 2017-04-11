@@ -2,111 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF5E220960
-	for <e@80x24.org>; Tue, 11 Apr 2017 00:26:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D830620960
+	for <e@80x24.org>; Tue, 11 Apr 2017 00:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753453AbdDKA0N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Apr 2017 20:26:13 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35253 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753122AbdDKA0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Apr 2017 20:26:10 -0400
-Received: by mail-pf0-f181.google.com with SMTP id i5so40529557pfc.2
-        for <git@vger.kernel.org>; Mon, 10 Apr 2017 17:26:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=a1Ra+AYDpVatBWesaZnvw6KEhFK/4MXQaSn1dLDdoe0=;
-        b=YZAeVMXKCeaT9dLmL2nl2e2SOZBoUcxQnDzj2exxBjBEK129cLdi3wOapJD4x3hDRg
-         ASUuLMwDXI52mRyUYDRWTWlGpdo+KKYWmKHouVLfsnkh/BAkSEjxJNEe6SM5b7n5mCL3
-         CRIawxTvhVQIJh86Cd1mKunO6kPIxsZw5YR3SE3QLxZSgjV+d1SIyEqrfJBD3UUCHvbQ
-         vrkrN/SKuHV0W3ozeS2rHQgrpKuQi64djuCo8sqN2FlOh5OMPkEfzIJFGoSk4CIx4yjR
-         eabQsJBlEQQ6NG9hg2kx3nfCAZfUW1X0IX6+7A+8Z0CIYE1zvZgDjh/WXgttLtSGcLju
-         qIiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=a1Ra+AYDpVatBWesaZnvw6KEhFK/4MXQaSn1dLDdoe0=;
-        b=hGGzMmF6rNZra8Wwdducvd3J/6YtPqL/J6exnW0qrGXYe+3ZZNfl5xhwpGZLREMcT+
-         6eWLar2CNsviXzeAhgtsx3J+eQx76nx3Okep3TPH5SdQnjbK7xFEsQMCLzXfj5SHYTGG
-         oDGLhMEMeMNIVoimh/JdDXfkgtyYqdTJJSDNj4udYuMfSRm3Rlu3n00h5Z0ixjvRoYvY
-         cXGCOKAdXFTqBwPvtUuR5ziVt9hBRwa0WhB1/4KmIhiOpLokknpCpKlcryQXX1BT2oYq
-         /wr0aoXsiTnrOhPCnF2NcO0Vdbs6uYMGoKf4HixDXIau4R78ziZySWJny5/tQHbQLXWF
-         gbeg==
-X-Gm-Message-State: AFeK/H1koNOkvs5YzFIHw2fzqeDBma917hyWOc7/ZZ5tLrq3h90gbDWtFgnYRgJPcCNfsw==
-X-Received: by 10.99.127.12 with SMTP id a12mr59037151pgd.5.1491870369260;
-        Mon, 10 Apr 2017 17:26:09 -0700 (PDT)
-Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:dcb:fd1c:cdca:5669])
-        by smtp.gmail.com with ESMTPSA id z123sm20733109pfz.56.2017.04.10.17.26.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 10 Apr 2017 17:26:08 -0700 (PDT)
-Date:   Mon, 10 Apr 2017 17:26:06 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/5] run-command: add note about forking and threading
-Message-ID: <20170411002606.GJ8741@aiede.mtv.corp.google.com>
-References: <20170410234919.34586-1-bmwill@google.com>
- <20170410234919.34586-6-bmwill@google.com>
+        id S1752214AbdDKAa3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Apr 2017 20:30:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59559 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751695AbdDKAa3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Apr 2017 20:30:29 -0400
+Received: (qmail 5630 invoked by uid 109); 11 Apr 2017 00:30:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 00:30:26 +0000
+Received: (qmail 30404 invoked by uid 111); 11 Apr 2017 00:30:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 10 Apr 2017 20:30:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Apr 2017 20:30:23 -0400
+Date:   Mon, 10 Apr 2017 20:30:23 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Joachim Durchholz <jo@durchholz.org>,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCH] connect.c: handle errors from split_cmdline
+Message-ID: <20170411003023.ynzc76yzdmomxthp@sigill.intra.peff.net>
+References: <20170409191117.25175-1-avarab@gmail.com>
+ <20170409191117.25175-3-avarab@gmail.com>
+ <CACBZZX7OfM-zivJAQMXdNarHDjAhzQhqGNZNs2QqDUyOo3AA0g@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170410234919.34586-6-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX7OfM-zivJAQMXdNarHDjAhzQhqGNZNs2QqDUyOo3AA0g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Apr 11, 2017 at 01:23:32AM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Brandon Williams wrote:
+> There's one segfault in there:
+> 
+> $ ./t5601-clone.sh --root="xtmp.$(perl -e 'print chr 39')" -v -i -d
+> [...]
+> Cloning into 'ssh-bracket-clone-plink-4'...
+> Segmentation fault
+> not ok 45 - single quoted plink.exe in GIT_SSH_COMMAND
 
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -458,6 +458,14 @@ int start_command(struct child_process *cmd)
->  		argv_array_pushv(&argv, cmd->argv);
->  	}
->  
-> +	/*
-> +	 * NOTE: In order to prevent deadlocking when using threads special
-> +	 * care should be taken with the function calls made in between the
-> +	 * fork() and exec() calls.  No calls should be made to functions which
-> +	 * require acquiring a lock (e.g. malloc) as the lock could have been
-> +	 * held by another thread at the time of forking, causing the lock to
-> +	 * never be released in the child process.
-> +	 */
->  	cmd->pid = fork();
+Here's a fix for that one. I think there are a few other memory
+irregularities in that function, too. I'll send another patch in a
+minute, but I wanted to get this out in case you were working on it,
+too.
 
-Why can't git use e.g. posix_spawn to avoid this?
+-- >8 --
+Subject: [PATCH] connect.c: handle errors from split_cmdline
 
-fork()-ing in a threaded context is very painful for maintainability.
-Any library function you are using could start taking a lock, and then
-you have a deadlock.  So you have to make use of a very small
-whitelisted list of library functions for this to work.
+Commit e9d9a8a4d (connect: handle putty/plink also in
+GIT_SSH_COMMAND, 2017-01-02) added a call to
+split_cmdline(), but checks only for a non-zero return to
+see if we got any output. Since the function returns
+negative values (and a NULL argv) on error, we end up
+dereferencing NULL and segfaulting.
 
-The function calls you have to audit are not only between fork() and
-exec() in the normal control flow.  You have to worry about signal
-handlers, too.
+Arguably we could report on the parsing error here, but it's
+probably not worth it. This is a best-effort attempt to see
+if we are using plink. So we can simply return here with
+"no, it wasn't plink" and let the shell actually complain
+about the bogus quoting.
 
-By comparison, posix_spawn() takes care of this all.  I really
-strongly do not want to move in the direction of more fork() in a
-multi-threaded context.  I'd rather turn off threads in the submodule
-case of grep altogether, but that shouldn't be needed:
+Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ connect.c        | 2 +-
+ t/t5601-clone.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-* it is possible to launch a command without fork+exec
-* if that's not suitable, then using fork introduces parallelism that
-  interacts much better with fork+exec than threads do
+diff --git a/connect.c b/connect.c
+index 7d65c1c73..6f2281ab0 100644
+--- a/connect.c
++++ b/connect.c
+@@ -730,7 +730,7 @@ static void handle_ssh_variant(const char *ssh_command, int is_cmdline,
+ 		const char **ssh_argv;
+ 
+ 		p = xstrdup(ssh_command);
+-		if (split_cmdline(p, &ssh_argv)) {
++		if (split_cmdline(p, &ssh_argv) > 0) {
+ 			variant = basename((char *)ssh_argv[0]);
+ 			/*
+ 			 * At this point, variant points into the buffer
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index b52b8acf9..9c56f771b 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -427,6 +427,12 @@ test_expect_success 'GIT_SSH_VARIANT overrides plink to tortoiseplink' '
+ 	expect_ssh "-batch -P 123" myhost src
+ '
+ 
++test_expect_success 'clean failure on broken quoting' '
++	test_must_fail \
++		env GIT_SSH_COMMAND="${SQ}plink.exe -v" \
++		git clone "[myhost:123]:src" sq-failure
++'
++
+ # Reset the GIT_SSH environment variable for clone tests.
+ setup_ssh_wrapper
+ 
+-- 
+2.12.2.952.g759391acc
 
-I really don't want to go down this path.  I've said that a few times.
-I'm saying it again now.
-
-My two cents,
-Jonathan
