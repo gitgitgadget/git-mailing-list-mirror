@@ -2,60 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD7B920970
-	for <e@80x24.org>; Tue, 11 Apr 2017 20:51:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D452B20970
+	for <e@80x24.org>; Tue, 11 Apr 2017 20:56:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753305AbdDKUvU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 16:51:20 -0400
-Received: from mail-oi0-f50.google.com ([209.85.218.50]:34502 "EHLO
-        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752246AbdDKUvT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 16:51:19 -0400
-Received: by mail-oi0-f50.google.com with SMTP id g204so10985573oib.1
-        for <git@vger.kernel.org>; Tue, 11 Apr 2017 13:51:18 -0700 (PDT)
+        id S1753522AbdDKU4Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 16:56:25 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33735 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752246AbdDKU4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 16:56:23 -0400
+Received: by mail-io0-f194.google.com with SMTP id k87so2812488ioi.0
+        for <git@vger.kernel.org>; Tue, 11 Apr 2017 13:56:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=jqUvkJ5uwCpLnAbsTw6D7QClY3/qH87Hi2uw/uBdgWU=;
-        b=K5CZr1ldL/6o5+kfl4h9Hhk6Q2ADPKZly1W+4m3BqOW1rmMgYdCwB8WY7BH/igSGlb
-         zd+H2L7b0HVDLBQaDnXlce7RfT+Pyi1A6/Plp/lLJ+ZfGYPyCZMiEI09/9BJy2gLPx3u
-         j7h6kTkO5qnAQPCAEC0J9YTBckP2rAHVBtB8mlXehy5JCpBnSqD/TAE5GNTplGKipvpy
-         b8fsRmMKz6tsnMx9jrhzCSYSHihq+lMdQnpeUW4SfgxzXo+ownJJDnJGSARuUOQ6QVIu
-         Ya4VWRWx9BDaIitGMQxK7jJEI9nbF1FJO9diuK8vaQet25kzRnE2zfMdt81t51IwOmd/
-         h9Hw==
+        bh=mQM5+CLlVkVGAvU7gwSgGdERLKufkB+l2w7ASbqJrz0=;
+        b=EY+N0j8nwg8yVSwq2zN7muuljm+KwawMJs0ndHNHYwsAxTjDQtlCHe0sIGOAHmSHBo
+         Y8Ei4+SKO5hWuWiYlzvqdGIsdE7/T+RBdJ7EgtZCrUs0/AbQeOIBVmUXWLR8xw5yH0Te
+         cZ5p8f7KSf1Qr9YLIWUX2XDCa+eXaDpwTd5uFm+OSAnPUobwJcHDg57AzmM12eyg1mP1
+         gngMRnV6sOIEMgahCiUVHwdVWbXjTttbdeIfG1hUWxAm4WENMcQQa3VLhMfi6cvNCHVE
+         NsCmc+Z/lQWHShlCUcbV2xwTFWQjiJyMmTFR//BhQHyNV8qLS+GpP32/Cegng8mqUh+C
+         6myw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jqUvkJ5uwCpLnAbsTw6D7QClY3/qH87Hi2uw/uBdgWU=;
-        b=TWDBCIXTyo6IK7hnHKtsuQ5BX6Feo1a43insbzMigU/0xqG0JnCyWA0uHuKbFG40Ow
-         I2a0/BaoQq6xGqZEqsnyPcFXw0DbOKX4vUPNrYD5rQdKZbZZv8+QPY0yvuuUcGmkuyKw
-         CLCICwictuSP9g229v78giOf/a7ty7i1udo96PjUKUOXs1Ilj0jAYmgTIdY9Ekls6VyY
-         lT9C9ialrf1+gLNBGNSCKIb3p/40lcWpkGQQgKSYqMWwHlh2B+eafoF9Ob7vUONAlD5N
-         NqdDEMlvUdn/krMtXllwFTNa8le3r6F9MryVREajafB+1y8B19n9ZNTZFvEuhqrG4xVf
-         E2OA==
-X-Gm-Message-State: AN3rC/63Ra4RNQDSqFeqYLLbBPa0LdP2F087cwZ1hKRS7U3hFefHeDwIlkxE+gfsIuqFzf8H+CSOvnfJWdb6YQ==
-X-Received: by 10.202.212.194 with SMTP id l185mr12910924oig.88.1491943878255;
- Tue, 11 Apr 2017 13:51:18 -0700 (PDT)
+        bh=mQM5+CLlVkVGAvU7gwSgGdERLKufkB+l2w7ASbqJrz0=;
+        b=XMQwWcDwrqUnM22onw7Glus4r4fj8UsMgr++ufl3dwfVFsxTHWCmhSl7i6CydFuqaP
+         eIv9Hsa44Z1Y30rHTORFVYUXnXzBSUbeR6sP7UsSSFCp7ZQxY0MbVM50uBPcGZWkEyFf
+         yLJORTirjx8XMEssdpRVuBD4hfKESKOeeuijER337vJ6QHvfdqcWtozp0FaEGfx6VPb3
+         OqVvS5PuGwlbleXJ6vrhnWl6lZOmgc4dXH/djV5k2JW9X0v/ehPbZPEQiBM7TQg96NN+
+         1aR3TPmBYdvZTtPsIQCiPp8RfcM9RvGuXPNoNDkI0J2hgeHp0Ten2pd6HOqTh+8j0aTq
+         trAw==
+X-Gm-Message-State: AFeK/H2UgZvbxhTdVUea2pjfcJDWoaKsESwju2jaxBL3EL3JjHDcyogoqKcEpxchmle8Cx6DvJqSutc+AnShtQ==
+X-Received: by 10.107.32.199 with SMTP id g190mr63595365iog.117.1491944182551;
+ Tue, 11 Apr 2017 13:56:22 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.157.35.80 with HTTP; Tue, 11 Apr 2017 13:50:57 -0700 (PDT)
-In-Reply-To: <20170411173722.asjrkpbbm4p6k6ov@sigill.intra.peff.net>
-References: <20170411171750.18624-1-ryazanov.s.a@gmail.com>
- <20170411171750.18624-3-ryazanov.s.a@gmail.com> <20170411173722.asjrkpbbm4p6k6ov@sigill.intra.peff.net>
-From:   Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Date:   Tue, 11 Apr 2017 23:50:57 +0300
-Message-ID: <CAHNKnsT6-U2TY0KVNGXXkWytZt-ixqDM-WR3Qcq1A-3+NgxAUQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] http: fix the silent ignoring of proxy misconfiguraion
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Received: by 10.107.134.97 with HTTP; Tue, 11 Apr 2017 13:56:01 -0700 (PDT)
+In-Reply-To: <20170411203434.iiupo2oovzviqju5@sigill.intra.peff.net>
+References: <20170408132506.5415-1-avarab@gmail.com> <20170408132506.5415-2-avarab@gmail.com>
+ <20170411100656.5bptxdaptc4zznan@sigill.intra.peff.net> <CACBZZX7vEQ5jUzX3GsD6JXe50TnRUtGmSVi7zBxwOmAQGABQ4Q@mail.gmail.com>
+ <20170411203434.iiupo2oovzviqju5@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 11 Apr 2017 22:56:01 +0200
+Message-ID: <CACBZZX7Xi2OWqHQd7jTGBEZyqcWk59oXbPJOjuYrYAFzd5huCA@mail.gmail.com>
+Subject: Re: [PATCH 01/12] grep: add ability to disable threading with
+ --threads=0 or grep.threads=0
+To:     Jeff King <peff@peff.net>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Thomas Rast <trast@student.ethz.ch>,
+        Fredrik Kuivinen <frekui@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,45 +71,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2017 at 8:37 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 11, 2017 at 08:17:50PM +0300, Sergey Ryazanov wrote:
->> Earlier, the whole http.proxy option string was passed to curl without
->> any preprocessing so curl could complain about the invalid proxy
->> configuration.
->>
->> After the commit 372370f167 ("http: use credential API to handle proxy
->> authentication", 2016-01-26), if the user specified an invalid HTTP
->> proxy option in the configuration, then the option parsing is silently
->> fails and NULL will be passed to curl as a proxy. This forces curl to
+On Tue, Apr 11, 2017 at 10:34 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 11, 2017 at 10:20:59PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> s/is silently/silently/
+>> I'm struggling to find a use-case where threading makes sense at all.
+>> The example in the initial introduction in 5b594f457a is always slower
+>> with >0 for me, and since then in 0579f91dd7 it got disabled entirely
+>> for non-worktree cases.
 >
->> fall back to detecting the proxy configuration from the environment,
->> causing the http.proxy option ignoring.
->>
->> Fix this issue by checking the proxy option parsing result. If parsing
->> failed then print error message and die. Such behaviour allows user to
->> quickly figure the proxy misconfiguration and correct it.
+> It's a big win for me in worktree greps of linux.git:
 >
-> Two minor grammos:
+>   $ best-of-five git grep --threads=3D1 '[q]werty'
+>   Attempt 1: 0.713
+>   Attempt 2: 0.708
+>   Attempt 3: 0.689
+>   Attempt 4: 0.695
+>   Attempt 5: 0.7
 >
-> s/error/an error/;
-> s/user/the user/;
+>   real  0m0.689s
+>   user  0m0.560s
+>   sys   0m0.248s
 >
+>   $ best-of-five git grep --threads=3D8 '[q]werty'
+>   Attempt 1: 0.238
+>   Attempt 2: 0.225
+>   Attempt 3: 0.222
+>   Attempt 4: 0.221
+>   Attempt 5: 0.225
+>
+>   real  0m0.221s
+>   user  0m0.936s
+>   sys   0m0.356s
+>
+> In non-worktree cases most of the time goes to accessing objects, which
+> happens under a lock. So you don't get any real parallelism, just
+> overhead.
+>
+>> But assuming it works for someone out there, then 0 threads is clearly
+>> not the same as 1. On linux.git with pcre2 grepping for [q]werty for
+>> example[1]
+>
+> Right, my suggestion was to teach "grep" to treat --threads=3D1 as "do no=
+t
+> spawn any other threads". I.e., to make it like the "0" case you were
+> proposing, and then leave "0" as "auto-detect". There would be no way to
+> spawn a _single_ thread and feed it. But why would you want to do that?
+> It's always going to be strictly worse than not threading at all.
 
-Thank you. Just sent a series with suggested grammar fixes as v4.
+I understand, but given the two profiles we've posted it seems clear
+that there's cases where if we did that, we'd be locking people out of
+their optimal thread configuration, which would be --thread=3D1 with my
+patch, but wouldn't exist with this proposed change.
 
-> In the earlier discussion you mentioned a warning, but I like this die()
-> much better.
->
+If you see better timings with 8 threads than 1 on linux.git, but I
+see strictly worse, then if you apply my patch doesn't --threads=3D0
+look worse than --threads=3D1, which looks worse than --threads=3D2 etc,
+until you reach some number where you either run out of CPU or I/O
+throughput.
 
-I actually meant "die" but by some reason I typed "warning" :-/
+Anyway, I really don't care about this feature much, I just wanted a
+way to disable threading, but looking at the perf profiles I wonder if
+doing your proposed change would cause a regression in some cases
+where someone really wanted /one/ thread.
 
-> Both patches look very clean, and nicely explained. Thanks for working
-> on this.
->
+But of course my patch breaks the long documented grep.threads=3D0 for
+"give me threads that you auto detect" to now mean "you get none".
 
-Peff, I would like to thank you and =C3=86var for your great help!
+Also doesn't --thread=3D1 right now mean "one thread, but two workers?".
+I haven't dug into the grep worker/thread code, but it compiles the
+the pattern twice, so isn't both the non-thread main process & the
+sole thread it spawns on --thread=3D1 doing work, so in some other
+universe it's synonymous with --workers=3D2?
 
---=20
-Sergey
+If so do pack-objects & index-pack also behave like that? If so this
+whole thing is very confusing for users, because some will read 1
+thread and think "one worker", whereas it really means "two workers,
+one using a thread, if you want three workers spawn two threads".
+
+Bah!
