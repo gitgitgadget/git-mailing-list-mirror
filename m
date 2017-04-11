@@ -2,108 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31BB920970
-	for <e@80x24.org>; Tue, 11 Apr 2017 20:22:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 761A420970
+	for <e@80x24.org>; Tue, 11 Apr 2017 20:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753433AbdDKUWi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 16:22:38 -0400
-Received: from mail-lf0-f67.google.com ([209.85.215.67]:35844 "EHLO
-        mail-lf0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751900AbdDKUWe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 16:22:34 -0400
-Received: by mail-lf0-f67.google.com with SMTP id 75so1001386lfs.3
-        for <git@vger.kernel.org>; Tue, 11 Apr 2017 13:22:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=m4i2WgRNKf9o0Uv+VFbfwPrEq3hFpSgQWuHSXdg9CSs=;
-        b=pBscxNG33mK86b+zEPOu97vwUqBLoQ04DJkoOWAzH4dQlAAh/tRkVoq2m9FjGqM7Mv
-         LGMh2j6x/Ldof67OW9yoE40hS2L0PURLP+m9OHbA3BE12MN93f3/un33HCcJf/9qdVEW
-         p9uPPKe/jUkNbE51asHG7LQmEB25+A1L2jJAnqc1HZ7BFhfu4fDspYcZnmF+YFv8Hd9Y
-         RfZO0eq+H5WimfJ95iEoXeX3Dt9CfHxT4HcdSJEn90uMQ61Ql+T3yp9V7MtwxYqfZXLO
-         tHpKRL/GzzLLqha9orfB61iB0HVdnjM4Y4PifJmq+3c33yK71oqDe41NAEOsooBxD6bl
-         Yybg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=m4i2WgRNKf9o0Uv+VFbfwPrEq3hFpSgQWuHSXdg9CSs=;
-        b=iDI5ZykuE3784h2D3FcvdvlB1vEPhwQ42S5q+kqPSf9V21hnIUgoUKfqMD7GBTmKA7
-         mW4EAe+oo0gvbmTkcO4xL0KT7JfVuBEW/94MeAx1GwskxKtgXwE8+oRr6DDLthNxuAdr
-         pSrn9fyF7jB+jvJNUuEW7twBTutuKvBoPRaSKcdx7GxH/PXAes0zxhv53dKemjk/y0Cc
-         hjuXK+0ziXgdr7uIK7jZuTK+f6s0EGYx8wd4DjizvO+XXbWbtk+VIntG9heLaEmMiHwn
-         D8VEXk3jgphqNnm1fV/RQGuWs+KqOg5aumnv0Srm5Glt73RvgMIDACqRp/JDDNlZf+3o
-         BoDw==
-X-Gm-Message-State: AN3rC/5nN/6N3BjlZisvKAoa0VC4Ca0PqpsIuhoBGNtCznhU2p5P72F5HXWBIP96gcexlg==
-X-Received: by 10.25.209.20 with SMTP id i20mr3022709lfg.49.1491942152930;
-        Tue, 11 Apr 2017 13:22:32 -0700 (PDT)
-Received: from rsa-laptop.internal.lan ([217.25.229.52])
-        by smtp.gmail.com with ESMTPSA id w78sm3681421lfi.23.2017.04.11.13.22.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 11 Apr 2017 13:22:32 -0700 (PDT)
-From:   Sergey Ryazanov <ryazanov.s.a@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        Knut Franke <k.franke@science-computing.de>,
-        git@vger.kernel.org
-Subject: [PATCH v4 2/2] http: fix the silent ignoring of proxy misconfiguraion
-Date:   Tue, 11 Apr 2017 23:22:19 +0300
-Message-Id: <20170411202219.20165-3-ryazanov.s.a@gmail.com>
-X-Mailer: git-send-email 2.10.2
-In-Reply-To: <20170411202219.20165-1-ryazanov.s.a@gmail.com>
-References: <20170411202219.20165-1-ryazanov.s.a@gmail.com>
+        id S1753272AbdDKUek (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 16:34:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60346 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752847AbdDKUej (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 16:34:39 -0400
+Received: (qmail 4118 invoked by uid 109); 11 Apr 2017 20:34:38 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 20:34:38 +0000
+Received: (qmail 7184 invoked by uid 111); 11 Apr 2017 20:34:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 16:34:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Apr 2017 16:34:34 -0400
+Date:   Tue, 11 Apr 2017 16:34:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Thomas Rast <trast@student.ethz.ch>,
+        Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH 01/12] grep: add ability to disable threading with
+ --threads=0 or grep.threads=0
+Message-ID: <20170411203434.iiupo2oovzviqju5@sigill.intra.peff.net>
+References: <20170408132506.5415-1-avarab@gmail.com>
+ <20170408132506.5415-2-avarab@gmail.com>
+ <20170411100656.5bptxdaptc4zznan@sigill.intra.peff.net>
+ <CACBZZX7vEQ5jUzX3GsD6JXe50TnRUtGmSVi7zBxwOmAQGABQ4Q@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX7vEQ5jUzX3GsD6JXe50TnRUtGmSVi7zBxwOmAQGABQ4Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Earlier, the whole http.proxy option string was passed to curl without
-any preprocessing so curl could complain about the invalid proxy
-configuration.
+On Tue, Apr 11, 2017 at 10:20:59PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-After the commit 372370f167 ("http: use credential API to handle proxy
-authentication", 2016-01-26), if the user specified an invalid HTTP
-proxy option in the configuration, then the option parsing silently
-fails and NULL will be passed to curl as a proxy. This forces curl to
-fall back to detecting the proxy configuration from the environment,
-causing the http.proxy option ignoring.
+> I'm struggling to find a use-case where threading makes sense at all.
+> The example in the initial introduction in 5b594f457a is always slower
+> with >0 for me, and since then in 0579f91dd7 it got disabled entirely
+> for non-worktree cases.
 
-Fix this issue by checking the proxy option parsing result. If parsing
-failed then print an error message and die. Such behaviour allows the
-user to quickly figure the proxy misconfiguration and correct it.
+It's a big win for me in worktree greps of linux.git:
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
----
+  $ best-of-five git grep --threads=1 '[q]werty'
+  Attempt 1: 0.713
+  Attempt 2: 0.708
+  Attempt 3: 0.689
+  Attempt 4: 0.695
+  Attempt 5: 0.7
 
-Changes since v2:
-  - new patch
+  real	0m0.689s
+  user	0m0.560s
+  sys	0m0.248s
 
-Changes since v3:
-  - fix grammar (thanks to Jeff)
+  $ best-of-five git grep --threads=8 '[q]werty'
+  Attempt 1: 0.238
+  Attempt 2: 0.225
+  Attempt 3: 0.222
+  Attempt 4: 0.221
+  Attempt 5: 0.225
 
- http.c | 3 +++
- 1 file changed, 3 insertions(+)
+  real	0m0.221s
+  user	0m0.936s
+  sys	0m0.356s
 
-diff --git a/http.c b/http.c
-index 8be75b2..82664dd 100644
---- a/http.c
-+++ b/http.c
-@@ -867,6 +867,9 @@ static CURL *get_curl_handle(void)
- 			strbuf_release(&url);
- 		}
- 
-+		if (!proxy_auth.host)
-+			die("Invalid proxy URL '%s'", curl_http_proxy);
-+
- 		curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
- #if LIBCURL_VERSION_NUM >= 0x071304
- 		var_override(&curl_no_proxy, getenv("NO_PROXY"));
--- 
-2.10.2
+In non-worktree cases most of the time goes to accessing objects, which
+happens under a lock. So you don't get any real parallelism, just
+overhead.
 
+> But assuming it works for someone out there, then 0 threads is clearly
+> not the same as 1. On linux.git with pcre2 grepping for [q]werty for
+> example[1]
+
+Right, my suggestion was to teach "grep" to treat --threads=1 as "do not
+spawn any other threads". I.e., to make it like the "0" case you were
+proposing, and then leave "0" as "auto-detect". There would be no way to
+spawn a _single_ thread and feed it. But why would you want to do that?
+It's always going to be strictly worse than not threading at all.
+
+-Peff
