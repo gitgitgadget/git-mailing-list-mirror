@@ -2,96 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E89620970
-	for <e@80x24.org>; Tue, 11 Apr 2017 20:42:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD7B920970
+	for <e@80x24.org>; Tue, 11 Apr 2017 20:51:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753514AbdDKUmi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 16:42:38 -0400
-Received: from siwi.pair.com ([209.68.5.199]:21636 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753504AbdDKUmf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 16:42:35 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1DF4684561;
-        Tue, 11 Apr 2017 16:42:34 -0400 (EDT)
-Subject: Re: [PATCH v2] unpack-trees: avoid duplicate ODB lookups during
- checkout
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-References: <20170407155306.42375-1-git@jeffhostetler.com>
- <20170407155306.42375-2-git@jeffhostetler.com>
- <23662d7b-84a9-4b71-1aa5-5d3d111f5c3d@web.de>
- <ea0aa4ea-1c28-c1dd-db92-d4758b9dca88@jeffhostetler.com>
- <001f55c6-a694-7dde-b14b-9d1dcc9c9a09@web.de>
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <ad2b5a8c-f9d0-82cb-25b8-76c1922af7f5@jeffhostetler.com>
-Date:   Tue, 11 Apr 2017 16:42:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1753305AbdDKUvU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 16:51:20 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:34502 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752246AbdDKUvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 16:51:19 -0400
+Received: by mail-oi0-f50.google.com with SMTP id g204so10985573oib.1
+        for <git@vger.kernel.org>; Tue, 11 Apr 2017 13:51:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jqUvkJ5uwCpLnAbsTw6D7QClY3/qH87Hi2uw/uBdgWU=;
+        b=K5CZr1ldL/6o5+kfl4h9Hhk6Q2ADPKZly1W+4m3BqOW1rmMgYdCwB8WY7BH/igSGlb
+         zd+H2L7b0HVDLBQaDnXlce7RfT+Pyi1A6/Plp/lLJ+ZfGYPyCZMiEI09/9BJy2gLPx3u
+         j7h6kTkO5qnAQPCAEC0J9YTBckP2rAHVBtB8mlXehy5JCpBnSqD/TAE5GNTplGKipvpy
+         b8fsRmMKz6tsnMx9jrhzCSYSHihq+lMdQnpeUW4SfgxzXo+ownJJDnJGSARuUOQ6QVIu
+         Ya4VWRWx9BDaIitGMQxK7jJEI9nbF1FJO9diuK8vaQet25kzRnE2zfMdt81t51IwOmd/
+         h9Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jqUvkJ5uwCpLnAbsTw6D7QClY3/qH87Hi2uw/uBdgWU=;
+        b=TWDBCIXTyo6IK7hnHKtsuQ5BX6Feo1a43insbzMigU/0xqG0JnCyWA0uHuKbFG40Ow
+         I2a0/BaoQq6xGqZEqsnyPcFXw0DbOKX4vUPNrYD5rQdKZbZZv8+QPY0yvuuUcGmkuyKw
+         CLCICwictuSP9g229v78giOf/a7ty7i1udo96PjUKUOXs1Ilj0jAYmgTIdY9Ekls6VyY
+         lT9C9ialrf1+gLNBGNSCKIb3p/40lcWpkGQQgKSYqMWwHlh2B+eafoF9Ob7vUONAlD5N
+         NqdDEMlvUdn/krMtXllwFTNa8le3r6F9MryVREajafB+1y8B19n9ZNTZFvEuhqrG4xVf
+         E2OA==
+X-Gm-Message-State: AN3rC/63Ra4RNQDSqFeqYLLbBPa0LdP2F087cwZ1hKRS7U3hFefHeDwIlkxE+gfsIuqFzf8H+CSOvnfJWdb6YQ==
+X-Received: by 10.202.212.194 with SMTP id l185mr12910924oig.88.1491943878255;
+ Tue, 11 Apr 2017 13:51:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <001f55c6-a694-7dde-b14b-9d1dcc9c9a09@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Received: by 10.157.35.80 with HTTP; Tue, 11 Apr 2017 13:50:57 -0700 (PDT)
+In-Reply-To: <20170411173722.asjrkpbbm4p6k6ov@sigill.intra.peff.net>
+References: <20170411171750.18624-1-ryazanov.s.a@gmail.com>
+ <20170411171750.18624-3-ryazanov.s.a@gmail.com> <20170411173722.asjrkpbbm4p6k6ov@sigill.intra.peff.net>
+From:   Sergey Ryazanov <ryazanov.s.a@gmail.com>
+Date:   Tue, 11 Apr 2017 23:50:57 +0300
+Message-ID: <CAHNKnsT6-U2TY0KVNGXXkWytZt-ixqDM-WR3Qcq1A-3+NgxAUQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] http: fix the silent ignoring of proxy misconfiguraion
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 4/10/2017 7:09 PM, René Scharfe wrote:
-> Am 10.04.2017 um 23:26 schrieb Jeff Hostetler:
->> On 4/8/2017 10:06 AM, René Scharfe wrote:
->>> Am 07.04.2017 um 17:53 schrieb git@jeffhostetler.com:
->>>> +            /* implicitly borrow buf[i-1] inside tree_desc[i] */
->>>> +            memcpy(&t[i], &t[i-1], sizeof(struct tree_desc));
->>>
->>> An assignment would be simpler:
->>>
->>>             t[i] = t[i - 1];
+On Tue, Apr 11, 2017 at 8:37 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Apr 11, 2017 at 08:17:50PM +0300, Sergey Ryazanov wrote:
+>> Earlier, the whole http.proxy option string was passed to curl without
+>> any preprocessing so curl could complain about the invalid proxy
+>> configuration.
 >>
->> True, but this might be a coin toss.  Maybe we should
->> see what the generated assembly looks like for each ??
+>> After the commit 372370f167 ("http: use credential API to handle proxy
+>> authentication", 2016-01-26), if the user specified an invalid HTTP
+>> proxy option in the configuration, then the option parsing is silently
+>> fails and NULL will be passed to curl as a proxy. This forces curl to
 >
-> Clang, GCC and ICC inline that memcpy call; the assembly output is the
-> same for both variants: https://godbolt.org/g/1q0YwK.  I guess you worry
-> about compilers that are just bad at struct assignments (i.e. worse than
-> calling memcpy)?  Do you have examples (just curious)?
-
-Nice website!  Really!
-
-Yes, my concern was that structure copies would do it
-field by field rather than just a block copy.  No, I
-don't have any examples -- maybe just some very old
-brain cells.... :-)
-
-And I just checked VS2015 and the structure copy is a
-few instructions shorter, but roughly the same.
-
+> s/is silently/silently/
 >
-> Assignments are easier on the eye of human readers in any case, and
-> there is no way to silently get the size wrong.
-
-agreed. thanks.
-
+>> fall back to detecting the proxy configuration from the environment,
+>> causing the http.proxy option ignoring.
+>>
+>> Fix this issue by checking the proxy option parsing result. If parsing
+>> failed then print error message and die. Such behaviour allows user to
+>> quickly figure the proxy misconfiguration and correct it.
 >
->> I tried to hit the common cases.  This loop runs a lot
->> and I didn't want to put an O(n^2) thing in there to
->> look for any matching peer.  Most of the time we are
->> in a simple 2 or 3 way effort.  I didn't want to pay
->> for the looping/branching overhead for the obscure [4..8]
->> efforts.
+> Two minor grammos:
 >
-> Makes sense, and it's a nice heuristic.  Perhaps it would be a good idea
-> to document these choices in a comment?
+> s/error/an error/;
+> s/user/the user/;
+>
 
-Good point. Thanks.
+Thank you. Just sent a series with suggested grammar fixes as v4.
 
+> In the earlier discussion you mentioned a warning, but I like this die()
+> much better.
+>
 
+I actually meant "die" but by some reason I typed "warning" :-/
+
+> Both patches look very clean, and nicely explained. Thanks for working
+> on this.
+>
+
+Peff, I would like to thank you and =C3=86var for your great help!
+
+--=20
+Sergey
