@@ -2,74 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E64D20970
-	for <e@80x24.org>; Tue, 11 Apr 2017 17:37:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0F2D20970
+	for <e@80x24.org>; Tue, 11 Apr 2017 17:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752151AbdDKRh1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 13:37:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60142 "EHLO cloud.peff.net"
+        id S1752473AbdDKRk4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 13:40:56 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:49088 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751812AbdDKRh0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 13:37:26 -0400
-Received: (qmail 22163 invoked by uid 109); 11 Apr 2017 17:37:25 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 17:37:25 +0000
-Received: (qmail 4710 invoked by uid 111); 11 Apr 2017 17:37:45 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 11 Apr 2017 13:37:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Apr 2017 13:37:22 -0400
-Date:   Tue, 11 Apr 2017 13:37:22 -0400
-From:   Jeff King <peff@peff.net>
-To:     Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Knut Franke <k.franke@science-computing.de>
-Subject: Re: [PATCH v3 2/2] http: fix the silent ignoring of proxy
- misconfiguraion
-Message-ID: <20170411173722.asjrkpbbm4p6k6ov@sigill.intra.peff.net>
-References: <20170411171750.18624-1-ryazanov.s.a@gmail.com>
- <20170411171750.18624-3-ryazanov.s.a@gmail.com>
+        id S1752183AbdDKRky (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 13:40:54 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id B487520970;
+        Tue, 11 Apr 2017 17:40:48 +0000 (UTC)
+Date:   Tue, 11 Apr 2017 17:40:48 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 5/5] run-command: add note about forking and threading
+Message-ID: <20170411174048.GA18679@dcvr>
+References: <20170410234919.34586-1-bmwill@google.com>
+ <20170410234919.34586-6-bmwill@google.com>
+ <20170411002606.GJ8741@aiede.mtv.corp.google.com>
+ <20170411005348.GA30913@starla>
+ <20170411173445.GF36152@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170411171750.18624-3-ryazanov.s.a@gmail.com>
+In-Reply-To: <20170411173445.GF36152@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2017 at 08:17:50PM +0300, Sergey Ryazanov wrote:
-
-> Earlier, the whole http.proxy option string was passed to curl without
-> any preprocessing so curl could complain about the invalid proxy
-> configuration.
+Brandon Williams <bmwill@google.com> wrote:
+> On 04/11, Eric Wong wrote:
+> > On the other hand, I believe we should make run-command
+> > vfork-compatible (and Brandon's series is a big (but incomplete)
+> > step in the (IMHO) right direction); as anything which is
+> > vfork-safe would also be safe in the presence of threads+(plain) fork.
+> > With vfork; the two processes share heap until execve.
 > 
-> After the commit 372370f167 ("http: use credential API to handle proxy
-> authentication", 2016-01-26), if the user specified an invalid HTTP
-> proxy option in the configuration, then the option parsing is silently
-> fails and NULL will be passed to curl as a proxy. This forces curl to
+> I haven't looked to much into vfork, one of the benefits of vfork is
+> that it is slightly more preferment than vanilla fork correct?  What are
+> some of the other benefits of using vfork over fork?
 
-s/is silently/silently/
-
-> fall back to detecting the proxy configuration from the environment,
-> causing the http.proxy option ignoring.
-> 
-> Fix this issue by checking the proxy option parsing result. If parsing
-> failed then print error message and die. Such behaviour allows user to
-> quickly figure the proxy misconfiguration and correct it.
-
-Two minor grammos:
-
-s/error/an error/;
-s/user/the user/;
-
-In the earlier discussion you mentioned a warning, but I like this die()
-much better.
-
-Both patches look very clean, and nicely explained. Thanks for working
-on this.
-
--Peff
+Yes, mainly performance and perhaps portability...  Last I
+checked (over a decade ago); uCLinux without MMU could not
+fork processes; only vfork.
