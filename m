@@ -3,80 +3,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4082A1FA14
-	for <e@80x24.org>; Tue, 11 Apr 2017 08:57:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC3841FA14
+	for <e@80x24.org>; Tue, 11 Apr 2017 09:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754057AbdDKI5D (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 04:57:03 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:36252 "EHLO
-        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751047AbdDKI5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 04:57:02 -0400
-Received: by mail-oi0-f53.google.com with SMTP id r203so175781045oib.3
-        for <git@vger.kernel.org>; Tue, 11 Apr 2017 01:57:01 -0700 (PDT)
+        id S1754309AbdDKJV1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 05:21:27 -0400
+Received: from mail-lf0-f65.google.com ([209.85.215.65]:36180 "EHLO
+        mail-lf0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753367AbdDKJVZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 05:21:25 -0400
+Received: by mail-lf0-f65.google.com with SMTP id 75so5194010lfs.3
+        for <git@vger.kernel.org>; Tue, 11 Apr 2017 02:21:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=picussecurity.com; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=y+gzTMWQCaKOcTQseX95m3vK9GNfNKAwmPB/gOhkahY=;
-        b=jSCLxzRl0YS5kzv/VV/st7AjZC4JHekSO3ISX0FA79J83YV8Uwdfi0kA0iGYmzckXC
-         8Sl9d5o1Hvwn3osEFELFf+L3CYZKtrVr05qZ9QDovXwybyvW1HrrE3OAWITK0INYvbMD
-         /tQrFJnXSXqqdsVVASOO7FxmGdkP+sfjgC0BM=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=qGhtEzhBOuEDtKMqxxlVeWlKnn6VsfJjokGjyZBXZMo=;
+        b=YThp2p2/Eejira/gX37VDwuAsUuaEEfd6p6rhCTWyolMDbUNkxkkkVIowXSxbAOaXU
+         goPgBMvKcfpvfItPGsDkNYxM/k+PQ9Ec/X+2/4YpAZuiB8KW+sY5OxESC2s3o7LlFUbZ
+         xIYErT2JnCTNYU+W8ACDAboThl7n7w8mYjXW1bTTmSvs239E1cwtvKCy2+Y2qbEKx6jz
+         TvE85DpVihZyoA93BoTSqMJaE7fKvMkyI6Zobjkv4V+MNHzKbzrfM+6xJMn1kKLxtb/x
+         TYUa7l9/qfoLOXxbvPXtbzMzVDnICQih+79fL2WH5p2miQwLAREP1V7W9E9t7j6dEqAw
+         n53Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=y+gzTMWQCaKOcTQseX95m3vK9GNfNKAwmPB/gOhkahY=;
-        b=VwT5ZbjwgLRNsOVrofoqDwfGknAyeHr91w8CUD9b6+pgBc+ghZ55dDwmuA3FL4cA3v
-         WxHzLxCIot4cN2FB0lEJzRmqQ3U+RaBXyVwBiBuTyuOat5RDz8Vlli288NUQZxx0JrfE
-         9j/Su58lTifujH4zB64Z2fSnJwlHU5i2YdLDD6dE/P4PC31lfpXBPbhJq/HTqovcJDC/
-         QWHMuxTJDaQABWhs5ZsLqbec//0wEXkIgRQrYOAy8mgSuT9C2wOpTegGBF2B2tEdyuig
-         39zclPpuF6aIqp1XUl7mKssG7W2cACObmsR0IvLDZrCO7JINyFmRc4NehgJgT5WCecAG
-         Zd9w==
-X-Gm-Message-State: AFeK/H0LJRiNvzfX3g+E3FAQQhJlTMQ5kdf67+kC7Ktdy4IRRTLk2X84xim6KtDTYUZtwkc7AjbmyntR35xl9g==
-X-Received: by 10.202.173.85 with SMTP id w82mr32040878oie.100.1491901021206;
- Tue, 11 Apr 2017 01:57:01 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.74.145.1 with HTTP; Tue, 11 Apr 2017 01:57:00 -0700 (PDT)
-From:   =?UTF-8?Q?Enis_Bayramo=C4=9Flu?= <enis@picussecurity.com>
-Date:   Tue, 11 Apr 2017 11:57:00 +0300
-Message-ID: <CAMLReHYBVmuu5H015N1ShCD0iLNau9oLOabJhQ7xc=58rXQi+Q@mail.gmail.com>
-Subject: `git status` output is very misleading after a merge on a "detached HEAD"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=qGhtEzhBOuEDtKMqxxlVeWlKnn6VsfJjokGjyZBXZMo=;
+        b=QG7KJ6vFaVB8gX2oNPryabWTnMWvRpTTLxyCvq0F9s9uzGqBb3FpNKqLqhR7pdo8+R
+         3GJEzRCr0l7DgzD0KR4jB/aaCKSZfr+4UkkOPpNmKnzJfy+IwrhO0cg4nxQsM/jH2u+D
+         OkBy+KO3lRVEFVt0ZOfodfsPUUbSw+tid8T6ulKjRf4qLcbbk4zAQC56DkiOtnTPDYh9
+         3LY+4raMjg4Z8rZa/yQsG5kU7fqG0OUnIlJlwBQCAgvx3Nhc5jmnS/jMuP/CdN8ewFFl
+         e7t4QFzOvzHNCiS4+LKRVAcbMkKLzSFzM2izcPq0csXs581PZ2WznoiRSJdNGe/knkvw
+         aP8g==
+X-Gm-Message-State: AFeK/H0auyT5KyQR2swWSJBinWu7a9HQZVww8LOqgjjOcrIS/zxusolFaQLmxvVRV92oGQ==
+X-Received: by 10.46.1.98 with SMTP id 95mr16433104ljb.8.1491902483374;
+        Tue, 11 Apr 2017 02:21:23 -0700 (PDT)
+Received: from rsa-laptop.internal.lan ([217.25.229.52])
+        by smtp.gmail.com with ESMTPSA id y17sm3333455lja.61.2017.04.11.02.21.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 11 Apr 2017 02:21:22 -0700 (PDT)
+From:   Sergey Ryazanov <ryazanov.s.a@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] http: honnor empty http.proxy option to bypass proxy
+Date:   Tue, 11 Apr 2017 12:20:50 +0300
+Message-Id: <20170411092050.15867-1-ryazanov.s.a@gmail.com>
+X-Mailer: git-send-email 2.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've encountered a very misleading output from `git status`. Here's a
-sequence of events that demonstrates the issue:
+Curl distinguish between empty proxy address and NULL proxy address. In
+the first case it completly disable proxy usage, but if proxy address
+option is NULL then curl attempt to determine proxy address from
+http_proxy environment variable.
 
-$ git --version
-git version 2.12.0
+According to documentation, if http.proxy configured to empty string
+then git should bypass proxy and connects to the server directly:
 
-$ git checkout origin/master
+    export http_proxy=http://network-proxy/
+    cd ~/foobar-project
+    git config remote.origin.proxy ""
+    git fetch
 
-$ git status
-HEAD detached from origin/master
-nothing to commit, working directory clean
+Previously, proxy host was configured by one line:
 
-$ git merge --ff f3515b749be861b57fc70c2341c1234eeb0d5b87
+    curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
 
-$ git status
-HEAD detached from origin/master
-nothing to commit, working directory clean
+Commit 372370f (http: use credential API to handle proxy auth...) parses
+proxy option, extracts proxy host address and additionaly updates curl
+configuration, which makes previous call a noop:
 
-$ git rev-parse origin/master
-e1dc1baaadee0f1aef2d5c45d068306025d11f67
+    credential_from_url(&proxy_auth, curl_http_proxy);
+    curl_easy_setopt(result, CURLOPT_PROXY, proxy_auth.host);
 
-$ git rev-parse HEAD
-786cb6dd09897e0950a2bdc971f0665a059efd33
+But if proxy option is empty then proxy host field become NULL this
+force curl to fallback to proxy configuration detection from
+environment. This caused empty http.proxy option not working any more.
 
-I think it's extremely misleading that `git status` simply reports
-"HEAD detached from origin/master" while this simply happens to be a
-mildly relevant fact about some past state.
+Fix this issue by explicitly handling empty http.proxy option. This also
+makes code a bit more clear and should help us avoid such regressions in
+the future.
 
-Thanks and regards
+Signed-off-by: Sergey Ryazanov <ryazanov.s.a@gmail.com>
+---
+
+Changes since v1:
+ - explicitly handle this case instead of mangling the common code
+
+ http.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/http.c b/http.c
+index 96d84bb..8be75b2 100644
+--- a/http.c
++++ b/http.c
+@@ -836,8 +836,14 @@ static CURL *get_curl_handle(void)
+ 		}
+ 	}
+ 
+-	if (curl_http_proxy) {
+-		curl_easy_setopt(result, CURLOPT_PROXY, curl_http_proxy);
++	if (curl_http_proxy && curl_http_proxy[0] == '\0') {
++		/*
++		 * Handle case with the empty http.proxy value here to keep
++		 * common code clean.
++		 * NB: empty option disables proxying at all.
++		 */
++		curl_easy_setopt(result, CURLOPT_PROXY, "");
++	} else if (curl_http_proxy) {
+ #if LIBCURL_VERSION_NUM >= 0x071800
+ 		if (starts_with(curl_http_proxy, "socks5h"))
+ 			curl_easy_setopt(result,
+-- 
+2.10.2
+
