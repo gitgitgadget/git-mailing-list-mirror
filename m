@@ -6,96 +6,174 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C03420970
-	for <e@80x24.org>; Wed, 12 Apr 2017 02:39:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0F82209FA
+	for <e@80x24.org>; Wed, 12 Apr 2017 03:12:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752069AbdDLCjc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Apr 2017 22:39:32 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58008 "EHLO
+        id S1752057AbdDLDML (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Apr 2017 23:12:11 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:52979 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1751605AbdDLCjb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Apr 2017 22:39:31 -0400
+        with ESMTP id S1751686AbdDLDMK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Apr 2017 23:12:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D5A0D710D9;
-        Tue, 11 Apr 2017 22:39:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26E3B71683;
+        Tue, 11 Apr 2017 23:12:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7kXQjfqi5c0wU9p0bouCjR0ft3Y=; b=rlzedc
-        +i27mb+c3Z74swe5sC53bNaL2YObw9H1f7afFV13TJjMEUR9rtE2vfLw2l2MitPF
-        sGN8aEDOQ/P5yVhm/sKDi4f/MBRCzTNfIDu7hAZnRX81TpWnh7lQHunaLztLucUZ
-        vdIlZIAQ9MDW9KaiSGRo6e4vOEyEGC7JmKfh8=
+        :content-type; s=sasl; bh=7pKLDYs+XpMZHw46rAhqKedkfiA=; b=GNsAgQ
+        BvmphVyYmvacS/UXQczZYUG+TTBARgDHXRfOyiqI+mKCqA9G7E+YJ00gHLJmAOqr
+        vkX/r/FX8YC1lg6JvMJGXB9veWMqi818Mg6f+g1ENv1qc09qwBbz9XYPeVOuvBWe
+        d+PkQGiPThsgu/DaVxwC7N45RTM8Q2JmAkGoc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xbWyyCARKWhwakhqqtP/rOGYt1cr0oPK
-        ksHMIgBwxcAwkZ+SqrQU5b4UfFcZUQWTzJJQ+PKPZFE8HUjwN3SKZuoKeOBZRQUB
-        LXba12sKKW/1YVyzmsCtfIc1NAsRlzRB+zfyu3jDF6KgTtDbKAxTPgZ+PcoC+VYH
-        Y7nXgaz8/z4=
+        :content-type; q=dns; s=sasl; b=k2LKnhNLN5vQzg2duyOwCOi6UOD2Yf/u
+        B4XsqmvkrLn27iLkJjYfRKLgi2NCgbmWA+U3Djm786ploRC5iZe5RWEH4dHOBPag
+        lE0uczdQDkJkl08LkyQas6A40xedVDxkX6xkfOBDLpv+zGv/4XSwRc8Qfba7qjwj
+        LYdv4secJ8o=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CC1FC710D8;
-        Tue, 11 Apr 2017 22:39:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1EF8571682;
+        Tue, 11 Apr 2017 23:12:09 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3B06B710D7;
-        Tue, 11 Apr 2017 22:39:29 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8681B71680;
+        Tue, 11 Apr 2017 23:12:08 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        David Turner <dturner@twosigma.com>, git@vger.kernel.org
-Subject: Re: [PATCH v6] http.postbuffer: allow full range of ssize_t values
-References: <20170411181357.16580-1-dturner@twosigma.com>
-        <20170411182740.GO8741@aiede.mtv.corp.google.com>
-        <20170411194127.cfy2omkdwhbtkn63@sigill.intra.peff.net>
-Date:   Tue, 11 Apr 2017 19:39:27 -0700
-In-Reply-To: <20170411194127.cfy2omkdwhbtkn63@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 11 Apr 2017 15:41:27 -0400")
-Message-ID: <xmqqa87mqrhc.fsf@gitster.mtv.corp.google.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v9 3/3] read-cache: speed up add_index_entry during checkout
+References: <20170411191702.20134-1-git@jeffhostetler.com>
+        <20170411191702.20134-4-git@jeffhostetler.com>
+Date:   Tue, 11 Apr 2017 20:12:07 -0700
+In-Reply-To: <20170411191702.20134-4-git@jeffhostetler.com>
+        (git@jeffhostetler.com's message of "Tue, 11 Apr 2017 19:17:02 +0000")
+Message-ID: <xmqq37deqpyw.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 40653B52-1F29-11E7-9499-C260AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D03B7990-1F2D-11E7-9336-C260AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+git@jeffhostetler.com writes:
 
->> The only unresolved issue was whether we can count on curl being new
->> enough for CURLOPT_POSTFIELDSIZE_LARGE to be present.  I say
->> "unresolved" but it is resolved in my mind since git doesn't build and
->> pass tests with such old versions of curl --- what's unresolved is
->> formalizing what the oldest curl version is that we want to support.
->> And that doesn't need to hold this patch hostage.
+> From: Jeff Hostetler <jeffhost@microsoft.com>
 >
-> It could build on older curl with a minor fix; the regression is in
-> v2.12. So if we did want to continue to support the same versions of
-> curl we did in v2.11, we could apply that fix and then we _would_ care
-> about #ifdef-ing this.
-
-What would the fix be?  Have a code that notices that the value set
-to http.postbuffer is too large and ignore the request on the other
-side of #ifdef, i.e. when Git is built with older curl that lack
-CURLOPT_POSTFIELDSIZE_LARGE?
-
-Something like that may be prudent for the 'maint' track.  But I
-tend to agree that for feature releases, we should revisit what the
-oldest version we claim to support from time to time and raise the
-floor when we notice nobody has even been attempting to build the
-other side of the #ifdef (and during that exercise, those who do
-want to have older versions supported _can_ argue against removal of
-#ifdef with patch to keep both side of #ifdef working).  I fully
-agree with what you said earlier that it is irresponsible to the
-users to keep #ifdef that gives a false impression that we are
-maintaining both sides of them, when in reality the older side has
-bit-rotten without anybody even noticing.
-
-I suspect that it is a bit too late for the next release, but we can
-decide by mid May for the one after 2.13 if we waned to.
-
-> That isn't my preferred route; just pointing out that if the "oldest
-> curl" question isn't settled, that could still be relevant to this
-> patch. It doesn't have to be held hostage to the fix, but we should be
-> aware we are digging the hole deeper.
+> Teach add_index_entry_with_check() and has_dir_name()
+> to see if the path of the new item is greater than the
+> last path in the index array before attempting to search
+> for it.
 >
-> -Peff
+> During checkout, merge_working_tree() populates the new
+> index in sorted order, so this change will save at least 2
+> binary lookups per file.
+
+Smart and simple.
+
+> diff --git a/read-cache.c b/read-cache.c
+> index 97f13a1..a8ef823 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -918,9 +918,24 @@ static int has_dir_name(struct index_state *istate,
+>  	int stage = ce_stage(ce);
+>  	const char *name = ce->name;
+>  	const char *slash = name + ce_namelen(ce);
+> +	size_t len_eq_last;
+> +	int cmp_last = 0;
+> +
+> +	if (istate->cache_nr > 0) {
+> +		/*
+> +		 * Compare the entry's full path with the last path in the index.
+> +		 * If it sorts AFTER the last entry in the index and they have no
+> +		 * common prefix, then there cannot be any F/D name conflicts.
+> +		 */
+> +		cmp_last = strcmp_offset(name,
+> +			istate->cache[istate->cache_nr-1]->name,
+
+Style?  "istate->cache[istate->cache_nr - 1]->name"
+
+> +			&len_eq_last);
+> +		if (cmp_last > 0 && len_eq_last == 0)
+> +			return retval;
+> +	}
+
+Let me follow the logic aloud.  Say the last entry in the cache is
+"x/y".  If we came here with ce->name == "x", we need to worry about
+nuking the existing entry "x/y".  But if we have "zoo", that cannot
+possibly overlap and we can safely return 0.
+
+That sounds correct, except that it might be playing overly safe.
+If we came here with "xx", we still are safe, but len_eq_last would
+be non-zero.  Probably it is not worth the extra complexity to catch
+it here (rather than letting the loop below to handle it).
+
+>  	for (;;) {
+> -		int len;
+> +		size_t len;
+>  
+>  		for (;;) {
+>  			if (*--slash == '/')
+> @@ -930,6 +945,24 @@ static int has_dir_name(struct index_state *istate,
+>  		}
+>  		len = slash - name;
+
+Mental note: cmp_last may be 0, >0 or <0 at this point in the very
+first iteration of the loop.  It is not updated in the loop.  The
+variable len_eq_last are used to carry the information about the
+last entry we learned at the beginning of this function---the new
+special case happens only when the path we are adding sorts later
+than the last existing entry (i.e. cmp_last > 0).
+
+> +		if (cmp_last > 0) {
+> +			/*
+> +			 * If this part of the directory prefix (including the trailing
+> +			 * slash) already appears in the path of the last entry in the
+> +			 * index, then we cannot also have a file with this prefix (or
+> +			 * any parent directory prefix).
+> +			 */
+> +			if (len+1 <= len_eq_last)
+
+Style?  "len + 1".
+
+> +				return retval;
+> +			/*
+> +			 * If this part of the directory prefix (excluding the trailing
+> +			 * slash) is longer than the known equal portions, then this part
+> +			 * of the prefix cannot collide with a file.  Go on to the parent.
+> +			 */
+> +			if (len > len_eq_last)
+> +				continue;
+
+Hmph, is the reasoning used in the two conditionals above sound?
+Does this work correctly even when the last existing entry in the
+cache is marked with CE_REMOVE?
+
+> +		}
+> +
+>  		pos = index_name_stage_pos(istate, name, len, stage);
+>  		if (pos >= 0) {
+>  			/*
+> @@ -1021,7 +1054,16 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+>  
+>  	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
+>  		cache_tree_invalidate_path(istate, ce->name);
+> -	pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+> +
+> +	/*
+> +	 * If this entry's path sorts after the last entry in the index,
+> +	 * we can avoid searching for it.
+> +	 */
+> +	if (istate->cache_nr > 0 &&
+> +		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
+> +		pos = -istate->cache_nr - 1;
+> +	else
+> +		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+
+This one (unlike the change to has_dir_name()) is trivially and
+obviously correct.
+
+>  	/* existing match? Just replace it. */
+>  	if (pos >= 0) {
