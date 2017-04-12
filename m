@@ -2,138 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 435EC1FA14
-	for <e@80x24.org>; Wed, 12 Apr 2017 13:11:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4732D1FA14
+	for <e@80x24.org>; Wed, 12 Apr 2017 13:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754116AbdDLNL4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 09:11:56 -0400
-Received: from mout.kundenserver.de ([212.227.126.187]:53259 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752224AbdDLNLy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 09:11:54 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue002 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 0MeGdC-1chKVE3e7a-00PrHi; Wed, 12 Apr 2017 15:11:50 +0200
-Subject: Re: `git status` output is very misleading after a merge on a
- "detached HEAD"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <CAMLReHYBVmuu5H015N1ShCD0iLNau9oLOabJhQ7xc=58rXQi+Q@mail.gmail.com>
- <88df8638-9b7b-42c4-bb34-4e1a49d4c22d@grubix.eu>
- <CAMLReHYbuHmGTtBSUQq3bO=6ghz=rfP-=Eg=PvP0tkwZbM2Q1Q@mail.gmail.com>
- <CACBZZX7xqoZ3LboOjwvQvX3JRJFhjFC54+mfLOddLXzconrobw@mail.gmail.com>
- <5704E476-BD11-47D1-A15E-C1E29A1398AD@grubix.eu>
- <CACBZZX4W1kk2cnncWz1EVjA-WtFryYzNoiiDHR9+9VC4AKJhKg@mail.gmail.com>
-Cc:     =?UTF-8?Q?Enis_Bayramo=c4=9flu?= <enis@picussecurity.com>,
-        Git Mailing List <git@vger.kernel.org>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <61ef36d9-7f25-80d6-5216-554684bd54dd@grubix.eu>
-Date:   Wed, 12 Apr 2017 15:11:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1752209AbdDLNVn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Apr 2017 09:21:43 -0400
+Received: from mail-oi0-f50.google.com ([209.85.218.50]:33206 "EHLO
+        mail-oi0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752224AbdDLNVl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2017 09:21:41 -0400
+Received: by mail-oi0-f50.google.com with SMTP id b187so30971151oif.0
+        for <git@vger.kernel.org>; Wed, 12 Apr 2017 06:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=4hd8Uqqj7xreRP5SIcGVcjD9Ew8nHpHTUx1LOu0EYN8=;
+        b=CtCpnRreSlAZL5G09XB6VKvBS3lhLlCvX2D6k9ySV3BX7gskfDLw0N606cc90JP4qC
+         SZpELmEOHc2u3JoHmqfA/P2HA1dzIdq8ZSrCaic3iYY/28Uo4FbAWiQL/RtxnvqDz10C
+         GMtLS+NqV6fcmLxuAj11NdbaiFcygnaEb4mB4Ex2AW0DoUvh3Fo8jkIOgXz7MFxMa3l8
+         46lqg7uzj3kzZJnt099upfuVcdsGjwC7IcfBXhr8SAs6QDzbMod5pYSWBs94yxtowTLR
+         I2mZ02mGjV06exgnnTUBQ27RQRIv3mEv0/KsaM5zbPiI/0p9mc36qcwTKWcO6JXm6jNa
+         fmPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=4hd8Uqqj7xreRP5SIcGVcjD9Ew8nHpHTUx1LOu0EYN8=;
+        b=fVYlhLELDHlkhE3spLo96JrAJoUCylK9rYK8UlDXQCHON+Cfk1Aba3ys3HQNoUzaJd
+         clz2INwLOlt44c23IjqYDDKC7ich4HB2WyHali5XXcz9ciUZEtRStHx6ef4s5lpqXwO2
+         pR/Ht7noT2/jP30Dponx2nf9LHbLXnPjUAhv9M07yaOlqYqxeK7VrL4iN6T1rsJGFMjP
+         K4KduSHdDkJbTbk7t6idSgkFJMk5rRbZlEImUW2Wh6HUgw+KqG03k7bYQTRe/mjbA4pM
+         GxNGpl/zRl0bAnlIyGWx4M5XVExs1Ah38F2JMgVGnHGGZSlV0OnI4Ra4AU6gQzT32LTb
+         U7ow==
+X-Gm-Message-State: AN3rC/5QP18IDKLedytRUP1BTuIF0+vuol65V0W6749SrYD+oApBkCHsx8TB2xR6q9Tm9qmM1R72K1z19nnmxg==
+X-Received: by 10.157.68.146 with SMTP id v18mr4468231ote.128.1492003300669;
+ Wed, 12 Apr 2017 06:21:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX4W1kk2cnncWz1EVjA-WtFryYzNoiiDHR9+9VC4AKJhKg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:Kx9JrpN3SUBbS7Psb8n47FwCyo0BDJtejbQML82HuL850CfXqTM
- IyVqCaRNwt+C01lC6LWi57jMegLDDNZWSyZH287sg4hTK3tgVBzg4SLx8RK19I66PvxX1s4
- fidjKLXE9YqJWnTnAra1kUgoK25WbQxmW6gfjw9PzUHiW9tK0a21w4hGoG7DQ9aDdYEvCzP
- sviFAxrBNuf7lc2jWS5OA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:08ZT1UAjyaM=:EBZcid3Q2TLIjXH/R91MXY
- nqZuN2G8Rt9Ep9EFcJWeWJAvCLtM6pVLyURJdWFE6TwTpUDfdy4JYmVvn82H93zgZGnEKIP6Z
- YER/M8CK3nkBm9BimhlNUCkGC4+guIGAhyj8MOvr58I+ud6TQ2uDfrWdaP+1VSsuoxRzcKdnm
- RWsFHHV9aaqAirByelFYArE6jx7J6rtz4AAVQyyXndeYxtMZX8XvpAPFtcs5OaluzKMAP4b44
- zNkRN+/K+1oKC2F2RQHaA2G41xXsRd0tAjZyBR3x+/npUQj7aysN2e4x+vKM2F+bQdRKQgHTL
- 70ZZZwWNB/6vddeRE0SyIiQNU+H3Csr6eYhaYD3FJ9vTQCMiqQhW+4abrw1UhPcJHlrQzUSn5
- G8gyVuZz8MUMCdwGhdgRne1BnuSTxrXKpgHzd2vG94ajNjo9AfUyI2MyJDhywZlHwNkYpLDoa
- 0kuUUkbaoPvAStSKcW9msDx9skSt9Bb1AamCaMmThGc/CR/uo7k6KrtcbEY+GqH59tv9XBw90
- wyDlfc3XEJZZRZHGOoZe9/EuNAj2B79Q87eeNK6nFnTZujvPdYtH4mbII6LWIXNaVSgBeE91s
- WIV5d4jbq/9NN7aFKNfpLPak5EZeZLxUx119GrHIKL0tclMa1/7/nXV85MdItWfr0DRjO+8pJ
- HyEgUuKPMEVayihKaxzGzcuXaKyxMvLLid1O3TNFNOZfYWdgedjHSLvG8sKlwmDGFQ4Nf/0Kd
- T3hcUJR+1cFhCIKN
+Received: by 10.74.158.70 with HTTP; Wed, 12 Apr 2017 06:21:10 -0700 (PDT)
+In-Reply-To: <SN2PR03MB2333BCFD2E1A6A400706F94CB7000@SN2PR03MB2333.namprd03.prod.outlook.com>
+References: <20170407192357.948-1-kewillf@microsoft.com> <20170407192357.948-4-kewillf@microsoft.com>
+ <20170410102429.GB19325@ash> <SN2PR03MB2333BCFD2E1A6A400706F94CB7000@SN2PR03MB2333.namprd03.prod.outlook.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 12 Apr 2017 20:21:10 +0700
+Message-ID: <CACsJy8Dw8qfS6G71y3FoT9w7H=FABMx=5R=v8JcPCEHtv1vLcw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] reset.c: update files when using sparse to avoid data loss.
+To:     Kevin Willford <kewillf@microsoft.com>
+Cc:     Kevin Willford <kcwillford@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "peff@peff.net" <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason venit, vidit, dixit 12.04.2017 14:18:
-> On Wed, Apr 12, 2017 at 7:43 AM, Michael J Gruber <git@grubix.eu> wrote:
->> Am 11. April 2017 22:40:14 MESZ schrieb "Ævar Arnfjörð Bjarmason" <avarab@gmail.com>:
->>> On Tue, Apr 11, 2017 at 5:13 PM, Enis Bayramoğlu
->>>> HEAD detached from origin/master 1 commit ago,
->>>
->>> In lieu of that, which would need some of the rev-list machinery to be
->>> invoked on every git-status, I wonder if just saying "HEAD detached &
->>> diverged from origin/master" wouldn't be clearer:
->>>
->>> diff --git a/wt-status.c b/wt-status.c
->>> index 308cf3779e..79c8cfd1cf 100644
->>> --- a/wt-status.c
->>> +++ b/wt-status.c
->>> @@ -1542,7 +1542,7 @@ static void wt_longstatus_print(struct wt_status
->>> *s)
->>>                                if (state.detached_at)
->>>                                      on_what = _("HEAD detached at ");
->>>                                else
->>> -                                       on_what = _("HEAD detached from
->>> ");
->>> +                                       on_what = _("HEAD detached &
->>> diverged from ");
->>>                        } else {
->>>                                branch_name = "";
->>>                           on_what = _("Not currently on any branch.");
->>>
->>>
->>>
->>
->> No way. That would reduce the information that we give.
-> 
-> How does it reduce the information we give? Maybe I've missed
-> something about what "from" means here, as opposed to "at", but it
-> seems to me to mean the same thing as "diverged" by definition, i.e.
-> we detached from the branch but we diverged from it.
+On Wed, Apr 12, 2017 at 5:30 AM, Kevin Willford <kewillf@microsoft.com> wrote:
+> The loss of the skip-worktree bits is part of the problem if you are talking
+> about modified files.  The other issue that I was having is when running a reset
+> and there were files added in the commit that is being reset, there will not
+> be an entry in the index and not a file on disk so the data for that file is
+> completely lost at that point.  "status" also doesn't include anything about
+> this loss of data.  On modified files status will at least have the file as deleted
+> since there is still an index entry but again the previous version of the file
+> and it's data is lost.
 
-No, "at" means we're still at that commit - detached but not diverged.
-"from" means we only started from that commit, but are not at it any more.
+Well, we could have "deleted" index entries, those marked with
+CE_REMOVE. They are never written down to file though, so 'status'
+won't benefit from that. Hopefully we can restore the file before the
+index file is written down and we really lose skip-worktree bits?
 
-> Saying "diverged"
-> just makes it clearer, how does it reduce the information we give?
+> To me this is totally unexpected behavior, for example if I am on a commit
+> where there are only files that where added and run a reset HEAD~1 and
+> then a status, it will show a clean working directory. Regardless of
+> skip-worktree bits the user needs to have the data in the working directory
+> after the reset or data is lost which is always bad.
 
-I misread your patch on my mobile phone, sorry. I thought you meant to
-replace both "at" and "from" by "diverged from" because you considered
-them synonymous.
-
-But your patch touches just the" from" case and emphasizes the "diverge"
-aspect, which is fine, of course.
-
->> Note that the difference between from and at is also: are there commits that we could lose when we switch away, that is: that git checkout would warn us about?
-> 
-> Right, but I don't see how that's in any way conflicting or mutually
-> exclusive with saying before hand that we've diverged from the branch.
-> 
->> Maybe improve the doc instead?
-> 
-> Aside from whether my patch makes any sense, the solution to a UX
-> issue really can't be "oh this just needs to be documented". For every
-> user who's confused by some interface we provide a *tiny* minority of
-> them go and exhaustively read the docs for an explanation, will just
-> remain confused.
-> 
-> I think saying from v.s. at is way too subtle, I for one have been
-> missing it for years until this thread, that's bad UX, git's also used
-> by a lot of non-native English speakers who may not at all get the
-> subtle difference between at and from in this context, or if they do
-> think the UI is using that subtlety to tell them something.
-
-Well, we have to find the right balance between clarity and brevity - an
-interface that is too chatty is a nightmare. That's why I suggested both
-doc changes and additional information.
-
-What do you think about the ahead/behind info as suggested? That should
-be more informative both qualitatively (something diverged) and
-quantitatively (by how much).
-
-Michael
+I agree we no longer have a place to save the skip-worktree bit, we
+have to restore the state back as if skip-worktree bit does not exist.
+It would be good if we could keep the logic in unpack_trees() though.
+For example, if the file is present on disk even if skip-worktree bit
+is on, unpack_trees() would abort instead of silently overwriting it.
+This is a difference between skip-worktree and assume-unchanged bits.
+If you do explicit checkout_entry() you might have to add more checks
+to keep behavior consistent.
+-- 
+Duy
