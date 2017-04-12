@@ -7,160 +7,115 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C7971FA14
-	for <e@80x24.org>; Wed, 12 Apr 2017 17:34:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AC851FA14
+	for <e@80x24.org>; Wed, 12 Apr 2017 17:47:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754818AbdDLReJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 13:34:09 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:34843 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754887AbdDLReH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 13:34:07 -0400
-Received: by mail-io0-f169.google.com with SMTP id r16so48453365ioi.2
-        for <git@vger.kernel.org>; Wed, 12 Apr 2017 10:34:06 -0700 (PDT)
+        id S1755258AbdDLRrS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Apr 2017 13:47:18 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:34610 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755145AbdDLRqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2017 13:46:17 -0400
+Received: by mail-io0-f182.google.com with SMTP id a103so51693273ioj.1
+        for <git@vger.kernel.org>; Wed, 12 Apr 2017 10:46:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=gUy9vL5+0gSI8zhH8Q3N2agZ2C8AGq9Ese8XMyDDK8A=;
-        b=atsXVLayX0UJ7boJeLfawCOJnWWkw4+nwsDEb8pX8V8nYxr0CRZIyNS/v78y+UiXlJ
-         A12H7mmMbP4iX8TMsmFpc2pOC4fRanuDOZXnsZBd7Lf9/R5RmYa3y6TwBhfeYRlGsHNR
-         SrADllSE9A4hNOS6oI+0pR809wLHLW+ObjbGY=
+        bh=AzwvTRITvfIfmCLR4TBfpZxYJDu9D1ZNr8XXwn5B9XY=;
+        b=K1289931UlZeJb67asjPnIVa2JhAOrCJ6cqOiBPpjl0ExmixSjPAJqzCjPyUK1VrtS
+         LUMWNHKawut010P3lCN/a6Bh2fEd5IbSGEVXtkLhmDvKsJOXLcFbfw3GidMKvF2xvz6V
+         DkHkNeKquwnaVracAhb/t5AqIVVgDs0tgmPXo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gUy9vL5+0gSI8zhH8Q3N2agZ2C8AGq9Ese8XMyDDK8A=;
-        b=o88JEjnsXzdVCQQWL64puPf7Lsy3V3WLwi6q7To2Ev+t0flImq0steazOZyiTjepd0
-         37y7s3cZtaVTubXO+rHaEbGnZDeuwaY3Wztb5s7u5zAtCLqNYe8K9J9uFAoqO/rhysLO
-         m7i6sxUxYd6TIWerQLaZaTj7Pqo9aaMsIU8sCuKLlPi6gBibod2Ltuc4XEHSXEJQt8Dv
-         /cZmq7eHFb995sGvEtP1ssH+zLLomft2zkWp9jUJfwdeI3AEpiweghAIpfGQkDRvqeSE
-         FLNapCS8YLnZk3xl2+jk8h5Ts819s32oRm3x37ukHT3zgOdBWXNxZb4ufuZtwpx3t0Yl
-         DiAA==
-X-Gm-Message-State: AN3rC/44+RHn1vO/GgBm3KmT35DMSIhmohRbUT4t6ZjF5Tt4ma+U6Wjc
-        //Xp7yVX2tKWUGh2
-X-Received: by 10.36.117.5 with SMTP id y5mr12705676itc.19.1492018446079;
-        Wed, 12 Apr 2017 10:34:06 -0700 (PDT)
+        bh=AzwvTRITvfIfmCLR4TBfpZxYJDu9D1ZNr8XXwn5B9XY=;
+        b=haBf8sbx004NhlAEksOBd/LJ29AKqUKJPwciMSUloXZlwaHu+HbPc0kkhx71J5nt3b
+         elbqiag13NoUa+bh4OFrzboIRUX9dBBgHcbGt18NubFcmBqQzNId0yjrTiVPY2UQe5Vp
+         jNdIf8+IlWAR9zSxpLkcNqDlB9umPDIDPcAsbTL7plv3wkRu1LfwmIl2FcGvzVqcUlLQ
+         8hQuUss2yhYxE3Avl7heLGDkfIb1Fj7Av+cFq8L6hW33qkPn7sysljP+uYR4XeTmrUZk
+         5wJ4gWhovGPd+zE74CNBt87tEZPHuJotDnzxiUNq0hC/T8hwLtl9PFisq8/g9jD4IA+D
+         9zKg==
+X-Gm-Message-State: AN3rC/6il1FLcGefEUPBd8jeNuGDlVlENHrtJkqCphI6B8bpSYFKmEHbv3u5Hqkm1bpQGCki
+X-Received: by 10.36.184.134 with SMTP id m128mr7316846ite.7.1492019171924;
+        Wed, 12 Apr 2017 10:46:11 -0700 (PDT)
 Received: from localhost ([2601:401:c500:7dd8:212c:7f4d:6af3:f7a7])
-        by smtp.gmail.com with ESMTPSA id j193sm9730775ioe.59.2017.04.12.10.34.05
+        by smtp.gmail.com with ESMTPSA id 123sm9760742iow.28.2017.04.12.10.46.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Apr 2017 10:34:05 -0700 (PDT)
-Date:   Wed, 12 Apr 2017 13:34:04 -0400
+        Wed, 12 Apr 2017 10:46:11 -0700 (PDT)
+Date:   Wed, 12 Apr 2017 13:46:10 -0400
 From:   Taylor Blau <ttaylorr@github.com>
 To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-        git@vger.kernel.org, gitster@pobox.com, peff@peff.net, e@80x24.org
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        tboegi@web.de, e@80x24.org
 Subject: Re: [PATCH v3 4/4] convert: add "status=delayed" to filter process
  protocol
-Message-ID: <20170412173404.GA49694@Ida>
+Message-ID: <20170412174610.GB49694@Ida>
 References: <20170409191107.20547-1-larsxschneider@gmail.com>
  <20170409191107.20547-5-larsxschneider@gmail.com>
- <a7fd3bef-49b2-0b0a-8ca4-89e41a402661@web.de>
- <388C3F2A-AC77-499F-9C74-216F5DC00FD8@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <388C3F2A-AC77-499F-9C74-216F5DC00FD8@gmail.com>
+In-Reply-To: <20170409191107.20547-5-larsxschneider@gmail.com>
 User-Agent: Mutt/1.8.0 (2017-02-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > (And at this point, may I suggest to change "delay-id" into "request-id=1" ?
->
-> If there is no objection by another reviewer then I am happy to change it.
+I think this is a great approach and one that I'd be happy to implement in LFS.
+The additional capability isn't too complex, so I think other similar filters to
+LFS shouldn't have a hard time implementing it either.
 
-I think "delay-id" may be more illustrative of what's occurring in this request.
-That being said, my preference would be that we remove the
-"delay-id"/"request-id" entirely from the protocol, and make Git responsible for
-handling the path lookup by a hashmap.
+I left a few comments, mostly expressing approval to the documentation changes.
+I'll leave the C review to someone more expert than me.
 
-Is the concern that a hashmap covering all entries in a large checkout would be
-too large to keep in memory? If so, keeping an opaque ID as a part of the
-protocol is something I would not object to.
++1 from me on the protocol changes.
 
-> >> +packet:          git> 0000
-> >> +packet:          git> 0000  # empty content!
-> >> +packet:          git< status=success
-> >> +packet:          git< 0000
-> >> +packet:          git< SMUDGED_CONTENT
-> >> +packet:          git< 0000
-> >> +packet:          git< 0000
-> >
-> > OK, good.
-> >
-> > The quest is: what happens next ?
-> >
-> > 2 things, kind of in parallel, but we need to prioritize and serialize:
-> > - Send the next blob
-> > - Fetch ready blobs
-> > - And of course: ask for more ready blobs.
-> > (it looks as if Peff and Jakub had useful comments already,
-> >  so I can stop here?)
->
-> I would like to keep the mechanism as follows:
->
-> 1. sends all blobs to the filter
-> 2. fetch blobs until we are done
->
-> @Taylor: Do you think that would be OK for LFS?
+> +Delay
+> +^^^^^
+> +
+> +If the filter supports the "delay" capability, then Git can send the
+> +flag "delay-able" after the filter command and pathname.
 
-I think that this would be fine for LFS and filters of this kind in general. For
-LFS in particular, my initial inclination would be to have the protocol open
-support writing blob data back to Git at anytime during the checkout process,
-not just after all blobs have been sent to the filter.
+Nit: I think either way is fine, but `can_delay` will save us 1 byte per each
+new checkout entry.
 
-That being said, I don't think this holds up in practice. The blobs are too big
-to fit in memory anyway, and will just end up getting written to LFS's object
-cache in .git/lfs/objects.
+> +"delay-id", a number that identifies the blob, and a flush packet. The
+> +filter acknowledges this number with a "success" status and a flush
+> +packet.
 
-Since they're already in there, all we would have to do is keep the list of
-`readyIds map[int]*os.File` in memory (or even map int -> LFS OID, and open the
-file later), and then `io.Copy()` from the open file back to Git.
+I mentioned this in another thread, but I'd prefer, if possible, that we use the
+pathname as a unique identifier for referring back to a particular checkout
+entry. I think adding an additional identifier adds unnecessary complication to
+the protocol and introduces a forced mapping on the filter side from id to
+path.
 
-This makes me think of adding another capability to the protocol, which would
-just be exchanging paths on disk in `/tmp` or any other directory so that we
-wouldn't have to stream content over the pipe. Instead of responding with
+Both Git and the filter are going to have to keep these paths in memory
+somewhere, be that in-process, or on disk. That being said, I can see potential
+troubles with a large number of long paths that exceed the memory available to
+Git or the filter when stored in a hashmap/set.
 
-    packet:          git< status=success
-    packet:          git< 0000
-    packet:          git< SMUDGED_CONTENT
-    packet:          git< 0000
-    packet:          git< 0000
+On Git's side, I think trading that for some CPU time might make sense. If Git
+were to SHA1 each path and store that in a hashmap, it would consume more CPU
+time, but less memory to store each path. Git and the filter could then exchange
+path names, and Git would simply SHA1 the pathname each time it needed to refer
+back to memory associated with that entry in a hashmap.
 
-We could respond with:
+> +by a "success" status that is also terminated with a flush packet. If
+> +no blobs for the delayed paths are available, yet, then the filter is
+> +expected to block the response until at least one blob becomes
+> +available. The filter can tell Git that it has no more delayed blobs
+> +by sending an empty list.
 
-    packet:          git< status=success
-    packet:          git< 0000
-    packet:          git< /path/to/contents.dat # <-
-    packet:          git< 0000
-    packet:          git< 0000
-
-Git would then be responsible for opening that file on disk (the filter would
-guarantee that to be possible), and then copying its contents into the working
-tree.
-
-I think that's a topic for later discussion, though :-).
-
-> > In general, Git should not have a unlimited number of blobs outstanding,
-> > as memory constraints may apply.
-> > There may be a config variable for the number of outstanding blobs,
-> > (similar to the window size in other protocols) and a variable
-> > for the number of "send bytes in outstanding blobs"
-> > (similar to window size (again!) in e.g TCP)
-> >
-> > The number of outstanding blobs is may be less important, and it is more
-> > important to monitor the number of bytes we keep in memory in some way.
-> >
-> > Something like "we set a limit to 500K of out standng data", once we are
-> > above the limit, don't send any new blobs.
->
-> I don't expect the filter to keep everything in memory. If there is no memory
-> anymore then I expect the filter to spool to disk. This keeps the protocol simple.
-> If this turns out to be not sufficient then we could improve that later, too.
-
-Agree.
+I think the blocking nature of the `list_available_blobs` command is a great
+synchronization mechanism for telling the filter when it can and can't send new
+blob information to Git. I was tenatively thinking of suggesting to remove this
+command and instead allow the filter to send readied blobs in sequence after all
+unique checkout entries had been sent from Git to the filter. But I think this
+allows approach allows us more flexibility, and isn't that much extra
+complication or bytes across the pipe.
 
 
 --
