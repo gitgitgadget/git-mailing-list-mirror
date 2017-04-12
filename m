@@ -2,108 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3E371FA14
-	for <e@80x24.org>; Wed, 12 Apr 2017 18:37:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6959C1FA14
+	for <e@80x24.org>; Wed, 12 Apr 2017 19:22:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752372AbdDLSht (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 14:37:49 -0400
-Received: from mail-qk0-f176.google.com ([209.85.220.176]:35767 "EHLO
-        mail-qk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752282AbdDLShr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 14:37:47 -0400
-Received: by mail-qk0-f176.google.com with SMTP id f133so30772613qke.2
-        for <git@vger.kernel.org>; Wed, 12 Apr 2017 11:37:47 -0700 (PDT)
+        id S1752643AbdDLTWQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Apr 2017 15:22:16 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34534 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752299AbdDLTWO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2017 15:22:14 -0400
+Received: by mail-pf0-f181.google.com with SMTP id c198so18029306pfc.1
+        for <git@vger.kernel.org>; Wed, 12 Apr 2017 12:22:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=RC/GzIToWp1RNcak63MZQ64jbNbfPMdX1uo/wp3bHuk=;
-        b=YDc1pIaO/w6agHEIxOqrSTuAPHw4NMj3QjEUJvsFNSz9/O9AH13MTUkzfWXlNWJwcK
-         h2F4cft/ahqrdJskwou1hq2LwTEvRysTdEd4cpVywbOQYzLEswjX1VGN2O8Xkot7KNgB
-         s5Sf/h9AEd54J6gKSx5MZ31iAj/uqwHVVLdYOeBDTMkglTkrF4LRCfK+nwQ/ChxBigGf
-         DoGnviu9nGJ1doTglnLHZZXm9BgeLyciArdCWZN73Nsz6Jfl/caoQWUP/xwuDNuZrorh
-         rJGyFGfu/ouC7v+8VBXLnq3EIignAbwwJRzl+s67O7b6oVlEtTPhXiOZkfywiCQKErtV
-         FK4w==
+        d=google.com; s=20161025;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=5vkmjY8CaJhF8/hJe0MgTpimAeEZhqRKevWpB9nWuOA=;
+        b=d1rTxOFDY70ITmvrZOPbkUVeH+GL88m/MlBEQu0w2EsS4Q8DYUUgrkDRBR/2MUsMqr
+         6pcKotvZEUm6bGkkp/84BhuB1kboHWS95h7cVIyvsxlJzFnbccJm1l1Sc1rzDOJ6VxO7
+         0nc1/zAeQUza+J8jyfSP2Ol7q3fYegk6GTEQEU4sBcJwp6vT75qAKMN6syIdY5PWDgGg
+         rDaF2lVbcNGsnM07WXm8wVjAVEEQFf6k5xlsN73W4tSNWWGjSinPYm9IMa0Z/yJGiRqE
+         mBSwtG6Bg9awdXQ+qsClOnjJ0B8zLrkUngjHMpIHxVrzFVLpTATuvSot5rem+oc5PyIv
+         2mfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=RC/GzIToWp1RNcak63MZQ64jbNbfPMdX1uo/wp3bHuk=;
-        b=HEhZqYxkK5RI3RqtJd2MkINUl14lEviX/OsWgKDz43yX0ta1/Nag4hYM/7dq318y+P
-         vk5N/ti6kU9GcOcfqffcIrR6atMiEnYugBxdn5nWMR4ZI7VyBew9xQyd+mHSAMldPbny
-         KM6h9ojIqFhQF9AwB/Iao3MRhr7O/UwMjsdAItqOL1DmiPgRQU7ML+DWDvwWkA8i/d9q
-         V4KYB/Amo1XewpRNiPRupoG0Ai3dSkpzpw3Rq9NSxWc4VTl4iS8FPybkcdB+Gh1CHhQF
-         IjgHcxAVuomT9CC8bJSbpa3gRcuNaVLQ8X1e5BxhzsQp+6IKPDWHj3yeMfKrzSUk55Pl
-         sE8Q==
-X-Gm-Message-State: AFeK/H0VLlnZWR5LdykNv8PrPXVNvreDIhaaDvMbOhfOoRK9auBq2towdXrnWrpkP7NLyL96aGPnXu7hwAtJaQ==
-X-Received: by 10.55.70.20 with SMTP id t20mr66971185qka.166.1492022266835;
- Wed, 12 Apr 2017 11:37:46 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.12.129.36 with HTTP; Wed, 12 Apr 2017 11:37:46 -0700 (PDT)
-From:   Andrew Hoyt <andrewhoyt@gmail.com>
-Date:   Wed, 12 Apr 2017 14:37:46 -0400
-Message-ID: <CAOiUhTHqbjN=S5eFWVs1x2dvCeyai_ys6EhWvKPjj21QozEtOg@mail.gmail.com>
-Subject: git subtree bug
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=5vkmjY8CaJhF8/hJe0MgTpimAeEZhqRKevWpB9nWuOA=;
+        b=G4POHVCmyDLb4sEzI0U707mh1RmMNN3d9elU4X07T+GqSWPAAUa6p5W3zrn5ZrwXlm
+         zS+lMdSfw3LM8U6nbrk7otj3dLJgL/fYX9OyuAO+XMmQQ4/98Rqo7XjaghvvsMzaLjNi
+         S0YHsBEkonzr25sq9gHIWHHApSrlyEgl8dy/BDYHuh0m4+rlCh5YxGeSbbGU0K9wxLAU
+         o2GIzuCiu/Y4eIiQILSHxQscNZUcH2PaMiKDTHsG0T53O3onzoIBuE9unhPE4ZaWzj+A
+         fSol0QCDuql2NunqLxrJo9EoZ0krEQOxuLlNL7XrIhTHqgZmH7ojIt9rqzOKIfdQgMhD
+         di0Q==
+X-Gm-Message-State: AN3rC/6CSqtrcoW7K9rRinmuY6y1a90t3QEryI9GuiFfSNChhPX4XcxL/T51i6wr/Yna0yFi
+X-Received: by 10.84.222.134 with SMTP id x6mr37709073pls.52.1492024933211;
+        Wed, 12 Apr 2017 12:22:13 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:ec58:2634:958b:ef])
+        by smtp.gmail.com with ESMTPSA id a77sm11276794pfj.1.2017.04.12.12.22.11
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 12 Apr 2017 12:22:12 -0700 (PDT)
+Date:   Wed, 12 Apr 2017 12:22:10 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 1/5] run-command: convert sane_execvp to sane_execvpe
+Message-ID: <20170412192210.GB79499@google.com>
+References: <20170410234919.34586-1-bmwill@google.com>
+ <20170410234919.34586-2-bmwill@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170410234919.34586-2-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi guys,
+On 04/10, Brandon Williams wrote:
+> Convert 'sane_execvp()' to 'sane_execvpe()' which optionally takes a
+> pointer to an array of 'char *' which should be used as the environment
+> for the process being exec'd.  If no environment is provided (by passing
+> NULL instead) then the already existing environment, as stored in
+> 'environ', will be used.
 
-I've been using git subtrees extensively to include third party tools
-in my projects. Today I stumbled across a bug with git-subtree when I
-was trying to update the jacoco (https://github.com/jacoco/jacoco.git)
-subtree in one of my projects.
+Turns out we probably can't use execvpe since it isn't portable.  From
+some of the other discussion it makes more sense to just move to using
+execve instead.
 
-The problem stems from adding a project as a subtree with a prefix
-that has the same name as a top-level subdirectory in that project.
-From then on, any changes made to the top-level directory of that
-sub-project will cause issues when you attempt a git subtree pull
-(e.g. the entire subtree AND the parent project will be deleted in
-your working directory).
+> 
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  cache.h       |  3 +--
+>  exec_cmd.c    |  2 +-
+>  run-command.c | 15 ++++++++++-----
+>  3 files changed, 12 insertions(+), 8 deletions(-)
+> 
+> diff --git a/cache.h b/cache.h
+> index 5c8078291..10d40ecae 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -2185,8 +2185,7 @@ int checkout_fast_forward(const unsigned char *from,
+>  			  const unsigned char *to,
+>  			  int overwrite_ignore);
+>  
+> -
+> -int sane_execvp(const char *file, char *const argv[]);
+> +int sane_execvpe(const char *file, char *const argv[], char *const envp[]);
+>  
+>  /*
+>   * A struct to encapsulate the concept of whether a file has changed
+> diff --git a/exec_cmd.c b/exec_cmd.c
+> index fb94aeba9..c375f354d 100644
+> --- a/exec_cmd.c
+> +++ b/exec_cmd.c
+> @@ -118,7 +118,7 @@ int execv_git_cmd(const char **argv) {
+>  	trace_argv_printf(nargv.argv, "trace: exec:");
+>  
+>  	/* execvp() can only ever return if it fails */
+> -	sane_execvp("git", (char **)nargv.argv);
+> +	sane_execvpe("git", (char **)nargv.argv, NULL);
+>  
+>  	trace_printf("trace: exec failed: %s\n", strerror(errno));
+>  
+> diff --git a/run-command.c b/run-command.c
+> index 574b81d3e..682bc3ca5 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -168,10 +168,15 @@ static int exists_in_PATH(const char *file)
+>  	return r != NULL;
+>  }
+>  
+> -int sane_execvp(const char *file, char * const argv[])
+> +int sane_execvpe(const char *file, char * const argv[], char *const envp[])
+>  {
+> -	if (!execvp(file, argv))
+> -		return 0; /* cannot happen ;-) */
+> +	if (envp) {
+> +		if (!execvpe(file, argv, envp))
+> +			return 0; /* cannot happen ;-) */
+> +	} else {
+> +		if (!execvp(file, argv))
+> +			return 0; /* cannot happen ;-) */
+> +	}
+>  
+>  	/*
+>  	 * When a command can't be found because one of the directories
+> @@ -226,7 +231,7 @@ static int execv_shell_cmd(const char **argv)
+>  	struct argv_array nargv = ARGV_ARRAY_INIT;
+>  	prepare_shell_cmd(&nargv, argv);
+>  	trace_argv_printf(nargv.argv, "trace: exec:");
+> -	sane_execvp(nargv.argv[0], (char **)nargv.argv);
+> +	sane_execvpe(nargv.argv[0], (char **)nargv.argv, NULL);
+>  	argv_array_clear(&nargv);
+>  	return -1;
+>  }
+> @@ -442,7 +447,7 @@ int start_command(struct child_process *cmd)
+>  		else if (cmd->use_shell)
+>  			execv_shell_cmd(cmd->argv);
+>  		else
+> -			sane_execvp(cmd->argv[0], (char *const*) cmd->argv);
+> +			sane_execvpe(cmd->argv[0], (char *const*) cmd->argv, NULL);
+>  		if (errno == ENOENT) {
+>  			if (!cmd->silent_exec_failure)
+>  				error("cannot run %s: %s", cmd->argv[0],
+> -- 
+> 2.12.2.715.g7642488e1d-goog
+> 
 
-Steps to reproduce:
-====================================================================
-mkdir --parents /tmp/project/prj
-cd /tmp/project
-echo "file in subdirectory" > prj/file_in_subdirectory
-echo "file in root" > file_in_root
-git init
-git add .
-git commit -m "Init subproject repository"
-
-mkdir /tmp/test
-cd /tmp/test
-git init
-git commit --allow-empty -m "Init test repository"
-git subtree add --prefix prj /tmp/project master
-
-cd /tmp/project
-echo "temp file" > temp
-git add temp
-git commit -m "add temp file"
-
-cd /tmp/test
-git subtree pull --prefix=prj /tmp/project master
-====================================================================
-
-In the above example, the problem occurs because we've added the
-subtree with the prefix "prj" when it happens to contain a top-level
-directory also called "prj". A change is then made to "project"s
-top-level directory (the file "temp" is created) and thus the "git
-subtree pull" command puts "test" into a broken state. If we had added
-the subtree with any other prefix, the problem would not have
-occurred. Likewise, if we had added "temp" anywhere other than the top
-level of "project" the subtree pull would not have caused problems.
-
-Anyhow, I'm not sure if you guys are aware of the problem or not, but
-I figured I'd bring it to your attention just in case.
-
-Thanks so much,
-- Andrew
+-- 
+Brandon Williams
