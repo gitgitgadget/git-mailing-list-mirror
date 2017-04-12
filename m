@@ -6,75 +6,75 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 887931FA14
-	for <e@80x24.org>; Wed, 12 Apr 2017 12:52:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 075E61FA14
+	for <e@80x24.org>; Wed, 12 Apr 2017 12:53:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753458AbdDLMwV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 08:52:21 -0400
-Received: from cloud.peff.net ([104.130.231.41]:60602 "EHLO cloud.peff.net"
+        id S1753290AbdDLMxp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Apr 2017 08:53:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60610 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752697AbdDLMwU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 08:52:20 -0400
-Received: (qmail 18426 invoked by uid 109); 12 Apr 2017 12:52:17 -0000
+        id S1752286AbdDLMxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2017 08:53:44 -0400
+Received: (qmail 18503 invoked by uid 109); 12 Apr 2017 12:53:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Apr 2017 12:52:17 +0000
-Received: (qmail 12078 invoked by uid 111); 12 Apr 2017 12:52:38 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Apr 2017 12:53:43 +0000
+Received: (qmail 12106 invoked by uid 111); 12 Apr 2017 12:54:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Apr 2017 08:52:38 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Apr 2017 08:52:14 -0400
-Date:   Wed, 12 Apr 2017 08:52:14 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 12 Apr 2017 08:54:04 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Apr 2017 08:53:40 -0400
+Date:   Wed, 12 Apr 2017 08:53:40 -0400
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        David Turner <dturner@twosigma.com>, git@vger.kernel.org
-Subject: Re: [PATCH v6] http.postbuffer: allow full range of ssize_t values
-Message-ID: <20170412125214.uiex4ludmgahsvme@sigill.intra.peff.net>
-References: <20170411181357.16580-1-dturner@twosigma.com>
- <20170411182740.GO8741@aiede.mtv.corp.google.com>
- <20170411194127.cfy2omkdwhbtkn63@sigill.intra.peff.net>
- <xmqqa87mqrhc.fsf@gitster.mtv.corp.google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Danny Sauer <danny@dannysauer.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make git log work for git CWD outside of work tree
+Message-ID: <20170412125340.do7m2pjyignw6fjh@sigill.intra.peff.net>
+References: <20170409022128.21337-1-danny@dannysauer.com>
+ <alpine.DEB.2.20.1704091238560.4268@virtualbox>
+ <413a1456-cac6-56c8-ea45-38f14cf958ae@dannysauer.com>
+ <xmqqvaqdqfhe.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CLBY22j3EjR4PW3n+K6PWUzb-HCgxTVeCGpwtApZF-6g@mail.gmail.com>
+ <20170410171352.s7r7tzheadxjlulw@sigill.intra.peff.net>
+ <CACsJy8B8osxd-0axJ9giaMYKuict2h1zW8TcYYuRFGXfBbdF0A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqa87mqrhc.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <CACsJy8B8osxd-0axJ9giaMYKuict2h1zW8TcYYuRFGXfBbdF0A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 11, 2017 at 07:39:27PM -0700, Junio C Hamano wrote:
+On Wed, Apr 12, 2017 at 01:30:31PM +0700, Duy Nguyen wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> The only unresolved issue was whether we can count on curl being new
-> >> enough for CURLOPT_POSTFIELDSIZE_LARGE to be present.  I say
-> >> "unresolved" but it is resolved in my mind since git doesn't build and
-> >> pass tests with such old versions of curl --- what's unresolved is
-> >> formalizing what the oldest curl version is that we want to support.
-> >> And that doesn't need to hold this patch hostage.
+> On Tue, Apr 11, 2017 at 12:13 AM, Jeff King <peff@peff.net> wrote:
+> > On Mon, Apr 10, 2017 at 07:01:00PM +0700, Duy Nguyen wrote:
+> >> An alternative is, when you have found out you need to read .mailmap,
+> >> you call setup_work_tree() then, which prepares the worktree for you
+> >> (including moving back to cwd) or dies if worktree does not exist, or
+> >> no-op if worktree has already been asked by somebody. Many commands do
+> >> lazy worktree initialization this way.
 > >
-> > It could build on older curl with a minor fix; the regression is in
-> > v2.12. So if we did want to continue to support the same versions of
-> > curl we did in v2.11, we could apply that fix and then we _would_ care
-> > about #ifdef-ing this.
+> > I think this is much more than just .mailmap, though. For instance, I
+> > have noticed a similar problem with .gitattributes:
 > 
-> What would the fix be?  Have a code that notices that the value set
-> to http.postbuffer is too large and ignore the request on the other
-> side of #ifdef, i.e. when Git is built with older curl that lack
-> CURLOPT_POSTFIELDSIZE_LARGE?
+> Urgh. assuming that we should not read .gitattributes if there's no
+> worktree to read from (similar to the "defaults to .git" situation),
+> how about
+> 
+>  - if mailmap stuff is requested, setup worktree, or die trying
+>  - if worktree is detected, but setup code does not jump to it, do it
+>  - if no worktree is detected, tell git-log to stop reading .gitattributes
+> 
+> We probablly want some "if no wotktree then die()" in .gitattributes
+> and .gitignore code, just in case it's incorrectly and accidentally
+> executed in exotic setup
 
-The fix I meant there is for a different spot. During the course of the
-discussion, somebody noticed that v2.12 does not compile using older
-curls:
-
-  http://public-inbox.org/git/20170404133241.GA15588@gevaerts.be/
-
-So _if_ we care about those older curls, then we should consider that a
-regression and fix it on the v2.12-maint track.
-
-And likewise, we should not accept this patch into master without a
-similar fix. Which is probably, yes, an ifdef for older curl that uses
-the non-LARGE version of POSTFIELDSIZE and defines xcurl_off_t() to
-check against "long" and complain when it overflows.
+I didn't check what we do with attributes when there is no worktree. The
+behavior you describe above sounds right. But note that in my test we
+_do_ have a worktree, but just look in the wrong location. So doing a
+chdir to $GIT_WORK_TREE would just work.
 
 -Peff
