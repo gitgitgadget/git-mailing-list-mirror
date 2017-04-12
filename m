@@ -2,188 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 428CF20970
-	for <e@80x24.org>; Wed, 12 Apr 2017 06:15:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C130A20960
+	for <e@80x24.org>; Wed, 12 Apr 2017 06:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752193AbdDLGPu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 02:15:50 -0400
-Received: from mail-oi0-f53.google.com ([209.85.218.53]:35992 "EHLO
+        id S1752508AbdDLGbD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Apr 2017 02:31:03 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:36684 "EHLO
         mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751164AbdDLGPs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 02:15:48 -0400
-Received: by mail-oi0-f53.google.com with SMTP id r203so20816361oib.3
-        for <git@vger.kernel.org>; Tue, 11 Apr 2017 23:15:48 -0700 (PDT)
+        with ESMTP id S1751159AbdDLGbC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2017 02:31:02 -0400
+Received: by mail-oi0-f53.google.com with SMTP id r203so21098904oib.3
+        for <git@vger.kernel.org>; Tue, 11 Apr 2017 23:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=picussecurity.com; s=google;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dMHkWp/fohwUVmG8preGQ1YFJDmL9HTJEm4QqAkWkys=;
-        b=aDv01+PVv61aOr8Erbbp8Yau0cfk6RiG7izXDU2Uf6BdUku4n/ZBSg5ZiW6lYYvqFh
-         JBNjAXMfj2JeFeF6KMAWNQJd5lmfzUvP264c2wwYHQ1o6yYhuXiIVpTxZFpN+ylNqa+B
-         UsTiYELJSFd4KDUu0pfy4AecGQeOOygSGqAIw=
+         :cc;
+        bh=t/rJSkIxV5rS4ZuVdMJn5DfMsmbrsskHOsxi8YhQ7Z8=;
+        b=HiMZEuX/Var+yklSlHW1KSxOYz6m1yDv9Y8OaRBUZ90Cftlvwr7YS2cHR8PS4xOqFo
+         P5ssapopV7M9pTfDP2490obtk8lJFbRVeQUmOJgpMh4hTEjxQXs48VD4yGE5+hCg/hya
+         OVbV9zFFa/o0Ks7mLgVaP9O5QaUolcIrcmx0TrLv3yWjH+gO7ep2uoYcNSzuriYGru4X
+         gdwYmmmwIhNGa9P50j2q1e+VUX/o6Gc1JEJdUmajfqzd2SM3SF1mj11CyQhex/R/Or5g
+         yXLp97nkxuoT9QEk7z0ocGlnpX6OGbqHw9ZsnmXnNp1T1KIR5gN0/TTvOn+VrvmdlfhK
+         RK4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dMHkWp/fohwUVmG8preGQ1YFJDmL9HTJEm4QqAkWkys=;
-        b=JC38wruEmyUMILc9jxBdigxxPytGTuuWy61HUnQzlOoAsJtoZnRvRJGXRDYG+Bhs7z
-         F5ndqtn+CetSr9urrGcHNOHWU67qrCJYf3zvYvcLMP6UKRRfwtcd9w00y7fJ/JnbJqgv
-         KsUrNj6CI9vua2vFQNw/1PWP3MlUx/Ldly+TeOZM1/LaBTIS6psmMXxp1/sXjyCUBwK/
-         ft5HGIFBS3fUxiKxi/Hm8KAowYOkS83PHyj9tB+j14KGX7CxW5PRivKBQ4rgCnjghrjc
-         9COcmvyPG53MXmhlU4EnaZFU2T32XK09YR7tBrAAXAkK0Cafadb/DNP49k6CNFUWGyaj
-         u41Q==
-X-Gm-Message-State: AN3rC/6lSON6XPoHGhhcqMi/ekLkaSEOZ+SKMicgxkx34cJdk3/c3K3FvgjE/C66ZwvAopPbCFOMp0QBVpRkPQ==
-X-Received: by 10.157.25.23 with SMTP id j23mr1602769ota.9.1491977747898; Tue,
- 11 Apr 2017 23:15:47 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=t/rJSkIxV5rS4ZuVdMJn5DfMsmbrsskHOsxi8YhQ7Z8=;
+        b=QlHkJtk7jZ6pWz55qzW8+vdQ6ttTf2PY+CrTq36rcsKO5rYOaq19QAdKDRWG60EDmV
+         ERwZl5jpttynfVdZLCxI0eYhWYksSNuU0EfwAji57L4pH4fMz8Co6YzWxodVLDLtDwXB
+         aOkxMNrqfg6dGrulLJ5C7QziBs83lsdvyxB7WN44c7hnbqxRGeOn2Wm2Pq9TlLIBb3ea
+         PY5u8IQ4SSa3PCILybKoqAsu3/v6+KHh2Nfx/15nMuqt/yMqfi6gLz7gvnt8nHNRfSzP
+         AboZSbHMBp0wA1aOmkJwXhytvXr5kRHRoBQzMOjYgsazmcPnEAVC9IfAQA1QFJBIohHq
+         GDgw==
+X-Gm-Message-State: AN3rC/4knGjwnmYGihU8BAKVsvcQFhrcoZ3aDGQz7pcFrhuLr5Gd2Gv/WnHk+k7/y/kVTuuP6ixnxiUvPxlrCA==
+X-Received: by 10.157.40.243 with SMTP id s106mr6616692ota.271.1491978661555;
+ Tue, 11 Apr 2017 23:31:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.145.1 with HTTP; Tue, 11 Apr 2017 23:15:47 -0700 (PDT)
-In-Reply-To: <5704E476-BD11-47D1-A15E-C1E29A1398AD@grubix.eu>
-References: <CAMLReHYBVmuu5H015N1ShCD0iLNau9oLOabJhQ7xc=58rXQi+Q@mail.gmail.com>
- <88df8638-9b7b-42c4-bb34-4e1a49d4c22d@grubix.eu> <CAMLReHYbuHmGTtBSUQq3bO=6ghz=rfP-=Eg=PvP0tkwZbM2Q1Q@mail.gmail.com>
- <CACBZZX7xqoZ3LboOjwvQvX3JRJFhjFC54+mfLOddLXzconrobw@mail.gmail.com> <5704E476-BD11-47D1-A15E-C1E29A1398AD@grubix.eu>
-From:   =?UTF-8?Q?Enis_Bayramo=C4=9Flu?= <enis@picussecurity.com>
-Date:   Wed, 12 Apr 2017 09:15:47 +0300
-Message-ID: <CAMLReHa2M=h+cWm_9qqiL0n+E1+AFzHXqiBG45fGiGUBTdkseg@mail.gmail.com>
-Subject: Re: `git status` output is very misleading after a merge on a
- "detached HEAD"
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+Received: by 10.74.158.70 with HTTP; Tue, 11 Apr 2017 23:30:31 -0700 (PDT)
+In-Reply-To: <20170410171352.s7r7tzheadxjlulw@sigill.intra.peff.net>
+References: <20170409022128.21337-1-danny@dannysauer.com> <alpine.DEB.2.20.1704091238560.4268@virtualbox>
+ <413a1456-cac6-56c8-ea45-38f14cf958ae@dannysauer.com> <xmqqvaqdqfhe.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8CLBY22j3EjR4PW3n+K6PWUzb-HCgxTVeCGpwtApZF-6g@mail.gmail.com> <20170410171352.s7r7tzheadxjlulw@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 12 Apr 2017 13:30:31 +0700
+Message-ID: <CACsJy8B8osxd-0axJ9giaMYKuict2h1zW8TcYYuRFGXfBbdF0A@mail.gmail.com>
+Subject: Re: [PATCH] Make git log work for git CWD outside of work tree
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Danny Sauer <danny@dannysauer.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2017 at 8:43 AM, Michael J Gruber <git@grubix.eu> wrote:
-> Am 11. April 2017 22:40:14 MESZ schrieb "=C3=86var Arnfj=C3=B6r=C3=B0 Bja=
-rmason" <avarab@gmail.com>:
->>On Tue, Apr 11, 2017 at 5:13 PM, Enis Bayramo=C4=9Flu
->><enis@picussecurity.com> wrote:
->>>> Well, what do you suggest as an alternative?
->>>>
->>>> Git tells you that you are in detached state and where you came from
->>>> (detached from).
->>>
->>> I think it'd be best if git status somehow indicated that you're no
->>> longer at the same commit. Maybe something like:
->>>
->>> $ git status
->>> HEAD detached from origin/master, no longer at the same commit
->>> nothing to commit, working directory clean
->>
->>I'm not saying this is clear, I didn't know this until I read the code
->>just now, but for what it's worth it says "detached at" if you're
->>detached from BRANCH but at the same commit, and "detached from" if
->>you're now on a different commit.
->>
+On Tue, Apr 11, 2017 at 12:13 AM, Jeff King <peff@peff.net> wrote:
+> On Mon, Apr 10, 2017 at 07:01:00PM +0700, Duy Nguyen wrote:
+>> An alternative is, when you have found out you need to read .mailmap,
+>> you call setup_work_tree() then, which prepares the worktree for you
+>> (including moving back to cwd) or dies if worktree does not exist, or
+>> no-op if worktree has already been asked by somebody. Many commands do
+>> lazy worktree initialization this way.
 >
-> That's what I explained in my first reply which the OP quoted in a choppe=
-d way.  I think he even misquoted the git output he got.
->
-> It's the difference between from and at.
+> I think this is much more than just .mailmap, though. For instance, I
+> have noticed a similar problem with .gitattributes:
 
-You're right, I hadn't noticed the difference, I really thought I
-copied the git output verbatim from the console, but I must've been
-confused while switching windows. Sorry about that.
+Urgh. assuming that we should not read .gitattributes if there's no
+worktree to read from (similar to the "defaults to .git" situation),
+how about
 
-I consider myself fairly fluent in English, but it's not my native
-language. If you think head detached "from" vs. "at" is immediately
-and unambiguously clear about what's going on, then I guess it's not
-worth changing the behavior.
+ - if mailmap stuff is requested, setup worktree, or die trying
+ - if worktree is detected, but setup code does not jump to it, do it
+ - if no worktree is detected, tell git-log to stop reading .gitattributes
 
->
->
->>> or, to be more informative
->>>
->>> HEAD detached from origin/master 1 commit ago,
->>
->>In lieu of that, which would need some of the rev-list machinery to be
->>invoked on every git-status, I wonder if just saying "HEAD detached &
->>diverged from origin/master" wouldn't be clearer:
->>
->>diff --git a/wt-status.c b/wt-status.c
->>index 308cf3779e..79c8cfd1cf 100644
->>--- a/wt-status.c
->>+++ b/wt-status.c
->>@@ -1542,7 +1542,7 @@ static void wt_longstatus_print(struct wt_status
->>*s)
->>                                if (state.detached_at)
->>                                      on_what =3D _("HEAD detached at ");
->>                                else
->>-                                       on_what =3D _("HEAD detached from
->>");
->>+                                       on_what =3D _("HEAD detached &
->>diverged from ");
->>                        } else {
->>                                branch_name =3D "";
->>                           on_what =3D _("Not currently on any branch.");
->>
->>
->>
->
-> No way. That would reduce the information that we give.
->
-> Note that the difference between from and at is also: are there commits t=
-hat we could lose when we switch away, that is: that git checkout would war=
-n us about?
->
-> Maybe improve the doc instead?
->
->>
->>> On Tue, Apr 11, 2017 at 5:55 PM, Michael J Gruber <git@grubix.eu>
->>wrote:
->>>> Enis Bayramo=C4=9Flu venit, vidit, dixit 11.04.2017 10:57:
->>>>> I've encountered a very misleading output from `git status`. Here's
->>a
->>>>> sequence of events that demonstrates the issue:
->>>>>
->>>>> $ git --version
->>>>> git version 2.12.0
->>>>>
->>>>> $ git checkout origin/master
->>>>>
->>>>> $ git status
->>>>> HEAD detached from origin/master
->>>>> nothing to commit, working directory clean
->>>>
->>>> Hmm. My Git would display "detached at" here as long as you are on
->>the
->>>> commit that you detached from.
->>>>
->>>>> $ git merge --ff f3515b749be861b57fc70c2341c1234eeb0d5b87
->>>>>
->>>>> $ git status
->>>>> HEAD detached from origin/master
->>>>> nothing to commit, working directory clean
->>>>>
->>>>> $ git rev-parse origin/master
->>>>> e1dc1baaadee0f1aef2d5c45d068306025d11f67
->>>>>
->>>>> $ git rev-parse HEAD
->>>>> 786cb6dd09897e0950a2bdc971f0665a059efd33
->>>>>
->>>>> I think it's extremely misleading that `git status` simply reports
->>>>> "HEAD detached from origin/master" while this simply happens to be
->>a
->>>>> mildly relevant fact about some past state.
->>>>>
->>>>> Thanks and regards
->>>>>
->>>>
->>>> Well, what do you suggest as an alternative?
->>>>
->>>> Git tells you that you are in detached state and where you came from
->>>> (detached from).
->>>>
->>>> Michael
->
-
-Thanks,
-Enis
+We probablly want some "if no wotktree then die()" in .gitattributes
+and .gitignore code, just in case it's incorrectly and accidentally
+executed in exotic setup
+-- 
+Duy
