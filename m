@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED4AD1FA14
-	for <e@80x24.org>; Wed, 12 Apr 2017 13:58:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C43531FA14
+	for <e@80x24.org>; Wed, 12 Apr 2017 14:02:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753290AbdDLN6Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 09:58:24 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:34792 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752923AbdDLN6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 09:58:22 -0400
-Received: by mail-pg0-f65.google.com with SMTP id o123so5495255pga.1
-        for <git@vger.kernel.org>; Wed, 12 Apr 2017 06:58:22 -0700 (PDT)
+        id S1752497AbdDLOCQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Apr 2017 10:02:16 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:33982 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752500AbdDLOCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2017 10:02:14 -0400
+Received: by mail-pf0-f195.google.com with SMTP id o126so5268218pfb.1
+        for <git@vger.kernel.org>; Wed, 12 Apr 2017 07:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=uYruuXpYtNXiRIZPkS2mTGmz8I71MBgtr8QlJkV7qC0=;
-        b=WBZEj604gIBH+2++dA8xH+pZbQDBvnc0AMGG7lneWZW+Rgr8/uBavlwnnsHTf3kXJV
-         SyI0FCzlmFYqKe2xdAmQJ3A9IGTkaRJGmA6HzH2NTe3kXePcNE1YaJ5+nTQiuaZ32+da
-         02FMStjavcaf5CrXnGebAMmKvHrsEdjusUsjOJZQGtV42wNSVUHrePmVotPrOOVAQknt
-         HqMFh3BFabMtfPm5hqdjBE1pONV4zwmZwou6PX6xBNET0Q2Kn/DVXPVkG1K6BdR3z5F+
-         9+a5oPpgA6ZaNd5Zk38ePSzH/WxPArXyBsLn3G5E5xbd5s3LChWTc77PoQeCs9YTpmz4
-         x3MQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zi3qhSdC3CVDo4YQrLo81jqCscL9Srxxm/xszpAUa/s=;
+        b=kPKBNBERoEsmamOlEsszvPAZNgoV2WJJy2faC5gik5i39Sim5yMAdhcHYLKQLykvFY
+         lUZ6G+eZI7w7J+mOhC4dSytyx78n9cum8sRcsSyNzMY9kPjxTnP25Id7hnLMutcyb9MW
+         e89JEHjH3NRpi55HqVfX8NAYVd+yoDAazVZjgu8vSnewgHKBgtnjS5ZGV4HO1P6f/7E2
+         USN8ejCGK0/ysLlxOpGEh+KPkFkCNs90XhWZPO/SkIketh24+xmCNdL0LswB2+teeElV
+         a75ZIHfObggcloC9vPsgsNoqA7vvhLglV8fOirMgTlAvjOT19eD0xWt0RTszhzAfCi4z
+         nwTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=uYruuXpYtNXiRIZPkS2mTGmz8I71MBgtr8QlJkV7qC0=;
-        b=FWxyQZi8xtgxr8g3hjZViN1hdR9CYOg4iv+gtz2I5ktjV9AJWXTqVDXctlNWLl8FoU
-         73OiB4fIBr+Ny5KEG6aBLykr7DqwpAzYHMs4HHo7YYmVwh93pzkQQkx27DjY4asRtTR4
-         S+MnLe7ly3/YXaFBvcRYuSvchjGNfVb1Rj9VJWrJuR8g2YFbrRihen+Rj1LboJ06orGc
-         0RC9F5WCI1EKMrg6fKNBgo3Ux2a7ENy0I3lqR4LREhLHwXtq0Ok2B4NQtv62Ya+y3wzV
-         NRqNqSFlASwH+3BebQeqVH7aRGusdmMGFOU7wQgczL1GwZIjFmiukvWjPphm/x6LWblW
-         LzyA==
-X-Gm-Message-State: AN3rC/6lzcbMpbhoTX43Xkc3PbHLx42ykinF0Ztz7nSl24R3fpkX29Vfwk7rqS9PG1/e4w==
-X-Received: by 10.98.149.196 with SMTP id c65mr29094152pfk.37.1492005501710;
-        Wed, 12 Apr 2017 06:58:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zi3qhSdC3CVDo4YQrLo81jqCscL9Srxxm/xszpAUa/s=;
+        b=i/Y/dQ6gHb4nQWLY2o+hKN07MxftsJxQoDwvDWN7dB/0vZXXu6+fhijTIkyrBr8m4b
+         cQvBcvY7jRSdPdFx+aHdrVRaDLVezMlA+swyBrM5zfYiUiDuyh+KOVejWWoWs1HIoG5u
+         pm8QG9SbcSHIDb7qwIl8/i56e0iXUqyeSKKsHgKP69s/di+Llgyw6fHZQ/uNcmfJVTAU
+         YuhR+nF5HNGdcNlenUDQa6D93epYf2Y4SUhWmXayUpoMls8LqKfV4lWUN/7RR/S/Ls8Z
+         O3iyNDMROWWhCXXxVtvg4Q40a6ADfjUoCT6mTpM4+YSN42IDL9vr5R6VFMfJvkWWalqY
+         4K8w==
+X-Gm-Message-State: AFeK/H1AaIh8vytMUTrgPTumT6Y09Lu93m4891MdGMU2q47+kBi0P5ORSkHCDXdWfpuhrw==
+X-Received: by 10.98.144.4 with SMTP id a4mr45851834pfe.243.1492005734167;
+        Wed, 12 Apr 2017 07:02:14 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id z188sm36944010pgb.3.2017.04.12.06.58.18
+        by smtp.gmail.com with ESMTPSA id m69sm36953082pfc.33.2017.04.12.07.02.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Apr 2017 06:58:21 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 12 Apr 2017 20:58:15 +0700
+        Wed, 12 Apr 2017 07:02:13 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 12 Apr 2017 21:02:09 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     David.Taylor@dell.com,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH] worktree add: add --lock option
-Date:   Wed, 12 Apr 2017 20:58:05 +0700
-Message-Id: <20170412135805.29837-1-pclouds@gmail.com>
+Subject: [PATCH] worktree: change 'worktree' to 'working tree' in help text
+Date:   Wed, 12 Apr 2017 21:01:53 +0700
+Message-Id: <20170412140153.30196-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <63F1AEE13FAE864586D589C671A6E18B0CFBF7@MX203CL03.corp.emc.com>
-References: <63F1AEE13FAE864586D589C671A6E18B0CFBF7@MX203CL03.corp.emc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,103 +66,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As explained in the document. This option has an advantage over the
-command sequence "git worktree add && git worktree lock": there will be
-no gap that somebody can accidentally "prune" the new worktree (or soon,
-explicitly "worktree remove" it).
+We have been trying to keep the terminology consistent on the
+user-facing front. Let's keep sticking to "working tree".
 
-"worktree add" does keep a lock on while it's preparing the worktree.
-If --lock is specified, this lock remains after the worktree is created.
+While at there, change 'other' to 'another'. The latter is probably more
+correct.
 
-Suggested-by: David Taylor <David.Taylor@dell.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- A patch that adds --lock may look like this.
+ builtin/worktree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- Documentation/git-worktree.txt |  7 ++++++-
- builtin/worktree.c             | 12 +++++++++++-
- t/t2025-worktree-add.sh        |  6 ++++++
- 3 files changed, 23 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 553cf8413f..b472acc356 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -9,7 +9,7 @@ git-worktree - Manage multiple working trees
- SYNOPSIS
- --------
- [verse]
--'git worktree add' [-f] [--detach] [--checkout] [-b <new-branch>] <path> [<branch>]
-+'git worktree add' [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<branch>]
- 'git worktree list' [--porcelain]
- 'git worktree lock' [--reason <string>] <worktree>
- 'git worktree prune' [-n] [-v] [--expire <expire>]
-@@ -107,6 +107,11 @@ OPTIONS
- 	such as configuring sparse-checkout. See "Sparse checkout"
- 	in linkgit:git-read-tree[1].
- 
-+--lock::
-+	Keep the working tree locked after creation. This is the
-+	equivalent of `git worktree lock` after `git worktree add`,
-+	but without race condition.
-+
- -n::
- --dry-run::
- 	With `prune`, do not remove anything; just report what it would
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 9993ded41a..3dab07c829 100644
+index 3dab07c829..b8ea1ef966 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -24,6 +24,7 @@ struct add_opts {
- 	int force;
- 	int detach;
- 	int checkout;
-+	int keep_locked;
- 	const char *new_branch;
- 	int force_new_branch;
- };
-@@ -305,7 +306,15 @@ static int add_worktree(const char *path, const char *refname,
- done:
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
--	unlink_or_warn(sb.buf);
-+	if (!ret && opts->keep_locked) {
-+		/*
-+		 * Don't keep the confusing "initializing" message
-+		 * after it's already over.
-+		 */
-+		truncate(sb.buf, 0);
-+	} else {
-+		unlink_or_warn(sb.buf);
-+	}
- 	argv_array_clear(&child_env);
- 	strbuf_release(&sb);
- 	strbuf_release(&symref);
-@@ -328,6 +337,7 @@ static int add(int ac, const char **av, const char *prefix)
- 			   N_("create or reset a branch")),
- 		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
- 		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
-+		OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
- 		OPT_END()
- 	};
- 
-diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
-index b618d6be21..6dce920c03 100755
---- a/t/t2025-worktree-add.sh
-+++ b/t/t2025-worktree-add.sh
-@@ -63,6 +63,12 @@ test_expect_success '"add" worktree' '
- 	)
- '
- 
-+test_expect_success '"add" worktree with lock' '
-+	git rev-parse HEAD >expect &&
-+	git worktree add --detach --lock here-with-lock master &&
-+	test_must_be_empty .git/worktrees/here-with-lock/locked
-+'
-+
- test_expect_success '"add" worktree from a subdir' '
- 	(
- 		mkdir sub &&
+@@ -330,7 +330,7 @@ static int add(int ac, const char **av, const char *prefix)
+ 	char *path;
+ 	const char *branch;
+ 	struct option options[] = {
+-		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in other worktree")),
++		OPT__FORCE(&opts.force, N_("checkout <branch> even if already checked out in another working tree")),
+ 		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
+ 			   N_("create a new branch")),
+ 		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
 -- 
 2.11.0.157.gd943d85
 
