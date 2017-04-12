@@ -2,111 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEA291FA14
-	for <e@80x24.org>; Wed, 12 Apr 2017 22:03:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3C3B1FA14
+	for <e@80x24.org>; Wed, 12 Apr 2017 22:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752372AbdDLWDX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 18:03:23 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:35542 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752031AbdDLWDV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 18:03:21 -0400
-Received: by mail-ua0-f194.google.com with SMTP id g30so2815250uab.2
-        for <git@vger.kernel.org>; Wed, 12 Apr 2017 15:03:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=tqfEhBvdvKM/GraGEpNSgjNf/vsDRreJgQdXXrkOWqk=;
-        b=iZyEBWTgTi730HPcuCmftAkzWoao+nectxjOQGjLf9eeab7aAi24rCLaiRhtj5NEQC
-         LbPTKHEswBztMRGWF7rcNoYgbujDbWTNAirtlAghuF8UOkv8rWsjf2ume6ZOSC1ZRdgI
-         3klYbNy0IYzR+dbNwYdsdPgSsJvZr9W0elsy0jxdCmlB3kPzM0s2LJGpykb/CYAVMNLH
-         JNnari7BhajZGn+TNl9yBmf89KTTAS4Wu5TSqZWdB2anFhMoL9fZGE+x+Gd6U4sQdTAw
-         JJJMqPk7suXwtVOdGZjV+r58tfpqOs5kaWTQjW0x4ujQI309TuO1Ur3qlkuABsXEy4qM
-         vQMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=tqfEhBvdvKM/GraGEpNSgjNf/vsDRreJgQdXXrkOWqk=;
-        b=efHlUs4anjlF+1HZZ2eerG4LbOO2bXT0IIFkMDht42gyc4DDF35X+r5VfFqUTckJy9
-         YC04xulnocJ6XX/5aKi+InyFS2o4HU6U6pIl/30otl4LIREi+fkgs2yb9tqjFbdfjvk8
-         hbm7Y8SX7Iw0jeV31R8HwcfSigWvJyGrokV/mb2OyF7ACfUjyIC19waxcyuytNg0v/j4
-         raLZM6sUHG0BfxtPRSMK/EVvV8yq4ugJw0lJa8uvlJGbXGgiG/NTMGvBU/1bTuGuFHNC
-         +rfFa/FzoV/wSUqqHZWsFmEuI8z1EcW+KUnTzrTngWqhRiDpgSuNY9oZQpK6vF5VPn4l
-         uEyA==
-X-Gm-Message-State: AN3rC/46Qm/f43DvZcVH0v6ma/lGwvSHTkHMRDTZwZFspNonhVxxJsbEv4C2prOU5/lT6XuuWUe4C4Rjg6X/CA==
-X-Received: by 10.176.82.238 with SMTP id w43mr2733498uaw.171.1492034600419;
- Wed, 12 Apr 2017 15:03:20 -0700 (PDT)
+        id S1752256AbdDLWFN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Apr 2017 18:05:13 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49220 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751647AbdDLWFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Apr 2017 18:05:11 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LkgEO-1cNz6X10VA-00aTZk; Thu, 13
+ Apr 2017 00:05:09 +0200
+Date:   Thu, 13 Apr 2017 00:05:08 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stephen Hicks <stephenhicks@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: Rebase sequencer changes prevent exec commands from modifying
+ the todo file?
+In-Reply-To: <CAKNkOnOkSgFei7jpck8Z7tH+jYn_MXvarA86GAadT8jJt4aO-g@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1704122355440.2135@virtualbox>
+References: <CAKNkOnM366uiJKkz31hS8V3NTa8qksP2pXrH4+F-zodZaNdsqg@mail.gmail.com> <alpine.DEB.2.20.1703021617510.3767@virtualbox> <CAKNkOnOkSgFei7jpck8Z7tH+jYn_MXvarA86GAadT8jJt4aO-g@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.176.23.211 with HTTP; Wed, 12 Apr 2017 15:03:20 -0700 (PDT)
-In-Reply-To: <20170412005011.46tr4mgsxk7chgfz@sigill.intra.peff.net>
-References: <20170410125911.6800-1-szeder.dev@gmail.com> <20170410135837.2ukgksfxdlcfqldy@sigill.intra.peff.net>
- <CAM0VKj=4Utapk9iFasChkPSdkWxB5WiHtpZGPUYKMC5LKrnGXw@mail.gmail.com>
- <20170410163557.gn3mlcalfhhncbtt@sigill.intra.peff.net> <CAM0VKjkdqjbkqOF6ucymtuBAAgBVJQ6SGe4Ep2gqVBtNp=s_CA@mail.gmail.com>
- <20170410170154.qwzaolflrvsduwzd@sigill.intra.peff.net> <426f08b9-79c8-0c5b-e07e-4dd6a49243e9@kdbg.org>
- <CAM0VKjmuCjLBFAErXP06wu0+-7SdWVMaVu_g25Q4V-uQz8T1uA@mail.gmail.com> <20170412005011.46tr4mgsxk7chgfz@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Thu, 13 Apr 2017 00:03:20 +0200
-Message-ID: <CAM0VKjkuoCotm8FB5qdTQsC0SaJiwBA9dXmdLJdSs8NwLdY8fQ@mail.gmail.com>
-Subject: Re: [PATCH] t6500: don't run detached auto gc at the end of the test script
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        David Turner <dturner@twosigma.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:oFeZM97PW2LadqgLK++QO/yrrXm+t+EYEeE+1Q6XWdGbnytR+fd
+ sJlX6/kDwRlfWb7OnOXJ/Uo+eiiXcrMC5/70EIj1MOcdJVAk/EHi6YHub7qoCs4X7gqtuaO
+ Qcufky/3QkY0Emk66RlUgNveBwPOnsQpBys55T/0RsxN93+BLYsKLveNISei8mf0Y6pA6hj
+ wY4tclnPKF8HdI0rMQwWQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O8++8PF70JU=:IxnW6WQg8zW5HYA2UZJ1Dz
+ zo5kAukdEmIx1jpCfsExRUQ00qamwDUJOHSceD/oSJxmFhwr6uputi1byQOsyXxMNvOxeeh1m
+ R3dND8p7rlO0TlepQhG2kT9kEQYVJR2NhFGOUJsJPhw6LEAlvwY8IWL/6rDwPRHAM7DaaGeAj
+ SaOcvmPibL7xtrh9G3X8ZObiJ9mbPgFuucu48ppTgZONW44oiTenoTzDyuy1MVHJKzx28mJ4z
+ mhIJXluC8MJQhWD3vzgC0r7ZUYCPQKgtc/h4NvlJjJq04g8ffaHv0QdNL1gu5fTQxmwa6d90U
+ U3vibc2wV/mUlnJICKU7u4YTMRQgRbrGZCSUC6FM4mPpenExiiG299f3Ytvagjy9naPA7NBWi
+ dRtV7GgmOcwqs3Be9usvpHxyGEi7grB4/CAZeeQhZVw6s1MkptX0+Ex6WlmjHnWG0dRetJgd4
+ ezjs0GluXPZ4dpV1OVHj0THvrJz1BixqbymiemqBckkZP+VlYByKwuVzU8XJ8KVuz4hrMgkLH
+ k46DRSWQhuerr1S+sr6YtKTZTsn6TPe2IauMWVehLhZDs5jWwsGbHSFs/AClmbQ9kXUZPqfKc
+ Lm+OZ0UdcoDYmOcnFasFo8R4c8TrgaMtexvX7N0m0Ef2eJGK3enGERWwSmoa6Aznc/JZa3RYe
+ Si+s/ueUak3FL0d4OUJRvSqSKPQmYNS/4Fl6a3SMJy/pwy+XDw7pJbD09n9ubALTW5lCdtC6u
+ x80SaUW9SOzB21VlTB3nrh/ZtrDk/Xfl8xVABwonhdwimOp3FH6S5KDiN8/aT38ro5OZ1miYN
+ EKLYqgo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2017 at 2:50 AM, Jeff King <peff@peff.net> wrote:
-> On Wed, Apr 12, 2017 at 02:27:05AM +0200, SZEDER G=C3=A1bor wrote:
->
->> >> I wonder if you could make it a general test-lib function, like:
->> >>
->> >>   run_and_wait () {
->> >>         # we read stdout from the child only for the side effect
->> >>         # of waiting until all child sub-processes exit, closing thei=
-r
->> >>         # fd 9.
->> >>         does_not_matter=3D$("$@" 9>&1)
->> >
->> >
->> > I'm afraid this won't work on Windows when the invoked command is git.=
- FD
->> > inheritance between MSYS (bash) and non-MSYS programs (git) is only
->> > implemented for FDs 0,1,2. That's a deficiency of MSYS, and I don't th=
-ink
->> > that was improved in MSYS2.
->>
->> Oh, that's a pity, I was almost ready with v2...
->>
->> Unfortunately, this makes the general helper function unworkable, of
->> course.  Though in this particular case it wouldn't matter, because on
->> Windows daemonize() is basically a noop and 'git gc --auto' remains in
->> the foreground anyway.
->
-> That makes it tempting to use in this scenario as a one-off with a
-> comment.
+Hi Stephen,
 
-Ok, I'll send it out in a minute, and Junio can then take his pick.
+On Tue, 11 Apr 2017, Stephen Hicks wrote:
 
->> I think we should stick with my initial patch, then.
->
-> I'm not entirely opposed, but my understanding was that it didn't
-> actually fix the race, it just made it a bit bigger. Which is sort of
-> unsatisfying.
->
-> I couldn't get the original to show a failure, though, even under heavy
-> load. So maybe widening the race is enough.
+> Thanks for the tips.  I think I have an approach that works, by simply
+> returning sequencer_continue() immediately after a successful exec.
 
-Just to be clear: it's only an occasionally appearing error message.
-There is no failure in the sense of test failure, because 'rm -rf
-$trash' erroring out during housekeeping does not fail the test suite.
+I am not sure that that works really as expected, as you re-enter the
+sequencer_continue() and neither the original author nor I expected nested
+calls.
+
+> I'm hesitant to only use mtime, size, and inode, since it's quite likely
+> that these are all identical even if the file has changed.
+
+Not at all. The mtime and the size will most likely be different.
+
+I am reluctant to take your wholesale approach, as I perform literally
+dozens of rebases with >100 commits, including plenty of exec calls, and I
+want the rebase to become faster instead of slower.
+
+> Say, the command is simply a `sed -i 's/^exec /#### /g'`, then the
+> timestamp (in seconds) will almost definitely be the same, and the size
+> and inode will be the same as well.
+
+Try it. The inode is different.
+
+> Granted this is a contrived example, but it would be unfortunate if
+> accidentally keeping the size the same were to cause the change to not
+> be picked up.
+> 
+> Another option would be to hash the contents, but at that point, I'm not
+> sure it's any better than simply unconditionally re-parsing the TODO.
+
+Again, my intent is to make rebase faster, not slower. Hashing the
+contents would make it slower. So would re-reading it.
+
+> https://github.com/git/git/pull/343
+
+Thank you for starting to work on this. I left a couple of comments.
+Please do not be offended by their terseness, I really wanted to point out
+a couple of things I think we can improve together, but I am also way past
+my bedtime.
+
+Ciao,
+Johannes
