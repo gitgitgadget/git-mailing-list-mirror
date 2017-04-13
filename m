@@ -2,80 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41BCC20960
-	for <e@80x24.org>; Thu, 13 Apr 2017 22:09:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2122820960
+	for <e@80x24.org>; Thu, 13 Apr 2017 22:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753103AbdDMWJK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 18:09:10 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:35833 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751808AbdDMWJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 18:09:08 -0400
-Received: by mail-pf0-f180.google.com with SMTP id i5so33960416pfc.2
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 15:09:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=zuDfce+OvjbpJww2pFzrFqotv8ca/C1lyDHWl/8fHcY=;
-        b=uHWcSxyL4OpbvFEKsL22jAJCynDHGHQJYaiO5OsRAGO0SnnPrWG+26aFE/5zHif0jB
-         QWPpS1682/heMz5VKmuLjdVAOuXxOHYTFD5doJkjW0oYJM4jrbkfidoNAO4r47M7tfqQ
-         pyv67GIExw9GSu1V4ZhIKZ37eIq4WlcVrPlSdPpw37Bqfk2lexBLy1wP+Z5GDQ8F3BVF
-         7d3RoGLshEw571y4gXYUPFbFMnob2j1Fu57i6B00dpMc9WSsx1dZkQQ67cSfVwyzLbsO
-         jn/683DVYyzw4l94/Rrvb1WZ0DNQXck/g97k0G2IwkQTVIHH60sj85aGOSeSBlAJ65tB
-         R4Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=zuDfce+OvjbpJww2pFzrFqotv8ca/C1lyDHWl/8fHcY=;
-        b=tUr0qp4lcTOIlI0tQY+7vYfkt0GyWwiFgOSMQPOVZ1WJmt8NkCBWdm+xXwFGPdBlj/
-         CAl3RVPc6CYSRrFVfOM24909m5bMCjnonxfJRzbNrSOluAnnCCz/kRjFfSCIECWthaRF
-         rKmNGEqNAzdVmbTyN2k/zV7X3+b7qWbXTsRJIET7eFJTIe7sdWjdET56lCeyuj0Eyw8b
-         rliK2fmChZ7eZngJNNsVN07Q8vqDwZvq9riVP06JEasc+edNHhDSZ2A3oetNVEJGcsRq
-         lhJSKOfoxIn7iltjBxeMTUEvogvNgmucDWxLoTrXTbotGcs2kNuP3Lv4d+hrsp6pL8NF
-         /qyg==
-X-Gm-Message-State: AN3rC/7YbTTRmY7zjy0y9akPCvbrILZssBMUDN0NWOp578goNyW+aSwz
-        8nTa5e4/A9kmWBH0
-X-Received: by 10.84.143.1 with SMTP id 1mr5530730ply.70.1492121337570;
-        Thu, 13 Apr 2017 15:08:57 -0700 (PDT)
-Received: from localhost ([2620:0:1000:5b10:e8bc:6ed8:87e7:fc44])
-        by smtp.gmail.com with ESMTPSA id e13sm33644pfb.30.2017.04.13.15.08.56
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Apr 2017 15:08:56 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, bmwill@google.com,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCH] submodule--helper: fix typo in is_active error message
-Date:   Thu, 13 Apr 2017 15:08:54 -0700
-Message-Id: <20170413220854.14767-1-sbeller@google.com>
-X-Mailer: git-send-email 2.12.2.603.g7b28dc31ba
+        id S1752848AbdDMW3x convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 13 Apr 2017 18:29:53 -0400
+Received: from mxo2.dft.dmz.twosigma.com ([208.77.212.182]:42960 "EHLO
+        mxo2.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751638AbdDMW3v (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 18:29:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTP id 8C21A100080;
+        Thu, 13 Apr 2017 22:29:50 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo2.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo2.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id pGRcbJAuBzfF; Thu, 13 Apr 2017 22:29:50 +0000 (GMT)
+Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTPS id 799BE8002E;
+        Thu, 13 Apr 2017 22:29:50 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Thu, 13 Apr 2017 22:29:50 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1263.000; Thu, 13 Apr 2017 22:29:50 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Jonathan Nieder' <jrnieder@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [PATCH] xgethostname: handle long hostnames
+Thread-Topic: [PATCH] xgethostname: handle long hostnames
+Thread-Index: AQHStKIM9oaSVVsbVkGBPndl8UE44qHD3INw
+Date:   Thu, 13 Apr 2017 22:29:50 +0000
+Message-ID: <b53099edc57947329f826f05de5303af@exmbdft7.ad.twosigma.com>
+References: <20170413192335.20679-1-dturner@twosigma.com>
+ <20170413220524.GE10084@aiede.mtv.corp.google.com>
+In-Reply-To: <20170413220524.GE10084@aiede.mtv.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.13]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> -----Original Message-----
+> From: Jonathan Nieder [mailto:jrnieder@gmail.com]
+> Sent: Thursday, April 13, 2017 6:05 PM
+> To: David Turner <David.Turner@twosigma.com>
+> Cc: git@vger.kernel.org
+> Subject: Re: [PATCH] xgethostname: handle long hostnames
+> 
+> Hi,
+> 
+> David Turner wrote:
+> 
+> > If the full hostname doesn't fit in the buffer supplied to
+> > gethostname, POSIX does not specify whether the buffer will be
+> > null-terminated, so to be safe, we should do it ourselves.
+> [...]
+> > +++ b/wrapper.c
+> > @@ -655,3 +655,16 @@ void sleep_millisec(int millisec)  {
+> >  	poll(NULL, 0, millisec);
+> >  }
+> > +
+> > +int xgethostname(char *buf, size_t len) {
+> > +	/*
+> > +	 * If the full hostname doesn't fit in buf, POSIX does not
+> > +	 * specify whether the buffer will be null-terminated, so to
+> > +	 * be safe, do it ourselves.
+> > +	 */
+> > +	int ret = gethostname(buf, len);
+> > +	if (!ret)
+> > +		buf[len - 1] = 0;
+> > +	return ret;
+> 
+> I wonder if after null-terminating we would want to report this as an error,
+> instead of silently using a truncated result.  I.e. something like
+> 
+> > +	if (!ret)
+> > +		buf[len - 1] = 0;
+> > +	if (strlen(buf) >= len - 1) {
+> > +		errno = ENAMETOOLONG;
+> > +		return -1;
+> > +	}
+>
+> (or EINVAL --- either is equally descriptive).
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index e42e671014..b1d4269e10 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1145,7 +1145,7 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- static int is_active(int argc, const char **argv, const char *prefix)
- {
- 	if (argc != 2)
--		die("submodule--helper is-active takes exactly 1 arguments");
-+		die("submodule--helper is-active takes exactly 1 argument");
- 
- 	gitmodules_config();
- 
--- 
-2.12.2.603.g7b28dc31ba
+Looking at the users of this function, I think most would be happier with a truncated buffer than an error:
+gc.c: used to see if we are the same machine as the machine that locked the repo. Unlikely that two machines have hostnames that differ only in the 256th-or-above character.
+fetch-pack.c, receive-pack.c: similar to gc.c; the hostname is a note in the .keep file
+Ident.c: used to make up a fake email address. On my laptop, gethostname returns "corey" (no domain part), so the email address is not likely to be valid anyway.
+
+> Also POSIX requires that hostnames are <= 255 bytes.  Maybe we can force the
+> buffer to be large enough.
+
+That is now how I read it.  I read the limit as HOST_NAME_MAX, which has a *minimum* value of 255, but which might be larger.
+
+The existing hostname buffers are 128, 256, and 1024 bytes, so they're pretty arbitrary.  
 
