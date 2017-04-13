@@ -2,95 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9D120970
-	for <e@80x24.org>; Thu, 13 Apr 2017 06:31:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0EDA120970
+	for <e@80x24.org>; Thu, 13 Apr 2017 07:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751054AbdDMGbp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 02:31:45 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64671 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750745AbdDMGbo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 02:31:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F70F81BA0;
-        Thu, 13 Apr 2017 02:31:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=JBW/3NXtkG4R
-        gE0vKofMhq2pGNw=; b=KKhRxI2ARKIE4GnrwOqzRCOoJCofTFMiFfhml79tVoAv
-        XVzldNFBDI2vrJThci3zfpnOHX2NtrxvtJsAtNkTWac5kHI5CVhf7UCmZPnScGv0
-        w9zNSmUjaM5J7MV9mDYO81fEZa02ZXlZ+/XxO1h3U8u7+d+JNUmfzeRq/7uXGBs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Sn3mEh
-        wIVQOvuYGJeDP1vqwQsmcgMyXWiFOGyYaYkp+/DxXetPjbtKZzxFrUlBGljBkCt9
-        AAx/uij1K2vxYuK4ndKHZH4OW+reaLVPUvuNcbTCU2p1wJeR4QHQKUmrgxJNZGdt
-        YsI0CkyhSw9SGFHbbQUkxjEms8w5rJV+YBhgo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4737A81B9E;
-        Thu, 13 Apr 2017 02:31:43 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F3AC81B9D;
-        Thu, 13 Apr 2017 02:31:42 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "Tom G. Christensen" <tgc@jupiterrise.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 5/7] Add support for gnupg < 1.4
-References: <CACBZZX450tRRsy-Sj8igZthYov7UxFMRJ51M-b1cgYBLo782jQ@mail.gmail.com>
-        <20170405130424.13803-1-tgc@jupiterrise.com>
-        <20170405130424.13803-6-tgc@jupiterrise.com>
-        <CACBZZX6bYLRSUAy2GUYhBVet3tjzrBQ40L49KxetAvBdgx_x+w@mail.gmail.com>
-Date:   Wed, 12 Apr 2017 23:31:41 -0700
-In-Reply-To: <CACBZZX6bYLRSUAy2GUYhBVet3tjzrBQ40L49KxetAvBdgx_x+w@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 5 Apr
- 2017 15:45:54
-        +0200")
-Message-ID: <xmqq7f2oq0mq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1756185AbdDMHUn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 03:20:43 -0400
+Received: from mail-lf0-f44.google.com ([209.85.215.44]:35223 "EHLO
+        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753286AbdDMHUl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 03:20:41 -0400
+Received: by mail-lf0-f44.google.com with SMTP id 75so25202380lfs.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 00:20:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=wLScsaPfNHS3aElyTEzGnit2P3C2XgLNW4FLrunvN7g=;
+        b=BFnTk8mzyRlSzaUK0A7kIQPdScyDhp67mD3SR0sOsX9OpH7KeR505go9pGbbVv7x3t
+         gSxcmcti00gDld0BbWnnavFjo4dXPXDwe9BpbMq/NCbOvWKPeIw47IkckDts3RiP1pMX
+         qJ/Z2XPQwrizXyHIGDJomoKXh64m53Wn0wrC648DsLp9+E1cIRDLR0bffOJ4JSwjn9Lc
+         S+p+SNpvYhSrvcSbfscJay4V2V2/RzKBnYj2MGmI78maEJ6LPwGyvUi+GhXqENlQ34J7
+         YUaGOlq0hanQZ+xQlNI0vCS9DHqydyxMBAIvOfbrna8nUCZSqj+9i0GC3Crwdo+Uu1xa
+         rUnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=wLScsaPfNHS3aElyTEzGnit2P3C2XgLNW4FLrunvN7g=;
+        b=B5BKoTKDUGzcA903pH0v5B3Sqqd+xqkR4trm926Kw0TO+Mvo+7C9QQMyjDHmtYIvMn
+         l7ZczUpv2rOCI38Yb8rrxuqwgPNnGaVoRi0BtPcpmvPmQPxfpOlDTlpBUSYzxJtpYgZz
+         xsgMfsO9gwA8z5p77emijzHyDliPgh0W255cI+3Wk/umIq8WHnKBtr+c55EcXVm1giQ2
+         Jm3kbPxXEsCZWk7/d8l0xvsRCTtF5nItObrruq1jckzxc6UUddmEOBcMbZictUP5dg4n
+         410LLqydV6qkWNZ2ylneDxtLt/POuKX5MlrUAXNtWwD27HNcut4L9Y80xdr4kawQiz2h
+         gjEg==
+X-Gm-Message-State: AN3rC/5URNceAk7BHeyUqB9KMWpB7DgYpN7qSO0RR6DNtVeXG5y8wvtB
+        FmloUVhS3+Roqlw1764bbG+fmI5qV/c3
+X-Received: by 10.25.216.212 with SMTP id r81mr591972lfi.66.1492068040158;
+ Thu, 13 Apr 2017 00:20:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: DBC487A8-2012-11E7-AE6B-C260AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.25.17.155 with HTTP; Thu, 13 Apr 2017 00:20:19 -0700 (PDT)
+In-Reply-To: <xmqqmvbkq1nn.fsf@gitster.mtv.corp.google.com>
+References: <2c3c8028cd057428758bb1e21a064a264936de90.1490968428.git.git@grubix.eu>
+ <xmqq8tnlz53m.fsf@gitster.mtv.corp.google.com> <CA+P7+xr37owZbCnwVKh0y_vUny9_pP380Y8sFA+7A-hv0Oc6AA@mail.gmail.com>
+ <xmqqmvbkq1nn.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 13 Apr 2017 00:20:19 -0700
+Message-ID: <CA+P7+xqu1oB2J2C9OoqaYAwdNOXT7f0kvHEHHZ4nXaefewBrNQ@mail.gmail.com>
+Subject: Re: [PATCH] status: show in-progress info for short status
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Michael J Gruber <git@grubix.eu>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Wed, Apr 12, 2017 at 11:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+>
+>> Personally, I would want this to become the default and not have a new
+>> option to trigger it. I think we could also extend the porcelain
+>> format to include this information as well, but I'm not too familiar
+>> with how the v2 format extends or not.
+>
+> I think the general rule of thumb for --porcelain is that we can
+> freely introduce new record types without version bump, and expect
+> the reading scripts to ignore unrecognised records (we may need to
+> describe this a bit more strongly in our document, though), while
+> changes to the format of existing records must require a command
+> line option that cannot be turned on by default with configuration
+> (or a version bump, if you want to change the output format by
+> default).
+>
+> I am getting the impression that this "we are doing X" is a new and
+> discinct record type that existing readers can safely ignore?  If
+> that is the case, it may be better to add it without making it
+> optional.
 
-> On Wed, Apr 5, 2017 at 3:04 PM, Tom G. Christensen <tgc@jupiterrise.com=
-> wrote:
->> This adds an OLD_GNUPG define to the Makefile which when activated wil=
-l
->> ensure git does not use the --keyid-format argument when calling the
->> 'gpg' program.
->> This is consistent with how 'gpg' was used in git < 2.10.0 and slightl=
-y
->> decreases security.
->
-> This changes the code Linus Torvalds added in b624a3e67f to mitigate
-> the evil32 project generating keys which looked the same for 32 bit
-> signatures.
->
-> I think this change makes sense, but the Makefile should have a
-> slightly scarier warning, something like:
->
-> "Define OLD_GNUPG if you need support for gnupg <1.4. Note that this
-> will cause git to only show the first 32 bits of PGP keys instead of
-> 64, and there's a wide variety of brute-forced 32 bit keys in the wild
-> thanks to the evil32 project (https://evil32.com). Enabling this will
-> make GPG work old versions, but you might be fooled into accepting
-> malicious keys as a result".
+Correct. But either way we should be free to change and extend the
+non-porcelain format without worry I thought?
 
-Very good point.  It surprised me somewhat to see that this is the
-only change necessary (iow, there is no need to tweak anything in t/
-directory).  Perhaps we would need a test or two (and need to figure
-out a way to make them work with both old and more recent GnuPG)?
+Thanks,
+Jake
