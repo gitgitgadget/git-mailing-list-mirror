@@ -2,117 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD5EA20960
-	for <e@80x24.org>; Thu, 13 Apr 2017 19:35:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EE1920960
+	for <e@80x24.org>; Thu, 13 Apr 2017 19:43:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755320AbdDMTfL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 15:35:11 -0400
-Received: from mail-ua0-f179.google.com ([209.85.217.179]:32993 "EHLO
-        mail-ua0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753145AbdDMTfJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 15:35:09 -0400
-Received: by mail-ua0-f179.google.com with SMTP id q26so38930369uaa.0
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 12:35:09 -0700 (PDT)
+        id S1755810AbdDMTnW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 15:43:22 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:34876 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755589AbdDMTnU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 15:43:20 -0400
+Received: by mail-pg0-f47.google.com with SMTP id 72so26461159pge.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 12:43:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=h7va8w0ghER47FOWWRTlJE89lrpYE0/jgXBQMYeNGqg=;
-        b=HzTcx1mDwOZck+yaWVLSSmpRJvPIw6xBOY1zFc5YIN8Wgr92qax1QVjdY9W5RdkkdZ
-         2EwS2phHLsyBF+rdQSeSkE17Jgru3iKh11Jpyl/ZiQvDHaBsv2rGIVBW5frhhzT2x8fQ
-         9FPuV7hql3cGACbEChqr0Zgic7OH1eH3aqOCd51o6fWLQ7E4K1S7P2Dday5QF1Uyg7Hm
-         y60NlL3A2j7y51yh33C/g5U1Iltx7FfZyEkvB90OSKfTOd6IUgFyH9grq8ZJpHgCrplt
-         potfx4TnvOYduF37yBQUavGXBRDob/qwOd5MZw0pcYY1z3WfsqJM4waJbIv2OUY3LdbW
-         ILBg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nBO5CM8+CdN4jkznBS1jHi+VLRQQUd7lIASRP0unXcg=;
+        b=UMiQjWNxNr+SR/qlgAJDU97G8t4ZdHljCh+b96Bw+rzZiJH8VmjB22KjZF6Xt/Jwuk
+         2mVFF2zLz6v7dbfrvezEtUWCw2XAw7dwbrODCPpHd3zCHIt+Iu9Ors0DvdtSGQjS4g2M
+         w9xdcGeoU/mII32neJbzi57ZUwbfCjWIx/tkklc0W/HRS8DercMyJzTc0E85oapPm/bj
+         IFElT6dyGIapD3rZiRQtontF/fQos0iXop9Rg4G1/N7eQgjzEXigfjw94OFCg1E4KajT
+         mQMMTQDGq90ecT5cenqq8jiHndfAfP4WNxd4tG/Pql4Fi/ZrRGypZ15pFQ1YjPIsVUfm
+         Bx1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=h7va8w0ghER47FOWWRTlJE89lrpYE0/jgXBQMYeNGqg=;
-        b=rwD10Ib23PdeEATE4JEljCx0sOTXLdxPwdJL5KA37lBbB5qc2mdaRTdZ6LUTJ3ayC6
-         IABROo7REjVSBZwFk8x4ik/BqGUfivsbJHk9Ier4R4pHipnrTNw1wr6BRWVTjnHe+s36
-         LwqfbzAEnkt5Zors7AYnuioxcITelp9FVlUQLd00cYeb4craP8rNOJ0JaBO+ScBrtBnh
-         HqItUjzO+V5zadgtnYjPvDL7VDEGsr0cNSsHJd+H1W12n3anQW+6BXQslXM4SX2QyWbK
-         h6Jrm/AuOrzP/snbqxztwsSfPm6DZGu84IxPcWmUGnuFIcnRCfXams4tdKPFKHkcY5kt
-         zruA==
-X-Gm-Message-State: AN3rC/5HDtnrWlygYtF4q1z5j2XxgqNjb7oMNeyAL2FiFrjkMzzYsGBz
-        g4F9UhxVE9eC8gJHd3Jdgp4kTn7mbw==
-X-Received: by 10.176.74.80 with SMTP id r16mr1794644uae.39.1492112108648;
- Thu, 13 Apr 2017 12:35:08 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nBO5CM8+CdN4jkznBS1jHi+VLRQQUd7lIASRP0unXcg=;
+        b=o6fxuAgQyke45ERjlQxTL1fZ8KjV6ilqdlnzTG1BtycN8ZMTwfCyVKDUnt5UomRH+i
+         V6LY4kqpSwF+a87afbhyItkG5O9PvL1D+CUIPnA+d6HRmgbMNMOJH5rTzCZZLhIXAZ39
+         41oeGwOQJvPUGvE8AZq0T48ix6YfSA1jdYzyF7zZTCn986ocQtIRDKdB4/JS4zIymy1R
+         AgasS8IX0ZQC53Uz7khHWOCF57GWnu1glTiFUdsVo+8B6en6X4Ee0N3fW+Z2lNMDT32P
+         YxqHn0Cwz4DbB6/+bitqjogVzVNcZ5mKJgoF799n17RKSakOEtgK1CZcTy11k3UwWz1H
+         NITw==
+X-Gm-Message-State: AN3rC/6cPWZCFXhIc+DhbUEC6XQvXti+AzTB1YUdP4hG7Vebtl9qip/Q
+        /LBZb1aBJqgjWrjW
+X-Received: by 10.99.97.85 with SMTP id v82mr4304234pgb.186.1492112599845;
+        Thu, 13 Apr 2017 12:43:19 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:1426:66e2:260b:9db9])
+        by smtp.gmail.com with ESMTPSA id p2sm8321596pfj.93.2017.04.13.12.43.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Apr 2017 12:43:18 -0700 (PDT)
+Date:   Thu, 13 Apr 2017 12:43:17 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Eric Wong <e@80x24.org>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH v2 4/6] run-command: don't die in child when duping
+ /dev/null
+Message-ID: <20170413194317.GG96917@google.com>
+References: <20170410234919.34586-1-bmwill@google.com>
+ <20170413183252.4713-1-bmwill@google.com>
+ <20170413183252.4713-5-bmwill@google.com>
+ <20170413192928.GA6129@whir>
 MIME-Version: 1.0
-Received: by 10.176.23.211 with HTTP; Thu, 13 Apr 2017 12:35:08 -0700 (PDT)
-In-Reply-To: <20170413191236.3usecfgkjujhblo6@sigill.intra.peff.net>
-References: <CAM0VKjkdqjbkqOF6ucymtuBAAgBVJQ6SGe4Ep2gqVBtNp=s_CA@mail.gmail.com>
- <20170410170154.qwzaolflrvsduwzd@sigill.intra.peff.net> <426f08b9-79c8-0c5b-e07e-4dd6a49243e9@kdbg.org>
- <CAM0VKjmuCjLBFAErXP06wu0+-7SdWVMaVu_g25Q4V-uQz8T1uA@mail.gmail.com>
- <20170412005011.46tr4mgsxk7chgfz@sigill.intra.peff.net> <CAM0VKjkuoCotm8FB5qdTQsC0SaJiwBA9dXmdLJdSs8NwLdY8fQ@mail.gmail.com>
- <20170413163701.33zjwrgnlfxjfwjo@sigill.intra.peff.net> <CAGZ79kY6TmEV38NkYJwkb5=Bu69tCjx6k+t6An5_52h8rEo5-Q@mail.gmail.com>
- <20170413175701.5ogpe7qbflbkgljm@sigill.intra.peff.net> <CAM0VKjmK0ib+sjf0sMPeiK7DrwHq1dJ58ZhDdp6HZsuQdb-eRw@mail.gmail.com>
- <20170413191236.3usecfgkjujhblo6@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Thu, 13 Apr 2017 21:35:08 +0200
-Message-ID: <CAM0VKjkVUPPsvpAu1WXeNg7sv1_V=Uxhhevf9fVkZvk9WERwwQ@mail.gmail.com>
-Subject: Re: [PATCH] t6500: don't run detached auto gc at the end of the test script
-To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>, Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        David Turner <dturner@twosigma.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170413192928.GA6129@whir>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 13, 2017 at 9:12 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Apr 13, 2017 at 09:03:26PM +0200, SZEDER G=C3=A1bor wrote:
->
->> > Yeah, I had a similar thought. I can't think of any reason why it woul=
-d
->> > trigger a false positive, as long as we account for test-failure and t=
-he
->> > --debug flag properly. I don't think we can just drop the "-f" from th=
-e
->> > final "rm", because it may be overriding funny permissions left by
->> > tests.
->>
->> FWIW, I used the following rather simple change during stress-testing
->> these patches (barring white-space damage):
->>
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 13b569682..d7fa15a69 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -763,7 +763,7 @@ test_done () {
->>
->>                 test -d "$remove_trash" &&
+On 04/13, Eric Wong wrote:
+> Brandon Williams <bmwill@google.com> wrote:
+> > @@ -487,7 +483,7 @@ int start_command(struct child_process *cmd)
+> >  		atexit(notify_parent);
+> >  
+> >  		if (cmd->no_stdin)
+> > -			dup_devnull(0);
+> > +			dup2(null_fd, 0);
+> 
+> I prefer we keep error checking for dup2 failures,
+> and also add more error checking for unchecked dup2 calls.
+> Can be a separate patch, I suppose.
+> 
+> Ditto for other dup2 changes
 
-I'm not sure under what circumstances the trash dir could be missing at
-this point...
+I simply figured that since we weren't doing the checks on the other
+dup2 calls that I would keep it consistent.  But if we wanted to add in
+more error checking then we can can in another patch.
 
->>                 cd "$(dirname "$remove_trash")" &&
->> -               rm -rf "$(basename "$remove_trash")"
->> +               rm -rf "$(basename "$remove_trash")" || exit 1
+> 
+> > @@ -558,6 +554,8 @@ int start_command(struct child_process *cmd)
+> >  	}
+> >  	close(notify_pipe[0]);
+> >  
+> > +	if (null_fd > 0)
+> > +		close(null_fd);
+> 
+> I would prefer:
+> 
+> 	if (null_fd >= 0)
+> 
+> here, even if we currently do not release stdin.
 
-... but when it is already removed, then I think we should not exit
-with error here.
-Nothing that a pair of {} wouldn't handle.
+K will do.
 
-> Oh, right. I thought "-f" would cause it to exit 0 even if some items
-> failed to be removed, but that only applies to ENOENT. So I think that
-> is probably a good change. I agree it's not a true error, but just a
-> sign of something fishy, but I don't think it hurts to have extra lint
-> checks.
->
-> Replacing it the "exit 1" with a "die" that has a message is probably a
-> good idea, though.
+> 
+> >  	argv_array_clear(&argv);
+> >  	free(childenv);
 
-If we can't 'cd' or 'rm -rf', then they will tell us why they failed
-anyway, most likely including the name of the trash directory.
-Do we really need more error messages than that?
+-- 
+Brandon Williams
