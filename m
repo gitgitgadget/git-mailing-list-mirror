@@ -2,81 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 286931FA14
-	for <e@80x24.org>; Thu, 13 Apr 2017 00:50:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 028211FA14
+	for <e@80x24.org>; Thu, 13 Apr 2017 06:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755405AbdDMAu1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Apr 2017 20:50:27 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:33737 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754785AbdDMAu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Apr 2017 20:50:26 -0400
-Received: by mail-pf0-f171.google.com with SMTP id s16so21076185pfs.0
-        for <git@vger.kernel.org>; Wed, 12 Apr 2017 17:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=exXuvrFNIGHAA7u+g/FtpDAoPZ0py7ftdAywAQoZvF0=;
-        b=IN56rBea60hwQeqGWskW9KDSkMO/ZsN0TILO9ByXayAWWmfsq4WJFAVI35dS+ve9qp
-         tHW9cirXL5eBy2Mt3XxIgrBgiyDVPdYj3Fc5wKVYhZLrqrKSHkKX2dh3iZv7ZFYXYoqs
-         U6Ds6jNHd9dRZU3jDJR8vx48s83aCyAOBBTIUR5fB/mvmG4M+cGlS7UT9s8PZkNB/PVO
-         kPG/uTZuHWvex5Ye5VTeuLkKu3nHhE+fVC9S5RLYoYoAMz+jbHA4VhfS/9pNsR4FB5Pt
-         YZfAh/Jem6WseoKjHnNybJa+PovLkwKF5i4b6Y7JEwfOD+HJLH4pid3AebpngP2w9kNf
-         kRgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=exXuvrFNIGHAA7u+g/FtpDAoPZ0py7ftdAywAQoZvF0=;
-        b=GC/aMfYsuYau1qX9VdKaPgVtLY1LD793hkP0QVONv5ZWEdUUnzJjqtdR2tv4yeHQll
-         DeDsi88qO/6aV1IvxVB1LPHO5hMXHdFb61uKGu1/BccJFi+6pSw7762wmQnMmcchHLWJ
-         lU3NmWMxMWbXeRRiBUQ76P+7kDpPtnO6vUt+khAP9tdjv/r/9lRviVKlOchZaPrws5ds
-         WrQ5n9ej0DYcgXFTpQe+E9zxrrDma0D2oT5wnuH8qo/8lGqvIN82t1AFyvb81atb9DWP
-         9DncxLj+NcEe98QwT/pqRedHCj4kjA7IlUASRs7hiqg0jnIt4Q5Sg53brxdip6+wp6GO
-         Yr8g==
-X-Gm-Message-State: AN3rC/6dlimkPnyGnoP0u5wlKEGgzKVZchJKV3Kc1oHUEpYj49fXBf5J
-        mhJoZBfMpsGyBaj/CxNGxhxtXN5/4bl/
-X-Received: by 10.84.231.206 with SMTP id g14mr647782pln.12.1492044625457;
- Wed, 12 Apr 2017 17:50:25 -0700 (PDT)
+        id S1756017AbdDMGJj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 02:09:39 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50223 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751400AbdDMGJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 02:09:37 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2EBE6818E5;
+        Thu, 13 Apr 2017 02:09:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=OxgzzIeuDyqYsw7S5HZNSfke1Ck=; b=PCjojj
+        Jl0ypt/8qwc9Ic8WVFR5I3xVGkv2OuvVaJYZEm/beMA4R/aLYLfNim3zLJRja7Oh
+        jAvSFq/7cv8iXfM4rsEh1I4PlGiTxTZqM1vZ6zs348ONRHKXXXImvjzIp1/IUK4o
+        6wT5q7yiXxpuMm+tq7VZ1PbxlIEOeZyBOb8po=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Lzqmfw91LuwnLx2Rzebr+/Lf8S1ZRxe3
+        QeW5Cl/X6z5dMHRHDIaWpL8tx9HPwvqf3GbFg6BpZo+my3JnYfE0pVBIeJcAkV4K
+        AQDBDnPTT/rh6ZBUbAeUOP2LOPZobwGeBwmqJKpzayY76SBe5VwX33JgRG+Xe6Aj
+        qhcwQpS8QHM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26997818E4;
+        Thu, 13 Apr 2017 02:09:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 90909818E3;
+        Thu, 13 Apr 2017 02:09:33 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Michael J Gruber <git@grubix.eu>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] status: show in-progress info for short status
+References: <2c3c8028cd057428758bb1e21a064a264936de90.1490968428.git.git@grubix.eu>
+        <xmqq8tnlz53m.fsf@gitster.mtv.corp.google.com>
+        <CA+P7+xr37owZbCnwVKh0y_vUny9_pP380Y8sFA+7A-hv0Oc6AA@mail.gmail.com>
+Date:   Wed, 12 Apr 2017 23:09:32 -0700
+In-Reply-To: <CA+P7+xr37owZbCnwVKh0y_vUny9_pP380Y8sFA+7A-hv0Oc6AA@mail.gmail.com>
+        (Jacob Keller's message of "Fri, 7 Apr 2017 09:18:01 -0700")
+Message-ID: <xmqqmvbkq1nn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.163.239 with HTTP; Wed, 12 Apr 2017 17:50:24 -0700 (PDT)
-In-Reply-To: <CAEA2_RJfcOc6FD41FNzU9LYs2xfzGZJxQyb2x8txuQqUE8RtNQ@mail.gmail.com>
-References: <1491442767-54068-1-git-send-email-bnmvco@gmail.com> <CAEA2_RJfcOc6FD41FNzU9LYs2xfzGZJxQyb2x8txuQqUE8RtNQ@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 12 Apr 2017 17:50:24 -0700
-Message-ID: <CAGZ79kbTjVSRgWc5su89pL5t_mSEubjT_cQ0Onu4EdcKVmyL7w@mail.gmail.com>
-Subject: Re: [PATCH v8 0/5] [GSoC] remove_subtree(): reimplement using iterators
-To:     "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
+X-Pobox-Relay-ID: C39610F0-200F-11E7-ABD9-C260AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 12, 2017 at 5:06 PM, Daniel Ferreira (theiostream)
-<bnmvco@gmail.com> wrote:
-> Hey there! I'm sorry for bothering you, but any chance you might have
-> overlooked this patch for a review?
+Jacob Keller <jacob.keller@gmail.com> writes:
 
-Sort of. I read through them and found no issue back then, but did
-not reply anticipating someone else would .
+> Personally, I would want this to become the default and not have a new
+> option to trigger it. I think we could also extend the porcelain
+> format to include this information as well, but I'm not too familiar
+> with how the v2 format extends or not.
 
->  (I'm just not familiar with how
-> long patches usually take to be reviewed, and since I always got an
-> answer within two days of sending it I wondered if you may have just
-> not noticed it.)
+I think the general rule of thumb for --porcelain is that we can
+freely introduce new record types without version bump, and expect
+the reading scripts to ignore unrecognised records (we may need to
+describe this a bit more strongly in our document, though), while
+changes to the format of existing records must require a command
+line option that cannot be turned on by default with configuration
+(or a version bump, if you want to change the output format by
+default).
 
-I reviewed it again and found just a very minor nit, no need for a resend
-if that is the only nit.
-
-Thanks,
-Stefan
+I am getting the impression that this "we are doing X" is a new and
+discinct record type that existing readers can safely ignore?  If
+that is the case, it may be better to add it without making it
+optional.
