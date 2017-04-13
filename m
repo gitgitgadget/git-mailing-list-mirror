@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EDA120970
-	for <e@80x24.org>; Thu, 13 Apr 2017 07:20:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79DED20970
+	for <e@80x24.org>; Thu, 13 Apr 2017 07:21:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756185AbdDMHUn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 03:20:43 -0400
-Received: from mail-lf0-f44.google.com ([209.85.215.44]:35223 "EHLO
-        mail-lf0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753286AbdDMHUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 03:20:41 -0400
-Received: by mail-lf0-f44.google.com with SMTP id 75so25202380lfs.2
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 00:20:41 -0700 (PDT)
+        id S1756099AbdDMHVb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 03:21:31 -0400
+Received: from mail-lf0-f42.google.com ([209.85.215.42]:34745 "EHLO
+        mail-lf0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753286AbdDMHV3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 03:21:29 -0400
+Received: by mail-lf0-f42.google.com with SMTP id t144so25298226lff.1
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 00:21:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=wLScsaPfNHS3aElyTEzGnit2P3C2XgLNW4FLrunvN7g=;
-        b=BFnTk8mzyRlSzaUK0A7kIQPdScyDhp67mD3SR0sOsX9OpH7KeR505go9pGbbVv7x3t
-         gSxcmcti00gDld0BbWnnavFjo4dXPXDwe9BpbMq/NCbOvWKPeIw47IkckDts3RiP1pMX
-         qJ/Z2XPQwrizXyHIGDJomoKXh64m53Wn0wrC648DsLp9+E1cIRDLR0bffOJ4JSwjn9Lc
-         S+p+SNpvYhSrvcSbfscJay4V2V2/RzKBnYj2MGmI78maEJ6LPwGyvUi+GhXqENlQ34J7
-         YUaGOlq0hanQZ+xQlNI0vCS9DHqydyxMBAIvOfbrna8nUCZSqj+9i0GC3Crwdo+Uu1xa
-         rUnw==
+        bh=AD1fRxY5ro+/EL0cwfWSmBMXDETUiAHa/gW23+8/KNM=;
+        b=komwSBROSc+iipWkCemRDcqubBxOAjEF1B3xezEMTivUZ6KsSOfs1UNwu1NWWkeF8w
+         NAD4r5n39nKg4dOIfW3ufSqST6k1lzHzgQqT0MtpgqtcF/sTU1OwmbHb8mp6O+stMKYg
+         z+D2UVJZ3Iaq3CWEKcP5/uqImdm383YOi5HH3zm9dTcRgHcxzm+rAWSmJrJ4EcxIFsAJ
+         wrWAaNGtbSwoIhuH24nrWlE49F4rK5TnbBckiSu8ZXgGf3hOWMT2dwtDSJ0lXK80xmoM
+         oAppxHl/zHL2Xogv1Vxo0aE4G4AkQi4mSR7dcmvbsiFJ5TNvWU4bTM7OP6hA64KI3WEn
+         Gr0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=wLScsaPfNHS3aElyTEzGnit2P3C2XgLNW4FLrunvN7g=;
-        b=B5BKoTKDUGzcA903pH0v5B3Sqqd+xqkR4trm926Kw0TO+Mvo+7C9QQMyjDHmtYIvMn
-         l7ZczUpv2rOCI38Yb8rrxuqwgPNnGaVoRi0BtPcpmvPmQPxfpOlDTlpBUSYzxJtpYgZz
-         xsgMfsO9gwA8z5p77emijzHyDliPgh0W255cI+3Wk/umIq8WHnKBtr+c55EcXVm1giQ2
-         Jm3kbPxXEsCZWk7/d8l0xvsRCTtF5nItObrruq1jckzxc6UUddmEOBcMbZictUP5dg4n
-         410LLqydV6qkWNZ2ylneDxtLt/POuKX5MlrUAXNtWwD27HNcut4L9Y80xdr4kawQiz2h
-         gjEg==
-X-Gm-Message-State: AN3rC/5URNceAk7BHeyUqB9KMWpB7DgYpN7qSO0RR6DNtVeXG5y8wvtB
-        FmloUVhS3+Roqlw1764bbG+fmI5qV/c3
-X-Received: by 10.25.216.212 with SMTP id r81mr591972lfi.66.1492068040158;
- Thu, 13 Apr 2017 00:20:40 -0700 (PDT)
+        bh=AD1fRxY5ro+/EL0cwfWSmBMXDETUiAHa/gW23+8/KNM=;
+        b=Ua7qMcTvAwdAzJSOeXJb9xX/t0eIqbzp2p+9Tt81Cth6YHavrlLXL7UvMDSJKcJNzW
+         grjnhr8khIpTdRIHWkWs5ycJ+EsRrBSHHA+kjFvlcxk1FAJo9B5nRKlh6Na7Nl+Bcl6q
+         MWJuGfXTbUnW2BKzy3CJ/Ckajkzysf4/D2JtUtxTlGHVa+S0CmV1xgWw8zjdpSdPDtL2
+         l4mi94BGJXUpRqXYQYQelOtvDdRP3iMW7llB/kDLjuBa29fzchskTQXWR4RMFLNS0XTX
+         kOEq5kXk4LnbPd4OJbHEwVC2SRvhoUbQLpCXys9Hu50179H5FCuMB0YO8HPwNyswovw2
+         ZR8A==
+X-Gm-Message-State: AN3rC/57pZE4fIWHKMlbC1eQmULo5V6cS6KTm/645Tgl09oBQ6kNmVjx
+        9sE4QJAl42hBRGLwwfnGNjBykZTOB0TM
+X-Received: by 10.25.100.5 with SMTP id y5mr579884lfb.58.1492068088378; Thu,
+ 13 Apr 2017 00:21:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.25.17.155 with HTTP; Thu, 13 Apr 2017 00:20:19 -0700 (PDT)
+Received: by 10.25.17.155 with HTTP; Thu, 13 Apr 2017 00:21:07 -0700 (PDT)
 In-Reply-To: <xmqqmvbkq1nn.fsf@gitster.mtv.corp.google.com>
 References: <2c3c8028cd057428758bb1e21a064a264936de90.1490968428.git.git@grubix.eu>
  <xmqq8tnlz53m.fsf@gitster.mtv.corp.google.com> <CA+P7+xr37owZbCnwVKh0y_vUny9_pP380Y8sFA+7A-hv0Oc6AA@mail.gmail.com>
  <xmqqmvbkq1nn.fsf@gitster.mtv.corp.google.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Thu, 13 Apr 2017 00:20:19 -0700
-Message-ID: <CA+P7+xqu1oB2J2C9OoqaYAwdNOXT7f0kvHEHHZ4nXaefewBrNQ@mail.gmail.com>
+Date:   Thu, 13 Apr 2017 00:21:07 -0700
+Message-ID: <CA+P7+xrCbMrun4TZtAniBY5ehObrcYHtL3XYycMaJiT0EJ9fmA@mail.gmail.com>
 Subject: Re: [PATCH] status: show in-progress info for short status
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Michael J Gruber <git@grubix.eu>,
@@ -85,8 +85,7 @@ On Wed, Apr 12, 2017 at 11:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
 > that is the case, it may be better to add it without making it
 > optional.
 
-Correct. But either way we should be free to change and extend the
-non-porcelain format without worry I thought?
+I think we are safe in extending porcelain v2.
 
 Thanks,
 Jake
