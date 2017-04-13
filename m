@@ -2,75 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60E8E20960
-	for <e@80x24.org>; Thu, 13 Apr 2017 18:35:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B861E20960
+	for <e@80x24.org>; Thu, 13 Apr 2017 18:35:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755716AbdDMSfU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 14:35:20 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:34085 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755796AbdDMSfQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 14:35:16 -0400
-Received: by mail-pg0-f43.google.com with SMTP id 21so34273845pgg.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 11:35:15 -0700 (PDT)
+        id S1755777AbdDMSfc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 14:35:32 -0400
+Received: from mail-pg0-f50.google.com ([74.125.83.50]:35081 "EHLO
+        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755942AbdDMSdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 14:33:11 -0400
+Received: by mail-pg0-f50.google.com with SMTP id 72so25751431pge.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 11:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tm/93exK3+AOwI2h//VuHD69lqeWkghQU7JZoyxElg4=;
-        b=HEJM13hfeUtUYEuWyZQijD2xTGKy/oE+HhUeisqOngFcSOuDpjmnWNKyjEyNgUyX4j
-         90kmMGbi3PA8HleCsKxYp4KFbjTS/1M4+i2ASuY2nrvXasMZQNMMcSlRG3nSs+JbapUG
-         cci/WHkwNg3EhixPIVIjrn5B/ebrH4K7l/u2NN62J5s7ax7elM0PvPRg5hoclm6PJMYt
-         eBYdoRghkauZ18+VPOqJgxyHv+P/fJC/KveCVCjnAkn7h3niL/I5rCXAqXuf7V7KbDlG
-         05RNR270eOdDaarXx0YgRcjl0lCvqEj8jINL5JYaIxPhDcF8v2smRVcc8T6Dm53IESZX
-         P0yw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=oiyhAc/tXIhOEvI1cZrdltp1R2WyuHcIsAwiatgWBfc=;
+        b=VJR86Esb8EMKnMKiObXpHsL5QlKtEVoZ6Dg703tSADJ6oHCM/oOP4twhSBaxuhy7UF
+         fuLLgLTOoZ1B3xafp97BtugcH3GJHHkvRoGHeV8NoxICtaZwe0TVkM6f87co73aLGfz8
+         6JGgKxBpOvPmUrWDtWPDHEaybc3PgQm73ekq9fxWx6iUPCg+ab2Kh9/UKM3mBIq4Wij1
+         ZgG/bm42y6VJiT/bA8qdg6956aTekQ9AOXMKHcQAgzMZTfQXTCpsbvdf1sKc32Tj3Hzq
+         kGS8PgcG6JNfjQYVf/6K1NmUnIC0MdVg6lJmw2SsYzj74VH/mw8U+te4FeV7p6d1NdjU
+         hB1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tm/93exK3+AOwI2h//VuHD69lqeWkghQU7JZoyxElg4=;
-        b=A+Mi9YGQ1kUyuayJO342xSFdwDb7QkmzQ265234EmBEU5nt6sIPiv52Bba6XQkx8GF
-         rvJOn8wPzj7wS9//kwe0lcxSZU8S/xr3L0dWuUv4+jgzdqtuYEzXyqc10Ryoqg03n2sr
-         mGBABBHyrqFfcWSpaQ2ZSnsqP7HTpwnLRYwpEDzW93zedr4SBBqW8pkFOoPETRGeG8Uk
-         ZfgP2KwPU1OWREVDPJGjTOKdVtooqXSimJLvyDNukfxZNGA62aTVdCIcR8DGpuaBoRdo
-         OJFkuQHK3a4v5PgZKGaNonQ1xUZ0X7/eGgKYUwlqtdR9+t8Byo857E8ikQCMrcE2ujDt
-         9M4w==
-X-Gm-Message-State: AN3rC/56QmSl5j/YeAxWOF0V6PF418t4WKMgvIR3vQ32UWYokO06fHBn
-        YzIKQMXO7Pa3KOQ/VHvUR4nJKdpECQoY
-X-Received: by 10.98.9.29 with SMTP id e29mr4207442pfd.101.1492108510272; Thu,
- 13 Apr 2017 11:35:10 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.163.239 with HTTP; Thu, 13 Apr 2017 11:35:09 -0700 (PDT)
-In-Reply-To: <CA+P7+xr6zkb4kLTM-+0f5OTtt583WR_0j=NEebOdYuO3Z6h1+w@mail.gmail.com>
-References: <CA+P7+xqE-SZ5D6pk6-Dx+-VzHijmgmrUR2F=-370Rh8oKr10Nw@mail.gmail.com>
- <20170413171224.3537-1-jacob.e.keller@intel.com> <20170413180357.GA96917@google.com>
- <CA+P7+xr6zkb4kLTM-+0f5OTtt583WR_0j=NEebOdYuO3Z6h1+w@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Apr 2017 11:35:09 -0700
-Message-ID: <CAGZ79kaRpAPFd8+rQUxKTmDfrQWdPGEEWGSVzstwUbj-7hRAKQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] ls-files: fix recurse-submodules with nested submodules
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=oiyhAc/tXIhOEvI1cZrdltp1R2WyuHcIsAwiatgWBfc=;
+        b=mp/OqAI2TS77e495OCMgWYsBxYUCahgG4FjiTn/gmNHBWQ3VUyL8+QE9X0FC4UD3bz
+         THuOln90cYnuhR3KHHATBh/g0hJZTABxy2JUN3/WS1IiDs9iK9Um1ICD5AbHj+MiIOcj
+         egl1YjmnDI2HC0t5+1b4nAo3h1w3JJaEaounBU/u3X1hDxv4iuVh3gsCjH7ullnVtXRC
+         qv2s4mIv+tWj6Mvi7cG8inguvYentuxdpf33Ioa1AxifEiTWh+xL5qZjX7uNm8NqxcAi
+         s1ml+2fnfHLM0F4Da9wBry5llOxD5drZ2BX/tl8KHuC1Gby5xvlq7PP0cG9fyMaD3Xs1
+         7icw==
+X-Gm-Message-State: AN3rC/4cNrY4zw76zNaO9Q7fGU2hmZsZOasto35iXL2po6IbFp86+w/Y
+        gS/tO4qEKs3PSsSs
+X-Received: by 10.98.46.134 with SMTP id u128mr4164985pfu.264.1492108390358;
+        Thu, 13 Apr 2017 11:33:10 -0700 (PDT)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id 201sm43764654pfc.126.2017.04.13.11.33.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 13 Apr 2017 11:33:09 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, jrnieder@gmail.com,
+        e@80x24.org
+Subject: [PATCH v2 6/6] run-command: add note about forking and threading
+Date:   Thu, 13 Apr 2017 11:32:52 -0700
+Message-Id: <20170413183252.4713-7-bmwill@google.com>
+X-Mailer: git-send-email 2.12.2.762.g0e3151a226-goog
+In-Reply-To: <20170413183252.4713-1-bmwill@google.com>
+References: <20170410234919.34586-1-bmwill@google.com>
+ <20170413183252.4713-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 13, 2017 at 11:31 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> Spinning out a process is one of the big downsides of working with
-> submodules in our code. Unfortunately, spinning out a process is also
-> one of the biggest ways we isolate submodules, and if we wanted to do
-> this "in-process" we would need to add an abstraction layer that lets
-> us handle submodules in-process in some clean way.
+All non-Async-Signal-Safe functions (e.g. malloc and die) were removed
+between 'fork' and 'exec' in start_command in order to avoid potential
+deadlocking when forking while multiple threads are running.  This
+deadlocking is possible when a thread (other than the one forking) has
+acquired a lock and didn't get around to releasing it before the fork.
+This leaves the lock in a locked state in the resulting process with no
+hope of it ever being released.
 
-Yeah if we had less globals and a repo struct (class) which we could
-operate on, that would be bring in the abstractions that we'd need.
+Add a note describing this potential pitfall before the call to 'fork()'
+so people working in this section of the code know to only use
+Async-Signal-Safe functions in the child process.
 
-Stefan
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ run-command.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/run-command.c b/run-command.c
+index 4230c4933..1c36e692d 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -525,6 +525,15 @@ int start_command(struct child_process *cmd)
+ 	prepare_cmd(&argv, cmd);
+ 	childenv = prep_childenv(cmd->env);
+ 
++	/*
++	 * NOTE: In order to prevent deadlocking when using threads special
++	 * care should be taken with the function calls made in between the
++	 * fork() and exec() calls.  No calls should be made to functions which
++	 * require acquiring a lock (e.g. malloc) as the lock could have been
++	 * held by another thread at the time of forking, causing the lock to
++	 * never be released in the child process.  This means only
++	 * Async-Signal-Safe functions are permitted in the child.
++	 */
+ 	cmd->pid = fork();
+ 	failed_errno = errno;
+ 	if (!cmd->pid) {
+-- 
+2.12.2.762.g0e3151a226-goog
+
