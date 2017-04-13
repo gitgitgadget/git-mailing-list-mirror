@@ -2,213 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DDFE20960
-	for <e@80x24.org>; Thu, 13 Apr 2017 21:14:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87FE920960
+	for <e@80x24.org>; Thu, 13 Apr 2017 21:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751205AbdDMVOa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 17:14:30 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:39620 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751083AbdDMVO3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 17:14:29 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 71B1220960;
-        Thu, 13 Apr 2017 21:14:28 +0000 (UTC)
-Date:   Thu, 13 Apr 2017 21:14:28 +0000
-From:   Eric Wong <e@80x24.org>
+        id S1751276AbdDMVOw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 17:14:52 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34945 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751083AbdDMVOu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 17:14:50 -0400
+Received: by mail-pg0-f67.google.com with SMTP id g2so13592589pge.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 14:14:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=o3Q8/FXs7QWkwHhqFuzmu4kaya0njCK93zfDCbYjogw=;
+        b=Of1GjpsfIDwqizDlUignFePhdVCYXZR12pLzA/u1tv1YePsPWzJRhViIyE6SQMEzsn
+         /5GEv1NP+tuY6NLgrf8ATioLu4sf4mfjwBxhJStAtyGJjCx/oaZu6fbvJmSujA2tf4Mu
+         zYRKWxfRoqASl5F5TgpTSlxdfW2NoBsw46eGOKVGLml2z0rTrRjLaoiUH14KMiSPCjnF
+         SS+klf/SvM/DLlAtQglkARI4l+W03958CTFf+Wy1J2K9FsKaRbxkyi+ZjmdSs99tj4hz
+         HVUz3A8nrtI6YspzdJC2cjJbg5guUt26EVDCzzKS4HfMwbvHxCxp9efdQzCpUzDiyIgw
+         6/nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=o3Q8/FXs7QWkwHhqFuzmu4kaya0njCK93zfDCbYjogw=;
+        b=AmM9J5uY1sPX1gY9FWzLLpO/i6HyqlmiadeUG9gVkRYoVWTC3wJ4GqGeYH64P9c5uu
+         ukOMUBBejfjKVWG5YLe52p8mIrOGq0qtwYE/bg8UaT6UgpVqnaFyIhcfJnwxL5FO5YCW
+         dIMkCFf8i7Ki29JRSWK9xXGAhKHCu4qlA9T9Oub89kLmyENypsu7HVgtkymjXfKNjWNs
+         MnGJYau0iGTTMNwDF2AkdZk1uLDzk2TvwuTQu3Fs15LXGrP9X70leUEoklINaPUQNRX7
+         bKnqt1YY7ALrP6gktRUpl5I5KHXDBZY7I9uTT66QADRJexxPBQpJqaD15lJOu01o2wdh
+         Puyg==
+X-Gm-Message-State: AN3rC/7QJ9bFSteKa9/MvXrqIzvXu2cebg8jqe0nB8lOKrlVJn2Cx4OQ
+        Jp/8/VcSoObGLw==
+X-Received: by 10.84.176.100 with SMTP id u91mr5392137plb.39.1492118089793;
+        Thu, 13 Apr 2017 14:14:49 -0700 (PDT)
+Received: from aiede.mtv.corp.google.com ([2620:0:1000:5b10:40ae:ac27:c1a2:6a87])
+        by smtp.gmail.com with ESMTPSA id r7sm19531026pgn.26.2017.04.13.14.14.48
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Apr 2017 14:14:49 -0700 (PDT)
+Date:   Thu, 13 Apr 2017 14:14:47 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: [PATCH 7/6] run-command: block signals between fork and execve
-Message-ID: <20170413211428.GA5961@whir>
+Cc:     git@vger.kernel.org, e@80x24.org
+Subject: Re: [PATCH v2 2/6] run-command: prepare command before forking
+Message-ID: <20170413211447.GC10084@aiede.mtv.corp.google.com>
 References: <20170410234919.34586-1-bmwill@google.com>
  <20170413183252.4713-1-bmwill@google.com>
+ <20170413183252.4713-3-bmwill@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170413183252.4713-1-bmwill@google.com>
+In-Reply-To: <20170413183252.4713-3-bmwill@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> wrote:
-> v2 does a bit of restructuring based on comments from reviewers.  I took the
-> patch by Eric and broke it up and tweaked it a bit to flow better with v2.  I
-> left out the part of Eric's patch which did signal manipulation as I wasn't
-> experienced enough to know what it was doing or why it was necessary.  Though I
-> believe the code is structured in such a way that Eric could make another patch
-> on top of this series with just the signal changes.
+Hi,
 
-Yeah, I think a separate commit message might be necessary to
-explain the signal changes.
+Brandon Williams wrote:
 
--------8<-----
-Subject: [PATCH] run-command: block signals between fork and execve
+> In order to avoid allocation between 'fork()' and 'exec()' the argv
+> array used in the exec call is prepared prior to forking the process.
 
-Signal handlers of the parent firing in the forked child may
-have unintended side effects.  Rather than auditing every signal
-handler we have and will ever have, block signals while forking
-and restore default signal handlers in the child before execve.
+nit: s/(the argv array.*) is prepared/prepare \1/
 
-Restoring default signal handlers is required because
-execve does not unblock signals, it only restores default
-signal handlers.  So we must restore them with sigprocmask
-before execve, leaving a window when signal handlers
-we control can fire in the child.  Continue ignoring
-ignored signals, but reset the rest to defaults.
+Git's commit messages are in the imperative mood, as if they are
+ordering the code or the computer to do something.
 
-Similarly, disable pthread cancellation to future-proof our code
-in case we start using cancellation; as cancellation is
-implemented with signals in glibc.
+More importantly, the commit message is a good place to explain some
+of the motivation behind the patch so that people can understand what
+the patch is for by reading it without having to dig into mailing list
+archives and get the discussion there.
 
-Signed-off-by: Eric Wong <e@80x24.org>
----
-  Changes from my original in <20170411070534.GA10552@whir>:
+E.g. this could say
 
-  - fixed typo in NO_PTHREADS code
+- that grep tests are intermittently failing in configurations using
+  some versions of tcmalloc
 
-  - dropped fflush(NULL) before fork, consider us screwed anyways
-    if the child uses stdio
+- that the cause is interaction between fork and threads: malloc holds
+  a lock that those versions of tcmalloc doesn't release in a
+  pthread_atfork handler
 
-  - respect SIG_IGN in child; that seems to be the prevailing
-    wisdom from reading https://ewontfix.com/7/ and process.c
-    in ruby (git clone https://github.com/ruby/ruby.git)
+- that according to [1] we need to only call async-signal-safe
+  operations between fork and exec.  Using malloc to build the argv
+  array isn't async-signal-safe
 
- run-command.c | 69 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
+[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/fork.html
 
-diff --git a/run-command.c b/run-command.c
-index 1c36e692d..59a8b4806 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -213,6 +213,7 @@ static int child_notifier = -1;
- 
- enum child_errcode {
- 	CHILD_ERR_CHDIR,
-+	CHILD_ERR_SIGPROCMASK,
- 	CHILD_ERR_ENOENT,
- 	CHILD_ERR_SILENT,
- 	CHILD_ERR_ERRNO,
-@@ -277,6 +278,8 @@ static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
- 		error_errno("exec '%s': cd to '%s' failed",
- 			    cmd->argv[0], cmd->dir);
- 		break;
-+	case CHILD_ERR_SIGPROCMASK:
-+		error_errno("sigprocmask failed restoring signals");
- 	case CHILD_ERR_ENOENT:
- 		error_errno("cannot run %s", cmd->argv[0]);
- 		break;
-@@ -388,6 +391,53 @@ static char **prep_childenv(const char *const *deltaenv)
- }
- #endif
- 
-+struct atfork_state {
-+#ifndef NO_PTHREADS
-+	int cs;
-+#endif
-+	sigset_t old;
-+};
-+
-+#ifndef NO_PTHREADS
-+static void bug_die(int err, const char *msg)
-+{
-+	if (err) {
-+		errno = err;
-+		die_errno("BUG: %s", msg);
-+	}
-+}
-+#endif
-+
-+static void atfork_prepare(struct atfork_state *as)
-+{
-+	sigset_t all;
-+
-+	if (sigfillset(&all))
-+		die_errno("sigfillset");
-+#ifdef NO_PTHREADS
-+	if (sigprocmask(SIG_SETMASK, &all, &as->old))
-+		die_errno("sigprocmask");
-+#else
-+	bug_die(pthread_sigmask(SIG_SETMASK, &all, &as->old),
-+		"blocking all signals");
-+	bug_die(pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, &as->cs),
-+		"disabling cancellation");
-+#endif
-+}
-+
-+static void atfork_parent(struct atfork_state *as)
-+{
-+#ifdef NO_PTHREADS
-+	if (sigprocmask(SIG_SETMASK, &as->old, NULL))
-+		die_errno("sigprocmask");
-+#else
-+	bug_die(pthread_setcancelstate(as->cs, NULL),
-+		"re-enabling cancellation");
-+	bug_die(pthread_sigmask(SIG_SETMASK, &as->old, NULL),
-+		"restoring signal mask");
-+#endif
-+}
-+
- static inline void set_cloexec(int fd)
- {
- 	int flags = fcntl(fd, F_GETFD);
-@@ -511,6 +561,7 @@ int start_command(struct child_process *cmd)
- 	char **childenv;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct child_err cerr;
-+	struct atfork_state as;
- 
- 	if (pipe(notify_pipe))
- 		notify_pipe[0] = notify_pipe[1] = -1;
-@@ -524,6 +575,7 @@ int start_command(struct child_process *cmd)
- 
- 	prepare_cmd(&argv, cmd);
- 	childenv = prep_childenv(cmd->env);
-+	atfork_prepare(&as);
- 
- 	/*
- 	 * NOTE: In order to prevent deadlocking when using threads special
-@@ -537,6 +589,7 @@ int start_command(struct child_process *cmd)
- 	cmd->pid = fork();
- 	failed_errno = errno;
- 	if (!cmd->pid) {
-+		int sig;
- 		/*
- 		 * Ensure the default die/error/warn routines do not get
- 		 * called, they can take stdio locks and malloc.
-@@ -584,6 +637,21 @@ int start_command(struct child_process *cmd)
- 		if (cmd->dir && chdir(cmd->dir))
- 			child_die(CHILD_ERR_CHDIR);
- 
-+		/*
-+		 * restore default signal handlers here, in case
-+		 * we catch a signal right before execve below
-+		 */
-+		for (sig = 1; sig < NSIG; sig++) {
-+			sighandler_t old = signal(sig, SIG_DFL);
-+
-+			/* ignored signals get reset to SIG_DFL on execve */
-+			if (old == SIG_IGN)
-+				signal(sig, SIG_IGN);
-+		}
-+
-+		if (sigprocmask(SIG_SETMASK, &as.old, NULL) != 0)
-+			child_die(CHILD_ERR_SIGPROCMASK);
-+
- 		execve(argv.argv[0], (char *const *) argv.argv,
- 		       (char *const *) childenv);
- 
-@@ -595,6 +663,7 @@ int start_command(struct child_process *cmd)
- 			child_die(CHILD_ERR_ERRNO);
- 		}
- 	}
-+	atfork_parent(&as);
- 	if (cmd->pid < 0)
- 		error_errno("cannot fork() for %s", cmd->argv[0]);
- 	else if (cmd->clean_on_exit)
--- 
-EW
+> In addition to this, the function used to exec is changed from
+> 'execvp()' to 'execv()' as the (p) variant of exec has the potential to
+> call malloc during the path resolution it performs.
+
+*puzzled* is execvp actually allowed to call malloc?
+
+Could this part go in a separate patch?  That would make it easier to
+review.
+
+[...]
+> +++ b/run-command.c
+[...]
+> +	/*
+> +	 * If there are no '/' characters in the command then perform a path
+> +	 * lookup and use the resolved path as the command to exec.  If there
+> +	 * are no '/' characters or if the command wasn't found in the path,
+> +	 * have exec attempt to invoke the command directly.
+> +	 */
+> +	if (!strchr(out->argv[0], '/')) {
+> +		char *program = locate_in_PATH(out->argv[0]);
+> +		if (program) {
+> +			free((char *)out->argv[0]);
+> +			out->argv[0] = program;
+> +		}
+> +	}
+
+This does one half of what execvp does but leaves out the other half.
+http://pubs.opengroup.org/onlinepubs/009695399/functions/exec.html
+explains:
+
+  There are two distinct ways in which the contents of the process
+  image file may cause the execution to fail, distinguished by the
+  setting of errno to either [ENOEXEC] or [EINVAL] (see the ERRORS
+  section). In the cases where the other members of the exec family of
+  functions would fail and set errno to [ENOEXEC], the execlp() and
+  execvp() functions shall execute a command interpreter and the
+  environment of the executed command shall be as if the process
+  invoked the sh utility using execl() as follows:
+
+  execl(<shell path>, arg0, file, arg1, ..., (char *)0);
+
+I think this is what the first patch in the series was about.  Do we
+want to drop that support?
+
+I think we need to keep it, since it is easy for authors of e.g.
+credential helpers to accidentally rely on it.
+
+[...]
+> @@ -437,12 +458,9 @@ int start_command(struct child_process *cmd)
+>  					unsetenv(*cmd->env);
+>  			}
+>  		}
+> -		if (cmd->git_cmd)
+> -			execv_git_cmd(cmd->argv);
+> -		else if (cmd->use_shell)
+> -			execv_shell_cmd(cmd->argv);
+> -		else
+> -			sane_execvp(cmd->argv[0], (char *const*) cmd->argv);
+> +
+> +		execv(argv.argv[0], (char *const *) argv.argv);
+
+What happens in the case sane_execvp was trying to handle?  Does
+prepare_cmd need error handling for when the command isn't found?
+
+Sorry this got so fussy.
+
+Thanks and hope that helps,
+Jonathan
