@@ -2,88 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271B320960
-	for <e@80x24.org>; Thu, 13 Apr 2017 19:08:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C0F6209FA
+	for <e@80x24.org>; Thu, 13 Apr 2017 19:12:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755193AbdDMTIn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 15:08:43 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:34633 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752196AbdDMTIm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 15:08:42 -0400
-Received: by mail-pf0-f181.google.com with SMTP id c198so32410858pfc.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 12:08:42 -0700 (PDT)
+        id S1753105AbdDMTML (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 15:12:11 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35089 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751626AbdDMTMK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 15:12:10 -0400
+Received: by mail-pf0-f177.google.com with SMTP id i5so32412721pfc.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 12:12:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=LufMecEsRnqj5Vdx3tIwjLolB75m3WnCVQ7SevpJl48=;
-        b=q/T3HmuQqidpJifmtt3KTefatDKw3s0khtLUGhugcJOskIknyQ2RlZeDd6geGoG4XV
-         Aznd8lc17d1z4AOsR3nRmDFnKriDpVCPQ+3a4q9zw5KcgyaKUTtcltFECJCku6NVj0oL
-         kJRA+RG9T5oBBFqQzD7WCLenRZ6xL53fC4dowtMkOAmo2XxoWIJ0VgZ/EtweX+qCuh1E
-         Y1abdStMtZHddKqUjSh4qnyFU96Kg81jUirkfR1xtruHYxmWjxF1SJIgHTi2e5w/Ozz+
-         0FYscFc/ddhnqbj2AJHCnDm84fylvbQk/TgXKIPyTnSoLXJVYxJ6vBdAkVm1xKskCE+O
-         1exw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=63k4wYC0fpL0uSpz6jJGnzm1oTeLt7yTcKUCQP3S84c=;
+        b=F1b7D+218Nif04DMcfGafa4UF7ln1AIQzX5zKGdQRlNykgI5AUsoXC9FhGBMV+Aw1T
+         KX9K2zJdPWrge9Y1HG1N77Tfa3LekH9R+E73NwL0fBCI7o2+yTkxD7/tSXCDTV2cP1ET
+         aYTzE9jrtucN0HKSFAaAQft/fQW8WvzBAoUros4quLvIZub9nlBU9amziRQ7k0H3TIgA
+         osGo6xZ6rP1FywuRM1hICDI1u7gOELoJ/ujDqaK0HarVVSGcIvo4fGaVKL3wcSDElH9I
+         i0/b69u9iKCgPDEmsFXxfHeaNFCXbkxuI0PJCbfvxzJ79vrhxGbXU8Ybec0H2WAKFOJ+
+         1THg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LufMecEsRnqj5Vdx3tIwjLolB75m3WnCVQ7SevpJl48=;
-        b=RDU1S5yZs6sNb0uOiQ1UOwZNzAiQzuy2Czma1n3bYdyhcz0UPKgXeAlLhglR+SbfVL
-         agGmrLECA4gqfVunTssQUS0h3nkT3KwAmdSRamTwsG7gEJIped6vMPw9qceFQD3uWhCr
-         guoRugMLgfNd77DlJFrA07L3P9Vee7hxn36acimVf6K8WvwlW4bNTpGz/7toz7dwQqtu
-         TzzOFWj2k9hwTQEdF93ztL6GgpCkrRcu7JEAAt/jeo3Jc9SciEl+YsO1l34zWu7JD4HE
-         ngA2WOPa/Oh5aPQGc3fnyNV7uBuTCaNWlEyUIJG4DAEB6OxMAlpKIAdv+sDxeFhNRc11
-         WzIw==
-X-Gm-Message-State: AN3rC/66fGuqd12+MGMd1BWXWKkIoH1yjEONcexNlM3vD/IZ4AFZlTH3
-        mzw5DlWzAASfouc3
-X-Received: by 10.98.131.197 with SMTP id h188mr4072049pfe.99.1492110521431;
-        Thu, 13 Apr 2017 12:08:41 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:1426:66e2:260b:9db9])
-        by smtp.gmail.com with ESMTPSA id m4sm13270991pgm.25.2017.04.13.12.08.40
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Apr 2017 12:08:40 -0700 (PDT)
-Date:   Thu, 13 Apr 2017 12:08:39 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH 3/4] submodule.c: harden submodule_move_head against
- broken submodules
-Message-ID: <20170413190839.GE96917@google.com>
-References: <20170411234923.1860-1-sbeller@google.com>
- <20170411234923.1860-4-sbeller@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=63k4wYC0fpL0uSpz6jJGnzm1oTeLt7yTcKUCQP3S84c=;
+        b=Oo3Szih2lg9N6b+y+sXdPFNKc+wmzY7ivzLh2Wf29piM/Fie6bRDD+gdRIf9QFfyfS
+         oTqQbAevYPS2Gvcf0tabmWUNGVZMXqgXfN4COBP0oC68kXl7l3lmJTtJ3P18eEGR/+80
+         2ZYUn75RsJKh0ynArpSH1pdrUGuXe5qIcxpffJBZVsz1OulQAOBFz0Fj3YtOTBDkoZN4
+         PpyUhh564BkZGmOZI8La++CIiSGNTyvN6R6L9pQJzWGmaDsMvgsZHodDZ59Advo7N6Ul
+         2Raeg939kV54/5gHpvj+AAkSYpxfAy3uwlCISftdsiaTS4fzr4kHILG1wh1oy+3mb9ZR
+         RsiA==
+X-Gm-Message-State: AN3rC/66+0/nooy9qB3NGG/t8//vQhE323aXYPgxTWt5vYcKvszjycHC
+        FxYcwSpejDu/yuBzgMH2BU8zH5KRBlBK
+X-Received: by 10.84.248.74 with SMTP id e10mr5369543pln.76.1492110729259;
+ Thu, 13 Apr 2017 12:12:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170411234923.1860-4-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.163.239 with HTTP; Thu, 13 Apr 2017 12:12:08 -0700 (PDT)
+In-Reply-To: <20170413190541.GD96917@google.com>
+References: <20170411234923.1860-1-sbeller@google.com> <20170411234923.1860-3-sbeller@google.com>
+ <20170413190541.GD96917@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Apr 2017 12:12:08 -0700
+Message-ID: <CAGZ79kZybFNPPAuw4GmVUSmQVBcCG402uCur8M9hSoY3CbhbXw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] submodule.c: uninitialized submodules are ignored in
+ recursive commands
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/11, Stefan Beller wrote:
-> Early on in submodule_move_head just after the check if the submodule is
-> initialized, we need to check if the submodule is populated correctly.
-> 
-> If the submodule is initialized but doesn't look like populated, this
-> is a red flag and can indicate multiple sorts of failures:
-> (1) The submodule may be recorded at an object name, that is missing.
-> (2) The submodule '.git' file link may be broken and it is not pointing
->     at a repository.
-> 
-> In both cases we want to complain to the user in the non-forced mode,
-> and in the forced mode ignoring the old state and just moving the
-> submodule into its new state with a fixed '.git' file link.
+On Thu, Apr 13, 2017 at 12:05 PM, Brandon Williams <bmwill@google.com> wrote:
+> On 04/11, Stefan Beller wrote:
+>> This was an oversight when working on the working tree modifying commands
+>> recursing into submodules.
+>>
+>> To test for uninitialized submodules, introduce another submodule, that is
+>> uninitialized in the actual tests. By adding it to the branch "add_sub1",
+>> which is the starting point of all other branches, we have wide coverage.
+>>
 
-What about the case where you have marked a submodule as active but
-don't have its respective .gitdir yet?  For now i think it would be
-acceptable to complain and do nothing/ignore it, in the future we may
-want to actually clone and then check it out.
+...
 
--- 
-Brandon Williams
+>
+> The 'submodule add' command will make the submodule active, so you'll
+> need to add in a line to subsequently make the submodule inactive for
+> this to work, unless you do in at a later point in time.
+
+Yes, it will make it active, but that doesn't matter here, because at this
+point (in create_lib_submodule_repo) we prepare an upstream
+in submodule_update_repo
+
+Any later test follows the structure of
+
+    prolog &&
+    reset_work_tree_to no_submodule &&
+    (
+        cd submodule_update &&
+        # do actual test here, in submodule_update
+    )
+
+Note that 'prolog' performs a clone of submodule_update_repo
+to submodule_update, manually setting 'sub1' to active.
+
+'uninitialized_sub' is not active.
+
+I tried to explain it via
+    To test for uninitialized submodules, introduce another submodule,
+    that is uninitialized in the actual tests.
+in the commit message, but that is too concise apparently.
+So the resend will explain that a bit more.
+
+Thanks,
+Stefan
