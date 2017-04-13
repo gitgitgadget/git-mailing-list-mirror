@@ -2,77 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 257B4209FA
-	for <e@80x24.org>; Thu, 13 Apr 2017 16:44:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0293F20960
+	for <e@80x24.org>; Thu, 13 Apr 2017 16:54:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754764AbdDMQo4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 12:44:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32979 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752689AbdDMQo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 12:44:56 -0400
-Received: (qmail 21209 invoked by uid 109); 13 Apr 2017 16:44:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Apr 2017 16:44:55 +0000
-Received: (qmail 24590 invoked by uid 111); 13 Apr 2017 16:45:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Apr 2017 12:45:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Apr 2017 12:44:52 -0400
-Date:   Thu, 13 Apr 2017 12:44:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        David Turner <dturner@twosigma.com>, git@vger.kernel.org
-Subject: Re: [PATCHv2.1] t6500: wait for detached auto gc at the end of the
- test script
-Message-ID: <20170413164451.quvt7xdzsm64lntp@sigill.intra.peff.net>
-References: <20170412220717.7357-1-szeder.dev@gmail.com>
- <20170413103138.12717-1-szeder.dev@gmail.com>
+        id S1752882AbdDMQym (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 12:54:42 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:35940 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751678AbdDMQyl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 12:54:41 -0400
+Received: by mail-qt0-f179.google.com with SMTP id v3so50308934qtd.3
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 09:54:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=37YtxosGPUV13zpmzDKmkeVE+ZIVviXjbWm2I4gK6D8=;
+        b=VRuvNPRmmU+tZg3D1OlH7sa1pFGRd1RqSFJZDboe5jTyo36DU4wIEeCJhteR6FgV+j
+         tUefDQ28SQbKTZ0c0bij4zWlIjWXI5Js/1RdMaUwII9PvFu4eGyO7mcMK8FkBxVBKjPE
+         /2v1Ef/mAUkiVXOnCCCM0hJRhJDDVEetkXkzePgcoP80k6s1r2Pic1FC+b1zWK4wdxeh
+         w/4WP+qlwpYXH4ym3F+9JjpEzhB+qbwuDRRPy+RH9u2Yszz2SRnmj6gJZwmy6JD2WqWa
+         HYuiyuYrA2GUS4OESfr+FaGBNSpTLcFuQuFxOTKdfKJUfao8lHKEqsy1KKbtBzI7zSob
+         Abdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=37YtxosGPUV13zpmzDKmkeVE+ZIVviXjbWm2I4gK6D8=;
+        b=TzhypgYyoSDMsUsVpKE/1qs/kEOTwSY0qxu7lnN1ep43m3MqC/Q+ULG/eWXVnodKrK
+         thTXtSd/cGrpaLACqfRwlO+AgJUSL4BIh2YOS7XgKKCr759bG4SH9ROsdurvmsMkZoYS
+         PCcl6NOJtb1a6VQb2b1mbTp6w0HdIVANWEj2kF++J/mRGGC9vEwrLVc1WW/Koef2sXiV
+         ZsosAHEMpaN2sVQ4YZRp5w+XaYXC0WjS23FAc/baMm10I+JiJmw0hvdtwtGgLlAaXOE2
+         6vFdnBuXnuomB2h31y0DgIvZtwebEY47GJAdwPMBUpvBcWZU0EVjvpovgHZR6GBvElEs
+         PVmA==
+X-Gm-Message-State: AN3rC/6kOC+fLEF7vAdSLa1kmJ6Y1+5fr6jS/giCKbkb8YZzf9f5rnHN
+        Ow+xogXtnQ9tstMeyrx4UUJGW/BlAQHJ
+X-Received: by 10.200.51.246 with SMTP id d51mr3436364qtb.119.1492102480074;
+ Thu, 13 Apr 2017 09:54:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170413103138.12717-1-szeder.dev@gmail.com>
+Received: by 10.200.40.50 with HTTP; Thu, 13 Apr 2017 09:54:39 -0700 (PDT)
+In-Reply-To: <CA+-Lr-CGHLFJv0iBPNMQ-X_GWzurt1dZKeMhpYd_fw6ZQGywzw@mail.gmail.com>
+References: <CA+-Lr-CGHLFJv0iBPNMQ-X_GWzurt1dZKeMhpYd_fw6ZQGywzw@mail.gmail.com>
+From:   EvenEven Odd <oddeveneven@gmail.com>
+Date:   Thu, 13 Apr 2017 19:54:39 +0300
+Message-ID: <CA+-Lr-B9FXSwa7tTJEbBjRX6NmUu3mu8CbTsHCv+rKA-jBY_8Q@mail.gmail.com>
+Subject: Fwd: Errors running gitk on OS X
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 13, 2017 at 12:31:38PM +0200, SZEDER Gábor wrote:
+Running gitk from the command line, while at the top level of a Git
+working directory, produces the following error message, and gitk
+fails to open:
 
-> Note, that this fd trickery doesn't work on Windows, because due to
-> MSYS limitations the git process only inherits the standard fds 0, 1
-> and 2 from the shell.  Luckily, it doesn't matter in this case,
-> because on Windows daemonize() is basically a noop, thus 'git gc
-> --auto' always runs in the foreground.
-> 
-> And since we can now continue the test reliably after the detached gc
-> finished, check that there is only a single packfile left at the end,
-> i.e. that the detached gc actually did what it was supposed to do.
-> Also add a comment at the end of the test script to warn developers of
-> future tests about this issue of long running detached gc processes.
+> objc[1031]: Objective-C garbage collection is no longer supported.
 
-The whole thing looks nicely explained, and I'm happy that we're able to
-reliably add this extra check at the end of the test.
+> /usr/local/bin/wish: line 2:  1031 Abort trap: 6           "$(dirname $0)/../../../Library/Frameworks/Tk.framework/Versions/8.5/Resources/Wish.app/Contents/MacOS/Wish" "$@"
 
-I did wonder what will happen if Windows learns to daemonize() the
-auto-gc. I don't think we'll get an immediate test failure, but this
-test will become racy again. But this time we'll actually notice the
-racy failure, because the "ls" will report extra packs if it runs before
-the background gc does. At which point we can revisit this.
+Additionally, the following error message pops up in a window:
 
-It would be nice if there were a non-racy way to detect whether we
-daemonized or not, and complain on Windows when we do. Then we'll be
-notified immediately when daemonize() changes by the test failure,
-rather than waiting for a racy failure.
+> Wish quit unexpectedly.
 
-I guess we could probably grep for the "in the background" message from
-the parent gc. OTOH, maybe it is not even worth it. The racy version
-should fail reasonably promptly, I think, and the comments you've left
-would point any investigator in the right direction.
+> Click Reopen to open the application again. Click Report to see more detailed information and send a report to Apple.
 
--Peff
+> Ignore | Report... | Reopen
+
+How can this be fixed?
+
+***
+
+OS: macOS Sierra, Version 10.12.4
+Git version: 2.11.0 (Apple Git-81)
