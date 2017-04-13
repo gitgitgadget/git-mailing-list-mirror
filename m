@@ -2,94 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3D9120960
-	for <e@80x24.org>; Thu, 13 Apr 2017 23:10:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1A9720960
+	for <e@80x24.org>; Thu, 13 Apr 2017 23:11:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752468AbdDMXKM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 19:10:12 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:34132 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751657AbdDMXKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 19:10:10 -0400
-Received: by mail-pf0-f176.google.com with SMTP id c198so34455358pfc.1
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 16:10:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=NvrVSXJ3xR5w5vo+HdcC3G8Xg9iShsstiWwIrDuJ/zA=;
-        b=BZaKjq2fPE2IL3YIf9ooZy6NpkD1nxpgVy/+EIoSkQdl93B2nO5uuGFuLk6jWBby4+
-         cs5Lery7Qy9EZ2Pnr7ICcM74cagy+HUZmpiy0s4WMrNXm1zLCLK1QCtnTeeYohpq2Shp
-         Hszmti25tkrXSCxlkcYMqOLxLUjLQnAQPZhcRVo4Ct1u994wXG4Ef2o4aPYwFQqIQW+o
-         YrQI+pWHFRFfV5TneJvmJJJo0Gm2Gh0LufEbfylCbjzKkXVi7VTQLnrJ/hjcvigLLfsS
-         I24WsFF5yUiSxy0vV/yqMHD0hFRjIL3d8OeJRRIQgPkO6wjU/RG2737/U0xiS6Jb04QM
-         AsTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NvrVSXJ3xR5w5vo+HdcC3G8Xg9iShsstiWwIrDuJ/zA=;
-        b=MOrv7RwGTiCvbdoAeHnXqRo+nSk1PHSl0LWDNQWm6OFosZ06sPCWBGYFCm5OEMWFnH
-         6jYkF7ka/qojEf8hZK11TSoPOI+QhGzvN1WpkyOz+MCZbUERnvznl15onz48i0ECklyq
-         rS7fmF0QMwkAYHxWu8JNngxeHuMGSzA9W9Sy7rw33FHtOK+C2LUtJFQlrCEkh2Uxl5E9
-         5g4qgsIGMl7puQHpFeiy+5h3creyugbjkZCr0/HTuCTKUo7RisQXfHZzbLNtABdzkEVK
-         wo/WMUYkVeXGgw/S9ns9ShpH1Iu84frfMMnK16rlSWDFCTMHbM/ihtLHc8wQ1XIL+/b/
-         KwRQ==
-X-Gm-Message-State: AN3rC/4FIrMw8UIIWwpkw9qSn/NxIWFEE6ScJmFZU/shttXVg6zKVZNY
-        FDWe4m2705/Lbip8
-X-Received: by 10.98.41.199 with SMTP id p190mr4303325pfp.266.1492125009993;
-        Thu, 13 Apr 2017 16:10:09 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b10:1426:66e2:260b:9db9])
-        by smtp.gmail.com with ESMTPSA id p80sm133998pfk.50.2017.04.13.16.10.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 13 Apr 2017 16:10:09 -0700 (PDT)
-Date:   Thu, 13 Apr 2017 16:10:07 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH] submodule--helper: fix typo in is_active error message
-Message-ID: <20170413231007.GC115420@google.com>
-References: <20170413220854.14767-1-sbeller@google.com>
+        id S1752413AbdDMXLg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 19:11:36 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51925 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752040AbdDMXLe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 19:11:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2ED1D88012;
+        Thu, 13 Apr 2017 19:11:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Zc0VJjQuXOAwa7Ihm5Rlz4a/wk8=; b=MX0uVe
+        icIiTEqLEyAFkRMr4hCbRIh8Y3f9B/xeRg2ZY5SlQoLNw9JvIVo4nAF0fl/Bn9de
+        IeT86m7iyIe09yatXiufFYaReFakRv/grQl703QsPyT5oFdUxsn/uJpywyR48Mj9
+        Ii1UZWOUBRlhCxzW4V3ntJv2SRWNzZ4KoU9TU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=e7fz+y+xxpI4dfkFwgxSQBaBjcHvbZgn
+        +hdg21hNzug7+SjL1aNCShLrxYnDNK4W6bGlkNJuWHzAukPe733c0x+12/tvzDbl
+        6VXxlHKzoW0hlfxtbB+KiQ8d5GR/+yflBioDWRbob8xNMbKEkVdfVkReedTEmcmh
+        cI7unvnAb80=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2633D88011;
+        Thu, 13 Apr 2017 19:11:33 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9248E88010;
+        Thu, 13 Apr 2017 19:11:32 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v3] unpack-trees: avoid duplicate ODB lookups during checkout
+References: <20170413155852.4281-1-git@jeffhostetler.com>
+        <20170413155852.4281-2-git@jeffhostetler.com>
+Date:   Thu, 13 Apr 2017 16:11:31 -0700
+In-Reply-To: <20170413155852.4281-2-git@jeffhostetler.com>
+        (git@jeffhostetler.com's message of "Thu, 13 Apr 2017 15:58:52 +0000")
+Message-ID: <xmqqtw5roqcc.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170413220854.14767-1-sbeller@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 88901DCC-209E-11E7-B5D1-E680B56B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/13, Stefan Beller wrote:
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  builtin/submodule--helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index e42e671014..b1d4269e10 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1145,7 +1145,7 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
->  static int is_active(int argc, const char **argv, const char *prefix)
->  {
->  	if (argc != 2)
-> -		die("submodule--helper is-active takes exactly 1 arguments");
-> +		die("submodule--helper is-active takes exactly 1 argument");
+git@jeffhostetler.com writes:
 
-Obvious fix.  Thanks!
+> +	/*
+> +	 * Fetch the tree from the ODB for each peer directory in the
+> +	 * n commits.
+> +	 *
+> +	 * For 2- and 3-way traversals, we try to avoid hitting the
+> +	 * ODB twice for the same OID.  This should yield a nice speed
+> +	 * up in checkouts and merges when the commits are similar.
+> +	 *
+> +	 * We don't bother doing the full O(n^2) search for larger n,
+> +	 * because wider traversals don't happen that often and we
+> +	 * avoid the search setup.
+> +	 *
+> +	 * When 2 peer OIDs are the same, we just copy the tree
+> +	 * descriptor data.  This implicitly borrows the buffer
+> +	 * data from the earlier cell.
 
+This "borrowing" made me worried, but it turns out that this is
+perfectly OK.
+
+fill_tree_descriptor() uses read_sha1_file() to give a tree_desc its
+own copy of the tree object data, so the code that calls into the
+tree traversal API is responsible for freeing the buffer returned
+from fill_tree_descriptor().  The updated code avoids double freeing
+by setting buf[i] to NULL for borrowing [i].
+
+> +	 */
+>  	for (i = 0; i < n; i++, dirmask >>= 1) {
+> -		const unsigned char *sha1 = NULL;
+> -		if (dirmask & 1)
+> -			sha1 = names[i].oid->hash;
+> -		buf[i] = fill_tree_descriptor(t+i, sha1);
+> +		if (i > 0 && are_same_oid(&names[i], &names[i - 1])) {
+> +			t[i] = t[i - 1];
+> +			buf[i] = NULL;
+> +		} else if (i > 1 && are_same_oid(&names[i], &names[i - 2])) {
+> +			t[i] = t[i - 2];
+> +			buf[i] = NULL;
+> +		} else {
+> +			const unsigned char *sha1 = NULL;
+> +			if (dirmask & 1)
+> +				sha1 = names[i].oid->hash;
+> +			buf[i] = fill_tree_descriptor(t+i, sha1);
+> +		}
+>  	}
 >  
->  	gitmodules_config();
->  
-> -- 
-> 2.12.2.603.g7b28dc31ba
-> 
-
--- 
-Brandon Williams
+>  	bottom = switch_cache_bottom(&newinfo);
