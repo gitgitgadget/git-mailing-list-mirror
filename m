@@ -2,98 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BB7820960
-	for <e@80x24.org>; Thu, 13 Apr 2017 19:25:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F33920960
+	for <e@80x24.org>; Thu, 13 Apr 2017 19:29:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755271AbdDMTZc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 15:25:32 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33403 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751808AbdDMTZa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 15:25:30 -0400
-Received: by mail-pg0-f46.google.com with SMTP id x125so34748822pgb.0
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 12:25:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=s50a5VXAfnAdlLv1wrw/Fkwn3C/o60Bfp8jbUW6YJzI=;
-        b=NOuWYvh5xOVYh0sl8GMr8n/plzomUAUn6tU5pu7kxhxNaWe3MpDSKyQK8+/E2zV8bH
-         MiXaFmJ8WbtHMjfJrIIlvRbdcwpNm4z5ETvZjs2ZZ76HSOfkmyc5uF1+VjiPYMUdrsq8
-         7mmXyVtasmJELm5hG4W6SXmTsDq6xB7rgYj+BsoUWD9XJpqtJfGM+6n1FggoiAcW7pe6
-         idT2EQWH62RkdiCTafTgUyg4Kr+5sKiqgnQiAHQy4W7wt6T3GxrmM5Z7QQ49it3atl7+
-         ruzoN9kDCH5UrM15MSwnUn4mzqo9e6gCde2VJ3KyhMMrV4lZGqz2oxz7w7MaXb8lW4eg
-         akhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=s50a5VXAfnAdlLv1wrw/Fkwn3C/o60Bfp8jbUW6YJzI=;
-        b=qIsCWS4ZJE/wbixMQE+IlGAuKJfIvTEWCicrMEXJwhpv0JA72283UIzZBj+U4LBPrA
-         X4h2mm9GESigU3Ayf3cMt+uCYFyB3/6kJQb3dxcE4BcQh32Lre1MoWLlHGfS7Hvkpn2R
-         0XP/Xn3+hom/FJ119ViWncZ5ZF8mStbJfgvZbtUqDL2V2iC+dV8DDXTpGb2XycQ1HKvY
-         Jo/LmC9M6BTDokHR9l+8V7B3FXtXqZ+yRQrnme/8httIEGDxeNLfYnwRxfldkRFs24l2
-         5f4rCjh8Tv7/Ak0GjX80a9hFOmh6rBZWVabwmZub2XmCwbBJHXdxpk7jhPM4jgqjY6xM
-         lQxA==
-X-Gm-Message-State: AN3rC/7bvdZZm+rcjlGsL/LPixoP0K3THuqXXDlCgQqd9rnemuh3gmkT
-        Tcct/+FP/ZHS8cQJvL82k7wYqVJAj36CmCDSjg==
-X-Received: by 10.98.9.29 with SMTP id e29mr4248654pfd.101.1492111529592; Thu,
- 13 Apr 2017 12:25:29 -0700 (PDT)
+        id S1755136AbdDMT3a (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 15:29:30 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:51918 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752145AbdDMT33 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 15:29:29 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id 8807220960;
+        Thu, 13 Apr 2017 19:29:28 +0000 (UTC)
+Date:   Thu, 13 Apr 2017 19:29:28 +0000
+From:   Eric Wong <e@80x24.org>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+Subject: Re: [PATCH v2 4/6] run-command: don't die in child when duping
+ /dev/null
+Message-ID: <20170413192928.GA6129@whir>
+References: <20170410234919.34586-1-bmwill@google.com>
+ <20170413183252.4713-1-bmwill@google.com>
+ <20170413183252.4713-5-bmwill@google.com>
 MIME-Version: 1.0
-Received: by 10.100.163.239 with HTTP; Thu, 13 Apr 2017 12:25:28 -0700 (PDT)
-In-Reply-To: <CA+P7+xp=1PUsq1_or=J8ED+-1NMaF=BckC9bK4jqWbA+RFeszw@mail.gmail.com>
-References: <20170413171224.3537-1-jacob.e.keller@intel.com>
- <20170413185707.97746-1-bmwill@google.com> <CAGZ79kZ8KV+c2StKR8tp=s_E1+uEaSezgsmUfyyO9HUrmzdT+g@mail.gmail.com>
- <CA+P7+xp=1PUsq1_or=J8ED+-1NMaF=BckC9bK4jqWbA+RFeszw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Apr 2017 12:25:28 -0700
-Message-ID: <CAGZ79kaRTrgHMnP6mA3V2rDHzf8iOidqLTpp2aXmi6x+6YeZxw@mail.gmail.com>
-Subject: Re: [PATCH 3/2] ls-files: only recurse on active submodules
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170413183252.4713-5-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 13, 2017 at 12:12 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
-> On Thu, Apr 13, 2017 at 12:05 PM, Stefan Beller <sbeller@google.com> wrote:
->> On Thu, Apr 13, 2017 at 11:57 AM, Brandon Williams <bmwill@google.com> wrote:
->>> Add in a check to see if a submodule is active before attempting to
->>> recurse.  This prevents 'ls-files' from trying to operate on a submodule
->>> which may not exist in the working directory.
->>
->> What would currently happen on recursing into non-active submodules?
->> Can we have a test for this?
->>
->> Thanks,
->> Stefan
->
-> We should be able to test for this. Is it possible that we can recurse
-> into a submodule as long as we have the clone in .git/modules/<name>
-> even if we don't have it checked out currently?
+Brandon Williams <bmwill@google.com> wrote:
+> @@ -487,7 +483,7 @@ int start_command(struct child_process *cmd)
+>  		atexit(notify_parent);
+>  
+>  		if (cmd->no_stdin)
+> -			dup_devnull(0);
+> +			dup2(null_fd, 0);
 
-Conceptually that should be possible, e.g.
+I prefer we keep error checking for dup2 failures,
+and also add more error checking for unchecked dup2 calls.
+Can be a separate patch, I suppose.
 
-    git ls-files --recurse-submodules <ancient ref>
+Ditto for other dup2 changes
 
-where the ancient ref contained submodules that are not present any more.
-In that case we would need to do
+> @@ -558,6 +554,8 @@ int start_command(struct child_process *cmd)
+>  	}
+>  	close(notify_pipe[0]);
+>  
+> +	if (null_fd > 0)
+> +		close(null_fd);
 
-    struct strbuf sb = STRBUF_INIT;
-    struct child_process = CHILD_PROCESS_INIT;
-    struct submodule *sub = submodule_from_path( \
-        <path as recorded in ancient tree>, <ancient ref>)
-    strbuf_git_path(&sb, "modules/%s", sub->name);
+I would prefer:
 
-    argv_array_pushl(&cp.args, "git", "ls-files", "--recurse", ...);
-    cp.dir = sb.buf;
-    run_command(&cp);
+	if (null_fd >= 0)
 
-Stefan
+here, even if we currently do not release stdin.
+
+>  	argv_array_clear(&argv);
+>  	free(childenv);
