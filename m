@@ -2,222 +2,386 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B153620960
-	for <e@80x24.org>; Thu, 13 Apr 2017 20:13:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECBBA20960
+	for <e@80x24.org>; Thu, 13 Apr 2017 20:28:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755733AbdDMUM7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 16:12:59 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35706 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755416AbdDMUM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 16:12:58 -0400
-Received: by mail-pf0-f181.google.com with SMTP id i5so32970614pfc.2
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 13:12:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=a5eDKkhwuXTWUaklr8FEpWRzRf9P+zaGX63sEDetJpc=;
-        b=hWVxTv+TA7uKXPpsE0DoIy0V3wzcYzTLLuYYHGfKVczOxuMuAL+zeOQGXF4Q6pgwao
-         hwcT0qVr+G9XtkUM81YPHPse9fe5J9U+yKeNn9vpAIBkCpA9i9IpUfOwCbaxuGTndLs2
-         6hqd16JIcgSlygU/df5+uCabmVJkKSmVVHxiVzvw7VLQPQGrWtbcjUa1w3HryRbwtUq1
-         i/wvTGgJ62yoRZXpKG9hV7fCSlHi3CR7hSwchJ+sMznh6unG1Dc4o9kNBteEKiMzIfI+
-         wPrkylc0sCYtxNkd364fpTGcWlefbAufkzrtal53c0pv1gSklsybaSdUivabqPQstxrK
-         SxBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=a5eDKkhwuXTWUaklr8FEpWRzRf9P+zaGX63sEDetJpc=;
-        b=UyQty9YYGiGVGuwCIhEWsrQK2UXts+2mFLxK5vNE5c7whgF7V59D/14AvJlUwfJIiq
-         8Ib9jNPGaUujoTDy9z9eL0Iqb7RXEM3n+9L+aE1PkgGsRatC9VSAv6X5AoelP/Pfxvrj
-         YZ4/k2J7iy82S/gx126U4QC3eoEGhQcTXO/FhlillqR2uiQbs2Q0PK+pkVJ7DDToCAUM
-         FfD49ZFFGmT2DkFvrPnHxdtyYrSCguQKCgmJ11wj7YdQSbWZTcivrdmXTGSsGE8RhnXU
-         kBjshsu1srmDVjZqbRHL0jhw3jkv9E5UMNLnGb14y+Yve/uKOkzdfXaoZOernl0Fidtu
-         Iz9Q==
-X-Gm-Message-State: AN3rC/7b1L4d8jjDjyM1EBXxtMhl7Ia6xqVLP+EAJbHqATuR4tGM9y0m
-        HkKqWhhPw7Jk1nAq
-X-Received: by 10.99.44.140 with SMTP id s134mr4306599pgs.178.1492114377245;
-        Thu, 13 Apr 2017 13:12:57 -0700 (PDT)
-Received: from twelve2.mtv.corp.google.com ([2620:0:1000:5b10:ccfa:7153:b6a9:3bd0])
-        by smtp.gmail.com with ESMTPSA id v8sm28356180pfd.108.2017.04.13.13.12.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Apr 2017 13:12:55 -0700 (PDT)
-Subject: Re: Proposal for "fetch-any-blob Git protocol" and server design
-To:     Kevin David <Kevin.David@microsoft.com>,
-        Ben Peart <peartben@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-References: <ffd92ad9-39fe-c76b-178d-6e3d6a425037@google.com>
- <CAGZ79ka-YaF5dBXJmhXsfwwrwSBy0tkun0yDysG581E0mpqDVw@mail.gmail.com>
- <00bf01d2aed7$b13492a0$139db7e0$@gmail.com>
- <BY2PR21MB0052067C2CDC6F727CCB6969EE030@BY2PR21MB0052.namprd21.prod.outlook.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Mark Thomas <markbt@efaref.net>,
-        Jeff Hostetler <git@jeffhostetler.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <18ebcd04-4765-bdc7-3880-b0e8cb90d35c@google.com>
-Date:   Thu, 13 Apr 2017 13:12:54 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
-MIME-Version: 1.0
-In-Reply-To: <BY2PR21MB0052067C2CDC6F727CCB6969EE030@BY2PR21MB0052.namprd21.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        id S1752331AbdDMU2y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 16:28:54 -0400
+Received: from sub3.mail.dreamhost.com ([69.163.253.7]:38652 "EHLO
+        homiemail-a100.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750997AbdDMU2w (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 Apr 2017 16:28:52 -0400
+Received: from homiemail-a100.g.dreamhost.com (localhost [127.0.0.1])
+        by homiemail-a100.g.dreamhost.com (Postfix) with ESMTP id A755931A073;
+        Thu, 13 Apr 2017 13:28:51 -0700 (PDT)
+Received: from localhost.localdomain (gzac10-107-1.nje.twosigma.com [208.77.214.155])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by homiemail-a100.g.dreamhost.com (Postfix) with ESMTPSA id 1676A31A070;
+        Thu, 13 Apr 2017 13:28:51 -0700 (PDT)
+From:   David Turner <dturner@twosigma.com>
+To:     git@vger.kernel.org
+Cc:     christian.couder@gmail.com, mfick@codeaurora.org,
+        jacob.keller@gmail.com, David Turner <dturner@twosigma.com>
+Subject: [PATCH] repack: respect gc.pid lock
+Date:   Thu, 13 Apr 2017 16:27:12 -0400
+Message-Id: <20170413202712.22192-1-dturner@twosigma.com>
+X-Mailer: git-send-email 2.11.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/12/2017 03:02 PM, Kevin David wrote:
-> Hi Jonathan,
->
-> I work on the network protocols for the GVFS project at Microsoft.
-> I shared a couple thoughts and questions below.
+Git gc locks the repository (using a gc.pid file) so that other gcs
+don't run concurrently. Make git repack respect this lock.
 
-Thanks for your reply!
+Now repack, by default, will refuse to run at the same time as a gc.
+This fixes a concurrency issue: a repack which deleted packs would
+make a concurrent gc sad when its packs were deleted out from under
+it.  The gc would fail with: "fatal: ./objects/pack/pack-$sha.pack
+cannot be accessed".  Then it would die, probably leaving a large temp
+pack hanging around.
 
-> I know we're considering server behavior here, but how large do you generally
-> expect these blob-want requests to be? I ask because we took an initial approach
-> very similar to this, however, we had a hard time being clever about figuring out
-> what set of blobs to request for those clients that didn't want the entire set, and
-> ended up falling back to single-blob requests.
->
-> Obviously, this could be due to thenature of our filesystem-virtualization-based client,
-> but I also suspect that the teams attacking this problem are more often than not dealing
-> with very large blob objects, so the cost of a round-trip becomes lower relative to sending
-> the object content itself.
+Git repack learns --no-lock, so that when run under git gc, it doesn't
+attempt to manage the lock itself.
 
-I am envisioning (1a) as described in Jeff Hostetler's e-mail [1] ("a 
-pre-command or hook to identify needed blobs and pre-fetch them before 
-allowing the actual command to start"), so a Git command would typically 
-make a single request that contains all the blobs required, but my 
-proposal can also handle (1c) ('"fault" them in as necessary in 
-read_object() while the command is running and without any pre-fetch 
-(either synchronously or asynchronously and with/without a helper 
-process)').
+Martin Fick suggested just moving the lock into git repack, but this
+would leave parts of git gc (e.g. git prune) protected by only local
+locks.  I worried that a prune (part of git gc) concurrent with a
+repack could confuse the repack, so I decided to go with this
+solution.
 
-Even if we decided to go with single-blob requests and responses, it is 
-still important to send them as packfiles, so that the server can serve 
-them directly from its compressed storage without first having to 
-uncompress them.
+Signed-off-by: David Turner <dturner@twosigma.com>
+---
+ Documentation/git-repack.txt |  5 +++
+ Makefile                     |  1 +
+ builtin/gc.c                 | 72 ++----------------------------------
+ builtin/repack.c             | 13 +++++++
+ repack.c                     | 88 ++++++++++++++++++++++++++++++++++++++++++++
+ repack.h                     |  8 ++++
+ t/t7700-repack.sh            |  8 ++++
+ 7 files changed, 127 insertions(+), 68 deletions(-)
+ create mode 100644 repack.c
+ create mode 100644 repack.h
 
-[1] 
-https://public-inbox.org/git/1488999039-37631-1-git-send-email-git@jeffhostetler.com/
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 26afe6ed54..b347ff5c62 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -143,6 +143,11 @@ other objects in that pack they already have locally.
+ 	being removed. In addition, any unreachable loose objects will
+ 	be packed (and their loose counterparts removed).
+ 
++--no-lock::
++	Do not lock the repository, and do not respect any existing lock.
++	Mostly useful for running repack within git gc.  Do not use this
++	unless you know what you are doing.
++
+ Configuration
+ -------------
+ 
+diff --git a/Makefile b/Makefile
+index 9b36068ac5..7095f03959 100644
+--- a/Makefile
++++ b/Makefile
+@@ -816,6 +816,7 @@ LIB_OBJS += refs/files-backend.o
+ LIB_OBJS += refs/iterator.o
+ LIB_OBJS += ref-filter.o
+ LIB_OBJS += remote.o
++LIB_OBJS += repack.o
+ LIB_OBJS += replace_object.o
+ LIB_OBJS += rerere.o
+ LIB_OBJS += resolve-undo.o
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c2c61a57bb..9b9c27020b 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -18,6 +18,7 @@
+ #include "sigchain.h"
+ #include "argv-array.h"
+ #include "commit.h"
++#include "repack.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+@@ -45,7 +46,6 @@ static struct argv_array prune = ARGV_ARRAY_INIT;
+ static struct argv_array prune_worktrees = ARGV_ARRAY_INIT;
+ static struct argv_array rerere = ARGV_ARRAY_INIT;
+ 
+-static struct tempfile pidfile;
+ static struct lock_file log_lock;
+ 
+ static struct string_list pack_garbage = STRING_LIST_INIT_DUP;
+@@ -234,70 +234,6 @@ static int need_to_gc(void)
+ 	return 1;
+ }
+ 
+-/* return NULL on success, else hostname running the gc */
+-static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+-{
+-	static struct lock_file lock;
+-	char my_host[128];
+-	struct strbuf sb = STRBUF_INIT;
+-	struct stat st;
+-	uintmax_t pid;
+-	FILE *fp;
+-	int fd;
+-	char *pidfile_path;
+-
+-	if (is_tempfile_active(&pidfile))
+-		/* already locked */
+-		return NULL;
+-
+-	if (gethostname(my_host, sizeof(my_host)))
+-		xsnprintf(my_host, sizeof(my_host), "unknown");
+-
+-	pidfile_path = git_pathdup("gc.pid");
+-	fd = hold_lock_file_for_update(&lock, pidfile_path,
+-				       LOCK_DIE_ON_ERROR);
+-	if (!force) {
+-		static char locking_host[128];
+-		int should_exit;
+-		fp = fopen(pidfile_path, "r");
+-		memset(locking_host, 0, sizeof(locking_host));
+-		should_exit =
+-			fp != NULL &&
+-			!fstat(fileno(fp), &st) &&
+-			/*
+-			 * 12 hour limit is very generous as gc should
+-			 * never take that long. On the other hand we
+-			 * don't really need a strict limit here,
+-			 * running gc --auto one day late is not a big
+-			 * problem. --force can be used in manual gc
+-			 * after the user verifies that no gc is
+-			 * running.
+-			 */
+-			time(NULL) - st.st_mtime <= 12 * 3600 &&
+-			fscanf(fp, "%"SCNuMAX" %127c", &pid, locking_host) == 2 &&
+-			/* be gentle to concurrent "gc" on remote hosts */
+-			(strcmp(locking_host, my_host) || !kill(pid, 0) || errno == EPERM);
+-		if (fp != NULL)
+-			fclose(fp);
+-		if (should_exit) {
+-			if (fd >= 0)
+-				rollback_lock_file(&lock);
+-			*ret_pid = pid;
+-			free(pidfile_path);
+-			return locking_host;
+-		}
+-	}
+-
+-	strbuf_addf(&sb, "%"PRIuMAX" %s",
+-		    (uintmax_t) getpid(), my_host);
+-	write_in_full(fd, sb.buf, sb.len);
+-	strbuf_release(&sb);
+-	commit_lock_file(&lock);
+-	register_tempfile(&pidfile, pidfile_path);
+-	free(pidfile_path);
+-	return NULL;
+-}
+-
+ static int report_last_gc_error(void)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+@@ -370,7 +306,7 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 
+ 	argv_array_pushl(&pack_refs_cmd, "pack-refs", "--all", "--prune", NULL);
+ 	argv_array_pushl(&reflog, "reflog", "expire", "--all", NULL);
+-	argv_array_pushl(&repack, "repack", "-d", "-l", NULL);
++	argv_array_pushl(&repack, "repack", "-d", "-l", "--no-lock", NULL);
+ 	argv_array_pushl(&prune, "prune", "--expire", NULL);
+ 	argv_array_pushl(&prune_worktrees, "worktree", "prune", "--expire", NULL);
+ 	argv_array_pushl(&rerere, "rerere", "gc", NULL);
+@@ -426,11 +362,11 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	} else
+ 		add_repack_all_option();
+ 
+-	name = lock_repo_for_gc(force, &pid);
++	name = lock_repo_for_pack_manipulation(force, &pid);
+ 	if (name) {
+ 		if (auto_gc)
+ 			return 0; /* be quiet on --auto */
+-		die(_("gc is already running on machine '%s' pid %"PRIuMAX" (use --force if not)"),
++		die(_("pack operation (gc or repack) is already running on machine '%s' pid %"PRIuMAX" (use --force if not)"),
+ 		    name, (uintmax_t)pid);
+ 	}
+ 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 677bc7c81a..619ac37a05 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -7,6 +7,7 @@
+ #include "strbuf.h"
+ #include "string-list.h"
+ #include "argv-array.h"
++#include "repack.h"
+ 
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+@@ -160,6 +161,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	int no_update_server_info = 0;
+ 	int quiet = 0;
+ 	int local = 0;
++	int no_lock = 0;
+ 
+ 	struct option builtin_repack_options[] = {
+ 		OPT_BIT('a', NULL, &pack_everything,
+@@ -194,6 +196,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("maximum size of each packfile")),
+ 		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
+ 				N_("repack objects in packs marked with .keep")),
++		OPT_BOOL(0, "no-lock", &no_lock,
++				N_("Do not lock the repository, and do not respect any existing lock.  Mostly useful for operation within git gc.")),
+ 		OPT_END()
+ 	};
+ 
+@@ -215,6 +219,15 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE))
+ 		die(_(incremental_bitmap_conflict_error));
+ 
++	if (!no_lock) {
++		pid_t pid;
++		const char *name = lock_repo_for_pack_manipulation(0, &pid);
++		if (name) {
++			die(_("pack operation (gc or repack) is already running on machine '%s' pid %"PRIuMAX" (use --no-lock if not)"),
++			    name, (uintmax_t)pid);
++		}
++	}
++
+ 	packdir = mkpathdup("%s/pack", get_object_directory());
+ 	packtmp = mkpathdup("%s/.tmp-%d-pack", packdir, (int)getpid());
+ 
+diff --git a/repack.c b/repack.c
+new file mode 100644
+index 0000000000..a6df28c7f2
+--- /dev/null
++++ b/repack.c
+@@ -0,0 +1,88 @@
++#include "builtin.h"
++#include "repack.h"
++#include "strbuf.h"
++#include "lockfile.h"
++#include "tempfile.h"
++
++static struct tempfile pidfile;
++
++/*
++ * Commands should call this before doing any operation which might
++ * delete a pack file (e.g. gc or repack).  We don't want to allow
++ * multiple operations of this type to operate at the same time.
++ *
++ * For historical reasons, the pid file created is called "gc.pid",
++ * even though it is also used for git-repack.
++ *
++ * The lock will persist until the process ends.
++ *
++ * If force is non-zero, any existing lock will be disregarded.
++ *
++ * return NULL on success, else hostname running the pack manipulation
++ * operation.
++ *
++ * It is safe to call this function multiple times in the same process;
++ * calls after the first successful call will always return NULL.
++ */
++const char *lock_repo_for_pack_manipulation(int force, pid_t* ret_pid)
++{
++	static struct lock_file lock;
++	char my_host[128];
++	struct strbuf sb = STRBUF_INIT;
++	struct stat st;
++	uintmax_t pid;
++	FILE *fp;
++	int fd;
++	char *pidfile_path;
++
++	if (is_tempfile_active(&pidfile))
++		/* already locked */
++		return NULL;
++
++	if (gethostname(my_host, sizeof(my_host)))
++		xsnprintf(my_host, sizeof(my_host), "unknown");
++
++	pidfile_path = git_pathdup("gc.pid");
++	fd = hold_lock_file_for_update(&lock, pidfile_path,
++				       LOCK_DIE_ON_ERROR);
++	if (!force) {
++		static char locking_host[128];
++		int should_exit;
++		fp = fopen(pidfile_path, "r");
++		memset(locking_host, 0, sizeof(locking_host));
++		should_exit =
++			fp != NULL &&
++			!fstat(fileno(fp), &st) &&
++			/*
++			 * 12 hour limit is very generous as gc should
++			 * never take that long. On the other hand we
++			 * don't really need a strict limit here,
++			 * running gc --auto one day late is not a big
++			 * problem. --force can be used in manual gc
++			 * after the user verifies that no gc is
++			 * running.
++			 */
++			time(NULL) - st.st_mtime <= 12 * 3600 &&
++			fscanf(fp, "%"SCNuMAX" %127c", &pid, locking_host) == 2 &&
++			/* be gentle to concurrent "gc" on remote hosts */
++			(strcmp(locking_host, my_host) || !kill(pid, 0) || errno == EPERM);
++		if (fp != NULL)
++			fclose(fp);
++		if (should_exit) {
++			if (fd >= 0)
++				rollback_lock_file(&lock);
++			*ret_pid = pid;
++			free(pidfile_path);
++			return locking_host;
++		}
++	}
++
++	strbuf_addf(&sb, "%"PRIuMAX" %s",
++		    (uintmax_t) getpid(), my_host);
++	write_in_full(fd, sb.buf, sb.len);
++	strbuf_release(&sb);
++	commit_lock_file(&lock);
++	register_tempfile(&pidfile, pidfile_path);
++	free(pidfile_path);
++	return NULL;
++}
+diff --git a/repack.h b/repack.h
+new file mode 100644
+index 0000000000..bf9144ee37
+--- /dev/null
++++ b/repack.h
+@@ -0,0 +1,8 @@
++#ifndef REPACK_H
++#define REPACK_H
++
++#include "git-compat-util.h"
++
++const char *lock_repo_for_pack_manipulation(int force, pid_t* ret_pid);
++
++#endif /* REPACK_H */
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 6061a04147..52f19c5871 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -196,5 +196,13 @@ test_expect_success 'objects made unreachable by grafts only are kept' '
+ 	git cat-file -t $H1
+ 	'
+ 
++test_expect_success 'repack respects gc.pid' '
++	test_tick &&
++	test_when_finished "rm -f .git/gc.pid" &&
++	echo -n "1234 hostname" >.git/gc.pid &&
++	test_must_fail git repack -a -d 2>err &&
++	test_i18ngrep "already running on machine .hostname. pid 1234" err
++	'
++
+ test_done
+ 
+-- 
+2.11.GIT
 
-> Along the same lines as above, this is where we started and it worked well for
-> low-volume requests. However, when we started ramping up the load,
-> `pack-objects` operating on a very large packed repository (~150 GiB) became
-> very computationally expensive, even with `--compression=1 --depth=0 --window=0`.
->
-> Being a bit more clever about packing objects (e.g. splitting blobs out from commits
-> and trees) improved this a bit, but we still hit a bottlenecks from what appeared to
-> be a large number of memory-mapping operations on a ~140GiB packfile of blobs.
->
-> Each `pack-objects` process would consume approximately one CPU core for the
-> duration of the request. It's possible that further splitting of these large blob packs
-> would have improved performance in some scenarios, but that would increase the
-> amount of pack-index lookups necessary to find a single object.
-
-I'm not very experienced with mmap, but I thought that memory-mapping a 
-large file in itself does not incur much of a performance penalty (if 
-any) - it is the accesses that count. I experimented with 15,000 and 
-150,000 MiB files and mmap and they seem to be handled quite well. Also, 
-how many objects are "pack-objects" packing here?
-
->> === Endpoint support for forward compatibility
->>
->> This "server" endpoint requires that the first line be understood, but
->> will ignore any other lines starting with words that it does not
->> understand. This allows new "commands" to be added (distinguished by
->> their first lines) and existing commands to be "upgraded" with backwards compatibility.
->
-> This seems like a clever way to avoid the canonical `/info/refs?service=git-upload-pack`
-> capability negotiation on every call. However, using error handling to fallback seems
-> slightly wonky to me. Hopefully users are incentivized to upgrade their clients.
-
-By "error handling to fallback", do you mean in my proposal or in a 
-possible future one (assuming my proposal is implemented)? I don't think 
-my proposal requires any error handling to fallback (since only new 
-clients can clone partially - old clients will just clone totally and 
-obliviously), but I acknowledge that this proposal does not mean that 
-any future proposal can be done without requiring error handling to 
-fallback.
-
->> === Indication to use the proposed endpoint
->>
->> The client will probably already record that at least one of its
->> remotes (the one that it successfully performed a "partial clone"
->> from) supports this new endpoint (if not, it can’t determine whether a
->> missing blob was caused by repo corruption or by the "partial clone").
->> This knowledge can be used both to know that the server supports
->> "fetch-blob-pack" and "fetch-commit-pack" (for the latter, the client
->> can fall back to "fetch-pack"/"upload-pack" when fetching from other servers).
->
-> This makes a lot of sense to me. When we built our caching proxy, we had to be careful
-> when designing how we'd handle clients requesting objects missing from the proxy.
->
-> For example, a client requests a single blob and the proxy doesn't have it - we can't simply
-> download that object from the "authoritative" remote and stick it in the `.git\objects\xx\yyy...`
-> directory, because the repository would be made corrupt.
-
-By proxy, do you mean a Git repository? Sorry, I don't really understand 
-this part.
-
-> Having a way to specify that the repo is a "partial clone" and allowing "holes" would help a lot,
-> I believe. I know there have been varying opinions on how these missing objects should be
-> "marked" and I'm not ready to propose anything there - just agreeing the problem is important.
-
-Agreed.
-
-> Not do derail us too far off blobs, but I wonder if we need a `fetch-commit-pack` endpoint,
-> or could get away with introducing a new capability (e.g. `no-blobs`) to `upload-pack` instead.
-> As a casual observer, this seems like it would be a much smaller change since the rest of the
-> negotiation/reachability calculation would look the same, right? Or would this `fetch-commit-pack`
-> not return trees either?
->
-> I only ask because, in our observations, when git wants to read commits it's
-> usually followed by a lot of "related" trees - again caveated with the fact that
-> we're intercepting many things at the filesystem layer.
-
-The main reason for this extra command is not to exclude blobs (which, 
-as you said, can be done with a new capability - I suspect that we will 
-need a capability or parameter of some sort anyway to indicate which 
-size of blobs to filter out) but to eliminate the mandatory ref 
-advertisement that is done whenever the client fetches. One of our use 
-cases (internal Android) has large blobs and many (more than 700k) refs, 
-so it would benefit greatly from blob filtering and elimination of the 
-mandatory ref advertisement (tens of megabytes per fetch).
-
-As for the size of the change, I have a work in progress that implements 
-this [2].
-
-[2] 
-https://public-inbox.org/git/cover.1491851452.git.jonathantanmy@google.com/
-
-> Just to keep the discussion interesting, I'll throw an alternative out there that's
-> worked well for us. As I understand it, the HTTP-based dumb transfer protocol
-> supports returning objects in loose object format, but only if they already exist
-> in loose format.
->
-> Extending this to have the remote provide these objects via a "dumb" protocol
-> when they are packed as well - i.e. the server would "loosens" them upon request -
-> is basically what we do and it works quite well for low-latency clients. To further improve
-> performance at the cost of complexity, we've added caching at the memory and disk layer
-> for these loose objects in the same format we send to the client.
->
-> There's a clear tradeoff here - the servers must have adequate disk and/or memory to store
-> these loose objects in optimal format. In addition, the higher the latency is to the remote,
-> the worse this solution will perform. Fortunately, in our case, network topology allows us to
-> put these caching proxies close enough to clients for it not to matter.
-
-This does make sense in the situation you describe, but (as you said) I 
-don't think we can guarantee this in the majority of situations. I think 
-some sort of batching (like the (1a) solution I talked about near the 
-start of this e-mail) and serving packed data from packed storage should 
-form the baseline, and any situation-specific optimizations (e.g. 
-serving unpacked data from topologically-close servers) can be 
-additional steps.
