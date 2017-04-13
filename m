@@ -2,71 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73B8C20960
-	for <e@80x24.org>; Thu, 13 Apr 2017 19:05:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E57E620960
+	for <e@80x24.org>; Thu, 13 Apr 2017 19:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755381AbdDMTFf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 15:05:35 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:33231 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752196AbdDMTFd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 15:05:33 -0400
-Received: by mail-pg0-f46.google.com with SMTP id x125so34549295pgb.0
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 12:05:33 -0700 (PDT)
+        id S1755462AbdDMTFp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 15:05:45 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:34696 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752196AbdDMTFo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 15:05:44 -0400
+Received: by mail-pg0-f52.google.com with SMTP id 21so34591086pgg.1
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 12:05:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=cH1kZOzSPEhpybcs9dInT9Rxdmu6iKMqX3h0YLuUWuM=;
-        b=Wc9dZalvTYWSPVRaevUBvlLrIhEyxHYdqOYK5CRmMptR8yPx8Ue09AlS18YrT3jqxX
-         GMf9fxpEWLAvf4EQFmD3CmFvL/r97eMCwON9TL09BJ6XMjvRQ2JHXBKaCt02ZbjXKYMO
-         uSVffM8A9du3nsZa7njvOTEMjhZe3gTxF57JOkDt/DjQqYdATkfcYocZRknl5P7sPKiI
-         A7Y9t05orfHxRpmQN/5wcoz10rpJuSO1apVE0zFkZfXf+Zcb1Fc2/kibvtlEoJ/J5l5P
-         pNIkJzf9p2d1KX/W1MQH+BQdxD4Sbv4jrt/sEmrxU7E15U7dqp69lIIt+f05HH8YCxaH
-         HxXQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=cwNPXQOU/pJ+P1qcFN8bwFTZGwv9dPSEy+NONgQ/lYo=;
+        b=mgbM4lacFEVhvDlsi85tTV49jjw5Oi3V+3MrUVs1i4jGeTOCTHnS82cAFLPmJx1UNh
+         jSSlmx6oD/kvMYk+yjgVmn0wKyvRH8S6PEOijKTnRo1Ymuo7Q6NQ8SbbzD9UIo5eJkPr
+         bVYeWnC7Aprz3WTB/ecz5/62vP3IoatiKC9QQhc0Mv4BbXnMQV3tEHij7wfAANazHr/h
+         r2yhprkADSYWQzVXPkFMJtTpKO5BxTDakZcjWPZDSv/jtAofAEFjigq45PgLN0A2GvZT
+         utjGVi0KHIzSJcM3sUXoI+MlxdEOczdt9keW0AdXtmszFagkqk9yw9c0EY7Fozq92nZq
+         TBqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=cH1kZOzSPEhpybcs9dInT9Rxdmu6iKMqX3h0YLuUWuM=;
-        b=QuckPsgMqEPC9mKITcWo8lXt0vIaa4e0CY/DE3zBV6jPLeW9Oo5sTQ9Q9KvylCGPGY
-         xKBEETpAq0+NEFuyjagexGy9H649D7yds/GPkswSnrlEkAM2PycjUCJ6ZsyYHLM7Isar
-         f6P36//STfSvTsEz2LaBDlok6sB8gM2PtG3KsBX/8GIVklcmp5pn3+Np7LILObtbdjnO
-         xAVVcRGoLDdgnmTQpJBMGG974V90gNdhJ/K1ZCn76EZpMGb3z7SH8DNGwvGmZ+Ervcqr
-         dR255D0+wogFuGWxMYtDT3jgPGoXTBv9bsB1yvqciVbWNiWjgLjSI1c116lfozTqTcLH
-         kggQ==
-X-Gm-Message-State: AN3rC/6lGwNuwiBBIsNllw38i1Tg55QEVqdeax1xRx0wqVcuCDDA/dDE
-        CnI07IrLQe4Jw1viiyVB9cNbrCqEfpiR
-X-Received: by 10.99.247.69 with SMTP id f5mr4393506pgk.63.1492110333089; Thu,
- 13 Apr 2017 12:05:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=cwNPXQOU/pJ+P1qcFN8bwFTZGwv9dPSEy+NONgQ/lYo=;
+        b=kqEC9Rhf7EY5vcG2fFQeL8dbQfPLHH1gU0nE9doQGPONxmrL4qsMcD3zvz4IkMjFUv
+         4VXg11ani+IlJWY9BI2zloBwOxkKkXmvL24tvkSzIWAcgLkRCMgmw+ZVc05T0+0bHQGw
+         38NGU5zWDVdtChUtVsUvp5BofqVOqvC1d8O3SZtLvWGdNDwnsUCEXzZcf9VWDU65wRmD
+         Q+5i6oxbs/mOU6rUsHu3EiOPid6NZ0qnWqzJ9YzloAMLqwqYisCACxMyXBVpo4+EfZRi
+         R5LdT1atxjsS6l5EUce/vv7OGRN7zzKLtgIw4KcZWxXe7u0TDCTv312CbWIy5Ws40eNF
+         hedQ==
+X-Gm-Message-State: AN3rC/7dnVnqHrBIsDpgHfr5cnxfTcx6mQRmdfNRiHlg+F5W4fyrjSnv
+        VLVj56ZSMqGjUlCOYe05mw==
+X-Received: by 10.84.199.170 with SMTP id r39mr5257508pld.144.1492110343613;
+        Thu, 13 Apr 2017 12:05:43 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:1426:66e2:260b:9db9])
+        by smtp.gmail.com with ESMTPSA id m29sm37602671pfj.32.2017.04.13.12.05.42
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Apr 2017 12:05:42 -0700 (PDT)
+Date:   Thu, 13 Apr 2017 12:05:41 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH 2/4] submodule.c: uninitialized submodules are ignored in
+ recursive commands
+Message-ID: <20170413190541.GD96917@google.com>
+References: <20170411234923.1860-1-sbeller@google.com>
+ <20170411234923.1860-3-sbeller@google.com>
 MIME-Version: 1.0
-Received: by 10.100.163.239 with HTTP; Thu, 13 Apr 2017 12:05:32 -0700 (PDT)
-In-Reply-To: <20170413185707.97746-1-bmwill@google.com>
-References: <20170413171224.3537-1-jacob.e.keller@intel.com> <20170413185707.97746-1-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Apr 2017 12:05:32 -0700
-Message-ID: <CAGZ79kZ8KV+c2StKR8tp=s_E1+uEaSezgsmUfyyO9HUrmzdT+g@mail.gmail.com>
-Subject: Re: [PATCH 3/2] ls-files: only recurse on active submodules
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170411234923.1860-3-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 13, 2017 at 11:57 AM, Brandon Williams <bmwill@google.com> wrote:
-> Add in a check to see if a submodule is active before attempting to
-> recurse.  This prevents 'ls-files' from trying to operate on a submodule
-> which may not exist in the working directory.
+On 04/11, Stefan Beller wrote:
+> This was an oversight when working on the working tree modifying commands
+> recursing into submodules.
+> 
+> To test for uninitialized submodules, introduce another submodule, that is
+> uninitialized in the actual tests. By adding it to the branch "add_sub1",
+> which is the starting point of all other branches, we have wide coverage.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  submodule.c               | 3 +++
+>  t/lib-submodule-update.sh | 1 +
+>  2 files changed, 4 insertions(+)
+> 
+> diff --git a/submodule.c b/submodule.c
+> index c52d6634c5..2fa42519a4 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1332,6 +1332,9 @@ int submodule_move_head(const char *path,
+>  	struct child_process cp = CHILD_PROCESS_INIT;
+>  	const struct submodule *sub;
+>  
+> +	if (!is_submodule_initialized(path))
+> +		return 0;
+> +
+>  	sub = submodule_from_path(null_sha1, path);
+>  
+>  	if (!sub)
+> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+> index fb4f7b014e..22dd9e060c 100755
+> --- a/t/lib-submodule-update.sh
+> +++ b/t/lib-submodule-update.sh
+> @@ -73,6 +73,7 @@ create_lib_submodule_repo () {
+>  
+>  		git checkout -b "add_sub1" &&
+>  		git submodule add ../submodule_update_sub1 sub1 &&
+> +		git submodule add ../submodule_update_sub1 uninitialized_sub &&
 
-What would currently happen on recursing into non-active submodules?
-Can we have a test for this?
+The 'submodule add' command will make the submodule active, so you'll
+need to add in a line to subsequently make the submodule inactive for
+this to work, unless you do in at a later point in time.
 
-Thanks,
-Stefan
+>  		git config -f .gitmodules submodule.sub1.ignore all &&
+>  		git config submodule.sub1.ignore all &&
+>  		git add .gitmodules &&
+> -- 
+> 2.12.2.603.g7b28dc31ba
+> 
+
+-- 
+Brandon Williams
