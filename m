@@ -2,119 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05E5C20960
-	for <e@80x24.org>; Thu, 13 Apr 2017 18:36:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F0A020960
+	for <e@80x24.org>; Thu, 13 Apr 2017 18:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752206AbdDMSgY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 14:36:24 -0400
-Received: from smtp.codeaurora.org ([198.145.29.96]:56600 "EHLO
-        smtp.codeaurora.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752823AbdDMSgW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 14:36:22 -0400
-Received: by smtp.codeaurora.org (Postfix, from userid 1000)
-        id D5FA560DBB; Thu, 13 Apr 2017 18:36:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1492108581;
-        bh=jVpo80kp5CmDbAO438cxYjUC2jb3AunVGRptPOJodfY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hH0ddYvwLN+X/SdajZ5Gy4BWnULmHiMPjEdUXN8g5xDI9vjNfA45wKkBrx2AWeTZN
-         SikwLcO9V0qCTHS8dXj0iSubPecmhIH94Tx2UMA4TTp11CvDW3zEZMQI4vRunnTPJ0
-         Y2NT1fy+QRxMlYgMEn0O4SjZAJYmhLfs0HyNTFOQ=
-Received: from mfick1-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mfick@smtp.codeaurora.org)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 48DF5607ED;
-        Thu, 13 Apr 2017 18:36:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=codeaurora.org;
-        s=default; t=1492108581;
-        bh=jVpo80kp5CmDbAO438cxYjUC2jb3AunVGRptPOJodfY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hH0ddYvwLN+X/SdajZ5Gy4BWnULmHiMPjEdUXN8g5xDI9vjNfA45wKkBrx2AWeTZN
-         SikwLcO9V0qCTHS8dXj0iSubPecmhIH94Tx2UMA4TTp11CvDW3zEZMQI4vRunnTPJ0
-         Y2NT1fy+QRxMlYgMEn0O4SjZAJYmhLfs0HyNTFOQ=
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 48DF5607ED
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: pdx-caf-mail.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
-From:   Martin Fick <mfick@codeaurora.org>
-To:     David Turner <novalis@novalis.org>
+        id S1755408AbdDMSgZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 14:36:25 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:34899 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754867AbdDMSgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 14:36:23 -0400
+Received: by mail-pf0-f170.google.com with SMTP id i5so32067763pfc.2
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 11:36:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=O+H6zWV+C94W9Q2ud5KUR2CdyYpFofuTmfOOBIaF78g=;
+        b=rT2NK8kZqqYmJBVU5GHSW3xJyLaHjN/mX7bRYn5qZB4/JIX1UIUouSM6S2T8KBgbFZ
+         bzvLJN4xg8/a2JJHcms+NDsfQbSwvU4Kfl+ai+ZTmBa+qiiP14TAYGt6ScZj+26azh2k
+         Qy6IzjBxwJhSFbOOyCzJJ/DIU9pYppICCdaTnEWNuhqsFnepwbmRLlVK5TAzPP6GZvOu
+         LFbf7M6THcinGrM+2AabutfzXiPUXHqLDjrEKs3589GUeRY8TG7zCCeIt9ODMsSh8KIS
+         LJw1a12TLXPG5SodnC8ssHivuZtgnDkQfSjAVkyCfZVyi7FU2zBlaarrtpkvHPHEHvpU
+         FtNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=O+H6zWV+C94W9Q2ud5KUR2CdyYpFofuTmfOOBIaF78g=;
+        b=QzQayOfJn05UBSfw0psADQ+6yosO2M1d3WwyWe4fJxDwBXzXyJe+F1xqNkv3lMQ0et
+         CTktyxwZ6pAQ/wnUnWL5auh5zrqG4FDm5HtC1TuuRMGzEsgLjNHoaWQ61xjTzEmlUxPl
+         MgutLPNDBEoTEUqKxbxS8o/kUDl9sly5BphlME+CgiIM3DQHNNB69r9aj9hEaohcupPR
+         8po/XDjqoIXidyV1+d5e0DGNBs4Ok5totlcyIYlhlEj75jH303ZML41aRXhM5rwtYCBC
+         jOCu4ctHozbtgajUfvR8QcK8wXOhD/sd0e+EyyILbeuzinnLJTnKyYsSDPiISjQ9m3hp
+         wOrA==
+X-Gm-Message-State: AN3rC/5RLnwdaaXoXIOlNIJCpxNKt6sKlFi+8v/e3rGoZl6JEriATy4a
+        siDGIpssxkoxVzFC
+X-Received: by 10.98.220.8 with SMTP id t8mr4104929pfg.144.1492108577287;
+        Thu, 13 Apr 2017 11:36:17 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:1426:66e2:260b:9db9])
+        by smtp.gmail.com with ESMTPSA id j4sm20521612pfk.91.2017.04.13.11.36.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Apr 2017 11:36:16 -0700 (PDT)
+Date:   Thu, 13 Apr 2017 11:36:15 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     Jacob Keller <jacob.keller@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: Simultaneous gc and repack
-Date:   Thu, 13 Apr 2017 12:36:20 -0600
-Message-ID: <1553777.vJallt5N6j@mfick1-lnx>
-User-Agent: KMail/4.8.5 (Linux/3.2.0-106-generic; KDE/4.8.5; x86_64; ; )
-In-Reply-To: <1492108087.1527.82.camel@novalis.org>
-References: <1492104698.1527.79.camel@novalis.org> <10832632.7AIzXehjUi@mfick1-lnx> <1492108087.1527.82.camel@novalis.org>
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] ls-files: fix recurse-submodules with nested
+ submodules
+Message-ID: <20170413183615.GC96917@google.com>
+References: <CA+P7+xqE-SZ5D6pk6-Dx+-VzHijmgmrUR2F=-370Rh8oKr10Nw@mail.gmail.com>
+ <20170413171224.3537-1-jacob.e.keller@intel.com>
+ <20170413180357.GA96917@google.com>
+ <CA+P7+xr6zkb4kLTM-+0f5OTtt583WR_0j=NEebOdYuO3Z6h1+w@mail.gmail.com>
+ <CAGZ79kaRpAPFd8+rQUxKTmDfrQWdPGEEWGSVzstwUbj-7hRAKQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kaRpAPFd8+rQUxKTmDfrQWdPGEEWGSVzstwUbj-7hRAKQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday, April 13, 2017 02:28:07 PM David Turner wrote:
-> On Thu, 2017-04-13 at 12:08 -0600, Martin Fick wrote:
-> > On Thursday, April 13, 2017 11:03:14 AM Jacob Keller 
-wrote:
-> > > On Thu, Apr 13, 2017 at 10:31 AM, David Turner 
-> > 
-> > <novalis@novalis.org> wrote:
-> > > > Git gc locks the repository (using a gc.pid file) so
-> > > > that other gcs don't run concurrently. But git
-> > > > repack
-> > > > doesn't respect this lock, so it's possible to have
-> > > > a
-> > > > repack running at the same time as a gc.  This makes
-> > > > the gc sad when its packs are deleted out from under
-> > > > it
-> > > > with: "fatal: ./objects/pack/pack-$sha.pack cannot
-> > > > be
-> > > > accessed".  Then it dies, leaving a large temp file
-> > > > hanging around.
-> > > > 
-> > > > Does the following seem reasonable?
-> > > > 
-> > > > 1. Make git repack, by default, check for a gc.pid
-> > > > file
-> > > > (using the same logic as git gc itself does).
-> > > > 2. Provide a --force option to git repack to ignore
-> > > > said
-> > > > check. 3. Make git gc provide that --force option
-> > > > when
-> > > > it calls repack under its own lock.
-> > > 
-> > > What about just making the code that calls repack
-> > > today
-> > > just call gc instead? I guess it's more work if you
-> > > don't
-> > > strictly need it but..?
-> > 
-> > There are many scanerios where this does not achieve
-> > the 
-> > same thing.  On the obvious side, gc does more than 
-> > repacking, but on the other side, repacking has many 
-> > switches that are not available via gc.
-> > 
-> > Would it make more sense to move the lock to repack
-> > instead  of to gc?
+On 04/13, Stefan Beller wrote:
+> On Thu, Apr 13, 2017 at 11:31 AM, Jacob Keller <jacob.keller@gmail.com> wrote:
+> > Spinning out a process is one of the big downsides of working with
+> > submodules in our code. Unfortunately, spinning out a process is also
+> > one of the biggest ways we isolate submodules, and if we wanted to do
+> > this "in-process" we would need to add an abstraction layer that lets
+> > us handle submodules in-process in some clean way.
 > 
-> Other gc operations might step on each other too (e.g.
-> packing refs). That would be less bad (and less common),
-> but it still seems worth avoiding.
+> Yeah if we had less globals and a repo struct (class) which we could
+> operate on, that would be bring in the abstractions that we'd need.
 
-Yes, but all of thsoe operations need to be self protected 
-already, or they risk the same issue.
-
--Martin
+Agreed, though we're probably pretty far from that becoming a reality.
+One day though!
 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of Code 
-Aurora Forum, hosted by The Linux Foundation
-
+Brandon Williams
