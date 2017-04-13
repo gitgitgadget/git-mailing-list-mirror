@@ -2,134 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D97120960
-	for <e@80x24.org>; Thu, 13 Apr 2017 15:59:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 980C320960
+	for <e@80x24.org>; Thu, 13 Apr 2017 16:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753807AbdDMP7H (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 11:59:07 -0400
-Received: from siwi.pair.com ([209.68.5.199]:63962 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751670AbdDMP7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 11:59:05 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1753075AbdDMQGV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 12:06:21 -0400
+Received: from mxo2.dft.dmz.twosigma.com ([208.77.212.182]:33528 "EHLO
+        mxo2.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751119AbdDMQGS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 12:06:18 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTP id 672B110005D;
+        Thu, 13 Apr 2017 16:06:17 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo2.dft.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo2.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id fVoLM0AEI8qm; Thu, 13 Apr 2017 16:06:17 +0000 (GMT)
+Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 2B710845B8;
-        Thu, 13 Apr 2017 11:59:04 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v3] unpack-trees: avoid duplicate ODB lookups during checkout
-Date:   Thu, 13 Apr 2017 15:58:52 +0000
-Message-Id: <20170413155852.4281-2-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170413155852.4281-1-git@jeffhostetler.com>
-References: <20170413155852.4281-1-git@jeffhostetler.com>
+        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTPS id 56D048002E;
+        Thu, 13 Apr 2017 16:06:17 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Thu, 13 Apr 2017 16:06:17 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1263.000; Thu, 13 Apr 2017 16:06:17 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     =?utf-8?B?J1NaRURFUiBHw6Fib3In?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+CC:     Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: [PATCHv2.1] t6500: wait for detached auto gc at the end of the
+ test script
+Thread-Topic: [PATCHv2.1] t6500: wait for detached auto gc at the end of the
+ test script
+Thread-Index: AQHStEEpfIYDsBYLfkeAPkA6Oo+N16HDdxYA
+Date:   Thu, 13 Apr 2017 16:06:16 +0000
+Message-ID: <af5e80be96d142ed9707edadf9ceae3f@exmbdft7.ad.twosigma.com>
+References: <20170412220717.7357-1-szeder.dev@gmail.com>
+ <20170413103138.12717-1-szeder.dev@gmail.com>
+In-Reply-To: <20170413103138.12717-1-szeder.dev@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.13]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
-
-Teach traverse_trees_recursive() to not do redundant ODB
-lookups when both directories refer to the same OID.
-
-In operations such as read-tree and checkout, there will
-likely be many peer directories that have the same OID when
-the differences between the commits are relatively small.
-In these cases we can avoid hitting the ODB multiple times
-for the same OID.
-
-This patch handles n=2 and n=3 cases and simply copies the
-data rather than repeating the fill_tree_descriptor().
-
-================
-On the Windows repo (500K trees, 3.1M files, 450MB index),
-this reduced the overall time by 0.75 seconds when cycling
-between 2 commits with a single file difference.
-
-(avg) before: 22.699
-(avg) after:  21.955
-===============
-
-================
-On Linux using p0006-read-tree-checkout.sh with linux.git:
-
-Test                                                          HEAD^              HEAD
--------------------------------------------------------------------------------------------------------
-0006.2: read-tree br_base br_ballast (57994)                  0.24(0.20+0.03)    0.24(0.22+0.01) +0.0%
-0006.3: switch between br_base br_ballast (57994)             10.58(6.23+2.86)   10.67(5.94+2.87) +0.9%
-0006.4: switch between br_ballast br_ballast_plus_1 (57994)   0.60(0.44+0.17)    0.57(0.44+0.14) -5.0%
-0006.5: switch between aliases (57994)                        0.59(0.48+0.13)    0.57(0.44+0.15) -3.4%
-================
-
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- unpack-trees.c | 37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3a8ee19..a674423 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -531,6 +531,11 @@ static int switch_cache_bottom(struct traverse_info *info)
- 	return ret;
- }
- 
-+static inline int are_same_oid(struct name_entry *name_j, struct name_entry *name_k)
-+{
-+	return name_j->oid && name_k->oid && !oidcmp(name_j->oid, name_k->oid);
-+}
-+
- static int traverse_trees_recursive(int n, unsigned long dirmask,
- 				    unsigned long df_conflicts,
- 				    struct name_entry *names,
-@@ -553,11 +558,35 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
- 	newinfo.pathlen += tree_entry_len(p) + 1;
- 	newinfo.df_conflicts |= df_conflicts;
- 
-+	/*
-+	 * Fetch the tree from the ODB for each peer directory in the
-+	 * n commits.
-+	 *
-+	 * For 2- and 3-way traversals, we try to avoid hitting the
-+	 * ODB twice for the same OID.  This should yield a nice speed
-+	 * up in checkouts and merges when the commits are similar.
-+	 *
-+	 * We don't bother doing the full O(n^2) search for larger n,
-+	 * because wider traversals don't happen that often and we
-+	 * avoid the search setup.
-+	 *
-+	 * When 2 peer OIDs are the same, we just copy the tree
-+	 * descriptor data.  This implicitly borrows the buffer
-+	 * data from the earlier cell.
-+	 */
- 	for (i = 0; i < n; i++, dirmask >>= 1) {
--		const unsigned char *sha1 = NULL;
--		if (dirmask & 1)
--			sha1 = names[i].oid->hash;
--		buf[i] = fill_tree_descriptor(t+i, sha1);
-+		if (i > 0 && are_same_oid(&names[i], &names[i - 1])) {
-+			t[i] = t[i - 1];
-+			buf[i] = NULL;
-+		} else if (i > 1 && are_same_oid(&names[i], &names[i - 2])) {
-+			t[i] = t[i - 2];
-+			buf[i] = NULL;
-+		} else {
-+			const unsigned char *sha1 = NULL;
-+			if (dirmask & 1)
-+				sha1 = names[i].oid->hash;
-+			buf[i] = fill_tree_descriptor(t+i, sha1);
-+		}
- 	}
- 
- 	bottom = switch_cache_bottom(&newinfo);
--- 
-2.9.3
-
+VGhhbmtzIGZvciBmaXhpbmcgdGhpcyENCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0K
+PiBGcm9tOiBTWkVERVIgR8OhYm9yIFttYWlsdG86c3plZGVyLmRldkBnbWFpbC5jb21dDQo+IFNl
+bnQ6IFRodXJzZGF5LCBBcHJpbCAxMywgMjAxNyA2OjMyIEFNDQo+IFRvOiBKdW5pbyBDIEhhbWFu
+byA8Z2l0c3RlckBwb2JveC5jb20+DQo+IENjOiBKZWZmIEtpbmcgPHBlZmZAcGVmZi5uZXQ+OyBK
+b2hhbm5lcyBTaXh0IDxqNnRAa2RiZy5vcmc+OyBEYXZpZCBUdXJuZXINCj4gPERhdmlkLlR1cm5l
+ckB0d29zaWdtYS5jb20+OyBnaXRAdmdlci5rZXJuZWwub3JnOyBTWkVERVIgR8OhYm9yDQo+IDxz
+emVkZXIuZGV2QGdtYWlsLmNvbT4NCj4gU3ViamVjdDogW1BBVENIdjIuMV0gdDY1MDA6IHdhaXQg
+Zm9yIGRldGFjaGVkIGF1dG8gZ2MgYXQgdGhlIGVuZCBvZiB0aGUgdGVzdA0KPiBzY3JpcHQNCj4g
+DQo+IFRoZSBsYXN0IHRlc3QgaW4gJ3Q2NTAwLWdjJywgJ2JhY2tncm91bmQgYXV0byBnYyBkb2Vz
+IG5vdCBydW4gaWYgZ2MubG9nIGlzIHByZXNlbnQNCj4gYW5kIHJlY2VudCBidXQgZG9lcyBpZiBp
+dCBpcyBvbGQnLCBhZGRlZCBpbg0KPiBhODMxYzA2YTIgKGdjOiBpZ25vcmUgb2xkIGdjLmxvZyBm
+aWxlcywgMjAxNy0wMi0xMCksIG1heSBzcG9yYWRpY2FsbHkgdHJpZ2dlciBhbg0KPiBlcnJvciBt
+ZXNzYWdlIGZyb20gdGhlIHRlc3QgaGFybmVzczoNCj4gDQo+ICAgcm06IGNhbm5vdCByZW1vdmUg
+J3RyYXNoIGRpcmVjdG9yeS50NjUwMC1nYy8uZ2l0L29iamVjdHMnOiBEaXJlY3Rvcnkgbm90IGVt
+cHR5DQo+IA0KPiBUaGUgdGVzdCBpbiBxdWVzdGlvbiBlbmRzIHdpdGggZXhlY3V0aW5nIGFuIGF1
+dG8gZ2MgaW4gdGhlIGJhY2tyb3VuZCwgd2hpY2gNCj4gb2NjYXNpb25hbGx5IHRha2VzIHNvIGxv
+bmcgdGhhdCBpdCdzIHN0aWxsIHJ1bm5pbmcgd2hlbiAndGVzdF9kb25lJyBpcyBhYm91dCB0bw0K
+PiByZW1vdmUgdGhlIHRyYXNoIGRpcmVjdG9yeS4gIFRoaXMgJ3JtIC1yZiAkdHJhc2gnIGluIHRo
+ZSBmb3JlZ3JvdW5kIG1pZ2h0IHJhY2UNCj4gd2l0aCB0aGUgZGV0YWNoZWQgYXV0byBnYyB0byBj
+cmVhdGUgYW5kIGRlbGV0ZSBmaWxlcyBhbmQgZGlyZWN0b3JpZXMsIGFuZCBnYw0KPiBtaWdodCAo
+cmUtKWNyZWF0ZSBhIHBhdGggdGhhdCAncm0nIGFscmVhZHkgdmlzaXRlZCBhbmQgcmVtb3ZlZCwg
+dHJpZ2dlcmluZyB0aGUNCj4gYWJvdmUgZXJyb3IgbWVzc2FnZSB3aGVuICdybScgYXR0ZW1wdHMg
+dG8gcmVtb3ZlIGl0cyBwYXJlbnQgZGlyZWN0b3J5Lg0KPiANCj4gQ29tbWl0IGJiMDU1MTBlNSAo
+dDU1MTA6IHJ1biBhdXRvLWdjIGluIHRoZSBmb3JlZ3JvdW5kLCAyMDE2LTA1LTAxKSBmaXhlZCB0
+aGUNCj4gc2FtZSBwcm9ibGVtIGluIGEgZGlmZmVyZW50IHRlc3Qgc2NyaXB0IGJ5IHNpbXBseSBk
+aXNhbGxvd2luZyBiYWNrZ3JvdW5kIGdjLg0KPiBVbmZvcnR1bmF0ZWx5LCB3aGF0IHdvcmtlZCB0
+aGVyZSBpcyBub3QgYXBwbGljYWJsZSBoZXJlLCBiZWNhdXNlIHRoZSBwdXJwb3NlDQo+IG9mIHRo
+aXMgdGVzdCBpcyB0byBjaGVjayB0aGUgYmVoYXZpb3Igb2YgYSBkZXRhY2hlZCBhdXRvIGdjLg0K
+PiANCj4gTWFrZSBzdXJlIHRoYXQgdGhlIHRlc3QgZG9lc24ndCBjb250aW51ZSBiZWZvcmUgdGhl
+IGdjIGlzIGZpbmlzaGVkIGluIHRoZQ0KPiBiYWNrZ3JvdW5kIHdpdGggYSBjbGV2ZXIgYml0IG9m
+IHNoZWxsIHRyaWNrZXJ5Og0KPiANCj4gICAtIE9wZW4gZmQgOSBpbiB0aGUgc2hlbGwsIHRvIGJl
+IGluaGVyaXRlZCBieSB0aGUgYmFja2dyb3VuZCBnYw0KPiAgICAgcHJvY2VzcywgYmVjYXVzZSBv
+dXIgZGFlbW9uaXplKCkgb25seSBjbG9zZXMgdGhlIHN0YW5kYXJkIGZkcyAwLA0KPiAgICAgMSBh
+bmQgMi4NCj4gICAtIER1cGxpY2F0ZSB0aGlzIGZkIDkgdG8gc3Rkb3V0Lg0KPiAgIC0gUmVhZCAn
+Z2l0IGdjJ3Mgc3Rkb3V0LCBhbmQgdGh1cyBmZCA5LCB0aHJvdWdoIGEgY29tbWFuZA0KPiAgICAg
+c3Vic3RpdHV0aW9uLiAgV2UgZG9uJ3QgYWN0dWFsbHkgY2FyZSBhYm91dCBnYydzIG91dHB1dCwg
+YnV0IHRoaXMNCj4gICAgIGNvbnN0cnVjdCBoYXMgdHdvIHVzZWZ1bCBwcm9wZXJ0aWVzOg0KPiAg
+IC0gVGhpcyByZWFkIGJsb2NrcyB1bnRpbCBzdGRvdXQgb3IgZmQgOSBhcmUgb3Blbi4gIFdoaWxl
+IHN0ZG91dCBpcw0KPiAgICAgY2xvc2VkIGFmdGVyIHRoZSBtYWluIGdjIHByb2Nlc3MgY3JlYXRl
+cyB0aGUgYmFja2dyb3VuZCBwcm9jZXNzDQo+ICAgICBhbmQgZXhpdHMsIGZkIDkgcmVtYWlucyBv
+cGVuIHVudGlsIHRoZSBiYWNrcm91bmQgcHJvY2VzcyBleGl0cy4NCj4gICAtIFRoZSB2YXJpYWJs
+ZSBhc3NpZ25tZW50IGZyb20gdGhlIGNvbW1hbmQgc3Vic3RpdHV0aW9uIGdldHMgaXRzDQo+ICAg
+ICBleGl0IHN0YXR1cyBmcm9tIHRoZSBjb21tYW5kIGV4ZWN1dGVkIHdpdGhpbiB0aGUgY29tbWFu
+ZA0KPiAgICAgc3Vic3RpdHV0aW9uLCBpLmUuIGEgZmFpbGluZyBtYWluIGdjIHByb2Nlc3Mgd2ls
+bCBjYXVzZSB0aGUgdGVzdA0KPiAgICAgdG8gZmFpbC4NCj4gDQo+IE5vdGUsIHRoYXQgdGhpcyBm
+ZCB0cmlja2VyeSBkb2Vzbid0IHdvcmsgb24gV2luZG93cywgYmVjYXVzZSBkdWUgdG8gTVNZUw0K
+PiBsaW1pdGF0aW9ucyB0aGUgZ2l0IHByb2Nlc3Mgb25seSBpbmhlcml0cyB0aGUgc3RhbmRhcmQg
+ZmRzIDAsIDEgYW5kIDIgZnJvbSB0aGUgc2hlbGwuDQo+IEx1Y2tpbHksIGl0IGRvZXNuJ3QgbWF0
+dGVyIGluIHRoaXMgY2FzZSwgYmVjYXVzZSBvbiBXaW5kb3dzIGRhZW1vbml6ZSgpIGlzDQo+IGJh
+c2ljYWxseSBhIG5vb3AsIHRodXMgJ2dpdCBnYyAtLWF1dG8nIGFsd2F5cyBydW5zIGluIHRoZSBm
+b3JlZ3JvdW5kLg0KPiANCj4gQW5kIHNpbmNlIHdlIGNhbiBub3cgY29udGludWUgdGhlIHRlc3Qg
+cmVsaWFibHkgYWZ0ZXIgdGhlIGRldGFjaGVkIGdjIGZpbmlzaGVkLA0KPiBjaGVjayB0aGF0IHRo
+ZXJlIGlzIG9ubHkgYSBzaW5nbGUgcGFja2ZpbGUgbGVmdCBhdCB0aGUgZW5kLCBpLmUuIHRoYXQg
+dGhlIGRldGFjaGVkIGdjDQo+IGFjdHVhbGx5IGRpZCB3aGF0IGl0IHdhcyBzdXBwb3NlZCB0byBk
+by4NCj4gQWxzbyBhZGQgYSBjb21tZW50IGF0IHRoZSBlbmQgb2YgdGhlIHRlc3Qgc2NyaXB0IHRv
+IHdhcm4gZGV2ZWxvcGVycyBvZiBmdXR1cmUNCj4gdGVzdHMgYWJvdXQgdGhpcyBpc3N1ZSBvZiBs
+b25nIHJ1bm5pbmcgZGV0YWNoZWQgZ2MgcHJvY2Vzc2VzLg0KPiANCj4gSGVscGVkLWJ5OiBKZWZm
+IEtpbmcgPHBlZmZAcGVmZi5uZXQ+DQo+IEhlbHBlZC1ieTogSm9oYW5uZXMgU2l4dCA8ajZ0QGtk
+Ymcub3JnPg0KPiBTaWduZWQtb2ZmLWJ5OiBTWkVERVIgR8OhYm9yIDxzemVkZXIuZGV2QGdtYWls
+LmNvbT4NCj4gLS0tDQo+IA0KPiBVcGRhdGVkIHN1YmplY3QgbGluZSwgYnV0IG90aGVyd2lzZSB0
+aGUgc2FtZSBhcyB2Mi4NCj4gDQo+ICB0L3Q2NTAwLWdjLnNoIHwgMTggKysrKysrKysrKysrKysr
+KystDQo+ICAxIGZpbGUgY2hhbmdlZCwgMTcgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQ0K
+PiANCj4gZGlmZiAtLWdpdCBhL3QvdDY1MDAtZ2Muc2ggYi90L3Q2NTAwLWdjLnNoIGluZGV4IDA4
+ZGUyZThhYi4uY2M3YWNkMTAxIDEwMDc1NQ0KPiAtLS0gYS90L3Q2NTAwLWdjLnNoDQo+ICsrKyBi
+L3QvdDY1MDAtZ2Muc2gNCj4gQEAgLTY3LDYgKzY3LDE2IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3Mg
+J2F1dG8gZ2Mgd2l0aCB0b28gbWFueSBsb29zZQ0KPiBvYmplY3RzIGRvZXMgbm90IGF0dGVtcHQg
+dG8gY3JlDQo+ICAJdGVzdF9saW5lX2NvdW50ID0gMiBuZXcgIyBUaGVyZSBpcyBvbmUgbmV3IHBh
+Y2sgYW5kIGl0cyAuaWR4ICAnDQo+IA0KPiArcnVuX2FuZF93YWl0X2Zvcl9hdXRvX2djICgpIHsN
+Cj4gKwkjIFdlIHJlYWQgc3Rkb3V0IGZyb20gZ2MgZm9yIHRoZSBzaWRlIGVmZmVjdCBvZiB3YWl0
+aW5nIHVudGlsIHRoZQ0KPiArCSMgYmFja2dyb3VuZCBnYyBwcm9jZXNzIGV4aXRzLCBjbG9zaW5n
+IGl0cyBmZCA5LiAgRnVydGhlcm1vcmUsIHRoZQ0KPiArCSMgdmFyaWFibGUgYXNzaWdubWVudCBm
+cm9tIGEgY29tbWFuZCBzdWJzdGl0dXRpb24gcHJlc2VydmVzIHRoZQ0KPiArCSMgZXhpdCBzdGF0
+dXMgb2YgdGhlIG1haW4gZ2MgcHJvY2Vzcy4NCj4gKwkjIE5vdGU6IHRoaXMgZmQgdHJpY2tlcnkg
+ZG9lc24ndCB3b3JrIG9uIFdpbmRvd3MsIGJ1dCB0aGVyZSBpcyBubw0KPiArCSMgbmVlZCB0bywg
+YmVjYXVzZSBvbiBXaW4gdGhlIGF1dG8gZ2MgYWx3YXlzIHJ1bnMgaW4gdGhlIGZvcmVncm91bmQu
+DQo+ICsJZG9lc250X21hdHRlcj0kKGdpdCBnYyAtLWF1dG8gOT4mMSkNCj4gK30NCj4gKw0KPiAg
+dGVzdF9leHBlY3Rfc3VjY2VzcyAnYmFja2dyb3VuZCBhdXRvIGdjIGRvZXMgbm90IHJ1biBpZiBn
+Yy5sb2cgaXMgcHJlc2VudCBhbmQNCj4gcmVjZW50IGJ1dCBkb2VzIGlmIGl0IGlzIG9sZCcgJw0K
+PiAgCXRlc3RfY29tbWl0IGZvbyAmJg0KPiAgCXRlc3RfY29tbWl0IGJhciAmJg0KPiBAQCAtODAs
+NyArOTAsMTMgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnYmFja2dyb3VuZCBhdXRvIGdjIGRvZXMg
+bm90IHJ1biBpZg0KPiBnYy5sb2cgaXMgcHJlc2VudCBhbmQgcmUNCj4gIAl0ZXN0LWNobXRpbWUg
+PS0zNDU2MDAgLmdpdC9nYy5sb2cgJiYNCj4gIAl0ZXN0X211c3RfZmFpbCBnaXQgZ2MgLS1hdXRv
+ICYmDQo+ICAJdGVzdF9jb25maWcgZ2MubG9nZXhwaXJ5IDIuZGF5cyAmJg0KPiAtCWdpdCBnYyAt
+LWF1dG8NCj4gKwlydW5fYW5kX3dhaXRfZm9yX2F1dG9fZ2MgJiYNCj4gKwlscyAuZ2l0L29iamVj
+dHMvcGFjay9wYWNrLSoucGFjayA+cGFja3MgJiYNCj4gKwl0ZXN0X2xpbmVfY291bnQgPSAxIHBh
+Y2tzDQo+ICAnDQo+IA0KPiArIyBETyBOT1QgbGVhdmUgYSBkZXRhY2hlZCBhdXRvIGdjIHByb2Nl
+c3MgcnVubmluZyBuZWFyIHRoZSBlbmQgb2YgdGhlICMNCj4gK3Rlc3Qgc2NyaXB0OiBpdCBjYW4g
+cnVuIGxvbmcgZW5vdWdoIGluIHRoZSBiYWNrZ3JvdW5kIHRvIHJhY2lseSAjDQo+ICtpbnRlcmZl
+cmUgd2l0aCB0aGUgY2xlYW51cCBpbiAndGVzdF9kb25lJy4NCj4gKw0KPiAgdGVzdF9kb25lDQo+
+IC0tDQo+IDIuMTIuMi42MTMuZzljNWI3OTkxMw0KDQo=
