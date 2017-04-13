@@ -2,88 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A706120960
-	for <e@80x24.org>; Thu, 13 Apr 2017 22:50:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3D9120960
+	for <e@80x24.org>; Thu, 13 Apr 2017 23:10:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751475AbdDMWuI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 18:50:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61197 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1750735AbdDMWuH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 18:50:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BB51E87CAA;
-        Thu, 13 Apr 2017 18:50:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NAMORT1G9j2a
-        /Nhhb3aNJ/lmXVc=; b=tYlW/bPiR4a8JBtYv8t8+5b2PiSltDWvgQZWuKLud1fc
-        lQ2MbuNA1EivCRCOwZLAVDYMj1sPAEzHYQprWsU7CzfiWK6XegsaJRQ4jVg37c6k
-        s6m3VQ3tOe21Kukcgc5daNFkTrTq4laLKmSGs1mVpXwO0pyuRBjQOprYWaYTiGM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=XNWWRQ
-        9raVWDb66j4tMda7/7qy97FG5nL9pj7fv2zQ4NlUhYT4UiJ2Y3BsVcGNlSVZSW82
-        C4PpRX7oVmtCZh5VWtWdKA1wvtC9P2n4SJsU+GrMAspJEj+8wPw8shMQrQzuAH7V
-        +aJ3uKs1VZGZ/ebT1kfc7VSulW5Pf8FuuUW4o=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B19E787CA8;
-        Thu, 13 Apr 2017 18:50:06 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0D42187CA6;
-        Thu, 13 Apr 2017 18:50:05 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, David.Taylor@dell.com
-Subject: Re: [PATCH] worktree add: add --lock option
-References: <63F1AEE13FAE864586D589C671A6E18B0CFBF7@MX203CL03.corp.emc.com>
-        <20170412135805.29837-1-pclouds@gmail.com>
-Date:   Thu, 13 Apr 2017 15:50:04 -0700
-In-Reply-To: <20170412135805.29837-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 12 Apr 2017 20:58:05 +0700")
-Message-ID: <xmqqy3v3orc3.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1752468AbdDMXKM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 19:10:12 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:34132 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751657AbdDMXKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 19:10:10 -0400
+Received: by mail-pf0-f176.google.com with SMTP id c198so34455358pfc.1
+        for <git@vger.kernel.org>; Thu, 13 Apr 2017 16:10:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NvrVSXJ3xR5w5vo+HdcC3G8Xg9iShsstiWwIrDuJ/zA=;
+        b=BZaKjq2fPE2IL3YIf9ooZy6NpkD1nxpgVy/+EIoSkQdl93B2nO5uuGFuLk6jWBby4+
+         cs5Lery7Qy9EZ2Pnr7ICcM74cagy+HUZmpiy0s4WMrNXm1zLCLK1QCtnTeeYohpq2Shp
+         Hszmti25tkrXSCxlkcYMqOLxLUjLQnAQPZhcRVo4Ct1u994wXG4Ef2o4aPYwFQqIQW+o
+         YrQI+pWHFRFfV5TneJvmJJJo0Gm2Gh0LufEbfylCbjzKkXVi7VTQLnrJ/hjcvigLLfsS
+         I24WsFF5yUiSxy0vV/yqMHD0hFRjIL3d8OeJRRIQgPkO6wjU/RG2737/U0xiS6Jb04QM
+         AsTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NvrVSXJ3xR5w5vo+HdcC3G8Xg9iShsstiWwIrDuJ/zA=;
+        b=MOrv7RwGTiCvbdoAeHnXqRo+nSk1PHSl0LWDNQWm6OFosZ06sPCWBGYFCm5OEMWFnH
+         6jYkF7ka/qojEf8hZK11TSoPOI+QhGzvN1WpkyOz+MCZbUERnvznl15onz48i0ECklyq
+         rS7fmF0QMwkAYHxWu8JNngxeHuMGSzA9W9Sy7rw33FHtOK+C2LUtJFQlrCEkh2Uxl5E9
+         5g4qgsIGMl7puQHpFeiy+5h3creyugbjkZCr0/HTuCTKUo7RisQXfHZzbLNtABdzkEVK
+         wo/WMUYkVeXGgw/S9ns9ShpH1Iu84frfMMnK16rlSWDFCTMHbM/ihtLHc8wQ1XIL+/b/
+         KwRQ==
+X-Gm-Message-State: AN3rC/4FIrMw8UIIWwpkw9qSn/NxIWFEE6ScJmFZU/shttXVg6zKVZNY
+        FDWe4m2705/Lbip8
+X-Received: by 10.98.41.199 with SMTP id p190mr4303325pfp.266.1492125009993;
+        Thu, 13 Apr 2017 16:10:09 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b10:1426:66e2:260b:9db9])
+        by smtp.gmail.com with ESMTPSA id p80sm133998pfk.50.2017.04.13.16.10.08
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 13 Apr 2017 16:10:09 -0700 (PDT)
+Date:   Thu, 13 Apr 2017 16:10:07 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH] submodule--helper: fix typo in is_active error message
+Message-ID: <20170413231007.GC115420@google.com>
+References: <20170413220854.14767-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 89B8E632-209B-11E7-A6F5-E680B56B9B0B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170413220854.14767-1-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> As explained in the document. This option has an advantage over the
-> command sequence "git worktree add && git worktree lock": there will be
-> no gap that somebody can accidentally "prune" the new worktree (or soon=
-,
-> explicitly "worktree remove" it).
->
-> "worktree add" does keep a lock on while it's preparing the worktree.
-> If --lock is specified, this lock remains after the worktree is created=
-.
->
-> Suggested-by: David Taylor <David.Taylor@dell.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
+On 04/13, Stefan Beller wrote:
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  A patch that adds --lock may look like this.
+>  builtin/submodule--helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index e42e671014..b1d4269e10 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1145,7 +1145,7 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
+>  static int is_active(int argc, const char **argv, const char *prefix)
+>  {
+>  	if (argc != 2)
+> -		die("submodule--helper is-active takes exactly 1 arguments");
+> +		die("submodule--helper is-active takes exactly 1 argument");
 
-This looks more like "I do believe the idea by David is a useful
-addition and here is how I did it to the best of my ability---let's
-make sure we polish it for eventual inclusion" than a mere "it may
-look like so---do whatever you want with it" patch.
+Obvious fix.  Thanks!
 
-To me "git worktree add --lock" somehow sounds less correct than
-"git worktree add --locked", but I'd appreciate if natives can
-correct me.
+>  
+>  	gitmodules_config();
+>  
+> -- 
+> 2.12.2.603.g7b28dc31ba
+> 
 
-Thanks.
+-- 
+Brandon Williams
