@@ -2,85 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C469D20960
-	for <e@80x24.org>; Thu, 13 Apr 2017 16:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 257B4209FA
+	for <e@80x24.org>; Thu, 13 Apr 2017 16:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754191AbdDMQlX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Apr 2017 12:41:23 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:33154 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752898AbdDMQlV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 12:41:21 -0400
-Received: by mail-wr0-f194.google.com with SMTP id l28so9329783wre.0
-        for <git@vger.kernel.org>; Thu, 13 Apr 2017 09:41:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=WvxDKH8sbNQ3X2Dd6lZTtzp9HbmjZQNdCPyZwEF7GdA=;
-        b=itvMr0KYilIL9tJ0ytKPJk6ggJ9RtBI5NbtTLURVAiAMOtzNHH1yxDjmMNsW+RRGnu
-         lEyclC6/2kn4/wfD5YAGdyjholnOKdUDNm2XfjcUSKyLzL9o+hYP6+lYcr+945CQaIYx
-         5vlI9zunaerwc4RkKdf0vk8g+CsLDuYG1RZbc6eYTBNZZbnVafRlAlCTtl7JiBKl+v06
-         DXikGClFW/1x+CNKWlb1c3BcHSVBL/n/ESu3qMpajl9hznn5NYJVmFK5NFGY6+yTV4vC
-         EwSy5oL6KeqbuGw5q0JIPSD5yDu6P2QFjxrPWehgmUCuRBWwQAzNIIMf9FrtpdzHO/lq
-         Zq/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=WvxDKH8sbNQ3X2Dd6lZTtzp9HbmjZQNdCPyZwEF7GdA=;
-        b=K9xgt1a3OpyiQwLwSkigzNbQbI01tktfAjfHuaaYKIt/pNu4L1ACHdfTC7LXialwFt
-         25xYPWDxwElly8991yiCXm4y7EAZ8Nf+87BRqCZ9RQA85TdWLMM7qoHsjZgYUojuwdlJ
-         YP8AeVB1P8///QJ86NwHsgL70j3mYYCakprMea9GEyG9eALmMAj3gySauSIyVZxxpzBB
-         nIsEIZhGS7S/jL1ec3c7Fz0/rGrf7Lk+EbTdeA1Ktmhecp1aj+SIADoTTiExZKOYOd79
-         5xXjdonDfvV/Ukf2QRJ+4P5bL0mT9nEO1oozQ9K7qzQYMszET0pK6gd2gbCmlucB6eLN
-         4fdw==
-X-Gm-Message-State: AN3rC/4xL1Dne/CMpdlP0yZkaMW2w/6FUF+YcUMm6uxQS5UrgQyc+FxV
-        CLjUVIrARGqExvvW
-X-Received: by 10.223.155.134 with SMTP id d6mr3509959wrc.113.1492101674553;
-        Thu, 13 Apr 2017 09:41:14 -0700 (PDT)
-Received: from localhost (cable-94-139-14-18.cust.telecolumbus.net. [94.139.14.18])
-        by smtp.gmail.com with ESMTPSA id t24sm2587841wra.44.2017.04.13.09.41.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Apr 2017 09:41:13 -0700 (PDT)
-From:   Ralf Thielow <ralf.thielow@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] git-add--interactive.perl: add missing dot in a message
-Date:   Thu, 13 Apr 2017 18:41:12 +0200
-Message-Id: <20170413164112.19623-1-ralf.thielow@gmail.com>
-X-Mailer: git-send-email 2.12.2.762.g0e3151a22
+        id S1754764AbdDMQo4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 12:44:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32979 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752689AbdDMQo4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 12:44:56 -0400
+Received: (qmail 21209 invoked by uid 109); 13 Apr 2017 16:44:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Apr 2017 16:44:55 +0000
+Received: (qmail 24590 invoked by uid 111); 13 Apr 2017 16:45:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 13 Apr 2017 12:45:16 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 13 Apr 2017 12:44:52 -0400
+Date:   Thu, 13 Apr 2017 12:44:51 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+        David Turner <dturner@twosigma.com>, git@vger.kernel.org
+Subject: Re: [PATCHv2.1] t6500: wait for detached auto gc at the end of the
+ test script
+Message-ID: <20170413164451.quvt7xdzsm64lntp@sigill.intra.peff.net>
+References: <20170412220717.7357-1-szeder.dev@gmail.com>
+ <20170413103138.12717-1-szeder.dev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170413103138.12717-1-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One message appears twice in the translations and the only
-difference is a dot at the end.  So add this dot to make
-the messages being identical.
+On Thu, Apr 13, 2017 at 12:31:38PM +0200, SZEDER Gábor wrote:
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- git-add--interactive.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Note, that this fd trickery doesn't work on Windows, because due to
+> MSYS limitations the git process only inherits the standard fds 0, 1
+> and 2 from the shell.  Luckily, it doesn't matter in this case,
+> because on Windows daemonize() is basically a noop, thus 'git gc
+> --auto' always runs in the foreground.
+> 
+> And since we can now continue the test reliably after the detached gc
+> finished, check that there is only a single packfile left at the end,
+> i.e. that the detached gc actually did what it was supposed to do.
+> Also add a comment at the end of the test script to warn developers of
+> future tests about this issue of long running detached gc processes.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 77b4ed53a..709a5f6ce 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1040,7 +1040,7 @@ marked for unstaging."),
- marked for applying."),
- 	checkout_index => N__(
- "If the patch applies cleanly, the edited hunk will immediately be
--marked for discarding"),
-+marked for discarding."),
- 	checkout_head => N__(
- "If the patch applies cleanly, the edited hunk will immediately be
- marked for discarding."),
--- 
-2.12.2.762.g0e3151a22
+The whole thing looks nicely explained, and I'm happy that we're able to
+reliably add this extra check at the end of the test.
 
+I did wonder what will happen if Windows learns to daemonize() the
+auto-gc. I don't think we'll get an immediate test failure, but this
+test will become racy again. But this time we'll actually notice the
+racy failure, because the "ls" will report extra packs if it runs before
+the background gc does. At which point we can revisit this.
+
+It would be nice if there were a non-racy way to detect whether we
+daemonized or not, and complain on Windows when we do. Then we'll be
+notified immediately when daemonize() changes by the test failure,
+rather than waiting for a racy failure.
+
+I guess we could probably grep for the "in the background" message from
+the parent gc. OTOH, maybe it is not even worth it. The racy version
+should fail reasonably promptly, I think, and the comments you've left
+would point any investigator in the right direction.
+
+-Peff
