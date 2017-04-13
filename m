@@ -2,114 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2122820960
-	for <e@80x24.org>; Thu, 13 Apr 2017 22:29:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90DA220960
+	for <e@80x24.org>; Thu, 13 Apr 2017 22:32:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752848AbdDMW3x convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 13 Apr 2017 18:29:53 -0400
-Received: from mxo2.dft.dmz.twosigma.com ([208.77.212.182]:42960 "EHLO
-        mxo2.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751638AbdDMW3v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Apr 2017 18:29:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTP id 8C21A100080;
-        Thu, 13 Apr 2017 22:29:50 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo2.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo2.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id pGRcbJAuBzfF; Thu, 13 Apr 2017 22:29:50 +0000 (GMT)
-Received: from exmbdft8.ad.twosigma.com (exmbdft8.ad.twosigma.com [172.22.2.84])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo2.dft.dmz.twosigma.com (Postfix) with ESMTPS id 799BE8002E;
-        Thu, 13 Apr 2017 22:29:50 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft8.ad.twosigma.com (172.22.2.84) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Thu, 13 Apr 2017 22:29:50 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Thu, 13 Apr 2017 22:29:50 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Jonathan Nieder' <jrnieder@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH] xgethostname: handle long hostnames
-Thread-Topic: [PATCH] xgethostname: handle long hostnames
-Thread-Index: AQHStKIM9oaSVVsbVkGBPndl8UE44qHD3INw
-Date:   Thu, 13 Apr 2017 22:29:50 +0000
-Message-ID: <b53099edc57947329f826f05de5303af@exmbdft7.ad.twosigma.com>
+        id S1751657AbdDMWcT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Apr 2017 18:32:19 -0400
+Received: from mout.web.de ([212.227.15.4]:64540 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751350AbdDMWcR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Apr 2017 18:32:17 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MRUC0-1cW5FO1xAO-00SdZT; Fri, 14
+ Apr 2017 00:32:06 +0200
+Subject: Re: [PATCH] xgethostname: handle long hostnames
+To:     David Turner <dturner@twosigma.com>, git@vger.kernel.org
 References: <20170413192335.20679-1-dturner@twosigma.com>
- <20170413220524.GE10084@aiede.mtv.corp.google.com>
-In-Reply-To: <20170413220524.GE10084@aiede.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.13]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <aa10d2cb-c21a-fbfd-9fae-0d0153e4901b@web.de>
+Date:   Fri, 14 Apr 2017 00:32:03 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0
 MIME-Version: 1.0
+In-Reply-To: <20170413192335.20679-1-dturner@twosigma.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:JRE6Lg4BBmB2T+E6TfQKafpw2HXswfWl5yi9XbU2Olj7MgHrNiU
+ 5nDoMWUvx1dutf5uTSA+3oeIclCENJO5uWNvs0TJht7pVWBX4bEYu5uuaTgzxZbquJNzaY+
+ /LxxcowFs70rypnV4yL7pRxpjD1VEL64sFhga8U6FW3QSHW9fnx7nCHfhqBqE/2hgOMWsb5
+ HTh5p6o3k6g0TvRisemOA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0cesSoVgrvQ=:9fA0uA2oqf9fbBv06jGEE+
+ i0L+dx46RlSWlgT1xycU2ympEESQ6p4b9nHpY9tS98jjhHPESLrXLnBLJGeM1ewT9Ic7vVnoj
+ 8Ij1Aze/RxD3o9Z0FEp4eqeYTj7jbWs9Lq+9V81trTEzUbhYHSfhiVWJNiQCJSA+fsfurmqfI
+ 5O1v/TUroyhWwtOSxZHs2iCR+okajoQts5fuDhnTz9os+xAp2B0eWshL1lzefLKXS5QGWRlhr
+ oJ+mziz5ntW9o9CUUoukaSn9spUdxEYwEqolX8aD9fWU4D/XKPDbfE0hBZS8Ke3xKcfg29+3z
+ bwezwKWP3DIsgo9vFZ71uZB4rnJuU5LABuGUeqFAyf1Pl9J8mEaK8ibNdkyac8UbCsVfC3Fyl
+ mRCcklIpUMUBcLo5DPiHTY6TJIIyLzbYhOSlvhXJNpJ+qs3r5Yi6u1hgDHiS529RlIJBLPFYs
+ oJB9ttwGwYF+inVRZWHail4l245j1YDI3O3DgPoQX/gbumVXCApgVkB6u45eovhSn+uUSbgwQ
+ X2/0p31sRE3uM5Xa/DvKDtYvHUskjUPEWJt/qCjCJyzsP2Q74HoYgd3x7d3J0o6qJYc1VbPrA
+ QeX/TeLYZvl7Q46XyPKDhrpGNw8VcPRy7jTAS1lMGrXS17bJIKepFRJTO1u5vPmw6MaZw8xwf
+ Jkzv5Yh46TTnoVY+LKuwhdddkgsd4ElOxfbwqi6vKLTWDFgdomRGORDajK+MGZ6dJ9wRtcLcz
+ MQOTWYxTxS6vhtFp6h0D8EJ6S08Ybs2MMM38tLpaDY3U7AvsN0IlauA8KEo8bNq55sgD1fRnD
+ LcFnd04
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Jonathan Nieder [mailto:jrnieder@gmail.com]
-> Sent: Thursday, April 13, 2017 6:05 PM
-> To: David Turner <David.Turner@twosigma.com>
-> Cc: git@vger.kernel.org
-> Subject: Re: [PATCH] xgethostname: handle long hostnames
+Am 13.04.2017 um 21:23 schrieb David Turner:
+> If the full hostname doesn't fit in the buffer supplied to
+> gethostname, POSIX does not specify whether the buffer will be
+> null-terminated, so to be safe, we should do it ourselves.  Introduce
+> new function, xgethostname, which ensures that there is always a \0
+> at the end of the buffer.
 > 
-> Hi,
-> 
-> David Turner wrote:
-> 
-> > If the full hostname doesn't fit in the buffer supplied to
-> > gethostname, POSIX does not specify whether the buffer will be
-> > null-terminated, so to be safe, we should do it ourselves.
-> [...]
-> > +++ b/wrapper.c
-> > @@ -655,3 +655,16 @@ void sleep_millisec(int millisec)  {
-> >  	poll(NULL, 0, millisec);
-> >  }
-> > +
-> > +int xgethostname(char *buf, size_t len) {
-> > +	/*
-> > +	 * If the full hostname doesn't fit in buf, POSIX does not
-> > +	 * specify whether the buffer will be null-terminated, so to
-> > +	 * be safe, do it ourselves.
-> > +	 */
-> > +	int ret = gethostname(buf, len);
-> > +	if (!ret)
-> > +		buf[len - 1] = 0;
-> > +	return ret;
-> 
-> I wonder if after null-terminating we would want to report this as an error,
-> instead of silently using a truncated result.  I.e. something like
-> 
-> > +	if (!ret)
-> > +		buf[len - 1] = 0;
-> > +	if (strlen(buf) >= len - 1) {
-> > +		errno = ENAMETOOLONG;
-> > +		return -1;
-> > +	}
->
-> (or EINVAL --- either is equally descriptive).
+> Signed-off-by: David Turner <dturner@twosigma.com>
+> ---
 
-Looking at the users of this function, I think most would be happier with a truncated buffer than an error:
-gc.c: used to see if we are the same machine as the machine that locked the repo. Unlikely that two machines have hostnames that differ only in the 256th-or-above character.
-fetch-pack.c, receive-pack.c: similar to gc.c; the hostname is a note in the .keep file
-Ident.c: used to make up a fake email address. On my laptop, gethostname returns "corey" (no domain part), so the email address is not likely to be valid anyway.
+> diff --git a/wrapper.c b/wrapper.c
+> index 0542fc7582..d837417709 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -655,3 +655,16 @@ void sleep_millisec(int millisec)
+>   {
+>   	poll(NULL, 0, millisec);
+>   }
+> +
+> +int xgethostname(char *buf, size_t len)
+> +{
+> +	/*
+> +	 * If the full hostname doesn't fit in buf, POSIX does not
+> +	 * specify whether the buffer will be null-terminated, so to
+> +	 * be safe, do it ourselves.
+> +	 */
+> +	int ret = gethostname(buf, len);
+> +	if (!ret)
+> +		buf[len - 1] = 0;
+> +	return ret;
+> +}
 
-> Also POSIX requires that hostnames are <= 255 bytes.  Maybe we can force the
-> buffer to be large enough.
+Silent truncation is not ideal, no matter if it's done by the wrapper or
+the original function.  It would be better to use a properly sized
+buffer.
 
-That is now how I read it.  I read the limit as HOST_NAME_MAX, which has a *minimum* value of 255, but which might be larger.
+POSIX requires hostnames to have a maximum length of HOST_NAME_MAX.  So
+how about just adding an assert to make sure len is big enough?  Or
+evaluate the condition at compile time with BUILD_ASSERT_OR_ZERO?
 
-The existing hostname buffers are 128, 256, and 1024 bytes, so they're pretty arbitrary.  
+Downside: Not all platforms define HOST_NAME_MAX.  daemon.c uses 256 as
+a fallback.  On Windows a buffer size of 256 is documented to suffice
+in all cases [1].  The Linux manpage [2] mentions a hostname length
+limit of 255 (plus NUL) as well, even though HOST_NAME_MAX is 64 there.
 
+Another possibility: Die (or at least warn) if the buffer doesn't
+contain a NUL byte after calling gethostname().  That only works for
+platforms that don't NUL-terminate on truncation, though, so silent
+truncation would still go unnoticed.
+
+Anyway, the buffer in builtin/gc.c with its 128 bytes seems to be too
+short; the others are at least 256 bytes long.  Replacing the magic
+buffer size number with HOST_NAME_MAX + 1 might be a good idea (after
+moving the fallback definition to git-compat-util.h).
+
+René
+
+
+[1] https://msdn.microsoft.com/en-us/library/windows/desktop/ms738527(v=vs.85).aspx
+[2] http://man7.org/linux/man-pages/man2/gethostname.2.html
