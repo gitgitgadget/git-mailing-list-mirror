@@ -2,149 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 151AF20970
-	for <e@80x24.org>; Fri, 14 Apr 2017 13:06:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CB9920970
+	for <e@80x24.org>; Fri, 14 Apr 2017 16:27:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751720AbdDNNGS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 09:06:18 -0400
-Received: from siwi.pair.com ([209.68.5.199]:48878 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751389AbdDNNGQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 09:06:16 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4ABB88450C;
-        Fri, 14 Apr 2017 09:06:15 -0400 (EDT)
-Subject: Re: [PATCH v9 3/3] read-cache: speed up add_index_entry during
- checkout
-To:     Junio C Hamano <gitster@pobox.com>
-References: <20170411191702.20134-1-git@jeffhostetler.com>
- <20170411191702.20134-4-git@jeffhostetler.com>
- <xmqq37deqpyw.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <d233feed-2494-e68b-5fe6-4e1bd43ef423@jeffhostetler.com>
-Date:   Fri, 14 Apr 2017 09:06:14 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751677AbdDNQ1a (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 12:27:30 -0400
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:34567 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751371AbdDNQ13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 12:27:29 -0400
+Received: by mail-lf0-f53.google.com with SMTP id t144so44033231lff.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:27:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Xy1UbFAqx/Mmy/hi2+lcca+cb1LgeRgzzY86CDLa2XY=;
+        b=c56COSxiCRSbjfrqlYT3BL15SwrxX0+F7nFW+B+JhFIC3cp1QnMrY9rCb4GDAdZzz8
+         Ew31SSdphGiE1yPU+wbyqsaMVUS9ZBt3KyZwXti0hBewysovJiHe9brcFY/pNvzDe+a9
+         QsM5ZpiAsjQ+V9hLNJI82LHXE4WDeyIxgpBfR3uu9l3c/ttCMGJwT2baWapVdsZetBOK
+         e+i9IYVpWYuF44JhKau5ycsOpqLgHyDMi6YxkzSNLHOT/OWnZ6jr55Is1mAEZe45jX3F
+         N5jXQEppwhqGpApUNAFa2OqtaDrm5lXnpk6KxPTw79ZwBKNMwWQdPgBiOfBEbYwdQl2f
+         cEbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Xy1UbFAqx/Mmy/hi2+lcca+cb1LgeRgzzY86CDLa2XY=;
+        b=ZPyRkDK43dwvwbDYKyhcuC7l/XNmcTLTCNFeJM9cdhMimmOoix/eHnQqdMaSRAxCvh
+         mpE0k5FwPjcUnrIlAgs7W03m5KTbB+95Sgl0+r6dxwFdnl8wljKTHU2AIvlcTWTmyBdl
+         XGMSbDaxTJxSVhfnSV2vKPYpJpVzfbBT2lGh2V8dSdyhrE/CbgIHD4IrS421saBTEAvn
+         KahVxVZGLASULJqvzafmGWpUVX8NCedg3zzq1kK5AQf16ari0TtOw7PC7YxkQcjBIPmQ
+         p4Vcvuhc4zUqBiWaOOT3DKYz1k16TXEL7mHUkjY2xvCT2XpBZdf8qg0tcOWN4uCePQHo
+         D1uQ==
+X-Gm-Message-State: AN3rC/5b2TnVHdkt5VPkeIjvPszu6YiMe9kER4N2mq1bv0+8z7Vi7618
+        KUqKBd24CDPXa9MStnat8kGAJxd/3Q==
+X-Received: by 10.25.100.5 with SMTP id y5mr3202183lfb.58.1492187247509; Fri,
+ 14 Apr 2017 09:27:27 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq37deqpyw.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.25.17.155 with HTTP; Fri, 14 Apr 2017 09:27:06 -0700 (PDT)
+In-Reply-To: <xmqqy3v3orc3.fsf@gitster.mtv.corp.google.com>
+References: <63F1AEE13FAE864586D589C671A6E18B0CFBF7@MX203CL03.corp.emc.com>
+ <20170412135805.29837-1-pclouds@gmail.com> <xmqqy3v3orc3.fsf@gitster.mtv.corp.google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 14 Apr 2017 09:27:06 -0700
+Message-ID: <CA+P7+xrdM-DGbs4PcN-E+yh=A5Fr40ZGr2RaoihkooUnorfHxA@mail.gmail.com>
+Subject: Re: [PATCH] worktree add: add --lock option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Git mailing list <git@vger.kernel.org>,
+        David.Taylor@dell.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 4/11/2017 11:12 PM, Junio C Hamano wrote:
-> git@jeffhostetler.com writes:
+On Thu, Apr 13, 2017 at 3:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
->> From: Jeff Hostetler <jeffhost@microsoft.com>
+>> As explained in the document. This option has an advantage over the
+>> command sequence "git worktree add && git worktree lock": there will be
+>> no gap that somebody can accidentally "prune" the new worktree (or soon,
+>> explicitly "worktree remove" it).
 >>
->> Teach add_index_entry_with_check() and has_dir_name()
->> to see if the path of the new item is greater than the
->> last path in the index array before attempting to search
->> for it.
+>> "worktree add" does keep a lock on while it's preparing the worktree.
+>> If --lock is specified, this lock remains after the worktree is created.
 >>
->> During checkout, merge_working_tree() populates the new
->> index in sorted order, so this change will save at least 2
->> binary lookups per file.
+>> Suggested-by: David Taylor <David.Taylor@dell.com>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  A patch that adds --lock may look like this.
 >
-> Smart and simple.
+> This looks more like "I do believe the idea by David is a useful
+> addition and here is how I did it to the best of my ability---let's
+> make sure we polish it for eventual inclusion" than a mere "it may
+> look like so---do whatever you want with it" patch.
 >
->> diff --git a/read-cache.c b/read-cache.c
->> index 97f13a1..a8ef823 100644
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -918,9 +918,24 @@ static int has_dir_name(struct index_state *istate,
->>  	int stage = ce_stage(ce);
->>  	const char *name = ce->name;
->>  	const char *slash = name + ce_namelen(ce);
->> +	size_t len_eq_last;
->> +	int cmp_last = 0;
->> +
->> +	if (istate->cache_nr > 0) {
->> +		/*
->> +		 * Compare the entry's full path with the last path in the index.
->> +		 * If it sorts AFTER the last entry in the index and they have no
->> +		 * common prefix, then there cannot be any F/D name conflicts.
->> +		 */
->> +		cmp_last = strcmp_offset(name,
->> +			istate->cache[istate->cache_nr-1]->name,
+> To me "git worktree add --lock" somehow sounds less correct than
+> "git worktree add --locked", but I'd appreciate if natives can
+> correct me.
 >
-> Style?  "istate->cache[istate->cache_nr - 1]->name"
->
->> +			&len_eq_last);
->> +		if (cmp_last > 0 && len_eq_last == 0)
->> +			return retval;
->> +	}
->
-> Let me follow the logic aloud.  Say the last entry in the cache is
-> "x/y".  If we came here with ce->name == "x", we need to worry about
-> nuking the existing entry "x/y".  But if we have "zoo", that cannot
-> possibly overlap and we can safely return 0.
->
-> That sounds correct, except that it might be playing overly safe.
-> If we came here with "xx", we still are safe, but len_eq_last would
-> be non-zero.  Probably it is not worth the extra complexity to catch
-> it here (rather than letting the loop below to handle it).
->
->>  	for (;;) {
->> -		int len;
->> +		size_t len;
->>
->>  		for (;;) {
->>  			if (*--slash == '/')
->> @@ -930,6 +945,24 @@ static int has_dir_name(struct index_state *istate,
->>  		}
->>  		len = slash - name;
->
-> Mental note: cmp_last may be 0, >0 or <0 at this point in the very
-> first iteration of the loop.  It is not updated in the loop.  The
-> variable len_eq_last are used to carry the information about the
-> last entry we learned at the beginning of this function---the new
-> special case happens only when the path we are adding sorts later
-> than the last existing entry (i.e. cmp_last > 0).
->
->> +		if (cmp_last > 0) {
->> +			/*
->> +			 * If this part of the directory prefix (including the trailing
->> +			 * slash) already appears in the path of the last entry in the
->> +			 * index, then we cannot also have a file with this prefix (or
->> +			 * any parent directory prefix).
->> +			 */
->> +			if (len+1 <= len_eq_last)
->
-> Style?  "len + 1".
->
->> +				return retval;
->> +			/*
->> +			 * If this part of the directory prefix (excluding the trailing
->> +			 * slash) is longer than the known equal portions, then this part
->> +			 * of the prefix cannot collide with a file.  Go on to the parent.
->> +			 */
->> +			if (len > len_eq_last)
->> +				continue;
->
-> Hmph, is the reasoning used in the two conditionals above sound?
-> Does this work correctly even when the last existing entry in the
-> cache is marked with CE_REMOVE?
+> Thanks.
 
-I'll double check my math here.  I also want to think about
-the "too conservative" comment above.
-
-WRT if the last entry is CE_REMOVE, I think we are still OK
-because we are asking if the given ce is strictly greater than
-the last entry so that we can append it rather than searching
-for a collision or insertion point.
+I think either "--lock" or "--locked" works for me. "--locked'
+suggests "this is the state I want the tree in" while "--lock"
+suggests "this is the action I want taken on the tree".
 
 Thanks,
-Jeff
+Jake
