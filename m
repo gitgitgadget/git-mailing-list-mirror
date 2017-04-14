@@ -2,137 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4965120970
-	for <e@80x24.org>; Fri, 14 Apr 2017 19:52:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FEB820970
+	for <e@80x24.org>; Fri, 14 Apr 2017 19:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754731AbdDNTwG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 15:52:06 -0400
-Received: from siwi.pair.com ([209.68.5.199]:57561 "EHLO siwi.pair.com"
+        id S1754779AbdDNTwY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 15:52:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33670 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752257AbdDNTwD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 15:52:03 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 64676845DF;
-        Fri, 14 Apr 2017 15:52:02 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
+        id S1752219AbdDNTwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 15:52:22 -0400
+Received: (qmail 5447 invoked by uid 109); 14 Apr 2017 19:52:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Apr 2017 19:52:21 +0000
+Received: (qmail 3455 invoked by uid 111); 14 Apr 2017 19:52:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Apr 2017 15:52:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Apr 2017 15:52:19 -0400
+Date:   Fri, 14 Apr 2017 15:52:19 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, gitster@pobox.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5] string-list: use ALLOC_GROW macro when reallocing string_list
-Date:   Fri, 14 Apr 2017 19:51:52 +0000
-Message-Id: <20170414195152.33919-2-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170414195152.33919-1-git@jeffhostetler.com>
-References: <20170414195152.33919-1-git@jeffhostetler.com>
+Subject: Re: [PATCH v4] unpack-trees: avoid duplicate ODB lookups during
+ checkout
+Message-ID: <20170414195219.qmc4w46t7t6brlp4@sigill.intra.peff.net>
+References: <20170414192554.26683-1-git@jeffhostetler.com>
+ <20170414192554.26683-2-git@jeffhostetler.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170414192554.26683-2-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+On Fri, Apr 14, 2017 at 07:25:54PM +0000, git@jeffhostetler.com wrote:
 
-Use ALLOC_GROW() macro when reallocing a string_list array
-rather than simply increasing it by 32.  This is a performance
-optimization.
+>  	for (i = 0; i < n; i++, dirmask >>= 1) {
+> -		const unsigned char *sha1 = NULL;
+> -		if (dirmask & 1)
+> -			sha1 = names[i].oid->hash;
+> -		buf[i] = fill_tree_descriptor(t+i, sha1);
+> +		if (i > 0 && are_same_oid(&names[i], &names[i - 1]))
+> +			t[i] = t[i - 1];
+> +		else if (i > 1 && are_same_oid(&names[i], &names[i - 2]))
+> +			t[i] = t[i - 2];
+> +		else {
+> +			const unsigned char *sha1 = NULL;
+> +			if (dirmask & 1)
+> +				sha1 = names[i].oid->hash;
+> +			buf[nr_buf++] = fill_tree_descriptor(t+i, sha1);
+> +		}
 
-During status on a very large repo and there are many changes,
-a significant percentage of the total run time is spent
-reallocing the wt_status.changes array.
+This looks fine to me.
 
-This change decreases the time in wt_status_collect_changes_worktree()
-from 125 seconds to 45 seconds on my very large repository.
+Just musing (and I do not think we need to go further than your patch),
+we're slowly walking towards an actual object-content cache. The "buf"
+array is now essentially a cache of all oids we've loaded, but it
+doesn't know its sha1s. So we could actually encapsulate all of the
+caching:
 
-This produced a modest gain on my 1M file artificial repo, but
-broke even on linux.git.
+  struct object_cache {
+	  int nr_entries;
+	  struct object_cache_entry {
+		  struct object_id oid;
+		  void *data;
+	  } cache[MAX_UNPACK_TREES];
+  };
 
-Test                                            HEAD^^            HEAD
----------------------------------------------------------------------------------------
-0005.2: read-tree status br_ballast (1000001)   8.29(5.62+2.62)   8.22(5.57+2.63) -0.8%
+and then ask it "have you seen oid X" rather than playing games with
+looking at "i - 1". Of course it would have to do a linear search, so
+the next step is to replace its array with a hashmap.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- string-list.c          |  5 +----
- t/perf/p0005-status.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+), 4 deletions(-)
- create mode 100755 t/perf/p0005-status.sh
+And now suddenly we have a reusable object-content cache that you could
+use like:
 
-diff --git a/string-list.c b/string-list.c
-index 45016ad..003ca18 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -41,10 +41,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
- 	if (exact_match)
- 		return -1 - index;
- 
--	if (list->nr + 1 >= list->alloc) {
--		list->alloc += 32;
--		REALLOC_ARRAY(list->items, list->alloc);
--	}
-+	ALLOC_GROW(list->items, list->nr+1, list->alloc);
- 	if (index < list->nr)
- 		memmove(list->items + index + 1, list->items + index,
- 				(list->nr - index)
-diff --git a/t/perf/p0005-status.sh b/t/perf/p0005-status.sh
-new file mode 100755
-index 0000000..0b0aa98
---- /dev/null
-+++ b/t/perf/p0005-status.sh
-@@ -0,0 +1,49 @@
-+#!/bin/sh
-+#
-+# This test measures the performance of various read-tree
-+# and status operations.  It is primarily interested in
-+# the algorithmic costs of index operations and recursive
-+# tree traversal -- and NOT disk I/O on thousands of files.
-+
-+test_description="Tests performance of read-tree"
-+
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+# If the test repo was generated by ./repos/many-files.sh
-+# then we know something about the data shape and branches,
-+# so we can isolate testing to the ballast-related commits
-+# and setup sparse-checkout so we don't have to populate
-+# the ballast files and directories.
-+#
-+# Otherwise, we make some general assumptions about the
-+# repo and consider the entire history of the current
-+# branch to be the ballast.
-+
-+test_expect_success "setup repo" '
-+	if git rev-parse --verify refs/heads/p0006-ballast^{commit}
-+	then
-+		echo Assuming synthetic repo from many-files.sh
-+		git branch br_base            master
-+		git branch br_ballast         p0006-ballast
-+		git config --local core.sparsecheckout 1
-+		cat >.git/info/sparse-checkout <<-EOF
-+		/*
-+		!ballast/*
-+		EOF
-+	else
-+		echo Assuming non-synthetic repo...
-+		git branch br_base            $(git rev-list HEAD | tail -n 1)
-+		git branch br_ballast         HEAD
-+	fi &&
-+	git checkout -q br_ballast &&
-+	nr_files=$(git ls-files | wc -l)
-+'
-+
-+test_perf "read-tree status br_ballast ($nr_files)" '
-+	git read-tree HEAD &&
-+	git status
-+'
-+
-+test_done
--- 
-2.9.3
+  struct object_cache = {0};
+  for (...) {
+    /* maybe reads fresh, or maybe gets it from the cache */
+    void *data = read_object_data_cached(&oid, &cache);
+  }
+  /* operation done, release the cache */
+  clear_object_cache(&cache);
 
+which would work anywhere you expect to load N objects and see some
+overlap.
+
+Of course it would be nicer still if this all just happened
+automatically behind the scenes of read_object_data(). But it would have
+to keep an _extra_ copy of each object, since the caller expects to be
+able to free it. We'd probably have to return instead a struct with
+buffer/size in it along with a reference counter.
+
+I don't think any of that is worth it unless there are spots where we
+really expect there to be a lot of cases where we hit the same objects
+in rapid succession. I don't think there should be, though. Our usual
+"caching" mechanism is to create a "struct object", which is enough to
+perform most operations (and has a much smaller memory footprint).
+
+So again, just musing. I think your patch is fine as-is.
+
+-Peff
