@@ -6,62 +6,62 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4002E20970
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3E7820970
 	for <e@80x24.org>; Fri, 14 Apr 2017 20:22:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751470AbdDNUUF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 16:20:05 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:34259 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751368AbdDNUUE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 16:20:04 -0400
-Received: by mail-pg0-f47.google.com with SMTP id 21so47341026pgg.1
-        for <git@vger.kernel.org>; Fri, 14 Apr 2017 13:20:04 -0700 (PDT)
+        id S1751502AbdDNUWV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 16:22:21 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:34596 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751368AbdDNUWU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 16:22:20 -0400
+Received: by mail-pg0-f51.google.com with SMTP id 21so47357958pgg.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2017 13:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=aZlFeaEevDXBWNgv1VDodIcuTuTqahngIbuitp46zSs=;
-        b=Rhx5Me/e4r90JP5s9LueBH3rS2h4lS40hgAS3KeeaRJQA3MG0P3NxlgNmZdsYPr8JS
-         Z1k8mZM+UT10UQijXUcEFI4V/MzzVdSJng2qcXA84mLWUM8lLsU46tM7ZZmlFE9Vq8/B
-         NdiHxfUIRa95gAMHe/8HxPqn1Gg1/jxldLfCoDFlpN4jn44OK9161NpEo2zRNW7k5OM3
-         d7oSMRXLdrZaTaD4sKrNLGPmFznozhhCm5tmv628aASPo+Qh0e3YYOY8SWi1c6wB7hnw
-         LUO4xmwhReg0VnnS9lx3QA9SlT1teUaqaWgd5LPG6oXnvyuE8f3isc7jK4i2ZTfphxdn
-         UfBw==
+        bh=pF7qpDvkpWMKU75x1K55A4DQs822Zygs+NGjJ1BNn9I=;
+        b=kRGiVrIQu9lZgexjDqLebwtCJUHF7YV5XIgDeJmzIhG2tE+BaQ2hDauS5gp/32N9ei
+         pgy19rlttWU2MiQWrRHzSrQ1alC2sf+TWoz8GWV65WVaQxrmaEn5zDhCniXBCZjIQZJW
+         yKN+nyi3gitTpy3WlwmB6kCjn8fAK0mJr2px/3Mv8tvWQhlG2lxKWPvXXc5aYPp0y6+D
+         uSreccxOmU04uo91F4gzbuvd91+giU39N8rbNrS2MG2tSdcOz/vcMlYyGo9WanlETPmf
+         QNKI/ItW4FKHc8+OiD2PDPttmkCxNyYMbgGGy8/qXvGFbPTY2BuffNyEsvP7TZrWDXkY
+         fwJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aZlFeaEevDXBWNgv1VDodIcuTuTqahngIbuitp46zSs=;
-        b=nOyQqgVkH4p7iP1FRw8bk0tnGW45yBCvtD4u91So8md929UgTieaJ7miJMX/GyLqZ6
-         2JX2xoPpMVqmAwZ11C6k42wWw4lBNaE0/FOh+Z+rGNiEXZSK7yw5aouMmzLfgi4d8PUV
-         tK6KVUeibIPe0qAF2vRDa1N/l+Yp9ktf1ZDcHIQ1rSmLpyLaJI8N0Yhgtai5B6k18WA/
-         PxjS1L2KCpLQCiU3RGZk5klmiHEcfeDTG9reK1g+/u1voRRPJt32WH+P+IMaTckBFZ5t
-         wJrOLEJgbhwzc7znADYBtmo1ZUpDgjAoIJ51EB00vAX2POH2DoEKRfZluVIe/lgZVCo7
-         YGxA==
-X-Gm-Message-State: AN3rC/5Ig2XE3nFGVOGXX0pgNHcCDSWiaGMn8X/wYQZopyVX1dhUbT1I
-        CZT/YPCAgyqAU+Rj
-X-Received: by 10.98.50.71 with SMTP id y68mr8769579pfy.220.1492201203553;
-        Fri, 14 Apr 2017 13:20:03 -0700 (PDT)
+        bh=pF7qpDvkpWMKU75x1K55A4DQs822Zygs+NGjJ1BNn9I=;
+        b=Kad/igkgRR54xjR1eCu778kqy+xkdvlSrG4gmeCN57cTJjTJoblOOxm4Ex37LlxGjn
+         O0q0jDHtF0eop71TKKR3WyeJLFflEqEUY7LD6FiyaekVE8xcky2dYubNbJpm1h62Yc6b
+         6m7t7ur0CDt+53Duy6BuBkCosuMRWkwSfXyrlKoMGXV3HBw4LyuQHHR8/0nIaWC7mA5O
+         BS5C/Fk5ubPWOFgs+jNbPQxvLnOirDsWAaQDTA6rQbVQsn5RwWf7zSemwPS4G4I+E8jI
+         KCOLqeqvGWDSl7YVzFz34YWh3H50hyvCZJkQcNFtmm8Z897iDyaiMPYPLKAxbhj4DtqX
+         kAeQ==
+X-Gm-Message-State: AN3rC/5lr7uAYVSo+b4fUzheg1HL54DhmZqihBu8d7BnJUqxbWfjG0S7
+        zDS/4TmB2PyUus+g
+X-Received: by 10.84.236.74 with SMTP id h10mr10783315pln.91.1492201339303;
+        Fri, 14 Apr 2017 13:22:19 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5e00:11e7:137a:7479:ecbc])
-        by smtp.gmail.com with ESMTPSA id k88sm4734807pfj.79.2017.04.14.13.20.02
+        by smtp.gmail.com with ESMTPSA id x6sm4753135pge.47.2017.04.14.13.22.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Apr 2017 13:20:02 -0700 (PDT)
-Date:   Fri, 14 Apr 2017 13:19:56 -0700
+        Fri, 14 Apr 2017 13:22:18 -0700 (PDT)
+Date:   Fri, 14 Apr 2017 13:22:17 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Eric Wong <e@80x24.org>
 Cc:     git@vger.kernel.org, jrnieder@gmail.com
-Subject: Re: [PATCH v3 06/10] run-command: don't die in child when duping
- /dev/null
-Message-ID: <20170414201956.GA54940@google.com>
+Subject: Re: [PATCH v3 07/10] run-command: eliminate calls to error handling
+ functions in child
+Message-ID: <20170414202217.GB54940@google.com>
 References: <20170413183252.4713-1-bmwill@google.com>
  <20170414165902.174167-1-bmwill@google.com>
- <20170414165902.174167-7-bmwill@google.com>
- <20170414193833.GA5290@starla>
+ <20170414165902.174167-8-bmwill@google.com>
+ <20170414185054.GA23865@whir>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20170414193833.GA5290@starla>
+In-Reply-To: <20170414185054.GA23865@whir>
 User-Agent: Mutt/1.7.0 (2016-08-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -70,13 +70,27 @@ X-Mailing-List: git@vger.kernel.org
 
 On 04/14, Eric Wong wrote:
 > Brandon Williams <bmwill@google.com> wrote:
-> > +	if (cmd->no_stdin || cmd->no_stdout || cmd->no_stderr) {
-> > +		null_fd = open("/dev/null", O_RDWR | O_CLOEXEC | O_NONBLOCK);
+> > +++ b/run-command.c
+> > @@ -211,14 +211,82 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
+> >  #ifndef GIT_WINDOWS_NATIVE
+> >  static int child_notifier = -1;
+> >  
+> > -static void notify_parent(void)
+> > +enum child_errcode {
+> > +	CHILD_ERR_CHDIR,
+> > +	CHILD_ERR_ENOENT,
+> > +	CHILD_ERR_SILENT,
+> > +	CHILD_ERR_ERRNO,
+> > +};
 > 
-> O_NONBLOCK?  This was in my original patch, too :x
-> Wow, I wonder what I was smoking that day...
+> I realize I introduced this in my original, but trailing commas
+> on the last enum value might not be portable.  Checking other
+> enum usages in our tree suggests we omit the last comma.
 
-And I apparently wasn't thinking enough to catch that!  I'll fix that.
+While I realize its not portal, I think there are other places that do
+this same thing.  I think it means we can move to a newer standard of C!
+
+In all seriousness though I'll drop the trailing comma.
 
 -- 
 Brandon Williams
