@@ -2,146 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C5FC20970
-	for <e@80x24.org>; Fri, 14 Apr 2017 16:51:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D562209FA
+	for <e@80x24.org>; Fri, 14 Apr 2017 16:59:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752897AbdDNQvO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 12:51:14 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:35424 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752723AbdDNQvK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 12:51:10 -0400
-Received: by mail-wr0-f196.google.com with SMTP id l44so13044571wrc.2
-        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:51:10 -0700 (PDT)
+        id S1753563AbdDNQ7Q (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 12:59:16 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:36727 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753268AbdDNQ7K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 12:59:10 -0400
+Received: by mail-pg0-f41.google.com with SMTP id g2so45462261pge.3
+        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:59:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=lk7BFyts2raMr56Ar2xvw0vpoATsDKZ5xUOtJl8vavE=;
-        b=BEcwZe1FxRkJ1bAbRQezCZkGlxnnoDLrQcc2AchPSa8EA2GNndRJZGBSmH7MOxWw84
-         RY4T8U6r4/gb+xjBPr/LaYS5KxRtUcCSSe2setzDJ666eAf1iTcinj845lA1DgtdJZvR
-         rjL6WXPgKOgNRMgEHUN00m++mZNej5fQ0cmSIUH//2q4Xid8YVaqvgzw2jzaMBfFFdMz
-         8E6rtjmEyljqz7/D4s0oYf46IR0OKn9RPoiNLcIMGTanlnwnzzTIligFzhz4qFCjGX3t
-         oia7hiXKKo8jmh7afcrcDPMkK7kCrxN06BL9JITnhhjeSrniSmGX9l7qjCU+4X7rAkma
-         NITQ==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=/XbYNdXyS36xVZzBP0pAIYwuQRj4omhV+yHy7ddmN7o=;
+        b=v1LOJunf0f2fJiQdvBYwIrPNzpmd7UFDoVQkNtobn0dyfsgjske1OV1FgCm/2IFmnG
+         8+BUIi9PRE+NP8TbYWSLgg8SOy71nnW1zkR6wfR0pUrt14PPAiGiRN8CoKgFAEP462I+
+         gl1LplDbXweqxt09Kuf4gtSbQMpZYulfPVTHfREPPCkZatqrwC1vccIXXBWp+HIze8+e
+         jfY+IpaKGBJsxaqCFeDFMsrHklBZujz/CSFGqQ6srDBHnBgOEJ+jMSgag7SZZbL1DklK
+         tGgTL+FBj0SaQMqTnD8MJD1ByDFyElt5ydm5e2nCy2rlYO/uul/gcROFuFeiaiHf6jtW
+         wqOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=lk7BFyts2raMr56Ar2xvw0vpoATsDKZ5xUOtJl8vavE=;
-        b=WMEGu5dhcJaLDfIyuAhwiX+ozTBNVMOMZ7anymaTIJ0UtIyCF7ukK4b9hEFc/7e9eM
-         uBGrP+xqzwuezX9AiPec/b9waw94I7wf+XHV2OB8IiuNBHjTHIo4xUI8DDjNONGYNk1v
-         v9jauXa5sferJqLFiG5Sg1wHr7Stis4HwBoiF1uT9gLOHwUYMEyeIRk2UHR1unwTmlyq
-         LXPMASe5giIUYPEahpG/PlomsS1UtjmIlOL2Ikmn6nFBTUICCWSUzOh5kY9Rg1VANfM8
-         qATan3yObSN92H6dtol4jbVzRqDwU+F0M1rl/wVClE+Z3iVtERTZbTuu1DORLZ/iJTn8
-         hiuw==
-X-Gm-Message-State: AN3rC/7WDH0ESm2mftif61LymhrNZaDm2BkNkMVaBAV3/RVJOgTay+BE
-        EWgWbk/O3BQdo6PQ
-X-Received: by 10.223.181.131 with SMTP id c3mr8278910wre.61.1492188669219;
-        Fri, 14 Apr 2017 09:51:09 -0700 (PDT)
-Received: from localhost ([151.54.23.249])
-        by smtp.gmail.com with ESMTPSA id b188sm3389113wmh.6.2017.04.14.09.51.06
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Apr 2017 09:51:08 -0700 (PDT)
-From:   Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-To:     Git ML <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv2] rebase: pass --[no]-signoff option to git am
-Date:   Fri, 14 Apr 2017 18:50:44 +0200
-Message-Id: <20170414165044.13990-1-giuseppe.bilotta@gmail.com>
-X-Mailer: git-send-email 2.12.2.765.g845dc5dc05
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=/XbYNdXyS36xVZzBP0pAIYwuQRj4omhV+yHy7ddmN7o=;
+        b=U4bfxXfRhlsIvD5MEUPuF4USQ7ntJzLvXKaptP0QPvR2rm2GiDfHtVti2E6Ou3Piay
+         cKc+4Ok7wguOVvb17fqhQZFbbK79R7ZF9grZz/yT70Bp7kgMgbFtd5cplACPwPQpGSM7
+         wnDOU/6r5FVVga9+usXnDccvFmdM+7pojOTokDdxSUWH/KJobEdeV4dBpiZZmfbU733B
+         pWM5IF8vZeAaeE3MhxwGdvv85nh/kQa55aQCEwjD9KV2mwQoLfXsjb/mYTD6W1JpSccd
+         /3FSEqUs3hsQ9qUyckopaG3+pXQ+nHoELNw8czBvZcyG+U8dsuM55zO0nn5b4B4U0Fi3
+         Kvtw==
+X-Gm-Message-State: AN3rC/7aNRq5/NVvgI4cMLlvFvhDFxGz2U6LGKSj8bC/vvp1O/WI/kb2
+        OacyttCGxCshIh9E
+X-Received: by 10.99.6.139 with SMTP id 133mr625465pgg.154.1492189149620;
+        Fri, 14 Apr 2017 09:59:09 -0700 (PDT)
+Received: from roshar.mtv.corp.google.com ([100.96.238.26])
+        by smtp.gmail.com with ESMTPSA id 129sm4276591pgj.23.2017.04.14.09.59.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 14 Apr 2017 09:59:08 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, jrnieder@gmail.com,
+        e@80x24.org
+Subject: [PATCH v3 00/10] forking and threading
+Date:   Fri, 14 Apr 2017 09:58:52 -0700
+Message-Id: <20170414165902.174167-1-bmwill@google.com>
+X-Mailer: git-send-email 2.12.2.762.g0e3151a226-goog
+In-Reply-To: <20170413183252.4713-1-bmwill@google.com>
+References: <20170413183252.4713-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes it easy to sign off a whole patchset before submission.
+Changes in v3:
+ * More error handling for dup2/close calls in the child
+ * Added a test in t0061 to test for regressions in run_command's
+   ability to interpret scripts without a "#!" line
+ * In the event execve fails with ENOEXEC, attempt to exec one more
+   time by invoking the shell to interpret the command
 
-To make things work, we also fix a design issue in git-am that made it
-ignore the signoff option during rebase (specifically, signoff was
-handled in parse_mail(), but not in parse_mail_rebasing()).
+Brandon Williams (9):
+  t5550: use write_script to generate post-update hook
+  t0061: run_command executes scripts without a #! line
+  run-command: prepare command before forking
+  run-command: use the async-signal-safe execv instead of execvp
+  run-command: prepare child environment before forking
+  run-command: don't die in child when duping /dev/null
+  run-command: eliminate calls to error handling functions in child
+  run-command: handle dup2 and close errors in child
+  run-command: add note about forking and threading
 
-This is trivially fixed by moving the conditional addition of the
-signoff from parse_mail() to the caller (am_run()), after either of the
-parse_mail*() functions were called.
+Eric Wong (1):
+  run-command: block signals between fork and execve
 
-Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
----
- Documentation/git-rebase.txt | 5 +++++
- builtin/am.c                 | 6 +++---
- git-rebase.sh                | 3 ++-
- 3 files changed, 10 insertions(+), 4 deletions(-)
+ run-command.c              | 426 ++++++++++++++++++++++++++++++++++++---------
+ t/t0061-run-command.sh     |  11 ++
+ t/t5550-http-fetch-dumb.sh |   5 +-
+ 3 files changed, 357 insertions(+), 85 deletions(-)
 
-Compared to v1, we also pass --no-signoff (which is accepted by git-am to
-override a preceding --signoff, so it works the same way) and make sure
-that git-am actually obeys --signoff while rebasing (which was not the
-case anymore since df2760a576a8d26e26a6a11aa497e347c7402fd3).
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 67d48e6883..e6f0b93337 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -385,6 +385,11 @@ have the long commit hash prepended to the format.
- 	Recreate merge commits instead of flattening the history by replaying
- 	commits a merge commit introduces. Merge conflict resolutions or manual
- 	amendments to merge commits are not preserved.
-+
-+--signoff::
-+	This flag is passed to 'git am' to sign off all the rebased
-+	commits (see linkgit:git-am[1]).
-+
- +
- This uses the `--interactive` machinery internally, but combining it
- with the `--interactive` option explicitly is generally not a good
-diff --git a/builtin/am.c b/builtin/am.c
-index f7a7a971fb..d072027b5a 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1321,9 +1321,6 @@ static int parse_mail(struct am_state *state, const char *mail)
- 	strbuf_addbuf(&msg, &mi.log_message);
- 	strbuf_stripspace(&msg, 0);
- 
--	if (state->signoff)
--		am_signoff(&msg);
--
- 	assert(!state->author_name);
- 	state->author_name = strbuf_detach(&author_name, NULL);
- 
-@@ -1848,6 +1845,9 @@ static void am_run(struct am_state *state, int resume)
- 			if (skip)
- 				goto next; /* mail should be skipped */
- 
-+			if (state->signoff)
-+				am_append_signoff(state);
-+
- 			write_author_script(state);
- 			write_commit_msg(state);
- 		}
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 48d7c5ded4..e2ec5c092d 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -34,6 +34,7 @@ root!              rebase all reachable commits up to the root(s)
- autosquash         move commits that begin with squash!/fixup! under -i
- committer-date-is-author-date! passed to 'git am'
- ignore-date!       passed to 'git am'
-+[no]-signoff!      passed to 'git am'
- whitespace=!       passed to 'git apply'
- ignore-whitespace! passed to 'git apply'
- C=!                passed to 'git apply'
-@@ -321,7 +322,7 @@ do
- 	--ignore-whitespace)
- 		git_am_opt="$git_am_opt $1"
- 		;;
--	--committer-date-is-author-date|--ignore-date)
-+	--committer-date-is-author-date|--ignore-date|--signoff|--no-signoff)
- 		git_am_opt="$git_am_opt $1"
- 		force_rebase=t
- 		;;
 -- 
-2.12.2.765.g845dc5dc05
+2.12.2.762.g0e3151a226-goog
 
