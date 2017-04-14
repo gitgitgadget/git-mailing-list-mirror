@@ -2,136 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C209209FA
-	for <e@80x24.org>; Fri, 14 Apr 2017 21:06:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0B0520970
+	for <e@80x24.org>; Fri, 14 Apr 2017 21:23:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751873AbdDNVGJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 17:06:09 -0400
-Received: from siwi.pair.com ([209.68.5.199]:51567 "EHLO siwi.pair.com"
+        id S1751962AbdDNVXc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 17:23:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33818 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751369AbdDNVGI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 17:06:08 -0400
-Received: from [10.160.98.126] (unknown [167.220.148.155])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id E7C42844B3;
-        Fri, 14 Apr 2017 17:06:06 -0400 (EDT)
-Subject: Re: [PATCH v4] unpack-trees: avoid duplicate ODB lookups during
- checkout
-To:     Jeff King <peff@peff.net>
-References: <20170414192554.26683-1-git@jeffhostetler.com>
- <20170414192554.26683-2-git@jeffhostetler.com>
- <20170414195219.qmc4w46t7t6brlp4@sigill.intra.peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jeff Hostetler <jeffhost@microsoft.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <90b76976-b14c-c1e2-bdd8-8bf1964bce3e@jeffhostetler.com>
-Date:   Fri, 14 Apr 2017 17:06:05 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751502AbdDNVXb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 17:23:31 -0400
+Received: (qmail 10934 invoked by uid 109); 14 Apr 2017 21:23:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Apr 2017 21:23:28 +0000
+Received: (qmail 5290 invoked by uid 111); 14 Apr 2017 21:23:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 14 Apr 2017 17:23:49 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Apr 2017 17:23:25 -0400
+Date:   Fri, 14 Apr 2017 17:23:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Thomas Rast <trast@student.ethz.ch>,
+        Fredrik Kuivinen <frekui@gmail.com>
+Subject: Re: [PATCH 01/12] grep: add ability to disable threading with
+ --threads=0 or grep.threads=0
+Message-ID: <20170414212325.fefrl3qdjigwyitd@sigill.intra.peff.net>
+References: <20170408132506.5415-1-avarab@gmail.com>
+ <20170408132506.5415-2-avarab@gmail.com>
+ <20170411100656.5bptxdaptc4zznan@sigill.intra.peff.net>
+ <CACBZZX7vEQ5jUzX3GsD6JXe50TnRUtGmSVi7zBxwOmAQGABQ4Q@mail.gmail.com>
+ <20170411203434.iiupo2oovzviqju5@sigill.intra.peff.net>
+ <CACBZZX7Xi2OWqHQd7jTGBEZyqcWk59oXbPJOjuYrYAFzd5huCA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20170414195219.qmc4w46t7t6brlp4@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX7Xi2OWqHQd7jTGBEZyqcWk59oXbPJOjuYrYAFzd5huCA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Apr 11, 2017 at 10:56:01PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
+> > Right, my suggestion was to teach "grep" to treat --threads=1 as "do not
+> > spawn any other threads". I.e., to make it like the "0" case you were
+> > proposing, and then leave "0" as "auto-detect". There would be no way to
+> > spawn a _single_ thread and feed it. But why would you want to do that?
+> > It's always going to be strictly worse than not threading at all.
+> 
+> I understand, but given the two profiles we've posted it seems clear
+> that there's cases where if we did that, we'd be locking people out of
+> their optimal thread configuration, which would be --thread=1 with my
+> patch, but wouldn't exist with this proposed change.
 
-On 4/14/2017 3:52 PM, Jeff King wrote:
-> On Fri, Apr 14, 2017 at 07:25:54PM +0000, git@jeffhostetler.com wrote:
->
->>  	for (i = 0; i < n; i++, dirmask >>= 1) {
->> -		const unsigned char *sha1 = NULL;
->> -		if (dirmask & 1)
->> -			sha1 = names[i].oid->hash;
->> -		buf[i] = fill_tree_descriptor(t+i, sha1);
->> +		if (i > 0 && are_same_oid(&names[i], &names[i - 1]))
->> +			t[i] = t[i - 1];
->> +		else if (i > 1 && are_same_oid(&names[i], &names[i - 2]))
->> +			t[i] = t[i - 2];
->> +		else {
->> +			const unsigned char *sha1 = NULL;
->> +			if (dirmask & 1)
->> +				sha1 = names[i].oid->hash;
->> +			buf[nr_buf++] = fill_tree_descriptor(t+i, sha1);
->> +		}
->
-> This looks fine to me.
->
-> Just musing (and I do not think we need to go further than your patch),
-> we're slowly walking towards an actual object-content cache. The "buf"
-> array is now essentially a cache of all oids we've loaded, but it
-> doesn't know its sha1s. So we could actually encapsulate all of the
-> caching:
->
->   struct object_cache {
-> 	  int nr_entries;
-> 	  struct object_cache_entry {
-> 		  struct object_id oid;
-> 		  void *data;
-> 	  } cache[MAX_UNPACK_TREES];
->   };
->
-> and then ask it "have you seen oid X" rather than playing games with
-> looking at "i - 1". Of course it would have to do a linear search, so
-> the next step is to replace its array with a hashmap.
->
-> And now suddenly we have a reusable object-content cache that you could
-> use like:
->
->   struct object_cache = {0};
->   for (...) {
->     /* maybe reads fresh, or maybe gets it from the cache */
->     void *data = read_object_data_cached(&oid, &cache);
->   }
->   /* operation done, release the cache */
->   clear_object_cache(&cache);
->
-> which would work anywhere you expect to load N objects and see some
-> overlap.
->
-> Of course it would be nicer still if this all just happened
-> automatically behind the scenes of read_object_data(). But it would have
-> to keep an _extra_ copy of each object, since the caller expects to be
-> able to free it. We'd probably have to return instead a struct with
-> buffer/size in it along with a reference counter.
->
-> I don't think any of that is worth it unless there are spots where we
-> really expect there to be a lot of cases where we hit the same objects
-> in rapid succession. I don't think there should be, though. Our usual
-> "caching" mechanism is to create a "struct object", which is enough to
-> perform most operations (and has a much smaller memory footprint).
->
-> So again, just musing. I think your patch is fine as-is.
+Maybe I don't understand your profiles. For a single-core machine you
+probably want fewer threads, right? There is no such thing as "0"
+threads, as you always have the original main thread in which we would
+do the work.  So the lowest you can go is "1" (it's a separate question
+of what --threads=0 should "mean"; I think we should keep it as
+"auto-detect" for compatibility).
 
+We could implement the single-thread case by spawning off one worker
+thread (and effectively having 2 threads, but one is just sitting in
+pthread_join()). And I think that's how it's implemented now in
+git-grep. But we can optimize out the creation of the second thread
+entirely, and just do the work in the main thread.
 
-Thanks for your help on this one.
+That saves a little bit of thread-spawning overhead, and it also makes
+debugging much more pleasant.  For --threads=2, you'd always have to
+kick in the thread-spawning code, and you'd spawn two worker threads
+(and the main thread just sits there).
 
-I think before I tried to do a cache at this layer,
-I would like to look at (or have a brave volunteer
-look at) the recursive tree traversal.  In my Windows
-tree I have 500K directories, so the full recursive
-tree traversal touches them.  My change cuts the ODB
-lookups (on a "checkout -b") from 1M to 500K (roughly),
-but I still have to do 500K strcmp's to get those
-savings.  What would be nice would be to have maybe
-an alternate callback -- one which knows the peers
-(and everything under them) are equal and let it short
-cut as much as it can.  The alternate version of the
-above routine would be able to avoid the strcmp's,
-but I'm guessing that there would also be savings
-when we look within a treenode -- the oidcmp's and
-some of the n-way parallel sub-treenode-iteration.
-I'm just swag'ing here, but there might be something
-here.
+IOW, I am just proposing something like this:
 
-Jeff
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 65070c52f..76ce38404 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -326,7 +326,7 @@ static int grep_oid(struct grep_opt *opt, const struct object_id *oid,
+ 	}
+ 
+ #ifndef NO_PTHREADS
+-	if (num_threads) {
++	if (num_threads > 1) {
+ 		add_work(opt, GREP_SOURCE_SHA1, pathbuf.buf, path, oid);
+ 		strbuf_release(&pathbuf);
+ 		return 0;
+@@ -360,7 +360,7 @@ static int grep_file(struct grep_opt *opt, const char *filename)
+ 	}
+ 
+ #ifndef NO_PTHREADS
+-	if (num_threads) {
++	if (num_threads > 1) {
+ 		add_work(opt, GREP_SOURCE_FILE, buf.buf, filename, filename);
+ 		strbuf_release(&buf);
+ 		return 0;
 
+where we fall back to the same code that NO_PTHREADS uses when there is
+only a single thread requested.
 
+> Anyway, I really don't care about this feature much, I just wanted a
+> way to disable threading, but looking at the perf profiles I wonder if
+> doing your proposed change would cause a regression in some cases
+> where someone really wanted /one/ thread.
+
+I'm not sure what would regress. Right now --threads=1 only does
+work in a single worker thread. And --threads=2 does it in 2, and so on.
+In all cases, the original main-thread is just farming out work and
+waiting on pthread_join() (let's call that the controller thread).  So
+why would you ever want the "controller plus one worker" setup? It's
+strictly worse than "controller just does the work".
+
+> But of course my patch breaks the long documented grep.threads=0 for
+> "give me threads that you auto detect" to now mean "you get none".
+
+Right, that's what I'm concerned about.
+
+> Also doesn't --thread=1 right now mean "one thread, but two workers?".
+> I haven't dug into the grep worker/thread code, but it compiles the
+> the pattern twice, so isn't both the non-thread main process & the
+> sole thread it spawns on --thread=1 doing work, so in some other
+> universe it's synonymous with --workers=2?
+
+I think --threads=1 right now means "one worker thread". I think the
+main program calls compile_grep_patterns() to make sure they are sane,
+before it even considers whether and how to thread.  And then each
+worker thread duplicates them and re-compiles them itself (IIRC, this is
+because the regex code may not be thread-safe).
+
+> If so do pack-objects & index-pack also behave like that? If so this
+> whole thing is very confusing for users, because some will read 1
+> thread and think "one worker", whereas it really means "two workers,
+> one using a thread, if you want three workers spawn two threads".
+
+No, I think --threads is "this many workers". If you have more than one
+worker, you may have an extra thread farming out work to them, but that
+isn't counted (and is mostly dormant).
+
+-Peff
