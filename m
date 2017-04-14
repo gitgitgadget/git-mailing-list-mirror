@@ -2,138 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33A6E20970
-	for <e@80x24.org>; Fri, 14 Apr 2017 20:32:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C209209FA
+	for <e@80x24.org>; Fri, 14 Apr 2017 21:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754779AbdDNUcn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 16:32:43 -0400
-Received: from siwi.pair.com ([209.68.5.199]:45079 "EHLO siwi.pair.com"
+        id S1751873AbdDNVGJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 17:06:09 -0400
+Received: from siwi.pair.com ([209.68.5.199]:51567 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754668AbdDNUcl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 16:32:41 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
+        id S1751369AbdDNVGI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 17:06:08 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id DB9D884572;
-        Fri, 14 Apr 2017 16:32:29 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
+        by siwi.pair.com (Postfix) with ESMTPSA id E7C42844B3;
+        Fri, 14 Apr 2017 17:06:06 -0400 (EDT)
+Subject: Re: [PATCH v4] unpack-trees: avoid duplicate ODB lookups during
+ checkout
+To:     Jeff King <peff@peff.net>
+References: <20170414192554.26683-1-git@jeffhostetler.com>
+ <20170414192554.26683-2-git@jeffhostetler.com>
+ <20170414195219.qmc4w46t7t6brlp4@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v7] read-cache: force_verify_index_checksum
-Date:   Fri, 14 Apr 2017 20:32:21 +0000
-Message-Id: <20170414203221.43015-2-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170414203221.43015-1-git@jeffhostetler.com>
-References: <20170414203221.43015-1-git@jeffhostetler.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <90b76976-b14c-c1e2-bdd8-8bf1964bce3e@jeffhostetler.com>
+Date:   Fri, 14 Apr 2017 17:06:05 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <20170414195219.qmc4w46t7t6brlp4@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Teach git to skip verification of the SHA1-1 checksum at the end of
-the index file in verify_hdr() which is called from read_index()
-unless the "force_verify_index_checksum" global variable is set.
 
-Teach fsck to force this verification.
+On 4/14/2017 3:52 PM, Jeff King wrote:
+> On Fri, Apr 14, 2017 at 07:25:54PM +0000, git@jeffhostetler.com wrote:
+>
+>>  	for (i = 0; i < n; i++, dirmask >>= 1) {
+>> -		const unsigned char *sha1 = NULL;
+>> -		if (dirmask & 1)
+>> -			sha1 = names[i].oid->hash;
+>> -		buf[i] = fill_tree_descriptor(t+i, sha1);
+>> +		if (i > 0 && are_same_oid(&names[i], &names[i - 1]))
+>> +			t[i] = t[i - 1];
+>> +		else if (i > 1 && are_same_oid(&names[i], &names[i - 2]))
+>> +			t[i] = t[i - 2];
+>> +		else {
+>> +			const unsigned char *sha1 = NULL;
+>> +			if (dirmask & 1)
+>> +				sha1 = names[i].oid->hash;
+>> +			buf[nr_buf++] = fill_tree_descriptor(t+i, sha1);
+>> +		}
+>
+> This looks fine to me.
+>
+> Just musing (and I do not think we need to go further than your patch),
+> we're slowly walking towards an actual object-content cache. The "buf"
+> array is now essentially a cache of all oids we've loaded, but it
+> doesn't know its sha1s. So we could actually encapsulate all of the
+> caching:
+>
+>   struct object_cache {
+> 	  int nr_entries;
+> 	  struct object_cache_entry {
+> 		  struct object_id oid;
+> 		  void *data;
+> 	  } cache[MAX_UNPACK_TREES];
+>   };
+>
+> and then ask it "have you seen oid X" rather than playing games with
+> looking at "i - 1". Of course it would have to do a linear search, so
+> the next step is to replace its array with a hashmap.
+>
+> And now suddenly we have a reusable object-content cache that you could
+> use like:
+>
+>   struct object_cache = {0};
+>   for (...) {
+>     /* maybe reads fresh, or maybe gets it from the cache */
+>     void *data = read_object_data_cached(&oid, &cache);
+>   }
+>   /* operation done, release the cache */
+>   clear_object_cache(&cache);
+>
+> which would work anywhere you expect to load N objects and see some
+> overlap.
+>
+> Of course it would be nicer still if this all just happened
+> automatically behind the scenes of read_object_data(). But it would have
+> to keep an _extra_ copy of each object, since the caller expects to be
+> able to free it. We'd probably have to return instead a struct with
+> buffer/size in it along with a reference counter.
+>
+> I don't think any of that is worth it unless there are spots where we
+> really expect there to be a lot of cases where we hit the same objects
+> in rapid succession. I don't think there should be, though. Our usual
+> "caching" mechanism is to create a "struct object", which is enough to
+> perform most operations (and has a much smaller memory footprint).
+>
+> So again, just musing. I think your patch is fine as-is.
 
-The checksum verification is for detecting disk corruption, and for
-small projects, the time it takes to compute SHA-1 is not that
-significant, but for gigantic repositories this calculation adds
-significant time to every command.
 
-These effect can be seen using t/perf/p0002-read-cache.sh:
+Thanks for your help on this one.
 
-Test                                          HEAD~1            HEAD
---------------------------------------------------------------------------------------
-0002.1: read_cache/discard_cache 1000 times   0.66(0.44+0.20)   0.30(0.27+0.02) -54.5%
+I think before I tried to do a cache at this layer,
+I would like to look at (or have a brave volunteer
+look at) the recursive tree traversal.  In my Windows
+tree I have 500K directories, so the full recursive
+tree traversal touches them.  My change cuts the ODB
+lookups (on a "checkout -b") from 1M to 500K (roughly),
+but I still have to do 500K strcmp's to get those
+savings.  What would be nice would be to have maybe
+an alternate callback -- one which knows the peers
+(and everything under them) are equal and let it short
+cut as much as it can.  The alternate version of the
+above routine would be able to avoid the strcmp's,
+but I'm guessing that there would also be savings
+when we look within a treenode -- the oidcmp's and
+some of the n-way parallel sub-treenode-iteration.
+I'm just swag'ing here, but there might be something
+here.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- builtin/fsck.c  |  1 +
- cache.h         |  2 ++
- read-cache.c    |  7 +++++++
- t/t1450-fsck.sh | 13 +++++++++++++
- 4 files changed, 23 insertions(+)
+Jeff
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 1a5cacc..5512d06 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -771,6 +771,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (keep_cache_objects) {
-+		verify_index_checksum = 1;
- 		read_cache();
- 		for (i = 0; i < active_nr; i++) {
- 			unsigned int mode;
-diff --git a/cache.h b/cache.h
-index 80b6372..87f13bf 100644
---- a/cache.h
-+++ b/cache.h
-@@ -685,6 +685,8 @@ extern void update_index_if_able(struct index_state *, struct lock_file *);
- extern int hold_locked_index(struct lock_file *, int);
- extern void set_alternate_index_output(const char *);
- 
-+extern int verify_index_checksum;
-+
- /* Environment bits from configuration mechanism */
- extern int trust_executable_bit;
- extern int trust_ctime;
-diff --git a/read-cache.c b/read-cache.c
-index 9054369..c4205aa 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1371,6 +1371,9 @@ struct ondisk_cache_entry_extended {
- 			    ondisk_cache_entry_extended_size(ce_namelen(ce)) : \
- 			    ondisk_cache_entry_size(ce_namelen(ce)))
- 
-+/* Allow fsck to force verification of the index checksum. */
-+int verify_index_checksum;
-+
- static int verify_hdr(struct cache_header *hdr, unsigned long size)
- {
- 	git_SHA_CTX c;
-@@ -1382,6 +1385,10 @@ static int verify_hdr(struct cache_header *hdr, unsigned long size)
- 	hdr_version = ntohl(hdr->hdr_version);
- 	if (hdr_version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < hdr_version)
- 		return error("bad index version %d", hdr_version);
-+
-+	if (!verify_index_checksum)
-+		return 0;
-+
- 	git_SHA1_Init(&c);
- 	git_SHA1_Update(&c, hdr, size - 20);
- 	git_SHA1_Final(sha1, &c);
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 33a51c9..677e15a 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -689,4 +689,17 @@ test_expect_success 'bogus head does not fallback to all heads' '
- 	! grep $blob out
- '
- 
-+test_expect_success 'detect corrupt index file in fsck' '
-+	cp .git/index .git/index.backup &&
-+	test_when_finished "mv .git/index.backup .git/index" &&
-+	echo zzzzzzzz >zzzzzzzz &&
-+	git add zzzzzzzz &&
-+	sed -e "s/zzzzzzzz/yyyyyyyy/" .git/index >.git/index.yyy &&
-+	mv .git/index.yyy .git/index &&
-+	# Confirm that fsck detects invalid checksum
-+	test_must_fail git fsck --cache &&
-+	# Confirm that status no longer complains about invalid checksum
-+	git status
-+'
-+
- test_done
--- 
-2.9.3
 
