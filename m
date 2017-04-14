@@ -2,32 +2,34 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1FB820970
-	for <e@80x24.org>; Fri, 14 Apr 2017 19:52:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4965120970
+	for <e@80x24.org>; Fri, 14 Apr 2017 19:52:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754765AbdDNTwI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 15:52:08 -0400
-Received: from siwi.pair.com ([209.68.5.199]:57550 "EHLO siwi.pair.com"
+        id S1754731AbdDNTwG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 15:52:06 -0400
+Received: from siwi.pair.com ([209.68.5.199]:57561 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752257AbdDNTwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 15:52:08 -0400
+        id S1752257AbdDNTwD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 15:52:03 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id BAEB5845DE;
-        Fri, 14 Apr 2017 15:52:01 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 64676845DF;
+        Fri, 14 Apr 2017 15:52:02 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v5] string-list: use ALLOC_GROW macro when reallocing
-Date:   Fri, 14 Apr 2017 19:51:51 +0000
-Message-Id: <20170414195152.33919-1-git@jeffhostetler.com>
+Subject: [PATCH v5] string-list: use ALLOC_GROW macro when reallocing string_list
+Date:   Fri, 14 Apr 2017 19:51:52 +0000
+Message-Id: <20170414195152.33919-2-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20170414195152.33919-1-git@jeffhostetler.com>
+References: <20170414195152.33919-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -35,17 +37,102 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Version 5 addresses coding style comments from the mailing list
-in the perf test and squashes the changes into 1 commit.
+Use ALLOC_GROW() macro when reallocing a string_list array
+rather than simply increasing it by 32.  This is a performance
+optimization.
 
-Jeff Hostetler (1):
-  string-list: use ALLOC_GROW macro when reallocing string_list
+During status on a very large repo and there are many changes,
+a significant percentage of the total run time is spent
+reallocing the wt_status.changes array.
 
+This change decreases the time in wt_status_collect_changes_worktree()
+from 125 seconds to 45 seconds on my very large repository.
+
+This produced a modest gain on my 1M file artificial repo, but
+broke even on linux.git.
+
+Test                                            HEAD^^            HEAD
+---------------------------------------------------------------------------------------
+0005.2: read-tree status br_ballast (1000001)   8.29(5.62+2.62)   8.22(5.57+2.63) -0.8%
+
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
  string-list.c          |  5 +----
  t/perf/p0005-status.sh | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
  2 files changed, 50 insertions(+), 4 deletions(-)
  create mode 100755 t/perf/p0005-status.sh
 
+diff --git a/string-list.c b/string-list.c
+index 45016ad..003ca18 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -41,10 +41,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
+ 	if (exact_match)
+ 		return -1 - index;
+ 
+-	if (list->nr + 1 >= list->alloc) {
+-		list->alloc += 32;
+-		REALLOC_ARRAY(list->items, list->alloc);
+-	}
++	ALLOC_GROW(list->items, list->nr+1, list->alloc);
+ 	if (index < list->nr)
+ 		memmove(list->items + index + 1, list->items + index,
+ 				(list->nr - index)
+diff --git a/t/perf/p0005-status.sh b/t/perf/p0005-status.sh
+new file mode 100755
+index 0000000..0b0aa98
+--- /dev/null
++++ b/t/perf/p0005-status.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
++#
++# This test measures the performance of various read-tree
++# and status operations.  It is primarily interested in
++# the algorithmic costs of index operations and recursive
++# tree traversal -- and NOT disk I/O on thousands of files.
++
++test_description="Tests performance of read-tree"
++
++. ./perf-lib.sh
++
++test_perf_default_repo
++
++# If the test repo was generated by ./repos/many-files.sh
++# then we know something about the data shape and branches,
++# so we can isolate testing to the ballast-related commits
++# and setup sparse-checkout so we don't have to populate
++# the ballast files and directories.
++#
++# Otherwise, we make some general assumptions about the
++# repo and consider the entire history of the current
++# branch to be the ballast.
++
++test_expect_success "setup repo" '
++	if git rev-parse --verify refs/heads/p0006-ballast^{commit}
++	then
++		echo Assuming synthetic repo from many-files.sh
++		git branch br_base            master
++		git branch br_ballast         p0006-ballast
++		git config --local core.sparsecheckout 1
++		cat >.git/info/sparse-checkout <<-EOF
++		/*
++		!ballast/*
++		EOF
++	else
++		echo Assuming non-synthetic repo...
++		git branch br_base            $(git rev-list HEAD | tail -n 1)
++		git branch br_ballast         HEAD
++	fi &&
++	git checkout -q br_ballast &&
++	nr_files=$(git ls-files | wc -l)
++'
++
++test_perf "read-tree status br_ballast ($nr_files)" '
++	git read-tree HEAD &&
++	git status
++'
++
++test_done
 -- 
 2.9.3
 
