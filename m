@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4B8E20970
-	for <e@80x24.org>; Fri, 14 Apr 2017 16:59:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55B4820970
+	for <e@80x24.org>; Fri, 14 Apr 2017 16:59:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753753AbdDNQ71 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 12:59:27 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33907 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753302AbdDNQ7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 12:59:18 -0400
-Received: by mail-pf0-f172.google.com with SMTP id c198so42771106pfc.1
-        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:59:17 -0700 (PDT)
+        id S1753857AbdDNQ72 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 12:59:28 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:35939 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753822AbdDNQ7X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 12:59:23 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 194so3445868pfv.3
+        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JpWW0ddC89qAjy8dXkbJH6lMJnT2y30AWlTiSHnSgro=;
-        b=p3pkYrZeC1rHB15zDVQYAwyw0R8b5Yv1SfRNBINjd/PSxTjLPzLhXPh1jF3/B+Dt1z
-         jMmS8MnxN2WAmMXVlYZU2TH0NGKIRAGAlHZFyu3FsfixSMrPy0oNuraSqNiGvTaKFuQB
-         y3KKc/I/3lXLYepJGmLFOd0xWTeKo1OIVw14JeSehXZpZ8nmGZd1SBqYGV7+ZZih6wMJ
-         dop13gJtkJSxDA4JWi8QMHF3dNyEuYHvIzMne3yE0aFo3J078daEPmMgkQZV+2M4jkDV
-         /Fzt1rjeDrqDoEu8HCuU1zz6VaAoTwEwnrhGxN9Uxjgg/1VnavsDoGda6qY4tAeuGWfU
-         eSXQ==
+        bh=c2jyEKEjB2pQU5WHCONXpJE2aVqvt72O4i+YtVqzuAU=;
+        b=euV0dNAoqEQriPMaUzR9vVxslH4Cq67rWZoOfjEv6ZfX8efiUGZkD2GJ+MML2cKq11
+         56jEw7MhAzyx4b3eWcRBLFHCseHK5KJ8Zju21SlumAHXJ1CXs49ksC1OL+nVjduTmbTi
+         aQn2wUj3q5ihocvD2g43J2FfWzFzcOL8cm47OH8At0H0B6iWRKF7/7UcP3B3uigHYYSy
+         VewDjbHC1KWbzkVd1mB1mWHsvpRRn38ccB9VC0eri8TyGbXv7KHrnHp3HLxM2b+EUPMd
+         hRochoeQpXCZJxeJk1GfKkK2dZOL7Ossuij0Fp084A6/BxulWyxhrsrajD46n69mYeVm
+         O7eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JpWW0ddC89qAjy8dXkbJH6lMJnT2y30AWlTiSHnSgro=;
-        b=oiDISHSrNaC4vm1Tc+WfzvVAKp9/s/ycNZXu82RU8Hw7JVI/sqcGT30SftBIdQdbhq
-         Fbq9iRGuPGdgejo4//fd/LZRH0BWjWxKCfa6Bl7eD3+yMgHwvsXL3U+9GuUjPt/ioKca
-         OanP0jOy7HnFXI2lJv4pA6cXURG7DzUxHb2thbL2+NqQe72eHp0/FL4B7bIeOsTieAtA
-         VU2V12r1IV9KCucntrqo4kzbgozI0AKlbygpUtJWqKlEFPQijX0luM5bc5BCHnLA7StF
-         a+VQacz8YfjirffxeisemHBDKnr4Jmt/6gxRmt+tSG6ev2e41fLtYOEVrekx1q1fhMpb
-         Z8jw==
-X-Gm-Message-State: AN3rC/6YGHkNj/bpAnH3WA+QTWNG8F+gMghLBxnXYnpMtmjltdUlQAFd
-        CKHMr0RnM/KeUvWK
-X-Received: by 10.84.238.9 with SMTP id u9mr10085170plk.174.1492189157174;
-        Fri, 14 Apr 2017 09:59:17 -0700 (PDT)
+        bh=c2jyEKEjB2pQU5WHCONXpJE2aVqvt72O4i+YtVqzuAU=;
+        b=ObAODVv0BLhXIx8HHofwlpF4SJmvkDlYaIby8HcR4HryavqnPy95tR2yoRZDRIvz9+
+         zP8M744c/qun9Lzqyfv5AML2oypCZRDFo1UgXQ2afZmoM3pVY61et/f+cq99M6z2Gzrk
+         cMZA/4AoNCyQlmTZBQY0zNvitPTBFryryZElrv0b0uRewSndmKSepOduPfGbh84fHVr8
+         XVVPiJLxp9irgts65PR52+WsB2J/HpZJcPgC65NpKmfmbF9r4tukru94QoA+VYizLCMh
+         oMMjMWXjGVx7b53twP5AXKdF4SdyrP7N8ZQhPMJmhDbiPKWH8g13d4sRjGjGZiCMPymx
+         TWAg==
+X-Gm-Message-State: AN3rC/5RIuuLcNJuA8z2USOhV7Yn+3OMvFejIITbO+VTSJUrb6v4Evdd
+        1LqSUd1wVoE9GHIB
+X-Received: by 10.98.61.91 with SMTP id k88mr7920790pfa.62.1492189162750;
+        Fri, 14 Apr 2017 09:59:22 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id 129sm4276591pgj.23.2017.04.14.09.59.15
+        by smtp.gmail.com with ESMTPSA id 129sm4276591pgj.23.2017.04.14.09.59.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 14 Apr 2017 09:59:16 -0700 (PDT)
+        Fri, 14 Apr 2017 09:59:21 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, jrnieder@gmail.com,
         e@80x24.org
-Subject: [PATCH v3 05/10] run-command: prepare child environment before forking
-Date:   Fri, 14 Apr 2017 09:58:57 -0700
-Message-Id: <20170414165902.174167-6-bmwill@google.com>
+Subject: [PATCH v3 09/10] run-command: add note about forking and threading
+Date:   Fri, 14 Apr 2017 09:59:01 -0700
+Message-Id: <20170414165902.174167-10-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226-goog
 In-Reply-To: <20170414165902.174167-1-bmwill@google.com>
 References: <20170413183252.4713-1-bmwill@google.com>
@@ -63,149 +63,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In order to avoid allocation between 'fork()' and 'exec()' prepare the
-environment to be used in the child process prior to forking.
+All non-Async-Signal-Safe functions (e.g. malloc and die) were removed
+between 'fork' and 'exec' in start_command in order to avoid potential
+deadlocking when forking while multiple threads are running.  This
+deadlocking is possible when a thread (other than the one forking) has
+acquired a lock and didn't get around to releasing it before the fork.
+This leaves the lock in a locked state in the resulting process with no
+hope of it ever being released.
 
-Switch to using 'execve()' so that the construct child environment can
-used in the exec'd process.
+Add a note describing this potential pitfall before the call to 'fork()'
+so people working in this section of the code know to only use
+Async-Signal-Safe functions in the child process.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- run-command.c | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 76 insertions(+), 10 deletions(-)
+ run-command.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/run-command.c b/run-command.c
-index 1c7a3b611..5864b5ff3 100644
+index f36eafa8d..d3a32eab6 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -267,6 +267,75 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
- 		}
- 	}
- }
-+
-+static int env_isequal(const char *e1, const char *e2)
-+{
-+	for (;;) {
-+		char c1 = *e1++;
-+		char c2 = *e2++;
-+		c1 = (c1 == '=') ? '\0' : tolower(c1);
-+		c2 = (c2 == '=') ? '\0' : tolower(c2);
-+
-+		if (c1 != c2)
-+			return 0;
-+		if (c1 == '\0')
-+			return 1;
-+	}
-+}
-+
-+static int searchenv(char **env, const char *name)
-+{
-+	int pos = 0;
-+
-+	for (; env[pos]; pos++)
-+		if (env_isequal(env[pos], name))
-+			break;
-+
-+	return pos;
-+}
-+
-+static int do_putenv(char **env, int env_nr, const char *name)
-+{
-+	int pos = searchenv(env, name);
-+
-+	if (strchr(name, '=')) {
-+		/* ('key=value'), insert of replace entry */
-+		if (pos >= env_nr)
-+			env_nr++;
-+		env[pos] = (char *) name;
-+	} else if (pos < env_nr) {
-+		/* otherwise ('key') remove existing entry */
-+		env_nr--;
-+		memmove(&env[pos], &env[pos + 1],
-+			(env_nr - pos) * sizeof(char *));
-+		env[env_nr] = NULL;
-+	}
-+
-+	return env_nr;
-+}
-+
-+static char **prep_childenv(const char *const *deltaenv)
-+{
-+	char **childenv;
-+	int childenv_nr = 0, childenv_alloc = 0;
-+	int i;
-+
-+	for (i = 0; environ[i]; i++)
-+		childenv_nr++;
-+	for (i = 0; deltaenv && deltaenv[i]; i++)
-+		childenv_alloc++;
-+	/* Add one for the NULL termination */
-+	childenv_alloc += childenv_nr + 1;
-+
-+	childenv = xcalloc(childenv_alloc, sizeof(char *));
-+	memcpy(childenv, environ, childenv_nr * sizeof(char *));
-+
-+	/* merge in deltaenv */
-+	for (i = 0; deltaenv && deltaenv[i]; i++)
-+		childenv_nr = do_putenv(childenv, childenv_nr, deltaenv[i]);
-+
-+	return childenv;
-+}
- #endif
- 
- static inline void set_cloexec(int fd)
-@@ -395,12 +464,14 @@ int start_command(struct child_process *cmd)
- #ifndef GIT_WINDOWS_NATIVE
- {
- 	int notify_pipe[2];
-+	char **childenv;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	if (pipe(notify_pipe))
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
+@@ -557,6 +557,15 @@ int start_command(struct child_process *cmd)
  	prepare_cmd(&argv, cmd);
-+	childenv = prep_childenv(cmd->env);
+ 	childenv = prep_childenv(cmd->env);
  
++	/*
++	 * NOTE: In order to prevent deadlocking when using threads special
++	 * care should be taken with the function calls made in between the
++	 * fork() and exec() calls.  No calls should be made to functions which
++	 * require acquiring a lock (e.g. malloc) as the lock could have been
++	 * held by another thread at the time of forking, causing the lock to
++	 * never be released in the child process.  This means only
++	 * Async-Signal-Safe functions are permitted in the child.
++	 */
  	cmd->pid = fork();
  	failed_errno = errno;
-@@ -456,14 +527,6 @@ int start_command(struct child_process *cmd)
- 		if (cmd->dir && chdir(cmd->dir))
- 			die_errno("exec '%s': cd to '%s' failed", cmd->argv[0],
- 			    cmd->dir);
--		if (cmd->env) {
--			for (; *cmd->env; cmd->env++) {
--				if (strchr(*cmd->env, '='))
--					putenv((char *)*cmd->env);
--				else
--					unsetenv(*cmd->env);
--			}
--		}
- 
- 		/*
- 		 * Attempt to exec using the command and arguments starting at
-@@ -471,9 +534,11 @@ int start_command(struct child_process *cmd)
- 		 * be used in the event exec failed with ENOEXEC at which point
- 		 * we will try to interpret the command using 'sh'.
- 		 */
--		execv(argv.argv[1], (char *const *) argv.argv + 1);
-+		execve(argv.argv[1], (char *const *) argv.argv + 1,
-+		       (char *const *) childenv);
- 		if (errno == ENOEXEC)
--			execv(argv.argv[0], (char *const *) argv.argv);
-+			execve(argv.argv[0], (char *const *) argv.argv,
-+			       (char *const *) childenv);
- 
- 		if (errno == ENOENT) {
- 			if (!cmd->silent_exec_failure)
-@@ -509,6 +574,7 @@ int start_command(struct child_process *cmd)
- 	close(notify_pipe[0]);
- 
- 	argv_array_clear(&argv);
-+	free(childenv);
- }
- #else
- {
+ 	if (!cmd->pid) {
 -- 
 2.12.2.762.g0e3151a226-goog
 
