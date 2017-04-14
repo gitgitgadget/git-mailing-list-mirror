@@ -2,57 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B828920970
-	for <e@80x24.org>; Fri, 14 Apr 2017 16:59:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5232220970
+	for <e@80x24.org>; Fri, 14 Apr 2017 16:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753949AbdDNQ7i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 12:59:38 -0400
-Received: from mail-pf0-f181.google.com ([209.85.192.181]:35401 "EHLO
-        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753822AbdDNQ73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 12:59:29 -0400
-Received: by mail-pf0-f181.google.com with SMTP id i5so42727159pfc.2
-        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:59:29 -0700 (PDT)
+        id S1753953AbdDNQ7n (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 12:59:43 -0400
+Received: from mail-pf0-f173.google.com ([209.85.192.173]:35394 "EHLO
+        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753344AbdDNQ7Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 12:59:16 -0400
+Received: by mail-pf0-f173.google.com with SMTP id i5so42726781pfc.2
+        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4jMviSDKSDVNAOXDfJKxqAYdphGZXaDMmOauztq2b4A=;
-        b=d14ER3NQaB2CaaXYDDcnj7iVQPUzKOCnT3kO1hjIayz+bbE/AG5JQxJE3YCpPbTo0V
-         1hREkKDuSIl7vBjDB2K4DhdRyIw5eM3m4JhnG9HzjIF5WsFAkxqM6jl1mxgI5H6jrfhu
-         +/s4ndqDdLY/h36LzB6/IHZZnxU+6TZ0zDS2y2RUAek92ecRP5iLpbcZdFv0Pys3YWb/
-         1pHR6K4oBqfZ7i5PJhLYhJ7XWR1DF30JQuYlH9he5/iUWpnhDrlOMllK5Hovzp+QIjSD
-         gMMvc/uS6n6YTfXfmXN77HOgZF+vbcano+UadzIEsiUeTJpK5cnD/ilXqkxH5zJMKQ7f
-         q1wQ==
+        bh=hLX1+eiU/CSDb51wJjfyfM+E60ihMkotw4f79gIJTRM=;
+        b=JLKh0Vt6UJj1o5pOhx1e1QwSD4/1eEzXKmJDrQXy99Z/ZPmokPpAN5cPH0rQ23Ceba
+         cIj3+0g2xtRv0UvSxRDtQq8SFxeA6hJuhb9ZtdBhyw/LWtwYK0bjiidG4yIsXYfGtbT6
+         lXzDQh/bL+C/tdqLbcJ6c+3CLS3HG0vICYNgv1MoQMhaowVZy0e/f4oQVX350jjbPk6U
+         r6a0fbue5uPvhB8glv+DyID11gfwVbcm8wCZ3fEAacJPkyYeLP9NV0m3VYGLivU60qIt
+         i+mhubda3oiKuAD1ac38w+q1NHs946mfHAQA5zzMiGRQyiaitUHcksnwWELRL/Jx0G5H
+         oU/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4jMviSDKSDVNAOXDfJKxqAYdphGZXaDMmOauztq2b4A=;
-        b=nYatKedgXr9oBnpC9cHDUm7+mjjdPzJleeQiF/qhwsjDFyEwX8LNtrvLknq67lx8BK
-         lC51tg9bQzdWvXLMt7uGFAxtRvnN+IxXLA0vr9tVdvLUKuYuUnpouv7Uu0AMVe+r9AYw
-         Ss5Z4dQ+zEpBGkWJ21Cg5XIuh8GWjKMqYLeH5RWCsCLA7C3LDLvY78LTn7v1vY+jkuYR
-         vb9QtTSJPXWQsB7T6knEQeSNB6L3E64FI+wA4J2O4qbWsmrPHL8CH9V/YQ0lpzxjlCJR
-         s7erJru++lyVKkFwer9JIqK4CnvT4SmZ+lm15p4/jaBrptxIv1U/Lz1PlIkUN3EN5SMc
-         ZXqw==
-X-Gm-Message-State: AN3rC/7tWha926wcbLm5fnaj6VSpy/nEzyguEeh+dAtZqvV/zdwBSnEJ
-        f+1QB0u6Ch0Bxx+T
-X-Received: by 10.84.143.195 with SMTP id 61mr9593038plz.158.1492189158546;
-        Fri, 14 Apr 2017 09:59:18 -0700 (PDT)
+        bh=hLX1+eiU/CSDb51wJjfyfM+E60ihMkotw4f79gIJTRM=;
+        b=iTEzxyWrs9jMPJ+MHe02xHLr1657gFZ+kPKZn6uOAT4LocwKnkSnFXJOUjWvb6rLg+
+         T8NO5YfzUBfsY1nv3Z1fFIGSXx+WvtTCkxSU7VLE3BcR6U+sJHplsvxCY5C+/vVqpZUa
+         FzDZ2ezlekPRncy8vf+y0kX2m/+abktyPTFzLR0oBee1GY4+0i8YGimleiYObUe+eUk8
+         ara+FhZo2FxjHZJmCDiBBGckPG1al0/dKmaiZ4SQDlALSQSC6p1mZQQxY6b/njLw1Lw7
+         yBTmaYUd1SXX/NB7cjNayEKY4d2MrvjlLwZHThP7hjsClv3+e83+jZUwDO0ztgPVpbHF
+         tUug==
+X-Gm-Message-State: AN3rC/5+lh0DDjn7qqPCw6a3FM5Pvd/DvKmxNGUWz0JDi/62OiUcrdEj
+        EZtzlMvBF0A6/GfD
+X-Received: by 10.99.134.193 with SMTP id x184mr7966717pgd.43.1492189155797;
+        Fri, 14 Apr 2017 09:59:15 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id 129sm4276591pgj.23.2017.04.14.09.59.17
+        by smtp.gmail.com with ESMTPSA id 129sm4276591pgj.23.2017.04.14.09.59.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 14 Apr 2017 09:59:17 -0700 (PDT)
+        Fri, 14 Apr 2017 09:59:14 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, jrnieder@gmail.com,
         e@80x24.org
-Subject: [PATCH v3 06/10] run-command: don't die in child when duping /dev/null
-Date:   Fri, 14 Apr 2017 09:58:58 -0700
-Message-Id: <20170414165902.174167-7-bmwill@google.com>
+Subject: [PATCH v3 04/10] run-command: use the async-signal-safe execv instead of execvp
+Date:   Fri, 14 Apr 2017 09:58:56 -0700
+Message-Id: <20170414165902.174167-5-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226-goog
 In-Reply-To: <20170414165902.174167-1-bmwill@google.com>
 References: <20170413183252.4713-1-bmwill@google.com>
@@ -62,91 +63,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Convert the function used to exec from 'execvp()' to 'execv()' as the (p)
+variant of exec isn't async-signal-safe and has the potential to call malloc
+during the path resolution it performs.  Instead we simply do the path
+resolution ourselves during the preparation stage prior to forking.  There also
+don't exist any portable (p) variants which also take in an environment to use
+in the exec'd process.  This allows easy migration to using 'execve()' in a
+future patch.
+
+Also, as noted in [1], in the event of an ENOEXEC the (p) variants of
+exec will attempt to execute the command by interpreting it with the
+'sh' utility.  To maintain this functionality, if 'execv()' fails with
+ENOEXEC, start_command will atempt to execute the command by
+interpreting it with 'sh'.
+
+[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/exec.html
+
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- run-command.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ run-command.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
 diff --git a/run-command.c b/run-command.c
-index 5864b5ff3..ee2c680ab 100644
+index d8d143795..1c7a3b611 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -117,18 +117,6 @@ static inline void close_pair(int fd[2])
- 	close(fd[1]);
- }
+@@ -238,6 +238,12 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
+ 	if (!cmd->argv[0])
+ 		die("BUG: command is empty");
  
--#ifndef GIT_WINDOWS_NATIVE
--static inline void dup_devnull(int to)
--{
--	int fd = open("/dev/null", O_RDWR);
--	if (fd < 0)
--		die_errno(_("open /dev/null failed"));
--	if (dup2(fd, to) < 0)
--		die_errno(_("dup2(%d,%d) failed"), fd, to);
--	close(fd);
--}
--#endif
--
- static char *locate_in_PATH(const char *file)
- {
- 	const char *p = getenv("PATH");
-@@ -464,12 +452,20 @@ int start_command(struct child_process *cmd)
- #ifndef GIT_WINDOWS_NATIVE
- {
- 	int notify_pipe[2];
-+	int null_fd = -1;
- 	char **childenv;
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 
- 	if (pipe(notify_pipe))
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
-+	if (cmd->no_stdin || cmd->no_stdout || cmd->no_stderr) {
-+		null_fd = open("/dev/null", O_RDWR | O_CLOEXEC | O_NONBLOCK);
-+		if (null_fd < 0)
-+			die_errno(_("open /dev/null failed"));
-+		set_cloexec(null_fd);
-+	}
++	/*
++	 * Add SHELL_PATH so in the event exec fails with ENOEXEC we can
++	 * attempt to interpret the command with 'sh'.
++	 */
++	argv_array_push(out, SHELL_PATH);
 +
- 	prepare_cmd(&argv, cmd);
- 	childenv = prep_childenv(cmd->env);
- 
-@@ -493,7 +489,7 @@ int start_command(struct child_process *cmd)
- 		atexit(notify_parent);
- 
- 		if (cmd->no_stdin)
--			dup_devnull(0);
-+			dup2(null_fd, 0);
- 		else if (need_in) {
- 			dup2(fdin[0], 0);
- 			close_pair(fdin);
-@@ -503,7 +499,7 @@ int start_command(struct child_process *cmd)
- 		}
- 
- 		if (cmd->no_stderr)
--			dup_devnull(2);
-+			dup2(null_fd, 2);
- 		else if (need_err) {
- 			dup2(fderr[1], 2);
- 			close_pair(fderr);
-@@ -513,7 +509,7 @@ int start_command(struct child_process *cmd)
- 		}
- 
- 		if (cmd->no_stdout)
--			dup_devnull(1);
-+			dup2(null_fd, 1);
- 		else if (cmd->stdout_to_stderr)
- 			dup2(2, 1);
- 		else if (need_out) {
-@@ -573,6 +569,8 @@ int start_command(struct child_process *cmd)
+ 	if (cmd->git_cmd) {
+ 		argv_array_push(out, "git");
+ 		argv_array_pushv(out, cmd->argv);
+@@ -246,6 +252,20 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
+ 	} else {
+ 		argv_array_pushv(out, cmd->argv);
  	}
- 	close(notify_pipe[0]);
- 
-+	if (null_fd >= 0)
-+		close(null_fd);
- 	argv_array_clear(&argv);
- 	free(childenv);
++
++	/*
++	 * If there are no '/' characters in the command then perform a path
++	 * lookup and use the resolved path as the command to exec.  If there
++	 * are no '/' characters or if the command wasn't found in the path,
++	 * have exec attempt to invoke the command directly.
++	 */
++	if (!strchr(out->argv[1], '/')) {
++		char *program = locate_in_PATH(out->argv[1]);
++		if (program) {
++			free((char *)out->argv[1]);
++			out->argv[1] = program;
++		}
++	}
  }
+ #endif
+ 
+@@ -445,7 +465,15 @@ int start_command(struct child_process *cmd)
+ 			}
+ 		}
+ 
+-		sane_execvp(argv.argv[0], (char *const *) argv.argv);
++		/*
++		 * Attempt to exec using the command and arguments starting at
++		 * argv.argv[1].  argv.argv[0] contains SHELL_PATH which will
++		 * be used in the event exec failed with ENOEXEC at which point
++		 * we will try to interpret the command using 'sh'.
++		 */
++		execv(argv.argv[1], (char *const *) argv.argv + 1);
++		if (errno == ENOEXEC)
++			execv(argv.argv[0], (char *const *) argv.argv);
+ 
+ 		if (errno == ENOENT) {
+ 			if (!cmd->silent_exec_failure)
 -- 
 2.12.2.762.g0e3151a226-goog
 
