@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC92020970
-	for <e@80x24.org>; Fri, 14 Apr 2017 16:59:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4B8E20970
+	for <e@80x24.org>; Fri, 14 Apr 2017 16:59:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751687AbdDNQ7Z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 12:59:25 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:35807 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753753AbdDNQ7V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 12:59:21 -0400
-Received: by mail-pg0-f49.google.com with SMTP id 72so37218602pge.2
-        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:59:20 -0700 (PDT)
+        id S1753753AbdDNQ71 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 12:59:27 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:33907 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753302AbdDNQ7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 12:59:18 -0400
+Received: by mail-pf0-f172.google.com with SMTP id c198so42771106pfc.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=J7H3U9KQ5UNLNt+h5PfT4NT+1uyMeiVE6MNmEvoxqYI=;
-        b=jw51wQEP3d5Z9DCkafC7Encr5LjQRFVD6/ginxqWOhwrUv8MSZ/4cOZTR4zS7K8BBX
-         R/79I7i1t3T+VrVwfiD6OM6q3huLuP9O008u+cLlUfXCabyG5tI/ZMhIBnAV3hIKwv8Z
-         vokhRr4kPaGeAWsGBixBmbQDDyPbvEaJ2O+lYR0GGX5QKx2UCXXaMg30yIvu6f2jQZ2I
-         0d3ESEfz+Rsbils5szLlq1txYbuDNMVOyUddgapyy43rBCdqY8P2cjizrXoZ6jg4EjsR
-         brfniQPpWk45pvyG8oY9rxVFmHcXqnJc0Utl3k1lACs1S+qlhHv93wimkNU/i2nCxPxY
-         hf8Q==
+        bh=JpWW0ddC89qAjy8dXkbJH6lMJnT2y30AWlTiSHnSgro=;
+        b=p3pkYrZeC1rHB15zDVQYAwyw0R8b5Yv1SfRNBINjd/PSxTjLPzLhXPh1jF3/B+Dt1z
+         jMmS8MnxN2WAmMXVlYZU2TH0NGKIRAGAlHZFyu3FsfixSMrPy0oNuraSqNiGvTaKFuQB
+         y3KKc/I/3lXLYepJGmLFOd0xWTeKo1OIVw14JeSehXZpZ8nmGZd1SBqYGV7+ZZih6wMJ
+         dop13gJtkJSxDA4JWi8QMHF3dNyEuYHvIzMne3yE0aFo3J078daEPmMgkQZV+2M4jkDV
+         /Fzt1rjeDrqDoEu8HCuU1zz6VaAoTwEwnrhGxN9Uxjgg/1VnavsDoGda6qY4tAeuGWfU
+         eSXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=J7H3U9KQ5UNLNt+h5PfT4NT+1uyMeiVE6MNmEvoxqYI=;
-        b=GCPimt8YeoNYlcF0OdKx+dSutuUGzczbqWCehAYtQJVuIMJtU33q6oyjDFnNrOQMMY
-         vYTdwLlT5L/O76h5FYfIVEad9kN8LLU+wfSaUpcIMIvNZe39Hlp8XXEhaNENOI6wWpCK
-         AfAPTY81nHeQIUvfMeMzDmjmqmW9ZENMd1QPOQlMPIexFffR3d3Tw1cDo39wBP95fVE8
-         tJXmpLYcAKp4IvmvxCsM/cwVZ0cHR/rJLFIuFhp4DM0/f81bRFBSeSsW6Gg3Il2RvSJO
-         4q8n4JXvDNfSm9a+qoo9H236jdZZfxnQQIcDxdNj8DngDqNSHQvS+x39DU03e6XoVgJ/
-         gYAQ==
-X-Gm-Message-State: AN3rC/5jvhsw05wE8DQTxJy90jlaAbf76yDvzDCrR2KxOrZd1zaTJcQV
-        gW37qv/gs23FA4F3
-X-Received: by 10.98.93.150 with SMTP id n22mr7808711pfj.103.1492189160097;
-        Fri, 14 Apr 2017 09:59:20 -0700 (PDT)
+        bh=JpWW0ddC89qAjy8dXkbJH6lMJnT2y30AWlTiSHnSgro=;
+        b=oiDISHSrNaC4vm1Tc+WfzvVAKp9/s/ycNZXu82RU8Hw7JVI/sqcGT30SftBIdQdbhq
+         Fbq9iRGuPGdgejo4//fd/LZRH0BWjWxKCfa6Bl7eD3+yMgHwvsXL3U+9GuUjPt/ioKca
+         OanP0jOy7HnFXI2lJv4pA6cXURG7DzUxHb2thbL2+NqQe72eHp0/FL4B7bIeOsTieAtA
+         VU2V12r1IV9KCucntrqo4kzbgozI0AKlbygpUtJWqKlEFPQijX0luM5bc5BCHnLA7StF
+         a+VQacz8YfjirffxeisemHBDKnr4Jmt/6gxRmt+tSG6ev2e41fLtYOEVrekx1q1fhMpb
+         Z8jw==
+X-Gm-Message-State: AN3rC/6YGHkNj/bpAnH3WA+QTWNG8F+gMghLBxnXYnpMtmjltdUlQAFd
+        CKHMr0RnM/KeUvWK
+X-Received: by 10.84.238.9 with SMTP id u9mr10085170plk.174.1492189157174;
+        Fri, 14 Apr 2017 09:59:17 -0700 (PDT)
 Received: from roshar.mtv.corp.google.com ([100.96.238.26])
-        by smtp.gmail.com with ESMTPSA id 129sm4276591pgj.23.2017.04.14.09.59.18
+        by smtp.gmail.com with ESMTPSA id 129sm4276591pgj.23.2017.04.14.09.59.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 14 Apr 2017 09:59:18 -0700 (PDT)
+        Fri, 14 Apr 2017 09:59:16 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, jrnieder@gmail.com,
         e@80x24.org
-Subject: [PATCH v3 07/10] run-command: eliminate calls to error handling functions in child
-Date:   Fri, 14 Apr 2017 09:58:59 -0700
-Message-Id: <20170414165902.174167-8-bmwill@google.com>
+Subject: [PATCH v3 05/10] run-command: prepare child environment before forking
+Date:   Fri, 14 Apr 2017 09:58:57 -0700
+Message-Id: <20170414165902.174167-6-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226-goog
 In-Reply-To: <20170414165902.174167-1-bmwill@google.com>
 References: <20170413183252.4713-1-bmwill@google.com>
@@ -63,211 +63,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All of our standard error handling paths have the potential to
-call malloc or take stdio locks; so we must avoid them inside
-the forked child.
+In order to avoid allocation between 'fork()' and 'exec()' prepare the
+environment to be used in the child process prior to forking.
 
-Instead, the child only writes an 8 byte struct atomically to
-the parent through the notification pipe to propagate an error.
-All user-visible error reporting happens from the parent;
-even avoiding functions like atexit(3) and exit(3).
+Switch to using 'execve()' so that the construct child environment can
+used in the exec'd process.
 
-Helped-by: Eric Wong <e@80x24.org>
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- run-command.c | 121 ++++++++++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 89 insertions(+), 32 deletions(-)
+ run-command.c | 86 ++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 76 insertions(+), 10 deletions(-)
 
 diff --git a/run-command.c b/run-command.c
-index ee2c680ab..25b487c35 100644
+index 1c7a3b611..5864b5ff3 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -211,14 +211,82 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
- #ifndef GIT_WINDOWS_NATIVE
- static int child_notifier = -1;
- 
--static void notify_parent(void)
-+enum child_errcode {
-+	CHILD_ERR_CHDIR,
-+	CHILD_ERR_ENOENT,
-+	CHILD_ERR_SILENT,
-+	CHILD_ERR_ERRNO,
-+};
-+
-+struct child_err {
-+	enum child_errcode err;
-+	int syserr; /* errno */
-+};
-+
-+static void child_die(enum child_errcode err)
- {
--	/*
--	 * execvp failed.  If possible, we'd like to let start_command
--	 * know, so failures like ENOENT can be handled right away; but
--	 * otherwise, finish_command will still report the error.
--	 */
--	xwrite(child_notifier, "", 1);
-+	struct child_err buf;
-+
-+	buf.err = err;
-+	buf.syserr = errno;
-+
-+	/* write(2) on buf smaller than PIPE_BUF (min 512) is atomic: */
-+	xwrite(child_notifier, &buf, sizeof(buf));
-+	_exit(1);
-+}
-+
-+/*
-+ * parent will make it look like the child spewed a fatal error and died
-+ * this is needed to prevent changes to t0061.
-+ */
-+static void fake_fatal(const char *err, va_list params)
-+{
-+	vreportf("fatal: ", err, params);
-+}
-+
-+static void child_error_fn(const char *err, va_list params)
-+{
-+	const char msg[] = "error() should not be called in child\n";
-+	xwrite(2, msg, sizeof(msg) - 1);
-+}
-+
-+static void child_warn_fn(const char *err, va_list params)
-+{
-+	const char msg[] = "warn() should not be called in child\n";
-+	xwrite(2, msg, sizeof(msg) - 1);
-+}
-+
-+static void NORETURN child_die_fn(const char *err, va_list params)
-+{
-+	const char msg[] = "die() should not be called in child\n";
-+	xwrite(2, msg, sizeof(msg) - 1);
-+	_exit(2);
-+}
-+
-+/* this runs in the parent process */
-+static void child_err_spew(struct child_process *cmd, struct child_err *cerr)
-+{
-+	static void (*old_errfn)(const char *err, va_list params);
-+
-+	old_errfn = get_error_routine();
-+	set_error_routine(fake_fatal);
-+	errno = cerr->syserr;
-+
-+	switch (cerr->err) {
-+	case CHILD_ERR_CHDIR:
-+		error_errno("exec '%s': cd to '%s' failed",
-+			    cmd->argv[0], cmd->dir);
-+		break;
-+	case CHILD_ERR_ENOENT:
-+		error_errno("cannot run %s", cmd->argv[0]);
-+		break;
-+	case CHILD_ERR_SILENT:
-+		break;
-+	case CHILD_ERR_ERRNO:
-+		error_errno("cannot exec '%s'", cmd->argv[0]);
-+		break;
-+	}
-+	set_error_routine(old_errfn);
- }
- 
- static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
-@@ -361,13 +429,6 @@ static int wait_or_whine(pid_t pid, const char *argv0, int in_signal)
- 		code += 128;
- 	} else if (WIFEXITED(status)) {
- 		code = WEXITSTATUS(status);
--		/*
--		 * Convert special exit code when execvp failed.
--		 */
--		if (code == 127) {
--			code = -1;
--			failed_errno = ENOENT;
--		}
- 	} else {
- 		error("waitpid is confused (%s)", argv0);
+@@ -267,6 +267,75 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
+ 		}
  	}
-@@ -455,6 +516,7 @@ int start_command(struct child_process *cmd)
- 	int null_fd = -1;
- 	char **childenv;
+ }
++
++static int env_isequal(const char *e1, const char *e2)
++{
++	for (;;) {
++		char c1 = *e1++;
++		char c2 = *e2++;
++		c1 = (c1 == '=') ? '\0' : tolower(c1);
++		c2 = (c2 == '=') ? '\0' : tolower(c2);
++
++		if (c1 != c2)
++			return 0;
++		if (c1 == '\0')
++			return 1;
++	}
++}
++
++static int searchenv(char **env, const char *name)
++{
++	int pos = 0;
++
++	for (; env[pos]; pos++)
++		if (env_isequal(env[pos], name))
++			break;
++
++	return pos;
++}
++
++static int do_putenv(char **env, int env_nr, const char *name)
++{
++	int pos = searchenv(env, name);
++
++	if (strchr(name, '=')) {
++		/* ('key=value'), insert of replace entry */
++		if (pos >= env_nr)
++			env_nr++;
++		env[pos] = (char *) name;
++	} else if (pos < env_nr) {
++		/* otherwise ('key') remove existing entry */
++		env_nr--;
++		memmove(&env[pos], &env[pos + 1],
++			(env_nr - pos) * sizeof(char *));
++		env[env_nr] = NULL;
++	}
++
++	return env_nr;
++}
++
++static char **prep_childenv(const char *const *deltaenv)
++{
++	char **childenv;
++	int childenv_nr = 0, childenv_alloc = 0;
++	int i;
++
++	for (i = 0; environ[i]; i++)
++		childenv_nr++;
++	for (i = 0; deltaenv && deltaenv[i]; i++)
++		childenv_alloc++;
++	/* Add one for the NULL termination */
++	childenv_alloc += childenv_nr + 1;
++
++	childenv = xcalloc(childenv_alloc, sizeof(char *));
++	memcpy(childenv, environ, childenv_nr * sizeof(char *));
++
++	/* merge in deltaenv */
++	for (i = 0; deltaenv && deltaenv[i]; i++)
++		childenv_nr = do_putenv(childenv, childenv_nr, deltaenv[i]);
++
++	return childenv;
++}
+ #endif
+ 
+ static inline void set_cloexec(int fd)
+@@ -395,12 +464,14 @@ int start_command(struct child_process *cmd)
+ #ifndef GIT_WINDOWS_NATIVE
+ {
+ 	int notify_pipe[2];
++	char **childenv;
  	struct argv_array argv = ARGV_ARRAY_INIT;
-+	struct child_err cerr;
  
  	if (pipe(notify_pipe))
  		notify_pipe[0] = notify_pipe[1] = -1;
-@@ -473,20 +535,16 @@ int start_command(struct child_process *cmd)
+ 
+ 	prepare_cmd(&argv, cmd);
++	childenv = prep_childenv(cmd->env);
+ 
+ 	cmd->pid = fork();
  	failed_errno = errno;
- 	if (!cmd->pid) {
- 		/*
--		 * Redirect the channel to write syscall error messages to
--		 * before redirecting the process's stderr so that all die()
--		 * in subsequent call paths use the parent's stderr.
-+		 * Ensure the default die/error/warn routines do not get
-+		 * called, they can take stdio locks and malloc.
- 		 */
--		if (cmd->no_stderr || need_err) {
--			int child_err = dup(2);
--			set_cloexec(child_err);
--			set_error_handle(fdopen(child_err, "w"));
--		}
-+		set_die_routine(child_die_fn);
-+		set_error_routine(child_error_fn);
-+		set_warn_routine(child_warn_fn);
- 
- 		close(notify_pipe[0]);
- 		set_cloexec(notify_pipe[1]);
- 		child_notifier = notify_pipe[1];
--		atexit(notify_parent);
- 
- 		if (cmd->no_stdin)
- 			dup2(null_fd, 0);
-@@ -521,8 +579,7 @@ int start_command(struct child_process *cmd)
- 		}
- 
+@@ -456,14 +527,6 @@ int start_command(struct child_process *cmd)
  		if (cmd->dir && chdir(cmd->dir))
--			die_errno("exec '%s': cd to '%s' failed", cmd->argv[0],
--			    cmd->dir);
-+			child_die(CHILD_ERR_CHDIR);
+ 			die_errno("exec '%s': cd to '%s' failed", cmd->argv[0],
+ 			    cmd->dir);
+-		if (cmd->env) {
+-			for (; *cmd->env; cmd->env++) {
+-				if (strchr(*cmd->env, '='))
+-					putenv((char *)*cmd->env);
+-				else
+-					unsetenv(*cmd->env);
+-			}
+-		}
  
  		/*
  		 * Attempt to exec using the command and arguments starting at
-@@ -537,12 +594,11 @@ int start_command(struct child_process *cmd)
- 			       (char *const *) childenv);
+@@ -471,9 +534,11 @@ int start_command(struct child_process *cmd)
+ 		 * be used in the event exec failed with ENOEXEC at which point
+ 		 * we will try to interpret the command using 'sh'.
+ 		 */
+-		execv(argv.argv[1], (char *const *) argv.argv + 1);
++		execve(argv.argv[1], (char *const *) argv.argv + 1,
++		       (char *const *) childenv);
+ 		if (errno == ENOEXEC)
+-			execv(argv.argv[0], (char *const *) argv.argv);
++			execve(argv.argv[0], (char *const *) argv.argv,
++			       (char *const *) childenv);
  
  		if (errno == ENOENT) {
--			if (!cmd->silent_exec_failure)
--				error("cannot run %s: %s", cmd->argv[0],
--					strerror(ENOENT));
--			exit(127);
-+			if (cmd->silent_exec_failure)
-+				child_die(CHILD_ERR_SILENT);
-+			child_die(CHILD_ERR_ENOENT);
- 		} else {
--			die_errno("cannot exec '%s'", cmd->argv[0]);
-+			child_die(CHILD_ERR_ERRNO);
- 		}
- 	}
- 	if (cmd->pid < 0)
-@@ -553,17 +609,18 @@ int start_command(struct child_process *cmd)
- 	/*
- 	 * Wait for child's exec. If the exec succeeds (or if fork()
- 	 * failed), EOF is seen immediately by the parent. Otherwise, the
--	 * child process sends a single byte.
-+	 * child process sends a child_err struct.
- 	 * Note that use of this infrastructure is completely advisory,
- 	 * therefore, we keep error checks minimal.
- 	 */
- 	close(notify_pipe[1]);
--	if (read(notify_pipe[0], &notify_pipe[1], 1) == 1) {
-+	if (xread(notify_pipe[0], &cerr, sizeof(cerr)) == sizeof(cerr)) {
- 		/*
- 		 * At this point we know that fork() succeeded, but exec()
- 		 * failed. Errors have been reported to our stderr.
- 		 */
- 		wait_or_whine(cmd->pid, cmd->argv[0], 0);
-+		child_err_spew(cmd, &cerr);
- 		failed_errno = errno;
- 		cmd->pid = -1;
- 	}
+ 			if (!cmd->silent_exec_failure)
+@@ -509,6 +574,7 @@ int start_command(struct child_process *cmd)
+ 	close(notify_pipe[0]);
+ 
+ 	argv_array_clear(&argv);
++	free(childenv);
+ }
+ #else
+ {
 -- 
 2.12.2.762.g0e3151a226-goog
 
