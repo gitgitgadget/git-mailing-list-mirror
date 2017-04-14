@@ -2,160 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 162DF20970
-	for <e@80x24.org>; Fri, 14 Apr 2017 16:32:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2175E20970
+	for <e@80x24.org>; Fri, 14 Apr 2017 16:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751654AbdDNQcY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 12:32:24 -0400
-Received: from a1i216.smtp2go.com ([43.228.184.216]:39831 "EHLO
-        a1i216.smtp2go.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751147AbdDNQcX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 12:32:23 -0400
-X-Greylist: delayed 338 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Apr 2017 12:32:22 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=smtpcorp.com; s=a0-2; h=Feedback-ID:X-Smtpcorp-Track:Date:Subject:To:From:
-        Reply-To:Message-ID:List-Unsubscribe;
-        bh=vkNJoZpmUbdtin2ZnLzctqSHy9C5TSKCdOSshujf1K0=; b=erwat1HKn9J4sPNlDysngr0oNs
-        nA7NW0O7jlbZIDd+x8ryHTiOmyDSXTRq/8CIPXc6Qvcvj8paHgg+iX/bQawaGHLj7sQYZcg2S1J6a
-        5o8Ufd4lGtGcJRAStZkel9UeLRBBbQTggTIs1H7v0zwBTBHYHmxa+AU+/U15YV+gnHKJlITFoYL7d
-        540s9/fpZ1Lkp9GC0A7xnOUIgIva/jFQXF6u2RCvlpyipWTRvOYeE2rL8/vA1SuKK1vIlgv55+unC
-        2ksQamw7MoVluujY7U8mkpJ/wk8U8kbdUDwf3uiJAWTdAvjnha9r0ag9OBt/5n3W+b8rJKx+niA9M
-        DDwR5XnA==;
-Message-ID: <D20C812A0278459095443B62002359A7@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, "Michael J Gruber" <git@grubix.eu>
-Cc:     =?UTF-8?Q?Enis_Bayramo=C4=9Flu?= <enis@picussecurity.com>,
-        "Git Mailing List" <git@vger.kernel.org>
-References: <CAMLReHYBVmuu5H015N1ShCD0iLNau9oLOabJhQ7xc=58rXQi+Q@mail.gmail.com> <88df8638-9b7b-42c4-bb34-4e1a49d4c22d@grubix.eu> <CAMLReHYbuHmGTtBSUQq3bO=6ghz=rfP-=Eg=PvP0tkwZbM2Q1Q@mail.gmail.com> <CACBZZX7xqoZ3LboOjwvQvX3JRJFhjFC54+mfLOddLXzconrobw@mail.gmail.com> <5704E476-BD11-47D1-A15E-C1E29A1398AD@grubix.eu> <CACBZZX4W1kk2cnncWz1EVjA-WtFryYzNoiiDHR9+9VC4AKJhKg@mail.gmail.com> <61ef36d9-7f25-80d6-5216-554684bd54dd@grubix.eu>
-Subject: Re: `git status` output is very misleading after a merge on a "detached HEAD"
-Date:   Fri, 14 Apr 2017 17:25:28 +0100
-Organization: OPDS
+        id S1751911AbdDNQdZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Apr 2017 12:33:25 -0400
+Received: from mail-lf0-f53.google.com ([209.85.215.53]:34769 "EHLO
+        mail-lf0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751761AbdDNQdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Apr 2017 12:33:23 -0400
+Received: by mail-lf0-f53.google.com with SMTP id t144so44086114lff.1
+        for <git@vger.kernel.org>; Fri, 14 Apr 2017 09:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ILBkFYLj8/lUx6QHBxf2HB87wdFkgDxTwS63IUE7s/8=;
+        b=V7H9zjkzqDG6Mb+NtSzMcBLl6rx/GAvye4msZUkaP6qz7+lTOVQGA8yX8+c1ZJ3Xa6
+         lznc91/jnhaM6CXjW0P9ncv0mwQtwihDqnq13Uasrp0YYtCAaB6FYBoqJC6+GE1NquUI
+         Y+4g8QTc0JmV7zf/Rz22l+SRn1JKis8xl4U3wXOPrVY0puLbkTMw0dN5W2c28ijT1vmq
+         DbLvaMl2FgWoDE2/3n9fXAHrYGUv1hBNZ57iCx1xyMbg49LZRtdUoCvfKzZ2ajee9RUq
+         g4KyuqY0LpIq0CHL9X8JIAzqsYfOMlw9yFoSLGksW3LPYoeuSskrOEopnqYyj8en9LXz
+         a7bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ILBkFYLj8/lUx6QHBxf2HB87wdFkgDxTwS63IUE7s/8=;
+        b=LAH7WLse3lH2HjI2OKlqABNGwu7oskAsBXBJyGnwuLpzzPfqEUzBaZZp0+WFkNrJrI
+         rJLLFUu1aIBOy98B/ziCCUQ5iMh42XVDeE/v2GFLRXMCSKMDQPGVaEFWdaLhj6qaxvNX
+         j64YmvsOfvEfEl0dI9YVpZ5TgKhY//BlvdKOC1Si0aNzVknbEM9HtDNbggXrwORETSND
+         GynNk2XLBrf7n2FP9Gc7n/jK3NHjEJ0K/frlTR5K9d7o8k0AAsW94eY+MVMJO2Fu1uhZ
+         s5thB7Tky8QlVkSPWjjqh+T0KLbas/NQB1YAPbmW4+7d1ShhRW5JFsnHQj2UWgTgF8Yw
+         xcEQ==
+X-Gm-Message-State: AN3rC/59BBO+uEY8hIP4ym+KXDnlx2uDuzn1WDwDnOBlq67TVyIyGbzv
+        Anb5pHP6eCNcZF4vHvqTzJL68g0PcQ==
+X-Received: by 10.25.24.217 with SMTP id 86mr3235378lfy.12.1492187601664; Fri,
+ 14 Apr 2017 09:33:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="UTF-8";
-        reply-type=original
-Content-Transfer-Encoding: 8bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-Smtpcorp-Track: 1cz43eDIIcx7JF.8NgB_PdNW
-Feedback-ID: 66524m:66524aMf6O2Y:66524sHQpU73K_-:SMTPCORP
-X-Report-Abuse: Please forward a copy of this message, including all
- headers, to <abuse@smtp2go.com>
+Received: by 10.25.17.155 with HTTP; Fri, 14 Apr 2017 09:33:01 -0700 (PDT)
+In-Reply-To: <CAGZ79kaRTrgHMnP6mA3V2rDHzf8iOidqLTpp2aXmi6x+6YeZxw@mail.gmail.com>
+References: <20170413171224.3537-1-jacob.e.keller@intel.com>
+ <20170413185707.97746-1-bmwill@google.com> <CAGZ79kZ8KV+c2StKR8tp=s_E1+uEaSezgsmUfyyO9HUrmzdT+g@mail.gmail.com>
+ <CA+P7+xp=1PUsq1_or=J8ED+-1NMaF=BckC9bK4jqWbA+RFeszw@mail.gmail.com> <CAGZ79kaRTrgHMnP6mA3V2rDHzf8iOidqLTpp2aXmi6x+6YeZxw@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Fri, 14 Apr 2017 09:33:01 -0700
+Message-ID: <CA+P7+xoY-FFXEkPgQBA4=Twq+G5YZrHkBqiO+sKHcGJe7xt7vw@mail.gmail.com>
+Subject: Re: [PATCH 3/2] ls-files: only recurse on active submodules
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-- a bit late in providing a comment..
-
-From: "Michael J Gruber" <git@grubix.eu>
-> Ævar Arnfjörð Bjarmason venit, vidit, dixit 12.04.2017 14:18:
->> On Wed, Apr 12, 2017 at 7:43 AM, Michael J Gruber <git@grubix.eu> wrote:
->>> Am 11. April 2017 22:40:14 MESZ schrieb "Ævar Arnfjörð Bjarmason"
->>> <avarab@gmail.com>:
->>>> On Tue, Apr 11, 2017 at 5:13 PM, Enis Bayramoğlu
->>>>> HEAD detached from origin/master 1 commit ago,
->>>>
->>>> In lieu of that, which would need some of the rev-list machinery to be
->>>> invoked on every git-status, I wonder if just saying "HEAD detached &
->>>> diverged from origin/master" wouldn't be clearer:
->>>>
->>>> diff --git a/wt-status.c b/wt-status.c
->>>> index 308cf3779e..79c8cfd1cf 100644
->>>> --- a/wt-status.c
->>>> +++ b/wt-status.c
->>>> @@ -1542,7 +1542,7 @@ static void wt_longstatus_print(struct wt_status
->>>> *s)
->>>>                                if (state.detached_at)
->>>>                                      on_what = _("HEAD detached at ");
->>>>                                else
->>>> -                                       on_what = _("HEAD detached from
->>>> ");
->>>> +                                       on_what = _("HEAD detached &
->>>> diverged from ");
->>>>                        } else {
->>>>                                branch_name = "";
->>>>                           on_what = _("Not currently on any branch.");
->>>>
->>>>
->>>>
+On Thu, Apr 13, 2017 at 12:25 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Thu, Apr 13, 2017 at 12:12 PM, Jacob Keller <jacob.keller@gmail.com> wrote:
+>> On Thu, Apr 13, 2017 at 12:05 PM, Stefan Beller <sbeller@google.com> wrote:
+>>> On Thu, Apr 13, 2017 at 11:57 AM, Brandon Williams <bmwill@google.com> wrote:
+>>>> Add in a check to see if a submodule is active before attempting to
+>>>> recurse.  This prevents 'ls-files' from trying to operate on a submodule
+>>>> which may not exist in the working directory.
 >>>
->>> No way. That would reduce the information that we give.
+>>> What would currently happen on recursing into non-active submodules?
+>>> Can we have a test for this?
+>>>
+>>> Thanks,
+>>> Stefan
 >>
->> How does it reduce the information we give? Maybe I've missed
->> something about what "from" means here, as opposed to "at", but it
->> seems to me to mean the same thing as "diverged" by definition, i.e.
->> we detached from the branch but we diverged from it.
+>> We should be able to test for this. Is it possible that we can recurse
+>> into a submodule as long as we have the clone in .git/modules/<name>
+>> even if we don't have it checked out currently?
 >
-> No, "at" means we're still at that commit - detached but not diverged.
-> "from" means we only started from that commit, but are not at it any more.
+> Conceptually that should be possible, e.g.
 >
->> Saying "diverged"
->> just makes it clearer, how does it reduce the information we give?
+>     git ls-files --recurse-submodules <ancient ref>
 >
-> I misread your patch on my mobile phone, sorry. I thought you meant to
-> replace both "at" and "from" by "diverged from" because you considered
-> them synonymous.
+> where the ancient ref contained submodules that are not present any more.
+> In that case we would need to do
 >
-> But your patch touches just the" from" case and emphasizes the "diverge"
-> aspect, which is fine, of course.
+>     struct strbuf sb = STRBUF_INIT;
+>     struct child_process = CHILD_PROCESS_INIT;
+>     struct submodule *sub = submodule_from_path( \
+>         <path as recorded in ancient tree>, <ancient ref>)
+>     strbuf_git_path(&sb, "modules/%s", sub->name);
 >
->>> Note that the difference between from and at is also: are there commits
->>> that we could lose when we switch away, that is: that git checkout would
->>> warn us about?
->>
->> Right, but I don't see how that's in any way conflicting or mutually
->> exclusive with saying before hand that we've diverged from the branch.
->>
->>> Maybe improve the doc instead?
+>     argv_array_pushl(&cp.args, "git", "ls-files", "--recurse", ...);
+>     cp.dir = sb.buf;
+>     run_command(&cp);
+>
+> Stefan
 
-I think that the doc should highlight the subtelty implied by the at/from
-distinction. Especially as users may reasonably think that they are detached 
-from a branch, and not see the distinction.
+Never mind. git ls-files doesn't support showing files for a specific
+ancient history. (I guess you'd use ls-tree for that?). I'm guessing
+we want to run in the actual work-tree for ls-files here.
 
->>
->> Aside from whether my patch makes any sense, the solution to a UX
->> issue really can't be "oh this just needs to be documented". For every
->> user who's confused by some interface we provide a *tiny* minority of
->> them go and exhaustively read the docs for an explanation, will just
->> remain confused.
->>
->> I think saying from v.s. at is way too subtle, I for one have been
->> missing it for years until this thread, that's bad UX, git's also used
->> by a lot of non-native English speakers who may not at all get the
->> subtle difference between at and from in this context, or if they do
->> think the UI is using that subtlety to tell them something.
+Does "is_submodule_initialized()" going to ensure that we only operate
+on a submodule that's currently checked out?
 
-As a native UK English speaker (living in Scotland), I focus on the verb
-'detached' rather than the at/from distinction. There are many local
-dialects and variants so that is only who are taught English as she is wrote
-who tend to notice the fine distinctions. (There are many fine Scottish
-words which are outwith RP English).
-
-At least if the man page indicated the distinction folks would notice
-sooner - they rarely get to see the distinction side by side in the terminal
-window.
-
->
-> Well, we have to find the right balance between clarity and brevity - an
-> interface that is too chatty is a nightmare. That's why I suggested both
-> doc changes and additional information.
->
-> What do you think about the ahead/behind info as suggested? That should
-> be more informative both qualitatively (something diverged) and
-> quantitatively (by how much).
->
-> Michael
->
---
-Philip
-
+Thanks,
+Jake
