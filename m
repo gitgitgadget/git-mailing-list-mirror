@@ -2,130 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8A8F20A04
-	for <e@80x24.org>; Sat, 15 Apr 2017 04:34:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BB1920D09
+	for <e@80x24.org>; Sat, 15 Apr 2017 07:35:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751010AbdDOEei (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Apr 2017 00:34:38 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:34692 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750776AbdDOEeg (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 15 Apr 2017 00:34:36 -0400
-Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1751696AbdDOHfY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Apr 2017 03:35:24 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64965 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1751511AbdDOHfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2017 03:35:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E5C5C791EE;
+        Sat, 15 Apr 2017 03:35:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=MNw1kUJW16vv
+        9zRYn5rdi8fYcb8=; b=MVnbIxp9Kx8r6yhP2W4BNWpPraDpbKCrwBpeBEsWO/cw
+        QJhTDuWg8ie/BPaP9xbO8y5y+jrsGok6CBRI+1VGE34ErEENcaYFnA4kElKXqHMC
+        yvQhiIHdya2XLktC1/esLyEYTXwid0Bs3wGOwtxJO+LqVIIao9tjphX3ONrt8ZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=M1iCb7
+        JPxs3gliYKihLRiap9ihgsXUULp8IPSskwtgGb3+Hkqvvz0QiLpQfwvEuyHbNciO
+        JIncqUTCcaeFaopKCGhdOcLJP5qogHEOE715JpIF0dhf5717xACuDQ+KbVT+RU+7
+        KqUUn50SMaTjHX8R/GC5EZR/kwyrq1iC/fXo0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DE095791ED;
+        Sat, 15 Apr 2017 03:35:20 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EC892280AD;
-        Sat, 15 Apr 2017 04:34:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492230873;
-        bh=F+kaRYBCNvRfWHD7L6cDLc/AsBa5tj8ypQ4/N5yRQT8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lEJFM9Vv2/AaZg4lqS7cafiMLlbvvrYsuf7JrxAiIjrR7VwZ8k3ulG4kCvVQg5JEk
-         3kySSfCAIUSC6sNqR6Ko4L07IyymMqOmAzmAjW0ndc/NHEsJBMqdS8NvTRUiFKpeYn
-         5WPvpN6QpN/RFuRqGcspRIPvBgo+0K5+LrsOdzNWCVRZeSLGZ3j5KxfoIAfGYg9w7F
-         j/c6KLCWCITnTYCW0InlRe0RX4NowdzaZqs0MeVJ4pU4+f/eJiypuuHgCb+cwQv3O3
-         3bojFH7qGyKFzFGHbXlQ/zJB0rR5qn+X7QpqV+/HuDbGirEhuGwdJn4bhCFXK68POW
-         nvOp9LGgnz2XhyfjYI9740V/3LSiecRM2P/kvR1CNoP2kaWABWxcxjKCKsL1TqeZA5
-         V02KEmMd0yOXAMRAuVedAyxwImrrET9ihY62BXXdPMde/sT+CDKtbvyNs73BnP6xNF
-         oWB1014HZQnUCgcOyAU3jkV+bF/gbMcaRlmnzW5TRooM+RysJOK
-Date:   Sat, 15 Apr 2017 04:34:30 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeffrey Manian <jeffrey.manian@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: "up-to-date" vs. "up to date"
-Message-ID: <20170415043429.ymrex77bfil2qbge@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeffrey Manian <jeffrey.manian@gmail.com>, git@vger.kernel.org
-References: <CALFtnmeRxgetuCVbO8ZmVkCR302vQ2s4hTPoHxAe5NEfmjtXEg@mail.gmail.com>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 583A4791EC;
+        Sat, 15 Apr 2017 03:35:20 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, David.Taylor@dell.com
+Subject: Re: [PATCH] worktree add: add --lock option
+References: <63F1AEE13FAE864586D589C671A6E18B0CFBF7@MX203CL03.corp.emc.com>
+        <20170412135805.29837-1-pclouds@gmail.com>
+Date:   Sat, 15 Apr 2017 00:35:19 -0700
+In-Reply-To: <20170412135805.29837-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Wed, 12 Apr 2017 20:58:05 +0700")
+Message-ID: <xmqqzifim8co.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cw5w6kcrsn5on2jw"
-Content-Disposition: inline
-In-Reply-To: <CALFtnmeRxgetuCVbO8ZmVkCR302vQ2s4hTPoHxAe5NEfmjtXEg@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 141FAC4E-21AE-11E7-A657-C260AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
---cw5w6kcrsn5on2jw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> -	unlink_or_warn(sb.buf);
+> +	if (!ret && opts->keep_locked) {
+> +		/*
+> +		 * Don't keep the confusing "initializing" message
+> +		 * after it's already over.
+> +		 */
+> +		truncate(sb.buf, 0);
+> +	} else {
+> +		unlink_or_warn(sb.buf);
+> +	}
 
-On Thu, Apr 13, 2017 at 04:34:16PM -0400, Jeffrey Manian wrote:
-> Hello git community,
->=20
-> This is about an issue of language style and punctuation, not anything
-> functional. Apologies in advance if I've brought this to the wrong
-> place.
->=20
-> There are a bunch of situations in which git will print a message like
-> "Your branch is up-to-date with 'origin/master'" or "Already
-> up-to-date."
->=20
-> In many of these cases, including the two examples I just gave, "up to
-> date" should not be hyphenated --- at least according to most (if not
-> all) English-language style guides.
-
-Yes, the Chicago Manual of Style agrees that "[i]f the phrasal adjective
-follows a verb, it is usually unhyphenated."  I often keep this rule in
-mind when writing commit messages.
-
-> Here are a couple posts in support of that, which also explain when it
-> should and should not be hyphenated:
-> https://english.stackexchange.com/questions/180611/do-i-keep-myself-up-to=
--date-or-up-to-date-on-something
-> http://grammarist.com/usage/up-to-date/
->=20
-> And the Chromium community dealing with the same issue:
-> https://groups.google.com/a/chromium.org/forum/#!topic/chromium-reviews/e=
-dodON6G2oY
->=20
-> I thought about submitting a patch, but I started looking through the
-> source code and found that "up-to-date" appears 61 times. So before I
-> get into that I thought I would check with the community to see if
-> this is something that's already been debated and decided.
-
-To my knowledge, we haven't discussed this issue before.  I'm not Junio,
-so I can't speak for whether a patch would ultimately be accepted, but
-I'm not opposed to seeing or reviewing such a patch.
-
-Generally, the rule on the list is that unless the change is very large
-or wide ranging, you'll find people are more likely to give you feedback
-on a concrete patch (including whether the idea is desirable) than on an
-idea in general.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---cw5w6kcrsn5on2jw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljxotUACgkQv1NdgR9S
-9otcQRAAhEaiYQiZwrePbk8PLCbB+7nrihQ9fDi+hnKh22QyFj/+u9ZM5w3jXdc5
-LrkxoqqB1k1/GlXhR//nLTpzvL61Gx7LnYppV5ZZnLSfi7XQaMCur66qAsDNFIJK
-bwEv//TTbKkqlXRFZ7DMIxKCjOibUCQDOSiplSMTGGvKuLlxYlfSrscMJ1IISfQx
-u2HMJBJjSIVvKd4N8vgydDLaTy5wfNE/vw9EZADFTq8WFOFCQnQXM76nwzqkE1iw
-DN1DNvIHHDqHnLiAm003SjU+X9VjeqipFm0UYFhumthgJbhJw7lHvUM90SVW1SSg
-l+Wc0vv4pdmGC80lyjdgLvImUl40PszMU8EsBmn2zy0L/GyN6CQHEAW1qkrRm+ri
-AyWYTcL+gX/bLszHDwzss4kPCvnKM2UI679/phYs473EH3nD0f0mDVipxDznJ/vL
-savvl7ix49gyul5P1f7Tht3nuFuvQd4zDwaJnhoJ79Y5mOL9jpJARZR1HfQbR+Jh
-Et0nm7iSuum60F87evEX9yXEx/tJ3CqwR/IUuV0VD7kFHzdi5fh/c3Gva6hDa4j2
-g2r6/UI3yNd18PdN9vQLasE3EIY2KS8ukhZ7dlyQ6uL9ZaPjdRLAg7NSGFXo5qRr
-zqRUGx3YXc1jpMOWdZtSZObuka4O6GISDKvglGFdq1IpAQ/jG5o=
-=9b3i
------END PGP SIGNATURE-----
-
---cw5w6kcrsn5on2jw--
+builtin/worktree.c: In function 'add_worktree':
+builtin/worktree.c:314:11: error: ignoring return value of 'truncate', de=
+clared with attribute warn_unused_result [-Werror=3Dunused-result]
+   truncate(sb.buf, 0);
+           ^
+cc1: all warnings being treated as errors
+make: *** [builtin/worktree.o] Error 1
