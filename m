@@ -2,109 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1673920A04
-	for <e@80x24.org>; Sat, 15 Apr 2017 01:37:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8A8F20A04
+	for <e@80x24.org>; Sat, 15 Apr 2017 04:34:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751554AbdDOBhc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Apr 2017 21:37:32 -0400
-Received: from mail-lf0-f54.google.com ([209.85.215.54]:33401 "EHLO
-        mail-lf0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751390AbdDOBha (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Apr 2017 21:37:30 -0400
-Received: by mail-lf0-f54.google.com with SMTP id 88so310721lfr.0
-        for <git@vger.kernel.org>; Fri, 14 Apr 2017 18:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=k8X32O+4BfvrzA5aCVx/WWTdeg9oUQtVHfUOQvWZofU=;
-        b=UYddsMPBCI11SWN/iUmjrXG6L9Tmhs2g97MTHjUyxBTGxXhWqSLYHashPcGo/lxJm+
-         DgrhwxOJpi9sdah0ghdbhkAgcS1q5n8MuB+aFXGLXXeMGgw+Z85xTrqXjMiBTFkQChmm
-         YIUYkpfPJq5XzQ3zbYuiKQuJVFU+4vTcfQmBp43NDJW5UyrPmiYOV7JSB3nXyW07pbMD
-         V45mTFtIyZI7U5fvUhwGiGCbzoDy+ESrIBUlt2MyFD73dztbW/wwjW0Lez9FO+men7s5
-         /WLwpXFR15gu87TPVGoS9GdsUt3RULOsnI8WysIyY0Qui55wfZsO2TxF5hwn0pf6zIhL
-         63xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=k8X32O+4BfvrzA5aCVx/WWTdeg9oUQtVHfUOQvWZofU=;
-        b=UeN53QIw0Vo7aNPZrynmLGT7mkO5u3qLt1jB1dmywqfMYkN4VCtRIrsZxk6eBE/MMh
-         oJEsA3VNDSghzpfqrh2zeSIrXkKvyyw77qJyZrRt93zZsBuRR5qcGNckMj8pNXw2PAho
-         g9ORCMr93xZ7JXRGMr8Z5BxRQGWXyQ+YElFX+UfXfSKHDtOP/zyLGmOeUttddGggBV3n
-         kMjbAJrqIGIRaB6I+tovfSDi+8cRSTv6PO5BmciaO7ofPNAadDxnYT3SZfjMbLTnF6AE
-         Ae30sLLbVxVDGOpFUFxsBmPIidw+8mjn9r3Y3odbWY10EltI4lQZaOldvg/XhgZ8fGQS
-         8BsA==
-X-Gm-Message-State: AN3rC/7YvVDVYuKOZJ987RqP9AC52XN3DNFd+7yFRYe73z2/LJMaGSpZ
-        jUZNtgvo5ykh9ngyiuzPD2A5QICbxw==
-X-Received: by 10.25.196.133 with SMTP id u127mr139209lff.88.1492220248909;
- Fri, 14 Apr 2017 18:37:28 -0700 (PDT)
+        id S1751010AbdDOEei (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Apr 2017 00:34:38 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:34692 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750776AbdDOEeg (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 15 Apr 2017 00:34:36 -0400
+Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EC892280AD;
+        Sat, 15 Apr 2017 04:34:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1492230873;
+        bh=F+kaRYBCNvRfWHD7L6cDLc/AsBa5tj8ypQ4/N5yRQT8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lEJFM9Vv2/AaZg4lqS7cafiMLlbvvrYsuf7JrxAiIjrR7VwZ8k3ulG4kCvVQg5JEk
+         3kySSfCAIUSC6sNqR6Ko4L07IyymMqOmAzmAjW0ndc/NHEsJBMqdS8NvTRUiFKpeYn
+         5WPvpN6QpN/RFuRqGcspRIPvBgo+0K5+LrsOdzNWCVRZeSLGZ3j5KxfoIAfGYg9w7F
+         j/c6KLCWCITnTYCW0InlRe0RX4NowdzaZqs0MeVJ4pU4+f/eJiypuuHgCb+cwQv3O3
+         3bojFH7qGyKFzFGHbXlQ/zJB0rR5qn+X7QpqV+/HuDbGirEhuGwdJn4bhCFXK68POW
+         nvOp9LGgnz2XhyfjYI9740V/3LSiecRM2P/kvR1CNoP2kaWABWxcxjKCKsL1TqeZA5
+         V02KEmMd0yOXAMRAuVedAyxwImrrET9ihY62BXXdPMde/sT+CDKtbvyNs73BnP6xNF
+         oWB1014HZQnUCgcOyAU3jkV+bF/gbMcaRlmnzW5TRooM+RysJOK
+Date:   Sat, 15 Apr 2017 04:34:30 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeffrey Manian <jeffrey.manian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: "up-to-date" vs. "up to date"
+Message-ID: <20170415043429.ymrex77bfil2qbge@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeffrey Manian <jeffrey.manian@gmail.com>, git@vger.kernel.org
+References: <CALFtnmeRxgetuCVbO8ZmVkCR302vQ2s4hTPoHxAe5NEfmjtXEg@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.25.17.155 with HTTP; Fri, 14 Apr 2017 18:37:08 -0700 (PDT)
-In-Reply-To: <CACBZZX7Ajf1c9YKP=MO0T9SV7d0-XZsT=RthJocqZw4_TcCcQw@mail.gmail.com>
-References: <CAELgYhf1s43p62t6W14S=nDt-O247cPqsPMUDfye1OTnDND3Gg@mail.gmail.com>
- <CAELgYhfwwLZXGN9yHZ04koDwGn3=KbuJOxhLM-+PCbumTmMunw@mail.gmail.com> <CACBZZX7Ajf1c9YKP=MO0T9SV7d0-XZsT=RthJocqZw4_TcCcQw@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Fri, 14 Apr 2017 18:37:08 -0700
-Message-ID: <CA+P7+xoBYApdmucEpdxT8qHJ0HP5RR2gOkStykd5Fq=8qsZxZQ@mail.gmail.com>
-Subject: Re: Index files autocompletion too slow in big repositories (w /
- suggestion for improvement)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Carlos Pita <carlosjosepita@gmail.com>,
-        =?UTF-8?B?4oCcZ2l0QHZnZXIua2VybmVsLm9yZ+KAnQ==?= 
-        <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cw5w6kcrsn5on2jw"
+Content-Disposition: inline
+In-Reply-To: <CALFtnmeRxgetuCVbO8ZmVkCR302vQ2s4hTPoHxAe5NEfmjtXEg@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 14, 2017 at 3:33 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Sat, Apr 15, 2017 at 12:08 AM, Carlos Pita <carlosjosepita@gmail.com> =
-wrote:
->> This is much faster (below 0.1s):
->>
->> __git_index_files ()
->> {
->>     local dir=3D"$(__gitdir)" root=3D"${2-.}" file;
->>     if [ -d "$dir" ]; then
->>         __git_ls_files_helper "$root" "$1" | \
->>             sed -r 's@/.*@@' | uniq | sort | uniq
->>     fi
->> }
->>
->> time __git_index_files
->>
->> real    0m0.075s
->> user    0m0.083s
->> sys    0m0.010s
->>
->> Most of the improvement is due to the simpler, non-grouping, regex.
->> Since I expect most of the common prefixes to arrive consecutively,
->> running uniq before sort also improves things a bit. I'm not removing
->> leading double quotes anymore (this isn't being done by the current
->> version, anyway) but this doesn't seem to hurt.
->>
->> Despite the dependence on sed this is ten times faster than the
->> original, maybe an option to enable fast index completion or something
->> like that might be desirable.
->>
->> Best regards
->
-> It's fine to depend on sed, these shell-scripts are POSIX compatible,
-> and so is sed, we use sed in a lot of the built-in shellscripts.
->
-> I think you should submit this as a patch, see Documentation/SubmittingPa=
-tches.
 
-Yea it should be fine to use sed.
+--cw5w6kcrsn5on2jw
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Jake
+On Thu, Apr 13, 2017 at 04:34:16PM -0400, Jeffrey Manian wrote:
+> Hello git community,
+>=20
+> This is about an issue of language style and punctuation, not anything
+> functional. Apologies in advance if I've brought this to the wrong
+> place.
+>=20
+> There are a bunch of situations in which git will print a message like
+> "Your branch is up-to-date with 'origin/master'" or "Already
+> up-to-date."
+>=20
+> In many of these cases, including the two examples I just gave, "up to
+> date" should not be hyphenated --- at least according to most (if not
+> all) English-language style guides.
+
+Yes, the Chicago Manual of Style agrees that "[i]f the phrasal adjective
+follows a verb, it is usually unhyphenated."  I often keep this rule in
+mind when writing commit messages.
+
+> Here are a couple posts in support of that, which also explain when it
+> should and should not be hyphenated:
+> https://english.stackexchange.com/questions/180611/do-i-keep-myself-up-to=
+-date-or-up-to-date-on-something
+> http://grammarist.com/usage/up-to-date/
+>=20
+> And the Chromium community dealing with the same issue:
+> https://groups.google.com/a/chromium.org/forum/#!topic/chromium-reviews/e=
+dodON6G2oY
+>=20
+> I thought about submitting a patch, but I started looking through the
+> source code and found that "up-to-date" appears 61 times. So before I
+> get into that I thought I would check with the community to see if
+> this is something that's already been debated and decided.
+
+To my knowledge, we haven't discussed this issue before.  I'm not Junio,
+so I can't speak for whether a patch would ultimately be accepted, but
+I'm not opposed to seeing or reviewing such a patch.
+
+Generally, the rule on the list is that unless the change is very large
+or wide ranging, you'll find people are more likely to give you feedback
+on a concrete patch (including whether the idea is desirable) than on an
+idea in general.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--cw5w6kcrsn5on2jw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAljxotUACgkQv1NdgR9S
+9otcQRAAhEaiYQiZwrePbk8PLCbB+7nrihQ9fDi+hnKh22QyFj/+u9ZM5w3jXdc5
+LrkxoqqB1k1/GlXhR//nLTpzvL61Gx7LnYppV5ZZnLSfi7XQaMCur66qAsDNFIJK
+bwEv//TTbKkqlXRFZ7DMIxKCjOibUCQDOSiplSMTGGvKuLlxYlfSrscMJ1IISfQx
+u2HMJBJjSIVvKd4N8vgydDLaTy5wfNE/vw9EZADFTq8WFOFCQnQXM76nwzqkE1iw
+DN1DNvIHHDqHnLiAm003SjU+X9VjeqipFm0UYFhumthgJbhJw7lHvUM90SVW1SSg
+l+Wc0vv4pdmGC80lyjdgLvImUl40PszMU8EsBmn2zy0L/GyN6CQHEAW1qkrRm+ri
+AyWYTcL+gX/bLszHDwzss4kPCvnKM2UI679/phYs473EH3nD0f0mDVipxDznJ/vL
+savvl7ix49gyul5P1f7Tht3nuFuvQd4zDwaJnhoJ79Y5mOL9jpJARZR1HfQbR+Jh
+Et0nm7iSuum60F87evEX9yXEx/tJ3CqwR/IUuV0VD7kFHzdi5fh/c3Gva6hDa4j2
+g2r6/UI3yNd18PdN9vQLasE3EIY2KS8ukhZ7dlyQ6uL9ZaPjdRLAg7NSGFXo5qRr
+zqRUGx3YXc1jpMOWdZtSZObuka4O6GISDKvglGFdq1IpAQ/jG5o=
+=9b3i
+-----END PGP SIGNATURE-----
+
+--cw5w6kcrsn5on2jw--
