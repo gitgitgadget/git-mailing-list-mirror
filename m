@@ -6,110 +6,138 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C25F20D09
-	for <e@80x24.org>; Sat, 15 Apr 2017 07:52:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B6AD20D09
+	for <e@80x24.org>; Sat, 15 Apr 2017 08:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752629AbdDOHwh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Apr 2017 03:52:37 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65341 "EHLO
+        id S1751926AbdDOIHT (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Apr 2017 04:07:19 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61981 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1752550AbdDOHwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2017 03:52:36 -0400
+        with ESMTP id S1751839AbdDOIHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2017 04:07:16 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FCB378470;
-        Sat, 15 Apr 2017 03:52:25 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9D2F479521;
+        Sat, 15 Apr 2017 04:07:14 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ePIjEzckJvEx
-        tV9YpP+GjDQc0Qw=; b=w1IrXTwz40YZj0Rf2iqohMVRKAfyesCtfXqrYUZXCF7g
-        p1abBs0Mf63FF2JRnY0TiAiez0uXmy1YyFiNBd89TVKyi4D/fgGlDUtOAB9LLYrr
-        4fzhDHy6GjguHE8hYrL8+knJQFOg9HbrqFyit7dKeEU0X6Kf0VdO9y9hkJjot3w=
+        :content-type:content-transfer-encoding; s=sasl; bh=JOq5uc1ejy82
+        J4J+Ubq5AOe/Yjg=; b=BLus8L0+/RXL4cFJ7F8VlZxei8vjf4AhUCLPmYWnDBjL
+        zFMaE1Smh0bdYg1xLlWXDQQQCax4Kl3wS/ogYj5FIWpvYKVAZZi+XCPFivoQ4Lhu
+        Vtt1evJV1eF1ON3OJl4ixwrJVWw+n+scHDnUT4TBsal2iTsfzEvefjU/iCnOAZg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ANSLCo
-        1oCftUi5kEzM1RKfmR6iG2/D9CMJsyxiQN7X75y8rQRc0YlKLUhccNcsxTIYGTyJ
-        jEGEH8G5cg7jtTUYXp/x3GLhqsMOnYUvAAqZCzuLCapz0x25E6Pw5/Xy/TbsG21V
-        PNsYjBbSKIGXGfngt7XY1b1ZgUcFsLzc5pmEw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1658D7846F;
-        Sat, 15 Apr 2017 03:52:25 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JM4Cv2
+        ZnXuhWW6NlYDrzquay8lJgQZc6ZwRvdfbtsdwa/GRXJ40vnEwDMGbNb4EFn6eaFi
+        Ho2+sATyxZ0eqsLSKXztlSQw3t69xMFJvSJWnVy7e96eg7fibjG0EEs3FDrr3kVO
+        ++4GJV1EOClHcpdTKj+gPpRHBcc56lM7N9MoY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9583779520;
+        Sat, 15 Apr 2017 04:07:14 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 81A8A7846D;
-        Sat, 15 Apr 2017 03:52:24 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 075F57951F;
+        Sat, 15 Apr 2017 04:07:13 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Carlos Pita <carlosjosepita@gmail.com>,
-        =?utf-8?Q?=E2=80=9Cgit=40vger?=
-         =?utf-8?Q?=2Ekernel=2Eorg=E2=80=9D?= <git@vger.kernel.org>
-Subject: Re: Index files autocompletion too slow in big repositories (w / suggestion for improvement)
-References: <CAELgYhf1s43p62t6W14S=nDt-O247cPqsPMUDfye1OTnDND3Gg@mail.gmail.com>
-        <CAELgYhfwwLZXGN9yHZ04koDwGn3=KbuJOxhLM-+PCbumTmMunw@mail.gmail.com>
-        <CACBZZX7Ajf1c9YKP=MO0T9SV7d0-XZsT=RthJocqZw4_TcCcQw@mail.gmail.com>
-        <CA+P7+xoBYApdmucEpdxT8qHJ0HP5RR2gOkStykd5Fq=8qsZxZQ@mail.gmail.com>
-Date:   Sat, 15 Apr 2017 00:52:23 -0700
-In-Reply-To: <CA+P7+xoBYApdmucEpdxT8qHJ0HP5RR2gOkStykd5Fq=8qsZxZQ@mail.gmail.com>
-        (Jacob Keller's message of "Fri, 14 Apr 2017 18:37:08 -0700")
-Message-ID: <xmqqr30um7k8.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, David.Taylor@dell.com
+Subject: Re: [PATCH] worktree add: add --lock option
+References: <63F1AEE13FAE864586D589C671A6E18B0CFBF7@MX203CL03.corp.emc.com>
+        <20170412135805.29837-1-pclouds@gmail.com>
+        <xmqqzifim8co.fsf@gitster.mtv.corp.google.com>
+Date:   Sat, 15 Apr 2017 01:07:13 -0700
+In-Reply-To: <xmqqzifim8co.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Sat, 15 Apr 2017 00:35:19 -0700")
+Message-ID: <xmqqmvbim6vi.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 769427A4-21B0-11E7-A206-E680B56B9B0B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 88C29512-21B2-11E7-AAC6-C260AE2156B6-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.keller@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Fri, Apr 14, 2017 at 3:33 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> On Sat, Apr 15, 2017 at 12:08 AM, Carlos Pita <carlosjosepita@gmail.co=
-m> wrote:
->>> This is much faster (below 0.1s):
->>>
->>> __git_index_files ()
->>> {
->>>     local dir=3D"$(__gitdir)" root=3D"${2-.}" file;
->>>     if [ -d "$dir" ]; then
->>>         __git_ls_files_helper "$root" "$1" | \
->>>             sed -r 's@/.*@@' | uniq | sort | uniq
->>>     fi
->>> }
->>>
->>> time __git_index_files
->>>
->>> real    0m0.075s
->>> user    0m0.083s
->>> sys    0m0.010s
->>>
->>> Most of the improvement is due to the simpler, non-grouping, regex.
->>> Since I expect most of the common prefixes to arrive consecutively,
->>> running uniq before sort also improves things a bit. I'm not removing
->>> leading double quotes anymore (this isn't being done by the current
->>> version, anyway) but this doesn't seem to hurt.
->>>
->>> Despite the dependence on sed this is ten times faster than the
->>> original, maybe an option to enable fast index completion or somethin=
-g
->>> like that might be desirable.
->>>
->>> Best regards
->>
->> It's fine to depend on sed, these shell-scripts are POSIX compatible,
->> and so is sed, we use sed in a lot of the built-in shellscripts.
->>
->> I think you should submit this as a patch, see Documentation/Submittin=
-gPatches.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
-> Yea it should be fine to use sed.
+>> -	unlink_or_warn(sb.buf);
+>> +	if (!ret && opts->keep_locked) {
+>> +		/*
+>> +		 * Don't keep the confusing "initializing" message
+>> +		 * after it's already over.
+>> +		 */
+>> +		truncate(sb.buf, 0);
+>> +	} else {
+>> +		unlink_or_warn(sb.buf);
+>> +	}
+>
+> builtin/worktree.c: In function 'add_worktree':
+> builtin/worktree.c:314:11: error: ignoring return value of 'truncate', =
+declared with attribute warn_unused_result [-Werror=3Dunused-result]
+>    truncate(sb.buf, 0);
+>            ^
+> cc1: all warnings being treated as errors
+> make: *** [builtin/worktree.o] Error 1
 
-As long as the use of "sed" is in line with POSIX.1; I do not think
-you need the non-portable "-r" merely to strip out everything that
-follow the first slash, so perhaps "s|-r|-e|" with the above (and do
-not write backslash after pipe at the end of the line---shell knows
-you haven't finished talking to it yet if you end a line with a
-pipe, and there is no need for backslash), you'd be golden.
+I wonder why we need to have "initializing" and then remove the
+string.  Wouldn't it be simpler to do something like this instead?
+Does an empty lockfile have some special meaning?
+
+ builtin/worktree.c      | 16 +++++++---------
+ t/t2025-worktree-add.sh |  3 +--
+ 2 files changed, 8 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 3dab07c829..5ebdcce793 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -243,7 +243,10 @@ static int add_worktree(const char *path, const char=
+ *refname,
+ 	 * after the preparation is over.
+ 	 */
+ 	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
+-	write_file(sb.buf, "initializing");
++	if (!opts->keep_locked)
++		write_file(sb.buf, "initializing");
++	else
++		write_file(sb.buf, "added with --lock");
+=20
+ 	strbuf_addf(&sb_git, "%s/.git", path);
+ 	if (safe_create_leading_directories_const(sb_git.buf))
+@@ -306,15 +309,10 @@ static int add_worktree(const char *path, const cha=
+r *refname,
+ done:
+ 	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
+-	if (!ret && opts->keep_locked) {
+-		/*
+-		 * Don't keep the confusing "initializing" message
+-		 * after it's already over.
+-		 */
+-		truncate(sb.buf, 0);
+-	} else {
++	if (!ret && opts->keep_locked)
++		;
++	else
+ 		unlink_or_warn(sb.buf);
+-	}
+ 	argv_array_clear(&child_env);
+ 	strbuf_release(&sb);
+ 	strbuf_release(&symref);
+diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+index 6dce920c03..304f25fcd1 100755
+--- a/t/t2025-worktree-add.sh
++++ b/t/t2025-worktree-add.sh
+@@ -65,8 +65,7 @@ test_expect_success '"add" worktree' '
+=20
+ test_expect_success '"add" worktree with lock' '
+ 	git rev-parse HEAD >expect &&
+-	git worktree add --detach --lock here-with-lock master &&
+-	test_must_be_empty .git/worktrees/here-with-lock/locked
++	git worktree add --detach --lock here-with-lock master
+ '
+=20
+ test_expect_success '"add" worktree from a subdir' '
