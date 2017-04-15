@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E0F101FA14
-	for <e@80x24.org>; Sat, 15 Apr 2017 14:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCA141FA14
+	for <e@80x24.org>; Sat, 15 Apr 2017 14:41:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754109AbdDOOlX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Apr 2017 10:41:23 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:32792 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753039AbdDOOlU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2017 10:41:20 -0400
-Received: by mail-wr0-f194.google.com with SMTP id l28so15442136wre.0
-        for <git@vger.kernel.org>; Sat, 15 Apr 2017 07:41:20 -0700 (PDT)
+        id S1754160AbdDOOlZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Apr 2017 10:41:25 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34922 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753862AbdDOOlY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2017 10:41:24 -0400
+Received: by mail-wm0-f66.google.com with SMTP id d79so2640986wmi.2
+        for <git@vger.kernel.org>; Sat, 15 Apr 2017 07:41:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=e3eQPKzaSiKHFKvxURKsC7AG+xXD8EWRQhEvUxFsRj0=;
-        b=PvLk23RdebrczDuRKP/tacRzFVvHd1M6+KS0EKfvaxjQiY14LbZc0X+wgWifdsUeCg
-         vKSlKqdc1NT2qEYV+1G8lpq7rCtx/DjUwNfEpmd7OBf0DUGvnbf67zO5efC+Ah3ZAhrx
-         LCMvyI0TGEsCfzuwsKU0Nbd7cmj2Y/FzSWOT8gq8QXuzOw4pYcTxu7/bSkJ2li6trDab
-         R70gwKw4DqmgXCFRPd/7kvIi8eynh0RibJhmFWUhDKEjeG8MgmTFII2Oh4XzPT8oSlis
-         q38I3fUCLKqyplkcZArOjtYtZkbuHjaz8HF5NHcteXd86+RN+EPqb888vgKNlq4l9rOS
-         PuIw==
+        bh=3dLIu2vYxTEfc0bBPkjXIb+SskIYFCJVaW5oA3hGL/A=;
+        b=D7ORSardsfOLEtzK1KR2NUYgmYYyqHD7aM0d0zEoN0ZV02nukM6/zRcBfFUFJDG+jS
+         P2Rig8iTBq9x/+Yyt3e7WQ5nM40bK8J1f+TtzD5sz89XSj1BJHtTf6ykdw0CVqnKOPiQ
+         6Y+VyLMjRnrXFNvSkIOgK6kxINvl0Efiglqg5BMM4Bef/aBodtbIJeWmCgD/SiAdWEHM
+         dpI5fo41rshKppuEKyty/XteG/AA08UQLmLE1oBRMsdGYESvOCCCqqOX4yU2XBwp7jU5
+         h20+ArDxCHdbIJrnYs6o1e8zvS6NHJnzoGYHVqkvBOMnDr6zHkdsxCgPATDpKG99X1zK
+         FLEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=e3eQPKzaSiKHFKvxURKsC7AG+xXD8EWRQhEvUxFsRj0=;
-        b=p8TTNXgrw+vraU87ZyT2Fr0re8Lm6VsuagPASS+wrIj0DmHACZ00Sx3YRiA5eUOXtz
-         DXFoeT8JyCHocfHRtcHy1jyCFLd9XUHTLnBVkYWT+Vd/U6caFqwsFV1gZ/dmaXTAT1d2
-         FJxNxbrAIADZBqGTS3iqjGSrtESVARP17n6XgSuWI+xtBhUELgzZKXGcpSOrkQRxMa+1
-         UVTtkV9X5ZIJoOfMOCa0D7lHhp60vGq0dLWuLRPEa8RapXJUa27O+bnCW9ZITaHu0Bd4
-         YzKMeQKsY0IgJeWRjeWqTwN0kGsfd6Xw57Rvr9q0DdixneqvgV1j0uKtmKAgDXiIttz/
-         1c1w==
-X-Gm-Message-State: AN3rC/7Efm2prDf61Gk1lnvSZkbB2YL99//OhD2GG4GDVvJwy6X8w/6p
-        Qd9oou9ceppjZw==
-X-Received: by 10.223.135.134 with SMTP id b6mr11209284wrb.48.1492267279553;
-        Sat, 15 Apr 2017 07:41:19 -0700 (PDT)
+        bh=3dLIu2vYxTEfc0bBPkjXIb+SskIYFCJVaW5oA3hGL/A=;
+        b=MWtoqrbjapusvXmUWcF8AhI/Cq2HqJju7iF99r5uLyZmMSJBla0djeV+P0BbPX3e7B
+         +vqRU2Vs+HEGZAv80rNJW3do3VKW/9u38tEyrzIyp5JquqmqxKFDDN3Kp4UFmov4DSRV
+         YLbjn/nVo21hH4ZYdvIoG4jmhPb3GeKdrQUHHJhohpR7fPW+ycYtEuHiQhduDYm7SJtd
+         wb8IY9yXhIgtd3FKYVq/FVI2J/rynFT5kj6mkWJLArYn4nwmtLlZvANjFex4RB5tY9wJ
+         hRIhvF5SBkylzPgvVcI5Tczff1etLp+n7cw/zCJGpMUdHegBFg6nEoYyluTA3jTS7z4g
+         ud2g==
+X-Gm-Message-State: AN3rC/7xndCrOoYNZNspixjqhtY0Y4kPW3MkDDB1/H3vrJoQyDFpAHOW
+        W04aUhZd5kDdlw==
+X-Received: by 10.28.181.69 with SMTP id e66mr2666786wmf.33.1492267283014;
+        Sat, 15 Apr 2017 07:41:23 -0700 (PDT)
 Received: from localhost ([151.54.23.249])
-        by smtp.gmail.com with ESMTPSA id b10sm2797658wme.22.2017.04.15.07.41.17
+        by smtp.gmail.com with ESMTPSA id w52sm6620216wrc.14.2017.04.15.07.41.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 15 Apr 2017 07:41:18 -0700 (PDT)
+        Sat, 15 Apr 2017 07:41:22 -0700 (PDT)
 From:   Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To:     Git ML <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 2/3] builtin/am: fold am_signoff() into am_append_signoff()
-Date:   Sat, 15 Apr 2017 16:41:02 +0200
-Message-Id: <20170415144103.11986-3-giuseppe.bilotta@gmail.com>
+Subject: [PATCH 3/3] rebase: pass --[no-]signoff option to git am
+Date:   Sat, 15 Apr 2017 16:41:03 +0200
+Message-Id: <20170415144103.11986-4-giuseppe.bilotta@gmail.com>
 X-Mailer: git-send-email 2.12.2.765.g2bf946761b
 In-Reply-To: <20170415144103.11986-1-giuseppe.bilotta@gmail.com>
 References: <20170415144103.11986-1-giuseppe.bilotta@gmail.com>
@@ -62,80 +62,105 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are no more direct calls to am_signoff(), so we can fold its
-logic  in am_append_signoff().
-
-(This is done in a separate commit rather than in the previous one, to
-make it easier to revert this specific change if additional calls are
-ever introduced.)
+This makes it easy to sign off a whole patchset before submission.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- builtin/am.c | 33 +++++++++++++++------------------
- 1 file changed, 15 insertions(+), 18 deletions(-)
+ Documentation/git-rebase.txt |  5 +++++
+ git-rebase.sh                |  3 ++-
+ t/t3428-rebase-signoff.sh    | 46 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3428-rebase-signoff.sh
 
-diff --git a/builtin/am.c b/builtin/am.c
-index d072027b5a..b29f885e41 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1181,42 +1181,39 @@ static void NORETURN die_user_resolve(const struct am_state *state)
- 	exit(128);
- }
- 
--static void am_signoff(struct strbuf *sb)
-+/**
-+ * Appends signoff to the "msg" field of the am_state.
-+ */
-+static void am_append_signoff(struct am_state *state)
- {
- 	char *cp;
- 	struct strbuf mine = STRBUF_INIT;
-+	struct strbuf sb = STRBUF_INIT;
- 
--	/* Does it end with our own sign-off? */
-+	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len);
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 67d48e6883..e6f0b93337 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -385,6 +385,11 @@ have the long commit hash prepended to the format.
+ 	Recreate merge commits instead of flattening the history by replaying
+ 	commits a merge commit introduces. Merge conflict resolutions or manual
+ 	amendments to merge commits are not preserved.
 +
-+	/* our sign-off */
- 	strbuf_addf(&mine, "\n%s%s\n",
- 		    sign_off_header,
- 		    fmt_name(getenv("GIT_COMMITTER_NAME"),
- 			     getenv("GIT_COMMITTER_EMAIL")));
--	if (mine.len < sb->len &&
--	    !strcmp(mine.buf, sb->buf + sb->len - mine.len))
++--signoff::
++	This flag is passed to 'git am' to sign off all the rebased
++	commits (see linkgit:git-am[1]).
 +
-+	/* Does sb end with it already? */
-+	if (mine.len < sb.len &&
-+	    !strcmp(mine.buf, sb.buf + sb.len - mine.len))
- 		goto exit; /* no need to duplicate */
- 
- 	/* Does it have any Signed-off-by: in the text */
--	for (cp = sb->buf;
-+	for (cp = sb.buf;
- 	     cp && *cp && (cp = strstr(cp, sign_off_header)) != NULL;
- 	     cp = strchr(cp, '\n')) {
--		if (sb->buf == cp || cp[-1] == '\n')
-+		if (sb.buf == cp || cp[-1] == '\n')
- 			break;
- 	}
- 
--	strbuf_addstr(sb, mine.buf + !!cp);
-+	strbuf_addstr(&sb, mine.buf + !!cp);
- exit:
- 	strbuf_release(&mine);
--}
--
--/**
-- * Appends signoff to the "msg" field of the am_state.
-- */
--static void am_append_signoff(struct am_state *state)
--{
--	struct strbuf sb = STRBUF_INIT;
--
--	strbuf_attach(&sb, state->msg, state->msg_len, state->msg_len);
--	am_signoff(&sb);
- 	state->msg = strbuf_detach(&sb, &state->msg_len);
- }
- 
+ +
+ This uses the `--interactive` machinery internally, but combining it
+ with the `--interactive` option explicitly is generally not a good
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 48d7c5ded4..6889fd19f3 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -34,6 +34,7 @@ root!              rebase all reachable commits up to the root(s)
+ autosquash         move commits that begin with squash!/fixup! under -i
+ committer-date-is-author-date! passed to 'git am'
+ ignore-date!       passed to 'git am'
++signoff!           passed to 'git am'
+ whitespace=!       passed to 'git apply'
+ ignore-whitespace! passed to 'git apply'
+ C=!                passed to 'git apply'
+@@ -321,7 +322,7 @@ do
+ 	--ignore-whitespace)
+ 		git_am_opt="$git_am_opt $1"
+ 		;;
+-	--committer-date-is-author-date|--ignore-date)
++	--committer-date-is-author-date|--ignore-date|--signoff|--no-signoff)
+ 		git_am_opt="$git_am_opt $1"
+ 		force_rebase=t
+ 		;;
+diff --git a/t/t3428-rebase-signoff.sh b/t/t3428-rebase-signoff.sh
+new file mode 100755
+index 0000000000..2afb564701
+--- /dev/null
++++ b/t/t3428-rebase-signoff.sh
+@@ -0,0 +1,46 @@
++#!/bin/sh
++
++test_description='git rebase --signoff
++
++This test runs git rebase --signoff and make sure that it works.
++'
++
++. ./test-lib.sh
++
++# A simple file to commit
++cat >file <<EOF
++a
++EOF
++
++# Expected commit message after rebase --signoff
++cat >expected-signed <<EOF
++first
++
++Signed-off-by: $(git var GIT_COMMITTER_IDENT | sed -e "s/>.*/>/")
++EOF
++
++# Expected commit message after rebase without --signoff (or with --no-signoff)
++cat >expected-unsigned <<EOF
++first
++EOF
++
++
++# We configure an alias to do the rebase --signoff so that
++# on the next subtest we can show that --no-signoff overrides the alias
++test_expect_success 'rebase --signoff adds a sign-off line' '
++	git commit --allow-empty -m "Initial empty commit" &&
++	git add file && git commit -m first &&
++	git config alias.rbs "rebase --signoff" &&
++	git rbs HEAD^ &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
++	test_cmp expected-signed actual
++'
++
++test_expect_success 'rebase --no-signoff does not add a sign-off line' '
++	git commit --amend -m "first" &&
++	git rbs --no-signoff HEAD^ &&
++	git cat-file commit HEAD | sed -e "1,/^\$/d" > actual &&
++	test_cmp expected-unsigned actual
++'
++
++test_done
 -- 
 2.12.2.765.g2bf946761b
 
