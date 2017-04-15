@@ -2,112 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 294EA20D09
-	for <e@80x24.org>; Sat, 15 Apr 2017 09:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B3B120D09
+	for <e@80x24.org>; Sat, 15 Apr 2017 10:05:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753268AbdDOJu2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Apr 2017 05:50:28 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:34208 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753226AbdDOJu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2017 05:50:26 -0400
-Received: by mail-io0-f195.google.com with SMTP id h41so20915575ioi.1
-        for <git@vger.kernel.org>; Sat, 15 Apr 2017 02:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DVdMLmbjHb+Z6tlHem0kLgBdrOE9ucCSyBQ380S7L3w=;
-        b=T4cGGTe1XB5EZmhaUUJpxtKnad/6aoFJHS0pKilXqXiylJvbd6bLWIdkQUwGpXR78k
-         1MLMF63f5lwjSpzYyw1NFWNuK5V7HsyQULCyAHhqKFNMwbxev+uoIXFnCW/8+ax1YfLc
-         r+Yb6A/qNnkbiFbLTuT3B1s6lemhoe2NEJt2nkYmvp7yWOzdXKPsd/r59mulMAVsAGSY
-         eQlRvuwmOc1F6qjVOh604fgewwxlcJvUzJNSd3HP1QZJSfp6p1uTCttpZLz44QArkbzY
-         3HAD3rkaXTg4Vz72U3HvM9+NBMGn3tmt2bS8dN/uO7pPBdTAn2AOp0ymE0f/HhTcong2
-         qXlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DVdMLmbjHb+Z6tlHem0kLgBdrOE9ucCSyBQ380S7L3w=;
-        b=CYdvlYyQvQKpw0Eh3wJ07AY5EhKg8ACavQqNE55WZKvNIweRCzZx1Xgo0ynxGh5Q2L
-         dicCWCOApGliNW+iFBxuU/trGjojWQlwpjMzCvY7JePFi1ljljRRQEHVo+VjTJFQlHkc
-         QXYz+GV/9jXzfd/taKKww+RYf9hib8dmiNxIkH9+VNSm/2b4kB8+C3YZZNqRZt6Gj2zr
-         wygy6+bmwavQFnc3AShf3TZPDAne/MhSXyA8IOdaBQ9VZD2MkwBZxo9BxpmjRufa5/nH
-         OYCro6d2aJqN1M8uemt1VZwnyqwEbUZgazUrlj3UEgBxZlcdP/WULnQZQF/+d6vWqxF+
-         jO8g==
-X-Gm-Message-State: AN3rC/5HIhWT6agyBcUnSuzZs7LtFcinY4R+Qn5o9X9CpNZDZLhPskBb
-        fXFj+UtReCvYtaKFBaPQ/4zCwunHwg==
-X-Received: by 10.107.35.200 with SMTP id j191mr1620753ioj.33.1492249825863;
- Sat, 15 Apr 2017 02:50:25 -0700 (PDT)
+        id S1752855AbdDOKDp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Apr 2017 06:03:45 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64495 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1752102AbdDOKDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2017 06:03:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6DE3179181;
+        Sat, 15 Apr 2017 06:03:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hYv3J4ZgWW7lKYpgdgmWWqR+LEg=; b=SWpdRd
+        dECba9Nh0FZXn4dPLxmntR/4uu9qVN2M0WR5iJWl+NLTFLC/hkqXCDt0GPhsGiDH
+        g5T2UMRGKo/AlvITOMrBSqeNkf0PWQ/romqbNlaVNETbo6HpmsuSd9OZmlCwAFsn
+        6AuZ9GBYZb5skTTfX+pDOZwpLNpdQX70HAkBM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=jK2GsIMQ5fENP0RzFWj+MCS/ZmE2W6Sv
+        6kMquJIbEh5tOxGyQxaeEUL23H+x55HoSYc039FoHSyJKgxEyAxPlUkLd8LGAFWn
+        fn8fnZEbeLEFLrpIsOtLc1uyNGU7tX8rQ5yWPoWPRBvtvpmyUvpwye5Q9SYCMoXd
+        fT/eEkipboc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 630B67917F;
+        Sat, 15 Apr 2017 06:03:42 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C72D77917E;
+        Sat, 15 Apr 2017 06:03:41 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Cc:     Git ML <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCHv3] rebase: pass --[no-]signoff option to git am
+References: <20170414225713.29710-1-giuseppe.bilotta@gmail.com>
+        <xmqqefwum3mh.fsf@gitster.mtv.corp.google.com>
+        <CAOxFTcwDrYvg5Nf1w9SfmM=Nt7XYsJPhKSYkJzMC0123EY94Aw@mail.gmail.com>
+Date:   Sat, 15 Apr 2017 03:03:40 -0700
+In-Reply-To: <CAOxFTcwDrYvg5Nf1w9SfmM=Nt7XYsJPhKSYkJzMC0123EY94Aw@mail.gmail.com>
+        (Giuseppe Bilotta's message of "Sat, 15 Apr 2017 11:36:44 +0200")
+Message-ID: <xmqqa87im1hf.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Sat, 15 Apr 2017 02:50:05 -0700 (PDT)
-In-Reply-To: <xmqqinm6m6p0.fsf@gitster.mtv.corp.google.com>
-References: <20170408132506.5415-1-avarab@gmail.com> <20170411104739.xzhxggpufvwgr3fu@sigill.intra.peff.net>
- <xmqqinm6m6p0.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 15 Apr 2017 11:50:05 +0200
-Message-ID: <CACBZZX6G4LFyqxvbba72ZzwuOPakiPWTSVbFCX7DzrZ5D5Vpqg@mail.gmail.com>
-Subject: Re: [PATCH 00/12] PCREv2 & more
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: CDCE21E8-21C2-11E7-B6DB-E680B56B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 15, 2017 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jeff King <peff@peff.net> writes:
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+
+>> We need new tests for "git rebase --signoff" that makes sure this
+>> works as expected and only when it should.
 >
->> On Sat, Apr 08, 2017 at 01:24:54PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
->>
->>> This adds PCRE v2 support, but as I was adding that I kept noticing
->>> other related problems to fix. It's all bundled up into the same
->>> series because much of it conflicts because it modifies the same test
->>> or other code. Notes on each patch below.
->>
->> Overall, the series looks OK to me.
->>
->> I'm not sure if it is worth all the complexity to carry pcre1/pcre2 as
->> run-time options. That does make it easier to do back-to-back
->> comparisons, but it makes the code a lot more complicated. In particular
->> I'm worried about subtle cases where we pcre1 turns into pcre2 (or vice
->> versa) by use of the aliases. That shouldn't matter to a user for
->> correctness, but it would throw off the benchmarking.
->>
->> If we literally just added USE_LIBPCRE2 and built against one or the
->> other, then all the complexity would be limited to a few #ifdefs. The
->> big drawback AFAICT is that anybody doing timing tests would have to
->> recompile in between.
->
-> Yeah, having to dl two libs at runtime, even when you would ever use
-> just one in a single run, is less than ideal.  A small downside
-> inflicted on everybody will add up to million times more than a
-> larger downside only suffered by developers, so I tend to agree with
-> you that we probably should simplify to choose just one (or zero) at
-> compile time.
+> Would the norm in this case be to introduce the test in the same
+> commit, or in a previous commit (as in: this is the feature we want to
+> implement, it obviously doesn't work now, but the next commit will fix
+> that), or in a subsequent one?
 
-I'll document & clarify this in v2, but I don't expect / want anyone
-who's distributing git to link to both v1 & v2, more details in my
-<CACBZZX6HLDmWSGiQ+cJ-p0Ak6SQHcmECaGqsfVz-Js4q7aSEwg@mail.gmail.com>.
+For a new feature (especially with this small implementation), it is
+best to have the test in the same commit.  
 
-It's just something we already have 95% of the code to support anyway,
-and doing the remaining 5% makes it easier to test & benchmark it for
-us devs without incurring any real maintenance or tech burden.
-
-But as noted elsewhere in that message I'll include a patch to only
-add the ability to use one PCRE version. So we can just review &
-discuss the tradeoffs of doing that then.
+We often use the "start with expect_failure, update the code while
+flipping _failure to _success" pattern but that is primarily
+suitable for bugfixes.
