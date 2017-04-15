@@ -2,90 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAA2520D09
-	for <e@80x24.org>; Sat, 15 Apr 2017 11:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AB4A1FA14
+	for <e@80x24.org>; Sat, 15 Apr 2017 12:10:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752804AbdDOL7i (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Apr 2017 07:59:38 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:24695 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752723AbdDOL7h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2017 07:59:37 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3w4tP3098xz5tlF;
-        Sat, 15 Apr 2017 13:59:34 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 4AFDC1CFA;
-        Sat, 15 Apr 2017 13:59:34 +0200 (CEST)
-Subject: Re: Index files autocompletion too slow in big repositories (w /
- suggestion for improvement)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Carlos Pita <carlosjosepita@gmail.com>
-References: <CAELgYhf1s43p62t6W14S=nDt-O247cPqsPMUDfye1OTnDND3Gg@mail.gmail.com>
- <CAELgYhfwwLZXGN9yHZ04koDwGn3=KbuJOxhLM-+PCbumTmMunw@mail.gmail.com>
- <CACBZZX7Ajf1c9YKP=MO0T9SV7d0-XZsT=RthJocqZw4_TcCcQw@mail.gmail.com>
-Cc:     =?UTF-8?B?4oCcZ2l0QHZnZXIua2VybmVsLm9yZ+KAnQ==?= 
-        <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder@ira.uka.de>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <7a07a2a8-07a6-4342-80d0-7684e6242326@kdbg.org>
-Date:   Sat, 15 Apr 2017 13:59:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1753773AbdDOMKn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Apr 2017 08:10:43 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:34874 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753569AbdDOMKl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Apr 2017 08:10:41 -0400
+Received: by mail-io0-f171.google.com with SMTP id r16so121939505ioi.2
+        for <git@vger.kernel.org>; Sat, 15 Apr 2017 05:10:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ebrmzzUBf4MEFUMVSofKSJCQq4xVx9Aazii2uH/AYlg=;
+        b=Fb42cZu+kNwWSpU+XgXqnNKmcS15Ib68DeDWDNhpYhQWWdM/6S3EHOXqri9HekUmnX
+         ZiCj5DJT2lBoG6vyYjNiljZ1QWq3+JRCFljxZOrbuL3/clgR9BdOEhWfs5YSK4X5XcsR
+         v2LOKDknsWIKbIzzR5lW90oJFE38bwGaf8hRYNH4EGY3K8tH0i4rnkvRFasW9UnMtO6U
+         KGv3Aeo4lOQY0qLbwLElPmYtWzCX6FqClDna6JZUgwFw9Y3UTSuE652PRmSoLGR46RSs
+         C225qK8vBAWzElh8d2ppfu87u+4+yznUcM0xdmxgaiyG4OUQgSfQ7Y7+J/8StrvU6+lu
+         aB+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ebrmzzUBf4MEFUMVSofKSJCQq4xVx9Aazii2uH/AYlg=;
+        b=dCKSUNrwhI9E8edawuLb8ap1QYjlhAQQ6X6DYdQ3LT/qLW7f5/9LDSZprNxVIAm+h1
+         2PrUtYxFNGRxE9/6FtNSA96yEVOBSPTrrVpJYkf57pvfUzXl1dGh8lj20TushxWb0GGS
+         g//gqDkGBERtOWEEmc7XMR96gAnm8E5qSllcJm8FjQMUFR22eN8sTHOYkzjyWfjW+iSk
+         GVczlpqiacsPLEy85vdTOLDtbuVI1915b7fyuZLt8JiB8o4fxgComflAnxIfziw3PSWp
+         gy8kVIsS9XEnWztZmtK9YYd4oKlJToNArlLcu1I0exo7HKqnjxlonLQRgYZZDv1kXM6+
+         oNhw==
+X-Gm-Message-State: AN3rC/7FIdSbdnp/MHnyrymw6phTD809BNpHejnOZg8O0FTV6txo1v9E
+        MFT1nhER7NZygt+RCjiHaonvpIm5WA==
+X-Received: by 10.107.46.229 with SMTP id u98mr1951148iou.147.1492258241020;
+ Sat, 15 Apr 2017 05:10:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACBZZX7Ajf1c9YKP=MO0T9SV7d0-XZsT=RthJocqZw4_TcCcQw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.134.97 with HTTP; Sat, 15 Apr 2017 05:10:20 -0700 (PDT)
+In-Reply-To: <20170411101412.jjzdscnirh5yerbn@sigill.intra.peff.net>
+References: <20170408132506.5415-1-avarab@gmail.com> <20170408132506.5415-4-avarab@gmail.com>
+ <20170411101412.jjzdscnirh5yerbn@sigill.intra.peff.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 15 Apr 2017 14:10:20 +0200
+Message-ID: <CACBZZX7S_WdrNr04XnpnBhS=Kvtp0uAirx7yjUXrveh_jJSKLg@mail.gmail.com>
+Subject: Re: [PATCH 03/12] Makefile & configure: reword outdated comment about PCRE
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Cc Gábor.
-
-Am 15.04.2017 um 00:33 schrieb Ævar Arnfjörð Bjarmason:
-> On Sat, Apr 15, 2017 at 12:08 AM, Carlos Pita <carlosjosepita@gmail.com> wrote:
->> This is much faster (below 0.1s):
->>
->> __git_index_files ()
->> {
->>     local dir="$(__gitdir)" root="${2-.}" file;
->>     if [ -d "$dir" ]; then
->>         __git_ls_files_helper "$root" "$1" | \
->>             sed -r 's@/.*@@' | uniq | sort | uniq
->>     fi
->> }
->>
->> time __git_index_files
->>
->> real    0m0.075s
->> user    0m0.083s
->> sys    0m0.010s
->>
->> Most of the improvement is due to the simpler, non-grouping, regex.
->> Since I expect most of the common prefixes to arrive consecutively,
->> running uniq before sort also improves things a bit. I'm not removing
->> leading double quotes anymore (this isn't being done by the current
->> version, anyway) but this doesn't seem to hurt.
->>
->> Despite the dependence on sed this is ten times faster than the
->> original, maybe an option to enable fast index completion or something
->> like that might be desirable.
+On Tue, Apr 11, 2017 at 12:14 PM, Jeff King <peff@peff.net> wrote:
+> On Sat, Apr 08, 2017 at 01:24:57PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> It's fine to depend on sed, these shell-scripts are POSIX compatible,
-> and so is sed, we use sed in a lot of the built-in shellscripts.
+>> Reword an outdated comment which suggests that only git-grep can use
+>> PCRE.
+>
+> Makes sense.
+>
+>> -# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will=
+ be
+>> -# able to use Perl-compatible regular expressions.
+>> +# Define USE_LIBPCRE if you have and want to use libpcre. Various
+>> +# commands such as like log, grep offer runtime options to use
+>> +# Perl-compatible regular expressions instead of standard or extended
+>> +# POSIX regular expressions.
+>
+> s/such as like log, grep/such as log and grep/ ?
+Thanks.
 
-This is about command line completion. We go a long way to avoid forking 
-processes there. What is 10x faster on Linux despite of forking a 
-process may not be so on Windows.
+>> diff --git a/configure.ac b/configure.ac
+>> [...]
+>> -# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will=
+ be
+>> -# able to use Perl-compatible regular expressions.
+>> +# Define USE_LIBPCRE if you have and want to use libpcre. Various
+>> +# commands such as like log, grep offer runtime options to use
+>> +# Perl-compatible regular expressions instead of standard or extended
+>> +# POSIX regular expressions.
+>
+> Ditto.
+>
+>> @@ -499,8 +501,10 @@ GIT_CONF_SUBST([NEEDS_SSL_WITH_CRYPTO])
+>>  GIT_CONF_SUBST([NO_OPENSSL])
+>>
+>>  #
+>> -# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will=
+ be
+>> -# able to use Perl-compatible regular expressions.
+>> +# Define USE_LIBPCRE if you have and want to use libpcre. Various
+>> +# commands such as like log, grep offer runtime options to use
+>> +# Perl-compatible regular expressions instead of standard or extended
+>> +# POSIX regular expressions.
+>
+> And again. It's weird that the text appears twice in configure.ac.
+> Apparently you can use --with-libpcre or USE_LIBPCRE in the environment?
+> Configure is weird.
 
-(I'm not using bash command line completion on Windows, so I can't tell 
-what the effect of your suggested change is on Windows. I hope Gábor can 
-comment on it.)
+You can't, I've added this to the commit message:
 
--- Hannes
-
+    Copy/pasting this so much in configure.ac is lame, these Makefile-like
+    flags aren't even used by autoconf, just the corresponding
+    --with[out]-* options. But copy/pasting the comments that make sense
+    for the Makefile to configure.ac where they make less sence is the
+    pattern everything else follows in that file. I'm not going to war
+    against that as part of this change, just following the existing
+    pattern.
