@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E35E20D09
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9496620D09
 	for <e@80x24.org>; Sun, 16 Apr 2017 22:21:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932131AbdDPWV0 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Apr 2017 18:21:26 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:35186 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932091AbdDPWVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2017 18:21:25 -0400
-Received: by mail-wr0-f195.google.com with SMTP id l44so18459369wrc.2
-        for <git@vger.kernel.org>; Sun, 16 Apr 2017 15:21:24 -0700 (PDT)
+        id S932135AbdDPWVa (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 18:21:30 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36382 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932091AbdDPWV2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2017 18:21:28 -0400
+Received: by mail-wr0-f193.google.com with SMTP id o21so18497836wrb.3
+        for <git@vger.kernel.org>; Sun, 16 Apr 2017 15:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PuvPDhwrvZrMAOKxmKJAIc0P6L8Av1YtzTFCb4LCK38=;
-        b=htfQ3bqE52cS71Nz5+fRohhBk+agjzcH9+EzEg3coWBMj803Di2JFbx37ILSlk/BJB
-         9nnowuRbZtSkmAVr2t5dtbCmAmWOPYwVYHg4ucwI05OQ3gCUUmaz18+Gxt3TRZf/rD42
-         BKvIlQ9HMvDOd441SRXrE8+jaG3x6TNDLmKJkt6TkHGgKmw7UFDt2OVONEdNOBWZtamz
-         uhDQn7+1Bk4QAAaKxI/ZPQzmuMytJKDCGpQMLo2Y3OqDQoPEQsetBmYJMiG5+28J1HNp
-         u+/SuHHox9xs+j1sE4Aafg3xvif2XKsv95lNfd47JDKYOfHrSJJptchx/sqiuFidSSCy
-         LGug==
+        bh=6uHc9SZasMMrgHVkUuSrYfLvw7kigsz8W9KIoGFvOKs=;
+        b=UAbTiWy4Gty+8tGrWCsYmIQjurQynohhJxHJ4e+fhBquZIVa8xKpwWS4zJTGGUvfZe
+         IZEN+q+WdtGx+yUaSX/U2jI2+MdNOfEBr2Vb2L1A+zFdv1vS7z+jULy2G6RDiCx/PR2V
+         xnl7f9z/yIg3CxYigJx/PanuGgYCdfd7epGhlQwLeiThTmhtmdy8COaTkDLchXC3Q7Df
+         vpP1o4TELLeo07r3JU7razhtWqaqOd+tQoqCx0pPckoA4cnXp0Eo6cf1LkDX1ZzUoqrv
+         6rT/WfDoX1NviRBvvxveN2nPb/qssR+knMYiJxCVOMB1Jpnzq+YGMoUfUZx8VaKGpu7O
+         FMew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PuvPDhwrvZrMAOKxmKJAIc0P6L8Av1YtzTFCb4LCK38=;
-        b=t9lQL4VT9toRLBYyR50sgJ1UY/32WPWWA93D36LFaSnHI0b6+H/vJu87eL/OpNO538
-         uPCTIt3guNPyyqtw6PRNHH/n0/vOsfqzQgTVHqs4KgOzpGxCsIGywwmAXp/tMTFRa+ep
-         hCaJmJfrX0jKU1x5cmGqOD66dZ3gyoP78nYIjg1WmGPAb0f60nVmKSUNbkvGGHeCa2fr
-         VreHf/0q7gHTlFyVdoaNFWUyBMWqPILgqNbs9ia7usE4juKWQWCr/yzsEAwABlm3ZvRN
-         gayMBzKzxzhAcvkeqibTedZwhtVsx1soWd+HfDUOdj3iXoq+wR4/m7BH50adnIFQJAnn
-         xnIg==
-X-Gm-Message-State: AN3rC/4Ie7rYP56c5WtG4CBh2AV6N4pMSP/wLt5z4Iyj4/WFM5Mj0K2C
-        UxcU9ljxAq2ncw==
-X-Received: by 10.223.171.182 with SMTP id s51mr2730096wrc.181.1492381283664;
-        Sun, 16 Apr 2017 15:21:23 -0700 (PDT)
+        bh=6uHc9SZasMMrgHVkUuSrYfLvw7kigsz8W9KIoGFvOKs=;
+        b=ZL2uqvlMFeNfPOCWuam8GudPyYyH4sWy38q90DVEGQ9QwtW35KkXMWlCnGe0pAkh5J
+         J9Bf5AvvLRvWTls37RRSebCn2q2+SA27d3kN/ZfAGh3867ZzYAh6vMgINjew9PhjjJUZ
+         wLwF+CJG793vDDwCkRThvqXUlkwf0B4KyprFR8A2ZkizjqqNmpiP+Yaeug7KS1thANdI
+         ZOW73Wk6pqfvr/9t0MwpBB3looh0oH8QAT1i5+vHNNNhVlh70Oq6dkikNNsd+zQ8nFJM
+         PlyjHzeA3tT9pdn8mlSN4B8XHemz/meYTJeN+k3My7rX1bDyrlnkYlXADllEQNc05vXe
+         2DOA==
+X-Gm-Message-State: AN3rC/7nO/TTwI3TryPwxvT9knkfPrnakXDNQybAqhSvQ2L0Uk7V5kYN
+        ChIcEoVrtolbGw==
+X-Received: by 10.223.146.98 with SMTP id 89mr15206314wrj.71.1492381287259;
+        Sun, 16 Apr 2017 15:21:27 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o9sm8045022wmd.4.2017.04.16.15.21.22
+        by smtp.gmail.com with ESMTPSA id o9sm8045022wmd.4.2017.04.16.15.21.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 16 Apr 2017 15:21:22 -0700 (PDT)
+        Sun, 16 Apr 2017 15:21:26 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 2/8] grep: add tests for --threads=N and grep.threads
-Date:   Sun, 16 Apr 2017 22:20:56 +0000
-Message-Id: <20170416222102.2320-3-avarab@gmail.com>
+Subject: [PATCH v2 3/8] grep: don't redundantly compile throwaway patterns under threading
+Date:   Sun, 16 Apr 2017 22:20:57 +0000
+Message-Id: <20170416222102.2320-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170416222102.2320-1-avarab@gmail.com>
 References: <20170416222102.2320-1-avarab@gmail.com>
@@ -74,49 +74,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add tests for when --threads=N is supplied on the command-line or when
-grep.threads is supplied in the configuration.
+Change the pattern compilation logic under threading so that grep
+doesn't compile a pattern it never ends up using on the non-threaded
+code path, only to compile it again N times for N threads which will
+each use their own copy, ignoring the initially compiled pattern.
 
-When the threading support was made run-time configurable in commit
-89f09dd34e ("grep: add --threads=<num> option and grep.threads
-configuration", 2015-12-15) no tests were added for it.
+This redundant compilation dates back to the initial introduction of
+the threaded grep in commit 5b594f457a ("Threaded grep",
+2010-01-25).
 
-In developing a change to grep I was able to make '--threads=1 <pat>`
-segfault, while the test suite still passed. This change fixes that
-blind spot in the tests.
+There was never any reason for doing this redundant work other than an
+oversight in the initial commit. Jeff King suggested on-list in
+<20170414212325.fefrl3qdjigwyitd@sigill.intra.peff.net> that this
+might be needed to check the pattern for sanity before threaded
+execution commences.
+
+That's not the case. The pattern is compiled under threading in
+start_threads() before any concurrent execution has started by calling
+pthread_create(), so if the pattern contains an error we still do the
+right thing. I.e. die with one error before any threaded execution has
+commenced, instead of e.g. spewing out an error for each N threads,
+which could be a regression a change like this might inadvertently
+introduce.
+
+The undocumented --debug mode added in commit 17bf35a3c7 ("grep: teach
+--debug option to dump the parse tree", 2012-09-13) still works
+properly with this change. It only emits debugging info during pattern
+compilation, which is now dumped by the pattern compiled just before
+the first thread is started.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7810-grep.sh | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ builtin/grep.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index cee42097b0..4523ca926b 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -771,6 +771,22 @@ test_expect_success 'grep -W with userdiff' '
- 	test_cmp expected actual
- '
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 3aa7836a04..a3d380551b 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -224,7 +224,8 @@ static void start_threads(struct grep_opt *opt)
+ 		int err;
+ 		struct grep_opt *o = grep_opt_dup(opt);
+ 		o->output = strbuf_out;
+-		o->debug = 0;
++		if (i)
++			o->debug = 0;
+ 		compile_grep_patterns(o);
+ 		err = pthread_create(&threads[i], NULL, run, o);
  
-+for threads in $(test_seq 0 10)
-+do
-+	test_expect_success "grep --threads=$threads & -c grep.threads=$threads" "
-+		git grep --threads=$threads . >actual.$threads &&
-+		if test $threads -ge 1
-+		then
-+			test_cmp actual.\$(($threads - 1)) actual.$threads
-+		fi &&
-+		git -c grep.threads=$threads grep . >actual.$threads &&
-+		if test $threads -ge 1
-+		then
-+			test_cmp actual.\$(($threads - 1)) actual.$threads
-+		fi
-+	"
-+done
+@@ -1154,8 +1155,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (!opt.fixed && opt.ignore_case)
+ 		opt.regflags |= REG_ICASE;
+ 
+-	compile_grep_patterns(&opt);
+-
+ 	/*
+ 	 * We have to find "--" in a separate pass, because its presence
+ 	 * influences how we will parse arguments that come before it.
+@@ -1230,6 +1229,15 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	num_threads = 0;
+ #endif
+ 
++	if (!num_threads)
++		/*
++		 * The compiled patterns on the main path are only
++		 * used when not using threading. Otherwise
++		 * start_threads() below calls compile_grep_patterns()
++		 * for each thread.
++		 */
++		compile_grep_patterns(&opt);
 +
- test_expect_success 'grep from a subdirectory to search wider area (1)' '
- 	mkdir -p s &&
- 	(
+ #ifndef NO_PTHREADS
+ 	if (num_threads) {
+ 		if (!(opt.name_only || opt.unmatch_name_only || opt.count)
 -- 
 2.11.0
 
