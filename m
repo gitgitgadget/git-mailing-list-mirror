@@ -2,109 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92A1420D09
-	for <e@80x24.org>; Sun, 16 Apr 2017 16:55:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1201920D09
+	for <e@80x24.org>; Sun, 16 Apr 2017 16:56:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756486AbdDPQz6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Apr 2017 12:55:58 -0400
-Received: from mout.web.de ([217.72.192.78]:57195 "EHLO mout.web.de"
+        id S1756516AbdDPQ4O (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 12:56:14 -0400
+Received: from mout.web.de ([212.227.17.11]:49495 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756312AbdDPQz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2017 12:55:56 -0400
+        id S1756149AbdDPQ4N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2017 12:56:13 -0400
 Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MgOL4-1ceR7b00YQ-00Nfnz; Sun, 16
- Apr 2017 18:55:49 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MHowb-1d2psC1O2v-003fq6; Sun, 16
+ Apr 2017 18:56:01 +0200
 X-Mozilla-News-Host: news://news.public-inbox.org:119
 To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] files_for_each_reflog_ent_reverse(): close stream and free
- strbuf on error
-Message-ID: <a77dfa47-3153-3f8c-3c37-30147f93e61b@web.de>
-Date:   Sun, 16 Apr 2017 18:55:46 +0200
+Subject: [PATCH] server-info: avoid calling fclose(3) twice in
+ update_info_file()
+Message-ID: <137d732f-7a23-8a8a-9f2b-7f16bb361c5a@web.de>
+Date:   Sun, 16 Apr 2017 18:55:58 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.0.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:fIkY5pxflx9a0Glrn0ATV8TkXlfLWYrAB7ne4dal/NzMoeUiJnq
- Fz/yE8kmUoIJj9Z+Kmp4+wpt2hJxPXqGYjqwcs7LUkZYI4hv1+p4EF63F3OXid4CZZaBPnG
- YrpiSFBzR1Yp1mP+gpmww2jXtayU/xh6KhoOkeG9vqxsibmifA74lGGzQB2oHbCWkbi+z3M
- MR96iRQH4bUB6bO6rY19A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/q13WaI8m8E=:m5gHF/7sHI8LV3lnDolVQA
- Nm0QeReO6Ep8RhflKEVvuPZ+3tOku+EwQszMEXA+s6JnrPSm/00pSO11Vb2Sfy3O6LH1xy2pu
- 57wc6qTiXYlCwXJbqwst9XASB4KTJTQQWVsfHSVbqN0DlNbib6O81+WKY7SgI/hIIltPJDvYW
- evNGI8g998p5Xrl5M/5RgPeseG7U73y74b6NxE0raXfqyKiIhrRguokRGsB7hmBVUj9J9Dk5I
- oSivjeXol36MdtHxNHp/1exaAT5JjaUR05bZm3BodMN23E/waKZDkGb73VnCQ8vs1k8BxCbb1
- kC5RDpEHR0h39hjrGn6uNoNVomUESSo1j8CoKhxn1aqnSnc1M1xu8lj2rA0enTNOpe/njlQVs
- lqquWlL89xTvalVqjpLMAxmG/bhRl1xSdb0jNPkBsWrZ9lVytD0qrIjarHWdcMdAYfWINDvfh
- Tg3NPgTrBzWFrXDMInB5nZ0n2iwabVCTkAMGtD7REiI6SNJceH3UWU9Ezm/wPpCIX/z9od47o
- 1+61O3a9HDTBwn/zY0Mo2/ykKawykUAkV8qi7IGxIwc6kA0/tZNm4HNPaYOejc5cbSx04ysD+
- EnsjPhCJL6pshbntKtIubSuJB36xXo6J50RBaw+M/17Dom14p3JftcN8QdbiBNw32vPKVt3qk
- w0p5IpHe5WB64WPMlesZbEBe0CeXxiOYfW66wHTgWRWDYLoWSw5eCygc61QNYn9SjvXr0jhKZ
- 6CRSeEEsggoMOI7d9A6E3V7/cilV1HKaq6VZZqNpIJQNT6FDu8Gvc30oCY9f/lsoXKX7kijrR
- UmIUUYk
+X-Provags-ID: V03:K0:B71G61vc63w0+8ooAWuLdkEELWwqB/JibVk8fi4F8G7Bzpq1sbA
+ eAx0YHyqJFuO8z+KrVJ3B01sThO6reU86kotgcYLf6zUL2GqsJMbUSMBSvBz4Ixat6FeiLF
+ 2pdhtYWAC482yj1KtrdM+4Mxh4IXJ5ShrzGY4SykbjbJjSf21IZSPrTv9xG1VWuPIcj+Xl/
+ Hx/wm+60XJ/qrv/SrHCAQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qO7TpeckSig=:NTIpPaX2vINgMYcOl8hn1b
+ zcab9Iqx3hGrteIFoJwVPK8mUMwV69eAI7PRvif+TbszzgbU9MFLBwBymZiUpZtiAw0gBnOw3
+ P9DTE0+s1ceYbfVpbgVA0xAgBfaiyhv37wkrYegs7kGT4BPdgRJJxNKwkD6MmfOlzFEEbouKS
+ dTHILYzyjVpq409VnhGm4U4Vj0fE5YK8ulfZVZQItWoN9NNpepFM32YZydXzeODWG4PdLAvfc
+ JZqTdQKpJCtXUkxNOQBv9Zpv7j6WTUdOUD7zs4ydV5+2Tax+YBEutzH6X2zhu5oX+WC7JZ0pq
+ EZI0RM2f4cIU5lpEHbbLzAHjVc9oiz9GOxoQLfMQowztgJ/u9iYOxrQspJ1feXoRvlYGUnRrg
+ T+Oj8dBS09T4ZGGKc8tAsKJ+LsjT/XgIHI6Kysy/bAvGG+bCUQ6xZ3r9d4mAWYSBOUu4FsU7j
+ 4Sawm+K4bZZ4ns6fShaaJQ984h0gg4Vxi1OjOEGS0o/nOXGyjt2H39oA5STK/4FUKdKh3h56J
+ Vyi9j84zSu4dKdnbDE9r/hVuEWlNEWbwlbUyytvlrrzWT1OZcW51EsfPjG4B4f7L3TIBgCYpn
+ u5csppv6SNUM8V1fTtDfGAs8oirch4Qo2kBVapBGp1x/lCfM8cfbAjifGW+Qsh1d+5Dx3TVRr
+ W0yE4kJcYVI25+/V0oZSo9rnzsTXescBQA7qwOQtC3TmsuLwyapLq3s+sIcrMED1ft+BRizeo
+ HJRSnkLqrraQ61AGouHLHlfA6BIzxaV4bKJOXrLkX1sGJnUpOx4FKUa4/jvykfIVjGiqXmwhn
+ iDBvWDl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Exit the loop orderly through the cleanup code, instead of dashing out
-with logfp still open and sb leaking.
+If an error occurs when or after closing the stream we call fclose(3)
+again in the error handler.  The second call can exhibit undefined
+behavior, so make sure to call fclose(3) at most once.  Also avoid
+calling close(2) after fd has been successfully associated with the
+stream, as fclose(3) has become responsible for doing that beyond
+this point.
 
 Found with Cppcheck.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- refs/files-backend.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ server-info.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 50188e92f9..2889f21568 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3159,8 +3159,8 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
+diff --git a/server-info.c b/server-info.c
+index 7bc4e75d22..f6c1a3dfb0 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -14,19 +14,21 @@ static int update_info_file(char *path, int (*generate)(FILE *))
+ 	char *tmp = mkpathdup("%s_XXXXXX", path);
+ 	int ret = -1;
+ 	int fd = -1;
+-	FILE *fp = NULL;
++	FILE *fp = NULL, *to_close;
  
- 	/* Jump to the end */
- 	if (fseek(logfp, 0, SEEK_END) < 0)
--		return error("cannot seek back reflog for %s: %s",
--			     refname, strerror(errno));
-+		ret = error("cannot seek back reflog for %s: %s",
-+			    refname, strerror(errno));
- 	pos = ftell(logfp);
- 	while (!ret && 0 < pos) {
- 		int cnt;
-@@ -3170,13 +3170,17 @@ static int files_for_each_reflog_ent_reverse(struct ref_store *ref_store,
- 
- 		/* Fill next block from the end */
- 		cnt = (sizeof(buf) < pos) ? sizeof(buf) : pos;
--		if (fseek(logfp, pos - cnt, SEEK_SET))
--			return error("cannot seek back reflog for %s: %s",
--				     refname, strerror(errno));
-+		if (fseek(logfp, pos - cnt, SEEK_SET)) {
-+			ret = error("cannot seek back reflog for %s: %s",
-+				    refname, strerror(errno));
-+			break;
-+		}
- 		nread = fread(buf, cnt, 1, logfp);
--		if (nread != 1)
--			return error("cannot read %d bytes from reflog for %s: %s",
--				     cnt, refname, strerror(errno));
-+		if (nread != 1) {
-+			ret = error("cannot read %d bytes from reflog for %s: %s",
-+				    cnt, refname, strerror(errno));
-+			break;
-+		}
- 		pos -= cnt;
- 
- 		scanp = endp = buf + cnt;
+ 	safe_create_leading_directories(path);
+ 	fd = git_mkstemp_mode(tmp, 0666);
+ 	if (fd < 0)
+ 		goto out;
+-	fp = fdopen(fd, "w");
++	to_close = fp = fdopen(fd, "w");
+ 	if (!fp)
+ 		goto out;
++	fd = -1;
+ 	ret = generate(fp);
+ 	if (ret)
+ 		goto out;
+-	if (fclose(fp))
++	fp = NULL;
++	if (fclose(to_close))
+ 		goto out;
+ 	if (adjust_shared_perm(tmp) < 0)
+ 		goto out;
 -- 
 2.12.2
 
