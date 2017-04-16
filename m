@@ -2,73 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4502D1FA14
-	for <e@80x24.org>; Sun, 16 Apr 2017 03:10:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6B5420D0A
+	for <e@80x24.org>; Sun, 16 Apr 2017 04:08:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754931AbdDPDKp (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Apr 2017 23:10:45 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:36699 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751582AbdDPDKo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Apr 2017 23:10:44 -0400
-Received: by mail-pg0-f46.google.com with SMTP id g2so57880336pge.3
-        for <git@vger.kernel.org>; Sat, 15 Apr 2017 20:10:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=/ux+4fwjS/JzH+3MqIhGetji6bxmSROqcjBJvd8ttWs=;
-        b=A6mJ50QOkMspqPApI+zw3213E7HhEvEPSNphsNSQDtoIZnTjtNJCQ5hz++PTc0zb92
-         VRCVCdLqKsFOO8Tp2Ru7+O+0L486WAp4/7gj4mDCkaI2pvzNeViw7P0n04TvGWeA5SQW
-         gGtiOW54LG0/40oRWEA+bjwUHFBSl40N2RbQKPcaSEeMYHkEYwIkcBcm3POxvHNH+JDL
-         aF5FAsgnPV3booPTWpJPhGtaSr+NKDrVV5EKqCeEypi8yjGjDnHbAkHDAIrMwmeZcl/j
-         fVNeWTuUhHUv+vdZgd8XhpLdBWL85OQSDCW16T2l1wc8z/zQGLSrt05MiH7lwkpWtLtt
-         0qgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=/ux+4fwjS/JzH+3MqIhGetji6bxmSROqcjBJvd8ttWs=;
-        b=ET1nNEC8eiMCdNXJ5ZotB2F7ba77hFViSch/1uxDLNbBJ+N1dm95OWT+jqXqHqXg5f
-         UVRk0BwwgirCREF7C1ykjz+QrtiXp7Ls2htD6H/93Q03IdyXMC0MKGpdwceJIoGAIdLw
-         63o/pB9HpScA1P5LiUvZ6/UYk/PV8BaskALY3lWUPCsAmh9Q1Hu5Ga/oRkdLXY//QmM1
-         83trmcCp73RkaENeFKn2P1/VSV5s5g9V2EelYPUr4LB2tkD7+kWui4xdRqXpRFi3cepT
-         ET1nETy5Lsuxn9ybLEDF6S/7twaZffTOKjB8dUnK1H60Z0eBc2/Z60e9b7N/qHdZ0rMy
-         zq8g==
-X-Gm-Message-State: AN3rC/4VmWv3ZqDJwsk1TWyw7l7GY477saDC7QplIJTGcZbqb/8xYL5E
-        C97tQ4/QAqm6dkC/704=
-X-Received: by 10.98.55.197 with SMTP id e188mr5308875pfa.116.1492312243252;
-        Sat, 15 Apr 2017 20:10:43 -0700 (PDT)
-Received: from ?IPv6:2001:569:fa80:8100:8067:33fa:4f3f:bf10? (node-1w7jr9ulriemkbefjpb9dduz4.ipv6.telus.net. [2001:569:fa80:8100:8067:33fa:4f3f:bf10])
-        by smtp.gmail.com with ESMTPSA id g22sm10565276pfd.22.2017.04.15.20.10.42
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Apr 2017 20:10:42 -0700 (PDT)
+        id S1751325AbdDPEIM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 00:08:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61637 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1750928AbdDPEIL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2017 00:08:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 99CE181F54;
+        Sun, 16 Apr 2017 00:08:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id; s=sasl; bh=OQJV+xkLtu3aqho+LYj5ARBVGLY
+        =; b=fx1Mver2M4os/+40DuoM9oBp1oqjs8u1mfzIt6Xd83nP2AVVvHBcnpk+qC4
+        KEKRgrUJIllg/L6e0IipUv8f4+41esQMoWMSDblvC7D90YSBfrJlDHbem68M4JGa
+        V4r3cNk9/XT5N3Yfg0g/7yvxxjCCoIHjfZa3Woefl4WGGioo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 91ED681F53;
+        Sun, 16 Apr 2017 00:08:09 -0400 (EDT)
+Received: from kmlap.hsd1.ct.comcast.net (unknown [24.60.167.92])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EEEF981F52;
+        Sun, 16 Apr 2017 00:08:08 -0400 (EDT)
+From:   Kyle Meyer <kyle@kyleam.com>
 To:     git@vger.kernel.org
-From:   Nathan McSween <nwmcsween@gmail.com>
-Subject: [REQ] Allow alternatives to gpg
-Message-ID: <9727e699-d97b-e8f2-ca48-574fc4f014af@gmail.com>
-Date:   Sat, 15 Apr 2017 20:10:41 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Cc:     Vegard Nossum <vegard.nossum@oracle.com>,
+        Kyle Meyer <kyle@kyleam.com>
+Subject: [PATCH] doc/revisions: remove brackets from rev^-n shorthand
+Date:   Sun, 16 Apr 2017 00:07:57 -0400
+Message-Id: <20170416040757.32104-1-kyle@kyleam.com>
+X-Mailer: git-send-email 2.12.2
+X-Pobox-Relay-ID: 4CE662E6-225A-11E7-882A-E680B56B9B0B-24757444!pb-smtp1.pobox.com
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:date:message-id; s=mesmtp;
+ bh=OQJV+xkLtu3aqho+LYj5ARBVGLY=;
+ b=iwyx3DzQzkkQ6Bx98HSJiv2qoGZjlae6cYqAmJOiADk8Nx6lnOEH0wonJ/aBEW18NcyXU4D2Qb8SaDwULEnjfGS/YbIafd4uQqN/IcfRva9MIpqYJOJ4XUYC2FBY6MWgjYaFbWx05NkRmBYva5314lBtKD3csAWW/Kn9oIEpgmY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I would like to try to make git signing pluggable, this would allow for 
-using tools such as signify[1].
-Now I'm wondering if this endeavor is worth taking and what would need 
-to be changed besides
-gpg-interface?
+Given that other instances of "{...}" in the revision documentation
+represent literal characters of revision specifications, describing
+the rev^-n shorthand as "<rev>^-{<n>}" incorrectly suggests that
+something like "master^-{1}" is an acceptable form.
 
-[1] http://man.openbsd.org/signify
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ Documentation/revisions.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+index 75d211f1a..61277469c 100644
+--- a/Documentation/revisions.txt
++++ b/Documentation/revisions.txt
+@@ -295,7 +295,7 @@ The 'r1{caret}@' notation means all parents of 'r1'.
+ The 'r1{caret}!' notation includes commit 'r1' but excludes all of its parents.
+ By itself, this notation denotes the single commit 'r1'.
+ 
+-The '<rev>{caret}-{<n>}' notation includes '<rev>' but excludes the <n>th
++The '<rev>{caret}-<n>' notation includes '<rev>' but excludes the <n>th
+ parent (i.e. a shorthand for '<rev>{caret}<n>..<rev>'), with '<n>' = 1 if
+ not given. This is typically useful for merge commits where you
+ can just pass '<commit>{caret}-' to get all the commits in the branch
+@@ -337,7 +337,7 @@ Revision Range Summary
+   as giving commit '<rev>' and then all its parents prefixed with
+   '{caret}' to exclude them (and their ancestors).
+ 
+-'<rev>{caret}-{<n>}', e.g. 'HEAD{caret}-, HEAD{caret}-2'::
++'<rev>{caret}-<n>', e.g. 'HEAD{caret}-, HEAD{caret}-2'::
+ 	Equivalent to '<rev>{caret}<n>..<rev>', with '<n>' = 1 if not
+ 	given.
+ 
+-- 
+2.12.2
+
