@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEB7420D09
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3E6D20D09
 	for <e@80x24.org>; Sun, 16 Apr 2017 22:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932155AbdDPWVd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Apr 2017 18:21:33 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:35207 "EHLO
+        id S932216AbdDPWVk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 18:21:40 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33591 "EHLO
         mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932091AbdDPWVb (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2017 18:21:31 -0400
-Received: by mail-wr0-f193.google.com with SMTP id l44so18459482wrc.2
-        for <git@vger.kernel.org>; Sun, 16 Apr 2017 15:21:30 -0700 (PDT)
+        with ESMTP id S932091AbdDPWVj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2017 18:21:39 -0400
+Received: by mail-wr0-f193.google.com with SMTP id l28so18485328wre.0
+        for <git@vger.kernel.org>; Sun, 16 Apr 2017 15:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+uSte149Yh6Y1OSZEp1cSpywA4VZCwLxUEUeuIbJ5fI=;
-        b=TgjES6Zus6L4TYZk4o3eDhridX5vxiEV1CvtU9TSOaDinR6Pb8tLY6AI1Yet4v5Exk
-         EFzA1O7Wz05XxjOOk9+3esZXUuid+K9fOAfX+9JTkCQp5G7Anj/8QCDBxHTQQVh1RaXB
-         XB3761hZX7k6OUHnh/+y/NpTzBvGQG9ADIurcXiEwoOsZejA/ITgqZHzcmXMFLeYdX6g
-         /NtZ8QqWNTn+ddNASoE3uRZKmLRs9jWBECbKRWM5daWIsfG4GMF+rZ+/BWnzmUbajdDf
-         4tiG2yFrZ1Sn/ZUwcbwoqX5GP8bFicB2aJyx2W0vvptUIhDB2ala3rROnnstFOAbcbFe
-         tj2w==
+        bh=NKrOMNIhJqnkuy5AmJXzU185HoILpnA+kYRvjckPxvY=;
+        b=tyHKhHfjayQBpoTgQRnmClaHj8RcBKv8KLfzoE92kmQJcFopC2YZxdNOeLWuG90YEX
+         BQ7TcQPZ+/6Zpi1KO7fgiO5WxLzsxcHHASb2E3l0a0hzYJUMN/K9BtrI97N8cZKpttOF
+         obFbY48ACkz1vnDKV5j4LGO9NUuave1RC6tIbcoGYJvTGftOJrsv42MNPhEWUoGVCB9z
+         uKPaWyNn8il+qMEfHDaJmHQQUmnuGV9xqAXdYLppdt8meucqO5trP6jM75Zngpw+YbSR
+         caN+cheu+/vvzjK0jZHjpsbtxPci0Vn/EvO+E1l63EYkhoipul5Z23Rh1JJfZFR9xleF
+         LvPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+uSte149Yh6Y1OSZEp1cSpywA4VZCwLxUEUeuIbJ5fI=;
-        b=g0wyz7hnii7Bi3tOOjwRILLsvXKeuWxSp2zt33OqhOkEMgAbNXYZKdav/vkHKP1oFB
-         nAVY+/5to9POLUUsm5QVzYb4VFB4VvDuPKhWZGrceD2X+h5B96nHEAD4Yis7GKUoTAaH
-         E129xCQH8j/E3UpoQPtYR0dcmHiS0nuPUj7+om8J4gXc50rcVWgGH0o1+EzSF+m1weNV
-         T4I5iFFcsqipvlomHzS/l0fSDCMoNKwg9OjlWYf9PEzcp2Q9YzpQBdLHOsdVePWlUx0e
-         /65rtVRpORo0ftq7iUJYtfCl01DXY4uk9JaNV1wTzV/uwGDTKzRCHPZte/SKfZEf8JtW
-         cLig==
-X-Gm-Message-State: AN3rC/6c79wyktIU1+rntkv3opXsavV/u0oxw7yA0IU6R8L2g06ZllYv
-        Whl9LmLcjbfbJQ==
-X-Received: by 10.223.175.211 with SMTP id y19mr15607721wrd.77.1492381289930;
-        Sun, 16 Apr 2017 15:21:29 -0700 (PDT)
+        bh=NKrOMNIhJqnkuy5AmJXzU185HoILpnA+kYRvjckPxvY=;
+        b=trpJ6CzR43PDjAZ/DODT7FXStokThB65+F1AOJMGxWvw18cE4YZt90k6rSw8bCPYc1
+         r8+kODUfjMFJ6yGAtpM067VLYqvqYJTCqDbsOrvKRAbqMkGruEOPlYqYF7tbw6xMW0aa
+         keRN6E3DTfWIXWPQz/Gm3IbagcUspaKCrPKFnXCY3Uf9V1OgWF4pfq7BrgeBVuXmvMts
+         lyf1//X3tTfQ7wdAVP6engudbsuwLypCxgCpOynooI+fnpG6LfGXGiYcSC1zVF0yEm5P
+         +w88EsgA6PSQh+ib1Qb7L8HG9YUFMKXQOoM7rSx19NgItOigOSaYnX7qeHuNPx/YQtae
+         a8Gg==
+X-Gm-Message-State: AN3rC/5xx3bFZprewso+wEZceDQD53/mc96+0BunmxMfe2/DUweCa8zg
+        RrTxmemwKXY6Sg==
+X-Received: by 10.223.148.7 with SMTP id 7mr15332682wrq.65.1492381292767;
+        Sun, 16 Apr 2017 15:21:32 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o9sm8045022wmd.4.2017.04.16.15.21.28
+        by smtp.gmail.com with ESMTPSA id o9sm8045022wmd.4.2017.04.16.15.21.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 16 Apr 2017 15:21:29 -0700 (PDT)
+        Sun, 16 Apr 2017 15:21:31 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 4/8] grep: skip pthreads overhead when using one thread
-Date:   Sun, 16 Apr 2017 22:20:58 +0000
-Message-Id: <20170416222102.2320-5-avarab@gmail.com>
+Subject: [PATCH v2 5/8] tests: add a PTHREADS prerequisite
+Date:   Sun, 16 Apr 2017 22:20:59 +0000
+Message-Id: <20170416222102.2320-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170416222102.2320-1-avarab@gmail.com>
 References: <20170416222102.2320-1-avarab@gmail.com>
@@ -74,38 +74,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Skip the administrative overhead of using pthreads when only using one
-thread. Instead take the non-threaded path which would be taken under
-NO_PTHREADS.
+Add a PTHREADS prerequisite which is false when git is compiled with
+NO_PTHREADS=YesPlease.
 
-The threading support was initially added in commit
-5b594f457a ("Threaded grep", 2010-01-25) with a hardcoded compile-time
-number of 8 threads. Later the number of threads was made configurable
-in commit 89f09dd34e ("grep: add --threads=<num> option and
-grep.threads configuration", 2015-12-15).
-
-That change did not add any special handling for --threads=1. Now we
-take a slightly faster path by skipping thread handling entirely when
-1 thread is requested.
+There's lots of custom code that runs when threading isn't available,
+but before this prerequisite there was no way to test it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Makefile      | 1 +
+ t/README      | 4 ++++
+ t/test-lib.sh | 1 +
+ 3 files changed, 6 insertions(+)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index a3d380551b..cb3323060e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1225,6 +1225,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		num_threads = GREP_NUM_THREADS_DEFAULT;
- 	else if (num_threads < 0)
- 		die(_("invalid number of threads specified (%d)"), num_threads);
-+	if (num_threads == 1)
-+		num_threads = 0;
- #else
- 	num_threads = 0;
- #endif
+diff --git a/Makefile b/Makefile
+index 9b36068ac5..9753281acd 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2235,6 +2235,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
+ 	@echo USE_LIBPCRE=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
++	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+diff --git a/t/README b/t/README
+index ab386c3681..6775ced582 100644
+--- a/t/README
++++ b/t/README
+@@ -817,6 +817,10 @@ use these, and "test_set_prereq" for how to define your own.
+    Test is run on a filesystem which converts decomposed utf-8 (nfd)
+    to precomposed utf-8 (nfc).
+ 
++ - PTHREADS
++
++   Git wasn't compiled with NO_PTHREADS=YesPlease.
++
+ Tips for Writing Tests
+ ----------------------
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 13b5696822..fba91bad3a 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1009,6 +1009,7 @@ esac
+ 
+ ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
+ test -z "$NO_PERL" && test_set_prereq PERL
++test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
+ test -z "$NO_PYTHON" && test_set_prereq PYTHON
+ test -n "$USE_LIBPCRE" && test_set_prereq LIBPCRE
+ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
 -- 
 2.11.0
 
