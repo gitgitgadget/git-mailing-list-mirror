@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1814B20D09
-	for <e@80x24.org>; Sun, 16 Apr 2017 22:21:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 338E020D09
+	for <e@80x24.org>; Sun, 16 Apr 2017 22:21:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932209AbdDPWVq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Apr 2017 18:21:46 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34381 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932091AbdDPWVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2017 18:21:44 -0400
-Received: by mail-wm0-f67.google.com with SMTP id z129so3870452wmb.1
-        for <git@vger.kernel.org>; Sun, 16 Apr 2017 15:21:43 -0700 (PDT)
+        id S932235AbdDPWVw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 18:21:52 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34369 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756674AbdDPWVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2017 18:21:50 -0400
+Received: by mail-wm0-f68.google.com with SMTP id z129so3870379wmb.1
+        for <git@vger.kernel.org>; Sun, 16 Apr 2017 15:21:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CIYHn5i5UdP8FeejUbmZ+jUQHAS2ZqfcU25GP16+p5U=;
-        b=i9dXOn/axforefFb/Gti8eU2hO/KOUjucNIHGSEO+R8OoWnGkT/wtgQYlQ/hTbjPEr
-         orvCPdkhy1SGFNYhBUCiKrrSHUkCI1Ly3Fx9wEt5gq44vHj1y04SbHo84vvibcSWQAZd
-         Oig2Vc/SvQZGWsFZS9u/biJURDKClpT6SOYz2EWB+4N4vfuyGCJm9kUbw8IGIGYDmT8R
-         jySIRfz5qc8CZBG3oqeubj5esAxnRpNuYahUtUY2LHatapwvxzUc+6Y/SW/IAzIyG5hU
-         EZ05T4oHkcSNPBJj6dGQYZJU50kxyDJhKia82nProK68o/zJMLCRJPy1MFVd59DXpisF
-         UwqQ==
+        bh=9iJ86W/2faRk8fIepfFB7ANJqIQGYRwKqmA1+qETelQ=;
+        b=YvAibT+MKLW3FCLq0bx4xLB98BO4vPM0rrW/2PDE8NMfxpwmUX0a32ksX7kGNNE3gX
+         wur52DlnmNlKxhge90xYRUcEg/aAOVZqtI3BUGSOvOr7RHUF61unRU6ElG2G+qdNJTIn
+         Lw2rxJSlI/V4IBufcgL1mQHUesOOkYgldTQjw0Ti9LGauzIL08rbAleIaqlpROezPZWo
+         DxYipSyvBMxNDvxS5B6DVWdXyarb2YpfpTb4NNYa7FM3W4PScRGV5moYPNO4H/GB5rE5
+         2Dva/qPZFrOLv+EriqV03W4vRnoVB+vLiURnnK9d6T6c5SRsKzMcx0cMR3icaS+cd864
+         Nw/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CIYHn5i5UdP8FeejUbmZ+jUQHAS2ZqfcU25GP16+p5U=;
-        b=N/jCT9lKlqQFpzEvQwKJDKTJSOOg3nP5eSGuG4WyMIktPzyGg186lAf8n+1oRcq8mg
-         cc6o5t+9GY/fJ0e+j4wF6p3LoytcktgWz7l7GromEzUC17nUbZWeDR6qJodFSI9I4drC
-         A1YSR/pBUuJsx9ftwMzWlA8tooixudz3hM00Uetp+Tk88o8YpvKWCEMCPbVn1PAnIj+5
-         Nkyow4/+3+CebvolAhDwtC+zEmTOFEslFbnPkzNwZcrtnQ2lEgFzxQwqweoz4D/UFGdC
-         p2kgHh6jqLPME51PDeBwFms5y93+Q3Aae0At/8w5Im6lefk/fz1G9zVgn3fPpXMh8pCM
-         rXaQ==
-X-Gm-Message-State: AN3rC/4lpXoVtofysx1Fnet4LprKrzvj7HQ1s1rDArMs030/nWXMHWrc
-        84hNu+3Sx/cL9g==
-X-Received: by 10.28.169.15 with SMTP id s15mr6454404wme.2.1492381297892;
-        Sun, 16 Apr 2017 15:21:37 -0700 (PDT)
+        bh=9iJ86W/2faRk8fIepfFB7ANJqIQGYRwKqmA1+qETelQ=;
+        b=RzorWHC/Dp71KIIq5kYE06+2MqkyE40Grm8kTc53XBsa1Ye+P7Nwe0fzl+ZNq1S1n4
+         a7rNGkm1JstrOPc5w3gRr8m4xxU0AaPNjwXQrjZ8Yvy6GrdI1UlXmgUq+fey0BIOU94C
+         mMeSRKxQH7WeT86/bTIihYO+RyYILZvmaEMuiebY18dtYHB9tsZVL3ant0ybUMMeyxLl
+         c1dUBcowkFYHuB+TIrbEbxuWFjQWMu8DNrX2seTsJXsvJ/BBlcBs0FCxxGUJvdEQZyg8
+         RNM5XPSdvEqPhmn+GTYJx5QKKPVwaJvP+Op+NoWWOGugExpMIU8lSiBB4D0N9zWerTzQ
+         nUbg==
+X-Gm-Message-State: AN3rC/4EoIfs7q/FIRzu11AiXRvCABDgGDFi3pKtRsZXuoAkNvQkwSBT
+        avQ/3ibiR9hGjw==
+X-Received: by 10.28.107.129 with SMTP id a1mr6840170wmi.47.1492381295704;
+        Sun, 16 Apr 2017 15:21:35 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o9sm8045022wmd.4.2017.04.16.15.21.36
+        by smtp.gmail.com with ESMTPSA id o9sm8045022wmd.4.2017.04.16.15.21.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 16 Apr 2017 15:21:37 -0700 (PDT)
+        Sun, 16 Apr 2017 15:21:34 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 7/8] pack-objects: fix buggy warning about threads under NO_PTHREADS=YesPlease
-Date:   Sun, 16 Apr 2017 22:21:01 +0000
-Message-Id: <20170416222102.2320-8-avarab@gmail.com>
+Subject: [PATCH v2 6/8] pack-object & index-pack: add test for --threads warning under NO_PTHREADS
+Date:   Sun, 16 Apr 2017 22:21:00 +0000
+Message-Id: <20170416222102.2320-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170416222102.2320-1-avarab@gmail.com>
 References: <20170416222102.2320-1-avarab@gmail.com>
@@ -74,52 +74,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a buggy warning about threads under NO_PTHREADS=YesPlease. Due to
-re-using the delta_search_threads variable for both the state of the
-"pack.threads" config & the --threads option setting "pack.threads"
-but not supplying --threads would trigger the warning for both
-"pack.threads" & --threads.
+Add a test for the warning that's emitted when --threads or
+pack.threads is provided under NO_PTHREADS. This uses the new PTHREADS
+prerequisite.
 
-Solve this bug by resetting the delta_search_threads variable in
-git_pack_config(), it might then be set by --threads again and be
-subsequently warned about, as the test I'm changing here asserts.
+The assertion for !GETTEXT_POISON in the latter test is currently
+redundant, since unlike index-pack the pack-objects warnings aren't
+i18n'd. However they might be changed to be i18n'd in the future, and
+there's no harm in future-proofing the test.
+
+There's an existing bug in the implementation of pack-objects which
+this test currently tests for as-is. Details about the bug & the fix
+are included in a follow-up change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/pack-objects.c | 4 +++-
- t/t5300-pack-object.sh | 3 +--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ t/t5300-pack-object.sh | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 84af7c2324..905465e91f 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2472,8 +2472,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 			die("invalid number of threads specified (%d)",
- 			    delta_search_threads);
- #ifdef NO_PTHREADS
--		if (delta_search_threads != 1)
-+		if (delta_search_threads != 1) {
- 			warning("no threads support, ignoring %s", k);
-+			delta_search_threads = 0;
-+		}
- #endif
- 		return 0;
- 	}
 diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 6bb6a8981b..50e1ae87a4 100755
+index 43a672c345..6bb6a8981b 100755
 --- a/t/t5300-pack-object.sh
 +++ b/t/t5300-pack-object.sh
-@@ -445,8 +445,7 @@ test_expect_success !PTHREADS,!GETTEXT_POISON 'pack-objects --threads=N or pack.
- 	git -c pack.threads=2 pack-objects --stdout --all </dev/null >/dev/null 2>err &&
- 	cat err &&
- 	grep ^warning: err >warnings &&
--	test_line_count = 2 warnings &&
--	grep "no threads support, ignoring --threads" err &&
+@@ -421,6 +421,40 @@ test_expect_success 'index-pack <pack> works in non-repo' '
+ 	test_path_is_file foo.idx
+ '
+ 
++test_expect_success !PTHREADS,!GETTEXT_POISON 'index-pack --threads=N or pack.threads=N warns when no pthreads' '
++	test_must_fail git index-pack --threads=2 2>err &&
++	grep ^warning: err >warnings &&
 +	test_line_count = 1 warnings &&
- 	grep "no threads support, ignoring pack\.threads" err &&
- 	git -c pack.threads=2 pack-objects --threads=4 --stdout --all </dev/null >/dev/null 2>err &&
- 	grep ^warning: err >warnings &&
++	grep "no threads support, ignoring --threads=2" err &&
++	test_must_fail git -c pack.threads=2 index-pack 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 1 warnings &&
++	grep "no threads support, ignoring pack\.threads" err &&
++	test_must_fail git -c pack.threads=2 index-pack --threads=4 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 2 warnings &&
++	grep "no threads support, ignoring --threads=4" err &&
++	grep "no threads support, ignoring pack\.threads" err
++'
++
++test_expect_success !PTHREADS,!GETTEXT_POISON 'pack-objects --threads=N or pack.threads=N warns when no pthreads' '
++	git pack-objects --threads=2 --stdout --all </dev/null >/dev/null 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 1 warnings &&
++	grep "no threads support, ignoring --threads" err &&
++	git -c pack.threads=2 pack-objects --stdout --all </dev/null >/dev/null 2>err &&
++	cat err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 2 warnings &&
++	grep "no threads support, ignoring --threads" err &&
++	grep "no threads support, ignoring pack\.threads" err &&
++	git -c pack.threads=2 pack-objects --threads=4 --stdout --all </dev/null >/dev/null 2>err &&
++	grep ^warning: err >warnings &&
++	test_line_count = 2 warnings &&
++	grep "no threads support, ignoring --threads" err &&
++	grep "no threads support, ignoring pack\.threads" err
++'
++
+ #
+ # WARNING!
+ #
 -- 
 2.11.0
 
