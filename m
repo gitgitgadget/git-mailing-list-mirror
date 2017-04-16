@@ -6,26 +6,26 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4CAC20A04
-	for <e@80x24.org>; Sun, 16 Apr 2017 06:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0322F20A04
+	for <e@80x24.org>; Sun, 16 Apr 2017 06:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754900AbdDPGmg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Apr 2017 02:42:36 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:60130 "EHLO
-        alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1753167AbdDPGmd (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 16 Apr 2017 02:42:33 -0400
-X-AuditID: 12074414-7efff70000002bfd-99-58f31258926c
+        id S1753848AbdDPGmc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 02:42:32 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:56011 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1753167AbdDPGm3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 16 Apr 2017 02:42:29 -0400
+X-AuditID: 12074413-f4fff700000077e1-b4-58f31253f789
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
         (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
         (Client did not present a certificate)
-        by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id C4.7D.11261.85213F85; Sun, 16 Apr 2017 02:42:32 -0400 (EDT)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B4.87.30689.35213F85; Sun, 16 Apr 2017 02:42:27 -0400 (EDT)
 Received: from bagpipes.fritz.box (p5B1058DF.dip0.t-ipconnect.de [91.16.88.223])
         (authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v3G6gGN6025813
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v3G6gGN4025813
         (version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-        Sun, 16 Apr 2017 02:42:30 -0400
+        Sun, 16 Apr 2017 02:42:25 -0400
 From:   Michael Haggerty <mhagger@alum.mit.edu>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
@@ -34,264 +34,94 @@ Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, David Turner <novalis@novalis.org>,
         git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 05/20] refs_verify_refname_available(): use function in more places
-Date:   Sun, 16 Apr 2017 08:41:27 +0200
-Message-Id: <1e3dec0a827da33c2d5064e0f25f4ded0f247c9b.1492323985.git.mhagger@alum.mit.edu>
+Subject: [PATCH v3 03/20] refs_ref_iterator_begin(): new function
+Date:   Sun, 16 Apr 2017 08:41:25 +0200
+Message-Id: <a8777f4c8eea6c098385a44542137e57d733d860.1492323985.git.mhagger@alum.mit.edu>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <cover.1492323985.git.mhagger@alum.mit.edu>
 References: <cover.1492323985.git.mhagger@alum.mit.edu>
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrHIsWRmVeSWpSXmKPExsUixO6iqBsh9DnCoOGtjMXaZ3eYLLqudDNZ
-        NPReYba4vWI+s8WSh6+ZLbqnvGW0+NHSw2yxeXM7iwOHx9/3H5g8ds66y+6xYFOpR1f7ETaP
-        Z717GD0uXlL2+LxJLoA9issmJTUnsyy1SN8ugStjyfNZTAUzbSrOXf3E2MC4UK+LkZNDQsBE
-        YvvvXYxdjFwcQgI7mCQOTX8P5Zxgklj5pYcNpIpNQFdiUU8zE4gtIqAmMbHtEAtIEbPAYyaJ
-        v8u6WUASwgJhEjteTGYHsVkEVCU2T90FFucViJK4N+MPE8Q6eYldbRdZQWxOAQuJKXc3gNUI
-        CZhLbD9+lXkCI88CRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRboWermZJXqpKaWbGCHBJrKD
-        8chJuUOMAhyMSjy8Fv6fIoRYE8uKK3MPMUpyMCmJ8sr8BwrxJeWnVGYkFmfEF5XmpBYfYpTg
-        YFYS4U1m+RwhxJuSWFmVWpQPk5LmYFES5/22WN1PSCA9sSQ1OzW1ILUIJivDwaEkwRstCNQo
-        WJSanlqRlplTgpBm4uAEGc4DNHyrAMjw4oLE3OLMdIj8KUZFKXHeHyAJAZBERmkeXC8sGbxi
-        FAd6RZiXGWQFDzCRwHW/AhrMBDSYYfIHkMEliQgpqQZGf413lQY2Xyf31CTLTvBIytENX8Gn
-        sSZGbkLcw5nrXy54wMHp8HtN2AfRx/Nt9q/rOqejnfXyBRvHp4Dg5eXuc8S5NzV8fLltrfBF
-        w7TPSatPNzokvcxWfcBQ9C1E4nHXf8nTHjkW29uCX6f5HaytsHk748wlQ9H2F29lNklu23u4
-        Yv0mo2QrJZbijERDLeai4kQAPIZQU+ECAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOIsWRmVeSWpSXmKPExsUixO6iqBss9DnC4M9jbou1z+4wWXRd6Way
+        aOi9wmxxe8V8ZoslD18zW3RPecto8aOlh9li8+Z2FgcOj7/vPzB57Jx1l91jwaZSj672I2we
+        z3r3MHpcvKTs8XmTXAB7FJdNSmpOZllqkb5dAlfGnGUKBTMFK6auX8LcwNjK18XIwSEhYCLx
+        sk+1i5GTQ0hgB5PE5N1mXYxcQPYJJolrjY3sIAk2AV2JRT3NTCC2iICaxMS2QywgRcwCj5kk
+        /i7rZgFJCAs4SnxtnwNWxCKgKrHkzWVWEJtXIEri39ldbCC2hIC8xK62i2BxTgELiSl3N7BA
+        bDaX2H78KvMERp4FjAyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3TN9XIzS/RSU0o3MULCTHgH
+        466TcocYBTgYlXh4Lfw/RQixJpYVV+YeYpTkYFIS5ZX5DxTiS8pPqcxILM6ILyrNSS0+xCjB
+        wawkwpvM8jlCiDclsbIqtSgfJiXNwaIkzqu2RN1PSCA9sSQ1OzW1ILUIJivDwaEkwftBAKhR
+        sCg1PbUiLTOnBCHNxMEJMpwHaPhWkBre4oLE3OLMdIj8KUZdjr6Oj++ZhFjy8vNSpcR5f4AU
+        CYAUZZTmwc2BpYdXjOJAbwnzMgsCVfEAUwvcpFdAS5iAljBM/gCypCQRISXVwBh76+jvi0xL
+        6jOv6tnkasd3P1msy/Kq1e0Z55JlR6ZtmaDh3df5iklgZc3qubyVNT6W/dbxSlM+1PPt8fb5
+        xDxvW7q08wJ7Sb9YxsZ/z0J/v2Lve3hoztRtcn12G/Y9/HfVTEKPQfV9Hd9XzlAenTk8GV0n
+        7zE/Sniv96RUN2RZ9GPF5JSSSCWW4oxEQy3mouJEALrLz4fqAgAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change `lock_raw_ref()` and `lock_ref_sha1_basic()` to use
-`refs_verify_refname_available()` instead of
-`verify_refname_available_dir()`. This means that those callsites now
-check for conflicts with all references rather than just packed refs,
-but the performance cost shouldn't be significant (and will be
-regained later).
-
-These were the last callers of `verify_refname_available_dir()`, so
-also delete that (very complicated) function.
+Extract a new function from `do_for_each_ref()`. It will be useful
+elsewhere.
 
 Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- refs/files-backend.c | 171 ++++-----------------------------------------------
- 1 file changed, 11 insertions(+), 160 deletions(-)
+ refs.c               | 15 +++++++++++++--
+ refs/refs-internal.h | 11 +++++++++++
+ 2 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 4185025efa..cf1c18cffb 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -738,152 +738,6 @@ static struct ref_iterator *cache_ref_iterator_begin(struct ref_dir *dir)
- 	return ref_iterator;
+diff --git a/refs.c b/refs.c
+index aa461156c4..2ae18097d4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1230,6 +1230,18 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 	return head_ref_submodule(NULL, fn, cb_data);
  }
  
--struct nonmatching_ref_data {
--	const struct string_list *skip;
--	const char *conflicting_refname;
--};
--
--static int nonmatching_ref_fn(struct ref_entry *entry, void *vdata)
--{
--	struct nonmatching_ref_data *data = vdata;
--
--	if (data->skip && string_list_has_string(data->skip, entry->name))
--		return 0;
--
--	data->conflicting_refname = entry->name;
--	return 1;
--}
--
--/*
-- * Return 0 if a reference named refname could be created without
-- * conflicting with the name of an existing reference in dir.
-- * See verify_refname_available for more information.
-- */
--static int verify_refname_available_dir(const char *refname,
--					const struct string_list *extras,
--					const struct string_list *skip,
--					struct ref_dir *dir,
--					struct strbuf *err)
--{
--	const char *slash;
--	const char *extra_refname;
--	int pos;
--	struct strbuf dirname = STRBUF_INIT;
--	int ret = -1;
--
--	/*
--	 * For the sake of comments in this function, suppose that
--	 * refname is "refs/foo/bar".
--	 */
--
--	assert(err);
--
--	strbuf_grow(&dirname, strlen(refname) + 1);
--	for (slash = strchr(refname, '/'); slash; slash = strchr(slash + 1, '/')) {
--		/* Expand dirname to the new prefix, not including the trailing slash: */
--		strbuf_add(&dirname, refname + dirname.len, slash - refname - dirname.len);
--
--		/*
--		 * We are still at a leading dir of the refname (e.g.,
--		 * "refs/foo"; if there is a reference with that name,
--		 * it is a conflict, *unless* it is in skip.
--		 */
--		if (dir) {
--			pos = search_ref_dir(dir, dirname.buf, dirname.len);
--			if (pos >= 0 &&
--			    (!skip || !string_list_has_string(skip, dirname.buf))) {
--				/*
--				 * We found a reference whose name is
--				 * a proper prefix of refname; e.g.,
--				 * "refs/foo", and is not in skip.
--				 */
--				strbuf_addf(err, "'%s' exists; cannot create '%s'",
--					    dirname.buf, refname);
--				goto cleanup;
--			}
--		}
--
--		if (extras && string_list_has_string(extras, dirname.buf) &&
--		    (!skip || !string_list_has_string(skip, dirname.buf))) {
--			strbuf_addf(err, "cannot process '%s' and '%s' at the same time",
--				    refname, dirname.buf);
--			goto cleanup;
--		}
--
--		/*
--		 * Otherwise, we can try to continue our search with
--		 * the next component. So try to look up the
--		 * directory, e.g., "refs/foo/". If we come up empty,
--		 * we know there is nothing under this whole prefix,
--		 * but even in that case we still have to continue the
--		 * search for conflicts with extras.
--		 */
--		strbuf_addch(&dirname, '/');
--		if (dir) {
--			pos = search_ref_dir(dir, dirname.buf, dirname.len);
--			if (pos < 0) {
--				/*
--				 * There was no directory "refs/foo/",
--				 * so there is nothing under this
--				 * whole prefix. So there is no need
--				 * to continue looking for conflicting
--				 * references. But we need to continue
--				 * looking for conflicting extras.
--				 */
--				dir = NULL;
--			} else {
--				dir = get_ref_dir(dir->entries[pos]);
--			}
--		}
--	}
--
--	/*
--	 * We are at the leaf of our refname (e.g., "refs/foo/bar").
--	 * There is no point in searching for a reference with that
--	 * name, because a refname isn't considered to conflict with
--	 * itself. But we still need to check for references whose
--	 * names are in the "refs/foo/bar/" namespace, because they
--	 * *do* conflict.
--	 */
--	strbuf_addstr(&dirname, refname + dirname.len);
--	strbuf_addch(&dirname, '/');
--
--	if (dir) {
--		pos = search_ref_dir(dir, dirname.buf, dirname.len);
--
--		if (pos >= 0) {
--			/*
--			 * We found a directory named "$refname/"
--			 * (e.g., "refs/foo/bar/"). It is a problem
--			 * iff it contains any ref that is not in
--			 * "skip".
--			 */
--			struct nonmatching_ref_data data;
--
--			data.skip = skip;
--			data.conflicting_refname = NULL;
--			dir = get_ref_dir(dir->entries[pos]);
--			sort_ref_dir(dir);
--			if (do_for_each_entry_in_dir(dir, 0, nonmatching_ref_fn, &data)) {
--				strbuf_addf(err, "'%s' exists; cannot create '%s'",
--					    data.conflicting_refname, refname);
--				goto cleanup;
--			}
--		}
--	}
--
--	extra_refname = find_descendant_ref(dirname.buf, extras, skip);
--	if (extra_refname)
--		strbuf_addf(err, "cannot process '%s' and '%s' at the same time",
--			    refname, extra_refname);
--	else
--		ret = 0;
--
--cleanup:
--	strbuf_release(&dirname);
--	return ret;
--}
--
- struct packed_ref_cache {
- 	struct ref_entry *root;
++struct ref_iterator *refs_ref_iterator_begin(
++		struct ref_store *refs,
++		const char *prefix, int trim, int flags)
++{
++	struct ref_iterator *iter;
++
++	iter = refs->be->iterator_begin(refs, prefix, flags);
++	iter = prefix_ref_iterator_begin(iter, prefix, trim);
++
++	return iter;
++}
++
+ /*
+  * Call fn for each reference in the specified submodule for which the
+  * refname begins with prefix. If trim is non-zero, then trim that
+@@ -1247,8 +1259,7 @@ static int do_for_each_ref(struct ref_store *refs, const char *prefix,
+ 	if (!refs)
+ 		return 0;
  
-@@ -1562,7 +1416,7 @@ static void unlock_ref(struct ref_lock *lock)
-  *
-  * If the reference doesn't already exist, verify that refname doesn't
-  * have a D/F conflict with any existing references. extras and skip
-- * are passed to verify_refname_available_dir() for this check.
-+ * are passed to refs_verify_refname_available() for this check.
-  *
-  * If mustexist is not set and the reference is not found or is
-  * broken, lock the reference anyway but clear sha1.
-@@ -1577,7 +1431,7 @@ static void unlock_ref(struct ref_lock *lock)
-  *
-  * but it includes a lot more code to
-  * - Deal with possible races with other processes
-- * - Avoid calling verify_refname_available_dir() when it can be
-+ * - Avoid calling refs_verify_refname_available() when it can be
-  *   avoided, namely if we were successfully able to read the ref
-  * - Generate informative error messages in the case of failure
+-	iter = refs->be->iterator_begin(refs, prefix, flags);
+-	iter = prefix_ref_iterator_begin(iter, prefix, trim);
++	iter = refs_ref_iterator_begin(refs, prefix, trim, flags);
+ 
+ 	return do_for_each_ref_iterator(iter, fn, cb_data);
+ }
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 6ee9f20dbc..545989ae7f 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -335,6 +335,17 @@ struct ref_iterator *empty_ref_iterator_begin(void);
   */
-@@ -1634,7 +1488,8 @@ static int lock_raw_ref(struct files_ref_store *refs,
- 			} else {
- 				/*
- 				 * The error message set by
--				 * verify_refname_available_dir() is OK.
-+				 * refs_verify_refname_available() is
-+				 * OK.
- 				 */
- 				ret = TRANSACTION_NAME_CONFLICT;
- 			}
-@@ -1758,16 +1613,13 @@ static int lock_raw_ref(struct files_ref_store *refs,
+ int is_empty_ref_iterator(struct ref_iterator *ref_iterator);
  
- 		/*
- 		 * If the ref did not exist and we are creating it,
--		 * make sure there is no existing packed ref whose
--		 * name begins with our refname, nor a packed ref
--		 * whose name is a proper prefix of our refname.
-+		 * make sure there is no existing ref that conflicts
-+		 * with refname:
- 		 */
--		if (verify_refname_available_dir(
--				    refname, extras, skip,
--				    get_packed_refs(refs),
--				    err)) {
-+		if (refs_verify_refname_available(
-+				    &refs->base, refname,
-+				    extras, skip, err))
- 			goto error_return;
--		}
- 	}
- 
- 	ret = 0;
-@@ -2122,9 +1974,8 @@ static struct ref_lock *lock_ref_sha1_basic(struct files_ref_store *refs,
- 	 * our refname.
- 	 */
- 	if (is_null_oid(&lock->old_oid) &&
--	    verify_refname_available_dir(refname, extras, skip,
--					 get_packed_refs(refs),
--					 err)) {
-+	    refs_verify_refname_available(&refs->base, refname,
-+					  extras, skip, err)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
- 	}
++/*
++ * Return an iterator that goes over each reference in `refs` for
++ * which the refname begins with prefix. If trim is non-zero, then
++ * trim that many characters off the beginning of each refname. flags
++ * can be DO_FOR_EACH_INCLUDE_BROKEN to include broken references in
++ * the iteration.
++ */
++struct ref_iterator *refs_ref_iterator_begin(
++		struct ref_store *refs,
++		const char *prefix, int trim, int flags);
++
+ /*
+  * A callback function used to instruct merge_ref_iterator how to
+  * interleave the entries from iter0 and iter1. The function should
 -- 
 2.11.0
 
