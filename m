@@ -2,95 +2,230 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA7B20A04
-	for <e@80x24.org>; Mon, 17 Apr 2017 14:33:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7594C20A04
+	for <e@80x24.org>; Mon, 17 Apr 2017 14:53:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753249AbdDQOdH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Apr 2017 10:33:07 -0400
-Received: from mail-lf0-f41.google.com ([209.85.215.41]:35134 "EHLO
-        mail-lf0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751765AbdDQOdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2017 10:33:06 -0400
-Received: by mail-lf0-f41.google.com with SMTP id 75so66070953lfs.2
-        for <git@vger.kernel.org>; Mon, 17 Apr 2017 07:33:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=pnl5bMojI8XC7aKqc+7Ts3KNoX3SbGpikECvgCizlhk=;
-        b=tMr3IMhaR1YwNd3Sqg31Jq6vSxDum1RpGTS2YeMLYj6YioCqhQfrzi5TKGVkjvPZnl
-         vOZTcDODvAYNNvKWEV2p64CdOzXhRucmm8DpzK/457Chl/Vad0DMhzqOhVP2YRBD7UdD
-         CMiwGF3vzkMy5Qi/EdY9qn/IqC8v0B5kmOBaZH4V3tO82iwqY+ijocgAY3wGfrufYIf+
-         EnFoLY1JwsvbMT16NQzdejFP4f4/CYXHhB2v6OeN1Xr4v7oFsJRy2J4mUaqwd6Ou7yXy
-         1LlYh51FOtO46NJv3jDC7azTjqycZDHOlUJe/b8ZNyV6y5JnqcgKQDOYISd4N/NxcdJq
-         /9IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=pnl5bMojI8XC7aKqc+7Ts3KNoX3SbGpikECvgCizlhk=;
-        b=HkQelnvc0oGF714elVCpAX08xxX4aRqJd3MtV83sszvHZr7sry8cKfGLXb4z1Aw36p
-         MODHsxxcO307IGQ5/JJu1hKXH4rBPEq4Z/xcKf2n9kEfTVcF7Gho9aawJRqxuny2LSZ1
-         fzEGM1ct0z0NYaHYxRqwLYctE/R284XVefGOFIy1oyCudgDNlu8KN/JW6d+eG50AfnOU
-         DguEmfSgXJh8thNxZ6KNbacaEq8GSGlVE7R8li4+30x3cyyjzul20R/25kM6GhO45D6A
-         HyLFFk7jLWTrtcXtKoYWs5+ny6IArXR6+d4oijD33wGXpHZORWPNVtk2rTlFfGV32lFA
-         ANcA==
-X-Gm-Message-State: AN3rC/6XrViF/QaJ038sUlAM9RDk6qhkpei+z3nd545oCUTqvRmTtZTX
-        rbs6GamN83CKwwJv+t45EH1nJLgTIA==
-X-Received: by 10.46.13.2 with SMTP id 2mr2874941ljn.93.1492439584358; Mon, 17
- Apr 2017 07:33:04 -0700 (PDT)
+        id S1752484AbdDQOxK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Apr 2017 10:53:10 -0400
+Received: from siwi.pair.com ([209.68.5.199]:33005 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752223AbdDQOxI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2017 10:53:08 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 65E3B8456F;
+        Mon, 17 Apr 2017 10:53:07 -0400 (EDT)
+Subject: Re: [PATCH v10 3/3] read-cache: speed up add_index_entry during
+ checkout
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+References: <20170414191230.52825-1-git@jeffhostetler.com>
+ <20170414191230.52825-4-git@jeffhostetler.com>
+ <d9f1acc8-03e3-abc6-af9d-da55a33218fa@web.de>
+Cc:     gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <28ef82b9-ab7a-ccaf-7bae-4eaa332725f8@jeffhostetler.com>
+Date:   Mon, 17 Apr 2017 10:53:06 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.25.67.78 with HTTP; Mon, 17 Apr 2017 07:33:03 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 17 Apr 2017 16:33:03 +0200
-Message-ID: <CAP8UFD3G_m1q6tORDRpfqWXQwrtpx-xQTqxfj0K=xU5WdEC+uw@mail.gmail.com>
-Subject: Draft of Git Rev News edition 26
-To:     git <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        "Ted Ts'o" <tytso@mit.edu>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        "Bernhard E. Reiter" <bernhard.reiter@intevation.de>,
-        Werner Koch <wk@gnupg.org>,
-        Peter Lebbing <peter@digitalbrains.com>,
-        Christian Neukirchen <chneukirchen@gmail.com>,
-        demerphq <demerphq@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <d9f1acc8-03e3-abc6-af9d-da55a33218fa@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-A draft of a new Git Rev News edition is available here:
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-26.md
+On 4/15/2017 1:55 PM, René Scharfe wrote:
+> Am 14.04.2017 um 21:12 schrieb git@jeffhostetler.com:
+>> From: Jeff Hostetler <jeffhost@microsoft.com>
+>
+> Very nice, especially the perf test!  But can we unbundle the different
+> optimizations into separate patches with their own performance numbers?
+> Candidates IMHO: The change in add_index_entry_with_check(), the first
+> hunk in has_dir_name(), the loop shortcuts.  That might also help find
+> the reason for the slight slowdown of 0006.3 for the kernel repository.
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+Let me take a look at this and see if it helps.
 
-  https://github.com/git/git.github.io/issues/238
+>> diff --git a/read-cache.c b/read-cache.c
+>> index 97f13a1..ba95fbb 100644
+>> --- a/read-cache.c
+>> +++ b/read-cache.c
+>> @@ -910,6 +910,9 @@ int strcmp_offset(const char *s1, const char *s2,
+>> size_t *first_change)
+>>   /*
+>>    * Do we have another file with a pathname that is a proper
+>>    * subset of the name we're trying to add?
+>> + *
+>> + * That is, is there another file in the index with a path
+>> + * that matches a sub-directory in the given entry?
+>>    */
+>>   static int has_dir_name(struct index_state *istate,
+>>               const struct cache_entry *ce, int pos, int ok_to_replace)
+>> @@ -918,9 +921,51 @@ static int has_dir_name(struct index_state *istate,
+>>       int stage = ce_stage(ce);
+>>       const char *name = ce->name;
+>>       const char *slash = name + ce_namelen(ce);
+>> +    size_t len_eq_last;
+>> +    int cmp_last = 0;
+>> +
+>> +    /*
+>> +     * We are frequently called during an iteration on a sorted
+>> +     * list of pathnames and while building a new index.  Therefore,
+>> +     * there is a high probability that this entry will eventually
+>> +     * be appended to the index, rather than inserted in the middle.
+>> +     * If we can confirm that, we can avoid binary searches on the
+>> +     * components of the pathname.
+>> +     *
+>> +     * Compare the entry's full path with the last path in the index.
+>> +     */
+>> +    if (istate->cache_nr > 0) {
+>> +        cmp_last = strcmp_offset(name,
+>> +            istate->cache[istate->cache_nr - 1]->name,
+>> +            &len_eq_last);
+>> +        if (cmp_last > 0) {
+>> +            if (len_eq_last == 0) {
+>> +                /*
+>> +                 * The entry sorts AFTER the last one in the
+>> +                 * index and their paths have no common prefix,
+>> +                 * so there cannot be a F/D conflict.
+>> +                 */
+>> +                return retval;
+>> +            } else {
+>> +                /*
+>> +                 * The entry sorts AFTER the last one in the
+>> +                 * index, but has a common prefix.  Fall through
+>> +                 * to the loop below to disect the entry's path
+>> +                 * and see where the difference is.
+>> +                 */
+>> +            }
+>> +        } else if (cmp_last == 0) {
+>> +            /*
+>> +             * The entry exactly matches the last one in the
+>> +             * index, but because of multiple stage and CE_REMOVE
+>> +             * items, we fall through and let the regular search
+>> +             * code handle it.
+>> +             */
+>> +        }
+>> +    }
+>>         for (;;) {
+>> -        int len;
+>> +        size_t len;
+>>             for (;;) {
+>>               if (*--slash == '/')
+>> @@ -930,6 +975,66 @@ static int has_dir_name(struct index_state *istate,
+>>           }
+>>           len = slash - name;
+>>   +        if (cmp_last > 0) {
+>> +            /*
+>> +             * (len + 1) is a directory boundary (including
+>> +             * the trailing slash).  And since the loop is
+>> +             * decrementing "slash", the first iteration is
+>> +             * the longest directory prefix; subsequent
+>> +             * iterations consider parent directories.
+>> +             */
+>> +
+>> +            if (len + 1 <= len_eq_last) {
+>> +                /*
+>> +                 * The directory prefix (including the trailing
+>> +                 * slash) also appears as a prefix in the last
+>> +                 * entry, so the remainder cannot collide (because
+>> +                 * strcmp said the whole path was greater).
+>> +                 *
+>> +                 * EQ: last: xxx/A
+>> +                 *     this: xxx/B
+>> +                 *
+>> +                 * LT: last: xxx/file_A
+>> +                 *     this: xxx/file_B
+>> +                 */
+>> +                return retval;
+>> +            }
+>> +
+>> +            if (len > len_eq_last) {
+>> +                /*
+>> +                 * This part of the directory prefix (excluding
+>> +                 * the trailing slash) is longer than the known
+>> +                 * equal portions, so this sub-directory cannot
+>> +                 * collide with a file.
+>> +                 *
+>> +                 * GT: last: xxxA
+>> +                 *     this: xxxB/file
+>> +                 */
+>> +                return retval;
+>> +            }
+>> +
+>
+> At this point len and len_eq_last are equal -- otherwise one of the two
+> previous conditions would have triggered.  Silly question: Is this
+> necessary for the following shortcut to work?  Removing the two checks
+> above doesn't seem to affect performance very much, and at least the
+> test suite still passes..
 
-You can also reply to this email.
+Both of these are highly dependent on the shape of the
+pathnames in the tree.  Let me try to quantify this.
 
-In general all kinds of contribution, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub, and
-so on, are very much appreciated.
+>
+>> +            if (ce_namelen(istate->cache[istate->cache_nr - 1]) > len) {
+>> +                /*
+>> +                 * The directory prefix lines up with part of
+>> +                 * a longer file or directory name, but sorts
+>> +                 * after it, so this sub-directory cannot
+>> +                 * collide with a file.
+>> +                 *
+>> +                 * last: xxx/yy-file (because '-' sorts before '/')
+>> +                 * this: xxx/yy/abc
+>> +                 */
+>> +                return retval;
+>> +            }
+>
+> istate->cache_nr can be zero if remove_index_entry_at() had been called
+> in a previous iteration, resulting in a segfault.  Checking right here
+> is probably the easiest way out; not sure if exiting early when the
+> index becomes empty would be better.
 
-I tried to cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+yeah, i guess remove_...() could delete them all and this test
+would be ill-defined.  Let me fix that.
 
-Thomas, Jakub, Markus and myself plan to publish this edition on
-Wednesday April 19th.
-
-Thanks,
-Christian.
+>
+>> +
+>> +            /*
+>> +             * This is a possible collision. Fall through and
+>> +             * let the regular search code handle it.
+>> +             *
+>> +             * last: xxx
+>> +             * this: xxx/file
+>> +             */
+>> +        }
+>> +
+>>           pos = index_name_stage_pos(istate, name, len, stage);
+>>           if (pos >= 0) {
+>>               /*
+>> @@ -1021,7 +1126,16 @@ static int add_index_entry_with_check(struct
+>> index_state *istate, struct cache_e
+>>         if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
+>>           cache_tree_invalidate_path(istate, ce->name);
+>> -    pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce),
+>> ce_stage(ce));
+>> +
+>> +    /*
+>> +     * If this entry's path sorts after the last entry in the index,
+>> +     * we can avoid searching for it.
+>> +     */
+>> +    if (istate->cache_nr > 0 &&
+>> +        strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
+>> +        pos = -istate->cache_nr - 1;
+>> +    else
+>> +        pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce),
+>> ce_stage(ce));
+>>         /* existing match? Just replace it. */
+>>       if (pos >= 0) {
+>>
