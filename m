@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46A2A1FA14
-	for <e@80x24.org>; Mon, 17 Apr 2017 10:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE4D31FA14
+	for <e@80x24.org>; Mon, 17 Apr 2017 10:10:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753381AbdDQKKN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Apr 2017 06:10:13 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34453 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752779AbdDQKKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2017 06:10:12 -0400
-Received: by mail-pg0-f68.google.com with SMTP id o123so26182199pga.1
-        for <git@vger.kernel.org>; Mon, 17 Apr 2017 03:10:12 -0700 (PDT)
+        id S1753562AbdDQKKS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Apr 2017 06:10:18 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35692 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752719AbdDQKKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2017 06:10:17 -0400
+Received: by mail-pg0-f66.google.com with SMTP id g2so26165355pge.2
+        for <git@vger.kernel.org>; Mon, 17 Apr 2017 03:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Zh63UOS7ilzhz5dxfKE0m9GbUJ+0r9iadIJ1yOEtJFU=;
-        b=nTlUd4FtsGK+MT26vzcFSegzuoPZ2u82BNoKQtFzq7gASs+kcpnP8KP3CQF2PvXqo+
-         MkzQmTXcXXAqvz/iSvdpEeGkroSSCT5y30QzHSLaLeLDQkLUFBCiEC17Ee2GtRHKxSXG
-         h6KwZI6RqjdLdfnu37M1MXwLzMvnuEbVrJhJ2lQK+YHTvELjyV6FnKZILgUC9JTgcokJ
-         Nd6Pkik4mK5iBhg/EmEs1XdaHcACu5aWApnFnCa6gjXDYm4YhfTKahcyOBwNdxzfASDU
-         wRBvjRleYbTo2Lh0fGqAbg97VAiOoS0fPTQjb7WRcggqfOcqknD3z5pzh8Nqc2v9wgMe
-         zKJA==
+        bh=pmXt03ZI3P1Qr+KfAreH2BU4MyyXPWowxy2jiyYS8aI=;
+        b=UjD0H1i9GxfNOTWFYPK9Lqea8Ef2SqRR997lqeJWNzbgx3WWqSYM1aflw5t2zdy0XT
+         zsMwRR17uyT2cX36lw8D9InvNeLBzvV+YjUppecDBZE/oIw3LKm7iTzqqC3NBmcLfOQe
+         ERhZN3Mv3qN5xMY+Ssz0GfNFqqD5aCCWCfTVFWvuD0msK8NkQeLhpYgaI00TlATb50fO
+         +88C3aitfD8RGBpw92sN+5k11VgL3yzEbkZY5WR+aw++Ok06epWZzjS2rLFAOQpZxC2z
+         c49lRjo86NO54ytKp7OkGpn+Z6+IV5exgTu7t8zTwN6qDvcCRzzn5ovUSXIMz+jSNeF2
+         HyVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Zh63UOS7ilzhz5dxfKE0m9GbUJ+0r9iadIJ1yOEtJFU=;
-        b=G7nJjsvsA0adUFk7MIofXU1TB+FDPKwrWeYPV5xaEpoMNNxlLHIM45XrYAdXgKEjLQ
-         CN6FYqqcvZ94kK/1W2pEB5EAd1riYLRp6+dl8zWHIxKdJipYf5PmvUkEitKbW/HVKAwL
-         VgWexn0wbZOuVbYtjgWsSvT2mFJVNf3pteIu2T2gYxdrCFtGt2x3dxgh8Be0TTBDWhI4
-         CL9MC35m7hz2BZ/jU+cIbHyQDZ4vofUxI7fUstbeYMpPafwMe8csFCDlrf6XuteC6cYO
-         TGjuJEvLoazVru/WFvrOW0JVHNbALesE71g8qXeYCntcdE6Xc+x5nBhLfu5UFivks3It
-         RCVA==
-X-Gm-Message-State: AN3rC/5BjIQtINfvc8b/S2yF85yHTYRysmP35GLyM1jg8BMIPgyrOBQm
-        00hiMussAIpl7w==
-X-Received: by 10.98.194.199 with SMTP id w68mr2754277pfk.192.1492423811503;
-        Mon, 17 Apr 2017 03:10:11 -0700 (PDT)
+        bh=pmXt03ZI3P1Qr+KfAreH2BU4MyyXPWowxy2jiyYS8aI=;
+        b=cPDUN2WxMJO6NSa7XaETxKMJSpSetf17dt9Ii7PnIdO8/PIEsHTsDzfDlZm5vKjQGr
+         cm8a9KI114RzmFTDjTasWZvIDu52tiQhVXBmDKhGKBkr3TCY9fcpbhZzBqrP0tBNZPzi
+         WwWnSRXmLAPcb3DEHAlb8MYGL6j4dAyB/IsiuISSt/hvB6CwP2liMZ38nYaVcVb5Jece
+         60P4UWIHFNDb+0mvnehtNiasMtJ+3NmdjQnCtgYEVGqJ2UZlWkhKIRyYsrzEAcsntoVS
+         YjT8ZmkBOLwE5Kn6RQtSsmY2Jorvuo7P8ZocB8f/uyvNoCPVtApdRsZq9FRAPltbQx/D
+         ht4A==
+X-Gm-Message-State: AN3rC/4igx9BMhfuEFyrxSe5Mh85RRRvAePdfl8DmjBRUDVA878Qizjy
+        19dyUDXT3qtsqA==
+X-Received: by 10.99.55.78 with SMTP id g14mr11273279pgn.191.1492423816701;
+        Mon, 17 Apr 2017 03:10:16 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id z5sm5487422pfd.76.2017.04.17.03.10.08
+        by smtp.gmail.com with ESMTPSA id s10sm17103976pfe.28.2017.04.17.03.10.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Apr 2017 03:10:10 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 17 Apr 2017 17:10:06 +0700
+        Mon, 17 Apr 2017 03:10:16 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 17 Apr 2017 17:10:11 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,12 +56,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         bert.wesarg@googlemail.com,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 1/3] config: prepare to pass more info in git_config_with_options()
-Date:   Mon, 17 Apr 2017 17:10:00 +0700
-Message-Id: <20170417101002.18272-1-pclouds@gmail.com>
+Subject: [PATCH v2 2/3] config: handle conditional include when $GIT_DIR is not set up
+Date:   Mon, 17 Apr 2017 17:10:01 +0700
+Message-Id: <20170417101002.18272-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
-In-Reply-To: <CACsJy8D-=3qPbEO-dq2+Mr-WZ+5RrivkSw9NX7_FhEJFy+59zA@mail.gmail.com>
+In-Reply-To: <20170417101002.18272-1-pclouds@gmail.com>
 References: <CACsJy8D-=3qPbEO-dq2+Mr-WZ+5RrivkSw9NX7_FhEJFy+59zA@mail.gmail.com>
+ <20170417101002.18272-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,185 +71,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So far we can only pass one flag, respect_includes, to thie function. We
-need to pass some more (non-flag even), so let's make it accept a struct
-instead of an integer.
+If setup_git_directory() and friends have not been called,
+get_git_dir() (because of includeIf.gitdir:XXX) would lead to
 
+    die("BUG: setup_git_env called without repository");
+
+There are two cases when a config file could be read before $GIT_DIR
+is located.
+
+The first one is check_repository_format(), where we read just the one
+file $GIT_DIR/config to check if we could understand this
+repository. This case should be safe. We do not parse include
+directives, which can only be triggered from git_config_with_options,
+but setup code uses a lower-level function. The concerned variables
+should never be hidden away behind includes anyway.
+
+The second one is triggered in check_pager_config() when we're about
+to run an external git command. We might be able to find $GIT_DIR in
+this case, which is exactly what read_early_config() does (and also is
+what check_pager_config() uses). Conditional includes and
+get_git_dir() could be triggered by the first
+git_config_with_options() call there, before discover_git_directory()
+is used as a fallback $GIT_DIR detection.
+
+Detect this special "early reading" case, pass down the $GIT_DIR,
+either from previous setup or detected by discover_git_directory(),
+and make conditional include use it.
+
+Noticed-by: Bert Wesarg <bert.wesarg@googlemail.com>
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/config.c | 21 ++++++++++++---------
- cache.h          |  7 ++++++-
- config.c         | 16 +++++++++++-----
- 3 files changed, 29 insertions(+), 15 deletions(-)
+ cache.h                   |  1 +
+ config.c                  | 34 ++++++++++++++++++++++++++--------
+ t/t1305-config-include.sh | 11 +++++++++++
+ 3 files changed, 38 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 4f49a0edb9..b937d175a9 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -26,7 +26,8 @@ static int use_global_config, use_system_config, use_local_config;
- static struct git_config_source given_config_source;
- static int actions, types;
- static int end_null;
--static int respect_includes = -1;
-+static int respect_includes_opt = -1;
-+static struct config_options config_options;
- static int show_origin;
- 
- #define ACTION_GET (1<<0)
-@@ -81,7 +82,7 @@ static struct option builtin_config_options[] = {
- 	OPT_GROUP(N_("Other")),
- 	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
--	OPT_BOOL(0, "includes", &respect_includes, N_("respect include directives on lookup")),
-+	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
- 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
- 	OPT_END(),
- };
-@@ -242,7 +243,7 @@ static int get_value(const char *key_, const char *regex_)
- 	}
- 
- 	git_config_with_options(collect_config, &values,
--				&given_config_source, respect_includes);
-+				&given_config_source, &config_options);
- 
- 	ret = !values.nr;
- 
-@@ -320,7 +321,7 @@ static void get_color(const char *var, const char *def_color)
- 	get_color_found = 0;
- 	parsed_color[0] = '\0';
- 	git_config_with_options(git_get_color_config, NULL,
--				&given_config_source, respect_includes);
-+				&given_config_source, &config_options);
- 
- 	if (!get_color_found && def_color) {
- 		if (color_parse(def_color, parsed_color) < 0)
-@@ -352,7 +353,7 @@ static int get_colorbool(const char *var, int print)
- 	get_diff_color_found = -1;
- 	get_color_ui_found = -1;
- 	git_config_with_options(git_get_colorbool_config, NULL,
--				&given_config_source, respect_includes);
-+				&given_config_source, &config_options);
- 
- 	if (get_colorbool_found < 0) {
- 		if (!strcmp(get_colorbool_slot, "color.diff"))
-@@ -441,7 +442,7 @@ static int get_urlmatch(const char *var, const char *url)
- 	}
- 
- 	git_config_with_options(urlmatch_config_entry, &config,
--				&given_config_source, respect_includes);
-+				&given_config_source, &config_options);
- 
- 	ret = !values.nr;
- 
-@@ -530,8 +531,10 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 				prefix_filename(prefix, given_config_source.file);
- 	}
- 
--	if (respect_includes == -1)
--		respect_includes = !given_config_source.file;
-+	if (respect_includes_opt == -1)
-+		config_options.respect_includes = !given_config_source.file;
-+	else
-+		config_options.respect_includes = respect_includes_opt;
- 
- 	if (end_null) {
- 		term = '\0';
-@@ -578,7 +581,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		check_argc(argc, 0, 0);
- 		if (git_config_with_options(show_all_config, NULL,
- 					    &given_config_source,
--					    respect_includes) < 0) {
-+					    &config_options) < 0) {
- 			if (given_config_source.file)
- 				die_errno("unable to read config file '%s'",
- 					  given_config_source.file);
 diff --git a/cache.h b/cache.h
-index 556468c25b..a6294d2573 100644
+index a6294d2573..878e1d441f 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1885,6 +1885,10 @@ enum config_origin_type {
- 	CONFIG_ORIGIN_CMDLINE
+@@ -1887,6 +1887,7 @@ enum config_origin_type {
+ 
+ struct config_options {
+ 	unsigned int respect_includes : 1;
++	const char *git_dir;
  };
  
-+struct config_options {
-+	unsigned int respect_includes : 1;
-+};
-+
  typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
-@@ -1898,7 +1902,7 @@ extern void read_early_config(config_fn_t cb, void *data);
- extern void git_config(config_fn_t fn, void *);
- extern int git_config_with_options(config_fn_t fn, void *,
- 				   struct git_config_source *config_source,
--				   int respect_includes);
-+				   const struct config_options *opts);
- extern int git_parse_ulong(const char *, unsigned long *);
- extern int git_parse_maybe_bool(const char *);
- extern int git_config_int(const char *, const char *);
-@@ -1950,6 +1954,7 @@ struct config_include_data {
- 	int depth;
- 	config_fn_t fn;
- 	void *data;
-+	const struct config_options *opts;
- };
- #define CONFIG_INCLUDE_INIT { 0 }
- extern int git_config_include(const char *name, const char *value, void *data);
 diff --git a/config.c b/config.c
-index 1a4d85537b..042321a3a0 100644
+index 042321a3a0..14f0417460 100644
 --- a/config.c
 +++ b/config.c
-@@ -1530,13 +1530,14 @@ static int do_git_config_sequence(config_fn_t fn, void *data)
+@@ -207,13 +207,22 @@ static int prepare_include_condition_pattern(struct strbuf *pat)
+ 	return prefix;
+ }
  
- int git_config_with_options(config_fn_t fn, void *data,
- 			    struct git_config_source *config_source,
--			    int respect_includes)
-+			    const struct config_options *opts)
+-static int include_by_gitdir(const char *cond, size_t cond_len, int icase)
++static int include_by_gitdir(const struct config_options *opts,
++			     const char *cond, size_t cond_len, int icase)
  {
- 	struct config_include_data inc = CONFIG_INCLUDE_INIT;
+ 	struct strbuf text = STRBUF_INIT;
+ 	struct strbuf pattern = STRBUF_INIT;
+ 	int ret = 0, prefix;
++	const char *git_dir;
  
--	if (respect_includes) {
-+	if (opts->respect_includes) {
- 		inc.fn = fn;
- 		inc.data = data;
-+		inc.opts = opts;
- 		fn = git_config_include;
- 		data = &inc;
- 	}
-@@ -1557,7 +1558,10 @@ int git_config_with_options(config_fn_t fn, void *data,
- 
- static void git_config_raw(config_fn_t fn, void *data)
- {
--	if (git_config_with_options(fn, data, NULL, 1) < 0)
-+	struct config_options opts = {0};
+-	strbuf_add_absolute_path(&text, get_git_dir());
++	if (opts->git_dir)
++		git_dir = opts->git_dir;
++	else if (have_git_dir())
++		git_dir = get_git_dir();
++	else
++		goto done;
 +
-+	opts.respect_includes = 1;
-+	if (git_config_with_options(fn, data, NULL, &opts) < 0)
- 		/*
- 		 * git_config_with_options() normally returns only
- 		 * zero, as most errors are fatal, and
-@@ -1597,9 +1601,11 @@ static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
++	strbuf_add_absolute_path(&text, git_dir);
+ 	strbuf_add(&pattern, cond, cond_len);
+ 	prefix = prepare_include_condition_pattern(&pattern);
  
- void read_early_config(config_fn_t cb, void *data)
+@@ -242,13 +251,14 @@ static int include_by_gitdir(const char *cond, size_t cond_len, int icase)
+ 	return ret;
+ }
+ 
+-static int include_condition_is_true(const char *cond, size_t cond_len)
++static int include_condition_is_true(const struct config_options *opts,
++				     const char *cond, size_t cond_len)
  {
-+	struct config_options opts = {0};
+ 
+ 	if (skip_prefix_mem(cond, cond_len, "gitdir:", &cond, &cond_len))
+-		return include_by_gitdir(cond, cond_len, 0);
++		return include_by_gitdir(opts, cond, cond_len, 0);
+ 	else if (skip_prefix_mem(cond, cond_len, "gitdir/i:", &cond, &cond_len))
+-		return include_by_gitdir(cond, cond_len, 1);
++		return include_by_gitdir(opts, cond, cond_len, 1);
+ 
+ 	/* unknown conditionals are always false */
+ 	return 0;
+@@ -273,7 +283,7 @@ int git_config_include(const char *var, const char *value, void *data)
+ 		ret = handle_path_include(value, inc);
+ 
+ 	if (!parse_config_key(var, "includeif", &cond, &cond_len, &key) &&
+-	    (cond && include_condition_is_true(cond, cond_len)) &&
++	    (cond && include_condition_is_true(inc->opts, cond, cond_len)) &&
+ 	    !strcmp(key, "path"))
+ 		ret = handle_path_include(value, inc);
+ 
+@@ -1603,10 +1613,12 @@ void read_early_config(config_fn_t cb, void *data)
+ {
+ 	struct config_options opts = {0};
  	struct strbuf buf = STRBUF_INIT;
++	char *to_free = NULL;
  
--	git_config_with_options(cb, data, NULL, 1);
-+	opts.respect_includes = 1;
-+	git_config_with_options(cb, data, NULL, &opts);
+ 	opts.respect_includes = 1;
+-	git_config_with_options(cb, data, NULL, &opts);
  
++	if (have_git_dir())
++		opts.git_dir = get_git_dir();
  	/*
  	 * When setup_git_directory() was not yet asked to discover the
-@@ -1615,7 +1621,7 @@ void read_early_config(config_fn_t cb, void *data)
+ 	 * GIT_DIR, we ask discover_git_directory() to figure out whether there
+@@ -1615,7 +1627,12 @@ void read_early_config(config_fn_t cb, void *data)
+ 	 * notably, the current working directory is still the same after the
+ 	 * call).
+ 	 */
+-	if (!have_git_dir() && discover_git_directory(&buf)) {
++	else if (discover_git_directory(&buf))
++		opts.git_dir = to_free = xstrdup(buf.buf);
++
++	git_config_with_options(cb, data, NULL, &opts);
++
++	if (!have_git_dir() && opts.git_dir) {
+ 		struct git_config_source repo_config;
+ 
  		memset(&repo_config, 0, sizeof(repo_config));
- 		strbuf_addstr(&buf, "/config");
- 		repo_config.file = buf.buf;
--		git_config_with_options(cb, data, &repo_config, 1);
-+		git_config_with_options(cb, data, &repo_config, &opts);
+@@ -1624,6 +1641,7 @@ void read_early_config(config_fn_t cb, void *data)
+ 		git_config_with_options(cb, data, &repo_config, &opts);
  	}
  	strbuf_release(&buf);
++	free(to_free);
  }
+ 
+ static void git_config_check_init(void);
+diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
+index e833939320..fddb47bafa 100755
+--- a/t/t1305-config-include.sh
++++ b/t/t1305-config-include.sh
+@@ -208,6 +208,17 @@ test_expect_success 'conditional include, both unanchored, icase' '
+ 	)
+ '
+ 
++test_expect_success 'conditional include, early config reading' '
++	(
++		cd foo &&
++		echo "[includeIf \"gitdir:foo/\"]path=bar6" >>.git/config &&
++		echo "[test]six=6" >.git/bar6 &&
++		echo 6 >expect &&
++		test-config read_early_config test.six >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_expect_success 'include cycles are detected' '
+ 	cat >.gitconfig <<-\EOF &&
+ 	[test]value = gitconfig
 -- 
 2.11.0.157.gd943d85
 
