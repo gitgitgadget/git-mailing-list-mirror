@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9BF120A04
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4F5B20A04
 	for <e@80x24.org>; Mon, 17 Apr 2017 20:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932200AbdDQUvv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Apr 2017 16:51:51 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:35464 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932177AbdDQUvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2017 16:51:49 -0400
-Received: by mail-qk0-f195.google.com with SMTP id k139so21116027qke.2
-        for <git@vger.kernel.org>; Mon, 17 Apr 2017 13:51:49 -0700 (PDT)
+        id S932215AbdDQUvy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Apr 2017 16:51:54 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:36587 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932177AbdDQUvx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2017 16:51:53 -0400
+Received: by mail-qk0-f194.google.com with SMTP id v75so21109976qkb.3
+        for <git@vger.kernel.org>; Mon, 17 Apr 2017 13:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qjSokgMLv2L7QqhP1H5ltIZ6vUs34ywP+qEGK95Pzfg=;
-        b=UKc/EFWfZoGmQe6iOcIhoITDz45a/EzjxtO0pCLb7Dp7UDZpLkNzLFCHt+N6k398kM
-         pEJEpTifhA3a5nC89il7cNWXQdD/VI1j6Hm6BJTbs7mu0qnjrPILL0479aFCjBBIQ3zQ
-         OWeJj/tYja1poGKw9WTPEOlKXUT7omR6pvifdapR1i7STzUxq6ohbS2BzQBHf+WmSjAm
-         62w5Nzyf7GqA4NCgVki9nSWD6bxaUQ7KMwtLJaLNSRMSdzUEmMF1c5AojKF2mCMnvaUz
-         TSTI9gkGJF4KH+pseAKZpM2ISrGP0haJ1eWDxsTQ8HCca8m7ZmUfYhjPxmK/3bannStf
-         eXjA==
+        bh=pzFsU7KRWPNtGJQ7O+VFQO5PVBaIluekPP1yjXO8mQw=;
+        b=IIiux+UtrsjeAEHLGzUuXRGFobODts2NnwecPr+nbdzIuWEKd6kzNijCx6fEoDdUwT
+         gD+xGkP54agH1wQ5k6Ay68mMbjMiLVNW6Lz21ARtWQMmbGl+cg8qn8CUIXlaanHrP0j9
+         hyW1LfPuv/z8l9XH6TmfFP0DfzDzC0WGp+AhO7B38gq5SvriR0Y/a7kXA9bk+TGOUA71
+         ZpgckYEhRJ5nySRV+jHKTc3hYZgTFKN/QYUSLkb1JgeuDuFyzwX5MKVOhnm5Tqf9Y0qS
+         RjURGGiIN1U/J1+SXnL+B4XRmDb8mokQTvR+50hw+f0N2ETTXcr159EWlJsXj/fvbNJg
+         CG4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=qjSokgMLv2L7QqhP1H5ltIZ6vUs34ywP+qEGK95Pzfg=;
-        b=P9N1kEx/3AhNRDj+kShbyNJ/f4eG3TAhF0SoyZktACXfzPqPnU5K2qntWZgdOtxql1
-         ujI79x0XAsR/JlfFNUxtmO0vbGGoyjrKUJGl0VCQMd16u8W36RpfjBcyFfAn79aT54y6
-         ZNAgyopf33Ks9kgZMrmaqEElQ5DTn+bc0yVx3xH4hH33J2qu5H7nPFLsQ1tMAv2EQo+k
-         lSR7BqtEmKzgv1qtZmlWduuV3S2N297kQ+U9wkulLkIbnw3TnJV0Y2GtqdzLTwt+uQy9
-         p1imP5RRJ6A8NzcX++mdeBwLs0vkzwkb80AQr1VAh4oc4ZLjA0UAJullSpGGZBMtxQaF
-         5WMg==
-X-Gm-Message-State: AN3rC/6auoyM4JAzA6Egi0aWa4VNmfHTOHX4lAkHb7KdoZ6SfhUhTWCx
-        FC23SqNgTHpYLw==
-X-Received: by 10.55.6.83 with SMTP id 80mr11348452qkg.156.1492462308932;
-        Mon, 17 Apr 2017 13:51:48 -0700 (PDT)
+        bh=pzFsU7KRWPNtGJQ7O+VFQO5PVBaIluekPP1yjXO8mQw=;
+        b=FGT0K/P/rnMlTjlUbbLzRE3tlOIsJdL7Pla+I0HmJPDUt62UD/THu7+WZxb5kdFJHd
+         2xj8qvIWxCrnN8l1cPK0aoe8G9KGidAERnD4JZ+4eoECUvzewNoyNTk1PW+ZgDodEqwo
+         FOb4l76m22aXgPD5PEqL7LdMgtCIAYMSWuVdlQtNQDPZWPf/ocN51A4DSVuMfqpTZvlp
+         rQtCm7ca3w0jr0Hxxb+sAtCWplF3b3VPTyZL79CeSWWJAH+WF3dBaMnvLF6SVMjRKQg+
+         HiU9EugfL1rnigxlLdOOPe7NKmGi2alBWKFwLT4UBrol18WMb87zZsoRLgyCn0mYGbUr
+         COgg==
+X-Gm-Message-State: AN3rC/4aU8llwtJPuYE0aK2WFGEGoHmjL5y2qNE0eSd8CDGQaifvZ3p4
+        5bgMGuCi8bX3EA==
+X-Received: by 10.55.204.157 with SMTP id n29mr9575905qkl.73.1492462312218;
+        Mon, 17 Apr 2017 13:51:52 -0700 (PDT)
 Received: from localhost.localdomain ([179.222.191.2])
-        by smtp.gmail.com with ESMTPSA id f203sm8093848qka.11.2017.04.17.13.51.45
+        by smtp.gmail.com with ESMTPSA id f203sm8093848qka.11.2017.04.17.13.51.49
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 17 Apr 2017 13:51:47 -0700 (PDT)
+        Mon, 17 Apr 2017 13:51:51 -0700 (PDT)
 From:   Daniel Ferreira <bnmvco@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v9 1/5] dir_iterator: add tests for dir_iterator API
-Date:   Mon, 17 Apr 2017 17:51:32 -0300
-Message-Id: <1492462296-4990-2-git-send-email-bnmvco@gmail.com>
+Subject: [PATCH v9 2/5] remove_subtree(): test removing nested directories
+Date:   Mon, 17 Apr 2017 17:51:33 -0300
+Message-Id: <1492462296-4990-3-git-send-email-bnmvco@gmail.com>
 X-Mailer: git-send-email 2.7.4 (Apple Git-66)
 In-Reply-To: <1492462296-4990-1-git-send-email-bnmvco@gmail.com>
 References: <1492462296-4990-1-git-send-email-bnmvco@gmail.com>
@@ -63,143 +63,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create t/helper/test-dir-iterator.c, which prints relevant information
-about a directory tree iterated over with dir_iterator.
-
-Create t/t0065-dir-iterator.sh, which tests that dir_iterator does
-iterate through a whole directory tree.
+Test removing a nested directory when an attempt is made to restore the
+index to a state where it does not exist. A similar test could be found
+previously in t/t2000-checkout-cache-clash.sh, but it did not check for
+nested directories, which could allow a faulty implementation of
+remove_subtree() pass the tests.
 
 Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
 ---
- Makefile                     |  1 +
- t/helper/.gitignore          |  1 +
- t/helper/test-dir-iterator.c | 30 ++++++++++++++++++++++++
- t/t0065-dir-iterator.sh      | 55 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 87 insertions(+)
- create mode 100644 t/helper/test-dir-iterator.c
- create mode 100755 t/t0065-dir-iterator.sh
+ t/t2000-checkout-cache-clash.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index d595ea3..a5c1ac0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -614,6 +614,7 @@ TEST_PROGRAMS_NEED_X += test-ctype
- TEST_PROGRAMS_NEED_X += test-config
- TEST_PROGRAMS_NEED_X += test-date
- TEST_PROGRAMS_NEED_X += test-delta
-+TEST_PROGRAMS_NEED_X += test-dir-iterator
- TEST_PROGRAMS_NEED_X += test-dump-cache-tree
- TEST_PROGRAMS_NEED_X += test-dump-split-index
- TEST_PROGRAMS_NEED_X += test-dump-untracked-cache
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index 758ed2e..a7d74d3 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -3,6 +3,7 @@
- /test-config
- /test-date
- /test-delta
-+/test-dir-iterator
- /test-dump-cache-tree
- /test-dump-split-index
- /test-dump-untracked-cache
-diff --git a/t/helper/test-dir-iterator.c b/t/helper/test-dir-iterator.c
-new file mode 100644
-index 0000000..a7d1470
---- /dev/null
-+++ b/t/helper/test-dir-iterator.c
-@@ -0,0 +1,30 @@
-+#include "git-compat-util.h"
-+#include "strbuf.h"
-+#include "iterator.h"
-+#include "dir-iterator.h"
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	struct dir_iterator *diter;
-+
-+	if (argc < 2)
-+		die("BUG: test-dir-iterator needs one argument");
-+
-+	strbuf_add(&path, argv[1], strlen(argv[1]));
-+
-+	diter = dir_iterator_begin(path.buf);
-+
-+	while (dir_iterator_advance(diter) == ITER_OK) {
-+		if (S_ISDIR(diter->st.st_mode))
-+			printf("[d] ");
-+		else if (S_ISREG(diter->st.st_mode))
-+			printf("[f] ");
-+		else
-+			printf("[?] ");
-+
-+		printf("(%s) [%s] %s\n", diter->relative_path, diter->basename, diter->path.buf);
-+	}
-+
-+	return 0;
-+}
-diff --git a/t/t0065-dir-iterator.sh b/t/t0065-dir-iterator.sh
-new file mode 100755
-index 0000000..b6d76dd
---- /dev/null
-+++ b/t/t0065-dir-iterator.sh
-@@ -0,0 +1,55 @@
-+#!/bin/sh
-+
-+test_description='Test directory iteration.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir -p dir &&
-+	mkdir -p dir/a/b/c/ &&
-+	>dir/b &&
-+	>dir/c &&
-+	mkdir -p dir/d/e/d/ &&
-+	>dir/a/b/c/d &&
-+	>dir/a/e &&
-+	>dir/d/e/d/a &&
-+
-+	mkdir -p dir2/a/b/c/ &&
-+	>dir2/a/b/c/d
+diff --git a/t/t2000-checkout-cache-clash.sh b/t/t2000-checkout-cache-clash.sh
+index de3edb5..ac10ba3 100755
+--- a/t/t2000-checkout-cache-clash.sh
++++ b/t/t2000-checkout-cache-clash.sh
+@@ -57,4 +57,15 @@ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
+ 	git checkout-index -a -f --prefix=there/
+ '
+ 
++test_expect_success 'git checkout-index -f should remove nested subtrees' '
++	echo content >path &&
++	git update-index --add path &&
++	rm path &&
++	mkdir -p path/with/nested/paths &&
++	echo content >path/file1 &&
++	echo content >path/with/nested/paths/file2 &&
++	git checkout-index -f -a &&
++	test ! -d path
 +'
 +
-+cat >expect-sorted-output <<-\EOF &&
-+[d] (a) [a] ./dir/a
-+[d] (a/b) [b] ./dir/a/b
-+[d] (a/b/c) [c] ./dir/a/b/c
-+[d] (d) [d] ./dir/d
-+[d] (d/e) [e] ./dir/d/e
-+[d] (d/e/d) [d] ./dir/d/e/d
-+[f] (a/b/c/d) [d] ./dir/a/b/c/d
-+[f] (a/e) [e] ./dir/a/e
-+[f] (b) [b] ./dir/b
-+[f] (c) [c] ./dir/c
-+[f] (d/e/d/a) [a] ./dir/d/e/d/a
-+EOF
-+
-+test_expect_success 'dir-iterator should iterate through all files' '
-+	test-dir-iterator ./dir >out &&
-+	sort <out >./actual-pre-order-sorted-output &&
-+
-+	test_cmp expect-sorted-output actual-pre-order-sorted-output
-+'
-+
-+cat >expect-pre-order-output <<-\EOF &&
-+[d] (a) [a] ./dir2/a
-+[d] (a/b) [b] ./dir2/a/b
-+[d] (a/b/c) [c] ./dir2/a/b/c
-+[f] (a/b/c/d) [d] ./dir2/a/b/c/d
-+EOF
-+
-+test_expect_success 'dir-iterator should list files in the correct order' '
-+	test-dir-iterator ./dir2 >actual-pre-order-output &&
-+
-+	test_cmp expect-pre-order-output actual-pre-order-output
-+'
-+
-+test_done
+ test_done
 -- 
 2.7.4 (Apple Git-66)
 
