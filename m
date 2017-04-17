@@ -6,72 +6,100 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42B2520D09
-	for <e@80x24.org>; Mon, 17 Apr 2017 03:31:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAB3C20D09
+	for <e@80x24.org>; Mon, 17 Apr 2017 03:56:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932458AbdDQDbl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Apr 2017 23:31:41 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64796 "EHLO
+        id S932360AbdDQD4S (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 23:56:18 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50660 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932441AbdDQDbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2017 23:31:40 -0400
+        with ESMTP id S932330AbdDQD4Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2017 23:56:16 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 55FC28BFA4;
-        Sun, 16 Apr 2017 23:31:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2C3808C23A;
+        Sun, 16 Apr 2017 23:56:15 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VmCF+Eznn+sWnrxHusDtT8b0UPs=; b=cN+tg+
-        hM2I3PwqmQ7+P75FHemVpu1lc+X2v4GxNf/9hhGZJAUZrSFVcKwAQ9UXVwGPDu1Q
-        ck0oh9dnqtTtmNW7HVvGmqg8nyLhwrLPd/QTfwlmMVqwpZ6X5o3MWxT9f/hFDJ+A
-        x5WoW3pi7DClMqfAS4WtfjuWrMn98XLvc/+4U=
+        :content-type:content-transfer-encoding; s=sasl; bh=QiY+7lyDTatP
+        mYKpld55hH7LJbM=; b=i/9Z+NVam+ySRABexQOE7EAd3hNqzjYSAfLQQJYoHTFU
+        GL0rMOUysVuDKMX9RRRQ6Qm9hbB1OJJzjwdmONd6Z4AUndUkeCWbAnaf2nyhyvvL
+        ZI9nVMVRY7yiBdMsyvHzTW3GtDEciYQ7IJ87pOsHf1mDuEu7Iy2OT9rFXoo1VxM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TSVCps5lfX/o1vR/mQmWyqGqysRZvLlj
-        gCmdkG740Nm4G1L69L3e8hnp1fpmmy/BAJxrH3TiPZ+4TPNzUJZovqL9DYVDWCkl
-        5s8gvSPMWHJl32RLs7bRoB0M8TKA9qXpyrzL7kt0+WSM4eu3p+5hV5kOnqi19cbo
-        cwZ9rChzJyc=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=F4Y+ph
+        AtfWhAPRy1gbgWWC9JEu35S4F8JAic5uSJt0Fd5CHHYZUUfScVwo35+i9nD8eGo5
+        DmcN6fUEiD7Xog7ObNv7s4XLA675ZHlXbb7rTiA/b+sqyxUagubsgZo8eCxlFNgD
+        l9CVvWrqoQwz4DUVgvaMCAxk2/g7rL22dlp7o=
 Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4DF2C8BFA3;
-        Sun, 16 Apr 2017 23:31:39 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 22AD58C239;
+        Sun, 16 Apr 2017 23:56:15 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A9B238BFA2;
-        Sun, 16 Apr 2017 23:31:38 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 750C88C238;
+        Sun, 16 Apr 2017 23:56:14 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        benpeart@microsoft.com, christian.couder@gmail.com
-Subject: Re: [PATCH v5 4/8] convert: Separate generic structures and variables from the filter specific ones
-References: <20170407120354.17736-1-benpeart@microsoft.com>
-        <20170407120354.17736-5-benpeart@microsoft.com>
-        <48FA4601-0819-4DE2-943A-7A791BA7C583@gmail.com>
-Date:   Sun, 16 Apr 2017 20:31:37 -0700
-In-Reply-To: <48FA4601-0819-4DE2-943A-7A791BA7C583@gmail.com> (Lars
-        Schneider's message of "Mon, 10 Apr 2017 12:18:45 +0200")
-Message-ID: <xmqqmvbfk8va.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH] push: document & test --force-with-lease with multiple remotes
+References: <487622bf-00d0-e4fc-4a74-08e18d59336a@gmail.com>
+        <20170408114100.13743-1-avarab@gmail.com>
+Date:   Sun, 16 Apr 2017 20:56:13 -0700
+In-Reply-To: <20170408114100.13743-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Sat, 8 Apr 2017 11:41:00 +0000")
+Message-ID: <xmqqinm3k7qa.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5DC293E0-231E-11E7-B77C-C260AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: CD6E8278-2321-11E7-B1F1-C260AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Lars Schneider <larsxschneider@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
->> -static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
->> +static struct subprocess_entry *find_multi_file_filter_entry(const char *cmd)
+> Document & test for cases where there are two remotes pointing to the
+> same URL, and a background fetch & subsequent `git push
+> --force-with-lease` shouldn't clobber un-updated references we haven't
+> fetched.
 >
-> I am curious why you removed the hashmap parameter (here and in other pars of this patch). 
-> I know the parameter is not strictly necessary as the hashmap is a global variable anyways. 
-> However, I think it eases code maintainability in the long run if a function is "as pure as 
-> possible" (IOW does rely on global state as less as possible).
+> Some editors like Microsoft's VSC have a feature to auto-fetch in the
+> background, this bypasses the protections offered by
+> --force-with-lease as noted in the documentation being added here.
 
-If the original relied on a global hashmap and this update kept the
-code like so, I wouldn't mind the end result of this series
-(i.e. rely on it being global).  But that is not the case.  It is
-making the code worse by stopping passing the hashmap through the
-callchain.
+That sounds like an unfortunate mix of two "feature"s that are
+mutually incompatible.  Perhaps those who thought auto-fetch was a
+good idea didn't think through the implications, and also it is
+understandable that those who never thought auto-fetch was a good
+idea would want --force-with-lease to default to the remote-tracking
+branch.
+
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index 1624a35888..2f2e9c078b 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -210,6 +210,43 @@ or we do not even have to have such a remote-track=
+ing branch when
+>  this form is used).  If `<expect>` is the empty string, then the named=
+ ref
+>  must not already exist.
+>  +
+> +This option interacts very badly with anything that implicitly runs
+> +`git fetch` on the remote to be pushed to in the background. The
+
+This description is not accurate.  Only those who do not to specify
+what is expected and instead use the remote-tracking branch are
+affected (but these random "git fetch" clobbering the
+remote-tracking branch is sort of known and expected).
+
+I do not think I would mind if these two new lines were added one
+paragraph above, i.e. where "--force-with-lease=3D<refname>" form is
+described.  It clearly says "... as the remote-tracking branch we
+have for them." and that is the best place to say "This option
+interacts badly".
