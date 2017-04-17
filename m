@@ -2,31 +2,31 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3F881FA26
-	for <e@80x24.org>; Mon, 17 Apr 2017 21:37:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4AE791FA26
+	for <e@80x24.org>; Mon, 17 Apr 2017 21:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754564AbdDQVht (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Apr 2017 17:37:49 -0400
-Received: from siwi.pair.com ([209.68.5.199]:58153 "EHLO siwi.pair.com"
+        id S1754725AbdDQVhu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Apr 2017 17:37:50 -0400
+Received: from siwi.pair.com ([209.68.5.199]:58168 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753570AbdDQVhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2017 17:37:47 -0400
+        id S1752636AbdDQVhs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2017 17:37:48 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 5D4438468E;
-        Mon, 17 Apr 2017 17:37:46 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 8B92084690;
+        Mon, 17 Apr 2017 17:37:47 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v11 1/5] read-cache: add strcmp_offset function
-Date:   Mon, 17 Apr 2017 21:37:30 +0000
-Message-Id: <20170417213734.55373-2-git@jeffhostetler.com>
+Subject: [PATCH v11 3/5] read-cache: speed up add_index_entry during checkout
+Date:   Mon, 17 Apr 2017 21:37:32 +0000
+Message-Id: <20170417213734.55373-4-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170417213734.55373-1-git@jeffhostetler.com>
 References: <20170417213734.55373-1-git@jeffhostetler.com>
@@ -37,145 +37,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add strcmp_offset() function to also return the offset of the
-first change.
+Teach add_index_entry_with_check() to see if the path
+of the new item is greater than the last path in the
+index array before attempting to search for it.
 
-Add unit test and helper to verify.
+During checkout, merge_working_tree() populates the new
+index in sorted order, so this change will save a binary
+lookups per file.  This preserves the original behavior
+but simply checks the last element before starting the
+search.
+
+This helps performance on very large repositories.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- Makefile                      |  1 +
- cache.h                       |  1 +
- read-cache.c                  | 20 ++++++++++++++++++++
- t/helper/.gitignore           |  1 +
- t/helper/test-strcmp-offset.c | 22 ++++++++++++++++++++++
- t/t0065-strcmp-offset.sh      | 21 +++++++++++++++++++++
- 6 files changed, 66 insertions(+)
- create mode 100644 t/helper/test-strcmp-offset.c
- create mode 100755 t/t0065-strcmp-offset.sh
+ read-cache.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 9ec6065..4c4c246 100644
---- a/Makefile
-+++ b/Makefile
-@@ -631,6 +631,7 @@ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
- TEST_PROGRAMS_NEED_X += test-sha1
- TEST_PROGRAMS_NEED_X += test-sha1-array
- TEST_PROGRAMS_NEED_X += test-sigchain
-+TEST_PROGRAMS_NEED_X += test-strcmp-offset
- TEST_PROGRAMS_NEED_X += test-string-list
- TEST_PROGRAMS_NEED_X += test-submodule-config
- TEST_PROGRAMS_NEED_X += test-subprocess
-diff --git a/cache.h b/cache.h
-index 80b6372..3c55047 100644
---- a/cache.h
-+++ b/cache.h
-@@ -574,6 +574,7 @@ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsi
- extern int discard_index(struct index_state *);
- extern int unmerged_index(const struct index_state *);
- extern int verify_path(const char *path);
-+extern int strcmp_offset(const char *s1, const char *s2, size_t *first_change);
- extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
- extern void adjust_dirname_case(struct index_state *istate, char *name);
- extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
 diff --git a/read-cache.c b/read-cache.c
-index 9054369..97f13a1 100644
+index 97f13a1..6a27688 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -887,6 +887,26 @@ static int has_file_name(struct index_state *istate,
- 	return retval;
- }
+@@ -1021,7 +1021,16 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
  
-+
-+/*
-+ * Like strcmp(), but also return the offset of the first change.
-+ * If strings are equal, return the length.
-+ */
-+int strcmp_offset(const char *s1, const char *s2, size_t *first_change)
-+{
-+	size_t k;
-+
-+	if (!first_change)
-+		return strcmp(s1, s2);
-+
-+	for (k = 0; s1[k] == s2[k]; k++)
-+		if (s1[k] == '\0')
-+			break;
-+
-+	*first_change = k;
-+	return (unsigned char)s1[k] - (unsigned char)s2[k];
-+}
-+
- /*
-  * Do we have another file with a pathname that is a proper
-  * subset of the name we're trying to add?
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index d6e8b36..0a89531 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -25,6 +25,7 @@
- /test-sha1
- /test-sha1-array
- /test-sigchain
-+/test-strcmp-offset
- /test-string-list
- /test-submodule-config
- /test-subprocess
-diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
-new file mode 100644
-index 0000000..4a45a54
---- /dev/null
-+++ b/t/helper/test-strcmp-offset.c
-@@ -0,0 +1,22 @@
-+#include "cache.h"
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	int result;
-+	size_t offset;
-+
-+	if (!argv[1] || !argv[2])
-+		die("usage: %s <string1> <string2>", argv[0]);
-+
-+	result = strcmp_offset(argv[1], argv[2], &offset);
+ 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
+ 		cache_tree_invalidate_path(istate, ce->name);
+-	pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
 +
 +	/*
-+	 * Because differnt CRTs behave differently, only rely on signs
-+	 * of the result values.
++	 * If this entry's path sorts after the last entry in the index,
++	 * we can avoid searching for it.
 +	 */
-+	result = (result < 0 ? -1 :
-+			  result > 0 ? 1 :
-+			  0);
-+	printf("%d %"PRIuMAX"\n", result, (uintmax_t)offset);
-+	return 0;
-+}
-diff --git a/t/t0065-strcmp-offset.sh b/t/t0065-strcmp-offset.sh
-new file mode 100755
-index 0000000..7d6d214
---- /dev/null
-+++ b/t/t0065-strcmp-offset.sh
-@@ -0,0 +1,21 @@
-+#!/bin/sh
-+
-+test_description='Test strcmp_offset functionality'
-+
-+. ./test-lib.sh
-+
-+while read s1 s2 expect
-+do
-+	test_expect_success "strcmp_offset($s1, $s2)" '
-+		echo "$expect" >expect &&
-+		test-strcmp-offset "$s1" "$s2" >actual &&
-+		test_cmp expect actual
-+	'
-+done <<-EOF
-+abc abc 0 3
-+abc def -1 0
-+abc abz -1 2
-+abc abcdef -1 3
-+EOF
-+
-+test_done
++	if (istate->cache_nr > 0 &&
++		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
++		pos = -istate->cache_nr - 1;
++	else
++		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+ 
+ 	/* existing match? Just replace it. */
+ 	if (pos >= 0) {
 -- 
 2.9.3
 
