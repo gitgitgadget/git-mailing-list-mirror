@@ -2,161 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E299220D09
-	for <e@80x24.org>; Mon, 17 Apr 2017 01:49:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7A2C20D09
+	for <e@80x24.org>; Mon, 17 Apr 2017 02:13:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932506AbdDQBtM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Apr 2017 21:49:12 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61877 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S932128AbdDQBtK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Apr 2017 21:49:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5EA6C8B242;
-        Sun, 16 Apr 2017 21:49:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=i2ECBhoOR7jY
-        dYvfq5gljqqLnR4=; b=WIn6w+somd/L3/i5a3rBcnLf/4tA0sbZd99KwcmWCJa/
-        al6O3IU2c2ukEO1PZy6lISIvF7l2gm7O6F0QnMU8hDG421/HZHODQZDJV6CXMcw0
-        GeaZeqq9JEW6+o88oBPzrKsAvuAzahr7WUfMfUpv8hRsWPNe/9cBUnDJ0mczQ+w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=iF8mpO
-        nUvmw3laVoHno9sQVgu+6I02q3YoWHVThrMhgxVeHgI15EIgFNJ99e9JgNpR5OkU
-        wy35BLCcV7jIXVDR0+tnyHIaWLcRrUCS1oQfyeMSDxznqPEUywbBt8WrBQmYJsiV
-        mWv8b7FZbU/ELLMY7tNqHUShnB38aSf/yNQI4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 53F418B241;
-        Sun, 16 Apr 2017 21:49:09 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A3A938B240;
-        Sun, 16 Apr 2017 21:49:08 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Martin =?utf-8?Q?Li=C5=A1ka?= <mliska@suse.cz>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
-References: <295981e7-d2e9-d3db-e32d-8dd80ca47136@suse.cz>
-        <20170406083425.7psdmrploxar3h6v@sigill.intra.peff.net>
-        <998bf391-7fc5-8329-db58-ef0f24517707@suse.cz>
-        <33c63fb9-281c-8fd2-66e7-b85f62f4f447@web.de>
-        <8555c61f-2617-eec8-6dbe-87c79c6ca302@suse.cz>
-        <587b0cb9-bd66-ddf7-5cca-023df3470883@kdbg.org>
-        <e392e05c-2815-8cfa-eed0-bd990f8ce954@web.de>
-        <357d045a-b1c5-1a73-2256-839efb543fe3@kdbg.org>
-        <96beb4c6-0569-0c12-8151-462c20be6a2a@suse.cz>
-Date:   Sun, 16 Apr 2017 18:49:07 -0700
-In-Reply-To: <96beb4c6-0569-0c12-8151-462c20be6a2a@suse.cz> ("Martin
- =?utf-8?Q?Li=C5=A1ka=22's?=
-        message of "Fri, 7 Apr 2017 16:23:13 +0200")
-Message-ID: <xmqqy3uzkdm4.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S932389AbdDQCNm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Apr 2017 22:13:42 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:36385 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932320AbdDQCNl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Apr 2017 22:13:41 -0400
+Received: by mail-pg0-f41.google.com with SMTP id g2so65182222pge.3
+        for <git@vger.kernel.org>; Sun, 16 Apr 2017 19:13:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=sE2brxicvU4jMPZHfPnzA6gXrKk40fZs+WHAtzuKY8I=;
+        b=ItUm3Oru2ZDHysy6Yk3eW+pjHkeJRaqKUJOlR98wF7Tf5yMQUjb6teKN+Uwb61A9Z2
+         xPATXm+rskK9CFli/txKH5oeWVFvtmX4WhltrTjtMpQ+ZV88ENOgdDNKVphvnsDkDm4C
+         PsnBO//fOI/kLZxsUnpZzhdE/5MUB9M3H4ew3kGlUM3fx3AwDRW39LRBgtVFaDHFxVL7
+         ws6t322jeaK+ug/feXWBThSU4ADxPpB7Q98m5FnFU94tBKRVZ+g37xd8iPils+Di3dl3
+         5ZaV96zyxMlzJgeH8At0la/gsIpxjCDgSXoe6IA4pQ1mm0og7vjeKk1/+laD6KR5UIoM
+         +pjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sE2brxicvU4jMPZHfPnzA6gXrKk40fZs+WHAtzuKY8I=;
+        b=I9G4TNT3VzsAhtlc+2GofYjYv2aksQhR+E/cAObQglWIS1hBAsUznODkDC4cachhVD
+         2lLFBDpzjA29gsuqp2MfBvg5M4t2ZewqByDHjpE3n7osuu2MX6j+t5eTpFXb9IR0NGdO
+         UFBC9fLwGoecz5jYddJAj/qr4jng0C0lTcN7sOvb+of63uYizOD7tURuCaoW4SqQIB2Z
+         YKXyFZyHyP2jNNflAySEFUpkhBZSBdn2mJBYtyZS5iH2kIIi9z6pSvP0sB9TzfXoCkzE
+         K3AdheLkLzPd8/Oo2e3nnACk15dyJLr6HyYfclVxnJvp+0YqBYhvpGcXml+I/2f0VI0j
+         4cEQ==
+X-Gm-Message-State: AN3rC/4hFLJtSwg0esu08yDa3BeWKpek/GHgnaw17lxcfkWRg2TiSwuM
+        XhGn0E3/dnAqvQ==
+X-Received: by 10.99.116.20 with SMTP id p20mr5969958pgc.74.1492395220419;
+        Sun, 16 Apr 2017 19:13:40 -0700 (PDT)
+Received: from duynguyen.vn.dektech.internal ([14.161.14.188])
+        by smtp.gmail.com with ESMTPSA id b10sm14326135pga.39.2017.04.16.19.13.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Apr 2017 19:13:39 -0700 (PDT)
+Date:   Mon, 17 Apr 2017 09:13:35 +0700
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        bert.wesarg@googlemail.com
+Subject: Re: [PATCH 2/2] config: handle conditional include when $GIT_DIR is
+ not set up
+Message-ID: <20170417021335.GB8987@duynguyen.vn.dektech.internal>
+References: <20170416045004.2ghhiv7jzgroejgw@sigill.intra.peff.net>
+ <20170416104125.15300-1-pclouds@gmail.com>
+ <20170416104125.15300-2-pclouds@gmail.com>
+ <20170416155131.ppp5iakohiiphzmk@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 0C18A77C-2310-11E7-8F7A-E680B56B9B0B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170416155131.ppp5iakohiiphzmk@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Martin Li=C5=A1ka <mliska@suse.cz> writes:
+On Sun, Apr 16, 2017 at 11:51:32AM -0400, Jeff King wrote:
+> > diff --git a/cache.h b/cache.h
+> > index e29a093839..27b7286f99 100644
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -1884,6 +1884,8 @@ enum config_origin_type {
+> >  
+> >  struct config_options {
+> >  	unsigned int respect_includes : 1;
+> > +	unsigned int early_config : 1;
+> > +	const char *git_dir; /* only valid when early_config is true */
+> >  };
+> 
+> Why do we need both the flag and the string? Later, you do:
+> 
+> > -static int include_by_gitdir(const char *cond, size_t cond_len, int icase)
+> > +static int include_by_gitdir(const struct config_options *opts,
+> > +			     const char *cond, size_t cond_len, int icase)
+> >  {
+> >  	struct strbuf text = STRBUF_INIT;
+> >  	struct strbuf pattern = STRBUF_INIT;
+> >  	int ret = 0, prefix;
+> >  
+> > -	strbuf_add_absolute_path(&text, get_git_dir());
+> > +	if (!opts->early_config)
+> > +		strbuf_add_absolute_path(&text, get_git_dir());
+> > +	else if (opts->git_dir)
+> > +		strbuf_add_absolute_path(&text, opts->git_dir);
+> > +	else
+> > +		goto done;
+> 
+> So we call get_git_dir() always when we're not in early config. Even if
+> we don't have a git dir! Doesn't this mean that programs operating
+> outside of a repo will still hit the BUG? I.e.:
+> 
+>   git config --global includeif.gitdir:/whatever.path foo
+>   cd /not/a/git/dir
+>   git diff --no-index foo bar
+> 
+> ?
+> 
+> I think instead the logic should be:
+> 
+>   if (opts->git_dir)
+> 	strbuf_add_absolute_path(&text, opts->git_dir);
+>   else if (have_git_dir())
+> 	strbuf_add_absolute_path(&text, get_git_dir());
+>   else
+> 	goto done;
 
-> From 0bdf4d717d3d368dd9676d15d20f8592c4d22fde Mon Sep 17 00:00:00 2001
-> From: marxin <mliska@suse.cz>
-> Date: Wed, 5 Apr 2017 14:31:32 +0200
-> Subject: [PATCH 1/2] Fix nonnull errors reported by UBSAN with GCC 7.
->
-> Replace call to memmove with newly introduced function memmove_or_null
-> and call to memcpy with COPY_ARRAY macro.
+Do we care about the case when the override instruction is "we don't
+have $GIT_DIR, act as if it does not exist, even though have_git_dir()
+returns true"?
 
-I didn't closely follow the discussion, but with these three lines
-(which will be the primary thing future readers of this change in
-"git log -p" output will rely on), it is unclear why this change was
-made.  For that matter, it is not clear what "nonnull errors" are,
-either.
-
-> Signed-off-by: Martin Liska <mliska@suse.cz>
-> ---
->  apply.c            | 4 +---
->  builtin/ls-files.c | 2 +-
->  git-compat-util.h  | 8 ++++++++
->  3 files changed, 10 insertions(+), 4 deletions(-)
->
-> diff --git a/apply.c b/apply.c
-> index e6dbab26a..121f3f414 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -2802,9 +2802,7 @@ static void update_image(struct apply_state *stat=
-e,
->  			img->line + applied_pos + preimage_limit,
->  			(img->nr - (applied_pos + preimage_limit)) *
->  			sizeof(*img->line));
-> -	memcpy(img->line + applied_pos,
-> -	       postimage->line,
-> -	       postimage->nr * sizeof(*img->line));
-> +	COPY_ARRAY(img->line + applied_pos, postimage->line, postimage->nr);
-
-I am suspecting that postimage->nr can be 0 and newer compliers can
-give warning "hey what's the point of copying 0 bytes?" which can be
-squelched by moving to COPY_ARRAY()?  If that is the case I like the
-change (but as I said, it is unclear if that is what is going on
-here).
-
-> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-> index d449e46db..0a6cc1e8a 100644
-> --- a/builtin/ls-files.c
-> +++ b/builtin/ls-files.c
-> @@ -391,7 +391,7 @@ static void prune_cache(const char *prefix, size_t =
-prefixlen)
->  		}
->  		last =3D next;
->  	}
-> -	memmove(active_cache, active_cache + pos,
-> +	memmove_or_null(active_cache, active_cache + pos,
->  		(last - pos) * sizeof(struct cache_entry *));
-
-Does this change come with the same or a similar motivation as the
-above (i.e. pos could be the same as last)?
-
-"Something or NULL" is a name we use for a function that returns
-something (under normal circumstances) or returns NULL.  This
-wrapper is not about returning NULL at all, as far as I can see, and
-is misnamed.  If it is about "avoid moving 0 bytes", similar to how
-COPY_ARRAY() is used in the previous hunk, perhaps MOVE_ARRAY() is a
-better name?
-
-Thanks.
-
->  	active_nr =3D last - pos;
->  }
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 8a4a3f85e..81f6e56ac 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1002,6 +1002,14 @@ int git_qsort_s(void *base, size_t nmemb, size_t=
- size,
->  		die("BUG: qsort_s() failed");			\
->  } while (0)
-> =20
-> +static inline void *memmove_or_null(void *dest, const void *src, size_=
-t n)
-> +{
-> +	if (n > 0)
-> +		return memmove(dest, src, n);
-> +	else
-> +		return dest;
-> +}
-> +
->  #ifndef REG_STARTEND
->  #error "Git requires REG_STARTEND support. Compile with NO_REGEX=3DNee=
-dsStartEnd"
->  #endif
+I'm guessing no, we won't run into that situation (and am inclined to
+restructure the code as you suggested). Just throwing it out there if
+I'm mistaken.
+--
+Duy
