@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D82351FA26
-	for <e@80x24.org>; Mon, 17 Apr 2017 21:37:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4A951FA26
+	for <e@80x24.org>; Mon, 17 Apr 2017 21:38:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754851AbdDQVh4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Apr 2017 17:37:56 -0400
-Received: from siwi.pair.com ([209.68.5.199]:58161 "EHLO siwi.pair.com"
+        id S1754819AbdDQVhz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Apr 2017 17:37:55 -0400
+Received: from siwi.pair.com ([209.68.5.199]:58178 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753740AbdDQVht (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1754217AbdDQVht (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 17 Apr 2017 17:37:49 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 059CB8468F;
-        Mon, 17 Apr 2017 17:37:46 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 1D85984691;
+        Mon, 17 Apr 2017 17:37:48 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v11 2/5] p0006-read-tree-checkout: perf test to time read-tree
-Date:   Mon, 17 Apr 2017 21:37:31 +0000
-Message-Id: <20170417213734.55373-3-git@jeffhostetler.com>
+Subject: [PATCH v11 4/5] read-cache: speed up has_dir_name (part 1)
+Date:   Mon, 17 Apr 2017 21:37:33 +0000
+Message-Id: <20170417213734.55373-5-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170417213734.55373-1-git@jeffhostetler.com>
 References: <20170417213734.55373-1-git@jeffhostetler.com>
@@ -37,220 +37,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Created t/perf/repos/many-files.sh to generate large, but
-artificial repositories.
+Teach has_dir_name() to see if the path of the new item
+is greater than the last path in the index array before
+attempting to search for it.
 
-Created t/perf/p0006-read-tree-checkout.sh to measure
-performance on various read-tree, checkout, and update-index
-operations.  This test can run using either artificial repos
-described above or normal repos.
+has_dir_name() is looking for file/directory collisions
+in the index and has to consider each sub-directory
+prefix in turn.  This can cause multiple binary searches
+for each path.
+
+During operations like checkout, merge_working_tree()
+populates the new index in sorted order, so we expect
+to be able to append in many cases.
+
+This commit is part 1 of 2.  This commit handles the top
+of has_dir_name() and the trivial optimization.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p0006-read-tree-checkout.sh |  67 ++++++++++++++++++++++
- t/perf/repos/.gitignore            |   1 +
- t/perf/repos/many-files.sh         | 110 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 178 insertions(+)
- create mode 100755 t/perf/p0006-read-tree-checkout.sh
- create mode 100644 t/perf/repos/.gitignore
- create mode 100755 t/perf/repos/many-files.sh
+ read-cache.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/t/perf/p0006-read-tree-checkout.sh b/t/perf/p0006-read-tree-checkout.sh
-new file mode 100755
-index 0000000..78cc23f
---- /dev/null
-+++ b/t/perf/p0006-read-tree-checkout.sh
-@@ -0,0 +1,67 @@
-+#!/bin/sh
-+#
-+# This test measures the performance of various read-tree
-+# and checkout operations.  It is primarily interested in
-+# the algorithmic costs of index operations and recursive
-+# tree traversal -- and NOT disk I/O on thousands of files.
+diff --git a/read-cache.c b/read-cache.c
+index 6a27688..9af0bd4 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -910,6 +910,9 @@ int strcmp_offset(const char *s1, const char *s2, size_t *first_change)
+ /*
+  * Do we have another file with a pathname that is a proper
+  * subset of the name we're trying to add?
++ *
++ * That is, is there another file in the index with a path
++ * that matches a sub-directory in the given entry?
+  */
+ static int has_dir_name(struct index_state *istate,
+ 			const struct cache_entry *ce, int pos, int ok_to_replace)
+@@ -918,6 +921,48 @@ static int has_dir_name(struct index_state *istate,
+ 	int stage = ce_stage(ce);
+ 	const char *name = ce->name;
+ 	const char *slash = name + ce_namelen(ce);
++	size_t len_eq_last;
++	int cmp_last = 0;
 +
-+test_description="Tests performance of read-tree"
-+
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+# If the test repo was generated by ./repos/many-files.sh
-+# then we know something about the data shape and branches,
-+# so we can isolate testing to the ballast-related commits
-+# and setup sparse-checkout so we don't have to populate
-+# the ballast files and directories.
-+#
-+# Otherwise, we make some general assumptions about the
-+# repo and consider the entire history of the current
-+# branch to be the ballast.
-+
-+test_expect_success "setup repo" '
-+	if git rev-parse --verify refs/heads/p0006-ballast^{commit}
-+	then
-+		echo Assuming synthetic repo from many-files.sh
-+		git branch br_base            master
-+		git branch br_ballast         p0006-ballast^
-+		git branch br_ballast_alias   p0006-ballast^
-+		git branch br_ballast_plus_1  p0006-ballast
-+		git config --local core.sparsecheckout 1
-+		cat >.git/info/sparse-checkout <<-EOF
-+		/*
-+		!ballast/*
-+		EOF
-+	else
-+		echo Assuming non-synthetic repo...
-+		git branch br_base            $(git rev-list HEAD | tail -n 1)
-+		git branch br_ballast         HEAD^ || error "no ancestor commit from current head"
-+		git branch br_ballast_alias   HEAD^
-+		git branch br_ballast_plus_1  HEAD
-+	fi &&
-+	git checkout -q br_ballast &&
-+	nr_files=$(git ls-files | wc -l)
-+'
-+
-+test_perf "read-tree br_base br_ballast ($nr_files)" '
-+	git read-tree -m br_base br_ballast -n
-+'
-+
-+test_perf "switch between br_base br_ballast ($nr_files)" '
-+	git checkout -q br_base &&
-+	git checkout -q br_ballast
-+'
-+
-+test_perf "switch between br_ballast br_ballast_plus_1 ($nr_files)" '
-+	git checkout -q br_ballast_plus_1 &&
-+	git checkout -q br_ballast
-+'
-+
-+test_perf "switch between aliases ($nr_files)" '
-+	git checkout -q br_ballast_alias &&
-+	git checkout -q br_ballast
-+'
-+
-+test_done
-diff --git a/t/perf/repos/.gitignore b/t/perf/repos/.gitignore
-new file mode 100644
-index 0000000..72e3dc3
---- /dev/null
-+++ b/t/perf/repos/.gitignore
-@@ -0,0 +1 @@
-+gen-*/
-diff --git a/t/perf/repos/many-files.sh b/t/perf/repos/many-files.sh
-new file mode 100755
-index 0000000..5a1d25e
---- /dev/null
-+++ b/t/perf/repos/many-files.sh
-@@ -0,0 +1,110 @@
-+#!/bin/sh
-+## Generate test data repository using the given parameters.
-+## When omitted, we create "gen-many-files-d-w-f.git".
-+##
-+## Usage: [-r repo] [-d depth] [-w width] [-f files]
-+##
-+## -r repo: path to the new repo to be generated
-+## -d depth: the depth of sub-directories
-+## -w width: the number of sub-directories at each level
-+## -f files: the number of files created in each directory
-+##
-+## Note that all files will have the same SHA-1 and each
-+## directory at a level will have the same SHA-1, so we
-+## will potentially have a large index, but not a large
-+## ODB.
-+##
-+## Ballast will be created under "ballast/".
-+
-+EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+
-+set -e
-+
-+## (5, 10, 9) will create 999,999 ballast files.
-+## (4, 10, 9) will create  99,999 ballast files.
-+depth=5
-+width=10
-+files=9
-+
-+while test "$#" -ne 0
-+do
-+    case "$1" in
-+	-r)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -r requires an argument' >&2; exit 1; }
-+	    repo=$1;
-+	    shift ;;
-+	-d)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -d requires an argument' >&2; exit 1; }
-+	    depth=$1;
-+	    shift ;;
-+	-w)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -w requires an argument' >&2; exit 1; }
-+	    width=$1;
-+	    shift ;;
-+	-f)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -f requires an argument' >&2; exit 1; }
-+	    files=$1;
-+	    shift ;;
-+	*)
-+	    echo "error: unknown option '$1'" >&2; exit 1 ;;
-+	esac
-+done
-+
-+## Inflate the index with thousands of empty files.
-+## usage: dir depth width files
-+fill_index() {
-+	awk -v arg_dir=$1 -v arg_depth=$2 -v arg_width=$3 -v arg_files=$4 '
-+		function make_paths(dir, depth, width, files, f, w) {
-+			for (f = 1; f <= files; f++) {
-+				print dir "/file" f
++	/*
++	 * We are frequently called during an iteration on a sorted
++	 * list of pathnames and while building a new index.  Therefore,
++	 * there is a high probability that this entry will eventually
++	 * be appended to the index, rather than inserted in the middle.
++	 * If we can confirm that, we can avoid binary searches on the
++	 * components of the pathname.
++	 *
++	 * Compare the entry's full path with the last path in the index.
++	 */
++	if (istate->cache_nr > 0) {
++		cmp_last = strcmp_offset(name,
++			istate->cache[istate->cache_nr - 1]->name,
++			&len_eq_last);
++		if (cmp_last > 0) {
++			if (len_eq_last == 0) {
++				/*
++				 * The entry sorts AFTER the last one in the
++				 * index and their paths have no common prefix,
++				 * so there cannot be a F/D conflict.
++				 */
++				return retval;
++			} else {
++				/*
++				 * The entry sorts AFTER the last one in the
++				 * index, but has a common prefix.  Fall through
++				 * to the loop below to disect the entry's path
++				 * and see where the difference is.
++				 */
 +			}
-+			if (depth > 0) {
-+				for (w = 1; w <= width; w++) {
-+					make_paths(dir "/dir" w, depth - 1, width, files)
-+				}
-+			}
++		} else if (cmp_last == 0) {
++			/*
++			 * The entry exactly matches the last one in the
++			 * index, but because of multiple stage and CE_REMOVE
++			 * items, we fall through and let the regular search
++			 * code handle it.
++			 */
 +		}
-+		END { make_paths(arg_dir, arg_depth, arg_width, arg_files) }
-+		' </dev/null |
-+	sed "s/^/100644 $EMPTY_BLOB	/" |
-+	git update-index --index-info
-+	return 0
-+}
-+
-+[ -z "$repo" ] && repo=gen-many-files-$depth.$width.$files.git
-+
-+mkdir $repo
-+cd $repo
-+git init .
-+
-+## Create an initial commit just to define master.
-+touch many-files.empty
-+echo "$depth $width $files" >many-files.params
-+git add many-files.*
-+git commit -q -m params
-+
-+## Create ballast for p0006 based upon the given params and
-+## inflate the index with thousands of empty files and commit.
-+git checkout -b p0006-ballast
-+fill_index "ballast" $depth $width $files
-+git commit -q -m "ballast"
-+
-+nr_files=$(git ls-files | wc -l)
-+
-+## Modify 1 file and commit.
-+echo "$depth $width $files" >>many-files.params
-+git add many-files.params
-+git commit -q -m "ballast plus 1"
-+
-+## Checkout master to put repo in canonical state (because
-+## the perf test may need to clone and enable sparse-checkout
-+## before attempting to checkout a commit with the ballast
-+## (because it may contain 100K directories and 1M files)).
-+git checkout master
-+
-+echo "Repository "$repo" ($depth, $width, $files) created.  Ballast $nr_files."
-+exit 0
++	}
+ 
+ 	for (;;) {
+ 		int len;
 -- 
 2.9.3
 
