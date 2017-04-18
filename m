@@ -2,155 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33C0F207B9
-	for <e@80x24.org>; Tue, 18 Apr 2017 21:37:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9923C207B9
+	for <e@80x24.org>; Tue, 18 Apr 2017 21:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755918AbdDRVhx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 17:37:53 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:33656 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755365AbdDRVhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 17:37:48 -0400
-Received: by mail-pg0-f42.google.com with SMTP id 63so2661306pgh.0
-        for <git@vger.kernel.org>; Tue, 18 Apr 2017 14:37:48 -0700 (PDT)
+        id S1753045AbdDRVkT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 17:40:19 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:35356 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751977AbdDRVkR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 17:40:17 -0400
+Received: by mail-wr0-f194.google.com with SMTP id l44so770900wrc.2
+        for <git@vger.kernel.org>; Tue, 18 Apr 2017 14:40:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xl1wbmNxDht3PYdm5YeE1ZBCFH4EkZkg/dtFmXQtdcA=;
-        b=byL5Oqf3efFun9hVlqWvFCUyDDy8igwhV0AQIlHCsOndWYPa/QewJNIAhDPNBPzCs3
-         UXkP0CyInEPShf6SoZS16OLkOY7xUWOzWDp9ktEqWFb5bS9M27Loh2bvzSZXuNOC8KxC
-         d5lZKUzGAqefhbrZjssy393YFx6MgARWXZt7DQEklbjf/j4a1sf7/03NjRW0dOoBW62J
-         Tjyi+iSiluLcM7ve1P1mnbWwBko0CVuxLJwCVW4Ij3h+dwg38HF4awtMiky4ZM04hxA/
-         81hZsHWX8tZLyf32AEY+GVsp9A+Bt3HbOFSfVi/aEPTSrRuo2z7Y7r3c79thvk0h4Zgs
-         wJFg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rTUDpQXpmHYSnmrRCc9ua6dwI5+z6/NWjpNE1ZSru4Q=;
+        b=lRGCFf23cKKx+V8wDleMjCcBhLDuX5ijwucuu6jrQ8zjk2uYYXgDIsnuYrGQwcQRQU
+         +zKng1uGG7XZ8THzu/Kxs5V7tj42vZ8K2vcCQ0dO/6p6KZyP/yEA6e8e5DshT837V0Kk
+         2xuYAP7sXs0qh2thbT3Eeg8kusge7unkUEafdMi2JqrdQd29qckPIo7sbZnbPU9dFlKe
+         U/7TfVv/Dj5Dmv/+6wIPrHDHMfV8JJV/wceWwLwbg/uqwYswVkVXvhBBEk1brymdu2kL
+         VY1ENwunKEw/EKmtA7Z89uA8EOsB8r5jzChgAreYaT0ND9hEwyBRuPgrp2fr724QF3sQ
+         96vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=xl1wbmNxDht3PYdm5YeE1ZBCFH4EkZkg/dtFmXQtdcA=;
-        b=K/YnHRxJMhGNxoh5W6Qi1/aSMAysV2fj/dc0fAOOYVgbMhF2iLYM0qNoNe2kFD6QKE
-         yVWLnAZdivNSSPhkYJzBpuPhj2BBYtsKAoHRHtEsRONrcr/2NOUXwKLipfZnn2anNy4e
-         kGSh5rhaNcawltOabm7EYUrRB+dRw+lbSUcOHLMkRncHPUbQJarn6THHo+N0OWCJk5AO
-         1pm5wWHXLzMaSL3H8a8NPY3xZKuGjM49RsFxOTeZGjyluafK3Q56Z58IRv40ADlogLGq
-         1asGWERoHbIJIMeRIxQv4q5RD/Ncul33K7mBq8loiDQL70CIzBoZH1sWhxexKSGVzKb4
-         0PNQ==
-X-Gm-Message-State: AN3rC/5MIyS4g68uRaDBiAjRXsOth8evVIqIPnDhPNwsbmwhu5EckuRq
-        dbOb3ImA8pIvDsFG
-X-Received: by 10.99.151.18 with SMTP id n18mr20664359pge.199.1492551462378;
-        Tue, 18 Apr 2017 14:37:42 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:c47b:4f4d:6233:ff9f])
-        by smtp.gmail.com with ESMTPSA id u45sm348961pgn.7.2017.04.18.14.37.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 18 Apr 2017 14:37:41 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     bmwill@google.com
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com,
-        jonathantanmy@google.com, philipoakley@iee.org,
-        Stefan Beller <sbeller@google.com>
-Subject: [PATCHv2 4/4] builtin/reset: add --recurse-submodules switch
-Date:   Tue, 18 Apr 2017 14:37:25 -0700
-Message-Id: <20170418213725.7901-5-sbeller@google.com>
-X-Mailer: git-send-email 2.12.2.642.g1b8cc69eee.dirty
-In-Reply-To: <20170418213725.7901-1-sbeller@google.com>
-References: <20170418213725.7901-1-sbeller@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rTUDpQXpmHYSnmrRCc9ua6dwI5+z6/NWjpNE1ZSru4Q=;
+        b=RqQ2/XcusiAa9RhQZ8keO3Ij7RaeTKfeFqRTHEmS1Gl7EZl3/WeSwhTIZpfPCd9qG3
+         H0LniEH8XbdAzHTDBZnIsjIBFbDBw8VZvuHs+jBrerSgsZy8dUffUPp6ytIPlRRKGwXp
+         AA5CvLisx4l1zED8vASORpLaAWsMKDnNfUrN2daX8S65iXhyEpSxRFqpym7cVGv2fkKl
+         hW2Nuoble9nW12ForNpDjJvS5mIe4Nh5E8MmhA1eE3lZjceXqHa1et/yWE1izsjxNIsQ
+         V5OKPWtZbhOAgFoF3WLS2+faeZEvnEaEdGJbS4n1N+RcfhamuT+V5vbzPxPQdobcI3/U
+         zoGw==
+X-Gm-Message-State: AN3rC/5+sADPLsBlc8cG7Zu05bNCBsXIjpiivpU1OFbAJpLdLEnX4l9V
+        uh8W7adBuL6NJfuQGCU=
+X-Received: by 10.223.169.205 with SMTP id b71mr23249586wrd.80.1492551615413;
+        Tue, 18 Apr 2017 14:40:15 -0700 (PDT)
+Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
+        by smtp.gmail.com with ESMTPSA id s49sm536821wrc.5.2017.04.18.14.40.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 18 Apr 2017 14:40:14 -0700 (PDT)
+Date:   Tue, 18 Apr 2017 22:40:25 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@jeffhostetler.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v11 2/5] p0006-read-tree-checkout: perf test to time
+ read-tree
+Message-ID: <20170418214025.GA4989@hank>
+References: <20170417213734.55373-1-git@jeffhostetler.com>
+ <20170417213734.55373-3-git@jeffhostetler.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170417213734.55373-3-git@jeffhostetler.com>
+User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-reset is yet another working tree manipulator, which should
-be taught about submodules.
+On 04/17, git@jeffhostetler.com wrote:
+> From: Jeff Hostetler <jeffhost@microsoft.com>
+> 
+> Created t/perf/repos/many-files.sh to generate large, but
+> artificial repositories.
+> 
+> Created t/perf/p0006-read-tree-checkout.sh to measure
+> performance on various read-tree, checkout, and update-index
+> operations.  This test can run using either artificial repos
+> described above or normal repos.
+> 
+> Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+> ---
+>  t/perf/p0006-read-tree-checkout.sh |  67 ++++++++++++++++++++++
+>  t/perf/repos/.gitignore            |   1 +
+>  t/perf/repos/many-files.sh         | 110 +++++++++++++++++++++++++++++++++++++
+>  3 files changed, 178 insertions(+)
+>  create mode 100755 t/perf/p0006-read-tree-checkout.sh
+>  create mode 100644 t/perf/repos/.gitignore
+>  create mode 100755 t/perf/repos/many-files.sh
+> 
+> diff --git a/t/perf/p0006-read-tree-checkout.sh b/t/perf/p0006-read-tree-checkout.sh
+> new file mode 100755
+> index 0000000..78cc23f
+> --- /dev/null
+> +++ b/t/perf/p0006-read-tree-checkout.sh
+> @@ -0,0 +1,67 @@
+> +#!/bin/sh
+> +#
+> +# This test measures the performance of various read-tree
+> +# and checkout operations.  It is primarily interested in
+> +# the algorithmic costs of index operations and recursive
+> +# tree traversal -- and NOT disk I/O on thousands of files.
+> +
+> +test_description="Tests performance of read-tree"
+> +
+> +. ./perf-lib.sh
+> +
+> +test_perf_default_repo
 
-One use case of "git-reset" is to reset to a known good state,
-and dropping commits that did not work as expected.
-In that case one of the expected outcomes from a hard reset
-would be to have broken submodules reset to a known good
-state as well.  A test for this was added in a prior patch.
+I like that it's possible to use a real world repository now instead
+of forcing the use of a synthetic repository :)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/reset.c            | 30 ++++++++++++++++++++++++++++++
- t/t7112-reset-submodule.sh |  8 ++++++++
- 2 files changed, 38 insertions(+)
+Is there a reason for this being test_perf_default_repo instead of
+test_perf_large_repo?  It seems like generating a large repo is what
+you are doing with repos/many-files.sh.
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index fc3b906c47..5ce27fcaed 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -21,6 +21,27 @@
- #include "parse-options.h"
- #include "unpack-trees.h"
- #include "cache-tree.h"
-+#include "submodule.h"
-+#include "submodule-config.h"
-+
-+static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
-+
-+static int option_parse_recurse_submodules(const struct option *opt,
-+					   const char *arg, int unset)
-+{
-+	if (unset) {
-+		recurse_submodules = RECURSE_SUBMODULES_OFF;
-+		return 0;
-+	}
-+	if (arg)
-+		recurse_submodules =
-+			parse_update_recurse_submodules_arg(opt->long_name,
-+							    arg);
-+	else
-+		recurse_submodules = RECURSE_SUBMODULES_ON;
-+
-+	return 0;
-+}
- 
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
-@@ -283,6 +304,9 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				N_("reset HEAD, index and working tree"), MERGE),
- 		OPT_SET_INT(0, "keep", &reset_type,
- 				N_("reset HEAD but keep local changes"), KEEP),
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
-+			    "reset", "control recursive updating of submodules",
-+			    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
- 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
- 				N_("record only the fact that removed paths will be added later")),
-@@ -295,6 +319,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 						PARSE_OPT_KEEP_DASHDASH);
- 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
- 
-+	if (recurse_submodules != RECURSE_SUBMODULES_DEFAULT) {
-+		gitmodules_config();
-+		git_config(submodule_config, NULL);
-+		set_config_update_recurse_submodules(RECURSE_SUBMODULES_ON);
-+	}
-+
- 	unborn = !strcmp(rev, "HEAD") && get_sha1("HEAD", oid.hash);
- 	if (unborn) {
- 		/* reset on unborn branch: treat as reset to empty tree */
-diff --git a/t/t7112-reset-submodule.sh b/t/t7112-reset-submodule.sh
-index 2eda6adeb1..f86ccdf215 100755
---- a/t/t7112-reset-submodule.sh
-+++ b/t/t7112-reset-submodule.sh
-@@ -5,6 +5,14 @@ test_description='reset can handle submodules'
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-submodule-update.sh
- 
-+KNOWN_FAILURE_SUBMODULE_RECURSIVE_NESTED=1
-+KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
-+KNOWN_FAILURE_SUBMODULE_OVERWRITE_IGNORED_UNTRACKED=1
-+
-+test_submodule_switch_recursing "git reset --recurse-submodules --keep"
-+
-+test_submodule_forced_switch_recursing "git reset --hard --recurse-submodules"
-+
- test_submodule_switch "git reset --keep"
- 
- test_submodule_switch "git reset --merge"
--- 
-2.12.2.642.g1b8cc69eee.dirty
+> +
+> +# If the test repo was generated by ./repos/many-files.sh
+> +# then we know something about the data shape and branches,
+> +# so we can isolate testing to the ballast-related commits
+> +# and setup sparse-checkout so we don't have to populate
+> +# the ballast files and directories.
+> +#
+> +# Otherwise, we make some general assumptions about the
+> +# repo and consider the entire history of the current
+> +# branch to be the ballast.
+> +
+> +test_expect_success "setup repo" '
+> +	if git rev-parse --verify refs/heads/p0006-ballast^{commit}
+> +	then
+> +		echo Assuming synthetic repo from many-files.sh
+> +		git branch br_base            master
+> +		git branch br_ballast         p0006-ballast^
+> +		git branch br_ballast_alias   p0006-ballast^
+> +		git branch br_ballast_plus_1  p0006-ballast
+> +		git config --local core.sparsecheckout 1
+> +		cat >.git/info/sparse-checkout <<-EOF
+> +		/*
+> +		!ballast/*
+> +		EOF
+> +	else
+> +		echo Assuming non-synthetic repo...
+> +		git branch br_base            $(git rev-list HEAD | tail -n 1)
+> +		git branch br_ballast         HEAD^ || error "no ancestor commit from current head"
+> +		git branch br_ballast_alias   HEAD^
+> +		git branch br_ballast_plus_1  HEAD
+> +	fi &&
+> +	git checkout -q br_ballast &&
+> +	nr_files=$(git ls-files | wc -l)
+> +'
+> +
+> +test_perf "read-tree br_base br_ballast ($nr_files)" '
+> +	git read-tree -m br_base br_ballast -n
+> +'
+> +
+> +test_perf "switch between br_base br_ballast ($nr_files)" '
+> +	git checkout -q br_base &&
+> +	git checkout -q br_ballast
+> +'
+> +
+> +test_perf "switch between br_ballast br_ballast_plus_1 ($nr_files)" '
+> +	git checkout -q br_ballast_plus_1 &&
+> +	git checkout -q br_ballast
+> +'
+> +
+> +test_perf "switch between aliases ($nr_files)" '
+> +	git checkout -q br_ballast_alias &&
+> +	git checkout -q br_ballast
+> +'
+> +
+> +test_done
+> diff --git a/t/perf/repos/.gitignore b/t/perf/repos/.gitignore
+> new file mode 100644
+> index 0000000..72e3dc3
+> --- /dev/null
+> +++ b/t/perf/repos/.gitignore
+> @@ -0,0 +1 @@
+> +gen-*/
+> diff --git a/t/perf/repos/many-files.sh b/t/perf/repos/many-files.sh
+> new file mode 100755
+> index 0000000..5a1d25e
+> --- /dev/null
+> +++ b/t/perf/repos/many-files.sh
+> @@ -0,0 +1,110 @@
+> +#!/bin/sh
+> +## Generate test data repository using the given parameters.
+> +## When omitted, we create "gen-many-files-d-w-f.git".
+> +##
+> +## Usage: [-r repo] [-d depth] [-w width] [-f files]
+> +##
+> +## -r repo: path to the new repo to be generated
+> +## -d depth: the depth of sub-directories
+> +## -w width: the number of sub-directories at each level
+> +## -f files: the number of files created in each directory
+> +##
+> +## Note that all files will have the same SHA-1 and each
+> +## directory at a level will have the same SHA-1, so we
+> +## will potentially have a large index, but not a large
+> +## ODB.
+> +##
+> +## Ballast will be created under "ballast/".
 
+I think comments should start only with a single '#' in the git
+source, as you already have it in p0006.
+
+[...]
