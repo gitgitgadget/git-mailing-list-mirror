@@ -6,85 +6,112 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BF6E1FA26
-	for <e@80x24.org>; Tue, 18 Apr 2017 02:03:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9E9A1FA26
+	for <e@80x24.org>; Tue, 18 Apr 2017 02:27:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757311AbdDRCDI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Apr 2017 22:03:08 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61145 "EHLO
+        id S1755928AbdDRC12 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Apr 2017 22:27:28 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64171 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1757306AbdDRCDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2017 22:03:07 -0400
+        with ESMTP id S1755881AbdDRC10 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2017 22:27:26 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5BD91738FE;
-        Mon, 17 Apr 2017 22:03:06 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E9DE2750FB;
+        Mon, 17 Apr 2017 22:27:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IkoEQAogIso5bXSgjJKctqWvHcI=; b=nT2u82
-        MTXsM3lTvviodnlLj080yztyGGasgWN0rRz2WukS4jtiMLz/W0Oh3c2rNID7lpYJ
-        3wdQYnXwP0ust2NElVI4iELCmX2zgFhLWbp6CkEft/C+QnIs8dzEA6O5nAynqjT8
-        LG7ZBRjp67oF8kwrdDymeiygu2uvZxEIPNWRk=
+        :content-type:content-transfer-encoding; s=sasl; bh=TJ25WIphsiUN
+        qtcqXGVQng9rJWY=; b=bS8T6/kYG0xYRJNgviLQDnQGX9lCXaSGdVcm48W++s+9
+        q167nXPpewIQrp/aEHc5gN5hqd3fdHBQY4WrbRMCLb9L29NxcxUBhZBNttva2b3k
+        jMxjb9QCPiacM8QLhKvURj6JLLd4RgCFCswrRkiqilGLAyh2glLHMV4Yd9oAQZc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=j5LmmQGmgoanyyoK0SLowhDnhofx9h3b
-        RLllEBLqqFkFjD3DhqE0IPnP/Jbbl7ST5bbsi3nhFXifa3bbMGr84Sda4BB71GDC
-        9XfBqSiz2L6Mrl28rCVNAB4uxgVfV2McVghdOufUA0kLxZ7d9Esy2PH2POT47ISV
-        CI5ZmPmpxhI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 51B43738FD;
-        Mon, 17 Apr 2017 22:03:06 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=NrtW6P
+        sQzgrdpDN+LNprhOya6D7jQkQ+zs5UnPP0nnJ0mP9yuudXlmAWqmo/B0702DMV+y
+        gSdIu9nQrDtPboDetMFp2rbBLc/V/G/pGlrx82f3oulDbe5ikwIcRlPgEPd0Bcic
+        OQiMsjlK1ZYDitjRMJR0w3o7x5EHQKGNlbE2E=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E0717750FA;
+        Mon, 17 Apr 2017 22:27:18 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD8FE738FC;
-        Mon, 17 Apr 2017 22:03:05 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 33774750F9;
+        Mon, 17 Apr 2017 22:27:18 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2 2/2] ls-files: fix path used when recursing into submodules
-References: <CA+P7+xqE-SZ5D6pk6-Dx+-VzHijmgmrUR2F=-370Rh8oKr10Nw@mail.gmail.com>
-        <20170413171224.3537-1-jacob.e.keller@intel.com>
-        <20170413171224.3537-2-jacob.e.keller@intel.com>
-Date:   Mon, 17 Apr 2017 19:03:04 -0700
-In-Reply-To: <20170413171224.3537-2-jacob.e.keller@intel.com> (Jacob Keller's
-        message of "Thu, 13 Apr 2017 10:12:24 -0700")
-Message-ID: <xmqqk26ih3qf.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        bert.wesarg@googlemail.com
+Subject: Re: [PATCH v2 1/3] config: prepare to pass more info in git_config_with_options()
+References: <CACsJy8D-=3qPbEO-dq2+Mr-WZ+5RrivkSw9NX7_FhEJFy+59zA@mail.gmail.com>
+        <20170417101002.18272-1-pclouds@gmail.com>
+Date:   Mon, 17 Apr 2017 19:27:16 -0700
+In-Reply-To: <20170417101002.18272-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Mon, 17 Apr 2017 17:10:00 +0700")
+Message-ID: <xmqqd1cah2m3.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2962DE12-23DB-11E7-917F-E680B56B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8B252C60-23DE-11E7-8A5F-C260AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> From: Jacob Keller <jacob.keller@gmail.com>
+> So far we can only pass one flag, respect_includes, to thie function. W=
+e
+
+s/thie/this/
+
+> need to pass some more (non-flag even), so let's make it accept a struc=
+t
+> instead of an integer.
 >
-> Don't assume that the current working directory is the root of the
-> repository. Correctly generate the path for the recursing child
-> processes by building it from the work_tree() root instead. Otherwise if
-> we run ls-files using --git-dir or --work-tree it will not work
-> correctly as it attempts to change directory into a potentially invalid
-> location. Best case, it doesn't exist and we produce an error. Worst
-> case we cd into the wrong location and unknown behavior occurs.
->
-> Add a new test which highlights this possibility.
->
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+.com>
 > ---
-> I'm not sure that I'm convinced by this method of solving the problem as
-> I suspect it has some corner cases (what about when run inside a
-> subdirectory? It seems to work for me but I'm not sure...) Additionally,
-> it felt weird that there's no helper function for creating a toplevel
-> relative path.
+>  builtin/config.c | 21 ++++++++++++---------
+>  cache.h          |  7 ++++++-
+>  config.c         | 16 +++++++++++-----
+>  3 files changed, 29 insertions(+), 15 deletions(-)
+>
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 4f49a0edb9..b937d175a9 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -26,7 +26,8 @@ static int use_global_config, use_system_config, use_=
+local_config;
+>  static struct git_config_source given_config_source;
+>  static int actions, types;
+>  static int end_null;
+> -static int respect_includes =3D -1;
+> +static int respect_includes_opt =3D -1;
+> +static struct config_options config_options;
+>  static int show_origin;
+> =20
+>  #define ACTION_GET (1<<0)
+> @@ -81,7 +82,7 @@ static struct option builtin_config_options[] =3D {
+>  	OPT_GROUP(N_("Other")),
+>  	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")=
+),
+>  	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")=
+),
+> -	OPT_BOOL(0, "includes", &respect_includes, N_("respect include direct=
+ives on lookup")),
+> +	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include di=
+rectives on lookup")),
 
-Is this a similar issue as discussed in a nearby thread e.g.
+It would be more in line with what the log message advertised if you
+did
 
-  <CACsJy8CLBY22j3EjR4PW3n+K6PWUzb-HCgxTVeCGpwtApZF-6g@mail.gmail.com>
+	static struct config_options config_options =3D {
+		-1, /* .respect_includes: unspecified */
+	};
 
-I do think it is a bug that sometimes we do not go to the root of
-the working tree when we know the repository is not a bare one.
+	OPT_BOOL(0, "includes", &config_options.respect_includes, N_("...")),
+
+no?
