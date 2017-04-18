@@ -2,91 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5C4A207B9
-	for <e@80x24.org>; Tue, 18 Apr 2017 21:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E557B207B9
+	for <e@80x24.org>; Tue, 18 Apr 2017 21:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753865AbdDRVCz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 17:02:55 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:35185 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751363AbdDRVCx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 17:02:53 -0400
-Received: by mail-pg0-f50.google.com with SMTP id 72so2276611pge.2
-        for <git@vger.kernel.org>; Tue, 18 Apr 2017 14:02:53 -0700 (PDT)
+        id S1753133AbdDRVHJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 17:07:09 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:37280 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751363AbdDRVHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 17:07:08 -0400
+Received: by mail-it0-f52.google.com with SMTP id a140so2436434ita.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2017 14:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=829JjfLFUC6J+f97OpRgxGtl90/3AFsUYdDEUFKtrP8=;
-        b=oELSruuR4axmcew3KprgpHc8KAxNoQsVu1VAnmgOLLqKlj2pHIYfOv5mK+5bMMvSjY
-         /5eOMxmL+s0zEDBdfElz4zwhnLEAX47RxSkkNXYpVejZvxqMNjBefx0Kmi/avu7j3OV4
-         qgr+vdQ+A4yMPoQUU6hQhlHFWsMv8YQl3eMivKdP3K9NrZ7AMs285i58WsM/6DOxKFA6
-         /oGC5YtL/a0CuCpgCHhbnsIx6sbLIdrnaYrbgHpC/LQUza5zAdXL8T6NXBX4BVGQH//W
-         DCfIjON4ynWzlI9ampHgebFzCnWpzZj2jW1Y8gyBaJvepUHXw/4guz7KUwhVShKobCZh
-         RTbA==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7tizb/dwb314giHxXC+vKoRyWSNTaB+DoqjbOLCNcLE=;
+        b=RNzsGOzhAWS7txoruh/ECCxuw7TGHdbcnKmNVBQPoFcBa87ioWYtMdDOcunC+FpI3Y
+         CY/xWSoyJt5UtdeZPa533gevTkMfHJvrQ1G8kPHqjulCQ5qk6HfeK+K+V13sTO0W8Mvr
+         KV/FahczfrTXyZb0EbBiWpTmgRXO8O3PbxyhO58mN3qRmAE4ZAi6JA2bPctZF4rywwL5
+         3zI9eGfeo8Cp7NYCbD1icuWcqSQ350T2FVV8tc7TOLHHJR8ibXSkSBza+X13NBvLApsG
+         A/tzfwSnrDYyGTxOLPe9XEcIDUOoccr8PSsqiVEs8INODy7VL/S0ZIXU3kBR/Pm03YhN
+         RT7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=829JjfLFUC6J+f97OpRgxGtl90/3AFsUYdDEUFKtrP8=;
-        b=X7Ck/r3hC3lkumWsi6omKMmgevw+Sv5M1D2kp8iNciJUqojMkIX22sljiEjaXqzXz3
-         OsoIwejWyMziOTWjjW/lrTbkPjRf2iMWV3RKYLnuEbc/3uXePD8wT20gNvIdqYv8tn/x
-         U5ZYUVMDFZnAXOv/SJUPskgn622KZMlHDlG7zhGInv8po7sXTVsCc8I0i4dsbmVoVGxf
-         WRKrkLyKmYfc+DVCDGazdT+ujtgYsGPSrk5whibDl+OMog+xg7yPI4FIO9grBJ6MGfEA
-         CF1hxI/2lNCk73iOpkJU9DpbOqb+q5IxzdgZEvhhwu6jg00dHNaFZw67zJczByrX/62f
-         +OPQ==
-X-Gm-Message-State: AN3rC/7fNMaZm7A9qVWu4r6QfIZkKGik/szrYfn4+PtoyLAcdvtRInMT
-        ++Wu/tfqA1MxEG2s
-X-Received: by 10.99.122.12 with SMTP id v12mr20342432pgc.98.1492549372583;
-        Tue, 18 Apr 2017 14:02:52 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c085:9655:b875:4bbf])
-        by smtp.gmail.com with ESMTPSA id i189sm254582pgd.61.2017.04.18.14.02.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 18 Apr 2017 14:02:51 -0700 (PDT)
-Date:   Tue, 18 Apr 2017 14:02:50 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com,
-        Karsten Blees <blees@dcon.de>
-Subject: Re: [PATCH v4 05/10] run-command: prepare child environment before
- forking
-Message-ID: <20170418210250.GA10227@google.com>
-References: <20170414165902.174167-1-bmwill@google.com>
- <20170417220818.44917-1-bmwill@google.com>
- <20170417220818.44917-6-bmwill@google.com>
- <20170418002651.GA14303@dcvr.yhbt.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7tizb/dwb314giHxXC+vKoRyWSNTaB+DoqjbOLCNcLE=;
+        b=qgP7WHeDcZCGnHIfWmQYWIoMZFQIyLYtn0rEcnBZ3dNK/K8Pm5Y/T/mSn2+dVkyK1k
+         J/6k+7Fil3o7zy6mivpX6lG5VM42ub+qcZxsfSoeAKP4vj1PVGlOYClpR8xQL3m9gqLk
+         sykn/YM1H8ItgPE4K7XWAY9L2dRMTHndREeojxPEwN5YrOyPoWok3TFilYd6QqhE1+wG
+         Vf25aRqBrLm7FCAx51F8B3ui6xOLckGEo+pVyphQPaxE6uoLXwV8MNnV0LmHtyxy6VNn
+         dz8Hj+GlEAeozLnT56eVk4yF0xlCzShbBYulQxBPCVHL+NmRn2pMkQvxuLMOldRmVzR2
+         KTRg==
+X-Gm-Message-State: AN3rC/7YPOB5DmV+5qp1NuTo1T6Xz9MxFuWGimpVlKNK8ZHUxoXgDVOx
+        zIDiKxpVD5NYTrgycNmHvpCMMWa9sQ==
+X-Received: by 10.36.103.86 with SMTP id u83mr5244289itc.91.1492549627984;
+ Tue, 18 Apr 2017 14:07:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170418002651.GA14303@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.107.134.97 with HTTP; Tue, 18 Apr 2017 14:06:47 -0700 (PDT)
+In-Reply-To: <20170418191553.15464-1-avarab@gmail.com>
+References: <CACBZZX584QwjphGfEgTn2V9P0yVkYSxfE1_Gp96bno8186SDyA@mail.gmail.com>
+ <20170418191553.15464-1-avarab@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 18 Apr 2017 23:06:47 +0200
+Message-ID: <CACBZZX4CD52j=fz_DPmVpsMLa-Dxu-iJ=GB8YQ6QFKOh1RWQ_g@mail.gmail.com>
+Subject: Re: [PATCH] clone: add a --no-tags option to clone without tags
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/18, Eric Wong wrote:
-> > +static int env_isequal(const char *e1, const char *e2)
-> > +{
-> > +	for (;;) {
-> > +		char c1 = *e1++;
-> > +		char c2 = *e2++;
-> > +		c1 = (c1 == '=') ? '\0' : tolower(c1);
-> > +		c2 = (c2 == '=') ? '\0' : tolower(c2);
-> 
-> Dealing with C strings scares me so maybe I'm misreading;
-> but: why is this comparison case-insensitive?
+On Tue, Apr 18, 2017 at 9:15 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 
-Well i was pulling inspiration from the stuff in mingw.c...looks like i
-probably shouldn't have done so as you're correct, they should be
-case-sensitive.  Jonathan pointed out that doing this env stuff in
-vanilla C may not be a good idea...and I kinda forgot about that cause
-it worked (it passed tests) Let me re-write this section of code to make
-it correct, and saner.
+>                     N_("clone only one branch, HEAD or --branch")),
+> +       OPT_BOOL_NONEG(0, "no-tags", &option_no_tags,
+> +                      N_("don't clone any tags, and set remote.<name>.ta=
+gOpt=3D--no-tags")),
+>         OPT_BOOL(0, "shallow-submodules", &option_shallow_submodules,
 
--- 
-Brandon Williams
+I forgot to note that this is on top of my earlier patch which adds
+OPT_BOOL_NONEG, see <20170418170914.9701-1-avarab@gmail.com>, but
+otherwise applies on top of master, and will work just fine by
+amending that to say OPT_BOOL (although --no-no-tags will then exist,
+as noted in the other patch).
