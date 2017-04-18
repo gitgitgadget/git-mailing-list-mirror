@@ -2,105 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20D111FE90
-	for <e@80x24.org>; Tue, 18 Apr 2017 11:16:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 025C21FE90
+	for <e@80x24.org>; Tue, 18 Apr 2017 11:29:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756071AbdDRLQy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 07:16:54 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:32887 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755968AbdDRLQx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 07:16:53 -0400
-Received: by mail-lf0-f52.google.com with SMTP id 88so32039107lfr.0
-        for <git@vger.kernel.org>; Tue, 18 Apr 2017 04:16:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zWJZhrjdcgYL/bjxKWqDoOuLcxwhym9vpIjSTI0AIyQ=;
-        b=iHvHBIAbUz/ka7fGrEbLiyIeIjKvrHx/tLqOcd+JA6ICa9ITAyOp/yvMS6rV7lrfoW
-         x0Mk7i7YtKrBPZkCDWM18LVO3ORsGimweAYXq7yYpV9eYYhgxuqvLodJLRT23ulsy6pb
-         UQW17qJXb6ToRkT52EI7L7Nh22yIeZXWVvbiH9oANNrGs7nppCpnVgYNoVCMSCed1wyK
-         2OP/SpI3euU/3xG2FPTMv1C1SHKERT9TSzg6aoQCOcLRd2VPk62yZzCRZyn9tP1Loa5b
-         Pdsxnd6dr83hIm7MNO3wmlbQWDyw1Mk3OkcZPd9U1FNWPuGq9C4N7/4ADjpNcMMbr9Nk
-         5imw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zWJZhrjdcgYL/bjxKWqDoOuLcxwhym9vpIjSTI0AIyQ=;
-        b=eg9KQSl4YNswofpS4d7Mvk0cAe66Cod79BloJjPTe/OXbtalrvsHSuLRhfGcD9GbLL
-         vtXUaPypycvWfATUVXgKXs+FV2lX6JNw/SgT6MTXbhc/xX9ADsGwwtZZaqgaJ63f4Ti5
-         iRqOXZnYGJHU+AL4v++0nFtmGC2KKilaTgB/ap7PGc7ILnzAt+GLPP9eNPWGzRH/WNDD
-         9hAfL4/ojZE8UPjSDd/sZgLa0iqUMKsDTK5ssl0yJk9ANrMqKmmpDQBraPhh7lpbq0x8
-         pSjLhIaTePd7s46PakT7bfhpZgOCP/qx4lXfh6aEeOvyqtQJwU5vuBnAG0bwyPJ+1nTL
-         fWBg==
-X-Gm-Message-State: AN3rC/5wylwi0cCFUo4UlbSln2n/sE7cJjwdcpbeuhi9+OJ2MW8+CQ96
-        GFbFrPFnIrj/o+woHY2DU2dxRYavmw==
-X-Received: by 10.46.69.133 with SMTP id s127mr4094047lja.44.1492514211506;
- Tue, 18 Apr 2017 04:16:51 -0700 (PDT)
+        id S1757021AbdDRL2r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 07:28:47 -0400
+Received: from mout.gmx.net ([212.227.15.15]:55541 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756350AbdDRL2o (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 07:28:44 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MH07e-1cnjzX0DCM-00DlGJ; Tue, 18
+ Apr 2017 13:28:33 +0200
+Date:   Tue, 18 Apr 2017 13:28:32 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/7] Makefile: optionally compile with both SHA1DC and
+ SHA1_OPENSSL
+In-Reply-To: <xmqq37du7n9p.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1704181325390.8522@virtualbox>
+References: <cover.1490397869.git.johannes.schindelin@gmx.de> <7a2444f08dea1b2fe497ae7498eba44626414d29.1490397869.git.johannes.schindelin@gmx.de> <xmqq37du7n9p.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.25.79.71 with HTTP; Tue, 18 Apr 2017 04:16:50 -0700 (PDT)
-In-Reply-To: <CAJgfmqXqfp3A+A74dfkKjQb_26ZNH9anY52-G2L5ipg=+6--2w@mail.gmail.com>
-References: <CAJgfmqU+1Ex1YkP94H2amXV+oqscbQwvb-CueuCiM7-n0AAP8Q@mail.gmail.com>
- <CACBZZX4fDu-o+ERiTyjVq2rWkXK6rjErU4KyW33qMx1_6vjMCQ@mail.gmail.com>
- <xmqqpogblvfr.fsf@gitster.mtv.corp.google.com> <CAJgfmqWf9j=R1=qy-kGTL4+y_40O+8S5q=VZuD3A-DbfRJer2Q@mail.gmail.com>
- <CACsJy8BASVSxJ4RzNKVpj9MyD=fMR-fpspMdET1bT45yMrf_0w@mail.gmail.com>
- <CAJgfmqW4ck9SwBrT_Z7bTOzM2zG==_ONUhTfhbLJtRu=vT+wyg@mail.gmail.com>
- <xmqq60i2im72.fsf@gitster.mtv.corp.google.com> <CAJgfmqXqfp3A+A74dfkKjQb_26ZNH9anY52-G2L5ipg=+6--2w@mail.gmail.com>
-From:   demerphq <demerphq@gmail.com>
-Date:   Tue, 18 Apr 2017 13:16:50 +0200
-Message-ID: <CANgJU+WbbF2yzg53D7NasN_nxqytOh=UoutmMPak77JhiJHx4A@mail.gmail.com>
-Subject: Re: Feature request: --format=json
-To:     "Fred .Flintstone" <eldmannen@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:R5pEvnHh508rndCryzJwYblZDAEWJZ/AgLKT32GFDsFssnXeLd9
+ 4WMnI6RJ65dS6JmocBCqZYb8SLQEnS1+a1iR2FfH7DxAnvWlaKduaktctsM8xMeGrZKnK4t
+ WP9p3eezwYuNlAzIU9LZFgdFXxZUQVmh5xh3Dymrtub50MRsIl6/vgeDTPzHz9UUMCwWQu2
+ 7TJwuVaYxqdXoJu3jkYLA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NqhD87sRpXI=:X7RYK59q9s50CCJzYScAdO
+ XDqlT/TWLqe6NEpCYfGDXyUwZ9pN2GhTKa8EAFYawCjsrVuFhcOEWRj/JeW+5kW4oq6Hz9mKc
+ iXUZ4xOvkVj3Y40YdF2KN/ruhc9oRYHMULfmrMsVO4IlK9/EKPO5I1t7NgNEfak2mF3Yt8Q2p
+ CMxmc46pn2C2SUb/sp9KzbiTPeSulSAK/I6TQUdkk2CN1UfrC4dDgGtS0gvUnYQLrZ9pXVrxv
+ Ism42QTwCAjCDckc92jbf+OD+dWn/8R3JhHLpf+Nj7YYUkJdC3IIJ+Vj12jp7MiGHLx6vhdVi
+ IXUOST7qdEVwGcYXxlyGz2zkBCZnsF7UIdlyWJg9HqBMelG2swddR7rt69neb/+bsqNR5uP9R
+ eCcq3puEePvmu6AC+hYFebmpjDHNKikUMVzm73CQWzOKfVykRMmiLoLQPpGeg0R5NCTLGke3S
+ sk2bghpe6bKkkB2PSnTzdXQpWV+VETOvMT5Ps3Aj/1y1UbPCjW+rn4yodElpSISvuC5XAR9dH
+ V68tbWDo1Bi8JXI3dJgeU4CU/dYfshkZBbfv3GnxyaR5OJYolwwCPJfvG2MLI31/bEq6pqL9Y
+ suytJBYKRStTjj2ZD4zyZgkjFDWJXRdvF0i41NdExToksgYhZdpArtFB68ISwTNb41X0u0jCz
+ jrCaYWkkttc7U3bC+SkeJRQp+Ja6/yDe757MxLc30nzS3oGRNe1nOTLHTl/zHrxwmZM/bEYzN
+ f9SzWuwJHMz5ifFvSSvBUJTq4Vv3tCwNsuI61m+Qa0+9ZDBRe20ULCEbusioIgX+GHpTTDTHe
+ e7wV0/I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18 April 2017 at 10:44, Fred .Flintstone <eldmannen@gmail.com> wrote:
-> Well the easiest way to work with that would be JSON.
-> So the best would be if Git could output the data I want in JSON format.
-> Then it would be easy for me to work with data.
->
-> With git rev-list and git-cat file, its not so easy to reliably parse
-> that output.
+Hi Junio,
 
-Doesn't seem too hard to work with rev-list to me. As far as I can
-tell the following produces what  you want. You need perl installed
-obviously, and the JSON::PP module is required, but should come
-bundled with recent perls.
+On Thu, 30 Mar 2017, Junio C Hamano wrote:
 
-git rev-list master --pretty=raw | perl -MJSON::PP=encode_json
--ane'if(/^(\w+) (.*)/) { if ($1 eq "commit") { push @objs, $o if $o;
-$o={}; } $o->{$1} = $2; } else { $o->{text} .= $_; } END{ push @objs,
-$o if $o; for $o (@objs) { s/^    //mg, s/^\n// for $o->{text};
-($o->{message},$o->{long_message})= split /\n\n/, delete $o->{text}; }
-print JSON::PP->new->pretty->encode(\@objs);}'
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > +#ifdef SHA1_DC_AND_OPENSSL
+> > +void (*SHA1_Init_func)(SHA_CTX_union *ctx) = (void *)SHA1DCInit;
+> > +void (*SHA1_Update_func)(SHA_CTX_union *ctx, const void *pointer, size_t size) =
+> > +	(void *)git_SHA1DCUpdate;
+> > +int (*SHA1_Final_func)(unsigned char sha1[20], SHA_CTX_union *ctx) =
+> > +	(void *)git_SHA1DCFinal;
+> > +
+> > +void toggle_sha1dc(int enable)
+> > +{
+> > +	if (enable) {
+> > +		SHA1_Init_func = (void *)SHA1DCInit;
+> > +		SHA1_Update_func = (void *)git_SHA1DCUpdate;
+> > +		SHA1_Final_func = (void *)git_SHA1DCFinal;
+> > +	} else {
+> > +		SHA1_Init_func = (void *)SHA1_Init;
+> > +		SHA1_Update_func = (void *)SHA1_Update;
+> > +		SHA1_Final_func = (void *)SHA1_Final;
+> > +	}
+> > +}
+> > +#endif
+> 
+> As I understand that this is a demonstration series, the approach
+> above is OK as an expedite way to illustrate one way how run-time
+> switching could be done.  The approach however is not very thread
+> friendly, though.
 
-You might consider an alternative approach than stating that working
-with JSON is "the easiest", especially to people who clearly are
-making do without it. :-)
+Indeed. However, the toggle is meant to be coarse, heavy-handed. I have to
+protect my time as Git for Windows maintainer, so I have to keep this as
+simple to maintain as possible while also benefitting my users. This
+toggle is intended to be run very, very early in the cmd_main() functions.
+As in: right when the config is read.
 
-A better argument might be that exposing data through a well defined
-and widely used and simple data format would trivially expand the
-range of projects that might interoperate with git or enhance the git
-ecosystem. For instance you could argue that having clean JSON output
-would make it easier to integrate into search engines and other
-indexing tools that already know how to speak JSON. Maybe a regular
-contributor on this list might agree with your arguments and make it
-happen.
+> > diff --git a/sha1dc/sha1.h b/sha1dc/sha1.h
+> > index bd8bd928fb3..243c2fe0b6b 100644
+> > --- a/sha1dc/sha1.h
+> > +++ b/sha1dc/sha1.h
+> > @@ -110,10 +110,26 @@ void git_SHA1DCFinal(unsigned char [20], SHA1_CTX *);
+> >   */
+> >  void git_SHA1DCUpdate(SHA1_CTX *ctx, const void *data, unsigned long len);
+> >  
+> > +#ifdef SHA1_DC_AND_OPENSSL
+> > +extern void toggle_sha1dc(int enable);
+> > +
+> > +typedef union {
+> > +	SHA1_CTX dc;
+> > +	SHA_CTX openssl;
+> > +} SHA_CTX_union;
+> 
+> The use of union is a good ingredient for a solution.  I would have
+> chosen to do this slightly differently if I were doing it.
+> 
+>         typedef struct {
+>                 int safe;
+>                 union {
+>                         SHA1_CTX_SAFE safe;
+>                         SHA1_CTX_FAST fast;
+>                 } u;
+>         } git_SHA_CTX;
+> 
+>         void git_SHA1_Init(git_SHA_CTX *ctx, int safe);
+> 	void git_SHA1_Update(git_SHA_CTX *ctx, const void *, unsigned long);
+> 	git_SHA1_Final(uchar [20], git_SHA_CTX *ctx);
+> 
+> where SHA1_CTX_FAST may be chosen from the Makefile just like we
+> currently choose platform_SHA_CTX.  SHA1_CTX_SAFE could also be made
+> configurable but it may be OK to hardcode it to refer to SHA1_CTX of
+> DC's.
+> 
+> As you already know, I am assuming that each codepath pretty much
+> knows if it needs safe or fast one (e.g. the one used in csum-file.c
+> knows it does not have to), so each git_SHA_CTX is told which one to
+> use when it gets initialized.
 
-Until then you can parse rev-list like the rest of us. :-)
+Thanks, at this stage it is pretty clear, though, that I will have to
+maintain this. I am not willing to make this as configurable as you
+suggested, as these patches will have to stay in git-for-windows/git.
 
-cheers,
-Yves
+Ciao,
+Dscho
