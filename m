@@ -2,65 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 214A21FA14
-	for <e@80x24.org>; Tue, 18 Apr 2017 17:03:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 303541FA14
+	for <e@80x24.org>; Tue, 18 Apr 2017 17:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757536AbdDRRDh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 13:03:37 -0400
-Received: from ikke.info ([178.21.113.177]:39486 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753293AbdDRRDe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 13:03:34 -0400
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id DAD7C4400BD; Tue, 18 Apr 2017 18:53:30 +0200 (CEST)
-Date:   Tue, 18 Apr 2017 18:53:30 +0200
-From:   Kevin Daudt <me@ikke.info>
-To:     "Bonk, Gregory" <gbonk@icct.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: FW: Issue in gitbash changing directory
-Message-ID: <20170418165330.GB24697@alpha.ikke.info>
-References: <DM5PR04MB061907F6F650E56FE2ECBCD5C7190@DM5PR04MB0619.namprd04.prod.outlook.com>
- <DM5PR04MB06197EF8FA0344708A69C842C7190@DM5PR04MB0619.namprd04.prod.outlook.com>
- <DM5PR04MB061992BA437ACAD18A5F44DBC7190@DM5PR04MB0619.namprd04.prod.outlook.com>
+        id S1755063AbdDRRIR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 13:08:17 -0400
+Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:36897 "EHLO
+        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754470AbdDRRIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 13:08:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id C6E771000C3;
+        Tue, 18 Apr 2017 17:08:14 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id Q5whHnGl3Pu0; Tue, 18 Apr 2017 17:08:14 +0000 (GMT)
+Received: from exmbdft6.ad.twosigma.com (exmbdft6.ad.twosigma.com [172.22.1.5])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id B42308002E;
+        Tue, 18 Apr 2017 17:08:14 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft6.ad.twosigma.com (172.22.1.5) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Tue, 18 Apr 2017 17:08:14 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1263.000; Tue, 18 Apr 2017 17:08:14 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Jeff King' <peff@peff.net>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "christian.couder@gmail.com" <christian.couder@gmail.com>,
+        "mfick@codeaurora.org" <mfick@codeaurora.org>,
+        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
+Subject: RE: [PATCH] repack: respect gc.pid lock
+Thread-Topic: [PATCH] repack: respect gc.pid lock
+Thread-Index: AQHStVYFs4jQpN8FG0CoCGa3r9IKNaHJsErwgADQfoCAALqvYA==
+Date:   Tue, 18 Apr 2017 17:08:14 +0000
+Message-ID: <d5c43adf0b074c6ebe43439bc3fc7539@exmbdft7.ad.twosigma.com>
+References: <20170413202712.22192-1-dturner@twosigma.com>
+ <20170414193341.itr3ybiiu2brt63b@sigill.intra.peff.net>
+ <c6dd37238f154ccea56dda9b43f3277a@exmbdft7.ad.twosigma.com>
+ <20170418034157.oi6hkg5obnca5zsa@sigill.intra.peff.net>
+In-Reply-To: <20170418034157.oi6hkg5obnca5zsa@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.13]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <DM5PR04MB061992BA437ACAD18A5F44DBC7190@DM5PR04MB0619.namprd04.prod.outlook.com>
-User-Agent: Mutt/1.8.0 (2017-02-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2017 at 12:48:09PM +0000, Bonk, Gregory wrote:
-> 
-> I accidently typed 'cd //'  and it worked.
-> 
-> gbonk@ICC11167 MINGW64 /c/git/mtb-messagehub-information-radiator (master)
-> $ cd //
-> 
-> gbonk@ICC11167 MINGW64 //
-> $ cd ..
-
-This has very little to do with git, but more with bash (the shell that
-is interpretting the command. From a bash FAQ [1]:
-
-> E10) Why does `cd //' leave $PWD as `//'?
-> 
-> POSIX.2, in its description of `cd', says that *three* or more leading
-> slashes may be replaced with a single slash when canonicalizing the
-> current working directory.
-> 
-> This is, I presume, for historical compatibility.  Certain versions of
-> Unix, and early network file systems, used paths of the form
-> //hostname/path to access `path' on server `hostname'.
-
-So this is kind of intentional.
-
-
-[1]: https://tiswww.case.edu/php/chet/bash/FAQ
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBKZWZmIEtpbmcgW21haWx0bzpw
+ZWZmQHBlZmYubmV0XQ0KPiBTZW50OiBNb25kYXksIEFwcmlsIDE3LCAyMDE3IDExOjQyIFBNDQo+
+IFRvOiBEYXZpZCBUdXJuZXIgPERhdmlkLlR1cm5lckB0d29zaWdtYS5jb20+DQo+IENjOiBnaXRA
+dmdlci5rZXJuZWwub3JnOyBjaHJpc3RpYW4uY291ZGVyQGdtYWlsLmNvbTsgbWZpY2tAY29kZWF1
+cm9yYS5vcmc7DQo+IGphY29iLmtlbGxlckBnbWFpbC5jb20NCj4gU3ViamVjdDogUmU6IFtQQVRD
+SF0gcmVwYWNrOiByZXNwZWN0IGdjLnBpZCBsb2NrDQo+IA0KPiBPbiBNb24sIEFwciAxNywgMjAx
+NyBhdCAxMToyOToxOFBNICswMDAwLCBEYXZpZCBUdXJuZXIgd3JvdGU6DQo+IA0KPiA+IFdlIHNh
+dyB0aGlzIGZhaWx1cmUgaW4gdGhlIGxvZ3MgbXVsdGlwbGUgIHRpbWVzICh3aXRoIHRocmVlIGRp
+ZmZlcmVudA0KPiA+IHNoYXMsIHdoaWxlIGEgZ2Mgd2FzIHJ1bm5pbmcpOg0KPiA+IEFwcmlsIDEy
+LCAyMDE3IDA2OjQ1IC0+IEVSUk9SIC0+ICdnaXQgLWMgcmVwYWNrLndyaXRlQml0bWFwcz10cnVl
+IHJlcGFjayAtQSAtZA0KPiAtLXBhY2sta2VwdC1vYmplY3RzJyBpbiBbcmVwb10gZmFpbGVkOg0K
+PiA+IGZhdGFsOiBwYWNrZmlsZSAuL29iamVjdHMvcGFjay9wYWNrLVtzaGFdLnBhY2sgY2Fubm90
+IGJlIGFjY2Vzc2VkDQo+ID4gUG9zc2libHkgc29tZSBvdGhlciByZXBhY2sgd2FzIGFsc28gcnVu
+bmluZyBhdCB0aGUgdGltZSBhcyB3ZWxsLg0KPiA+DQo+ID4gTXkgY29sbGVhZ3VlIGFsc28gc2F3
+IGl0IHdoaWxlIG1hbnVhbGx5IGRvaW5nIGdjIChhZ2FpbiB3aGlsZSByZXBhY2tzDQo+ID4gd2Vy
+ZSBsaWtlbHkgdG8gYmUgcnVubmluZyk6DQo+IA0KPiBUaGlzIGlzIHNvcnQgb2YgYSBzaWRlIHF1
+ZXN0aW9uLCBidXQuLi53aHkgYXJlIHlvdSBydW5uaW5nIG90aGVyIHJlcGFja3MgYWxvbmdzaWRl
+DQo+IGdpdC1nYz8gSXQgc2VlbXMgbGlrZSB5b3Ugb3VnaHQgdG8gYmUgZG9pbmcgb25lIG9yIHRo
+ZSBvdGhlci4NCj4NCj4gSSBkb24ndCBiZWdydWRnZSBhbnlib2R5IHdpdGggYSBjb21wbGljYXRl
+ZCBzZXR1cCBydW5uaW5nIHRoZWlyIG93biBzZXQgb2YgZ2MNCj4gY29tbWFuZHMsIGJ1dCBJJ2Qg
+dGhpbmsgeW91IHdvdWxkIHdhbnQgdG8gZG8gbG9ja2luZyB0aGVyZSwgYW5kIGRpc2FibGUgYXV0
+by0NCj4gZ2MgZW50aXJlbHkuIE90aGVyd2lzZSB5b3UncmUgZ29pbmcgdG8gZ2V0IGRpZmZlcmVu
+dCByZXN1bHRzIGRlcGVuZGluZyBvbiB3aG8NCj4gZ2MnZCBsYXN0Lg0KDQpUaGF0J3Mgd2hhdCBn
+aXRsYWIgZG9lcywgc28geW91J2xsIGhhdmUgdG8gYXNrIHRoZW0gd2h5IHRoZXkgZG8gaXQgdGhh
+dCB3YXkuICANCkZyb20gaHR0cHM6Ly9naXRsYWIuY29tL2dpdGxhYi1vcmcvZ2l0bGFiLWNlL2lz
+c3Vlcy8zMDkzOSNub3RlXzI3NDg3OTgxDQogaXQgbG9va3MgbGlrZSB0aGV5IG1heSBoYXZlIGlu
+dGVuZGVkIHRvIGhhdmUgYSBsb2NrIGJ1dCBub3QgcXVpdGUgc3VjY2VlZGVkLg0KIA0KPiA+ICQg
+Z2l0IGdjIC0tYWdncmVzc2l2ZQ0KPiA+IENvdW50aW5nIG9iamVjdHM6IDEzODAwMDczLCBkb25l
+Lg0KPiA+IERlbHRhIGNvbXByZXNzaW9uIHVzaW5nIHVwIHRvIDggdGhyZWFkcy4NCj4gPiBDb21w
+cmVzc2luZyBvYmplY3RzOiAgOTklICgxMTQ2NTg0Ni8xMTQ2NTk3MSkNCj4gPiBDb21wcmVzc2lu
+ZyBvYmplY3RzOiAxMDAlICgxMTQ2NTk3MS8xMTQ2NTk3MSksIGRvbmUuDQo+ID4gZmF0YWw6IHBh
+Y2tmaWxlIFtyZXBvXS9vYmplY3RzL3BhY2svcGFjay1bc2hhXS5wYWNrIGNhbm5vdCBiZSBhY2Nl
+c3NlZA0KPiANCj4gT0ssIHNvIHRoaXMgcHJlc3VtYWJseSBoYXBwZW5lZCBkdXJpbmcgdGhlIHdy
+aXRpbmcgcGhhc2UuIFdoaWNoIHNlZW1zIGxpa2UgdGhlDQo+ICJhIHBhY2sgd2FzIGNsb3NlZCwg
+YW5kIHdlIGNvdWxkbid0IHJlLW9wZW4gaXQiIHByb2JsZW0gd2UndmUgc2VlbiBiZWZvcmUuDQo+
+IA0KPiA+IFdlIGhhdmUgYSByZWFzb25hYmxlIHJsaW1pdCAoNjRrIHNvZnQgbGltaXQpLCBzbyB0
+aGF0IGZhaWx1cmUgbW9kZSBpcw0KPiA+IHByZXR0eSB1bmxpa2VseS4gIEkgIHRoaW5rIHdlIHNo
+b3VsZCBoYXZlIGhhZCAyMCBvciBzbyBwYWNrcyAtLSBub3QgdGVucyBvZg0KPiB0aG91c2FuZHMu
+DQo+ID4gWy4uLl0NCj4gPiBEbyB5b3UgaGF2ZSBhbnkgaWRlYSB3aHkgdGhpcyB3b3VsZCBiZSBo
+YXBwZW5pbmcgb3RoZXIgdGhhbiB0aGUgcmxpbWl0IHRoaW5nPw0KPiANCj4gWWVhaCwgdGhhdCBz
+aG91bGQgYmUgZW5vdWdoICh5b3UgY291bGQgZG91YmxlIGNoZWNrIHRoZSByZXR1cm4gb2YNCj4g
+Z2V0X21heF9mZF9saW1pdCgpIG9uIHlvdXIgc3lzdGVtIGlmIHlvdSB3YW50ZWQgdG8gYmUgcGFy
+YW5vaWQpLg0KPiANCj4gV2UgYWxzbyBrZWVwIG9ubHkgYSBsaW1pdGVkIG51bWJlciBvZiBieXRl
+cyBtbWFwJ2QgYXQgb25lIHRpbWUuIE5vcm1hbGx5IHdlDQo+IGRvbid0IGFjdHVhbGx5IGNsb3Nl
+IHBhY2tmaWxlcyB3aGVuIHdlIHJlbGVhc2UgdGhlaXIgbW1hcCB3aW5kb3dzLg0KPiBCdXQgSSB0
+aGluayB0aGVyZSBpcyBvbmUgcGF0aCB0aGF0IG1pZ2h0LiBXaGVuIHVzZV9wYWNrKCkgbWFwcyBh
+IHBhY2ssIGlmIHRoZQ0KPiBlbnRpcmUgcGFjayBmaXRzIGluIGEgc2luZ2xlIHdpbmRvdywgdGhl
+biB3ZSBjbG9zZSBpdDsgdGhpcyBpcyBkdWUgdG8gZDEzMWI3YWZlDQo+IChzaGExX2ZpbGUuYzog
+RG9uJ3QgcmV0YWluIG9wZW4gZmRzIG9uIHNtYWxsIHBhY2tzLCAyMDExLTAzLTAyKS4NCj4gDQo+
+IEJ1dCBpZiB3ZSBldmVyIHVubWFwIHRoYXQgd2luZG93LCBub3cgd2UgaGF2ZSBubyBoYW5kbGUg
+dG8gdGhlIHBhY2suDQo+IE5vcm1hbGx5IG9uIGEgNjQtYml0IHN5c3RlbSB0aGlzIHdvdWxkbid0
+IGhhcHBlbiBhdCBhbGwsIHNpbmNlIHRoZSBkZWZhdWx0DQo+IGNvcmUucGFja2VkR2l0TGltaXQg
+aXMgOEdCIHRoZXJlLg0KDQpBaGEsIEkgbWlzc2VkIHRoYXQgbGltaXQgd2hpbGUgbWVzc2luZyBh
+cm91bmQgd2l0aCB0aGUgY29kZS4gIFRoYXQgbXVzdCBiZSBpdC4NCg0KPiBTbyBpZiB5b3UgaGF2
+ZSBhIGZldyBzbWFsbCBwYWNrcyBhbmQgb25lIHZlcnkgbGFyZ2UgcGFjayAob3ZlciA4R0IpLCBJ
+IHRoaW5rIHRoaXMNCj4gY291bGQgdHJpZ2dlci4gV2UgbWF5IGRvIHRoZSBzbWFsbC1wYWNrIHRo
+aW5nIGZvciBzb21lIG9mIHRoZW0sIGFuZCB0aGVuIHRoZQ0KPiBsYXJnZSBwYWNrIGZvcmNlcyB1
+cyB0byBkcm9wIHRoZSBtbWFwcyBmb3Igc29tZSBvZiB0aGUgb3RoZXJzLiBXaGVuIHdlIGdvDQo+
+IGJhY2sgdG8gYWNjZXNzIHRoZSBzbWFsbCBwYWNrLCB3ZSBmaW5kIGl0J3MgZ29uZS4NCj4gDQo+
+IE9uZSBzb2x1dGlvbiB3b3VsZCBiZSB0byBidW1wIGNvcmUucGFja2VkR2l0TGltaXQgdG8gc29t
+ZXRoaW5nIG11Y2ggaGlnaGVyDQo+IChpdCdzIGFuIG1tYXAsIHNvIHdlJ3JlIHJlYWxseSBqdXN0
+IGNoZXdpbmcgdXAgYWRkcmVzcyBzcGFjZTsgaXQncyB1cCB0byB0aGUgT1MgdG8NCj4gZGVjaWRl
+IHdoZW4gdG8gbG9hZCBwYWdlcyBmcm9tIGRpc2sgYW5kIHdoZW4gdG8gZHJvcCB0aGVtKS4NCj4N
+Cj4gVGhlIG90aGVyIGFsdGVybmF0aXZlIGlzIHRvIGRpc2FibGUgdGhlIHNtYWxsLXBhY2sgY2xv
+c2luZyBmcm9tIGQxMzFiN2FmZS4gSXQNCj4gbWlnaHQgbmVlZCB0byBiZSBjb25maWd1cmFibGUs
+IG9yIHBlcmhhcHMgYXV0by10dW5lZCBiYXNlZCBvbiB0aGUgZmQgbGltaXQuDQo+IExpbnV4IHN5
+c3RlbXMgdGVuZCB0byBoYXZlIGdlbmVyb3VzIGRlc2NyaXB0b3IgbGltaXRzLCBidXQgSSdtIG5v
+dCBzdXJlIHdlIGNhbg0KPiByZWx5IG9uIHRoYXQuIE9UT0gsIGl0IHNlZW1zIGxpa2UgdGhlIGNv
+ZGUgdG8gY2xvc2UgZGVzY3JpcHRvcnMgd2hlbiBuZWVkZWQNCj4gd291bGQgdGFrZSBjYXJlIG9m
+IHRoaW5ncy4gU28gbWF5YmUgd2Ugc2hvdWxkIGp1c3QgcmV2ZXJ0IGQxMzFiN2FmZSBlbnRpcmVs
+eS4NCg0KSSBkZWZpbml0ZWx5IHJlbWVtYmVyIHJ1bm5pbmcgaW50byBmZCBsaW1pdHMgd2hlbiBw
+cm9jZXNzaW5nIHZlcnkgbGFyZ2UgbnVtYmVycyANCm9mIHBhY2tzIGF0IFR3aXR0ZXIsIGJ1dCBJ
+IGRvbid0IHJlY2FsbCB0aGUgZXhhY3QgZGV0YWlscy4gIFByZXN1bWFibHksIGQxMzFiN2FmZQ0K
+d2FzIHN1cHBvc2VkIHRvIGhlbHAgd2l0aCB0aGlzLCBidXQgaW4gZmFjdCwgaXQgZGlkIG5vdCB0
+b3RhbGx5IHNvbHZlIGl0LiBQZXJoYXBzIA0Kd2Ugd2VyZSBkb2luZyBzb21ldGhpbmcgZnVubnku
+ICBBZGp1c3RpbmcgdGhlIGZkIGxpbWl0cyB3YXMgdGhlIGVhc3kgZml4Lg0KDQpPbiA2NC1iaXQg
+c3lzdGVtcywgSSB0aGluayBjb3JlLnBhY2tlZEdpdExpbWl0IGRvZXNuJ3QgbWFrZSBhIA0KbG90
+IG9mIHNlbnNlLiBUaGVyZSBpcyBwbGVudHkgb2YgYWRkcmVzcyBzcGFjZS4gIFdoeSBub3QgdXNl
+IGl0Pw0KDQpGb3IgMzItYml0IHN5c3RlbXMsIG9mIGNvdXJzZSwgYWRkcmVzcyBzcGFjZSBpcyBt
+b3JlIHByZWNpb3VzLg0KDQpJJ2xsIGFzayBvdXIgZ2l0IHNlcnZlciBhZG1pbmlzdHJhdG9yIHRv
+IGFkanVzdCBjb3JlLnBhY2tlZEdpdExpbWl0DQphbmQgdHVybiByZXBhY2tzIGJhY2sgb24gdG8g
+c2VlIGlmIHRoYXQgZml4ZXMgdGhlIGlzc3VlLg0KDQo+IFRoZSBmaW5hbCB0aGluZyBJJ2QgYXNr
+IGlzIHdoZXRoZXIgeW91IG1pZ2h0IGJlIG9uIGEgbmV0d29ya2VkIGZpbGVzeXN0ZW0gdGhhdA0K
+PiB3b3VsZCBmb2lsIG91ciB1c3VhbCAib3BlbiBkZXNjcmlwdG9ycyBtZWFuIHBhY2tzIGRvbid0
+IGdvIGF3YXkiIGxvZ2ljLiBCdXQNCj4gYWZ0ZXIgaGF2aW5nIGR1ZyBpbnRvIHRoZSBkZXRhaWxz
+IGFib3ZlLCBJIGhhdmUgYSBmZWVsaW5nIHRoZSBhbnN3ZXIgaXMgc2ltcGx5IHRoYXQNCj4geW91
+IGhhdmUgcmVwb3NpdG9yaWVzID44R0IuDQoNClllcywgb3VyIHJlcG8gaXMgPjhHQiwgYW5kIG5v
+LCBpdCdzIG5vdCBvbiBhIG5ldHdvcmtlZCBmaWxlc3lzdGVtLg0KDQo+IEFuZCBpZiB0aGF0IGlz
+IHRoZSBjYXNlLCB0aGVuIHllYWgsIHlvdXIgbG9ja2luZyBwYXRjaCBpcyBkZWZpbml0ZWx5IGEg
+YmFuZC1haWQuIElmDQo+IHlvdSBmZXRjaCBhbmQgcmVwYWNrIGF0IHRoZSBzYW1lIHRpbWUsIHlv
+dSdsbCBldmVudHVhbGx5IHNlZSBhIHJhY3kgZmFpbGVkIGZldGNoLg0KDQpGYWlyIGVub3VnaC4N
+Cg==
