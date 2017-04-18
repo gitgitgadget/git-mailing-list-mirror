@@ -2,182 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3927E1FA14
-	for <e@80x24.org>; Tue, 18 Apr 2017 16:08:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1D541FA14
+	for <e@80x24.org>; Tue, 18 Apr 2017 16:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757534AbdDRQIQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 12:08:16 -0400
-Received: from mout.web.de ([212.227.15.14]:49320 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1757418AbdDRQIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 12:08:12 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M7ssy-1c5VA32pTE-00vMoP; Tue, 18
- Apr 2017 18:07:47 +0200
-Subject: Re: [PATCH v2] xgethostname: handle long hostnames
-To:     Junio C Hamano <gitster@pobox.com>,
-        David Turner <dturner@twosigma.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        Duy Nguyen <pclouds@gmail.com>
-References: <20170417161748.31231-1-dturner@twosigma.com>
- <xmqq1ssqikc5.fsf@gitster.mtv.corp.google.com>
- <xmqqwpaih4q2.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <281d0843-d48a-b7ab-737b-b9528689d44e@web.de>
-Date:   Tue, 18 Apr 2017 18:07:43 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqwpaih4q2.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:VB+wElFbEo4b2h08ECf1BGOjzrhuX3PKB2Qr7niRJmgcIK8U1ve
- JG8cjcJvyJKReVZRpsxkWK0qHC7K4xPhslWvCvA010pTBtTHpqv0MCIPLPTaE683d8lMBAj
- wp4Xs1FgdHMZju65C27mOLwWwtOOXjjdSbvKQDgZAcw3uICp+fd+mizct+rYnpUz2ll2OZO
- R2c4dr7L0z2lJwhCHwzWw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UX0cPreZ1w4=:G+8gcGedo5XA4VjUhgCoMo
- +vgaSjZILWTQRI2DXtnT94sMd4pk+9hjozH0OisOigsd19ry0WxgpN9xg0FoImgGV0AiqQsGG
- yCgnWStyq0svdHWJXZ/vXTaJCpDdnk1YGqCrOfNnyYKxN3zfAhYbkIuxX999f6MYOR96sI7o5
- WPbCEG4y1pBHPep/Rgo+zl1VEdx7MkLgVGBBGzq4e8Uz/4JmcAun+VufYhVipq/YNxoXlFaYa
- zPHh8K0fgrAKxl9Xd6/sCE0YoSPyGnyM7FSPWmSd6HXdOSFZ3wi6CVfn5gIohP/x6s2C4571Y
- /1vBxa3ILfZzjz3Xccf4LfLr4M43y8R13SwuTBLarmTysngGDdWlQlhV5C9tHsz6LJM4wivnV
- dJLSbXvTmNS1yPZ0UhW+Z2tHvU3G7vu5GSAMukA6CFgCKlqEbQuFPSXRDywIzkBhZ0otuaU+f
- FxGpfOg9UkAjuEq3bQ4HihfFxFw4xuLtUn71aAVfwoXgaGrZ8Sf87usyxlt/NKo4zVMtJQ7lK
- GaLlcbMrCyTLnPVvS1aCy9QGauiV6KI2VabP0Sf14QdZ6YZZvYAtsfG1JqonTPRPXD5paztNO
- i6vMF0ZzkNT0nAtMB1RUXs7f3epJvfA5PRplFQLcsrxMCrhxo0JnXLMEJgKLUI+RXEbndv/eT
- ZcbyDxXICIpwB/vFsDwjwP+KQaBzSHEzUSQdH+TcPOC6yojN/qIiqfDsg0kVEVSr/6s4ndyif
- mKo1VtO0KAhrPtbQgqxgARCd3m5gtbaCx41jHmdA57AWBZvMNtTC5QwJHsGxLam0O5TZvTSdQ
- EGlWV+/
+        id S1757474AbdDRQOq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 12:14:46 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36029 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751783AbdDRQOo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 12:14:44 -0400
+Received: by mail-wr0-f196.google.com with SMTP id o21so25532883wrb.3
+        for <git@vger.kernel.org>; Tue, 18 Apr 2017 09:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=references:in-reply-to:mime-version:content-transfer-encoding
+         :message-id:cc:from:subject:date:to;
+        bh=7Aky2os3lI426ZSvTalrbgS16t4Iqw1TpQ2Dv1MH3NI=;
+        b=Jvu8bpV2ul0rHAKHgCQ1ysTml0l+hx35xpeWuVUKz3lC4YPtUJAkVjjK2sWeho3YI4
+         GsCedQspw1iQpHcP0MrxAxMsesQsyX0dL5Q2h1EUlqHgPHtef3hssY2lpCH/+cUfIlmo
+         yidRY0VLautmtDoOGkwG28d1bkhBTftEpWi6CWj6+uaMj3BQZSqkv8Rl+lkw5G2P1Okj
+         Dlq+FbPsnvKhBh6KmeXg7BPrqUDohPN01I04lfY1+AA6s4YQOOHUDys40YXlqIY5inih
+         Ww4E6F6oeqMuMrmDr3/dIRH5s3sP4JT4l6LG7tjCYd9C4z5tXUYr0o8IkSMLkxJvcDra
+         P9JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:references:in-reply-to:mime-version
+         :content-transfer-encoding:message-id:cc:from:subject:date:to;
+        bh=7Aky2os3lI426ZSvTalrbgS16t4Iqw1TpQ2Dv1MH3NI=;
+        b=OsRJXX2bqMl2leU+ko/92ko+qqHWomgvskkF+v5s/LdvymH/7Jq9m9ZEqNiPffyien
+         kX7Y8+akSbU2OoRotKm/PH7K4oPYHmNuT0x3uUULNZNZz7BFbt1san7x/t2vq2GydJPm
+         DKBtYy0seb5Bo0Lp2ud6OOHksiw3bnvux9C0fl6RTCZt2EK7FeS4+iZxpw0zG7pBP21+
+         UHFdeGrFzyDUPh/mFId/iwQC+RRCx8f9QZ1wDAUzAMdbsqlJJ38XGi4NZxkLrKb5te40
+         4v7T5uciLh/RUZntXM+89RP2KHeTVqYpGSRspPxNOZlHCZqrSsu1q/ivc+ToVsPuR2v5
+         sRFw==
+X-Gm-Message-State: AN3rC/5OzYyvLE24a1ByhPtcyZZUlLz9vbN5ND/f8B5+aTbP3caENVpz
+        OxRxJaM55/lhuA==
+X-Received: by 10.223.133.1 with SMTP id 1mr24621082wrh.43.1492532083101;
+        Tue, 18 Apr 2017 09:14:43 -0700 (PDT)
+Received: from [172.16.1.108] ([92.70.185.162])
+        by smtp.gmail.com with ESMTPSA id s27sm17549271wra.25.2017.04.18.09.14.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Apr 2017 09:14:42 -0700 (PDT)
+References: <20170409191107.20547-1-larsxschneider@gmail.com> <20170409191107.20547-5-larsxschneider@gmail.com> <20170412174610.GB49694@Ida>
+In-Reply-To: <20170412174610.GB49694@Ida>
+Mime-Version: 1.0 (1.0)
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset=us-ascii
+Message-Id: <1D510C6F-A830-48BE-880B-62F4212F4A7F@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        tboegi@web.de, e@80x24.org
+X-Mailer: iPhone Mail (14E304)
+From:   Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH v3 4/4] convert: add "status=delayed" to filter process protocol
+Date:   Tue, 18 Apr 2017 18:14:36 +0200
+To:     Taylor Blau <ttaylorr@github.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 18.04.2017 um 03:41 schrieb Junio C Hamano:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> David Turner <dturner@twosigma.com> writes:
->>
->>> @@ -250,14 +250,14 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
->>> ...
->>>   	if (!force) {
->>> -		static char locking_host[128];
->>> +		static char locking_host[HOST_NAME_MAX + 1];
->>>   		int should_exit;
->>>   		fp = fopen(pidfile_path, "r");
->>>   		memset(locking_host, 0, sizeof(locking_host));
->>
->> I compared the result of applying this v2 directly on top of master
->> and applying René's "Use HOST_NAME_MAX"and then applying your v1.
->> This hunk is the only difference.
->>
->> As this locking_host is used like so in the later part of the code:
->>
->>   			time(NULL) - st.st_mtime <= 12 * 3600 &&
->>   			fscanf(fp, "%"SCNuMAX" %127c", &pid, locking_host) == 2 &&
->>   			/* be gentle to concurrent "gc" on remote hosts */
->>   			(strcmp(locking_host, my_host) || !kill(pid, 0) || errno == EPERM);
->>
->> I suspect that turning it to HOST_NAME_MAX + 1 without tweaking
->> the format "%127c" gives us an inconsistent resulting code.
 
-Oh, missed that.  Thanks for catching it!
+> On 12. Apr 2017, at 19:46, Taylor Blau <ttaylorr@github.com> wrote:
+>=20
+> I think this is a great approach and one that I'd be happy to implement in=
+ LFS.
+> The additional capability isn't too complex, so I think other similar filt=
+ers to
+> LFS shouldn't have a hard time implementing it either.
+>=20
+> I left a few comments, mostly expressing approval to the documentation cha=
+nges.
+> I'll leave the C review to someone more expert than me.
+>=20
+> +1 from me on the protocol changes.
 
->> Of course, my_host is sized to HOST_NAME_MAX + 1 and we are
->> comparing it with locking_host, so perhaps we'd need to take this
->> version to size locking_host to also HOST_NAME_MAX + 1, and then
->> scan with %255c (but then shouldn't we scan with %256c instead?  I
->> am not sure where these +1 comes from).
-> 
-> That is, something along this line...
-> 
->   builtin/gc.c | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index be75508292..4f85610d87 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -240,7 +240,11 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
->   				       LOCK_DIE_ON_ERROR);
->   	if (!force) {
->   		static char locking_host[HOST_NAME_MAX + 1];
-> +		static char *scan_fmt;
->   		int should_exit;
-> +
-> +		if (!scan_fmt)
-> +			scan_fmt = xstrfmt("%s %%%dc", "%"SCNuMAX, HOST_NAME_MAX);
->   		fp = fopen(pidfile_path, "r");
->   		memset(locking_host, 0, sizeof(locking_host));
->   		should_exit =
-> @@ -256,7 +260,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
->   			 * running.
->   			 */
->   			time(NULL) - st.st_mtime <= 12 * 3600 &&
-> -			fscanf(fp, "%"SCNuMAX" %127c", &pid, locking_host) == 2 &&
-> +			fscanf(fp, scan_fmt, &pid, locking_host) == 2 &&
->   			/* be gentle to concurrent "gc" on remote hosts */
->   			(strcmp(locking_host, my_host) || !kill(pid, 0) || errno == EPERM);
->   		if (fp != NULL)
-> 
+Thanks!
 
-How important is it to scan the whole file in one call?  We could split
-it up like this and use a strbuf to handle host names of any length.  We
-need to be permissive here to allow machines with different values for
-HOST_NAME_MAX to work with the same file on a network file system, so
-this would have to be the first patch, right?
 
-NB: That && cascade has enough meat for a whole function.
+>> +Delay
+>> +^^^^^
+>> +
+>> +If the filter supports the "delay" capability, then Git can send the
+>> +flag "delay-able" after the filter command and pathname.
+>=20
+> Nit: I think either way is fine, but `can_delay` will save us 1 byte per e=
+ach
+> new checkout entry.
 
-René
+1 byte is no convincing argument to me but since you are a native speaker I t=
+rust your "can-delay" suggestion. I prefer dashes over underscores, though, f=
+or consistency with the rest of the protocol.
 
----
- builtin/gc.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 1fca84c19d..d5e880028e 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -251,10 +251,9 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
- 	fd = hold_lock_file_for_update(&lock, pidfile_path,
- 				       LOCK_DIE_ON_ERROR);
- 	if (!force) {
--		static char locking_host[128];
-+		static struct strbuf locking_host = STRBUF_INIT;
- 		int should_exit;
- 		fp = fopen(pidfile_path, "r");
--		memset(locking_host, 0, sizeof(locking_host));
- 		should_exit =
- 			fp != NULL &&
- 			!fstat(fileno(fp), &st) &&
-@@ -268,9 +267,10 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
- 			 * running.
- 			 */
- 			time(NULL) - st.st_mtime <= 12 * 3600 &&
--			fscanf(fp, "%"SCNuMAX" %127c", &pid, locking_host) == 2 &&
-+			fscanf(fp, "%"SCNuMAX" ", &pid) == 1 &&
-+			!strbuf_getwholeline(&locking_host, fp, '\0') &&
- 			/* be gentle to concurrent "gc" on remote hosts */
--			(strcmp(locking_host, my_host) || !kill(pid, 0) || errno == EPERM);
-+			(strcmp(locking_host.buf, my_host) || !kill(pid, 0) || errno == EPERM);
- 		if (fp != NULL)
- 			fclose(fp);
- 		if (should_exit) {
-@@ -278,7 +278,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
- 				rollback_lock_file(&lock);
- 			*ret_pid = pid;
- 			free(pidfile_path);
--			return locking_host;
-+			return locking_host.buf;
- 		}
- 	}
- 
--- 
-2.12.2
+>> +"delay-id", a number that identifies the blob, and a flush packet. The
+>> +filter acknowledges this number with a "success" status and a flush
+>> +packet.
+>=20
+> I mentioned this in another thread, but I'd prefer, if possible, that we u=
+se the
+> pathname as a unique identifier for referring back to a particular checkou=
+t
+> entry. I think adding an additional identifier adds unnecessary complicati=
+on to
+> the protocol and introduces a forced mapping on the filter side from id to=
+
+> path.
+
+I agree! I answered in the other thread. Let's keep the discussion there.
+
+
+> Both Git and the filter are going to have to keep these paths in memory
+> somewhere, be that in-process, or on disk. That being said, I can see pote=
+ntial
+> troubles with a large number of long paths that exceed the memory availabl=
+e to
+> Git or the filter when stored in a hashmap/set.
+>=20
+> On Git's side, I think trading that for some CPU time might make sense. If=
+ Git
+> were to SHA1 each path and store that in a hashmap, it would consume more C=
+PU
+> time, but less memory to store each path. Git and the filter could then ex=
+change
+> path names, and Git would simply SHA1 the pathname each time it needed to r=
+efer
+> back to memory associated with that entry in a hashmap.
+
+I would be surprised if this would be necessary. If we filter delay 50,000 f=
+iles (=3D a lot!) with a path length of 1000 characters (=3D very long!) the=
+n we would use 50MB plus some hashmap data structures. Modern machines shoul=
+d have enough RAM I would think...
+
+Thanks,
+Lars=
