@@ -6,93 +6,85 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA9381FA26
-	for <e@80x24.org>; Tue, 18 Apr 2017 01:56:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BF6E1FA26
+	for <e@80x24.org>; Tue, 18 Apr 2017 02:03:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932306AbdDRB4N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Apr 2017 21:56:13 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50460 "EHLO
+        id S1757311AbdDRCDI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Apr 2017 22:03:08 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61145 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1754378AbdDRB4K (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Apr 2017 21:56:10 -0400
+        with ESMTP id S1757306AbdDRCDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Apr 2017 22:03:07 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DBCB674CF7;
-        Mon, 17 Apr 2017 21:56:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5BD91738FE;
+        Mon, 17 Apr 2017 22:03:06 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=/SJBsZ+E+/wc
-        IuSDCZ+LpypMQ7I=; b=PXitl1xmOayOOqDhRyXS7HZnN0a8oGhc9pX9IL0cgAdE
-        oY58JgGu28oxOo6WifYFG3IAGLFyWjx3VpNU4Vq6gHHnk6GCb1mXJKsYpzWCyt1D
-        CNQ+HCO4k43vEXsIQTQCbEI+q5R6uNSZsWxhFRed8+W8QV2yHUCJUQF8Kmv9yQE=
+        :content-type; s=sasl; bh=IkoEQAogIso5bXSgjJKctqWvHcI=; b=nT2u82
+        MTXsM3lTvviodnlLj080yztyGGasgWN0rRz2WukS4jtiMLz/W0Oh3c2rNID7lpYJ
+        3wdQYnXwP0ust2NElVI4iELCmX2zgFhLWbp6CkEft/C+QnIs8dzEA6O5nAynqjT8
+        LG7ZBRjp67oF8kwrdDymeiygu2uvZxEIPNWRk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ULRswm
-        f5mDZoaXoBZcRZROMbHz8npPe9vWiNdZlOqAzwLwVl93CJeSKkk6mvhC3rFS7833
-        9FOQpLZBT1uy20PC1eJhJ2yuEIzlAZ+k4Ajxxy0chloaLSETDM+HWZMzB6JknG+g
-        YAqiCAzeX8PQrUv4A0f5++BlE4AD/e+pl5PNs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D413E74CF6;
-        Mon, 17 Apr 2017 21:56:09 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=j5LmmQGmgoanyyoK0SLowhDnhofx9h3b
+        RLllEBLqqFkFjD3DhqE0IPnP/Jbbl7ST5bbsi3nhFXifa3bbMGr84Sda4BB71GDC
+        9XfBqSiz2L6Mrl28rCVNAB4uxgVfV2McVghdOufUA0kLxZ7d9Esy2PH2POT47ISV
+        CI5ZmPmpxhI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 51B43738FD;
+        Mon, 17 Apr 2017 22:03:06 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 310B174CF5;
-        Mon, 17 Apr 2017 21:56:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AD8FE738FC;
+        Mon, 17 Apr 2017 22:03:05 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     David Turner <dturner@twopensource.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: What's cooking in git.git (Apr 2017, #02; Sun, 16)
-References: <xmqqmvbfij92.fsf@gitster.mtv.corp.google.com>
-        <e6f869b1-09c2-88eb-d79d-b0dc2090a632@web.de>
-Date:   Mon, 17 Apr 2017 18:56:07 -0700
-In-Reply-To: <e6f869b1-09c2-88eb-d79d-b0dc2090a632@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Mon, 17 Apr 2017 11:56:52 +0200")
-Message-ID: <xmqqo9vuh420.fsf@gitster.mtv.corp.google.com>
+To:     Jacob Keller <jacob.e.keller@intel.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v2 2/2] ls-files: fix path used when recursing into submodules
+References: <CA+P7+xqE-SZ5D6pk6-Dx+-VzHijmgmrUR2F=-370Rh8oKr10Nw@mail.gmail.com>
+        <20170413171224.3537-1-jacob.e.keller@intel.com>
+        <20170413171224.3537-2-jacob.e.keller@intel.com>
+Date:   Mon, 17 Apr 2017 19:03:04 -0700
+In-Reply-To: <20170413171224.3537-2-jacob.e.keller@intel.com> (Jacob Keller's
+        message of "Thu, 13 Apr 2017 10:12:24 -0700")
+Message-ID: <xmqqk26ih3qf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3120B580-23DA-11E7-AD03-C260AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2962DE12-23DB-11E7-917F-E680B56B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> Am 17.04.2017 um 09:30 schrieb Junio C Hamano:
->> * dt/xgethostname-nul-termination (2017-04-13) 1 commit
->>   - xgethostname: handle long hostnames
->>=20
->>   gethostname(2) may not NUL terminate the buffer if hostname does
->>   not fit; unfortunately there is no easy way to see if our buffer
->>   was too small, but at least this will make sure we will not end up
->>   using garbage past the end of the buffer.
->>=20
->>   Will merge to 'next'.
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
-> [Sorry for repeating, but I didn't see a direct reply.]
+> Don't assume that the current working directory is the root of the
+> repository. Correctly generate the path for the recursing child
+> processes by building it from the work_tree() root instead. Otherwise if
+> we run ls-files using --git-dir or --work-tree it will not work
+> correctly as it attempts to change directory into a potentially invalid
+> location. Best case, it doesn't exist and we produce an error. Worst
+> case we cd into the wrong location and unknown behavior occurs.
 >
-> If a host name doesn't fit then the buffer is too small.  Let's make it
-> big enough, reducing the number of magic constants and avoiding silent
-> truncation all at the same time.  Patch for that:
+> Add a new test which highlights this possibility.
 >
-> -- >8 --
-> Subject: [PATCH] use HOST_NAME_MAX to size buffers for gethostname(2)
->
-> POSIX limits the length of host names to HOST_NAME_MAX.  Export the
-> fallback definition from daemon.c and use this constant to make all
-> buffers used with gethostname(2) big enough for any possible result
-> and a terminating NUL.
->
-> Inspired-by: David Turner <dturner@twopensource.com>=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 > ---
+> I'm not sure that I'm convinced by this method of solving the problem as
+> I suspect it has some corner cases (what about when run inside a
+> subdirectory? It seems to work for me but I'm not sure...) Additionally,
+> it felt weird that there's no helper function for creating a toplevel
+> relative path.
 
-Thanks.  Let's have this one immediately before David's
-xgethostname() patch on the same topic branch.
+Is this a similar issue as discussed in a nearby thread e.g.
 
-The fact that the length of my_host[] vs locking_host[] being
-different still remains, though.  I do not know if it matters.
+  <CACsJy8CLBY22j3EjR4PW3n+K6PWUzb-HCgxTVeCGpwtApZF-6g@mail.gmail.com>
+
+I do think it is a bug that sometimes we do not go to the root of
+the working tree when we know the repository is not a bare one.
