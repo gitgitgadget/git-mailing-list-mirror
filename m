@@ -2,115 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44D281FE90
-	for <e@80x24.org>; Tue, 18 Apr 2017 10:44:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20D111FE90
+	for <e@80x24.org>; Tue, 18 Apr 2017 11:16:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755050AbdDRKoT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 06:44:19 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:35526 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754489AbdDRKoR (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 18 Apr 2017 06:44:17 -0400
-Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id BBA03280AD;
-        Tue, 18 Apr 2017 10:44:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492512255;
-        bh=pYQQFxDEeMdAvkwQEDKyCnlKPezbiBT9okhz4p6m/vA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=PvKV3N1osaFD0S8jFgGxOWktZxnU2OEZ/EBwSakj2cmu2Ad2Uk3PB05SkZIb3dQx1
-         2wmaYLpWIovDQAtuVsyTgjRYrmRYhFmt9DPjAi5a1WGSmf5IMP3cVDGB1rQ3j/qIew
-         wnvfp98kK5kcKSJvVEi9onZmo95r3m+Senv2VVJNSElkaGxOKxOZDQdLxP0jAc6DF5
-         P9p+uqlQB2yasP/o1bhosT/nzHU1/4+i1P1yDrzq8TfpbWq6BNV7NubSrXWNXWzbm8
-         MQ1SKX6Pp4+sK6brmMPZ33sYDcSz3F6ATgD2TgTxx8qnFuB4cjpvCJIaQAA/RL7uPB
-         H0CS7zDIRTnPmw16UuUhKSXy446hMFWEdAB9+m4scyrHREf1ow8NfNRyDOed27fyxs
-         YVEuuRpZ2B5qN0Wsxau7l6MUYN5GwrGHDgF0fJx9zklgVKs5jgpPST+gDL34F48FPv
-         WEMcvLPSp0UFaGyTE2MwEDXJyFNEwvj+Ky4f/9hqY98JYDrWTks
-Date:   Tue, 18 Apr 2017 10:44:11 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1 0/3] travis-ci: build docs with asciidoctor
-Message-ID: <20170418104411.hdkzh3psvej63tqw@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20170411083309.58315-1-larsxschneider@gmail.com>
- <xmqq37dcorr7.fsf@gitster.mtv.corp.google.com>
- <63CA5B3A-8AEA-473B-9F4C-86C2BBB0530F@gmail.com>
+        id S1756071AbdDRLQy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 07:16:54 -0400
+Received: from mail-lf0-f52.google.com ([209.85.215.52]:32887 "EHLO
+        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755968AbdDRLQx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 07:16:53 -0400
+Received: by mail-lf0-f52.google.com with SMTP id 88so32039107lfr.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2017 04:16:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=zWJZhrjdcgYL/bjxKWqDoOuLcxwhym9vpIjSTI0AIyQ=;
+        b=iHvHBIAbUz/ka7fGrEbLiyIeIjKvrHx/tLqOcd+JA6ICa9ITAyOp/yvMS6rV7lrfoW
+         x0Mk7i7YtKrBPZkCDWM18LVO3ORsGimweAYXq7yYpV9eYYhgxuqvLodJLRT23ulsy6pb
+         UQW17qJXb6ToRkT52EI7L7Nh22yIeZXWVvbiH9oANNrGs7nppCpnVgYNoVCMSCed1wyK
+         2OP/SpI3euU/3xG2FPTMv1C1SHKERT9TSzg6aoQCOcLRd2VPk62yZzCRZyn9tP1Loa5b
+         Pdsxnd6dr83hIm7MNO3wmlbQWDyw1Mk3OkcZPd9U1FNWPuGq9C4N7/4ADjpNcMMbr9Nk
+         5imw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=zWJZhrjdcgYL/bjxKWqDoOuLcxwhym9vpIjSTI0AIyQ=;
+        b=eg9KQSl4YNswofpS4d7Mvk0cAe66Cod79BloJjPTe/OXbtalrvsHSuLRhfGcD9GbLL
+         vtXUaPypycvWfATUVXgKXs+FV2lX6JNw/SgT6MTXbhc/xX9ADsGwwtZZaqgaJ63f4Ti5
+         iRqOXZnYGJHU+AL4v++0nFtmGC2KKilaTgB/ap7PGc7ILnzAt+GLPP9eNPWGzRH/WNDD
+         9hAfL4/ojZE8UPjSDd/sZgLa0iqUMKsDTK5ssl0yJk9ANrMqKmmpDQBraPhh7lpbq0x8
+         pSjLhIaTePd7s46PakT7bfhpZgOCP/qx4lXfh6aEeOvyqtQJwU5vuBnAG0bwyPJ+1nTL
+         fWBg==
+X-Gm-Message-State: AN3rC/5wylwi0cCFUo4UlbSln2n/sE7cJjwdcpbeuhi9+OJ2MW8+CQ96
+        GFbFrPFnIrj/o+woHY2DU2dxRYavmw==
+X-Received: by 10.46.69.133 with SMTP id s127mr4094047lja.44.1492514211506;
+ Tue, 18 Apr 2017 04:16:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="fhnu3dbgi2uxhuuk"
-Content-Disposition: inline
-In-Reply-To: <63CA5B3A-8AEA-473B-9F4C-86C2BBB0530F@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+Received: by 10.25.79.71 with HTTP; Tue, 18 Apr 2017 04:16:50 -0700 (PDT)
+In-Reply-To: <CAJgfmqXqfp3A+A74dfkKjQb_26ZNH9anY52-G2L5ipg=+6--2w@mail.gmail.com>
+References: <CAJgfmqU+1Ex1YkP94H2amXV+oqscbQwvb-CueuCiM7-n0AAP8Q@mail.gmail.com>
+ <CACBZZX4fDu-o+ERiTyjVq2rWkXK6rjErU4KyW33qMx1_6vjMCQ@mail.gmail.com>
+ <xmqqpogblvfr.fsf@gitster.mtv.corp.google.com> <CAJgfmqWf9j=R1=qy-kGTL4+y_40O+8S5q=VZuD3A-DbfRJer2Q@mail.gmail.com>
+ <CACsJy8BASVSxJ4RzNKVpj9MyD=fMR-fpspMdET1bT45yMrf_0w@mail.gmail.com>
+ <CAJgfmqW4ck9SwBrT_Z7bTOzM2zG==_ONUhTfhbLJtRu=vT+wyg@mail.gmail.com>
+ <xmqq60i2im72.fsf@gitster.mtv.corp.google.com> <CAJgfmqXqfp3A+A74dfkKjQb_26ZNH9anY52-G2L5ipg=+6--2w@mail.gmail.com>
+From:   demerphq <demerphq@gmail.com>
+Date:   Tue, 18 Apr 2017 13:16:50 +0200
+Message-ID: <CANgJU+WbbF2yzg53D7NasN_nxqytOh=UoutmMPak77JhiJHx4A@mail.gmail.com>
+Subject: Re: Feature request: --format=json
+To:     "Fred .Flintstone" <eldmannen@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 18 April 2017 at 10:44, Fred .Flintstone <eldmannen@gmail.com> wrote:
+> Well the easiest way to work with that would be JSON.
+> So the best would be if Git could output the data I want in JSON format.
+> Then it would be easy for me to work with data.
+>
+> With git rev-list and git-cat file, its not so easy to reliably parse
+> that output.
 
---fhnu3dbgi2uxhuuk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Doesn't seem too hard to work with rev-list to me. As far as I can
+tell the following produces what  you want. You need perl installed
+obviously, and the JSON::PP module is required, but should come
+bundled with recent perls.
 
-On Tue, Apr 18, 2017 at 10:32:59AM +0200, Lars Schneider wrote:
->=20
-> > On 14. Apr 2017, at 00:41, Junio C Hamano <gitster@pobox.com> wrote:
-> > Having said that, I wonder if we get some interesting results out of
-> > building the documentation twice, though.  By looking at the Travis
-> > log with timestamps, we probably can see how long each build takes,
-> > but that is much less interesting than learning if new versions of
-> > text used mark-up that does not format correctly on one or the other
-> > (i.e. catch documentation breakage early in each CI run), for
-> > example.  I have an impression that neither AsciiDoc nor AsciiDoctor
-> > "fails" in an obvious way that "make" can notice (i.e. they often
-> > just silently produce nonsense output when fed a malformed input
-> > instead).
->=20
-> True! But wouldn't we get a syntax check here? Wouldn't asciidoc / ascido=
-ctor bark if we use wrong/unsupported elements?
+git rev-list master --pretty=raw | perl -MJSON::PP=encode_json
+-ane'if(/^(\w+) (.*)/) { if ($1 eq "commit") { push @objs, $o if $o;
+$o={}; } $o->{$1} = $2; } else { $o->{text} .= $_; } END{ push @objs,
+$o if $o; for $o (@objs) { s/^    //mg, s/^\n// for $o->{text};
+($o->{message},$o->{long_message})= split /\n\n/, delete $o->{text}; }
+print JSON::PP->new->pretty->encode(\@objs);}'
 
-Asciidoctor isn't very strict about questionable items.  If you want
-that behavior, you'd want to check for output to standard error during
-the make process, as Asciidoctor uses Ruby's warn function.
+You might consider an alternative approach than stating that working
+with JSON is "the easiest", especially to people who clearly are
+making do without it. :-)
 
-One of the things I've wanted to do is to make it able to be strict, but
-that requires a lot of refactoring work that I just haven't gotten
-around to.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+A better argument might be that exposing data through a well defined
+and widely used and simple data format would trivially expand the
+range of projects that might interoperate with git or enhance the git
+ecosystem. For instance you could argue that having clean JSON output
+would make it easier to integrate into search engines and other
+indexing tools that already know how to speak JSON. Maybe a regular
+contributor on this list might agree with your arguments and make it
+happen.
 
---fhnu3dbgi2uxhuuk
-Content-Type: application/pgp-signature; name="signature.asc"
+Until then you can parse rev-list like the rest of us. :-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlj17fsACgkQv1NdgR9S
-9otqbg//YwLHgoRxs4uIdfhSXb3dyy+/G3IbPleQUT3MdABvthLC6+6NzS5huWHC
-HyVfNtDAn9+CJY4OtHmRnwEozjs6HoPFQjYlZm+Ib85FHtTpd7QPLdSD7QP9nR1y
-RMMnVdnBsjoPw0ib11MujDfiDCzN6++jJUAWzEu+irdsxn0zVoHm1+PNUXTPBohn
-U7hnlGZtlFKuAO3mQnPITRbRaz/Yshlq0DlnHc9kKeasjLNMj5BDk6Fuh5IzMdBO
-bXJLQCiYE4qHjr68511+igZb8zPeHUnkr7lDGeQwO0r86wGyZ7svlSm2IqC1amc1
-JQ2MCDz2+IkUkJpoiyb51DwSbq3z7kzLoZVl8Sp7xSBEwEzfjrQXcs4d/J2xAB8E
-iN2QXXPyuJw+6/uhoUct7fAdBmMTa9Qj16s9ip9oS3h5Vz71hCvtikkw8+FTHrdZ
-+ndNBm1MMH/3xvPM/UCGbeEnwKrb553OsrwwUsJboVDg7gP6pl5d5DyWkrafa3Hf
-48PPsdyzrqYeqcfeiEkGiDZnEXEoI4yLymjluuosls/Q2KhRsclOm4TSoHRpGYLQ
-wlGd4ZaubZJ/gAJ1ATxJ/PM3Cd0yw6srURziSGO5z5ibh5E8IAtm2pHKqmQ08XLp
-t0TZmNvM3Zmkp60ttAdB1gg1yT5ofO2EphUmvaZ7uLcJeU0qFg4=
-=pOuU
------END PGP SIGNATURE-----
-
---fhnu3dbgi2uxhuuk--
+cheers,
+Yves
