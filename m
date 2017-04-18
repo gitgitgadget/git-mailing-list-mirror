@@ -2,88 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 637EA1FE90
-	for <e@80x24.org>; Tue, 18 Apr 2017 08:43:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5793A1FE90
+	for <e@80x24.org>; Tue, 18 Apr 2017 08:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932083AbdDRIlb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 04:41:31 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35780 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932079AbdDRIlN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 04:41:13 -0400
-Received: by mail-wm0-f66.google.com with SMTP id d79so13266653wmi.2
-        for <git@vger.kernel.org>; Tue, 18 Apr 2017 01:41:13 -0700 (PDT)
+        id S932079AbdDRIpG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 04:45:06 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:34601 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755463AbdDRIoH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 04:44:07 -0400
+Received: by mail-wm0-f49.google.com with SMTP id r190so8774073wme.1
+        for <git@vger.kernel.org>; Tue, 18 Apr 2017 01:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Srt0zD2IneDqapX8zqiejCRQlKgYJq4hxQrjl6Sv650=;
-        b=he58yLy0opWbS2sPBF997WfA5zzKe/s2p/2KzXuxrMsn4ixxzFq28eUVL3CEr7Z2MN
-         P7ZQsxvmsybeeHr9wokda86q5GErRS7g3hw2+J9e8537T6PCXwWKETA3OagmkVEmW+jQ
-         BSpaQTES7Vmpk1UijSKa/eOjyrRV7XGkhKvMhbl9uBl+VIKL1O/ToOb8IJXTCrKr/bPu
-         k1AdERiJq1AyBpif7IsWmD61bt3bUiGlusXmx6NuZNlIUfmtgevrIlDWUK6MaGA7gF4P
-         v1qi2JY+O8qoI0YkWBY2PMMr2fa4SuqBfRiKMf+GE0Qu0u1hw+rTkhIoGshd0K4wEiPQ
-         S0Aw==
+        bh=f/A4h3mrERgZ13BtTIsUYEK5WIF4GHI+W/N9Y/QGTMY=;
+        b=gqSRERaTtkxQjfnPYQwRTEOcvjsFuIIV0M8v3LXDhh6qG6vZJezQKkE4bp4X/iyD7W
+         3qvOagawjwECsGylzAJlZgy47++6QjkAAk6biGMLfaVTOj7IuK/uuNAYb79dTbq62m0W
+         HjNnXvmiPp8StwPVRfT518hlKbCEg08olyWXHwcUKTFKeWDIMi1n78BjflgoMpogUS2G
+         lx5HZDcDn3H6SEFXOVy2+wqrKbDekCB0COF/s60jmk4109UuN5GJsP1/KxQPdbRe1L47
+         6VLBW0Txarf8e5AIDYC9140iIpl9ORyGkib3Ryj+MoIm+oUt99xuF2WiP6N9mwTfLxYB
+         nm7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Srt0zD2IneDqapX8zqiejCRQlKgYJq4hxQrjl6Sv650=;
-        b=ODR3Vije6y2/sDWIHY1UUFpSgwbYpG5o4NkSYKKEVVqmf69jfKyZvT2wXeEi5FBDOt
-         rtRTybs42i0rVogZL/P+jhR0xF+n8vmVdv7hy7KgTFfYxQMMXPwrrqmottj064y0u0gG
-         RRZuoKvWFa1DXNT9jXz59yKep9qD+QfWHX9PFg/JYQv7a2giwHTvXB5ZMjz5s0ZPXnMY
-         NRvUxRhEaHHdX0o9QcNe9tIY5Lut6zc8eHfr9hAx0U8EvcDs0SX/tsgTaoFFtnKiT0XX
-         zSPwEMQHO+oARtF97nAAhNJs91sXwSs8cbtmwf5gZ9EDK6NJNIWn7rix/I/KvVDe/kig
-         pd0Q==
-X-Gm-Message-State: AN3rC/5z9b4yl9TqaKxhDI9pqizxEyH4baNU/KaOzedvmIcwfABBlrjV
-        NnTT+eAOkO8INn4W5o833ELJ525TRw==
-X-Received: by 10.28.197.135 with SMTP id v129mr12716137wmf.55.1492504872608;
- Tue, 18 Apr 2017 01:41:12 -0700 (PDT)
+        bh=f/A4h3mrERgZ13BtTIsUYEK5WIF4GHI+W/N9Y/QGTMY=;
+        b=jMXD0xR240QImchQX7K8BW4upsXH83tkfBeE9W87mPfE4lBp1yIro2pOPfj/L90Xtt
+         1p+wZv5RH38Ae01jsKqA12lX2UDfvJOTIfaeaeK20LNM1LaLAgRePcbbmSdW3s7fSjXZ
+         lnDETjUkjL2MN5JxOhVFEYhpjtz+5WTaruAKhwjWL+Lr9pcwFM3PgcNH3Pz9rS0k1djZ
+         e2ceIpl0lM7+d0K1J03jZndeDjJdsOS2rLRMX3/P5j3nTARQ5Lj4/fo83bI7r0Vm9UQA
+         YFWxQUfq69E10Dro03XHUi0pBSz70RgdL7PhQYvscZ8tbhkj99NH6vI7i/iZBHU13zdt
+         KGaQ==
+X-Gm-Message-State: AN3rC/5YMhJKx6B2t5H1HKIZmwOSJiOrgz6QbaLX6yhq0v/M/cFP6WYz
+        mFHNie5ZFHBnhu1//8nPsFaTJyR1kA==
+X-Received: by 10.28.197.135 with SMTP id v129mr12728592wmf.55.1492505045166;
+ Tue, 18 Apr 2017 01:44:05 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.28.98.212 with HTTP; Tue, 18 Apr 2017 01:40:52 -0700 (PDT)
-In-Reply-To: <xmqqinm2inc2.fsf@gitster.mtv.corp.google.com>
-References: <20170415144103.11986-1-giuseppe.bilotta@gmail.com>
- <xmqqshl7ik21.fsf@gitster.mtv.corp.google.com> <CAOxFTczhfvzhrSiCj7SgLXbO3hrBW_QaDVZMpOqrij_hCJyCzg@mail.gmail.com>
- <xmqqinm2inc2.fsf@gitster.mtv.corp.google.com>
-From:   Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Date:   Tue, 18 Apr 2017 10:40:52 +0200
-Message-ID: <CAOxFTcyv_o8Gbjj-R0g6eK-i1QDZUA9okwq=7Yb4iW3n=kF-mQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] rebase --signoff
+Received: by 10.80.142.26 with HTTP; Tue, 18 Apr 2017 01:44:04 -0700 (PDT)
+In-Reply-To: <xmqq60i2im72.fsf@gitster.mtv.corp.google.com>
+References: <CAJgfmqU+1Ex1YkP94H2amXV+oqscbQwvb-CueuCiM7-n0AAP8Q@mail.gmail.com>
+ <CACBZZX4fDu-o+ERiTyjVq2rWkXK6rjErU4KyW33qMx1_6vjMCQ@mail.gmail.com>
+ <xmqqpogblvfr.fsf@gitster.mtv.corp.google.com> <CAJgfmqWf9j=R1=qy-kGTL4+y_40O+8S5q=VZuD3A-DbfRJer2Q@mail.gmail.com>
+ <CACsJy8BASVSxJ4RzNKVpj9MyD=fMR-fpspMdET1bT45yMrf_0w@mail.gmail.com>
+ <CAJgfmqW4ck9SwBrT_Z7bTOzM2zG==_ONUhTfhbLJtRu=vT+wyg@mail.gmail.com> <xmqq60i2im72.fsf@gitster.mtv.corp.google.com>
+From:   "Fred .Flintstone" <eldmannen@gmail.com>
+Date:   Tue, 18 Apr 2017 10:44:04 +0200
+Message-ID: <CAJgfmqXqfp3A+A74dfkKjQb_26ZNH9anY52-G2L5ipg=+6--2w@mail.gmail.com>
+Subject: Re: Feature request: --format=json
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git ML <git@vger.kernel.org>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2017 at 2:14 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+Well the easiest way to work with that would be JSON.
+So the best would be if Git could output the data I want in JSON format.
+Then it would be easy for me to work with data.
+
+With git rev-list and git-cat file, its not so easy to reliably parse
+that output.
+
+On Tue, Apr 18, 2017 at 2:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Fred .Flintstone" <eldmannen@gmail.com> writes:
 >
->>>  - How does this interact with "git rebase -i" and other modes of
->>>    operation?
+>> So I would either have to do:
+>> git rev-list --all
+>> Then iterate over each line and do git-cat-file commit <commit-id>.
 >>
->> A better question would maybe be how do we want this to interact?
+>> Or do:
+>> git rev-list --all | git cat-file --batch
+>>
+>> If I do it in a batch, then it will be tricky to reliably parse since
+>> I don't know when the message body ends and when the next commit
+>> starts.
+>>
+>> JSON output would have been very handy.
 >
-> If "git rebase -i/-m --signoff" will not do anything (which I
-> suspect is what we have here), we at least would want it to be
-> documented, or the combination be made to error out, I would think.
->
-> A better question can wait until that happens ;-)
-
-I've been looking into adding signoff support to the rest of
-git-rebase, but the thing is far less trivial to do than I initially
-imagined, since the interactive part is split across a number of
-sections and files, including C helpers and the sequencer itself. It
-can _probably_ be done, but building tests for all corner cases is
-quite the daunting task. I think that for the moment I'll resubmit
-with the Documentation fix to declare it non-interactive only, and
-then leave the extended for later.
-
--- 
-Giuseppe "Oblomov" Bilotta
+> I am somewhat puzzled.  I thought that you were trying to come up
+> with a way to produce JSON output and people are trying to help you
+> by pointing out tools that you can use for that.
