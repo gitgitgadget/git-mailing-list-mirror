@@ -2,81 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E20E1FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 15:10:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03DB81FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 15:50:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1765568AbdDSPKK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 11:10:10 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36107 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1765312AbdDSPKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 11:10:07 -0400
-Received: (qmail 13379 invoked by uid 109); 19 Apr 2017 15:10:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Apr 2017 15:10:07 +0000
-Received: (qmail 23787 invoked by uid 111); 19 Apr 2017 15:10:30 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Apr 2017 11:10:30 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Apr 2017 11:10:05 -0400
-Date:   Wed, 19 Apr 2017 11:10:05 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jacob Keller <jacob.e.keller@intel.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFC PATCH] parse-options: disallow double-negations of options
- starting with no-
-Message-ID: <20170419151005.wolvxiacjqxoqrq3@sigill.intra.peff.net>
-References: <20170419090820.20279-1-jacob.e.keller@intel.com>
+        id S937740AbdDSPui convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 19 Apr 2017 11:50:38 -0400
+Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:38670 "EHLO
+        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S937736AbdDSPug (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 11:50:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id 976B7100082;
+        Wed, 19 Apr 2017 15:50:35 +0000 (GMT)
+X-Virus-Scanned: Debian amavisd-new at twosigma.com
+Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
+        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id d6IuWmVKtaeh; Wed, 19 Apr 2017 15:50:35 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (exmbdft7.ad.twosigma.com [172.22.2.43])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id 857548002E;
+        Wed, 19 Apr 2017 15:50:35 +0000 (GMT)
+Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
+ exmbdft7.ad.twosigma.com (172.22.2.43) with Microsoft SMTP Server (TLS) id
+ 15.0.1263.5; Wed, 19 Apr 2017 15:50:35 +0000
+Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
+ exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
+ 15.00.1263.000; Wed, 19 Apr 2017 15:50:35 +0000
+From:   David Turner <David.Turner@twosigma.com>
+To:     'Junio C Hamano' <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "l.s.r@web.de" <l.s.r@web.de>
+Subject: RE: [PATCH v3 2/2] xgethostname: handle long hostnames
+Thread-Topic: [PATCH v3 2/2] xgethostname: handle long hostnames
+Thread-Index: AQHSuLfL9Q6yqt0HKEmBknmyVJ/JJqHM04Ww
+Date:   Wed, 19 Apr 2017 15:50:34 +0000
+Message-ID: <0701e70b52fe4bdd8e04e4c6918aab7a@exmbdft7.ad.twosigma.com>
+References: <20170418215743.18406-1-dturner@twosigma.com>
+        <20170418215743.18406-3-dturner@twosigma.com>
+        <20170419013552.GB28740@aiede.svl.corp.google.com>
+ <xmqq4lxlcdpf.fsf@gitster.mtv.corp.google.com>
+In-Reply-To: <xmqq4lxlcdpf.fsf@gitster.mtv.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [172.20.60.13]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170419090820.20279-1-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 19, 2017 at 02:08:20AM -0700, Jacob Keller wrote:
-
-> From: Jacob Keller <jacob.keller@gmail.com>
+> -----Original Message-----
+> From: Junio C Hamano [mailto:gitster@pobox.com]
+> Sent: Tuesday, April 18, 2017 10:51 PM
+> To: Jonathan Nieder <jrnieder@gmail.com>
+> Cc: David Turner <David.Turner@twosigma.com>; git@vger.kernel.org;
+> l.s.r@web.de
+> Subject: Re: [PATCH v3 2/2] xgethostname: handle long hostnames
 > 
-> Many options can be negated by prefixing the option with "no-", for
-> example "--3way" can be prefixed with "--no-3way" to disable it. Since
-> 0f1930c58754 ("parse-options: allow positivation of options
-> starting, with no-", 2012-02-25) we have also had support to negate
-> options which start with "no-" by using the positive wording.
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 > 
-> This leads to the confusing (and non-documented) case that you can still
-> prefix options beginning with "no-" by a second "no-" to negate them.
-> That is, we allow "no-no-hardlinks" to negate the "no-hardlinks" option.
+> > Hi,
+> >
+> > David Turner wrote:
+> >
+> >> If the full hostname doesn't fit in the buffer supplied to
+> >> gethostname, POSIX does not specify whether the buffer will be
+> >> null-terminated, so to be safe, we should do it ourselves.  Introduce
+> >> new function, xgethostname, which ensures that there is always a \0
+> >> at the end of the buffer.
+> >
+> > I think we should detect the error instead of truncating the hostname.
+> > That (on top of your patch) would look like the following.
+> >
+> > Thoughts?
+> > Jonathan
+> >
+> > diff --git i/wrapper.c w/wrapper.c
+> > index d837417709..e218bd3bef 100644
+> > --- i/wrapper.c
+> > +++ w/wrapper.c
+> > @@ -660,11 +660,13 @@ int xgethostname(char *buf, size_t len)  {
+> >  	/*
+> >  	 * If the full hostname doesn't fit in buf, POSIX does not
+> > -	 * specify whether the buffer will be null-terminated, so to
+> > -	 * be safe, do it ourselves.
+> > +	 * guarantee that an error will be returned. Check for ourselves
+> > +	 * to be safe.
+> >  	 */
+> >  	int ret = gethostname(buf, len);
+> > -	if (!ret)
+> > -		buf[len - 1] = 0;
+> > +	if (!ret && !memchr(buf, 0, len)) {
+> > +		errno = ENAMETOOLONG;
+> > +		return -1;
+> > +	}
 > 
-> This can be confusing to the user so lets just disallow the
-> double-negative forms. If the long_name begins with "no-" then we simply
-> don't allow the regular negation format, and only allow the option to be
-> negated by the positive form.
-> 
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
-> I started going about implementing an OPT_NEGBOOL as suggested by Peff,
-> but realized this might just be simpler, and we already support the
-> positive format for the negation, so we don't lose expressiveness. We
-> *might* want to tie this to an option flag instead so that it only kicks
-> in if the option specifically requests it. Thoughts?
+> Hmmmm.  "Does not specify if the buffer will be NUL-terminated"
+> would mean that it is OK for the platform gethostname() to stuff
+> sizeof(buf)-1 first bytes of the hostname in the buffer and then truncate by
+> placing '\0' at the end of the buf, and we would not notice truncation with the
+> above change on such a platform, no?
 
-Yeah, if we are going to do anything, this is the right thing to do.
+My read of the docs is that not only is that OK, but it is also permitted
+for the platform to put sizeof(buf) bytes into the buffer and *not* 
+put \0 at the end.
 
-I am on the fence on whether it actually needs addressing or not. Sure,
---no-no-foo looks silly, but if the only way it happens is that the user
-typed it, it doesn't seem so bad to me to respect it. I am tempted to
-say we should support arbitrary levels of "no-" parsing as an easter
-egg, but that is probably silly. :)
+So in order to do a dynamic approach, we would have to allocate some
+buffer, then run gethostname, then check if the penultimate element 
+of the buffer was written to, and if so, allocate a larger buffer.  Yucky,
+but possible.
 
-So I am fine with this patch, or without it.
-
--Peff
