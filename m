@@ -2,90 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D65CF1FA26
-	for <e@80x24.org>; Wed, 19 Apr 2017 07:03:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 877FF1FA26
+	for <e@80x24.org>; Wed, 19 Apr 2017 07:32:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760293AbdDSHDO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 03:03:14 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:36766 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1760290AbdDSHDN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 03:03:13 -0400
-Received: by mail-it0-f44.google.com with SMTP id b15so23792362iti.1
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 00:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=sZd3gAchi4ceVUS/lgcf4fxTEsTe30bn2aEcYgMSX+8=;
-        b=nWrhQksrrs2HZ20d55PdVZaTWcTj7hqGdcN+U+pgHfcmUz1lt8CNGo14e10sD/k5eS
-         mMOmQPvHF+FNoKA8yHwmUVzgWUMz23uqrJoqku1XJPckQJyFZDjNhK7gFZHngCwAlG5s
-         OfW2BlTmootrV4DVfnCBq9cjYZFrVS3I/61MO8Xau0VxymK6+34cXGAxglSOLHnjKNct
-         VhsjUSVMQXR/MSlBh1f3hBj68x6DArcC8NxrFSv5vwH23PbFpKHLghIvL9DB30FxCgrT
-         obsvqMpVR91p12NkbuTBz7s74s0hBc0JMVVbUH/Fczyd7HcBAOFth6Wt/6ZIUw507/7Y
-         XhDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sZd3gAchi4ceVUS/lgcf4fxTEsTe30bn2aEcYgMSX+8=;
-        b=RoLOTKg/rGg3+tjmBHSvAGU2SOpHFw6YhkBRdvYIW3aPy1O0bhtQ/QUF+wkjri+fia
-         umNZZGauoIfVe7jOuSy3gG72FIUFkYYTWCkaqDqGAb4QnD3uWMhLzspbxe57QqNG3tMy
-         HK1pxSRpO9QLryXw2VxKeKyqE/dQ4+oiKoCE7WrNjPqLHnq+d5XqdAWcw42zg8ERWabd
-         sAFyajxvHKEy0/RcjnxzY+oapf1afii0YdlCE7RZetQJsoUf98OGawLvLTwSjOOs+fXD
-         wUW9bwq32fIRVtmOyY8q9ZdUt5J2dHAi5esyR9ICYwikuLRaeBV4t4wpJHzgZ3vP4oRV
-         qcZw==
-X-Gm-Message-State: AN3rC/4xRAy5AscpYkR2UX8nmHgsh8wxGCazNFK87/MVqh902lZCJvRq
-        6+zMFb8foWySmLtx0ofaQyCrjgyWEA==
-X-Received: by 10.36.43.77 with SMTP id h74mr1760109ita.60.1492585392970; Wed,
- 19 Apr 2017 00:03:12 -0700 (PDT)
+        id S1760564AbdDSHcM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 03:32:12 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:37269 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1760561AbdDSHcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 03:32:10 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id 0k5wdewgFcpsk0k5wdNpcY; Wed, 19 Apr 2017 08:32:09 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
+ a=xtxXYLxNAAAA:8 a=5VET6gVex9WtIZa_MwIA:9 a=wPNLvfGTeEIA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
+Message-ID: <AC79ED43D69A4063B2F30AE43B1AEE63@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Junio C Hamano" <gitster@pobox.com>
+Cc:     "Christoph Michelbach" <michelbach94@gmail.com>,
+        "Git Mailing List" <git@vger.kernel.org>
+References: <1492287435.14812.2.camel@gmail.com><9535BE255A654CADB7B0AE7599A6FA96@PhilipOakley><1492347718.19687.14.camel@gmail.com><2DCA89C3FDFF41E5B3651018BF837267@PhilipOakley><1492368692.22852.9.camel@gmail.com><DF5E72F5BD2F4BB99D8EC4DF1B4543F7@PhilipOakley><1492380399.19991.13.camel@gmail.com><5EBADDE444D141918F6873BE8456E026@PhilipOakley><1492452173.11708.22.camel@gmail.com><5FD0803E166B4D2F9F64D8D21AC23EB3@PhilipOakley> <xmqqa87eimje.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH] Documentation/git-checkout: make doc. of checkout <tree-ish> clearer
+Date:   Wed, 19 Apr 2017 08:32:08 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Wed, 19 Apr 2017 00:02:52 -0700 (PDT)
-In-Reply-To: <20170419025016.we3tfuvgppuamc7g@sigill.intra.peff.net>
-References: <20170418170914.9701-1-avarab@gmail.com> <de79d366-3609-8efe-b23a-7e793036b3ef@web.de>
- <20170419014143.56io56xn6mawy5xi@sigill.intra.peff.net> <xmqqh91lce6y.fsf@gitster.mtv.corp.google.com>
- <20170419025016.we3tfuvgppuamc7g@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 19 Apr 2017 09:02:52 +0200
-Message-ID: <CACBZZX5wHvWgqjBaiD4pJsVQug=+-4xRwkvfZ0uZ=meE3xR6NQ@mail.gmail.com>
-Subject: Re: [PATCH] various: disallow --no-no-OPT for --no-opt options
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfMGM8oWl1tUf60mrK1rorqrASaF8sQKvpw9UYYhOImaWKAoCwZX8zK1wsNi7oIvNPmIbYjOUtagcej1fYKuBvlC6aS+JR70X41/UfwWvXzslY0GxVawv
+ I31IakRJwbgFhCMS3GWXdqMo67YEXqGtRglQP8hzk4wt2pjW/f9NWs9KJPm9A1/8NpQF+rqWWrchudpsdyQwLNBOm1G6slKLPIQ9VsBOSiOqT+iUulA1pFLu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 19, 2017 at 4:50 AM, Jeff King <peff@peff.net> wrote:
-> On Tue, Apr 18, 2017 at 07:40:37PM -0700, Junio C Hamano wrote:
+From: "Junio C Hamano" <gitster@pobox.com>    Sent: Tuesday, April 18, 2017 
+1:31 AM
+> "Philip Oakley" <philipoakley@iee.org> writes:
 >
->> > It might even be possible to detect the existing line and
->> > have parse-options automatically respect "--foo" when "--no-foo" is
->> > present.  But that may run afoul of callers that add both "--foo" and
->> > "--no-foo" manually.
+>>>> If we'd created and added a file d just before the checkout, what
+>>>> should
+>>>> have happened to d, and why?
+>>>
+>>> I understand what the command does. It behaves perfectly as I expected
+>>> it to. I did not find this script but wrote it to demonstrate that what
+>>> the documentation says is different from how it behaves after having
+>>> read what the documentation says it should do and noticing that that's
+>>> not how I expected it to work from experience.
+>>>
+>>> What it really does is to copy all files described by the given paths
+>>> from the given tree-ish to the working directory. Or at least that's my
+>>> expectation of what it does.
+>>>
+>>> The documentation, however, says that the given paths are *restored*.
+>>> This is different.
 >>
->> True but wouldn't that something we would want to avoid anyway?
->> That is, "git cmd [--OPT | --no-OPT | --no-no-OPT]" from the end
->> user's point of view should be an error because it is unclear what
->> difference there are between --OPT and --no-no-OPT.  And we should
->> be able to add a rule to parse_options_check() to catch such an
->> error.
+>> I don't see that difference in the phrase *restored*, compared to your
+>> 'copy all files described by the given paths'. Could you explain a
+>> little more?
 >
-> I meant that if you have something like this in your options array:
+> I am obviously not Christoph, and I was the one that defined how
+> "checkout <tree> -- <pathspec>" should work, but when you say
+> "restore" (which is not what I wrote ;-)) it is fair to expect lack
+> of 'd' could also be "restored", in addition to path that was in the
+> directory.
 >
->   { 0, "foo", OPTION_INTEGER, &foo, 1 },
->   { 0, "no-foo", OPTION_INTEGER, &foo, 2 },
+> Obviously, "grab all paths that match <pathspec> out of <tree>, add
+> them to the index and copy them out to the working tree" will never
+> be able to _restore_ the lack of 'd', even it may match the
+> <pathspec> being used to do this checkout, by removing it from the
+> current index and the working tree.
+>
+My attempt at asking about an additional file 'd' ended up being a bit of a 
+red herring as it went off at a tangent.
 
-I may be missing something, but don't we already do exactly what
-you're describing here? See commit f1930c587 ("parse-options: allow
-positivation of options starting, with no-", 2012-02-25) from Ren=C3=A9
-Scharfe.
+Hopefully Christoph will hang in to help clarify the original issue. I think 
+I'm getting a sense of the potential confusion between the different 
+messages Git sends out, and which one is the right one here. On the one hand 
+Git promotes the two step staging area approach, but on the other hand the 
+checkout of a file suggests IIUC that all checkouts will end up as staged 
+revisions (one step only).
+
+Philip 
+
