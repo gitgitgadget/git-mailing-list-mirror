@@ -6,28 +6,30 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AAFA1FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 17:06:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0302C1FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 17:06:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967747AbdDSRGi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 13:06:38 -0400
-Received: from siwi.pair.com ([209.68.5.199]:15205 "EHLO siwi.pair.com"
+        id S967888AbdDSRGk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 13:06:40 -0400
+Received: from siwi.pair.com ([209.68.5.199]:15225 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967438AbdDSRGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 13:06:32 -0400
+        id S967883AbdDSRGd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 13:06:33 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4DEFC844FA;
-        Wed, 19 Apr 2017 13:06:30 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id 0FB4E84504;
+        Wed, 19 Apr 2017 13:06:31 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v12 0/5] read-cache: speed up add_index_entry
-Date:   Wed, 19 Apr 2017 17:06:13 +0000
-Message-Id: <20170419170618.16535-1-git@jeffhostetler.com>
+Subject: [PATCH v12 3/5] read-cache: speed up add_index_entry during checkout
+Date:   Wed, 19 Apr 2017 17:06:16 +0000
+Message-Id: <20170419170618.16535-4-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20170419170618.16535-1-git@jeffhostetler.com>
+References: <20170419170618.16535-1-git@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -35,41 +37,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Version 12 adds a new t/perf/repo/inflate-repo.sh script to let you
-inflate a test repo, such as a copy of git.git or linux.git, to have
-a branch containing a very large number of (non-synthetic) files.
+Teach add_index_entry_with_check() to see if the path
+of the new item is greater than the last path in the
+index array before attempting to search for it.
 
-It also fixes the "##" comments in the many-files.sh script
-as mentioned on the mailing list.
+During checkout, merge_working_tree() populates the new
+index in sorted order, so this change will save a binary
+lookups per file.  This preserves the original behavior
+but simply checks the last element before starting the
+search.
 
-I've also updated the commit message on part 2 to show the
-results when run on an inflated copy of linux.git with 1M+ files.
+This helps performance on very large repositories.
 
-Jeff Hostetler (5):
-  read-cache: add strcmp_offset function
-  p0006-read-tree-checkout: perf test to time read-tree
-  read-cache: speed up add_index_entry during checkout
-  read-cache: speed up has_dir_name (part 1)
-  read-cache: speed up has_dir_name (part 2)
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ read-cache.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
- Makefile                           |   1 +
- cache.h                            |   1 +
- read-cache.c                       | 139 ++++++++++++++++++++++++++++++++++++-
- t/helper/.gitignore                |   1 +
- t/helper/test-strcmp-offset.c      |  22 ++++++
- t/perf/p0006-read-tree-checkout.sh |  67 ++++++++++++++++++
- t/perf/repos/.gitignore            |   1 +
- t/perf/repos/inflate-repo.sh       |  86 +++++++++++++++++++++++
- t/perf/repos/many-files.sh         | 110 +++++++++++++++++++++++++++++
- t/t0065-strcmp-offset.sh           |  21 ++++++
- 10 files changed, 447 insertions(+), 2 deletions(-)
- create mode 100644 t/helper/test-strcmp-offset.c
- create mode 100755 t/perf/p0006-read-tree-checkout.sh
- create mode 100644 t/perf/repos/.gitignore
- create mode 100755 t/perf/repos/inflate-repo.sh
- create mode 100755 t/perf/repos/many-files.sh
- create mode 100755 t/t0065-strcmp-offset.sh
-
+diff --git a/read-cache.c b/read-cache.c
+index 97f13a1..6a27688 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1021,7 +1021,16 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
+ 
+ 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
+ 		cache_tree_invalidate_path(istate, ce->name);
+-	pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
++
++	/*
++	 * If this entry's path sorts after the last entry in the index,
++	 * we can avoid searching for it.
++	 */
++	if (istate->cache_nr > 0 &&
++		strcmp(ce->name, istate->cache[istate->cache_nr - 1]->name) > 0)
++		pos = -istate->cache_nr - 1;
++	else
++		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
+ 
+ 	/* existing match? Just replace it. */
+ 	if (pos >= 0) {
 -- 
 2.9.3
 
