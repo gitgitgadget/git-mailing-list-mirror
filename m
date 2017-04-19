@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A54C1FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 17:06:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6397E1FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 17:06:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967885AbdDSRGf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 13:06:35 -0400
-Received: from siwi.pair.com ([209.68.5.199]:15218 "EHLO siwi.pair.com"
+        id S967887AbdDSRGg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 13:06:36 -0400
+Received: from siwi.pair.com ([209.68.5.199]:15215 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967879AbdDSRGc (ORCPT <rfc822;git@vger.kernel.org>);
+        id S967658AbdDSRGc (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 19 Apr 2017 13:06:32 -0400
 Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 6ABEF84501;
-        Wed, 19 Apr 2017 13:06:31 -0400 (EDT)
+        by siwi.pair.com (Postfix) with ESMTPSA id D7379844FC;
+        Wed, 19 Apr 2017 13:06:30 -0400 (EDT)
 From:   git@jeffhostetler.com
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v12 2/5] p0006-read-tree-checkout: perf test to time read-tree
-Date:   Wed, 19 Apr 2017 17:06:15 +0000
-Message-Id: <20170419170618.16535-3-git@jeffhostetler.com>
+Subject: [PATCH v12 1/5] read-cache: add strcmp_offset function
+Date:   Wed, 19 Apr 2017 17:06:14 +0000
+Message-Id: <20170419170618.16535-2-git@jeffhostetler.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170419170618.16535-1-git@jeffhostetler.com>
 References: <20170419170618.16535-1-git@jeffhostetler.com>
@@ -37,325 +37,145 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Created t/perf/repos/many-files.sh to generate large, but
-artificial repositories.
+Add strcmp_offset() function to also return the offset of the
+first change.
 
-Created t/perf/inflate-repo.sh to alter an EXISTING repo
-to have a set of large commits.  This can be used to create
-a branch with 1M+ files in repositories like git.git or
-linux.git, but with more realistic content.  It does this
-by making multiple copies of the entire worktree in a series
-of sub-directories.
-
-The branch name and ballast structure created by both scripts
-match, so either script can be used to generate very large
-test repositories for the following perf test.
-
-Created t/perf/p0006-read-tree-checkout.sh to measure
-performance on various read-tree, checkout, and update-index
-operations.  This test can run using either normal repos or
-ones from the above scripts.
+Add unit test and helper to verify.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- t/perf/p0006-read-tree-checkout.sh |  67 ++++++++++++++++++++++
- t/perf/repos/.gitignore            |   1 +
- t/perf/repos/inflate-repo.sh       |  86 +++++++++++++++++++++++++++++
- t/perf/repos/many-files.sh         | 110 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 264 insertions(+)
- create mode 100755 t/perf/p0006-read-tree-checkout.sh
- create mode 100644 t/perf/repos/.gitignore
- create mode 100755 t/perf/repos/inflate-repo.sh
- create mode 100755 t/perf/repos/many-files.sh
+ Makefile                      |  1 +
+ cache.h                       |  1 +
+ read-cache.c                  | 20 ++++++++++++++++++++
+ t/helper/.gitignore           |  1 +
+ t/helper/test-strcmp-offset.c | 22 ++++++++++++++++++++++
+ t/t0065-strcmp-offset.sh      | 21 +++++++++++++++++++++
+ 6 files changed, 66 insertions(+)
+ create mode 100644 t/helper/test-strcmp-offset.c
+ create mode 100755 t/t0065-strcmp-offset.sh
 
-diff --git a/t/perf/p0006-read-tree-checkout.sh b/t/perf/p0006-read-tree-checkout.sh
-new file mode 100755
-index 0000000..78cc23f
---- /dev/null
-+++ b/t/perf/p0006-read-tree-checkout.sh
-@@ -0,0 +1,67 @@
-+#!/bin/sh
-+#
-+# This test measures the performance of various read-tree
-+# and checkout operations.  It is primarily interested in
-+# the algorithmic costs of index operations and recursive
-+# tree traversal -- and NOT disk I/O on thousands of files.
+diff --git a/Makefile b/Makefile
+index 9ec6065..4c4c246 100644
+--- a/Makefile
++++ b/Makefile
+@@ -631,6 +631,7 @@ TEST_PROGRAMS_NEED_X += test-scrap-cache-tree
+ TEST_PROGRAMS_NEED_X += test-sha1
+ TEST_PROGRAMS_NEED_X += test-sha1-array
+ TEST_PROGRAMS_NEED_X += test-sigchain
++TEST_PROGRAMS_NEED_X += test-strcmp-offset
+ TEST_PROGRAMS_NEED_X += test-string-list
+ TEST_PROGRAMS_NEED_X += test-submodule-config
+ TEST_PROGRAMS_NEED_X += test-subprocess
+diff --git a/cache.h b/cache.h
+index 80b6372..3c55047 100644
+--- a/cache.h
++++ b/cache.h
+@@ -574,6 +574,7 @@ extern int write_locked_index(struct index_state *, struct lock_file *lock, unsi
+ extern int discard_index(struct index_state *);
+ extern int unmerged_index(const struct index_state *);
+ extern int verify_path(const char *path);
++extern int strcmp_offset(const char *s1, const char *s2, size_t *first_change);
+ extern int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+ extern void adjust_dirname_case(struct index_state *istate, char *name);
+ extern struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+diff --git a/read-cache.c b/read-cache.c
+index 9054369..97f13a1 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -887,6 +887,26 @@ static int has_file_name(struct index_state *istate,
+ 	return retval;
+ }
+ 
 +
-+test_description="Tests performance of read-tree"
++/*
++ * Like strcmp(), but also return the offset of the first change.
++ * If strings are equal, return the length.
++ */
++int strcmp_offset(const char *s1, const char *s2, size_t *first_change)
++{
++	size_t k;
 +
-+. ./perf-lib.sh
++	if (!first_change)
++		return strcmp(s1, s2);
 +
-+test_perf_default_repo
++	for (k = 0; s1[k] == s2[k]; k++)
++		if (s1[k] == '\0')
++			break;
 +
-+# If the test repo was generated by ./repos/many-files.sh
-+# then we know something about the data shape and branches,
-+# so we can isolate testing to the ballast-related commits
-+# and setup sparse-checkout so we don't have to populate
-+# the ballast files and directories.
-+#
-+# Otherwise, we make some general assumptions about the
-+# repo and consider the entire history of the current
-+# branch to be the ballast.
-+
-+test_expect_success "setup repo" '
-+	if git rev-parse --verify refs/heads/p0006-ballast^{commit}
-+	then
-+		echo Assuming synthetic repo from many-files.sh
-+		git branch br_base            master
-+		git branch br_ballast         p0006-ballast^
-+		git branch br_ballast_alias   p0006-ballast^
-+		git branch br_ballast_plus_1  p0006-ballast
-+		git config --local core.sparsecheckout 1
-+		cat >.git/info/sparse-checkout <<-EOF
-+		/*
-+		!ballast/*
-+		EOF
-+	else
-+		echo Assuming non-synthetic repo...
-+		git branch br_base            $(git rev-list HEAD | tail -n 1)
-+		git branch br_ballast         HEAD^ || error "no ancestor commit from current head"
-+		git branch br_ballast_alias   HEAD^
-+		git branch br_ballast_plus_1  HEAD
-+	fi &&
-+	git checkout -q br_ballast &&
-+	nr_files=$(git ls-files | wc -l)
-+'
-+
-+test_perf "read-tree br_base br_ballast ($nr_files)" '
-+	git read-tree -m br_base br_ballast -n
-+'
-+
-+test_perf "switch between br_base br_ballast ($nr_files)" '
-+	git checkout -q br_base &&
-+	git checkout -q br_ballast
-+'
-+
-+test_perf "switch between br_ballast br_ballast_plus_1 ($nr_files)" '
-+	git checkout -q br_ballast_plus_1 &&
-+	git checkout -q br_ballast
-+'
-+
-+test_perf "switch between aliases ($nr_files)" '
-+	git checkout -q br_ballast_alias &&
-+	git checkout -q br_ballast
-+'
-+
-+test_done
-diff --git a/t/perf/repos/.gitignore b/t/perf/repos/.gitignore
-new file mode 100644
-index 0000000..72e3dc3
---- /dev/null
-+++ b/t/perf/repos/.gitignore
-@@ -0,0 +1 @@
-+gen-*/
-diff --git a/t/perf/repos/inflate-repo.sh b/t/perf/repos/inflate-repo.sh
-new file mode 100755
-index 0000000..64f5d7a
---- /dev/null
-+++ b/t/perf/repos/inflate-repo.sh
-@@ -0,0 +1,86 @@
-+#!/bin/sh
-+# Inflate the size of an EXISTING repo.
-+#
-+# This script should be run inside the worktree of a TEST repo.
-+# It will use the contents of the current HEAD to generate a
-+# commit containing copies of the current worktree such that the
-+# total size of the commit has at least <target_size> files.
-+#
-+# Usage: [-t target_size] [-b branch_name]
-+
-+set -e
-+
-+target_size=10000
-+branch_name=p0006-ballast
-+ballast=ballast
-+
-+while test "$#" -ne 0
-+do
-+    case "$1" in
-+	-b)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -b requires an argument' >&2; exit 1; }
-+	    branch_name=$1;
-+	    shift ;;
-+	-t)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -t requires an argument' >&2; exit 1; }
-+	    target_size=$1;
-+	    shift ;;
-+	*)
-+	    echo "error: unknown option '$1'" >&2; exit 1 ;;
-+    esac
-+done
-+
-+git ls-tree -r HEAD >GEN_src_list
-+nr_src_files=$(cat GEN_src_list | wc -l)
-+
-+src_branch=$(git symbolic-ref --short HEAD)
-+
-+echo "Branch $src_branch initially has $nr_src_files files."
-+
-+if test $target_size -le $nr_src_files
-+then
-+    echo "Repository already exceeds target size $target_size."
-+    rm GEN_src_list
-+    exit 1
-+fi
-+
-+# Create well-known branch and add 1 file change to start
-+# if off before the ballast.
-+git checkout -b $branch_name HEAD
-+echo "$target_size" > inflate-repo.params
-+git add inflate-repo.params
-+git commit -q -m params
-+
-+# Create ballast for in our branch.
-+copy=1
-+nr_files=$nr_src_files
-+while test $nr_files -lt $target_size
-+do
-+    sed -e "s|	|	$ballast/$copy/|" <GEN_src_list |
-+	git update-index --index-info
-+
-+    nr_files=$(expr $nr_files + $nr_src_files)
-+    copy=$(expr $copy + 1)
-+done
-+rm GEN_src_list
-+git commit -q -m "ballast"
-+
-+# Modify 1 file and commit.
-+echo "$target_size" >> inflate-repo.params
-+git add inflate-repo.params
-+git commit -q -m "ballast plus 1"
-+
-+nr_files=$(git ls-files | wc -l)
-+
-+# Checkout master to put repo in canonical state (because
-+# the perf test may need to clone and enable sparse-checkout
-+# before attempting to checkout a commit with the ballast
-+# (because it may contain 100K directories and 1M files)).
-+git checkout $src_branch
-+
-+echo "Repository inflated. Branch $branch_name has $nr_files files."
-+
-+exit 0
-+
-diff --git a/t/perf/repos/many-files.sh b/t/perf/repos/many-files.sh
-new file mode 100755
-index 0000000..28720e4
---- /dev/null
-+++ b/t/perf/repos/many-files.sh
-@@ -0,0 +1,110 @@
-+#!/bin/sh
-+# Generate test data repository using the given parameters.
-+# When omitted, we create "gen-many-files-d-w-f.git".
-+#
-+# Usage: [-r repo] [-d depth] [-w width] [-f files]
-+#
-+# -r repo: path to the new repo to be generated
-+# -d depth: the depth of sub-directories
-+# -w width: the number of sub-directories at each level
-+# -f files: the number of files created in each directory
-+#
-+# Note that all files will have the same SHA-1 and each
-+# directory at a level will have the same SHA-1, so we
-+# will potentially have a large index, but not a large
-+# ODB.
-+#
-+# Ballast will be created under "ballast/".
-+
-+EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-+
-+set -e
-+
-+# (5, 10, 9) will create 999,999 ballast files.
-+# (4, 10, 9) will create  99,999 ballast files.
-+depth=5
-+width=10
-+files=9
-+
-+while test "$#" -ne 0
-+do
-+    case "$1" in
-+	-r)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -r requires an argument' >&2; exit 1; }
-+	    repo=$1;
-+	    shift ;;
-+	-d)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -d requires an argument' >&2; exit 1; }
-+	    depth=$1;
-+	    shift ;;
-+	-w)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -w requires an argument' >&2; exit 1; }
-+	    width=$1;
-+	    shift ;;
-+	-f)
-+	    shift;
-+	    test "$#" -ne 0 || { echo 'error: -f requires an argument' >&2; exit 1; }
-+	    files=$1;
-+	    shift ;;
-+	*)
-+	    echo "error: unknown option '$1'" >&2; exit 1 ;;
-+	esac
-+done
-+
-+# Inflate the index with thousands of empty files.
-+# usage: dir depth width files
-+fill_index() {
-+	awk -v arg_dir=$1 -v arg_depth=$2 -v arg_width=$3 -v arg_files=$4 '
-+		function make_paths(dir, depth, width, files, f, w) {
-+			for (f = 1; f <= files; f++) {
-+				print dir "/file" f
-+			}
-+			if (depth > 0) {
-+				for (w = 1; w <= width; w++) {
-+					make_paths(dir "/dir" w, depth - 1, width, files)
-+				}
-+			}
-+		}
-+		END { make_paths(arg_dir, arg_depth, arg_width, arg_files) }
-+		' </dev/null |
-+	sed "s/^/100644 $EMPTY_BLOB	/" |
-+	git update-index --index-info
-+	return 0
++	*first_change = k;
++	return (unsigned char)s1[k] - (unsigned char)s2[k];
 +}
 +
-+[ -z "$repo" ] && repo=gen-many-files-$depth.$width.$files.git
+ /*
+  * Do we have another file with a pathname that is a proper
+  * subset of the name we're trying to add?
+diff --git a/t/helper/.gitignore b/t/helper/.gitignore
+index d6e8b36..0a89531 100644
+--- a/t/helper/.gitignore
++++ b/t/helper/.gitignore
+@@ -25,6 +25,7 @@
+ /test-sha1
+ /test-sha1-array
+ /test-sigchain
++/test-strcmp-offset
+ /test-string-list
+ /test-submodule-config
+ /test-subprocess
+diff --git a/t/helper/test-strcmp-offset.c b/t/helper/test-strcmp-offset.c
+new file mode 100644
+index 0000000..4a45a54
+--- /dev/null
++++ b/t/helper/test-strcmp-offset.c
+@@ -0,0 +1,22 @@
++#include "cache.h"
 +
-+mkdir $repo
-+cd $repo
-+git init .
++int cmd_main(int argc, const char **argv)
++{
++	int result;
++	size_t offset;
 +
-+# Create an initial commit just to define master.
-+touch many-files.empty
-+echo "$depth $width $files" >many-files.params
-+git add many-files.*
-+git commit -q -m params
++	if (!argv[1] || !argv[2])
++		die("usage: %s <string1> <string2>", argv[0]);
 +
-+# Create ballast for p0006 based upon the given params and
-+# inflate the index with thousands of empty files and commit.
-+git checkout -b p0006-ballast
-+fill_index "ballast" $depth $width $files
-+git commit -q -m "ballast"
++	result = strcmp_offset(argv[1], argv[2], &offset);
 +
-+nr_files=$(git ls-files | wc -l)
++	/*
++	 * Because differnt CRTs behave differently, only rely on signs
++	 * of the result values.
++	 */
++	result = (result < 0 ? -1 :
++			  result > 0 ? 1 :
++			  0);
++	printf("%d %"PRIuMAX"\n", result, (uintmax_t)offset);
++	return 0;
++}
+diff --git a/t/t0065-strcmp-offset.sh b/t/t0065-strcmp-offset.sh
+new file mode 100755
+index 0000000..7d6d214
+--- /dev/null
++++ b/t/t0065-strcmp-offset.sh
+@@ -0,0 +1,21 @@
++#!/bin/sh
 +
-+# Modify 1 file and commit.
-+echo "$depth $width $files" >>many-files.params
-+git add many-files.params
-+git commit -q -m "ballast plus 1"
++test_description='Test strcmp_offset functionality'
 +
-+# Checkout master to put repo in canonical state (because
-+# the perf test may need to clone and enable sparse-checkout
-+# before attempting to checkout a commit with the ballast
-+# (because it may contain 100K directories and 1M files)).
-+git checkout master
++. ./test-lib.sh
 +
-+echo "Repository "$repo" ($depth, $width, $files) created.  Ballast $nr_files."
-+exit 0
++while read s1 s2 expect
++do
++	test_expect_success "strcmp_offset($s1, $s2)" '
++		echo "$expect" >expect &&
++		test-strcmp-offset "$s1" "$s2" >actual &&
++		test_cmp expect actual
++	'
++done <<-EOF
++abc abc 0 3
++abc def -1 0
++abc abz -1 2
++abc abcdef -1 3
++EOF
++
++test_done
 -- 
 2.9.3
 
