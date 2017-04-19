@@ -2,61 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 089C5207BC
-	for <e@80x24.org>; Wed, 19 Apr 2017 06:21:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8414F1FA26
+	for <e@80x24.org>; Wed, 19 Apr 2017 06:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759671AbdDSGVy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 02:21:54 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:21401 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752996AbdDSGVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 02:21:54 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3w7BjX4W39z5tlY;
-        Wed, 19 Apr 2017 08:21:52 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 990EA42B3;
-        Wed, 19 Apr 2017 08:21:51 +0200 (CEST)
-Subject: Re: [PATCH v5 02/11] t0061: run_command executes scripts without a #!
- line
-To:     Brandon Williams <bmwill@google.com>
-References: <20170417220818.44917-1-bmwill@google.com>
- <20170418231805.61835-1-bmwill@google.com>
- <20170418231805.61835-3-bmwill@google.com>
- <12add885-b56d-4707-57c1-1073fbb7786c@kdbg.org>
-Cc:     git@vger.kernel.org, e@80x24.org, jrnieder@gmail.com
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <9c562827-78f5-ab8f-bf04-5f403672a32d@kdbg.org>
-Date:   Wed, 19 Apr 2017 08:21:51 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
-MIME-Version: 1.0
-In-Reply-To: <12add885-b56d-4707-57c1-1073fbb7786c@kdbg.org>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+        id S933221AbdDSGt1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 02:49:27 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33358 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933137AbdDSGt1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 02:49:27 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o81so3154958wmb.0
+        for <git@vger.kernel.org>; Tue, 18 Apr 2017 23:49:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=QC08NH+xXy1tLcvvI7drkGZbSw7pyGGIxhXjF7Ecnoo=;
+        b=VHU5jaiarh+QKGPjXoSMH1ToUAHZedCz+AWGNUO3kbzd5PYP6zvp6dxdizV0lFI7Ye
+         2cX2sqgIgGEl+/Xlj+sKbjPAnCkhOpOzsFEoqMCZQgTvNdhGaljbJj6E9H6FuJ403EKn
+         I/rYzwwXYJROV3ZXuf24MG0bE5cC1iBxOdmOu9VasSkEQX1lZoR5cyPT4nq+3NTF/wkN
+         4BMZhqQa0+j6OiVNbUz3HwVmDqzppWSRlH9uIGF7GqexujJVNyoFcNkH1s1U0WkLbxn4
+         pEkN5/t+rErqpxq7eP/RMrYmvUa+Mu8gMgT8E5bOiHoibp6HYA9lpxwWnH5GrLzjYIyn
+         +nqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=QC08NH+xXy1tLcvvI7drkGZbSw7pyGGIxhXjF7Ecnoo=;
+        b=ISDNcbJdxRdhnJz1Q3P/OEQ5uI2NXUGyi9E7mpZT3RjeCKzwBCqKShPFvKgEQxrNzP
+         auc1KaI7ViNUSCl3usOf83s69JLPt1L5neJcnKz9sUCrDYgISN/Z1IIXImYm7MxLfMR9
+         LgtfK89Vi5BqytEoL0j4yXW8O0zt5N8YC3UuhISXnDtycO11/adlRdDKMwdsMdGxI4qT
+         ECgXdNS/E94YoMUJwKgfW/ffSFn3lp4zg0FuPAyDA8sF1VUk0+TPuOKU4U4aWottKua4
+         DmNkNd+t9HZXCFyHJSJ+6lgmJTpbmc+YKAzcVXq+cjrvUVihIkFKhLd3pjPfKzIVCxY4
+         bcFw==
+X-Gm-Message-State: AN3rC/5gQZPcOQ5j0GI4FVScJY1jg6GWdF0sAjA8NEbTemrHm0FyFdmK
+        /XO1ggbCmwMZZA==
+X-Received: by 10.28.135.4 with SMTP id j4mr16565428wmd.107.1492584565665;
+        Tue, 18 Apr 2017 23:49:25 -0700 (PDT)
+Received: from localhost ([151.54.23.249])
+        by smtp.gmail.com with ESMTPSA id o1sm849795wmd.16.2017.04.18.23.49.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 18 Apr 2017 23:49:24 -0700 (PDT)
+From:   Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To:     Git ML <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCH 0/2] gitweb: tags feeds
+Date:   Wed, 19 Apr 2017 08:49:14 +0200
+Message-Id: <20170419064916.18663-1-giuseppe.bilotta@gmail.com>
+X-Mailer: git-send-email 2.12.2.822.g5451c77231
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.04.2017 um 07:43 schrieb Johannes Sixt:
-> Am 19.04.2017 um 01:17 schrieb Brandon Williams:
->> Add a test to 't0061-run-command.sh' to ensure that run_command can
->> continue to execute scripts which don't include a '#!' line.
->
-> Why is this necessary? I am pretty certain that our emulation layer on
-> Windows can only run scripts with a shbang line.
+A smallish patchset to implement RSS and Atom feeds to complement the
+tags view, accessible as verbs `tags_rss` and `tags_atom`.
 
-Nevermind. It is a compatibility feature: People may have written their 
-hooks and scripts without #!, and these must continue to work where they 
-worked before.
+(I actually made this some 5 years ago, and it has been running on
+http://git.oblomov.eu/ since, but for some reason I forgot to submit
+it for upstreaming.)
 
-Please protect the new test with !MINGW.
+The patchset is also available in the git repository at:
 
-Thanks,
--- Hannes
+  git://git.oblomov.eu/git gitweb-tags-feed
+
+------------------------------------------------------------------------
+
+Giuseppe Bilotta (2):
+  gitweb: infrastructure for tags feed
+  gitweb: expose tags feed in appropriate places
+
+ gitweb/gitweb.perl | 126 ++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 91 insertions(+), 35 deletions(-)
+
+-- 
+2.12.2.822.g5451c77231
 
