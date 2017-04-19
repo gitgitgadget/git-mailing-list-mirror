@@ -2,98 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEC931FA26
-	for <e@80x24.org>; Wed, 19 Apr 2017 09:08:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 513541FA26
+	for <e@80x24.org>; Wed, 19 Apr 2017 09:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761596AbdDSJIj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 05:08:39 -0400
-Received: from mail-lf0-f47.google.com ([209.85.215.47]:36726 "EHLO
-        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1761553AbdDSJIe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 05:08:34 -0400
-Received: by mail-lf0-f47.google.com with SMTP id c80so8833346lfh.3
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 02:08:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8uNfHdgDIZgcu+kD8Hqet2t1R9vIuZUVUAfpiAJyGcc=;
-        b=Lj+SXDeFyDv7MVXJH6R0gRVoQDArTPkazYPgRjoA8LWuwkiSDVWUgJTVDZl5Ja2MO/
-         G3FZubIuGBQa89utKtMy7S25h60Dbkx3X5KFRj23/hGE9Dzr9+5eXB8JqOs0IO/nC6Wx
-         FAiz6y+reaQIZ9jCPObqZGEa2tq46Rakh+KzmJBsh8cUikdqHoYTKWl1LhFOVYuO7AwR
-         lKQE19abCLh8kI1mZh4H37WlT1KJ+i9/fuktigfjDm+t8baJl+whP9KuJ0I7aWTn1W5O
-         mmj/Lvc/xylnu98yWjxaMohye0jI3bjjaLCP5vTPUjOT63D8JcmonyQcbD3ZlXJZcdg4
-         O11A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8uNfHdgDIZgcu+kD8Hqet2t1R9vIuZUVUAfpiAJyGcc=;
-        b=rJ8VP7iD5DK64vESYqgASxXQhO4LtpksT6ETTdahZprXxZSoI0SbbncJd8tTNxoWJ3
-         iMuajelbnN40Aj0sEpVep7ppNSN5+nwatR4pcN4U/NORBVGEWGZEdxy30H1WwgoWZO4L
-         Or8iN2drKhzK35EWrIXiWvjw/9Fb12Us3GsnA9U0uUyuKCqvHRoh1W+8gRoyLNELCctG
-         6ZRBcJoYxXC++RN+h15zQIlI8SB9qMiBcPgDlfAeYiLRozS2YowLOs6aV7vm3bDdqiVA
-         vW5R0+b6mzWGJDmHZE3piYztOG6LtFTg/S5vfF4l8z1qEBYE94VXmb9GJcHZvwWL5Cm/
-         3U/g==
-X-Gm-Message-State: AN3rC/4iHL2eXHL8tXdlniKdtmcUutvH1Fzg8ZUDp+1lMSaPoBLzxL9I
-        +tYzpvx7ra+werkqUlEwy0VbyK2Otg==
-X-Received: by 10.46.22.10 with SMTP id w10mr588342ljd.35.1492592912588; Wed,
- 19 Apr 2017 02:08:32 -0700 (PDT)
+        id S1761448AbdDSJPS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 05:15:18 -0400
+Received: from a7-19.smtp-out.eu-west-1.amazonses.com ([54.240.7.19]:36002
+        "EHLO a7-19.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1761374AbdDSJPR (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 Apr 2017 05:15:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1492593315;
+        h=From:To:Message-ID:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=ic1pGoKeoP1cfaTP56g0wAhsN0qtnlv+t5dhJ+v4Co0=;
+        b=XoHL2vRrBUO3Ynnc/eHDkUgDu3bOPq6yWkVvbLUZ1VjgZHZJcUTpG1pcV6MR4eHB
+        JLZwM81rq7KE/p3dR0nfArBfkFbfmJoMG8/xBxRxAalz0vZI2GyEL/P28ctLvXc+ZDd
+        mfbHQRN1WdXEyv/DVXvcJBBfdqdXmRz8XF/iKFaw=
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015b857e8d20-1c33bac0-0e25-4afd-a533-48f37a09a83f-000000@eu-west-1.amazonses.com>
+Subject: [PATCH] gitmodules: clarify the ignore option values
 MIME-Version: 1.0
-Received: by 10.25.17.155 with HTTP; Wed, 19 Apr 2017 02:08:11 -0700 (PDT)
-In-Reply-To: <CACBZZX5wHvWgqjBaiD4pJsVQug=+-4xRwkvfZ0uZ=meE3xR6NQ@mail.gmail.com>
-References: <20170418170914.9701-1-avarab@gmail.com> <de79d366-3609-8efe-b23a-7e793036b3ef@web.de>
- <20170419014143.56io56xn6mawy5xi@sigill.intra.peff.net> <xmqqh91lce6y.fsf@gitster.mtv.corp.google.com>
- <20170419025016.we3tfuvgppuamc7g@sigill.intra.peff.net> <CACBZZX5wHvWgqjBaiD4pJsVQug=+-4xRwkvfZ0uZ=meE3xR6NQ@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Wed, 19 Apr 2017 02:08:11 -0700
-Message-ID: <CA+P7+xp-VzyqH2Sn9i0fO4rwszEo6NbTMsdTah+Z+zrc5VR4_g@mail.gmail.com>
-Subject: Re: [PATCH] various: disallow --no-no-OPT for --no-opt options
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 19 Apr 2017 09:15:15 +0000
+X-SES-Outgoing: 2017.04.19-54.240.7.19
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 19, 2017 at 12:02 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Wed, Apr 19, 2017 at 4:50 AM, Jeff King <peff@peff.net> wrote:
->> On Tue, Apr 18, 2017 at 07:40:37PM -0700, Junio C Hamano wrote:
->>
->>> > It might even be possible to detect the existing line and
->>> > have parse-options automatically respect "--foo" when "--no-foo" is
->>> > present.  But that may run afoul of callers that add both "--foo" and
->>> > "--no-foo" manually.
->>>
->>> True but wouldn't that something we would want to avoid anyway?
->>> That is, "git cmd [--OPT | --no-OPT | --no-no-OPT]" from the end
->>> user's point of view should be an error because it is unclear what
->>> difference there are between --OPT and --no-no-OPT.  And we should
->>> be able to add a rule to parse_options_check() to catch such an
->>> error.
->>
->> I meant that if you have something like this in your options array:
->>
->>   { 0, "foo", OPTION_INTEGER, &foo, 1 },
->>   { 0, "no-foo", OPTION_INTEGER, &foo, 2 },
->
-> I may be missing something, but don't we already do exactly what
-> you're describing here? See commit f1930c587 ("parse-options: allow
-> positivation of options starting, with no-", 2012-02-25) from Ren=C3=A9
-> Scharfe.
+Add more structure and describe each possible option in a self-contained
+way, not referring to any of the previously described options.
 
-Correct, but if you pass the NONEG flag to the option then it will no
-longer perform this type of negation either.
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ Documentation/gitmodules.txt | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-Thanks,
-Jake
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index 8f7c50f..4700624 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -66,17 +66,26 @@ submodule.<name>.fetchRecurseSubmodules::
+ 
+ submodule.<name>.ignore::
+ 	Defines under what circumstances "git status" and the diff family show
+-	a submodule as modified. When set to "all", it will never be considered
+-	modified (but will nonetheless show up in the output of status and
+-	commit when it has been staged), "dirty" will ignore all changes
+-	to the submodules work tree and
+-	takes only differences between the HEAD of the submodule and the commit
+-	recorded in the superproject into account. "untracked" will additionally
+-	let submodules with modified tracked files in their work tree show up.
+-	Using "none" (the default when this option is not set) also shows
+-	submodules that have untracked files in their work tree as changed.
+-	If this option is also present in the submodules entry in .git/config of
+-	the superproject, the setting there will override the one found in
++	a submodule as modified. The following values are supported:
++
++	all;; The submodule will never be considered modified (but will
++	    nonetheless show up in the output of status and commit when it has
++	    been staged).
++
++	dirty;; All changes to the submodule's work tree will be ignored, only
++	    committed differences between the HEAD of the submodule and its
++	    recorded state in the superproject are taken into account.
++
++	untracked;; Only untracked files in submodules will be ignored.
++	    Committed differences and modifications to tracked files will show
++	    up.
++
++	none;; No modifiations to submodules are ignored, all of committed
++	    differences, and modifications to tracked and untracked files are
++	    shown. This is the default option.
++
++	If this option is also present in the submodules entry in .git/config
++	of the superproject, the setting there will override the one found in
+ 	.gitmodules.
+ 	Both settings can be overridden on the command line by using the
+ 	"--ignore-submodule" option. The 'git submodule' commands are not
+
+--
+https://github.com/git/git/pull/348
