@@ -2,104 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11AF21FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 13:20:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F7CA1FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 13:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1763556AbdDSNUF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 09:20:05 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:33496 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1762829AbdDSNUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 09:20:03 -0400
-Received: by mail-it0-f68.google.com with SMTP id z67so2782971itb.0
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 06:20:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=T/oFrs3KRutmMBVW8d2f7tvLGQmeWtD6x3OkYxfKSRI=;
-        b=rxe1Wam+3KzDf39EF7WevpQNsIZEK7OsFdftH5QzyG6WbokAlmmRNWC/4x17Fdw6k5
-         asVKxNlgw9YQ2Thsvf7CHm2385aXWWGn75rF3n/9KboSEv01TdfSy1SfkZ5HsowWlxiY
-         l0KPFSjJ0GePEeDewhNhwNPbd9aS/vmiJfnEJiZROXlf/RganLyxdx9kTmgoqbAxbpWd
-         jjOTwN3hx4EtCvaTgLIwplmLzolHGX/o58ugT4UKfkocjezg3zb0cEiWS6nMf8XfBOiM
-         EUZN6icjVahD9t50K/+IpnpcChZTQhx52F97k/JHMvZYsnzeQUmxOXPGAdEUonL5aWy7
-         aiRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=T/oFrs3KRutmMBVW8d2f7tvLGQmeWtD6x3OkYxfKSRI=;
-        b=kKJF3PnA8CJvFojbU+iwwvXtEoNODi7MONiaxpeOAnGLxJGapyS7DfgiMq9IS0KzIJ
-         1pfAYdIW+fw2oytIPIi3s7xSP1FoxBcAh+bpHp5+A126pLkIKty+eYyw/rS2BsUo6ylk
-         y0TfPhcGOGxUJPj8LvY9djiH0UJhUs1ldepScd0tFK6s9zZXMi1v8yvI38xmygmygIHD
-         wv4RFNNAKr3v+q2mZlLdygFqorlZAp7H5iV74wYjIKJPosZxPuCyImX2yRnwBVMLiHki
-         +nU+SLkCybBtFWcEhAEIi1wO3T2eLjwvX6c+w57ICZYg7NtAVtWX9VwVEKv4rVao5nCN
-         5Wfg==
-X-Gm-Message-State: AN3rC/7gyw2CRZkfnE4Lv+MPCpzTkZ8QrHww19gjdoDn4JxpEL7j2S0C
-        XSe6rpO26vYVX/rAr/qSEUIBSJLFpYO0
-X-Received: by 10.36.115.12 with SMTP id y12mr3241287itb.24.1492608002773;
- Wed, 19 Apr 2017 06:20:02 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Wed, 19 Apr 2017 06:19:42 -0700 (PDT)
-In-Reply-To: <b4eef4c1-cd5a-aa71-fc79-8af89dbe365d@web.de>
-References: <20170418170914.9701-1-avarab@gmail.com> <de79d366-3609-8efe-b23a-7e793036b3ef@web.de>
- <CACBZZX6XWXjvDKeR+a1Ymb4csXgOKLiF==VkKLp5S9TRVQhgoA@mail.gmail.com> <b4eef4c1-cd5a-aa71-fc79-8af89dbe365d@web.de>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 19 Apr 2017 15:19:42 +0200
-Message-ID: <CACBZZX7Y2cqabLMkx35ZU88Y3+8zffP5hxa8haThMaErbfhcfA@mail.gmail.com>
+        id S1763786AbdDSNos (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 09:44:48 -0400
+Received: from mout.web.de ([212.227.17.11]:57399 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1763761AbdDSNor (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 09:44:47 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LtnzN-1bzu053lgL-011BGp; Wed, 19
+ Apr 2017 15:44:41 +0200
 Subject: Re: [PATCH] various: disallow --no-no-OPT for --no-opt options
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+References: <20170418170914.9701-1-avarab@gmail.com>
+ <de79d366-3609-8efe-b23a-7e793036b3ef@web.de>
+ <CACBZZX6XWXjvDKeR+a1Ymb4csXgOKLiF==VkKLp5S9TRVQhgoA@mail.gmail.com>
+ <b4eef4c1-cd5a-aa71-fc79-8af89dbe365d@web.de>
+ <CACBZZX7Y2cqabLMkx35ZU88Y3+8zffP5hxa8haThMaErbfhcfA@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <6d9cedc4-3d3d-61a8-080c-98126c555e1b@web.de>
+Date:   Wed, 19 Apr 2017 15:44:35 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
+MIME-Version: 1.0
+In-Reply-To: <CACBZZX7Y2cqabLMkx35ZU88Y3+8zffP5hxa8haThMaErbfhcfA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:/v82CHKUSm+bc4JrTgZKxpLSNrldmX2xvBjFWNg000b/W/gp8Iu
+ JgMPNgysObP+vllHRusabiXYJb5g0xlGjHk5us7uQIJR+xpd19/3FP20hQNe6m0kR3evDmw
+ 7tmVD85QshpJHWL0XZxevCKiWDXImYpk9hG8v2xAH4TlSv2axg5LXJcCwNOkoBDvFL0Ra1x
+ Lv+KxrTZrOxcoB1DMzvnA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VBTtWBMgzdU=:BYOflDdZ+h86aOZ8BR9BJ9
+ wKPmkFO9yr6yFXT2p+4gUJRSKSidv+kQRDfPd4WjJCx8h+9GVe/P6mLCbYsTWE71aLmyYeAVi
+ H6F44mfZz4QL9eNWLXJJPbH1flZ2Mb5tmRctrNZ6rT3FqIHLBiE3KinEkAk5xwQwPW5y1Twlv
+ 00/xL8L2AjjG6BSHugmbOd81Hz6lO8ggfTAzkVV+ODCCqGfpv6XoitMlYs91sswhHCU/SsL1I
+ VGbBeCPWu3QY7lHSS4zIZyAt2c6asKEdEpoCnDhACzO4qkhDCJLKDsm+57ggJC6FPuBiS2RW+
+ JO/XkTcSDaD4Tp528fG/fSsZT0c2lyt3if/O/FVi8K04SDRr5nOunTwChAX7WkykyR7YvY7yb
+ Fh/KbqN/hCC3YJtfuzADH/blnBj72BCbuUOnQSDt1OHrA/gmIcAGYKRsI42CNIgIYAFSacszT
+ DEN4L/RGfTymRJa1I/zjBxuUuQ9X5YYU9QFk6q0QB8dXg6+QUk9SUk3BNMWu6RRPtIbyFKjoU
+ yGWHKYYkx/Z1uif315UjNzMwI6/l2JCsgP4CCKV2Q6HtP42hxvUJEanSugx53n6ZJPVyX8jWb
+ 5y1KrE2GZXYtk0pnhdF2SWgGClP+V8oprMR2sFzI0l+BES9SJgGcng3Zi9lpcLvg1DRX62Tys
+ QJB2QwL3Whp2CweXiLPvSttK4OPQpqvUsI8Y93TvkLG8auobgXxxrQWjqzYLRsdYNK51Q5U7P
+ EiEk+E5dkcTW23xyhlyv6+4lpc2zxqI173JhlEnm0c8+vtVDe5/pddNGyzseyfPYg4r6XNt/Y
+ PNugEb3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 19, 2017 at 3:11 PM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Am 19.04.2017 um 09:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>
->> On Wed, Apr 19, 2017 at 12:29 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wrote=
-:
->>>
->>> Setting PARSE_OPT_NONEG takes away the ability to toggle the affected
->>> option.  E.g. git clone would reject --checkout.  Currently users can
->>> specify --no- options as defaults in aliases and override them on the
->>> command line if needed, with the patch that won't be possible anymore.
->>>
->>> PARSE_OPT_NONEG should only be used for options where a negation doesn'=
-t
->>> make sense, e.g. for the --stage option of checkout-index.
->>
->>
->> That's a bad bug, I don't know whether to be surprised or not that we
->> had no tests for this :)
->>
->> I thought I was just disabling --no-no-checkout for --no-checkout, not
->> --checkout, but didn't notice the subtleties of the special case
->> handling for --no-* in parse-options.c, thanks.
->
->
-> I'm confused.  What's the bug here?
->
-> --no-no-checkout is undocumented; Jacob's patch addresses it. --no-checko=
-ut
-> is the documented form.  Negation allows --checkout to be used as well, w=
-ith
-> the opposite meaning to --no-checkout.  Turning off negation with
-> PARSE_OPT_NONEG forbids --checkout to be used.
->
-> Perhaps the issue is that a single line of documentation is not enough
-> ("PARSE_OPT_NONEG: says that this option cannot be negated")?
+Am 19.04.2017 um 15:19 schrieb Ævar Arnfjörð Bjarmason:
+> I mean a bug in my patch, i.e. I meant to remove --no-no-OPT in cases
+> of --no-OPT but also removed --OPT unintentionally, but anyway, let's
+> drop this one, Jacob's patch is better.
 
-I mean a bug in my patch, i.e. I meant to remove --no-no-OPT in cases
-of --no-OPT but also removed --OPT unintentionally, but anyway, let's
-drop this one, Jacob's patch is better.
+Ah, OK.
+
+You also wondered why no tests complained.  Good question.  Would it 
+make sense to test every option *and* its negation?  That would double 
+the number of tests in order to check a parseopt feature.  Hmm, not 
+sure.  More test coverage would be good, but I doubt we'd ever arrive at 
+100% for this.
+
+If you had converted --no-doubt in t/helper/test-parse-options.c to 
+OPT_BOOL_NONEG instead of or in addition to adding the new flag --no-neg 
+then you'd seen the effect in t0040.
+
+René
