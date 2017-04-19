@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 495911FA26
-	for <e@80x24.org>; Wed, 19 Apr 2017 11:02:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C31271FA26
+	for <e@80x24.org>; Wed, 19 Apr 2017 11:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762560AbdDSLCk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 07:02:40 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:36741 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1762545AbdDSLCg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 07:02:36 -0400
-Received: by mail-pf0-f196.google.com with SMTP id v14so2086290pfd.3
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 04:02:36 -0700 (PDT)
+        id S1762510AbdDSLCn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 07:02:43 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35349 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1762570AbdDSLCm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 07:02:42 -0400
+Received: by mail-pg0-f66.google.com with SMTP id g2so3587819pge.2
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 04:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sbA5/AFuNYmRLReRGSwPvseUatvEM3Jjfg5QHTyOGlM=;
-        b=iWrvx7jcIjuXxyqWontgcpyTCECl4rN9MaNKRU8GYNQJ2KmnWx17Dw0ssOF9HH1Ut5
-         LoJag3a2y0+BI5GiLdGgWpBFBDZ/YUNK8H6N0fQlMQLGBPbUkBS7ER+apYq0WF/O8BX2
-         +jG8V0mW9alV/Q2jYSnycfNGSX3sRwVJjw9LwDjHFVEB7dMcZ1QMs75CcX3O2Aso8Otb
-         pejPizd6PBoDCqfxj5LQVPoZNCa8hIoMaie17B0+C3x8/EnP+TZ+9fOYEcOfDTDpn5RK
-         zJi/hLKBzyIKGmAinZQibHrohhBtcFHMRmGi9gtsg0oSMslzSVNgrCTie3jiKpsCGc1p
-         O7Pw==
+        bh=S+D6hT6jHQLXEo6IdBFGgBEtQrS+6Vmop+JeGpFmcu4=;
+        b=J0F5BizdaotWfqcpYqt7/mZN1OlHF9AY3LLDLHkkyPl9LMJ+UCwSHFMsWNnYUFKh4A
+         QHeRTI+cMgnjckPLoPpMH8Jg6Rr8cZ3VHm2QvyQStGf6lSwDjFgkdhEFLIFVDRZ08kRt
+         G2Gjh3nCioENowOsHsgUKX2SFwzv4vu6m8mEuXDSjhI+HN5mD37hcpD9zMM8hU0WV3pC
+         uyOpM8Qt3/zAR1PxsU9vmoNX9suuS3gllKy+xem23mSdlyVT708wu2lNyCgwkqhhHplD
+         LuZFXMJeelx+Vv7Lpix4RPuCED5Kxd1ndZAf/xKU6ngIbdjaySscrSk9sryiCylwJ7KC
+         8fPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sbA5/AFuNYmRLReRGSwPvseUatvEM3Jjfg5QHTyOGlM=;
-        b=gVRel3xOp41uRBT1qfjLAIf0YjuW3CWADz4K9dgNlVsXkMTs4kAHsApw7lLiupsZND
-         hoEEm76EfNIV2RYc46i/rpIugn6DN5w8gX7pauwZdNHvQf7MkFzWDC/QQk3XZ98uheh3
-         o0XswGQpfWl4gYdadag4lHYaDyk+L7Fv8hIV/1+zT+/A6tIQvbyeCn0zoPBi7TroGNPQ
-         3EoHRwsZKDmmqCf/aP9/YFZAP27l5vfiQR6r5fuwgZ1US6o/3YizKdBFcT/nwrnDxDOB
-         wQpPdWOZ9ljPS3Jjm0p/Zn72k2GykPxZLGFFr98RVO9jy9ehGFQQvOMzu426MYuZnDC9
-         YEfQ==
-X-Gm-Message-State: AN3rC/7UaG/hcnlplVyVE9wxxEx+mCgrUYNU3ePE/UEC41iXmMPoOtEf
-        8gOGQHe/mSfulw==
-X-Received: by 10.98.160.148 with SMTP id p20mr2461427pfl.249.1492599755647;
-        Wed, 19 Apr 2017 04:02:35 -0700 (PDT)
+        bh=S+D6hT6jHQLXEo6IdBFGgBEtQrS+6Vmop+JeGpFmcu4=;
+        b=q54zRNpSuSnDr8OHSEbXiKT72Ia0Tn1ukgsnxPEshku90Oyydym5JT5PkJgFXOR5Qq
+         6l8OHxPpq3yxypmy4QIF6nSpfAc+7317KeyechUm/m3MzfPDSogNw+kmGgRN/6c2plma
+         PQHB9QwTzjB9/15/csVr/Mn6j45dhtM9laplWQC51ZrJbu5pi2jOPI/U38zed7AzU01M
+         oZUM8yMCW8krksP3a4JID89YNUbCuihphxjbPy5VsrpX7bSgJSppidWJwjYcttM6ncY7
+         /RDEsikavNbQxjdDKTpXngClfFficl8/uQ/fbHginoxHq6TvZvOPSCk0/iYyKQDEzTxo
+         5OAg==
+X-Gm-Message-State: AN3rC/5fJIuTQ1XTSRGo2haQ4dQ2i4A7TuRFfCNetUYWJ3cG9lh0kZgM
+        z6qusAgnO63Bdw==
+X-Received: by 10.84.192.37 with SMTP id b34mr3304142pld.30.1492599761275;
+        Wed, 19 Apr 2017 04:02:41 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id z22sm3972208pfg.117.2017.04.19.04.02.32
+        by smtp.gmail.com with ESMTPSA id c28sm4004737pfj.19.2017.04.19.04.02.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Apr 2017 04:02:35 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 19 Apr 2017 18:02:29 +0700
+        Wed, 19 Apr 2017 04:02:40 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 19 Apr 2017 18:02:35 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 06/12] refs: add refs_head_ref()
-Date:   Wed, 19 Apr 2017 18:01:39 +0700
-Message-Id: <20170419110145.5086-7-pclouds@gmail.com>
+Subject: [PATCH v3 07/12] revision.c: use refs_for_each*() instead of for_each_*_submodule()
+Date:   Wed, 19 Apr 2017 18:01:40 +0700
+Message-Id: <20170419110145.5086-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170419110145.5086-1-pclouds@gmail.com>
 References: <20170419110145.5086-1-pclouds@gmail.com>
@@ -75,64 +75,114 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 19 +++++++++----------
- refs.h |  2 ++
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ revision.c | 48 ++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 32 insertions(+), 16 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 26474cb62a..a252ae43ee 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1208,27 +1208,26 @@ int refs_rename_ref_available(struct ref_store *refs,
- 	return ok;
+diff --git a/revision.c b/revision.c
+index 295d4f8205..c329070c89 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1189,12 +1189,19 @@ void add_ref_exclusion(struct string_list **ref_excludes_p, const char *exclude)
+ 	string_list_append(*ref_excludes_p, exclude);
  }
  
--int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
-+int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+-static void handle_refs(const char *submodule, struct rev_info *revs, unsigned flags,
+-		int (*for_each)(const char *, each_ref_fn, void *))
++static void handle_refs(struct ref_store *refs,
++			struct rev_info *revs, unsigned flags,
++			int (*for_each)(struct ref_store *, each_ref_fn, void *))
  {
- 	struct object_id oid;
- 	int flag;
- 
--	if (submodule) {
--		if (resolve_gitlink_ref(submodule, "HEAD", oid.hash) == 0)
--			return fn("HEAD", &oid, 0, cb_data);
--
--		return 0;
--	}
--
--	if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag))
-+	if (!refs_read_ref_full(refs, "HEAD", RESOLVE_REF_READING,
-+				oid.hash, &flag))
- 		return fn("HEAD", &oid, flag, cb_data);
- 
- 	return 0;
- }
- 
-+int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
-+{
-+	return refs_head_ref(get_submodule_ref_store(submodule), fn, cb_data);
-+}
+ 	struct all_refs_cb cb;
 +
- int head_ref(each_ref_fn fn, void *cb_data)
- {
--	return head_ref_submodule(NULL, fn, cb_data);
-+	return refs_head_ref(get_main_ref_store(), fn, cb_data);
++	if (!refs) {
++		/* this could happen with uninitialized submodules */
++		return;
++	}
++
+ 	init_all_refs_cb(&cb, revs, flags);
+-	for_each(submodule, handle_one_ref, &cb);
++	for_each(refs, handle_one_ref, &cb);
  }
  
- /*
-diff --git a/refs.h b/refs.h
-index 447381d378..0572473ef7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -233,6 +233,8 @@ typedef int each_ref_fn(const char *refname,
-  * modifies the reference also returns a nonzero value to immediately
-  * stop the iteration. Returned references are sorted.
-  */
-+int refs_head_ref(struct ref_store *refs,
-+		  each_ref_fn fn, void *cb_data);
- int refs_for_each_ref(struct ref_store *refs,
- 		      each_ref_fn fn, void *cb_data);
- int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
+ static void handle_one_reflog_commit(struct object_id *oid, void *cb_data)
+@@ -2067,23 +2074,25 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 	ctx->argc -= n;
+ }
+ 
+-static int for_each_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data, const char *term) {
++static int for_each_bisect_ref(struct ref_store *refs, each_ref_fn fn,
++			       void *cb_data, const char *term)
++{
+ 	struct strbuf bisect_refs = STRBUF_INIT;
+ 	int status;
+ 	strbuf_addf(&bisect_refs, "refs/bisect/%s", term);
+-	status = for_each_ref_in_submodule(submodule, bisect_refs.buf, fn, cb_data);
++	status = refs_for_each_ref_in(refs, bisect_refs.buf, fn, cb_data);
+ 	strbuf_release(&bisect_refs);
+ 	return status;
+ }
+ 
+-static int for_each_bad_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
++static int for_each_bad_bisect_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+ {
+-	return for_each_bisect_ref(submodule, fn, cb_data, term_bad);
++	return for_each_bisect_ref(refs, fn, cb_data, term_bad);
+ }
+ 
+-static int for_each_good_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
++static int for_each_good_bisect_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+ {
+-	return for_each_bisect_ref(submodule, fn, cb_data, term_good);
++	return for_each_bisect_ref(refs, fn, cb_data, term_good);
+ }
+ 
+ static int handle_revision_pseudo_opt(const char *submodule,
+@@ -2092,8 +2101,14 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ {
+ 	const char *arg = argv[0];
+ 	const char *optarg;
++	struct ref_store *refs;
+ 	int argcount;
+ 
++	if (submodule) {
++		refs = get_submodule_ref_store(submodule);
++	} else
++		refs = get_main_ref_store();
++
+ 	/*
+ 	 * NOTE!
+ 	 *
+@@ -2105,22 +2120,23 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 	 * register it in the list at the top of handle_revision_opt.
+ 	 */
+ 	if (!strcmp(arg, "--all")) {
+-		handle_refs(submodule, revs, *flags, for_each_ref_submodule);
+-		handle_refs(submodule, revs, *flags, head_ref_submodule);
++		handle_refs(refs, revs, *flags, refs_for_each_ref);
++		handle_refs(refs, revs, *flags, refs_head_ref);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--branches")) {
+-		handle_refs(submodule, revs, *flags, for_each_branch_ref_submodule);
++		handle_refs(refs, revs, *flags, refs_for_each_branch_ref);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--bisect")) {
+ 		read_bisect_terms(&term_bad, &term_good);
+-		handle_refs(submodule, revs, *flags, for_each_bad_bisect_ref);
+-		handle_refs(submodule, revs, *flags ^ (UNINTERESTING | BOTTOM), for_each_good_bisect_ref);
++		handle_refs(refs, revs, *flags, for_each_bad_bisect_ref);
++		handle_refs(refs, revs, *flags ^ (UNINTERESTING | BOTTOM),
++			    for_each_good_bisect_ref);
+ 		revs->bisect = 1;
+ 	} else if (!strcmp(arg, "--tags")) {
+-		handle_refs(submodule, revs, *flags, for_each_tag_ref_submodule);
++		handle_refs(refs, revs, *flags, refs_for_each_tag_ref);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--remotes")) {
+-		handle_refs(submodule, revs, *flags, for_each_remote_ref_submodule);
++		handle_refs(refs, revs, *flags, refs_for_each_remote_ref);
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if ((argcount = parse_long_opt("glob", argv, &optarg))) {
+ 		struct all_refs_cb cb;
 -- 
 2.11.0.157.gd943d85
 
