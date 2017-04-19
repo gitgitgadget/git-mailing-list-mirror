@@ -7,141 +7,83 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 240A31FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 12:59:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA8441FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 13:11:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1763300AbdDSM7Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 08:59:24 -0400
-Received: from mout.web.de ([212.227.17.11]:63353 "EHLO mout.web.de"
+        id S934302AbdDSNLe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 09:11:34 -0400
+Received: from mout.web.de ([217.72.192.78]:50746 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1763027AbdDSM7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 08:59:22 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MGABv-1cli7537oN-00FALx; Wed, 19
- Apr 2017 14:59:04 +0200
-Subject: Re: [RFC PATCH] parse-options: disallow double-negations of options
- starting with no-
-To:     Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        id S934280AbdDSNLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 09:11:30 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LhNs4-1cEYCQ3jns-00mbgJ; Wed, 19
+ Apr 2017 15:11:07 +0200
+Subject: Re: [PATCH] various: disallow --no-no-OPT for --no-opt options
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Jacob Keller <jacob.keller@gmail.com>
-References: <20170419090820.20279-1-jacob.e.keller@intel.com>
+References: <20170418170914.9701-1-avarab@gmail.com>
+ <de79d366-3609-8efe-b23a-7e793036b3ef@web.de>
+ <CACBZZX6XWXjvDKeR+a1Ymb4csXgOKLiF==VkKLp5S9TRVQhgoA@mail.gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <68ed1250-534d-dc16-874e-ea14b592f8fd@web.de>
-Date:   Wed, 19 Apr 2017 14:58:58 +0200
+Message-ID: <b4eef4c1-cd5a-aa71-fc79-8af89dbe365d@web.de>
+Date:   Wed, 19 Apr 2017 15:11:01 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.0.1
 MIME-Version: 1.0
-In-Reply-To: <20170419090820.20279-1-jacob.e.keller@intel.com>
+In-Reply-To: <CACBZZX6XWXjvDKeR+a1Ymb4csXgOKLiF==VkKLp5S9TRVQhgoA@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:by51112hgA7qNCesDsTh82ydN1b1H7zN2YFaytigVyCevqIn6pI
- x7XMb+B09dZCNQrCfIO7yQ19y2kout+PHVw0rcRQ5mi4atg/SEmGguE1WWGQ0OUxg00vfQ3
- xGq8HILgQxUzEs2o1wUskJ2Ty797CNUXEJIx53JMIV70/YeOOinnfxKSBV1h3dJ2iBjGkYe
- gsOj90xV9UbszuIgvBwVA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:o6uf6rYAQog=:o0VJl9bP47lMU9TuKB3AI7
- ZiZdmiAJ8Y5O/w74zRn+15QnLJo0iX2YgKtgg+7tUrCratg6d2oJl5lkyjRB96GHnhggvRlO9
- 40Ez+Sh4j7Di55aCMpCU7JX8QvBOZpe4RPIapI8Mcdb+KIUJCECLrztyiUCJXdmLqSyA9gXEF
- Y88O8OVxazIu70KWt8qdr2Lnw1EcpZIioCY8R2zS2E8pIKKDZWjnqjLUvzBaSRg65Z1FiEhuX
- 3HfjnA4WXkvVguDXcZeVzFOrdSXA+o0r/i/g8Gj0r/j7vYFsHxLQcD5Zfcj5TY0kB0IVtQMN9
- voABmoR9XAgd01ePb0T3zUb8czM34ElY3ts7ET9urLfZexbAdnWFnL9ms454zATHTSZpelvSA
- wMXNnkbqDVbhyUosL71dpOM3VppwIjcAuXyFi1j0c1v1TSC3IrzXrXdFUQwdQn2BXWvNXiXOx
- FiBvM6CjqPHCUFngGkQBXzNqoS8eXXk3BH7sD2gLnHs3QNPzfjTm2qu0zSwg8xnZQVnADkY29
- lcAWVNHtvMnZX9RZDs7cmN8YCgVUtyvfzvGTddBq7cVXcBJui77tc5FDa9e4N7Y7+js/Uyzt0
- Wzj/qsC4OVc2GE7jMQF7oaEqp9Xc7ydbMG+OiQnKeRwE3CQgI/le8OEFVVG+MfsXqJsK3wV21
- xManTAFxvK+w1VL46ecvgiMknAsdXxbE/xGPaYNNZJ7bqMCCaq1JaZB9bUY42jl/uGGv3Vjbg
- ZmSn6yAw2V6np/Lux7TouxeAESxu8Kay6ilPISzmRjHsLaJDTXGSNSTOXkkDFMXvmX+caeZ9n
- 8QNVkfj
+X-Provags-ID: V03:K0:ODDrBm4Pc9L2AIBd2lyhoLAN1B7iGwanWNhv0aGD/jCdZjaF0DD
+ 82MbPs0qJnLHbAcvp/tEgJf4ISTjcHgw/zJ9VqjyVvpQjJtVeYKWfYs6274z7jqpL7SNdUI
+ PArBr90oIEH7IxHEm9W1Vcvtxu/TxOiLRNrQBeX3J06AYndLKhzNkXQc3LR2O6agNtF6+wZ
+ h6nUnv10jKm8hdMwrOHHw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:1uYxytlI1bk=:QSed1J8kzEabcBaN6IKyHA
+ nSkWORWxnS/ZW29oqasS+J3mMhKrfDAZ9cOm0qb5tgA2dAxcHOVppecC4xqp5DQjnDyVk7wc5
+ Xl/tcfpcW8TyeJeYmvqTW3EX4N2JDzRUpgQvaU9pXmbw0K/BcIF9CF+dU1XJLpstbLtyKWj/c
+ gfbBClLRrzmLzafp8WPftcrTn5OOe8OgU8kVfEOmoKgB1toDiHKktvuqGjLSYVuLBKxuCdvS7
+ LsakyBwQL5FQGtKglsxW5W+/qR7AfvU9h1IyeXs8PrFfgdfLtOzrwQF4+O3sydLUPwjZ90jjy
+ Rk7g8Tg2X00zFBKz6jG6NdksgtKnwx7jG6GcKVu8M8BG/XZjYP0N2g8ky5lKtTp0PcV/YHvuS
+ QD6OUl9PTLBITXbMvlVGGkHu7YOYieEeGMPYweEAaBDV/2bhdcIpD3H5ald2RNCzkqMtDrHdZ
+ 4mW35MmKueRLxhL2A6gc0MvI3pxYlVZ5+VxAkakt97qwpE6nm0uvJQn6WcVF6H3rir2CRi3Kk
+ BiVbWuh83KpvPO58MjcvDBAzKRmL7Bggt6vXgKQ+PlTl0wK3K2beJzJ20FwZv6xANb9QVjm1w
+ B6Ns/SYylb9zhoWEhh66JXuQ5ghf17rSh4Na7KsawEK7yn1ZDztbEKFkyWfZj97mA3pK7cD+K
+ cqB0MHJ3maUhQg0NZAWIpfn+GyTlOqL63ZQyKiMJYxbaEndCFo8XFHGjcny1NPFmNmRgkkJ0F
+ BwQiZf2z8eZikmU+W4f5T15QHPhs2HlDUkO5Co5eseTExk7UrZHCFY6eEe+27QsAwlUfK9W6q
+ i80qacX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.04.2017 um 11:08 schrieb Jacob Keller:
-> From: Jacob Keller <jacob.keller@gmail.com>
+Am 19.04.2017 um 09:00 schrieb Ævar Arnfjörð Bjarmason:
+> On Wed, Apr 19, 2017 at 12:29 AM, René Scharfe <l.s.r@web.de> wrote:
+>> Setting PARSE_OPT_NONEG takes away the ability to toggle the affected
+>> option.  E.g. git clone would reject --checkout.  Currently users can
+>> specify --no- options as defaults in aliases and override them on the
+>> command line if needed, with the patch that won't be possible anymore.
+>>
+>> PARSE_OPT_NONEG should only be used for options where a negation doesn't
+>> make sense, e.g. for the --stage option of checkout-index.
 > 
-> Many options can be negated by prefixing the option with "no-", for
-> example "--3way" can be prefixed with "--no-3way" to disable it. Since
-> 0f1930c58754 ("parse-options: allow positivation of options
-> starting, with no-", 2012-02-25) we have also had support to negate
-> options which start with "no-" by using the positive wording.
+> That's a bad bug, I don't know whether to be surprised or not that we
+> had no tests for this :)
 > 
-> This leads to the confusing (and non-documented) case that you can still
-> prefix options beginning with "no-" by a second "no-" to negate them.
-> That is, we allow "no-no-hardlinks" to negate the "no-hardlinks" option.
-> 
-> This can be confusing to the user so lets just disallow the
-> double-negative forms. If the long_name begins with "no-" then we simply
-> don't allow the regular negation format, and only allow the option to be
-> negated by the positive form.
+> I thought I was just disabling --no-no-checkout for --no-checkout, not
+> --checkout, but didn't notice the subtleties of the special case
+> handling for --no-* in parse-options.c, thanks.
 
-Your patch is a modernized version of my old one, so I'm fine with it.
+I'm confused.  What's the bug here?
 
-But I wonder how --no-no-x being treated the same as --x can be 
-confusing.  https://en.wikipedia.org/wiki/Double_negative explains it, I 
-think -- in some languages and dialects multiple negatives increase 
-negativity instead of cancelling themselves out pairwise.  So users 
-would expect to get no x with --no-x and even less of it with --no-no-x?
+--no-no-checkout is undocumented; Jacob's patch addresses it. 
+--no-checkout is the documented form.  Negation allows --checkout to be 
+used as well, with the opposite meaning to --no-checkout.  Turning off 
+negation with PARSE_OPT_NONEG forbids --checkout to be used.
 
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
-> I started going about implementing an OPT_NEGBOOL as suggested by Peff,
-> but realized this might just be simpler, and we already support the
-> positive format for the negation, so we don't lose expressiveness. We
-> *might* want to tie this to an option flag instead so that it only kicks
-> in if the option specifically requests it. Thoughts?
-
-Do you mean that there should be a flag for allowing double negation? 
-In which situation would it be useful?
-
-Or do you mean that negation should be disabled by default and would 
-have to be enabled explicitly, unlike the current situation where it is 
-enabled by default and can be turned off with PARSE_OPT_NONEG?  That 
-depends on how often we'd want to disable negation, I guess.  For 
-boolean flags it probably makes sense to allow it by default.
-
->   parse-options.c          | 3 +++
->   t/t0040-parse-options.sh | 5 ++++-
->   2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/parse-options.c b/parse-options.c
-> index a23a1e67f04f..8e024c569f52 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -299,6 +299,9 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
->   				}
->   				continue;
->   			}
-> +			/* avoid double-negate on long_name */
-> +			if (starts_with(long_name, "no-"))
-> +				continue;
->   			flags |= OPT_UNSET;
->   			if (!skip_prefix(arg + 3, long_name, &rest)) {
->   				/* abbreviated and negated? */
-> diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-> index 74d2cd76fe56..abccfa5f265f 100755
-> --- a/t/t0040-parse-options.sh
-> +++ b/t/t0040-parse-options.sh
-> @@ -88,7 +88,6 @@ test_expect_success 'OPT_BOOL() is idempotent #1' 'check boolean: 1 --yes --yes'
->   test_expect_success 'OPT_BOOL() is idempotent #2' 'check boolean: 1 -DB'
->   
->   test_expect_success 'OPT_BOOL() negation #1' 'check boolean: 0 -D --no-yes'
-> -test_expect_success 'OPT_BOOL() negation #2' 'check boolean: 0 -D --no-no-doubt'
->   
->   test_expect_success 'OPT_BOOL() no negation #1' 'check_unknown_i18n --fear'
->   test_expect_success 'OPT_BOOL() no negation #2' 'check_unknown_i18n --no-no-fear'
-> @@ -392,4 +391,8 @@ test_expect_success '--no-verbose resets multiple verbose to 0' '
->   	test-parse-options --expect="verbose: 0" -v -v -v --no-verbose
->   '
->   
-> +test_expect_success 'double negation not accepted' '
-> +	test_must_fail test-parse-options --expect="boolean: 0" --no-no-doubt
-> +'
-> +
->   test_done
-
-Using check_unknown_i18n like in the test for --no-no-fear would be 
-shorter and more consistent.
+Perhaps the issue is that a single line of documentation is not enough 
+("PARSE_OPT_NONEG: says that this option cannot be negated")?
 
 René
