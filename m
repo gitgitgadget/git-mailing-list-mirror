@@ -6,77 +6,105 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37EB6207BC
-	for <e@80x24.org>; Wed, 19 Apr 2017 02:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1266F207BC
+	for <e@80x24.org>; Wed, 19 Apr 2017 02:40:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759218AbdDSC3E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 22:29:04 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61720 "EHLO
+        id S1759013AbdDSCkl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 22:40:41 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58464 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1759215AbdDSC3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 22:29:03 -0400
+        with ESMTP id S1758883AbdDSCkk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 22:40:40 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 204BE81EB4;
-        Tue, 18 Apr 2017 22:29:02 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0609982055;
+        Tue, 18 Apr 2017 22:40:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7kR8kQ/zSXd9fO4bPKTTsVNXzJU=; b=TbvrBX
-        TtCbjVYT/OWj3DclImDsvbVUJJ32OQt5OCULjQdPPp42+pygi//aplq4+jhb3BSP
-        hZkYrZpp2MjNQcknHWXT120Dqidfq6CKU3wTQUUv7vbYLs/JYNJ9A+TP3y5OqfVC
-        9HJHB4RG4nr2+lb0zRYZIpq83uZ44MqMrtFos=
+        :content-type:content-transfer-encoding; s=sasl; bh=G8IzPWk8+aGI
+        LZS+y++3p/4mRQ4=; b=qG0M/s1zRE3meOUKphr1bS1xryZfKPHouMxl85hHmxch
+        TGum+N5Y9eYhc1wGuVOe+eqR29FVBK3lUETypVPd7j8gVayU1l9zoYc5Dn1F+u76
+        0kd5Avx/1tId6sOu4H23GPkuM5FA+rkBTecT5y7TAOY1gr1rfZLimAOeuBbNMps=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UhSVIV9g4qvgfe0Az6YDo3JH9Ftzu57V
-        Lg971P56KKXeiYl/zNhaeDuUj+p8JAjcGfmHtMQRskqhQcEhxvAQAp5XmI9M/z6t
-        Jhw0XFrqwiiQB1Muz+buAmK0UaD4Zzj/vjGRozYxp6wevEcdIlv7wXqZSlgQms25
-        bXCG/2Qugkg=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hDOi9J
+        2GcDMmPOrs3KJ7W16HutMwwesXLU815XvdIp40TCHmgsu5LhL4+uWmtILIz4SkFQ
+        dV3EOTXyEuIAAfsrbgHxOwI34HQ0LVPn6gKLkYt/J0D/YYDLIfeR5oSduXChmBNF
+        e/PEVJ/KunceQalDzOKHfGqAZjQhocsPy9EtY=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1878B81EB3;
-        Tue, 18 Apr 2017 22:29:02 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F253582053;
+        Tue, 18 Apr 2017 22:40:38 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 52B2881EB0;
-        Tue, 18 Apr 2017 22:29:01 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D7AE82052;
+        Tue, 18 Apr 2017 22:40:38 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Max Ivanov <ivanov.maxim@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: no MERGE_HEAD after octopus merge failure
-References: <CALQ-8C+9dzM0cNCrK-DGiu8fc=UsS11OZbwhXWh_CDGOeGnECA@mail.gmail.com>
-Date:   Tue, 18 Apr 2017 19:29:00 -0700
-In-Reply-To: <CALQ-8C+9dzM0cNCrK-DGiu8fc=UsS11OZbwhXWh_CDGOeGnECA@mail.gmail.com>
-        (Max Ivanov's message of "Tue, 18 Apr 2017 15:26:22 +0100")
-Message-ID: <xmqqlgqxceqb.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] various: disallow --no-no-OPT for --no-opt options
+References: <20170418170914.9701-1-avarab@gmail.com>
+        <de79d366-3609-8efe-b23a-7e793036b3ef@web.de>
+        <20170419014143.56io56xn6mawy5xi@sigill.intra.peff.net>
+Date:   Tue, 18 Apr 2017 19:40:37 -0700
+In-Reply-To: <20170419014143.56io56xn6mawy5xi@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 18 Apr 2017 21:41:43 -0400")
+Message-ID: <xmqqh91lce6y.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F30721A2-24A7-11E7-B270-E680B56B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 9289041A-24A9-11E7-9B05-E680B56B9B0B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Max Ivanov <ivanov.maxim@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> I am using git 2.12.0 and it leaves no MERGE_HEAD once octopus merge
-> failed with conflicts. Is it intentional? Files have conflicts markers
-> and once resolved `git commit` creates just a normal commit, which is
-> very inconvenient and confusing.
+> On Wed, Apr 19, 2017 at 12:29:18AM +0200, Ren=C3=A9 Scharfe wrote:
+> ...
+>> PARSE_OPT_NONEG should only be used for options where a negation doesn=
+'t
+>> make sense, e.g. for the --stage option of checkout-index.
+>
+> I think we do strive to avoid "--no-no-foo", and instead have "--no-foo=
+"
+> and "--foo" to cover both sides.  So for example:
+>
+>> > -		OPT_BOOL(0, "no-add", &state->no_add,
+>> > +		OPT_BOOL_NONEG(0, "no-add", &state->no_add,
+>> >   			N_("ignore additions made by the patch")),
+>
+> This could be more like:
+>
+>   OPT_NEGBOOL(0, "add", &state->no_add, ...)
+>
+> where NEGBOOL would be smart enough to show "--no-add" in the help as
+> the primary.
 
-I suspect you got these lines in the error message, which you didn't
-read:
+I very much appreciate that this topic to avoid --no-no-OPT
+nonsense, but just disabling --no-no-OPT without giving --OPT the
+meaning the user who would have used --no-no-OPT wanted does not
+sound like a good solution.  Your NEGBOOL looks like a better
+approach.
 
-    Automated merge did not work.
-    Should not be doing an octopus.
+> It might even be possible to detect the existing line and
+> have parse-options automatically respect "--foo" when "--no-foo" is
+> present.  But that may run afoul of callers that add both "--foo" and
+> "--no-foo" manually.
 
-Octopus is designed to be done only for simple conflict-less merges,
-because it makes later bisection inherently (read: not fault of the
-tool, but a natural consequence of the shape of the resulting
-history) less efficient.  It might have been better if we chose to
-(1) refuse octopus merge if the working tree before "git merge"
-starts is not clean, and(2) automatically run "git reset --hard"
-when failing an octopus issuing the above error message.  But we
-didn't, so you'd need to do "git reset --hard" and merge the tips
-one by one, not making an octopus.
+True but wouldn't that something we would want to avoid anyway?
+That is, "git cmd [--OPT | --no-OPT | --no-no-OPT]" from the end
+user's point of view should be an error because it is unclear what
+difference there are between --OPT and --no-no-OPT.  And we should
+be able to add a rule to parse_options_check() to catch such an
+error.
 
+Having said that, I am not sure if we want to go the route of
+"existing line that begins with 'no-' behaves magical".  For
+boolean, I suspect we may be get away with such a magic without
+confusing ourselves too much, though.
 
+Thanks.
