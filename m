@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76547207BF
-	for <e@80x24.org>; Wed, 19 Apr 2017 23:13:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65DC11FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 23:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S940292AbdDSXNp (ORCPT <rfc822;e@80x24.org>);
+        id S940297AbdDSXNs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 19:13:48 -0400
+Received: from mail-io0-f179.google.com ([209.85.223.179]:33881 "EHLO
+        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S940290AbdDSXNp (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 19 Apr 2017 19:13:45 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:33845 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S940288AbdDSXNm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 19:13:42 -0400
-Received: by mail-io0-f169.google.com with SMTP id a103so42685096ioj.1
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 16:13:41 -0700 (PDT)
+Received: by mail-io0-f179.google.com with SMTP id a103so42686900ioj.1
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 16:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BiLIm1u/rwzcVEVjyff6Do09v7dfkcHd4jKEdGBHdD4=;
-        b=mkcBEes8brGYNqUr9s/73nB0WwSMJ7AiaXwjZUoys1+X1lK2q4em5FRiZ/OZmxb5LQ
-         C5qUrtcddodOXaEqVq+1hydXMhgItvSkbtHYXPC+nXwHO+tSnD1cZ7c2XgGuwJfZJGmL
-         Ec/DPbpNusVMI8BF2By/LCcWoO33DhLwckAzXjKInCGZY4ydBdjHnTX3pv2AvkPkZnUw
-         DMNcRPqCjvo4yCOWU+Hx+l2fWtuz3nFhl29nB/wzYTRxyn40EkT3QeL5TYlycnCOlBRz
-         tPUiqWxjdpdkw/Z/8igXGVLtwGLocNVlmhyNW0SOWe+O+uEO7Zpf3DccuAa4WPnBaPPV
-         Ossw==
+        bh=jUTzvKrg09pN7ttMYVm0n5+31dEWfeSY/yGxX35Gwlw=;
+        b=BMYd0wsfrInulbY1d6wROsN1f/kdFDhbMpQJvHbHNnqSLraO/nUQ5oTOITeLEGaFGF
+         N1gVQdingPtiv0Jt4D0/jMMcDY4aFwTaSMcd/9qZrnRJ80T0hvdbnEwSERbOyLsJNRuh
+         r1rVU8zd4NdoeBV+IoXC4xwa0tOtOyi8y4CP62MRzq/q0PJ6XJRI8PMkcB2wfUeoZC5S
+         18uzD/BuvBivh8hSdwqVtu+Jai/7N7vaBaaGKlCAkiLytROj34jgRF5hI2ZLr06YX1Zf
+         /0MgxwweQgOvxPEo/jRcPSrWOS7vncVh/KwJErB+E2gwVI6ULh12rexsxfoS+H4fx0t/
+         sTtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BiLIm1u/rwzcVEVjyff6Do09v7dfkcHd4jKEdGBHdD4=;
-        b=gB5L2WoiyfQoF6qQn4puCrWu4RC7MlpuB/ck4SqLyfKpqukEuDqHz1En0AXD8+dUIp
-         qDrx9qFVUuQJ5ySNHi7ZkA/XVN6lhESxmHPchqdsSqWWIXMClZB+QTQWOANlQkl333lu
-         up5GaB5Eaubfsp6MWgY81KDLZyUsNuiFgjVFOnkNZ7Q6tf/k9Ev+8xkFw9GiKq1FmZJG
-         PiP2hTZwe/rtAh/Qq/xXnIOcSEbuNeUW3EbugJS3xAD7hwGlycidwVLbjDDlcbNaKEn9
-         skW/j/Y1z4Xt6y2JA7LV2EIzAqaMXFAecmwaaPrH61Q68uAbpW2ZprUwVqR15xbm4mhg
-         Y1nw==
-X-Gm-Message-State: AN3rC/6GtD6aTUEwupgzdGOV1EHFrUNxwqvDYFnFCitY4dOHLSS8v26p
-        hi4OVGM3TYL7THa3
-X-Received: by 10.99.119.4 with SMTP id s4mr5200605pgc.71.1492643617885;
-        Wed, 19 Apr 2017 16:13:37 -0700 (PDT)
+        bh=jUTzvKrg09pN7ttMYVm0n5+31dEWfeSY/yGxX35Gwlw=;
+        b=t65fbtjzEZbHkMV48I/2NDpLDgGdQcWRR02QEhGfbmJRJ7fCO7Na2OWVc407ubENFW
+         ARsIxjoW9jGVBJdFm6kQJzLtembmWxN+lo4NySMAvVRef/rrkQ0FGUf3S6iocyHup+pp
+         wAvJo9ftfouZxUQQ4e2PRUZ37YvyeEt4UfvkuclrhzpiR3KgE1m7EWSekB0uvIfLlMCV
+         PXqKq/QX35/oCwgwRY2Pp53UzC9cHf/6Epb9G0Awjxy2DdRRkqlat8w4TPmtITGVemAP
+         DslvtWZiNdcnrTk59VyNWbPYvMyYx4Y0gVJH2FO2xcwAZYTlIx9Ks+DSJNThUJV4kUAE
+         ragQ==
+X-Gm-Message-State: AN3rC/7KtN2x7mspBYIwb+AEU7eCe+wilkL/nSjlItIgrapwq+gSe129
+        TNoKJn30/MIMr4+P
+X-Received: by 10.84.174.131 with SMTP id r3mr6775093plb.136.1492643620841;
+        Wed, 19 Apr 2017 16:13:40 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id s10sm6433798pfe.28.2017.04.19.16.13.36
+        by smtp.gmail.com with ESMTPSA id s10sm6433798pfe.28.2017.04.19.16.13.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Apr 2017 16:13:36 -0700 (PDT)
+        Wed, 19 Apr 2017 16:13:39 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, j6t@kdbg.org,
         sbeller@google.com, e@80x24.org, jrnieder@gmail.com
-Subject: [PATCH v6 02/11] t0061: run_command executes scripts without a #! line
-Date:   Wed, 19 Apr 2017 16:13:18 -0700
-Message-Id: <20170419231327.49895-3-bmwill@google.com>
+Subject: [PATCH v6 04/11] run-command: use the async-signal-safe execv instead of execvp
+Date:   Wed, 19 Apr 2017 16:13:20 -0700
+Message-Id: <20170419231327.49895-5-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.816.g2cccc81164-goog
 In-Reply-To: <20170419231327.49895-1-bmwill@google.com>
 References: <20170418231805.61835-1-bmwill@google.com>
@@ -63,36 +63,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test to 't0061-run-command.sh' to ensure that run_command can
-continue to execute scripts which don't include a '#!' line.
+Convert the function used to exec from 'execvp()' to 'execv()' as the (p)
+variant of exec isn't async-signal-safe and has the potential to call malloc
+during the path resolution it performs.  Instead we simply do the path
+resolution ourselves during the preparation stage prior to forking.  There also
+don't exist any portable (p) variants which also take in an environment to use
+in the exec'd process.  This allows easy migration to using 'execve()' in a
+future patch.
+
+Also, as noted in [1], in the event of an ENOEXEC the (p) variants of
+exec will attempt to execute the command by interpreting it with the
+'sh' utility.  To maintain this functionality, if 'execv()' fails with
+ENOEXEC, start_command will atempt to execute the command by
+interpreting it with 'sh'.
+
+[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/exec.html
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- t/t0061-run-command.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ run-command.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 12228b4aa..98c09dd98 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -26,6 +26,17 @@ test_expect_success 'run_command can run a command' '
- 	test_cmp empty err
- '
+diff --git a/run-command.c b/run-command.c
+index d8d143795..1c7a3b611 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -238,6 +238,12 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
+ 	if (!cmd->argv[0])
+ 		die("BUG: command is empty");
  
-+test_expect_success !MINGW 'run_command can run a script without a #! line' '
-+	cat >hello <<-\EOF &&
-+	cat hello-script
-+	EOF
-+	chmod +x hello &&
-+	test-run-command run-command ./hello >actual 2>err &&
++	/*
++	 * Add SHELL_PATH so in the event exec fails with ENOEXEC we can
++	 * attempt to interpret the command with 'sh'.
++	 */
++	argv_array_push(out, SHELL_PATH);
 +
-+	test_cmp hello-script actual &&
-+	test_cmp empty err
-+'
+ 	if (cmd->git_cmd) {
+ 		argv_array_push(out, "git");
+ 		argv_array_pushv(out, cmd->argv);
+@@ -246,6 +252,20 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
+ 	} else {
+ 		argv_array_pushv(out, cmd->argv);
+ 	}
 +
- test_expect_success POSIXPERM 'run_command reports EACCES' '
- 	cat hello-script >hello.sh &&
- 	chmod -x hello.sh &&
++	/*
++	 * If there are no '/' characters in the command then perform a path
++	 * lookup and use the resolved path as the command to exec.  If there
++	 * are no '/' characters or if the command wasn't found in the path,
++	 * have exec attempt to invoke the command directly.
++	 */
++	if (!strchr(out->argv[1], '/')) {
++		char *program = locate_in_PATH(out->argv[1]);
++		if (program) {
++			free((char *)out->argv[1]);
++			out->argv[1] = program;
++		}
++	}
+ }
+ #endif
+ 
+@@ -445,7 +465,15 @@ int start_command(struct child_process *cmd)
+ 			}
+ 		}
+ 
+-		sane_execvp(argv.argv[0], (char *const *) argv.argv);
++		/*
++		 * Attempt to exec using the command and arguments starting at
++		 * argv.argv[1].  argv.argv[0] contains SHELL_PATH which will
++		 * be used in the event exec failed with ENOEXEC at which point
++		 * we will try to interpret the command using 'sh'.
++		 */
++		execv(argv.argv[1], (char *const *) argv.argv + 1);
++		if (errno == ENOEXEC)
++			execv(argv.argv[0], (char *const *) argv.argv);
+ 
+ 		if (errno == ENOENT) {
+ 			if (!cmd->silent_exec_failure)
 -- 
 2.12.2.816.g2cccc81164-goog
 
