@@ -2,125 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DF221FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 17:06:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29EFD207BF
+	for <e@80x24.org>; Wed, 19 Apr 2017 17:22:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967892AbdDSRGs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 13:06:48 -0400
-Received: from siwi.pair.com ([209.68.5.199]:15229 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967206AbdDSRGd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 13:06:33 -0400
-Received: from jeffhost-ubuntu.reddog.microsoft.com (unknown [65.55.188.213])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 9767584505;
-        Wed, 19 Apr 2017 13:06:32 -0400 (EDT)
-From:   git@jeffhostetler.com
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v12 4/5] read-cache: speed up has_dir_name (part 1)
-Date:   Wed, 19 Apr 2017 17:06:17 +0000
-Message-Id: <20170419170618.16535-5-git@jeffhostetler.com>
-X-Mailer: git-send-email 2.9.3
-In-Reply-To: <20170419170618.16535-1-git@jeffhostetler.com>
-References: <20170419170618.16535-1-git@jeffhostetler.com>
+        id S968402AbdDSRWj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 13:22:39 -0400
+Received: from mail-yb0-f181.google.com ([209.85.213.181]:33587 "EHLO
+        mail-yb0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968398AbdDSRWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 13:22:37 -0400
+Received: by mail-yb0-f181.google.com with SMTP id 81so9653414ybp.0
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 10:22:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ECMpWmQY/LQIJx+ragUPbr9S782LU/rvnO7sTWFwFN8=;
+        b=OF0wMrdtwZsWvf+Fh1Ipw4JR7nOBgC9QKjtstIDnE/3xYRrdwHzMaAgVpk3oTzWnHn
+         c+oz/eucSG783YkWu04Fm78z3x6gwlnAKltqdP19kWOfxGR9lxg8A1PcvqebzWOwp3Uq
+         Ry0c9afAkfm4t1f/IXimz7SbgP1MsKqBkqpbHpfkP6OA5YBLrWwsTz1zfJeLYYNtuUBJ
+         0s2sEFTcrn4GUOroRpdsaRVRYMQtwLk+oVf32cr6Go/fH+1VvAHFrJlS4ZACFxahBekT
+         gMZokNbWsHpsclzfN/wbxDaAqmYbBL2YiRs36d9Z97oAampXese4FPdF3l08kUxFo9pG
+         fxEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ECMpWmQY/LQIJx+ragUPbr9S782LU/rvnO7sTWFwFN8=;
+        b=sSa5cY43cehNg1G+VpGpzJfEfFgTtupw0m98E9Uerutdr4SyTcJ5JHGoMXxLxjKwdk
+         QDpTHFFaOZd6wpJD6nOSjSqFBz1QGd5efkVx2oDGNpryoiTi8Dao+hN4KcT3U0VTKkqe
+         uvNjAmCrZjB/rYG1JYYMzJvkHBktK62Ltr+bFicjGDiUYeW3tIzsJnQwi67+jBbBBFs6
+         XM4p+wD4+jF0M6+fp+R+4zd/IBJmRN6zoLM9OLozPs8B1JHeBnxOo3Dc3TeLbreuTntq
+         Pb75x3LqYC8MJmgdFvg8PAY0p4t5AtY5BsgWcv1eP5lmtohc/ZranQ+eJrClXVX7FxhD
+         eYYg==
+X-Gm-Message-State: AN3rC/7+Yq+t3Uj4+2DM0mHhVJpdneYHxtcsCXrfV3Ihzu1Fxkh1BkHh
+        Rgxb4PGJb2Kk05cRLUvBOdbuKVbg1s0k
+X-Received: by 10.98.24.195 with SMTP id 186mr3986430pfy.35.1492622556068;
+ Wed, 19 Apr 2017 10:22:36 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.100.153.156 with HTTP; Wed, 19 Apr 2017 10:22:35 -0700 (PDT)
+In-Reply-To: <xmqqwpah9ci5.fsf@gitster.mtv.corp.google.com>
+References: <xmqqwpah9ci5.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 19 Apr 2017 10:22:35 -0700
+Message-ID: <CAGZ79ka_02z-G9Z2=i2TLzRTMty3VJY9gbFtWmANtQDrwVr8Vw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Apr 2017, #03; Tue, 18)
+To:     Junio C Hamano <gitster@pobox.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+Prathamesh wrote:
 
-Teach has_dir_name() to see if the path of the new item
-is greater than the last path in the index array before
-attempting to search for it.
+> Also, I would like to ask is there are any more changes required in my microproject for getting it merged.
+> https://public-inbox.org/git/20170403213557.27724-1-pc44800@gmail.com/
 
-has_dir_name() is looking for file/directory collisions
-in the index and has to consider each sub-directory
-prefix in turn.  This can cause multiple binary searches
-for each path.
+See the last what's cooking email:
 
-During operations like checkout, merge_working_tree()
-populates the new index in sorted order, so we expect
-to be able to append in many cases.
+https://public-inbox.org/git/20170419094145.GA9051@ash/T/#t
 
-This commit is part 1 of 2.  This commit handles the top
-of has_dir_name() and the trivial optimization.
+Junio wrote:
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
----
- read-cache.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+> * pc/t2027-git-to-pipe-cleanup (2017-04-14) 1 commit
+>  - t2027: avoid using pipes
+>
+>  Having a git command on the upstream side of a pipe in a test
+>  script will hide the exit status from the command, which may cause
+>  us to fail to notice a breakage; rewrite tests in a script to avoid
+>  this issue.
+>
 
-diff --git a/read-cache.c b/read-cache.c
-index 6a27688..9af0bd4 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -910,6 +910,9 @@ int strcmp_offset(const char *s1, const char *s2, size_t *first_change)
- /*
-  * Do we have another file with a pathname that is a proper
-  * subset of the name we're trying to add?
-+ *
-+ * That is, is there another file in the index with a path
-+ * that matches a sub-directory in the given entry?
-  */
- static int has_dir_name(struct index_state *istate,
- 			const struct cache_entry *ce, int pos, int ok_to_replace)
-@@ -918,6 +921,48 @@ static int has_dir_name(struct index_state *istate,
- 	int stage = ce_stage(ce);
- 	const char *name = ce->name;
- 	const char *slash = name + ce_namelen(ce);
-+	size_t len_eq_last;
-+	int cmp_last = 0;
-+
-+	/*
-+	 * We are frequently called during an iteration on a sorted
-+	 * list of pathnames and while building a new index.  Therefore,
-+	 * there is a high probability that this entry will eventually
-+	 * be appended to the index, rather than inserted in the middle.
-+	 * If we can confirm that, we can avoid binary searches on the
-+	 * components of the pathname.
-+	 *
-+	 * Compare the entry's full path with the last path in the index.
-+	 */
-+	if (istate->cache_nr > 0) {
-+		cmp_last = strcmp_offset(name,
-+			istate->cache[istate->cache_nr - 1]->name,
-+			&len_eq_last);
-+		if (cmp_last > 0) {
-+			if (len_eq_last == 0) {
-+				/*
-+				 * The entry sorts AFTER the last one in the
-+				 * index and their paths have no common prefix,
-+				 * so there cannot be a F/D conflict.
-+				 */
-+				return retval;
-+			} else {
-+				/*
-+				 * The entry sorts AFTER the last one in the
-+				 * index, but has a common prefix.  Fall through
-+				 * to the loop below to disect the entry's path
-+				 * and see where the difference is.
-+				 */
-+			}
-+		} else if (cmp_last == 0) {
-+			/*
-+			 * The entry exactly matches the last one in the
-+			 * index, but because of multiple stage and CE_REMOVE
-+			 * items, we fall through and let the regular search
-+			 * code handle it.
-+			 */
-+		}
-+	}
- 
- 	for (;;) {
- 		int len;
--- 
-2.9.3
+I have reviewed pc/t2027-git-to-pipe-cleanup and it looks good to me
+for inclusion.
 
+Thanks,
+Stefan
