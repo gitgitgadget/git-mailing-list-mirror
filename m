@@ -2,101 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEEBA1FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 19:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFCF41FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 20:03:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S935829AbdDSTwH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 15:52:07 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:35230 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S935823AbdDSTwG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 15:52:06 -0400
-Received: by mail-io0-f171.google.com with SMTP id r16so34194853ioi.2
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 12:52:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=iCVRHNyt11QlWKsAzcqe01twIQkCmM2iQmkuwwLChWY=;
-        b=ejfzGS54Uj1eFo3xyWKrMJQZa5OJ0/BhICEb7W7cS6Jm0u9KGNCtTQ+oGrbASnQEQx
-         UEveXUjF5F/iChVWUZMWu6FniHhl8hJs8kAgm5GqWEMKjR6VAd7ZgFpCX8IHv3XH05na
-         LBdA9/YYDmdDqLpBFk268NQwFs6nwxMKkFDYC6TMFCJqmza0BaUALcjYDWO2ZUATw9Yd
-         ovdaaoQ+TTyST9c4+OO3ktZRU2N5S17CDo/JIDefr8/2GhhO11unhruN/MM629trgoa6
-         5qxbckrB4fsiBcdfWe7/14EJwMraJKKvXxxRLHitS+eu4RlGz6YOP7q8ON+P7sy6aMtc
-         lqzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=iCVRHNyt11QlWKsAzcqe01twIQkCmM2iQmkuwwLChWY=;
-        b=rx4w4HUFBscAnNh0KZe9LE++8k+R1d7UTCUDsvSraxd/i/CwnpHPBisv3t1Om3rlXK
-         umDUwphQq0qzjwckPOI4Eo9n8qVTuuRRBtwL9LQqFXjCIxW7yqDlAr9i2Mf/0oRYGYxR
-         fbmpoBoMbO95FfdabEmpA/eplEcolilDXmBBjx/9wXlNKSRBuhqZXEkcEsdecbP0nj/r
-         oI7LWGxij69PUajy1Wdg0yksxr0Z6R84Bi/JG1zyLimYBwVNe5eAKGbtj/xS0Mlwl7ef
-         czKJ70GDh+Hb8oiDVNsp0ne9avIbDZ+6qrld1WHtJjBiae/D19hTJSgn7pgzT2/1gnxt
-         UoHw==
-X-Gm-Message-State: AN3rC/4hTovxDjD74iFxWk49/sdcuwHkp2dhGJfo9SKYiNHmwTjSvjcV
-        T8MfvOReNAOOGgIz8tNyXYC256aoyl6q
-X-Received: by 10.99.56.66 with SMTP id h2mr4690565pgn.40.1492631523971; Wed,
- 19 Apr 2017 12:52:03 -0700 (PDT)
+        id S967367AbdDSUDX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 16:03:23 -0400
+Received: from mout.web.de ([217.72.192.78]:54460 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S966707AbdDSUDV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 16:03:21 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Mb8sh-1cke7S0y1T-00Kgv3; Wed, 19
+ Apr 2017 22:03:01 +0200
+Subject: Re: [PATCH v3 1/2] use HOST_NAME_MAX to size buffers for
+ gethostname(2)
+To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>
+References: <20170418215743.18406-1-dturner@twosigma.com>
+ <20170418215743.18406-2-dturner@twosigma.com>
+ <20170419012824.GA28740@aiede.svl.corp.google.com>
+ <c0333c81-d3b2-ca2d-a553-75642d8fb949@web.de>
+ <1b3e983f-4a70-652b-53f3-0c571c6efa1e@web.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <7d075a07-edc9-83eb-25cf-7f8b13700584@web.de>
+Date:   Wed, 19 Apr 2017 22:02:59 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Wed, 19 Apr 2017 12:52:03 -0700 (PDT)
-In-Reply-To: <20170411194616.4963-1-sbeller@google.com>
-References: <20170411194616.4963-1-sbeller@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 19 Apr 2017 12:52:03 -0700
-Message-ID: <CAGZ79kZMLVR-G1C3WL5sdo101oURuvhtnx43z=mT_u7x5XoZSw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] clone: record submodule alternates when not recursing
-To:     Brandon Williams <bmwill@google.com>,
-        Maxime Viargues <maxime.viargues@serato.com>,
-        Junio C Hamano <jch@google.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <1b3e983f-4a70-652b-53f3-0c571c6efa1e@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:Cr0Bw7GPAjLZ4Y7v1cCPPBmgz2Ms8xPT2EUGYi8s63R/nAItEX/
+ opuwbY3eHqU+0gpIJ7LPXomMTtDOIQgi4sNDg+x0GkFv/wxqOtLj2U49yKxTJR3OyJg1lD9
+ VxeVdxBwov8MzEz0NH8zGaVFnOuR8qqpXL0vEwbRLIjP5mh8M+wD0a5FGIChf5Tfx60Wblu
+ /5DxXqcSdxcR7I1waEwlQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:W5kwL+r1WZ4=:ydTWwbLBQPxKcURDZVbFg+
+ oOcJJ/kb1Zf9s0ibL+8vDMkvzpfT68QUEgUf3iFFhPrBbRrDpXBgb20vBJkvvla2ynHiGx1o6
+ k7TScBdhKC+n+Oa4PVpHS1Wk5lPrGlwQkvDIVvzZ4M1rZx7J6Wf2nY2w8ifRfPylcsU8XhmE5
+ HBeAqHJCWm6KHjGJfGiYzvx0VgrGEkgrvqcwTuodgaIVX6zP57/+hXLqWfJA1ZNLsShknEUHN
+ VTDVH+amku3utvMKXmuO6fNzbh6Smd2WSMxzaCLkqPw58TktBkCDYpTGOV53m5fC43QQ1uuVr
+ /0/BpExGT767r2NGeJoOmNcUgu62AIOJY6uQp4j+aybqytWJmfnuKyMARMbCB0I6cGxhRrVTC
+ L7GSHIaupKq/nytUTjTGWyoXh9inyEUvbr+hWwJfqnnMlnuUJgi7xob1A98YV6HSF/IypRxC2
+ 9qU/1uAhtsTSx15bN2/5Q+Bw2CokV57IUXvN4AfG9jZxdfwff9o2QAyFy3QXZjFD0loJyz2iM
+ 3bHC8wn1txNie6+4lGfIPyRPusRUaSA1kdPhbiE2NoOS17fwSAVORdRtXvXIhCUh0R2esu2bf
+ jKeZKeAl+J1/47YjrERwzMrRPBU0TYb5DFmmZaNJGurIAUxU+NbqZ1hxwTmn1FvrMLE2OxBve
+ p21q0xO5arinoCAM51XDPMlx4t+lA4jvCYCfhXfgxG1WyQ8Q7lf0AbVZYwEusrI/RB7ceGW1e
+ 8IfGve4I9FUPhVtmEakzOp7uNVwcCEhznT8id8T6fbQ1rq/bxM0a1MHSYuRfsJBhPZDBowPbN
+ CI4fFoh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+ Junio, Jacob
+Am 19.04.2017 um 21:09 schrieb Torsten Bögershausen:
+> On 2017-04-19 19:28, René Scharfe wrote:
+> []
+> One or two minor comments inline
+>> diff --git a/builtin/gc.c b/builtin/gc.c
+>> index 2daede7820..4c1c01e87d 100644
+>> --- a/builtin/gc.c
+>> +++ b/builtin/gc.c
+>> @@ -228,21 +228,99 @@ static int need_to_gc(void)
+>>   	return 1;
+>>   }
+>>   
+>> +struct pidfile {
+>> +	struct strbuf buf;
+>> +	char *hostname;
+>> +};
+>> +
+>> +#define PIDFILE_INIT { STRBUF_INIT }
+>> +
+>> +static void pidfile_release(struct pidfile *pf)
+>> +{
+>> +	pf->hostname = NULL;
+>> +	strbuf_release(&pf->buf);
+>> +}
+>> +
+>> +static int pidfile_read(struct pidfile *pf, const char *path,
+>> +			unsigned int max_age_seconds)
+>> +{
+>> +	int fd;
+>> +	struct stat st;
+>> +	ssize_t len;
+>> +	char *space;
+>> +	int rc = -1;
+>> +
+>> +	fd = open(path, O_RDONLY);
+>> +	if (fd < 0)
+>> +		return rc;
+>> +
+>> +	if (fstat(fd, &st))
+>> +		goto out;
+>> +	if (time(NULL) - st.st_mtime > max_age_seconds)
+>> +		goto out;
+>> +	if (st.st_size > (size_t)st.st_size)
+> 
+> Minor: we need xsize_t here ?
+> if (st.st_size > xsize_t(st.st_size))
 
-On Tue, Apr 11, 2017 at 12:46 PM, Stefan Beller <sbeller@google.com> wrote:
-> The meat is in the second patch:
->     The commit 31224cbdc7 (clone: recursive and reference option triggers
->     submodule alternates, 2016-08-17) argued for any further `submodule update`
->     to respect the initial setup. This is not the case if you only pass
->     '--reference[-if-able]' to the initial clone without instructing to
->     recurse into submodules.
->
->     If there are submodules however the user is likely to later run
->     a 'submodule update --init' to obtain the submodules. In this case we
->     also want to have the references available.
->
-> The first patch produces a nice helper function and some refactoring.
->
-> Thanks,
-> Stefan
->
-> Stefan Beller (2):
->   submodule.c: add has_submodules to check if we have any submodules
->   clone: remember references for submodules even when not recursing
->
->  builtin/checkout.c          |  2 +-
->  builtin/clone.c             |  8 +++--
->  builtin/fetch.c             |  2 +-
->  builtin/read-tree.c         |  2 +-
->  builtin/submodule--helper.c |  6 ++--
->  submodule.c                 | 78 +++++++++++++++++++++++++++++++++++----------
->  submodule.h                 |  8 ++++-
->  unpack-trees.c              |  2 +-
->  8 files changed, 82 insertions(+), 26 deletions(-)
->
-> --
-> 2.12.2.575.gb14f27f917
->
+No, xsize_t() would do the same check and die on overflow, and 
+pidfile_read() is supposed to handle big pids gracefully.
+
+> 
+>> +		goto out;
+>> +
+>> +	len = strbuf_read(&pf->buf, fd, st.st_size);
+>> +	if (len < 0)
+>> +		goto out;
+>> +
+>> +	space = strchr(pf->buf.buf, ' ');
+>> +	if (!space) {
+>> +		pidfile_release(pf);
+>> +		goto out;
+>> +	}
+>> +	pf->hostname = space + 1;
+>> +	*space = '\0';
+>> +
+>> +	rc = 0;
+>> +out:
+>> +	close(fd);
+>> +	return rc;
+>> +}
+>> +
+>> +static int parse_pid(const char *value, pid_t *ret)
+>> +{
+>> +	if (value && *value) {
+>> +		char *end;
+>> +		intmax_t val;
+>> +
+>> +		errno = 0;
+>> +		val = strtoimax(value, &end, 0);
+>> +		if (errno == ERANGE)
+>> +			return 0;
+>> +		if (*end)
+>> +			return 0;
+>> +		if (labs(val) > maximum_signed_value_of_type(pid_t)) {
+>> +			errno = ERANGE;
+>> +			return 0;
+>> +		}
+>> +		*ret = val;
+>> +		return 1;
+>> +	}
+>> +	errno = EINVAL;
+>> +	return 0;
+>> +}
+>> +
+>> +static int pidfile_process_exists(const struct pidfile *pf)
+>> +{
+>> +	pid_t pid;
+>> +	return parse_pid(pf->buf.buf, &pid) &&
+>> +		(!kill(pid, 0) || errno == EPERM);
+>> +}
+>> +
+>>   /* return NULL on success, else hostname running the gc */
+>> -static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
+>> +static int lock_repo_for_gc(int force, struct pidfile *pf)
+>>   {
+>>   	static struct lock_file lock;
+>>   	char my_host[128];
+> 
+> Huh ?
+> should this be increased, may be in another path ?
+
+It should, but not in this patch.
+
+René
