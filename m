@@ -2,121 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E90AC1FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 16:12:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 166F5207BD
+	for <e@80x24.org>; Wed, 19 Apr 2017 16:44:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965558AbdDSQMM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 12:12:12 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:38426 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965411AbdDSQMH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 12:12:07 -0400
-Received: by mail-it0-f50.google.com with SMTP id e132so18579578ite.1
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 09:12:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XFrd4CYZzkgvgfvHCplwIyeEhtL34Ody/W6JBm/prMc=;
-        b=v/vr/Nei54iK7z2LhD4U792gtDvqueioA2AC+Bi45QTIIfg8VJM9MC1TknausAcTMU
-         IAjY4gjmET64tT2LOlu4MitmHbUf3ipk3KaDSrFbcfPrU9hUxBsvHpgIyT0D/kcIu2Ve
-         PfD/ysSCPLZhJSfajAmFdDVAOIYHxR1eoEZAnWSP718kxbrYwNe1aLMkBJO0ltFMkdNz
-         GNw0Yw/Qg+GJM28vL+jLCB2w338JyD0SQU/rzX38+UvkVzv9XEaSpJDUs8aBY75uj4cc
-         38D/xMZYcS9hgtrKP7sAYHRWet1frm3rNk4vTJqhDyMmF+LQMf4a00FLMmndZ55hqfqP
-         uglA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XFrd4CYZzkgvgfvHCplwIyeEhtL34Ody/W6JBm/prMc=;
-        b=ueaMONEn29a4KTh5ciqOSa5ZnoHZGrZhTu4kvT2u+h1899NdnO9Dj5HZNawhWh/yYs
-         G6RsSgO4W8BA8dhDnd7nsrOvqMLfJxz1VaJJOxysgfYp3z6tcUedSt+i06lNsdbc2FfY
-         yfadoh9G5k7U3lho6zyRaF3bf+pERKQq/A7h2IVAaOA0dU9c4iik/9lOagGomkTOiunx
-         aBkAF/v3KYdebkRah3p5gafg2ol5RL7MTrvbAT8y69l/cDz35cK1mz5n80cCIM5AT2wQ
-         F5I3drDqL/fT8nOrO/1RJ1VSWrfoxoXc/TJt5soE/48BCTNfBRpzbfe54fnTmm6epQXH
-         0u1w==
-X-Gm-Message-State: AN3rC/7m+18n+/rLinZkWZn7ejK4cp6Kc387qNvYmZH6Jcsqy4GWTEVR
-        ef3yarxkQxS8e7ZV
-X-Received: by 10.98.158.205 with SMTP id f74mr3817431pfk.119.1492618240498;
-        Wed, 19 Apr 2017 09:10:40 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:c085:9655:b875:4bbf])
-        by smtp.gmail.com with ESMTPSA id h7sm5470056pfc.99.2017.04.19.09.10.39
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 19 Apr 2017 09:10:39 -0700 (PDT)
-Date:   Wed, 19 Apr 2017 09:10:38 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v5 11/11] run-command: block signals between fork and
- execve
-Message-ID: <20170419161038.GB132229@google.com>
-References: <20170417220818.44917-1-bmwill@google.com>
- <20170418231805.61835-1-bmwill@google.com>
- <20170418231805.61835-12-bmwill@google.com>
- <4c2f91fd-c9bd-cfe0-4e2d-3f1669410579@kdbg.org>
- <20170419074830.GA25646@starla>
+        id S966541AbdDSQoT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 12:44:19 -0400
+Received: from mout.web.de ([212.227.17.12]:64101 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S966538AbdDSQoR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 12:44:17 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M9os0-1cuKD23r1k-00B69q; Wed, 19
+ Apr 2017 18:44:01 +0200
+Subject: Re: [PATCH v3 2/2] xgethostname: handle long hostnames
+To:     David Turner <David.Turner@twosigma.com>,
+        'Junio C Hamano' <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20170418215743.18406-1-dturner@twosigma.com>
+ <20170418215743.18406-3-dturner@twosigma.com>
+ <20170419013552.GB28740@aiede.svl.corp.google.com>
+ <xmqq4lxlcdpf.fsf@gitster.mtv.corp.google.com>
+ <0701e70b52fe4bdd8e04e4c6918aab7a@exmbdft7.ad.twosigma.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <ae1d9cb2-dd4b-4bc7-469f-1b7729811f5a@web.de>
+Date:   Wed, 19 Apr 2017 18:43:59 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170419074830.GA25646@starla>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <0701e70b52fe4bdd8e04e4c6918aab7a@exmbdft7.ad.twosigma.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:ZlG3ErlqHmTdXUMBy28x7n2JuwQv1qZpCduwXBVJiKi470fTb1k
+ 3c/76LSyUO/vpdp3bZVShB6d/6rsvh458TEuRvpArtLmBjg97wvkrdBlOHFE41UEF6WA7oY
+ Sp17dEjugoIsK9yHA+0qCUfUFY3keSXGtCAfc548JjZw4YTel20xI/wwbYuziiHfHeBBCdX
+ rIQFKZ+8UyRpTjq4GcHgg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qztcrw2rCaY=:vQVDO8fvyoElCK4iFFOxMz
+ J80uXfLgkoxQPeT0zBoWmybsB6Q6g0SMzHR1a2Qt+9d548PpUDKO5YmMPuCKdxXvN5x0uYikP
+ qOEns0MxUKNPgLXuYHJDRjCKIlIdso1XzBw+cxeZgH8XRN7pkKFATxBbqxovFZNTsHbdsIaOB
+ EfM+yKWKyr2oEJl/HY+qsjwPmbFg2PU5+BzM3s1dw4OZYUFZX4H0LTXzXFmB+uuulJcE29aRl
+ 8RLTOuWiDy4tc3KVEaG4DaHj/9JlB+8YEbXG2dUyW1fiVgkVYzE0sgjiYm5yIqAbv4jlppSnW
+ +Ez0Gm93AlK+EtegKDuHtHDOzCH0u+DuxmT0Y+89Q9q+kL5Z4Q5hyRAnMfkXdcjoENVNsOruh
+ 76T8COy8ddjdoqIMVB2fBhNKSYSgyD7bsEs6TZlGZvFo5lJdsD1V2bjmLNfjrOqfpFUk9MDk3
+ wavVAXknPIQ/XEZOBTbc4BwM2u4K8j+vHx7lGf6949zQpeFnu06qfzYBj1CfSlb+1zkRgwcXi
+ eQuiuyVuDZ/QObWkOY+slSWQxY8FgOdTyS263scGUw88jz0O98+v0/xSiYbafzN5PBMt1bjUQ
+ raI0KKSrefAFh+d6M85M17eptEsiLCxdwlAJZ5lbORJxDHAJ9HAjFWXN4pUI1ryKUuY217VtO
+ q173HbeT7NhK/yMhCyGAwRIA1qBKMrTu1uI3op08thpiEcYztArIQXLC2TeUg+iB7xl745z+x
+ Ag7I/bHXOAh/rR5MnM0/+z2miUO/DY7pmP3+2UI0kByrmxEhzgn3ofhHHYRY29CXALy7uraMM
+ OvhLtdb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/19, Eric Wong wrote:
-> Johannes Sixt <j6t@kdbg.org> wrote:
-> > Am 19.04.2017 um 01:18 schrieb Brandon Williams:
-> > >@@ -400,6 +404,53 @@ static char **prep_childenv(const char *const *deltaenv)
-> > > }
-> > > #endif
-> > >
-> > 
-> > Does this #endif in this hunk context belong to an #ifndef
-> > GIT_WINDOWS_NATIVE? If so, I wonder why these new functions are outside
-> > these brackets? An oversight?
+Am 19.04.2017 um 17:50 schrieb David Turner:
+>> -----Original Message-----
+>> From: Junio C Hamano [mailto:gitster@pobox.com]
+>> Sent: Tuesday, April 18, 2017 10:51 PM
+>> To: Jonathan Nieder <jrnieder@gmail.com>
+>> Cc: David Turner <David.Turner@twosigma.com>; git@vger.kernel.org;
+>> l.s.r@web.de
+>> Subject: Re: [PATCH v3 2/2] xgethostname: handle long hostnames
+>>
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>>
+>>> Hi,
+>>>
+>>> David Turner wrote:
+>>>
+>>>> If the full hostname doesn't fit in the buffer supplied to
+>>>> gethostname, POSIX does not specify whether the buffer will be
+>>>> null-terminated, so to be safe, we should do it ourselves.  Introduce
+>>>> new function, xgethostname, which ensures that there is always a \0
+>>>> at the end of the buffer.
+>>>
+>>> I think we should detect the error instead of truncating the hostname.
+>>> That (on top of your patch) would look like the following.
+>>>
+>>> Thoughts?
+>>> Jonathan
+>>>
+>>> diff --git i/wrapper.c w/wrapper.c
+>>> index d837417709..e218bd3bef 100644
+>>> --- i/wrapper.c
+>>> +++ w/wrapper.c
+>>> @@ -660,11 +660,13 @@ int xgethostname(char *buf, size_t len)  {
+>>>   	/*
+>>>   	 * If the full hostname doesn't fit in buf, POSIX does not
+>>> -	 * specify whether the buffer will be null-terminated, so to
+>>> -	 * be safe, do it ourselves.
+>>> +	 * guarantee that an error will be returned. Check for ourselves
+>>> +	 * to be safe.
+>>>   	 */
+>>>   	int ret = gethostname(buf, len);
+>>> -	if (!ret)
+>>> -		buf[len - 1] = 0;
+>>> +	if (!ret && !memchr(buf, 0, len)) {
+>>> +		errno = ENAMETOOLONG;
+>>> +		return -1;
+>>> +	}
+>>
+>> Hmmmm.  "Does not specify if the buffer will be NUL-terminated"
+>> would mean that it is OK for the platform gethostname() to stuff
+>> sizeof(buf)-1 first bytes of the hostname in the buffer and then truncate by
+>> placing '\0' at the end of the buf, and we would not notice truncation with the
+>> above change on such a platform, no?
 > 
-> Seems like an oversight, sorry about that.
-> All the new atfork stuff I added should be protected by
-> #ifndef GIT_WINDOWS_NATIVE.
-> 
-> Brandon / Johannes: can you fixup on your end?
+> My read of the docs is that not only is that OK, but it is also permitted
+> for the platform to put sizeof(buf) bytes into the buffer and *not*
+> put \0 at the end.
 
-Correct, this is an oversight I should have caught :)
-No worries though, I'll fix it up in a reroll (since I'm going to be
-need to send out another version to fix up another patch in the series
-for Windows)
+That sounds crazy, but that's how I read the spec [1] as well.  And
+POSIX also doesn't specify any errors for gethostname.  But that
+makes kinda sense because it *does* specify HOST_NAME_MAX as maximum
+size.  Things get more interesting when this spec meets systems that
+don't have HOST_NAME_MAX, or error returns, or bugs.
 
-> 
-> I wonder if some of this OS-specific code would be more
-> easily maintained if split out further to OS-specific files,
-> even at the risk of some code duplication.
-> 
-> And/or perhaps label all #else and #endif statements with
-> comments, and limit the scope of each ifdef block to be
-> per-function for with tiny attention spans like me :x
+> So in order to do a dynamic approach, we would have to allocate some
+> buffer, then run gethostname, then check if the penultimate element
+> of the buffer was written to, and if so, allocate a larger buffer.  Yucky,
+> but possible.
 
-Yeah I'm not sure I know the best way to prevent this from happening,
-thankfully we have windows folk who keep us honest :D
+That's what the gnulib version of xgethostname does [2], among
+other things.
 
-> 
-> > >+struct atfork_state {
-> > >+#ifndef NO_PTHREADS
-> > >+	int cs;
-> > >+#endif
-> > >+	sigset_t old;
-> > >+};
-> > ...
-> > 
-> > -- Hannes
-> > 
+The more I read about gethostname and its weirdness, the more I
+think we should import an existing, proven version of xgethostname
+that returns an allocated buffer.  That way we wouldn't have to
+worry about truncation or missing NULs or buffer sizes anymore.
+What do you think?
 
--- 
-Brandon Williams
+I found the one from gnulib and from Neal Walfield [3] mentioned
+in the Hurd docs; are there more?
+
+René
+
+
+[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/gethostname.html
+[2] http://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=blob;f=lib/xgethostname.c;hb=0632e115747ff96e93330c88f536d7354a7ce507
+[3] http://walfield.org/pub/people/neal/xgethostname/
+[4] https://www.gnu.org/software/hurd/hurd/porting/guidelines.html#MAXHOSTNAMELEN_tt_
