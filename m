@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7DEE1FA26
-	for <e@80x24.org>; Wed, 19 Apr 2017 09:08:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEC931FA26
+	for <e@80x24.org>; Wed, 19 Apr 2017 09:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1761557AbdDSJI1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 05:08:27 -0400
-Received: from mga02.intel.com ([134.134.136.20]:59461 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1761457AbdDSJIY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 05:08:24 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga101.jf.intel.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 19 Apr 2017 02:08:22 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.37,220,1488873600"; 
-   d="scan'208";a="76169624"
-Received: from jekeller-desk.amr.corp.intel.com (HELO jekeller-desk.jekeller.internal) ([10.166.35.158])
-  by orsmga002.jf.intel.com with ESMTP; 19 Apr 2017 02:08:22 -0700
-From:   Jacob Keller <jacob.e.keller@intel.com>
-To:     git@vger.kernel.org
+        id S1761596AbdDSJIj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 05:08:39 -0400
+Received: from mail-lf0-f47.google.com ([209.85.215.47]:36726 "EHLO
+        mail-lf0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1761553AbdDSJIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 05:08:34 -0400
+Received: by mail-lf0-f47.google.com with SMTP id c80so8833346lfh.3
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 02:08:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=8uNfHdgDIZgcu+kD8Hqet2t1R9vIuZUVUAfpiAJyGcc=;
+        b=Lj+SXDeFyDv7MVXJH6R0gRVoQDArTPkazYPgRjoA8LWuwkiSDVWUgJTVDZl5Ja2MO/
+         G3FZubIuGBQa89utKtMy7S25h60Dbkx3X5KFRj23/hGE9Dzr9+5eXB8JqOs0IO/nC6Wx
+         FAiz6y+reaQIZ9jCPObqZGEa2tq46Rakh+KzmJBsh8cUikdqHoYTKWl1LhFOVYuO7AwR
+         lKQE19abCLh8kI1mZh4H37WlT1KJ+i9/fuktigfjDm+t8baJl+whP9KuJ0I7aWTn1W5O
+         mmj/Lvc/xylnu98yWjxaMohye0jI3bjjaLCP5vTPUjOT63D8JcmonyQcbD3ZlXJZcdg4
+         O11A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=8uNfHdgDIZgcu+kD8Hqet2t1R9vIuZUVUAfpiAJyGcc=;
+        b=rJ8VP7iD5DK64vESYqgASxXQhO4LtpksT6ETTdahZprXxZSoI0SbbncJd8tTNxoWJ3
+         iMuajelbnN40Aj0sEpVep7ppNSN5+nwatR4pcN4U/NORBVGEWGZEdxy30H1WwgoWZO4L
+         Or8iN2drKhzK35EWrIXiWvjw/9Fb12Us3GsnA9U0uUyuKCqvHRoh1W+8gRoyLNELCctG
+         6ZRBcJoYxXC++RN+h15zQIlI8SB9qMiBcPgDlfAeYiLRozS2YowLOs6aV7vm3bDdqiVA
+         vW5R0+b6mzWGJDmHZE3piYztOG6LtFTg/S5vfF4l8z1qEBYE94VXmb9GJcHZvwWL5Cm/
+         3U/g==
+X-Gm-Message-State: AN3rC/4iHL2eXHL8tXdlniKdtmcUutvH1Fzg8ZUDp+1lMSaPoBLzxL9I
+        +tYzpvx7ra+werkqUlEwy0VbyK2Otg==
+X-Received: by 10.46.22.10 with SMTP id w10mr588342ljd.35.1492592912588; Wed,
+ 19 Apr 2017 02:08:32 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.25.17.155 with HTTP; Wed, 19 Apr 2017 02:08:11 -0700 (PDT)
+In-Reply-To: <CACBZZX5wHvWgqjBaiD4pJsVQug=+-4xRwkvfZ0uZ=meE3xR6NQ@mail.gmail.com>
+References: <20170418170914.9701-1-avarab@gmail.com> <de79d366-3609-8efe-b23a-7e793036b3ef@web.de>
+ <20170419014143.56io56xn6mawy5xi@sigill.intra.peff.net> <xmqqh91lce6y.fsf@gitster.mtv.corp.google.com>
+ <20170419025016.we3tfuvgppuamc7g@sigill.intra.peff.net> <CACBZZX5wHvWgqjBaiD4pJsVQug=+-4xRwkvfZ0uZ=meE3xR6NQ@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 19 Apr 2017 02:08:11 -0700
+Message-ID: <CA+P7+xp-VzyqH2Sn9i0fO4rwszEo6NbTMsdTah+Z+zrc5VR4_g@mail.gmail.com>
+Subject: Re: [PATCH] various: disallow --no-no-OPT for --no-opt options
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: [RFC PATCH] parse-options: disallow double-negations of options starting with no-
-Date:   Wed, 19 Apr 2017 02:08:20 -0700
-Message-Id: <20170419090820.20279-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.12.2.882.g942b4cedeff1.dirty
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Wed, Apr 19, 2017 at 12:02 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Wed, Apr 19, 2017 at 4:50 AM, Jeff King <peff@peff.net> wrote:
+>> On Tue, Apr 18, 2017 at 07:40:37PM -0700, Junio C Hamano wrote:
+>>
+>>> > It might even be possible to detect the existing line and
+>>> > have parse-options automatically respect "--foo" when "--no-foo" is
+>>> > present.  But that may run afoul of callers that add both "--foo" and
+>>> > "--no-foo" manually.
+>>>
+>>> True but wouldn't that something we would want to avoid anyway?
+>>> That is, "git cmd [--OPT | --no-OPT | --no-no-OPT]" from the end
+>>> user's point of view should be an error because it is unclear what
+>>> difference there are between --OPT and --no-no-OPT.  And we should
+>>> be able to add a rule to parse_options_check() to catch such an
+>>> error.
+>>
+>> I meant that if you have something like this in your options array:
+>>
+>>   { 0, "foo", OPTION_INTEGER, &foo, 1 },
+>>   { 0, "no-foo", OPTION_INTEGER, &foo, 2 },
+>
+> I may be missing something, but don't we already do exactly what
+> you're describing here? See commit f1930c587 ("parse-options: allow
+> positivation of options starting, with no-", 2012-02-25) from Ren=C3=A9
+> Scharfe.
 
-Many options can be negated by prefixing the option with "no-", for
-example "--3way" can be prefixed with "--no-3way" to disable it. Since
-0f1930c58754 ("parse-options: allow positivation of options
-starting, with no-", 2012-02-25) we have also had support to negate
-options which start with "no-" by using the positive wording.
+Correct, but if you pass the NONEG flag to the option then it will no
+longer perform this type of negation either.
 
-This leads to the confusing (and non-documented) case that you can still
-prefix options beginning with "no-" by a second "no-" to negate them.
-That is, we allow "no-no-hardlinks" to negate the "no-hardlinks" option.
-
-This can be confusing to the user so lets just disallow the
-double-negative forms. If the long_name begins with "no-" then we simply
-don't allow the regular negation format, and only allow the option to be
-negated by the positive form.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-I started going about implementing an OPT_NEGBOOL as suggested by Peff,
-but realized this might just be simpler, and we already support the
-positive format for the negation, so we don't lose expressiveness. We
-*might* want to tie this to an option flag instead so that it only kicks
-in if the option specifically requests it. Thoughts?
-
- parse-options.c          | 3 +++
- t/t0040-parse-options.sh | 5 ++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index a23a1e67f04f..8e024c569f52 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -299,6 +299,9 @@ static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
- 				}
- 				continue;
- 			}
-+			/* avoid double-negate on long_name */
-+			if (starts_with(long_name, "no-"))
-+				continue;
- 			flags |= OPT_UNSET;
- 			if (!skip_prefix(arg + 3, long_name, &rest)) {
- 				/* abbreviated and negated? */
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index 74d2cd76fe56..abccfa5f265f 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -88,7 +88,6 @@ test_expect_success 'OPT_BOOL() is idempotent #1' 'check boolean: 1 --yes --yes'
- test_expect_success 'OPT_BOOL() is idempotent #2' 'check boolean: 1 -DB'
- 
- test_expect_success 'OPT_BOOL() negation #1' 'check boolean: 0 -D --no-yes'
--test_expect_success 'OPT_BOOL() negation #2' 'check boolean: 0 -D --no-no-doubt'
- 
- test_expect_success 'OPT_BOOL() no negation #1' 'check_unknown_i18n --fear'
- test_expect_success 'OPT_BOOL() no negation #2' 'check_unknown_i18n --no-no-fear'
-@@ -392,4 +391,8 @@ test_expect_success '--no-verbose resets multiple verbose to 0' '
- 	test-parse-options --expect="verbose: 0" -v -v -v --no-verbose
- '
- 
-+test_expect_success 'double negation not accepted' '
-+	test_must_fail test-parse-options --expect="boolean: 0" --no-no-doubt
-+'
-+
- test_done
--- 
-2.12.2.882.g942b4cedeff1.dirty
-
+Thanks,
+Jake
