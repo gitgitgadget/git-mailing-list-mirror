@@ -2,169 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFD521FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 19:09:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEEBA1FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 19:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030767AbdDSTJY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 15:09:24 -0400
-Received: from mout.web.de ([212.227.15.4]:58702 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S969152AbdDSTJW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 15:09:22 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MZlNu-1cjwaY40tS-00LRyw; Wed, 19
- Apr 2017 21:09:09 +0200
-Subject: Re: [PATCH v3 1/2] use HOST_NAME_MAX to size buffers for
- gethostname(2)
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        David Turner <dturner@twosigma.com>
-References: <20170418215743.18406-1-dturner@twosigma.com>
- <20170418215743.18406-2-dturner@twosigma.com>
- <20170419012824.GA28740@aiede.svl.corp.google.com>
- <c0333c81-d3b2-ca2d-a553-75642d8fb949@web.de>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <1b3e983f-4a70-652b-53f3-0c571c6efa1e@web.de>
-Date:   Wed, 19 Apr 2017 21:09:06 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
+        id S935829AbdDSTwH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 15:52:07 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:35230 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935823AbdDSTwG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 15:52:06 -0400
+Received: by mail-io0-f171.google.com with SMTP id r16so34194853ioi.2
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 12:52:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=iCVRHNyt11QlWKsAzcqe01twIQkCmM2iQmkuwwLChWY=;
+        b=ejfzGS54Uj1eFo3xyWKrMJQZa5OJ0/BhICEb7W7cS6Jm0u9KGNCtTQ+oGrbASnQEQx
+         UEveXUjF5F/iChVWUZMWu6FniHhl8hJs8kAgm5GqWEMKjR6VAd7ZgFpCX8IHv3XH05na
+         LBdA9/YYDmdDqLpBFk268NQwFs6nwxMKkFDYC6TMFCJqmza0BaUALcjYDWO2ZUATw9Yd
+         ovdaaoQ+TTyST9c4+OO3ktZRU2N5S17CDo/JIDefr8/2GhhO11unhruN/MM629trgoa6
+         5qxbckrB4fsiBcdfWe7/14EJwMraJKKvXxxRLHitS+eu4RlGz6YOP7q8ON+P7sy6aMtc
+         lqzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=iCVRHNyt11QlWKsAzcqe01twIQkCmM2iQmkuwwLChWY=;
+        b=rx4w4HUFBscAnNh0KZe9LE++8k+R1d7UTCUDsvSraxd/i/CwnpHPBisv3t1Om3rlXK
+         umDUwphQq0qzjwckPOI4Eo9n8qVTuuRRBtwL9LQqFXjCIxW7yqDlAr9i2Mf/0oRYGYxR
+         fbmpoBoMbO95FfdabEmpA/eplEcolilDXmBBjx/9wXlNKSRBuhqZXEkcEsdecbP0nj/r
+         oI7LWGxij69PUajy1Wdg0yksxr0Z6R84Bi/JG1zyLimYBwVNe5eAKGbtj/xS0Mlwl7ef
+         czKJ70GDh+Hb8oiDVNsp0ne9avIbDZ+6qrld1WHtJjBiae/D19hTJSgn7pgzT2/1gnxt
+         UoHw==
+X-Gm-Message-State: AN3rC/4hTovxDjD74iFxWk49/sdcuwHkp2dhGJfo9SKYiNHmwTjSvjcV
+        T8MfvOReNAOOGgIz8tNyXYC256aoyl6q
+X-Received: by 10.99.56.66 with SMTP id h2mr4690565pgn.40.1492631523971; Wed,
+ 19 Apr 2017 12:52:03 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <c0333c81-d3b2-ca2d-a553-75642d8fb949@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:9EZaDJ/zOZS2a5zxpBttPVpxzy2zZ562nzKGAj5of9deUkaLtda
- eIaDSzJVnCZ8QHgApHIcsMGH4JzuoFtdnVc/WvkOvZmr92fOzoEFbU7ICo2iRBDJ7lqaQgE
- FrwFNGJ4g8QQjepFNc/IKvYZLTgsPCegHyWpeEnZRpiwJMNEGpsBDSXdx317KORplWI3hk3
- skA3ZmqgoR1gYaCW5FOZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UOvNcoKHecA=:sPIDGbgy8onn+RGKFxbLNv
- R31VJz4tL0mRPVEXaTQ+35lAkEaLnj8K86KGbk4DgphFq9q+e7iX/YkqiWduZA2tpddxSgh/O
- xhIUgZAXlabIN0LUoK5hBRIH2McnJjkIfILpt6EX67qYxhR3Avs+9EVVs7Y+zcgw3dctgAYh8
- JwSWyBWOTrdVV5FJNqVv+mRqy21K2SfUEjIzwZlM5O618uwZlj/M6mknhwHdXtFE37SYcDkyA
- iqL6EO6v+KhL5wZih8VMv9FqpmStjDR8RZXI4jyeNZYtq10JZaXOm88kc1SYrcOKbOWhYuxjS
- j+0cyqgaQAau0lvucn+hHnqn+5KvTuB6VXph4KmDe1Wg3pzA7s3jHRbt6wufnGFtgQmOc5pE3
- kPhtvj1QfVXgS6yHBuMwdoWBmQ/uUOkzzoEsZhRmfTFZ8yWd0NPWZ98aRUN0kfoXMgmXQz1ro
- EBzIwD3DpTcEgmPxLvKNGIMG9i1vQYrz9pFsrhG+Cub/7VVMhKXUEB+EbQN9ymoSsmhqbwC2K
- MHEicV4/SH2K+Ru/kt47RXESh8ugBZsEJQRrO6f2iHAYzLC+FUDEr3wDdc3GM+MBDxsdoo771
- Wm8XaTfq0gLtinVHroXMhzS4sEs/+JF4nCxu+sQ5ef6p4vL27mq+ivhJFK+lC3decg00EJPIT
- 28Yf+p5ScthhzQQCc88N5j0A0pYT5qw93iQk8wlapuHNB+/c5h9SrVpipVnOIA2lU54/WgVpU
- sN7HbpkUn9F7dqscZUNYloh1CHi3tkc/SbRjmKTpcwXlPAgrJHVyAiVLOYsSzQYAleAecjkTD
- ESD5k8x
+Received: by 10.100.153.156 with HTTP; Wed, 19 Apr 2017 12:52:03 -0700 (PDT)
+In-Reply-To: <20170411194616.4963-1-sbeller@google.com>
+References: <20170411194616.4963-1-sbeller@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 19 Apr 2017 12:52:03 -0700
+Message-ID: <CAGZ79kZMLVR-G1C3WL5sdo101oURuvhtnx43z=mT_u7x5XoZSw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] clone: record submodule alternates when not recursing
+To:     Brandon Williams <bmwill@google.com>,
+        Maxime Viargues <maxime.viargues@serato.com>,
+        Junio C Hamano <jch@google.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-04-19 19:28, René Scharfe wrote:
-[]
-One or two minor comments inline
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 2daede7820..4c1c01e87d 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -228,21 +228,99 @@ static int need_to_gc(void)
->  	return 1;
->  }
->  
-> +struct pidfile {
-> +	struct strbuf buf;
-> +	char *hostname;
-> +};
-> +
-> +#define PIDFILE_INIT { STRBUF_INIT }
-> +
-> +static void pidfile_release(struct pidfile *pf)
-> +{
-> +	pf->hostname = NULL;
-> +	strbuf_release(&pf->buf);
-> +}
-> +
-> +static int pidfile_read(struct pidfile *pf, const char *path,
-> +			unsigned int max_age_seconds)
-> +{
-> +	int fd;
-> +	struct stat st;
-> +	ssize_t len;
-> +	char *space;
-> +	int rc = -1;
-> +
-> +	fd = open(path, O_RDONLY);
-> +	if (fd < 0)
-> +		return rc;
-> +
-> +	if (fstat(fd, &st))
-> +		goto out;
-> +	if (time(NULL) - st.st_mtime > max_age_seconds)
-> +		goto out;
-> +	if (st.st_size > (size_t)st.st_size)
++ Junio, Jacob
 
-Minor: we need xsize_t here ?
-if (st.st_size > xsize_t(st.st_size))
-
-> +		goto out;
-> +
-> +	len = strbuf_read(&pf->buf, fd, st.st_size);
-> +	if (len < 0)
-> +		goto out;
-> +
-> +	space = strchr(pf->buf.buf, ' ');
-> +	if (!space) {
-> +		pidfile_release(pf);
-> +		goto out;
-> +	}
-> +	pf->hostname = space + 1;
-> +	*space = '\0';
-> +
-> +	rc = 0;
-> +out:
-> +	close(fd);
-> +	return rc;
-> +}
-> +
-> +static int parse_pid(const char *value, pid_t *ret)
-> +{
-> +	if (value && *value) {
-> +		char *end;
-> +		intmax_t val;
-> +
-> +		errno = 0;
-> +		val = strtoimax(value, &end, 0);
-> +		if (errno == ERANGE)
-> +			return 0;
-> +		if (*end)
-> +			return 0;
-> +		if (labs(val) > maximum_signed_value_of_type(pid_t)) {
-> +			errno = ERANGE;
-> +			return 0;
-> +		}
-> +		*ret = val;
-> +		return 1;
-> +	}
-> +	errno = EINVAL;
-> +	return 0;
-> +}
-> +
-> +static int pidfile_process_exists(const struct pidfile *pf)
-> +{
-> +	pid_t pid;
-> +	return parse_pid(pf->buf.buf, &pid) &&
-> +		(!kill(pid, 0) || errno == EPERM);
-> +}
-> +
->  /* return NULL on success, else hostname running the gc */
-> -static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
-> +static int lock_repo_for_gc(int force, struct pidfile *pf)
->  {
->  	static struct lock_file lock;
->  	char my_host[128];
-
-Huh ?
-should this be increased, may be in another path ?
-
-
+On Tue, Apr 11, 2017 at 12:46 PM, Stefan Beller <sbeller@google.com> wrote:
+> The meat is in the second patch:
+>     The commit 31224cbdc7 (clone: recursive and reference option triggers
+>     submodule alternates, 2016-08-17) argued for any further `submodule update`
+>     to respect the initial setup. This is not the case if you only pass
+>     '--reference[-if-able]' to the initial clone without instructing to
+>     recurse into submodules.
+>
+>     If there are submodules however the user is likely to later run
+>     a 'submodule update --init' to obtain the submodules. In this case we
+>     also want to have the references available.
+>
+> The first patch produces a nice helper function and some refactoring.
+>
+> Thanks,
+> Stefan
+>
+> Stefan Beller (2):
+>   submodule.c: add has_submodules to check if we have any submodules
+>   clone: remember references for submodules even when not recursing
+>
+>  builtin/checkout.c          |  2 +-
+>  builtin/clone.c             |  8 +++--
+>  builtin/fetch.c             |  2 +-
+>  builtin/read-tree.c         |  2 +-
+>  builtin/submodule--helper.c |  6 ++--
+>  submodule.c                 | 78 +++++++++++++++++++++++++++++++++++----------
+>  submodule.h                 |  8 ++++-
+>  unpack-trees.c              |  2 +-
+>  8 files changed, 82 insertions(+), 26 deletions(-)
+>
+> --
+> 2.12.2.575.gb14f27f917
+>
