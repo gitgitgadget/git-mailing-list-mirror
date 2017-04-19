@@ -2,93 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2410B207BC
-	for <e@80x24.org>; Wed, 19 Apr 2017 05:32:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62E20207BD
+	for <e@80x24.org>; Wed, 19 Apr 2017 05:43:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1760060AbdDSFcQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 01:32:16 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53744 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1760057AbdDSFcN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 01:32:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CFF5985368;
-        Wed, 19 Apr 2017 01:32:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=1TXqiAk2W+joJLDqf1HOssQPA
-        WQ=; b=CsU0C7WC4SFPaqRrRl3mGso6bTVDi6pqUgzUB7IQGEGjpkZAcYJqyoLNS
-        we/lUTNoHwwDBbBrUBAxqa2MgaweGr0VTjtnLE8hO+fSQpQ8hRsaoPyWQOtmB1HR
-        Gvw0oKo+Ag+ped+nmG/Av5kKMTxyG4boTubGcrVnPQNgBoUh00=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=hhv+AfA2CYP1LaOOQX/
-        kLqblAw9s0Qtp9sBZU1BEOupAq+HI+0iYITxVp411LqRgDP48VvfMIeFQ6DBSsXh
-        qdlSza0ITwH6BPUHtcVCjrgXl2MMHPUNvCwgh+/xyXYTRWOdYqoMFpOsiGD88N6l
-        oNXrAa8ZITIhUAM4/nWDRB2U=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C85AA85367;
-        Wed, 19 Apr 2017 01:32:11 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 39F4285366;
-        Wed, 19 Apr 2017 01:32:11 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] clone: add a --no-tags option to clone without tags
-References: <CACBZZX584QwjphGfEgTn2V9P0yVkYSxfE1_Gp96bno8186SDyA@mail.gmail.com>
-        <20170418191553.15464-1-avarab@gmail.com>
-        <xmqq60i1dvnk.fsf@gitster.mtv.corp.google.com>
-Date:   Tue, 18 Apr 2017 22:32:09 -0700
-Message-ID: <xmqq1ssparom.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1759587AbdDSFna (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 01:43:30 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:50774 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1759552AbdDSFn3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 01:43:29 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3w79sC1XFlz5tlB;
+        Wed, 19 Apr 2017 07:43:27 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 7C38542B3;
+        Wed, 19 Apr 2017 07:43:26 +0200 (CEST)
+Subject: Re: [PATCH v5 02/11] t0061: run_command executes scripts without a #!
+ line
+To:     Brandon Williams <bmwill@google.com>
+References: <20170417220818.44917-1-bmwill@google.com>
+ <20170418231805.61835-1-bmwill@google.com>
+ <20170418231805.61835-3-bmwill@google.com>
+Cc:     git@vger.kernel.org, e@80x24.org, jrnieder@gmail.com
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <12add885-b56d-4707-57c1-1073fbb7786c@kdbg.org>
+Date:   Wed, 19 Apr 2017 07:43:25 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 8983D94A-24C1-11E7-8330-C260AE2156B6-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20170418231805.61835-3-bmwill@google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 19.04.2017 um 01:17 schrieb Brandon Williams:
+> Add a test to 't0061-run-command.sh' to ensure that run_command can
+> continue to execute scripts which don't include a '#!' line.
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> Add a --no-tags option to "git clone" to clone without tags. Currently
->> there's no easy way to clone a repository and end up with just a
->> "master" branch via --single-branch, or track all branches and no
->> tags. Now --no-tags can be added to "git clone" with or without
->> --single-branch to clone a repository without tags.
->
-> Makes sense.
->
->> +--no-tags::
->> +	Don't clone any tags, and set `remote.origin.tagOpt=3D--no-tags`
->> +	in the config, ensuring that future `git pull` and `git fetch`
->> +	operations won't fetch any tags.
->
-> OK.  Not just we ignore tags during the initial cloning, we set
-> things up so that we do not _follow_ tags in subsequent fetches.
+Why is this necessary? I am pretty certain that our emulation layer on 
+Windows can only run scripts with a shbang line.
 
-I somewhat doubt the utility of this change.  "--single-branch"
-already refrains from grabbing all the tags, and the tags it grabs
-when "clone" runs and also in subsequent "fetch" are only the ones
-relevant to that branch.  When a user is fetching say 'maint', it is
-very likely that the user wants tags that are reachable from the tip
-of 'maint' (if only to make the tip of that branch describable),
-even though the user would not care about the tags on the other
-branches that are ahead of 'maint'.
-
-It is not that much code, and carrying it is not that much burden,
-but I am reasonably sure that I won't use it myself.
-
-
+-- Hannes
 
