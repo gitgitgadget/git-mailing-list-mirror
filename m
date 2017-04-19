@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7E621FA26
-	for <e@80x24.org>; Wed, 19 Apr 2017 11:02:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 495911FA26
+	for <e@80x24.org>; Wed, 19 Apr 2017 11:02:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762542AbdDSLCc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 07:02:32 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36703 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1762535AbdDSLCa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 07:02:30 -0400
-Received: by mail-pf0-f195.google.com with SMTP id v14so2085982pfd.3
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 04:02:30 -0700 (PDT)
+        id S1762560AbdDSLCk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 07:02:40 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:36741 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1762545AbdDSLCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 07:02:36 -0400
+Received: by mail-pf0-f196.google.com with SMTP id v14so2086290pfd.3
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 04:02:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZeYaCnnXTdd9dpk3dELboTJ/OJrss+vnfRZRl1BGS5U=;
-        b=mCwqKSWMpIONFHkrmm5ej74xub/6j81r79L4Xo11XnRN7VPmFwA+oz7lMIBLBRpzgq
-         DKHAQEu/6+1pH93uXd5RQ77iJ1LGB12hSML0KiiAvuwKLZvxyZAe5S+rHLQGEKysYJgh
-         0q3g+madHF++wRoyL7oggQEypAeZxN7JSXmgc6QZOITDDc1lMfKtmYyLt2Msmtdhg9VB
-         p9M4dgAqqecktGOc5VVH7V2YqcMslMooNXFYn4gM4zdmDhy8JA7ZGCJf7i4Jqamokab6
-         tWr71gg2ulwVjdgkKBXsLrjEAs605r33SgTscNdt2OQGCgzlGegxsxHh1Eht0SosT9/n
-         ymcw==
+        bh=sbA5/AFuNYmRLReRGSwPvseUatvEM3Jjfg5QHTyOGlM=;
+        b=iWrvx7jcIjuXxyqWontgcpyTCECl4rN9MaNKRU8GYNQJ2KmnWx17Dw0ssOF9HH1Ut5
+         LoJag3a2y0+BI5GiLdGgWpBFBDZ/YUNK8H6N0fQlMQLGBPbUkBS7ER+apYq0WF/O8BX2
+         +jG8V0mW9alV/Q2jYSnycfNGSX3sRwVJjw9LwDjHFVEB7dMcZ1QMs75CcX3O2Aso8Otb
+         pejPizd6PBoDCqfxj5LQVPoZNCa8hIoMaie17B0+C3x8/EnP+TZ+9fOYEcOfDTDpn5RK
+         zJi/hLKBzyIKGmAinZQibHrohhBtcFHMRmGi9gtsg0oSMslzSVNgrCTie3jiKpsCGc1p
+         O7Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZeYaCnnXTdd9dpk3dELboTJ/OJrss+vnfRZRl1BGS5U=;
-        b=aVws3CMCC5RqHJ+lGwZe+NZpp4ma48JuaZw6MF4N0F3iAC2a4aAQ0+TvPj3Xdf3003
-         FtKY0iEKrta0w5tfBM/P9+kJKzQ2rfMyFvh2MUPDPXWS4wBFWNGEhQPs2PLvEkQcBLxa
-         61MDk6eiRk7b8cdKRAEbF0RwL45iiFkRD8fmk2db55qfM43CcowbYhcJzOh0v4Zj8iUc
-         +jfMV2FZYl/QxSPFURrWoKkoJZGCOMzqYOq+boszwmobv2wDvqXkiqIhiNBljcR9ZWhd
-         auS+5SdXYDXcKAo9gJ+T7UHXbIrfSavnAfk76W99rEgyV6lVsIvPB7OcJLBKQVlSKgmu
-         6vbA==
-X-Gm-Message-State: AN3rC/46/sM1eSVMsFRP7pShL6ImkG00J7j6H/bdY6LtMUFc+kSJDrKs
-        28st1jPCvI/3kA==
-X-Received: by 10.99.131.66 with SMTP id h63mr2489026pge.39.1492599750000;
-        Wed, 19 Apr 2017 04:02:30 -0700 (PDT)
+        bh=sbA5/AFuNYmRLReRGSwPvseUatvEM3Jjfg5QHTyOGlM=;
+        b=gVRel3xOp41uRBT1qfjLAIf0YjuW3CWADz4K9dgNlVsXkMTs4kAHsApw7lLiupsZND
+         hoEEm76EfNIV2RYc46i/rpIugn6DN5w8gX7pauwZdNHvQf7MkFzWDC/QQk3XZ98uheh3
+         o0XswGQpfWl4gYdadag4lHYaDyk+L7Fv8hIV/1+zT+/A6tIQvbyeCn0zoPBi7TroGNPQ
+         3EoHRwsZKDmmqCf/aP9/YFZAP27l5vfiQR6r5fuwgZ1US6o/3YizKdBFcT/nwrnDxDOB
+         wQpPdWOZ9ljPS3Jjm0p/Zn72k2GykPxZLGFFr98RVO9jy9ehGFQQvOMzu426MYuZnDC9
+         YEfQ==
+X-Gm-Message-State: AN3rC/7UaG/hcnlplVyVE9wxxEx+mCgrUYNU3ePE/UEC41iXmMPoOtEf
+        8gOGQHe/mSfulw==
+X-Received: by 10.98.160.148 with SMTP id p20mr2461427pfl.249.1492599755647;
+        Wed, 19 Apr 2017 04:02:35 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id q136sm3983266pfq.80.2017.04.19.04.02.26
+        by smtp.gmail.com with ESMTPSA id z22sm3972208pfg.117.2017.04.19.04.02.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Apr 2017 04:02:29 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 19 Apr 2017 18:02:24 +0700
+        Wed, 19 Apr 2017 04:02:35 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 19 Apr 2017 18:02:29 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 05/12] refs: move submodule slash stripping code to get_submodule_ref_store
-Date:   Wed, 19 Apr 2017 18:01:38 +0700
-Message-Id: <20170419110145.5086-6-pclouds@gmail.com>
+Subject: [PATCH v3 06/12] refs: add refs_head_ref()
+Date:   Wed, 19 Apr 2017 18:01:39 +0700
+Message-Id: <20170419110145.5086-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170419110145.5086-1-pclouds@gmail.com>
 References: <20170419110145.5086-1-pclouds@gmail.com>
@@ -73,83 +73,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a better place that will benefit all submodule callers instead
-of just resolve_gitlink_ref()
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- refs.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ refs.c | 19 +++++++++----------
+ refs.h |  2 ++
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 5902a3d9e5..26474cb62a 100644
+index 26474cb62a..a252ae43ee 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1422,25 +1422,10 @@ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
- int resolve_gitlink_ref(const char *submodule, const char *refname,
- 			unsigned char *sha1)
- {
--	size_t len = strlen(submodule);
- 	struct ref_store *refs;
- 	int flags;
- 
--	while (len && submodule[len - 1] == '/')
--		len--;
--
--	if (!len)
--		return -1;
--
--	if (submodule[len]) {
--		/* We need to strip off one or more trailing slashes */
--		char *stripped = xmemdupz(submodule, len);
--
--		refs = get_submodule_ref_store(stripped);
--		free(stripped);
--	} else {
--		refs = get_submodule_ref_store(submodule);
--	}
-+	refs = get_submodule_ref_store(submodule);
- 
- 	if (!refs)
- 		return -1;
-@@ -1558,7 +1543,17 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- {
- 	struct strbuf submodule_sb = STRBUF_INIT;
- 	struct ref_store *refs;
-+	char *to_free = NULL;
- 	int ret;
-+	size_t len;
-+
-+	if (submodule) {
-+		len = strlen(submodule);
-+		while (len && submodule[len - 1] == '/')
-+			len--;
-+		if (!len)
-+			submodule = NULL;
-+	}
- 
- 	if (!submodule || !*submodule) {
- 		/*
-@@ -1568,6 +1563,10 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- 		return get_main_ref_store();
- 	}
- 
-+	if (submodule[len])
-+		/* We need to strip off one or more trailing slashes */
-+		submodule = to_free = xmemdupz(submodule, len);
-+
- 	refs = lookup_ref_store_map(&submodule_ref_stores, submodule);
- 	if (refs)
- 		goto done;
-@@ -1589,6 +1588,8 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
- 
- done:
- 	strbuf_release(&submodule_sb);
-+	free(to_free);
-+
- 	return refs;
+@@ -1208,27 +1208,26 @@ int refs_rename_ref_available(struct ref_store *refs,
+ 	return ok;
  }
  
+-int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+ {
+ 	struct object_id oid;
+ 	int flag;
+ 
+-	if (submodule) {
+-		if (resolve_gitlink_ref(submodule, "HEAD", oid.hash) == 0)
+-			return fn("HEAD", &oid, 0, cb_data);
+-
+-		return 0;
+-	}
+-
+-	if (!read_ref_full("HEAD", RESOLVE_REF_READING, oid.hash, &flag))
++	if (!refs_read_ref_full(refs, "HEAD", RESOLVE_REF_READING,
++				oid.hash, &flag))
+ 		return fn("HEAD", &oid, flag, cb_data);
+ 
+ 	return 0;
+ }
+ 
++int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return refs_head_ref(get_submodule_ref_store(submodule), fn, cb_data);
++}
++
+ int head_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return head_ref_submodule(NULL, fn, cb_data);
++	return refs_head_ref(get_main_ref_store(), fn, cb_data);
+ }
+ 
+ /*
+diff --git a/refs.h b/refs.h
+index 447381d378..0572473ef7 100644
+--- a/refs.h
++++ b/refs.h
+@@ -233,6 +233,8 @@ typedef int each_ref_fn(const char *refname,
+  * modifies the reference also returns a nonzero value to immediately
+  * stop the iteration. Returned references are sorted.
+  */
++int refs_head_ref(struct ref_store *refs,
++		  each_ref_fn fn, void *cb_data);
+ int refs_for_each_ref(struct ref_store *refs,
+ 		      each_ref_fn fn, void *cb_data);
+ int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
 -- 
 2.11.0.157.gd943d85
 
