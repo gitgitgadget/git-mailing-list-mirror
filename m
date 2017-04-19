@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65DC11FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 23:13:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 415D51FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 23:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S940297AbdDSXNs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 19:13:48 -0400
-Received: from mail-io0-f179.google.com ([209.85.223.179]:33881 "EHLO
-        mail-io0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S940290AbdDSXNp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 19:13:45 -0400
-Received: by mail-io0-f179.google.com with SMTP id a103so42686900ioj.1
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 16:13:45 -0700 (PDT)
+        id S940302AbdDSXNv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 19:13:51 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:35830 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S940293AbdDSXNr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 19:13:47 -0400
+Received: by mail-io0-f171.google.com with SMTP id r16so41074568ioi.2
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 16:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=jUTzvKrg09pN7ttMYVm0n5+31dEWfeSY/yGxX35Gwlw=;
-        b=BMYd0wsfrInulbY1d6wROsN1f/kdFDhbMpQJvHbHNnqSLraO/nUQ5oTOITeLEGaFGF
-         N1gVQdingPtiv0Jt4D0/jMMcDY4aFwTaSMcd/9qZrnRJ80T0hvdbnEwSERbOyLsJNRuh
-         r1rVU8zd4NdoeBV+IoXC4xwa0tOtOyi8y4CP62MRzq/q0PJ6XJRI8PMkcB2wfUeoZC5S
-         18uzD/BuvBivh8hSdwqVtu+Jai/7N7vaBaaGKlCAkiLytROj34jgRF5hI2ZLr06YX1Zf
-         /0MgxwweQgOvxPEo/jRcPSrWOS7vncVh/KwJErB+E2gwVI6ULh12rexsxfoS+H4fx0t/
-         sTtA==
+        bh=yBDHeXiPQs+2ANd5mCKX5FRvyv5YJwVCh9NlvARdMX0=;
+        b=MRHqibYT7p3jTNo6y0F9Ssmo0nzztKSmfXaJScvFs/Ap4qzzZNauUsabOq6TtxLSw6
+         eQEVitqzuAL28bu5fh71/x4Vt/wSPkycRSBkdlzyRGEMRy9CBw7f6vyJ0rfhZoRgDFrA
+         L7Wyv0FDpSslauZ6ZEGXDlw2lB0Pqmhgcju5L76zDPN94AD2crJicvKfdMwJm3RkJMxL
+         B6aflCyrOqZcH0rEoZ7EhR+OZ8ld0g9Df53x3CEeO169McL/i7/vkrDDxatA67BwpTi6
+         xdfYiI3c15Pw+MvoETGr929EK8V/y3i747bN7kWAVHt1VNz7mJk+1YF93C4v+hOmVKOs
+         BiHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=jUTzvKrg09pN7ttMYVm0n5+31dEWfeSY/yGxX35Gwlw=;
-        b=t65fbtjzEZbHkMV48I/2NDpLDgGdQcWRR02QEhGfbmJRJ7fCO7Na2OWVc407ubENFW
-         ARsIxjoW9jGVBJdFm6kQJzLtembmWxN+lo4NySMAvVRef/rrkQ0FGUf3S6iocyHup+pp
-         wAvJo9ftfouZxUQQ4e2PRUZ37YvyeEt4UfvkuclrhzpiR3KgE1m7EWSekB0uvIfLlMCV
-         PXqKq/QX35/oCwgwRY2Pp53UzC9cHf/6Epb9G0Awjxy2DdRRkqlat8w4TPmtITGVemAP
-         DslvtWZiNdcnrTk59VyNWbPYvMyYx4Y0gVJH2FO2xcwAZYTlIx9Ks+DSJNThUJV4kUAE
-         ragQ==
-X-Gm-Message-State: AN3rC/7KtN2x7mspBYIwb+AEU7eCe+wilkL/nSjlItIgrapwq+gSe129
-        TNoKJn30/MIMr4+P
-X-Received: by 10.84.174.131 with SMTP id r3mr6775093plb.136.1492643620841;
-        Wed, 19 Apr 2017 16:13:40 -0700 (PDT)
+        bh=yBDHeXiPQs+2ANd5mCKX5FRvyv5YJwVCh9NlvARdMX0=;
+        b=BKhtxNLurTTH6pi5lfQT6X06Y551vJCGv3RDgc4fE00jf6MMN/DHlLwzkiQYO15Efg
+         SBA40F62Das/Woq+CdmJIEm0EdJufCTBzhl174UwaiH7H6rIV18PgDr/r9klAaaojpKh
+         xSZXLdwGOfLpH1yp+c7vpZkpkIh10TY1xl+r51869WBl3fauqiSaqd1kt6MDqZhal8qf
+         xnmuzs4W/ybxaaXzg0bj/EJQUpw3uDhH/Tz4TP5VBWDiOnWYynXLKEcNdTAOkbTq2H/K
+         fhPScmIxWqVAyQuuPDBJe6xFQL8NVlISVgoO79WUZa1+hQCDNHqVM8oJwcYvPSFwjFJU
+         U9xg==
+X-Gm-Message-State: AN3rC/6iTXtRzgHl0DJhvrYWNvy7urJGCKCIGqU+MCOHHAb5FQ5GD00h
+        /jJxiTCLgyRNkLpR
+X-Received: by 10.84.141.36 with SMTP id 33mr6703098plu.81.1492643622312;
+        Wed, 19 Apr 2017 16:13:42 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id s10sm6433798pfe.28.2017.04.19.16.13.39
+        by smtp.gmail.com with ESMTPSA id s10sm6433798pfe.28.2017.04.19.16.13.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Apr 2017 16:13:39 -0700 (PDT)
+        Wed, 19 Apr 2017 16:13:41 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, j6t@kdbg.org,
         sbeller@google.com, e@80x24.org, jrnieder@gmail.com
-Subject: [PATCH v6 04/11] run-command: use the async-signal-safe execv instead of execvp
-Date:   Wed, 19 Apr 2017 16:13:20 -0700
-Message-Id: <20170419231327.49895-5-bmwill@google.com>
+Subject: [PATCH v6 05/11] string-list: add string_list_remove function
+Date:   Wed, 19 Apr 2017 16:13:21 -0700
+Message-Id: <20170419231327.49895-6-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.816.g2cccc81164-goog
 In-Reply-To: <20170419231327.49895-1-bmwill@google.com>
 References: <20170418231805.61835-1-bmwill@google.com>
@@ -63,82 +63,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the function used to exec from 'execvp()' to 'execv()' as the (p)
-variant of exec isn't async-signal-safe and has the potential to call malloc
-during the path resolution it performs.  Instead we simply do the path
-resolution ourselves during the preparation stage prior to forking.  There also
-don't exist any portable (p) variants which also take in an environment to use
-in the exec'd process.  This allows easy migration to using 'execve()' in a
-future patch.
-
-Also, as noted in [1], in the event of an ENOEXEC the (p) variants of
-exec will attempt to execute the command by interpreting it with the
-'sh' utility.  To maintain this functionality, if 'execv()' fails with
-ENOEXEC, start_command will atempt to execute the command by
-interpreting it with 'sh'.
-
-[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/exec.html
+Teach string-list to be able to remove a string from a sorted
+'struct string_list'.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- run-command.c | 30 +++++++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ string-list.c | 18 ++++++++++++++++++
+ string-list.h |  7 +++++++
+ 2 files changed, 25 insertions(+)
 
-diff --git a/run-command.c b/run-command.c
-index d8d143795..1c7a3b611 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -238,6 +238,12 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
- 	if (!cmd->argv[0])
- 		die("BUG: command is empty");
- 
-+	/*
-+	 * Add SHELL_PATH so in the event exec fails with ENOEXEC we can
-+	 * attempt to interpret the command with 'sh'.
-+	 */
-+	argv_array_push(out, SHELL_PATH);
-+
- 	if (cmd->git_cmd) {
- 		argv_array_push(out, "git");
- 		argv_array_pushv(out, cmd->argv);
-@@ -246,6 +252,20 @@ static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
- 	} else {
- 		argv_array_pushv(out, cmd->argv);
- 	}
-+
-+	/*
-+	 * If there are no '/' characters in the command then perform a path
-+	 * lookup and use the resolved path as the command to exec.  If there
-+	 * are no '/' characters or if the command wasn't found in the path,
-+	 * have exec attempt to invoke the command directly.
-+	 */
-+	if (!strchr(out->argv[1], '/')) {
-+		char *program = locate_in_PATH(out->argv[1]);
-+		if (program) {
-+			free((char *)out->argv[1]);
-+			out->argv[1] = program;
-+		}
-+	}
+diff --git a/string-list.c b/string-list.c
+index 45016ad86..8f7b69ada 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -67,6 +67,24 @@ struct string_list_item *string_list_insert(struct string_list *list, const char
+ 	return list->items + index;
  }
- #endif
  
-@@ -445,7 +465,15 @@ int start_command(struct child_process *cmd)
- 			}
- 		}
++void string_list_remove(struct string_list *list, const char *string,
++			int free_util)
++{
++	int exact_match;
++	int i = get_entry_index(list, string, &exact_match);
++
++	if (exact_match) {
++		if (list->strdup_strings)
++			free(list->items[i].string);
++		if (free_util)
++			free(list->items[i].util);
++
++		list->nr--;
++		memmove(list->items + i, list->items + i + 1,
++			(list->nr - i) * sizeof(struct string_list_item));
++	}
++}
++
+ int string_list_has_string(const struct string_list *list, const char *string)
+ {
+ 	int exact_match;
+diff --git a/string-list.h b/string-list.h
+index d3809a141..29bfb7ae4 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -63,6 +63,13 @@ int string_list_find_insert_index(const struct string_list *list, const char *st
+ struct string_list_item *string_list_insert(struct string_list *list, const char *string);
  
--		sane_execvp(argv.argv[0], (char *const *) argv.argv);
-+		/*
-+		 * Attempt to exec using the command and arguments starting at
-+		 * argv.argv[1].  argv.argv[0] contains SHELL_PATH which will
-+		 * be used in the event exec failed with ENOEXEC at which point
-+		 * we will try to interpret the command using 'sh'.
-+		 */
-+		execv(argv.argv[1], (char *const *) argv.argv + 1);
-+		if (errno == ENOEXEC)
-+			execv(argv.argv[0], (char *const *) argv.argv);
- 
- 		if (errno == ENOENT) {
- 			if (!cmd->silent_exec_failure)
+ /*
++ * Removes the given string from the sorted list.
++ * If the string doesn't exist, the list is not altered.
++ */
++extern void string_list_remove(struct string_list *list, const char *string,
++			       int free_util);
++
++/*
+  * Checks if the given string is part of a sorted list. If it is part of the list,
+  * return the coresponding string_list_item, NULL otherwise.
+  */
 -- 
 2.12.2.816.g2cccc81164-goog
 
