@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3A491FA26
-	for <e@80x24.org>; Wed, 19 Apr 2017 11:02:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F56B1FA26
+	for <e@80x24.org>; Wed, 19 Apr 2017 11:02:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1762581AbdDSLCz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 07:02:55 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36077 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1762418AbdDSLCx (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1762436AbdDSLC4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 07:02:56 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:36131 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1762427AbdDSLCx (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 19 Apr 2017 07:02:53 -0400
-Received: by mail-pg0-f68.google.com with SMTP id 34so3581939pgx.3
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 04:02:52 -0700 (PDT)
+Received: by mail-pg0-f67.google.com with SMTP id 34so3582253pgx.3
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 04:02:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yzTY40S/AhN7OxVRCSKqJhnwdMF/ZmQj9GaCBwIl4cE=;
-        b=tZrBXzxdxuJta9KpIEFkJm5SG3lHRyhFANd10X3nnjrF3/MsL0c+qlEhh/Yhp2KZqY
-         8vUYQHodf7pEdweVNxEKDKFRTblin7XHMCEPE7SeIxNfNr3QD6cQmpCEpTxfeU3xSNHB
-         K5mYuzwRik5roagFnf82+akapNX/GbqTdKEwfP0DNgGBp0ZJxPMa82ZlX0DQA18A30mL
-         Q5nxL94yEbcNiDtE+pA68N2TEpYuoSY+eRHYdopHNQnpGdoahV3KbUqIJ6Sl5+1VgZiV
-         GfclHvyywQz4VVw3/O+h4FIRJZif/poY3n+ngySGqDeHTmyAp6tDy7wUEMPrD5aI0csL
-         sDeg==
+        bh=8wzkFKnGsOOYHfIdpebUS5IQpIzBWd5xBCm2/sWr+i0=;
+        b=l9TBG42Lm+GN2QzWFDjFUg5JlZZvNSTu7/tD5lD0KT7BBcivJQkpDGc3ajugOUfsIW
+         V0GPNhEh7/yNH0tUvw6ADzpcE/ODaoI8hsDeFJwgglCjMrfb5fkTjZqmEGIJM4YnEgsq
+         /n/msWjEtTsR3hf98qE5MgvivHpNrjCxzjmswWRpEhxKZmzcmL/fAWfOB9hhQg7Nzzn3
+         oj0bOGywG5omc04XBJvVdlgZWuF+cyg03qQb6m0KaPbvRzqIfEWVZOiJ0RnInXAM749y
+         bXmrR4Zi0xJ/aBjF69Y6OAHm3LwmpkxC7mSM5J1kFLUTLSJkud2xeYEiGCmkUIz8GuU9
+         KDLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yzTY40S/AhN7OxVRCSKqJhnwdMF/ZmQj9GaCBwIl4cE=;
-        b=sS5ZfOD11u2JwVe4O7usTIiEM3sjPGwZKKEZnsdU2tPo26sEq0+4WwqvsTZxILptgh
-         6lal5Y73bBWEv69G98tUwCNihQY1nZwEFNJTdkwD31o2u3wJ7hcngX1U5B5g/s20CD0O
-         GC9aG1FaQobMn12hl2HRvwNkMvl8yPrWwkRNzIC0Ld03unlBj5886qAg9VpB7UnBS5JH
-         KzcfXgG4d2OTxbDMZbFvaHf14IFddJ2uvV7LeQzrTkEs2Bj5dDKrofsSlp4Qngh/wZmj
-         xMhUz5hp/DCXmgaeKlkLyiyGwwGYO4EUIz7OMmmc++ldH5ozY7s4D5R2ft41Qo/eQGia
-         dIMQ==
-X-Gm-Message-State: AN3rC/6NKKC0eNxw3wiUv00wHpO/JGcURaqykwzUEisUXIfh/B1U2ReB
-        pVRKqCc1JzBY2k5e
-X-Received: by 10.99.121.195 with SMTP id u186mr2462808pgc.202.1492599767134;
-        Wed, 19 Apr 2017 04:02:47 -0700 (PDT)
+        bh=8wzkFKnGsOOYHfIdpebUS5IQpIzBWd5xBCm2/sWr+i0=;
+        b=TYYBSQDfJXSQecgzxyBmf1Fk+QUhMq5qyzUwDTu2q3291iOutxLYBdGWqpHAJzsSS1
+         L+3myr1OTUTLafHFudc3ODKcVie4Wewjez4Pn4Xs8yit+5tbIMLG/3hlkneQekFQIeja
+         32rx5A5i8luc4Gjspa0fOd6mK6NE5n4z8XGBjAyUhMkEciUo8C9etRvfVX0RSWXtVvMF
+         KJ1ZXO2WIMt9ZuzUhJNqL88OxJJgdFFSwL2m2i+arg866NfCU04hU6I0j4J3Rz0hh0WH
+         UYqG+reviaxDQvZ+M4WHhL9j3FRo+ht8dflM3jbjMvWoQx2lLvVA5onIukFI8YPU4nlj
+         QlmQ==
+X-Gm-Message-State: AN3rC/7JU1JXOddYtG3QJDZTv00fAXyC9qYW8bnKy+8l64ca1TEziCyZ
+        S9mDQ6C5tYwm9g==
+X-Received: by 10.98.30.3 with SMTP id e3mr2507044pfe.48.1492599772806;
+        Wed, 19 Apr 2017 04:02:52 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id c7sm4017888pgn.24.2017.04.19.04.02.43
+        by smtp.gmail.com with ESMTPSA id u8sm3977173pfk.103.2017.04.19.04.02.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Apr 2017 04:02:46 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 19 Apr 2017 18:02:41 +0700
+        Wed, 19 Apr 2017 04:02:52 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 19 Apr 2017 18:02:47 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v3 08/12] refs: remove dead for_each_*_submodule()
-Date:   Wed, 19 Apr 2017 18:01:41 +0700
-Message-Id: <20170419110145.5086-9-pclouds@gmail.com>
+Subject: [PATCH v3 09/12] revision.c: --all adds HEAD from all worktrees
+Date:   Wed, 19 Apr 2017 18:01:42 +0700
+Message-Id: <20170419110145.5086-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170419110145.5086-1-pclouds@gmail.com>
 References: <20170419110145.5086-1-pclouds@gmail.com>
@@ -73,123 +73,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These are used in revision.c. After the last patch they are replaced
-with the refs_ version. Delete them (except for_each_remote_ref_submodule
-which is still used by submodule.c)
+Unless single_worktree is set, --all now adds HEAD from all worktrees.
+
+Since reachable.c code does not use setup_revisions(), we need to call
+other_head_refs_submodule() explicitly there to have the same effect on
+"git prune", so that we won't accidentally delete objects needed by some
+other HEADs.
+
+A new FIXME is added because we would need something like
+
+    int refs_other_head_refs(struct ref_store *, each_ref_fn, cb_data);
+
+in addition to other_head_refs() to handle it, which might require
+
+    int get_submodule_worktrees(const char *submodule, int flags);
+
+It could be a separate topic to reduce the scope of this one.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/technical/api-ref-iteration.txt |  7 ++-----
- refs.c                                        | 29 ---------------------------
- refs.h                                        |  9 ---------
- 3 files changed, 2 insertions(+), 43 deletions(-)
+ reachable.c      |  1 +
+ refs.c           | 22 ++++++++++++++++++++++
+ refs.h           |  1 +
+ revision.c       | 13 +++++++++++++
+ submodule.c      |  2 ++
+ t/t5304-prune.sh | 12 ++++++++++++
+ 6 files changed, 51 insertions(+)
 
-diff --git a/Documentation/technical/api-ref-iteration.txt b/Documentation/technical/api-ref-iteration.txt
-index 37379d8337..c9e9a60dbd 100644
---- a/Documentation/technical/api-ref-iteration.txt
-+++ b/Documentation/technical/api-ref-iteration.txt
-@@ -32,11 +32,8 @@ Iteration functions
+diff --git a/reachable.c b/reachable.c
+index a8a979bd4f..a3b938b46c 100644
+--- a/reachable.c
++++ b/reachable.c
+@@ -177,6 +177,7 @@ void mark_reachable_objects(struct rev_info *revs, int mark_reflog,
  
- * `for_each_glob_ref_in()` the previous and `for_each_ref_in()` combined.
+ 	/* detached HEAD is not included in the list above */
+ 	head_ref(add_one_ref, revs);
++	other_head_refs(add_one_ref, revs);
  
--* `head_ref_submodule()`, `for_each_ref_submodule()`,
--  `for_each_ref_in_submodule()`, `for_each_tag_ref_submodule()`,
--  `for_each_branch_ref_submodule()`, `for_each_remote_ref_submodule()`
--  do the same as the functions described above but for a specified
--  submodule.
-+* Use `refs_` API for accessing submodules. The submodule ref store could
-+  be obtained with `get_submodule_ref_store().
- 
- * `for_each_rawref()` can be used to learn about broken ref and symref.
- 
+ 	/* Add all reflog info */
+ 	if (mark_reflog)
 diff --git a/refs.c b/refs.c
-index a252ae43ee..537052f7ba 100644
+index 537052f7ba..23e3607674 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -316,12 +316,6 @@ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
- 	return refs_for_each_tag_ref(get_main_ref_store(), fn, cb_data);
- }
- 
--int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_tag_ref(get_submodule_ref_store(submodule),
--				     fn, cb_data);
--}
--
- int refs_for_each_branch_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
+@@ -1780,3 +1780,25 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
  {
- 	return refs_for_each_ref_in(refs, "refs/heads/", fn, cb_data);
-@@ -332,12 +326,6 @@ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
- 	return refs_for_each_branch_ref(get_main_ref_store(), fn, cb_data);
+ 	return refs_rename_ref(get_main_ref_store(), oldref, newref, logmsg);
  }
- 
--int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_branch_ref(get_submodule_ref_store(submodule),
--					fn, cb_data);
--}
--
- int refs_for_each_remote_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
- 	return refs_for_each_ref_in(refs, "refs/remotes/", fn, cb_data);
-@@ -1220,11 +1208,6 @@ int refs_head_ref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- 	return 0;
- }
- 
--int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return refs_head_ref(get_submodule_ref_store(submodule), fn, cb_data);
--}
--
- int head_ref(each_ref_fn fn, void *cb_data)
- {
- 	return refs_head_ref(get_main_ref_store(), fn, cb_data);
-@@ -1263,11 +1246,6 @@ int for_each_ref(each_ref_fn fn, void *cb_data)
- 	return refs_for_each_ref(get_main_ref_store(), fn, cb_data);
- }
- 
--int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_ref(get_submodule_ref_store(submodule), fn, cb_data);
--}
--
- int refs_for_each_ref_in(struct ref_store *refs, const char *prefix,
- 			 each_ref_fn fn, void *cb_data)
- {
-@@ -1289,13 +1267,6 @@ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data, unsig
- 			       prefix, fn, 0, flag, cb_data);
- }
- 
--int for_each_ref_in_submodule(const char *submodule, const char *prefix,
--			      each_ref_fn fn, void *cb_data)
--{
--	return refs_for_each_ref_in(get_submodule_ref_store(submodule),
--				    prefix, fn, cb_data);
--}
--
- int for_each_replace_ref(each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(get_main_ref_store(),
++
++int other_head_refs(each_ref_fn fn, void *cb_data)
++{
++	struct worktree **worktrees, **p;
++	int ret = 0;
++
++	worktrees = get_worktrees(0);
++	for (p = worktrees; *p; p++) {
++		struct worktree *wt = *p;
++		struct ref_store *refs;
++
++		if (wt->is_current)
++			continue;
++
++		refs = get_worktree_ref_store(wt);
++		ret = refs_head_ref(refs, fn, cb_data);
++		if (ret)
++			break;
++	}
++	free_worktrees(worktrees);
++	return ret;
++}
 diff --git a/refs.h b/refs.h
-index 0572473ef7..e06db37118 100644
+index e06db37118..cc71b6c7a0 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -259,15 +259,6 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
+@@ -247,6 +247,7 @@ int refs_for_each_remote_ref(struct ref_store *refs,
+ 			     each_ref_fn fn, void *cb_data);
  
--int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
--int for_each_ref_submodule(const char *submodule,
--			   each_ref_fn fn, void *cb_data);
--int for_each_ref_in_submodule(const char *submodule, const char *prefix,
--		each_ref_fn fn, void *cb_data);
--int for_each_tag_ref_submodule(const char *submodule,
--			       each_ref_fn fn, void *cb_data);
--int for_each_branch_ref_submodule(const char *submodule,
--				  each_ref_fn fn, void *cb_data);
- int for_each_remote_ref_submodule(const char *submodule,
- 				  each_ref_fn fn, void *cb_data);
+ int head_ref(each_ref_fn fn, void *cb_data);
++int other_head_refs(each_ref_fn fn, void *cb_data);
+ int for_each_ref(each_ref_fn fn, void *cb_data);
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
+ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+diff --git a/revision.c b/revision.c
+index c329070c89..040a0064f6 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2105,6 +2105,13 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 	int argcount;
  
+ 	if (submodule) {
++		/*
++		 * We need some something like get_submodule_worktrees()
++		 * before we can go through all worktrees of a submodule,
++		 * .e.g with adding all HEADs from --all, which is not
++		 * supported right now, so stick to single worktree.
++		 */
++		assert(revs->single_worktree != 0);
+ 		refs = get_submodule_ref_store(submodule);
+ 	} else
+ 		refs = get_main_ref_store();
+@@ -2122,6 +2129,12 @@ static int handle_revision_pseudo_opt(const char *submodule,
+ 	if (!strcmp(arg, "--all")) {
+ 		handle_refs(refs, revs, *flags, refs_for_each_ref);
+ 		handle_refs(refs, revs, *flags, refs_head_ref);
++		if (!revs->single_worktree) {
++			struct all_refs_cb cb;
++
++			init_all_refs_cb(&cb, revs, *flags);
++			other_head_refs(handle_one_ref, &cb);
++		}
+ 		clear_ref_exclusion(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--branches")) {
+ 		handle_refs(refs, revs, *flags, refs_for_each_branch_ref);
+diff --git a/submodule.c b/submodule.c
+index a31f68812c..8c5af6e7f3 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1225,6 +1225,8 @@ static int find_first_merges(struct object_array *result, const char *path,
+ 			oid_to_hex(&a->object.oid));
+ 	init_revisions(&revs, NULL);
+ 	rev_opts.submodule = path;
++	/* FIXME: can't handle linked worktrees in submodules yet */
++	revs.single_worktree = path != NULL;
+ 	setup_revisions(ARRAY_SIZE(rev_args)-1, rev_args, &revs, &rev_opts);
+ 
+ 	/* save all revisions from the above list that contain b */
+diff --git a/t/t5304-prune.sh b/t/t5304-prune.sh
+index cba45c7be9..683bdb031c 100755
+--- a/t/t5304-prune.sh
++++ b/t/t5304-prune.sh
+@@ -292,4 +292,16 @@ test_expect_success 'prune: handle index in multiple worktrees' '
+ 	test_cmp second-worktree/blob actual
+ '
+ 
++test_expect_success 'prune: handle HEAD in multiple worktrees' '
++	git worktree add --detach third-worktree &&
++	echo "new blob for third-worktree" >third-worktree/blob &&
++	git -C third-worktree add blob &&
++	git -C third-worktree commit -m "third" &&
++	rm .git/worktrees/third-worktree/index &&
++	test_must_fail git -C third-worktree show :blob &&
++	git prune --expire=now &&
++	git -C third-worktree show HEAD:blob >actual &&
++	test_cmp third-worktree/blob actual
++'
++
+ test_done
 -- 
 2.11.0.157.gd943d85
 
