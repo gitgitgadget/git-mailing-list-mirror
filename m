@@ -2,99 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53111207BD
-	for <e@80x24.org>; Wed, 19 Apr 2017 03:18:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBC80207BC
+	for <e@80x24.org>; Wed, 19 Apr 2017 03:44:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1759366AbdDSDSq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Apr 2017 23:18:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:35760 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1759312AbdDSDSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Apr 2017 23:18:44 -0400
-Received: (qmail 31125 invoked by uid 109); 19 Apr 2017 03:18:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 19 Apr 2017 03:18:42 +0000
-Received: (qmail 18549 invoked by uid 111); 19 Apr 2017 03:19:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 18 Apr 2017 23:19:05 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Apr 2017 23:18:39 -0400
-Date:   Tue, 18 Apr 2017 23:18:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@jeffhostetler.com, git@vger.kernel.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v1] diffcore-rename: speed up register_rename_src
-Message-ID: <20170419031839.m2zgwywa2soejiqk@sigill.intra.peff.net>
-References: <20170418194421.22453-1-git@jeffhostetler.com>
- <20170418194421.22453-2-git@jeffhostetler.com>
- <20170419013214.q35jarvmk5jhqdyi@sigill.intra.peff.net>
- <xmqqd1c9cdzi.fsf@gitster.mtv.corp.google.com>
- <20170419025608.xy5nvso6k6lb5z7g@sigill.intra.peff.net>
+        id S1759418AbdDSDoE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Apr 2017 23:44:04 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53188 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1759415AbdDSDoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Apr 2017 23:44:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BD7F82890;
+        Tue, 18 Apr 2017 23:43:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iH2xOsCE+TNtMntvA3N+mVtfdCk=; b=uIqrLC
+        pos6XMX0T/XITyjc8DTOsUh5LzfWN++6OQKDA3r2kTbE/dhSBI9HPnfQSGMMXkdj
+        xBdKCESCtBKcKywwOKxPJcgEyA0mEUbEBh/h2nJbI6qEr7pMKq/qdqkVoXzNXL+K
+        RC/+RRFJTUoPSweu4ezfu6A4mCODypek90d6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZpFXtt7pQEgyLTuVmfvCuZ7A2O8qVn/s
+        TPJ6tK/bk7T04a8+PShOe/c0i+lFejQel5LWiNHa8d3lI+1V+VkmhbO3Cyt2OuIn
+        QtdzGClt7ji+IbaCaJkhl/4cq/akGsLKnX7sNqKL9IH0Fs//gicLrJFoLNON7ghz
+        vpIBb+8Hm2Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 403BC8288F;
+        Tue, 18 Apr 2017 23:43:57 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ACA328288E;
+        Tue, 18 Apr 2017 23:43:56 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Cc:     Git ML <git@vger.kernel.org>
+Subject: Re: [PATCH v4 0/3] rebase: --signoff support
+References: <20170418092905.20097-1-giuseppe.bilotta@gmail.com>
+Date:   Tue, 18 Apr 2017 20:43:55 -0700
+In-Reply-To: <20170418092905.20097-1-giuseppe.bilotta@gmail.com> (Giuseppe
+        Bilotta's message of "Tue, 18 Apr 2017 11:29:02 +0200")
+Message-ID: <xmqqshl5awp0.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170419025608.xy5nvso6k6lb5z7g@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6A79098A-24B2-11E7-9103-E680B56B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 18, 2017 at 10:56:08PM -0400, Jeff King wrote:
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-> > When adding many things, we often just append and then sort at the
-> > end after we finished adding.  I wonder if recent "check the last
-> > one and append" optimization beats that strategy.
-> 
-> The big question is whether we need to detect duplicates while we're
-> appending to the list, which is hard on an unsorted list.  In this
-> function, at least, we do detect when the path already exists and return
-> the existing entry. I'm not sure under what circumstances we would see
-> such a duplicate, though, as each filename should appear only once in
-> the tree diff. I would think.
-> 
-> Doing:
-> 
-> diff --git a/diffcore-rename.c b/diffcore-rename.c
-> index f7444c86b..56a493d97 100644
-> --- a/diffcore-rename.c
-> +++ b/diffcore-rename.c
-> @@ -86,7 +86,7 @@ static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
->  		struct diff_rename_src *src = &(rename_src[next]);
->  		int cmp = strcmp(one->path, src->p->one->path);
->  		if (!cmp)
-> -			return src;
-> +			die("BUG: duplicate rename src: %s", one->path);
->  		if (cmp < 0) {
->  			last = next;
->  			continue;
-> 
-> passes the test suite, at least. :)
+> Some work about extending --signoff support to interactive rebases is
+> underway in the `rebase-signoff-ext` branch, but there's a lot of
+> corner cases to test and work-out, so I guess that'll be fore some
+> other time.
 
-Maybe relevant: 4d6be03b9 (diffcore-rename: avoid processing duplicate
-destinations, 2015-02-26). That's on the dst side, but possibly we
-should do something similar on the src side.
+Yup, that is fine.
 
-BTW, I think the return value from register_rename_src() is
-questionable. It points to a "struct diff_rename_src" that may be
-reallocated by further calls to the function. Fortunately nobody
-actually looks at it, let alone saves it, so there's no bug.
-
-We may want to convert that return value to a void (if not just return
-an int for "hey, there's a duplicate", like we do for add_rename_dst()).
-
-Also, presumably that function could learn the same "check the last one"
-trick that the src side does. Which leads me back to "surely we can
-generalize this". I don't think bsearch() is quite what we want, because
-its interface doesn't tell us where to put the item when it isn't found.
-But I think we could make a general bsearch-like function that has
-similar semantics to index_name_pos(), with its negative-integer return.
-
-And then that would be a general lookup function, and we could easily
-build a general "look up and add" function around that. And the "check
-the last one" optimization would go in the latter.
-
--Peff
+Will queue.  Thanks.
