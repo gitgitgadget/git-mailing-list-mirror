@@ -2,124 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03DB81FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 15:50:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D83D1FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 15:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937740AbdDSPui convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 19 Apr 2017 11:50:38 -0400
-Received: from mxo1.nje.dmz.twosigma.com ([208.77.214.160]:38670 "EHLO
-        mxo1.nje.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S937736AbdDSPug (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 11:50:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTP id 976B7100082;
-        Wed, 19 Apr 2017 15:50:35 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.nje.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.nje.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id d6IuWmVKtaeh; Wed, 19 Apr 2017 15:50:35 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (exmbdft7.ad.twosigma.com [172.22.2.43])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.nje.dmz.twosigma.com (Postfix) with ESMTPS id 857548002E;
-        Wed, 19 Apr 2017 15:50:35 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft7.ad.twosigma.com (172.22.2.43) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Wed, 19 Apr 2017 15:50:35 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Wed, 19 Apr 2017 15:50:35 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Junio C Hamano' <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "l.s.r@web.de" <l.s.r@web.de>
-Subject: RE: [PATCH v3 2/2] xgethostname: handle long hostnames
-Thread-Topic: [PATCH v3 2/2] xgethostname: handle long hostnames
-Thread-Index: AQHSuLfL9Q6yqt0HKEmBknmyVJ/JJqHM04Ww
-Date:   Wed, 19 Apr 2017 15:50:34 +0000
-Message-ID: <0701e70b52fe4bdd8e04e4c6918aab7a@exmbdft7.ad.twosigma.com>
-References: <20170418215743.18406-1-dturner@twosigma.com>
-        <20170418215743.18406-3-dturner@twosigma.com>
-        <20170419013552.GB28740@aiede.svl.corp.google.com>
- <xmqq4lxlcdpf.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqq4lxlcdpf.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.13]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S965441AbdDSP5E (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 11:57:04 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:36013 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S937866AbdDSP5D (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 11:57:03 -0400
+Received: by mail-io0-f182.google.com with SMTP id o22so26910823iod.3
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 08:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fpCv3iTlO2934wJM61HP9uRJPvXAEfQ/Bg94V+tQL8M=;
+        b=GedYAHM8FKUbBp2EZ2f8Fxxysi/mVvXKPRx/Fv+dfTtGC7OYT1MEU4eUUW6OdyziZ5
+         0/rDQVF5ad2u55Z6YN2Y1Xzok/9fPWXCnu35KYOjdSJOgkABdmO4WbW4emxpmj88dHes
+         j/WIQRMiWrXv3FTDi7vJdFHaEY+pGtEBALz4jrV0nEdacQgWWHN45CVcRE4JEW1+sV6J
+         ohqVE0Rg8ve7/8/yOiAFA/7C2WK2Edy4wfbREjzt3fLCmYN7LRo+fhFhg7yT5EY5sC49
+         SPsOStKeSduiJhSZ8zlwmuqhMjucqUTkl9E+S/etu8UwmlIEJgDICz5vDfXGwy9H8sfS
+         2v5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fpCv3iTlO2934wJM61HP9uRJPvXAEfQ/Bg94V+tQL8M=;
+        b=mUOGtrLfzP98HeijyAfS/ejZUC7SeBYPp62k3tpnhP1xcI5E8wZ0stocgyqKRAAzCg
+         QjSxTnzl2ccY8WMNr3SXhS+nitepYlwiGyHo7rSFJ7H1zZksyEnPIVxtES1S4ESBDI2L
+         ybfQ+t1ierjAthrXCOR9AumRMxnrRtFGYYb5TlbdROxHorEVy7caDcoE9yI9kXb+4FMB
+         DtzTPQkXePnsy9KbAvDA8HkKMeUTwAhiQNGI0ER/EGgnkqL2zh4fNxAZFUaEV40xUF/1
+         bVoaYR8/J8fy9Sr5ViZQxHuHS2KxXE+LV3CBV8Towzlwk5/QUznRn3s4j0Gd0Vg3eMlU
+         z8SA==
+X-Gm-Message-State: AN3rC/6bn8f0b6uVqIcla01KH7gKxQQwf5ursNeUdbMBA1s3EPBbTYij
+        8zkJ+1Kl2XY4ijt0
+X-Received: by 10.98.202.80 with SMTP id n77mr3856101pfg.158.1492617422063;
+        Wed, 19 Apr 2017 08:57:02 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:c085:9655:b875:4bbf])
+        by smtp.gmail.com with ESMTPSA id s21sm5456227pgg.65.2017.04.19.08.57.00
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 19 Apr 2017 08:57:00 -0700 (PDT)
+Date:   Wed, 19 Apr 2017 08:56:59 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, e@80x24.org, jrnieder@gmail.com
+Subject: Re: [PATCH v5 02/11] t0061: run_command executes scripts without a
+ #! line
+Message-ID: <20170419155659.GA132229@google.com>
+References: <20170417220818.44917-1-bmwill@google.com>
+ <20170418231805.61835-1-bmwill@google.com>
+ <20170418231805.61835-3-bmwill@google.com>
+ <12add885-b56d-4707-57c1-1073fbb7786c@kdbg.org>
+ <9c562827-78f5-ab8f-bf04-5f403672a32d@kdbg.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9c562827-78f5-ab8f-bf04-5f403672a32d@kdbg.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Tuesday, April 18, 2017 10:51 PM
-> To: Jonathan Nieder <jrnieder@gmail.com>
-> Cc: David Turner <David.Turner@twosigma.com>; git@vger.kernel.org;
-> l.s.r@web.de
-> Subject: Re: [PATCH v3 2/2] xgethostname: handle long hostnames
-> 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> > Hi,
+On 04/19, Johannes Sixt wrote:
+> Am 19.04.2017 um 07:43 schrieb Johannes Sixt:
+> >Am 19.04.2017 um 01:17 schrieb Brandon Williams:
+> >>Add a test to 't0061-run-command.sh' to ensure that run_command can
+> >>continue to execute scripts which don't include a '#!' line.
 > >
-> > David Turner wrote:
-> >
-> >> If the full hostname doesn't fit in the buffer supplied to
-> >> gethostname, POSIX does not specify whether the buffer will be
-> >> null-terminated, so to be safe, we should do it ourselves.  Introduce
-> >> new function, xgethostname, which ensures that there is always a \0
-> >> at the end of the buffer.
-> >
-> > I think we should detect the error instead of truncating the hostname.
-> > That (on top of your patch) would look like the following.
-> >
-> > Thoughts?
-> > Jonathan
-> >
-> > diff --git i/wrapper.c w/wrapper.c
-> > index d837417709..e218bd3bef 100644
-> > --- i/wrapper.c
-> > +++ w/wrapper.c
-> > @@ -660,11 +660,13 @@ int xgethostname(char *buf, size_t len)  {
-> >  	/*
-> >  	 * If the full hostname doesn't fit in buf, POSIX does not
-> > -	 * specify whether the buffer will be null-terminated, so to
-> > -	 * be safe, do it ourselves.
-> > +	 * guarantee that an error will be returned. Check for ourselves
-> > +	 * to be safe.
-> >  	 */
-> >  	int ret = gethostname(buf, len);
-> > -	if (!ret)
-> > -		buf[len - 1] = 0;
-> > +	if (!ret && !memchr(buf, 0, len)) {
-> > +		errno = ENAMETOOLONG;
-> > +		return -1;
-> > +	}
-> 
-> Hmmmm.  "Does not specify if the buffer will be NUL-terminated"
-> would mean that it is OK for the platform gethostname() to stuff
-> sizeof(buf)-1 first bytes of the hostname in the buffer and then truncate by
-> placing '\0' at the end of the buf, and we would not notice truncation with the
-> above change on such a platform, no?
+> >Why is this necessary? I am pretty certain that our emulation layer on
+> >Windows can only run scripts with a shbang line.
 
-My read of the docs is that not only is that OK, but it is also permitted
-for the platform to put sizeof(buf) bytes into the buffer and *not* 
-put \0 at the end.
+Out of curiosity how did you have t5550 passing on windows then?  Since
+the first patch in this series fixes a that test which doesn't have a
+'#!' line.
 
-So in order to do a dynamic approach, we would have to allocate some
-buffer, then run gethostname, then check if the penultimate element 
-of the buffer was written to, and if so, allocate a larger buffer.  Yucky,
-but possible.
+> 
+> Nevermind. It is a compatibility feature: People may have written
+> their hooks and scripts without #!, and these must continue to work
+> where they worked before.
+> 
+> Please protect the new test with !MINGW.
 
+Will do.
+
+> 
+> Thanks,
+> -- Hannes
+> 
+
+-- 
+Brandon Williams
