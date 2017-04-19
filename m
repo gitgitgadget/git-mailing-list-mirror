@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 919441FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 23:14:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE5661FE90
+	for <e@80x24.org>; Wed, 19 Apr 2017 23:14:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938370AbdDSXN5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 19:13:57 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:33149 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S940293AbdDSXNx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 19:13:53 -0400
-Received: by mail-io0-f175.google.com with SMTP id k87so42190060ioi.0
-        for <git@vger.kernel.org>; Wed, 19 Apr 2017 16:13:43 -0700 (PDT)
+        id S940310AbdDSXN7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 19:13:59 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:33939 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S940290AbdDSXNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Apr 2017 19:13:50 -0400
+Received: by mail-io0-f170.google.com with SMTP id a103so42689535ioj.1
+        for <git@vger.kernel.org>; Wed, 19 Apr 2017 16:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8RqJPy+hZPui+9Ow/bgZhIr+NzSPBhOXmrbt9YU8SSM=;
-        b=CoXuSnHLWJ+2GKhbkOb6F8myWyJ5k1pzI9Q0SydI7o53XPlqfr0DK1Wtng0Sdoi3UG
-         bto7+oJ5uO2h6NQLDG2oVWcMS0KoZP7cRBtAc7H8SgOemwxBRmsKKfswUQ8TQorcdj+X
-         7fAK8gJ3zqMJfq4HM8AwCheWsqSKNEi0PfYEqLVeS5PlxQ+zcNwz7Bvpm+2r6xbMg1Cc
-         PAkRvUWZuf2Zm0UKP1dgPkYPzRHwzE5YcmH6S4A3pRY/K0iTY0p6Bzgf+qPT5pzvLrpU
-         2JctxvQOtLiPxnXfMNsK0TL2fotjxZnzWZW3F7lkOBs5cMLkaU5jp1UUpxlbiAizAcQr
-         rjVQ==
+        bh=Ar72qPy8QBS1Abtf2FZUNFKRCioNzWk/L2qpfhUhfw4=;
+        b=X8R8ey4+L9eEZpSJyQnhiCU7aMm+rBcf1t4gMZFCEvxvjX/RZWeB41FEjbkqrz+hl2
+         vcFfBpmg3yLHG2xdUz1WmnW5SGjq2ZTBLC8G2zDEl3bh3TDsptaTZixi86YIRrXJVVdE
+         S1GdjquBVEfxgqVuIxjUAUpfYNizLnXjpnhmImkjYiTG5Jl9nWWxE3+2tnGzTT3wu61T
+         dOmR8Zjdzjq4GrLBuS+tKnvgtI+zRgHqsRzxco/S/173Dh37xkaBDIqgKVF6sV6pGEI6
+         ez1iHbWdr6elbgyu0CxQWnWlCC/248vQfo5JS23Kgs2kkZMVuJSstwkW7buoRsv9Nt9i
+         kzVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=8RqJPy+hZPui+9Ow/bgZhIr+NzSPBhOXmrbt9YU8SSM=;
-        b=AVV9ZSW2GoRinKitZhbgtHhX8xHjQo2s+540i2k2EhDGFzJgMP3t7qHSW7567Cs3O8
-         EsUOpSSgErevruEZeQI3Nlb7vyuXDqKjCJNw2akzSbujAnb+V1sd7PQe2Gj0Qjhw3z3B
-         FjR9zNp55hnUNvaEcywAapW+kOHN8Q7Uj3h8NE561f4lIDpmXaz2oE1ftHQycSAGDBKx
-         r+3DZ6V/C29pSp8P8SgWhrQ+w/YDdQ8GpM4pAhQj854eEQAjIfrWqY5Kwbh0+aUNt+VP
-         rPt50TEyOhu2qqF2MDSbw3nf2Tykf2NkJfEjGXqQ2A8XN7YHvb/WqTgofV//FLhSohLY
-         doNQ==
-X-Gm-Message-State: AN3rC/72Xxf81UvCYa8QeY/YY4VzBOgq+QtH+iHfXtQsh7dwmI1OCYU+
-        nuq2v3TuoHPkNbfz
-X-Received: by 10.98.153.216 with SMTP id t85mr5306242pfk.178.1492643619332;
-        Wed, 19 Apr 2017 16:13:39 -0700 (PDT)
+        bh=Ar72qPy8QBS1Abtf2FZUNFKRCioNzWk/L2qpfhUhfw4=;
+        b=jS6P7cqafXtIXOu2u7D/96vIi0R3Pd+jh4rD4zsTUEsf3nge9GeSWzXRT5Qq4cf0MF
+         /oZ2u692QOxFzlhlHvgq5gDp3W1lnEMIs0R3QogDCk/tq5sIYH9aqwIbzEarvthXCLQg
+         bhpUv7AZMcKrYWtYomdvXFPrJnqmurZkbvAnMzQBZab9L1xbKggPjkVS8SPX17JlGaEl
+         zge1sbS7WI1xcJCi5Q262UBY2Az4CR7afjEYCJfuiGgF7GmhVvgem2NeQ6gI8SvHPb0q
+         5CUrcgp1kLU3QVk4fhmy3OE2/SgQC5yNARcuhUVa6nPccWXiV4pD+YJjTdMx/Zxv/sWy
+         T+Yw==
+X-Gm-Message-State: AN3rC/6LwLQcg7QIpNBg7kJztO/xddjGK6SuTpNi91RR/Im/5bYl+4nM
+        49hT3Hgh9peCLJiS
+X-Received: by 10.99.163.98 with SMTP id v34mr5285447pgn.228.1492643625201;
+        Wed, 19 Apr 2017 16:13:45 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id s10sm6433798pfe.28.2017.04.19.16.13.37
+        by smtp.gmail.com with ESMTPSA id s10sm6433798pfe.28.2017.04.19.16.13.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Apr 2017 16:13:38 -0700 (PDT)
+        Wed, 19 Apr 2017 16:13:44 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>, j6t@kdbg.org,
         sbeller@google.com, e@80x24.org, jrnieder@gmail.com
-Subject: [PATCH v6 03/11] run-command: prepare command before forking
-Date:   Wed, 19 Apr 2017 16:13:19 -0700
-Message-Id: <20170419231327.49895-4-bmwill@google.com>
+Subject: [PATCH v6 07/11] run-command: don't die in child when duping /dev/null
+Date:   Wed, 19 Apr 2017 16:13:23 -0700
+Message-Id: <20170419231327.49895-8-bmwill@google.com>
 X-Mailer: git-send-email 2.12.2.816.g2cccc81164-goog
 In-Reply-To: <20170419231327.49895-1-bmwill@google.com>
 References: <20170418231805.61835-1-bmwill@google.com>
@@ -63,121 +63,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to [1] we need to only call async-signal-safe operations between fork
-and exec.  Using malloc to build the argv array isn't async-signal-safe.
-
-In order to avoid allocation between 'fork()' and 'exec()' prepare the
-argv array used in the exec call prior to forking the process.
-
-[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/fork.html
-
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- run-command.c | 46 ++++++++++++++++++++++++++--------------------
- 1 file changed, 26 insertions(+), 20 deletions(-)
+ run-command.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
 diff --git a/run-command.c b/run-command.c
-index 574b81d3e..d8d143795 100644
+index 15e2e74a7..b3a35dd82 100644
 --- a/run-command.c
 +++ b/run-command.c
-@@ -221,18 +221,6 @@ static const char **prepare_shell_cmd(struct argv_array *out, const char **argv)
+@@ -117,18 +117,6 @@ static inline void close_pair(int fd[2])
+ 	close(fd[1]);
  }
  
- #ifndef GIT_WINDOWS_NATIVE
--static int execv_shell_cmd(const char **argv)
+-#ifndef GIT_WINDOWS_NATIVE
+-static inline void dup_devnull(int to)
 -{
--	struct argv_array nargv = ARGV_ARRAY_INIT;
--	prepare_shell_cmd(&nargv, argv);
--	trace_argv_printf(nargv.argv, "trace: exec:");
--	sane_execvp(nargv.argv[0], (char **)nargv.argv);
--	argv_array_clear(&nargv);
--	return -1;
+-	int fd = open("/dev/null", O_RDWR);
+-	if (fd < 0)
+-		die_errno(_("open /dev/null failed"));
+-	if (dup2(fd, to) < 0)
+-		die_errno(_("dup2(%d,%d) failed"), fd, to);
+-	close(fd);
 -}
 -#endif
 -
--#ifndef GIT_WINDOWS_NATIVE
- static int child_notifier = -1;
- 
- static void notify_parent(void)
-@@ -244,6 +232,21 @@ static void notify_parent(void)
- 	 */
- 	xwrite(child_notifier, "", 1);
- }
-+
-+static void prepare_cmd(struct argv_array *out, const struct child_process *cmd)
-+{
-+	if (!cmd->argv[0])
-+		die("BUG: command is empty");
-+
-+	if (cmd->git_cmd) {
-+		argv_array_push(out, "git");
-+		argv_array_pushv(out, cmd->argv);
-+	} else if (cmd->use_shell) {
-+		prepare_shell_cmd(out, cmd->argv);
-+	} else {
-+		argv_array_pushv(out, cmd->argv);
-+	}
-+}
- #endif
- 
- static inline void set_cloexec(int fd)
-@@ -372,9 +375,13 @@ int start_command(struct child_process *cmd)
+ static char *locate_in_PATH(const char *file)
+ {
+ 	const char *p = getenv("PATH");
+@@ -444,12 +432,20 @@ int start_command(struct child_process *cmd)
  #ifndef GIT_WINDOWS_NATIVE
  {
  	int notify_pipe[2];
-+	struct argv_array argv = ARGV_ARRAY_INIT;
-+
++	int null_fd = -1;
+ 	char **childenv;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 
  	if (pipe(notify_pipe))
  		notify_pipe[0] = notify_pipe[1] = -1;
  
-+	prepare_cmd(&argv, cmd);
++	if (cmd->no_stdin || cmd->no_stdout || cmd->no_stderr) {
++		null_fd = open("/dev/null", O_RDWR | O_CLOEXEC);
++		if (null_fd < 0)
++			die_errno(_("open /dev/null failed"));
++		set_cloexec(null_fd);
++	}
 +
- 	cmd->pid = fork();
- 	failed_errno = errno;
- 	if (!cmd->pid) {
-@@ -437,12 +444,9 @@ int start_command(struct child_process *cmd)
- 					unsetenv(*cmd->env);
- 			}
- 		}
--		if (cmd->git_cmd)
--			execv_git_cmd(cmd->argv);
--		else if (cmd->use_shell)
--			execv_shell_cmd(cmd->argv);
--		else
--			sane_execvp(cmd->argv[0], (char *const*) cmd->argv);
-+
-+		sane_execvp(argv.argv[0], (char *const *) argv.argv);
-+
- 		if (errno == ENOENT) {
- 			if (!cmd->silent_exec_failure)
- 				error("cannot run %s: %s", cmd->argv[0],
-@@ -458,7 +462,7 @@ int start_command(struct child_process *cmd)
- 		mark_child_for_cleanup(cmd->pid, cmd);
+ 	prepare_cmd(&argv, cmd);
+ 	childenv = prep_childenv(cmd->env);
  
- 	/*
--	 * Wait for child's execvp. If the execvp succeeds (or if fork()
-+	 * Wait for child's exec. If the exec succeeds (or if fork()
- 	 * failed), EOF is seen immediately by the parent. Otherwise, the
- 	 * child process sends a single byte.
- 	 * Note that use of this infrastructure is completely advisory,
-@@ -467,7 +471,7 @@ int start_command(struct child_process *cmd)
- 	close(notify_pipe[1]);
- 	if (read(notify_pipe[0], &notify_pipe[1], 1) == 1) {
- 		/*
--		 * At this point we know that fork() succeeded, but execvp()
-+		 * At this point we know that fork() succeeded, but exec()
- 		 * failed. Errors have been reported to our stderr.
- 		 */
- 		wait_or_whine(cmd->pid, cmd->argv[0], 0);
-@@ -475,6 +479,8 @@ int start_command(struct child_process *cmd)
- 		cmd->pid = -1;
+@@ -473,7 +469,7 @@ int start_command(struct child_process *cmd)
+ 		atexit(notify_parent);
+ 
+ 		if (cmd->no_stdin)
+-			dup_devnull(0);
++			dup2(null_fd, 0);
+ 		else if (need_in) {
+ 			dup2(fdin[0], 0);
+ 			close_pair(fdin);
+@@ -483,7 +479,7 @@ int start_command(struct child_process *cmd)
+ 		}
+ 
+ 		if (cmd->no_stderr)
+-			dup_devnull(2);
++			dup2(null_fd, 2);
+ 		else if (need_err) {
+ 			dup2(fderr[1], 2);
+ 			close_pair(fderr);
+@@ -493,7 +489,7 @@ int start_command(struct child_process *cmd)
+ 		}
+ 
+ 		if (cmd->no_stdout)
+-			dup_devnull(1);
++			dup2(null_fd, 1);
+ 		else if (cmd->stdout_to_stderr)
+ 			dup2(2, 1);
+ 		else if (need_out) {
+@@ -553,6 +549,8 @@ int start_command(struct child_process *cmd)
  	}
  	close(notify_pipe[0]);
-+
-+	argv_array_clear(&argv);
+ 
++	if (null_fd >= 0)
++		close(null_fd);
+ 	argv_array_clear(&argv);
+ 	free(childenv);
  }
- #else
- {
 -- 
 2.12.2.816.g2cccc81164-goog
 
