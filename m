@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E697C207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 21:08:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D04CE207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 21:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S947610AbdDTVI3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 17:08:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37254 "EHLO cloud.peff.net"
+        id S1031210AbdDTVIo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 17:08:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37257 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S947595AbdDTVI2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 17:08:28 -0400
-Received: (qmail 2021 invoked by uid 109); 20 Apr 2017 21:08:28 -0000
+        id S1031098AbdDTVIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 17:08:43 -0400
+Received: (qmail 2029 invoked by uid 109); 20 Apr 2017 21:08:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 21:08:28 +0000
-Received: (qmail 9637 invoked by uid 111); 20 Apr 2017 21:08:51 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 21:08:43 +0000
+Received: (qmail 9654 invoked by uid 111); 20 Apr 2017 21:09:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 17:08:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 17:08:25 -0400
-Date:   Thu, 20 Apr 2017 17:08:25 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 17:09:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 17:08:41 -0400
+Date:   Thu, 20 Apr 2017 17:08:41 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/6] bisect: add git_path_bisect_terms helper
-Message-ID: <20170420210825.lr55sl7se4uloncf@sigill.intra.peff.net>
+Subject: [PATCH 2/6] branch: add edit_description() helper
+Message-ID: <20170420210840.hufdbroebp2dpcsz@sigill.intra.peff.net>
 References: <20170420210754.bzrnc74dpjs7fgpf@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -37,38 +37,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This avoids using the dangerous git_path(). Right now
-there's only one call site (because the writing half is
-still part of the shell script), but it may come in handy in
-the future as more of bisect is written in C. It also
-matches how we access the other BISECT_* files.
+Rather than have a variable with a short name that is fed to
+git_path(), let's add a helper function that returns the
+full path. This avoids the dangerous git_path() function.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- bisect.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ builtin/branch.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 03af06c66..08c9fb726 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -432,6 +432,7 @@ static int read_bisect_refs(void)
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0552c42ad..48a513a84 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -504,7 +504,7 @@ static void rename_branch(const char *oldname, const char *newname, int force)
+ 	strbuf_release(&newsection);
+ }
  
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
- static GIT_PATH_FUNC(git_path_bisect_expected_rev, "BISECT_EXPECTED_REV")
-+static GIT_PATH_FUNC(git_path_bisect_terms, "BISECT_TERMS")
+-static const char edit_description[] = "BRANCH_DESCRIPTION";
++static GIT_PATH_FUNC(edit_description, "EDIT_DESCRIPTION")
  
- static void read_bisect_paths(struct argv_array *array)
+ static int edit_branch_description(const char *branch_name)
  {
-@@ -906,7 +907,7 @@ static void show_diff_tree(const char *prefix, struct commit *commit)
- void read_bisect_terms(const char **read_bad, const char **read_good)
- {
- 	struct strbuf str = STRBUF_INIT;
--	const char *filename = git_path("BISECT_TERMS");
-+	const char *filename = git_path_bisect_terms();
- 	FILE *fp = fopen(filename, "r");
- 
- 	if (!fp) {
+@@ -519,9 +519,9 @@ static int edit_branch_description(const char *branch_name)
+ 		      "  %s\n"
+ 		      "Lines starting with '%c' will be stripped.\n"),
+ 		    branch_name, comment_line_char);
+-	write_file_buf(git_path(edit_description), buf.buf, buf.len);
++	write_file_buf(edit_description(), buf.buf, buf.len);
+ 	strbuf_reset(&buf);
+-	if (launch_editor(git_path(edit_description), &buf, NULL)) {
++	if (launch_editor(edit_description(), &buf, NULL)) {
+ 		strbuf_release(&buf);
+ 		return -1;
+ 	}
 -- 
 2.13.0.rc0.363.g8726c260e
 
