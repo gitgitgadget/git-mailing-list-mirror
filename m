@@ -7,133 +7,96 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C2191FA26
-	for <e@80x24.org>; Thu, 20 Apr 2017 17:24:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E80931FA26
+	for <e@80x24.org>; Thu, 20 Apr 2017 17:27:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938918AbdDTRYy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 13:24:54 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:36068 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938879AbdDTRYx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 13:24:53 -0400
-Received: by mail-qt0-f196.google.com with SMTP id t52so8466401qtb.3
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 10:24:52 -0700 (PDT)
+        id S941145AbdDTR1w (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 13:27:52 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34937 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S941126AbdDTR1u (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 13:27:50 -0400
+Received: by mail-qt0-f194.google.com with SMTP id o36so8466625qtb.2
+        for <git@vger.kernel.org>; Thu, 20 Apr 2017 10:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:references:cc:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding;
-        bh=3MmQQhnxs/n/wmCLL1YoH6g5+ot4Sgq3n4Pc2zxJBOA=;
-        b=Auc9NPiSsuSGx5+wcLJ0+k1ZWaFMiognubKNpq+1Yg+bYdBsmr9Uvj11/xLviCsSkT
-         F5lsSKTRtGzoQ8vbKJR7qTRDoIFUVAde8bLOORc4TMx4upS5PAMalxlQlGDAOIJ/00Cg
-         ukaDAcdKAakUZImxjXQG8DemsIP/pK7qxW+iEfsPOvO85LVvWvL2jX6aw4k7VufnEtFJ
-         oLSkO7K9f0HhXVYqiZDq/mCbnLxTHjTHp+6zN6AfjvP6qPwf5MaYmqnwrZ0gxSYqTUEU
-         tdwfKc4qBKSaoCgZzNFEkLXYT+xMpDo+zD9J/nb8dD3er1LMyGT+cx+Y3urVUsYlMpqO
-         ioeg==
+        bh=zjKRsP2XFQnjyqa4e2eNI0emVrpMMCuLWimBxqsukSQ=;
+        b=kWH+7+fP67benXnfJEDnxKnD66dyu3BMKKB0WvD1p0vE7d42eVjK66Gd1Mqhp5qq+B
+         VbnuLqKR2ZpKgWQC8q87nxbqHYPSUzOVRPpjNnim0EvlaoFEmWtjFXkWGdpC15JdKoRC
+         n3C53ge4UuzvUe4M46P+OTuOeb7BVCbpTWGUzx67/IzTuAG9M2ajMi0slZUhEskTpdok
+         8p7VbEoiVw3aOhKxKsrL3yqlOcxbmGwv9zn4Gj8pN3DoLNlGuRxcaOB5X4uTmdzwXFll
+         fBDHC5HUQHjaaal/2DN0DZ+P23In/WRMivNaIYSsy2FdclSL9fC896iMmqddIAYWQYCq
+         RgIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:references:cc:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=3MmQQhnxs/n/wmCLL1YoH6g5+ot4Sgq3n4Pc2zxJBOA=;
-        b=T8r082UidC+N6s9SsLe7c9NMwS7hpSPgq7CaoDjIVVEUQ+T3+kGX+XZqYxdTF5waVZ
-         jNiMFhJQGtq2uK/Q1xngxZ2uPkY//p7xFk4d5zgRWlgebfNNASlZ5z5VYYKhrjY8fGIm
-         uVXXe0aXC3cD8fsehRgUw3LPnHAHU7lFzIf8L1S+c4Ml9wiE6knUVJKXZAQJoZ0jozat
-         ZYfO/1RHVdOKEgAukNkpjnm31tWi73aSEc+VBc0AEMvhN1AHdClBwdvNFwe/e4KzCtmF
-         6eutg9LTPneh+VqNvrX/yP2BjVNOoJ/qymIw5Bf6LhvnQdSoNYcn1P+SVb1Cgji1cGGT
-         opjg==
-X-Gm-Message-State: AN3rC/4yyHaiimxY8GR766OdjQc/2G8Vhi0okF62lLSF0G+NxiNMbmvT
-        w2/aaPzwjWJ45Q==
-X-Received: by 10.200.46.150 with SMTP id h22mr10072514qta.157.1492709092133;
-        Thu, 20 Apr 2017 10:24:52 -0700 (PDT)
+        bh=zjKRsP2XFQnjyqa4e2eNI0emVrpMMCuLWimBxqsukSQ=;
+        b=JUpK+vh3tUzIw2TzdY0dLtuR1DJC4VcJ3WsBcoh3DkOtyXn8LtmirhC+c2/B0HTYEb
+         VedFZ5YlInA9IpAS39MlhkgFweaB/yZHdlDkejgOTfHZkKoiJQ/vevTvIvYJVP/mT87J
+         95JtgtkLSkABewhUd1MYJmsNwN/70K/r+yolDANd1T3y2wstp6YnsRLys4Z+So71ZCxD
+         RbHVK6OzxI+Cd7EV0yQFZqNZp+0+19qLVVbDc4+bFNPTwWrMrbnOwpFZIFUxmHbrS2Rl
+         udPBtOHmJN62grNqfBt9Y+T0uiHNRZKAzbgR/oReSxE1pCbJ+dGdoVrq05YZkH563Kio
+         D2AA==
+X-Gm-Message-State: AN3rC/5bjeII8uY7esiNmClQWC3x1HEoLY9rt7X3XJRpeJzo2lN4BCmI
+        rNhzAHltkAL/NQ==
+X-Received: by 10.237.42.29 with SMTP id c29mr10016260qtd.113.1492709269644;
+        Thu, 20 Apr 2017 10:27:49 -0700 (PDT)
 Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id m57sm4571907qtb.23.2017.04.20.10.24.49
+        by smtp.gmail.com with ESMTPSA id p19sm4577102qtp.36.2017.04.20.10.27.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Apr 2017 10:24:50 -0700 (PDT)
-Subject: Re: [PATCH v5 4/8] convert: Separate generic structures and variables
- from the filter specific ones
-To:     Junio C Hamano <gitster@pobox.com>
+        Thu, 20 Apr 2017 10:27:48 -0700 (PDT)
+Subject: Re: [PATCH v5 3/8] convert: Split start_multi_file_filter into two
+ separate functions
+To:     Jeff King <peff@peff.net>,
+        Lars Schneider <larsxschneider@gmail.com>
 References: <20170407120354.17736-1-benpeart@microsoft.com>
- <20170407120354.17736-5-benpeart@microsoft.com>
- <48FA4601-0819-4DE2-943A-7A791BA7C583@gmail.com>
- <xmqqmvbfk8va.fsf@gitster.mtv.corp.google.com>
- <48448c2c-378d-0d87-2f99-32095326f323@gmail.com>
- <xmqqa87ddwbe.fsf@gitster.mtv.corp.google.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        benpeart@microsoft.com, christian.couder@gmail.com
+ <20170407120354.17736-4-benpeart@microsoft.com>
+ <20170411161617.fyu5pmzgplscoozz@sigill.intra.peff.net>
+ <FD58071A-4DC7-4AB7-8B6B-56B71E715144@gmail.com>
+ <20170411193709.w5tz3i3vg5mnnhfe@sigill.intra.peff.net>
+ <629B2192-FD64-422E-9361-C182303582DC@gmail.com>
+ <20170411200520.oivytvlzkdu7bfh5@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, gitster@pobox.com, benpeart@microsoft.com,
+        christian.couder@gmail.com
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <afcdc386-0122-a33e-fa90-4ddbba32ab66@gmail.com>
-Date:   Thu, 20 Apr 2017 13:24:45 -0400
+Message-ID: <c8204d07-ce42-6153-61a6-1a612840d337@gmail.com>
+Date:   Thu, 20 Apr 2017 13:27:44 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
  Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqa87ddwbe.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+In-Reply-To: <20170411200520.oivytvlzkdu7bfh5@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 4/18/2017 9:23 PM, Junio C Hamano wrote:
-> Ben Peart <peartben@gmail.com> writes:
+On 4/11/2017 4:05 PM, Jeff King wrote:
+> On Tue, Apr 11, 2017 at 10:01:02PM +0200, Lars Schneider wrote:
 >
->> On 4/16/2017 11:31 PM, Junio C Hamano wrote:
->>> Lars Schneider <larsxschneider@gmail.com> writes:
->>>
->>>> However, I think it eases code maintainability in the long run if a function is "as pure as
->>>> possible" (IOW does rely on global state as less as possible).
->>> If the original relied on a global hashmap and this update kept the
->>> code like so, I wouldn't mind the end result of this series
->>> (i.e. rely on it being global).  But that is not the case.  It is
->>> making the code worse by stopping passing the hashmap through the
->>> callchain.
->> ...  Since it was already a global, I didn't feel
->> like this made it any worse.
-> The code before your series can easily lose the globals with the
-> attached patch, _exactly_ because it is prepared to be reusable by a
-> new caller that supplies its own hashmap by passing it through the
-> callchain.  The child-process machinery Lars made for his conversion
-> thing, which you are trying to split out to make it reusable, can be
-> used by somebody other than apply_multi_file_filter() if you do not
-> lose the hashmap; what the new caller needs to do is to supply its
-> own hashmap so that they do not interact with the set of processes
-> used by Lars's conversion machinery.
+>>> If you initialize errno to 0 right before a syscall, then yes, you can
+>>> trust it without checking the return value of the syscall. I wouldn't
+>>> trust it before calling more complicated functions, though. Not even
+>>> xwrite(), which may see EINTR and keep going (which is OK for checking
+>>> for EPIPE, but not checking generally for errno values).
+>> Should we remove all the errno checks here as we don't have any direct
+>> "write" etc syscalls anyways then?
+> Yeah, you should be trusting the return value from the various
+> sub-functions. Usually you'd check "errno == EPIPE" only when you saw an
+> error return but you want to _ignore_ EPIPE. This is what
+> filter_buffer_or_fd() is doing.
 >
-> If we want to lose the global _after_ applying this patch 4/8, don't
-> we have to essentially _undo_ 4/8?  How can it not be seen as making
-> it worse?
-
-That's fine.  I'll flip it back in the next spin and enable multiple 
-pools of sub-processes.  We'll still need 4/8 but it will be a smaller 
-change.
-
+> But the code here is the opposite case. It definitely wants to treat
+> EPIPE as an error. But that should be happening already because any
+> EPIPE we get would come with an error-return from one of the
+> packet_write() functions.
 >
->   convert.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/convert.c b/convert.c
-> index 8d652bf27c..ff831e85b8 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -503,9 +503,6 @@ struct cmd2process {
->   	struct child_process process;
->   };
->   
-> -static int cmd_process_map_initialized;
-> -static struct hashmap cmd_process_map;
-> -
->   static int cmd2process_cmp(const struct cmd2process *e1,
->   			   const struct cmd2process *e2,
->   			   const void *unused)
-> @@ -682,6 +679,9 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
->   	struct strbuf filter_status = STRBUF_INIT;
->   	const char *filter_type;
->   
-> +static int cmd_process_map_initialized;
-> +static struct hashmap cmd_process_map;
-> +
->   	if (!cmd_process_map_initialized) {
->   		cmd_process_map_initialized = 1;
->   		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
->
+> So I would say that "err || errno == EPIPE" here can just become "err",
+> and ditto in apply_multi_file_filter().
+I'll update it this way in the next spin of the patch series.
+> -Peff
 
