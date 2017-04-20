@@ -2,133 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26E78207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 22:04:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69AF4207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 22:07:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S947139AbdDTWEj convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 20 Apr 2017 18:04:39 -0400
-Received: from mxo1.dft.dmz.twosigma.com ([208.77.212.183]:38109 "EHLO
-        mxo1.dft.dmz.twosigma.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938900AbdDTWEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 18:04:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTP id 09DBC100145;
-        Thu, 20 Apr 2017 22:04:37 +0000 (GMT)
-X-Virus-Scanned: Debian amavisd-new at twosigma.com
-Received: from mxo1.dft.dmz.twosigma.com ([127.0.0.1])
-        by localhost (mxo1.dft.dmz.twosigma.com [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id m1WMDau6ygLM; Thu, 20 Apr 2017 22:04:36 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (exmbdft7.ad.twosigma.com [172.22.2.43])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mxo1.dft.dmz.twosigma.com (Postfix) with ESMTPS id EC25E8003B;
-        Thu, 20 Apr 2017 22:04:36 +0000 (GMT)
-Received: from exmbdft7.ad.twosigma.com (172.22.2.43) by
- exmbdft7.ad.twosigma.com (172.22.2.43) with Microsoft SMTP Server (TLS) id
- 15.0.1263.5; Thu, 20 Apr 2017 22:04:36 +0000
-Received: from exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955]) by
- exmbdft7.ad.twosigma.com ([fe80::552e:5f62:35e9:7955%19]) with mapi id
- 15.00.1263.000; Thu, 20 Apr 2017 22:04:36 +0000
-From:   David Turner <David.Turner@twosigma.com>
-To:     'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH] Increase core.packedGitLimit
-Thread-Topic: [PATCH] Increase core.packedGitLimit
-Thread-Index: AQHSuhl8+XCjOd4c/UqYMBI6F7q6BqHOzjcAgAAAKtA=
-Date:   Thu, 20 Apr 2017 22:04:36 +0000
-Message-ID: <4c111acb3f134aa9aef8648d75bd741f@exmbdft7.ad.twosigma.com>
-References: <20170420204118.17856-1-dturner@twosigma.com>
- <20170420210254.f4ykyi46bso5uj3o@sigill.intra.peff.net>
- <alpine.DEB.2.20.1704202355230.3480@virtualbox>
-In-Reply-To: <alpine.DEB.2.20.1704202355230.3480@virtualbox>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [172.20.60.13]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S947856AbdDTWHl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 18:07:41 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:33502 "EHLO
+        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S947819AbdDTWHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 18:07:40 -0400
+Received: by mail-oi0-f53.google.com with SMTP id y11so38152776oie.0
+        for <git@vger.kernel.org>; Thu, 20 Apr 2017 15:07:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8dBUYBPdcBwcM7ayxOmE7xjLlErHoR0lcbnArV3TmWc=;
+        b=rhA7B8Ggw4qDIYNN/5DsBdLoOmrq5nTDwAcHkzIhhvNiqz+0HbFDPOwZlj9Fs1x058
+         UyuH8PVFs109GQFwkSKCoMKiRCEmfA5fudiM9WJ9Mv/yMEZMbpyKc2sWA9MjYkMS4lsb
+         ieL4INftpppQPGdwsqp/8n4Fyv9JuS95XKFKMJNphn1/qwlGdxh/gTZoa6AH6DhUgmGt
+         wlkGoxJqY6Bn+X/SDrDPqrWJAgxVq0VYw6Q/wLjhADFl+tokmCN9wP9W1L+7GkfiDRR2
+         Eo/Qo06uoBXGDnZe8P/qjDv/aiuO+neSVos74Kkn3OMFO9ibEVtCvAD1XZ4YZWys/9y+
+         4VYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8dBUYBPdcBwcM7ayxOmE7xjLlErHoR0lcbnArV3TmWc=;
+        b=VctLLGwZVGzrqrZXyL2M43dRWueOlqSqb05i674hNPvu83rvuHm8SpF+6ftxbPRDpb
+         jY9W4UQoivEv5mzn5wNP0OAVUaSZ9ViTOcxThUbckjPXTrVYOP2zmkifpzRxyTDTefs/
+         7d8HOCtnnXVENDaQhlG/8AZeqLLakrEC8DKNmjGYqnDGCBlYPl10WE1DzR5XuwNKBd3A
+         j6TwdTJ3hl12RDLOvw8hd0cVtzv5Y5mynFnWJ4KFTlSz9oCNfIJpDlYTBARkSo0tH+Aw
+         VPcsXBQnnESTzzvKLJQaBvzH+YtHmC1CQ3S55eyXPIuwOKfLvrZmbRmQVXa5cCa535Td
+         nsLg==
+X-Gm-Message-State: AN3rC/7qaQukjIn4S5o+cQ5sYCi9TqaWhPwNG7jBWc9ISfADlV5KdakA
+        t36ez6qxcsKclq6h
+X-Received: by 10.84.222.129 with SMTP id x1mr12341777pls.44.1492726058887;
+        Thu, 20 Apr 2017 15:07:38 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:6c7e:3273:2d37:5651])
+        by smtp.gmail.com with ESMTPSA id 186sm12152758pfx.72.2017.04.20.15.07.37
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 20 Apr 2017 15:07:37 -0700 (PDT)
+Date:   Thu, 20 Apr 2017 15:07:36 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     maxime.viargues@serato.com, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] submodule.c: add has_submodules to check if we have
+ any submodules
+Message-ID: <20170420220736.GH142567@google.com>
+References: <20170411194616.4963-1-sbeller@google.com>
+ <20170411194616.4963-2-sbeller@google.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170411194616.4963-2-sbeller@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 04/11, Stefan Beller wrote:
+> +int has_submodules(unsigned what_to_check)
+> +{
+> +	if (what_to_check & SUBMODULE_CHECK_ANY_CONFIG) {
+> +		if (submodule_config_reading == SUBMODULE_CONFIG_NOT_READ)
+> +			load_submodule_config();
+> +		if (submodule_config_reading == SUBMODULE_CONFIG_EXISTS)
+> +			return 1;
+> +	}
+> +
+> +	if ((what_to_check & SUBMODULE_CHECK_ABSORBED_GIT_DIRS) &&
+> +	    file_exists(git_path("modules")))
+> +		return 1;
+> +
+> +	if ((what_to_check & SUBMODULE_CHECK_GITMODULES_IN_WT) &&
+> +	    (!is_bare_repository() && file_exists(".gitmodules")))
+> +		return 1;
+> +
+> +	if (what_to_check & SUBMODULE_CHECK_GITLINKS_IN_TREE) {
+> +		int i;
+> +
+> +		if (read_cache() < 0)
+> +			die(_("index file corrupt"));
+> +
+> +		for (i = 0; i < active_nr; i++)
+> +			if (S_ISGITLINK(active_cache[i]->ce_mode))
+> +				return 1;
+> +	}
+> +
+> +	return 0;
+> +}
 
-> -----Original Message-----
-> From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de]
-> Sent: Thursday, April 20, 2017 5:58 PM
-> To: Jeff King <peff@peff.net>
-> Cc: David Turner <David.Turner@twosigma.com>; git@vger.kernel.org
-> Subject: Re: [PATCH] Increase core.packedGitLimit
-> 
-> Hi Peff,
-> 
-> On Thu, 20 Apr 2017, Jeff King wrote:
-> 
-> > On Thu, Apr 20, 2017 at 04:41:18PM -0400, David Turner wrote:
-> >
-> > > When core.packedGitLimit is exceeded, git will close packs.  If
-> > > there is a repack operation going on in parallel with a fetch, the
-> > > fetch might open a pack, and then be forced to close it due to
-> > > packedGitLimit being hit.  The repack could then delete the pack out
-> > > from under the fetch, causing the fetch to fail.
-> > >
-> > > Increase core.packedGitLimit's default value to prevent this.
-> > >
-> > > On current 64-bit x86_64 machines, 48 bits of address space are
-> > > available.  It appears that 64-bit ARM machines have no standard
-> > > amount of address space (that is, it varies by manufacturer), and
-> > > IA64 and POWER machines have the full 64 bits.  So 48 bits is the
-> > > only limit that we can reasonably care about.  We reserve a few bits
-> > > of the 48-bit address space for the kernel's use (this is not
-> > > strictly necessary, but it's better to be safe), and use up to the
-> > > remaining 45.  No git repository will be anywhere near this large
-> > > any time soon, so this should prevent the failure.
-> >
-> > Yep, I think this is a reasonable direction.
-> >
-> > > ---
-> > >  git-compat-util.h | 2 +-
-> > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > This probably needs an update to the core.packedGitLimit section of
-> > Documentation/config.txt.
-> >
-> > > diff --git a/git-compat-util.h b/git-compat-util.h index
-> > > 8a4a3f85e7..1c5de153a5 100644
-> > > --- a/git-compat-util.h
-> > > +++ b/git-compat-util.h
-> > > @@ -616,7 +616,7 @@ extern int git_lstat(const char *, struct stat
-> > > *);  #endif
-> > >
-> > >  #define DEFAULT_PACKED_GIT_LIMIT \
-> > > -	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? 8192 : 256))
-> > > +	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? (32 * 1024L *
-> > > +1024L) : 256))
-> >
-> > I wondered if we would run afoul of integer sizes on 64-bit systems
-> > where "long" is still only 32-bits (i.e., Windows). But I think it's
-> > OK, because the values before we cast to size_t are in megabytes. So
-> > your
-> > 32*1024*1024 needs only 25 bits to store it. And then after we cast to
-> > size_t, everything is in 64-bit.
-> 
-> Indeed, when I patch a local Git checkout accordingly, I see that
-> packed_git_limit is set to 35184372088832.
-> 
-> The bigger problem in this regard is that users are allowed to override this via
-> core.packedgitlimit but that value is parsed as an unsigned long.
+It may be a good idea to rearrange these by order to correctness.
+Correctness may not be the best way to describe it, but which is the
+strongest indicator that there is a submodule or that a repo 'has a
+submodule'.  That way in the future we could have a #define that is
+SUBMODULE_CHECK_ANY or ALL or something....Now that I'm thinking harder
+about that we may not want that, and just require explicitly stating
+which check you want done.
 
-We might want to think about replacing git_config_ulong with 
-git_config_size_t in nearly all cases. "long" has ceased to be 
-useful.  More modern versions of C prefer uint64_t, but I
-think that we'll usually want size_t because these values will
-be used as memory limits of various sorts.
+Anyways good looking patch, and I like the idea of consolidating the
+checks into a single function.
 
+> diff --git a/submodule.h b/submodule.h
+> index 8a8bc49dc9..5ec72fbb16 100644
+> --- a/submodule.h
+> +++ b/submodule.h
+> @@ -1,6 +1,12 @@
+>  #ifndef SUBMODULE_H
+>  #define SUBMODULE_H
+>  
+> +#define SUBMODULE_CHECK_ANY_CONFIG		(1<<0)
+> +#define SUBMODULE_CHECK_ABSORBED_GIT_DIRS	(1<<1)
+> +#define SUBMODULE_CHECK_GITMODULES_IN_WT	(1<<2)
+> +#define SUBMODULE_CHECK_GITLINKS_IN_TREE 	(1<<3)
+> +int has_submodules(unsigned what_to_check);
+
+-- 
+Brandon Williams
