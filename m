@@ -2,116 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB191207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 20:59:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7738F207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 21:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S947377AbdDTU7K (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 16:59:10 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50361 "EHLO mout.gmx.net"
+        id S947438AbdDTVDB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 17:03:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37241 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S947233AbdDTU7J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 16:59:09 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lt1S6-1c0FIW1bp4-012bp6; Thu, 20
- Apr 2017 22:58:58 +0200
-Date:   Thu, 20 Apr 2017 22:58:57 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v3 7/8] Abort if the system time cannot handle one of our
- timestamps
-In-Reply-To: <cover.1492721487.git.johannes.schindelin@gmx.de>
-Message-ID: <31e6035de94c95660003575edffe8a96714ef519.1492721487.git.johannes.schindelin@gmx.de>
-References: <cover.1491159939.git.johannes.schindelin@gmx.de> <cover.1492721487.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S947411AbdDTVC6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 17:02:58 -0400
+Received: (qmail 1634 invoked by uid 109); 20 Apr 2017 21:02:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 21:02:57 +0000
+Received: (qmail 9544 invoked by uid 111); 20 Apr 2017 21:03:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 17:03:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 17:02:55 -0400
+Date:   Thu, 20 Apr 2017 17:02:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     David Turner <dturner@twosigma.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] Increase core.packedGitLimit
+Message-ID: <20170420210254.f4ykyi46bso5uj3o@sigill.intra.peff.net>
+References: <20170420204118.17856-1-dturner@twosigma.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eK3aIpFdDvTKSd1LAOqcpQE+aLayKtc9yzuelgTDsIIS6/Z0a4k
- iaabdT4nxbJIiv8wmii1i1TsndMkyfB3OUCo5k6lMS3Tz2zQeCi+80gwpiiFz11qev29Z/k
- Q6x316gwb8OUpLkI4GTvUdUp+9K8epGSTFih6ZEhL3+wXliwl+1F8n+gt83FVcH1vaFQMtj
- CLumjuCJpM21CDvVKzZrw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:wFb+r08SbKI=:vKM+p1LLYKU00rRkK4gk80
- xuS0rZrKqe7Fej/mOen1KFbHafD7AeGoMrrJAdKTTHfpkTTOzEHZaHJxj+hRjRvfEsXyyjKeB
- TUUGura3Rs2xCh8mRGfHwZx66t//K8yBAOSGbg6v9g8LGcdBCs5DOLDA63MarZBJbO2BBv0ds
- i/8RJlGUD4/xDuGTiEyYfJrdEsadEtdDL/A9e+Bop2h14wqw+WytfphIXcB6hmUZaeLDlIrWZ
- Xuy4Uq1VTNBjiEU6XbXiZLt/p3C8AB3N8vr6La0Fn210sNcR1ZTQNbm9UXrXkiFulFPcYUqZw
- 1LVKfatgc2xCE/VqghOYAqcUiOp7NMFsfc+j4LkHl9dyu0qrTBEAymgMIfbbcQOPMnOmFFYVU
- K/CSXE+sGchKfqIhkPZSX4cLPsCLNnQKqPBElG5TAIY+SRUZE/pcAUessUriv+0YXRS5pACGZ
- M+6TMnMe8+JqISJdmcp9fqTkDFD625gWcC1yWdq4ErLI50wBHv6BAcg1T2DlEMfWPB5H2eKIs
- mZYh3s2ZpIU652MTyjTySoI8LGp3wQJH2XOYYjNy41TLDhFagT5/CaJugNZYGzEbPsDqNaq1W
- PG4WHI4YDaaQOPZlLze+NIhk69mqw3FTuw0D3netaepmEfeFuObfVUsHZ82U2xtzUuOarmlPy
- gOWCF5WCJ4kja1DJXavcGHK3uuXHrrwf01Hgn1QlFbT5AZY3m0nEp3ynzQWbHCynuhTTNn0Hy
- 3gPObdyPWgMimu66gHKz7GLPMhobQMHX90JELzwYwhb6g1a2Z6CWFBjGHy7Pv0SSzqOYk3rEQ
- NalQ4+j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170420204118.17856-1-dturner@twosigma.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We are about to switch to a new data type for time stamps that is
-definitely not smaller or equal, but larger or equal to time_t.
+On Thu, Apr 20, 2017 at 04:41:18PM -0400, David Turner wrote:
 
-So before using the system functions to process or format timestamps,
-let's make extra certain that they can handle what we feed them.
+> When core.packedGitLimit is exceeded, git will close packs.  If there
+> is a repack operation going on in parallel with a fetch, the fetch
+> might open a pack, and then be forced to close it due to
+> packedGitLimit being hit.  The repack could then delete the pack
+> out from under the fetch, causing the fetch to fail.
+> 
+> Increase core.packedGitLimit's default value to prevent
+> this.
+> 
+> On current 64-bit x86_64 machines, 48 bits of address space are
+> available.  It appears that 64-bit ARM machines have no standard
+> amount of address space (that is, it varies by manufacturer), and IA64
+> and POWER machines have the full 64 bits.  So 48 bits is the only
+> limit that we can reasonably care about.  We reserve a few bits of the
+> 48-bit address space for the kernel's use (this is not strictly
+> necessary, but it's better to be safe), and use up to the remaining
+> 45.  No git repository will be anywhere near this large any time soon,
+> so this should prevent the failure.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- date.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+Yep, I think this is a reasonable direction.
 
-diff --git a/date.c b/date.c
-index 92ab31aa441..db3435df3e4 100644
---- a/date.c
-+++ b/date.c
-@@ -43,10 +43,13 @@ static time_t gm_time_t(timestamp_t time, int tz)
- {
- 	int minutes;
- 
-+	if (date_overflows(time))
-+		die("Timestamp too large for this system: %"PRItime, time);
-+
- 	minutes = tz < 0 ? -tz : tz;
- 	minutes = (minutes / 100)*60 + (minutes % 100);
- 	minutes = tz < 0 ? -minutes : minutes;
--	return time + minutes * 60;
-+	return (time_t)time + minutes * 60;
- }
- 
- /*
-@@ -56,7 +59,12 @@ static time_t gm_time_t(timestamp_t time, int tz)
-  */
- static struct tm *time_to_tm(timestamp_t time, int tz)
- {
--	time_t t = gm_time_t(time, tz);
-+	time_t t;
-+
-+	if (date_overflows(time))
-+		die("Timestamp too large for this system: %"PRItime, time);
-+
-+	t = gm_time_t((time_t)time, tz);
- 	return gmtime(&t);
- }
- 
-@@ -70,7 +78,10 @@ static int local_tzoffset(timestamp_t time)
- 	struct tm tm;
- 	int offset, eastwest;
- 
--	t = time;
-+	if (date_overflows(time))
-+		die("Timestamp too large for this system: %"PRItime, time);
-+
-+	t = (time_t)time;
- 	localtime_r(&t, &tm);
- 	t_local = tm_to_time_t(&tm);
- 
--- 
-2.12.2.windows.2.406.gd14a8f8640f
+> ---
+>  git-compat-util.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
+This probably needs an update to the core.packedGitLimit section of
+Documentation/config.txt.
 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 8a4a3f85e7..1c5de153a5 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -616,7 +616,7 @@ extern int git_lstat(const char *, struct stat *);
+>  #endif
+>  
+>  #define DEFAULT_PACKED_GIT_LIMIT \
+> -	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? 8192 : 256))
+> +	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? (32 * 1024L * 1024L) : 256))
+
+I wondered if we would run afoul of integer sizes on 64-bit systems where
+"long" is still only 32-bits (i.e., Windows). But I think it's OK,
+because the values before we cast to size_t are in megabytes. So your
+32*1024*1024 needs only 25 bits to store it. And then after we cast to
+size_t, everything is in 64-bit.
+
+-Peff
