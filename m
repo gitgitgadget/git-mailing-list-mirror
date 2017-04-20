@@ -2,61 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	URI_HEX shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10C76207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 21:38:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C327207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 21:58:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S971382AbdDTViu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 17:38:50 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:56685 "EHLO
-        new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S971369AbdDTVit (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 20 Apr 2017 17:38:49 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.47])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 3D9FA9E2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 17:38:48 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute7.internal (MEProxy); Thu, 20 Apr 2017 17:38:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc:x-sasl-enc; s=
-        fm1; bh=6qTM15mJZe51A7LvcTLIsVQ5Uf73RQDcH27RqUjRBeg=; b=T+ZlSJ2H
-        3+dnUR8qITuVy1qpWzxbtXjLuvTXuJrYl7QawaC7ChZrJsE6wPsspCnD8YEjMpzm
-        8zmkk3G+6QYtNPH1L5U/ntF6I1l7EZ3I5bPxip6xFi7jvH4rGOQx/w7CcWGYnjYw
-        EUyd9VUsiyOfoiL6YMZzWzeNiPaYg7IWZp8K8K3Ts1pCOlVMNPvKE1TuKTET4GRJ
-        2G5zC6XxuVSQ7ZMr6oDgU9yVjTI/vyxKOaiPEyTln/1XaykFLXGB0f3efhhu9/qg
-        eu5ITqBCrtR6hAojLIsXZvJhjXHoOGJIqNmcRrNZX9B24Md58BPpncgACdXO0frG
-        amMu7kHH7EfOOg==
-X-ME-Sender: <xms:aCr5WAE_k7_nvlTbiO8tzwvzoKvdiRQFJyKghU-Du3oSpF0kjF2fww>
-X-Sasl-enc: zBIvKc3P051GseU++jje2bnjlFC1Otd/pK7ef+mYRIlf 1492724327
-Received: from mjim.nabble.com (unknown [162.253.133.84])
-        by mail.messagingengine.com (Postfix) with ESMTPA id C630724370
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 17:38:47 -0400 (EDT)
-Date:   Thu, 20 Apr 2017 14:38:47 -0700 (MST)
-From:   galt <galt@folkplanet.com>
-To:     git@vger.kernel.org
-Message-ID: <1492724327147-7657474.post@n2.nabble.com>
-In-Reply-To: <4A951EFB.1010400@draigBrady.com>
-References: <4A85F270.20703@draigBrady.com> <3e8340490908151302y33a97d50t38ad0a8a788f1cee@mail.gmail.com> <43d8ce650908151312o6a43416el27965c4b0ab8d83d@mail.gmail.com> <alpine.LFD.2.01.0908151315400.3162@localhost.localdomain> <alpine.LFD.2.01.0908151336530.3162@localhost.localdomain> <alpine.LFD.2.00.0908162151180.6044@xanadu.home> <4A951EFB.1010400@draigBrady.com>
-Subject: Re: Linus' sha1 is much faster!
+        id S947889AbdDTV6f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 17:58:35 -0400
+Received: from mout.gmx.net ([212.227.17.20]:62215 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S947880AbdDTV6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 17:58:35 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mb31L-1chrGN1Rn9-00Kj2y; Thu, 20
+ Apr 2017 23:58:16 +0200
+Date:   Thu, 20 Apr 2017 23:58:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     David Turner <dturner@twosigma.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Increase core.packedGitLimit
+In-Reply-To: <20170420210254.f4ykyi46bso5uj3o@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1704202355230.3480@virtualbox>
+References: <20170420204118.17856-1-dturner@twosigma.com> <20170420210254.f4ykyi46bso5uj3o@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:7GLNsX2DSv1Mcgks0lqICUQm8Q395nkEqlJe7GhXZgnDqT6RRU9
+ S74Oea+UHrsTUkKJpQByQWZ9REKp88MaP/+g2+DhvyaVaAU4oVB6ydo73EqDxcoee2h/FCL
+ LIphXKCz7vmh34Ov6Dyh3JFcWhqX1yvmfLk9Pije4npaqD/+uO6+ERN79RQtAIehD4glGsM
+ jRBSPxOAlBB3u3aWN1gKg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a+sOcDjrNh0=:P1TcQhCttLzk3/5cSt4932
+ pz1tm7p3C8XW7gel4RxictQBgrjnUm4pVWATVCRV14gLiTcBzhsqzMb2NkkJJL6YGFv8nEMwH
+ Km+tN8TKg9NfPaJNlwGyLAkOSKuckBM6Goz/q6Rb/Vd4tS3iytERNgUftt1l/ssd40EXvcM9U
+ qbumnsEI3i1IJG3+/7Sft2/L5rXuV1N/rkikVZ+y4WCIkI0ISVTaT6bhWQ8kKXiM31uYU0TA8
+ VlK2sWbVBwTZl3fp4miynlSo0dK9Zc+a6nR5PrMRVD2nhCmxWAMFwwxSrEok0b8LF0fuLHE19
+ fsa6umEhD/idpy3cUrg01jWkMJ8haD6vl7fkIViIdGj+f9e55jD4f/MdFNtdJQBevyTZnzQPj
+ JrJp6gkDNVOUnfmA8Ll4zXYxZnCtBQvurtUOu6XqLB1Ox+7NIiUtbfFccYrgxd/jFdK/iUU5G
+ O7RJxpCVPdHGeXkLWJ+yZU6lW0TcVwxf5fN1zsKBf3FVSljLivp1YrV8djfHRkuMxR4+W9O3/
+ +3ILwf7Nrcz8aOuibfbgHc6wpy/8NYyQ6Q5WOYYTYQewOOI0gk+xAl5Mr8VTqrCvP0zIDCOLy
+ DUHmU4oSoxp5/wgKCf7qx85+hQ1EFda1FWHiUCCyseUND/GeviEenWEwGUtyi1GR35LWr5vh1
+ GIuzeTgGuHgTipBxKQzHsI89UXZdhffiYY/J1lD2G+ibY0MMoIKsxzJiOlGcQR3LGWvA++8Dy
+ Ey27CaTBakrT/wBn19KohKbwEG9A8slf7pzYhApNk0EpHOhqSs75YWIQqILYTWsSZXF+9gK/r
+ dw3vPz8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A Ph=C3=A1draig, c=C3=A1 bhfuil t=C3=BA i do ch=C3=B3na=C3=AD?
-T=C3=A1 m=C3=A9 i gCalafoirne.
+Hi Peff,
 
+On Thu, 20 Apr 2017, Jeff King wrote:
 
+> On Thu, Apr 20, 2017 at 04:41:18PM -0400, David Turner wrote:
+> 
+> > When core.packedGitLimit is exceeded, git will close packs.  If there
+> > is a repack operation going on in parallel with a fetch, the fetch
+> > might open a pack, and then be forced to close it due to
+> > packedGitLimit being hit.  The repack could then delete the pack
+> > out from under the fetch, causing the fetch to fail.
+> > 
+> > Increase core.packedGitLimit's default value to prevent
+> > this.
+> > 
+> > On current 64-bit x86_64 machines, 48 bits of address space are
+> > available.  It appears that 64-bit ARM machines have no standard
+> > amount of address space (that is, it varies by manufacturer), and IA64
+> > and POWER machines have the full 64 bits.  So 48 bits is the only
+> > limit that we can reasonably care about.  We reserve a few bits of the
+> > 48-bit address space for the kernel's use (this is not strictly
+> > necessary, but it's better to be safe), and use up to the remaining
+> > 45.  No git repository will be anywhere near this large any time soon,
+> > so this should prevent the failure.
+> 
+> Yep, I think this is a reasonable direction.
+> 
+> > ---
+> >  git-compat-util.h | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> This probably needs an update to the core.packedGitLimit section of
+> Documentation/config.txt.
+> 
+> > diff --git a/git-compat-util.h b/git-compat-util.h
+> > index 8a4a3f85e7..1c5de153a5 100644
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -616,7 +616,7 @@ extern int git_lstat(const char *, struct stat *);
+> >  #endif
+> >  
+> >  #define DEFAULT_PACKED_GIT_LIMIT \
+> > -	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? 8192 : 256))
+> > +	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? (32 * 1024L * 1024L) : 256))
+> 
+> I wondered if we would run afoul of integer sizes on 64-bit systems where
+> "long" is still only 32-bits (i.e., Windows). But I think it's OK,
+> because the values before we cast to size_t are in megabytes. So your
+> 32*1024*1024 needs only 25 bits to store it. And then after we cast to
+> size_t, everything is in 64-bit.
 
---
-View this message in context: http://git.661346.n2.nabble.com/Linus-sha1-is=
--much-faster-tp3448007p7657474.html
-Sent from the git mailing list archive at Nabble.com.
+Indeed, when I patch a local Git checkout accordingly, I see that
+packed_git_limit is set to 35184372088832.
+
+The bigger problem in this regard is that users are allowed to override
+this via core.packedgitlimit but that value is parsed as an unsigned long.
+
+Ciao,
+Dscho
