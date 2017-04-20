@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DD13207BC
-	for <e@80x24.org>; Thu, 20 Apr 2017 11:29:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB2C7207BC
+	for <e@80x24.org>; Thu, 20 Apr 2017 11:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S944797AbdDTL3f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 07:29:35 -0400
-Received: from mail-oi0-f66.google.com ([209.85.218.66]:36677 "EHLO
-        mail-oi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031824AbdDTL1g (ORCPT <rfc822;git@vger.kernel.org>);
+        id S944883AbdDTL1r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 07:27:47 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:34484 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031820AbdDTL1g (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 20 Apr 2017 07:27:36 -0400
-Received: by mail-oi0-f66.google.com with SMTP id a3so3200975oii.3
+Received: by mail-io0-f196.google.com with SMTP id h41so15347436ioi.1
         for <git@vger.kernel.org>; Thu, 20 Apr 2017 04:27:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=v9ykC/IaLpHTH6OWvR6EpRn8L6TRcYKLvGLhvZoxL1I=;
-        b=UAKBPD2sIsm4Oj1TqQ2c9+8O+8wZ4L0mn1CVTRLUkBqqL6n6Qps3EHUySdW+I5vsWD
-         /BRS3kK2wL2D5MY7XevZV4H2nKD1MCyIEf5U1Oklu+rC5KyTvQmbZ3Z8KpQ4W+zxbm1Y
-         yM+XSlIRtoojVVB0zlTmXE/aZ6MvEQoKjqOtvcHRXOnaqH3C37ujWx7LYPhPpPMR6RIj
-         8P5eQaWUu/hIne2XYT0tyxt5hc8oZxvriwF/xH5iDwljL2iPbrpLjJEvfB6QW/T1718C
-         T+gnZWGlnW62U2PDckXGUE7VF3f8uGOG9yogg5unh+qtVgSWq2hVBXBL+vn6wtW9Tn7J
-         LysQ==
+        bh=+W03EP6xPvkJwteQJktMjTUtBILk+1q83AQzD3ZzdV8=;
+        b=HJJ6SV3HfhOBDPjeWMle92L8IcAzUHPo62lQkkDc4BCUpMxs0xRM5YRgUCg+PRodfs
+         7maGsE3qFqPG3bfLcvYHXiJrx9ZPNDhe0liviAUBUskFuV/LeCr0f1VW1MumOXijNIw4
+         YgBcWLnylkJTDQRJ6dQJ7KEhogv8fe1CGac0R4qXeMkQAzGfGuAPsqY87+MgPP5Li4KM
+         juWiPrMBBfinFbqo3RsUv6whMn+f6SERhsX3OuMc66LRTYL9SNCENk8PQWh+3nm6XwyZ
+         DwIG0S/uBIyCPxIHpgkKIR7dhE2UVQTY8S+RcsF0dSHcSozRZfh79colJ4UKetZSqny5
+         xo4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=v9ykC/IaLpHTH6OWvR6EpRn8L6TRcYKLvGLhvZoxL1I=;
-        b=b75VQrKYWCaULfs4nUzTmI0yoilKMgEMeWBYMPnG0vx0Kk0wBHIEQX4PRtOyFmSdSM
-         D+sCn/Qd1Fj5ZIE8jKknADtFGXEgCf+/u/+zbwLvn3GdNGYgUewtAA3fWPhS88JyCk2k
-         /f+4VDHehdyV3tmXqS0IhLVa7RvSQ8A+5zL0RTflDrjTep9wgTnTCb/QtpiBSSqaFYXw
-         2oMat91T7wey//y+bTaHw1XzcNh2jjrhZi1zltSxb3FmvwErHIBAozzaaDW8xWwiTT60
-         HMAgkDePW9U8Xyq1sv8dArSU3qsSQXcMXzFi5PhqpqVEOQG+r1zjGNaxzn23vWDQ2+gC
-         s21A==
-X-Gm-Message-State: AN3rC/7VPg6tJ0/w4Uqwg9TJizEQOt9kWU3kpOIaURIH5lDK3qAJWnFo
-        5J7vxdjHXFwhCg==
-X-Received: by 10.84.224.70 with SMTP id a6mr9786814plt.25.1492687655180;
-        Thu, 20 Apr 2017 04:27:35 -0700 (PDT)
+        bh=+W03EP6xPvkJwteQJktMjTUtBILk+1q83AQzD3ZzdV8=;
+        b=GFZ27/Egojbv0ZY05RiV0Fc9IwsbZvNmbP9zkPsMpqTosjzkCqdpH4CHPMkYaCfkzK
+         j6Y6Mi0S/wB7t/kL5h+G2XvO4/qs5p8+I+IeHujn3FMiFnkP4fqvbB4MmO1nMLXEU/V6
+         0856xH2YJUoNFz4Zes3mDlLKfnuHVJkMfRKgotA46YdBY5v/5I8lQitYa4VqkQGRbNc0
+         sZHiduID50xQSl648C5J0MWHsioaB7doJ4pn8PbQxDAPmRpJN2cDh9yRB/LURvVdN8Wv
+         I7AM7l4t3Vb4q41zs+g5culP0IuPM1WYTXo8LW2o8Nxot4peAKAF9GRTImyRYguWkYhP
+         j1ww==
+X-Gm-Message-State: AN3rC/7/vUERIbrDXWIoQxN0Y86jx5mgcGmGT+N9JJmOKauxF74U69Ke
+        +rqPWOWpEqSgiz23
+X-Received: by 10.98.74.85 with SMTP id x82mr7485767pfa.115.1492687649985;
+        Thu, 20 Apr 2017 04:27:29 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id z5sm10048335pff.73.2017.04.20.04.27.32
+        by smtp.gmail.com with ESMTPSA id f62sm10050821pfb.84.2017.04.20.04.27.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Apr 2017 04:27:34 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 20 Apr 2017 18:27:30 +0700
+        Thu, 20 Apr 2017 04:27:29 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 20 Apr 2017 18:27:24 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 14/15] config.c: handle error on failing to fopen()
-Date:   Thu, 20 Apr 2017 18:26:08 +0700
-Message-Id: <20170420112609.26089-15-pclouds@gmail.com>
+Subject: [PATCH 13/15] xdiff-interface.c: report errno on failure to stat() or fopen()
+Date:   Thu, 20 Apr 2017 18:26:07 +0700
+Message-Id: <20170420112609.26089-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170420112609.26089-1-pclouds@gmail.com>
 References: <20170420112609.26089-1-pclouds@gmail.com>
@@ -70,59 +70,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the first case, we already correctly return -1 if fopen() fails to
-open. But we should report something so people know what's wrong.
-
-In the second case, config_file == NULL does not necessarily mean "no
-config file". Bail out if needed.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- config.c              | 8 +++++++-
- t/t1308-config-set.sh | 4 +++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ xdiff-interface.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/config.c b/config.c
-index 1a4d85537b..ac9effa7aa 100644
---- a/config.c
-+++ b/config.c
-@@ -1401,7 +1401,8 @@ int git_config_from_file(config_fn_t fn, const char *filename, void *data)
- 		ret = do_config_from_file(fn, CONFIG_ORIGIN_FILE, filename, filename, f, data);
- 		funlockfile(f);
- 		fclose(f);
--	}
-+	} else if (errno != ENOENT)
-+		warn_on_inaccessible(filename);
- 	return ret;
- }
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 060038c2d6..d3f78ca2a7 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -164,9 +164,9 @@ int read_mmfile(mmfile_t *ptr, const char *filename)
+ 	size_t sz;
  
-@@ -2601,6 +2602,11 @@ int git_config_rename_section_in_file(const char *config_filename,
- 	}
- 
- 	if (!(config_file = fopen(config_filename, "rb"))) {
-+		if (errno != ENOENT) {
-+			warn_on_inaccessible(config_filename);
-+			ret = -1;
-+			goto out;
-+		}
- 		/* no config file means nothing to rename, no error */
- 		goto commit_and_out;
- 	}
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index ff50960cca..13e95561f4 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -187,7 +187,9 @@ test_expect_success POSIXPERM,SANITY 'proper error on non-accessible files' '
- 	chmod -r .git/config &&
- 	test_when_finished "chmod +r .git/config" &&
- 	echo "Error (-1) reading configuration file .git/config." >expect &&
--	test_expect_code 2 test-config configset_get_value foo.bar .git/config 2>actual &&
-+	test_expect_code 2 test-config configset_get_value foo.bar .git/config 2>output &&
-+	grep "^warning:" output &&
-+	grep "^Error" output >actual &&
- 	test_cmp expect actual
- '
- 
+ 	if (stat(filename, &st))
+-		return error("Could not stat %s", filename);
++		return error_errno("Could not stat %s", filename);
+ 	if ((f = fopen(filename, "rb")) == NULL)
+-		return error("Could not open %s", filename);
++		return error_errno("Could not open %s", filename);
+ 	sz = xsize_t(st.st_size);
+ 	ptr->ptr = xmalloc(sz ? sz : 1);
+ 	if (sz && fread(ptr->ptr, sz, 1, f) != 1) {
 -- 
 2.11.0.157.gd943d85
 
