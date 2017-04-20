@@ -2,78 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32EB4207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 20:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C2FE207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 20:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S970307AbdDTUlv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 16:41:51 -0400
-Received: from sub3.mail.dreamhost.com ([69.163.253.7]:56887 "EHLO
-        homiemail-a39.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1033593AbdDTUlr (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 20 Apr 2017 16:41:47 -0400
-Received: from homiemail-a39.g.dreamhost.com (localhost [127.0.0.1])
-        by homiemail-a39.g.dreamhost.com (Postfix) with ESMTP id 4DF10150078;
-        Thu, 20 Apr 2017 13:41:36 -0700 (PDT)
-Received: from localhost.localdomain (gzac10-107-1.nje.twosigma.com [208.77.214.155])
-        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by homiemail-a39.g.dreamhost.com (Postfix) with ESMTPSA id E4B2F150074;
-        Thu, 20 Apr 2017 13:41:35 -0700 (PDT)
-From:   David Turner <dturner@twosigma.com>
-To:     git@vger.kernel.org
-Cc:     David Turner <dturner@twosigma.com>
-Subject: [PATCH] Increase core.packedGitLimit
-Date:   Thu, 20 Apr 2017 16:41:18 -0400
-Message-Id: <20170420204118.17856-1-dturner@twosigma.com>
-X-Mailer: git-send-email 2.11.GIT
+        id S1031234AbdDTUtl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 16:49:41 -0400
+Received: from mail-io0-f170.google.com ([209.85.223.170]:34688 "EHLO
+        mail-io0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030672AbdDTUtj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 16:49:39 -0400
+Received: by mail-io0-f170.google.com with SMTP id a103so87276530ioj.1
+        for <git@vger.kernel.org>; Thu, 20 Apr 2017 13:49:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YscHujWBTGSiHs/BS2gQxoQSbj6ulAmVxjeVYZo1N2E=;
+        b=Afl3VUojDnvwGOBmv5hTWSxTjcWw5gg2pOS4CngT9g4+nSOjjcN9DernR7fnca2Wvd
+         U2OZiLOJS0oUTlNtOkRllxnpryQVj+MO8mHYwnEiCa9QaFNoWjF8sDraolTIFaOzz75H
+         ghKDqI5TCXnO74IuJ8jw6p05VuafUyr/Pk8AeEWAQDhnukE//qeooEuizv5Ps293ZF49
+         T6ZPp5FpUJWiCFF4eI0DyFp08hXUWsDob3/T6biqrJcPJrYd2OCEXulKc2NT1Vk2e4Qh
+         Owz2cJqP9ykJommEq6D9Yhf7FU37J1u7g1kGCxx/zf8iwqhyvZNDROuXCkKAhdhy0EN3
+         Icfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YscHujWBTGSiHs/BS2gQxoQSbj6ulAmVxjeVYZo1N2E=;
+        b=Eeq6x2X9u1nnnanTegZDTv90qo31eBXf9jhe1iRk1NTJHBXJ1mNLQS/s3iqfFA75jD
+         pGGTjlQ2j005qlmj/7FylyxZZ1QTCfdFZDwz7jn3Z6sE106R0CnoM9yOu+sTTXg0kqTx
+         d/zPa8iiJ5InL186+wB5HBlPRA/kHi7Zy2ckcRD9Li2LZ6I1zWEVC4CtDmnuEdiw9ZN+
+         jpU6jmvMj4Sc3oiaZqBJ4lLkxTn0kgS+12ZEnBBcyJ/mj+QPRlI2wY90APbYeKWaNuRf
+         WTCTENWjBmCpdmVkINCmiVDnf2RSKD++DnopPqPZxdxDCDs/CFBUb5N+iV1j4jjYxkz+
+         qAdg==
+X-Gm-Message-State: AN3rC/4715v5gkB6V/FzXNCjjg9Zg+/uWsi7dVs8s+PELrGivZANK2SN
+        JhISHVkUKQNtaNVn
+X-Received: by 10.107.16.100 with SMTP id y97mr11179352ioi.164.1492721377837;
+        Thu, 20 Apr 2017 13:49:37 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:6c7e:3273:2d37:5651])
+        by smtp.gmail.com with ESMTPSA id 9sm3185664iol.36.2017.04.20.13.49.35
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 20 Apr 2017 13:49:36 -0700 (PDT)
+Date:   Thu, 20 Apr 2017 13:49:34 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org, e@80x24.org,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v5 02/11] t0061: run_command executes scripts without a
+ #! line
+Message-ID: <20170420204934.GG142567@google.com>
+References: <20170417220818.44917-1-bmwill@google.com>
+ <20170418231805.61835-1-bmwill@google.com>
+ <20170418231805.61835-3-bmwill@google.com>
+ <12add885-b56d-4707-57c1-1073fbb7786c@kdbg.org>
+ <9c562827-78f5-ab8f-bf04-5f403672a32d@kdbg.org>
+ <20170419155659.GA132229@google.com>
+ <alpine.DEB.2.20.1704201245420.3480@virtualbox>
+ <20170420170223.GE142567@google.com>
+ <alpine.DEB.2.20.1704202223060.3480@virtualbox>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1704202223060.3480@virtualbox>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When core.packedGitLimit is exceeded, git will close packs.  If there
-is a repack operation going on in parallel with a fetch, the fetch
-might open a pack, and then be forced to close it due to
-packedGitLimit being hit.  The repack could then delete the pack
-out from under the fetch, causing the fetch to fail.
+On 04/20, Johannes Schindelin wrote:
+> Hi Brandon,
+> 
+> On Thu, 20 Apr 2017, Brandon Williams wrote:
+> 
+> > On 04/20, Johannes Schindelin wrote:
+> > > 
+> > > On Wed, 19 Apr 2017, Brandon Williams wrote:
+> > > 
+> > > > On 04/19, Johannes Sixt wrote:
+> > > > > Am 19.04.2017 um 07:43 schrieb Johannes Sixt:
+> > > > > >Am 19.04.2017 um 01:17 schrieb Brandon Williams:
+> > > > > >>Add a test to 't0061-run-command.sh' to ensure that run_command
+> > > > > >>can continue to execute scripts which don't include a '#!' line.
+> > > > > >
+> > > > > >Why is this necessary? I am pretty certain that our emulation
+> > > > > >layer on Windows can only run scripts with a shbang line.
+> > > > 
+> > > > Out of curiosity how did you have t5550 passing on windows then?
+> > > 
+> > > This is the reason:
+> > > 
+> > > 	1..0 # SKIP no web server found at '/usr/sbin/apache2'
+> > 
+> > Hmm, that's interesting.  So do any of the http tests get run on windows
+> > then?  I wonder if that lack of coverage could be an issue at some
+> > point in the future.
+> 
+> Possibly. I'll put it at the bottom of my TODO list ;-)
+> 
+> > > As predicted by Hannes, your new test fails miserably on Windows:
+> > 
+> > Isn't 'miserably' just a bit harsh ;P haha
+> 
+> Ah, I tried to be funny. So much for my future career as a comedian.
 
-Increase core.packedGitLimit's default value to prevent
-this.
+Haha yeah I figured, no worries.  I was just throwing it back at you :D
 
-On current 64-bit x86_64 machines, 48 bits of address space are
-available.  It appears that 64-bit ARM machines have no standard
-amount of address space (that is, it varies by manufacturer), and IA64
-and POWER machines have the full 64 bits.  So 48 bits is the only
-limit that we can reasonably care about.  We reserve a few bits of the
-48-bit address space for the kernel's use (this is not strictly
-necessary, but it's better to be safe), and use up to the remaining
-45.  No git repository will be anywhere near this large any time soon,
-so this should prevent the failure.
+> 
+> Ciao,
+> Dscho
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: David Turner <dturner@twosigma.com>
----
- git-compat-util.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 8a4a3f85e7..1c5de153a5 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -616,7 +616,7 @@ extern int git_lstat(const char *, struct stat *);
- #endif
- 
- #define DEFAULT_PACKED_GIT_LIMIT \
--	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? 8192 : 256))
-+	((1024L * 1024L) * (size_t)(sizeof(void*) >= 8 ? (32 * 1024L * 1024L) : 256))
- 
- #ifdef NO_PREAD
- #define pread git_pread
 -- 
-2.11.GIT
-
+Brandon Williams
