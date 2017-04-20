@@ -2,75 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBD251FE90
-	for <e@80x24.org>; Wed, 19 Apr 2017 23:57:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD4561FE90
+	for <e@80x24.org>; Thu, 20 Apr 2017 00:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968779AbdDSX5p (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Apr 2017 19:57:45 -0400
-Received: from mout0.freenet.de ([195.4.92.90]:55483 "EHLO mout0.freenet.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S968763AbdDSX5n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Apr 2017 19:57:43 -0400
-Received: from [195.4.92.140] (helo=mjail0.freenet.de)
-        by mout0.freenet.de with esmtpa (ID liebundartig@freenet.de) (port 25) (Exim 4.85 #1)
-        id 1d0zTi-0000Fk-7i; Thu, 20 Apr 2017 01:57:42 +0200
-Received: from localhost ([::1]:43063 helo=mjail0.freenet.de)
-        by mjail0.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
-        id 1d0zTi-0007YT-3u; Thu, 20 Apr 2017 01:57:42 +0200
-Received: from mx2.freenet.de ([195.4.92.12]:45951)
-        by mjail0.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
-        id 1d0zQj-00057p-Ek; Thu, 20 Apr 2017 01:54:37 +0200
-Received: from p20030045447e6e3990f8c675965ced16.dip0.t-ipconnect.de ([2003:45:447e:6e39:90f8:c675:965c:ed16]:36101)
-        by mx2.freenet.de with esmtpsa (ID liebundartig@freenet.de) (TLSv1.2:DHE-RSA-AES128-SHA:128) (port 465) (Exim 4.85 #1)
-        id 1d0zQj-0005if-87; Thu, 20 Apr 2017 01:54:37 +0200
-Subject: Re: minor typos in documentation
-To:     Stefan Beller <sbeller@google.com>
-References: <ea2780fd-8d63-6060-fb17-df5720bbc3de@freenet.de>
- <CAGZ79kavV-58JyUce9BMO9S3LVKGeUBQU-Qt79LAR41xgr=MxA@mail.gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Genz?= <liebundartig@freenet.de>
-Message-ID: <4f4e6b6e-7917-49c9-f4b4-627eaa062915@freenet.de>
-Date:   Thu, 20 Apr 2017 01:54:36 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:45.0) Gecko/20100101
- Thunderbird/45.7.0
+        id S967202AbdDTAoC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Apr 2017 20:44:02 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:35970 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S936095AbdDTAoB (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 Apr 2017 20:44:01 -0400
+Received: from genre.crustytoothpaste.net (unknown [172.16.2.244])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5E601280AD;
+        Thu, 20 Apr 2017 00:43:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1492649039;
+        bh=BkjxGT/jKYrmH3CrpOBF6+lyTm9Y+Cx0JwhEPCZ5VfI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=MsDepl7Adncv8CwgtUEE54ijIeqUitWv6dNeAWd/u3ne4/h5fc8F6Ij4Qb9Y0Vhpk
+         ZRoxRLCA0FB9LCSqd/Kh+4q+St8WcN8NjVDxggoZhf2gcQskyewK2Jqs0gB5g8lYcm
+         nvDlMaar64jgsr34qvBQHi8AD4VKzQas5OPILYx11FrNhO+7YyGuOL6uiJ3/NAebBE
+         BIKu/wsdR17Zy5qyE6F2VtXiz9JaE2zN4/Ez9/09BNLZ8SIbApBdBRDXT0IBu1OJfb
+         JOEvcCZFByFz9lAXuSKNzCPtRHo/s03edXGd0y1VPOLZlqF3JjNeowROFl1tKBOMjp
+         32F68R1itzJl7el5v5Vs0PFQlZOF4K5RiUFaD3RxEXhOnNnzK8dO9+WUynfF2mqqbV
+         B8bHwIOQ0b4fOA7MVYoPQR1wUH5Anu/VtPHirZa2rE3dsimHYKH2LIrNbekTXCwrrQ
+         dEXgVpuKmjUZaVVNnJTy8jts6LkDOisQiv3zc3IjpZ39kmMMV0I
+Date:   Thu, 20 Apr 2017 00:43:55 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [bug?] docs in Documentation/technical/ do not seem to be
+ distributed
+Message-ID: <20170420004355.wlojjb4miudun4ur@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CAJZjrdWNQFkWwAO_hmHMzVGNNMfynxsvbWufGvRWX8bZD19Epw@mail.gmail.com>
+ <20170419170509.GC28740@aiede.svl.corp.google.com>
+ <CAJZjrdWey6atV0rQUborVH0mnev5j8q3Qsny1dgr9hj8_Hz5uw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kavV-58JyUce9BMO9S3LVKGeUBQU-Qt79LAR41xgr=MxA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originated-At: 2003:45:447e:6e39:90f8:c675:965c:ed16!36101
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ogbu5ijgunup5ps6"
+Content-Disposition: inline
+In-Reply-To: <CAJZjrdWey6atV0rQUborVH0mnev5j8q3Qsny1dgr9hj8_Hz5uw@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19.04.2017 22:55, Stefan Beller wrote:
-...
->
-> Thanks for spotting the errors!
->
-> Care to craft a patch and send it upstream yourself?
-> See https://github.com/git/git/blob/master/Documentation/SubmittingPatches
-> how to approach it.
-> TL;DR:
->     git clone https://github.com/git/git
->     # hack hack hack
->     git commit
->     git format-patch HEAD^
->     # use e.g. git send-email to send the patch to the mailing list
->
-> Thanks,
-> Stefan
->
->
 
-To be honest I started to read the mentioned website, was intimidated and decided to sent an email.
+--ogbu5ijgunup5ps6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Alright, what could possibly go wrong? I will do it.
--- 
-Kind regards,
-René
+On Wed, Apr 19, 2017 at 01:03:09PM -0500, Samuel Lijin wrote:
+> On Wed, Apr 19, 2017 at 12:05 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> > This sounds like a packaging bug in Arch Linux and Ubuntu.
+> >
+> > That said, at least in Ubuntu, I am not able to reproduce it.  Do
+> > you have the git-doc (or git-all, which depends on git-doc) package
+> > installed?
+>=20
+> That was the answer on the Ubuntu machine. Doesn't apply to Arch,
+> though, so I guess I'll reach out upstream there. I've also opened
+> #994 on the git/git-scm.com repo for this.
+>=20
+> Out of curiosity, do you know why it's distributed like that?
+
+I expect the answer for Ubuntu is that it's the way that Debian does it.
+
+Debian traditionally distributes documentation in a separate package
+because it's architecture independent, and the binaries are not.
+Therefore, including it in the main package would bloat the archive
+substantially by including a copy of identical data for each
+architecture.
+
+Doing it this way also allows people to not install documentation that
+they don't need, say, on a server.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--ogbu5ijgunup5ps6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlj4BEsACgkQv1NdgR9S
+9oteAw//bLIwl4O4Pr0M9CHyHjHWnHfLRUJGA5FX0bZJ/RN26nUBMAjHPNQ+2uw4
+kOqsh7fOmp7Vw+pgJR13iYjSyahnNy4whpi72kbbPNvetkjDCd63pSO6T9FpqecC
+8X6DKYmr+Sb5kCVS0kWc5Sa5nIZKeJsgyM78UfC3gRHr8P7rC148mxMm/9ceCu4/
+D8P6sjCm2xBMKNvmcrndF2mWGgmq6Kr7O67mLYAR+89Hk950J1yMjAJIG8M/oAh0
+bQMn95YatjNHn2x9+tTgTX3IaXc9Ww++q1YY5SairqugGDHeA3pME+We5lwvWGhB
+nNmaQmV2u+8wUdZZ6pFcuK2P75DlEXxSaklY697DwY0pDVygRWnvdp6MI/m5wLBK
+fXV77z7NRmC5LTCdvUMvyY2oUz30M/dce+6VlG2B9smtWG/5vahUTCj4H+v9duEy
+vsiIIoy0AMDTNsMl4szGybF1sQdN9CBkgksUan0yg9SaSoAWLa1jYxruNms7lItU
+6+6FwNzYuKq31OFf+oO7EYv3OQebstnbg+a2IEduiOaTo1NJhWEK8NfYhm70/Pnr
+sIPiDDmKMNMd//BRTxgy24uFB9yStJrONsm9LvbbIuKnJRgl79acRIdSCKFtwm4O
+1n01CaVGMlUVwQ5JADqKFVUq16zlaVXbDR+GjCKxGAW4859JVEo=
+=wwcC
+-----END PGP SIGNATURE-----
+
+--ogbu5ijgunup5ps6--
