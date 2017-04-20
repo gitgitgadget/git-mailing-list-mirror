@@ -6,98 +6,77 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4354A1FA26
-	for <e@80x24.org>; Thu, 20 Apr 2017 15:35:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07DFD1FA26
+	for <e@80x24.org>; Thu, 20 Apr 2017 15:50:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S970698AbdDTPfT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 11:35:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36866 "EHLO cloud.peff.net"
+        id S970883AbdDTPuK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 11:50:10 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36879 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S970607AbdDTPfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 11:35:17 -0400
-Received: (qmail 14171 invoked by uid 109); 20 Apr 2017 15:35:15 -0000
+        id S970831AbdDTPuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 11:50:10 -0400
+Received: (qmail 15077 invoked by uid 109); 20 Apr 2017 15:50:05 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 15:35:15 +0000
-Received: (qmail 4269 invoked by uid 111); 20 Apr 2017 15:35:39 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 15:50:05 +0000
+Received: (qmail 4367 invoked by uid 111); 20 Apr 2017 15:50:29 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 11:35:39 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 11:35:13 -0400
-Date:   Thu, 20 Apr 2017 11:35:13 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 11:50:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 11:50:03 -0400
+Date:   Thu, 20 Apr 2017 11:50:03 -0400
 From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2017, #04; Wed, 19)
-Message-ID: <20170420153512.kc57z7cyxdzq74sg@sigill.intra.peff.net>
-References: <xmqq4lxjabce.fsf@gitster.mtv.corp.google.com>
- <20170420095921.GA23873@ash>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v1] diffcore-rename: speed up register_rename_src
+Message-ID: <20170420155003.cugkol6rbv25lpdi@sigill.intra.peff.net>
+References: <20170418194421.22453-1-git@jeffhostetler.com>
+ <20170418194421.22453-2-git@jeffhostetler.com>
+ <20170419013214.q35jarvmk5jhqdyi@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1704201231350.3480@virtualbox>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170420095921.GA23873@ash>
+In-Reply-To: <alpine.DEB.2.20.1704201231350.3480@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 20, 2017 at 04:59:21PM +0700, Duy Nguyen wrote:
+On Thu, Apr 20, 2017 at 12:40:52PM +0200, Johannes Schindelin wrote:
 
-> On Wed, Apr 19, 2017 at 10:37:21PM -0700, Junio C Hamano wrote:
-> > * nd/worktree-add-lock (2017-04-16) 2 commits
-> >  - SQUASH???
-> >  - worktree add: add --lock option
+> > > Teach register_rename_src() to see if new file pair can simply be
+> > > appended to the rename_src[] array before performing the binary search
+> > > to find the proper insertion point.
 > > 
-> >  Allow to lock a worktree immediately after it's created. This helps
-> >  prevent a race between "git worktree add; git worktree lock" and
-> >  "git worktree prune".
-> > 
-> >  Waiting for a response to SQUASH???
+> > I guess your perf results show some minor improvement. But I suspect
+> > this is because your synthetic repo does not resemble the real world
+> > very much.
 > 
-> Looking good. I would add some comment, lest ';' feel lonely. But it's
-> really personal taste.
+> Please note that the synthetic test repo was added *after* coming up with
+> the patch, *after* performance benchmarking on a certain really big
+> repository (it is not hard to guess what use case we are optimizing,
+> right?).
 > 
-> -- 8< --
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 5ebdcce793..bc75676bf3 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -310,7 +310,7 @@ static int add_worktree(const char *path, const char *refname,
->  	strbuf_reset(&sb);
->  	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
->  	if (!ret && opts->keep_locked)
-> -		;
-> +		;	      /* --lock wants to keep "locked" file */
->  	else
->  		unlink_or_warn(sb.buf);
+> In that light, I would like to register the fact that Jeff's performance
+> work is trying to improve a very real world, that of more than 2,000
+> developers in our company [*1*].
 
-I know this is just a drive-by comment, but given that the "else" is the
-only thing that does anything, would it be simpler to flip the
-conditional? The strbuf manipulation above also could go inside it.
-E.g.:
+Sure; I didn't think it came out of thin air. What are the benchmarks on
+this real-world repository, then?
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 5ebdcce79..05ade547c 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -307,12 +307,11 @@ static int add_worktree(const char *path, const char *refname,
- 	junk_git_dir = NULL;
- 
- done:
--	strbuf_reset(&sb);
--	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
--	if (!ret && opts->keep_locked)
--		;
--	else
-+	if (ret || !opts->keep_locked) {
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "%s/locked", sb_repo.buf);
- 		unlink_or_warn(sb.buf);
-+	}
- 	argv_array_clear(&child_env);
- 	strbuf_release(&sb);
- 	strbuf_release(&symref);
+Specifically, it looks like this optimization isn't really about the
+number of files in the repository so much as the number of
+additions/deletions in a particular diff (which is what become rename
+sources and destinations).
 
-(Since it's in its own block I'd also consider just introducing a new
-variable for the path, but I guess reusing "sb" for each path is already
-a pattern in the function).
+Is it common to add or delete 4 million tiny files and then run "git
+status"?
+
+Note that I think the optimization probably _is_ worth doing in the
+general case. These "is it sorted" tradeoffs can backfire if we
+sometimes get unsorted input, but I don't think that would ever be the
+case here. My main complaint is not that it's not worth doing, but that
+I'm not excited about sprinkling these checks ad-hoc throughout the code
+base.
 
 -Peff
