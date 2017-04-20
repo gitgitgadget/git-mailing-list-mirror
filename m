@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42EC0207BC
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F96C207BC
 	for <e@80x24.org>; Thu, 20 Apr 2017 11:26:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S970260AbdDTL0q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 07:26:46 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:34109 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031570AbdDTL0n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 07:26:43 -0400
-Received: by mail-oi0-f65.google.com with SMTP id y11so6305685oie.1
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 04:26:42 -0700 (PDT)
+        id S1031595AbdDTL0u (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 07:26:50 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33773 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S942132AbdDTL0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 07:26:32 -0400
+Received: by mail-io0-f194.google.com with SMTP id k87so15222150ioi.0
+        for <git@vger.kernel.org>; Thu, 20 Apr 2017 04:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=h/5l+g8CNRlKQe5VQloP9zJ7x3ZghBhfDg/GSY6irrY=;
-        b=vbK+6v0WI+2xxXoIFm2huDtmIiDLOHcbVHifSVrwRWet9fFfVk0jnwqWI0Yy4SME5O
-         h5uAv1tbxqfqttEpF9SPjVd5FYvFZWIWBfjQ4+ygO9sMwM6GYd4GLaf5mtSqdCMtFsVd
-         FeG8B71lfILMSX11RDijVdByJ2P/TKoeNSHWUJJHBb+SBW1cne7QR4C2DgQNgEmy95nE
-         +dQkVIAScJYSKX+pc1L9EqKFnpAwKQ9NtDICFEjwVlYhtsI0XT7+anvkVvGX9pQ0eAke
-         /ZbDtyK22PGXB9jyaa1Brn18xejnQM2IpzL563qxT9GaByDPCvsjAdBypKudHIrDvdgu
-         Rw9A==
+        bh=FW+T+NYyCka4H75R+PeTKF4CpW0ymUVubObqzz3C1BI=;
+        b=IuLigi/qTfkp/yMp2zZ8Hvu5xoL5kDBeEX2fOPfqhIdGNS9F2N59jXaQq1ARKquUJv
+         vQHhhiWjSqtNerNLP9XQksU8rNjAmmsSQkcZu5Nx+ga3qxwVcRBlUh9djtMnvmBSiF3X
+         5hvhBLV1R8F2klXB/7A0no3Bud2HjvZy6xKDL2SIGPaj+WqIHtYG2o+wQ2vHG63fcDQx
+         Jurv6cYD2jHrtvye6T6xg9YDKeIZ86Zt9jB232MaILM+eIqYnBz8jwiYOL6VBjNAFIEB
+         +ap8JMPNduF8VvUYCKJWfwoL5pUXIAiTd2YgUQxS9gva8hyVVNn5O8TRDctx47IXj8Dt
+         3iEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=h/5l+g8CNRlKQe5VQloP9zJ7x3ZghBhfDg/GSY6irrY=;
-        b=Phsdfi4wgH3wTOHw9mlObofB+eUxm7J0Afp0GkwRBH29gZbOO24IYAobLiCU63DJBF
-         c1eKKBKwhKSXJW4iFFD7ImqlCVzTMEChksXOslJiqvbDwz/AtWUm+T7aN9NxPAovagCK
-         bxYQfXxtE2z3WNA4ZikDWQhRCB7U/VYTT8xVaKSbQcpf7OxwDf/ErhhQPDK/b2Vj3BjX
-         ctHoboqIS3wAvI79mc9iZiL4+BzJZiM/ynAqo18zm2tPs7TgKjGgirgMCYkMwr+bio4T
-         glY2sx/xmG+b9QZXglsmsQs1oc0K3d/XXXX0oM0/FYhbVvlgf3xSyhdLEN/fRFzyNI0u
-         51qg==
-X-Gm-Message-State: AN3rC/6SVUk6ZySVvEi7YU0xAr88zgBvGDusd2GSe8UCaXK1491a7Ovg
-        pzvVBVQtzhkbcQ==
-X-Received: by 10.84.148.203 with SMTP id y11mr9958429plg.10.1492687597421;
-        Thu, 20 Apr 2017 04:26:37 -0700 (PDT)
+        bh=FW+T+NYyCka4H75R+PeTKF4CpW0ymUVubObqzz3C1BI=;
+        b=S6gRXDPWFSOP+AQiw4itrbKuM2MTi+/rIvZXgZUoqMLuI7PLoaDfbiOtaITQoXOmR7
+         KGIfmisZWpkM2L8d+K2gSeue/zIVGZ9Attcr+wLsiGQsSOWZX1WkMCE2ze+CtHVqqKp7
+         Idu2tO6EHVOolGWNLtRrvPxRIRNn4RfOfuIOR5xw3m3gIprvJSfliOWIFah3sMvHIUcK
+         7mPN/8dwk1n3fq7N338XgONe8MvJDt5Mgym6FW9u67K3apUGuuLV4jTQ04fOTMK6Hzhz
+         AwsRSe/OrnH6LbFkV6cQ99d+8PRVk54qYPMsI1a5GOted3GNPK1NbSotaqGqot1Trxrb
+         dIlA==
+X-Gm-Message-State: AN3rC/7Aqc6JzpL/inFuLy2/cJxy5V/UoeJus1udf71oKOTyJMVh0Gno
+        BgFNNGJNSo9dcQ==
+X-Received: by 10.99.55.78 with SMTP id g14mr7621939pgn.191.1492687586888;
+        Thu, 20 Apr 2017 04:26:26 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id r131sm10026128pgr.67.2017.04.20.04.26.34
+        by smtp.gmail.com with ESMTPSA id s83sm9672667pfa.128.2017.04.20.04.26.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Apr 2017 04:26:36 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 20 Apr 2017 18:26:32 +0700
+        Thu, 20 Apr 2017 04:26:26 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 20 Apr 2017 18:26:21 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/15] blame: report error on open if graft_file is a directory
-Date:   Thu, 20 Apr 2017 18:25:57 +0700
-Message-Id: <20170420112609.26089-4-pclouds@gmail.com>
+Subject: [PATCH 01/15] config.mak.uname: set FREAD_READS_DIRECTORIES for Linux and FreeBSD
+Date:   Thu, 20 Apr 2017 18:25:55 +0700
+Message-Id: <20170420112609.26089-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170420112609.26089-1-pclouds@gmail.com>
 References: <20170420112609.26089-1-pclouds@gmail.com>
@@ -70,28 +70,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This variable is added [1] with the assumption that on a sane system,
+fopen(<dir>, "r") should return NULL. Linux and FreeBSD do not meet this
+expectation while at least Windows and AIX do. Let's make sure they
+behave the same way.
+
+I only tested one version on Linux (4.7.0 with glibc 2.22) and
+FreeBSD (11.0) but since GNU/kFreeBSD is fbsd kernel with gnu userspace,
+I'm pretty sure it shares the same problem.
+
+[1] cba22528fa (Add compat/fopen.c which returns NULL on attempt to open
+    directory - 2008-02-08)
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/blame.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ config.mak.uname | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 07506a3e45..70afa1b05c 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2073,8 +2073,11 @@ static int read_ancestry(const char *graft_file)
- {
- 	FILE *fp = fopen(graft_file, "r");
- 	struct strbuf buf = STRBUF_INIT;
--	if (!fp)
-+	if (!fp) {
-+		if (errno != ENOENT)
-+			warn_on_inaccessible(graft_file);
- 		return -1;
-+	}
- 	while (!strbuf_getwholeline(&buf, fp, '\n')) {
- 		/* The format is just "Commit Parent1 Parent2 ...\n" */
- 		struct commit_graft *graft = read_graft_line(buf.buf, buf.len);
+diff --git a/config.mak.uname b/config.mak.uname
+index 399fe19271..a25ffddb3e 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -36,6 +36,7 @@ ifeq ($(uname_S),Linux)
+ 	NEEDS_LIBRT = YesPlease
+ 	HAVE_GETDELIM = YesPlease
+ 	SANE_TEXT_GREP=-a
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	HAVE_ALLOCA_H = YesPlease
+@@ -43,6 +44,7 @@ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	HAVE_PATHS_H = YesPlease
+ 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+ 	LIBC_CONTAINS_LIBINTL = YesPlease
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+ ifeq ($(uname_S),UnixWare)
+ 	CC = cc
+@@ -201,6 +203,7 @@ ifeq ($(uname_S),FreeBSD)
+ 	GMTIME_UNRELIABLE_ERRORS = UnfortunatelyYes
+ 	HAVE_BSD_SYSCTL = YesPlease
+ 	PAGER_ENV = LESS=FRX LV=-c MORE=FRX
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+ ifeq ($(uname_S),OpenBSD)
+ 	NO_STRCASESTR = YesPlease
 -- 
 2.11.0.157.gd943d85
 
