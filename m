@@ -7,92 +7,143 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 311B2207BC
-	for <e@80x24.org>; Thu, 20 Apr 2017 09:59:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAE32207BC
+	for <e@80x24.org>; Thu, 20 Apr 2017 10:11:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031117AbdDTJ7i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 05:59:38 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:35150 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031112AbdDTJ7e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 05:59:34 -0400
-Received: by mail-oi0-f46.google.com with SMTP id j201so43313924oih.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 02:59:33 -0700 (PDT)
+        id S1031146AbdDTKLQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 06:11:16 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:33008 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030738AbdDTKLO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 06:11:14 -0400
+Received: by mail-io0-f193.google.com with SMTP id k87so14518487ioi.0
+        for <git@vger.kernel.org>; Thu, 20 Apr 2017 03:11:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=6M/sQl1Qe/59PZ1sIZ4Aureu1PRNM2iIj+BBaYXX/XA=;
-        b=RBvN2vDYox3wAIl3AQAAS6xtWNZS1Ul6G9yp9DpKc8VAbXqDSji8u2urexDsaJekiS
-         0EtA7qu584giPlVhessmCTDmbCvZ+qUD9eGN2Ft4ntREjmNA5X/+pYi2Wt8m6zZgU5YU
-         8nHCddQKS0WOJRsx8uP48pd1ObU9P2VkUSVPNKCmoZbMCRGCtCMl64urTRsvxfs8DDHT
-         TY0dpBlQ0RVJt4uOzm16KD6FLLiQPRuFMrYII8/LN71ruJznqiMw0h4GgBzDxbOzb2Bo
-         ZQr5/rPws4Q+W4gFXWnDW3ROjdQZmP3SLSg+LCd2IxMbLisGHnt9ve8BWLrlPUucVCdw
-         T+uA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/RaNGnPKMoa5EOrxibKBFfwDyIhWrn8bj/JCiorurjA=;
+        b=uW/akwhjPMTVfzJLtDN4j8L/y1AxEII/GNaP5vN4AeEAyiBjpUejDIUFFOWFTcTvfZ
+         Y6xUmB47FpAlggMc1NzuSaBJ9pY5n8Zy9+ZmUaBc6ZiA4VmvR1+Ts23WtjzprV0a3Mcq
+         zAvXkbQyH4piv/gDftX0lHtN2yAD0dtFn4psCHSASRzlimM91CiZ95l5NHzCp/ZBSv2o
+         heEbWg/v9I0Ze7YHQn81o7d1M+lmnJ+1+b5C2nSC25wrweHxStreEj2s4B7LulCHbMXA
+         z6hL0IR/zC5vG7vhpX/ZaEF+fG3cNqKD1JeqLooH9Cpz5+2QNlxjMTUsiIGvoytAOvVn
+         9cMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=6M/sQl1Qe/59PZ1sIZ4Aureu1PRNM2iIj+BBaYXX/XA=;
-        b=lNA11BxvmViSvXhUrMngSqn6/gxigrO73b3koJEesqqvtWpwqBmh1hzqyEUklrLkau
-         1162WKBrP1F7cD7XzzTlxeceX9rtX/3zthd/GlURA7rfaNCehdYzITunjrPUgtXAvO6H
-         TviTYdpdC2wc9zs8peAakhmb1HNRtae1OAlXu8ZnVvJkIuZa9vFbI+rf0I34GlAnNbnE
-         3rdXhPVwktKa0IskhHRVXtMbTFDUio4hhk6k9xCN5L5pLypo/aP1mRg5yNUWTR/0RkRs
-         ThSbWk5kvn/05WfAX/B+iC9XcIMEWEvz1kM/xBHheOHAlO99xqmGJgxVStG6ZDDS4iik
-         +Hkg==
-X-Gm-Message-State: AN3rC/4+ri88PNSHuBPyuu9E8KUxCN4xKje1mLEYLH0NnM0P2c7WubEJ
-        9NoE43MPPHJZqR2+
-X-Received: by 10.84.224.70 with SMTP id a6mr9314087plt.25.1492682368330;
-        Thu, 20 Apr 2017 02:59:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/RaNGnPKMoa5EOrxibKBFfwDyIhWrn8bj/JCiorurjA=;
+        b=rZo00fp3qGmU1QKa+C4s8CIhgZIyCqFrePnedQR9kRV+q4BlPBtTc56SGjRCkqGhab
+         9WliTng4Lny6KuyRXgz0+XMPb6sGa10wUZjATEMNdKI8JFju+QKMOu51q6iPf91bszi4
+         Dad7ceD3xO5itl6TVBi6rcP6IUDQhk03wQho5UcbKsazIgnYQ6BzrQb28pRdBL/RT9OH
+         ywb0VBCDelr7IIeZDc4ryuB/mBU3cqjEF8bEDT3UwxLA5jMjUAMPKOAVQ/RvjrAyNPFK
+         nQbUHqh231adqQZ0w3eaYYR7Yi97xe3Fs7irqOPgqiLIul5O/xoijXqmi1VbzWNXVbbM
+         oVsA==
+X-Gm-Message-State: AN3rC/5hOSk4fWSBRuqNhoSbE6gHNBcfuYx0G9I+rvRFkMODFvlTRivg
+        Mc+za6yL8I7nMg==
+X-Received: by 10.99.126.23 with SMTP id z23mr2483954pgc.63.1492683073319;
+        Thu, 20 Apr 2017 03:11:13 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id 4sm9466698pff.17.2017.04.20.02.59.25
+        by smtp.gmail.com with ESMTPSA id g75sm9536799pfg.82.2017.04.20.03.11.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Apr 2017 02:59:27 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Thu, 20 Apr 2017 16:59:21 +0700
-Date:   Thu, 20 Apr 2017 16:59:21 +0700
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2017, #04; Wed, 19)
-Message-ID: <20170420095921.GA23873@ash>
-References: <xmqq4lxjabce.fsf@gitster.mtv.corp.google.com>
+        Thu, 20 Apr 2017 03:11:12 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Thu, 20 Apr 2017 17:11:06 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 0/6] nd/worktree-move update
+Date:   Thu, 20 Apr 2017 17:10:18 +0700
+Message-Id: <20170420101024.7593-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.11.0.157.gd943d85
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4lxjabce.fsf@gitster.mtv.corp.google.com>
-X-Clacks-Overhead: GNU Terry Pratchett
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 19, 2017 at 10:37:21PM -0700, Junio C Hamano wrote:
-> * nd/worktree-add-lock (2017-04-16) 2 commits
->  - SQUASH???
->  - worktree add: add --lock option
-> 
->  Allow to lock a worktree immediately after it's created. This helps
->  prevent a race between "git worktree add; git worktree lock" and
->  "git worktree prune".
-> 
->  Waiting for a response to SQUASH???
+This
 
-Looking good. I would add some comment, lest ';' feel lonely. But it's
-really personal taste.
+ - squashes in Johannes' fix (that's already on jch/nd/worktree-move)
+ - fixes the compile problem on latest master (because prefix_filename
+   takes one argument less)
+ - fixes the test failure because real_path() is called twice (the
+   first one hidden in read_gitfile_gently) but the output is not
+   duplicated.
 
--- 8< --
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 5ebdcce793..bc75676bf3 100644
+index 74fc8578fc..b5afba1646 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -310,7 +310,7 @@ static int add_worktree(const char *path, const char *refname,
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
- 	if (!ret && opts->keep_locked)
--		;
-+		;	      /* --lock wants to keep "locked" file */
- 	else
- 		unlink_or_warn(sb.buf);
- 	argv_array_clear(&child_env);
--- 8< --
+@@ -561,9 +561,7 @@ static int move_worktree(int ac, const char **av, const char *prefix)
+ 	if (ac != 2)
+ 		usage_with_options(worktree_usage, options);
+ 
+-	strbuf_addstr(&dst, prefix_filename(prefix,
+-					    strlen(prefix),
+-					    av[1]));
++	strbuf_addstr(&dst, prefix_filename(prefix, av[1]));
+ 	if (is_directory(dst.buf))
+ 		/*
+ 		 * keep going, dst will be appended after we get the
+diff --git a/worktree.c b/worktree.c
+index 85bf481cec..c695dcf982 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -311,8 +311,8 @@ static int report(int quiet, const char *fmt, ...)
+ int validate_worktree(const struct worktree *wt, int quiet)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+-	const char *path;
+-	int err;
++	char *path;
++	int err, ret;
+ 
+ 	if (is_main_worktree(wt)) {
+ 		/*
+@@ -344,14 +344,17 @@ int validate_worktree(const struct worktree *wt, int quiet)
+ 		return report(quiet, _("'%s/.git' does not exist"), wt->path);
+ 	}
+ 
+-	path = read_gitfile_gently(sb.buf, &err);
++	path = xstrdup_or_null(read_gitfile_gently(sb.buf, &err));
+ 	strbuf_release(&sb);
+ 	if (!path)
+ 		return report(quiet, _("'%s/.git' is not a .git file, error code %d"),
+ 			      wt->path, err);
+ 
+-	if (fspathcmp(path, real_path(git_common_path("worktrees/%s", wt->id))))
+-		return report(quiet, _("'%s' does not point back to"),
++	ret = fspathcmp(path, real_path(git_common_path("worktrees/%s", wt->id)));
++	free(path);
++
++	if (ret)
++		return report(quiet, _("'%s' does not point back to '%s'"),
+ 			      wt->path, git_common_path("worktrees/%s", wt->id));
+ 
+ 	return 0;
+
+Nguyễn Thái Ngọc Duy (6):
+  worktree.c: add validate_worktree()
+  worktree.c: add update_worktree_location()
+  worktree move: new command
+  worktree move: accept destination as directory
+  worktree move: refuse to move worktrees with submodules
+  worktree remove: new command
+
+ Documentation/git-worktree.txt         |  28 +++---
+ builtin/worktree.c                     | 160 +++++++++++++++++++++++++++++++++
+ contrib/completion/git-completion.bash |   5 +-
+ t/t2028-worktree-move.sh               |  57 ++++++++++++
+ worktree.c                             |  87 ++++++++++++++++++
+ worktree.h                             |  11 +++
+ 6 files changed, 337 insertions(+), 11 deletions(-)
+
+-- 
+2.11.0.157.gd943d85
+
