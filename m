@@ -2,130 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 017A01FA26
-	for <e@80x24.org>; Thu, 20 Apr 2017 18:21:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82F081FA26
+	for <e@80x24.org>; Thu, 20 Apr 2017 18:35:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031506AbdDTSVH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 14:21:07 -0400
-Received: from mail-yb0-f175.google.com ([209.85.213.175]:35091 "EHLO
-        mail-yb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S969272AbdDTSVG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 14:21:06 -0400
-Received: by mail-yb0-f175.google.com with SMTP id 6so33126874ybq.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 11:21:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Cu+cWlBPlYI8xIPOYGBtHIZH6kUKez4Ojo98DMQsFho=;
-        b=Fj760VVwf1R+96nt0y/OgNkNnCm4lsFpbqhQ6K6QF3Fys34grOUV/Q7ATnN4yAupuP
-         cRKtd3Sjbal/ULEoqXoPDF/U9c8ZUx4Foy2aPM7/rsywojQD/Vg3oAHv/F93SdrtNl5a
-         txfVo3iDsExYYbDXsG1+LGIw5ggVJ7nMywZsyNVkRr6nEwyFag18LLEQ+NV1cyYonlta
-         opknMfPafAhNHUsi1qO9+7sXXk+mV5kbc8dsSgdXn/PNXZVxPRHIfQMGkLssFxVE0Tk1
-         6QZozh7Z0TRHSE0jy7vejd8zP7SepnlIU2hmlw1N2Jrl1N2YHLrNw26MbYWWBSo9rb8O
-         y01Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Cu+cWlBPlYI8xIPOYGBtHIZH6kUKez4Ojo98DMQsFho=;
-        b=GJduR5WpeYxlUyr5t5q6+PljfomLXcK5cxDaNNFbaF0SXbKHJNeUYpMVZcP3IpUVWL
-         i5c58eWFaq8AwLBEy+pbfxcIa0zOU/c6CkVriPMcjFTYXmD8GvwJHZnvKWLGIOfODjVe
-         gdQmclGOC5eOLqkgQc6xknblh/Z/wr4hjYFMY6HW/ENe5F5XrIL77/4/36NVmI3QU6wB
-         fxazvu3Xi6QFX0ZCLAW1I5cC3RgnJ853mMRmjRGqUJWU2k5gC53z+WgJsD4XUgec6aCD
-         hOs7EtYo0D2zhcVIgJfkcr4Kav2e/0xXslxRbeQkSu4x+9ofk2YigLsm5SDBWhzOatss
-         fUfw==
-X-Gm-Message-State: AN3rC/5Bq+13eBzersCXT2tta4qUrMx6H3SH9btD171HU/Lm4ebMgVBs
-        ZipfY7m7ipeaVkuquzuJCn5MECJkiBdBjfc=
-X-Received: by 10.98.24.195 with SMTP id 186mr8964824pfy.35.1492712464729;
- Thu, 20 Apr 2017 11:21:04 -0700 (PDT)
+        id S946374AbdDTSfA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 14:35:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37031 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S936262AbdDTSe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 14:34:59 -0400
+Received: (qmail 25095 invoked by uid 109); 20 Apr 2017 18:34:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 18:34:57 +0000
+Received: (qmail 6459 invoked by uid 111); 20 Apr 2017 18:35:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 14:35:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 14:34:55 -0400
+Date:   Thu, 20 Apr 2017 14:34:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v1] diffcore-rename: speed up register_rename_src
+Message-ID: <20170420183455.y5oz3hspz3v2g6yr@sigill.intra.peff.net>
+References: <20170418194421.22453-1-git@jeffhostetler.com>
+ <20170418194421.22453-2-git@jeffhostetler.com>
+ <20170419013214.q35jarvmk5jhqdyi@sigill.intra.peff.net>
+ <xmqqd1c9cdzi.fsf@gitster.mtv.corp.google.com>
+ <20170419025608.xy5nvso6k6lb5z7g@sigill.intra.peff.net>
+ <20170419031839.m2zgwywa2soejiqk@sigill.intra.peff.net>
+ <40228c69-7946-3ef1-35de-4cea9b0312e4@jeffhostetler.com>
+ <20170420161359.haolllw4ac5jjqx4@sigill.intra.peff.net>
+ <4d400fb6-201e-e1ba-cc3a-935951ab3e14@jeffhostetler.com>
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Thu, 20 Apr 2017 11:21:04 -0700 (PDT)
-In-Reply-To: <20170412200037.18752-1-sbeller@google.com>
-References: <20170412200037.18752-1-sbeller@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 20 Apr 2017 11:21:04 -0700
-Message-ID: <CAGZ79kYTqh=Qa+Pt1+MojrcYFr05HQgbPRcc=DvjCkUWsjP5Uw@mail.gmail.com>
-Subject: Re: [PATCH] refs.h: rename submodule arguments to submodule_path
-To:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4d400fb6-201e-e1ba-cc3a-935951ab3e14@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+ Junio
+On Thu, Apr 20, 2017 at 02:08:46PM -0400, Jeff Hostetler wrote:
 
-On Wed, Apr 12, 2017 at 1:00 PM, Stefan Beller <sbeller@google.com> wrote:
-> In submodule land we carefully need to distinguish between the path of a
-> submodule and its name.
->
-> The path of a submodule is the path that is recorded in the working tree
-> of the superproject and describes where the submodule is bound to the
-> superprojects tree.
->
-> The name as introduced in 941987a554 (git-submodule: give submodules
-> proper names, 2007-06-11) exists to track submodules across renames of
-> submodules. It is also used for the internal path in .git/modules/<name>
-> to store the git directory of the submodule inside the superproject.
->
-> When looking up ref functions to use, I was confused which of the two
-> submodule properties are meant in the argument of the ref functions.
-> The context in which the functions were used however revealed it is the
-> path of the submodules.
->
-> Rename the arguments to clearly describe what is expected as an input
-> argument.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  refs.h | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/refs.h b/refs.h
-> index 3df0d45ebb..451f92958a 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -86,7 +86,7 @@ int peel_ref(const char *refname, unsigned char *sha1);
->   * successful, return 0 and set sha1 to the name of the object;
->   * otherwise, return a non-zero value.
->   */
-> -int resolve_gitlink_ref(const char *submodule, const char *refname,
-> +int resolve_gitlink_ref(const char *submodule_path, const char *refname,
->                         unsigned char *sha1);
->
->  /*
-> @@ -204,16 +204,16 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
->  int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
->                          const char *prefix, void *cb_data);
->
-> -int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
-> -int for_each_ref_submodule(const char *submodule,
-> +int head_ref_submodule(const char *submodule_path, each_ref_fn fn, void *cb_data);
-> +int for_each_ref_submodule(const char *submodule_path,
->                            each_ref_fn fn, void *cb_data);
-> -int for_each_ref_in_submodule(const char *submodule, const char *prefix,
-> +int for_each_ref_in_submodule(const char *submodule_path, const char *prefix,
->                 each_ref_fn fn, void *cb_data);
-> -int for_each_tag_ref_submodule(const char *submodule,
-> +int for_each_tag_ref_submodule(const char *submodule_path,
->                                each_ref_fn fn, void *cb_data);
-> -int for_each_branch_ref_submodule(const char *submodule,
-> +int for_each_branch_ref_submodule(const char *submodule_path,
->                                   each_ref_fn fn, void *cb_data);
-> -int for_each_remote_ref_submodule(const char *submodule,
-> +int for_each_remote_ref_submodule(const char *submodule_path,
->                                   each_ref_fn fn, void *cb_data);
->
->  int head_ref_namespaced(each_ref_fn fn, void *cb_data);
-> --
-> 2.12.2.603.g7b28dc31ba
->
+> > That's not the minimal change you were going for, but I think the end
+> > result is simpler and more consistent.
+> 
+> OK, let me take a stab at something like that and
+> see where it takes me.
+
+Thanks.
+
+I set the patch as a lump, but I think there are a few things going on
+there:
+
+  - the return value of register_rename_src() is actively dangerous (it
+    points to memory which may be reallocated), so it's good that it
+    goes away in favor of an "int"
+
+  - we already refuse to do rename detection when there are duplicate
+    dsts. This adds the same for srcs. I don't know if the same safety
+    rules apply there, but it certainly seems like a reasonable and
+    consistent precaution to say "this tree looks broken, let's skip
+    rename detection". But it does mean a potential change in
+    functionality in that corner case.
+
+  - this patch probably adds "unsorted tree" to the list of breakages
+    that would cause us to skip rename detection. I don't know if that's
+    actually possible in practice (i.e., do we end up sorting the
+    diffq elsewhere anyway?). I also wondered if it might run afoul of
+    diffcore_order(), but that is applied after rename detection, so
+    we're OK.
+
+> WRT your earlier comment about how often we add or delete 4M
+> files and then run status.  The use case that started this was a
+> 1% sparse-checkout followed by a read-tree (which reset the
+> skip-worktree bits) and then status (which thought 99% of the
+> worktree had been deleted or maybe renamed).  There are probably
+> other ways to get into this state, but that's how this started.
+
+Right, that sounds plausible. I guess I just wondered if this is
+something an average developer runs daily, or something that they would
+run into once a year. Shaving 4s of CPU off of a once-a-year operation
+is less exciting.
+
+> The more subtle point is that -- for these obscenely large
+> values of n -- any time I see an O(n log n) operation that could
+> or should be O(n), I want to stop and look at it.
+
+Heh. I spent a fair bit of time in Git's past turning O(n^2) operations
+into O(n log n), so I feel your pain. I do think it's important to pay
+attention to whole-operation numbers, though. Quite often you have an
+O(n log n) with a small constant (like a single strcmp) coupled with
+something linear but with a huge constant (like loading blob contents),
+and micro-optimizations to the former get drowned out by the latter.
+
+-Peff
