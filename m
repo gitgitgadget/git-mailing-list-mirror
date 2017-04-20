@@ -2,143 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F356F207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 21:24:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 109BE207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 21:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S947794AbdDTVY2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 17:24:28 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37728 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S947792AbdDTVY1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 17:24:27 -0400
-Received: by mail-wm0-f41.google.com with SMTP id m123so3033478wma.0
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 14:24:26 -0700 (PDT)
+        id S1030888AbdDTVYg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 17:24:36 -0400
+Received: from mail-wr0-f182.google.com ([209.85.128.182]:36002 "EHLO
+        mail-wr0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S947792AbdDTVYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 17:24:35 -0400
+Received: by mail-wr0-f182.google.com with SMTP id c55so43640005wrc.3
+        for <git@vger.kernel.org>; Thu, 20 Apr 2017 14:24:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7Z9SIsuUAGes2VsNbvDIC1JZ9m5adftNo2M4UDJTKsM=;
-        b=E8MIyoFytoMsv4eqV7nec96T78P1qGPCn/r8gVyDw8W+f/tQyLQNSaHdj5cInLwRYd
-         OZc1HWmLRDEwWxGscuW1enBrgDWIqADfr65878K2D1RBKCI/uAV9AItPHoIEaxWGLjF8
-         GrOtp3Yl3eMRA7XCE8lw2GhNeYEBQb4gAR/ihDaE6g1Xt4lppnGeBxb9nqdA2pGMuIfR
-         Y54VW/L/awmGMmLDP8VRhkoxHF4S18/ZhwB1nAfgplWeNhuRdfiGWYGWEvMWyYuyFNrs
-         FY+ELNhuGL9CkfESQyAkVA3cTPGQgR3AVZg5O1+AxQLQH5p/N/d7Lld2gzBUIUYarGOb
-         6P7A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=QBmTVGhb4s7H8FrRL8K0jpzJaVcUfxAC8OIaeFmjApc=;
+        b=GVuKZKRhCrmvFZXCoy+P32lD6l1HKkvcZrYjka0VSdIHWm/UCOCnjzEzFXGPEy8fDM
+         WSeo4ZGI3USRoyD54nPlk4FKjR1wOcEaVs6e9aeoWA33AWgKe9DX+yyH1RvESf8WeEZ+
+         c6s4mRXKXDveBPRiOLRNkeH9lmGSn1gDrTe1B05fZWGJQ0+Zbue1LIXH1P3MAxm+frss
+         3IHYjr8Dhsgc3lHUTSqZEpPA0EXcrzS6wYpyN4a41IZ5vQp0vOwNX0lEPakhS4anjK1G
+         AYBtWqeoLh8prY0FGzCvOoxplHX9/++BGwzeP+gisYr0GiX7EGCTJxCFEEyyyZdgbEbV
+         jEZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7Z9SIsuUAGes2VsNbvDIC1JZ9m5adftNo2M4UDJTKsM=;
-        b=oh3EDcT4BW78JMnuiIsKHul+8xJFWc41+bOAzoFuIODOr8DZk4NrvopI06SnrgDxWr
-         7hj9qHRH+DE2fFCczDoH5dZlQ4gFHeh2fFaEAxk/vppms92ugW/I0ghp6CZjqAtT80dv
-         c7ZYDoZUl58uK9fR1WTs9jgr8WORmcZaRXhRYQyBS1Kgc3sJWS2xZu1ZoHBmkGa6edlA
-         9RVyX8E/MvYzsCpl1GGGaBl6w1nNIOwdOhDpDTAcGyUHCYwBpPravYgueUb80XboL5dg
-         7gY1LEgj/5HtEUM3CTP2S7UyDKEV5Vs3jaZPUtMXqvVYyQbcvMcLXfSaqp6KPpYIccdS
-         z/DA==
-X-Gm-Message-State: AN3rC/69VlmVQqglkuaUX3kB48QjdY1t2h5ZXyGigVol0ZlMwJzEcAUL
-        zSFhga7oLs7WHmR4g/c=
-X-Received: by 10.28.52.66 with SMTP id b63mr5309278wma.30.1492723465697;
-        Thu, 20 Apr 2017 14:24:25 -0700 (PDT)
-Received: from localhost ([2a02:c7f:c42b:f900:5e51:4fff:fee9:57af])
-        by smtp.gmail.com with ESMTPSA id p101sm9048542wrb.64.2017.04.20.14.24.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Apr 2017 14:24:24 -0700 (PDT)
-Date:   Thu, 20 Apr 2017 22:24:36 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [BUG] test suite broken with GIT_TEST_SPLIT_INDEX
-Message-ID: <20170420212436.GC4989@hank>
-References: <20170420205214.GB4989@hank>
- <CAP8UFD1LAU8hg4ioes=y4o_Phgd1zBhUJOmkqTPo++4SprWWpw@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=QBmTVGhb4s7H8FrRL8K0jpzJaVcUfxAC8OIaeFmjApc=;
+        b=HwbfwM8A9pIepI4BvXzIf168pvSvqcNO+2LtNEyiSEl8Oo+qTV7mcezDvyRAzuWy0y
+         bOTA0VRFziHduoGtjjt8Aw9UVhoeXNqTsJzrKbnHEqcDlTfTWAkOBSkqSs9juNcxgpXN
+         F2Mtd5w+jB0vOrilNpMCRN45hA7oj+FAiZQXziHFgFTNpF8A2qXCbFoizPHTR48eoHhx
+         PEJhtw2ZWacHBaZSgLTv5CoAEQgfvHoRpmBPYrGoIZ8ge8IzzpzC7hp0glMUvt+O88QN
+         7/2In8lDcNDbLAV7XAkROnkdqhwYMeu/j7dJRdy7H4NTguAZ5DvBgYOEJFBYeuvTTYvx
+         qmUg==
+X-Gm-Message-State: AN3rC/7xaS016pBLjX0RILUCPLfq5ipzx9EjQcqjOZIsHdhSbwcUlvgK
+        nxbV13qdCnR7cQ==
+X-Received: by 10.223.178.68 with SMTP id y4mr10365978wra.88.1492723468751;
+        Thu, 20 Apr 2017 14:24:28 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id k63sm442322wmf.9.2017.04.20.14.24.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 20 Apr 2017 14:24:27 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        =?UTF-8?q?Zolt=C3=A1n=20Herczeg?= <hzmester@freemail.hu>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 05/18] Makefile & configure: reword outdated comment about PCRE
+Date:   Thu, 20 Apr 2017 21:23:32 +0000
+Message-Id: <20170420212345.7408-6-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170420212345.7408-1-avarab@gmail.com>
+References: <20170420212345.7408-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1LAU8hg4ioes=y4o_Phgd1zBhUJOmkqTPo++4SprWWpw@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/20, Christian Couder wrote:
-> Hi,
-> 
-> On Thu, Apr 20, 2017 at 10:52 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > Hi,
-> >
-> > I just tried to run the test suite with GIT_TEST_SPLIT_INDEX=YesPlease
-> > and noticed that a few tests are broken both in pu and master.
-> >
-> > Below the test failures on master:
-> >
-> > Test Summary Report
-> > -------------------
-> > t7009-filter-branch-null-sha1.sh                 (Wstat: 256 Tests: 5 Failed: 2)
-> >   Failed tests:  4-5
-> >   Non-zero exit status: 1
-> > t3900-i18n-commit.sh                             (Wstat: 256 Tests: 34 Failed: 1)
-> >   Failed test:  34
-> >   Non-zero exit status: 1
-> > t5407-post-rewrite-hook.sh                       (Wstat: 256 Tests: 14 Failed: 4)
-> >   Failed tests:  11-14
-> >   Non-zero exit status: 1
-> > t3415-rebase-autosquash.sh                       (Wstat: 256 Tests: 19 Failed: 15)
-> >   Failed tests:  4-17, 19
-> >   Non-zero exit status: 1
-> > t3404-rebase-interactive.sh                      (Wstat: 256 Tests: 95 Failed: 54)
-> >   Failed tests:  18, 20, 22-24, 26-43, 45, 47-74, 84-85
-> >   Non-zero exit status: 1
-> >
-> > Bisecting between master and v2.10.0 leads me to the merge commit
-> > 94c9b5af70 ("Merge branch 'cc/split-index-config'", 2017-03-17).
-> >
-> > Unfortunately I don't forsee myself having time to track the bug down
-> > soon.  Sorry for not noticing this earlier in the cycle.
-> >
-> > The bisect log is below if someone finds it helpful:
-> >
-> > git bisect start
-> > # bad: [6a2c2f8d34fa1e8f3bb85d159d354810ed63692e] Git 2.13-rc0
-> > git bisect bad 6a2c2f8d34fa1e8f3bb85d159d354810ed63692e
-> > # good: [6ebdac1bab966b720d776aa43ca188fe378b1f4b] Git 2.10
-> > git bisect good 6ebdac1bab966b720d776aa43ca188fe378b1f4b
-> > # good: [733671b0fd2fb03edb05273f36ec70bd624e544f] Merge branch 'maint'
-> > git bisect good 733671b0fd2fb03edb05273f36ec70bd624e544f
-> > # good: [04b4f7d579056cedaae2de0a019e5993b4d9c2d0] Merge branch 'sb/submodule-update-initial-runs-custom-script' into maint
-> > git bisect good 04b4f7d579056cedaae2de0a019e5993b4d9c2d0
-> > # bad: [af6865a7f1e1d915d3b63e998226028ca4abb6ee] submodule.c: convert is_submodule_modified to use strbuf_getwholeline
-> > git bisect bad af6865a7f1e1d915d3b63e998226028ca4abb6ee
-> > # good: [3f7ebc6ece46f1c23480d094688b8b5f24eb345c] Merge branch 'jk/tempfile-ferror-fclose-confusion'
-> > git bisect good 3f7ebc6ece46f1c23480d094688b8b5f24eb345c
-> > # bad: [94c9b5af703eb70adba349cfbfaaa3029849744c] Merge branch 'cc/split-index-config'
-> > git bisect bad 94c9b5af703eb70adba349cfbfaaa3029849744c
-> > # good: [36d5286f6815542761dae92fdcdce8db1556727f] Merge branch 'ax/line-log-range-merge-fix'
-> > git bisect good 36d5286f6815542761dae92fdcdce8db1556727f
-> > # good: [c3a008250272295271584c6303463ffb9b055cbc] read-cache: use freshen_shared_index() in read_index_from()
-> > git bisect good c3a008250272295271584c6303463ffb9b055cbc
-> > # good: [228b78752de9d759839665764391262c0ec156cf] Merge branch 'jt/perf-updates'
-> > git bisect good 228b78752de9d759839665764391262c0ec156cf
-> > # good: [073778017158ecf3153b050776029907bc75826f] Merge branch 'kn/ref-filter-branch-list'
-> > git bisect good 073778017158ecf3153b050776029907bc75826f
-> > # good: [b46013950aff31b6626af96ccbf2c48469e36c66] Documentation/git-update-index: explain splitIndex.*
-> > git bisect good b46013950aff31b6626af96ccbf2c48469e36c66
-> > # good: [32c43f595f93cdd4ed5305aef97a3f6aaa74ed72] Sync with 'maint'
-> > git bisect good 32c43f595f93cdd4ed5305aef97a3f6aaa74ed72
-> > # first bad commit: [94c9b5af703eb70adba349cfbfaaa3029849744c] Merge branch 'cc/split-index-config'
-> 
-> Could you try with the following patch:
-> 
-> http://public-inbox.org/git/20170330210354.20018-1-chriscool@tuxfamily.org/
+Reword an outdated comment which suggests that only git-grep can use
+PCRE.
 
-Yeah, I tried with and without that patch with the same result.
-Unless I'm screwing something up when testing I don't think this fixes
-the issue unfortunately.
+This comment was added back when PCRE support was initially added in
+commit 63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09), and was true
+at the time.
 
-> Thanks,
-> Christian.
+It hasn't been telling the full truth since git-log learned to use
+PCRE with --grep in commit 727b6fc3ed ("log --grep: accept
+--basic-regexp and --perl-regexp", 2012-10-03), and more importantly
+is likely to get more inaccurate over time as more use is made of PCRE
+in other areas.
+
+Reword it to be more future-proof, and to more clearly explain that
+this enables user-initiated runtime behavior.
+
+Copy/pasting this so much in configure.ac is lame, these Makefile-like
+flags aren't even used by autoconf, just the corresponding
+--with[out]-* options. But copy/pasting the comments that make sense
+for the Makefile to configure.ac where they make less sence is the
+pattern everything else follows in that file. I'm not going to war
+against that as part of this change, just following the existing
+pattern.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile     |  6 ++++--
+ configure.ac | 12 ++++++++----
+ 2 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index eb1a1a7cff..2e63b1cfcc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -24,8 +24,10 @@ all::
+ # Define NO_OPENSSL environment variable if you do not have OpenSSL.
+ # This also implies BLK_SHA1.
+ #
+-# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
+-# able to use Perl-compatible regular expressions.
++# Define USE_LIBPCRE if you have and want to use libpcre. Various
++# commands such as log and grep offer runtime options to use
++# Perl-compatible regular expressions instead of standard or extended
++# POSIX regular expressions.
+ #
+ # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
+diff --git a/configure.ac b/configure.ac
+index 128165529f..deeb968daa 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -250,8 +250,10 @@ AS_HELP_STRING([--with-openssl],[use OpenSSL library (default is YES)])
+ AS_HELP_STRING([],              [ARG can be prefix for openssl library and headers]),
+ GIT_PARSE_WITH([openssl]))
+ 
+-# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
+-# able to use Perl-compatible regular expressions.
++# Define USE_LIBPCRE if you have and want to use libpcre. Various
++# commands such as log and grep offer runtime options to use
++# Perl-compatible regular expressions instead of standard or extended
++# POSIX regular expressions.
+ #
+ # Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
+ # /foo/bar/include and /foo/bar/lib directories.
+@@ -499,8 +501,10 @@ GIT_CONF_SUBST([NEEDS_SSL_WITH_CRYPTO])
+ GIT_CONF_SUBST([NO_OPENSSL])
+ 
+ #
+-# Define USE_LIBPCRE if you have and want to use libpcre. git-grep will be
+-# able to use Perl-compatible regular expressions.
++# Define USE_LIBPCRE if you have and want to use libpcre. Various
++# commands such as log and grep offer runtime options to use
++# Perl-compatible regular expressions instead of standard or extended
++# POSIX regular expressions.
+ #
+ 
+ if test -n "$USE_LIBPCRE"; then
+-- 
+2.11.0
+
