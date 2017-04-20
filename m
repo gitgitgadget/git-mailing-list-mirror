@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B60E207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 21:25:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E639207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 21:25:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033348AbdDTVZ3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 17:25:29 -0400
-Received: from mail-wr0-f196.google.com ([209.85.128.196]:34863 "EHLO
-        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031722AbdDTVZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 17:25:11 -0400
-Received: by mail-wr0-f196.google.com with SMTP id l44so9434870wrc.2
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 14:25:10 -0700 (PDT)
+        id S1033464AbdDTVZe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 17:25:34 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:36500 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031666AbdDTVZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 17:25:09 -0400
+Received: by mail-wm0-f44.google.com with SMTP id o81so2760737wmb.1
+        for <git@vger.kernel.org>; Thu, 20 Apr 2017 14:25:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+4Gc+NydQZ+jDONLiG1zhNbw2u+JlykRAFSthuRNVDY=;
-        b=Gr/MZukaWls7yCWj7zs1RmQCi18rpZjsu9HM4DU08mJ79vfRJb52ysH004nSOAAkol
-         eIqmJclHBzhVT1IbJOxoPJqceo4sPazMevTROaL/bSNYzXMdA6+UtropkAnHaFDiwPrb
-         1Vj+gKrZbmtIHkPbrHwC4lHyp2P3f5z58Zq81m59BtmQ5kypha+NPkf8giL9mqp7jk9E
-         fPUXII1Pr+W6rlRgnJMnBzWyEWF118ko2yzw6ahaynB9oqBCiQ8iFNqIkO484oS+PtSR
-         S/63F7wt4g8wKilYW+sszPq1lhDsBu6YCKyExSVzwNWO2pPSGsVEMysSNx5Nmf9Sf9Is
-         IgvQ==
+        bh=0JrO17ELm8uJPkmTSJffVyNLvZBdWyYnWjB+klcnZwY=;
+        b=ZjOKy8iuex8RvzNRo2lN+138XK5wFkWjwfvh7enmb34eTDxH5Bzt2QKU0PO/COAGt9
+         XB9Y1RiTBydwQpsTvSPSouTCpjHIirbkCnxCQ/otshQjxUGaj1jmlaxoLckace21dpVa
+         VGEPGyZqhuEebiiSACHx8KSfIDUhxHpQXudRZzWMS1EkW0mA5ehVBveOS0ivgl3jW7yJ
+         nHKmTWlaq/U3xpirA9QzOfNHdnW/7ayV6d/4a9afWQPsYTyAW27AgIiz6J7X1gOXDyW+
+         0fSFfaXyEyu70eU3zKDf+30/eZtHwXRW2/AQ1Pnvs8FTmkcKaybwyQgLjy8C/XBszxx+
+         RG5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+4Gc+NydQZ+jDONLiG1zhNbw2u+JlykRAFSthuRNVDY=;
-        b=rx1XHw9ywYZMj6HZPsQ1S4uWLgFPvZiENLQYprf9xFcFo59Zc+TUcvRyDMTNguxj/H
-         rz4aX4dIJts5sFnbvDvVV957o3Al81kEm6g8C1dzhOyD54FHWCPapGYnF0UsC85+9kyu
-         UE7MbrqFBXw0pmhOLqYjguThEoNO9N+7qoeZ6d+1oD5i1i12bs96bWRFwWaraGs8Haww
-         t0a8qkP5AVXImNTTyv8EtWHT40Dbg7L+5DhY/RwwFroBN+JsTfvxv2ZxTZ2JvZH5QQcC
-         YX9dMDP2QguAEnsHnRNIXgQpTb1jjH3frQnPYFqr9TZbwJT2Vy4tbguh5YJwBpF9tXaV
-         O6rw==
-X-Gm-Message-State: AN3rC/6KwmJqTT7tl4+pMgvUA3/nRHGRyMgIKpCpNueDvHgB58Crz2Y+
-        6HAZpax4j5TSCgVNVFM=
-X-Received: by 10.223.142.213 with SMTP id q79mr463300wrb.25.1492723509146;
-        Thu, 20 Apr 2017 14:25:09 -0700 (PDT)
+        bh=0JrO17ELm8uJPkmTSJffVyNLvZBdWyYnWjB+klcnZwY=;
+        b=KpLs4wIaP8QT4B+okPk9gnFuGTJUVx6EWQ738Q8JJWyFcts/RJDRd0aZr5OZ+3/7vr
+         dYYkXf+A3GEAwTXAJCuJDaIYB4GzASdaoM7f1ED4bKfPrptntk2jfhj2+9mKLcDzKF/R
+         N7LZnk01J6f5AckiBHI6PoOFYL5TJJtbuuwzUobiCY+UVp1cfU6k1GXcuizS7BLvVXRO
+         cuCq/Ez2GLKB58VKkOaRieD7DD0x65YupXWERgr62Q2dOf/79MzUY+JPKlljGH43squE
+         TM/TNUSHM0Uyao4bqk2UT8mebSwv60uRo6ortuq/BfV8PCdGydBiQjVAza/XSrHCwh+Q
+         iDTw==
+X-Gm-Message-State: AN3rC/4jPuGDqevL347Ue8q3myyYPzfN7rl6y28hhde5x3+AJ7dOXmte
+        LLe2uhwRR5i0LA==
+X-Received: by 10.28.54.151 with SMTP id y23mr5238224wmh.90.1492723502747;
+        Thu, 20 Apr 2017 14:25:02 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id k63sm442322wmf.9.2017.04.20.14.25.07
+        by smtp.gmail.com with ESMTPSA id k63sm442322wmf.9.2017.04.20.14.25.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Apr 2017 14:25:08 -0700 (PDT)
+        Thu, 20 Apr 2017 14:25:01 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 17/18] grep: remove support concurrent use of both PCRE v1 & v2
-Date:   Thu, 20 Apr 2017 21:23:44 +0000
-Message-Id: <20170420212345.7408-18-avarab@gmail.com>
+Subject: [PATCH v3 15/18] grep: add support for the PCRE v1 JIT API
+Date:   Thu, 20 Apr 2017 21:23:42 +0000
+Message-Id: <20170420212345.7408-16-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170420212345.7408-1-avarab@gmail.com>
 References: <20170420212345.7408-1-avarab@gmail.com>
@@ -76,446 +76,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove the support for concurrently using PCRE v1 & v2 by compiling
-Git with support for both.
+Change the grep PCRE v1 code to use JIT when available. When PCRE
+support was initially added in commit 63e7e9d8b6 ("git-grep: Learn
+PCRE", 2011-05-09) PCRE had no JIT support, it was integrated into
+8.20 released on 2011-10-21.
 
-Having access to both at runtime via grep.patternType=[pcre1|pcre2]
-makes it easier for the developer hacking on the PCRE implementations
-to test them concurrently, but adds confusion for everyone else,
-particularly Git users who have no reason to concurrently use both
-libraries.
+When JIT support is enabled the PCRE performance usually improves by
+more than 50%. The pattern compilation times are relatively slower,
+but those relative numbers are tiny, and are easily made back in all
+but the most trivial cases of grep. Detailed benchhmarks are available
+at: http://sljit.sourceforge.net/pcre.html
 
-Now either USE_LIBPCRE1=YesPlease (or its alias USE_LIBPCRE) or
-USE_LIBPCRE2=YesPlease can be supplied when building git, but
-providing both will yield an error, similarly providing both
---with-libpcre1 & --with-libpcre2 to the configure script will produce
-an error.
+With this change the difference in a t/perf/p7820-grep-engines.sh run
+is, shown with git --word-diff:
+
+    7820.1: extended with how.to                               [-0.28(1.23+0.44)-]{+0.28(1.18+0.39)+}
+    7820.2: extended with ^how to                              [-0.26(1.15+0.38)-]{+0.27(1.13+0.40)+}
+    7820.3: extended with \w+our\w*                            [-6.06(38.44+0.35)-]{+6.11(38.66+0.32)+}
+    7820.4: extended with -?-?-?-?-?-?-?-?-?-?-?-----------$   [-0.37(1.57+0.38)-]{+0.37(1.56+0.42)+}
+    7820.5: pcre1 with how.to                                  [-0.26(1.15+0.37)-]{+0.19(0.39+0.55)+}
+    7820.6: pcre1 with ^how to                                 [-0.46(2.66+0.31)-]{+0.22(0.67+0.44)+}
+    7820.7: pcre1 with \w+our\w*                               [-16.42(99.42+0.48)-]{+0.51(3.05+0.24)+}
+    7820.8: pcre1 with -?-?-?-?-?-?-?-?-?-?-?-----------$      [-81.52(275.37+0.41)-]{+5.16(19.31+0.33)+}
+
+The conditional support for JIT is implemented as suggested in the
+pcrejit(3) man page. E.g. defining PCRE_STUDY_JIT_COMPILE to 0 if it's
+not present.
+
+There's no graceful fallback if pcre_jit_stack_alloc() fails under
+PCRE_CONFIG_JIT, instead the program will abort. I don't think this is
+worth handling, it'll only fail in cases where malloc() doesn't work,
+in which case we're screwed anyway.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt           |  7 ----
- Makefile                           | 36 +++++++++----------
- builtin/grep.c                     |  3 --
- configure.ac                       | 72 +++++++++++++++++++++-----------------
- grep.c                             | 19 +---------
- grep.h                             |  4 +--
- t/README                           | 12 -------
- t/perf/p7820-grep-engines.sh       |  2 +-
- t/t7810-grep.sh                    | 30 +---------------
- t/t7814-grep-recurse-submodules.sh | 14 +-------
- t/test-lib.sh                      |  5 ++-
- 11 files changed, 65 insertions(+), 139 deletions(-)
+ grep.c | 27 ++++++++++++++++++++++++++-
+ grep.h |  5 +++++
+ 2 files changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a5fc482495..475e874d51 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1624,13 +1624,6 @@ grep.patternType::
- 	'fixed', or 'perl' will enable the `--basic-regexp`, `--extended-regexp`,
- 	`--fixed-strings`, or `--perl-regexp` option accordingly, while the
- 	value 'default' will return to the default matching behavior.
--+
--The 'perl' and 'pcre' values are synonyms. Depending on which PCRE
--library Git was compiled with either or both of 'pcre1' and 'pcre2'
--might also be available.
--+
--If both are available Git currently defaults to 'pcre1', but this
--might change in future versions.
- 
- grep.extendedRegexp::
- 	If set to true, enable `--extended-regexp` option by default. This
-diff --git a/Makefile b/Makefile
-index afdde49cda..a792f206b9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -29,16 +29,13 @@ all::
- # Perl-compatible regular expressions instead of standard or extended
- # POSIX regular expressions.
- #
--# Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
--# /foo/bar/include and /foo/bar/lib directories.
-+# Currently USE_LIBPCRE is a synonym for USE_LIBPCRE1, define
-+# USE_LIBPCRE2 instead if you'd like to use version 2 of the PCRE
-+# library. The USE_LIBPCRE flag will likely be changed to mean v2 by
-+# default in future releases.
- #
--# Define USE_LIBPCRE2 if you have and want to use libpcre2. Various
--# commands such as log and grep offer runtime options to use
--# Perl-compatible regular expressions instead of standard or extended
--# POSIX regular expressions.
--#
--# Define LIBPCRE2DIR=/foo/bar if your libpcre2 header and library
--# files are in /foo/bar/include and /foo/bar/lib directories.
-+# Define LIBPCREDIR=/foo/bar if your PCRE header and library files are in
-+# /foo/bar/include and /foo/bar/lib directories.
- #
- # Define HAVE_ALLOCA_H if you have working alloca(3) defined in that header.
- #
-@@ -1093,24 +1090,27 @@ ifdef NO_LIBGEN_H
- 	COMPAT_OBJS += compat/basename.o
- endif
- 
--ifdef USE_LIBPCRE
--	BASIC_CFLAGS += -DUSE_LIBPCRE1
--	ifdef LIBPCREDIR
--		BASIC_CFLAGS += -I$(LIBPCREDIR)/include
--		EXTLIBS += -L$(LIBPCREDIR)/$(lib) $(CC_LD_DYNPATH)$(LIBPCREDIR)/$(lib)
-+USE_LIBPCRE1 ?= $(USE_LIBPCRE)
-+
-+ifneq (,$(USE_LIBPCRE1))
-+	ifdef USE_LIBPCRE2
-+$(error Only set USE_LIBPCRE1 (or its alias USE_LIBPCRE) or USE_LIBPCRE2, not both!)
- 	endif
-+
-+	BASIC_CFLAGS += -DUSE_LIBPCRE1
- 	EXTLIBS += -lpcre
- endif
- 
- ifdef USE_LIBPCRE2
- 	BASIC_CFLAGS += -DUSE_LIBPCRE2
--	ifdef LIBPCRE2DIR
--		BASIC_CFLAGS += -I$(LIBPCRE2DIR)/include
--		EXTLIBS += -L$(LIBPCRE2DIR)/$(lib) $(CC_LD_DYNPATH)$(LIBPCR2EDIR)/$(lib)
--	endif
- 	EXTLIBS += -lpcre2-8
- endif
- 
-+ifdef LIBPCREDIR
-+	BASIC_CFLAGS += -I$(LIBPCREDIR)/include
-+	EXTLIBS += -L$(LIBPCREDIR)/$(lib) $(CC_LD_DYNPATH)$(LIBPCREDIR)/$(lib)
-+endif
-+
- ifdef HAVE_ALLOCA_H
- 	BASIC_CFLAGS += -DHAVE_ALLOCA_H
- endif
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 178b10aa6f..be3dbd6957 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -495,9 +495,6 @@ static void compile_submodule_options(const struct grep_opt *opt,
- 		break;
- 	case GREP_PATTERN_TYPE_UNSPECIFIED:
- 		break;
--	case GREP_PATTERN_TYPE_PCRE1:
--	case GREP_PATTERN_TYPE_PCRE2:
--		die("BUG: Command-line option for pcre1 or pcre2 added without updating switch statement");
- 	default:
- 		die("BUG: Added a new grep pattern type without updating switch statement");
- 	}
-diff --git a/configure.ac b/configure.ac
-index 7ceb22ed03..11d083fbe0 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -255,47 +255,63 @@ GIT_PARSE_WITH([openssl]))
- # Perl-compatible regular expressions instead of standard or extended
- # POSIX regular expressions.
- #
--# Define LIBPCREDIR=/foo/bar if your libpcre header and library files are in
-+# Currently USE_LIBPCRE is a synonym for USE_LIBPCRE1, define
-+# USE_LIBPCRE2 instead if you'd like to use version 2 of the PCRE
-+# library. The USE_LIBPCRE flag will likely be changed to mean v2 by
-+# default in future releases.
-+#
-+# Define LIBPCREDIR=/foo/bar if your PCRE header and library files are in
- # /foo/bar/include and /foo/bar/lib directories.
- #
- AC_ARG_WITH(libpcre,
--AS_HELP_STRING([--with-libpcre],[support Perl-compatible regexes via libpcre1 (default is NO)])
--AS_HELP_STRING([],           [ARG can be also prefix for libpcre1 library and headers]),
-+AS_HELP_STRING([--with-libpcre],[synonym for --with-libpcre1]),
-     if test "$withval" = "no"; then
--	USE_LIBPCRE=
-+	USE_LIBPCRE1=
-     elif test "$withval" = "yes"; then
--	USE_LIBPCRE=YesPlease
-+	USE_LIBPCRE1=YesPlease
-     else
--	USE_LIBPCRE=YesPlease
-+	USE_LIBPCRE1=YesPlease
- 	LIBPCREDIR=$withval
- 	AC_MSG_NOTICE([Setting LIBPCREDIR to $LIBPCREDIR])
--        dnl USE_LIBPCRE can still be modified below, so don't substitute
-+        dnl USE_LIBPCRE1 can still be modified below, so don't substitute
-+        dnl it yet.
-+	GIT_CONF_SUBST([LIBPCREDIR])
-+    fi)
-+
-+AC_ARG_WITH(libpcre1,
-+AS_HELP_STRING([--with-libpcre1],[support Perl-compatible regexes via libpcre1 (default is NO)])
-+AS_HELP_STRING([],           [ARG can be also prefix for libpcre library and headers]),
-+    if test "$withval" = "no"; then
-+	USE_LIBPCRE1=
-+    elif test "$withval" = "yes"; then
-+	USE_LIBPCRE1=YesPlease
-+    else
-+	USE_LIBPCRE1=YesPlease
-+	LIBPCREDIR=$withval
-+	AC_MSG_NOTICE([Setting LIBPCREDIR to $LIBPCREDIR])
-+        dnl USE_LIBPCRE1 can still be modified below, so don't substitute
-         dnl it yet.
- 	GIT_CONF_SUBST([LIBPCREDIR])
-     fi)
- 
--# Define USE_LIBPCRE2 if you have and want to use libpcre2. Various
--# commands such as log and grep offer runtime options to use
--# Perl-compatible regular expressions instead of standard or extended
--# POSIX regular expressions.
--#
--# Define LIBPCR2EDIR=/foo/bar if your libpcre2 header and library
--# files are in /foo/bar/include and /foo/bar/lib directories.
--#
- AC_ARG_WITH(libpcre2,
- AS_HELP_STRING([--with-libpcre2],[support Perl-compatible regexes via libpcre2 (default is NO)])
- AS_HELP_STRING([],           [ARG can be also prefix for libpcre library and headers]),
-+    if test -n "$USE_LIBPCRE1"; then
-+        AC_MSG_ERROR([Only supply one of --with-libpcre1 or --with-libpcre2!])
-+    fi
-+
-     if test "$withval" = "no"; then
- 	USE_LIBPCRE2=
-     elif test "$withval" = "yes"; then
- 	USE_LIBPCRE2=YesPlease
-     else
- 	USE_LIBPCRE2=YesPlease
--	LIBPCRE2DIR=$withval
--	AC_MSG_NOTICE([Setting LIBPCRE2DIR to $LIBPCRE2DIR])
-+	LIBPCREDIR=$withval
-+	AC_MSG_NOTICE([Setting LIBPCREDIR to $LIBPCREDIR])
-         dnl USE_LIBPCRE2 can still be modified below, so don't substitute
-         dnl it yet.
--	GIT_CONF_SUBST([LIBPCRE2DIR])
-+	GIT_CONF_SUBST([LIBPCREDIR])
-     fi)
- #
- # Define HAVE_ALLOCA_H if you have working alloca(3) defined in that header.
-@@ -525,13 +541,11 @@ GIT_CONF_SUBST([NEEDS_SSL_WITH_CRYPTO])
- GIT_CONF_SUBST([NO_OPENSSL])
- 
- #
--# Define USE_LIBPCRE if you have and want to use libpcre. Various
--# commands such as log and grep offer runtime options to use
--# Perl-compatible regular expressions instead of standard or extended
--# POSIX regular expressions.
-+# Handle the USE_LIBPCRE1 and USE_LIBPCRE2 options potentially set
-+# above.
- #
- 
--if test -n "$USE_LIBPCRE"; then
-+if test -n "$USE_LIBPCRE1"; then
- 
- GIT_STASH_FLAGS($LIBPCREDIR)
- 
-@@ -541,26 +555,20 @@ AC_CHECK_LIB([pcre], [pcre_version],
- 
- GIT_UNSTASH_FLAGS($LIBPCREDIR)
- 
--GIT_CONF_SUBST([USE_LIBPCRE])
-+GIT_CONF_SUBST([USE_LIBPCRE1])
- 
- fi
- 
--#
--# Define USE_LIBPCRE2 if you have and want to use libpcre2. Various
--# commands such as log and grep offer runtime options to use
--# Perl-compatible regular expressions instead of standard or extended
--# POSIX regular expressions.
--#
- 
- if test -n "$USE_LIBPCRE2"; then
- 
--GIT_STASH_FLAGS($LIBPCRE2DIR)
-+GIT_STASH_FLAGS($LIBPCREDIR)
- 
- AC_CHECK_LIB([pcre2-8], [pcre2_config_8],
- [USE_LIBPCRE2=YesPlease],
- [USE_LIBPCRE2=])
- 
--GIT_UNSTASH_FLAGS($LIBPCRE2DIR)
-+GIT_UNSTASH_FLAGS($LIBPCREDIR)
- 
- GIT_CONF_SUBST([USE_LIBPCRE2])
- 
 diff --git a/grep.c b/grep.c
-index 39955f5745..1c8d47b615 100644
+index d2c87ee2c3..eb68bdaa2a 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -60,13 +60,8 @@ static int parse_pattern_type_arg(const char *opt, const char *arg)
- 		return GREP_PATTERN_TYPE_ERE;
- 	else if (!strcmp(arg, "fixed"))
- 		return GREP_PATTERN_TYPE_FIXED;
--	else if (!strcmp(arg, "perl") ||
--		 !strcmp(arg, "pcre"))
-+	else if (!strcmp(arg, "perl"))
- 		return GREP_PATTERN_TYPE_PCRE;
--	else if (!strcmp(arg, "pcre1"))
--		return GREP_PATTERN_TYPE_PCRE1;
--	else if (!strcmp(arg, "pcre2"))
--		return GREP_PATTERN_TYPE_PCRE2;
- 	die("bad %s argument: %s", opt, arg);
+@@ -331,6 +331,9 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 	const char *error;
+ 	int erroffset;
+ 	int options = PCRE_MULTILINE;
++#ifdef PCRE_CONFIG_JIT
++	int canjit;
++#endif
+ 
+ 	if (opt->ignore_case) {
+ 		if (has_non_ascii(p->pattern))
+@@ -345,9 +348,19 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 	if (!p->pcre1_regexp)
+ 		compile_regexp_failed(p, error);
+ 
+-	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, 0, &error);
++	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, PCRE_STUDY_JIT_COMPILE, &error);
+ 	if (!p->pcre1_extra_info && error)
+ 		die("%s", error);
++
++#ifdef PCRE_CONFIG_JIT
++	pcre_config(PCRE_CONFIG_JIT, &canjit);
++	if (canjit == 1) {
++		p->pcre1_jit_stack = pcre_jit_stack_alloc(1, 1024 * 1024);
++		if (!p->pcre1_jit_stack)
++			die("BUG: Couldn't allocate PCRE JIT stack");
++		pcre_assign_jit_stack(p->pcre1_extra_info, NULL, p->pcre1_jit_stack);
++	}
++#endif
  }
  
-@@ -215,18 +210,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
- 		opt->pcre2 = 1;
- #endif
- 		break;
--
--	case GREP_PATTERN_TYPE_PCRE1:
--		opt->fixed = 0;
--		opt->pcre1 = 1;
--		opt->pcre2 = 0;
--		break;
--
--	case GREP_PATTERN_TYPE_PCRE2:
--		opt->fixed = 0;
--		opt->pcre1 = 0;
--		opt->pcre2 = 1;
--		break;
- 	}
- }
+ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+@@ -358,8 +371,15 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 	if (eflags & REG_NOTBOL)
+ 		flags |= PCRE_NOTBOL;
  
++#ifdef PCRE_CONFIG_JIT
++	ret = pcre_jit_exec(p->pcre1_regexp, p->pcre1_extra_info, line, eol - line,
++			    0, flags, ovector, ARRAY_SIZE(ovector),
++			    p->pcre1_jit_stack);
++#else
+ 	ret = pcre_exec(p->pcre1_regexp, p->pcre1_extra_info, line, eol - line,
+ 			0, flags, ovector, ARRAY_SIZE(ovector));
++#endif
++
+ 	if (ret < 0 && ret != PCRE_ERROR_NOMATCH)
+ 		die("pcre_exec failed with error code %d", ret);
+ 	if (ret > 0) {
+@@ -374,7 +394,12 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ static void free_pcre1_regexp(struct grep_pat *p)
+ {
+ 	pcre_free(p->pcre1_regexp);
++#ifdef PCRE_CONFIG_JIT
++	pcre_free_study(p->pcre1_extra_info);
++	pcre_jit_stack_free(p->pcre1_jit_stack);
++#else
+ 	pcre_free(p->pcre1_extra_info);
++#endif
+ 	pcre_free((void *)p->pcre1_tables);
+ }
+ #else /* !USE_LIBPCRE1 */
 diff --git a/grep.h b/grep.h
-index dd16b5fd53..1b56d327e2 100644
+index fa2ab9485f..29e20bf837 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -89,9 +89,7 @@ enum grep_pattern_type {
- 	GREP_PATTERN_TYPE_BRE,
- 	GREP_PATTERN_TYPE_ERE,
- 	GREP_PATTERN_TYPE_FIXED,
--	GREP_PATTERN_TYPE_PCRE,
--	GREP_PATTERN_TYPE_PCRE1,
--	GREP_PATTERN_TYPE_PCRE2
-+	GREP_PATTERN_TYPE_PCRE
- };
- 
- struct grep_expr {
-diff --git a/t/README b/t/README
-index 547b06e700..a90cb62583 100644
---- a/t/README
-+++ b/t/README
-@@ -808,18 +808,6 @@ use these, and "test_set_prereq" for how to define your own.
-    Git was compiled with support for PCRE. Wrap any tests
-    that use git-grep --perl-regexp or git-grep -P in these.
- 
-- - LIBPCRE1
--
--   Git was compiled with PCRE v1 support via
--   USE_LIBPCRE=YesPlease. Wrap any PCRE using tests that for some
--   reason need v1 of the PCRE library instead of v2 in these.
--
-- - LIBPCRE2
--
--   Git was compiled with PCRE v2 support via
--   USE_LIBPCRE2=YesPlease. Wrap any PCRE using tests that for some
--   reason need v2 of the PCRE library instead of v1 in these.
--
-  - CASE_INSENSITIVE_FS
- 
-    Test is run on a case insensitive file system.
-diff --git a/t/perf/p7820-grep-engines.sh b/t/perf/p7820-grep-engines.sh
-index 70c5a5ca32..96d993ec7d 100755
---- a/t/perf/p7820-grep-engines.sh
-+++ b/t/perf/p7820-grep-engines.sh
-@@ -7,7 +7,7 @@ test_description="Comparison of git-grep's regex engines"
- test_perf_large_repo
- test_checkout_worktree
- 
--for engine in extended pcre1 pcre2
-+for engine in extended perl
- do
- 	# Patterns stolen from http://sljit.sourceforge.net/pcre.html
- 	for pattern in \
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index bae7e524b9..f5f1b61e02 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -1063,16 +1063,6 @@ test_expect_success PCRE 'grep -P pattern' '
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE1 'grep libpcre1 pattern' '
--	git -c grep.patternType=pcre1 grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
--	test_cmp expected actual
--'
--
--test_expect_success LIBPCRE2 'grep libpcre2 pattern' '
--	git -c grep.patternType=pcre2 grep "\p{Ps}.*?\p{Pe}" hello.c >actual &&
--	test_cmp expected actual
--'
--
- test_expect_success 'grep pattern with grep.extendedRegexp=true' '
- 	>empty &&
- 	test_must_fail git -c grep.extendedregexp=true \
-@@ -1522,28 +1512,10 @@ test_expect_success 'grep does not report i-t-a and assume unchanged with -L' '
- 	test_cmp expected actual
- '
- 
--test_expect_success PCRE "grep with grep.patternType synonyms perl/pcre" '
-+test_expect_success PCRE "grep with grep.patternType synonyms perl" '
- 	echo "#include <stdio.h>" >expected &&
- 	git -c grep.patternType=perl  grep -h --no-line-number "st(?=dio)" >actual &&
--	test_cmp expected actual &&
--	git -c grep.patternType=pcre  grep -h --no-line-number "st(?=dio)" >actual &&
- 	test_cmp expected actual
- '
- 
--test_expect_success LIBPCRE1 "grep with grep.patternType=pcre1" '
--	echo "#include <stdio.h>" >expected &&
--	git -c grep.patternType=pcre1 grep -h --no-line-number "st(?=dio)" >actual &&
--	test_cmp expected actual &&
--	test_must_fail git -c grep.patternType=pcre1 grep "foo(?+bar)" 2>error &&
--	test_i18ngrep -q "digit expected after" error
--'
--
--test_expect_success LIBPCRE2 "grep with grep.patternType=pcre2" '
--	echo "#include <stdio.h>" >expected &&
--	git -c grep.patternType=pcre2 grep -h --no-line-number "st(?=dio)" >actual &&
--	test_cmp expected actual &&
--	test_must_fail git -c grep.patternType=pcre2 grep "foo(?+bar)" 2>error &&
--	test_i18ngrep -q "digit expected after" error
--'
--
- test_done
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 7a8a48493b..ef658b7899 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -358,19 +358,7 @@ test_expect_success 'grep --recurse-submodules should pass the pattern type alon
- 		EOF
- 		test_cmp expect actual &&
- 		git -c grep.patternType=perl grep --recurse-submodules -e "(.|.)[\d]" >actual &&
--		test_cmp expect actual &&
--		git -c grep.patternType=pcre grep --recurse-submodules -e "(.|.)[\d]" >actual &&
--		test_cmp expect actual &&
--		if test_have_prereq LIBPCRE1
--		then
--			git -c grep.patternType=pcre1 grep --recurse-submodules -e "(.|.)[\d]" >actual &&
--			test_cmp expect actual
--		fi &&
--		if test_have_prereq LIBPCRE2
--		then
--			git -c grep.patternType=pcre2 grep --recurse-submodules -e "(.|.)[\d]" >actual &&
--			test_cmp expect actual
--		fi
-+		test_cmp expect actual
- 	fi
- '
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6f873de3e7..969f931ebf 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1010,9 +1010,8 @@ esac
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PYTHON" && test_set_prereq PYTHON
--test -n "$USE_LIBPCRE1$USE_LIBPCRE2" && test_set_prereq PCRE
--test -n "$USE_LIBPCRE1" && test_set_prereq LIBPCRE1
--test -n "$USE_LIBPCRE2" && test_set_prereq LIBPCRE2
-+test -n "$USE_LIBPCRE1" && test_set_prereq PCRE
-+test -n "$USE_LIBPCRE2" && test_set_prereq PCRE
- test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
- 
- # Can we rely on git's output in the C locale?
+@@ -3,9 +3,13 @@
+ #include "color.h"
+ #ifdef USE_LIBPCRE1
+ #include <pcre.h>
++#ifndef PCRE_STUDY_JIT_COMPILE
++#define PCRE_STUDY_JIT_COMPILE 0
++#endif
+ #else
+ typedef int pcre;
+ typedef int pcre_extra;
++typedef int pcre_jit_stack;
+ #endif
+ #include "kwset.h"
+ #include "thread-utils.h"
+@@ -48,6 +52,7 @@ struct grep_pat {
+ 	regex_t regexp;
+ 	pcre *pcre1_regexp;
+ 	pcre_extra *pcre1_extra_info;
++	pcre_jit_stack *pcre1_jit_stack;
+ 	const unsigned char *pcre1_tables;
+ 	kwset_t kws;
+ 	unsigned fixed:1;
 -- 
 2.11.0
 
