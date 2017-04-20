@@ -6,70 +6,73 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D2CD207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 20:15:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF95207BD
+	for <e@80x24.org>; Thu, 20 Apr 2017 20:22:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1033298AbdDTUOu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 16:14:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37167 "EHLO cloud.peff.net"
+        id S1033587AbdDTUWG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 16:22:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37176 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1033218AbdDTUOq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 16:14:46 -0400
-Received: (qmail 31098 invoked by uid 109); 20 Apr 2017 20:14:46 -0000
+        id S1033546AbdDTUWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 16:22:03 -0400
+Received: (qmail 31528 invoked by uid 109); 20 Apr 2017 20:22:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 20:14:46 +0000
-Received: (qmail 8643 invoked by uid 111); 20 Apr 2017 20:15:10 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 20:22:01 +0000
+Received: (qmail 8770 invoked by uid 111); 20 Apr 2017 20:22:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 16:15:10 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 16:14:43 -0400
-Date:   Thu, 20 Apr 2017 16:14:43 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 20 Apr 2017 16:22:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Apr 2017 16:21:58 -0400
+Date:   Thu, 20 Apr 2017 16:21:58 -0400
 From:   Jeff King <peff@peff.net>
-To:     David Turner <David.Turner@twosigma.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "christian.couder@gmail.com" <christian.couder@gmail.com>,
-        "mfick@codeaurora.org" <mfick@codeaurora.org>,
-        "jacob.keller@gmail.com" <jacob.keller@gmail.com>
-Subject: Re: [PATCH] repack: respect gc.pid lock
-Message-ID: <20170420201443.ee4tgoymzpfvl4jq@sigill.intra.peff.net>
-References: <20170413202712.22192-1-dturner@twosigma.com>
- <20170414193341.itr3ybiiu2brt63b@sigill.intra.peff.net>
- <c6dd37238f154ccea56dda9b43f3277a@exmbdft7.ad.twosigma.com>
- <20170418034157.oi6hkg5obnca5zsa@sigill.intra.peff.net>
- <2400e9cbfaff4838a8f3b23c4c2c5a22@exmbdft7.ad.twosigma.com>
- <20170418171930.zad5wrbu5rvdsmg5@sigill.intra.peff.net>
- <710ded65bb8843ab838d9c52cd796317@exmbdft7.ad.twosigma.com>
- <20170418175011.qx64luolrvqwwtpa@sigill.intra.peff.net>
- <7e31f4ed5c0f4c31b2870fb58cf7110e@exmbdft7.ad.twosigma.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: [PATCH] connect.c: fix leak in handle_ssh_variant
+Message-ID: <20170420202157.l2un35omz4vhffny@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7e31f4ed5c0f4c31b2870fb58cf7110e@exmbdft7.ad.twosigma.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 20, 2017 at 08:10:24PM +0000, David Turner wrote:
+When we see an error from split_cmdline(), we exit the
+function without freeing the copy of the command string we
+made.
 
-> > Is "-a" or "-A" the key factor? Are there current callers who prefer the current
-> > behavior of "possibly duplicate some work, but never report failure" versus "do
-> > not duplicate work, but sometimes fail due to lock contention"?
-> 
-> One problem with failing is that it can leave a temp pack behind.
+This was sort-of introduced by 22e5ae5c8 (connect.c: handle
+errors from split_cmdline, 2017-04-10). The leak existed
+before that, but before that commit fixed the bug, we could
+never trigger this else clause in the first place.
 
-Yeah. IMHO we should probably treat failed object and pack writes as
-normal tempfiles and remove them (but possibly respect a "debug mode"
-that leaves them around). But that's another patch entirely.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was meant to be part of the original patch in:
 
-> I think the correct fix is to change the default code.packedGitLimit on 64-bit 
-> machines to 32 terabytes (2**45 bytes).  That's because on modern Intel 
-> processors, there are 48 bits of address space actually available, but the kernel 
-> is going to probably reserve a few bits.  My machine claims to have 2**46 bytes 
-> of virtual address space available.  It's also several times bigger than any 
-> repo that I know of or can easily imagine.
-> 
-> Does that seem reasonable to you?
+  http://public-inbox.org/git/20170411003554.2tjnn65vfco376kj@sigill.intra.peff.net/
 
-Yes, it does.
+but I posted two versions in quick succession and Junio picked up the
+first one. :)
 
--Peff
+ connect.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/connect.c b/connect.c
+index 568a35f75..cd21a1b6f 100644
+--- a/connect.c
++++ b/connect.c
+@@ -738,8 +738,10 @@ static void handle_ssh_variant(const char *ssh_command, int is_cmdline,
+ 			 * any longer.
+ 			 */
+ 			free(ssh_argv);
+-		} else
++		} else {
++			free(p);
+ 			return;
++		}
+ 	}
+ 
+ 	if (!strcasecmp(variant, "plink") ||
+-- 
+2.13.0.rc0.363.g8726c260e
