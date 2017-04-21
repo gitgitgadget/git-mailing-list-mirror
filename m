@@ -2,110 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D0DF207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 18:29:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B4B0207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 18:32:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1041200AbdDUS3V (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 14:29:21 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:33252 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1422783AbdDUS3N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 14:29:13 -0400
-Received: by mail-io0-f175.google.com with SMTP id k87so130871599ioi.0
-        for <git@vger.kernel.org>; Fri, 21 Apr 2017 11:29:13 -0700 (PDT)
+        id S1041589AbdDUScF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 14:32:05 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:34865 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1041547AbdDUSb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 14:31:57 -0400
+Received: by mail-qt0-f195.google.com with SMTP id o36so12937504qtb.2
+        for <git@vger.kernel.org>; Fri, 21 Apr 2017 11:31:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5s/DldDqcDc8sPy5zuWcgAjH/FQZHsNJD8TMeFc7Lhg=;
-        b=jDEVP5W9P5MvIliCve92cKFycYstWHfm73yf6qegHkpLgiXjELrR33XtTcqwOYZQ9h
-         xN8c5gsSalmn8LCGoRAW1UV4BZGDTEoVYygId7xeEuFtE+xyzdBXR0t7+ZJENu/0NKY9
-         /aZg5bJZNtTtu1yG2AnC+2PnaeLxtaXUEO3w9joDzTak2RBYt6FGmkELL54c5vuU1vtK
-         Nu14TA1ZGrXXJC71pADVHlkPHo52s9pf55M3rG97EeDJh3n0yxrvJhUMemmAKpPOJ18e
-         ixGvdn/z93doys7iPYBqwSvjwc5bcPVJgMbhPe7FDtQJ5oqNW71xiM2eGSSdp5cV1SGf
-         CS7Q==
+        h=from:to:cc:subject:date:message-id;
+        bh=y3fTTRmqTrzj/orzSglRjs4Ij/6/57I9H8Y0TfChTT8=;
+        b=LfaSD12gNtvRcXxjkRXAH9i5CECJngixiMSKHzykptd3m2ca402xBAMfXuQC3hzeMZ
+         UB48FWeGUOYv03qu3pyKnuRbyLPrqeOvyH5OX2C1rqG/HNqY5v6VTZD5yZeUZYIJyW9f
+         Q2uVTD0IrglhqW6f11bIUqKSPMDiv24tce3scTNgzgcwBerWktlhjUnwgknMKCh0WH2B
+         AKaN8pd1/JCa1vHD33IZ45pvhB/aQdeUTumBwqjktEXab5a1esGRgQY9uK/L/MBEJMi4
+         FL4UPpSawKaBDS/Ts4OwBwl9usUpgsSUkgKOe3YT4PrI4fVJ/MuqvpN7elvbFn/w9xlT
+         jq3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5s/DldDqcDc8sPy5zuWcgAjH/FQZHsNJD8TMeFc7Lhg=;
-        b=BuuM47P420epP5znDrz0yNNeE/QycVUxt/RuVWZNAy3h41BBgpS0XJ/fzJWjIfFUMJ
-         KZqZ/GRQ3K0At/kUYFb47ozUkIkAhHA18oN4BTFZRPKnzqe6ijfdEmuhNoi+ct7wMnMX
-         hn0GRVOKVoO373npAzQ/rNimXzu0K30EQl0uCrZC99qE2uBng8ETidjj1gMghnWguLEa
-         BF8LZU/v+TMLnCg7lQvZm1QML8rD2Nu3bW0ibFSF1Sma2sUZd5XUU8ov0OrGhh85dJSs
-         FiCa81+T3m7v3+xUKCC5vbfVELnrDY+ecOXAUCuBzvE/e1Km6qi/rkKZU17MmJbl+Z0g
-         3Gtg==
-X-Gm-Message-State: AN3rC/4ynpVsgK6TtScEWVV8/DVlI3F1McSPD2yxnUlOlCZC3Gc1RT6y
-        TGwY1vDgudlOWcMu36eyHuDfz/liE7DIkjE=
-X-Received: by 10.107.32.199 with SMTP id g190mr17867636iog.117.1492795723234;
- Fri, 21 Apr 2017 10:28:43 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Fri, 21 Apr 2017 10:28:22 -0700 (PDT)
-In-Reply-To: <e7aed763-cf46-4d7e-1b11-0a7a65b8f496@grubix.eu>
-References: <CACBZZX62+acvi1dpkknadTL827mtCm_QesGSZ=6+UnyeMpg8+Q@mail.gmail.com>
- <e7aed763-cf46-4d7e-1b11-0a7a65b8f496@grubix.eu>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 21 Apr 2017 19:28:22 +0200
-Message-ID: <CACBZZX5t43FWGOFeOEZs9gv3sGrv4Y1ZbapHXY2wLEC18ZU-HA@mail.gmail.com>
-Subject: Re: [BUG] test suite broken with GETTEXT_POISON=YesPlease
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=y3fTTRmqTrzj/orzSglRjs4Ij/6/57I9H8Y0TfChTT8=;
+        b=Y8Ntt1KflXoCLw3rFEZIoPA7WQ1twA6/lnirz6jhnBGi0ucJhM8pczGFNtNj3FTXsa
+         h4xCkwY9c5n/mzA2XpmJps6S8kZN/K0kRDmrHEiJA7cfmSRAwgQXwnZ6PUQd94vxasTT
+         zrBJQCypu4/o5028eJT51IDTE+VTfGxug0pjfACASqBI8pkZEe40U2mRzSA0xhOpnfL6
+         EBbHtm9fy3glYaochKZZtdBjNha6vBXPhVSrcNLsqK2T5GWyWWxm+0orhQvR8gOVmTNu
+         9ty3b5NVADGIRkE/GuLonocSvpfvcf6wo24M7E5m9WBCjOyk5nTckYXUfdwqoDjg8W2h
+         tLFQ==
+X-Gm-Message-State: AN3rC/40UQp/UbOCYvUUUO9t4XsvOQUSNeqD4lYrXkm6ba1eGEc/sZ6u
+        c9T/L/mAd8fC1uyXkEA=
+X-Received: by 10.200.54.237 with SMTP id b42mr14207257qtc.233.1492795596243;
+        Fri, 21 Apr 2017 10:26:36 -0700 (PDT)
+Received: from localhost.localdomain ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id g66sm6700551qkb.55.2017.04.21.10.26.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 21 Apr 2017 10:26:34 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, benpeart@microsoft.com,
+        christian.couder@gmail.com, larsxschneider@gmail.com
+Subject: [PATCH v6 0/8] refactor the filter process code into a reusable module
+Date:   Fri, 21 Apr 2017 13:26:03 -0400
+Message-Id: <20170421172611.12152-1-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.12.0.windows.1.33.g243d9b384c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 4:47 PM, Michael J Gruber <git@grubix.eu> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 20.04.2017 23:=
-58:
->> As a refresh of everyone's memory (because mine needed it). This is a
->> feature I added back in 2011 when the i18n support was initially
->> added.
->>
->> There was concern at the time that we would inadvertently mark
->> plumbing messages for translation, particularly something in a shared
->> code path, and this was a way to hopefully smoke out those issues with
->> the test suite.
->>
->> However compiling with it breaks a couple of dozen tests, I stopped
->> digging when I saw some broke back in 2014.
->>
->> What should be done about this? I think if we're going to keep them
->> they need to be run regularly by something like Travis (Lars CC'd),
->> however empirical evidence suggests that not running them is just fine
->> too, so should we just remove support for this test mode?
->>
->> I don't care, but I can come up with the patch either way, but would
->> only be motivated to write the one-time fix for it if some CI system
->> is actually running them regularly, otherwise they'll just be subject
->> to bitrotting again.
->>
->
-> I use that switch when I change something that involves l10n, but
-> usually I run specific tests only. To be honest: I have to make sure not
-> to get confused by (nor forget one of) the build flag GETTEXT_POISON and
-> the environment variable GIT_GETTEXT_POISON. I'm not sure I always
-> tested what I meant to test...
+Refactor the filter.<driver>.process code into a separate sub-process
+module that can be used to reduce the cost of starting up a sub-process
+for multiple commands.  It does this by keeping the external process
+running and processing all commands by communicating over standard input
+and standard output using the packet format (pkt-line) based protocol.
+Full documentation is in Documentation/technical/api-sub-process.txt.
 
-For any of the built-in tests, you just need to compile git with
-GETTEXT_POISON=3DYesPlease, the env var is set by test-lib.sh for you,
-you only need to set GIT_GETTEXT_POISON=3D1 if you're ad-hoc running
-some git command yourself, e.g.:
+This code is refactored from:
 
-$ ./git status
-On branch master
-Your branch is up-to-date with 'origin/master'.
-nothing to commit, working tree clean
-$ GIT_GETTEXT_POISON=3D1 ./git status
-# GETTEXT POISON #master
-# GETTEXT POISON #
+	Commit edcc85814c ("convert: add filter.<driver>.process option", 2016-10-16)
+	keeps the external process running and processes all commands
+
+Ben Peart (8):
+  pkt-line: add packet_read_line_gently()
+  convert: move packet_write_list() into pkt-line as packet_writel()
+  convert: Split start_multi_file_filter into two separate functions
+  convert: Separate generic structures and variables from the filter
+    specific ones
+  convert: Update generic functions to only use generic data structures
+  convert: rename reusable sub-process functions
+  sub-process: move sub-process functions into separate files
+  convert: Update subprocess_read_status to not die on EOF
+
+ Documentation/technical/api-sub-process.txt |  59 ++++++++++
+ Makefile                                    |   1 +
+ convert.c                                   | 161 ++++++----------------------
+ pkt-line.c                                  |  33 +++++-
+ pkt-line.h                                  |  11 ++
+ sub-process.c                               | 106 ++++++++++++++++++
+ sub-process.h                               |  49 +++++++++
+ 7 files changed, 291 insertions(+), 129 deletions(-)
+ create mode 100644 Documentation/technical/api-sub-process.txt
+ create mode 100644 sub-process.c
+ create mode 100644 sub-process.h
+
+-- 
+2.12.0.windows.1.33.g243d9b384c
+
