@@ -7,107 +7,66 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 350E5207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 12:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B059207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 12:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1038855AbdDUM0E (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 08:26:04 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:36766 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1038167AbdDUM0D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 08:26:03 -0400
-Received: by mail-oi0-f42.google.com with SMTP id s131so6222239oia.3
-        for <git@vger.kernel.org>; Fri, 21 Apr 2017 05:25:57 -0700 (PDT)
+        id S1039177AbdDUM1x (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 08:27:53 -0400
+Received: from mail-oi0-f54.google.com ([209.85.218.54]:36304 "EHLO
+        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1039170AbdDUM1v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 08:27:51 -0400
+Received: by mail-oi0-f54.google.com with SMTP id s131so6295117oia.3
+        for <git@vger.kernel.org>; Fri, 21 Apr 2017 05:27:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=3idy4oBYzwRXrc23yLhLJXT59YQ60Utj/Dplj9EiUlQ=;
-        b=OeNGA8adXfU9shyQcZP+0airEZkwQnxAmV5kYc2tIHnJ2Ttglbg7AtMaTKBKKtPkhm
-         6rJSJboG+xqNE/WTjpVC8kVk5nrLhcm3uu7PQNb+vq4EhGJH+L26ga6/RZrChlSy9iJm
-         trm2OuATWqNv/aGJKNaKRRshl830cGTWiFqErR3dIXxe2mDN1AbllECdRL8JvwmmLK+d
-         XPZP2SCddL++mH9th23kvBOxAUpzZnbfjzoqODPg2MpynVaCAsX54BSh+ynsQmi8s6QY
-         2ViOUeZ/oi7DsMQUqMsYO7PDsdb/NjGSf1OfJqGfgnieksGzlonsYy44/hmGitfiCDlg
-         yUzw==
+        bh=gwL/hRfvhBVwJDRgrEjjkLll1gEQgN9PJTPhbnTp0sk=;
+        b=bh20epJ9x65tLcp0vckrnAktwTSh+o3dvTHMhKdRAFTb7STkgoM0kcf12LYrER8WPN
+         fSTErXn835IerF+rZLnLLtRZe+UU2NhGKmxy/bjSZtKXig+Q1gFKps5dMyB4YdVcz87i
+         BT+2oAdxx5rJvk5ACneH1c8fe7YHGAEKItiXSbhq4HvY9Bgz/6Ou5nGwZurGZT280E+M
+         +kL+OCLg4LriU1om5DyMPyCjXAwV7EGzc0A58tAdrdBMcadt//d7l9bihhobW5b8PGaI
+         blUGzgwJ+C6RuZdU5ctxidTGIWJOXI4WOzVt3g+KV6lsmMUUPHwa9GebP40YK61+5JWu
+         Ngfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=3idy4oBYzwRXrc23yLhLJXT59YQ60Utj/Dplj9EiUlQ=;
-        b=iLPsJSw7Nd2JyLExIX2Y63VF6W445ZOzLMYH8Df6CUv6NUWzt+m8TWZvuzmW4NlzcV
-         mDwNOKiTlffmv8vlC81M5Cq81SeK3eJbfTRuu4hI22LLUh/KnQzWn+QyRjiWMagM0aa1
-         iZ4hTv7vRatO4S0sz0i3gFIXf0UGIP2DDAzD+sDnnr8d4b6ZLvuKHjVX2jylqA201xYr
-         CqPTyYTr6izGY/27gK0b3iapvyRt3PYavFLJjcDhcDbhJLfEGYSBEtc1vdFj41xTbWel
-         NDFnFEvZEPsDFlS/pxkU5P4VUXj7fczRB6BRUwy2fNPAYFWvGWYp4P1KZOWo/Wfcu/qs
-         AsXA==
-X-Gm-Message-State: AN3rC/6MlDFiRLh2n0PbTM5pNuI9lVIjmyedtd5DtKP5YYf0xKlSx3hh
-        nYtyv13Zcz42Yrqoch6Eh2DxTNDSlA==
-X-Received: by 10.157.46.246 with SMTP id w109mr8008316ota.225.1492777552285;
- Fri, 21 Apr 2017 05:25:52 -0700 (PDT)
+        bh=gwL/hRfvhBVwJDRgrEjjkLll1gEQgN9PJTPhbnTp0sk=;
+        b=R50T1ywqxOpyq3OHcMnsMveFj4uVCo7xZg63rgKT90KslCDFj+dtzlsNEl9egHz7uk
+         usth8Lpgb7s5Ita08cKZZwbPLPS5oVTWyH+LMqgLIYnMAVC4aMCT2gQFW1DKcpXe98YQ
+         t42DOdU///sbDpCo0lEfk7AwxDJfDa4WYp9mu8nmLC+gqiXSkDN4Z0DCoLYVYYoA/zx6
+         Tr9JVqLrCalvNSIvKmyg/fjMpFZgD98rrK552Q99Thwa4kqRsFj5QyvYL72mzc4RLFmM
+         8zQCYmfIaAb87icghGpI9HWXNk5wuOZXUeCODZKjAEtllTk9E0sn28iJETZa1r7KAFAA
+         JQLw==
+X-Gm-Message-State: AN3rC/6BSQ98nrt9vW/OJ912ZmnH4bLqGxjLiLn1pk8VBamddLda0F8J
+        OImIN7NnJMeb38N/3eKYh49yTHfUoQ==
+X-Received: by 10.157.61.163 with SMTP id l32mr8608461otc.28.1492777670917;
+ Fri, 21 Apr 2017 05:27:50 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.158.70 with HTTP; Fri, 21 Apr 2017 05:25:21 -0700 (PDT)
-In-Reply-To: <CAP8UFD3MJYR6pH2=7pKjBdLY6oUswNdG7eDNp6PdCFz336Y2FQ@mail.gmail.com>
-References: <20170420205214.GB4989@hank> <CAP8UFD1LAU8hg4ioes=y4o_Phgd1zBhUJOmkqTPo++4SprWWpw@mail.gmail.com>
- <20170420212436.GC4989@hank> <CAP8UFD25tJgQD=bREOG-_q0jCLw-nxhO6pYbOaaYMuAH4VxN3Q@mail.gmail.com>
- <CACsJy8DotVErJjbUBmt9bxu90CSKEsqAT_nYTNXwstEk3YhN2g@mail.gmail.com>
- <CAP8UFD2v-X3KfsvFSQrFvgTWRB7P684qN=DowNK2GunJys1i=Q@mail.gmail.com> <CAP8UFD3MJYR6pH2=7pKjBdLY6oUswNdG7eDNp6PdCFz336Y2FQ@mail.gmail.com>
+Received: by 10.74.158.70 with HTTP; Fri, 21 Apr 2017 05:27:20 -0700 (PDT)
+In-Reply-To: <CAPc5daXPgEFibr28-EZjk9_vYrrO2qt9VLXW6PepmFXUChpk7Q@mail.gmail.com>
+References: <20170420112609.26089-1-pclouds@gmail.com> <xmqqlgqu7cq8.fsf@gitster.mtv.corp.google.com>
+ <xmqqk26e5swj.fsf@gitster.mtv.corp.google.com> <20170421062915.he5tlgjqq7kj5h32@sigill.intra.peff.net>
+ <CACsJy8D1LuH6qVp15MSkCM_oQphVUUK0r9SeKC5AzX+9Xi2dcw@mail.gmail.com> <CAPc5daXPgEFibr28-EZjk9_vYrrO2qt9VLXW6PepmFXUChpk7Q@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 21 Apr 2017 19:25:21 +0700
-Message-ID: <CACsJy8ATvRgOZPpy9_SznvFXm5imJNbcqMSAYSw4H633rqRjEw@mail.gmail.com>
-Subject: Re: [BUG] test suite broken with GIT_TEST_SPLIT_INDEX
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git <git@vger.kernel.org>
+Date:   Fri, 21 Apr 2017 19:27:20 +0700
+Message-ID: <CACsJy8CCW+gQ6n2VOC4nmRBukHSLyxYizQhowQoNOc8weZzJjA@mail.gmail.com>
+Subject: Re: [PATCH 00/15] Handle fopen() errors
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 6:57 PM, Christian Couder
-<christian.couder@gmail.com> wrote:
-> On Fri, Apr 21, 2017 at 1:46 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->> On Fri, Apr 21, 2017 at 11:53 AM, Duy Nguyen <pclouds@gmail.com> wrote:
->>> On Fri, Apr 21, 2017 at 2:10 PM, Christian Couder
->>> <christian.couder@gmail.com> wrote:
->>>> On Thu, Apr 20, 2017 at 11:24 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
->>>>> On 04/20, Christian Couder wrote:
->>>>>>
->>>>>> Could you try with the following patch:
->>>>>>
->>>>>> http://public-inbox.org/git/20170330210354.20018-1-chriscool@tuxfamily.org/
->>>>>
->>>>> Yeah, I tried with and without that patch with the same result.
->>>>> Unless I'm screwing something up when testing I don't think this fixes
->>>>> the issue unfortunately.
->>>>
->>>> Ok, I will take a look soon.
->>>>
->>>> By the way I think that GIT_TEST_SPLIT_INDEX has become redundant now
->>>> that there is core.splitIndex.
->>>> So perhaps in the long run it will be best to deprecate
->>>> GIT_TEST_SPLIT_INDEX and eventually remove it.
->>>
->>> I think you can't, at least the way I understand this variable. It's a
->>> _test_ variable to force exercise split index code path a whole lot
->>> more, by running the entire test suite with split index always
->>> enabled, instead of just a couple in  t????-split-index.sh. We can't
->>> achieve the same with core.splitIndex because that's more about user
->>> control and you can't just set core.splitIndex for the entire test
->>> suite (can we?).
->>
->> Yeah, you are right.
->> It looks like we have GIT_TEST_OPTS to pass options like --debug,
->> --valgrind, --verbose, but we don't have an environment variable to
->> set config options.
->
-> Or maybe GIT_CONFIG_PARAMETERS works for this purpose?
+On Fri, Apr 21, 2017 at 6:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Yes, but (1) we'd need to be careful about --quiet
 
-It has to be set inside test-lib.sh, not from outside because
-environment variables from outside are filtered if I remember
-correctly and only a few specials plus those GIT_TEST_ can survive.
-Some tests override GIT_CONFIG_PARAMETERS themselves to pass config
-vars to certain command (I know because I just did a couple days ago
-;).which loses core.splitIndex.
+Yeah. It's a real pain point for making changes like this. At some
+point we should just have a global (maybe multi-level) quiet flag.
 -- 
 Duy
