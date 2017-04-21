@@ -2,163 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1AE4A207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 19:52:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B602207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 20:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1425663AbdDUTwh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 15:52:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37920 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1425602AbdDUTwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 15:52:36 -0400
-Received: (qmail 7859 invoked by uid 109); 21 Apr 2017 17:05:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 17:05:53 +0000
-Received: (qmail 17656 invoked by uid 111); 21 Apr 2017 17:06:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 13:06:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Apr 2017 13:05:51 -0400
-Date:   Fri, 21 Apr 2017 13:05:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git <git@vger.kernel.org>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [BUG] test suite broken with GIT_TEST_SPLIT_INDEX
-Message-ID: <20170421170551.jsj47btuyfwvmc62@sigill.intra.peff.net>
-References: <20170420205214.GB4989@hank>
- <CAP8UFD1LAU8hg4ioes=y4o_Phgd1zBhUJOmkqTPo++4SprWWpw@mail.gmail.com>
- <20170420212436.GC4989@hank>
- <CAP8UFD2f9g__ykCjReSoaAUvFTPmgRDbsWFQMRrFoFw8haV0uA@mail.gmail.com>
- <CAP8UFD36dcm9EfvtWqqEON1Muyyd7_j3uRtr6C2bLzXZN5n1MQ@mail.gmail.com>
+        id S1425903AbdDUUGQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 16:06:16 -0400
+Received: from mail-ua0-f172.google.com ([209.85.217.172]:35395 "EHLO
+        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1425897AbdDUUGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 16:06:14 -0400
+Received: by mail-ua0-f172.google.com with SMTP id f10so86805058uaa.2
+        for <git@vger.kernel.org>; Fri, 21 Apr 2017 13:06:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=i3uB6SALDlQZxE6pcaHyRT6Jk4s86IEOg3qK9jiyfXM=;
+        b=hV3iz7uO/AEnNkD4vwaG+oOw4t71if+tY5ttrK7DnROg7E6Wr6rdTN1CKA5vwzoPQP
+         5j7NRE5otvsqsrvVsi+1sJ58i8A0ZQtPbR5e5ANSdMYHC3mrU/1JUmliMIXMMsfpqPbD
+         YYEIQwQPvjukhknS2i2Ph0Z9MnOvCSX2hXNWDxFkV4u59meRVAVtTQAggPHRxOWIbDOF
+         ZR/T6adWc/MDWk2ZinXKX3lXvSlTlBLZP8A8D0IPhpX81NY2gJIUEOkZbz9FjspC54IC
+         wI+I23A15jP2ulppOlbyylJSBl7sfw0CUSxGLBv+DVzv1xzBtpjIFBxIfGEkstMsl6dW
+         NbeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=i3uB6SALDlQZxE6pcaHyRT6Jk4s86IEOg3qK9jiyfXM=;
+        b=JCzrPcpR8JiGS6sOYSm5twCIg+X70FkTebXsQQ4ROcee45VEdvT7RLSYb7NqZETf22
+         ++HZE49HEmrV/2mEY9iQUlR1ZbsCkLtNCaRrRmYwxzGWWH/it8Rb+D50jWzKnn2p65hj
+         yRpm3e0O9onxjss+aE4hQMmTEmLzFhXI0I2HR9sqzen/5+hE2e/THBLV1v3+HG3Tu/dQ
+         oXrvank+SoEYl4LH3x9u5dIKPy/r5LQ4MnBj0wW17AouUJfT2Ntt7rivpCIj/O9pZGWt
+         A4N4VNBpWFReCO1ZViHQPznOn4+TlYZn9QuCU6uFAh9MostxROqQrA83VuVi8D8I4Sl9
+         B2Og==
+X-Gm-Message-State: AN3rC/4jBefqxmyemV9mLNCuEdgdkACVHFeOmBwwpagzBhGVjcPjH6qg
+        DiAiu1duP0bECHfRFY6rG5pqBYyZPQ==
+X-Received: by 10.176.16.11 with SMTP id f11mr8092044uab.156.1492805173770;
+ Fri, 21 Apr 2017 13:06:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD36dcm9EfvtWqqEON1Muyyd7_j3uRtr6C2bLzXZN5n1MQ@mail.gmail.com>
+Received: by 10.176.23.211 with HTTP; Fri, 21 Apr 2017 13:06:13 -0700 (PDT)
+In-Reply-To: <xmqq7f2e8u14.fsf@gitster.mtv.corp.google.com>
+References: <CAM0VKjm1m4v9vTpwFEejBuD3NuGm+kAdEV-_rzCXCz2G4m5NGw@mail.gmail.com>
+ <20170420165230.5951-1-szeder.dev@gmail.com> <xmqq7f2e8u14.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Fri, 21 Apr 2017 22:06:13 +0200
+Message-ID: <CAM0VKj=kaFseg9cs9SOyzJCVtpBXD8sq9mWWWYg=mAxu7uRB7g@mail.gmail.com>
+Subject: Re: [PATCH] test-lib: abort when can't remove trash directory
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        David Turner <dturner@twosigma.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 05:23:51PM +0200, Christian Couder wrote:
+On Fri, Apr 21, 2017 at 2:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+>
+>> We had two similar bugs in the tests sporadically triggering error
+>> messages during the removal of the trash directory, see commits
+>> bb05510e5 (t5510: run auto-gc in the foreground, 2016-05-01) and
+>> ef09036cf (t6500: wait for detached auto gc at the end of the test
+>> script, 2017-04-13).  The test script succeeded nonetheless, because
+>> these errors are ignored during housekeeping in 'test_done'.
+>>
+>> However, such an error is a sign that something is fishy in the test
+>> script.  Print an error message and abort the test script when the
+>> trash directory can't be removed successfully or is already removed,
+>> because that's unexpected and we woud prefer somebody notice and
 
-> > I just tried on "pu" and only the first test
-> > (t7009-filter-branch-null-sha1.sh) fails there.
-> 
-> I bisected this test's failure (when using
-> GIT_TEST_SPLIT_INDEX=YesPlease) to e6a1dd77e1 (read-cache: regenerate
-> shared index if necessary, 2017-02-27).
-> 
-> The failing test is the following:
-> 
-> test_expect_success 'filter commands are still checked' '
->         test_must_fail git filter-branch \
->                 --force --prune-empty \
->                 --index-filter "git rm --cached --ignore-unmatch three.t"
-> '
-> 
-> And if I add the following at the beginning of the test:
-> 
->         git config splitIndex.maxPercentChange 100 &&
-> 
-> the test then passes.
-> 
-> So It looks like in split index mode the test doesn't expect the
-> shared index to be regenerated.
-> Maybe Peff, as he is the author of this test, or Duy have an idea about this?
+s/woud/would/
 
-Right. The test has a broken tree with a null sha1, and filter-branch
-will do:
+>> figure out why.
 
-  GIT_ALLOW_NULL_SHA1=1 git read-tree $broken
 
-to allow it to enter the index. We expect that further commands that
-write out the index will not allow it (so you can run commands that
-remove the broken entry, but not ones that leave it).
+> Note, that the commit message references ef09036cf (t6500: wait for
+>> detached auto gc at the end of the test script, 2017-04-13), which
+>> is still only in 'pu'.
+>
+> I think that one is already part of 2.13-rc0 ;-)
 
-So without split index, this command:
-
-  git rm --cached three.t
-
-will fail. But in split-index mode, the broken entry is in another
-index, and is left untouched. I'm not sure there's a way to reconcile
-the split-index behavior with what the test is expecting; it's
-inherently optimizing out the thing that the test wants to check.
-
-Probably we should catch the broken index entry when we write out the
-tree, too. We usually do catch missing objects, but this one is a
-gitlink, so it's OK for it to be missing. I think we should catch the
-null sha1 specifically, though, as that was the intent of the commit
-that added t7009.
-
-So the patch below _almost_ works. It fixes the failing test. But note
-the new test I added, with a noop index-filter. That checks that we
-don't retain the cache-tree extension from the bogus tree when reading.
-But for some reason it fails on split-index mode. Does cache-tree stuff
-somehow work differently there?
-
-diff --git a/cache-tree.c b/cache-tree.c
-index 345ea3596..34baa6d85 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -354,7 +354,9 @@ static int update_one(struct cache_tree *it,
- 			entlen = pathlen - baselen;
- 			i++;
- 		}
--		if (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1)) {
-+
-+		if (is_null_sha1(sha1) ||
-+		    (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1))) {
- 			strbuf_release(&buffer);
- 			if (expected_missing)
- 				return -1;
-diff --git a/read-cache.c b/read-cache.c
-index b3d0f3c30..15a4779f2 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2197,6 +2197,7 @@ static int do_write_index(struct index_state *istate, int newfd,
- 	int entries = istate->cache_nr;
- 	struct stat st;
- 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
-+	int drop_cache_tree = 0;
- 
- 	for (i = removed = extended = 0; i < entries; i++) {
- 		if (cache[i]->ce_flags & CE_REMOVE)
-@@ -2247,6 +2248,8 @@ static int do_write_index(struct index_state *istate, int newfd,
- 				warning(msg, ce->name);
- 			else
- 				return error(msg, ce->name);
-+
-+			drop_cache_tree = 1;
- 		}
- 		if (ce_write_entry(&c, newfd, ce, previous_name) < 0)
- 			return -1;
-@@ -2265,7 +2268,7 @@ static int do_write_index(struct index_state *istate, int newfd,
- 		if (err)
- 			return -1;
- 	}
--	if (!strip_extensions && istate->cache_tree) {
-+	if (!strip_extensions && !drop_cache_tree && istate->cache_tree) {
- 		struct strbuf sb = STRBUF_INIT;
- 
- 		cache_tree_write(&sb, istate->cache_tree);
-diff --git a/t/t7009-filter-branch-null-sha1.sh b/t/t7009-filter-branch-null-sha1.sh
-index c27f90f28..a8d9ec498 100755
---- a/t/t7009-filter-branch-null-sha1.sh
-+++ b/t/t7009-filter-branch-null-sha1.sh
-@@ -31,6 +31,12 @@ test_expect_success 'setup: bring HEAD and index in sync' '
- 	git commit -a -m "back to normal"
- '
- 
-+test_expect_success 'noop filter-branch complains' '
-+	test_must_fail git filter-branch \
-+		--force --prune-empty \
-+		--index-filter "true"
-+'
-+
- test_expect_success 'filter commands are still checked' '
- 	test_must_fail git filter-branch \
- 		--force --prune-empty \
+Yeah, I should have fetched before submitting.
