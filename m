@@ -2,80 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F6CB207BD
-	for <e@80x24.org>; Fri, 21 Apr 2017 04:18:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FD65207BD
+	for <e@80x24.org>; Fri, 21 Apr 2017 05:01:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752074AbdDUESa (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 00:18:30 -0400
-Received: from mout.web.de ([212.227.15.4]:49811 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752014AbdDUES2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 00:18:28 -0400
-Received: from [192.168.88.106] ([194.47.243.242]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMEyj-1cvfFe4ATF-0083wo; Fri, 21
- Apr 2017 06:18:04 +0200
-Subject: Re: [PATCH v3 1/2] use HOST_NAME_MAX to size buffers for
- gethostname(2)
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-References: <20170418215743.18406-1-dturner@twosigma.com>
- <20170418215743.18406-2-dturner@twosigma.com>
- <20170419012824.GA28740@aiede.svl.corp.google.com>
- <c0333c81-d3b2-ca2d-a553-75642d8fb949@web.de>
- <1b3e983f-4a70-652b-53f3-0c571c6efa1e@web.de>
- <7d075a07-edc9-83eb-25cf-7f8b13700584@web.de>
- <a718ca38-4c07-9f3d-e7f5-9efd7ef59007@web.de>
- <0882e8f6-f9e2-20c2-4e94-3fa8a50097c9@web.de>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        David Turner <dturner@twosigma.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <62e3185b-3cbb-f0b4-47be-f4093bfb9a6a@web.de>
-Date:   Fri, 21 Apr 2017 06:18:42 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
+        id S1035228AbdDUFBh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 01:01:37 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57197 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1035172AbdDUFBf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 01:01:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0BD577D4BF;
+        Fri, 21 Apr 2017 01:01:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xQAwV+9uNRJf6MFYEEceTEJYpF4=; b=qvCb0c
+        KUVLF0hUu2Rkon8NzrWTqHGW5kNGdACm2XTnHxf4RAaol+Frt5wfAOPz3S5VuSed
+        zcl5ntosxv/h1okKK0O4BMUf50eepvuADHk4/GybHt8He2yxcsJRAAXT6HlAU+jm
+        FtEi+IzNV2WD/2Ph7WfqqLQsbfM5feURe+tpM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=DUv46AA9LIGUR33W/qoMPPdIzIFkH+tp
+        UwTibNofk/p4ktbcLKnh//L3VaHgesJQWRWcUAhwBrQt0EZG8bH9HyI+HR9qAHE7
+        5ZTVX75IhkkGWvdfka/e31LUknz8xYgEy6Wq51RGdhLVb1HMMkzSXVfGcEztdX0f
+        hOIoy3ea1Dw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 01F847D4BE;
+        Fri, 21 Apr 2017 01:01:34 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A4F77D4BD;
+        Fri, 21 Apr 2017 01:01:33 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] completion: optionally disable checkout DWIM
+References: <20170420201229.fxiylgp2v2v4sz3w@sigill.intra.peff.net>
+Date:   Thu, 20 Apr 2017 22:01:32 -0700
+In-Reply-To: <20170420201229.fxiylgp2v2v4sz3w@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 20 Apr 2017 16:12:30 -0400")
+Message-ID: <xmqqzifa4amr.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <0882e8f6-f9e2-20c2-4e94-3fa8a50097c9@web.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:mcG705bugXX8cMury/PpgXURwwMWuOJvr+7PtPtVhvJYoPsFY9I
- v6ncjluFYHygxeLnYM6CqttNIHo/V80RtM2MrjuCmbvoX8Zc6HZ4HuvGfoaj24C/E3lmccP
- dYea/NJlV9VNmSMWO3ZobYFO4Zgv3GTHH1Epvej9gzWlC0aUoZxLdFQiL4+x2ZlM4qJPC0n
- /IwHKIJHi0Ar/zNUTZ+Eg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:seBSakmHUAw=:96/q0YrTNTJdKVaaHreILm
- bIdbYN7v1m2z8hzBoE3G6AjE+EGsXV0UJW1IpokTvvKAlnLz2lqFKUCWMgDn2vmDulI7LXKCQ
- 1OnjLFJjJEUnPV21aGAJe/yvQzvvGSmMoUm82uINjq7HYJ6GJb2HBwIsibaUxyvsvlF2prH+E
- FWOYn83cCba1Bpk5sUrISLfa0bTfaJDfcYocjeCuzAyt236rWa2qUPmMjg/em/iRPqTlOpO3z
- jpN3nA2cKn+lSg7VXciaBtS6CVQJvMekQspXTp9PedsgGeu6hdZplHhsDOgm2BLHLhBkh+wII
- sy4HHKCKHm1M8xvLQeyZek8NbMwuRzsIfEHJILXyHRvm4sicM4W8GdWnfLuEl+TW+Lu04979C
- 6GQqEHfZYKW1nyZkOxBIgAqNKuFEJpfcJ62Y5amzhAAIxtd4Mv4W0tef4yHAnBkWcxp/XfuRj
- 7sbfQ5negizPKhHmQ5HEsgVEl3ZVeRHEkNJ/RsyqO/KGExjKG9xkoS0S7BN1cHk6ZzXdS0WSj
- O5FuSkZMk5PhPJohnQZMiMl5I2yNTadMFfqu/71z7uKwvfoLeQee0uC2IIHqLn/z9aGh/Ttfl
- 0fvQmJ+lF1g0rE5GGrAE8wxzEou9pKffl1NdiHhkVEENoUwGyDIJG0NwwF7yuOfICuhCM1gL8
- wSja30d2jYk2t8qLeD2yZHie6a8vNTg55UYCCQGX2PNmaH+OfB+Mj9kozLomQAdYj3444NSAp
- I1VGFA6ceu2fzgOV422vwEDxmHaHYwACdVTssA9dum5iMqCDHzdaY3hZ8i7UGgBzDdtGURMrQ
- LNJeIDF
+Content-Type: text/plain
+X-Pobox-Relay-ID: 96D9BCF6-264F-11E7-BE82-E680B56B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-> I think I meant to write "big pidfiles" there.
+> When we complete branch names for "git checkout", we also
+> complete remote branch names that could trigger the DWIM
+> behavior. Depending on your workflow and project, this can
+> be either convenient or annoying.
+> ...
+> This is flexible enough for me, but it's possible somebody would want
+> this on a per-repo basis. I don't know that we want to read from `git
+> config`, though, because it's relatively expensive to do so. People who
+> want per-repo settings are probably better off with a hook that triggers
+> when they "cd" around, and sets up their preferences.
+
+Sounds OK.  I am kind of surprised that --no-guess is the only way
+to turn off this dwimming (not in the completion side, but there
+does not seem to be a way to tell "git checkout" that you do not
+need that create-missing-branch-out-of-remote-tracking).
+
+>  contrib/completion/git-completion.bash | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 >
-> With xsize_t() gc would die when seeing a pidfile whose size doesn't fit into
-> size_t.  The version I sent just ignores such files.  However, it would choke
-> on slightly smaller files that happen to not fit into memory.  And no
-> reasonable pidfile can be big enough to trigger any of that, so dying on
-> conversion error wouldn't really be a problem.  Is that what you meant?  It
-> makes sense, in any case.
-
-In short: Yes.
-
->
-> Thanks,
-> René
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 1150164d5..f53b18fae 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -28,6 +28,14 @@
+>  # completion style.  For example '!f() { : git commit ; ... }; f' will
+>  # tell the completion to use commit completion.  This also works with aliases
+>  # of form "!sh -c '...'".  For example, "!sh -c ': git commit ; ... '".
+> +#
+> +# You can set the following environment variables to influence the behavior of
+> +# the completion routines:
+> +#
+> +#   GIT_COMPLETION_CHECKOUT_NO_GUESS
+> +#
+> +#     When non-empty, do not include "DWIM" suggestions in git-checkout
+> +#     completion (e.g., completing "foo" when "origin/foo" exists).
+>  
+>  case "$COMP_WORDBREAKS" in
+>  *:*) : great ;;
+> @@ -1248,7 +1256,8 @@ _git_checkout ()
+>  		# check if --track, --no-track, or --no-guess was specified
+>  		# if so, disable DWIM mode
+>  		local flags="--track --no-track --no-guess" track_opt="--track"
+> -		if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
+> +		if [ -n "$GIT_COMPLETION_CHECKOUT_NO_GUESS" -o \
+> +		     -n "$(__git_find_on_cmdline "$flags")" ]; then
+>  			track_opt=''
+>  		fi
+>  		__git_complete_refs $track_opt
