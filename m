@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67B20207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 18:19:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA7AB207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 18:26:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161295AbdDUST4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 14:19:56 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:34932 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1041697AbdDUSTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 14:19:53 -0400
-Received: by mail-qt0-f193.google.com with SMTP id o36so12899962qtb.2
-        for <git@vger.kernel.org>; Fri, 21 Apr 2017 11:19:52 -0700 (PDT)
+        id S1037371AbdDUS0u (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 14:26:50 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:34075 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1036979AbdDUS0q (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 14:26:46 -0400
+Received: by mail-qk0-f194.google.com with SMTP id d80so8414738qke.1
+        for <git@vger.kernel.org>; Fri, 21 Apr 2017 11:26:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VI6Ciu0n0OUnY9NPUh/PX210zIn4LNV0wTuLRBkGEpo=;
-        b=LzALOfwkJ01w3eu3U8ev77onz03QN3Ih7bqvdhC6thD1o/f/mm++LqyQANELZQ3zoL
-         BTYS7UeUWal7o+8QkZdb2C4xrTslgM+HrNVUvgozH13D9eKYQZigg0vfR/Am/nFVOKG2
-         755bH30DUSbeZfnyK/jC143Oo6sgt9PYXUenBbpdpKA9bkwawZTzK2b5CYuYm0uzpVIK
-         nKrHf4zmgzI8bGPYfj8QjdqforAgk7BrSM/rXRp6Qb2uVBFd2Ww+RdHVPJtuLF3zn0X9
-         Pi6TMoPrGPB7XRifB1evPPCUwjWIk4bG1jVFpb9YGujkDZZBFkQwpHdNNqASu/0OwC9w
-         mZGA==
+        bh=hWA72IsxOfKB9pZFpHe90EvQqKJFxlPqhllmuSmiQ88=;
+        b=HT9O3MGv/T8n7xjT3k+Xn9qMU37CasuebNXpzJmgMeG7GqMl6/648W3ChYExOgfi+b
+         evCqyR1bZgIwJkON0G5eGfDdE2YR2YWOjTXxSRe5/LwH5QtEOvsPJPkuX5PPr+jHHrsV
+         XnAgUJa2HZt+NvGKPoEk18AxELpRHTjSIIMwpmGUzTE/h9ayRYcSFgBtgk/ZVoyl4z2y
+         RJGw5bMeOnsDb7zkEvVUk1UWwm9lyUb3Z7LDGqF/CdSV03dfGaPXpTrXbGPQgv4ZOdMy
+         fWcMWSd1z1zYKSwAW87lwvC2FoZacYxMo0KIVx2HpyuZYYoMkzPuMKIw2HIYuFdqRXqq
+         7dFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=VI6Ciu0n0OUnY9NPUh/PX210zIn4LNV0wTuLRBkGEpo=;
-        b=BxAhB4o7qlX9EWlj1uQ6097es+Per07Mwxgz+cU28obE0/WqMQ+atUOlEwDXg2jUDl
-         v7JLrIcTvbxkmggNKkGfgR3tPyVFLNRdVcnDB0HGEdk/pDPA0y4+hLfw+VGL6MdBJnPw
-         lleLplehxK/YRB4r96hgxp1fSskQ+hJVhDzQP6xjxZ2n1+/X1d/oFkXy2I2cmtYhuPT5
-         oLJbhRsqP+EFO98niNU9inZGNQ8JJqGIEdE6zveoE9Y7K0CcbaLgzBB1qk29WF0yWIzq
-         pQgRmrGt+LTj1j3SGa7U0jdBevwLfvYGV6mnqr1WDPPs6Npv3w+Cxq3zoVZz2tafGi9f
-         E+Bg==
-X-Gm-Message-State: AN3rC/6po5HvgUdMA9UgqFHHqNciUva3mJoJFgdvu8DVQVtAOqIQ34aC
-        G4hNbmed3vanmX8JRHc=
-X-Received: by 10.200.2.168 with SMTP id p40mr13914054qtg.18.1492795605339;
-        Fri, 21 Apr 2017 10:26:45 -0700 (PDT)
+        bh=hWA72IsxOfKB9pZFpHe90EvQqKJFxlPqhllmuSmiQ88=;
+        b=CT8WlFdqbdodeUbyuigV3gHHsbo4XEa1nepKEkQgAtzuubS6uqX5m2y/fgaC/oarfi
+         NFaT1SXo9xImJnvYc5UdBZEY/gtENLZDPKI7d5NRSTAQy0F9IrLrvjWWc9jpRIm+h3O4
+         RpsEAlPfrw6804BuQZS+JeTYscGSPF/3HNdVeJ8VLW0Eaakq8FfNqrMIbEULZGLNLU/4
+         q7GIAgL5ZjdqgieX16M6FL/v1wf7NBQP6/cH0cE5xA84Eyjau3sWqgXNwAU7qBLZ3rvf
+         eQNLF5zxlRIOQcfpv4H6qqQSGpJbvz5VsaxtVlXmh24+Ks/sYkW771BuT7lcbx5PFGre
+         jbkQ==
+X-Gm-Message-State: AN3rC/41lzLPizdajvdBIaGUvLP1/1qpuD+gBO4k4Th/ZwBSHltg1UPl
+        3yyKBKMFOq4no/6GQFw=
+X-Received: by 10.55.51.81 with SMTP id z78mr14747052qkz.100.1492795610333;
+        Fri, 21 Apr 2017 10:26:50 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id g66sm6700551qkb.55.2017.04.21.10.26.43
+        by smtp.gmail.com with ESMTPSA id g66sm6700551qkb.55.2017.04.21.10.26.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 21 Apr 2017 10:26:43 -0700 (PDT)
+        Fri, 21 Apr 2017 10:26:49 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v6 1/8] pkt-line: add packet_read_line_gently()
-Date:   Fri, 21 Apr 2017 13:26:04 -0400
-Message-Id: <20170421172611.12152-2-benpeart@microsoft.com>
+Subject: [PATCH v6 4/8] convert: Separate generic structures and variables from the filter specific ones
+Date:   Fri, 21 Apr 2017 13:26:07 -0400
+Message-Id: <20170421172611.12152-5-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.0.windows.1.33.g243d9b384c
 In-Reply-To: <20170421172611.12152-1-benpeart@microsoft.com>
 References: <20170421172611.12152-1-benpeart@microsoft.com>
@@ -63,68 +63,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add packet_read_line_gently() to enable reading a line without dying on
-EOF.
+To enable future reuse of the filter.<driver>.process infrastructure,
+split the cmd2process structure into two separate parts.
+
+subprocess_entry will now contain the generic data required to manage
+the creation and tracking of the child process in a hashmap. Also move
+all knowledge of the hashmap into the generic functions.
+
+cmd2process is a filter protocol specific structure that is used to
+track the negotiated capabilities of the filter.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- pkt-line.c | 14 +++++++++++++-
- pkt-line.h | 10 ++++++++++
- 2 files changed, 23 insertions(+), 1 deletion(-)
+ convert.c | 35 ++++++++++++++++++++---------------
+ 1 file changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/pkt-line.c b/pkt-line.c
-index d4b6bfe076..bfdb177b34 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -315,7 +315,7 @@ static char *packet_read_line_generic(int fd,
- 			      PACKET_READ_CHOMP_NEWLINE);
- 	if (dst_len)
- 		*dst_len = len;
--	return len ? packet_buffer : NULL;
-+	return (len > 0) ? packet_buffer : NULL;
- }
+diff --git a/convert.c b/convert.c
+index 36401fe087..bfb19beed5 100644
+--- a/convert.c
++++ b/convert.c
+@@ -496,26 +496,31 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
+ #define CAP_CLEAN    (1u<<0)
+ #define CAP_SMUDGE   (1u<<1)
  
- char *packet_read_line(int fd, int *len_p)
-@@ -323,6 +323,18 @@ char *packet_read_line(int fd, int *len_p)
- 	return packet_read_line_generic(fd, NULL, NULL, len_p);
- }
+-struct cmd2process {
++struct subprocess_entry {
+ 	struct hashmap_entry ent; /* must be the first member! */
+-	unsigned int supported_capabilities;
+ 	const char *cmd;
+ 	struct child_process process;
+ };
  
-+int packet_read_line_gently(int fd, int *dst_len, char** dst_line)
-+{
-+	int len = packet_read(fd, NULL, NULL,
-+			      packet_buffer, sizeof(packet_buffer),
-+			      PACKET_READ_CHOMP_NEWLINE|PACKET_READ_GENTLE_ON_EOF);
-+	if (dst_len)
-+		*dst_len = len;
-+	if (dst_line)
-+		*dst_line = (len > 0) ? packet_buffer : NULL;
-+	return len;
-+}
++struct cmd2process {
++	struct subprocess_entry subprocess; /* must be the first member! */
++	unsigned int supported_capabilities;
++};
 +
- char *packet_read_line_buf(char **src, size_t *src_len, int *dst_len)
+ static int cmd_process_map_initialized;
+ static struct hashmap cmd_process_map;
+ 
+-static int cmd2process_cmp(const struct cmd2process *e1,
+-			   const struct cmd2process *e2,
++static int cmd2process_cmp(const struct subprocess_entry *e1,
++			   const struct subprocess_entry *e2,
+ 			   const void *unused)
  {
- 	return packet_read_line_generic(-1, src, src_len, dst_len);
-diff --git a/pkt-line.h b/pkt-line.h
-index 18eac64830..ad30db101a 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -74,6 +74,16 @@ int packet_read(int fd, char **src_buffer, size_t *src_len, char
- char *packet_read_line(int fd, int *size);
+ 	return strcmp(e1->cmd, e2->cmd);
+ }
  
- /*
-+ * Convenience wrapper for packet_read that sets the PACKET_READ_GENTLE_ON_EOF
-+ * and CHOMP_NEWLINE options. The return value specifies the number of bytes
-+ * read into the buffer or -1 on truncated input. If the *dst_line parameter
-+ * is not NULL it will return NULL for a flush packet and otherwise points to
-+ * a static buffer (that may be overwritten by subsequent calls). If the size
-+ * parameter is not NULL, the length of the packet is written to it.
-+ */
-+int packet_read_line_gently(int fd, int *size, char** dst_line);
+-static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
++static struct subprocess_entry *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
+ {
+-	struct cmd2process key;
++	struct subprocess_entry key;
 +
-+/*
-  * Same as packet_read_line, but read from a buf rather than a descriptor;
-  * see packet_read for details on how src_* is used.
-  */
+ 	hashmap_entry_init(&key, strhash(cmd));
+ 	key.cmd = cmd;
+ 	return hashmap_get(hashmap, &key, NULL);
+@@ -541,7 +546,7 @@ static void read_multi_file_filter_status(int fd, struct strbuf *status)
+ 	}
+ }
+ 
+-static void kill_multi_file_filter(struct hashmap *hashmap, struct cmd2process *entry)
++static void kill_multi_file_filter(struct hashmap *hashmap, struct subprocess_entry *entry)
+ {
+ 	if (!entry)
+ 		return;
+@@ -571,8 +576,8 @@ static int start_multi_file_filter_fn(struct cmd2process *entry)
+ 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
+ 	char *cap_buf;
+ 	const char *cap_name;
+-	struct child_process *process = &entry->process;
+-	const char *cmd = entry->cmd;
++	struct child_process *process = &entry->subprocess.process;
++	const char *cmd = entry->subprocess.cmd;
+ 
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+ 
+@@ -632,9 +637,9 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	const char *argv[] = { cmd, NULL };
+ 
+ 	entry = xmalloc(sizeof(*entry));
+-	entry->cmd = cmd;
++	entry->subprocess.cmd = cmd;
+ 	entry->supported_capabilities = 0;
+-	process = &entry->process;
++	process = &entry->subprocess.process;
+ 
+ 	child_process_init(process);
+ 	process->argv = argv;
+@@ -654,7 +659,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	err = start_multi_file_filter_fn(entry);
+ 	if (err) {
+ 		error("initialization for external filter '%s' failed", cmd);
+-		kill_multi_file_filter(hashmap, entry);
++		kill_multi_file_filter(hashmap, &entry->subprocess);
+ 		return NULL;
+ 	}
+ 
+@@ -678,7 +683,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
+ 		entry = NULL;
+ 	} else {
+-		entry = find_multi_file_filter_entry(&cmd_process_map, cmd);
++		entry = (struct cmd2process *)find_multi_file_filter_entry(&cmd_process_map, cmd);
+ 	}
+ 
+ 	fflush(NULL);
+@@ -688,7 +693,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 		if (!entry)
+ 			return 0;
+ 	}
+-	process = &entry->process;
++	process = &entry->subprocess.process;
+ 
+ 	if (!(wanted_capability & entry->supported_capabilities))
+ 		return 0;
+@@ -759,7 +764,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 			 * Force shutdown and restart if another blob requires filtering.
+ 			 */
+ 			error("external filter '%s' failed", cmd);
+-			kill_multi_file_filter(&cmd_process_map, entry);
++			kill_multi_file_filter(&cmd_process_map, &entry->subprocess);
+ 		}
+ 	} else {
+ 		strbuf_swap(dst, &nbuf);
 -- 
 2.12.0.windows.1.33.g243d9b384c
 
