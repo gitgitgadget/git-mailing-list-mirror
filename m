@@ -2,168 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8FFFA207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 19:11:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF58D207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 19:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424591AbdDUTLz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 15:11:55 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:34954 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1424559AbdDUTLx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 15:11:53 -0400
-Received: by mail-qk0-f194.google.com with SMTP id k139so13543062qke.2
-        for <git@vger.kernel.org>; Fri, 21 Apr 2017 12:11:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KnMlG/+arludWJ5pfUp0vWN0Xj0xkR62Z5+YisOnezQ=;
-        b=KJLPOQhGi0bZkY03ok5n/2m2pB9KDqz5fifxgh5WFnpPtOKXb3LcUehAPDAoYM2zjx
-         F+QjT4nyKgNqTGkKK62BWIXmQXyInk14QVnrx3SDxpUsYAu4XqZTw0J2a0Bs8xyOM7ys
-         eJoUwU1c/EQoh33tBlyYtWQXytZusCnvr72AAVcp4cEFTJlNJ7naGqsgB4xQBiOccpkw
-         97GzqY/WpAYoAPAzrQHA4T0Zs424sxT5gcJv4EJrIVZ+nDP4y2F/uwOBmdmDVrOYodzC
-         CieGZdegC7a73Zg06G+f+YyVcrIC+TBrUcaO7WGaoHowPEDGiAvdtG0i2vatmvhUHqIm
-         FXsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KnMlG/+arludWJ5pfUp0vWN0Xj0xkR62Z5+YisOnezQ=;
-        b=Ija7/+NIVeAFKx3ruK+FCZSMgr50Pw4cMjkMiVeRqJNwrKEXtgnkD0eEFWMVtuQUil
-         dGhNt2mB8hVlNL8AYMd6lsU/Qg3A9w91SXXS+sKtsaZbHjm/eameZcFYyZjGtaE38O+U
-         d2WbUOctIQrOD2EDCmDG6x478o0PZDkl36hkdJaw0TLIBCaOg3G7H6rVcZk78x8P//XC
-         vS2o39cTTQUX6Bvzy8HSOSoNuqqCwj8MFlqyVCdO0Qn7VvUutjoqYkD0v8Hcow8zjIXa
-         tXdwahBEUIpu511UJ/WnQfGCBLKlLqMntNLNTHKiLKZyyv5Q3dTC7bi9LmxAwK7RiMsx
-         RAJA==
-X-Gm-Message-State: AN3rC/6meIE0XjMlp0zcBURXXZdvKXLjG8V0c/flROw34l2Sjx69+RVY
-        CCbjbBIZXm2mIyQVWz4=
-X-Received: by 10.55.93.193 with SMTP id r184mr13186401qkb.221.1492795607378;
-        Fri, 21 Apr 2017 10:26:47 -0700 (PDT)
-Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id g66sm6700551qkb.55.2017.04.21.10.26.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 21 Apr 2017 10:26:46 -0700 (PDT)
-From:   Ben Peart <peartben@gmail.com>
-X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, benpeart@microsoft.com,
-        christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v6 2/8] convert: move packet_write_list() into pkt-line as packet_writel()
-Date:   Fri, 21 Apr 2017 13:26:05 -0400
-Message-Id: <20170421172611.12152-3-benpeart@microsoft.com>
-X-Mailer: git-send-email 2.12.0.windows.1.33.g243d9b384c
-In-Reply-To: <20170421172611.12152-1-benpeart@microsoft.com>
-References: <20170421172611.12152-1-benpeart@microsoft.com>
+        id S1424670AbdDUTND (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 15:13:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37899 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1424667AbdDUTNC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 15:13:02 -0400
+Received: (qmail 13936 invoked by uid 109); 21 Apr 2017 18:46:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 18:46:19 +0000
+Received: (qmail 18759 invoked by uid 111); 21 Apr 2017 18:46:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 14:46:43 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Apr 2017 14:46:17 -0400
+Date:   Fri, 21 Apr 2017 14:46:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>, git <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] cache-tree: reject entries with null sha1
+Message-ID: <20170421184617.lc5bioa5px6ninrj@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add packet_writel() which writes multiple lines in a single call and
-then calls packet_flush_gently(). Update convert.c to use the new
-packet_writel() function from pkt-line.
+We generally disallow null sha1s from entering the index,
+due to 4337b5856 (do not write null sha1s to on-disk index,
+2012-07-28). However, we loosened that in 83bd7437c
+(write_index: optionally allow broken null sha1s,
+2013-08-27) so that tools like filter-branch could be used
+to repair broken history.
 
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
+However, we should make sure that these broken entries do
+not get propagated into new trees. For most entries, we'd
+catch them with the missing-object check (since presumably
+the null sha1 does not exist in our object database). But
+gitlink entries do not need reachability, so we may blindly
+copy the entry into a bogus tree.
+
+This patch rejects all null sha1s (with the same "invalid
+entry" message that missing objects get) when building trees
+from the index. It does so even for non-gitlinks, and even
+when "write-tree" is given the --missing-ok flag. The null
+sha1 is a special sentinel value that is already rejected in
+trees by fsck; whether the object exists or not, it is an
+error to put it in a tree.
+
+Note that for this to work, we must also avoid reusing an
+existing cache-tree that contains the null sha1. This patch
+does so by just refusing to write out any cache tree when
+the index contains a null sha1. This is blunter than we need
+to be; we could just reject the subtree that contains the
+offending entry. But it's not worth the complexity. The
+behavior is unchanged unless you have a broken index entry,
+and even then we'd refuse the whole index write unless the
+emergency GIT_ALLOW_NULL_SHA1 is in use. And even then the
+end result is only a performance drop (any write-tree will
+have to generate the whole cache-tree from scratch).
+
+The tests bear some explanation.
+
+The existing test in t7009 doesn't catch this problem,
+because our index-filter runs "git rm --cached", which will
+try to rewrite the updated index and barf on the bogus
+entry. So we never even make it to write-tree.  The new test
+there adds a noop index-filter, which does show the problem.
+
+The new tests in t1601 are slightly redundant with what
+filter-branch is doing under the hood in t7009. But as
+they're much more direct, they're easier to reason about.
+And should filter-branch ever change or go away, we'd want
+to make sure that these plumbing commands behave sanely.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
- convert.c  | 23 ++---------------------
- pkt-line.c | 19 +++++++++++++++++++
- pkt-line.h |  1 +
- 3 files changed, 22 insertions(+), 21 deletions(-)
+When merged to pu, this fixes the existing test breakage in t7009 when
+GIT_TEST_SPLIT_INDEX is used (because the split index didn't rewrite the
+whole index, "git rm --cached" didn't always barf). But I think it's
+worth doing on its own merits, as demonstrated by the new tests.
 
-diff --git a/convert.c b/convert.c
-index 8d652bf27c..793c29ebfd 100644
---- a/convert.c
-+++ b/convert.c
-@@ -521,25 +521,6 @@ static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap,
- 	return hashmap_get(hashmap, &key, NULL);
- }
- 
--static int packet_write_list(int fd, const char *line, ...)
--{
--	va_list args;
--	int err;
--	va_start(args, line);
--	for (;;) {
--		if (!line)
--			break;
--		if (strlen(line) > LARGE_PACKET_DATA_MAX)
--			return -1;
--		err = packet_write_fmt_gently(fd, "%s\n", line);
--		if (err)
--			return err;
--		line = va_arg(args, const char*);
--	}
--	va_end(args);
--	return packet_flush_gently(fd);
--}
--
- static void read_multi_file_filter_status(int fd, struct strbuf *status)
- {
- 	struct strbuf **pair;
-@@ -616,7 +597,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
--	err = packet_write_list(process->in, "git-filter-client", "version=2", NULL);
-+	err = packet_writel(process->in, "git-filter-client", "version=2", NULL);
- 	if (err)
- 		goto done;
- 
-@@ -632,7 +613,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	if (err)
- 		goto done;
- 
--	err = packet_write_list(process->in, "capability=clean", "capability=smudge", NULL);
-+	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
- 
- 	for (;;) {
- 		cap_buf = packet_read_line(process->out, NULL);
-diff --git a/pkt-line.c b/pkt-line.c
-index bfdb177b34..756410d2f6 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
- 	return status;
- }
- 
-+int packet_writel(int fd, const char *line, ...)
-+{
-+	va_list args;
-+	int err;
-+	va_start(args, line);
-+	for (;;) {
-+		if (!line)
-+			break;
-+		if (strlen(line) > LARGE_PACKET_DATA_MAX)
-+			return -1;
-+		err = packet_write_fmt_gently(fd, "%s\n", line);
-+		if (err)
-+			return err;
-+		line = va_arg(args, const char*);
-+	}
-+	va_end(args);
-+	return packet_flush_gently(fd);
-+}
+The one thing I haven't figured out it is why the new test in t7009
+fails with the split-index. And even more curiously, the new tests in
+t1601 _don't_ fail with it, even if I instrument the fake index to have
+more entries (making it more likely to split).
+
+ cache-tree.c                       |  4 +++-
+ read-cache.c                       |  5 ++++-
+ t/t1601-index-bogus.sh             | 22 ++++++++++++++++++++++
+ t/t7009-filter-branch-null-sha1.sh |  6 ++++++
+ 4 files changed, 35 insertions(+), 2 deletions(-)
+ create mode 100755 t/t1601-index-bogus.sh
+
+diff --git a/cache-tree.c b/cache-tree.c
+index 345ea3596..34baa6d85 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -354,7 +354,9 @@ static int update_one(struct cache_tree *it,
+ 			entlen = pathlen - baselen;
+ 			i++;
+ 		}
+-		if (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1)) {
 +
- static int packet_write_gently(const int fd_out, const char *buf, size_t size)
- {
- 	static char packet_write_buffer[LARGE_PACKET_MAX];
-diff --git a/pkt-line.h b/pkt-line.h
-index ad30db101a..957b9a5fa3 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- int packet_flush_gently(int fd);
- int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+int packet_writel(int fd, const char *line, ...);
- int write_packetized_from_fd(int fd_in, int fd_out);
- int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
++		if (is_null_sha1(sha1) ||
++		    (mode != S_IFGITLINK && !missing_ok && !has_sha1_file(sha1))) {
+ 			strbuf_release(&buffer);
+ 			if (expected_missing)
+ 				return -1;
+diff --git a/read-cache.c b/read-cache.c
+index e44775182..6851de892 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2054,6 +2054,7 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 	int entries = istate->cache_nr;
+ 	struct stat st;
+ 	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
++	int drop_cache_tree = 0;
  
+ 	for (i = removed = extended = 0; i < entries; i++) {
+ 		if (cache[i]->ce_flags & CE_REMOVE)
+@@ -2104,6 +2105,8 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 				warning(msg, ce->name);
+ 			else
+ 				return error(msg, ce->name);
++
++			drop_cache_tree = 1;
+ 		}
+ 		if (ce_write_entry(&c, newfd, ce, previous_name) < 0)
+ 			return -1;
+@@ -2122,7 +2125,7 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 		if (err)
+ 			return -1;
+ 	}
+-	if (!strip_extensions && istate->cache_tree) {
++	if (!strip_extensions && !drop_cache_tree && istate->cache_tree) {
+ 		struct strbuf sb = STRBUF_INIT;
+ 
+ 		cache_tree_write(&sb, istate->cache_tree);
+diff --git a/t/t1601-index-bogus.sh b/t/t1601-index-bogus.sh
+new file mode 100755
+index 000000000..73cc9323c
+--- /dev/null
++++ b/t/t1601-index-bogus.sh
+@@ -0,0 +1,22 @@
++#!/bin/sh
++
++test_description='test handling of bogus index entries'
++. ./test-lib.sh
++
++test_expect_success 'create tree with null sha1' '
++	tree=$(printf "160000 commit $_z40\\tbroken\\n" | git mktree)
++'
++
++test_expect_success 'read-tree refuses to read null sha1' '
++	test_must_fail git read-tree $tree
++'
++
++test_expect_success 'GIT_ALLOW_NULL_SHA1 overrides refusal' '
++	GIT_ALLOW_NULL_SHA1=1 git read-tree $tree
++'
++
++test_expect_success 'git write-tree refuses to write null sha1' '
++	test_must_fail git write-tree
++'
++
++test_done
+diff --git a/t/t7009-filter-branch-null-sha1.sh b/t/t7009-filter-branch-null-sha1.sh
+index c27f90f28..a8d9ec498 100755
+--- a/t/t7009-filter-branch-null-sha1.sh
++++ b/t/t7009-filter-branch-null-sha1.sh
+@@ -31,6 +31,12 @@ test_expect_success 'setup: bring HEAD and index in sync' '
+ 	git commit -a -m "back to normal"
+ '
+ 
++test_expect_success 'noop filter-branch complains' '
++	test_must_fail git filter-branch \
++		--force --prune-empty \
++		--index-filter "true"
++'
++
+ test_expect_success 'filter commands are still checked' '
+ 	test_must_fail git filter-branch \
+ 		--force --prune-empty \
 -- 
-2.12.0.windows.1.33.g243d9b384c
-
+2.13.0.rc0.364.g36b4d8031
