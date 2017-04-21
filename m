@@ -2,121 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC2D7207BD
-	for <e@80x24.org>; Thu, 20 Apr 2017 23:18:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB9EA207BD
+	for <e@80x24.org>; Fri, 21 Apr 2017 00:49:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S946871AbdDTXSq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 19:18:46 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:34619 "EHLO
-        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S945475AbdDTXSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 19:18:44 -0400
-Received: by mail-io0-f180.google.com with SMTP id a103so92572057ioj.1
-        for <git@vger.kernel.org>; Thu, 20 Apr 2017 16:18:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=E1v+3Pj04Vjbbgxus1m7U5I+Io+xel6ymuI75E0stHo=;
-        b=ZXzo1dW98ejqy03tof754hGCwV/qh+A1T+aAsnsx/h6ZunucRgjftMgZFCNNBMkRSl
-         uNnlpUkRpsyh2MTshs1xe/BOuWL8xMILTpkbqjz/v4Dx58rzHGbWlNaCI0lXWiCLW5zf
-         naiwnMHA6gWPvxBE7FespAeu8KXhvWkK0dghbV8aVUSintRgheBsMrEJmUdh/AgTby29
-         EkZP2MkIGBp/LyycA4VVPSCrfkycmKbA+z1E4ImFndiFZjgxKL1duEshaVuNHBnQuSd+
-         HblPQPS4XzZn02NWiAUnlhiKJ6xKzn9PzKtK3nbeatAGUI9wC/V0v/bU5DWUAmmfrNyD
-         QEvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=E1v+3Pj04Vjbbgxus1m7U5I+Io+xel6ymuI75E0stHo=;
-        b=pw+z38z9gW8a17jR4bBLLkmIBYj/xyl+oJzmqCQclhMAE+vd9j3fB81l9T8mentqbm
-         +QB/J9KhMcfqSx6VxYqhTdHKjQ+Z6EByXHwTJv6SZA8CNXTCpmt0roSJXMBG/qNNPeqz
-         YEJBWpK8/0VBOOsgpkAe3zn+PD8ArenpHFONsPtToqpTehWkwTUV5tcI46wfxDlpnLnn
-         Nggxa1Yk1I6YkJtOcAjtE+umqFEN6bW4I0+OMRxeg9tW2ppTAXYeAYWwQdoW/8PhAjfF
-         DEwQ4VciiqoOs1RORT/BRoWVnlS3hFn3mCwGN+K+wO8itPLXbgKbofRlev3QhZJElT/e
-         Kdbg==
-X-Gm-Message-State: AN3rC/4hrhZmF4sdgt1u9+NAeKkBkdj4TiFxXpAks/7H9HTH1olc9rgA
-        lQa4ZwIPW2tQu+FA
-X-Received: by 10.99.122.12 with SMTP id v12mr9615009pgc.98.1492730318898;
-        Thu, 20 Apr 2017 16:18:38 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:6c7e:3273:2d37:5651])
-        by smtp.gmail.com with ESMTPSA id j73sm12281901pfe.108.2017.04.20.16.18.37
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 20 Apr 2017 16:18:37 -0700 (PDT)
-Date:   Thu, 20 Apr 2017 16:18:36 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        peff@peff.net
-Subject: Re: What's cooking in git.git (Apr 2017, #04; Wed, 19)
-Message-ID: <20170420231836.GM142567@google.com>
-References: <xmqq4lxjabce.fsf@gitster.mtv.corp.google.com>
- <D61D47BD-9750-4FB6-892E-013504E03738@gmail.com>
- <alpine.DEB.2.20.1704201523390.3480@virtualbox>
- <20170420165622.GC142567@google.com>
+        id S948278AbdDUAtA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 20:49:00 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63821 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S948273AbdDUAs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 20:48:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EB3F37EADC;
+        Thu, 20 Apr 2017 20:48:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=/5ZU/onb3dRt
+        rghfGkqa4T7RHbE=; b=p/E4XKAm5A2zEKHcnnrtStkp4+N4gP2pzkG13KmE8mLz
+        1ZDqXzeEk7LCZfogeI7W0mcoSkDzLMf51XUQXCXkOKfsSmMB6lNgzVcYc1Rzfx5e
+        gsT1zDl7hzPDjdZIlzF0MNOvKDZA9MCqxbpw5PQefqa2PTkhi/CE4422stGB6l4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=xzE3ry
+        SOvCY+I6htm90B6pmlYC1qfwmBlC+u5IK01tE6Jb5KPUzB7NN/LUEK7LjFTFrMB5
+        TZpnvfU5OMK4Y5KxZvKlm0u7Lh9wNbxauYD6oO8Xh13Th08u9tLb22HOZtVyZyzJ
+        QSBv9LD2DExVevZrwFySuMc3g+rdGTesHNr9A=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DC8DD7EAD9;
+        Thu, 20 Apr 2017 20:48:56 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3C1437EAD8;
+        Thu, 20 Apr 2017 20:48:56 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        David Turner <dturner@twosigma.com>, git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: abort when can't remove trash directory
+References: <CAM0VKjm1m4v9vTpwFEejBuD3NuGm+kAdEV-_rzCXCz2G4m5NGw@mail.gmail.com>
+        <20170420165230.5951-1-szeder.dev@gmail.com>
+Date:   Thu, 20 Apr 2017 17:48:55 -0700
+In-Reply-To: <20170420165230.5951-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Thu, 20 Apr 2017 18:52:30 +0200")
+Message-ID: <xmqq7f2e8u14.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170420165622.GC142567@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 4C93425C-262C-11E7-B7F2-C260AE2156B6-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/20, Brandon Williams wrote:
-> On 04/20, Johannes Schindelin wrote:
-> > Hi Lars & Junio,
-> > 
-> > On Thu, 20 Apr 2017, Lars Schneider wrote:
-> > 
-> > > > * bw/forking-and-threading (2017-04-19) 11 commits
-> > > > - run-command: block signals between fork and execve
-> > > > - run-command: add note about forking and threading
-> > > > - run-command: handle dup2 and close errors in child
-> > > > - run-command: eliminate calls to error handling functions in child
-> > > > - run-command: don't die in child when duping /dev/null
-> > > > - run-command: prepare child environment before forking
-> > > > - string-list: add string_list_remove function
-> > > > - run-command: use the async-signal-safe execv instead of execvp
-> > > > - run-command: prepare command before forking
-> > > > - t0061: run_command executes scripts without a #! line
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-I just double checked what differences existed between what I have
-locally and what is queued at bw/forking-and-threading and it looks like
-the changes (adding the !MINGW) to just this one patch were missed,
-while the rest of them were picked up.  Just and fyi.
+> We had two similar bugs in the tests sporadically triggering error
+> messages during the removal of the trash directory, see commits
+> bb05510e5 (t5510: run auto-gc in the foreground, 2016-05-01) and
+> ef09036cf (t6500: wait for detached auto gc at the end of the test
+> script, 2017-04-13).  The test script succeeded nonetheless, because
+> these errors are ignored during housekeeping in 'test_done'.
+>
+> However, such an error is a sign that something is fishy in the test
+> script.  Print an error message and abort the test script when the
+> trash directory can't be removed successfully or is already removed,
+> because that's unexpected and we woud prefer somebody notice and
+> figure out why.
 
-> > > > - t5550: use write_script to generate post-update hook
-> > > > 
-> > > > The "run-command" APIimplementation has been made more robust
-> > > > against dead-locking in a threaded environment.
-> > > > 
-> > > > Will merge to 'next'.
-> > > 
-> > > There might be a problem on Windows with this (that's just a hunch, i can't test this right now):
-> > > https://travis-ci.org/git/git/jobs/223830474
-> > 
-> > Thanks for keeping track of Travis' failure reports. From what I see, the
-> > latest iteration (which does not seem to have made it to `pu` yet) has the
-> > !MINGW prerequisite which should fix the issue. Hopefully my suggested
-> > addition to the commit message will make it into the commit history, too.
-> 
-> Thanks for catching this.  And as you pointed out the latest reroll
-> should fix the issue.
-> 
-> > 
-> > Ciao,
-> > Dscho
-> 
-> -- 
-> Brandon Williams
+Makes sense to me, too.
 
--- 
-Brandon Williams
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>
+> Note, that the commit message references ef09036cf (t6500: wait for
+> detached auto gc at the end of the test script, 2017-04-13), which
+> is still only in 'pu'.
+
+I think that one is already part of 2.13-rc0 ;-)
+
+>  t/test-lib.sh | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 13b569682..e9e6f677d 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -761,9 +761,12 @@ test_done () {
+>  			say "1..$test_count$skip_all"
+>  		fi
+> =20
+> -		test -d "$remove_trash" &&
+> +		test -d "$remove_trash" ||
+> +		error "Tests passed but trash directory already removed before test =
+cleanup; aborting"
+> +
+>  		cd "$(dirname "$remove_trash")" &&
+> -		rm -rf "$(basename "$remove_trash")"
+> +		rm -rf "$(basename "$remove_trash")" ||
+> +		error "Tests passed but test cleanup failed; aborting"
+> =20
+>  		test_at_end_hook_
