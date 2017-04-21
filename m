@@ -6,144 +6,120 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 312FD207BD
-	for <e@80x24.org>; Fri, 21 Apr 2017 03:33:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C4E0207BD
+	for <e@80x24.org>; Fri, 21 Apr 2017 03:41:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034959AbdDUDdP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Apr 2017 23:33:15 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:65503 "EHLO
+        id S1034927AbdDUDlg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Apr 2017 23:41:36 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62629 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1034929AbdDUDdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Apr 2017 23:33:15 -0400
+        with ESMTP id S1032482AbdDUDlf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Apr 2017 23:41:35 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4743D7CA0A;
-        Thu, 20 Apr 2017 23:33:13 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8BC5B80564;
+        Thu, 20 Apr 2017 23:41:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=oTxRKKhQDW0y
-        hn+DjnDo8z9xvyI=; b=rQFB+SpnG5oKjjkbLyW++BiWLKMgpVfFJrMh4rGJyRcN
-        9TWGqeVTuIjWI1YvO5PWWn/X1KpOLHOzd9AFZbAz6GQpBcrSx7+tKuIo5hFUfK8I
-        HGkR8DGuU/lXy98AI6Vn+ZiwRD1dqR6WOfPio2F/R5UVlhC/3NFfjtIBh4ZWhuE=
+        :content-type; s=sasl; bh=tSwY/amdDCABxxAIauWIQ7849Wg=; b=DtL+C2
+        VM3gB1fvzHYhdA/WfjYUY6mBedV+uNxmDbUOq0zF3XFWbsgdma3r3wrZWdbM5hrI
+        c099PBVmGnXB8H9AL6huRqm5MrQQSv/NyoZ92jUTqM7DUQW0t1+31ztdD5MC2ouj
+        YtqHNo6bMB4J4IuvCPEkt7FZqVHx46A9WA+v4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=j5TU8g
-        IcZwsdCelgRnJaDOttlUaVkzRozC/aB0pE2oTNt6z9gB/bF8jpcw3ms8URaM9jxg
-        fRjafpDgym1bUP+lGZarByjoz1vbGHzXWBvJGoQ3J4uYmgbmxHaJrfQs8Gecu5zD
-        /Hmd8kJUO8b4XIyTeiRu2g6qx4o/bbxoi4VgU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3FD9D7CA09;
-        Thu, 20 Apr 2017 23:33:13 -0400 (EDT)
+        :content-type; q=dns; s=sasl; b=sugIxVSuHj3pkcpYL1JWp9sdMBr4pbNx
+        zEquyYUf63asE1NjlFNnwn8WOl61k0RxCgTVVAzyIbcwmRP3HMziv1gyW/Spta2C
+        nE4TQ5PdOaRQMDzeTZT8r+LQp1KcYr1xaD2KjiVvrs/twucWhO+Jey86sTSIISWW
+        qZshPnP+pM8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8342580563;
+        Thu, 20 Apr 2017 23:41:33 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A11667CA08;
-        Thu, 20 Apr 2017 23:33:12 -0400 (EDT)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E740980562;
+        Thu, 20 Apr 2017 23:41:32 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/6] worktree remove: new command
-References: <20170420101024.7593-1-pclouds@gmail.com>
-        <20170420101024.7593-7-pclouds@gmail.com>
-Date:   Thu, 20 Apr 2017 20:33:11 -0700
-In-Reply-To: <20170420101024.7593-7-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Thu, 20 Apr 2017 17:10:24 +0700")
-Message-ID: <xmqqo9vq5tag.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 00/15] Handle fopen() errors
+References: <20170420112609.26089-1-pclouds@gmail.com>
+        <xmqqlgqu7cq8.fsf@gitster.mtv.corp.google.com>
+Date:   Thu, 20 Apr 2017 20:41:32 -0700
+In-Reply-To: <xmqqlgqu7cq8.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
+        message of "Thu, 20 Apr 2017 18:47:59 -0700")
+Message-ID: <xmqqk26e5swj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 3F6B17B4-2643-11E7-98B1-E680B56B9B0B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 699CE0B6-2644-11E7-9CF2-C260AE2156B6-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +	worktrees =3D get_worktrees(0);
-> +	wt =3D find_worktree(worktrees, prefix, av[0]);
-> +	if (!wt)
-> +		die(_("'%s' is not a working directory"), av[0]);
-> +	if (is_main_worktree(wt))
-> +		die(_("'%s' is a main working directory"), av[0]);
+> I wonder if it is OK to only special case ENOENT for !fp cases,
+> where existing code silently returns.  Perhaps it is trying to read
+> an optional file, and it returns silently because lack of it is
+> perfectly OK for the purpose of the code.  Are there cases where
+> this optional file is inside an optional directory, leading to
+> ENOTDIR, instead of ENOENT, observed and reported by your check?
 
-The same comment as 3/6 applies here.
+"git grep -B1 warn_on_inaccessible" is enlightening.  I wonder if we
+want to wrap the two lines into a hard to misuse helper function,
+something along this line.  Would having this patch as a preparatory
+step shrink your series?  The patch count would be the same, but you
+wouldn't be writing "if (errno != ENOENT)" lines yourself.
 
-> +	reason =3D is_worktree_locked(wt);
-> +	if (reason) {
-> +		if (*reason)
-> +			die(_("already locked, reason: %s"), reason);
-> +		die(_("already locked, no reason"));
-> +	}
+ attr.c            | 3 +--
+ git-compat-util.h | 3 +++
+ wrapper.c         | 6 ++++++
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-The same comment as 3/6 applies here, too.
-
-This is shared with 3/6 but I wonder if "--force" should be usable
-as a way to bust this refusal.  There is an "unlock" operation, so
-probably such a short-cut is not necessary---if you want to repair
-your repository by moving or removing a working tree and if you
-cannot do so due to an outstanding lock, you can do a two-step dance
-"unlock followed by move or remove".  So I am OK with "--force" that
-does not bust the lock.
-
-> +	if (validate_worktree(wt, 0))
-> +		return -1;
-> +
-> +	if (!force) {
-> +		struct argv_array child_env =3D ARGV_ARRAY_INIT;
-> +		struct child_process cp;
-> +		char buf[1];
-> +
-> +		argv_array_pushf(&child_env, "%s=3D%s/.git",
-> +				 GIT_DIR_ENVIRONMENT, wt->path);
-> +		argv_array_pushf(&child_env, "%s=3D%s",
-> +				 GIT_WORK_TREE_ENVIRONMENT, wt->path);
-> +		memset(&cp, 0, sizeof(cp));
-> +		argv_array_pushl(&cp.args, "status", "--porcelain", NULL);
-> +		cp.env =3D child_env.argv;
-> +		cp.git_cmd =3D 1;
-> +		cp.dir =3D wt->path;
-> +		cp.out =3D -1;
-> +		ret =3D start_command(&cp);
-> +		if (ret)
-> +			die_errno(_("failed to run git-status on '%s', code %d"),
-> +				  av[0], ret);
-
-Do we return "code" from start_command() that is usable like this?
-
-Is this "git status --porcelain" call affected by settings like
-"submodule.*.ignore"?  If so, is that a good thing?
-
-Oh, submodules.  Unlike "move" that may make their .git files
-pointing at strange places after the operation finishes, "remove"
-does not have to worry about them, because they are going to
-disappear--I think that is OK, but I could be missing some cases
-where a working tree that is not dirty may still want to be kept.
-I dunno.
-
-> +		ret =3D xread(cp.out, buf, sizeof(buf));
-> +		if (ret)
-> +			die(_("'%s' is dirty, use --force to delete it"), av[0]);
-> +		close(cp.out);
-> +		ret =3D finish_command(&cp);
-> +		if (ret)
-> +			die_errno(_("failed to run git-status on '%s', code %d"),
-> +				  av[0], ret);
-> +	}
-> +	strbuf_addstr(&sb, wt->path);
-> +	if (remove_dir_recursively(&sb, 0)) {
-
-Oh, submodules.  If this working tree has submodules that are not
-yet absorbed, wouldn't this go into their ".git" recursively and
-end up losing everything?
-
-> +		error_errno(_("failed to delete '%s'"), sb.buf);
-> +		ret =3D -1;
-> +	}
-> +	strbuf_reset(&sb);
-> +	strbuf_addstr(&sb, git_common_path("worktrees/%s", wt->id));
-> +	if (remove_dir_recursively(&sb, 0)) {
-> +		error_errno(_("failed to delete '%s'"), sb.buf);
-> +		ret =3D -1;
-> +	}
+diff --git a/attr.c b/attr.c
+index 1fcf042b87..f695ded53f 100644
+--- a/attr.c
++++ b/attr.c
+@@ -373,8 +373,7 @@ static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
+ 	int lineno = 0;
+ 
+ 	if (!fp) {
+-		if (errno != ENOENT && errno != ENOTDIR)
+-			warn_on_inaccessible(path);
++		warn_failure_to_read_open_optional_path(path);
+ 		return NULL;
+ 	}
+ 	res = xcalloc(1, sizeof(*res));
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 8a4a3f85e7..998366c628 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1094,6 +1094,9 @@ int access_or_die(const char *path, int mode, unsigned flag);
+ /* Warn on an inaccessible file that ought to be accessible */
+ void warn_on_inaccessible(const char *path);
+ 
++/* Call the above after fopen/open fails for optional input */
++void warn_failure_to_read_open_optional_path(const char *);
++
+ #ifdef GMTIME_UNRELIABLE_ERRORS
+ struct tm *git_gmtime(const time_t *);
+ struct tm *git_gmtime_r(const time_t *, struct tm *);
+diff --git a/wrapper.c b/wrapper.c
+index 0542fc7582..172cb9fad6 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -576,6 +576,12 @@ int remove_or_warn(unsigned int mode, const char *file)
+ 	return S_ISGITLINK(mode) ? rmdir_or_warn(file) : unlink_or_warn(file);
+ }
+ 
++void warn_failure_to_read_open_optional_path(const char *path)
++{
++	if (errno != ENOENT && errno != ENOTDIR)
++		warn_on_inaccessible(path);
++}
++
+ void warn_on_inaccessible(const char *path)
+ {
+ 	warning_errno(_("unable to access '%s'"), path);
