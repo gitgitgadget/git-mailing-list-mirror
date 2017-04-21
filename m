@@ -2,106 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53E9D1FE90
-	for <e@80x24.org>; Fri, 21 Apr 2017 10:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5B341FE90
+	for <e@80x24.org>; Fri, 21 Apr 2017 10:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1037866AbdDUKqK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 06:46:10 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50368 "EHLO mout.gmx.net"
+        id S1037918AbdDUKqN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 06:46:13 -0400
+Received: from mout.gmx.net ([212.227.17.22]:61193 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1037782AbdDUKqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 06:46:07 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M08ia-1c9QRy2dY4-00uK2z; Fri, 21
- Apr 2017 12:46:02 +0200
-Date:   Fri, 21 Apr 2017 12:46:01 +0200 (CEST)
+        id S1037589AbdDUKqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 06:46:10 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbgyV-1cHQft34e3-00lDlK; Fri, 21
+ Apr 2017 12:46:06 +0200
+Date:   Fri, 21 Apr 2017 12:46:06 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v4 8/9] Use uintmax_t for timestamps
+Subject: [PATCH v4 9/9] show_date_ident(): defer date overflow check
 In-Reply-To: <cover.1492771484.git.johannes.schindelin@gmx.de>
-Message-ID: <b59a414793492786937e910f6cd588b8e1751b4b.1492771484.git.johannes.schindelin@gmx.de>
+Message-ID: <3a33b168e96c676592154dc1313a5bdea989831e.1492771484.git.johannes.schindelin@gmx.de>
 References: <cover.1492721487.git.johannes.schindelin@gmx.de> <cover.1492771484.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:xLlCXm7yS9fR5UYSRU7qpfZv57UGCK5KIJivcjAQ+Pv1DbL7FE3
- Vgu1BqUQsyefGuQQHygll5ZLukzsn9oJoTweA/MIvtaqP3HIUnWrHzOF9PbO6Pd65pJIsrU
- fF+HhOtMf5Tweaxjnp0/wTVp7TRdb5I76v2dt3cXtLBgdLsKJym8RQsgB1vVkTQQujf7Q+W
- VV5VGHJaRQP2Dotp8/j/w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:31V/qFKJQQI=:3LqVOmhGUqiVRdbMoYvKgk
- 73BT3DIM7enfhVMJ9yzwIXQ5RBpOESqrfaVeOyaDy9973qzfQinQ9PZyk+NwBh2lZH6bdde8A
- ew5lWoGL7jnomlcWVhniVioPAs68Q713h6CPbjcgsfGNtXn3AubOMzMIeBK+oC/KosDF4VW6+
- qCCo4VgO37fnlAEA+hb1ZjIa0fIDnY4gy+vFDKtNy8juSScpKJ0xuDWCWNqHoMeNS/sjmEpFZ
- scDNLbSGaUmCP4QD2lJ3nflSiiJOuyOMB+hYoQwYMwDJYbgWNhjNJTWnd8DVuG0jW4jCg/FPc
- UIr+BcoLuyZnN3KCu+ld4OjfsH4R8ymvyZ0f/e3Y7GdzZB5IdVS+xD8jDFVGKYwHxhQoUpeff
- 0YFOC8c2HfdeZqMKJUd8+1yo8cNBdCYnhYy1+mD6aPwyODuqR44udg7ekK6qVNbcjSRr6I4Q8
- xsIBK/u2cC4lILIm984TFXoB3STfejCkgtQH82zCmAsT+vnfS2qCiIqUOjdlBRacNTuaJ96jd
- ndUVY8naxEw10UyN3dE695fz0dVB+Qc73LzzqTo0MYjV5Q7UFiFywpTIY6QO/YCHxZKGNSBgg
- 0l6FzgFkFxffdVZsEWfTgoVxtvnihpREWD9aDTdwUn+T0R11QKTEkRQ1j/WaWfXYz/taWQm4l
- EOxErXI3gr9+tsIYfpYA4cIPTeJkm0aGHFfZ6LCQREJU5QN/GH3uqGqHYOqo7+hZSUqEOHO+j
- PhGveYYgtq0XnmhJXALB2QiFL2AensGmyhEyPZ6rnoSBaqbvNB0cLEqijyfucQ+UKXnyTcg5K
- D4mrXKB
+X-Provags-ID: V03:K0:jHoiLa1ZS3ILEt1d7+ELw/eovzqOOGAy9/F1JVXvhSbveEWjUj8
+ pP5ho070v4YieBRSF1hTLH2x95mZUJw8DontJNzONr2kj772quPFdVQLn1Vy6DLmr62jiR2
+ qRSWN4TZIpsbIX7RY+fBVsQVTMUvds1DwUgq53o5YOrYy9/vk1zCFmbZbFH2gnRC7dIX3eh
+ y3MPCfkDE9+hWAPH/mI0A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9Cq8ZRjx3EQ=:52fLR44IZKxQWspzgP2JkU
+ xSFBMbGK9wgz23TiYUuVPHAG4eCr5UgBkwT0pBvNWbIVwYUJ7ukquYlW/D1uYl77jthlCcgAk
+ IUHzPqlhfXHOr/S2u0qnm6F77P0SxlktJj3MPKAKxLxIZBo6KMDLmtnWgXjzRuZ+2HBvRM/NI
+ Ox4PihS5QE3Ol/gy/tXZbkNyUzcpIjLdoYSZxq4bDdWYB06jtnQm5vl+P/OgBGuHc7+pJbDE7
+ AQH6zbys8x0ZbTN/qQp5FL388LYjYNhKrjersuUNC7YgglyvTAJG3XLzlEtrteMwh9MVp2Rhb
+ VcRIyBlbBWJgLcDTyRUvCMOODlCQpX/iTFjK1LwQV3AXr/AncvsLEyrzK1KXQrQqumKGSM617
+ 4B1ylxH4znw/KJCD5Rjbhn73P1RpnbF687uYdNSl7W2hor9PeQHaEPUqNh30J0LiZlkQHWwia
+ JBHtV2yvbirHbj8sGKae6c1sZ/WX0Nc0fUTo12+HMQ/gKj1iTWLBtxKsccGy/ElnibjNLQ8Ff
+ 23MRzx5Q18KDks4hAQtoBrBzr/d7XX8qVNpsUbQ5YPkwGjBb7nxd4DgR9exvOtcgOgc3P3TdI
+ xFpFQ+yIT9CKtWDueIqXtoqk9UbyDFOmh5I3Iev3DnWBiQPisp7l5VivE5wXkEdso/5Em9qBB
+ BccPvzs4VxCwM3BwJ64W4G/U8Ig1gn4SeVj22h5MewSbjn5SLtmkZYqKyQJz6NDok/bWlB8gM
+ V8OjBVKwHZ1d/r3obfU+3DACvRfM0nEBd6n893W0iepXI5OaGsWtaARTBx/Pycoe3TQvtLMNi
+ lwKcruL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, we used `unsigned long` for timestamps. This was only a good
-choice on Linux, where we know implicitly that `unsigned long` is what is
-used for `time_t`.
-
-However, we want to use a different data type for timestamps for two
-reasons:
-
-- there is nothing that says that `unsigned long` should be the same data
-  type as `time_t`, and indeed, on 64-bit Windows for example, it is not:
-  `unsigned long` is 32-bit but `time_t` is 64-bit.
-
-- even on 32-bit Linux, where `unsigned long` (and thereby `time_t`) is
-  32-bit, we *want* to be able to encode timestamps in Git that are
-  currently absurdly far in the future, *even if* the system library is
-  not able to format those timestamps into date strings.
-
-So let's just switch to the maximal integer type available, which should
-be at least 64-bit for all practical purposes these days. It certainly
-cannot be worse than `unsigned long`, so...
+Now that we use uintmax_t for timestamps, we can represent timestamps
+that would not fit inside the time_t data type. As long as we do not
+have to use the system functions, we can even display them, e.g. as Unix
+epoch.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- git-compat-util.h | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ pretty.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 72c12173a14..c678ca94b8f 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -319,10 +319,14 @@ extern char *gitdirname(char *);
- #define PRIo32 "o"
- #endif
+diff --git a/pretty.c b/pretty.c
+index 587d48371b0..35fd290096a 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -410,14 +410,10 @@ const char *show_ident_date(const struct ident_split *ident,
  
--typedef unsigned long timestamp_t;
--#define PRItime "lu"
--#define parse_timestamp strtoul
-+typedef uintmax_t timestamp_t;
-+#define PRItime PRIuMAX
-+#define parse_timestamp strtoumax
-+#ifdef ULLONG_MAX
-+#define TIME_MAX ULLONG_MAX
-+#else
- #define TIME_MAX ULONG_MAX
-+#endif
+ 	if (ident->date_begin && ident->date_end)
+ 		date = parse_timestamp(ident->date_begin, NULL, 10);
+-	if (date_overflows(date))
+-		date = 0;
+-	else {
+-		if (ident->tz_begin && ident->tz_end)
+-			tz = strtol(ident->tz_begin, NULL, 10);
+-		if (tz >= INT_MAX || tz <= INT_MIN)
+-			tz = 0;
+-	}
++	if (ident->tz_begin && ident->tz_end)
++		tz = strtol(ident->tz_begin, NULL, 10);
++	if (tz >= INT_MAX || tz <= INT_MIN)
++		tz = 0;
+ 	return show_date(date, tz, mode);
+ }
  
- #ifndef PATH_SEP
- #define PATH_SEP ':'
 -- 
 2.12.2.windows.2.406.gd14a8f8640f
-
-
