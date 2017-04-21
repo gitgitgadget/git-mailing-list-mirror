@@ -2,88 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CA78207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 17:01:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E375207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 18:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1161919AbdDUQnl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 12:43:41 -0400
-Received: from mout.kundenserver.de ([212.227.126.133]:61547 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161901AbdDUQn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 12:43:29 -0400
-Received: from skimbleshanks.math.uni-hannover.de ([130.75.46.4]) by
- mrelayeu.kundenserver.de (mreue003 [212.227.15.167]) with ESMTPSA (Nemesis)
- id 0MaFzQ-1chq2709TU-00Ju5v; Fri, 21 Apr 2017 16:47:15 +0200
-Subject: Re: [BUG] test suite broken with GETTEXT_POISON=YesPlease
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CACBZZX62+acvi1dpkknadTL827mtCm_QesGSZ=6+UnyeMpg8+Q@mail.gmail.com>
-From:   Michael J Gruber <git@grubix.eu>
-Message-ID: <e7aed763-cf46-4d7e-1b11-0a7a65b8f496@grubix.eu>
-Date:   Fri, 21 Apr 2017 16:47:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.0
-MIME-Version: 1.0
-In-Reply-To: <CACBZZX62+acvi1dpkknadTL827mtCm_QesGSZ=6+UnyeMpg8+Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: de-DE
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:CgqtL4cT1fCDWxPqSI4cS2nJWXICdLMtTJy867Ssnu8IUKJuGIC
- s8JxG+9Ggksshwxhrxs5PSt4S8t6UKutensbmqG2e5drvadamcfW+LPB84ILAq6pBU6dIun
- 8QbdyG00VX2FB842EqoZA+6uqAIM0P0yEfWyBDdP6YCDiLJDA5km0i1bhTVm0tSwPEvjl/H
- 7G3jHrcNZKSvEWZxtOaTg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/jLJBULGh+I=:+fJHFredfRO5ISmOxY+5Tw
- QYJ6h6++b6OBJ11C3cxxEsK87ELAKZk8K6eMN9aOOe5wKurGaS4xBc6WYa4AH4yMPCfXEgIwt
- a2FujrYID7yGW89QzKe9ChAR/Olz2bL10XPxHLLhKWytIdeg9TFaHmcOBPjreUmGi1tVQ/Vgp
- YUgbKK9aAj8alZqyJOZwGIm9140iqBN8ZU9EAkj27QnUJV4fvM11rC5/9gQVCipZu+vGjQplg
- VoxqSFyiu3ZCmqPoSMmuXvkGRba85EoySDazUpeoXuHoySTFyx03nCn3TiKB80BEZfNqVUhSC
- nCwQweZM6A2WtzrDCq9nn3qZRr+TnRWWtyNpwtvf34o5x5WbNgmAhuk6qoKkUIqcqY82MCJnQ
- 70nuhu1Lul9oy2TzN/ZkTfjDn9ibiqZUoNH14o6zlazD9gx7oAYrqr5PEBEyIpZ4pbacHy/er
- 1G+GHtxybym8nGx++wbD6B58yy6jKzny87LptKGXuriSmEXkpIFZlU/Ue/s5qf7WmCCT4kRRG
- /5EM93OVNS24dd99mtS4CmmrjZMl11bmZ+9j9QcAGpWbECRxkzBAe1ZJBtrLOaNRKyQfRLICi
- 09lHSdhrT1LI8XoHfphv52QHO7/uzdS2qOxyvBKTJIRRgUyusIWQQzsWkDU/eSQb/aVc7gfWg
- Jerv5t5Ql4albwxCIeDcPkbj8xyqBITTU3vYxINAxlnop7I6kAjhPqoIV2o/6N9wqMOnEU0GJ
- ooD3g7A8e7LQ9pwV
+        id S1041560AbdDURlc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 13:41:32 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:36555 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1041565AbdDURlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 13:41:12 -0400
+Received: by mail-io0-f176.google.com with SMTP id p80so9419859iop.3
+        for <git@vger.kernel.org>; Fri, 21 Apr 2017 10:41:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=u60SZkERupozcX0oZXrcBHm3SGNC7B9XKy8VQfEDszo=;
+        b=AK8mxgu+2t5Ea8A5qlYtPvkW/j8nombWC4ILly+GzcSjVRSHUhKykDh1pJ5qDi6Buw
+         gPMfaw/+2ESVkD4UWXzzY20p38O8qQ0Czoj6fneA2q/Oa4lBokp0RVwFWvIGnXXfEnfJ
+         83E8FhL9R7hHVoX919u3WyMBUBQwzUcUkaSWdDHJqXNTaKHOOFes7z8DjUHMwQuSPuwg
+         FEwLCksP60jdGLEuhlYRhai1nI1EQ1jNLcm40XAWOlPx4iHjowupBmf4ZqA6PewCoF5f
+         4ugYYBRF/34aXn+HfNTL3nRcdHtw7zQM5CA9TugGFsKbKRgqnQbeUM+glWdRwW7HVubK
+         t5ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=u60SZkERupozcX0oZXrcBHm3SGNC7B9XKy8VQfEDszo=;
+        b=mvuc37CW5v/5NqYDaCq1hg7Lx24GcoTO+7AeJ9uh1IM9ldXo7LFU65aUlJt4u+i123
+         mugYMkF4959zIZums5K46Vz2rMeQk4/Xcbk8fA5sD9jE2zv7VRqBGmEjqVeI9YJpTifS
+         auM5IRdv9o8nsXI48grGOrccQgq6HDbimoQEXmuWgxHJB8RGx7O21YjQNzhM8xVRgXop
+         +hOsyWqBu7DmNm+dksQEvb5Hde6FYGGPjcRYD9VHZyg/AGP2C66BriH9/S5aVgeQje7P
+         cAPhwk3yfoT3lVfXpNvLUf3sdGiWuDx3aIH/p1mZrnk2BSs5k1PR+g4K4WhctSbTP4RJ
+         b1cg==
+X-Gm-Message-State: AN3rC/7hynInZvf7jW4XbEbZOyBxZ6kYzXoqSToXgWWfoEZDG77IXp7H
+        ytqY1bNe55KHam1h
+X-Received: by 10.99.107.198 with SMTP id g189mr13273502pgc.162.1492796397693;
+        Fri, 21 Apr 2017 10:39:57 -0700 (PDT)
+Received: from localhost ([2620:0:100e:422:20c0:fec:9e95:adb1])
+        by smtp.gmail.com with ESMTPSA id x1sm7356500pfx.133.2017.04.21.10.39.56
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 21 Apr 2017 10:39:56 -0700 (PDT)
+From:   Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, bmwill@google.com, jrnieder@gmail.com,
+        jonathantanmy@google.com, philipoakley@iee.org,
+        Stefan Beller <sbeller@google.com>
+Subject: [PATCHv3 4/4] builtin/reset: add --recurse-submodules switch
+Date:   Fri, 21 Apr 2017 10:39:53 -0700
+Message-Id: <20170421173953.16433-1-sbeller@google.com>
+X-Mailer: git-send-email 2.13.0.rc0.2.g0d1ae48b0e
+In-Reply-To: <CAGZ79kZ4oJcCD5QttcSzkfTVotust8vnBmSbp0sh5PrpqMQgJw@mail.gmail.com>
+References: <CAGZ79kZ4oJcCD5QttcSzkfTVotust8vnBmSbp0sh5PrpqMQgJw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason venit, vidit, dixit 20.04.2017 23:58:
-> As a refresh of everyone's memory (because mine needed it). This is a
-> feature I added back in 2011 when the i18n support was initially
-> added.
-> 
-> There was concern at the time that we would inadvertently mark
-> plumbing messages for translation, particularly something in a shared
-> code path, and this was a way to hopefully smoke out those issues with
-> the test suite.
-> 
-> However compiling with it breaks a couple of dozen tests, I stopped
-> digging when I saw some broke back in 2014.
-> 
-> What should be done about this? I think if we're going to keep them
-> they need to be run regularly by something like Travis (Lars CC'd),
-> however empirical evidence suggests that not running them is just fine
-> too, so should we just remove support for this test mode?
-> 
-> I don't care, but I can come up with the patch either way, but would
-> only be motivated to write the one-time fix for it if some CI system
-> is actually running them regularly, otherwise they'll just be subject
-> to bitrotting again.
-> 
+git-reset is yet another working tree manipulator, which should
+be taught about submodules.
 
-I use that switch when I change something that involves l10n, but
-usually I run specific tests only. To be honest: I have to make sure not
-to get confused by (nor forget one of) the build flag GETTEXT_POISON and
-the environment variable GIT_GETTEXT_POISON. I'm not sure I always
-tested what I meant to test...
+When a user uses git-reset and requests to recurse into submodules,
+this will reset the submodules to the object name as recorded in the
+superproject, detaching the HEADs.
 
-Michael
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+  This replaces the topmost patch in sb/reset-recurse-submodules.
+  The only difference is the rewording of the commit message.
+  
+  Thanks,
+  Stefan
+
+ builtin/reset.c            | 30 ++++++++++++++++++++++++++++++
+ t/t7112-reset-submodule.sh |  8 ++++++++
+ 2 files changed, 38 insertions(+)
+
+diff --git a/builtin/reset.c b/builtin/reset.c
+index fc3b906c47..5ce27fcaed 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -21,6 +21,27 @@
+ #include "parse-options.h"
+ #include "unpack-trees.h"
+ #include "cache-tree.h"
++#include "submodule.h"
++#include "submodule-config.h"
++
++static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
++
++static int option_parse_recurse_submodules(const struct option *opt,
++					   const char *arg, int unset)
++{
++	if (unset) {
++		recurse_submodules = RECURSE_SUBMODULES_OFF;
++		return 0;
++	}
++	if (arg)
++		recurse_submodules =
++			parse_update_recurse_submodules_arg(opt->long_name,
++							    arg);
++	else
++		recurse_submodules = RECURSE_SUBMODULES_ON;
++
++	return 0;
++}
+ 
+ static const char * const git_reset_usage[] = {
+ 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
+@@ -283,6 +304,9 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 				N_("reset HEAD, index and working tree"), MERGE),
+ 		OPT_SET_INT(0, "keep", &reset_type,
+ 				N_("reset HEAD but keep local changes"), KEEP),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules,
++			    "reset", "control recursive updating of submodules",
++			    PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
+ 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
+ 				N_("record only the fact that removed paths will be added later")),
+@@ -295,6 +319,12 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 						PARSE_OPT_KEEP_DASHDASH);
+ 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+ 
++	if (recurse_submodules != RECURSE_SUBMODULES_DEFAULT) {
++		gitmodules_config();
++		git_config(submodule_config, NULL);
++		set_config_update_recurse_submodules(RECURSE_SUBMODULES_ON);
++	}
++
+ 	unborn = !strcmp(rev, "HEAD") && get_sha1("HEAD", oid.hash);
+ 	if (unborn) {
+ 		/* reset on unborn branch: treat as reset to empty tree */
+diff --git a/t/t7112-reset-submodule.sh b/t/t7112-reset-submodule.sh
+index 2eda6adeb1..f86ccdf215 100755
+--- a/t/t7112-reset-submodule.sh
++++ b/t/t7112-reset-submodule.sh
+@@ -5,6 +5,14 @@ test_description='reset can handle submodules'
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-submodule-update.sh
+ 
++KNOWN_FAILURE_SUBMODULE_RECURSIVE_NESTED=1
++KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
++KNOWN_FAILURE_SUBMODULE_OVERWRITE_IGNORED_UNTRACKED=1
++
++test_submodule_switch_recursing "git reset --recurse-submodules --keep"
++
++test_submodule_forced_switch_recursing "git reset --hard --recurse-submodules"
++
+ test_submodule_switch "git reset --keep"
+ 
+ test_submodule_switch "git reset --merge"
+-- 
+2.13.0.rc0.2.g0d1ae48b0e
+
