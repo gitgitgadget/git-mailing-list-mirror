@@ -2,75 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3C04207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 14:25:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1F95207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 15:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1040939AbdDUOZY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 10:25:24 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:33852 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1039917AbdDUOZW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 10:25:22 -0400
-Received: by mail-qt0-f176.google.com with SMTP id c45so70721239qtb.1
-        for <git@vger.kernel.org>; Fri, 21 Apr 2017 07:25:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=zwIZkoRDYWwGfAz6QJYwXpqFvO2/y8YZdSeaOz34aPY=;
-        b=tbFkVaTxeJnwhfICM3g1T1wXF3SNotfPuDnpqMW6asVp8Ku5/NLl4zI176KiOWOsxD
-         CQksHzMEwag6zaBuQjEkuvDuGNhZEyEwFqvfEIkrlBf7hHlEMkp6d+ugN9TZ5DSVd9Fu
-         TBMVNIcnKj5VcYKckKS+klXBgNqtH70C/fiy1m66BCkV9TY/2snfIPYRxKDwZODF1nN+
-         QBwmpAr1jhu8KhOE/B/KWousYWhDPTyAqGd7xTxW79RkWYjD+oupx+kwyxhJ3wNJ4Tkj
-         NT+nx6KTZF/vcQabAn3no8DuJZhT7QASynBXI9UI7Z91VukXlCCDzjfRcoXu6z5Rh3qH
-         sn7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=zwIZkoRDYWwGfAz6QJYwXpqFvO2/y8YZdSeaOz34aPY=;
-        b=OmdlZNEBRPEpxPStBLmItp1tD3SnWJyYDDnG5ao2ulc4mI4UNUfUAsPebGamIPMArS
-         /9wgMtPXjpVB9Ce+sDL4TehiHVGbYbYoIexTDWDG95bBMXq7nfCnlN1bjXvn5WTc8pGo
-         PkIaPusuRlPaTJn6Q23EvPyaOqZv3lz3vQsGClYB/jkLjpmwrAOwQvyRepH59psOMhaB
-         LAFYKfj6ZsJokGv2MWLhXF9e74Hr3pT5BjLHuYpD6t2OAw7ruwvUlYnWLv4TV4Xec6o7
-         p5F2ku0czen1LrOegCDpz9+kGSfMmsNEPM/lzbPHgbeDV/s2hfkIFFlCN+255MVmYPeo
-         cPlw==
-X-Gm-Message-State: AN3rC/7k+/kgT3evTDe4GDASyr4niYaMVYxl55WBgp9jZmYDehP5dFDV
-        U+Og+0hwDFaU3EjPxPoD+JutXJYFjkpD
-X-Received: by 10.237.36.103 with SMTP id s36mr14370782qtc.71.1492784720859;
- Fri, 21 Apr 2017 07:25:20 -0700 (PDT)
+        id S1037185AbdDUO74 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 10:59:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37745 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1041242AbdDUO7y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 10:59:54 -0400
+Received: (qmail 32741 invoked by uid 109); 21 Apr 2017 14:59:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 14:59:18 +0000
+Received: (qmail 16928 invoked by uid 111); 21 Apr 2017 14:59:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 10:59:42 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Apr 2017 10:59:16 -0400
+Date:   Fri, 21 Apr 2017 10:59:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] nd/worktree-move update
+Message-ID: <20170421145916.mknekgqzhxffu7di@sigill.intra.peff.net>
+References: <20170420101024.7593-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Received: by 10.55.96.65 with HTTP; Fri, 21 Apr 2017 07:25:20 -0700 (PDT)
-In-Reply-To: <20170420212436.GC4989@hank>
-References: <20170420205214.GB4989@hank> <CAP8UFD1LAU8hg4ioes=y4o_Phgd1zBhUJOmkqTPo++4SprWWpw@mail.gmail.com>
- <20170420212436.GC4989@hank>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 21 Apr 2017 16:25:20 +0200
-Message-ID: <CAP8UFD2f9g__ykCjReSoaAUvFTPmgRDbsWFQMRrFoFw8haV0uA@mail.gmail.com>
-Subject: Re: [BUG] test suite broken with GIT_TEST_SPLIT_INDEX
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170420101024.7593-1-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 20, 2017 at 11:24 PM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> On 04/20, Christian Couder wrote:
->>
->> Could you try with the following patch:
->>
->> http://public-inbox.org/git/20170330210354.20018-1-chriscool@tuxfamily.org/
->
-> Yeah, I tried with and without that patch with the same result.
-> Unless I'm screwing something up when testing I don't think this fixes
-> the issue unfortunately.
+On Thu, Apr 20, 2017 at 05:10:18PM +0700, Nguyễn Thái Ngọc Duy wrote:
 
-I just tried on "pu" and only the first test
-(t7009-filter-branch-null-sha1.sh) fails there.
+>  - fixes the compile problem on latest master (because prefix_filename
+>    takes one argument less)
+
+It also now returns an allocated buffer.
+
+So:
+
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -561,9 +561,7 @@ static int move_worktree(int ac, const char **av, const char *prefix)
+>  	if (ac != 2)
+>  		usage_with_options(worktree_usage, options);
+>  
+> -	strbuf_addstr(&dst, prefix_filename(prefix,
+> -					    strlen(prefix),
+> -					    av[1]));
+> +	strbuf_addstr(&dst, prefix_filename(prefix, av[1]));
+
+...this is now a leak. Probably:
+
+  const char *filename = prefix_filename(prefix, av[1]);
+  strbuf_attach(&dst, filename, strlen(filename), strlen(filename));
+
+is what you want. That would be less awkward if we had a
+strbuf_attach_str().
+
+Or if we had a strbuf variant of prefix_filename(), you could do:
+
+  prefix_filename_buf(&dst, prefix, av[1]);
+
+I almost added that when I did the prefix_filename() work, since it uses
+a strbuf internally. But there were no callers that would have used it.
+Maybe it's worth doing now.
+
+-- >8 --
+From d0b933fc023023a017df9268360aa327c28b90f0 Mon Sep 17 00:00:00 2001
+From: Jeff King <peff@peff.net>
+Date: Fri, 21 Apr 2017 10:53:07 -0400
+Subject: [PATCH] prefix_filename: add strbuf variant
+
+Now that prefix_filename() always allocates, it's awkward to
+put its value directly into a strbuf. You have to either
+free:
+
+  const char *filename = prefix_filename(prefix, arg);
+  strbuf_addstr(&buf, filename);
+  free(filename);
+
+or you have to attach:
+
+  const char *filename = prefix_filename(prefix, arg);
+  strbuf_attach(&buf, filename, strlen(filename), strlen(filename));
+
+Since we're already using a strbuf internally, it's easy to
+provide a variant that lets you write directly into one:
+
+  prefix_filename_buf(&buf, prefix, arg);
+
+For consistency with git_path_buf(), the function overwrites
+the strbuf rather than appending.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ abspath.c | 17 ++++++++++++-----
+ cache.h   |  6 ++++++
+ 2 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/abspath.c b/abspath.c
+index 7f1cfe979..7594f62a5 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -246,21 +246,28 @@ char *absolute_pathdup(const char *path)
+ 	return strbuf_detach(&sb, NULL);
+ }
+ 
+-char *prefix_filename(const char *pfx, const char *arg)
++void prefix_filename_buf(struct strbuf *path, const char *pfx, const char *arg)
+ {
+-	struct strbuf path = STRBUF_INIT;
+ 	size_t pfx_len = pfx ? strlen(pfx) : 0;
+ 
++	strbuf_reset(path);
++
+ 	if (!pfx_len)
+ 		; /* nothing to prefix */
+ 	else if (is_absolute_path(arg))
+ 		pfx_len = 0;
+ 	else
+-		strbuf_add(&path, pfx, pfx_len);
++		strbuf_add(path, pfx, pfx_len);
+ 
+-	strbuf_addstr(&path, arg);
++	strbuf_addstr(path, arg);
+ #ifdef GIT_WINDOWS_NATIVE
+-	convert_slashes(path.buf + pfx_len);
++	convert_slashes(path->buf + pfx_len);
+ #endif
++}
++
++char *prefix_filename(const char *pfx, const char *arg)
++{
++	struct strbuf path = STRBUF_INIT;
++	prefix_filename_buf(&path, pfx, arg);
+ 	return strbuf_detach(&path, NULL);
+ }
+diff --git a/cache.h b/cache.h
+index ba27595d5..209039a98 100644
+--- a/cache.h
++++ b/cache.h
+@@ -548,6 +548,12 @@ extern char *prefix_path_gently(const char *prefix, int len, int *remaining, con
+  */
+ extern char *prefix_filename(const char *prefix, const char *path);
+ 
++/*
++ * Like prefix_filename, but write into "buf", overwriting any
++ * previous contents of the strbuf.
++ */
++extern void prefix_filename_buf(struct strbuf *out, const char *prefix, const char *path);
++
+ extern int check_filename(const char *prefix, const char *name);
+ extern void verify_filename(const char *prefix,
+ 			    const char *name,
+-- 
+2.13.0.rc0.364.g36b4d8031
+
