@@ -2,93 +2,184 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B602207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 20:06:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8285A207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 20:14:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1425903AbdDUUGQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 16:06:16 -0400
-Received: from mail-ua0-f172.google.com ([209.85.217.172]:35395 "EHLO
-        mail-ua0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1425897AbdDUUGO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 16:06:14 -0400
-Received: by mail-ua0-f172.google.com with SMTP id f10so86805058uaa.2
-        for <git@vger.kernel.org>; Fri, 21 Apr 2017 13:06:14 -0700 (PDT)
+        id S1161450AbdDUUOv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 16:14:51 -0400
+Received: from mail-ua0-f178.google.com ([209.85.217.178]:35827 "EHLO
+        mail-ua0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1161420AbdDUUOu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 16:14:50 -0400
+Received: by mail-ua0-f178.google.com with SMTP id f10so86907471uaa.2
+        for <git@vger.kernel.org>; Fri, 21 Apr 2017 13:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=i3uB6SALDlQZxE6pcaHyRT6Jk4s86IEOg3qK9jiyfXM=;
-        b=hV3iz7uO/AEnNkD4vwaG+oOw4t71if+tY5ttrK7DnROg7E6Wr6rdTN1CKA5vwzoPQP
-         5j7NRE5otvsqsrvVsi+1sJ58i8A0ZQtPbR5e5ANSdMYHC3mrU/1JUmliMIXMMsfpqPbD
-         YYEIQwQPvjukhknS2i2Ph0Z9MnOvCSX2hXNWDxFkV4u59meRVAVtTQAggPHRxOWIbDOF
-         ZR/T6adWc/MDWk2ZinXKX3lXvSlTlBLZP8A8D0IPhpX81NY2gJIUEOkZbz9FjspC54IC
-         wI+I23A15jP2ulppOlbyylJSBl7sfw0CUSxGLBv+DVzv1xzBtpjIFBxIfGEkstMsl6dW
-         NbeA==
+         :cc;
+        bh=OU9ILScg8P4smNzGaTxW0+L7srdN0N9EU+xyTmg73iI=;
+        b=IqliaQZKP5VpaWB8RVLm34jeEv87WbeOIaSNyTYIo0XlCPRFJcACA0TA5oN1fS8w2G
+         c3gMZ5F5mXDUT2yz/3MqvgRTNhVFkdGE2kmgA76+SwWvW6Hz7LqV8GscdXDC4YF2rIey
+         0UDYka3HmnS/wKnUeMN6mNGp9ffSZSAsdrJI+exZBby0h/EyUp4wrpsOK/2gvcsor5Tx
+         R/u6N50SXte+sHavVsxUOaVFJIgXrqiEjt1PBO0QWKRbGWCppRDnoHgjSiJbslldDvVu
+         4VOguj0y3WhFQ1S7ncxmXRFFGHyJ4N18Cj6QDGuLnsiqAS6iRLCkey94OL01KV88O1vO
+         jmaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=i3uB6SALDlQZxE6pcaHyRT6Jk4s86IEOg3qK9jiyfXM=;
-        b=JCzrPcpR8JiGS6sOYSm5twCIg+X70FkTebXsQQ4ROcee45VEdvT7RLSYb7NqZETf22
-         ++HZE49HEmrV/2mEY9iQUlR1ZbsCkLtNCaRrRmYwxzGWWH/it8Rb+D50jWzKnn2p65hj
-         yRpm3e0O9onxjss+aE4hQMmTEmLzFhXI0I2HR9sqzen/5+hE2e/THBLV1v3+HG3Tu/dQ
-         oXrvank+SoEYl4LH3x9u5dIKPy/r5LQ4MnBj0wW17AouUJfT2Ntt7rivpCIj/O9pZGWt
-         A4N4VNBpWFReCO1ZViHQPznOn4+TlYZn9QuCU6uFAh9MostxROqQrA83VuVi8D8I4Sl9
-         B2Og==
-X-Gm-Message-State: AN3rC/4jBefqxmyemV9mLNCuEdgdkACVHFeOmBwwpagzBhGVjcPjH6qg
-        DiAiu1duP0bECHfRFY6rG5pqBYyZPQ==
-X-Received: by 10.176.16.11 with SMTP id f11mr8092044uab.156.1492805173770;
- Fri, 21 Apr 2017 13:06:13 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=OU9ILScg8P4smNzGaTxW0+L7srdN0N9EU+xyTmg73iI=;
+        b=gHk4gMsKkWZwNcmM/YDVoRT6mFv/D8ZzJRHrV5SeNJvMhzjeup12iQELjm7mSO6nzo
+         FajW4SNCtPxDTLLDyN1P/ATq4ZsOZtI3GlFCZpjp+eTLZisnohBJCB0xdU4pyZkXueyG
+         /lRWb2Q/0lrKpHFplBU/zDsX89PlGaLZIbrGxi3Y3ubfJk4xe010OfOIyPnWRR6Yypli
+         5obgNyWvbqfWl6fa9U0RcVRRv/WnZ5uDPfgqFSFd97wkLu7JElUC5SgeYkWBhIeq9kp4
+         cNqbAJ4A5b+WmK0Koqdlbpf3w2zM9Fo+19cdWqOX70n1fjfzxiFjcQYVu+Be13cbIZmg
+         opbg==
+X-Gm-Message-State: AN3rC/7wAOWwcUkH9jNEAewy7MCd9W3pv2BcmyiotgrZZYbwfrQaAr2H
+        8VzOHqWXr9dcp/xQJM1BFvG08TvoGw==
+X-Received: by 10.176.16.206 with SMTP id x14mr8003345uab.174.1492805689198;
+ Fri, 21 Apr 2017 13:14:49 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.176.23.211 with HTTP; Fri, 21 Apr 2017 13:06:13 -0700 (PDT)
-In-Reply-To: <xmqq7f2e8u14.fsf@gitster.mtv.corp.google.com>
-References: <CAM0VKjm1m4v9vTpwFEejBuD3NuGm+kAdEV-_rzCXCz2G4m5NGw@mail.gmail.com>
- <20170420165230.5951-1-szeder.dev@gmail.com> <xmqq7f2e8u14.fsf@gitster.mtv.corp.google.com>
+Received: by 10.176.23.211 with HTTP; Fri, 21 Apr 2017 13:14:48 -0700 (PDT)
+In-Reply-To: <xmqqzifa4amr.fsf@gitster.mtv.corp.google.com>
+References: <20170420201229.fxiylgp2v2v4sz3w@sigill.intra.peff.net> <xmqqzifa4amr.fsf@gitster.mtv.corp.google.com>
 From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 21 Apr 2017 22:06:13 +0200
-Message-ID: <CAM0VKj=kaFseg9cs9SOyzJCVtpBXD8sq9mWWWYg=mAxu7uRB7g@mail.gmail.com>
-Subject: Re: [PATCH] test-lib: abort when can't remove trash directory
+Date:   Fri, 21 Apr 2017 22:14:48 +0200
+Message-ID: <CAM0VKjm=JMuYzsS-OTx+p-vFF8PmWJGbFnndag9dWw6xCe3g6Q@mail.gmail.com>
+Subject: Re: [PATCH] completion: optionally disable checkout DWIM
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        David Turner <dturner@twosigma.com>,
-        Git mailing list <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 2:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+On Fri, Apr 21, 2017 at 7:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
->> We had two similar bugs in the tests sporadically triggering error
->> messages during the removal of the trash directory, see commits
->> bb05510e5 (t5510: run auto-gc in the foreground, 2016-05-01) and
->> ef09036cf (t6500: wait for detached auto gc at the end of the test
->> script, 2017-04-13).  The test script succeeded nonetheless, because
->> these errors are ignored during housekeeping in 'test_done'.
+>> When we complete branch names for "git checkout", we also
+>> complete remote branch names that could trigger the DWIM
+>> behavior. Depending on your workflow and project, this can
+>> be either convenient or annoying.
+>> ...
+>> This is flexible enough for me, but it's possible somebody would want
+>> this on a per-repo basis. I don't know that we want to read from `git
+>> config`, though, because it's relatively expensive to do so. People who
+>> want per-repo settings are probably better off with a hook that triggers
+>> when they "cd" around, and sets up their preferences.
+
+We could discern between more than just empty vs. non-empty state of
+the environment variable, e.g.:
+
+  - if empty/unset, then include "DWIM" suggestions.
+  - if set to 'config', then query the 'completion.checkoutNoGuess'
+    configuration variable, and omit "DWIM" suggestions if its true.
+  - if set to something else, then omit "DWIM" suggestions.
+
+Then users can themselves decide, whether the per-repo configurability
+is worth the overhead of running 'git config'.
+
+
+> Sounds OK.  I am kind of surprised that --no-guess is the only way
+> to turn off this dwimming (not in the completion side, but there
+> does not seem to be a way to tell "git checkout" that you do not
+> need that create-missing-branch-out-of-remote-tracking).
+>
+>>  contrib/completion/git-completion.bash | 11 ++++++++++-
+>>  1 file changed, 10 insertions(+), 1 deletion(-)
 >>
->> However, such an error is a sign that something is fishy in the test
->> script.  Print an error message and abort the test script when the
->> trash directory can't be removed successfully or is already removed,
->> because that's unexpected and we woud prefer somebody notice and
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 1150164d5..f53b18fae 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -28,6 +28,14 @@
+>>  # completion style.  For example '!f() { : git commit ; ... }; f' will
+>>  # tell the completion to use commit completion.  This also works with aliases
+>>  # of form "!sh -c '...'".  For example, "!sh -c ': git commit ; ... '".
+>> +#
+>> +# You can set the following environment variables to influence the behavior of
+>> +# the completion routines:
+>> +#
+>> +#   GIT_COMPLETION_CHECKOUT_NO_GUESS
 
-s/woud/would/
+That's one long variable name :)
+Of course it has to start with the 'GIT_COMPLETION_' prefix, and you
+can't win from there...
 
->> figure out why.
+>> +#     When non-empty, do not include "DWIM" suggestions in git-checkout
+>> +#     completion (e.g., completing "foo" when "origin/foo" exists).
+>>
+>>  case "$COMP_WORDBREAKS" in
+>>  *:*) : great ;;
+>> @@ -1248,7 +1256,8 @@ _git_checkout ()
+>>               # check if --track, --no-track, or --no-guess was specified
+>>               # if so, disable DWIM mode
+>>               local flags="--track --no-track --no-guess" track_opt="--track"
+>> -             if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
+>> +             if [ -n "$GIT_COMPLETION_CHECKOUT_NO_GUESS" -o \
+>> +                  -n "$(__git_find_on_cmdline "$flags")" ]; then
 
+|| would be better than '-o', because the former short-circuits when
+the first condition is true, but the latter doesn't.
 
-> Note, that the commit message references ef09036cf (t6500: wait for
->> detached auto gc at the end of the test script, 2017-04-13), which
->> is still only in 'pu'.
+>>                       track_opt=''
+>>               fi
+>>               __git_complete_refs $track_opt
+
+On Fri, Apr 21, 2017 at 7:01 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff King <peff@peff.net> writes:
 >
-> I think that one is already part of 2.13-rc0 ;-)
-
-Yeah, I should have fetched before submitting.
+>> When we complete branch names for "git checkout", we also
+>> complete remote branch names that could trigger the DWIM
+>> behavior. Depending on your workflow and project, this can
+>> be either convenient or annoying.
+>> ...
+>> This is flexible enough for me, but it's possible somebody would want
+>> this on a per-repo basis. I don't know that we want to read from `git
+>> config`, though, because it's relatively expensive to do so. People who
+>> want per-repo settings are probably better off with a hook that triggers
+>> when they "cd" around, and sets up their preferences.
+>
+> Sounds OK.  I am kind of surprised that --no-guess is the only way
+> to turn off this dwimming (not in the completion side, but there
+> does not seem to be a way to tell "git checkout" that you do not
+> need that create-missing-branch-out-of-remote-tracking).
+>
+>>  contrib/completion/git-completion.bash | 11 ++++++++++-
+>>  1 file changed, 10 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 1150164d5..f53b18fae 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -28,6 +28,14 @@
+>>  # completion style.  For example '!f() { : git commit ; ... }; f' will
+>>  # tell the completion to use commit completion.  This also works with aliases
+>>  # of form "!sh -c '...'".  For example, "!sh -c ': git commit ; ... '".
+>> +#
+>> +# You can set the following environment variables to influence the behavior of
+>> +# the completion routines:
+>> +#
+>> +#   GIT_COMPLETION_CHECKOUT_NO_GUESS
+>> +#
+>> +#     When non-empty, do not include "DWIM" suggestions in git-checkout
+>> +#     completion (e.g., completing "foo" when "origin/foo" exists).
+>>
+>>  case "$COMP_WORDBREAKS" in
+>>  *:*) : great ;;
+>> @@ -1248,7 +1256,8 @@ _git_checkout ()
+>>               # check if --track, --no-track, or --no-guess was specified
+>>               # if so, disable DWIM mode
+>>               local flags="--track --no-track --no-guess" track_opt="--track"
+>> -             if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
+>> +             if [ -n "$GIT_COMPLETION_CHECKOUT_NO_GUESS" -o \
+>> +                  -n "$(__git_find_on_cmdline "$flags")" ]; then
+>>                       track_opt=''
+>>               fi
+>>               __git_complete_refs $track_opt
