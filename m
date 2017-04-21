@@ -2,68 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DBF71FE90
-	for <e@80x24.org>; Fri, 21 Apr 2017 06:33:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C37FE1FE90
+	for <e@80x24.org>; Fri, 21 Apr 2017 06:42:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1035826AbdDUGd3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 02:33:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37574 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1035281AbdDUGd1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 02:33:27 -0400
-Received: (qmail 2928 invoked by uid 109); 21 Apr 2017 06:33:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 06:33:26 +0000
-Received: (qmail 14377 invoked by uid 111); 21 Apr 2017 06:33:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 02:33:51 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Apr 2017 02:33:25 -0400
-Date:   Fri, 21 Apr 2017 02:33:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 05/15] log: report errno on failure to fopen() a file
-Message-ID: <20170421063324.uumqm4shxunyoii4@sigill.intra.peff.net>
-References: <20170420112609.26089-1-pclouds@gmail.com>
- <20170420112609.26089-6-pclouds@gmail.com>
+        id S1035835AbdDUGme (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 02:42:34 -0400
+Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:60615 "EHLO
+        alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1035831AbdDUGmd (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 21 Apr 2017 02:42:33 -0400
+X-AuditID: 12074412-a4fff70000003a21-33-58f9a9cb4698
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id F5.13.14881.BC9A9F85; Fri, 21 Apr 2017 02:42:20 -0400 (EDT)
+Received: from [192.168.69.190] (p57906886.dip0.t-ipconnect.de [87.144.104.134])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v3L6gH4a024974
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Fri, 21 Apr 2017 02:42:18 -0400
+Subject: Re: [PATCH] refs.h: rename submodule arguments to submodule_path
+To:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+References: <20170412200037.18752-1-sbeller@google.com>
+ <CAGZ79kYTqh=Qa+Pt1+MojrcYFr05HQgbPRcc=DvjCkUWsjP5Uw@mail.gmail.com>
+ <xmqqy3uu7ee3.fsf@gitster.mtv.corp.google.com>
+ <cb1dd8b6-3357-57ff-650d-c55a7eb38d34@alum.mit.edu>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <8b2ef70c-4064-f726-8752-5bb0a898ee7a@alum.mit.edu>
+Date:   Fri, 21 Apr 2017 08:42:16 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170420112609.26089-6-pclouds@gmail.com>
+In-Reply-To: <cb1dd8b6-3357-57ff-650d-c55a7eb38d34@alum.mit.edu>
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrNIsWRmVeSWpSXmKPExsUixO6iqHtm5c8Ig/aD4hZdV7qZLBp6rzBb
+        dE95y2ixeXM7iwOLx85Zd9k9Fmwq9bh4Sdnj8ya5AJYoLpuU1JzMstQifbsEroy5DfIFf1kq
+        Tv/6z9TA2MjSxcjJISFgItE0/yRjFyMXh5DADiaJZSu62UESQgIXmCSe7WDuYuTgEBbwlDjx
+        wQ7EFBHwkmibWQxR/pRR4vSyP2wg5cwCSRL73p9gBbHZBHQlFvU0M4HYvAL2Ehef3GQEsVkE
+        VCU2XbwEViMqECIxZ+EDRogaQYmTM5+A3cMp4CBx41wDC8RMPYkd13+xQtjyEtvfzmGewMg/
+        C0nLLCRls5CULWBkXsUol5hTmqubm5iZU5yarFucnJiXl1qka6aXm1mil5pSuokREq5COxjX
+        n5Q7xCjAwajEw3ti5Y8IIdbEsuLK3EOMkhxMSqK8Vzt+RgjxJeWnVGYkFmfEF5XmpBYfYpTg
+        YFYS4a2bC5TjTUmsrEotyodJSXOwKInz/lys7ickkJ5YkpqdmlqQWgSTleHgUJLgvbYCqFGw
+        KDU9tSItM6cEIc3EwQkynAdouP9KkOHFBYm5xZnpEPlTjLocc+59fc8kxJKXn5cqJc67H2SQ
+        AEhRRmke3BxYmnnFKA70ljCvOMgoHmCKgpv0CmgJE9CSs34/QJaUJCKkpBoY23i7tX6Zb1mf
+        taDBzsf+BM+pVxvb/4avnn5Ycrv2rI9eReUn/2V8d5Wa53zdPWLevQtTPKOqjVctDStNeLZa
+        uEKk8GL/ho4Uh6W34wr9VtpeEzH28Amc6SRqlGc0Y2qp5mPd2m8ez09ecwg9sO9V4EI3n0Rf
+        6cIV3HtT2v0n3bihvMDyv9QhJZbijERDLeai4kQA25168Q4DAAA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 20, 2017 at 06:25:59PM +0700, Nguyễn Thái Ngọc Duy wrote:
-
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  builtin/log.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+On 04/21/2017 08:32 AM, Michael Haggerty wrote:
+> [...]
+> I've CCed Duy because I don't know whether he has more plans regarding
+> submodule references [...] get rid of the
+> `for_each_ref_submodule()` family of functions entirely.
 > 
-> diff --git a/builtin/log.c b/builtin/log.c
-> index b3b10cc1ed..26d6a3cf14 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -858,7 +858,8 @@ static int open_next_file(struct commit *commit, const char *subject,
->  		printf("%s\n", filename.buf + outdir_offset);
->  
->  	if ((rev->diffopt.file = fopen(filename.buf, "w")) == NULL)
-> -		return error(_("Cannot open patch file %s"), filename.buf);
-> +		return error_errno(_("Cannot open patch file %s"),
-> +				   filename.buf);
->  
->  	strbuf_release(&filename);
->  	return 0;
+> So perhaps the code that this patch touches won't be around long anyway.
 
-Not a new problem with your patch, but just looking at the context it
-seems clear that "filename" is leaked in the error case.
+Oh yeah, he has done exactly that in his nd/prune-in-worktree patch
+series. (I knew I'd seen that somewhere...)
 
--Peff
+So it seems that the argument renaming has mostly been overtaken by
+events, though even after Duy's patch series there are a few `const char
+*submodule` arguments that could be renamed.
+
+Michael
+
