@@ -2,192 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA7AB207BC
-	for <e@80x24.org>; Fri, 21 Apr 2017 18:26:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D0DF207BC
+	for <e@80x24.org>; Fri, 21 Apr 2017 18:29:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1037371AbdDUS0u (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 14:26:50 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:34075 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1036979AbdDUS0q (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 14:26:46 -0400
-Received: by mail-qk0-f194.google.com with SMTP id d80so8414738qke.1
-        for <git@vger.kernel.org>; Fri, 21 Apr 2017 11:26:46 -0700 (PDT)
+        id S1041200AbdDUS3V (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 14:29:21 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:33252 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1422783AbdDUS3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 14:29:13 -0400
+Received: by mail-io0-f175.google.com with SMTP id k87so130871599ioi.0
+        for <git@vger.kernel.org>; Fri, 21 Apr 2017 11:29:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hWA72IsxOfKB9pZFpHe90EvQqKJFxlPqhllmuSmiQ88=;
-        b=HT9O3MGv/T8n7xjT3k+Xn9qMU37CasuebNXpzJmgMeG7GqMl6/648W3ChYExOgfi+b
-         evCqyR1bZgIwJkON0G5eGfDdE2YR2YWOjTXxSRe5/LwH5QtEOvsPJPkuX5PPr+jHHrsV
-         XnAgUJa2HZt+NvGKPoEk18AxELpRHTjSIIMwpmGUzTE/h9ayRYcSFgBtgk/ZVoyl4z2y
-         RJGw5bMeOnsDb7zkEvVUk1UWwm9lyUb3Z7LDGqF/CdSV03dfGaPXpTrXbGPQgv4ZOdMy
-         fWcMWSd1z1zYKSwAW87lwvC2FoZacYxMo0KIVx2HpyuZYYoMkzPuMKIw2HIYuFdqRXqq
-         7dFg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=5s/DldDqcDc8sPy5zuWcgAjH/FQZHsNJD8TMeFc7Lhg=;
+        b=jDEVP5W9P5MvIliCve92cKFycYstWHfm73yf6qegHkpLgiXjELrR33XtTcqwOYZQ9h
+         xN8c5gsSalmn8LCGoRAW1UV4BZGDTEoVYygId7xeEuFtE+xyzdBXR0t7+ZJENu/0NKY9
+         /aZg5bJZNtTtu1yG2AnC+2PnaeLxtaXUEO3w9joDzTak2RBYt6FGmkELL54c5vuU1vtK
+         Nu14TA1ZGrXXJC71pADVHlkPHo52s9pf55M3rG97EeDJh3n0yxrvJhUMemmAKpPOJ18e
+         ixGvdn/z93doys7iPYBqwSvjwc5bcPVJgMbhPe7FDtQJ5oqNW71xiM2eGSSdp5cV1SGf
+         CS7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=hWA72IsxOfKB9pZFpHe90EvQqKJFxlPqhllmuSmiQ88=;
-        b=CT8WlFdqbdodeUbyuigV3gHHsbo4XEa1nepKEkQgAtzuubS6uqX5m2y/fgaC/oarfi
-         NFaT1SXo9xImJnvYc5UdBZEY/gtENLZDPKI7d5NRSTAQy0F9IrLrvjWWc9jpRIm+h3O4
-         RpsEAlPfrw6804BuQZS+JeTYscGSPF/3HNdVeJ8VLW0Eaakq8FfNqrMIbEULZGLNLU/4
-         q7GIAgL5ZjdqgieX16M6FL/v1wf7NBQP6/cH0cE5xA84Eyjau3sWqgXNwAU7qBLZ3rvf
-         eQNLF5zxlRIOQcfpv4H6qqQSGpJbvz5VsaxtVlXmh24+Ks/sYkW771BuT7lcbx5PFGre
-         jbkQ==
-X-Gm-Message-State: AN3rC/41lzLPizdajvdBIaGUvLP1/1qpuD+gBO4k4Th/ZwBSHltg1UPl
-        3yyKBKMFOq4no/6GQFw=
-X-Received: by 10.55.51.81 with SMTP id z78mr14747052qkz.100.1492795610333;
-        Fri, 21 Apr 2017 10:26:50 -0700 (PDT)
-Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id g66sm6700551qkb.55.2017.04.21.10.26.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 21 Apr 2017 10:26:49 -0700 (PDT)
-From:   Ben Peart <peartben@gmail.com>
-X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, benpeart@microsoft.com,
-        christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: [PATCH v6 4/8] convert: Separate generic structures and variables from the filter specific ones
-Date:   Fri, 21 Apr 2017 13:26:07 -0400
-Message-Id: <20170421172611.12152-5-benpeart@microsoft.com>
-X-Mailer: git-send-email 2.12.0.windows.1.33.g243d9b384c
-In-Reply-To: <20170421172611.12152-1-benpeart@microsoft.com>
-References: <20170421172611.12152-1-benpeart@microsoft.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5s/DldDqcDc8sPy5zuWcgAjH/FQZHsNJD8TMeFc7Lhg=;
+        b=BuuM47P420epP5znDrz0yNNeE/QycVUxt/RuVWZNAy3h41BBgpS0XJ/fzJWjIfFUMJ
+         KZqZ/GRQ3K0At/kUYFb47ozUkIkAhHA18oN4BTFZRPKnzqe6ijfdEmuhNoi+ct7wMnMX
+         hn0GRVOKVoO373npAzQ/rNimXzu0K30EQl0uCrZC99qE2uBng8ETidjj1gMghnWguLEa
+         BF8LZU/v+TMLnCg7lQvZm1QML8rD2Nu3bW0ibFSF1Sma2sUZd5XUU8ov0OrGhh85dJSs
+         FiCa81+T3m7v3+xUKCC5vbfVELnrDY+ecOXAUCuBzvE/e1Km6qi/rkKZU17MmJbl+Z0g
+         3Gtg==
+X-Gm-Message-State: AN3rC/4ynpVsgK6TtScEWVV8/DVlI3F1McSPD2yxnUlOlCZC3Gc1RT6y
+        TGwY1vDgudlOWcMu36eyHuDfz/liE7DIkjE=
+X-Received: by 10.107.32.199 with SMTP id g190mr17867636iog.117.1492795723234;
+ Fri, 21 Apr 2017 10:28:43 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.134.97 with HTTP; Fri, 21 Apr 2017 10:28:22 -0700 (PDT)
+In-Reply-To: <e7aed763-cf46-4d7e-1b11-0a7a65b8f496@grubix.eu>
+References: <CACBZZX62+acvi1dpkknadTL827mtCm_QesGSZ=6+UnyeMpg8+Q@mail.gmail.com>
+ <e7aed763-cf46-4d7e-1b11-0a7a65b8f496@grubix.eu>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 21 Apr 2017 19:28:22 +0200
+Message-ID: <CACBZZX5t43FWGOFeOEZs9gv3sGrv4Y1ZbapHXY2wLEC18ZU-HA@mail.gmail.com>
+Subject: Re: [BUG] test suite broken with GETTEXT_POISON=YesPlease
+To:     Michael J Gruber <git@grubix.eu>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-To enable future reuse of the filter.<driver>.process infrastructure,
-split the cmd2process structure into two separate parts.
+On Fri, Apr 21, 2017 at 4:47 PM, Michael J Gruber <git@grubix.eu> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 20.04.2017 23:=
+58:
+>> As a refresh of everyone's memory (because mine needed it). This is a
+>> feature I added back in 2011 when the i18n support was initially
+>> added.
+>>
+>> There was concern at the time that we would inadvertently mark
+>> plumbing messages for translation, particularly something in a shared
+>> code path, and this was a way to hopefully smoke out those issues with
+>> the test suite.
+>>
+>> However compiling with it breaks a couple of dozen tests, I stopped
+>> digging when I saw some broke back in 2014.
+>>
+>> What should be done about this? I think if we're going to keep them
+>> they need to be run regularly by something like Travis (Lars CC'd),
+>> however empirical evidence suggests that not running them is just fine
+>> too, so should we just remove support for this test mode?
+>>
+>> I don't care, but I can come up with the patch either way, but would
+>> only be motivated to write the one-time fix for it if some CI system
+>> is actually running them regularly, otherwise they'll just be subject
+>> to bitrotting again.
+>>
+>
+> I use that switch when I change something that involves l10n, but
+> usually I run specific tests only. To be honest: I have to make sure not
+> to get confused by (nor forget one of) the build flag GETTEXT_POISON and
+> the environment variable GIT_GETTEXT_POISON. I'm not sure I always
+> tested what I meant to test...
 
-subprocess_entry will now contain the generic data required to manage
-the creation and tracking of the child process in a hashmap. Also move
-all knowledge of the hashmap into the generic functions.
+For any of the built-in tests, you just need to compile git with
+GETTEXT_POISON=3DYesPlease, the env var is set by test-lib.sh for you,
+you only need to set GIT_GETTEXT_POISON=3D1 if you're ad-hoc running
+some git command yourself, e.g.:
 
-cmd2process is a filter protocol specific structure that is used to
-track the negotiated capabilities of the filter.
-
-Signed-off-by: Ben Peart <benpeart@microsoft.com>
----
- convert.c | 35 ++++++++++++++++++++---------------
- 1 file changed, 20 insertions(+), 15 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 36401fe087..bfb19beed5 100644
---- a/convert.c
-+++ b/convert.c
-@@ -496,26 +496,31 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
- #define CAP_CLEAN    (1u<<0)
- #define CAP_SMUDGE   (1u<<1)
- 
--struct cmd2process {
-+struct subprocess_entry {
- 	struct hashmap_entry ent; /* must be the first member! */
--	unsigned int supported_capabilities;
- 	const char *cmd;
- 	struct child_process process;
- };
- 
-+struct cmd2process {
-+	struct subprocess_entry subprocess; /* must be the first member! */
-+	unsigned int supported_capabilities;
-+};
-+
- static int cmd_process_map_initialized;
- static struct hashmap cmd_process_map;
- 
--static int cmd2process_cmp(const struct cmd2process *e1,
--			   const struct cmd2process *e2,
-+static int cmd2process_cmp(const struct subprocess_entry *e1,
-+			   const struct subprocess_entry *e2,
- 			   const void *unused)
- {
- 	return strcmp(e1->cmd, e2->cmd);
- }
- 
--static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
-+static struct subprocess_entry *find_multi_file_filter_entry(struct hashmap *hashmap, const char *cmd)
- {
--	struct cmd2process key;
-+	struct subprocess_entry key;
-+
- 	hashmap_entry_init(&key, strhash(cmd));
- 	key.cmd = cmd;
- 	return hashmap_get(hashmap, &key, NULL);
-@@ -541,7 +546,7 @@ static void read_multi_file_filter_status(int fd, struct strbuf *status)
- 	}
- }
- 
--static void kill_multi_file_filter(struct hashmap *hashmap, struct cmd2process *entry)
-+static void kill_multi_file_filter(struct hashmap *hashmap, struct subprocess_entry *entry)
- {
- 	if (!entry)
- 		return;
-@@ -571,8 +576,8 @@ static int start_multi_file_filter_fn(struct cmd2process *entry)
- 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
- 	char *cap_buf;
- 	const char *cap_name;
--	struct child_process *process = &entry->process;
--	const char *cmd = entry->cmd;
-+	struct child_process *process = &entry->subprocess.process;
-+	const char *cmd = entry->subprocess.cmd;
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
-@@ -632,9 +637,9 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	const char *argv[] = { cmd, NULL };
- 
- 	entry = xmalloc(sizeof(*entry));
--	entry->cmd = cmd;
-+	entry->subprocess.cmd = cmd;
- 	entry->supported_capabilities = 0;
--	process = &entry->process;
-+	process = &entry->subprocess.process;
- 
- 	child_process_init(process);
- 	process->argv = argv;
-@@ -654,7 +659,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	err = start_multi_file_filter_fn(entry);
- 	if (err) {
- 		error("initialization for external filter '%s' failed", cmd);
--		kill_multi_file_filter(hashmap, entry);
-+		kill_multi_file_filter(hashmap, &entry->subprocess);
- 		return NULL;
- 	}
- 
-@@ -678,7 +683,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 		hashmap_init(&cmd_process_map, (hashmap_cmp_fn) cmd2process_cmp, 0);
- 		entry = NULL;
- 	} else {
--		entry = find_multi_file_filter_entry(&cmd_process_map, cmd);
-+		entry = (struct cmd2process *)find_multi_file_filter_entry(&cmd_process_map, cmd);
- 	}
- 
- 	fflush(NULL);
-@@ -688,7 +693,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 		if (!entry)
- 			return 0;
- 	}
--	process = &entry->process;
-+	process = &entry->subprocess.process;
- 
- 	if (!(wanted_capability & entry->supported_capabilities))
- 		return 0;
-@@ -759,7 +764,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
- 			 * Force shutdown and restart if another blob requires filtering.
- 			 */
- 			error("external filter '%s' failed", cmd);
--			kill_multi_file_filter(&cmd_process_map, entry);
-+			kill_multi_file_filter(&cmd_process_map, &entry->subprocess);
- 		}
- 	} else {
- 		strbuf_swap(dst, &nbuf);
--- 
-2.12.0.windows.1.33.g243d9b384c
-
+$ ./git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+$ GIT_GETTEXT_POISON=3D1 ./git status
+# GETTEXT POISON #master
+# GETTEXT POISON #
