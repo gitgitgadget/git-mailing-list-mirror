@@ -7,122 +7,300 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 486F01FE90
-	for <e@80x24.org>; Sat, 22 Apr 2017 17:32:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 360EA1FE90
+	for <e@80x24.org>; Sat, 22 Apr 2017 17:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1043993AbdDVRco (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Apr 2017 13:32:44 -0400
-Received: from mail-vk0-f67.google.com ([209.85.213.67]:34715 "EHLO
-        mail-vk0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1043972AbdDVRcn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2017 13:32:43 -0400
-Received: by mail-vk0-f67.google.com with SMTP id e15so758427vkd.1
-        for <git@vger.kernel.org>; Sat, 22 Apr 2017 10:32:42 -0700 (PDT)
+        id S1425814AbdDVRzX (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Apr 2017 13:55:23 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36638 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1425780AbdDVRzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2017 13:55:21 -0400
+Received: by mail-wm0-f65.google.com with SMTP id u65so10171210wmu.3
+        for <git@vger.kernel.org>; Sat, 22 Apr 2017 10:55:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pPwAbW+xS1Aw5Z5T0/IquqMxe8jLgGgRJRO7+010SwI=;
-        b=MQf3G3DHw7mQMFFgQPos7NDrC1rj5XvOeSNBSZOuAtCK7uKHZ+1sw8gASIrEkWii00
-         5LGURlHv4v7uJQTwqvg8TWeVigbp/Xm/ZjdMe18/JMwKBTdXa5JL+8CppSM/AdfwKdOy
-         t7koR3WHQ3RsxSvC2woJMIOPB9BbbfjV7WX4Mh3SIddeGC9eI958KvOeIOmpCif2unle
-         gp4YkxC7bXGUTnayq48f/WQ54J5VOG0icOF8m8iECNm5DIwIaeHeaXQAXuggW8aTkRJo
-         6rTOLAApbYwGLS8RLWhmq90/K3UyYkF5L2U17B9Qn/z11/tJgtgVcFH9tvmdr/rgdhs0
-         XdzQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hpIzElnNOniYe4ZRPpZbkdCE2qRtfaR8N+MmhiJdzaw=;
+        b=jseQbGVq2jkqYK53OY+MFoH5edButyLy+dBT3d7/4NvCENsR5SIpDhYgF5ab0hxH+o
+         UlCJtAWVtaDOh9hUp07o2CZruxAckmIsX3CzYGM2GGKlhhFqPckOxyexKlyxJ5jZks2c
+         dDfIzzO3/LK3S7GettmQJGsQjyHqyfx7ipWlYuixU8BA9RoxrwDEe9I2uWLezhKD8dxz
+         grgbXHrrpE8S9XwHmPQx4UzgMww9dm6fD3jOocMfnQkhot5WmvZTu/eOFdQC0NLarbi2
+         XKxCGd86SBxXd93UWpk0iMcZ8wM7WD47Jm/j45NNF3SnMKh/MshoNCyHdOoELKO7Js9Z
+         b6eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pPwAbW+xS1Aw5Z5T0/IquqMxe8jLgGgRJRO7+010SwI=;
-        b=pG8UloGsqf15fNmyLemwWL7tL5F/Ac6Yrn+Wfn8ORjevVAiK3rTlsF6KpMrBGzw5E1
-         DtrpNRxQhxR5klTilWDLGw4LqwRxlDFOnWjrhCiLgpFjy0uXbaqmXzp25Ts3U6OyxmPW
-         5hOdTPLz9WulBwDrZK0S0mycFlXDGjUSDfH/pD/3LICiv7L+FoG2fwBaROdwh1H2zzU4
-         R8kZ7Gy8GfWKRxrm6I2qtcbLXJ96r7ZRvPUvFnkHdV2ArfiVctefVRig3M9/dcz/spMl
-         TEA9I5nkX9lv0HWxvovcGFtYoA8TN/z4moeQNXRxbAklcGS688NmAkBWUyO4DaUeBk8N
-         zqCg==
-X-Gm-Message-State: AN3rC/6EKYYg1YGtEhGjvoct/rVG3Y8dEgDlpdQnQfWsZyEJ8b2B11Jr
-        gG2ynwTPo+Q77EZvyJoCLf4WjYiSDg==
-X-Received: by 10.31.181.141 with SMTP id e135mr891884vkf.23.1492882362068;
- Sat, 22 Apr 2017 10:32:42 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.23.211 with HTTP; Sat, 22 Apr 2017 10:32:41 -0700 (PDT)
-In-Reply-To: <20170421201957.ztwnyw6mut4b5u53@sigill.intra.peff.net>
-References: <20170420201229.fxiylgp2v2v4sz3w@sigill.intra.peff.net>
- <xmqqzifa4amr.fsf@gitster.mtv.corp.google.com> <CAM0VKjm=JMuYzsS-OTx+p-vFF8PmWJGbFnndag9dWw6xCe3g6Q@mail.gmail.com>
- <20170421201957.ztwnyw6mut4b5u53@sigill.intra.peff.net>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Sat, 22 Apr 2017 19:32:41 +0200
-Message-ID: <CAM0VKj=j52hDD1TKqbube3Of1qo8zZ7e4q4yAmxbNORRRDZyFQ@mail.gmail.com>
-Subject: Re: [PATCH] completion: optionally disable checkout DWIM
-To:     Jeff King <peff@peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hpIzElnNOniYe4ZRPpZbkdCE2qRtfaR8N+MmhiJdzaw=;
+        b=sqUE1C6uXM2ihW2W86GzsRrMiBney2dS0xhCi2SGHoQptDsNT2w5+jX5FZaOdZCk1Y
+         GMTS52zHbxIR0xFRdvhO8MJlAYFQ02Zt4ej0MMAHWorx0ilPhxZOHlZKaw/YDkElq3ke
+         eKW5YeXKJ7RJu/EL8SXnquCcCRvI0tpepvtiqKhPsOHiIg1NixQExiH7U9ij2pKXOAad
+         3/W9g14lv0IHvcut5LLEzbyyKLPqKYOzWseEEeb9Ia8CShmPMInmjc1/lI0ajx6NzQLB
+         FEAmr/MjFuseF3zq7ptPW1L1KbU8VZUbuwCvoHf4uKYzTeZJXweglLs6TpjLG+y/Zqko
+         d8Sg==
+X-Gm-Message-State: AN3rC/612gwHftIaggNlGrmXxGtzpiJUYUcDtQnhA42Oz/Pf/aTXvead
+        9bCMVHhWdjQipg==
+X-Received: by 10.28.185.10 with SMTP id j10mr3581391wmf.57.1492883720130;
+        Sat, 22 Apr 2017 10:55:20 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id 43sm16066478wry.31.2017.04.22.10.55.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 22 Apr 2017 10:55:19 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jay Soffian <jaysoffian@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] completion: expand "push --delete <remote> <ref>" for refs on that <remote>
+Date:   Sat, 22 Apr 2017 17:55:04 +0000
+Message-Id: <20170422175504.19999-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170421122832.24617-1-szeder.dev@gmail.com>
+References: <20170421122832.24617-1-szeder.dev@gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 10:19 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Apr 21, 2017 at 10:14:48PM +0200, SZEDER G=C3=A1bor wrote:
+Change the completion of "push --delete <remote> <ref>" to complete
+refs on that <remote>, not all refs.
+
+Before this cloning git.git and doing "git push --delete origin
+p<TAB>" will complete nothing, since a fresh clone of git.git will
+have no "pu" branch, whereas origin/p<TAB> will uselessly complete
+origin/pu, but fully qualified references aren't accepted by
+"--delete".
+
+Now p<TAB> will complete as "pu". The completion of giving --delete
+later, e.g. "git push origin --delete p<TAB>" remains unchanged, this
+is a bug, but is a general existing limitation of the bash completion,
+and not how git-push is documented, so I'm not fixing that case, but
+adding a failing TODO test for it.
+
+The testing code was supplied by SZEDER Gábor in
+<20170421122832.24617-1-szeder.dev@gmail.com> with minor setup
+modifications on my part.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Reviewed-by: SZEDER Gábor <szeder.dev@gmail.com>
+Test-code-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+
+On Fri, Apr 21, 2017 at 2:28 PM, SZEDER Gábor <szeder.dev@gmail.com> wrote:
 >
->> >> This is flexible enough for me, but it's possible somebody would want
->> >> this on a per-repo basis. I don't know that we want to read from `git
->> >> config`, though, because it's relatively expensive to do so. People w=
-ho
->> >> want per-repo settings are probably better off with a hook that trigg=
-ers
->> >> when they "cd" around, and sets up their preferences.
->>
->> We could discern between more than just empty vs. non-empty state of
->> the environment variable, e.g.:
->>
->>   - if empty/unset, then include "DWIM" suggestions.
->>   - if set to 'config', then query the 'completion.checkoutNoGuess'
->>     configuration variable, and omit "DWIM" suggestions if its true.
->>   - if set to something else, then omit "DWIM" suggestions.
->>
->> Then users can themselves decide, whether the per-repo configurability
->> is worth the overhead of running 'git config'.
+> On Tue, Apr 18, 2017 at 3:31 PM, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+>> Change the completion of "push --delete <remote> <ref>" to complete
+>> refs on that <remote>, not all refs.
 >
-> Yep, that would work. I wasn't going to bother with that complexity
-> unless somebody really wanted it. The important thing is not to paint
-> ourselves into a corner. By the rules you gave above, it would probably
-> be fine to extend my patch later to match. But we could also be more
-> specific (e.g., look for some positive value like "1").
-
-That's fine with me.
-
-We should have done this when we introduced env variables controlling
-the prompt script, we could spare a 'git config' execution in a
-subshell or two.
-
->> >> @@ -1248,7 +1256,8 @@ _git_checkout ()
->> >>               # check if --track, --no-track, or --no-guess was speci=
-fied
->> >>               # if so, disable DWIM mode
->> >>               local flags=3D"--track --no-track --no-guess" track_opt=
-=3D"--track"
->> >> -             if [ -n "$(__git_find_on_cmdline "$flags")" ]; then
->> >> +             if [ -n "$GIT_COMPLETION_CHECKOUT_NO_GUESS" -o \
->> >> +                  -n "$(__git_find_on_cmdline "$flags")" ]; then
->>
->> || would be better than '-o', because the former short-circuits when
->> the first condition is true, but the latter doesn't.
+> Good.
 >
-> Ah, I didn't know that. Usually I use "||", but I thought "-o" was
-> generally preferred in bash-specific scripts. We definitely want to
-> short circuit here.
+>> Before this e.g. cloning git.git
+>> and doing "git push --delete origin p<TAB>" will complete nothing,
+>
+> Well, it will complete all local branches starting with 'p', but
+> perhaps you don't happen to have any.
+>
+>> whereas origin/p<TAB> will uselessly complete origin/pu.
+>>
+>> Now p<TAB> will complete as "pu". The completion of giving --delete
+>> later, e.g. "git push origin --delete p<TAB>" remains unchanged, this
+>> is a bug, but is a general existing limitation of the bash completion,
+>> and not how git-push is documented, so I'm not fixing that case.
+>>
+>> I looked over t9902-completion.sh but couldn't quickly find out how to
+>> add a test for this,
+>
+> Yeah, this helper function has to look at the whole command line to do
+> its thing, and we don't have other unit test-like tests doing
+> something like that.
+>
+> One option would be something like this:
+>
+> @@ -1162,6 +1162,19 @@ test_expect_success '__git_complete_fetch_refspecs - fully qualified & prefix' '
+>         test_cmp expected out
+>  '
+>
+> +test_expect_success '__git_complete_remote_or_refspec - push -d' '
+> +       sed -e "s/Z$//" >expected <<-EOF &&
+> +       master-in-other Z
+> +       EOF
+> +       (
+> +               words=(git push -d other ma) &&
+> +               cword=${#words[@]} cur=${words[cword-1]} &&
+> +               __git_complete_remote_or_refspec &&
+> +               print_comp
+> +       ) &&
+> +       test_cmp expected out
+> +'
+> +
+>  test_expect_success 'teardown after ref completion' '
+>         git branch -d matching-branch &&
+>         git tag -d matching-tag &&
+>
+> This is chatty, no question about that, but it only excercises
+> __git_complete_remote_or_refspec() (and __git_refs() behind its back),
+> and thus fits right in there with other refs completion tests.
+>
+>
+> The other option would be something like this:
+>
+> @@ -1348,6 +1361,10 @@ test_expect_success 'complete tree filename with metacharacters' '
+>         EOF
+>  '
+>
+> +test_expect_success 'complete remote refs for git push -d' '
+> +       test_completion "git push -d other ma" "master-in-other "
+> +'
+> +
+>  test_expect_success 'send-email' '
+>         test_completion "git send-email --cov" "--cover-letter " &&
+>         test_completion "git send-email ma" "master "
+>
+> While this is much more compact, it does excercise the whole shebang,
+> therefore it has to go to the integration tests.  However, at that
+> point in the test script there aren't any remote refs in the
+> repository (and, consequently this test will fail as it is), so you
+> would need to add a few, which in turn would most likely require
+> adjustments in other tests.
+>
+> I'm partial to the former, even if it's more lines of code, because if
+> it were to fail, then it already narrowed down the scope where we'd
+> need to look for the cause of the failure.
+>
+> Take your pick :)
+>
+>> but all the existing tests pass, and all my
+>> manual testing of "git push --delete <remote> ..." does the right
+>> thing now.
+>>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>>  contrib/completion/git-completion.bash | 7 +++++--
+>>  1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 1150164d5c..2e5b3ed776 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -701,7 +701,7 @@ __git_complete_revlist ()
+>>  __git_complete_remote_or_refspec ()
+>>  {
+>>       local cur_="$cur" cmd="${words[1]}"
+>> -     local i c=2 remote="" pfx="" lhs=1 no_complete_refspec=0
+>> +     local i c=2 remote="" pfx="" lhs=1 no_complete_refspec=0 delete=0
+>>       if [ "$cmd" = "remote" ]; then
+>>               ((c++))
+>>       fi
+>> @@ -709,6 +709,7 @@ __git_complete_remote_or_refspec ()
+>>               i="${words[c]}"
+>>               case "$i" in
+>>               --mirror) [ "$cmd" = "push" ] && no_complete_refspec=1 ;;
+>> +             --delete) delete=1 ;;
+>
+> I noticed the two identical __git_complete_refs() calls in the hunk
+> below.  How about:
+>
+>   -d|--delete) [ "$cmd" = "push" ] && lhs=0 ;;
+>
+> First, it recognizes the short option, too.
+> Second, with 'push -d' any ref is interpreted as the right hand side
+> of a refspec whose left hand side is empty (i.e. '-d pu' means ':pu').
+> That 'lhs=0' tells the rest of the function to complete the right hand
+> side of a refspec, i.e. in case of 'push' to list remote refs, which
+> is exactly what you want.  And you won't need the extra if branch in
+> the hunk below, or the new local variable.
+> In this case, however, we should check that the command is 'push' as
+> well, just in case the other commands whose completion is driven by
+> this helper function get these options in the future.
 
-No, we use || and && fairly consistently in conditions in Bash
-scripts.  There is no '-o' in the completion or prompt scripts, and
-there is only a single '-a' in the former, but it only checks two
-one-letter variables, so it doesn't matter.  (Besides, it's from my
-second ever commit, so it has great sentimental value ;)
+Thanks a lot. I changed all of this as you suggested & integrated your
+testing code, now also with a TODO test for "git push origin
+--delete".
 
-There are some inconsistencies using 'if [ ... ]' and 'if [[ ... ]]',
-but oh well.
+>>               --all)
+>>                       case "$cmd" in
+>>                       push) no_complete_refspec=1 ;;
+>> @@ -761,7 +762,9 @@ __git_complete_remote_or_refspec ()
+>>               fi
+>>               ;;
+>>       push)
+>> -             if [ $lhs = 1 ]; then
+>> +             if [ $delete = 1 ]; then
+>> +                     __git_complete_refs --remote="$remote" --pfx="$pfx" --cur="$cur_"
+>> +             elif [ $lhs = 1 ]; then
+>>                       __git_complete_refs --pfx="$pfx" --cur="$cur_"
+>>               else
+>>                       __git_complete_refs --remote="$remote" --pfx="$pfx" --cur="$cur_"
+>> --
+>> 2.11.0
 
+ contrib/completion/git-completion.bash |  1 +
+ t/t9902-completion.sh                  | 34 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-Anyway, v2 looks good to me.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1150164d5c..b617019075 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -709,6 +709,7 @@ __git_complete_remote_or_refspec ()
+ 		i="${words[c]}"
+ 		case "$i" in
+ 		--mirror) [ "$cmd" = "push" ] && no_complete_refspec=1 ;;
++		-d|--delete) [ "$cmd" = "push" ] && lhs=0 ;;
+ 		--all)
+ 			case "$cmd" in
+ 			push) no_complete_refspec=1 ;;
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 5ed28135be..2cb999ecfa 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1457,4 +1457,38 @@ test_expect_failure 'complete with tilde expansion' '
+ 	test_completion "git add ~/tmp/" "~/tmp/file"
+ '
+ 
++test_expect_success 'setup other remote for remote reference completion' '
++	git remote add other otherrepo &&
++	git fetch other
++'
++
++for flag in -d --delete
++do
++	test_expect_success "__git_complete_remote_or_refspec - push $flag other" '
++		sed -e "s/Z$//" >expected <<-EOF &&
++		master-in-other Z
++		EOF
++		(
++			words=(git push '$flag' other ma) &&
++			cword=${#words[@]} cur=${words[cword-1]} &&
++			__git_complete_remote_or_refspec &&
++			print_comp
++		) &&
++		test_cmp expected out
++	'
++
++	test_expect_failure "__git_complete_remote_or_refspec - push other $flag" '
++		sed -e "s/Z$//" >expected <<-EOF &&
++		master-in-other Z
++		EOF
++		(
++			words=(git push other '$flag' ma) &&
++			cword=${#words[@]} cur=${words[cword-1]} &&
++			__git_complete_remote_or_refspec &&
++			print_comp
++		) &&
++		test_cmp expected out
++	'
++done
++
+ test_done
+-- 
+2.11.0
+
