@@ -2,305 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360EA1FE90
-	for <e@80x24.org>; Sat, 22 Apr 2017 17:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5629A1FE90
+	for <e@80x24.org>; Sat, 22 Apr 2017 19:32:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1425814AbdDVRzX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Apr 2017 13:55:23 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36638 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1425780AbdDVRzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Apr 2017 13:55:21 -0400
-Received: by mail-wm0-f65.google.com with SMTP id u65so10171210wmu.3
-        for <git@vger.kernel.org>; Sat, 22 Apr 2017 10:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hpIzElnNOniYe4ZRPpZbkdCE2qRtfaR8N+MmhiJdzaw=;
-        b=jseQbGVq2jkqYK53OY+MFoH5edButyLy+dBT3d7/4NvCENsR5SIpDhYgF5ab0hxH+o
-         UlCJtAWVtaDOh9hUp07o2CZruxAckmIsX3CzYGM2GGKlhhFqPckOxyexKlyxJ5jZks2c
-         dDfIzzO3/LK3S7GettmQJGsQjyHqyfx7ipWlYuixU8BA9RoxrwDEe9I2uWLezhKD8dxz
-         grgbXHrrpE8S9XwHmPQx4UzgMww9dm6fD3jOocMfnQkhot5WmvZTu/eOFdQC0NLarbi2
-         XKxCGd86SBxXd93UWpk0iMcZ8wM7WD47Jm/j45NNF3SnMKh/MshoNCyHdOoELKO7Js9Z
-         b6eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hpIzElnNOniYe4ZRPpZbkdCE2qRtfaR8N+MmhiJdzaw=;
-        b=sqUE1C6uXM2ihW2W86GzsRrMiBney2dS0xhCi2SGHoQptDsNT2w5+jX5FZaOdZCk1Y
-         GMTS52zHbxIR0xFRdvhO8MJlAYFQ02Zt4ej0MMAHWorx0ilPhxZOHlZKaw/YDkElq3ke
-         eKW5YeXKJ7RJu/EL8SXnquCcCRvI0tpepvtiqKhPsOHiIg1NixQExiH7U9ij2pKXOAad
-         3/W9g14lv0IHvcut5LLEzbyyKLPqKYOzWseEEeb9Ia8CShmPMInmjc1/lI0ajx6NzQLB
-         FEAmr/MjFuseF3zq7ptPW1L1KbU8VZUbuwCvoHf4uKYzTeZJXweglLs6TpjLG+y/Zqko
-         d8Sg==
-X-Gm-Message-State: AN3rC/612gwHftIaggNlGrmXxGtzpiJUYUcDtQnhA42Oz/Pf/aTXvead
-        9bCMVHhWdjQipg==
-X-Received: by 10.28.185.10 with SMTP id j10mr3581391wmf.57.1492883720130;
-        Sat, 22 Apr 2017 10:55:20 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 43sm16066478wry.31.2017.04.22.10.55.18
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 22 Apr 2017 10:55:19 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        id S1426678AbdDVTcQ convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 22 Apr 2017 15:32:16 -0400
+Received: from lamora.getmail.no ([84.210.184.7]:34716 "EHLO lamora.getmail.no"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1426632AbdDVTcP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Apr 2017 15:32:15 -0400
+X-Greylist: delayed 576 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Apr 2017 15:32:15 EDT
+Received: from localhost (localhost [127.0.0.1])
+        by lamora.getmail.no (Postfix) with ESMTP id 817DB12006A;
+        Sat, 22 Apr 2017 21:22:37 +0200 (CEST)
+Received: from lamora.getmail.no ([127.0.0.1])
+        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id kEmwRfOrhNM8; Sat, 22 Apr 2017 21:22:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by lamora.getmail.no (Postfix) with ESMTP id C4C3D122A00;
+        Sat, 22 Apr 2017 21:22:36 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at lamora.get.c.bitbit.net
+Received: from lamora.getmail.no ([127.0.0.1])
+        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id Wm0JgIg-9SDA; Sat, 22 Apr 2017 21:22:36 +0200 (CEST)
+Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
+        by lamora.getmail.no (Postfix) with ESMTPSA id 972C912006A;
+        Sat, 22 Apr 2017 21:22:36 +0200 (CEST)
+Received: from peter (helo=localhost)
+        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
+        (envelope-from <peter@softwolves.pp.se>)
+        id 1d20c9-0003LM-8r; Sat, 22 Apr 2017 21:22:37 +0200
+Date:   Sat, 22 Apr 2017 20:22:37 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Jay Soffian <jaysoffian@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] completion: expand "push --delete <remote> <ref>" for refs on that <remote>
-Date:   Sat, 22 Apr 2017 17:55:04 +0000
-Message-Id: <20170422175504.19999-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170421122832.24617-1-szeder.dev@gmail.com>
-References: <20170421122832.24617-1-szeder.dev@gmail.com>
+cc:     Keith Goldfarb <keith@blackthorn-media.com>
+Subject: [PATCH] archive-zip: Add zip64 headers when file size is too large
+ for 32 bits
+In-Reply-To: <3C736801-6BB8-41CC-88FF-C42FC853A736@blackthorn-media.com>
+Message-ID: <alpine.DEB.2.11.1704222019420.12779@perkele.intern.softwolves.pp.se>
+References: <3C736801-6BB8-41CC-88FF-C42FC853A736@blackthorn-media.com>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: TEXT/PLAIN; format=flowed; charset=ISO-8859-7
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the completion of "push --delete <remote> <ref>" to complete
-refs on that <remote>, not all refs.
+If the size of the files in the archive cannot be expressed in 32 bits, or
+the offset in the zip file itself, add zip64 local headers with the actual
+size. If we do find such entries, we also set a flag to force the creation
+of a zip64 end of central directory record.
 
-Before this cloning git.git and doing "git push --delete origin
-p<TAB>" will complete nothing, since a fresh clone of git.git will
-have no "pu" branch, whereas origin/p<TAB> will uselessly complete
-origin/pu, but fully qualified references aren't accepted by
-"--delete".
-
-Now p<TAB> will complete as "pu". The completion of giving --delete
-later, e.g. "git push origin --delete p<TAB>" remains unchanged, this
-is a bug, but is a general existing limitation of the bash completion,
-and not how git-push is documented, so I'm not fixing that case, but
-adding a failing TODO test for it.
-
-The testing code was supplied by SZEDER Gábor in
-<20170421122832.24617-1-szeder.dev@gmail.com> with minor setup
-modifications on my part.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Reviewed-by: SZEDER Gábor <szeder.dev@gmail.com>
-Test-code-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
 ---
+  archive-zip.c | 50 +++++++++++++++++++++++++++++++++++++++++---------
+  1 file changed, 41 insertions(+), 9 deletions(-)
 
-On Fri, Apr 21, 2017 at 2:28 PM, SZEDER Gábor <szeder.dev@gmail.com> wrote:
->
-> On Tue, Apr 18, 2017 at 3:31 PM, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
->> Change the completion of "push --delete <remote> <ref>" to complete
->> refs on that <remote>, not all refs.
->
-> Good.
->
->> Before this e.g. cloning git.git
->> and doing "git push --delete origin p<TAB>" will complete nothing,
->
-> Well, it will complete all local branches starting with 'p', but
-> perhaps you don't happen to have any.
->
->> whereas origin/p<TAB> will uselessly complete origin/pu.
->>
->> Now p<TAB> will complete as "pu". The completion of giving --delete
->> later, e.g. "git push origin --delete p<TAB>" remains unchanged, this
->> is a bug, but is a general existing limitation of the bash completion,
->> and not how git-push is documented, so I'm not fixing that case.
->>
->> I looked over t9902-completion.sh but couldn't quickly find out how to
->> add a test for this,
->
-> Yeah, this helper function has to look at the whole command line to do
-> its thing, and we don't have other unit test-like tests doing
-> something like that.
->
-> One option would be something like this:
->
-> @@ -1162,6 +1162,19 @@ test_expect_success '__git_complete_fetch_refspecs - fully qualified & prefix' '
->         test_cmp expected out
->  '
->
-> +test_expect_success '__git_complete_remote_or_refspec - push -d' '
-> +       sed -e "s/Z$//" >expected <<-EOF &&
-> +       master-in-other Z
-> +       EOF
-> +       (
-> +               words=(git push -d other ma) &&
-> +               cword=${#words[@]} cur=${words[cword-1]} &&
-> +               __git_complete_remote_or_refspec &&
-> +               print_comp
-> +       ) &&
-> +       test_cmp expected out
-> +'
-> +
->  test_expect_success 'teardown after ref completion' '
->         git branch -d matching-branch &&
->         git tag -d matching-tag &&
->
-> This is chatty, no question about that, but it only excercises
-> __git_complete_remote_or_refspec() (and __git_refs() behind its back),
-> and thus fits right in there with other refs completion tests.
->
->
-> The other option would be something like this:
->
-> @@ -1348,6 +1361,10 @@ test_expect_success 'complete tree filename with metacharacters' '
->         EOF
->  '
->
-> +test_expect_success 'complete remote refs for git push -d' '
-> +       test_completion "git push -d other ma" "master-in-other "
-> +'
-> +
->  test_expect_success 'send-email' '
->         test_completion "git send-email --cov" "--cover-letter " &&
->         test_completion "git send-email ma" "master "
->
-> While this is much more compact, it does excercise the whole shebang,
-> therefore it has to go to the integration tests.  However, at that
-> point in the test script there aren't any remote refs in the
-> repository (and, consequently this test will fail as it is), so you
-> would need to add a few, which in turn would most likely require
-> adjustments in other tests.
->
-> I'm partial to the former, even if it's more lines of code, because if
-> it were to fail, then it already narrowed down the scope where we'd
-> need to look for the cause of the failure.
->
-> Take your pick :)
->
->> but all the existing tests pass, and all my
->> manual testing of "git push --delete <remote> ..." does the right
->> thing now.
->>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
->>  contrib/completion/git-completion.bash | 7 +++++--
->>  1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->> index 1150164d5c..2e5b3ed776 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -701,7 +701,7 @@ __git_complete_revlist ()
->>  __git_complete_remote_or_refspec ()
->>  {
->>       local cur_="$cur" cmd="${words[1]}"
->> -     local i c=2 remote="" pfx="" lhs=1 no_complete_refspec=0
->> +     local i c=2 remote="" pfx="" lhs=1 no_complete_refspec=0 delete=0
->>       if [ "$cmd" = "remote" ]; then
->>               ((c++))
->>       fi
->> @@ -709,6 +709,7 @@ __git_complete_remote_or_refspec ()
->>               i="${words[c]}"
->>               case "$i" in
->>               --mirror) [ "$cmd" = "push" ] && no_complete_refspec=1 ;;
->> +             --delete) delete=1 ;;
->
-> I noticed the two identical __git_complete_refs() calls in the hunk
-> below.  How about:
->
->   -d|--delete) [ "$cmd" = "push" ] && lhs=0 ;;
->
-> First, it recognizes the short option, too.
-> Second, with 'push -d' any ref is interpreted as the right hand side
-> of a refspec whose left hand side is empty (i.e. '-d pu' means ':pu').
-> That 'lhs=0' tells the rest of the function to complete the right hand
-> side of a refspec, i.e. in case of 'push' to list remote refs, which
-> is exactly what you want.  And you won't need the extra if branch in
-> the hunk below, or the new local variable.
-> In this case, however, we should check that the command is 'push' as
-> well, just in case the other commands whose completion is driven by
-> this helper function get these options in the future.
+> git archive, when writing a zip file, has a silent 4GB file size 
+> limit (on the inputs as well as the output), as it doesn�t fully 
+> support zip64.
 
-Thanks a lot. I changed all of this as you suggested & integrated your
-testing code, now also with a TODO test for "git push origin
---delete".
+Yeah, it seems that the zip64 support that was added was to support 
+more than 65535 files, but it did not add support for 64-bit file 
+sizes or ZIP archives.
 
->>               --all)
->>                       case "$cmd" in
->>                       push) no_complete_refspec=1 ;;
->> @@ -761,7 +762,9 @@ __git_complete_remote_or_refspec ()
->>               fi
->>               ;;
->>       push)
->> -             if [ $lhs = 1 ]; then
->> +             if [ $delete = 1 ]; then
->> +                     __git_complete_refs --remote="$remote" --pfx="$pfx" --cur="$cur_"
->> +             elif [ $lhs = 1 ]; then
->>                       __git_complete_refs --pfx="$pfx" --cur="$cur_"
->>               else
->>                       __git_complete_refs --remote="$remote" --pfx="$pfx" --cur="$cur_"
->> --
->> 2.11.0
+Try the below patch, it seems to work for me with a repository with 
+two files of 4 Gbyte plus a few bytes. Haven't tested the case where 
+the archive itself is larger than 4 Gbyte, but that ought to work, too.
 
- contrib/completion/git-completion.bash |  1 +
- t/t9902-completion.sh                  | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
+diff --git a/archive-zip.c b/archive-zip.c
+index b429a8d..c76a9b4 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -10,6 +10,7 @@
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 1150164d5c..b617019075 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -709,6 +709,7 @@ __git_complete_remote_or_refspec ()
- 		i="${words[c]}"
- 		case "$i" in
- 		--mirror) [ "$cmd" = "push" ] && no_complete_refspec=1 ;;
-+		-d|--delete) [ "$cmd" = "push" ] && lhs=0 ;;
- 		--all)
- 			case "$cmd" in
- 			push) no_complete_refspec=1 ;;
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 5ed28135be..2cb999ecfa 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1457,4 +1457,38 @@ test_expect_failure 'complete with tilde expansion' '
- 	test_completion "git add ~/tmp/" "~/tmp/file"
- '
- 
-+test_expect_success 'setup other remote for remote reference completion' '
-+	git remote add other otherrepo &&
-+	git fetch other
-+'
+  static int zip_date;
+  static int zip_time;
++static int zip_zip64;
+
+  static unsigned char *zip_dir;
+  static unsigned int zip_dir_size;
+@@ -88,6 +89,16 @@ struct zip_extra_mtime {
+  	unsigned char _end[1];
+  };
+
++struct zip_extra_zip64 {
++	unsigned char magic[2];
++	unsigned char extra_size[2];
++	unsigned char size[8];
++	unsigned char compressed_size[8];
++	unsigned char offset[8];
++	unsigned char disk[4];
++	unsigned char _end[1];
++};
 +
-+for flag in -d --delete
-+do
-+	test_expect_success "__git_complete_remote_or_refspec - push $flag other" '
-+		sed -e "s/Z$//" >expected <<-EOF &&
-+		master-in-other Z
-+		EOF
-+		(
-+			words=(git push '$flag' other ma) &&
-+			cword=${#words[@]} cur=${words[cword-1]} &&
-+			__git_complete_remote_or_refspec &&
-+			print_comp
-+		) &&
-+		test_cmp expected out
-+	'
-+
-+	test_expect_failure "__git_complete_remote_or_refspec - push other $flag" '
-+		sed -e "s/Z$//" >expected <<-EOF &&
-+		master-in-other Z
-+		EOF
-+		(
-+			words=(git push other '$flag' ma) &&
-+			cword=${#words[@]} cur=${words[cword-1]} &&
-+			__git_complete_remote_or_refspec &&
-+			print_comp
-+		) &&
-+		test_cmp expected out
-+	'
-+done
-+
- test_done
+  struct zip64_dir_trailer {
+  	unsigned char magic[4];
+  	unsigned char record_size[8];
+@@ -122,6 +133,9 @@ struct zip64_dir_trailer_locator {
+  #define ZIP_EXTRA_MTIME_SIZE	offsetof(struct zip_extra_mtime, _end)
+  #define ZIP_EXTRA_MTIME_PAYLOAD_SIZE \
+  	(ZIP_EXTRA_MTIME_SIZE - offsetof(struct zip_extra_mtime, flags))
++#define ZIP_EXTRA_ZIP64_SIZE	offsetof(struct zip_extra_zip64, _end)
++#define ZIP_EXTRA_ZIP64_PAYLOAD_SIZE \
++	(ZIP_EXTRA_ZIP64_SIZE - offsetof(struct zip_extra_zip64, size))
+  #define ZIP64_DIR_TRAILER_SIZE	offsetof(struct zip64_dir_trailer, _end)
+  #define ZIP64_DIR_TRAILER_RECORD_SIZE \
+  	(ZIP64_DIR_TRAILER_SIZE - \
+@@ -219,19 +233,25 @@ static void set_zip_dir_data_desc(struct zip_dir_header *header,
+  				  unsigned long compressed_size,
+  				  unsigned long crc)
+  {
++	int clamped = 0;
+  	copy_le32(header->crc32, crc);
+-	copy_le32(header->compressed_size, compressed_size);
+-	copy_le32(header->size, size);
++	copy_le32(header->compressed_size, clamp_max(compressed_size, 0xFFFFFFFFU, &clamped));
++	copy_le32(header->size, clamp_max(size, 0xFFFFFFFFU, &clamped));
++	if (clamped)
++		zip_zip64 = 1;
+  }
+
+  static void set_zip_header_data_desc(struct zip_local_header *header,
+  				     unsigned long size,
+  				     unsigned long compressed_size,
+-				     unsigned long crc)
++				     unsigned long crc,
++				     int *clamped)
+  {
+  	copy_le32(header->crc32, crc);
+-	copy_le32(header->compressed_size, compressed_size);
+-	copy_le32(header->size, size);
++	copy_le32(header->compressed_size, clamp_max(compressed_size, 0xFFFFFFFFU, clamped));
++	copy_le32(header->size, clamp_max(size, 0xFFFFFFFFU, clamped));
++	if (clamped)
++		zip_zip64 = 1;
+  }
+
+  static int has_only_ascii(const char *s)
+@@ -279,6 +299,7 @@ static int write_zip_entry(struct archiver_args *args,
+  	int is_binary = -1;
+  	const char *path_without_prefix = path + args->baselen;
+  	unsigned int creator_version = 0;
++	int clamped = 0;
+
+  	crc = crc32(0, NULL, 0);
+
+@@ -376,7 +397,7 @@ static int write_zip_entry(struct archiver_args *args,
+  	copy_le16(dirent.comment_length, 0);
+  	copy_le16(dirent.disk, 0);
+  	copy_le32(dirent.attr2, attr2);
+-	copy_le32(dirent.offset, zip_offset);
++	copy_le32(dirent.offset, clamp_max(zip_offset, 0xFFFFFFFFU, &clamped));
+
+  	copy_le32(header.magic, 0x04034b50);
+  	copy_le16(header.version, 10);
+@@ -384,15 +405,26 @@ static int write_zip_entry(struct archiver_args *args,
+  	copy_le16(header.compression_method, method);
+  	copy_le16(header.mtime, zip_time);
+  	copy_le16(header.mdate, zip_date);
+-	set_zip_header_data_desc(&header, size, compressed_size, crc);
++	set_zip_header_data_desc(&header, size, compressed_size, crc, &clamped);
+  	copy_le16(header.filename_length, pathlen);
+-	copy_le16(header.extra_length, ZIP_EXTRA_MTIME_SIZE);
++	copy_le16(header.extra_length, ZIP_EXTRA_MTIME_SIZE + (clamped ? ZIP_EXTRA_ZIP64_SIZE : 0));
+  	write_or_die(1, &header, ZIP_LOCAL_HEADER_SIZE);
+  	zip_offset += ZIP_LOCAL_HEADER_SIZE;
+  	write_or_die(1, path, pathlen);
+  	zip_offset += pathlen;
+  	write_or_die(1, &extra, ZIP_EXTRA_MTIME_SIZE);
+  	zip_offset += ZIP_EXTRA_MTIME_SIZE;
++	if (clamped) {
++		struct zip_extra_zip64 extra_zip64;
++		copy_le16(extra_zip64.magic, 0x0001);
++		copy_le16(extra_zip64.extra_size, ZIP_EXTRA_ZIP64_PAYLOAD_SIZE);
++		copy_le64(extra_zip64.size, size);
++		copy_le64(extra_zip64.compressed_size, compressed_size);
++		copy_le64(extra_zip64.offset, zip_offset);
++		copy_le32(extra_zip64.disk, 0);
++		write_or_die(1, &extra_zip64, ZIP_EXTRA_ZIP64_SIZE);
++		zip_offset += ZIP_EXTRA_ZIP64_SIZE;
++	}
+  	if (stream && method == 0) {
+  		unsigned char buf[STREAM_BUFFER_SIZE];
+  		ssize_t readlen;
+@@ -538,7 +570,7 @@ static void write_zip_trailer(const unsigned char *sha1)
+  	copy_le16(trailer.comment_length, sha1 ? GIT_SHA1_HEXSZ : 0);
+
+  	write_or_die(1, zip_dir, zip_dir_offset);
+-	if (clamped)
++	if (clamped || zip_zip64)
+  		write_zip64_trailer();
+  	write_or_die(1, &trailer, ZIP_DIR_TRAILER_SIZE);
+  	if (sha1)
 -- 
-2.11.0
-
+2.1.4
