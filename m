@@ -2,53 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8196D1FAA1
-	for <e@80x24.org>; Fri, 21 Apr 2017 22:13:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1999E207D6
+	for <e@80x24.org>; Sat, 22 Apr 2017 00:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1426115AbdDUWN5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Apr 2017 18:13:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38030 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1426109AbdDUWNz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Apr 2017 18:13:55 -0400
-Received: (qmail 26597 invoked by uid 109); 21 Apr 2017 22:13:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 22:13:53 +0000
-Received: (qmail 20955 invoked by uid 111); 21 Apr 2017 22:14:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 21 Apr 2017 18:14:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Apr 2017 18:13:50 -0400
-Date:   Fri, 21 Apr 2017 18:13:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brian Norris <computersforpeace@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [GIT 2.12.2 REGRESSION] git cherry-pick -x
-Message-ID: <20170421221350.xlhhrsk7m2bxh4tz@sigill.intra.peff.net>
-References: <20170421220155.GA142345@google.com>
- <CAGZ79kYBgvzkO66pL3buffAChKtPu2Xt5Q4FUoiijYHj591aCg@mail.gmail.com>
+        id S1162914AbdDVAzN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Apr 2017 20:55:13 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:38510 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162027AbdDVAzM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Apr 2017 20:55:12 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout07 with smtp
+        id BCv81v0031keHif01Cv93y; Sat, 22 Apr 2017 01:55:10 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=Y8KIilWN c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=kEAT2GeZLIsztotGbiEA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+To:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] worktree: fix an 'Using integer as a NULL pointer' warning
+Message-ID: <d0e81b1e-5869-299e-f462-4d43dc997bd1@ramsayjones.plus.com>
+Date:   Sat, 22 Apr 2017 01:55:08 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYBgvzkO66pL3buffAChKtPu2Xt5Q4FUoiijYHj591aCg@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 03:10:03PM -0700, Stefan Beller wrote:
 
-> +Jonathan, who worked on trailers
-> [...]
-> > I haven't tried bisecting precisely, but somewhere along the way git
-> > cherry-pick -x regressed between 2.9.3 and 2.12.2.
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
 
-Yeah, it bisects to 967dfd4d5 (sequencer: use trailer's trailer layout,
-2016-11-02).
+Hi Duy,
 
--Peff
+If you need to re-roll your 'nd/worktree-move' branch could you please
+squash this into the relevant patch (commit 8a1dc92e91 ("worktree move:
+refuse to move worktrees with submodules", 20-04-2017)).
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+ builtin/worktree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index ff9ccb57f..c54abd5b8 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -534,7 +534,7 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
+ 
+ static void validate_no_submodules(const struct worktree *wt)
+ {
+-	struct index_state istate = {0};
++	struct index_state istate = { NULL };
+ 	int i, found_submodules = 0;
+ 
+ 	if (read_index_from(&istate, worktree_git_path(wt, "index")) > 0) {
+-- 
+2.12.0
