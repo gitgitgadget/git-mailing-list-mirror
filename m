@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E0A7207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4154D207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046201AbdDWVgr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:36:47 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37380 "EHLO
+        id S1046205AbdDWVgy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:36:54 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37618 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046126AbdDWVfs (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:48 -0400
+        by vger.kernel.org with ESMTP id S1046127AbdDWVft (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:49 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C6249280C7;
-        Sun, 23 Apr 2017 21:35:36 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id D2D53280AD;
+        Sun, 23 Apr 2017 21:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492983336;
-        bh=lS58PaZesV7jbqBUJNRClGvJMh3nQRiDu2n9TAXsNTM=;
+        s=default; t=1492983335;
+        bh=01SEaiP1oAKVs2Eo496joR5C0t0M3l6MZqxA5uQv+yM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=QtT/0nJ5whoUwalr+uDVOyb7GQS2sX0+U7RfUSEJuFyZ3s+XYIbnFU+JiHWUrXuLb
-         A6ny8eEgTcTb31ELxPuFYjKI3OLYOVnte9hOXHVL6lNPL6CPaF8esmNtloKpIcVVfH
-         NQQgdVPWIrEQu5ma0ND4fh1LXoVRQpNV9YFa3Kf9DVMeueNFtsgFzJd/XbM1kqXPSh
-         Ef/n4LxfPv+ERcKY4HN+3TAuCzH/CBW3pcRwLPvcUH0Vh6kDUFh/5D87qz2HvWR5K4
-         V2xSg6sIV4KX6Q9Rr0c2IL0R6nf66xh20UbQW5dj7WIAdD0xq2Dp98qPrq4lx3mGC4
-         NV7k0mn9o9e52atUM/X8/l8uwOzBY56q2VnR28lRkocysfnWm5aShSAnoClg1smLQt
-         6o4TcxkiZHJLa0/bg1r947cExIpITOGwy3mEPx3iu8LMDbOC5DeOvxX7xOGJhmK4iM
-         i0GnWFYK9nlJnC9A5hCj7pBew2/5fM3Vm9QdZ8jitB1Ytn1aZZO
+        b=E/bY+J8P4NpVAcX4oJroiFj7Xk6IC0wd2YGILZJ2QBbrviKbEnKKwuYPoJ9pP2HWI
+         bKnn5D9xuSR0uKf+NjUDBSUr/kQgdBjE+alfUdnYIHMeqymVLlVs5td0zWN9WqiVvp
+         Iy8M+RDRlxeRt0SY8JI1VFHamw6zafFy+6SSFIxno4oW1X2BhW2RAJrbimXlNUUvj/
+         WcQWbro+TPgHftjs6aLiD1ypoDf/kncfJGujICvhKY0TTjqQ/6Bm6z601dTVkVAua3
+         Tv8wPBUzVKuC1tChJ7H/q6WLwhmtARrtRzFI3a0BYRA7tT3ZMdvr+yHZ1m33LkvJ0k
+         TWJRtD8gJTHal6AQWLc6HocVTg4nSED3uJaonCg+9/LaSqgIZDVy1UvDXTOaNXyGq1
+         npliHZ7G4iQRQB//kQVSk30TdH2Kk1mhaPY9td41Jy/3kAgjPxYcbxsDf890d73J0Z
+         78BGMS479PwGdUnoh/1V71mGCBUMnUnVEPb/lfK2JHNSzyD8iVk
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 26/53] pack: convert struct pack_idx_entry to struct object_id
-Date:   Sun, 23 Apr 2017 21:34:26 +0000
-Message-Id: <20170423213453.253425-27-sandals@crustytoothpaste.net>
+Subject: [PATCH 25/53] Convert lookup_commit* to struct object_id
+Date:   Sun, 23 Apr 2017 21:34:25 +0000
+Message-Id: <20170423213453.253425-26-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,617 +48,1352 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct pack_idx_entry to use struct object_id by changing the
-definition and applying the following semantic patch, plus the standard
-object_id transforms:
+Convert lookup_commit, lookup_commit_or_die,
+lookup_commit_reference, and lookup_commit_reference_gently to take
+struct object_id arguments.
+
+Introduce a temporary in parse_object buffer in order to convert this
+function.  This is required since in order to convert parse_object and
+parse_object_buffer, lookup_commit_reference_gently and
+lookup_commit_or_die would need to be converted.  Not introducing a
+temporary would therefore require that lookup_commit_or_die take a
+struct object_id *, but lookup_commit would take unsigned char *,
+leaving a confusing and hard-to-use interface.
+
+parse_object_buffer will lose this temporary in a later patch.
+
+This commit was created with manual changes to commit.c, commit.h, and
+object.c, plus the following semantic patch:
 
 @@
-struct pack_idx_entry E1;
+expression E1, E2;
 @@
-- E1.sha1
-+ E1.oid.hash
+- lookup_commit_reference_gently(E1.hash, E2)
++ lookup_commit_reference_gently(&E1, E2)
 
 @@
-struct pack_idx_entry *E1;
+expression E1, E2;
 @@
-- E1->sha1
-+ E1->oid.hash
+- lookup_commit_reference_gently(E1->hash, E2)
++ lookup_commit_reference_gently(E1, E2)
+
+@@
+expression E1;
+@@
+- lookup_commit_reference(E1.hash)
++ lookup_commit_reference(&E1)
+
+@@
+expression E1;
+@@
+- lookup_commit_reference(E1->hash)
++ lookup_commit_reference(E1)
+
+@@
+expression E1;
+@@
+- lookup_commit(E1.hash)
++ lookup_commit(&E1)
+
+@@
+expression E1;
+@@
+- lookup_commit(E1->hash)
++ lookup_commit(E1)
+
+@@
+expression E1, E2;
+@@
+- lookup_commit_or_die(E1.hash, E2)
++ lookup_commit_or_die(&E1, E2)
+
+@@
+expression E1, E2;
+@@
+- lookup_commit_or_die(E1->hash, E2)
++ lookup_commit_or_die(E1, E2)
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/index-pack.c   | 33 +++++++++++++++-----------
- builtin/pack-objects.c | 63 +++++++++++++++++++++++++++++---------------------
- bulk-checkin.c         |  4 ++--
- fast-import.c          | 30 ++++++++++++------------
- pack-bitmap-write.c    |  8 ++++---
- pack-objects.c         |  8 ++++---
- pack-write.c           | 10 ++++----
- pack.h                 |  2 +-
- 8 files changed, 89 insertions(+), 69 deletions(-)
+ archive.c               |  2 +-
+ bisect.c                |  2 +-
+ branch.c                |  2 +-
+ builtin/am.c            |  4 ++--
+ builtin/blame.c         |  4 ++--
+ builtin/branch.c        |  6 +++---
+ builtin/checkout.c      |  6 +++---
+ builtin/clone.c         |  2 +-
+ builtin/commit-tree.c   |  2 +-
+ builtin/commit.c        |  4 ++--
+ builtin/describe.c      |  4 ++--
+ builtin/diff-tree.c     |  4 ++--
+ builtin/fast-export.c   |  2 +-
+ builtin/fetch.c         |  7 ++++---
+ builtin/fmt-merge-msg.c |  4 ++--
+ builtin/log.c           |  8 ++++----
+ builtin/merge-base.c    |  6 +++---
+ builtin/merge.c         |  2 +-
+ builtin/notes.c         |  2 +-
+ builtin/pull.c          | 10 +++++-----
+ builtin/reflog.c        |  8 ++++----
+ builtin/replace.c       |  4 ++--
+ builtin/reset.c         |  4 ++--
+ builtin/rev-parse.c     |  6 +++---
+ builtin/show-branch.c   |  4 ++--
+ builtin/tag.c           |  2 +-
+ builtin/verify-commit.c |  2 +-
+ bundle.c                |  2 +-
+ commit.c                | 30 +++++++++++++++---------------
+ commit.h                | 12 ++++++------
+ fast-import.c           |  4 ++--
+ fetch-pack.c            |  2 +-
+ http-push.c             |  5 +++--
+ log-tree.c              |  2 +-
+ notes-cache.c           |  2 +-
+ notes-merge.c           |  4 ++--
+ notes-utils.c           |  2 +-
+ object.c                |  5 ++++-
+ parse-options-cb.c      |  2 +-
+ ref-filter.c            |  4 ++--
+ remote.c                | 13 +++++++------
+ revision.c              |  8 ++++----
+ sequencer.c             |  8 ++++----
+ sha1_name.c             | 10 +++++-----
+ shallow.c               | 20 ++++++++++----------
+ submodule.c             | 14 +++++++-------
+ tag.c                   |  2 +-
+ tree.c                  |  2 +-
+ walker.c                |  2 +-
+ wt-status.c             |  2 +-
+ 50 files changed, 138 insertions(+), 132 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 4ff567db4..fef0025e4 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -747,13 +747,13 @@ static int compare_objects(const unsigned char *buf, unsigned long size,
- 		ssize_t len = read_istream(data->st, data->buf, size);
- 		if (len == 0)
- 			die(_("SHA1 COLLISION FOUND WITH %s !"),
--			    sha1_to_hex(data->entry->idx.sha1));
-+			    oid_to_hex(&data->entry->idx.oid));
- 		if (len < 0)
- 			die(_("unable to read %s"),
--			    sha1_to_hex(data->entry->idx.sha1));
-+			    oid_to_hex(&data->entry->idx.oid));
- 		if (memcmp(buf, data->buf, len))
- 			die(_("SHA1 COLLISION FOUND WITH %s !"),
--			    sha1_to_hex(data->entry->idx.sha1));
-+			    oid_to_hex(&data->entry->idx.oid));
- 		size -= len;
- 		buf += len;
- 	}
-@@ -771,12 +771,12 @@ static int check_collison(struct object_entry *entry)
+diff --git a/archive.c b/archive.c
+index 60b889198..54701e8bb 100644
+--- a/archive.c
++++ b/archive.c
+@@ -360,7 +360,7 @@ static void parse_treeish_arg(const char **argv,
+ 	if (get_sha1(name, oid.hash))
+ 		die("Not a valid object name");
  
- 	memset(&data, 0, sizeof(data));
- 	data.entry = entry;
--	data.st = open_istream(entry->idx.sha1, &type, &size, NULL);
-+	data.st = open_istream(entry->idx.oid.hash, &type, &size, NULL);
- 	if (!data.st)
- 		return -1;
- 	if (size != entry->size || type != entry->type)
- 		die(_("SHA1 COLLISION FOUND WITH %s !"),
--		    sha1_to_hex(entry->idx.sha1));
-+		    oid_to_hex(&entry->idx.oid));
- 	unpack_data(entry, compare_objects, &data);
- 	close_istream(data.st);
- 	free(data.buf);
-@@ -957,9 +957,10 @@ static void resolve_delta(struct object_entry *delta_obj,
- 	if (!result->data)
- 		bad_object(delta_obj->idx.offset, _("failed to apply delta"));
- 	hash_sha1_file(result->data, result->size,
--		       typename(delta_obj->real_type), delta_obj->idx.sha1);
-+		       typename(delta_obj->real_type),
-+		       delta_obj->idx.oid.hash);
- 	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
--		    delta_obj->idx.sha1);
-+		    delta_obj->idx.oid.hash);
- 	counter_lock();
- 	nr_resolved_deltas++;
- 	counter_unlock();
-@@ -989,7 +990,7 @@ static struct base_data *find_unresolved_deltas_1(struct base_data *base,
- 						  struct base_data *prev_base)
+-	commit = lookup_commit_reference_gently(oid.hash, 1);
++	commit = lookup_commit_reference_gently(&oid, 1);
+ 	if (commit) {
+ 		commit_sha1 = commit->object.oid.hash;
+ 		archive_time = commit->date;
+diff --git a/bisect.c b/bisect.c
+index 03af06c66..1f273a85a 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -704,7 +704,7 @@ static int bisect_checkout(const unsigned char *bisect_rev, int no_checkout)
+ 
+ static struct commit *get_commit_reference(const struct object_id *oid)
  {
- 	if (base->ref_last == -1 && base->ofs_last == -1) {
--		find_ref_delta_children(base->obj->idx.sha1,
-+		find_ref_delta_children(base->obj->idx.oid.hash,
- 					&base->ref_first, &base->ref_last,
- 					OBJ_REF_DELTA);
- 
-@@ -1130,7 +1131,8 @@ static void parse_pack_objects(unsigned char *sha1)
- 	for (i = 0; i < nr_objects; i++) {
- 		struct object_entry *obj = &objects[i];
- 		void *data = unpack_raw_entry(obj, &ofs_delta->offset,
--					      ref_delta_sha1, obj->idx.sha1);
-+					      ref_delta_sha1,
-+					      obj->idx.oid.hash);
- 		obj->real_type = obj->type;
- 		if (obj->type == OBJ_OFS_DELTA) {
- 			nr_ofs_deltas++;
-@@ -1146,7 +1148,8 @@ static void parse_pack_objects(unsigned char *sha1)
- 			obj->real_type = OBJ_BAD;
- 			nr_delays++;
- 		} else
--			sha1_object(data, NULL, obj->size, obj->type, obj->idx.sha1);
-+			sha1_object(data, NULL, obj->size, obj->type,
-+				    obj->idx.oid.hash);
- 		free(data);
- 		display_progress(progress, i+1);
+-	struct commit *r = lookup_commit_reference(oid->hash);
++	struct commit *r = lookup_commit_reference(oid);
+ 	if (!r)
+ 		die(_("Not a valid commit name %s"), oid_to_hex(oid));
+ 	return r;
+diff --git a/branch.c b/branch.c
+index 1758c9708..4899144f5 100644
+--- a/branch.c
++++ b/branch.c
+@@ -286,7 +286,7 @@ void create_branch(const char *name, const char *start_name,
+ 		break;
  	}
-@@ -1172,7 +1175,8 @@ static void parse_pack_objects(unsigned char *sha1)
- 		if (obj->real_type != OBJ_BAD)
- 			continue;
- 		obj->real_type = obj->type;
--		sha1_object(NULL, obj, obj->size, obj->type, obj->idx.sha1);
-+		sha1_object(NULL, obj, obj->size, obj->type,
-+			    obj->idx.oid.hash);
- 		nr_delays--;
- 	}
- 	if (nr_delays)
-@@ -1330,7 +1334,7 @@ static struct object_entry *append_obj_to_pack(struct sha1file *f,
- 	obj[1].idx.offset += write_compressed(f, buf, size);
- 	obj[0].idx.crc32 = crc32_end(f);
- 	sha1flush(f);
--	hashcpy(obj->idx.sha1, sha1);
-+	hashcpy(obj->idx.oid.hash, sha1);
- 	return obj;
- }
  
-@@ -1581,13 +1585,14 @@ static void show_pack_info(int stat_only)
- 		if (stat_only)
- 			continue;
- 		printf("%s %-6s %lu %lu %"PRIuMAX,
--		       sha1_to_hex(obj->idx.sha1),
-+		       oid_to_hex(&obj->idx.oid),
- 		       typename(obj->real_type), obj->size,
- 		       (unsigned long)(obj[1].idx.offset - obj->idx.offset),
- 		       (uintmax_t)obj->idx.offset);
- 		if (is_delta_type(obj->type)) {
- 			struct object_entry *bobj = &objects[obj_stat[i].base_object_no];
--			printf(" %u %s", obj_stat[i].delta_depth, sha1_to_hex(bobj->idx.sha1));
-+			printf(" %u %s", obj_stat[i].delta_depth,
-+			       oid_to_hex(&bobj->idx.oid));
- 		}
- 		putchar('\n');
- 	}
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 477070806..d76ff0542 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -106,12 +106,14 @@ static void *get_delta(struct object_entry *entry)
- 	void *buf, *base_buf, *delta_buf;
- 	enum object_type type;
+-	if ((commit = lookup_commit_reference(oid.hash)) == NULL)
++	if ((commit = lookup_commit_reference(&oid)) == NULL)
+ 		die(_("Not a valid branch point: '%s'."), start_name);
+ 	oidcpy(&oid, &commit->object.oid);
  
--	buf = read_sha1_file(entry->idx.sha1, &type, &size);
-+	buf = read_sha1_file(entry->idx.oid.hash, &type, &size);
- 	if (!buf)
--		die("unable to read %s", sha1_to_hex(entry->idx.sha1));
--	base_buf = read_sha1_file(entry->delta->idx.sha1, &type, &base_size);
-+		die("unable to read %s", oid_to_hex(&entry->idx.oid));
-+	base_buf = read_sha1_file(entry->delta->idx.oid.hash, &type,
-+				  &base_size);
- 	if (!base_buf)
--		die("unable to read %s", sha1_to_hex(entry->delta->idx.sha1));
-+		die("unable to read %s",
-+		    oid_to_hex(&entry->delta->idx.oid));
- 	delta_buf = diff_delta(base_buf, base_size,
- 			       buf, size, &delta_size, 0);
- 	if (!delta_buf || delta_size != entry->delta_size)
-@@ -249,12 +251,14 @@ static unsigned long write_no_reuse_object(struct sha1file *f, struct object_ent
- 	if (!usable_delta) {
- 		if (entry->type == OBJ_BLOB &&
- 		    entry->size > big_file_threshold &&
--		    (st = open_istream(entry->idx.sha1, &type, &size, NULL)) != NULL)
-+		    (st = open_istream(entry->idx.oid.hash, &type, &size, NULL)) != NULL)
- 			buf = NULL;
- 		else {
--			buf = read_sha1_file(entry->idx.sha1, &type, &size);
-+			buf = read_sha1_file(entry->idx.oid.hash, &type,
-+					     &size);
- 			if (!buf)
--				die(_("unable to read %s"), sha1_to_hex(entry->idx.sha1));
-+				die(_("unable to read %s"),
-+				    oid_to_hex(&entry->idx.oid));
- 		}
- 		/*
- 		 * make sure no cached delta data remains from a
-@@ -322,7 +326,7 @@ static unsigned long write_no_reuse_object(struct sha1file *f, struct object_ent
- 			return 0;
- 		}
- 		sha1write(f, header, hdrlen);
--		sha1write(f, entry->delta->idx.sha1, 20);
-+		sha1write(f, entry->delta->idx.oid.hash, 20);
- 		hdrlen += 20;
+diff --git a/builtin/am.c b/builtin/am.c
+index f7a7a971f..a0979fab2 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1492,7 +1492,7 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+ 	if (get_mail_commit_oid(&commit_oid, mail) < 0)
+ 		die(_("could not parse %s"), mail);
+ 
+-	commit = lookup_commit_or_die(commit_oid.hash, mail);
++	commit = lookup_commit_or_die(&commit_oid, mail);
+ 
+ 	get_commit_info(state, commit);
+ 
+@@ -1687,7 +1687,7 @@ static void do_commit(const struct am_state *state)
+ 
+ 	if (!get_sha1_commit("HEAD", parent.hash)) {
+ 		old_oid = &parent;
+-		commit_list_insert(lookup_commit(parent.hash), &parents);
++		commit_list_insert(lookup_commit(&parent), &parents);
  	} else {
- 		if (limit && hdrlen + datalen + 20 >= limit) {
-@@ -334,7 +338,7 @@ static unsigned long write_no_reuse_object(struct sha1file *f, struct object_ent
- 		sha1write(f, header, hdrlen);
- 	}
- 	if (st) {
--		datalen = write_large_blob_data(st, f, entry->idx.sha1);
-+		datalen = write_large_blob_data(st, f, entry->idx.oid.hash);
- 		close_istream(st);
- 	} else {
- 		sha1write(f, buf, datalen);
-@@ -369,7 +373,8 @@ static off_t write_reuse_object(struct sha1file *f, struct object_entry *entry,
- 	datalen = revidx[1].offset - offset;
- 	if (!pack_to_stdout && p->index_version > 1 &&
- 	    check_pack_crc(p, &w_curs, offset, datalen, revidx->nr)) {
--		error("bad packed object CRC for %s", sha1_to_hex(entry->idx.sha1));
-+		error("bad packed object CRC for %s",
-+		      oid_to_hex(&entry->idx.oid));
- 		unuse_pack(&w_curs);
- 		return write_no_reuse_object(f, entry, limit, usable_delta);
- 	}
-@@ -379,7 +384,8 @@ static off_t write_reuse_object(struct sha1file *f, struct object_entry *entry,
+ 		old_oid = NULL;
+ 		say(state, stderr, _("applying to an empty history"));
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 7d644d092..58bb274d0 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2253,7 +2253,7 @@ static struct commit_list **append_parent(struct commit_list **tail, const struc
+ {
+ 	struct commit *parent;
  
- 	if (!pack_to_stdout && p->index_version == 1 &&
- 	    check_pack_inflate(p, &w_curs, offset, datalen, entry->size)) {
--		error("corrupt packed object for %s", sha1_to_hex(entry->idx.sha1));
-+		error("corrupt packed object for %s",
-+		      oid_to_hex(&entry->idx.oid));
- 		unuse_pack(&w_curs);
- 		return write_no_reuse_object(f, entry, limit, usable_delta);
+-	parent = lookup_commit_reference(oid->hash);
++	parent = lookup_commit_reference(oid);
+ 	if (!parent)
+ 		die("no such commit %s", oid_to_hex(oid));
+ 	return &commit_list_insert(parent, tail)->next;
+@@ -2475,7 +2475,7 @@ static const char *dwim_reverse_initial(struct scoreboard *sb)
+ 	/* Do we have HEAD? */
+ 	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL))
+ 		return NULL;
+-	head_commit = lookup_commit_reference_gently(head_oid.hash, 1);
++	head_commit = lookup_commit_reference_gently(&head_oid, 1);
+ 	if (!head_commit)
+ 		return NULL;
+ 
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 0552c42ad..720576160 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -124,7 +124,7 @@ static int branch_merged(int kind, const char *name,
+ 		    (reference_name = reference_name_to_free =
+ 		     resolve_refdup(upstream, RESOLVE_REF_READING,
+ 				    oid.hash, NULL)) != NULL)
+-			reference_rev = lookup_commit_reference(oid.hash);
++			reference_rev = lookup_commit_reference(&oid);
  	}
-@@ -404,7 +410,7 @@ static off_t write_reuse_object(struct sha1file *f, struct object_entry *entry,
- 			return 0;
- 		}
- 		sha1write(f, header, hdrlen);
--		sha1write(f, entry->delta->idx.sha1, 20);
-+		sha1write(f, entry->delta->idx.oid.hash, 20);
- 		hdrlen += 20;
- 		reused_delta++;
- 	} else {
-@@ -509,7 +515,7 @@ static enum write_one_status write_one(struct sha1file *f,
- 	recursing = (e->idx.offset == 1);
- 	if (recursing) {
- 		warning("recursive delta detected for object %s",
--			sha1_to_hex(e->idx.sha1));
-+			oid_to_hex(&e->idx.oid));
- 		return WRITE_ONE_RECURSIVE;
- 	} else if (e->idx.offset || e->preferred_base) {
- 		/* offset is non zero if object is written already. */
-@@ -1432,7 +1438,7 @@ static void check_object(struct object_entry *entry)
- 				ofs += 1;
- 				if (!ofs || MSB(ofs, 7)) {
- 					error("delta base offset overflow in pack for %s",
--					      sha1_to_hex(entry->idx.sha1));
-+					      oid_to_hex(&entry->idx.oid));
- 					goto give_up;
- 				}
- 				c = buf[used_0++];
-@@ -1441,7 +1447,7 @@ static void check_object(struct object_entry *entry)
- 			ofs = entry->in_pack_offset - ofs;
- 			if (ofs <= 0 || ofs >= entry->in_pack_offset) {
- 				error("delta base offset out of bound for %s",
--				      sha1_to_hex(entry->idx.sha1));
-+				      oid_to_hex(&entry->idx.oid));
- 				goto give_up;
- 			}
- 			if (reuse_delta && !entry->preferred_base) {
-@@ -1498,7 +1504,7 @@ static void check_object(struct object_entry *entry)
- 		unuse_pack(&w_curs);
- 	}
- 
--	entry->type = sha1_object_info(entry->idx.sha1, &entry->size);
-+	entry->type = sha1_object_info(entry->idx.oid.hash, &entry->size);
- 	/*
- 	 * The error condition is checked in prepare_pack().  This is
- 	 * to permit a missing preferred base object to be ignored
-@@ -1514,7 +1520,7 @@ static int pack_offset_sort(const void *_a, const void *_b)
- 
- 	/* avoid filesystem trashing with loose objects */
- 	if (!a->in_pack && !b->in_pack)
--		return hashcmp(a->idx.sha1, b->idx.sha1);
-+		return oidcmp(&a->idx.oid, &b->idx.oid);
- 
- 	if (a->in_pack < b->in_pack)
+ 	if (!reference_rev)
+ 		reference_rev = head_rev;
+@@ -157,7 +157,7 @@ static int check_branch_commit(const char *branchname, const char *refname,
+ 			       const struct object_id *oid, struct commit *head_rev,
+ 			       int kinds, int force)
+ {
+-	struct commit *rev = lookup_commit_reference(oid->hash);
++	struct commit *rev = lookup_commit_reference(oid);
+ 	if (!rev) {
+ 		error(_("Couldn't look up commit object for '%s'"), refname);
  		return -1;
-@@ -1560,7 +1566,8 @@ static void drop_reused_delta(struct object_entry *entry)
- 		 * And if that fails, the error will be recorded in entry->type
- 		 * and dealt with in prepare_pack().
- 		 */
--		entry->type = sha1_object_info(entry->idx.sha1, &entry->size);
-+		entry->type = sha1_object_info(entry->idx.oid.hash,
-+					       &entry->size);
+@@ -211,7 +211,7 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
  	}
+ 
+ 	if (!force) {
+-		head_rev = lookup_commit_reference(head_oid.hash);
++		head_rev = lookup_commit_reference(&head_oid);
+ 		if (!head_rev)
+ 			die(_("Couldn't look up commit object for HEAD"));
+ 	}
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index bfa5419f3..afa99fb8a 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -393,7 +393,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		die(_("unable to write new index file"));
+ 
+ 	read_ref_full("HEAD", 0, rev.hash, NULL);
+-	head = lookup_commit_reference_gently(rev.hash, 1);
++	head = lookup_commit_reference_gently(&rev, 1);
+ 
+ 	errs |= post_checkout_hook(head, head, 0);
+ 	return errs;
+@@ -833,7 +833,7 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	int flag, writeout_error = 0;
+ 	memset(&old, 0, sizeof(old));
+ 	old.path = path_to_free = resolve_refdup("HEAD", 0, rev.hash, &flag);
+-	old.commit = lookup_commit_reference_gently(rev.hash, 1);
++	old.commit = lookup_commit_reference_gently(&rev, 1);
+ 	if (!(flag & REF_ISSYMREF))
+ 		old.path = NULL;
+ 
+@@ -1047,7 +1047,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	else
+ 		new->path = NULL; /* not an existing branch */
+ 
+-	new->commit = lookup_commit_reference_gently(rev->hash, 1);
++	new->commit = lookup_commit_reference_gently(rev, 1);
+ 	if (!new->commit) {
+ 		/* not a commit */
+ 		*source_tree = parse_tree_indirect(rev->hash);
+diff --git a/builtin/clone.c b/builtin/clone.c
+index de85b8525..646f28792 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -682,7 +682,7 @@ static void update_head(const struct ref *our, const struct ref *remote,
+ 			install_branch_config(0, head, option_origin, our->name);
+ 		}
+ 	} else if (our) {
+-		struct commit *c = lookup_commit_reference(our->old_oid.hash);
++		struct commit *c = lookup_commit_reference(&our->old_oid);
+ 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
+ 		update_ref(msg, "HEAD", c->object.oid.hash,
+ 			   NULL, REF_NODEREF, UPDATE_REFS_DIE_ON_ERR);
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 605017261..f39c2b273 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -58,7 +58,7 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			if (get_sha1_commit(argv[i], oid.hash))
+ 				die("Not a valid object name %s", argv[i]);
+ 			assert_sha1_type(oid.hash, OBJ_COMMIT);
+-			new_parent(lookup_commit(oid.hash), &parents);
++			new_parent(lookup_commit(&oid), &parents);
+ 			continue;
+ 		}
+ 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 05a0b609e..d349d48ef 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1430,7 +1430,7 @@ static void print_summary(const char *prefix, const struct object_id *oid,
+ 	struct strbuf author_ident = STRBUF_INIT;
+ 	struct strbuf committer_ident = STRBUF_INIT;
+ 
+-	commit = lookup_commit(oid->hash);
++	commit = lookup_commit(oid);
+ 	if (!commit)
+ 		die(_("couldn't look up newly created commit"));
+ 	if (parse_commit(commit))
+@@ -1654,7 +1654,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1("HEAD", oid.hash))
+ 		current_head = NULL;
+ 	else {
+-		current_head = lookup_commit_or_die(oid.hash, "HEAD");
++		current_head = lookup_commit_or_die(&oid, "HEAD");
+ 		if (parse_commit(current_head))
+ 			die(_("could not parse HEAD commit"));
+ 	}
+diff --git a/builtin/describe.c b/builtin/describe.c
+index a5cd8c513..f6032f593 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -281,7 +281,7 @@ static void describe(const char *arg, int last_one)
+ 
+ 	if (get_oid(arg, &oid))
+ 		die(_("Not a valid object name %s"), arg);
+-	cmit = lookup_commit_reference(oid.hash);
++	cmit = lookup_commit_reference(&oid);
+ 	if (!cmit)
+ 		die(_("%s is not a valid '%s' object"), arg, commit_type);
+ 
+@@ -309,7 +309,7 @@ static void describe(const char *arg, int last_one)
+ 		struct commit *c;
+ 		struct commit_name *n = hashmap_iter_first(&names, &iter);
+ 		for (; n; n = hashmap_iter_next(&iter)) {
+-			c = lookup_commit_reference_gently(n->peeled.hash, 1);
++			c = lookup_commit_reference_gently(&n->peeled, 1);
+ 			if (c)
+ 				c->util = n;
+ 		}
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 326f88b65..e85a449df 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -9,7 +9,7 @@ static struct rev_info log_tree_opt;
+ 
+ static int diff_tree_commit_sha1(const struct object_id *oid)
+ {
+-	struct commit *commit = lookup_commit_reference(oid->hash);
++	struct commit *commit = lookup_commit_reference(oid);
+ 	if (!commit)
+ 		return -1;
+ 	return log_tree_commit(&log_tree_opt, commit);
+@@ -23,7 +23,7 @@ static int stdin_diff_commit(struct commit *commit, const char *p)
+ 
+ 	/* Graft the fake parents locally to the commit */
+ 	while (isspace(*p++) && !parse_oid_hex(p, &oid, &p)) {
+-		struct commit *parent = lookup_commit(oid.hash);
++		struct commit *parent = lookup_commit(&oid);
+ 		if (!pptr) {
+ 			/* Free the real parent list */
+ 			free_commit_list(commit->parents);
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index e0220630d..b4521cb62 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -938,7 +938,7 @@ static void import_marks(char *input_file)
+ 			/* only commits */
+ 			continue;
+ 
+-		commit = lookup_commit(oid.hash);
++		commit = lookup_commit(&oid);
+ 		if (!commit)
+ 			die("not a commit? can't happen: %s", oid_to_hex(&oid));
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 5f2c2ab23..d4d573b98 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -636,8 +636,8 @@ static int update_local_ref(struct ref *ref,
+ 		return r;
+ 	}
+ 
+-	current = lookup_commit_reference_gently(ref->old_oid.hash, 1);
+-	updated = lookup_commit_reference_gently(ref->new_oid.hash, 1);
++	current = lookup_commit_reference_gently(&ref->old_oid, 1);
++	updated = lookup_commit_reference_gently(&ref->new_oid, 1);
+ 	if (!current || !updated) {
+ 		const char *msg;
+ 		const char *what;
+@@ -770,7 +770,8 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 				continue;
+ 			}
+ 
+-			commit = lookup_commit_reference_gently(rm->old_oid.hash, 1);
++			commit = lookup_commit_reference_gently(&rm->old_oid,
++								1);
+ 			if (!commit)
+ 				rm->fetch_head_status = FETCH_HEAD_NOT_FOR_MERGE;
+ 
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 6faa3c0d2..91dd753dd 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -566,7 +566,7 @@ static void find_merge_parents(struct merge_parents *result,
+ 		commit_list_insert(parent, &parents);
+ 		add_merge_parent(result, &obj->oid, &parent->object.oid);
+ 	}
+-	head_commit = lookup_commit(head->hash);
++	head_commit = lookup_commit(head);
+ 	if (head_commit)
+ 		commit_list_insert(head_commit, &parents);
+ 	parents = reduce_heads(parents);
+@@ -633,7 +633,7 @@ int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+ 		struct commit *head;
+ 		struct rev_info rev;
+ 
+-		head = lookup_commit_or_die(head_oid.hash, "HEAD");
++		head = lookup_commit_or_die(&head_oid, "HEAD");
+ 		init_revisions(&rev, NULL);
+ 		rev.commit_format = CMIT_FMT_ONELINE;
+ 		rev.ignore_merges = 1;
+diff --git a/builtin/log.c b/builtin/log.c
+index b3b10cc1e..d8b56ea41 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -878,8 +878,8 @@ static void get_patch_ids(struct rev_info *rev, struct patch_ids *ids)
+ 	o2 = rev->pending.objects[1].item;
+ 	flags1 = o1->flags;
+ 	flags2 = o2->flags;
+-	c1 = lookup_commit_reference(o1->oid.hash);
+-	c2 = lookup_commit_reference(o2->oid.hash);
++	c1 = lookup_commit_reference(&o1->oid);
++	c2 = lookup_commit_reference(&o2->oid);
+ 
+ 	if ((flags1 & UNINTERESTING) == (flags2 & UNINTERESTING))
+ 		die(_("Not a range."));
+@@ -1263,7 +1263,7 @@ static struct commit *get_base_commit(const char *base_commit,
+ 
+ 			if (get_oid(upstream, &oid))
+ 				die(_("Failed to resolve '%s' as a valid ref."), upstream);
+-			commit = lookup_commit_or_die(oid.hash, "upstream base");
++			commit = lookup_commit_or_die(&oid, "upstream base");
+ 			base_list = get_merge_bases_many(commit, total, list);
+ 			/* There should be one and only one merge base. */
+ 			if (!base_list || base_list->next)
+@@ -1819,7 +1819,7 @@ static int add_pending_commit(const char *arg, struct rev_info *revs, int flags)
+ {
+ 	struct object_id oid;
+ 	if (get_oid(arg, &oid) == 0) {
+-		struct commit *commit = lookup_commit_reference(oid.hash);
++		struct commit *commit = lookup_commit_reference(&oid);
+ 		if (commit) {
+ 			commit->object.flags |= flags;
+ 			add_pending_object(revs, &commit->object, arg);
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index cfe2a796f..5c74ce249 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -41,7 +41,7 @@ static struct commit *get_commit_reference(const char *arg)
+ 
+ 	if (get_oid(arg, &revkey))
+ 		die("Not a valid object name %s", arg);
+-	r = lookup_commit_reference(revkey.hash);
++	r = lookup_commit_reference(&revkey);
+ 	if (!r)
+ 		die("Not a valid commit name %s", arg);
+ 
+@@ -120,7 +120,7 @@ static void add_one_commit(struct object_id *oid, struct rev_collect *revs)
+ 	if (is_null_oid(oid))
+ 		return;
+ 
+-	commit = lookup_commit(oid->hash);
++	commit = lookup_commit(oid);
+ 	if (!commit ||
+ 	    (commit->object.flags & TMP_MARK) ||
+ 	    parse_commit(commit))
+@@ -168,7 +168,7 @@ static int handle_fork_point(int argc, const char **argv)
+ 	if (get_oid(commitname, &oid))
+ 		die("Not a valid object name: '%s'", commitname);
+ 
+-	derived = lookup_commit_reference(oid.hash);
++	derived = lookup_commit_reference(&oid);
+ 	memset(&revs, 0, sizeof(revs));
+ 	revs.initial = 1;
+ 	for_each_reflog_ent(refname, collect_one_reflog_ent, &revs);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 703827f00..f11b5f3de 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1123,7 +1123,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (!branch || is_null_oid(&head_oid))
+ 		head_commit = NULL;
+ 	else
+-		head_commit = lookup_commit_or_die(head_oid.hash, "HEAD");
++		head_commit = lookup_commit_or_die(&head_oid, "HEAD");
+ 
+ 	init_diff_ui_defaults();
+ 	git_config(git_merge_config, NULL);
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 7b891471c..f2847c41e 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -706,7 +706,7 @@ static int merge_commit(struct notes_merge_options *o)
+ 
+ 	if (get_oid("NOTES_MERGE_PARTIAL", &oid))
+ 		die(_("failed to read ref NOTES_MERGE_PARTIAL"));
+-	else if (!(partial = lookup_commit_reference(oid.hash)))
++	else if (!(partial = lookup_commit_reference(&oid)))
+ 		die(_("could not find commit from NOTES_MERGE_PARTIAL."));
+ 	else if (parse_commit(partial))
+ 		die(_("could not parse commit from NOTES_MERGE_PARTIAL."));
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d8aa26d8a..21e114ec0 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -698,10 +698,10 @@ static int get_octopus_merge_base(struct object_id *merge_base,
+ {
+ 	struct commit_list *revs = NULL, *result;
+ 
+-	commit_list_insert(lookup_commit_reference(curr_head->hash), &revs);
+-	commit_list_insert(lookup_commit_reference(merge_head->hash), &revs);
++	commit_list_insert(lookup_commit_reference(curr_head), &revs);
++	commit_list_insert(lookup_commit_reference(merge_head), &revs);
+ 	if (!is_null_oid(fork_point))
+-		commit_list_insert(lookup_commit_reference(fork_point->hash), &revs);
++		commit_list_insert(lookup_commit_reference(fork_point), &revs);
+ 
+ 	result = reduce_heads(get_octopus_merge_bases(revs));
+ 	free_commit_list(revs);
+@@ -865,9 +865,9 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		struct commit_list *list = NULL;
+ 		struct commit *merge_head, *head;
+ 
+-		head = lookup_commit_reference(orig_head.hash);
++		head = lookup_commit_reference(&orig_head);
+ 		commit_list_insert(head, &list);
+-		merge_head = lookup_commit_reference(merge_heads.oid[0].hash);
++		merge_head = lookup_commit_reference(&merge_heads.oid[0]);
+ 		if (is_descendant_of(merge_head, list)) {
+ 			/* we can fast-forward this without invoking rebase */
+ 			opt_ff = "--ff-only";
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index d6718d326..4831116ea 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -192,7 +192,7 @@ static int keep_entry(struct commit **it, struct object_id *oid)
+ 
+ 	if (is_null_oid(oid))
+ 		return 1;
+-	commit = lookup_commit_reference_gently(oid->hash, 1);
++	commit = lookup_commit_reference_gently(oid, 1);
+ 	if (!commit)
+ 		return 0;
+ 
+@@ -261,7 +261,7 @@ static int unreachable(struct expire_reflog_policy_cb *cb, struct commit *commit
+ 		if (is_null_oid(oid))
+ 			return 0;
+ 
+-		commit = lookup_commit_reference_gently(oid->hash, 1);
++		commit = lookup_commit_reference_gently(oid, 1);
+ 
+ 		/* Not a commit -- keep it */
+ 		if (!commit)
+@@ -318,7 +318,7 @@ static int push_tip_to_list(const char *refname, const struct object_id *oid,
+ 	struct commit *tip_commit;
+ 	if (flags & REF_ISSYMREF)
+ 		return 0;
+-	tip_commit = lookup_commit_reference_gently(oid->hash, 1);
++	tip_commit = lookup_commit_reference_gently(oid, 1);
+ 	if (!tip_commit)
+ 		return 0;
+ 	commit_list_insert(tip_commit, list);
+@@ -335,7 +335,7 @@ static void reflog_expiry_prepare(const char *refname,
+ 		cb->tip_commit = NULL;
+ 		cb->unreachable_expire_kind = UE_HEAD;
+ 	} else {
+-		cb->tip_commit = lookup_commit_reference_gently(oid->hash, 1);
++		cb->tip_commit = lookup_commit_reference_gently(oid, 1);
+ 		if (!cb->tip_commit)
+ 			cb->unreachable_expire_kind = UE_ALWAYS;
+ 		else
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 065515bab..e2ea3d47b 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -327,7 +327,7 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+ 		struct object_id oid;
+ 		if (get_oid(argv[i], &oid) < 0)
+ 			die(_("Not a valid object name: '%s'"), argv[i]);
+-		lookup_commit_or_die(oid.hash, argv[i]);
++		lookup_commit_or_die(&oid, argv[i]);
+ 		strbuf_addf(&new_parents, "parent %s\n", oid_to_hex(&oid));
+ 	}
+ 
+@@ -393,7 +393,7 @@ static int create_graft(int argc, const char **argv, int force)
+ 
+ 	if (get_oid(old_ref, &old) < 0)
+ 		die(_("Not a valid object name: '%s'"), old_ref);
+-	commit = lookup_commit_or_die(old.hash, old_ref);
++	commit = lookup_commit_or_die(&old, old_ref);
+ 
+ 	buffer = get_commit_buffer(commit, &size);
+ 	strbuf_add(&buf, buffer, size);
+diff --git a/builtin/reset.c b/builtin/reset.c
+index fc3b906c4..0be52fa36 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -303,7 +303,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		struct commit *commit;
+ 		if (get_sha1_committish(rev, oid.hash))
+ 			die(_("Failed to resolve '%s' as a valid revision."), rev);
+-		commit = lookup_commit_reference(oid.hash);
++		commit = lookup_commit_reference(&oid);
+ 		if (!commit)
+ 			die(_("Could not parse object '%s'."), rev);
+ 		oidcpy(&oid, &commit->object.oid);
+@@ -380,7 +380,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		update_ref_status = reset_refs(rev, &oid);
+ 
+ 		if (reset_type == HARD && !update_ref_status && !quiet)
+-			print_new_head_line(lookup_commit_reference(oid.hash));
++			print_new_head_line(lookup_commit_reference(&oid));
+ 	}
+ 	if (!pathspec.nr)
+ 		remove_branch_state();
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 272bb13a0..01c67a1f1 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -279,8 +279,8 @@ static int try_difference(const char *arg)
+ 		if (symmetric) {
+ 			struct commit_list *exclude;
+ 			struct commit *a, *b;
+-			a = lookup_commit_reference(oid.hash);
+-			b = lookup_commit_reference(end.hash);
++			a = lookup_commit_reference(&oid);
++			b = lookup_commit_reference(&end);
+ 			exclude = get_merge_bases(a, b);
+ 			while (exclude) {
+ 				struct commit *commit = pop_commit(&exclude);
+@@ -332,7 +332,7 @@ static int try_parent_shorthands(const char *arg)
+ 		return 0;
+ 	}
+ 
+-	commit = lookup_commit_reference(oid.hash);
++	commit = lookup_commit_reference(&oid);
+ 	if (exclude_parent &&
+ 	    exclude_parent > commit_list_count(commit->parents)) {
+ 		*dotdot = '^';
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 19756595d..71b6f3c17 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -358,7 +358,7 @@ static void sort_ref_range(int bottom, int top)
+ static int append_ref(const char *refname, const struct object_id *oid,
+ 		      int allow_dups)
+ {
+-	struct commit *commit = lookup_commit_reference_gently(oid->hash, 1);
++	struct commit *commit = lookup_commit_reference_gently(oid, 1);
+ 	int i;
+ 
+ 	if (!commit)
+@@ -816,7 +816,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 			       MAX_REVS), MAX_REVS);
+ 		if (get_sha1(ref_name[num_rev], revkey.hash))
+ 			die(_("'%s' is not a valid ref."), ref_name[num_rev]);
+-		commit = lookup_commit_reference(revkey.hash);
++		commit = lookup_commit_reference(&revkey);
+ 		if (!commit)
+ 			die(_("cannot find commit %s (%s)"),
+ 			    ref_name[num_rev], oid_to_hex(&revkey));
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 597c925e3..d0070b37c 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -328,7 +328,7 @@ static void create_reflog_msg(const struct object_id *oid, struct strbuf *sb)
+ 		}
+ 		free(buf);
+ 
+-		if ((c = lookup_commit_reference(oid->hash)) != NULL)
++		if ((c = lookup_commit_reference(oid)) != NULL)
+ 			strbuf_addf(sb, ", %s", show_date(c->date, 0, DATE_MODE(SHORT)));
+ 		break;
+ 	case OBJ_TREE:
+diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
+index a5db1c427..05b734e6d 100644
+--- a/builtin/verify-commit.c
++++ b/builtin/verify-commit.c
+@@ -25,7 +25,7 @@ static int run_gpg_verify(const struct object_id *oid, const char *buf, unsigned
+ 
+ 	memset(&signature_check, 0, sizeof(signature_check));
+ 
+-	ret = check_commit_signature(lookup_commit(oid->hash), &signature_check);
++	ret = check_commit_signature(lookup_commit(oid), &signature_check);
+ 	print_signature_buffer(&signature_check, flags);
+ 
+ 	signature_check_clear(&signature_check);
+diff --git a/bundle.c b/bundle.c
+index 6e181bb3d..3386dba3b 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -367,7 +367,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
+ 			 * in terms of a tag (e.g. v2.0 from the range
+ 			 * "v1.0..v2.0")?
+ 			 */
+-			struct commit *one = lookup_commit_reference(oid.hash);
++			struct commit *one = lookup_commit_reference(&oid);
+ 			struct object *obj;
+ 
+ 			if (e->item == &(one->object)) {
+diff --git a/commit.c b/commit.c
+index ec41ba5e0..0f6c9b6bf 100644
+--- a/commit.c
++++ b/commit.c
+@@ -18,38 +18,38 @@ int save_commit_buffer = 1;
+ 
+ const char *commit_type = "commit";
+ 
+-struct commit *lookup_commit_reference_gently(const unsigned char *sha1,
++struct commit *lookup_commit_reference_gently(const struct object_id *oid,
+ 					      int quiet)
+ {
+-	struct object *obj = deref_tag(parse_object(sha1), NULL, 0);
++	struct object *obj = deref_tag(parse_object(oid->hash), NULL, 0);
+ 
+ 	if (!obj)
+ 		return NULL;
+ 	return object_as_type(obj, OBJ_COMMIT, quiet);
  }
  
-@@ -1852,26 +1859,29 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	/* Load data if not already done */
- 	if (!trg->data) {
- 		read_lock();
--		trg->data = read_sha1_file(trg_entry->idx.sha1, &type, &sz);
-+		trg->data = read_sha1_file(trg_entry->idx.oid.hash, &type,
-+					   &sz);
- 		read_unlock();
- 		if (!trg->data)
- 			die("object %s cannot be read",
--			    sha1_to_hex(trg_entry->idx.sha1));
-+			    oid_to_hex(&trg_entry->idx.oid));
- 		if (sz != trg_size)
- 			die("object %s inconsistent object length (%lu vs %lu)",
--			    sha1_to_hex(trg_entry->idx.sha1), sz, trg_size);
-+			    oid_to_hex(&trg_entry->idx.oid), sz,
-+			    trg_size);
- 		*mem_usage += sz;
- 	}
- 	if (!src->data) {
- 		read_lock();
--		src->data = read_sha1_file(src_entry->idx.sha1, &type, &sz);
-+		src->data = read_sha1_file(src_entry->idx.oid.hash, &type,
-+					   &sz);
- 		read_unlock();
- 		if (!src->data) {
- 			if (src_entry->preferred_base) {
- 				static int warned = 0;
- 				if (!warned++)
- 					warning("object %s cannot be read",
--						sha1_to_hex(src_entry->idx.sha1));
-+						oid_to_hex(&src_entry->idx.oid));
- 				/*
- 				 * Those objects are not included in the
- 				 * resulting pack.  Be resilient and ignore
-@@ -1881,11 +1891,12 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 				return 0;
- 			}
- 			die("object %s cannot be read",
--			    sha1_to_hex(src_entry->idx.sha1));
-+			    oid_to_hex(&src_entry->idx.oid));
- 		}
- 		if (sz != src_size)
- 			die("object %s inconsistent object length (%lu vs %lu)",
--			    sha1_to_hex(src_entry->idx.sha1), sz, src_size);
-+			    oid_to_hex(&src_entry->idx.oid), sz,
-+			    src_size);
- 		*mem_usage += sz;
- 	}
- 	if (!src->index) {
-@@ -2406,7 +2417,7 @@ static void prepare_pack(int window, int depth)
- 			nr_deltas++;
- 			if (entry->type < 0)
- 				die("unable to get type of object %s",
--				    sha1_to_hex(entry->idx.sha1));
-+				    oid_to_hex(&entry->idx.oid));
- 		} else {
- 			if (entry->type < 0) {
- 				/*
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index ddb6070c4..5be7ce5c7 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -69,7 +69,7 @@ static int already_written(struct bulk_checkin_state *state, unsigned char sha1[
+-struct commit *lookup_commit_reference(const unsigned char *sha1)
++struct commit *lookup_commit_reference(const struct object_id *oid)
+ {
+-	return lookup_commit_reference_gently(sha1, 0);
++	return lookup_commit_reference_gently(oid, 0);
+ }
  
- 	/* Might want to keep the list sorted */
- 	for (i = 0; i < state->nr_written; i++)
--		if (!hashcmp(state->written[i]->sha1, sha1))
-+		if (!hashcmp(state->written[i]->oid.hash, sha1))
- 			return 1;
+-struct commit *lookup_commit_or_die(const unsigned char *sha1, const char *ref_name)
++struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref_name)
+ {
+-	struct commit *c = lookup_commit_reference(sha1);
++	struct commit *c = lookup_commit_reference(oid);
+ 	if (!c)
+ 		die(_("could not parse %s"), ref_name);
+-	if (hashcmp(sha1, c->object.oid.hash)) {
++	if (oidcmp(oid, &c->object.oid)) {
+ 		warning(_("%s %s is not a commit!"),
+-			ref_name, sha1_to_hex(sha1));
++			ref_name, oid_to_hex(oid));
+ 	}
+ 	return c;
+ }
  
- 	/* This is a new object we need to keep */
-@@ -242,7 +242,7 @@ static int deflate_to_pack(struct bulk_checkin_state *state,
- 		state->offset = checkpoint.offset;
- 		free(idx);
- 	} else {
--		hashcpy(idx->sha1, result_sha1);
-+		hashcpy(idx->oid.hash, result_sha1);
- 		ALLOC_GROW(state->written,
- 			   state->nr_written + 1,
- 			   state->alloc_written);
+-struct commit *lookup_commit(const unsigned char *sha1)
++struct commit *lookup_commit(const struct object_id *oid)
+ {
+-	struct object *obj = lookup_object(sha1);
++	struct object *obj = lookup_object(oid->hash);
+ 	if (!obj)
+-		return create_object(sha1, alloc_commit_node());
++		return create_object(oid->hash, alloc_commit_node());
+ 	return object_as_type(obj, OBJ_COMMIT, 0);
+ }
+ 
+@@ -60,7 +60,7 @@ struct commit *lookup_commit_reference_by_name(const char *name)
+ 
+ 	if (get_sha1_committish(name, oid.hash))
+ 		return NULL;
+-	commit = lookup_commit_reference(oid.hash);
++	commit = lookup_commit_reference(&oid);
+ 	if (parse_commit(commit))
+ 		return NULL;
+ 	return commit;
+@@ -350,7 +350,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+ 		 */
+ 		if (graft && (graft->nr_parent < 0 || grafts_replace_parents))
+ 			continue;
+-		new_parent = lookup_commit(parent.hash);
++		new_parent = lookup_commit(&parent);
+ 		if (new_parent)
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
+ 	}
+@@ -358,7 +358,7 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+ 		int i;
+ 		struct commit *new_parent;
+ 		for (i = 0; i < graft->nr_parent; i++) {
+-			new_parent = lookup_commit(graft->parent[i].hash);
++			new_parent = lookup_commit(&graft->parent[i]);
+ 			if (!new_parent)
+ 				continue;
+ 			pptr = &commit_list_insert(new_parent, pptr)->next;
+@@ -562,7 +562,7 @@ void clear_commit_marks_for_object_array(struct object_array *a, unsigned mark)
+ 
+ 	for (i = 0; i < a->nr; i++) {
+ 		object = a->objects[i].item;
+-		commit = lookup_commit_reference_gently(object->oid.hash, 1);
++		commit = lookup_commit_reference_gently(&object->oid, 1);
+ 		if (commit)
+ 			clear_commit_marks(commit, mark);
+ 	}
+diff --git a/commit.h b/commit.h
+index 884177b8f..3488a285b 100644
+--- a/commit.h
++++ b/commit.h
+@@ -45,18 +45,18 @@ enum decoration_type {
+ void add_name_decoration(enum decoration_type type, const char *name, struct object *obj);
+ const struct name_decoration *get_name_decoration(const struct object *obj);
+ 
+-struct commit *lookup_commit(const unsigned char *sha1);
+-struct commit *lookup_commit_reference(const unsigned char *sha1);
+-struct commit *lookup_commit_reference_gently(const unsigned char *sha1,
++struct commit *lookup_commit(const struct object_id *oid);
++struct commit *lookup_commit_reference(const struct object_id *oid);
++struct commit *lookup_commit_reference_gently(const struct object_id *oid,
+ 					      int quiet);
+ struct commit *lookup_commit_reference_by_name(const char *name);
+ 
+ /*
+- * Look up object named by "sha1", dereference tag as necessary,
+- * get a commit and return it. If "sha1" does not dereference to
++ * Look up object named by "oid", dereference tag as necessary,
++ * get a commit and return it. If "oid" does not dereference to
+  * a commit, use ref_name to report an error and die.
+  */
+-struct commit *lookup_commit_or_die(const unsigned char *sha1, const char *ref_name);
++struct commit *lookup_commit_or_die(const struct object_id *oid, const char *ref_name);
+ 
+ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size);
+ int parse_commit_gently(struct commit *item, int quiet_on_missing);
 diff --git a/fast-import.c b/fast-import.c
-index 0aa81d522..d517b7536 100644
+index 6b0117e51..0aa81d522 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -563,7 +563,7 @@ static struct object_entry *new_object(struct object_id *oid)
- 		alloc_objects(object_entry_alloc);
+@@ -1761,8 +1761,8 @@ static int update_branch(struct branch *b)
+ 	if (!force_update && !is_null_oid(&old_oid)) {
+ 		struct commit *old_cmit, *new_cmit;
  
- 	e = blocks->next_free++;
--	hashcpy(e->idx.sha1, oid->hash);
-+	oidcpy(&e->idx.oid, oid);
- 	return e;
- }
+-		old_cmit = lookup_commit_reference_gently(old_oid.hash, 0);
+-		new_cmit = lookup_commit_reference_gently(b->oid.hash, 0);
++		old_cmit = lookup_commit_reference_gently(&old_oid, 0);
++		new_cmit = lookup_commit_reference_gently(&b->oid, 0);
+ 		if (!old_cmit || !new_cmit)
+ 			return error("Branch %s is missing commits.", b->name);
  
-@@ -572,7 +572,7 @@ static struct object_entry *find_object(struct object_id *oid)
- 	unsigned int h = oid->hash[0] << 8 | oid->hash[1];
- 	struct object_entry *e;
- 	for (e = object_table[h]; e; e = e->next)
--		if (!hashcmp(oid->hash, e->idx.sha1))
-+		if (!oidcmp(oid, &e->idx.oid))
- 			return e;
- 	return NULL;
- }
-@@ -583,7 +583,7 @@ static struct object_entry *insert_object(struct object_id *oid)
- 	struct object_entry *e = object_table[h];
+diff --git a/fetch-pack.c b/fetch-pack.c
+index f3aae85d5..ab767503b 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -481,7 +481,7 @@ static int find_common(struct fetch_pack_args *args,
+ 				case ACK_ready:
+ 				case ACK_continue: {
+ 					struct commit *commit =
+-						lookup_commit(result_oid->hash);
++						lookup_commit(result_oid);
+ 					if (!commit)
+ 						die(_("invalid commit %s"), oid_to_hex(result_oid));
+ 					if (args->stateless_rpc
+diff --git a/http-push.c b/http-push.c
+index f3dd0a560..04568e4fb 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1569,8 +1569,9 @@ static void fetch_symref(const char *path, char **symref, struct object_id *oid)
  
- 	while (e) {
--		if (!hashcmp(oid->hash, e->idx.sha1))
-+		if (!oidcmp(oid, &e->idx.oid))
- 			return e;
- 		e = e->next;
- 	}
-@@ -1847,7 +1847,7 @@ static void dump_marks_helper(FILE *f,
- 		for (k = 0; k < 1024; k++) {
- 			if (m->data.marked[k])
- 				fprintf(f, ":%" PRIuMAX " %s\n", base + k,
--					sha1_to_hex(m->data.marked[k]->idx.sha1));
-+					oid_to_hex(&m->data.marked[k]->idx.oid));
- 		}
- 	}
- }
-@@ -2385,7 +2385,7 @@ static void file_change_m(const char *p, struct branch *b)
- 
- 	if (*p == ':') {
- 		oe = find_mark(parse_mark_ref_space(&p));
--		hashcpy(oid.hash, oe->idx.sha1);
-+		oidcpy(&oid, &oe->idx.oid);
- 	} else if (skip_prefix(p, "inline ", &p)) {
- 		inline_data = 1;
- 		oe = NULL; /* not used with inline_data, but makes gcc happy */
-@@ -2551,7 +2551,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
- 	/* <dataref> or 'inline' */
- 	if (*p == ':') {
- 		oe = find_mark(parse_mark_ref_space(&p));
--		hashcpy(oid.hash, oe->idx.sha1);
-+		oidcpy(&oid, &oe->idx.oid);
- 	} else if (skip_prefix(p, "inline ", &p)) {
- 		inline_data = 1;
- 		oe = NULL; /* not used with inline_data, but makes gcc happy */
-@@ -2574,7 +2574,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
- 		struct object_entry *commit_oe = find_mark(commit_mark);
- 		if (commit_oe->type != OBJ_COMMIT)
- 			die("Mark :%" PRIuMAX " not a commit", commit_mark);
--		hashcpy(commit_oid.hash, commit_oe->idx.sha1);
-+		oidcpy(&commit_oid, &commit_oe->idx.oid);
- 	} else if (!get_oid(p, &commit_oid)) {
- 		unsigned long size;
- 		char *buf = read_object_with_reference(commit_oid.hash,
-@@ -2679,8 +2679,8 @@ static int parse_from(struct branch *b)
- 		struct object_entry *oe = find_mark(idnum);
- 		if (oe->type != OBJ_COMMIT)
- 			die("Mark :%" PRIuMAX " not a commit", idnum);
--		if (hashcmp(b->oid.hash, oe->idx.sha1)) {
--			hashcpy(b->oid.hash, oe->idx.sha1);
-+		if (oidcmp(&b->oid, &oe->idx.oid)) {
-+			oidcpy(&b->oid, &oe->idx.oid);
- 			if (oe->pack_id != MAX_PACK_ID) {
- 				unsigned long size;
- 				char *buf = gfi_unpack_entry(oe, &size);
-@@ -2723,7 +2723,7 @@ static struct hash_list *parse_merge(unsigned int *count)
- 			struct object_entry *oe = find_mark(idnum);
- 			if (oe->type != OBJ_COMMIT)
- 				die("Mark :%" PRIuMAX " not a commit", idnum);
--			hashcpy(n->oid.hash, oe->idx.sha1);
-+			oidcpy(&n->oid, &oe->idx.oid);
- 		} else if (!get_oid(from, &n->oid)) {
- 			unsigned long size;
- 			char *buf = read_object_with_reference(n->oid.hash,
-@@ -2878,7 +2878,7 @@ static void parse_new_tag(const char *arg)
- 		from_mark = parse_mark_ref_eol(from);
- 		oe = find_mark(from_mark);
- 		type = oe->type;
--		hashcpy(oid.hash, oe->idx.sha1);
-+		oidcpy(&oid, &oe->idx.oid);
- 	} else if (!get_oid(from, &oid)) {
- 		struct object_entry *oe = find_object(&oid);
- 		if (!oe) {
-@@ -3008,7 +3008,7 @@ static void parse_get_mark(const char *p)
- 	if (!oe)
- 		die("Unknown mark: %s", command_buf.buf);
- 
--	xsnprintf(output, sizeof(output), "%s\n", sha1_to_hex(oe->idx.sha1));
-+	xsnprintf(output, sizeof(output), "%s\n", oid_to_hex(&oe->idx.oid));
- 	cat_blob_write(output, GIT_SHA1_HEXSZ + 1);
- }
- 
-@@ -3022,7 +3022,7 @@ static void parse_cat_blob(const char *p)
- 		oe = find_mark(parse_mark_ref_eol(p));
- 		if (!oe)
- 			die("Unknown mark: %s", command_buf.buf);
--		hashcpy(oid.hash, oe->idx.sha1);
-+		oidcpy(&oid, &oe->idx.oid);
- 	} else {
- 		if (parse_oid_hex(p, &oid, &p))
- 			die("Invalid dataref: %s", command_buf.buf);
-@@ -3094,7 +3094,7 @@ static struct object_entry *parse_treeish_dataref(const char **p)
- 		e = find_mark(parse_mark_ref_space(p));
- 		if (!e)
- 			die("Unknown mark: %s", command_buf.buf);
--		hashcpy(oid.hash, e->idx.sha1);
-+		oidcpy(&oid, &e->idx.oid);
- 	} else {	/* <sha1> */
- 		if (parse_oid_hex(*p, &oid, p))
- 			die("Invalid dataref: %s", command_buf.buf);
-@@ -3148,7 +3148,7 @@ static void parse_ls(const char *p, struct branch *b)
- 	} else {
- 		struct object_entry *e = parse_treeish_dataref(&p);
- 		root = new_tree_entry();
--		hashcpy(root->versions[1].oid.hash, e->idx.sha1);
-+		oidcpy(&root->versions[1].oid, &e->idx.oid);
- 		if (!is_null_oid(&root->versions[1].oid))
- 			root->versions[1].mode = S_IFDIR;
- 		load_tree(root);
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index e313f4f2b..8e47a96b3 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -73,7 +73,8 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
- 			break;
- 
- 		default:
--			real_type = sha1_object_info(entry->idx.sha1, NULL);
-+			real_type = sha1_object_info(entry->idx.oid.hash,
-+						     NULL);
- 			break;
- 		}
- 
-@@ -96,7 +97,8 @@ void bitmap_writer_build_type_index(struct pack_idx_entry **index,
- 
- 		default:
- 			die("Missing type information for %s (%d/%d)",
--			    sha1_to_hex(entry->idx.sha1), real_type, entry->type);
-+			    oid_to_hex(&entry->idx.oid), real_type,
-+			    entry->type);
- 		}
- 	}
- }
-@@ -459,7 +461,7 @@ static inline void dump_bitmap(struct sha1file *f, struct ewah_bitmap *bitmap)
- static const unsigned char *sha1_access(size_t pos, void *table)
+ static int verify_merge_base(struct object_id *head_oid, struct ref *remote)
  {
- 	struct pack_idx_entry **index = table;
--	return index[pos]->sha1;
-+	return index[pos]->oid.hash;
+-	struct commit *head = lookup_commit_or_die(head_oid->hash, "HEAD");
+-	struct commit *branch = lookup_commit_or_die(remote->old_oid.hash, remote->name);
++	struct commit *head = lookup_commit_or_die(head_oid, "HEAD");
++	struct commit *branch = lookup_commit_or_die(&remote->old_oid,
++						     remote->name);
+ 
+ 	return in_merge_bases(branch, head);
  }
+diff --git a/log-tree.c b/log-tree.c
+index 4618dd04c..7fb1a85d2 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -140,7 +140,7 @@ static int add_ref_decoration(const char *refname, const struct object_id *oid,
  
- static void write_selected_commits_v1(struct sha1file *f,
-diff --git a/pack-objects.c b/pack-objects.c
-index 6398a8aa9..9558d1383 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -14,7 +14,7 @@ static uint32_t locate_object_entry_hash(struct packing_data *pdata,
- 	while (pdata->index[i] > 0) {
- 		uint32_t pos = pdata->index[i] - 1;
- 
--		if (!hashcmp(sha1, pdata->objects[pos].idx.sha1)) {
-+		if (!hashcmp(sha1, pdata->objects[pos].idx.oid.hash)) {
- 			*found = 1;
- 			return i;
- 		}
-@@ -53,7 +53,9 @@ static void rehash_objects(struct packing_data *pdata)
- 
- 	for (i = 0; i < pdata->nr_objects; i++) {
- 		int found;
--		uint32_t ix = locate_object_entry_hash(pdata, entry->idx.sha1, &found);
-+		uint32_t ix = locate_object_entry_hash(pdata,
-+						       entry->idx.oid.hash,
-+						       &found);
- 
- 		if (found)
- 			die("BUG: Duplicate object in hash");
-@@ -98,7 +100,7 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
- 	new_entry = pdata->objects + pdata->nr_objects++;
- 
- 	memset(new_entry, 0, sizeof(*new_entry));
--	hashcpy(new_entry->idx.sha1, sha1);
-+	hashcpy(new_entry->idx.oid.hash, sha1);
- 
- 	if (pdata->index_size * 3 <= pdata->nr_objects * 4)
- 		rehash_objects(pdata);
-diff --git a/pack-write.c b/pack-write.c
-index fa97b7255..a333ec675 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -13,7 +13,7 @@ static int sha1_compare(const void *_a, const void *_b)
+ static int add_graft_decoration(const struct commit_graft *graft, void *cb_data)
  {
- 	struct pack_idx_entry *a = *(struct pack_idx_entry **)_a;
- 	struct pack_idx_entry *b = *(struct pack_idx_entry **)_b;
--	return hashcmp(a->sha1, b->sha1);
-+	return oidcmp(&a->oid, &b->oid);
- }
+-	struct commit *commit = lookup_commit(graft->oid.hash);
++	struct commit *commit = lookup_commit(&graft->oid);
+ 	if (!commit)
+ 		return 0;
+ 	add_name_decoration(DECORATION_GRAFTED, "grafted", &commit->object);
+diff --git a/notes-cache.c b/notes-cache.c
+index 1cdd4984a..2843e9857 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -14,7 +14,7 @@ static int notes_cache_match_validity(const char *ref, const char *validity)
+ 	if (read_ref(ref, oid.hash) < 0)
+ 		return 0;
  
- static int cmp_uint32(const void *a_, const void *b_)
-@@ -103,7 +103,7 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 		struct pack_idx_entry **next = list;
- 		while (next < last) {
- 			struct pack_idx_entry *obj = *next;
--			if (obj->sha1[0] != i)
-+			if (obj->oid.hash[0] != i)
- 				break;
- 			next++;
+-	commit = lookup_commit_reference_gently(oid.hash, 1);
++	commit = lookup_commit_reference_gently(&oid, 1);
+ 	if (!commit)
+ 		return 0;
+ 
+diff --git a/notes-merge.c b/notes-merge.c
+index 7ac9bb9a4..b6c704045 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -554,7 +554,7 @@ int notes_merge(struct notes_merge_options *o,
+ 	else if (!check_refname_format(o->local_ref, 0) &&
+ 		is_null_oid(&local_oid))
+ 		local = NULL; /* local_sha1 == null_sha1 indicates unborn ref */
+-	else if (!(local = lookup_commit_reference(local_oid.hash)))
++	else if (!(local = lookup_commit_reference(&local_oid)))
+ 		die("Could not parse local commit %s (%s)",
+ 		    oid_to_hex(&local_oid), o->local_ref);
+ 	trace_printf("\tlocal commit: %.7s\n", oid_to_hex(&local_oid));
+@@ -572,7 +572,7 @@ int notes_merge(struct notes_merge_options *o,
+ 			die("Failed to resolve remote notes ref '%s'",
+ 			    o->remote_ref);
  		}
-@@ -122,11 +122,11 @@ const char *write_idx_file(const char *index_name, struct pack_idx_entry **objec
- 			uint32_t offset = htonl(obj->offset);
- 			sha1write(f, &offset, 4);
- 		}
--		sha1write(f, obj->sha1, 20);
-+		sha1write(f, obj->oid.hash, 20);
- 		if ((opts->flags & WRITE_IDX_STRICT) &&
--		    (i && !hashcmp(list[-2]->sha1, obj->sha1)))
-+		    (i && !oidcmp(&list[-2]->oid, &obj->oid)))
- 			die("The same object %s appears twice in the pack",
--			    sha1_to_hex(obj->sha1));
-+			    oid_to_hex(&obj->oid));
+-	} else if (!(remote = lookup_commit_reference(remote_oid.hash))) {
++	} else if (!(remote = lookup_commit_reference(&remote_oid))) {
+ 		die("Could not parse remote commit %s (%s)",
+ 		    oid_to_hex(&remote_oid), o->remote_ref);
  	}
+diff --git a/notes-utils.c b/notes-utils.c
+index 36c1490aa..325ff3daa 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -18,7 +18,7 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 		/* Deduce parent commit from t->ref */
+ 		struct object_id parent_oid;
+ 		if (!read_ref(t->ref, parent_oid.hash)) {
+-			struct commit *parent = lookup_commit(parent_oid.hash);
++			struct commit *parent = lookup_commit(&parent_oid);
+ 			if (parse_commit(parent))
+ 				die("Failed to find/parse commit %s", t->ref);
+ 			commit_list_insert(parent, &parents);
+diff --git a/object.c b/object.c
+index e680d881a..fe2222356 100644
+--- a/object.c
++++ b/object.c
+@@ -182,9 +182,12 @@ struct object *lookup_unknown_object(const unsigned char *sha1)
  
- 	if (index_version >= 2) {
-diff --git a/pack.h b/pack.h
-index 5c2158746..c7de42ef3 100644
---- a/pack.h
-+++ b/pack.h
-@@ -67,7 +67,7 @@ struct pack_idx_header {
-  * Common part of object structure used for write_idx_file
-  */
- struct pack_idx_entry {
--	unsigned char sha1[20];
+ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type type, unsigned long size, void *buffer, int *eaten_p)
+ {
 +	struct object_id oid;
- 	uint32_t crc32;
- 	off_t offset;
- };
+ 	struct object *obj;
+ 	*eaten_p = 0;
+ 
++	hashcpy(oid.hash, sha1);
++
+ 	obj = NULL;
+ 	if (type == OBJ_BLOB) {
+ 		struct blob *blob = lookup_blob(sha1);
+@@ -206,7 +209,7 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
+ 			}
+ 		}
+ 	} else if (type == OBJ_COMMIT) {
+-		struct commit *commit = lookup_commit(sha1);
++		struct commit *commit = lookup_commit(&oid);
+ 		if (commit) {
+ 			if (parse_commit_buffer(commit, buffer, size))
+ 				return NULL;
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 35a941fdd..8dd57cf6e 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -87,7 +87,7 @@ int parse_opt_commits(const struct option *opt, const char *arg, int unset)
+ 		return -1;
+ 	if (get_oid(arg, &oid))
+ 		return error("malformed object name %s", arg);
+-	commit = lookup_commit_reference(oid.hash);
++	commit = lookup_commit_reference(&oid);
+ 	if (!commit)
+ 		return error("no such commit %s", arg);
+ 	commit_list_insert(commit, opt->value);
+diff --git a/ref-filter.c b/ref-filter.c
+index 47cce0a18..e1d18ac0d 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1782,7 +1782,7 @@ static int ref_filter_handler(const char *refname, const struct object_id *oid,
+ 	 * non-commits early. The actual filtering is done later.
+ 	 */
+ 	if (filter->merge_commit || filter->with_commit || filter->no_commit || filter->verbose) {
+-		commit = lookup_commit_reference_gently(oid->hash, 1);
++		commit = lookup_commit_reference_gently(oid, 1);
+ 		if (!commit)
+ 			return 0;
+ 		/* We perform the filtering for the '--contains' option... */
+@@ -2108,7 +2108,7 @@ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
+ 	if (get_oid(arg, &oid))
+ 		die(_("malformed object name %s"), arg);
+ 
+-	rf->merge_commit = lookup_commit_reference_gently(oid.hash, 0);
++	rf->merge_commit = lookup_commit_reference_gently(&oid, 0);
+ 	if (!rf->merge_commit)
+ 		return opterror(opt, "must point to a commit", 0);
+ 
+diff --git a/remote.c b/remote.c
+index 801137c72..bf9a47d95 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1296,7 +1296,7 @@ static void add_to_tips(struct tips *tips, const struct object_id *oid)
+ 
+ 	if (is_null_oid(oid))
+ 		return;
+-	commit = lookup_commit_reference_gently(oid->hash, 1);
++	commit = lookup_commit_reference_gently(oid, 1);
+ 	if (!commit || (commit->object.flags & TMP_MARK))
+ 		return;
+ 	commit->object.flags |= TMP_MARK;
+@@ -1358,7 +1358,8 @@ static void add_missing_tags(struct ref *src, struct ref **dst, struct ref ***ds
+ 
+ 			if (is_null_oid(&ref->new_oid))
+ 				continue;
+-			commit = lookup_commit_reference_gently(ref->new_oid.hash, 1);
++			commit = lookup_commit_reference_gently(&ref->new_oid,
++								1);
+ 			if (!commit)
+ 				/* not pushing a commit, which is not an error */
+ 				continue;
+@@ -1585,8 +1586,8 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
+ 			else if (!has_object_file(&ref->old_oid))
+ 				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
+-			else if (!lookup_commit_reference_gently(ref->old_oid.hash, 1) ||
+-				 !lookup_commit_reference_gently(ref->new_oid.hash, 1))
++			else if (!lookup_commit_reference_gently(&ref->old_oid, 1) ||
++				 !lookup_commit_reference_gently(&ref->new_oid, 1))
+ 				reject_reason = REF_STATUS_REJECT_NEEDS_FORCE;
+ 			else if (!ref_newer(&ref->new_oid, &ref->old_oid))
+ 				reject_reason = REF_STATUS_REJECT_NONFASTFORWARD;
+@@ -2009,13 +2010,13 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
+ 	/* Cannot stat if what we used to build on no longer exists */
+ 	if (read_ref(base, oid.hash))
+ 		return -1;
+-	theirs = lookup_commit_reference(oid.hash);
++	theirs = lookup_commit_reference(&oid);
+ 	if (!theirs)
+ 		return -1;
+ 
+ 	if (read_ref(branch->refname, oid.hash))
+ 		return -1;
+-	ours = lookup_commit_reference(oid.hash);
++	ours = lookup_commit_reference(&oid);
+ 	if (!ours)
+ 		return -1;
+ 
+diff --git a/revision.c b/revision.c
+index 945367034..f8e0dee6d 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1395,10 +1395,10 @@ static void prepare_show_merge(struct rev_info *revs)
+ 
+ 	if (get_oid("HEAD", &oid))
+ 		die("--merge without HEAD?");
+-	head = lookup_commit_or_die(oid.hash, "HEAD");
++	head = lookup_commit_or_die(&oid, "HEAD");
+ 	if (get_oid("MERGE_HEAD", &oid))
+ 		die("--merge without MERGE_HEAD?");
+-	other = lookup_commit_or_die(oid.hash, "MERGE_HEAD");
++	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
+ 	add_pending_object(revs, &head->object, "HEAD");
+ 	add_pending_object(revs, &other->object, "MERGE_HEAD");
+ 	bases = get_merge_bases(head, other);
+@@ -1500,10 +1500,10 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 
+ 				a = (a_obj->type == OBJ_COMMIT
+ 				     ? (struct commit *)a_obj
+-				     : lookup_commit_reference(a_obj->oid.hash));
++				     : lookup_commit_reference(&a_obj->oid));
+ 				b = (b_obj->type == OBJ_COMMIT
+ 				     ? (struct commit *)b_obj
+-				     : lookup_commit_reference(b_obj->oid.hash));
++				     : lookup_commit_reference(&b_obj->oid));
+ 				if (!a || !b)
+ 					goto missing;
+ 				exclude = get_merge_bases(a, b);
+diff --git a/sequencer.c b/sequencer.c
+index cfa544ab9..46e05e385 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -488,7 +488,7 @@ static int is_index_unchanged(void)
+ 	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL))
+ 		return error(_("could not resolve HEAD commit\n"));
+ 
+-	head_commit = lookup_commit(head_oid.hash);
++	head_commit = lookup_commit(&head_oid);
+ 
+ 	/*
+ 	 * If head_commit is NULL, check_commit, called from
+@@ -841,7 +841,7 @@ static int update_squash_messages(enum todo_command command,
+ 
+ 		if (get_oid("HEAD", &head))
+ 			return error(_("need a HEAD to fixup"));
+-		if (!(head_commit = lookup_commit_reference(head.hash)))
++		if (!(head_commit = lookup_commit_reference(&head)))
+ 			return error(_("could not read HEAD"));
+ 		if (!(head_message = get_commit_buffer(head_commit, NULL)))
+ 			return error(_("could not read HEAD's commit message"));
+@@ -1279,7 +1279,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 	if (status < 0)
+ 		return -1;
+ 
+-	item->commit = lookup_commit_reference(commit_oid.hash);
++	item->commit = lookup_commit_reference(&commit_oid);
+ 	return !item->commit;
+ }
+ 
+@@ -2275,7 +2275,7 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 			continue;
+ 
+ 		if (!get_oid(name, &oid)) {
+-			if (!lookup_commit_reference_gently(oid.hash, 1)) {
++			if (!lookup_commit_reference_gently(&oid, 1)) {
+ 				enum object_type type = sha1_object_info(oid.hash, NULL);
+ 				return error(_("%s: can't cherry-pick a %s"),
+ 					name, typename(type));
+diff --git a/sha1_name.c b/sha1_name.c
+index 8889190a9..390a09c41 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -354,7 +354,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 
+ 	type = sha1_object_info(oid->hash, NULL);
+ 	if (type == OBJ_COMMIT) {
+-		struct commit *commit = lookup_commit(oid->hash);
++		struct commit *commit = lookup_commit(oid);
+ 		if (commit) {
+ 			struct pretty_print_context pp = {0};
+ 			pp.date_mode.type = DATE_SHORT;
+@@ -729,7 +729,7 @@ static int get_parent(const char *name, int len,
+ 
+ 	if (ret)
+ 		return ret;
+-	commit = lookup_commit_reference(oid.hash);
++	commit = lookup_commit_reference(&oid);
+ 	if (parse_commit(commit))
+ 		return -1;
+ 	if (!idx) {
+@@ -757,7 +757,7 @@ static int get_nth_ancestor(const char *name, int len,
+ 	ret = get_sha1_1(name, len, oid.hash, GET_SHA1_COMMITTISH);
+ 	if (ret)
+ 		return ret;
+-	commit = lookup_commit_reference(oid.hash);
++	commit = lookup_commit_reference(&oid);
+ 	if (!commit)
+ 		return -1;
+ 
+@@ -1136,13 +1136,13 @@ int get_oid_mb(const char *name, struct object_id *oid)
+ 	}
+ 	if (st)
+ 		return st;
+-	one = lookup_commit_reference_gently(oid_tmp.hash, 0);
++	one = lookup_commit_reference_gently(&oid_tmp, 0);
+ 	if (!one)
+ 		return -1;
+ 
+ 	if (get_sha1_committish(dots[3] ? (dots + 3) : "HEAD", oid_tmp.hash))
+ 		return -1;
+-	two = lookup_commit_reference_gently(oid_tmp.hash, 0);
++	two = lookup_commit_reference_gently(&oid_tmp, 0);
+ 	if (!two)
+ 		return -1;
+ 	mbs = get_merge_bases(one, two);
+diff --git a/shallow.c b/shallow.c
+index 1327ee16f..6950cc24f 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -31,7 +31,7 @@ int register_shallow(const struct object_id *oid)
+ {
+ 	struct commit_graft *graft =
+ 		xmalloc(sizeof(struct commit_graft));
+-	struct commit *commit = lookup_commit(oid->hash);
++	struct commit *commit = lookup_commit(oid);
+ 
+ 	oidcpy(&graft->oid, oid);
+ 	graft->nr_parent = -1;
+@@ -241,7 +241,7 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+ 	if (graft->nr_parent != -1)
+ 		return 0;
+ 	if (data->flags & SEEN_ONLY) {
+-		struct commit *c = lookup_commit(graft->oid.hash);
++		struct commit *c = lookup_commit(&graft->oid);
+ 		if (!c || !(c->object.flags & SEEN)) {
+ 			if (data->flags & VERBOSE)
+ 				printf("Removing %s from .git/shallow\n",
+@@ -475,7 +475,7 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
+ 	size_t bitmap_size = st_mult(sizeof(uint32_t), bitmap_nr);
+ 	uint32_t *tmp = xmalloc(bitmap_size); /* to be freed before return */
+ 	uint32_t *bitmap = paint_alloc(info);
+-	struct commit *c = lookup_commit_reference_gently(oid->hash, 1);
++	struct commit *c = lookup_commit_reference_gently(oid, 1);
+ 	if (!c)
+ 		return;
+ 	memset(bitmap, 0, bitmap_size);
+@@ -531,7 +531,7 @@ static void paint_down(struct paint_info *info, const struct object_id *oid,
+ static int mark_uninteresting(const char *refname, const struct object_id *oid,
+ 			      int flags, void *cb_data)
+ {
+-	struct commit *commit = lookup_commit_reference_gently(oid->hash, 1);
++	struct commit *commit = lookup_commit_reference_gently(oid, 1);
+ 	if (!commit)
+ 		return 0;
+ 	commit->object.flags |= UNINTERESTING;
+@@ -599,7 +599,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 
+ 	/* Mark potential bottoms so we won't go out of bound */
+ 	for (i = 0; i < nr_shallow; i++) {
+-		struct commit *c = lookup_commit(oid[shallow[i]].hash);
++		struct commit *c = lookup_commit(&oid[shallow[i]]);
+ 		c->object.flags |= BOTTOM;
+ 	}
+ 
+@@ -610,7 +610,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 		int bitmap_size = ((pi.nr_bits + 31) / 32) * sizeof(uint32_t);
+ 		memset(used, 0, sizeof(*used) * info->shallow->nr);
+ 		for (i = 0; i < nr_shallow; i++) {
+-			const struct commit *c = lookup_commit(oid[shallow[i]].hash);
++			const struct commit *c = lookup_commit(&oid[shallow[i]]);
+ 			uint32_t **map = ref_bitmap_at(&pi.ref_bitmap, c);
+ 			if (*map)
+ 				used[shallow[i]] = xmemdupz(*map, bitmap_size);
+@@ -641,7 +641,7 @@ static int add_ref(const char *refname, const struct object_id *oid,
+ {
+ 	struct commit_array *ca = cb_data;
+ 	ALLOC_GROW(ca->commits, ca->nr + 1, ca->alloc);
+-	ca->commits[ca->nr] = lookup_commit_reference_gently(oid->hash, 1);
++	ca->commits[ca->nr] = lookup_commit_reference_gently(oid, 1);
+ 	if (ca->commits[ca->nr])
+ 		ca->nr++;
+ 	return 0;
+@@ -679,7 +679,7 @@ static void post_assign_shallow(struct shallow_info *info,
+ 	for (i = dst = 0; i < info->nr_theirs; i++) {
+ 		if (i != dst)
+ 			info->theirs[dst] = info->theirs[i];
+-		c = lookup_commit(oid[info->theirs[i]].hash);
++		c = lookup_commit(&oid[info->theirs[i]]);
+ 		bitmap = ref_bitmap_at(ref_bitmap, c);
+ 		if (!*bitmap)
+ 			continue;
+@@ -700,7 +700,7 @@ static void post_assign_shallow(struct shallow_info *info,
+ 	for (i = dst = 0; i < info->nr_ours; i++) {
+ 		if (i != dst)
+ 			info->ours[dst] = info->ours[i];
+-		c = lookup_commit(oid[info->ours[i]].hash);
++		c = lookup_commit(&oid[info->ours[i]]);
+ 		bitmap = ref_bitmap_at(ref_bitmap, c);
+ 		if (!*bitmap)
+ 			continue;
+@@ -722,7 +722,7 @@ static void post_assign_shallow(struct shallow_info *info,
+ int delayed_reachability_test(struct shallow_info *si, int c)
+ {
+ 	if (si->need_reachability_test[c]) {
+-		struct commit *commit = lookup_commit(si->shallow->oid[c].hash);
++		struct commit *commit = lookup_commit(&si->shallow->oid[c]);
+ 
+ 		if (!si->commits) {
+ 			struct commit_array ca;
+diff --git a/submodule.c b/submodule.c
+index ebbf66d31..e0e69e02c 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -447,8 +447,8 @@ static void show_submodule_header(FILE *f, const char *path,
+ 	 * Attempt to lookup the commit references, and determine if this is
+ 	 * a fast forward or fast backwards update.
+ 	 */
+-	*left = lookup_commit_reference(one->hash);
+-	*right = lookup_commit_reference(two->hash);
++	*left = lookup_commit_reference(one);
++	*right = lookup_commit_reference(two);
+ 
+ 	/*
+ 	 * Warn about missing commits in the submodule project, but only if
+@@ -634,7 +634,7 @@ static int check_has_commit(const struct object_id *oid, void *data)
+ {
+ 	int *has_commit = data;
+ 
+-	if (!lookup_commit_reference(oid->hash))
++	if (!lookup_commit_reference(oid))
+ 		*has_commit = 0;
+ 
+ 	return 0;
+@@ -899,7 +899,7 @@ int push_unpushed_submodules(struct oid_array *commits,
+ static int is_submodule_commit_present(const char *path, struct object_id *oid)
+ {
+ 	int is_present = 0;
+-	if (!add_submodule_odb(path) && lookup_commit_reference(oid->hash)) {
++	if (!add_submodule_odb(path) && lookup_commit_reference(oid)) {
+ 		/* Even if the submodule is checked out and the commit is
+ 		 * present, make sure it is reachable from a ref. */
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+@@ -1593,9 +1593,9 @@ int merge_submodule(struct object_id *result, const char *path,
+ 		return 0;
+ 	}
+ 
+-	if (!(commit_base = lookup_commit_reference(base->hash)) ||
+-	    !(commit_a = lookup_commit_reference(a->hash)) ||
+-	    !(commit_b = lookup_commit_reference(b->hash))) {
++	if (!(commit_base = lookup_commit_reference(base)) ||
++	    !(commit_a = lookup_commit_reference(a)) ||
++	    !(commit_b = lookup_commit_reference(b))) {
+ 		MERGE_WARNING(path, "commits not present");
+ 		return 0;
+ 	}
+diff --git a/tag.c b/tag.c
+index 625f5cd71..79b78d358 100644
+--- a/tag.c
++++ b/tag.c
+@@ -146,7 +146,7 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
+ 	} else if (!strcmp(type, tree_type)) {
+ 		item->tagged = &lookup_tree(oid.hash)->object;
+ 	} else if (!strcmp(type, commit_type)) {
+-		item->tagged = &lookup_commit(oid.hash)->object;
++		item->tagged = &lookup_commit(&oid)->object;
+ 	} else if (!strcmp(type, tag_type)) {
+ 		item->tagged = &lookup_tag(oid.hash)->object;
+ 	} else {
+diff --git a/tree.c b/tree.c
+index ce345c551..33fa7ee71 100644
+--- a/tree.c
++++ b/tree.c
+@@ -91,7 +91,7 @@ static int read_tree_1(struct tree *tree, struct strbuf *base,
+ 		else if (S_ISGITLINK(entry.mode)) {
+ 			struct commit *commit;
+ 
+-			commit = lookup_commit(entry.oid->hash);
++			commit = lookup_commit(entry.oid);
+ 			if (!commit)
+ 				die("Commit %s in submodule path %s%s not found",
+ 				    oid_to_hex(entry.oid),
+diff --git a/walker.c b/walker.c
+index 2c86e406f..b499fcb72 100644
+--- a/walker.c
++++ b/walker.c
+@@ -206,7 +206,7 @@ static int interpret_target(struct walker *walker, char *target, unsigned char *
+ static int mark_complete(const char *path, const struct object_id *oid,
+ 			 int flag, void *cb_data)
+ {
+-	struct commit *commit = lookup_commit_reference_gently(oid->hash, 1);
++	struct commit *commit = lookup_commit_reference_gently(oid, 1);
+ 
+ 	if (commit) {
+ 		commit->object.flags |= COMPLETE;
+diff --git a/wt-status.c b/wt-status.c
+index 037548496..e5854ba6f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1428,7 +1428,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
+ 	    /* sha1 is a commit? match without further lookup */
+ 	    (!oidcmp(&cb.noid, &oid) ||
+ 	     /* perhaps sha1 is a tag, try to dereference to a commit */
+-	     ((commit = lookup_commit_reference_gently(oid.hash, 1)) != NULL &&
++	     ((commit = lookup_commit_reference_gently(&oid, 1)) != NULL &&
+ 	      !oidcmp(&cb.noid, &commit->object.oid)))) {
+ 		const char *from = ref;
+ 		if (!skip_prefix(from, "refs/tags/", &from))
