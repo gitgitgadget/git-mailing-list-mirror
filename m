@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA648207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1B9C207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046189AbdDWVga (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:36:30 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37320 "EHLO
+        id S1046191AbdDWVgd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:36:33 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37462 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046084AbdDWVfk (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:40 -0400
+        by vger.kernel.org with ESMTP id S1046109AbdDWVfj (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:39 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 6DCA6280C3;
-        Sun, 23 Apr 2017 21:35:34 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id CD138280C1;
+        Sun, 23 Apr 2017 21:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492983334;
-        bh=05NWRd0cNzhwXiD+K09elenFCqQ6Vr4Rw4dmGv62WmU=;
+        s=default; t=1492983333;
+        bh=PIZ3gx1aHRaCQtcuwuk6Ye15UOP7JE01YzTgp9gB5XI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=myxiDPoLtRTUuJCktlU5aFncxV+rAp/Vbopujuobbbe6eXixpo1NCrWZKaHpllsUh
-         3Kh6iqpShmWwQJSfzvK4bgjZ47lr6xQnjQMQECITZAloKzXI35T3FzdXpabpXQVPQX
-         C7EfCvAG20hrAOjxAR6qh8PYz3mq4MRMypD69CuHi0QT8juTyIw/3U1kF8zVkJO94F
-         ZY6KQGNnE+yMhDbT4/mTkzz7ZKNX111PlcGJcFTFQ/h4PBJ9okWMO6bN5FAmj5bvYk
-         tuMsaSCSdaUxLZHWh+T9i1+plkJAqvZr1OSbI2ND84aXe1WdxZyNfdiyLJAiW6DS2I
-         ZJ9DKSkg9RL22Rch9yUIoiCoQtpWgirfgq4w4CoqDyr0U7a5ChJS4B8euDshPmJ7bp
-         cWHkVy+6pJpf+vPI2MUyjU6zeua3wYvBiYx450/7hJhYYzwqwoZvf9Gvtn+agT1HnG
-         18o8JUtWE1ZEhCHe2KbXLEjkIoAmfYUQqng5g3DTvVzyrb38JhP
+        b=T4fSrJQ2Gogoki1NGWNBQHi65qaDapb52BK4NndwukCCnyg6H4G6zi+u4dmrFqdSj
+         6IoNi60eNbaJiVkfgmASPMUHR8sTFwF46cgUl18qo4WEukAKcTTU6DE4pcgDzP0Z8Q
+         Er0YpRhrGPdzIlWsIeskmB8/iZTugzuXNrJaMc60xjlAsDsRAqxj2EF1bgi8p8walw
+         shpLPmjXv1NJiIaKAx6zUJLvDF3OnqjhYPC21JU66qPu86lrSTsJPbCv2DpXJ00jFN
+         uiTb2Q2Lohz1vne1SdnuNbauQ/+FCxGGs6KY0VSHiGNLo/LO0VNr6cUfMkMx2JrUXE
+         XMaVB1YJJHDOJ6PjOJ2eAdG12ngRPcQliydfh7qay/gN8iWfSIuWB/v1upAlvV7luQ
+         71cg7xApQxmu4rgw9MGwHUUMXStJjssOEiIz1C5t6LfqhW2tc9NqkJsY8UzY+AgF7Y
+         EkNG+D5Jk/1knpwPy90qU6HQCB6WbybT/I1UgfUCEqoDnwYL7M2
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 22/53] sequencer: convert some functions to struct object_id
-Date:   Sun, 23 Apr 2017 21:34:22 +0000
-Message-Id: <20170423213453.253425-23-sandals@crustytoothpaste.net>
+Subject: [PATCH 20/53] revision: convert prepare_show_merge to struct object_id
+Date:   Sun, 23 Apr 2017 21:34:20 +0000
+Message-Id: <20170423213453.253425-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,50 +48,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert update_squash_messages and is_index_unchanged to struct
-object_id.  These are callers of lookup_commit and
-lookup_commit_reference, which we want to convert.
+This is a caller of lookup_commit_or_die, which we will convert later
+on.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sequencer.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ revision.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index e13a25b91..0562d7b9a 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -482,13 +482,13 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
- 
- static int is_index_unchanged(void)
+diff --git a/revision.c b/revision.c
+index 2b56c3baf..945367034 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1389,16 +1389,16 @@ static void prepare_show_merge(struct rev_info *revs)
  {
--	unsigned char head_sha1[20];
-+	struct object_id head_oid;
- 	struct commit *head_commit;
+ 	struct commit_list *bases;
+ 	struct commit *head, *other;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	const char **prune = NULL;
+ 	int i, prune_num = 1; /* counting terminating NULL */
  
--	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
-+	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL))
- 		return error(_("could not resolve HEAD commit\n"));
- 
--	head_commit = lookup_commit(head_sha1);
-+	head_commit = lookup_commit(head_oid.hash);
- 
- 	/*
- 	 * If head_commit is NULL, check_commit, called from
-@@ -835,13 +835,13 @@ static int update_squash_messages(enum todo_command command,
- 		strbuf_splice(&buf, 0, eol - buf.buf, header.buf, header.len);
- 		strbuf_release(&header);
- 	} else {
--		unsigned char head[20];
-+		struct object_id head;
- 		struct commit *head_commit;
- 		const char *head_message, *body;
- 
--		if (get_sha1("HEAD", head))
-+		if (get_oid("HEAD", &head))
- 			return error(_("need a HEAD to fixup"));
--		if (!(head_commit = lookup_commit_reference(head)))
-+		if (!(head_commit = lookup_commit_reference(head.hash)))
- 			return error(_("could not read HEAD"));
- 		if (!(head_message = get_commit_buffer(head_commit, NULL)))
- 			return error(_("could not read HEAD's commit message"));
+-	if (get_sha1("HEAD", sha1))
++	if (get_oid("HEAD", &oid))
+ 		die("--merge without HEAD?");
+-	head = lookup_commit_or_die(sha1, "HEAD");
+-	if (get_sha1("MERGE_HEAD", sha1))
++	head = lookup_commit_or_die(oid.hash, "HEAD");
++	if (get_oid("MERGE_HEAD", &oid))
+ 		die("--merge without MERGE_HEAD?");
+-	other = lookup_commit_or_die(sha1, "MERGE_HEAD");
++	other = lookup_commit_or_die(oid.hash, "MERGE_HEAD");
+ 	add_pending_object(revs, &head->object, "HEAD");
+ 	add_pending_object(revs, &other->object, "MERGE_HEAD");
+ 	bases = get_merge_bases(head, other);
