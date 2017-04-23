@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4182E207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2D17207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046193AbdDWVgg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:36:36 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37488 "EHLO
+        id S1046196AbdDWVgj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:36:39 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37558 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046111AbdDWVfk (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:40 -0400
+        by vger.kernel.org with ESMTP id S1046118AbdDWVfn (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:43 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 24BA5280C2;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9EA80280C4;
         Sun, 23 Apr 2017 21:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1492983334;
-        bh=/sBlreZgxoetE8BM3jqnM8StaWuiXw2/dMtcnWYninU=;
+        bh=bU1IrTUlNtnykTpZhNtgtukFmdu3rCw99SrJIl6dJFg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=Zxs3JPf330OzUsUsNl+LHCF1/2Qkiw+JWZ4D5ZNVnlrKEMnYPsshquo6EDSWqSVNz
-         zzIj8UniOFSlZEgjBuQg+/czqmVBubl2u9o1kDxT9IgcjLp/1U74DdPHXLF9IC5UBM
-         rhs85RO7gFzbnKdN5vzRr4ypw0dAY5blga2QqGLwAgnG3AZ+NP3xEL0ZliJBW8wdbc
-         o/9rWZbJQHuM3UMcD914XJc6YzlvP49s8n9/0vByG6Pu86Kgq2AiS9w09OLRm/wpbh
-         evVrqSa8HoM8ntLDIA1QIpi6jKaj/t22yxvrMTwVsWODOUefE9cahqfcgWWeWmexul
-         ISVt3NJQ1Pebtv27oMF0TPDTeuuk0EbJM1FkDptd6e9Va5inHOboBROLul6Sb6revn
-         BmA3Y5Ht59StpeLDQrbSBlgcJ5kDf3KhifKsBSFrXbZayUHBlZmm0E2Ivxf1GM0sbH
-         CjJIkKIuumBe1MHKv2HC5cRGAJ/zcLs74EJpA9TkvQwZUZ+kZOG
+        b=los/c2CXpiQZbIBdyaSHvSB5SwxZlhVui0w8EROPsAen2l7gjEX//481PQMNZyO6+
+         b7ccYsLIZi4FMZHBxmnzjJ6qQQsEzgndDaYwNvElWwcpfoWL4UmO7jP4cBMEQl5hOh
+         bR2lGk8Y1n6KU4YTSn7SP6wVO3USG6U98stPb357Y1H9wqYCpRU0PwV/N/d8ol/HON
+         /TXKyJ0+ZsyTvN7AMgd7ySMQMtC+p287VrrGS3sk3MRvrNPWnY0VkmH4CPUdXo+3XU
+         /ssvfEnFsYHtYY4pwyUs0L6JWqc+5XtyrFwVBiLK71qwzQ0xHIKTg1d33D2c07D2xV
+         5E30FMdwztaKXpHNpf/AFgVlKcFBryDO0TdpH1GFMA+KxI/AOhNBeqZnhBMN6nsjPa
+         FzpCkzFRAELLHnTTvB8LJnxxT5v9i4Gx1tZOdcXysmOXih7GKLZD06kbe3PmTCb0Au
+         KICpNdifEx3iD6tQ9KsDBbn+gdtbiDygNvLDQAmfPE5vL6vjZr7
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 21/53] shallow: convert shallow registration functions to object_id
-Date:   Sun, 23 Apr 2017 21:34:21 +0000
-Message-Id: <20170423213453.253425-22-sandals@crustytoothpaste.net>
+Subject: [PATCH 23/53] builtin/tag: convert to struct object_id
+Date:   Sun, 23 Apr 2017 21:34:23 +0000
+Message-Id: <20170423213453.253425-24-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,179 +48,244 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert register_shallow and unregister_shallow to take struct
-object_id.  register_shallow is a caller of lookup_commit, which we will
-convert later.  It doesn't make sense for the registration and
-unregistration functions to have incompatible interfaces, so convert
-them both.
+Parts of this module call lookup_commit_reference, which we want to
+convert.  The module is small and mostly self-contained, so convert the
+rest of it while we're at it.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/pack-objects.c |  6 +++---
- builtin/receive-pack.c |  2 +-
- commit.c               |  4 ++--
- commit.h               |  4 ++--
- fetch-pack.c           |  4 ++--
- shallow.c              | 12 ++++++------
- upload-pack.c          |  8 ++++----
- 7 files changed, 20 insertions(+), 20 deletions(-)
+ builtin/tag.c | 66 +++++++++++++++++++++++++++++------------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0fe35d1b5..477070806 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2777,10 +2777,10 @@ static void get_object_list(int ac, const char **av)
- 				continue;
- 			}
- 			if (starts_with(line, "--shallow ")) {
--				unsigned char sha1[20];
--				if (get_sha1_hex(line + 10, sha1))
-+				struct object_id oid;
-+				if (get_oid_hex(line + 10, &oid))
- 					die("not an SHA-1 '%s'", line + 10);
--				register_shallow(sha1);
-+				register_shallow(&oid);
- 				use_bitmap_index = 0;
- 				continue;
- 			}
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 3cba3fd27..38e5164f6 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -859,7 +859,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- 	 * not lose these new roots..
- 	 */
- 	for (i = 0; i < extra.nr; i++)
--		register_shallow(extra.oid[i].hash);
-+		register_shallow(&extra.oid[i]);
- 
- 	si->shallow_ref[cmd->index] = 0;
- 	oid_array_clear(&extra);
-diff --git a/commit.c b/commit.c
-index 73c78c2b8..ec41ba5e0 100644
---- a/commit.c
-+++ b/commit.c
-@@ -216,9 +216,9 @@ int for_each_commit_graft(each_commit_graft_fn fn, void *cb_data)
- 	return ret;
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 222404522..597c925e3 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -66,7 +66,7 @@ static int list_tags(struct ref_filter *filter, struct ref_sorting *sorting, con
  }
  
--int unregister_shallow(const unsigned char *sha1)
-+int unregister_shallow(const struct object_id *oid)
+ typedef int (*each_tag_name_fn)(const char *name, const char *ref,
+-				const unsigned char *sha1, const void *cb_data);
++				const struct object_id *oid, const void *cb_data);
+ 
+ static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
+ 			     const void *cb_data)
+@@ -74,17 +74,17 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
+ 	const char **p;
+ 	struct strbuf ref = STRBUF_INIT;
+ 	int had_error = 0;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 
+ 	for (p = argv; *p; p++) {
+ 		strbuf_reset(&ref);
+ 		strbuf_addf(&ref, "refs/tags/%s", *p);
+-		if (read_ref(ref.buf, sha1)) {
++		if (read_ref(ref.buf, oid.hash)) {
+ 			error(_("tag '%s' not found."), *p);
+ 			had_error = 1;
+ 			continue;
+ 		}
+-		if (fn(*p, ref.buf, sha1, cb_data))
++		if (fn(*p, ref.buf, &oid, cb_data))
+ 			had_error = 1;
+ 	}
+ 	strbuf_release(&ref);
+@@ -92,16 +92,16 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn,
+ }
+ 
+ static int delete_tag(const char *name, const char *ref,
+-		      const unsigned char *sha1, const void *cb_data)
++		      const struct object_id *oid, const void *cb_data)
  {
--	int pos = commit_graft_pos(sha1);
-+	int pos = commit_graft_pos(oid->hash);
- 	if (pos < 0)
+-	if (delete_ref(NULL, ref, sha1, 0))
++	if (delete_ref(NULL, ref, oid->hash, 0))
+ 		return 1;
+-	printf(_("Deleted tag '%s' (was %s)\n"), name, find_unique_abbrev(sha1, DEFAULT_ABBREV));
++	printf(_("Deleted tag '%s' (was %s)\n"), name, find_unique_abbrev(oid->hash, DEFAULT_ABBREV));
+ 	return 0;
+ }
+ 
+ static int verify_tag(const char *name, const char *ref,
+-		      const unsigned char *sha1, const void *cb_data)
++		      const struct object_id *oid, const void *cb_data)
+ {
+ 	int flags;
+ 	const char *fmt_pretty = cb_data;
+@@ -110,11 +110,11 @@ static int verify_tag(const char *name, const char *ref,
+ 	if (fmt_pretty)
+ 		flags = GPG_VERIFY_OMIT_STATUS;
+ 
+-	if (gpg_verify_tag(sha1, name, flags))
++	if (gpg_verify_tag(oid->hash, name, flags))
  		return -1;
- 	if (pos + 1 < commit_graft_nr)
-diff --git a/commit.h b/commit.h
-index 7b1986d5c..884177b8f 100644
---- a/commit.h
-+++ b/commit.h
-@@ -263,8 +263,8 @@ extern struct commit_list *get_merge_bases_many_dirty(struct commit *one, int n,
  
- struct oid_array;
- struct ref;
--extern int register_shallow(const unsigned char *sha1);
--extern int unregister_shallow(const unsigned char *sha1);
-+extern int register_shallow(const struct object_id *oid);
-+extern int unregister_shallow(const struct object_id *oid);
- extern int for_each_commit_graft(each_commit_graft_fn, void *);
- extern int is_repository_shallow(void);
- extern struct commit_list *get_shallow_commits(struct object_array *heads,
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 1e6b03b6b..f3aae85d5 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -415,7 +415,7 @@ static int find_common(struct fetch_pack_args *args,
- 			if (skip_prefix(line, "shallow ", &arg)) {
- 				if (get_oid_hex(arg, &oid))
- 					die(_("invalid shallow line: %s"), line);
--				register_shallow(oid.hash);
-+				register_shallow(&oid);
- 				continue;
- 			}
- 			if (skip_prefix(line, "unshallow ", &arg)) {
-@@ -426,7 +426,7 @@ static int find_common(struct fetch_pack_args *args,
- 				/* make sure that it is parsed as shallow */
- 				if (!parse_object(oid.hash))
- 					die(_("error in object: %s"), line);
--				if (unregister_shallow(oid.hash))
-+				if (unregister_shallow(&oid))
- 					die(_("no shallow found: %s"), line);
- 				continue;
- 			}
-diff --git a/shallow.c b/shallow.c
-index 25b6db989..c520ae3ae 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -27,13 +27,13 @@ void set_alternate_shallow_file(const char *path, int override)
- 	alternate_shallow_file = xstrdup_or_null(path);
+ 	if (fmt_pretty)
+-		pretty_print_ref(name, sha1, fmt_pretty);
++		pretty_print_ref(name, oid->hash, fmt_pretty);
+ 
+ 	return 0;
+ }
+@@ -182,13 +182,13 @@ static int git_tag_config(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
  }
  
--int register_shallow(const unsigned char *sha1)
-+int register_shallow(const struct object_id *oid)
+-static void write_tag_body(int fd, const unsigned char *sha1)
++static void write_tag_body(int fd, const struct object_id *oid)
  {
- 	struct commit_graft *graft =
- 		xmalloc(sizeof(struct commit_graft));
--	struct commit *commit = lookup_commit(sha1);
-+	struct commit *commit = lookup_commit(oid->hash);
+ 	unsigned long size;
+ 	enum object_type type;
+ 	char *buf, *sp;
  
--	hashcpy(graft->oid.hash, sha1);
-+	oidcpy(&graft->oid, oid);
- 	graft->nr_parent = -1;
- 	if (commit && commit->object.parsed)
- 		commit->parents = NULL;
-@@ -65,10 +65,10 @@ int is_repository_shallow(void)
- 	is_shallow = 1;
+-	buf = read_sha1_file(sha1, &type, &size);
++	buf = read_sha1_file(oid->hash, &type, &size);
+ 	if (!buf)
+ 		return;
+ 	/* skip header */
+@@ -204,11 +204,11 @@ static void write_tag_body(int fd, const unsigned char *sha1)
+ 	free(buf);
+ }
  
- 	while (fgets(buf, sizeof(buf), fp)) {
--		unsigned char sha1[20];
--		if (get_sha1_hex(buf, sha1))
-+		struct object_id oid;
-+		if (get_oid_hex(buf, &oid))
- 			die("bad shallow line: %s", buf);
--		register_shallow(sha1);
-+		register_shallow(&oid);
- 	}
- 	fclose(fp);
- 	return is_shallow;
-diff --git a/upload-pack.c b/upload-pack.c
-index ffb028d62..20f87cd38 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -642,7 +642,7 @@ static void send_shallow(struct commit_list *result)
- 		if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
- 			packet_write_fmt(1, "shallow %s",
- 					 oid_to_hex(&object->oid));
--			register_shallow(object->oid.hash);
-+			register_shallow(&object->oid);
- 			shallow_nr++;
- 		}
- 		result = result->next;
-@@ -667,7 +667,7 @@ static void send_unshallow(const struct object_array *shallows)
- 			 * parse and add the parents to the want list, then
- 			 * re-register it.
- 			 */
--			unregister_shallow(object->oid.hash);
-+			unregister_shallow(&object->oid);
- 			object->parsed = 0;
- 			parse_commit_or_die((struct commit *)object);
- 			parents = ((struct commit *)object)->parents;
-@@ -679,7 +679,7 @@ static void send_unshallow(const struct object_array *shallows)
- 			add_object_array(object, NULL, &extra_edge_obj);
- 		}
- 		/* make sure commit traversal conforms to client */
--		register_shallow(object->oid.hash);
-+		register_shallow(&object->oid);
+-static int build_tag_object(struct strbuf *buf, int sign, unsigned char *result)
++static int build_tag_object(struct strbuf *buf, int sign, struct object_id *result)
+ {
+ 	if (sign && do_sign(buf) < 0)
+ 		return error(_("unable to sign the tag"));
+-	if (write_sha1_file(buf->buf, buf->len, tag_type, result) < 0)
++	if (write_sha1_file(buf->buf, buf->len, tag_type, result->hash) < 0)
+ 		return error(_("unable to write tag file"));
+ 	return 0;
+ }
+@@ -223,15 +223,15 @@ struct create_tag_options {
+ 	} cleanup_mode;
+ };
+ 
+-static void create_tag(const unsigned char *object, const char *tag,
++static void create_tag(const struct object_id *object, const char *tag,
+ 		       struct strbuf *buf, struct create_tag_options *opt,
+-		       unsigned char *prev, unsigned char *result)
++		       struct object_id *prev, struct object_id *result)
+ {
+ 	enum object_type type;
+ 	struct strbuf header = STRBUF_INIT;
+ 	char *path = NULL;
+ 
+-	type = sha1_object_info(object, NULL);
++	type = sha1_object_info(object->hash, NULL);
+ 	if (type <= OBJ_NONE)
+ 	    die(_("bad object type."));
+ 
+@@ -240,7 +240,7 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 		    "type %s\n"
+ 		    "tag %s\n"
+ 		    "tagger %s\n\n",
+-		    sha1_to_hex(object),
++		    oid_to_hex(object),
+ 		    typename(type),
+ 		    tag,
+ 		    git_committer_info(IDENT_STRICT));
+@@ -254,7 +254,7 @@ static void create_tag(const unsigned char *object, const char *tag,
+ 		if (fd < 0)
+ 			die_errno(_("could not create file '%s'"), path);
+ 
+-		if (!is_null_sha1(prev)) {
++		if (!is_null_oid(prev)) {
+ 			write_tag_body(fd, prev);
+ 		} else {
+ 			struct strbuf buf = STRBUF_INIT;
+@@ -296,7 +296,7 @@ static void create_tag(const unsigned char *object, const char *tag,
  	}
  }
  
-@@ -883,7 +883,7 @@ static void receive_needs(void)
- 		if (shallows.nr > 0) {
- 			int i;
- 			for (i = 0; i < shallows.nr; i++)
--				register_shallow(shallows.objects[i].item->oid.hash);
-+				register_shallow(&shallows.objects[i].item->oid);
- 		}
+-static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
++static void create_reflog_msg(const struct object_id *oid, struct strbuf *sb)
+ {
+ 	enum object_type type;
+ 	struct commit *c;
+@@ -310,17 +310,17 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
+ 		strbuf_addstr(sb, rla);
+ 	} else {
+ 		strbuf_addstr(sb, _("tag: tagging "));
+-		strbuf_add_unique_abbrev(sb, sha1, DEFAULT_ABBREV);
++		strbuf_add_unique_abbrev(sb, oid->hash, DEFAULT_ABBREV);
+ 	}
  
- 	shallow_nr += shallows.nr;
+ 	strbuf_addstr(sb, " (");
+-	type = sha1_object_info(sha1, NULL);
++	type = sha1_object_info(oid->hash, NULL);
+ 	switch (type) {
+ 	default:
+ 		strbuf_addstr(sb, _("object of unknown type"));
+ 		break;
+ 	case OBJ_COMMIT:
+-		if ((buf = read_sha1_file(sha1, &type, &size)) != NULL) {
++		if ((buf = read_sha1_file(oid->hash, &type, &size)) != NULL) {
+ 			subject_len = find_commit_subject(buf, &subject_start);
+ 			strbuf_insert(sb, sb->len, subject_start, subject_len);
+ 		} else {
+@@ -328,7 +328,7 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
+ 		}
+ 		free(buf);
+ 
+-		if ((c = lookup_commit_reference(sha1)) != NULL)
++		if ((c = lookup_commit_reference(oid->hash)) != NULL)
+ 			strbuf_addf(sb, ", %s", show_date(c->date, 0, DATE_MODE(SHORT)));
+ 		break;
+ 	case OBJ_TREE:
+@@ -378,7 +378,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct strbuf ref = STRBUF_INIT;
+ 	struct strbuf reflog_msg = STRBUF_INIT;
+-	unsigned char object[20], prev[20];
++	struct object_id object, prev;
+ 	const char *object_ref, *tag;
+ 	struct create_tag_options opt;
+ 	char *cleanup_arg = NULL;
+@@ -528,14 +528,14 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	if (argc > 2)
+ 		die(_("too many params"));
+ 
+-	if (get_sha1(object_ref, object))
++	if (get_oid(object_ref, &object))
+ 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
+ 
+ 	if (strbuf_check_tag_ref(&ref, tag))
+ 		die(_("'%s' is not a valid tag name."), tag);
+ 
+-	if (read_ref(ref.buf, prev))
+-		hashclr(prev);
++	if (read_ref(ref.buf, prev.hash))
++		oidclr(&prev);
+ 	else if (!force)
+ 		die(_("tag '%s' already exists"), tag);
+ 
+@@ -550,24 +550,24 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	else
+ 		die(_("Invalid cleanup mode %s"), cleanup_arg);
+ 
+-	create_reflog_msg(object, &reflog_msg);
++	create_reflog_msg(&object, &reflog_msg);
+ 
+ 	if (create_tag_object) {
+ 		if (force_sign_annotate && !annotate)
+ 			opt.sign = 1;
+-		create_tag(object, tag, &buf, &opt, prev, object);
++		create_tag(&object, tag, &buf, &opt, &prev, &object);
+ 	}
+ 
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+-	    ref_transaction_update(transaction, ref.buf, object, prev,
++	    ref_transaction_update(transaction, ref.buf, object.hash, prev.hash,
+ 				   create_reflog ? REF_FORCE_CREATE_REFLOG : 0,
+ 				   reflog_msg.buf, &err) ||
+ 	    ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+ 	ref_transaction_free(transaction);
+-	if (force && !is_null_sha1(prev) && hashcmp(prev, object))
+-		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
++	if (force && !is_null_oid(&prev) && oidcmp(&prev, &object))
++		printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev.hash, DEFAULT_ABBREV));
+ 
+ 	strbuf_release(&err);
+ 	strbuf_release(&buf);
