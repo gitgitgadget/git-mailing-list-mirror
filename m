@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DB91207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8399D207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:35:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046110AbdDWVfj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:35:39 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37288 "EHLO
+        id S1046115AbdDWVfm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:35:42 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37302 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046084AbdDWVf3 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:29 -0400
+        by vger.kernel.org with ESMTP id S1046085AbdDWVfa (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:30 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 12725280B0;
-        Sun, 23 Apr 2017 21:35:28 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0ABDD280B1;
+        Sun, 23 Apr 2017 21:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492983328;
-        bh=Xsa62AHwY7u/6VQPKKMbc0Em6mWd+W4iIYuqyTx9TzI=;
+        s=default; t=1492983329;
+        bh=B746u6Sm7BmkcOL+7Oi1j/JhEhYh1PbxHLbpo1vd0QE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ubN9YDZhpUG61N4c/Y04k7JPrJEu3qfpv2Rn0njKTPin+GQX9yDJXqYVJMZAk3GHI
-         a1MYqhMwqWNSlUiBcdYc43L1gAYThHlHD3xUzMAxWGPeQXGZvmxT9je9DxnvVbJF1+
-         rQWTr4Gsqv8DtfzHXl6hiVztBdr5+wOiMsURg89aaQvrlnqh+yFeQ5vGQ1W6beGrCu
-         aqbh91Vc5H4RRKbUmuKO8GvdV373U5foFY0ZPLqBEZqbp6glkBnYlREqYvfegJqVSK
-         0hNOwyDactuaXxPY8b3BDMQOSpXvDJSe0BySBZMOzsFoMMg8oTaAtdYFR/8nGEHSkP
-         +xADaR0qneCFh8W44xtaD3c93vJBEY2iA0R9+YXw7b9ORmRUfDkimuRsLlrj6TSPMr
-         Nn0kWWAwJ51GTILMBN1FZ/WmGkZReYmkNvpIYyomEdIKD5OilzTEZV/EUwlmIuj2Bv
-         XrFDBYSTUyXRvjszbzX0ji8d0JZSg2ju2plIgfaUhpUOeK5WkRW
+        b=kQ20Y7XrO8twkZmFGU3WWfSJCfndjNBVvhnJLzWjihnmPEPDWkI5wGeYrMt2VGo7z
+         /BD5aoSL0h9yM9myLmdTs1WDiNHOoqEBmxLMdod9fBWukGmnMygpPwpQMLp/C5BjnL
+         2QnAkLuUm50lJHzbrMR0VzH3DtX08JmBPGrwyqlFlCYrfOAJguV0qQtfF6ZE9fokWk
+         04XHBMVP7MPP79IUWsYNQaXFYPXZKqNYECbJk+/a1rf/gKrEoBwJZtakJdyrHhiAnc
+         oFRr7WGUfD/AQ4KbFK4KkgP8+bxrgvddEoFUImoMiEBR3aTMPAPRY1wjbDUlPxBEkp
+         7HWzZIm9EBLW28zuYg8g9H+zAEcMKeOFcS0UXMluqzjMPvYfZF5qqs7ofGpV7llLAd
+         RgtIuT7KfgglaaL2WewiRJQv8xWhlPaKDAXfeGA9ElFshCk2Zc/2mGpADsxExsDwrB
+         CoCacpZZiUafv172bdN82NsBo1Bz1q/WAKpoLOuUjJS3YRxW4vu
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/53] Convert struct cache_tree to use struct object_id
-Date:   Sun, 23 Apr 2017 21:34:03 +0000
-Message-Id: <20170423213453.253425-4-sandals@crustytoothpaste.net>
+Subject: [PATCH 04/53] builtin/name-rev: convert to struct object_id
+Date:   Sun, 23 Apr 2017 21:34:04 +0000
+Message-Id: <20170423213453.253425-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,271 +48,129 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert the sha1 member of struct cache_tree to struct object_id by
-changing the definition and applying the following semantic patch, plus
-the standard object_id transforms:
+Convert all the uses of unsigned char [20] to struct object_id.  Also,
+convert some hard-coded integers into constants.
 
-@@
-struct cache_tree E1;
-@@
-- E1.sha1
-+ E1.oid.hash
+name_rev_line accepts a wide variety of free-form input and only
+interprets 40-character hex values, passing through everything else.
+Consequently, it is not a good candidate for parse_oid_hex, which is
+much stricter.
 
-@@
-struct cache_tree *E1;
-@@
-- E1->sha1
-+ E1->oid.hash
-
-Fix up one reference to active_cache_tree which was not automatically
-caught by Coccinelle.  These changes are prerequisites for converting
-parse_object.
+This change is a prerequisite for converting parse_object.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/commit.c                |  2 +-
- builtin/fsck.c                  |  4 ++--
- cache-tree.c                    | 31 ++++++++++++++++---------------
- cache-tree.h                    |  3 ++-
- merge-recursive.c               |  2 +-
- revision.c                      |  2 +-
- sequencer.c                     |  3 ++-
- t/helper/test-dump-cache-tree.c |  4 ++--
- 8 files changed, 27 insertions(+), 24 deletions(-)
+ builtin/name-rev.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 4e288bc51..05a0b609e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1758,7 +1758,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		append_merge_tag_headers(parents, &tail);
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index 92a5d8a5d..00760ecc6 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -114,7 +114,7 @@ struct name_ref_data {
+ 
+ static struct tip_table {
+ 	struct tip_table_entry {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		const char *refname;
+ 	} *table;
+ 	int nr;
+@@ -122,13 +122,13 @@ static struct tip_table {
+ 	int sorted;
+ } tip_table;
+ 
+-static void add_to_tip_table(const unsigned char *sha1, const char *refname,
++static void add_to_tip_table(const struct object_id *oid, const char *refname,
+ 			     int shorten_unambiguous)
+ {
+ 	refname = name_ref_abbrev(refname, shorten_unambiguous);
+ 
+ 	ALLOC_GROW(tip_table.table, tip_table.nr + 1, tip_table.alloc);
+-	hashcpy(tip_table.table[tip_table.nr].sha1, sha1);
++	oidcpy(&tip_table.table[tip_table.nr].oid, oid);
+ 	tip_table.table[tip_table.nr].refname = xstrdup(refname);
+ 	tip_table.nr++;
+ 	tip_table.sorted = 0;
+@@ -137,7 +137,7 @@ static void add_to_tip_table(const unsigned char *sha1, const char *refname,
+ static int tipcmp(const void *a_, const void *b_)
+ {
+ 	const struct tip_table_entry *a = a_, *b = b_;
+-	return hashcmp(a->sha1, b->sha1);
++	return oidcmp(&a->oid, &b->oid);
+ }
+ 
+ static int name_ref(const char *path, const struct object_id *oid, int flags, void *cb_data)
+@@ -194,7 +194,7 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ 			return 0;
  	}
  
--	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->sha1,
-+	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->oid.hash,
- 			 parents, oid.hash, author_ident.buf, sign_commit, extra)) {
- 		rollback_index_files();
- 		die(_("failed to write commit object"));
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f76e4163a..543122f04 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -599,10 +599,10 @@ static int fsck_cache_tree(struct cache_tree *it)
- 		fprintf(stderr, "Checking cache tree\n");
+-	add_to_tip_table(oid->hash, path, can_abbreviate_output);
++	add_to_tip_table(oid, path, can_abbreviate_output);
  
- 	if (0 <= it->entry_count) {
--		struct object *obj = parse_object(it->sha1);
-+		struct object *obj = parse_object(it->oid.hash);
- 		if (!obj) {
- 			error("%s: invalid sha1 pointer in cache-tree",
--			      sha1_to_hex(it->sha1));
-+			      oid_to_hex(&it->oid));
- 			errors_found |= ERROR_REFS;
- 			return 1;
+ 	while (o && o->type == OBJ_TAG) {
+ 		struct tag *t = (struct tag *) o;
+@@ -216,7 +216,7 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
+ static const unsigned char *nth_tip_table_ent(size_t ix, void *table_)
+ {
+ 	struct tip_table_entry *table = table_;
+-	return table[ix].sha1;
++	return table[ix].oid.hash;
+ }
+ 
+ static const char *get_exact_ref_match(const struct object *o)
+@@ -301,9 +301,9 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+ #define ishex(x) (isdigit((x)) || ((x) >= 'a' && (x) <= 'f'))
+ 		if (!ishex(*p))
+ 			forty = 0;
+-		else if (++forty == 40 &&
++		else if (++forty == GIT_SHA1_HEXSZ &&
+ 			 !ishex(*(p+1))) {
+-			unsigned char sha1[40];
++			struct object_id oid;
+ 			const char *name = NULL;
+ 			char c = *(p+1);
+ 			int p_len = p - p_start + 1;
+@@ -311,9 +311,9 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+ 			forty = 0;
+ 
+ 			*(p+1) = 0;
+-			if (!get_sha1(p - 39, sha1)) {
++			if (!get_oid(p - (GIT_SHA1_HEXSZ - 1), &oid)) {
+ 				struct object *o =
+-					lookup_object(sha1);
++					lookup_object(oid.hash);
+ 				if (o)
+ 					name = get_rev_name(o, &buf);
+ 			}
+@@ -323,7 +323,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+ 				continue;
+ 
+ 			if (data->name_only)
+-				printf("%.*s%s", p_len - 40, p_start, name);
++				printf("%.*s%s", p_len - GIT_SHA1_HEXSZ, p_start, name);
+ 			else
+ 				printf("%.*s (%s)", p_len, p_start, name);
+ 			p_start = p + 1;
+@@ -374,18 +374,18 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
+ 		cutoff = 0;
+ 
+ 	for (; argc; argc--, argv++) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		struct object *object;
+ 		struct commit *commit;
+ 
+-		if (get_sha1(*argv, sha1)) {
++		if (get_oid(*argv, &oid)) {
+ 			fprintf(stderr, "Could not get sha1 for %s. Skipping.\n",
+ 					*argv);
+ 			continue;
  		}
-diff --git a/cache-tree.c b/cache-tree.c
-index 345ea3596..35d507ed7 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -225,7 +225,7 @@ int cache_tree_fully_valid(struct cache_tree *it)
- 	int i;
- 	if (!it)
- 		return 0;
--	if (it->entry_count < 0 || !has_sha1_file(it->sha1))
-+	if (it->entry_count < 0 || !has_sha1_file(it->oid.hash))
- 		return 0;
- 	for (i = 0; i < it->subtree_nr; i++) {
- 		if (!cache_tree_fully_valid(it->down[i]->cache_tree))
-@@ -253,7 +253,7 @@ static int update_one(struct cache_tree *it,
  
- 	*skip_count = 0;
- 
--	if (0 <= it->entry_count && has_sha1_file(it->sha1))
-+	if (0 <= it->entry_count && has_sha1_file(it->oid.hash))
- 		return it->entry_count;
- 
- 	/*
-@@ -340,7 +340,7 @@ static int update_one(struct cache_tree *it,
- 				die("cache-tree.c: '%.*s' in '%s' not found",
- 				    entlen, path + baselen, path);
- 			i += sub->count;
--			sha1 = sub->cache_tree->sha1;
-+			sha1 = sub->cache_tree->oid.hash;
- 			mode = S_IFDIR;
- 			contains_ita = sub->cache_tree->entry_count < 0;
- 			if (contains_ita) {
-@@ -402,12 +402,13 @@ static int update_one(struct cache_tree *it,
- 		unsigned char sha1[20];
- 		hash_sha1_file(buffer.buf, buffer.len, tree_type, sha1);
- 		if (has_sha1_file(sha1))
--			hashcpy(it->sha1, sha1);
-+			hashcpy(it->oid.hash, sha1);
- 		else
- 			to_invalidate = 1;
- 	} else if (dryrun)
--		hash_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1);
--	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1)) {
-+		hash_sha1_file(buffer.buf, buffer.len, tree_type,
-+			       it->oid.hash);
-+	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->oid.hash)) {
- 		strbuf_release(&buffer);
- 		return -1;
- 	}
-@@ -417,7 +418,7 @@ static int update_one(struct cache_tree *it,
- #if DEBUG
- 	fprintf(stderr, "cache-tree update-one (%d ent, %d subtree) %s\n",
- 		it->entry_count, it->subtree_nr,
--		sha1_to_hex(it->sha1));
-+		oid_to_hex(&it->oid));
- #endif
- 	return i;
- }
-@@ -457,14 +458,14 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
- 	if (0 <= it->entry_count)
- 		fprintf(stderr, "cache-tree <%.*s> (%d ent, %d subtree) %s\n",
- 			pathlen, path, it->entry_count, it->subtree_nr,
--			sha1_to_hex(it->sha1));
-+			oid_to_hex(&it->oid));
- 	else
- 		fprintf(stderr, "cache-tree <%.*s> (%d subtree) invalid\n",
- 			pathlen, path, it->subtree_nr);
- #endif
- 
- 	if (0 <= it->entry_count) {
--		strbuf_add(buffer, it->sha1, 20);
-+		strbuf_add(buffer, it->oid.hash, 20);
- 	}
- 	for (i = 0; i < it->subtree_nr; i++) {
- 		struct cache_tree_sub *down = it->down[i];
-@@ -521,7 +522,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 	if (0 <= it->entry_count) {
- 		if (size < 20)
- 			goto free_return;
--		hashcpy(it->sha1, (const unsigned char*)buf);
-+		hashcpy(it->oid.hash, (const unsigned char*)buf);
- 		buf += 20;
- 		size -= 20;
- 	}
-@@ -530,7 +531,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
- 	if (0 <= it->entry_count)
- 		fprintf(stderr, "cache-tree <%s> (%d ent, %d subtree) %s\n",
- 			*buffer, it->entry_count, subtree_nr,
--			sha1_to_hex(it->sha1));
-+			oid_to_hex(&it->oid));
- 	else
- 		fprintf(stderr, "cache-tree <%s> (%d subtrees) invalid\n",
- 			*buffer, subtree_nr);
-@@ -641,10 +642,10 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
- 		subtree = cache_tree_find(index_state->cache_tree, prefix);
- 		if (!subtree)
- 			return WRITE_TREE_PREFIX_ERROR;
--		hashcpy(sha1, subtree->sha1);
-+		hashcpy(sha1, subtree->oid.hash);
- 	}
- 	else
--		hashcpy(sha1, index_state->cache_tree->sha1);
-+		hashcpy(sha1, index_state->cache_tree->oid.hash);
- 
- 	if (0 <= newfd)
- 		rollback_lock_file(lock_file);
-@@ -663,7 +664,7 @@ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
- 	struct name_entry entry;
- 	int cnt;
- 
--	hashcpy(it->sha1, tree->object.oid.hash);
-+	oidcpy(&it->oid, &tree->object.oid);
- 	init_tree_desc(&desc, tree->buffer, tree->size);
- 	cnt = 0;
- 	while (tree_entry(&desc, &entry)) {
-@@ -718,7 +719,7 @@ int cache_tree_matches_traversal(struct cache_tree *root,
- 
- 	it = find_cache_tree_from_traversal(root, info);
- 	it = cache_tree_find(it, ent->path);
--	if (it && it->entry_count > 0 && !hashcmp(ent->oid->hash, it->sha1))
-+	if (it && it->entry_count > 0 && !oidcmp(ent->oid, &it->oid))
- 		return it->entry_count;
- 	return 0;
- }
-diff --git a/cache-tree.h b/cache-tree.h
-index 41c574663..f7b9cab7e 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -1,6 +1,7 @@
- #ifndef CACHE_TREE_H
- #define CACHE_TREE_H
- 
-+#include "cache.h"
- #include "tree.h"
- #include "tree-walk.h"
- 
-@@ -15,7 +16,7 @@ struct cache_tree_sub {
- 
- struct cache_tree {
- 	int entry_count; /* negative means "invalid" */
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	int subtree_nr;
- 	int subtree_alloc;
- 	struct cache_tree_sub **down;
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 62decd51c..9d6fd577e 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -304,7 +304,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
- 		return NULL;
- 	}
- 
--	result = lookup_tree(active_cache_tree->sha1);
-+	result = lookup_tree(active_cache_tree->oid.hash);
- 
- 	return result;
- }
-diff --git a/revision.c b/revision.c
-index 7ff61ff5f..2b56c3baf 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1249,7 +1249,7 @@ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
- 	int i;
- 
- 	if (it->entry_count >= 0) {
--		struct tree *tree = lookup_tree(it->sha1);
-+		struct tree *tree = lookup_tree(it->oid.hash);
- 		add_pending_object_with_path(revs, &tree->object, "",
- 					     040000, path->buf);
- 	}
-diff --git a/sequencer.c b/sequencer.c
-index 77afecaeb..e13a25b91 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -508,7 +508,8 @@ static int is_index_unchanged(void)
- 		if (cache_tree_update(&the_index, 0))
- 			return error(_("unable to update cache tree\n"));
- 
--	return !hashcmp(active_cache_tree->sha1, head_commit->tree->object.oid.hash);
-+	return !oidcmp(&active_cache_tree->oid,
-+		       &head_commit->tree->object.oid);
- }
- 
- static int write_author_script(const char *message)
-diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
-index 7af116d49..ebf3aab22 100644
---- a/t/helper/test-dump-cache-tree.c
-+++ b/t/helper/test-dump-cache-tree.c
-@@ -10,7 +10,7 @@ static void dump_one(struct cache_tree *it, const char *pfx, const char *x)
- 		       "invalid", x, pfx, it->subtree_nr);
- 	else
- 		printf("%s %s%s (%d entries, %d subtrees)\n",
--		       sha1_to_hex(it->sha1), x, pfx,
-+		       oid_to_hex(&it->oid), x, pfx,
- 		       it->entry_count, it->subtree_nr);
- }
- 
-@@ -32,7 +32,7 @@ static int dump_cache_tree(struct cache_tree *it,
- 	}
- 	else {
- 		dump_one(it, pfx, "");
--		if (hashcmp(it->sha1, ref->sha1) ||
-+		if (oidcmp(&it->oid, &ref->oid) ||
- 		    ref->entry_count != it->entry_count ||
- 		    ref->subtree_nr != it->subtree_nr) {
- 			/* claims to be valid but is lying */
+ 		commit = NULL;
+-		object = parse_object(sha1);
++		object = parse_object(oid.hash);
+ 		if (object) {
+ 			struct object *peeled = deref_tag(object, *argv, 0);
+ 			if (peeled && peeled->type == OBJ_COMMIT)
