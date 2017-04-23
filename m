@@ -7,54 +7,74 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65307207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 16:25:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89EBE207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 16:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162179AbdDWQZG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 12:25:06 -0400
-Received: from mout3.freenet.de ([195.4.92.93]:40149 "EHLO mout3.freenet.de"
+        id S971371AbdDWQtO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 12:49:14 -0400
+Received: from mout0.freenet.de ([195.4.92.90]:51475 "EHLO mout0.freenet.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1162038AbdDWQZE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2017 12:25:04 -0400
-Received: from [195.4.92.142] (helo=mjail2.freenet.de)
-        by mout3.freenet.de with esmtpa (ID liebundartig@freenet.de) (port 25) (Exim 4.85 #1)
-        id 1d2KJr-0004v2-At; Sun, 23 Apr 2017 18:25:03 +0200
-Received: from localhost ([::1]:58588 helo=mjail2.freenet.de)
-        by mjail2.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
-        id 1d2KJq-00063T-66; Sun, 23 Apr 2017 18:25:02 +0200
-Received: from mx12.freenet.de ([195.4.92.22]:48449)
-        by mjail2.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
-        id 1d2KH8-0002z3-8P; Sun, 23 Apr 2017 18:22:14 +0200
-Received: from p200300454467fa4464be414ec96be51f.dip0.t-ipconnect.de ([2003:45:4467:fa44:64be:414e:c96b:e51f]:50926)
-        by mx12.freenet.de with esmtpsa (ID liebundartig@freenet.de) (TLSv1.2:DHE-RSA-AES128-SHA:128) (port 465) (Exim 4.85 #1)
-        id 1d2KH9-0002r6-2F; Sun, 23 Apr 2017 18:22:15 +0200
-Subject: Re: minor typos in documentation
-To:     Stefan Beller <sbeller@google.com>
-References: <ea2780fd-8d63-6060-fb17-df5720bbc3de@freenet.de>
- <CAGZ79kavV-58JyUce9BMO9S3LVKGeUBQU-Qt79LAR41xgr=MxA@mail.gmail.com>
- <4f4e6b6e-7917-49c9-f4b4-627eaa062915@freenet.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Genz?= <liebundartig@freenet.de>
-Message-ID: <75974e19-4b8c-3f52-8358-b0c2ba1e57b1@freenet.de>
-Date:   Sun, 23 Apr 2017 18:22:13 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
-MIME-Version: 1.0
-In-Reply-To: <4f4e6b6e-7917-49c9-f4b4-627eaa062915@freenet.de>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originated-At: 2003:45:4467:fa44:64be:414e:c96b:e51f!50926
+        id S971343AbdDWQtM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2017 12:49:12 -0400
+Received: from [195.4.92.141] (helo=mjail1.freenet.de)
+        by mout0.freenet.de with esmtpa (ID liebundartig@freenet.de) (port 25) (Exim 4.85 #1)
+        id 1d2KhC-0007VD-90; Sun, 23 Apr 2017 18:49:10 +0200
+Received: from localhost ([::1]:52424 helo=mjail1.freenet.de)
+        by mjail1.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
+        id 1d2KhB-0004OB-BI; Sun, 23 Apr 2017 18:49:09 +0200
+Received: from mx4.freenet.de ([195.4.92.14]:56781)
+        by mjail1.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
+        id 1d2Kdl-0000bl-4I; Sun, 23 Apr 2017 18:45:37 +0200
+Received: from p200300454467fa4464be414ec96be51f.dip0.t-ipconnect.de ([2003:45:4467:fa44:64be:414e:c96b:e51f]:48175)
+        by mx4.freenet.de with esmtpsa (ID liebundartig@freenet.de) (TLSv1.2:AES128-SHA256:128) (port 465) (Exim 4.85 #1)
+        id 1d2Kdl-0003iG-Qb; Sun, 23 Apr 2017 18:45:37 +0200
+From:   =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com,
+        =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
+Subject: [PATCH] doc: git-pull.txt use US spelling, fix minor typo
+Date:   Sun, 23 Apr 2017 18:45:25 +0200
+Message-Id: <1492965925-29744-1-git-send-email-liebundartig@freenet.de>
+X-Mailer: git-send-email 1.9.1
+X-Originated-At: 2003:45:4467:fa44:64be:414e:c96b:e51f!48175
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+---
+Instead of using two command lines I could have replaced the comma with a semicolon.
 
-I submitted the patch to the mailing list.
-Based on my experience I submitted another patch to improve the documentation.
+I do not mind, if this patch is squashed into the other minor typo fixes of mine:
+3c228f462d02e76956062b8d8572158cbcdbbc7b
 
-Thank you for guiding me.
+
+ Documentation/git-pull.txt | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 4470e4b..942af8e 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -67,7 +67,7 @@ with uncommitted changes is discouraged: while possible, it leaves you
+ in a state that may be hard to back out of in the case of a conflict.
+ 
+ If any of the remote changes overlap with local uncommitted changes,
+-the merge will be automatically cancelled and the work tree untouched.
++the merge will be automatically canceled and the work tree untouched.
+ It is generally best to get any local changes in working order before
+ pulling or stash them away with linkgit:git-stash[1].
+ 
+@@ -210,7 +210,8 @@ EXAMPLES
+   current branch:
+ +
+ ------------------------------------------------
+-$ git pull, git pull origin
++$ git pull
++$ git pull origin
+ ------------------------------------------------
+ +
+ Normally the branch merged in is the HEAD of the remote repository,
 -- 
-Kind regards,
-René
+1.9.1
+
