@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C727207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9003D207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046181AbdDWVgU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:36:20 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37446 "EHLO
+        id S1046183AbdDWVgW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:36:22 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37322 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046104AbdDWVfi (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:38 -0400
+        by vger.kernel.org with ESMTP id S1046108AbdDWVfj (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:39 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1FE57280BD;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A1396280C0;
         Sun, 23 Apr 2017 21:35:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1492983333;
-        bh=4bL2u7h1sHWuy158gFBw/8/Ug870OwpdQz4sX1gWclQ=;
+        bh=LN8wkSzE1wZmdGdw+SRTDnx2DORuPoqICeG0SDni2UM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=w7J2MMnNHHBtXTiDvXiJpayaC39/90W4f+DhRArLyzZa5v9sfRTjq5He6WQur4gxS
-         TFgttXjDA8RMqzcLhayRAAE3O/0FwO3GbNnv1aMR07x12gDIhhvXP8NafuJPKHJLle
-         BAhiDif91BB13paXe8WQ3T6G4ZCEoWTh6wcy4ot8NYyvFLKl+BXxpdemFacuAmqXTS
-         r8xcfCcqFVFXmbDILewwADBDJ7zFzz7oi+W/EykxO4kgaKt6iajWDf8BYy1FHQ6TCK
-         Dv301C17B6qYlMOzC7+G2vyJKa8VvKkZpmGgVpD+IQio1Ys5cCHXM0thVKAkUf+vN6
-         OUOF65KiijwXvjBA23Llw4yq9BgIv/qoX6PPxqyN4ZzHSptO52LkwCHQDvIX9kfDtd
-         RTq5+hU+E+d10VadiAw+Ffer3gx2jtjcE4tbSsmFhqloTEJFXavYbR/+sRoYSBXRYQ
-         o286vAFEiVoT9flsfqQnU+zGJyXhrjAQrjP5DVIH0hSd74X9o8z
+        b=DpTuEx+Kc4T9UJml4ymfGSGUamQokhlqQ7aIY4cjVAH45hAwDdvqF4wmNIkpAaQJi
+         cq8543CFR4i3dCHXhxmtOfdTkITPDHxVSZqqyGizpd2h55LTPrHYI2vbLVwvfk6DqH
+         FGkEFWMweu49ueaKejd5NQjZhIlyzxovAL+vbHuv1wrAFGDN5wQtxUpCz5jiMF9IXr
+         lxLjsOgsjUtjJPZADUrG9N4ddrX2+88eHQFW1KGIUaxly0GjvzsX9dfnxfvo5XbpeX
+         qCnF7H4SC3rLJaVn90KiLHmosxXwTxFEpxC3NsinscPCJLGzp+4xJ6HYMaCTUreJ+F
+         iEM3X9LNV5hVZsKQoqb6wWpXKVoP4dXs2MeefBSLfuCRYpYBmux6jDIdKsBo8UV3Xf
+         VVP2/JXwgpOrHPeo08u/xGikY6TD/ejLr4FTl7tMusrznrWvvAtAUejfPDbg5L0vLR
+         55Uw71bzFDzbzLG+alMTiFCZhaa7xnfbfn+E/cNS3cfr1fKgYGU
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 16/53] builtin/verify-commit: convert to struct object_id
-Date:   Sun, 23 Apr 2017 21:34:16 +0000
-Message-Id: <20170423213453.253425-17-sandals@crustytoothpaste.net>
+Subject: [PATCH 19/53] notes-utils: convert internals to struct object_id
+Date:   Sun, 23 Apr 2017 21:34:19 +0000
+Message-Id: <20170423213453.253425-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,59 +48,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a prerequisite to convert to lookup_commit, which we will
-convert later.
+Convert the internals of create_notes_comit and commit_notes to use
+struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/verify-commit.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ notes-utils.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
-index 38bedf8f9..a5db1c427 100644
---- a/builtin/verify-commit.c
-+++ b/builtin/verify-commit.c
-@@ -18,14 +18,14 @@ static const char * const verify_commit_usage[] = {
- 		NULL
- };
- 
--static int run_gpg_verify(const unsigned char *sha1, const char *buf, unsigned long size, unsigned flags)
-+static int run_gpg_verify(const struct object_id *oid, const char *buf, unsigned long size, unsigned flags)
+diff --git a/notes-utils.c b/notes-utils.c
+index 24a33616a..36c1490aa 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -7,18 +7,18 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 			 const char *msg, size_t msg_len,
+ 			 unsigned char *result_sha1)
  {
- 	struct signature_check signature_check;
- 	int ret;
+-	unsigned char tree_sha1[20];
++	struct object_id tree_oid;
  
- 	memset(&signature_check, 0, sizeof(signature_check));
+ 	assert(t->initialized);
  
--	ret = check_commit_signature(lookup_commit(sha1), &signature_check);
-+	ret = check_commit_signature(lookup_commit(oid->hash), &signature_check);
- 	print_signature_buffer(&signature_check, flags);
+-	if (write_notes_tree(t, tree_sha1))
++	if (write_notes_tree(t, tree_oid.hash))
+ 		die("Failed to write notes tree to database");
  
- 	signature_check_clear(&signature_check);
-@@ -35,22 +35,22 @@ static int run_gpg_verify(const unsigned char *sha1, const char *buf, unsigned l
- static int verify_commit(const char *name, unsigned flags)
+ 	if (!parents) {
+ 		/* Deduce parent commit from t->ref */
+-		unsigned char parent_sha1[20];
+-		if (!read_ref(t->ref, parent_sha1)) {
+-			struct commit *parent = lookup_commit(parent_sha1);
++		struct object_id parent_oid;
++		if (!read_ref(t->ref, parent_oid.hash)) {
++			struct commit *parent = lookup_commit(parent_oid.hash);
+ 			if (parse_commit(parent))
+ 				die("Failed to find/parse commit %s", t->ref);
+ 			commit_list_insert(parent, &parents);
+@@ -26,14 +26,14 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 		/* else: t->ref points to nothing, assume root/orphan commit */
+ 	}
+ 
+-	if (commit_tree(msg, msg_len, tree_sha1, parents, result_sha1, NULL, NULL))
++	if (commit_tree(msg, msg_len, tree_oid.hash, parents, result_sha1, NULL, NULL))
+ 		die("Failed to commit notes tree to database");
+ }
+ 
+ void commit_notes(struct notes_tree *t, const char *msg)
  {
- 	enum object_type type;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	char *buf;
- 	unsigned long size;
- 	int ret;
+ 	struct strbuf buf = STRBUF_INIT;
+-	unsigned char commit_sha1[20];
++	struct object_id commit_oid;
  
--	if (get_sha1(name, sha1))
-+	if (get_oid(name, &oid))
- 		return error("commit '%s' not found.", name);
+ 	if (!t)
+ 		t = &default_notes_tree;
+@@ -46,9 +46,9 @@ void commit_notes(struct notes_tree *t, const char *msg)
+ 	strbuf_addstr(&buf, msg);
+ 	strbuf_complete_line(&buf);
  
--	buf = read_sha1_file(sha1, &type, &size);
-+	buf = read_sha1_file(oid.hash, &type, &size);
- 	if (!buf)
- 		return error("%s: unable to read file.", name);
- 	if (type != OBJ_COMMIT)
- 		return error("%s: cannot verify a non-commit object of type %s.",
- 				name, typename(type));
+-	create_notes_commit(t, NULL, buf.buf, buf.len, commit_sha1);
++	create_notes_commit(t, NULL, buf.buf, buf.len, commit_oid.hash);
+ 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
+-	update_ref(buf.buf, t->update_ref, commit_sha1, NULL, 0,
++	update_ref(buf.buf, t->update_ref, commit_oid.hash, NULL, 0,
+ 		   UPDATE_REFS_DIE_ON_ERR);
  
--	ret = run_gpg_verify(sha1, buf, size, flags);
-+	ret = run_gpg_verify(&oid, buf, size, flags);
- 
- 	free(buf);
- 	return ret;
+ 	strbuf_release(&buf);
