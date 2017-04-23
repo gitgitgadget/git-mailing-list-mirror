@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44000207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:37:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2D2E207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:37:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046207AbdDWVg6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:36:58 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37406 "EHLO
+        id S1046209AbdDWVhC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:37:02 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37624 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046128AbdDWVfu (ORCPT
+        by vger.kernel.org with ESMTP id S1046130AbdDWVfu (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:50 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4BF24280C8;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 985F3280B1;
         Sun, 23 Apr 2017 21:35:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1492983337;
-        bh=HjklwKLzgc3zcL2tHq0cQ0H4JHE7HMzGukhXU4jtvAs=;
+        bh=QSurIkEtvNtVm9ZS5KApGCEdMOS8Eo8px/1oCXZhAm4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=YEl2DHhp3I1Xga9WKiF/8xqaQsjUqJzALtuwJEGSayYUNZPuwHNIegERFP1zKm58X
-         MaMzIupNJ71e8jSXruYXsBM6BcwynfhnrsU+UEmqkQyikHx+cCwASCvcG6k8dYrfV2
-         S25KHKVELqG0IJ6sATwnnVRjB6Na4Z5ZcmkYboYK7/n0xxsWYsHnJyi89YGVeOCf4G
-         6lre6UW9NoCsA5wOeYYsqZA19vVViuui53LmfK/669P/o2rL7B8T/XhWCI3vk7BoC8
-         fQo6Cs4Ld7sAQ/0hNVT0Yzf1rrl3YCHyIGxVubvJ+XArmQBZ2/daYCsF4XSdmjM+tS
-         TJ7kMF3RcRgxiNlOxrL1CL+xX0cy9pXEuABFPHfNT1r52QWBsp/fGaGSIzbwwcTAY6
-         VMzCYkXbYtCxAAT90JOZxujXX8lZ/ik28Kss7VlJ7eYfXjucZjnnGoAh5M9u6Dm1mz
-         3cOU+YGLBJBYkKXeY1zeaOahm2bjm8hdnNIb9V2EVeFot6s4syy
+        b=bP3/li+Uw1v4Oj3HnoHynow1fr+it8X5gKdiXsxz0T0OkMonNj7jaqmL1kQcvElU4
+         oE5K3h+HoZ/QGcahF5+Wte3L1FX1p2FiXsG9x9EDJ5LI960mEV780KoBM1djJjUmlD
+         kzJoV0lVQm50OSAyipV+VpnkMgso3Veph9Ffn4wCf/2yz2IpTA/GFf5f/MwGR2A0eG
+         CpXEZazkTbfD1rWRuDwLyCkLYzmJoamP8E6PbB9Vpv7ZF8zuVW95XlRIS+0GIWyUQ4
+         oPgOId3sDniX7AC3hUpl5XqFILjmAnYBMxrr+sNYMm0UFbuhZGi3u3HmYvl7nEnu/K
+         nBuc5EReqyupQo9+nmasjIcSoLuWGcyFV81i8nAvem8IJikSSonQxRiKbBaAW4ytGs
+         NSYCKxqkL58YzUkqZEBb7eJosADBoN6FSjEVVHWbdJiTcSbcj2G0+ZCgDHQFd9WP29
+         wtFCLV1p9OcW3PymdOAA5xOBbXkg63zgIkfHbI7UlIrnN0MuSIi
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 27/53] builtin/unpack-objects: convert to struct object_id
-Date:   Sun, 23 Apr 2017 21:34:27 +0000
-Message-Id: <20170423213453.253425-28-sandals@crustytoothpaste.net>
+Subject: [PATCH 28/53] Convert remaining callers of lookup_blob to object_id
+Date:   Sun, 23 Apr 2017 21:34:28 +0000
+Message-Id: <20170423213453.253425-29-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,216 +48,189 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert struct delta_info and struct object_info, as well as the various
-functions, to use struct object_id.  Convert several hard-coded 20
-values to GIT_SHA1_RAWSZ.  Among the functions converted is a caller of
-lookup_blob, which we will convert shortly.
+All but a few callers of lookup_blob have been converted to struct
+object_id.  Introduce a temporary, which will be removed later, into
+parse_object to ease the transition, and convert the remaining callers
+so that we can update lookup_blob to take struct object_id *.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/unpack-objects.c | 64 ++++++++++++++++++++++++------------------------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ builtin/index-pack.c | 28 ++++++++++++++--------------
+ builtin/merge-tree.c | 10 +++++-----
+ object.c             |  9 ++++++---
+ 3 files changed, 25 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 4532aa083..3dc5e5691 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -127,7 +127,7 @@ static void *get_data(unsigned long size)
- }
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index fef0025e4..2241ee68e 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -785,7 +785,7 @@ static int check_collison(struct object_entry *entry)
  
- struct delta_info {
--	unsigned char base_sha1[20];
-+	struct object_id base_oid;
- 	unsigned nr;
- 	off_t base_offset;
- 	unsigned long size;
-@@ -137,13 +137,13 @@ struct delta_info {
- 
- static struct delta_info *delta_list;
- 
--static void add_delta_to_list(unsigned nr, unsigned const char *base_sha1,
-+static void add_delta_to_list(unsigned nr, const struct object_id *base_oid,
- 			      off_t base_offset,
- 			      void *delta, unsigned long size)
+ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 			unsigned long size, enum object_type type,
+-			const unsigned char *sha1)
++			const struct object_id *oid)
  {
- 	struct delta_info *info = xmalloc(sizeof(*info));
+ 	void *new_data = NULL;
+ 	int collision_test_needed = 0;
+@@ -794,7 +794,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
  
--	hashcpy(info->base_sha1, base_sha1);
-+	oidcpy(&info->base_oid, base_oid);
- 	info->base_offset = base_offset;
- 	info->size = size;
- 	info->delta = delta;
-@@ -154,7 +154,7 @@ static void add_delta_to_list(unsigned nr, unsigned const char *base_sha1,
- 
- struct obj_info {
- 	off_t offset;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct object *obj;
- };
- 
-@@ -170,9 +170,9 @@ static unsigned nr_objects;
-  */
- static void write_cached_object(struct object *obj, struct obj_buffer *obj_buf)
- {
--	unsigned char sha1[20];
-+	struct object_id oid;
- 
--	if (write_sha1_file(obj_buf->buffer, obj_buf->size, typename(obj->type), sha1) < 0)
-+	if (write_sha1_file(obj_buf->buffer, obj_buf->size, typename(obj->type), oid.hash) < 0)
- 		die("failed to write object %s", oid_to_hex(&obj->oid));
- 	obj->flags |= FLAG_WRITTEN;
- }
-@@ -237,19 +237,19 @@ static void write_object(unsigned nr, enum object_type type,
- 			 void *buf, unsigned long size)
- {
- 	if (!strict) {
--		if (write_sha1_file(buf, size, typename(type), obj_list[nr].sha1) < 0)
-+		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
- 		obj_list[nr].obj = NULL;
- 	} else if (type == OBJ_BLOB) {
- 		struct blob *blob;
--		if (write_sha1_file(buf, size, typename(type), obj_list[nr].sha1) < 0)
-+		if (write_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
- 
--		blob = lookup_blob(obj_list[nr].sha1);
-+		blob = lookup_blob(obj_list[nr].oid.hash);
- 		if (blob)
- 			blob->object.flags |= FLAG_WRITTEN;
- 		else
-@@ -258,9 +258,9 @@ static void write_object(unsigned nr, enum object_type type,
- 	} else {
- 		struct object *obj;
- 		int eaten;
--		hash_sha1_file(buf, size, typename(type), obj_list[nr].sha1);
-+		hash_sha1_file(buf, size, typename(type), obj_list[nr].oid.hash);
- 		added_object(nr, type, buf, size);
--		obj = parse_object_buffer(obj_list[nr].sha1, type, size, buf, &eaten);
-+		obj = parse_object_buffer(obj_list[nr].oid.hash, type, size, buf, &eaten);
- 		if (!obj)
- 			die("invalid %s", typename(type));
- 		add_object_buffer(obj, buf, size);
-@@ -296,7 +296,7 @@ static void added_object(unsigned nr, enum object_type type,
- 	struct delta_info *info;
- 
- 	while ((info = *p) != NULL) {
--		if (!hashcmp(info->base_sha1, obj_list[nr].sha1) ||
-+		if (!oidcmp(&info->base_oid, &obj_list[nr].oid) ||
- 		    info->base_offset == obj_list[nr].offset) {
- 			*p = info->next;
- 			p = &delta_list;
-@@ -320,12 +320,12 @@ static void unpack_non_delta_entry(enum object_type type, unsigned long size,
- 		free(buf);
- }
- 
--static int resolve_against_held(unsigned nr, const unsigned char *base,
-+static int resolve_against_held(unsigned nr, const struct object_id *base,
- 				void *delta_data, unsigned long delta_size)
- {
- 	struct object *obj;
- 	struct obj_buffer *obj_buffer;
--	obj = lookup_object(base);
-+	obj = lookup_object(base->hash);
- 	if (!obj)
- 		return 0;
- 	obj_buffer = lookup_object_buffer(obj);
-@@ -341,25 +341,25 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- {
- 	void *delta_data, *base;
- 	unsigned long base_size;
--	unsigned char base_sha1[20];
-+	struct object_id base_oid;
- 
- 	if (type == OBJ_REF_DELTA) {
--		hashcpy(base_sha1, fill(20));
--		use(20);
-+		hashcpy(base_oid.hash, fill(GIT_SHA1_RAWSZ));
-+		use(GIT_SHA1_RAWSZ);
- 		delta_data = get_data(delta_size);
- 		if (dry_run || !delta_data) {
- 			free(delta_data);
- 			return;
- 		}
--		if (has_sha1_file(base_sha1))
-+		if (has_object_file(&base_oid))
- 			; /* Ok we have this one */
--		else if (resolve_against_held(nr, base_sha1,
-+		else if (resolve_against_held(nr, &base_oid,
- 					      delta_data, delta_size))
- 			return; /* we are done */
- 		else {
- 			/* cannot resolve yet --- queue it */
--			hashclr(obj_list[nr].sha1);
--			add_delta_to_list(nr, base_sha1, 0, delta_data, delta_size);
-+			oidclr(&obj_list[nr].oid);
-+			add_delta_to_list(nr, &base_oid, 0, delta_data, delta_size);
- 			return;
- 		}
- 	} else {
-@@ -399,8 +399,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 			} else if (base_offset > obj_list[mid].offset) {
- 				lo = mid + 1;
- 			} else {
--				hashcpy(base_sha1, obj_list[mid].sha1);
--				base_found = !is_null_sha1(base_sha1);
-+				oidcpy(&base_oid, &obj_list[mid].oid);
-+				base_found = !is_null_oid(&base_oid);
- 				break;
- 			}
- 		}
-@@ -409,19 +409,19 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 			 * The delta base object is itself a delta that
- 			 * has not been resolved yet.
- 			 */
--			hashclr(obj_list[nr].sha1);
--			add_delta_to_list(nr, null_sha1, base_offset, delta_data, delta_size);
-+			oidclr(&obj_list[nr].oid);
-+			add_delta_to_list(nr, &null_oid, base_offset, delta_data, delta_size);
- 			return;
- 		}
+ 	if (startup_info->have_repository) {
+ 		read_lock();
+-		collision_test_needed = has_sha1_file_with_flags(sha1, HAS_SHA1_QUICK);
++		collision_test_needed = has_sha1_file_with_flags(oid->hash, HAS_SHA1_QUICK);
+ 		read_unlock();
  	}
  
--	if (resolve_against_held(nr, base_sha1, delta_data, delta_size))
-+	if (resolve_against_held(nr, &base_oid, delta_data, delta_size))
+@@ -809,31 +809,31 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 		enum object_type has_type;
+ 		unsigned long has_size;
+ 		read_lock();
+-		has_type = sha1_object_info(sha1, &has_size);
++		has_type = sha1_object_info(oid->hash, &has_size);
+ 		if (has_type < 0)
+-			die(_("cannot read existing object info %s"), sha1_to_hex(sha1));
++			die(_("cannot read existing object info %s"), oid_to_hex(oid));
+ 		if (has_type != type || has_size != size)
+-			die(_("SHA1 COLLISION FOUND WITH %s !"), sha1_to_hex(sha1));
+-		has_data = read_sha1_file(sha1, &has_type, &has_size);
++			die(_("SHA1 COLLISION FOUND WITH %s !"), oid_to_hex(oid));
++		has_data = read_sha1_file(oid->hash, &has_type, &has_size);
+ 		read_unlock();
+ 		if (!data)
+ 			data = new_data = get_data_from_pack(obj_entry);
+ 		if (!has_data)
+-			die(_("cannot read existing object %s"), sha1_to_hex(sha1));
++			die(_("cannot read existing object %s"), oid_to_hex(oid));
+ 		if (size != has_size || type != has_type ||
+ 		    memcmp(data, has_data, size) != 0)
+-			die(_("SHA1 COLLISION FOUND WITH %s !"), sha1_to_hex(sha1));
++			die(_("SHA1 COLLISION FOUND WITH %s !"), oid_to_hex(oid));
+ 		free(has_data);
+ 	}
+ 
+ 	if (strict) {
+ 		read_lock();
+ 		if (type == OBJ_BLOB) {
+-			struct blob *blob = lookup_blob(sha1);
++			struct blob *blob = lookup_blob(oid->hash);
+ 			if (blob)
+ 				blob->object.flags |= FLAG_CHECKED;
+ 			else
+-				die(_("invalid blob object %s"), sha1_to_hex(sha1));
++				die(_("invalid blob object %s"), oid_to_hex(oid));
+ 		} else {
+ 			struct object *obj;
+ 			int eaten;
+@@ -845,7 +845,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 			 * we do not need to free the memory here, as the
+ 			 * buf is deleted by the caller.
+ 			 */
+-			obj = parse_object_buffer(sha1, type, size, buf, &eaten);
++			obj = parse_object_buffer(oid->hash, type, size, buf, &eaten);
+ 			if (!obj)
+ 				die(_("invalid %s"), typename(type));
+ 			if (do_fsck_object &&
+@@ -960,7 +960,7 @@ static void resolve_delta(struct object_entry *delta_obj,
+ 		       typename(delta_obj->real_type),
+ 		       delta_obj->idx.oid.hash);
+ 	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
+-		    delta_obj->idx.oid.hash);
++		    &delta_obj->idx.oid);
+ 	counter_lock();
+ 	nr_resolved_deltas++;
+ 	counter_unlock();
+@@ -1149,7 +1149,7 @@ static void parse_pack_objects(unsigned char *sha1)
+ 			nr_delays++;
+ 		} else
+ 			sha1_object(data, NULL, obj->size, obj->type,
+-				    obj->idx.oid.hash);
++				    &obj->idx.oid);
+ 		free(data);
+ 		display_progress(progress, i+1);
+ 	}
+@@ -1176,7 +1176,7 @@ static void parse_pack_objects(unsigned char *sha1)
+ 			continue;
+ 		obj->real_type = obj->type;
+ 		sha1_object(NULL, obj, obj->size, obj->type,
+-			    obj->idx.oid.hash);
++			    &obj->idx.oid);
+ 		nr_delays--;
+ 	}
+ 	if (nr_delays)
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index 5b7ab9b96..cdeb6562d 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -161,14 +161,14 @@ static int both_empty(struct name_entry *a, struct name_entry *b)
+ 	return !(a->oid || b->oid);
+ }
+ 
+-static struct merge_list *create_entry(unsigned stage, unsigned mode, const unsigned char *sha1, const char *path)
++static struct merge_list *create_entry(unsigned stage, unsigned mode, const struct object_id *oid, const char *path)
+ {
+ 	struct merge_list *res = xcalloc(1, sizeof(*res));
+ 
+ 	res->stage = stage;
+ 	res->path = path;
+ 	res->mode = mode;
+-	res->blob = lookup_blob(sha1);
++	res->blob = lookup_blob(oid->hash);
+ 	return res;
+ }
+ 
+@@ -188,8 +188,8 @@ static void resolve(const struct traverse_info *info, struct name_entry *ours, s
  		return;
  
--	base = read_sha1_file(base_sha1, &type, &base_size);
-+	base = read_sha1_file(base_oid.hash, &type, &base_size);
- 	if (!base) {
- 		error("failed to read delta-pack base object %s",
--		      sha1_to_hex(base_sha1));
-+		      oid_to_hex(&base_oid));
- 		if (!recover)
- 			exit(1);
- 		has_errors = 1;
-@@ -505,7 +505,7 @@ static void unpack_all(void)
- int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
- {
- 	int i;
--	unsigned char sha1[20];
+ 	path = traverse_path(info, result);
+-	orig = create_entry(2, ours->mode, ours->oid->hash, path);
+-	final = create_entry(0, result->mode, result->oid->hash, path);
++	orig = create_entry(2, ours->mode, ours->oid, path);
++	final = create_entry(0, result->mode, result->oid, path);
+ 
+ 	final->link = orig;
+ 
+@@ -239,7 +239,7 @@ static struct merge_list *link_entry(unsigned stage, const struct traverse_info
+ 		path = entry->path;
+ 	else
+ 		path = traverse_path(info, n);
+-	link = create_entry(stage, n->mode, n->oid->hash, path);
++	link = create_entry(stage, n->mode, n->oid, path);
+ 	link->link = entry;
+ 	return link;
+ }
+diff --git a/object.c b/object.c
+index fe2222356..0208c407a 100644
+--- a/object.c
++++ b/object.c
+@@ -190,7 +190,7 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
+ 
+ 	obj = NULL;
+ 	if (type == OBJ_BLOB) {
+-		struct blob *blob = lookup_blob(sha1);
++		struct blob *blob = lookup_blob(oid.hash);
+ 		if (blob) {
+ 			if (parse_blob_buffer(blob, buffer, size))
+ 				return NULL;
+@@ -251,8 +251,11 @@ struct object *parse_object(const unsigned char *sha1)
+ 	const unsigned char *repl = lookup_replace_object(sha1);
+ 	void *buffer;
+ 	struct object *obj;
 +	struct object_id oid;
  
- 	check_replace_refs = 0;
+-	obj = lookup_object(sha1);
++	hashcpy(oid.hash, sha1);
++
++	obj = lookup_object(oid.hash);
+ 	if (obj && obj->parsed)
+ 		return obj;
  
-@@ -566,12 +566,12 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix)
- 	git_SHA1_Init(&ctx);
- 	unpack_all();
- 	git_SHA1_Update(&ctx, buffer, offset);
--	git_SHA1_Final(sha1, &ctx);
-+	git_SHA1_Final(oid.hash, &ctx);
- 	if (strict)
- 		write_rest();
--	if (hashcmp(fill(20), sha1))
-+	if (hashcmp(fill(GIT_SHA1_RAWSZ), oid.hash))
- 		die("final sha1 did not match");
--	use(20);
-+	use(GIT_SHA1_RAWSZ);
+@@ -263,7 +266,7 @@ struct object *parse_object(const unsigned char *sha1)
+ 			error("sha1 mismatch %s", sha1_to_hex(repl));
+ 			return NULL;
+ 		}
+-		parse_blob_buffer(lookup_blob(sha1), NULL, 0);
++		parse_blob_buffer(lookup_blob(oid.hash), NULL, 0);
+ 		return lookup_object(sha1);
+ 	}
  
- 	/* Write the last part of the buffer to stdout */
- 	while (len) {
