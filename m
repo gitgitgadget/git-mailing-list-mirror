@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE904207E2
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DB91207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046094AbdDWVfe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:35:34 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37280 "EHLO
+        id S1046110AbdDWVfj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:35:39 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37288 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933039AbdDWVf3 (ORCPT
+        by vger.kernel.org with ESMTP id S1046084AbdDWVf3 (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:29 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 93841280AE;
-        Sun, 23 Apr 2017 21:35:27 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 12725280B0;
+        Sun, 23 Apr 2017 21:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492983327;
-        bh=vuQDWlSRd9gj9jcFVJt/dnYeQXFxuGVhg26CnMe0Fz8=;
+        s=default; t=1492983328;
+        bh=Xsa62AHwY7u/6VQPKKMbc0Em6mWd+W4iIYuqyTx9TzI=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=X7FuUSVV+/gE9vWyVjisVpg6O+voH9SBMD1YFL15KMokewxFpPZYng1CSIV+2Ko8x
-         28dHv0EXVVagp9M0QMXWnt5e9UDiu1gik7FQyrXXHLSwKT2fEuRoW/zc9M3MqBglEF
-         UBP6tA+Gnsk1eKThbRH5khU24Qc9vDcJv1rcWgfNzC8MwINFTMTvD3azSdI05caOab
-         16Ho1TJHtrcPiOLRsUa92oTqfLFC04TS6BVPpNKrxcijuiAeoydAU+A4s/7FqpmdlC
-         id+ftwAxG3AgrbsurvwVc6Ttldg2s31h1zZ6nQUBbNmtkh5SimfSVN78fmKo0io8cB
-         v7JFvcDiF3DAs27swY3YVxuTRmrg0LR/FZDHroMJSHHTkXO6mDgFQTPpQ1fDNP7psN
-         bxvp8NqzW7c9/HYm5ni5OBw4AuMqN5GdhwswH+JQisYNOca1+prb63D3sNG0Ho3Tqx
-         +CjyzeA33gXJCmWEnOd2DsYJxTMm57GeQYx5VrueIva+nh4gPcI
+        b=ubN9YDZhpUG61N4c/Y04k7JPrJEu3qfpv2Rn0njKTPin+GQX9yDJXqYVJMZAk3GHI
+         a1MYqhMwqWNSlUiBcdYc43L1gAYThHlHD3xUzMAxWGPeQXGZvmxT9je9DxnvVbJF1+
+         rQWTr4Gsqv8DtfzHXl6hiVztBdr5+wOiMsURg89aaQvrlnqh+yFeQ5vGQ1W6beGrCu
+         aqbh91Vc5H4RRKbUmuKO8GvdV373U5foFY0ZPLqBEZqbp6glkBnYlREqYvfegJqVSK
+         0hNOwyDactuaXxPY8b3BDMQOSpXvDJSe0BySBZMOzsFoMMg8oTaAtdYFR/8nGEHSkP
+         +xADaR0qneCFh8W44xtaD3c93vJBEY2iA0R9+YXw7b9ORmRUfDkimuRsLlrj6TSPMr
+         Nn0kWWAwJ51GTILMBN1FZ/WmGkZReYmkNvpIYyomEdIKD5OilzTEZV/EUwlmIuj2Bv
+         XrFDBYSTUyXRvjszbzX0ji8d0JZSg2ju2plIgfaUhpUOeK5WkRW
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 01/53] fetch-pack: convert to struct object_id
-Date:   Sun, 23 Apr 2017 21:34:01 +0000
-Message-Id: <20170423213453.253425-2-sandals@crustytoothpaste.net>
+Subject: [PATCH 03/53] Convert struct cache_tree to use struct object_id
+Date:   Sun, 23 Apr 2017 21:34:03 +0000
+Message-Id: <20170423213453.253425-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,304 +48,271 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert all uses of unsigned char [20] to struct object_id.  Switch one
-use of get_sha1_hex to parse_oid_hex to avoid the need for a constant.
-This change is necessary in order to convert parse_object.
+Convert the sha1 member of struct cache_tree to struct object_id by
+changing the definition and applying the following semantic patch, plus
+the standard object_id transforms:
+
+@@
+struct cache_tree E1;
+@@
+- E1.sha1
++ E1.oid.hash
+
+@@
+struct cache_tree *E1;
+@@
+- E1->sha1
++ E1->oid.hash
+
+Fix up one reference to active_cache_tree which was not automatically
+caught by Coccinelle.  These changes are prerequisites for converting
+parse_object.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- fetch-pack.c | 89 ++++++++++++++++++++++++++++++------------------------------
- 1 file changed, 45 insertions(+), 44 deletions(-)
+ builtin/commit.c                |  2 +-
+ builtin/fsck.c                  |  4 ++--
+ cache-tree.c                    | 31 ++++++++++++++++---------------
+ cache-tree.h                    |  3 ++-
+ merge-recursive.c               |  2 +-
+ revision.c                      |  2 +-
+ sequencer.c                     |  3 ++-
+ t/helper/test-dump-cache-tree.c |  4 ++--
+ 8 files changed, 27 insertions(+), 24 deletions(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 42969353d..1e6b03b6b 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -118,9 +118,9 @@ static void rev_list_push(struct commit *commit, int mark)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 4e288bc51..05a0b609e 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1758,7 +1758,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		append_merge_tag_headers(parents, &tail);
  	}
- }
  
--static int rev_list_insert_ref(const char *refname, const unsigned char *sha1)
-+static int rev_list_insert_ref(const char *refname, const struct object_id *oid)
- {
--	struct object *o = deref_tag(parse_object(sha1), refname, 0);
-+	struct object *o = deref_tag(parse_object(oid->hash), refname, 0);
+-	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->sha1,
++	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->oid.hash,
+ 			 parents, oid.hash, author_ident.buf, sign_commit, extra)) {
+ 		rollback_index_files();
+ 		die(_("failed to write commit object"));
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index f76e4163a..543122f04 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -599,10 +599,10 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 		fprintf(stderr, "Checking cache tree\n");
  
- 	if (o && o->type == OBJ_COMMIT)
- 		rev_list_push((struct commit *)o, SEEN);
-@@ -131,7 +131,7 @@ static int rev_list_insert_ref(const char *refname, const unsigned char *sha1)
- static int rev_list_insert_ref_oid(const char *refname, const struct object_id *oid,
- 				   int flag, void *cb_data)
- {
--	return rev_list_insert_ref(refname, oid->hash);
-+	return rev_list_insert_ref(refname, oid);
- }
- 
- static int clear_marks(const char *refname, const struct object_id *oid,
-@@ -183,7 +183,7 @@ static void mark_common(struct commit *commit,
-   Get the next rev to send, ignoring the common.
- */
- 
--static const unsigned char *get_rev(void)
-+static const struct object_id *get_rev(void)
- {
- 	struct commit *commit = NULL;
- 
-@@ -222,7 +222,7 @@ static const unsigned char *get_rev(void)
+ 	if (0 <= it->entry_count) {
+-		struct object *obj = parse_object(it->sha1);
++		struct object *obj = parse_object(it->oid.hash);
+ 		if (!obj) {
+ 			error("%s: invalid sha1 pointer in cache-tree",
+-			      sha1_to_hex(it->sha1));
++			      oid_to_hex(&it->oid));
+ 			errors_found |= ERROR_REFS;
+ 			return 1;
  		}
+diff --git a/cache-tree.c b/cache-tree.c
+index 345ea3596..35d507ed7 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -225,7 +225,7 @@ int cache_tree_fully_valid(struct cache_tree *it)
+ 	int i;
+ 	if (!it)
+ 		return 0;
+-	if (it->entry_count < 0 || !has_sha1_file(it->sha1))
++	if (it->entry_count < 0 || !has_sha1_file(it->oid.hash))
+ 		return 0;
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		if (!cache_tree_fully_valid(it->down[i]->cache_tree))
+@@ -253,7 +253,7 @@ static int update_one(struct cache_tree *it,
+ 
+ 	*skip_count = 0;
+ 
+-	if (0 <= it->entry_count && has_sha1_file(it->sha1))
++	if (0 <= it->entry_count && has_sha1_file(it->oid.hash))
+ 		return it->entry_count;
+ 
+ 	/*
+@@ -340,7 +340,7 @@ static int update_one(struct cache_tree *it,
+ 				die("cache-tree.c: '%.*s' in '%s' not found",
+ 				    entlen, path + baselen, path);
+ 			i += sub->count;
+-			sha1 = sub->cache_tree->sha1;
++			sha1 = sub->cache_tree->oid.hash;
+ 			mode = S_IFDIR;
+ 			contains_ita = sub->cache_tree->entry_count < 0;
+ 			if (contains_ita) {
+@@ -402,12 +402,13 @@ static int update_one(struct cache_tree *it,
+ 		unsigned char sha1[20];
+ 		hash_sha1_file(buffer.buf, buffer.len, tree_type, sha1);
+ 		if (has_sha1_file(sha1))
+-			hashcpy(it->sha1, sha1);
++			hashcpy(it->oid.hash, sha1);
+ 		else
+ 			to_invalidate = 1;
+ 	} else if (dryrun)
+-		hash_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1);
+-	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1)) {
++		hash_sha1_file(buffer.buf, buffer.len, tree_type,
++			       it->oid.hash);
++	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->oid.hash)) {
+ 		strbuf_release(&buffer);
+ 		return -1;
  	}
- 
--	return commit->object.oid.hash;
-+	return &commit->object.oid;
+@@ -417,7 +418,7 @@ static int update_one(struct cache_tree *it,
+ #if DEBUG
+ 	fprintf(stderr, "cache-tree update-one (%d ent, %d subtree) %s\n",
+ 		it->entry_count, it->subtree_nr,
+-		sha1_to_hex(it->sha1));
++		oid_to_hex(&it->oid));
+ #endif
+ 	return i;
  }
+@@ -457,14 +458,14 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
+ 	if (0 <= it->entry_count)
+ 		fprintf(stderr, "cache-tree <%.*s> (%d ent, %d subtree) %s\n",
+ 			pathlen, path, it->entry_count, it->subtree_nr,
+-			sha1_to_hex(it->sha1));
++			oid_to_hex(&it->oid));
+ 	else
+ 		fprintf(stderr, "cache-tree <%.*s> (%d subtree) invalid\n",
+ 			pathlen, path, it->subtree_nr);
+ #endif
  
- enum ack_type {
-@@ -251,7 +251,7 @@ static void consume_shallow_list(struct fetch_pack_args *args, int fd)
+ 	if (0 <= it->entry_count) {
+-		strbuf_add(buffer, it->sha1, 20);
++		strbuf_add(buffer, it->oid.hash, 20);
  	}
- }
- 
--static enum ack_type get_ack(int fd, unsigned char *result_sha1)
-+static enum ack_type get_ack(int fd, struct object_id *result_oid)
- {
- 	int len;
- 	char *line = packet_read_line(fd, &len);
-@@ -262,7 +262,7 @@ static enum ack_type get_ack(int fd, unsigned char *result_sha1)
- 	if (!strcmp(line, "NAK"))
- 		return NAK;
- 	if (skip_prefix(line, "ACK ", &arg)) {
--		if (!get_sha1_hex(arg, result_sha1)) {
-+		if (!get_oid_hex(arg, result_oid)) {
- 			arg += 40;
- 			len -= arg - line;
- 			if (len < 1)
-@@ -291,7 +291,7 @@ static void send_request(struct fetch_pack_args *args,
- 
- static void insert_one_alternate_object(struct object *obj)
- {
--	rev_list_insert_ref(NULL, obj->oid.hash);
-+	rev_list_insert_ref(NULL, &obj->oid);
- }
- 
- #define INITIAL_FLUSH 16
-@@ -315,12 +315,12 @@ static int next_flush(struct fetch_pack_args *args, int count)
- }
- 
- static int find_common(struct fetch_pack_args *args,
--		       int fd[2], unsigned char *result_sha1,
-+		       int fd[2], struct object_id *result_oid,
- 		       struct ref *refs)
- {
- 	int fetching;
- 	int count = 0, flushes = 0, flush_at = INITIAL_FLUSH, retval;
--	const unsigned char *sha1;
-+	const struct object_id *oid;
- 	unsigned in_vain = 0;
- 	int got_continue = 0;
- 	int got_ready = 0;
-@@ -338,7 +338,7 @@ static int find_common(struct fetch_pack_args *args,
- 
- 	fetching = 0;
- 	for ( ; refs ; refs = refs->next) {
--		unsigned char *remote = refs->old_oid.hash;
-+		struct object_id *remote = &refs->old_oid;
- 		const char *remote_hex;
- 		struct object *o;
- 
-@@ -352,12 +352,12 @@ static int find_common(struct fetch_pack_args *args,
- 		 * interested in the case we *know* the object is
- 		 * reachable and we have already scanned it.
- 		 */
--		if (((o = lookup_object(remote)) != NULL) &&
-+		if (((o = lookup_object(remote->hash)) != NULL) &&
- 				(o->flags & COMPLETE)) {
- 			continue;
- 		}
- 
--		remote_hex = sha1_to_hex(remote);
-+		remote_hex = oid_to_hex(remote);
- 		if (!fetching) {
- 			struct strbuf c = STRBUF_INIT;
- 			if (multi_ack == 2)     strbuf_addstr(&c, " multi_ack_detailed");
-@@ -408,25 +408,25 @@ static int find_common(struct fetch_pack_args *args,
- 	if (args->deepen) {
- 		char *line;
- 		const char *arg;
--		unsigned char sha1[20];
-+		struct object_id oid;
- 
- 		send_request(args, fd[1], &req_buf);
- 		while ((line = packet_read_line(fd[0], NULL))) {
- 			if (skip_prefix(line, "shallow ", &arg)) {
--				if (get_sha1_hex(arg, sha1))
-+				if (get_oid_hex(arg, &oid))
- 					die(_("invalid shallow line: %s"), line);
--				register_shallow(sha1);
-+				register_shallow(oid.hash);
- 				continue;
- 			}
- 			if (skip_prefix(line, "unshallow ", &arg)) {
--				if (get_sha1_hex(arg, sha1))
-+				if (get_oid_hex(arg, &oid))
- 					die(_("invalid unshallow line: %s"), line);
--				if (!lookup_object(sha1))
-+				if (!lookup_object(oid.hash))
- 					die(_("object not found: %s"), line);
- 				/* make sure that it is parsed as shallow */
--				if (!parse_object(sha1))
-+				if (!parse_object(oid.hash))
- 					die(_("error in object: %s"), line);
--				if (unregister_shallow(sha1))
-+				if (unregister_shallow(oid.hash))
- 					die(_("no shallow found: %s"), line);
- 				continue;
- 			}
-@@ -445,9 +445,9 @@ static int find_common(struct fetch_pack_args *args,
- 
- 	flushes = 0;
- 	retval = -1;
--	while ((sha1 = get_rev())) {
--		packet_buf_write(&req_buf, "have %s\n", sha1_to_hex(sha1));
--		print_verbose(args, "have %s", sha1_to_hex(sha1));
-+	while ((oid = get_rev())) {
-+		packet_buf_write(&req_buf, "have %s\n", oid_to_hex(oid));
-+		print_verbose(args, "have %s", oid_to_hex(oid));
- 		in_vain++;
- 		if (flush_at <= ++count) {
- 			int ack;
-@@ -467,10 +467,10 @@ static int find_common(struct fetch_pack_args *args,
- 
- 			consume_shallow_list(args, fd[0]);
- 			do {
--				ack = get_ack(fd[0], result_sha1);
-+				ack = get_ack(fd[0], result_oid);
- 				if (ack)
- 					print_verbose(args, _("got %s %d %s"), "ack",
--						      ack, sha1_to_hex(result_sha1));
-+						      ack, oid_to_hex(result_oid));
- 				switch (ack) {
- 				case ACK:
- 					flushes = 0;
-@@ -481,9 +481,9 @@ static int find_common(struct fetch_pack_args *args,
- 				case ACK_ready:
- 				case ACK_continue: {
- 					struct commit *commit =
--						lookup_commit(result_sha1);
-+						lookup_commit(result_oid->hash);
- 					if (!commit)
--						die(_("invalid commit %s"), sha1_to_hex(result_sha1));
-+						die(_("invalid commit %s"), oid_to_hex(result_oid));
- 					if (args->stateless_rpc
- 					 && ack == ACK_common
- 					 && !(commit->object.flags & COMMON)) {
-@@ -491,7 +491,7 @@ static int find_common(struct fetch_pack_args *args,
- 						 * on the next RPC request so the peer knows
- 						 * it is in common with us.
- 						 */
--						const char *hex = sha1_to_hex(result_sha1);
-+						const char *hex = oid_to_hex(result_oid);
- 						packet_buf_write(&req_buf, "have %s\n", hex);
- 						state_len = req_buf.len;
- 						/*
-@@ -536,10 +536,10 @@ static int find_common(struct fetch_pack_args *args,
- 	if (!got_ready || !no_done)
- 		consume_shallow_list(args, fd[0]);
- 	while (flushes || multi_ack) {
--		int ack = get_ack(fd[0], result_sha1);
-+		int ack = get_ack(fd[0], result_oid);
- 		if (ack) {
- 			print_verbose(args, _("got %s (%d) %s"), "ack",
--				      ack, sha1_to_hex(result_sha1));
-+				      ack, oid_to_hex(result_oid));
- 			if (ack == ACK)
- 				return 0;
- 			multi_ack = 1;
-@@ -553,9 +553,9 @@ static int find_common(struct fetch_pack_args *args,
- 
- static struct commit_list *complete;
- 
--static int mark_complete(const unsigned char *sha1)
-+static int mark_complete(const struct object_id *oid)
- {
--	struct object *o = parse_object(sha1);
-+	struct object *o = parse_object(oid->hash);
- 
- 	while (o && o->type == OBJ_TAG) {
- 		struct tag *t = (struct tag *) o;
-@@ -577,7 +577,7 @@ static int mark_complete(const unsigned char *sha1)
- static int mark_complete_oid(const char *refname, const struct object_id *oid,
- 			     int flag, void *cb_data)
- {
--	return mark_complete(oid->hash);
-+	return mark_complete(oid);
- }
- 
- static void mark_recent_complete_commits(struct fetch_pack_args *args,
-@@ -635,14 +635,15 @@ static void filter_refs(struct fetch_pack_args *args,
- 
- 	/* Append unmatched requests to the list */
- 	for (i = 0; i < nr_sought; i++) {
--		unsigned char sha1[20];
-+		struct object_id oid;
-+		const char *p;
- 
- 		ref = sought[i];
- 		if (ref->match_status != REF_NOT_MATCHED)
- 			continue;
--		if (get_sha1_hex(ref->name, sha1) ||
--		    ref->name[40] != '\0' ||
--		    hashcmp(sha1, ref->old_oid.hash))
-+		if (parse_oid_hex(ref->name, &oid, &p) ||
-+		    *p != '\0' ||
-+		    oidcmp(&oid, &ref->old_oid))
- 			continue;
- 
- 		if ((allow_unadvertised_object_request &
-@@ -659,7 +660,7 @@ static void filter_refs(struct fetch_pack_args *args,
- 
- static void mark_alternate_complete(struct object *obj)
- {
--	mark_complete(obj->oid.hash);
-+	mark_complete(&obj->oid);
- }
- 
- static int everything_local(struct fetch_pack_args *args,
-@@ -722,17 +723,17 @@ static int everything_local(struct fetch_pack_args *args,
- 	filter_refs(args, refs, sought, nr_sought);
- 
- 	for (retval = 1, ref = *refs; ref ; ref = ref->next) {
--		const unsigned char *remote = ref->old_oid.hash;
-+		const struct object_id *remote = &ref->old_oid;
- 		struct object *o;
- 
--		o = lookup_object(remote);
-+		o = lookup_object(remote->hash);
- 		if (!o || !(o->flags & COMPLETE)) {
- 			retval = 0;
--			print_verbose(args, "want %s (%s)", sha1_to_hex(remote),
-+			print_verbose(args, "want %s (%s)", oid_to_hex(remote),
- 				      ref->name);
- 			continue;
- 		}
--		print_verbose(args, _("already have %s (%s)"), sha1_to_hex(remote),
-+		print_verbose(args, _("already have %s (%s)"), oid_to_hex(remote),
- 			      ref->name);
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		struct cache_tree_sub *down = it->down[i];
+@@ -521,7 +522,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 	if (0 <= it->entry_count) {
+ 		if (size < 20)
+ 			goto free_return;
+-		hashcpy(it->sha1, (const unsigned char*)buf);
++		hashcpy(it->oid.hash, (const unsigned char*)buf);
+ 		buf += 20;
+ 		size -= 20;
  	}
- 	return retval;
-@@ -871,7 +872,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 				 char **pack_lockfile)
- {
- 	struct ref *ref = copy_ref_list(orig_ref);
+@@ -530,7 +531,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 	if (0 <= it->entry_count)
+ 		fprintf(stderr, "cache-tree <%s> (%d ent, %d subtree) %s\n",
+ 			*buffer, it->entry_count, subtree_nr,
+-			sha1_to_hex(it->sha1));
++			oid_to_hex(&it->oid));
+ 	else
+ 		fprintf(stderr, "cache-tree <%s> (%d subtrees) invalid\n",
+ 			*buffer, subtree_nr);
+@@ -641,10 +642,10 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
+ 		subtree = cache_tree_find(index_state->cache_tree, prefix);
+ 		if (!subtree)
+ 			return WRITE_TREE_PREFIX_ERROR;
+-		hashcpy(sha1, subtree->sha1);
++		hashcpy(sha1, subtree->oid.hash);
+ 	}
+ 	else
+-		hashcpy(sha1, index_state->cache_tree->sha1);
++		hashcpy(sha1, index_state->cache_tree->oid.hash);
+ 
+ 	if (0 <= newfd)
+ 		rollback_lock_file(lock_file);
+@@ -663,7 +664,7 @@ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
+ 	struct name_entry entry;
+ 	int cnt;
+ 
+-	hashcpy(it->sha1, tree->object.oid.hash);
++	oidcpy(&it->oid, &tree->object.oid);
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	cnt = 0;
+ 	while (tree_entry(&desc, &entry)) {
+@@ -718,7 +719,7 @@ int cache_tree_matches_traversal(struct cache_tree *root,
+ 
+ 	it = find_cache_tree_from_traversal(root, info);
+ 	it = cache_tree_find(it, ent->path);
+-	if (it && it->entry_count > 0 && !hashcmp(ent->oid->hash, it->sha1))
++	if (it && it->entry_count > 0 && !oidcmp(ent->oid, &it->oid))
+ 		return it->entry_count;
+ 	return 0;
+ }
+diff --git a/cache-tree.h b/cache-tree.h
+index 41c574663..f7b9cab7e 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -1,6 +1,7 @@
+ #ifndef CACHE_TREE_H
+ #define CACHE_TREE_H
+ 
++#include "cache.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+ 
+@@ -15,7 +16,7 @@ struct cache_tree_sub {
+ 
+ struct cache_tree {
+ 	int entry_count; /* negative means "invalid" */
 -	unsigned char sha1[20];
 +	struct object_id oid;
- 	const char *agent_feature;
- 	int agent_len;
- 
-@@ -943,7 +944,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
- 		packet_flush(fd[1]);
- 		goto all_done;
+ 	int subtree_nr;
+ 	int subtree_alloc;
+ 	struct cache_tree_sub **down;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 62decd51c..9d6fd577e 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -304,7 +304,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+ 		return NULL;
  	}
--	if (find_common(args, fd, sha1, ref) < 0)
-+	if (find_common(args, fd, &oid, ref) < 0)
- 		if (!args->keep_pack)
- 			/* When cloning, it is not unusual to have
- 			 * no common commit.
+ 
+-	result = lookup_tree(active_cache_tree->sha1);
++	result = lookup_tree(active_cache_tree->oid.hash);
+ 
+ 	return result;
+ }
+diff --git a/revision.c b/revision.c
+index 7ff61ff5f..2b56c3baf 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1249,7 +1249,7 @@ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
+ 	int i;
+ 
+ 	if (it->entry_count >= 0) {
+-		struct tree *tree = lookup_tree(it->sha1);
++		struct tree *tree = lookup_tree(it->oid.hash);
+ 		add_pending_object_with_path(revs, &tree->object, "",
+ 					     040000, path->buf);
+ 	}
+diff --git a/sequencer.c b/sequencer.c
+index 77afecaeb..e13a25b91 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -508,7 +508,8 @@ static int is_index_unchanged(void)
+ 		if (cache_tree_update(&the_index, 0))
+ 			return error(_("unable to update cache tree\n"));
+ 
+-	return !hashcmp(active_cache_tree->sha1, head_commit->tree->object.oid.hash);
++	return !oidcmp(&active_cache_tree->oid,
++		       &head_commit->tree->object.oid);
+ }
+ 
+ static int write_author_script(const char *message)
+diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
+index 7af116d49..ebf3aab22 100644
+--- a/t/helper/test-dump-cache-tree.c
++++ b/t/helper/test-dump-cache-tree.c
+@@ -10,7 +10,7 @@ static void dump_one(struct cache_tree *it, const char *pfx, const char *x)
+ 		       "invalid", x, pfx, it->subtree_nr);
+ 	else
+ 		printf("%s %s%s (%d entries, %d subtrees)\n",
+-		       sha1_to_hex(it->sha1), x, pfx,
++		       oid_to_hex(&it->oid), x, pfx,
+ 		       it->entry_count, it->subtree_nr);
+ }
+ 
+@@ -32,7 +32,7 @@ static int dump_cache_tree(struct cache_tree *it,
+ 	}
+ 	else {
+ 		dump_one(it, pfx, "");
+-		if (hashcmp(it->sha1, ref->sha1) ||
++		if (oidcmp(&it->oid, &ref->oid) ||
+ 		    ref->entry_count != it->entry_count ||
+ 		    ref->subtree_nr != it->subtree_nr) {
+ 			/* claims to be valid but is lying */
