@@ -2,77 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A8A5207E2
-	for <e@80x24.org>; Sun, 23 Apr 2017 16:01:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96AF4207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 16:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1045856AbdDWQBJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 12:01:09 -0400
-Received: from mail-vk0-f47.google.com ([209.85.213.47]:33034 "EHLO
-        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1045854AbdDWQBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2017 12:01:07 -0400
-Received: by mail-vk0-f47.google.com with SMTP id j127so28890921vkh.0
-        for <git@vger.kernel.org>; Sun, 23 Apr 2017 09:01:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=Bc7xYABfAmUfYFPBmF5pSEjgKwQRu2Dn9a6F84IbB+M=;
-        b=TNObeqv01iNZsrILXAV4i42ISv0dQTjpECiSzQ4WsXAaR8NScXhm1oIG7/sWjcUuql
-         7sWWfXPiqm3wgrvpj+HNvQqjtLERRa30nqGleRmYltLGBFBw1ErnDCZamqk20bqeZJ6K
-         ObriiQ2WPEej3qpO0Va6sxGDbo3+5I75VIQULv4Krbo8L0ncwtR4MdtZ8SF7+PNvuA4v
-         uxG6o6TiD+dx+0LFM3lMuPjj1RWPHSXvS0YXyHMLslBjvTzF78Bqzz/ZPCUPt3VY1wA0
-         qzTZ3bmKfVBghsl5PPXMZx6xB0aAO/aoek76A2jhnPPFr6XTuTa5xv0UMtOVOxwlle/v
-         UTpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=Bc7xYABfAmUfYFPBmF5pSEjgKwQRu2Dn9a6F84IbB+M=;
-        b=RETK6Ngupbh34OaSv7Yd2iNPVn11Cnfim1eiR59RRTMb2YVXROkSmF6JQ+BjJpFL54
-         ZxE4O1X6RZ1iXzhVWC9b032N/chPwABMVKU1MrM9jd0c1w0hTgLYikcQFl5KBVFduOoS
-         +mxol0YHk6uC54YiEUNOpmOCCVYuaMXZQ8a9AjbhltFXgFNsOVpuo4AbGA3SZnO+6nxE
-         NAGF5CqBnB16EBqZWXwEUsG3Xd/cz55EpYc7DwoE7UBGLNMEk1GVuklPAv7/dDyo5r+c
-         0F0ImMApAMVM2JTMqd8WyhoV5AN4MCWkwAuv7icbPbGrxoXTtt5J1U7YL0Z5Nl5yudev
-         pvzg==
-X-Gm-Message-State: AN3rC/6T1ZXh55AB/ED38m/GUU01UQbnIe2+XCe+1syU/RtdDxzBfNYn
-        IKXTSm9QhHM8mr2AP1z/OjsbDzwhPWor2Eg=
-X-Received: by 10.31.140.131 with SMTP id o125mr279148vkd.100.1492963265663;
- Sun, 23 Apr 2017 09:01:05 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.176.80.73 with HTTP; Sun, 23 Apr 2017 09:01:05 -0700 (PDT)
-From:   vvs <vvs009@gmail.com>
-Date:   Sun, 23 Apr 2017 19:01:05 +0300
-Message-ID: <CAM1zWBtfgHT=pT0pidQo1HD=DfrXLG3gNaUvs0vZKvYfG1BHFw@mail.gmail.com>
-Subject: Logical inconsistency in git reset
+        id S1162141AbdDWQUz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 12:20:55 -0400
+Received: from mout1.freenet.de ([195.4.92.91]:37254 "EHLO mout1.freenet.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1045839AbdDWQUx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2017 12:20:53 -0400
+Received: from [195.4.92.142] (helo=mjail2.freenet.de)
+        by mout1.freenet.de with esmtpa (ID liebundartig@freenet.de) (port 25) (Exim 4.85 #1)
+        id 1d2KFn-0005u6-84; Sun, 23 Apr 2017 18:20:51 +0200
+Received: from localhost ([::1]:56493 helo=mjail2.freenet.de)
+        by mjail2.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
+        id 1d2KFm-0000n2-3b; Sun, 23 Apr 2017 18:20:50 +0200
+Received: from mx9.freenet.de ([195.4.92.19]:39981)
+        by mjail2.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
+        id 1d2KDM-0006vZ-MV; Sun, 23 Apr 2017 18:18:20 +0200
+Received: from p200300454467fa4464be414ec96be51f.dip0.t-ipconnect.de ([2003:45:4467:fa44:64be:414e:c96b:e51f]:50923)
+        by mx9.freenet.de with esmtpsa (ID liebundartig@freenet.de) (TLSv1.2:AES128-SHA256:128) (port 465) (Exim 4.85 #1)
+        id 1d2KDN-0002CB-Go; Sun, 23 Apr 2017 18:18:21 +0200
+From:   =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Cc:     gitster@pobox.com,
+        =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
+Subject: [PATCH] doc: update SubmittingPatches
+Date:   Sun, 23 Apr 2017 18:17:44 +0200
+Message-Id: <1492964264-29423-1-git-send-email-liebundartig@freenet.de>
+X-Mailer: git-send-email 1.9.1
+X-Originated-At: 2003:45:4467:fa44:64be:414e:c96b:e51f!50923
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear list
+-use US English spelling
+-based on my own experience:
+ * add commands used to contribute a patch
+ * minor wording change for better readability
 
-Like it was suggested on git-users list I'm forwarding the original
-message here.
+Thanks-to: Stefan Beller <sbeller@google.com>
+---
+ Documentation/SubmittingPatches | 31 +++++++++++++++++++++++++------
+ 1 file changed, 25 insertions(+), 6 deletions(-)
 
-I found out that "git reset --hard" produced different outcome
-depending on current index content, i.e. when there is no entry for a
-file in working tree it actually changed that file. While on the
-contrary, if you use "git reset --mixed" right before that, the file
-won't be touched. This affects make, which thinks that the file was
-changed.
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index bc8ad00..ac027ba 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -51,7 +51,7 @@ If your description starts to get too long, that's a sign that you
+ probably need to split up your commit to finer grained pieces.
+ That being said, patches which plainly describe the things that
+ help reviewers check the patch, and future maintainers understand
+-the code, are the most beautiful patches.  Descriptions that summarise
++the code, are the most beautiful patches.  Descriptions that summarize
+ the point in the subject well, and describe the motivation for the
+ change, the approach taken by the change, and if relevant how this
+ differs substantially from the prior version, are all good things
+@@ -87,7 +87,7 @@ patches separate from other documentation changes.
+ Oh, another thing.  We are picky about whitespaces.  Make sure your
+ changes do not trigger errors with the sample pre-commit hook shipped
+ in templates/hooks--pre-commit.  To help ensure this does not happen,
+-run git diff --check on your changes before you commit.
++run "git diff --check" on your changes before you commit.
+ 
+ 
+ (2) Describe your changes well.
+@@ -111,10 +111,10 @@ Improve...".
+ 
+ The body should provide a meaningful commit message, which:
+ 
+-  . explains the problem the change tries to solve, iow, what is wrong
++  . explains the problem the change tries to solve, i.e. what is wrong
+     with the current code without the change.
+ 
+-  . justifies the way the change solves the problem, iow, why the
++  . justifies the way the change solves the problem, i.e. why the
+     result with the change is better.
+ 
+   . alternate solutions considered but discarded, if any.
+@@ -122,7 +122,7 @@ The body should provide a meaningful commit message, which:
+ Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
+ instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
+ to do frotz", as if you are giving orders to the codebase to change
+-its behaviour.  Try to make sure your explanation can be understood
++its behavior.  Try to make sure your explanation can be understood
+ without external resources. Instead of giving a URL to a mailing list
+ archive, summarize the relevant points of the discussion.
+ 
+@@ -261,7 +261,7 @@ smaller project it is a good discipline to follow it.
+ The sign-off is a simple line at the end of the explanation for
+ the patch, which certifies that you wrote it or otherwise have
+ the right to pass it on as a open-source patch.  The rules are
+-pretty simple: if you can certify the below:
++pretty simple: if you can certify the below D-C-O:
+ 
+         Developer's Certificate of Origin 1.1
+ 
+@@ -376,6 +376,25 @@ from the list and queue it to 'pu', in order to make it easier for
+ people play with it without having to pick up and apply the patch to
+ their trees themselves.
+ 
++
++An oversimplified summary of the commands to run:
++* clone repo
++  $ git clone https://github.com/git/git
++
++* change files in your local repo copy
++
++* commit your changes
++  $ git commit -a
++
++* create '.patch' file for the latest commit
++  $ git format-patch HEAD^
++
++* install 'git-email' package and configure it, f.e.
++    https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSendEmail/
++  send an email to yourself using your MUA in order to find out the value
++  for the "--smtp-domain" option; look at the 'Received' header option
++  $ git send-email --annotate --smtp-domain=LONGSTRING --to=git@vger.kernel.org --cc=MAINTAINER --smtp-debug=1 NAME.patch
++
+ ------------------------------------------------
+ Know the status of your patch after submission
+ 
+-- 
+1.9.1
 
-More detailed discussion and test cases can be found here:
-https://groups.google.com/forum/?hl=en#!topic/git-users/9ziZ6yq-BfU
-
-I could just add to that argument that this issue is certainly looks
-like a logical inconsistency to an average user. The git operations
-are checking an index entry for the file in working tree but they
-doesn't fill that entry in the first place. Shouldn't this be
-considered as a kind of uninitialized pointer problem? And there is
-that useful abstraction that --hard should include --mixed semantics.
