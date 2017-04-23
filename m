@@ -2,144 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 728F7207D6
-	for <e@80x24.org>; Sun, 23 Apr 2017 07:50:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CF29207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 14:00:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1427845AbdDWHuQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 03:50:16 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:53233 "EHLO bsmtp1.bon.at"
+        id S1045556AbdDWOAE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 10:00:04 -0400
+Received: from mout1.freenet.de ([195.4.92.91]:32840 "EHLO mout1.freenet.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1427840AbdDWHuP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2017 03:50:15 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3w9hTd33x7z5tl9;
-        Sun, 23 Apr 2017 09:50:13 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id C3E073A5;
-        Sun, 23 Apr 2017 09:50:10 +0200 (CEST)
-Subject: Re: [PATCH v2] archive-zip: Add zip64 headers when file size is too
- large for 32 bits
-To:     Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
- <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
-Cc:     Keith Goldfarb <keith@blackthorn-media.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
-Date:   Sun, 23 Apr 2017 09:50:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
-MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
+        id S1754307AbdDWOAD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2017 10:00:03 -0400
+Received: from [195.4.92.142] (helo=mjail2.freenet.de)
+        by mout1.freenet.de with esmtpa (ID liebundartig@freenet.de) (port 25) (Exim 4.85 #1)
+        id 1d2I3U-0001TH-Oc; Sun, 23 Apr 2017 16:00:00 +0200
+Received: from localhost ([::1]:57911 helo=mjail2.freenet.de)
+        by mjail2.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
+        id 1d2I3U-0003yI-M1; Sun, 23 Apr 2017 16:00:00 +0200
+Received: from mx7.freenet.de ([195.4.92.17]:55896)
+        by mjail2.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
+        id 1d2I0w-0000tN-8D; Sun, 23 Apr 2017 15:57:22 +0200
+Received: from p200300454467fa4464be414ec96be51f.dip0.t-ipconnect.de ([2003:45:4467:fa44:64be:414e:c96b:e51f]:57829)
+        by mx7.freenet.de with esmtpsa (ID liebundartig@freenet.de) (TLSv1.2:AES128-SHA256:128) (port 465) (Exim 4.85 #1)
+        id 1d2I0v-0003MA-Va; Sun, 23 Apr 2017 15:57:22 +0200
+From:   =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com,
+        =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
+Subject: [PATCH] fix minor typing mistakes
+Date:   Sun, 23 Apr 2017 15:56:49 +0200
+Message-Id: <1492955809-29018-1-git-send-email-liebundartig@freenet.de>
+X-Mailer: git-send-email 1.9.1
+X-Originated-At: 2003:45:4467:fa44:64be:414e:c96b:e51f!57829
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.04.2017 um 00:41 schrieb Peter Krefting:
-> Indeed. Last time I implemented zip64 support it was on the reading side,
-> and I remember this was a mess...
+Thanks-to: Stefan Beller <sbeller@google.com>
+---
+ Documentation/git-commit.txt        | 4 ++--
+ Documentation/gitremote-helpers.txt | 2 +-
+ ci/run-windows-build.sh             | 2 +-
+ diff.c                              | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-It is indeed!
-
->  static void set_zip_header_data_desc(struct zip_local_header *header,
->  				     unsigned long size,
->  				     unsigned long compressed_size,
-> -				     unsigned long crc)
-> +				     unsigned long crc,
-> +				     int *clamped)
->  {
->  	copy_le32(header->crc32, crc);
-> -	copy_le32(header->compressed_size, compressed_size);
-> -	copy_le32(header->size, size);
-> +	copy_le32(header->compressed_size, clamp_max(compressed_size, 0xFFFFFFFFU, clamped));
-> +	copy_le32(header->size, clamp_max(size, 0xFFFFFFFFU, clamped));
-> +	if (clamped)
-> +		zip_zip64 = 1;
-
-This must be
-
-	if (*clamped)
-
->  }
->
->  static int has_only_ascii(const char *s)
-> @@ -279,6 +299,7 @@ static int write_zip_entry(struct archiver_args *args,
->  	int is_binary = -1;
->  	const char *path_without_prefix = path + args->baselen;
->  	unsigned int creator_version = 0;
-> +	int clamped = 0;
->
->  	crc = crc32(0, NULL, 0);
->
-> @@ -376,7 +397,7 @@ static int write_zip_entry(struct archiver_args *args,
->  	copy_le16(dirent.comment_length, 0);
->  	copy_le16(dirent.disk, 0);
->  	copy_le32(dirent.attr2, attr2);
-> -	copy_le32(dirent.offset, zip_offset);
-> +	copy_le32(dirent.offset, clamp_max(zip_offset, 0xFFFFFFFFU, &clamped));
-
-I don't see any provisions to write the zip64 extra header in the 
-central directory when this offset is clamped. This means that ZIP 
-archives whose size exceed 4GB are still unsupported.
-
->
->  	copy_le32(header.magic, 0x04034b50);
->  	copy_le16(header.version, 10);
-> @@ -384,15 +405,26 @@ static int write_zip_entry(struct archiver_args *args,
->  	copy_le16(header.compression_method, method);
->  	copy_le16(header.mtime, zip_time);
->  	copy_le16(header.mdate, zip_date);
-> -	set_zip_header_data_desc(&header, size, compressed_size, crc);
-> +	set_zip_header_data_desc(&header, size, compressed_size, crc, &clamped);
->  	copy_le16(header.filename_length, pathlen);
-> -	copy_le16(header.extra_length, ZIP_EXTRA_MTIME_SIZE);
-> +	copy_le16(header.extra_length, ZIP_EXTRA_MTIME_SIZE + (clamped ? ZIP_EXTRA_ZIP64_SIZE : 0));
->  	write_or_die(1, &header, ZIP_LOCAL_HEADER_SIZE);
->  	zip_offset += ZIP_LOCAL_HEADER_SIZE;
->  	write_or_die(1, path, pathlen);
->  	zip_offset += pathlen;
->  	write_or_die(1, &extra, ZIP_EXTRA_MTIME_SIZE);
->  	zip_offset += ZIP_EXTRA_MTIME_SIZE;
-> +	if (clamped) {
-> +		struct zip_extra_zip64 extra_zip64;
-> +		copy_le16(extra_zip64.magic, 0x0001);
-> +		copy_le16(extra_zip64.extra_size, ZIP_EXTRA_ZIP64_PAYLOAD_SIZE);
-> +		copy_le64(extra_zip64.size, size >= 0xFFFFFFFFU ? size : 0);
-> +		copy_le64(extra_zip64.compressed_size, compressed_size >= 0xFFFFFFFFU ? compressed_size : 0);
-> +		copy_le64(extra_zip64.offset, zip_offset >= 0xFFFFFFFFU ? zip_offset : 0);
-> +		copy_le32(extra_zip64.disk, 0);
-
-These are wrong, I think. Entries that did not overflow must be omitted 
-entirely from the zip64 extra record, not filled with 0. This implies 
-that the payload size (.extra_size) is dynamic.
-
-As René pointed out, the offset is only written in the central 
-directory, but not in the local header for the current file. Therefore, 
-it must be omitted here. The disk number also never exceeds 0xffff and 
-must be omitted as well.
-
-> +		write_or_die(1, &extra_zip64, ZIP_EXTRA_ZIP64_SIZE);
-> +		zip_offset += ZIP_EXTRA_ZIP64_SIZE;
-> +	}
->  	if (stream && method == 0) {
->  		unsigned char buf[STREAM_BUFFER_SIZE];
->  		ssize_t readlen;
-> @@ -538,7 +570,7 @@ static void write_zip_trailer(const unsigned char *sha1)
->  	copy_le16(trailer.comment_length, sha1 ? GIT_SHA1_HEXSZ : 0);
->
->  	write_or_die(1, zip_dir, zip_dir_offset);
-> -	if (clamped)
-> +	if (clamped || zip_zip64)
->  		write_zip64_trailer();
->  	write_or_die(1, &trailer, ZIP_DIR_TRAILER_SIZE);
->  	if (sha1)
->
-
--- Hannes
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index ed0f5b9..afb06ad 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -95,7 +95,7 @@ OPTIONS
+ 
+ --reset-author::
+ 	When used with -C/-c/--amend options, or when committing after a
+-	a conflicting cherry-pick, declare that the authorship of the
++	conflicting cherry-pick, declare that the authorship of the
+ 	resulting commit now belongs to the committer. This also renews
+ 	the author timestamp.
+ 
+@@ -112,7 +112,7 @@ OPTIONS
+ 	`--dry-run`.
+ 
+ --long::
+-	When doing a dry-run, give the output in a the long-format.
++	When doing a dry-run, give the output in the long-format.
+ 	Implies `--dry-run`.
+ 
+ -z::
+diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
+index e4b785e..4a584f3 100644
+--- a/Documentation/gitremote-helpers.txt
++++ b/Documentation/gitremote-helpers.txt
+@@ -463,7 +463,7 @@ set by Git if the remote helper has the 'option' capability.
+ 	GPG sign pushes.
+ 
+ 'option push-option <string>::
+-	Transmit <string> as a push option. As the a push option
++	Transmit <string> as a push option. As the push option
+ 	must not contain LF or NUL characters, the string is not encoded.
+ 
+ SEE ALSO
+diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
+index 4e3a50b..9f89d54 100755
+--- a/ci/run-windows-build.sh
++++ b/ci/run-windows-build.sh
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env bash
+ #
+-# Script to trigger the a Git for Windows build and test run.
++# Script to trigger the Git for Windows build and test run.
+ # Set the $GFW_CI_TOKEN as environment variable.
+ # Pass the branch (only branches on https://github.com/git/git are
+ # supported) and a commit hash.
+diff --git a/diff.c b/diff.c
+index 11eef1c..74283d9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -911,7 +911,7 @@ static int fn_out_diff_words_write_helper(FILE *fp,
+ /*
+  * '--color-words' algorithm can be described as:
+  *
+- *   1. collect a the minus/plus lines of a diff hunk, divided into
++ *   1. collect the minus/plus lines of a diff hunk, divided into
+  *      minus-lines and plus-lines;
+  *
+  *   2. break both minus-lines and plus-lines into words and
+-- 
+1.9.1
 
