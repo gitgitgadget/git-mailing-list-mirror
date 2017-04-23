@@ -2,97 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A912207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 14:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A8A5207E2
+	for <e@80x24.org>; Sun, 23 Apr 2017 16:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1045698AbdDWOvZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 10:51:25 -0400
-Received: from lamora.getmail.no ([84.210.184.7]:52381 "EHLO lamora.getmail.no"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1045695AbdDWOvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2017 10:51:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by lamora.getmail.no (Postfix) with ESMTP id 85C8910759E;
-        Sun, 23 Apr 2017 16:51:21 +0200 (CEST)
-Received: from lamora.getmail.no ([127.0.0.1])
-        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id FOTc6G7T2cJj; Sun, 23 Apr 2017 16:51:21 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by lamora.getmail.no (Postfix) with ESMTP id 147D31075DB;
-        Sun, 23 Apr 2017 16:51:21 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at lamora.get.c.bitbit.net
-Received: from lamora.getmail.no ([127.0.0.1])
-        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id wvPcaja6NFV2; Sun, 23 Apr 2017 16:51:20 +0200 (CEST)
-Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
-        by lamora.getmail.no (Postfix) with ESMTPSA id E329310759E;
-        Sun, 23 Apr 2017 16:51:20 +0200 (CEST)
-Received: from peter (helo=localhost)
-        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
-        (envelope-from <peter@softwolves.pp.se>)
-        id 1d2IrB-00019Y-CL; Sun, 23 Apr 2017 16:51:21 +0200
-Date:   Sun, 23 Apr 2017 15:51:21 +0100 (CET)
-From:   Peter Krefting <peter@softwolves.pp.se>
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
-        git@vger.kernel.org, Keith Goldfarb <keith@blackthorn-media.com>
-Subject: Re: [PATCH v2] archive-zip: Add zip64 headers when file size is too
- large for 32 bits
-In-Reply-To: <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
-Message-ID: <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
-User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+        id S1045856AbdDWQBJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 12:01:09 -0400
+Received: from mail-vk0-f47.google.com ([209.85.213.47]:33034 "EHLO
+        mail-vk0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1045854AbdDWQBH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2017 12:01:07 -0400
+Received: by mail-vk0-f47.google.com with SMTP id j127so28890921vkh.0
+        for <git@vger.kernel.org>; Sun, 23 Apr 2017 09:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Bc7xYABfAmUfYFPBmF5pSEjgKwQRu2Dn9a6F84IbB+M=;
+        b=TNObeqv01iNZsrILXAV4i42ISv0dQTjpECiSzQ4WsXAaR8NScXhm1oIG7/sWjcUuql
+         7sWWfXPiqm3wgrvpj+HNvQqjtLERRa30nqGleRmYltLGBFBw1ErnDCZamqk20bqeZJ6K
+         ObriiQ2WPEej3qpO0Va6sxGDbo3+5I75VIQULv4Krbo8L0ncwtR4MdtZ8SF7+PNvuA4v
+         uxG6o6TiD+dx+0LFM3lMuPjj1RWPHSXvS0YXyHMLslBjvTzF78Bqzz/ZPCUPt3VY1wA0
+         qzTZ3bmKfVBghsl5PPXMZx6xB0aAO/aoek76A2jhnPPFr6XTuTa5xv0UMtOVOxwlle/v
+         UTpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Bc7xYABfAmUfYFPBmF5pSEjgKwQRu2Dn9a6F84IbB+M=;
+        b=RETK6Ngupbh34OaSv7Yd2iNPVn11Cnfim1eiR59RRTMb2YVXROkSmF6JQ+BjJpFL54
+         ZxE4O1X6RZ1iXzhVWC9b032N/chPwABMVKU1MrM9jd0c1w0hTgLYikcQFl5KBVFduOoS
+         +mxol0YHk6uC54YiEUNOpmOCCVYuaMXZQ8a9AjbhltFXgFNsOVpuo4AbGA3SZnO+6nxE
+         NAGF5CqBnB16EBqZWXwEUsG3Xd/cz55EpYc7DwoE7UBGLNMEk1GVuklPAv7/dDyo5r+c
+         0F0ImMApAMVM2JTMqd8WyhoV5AN4MCWkwAuv7icbPbGrxoXTtt5J1U7YL0Z5Nl5yudev
+         pvzg==
+X-Gm-Message-State: AN3rC/6T1ZXh55AB/ED38m/GUU01UQbnIe2+XCe+1syU/RtdDxzBfNYn
+        IKXTSm9QhHM8mr2AP1z/OjsbDzwhPWor2Eg=
+X-Received: by 10.31.140.131 with SMTP id o125mr279148vkd.100.1492963265663;
+ Sun, 23 Apr 2017 09:01:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Received: by 10.176.80.73 with HTTP; Sun, 23 Apr 2017 09:01:05 -0700 (PDT)
+From:   vvs <vvs009@gmail.com>
+Date:   Sun, 23 Apr 2017 19:01:05 +0300
+Message-ID: <CAM1zWBtfgHT=pT0pidQo1HD=DfrXLG3gNaUvs0vZKvYfG1BHFw@mail.gmail.com>
+Subject: Logical inconsistency in git reset
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt:
+Dear list
 
-> Let's get the naming straight: There is no "zip64 local header". There is a 
-> "zip64 extra record" for the "zip local header".
+Like it was suggested on git-users list I'm forwarding the original
+message here.
 
-Indeed, sorry for the confusion. That's what I get for trying to write 
-coherent email at half past midnight :-)
+I found out that "git reset --hard" produced different outcome
+depending on current index content, i.e. when there is no entry for a
+file in working tree it actually changed that file. While on the
+contrary, if you use "git reset --mixed" right before that, the file
+won't be touched. This affects make, which thinks that the file was
+changed.
 
-> The zip64 extra data record has an offset field, but since the local 
-> header does not have an offset field, the offset field in the 
-> corresponding zip64 extra data record is always omitted.
+More detailed discussion and test cases can be found here:
+https://groups.google.com/forum/?hl=en#!topic/git-users/9ziZ6yq-BfU
 
-Ah, now I understand, I was a bit confused, as the same code generates 
-the central directory entry as the local entry.
-
->> @@ -376,7 +397,7 @@ static int write_zip_entry(struct archiver_args *args,
->>  	copy_le16(dirent.comment_length, 0);
->>  	copy_le16(dirent.disk, 0);
->>  	copy_le32(dirent.attr2, attr2);
->> -	copy_le32(dirent.offset, zip_offset);
->> +	copy_le32(dirent.offset, clamp_max(zip_offset, 0xFFFFFFFFU, 
->> &clamped));
->
-> I don't see any provisions to write the zip64 extra header in the central 
-> directory when this offset is clamped. This means that ZIP archives whose 
-> size exceed 4GB are still unsupported.
-
-The clamped flag will trigger the inclusion of the zip64 central 
-directory, which contains the 64-bit offset. Should the central 
-directory entry also have the zip64 extra field?
-
-> These are wrong, I think. Entries that did not overflow must be omitted 
-> entirely from the zip64 extra record, not filled with 0. This implies that 
-> the payload size (.extra_size) is dynamic.
-
-That is what I was trying to figure out, APPNOTE is extremely vague on 
-the subject, but thinking back I recall that you are correct.
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+I could just add to that argument that this issue is certainly looks
+like a logical inconsistency to an average user. The git operations
+are checking an index entry for the file in working tree but they
+doesn't fill that entry in the first place. Shouldn't this be
+considered as a kind of uninitialized pointer problem? And there is
+that useful abstraction that --hard should include --mixed semantics.
