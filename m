@@ -2,45 +2,44 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 335EA207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:37:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D06FD207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046215AbdDWVhQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:37:16 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37430 "EHLO
+        id S1046217AbdDWVhT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:37:19 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37432 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046136AbdDWVfw (ORCPT
+        by vger.kernel.org with ESMTP id S1046138AbdDWVfw (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:52 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5B901280CA;
-        Sun, 23 Apr 2017 21:35:38 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2EA9C280CC;
+        Sun, 23 Apr 2017 21:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492983338;
-        bh=Ala30MPA6e330s5G28DVtX/kNIPXNyAwCgm3dlbL3D4=;
+        s=default; t=1492983339;
+        bh=TgR7H6NCGamEWgIcPoi9IytuoIU/5Efz/zuHF1w/f4s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ADYaykO7PsJLXFT/wjHGkoj0mlo0Bf7whJ6CtXxqo+XNLCX4TwzcrYESSfTdeYUdB
-         zfXG1gYjoSAvWmWjjuFQXLwb2VQqY2fFLxb8B9Az0FbTbRuL5gWI6sbE3t1uBeKFwK
-         d+EFoemGk31WpNjLxdhwJ6y2EmuSmUPJ/gDY+HA3wdOi+aUe7znQUnpsJs8PqqIkuG
-         T2FfoFQ+8eE9GsIaH6bdyUiPHc4x8RVXC6fsc9VtKQH3GJhJvT6MfxXGrxLUh7uWRs
-         x7Mw5y8B8mQ6pfEEcbWaK2F8jyYm1LE7D2ei9vfHUPmk5K06MeaOaQrE9BO8ZQ545K
-         yjIkbH22A1PJW0alGKweZicuNtrX5/V3TJI2Yt5VNuBO0sFGthA/l0lT5Bg32ihcoS
-         +wphJa9MvSVAQmcYLqDfE35HSrGUysm3PwQ5zAgLjvD4JJNf85cDtoisxTBkMO8rmk
-         2ARwrQuOvrNuue/DCU0GrDzAwRcw3GSoe6HmQ2SJdd0R2QnmktA
+        b=zrbITT8YIOuIokI26nONkB2VBg/CZJojbO+ALwUzQO74aFJ/DJ7+quol5rUSnw8ve
+         ymRyVUNlTYwvvU7FbKhPeLZNt07QxyjmyVpFp/0ho1xp066pvnkznzGxe7SDQxtECs
+         gID3chndX/FxY+xUX/x/gwY44BOZdb1lCP6MDoLh+Qb6uTJFTVhC0qpJK+hDXhrvtL
+         LwVDb5/tWfrs4ZegYVcGE42df8I0hHC8f+ew66nI7tlYUPg/PI1uZ6rtIUctHrDRU9
+         O7vFvcsilp4I2dZkzdnVDEhV3yxIkN3zvqPsU+YgwbQmvB7OuXYjD4PZJYv5Z1svQW
+         jaHmdx7S+9+/8IytoAzAqtF4PSfIFj6NdcHi/whUaKdCDG0m3zMmoLqN1o3PM6vzcd
+         QnZjSE+xCGeKlYvgKmG46A32N3hTge1FP7zRxUmwfI8XbzSVh4nxHycdHd9G5eaXW7
+         oqMgYYHLpaDs923wFGZAdZDrLGOegl8tYoupFypLnjWbZ17YwZq
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 31/53] builtin/reflog: convert tree_is_complete to take struct object_id
-Date:   Sun, 23 Apr 2017 21:34:31 +0000
-Message-Id: <20170423213453.253425-32-sandals@crustytoothpaste.net>
+Subject: [PATCH 34/53] Convert lookup_tag to struct object_id
+Date:   Sun, 23 Apr 2017 21:34:34 +0000
+Message-Id: <20170423213453.253425-35-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -49,56 +48,152 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Convert lookup_tag to take a pointer to struct object_id.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/reflog.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/describe.c     | 6 +++---
+ builtin/pack-objects.c | 2 +-
+ builtin/replace.c      | 2 +-
+ log-tree.c             | 2 +-
+ object.c               | 2 +-
+ sha1_name.c            | 2 +-
+ tag.c                  | 8 ++++----
+ tag.h                  | 2 +-
+ 8 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 4831116ea..7866a0341 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -55,14 +55,14 @@ struct collect_reflog_cb {
- #define STUDYING	(1u<<11)
- #define REACHABLE	(1u<<12)
+diff --git a/builtin/describe.c b/builtin/describe.c
+index f6032f593..893c8789f 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -79,13 +79,13 @@ static int replace_name(struct commit_name *e,
+ 		struct tag *t;
  
--static int tree_is_complete(const unsigned char *sha1)
-+static int tree_is_complete(const struct object_id *oid)
- {
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 	int complete;
- 	struct tree *tree;
- 
--	tree = lookup_tree(sha1);
-+	tree = lookup_tree(oid->hash);
- 	if (!tree)
- 		return 0;
- 	if (tree->object.flags & SEEN)
-@@ -73,7 +73,7 @@ static int tree_is_complete(const unsigned char *sha1)
- 	if (!tree->buffer) {
- 		enum object_type type;
- 		unsigned long size;
--		void *data = read_sha1_file(sha1, &type, &size);
-+		void *data = read_sha1_file(oid->hash, &type, &size);
- 		if (!data) {
- 			tree->object.flags |= INCOMPLETE;
- 			return 0;
-@@ -85,7 +85,7 @@ static int tree_is_complete(const unsigned char *sha1)
- 	complete = 1;
- 	while (tree_entry(&desc, &entry)) {
- 		if (!has_sha1_file(entry.oid->hash) ||
--		    (S_ISDIR(entry.mode) && !tree_is_complete(entry.oid->hash))) {
-+		    (S_ISDIR(entry.mode) && !tree_is_complete(entry.oid))) {
- 			tree->object.flags |= INCOMPLETE;
- 			complete = 0;
+ 		if (!e->tag) {
+-			t = lookup_tag(e->oid.hash);
++			t = lookup_tag(&e->oid);
+ 			if (!t || parse_tag(t))
+ 				return 1;
+ 			e->tag = t;
  		}
-@@ -152,7 +152,7 @@ static int commit_is_complete(struct commit *commit)
- 		for (i = 0; i < found.nr; i++) {
- 			struct commit *c =
- 				(struct commit *)found.objects[i].item;
--			if (!tree_is_complete(c->tree->object.oid.hash)) {
-+			if (!tree_is_complete(&c->tree->object.oid)) {
- 				is_incomplete = 1;
- 				c->object.flags |= INCOMPLETE;
- 			}
+ 
+-		t = lookup_tag(oid->hash);
++		t = lookup_tag(oid);
+ 		if (!t || parse_tag(t))
+ 			return 0;
+ 		*tag = t;
+@@ -245,7 +245,7 @@ static unsigned long finish_depth_computation(
+ static void display_name(struct commit_name *n)
+ {
+ 	if (n->prio == 2 && !n->tag) {
+-		n->tag = lookup_tag(n->oid.hash);
++		n->tag = lookup_tag(&n->oid);
+ 		if (!n->tag || parse_tag(n->tag))
+ 			die(_("annotated tag %s not available"), n->path);
+ 	}
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d76ff0542..7cebb5a7f 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2348,7 +2348,7 @@ static void add_tag_chain(const struct object_id *oid)
+ 	if (packlist_find(&to_pack, oid->hash, NULL))
+ 		return;
+ 
+-	tag = lookup_tag(oid->hash);
++	tag = lookup_tag(oid);
+ 	while (1) {
+ 		if (!tag || parse_tag(tag) || !tag->tagged)
+ 			die("unable to pack objects reachable from tag %s",
+diff --git a/builtin/replace.c b/builtin/replace.c
+index e2ea3d47b..205510b5b 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -354,7 +354,7 @@ static void check_one_mergetag(struct commit *commit,
+ 	int i;
+ 
+ 	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_oid.hash);
+-	tag = lookup_tag(tag_oid.hash);
++	tag = lookup_tag(&tag_oid);
+ 	if (!tag)
+ 		die(_("bad mergetag in commit '%s'"), ref);
+ 	if (parse_tag_buffer(tag, extra->value, extra->len))
+diff --git a/log-tree.c b/log-tree.c
+index 169fd039f..6532c892c 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -488,7 +488,7 @@ static void show_one_mergetag(struct commit *commit,
+ 	size_t payload_size, gpg_message_offset;
+ 
+ 	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), oid.hash);
+-	tag = lookup_tag(oid.hash);
++	tag = lookup_tag(&oid);
+ 	if (!tag)
+ 		return; /* error message already given */
+ 
+diff --git a/object.c b/object.c
+index d23c5fad3..dd4d3a1ea 100644
+--- a/object.c
++++ b/object.c
+@@ -220,7 +220,7 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
+ 			obj = &commit->object;
+ 		}
+ 	} else if (type == OBJ_TAG) {
+-		struct tag *tag = lookup_tag(sha1);
++		struct tag *tag = lookup_tag(&oid);
+ 		if (tag) {
+ 			if (parse_tag_buffer(tag, buffer, size))
+ 			       return NULL;
+diff --git a/sha1_name.c b/sha1_name.c
+index 390a09c41..b7e09ac13 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -361,7 +361,7 @@ static int show_ambiguous_object(const struct object_id *oid, void *data)
+ 			format_commit_message(commit, " %ad - %s", &desc, &pp);
+ 		}
+ 	} else if (type == OBJ_TAG) {
+-		struct tag *tag = lookup_tag(oid->hash);
++		struct tag *tag = lookup_tag(oid);
+ 		if (!parse_tag(tag) && tag->tag)
+ 			strbuf_addf(&desc, " %s", tag->tag);
+ 	}
+diff --git a/tag.c b/tag.c
+index 062516b40..571798519 100644
+--- a/tag.c
++++ b/tag.c
+@@ -89,11 +89,11 @@ struct object *deref_tag_noverify(struct object *o)
+ 	return o;
+ }
+ 
+-struct tag *lookup_tag(const unsigned char *sha1)
++struct tag *lookup_tag(const struct object_id *oid)
+ {
+-	struct object *obj = lookup_object(sha1);
++	struct object *obj = lookup_object(oid->hash);
+ 	if (!obj)
+-		return create_object(sha1, alloc_tag_node());
++		return create_object(oid->hash, alloc_tag_node());
+ 	return object_as_type(obj, OBJ_TAG, 0);
+ }
+ 
+@@ -148,7 +148,7 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
+ 	} else if (!strcmp(type, commit_type)) {
+ 		item->tagged = &lookup_commit(&oid)->object;
+ 	} else if (!strcmp(type, tag_type)) {
+-		item->tagged = &lookup_tag(oid.hash)->object;
++		item->tagged = &lookup_tag(&oid)->object;
+ 	} else {
+ 		error("Unknown type %s", type);
+ 		item->tagged = NULL;
+diff --git a/tag.h b/tag.h
+index a5721b673..8d6fc2814 100644
+--- a/tag.h
++++ b/tag.h
+@@ -12,7 +12,7 @@ struct tag {
+ 	unsigned long date;
+ };
+ 
+-extern struct tag *lookup_tag(const unsigned char *sha1);
++extern struct tag *lookup_tag(const struct object_id *oid);
+ extern int parse_tag_buffer(struct tag *item, const void *data, unsigned long size);
+ extern int parse_tag(struct tag *item);
+ extern struct object *deref_tag(struct object *, const char *, int);
