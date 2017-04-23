@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3B1D207BD
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:35:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 103F5207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046133AbdDWVfv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:35:51 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37322 "EHLO
+        id S1046140AbdDWVfw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:35:52 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37320 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S933022AbdDWVfb (ORCPT
+        by vger.kernel.org with ESMTP id S1046091AbdDWVfb (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:31 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E8E26280B5;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A058E280B4;
         Sun, 23 Apr 2017 21:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492983330;
-        bh=2NSpD/LyhkhM4CA1zbv1XExfrT+1NOxf8jIFQ2ob+cc=;
+        s=default; t=1492983329;
+        bh=hutjRo5HsKDbF/+SRuxzdwpgjZ2+YgA4SPBCk5IDydU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VuuM8Dx7izPJkX16TgTttk6s/wObILawG2msA2AvnWXviOxAgOyd105Pw1whLdjYg
-         oVHXlvtuM0g7Cy4nauEFt0LymK2h0yJmEb21R7EssbNQLLWJJsKZZQVe35/dmUW8gj
-         FkKXhQn136QqAXWjbjQUoF1b/AYSsuqfqryHrc3AqelQcyNjMCn4vufwBzJIkWAIee
-         PwjxMf6lebkA/J5qfDTTrASXCyVYJbA156hfQmKCp6e9ZILpp3FY6m7YbRJn5JaWvH
-         OqLlEFLY8g3b/JQt48QkJtMCGo80MYHcunVD7iV7a4b/vr7qp1iCOlM8fQ08LxVaK7
-         czMV5AN21Tt/i9yVSD9PqL+IF399IOUWEYoZtE0tX9KLFHkT0n6MHLG/n1uDzsYoVt
-         Oan0OMtxQDvRppNKWy7H/FyZ9ZhnZQlo3GQDnSLEOz/GQfwyOSDAy4oZkPBOfjw0+V
-         pceemYyJfC3CYpgKW7cBVuZv+A+FabeQukQrix5KHQKgPKHo0/P
+        b=pIMhNVCuGxAzTZ3mcNgacJbbVLoQr14OGuGdJ51Zhdh2U96E0TBuwo73m3+80eKSk
+         e+heWurp1J/lbp1P6QF5DHz9LI7NJrm0Yauy99FeVxH1ND199mzMHJjLte4+hh/JdG
+         /OKglQ8MROYjjFY48fVQMW5YDXVE1UYXMWboD4Q+g7r0ilkkeAR90Fy5I9UFH0s6pM
+         NKlQ9ylnq5P6aFGnZcgjTdyfebiBfGKCYGI4kfIpY1ESI3yis5N8gl7hJ5JTKmWPGp
+         dKbSjuXOCyQnl4DtK1Z16F+fJ2K1vVNOX9aiSVJQHTr/IpTuLMeTLdijYAD1eXx1C4
+         JdyPgCks895PeXgVrdyuSWU2LAZ7MckiioWG3imDAV+nTZ59OoHzp1zheQUo5FcLXq
+         0t8sdCtGtMlh7Iw4oooIgxywYmv4XKMcPsYJ2CzHtMWeFAXUPVv/fVl4JrfVGfIhzb
+         H9FhrmxxyyN1e5ZSiThJxaIozVRfGFXs4M2h0YCJxmp5bnHn9es
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 08/53] builtin/blame: convert static function to struct object_id
-Date:   Sun, 23 Apr 2017 21:34:08 +0000
-Message-Id: <20170423213453.253425-9-sandals@crustytoothpaste.net>
+Subject: [PATCH 07/53] branch: convert to struct object_id
+Date:   Sun, 23 Apr 2017 21:34:07 +0000
+Message-Id: <20170423213453.253425-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -48,36 +48,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function is a caller of lookup_commit_reference_gently, which we
-will convert later.
+This change is required to convert lookup_commit_reference later.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/blame.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ branch.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 07506a3e4..7d644d092 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -2461,7 +2461,7 @@ static const char *dwim_reverse_initial(struct scoreboard *sb)
- 	 */
- 	struct object *obj;
- 	struct commit *head_commit;
--	unsigned char head_sha1[20];
-+	struct object_id head_oid;
+diff --git a/branch.c b/branch.c
+index ad5a2299b..1758c9708 100644
+--- a/branch.c
++++ b/branch.c
+@@ -191,9 +191,9 @@ int validate_new_branchname(const char *name, struct strbuf *ref,
  
- 	if (sb->revs->pending.nr != 1)
- 		return NULL;
-@@ -2473,9 +2473,9 @@ static const char *dwim_reverse_initial(struct scoreboard *sb)
- 		return NULL;
+ 	if (!attr_only) {
+ 		const char *head;
+-		unsigned char sha1[20];
++		struct object_id oid;
  
- 	/* Do we have HEAD? */
--	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_sha1, NULL))
-+	if (!resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, head_oid.hash, NULL))
- 		return NULL;
--	head_commit = lookup_commit_reference_gently(head_sha1, 1);
-+	head_commit = lookup_commit_reference_gently(head_oid.hash, 1);
- 	if (!head_commit)
- 		return NULL;
+-		head = resolve_ref_unsafe("HEAD", 0, sha1, NULL);
++		head = resolve_ref_unsafe("HEAD", 0, oid.hash, NULL);
+ 		if (!is_bare_repository() && head && !strcmp(head, ref->buf))
+ 			die(_("Cannot force update the current branch."));
+ 	}
+@@ -233,7 +233,7 @@ void create_branch(const char *name, const char *start_name,
+ 		   int quiet, enum branch_track track)
+ {
+ 	struct commit *commit;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	char *real_ref;
+ 	struct strbuf ref = STRBUF_INIT;
+ 	int forcing = 0;
+@@ -253,7 +253,7 @@ void create_branch(const char *name, const char *start_name,
+ 	}
  
+ 	real_ref = NULL;
+-	if (get_sha1(start_name, sha1)) {
++	if (get_oid(start_name, &oid)) {
+ 		if (explicit_tracking) {
+ 			if (advice_set_upstream_failure) {
+ 				error(_(upstream_missing), start_name);
+@@ -265,7 +265,7 @@ void create_branch(const char *name, const char *start_name,
+ 		die(_("Not a valid object name: '%s'."), start_name);
+ 	}
+ 
+-	switch (dwim_ref(start_name, strlen(start_name), sha1, &real_ref)) {
++	switch (dwim_ref(start_name, strlen(start_name), oid.hash, &real_ref)) {
+ 	case 0:
+ 		/* Not branching from any existing branch */
+ 		if (explicit_tracking)
+@@ -286,9 +286,9 @@ void create_branch(const char *name, const char *start_name,
+ 		break;
+ 	}
+ 
+-	if ((commit = lookup_commit_reference(sha1)) == NULL)
++	if ((commit = lookup_commit_reference(oid.hash)) == NULL)
+ 		die(_("Not a valid branch point: '%s'."), start_name);
+-	hashcpy(sha1, commit->object.oid.hash);
++	oidcpy(&oid, &commit->object.oid);
+ 
+ 	if (reflog)
+ 		log_all_ref_updates = LOG_REFS_NORMAL;
+@@ -306,7 +306,7 @@ void create_branch(const char *name, const char *start_name,
+ 		transaction = ref_transaction_begin(&err);
+ 		if (!transaction ||
+ 		    ref_transaction_update(transaction, ref.buf,
+-					   sha1, forcing ? NULL : null_sha1,
++					   oid.hash, forcing ? NULL : null_sha1,
+ 					   0, msg, &err) ||
+ 		    ref_transaction_commit(transaction, &err))
+ 			die("%s", err.buf);
