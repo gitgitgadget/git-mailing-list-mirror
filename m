@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFFBD207E2
-	for <e@80x24.org>; Sun, 23 Apr 2017 21:38:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB0C1207BD
+	for <e@80x24.org>; Sun, 23 Apr 2017 21:38:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1046286AbdDWViO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 17:38:14 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37558 "EHLO
+        id S1046288AbdDWViS (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 17:38:18 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37488 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1046153AbdDWVgB (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:36:01 -0400
+        by vger.kernel.org with ESMTP id S933022AbdDWVf5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Apr 2017 17:35:57 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id EEF6D280D9;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4D554280D7;
         Sun, 23 Apr 2017 21:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1492983342;
-        bh=4Aah0QPZnN3sMvpWAVWvYLoUrYEdAmoP/LF2fg9FgwE=;
+        s=default; t=1492983341;
+        bh=iv8Yph1qhCJhnIUXlSeW6d3aDnpvBJvDlqfYpoW0trw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WWwe7hetEoqDesgwla4OXszOXitKupAUwQ66A68h5onxSKu2c7fX8YG/bu2xx/XPl
-         JHsSMGHxjAvAF1dqv6AduOw2Ppm527r/2Mt7YonUo383EU55ik6OgUV/SzF59/DamR
-         esTuI1PyfX4+NN2TO1qGiDb2OQV9M3ikz1GAZp2Fd2tOamBDy9zjMrmvT8wX03xN9z
-         lOUs9CUrAtWCyjTlCfKoLA4jAGFNQo48Zes48xhhsfzj+pt1BbD4KUCgi9CZIjoS/C
-         7OZy4EPtMCVZ6qnVqNJX5+hYfnckOguEwpkDVnrkNsS/351I1qVHfisPouyRq5ufio
-         Fa0B9z776x/NfBqPGbwLyisDOb09Uqkk0x/BZy8+7K2EFES1d6T61T9GdEEXTL6KfY
-         WugUZowx0aw7DyOx+a7qRlAzQohNHRyL3urEgPgoRFZeY4Z9WXkFqf6EdsAo3J7ug6
-         iO14GvA5N7LC+LAkZeDNq3OnRspiGuX9l99v9lOmR594KiXIoOy
+        b=hdqcnQOVz2mU4qtYnjvV7jLZG4IlN2MhLB0CKZA8sm8edEVCYH06AkGkmDIqmzp2M
+         g3KcUcBJVgYM+sHvaiu1+Of32BKNIObbtUdxirliiaRLOhlJbmM+Iti7fUwno8C0CP
+         pkaIxOvpkM/Vlykzo3zJOa5s6NxOWAXUz4eDznYQ5FzNe3LMsoINgCgALCxiBbnPkB
+         ZuoZf9Vq+rHuLriIxxvaTRe+mK/qCxcNYs0eYgvDJyvBrlH55TDsY/Chwy2MAI2+rJ
+         DQhbwIbBTjrLQ1OdQ/A+VdxMmNuC+hQtrXHcfGr5tBs80IU5hKX5SDqt3TTTWNxigy
+         FGz6iy3O56SsjZiFK58Thxob2BPJnfTeWejG5UAL1YyIo/r3ejTZD/CfmuIRDSnCKy
+         efST6EEwgRYrH40uByzjhFZBGn8XI1IfQBfakad/4ej8J0iFFASx6zfDnY9TCMd7E9
+         HW2dZWVOz/vzFzS3uXDEu4MOCmYC94XFavjPgfV3vG7WyynVZ7+
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 44/53] sha1_name: convert internals of peel_onion to object_id
-Date:   Sun, 23 Apr 2017 21:34:44 +0000
-Message-Id: <20170423213453.253425-45-sandals@crustytoothpaste.net>
+Subject: [PATCH 42/53] revision: convert remaining parse_object callers to object_id
+Date:   Sun, 23 Apr 2017 21:34:42 +0000
+Message-Id: <20170423213453.253425-43-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.12.2.762.g0e3151a226
 In-Reply-To: <20170423213453.253425-1-sandals@crustytoothpaste.net>
 References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
@@ -50,32 +50,157 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sha1_name.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ revision.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index b7e09ac13..72e72ab9a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -798,7 +798,7 @@ struct object *peel_to_type(const char *name, int namelen,
- static int peel_onion(const char *name, int len, unsigned char *sha1,
- 		      unsigned lookup_flags)
+diff --git a/revision.c b/revision.c
+index f82c56e1f..80f74bb7b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -177,23 +177,23 @@ void add_pending_object(struct rev_info *revs,
+ 
+ void add_head_to_pending(struct rev_info *revs)
  {
--	unsigned char outer[20];
-+	struct object_id outer;
- 	const char *sp;
- 	unsigned int expected_type = 0;
- 	struct object *o;
-@@ -846,10 +846,10 @@ static int peel_onion(const char *name, int len, unsigned char *sha1,
- 	else if (expected_type == OBJ_TREE)
- 		lookup_flags |= GET_SHA1_TREEISH;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct object *obj;
+-	if (get_sha1("HEAD", sha1))
++	if (get_oid("HEAD", &oid))
+ 		return;
+-	obj = parse_object(sha1);
++	obj = parse_object(oid.hash);
+ 	if (!obj)
+ 		return;
+ 	add_pending_object(revs, obj, "HEAD");
+ }
  
--	if (get_sha1_1(name, sp - name - 2, outer, lookup_flags))
-+	if (get_sha1_1(name, sp - name - 2, outer.hash, lookup_flags))
- 		return -1;
+ static struct object *get_reference(struct rev_info *revs, const char *name,
+-				    const unsigned char *sha1,
++				    const struct object_id *oid,
+ 				    unsigned int flags)
+ {
+ 	struct object *object;
  
--	o = parse_object(outer);
-+	o = parse_object(outer.hash);
- 	if (!o)
- 		return -1;
- 	if (!expected_type) {
+-	object = parse_object(sha1);
++	object = parse_object(oid->hash);
+ 	if (!object) {
+ 		if (revs->ignore_missing)
+ 			return object;
+@@ -206,7 +206,7 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
+ void add_pending_oid(struct rev_info *revs, const char *name,
+ 		      const struct object_id *oid, unsigned int flags)
+ {
+-	struct object *object = get_reference(revs, name, oid->hash, flags);
++	struct object *object = get_reference(revs, name, oid, flags);
+ 	add_pending_object(revs, object, name);
+ }
+ 
+@@ -1157,7 +1157,7 @@ static int handle_one_ref(const char *path, const struct object_id *oid,
+ 	if (ref_excluded(cb->all_revs->ref_excludes, path))
+ 	    return 0;
+ 
+-	object = get_reference(cb->all_revs, path, oid->hash, cb->all_flags);
++	object = get_reference(cb->all_revs, path, oid, cb->all_flags);
+ 	add_rev_cmdline(cb->all_revs, object, path, REV_CMD_REF, cb->all_flags);
+ 	add_pending_oid(cb->all_revs, path, oid, cb->all_flags);
+ 	return 0;
+@@ -1292,7 +1292,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
+ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
+ 			    int exclude_parent)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct object *it;
+ 	struct commit *commit;
+ 	struct commit_list *parents;
+@@ -1303,17 +1303,17 @@ static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
+ 		flags ^= UNINTERESTING | BOTTOM;
+ 		arg++;
+ 	}
+-	if (get_sha1_committish(arg, sha1))
++	if (get_sha1_committish(arg, oid.hash))
+ 		return 0;
+ 	while (1) {
+-		it = get_reference(revs, arg, sha1, 0);
++		it = get_reference(revs, arg, &oid, 0);
+ 		if (!it && revs->ignore_missing)
+ 			return 0;
+ 		if (it->type != OBJ_TAG)
+ 			break;
+ 		if (!((struct tag*)it)->tagged)
+ 			return 0;
+-		hashcpy(sha1, ((struct tag*)it)->tagged->oid.hash);
++		oidcpy(&oid, &((struct tag*)it)->tagged->oid);
+ 	}
+ 	if (it->type != OBJ_COMMIT)
+ 		return 0;
+@@ -1434,7 +1434,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 	struct object_context oc;
+ 	char *dotdot;
+ 	struct object *object;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int local_flags;
+ 	const char *arg = arg_;
+ 	int cant_be_filename = revarg_opt & REVARG_CANNOT_BE_FILENAME;
+@@ -1444,7 +1444,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 
+ 	dotdot = strstr(arg, "..");
+ 	if (dotdot) {
+-		unsigned char from_sha1[20];
++		struct object_id from_oid;
+ 		const char *next = dotdot + 2;
+ 		const char *this = arg;
+ 		int symmetric = *next == '.';
+@@ -1470,8 +1470,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 				return -1;
+ 			}
+ 		}
+-		if (!get_sha1_committish(this, from_sha1) &&
+-		    !get_sha1_committish(next, sha1)) {
++		if (!get_sha1_committish(this, from_oid.hash) &&
++		    !get_sha1_committish(next, oid.hash)) {
+ 			struct object *a_obj, *b_obj;
+ 
+ 			if (!cant_be_filename) {
+@@ -1479,8 +1479,8 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 				verify_non_filename(revs->prefix, arg);
+ 			}
+ 
+-			a_obj = parse_object(from_sha1);
+-			b_obj = parse_object(sha1);
++			a_obj = parse_object(from_oid.hash);
++			b_obj = parse_object(oid.hash);
+ 			if (!a_obj || !b_obj) {
+ 			missing:
+ 				if (revs->ignore_missing)
+@@ -1568,11 +1568,11 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 	if (revarg_opt & REVARG_COMMITTISH)
+ 		get_sha1_flags = GET_SHA1_COMMITTISH;
+ 
+-	if (get_sha1_with_context(arg, get_sha1_flags, sha1, &oc))
++	if (get_sha1_with_context(arg, get_sha1_flags, oid.hash, &oc))
+ 		return revs->ignore_missing ? 0 : -1;
+ 	if (!cant_be_filename)
+ 		verify_non_filename(revs->prefix, arg);
+-	object = get_reference(revs, arg, sha1, flags ^ local_flags);
++	object = get_reference(revs, arg, &oid, flags ^ local_flags);
+ 	add_rev_cmdline(revs, object, arg_, REV_CMD_REV, flags ^ local_flags);
+ 	add_pending_object_with_mode(revs, object, arg, oc.mode);
+ 	return 0;
+@@ -2287,12 +2287,12 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	if (revs->show_merge)
+ 		prepare_show_merge(revs);
+ 	if (revs->def && !revs->pending.nr && !got_rev_arg) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		struct object *object;
+ 		struct object_context oc;
+-		if (get_sha1_with_context(revs->def, 0, sha1, &oc))
++		if (get_sha1_with_context(revs->def, 0, oid.hash, &oc))
+ 			diagnose_missing_default(revs->def);
+-		object = get_reference(revs, revs->def, sha1, 0);
++		object = get_reference(revs, revs->def, &oid, 0);
+ 		add_pending_object_with_mode(revs, object, revs->def, oc.mode);
+ 	}
+ 
