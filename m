@@ -6,78 +6,84 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5347207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 18:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15D6B207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 18:39:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1173804AbdDXSZI convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 24 Apr 2017 14:25:08 -0400
-Received: from lamora.getmail.no ([84.210.184.7]:43298 "EHLO lamora.getmail.no"
+        id S977003AbdDXSjb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 14:39:31 -0400
+Received: from siwi.pair.com ([209.68.5.199]:24815 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1173756AbdDXSY4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 14:24:56 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by lamora.getmail.no (Postfix) with ESMTP id 5FB3512749C;
-        Mon, 24 Apr 2017 20:24:53 +0200 (CEST)
-Received: from lamora.getmail.no ([127.0.0.1])
-        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 5ndH2yDrFWmb; Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by lamora.getmail.no (Postfix) with ESMTP id DE94E127507;
-        Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at lamora.get.c.bitbit.net
-Received: from lamora.getmail.no ([127.0.0.1])
-        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id IdUsK3Ghc8Sd; Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
-Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
-        by lamora.getmail.no (Postfix) with ESMTPSA id C074A127420;
-        Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
-Received: from peter (helo=localhost)
-        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
-        (envelope-from <peter@softwolves.pp.se>)
-        id 1d2ifN-00089V-FS; Mon, 24 Apr 2017 20:24:53 +0200
-Date:   Mon, 24 Apr 2017 19:24:53 +0100 (CET)
-From:   Peter Krefting <peter@softwolves.pp.se>
-To:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Keith Goldfarb <keith@blackthorn-media.com>
-Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
-In-Reply-To: <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
-Message-ID: <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org> <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org> <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se> <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de> <85f2b6d1-107b-0624-af82-92446f28269e@web.de> <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
-User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+        id S976993AbdDXSj3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 14:39:29 -0400
+Received: from [10.181.8.102] (cpe-76-182-13-114.nc.res.rr.com [76.182.13.114])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 9BBAA8448B;
+        Mon, 24 Apr 2017 14:39:28 -0400 (EDT)
+Subject: Re: [PATCH v7] read-cache: force_verify_index_checksum
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <20170414203221.43015-1-git@jeffhostetler.com>
+ <20170414203221.43015-2-git@jeffhostetler.com>
+ <870a8a36-fc6c-6b07-d09e-eec8a9f46a5c@kdbg.org>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <8bde0b54-c0f6-364d-1f08-ce5207eb6c86@jeffhostetler.com>
+Date:   Mon, 24 Apr 2017 14:39:27 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <870a8a36-fc6c-6b07-d09e-eec8a9f46a5c@kdbg.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe:
 
-> @@ -433,6 +446,11 @@ static int write_zip_entry(struct archiver_args *args,
-> 	free(deflated);
-> 	free(buffer);
+
+On 4/24/2017 1:26 PM, Johannes Sixt wrote:
+> Am 14.04.2017 um 22:32 schrieb git@jeffhostetler.com:
+>> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+>> index 33a51c9..677e15a 100755
+>> --- a/t/t1450-fsck.sh
+>> +++ b/t/t1450-fsck.sh
+>> @@ -689,4 +689,17 @@ test_expect_success 'bogus head does not 
+>> fallback to all heads' '
+>>      ! grep $blob out
+>>  '
+>>
+>> +test_expect_success 'detect corrupt index file in fsck' '
+>> +    cp .git/index .git/index.backup &&
+>> +    test_when_finished "mv .git/index.backup .git/index" &&
+>> +    echo zzzzzzzz >zzzzzzzz &&
+>> +    git add zzzzzzzz &&
+>> +    sed -e "s/zzzzzzzz/yyyyyyyy/" .git/index >.git/index.yyy &&
 >
-> +	if (offset > 0xffffffff) {
-> +		zip64_dir_extra_payload_size += 8;
-> +		zip_dir_extra_size += 2 + 2 + zip64_dir_extra_payload_size;
-> +	}
-> +
-> 	strbuf_add_le(&zip_dir, 4, 0x02014b50);	/* magic */
-> 	strbuf_add_le(&zip_dir, 2, creator_version);
-> 	strbuf_add_le(&zip_dir, 2, 10);		/* version */
+> sed on a binary file? Sooner or later we are going to run into 
+> portability issues.
 
-This needs to be >=. The spec says that if the value is 0xffffffff, 
-there should be a zip64 record with the actual size (even if it is 
-0xffffffff).
+In v5 of this patch series I used "perl" and it was suggested that I use 
+"sed" instead.
+It doesn't matter to me which we use.  My testing showed that it was 
+safe, but that
+was only Linux.
 
-Also set the version required to 45 (4.5) for any record that has zip64 
-fields.
+Does the mailing list have a preference for this ?
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+>
+>
+>> +    mv .git/index.yyy .git/index &&
+>> +    # Confirm that fsck detects invalid checksum
+>> +    test_must_fail git fsck --cache &&
+>
+> You should ensure that this failure is really because of an invalid 
+> checksum. The failure could also be due to an extra LF at the end that 
+> sed inserted, no?
+
+I suppose we could, but I'm tempted to wait on that for now.
+
+Jeff
+
