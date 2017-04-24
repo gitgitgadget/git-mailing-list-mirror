@@ -6,84 +6,184 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA1A8207BD
-	for <e@80x24.org>; Mon, 24 Apr 2017 00:45:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACD96207BD
+	for <e@80x24.org>; Mon, 24 Apr 2017 01:16:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1163807AbdDXApJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 20:45:09 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64836 "EHLO
+        id S1163925AbdDXBQM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 21:16:12 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59154 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1163792AbdDXApI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2017 20:45:08 -0400
+        with ESMTP id S1163923AbdDXBQK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2017 21:16:10 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id BFF497C50A;
-        Sun, 23 Apr 2017 20:45:06 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 50B7E7C942;
+        Sun, 23 Apr 2017 21:15:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mCFi22/u/OubMYBzfM4EnnQIGMU=; b=LecJid
-        r5SMolcHI8mCqiG4zBi8SE5g4ms2U9ht/49M3Va9l3vqKNh4qaV7zv4RJoLs4ulV
-        GbtSSd4Ct+jNR0SH4xzK32/Y/+zHo/LnqRIVB2jE7hvodDWSDz+J09iOheCUkMJg
-        P+XHJd8FS0XXWwCaQii1FgVDCkPxGAFVDW4Gk=
+        :content-type:content-transfer-encoding; s=sasl; bh=jPouS/ekBSnq
+        cViWU1xcTvKWVmM=; b=OYVyOy3Qe0H2RjLRcShAbZTrW6qek5Q7zqU2CNP857Eo
+        bGzpL0ZDGfeFEr+jSn+f3mFTdMyQ/TaVqlN3vI3/HuxgmCGZt7ENzrKnl3cNAQdM
+        8zwi+GItVIZVST+LvzvFmSY9/19P/+HQsLlD3S0r/JhU5MrRuDds5Cw/qcMu6pY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=s/D4TY5ybY8SGUUVeoUJYTaDOCPd2xsk
-        O80KKBF2JlcatqTdHM0GBmvvlruoD+AoRmG7ZJlCgZoyT7hcPT/BNA+ic6+w/XTB
-        EQJpmL1y3RPWSEu2rXZ70oW4oM2doAvnZQ+7raxNX1PAyNiQhAePhUAmRPx9S/0r
-        Qcl7S5Kqy+Y=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=YNyRVl
+        1li/EIPCF9bP3N6oTgEWU7tJumejG2EqfbQNC8gHGv6aPtE9j4EoMYzuf9DK3F7d
+        0vPxaep8b0T+Z4abQsRC2yONpTvm0QoXRy/SDDBVSra6Qkb+ueSDIaDteoGYyNaq
+        cRC5N2zeXz5nCDe0O+IwqgjXSqvX4rUGIQ/x4=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B8B947C509;
-        Sun, 23 Apr 2017 20:45:06 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3B52C7C941;
+        Sun, 23 Apr 2017 21:15:59 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 17D797C508;
-        Sun, 23 Apr 2017 20:45:06 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 956947C940;
+        Sun, 23 Apr 2017 21:15:58 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 00/15] Handle fopen() errors
-References: <20170420112609.26089-1-pclouds@gmail.com>
-        <xmqqlgqu7cq8.fsf@gitster.mtv.corp.google.com>
-        <xmqqk26e5swj.fsf@gitster.mtv.corp.google.com>
-        <20170421062915.he5tlgjqq7kj5h32@sigill.intra.peff.net>
-        <CACsJy8D1LuH6qVp15MSkCM_oQphVUUK0r9SeKC5AzX+9Xi2dcw@mail.gmail.com>
-        <CAPc5daXPgEFibr28-EZjk9_vYrrO2qt9VLXW6PepmFXUChpk7Q@mail.gmail.com>
-        <CACsJy8CCW+gQ6n2VOC4nmRBukHSLyxYizQhowQoNOc8weZzJjA@mail.gmail.com>
-        <20170421170700.qyjtrvew54u2epue@sigill.intra.peff.net>
-Date:   Sun, 23 Apr 2017 17:45:04 -0700
-In-Reply-To: <20170421170700.qyjtrvew54u2epue@sigill.intra.peff.net> (Jeff
-        King's message of "Fri, 21 Apr 2017 13:07:00 -0400")
-Message-ID: <xmqq60hu4orz.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
+        Lars Schneider <larsxschneider@gmail.com>
+Subject: Re: [PATCH] tests: fix tests broken under GETTEXT_POISON=YesPlease
+References: <FDAE86E2-F607-4E82-8E0C-0E6DCEF7ED67@gmail.com>
+        <20170421185757.28978-1-avarab@gmail.com>
+Date:   Sun, 23 Apr 2017 18:15:57 -0700
+In-Reply-To: <20170421185757.28978-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 21 Apr 2017 18:57:57 +0000")
+Message-ID: <xmqq1ssi4nci.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4298D692-2887-11E7-8869-E680B56B9B0B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 92C87EB6-288B-11E7-8D43-E680B56B9B0B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> On Fri, Apr 21, 2017 at 07:27:20PM +0700, Duy Nguyen wrote:
+> The GETTEXT_POISON=3DYesPlease compile-time testing option added in my
+> bb946bba76 ("i18n: add GETTEXT_POISON to simulate unfriendly
+> translator", 2011-02-22) has been slowly bitrotting as strings have
+> been marked for translation, and new tests have been added without
+> running it.
 >
->> On Fri, Apr 21, 2017 at 6:52 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> > Yes, but (1) we'd need to be careful about --quiet
->> 
->> Yeah. It's a real pain point for making changes like this. At some
->> point we should just have a global (maybe multi-level) quiet flag.
+> I brought this up on the list ("[BUG] test suite broken with
+> GETTEXT_POISON=3DYesPlease", [1]) asking whether this mode was useful a=
+t
+> all anymore. At least one person occasionally uses it, and Lars
+> Schneider offered to change one of the the Travis builds to run in
+> this mode, so fix up the failing ones.
 >
-> I don't think it's too bad here. Isn't it just:
+> My test setup runs most of the tests, with the notable exception of
+> skipping all the p4 tests, so it's possible that there's still some
+> lurking regressions I haven't fixed.
 >
->   FILE *fh = quiet ? fopen(x, y) : fopen_or_warn(x, y);
->
-> It is a little annoying to have to repeat "x", though (which is
-> sometimes a git_path() invocation).
+> 1. <CACBZZX62+acvi1dpkknadTL827mtCm_QesGSZ=3D6+UnyeMpg8+Q@mail.gmail.co=
+m>
 
-Sure, but you could do
+To be honest, I feel quite uneasy about this patch.  It is no
+brainer to take fixes like the one to 1309 where we used grep on a
+localizable string to use test_i18ngrep instead---they are obviously
+good changes.
 
-	fopen_or_warn(quiet, x, y)
+But changes that skip tests with !GETTEXT_POISON look suspicious.
 
-if it is a problem ;-)
+> diff --git a/t/t1430-bad-ref-name.sh b/t/t1430-bad-ref-name.sh
+> index 8937e25e49..2003ec7907 100755
+> --- a/t/t1430-bad-ref-name.sh
+> +++ b/t/t1430-bad-ref-name.sh
+> @@ -122,7 +122,7 @@ test_expect_success 'push cannot create a badly nam=
+ed ref' '
+>  	! grep -e "broken\.\.\.ref" output
+>  '
+> =20
+> -test_expect_failure 'push --mirror can delete badly named ref' '
+> +test_expect_failure !GETTEXT_POISON 'push --mirror can delete badly na=
+med ref' '
+>  	top=3D$(pwd) &&
+>  	git init src &&
+>  	git init dest &&
+
+This test affects only src and dest repositories that does not seem
+to be looked at by later tests, so skipping it is presumably safe.
+
+I am guessing that the reason why this is skipped is because the
+error message is looked at with "! grep ", not "grep", but by
+skipping the entire test, we are not checking that "push" succeeds
+(which should happen regardless of the locale).
+
+It also is VERY curious that the test before this one (whose tail is
+visible in the pre-context) does not need to be skipped.  Is that
+because we can expect "broken...ref", which is litrally a part of a
+refname, would be emitted intact in any locale (including the
+poisoned one)?  If that is the case it is curous why this one needs
+to be skipped.
+
+> diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
+> index 5778c0afe1..a428ae6703 100755
+> --- a/t/t3203-branch-output.sh
+> +++ b/t/t3203-branch-output.sh
+> @@ -236,7 +236,7 @@ test_expect_success 'git branch --format option' '
+>  	Refname is refs/heads/ref-to-remote
+>  	EOF
+>  	git branch --format=3D"Refname is %(refname)" >actual &&
+> -	test_cmp expect actual
+> +	test_i18ncmp expect actual
+>  '
+
+This is a strange change.  Filling the placeholder in a format
+string "Refname is %(refname)" should be affeced by i18n???
+
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive=
+.sh
+> index 33d392ba11..e07d6d8cd2 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -366,7 +366,7 @@ test_expect_success 'verbose flag is heeded, even a=
+fter --
+> ...
+> -test_expect_success 'multi-squash only fires up editor once' '
+> +test_expect_success !GETTEXT_POISON 'multi-squash only fires up editor=
+ once' '
+>  	base=3D$(git rev-parse HEAD~4) &&
+>  	set_fake_editor &&
+>  	FAKE_COMMIT_AMEND=3D"ONCE" FAKE_LINES=3D"1 squash 2 squash 3 squash 4=
+" \
+
+This is also curious.  Is this because the poison locale does not substit=
+ute
+anything passed to format template and literal strings like ONCE and
+the instructions do not reach the edited file?
+
+ (skipping many changes, not because I find nothing to comment on them)
+
+> diff --git a/t/t5316-pack-delta-depth.sh b/t/t5316-pack-delta-depth.sh
+> index 37143ea0ac..2ed479b712 100755
+> --- a/t/t5316-pack-delta-depth.sh
+> +++ b/t/t5316-pack-delta-depth.sh
+> @@ -82,12 +82,16 @@ test_expect_success 'packing produces a long delta'=
+ '
+>  	# Use --window=3D0 to make sure we are seeing reused deltas,
+>  	# not computing a new long chain.
+>  	pack=3D$(git pack-objects --all --window=3D0 </dev/null pack) &&
+> -	test 9 =3D "$(max_chain pack-$pack.pack)"
+> +	echo 9 >expect &&
+> +	max_chain pack-$pack.pack >actual &&
+> +	test_i18ncmp expect actual
+>  '
+
+This is also curious.  Why do we needto protect comparision with a
+line whose contents is '9' from poison locale?  If the last one were
+test_cmp I think this is a good change, by the way.
+
+>  test_expect_success '--depth limits depth' '
+>  	pack=3D$(git pack-objects --all --depth=3D5 </dev/null pack) &&
+> -	test 5 =3D "$(max_chain pack-$pack.pack)"
+> +	echo 5 >expect &&
+> +	max_chain pack-$pack.pack >actual &&
+> +	test_i18ncmp expect actual
+>  '
+
+Likewise.
+
