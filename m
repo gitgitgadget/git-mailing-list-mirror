@@ -2,131 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29D3D207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 23:23:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8606207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 23:33:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S979304AbdDXXXq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 19:23:46 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:38002 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S979301AbdDXXXo (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 24 Apr 2017 19:23:44 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 9C8D9280AD;
-        Mon, 24 Apr 2017 23:23:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1493076223;
-        bh=G0q2nBYprCBK/4/OdqlR2SpeQiFcJkIOdGv296c5mYk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Tcku0at9G18vEWcXyndO0r51GqjMuLUk7wrRIOjqNrzq6/zQS59YuCe+K1+UDWSHh
-         0x8FqdIbNPpovEnx7lKTq1hWkOJH9JJb5DBnzDGvrSVqBMt9uWHga1l9sq2BB0iohe
-         I6kbRw2KQ3B66qkcLvlawnJTYFVfRXdLwK0Z2hZgoKCwec+THIkF+6zPlCdTfQTCMh
-         zn0eg1fEEb91laGOrQ2F+DbvUuxPnafb98b6Y6k4pQHlgESzfqTe/zpB6BA3BhOKJY
-         FmaQd7HCM2WE04jbPW5FA+rvzPaRaAemMrHuTYgbECxtI5YDKH0Idg/P8dXPy8tltW
-         X+mSC9LwVhz0MKMgAuiSjK37xgvhyruPmTPOPGxPPG4y/ixxUI9pOKE4lKWZZXyuCd
-         /IH4lys7naHbO3G4jRz2yW9oKb20ZMzbwjahs1BRu1O6DrV5vMGkJhO2ubvwvaDt9O
-         6OCY2axRL+rEbP5euNVLBcxVOMnmCLXxVF4RzmKLY/QLZfZGtIR
-Date:   Mon, 24 Apr 2017 23:23:37 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 11/53] fast-import: convert to struct object_id
-Message-ID: <20170424232337.hg2dbpdt6rrfscko@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
- <20170423213453.253425-12-sandals@crustytoothpaste.net>
- <CAGZ79kbdVEhcxP4dhSR6GaOKjgTD+bPn_+5edV4TjV3A84HQ-A@mail.gmail.com>
+        id S979312AbdDXXdl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 19:33:41 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:16976 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S979309AbdDXXdk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 19:33:40 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id 2nU9dUCwcHGLw2nUAdtp86; Tue, 25 Apr 2017 00:33:38 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=IkcTkHD0fZMA:10 a=1XWaLZrsAAAA:8
+ a=pGLkceISAAAA:8 a=5rxgeBVgAAAA:8 a=nc0sOGcMyoZwE_-mOooA:9 a=QEXdDO2ut3YA:10
+ a=6kGIvZw6iX1k4Y-7sg4_:22 a=PwKx63F5tFurRwaNxrlG:22
+Message-ID: <4BF0A1BFFFFD421EB8C5F7E6FEF14357@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Stefan Beller" <sbeller@google.com>,
+        "Orgad Shaneh" <orgads@gmail.com>,
+        "Dakota Hawkins" <dakotahawkins@gmail.com>
+Cc:     "git" <git@vger.kernel.org>
+References: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com> <CAGZ79kZ5440r1EHOVP3eXxe5u=u16y_jXTA0C4hLJA2kUkF-kg@mail.gmail.com>
+Subject: Re: Submodule/contents conflict
+Date:   Tue, 25 Apr 2017 00:33:38 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="eomliucd3genrvon"
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbdVEhcxP4dhSR6GaOKjgTD+bPn_+5edV4TjV3A84HQ-A@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-2-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+Content-Type: text/plain;
+        format=flowed;
+        charset="utf-8";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfK1OlMbi8WFy/VAV/EsBt2zelzBBbcuTj60kc507p51npXbu7nEVEFC75LL50ZPSCP4buSryEsIlaD8POXPmZIdfBR4qD9IEC+dxK6wBYYEUhKszw//N
+ YnG59aqlMLS7JZkvYpZTrEUVA19ls1P0TpcwaN5yIBLHdWQhDJxbl+BdH0usawYr2/BE14CgC6t+NVNYxAhxa0iOLvVgxxvggbWM0kO6VxDpVl54awwBLGJZ
+ c4mthB4tFOfKziq3G/wgTQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: "Stefan Beller" <sbeller@google.com>
+> On Mon, Apr 24, 2017 at 1:06 AM, Orgad Shaneh <orgads@gmail.com> wrote:
+>> Hi,
+>>
+>> I've noticed a strange behavior with submodule/content conflict. My
+>> current Git version is 2.12.2, but the problem exists since I
+>> remember.
+>>
+>> Branch A has a submodule.
+>> In branch B which diverged from A, I replaced the submodule with its 
+>> contents.
+>>
+>> Now, every time I merge A into B, and A had changed the submodule
+>> reference, all the files inside the ex-submodule directory in B are
+>> being "re-added".
+>>
+>> Moreover, aborting the merge prints an error, but seems to work
+>> nevertheless, and if I run git reset --hard all the files in that
+>> directory are actually written to the disk, even though they haven't
+>> changed at all.
+>>
 
---eomliucd3genrvon
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is almost the same as just reported by 'vvs' [1] 
+https://public-inbox.org/git/CAM1zWBtfgHT=pT0pidQo1HD=DfrXLG3gNaUvs0vZKvYfG1BHFw@mail.gmail.com/, 
+originally on the 'git user' list 
+https://groups.google.com/forum/?hl=en#!topic/git-users/9ziZ6yq-BfU
 
-On Mon, Apr 24, 2017 at 10:20:27AM -0700, Stefan Beller wrote:
-> On Sun, Apr 23, 2017 at 2:34 PM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > ---
->=20
-> > @@ -2823,12 +2821,10 @@ static void parse_new_commit(const char *arg)
-> >         strbuf_addf(&new_data, "tree %s\n",
-> >                 oid_to_hex(&b->branch_tree.versions[1].oid));
-> >         if (!is_null_oid(&b->oid))
-> > -               strbuf_addf(&new_data, "parent %s\n",
-> > -                           oid_to_hex(&b->oid));
-> > +               strbuf_addf(&new_data, "parent %s\n", oid_to_hex(&b->oi=
-d));
-> >         while (merge_list) {
-> >                 struct hash_list *next =3D merge_list->next;
-> > -               strbuf_addf(&new_data, "parent %s\n",
-> > -                           oid_to_hex(&merge_list->oid));
-> > +               strbuf_addf(&new_data, "parent %s\n", oid_to_hex(&merge=
-_list->oid));
-> >                 free(merge_list);
-> >                 merge_list =3D next;
-> >         }
->=20
-> This is a funny one. The only change is line rewrapping, as it fits
-> into 80 cols easily.
-> I was reviewing this series using colored --word-diff output, and this hu=
-nk does
-> not produce any red or green. I wonder if this is the intended
-> behavior of the word diffing
-> or if we rather want to insert a <RED> - \n - </RED>.
+It also has a similarity to 
+https://public-inbox.org/git/1492287435.14812.2.camel@gmail.com/  regarding 
+how checkout operates.
 
-I used Coccinelle for part of this, I think, so that would be why.
-Sometimes it doesn't do everything I want, but it lets me do less manual
-work.  I'll revert that change in the reroll.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
+It does feel as if there are two slightly different optimisations that could 
+be used when the desired file pre-exists in the worktree, but isn't 
+immediately known to the index.
 
---eomliucd3genrvon
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.18 (GNU/Linux)
+>> When the submodule is small, it might be ok. But in my project we have
+>> a huge submodule with ~16K files, and on each merge all the files are
+>> listed, and even mixed reset takes several minutes.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlj+iPkACgkQv1NdgR9S
-9otoYg//XCMI7bnJzQeQmfyOj2eSswvcnrOZKU/225X8MU4hC/4MVRGO4WtffuoL
-i33sfsFjkVGLm9DH5Mvs6BIs5QyrudBcfknUxun9xHsYWocOVrcCEtFIVJd51ewz
-pdPf00C2BD/juYTtw0j4mpfYCko+ea7hHoE2bArZVr3Zgs4vVJkp3D6RsAHLfmUt
-0ege6PXx2dD9UAbXXf7FjPGknr0S9znopqAMOKi55w7kTfpcqWYZ31aQ3cz4V0AF
-u37oHhZTTkE3RRuc8IZ8ISpBwcVD6YdwTYjM/sNcIo5FShMbqNhWnIT9cmaoAXUJ
-scu8yhcb6vsrgIZZwNswagAkyERekC8lSpGx66Z+PXJ9/HlLxSlyoN03EUFd4HNl
-8FT8rbRjNtkZ9jE+cMNLBSXCsSqQqMY9eAyVdQ/Vc38KA3w2Gj1TDasFPIpEHRuK
-dlINbyUeZHxqe0ySsUCIS/RDblnrEBFwwXDS3pIIcdqVvn9b8VWaX3TxP7NYOplS
-xuGYpd6k4InE1zPrVoZUTY9F+cX8qdV+TipCBBgGeSRI+yGKYvl9ssDpQq+mMUIq
-Fuo6JxxxL17aaO3BUWLHLAsHI8e2JplZivMTni+mlPrhwHIHgRkCyef2w379WVux
-HbQeICjrUYc7F68EtFwZk+MP1Pz7EYHQE0Nz8LA7jWqUSoXowF4=
-=WxES
------END PGP SIGNATURE-----
+That sounds like a wait that is not wanted!
+>>
+>
+> A similar bug report
+> https://public-inbox.org/git/CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com/
+>
+> "checkout --recurse-submodules" (as mentioned in that report)
+> made it into Git by now, but this bug goes unfixed, still.
+>
+>> The following script demonstrates this:
+>> #!/bin/sh
+>>
+>> rm -rf super sub
+>> mkdir sub
+>> cd sub
+>> git init
+>> touch foo
+>> git add foo
+>> git commit -m 'Initial commit'
+>> mkdir ../super; cd ../super
+>> git init
+>> git submodule add ../sub
+>> touch foo; git add foo sub
+>> git commit -m 'Initial commit'
+>> git checkout -b update-sub
+>> git update-index --cacheinfo 
+>> 160000,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,sub
+>> git commit -m 'Update submodule'
+>> git checkout -b remove-sub HEAD^
+>> git rm sub
+>> mkdir sub
+>> touch sub/foo sub/bar
+>> git add sub
+>> git commit -m 'Replaced submodule with contents'
+>> git checkout -b remove-2 HEAD^
+>> git merge --no-ff remove-sub
+>> git merge update-sub
+>> # Adding sub/foo
+>> # Adding sub/bar
+>> # CONFLICT (modify/delete): sub deleted in HEAD and modified in
+>> update-sub. Version update-sub of sub left in tree at sub~update-sub.
+>> # Automatic merge failed; fix conflicts and then commit the result.
+>> git merge --abort
+>> # error: 'sub' appears as both a file and as a directory
+>> # error: sub: cannot drop to stage #0
+>>
+>> - Orgad
+>
+--
+Philip 
 
---eomliucd3genrvon--
