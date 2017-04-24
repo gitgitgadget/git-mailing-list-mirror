@@ -2,143 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6E99207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 18:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5347207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 18:25:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S975651AbdDXSM0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 14:12:26 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:35977 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S975389AbdDXSMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 14:12:24 -0400
-Received: by mail-pf0-f178.google.com with SMTP id 194so15959034pfv.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 11:12:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pSyOnYnTPr/P+sXfdvJZDQNe4uPv6AdxsuC52lGLhiM=;
-        b=n4KqnckxgVHhQ2cvTJ7P1eRUhINRB7thKhdpjpJiy9w1a3DeO/5BXhzTkMFeUFIts/
-         yxlkBu6US0uwcLRiLyREwxmnLi0ugzjMmEZm6Lw3KGMMx3OyDMzp+KQIfBApc/LmKIPh
-         vJagif0HazhLbP7wYf70Ovb8uoM3kC4xSGCdmFLvA9ij/QGeFzvg13wBpZ3PwJjS2jGw
-         9euECrWlheRTYjuxhVLi1TKqLV7jbZLNbAW80arLplb5zZech7HaGF/7GG7Spb7s30qh
-         NnytvJXqxgk+XarcTP4KvgWqchwlJK6SbpnJ0XFo0PvR0qMRzbU+70KMmwjk4/kz15+x
-         B16A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pSyOnYnTPr/P+sXfdvJZDQNe4uPv6AdxsuC52lGLhiM=;
-        b=J5cT0mApojq4pfATs88FVvkzCFVze4GAm6CBCyhUx7Hh7k5ibZ5kFoQTXNPyqlRLbh
-         tCil9ZStgTDRm+TR408tS7IJXX3VF36u7WEa29Z4zFQNxNk9BYEvGp+fixDHXmb5Ijdx
-         oFzGxKdGX+ddwdrzknT6Mue3I/G0zE91qSoqHPhicaWIzDcS5YPodBAN8troGJEYasLh
-         wH1dNa7mLbi9szeLihu7rDkxjMVG1Mhopt364V5TLWYmeFHchrdeP4uD33osAvN7kssN
-         XEIypRrQcyrn68b+qLaRpaywBvUPZC+cadq5fHM0blagR4oc5Pib/DQd47vhhKUKIPW6
-         crJA==
-X-Gm-Message-State: AN3rC/71vmulqQP3kKcMFlAU2teGkEPMEbTMYvWKqLYza/1JYur2iz88
-        HjhCjsBY4xVoqYhVparJtnlp13JJZAn9
-X-Received: by 10.98.72.88 with SMTP id v85mr26312418pfa.8.1493057543262; Mon,
- 24 Apr 2017 11:12:23 -0700 (PDT)
+        id S1173804AbdDXSZI convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 24 Apr 2017 14:25:08 -0400
+Received: from lamora.getmail.no ([84.210.184.7]:43298 "EHLO lamora.getmail.no"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1173756AbdDXSY4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 14:24:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by lamora.getmail.no (Postfix) with ESMTP id 5FB3512749C;
+        Mon, 24 Apr 2017 20:24:53 +0200 (CEST)
+Received: from lamora.getmail.no ([127.0.0.1])
+        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 5ndH2yDrFWmb; Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by lamora.getmail.no (Postfix) with ESMTP id DE94E127507;
+        Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at lamora.get.c.bitbit.net
+Received: from lamora.getmail.no ([127.0.0.1])
+        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id IdUsK3Ghc8Sd; Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
+Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
+        by lamora.getmail.no (Postfix) with ESMTPSA id C074A127420;
+        Mon, 24 Apr 2017 20:24:52 +0200 (CEST)
+Received: from peter (helo=localhost)
+        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
+        (envelope-from <peter@softwolves.pp.se>)
+        id 1d2ifN-00089V-FS; Mon, 24 Apr 2017 20:24:53 +0200
+Date:   Mon, 24 Apr 2017 19:24:53 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
+To:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Keith Goldfarb <keith@blackthorn-media.com>
+Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
+In-Reply-To: <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
+Message-ID: <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se>
+References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org> <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
+ <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org> <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se> <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de> <85f2b6d1-107b-0624-af82-92446f28269e@web.de> <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Mon, 24 Apr 2017 11:12:22 -0700 (PDT)
-In-Reply-To: <378b8e50-562a-a311-2e0f-505de036aaf1@alum.mit.edu>
-References: <20170419110145.5086-1-pclouds@gmail.com> <20170419110145.5086-6-pclouds@gmail.com>
- <378b8e50-562a-a311-2e0f-505de036aaf1@alum.mit.edu>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Apr 2017 11:12:22 -0700
-Message-ID: <CAGZ79kb-8zUibxCMNxkg2jbGLuXPGm0ZjqZ_KtLKV4YTrn0TsQ@mail.gmail.com>
-Subject: Re: [PATCH v3 05/12] refs: move submodule slash stripping code to get_submodule_ref_store
-To:     Michael Haggerty <mhagger@alum.mit.edu>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: TEXT/PLAIN; format=flowed; charset=ISO-8859-15
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 10:27 PM, Michael Haggerty <mhagger@alum.mit.edu> w=
-rote:
-> On 04/19/2017 01:01 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->> This is a better place that will benefit all submodule callers instead
->> of just resolve_gitlink_ref()
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
-com>
->> ---
->>  refs.c | 33 +++++++++++++++++----------------
->>  1 file changed, 17 insertions(+), 16 deletions(-)
->>
->> diff --git a/refs.c b/refs.c
->> index 5902a3d9e5..26474cb62a 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1422,25 +1422,10 @@ const char *resolve_ref_unsafe(const char *refna=
-me, int resolve_flags,
->>  int resolve_gitlink_ref(const char *submodule, const char *refname,
->>                       unsigned char *sha1)
->>  {
->> -     size_t len =3D strlen(submodule);
->>       struct ref_store *refs;
->>       int flags;
->>
->> -     while (len && submodule[len - 1] =3D=3D '/')
->> -             len--;
->> -
->> -     if (!len)
->> -             return -1;
->> -
->> -     if (submodule[len]) {
->> -             /* We need to strip off one or more trailing slashes */
->> -             char *stripped =3D xmemdupz(submodule, len);
->> -
->> -             refs =3D get_submodule_ref_store(stripped);
->> -             free(stripped);
->> -     } else {
->> -             refs =3D get_submodule_ref_store(submodule);
->> -     }
->> +     refs =3D get_submodule_ref_store(submodule);
->>
->>       if (!refs)
->>               return -1;
->> @@ -1558,7 +1543,17 @@ struct ref_store *get_submodule_ref_store(const c=
-har *submodule)
->>  {
->>       struct strbuf submodule_sb =3D STRBUF_INIT;
->>       struct ref_store *refs;
->> +     char *to_free =3D NULL;
->>       int ret;
->> +     size_t len;
->> +
->> +     if (submodule) {
->> +             len =3D strlen(submodule);
->> +             while (len && submodule[len - 1] =3D=3D '/')
->> +                     len--;
->> +             if (!len)
->> +                     submodule =3D NULL;
->> +     }
+René Scharfe:
+
+> @@ -433,6 +446,11 @@ static int write_zip_entry(struct archiver_args *args,
+> 	free(deflated);
+> 	free(buffer);
 >
-> Ugh. Should a submodule named "///" *really* be considered to refer to
-> the main ref_store? I understand that's what the code did before this
-> patch, but it seems to me more like an accident of the old design rather
-> than something worth supporting. In other words, if a caller would
-> really pass us such a string, it seems like we could declare the caller
-> buggy, no?
+> +	if (offset > 0xffffffff) {
+> +		zip64_dir_extra_payload_size += 8;
+> +		zip_dir_extra_size += 2 + 2 + zip64_dir_extra_payload_size;
+> +	}
+> +
+> 	strbuf_add_le(&zip_dir, 4, 0x02014b50);	/* magic */
+> 	strbuf_add_le(&zip_dir, 2, creator_version);
+> 	strbuf_add_le(&zip_dir, 2, 10);		/* version */
 
-In a nearby thread we discussed whether we want to tighten the
-submodule names and paths as some of the code path do funny
-things on funny input. As 'submodule' here refers to a path (and not
-a name), I would think '///' is not possible/buggy, rather we'd want to
-discuss if we want to extend the check to is_dir_sep, which would
-include '\' on Windows.
+This needs to be >=. The spec says that if the value is 0xffffffff, 
+there should be a zip64 record with the actual size (even if it is 
+0xffffffff).
 
-Thanks,
-Stefan
+Also set the version required to 45 (4.5) for any record that has zip64 
+fields.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
