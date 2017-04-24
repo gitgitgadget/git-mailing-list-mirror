@@ -2,81 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06060207E2
-	for <e@80x24.org>; Mon, 24 Apr 2017 22:10:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAAA4207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 22:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S978718AbdDXWK1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 18:10:27 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:36856 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S978247AbdDXWKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 18:10:25 -0400
-Received: by mail-pg0-f43.google.com with SMTP id g2so18945200pge.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 15:10:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+t+Xma3SsCz48JP+aHG2w9UEmukY5WKvpBRPpRTY+f8=;
-        b=nI8GPWVT+oOhMr6t9CwIvwUL6Q1RYNtk3h5kxqTWm3g8EHJgxtJFPOut0qwTYgn4e+
-         qq7HpmJACnNBJUe41ZTj3N7JNn51mr4eFbxCl3O/DtQgSSxyTW+5jG5zPb/NQrcgJKHP
-         UeVnfO4V+IlV9agTyoNLixHOav7gX3CbYD8JK4rwdRdnY+m/DyqZ+ioI3k4xZnPyV2d1
-         k1UomOyAmunkWU0plUmTXkkuBUL32f5QLppdJexNNqkodIqQQFyKJj55XTdkgV9g9glg
-         SDTmuv5+3gwfUPyj4GwrXlL/iwcWoCGnf0dEu/oqvwn0EvEzuoqHPtOIk+UkZGNuB32G
-         B2Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+t+Xma3SsCz48JP+aHG2w9UEmukY5WKvpBRPpRTY+f8=;
-        b=nPkAchbuYsj+TWWX+JLvsWvkxsM7Sd0udMsYofWyjj2k+yvNosGIR8mylw8ovLZZV1
-         YnKgeORf54NxT4DSH+elvtdWpWDF8zJ73VDf59eUJQ9KyfB8YcSIGsJcIzfjZoukAvAO
-         EDSphlNKj6FapV0L29X3WkqMbZ5u9YO6IiKv/mG/z2klVRflJWR7CAJcrc9HUoO9X1mq
-         vrVptuW722vzxxHkCZ/Pwoma/9fZO2tzfF+QRiQ65CggBkldlo2XMffcEwzs4+NxfB9I
-         8tHqKVDpjJ3JRtyFANwSISzB01TkvNUjyq8QIJJFzABjS+n413jeykUNzPawUNXVUTfd
-         NYXg==
-X-Gm-Message-State: AN3rC/44DY79YSg2nZUnSrNfTWahN45kCv1dEOAemFMDf1rArUeBr1Mq
-        ie/CcRZ/tpBIJnxwNCFDj02s89wIwuWP
-X-Received: by 10.84.231.136 with SMTP id g8mr27553234plk.12.1493071824909;
- Mon, 24 Apr 2017 15:10:24 -0700 (PDT)
+        id S978561AbdDXWL7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 18:11:59 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:49777 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S978256AbdDXWL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 18:11:58 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout08 with smtp
+        id CNBv1v0031keHif01NBw4V; Mon, 24 Apr 2017 23:11:56 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=JPdLi4Cb c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=mviJlhNYUKBwYg-DG0kA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [GSoC][RFC/PATCH v2] submodule: port subcommand foreach from
+ shell to C
+To:     Stefan Beller <sbeller@google.com>,
+        Prathamesh Chavan <pc44800@gmail.com>
+References: <CAGZ79kYmRe+NURkgxRQM2QsGQEqtp+oGas5H0ryfztx8s2chwA@mail.gmail.com>
+ <20170422195804.18477-1-pc44800@gmail.com>
+ <CAGZ79kb1CR3qKOzByFC_wy7+Fh7cofFT1urhA06RuBK_3vGKmg@mail.gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <efe8e82d-a021-5fc4-492a-e6e0ab7d52d3@ramsayjones.plus.com>
+Date:   Mon, 24 Apr 2017 23:11:55 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Mon, 24 Apr 2017 15:10:24 -0700 (PDT)
-In-Reply-To: <20170423213453.253425-14-sandals@crustytoothpaste.net>
-References: <20170423213453.253425-1-sandals@crustytoothpaste.net> <20170423213453.253425-14-sandals@crustytoothpaste.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Apr 2017 15:10:24 -0700
-Message-ID: <CAGZ79kYKLin0=Yz33NO8tQrWUBbjBGU==2RCEeNZFLhV5j7oQw@mail.gmail.com>
-Subject: Re: [PATCH 13/53] notes-cache: convert to struct object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <CAGZ79kb1CR3qKOzByFC_wy7+Fh7cofFT1urhA06RuBK_3vGKmg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 23, 2017 at 2:34 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> Convert as many instances of unsigned char [20] as possible,  Update the
 
-s/Update/update/ or s/,/./
 
-Side remark: In all patches up to now you put a space between the char and
-the [20] (or [40]), which is irritating to read (for me). I presume
-putting it adjacent
-to the char would offend others as that would violate our coding
-style. So having
-the whitespace in between "char" and the array makes sense.
+On 24/04/17 21:03, Stefan Beller wrote:
+[snip]
 
-Up and including this patch looks good.
+> +
+> + argv_array_pushf(&cp.env_array, "name=%s", sub->name);
+> + argv_array_pushf(&cp.env_array, "path=%s", displaypath);
+> + argv_array_pushf(&cp.env_array, "sm_path=%s", displaypath);
+> 
+> You mention keeping 'sm_path' in the notes after the commit message. I would
+> add that part to the commit message, to explain why we have multiple variables
+> that have the same value. Maybe even a comment in the code:
+> 
+>     /* Keep sm_path for historic reasons, see tests in 091a6eb0fee. */
+>     .. sm_path ..
 
-Thanks,
-Stefan
+Hmm, you need to be a bit careful with putting 'path' in the
+environment (if you then export it to sub-processes) on windows
+(cygwin, MinGW, GfW). See commit 64394e3ae9. I would have liked
+to remove $path altogether from the 'submodule-foreach api' in
+that commit, but users and their scripts were already using it
+(so I couldn't just drop it, without some deprecation period).
+So long as whatever was being 'eval'-ed in the script didn't
+export $path, ...
+
+ATB,
+Ramsay Jones
+
