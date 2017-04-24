@@ -2,120 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2E8D1FE90
-	for <e@80x24.org>; Mon, 24 Apr 2017 11:15:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDC421FE90
+	for <e@80x24.org>; Mon, 24 Apr 2017 11:17:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1169131AbdDXLPN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 07:15:13 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:34592 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1169061AbdDXLOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 07:14:30 -0400
-Received: by mail-io0-f176.google.com with SMTP id a103so187579712ioj.1
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 04:14:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GMOvDiGggI/Wd7qoGscModVJQ0CUyL6Ghz701ZdCVRg=;
-        b=LwNMVnZygDmhHJftl99+YZijq0qKn0ZhOsR9LBUumKQBsZ1nPJrGHM7w19yYrcO3HS
-         XZww3XZ/As8aNT+d0CVBY38pA6yALYOg5f22vup8Gs4Fwfvsj+6xhCTI6+rEMaMypDTX
-         b0dFp6UbYtlCnQPkEqTxOzoqidgG+DChjQeqooLnbzQXsJhfFV0kPuJOxpuAk+bfZFzG
-         06tMT0YSEhfLb5FHaLpNstC7UkEPxbs0IEKNfZ4URNfSAMHcm6bpLEBuSxE9yYUJijtT
-         xatiC4/7BEiblTOU5BkUKvYES2ks7Bsea1IHJO4A8o7lYeLY4HnWlmgTESlN+Ew28+/8
-         iZkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GMOvDiGggI/Wd7qoGscModVJQ0CUyL6Ghz701ZdCVRg=;
-        b=L8NQDM5XQ8+1dx1I8xa0DDQ9Nxpcc19Io9/iblpooct5KOLoI0hS0PjI4UwpQCGiKd
-         A/+nXZoawaU0SU0cNvO/zpxkLYEiH8d1f87EzuFS1hyVYRK3ZPGT9ATmz0mPJmiuW1kq
-         WpsoeW+uyncTaiw+aLwZ8ZbixGi1RqX491XYaNl6YewaIC1epCSVYs2I5mDEJNk9zgbQ
-         PMea7j6rNbiTFD/lRRMeQze26Ih5xL3Nu6d6INF4VjoguoQjD2p30WdkwePzPrmlDaxi
-         18BWMUdmfoncW2xFr0z2usauXqNIHwb5aCqAjDIIrTDpoZJTAyPL97CMOSk5RWIqsE4M
-         IXkg==
-X-Gm-Message-State: AN3rC/4vPhb4oAhVck/BTh3bD0f98w09qpQpcPBEQluhJ6uRQ7Qj8xKR
-        xoNs9DwXM5hTqGTazI9f8/CT7DPNHg==
-X-Received: by 10.157.18.144 with SMTP id g16mr267873otg.10.1493032468739;
- Mon, 24 Apr 2017 04:14:28 -0700 (PDT)
+        id S1169132AbdDXLPc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 07:15:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38967 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1168752AbdDXLNf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 07:13:35 -0400
+Received: (qmail 23448 invoked by uid 109); 24 Apr 2017 11:13:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Apr 2017 11:13:33 +0000
+Received: (qmail 5567 invoked by uid 111); 24 Apr 2017 11:13:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Apr 2017 07:13:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Apr 2017 07:13:31 -0400
+Date:   Mon, 24 Apr 2017 07:13:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cache-tree: reject entries with null sha1
+Message-ID: <20170424111330.rfkoafb74wxzszl2@sigill.intra.peff.net>
+References: <20170421184617.lc5bioa5px6ninrj@sigill.intra.peff.net>
+ <CACsJy8AAtV5KJHBqWvnYb3Mw9CVzEdG3M-UJA+jd5MR5e-UMsA@mail.gmail.com>
 MIME-Version: 1.0
-Received: by 10.74.158.70 with HTTP; Mon, 24 Apr 2017 04:13:58 -0700 (PDT)
-In-Reply-To: <xmqqh91i7bdy.fsf@gitster.mtv.corp.google.com>
-References: <20170420101024.7593-1-pclouds@gmail.com> <20170420101024.7593-2-pclouds@gmail.com>
- <xmqqh91i7bdy.fsf@gitster.mtv.corp.google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 24 Apr 2017 18:13:58 +0700
-Message-ID: <CACsJy8CCsZWAQJwRQQAYerGLgiaGMZesGZPi4NJvkOtEB0m7MA@mail.gmail.com>
-Subject: Re: [PATCH 1/6] worktree.c: add validate_worktree()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8AAtV5KJHBqWvnYb3Mw9CVzEdG3M-UJA+jd5MR5e-UMsA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 9:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> +int validate_worktree(const struct worktree *wt, int quiet)
->> +{
->> +     struct strbuf sb = STRBUF_INIT;
->> +     char *path;
->> +     int err, ret;
->> +
->> +     if (is_main_worktree(wt)) {
->> +             /*
->> +              * Main worktree using .git file to point to the
->> +              * repository would make it impossible to know where
->> +              * the actual worktree is if this function is executed
->> +              * from another worktree. No .git file support for now.
->> +              */
->> +             strbuf_addf(&sb, "%s/.git", wt->path);
->> +             if (!is_directory(sb.buf)) {
->> +                     strbuf_release(&sb);
->> +                     return report(quiet, _("'%s/.git' at main worktree is not the repository directory"),
->> +                                   wt->path);
->
-> These messages come without telling what they are.  Should they say
-> that these are errors?  Or does the severity depend on the caller,
-> i.e. why they want to know if a particular worktree is valid, and
-> sometimes these are errors and other times they are mere warnings?
+On Mon, Apr 24, 2017 at 05:39:33PM +0700, Duy Nguyen wrote:
 
-I'll save the error in a strbuf and let the caller decide how to
-present them, which gives better context (e.g. "unable to move
-worktree because ...")
+> > When merged to pu, this fixes the existing test breakage in t7009 when
+> > GIT_TEST_SPLIT_INDEX is used (because the split index didn't rewrite the
+> > whole index, "git rm --cached" didn't always barf).
+> 
+> Latest 'pu' has your patch, but t7009 still fails on me (with "invalid
+> object" error), more on this later..
 
->> +             }
->> +             return 0;
->> +     }
->> +
->> +     /*
->> +      * Make sure "gitdir" file points to a real .git file and that
->> +      * file points back here.
->> +      */
->> +     if (!is_absolute_path(wt->path))
->> +             return report(quiet, _("'%s' file does not contain absolute path to the worktree location"),
->> +                           git_common_path("worktrees/%s/gitdir", wt->id));
->
-> It makes me wonder if this kind of error reporting belongs to the
-> place where these are read (and a new wt is written out to the
-> filesystem, perhaps).  The programmer who wrote this code may have
-> known that wt->path is prepared by reading "worktrees/%s/gitdir" and
-> without doing real_path() or absolute_path() on the result when this
-> code was written, but nothing guarantees that to stay true over time
-> as the code evolves.
+Right, it fails for me, too. But only on the new test "noop
+filter-branch complaisn". The old one "filter commands are still
+checked" should pass after my patch.
 
-This is almost like fsck for worktrees and for now only be checked
-before we do destructive things to worktrees (moving, removing..).
+> Just checking, since cache-tree helps speed up many operations,
+> dropping cache-tree can have some performance implication. But this
+> must be an error case (null sha1) and we will not run into it often to
+> worry about unnecessary dropping, correct?
 
-Yeah we probably should do this at read time too (after checking if a
-worktree is locked, and skip the next check because wt->path may not
-exist). But we probably want to either make this function cheaper, or
-we cache the worktree list. Probably the latter. It's on my todo list.
--- 
-Duy
+Correct. We usually die when we see a null sha1. So this only kicks in
+when GIT_ALLOW_NULL_SHA1 is set, which basically means when
+filter-branch is running. And of course there it only kicks in when you
+actually have a null sha1, which is a rare error case (and you must be
+removing it with your filter, or write-tree will barf anyway).
+
+> > The one thing I haven't figured out it is why the new test in t7009
+> > fails with the split-index. And even more curiously, the new tests in
+> > t1601 _don't_ fail with it, even if I instrument the fake index to have
+> > more entries (making it more likely to split).
+> 
+> back to t7009 failure. I'll see if I can look more into this this
+> weekend. If split-index somehow produces these null sha1, then I
+> probably have a problem.
+
+I don't think it's producing them. It's just that the check in
+write-tree isn't triggering for some reasons. If I run t7009 with
+GIT_TRACE=1, the failing test shows:
+
+  trace: built-in: git 'read-tree' '-i' '-m' 'e3ed0c3a94f05540151bd8cb9ac647b8777964a6'
+  error: invalid object 160000 0000000000000000000000000000000000000000 for 'broken'
+  warning: cache entry has null sha1: broken
+  trace: built-in: git 'cat-file' 'commit' 'e3ed0c3a94f05540151bd8cb9ac647b8777964a6'
+  trace: built-in: git 'write-tree'
+
+That last write-tree _should_ barf, but it doesn't. I suspect the reason
+is that in the read-tree step, we do not properly strip the cache-tree
+when we see the null sha1, so it just gets reused later. But I couldn't
+reproduce it when running t1601, which does roughly the same steps.
+
+If I instrument it like this:
+
+diff --git a/read-cache.c b/read-cache.c
+index 15a4779f2..4d9482092 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2268,9 +2268,10 @@ static int do_write_index(struct index_state *istate, int newfd,
+ 		if (err)
+ 			return -1;
+ 	}
++	warning("drop_cache_tree = %d", drop_cache_tree);
+ 	if (!strip_extensions && !drop_cache_tree && istate->cache_tree) {
+ 		struct strbuf sb = STRBUF_INIT;
+-
++		warning("reusing cache tree");
+ 		cache_tree_write(&sb, istate->cache_tree);
+ 		err = write_index_ext_header(&c, newfd, CACHE_EXT_TREE, sb.len) < 0
+ 			|| ce_write(&c, newfd, sb.buf, sb.len) < 0;
+
+then I see:
+
+  trace: built-in: git 'read-tree' '-i' '-m' 'e3ed0c3a94f05540151bd8cb9ac647b8777964a6'
+  error: invalid object 160000 0000000000000000000000000000000000000000 for 'broken'
+  warning: cache entry has null sha1: broken
+  warning: drop_cache_tree = 1
+  warning: drop_cache_tree = 0
+  warning: reusing cache tree
+  trace: built-in: git 'cat-file' 'commit' 'e3ed0c3a94f05540151bd8cb9ac647b8777964a6'
+  trace: built-in: git 'write-tree'
+
+So we end up in do_write_index twice, and one time we copy the cache
+tree. I don't know how cache-tree works with the split index. Is it
+possible that we write the cache-tree covering the entry for "broken"
+into a separate index than the "broken" entry itself? That would explain
+what I'm seeing.
+
+> BTW, I ran t7009 with valgrind and it reported this. Is it something
+> we should be worried about? I vaguely recall you're doing something
+> with prio-queue...
+> 
+> ==4246== Source and destination overlap in memcpy(0x5952990, 0x5952990, 16)
+> ==4246==    at 0x4C2EACD: memcpy@@GLIBC_2.14 (in
+> /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
+> ==4246==    by 0x545D05: swap (prio-queue.c:15)
+> ==4246==    by 0x545D72: prio_queue_reverse (prio-queue.c:25)
+> ==4246==    by 0x4CBC0C: sort_in_topological_order (commit.c:723)
+> ==4246==    by 0x574C97: prepare_revision_walk (revision.c:2858)
+> ==4246==    by 0x48A2BA: cmd_rev_list (rev-list.c:385)
+> ==4246==    by 0x405A6F: run_builtin (git.c:371)
+> ==4246==    by 0x405CDC: handle_builtin (git.c:572)
+> ==4246==    by 0x405E51: run_argv (git.c:624)
+> ==4246==    by 0x405FF3: cmd_main (git.c:701)
+> ==4246==    by 0x4A48CE: main (common-main.c:43)
+
+I couldn't reproduce here, but it looks like it comes from René's new
+SWAP macro. It doesn't detect a noop swap, and we may call memcpy with
+identical src and dst parameters. That's _probably_ fine in practice,
+but we may want to exit the function early.
+
+I'll ping separately in that thread.
+
+-Peff
