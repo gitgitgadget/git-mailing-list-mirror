@@ -2,185 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2CB5207BD
-	for <e@80x24.org>; Mon, 24 Apr 2017 04:31:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51FAB207BD
+	for <e@80x24.org>; Mon, 24 Apr 2017 05:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1164650AbdDXEb2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 00:31:28 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50246 "EHLO
-        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1164638AbdDXEb0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 00:31:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 287D781BF2;
-        Mon, 24 Apr 2017 00:31:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CI8uNqjQaCrFera57gV0CPj0W/o=; b=OZSuW1
-        k7Qh1bYXPU/nBGAFPpVvJ1yS87baxwyQEuUWENKGybjVlcPA4viBGh8e0yvnkkQf
-        ooYSK90YNFtdil8L5rNX9CqFLs/Vh0bUFSdiR9zCMSIiEagOtBATtaaKfc1sGCcW
-        gAUD4tLUT/GqI7TTa53qszNW58l110OITxiJU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nNwMxealI4kBGQq52Vo5RDC7jDwKMeg0
-        IYztQT2x4uQ7jLdcD3m0tm/2gDe6tOpUa++YG+fF96yjJ38Qp1X1OUgvDEUY/73d
-        qWaNVMG0FKsZYrowSBIGWu41aCv5j1AQFkY0rTa3L9yc2TMovLvnUApvM8u32zLv
-        VMbkE881oMs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1EA4B81BF1;
-        Mon, 24 Apr 2017 00:31:25 -0400 (EDT)
-Received: from pobox.com (unknown [104.132.0.95])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 77CE681BF0;
-        Mon, 24 Apr 2017 00:31:24 -0400 (EDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com,
-        christian.couder@gmail.com, larsxschneider@gmail.com
-Subject: Re: [PATCH v6 3/8] convert: Split start_multi_file_filter into two separate functions
-References: <20170421172611.12152-1-benpeart@microsoft.com>
-        <20170421172611.12152-4-benpeart@microsoft.com>
-Date:   Sun, 23 Apr 2017 21:31:23 -0700
-In-Reply-To: <20170421172611.12152-4-benpeart@microsoft.com> (Ben Peart's
-        message of "Fri, 21 Apr 2017 13:26:06 -0400")
-Message-ID: <xmqqshkyzask.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S1165286AbdDXF3U (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 01:29:20 -0400
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:33866 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1165283AbdDXF3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 01:29:19 -0400
+Received: by mail-ua0-f171.google.com with SMTP id h2so106848362uaa.1
+        for <git@vger.kernel.org>; Sun, 23 Apr 2017 22:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=dCIuy45dCNy5nx8vdUmmbqD/mYHCOBM0AOszY/IYoQ4=;
+        b=IRL8U5BiSUS/3ng3+oUCGSplX49+vfXfku1bsQLdYBiQyVNgKmo6+qwJjFoJeVBS6L
+         xhU8L8gUdM1aIhjKuU3QCVFNAavyBB+B2HgxLI3PYd3Cw5CFBkBHAOKcEYa/aehgPeyq
+         +BNFxinCCylM9zIMINV3adXpyEhImJu5EDlw2yvzihvoMqnRLxkikl0frg2Xqp2po24m
+         ItvtNlj8fQtK5MyIaKERG4TwePL09uj/uOQ+/uMM3KLuVjD/Cr0YH9SMpRaRUkXqPIq9
+         JRBvSq38P6AeKTmTf4wFJWrrkzj6Xk4DZUYgAKhvEwcEnHLI7TU8QJ0Gn8Ta7dCwTRzf
+         0I1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=dCIuy45dCNy5nx8vdUmmbqD/mYHCOBM0AOszY/IYoQ4=;
+        b=GEarGKclfx9iOMUBzwfOGTTklACQLaMFNGti70VoESLZ7cFVmRh70YZFVIKgS/tTaG
+         0e4ZbekWTgtjaSDfPbziPWxonBEO9a49mbZkZ+ifDAnTGFskYtLe8lqeGUeNrUqvHzA4
+         aDEquxUFEXASw8/ViRVW8BAqSY9tlRfHYzFJuHoihtALoXagm3Z8W9/mk/z42Z2bdXUd
+         zYnZpORa2+x8tSMG8odQkNAqYM3SEWoXo/GgNhzwI3BCY5G2eGtCLNWgz+oCRpUMKiTC
+         iyknX3H1+ilbv+Lk4wY3eIm8FuISV9YvIKg4vbkS3PoZ0o70s/K5xGdyzdWcOH6GDJBh
+         AtMA==
+X-Gm-Message-State: AN3rC/5LPX7tMFir3P42hGT2dQfxM6YF8LjQ70O2pnXoFR+FjSqbFL5R
+        Ggo7mwo9CFJgYvl1u5HPyup2k2X0ouYB
+X-Received: by 10.176.77.211 with SMTP id b19mr12675972uah.63.1493011758157;
+ Sun, 23 Apr 2017 22:29:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DFFD327E-28A6-11E7-BFC5-C260AE2156B6-77302942!pb-smtp2.pobox.com
+Received: by 10.176.6.105 with HTTP; Sun, 23 Apr 2017 22:28:37 -0700 (PDT)
+In-Reply-To: <CAA0fXPvf5V3bALha-7fwTCt17OnXMDX-BjAz+jmXrsbK62BtCg@mail.gmail.com>
+References: <CAA0fXPu7s1-UQ-RBxvmPq0kGSsdt1wp9VJp7wNMZ_uE02RvCbw@mail.gmail.com>
+ <CAJZjrdVyKcPCmPT8S=Spju_Q7KRjkm7AbP4H--pVdiY9qR=AhQ@mail.gmail.com>
+ <CAA0fXPsuSZsn3tfm=f0G7OP7bL0L=7GDy_WVqfAnhfBKonrHvg@mail.gmail.com>
+ <CAJZjrdXqD-fSCjC75bPgeYKUDH-XvGkpjGgSeoYu9NNhZyiN3w@mail.gmail.com> <CAA0fXPvf5V3bALha-7fwTCt17OnXMDX-BjAz+jmXrsbK62BtCg@mail.gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Mon, 24 Apr 2017 00:28:37 -0500
+Message-ID: <CAJZjrdXWbBz3MUVG4WuXvkGD1TZDWTaaEd7VXnyhDsXvU7WSEw@mail.gmail.com>
+Subject: Re: I suggest a new feature: One copy from files
+To:     Rm Beer <rmbeer2@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Looping the listserv back in, didn't realize this had gone off thread.
 
-> Subject: [PATCH v6 3/8] convert: Split start_multi_file_filter into two separate functions
+I'm not sure what you mean by "update only the last change, and not
+record the old changes".
 
-Two minor nits, because the capital after "<area>:" looks ugly in shortlog
-output, and having () there makes it easier to notice that a
-function name is being discussed.  I.e.
+update-index is, like most Git commands, per repo.
 
-    convert: split start_multi_file_filter() into two separate functions
-
-> To enable future reuse of the filter.<driver>.process infrastructure,
-> split start_multi_file_filter into two separate parts.
+On Mon, Apr 24, 2017 at 12:08 AM, Rm Beer <rmbeer2@gmail.com> wrote:
+> Yes, but i say about of have a update only the last change, and not
+> record the old changes. Interesting command the 'update-index', this
+> is a permanent config for each dir/files?
 >
-> start_multi_file_filter will now only contain the generic logic to
-> manage the creation and tracking of the child process in a hashmap.
->
-> start_multi_file_filter_fn is a protocol specific initialization
-> function that will negotiate the multi-file-filter interface version
-> and capabilities.
-
-The above fails to describe a lot more important/significant change
-this patch makes.  Two mistaken check "errno == EPIPE" have been
-removed as a preliminary bugfix.  I think the bugfix deserves to be
-split into a separate patch by itself and hoisted much earlier in
-the series.  It alone is a very good change, with or without the
-remainder of the changes in this patch.
-
-Thanks.
-
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
->  convert.c | 62 ++++++++++++++++++++++++++++++++++++--------------------------
->  1 file changed, 36 insertions(+), 26 deletions(-)
->
-> diff --git a/convert.c b/convert.c
-> index 793c29ebfd..36401fe087 100644
-> --- a/convert.c
-> +++ b/convert.c
-> @@ -565,35 +565,14 @@ static void stop_multi_file_filter(struct child_process *process)
->  	finish_command(process);
->  }
->  
-> -static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
-> +static int start_multi_file_filter_fn(struct cmd2process *entry)
->  {
->  	int err;
-> -	struct cmd2process *entry;
-> -	struct child_process *process;
-> -	const char *argv[] = { cmd, NULL };
->  	struct string_list cap_list = STRING_LIST_INIT_NODUP;
->  	char *cap_buf;
->  	const char *cap_name;
-> -
-> -	entry = xmalloc(sizeof(*entry));
-> -	entry->cmd = cmd;
-> -	entry->supported_capabilities = 0;
-> -	process = &entry->process;
-> -
-> -	child_process_init(process);
-> -	process->argv = argv;
-> -	process->use_shell = 1;
-> -	process->in = -1;
-> -	process->out = -1;
-> -	process->clean_on_exit = 1;
-> -	process->clean_on_exit_handler = stop_multi_file_filter;
-> -
-> -	if (start_command(process)) {
-> -		error("cannot fork to run external filter '%s'", cmd);
-> -		return NULL;
-> -	}
-> -
-> -	hashmap_entry_init(entry, strhash(cmd));
-> +	struct child_process *process = &entry->process;
-> +	const char *cmd = entry->cmd;
->  
->  	sigchain_push(SIGPIPE, SIG_IGN);
->  
-> @@ -642,7 +621,38 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
->  done:
->  	sigchain_pop(SIGPIPE);
->  
-> -	if (err || errno == EPIPE) {
-> +	return err;
-> +}
-> +
-> +static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
-> +{
-> +	int err;
-> +	struct cmd2process *entry;
-> +	struct child_process *process;
-> +	const char *argv[] = { cmd, NULL };
-> +
-> +	entry = xmalloc(sizeof(*entry));
-> +	entry->cmd = cmd;
-> +	entry->supported_capabilities = 0;
-> +	process = &entry->process;
-> +
-> +	child_process_init(process);
-> +	process->argv = argv;
-> +	process->use_shell = 1;
-> +	process->in = -1;
-> +	process->out = -1;
-> +	process->clean_on_exit = 1;
-> +	process->clean_on_exit_handler = stop_multi_file_filter;
-> +
-> +	if (start_command(process)) {
-> +		error("cannot fork to run external filter '%s'", cmd);
-> +		return NULL;
-> +	}
-> +
-> +	hashmap_entry_init(entry, strhash(cmd));
-> +
-> +	err = start_multi_file_filter_fn(entry);
-> +	if (err) {
->  		error("initialization for external filter '%s' failed", cmd);
->  		kill_multi_file_filter(hashmap, entry);
->  		return NULL;
-> @@ -733,7 +743,7 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
->  done:
->  	sigchain_pop(SIGPIPE);
->  
-> -	if (err || errno == EPIPE) {
-> +	if (err) {
->  		if (!strcmp(filter_status.buf, "error")) {
->  			/* The filter signaled a problem with the file. */
->  		} else if (!strcmp(filter_status.buf, "abort")) {
+> 2017-04-24 1:59 GMT-03:00 Samuel Lijin <sxlijin@gmail.com>:
+>> Ah - I see what you're asking for now, basically the ability to tell Git to
+>> ignore changes to a file once you've already started tracking it, right?
+>>
+>> If I'm not mistaken, git update-index --skip-worktree will do this for you.
+>> (I'm on my phone, so I don't have easy access to documentation right now.)
+>>
+>> Hope this helps.
+>>
+>> On Apr 23, 2017 11:51 PM, "Rm Beer" <rmbeer2@gmail.com> wrote:
+>>>
+>>> in a repository have two behaviors. (How understand i)
+>>>
+>>> 1) A file can check and updated in the repository, take any change
+>>> from the file like a record logs.
+>>> 2) If the file have in .gitignore . Git never see it.
+>>>
+>>> I suggest add a new behaviors:
+>>>
+>>> 3) A file can check and updated in the repository. But never add in
+>>> the record logs, only have one copy in the repository. (Maybe add
+>>> filters in .gitonecopy or something)
+>>>
+>>>
+>>> 2017-04-24 1:02 GMT-03:00 Samuel Lijin <sxlijin@gmail.com>:
+>>> > ...what?
+>>> >
+>>> > I'm sorry, I have absolutely no idea what you're asking. You're going
+>>> > to have to be a lot more specific with your description of the desired
+>>> > behavior because as is, I have no idea what purpose your .gitonecopy
+>>> > or .gitonelog would serve. I also have no idea what this has to do
+>>> > with the binary files ignored by .gitignore.
+>>> >
+>>> > It would probably make sense for you to describe a use case for this
+>>> > as well, to help us understand why you want what you're asking for.
+>>> >
+>>> > On Sun, Apr 23, 2017 at 10:47 PM, Rm Beer <rmbeer2@gmail.com> wrote:
+>>> >> I have a several directories with binary files datas that is discard
+>>> >> by .gitignore.
+>>> >>
+>>> >> I recommend make a new .gitonecopy or .gitonelog or something that
+>>> >> take the directories with only 1 copy of last updated and not take
+>>> >> history of files in the repository.
+>>> >> Maybe anyone found other best method for apply this idea.
