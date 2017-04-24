@@ -2,94 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 676791FE90
-	for <e@80x24.org>; Mon, 24 Apr 2017 11:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2E8D1FE90
+	for <e@80x24.org>; Mon, 24 Apr 2017 11:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1169145AbdDXLGJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 07:06:09 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:36564 "EHLO
-        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1169082AbdDXLEc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 07:04:32 -0400
-Received: by mail-io0-f180.google.com with SMTP id p80so69528043iop.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 04:04:32 -0700 (PDT)
+        id S1169131AbdDXLPN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 07:15:13 -0400
+Received: from mail-io0-f176.google.com ([209.85.223.176]:34592 "EHLO
+        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1169061AbdDXLOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 07:14:30 -0400
+Received: by mail-io0-f176.google.com with SMTP id a103so187579712ioj.1
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 04:14:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=00u8vHdB7us9jyBMrukCUUefCh2dhwGwtiJ354eQ0Hs=;
-        b=pJixt6yt0Zd439kOcacC5cj3e66hFIJOJNnfUkjvJJtfNaMr7s6XTPdIzLZDqRY2hd
-         9DxMmiki4UALBW+Mjcfrv7oWxqaS0mLloKN4cZFkCfSy8zLX7E9p+JslUSrWc+23EieP
-         FxzAk1jjW1TAA7f10vYmiylRcuk/AN78RnG+0vVOYikmD8VqiX6TjOIG8yUSStTwvBrQ
-         vbFtnODPL+OdaDnd7xjsdN9Dm5vKLtBczpdP0qeSwzp4+F6F0NQkimFeK9Hp+uY7C0dX
-         mP65u1Zuhwewh5vASfBi26wWPWFcMNAm0/eIkYAVrtL9P5j8WE6RVvDPNZLqmForehFp
-         i3ww==
+        bh=GMOvDiGggI/Wd7qoGscModVJQ0CUyL6Ghz701ZdCVRg=;
+        b=LwNMVnZygDmhHJftl99+YZijq0qKn0ZhOsR9LBUumKQBsZ1nPJrGHM7w19yYrcO3HS
+         XZww3XZ/As8aNT+d0CVBY38pA6yALYOg5f22vup8Gs4Fwfvsj+6xhCTI6+rEMaMypDTX
+         b0dFp6UbYtlCnQPkEqTxOzoqidgG+DChjQeqooLnbzQXsJhfFV0kPuJOxpuAk+bfZFzG
+         06tMT0YSEhfLb5FHaLpNstC7UkEPxbs0IEKNfZ4URNfSAMHcm6bpLEBuSxE9yYUJijtT
+         xatiC4/7BEiblTOU5BkUKvYES2ks7Bsea1IHJO4A8o7lYeLY4HnWlmgTESlN+Ew28+/8
+         iZkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=00u8vHdB7us9jyBMrukCUUefCh2dhwGwtiJ354eQ0Hs=;
-        b=FV2vwgWQtP3JdPn4b5J4i+ybjVFcF26r5uK9osDgIGL85aOXnMnWlv366LB2UpVJcz
-         8s/y2fcxF1OKt7yL/iEa/wOPrOxmZ57pAoMfxA8ksWBqw2XKeJ24YGuZh4adni2FTcK4
-         pEZFr3/ZmWwnQC257z09lExr21q0Il5ZrPFQ/4a6C7pVFRWkXJdP7Ffsyl9y8kZqkk4y
-         Fnf1aTuHVQVAwN0AI9GN/+Xo3JDHSyixoR+wTP3cs9kOAutwbG1povM0G8ssdJ9qZ1GZ
-         ctqhRYd4jP00wSjw2cB0/XBLw6Q1YZ5wVEVe/YbTZVtU9rPCG5z6BujTo0Sj0fDeHeII
-         0f+w==
-X-Gm-Message-State: AN3rC/5V/7Exd1d1VAb+JPEUMu9xFtPKSq7lhFa9IfzKAprFqc3WI0Wg
-        katIFOtOkyvOjSy4PxC21JdDiLJvig==
-X-Received: by 10.157.43.110 with SMTP id f43mr5507640otd.79.1493031871074;
- Mon, 24 Apr 2017 04:04:31 -0700 (PDT)
+        bh=GMOvDiGggI/Wd7qoGscModVJQ0CUyL6Ghz701ZdCVRg=;
+        b=L8NQDM5XQ8+1dx1I8xa0DDQ9Nxpcc19Io9/iblpooct5KOLoI0hS0PjI4UwpQCGiKd
+         A/+nXZoawaU0SU0cNvO/zpxkLYEiH8d1f87EzuFS1hyVYRK3ZPGT9ATmz0mPJmiuW1kq
+         WpsoeW+uyncTaiw+aLwZ8ZbixGi1RqX491XYaNl6YewaIC1epCSVYs2I5mDEJNk9zgbQ
+         PMea7j6rNbiTFD/lRRMeQze26Ih5xL3Nu6d6INF4VjoguoQjD2p30WdkwePzPrmlDaxi
+         18BWMUdmfoncW2xFr0z2usauXqNIHwb5aCqAjDIIrTDpoZJTAyPL97CMOSk5RWIqsE4M
+         IXkg==
+X-Gm-Message-State: AN3rC/4vPhb4oAhVck/BTh3bD0f98w09qpQpcPBEQluhJ6uRQ7Qj8xKR
+        xoNs9DwXM5hTqGTazI9f8/CT7DPNHg==
+X-Received: by 10.157.18.144 with SMTP id g16mr267873otg.10.1493032468739;
+ Mon, 24 Apr 2017 04:14:28 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.157.6.166 with HTTP; Mon, 24 Apr 2017 04:04:10 -0700 (PDT)
-In-Reply-To: <CACsJy8DPtfyAAX_cmRLib=eKPMWnew5CsYDV6V3xTTiEg1Kksg@mail.gmail.com>
-References: <CAJgfmqU+1Ex1YkP94H2amXV+oqscbQwvb-CueuCiM7-n0AAP8Q@mail.gmail.com>
- <CACBZZX4fDu-o+ERiTyjVq2rWkXK6rjErU4KyW33qMx1_6vjMCQ@mail.gmail.com>
- <xmqqpogblvfr.fsf@gitster.mtv.corp.google.com> <CAJgfmqWf9j=R1=qy-kGTL4+y_40O+8S5q=VZuD3A-DbfRJer2Q@mail.gmail.com>
- <CACsJy8BASVSxJ4RzNKVpj9MyD=fMR-fpspMdET1bT45yMrf_0w@mail.gmail.com>
- <CAJgfmqW4ck9SwBrT_Z7bTOzM2zG==_ONUhTfhbLJtRu=vT+wyg@mail.gmail.com>
- <xmqq60i2im72.fsf@gitster.mtv.corp.google.com> <CAJgfmqXqfp3A+A74dfkKjQb_26ZNH9anY52-G2L5ipg=+6--2w@mail.gmail.com>
- <CANgJU+WbbF2yzg53D7NasN_nxqytOh=UoutmMPak77JhiJHx4A@mail.gmail.com>
- <CAH_OBidR8ewMO_B0HM2SU=B+uV=kRjpOKVMcvohEkZ1PSgT92w@mail.gmail.com> <CACsJy8DPtfyAAX_cmRLib=eKPMWnew5CsYDV6V3xTTiEg1Kksg@mail.gmail.com>
-From:   shawn wilson <ag4ve.us@gmail.com>
-Date:   Mon, 24 Apr 2017 07:04:10 -0400
-Message-ID: <CAH_OBid8nNGX2fFJkGcS1=bDQBjMvXn4ZeJ9wJ4VNGOMh-AeRQ@mail.gmail.com>
-Subject: Re: Feature request: --format=json
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     demerphq <demerphq@gmail.com>,
-        "Fred .Flintstone" <eldmannen@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Received: by 10.74.158.70 with HTTP; Mon, 24 Apr 2017 04:13:58 -0700 (PDT)
+In-Reply-To: <xmqqh91i7bdy.fsf@gitster.mtv.corp.google.com>
+References: <20170420101024.7593-1-pclouds@gmail.com> <20170420101024.7593-2-pclouds@gmail.com>
+ <xmqqh91i7bdy.fsf@gitster.mtv.corp.google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 24 Apr 2017 18:13:58 +0700
+Message-ID: <CACsJy8CCsZWAQJwRQQAYerGLgiaGMZesGZPi4NJvkOtEB0m7MA@mail.gmail.com>
+Subject: Re: [PATCH 1/6] worktree.c: add validate_worktree()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 24, 2017 at 5:28 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Mon, Apr 24, 2017 at 3:33 PM, shawn wilson <ag4ve.us@gmail.com> wrote:
->> Late to the party, but I too would also like json format output (mainly so I
->> could pipe stuff to jq instead of looking at the man page for which %thing
->> I'm looking for). That said, it's not at the PR level of want for me.
->>
->> OTOH, format=xml would be even more handy IMHO... Which I see has hit both
->> SO and this ml in the past. Either way /some/ machine output would be a good
->> thing :)
+On Fri, Apr 21, 2017 at 9:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +int validate_worktree(const struct worktree *wt, int quiet)
+>> +{
+>> +     struct strbuf sb = STRBUF_INIT;
+>> +     char *path;
+>> +     int err, ret;
+>> +
+>> +     if (is_main_worktree(wt)) {
+>> +             /*
+>> +              * Main worktree using .git file to point to the
+>> +              * repository would make it impossible to know where
+>> +              * the actual worktree is if this function is executed
+>> +              * from another worktree. No .git file support for now.
+>> +              */
+>> +             strbuf_addf(&sb, "%s/.git", wt->path);
+>> +             if (!is_directory(sb.buf)) {
+>> +                     strbuf_release(&sb);
+>> +                     return report(quiet, _("'%s/.git' at main worktree is not the repository directory"),
+>> +                                   wt->path);
 >
-> Personally I'd rather avoid linking to another library just for
-> json/xml formatting. libgit2 would be a great place to have
-> functionality like this and it looks like you don't even have to touch
-> C [1] to do that.
+> These messages come without telling what they are.  Should they say
+> that these are errors?  Or does the severity depend on the caller,
+> i.e. why they want to know if a particular worktree is valid, and
+> sometimes these are errors and other times they are mere warnings?
+
+I'll save the error in a strbuf and let the caller decide how to
+present them, which gives better context (e.g. "unable to move
+worktree because ...")
+
+>> +             }
+>> +             return 0;
+>> +     }
+>> +
+>> +     /*
+>> +      * Make sure "gitdir" file points to a real .git file and that
+>> +      * file points back here.
+>> +      */
+>> +     if (!is_absolute_path(wt->path))
+>> +             return report(quiet, _("'%s' file does not contain absolute path to the worktree location"),
+>> +                           git_common_path("worktrees/%s/gitdir", wt->id));
 >
-> [1] https://gist.github.com/m1el/42472327b4be382b02eb
+> It makes me wonder if this kind of error reporting belongs to the
+> place where these are read (and a new wt is written out to the
+> filesystem, perhaps).  The programmer who wrote this code may have
+> known that wt->path is prepared by reading "worktrees/%s/gitdir" and
+> without doing real_path() or absolute_path() on the result when this
+> code was written, but nothing guarantees that to stay true over time
+> as the code evolves.
 
+This is almost like fsck for worktrees and for now only be checked
+before we do destructive things to worktrees (moving, removing..).
 
-Heh, well, I guess if it's like that (simple), I don't really care :)
-I was under the impression (no idea why) that it was limited to C or
-java (and friends). Given this means I don't have to figure out
-someone's json structure or refer to an xsd, I'll live w/ this.
+Yeah we probably should do this at read time too (after checking if a
+worktree is locked, and skip the next check because wt->path may not
+exist). But we probably want to either make this function cheaper, or
+we cache the worktree list. Probably the latter. It's on my todo list.
+-- 
+Duy
