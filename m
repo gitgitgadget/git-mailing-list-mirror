@@ -2,115 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACED5207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 16:30:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0C38207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 16:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S972696AbdDXQau (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 12:30:50 -0400
-Received: from mail-io0-f176.google.com ([209.85.223.176]:36504 "EHLO
-        mail-io0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S972296AbdDXQaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 12:30:05 -0400
-Received: by mail-io0-f176.google.com with SMTP id p80so79550304iop.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 09:30:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xjEtOOsbg7ZplOo8rvQoiMmlg5PHnT7MVThjIqCxIug=;
-        b=DWPqMLlO1Z0AfwBQXY1YJrJfFzo+B91XPLouFFMeKq1PqRl3gdPjY0Eagc57VTPEkj
-         dqrMhOu75+/lSFK0FPuP6O/UjkYJ78gJwfeblFfwYOW4vFzLOQ3np7YDm1iMtwZrXfDw
-         VQZmq8Y8drfgp2W8yN/3i/HCiWKEe8aAiTa3zZi4s97NPJeOWg/1NfAdXcOmx62JgwV5
-         MEpXCxjnxiNUQL9SnBfFqvvIUtJnBVIFQJYRk48ZxjuXYNzJVue5Y7neIlVp6aCE1hd5
-         foZmA7QdVBqUrgoxsYlsA2LK4n+H6u/jLg2qt7rW6L7t1YKsoWR+3RUvvGvqOxhEFbFm
-         6LDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xjEtOOsbg7ZplOo8rvQoiMmlg5PHnT7MVThjIqCxIug=;
-        b=rvN6t3SpC28M5G+jY4Ln0wdgrnyiZiHu20eeKJUkRAvfYjrA/QB2HqcRDHHstg0ewU
-         gl7ufiPEzpFviYJzIUWH/TcUxFDgpKBWkTH7O9OffjvYHeUXM8rypfgQfldZV9M4MTUN
-         PFQXCpQwcAIoDWxyDh8dSSDNvFGZUnouiTBUHTnE3rZyvX44lQwrDDs/W0A3qj5QxceR
-         YRezevLchE6fGqiboTDrH2RsrDLdD88xcRyynL/xge5nC6SRBv21kd9uY+8Ruy6uGJro
-         Ea5ux79+RUYaOvdq6+OLLzAmK1FaZYoW1kNMkP4qgMFf8JEh6EzPiUrCyMMhGaN+4Saq
-         mKSQ==
-X-Gm-Message-State: AN3rC/55cWgj929gEymN1KDNmG0EdQTYqObOmk1ZR+cd9I5LPHPK7UzB
-        0IKwubeKD1SiE7Dp
-X-Received: by 10.107.55.68 with SMTP id e65mr8027212ioa.55.1493051404884;
-        Mon, 24 Apr 2017 09:30:04 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:fd4c:a29e:d4e5:1c03])
-        by smtp.gmail.com with ESMTPSA id e90sm289622itd.30.2017.04.24.09.30.03
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 24 Apr 2017 09:30:03 -0700 (PDT)
-Date:   Mon, 24 Apr 2017 09:30:02 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] completion: optionally disable checkout DWIM
-Message-ID: <20170424163002.GB195761@google.com>
-References: <20170420201229.fxiylgp2v2v4sz3w@sigill.intra.peff.net>
- <20170421202705.4uhbk3okccszxvgl@sigill.intra.peff.net>
+        id S974753AbdDXQe4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 12:34:56 -0400
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:29865 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S974750AbdDXQez (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 12:34:55 -0400
+Received: from PhilipOakley ([92.31.218.76])
+        by smtp.talktalk.net with SMTP
+        id 2gwadmbNa46SJ2gwadlsaK; Mon, 24 Apr 2017 17:34:33 +0100
+X-Originating-IP: [92.31.218.76]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=CItoZljD c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
+ a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=Oi53O257nWWIvWR4AIEA:9
+ a=wPNLvfGTeEIA:10
+Message-ID: <ADC645666B1F4ECA92E9082F0565F475@PhilipOakley>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From:   "Philip Oakley" <philipoakley@iee.org>
+To:     "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+        "Johannes Sixt" <j6t@kdbg.org>
+Cc:     "Christian Couder" <christian.couder@gmail.com>,
+        "Junio C Hamano" <gitster@pobox.com>,
+        "Lars Schneider" <larsxschneider@gmail.com>,
+        "git" <git@vger.kernel.org>, "Jeff King" <peff@peff.net>,
+        "Brandon Williams" <bmwill@google.com>
+References: <xmqq4lxjabce.fsf@gitster.mtv.corp.google.com> <D61D47BD-9750-4FB6-892E-013504E03738@gmail.com> <xmqqbmrq8z4j.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1704211135430.3480@virtualbox> <CAP8UFD19DVqQLHBta74uLcFPwJaRUKF8Ppmnhct5ub=OkKSqCQ@mail.gmail.com> <a9685abc-50ad-3ee6-3384-0e043d205612@kdbg.org> <alpine.DEB.2.20.1704241622510.3480@virtualbox>
+Subject: Re: What's cooking in git.git (Apr 2017, #04; Wed, 19)
+Date:   Mon, 24 Apr 2017 17:34:32 +0100
+Organization: OPDS
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170421202705.4uhbk3okccszxvgl@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain;
+        format=flowed;
+        charset="iso-8859-1";
+        reply-type=original
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-CMAE-Envelope: MS4wfFpk7gm1/twhpHplrwPf7nXQwo08L/+w96INMjLuuzDL8fRSPASQusoNgdZf401gS1LcBhdPZooMMzzrhFui8k/3/NibxJNLeWYaz6qjxKo9Vo9IAFw2
+ kX6mk1ehNRoVlu2Y8GM6qgzLKsAKOm4EIqIpdKqaV9wdYcDTqzXTFGrpIjfWlYNX+mdCaB8foF1turbG8DPfBAoLNTeZm00nHoH357HupuIFjNOBtmrRs9wR
+ yW3D4SjjLW47GGb51ahNW8QREe8IdhDS9xUWdids1VhbGsH1rW6Aw1++kzHr1bBNZUBQW3/D27m7a15FNBDQl0wYg2X82htSfGuJIbDIyC5e7aUt+T5sYPAv
+ IcQj6kmS3RfC3wlPwh5Zrohb+fAs9A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/21, Jeff King wrote:
-> 
-> When we complete branch names for "git checkout", we also
-> complete remote branch names that could trigger the DWIM
-> behavior. Depending on your workflow and project, this can
-> be either convenient or annoying.
-> 
-> For instance, my clone of gitster.git contains 74 local
-> "jk/*" branches, but origin contains another 147. When I
-> want to checkout a local branch but can't quite remember the
-> name, tab completion shows me 251 entries. And worse, for a
-> topic that has been picked up for pu, the upstream branch
-> name is likely to be similar to mine, leading to a high
-> probability that I pick the wrong one and accidentally
-> create a new branch.
-> 
-> This patch adds a way for the user to tell the completion
-> code not to include DWIM suggestions for checkout. This can
-> already be done by typing:
-> 
->   git checkout --no-guess jk/<TAB>
-> 
-> but that's rather cumbersome. The downside, of course, is
-> that you no longer get completion support when you _do_ want
-> to invoke the DWIM behavior. But depending on your workflow,
-> that may not be a big loss (for instance, in git.git I am
-> much more likely to want to detach, so I'd type "git
-> checkout origin/jk/<TAB>" anyway).
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> Hi Hannes,
+>
+> On Sat, 22 Apr 2017, Johannes Sixt wrote:
+>
+>> Am 21.04.2017 um 14:29 schrieb Christian Couder:
+>> > First bisect should ask you to test merge bases only if there are
+>> > "good" commits that are not ancestors of the "bad" commit.
+>>
+>> That's a tangent, but I have never understood why this needs to be so.
+>> Consider this:
+>>
+>>    o--o--o--o--o--o--o--o--B
+>>    /           /
+>>  -o--o--o--o--g--o--o--o--o--G
+>>
+>> When I mark B as bad and G as good, why would g have to be tested first? 
+>> This
+>> is exactly what I do when I bisect in Git history: I mark the latest 
+>> commits
+>> on git-gui and gitk sub-histories as good, because I know they can't 
+>> possibly
+>> be bad. (In my setup, these two histories are ahead of pu and next.)
+>
+> I guess the idea behind bisect's reasoning is that you could have merged
+> the "wrong" branch first.
+>
+> Ciao,
+> Dscho
+>
 
-May not be relevant to this patch per-say, but is there a way to have
-the completion for checkout only complete up to a part of
-remotes/branches?  Say a forward-slash '/'.  For example git.git has
-lots of branches which have the form: origin/<initials>/branch-name.  It
-would be convenient if when I type:
+Sorry if I'm bikeshedding here, but it does look like adding an alternate 
+'bisect' strategy may be useful for this style of integration testing.
 
-git checkout <TAB> 
+To me, given the multiplicity of independent branches being brought 
+together, it should be possible to do a check on each of the branches 
+separately, before the tests along the line of integration . The tests would 
+not be a true 'bisection' as they are separate single point tests, but they 
+do establish good commits at the tips of those branches.
 
-Instead of getting a long list of 2k or so branch names that instead I
-would get see the remote's name e.g. 'origin/' kind of like vanilla
-directory completion.  This way, unless I'm actually interested in the
-remote, I don't see the thousands of branches related to it.
+Thus, for each of the merges in the --first-parent traversal, the option 
+could test (in the OS of choice) the *second parent* commit of the merge. 
+This sets the known good points. The breakages during the integration then 
+become easier to bisect, as it is only looking for the integration of a good 
+series into mainline that breaks. [1]
 
--- 
-Brandon Williams
+In addition, an aside that dscho made earlier about the merge-base of some 
+branches relative to Windows may have been missed. The normal bisect process 
+assumes that we start from a set of good merge bases. However, dscho noticed 
+that occasionally some series may choose an older point on maint (etc.) that 
+itself would _not_ be classed as good when tested on Windows (or on other 
+OS's). Those older mergebases can make the classic bisect across all the 
+commits in the DAG between here and there a tortuous process, especially if 
+the local OS implementation percieves the base points as bad! (which breaks 
+expectations).
+
+--
+Philip
+
+
+[1] It maybe that this can be approached via an alternate DAG, which could 
+be 'faked' up as if each of the topic branches had been squashed from being 
+a long series down to a single commit (the final tree of the series), and 
+then likewise (same tree) for the integration merges, such that all the 
+singleton commits are not tested, only the pre and post merge commits on the 
+first-parent traverse. 
+
