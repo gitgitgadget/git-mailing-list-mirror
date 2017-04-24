@@ -2,95 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E77E71FE90
-	for <e@80x24.org>; Mon, 24 Apr 2017 07:52:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01BFE1FE90
+	for <e@80x24.org>; Mon, 24 Apr 2017 08:06:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166288AbdDXHwu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 03:52:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38865 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1166245AbdDXHws (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 03:52:48 -0400
-Received: (qmail 11308 invoked by uid 109); 24 Apr 2017 07:52:44 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Apr 2017 07:52:44 +0000
-Received: (qmail 4190 invoked by uid 111); 24 Apr 2017 07:53:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Apr 2017 03:53:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Apr 2017 03:52:42 -0400
-Date:   Mon, 24 Apr 2017 03:52:42 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        David Turner <dturner@twosigma.com>, git@vger.kernel.org
-Subject: Re: [PATCH] test-lib: abort when can't remove trash directory
-Message-ID: <20170424075241.ybbq2cpvbmwtdwz7@sigill.intra.peff.net>
-References: <CAM0VKjm1m4v9vTpwFEejBuD3NuGm+kAdEV-_rzCXCz2G4m5NGw@mail.gmail.com>
- <20170420165230.5951-1-szeder.dev@gmail.com>
- <20170421201527.wdtxhox3p4g35gex@sigill.intra.peff.net>
- <xmqqk26a4q69.fsf@gitster.mtv.corp.google.com>
- <20170424014339.nuh7ixlqudfnftzp@sigill.intra.peff.net>
- <xmqqwpaa1pgb.fsf@gitster.mtv.corp.google.com>
- <xmqq60hu1mhq.fsf@gitster.mtv.corp.google.com>
+        id S1166433AbdDXIGy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 04:06:54 -0400
+Received: from mail-vk0-f41.google.com ([209.85.213.41]:35698 "EHLO
+        mail-vk0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1166414AbdDXIGw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 04:06:52 -0400
+Received: by mail-vk0-f41.google.com with SMTP id 198so13359376vkk.2
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 01:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=/lfar9OpTFSH4c9wBLx9vodxZSxS9XqLdnD5SsmWljs=;
+        b=tdL2KfN0t/JQbYnrRZ1G7+6PC5qwcmB4QLZhFmQPLtoGjZpMgJ3Kn/twqL09FsUqVm
+         mkAE5qv0MYbrfDIYLs0kLPYS7RojdmfA+kZUcWNDbi7sSC+4xaZ1B1MLLG3ceJt5xGB2
+         KqlOpilapDTASlTsuVfQOu7+r8AWkIoCxoa/Lq1kLGme2YzScrvReCLZrhiFOVzM/8HR
+         K0QPKmAIEeFmT2NTgZuHOrDuRCtWM6ol2cyhm2fVks6lflPn7Rf14am76fROZBpTXg8L
+         DBW65lEEE8R/i7aE3c6yNTkQz5m4xft7R1/CS8RylBy52osvE9ORWQvUus31FzaXsLub
+         GmAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=/lfar9OpTFSH4c9wBLx9vodxZSxS9XqLdnD5SsmWljs=;
+        b=luH1I8dk4M9ucC7w7+FuIl8WbO70LSvFO175QO0pNISf+ktpwaelFLPH5MIPqb+I0Q
+         lOau5H8XeHuUiihK3jlgB1jURqEnZuKIT00sT1P1YERuKVwxywcmUCJGnM0LLi/ZqnPK
+         GmFbCkflrf0//VRo0gDotp1BbjcCCse3SC71CcMtBi1qOYL8hyyM/cZRcfk3z23T1WCm
+         R1FPpMJVUqHOUS5XF0h9yluodqPYPTC4L919HU+cBda+e1mh/WP9hRPt2uReyKdXGOmz
+         AoId8QNc6re1hWlPdI64kDSG6XS9axdQnnaH3YE2ziYigC/tTRdsXFpPLIKelwb8f8n9
+         +9Rw==
+X-Gm-Message-State: AN3rC/4olnNl7wPiEJltaOmz0+OpEBeWDFVEyTHBij9ANxsPbi484Yej
+        pDqXhB4Bpl3qqKI1GnvNnH60Q3USSDLQ0jA=
+X-Received: by 10.31.147.136 with SMTP id v130mr1769849vkd.164.1493021211346;
+ Mon, 24 Apr 2017 01:06:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq60hu1mhq.fsf@gitster.mtv.corp.google.com>
+Received: by 10.103.183.8 with HTTP; Mon, 24 Apr 2017 01:06:50 -0700 (PDT)
+From:   Orgad Shaneh <orgads@gmail.com>
+Date:   Mon, 24 Apr 2017 11:06:50 +0300
+Message-ID: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com>
+Subject: Submodule/contents conflict
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 23, 2017 at 09:02:41PM -0700, Junio C Hamano wrote:
+Hi,
 
-> >> That looks fine, assuming the answer to the "is the cwd important"
-> >> question is "no".
-> >
-> > And I do think the answer would be "yes", unfortunately.  There are
-> > systems that do not even allow a file to be removed while it is
-> > open, so...
-> 
-> In addition to "some platforms may not want cwd removed", this
-> directory would be where test_at_end_hook_ will be running in, so
-> we'd better be consistent with the current behaviour.
+I've noticed a strange behavior with submodule/content conflict. My
+current Git version is 2.12.2, but the problem exists since I
+remember.
 
-Good point. There's only one caller, but it does care about being in
-that directory.
+Branch A has a submodule.
+In branch B which diverged from A, I replaced the submodule with its contents.
 
-> Second try that hopefully is much less damaging
-> 
->  t/test-lib.sh | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index cb0766b9ee..4e8f511870 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -760,12 +760,15 @@ test_done () {
->  			say "1..$test_count$skip_all"
->  		fi
->  
-> -		test -d "$remove_trash" ||
-> -		error "Tests passed but trash directory already removed before test cleanup; aborting"
-> +		if test -z "$debug"
-> +		then
-> +			test -d "$TRASH_DIRECTORY" ||
-> +			error "Tests passed but trash directory already removed before test cleanup; aborting"
->  
-> -		cd "$(dirname "$remove_trash")" &&
-> -		rm -rf "$(basename "$remove_trash")" ||
-> -		error "Tests passed but test cleanup failed; aborting"
-> +			cd "$(dirname "$TRASH_DIRECTORY")" &&
-> +			rm -fr "$TRASH_DIRECTORY" ||
-> +			error "Tests passed but test cleanup failed; aborting"
-> +		fi
+Now, every time I merge A into B, and A had changed the submodule
+reference, all the files inside the ex-submodule directory in B are
+being "re-added".
 
-Yeah, that looks good to me.
+Moreover, aborting the merge prints an error, but seems to work
+nevertheless, and if I run git reset --hard all the files in that
+directory are actually written to the disk, even though they haven't
+changed at all.
 
--Peff
+When the submodule is small, it might be ok. But in my project we have
+a huge submodule with ~16K files, and on each merge all the files are
+listed, and even mixed reset takes several minutes.
+
+The following script demonstrates this:
+#!/bin/sh
+
+rm -rf super sub
+mkdir sub
+cd sub
+git init
+touch foo
+git add foo
+git commit -m 'Initial commit'
+mkdir ../super; cd ../super
+git init
+git submodule add ../sub
+touch foo; git add foo sub
+git commit -m 'Initial commit'
+git checkout -b update-sub
+git update-index --cacheinfo 160000,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,sub
+git commit -m 'Update submodule'
+git checkout -b remove-sub HEAD^
+git rm sub
+mkdir sub
+touch sub/foo sub/bar
+git add sub
+git commit -m 'Replaced submodule with contents'
+git checkout -b remove-2 HEAD^
+git merge --no-ff remove-sub
+git merge update-sub
+# Adding sub/foo
+# Adding sub/bar
+# CONFLICT (modify/delete): sub deleted in HEAD and modified in
+update-sub. Version update-sub of sub left in tree at sub~update-sub.
+# Automatic merge failed; fix conflicts and then commit the result.
+git merge --abort
+# error: 'sub' appears as both a file and as a directory
+# error: sub: cannot drop to stage #0
+
+- Orgad
