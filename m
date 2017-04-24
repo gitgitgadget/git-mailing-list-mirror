@@ -2,121 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAB80207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 14:18:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C782207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 14:20:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1170095AbdDXOSh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 10:18:37 -0400
-Received: from esa1.dell-outbound.iphmx.com ([68.232.153.90]:35972 "EHLO
-        esa1.dell-outbound.iphmx.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1169844AbdDXOSf (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 24 Apr 2017 10:18:35 -0400
-X-Greylist: delayed 681 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Apr 2017 10:18:35 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=dell.com; i=@dell.com; q=dns/txt; s=smtpout;
-  t=1493043050; x=1524579050;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=8Ef2xW9R0rzSZhlmVUXUh7CTucb7S/7nM+7/30D/B5M=;
-  b=nkiU9xPCOUiWrlIV/ptSXB0IICZkT2d0dAOLAwO9GLPg37VslnufZAR7
-   Qokig6+lwSzQcdWlfnWz7hgSK9iMMUr9/oly7Pzy0wHNW2MzQypOk8p95
-   36kOVA4iCTkiG7Adaz36bjPDa5jm4HqPWznmPvOGK/40Ph8PzwNqBLr2s
-   M=;
-Received: from esa5.dell-outbound2.iphmx.com ([68.232.153.203])
-  by esa1.dell-outbound.iphmx.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 24 Apr 2017 09:01:12 -0500
-From:   "taylor, david" <David.Taylor@dell.com>
-Received: from mailuogwhop.emc.com ([168.159.213.141])
-  by esa5.dell-outbound2.iphmx.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 24 Apr 2017 20:02:57 +0600
-Received: from maildlpprd03.lss.emc.com (maildlpprd03.lss.emc.com [10.253.24.35])
-        by mailuogwprd04.lss.emc.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.0) with ESMTP id v3OE7Ba7028331
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 24 Apr 2017 10:07:12 -0400
-X-DKIM: OpenDKIM Filter v2.4.3 mailuogwprd04.lss.emc.com v3OE7Ba7028331
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=emc.com; s=jan2013;
-        t=1493042832; bh=geSRPvJBIJG95tjY2B+Vc451OXs=;
-        h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-         Content-Type:Content-Transfer-Encoding:MIME-Version;
-        b=tHsHAMudP2p6QNlU8Vj8EF1qcciHySf+hrGLXdoyrXJlM0pNShxrg4ONthrA+UmRi
-         BcBW8w+PSxQKwEZdN9/Int4P2270jl3nXjxNR97OTUDdVmQXYoNuaC3al3NLEJg407
-         1OiNOB7FIkeR3iLTxbKLZdAu1gvYNEPRy5g0Re/o=
-X-DKIM: OpenDKIM Filter v2.4.3 mailuogwprd04.lss.emc.com v3OE7Ba7028331
-Received: from mailusrhubprd54.lss.emc.com (mailusrhubprd54.lss.emc.com [10.106.48.19]) by maildlpprd03.lss.emc.com (RSA Interceptor); Mon, 24 Apr 2017 10:06:53 -0400
-Received: from MXHUB202.corp.emc.com (MXHUB202.corp.emc.com [10.253.68.28])
-        by mailusrhubprd54.lss.emc.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.0) with ESMTP id v3OE704J001865
-        (version=TLSv1.2 cipher=AES128-SHA256 bits=128 verify=FAIL);
-        Mon, 24 Apr 2017 10:07:00 -0400
-Received: from MX203CL03.corp.emc.com ([fe80::4dee:b763:b476:8fbc]) by
- MXHUB202.corp.emc.com ([10.253.68.28]) with mapi id 14.03.0266.001; Mon, 24
- Apr 2017 10:06:59 -0400
-To:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-CC:     Git Mailing List <git@vger.kernel.org>
-Subject: RE: [PATCH] worktree add: add --lock option
-Thread-Topic: [PATCH] worktree add: add --lock option
-Thread-Index: AQHStKhKcWigKBrcdUyLP3pp/L0hrqHFGAaAgA+CwPA=
-Date:   Mon, 24 Apr 2017 14:06:59 +0000
-Message-ID: <63F1AEE13FAE864586D589C671A6E18B0D23F9@MX203CL03.corp.emc.com>
-References: <63F1AEE13FAE864586D589C671A6E18B0CFBF7@MX203CL03.corp.emc.com>
- <20170412135805.29837-1-pclouds@gmail.com>
- <xmqqy3v3orc3.fsf@gitster.mtv.corp.google.com>
- <CACsJy8D_S+KNTxLp7QT5KzvCmdjuQZ++saYAaikkO7beRDwzJQ@mail.gmail.com>
-In-Reply-To: <CACsJy8D_S+KNTxLp7QT5KzvCmdjuQZ++saYAaikkO7beRDwzJQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.238.48.71]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1171980AbdDXOUd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 10:20:33 -0400
+Received: from mout.gmx.net ([212.227.17.21]:61528 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1172531AbdDXOUY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 10:20:24 -0400
+Received: from virtualbox ([95.208.59.55]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lqhaw-1cOfOI272A-00eOrF; Mon, 24
+ Apr 2017 16:20:04 +0200
+Date:   Mon, 24 Apr 2017 16:19:48 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org,
+        peff@peff.net, bmwill@google.com
+Subject: Re: What's cooking in git.git (Apr 2017, #04; Wed, 19)
+In-Reply-To: <xmqqfugy4pnx.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1704241609300.3480@virtualbox>
+References: <xmqq4lxjabce.fsf@gitster.mtv.corp.google.com> <D61D47BD-9750-4FB6-892E-013504E03738@gmail.com> <xmqqbmrq8z4j.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1704211135430.3480@virtualbox> <xmqqfugy4pnx.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-X-Sentrion-Hostname: mailusrhubprd54.lss.emc.com
-X-RSA-Classifications: public
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:ZbkM+YcyulQQVrhSavZbbIk9r/dIqai2RfUxgSG23helt3gePW+
+ AX5MRF+//HUWvdzxe06h06+hSGUENL6iWFzmWrZBq410kPuuN2IfCNQGtR9Jc2ShbB9AzdU
+ 5/fjSJqvvyUCwfnz9VIYpbmqmOMVabeYwdzrNEgPIYghGhV6Zju9IP60ru4qR5+6jFpQv21
+ Njp3Ys26RaeSJwmJpBbsg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8pFEjHWKfUc=:Lv7NyCZgx09vXS4lFAtz7g
+ SVoz2oMJD5dnUSqPdhMfvqpswhxlEW64cWziKKwRpvZ9AVvf1UwwpvZ58sPxkvPSnkKpC33A6
+ f5Lby4OGKaZOLUHlRID+YqYwh0ZTN7aA6Fn/j8ul64DxyFObfmO2wIR7YsywMjbXwV+aqMRk2
+ ClBBWFz9FIzHXPouCK0cVG+cIayLIPmRRHqWu/N87UBcKSNrh5/7Duunr4tWU3sNXxni8GNBe
+ n8uSdJFkBr6OFFgo8JUGCPxcfMaNPlGEPbjt6iyG+Oiv0nxKGULu2qC2OU6ll942L2yobMcYl
+ 6n3DsxsTWFpJC0y4fA/2ngMCkmXYV3hsdrqO4gKRoJEG/8xzYQ0PDY82LyIZZVq4agPb3DDx6
+ d5SUoHvC4UCuUJZsjGsGokoTj1RxcJr4g41vr992vEjZjeWxIALWZd7caD57ujjhBumedNDQw
+ sFzdsb0exM5n20OOxMV1lZqo67AWzKPEog9EzG1lBheAtLH6tNNE91q1SsAWVtasrbUBpvQGr
+ koU68aEqlDNjo/YHt7xkpY4qKFb5w3yVvJQlZr2vdUI9RBNso+Pg6miZ8ZvztH+P2nofuBD+R
+ tdzwx85nGrKMbxSonW+B4TcsLEFe5lRP0jI8gO1+o20OkZb/bLuf3KWrDjwGSJbXD9H5nGG/f
+ 0NX9i0QibmCE/s+KSNI5D0wNMiUABBUk2GclDaWcDm5OQpZN1lonA2Ww6ZtiP1e2XA5UR2das
+ WhskwfH2shYrIY3GjQuM2ldcjgFD1B3vMmPNsiA4mJxOCHq+p6K7f5cfR939JLSbYmFQys++P
+ rILfDa3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQo+IEZyb206IER1eSBOZ3V5ZW4gW21haWx0bzpwY2xvdWRzQGdtYWlsLmNvbV0NCj4gU2VudDog
-RnJpZGF5LCBBcHJpbCAxNCwgMjAxNyA5OjAxIEFNDQo+IFRvOiBKdW5pbyBDIEhhbWFubw0KPiBD
-YzogR2l0IE1haWxpbmcgTGlzdDsgdGF5bG9yLCBkYXZpZA0KPiBTdWJqZWN0OiBSZTogW1BBVENI
-XSB3b3JrdHJlZSBhZGQ6IGFkZCAtLWxvY2sgb3B0aW9uDQo+IA0KPiBPbiBGcmksIEFwciAxNCwg
-MjAxNyBhdCA1OjUwIEFNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+DQo+IHdy
-b3RlOg0KPiA+IE5ndXnhu4VuIFRow6FpIE5n4buNYyBEdXkgIDxwY2xvdWRzQGdtYWlsLmNvbT4g
-d3JpdGVzOg0KPiA+DQo+ID4+IEFzIGV4cGxhaW5lZCBpbiB0aGUgZG9jdW1lbnQuIFRoaXMgb3B0
-aW9uIGhhcyBhbiBhZHZhbnRhZ2Ugb3ZlciB0aGUNCj4gPj4gY29tbWFuZCBzZXF1ZW5jZSAiZ2l0
-IHdvcmt0cmVlIGFkZCAmJiBnaXQgd29ya3RyZWUgbG9jayI6IHRoZXJlIHdpbGwgYmUNCj4gPj4g
-bm8gZ2FwIHRoYXQgc29tZWJvZHkgY2FuIGFjY2lkZW50YWxseSAicHJ1bmUiIHRoZSBuZXcgd29y
-a3RyZWUgKG9yDQo+IHNvb24sDQo+ID4+IGV4cGxpY2l0bHkgIndvcmt0cmVlIHJlbW92ZSIgaXQp
-Lg0KPiA+Pg0KPiA+PiAid29ya3RyZWUgYWRkIiBkb2VzIGtlZXAgYSBsb2NrIG9uIHdoaWxlIGl0
-J3MgcHJlcGFyaW5nIHRoZSB3b3JrdHJlZS4NCj4gPj4gSWYgLS1sb2NrIGlzIHNwZWNpZmllZCwg
-dGhpcyBsb2NrIHJlbWFpbnMgYWZ0ZXIgdGhlIHdvcmt0cmVlIGlzIGNyZWF0ZWQuDQo+ID4+DQo+
-ID4+IFN1Z2dlc3RlZC1ieTogRGF2aWQgVGF5bG9yIDxEYXZpZC5UYXlsb3JAZGVsbC5jb20+DQo+
-ID4+IFNpZ25lZC1vZmYtYnk6IE5ndXnhu4VuIFRow6FpIE5n4buNYyBEdXkgPHBjbG91ZHNAZ21h
-aWwuY29tPg0KPiA+PiAtLS0NCj4gPj4gIEEgcGF0Y2ggdGhhdCBhZGRzIC0tbG9jayBtYXkgbG9v
-ayBsaWtlIHRoaXMuDQo+ID4NCj4gPiBUaGlzIGxvb2tzIG1vcmUgbGlrZSAiSSBkbyBiZWxpZXZl
-IHRoZSBpZGVhIGJ5IERhdmlkIGlzIGEgdXNlZnVsDQo+ID4gYWRkaXRpb24gYW5kIGhlcmUgaXMg
-aG93IEkgZGlkIGl0IHRvIHRoZSBiZXN0IG9mIG15IGFiaWxpdHktLS1sZXQncw0KPiA+IG1ha2Ug
-c3VyZSB3ZSBwb2xpc2ggaXQgZm9yIGV2ZW50dWFsIGluY2x1c2lvbiIgdGhhbiBhIG1lcmUgIml0
-IG1heQ0KPiA+IGxvb2sgbGlrZSBzby0tLWRvIHdoYXRldmVyIHlvdSB3YW50IHdpdGggaXQiIHBh
-dGNoLg0KPiANCj4gSXQgaXMgYSBnb29kIGFkZGl0aW9uLCB3aGljaCBpcyB3aHkgSSBhZGRlZCB0
-ZXN0cyBhbmQgZG9jdW1lbnRzLCBzbyBpdA0KPiBtYXkgaGF2ZSBhIGNoYW5jZSBmb3IgaW5jbHVz
-aW9uLiBJIHdvdWxkIG5vdCBzdHJvbmdseSBkZWZlbmQgaXQgdGhvdWdoDQo+IGlmIHRoZXJlJ3Mg
-b2JqZWN0aW9uLg0KPiANCj4gPiBUbyBtZSAiZ2l0IHdvcmt0cmVlIGFkZCAtLWxvY2siIHNvbWVo
-b3cgc291bmRzIGxlc3MgY29ycmVjdCB0aGFuDQo+ID4gImdpdCB3b3JrdHJlZSBhZGQgLS1sb2Nr
-ZWQiLCBidXQgSSdkIGFwcHJlY2lhdGUgaWYgbmF0aXZlcyBjYW4NCj4gPiBjb3JyZWN0IG1lLg0K
-PiANCj4gVGhhdCB3YXMgbXkgZmlyc3QgY2hvaWNlIHRvby4gVGhlbiBJIHNhdyAtLWRldGFjaCAo
-aW5zdGVhZCBvZg0KPiAtLWRldGFjaGVkKS4gSSBkaWRuJ3QgY2FyZSBtdWNoIGFuZCB3ZW50IHdp
-dGggYSB2ZXJiIGxpa2UgdGhlIHJlc3QuDQoNCldoaWxlIEkgcGVyc29uYWxseSB3b3VsZCBwcmVm
-ZXIgLS1sb2NrZWQsIEkgYWxzbyBwcmVmZXIga2VlcGluZyBpdCAncGFyYWxsZWwNCmNvbnN0cnVj
-dGlvbicgd2l0aCAtLWRldGFjaC4gIFRoYXQgaXMgZWl0aGVyIFstLWRldGFjaF1bLS1sb2NrXSBv
-cg0KWy0tZGV0YWNoZWRdWy0tbG9ja2VkXS4gIEJ1dCwgdWx0aW1hdGVseSwgbXkgaW50ZW5kZWQg
-IHVzZSBpcyB3aXRoaW4gYSBzY3JpcHQsDQpzbyBldmVuIGlmIGl0IHdhcyAtLXRvdGFsbHktbm9u
-LW1uZW1vbmljLW9wdGlvbiBJIHdvdWxkIGNvcGUuDQoNCkEgc3Ryb25nZXIgZGVzaXJlLCByZWdh
-cmRsZXNzIG9mIHdoZXRoZXIgaXQncyBEdXkncyBpbXBsZW1lbnRhdGlvbiwgbWluZSwgb3INCnNv
-bWVvbmUgZWxzZXMsIGlzIHRvIGhhdmUgc29tZXRoaW5nIGFjY2VwdGFibGUgdG8gdGhlIGNvbW11
-bml0eSBzbyB0aGF0DQp3ZSBhcmUgbm90IG1haW50YWluaW5nIGEgZm9yayB3aXRoIHRoZSBhdHRl
-bmRhbnQgbmVlZCB0byBtZXJnZSBjaGFuZ2VzDQppbiBlYWNoIHRpbWUgd2UgdXBncmFkZS4NCg0K
-PiAtLQ0KPiBEdXkNCg==
+Hi Junio,
+
+On Sun, 23 Apr 2017, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Part of the reason is that you push out all of the branches in one go,
+> > typically at the very end of your work day. The idea of Continuous
+> > Integration is a little orthogonal to that style, suggesting to build
+> > & test whenever new changes come into the integration branch.
+> >
+> > As a consequence, my original setup was a little overloaded: the VM
+> > sat idle most of the time, and when you pushed, it was overloaded.
+> 
+> I do not see pushing out all them in one go is making the problem worse
+> for you, though.
+
+Oh no, you don't see that? Then let me spell it out a little more
+clearly: when you push out four branches at the same time, the same
+Virtual Machine that hosts all of the build agents has to build each and
+everyone of them, then run the entire test suite.
+
+As I have pointed out at several occasions (but I was probably complaining
+too much about it, so you probably ignored it), the test suite uses shell
+scripting a lot, and as a consequence it is really, really slow on
+Windows. Meaning that even on a high-end VM, it typically takes 1.5 hours
+to run the test suite. That's without SVN tests.
+
+So now we have up to four build agents banging at the same CPU and RAM,
+competing for resources. Now it takes more like 2-3 hours to run the
+entire build & test.
+
+The situation usually gets a little worse, even: you sometimes push out
+several iterations of `pu` in relatively rapid succession, "rapid" being
+relative to the time taken by the builds.
+
+That means that there are sometimes four jobs still hogging the VM when
+the next request to build & test `pu` arrives, and sometimes there is
+another one queued before the first job finishes.
+
+Naturally, the last two jobs will have started barely before Travis
+decides that it waited long enough (3 hours) to call it quits.
+
+To answer your implied question: the situation would be much, much better
+if the branches with more time in-between.
+
+But as I said, I understand that it would be asking you way too much to
+change your process that seems to work well for you.
+
+> As of this writing, master..pu counts 60+ first-parent merges.
+> Instead of pushing out the final one at the end of the day, I could
+> push out after every merge.  Behind the scenes, because some topics
+> are extended or tweaked while I read the list discussion, the number
+> of merges I am doing during a day is about twice or more than that
+> before I reach the final version for the day.  
+> 
+> Many issues can be noticed locally even before the patches hit a
+> topic, before the topic gets merged to 'pu', or before the tentative
+> 'pu' is pushed out, and breakage at each of these points can be
+> locally corrected without bothering external test setups.  I've been
+> assuming that pushing out all in one go at the end will help
+> reducing the load at external test setups.
+
+Pushing out only four updates at the end of the day is probably better
+than pushing after every merge, for sure.
+
+Ciao,
+Dscho
