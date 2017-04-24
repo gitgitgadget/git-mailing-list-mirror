@@ -2,96 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2794207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 23:43:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95FBD207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 23:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S979330AbdDXXnb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 19:43:31 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:35080 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S979226AbdDXXn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 19:43:29 -0400
-Received: by mail-pf0-f178.google.com with SMTP id v14so14976518pfd.2
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 16:43:29 -0700 (PDT)
+        id S979243AbdDXXvl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 19:51:41 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:32823 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S979033AbdDXXvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 19:51:39 -0400
+Received: by mail-pf0-f176.google.com with SMTP id a188so18720227pfa.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 16:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WWSTHkKYzkIoZxzi9Y7lPLNRkWdDF7G1FY+UJpqOB7Y=;
-        b=lShIqsbVVT5TNZMD+INtomjetkRcwuFo4cScS4GCF4GS6N6tSbdmAT3Km59iBC8qoi
-         /viNglMEkXh7Tjg+4yskeq+HIGXjIcV1UHF7fC6L4NpTqsYDeLnt1tPHJblaBCm82Bz3
-         IpDhwE0C0m53jcZVcHdA7MEOO72iBmUF4DXuz5fvtdMAwaw1g864VkWvvc2iXSURQxVl
-         RnfDa6b7YMeMkWBZO2hZMFnGc3PJoURGxeLB56kzBpjhYSK6mfcqykYlnLbMMerGMHM+
-         0u768/Y46siZg3tkJL3jleBQn02Yjg1FshKTz90OzjGPUp4Yt5SA4wrDULBgyCFCrP4S
-         udFw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=gP34P9WyYa6Bl9LW9JXo2aj3UBU7/9Tfq/yO63481pA=;
+        b=I2FTaWHnd7ezZRjfIXYDxAnjZE410+TvPK7Q93D+M6PFX4r0DGLuG2JRbKDFIwckA8
+         BXx5FEnUtIrMX1OjqLm/Bl5eP4ws1QEEZfRd5ACiIH+WVO7tclXy8HyolZ8WnTaZgUk7
+         C2i4alKxXzxOaVdza3OfE0kvJ8WeLFWUVn04QK/uQW9/41ieglDcxp9FU5WyzpvBYby5
+         MkYCUy32zg51VOzlS0WRzxDBRm1Nj8djUxjtLavw/Vm6DoKNGWcx7AI1nzKm/UBJpCCT
+         zhg9QZwedB7eiFeze6H5DUvG2U5O3PApRDIQ9cz678tLfOz7kKywWfKjDkWmcAzCOYOQ
+         UlVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WWSTHkKYzkIoZxzi9Y7lPLNRkWdDF7G1FY+UJpqOB7Y=;
-        b=a3eK3sdk8j2wFPCg3Z40hYO4SIm/s/PJxdM1Cd/1zkoSZCH9C1+gNJXU/3SNpeiNeF
-         XEjXXYETGTZmsELYV7ZV7BmC46S5s2uogn9mROIUz07rf+JsEfguOYrlB5wiwSvmIS6l
-         zb+J4f/UwAAzh0lMGYRLP03DusZpTzYavXCgJ0oEbhzdZveD/igzGV3XCRdaAeWuSGW1
-         Ff40ldpNp9jo9sX1IrNJiaNl8GeIYpYQAclBAo3XEtBQ6ANKLR+p+WfQnskskPvTkR5f
-         VVFmagBtFrgGqPVuHfY4PD/vcO/KZPpnjOc1U3hm86Gg+eV62rubFsVCRJ2Kt3UrK4EB
-         bRZQ==
-X-Gm-Message-State: AN3rC/7kVY43LmpWURAeTSNsEQD/nkcF3CgAHQBKAC/aUKxfVRvSWzEl
-        JYy/2zRjiG+8ib9q94fNptN58suZ7/3p
-X-Received: by 10.84.222.134 with SMTP id x6mr35520834pls.52.1493077409215;
- Mon, 24 Apr 2017 16:43:29 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Mon, 24 Apr 2017 16:43:28 -0700 (PDT)
-In-Reply-To: <4BF0A1BFFFFD421EB8C5F7E6FEF14357@PhilipOakley>
-References: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com>
- <CAGZ79kZ5440r1EHOVP3eXxe5u=u16y_jXTA0C4hLJA2kUkF-kg@mail.gmail.com> <4BF0A1BFFFFD421EB8C5F7E6FEF14357@PhilipOakley>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Apr 2017 16:43:28 -0700
-Message-ID: <CAGZ79kZDzuSHw4siSkiekw73bBq9R8gg_R+a7NyNUG6bYxc2Og@mail.gmail.com>
-Subject: Re: Submodule/contents conflict
-To:     Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>
-Cc:     Orgad Shaneh <orgads@gmail.com>,
-        Dakota Hawkins <dakotahawkins@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=gP34P9WyYa6Bl9LW9JXo2aj3UBU7/9Tfq/yO63481pA=;
+        b=sU3z+ncnZGTTwz4XUZRzGHib9kSeABm9NDF8fVIGa9+OMziA6dLu2KaNsh6IwqYOud
+         LMUtl9YTJG3+C4DwJb06uDbCHsfyw0fRMx9ideLDgEYjQEaLjpcHQ9zUKQdc4c2eHoI2
+         Z6SiGNwIK7com+rZtWSpy9DjqznRXMM8UbkDjfExh+pL1KvhGrO6Gh2Uf76xo6ISMe5X
+         inYLqiUpy+gbkoea0bHv3YTuFzH5Xnjhjx19HjXkwVpCe0/dm13GMkyqw9190qqC6AAD
+         oyNm8zhBGPDDuR0bXVanOe3aCk04qCvONpqqZHf9GI+7vucVCwA+PHm20m6A+73T6d5d
+         elzA==
+X-Gm-Message-State: AN3rC/6OCd7DrvuWsI2zM4EskThGvx6Zp+g3DRss5CRVjH2cqwVBZv4v
+        OYHM6VuW3UXLtiR+
+X-Received: by 10.98.87.203 with SMTP id i72mr27301659pfj.151.1493077898822;
+        Mon, 24 Apr 2017 16:51:38 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id h89sm32660313pfh.45.2017.04.24.16.51.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 24 Apr 2017 16:51:37 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
+        j6t@kdbg.org, sbeller@google.com, e@80x24.org, jrnieder@gmail.com
+Subject: [PATCH v6 12/11] run-command: don't try to execute directories
+Date:   Mon, 24 Apr 2017 16:50:42 -0700
+Message-Id: <20170424235042.26627-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d-goog
+In-Reply-To: <20170424223752.GB105623@google.com>
+References: <20170424223752.GB105623@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 24, 2017 at 4:33 PM, Philip Oakley <philipoakley@iee.org> wrote:
+In some situations run-command will incorrectly try (and fail) to
+execute a directory instead of an executable.  For example:
 
-> This is almost the same as just reported by 'vvs' [1]
-> https://public-inbox.org/git/CAM1zWBtfgHT=pT0pidQo1HD=DfrXLG3gNaUvs0vZKvYfG1BHFw@mail.gmail.com/,
-> originally on the 'git user' list
-> https://groups.google.com/forum/?hl=en#!topic/git-users/9ziZ6yq-BfU
+Lets suppose a user has PATH=~/bin (where 'bin' is a directory) and they
+happen to have another directory inside 'bin' named 'git-remote-blah'.
+Then git tries to execute the directory:
 
-For this issue, +cc Jeff King due to this pointer:
+	$ git ls-remote blah://blah
+	fatal: cannot exec 'git-remote-blah': Permission denied
 
->> On the main list thare is a similar "issue" [1] regarding the expectation for `git checkout`,
->> and importantly (for me) these collected views regarding the "Git Data Protection and
->> Management Principles" is not within the Git documentation.
->
-> Yes, that's an interesting point. What concerns me is that the commit
-> c5326bd62b7e168ba1339dacb7ee812d0fe98c7c which introduced this
-> into checkout isn't consistent with reset. Seems that nobody noticed this before.
+This is due to only checking 'access()' when locating an executable in
+PATH, which doesn't distinguish between files and directories.  Instead
+use 'stat()' and check that the path is to a regular file.  Now
+run-command won't try to execute the directory 'git-remote-blah':
 
-It seems as if we'd want to see the code from
-c5326bd62b7e168ba1339dacb7ee812d0fe98c7c
-to be part of any worktree touching command, specifically reset?
+	$ git ls-remote blah://blah
+	fatal: Unable to find remote helper for 'blah'
 
-> It also has a similarity to
-> https://public-inbox.org/git/1492287435.14812.2.camel@gmail.com/  regarding
-> how checkout operates.
+Signed-off-by: Brandon Williams <bmwill@google.com>
+---
+ run-command.c          | 3 ++-
+ t/t0061-run-command.sh | 7 +++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-This seems to be orthogonal to the original topic (no submodules, nor checkout
-bugs, just a doc update?)
+diff --git a/run-command.c b/run-command.c
+index a97d7bf9f..ece0bf342 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -127,6 +127,7 @@ static char *locate_in_PATH(const char *file)
+ 
+ 	while (1) {
+ 		const char *end = strchrnul(p, ':');
++		struct stat st;
+ 
+ 		strbuf_reset(&buf);
+ 
+@@ -137,7 +138,7 @@ static char *locate_in_PATH(const char *file)
+ 		}
+ 		strbuf_addstr(&buf, file);
+ 
+-		if (!access(buf.buf, F_OK))
++		if (!stat(buf.buf, &st) && S_ISREG(st.st_mode))
+ 			return strbuf_detach(&buf, NULL);
+ 
+ 		if (!*end)
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 98c09dd98..30c4ad75f 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -37,6 +37,13 @@ test_expect_success !MINGW 'run_command can run a script without a #! line' '
+ 	test_cmp empty err
+ '
+ 
++test_expect_success 'run_command should not try to execute a directory' '
++	test_when_finished "rm -rf bin/blah" &&
++	mkdir -p bin/blah &&
++	PATH=bin:$PATH test_must_fail test-run-command run-command blah 2>err &&
++	test_i18ngrep "No such file or directory" err
++'
++
+ test_expect_success POSIXPERM 'run_command reports EACCES' '
+ 	cat hello-script >hello.sh &&
+ 	chmod -x hello.sh &&
+-- 
+2.13.0.rc0.306.g87b477812d-goog
 
-
-> It does feel as if there are two slightly different optimisations that could
-> be used when the desired file pre-exists in the worktree, but isn't
-> immediately known to the index.
->
