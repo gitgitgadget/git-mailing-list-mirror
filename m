@@ -6,124 +6,139 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA8E4207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 17:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6E99207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 18:12:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S972567AbdDXRkj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 13:40:39 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:36325 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S938155AbdDXRkh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 13:40:37 -0400
-Received: by mail-pf0-f169.google.com with SMTP id 194so15583482pfv.3
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 10:40:36 -0700 (PDT)
+        id S975651AbdDXSM0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 14:12:26 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:35977 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S975389AbdDXSMY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 14:12:24 -0400
+Received: by mail-pf0-f178.google.com with SMTP id 194so15959034pfv.3
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 11:12:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=796MabSMJdzTynKGPQOctgwxuNRFBf1NkPKyzJUKVLY=;
-        b=VOePuHomA0qpY7zijaxElLA8uv8OjW9Jl8FNSzQlQ9f++wgUjvIGoEMelboLisdpK9
-         j+CSWQI5nqZmEH84ZVtrcu6ocixzQ2H8kLXxRocejMZRaFVD0xDG7/4eG8N42bsmQDYk
-         327t6aU7uSXkvNy1+KscWiUoIuF2HbRcgKULVwjSPA6+XvVCeedH6su9rzTsthPGgBvw
-         mRNlxFqyMGHe99g0CYNMz5/XoibNIoyVzmPyK1r53Z3iO99CY2hBlvYGm0FexGNN9ije
-         SWNfpF8+1ZaD3dOeBpbKNsIYvJYs6gl/vPQC18LKAenRnhQKX2V/q0tHVStfZvqfWlhs
-         84PA==
+         :cc:content-transfer-encoding;
+        bh=pSyOnYnTPr/P+sXfdvJZDQNe4uPv6AdxsuC52lGLhiM=;
+        b=n4KqnckxgVHhQ2cvTJ7P1eRUhINRB7thKhdpjpJiy9w1a3DeO/5BXhzTkMFeUFIts/
+         yxlkBu6US0uwcLRiLyREwxmnLi0ugzjMmEZm6Lw3KGMMx3OyDMzp+KQIfBApc/LmKIPh
+         vJagif0HazhLbP7wYf70Ovb8uoM3kC4xSGCdmFLvA9ij/QGeFzvg13wBpZ3PwJjS2jGw
+         9euECrWlheRTYjuxhVLi1TKqLV7jbZLNbAW80arLplb5zZech7HaGF/7GG7Spb7s30qh
+         NnytvJXqxgk+XarcTP4KvgWqchwlJK6SbpnJ0XFo0PvR0qMRzbU+70KMmwjk4/kz15+x
+         B16A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=796MabSMJdzTynKGPQOctgwxuNRFBf1NkPKyzJUKVLY=;
-        b=lAhN0pSXXhT9hP2/AKQSS/lNJlKTirXTdXH7c50KqSQ8LVRWjdcfrK2CrOModYhzNh
-         83sOaF59TGz3u1SNjZal1/j64NUmj9jZXyAsAsLyg1Wmby4XWkkafQUMX/ZN3ylmJhij
-         tqL1ErhTpZKxtOVtU7rcfImjesiFHCigMTtujYGfJZSaV4VXPaZqNLQ3061Ku/UgoZi0
-         2AyBp8RT5UN5vUjM0C5qQ9v5pX31TPLKo447WCiN31hI/rtGjTs4f4rQejkwS8U0J1Lz
-         bigrIlb8yNr0yH5PNT2hLeptbgi4jZk+XYPewDuZQQg3ktwUCZZ3eIq5egASbJr50F6W
-         e6jw==
-X-Gm-Message-State: AN3rC/4aPo014Ki6h93QOdCRag9vEsgSfVHlCyFvRzmw3sDp8v6yf5o/
-        wNjkueVBB6DCozRhcc9AD271XYgqmout
-X-Received: by 10.84.222.134 with SMTP id x6mr34573036pls.52.1493055636415;
- Mon, 24 Apr 2017 10:40:36 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pSyOnYnTPr/P+sXfdvJZDQNe4uPv6AdxsuC52lGLhiM=;
+        b=J5cT0mApojq4pfATs88FVvkzCFVze4GAm6CBCyhUx7Hh7k5ibZ5kFoQTXNPyqlRLbh
+         tCil9ZStgTDRm+TR408tS7IJXX3VF36u7WEa29Z4zFQNxNk9BYEvGp+fixDHXmb5Ijdx
+         oFzGxKdGX+ddwdrzknT6Mue3I/G0zE91qSoqHPhicaWIzDcS5YPodBAN8troGJEYasLh
+         wH1dNa7mLbi9szeLihu7rDkxjMVG1Mhopt364V5TLWYmeFHchrdeP4uD33osAvN7kssN
+         XEIypRrQcyrn68b+qLaRpaywBvUPZC+cadq5fHM0blagR4oc5Pib/DQd47vhhKUKIPW6
+         crJA==
+X-Gm-Message-State: AN3rC/71vmulqQP3kKcMFlAU2teGkEPMEbTMYvWKqLYza/1JYur2iz88
+        HjhCjsBY4xVoqYhVparJtnlp13JJZAn9
+X-Received: by 10.98.72.88 with SMTP id v85mr26312418pfa.8.1493057543262; Mon,
+ 24 Apr 2017 11:12:23 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Mon, 24 Apr 2017 10:40:36 -0700 (PDT)
-In-Reply-To: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com>
-References: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com>
+Received: by 10.100.153.156 with HTTP; Mon, 24 Apr 2017 11:12:22 -0700 (PDT)
+In-Reply-To: <378b8e50-562a-a311-2e0f-505de036aaf1@alum.mit.edu>
+References: <20170419110145.5086-1-pclouds@gmail.com> <20170419110145.5086-6-pclouds@gmail.com>
+ <378b8e50-562a-a311-2e0f-505de036aaf1@alum.mit.edu>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 24 Apr 2017 10:40:36 -0700
-Message-ID: <CAGZ79kZ5440r1EHOVP3eXxe5u=u16y_jXTA0C4hLJA2kUkF-kg@mail.gmail.com>
-Subject: Re: Submodule/contents conflict
-To:     Orgad Shaneh <orgads@gmail.com>,
-        Dakota Hawkins <dakotahawkins@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Date:   Mon, 24 Apr 2017 11:12:22 -0700
+Message-ID: <CAGZ79kb-8zUibxCMNxkg2jbGLuXPGm0ZjqZ_KtLKV4YTrn0TsQ@mail.gmail.com>
+Subject: Re: [PATCH v3 05/12] refs: move submodule slash stripping code to get_submodule_ref_store
+To:     Michael Haggerty <mhagger@alum.mit.edu>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 24, 2017 at 1:06 AM, Orgad Shaneh <orgads@gmail.com> wrote:
-> Hi,
+On Fri, Apr 21, 2017 at 10:27 PM, Michael Haggerty <mhagger@alum.mit.edu> w=
+rote:
+> On 04/19/2017 01:01 PM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> This is a better place that will benefit all submodule callers instead
+>> of just resolve_gitlink_ref()
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.=
+com>
+>> ---
+>>  refs.c | 33 +++++++++++++++++----------------
+>>  1 file changed, 17 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/refs.c b/refs.c
+>> index 5902a3d9e5..26474cb62a 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1422,25 +1422,10 @@ const char *resolve_ref_unsafe(const char *refna=
+me, int resolve_flags,
+>>  int resolve_gitlink_ref(const char *submodule, const char *refname,
+>>                       unsigned char *sha1)
+>>  {
+>> -     size_t len =3D strlen(submodule);
+>>       struct ref_store *refs;
+>>       int flags;
+>>
+>> -     while (len && submodule[len - 1] =3D=3D '/')
+>> -             len--;
+>> -
+>> -     if (!len)
+>> -             return -1;
+>> -
+>> -     if (submodule[len]) {
+>> -             /* We need to strip off one or more trailing slashes */
+>> -             char *stripped =3D xmemdupz(submodule, len);
+>> -
+>> -             refs =3D get_submodule_ref_store(stripped);
+>> -             free(stripped);
+>> -     } else {
+>> -             refs =3D get_submodule_ref_store(submodule);
+>> -     }
+>> +     refs =3D get_submodule_ref_store(submodule);
+>>
+>>       if (!refs)
+>>               return -1;
+>> @@ -1558,7 +1543,17 @@ struct ref_store *get_submodule_ref_store(const c=
+har *submodule)
+>>  {
+>>       struct strbuf submodule_sb =3D STRBUF_INIT;
+>>       struct ref_store *refs;
+>> +     char *to_free =3D NULL;
+>>       int ret;
+>> +     size_t len;
+>> +
+>> +     if (submodule) {
+>> +             len =3D strlen(submodule);
+>> +             while (len && submodule[len - 1] =3D=3D '/')
+>> +                     len--;
+>> +             if (!len)
+>> +                     submodule =3D NULL;
+>> +     }
 >
-> I've noticed a strange behavior with submodule/content conflict. My
-> current Git version is 2.12.2, but the problem exists since I
-> remember.
->
-> Branch A has a submodule.
-> In branch B which diverged from A, I replaced the submodule with its contents.
->
-> Now, every time I merge A into B, and A had changed the submodule
-> reference, all the files inside the ex-submodule directory in B are
-> being "re-added".
->
-> Moreover, aborting the merge prints an error, but seems to work
-> nevertheless, and if I run git reset --hard all the files in that
-> directory are actually written to the disk, even though they haven't
-> changed at all.
->
-> When the submodule is small, it might be ok. But in my project we have
-> a huge submodule with ~16K files, and on each merge all the files are
-> listed, and even mixed reset takes several minutes.
->
+> Ugh. Should a submodule named "///" *really* be considered to refer to
+> the main ref_store? I understand that's what the code did before this
+> patch, but it seems to me more like an accident of the old design rather
+> than something worth supporting. In other words, if a caller would
+> really pass us such a string, it seems like we could declare the caller
+> buggy, no?
 
-A similar bug report
-https://public-inbox.org/git/CAG0BQX=wvpkJ=PQWV-NbmhuPV8yzvd_KYKzJmsfWq9xStZ2bnQ@mail.gmail.com/
+In a nearby thread we discussed whether we want to tighten the
+submodule names and paths as some of the code path do funny
+things on funny input. As 'submodule' here refers to a path (and not
+a name), I would think '///' is not possible/buggy, rather we'd want to
+discuss if we want to extend the check to is_dir_sep, which would
+include '\' on Windows.
 
-"checkout --recurse-submodules" (as mentioned in that report)
-made it into Git by now, but this bug goes unfixed, still.
-
-> The following script demonstrates this:
-> #!/bin/sh
->
-> rm -rf super sub
-> mkdir sub
-> cd sub
-> git init
-> touch foo
-> git add foo
-> git commit -m 'Initial commit'
-> mkdir ../super; cd ../super
-> git init
-> git submodule add ../sub
-> touch foo; git add foo sub
-> git commit -m 'Initial commit'
-> git checkout -b update-sub
-> git update-index --cacheinfo 160000,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,sub
-> git commit -m 'Update submodule'
-> git checkout -b remove-sub HEAD^
-> git rm sub
-> mkdir sub
-> touch sub/foo sub/bar
-> git add sub
-> git commit -m 'Replaced submodule with contents'
-> git checkout -b remove-2 HEAD^
-> git merge --no-ff remove-sub
-> git merge update-sub
-> # Adding sub/foo
-> # Adding sub/bar
-> # CONFLICT (modify/delete): sub deleted in HEAD and modified in
-> update-sub. Version update-sub of sub left in tree at sub~update-sub.
-> # Automatic merge failed; fix conflicts and then commit the result.
-> git merge --abort
-> # error: 'sub' appears as both a file and as a directory
-> # error: sub: cannot drop to stage #0
->
-> - Orgad
+Thanks,
+Stefan
