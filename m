@@ -2,103 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CC76207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 20:06:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 422AD207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 20:33:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1173872AbdDXUGS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 16:06:18 -0400
-Received: from mout.web.de ([217.72.192.78]:51097 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1173864AbdDXUGQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 16:06:16 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M2MUi-1cAvAn03BE-00s2uJ; Mon, 24
- Apr 2017 22:06:13 +0200
-Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
-To:     Peter Krefting <peter@softwolves.pp.se>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Keith Goldfarb <keith@blackthorn-media.com>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
- <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
- <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
- <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
- <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
- <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
- <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
- <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
- <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de>
-Date:   Mon, 24 Apr 2017 22:06:11 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S976792AbdDXUdq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 16:33:46 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:34713 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S977598AbdDXUdf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 16:33:35 -0400
+Received: by mail-qk0-f194.google.com with SMTP id u75so5711030qka.1
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 13:33:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=TNRWF14GhlRG6J2+gGa7f6RbnE3v67Aiodjp87hBJyU=;
+        b=OYg1XjCnQSyQG8xTvu1xoTJ1UWCXAQ80lPYPvuWscM2Ez0HpA57n3mc3giGcmCq5Wq
+         pVXF+E0SFeJY98vlduTP8FavsVmGKeVbDrNaD+UG1Ka67jaAEbAqOuF9PNMTwKa3qWdq
+         dnez4RQLUt8AFvS6u7pHy3dQYLGfXfyR9HkDV/MCsWo3GDKeWDr6yK5ecm4h3dPh+J1Z
+         E1dkvhW5D29T51/bvMVAM/9n3lCvyZ//XdZFByhoaUDidPc8uUrz5Uzwml+D6sgZb3nV
+         FCIV2yY5n3OypbeGoAtLPg4xNQEcdjdkyyTVREqODDUR6sq/SqHGWOwd0h7gEzjTHAjt
+         pKFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=TNRWF14GhlRG6J2+gGa7f6RbnE3v67Aiodjp87hBJyU=;
+        b=Fli7+7kiYzFDqKEeJuxRWovA6MlRTQKVYnPTMxyBHHq/VbUhHQP6MsDUgjUHnrq3Ec
+         IMTNLuaf+KSGsRSgaz4K0uGK6oV3ek8K9p2zFfSp39AbeoQofMn7EZ7KjNHqKmJF6Ytk
+         E0l32xe4vxWKi2eBbHulVGV/+3VKXj+A8/m30zurElGUFYzet6q34gH2oSwNM3P7dXOn
+         D6V9YteCxQ+pBRRHRz8VCs4+FHFxccSoTeMWH5PlGitikIbHl09vedsvMlQZzme4OZhX
+         2GWbI+GpHTKnzgTHvcRQuNoiMK8UnRA5RJb79xnP3QmhUcYV5gKYMJ2Ho/Gb9BsYCSaI
+         Ab3Q==
+X-Gm-Message-State: AN3rC/7Sj4K1lPslmjw8uCWJdkHPmzFY6710XHT3qCIIWrwJNUoB7YT9
+        NPV6LqtVHtIspQ==
+X-Received: by 10.55.92.71 with SMTP id q68mr26063942qkb.219.1493066009417;
+        Mon, 24 Apr 2017 13:33:29 -0700 (PDT)
+Received: from [192.168.1.13] ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id c21sm3846131qkg.64.2017.04.24.13.33.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Apr 2017 13:33:28 -0700 (PDT)
+Subject: Re: [PATCH v6 1/8] pkt-line: add packet_read_line_gently()
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170421172611.12152-1-benpeart@microsoft.com>
+ <20170421172611.12152-2-benpeart@microsoft.com>
+ <xmqqy3uqzb90.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com,
+        christian.couder@gmail.com, larsxschneider@gmail.com
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <d6e8a63b-e95d-4194-5ad0-d68f557be083@gmail.com>
+Date:   Mon, 24 Apr 2017 16:33:27 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:dY76ZEvBjdB5TPx3fU7n5YMoDfHqqEwhtbL/dlqO4/8EkR1pTeu
- Kdp+fiwrGfPFoJyAwAcwcq2e7dDt/KdkCXLTsbo9+y+jkvPsS7LfKc/vavbi7mI1QVsUh7/
- RMNwhGukpsvwmxfJ8uoDzceK2lFci6LOmplOG2S1mlw/BIjp4chGJxVmtunOtYElRfRj8Rw
- oRVEKEotpgxinY1UD/8AQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:deKioZUTAP0=:6lNk83IW90jwqiiNryQ9t+
- QWZd+raExZQl0SfUFtBS8oPiB8Hiqfk+pnzeZVm4pM0Y76B1TOwbuRclwGwLM7LcFyorymaoz
- LPAchW/qRRpctk3aH1hnjrbXkEEV4pZjyvyOrf3XCIxGNidjby1KHsZXZ98qsrfrrqh7jrQRs
- rxfFIQuZeMnYIlkce3GASn5s1r3syqLX6hk28HXIm5pIf5551mlqY44LPknshmv5h1mLw631l
- S16J5pQL3d56fESooHGXofb7s5SULSb0PNGKKIYoc3ugj0lXYEtuV3DFjschIMYyKU+CDNU1r
- hFMwjp7u6xBn8ahWtG9aBME+gYwTudHFmyeHoKRx8HT6yrkpl8nRcLyy/hpF32UujJeTJ1Vkc
- +wad3ZyzG4eDWdulPnM/WNLhX0/Um8H9pHSc7iS2w5Cy6G9U+yA6f7BlBJ269YdwCrkbVqCc4
- l8xxQzUpdW6U93GuhIk6QEMg/Q8NhIh9AJR6lvog/GiudVOrgfUch6XOG6OlGHefvWZlkk+Xb
- LOXKGEN++wjTSB49IYReZ78IRlKcxIQrbpig5Xe6Ub0+mx6xg2/pRVtSdTCBXgTjuQMXfHYBo
- +tFudFprst6mai11Sdvt37mQJQ7JT/YWP45QTBb2aF72C+zDi4DRh5Fa+UMaxGgDpZeGfhdi6
- g4TTAEsJn2lnjTY5VJ9L3f1JbfvdgVqbdu6zLRSScsI36d5G7MxbX9zM5PN+c2Ua/ZHV9CPr0
- Q9JIElOtdcnR5O4fNyFCWKC4MWmgUK3yblcabZSvMQbX7u66woq9kbHSVOKqro9/NHFlEvUil
- ICahvrm
+In-Reply-To: <xmqqy3uqzb90.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.04.2017 um 20:24 schrieb Peter Krefting:
-> René Scharfe:
-> 
->> @@ -433,6 +446,11 @@ static int write_zip_entry(struct archiver_args 
->> *args,
->>     free(deflated);
->>     free(buffer);
+
+
+On 4/24/2017 12:21 AM, Junio C Hamano wrote:
+> Ben Peart <peartben@gmail.com> writes:
+>
+>> Add packet_read_line_gently() to enable reading a line without dying on
+>> EOF.
 >>
->> +    if (offset > 0xffffffff) {
->> +        zip64_dir_extra_payload_size += 8;
->> +        zip_dir_extra_size += 2 + 2 + zip64_dir_extra_payload_size;
->> +    }
->> +
->>     strbuf_add_le(&zip_dir, 4, 0x02014b50);    /* magic */
->>     strbuf_add_le(&zip_dir, 2, creator_version);
->>     strbuf_add_le(&zip_dir, 2, 10);        /* version */
-> 
-> This needs to be >=. The spec says that if the value is 0xffffffff, 
-> there should be a zip64 record with the actual size (even if it is 
-> 0xffffffff).
+>> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+>> ---
+>>   pkt-line.c | 14 +++++++++++++-
+>>   pkt-line.h | 10 ++++++++++
+>>   2 files changed, 23 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/pkt-line.c b/pkt-line.c
+>> index d4b6bfe076..bfdb177b34 100644
+>> --- a/pkt-line.c
+>> +++ b/pkt-line.c
+>> @@ -315,7 +315,7 @@ static char *packet_read_line_generic(int fd,
+>>   			      PACKET_READ_CHOMP_NEWLINE);
+>>   	if (dst_len)
+>>   		*dst_len = len;
+>> -	return len ? packet_buffer : NULL;
+>> +	return (len > 0) ? packet_buffer : NULL;
+>>   }
+> The log does not seem to explain what this change is about.
 
-Could you please cite the relevant part?
+This change was made as the result of a request in feedback from the 
+previous version of the patch series which pointed out that the call to 
+packet_read can return -1 in some error cases and to keep the code more 
+consistent with packet_read_line_gently below.
 
-Here's how I read it: If a value doesn't fit into a 32-bit field it is 
-set to 0xffffffff, a zip64 extra is added and a 64-bit field stores the 
-actual value.  The magic value 0xffffffff indicates that a corresponding 
-64-bit field is present in the zip64 extra.  That means even if a value 
-is 0xffffffff (and thus fits) we need to add it to the zip64 extra.  If 
-there is no zip64 extra then we can store 0xffffffff in the 32-bit 
-field, though.
+If len < 0 then the old code would have incorrectly returned a pointer 
+to a buffer with garbage while the new code correctly returns NULL 
+(fixes potential bug)
+if len == 0 then the code will return NULL before and after this change 
+(no change in behavior)
+if len > 0 then the code will return packet_buffer before and after this 
+change (no change in behavior)
 
-> Also set the version required to 45 (4.5) for any record that has zip64 
-> fields.
+>
+> Is this supposed to be a preliminary bugfix where this helper used
+> to return a non-NULL buffer when underlying packet_read() signaled
+> an error by returning a negative len?  If so, this should probably
+> be a separate patch early in the series.
+>
+> Should len==0 be considered an error?  Especially given that
+> PACKET_READ_CHOMP_NEWLINE is in use, I would expect that len==0
+> should be treated similarly to positive length, i.e. the otherside
+> gave us an empty line.
+>
+>>   char *packet_read_line(int fd, int *len_p)
+>> @@ -323,6 +323,18 @@ char *packet_read_line(int fd, int *len_p)
+>>   	return packet_read_line_generic(fd, NULL, NULL, len_p);
+>>   }
+>>   
+>> +int packet_read_line_gently(int fd, int *dst_len, char** dst_line)
+> ERROR: "foo** bar" should be "foo **bar"
+> #29: FILE: pkt-line.c:326:
+> +int packet_read_line_gently(int fd, int *dst_len, char** dst_line)
 
-Ah, yes indeed.
+Sorry, missed that somehow.  I'll move the space before the ** in the 
+next version of the patch series.
 
-René
+>
+>> +{
+>> +	int len = packet_read(fd, NULL, NULL,
+>> +			      packet_buffer, sizeof(packet_buffer),
+>> +			      PACKET_READ_CHOMP_NEWLINE|PACKET_READ_GENTLE_ON_EOF);
+>> +	if (dst_len)
+>> +		*dst_len = len;
+>> +	if (dst_line)
+>> +		*dst_line = (len > 0) ? packet_buffer : NULL;
+> I have the same doubt as above for len == 0 case.
+
+packet_read() returns -1 when PACKET_READ_GENTLE_ON_EOF is passed and it 
+hits truncated output from the remote process.  This occurs when the 
+remote process exits unexpectedly which is the exact case I was fixing 
+with this new function.  This requires testing len for this error 
+condition so that it can correctly handle this error case, otherwise it 
+would incorrectly return an invalid buffer. Since this is a new 
+function, there isn't any before/after behavior comparisons but it is 
+consistent with the similar packet_read_line() function.
+
