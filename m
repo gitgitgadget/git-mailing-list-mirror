@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21179207E2
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D14F207E2
 	for <e@80x24.org>; Mon, 24 Apr 2017 10:02:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166456AbdDXKCR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 06:02:17 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:35804 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1168352AbdDXKCI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 06:02:08 -0400
-Received: by mail-io0-f194.google.com with SMTP id d203so47832499iof.2
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 03:02:08 -0700 (PDT)
+        id S1168355AbdDXKCT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 06:02:19 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:35505 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1168339AbdDXKCB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 06:02:01 -0400
+Received: by mail-io0-f195.google.com with SMTP id d203so47830961iof.2
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 03:01:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=LqexGjLjaA3QdFMcSWss1V43aJ2zzP8j6FVcZkbnwnA=;
-        b=XQpqBC0DexH3wWAGKtcONr75DqhXYoc/q81gUUv3XD9lWsuNVotQMQ0B9Y1xk2N266
-         tQ9ujYZLYOWx5ZeWEcHv5kEls4jfeqNBQ3FwHrBBscv0Qgiz1BGy+WY1AKNPjVLujH8v
-         rsSw1Hz3xEn0Muj85Ebo8fZ2XyYxxb0NbcAK+yBSYDbKIPeNZk8DZQWRVhVoFbkjsIHF
-         85SUIHOsKzhbqNA1tjkYlobS6BR3kVAfwN5/p9NJH3/KP/kb9MXPa7QmHEeEzADWZLwE
-         tOs3/hsHdX8NZ+QGZRmhWYkXmnbkpbTyDXuawTfg0J56n6Nz2ckanqGniaEhuKj4RnHW
-         vFcw==
+        bh=EUQQlfZ+Y8ZhWHZYcFfPwzG40QVfGu3yTVmak9wqtuA=;
+        b=gZ1q7jdnvWfgNiKiqBXh9k5vYPOR1w9CdDU7XaFdDfSI7TrSjkLw7PicnAOERpHNKp
+         pG+/H00UykZYrbY8J4xP4dXKuD2z/CMsohLGBu90Zqe4j3XmSJLJrho2Vd32fKAQ7Miw
+         sZyW9ThZjYvQGkk1nPODxBED5jt7cuzpk0zZsNjdFnb8KjxqTIczTo+MqPUoU9gOe1fv
+         dVzOBu4Ot2NFSdwNhCy132STrE7keeb+ldWmVdtizBRxzmrRQ1n9hbftLJvB6GtVTQ7S
+         yBuQlncSKoAjzv//nWyXxIqgXmRXZIhWGfEtXE/5lgUDZB8rznVbl+YmKwugUEmwjLTY
+         938w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=LqexGjLjaA3QdFMcSWss1V43aJ2zzP8j6FVcZkbnwnA=;
-        b=ilbsXWsC+3TDWvuXNeOPwrGsVdpPIOKFgMxWh6BeEpfqRVeWp3TFS1dJpqCIUInOmp
-         8nLmCsjk8DxsUdiXYIFTNPtgeWj6+lhkY2YR0zM8wFY/WBDP60A66qTqnC6lksA9NVOk
-         ICEOUPchrN4rvSodVD58RG4o2gMe0AaxQrtQc0xj3Art5/uKKx76Af2vNmM4OTgkCBCb
-         opIf/mrgf7F3Dx50aEu7+jqfxn1v70Mh52y6ktccBMOqpMdHTeNQgXxoidO9zFQhBLo7
-         VUvdcFIb7HFA5rt/1i2nUStv9jeNnUNukPfdIobNuxDCc2lg6ANSlx23nGGFZfey6O2b
-         GhTg==
-X-Gm-Message-State: AN3rC/7ExqgLG6rorLNFp6rWyBnWimQ6cztM20BogHMrYb+msty/Ktys
-        VgUwRgSf95rOIg==
-X-Received: by 10.98.145.18 with SMTP id l18mr23458572pfe.173.1493028126884;
-        Mon, 24 Apr 2017 03:02:06 -0700 (PDT)
+        bh=EUQQlfZ+Y8ZhWHZYcFfPwzG40QVfGu3yTVmak9wqtuA=;
+        b=Mhi0Aqa8sA3Bk73nEIvftST9shrBSgWEacZTbQUDB8Jm0zpUgNKizbLzbL9rDBWIep
+         r4Xh6iTV1qZcI2g2bReKlpupsJzA0Z2IBs5+9aPDgcdXYWDYt/keIiGAf8bXnn1pV9cw
+         ET4wC8E3IYjOyCq8CtgbVAqx1s3DLcUbuRo+/gWg9tFjZpOgrCQoHOtTaUT7jtb0wfjl
+         oP67n4LetnzewTdGvrzxg8OJwrB5aEtEJuS5f13qGIsWxIGQoDNo1kLrRntaSlDpsGwa
+         VwQQhWPuC88mbgp1aEoxlZ0C7Ltv3J106Hhpz7sGOFHUnSH8LWBUPGFkFPfNwlClFUg7
+         Seuw==
+X-Gm-Message-State: AN3rC/4AA8p5lgZL30TNWVGCXou2MyhMmxwxtAx+FHn5RbCPH4nW+ny8
+        mKX3MdmFKjdfCA==
+X-Received: by 10.98.68.133 with SMTP id m5mr23954770pfi.60.1493028114876;
+        Mon, 24 Apr 2017 03:01:54 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id f131sm29887598pfc.54.2017.04.24.03.02.03
+        by smtp.gmail.com with ESMTPSA id a187sm29832771pfa.59.2017.04.24.03.01.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Apr 2017 03:02:06 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Mon, 24 Apr 2017 17:02:01 +0700
+        Mon, 24 Apr 2017 03:01:54 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Mon, 24 Apr 2017 17:01:49 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Michael Haggerty <mhagger@alum.mit.edu>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v5 5/6] worktree.c: kill parse_ref() in favor of refs_resolve_ref_unsafe()
-Date:   Mon, 24 Apr 2017 17:01:23 +0700
-Message-Id: <20170424100124.24637-6-pclouds@gmail.com>
+Subject: [PATCH v5 3/6] refs: add REFS_STORE_ALL_CAPS
+Date:   Mon, 24 Apr 2017 17:01:21 +0700
+Message-Id: <20170424100124.24637-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170424100124.24637-1-pclouds@gmail.com>
 References: <20170404102123.25315-1-pclouds@gmail.com>
@@ -71,310 +71,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The manual parsing code is replaced with a call to refs_resolve_ref_unsafe().
-The manual parsing code must die because only refs/files-backend.c
-should do that.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- branch.c                               |   3 +-
- t/helper/test-ref-store.c              |  18 ++++++
- t/t1407-worktree-ref-store.sh (new +x) |  40 +++++++++++++
- worktree.c                             | 102 +++++++++------------------------
- worktree.h                             |   2 +-
- 5 files changed, 88 insertions(+), 77 deletions(-)
- create mode 100755 t/t1407-worktree-ref-store.sh
+ refs.c               | 6 +-----
+ refs/refs-internal.h | 4 ++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 5c12036b02..0b949b7fb2 100644
---- a/branch.c
-+++ b/branch.c
-@@ -355,7 +355,8 @@ int replace_each_worktree_head_symref(const char *oldref, const char *newref,
- 	for (i = 0; worktrees[i]; i++) {
- 		if (worktrees[i]->is_detached)
- 			continue;
--		if (strcmp(oldref, worktrees[i]->head_ref))
-+		if (worktrees[i]->head_ref &&
-+		    strcmp(oldref, worktrees[i]->head_ref))
- 			continue;
+diff --git a/refs.c b/refs.c
+index 96eba92475..6e6f0ec5be 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1526,11 +1526,7 @@ struct ref_store *get_main_ref_store(void)
+ 	if (main_ref_store)
+ 		return main_ref_store;
  
- 		if (set_worktree_head_symref(get_worktree_git_dir(worktrees[i]),
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index 2d84c45ffe..4a487c014e 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "refs.h"
-+#include "worktree.h"
- 
- static const char *notnull(const char *arg, const char *name)
- {
-@@ -32,6 +33,23 @@ static const char **get_store(const char **argv, struct ref_store **refs)
- 		strbuf_release(&sb);
- 
- 		*refs = get_submodule_ref_store(gitdir);
-+	} else if (skip_prefix(argv[0], "worktree:", &gitdir)) {
-+		struct worktree **p, **worktrees = get_worktrees(0);
-+
-+		for (p = worktrees; *p; p++) {
-+			struct worktree *wt = *p;
-+
-+			if (!wt->id) {
-+				/* special case for main worktree */
-+				if (!strcmp(gitdir, "main"))
-+					break;
-+			} else if (!strcmp(gitdir, wt->id))
-+				break;
-+		}
-+		if (!*p)
-+			die("no such worktree: %s", gitdir);
-+
-+		*refs = get_worktree_ref_store(*p);
- 	} else
- 		die("unknown backend %s", argv[0]);
- 
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-new file mode 100755
-index 0000000000..04d1e9d177
---- /dev/null
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+
-+test_description='test worktree ref store api'
-+
-+. ./test-lib.sh
-+
-+RWT="test-ref-store worktree:wt"
-+RMAIN="test-ref-store worktree:main"
-+
-+test_expect_success 'setup' '
-+	test_commit first &&
-+	git worktree add -b wt-master wt &&
-+	(
-+		cd wt &&
-+		test_commit second
-+	)
-+'
-+
-+test_expect_success 'resolve_ref(<shared-ref>)' '
-+	SHA1=`git rev-parse master` &&
-+	echo "$SHA1 refs/heads/master 0x0" >expected &&
-+	$RWT resolve-ref refs/heads/master 0 >actual &&
-+	test_cmp expected actual &&
-+	$RMAIN resolve-ref refs/heads/master 0 >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'resolve_ref(<per-worktree-ref>)' '
-+	SHA1=`git -C wt rev-parse HEAD` &&
-+	echo "$SHA1 refs/heads/wt-master 0x1" >expected &&
-+	$RWT resolve-ref HEAD 0 >actual &&
-+	test_cmp expected actual &&
-+
-+	SHA1=`git rev-parse HEAD` &&
-+	echo "$SHA1 refs/heads/master 0x1" >expected &&
-+	$RMAIN resolve-ref HEAD 0 >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
-diff --git a/worktree.c b/worktree.c
-index fa7bc67a50..c1ec334b06 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -19,54 +19,25 @@ void free_worktrees(struct worktree **worktrees)
- 	free (worktrees);
+-	main_ref_store = ref_store_init(get_git_dir(),
+-					(REF_STORE_READ |
+-					 REF_STORE_WRITE |
+-					 REF_STORE_ODB |
+-					 REF_STORE_MAIN));
++	main_ref_store = ref_store_init(get_git_dir(), REF_STORE_ALL_CAPS);
+ 	return main_ref_store;
  }
  
--/*
-- * read 'path_to_ref' into 'ref'.  Also if is_detached is not NULL,
-- * set is_detached to 1 (0) if the ref is detached (is not detached).
-- *
-- * $GIT_COMMON_DIR/$symref (e.g. HEAD) is practically outside $GIT_DIR so
-- * for linked worktrees, `resolve_ref_unsafe()` won't work (it uses
-- * git_path). Parse the ref ourselves.
-- *
-- * return -1 if the ref is not a proper ref, 0 otherwise (success)
-- */
--static int parse_ref(char *path_to_ref, struct strbuf *ref, int *is_detached)
--{
--	if (is_detached)
--		*is_detached = 0;
--	if (!strbuf_readlink(ref, path_to_ref, 0)) {
--		/* HEAD is symbolic link */
--		if (!starts_with(ref->buf, "refs/") ||
--				check_refname_format(ref->buf, 0))
--			return -1;
--	} else if (strbuf_read_file(ref, path_to_ref, 0) >= 0) {
--		/* textual symref or detached */
--		if (!starts_with(ref->buf, "ref:")) {
--			if (is_detached)
--				*is_detached = 1;
--		} else {
--			strbuf_remove(ref, 0, strlen("ref:"));
--			strbuf_trim(ref);
--			if (check_refname_format(ref->buf, 0))
--				return -1;
--		}
--	} else
--		return -1;
--	return 0;
--}
--
- /**
-- * Add the head_sha1 and head_ref (if not detached) to the given worktree
-+ * Update head_sha1, head_ref and is_detached of the given worktree
-  */
--static void add_head_info(struct strbuf *head_ref, struct worktree *worktree)
-+static void add_head_info(struct worktree *wt)
- {
--	if (head_ref->len) {
--		if (worktree->is_detached) {
--			get_sha1_hex(head_ref->buf, worktree->head_sha1);
--		} else {
--			resolve_ref_unsafe(head_ref->buf, 0, worktree->head_sha1, NULL);
--			worktree->head_ref = strbuf_detach(head_ref, NULL);
--		}
--	}
-+	int flags;
-+	const char *target;
-+
-+	target = refs_resolve_ref_unsafe(get_worktree_ref_store(wt),
-+					 "HEAD",
-+					 RESOLVE_REF_READING,
-+					 wt->head_sha1, &flags);
-+	if (!target)
-+		return;
-+
-+	if (flags & REF_ISSYMREF)
-+		wt->head_ref = xstrdup(target);
-+	else
-+		wt->is_detached = 1;
- }
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 690498698e..b26f7e41ce 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -467,6 +467,10 @@ struct ref_store;
+ #define REF_STORE_WRITE		(1 << 1) /* can perform update operations */
+ #define REF_STORE_ODB		(1 << 2) /* has access to object database */
+ #define REF_STORE_MAIN		(1 << 3)
++#define REF_STORE_ALL_CAPS	(REF_STORE_READ | \
++				 REF_STORE_WRITE | \
++				 REF_STORE_ODB | \
++				 REF_STORE_MAIN)
  
- /**
-@@ -77,9 +48,7 @@ static struct worktree *get_main_worktree(void)
- 	struct worktree *worktree = NULL;
- 	struct strbuf path = STRBUF_INIT;
- 	struct strbuf worktree_path = STRBUF_INIT;
--	struct strbuf head_ref = STRBUF_INIT;
- 	int is_bare = 0;
--	int is_detached = 0;
- 
- 	strbuf_add_absolute_path(&worktree_path, get_git_common_dir());
- 	is_bare = !strbuf_strip_suffix(&worktree_path, "/.git");
-@@ -91,13 +60,10 @@ static struct worktree *get_main_worktree(void)
- 	worktree = xcalloc(1, sizeof(*worktree));
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
- 	worktree->is_bare = is_bare;
--	worktree->is_detached = is_detached;
--	if (!parse_ref(path.buf, &head_ref, &is_detached))
--		add_head_info(&head_ref, worktree);
-+	add_head_info(worktree);
- 
- 	strbuf_release(&path);
- 	strbuf_release(&worktree_path);
--	strbuf_release(&head_ref);
- 	return worktree;
- }
- 
-@@ -106,8 +72,6 @@ static struct worktree *get_linked_worktree(const char *id)
- 	struct worktree *worktree = NULL;
- 	struct strbuf path = STRBUF_INIT;
- 	struct strbuf worktree_path = STRBUF_INIT;
--	struct strbuf head_ref = STRBUF_INIT;
--	int is_detached = 0;
- 
- 	if (!id)
- 		die("Missing linked worktree name");
-@@ -127,19 +91,14 @@ static struct worktree *get_linked_worktree(const char *id)
- 	strbuf_reset(&path);
- 	strbuf_addf(&path, "%s/worktrees/%s/HEAD", get_git_common_dir(), id);
- 
--	if (parse_ref(path.buf, &head_ref, &is_detached) < 0)
--		goto done;
--
- 	worktree = xcalloc(1, sizeof(*worktree));
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
- 	worktree->id = xstrdup(id);
--	worktree->is_detached = is_detached;
--	add_head_info(&head_ref, worktree);
-+	add_head_info(worktree);
- 
- done:
- 	strbuf_release(&path);
- 	strbuf_release(&worktree_path);
--	strbuf_release(&head_ref);
- 	return worktree;
- }
- 
-@@ -334,8 +293,6 @@ const struct worktree *find_shared_symref(const char *symref,
- 					  const char *target)
- {
- 	const struct worktree *existing = NULL;
--	struct strbuf path = STRBUF_INIT;
--	struct strbuf sb = STRBUF_INIT;
- 	static struct worktree **worktrees;
- 	int i = 0;
- 
-@@ -345,6 +302,11 @@ const struct worktree *find_shared_symref(const char *symref,
- 
- 	for (i = 0; worktrees[i]; i++) {
- 		struct worktree *wt = worktrees[i];
-+		const char *symref_target;
-+		unsigned char sha1[20];
-+		struct ref_store *refs;
-+		int flags;
-+
- 		if (wt->is_bare)
- 			continue;
- 
-@@ -359,25 +321,15 @@ const struct worktree *find_shared_symref(const char *symref,
- 			}
- 		}
- 
--		strbuf_reset(&path);
--		strbuf_reset(&sb);
--		strbuf_addf(&path, "%s/%s",
--			    get_worktree_git_dir(wt),
--			    symref);
--
--		if (parse_ref(path.buf, &sb, NULL)) {
--			continue;
--		}
--
--		if (!strcmp(sb.buf, target)) {
-+		refs = get_worktree_ref_store(wt);
-+		symref_target = refs_resolve_ref_unsafe(refs, symref, 0,
-+							sha1, &flags);
-+		if ((flags & REF_ISSYMREF) && !strcmp(symref_target, target)) {
- 			existing = wt;
- 			break;
- 		}
- 	}
- 
--	strbuf_release(&path);
--	strbuf_release(&sb);
--
- 	return existing;
- }
- 
-diff --git a/worktree.h b/worktree.h
-index 6bfb985203..5ea5e503fb 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -4,7 +4,7 @@
- struct worktree {
- 	char *path;
- 	char *id;
--	char *head_ref;
-+	char *head_ref;		/* NULL if HEAD is broken or detached */
- 	char *lock_reason;	/* internal use */
- 	unsigned char head_sha1[20];
- 	int is_detached;
+ /*
+  * Initialize the ref_store for the specified gitdir. These functions
 -- 
 2.11.0.157.gd943d85
 
