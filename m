@@ -2,139 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 108C3207BD
-	for <e@80x24.org>; Mon, 24 Apr 2017 03:24:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E77A7207BD
+	for <e@80x24.org>; Mon, 24 Apr 2017 03:25:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1164458AbdDXDYi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 23:24:38 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:33656 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1164436AbdDXDYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2017 23:24:32 -0400
-Received: by mail-io0-f195.google.com with SMTP id k87so44663691ioi.0
-        for <git@vger.kernel.org>; Sun, 23 Apr 2017 20:24:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=NzD48/XAATVpbQ63l4OyIUvb5iV7LL9u+zwsjFVeVzU=;
-        b=b1qBMDkhAoNyU0aYiESqkV2OFeWtyFai2pS5qAb6+Fyc7YwcTwGIR6AUbTnjNUW4UW
-         MFLZYXbQqyEti5qrhomrctFf4hXJRTRYzHTGtMc0nqatufEZznABM4253PKWxYhPME/t
-         a7tlcvoZRetnyUvA9WpU1ef+nly4RrAzdG8Aun8tw+umbk2ULIjvtlp899SceEalIez3
-         TyVrUXDQcLhG85Rg8+zY/nKRKv9s4MyBdiUqZa1Qkb2A4qvQadei01ocWURTnxMEjkTB
-         fpU1mnPECWfSBmET1aaRdwPxtkJVzEE6UiXznzbiGdhRd8x3Rg9Iup9WVDM1vIuWdEB9
-         IPUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=NzD48/XAATVpbQ63l4OyIUvb5iV7LL9u+zwsjFVeVzU=;
-        b=LZ02tz3OCYl43kh47X1BzXG5UYuScadkcq5wlFbzrahQSZWZdA2x9P7A2j2eleT97/
-         HguFdgBNFsZAPcI06W93pvdsNUGEd9J2Ixi5vEdJGuRhZ9T5oyD/PsWcZ5icM8kxt8oQ
-         7O8BwO3HwWwJ810t7rMwPHnTC/hx90+AxKFaaOYTiXi+oc/dx7XfxRUbrw66jqPOHwv7
-         jBCGAGE/6dD/faH63YjB/La0TPwsteK+RhpfvbShufInWJV0378i5UCX/TEsxqXYDRNT
-         kLZ1u9YALvpbz6R4no1J/bovF4HWYTl68JVCPumG4N/BN9rmrTVegD+XEv4h58o5uMhm
-         oMqA==
-X-Gm-Message-State: AN3rC/7gHG7eV3FQILDLcqgjhTA/jErGX+tbhQrWYkJ0UXdA4V4+PFva
-        /FtBnwrINHN5GA==
-X-Received: by 10.107.140.197 with SMTP id o188mr5354680iod.180.1493004271766;
-        Sun, 23 Apr 2017 20:24:31 -0700 (PDT)
-Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id 66sm7361847ior.34.2017.04.23.20.24.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 23 Apr 2017 20:24:31 -0700 (PDT)
-From:   Liam Beguin <liambeguin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     liambeguin@gmail.com, martin.von.zweigbergk@gmail.com
-Subject: [PATCH] rebase -i: add config to abbreviate command name
-Date:   Sun, 23 Apr 2017 23:23:47 -0400
-Message-Id: <20170424032347.10878-1-liambeguin@gmail.com>
-X-Mailer: git-send-email 2.9.3
+        id S1164468AbdDXDY6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 23:24:58 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57980 "EHLO
+        sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1164428AbdDXDYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2017 23:24:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EAF2D7DB14;
+        Sun, 23 Apr 2017 23:24:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Yn53U4JOvjdI9HmM+cxn9XgoVaQ=; b=Jwbn/8
+        pElYvqYcuYGXCrdxm4DJewb+80GlR/OIJvmlsPDqXvszwhQKDAy8wb9+N8lU8oiG
+        Cs1f+n1Nxmzg/RehoOxNk6WPRqJj/kTw1dqblV4RwVpnUbMIgSFLPCBVsjd0bI32
+        JvzaZXKlDAuA9uJhFtVtA8u1EQYAajIVc+Nrk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mBctALJbkj/yY4YQUENYZfTdqXM87BoO
+        uMq/fxPXjSBhXPWUpAupKKsndhSyzawwrpjfGSHA9Kak5V75IkwmhZp5Etgvnvt2
+        XgWX6jYdZBaBQvZ952NYKjyxM7XGrHVXPxx8gKkqP6VKidUeJ7I30InbKYKoXowE
+        wPWOkAdaU4k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E23B37DB13;
+        Sun, 23 Apr 2017 23:24:50 -0400 (EDT)
+Received: from pobox.com (unknown [104.132.0.95])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 38CC67DB12;
+        Sun, 23 Apr 2017 23:24:50 -0400 (EDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v4 8/9] Use uintmax_t for timestamps
+References: <cover.1492721487.git.johannes.schindelin@gmx.de>
+        <cover.1492771484.git.johannes.schindelin@gmx.de>
+        <b59a414793492786937e910f6cd588b8e1751b4b.1492771484.git.johannes.schindelin@gmx.de>
+Date:   Sun, 23 Apr 2017 20:24:49 -0700
+In-Reply-To: <b59a414793492786937e910f6cd588b8e1751b4b.1492771484.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Fri, 21 Apr 2017 12:46:01 +0200
+        (CEST)")
+Message-ID: <xmqqinlu1o8u.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 932FDE00-289D-11E7-8C5C-E680B56B9B0B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add the 'rebase.abbrevCmd' boolean config option to allow
-the user to abbreviate the default command name while editing
-the 'git-rebase-todo' file.
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-Signed-off-by: Liam Beguin <liambeguin@gmail.com>
----
-Notes:
+> Previously, we used `unsigned long` for timestamps. This was only a good
+> choice on Linux, where we know implicitly that `unsigned long` is what is
+> used for `time_t`.
+>
+> However, we want to use a different data type for timestamps for two
+> reasons:
+>
+> - there is nothing that says that `unsigned long` should be the same data
+>   type as `time_t`, and indeed, on 64-bit Windows for example, it is not:
+>   `unsigned long` is 32-bit but `time_t` is 64-bit.
+>
+> - even on 32-bit Linux, where `unsigned long` (and thereby `time_t`) is
+>   32-bit, we *want* to be able to encode timestamps in Git that are
+>   currently absurdly far in the future, *even if* the system library is
+>   not able to format those timestamps into date strings.
+>
+> So let's just switch to the maximal integer type available, which should
+> be at least 64-bit for all practical purposes these days. It certainly
+> cannot be worse than `unsigned long`, so...
 
- *  This allows the lines to remain aligned when using single
-    letter commands.
+Should we at least clamp in date_overflows() so that large values
+representable with timestamp_t that will become unrepresentable when
+we start allowing negative timestamps would be rejected?  That way
+we won't have to hear complaints from the people who used timestamps
+far in the future that we regressed the implementation for them by
+halving the possible timestamp range.
 
- Documentation/config.txt     | 3 +++
- Documentation/git-rebase.txt | 3 +++
- git-rebase--interactive.sh   | 8 ++++++--
- 3 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 475e874d5155..59b64832aeb4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2614,6 +2614,9 @@ rebase.instructionFormat::
- 	the instruction list during an interactive rebase.  The format will automatically
- 	have the long commit hash prepended to the format.
- 
-+rebase.abbrevCmd::
-+	If set to true, abbreviate command name in interactive mode.
-+
- receive.advertiseAtomic::
- 	By default, git-receive-pack will advertise the atomic push
- 	capability to its clients. If you don't want to advertise this
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 67d48e688315..0c423d903625 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -222,6 +222,9 @@ rebase.missingCommitsCheck::
- rebase.instructionFormat::
- 	Custom commit list format to use during an `--interactive` rebase.
- 
-+rebase.abbrevCmd::
-+	If set to true, abbreviate command name in interactive mode.
-+
- OPTIONS
- -------
- --onto <newbase>::
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 2c9c0165b5ab..9f3e82b79615 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -1210,6 +1210,10 @@ else
- 	revisions=$onto...$orig_head
- 	shortrevisions=$shorthead
- fi
-+
-+rebasecmd=pick
-+test "$(git config --bool --get rebase.abbrevCmd)" = true && rebasecmd=p
-+
- format=$(git config --get rebase.instructionFormat)
- # the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
- git rev-list $merges_option --format="%m%H ${format:-%s}" \
-@@ -1228,7 +1232,7 @@ do
- 
- 	if test t != "$preserve_merges"
- 	then
--		printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
-+		printf '%s\n' "${comment_out}${rebasecmd} $sha1 $rest" >>"$todo"
- 	else
- 		if test -z "$rebase_root"
- 		then
-@@ -1246,7 +1250,7 @@ do
- 		if test f = "$preserve"
- 		then
- 			touch "$rewritten"/$sha1
--			printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
-+			printf '%s\n' "${comment_out}${rebasecmd} $sha1 $rest" >>"$todo"
- 		fi
- 	fi
- done
--- 
-2.9.3
 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  git-compat-util.h | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 72c12173a14..c678ca94b8f 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -319,10 +319,14 @@ extern char *gitdirname(char *);
+>  #define PRIo32 "o"
+>  #endif
+>  
+> -typedef unsigned long timestamp_t;
+> -#define PRItime "lu"
+> -#define parse_timestamp strtoul
+> +typedef uintmax_t timestamp_t;
+> +#define PRItime PRIuMAX
+> +#define parse_timestamp strtoumax
+> +#ifdef ULLONG_MAX
+> +#define TIME_MAX ULLONG_MAX
+> +#else
+>  #define TIME_MAX ULONG_MAX
+> +#endif
+>  
+>  #ifndef PATH_SEP
+>  #define PATH_SEP ':'
