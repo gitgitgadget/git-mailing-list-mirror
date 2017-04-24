@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F596207BD
-	for <e@80x24.org>; Mon, 24 Apr 2017 02:28:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B61B2207BD
+	for <e@80x24.org>; Mon, 24 Apr 2017 02:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1164178AbdDXC2N (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Apr 2017 22:28:13 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:52937 "EHLO
+        id S1164189AbdDXCgb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Apr 2017 22:36:31 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54463 "EHLO
         sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1164167AbdDXC2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Apr 2017 22:28:11 -0400
+        with ESMTP id S1757980AbdDXCga (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Apr 2017 22:36:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B6FED80C15;
-        Sun, 23 Apr 2017 22:28:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D5AB87D447;
+        Sun, 23 Apr 2017 22:36:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Je8GsIvWnbNm
-        wzUTp2Y8txpi6Ew=; b=DL4OyVM7CaXB+Fya8DWDEUetDqdvMbtMP+hHb+PSY9EA
-        2yoIMw+4VT4DupGW++o9MaD6FQwMnheUE03jsiDD4pKwqdLYXnnLj9f2SPc53qiF
-        4DsroGjY4dkwr+RV6JG/BFDnvC0f6LS7ef5gPGAFCE1Aoez9q5SkcHdGJyVpQHI=
+        :content-type:content-transfer-encoding; s=sasl; bh=eSlGZzG2CseU
+        LEFObgzeONC+3WY=; b=qdTutzG5ZnZfiK3Xudi93KXSi50xkr7SnsRaoZLHE46J
+        dVgzxWtrb0GjCmxABeopskW1X9Cf/Dhsu6zPfNVljSuVFYC4b9SFyQbtw2AqQEz4
+        feW9vGPVfc5bOL2vL0jDccBlJ0DTHwsxpXdFUHECyiCya85huXLXzsl9gscl9i8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=r2ggoz
-        S74Y0zT/QrjDT5BJyYSSHdpeh6SU3LnlO666apsOJ9u+IN5/0hQfiYxfbJjgwKhA
-        iMKkvLsAY1k60cYWSBnnKK6e7f2ygDrEVjfhE0mYz50PWb2KaUbwisPlAZBcZUWS
-        xg/NabXqz/ehbD/O+bK8AXrPTYZut4/5cGdo4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD6E980C14;
-        Sun, 23 Apr 2017 22:28:09 -0400 (EDT)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=LIr+NJ
+        5mAoLi2okpor34opDJQdi8OJus8Yvp54V653a54RrMCQyth+ZSyzne+FabC4rOUw
+        ydz5FXkArefpPDFPycJ3FcFbrTkN6n9MybJLLKSGQejvezwAzozArmX0INSc5DHi
+        BdPBvhuR0j3+5ft77MnDhn/6Q8zaG0FcLEWD4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CD62D7D446;
+        Sun, 23 Apr 2017 22:36:28 -0400 (EDT)
 Received: from pobox.com (unknown [104.132.0.95])
         (using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1D8D380C13;
-        Sun, 23 Apr 2017 22:28:09 -0400 (EDT)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 479367D445;
+        Sun, 23 Apr 2017 22:36:28 -0400 (EDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?Q?Ren=C3=A9?= Genz <liebundartig@freenet.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fix minor typing mistakes
-References: <1492955809-29018-1-git-send-email-liebundartig@freenet.de>
-Date:   Sun, 23 Apr 2017 19:28:08 -0700
-In-Reply-To: <1492955809-29018-1-git-send-email-liebundartig@freenet.de>
-        (=?utf-8?Q?=22Ren=C3=A9?= Genz"'s message of "Sun, 23 Apr 2017 15:56:49
+Subject: Re: [PATCH] doc: update SubmittingPatches
+References: <1492964264-29423-1-git-send-email-liebundartig@freenet.de>
+Date:   Sun, 23 Apr 2017 19:36:27 -0700
+In-Reply-To: <1492964264-29423-1-git-send-email-liebundartig@freenet.de>
+        (=?utf-8?Q?=22Ren=C3=A9?= Genz"'s message of "Sun, 23 Apr 2017 18:17:44
  +0200")
-Message-ID: <xmqqa87635fr.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqq60hu351w.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A7F7F726-2895-11E7-8DC0-C260AE2156B6-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D17EFAC6-2896-11E7-A323-E680B56B9B0B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -60,85 +60,55 @@ X-Mailing-List: git@vger.kernel.org
 
 Ren=C3=A9 Genz <liebundartig@freenet.de> writes:
 
-> Thanks-to: Stefan Beller <sbeller@google.com>
-> ---
+ (updates for minor irritations skipped as I do not have strong
+ opinions against them).
 
-It is nice to give credit to where credit is due (it is more common
-to say Helped-by: around here, though), but don't forget to sign off
-your patch yourself ;-)  IOW
+> @@ -261,7 +261,7 @@ smaller project it is a good discipline to follow i=
+t.
+>  The sign-off is a simple line at the end of the explanation for
+>  the patch, which certifies that you wrote it or otherwise have
+>  the right to pass it on as a open-source patch.  The rules are
+> -pretty simple: if you can certify the below:
+> +pretty simple: if you can certify the below D-C-O:
 
-    Helped-by: Stefan Beller <sbeller@google.com>
-    Signed-off-by: Ren=C3=A9 Genz <liebundartig@freenet.de>
+OK.  There is another instance of D-C-O away from here and new
+people who read the document would not know without this addition
+what it refers to.  This is a good addition.
 
->  Documentation/git-commit.txt        | 4 ++--
->  Documentation/gitremote-helpers.txt | 2 +-
->  ci/run-windows-build.sh             | 2 +-
->  diff.c                              | 2 +-
->  4 files changed, 5 insertions(+), 5 deletions(-)
+>          Developer's Certificate of Origin 1.1
+> =20
+> @@ -376,6 +376,25 @@ from the list and queue it to 'pu', in order to ma=
+ke it easier for
+>  people play with it without having to pick up and apply the patch to
+>  their trees themselves.
 
-This "a the" and "the a" seem to be quite a popular typo.  Thanks
-for catching them.
 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.tx=
-t
-> index ed0f5b9..afb06ad 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -95,7 +95,7 @@ OPTIONS
+An oversimplified one is not necessarily welcome.  Can you split
+this patch into "fixes" (all of the above) and the remainder?
+
 > =20
->  --reset-author::
->  	When used with -C/-c/--amend options, or when committing after a
-> -	a conflicting cherry-pick, declare that the authorship of the
-> +	conflicting cherry-pick, declare that the authorship of the
->  	resulting commit now belongs to the committer. This also renews
->  	the author timestamp.
-> =20
-> @@ -112,7 +112,7 @@ OPTIONS
->  	`--dry-run`.
-> =20
->  --long::
-> -	When doing a dry-run, give the output in a the long-format.
-> +	When doing a dry-run, give the output in the long-format.
->  	Implies `--dry-run`.
-> =20
->  -z::
-> diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitrem=
-ote-helpers.txt
-> index e4b785e..4a584f3 100644
-> --- a/Documentation/gitremote-helpers.txt
-> +++ b/Documentation/gitremote-helpers.txt
-> @@ -463,7 +463,7 @@ set by Git if the remote helper has the 'option' ca=
-pability.
->  	GPG sign pushes.
-> =20
->  'option push-option <string>::
-> -	Transmit <string> as a push option. As the a push option
-> +	Transmit <string> as a push option. As the push option
->  	must not contain LF or NUL characters, the string is not encoded.
-> =20
->  SEE ALSO
-> diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-> index 4e3a50b..9f89d54 100755
-> --- a/ci/run-windows-build.sh
-> +++ b/ci/run-windows-build.sh
-> @@ -1,6 +1,6 @@
->  #!/usr/bin/env bash
->  #
-> -# Script to trigger the a Git for Windows build and test run.
-> +# Script to trigger the Git for Windows build and test run.
->  # Set the $GFW_CI_TOKEN as environment variable.
->  # Pass the branch (only branches on https://github.com/git/git are
->  # supported) and a commit hash.
-> diff --git a/diff.c b/diff.c
-> index 11eef1c..74283d9 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -911,7 +911,7 @@ static int fn_out_diff_words_write_helper(FILE *fp,
->  /*
->   * '--color-words' algorithm can be described as:
->   *
-> - *   1. collect a the minus/plus lines of a diff hunk, divided into
-> + *   1. collect the minus/plus lines of a diff hunk, divided into
->   *      minus-lines and plus-lines;
->   *
->   *   2. break both minus-lines and plus-lines into words and
+> +
+> +An oversimplified summary of the commands to run:
+
+> +* clone repo
+> +  $ git clone https://github.com/git/git
+> +
+> +* change files in your local repo copy
+> +
+> +* commit your changes
+> +  $ git commit -a
+> +
+> +* create '.patch' file for the latest commit
+> +  $ git format-patch HEAD^
+> +
+> +* install 'git-email' package and configure it, f.e.
+> +    https://www.freedesktop.org/wiki/Software/PulseAudio/HowToUseGitSe=
+ndEmail/
+> +  send an email to yourself using your MUA in order to find out the va=
+lue
+> +  for the "--smtp-domain" option; look at the 'Received' header option
+> +  $ git send-email --annotate --smtp-domain=3DLONGSTRING --to=3Dgit@vg=
+er.kernel.org --cc=3DMAINTAINER --smtp-debug=3D1 NAME.patch
+> +
+>  ------------------------------------------------
+>  Know the status of your patch after submission
