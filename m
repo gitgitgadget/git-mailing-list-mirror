@@ -7,110 +7,133 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BADD2207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 13:57:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93567207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 13:58:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1171324AbdDXN5p (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 09:57:45 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61928 "EHLO mout.gmx.net"
+        id S1171913AbdDXN6I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 09:58:08 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63347 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1171810AbdDXN5i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 09:57:38 -0400
-Received: from virtualbox ([95.208.59.55]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0La3c1-1cHo9v1Mcf-00lki2; Mon, 24
- Apr 2017 15:57:30 +0200
-Date:   Mon, 24 Apr 2017 15:57:28 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1171899AbdDXN6B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 09:58:01 -0400
+Received: from virtualbox ([95.208.59.55]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M92lh-1cqrqz11DB-00CO5i; Mon, 24
+ Apr 2017 15:57:56 +0200
+Date:   Mon, 24 Apr 2017 15:57:55 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org,
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 7/9] Abort if the system time cannot handle one of
- our timestamps
-In-Reply-To: <xmqqr30i1omp.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1704241228510.3480@virtualbox>
-References: <cover.1492721487.git.johannes.schindelin@gmx.de>        <cover.1492771484.git.johannes.schindelin@gmx.de>        <2b7f90c003a1f60ede39813530617edbbdf29607.1492771484.git.johannes.schindelin@gmx.de>
- <xmqqr30i1omp.fsf@gitster.mtv.corp.google.com>
+Subject: [PATCH v5 1/8] ref-filter: avoid using `unsigned long` for catch-all
+ data type
+In-Reply-To: <cover.1493042239.git.johannes.schindelin@gmx.de>
+Message-ID: <e801667c27e0dece4bc3489306831b4dfc9ad481.1493042239.git.johannes.schindelin@gmx.de>
+References: <cover.1492771484.git.johannes.schindelin@gmx.de> <cover.1493042239.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:60iRSE5eRgohv+PuNwcY/RQtB2ehPKIGGdBtio2QF5fPXvr1wmd
- cFpkWiHkWDTXGXb+Q4zLJ+5bYYmUnMtjbREClVP8u7JhZQSyHpBnoZzwnv68cNp26RlJwjo
- 1DIDptrIwQCi34mlxlsktXQ2xkUvK/hQAJ5Ad2fPS00HEGw3ogRlft1oJKzpJHsPfK79nxT
- lne755ypjmIfMfz5pqW4w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:LXk8WJ49BcI=:3+hDCYrIiFw0IHpvRF/56a
- C8U2OkmCdcs2qq2DK1/xKnH+k2GuNlhxsFvHPRC0daXcAKcGXhOZX00oSiKaH/xjVUszlcGzh
- wUfAo7r6GzieCK5Db7LbeG70iAb8AVqn2DfivfTdA+liOkF6toAodXlXUA45bYzIRbHTGqvcq
- /YuYhrNnT6pCGE1w6Vxrg12z1mjmpvCFIBtNhpkVB2jbR8qvd9NfyuRsG/mdGi0e17mpULE0x
- 5XOtM2ft8yhK+JKwhiemMeSL4n2jihn1pYLPSh4L9dMSdPcke+yeKH8Tg4YbAje34A9ajbhnD
- S1mVBhRTiYClczzgLhLG0t0hCqIvNKBdPGtmfeBI4p/RXZcYuEuyfvefzh2j6/vJ18OSSCvBi
- MQX/LJquAmKps839+FsUVzqsMKR0yEF8BGXqCAPmQv7gW+TbM0/+++Io2ht80tONBpJh2cWf/
- qXJt47TKp87y2XrR7eQcmhMhQAaHQQ+C6Vb9uNZcsZxuoDvve+S1NbVzFA7fPvmNCpGkapylU
- x+HbvS+PRIOdUGOcAH4jorEH0m+qBW6kfKFCMNT8Rv4zZ5EFQvb/MpkAIvuIeTXE+nWyvNyIe
- e/bMUXjWa/R/PjbCMLc/01/z5VHaviAod9ggjNNz2AtGtVKAr+hQzByg6LLXUX4/C3U4dZth5
- 2yLl+VTByyaoD438QwPgMe1fkuJVSGH537ILmGoQ5cMmooBl11hS1C4J1MsYFXlCt1mgNXZrZ
- Tdlipf1OHp6uOVMawvoINKN78oSFvnhXUvkO6LNwY1HHMH5HiHhCFJ235jMTaWbOXTfclQvjn
- ex4yPNj
+X-Provags-ID: V03:K0:9omY8HDhABzw8sWF+hKaA8opJksSw95U9YpLCjy0uS4ZVrcFZqp
+ G5f0Ft0KAxDZm7NYtMn+NCImOd3r8hLLC861vjaiDkN1/w/GoaVlJUQUWTf0OcAu+UG+RIt
+ 05dw8uu5TAPjiGTYH6K5G/wBdd8IGUOezzDREkHRlb47HkfQG1C7pdpaaKNDzxb/bdMWGih
+ O9hKqz4lkQw1/6zghkhZQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LK7DbDOIeDU=:V0rvrTevhzZhOFXFTkMYzR
+ krcVRU+g4raQrOhDls+IqCapjBssydrRdy/Jyl4bw3Xd9IFtIRW3e6GvqDuhryk/4J8PXCLYD
+ 9F/wQKevuJyw5inBB494CNGltOZhbsOG/oQmAhAM39pwxOvVJ/UGopwm6Gib8jAZ/pIaRi3M/
+ JuE7GRaX2ahUUJXsqBbUHfjsIPT14IzvmHn98sHqM0hLDLHfP4Tw7SnwvCE0+UJDHPVdAG0Sv
+ byQF3yumAH78MfcCOv0m+lYjk6FQC8VcQa+NXMay1qSwUz4Af3EubbChUY85fxyW4P1uTVjXE
+ hReiXSaB6lL3lPhamNIU6fRZvdYsq3uWTmKsHTZK4yas+EnJs600MU3YmyWU8ZYqEm44sDfcn
+ pqjb/1U5uPY+BZR9iugY9puMtbOxFbAyGPQznQ9pecyx4P+l06F8YXqB6tn+vnF7T7McixG5V
+ ONtoO5R+FmmdrCZjbdEC4Is5Oa6b7wYGxSsZ4S7IiPJk1G+S18c4RTVtY6LulWM7rRNQNIMEj
+ auqe365yYNlz4sYQASHT9WOjgbCkR8bxvQkpyOJmbjNaWerMap3IJyWdhWiaIoEz4xAMojejJ
+ e8tpWq16NpBkB6mxr+6ob/el7PAc2eBsEVM3SJBOd0sFxgvsxs7GyXGjaQ72BWWLYVdXQ7adq
+ /BGhSk25MrHNwM+hynJW9hgE6kpsyxZNf5ETYkVGwaEfyWWA1ltWRm9y7myp1/Zw62z7sRL/z
+ VcPpuWnGDcCXbbN8GOnzzMS5Hx+ShXvnXXqTt0kMJfEFK5PjvHwZ9dqeTMmcFWFpFmT5VrTfv
+ GE85x59
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+In its `atom_value` struct, the ref-filter source code wants to store
+different values in a field called `ul` (for `unsigned long`), e.g.
+timestamps.
 
-On Sun, 23 Apr 2017, Junio C Hamano wrote:
+However, as we are about to switch the data type of timestamps away from
+`unsigned long` (because it may be 32-bit even when `time_t` is 64-bit),
+that data type is not large enough.
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-> 
-> > diff --git a/date.c b/date.c
-> > index 92ab31aa441..75f6335cd09 100644
-> > --- a/date.c
-> > +++ b/date.c
-> > @@ -46,7 +46,10 @@ static time_t gm_time_t(timestamp_t time, int tz)
-> >  	minutes = tz < 0 ? -tz : tz;
-> >  	minutes = (minutes / 100)*60 + (minutes % 100);
-> >  	minutes = tz < 0 ? -minutes : minutes;
-> > -	return time + minutes * 60;
-> > +
-> > +	if (date_overflows(time + minutes * 60))
-> > +		die("Timestamp too large for this system: %"PRItime, time);
-> > +	return (time_t)time + minutes * 60;
-> >  }
-> 
-> All the other calls to date_overflows() take a variable that holds
-> timestamp_t and presumably they are checking for integer wraparound
-> when the values are computed, but this one is not.
+Simply change that field to use `uintmax_t` instead.
 
-I was debating whether this extra check is necessary and had decided
-against it. Apparently I was wrong to do so.
+This patch is a bit larger than the mere change of the data type
+because the field's name was tied to its data type, which has been fixed
+at the same time.
 
-> Perhaps we want to make it a bit more careful here?  I wonder if
-> something like this is a good approach:
-> 
->     #define date_overflows(time) date_overflows_add(time, 0)
-> 
->     int date_overflows_add(timestamp_t base, timestamp_t minutes)
->     {
-> 	timestamp_t t;
-> 	if (unsigned_add_overflows(base, minutes))
-> 	    return 1;
-> 	t = base + minutes;
-> 	if ((uintmax_t) t >= TIME_MAX)
->             return 1;
-> 	... what you have in date_overflows() ...
->     }
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ ref-filter.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-That sounds like uglifying the common case for a single user. Let's not.
+diff --git a/ref-filter.c b/ref-filter.c
+index 3a640448fd8..92871266001 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -351,7 +351,7 @@ struct ref_formatting_state {
+ struct atom_value {
+ 	const char *s;
+ 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
+-	unsigned long ul; /* used for sorting when not FIELD_STR */
++	uintmax_t value; /* used for sorting when not FIELD_STR */
+ 	struct used_atom *atom;
+ };
+ 
+@@ -723,7 +723,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 		if (!strcmp(name, "objecttype"))
+ 			v->s = typename(obj->type);
+ 		else if (!strcmp(name, "objectsize")) {
+-			v->ul = sz;
++			v->value = sz;
+ 			v->s = xstrfmt("%lu", sz);
+ 		}
+ 		else if (deref)
+@@ -770,8 +770,8 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 			v->s = xstrdup(oid_to_hex(&commit->tree->object.oid));
+ 		}
+ 		else if (!strcmp(name, "numparent")) {
+-			v->ul = commit_list_count(commit->parents);
+-			v->s = xstrfmt("%lu", v->ul);
++			v->value = commit_list_count(commit->parents);
++			v->s = xstrfmt("%lu", (unsigned long)v->value);
+ 		}
+ 		else if (!strcmp(name, "parent")) {
+ 			struct commit_list *parents;
+@@ -875,11 +875,11 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ 	if ((tz == LONG_MIN || tz == LONG_MAX) && errno == ERANGE)
+ 		goto bad;
+ 	v->s = xstrdup(show_date(timestamp, tz, &date_mode));
+-	v->ul = timestamp;
++	v->value = timestamp;
+ 	return;
+  bad:
+ 	v->s = "";
+-	v->ul = 0;
++	v->value = 0;
+ }
+ 
+ /* See grab_values */
+@@ -1941,9 +1941,9 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 	else if (cmp_type == FIELD_STR)
+ 		cmp = cmp_fn(va->s, vb->s);
+ 	else {
+-		if (va->ul < vb->ul)
++		if (va->value < vb->value)
+ 			cmp = -1;
+-		else if (va->ul == vb->ul)
++		else if (va->value == vb->value)
+ 			cmp = cmp_fn(a->refname, b->refname);
+ 		else
+ 			cmp = 1;
+-- 
+2.12.2.windows.2.406.gd14a8f8640f
 
-The code would also be incorrect, as the `minutes` variable can be
-negative, which the `unsigned_add_overflows()` macro cannot handle (it
-would report very, very false positives, and it would hurt you more than
-me because I live East of Greenwich).
 
-Apart from that, the signature should use seconds, not minutes, or
-alternatively multiply by 60.
-
-I'll add a fixed extra check, to the single location that needs it.
-
-Ciao,
-Dscho
