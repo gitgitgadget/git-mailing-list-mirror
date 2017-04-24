@@ -2,93 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E72F207D6
-	for <e@80x24.org>; Mon, 24 Apr 2017 22:38:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846AE207D6
+	for <e@80x24.org>; Mon, 24 Apr 2017 22:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1174221AbdDXWh6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 18:37:58 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34576 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1174193AbdDXWh4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 18:37:56 -0400
-Received: by mail-io0-f181.google.com with SMTP id a103so203768739ioj.1
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 15:37:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lpqyE2B149/d4zs/t373muEAt0REjn2vqEL9yvvDuLk=;
-        b=IEzGE3ab3iBbitCFLPwsf5mkbHRQ7K58D0TOZSUa5mb3JpBTYJpZZ7Bh216lL5BIw5
-         Llqfm8rP4SPFI9fBxJkWekLve1EByDtRSyntvxzPRmNwmsBnpX/5SE0M+531I6l0FiP/
-         sR7BHCgvXLn0ZNMWg0OSIb9hboG/blPoqgj3hrFJjpOY7Qav9hUljpL7gjX4ywBaAQqU
-         MlmZ14raDn+gSbokRKJqrY+hQI5J3xKcaA91zRuVKLvqnKLfsAQ2XZfk005XSugkV8QA
-         +imTC/BHCDDk1dYEiplRVSv9F8SLUsXwv6kwX4hU6nzvtzvcL9RVGY455EC1Jn4fmgPB
-         yZTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lpqyE2B149/d4zs/t373muEAt0REjn2vqEL9yvvDuLk=;
-        b=b3MvkaSP28fJTAnjS2xT5DLoRsTdJMQKJuIAe6yUaDDQWMZogDGxWDI5UenENTdBCf
-         wvRUWZEFTiA1OEVp0N/SJSUkPdSyAwTqvkzECiG9m33vAVC7hyRUjvIIH/jnMmwtG87r
-         NEncFBnc3dZzlir/Nq3BCuEoCVZtqhEOLdj7DWmTxX0qlaQf9j2AKNkO+7wt0UBsBNF3
-         yibmzN1KB4Vpqws/IgaYvcIKzSBj3p6WLFqFBuNvOK1vSLkBiEkw59KMPr1LjRMJlk72
-         nHecdb4QWnkCoAJdRaJnVP7hXWByiJWDAoDIY96Pxcfhr2SwPq9mDaDCU+Lwo5cHVMLN
-         DMmQ==
-X-Gm-Message-State: AN3rC/5yN6dzwWcXYirUzM5GP3eEOoBe8FJ8Q6i2TPaLJpicB1PteKvY
-        VVTZv11dGIDfYCVv
-X-Received: by 10.107.48.144 with SMTP id w138mr9732441iow.30.1493073475352;
-        Mon, 24 Apr 2017 15:37:55 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:3165:1f91:2c02:1f0c])
-        by smtp.gmail.com with ESMTPSA id 123sm8612946iow.28.2017.04.24.15.37.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 24 Apr 2017 15:37:54 -0700 (PDT)
-Date:   Mon, 24 Apr 2017 15:37:52 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     git@vger.kernel.org
-Cc:     j6t@kdbg.org, sbeller@google.com, e@80x24.org, jrnieder@gmail.com
-Subject: Re: [PATCH v6 00/11] forking and threading
-Message-ID: <20170424223752.GB105623@google.com>
-References: <20170418231805.61835-1-bmwill@google.com>
- <20170419231327.49895-1-bmwill@google.com>
+        id S978890AbdDXWn4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 18:43:56 -0400
+Received: from avasout08.plus.net ([212.159.14.20]:53335 "EHLO
+        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S978888AbdDXWnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 18:43:55 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout08 with smtp
+        id CNjr1v0031keHif01Njs6R; Mon, 24 Apr 2017 23:43:52 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=JPdLi4Cb c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=HnWYo9CF3BJTlypwlccA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [GSoC][RFC/PATCH v2] submodule: port subcommand foreach from
+ shell to C
+To:     Stefan Beller <sbeller@google.com>
+References: <CAGZ79kYmRe+NURkgxRQM2QsGQEqtp+oGas5H0ryfztx8s2chwA@mail.gmail.com>
+ <20170422195804.18477-1-pc44800@gmail.com>
+ <CAGZ79kb1CR3qKOzByFC_wy7+Fh7cofFT1urhA06RuBK_3vGKmg@mail.gmail.com>
+ <efe8e82d-a021-5fc4-492a-e6e0ab7d52d3@ramsayjones.plus.com>
+ <CAGZ79kbU4LcRFHh5dM7i+L5DKpxKSrK-mZdYEeScrzVnYZsJmg@mail.gmail.com>
+Cc:     Prathamesh Chavan <pc44800@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <c3b724d8-bb9b-b63b-0105-8c1e22b120be@ramsayjones.plus.com>
+Date:   Mon, 24 Apr 2017 23:43:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170419231327.49895-1-bmwill@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAGZ79kbU4LcRFHh5dM7i+L5DKpxKSrK-mZdYEeScrzVnYZsJmg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/19, Brandon Williams wrote:
-> Changes in v6:
-> * fix some windows compat issues
-> * better comment on the string_list_remove function (also marked extern)
-> 
-> Brandon Williams (10):
->   t5550: use write_script to generate post-update hook
->   t0061: run_command executes scripts without a #! line
->   run-command: prepare command before forking
->   run-command: use the async-signal-safe execv instead of execvp
->   string-list: add string_list_remove function
->   run-command: prepare child environment before forking
->   run-command: don't die in child when duping /dev/null
->   run-command: eliminate calls to error handling functions in child
->   run-command: handle dup2 and close errors in child
->   run-command: add note about forking and threading
-> 
-> Eric Wong (1):
->   run-command: block signals between fork and execve
 
-Just as an FYI there's a bug with this code where it'll try to execute a
-directory.  I'm adding a test and fixing it.  Since this topic is in
-next I'll base the patch on top of this series.
 
--- 
-Brandon Williams
+On 24/04/17 23:17, Stefan Beller wrote:
+> On Mon, Apr 24, 2017 at 3:11 PM, Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+>>
+>>
+>> On 24/04/17 21:03, Stefan Beller wrote:
+>> [snip]
+>>
+>>> +
+>>> + argv_array_pushf(&cp.env_array, "name=%s", sub->name);
+>>> + argv_array_pushf(&cp.env_array, "path=%s", displaypath);
+>>> + argv_array_pushf(&cp.env_array, "sm_path=%s", displaypath);
+>>>
+>>> You mention keeping 'sm_path' in the notes after the commit message. I would
+>>> add that part to the commit message, to explain why we have multiple variables
+>>> that have the same value. Maybe even a comment in the code:
+>>>
+>>>     /* Keep sm_path for historic reasons, see tests in 091a6eb0fee. */
+>>>     .. sm_path ..
+>>
+>> Hmm, you need to be a bit careful with putting 'path' in the
+>> environment (if you then export it to sub-processes) on windows
+>> (cygwin, MinGW, GfW). See commit 64394e3ae9. I would have liked
+>> to remove $path altogether from the 'submodule-foreach api' in
+>> that commit, but users and their scripts were already using it
+>> (so I couldn't just drop it, without some deprecation period).
+>> So long as whatever was being 'eval'-ed in the script didn't
+>> export $path, ...
+>>
+> 
+> Oh, I misread the comment
+> 
+>      # we make $path available to scripts ...
+>      path=$sm_path
+> 
+> as it was such a casual friendly thing to say in that context.
+> So the *real* historic baggage is
+>     argv_array_pushf(&cp.env_array, "path=%s", displaypath);
+> whereas
+>     argv_array_pushf(&cp.env_array, "sm_path=%s", displaypath);
+> is considered the correct way to go.
+
+I have to admit that I didn't actually read the code in this
+patch. I just saw the subject line and the ass-backward comment
+about $sm_path. ;-)
+
+My intention was simply to warn: 'there be dragons'.
+
+ATB,
+Ramsay Jones
+
+
