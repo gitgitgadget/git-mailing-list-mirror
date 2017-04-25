@@ -2,78 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5EA6207BD
-	for <e@80x24.org>; Tue, 25 Apr 2017 09:57:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD607207BD
+	for <e@80x24.org>; Tue, 25 Apr 2017 10:02:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1428954AbdDYJ53 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 05:57:29 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:32984 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1428951AbdDYJ51 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 05:57:27 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 3wBzCT4PGPz1qtXD;
-        Tue, 25 Apr 2017 11:57:25 +0200 (CEST)
-Received: from localhost (dynscan01.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 3wBzCT2kyHz3hhRr;
-        Tue, 25 Apr 2017 11:57:25 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan01.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id QqTPUr7QKMb0; Tue, 25 Apr 2017 11:57:23 +0200 (CEST)
-X-Auth-Info: v0bi8ShhvZTGCWCPXn6ajW3hrg2eSKnPiddrAfbxVhjYV9UiYkAH1kmHld4kX+kw
-Received: from igel.home (ppp-88-217-11-229.dynamic.mnet-online.de [88.217.11.229])
-        (using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Tue, 25 Apr 2017 11:57:23 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-        id 52FAB2C3AC5; Tue, 25 Apr 2017 11:57:20 +0200 (CEST)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Liam Beguin <liambeguin@gmail.com>
-Cc:     git@vger.kernel.org, Jhannes.Schindelin@gmx.de, peff@peff.net
-Subject: Re: [PATCH v2] rebase -i: add config to abbreviate command-names
-References: <20170424032347.10878-1-liambeguin@gmail.com>
-        <20170425043742.15529-1-liambeguin@gmail.com>
-X-Yow:  I have a very good DENTAL PLAN.  Thank you.
-Date:   Tue, 25 Apr 2017 11:57:20 +0200
-In-Reply-To: <20170425043742.15529-1-liambeguin@gmail.com> (Liam Beguin's
-        message of "Tue, 25 Apr 2017 00:37:42 -0400")
-Message-ID: <87vapsq073.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1428976AbdDYKCA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 06:02:00 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39673 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1758324AbdDYKB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 06:01:58 -0400
+Received: (qmail 9224 invoked by uid 109); 25 Apr 2017 10:01:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Apr 2017 10:01:57 +0000
+Received: (qmail 4104 invoked by uid 111); 25 Apr 2017 10:02:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Apr 2017 06:02:23 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Apr 2017 06:01:55 -0400
+Date:   Tue, 25 Apr 2017 06:01:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG] test suite broken with GETTEXT_POISON=YesPlease
+Message-ID: <20170425100155.zvfxyvd3egw463xe@sigill.intra.peff.net>
+References: <CACBZZX62+acvi1dpkknadTL827mtCm_QesGSZ=6+UnyeMpg8+Q@mail.gmail.com>
+ <FDAE86E2-F607-4E82-8E0C-0E6DCEF7ED67@gmail.com>
+ <CACsJy8BceB96D39gbjTFx=XQZ6ATHYYQGMRSeV=u4C3jEvTDbQ@mail.gmail.com>
+ <20170424203710.cijg3bjdrb2eywmh@sigill.intra.peff.net>
+ <054E67A2-56B0-4C91-89F5-F33E8C00ED61@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <054E67A2-56B0-4C91-89F5-F33E8C00ED61@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Apr 25 2017, Liam Beguin <liambeguin@gmail.com> wrote:
+On Tue, Apr 25, 2017 at 10:51:20AM +0200, Lars Schneider wrote:
 
-> Add the 'rebase.abbrevCmd' boolean config option to allow `git rebase -i`
-> to abbreviate the command-names in the instruction list.
->
-> This means that `git rebase -i` would print:
->     p deadbee The oneline of this commit
->     ...
->
-> instead of:
->     pick deadbee The oneline of this commit
->     ...
->
-> Using a single character command-name allows the lines to remain
-> aligned, making the whole set more readable.
+> >> Off topic, is it possible to receive mail notifications from Travis
+> >> when a fault is found in either 'pu', 'next' or 'master'? I know how
+> >> to do it in Jenkins, but I'm not familiar with Travis and there's no
+> >> obvious button from the web page..
+> > 
+> > I looked into this a bit for my personal builds. Notification config has
+> > to go into the .travis.yml file[1].  So I think the best we could do is
+> > send a notification email to some mailing list, and then let people
+> > subscribe to that (or it could go to git@vger; I don't know how noisy it
+> > would be).
+> 
+> A separate mailing list sounds like a very good idea to me!
+> Maybe "git-builds@vger.kernel.org" or something?
+> What would it take to set something up like this?
 
-Perhaps there should rather be an option to tell rebase to align the
-columns?
+I suspect that emailing the vger admins is the right place (or that they
+can point us in the right direction, or tell us to get lost). The best
+address is probably postmaster@vger.kernel.org.
 
-Andreas.
+(I resisted just cc-ing them here to see if other people had opinions on
+just sending the output to the regular list).
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+-Peff
