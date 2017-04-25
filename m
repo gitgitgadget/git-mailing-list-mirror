@@ -7,295 +7,189 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E79F21FE90
-	for <e@80x24.org>; Tue, 25 Apr 2017 13:52:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4DC5207EC
+	for <e@80x24.org>; Tue, 25 Apr 2017 13:52:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1430856AbdDYNwm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 09:52:42 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57326 "EHLO mout.gmx.net"
+        id S1431388AbdDYNws (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 09:52:48 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49562 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1431366AbdDYNwj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 09:52:39 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LraSn-1bzx171Khx-013Q9v; Tue, 25
- Apr 2017 15:52:20 +0200
-Date:   Tue, 25 Apr 2017 15:52:19 +0200 (CEST)
+        id S1431366AbdDYNwr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 09:52:47 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDhba-1clzKW3im6-00H4u7; Tue, 25
+ Apr 2017 15:52:10 +0200
+Date:   Tue, 25 Apr 2017 15:52:10 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>
-Subject: [PATCH v2 9/9] rebase -i: rearrange fixup/squash lines using the
+Subject: [PATCH v2 7/9] rebase -i: skip unnecessary picks using the
  rebase--helper
 In-Reply-To: <cover.1493128210.git.johannes.schindelin@gmx.de>
-Message-ID: <0bc80dfece5c0685473e4d3f75afc13c4762f72a.1493128210.git.johannes.schindelin@gmx.de>
+Message-ID: <ecab086a62e96388f4dfc7e36a679821fdc7c8c3.1493128210.git.johannes.schindelin@gmx.de>
 References: <cover.1472833365.git.johannes.schindelin@gmx.de> <cover.1493128210.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:e/M2xk5+kxyxMuLaTSvzByq/2ZhVGiX/4MzsRcvClQXUB84zXuO
- fHQfpTRHbXRW9xNODBqPG+er1LP0yfpM5vbe0fHN1O3EP3oOJ3MwC+7/1F5uAw9vJb8wPwa
- AuhJv49l13yFOFJQkDaSwwW/kPGfpYAQMrMl3yOrKb4NSfqWEaslKooISIXcwJXhYZpQJtS
- xtDN0ae1SF+A0k5ahVFmg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iX+1HZjrpC0=:LVtAnwoHr1kliYHPWtOHxY
- RJfEmve8LqUNdqTyVoUu/H19JY73uKUriqIKujs/taD9ju9b/taFBskHqxkgzELpG50sA6Qz3
- uOc8trYTK/KuVR3QSzfps4ssZF+TinmieSssnrT2S+Wgvk8o9TWcFAhKaTnH5rmZvXfvTuNrS
- 9MvHG16pt2ljQGy+DKq0RUnAP0NSFQg+/Fd9CJ2deppdc5kHwOJgtkffosGZ9shkZConmnZ6U
- cy8G8pWnJA8KINYScPyzM5KU8lXM9EkbKiuwAbHZZUq3hECrhW1tJ5l9pCyTZuLpzPifl05Iv
- PNoWI/kLmHpQPF4ldSwC2YTYoagp8XfI+6uJISfcjppSlFCoP6X8K3pib5KH0q8lxf5oAOcuo
- bWzZBOAZ6oMjOY+ngd66AG0hLGjbokDgDNP6WiImXbPJoyOVRZYfjCx/+SnjbzQN5DJyEWS8g
- IBqn9pfu6Zpl1PjRf6ZPJHPF2qguhm03B6jHpBLyuYEjxJQYozRhye5pWJ49bkFaOzrBiZRIk
- 5AKyML8QVV4LrP6B6PArXpVDsP+zkP/aGzF7D4wmVorkmXTEIyrZ2QizPOJ+a4dOXsmqaADmG
- QoqIGlHhVLNiRGbVX5o3l7+fCGAdXKQpq2EACjNyzaujQzuJOHp9GXcP9Crl/Jz9zlYCWeOJ8
- 52YjEI669JiM0eK+syiB9/LcJXiWnuV4oSZAuE/ET2q4AM8FCF4fFKmE3JJIcofijMbOfzi7u
- CEizLo7YELw8VWGQnPver8uIQGEXZerKF2Zf6Enajn2Ry7vFY4CBccmhu10D4p38V8vdCS7u0
- zSACWIi
+X-Provags-ID: V03:K0:99RVyIqJMQctCUhGUNe0NAh5Gr4MJZWc7MeT/gfl3ji0uoOYK7p
+ OAAl7pY/B9aB5aE9RJ7d6cP8Xn+6TO1+BKaOO/CN6hTR1dFKkBzK/d5/1etFdncm44rJl5q
+ UQicUx2pFYqgeIfjyxXdezPveRNFcxcaUuVdvjzy+mPv7JSOiR82o4h0fX3GoBFZ3AEgCPk
+ 6eDnrI0r5Q5xjo0ffInUw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4aLZjI/JUSs=:9umbE5ufXYoUqhXFJZihKs
+ mdEX8uWI7y3Ur40YraarJcGAY30ZsSGlV3TbuMdIM2qMYdQsbff3DhHOg/rZOb327GikGe0og
+ XbX2t78UgHL8eOOgyAJBYgjCXqViu0xdiVvf9XjZke1+WgngAouM+zGiigg8ErGm9x3Idu2nx
+ lZaOLX+kvQNjBqJa8ax4+FxEe+kmGvCUO+aCpYOi3IvPPWQglI4WI1sHZY0e1aqjDCXetcCVQ
+ xF/Js5pgMGo6mCR8hUau/z7AS6ZtbdzLolL2bpCGUqCgybe9xcLuytgSvYyQcZBPFcUMZw9ot
+ 0Ghhad9XtIkaEoqtRwwIIU5XnOeWHXCfxgwWx87c5KVzrdQ9CN5yil3k2ilGNbLOLS/0PRtdd
+ Bb8xAtef9dlYYnDLD6u+azuZXctInv5/2QPVJtBTYERPoNIET1WlIjcvvARNyWOR3XPpBeO5H
+ MKwjOP4QqX2zfiYWTwQHhciW3tjASGeXzWV+c22irVRHFGrrhQI9bMahoMPUwcVxnjUx4vdR4
+ Z5dIGFAknze0RLyXUshAyBx4cJ8TuZMsF6LqNbExxh+2tgqY0B/M4Z/ylSriQItuJWYqZoWSl
+ OqqIYa5ks3MiPYLYW6lo8qiAvBJoEzFdXf1Z8W1Rzrufv0zKRjKqybSmA2OxHebt/L+EeY2CY
+ aDV6+TiMdlktkDj0qip37fE0o4bjHbqFqL1jqcDcRuH47cR6XyOJ95qpYzqDMfaSlogntX5GO
+ Q0At8CeedE41L6xAvw/WY4N7I0dxxDUKjV3+ybiC/wuc6wVFTYKMpvN7xWGTxEBUqyfB87gg5
+ jZIHdFj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This operation has quadratic complexity, which is especially painful
-on Windows, where shell scripts are *already* slow (mainly due to the
-overhead of the POSIX emulation layer).
+In particular on Windows, where shell scripts are even more expensive
+than on MacOSX or Linux, it makes sense to move a loop that forks
+Git at least once for every line in the todo list into a builtin.
 
-Let's reimplement this with linear complexity (using a hash map to
-match the commits' subject lines) for the common case; Sadly, the
-fixup/squash feature's design neglected performance considerations,
-allowing arbitrary prefixes (read: `fixup! hell` will match the
-commit subject `hello world`), which means that we are stuck with
-quadratic performance in the worst case.
-
-The reimplemented logic also happens to fix a bug where commented-out
-lines (representing empty patches) were dropped by the previous code.
-
-While at it, clarify how the fixup/squash feature works in `git rebase
--i`'s man page.
+Note: The original code did not try to skip unnecessary picks of root
+commits but punts instead (probably --root was not considered common
+enough of a use case to bother optimizing). We do the same, for now.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-rebase.txt |  16 ++--
- builtin/rebase--helper.c     |   6 +-
- git-rebase--interactive.sh   |  90 +-------------------
- sequencer.c                  | 197 +++++++++++++++++++++++++++++++++++++++++++
- sequencer.h                  |   1 +
- t/t3415-rebase-autosquash.sh |   2 +-
- 6 files changed, 214 insertions(+), 98 deletions(-)
+ builtin/rebase--helper.c   |  6 +++-
+ git-rebase--interactive.sh | 41 ++-------------------
+ sequencer.c                | 90 ++++++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h                |  1 +
+ 4 files changed, 99 insertions(+), 39 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 67d48e68831..da79fbda5b3 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -425,13 +425,15 @@ without an explicit `--interactive`.
- --autosquash::
- --no-autosquash::
- 	When the commit log message begins with "squash! ..." (or
--	"fixup! ..."), and there is a commit whose title begins with
--	the same ..., automatically modify the todo list of rebase -i
--	so that the commit marked for squashing comes right after the
--	commit to be modified, and change the action of the moved
--	commit from `pick` to `squash` (or `fixup`).  Ignores subsequent
--	"fixup! " or "squash! " after the first, in case you referred to an
--	earlier fixup/squash with `git commit --fixup/--squash`.
-+	"fixup! ..."), and there is already a commit in the todo list that
-+	matches the same `...`, automatically modify the todo list of rebase
-+	-i so that the commit marked for squashing comes right after the
-+	commit to be modified, and change the action of the moved commit
-+	from `pick` to `squash` (or `fixup`).  A commit matches the `...` if
-+	the commit subject matches, or if the `...` refers to the commit's
-+	hash. As a fall-back, partial matches of the commit subject work,
-+	too.  The recommended way to create fixup/squash commits is by using
-+	the `--fixup`/`--squash` options of linkgit:git-commit[1].
- +
- This option is only valid when the `--interactive` option is used.
- +
 diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index de3ccd9bfbc..e6591f01112 100644
+index e706eac710d..de3ccd9bfbc 100644
 --- a/builtin/rebase--helper.c
 +++ b/builtin/rebase--helper.c
 @@ -14,7 +14,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  	int keep_empty = 0;
  	enum {
  		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S,
--		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS
-+		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH
+-		CHECK_TODO_LIST
++		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS
  	} command = 0;
  	struct option options[] = {
  		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-@@ -33,6 +33,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+@@ -31,6 +31,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
+ 		OPT_CMDMODE(0, "check-todo-list", &command,
  			N_("check the todo list"), CHECK_TODO_LIST),
- 		OPT_CMDMODE(0, "skip-unnecessary-picks", &command,
- 			N_("skip unnecessary picks"), SKIP_UNNECESSARY_PICKS),
-+		OPT_CMDMODE(0, "rearrange-squash", &command,
-+			N_("rearrange fixup/squash lines"), REARRANGE_SQUASH),
++		OPT_CMDMODE(0, "skip-unnecessary-picks", &command,
++			N_("skip unnecessary picks"), SKIP_UNNECESSARY_PICKS),
  		OPT_END()
  	};
  
-@@ -59,5 +61,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+@@ -55,5 +57,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		return !!transform_todo_ids(0);
+ 	if (command == CHECK_TODO_LIST && argc == 1)
  		return !!check_todo_list();
- 	if (command == SKIP_UNNECESSARY_PICKS && argc == 1)
- 		return !!skip_unnecessary_picks();
-+	if (command == REARRANGE_SQUASH && argc == 1)
-+		return !!rearrange_squash();
++	if (command == SKIP_UNNECESSARY_PICKS && argc == 1)
++		return !!skip_unnecessary_picks();
  	usage_with_options(builtin_rebase_helper_usage, options);
  }
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 931bc09e0cf..d39fe4f5fb7 100644
+index 1649506e1e4..931bc09e0cf 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -744,94 +744,6 @@ collapse_todo_ids() {
- 	git rebase--helper --shorten-sha1s
+@@ -713,43 +713,6 @@ do_rest () {
+ 	done
  }
  
--# Rearrange the todo list that has both "pick sha1 msg" and
--# "pick sha1 fixup!/squash! msg" appears in it so that the latter
--# comes immediately after the former, and change "pick" to
--# "fixup"/"squash".
--#
--# Note that if the config has specified a custom instruction format
--# each log message will be re-retrieved in order to normalize the
--# autosquash arrangement
--rearrange_squash () {
--	format=$(git config --get rebase.instructionFormat)
--	# extract fixup!/squash! lines and resolve any referenced sha1's
--	while read -r pick sha1 message
+-# skip picking commits whose parents are unchanged
+-skip_unnecessary_picks () {
+-	fd=3
+-	while read -r command rest
 -	do
--		test -z "${format}" || message=$(git log -n 1 --format="%s" ${sha1})
--		case "$message" in
--		"squash! "*|"fixup! "*)
--			action="${message%%!*}"
--			rest=$message
--			prefix=
--			# skip all squash! or fixup! (but save for later)
--			while :
--			do
--				case "$rest" in
--				"squash! "*|"fixup! "*)
--					prefix="$prefix${rest%%!*},"
--					rest="${rest#*! }"
--					;;
--				*)
--					break
--					;;
--				esac
--			done
--			printf '%s %s %s %s\n' "$sha1" "$action" "$prefix" "$rest"
--			# if it's a single word, try to resolve to a full sha1 and
--			# emit a second copy. This allows us to match on both message
--			# and on sha1 prefix
--			if test "${rest#* }" = "$rest"; then
--				fullsha="$(git rev-parse -q --verify "$rest" 2>/dev/null)"
--				if test -n "$fullsha"; then
--					# prefix the action to uniquely identify this line as
--					# intended for full sha1 match
--					echo "$sha1 +$action $prefix $fullsha"
--				fi
--			fi
--		esac
--	done >"$1.sq" <"$1"
--	test -s "$1.sq" || return
--
--	used=
--	while read -r pick sha1 message
--	do
--		case " $used" in
--		*" $sha1 "*) continue ;;
--		esac
--		printf '%s\n' "$pick $sha1 $message"
--		test -z "${format}" || message=$(git log -n 1 --format="%s" ${sha1})
--		used="$used$sha1 "
--		while read -r squash action msg_prefix msg_content
--		do
--			case " $used" in
--			*" $squash "*) continue ;;
--			esac
--			emit=0
--			case "$action" in
--			+*)
--				action="${action#+}"
--				# full sha1 prefix test
--				case "$msg_content" in "$sha1"*) emit=1;; esac ;;
+-		# fd=3 means we skip the command
+-		case "$fd,$command" in
+-		3,pick|3,p)
+-			# pick a commit whose parent is current $onto -> skip
+-			sha1=${rest%% *}
+-			case "$(git rev-parse --verify --quiet "$sha1"^)" in
+-			"$onto"*)
+-				onto=$sha1
+-				;;
 -			*)
--				# message prefix test
--				case "$message" in "$msg_content"*) emit=1;; esac ;;
+-				fd=1
+-				;;
 -			esac
--			if test $emit = 1; then
--				if test -n "${format}"
--				then
--					msg_content=$(git log -n 1 --format="${format}" ${squash})
--				else
--					msg_content="$(echo "$msg_prefix" | sed "s/,/! /g")$msg_content"
--				fi
--				printf '%s\n' "$action $squash $msg_content"
--				used="$used$squash "
--			fi
--		done <"$1.sq"
--	done >"$1.rearranged" <"$1"
--	cat "$1.rearranged" >"$1"
--	rm -f "$1.sq" "$1.rearranged"
+-			;;
+-		3,"$comment_char"*|3,)
+-			# copy comments
+-			;;
+-		*)
+-			fd=1
+-			;;
+-		esac
+-		printf '%s\n' "$command${rest:+ }$rest" >&$fd
+-	done <"$todo" >"$todo.new" 3>>"$done" &&
+-	mv -f "$todo".new "$todo" &&
+-	case "$(peek_next_command)" in
+-	squash|s|fixup|f)
+-		record_in_rewritten "$onto"
+-		;;
+-	esac ||
+-		die "$(gettext "Could not skip unnecessary pick commands")"
 -}
 -
- # Add commands after a pick or after a squash/fixup serie
- # in the todo list.
- add_exec_commands () {
-@@ -1091,7 +1003,7 @@ then
- fi
+ transform_todo_ids () {
+ 	while read -r command rest
+ 	do
+@@ -1172,7 +1135,9 @@ git rebase--helper --check-todo-list || {
  
- test -s "$todo" || echo noop >> "$todo"
--test -n "$autosquash" && rearrange_squash "$todo"
-+test -z "$autosquash" || git rebase--helper --rearrange-squash || exit
- test -n "$cmd" && add_exec_commands "$todo"
+ expand_todo_ids
  
- todocount=$(git stripspace --strip-comments <"$todo" | wc -l)
+-test -d "$rewritten" || test -n "$force_rebase" || skip_unnecessary_picks
++test -d "$rewritten" || test -n "$force_rebase" ||
++onto="$(git rebase--helper --skip-unnecessary-picks)" ||
++die "Could not skip unnecessary pick commands"
+ 
+ checkout_onto
+ if test -z "$rebase_root" && test ! -d "$rewritten"
 diff --git a/sequencer.c b/sequencer.c
-index bbbc98c9116..2b07fb9e0ce 100644
+index 3a935fa4cbc..bbbc98c9116 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -19,6 +19,7 @@
- #include "trailer.h"
- #include "log-tree.h"
- #include "wt-status.h"
-+#include "hashmap.h"
+@@ -2616,3 +2616,93 @@ int check_todo_list(void)
  
- #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
- 
-@@ -2706,3 +2707,199 @@ int skip_unnecessary_picks(void)
- 
- 	return 0;
+ 	return res;
  }
 +
-+struct subject2item_entry {
-+	struct hashmap_entry entry;
-+	int i;
-+	char subject[FLEX_ARRAY];
-+};
-+
-+static int subject2item_cmp(const struct subject2item_entry *a,
-+	const struct subject2item_entry *b, const void *key)
-+{
-+	return key ? strcmp(a->subject, key) : strcmp(a->subject, b->subject);
-+}
-+
-+/*
-+ * Rearrange the todo list that has both "pick sha1 msg" and "pick sha1
-+ * fixup!/squash! msg" in it so that the latter is put immediately after the
-+ * former, and change "pick" to "fixup"/"squash".
-+ *
-+ * Note that if the config has specified a custom instruction format, each log
-+ * message will have to be retrieved from the commit (as the oneline in the
-+ * script cannot be trusted) in order to normalize the autosquash arrangement.
-+ */
-+int rearrange_squash(void)
++/* skip picking commits whose parents are unchanged */
++int skip_unnecessary_picks(void)
 +{
 +	const char *todo_file = rebase_path_todo();
++	struct strbuf buf = STRBUF_INIT;
 +	struct todo_list todo_list = TODO_LIST_INIT;
-+	struct hashmap subject2item;
-+	int res = 0, rearranged = 0, *next, *tail, fd, i;
-+	char **subjects;
++	struct object_id onto_oid, *oid = &onto_oid, *parent_oid;
++	int fd, i;
++
++	if (!read_oneliner(&buf, rebase_path_onto(), 0))
++		return error(_("could not read 'onto'"));
++	if (get_sha1(buf.buf, onto_oid.hash)) {
++		strbuf_release(&buf);
++		return error(_("need a HEAD to fixup"));
++	}
++	strbuf_release(&buf);
 +
 +	fd = open(todo_file, O_RDONLY);
-+	if (fd < 0)
++	if (fd < 0) {
 +		return error_errno(_("could not open '%s'"), todo_file);
++	}
 +	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
 +		close(fd);
 +		return error(_("could not read '%s'."), todo_file);
@@ -306,183 +200,77 @@ index bbbc98c9116..2b07fb9e0ce 100644
 +		return -1;
 +	}
 +
-+	/*
-+	 * The hashmap maps onelines to the respective todo list index.
-+	 *
-+	 * If any items need to be rearranged, the next[i] value will indicate
-+	 * which item was moved directly after the i'th.
-+	 *
-+	 * In that case, last[i] will indicate the index of the latest item to
-+	 * be moved to appear after the i'th.
-+	 */
-+	hashmap_init(&subject2item, (hashmap_cmp_fn) subject2item_cmp,
-+		     todo_list.nr);
-+	ALLOC_ARRAY(next, todo_list.nr);
-+	ALLOC_ARRAY(tail, todo_list.nr);
-+	ALLOC_ARRAY(subjects, todo_list.nr);
 +	for (i = 0; i < todo_list.nr; i++) {
-+		struct strbuf buf = STRBUF_INIT;
 +		struct todo_item *item = todo_list.items + i;
-+		const char *commit_buffer, *subject, *p;
-+		int i2 = -1;
-+		struct subject2item_entry *entry;
 +
-+		next[i] = tail[i] = -1;
-+		if (item->command >= TODO_EXEC) {
-+			subjects[i] = NULL;
++		if (item->command >= TODO_NOOP)
 +			continue;
-+		}
-+
-+		if (is_fixup(item->command)) {
++		if (item->command != TODO_PICK)
++			break;
++		if (parse_commit(item->commit)) {
 +			todo_list_release(&todo_list);
-+			return error(_("the script was already rearranged."));
++			return error(_("could not parse commit '%s'"),
++				oid_to_hex(&item->commit->object.oid));
 +		}
-+
-+		item->commit->util = item;
-+
-+		parse_commit(item->commit);
-+		commit_buffer = get_commit_buffer(item->commit, NULL);
-+		find_commit_subject(commit_buffer, &subject);
-+		format_subject(&buf, subject, " ");
-+		subject = subjects[i] = buf.buf;
-+		unuse_commit_buffer(item->commit, commit_buffer);
-+		if ((skip_prefix(subject, "fixup! ", &p) ||
-+		     skip_prefix(subject, "squash! ", &p))) {
-+			struct commit *commit2;
-+
-+			for (;;) {
-+				while (isspace(*p))
-+					p++;
-+				if (!skip_prefix(p, "fixup! ", &p) &&
-+				    !skip_prefix(p, "squash! ", &p))
-+					break;
-+			}
-+
-+			if ((entry = hashmap_get_from_hash(&subject2item,
-+							   strhash(p), p)))
-+				/* found by title */
-+				i2 = entry->i;
-+			else if (!strchr(p, ' ') &&
-+				 (commit2 =
-+				  lookup_commit_reference_by_name(p)) &&
-+				 commit2->util)
-+				/* found by commit name */
-+				i2 = (struct todo_item *)commit2->util
-+					- todo_list.items;
-+			else {
-+				/* copy can be a prefix of the commit subject */
-+				for (i2 = 0; i2 < i; i2++)
-+					if (subjects[i2] &&
-+					    starts_with(subjects[i2], p))
-+						break;
-+				if (i2 == i)
-+					i2 = -1;
-+			}
-+		}
-+		if (i2 >= 0) {
-+			rearranged = 1;
-+			todo_list.items[i].command =
-+				starts_with(subject, "fixup!") ?
-+				TODO_FIXUP : TODO_SQUASH;
-+			if (next[i2] < 0)
-+				next[i2] = i;
-+			else
-+				next[tail[i2]] = i;
-+			tail[i2] = i;
-+		} else if (!hashmap_get_from_hash(&subject2item,
-+						strhash(subject), subject)) {
-+			FLEX_ALLOC_MEM(entry, subject, buf.buf, buf.len);
-+			entry->i = i;
-+			hashmap_entry_init(entry, strhash(entry->subject));
-+			hashmap_put(&subject2item, entry);
-+		}
-+		strbuf_detach(&buf, NULL);
++		if (!item->commit->parents)
++			break; /* root commit */
++		if (item->commit->parents->next)
++			break; /* merge commit */
++		parent_oid = &item->commit->parents->item->object.oid;
++		if (hashcmp(parent_oid->hash, oid->hash))
++			break;
++		oid = &item->commit->object.oid;
 +	}
++	if (i > 0) {
++		int offset = i < todo_list.nr ?
++			todo_list.items[i].offset_in_buf : todo_list.buf.len;
++		const char *done_path = rebase_path_done();
 +
-+	if (rearranged) {
-+		struct strbuf buf = STRBUF_INIT;
-+		char *format = NULL;
-+
-+		git_config_get_string("rebase.instructionFormat", &format);
-+		for (i = 0; i < todo_list.nr; i++) {
-+			enum todo_command command = todo_list.items[i].command;
-+			int cur = i;
-+
-+			/*
-+			 * Initially, all commands are 'pick's. If it is a
-+			 * fixup or a squash now, we have rearranged it.
-+			 */
-+			if (is_fixup(command))
-+				continue;
-+
-+			while (cur >= 0) {
-+				int offset = todo_list.items[cur].offset_in_buf;
-+				int end_offset = cur + 1 < todo_list.nr ?
-+					todo_list.items[cur + 1].offset_in_buf :
-+					todo_list.buf.len;
-+				char *bol = todo_list.buf.buf + offset;
-+				char *eol = todo_list.buf.buf + end_offset;
-+
-+				/* replace 'pick', by 'fixup' or 'squash' */
-+				command = todo_list.items[cur].command;
-+				if (is_fixup(command)) {
-+					strbuf_addstr(&buf,
-+						todo_command_info[command].str);
-+					bol += strcspn(bol, " \t");
-+				}
-+
-+				strbuf_add(&buf, bol, eol - bol);
-+
-+				cur = next[cur];
-+			}
++		fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
++		if (write_in_full(fd, todo_list.buf.buf, offset) < 0) {
++			todo_list_release(&todo_list);
++			return error_errno(_("could not write to '%s'"),
++				done_path);
 +		}
-+
-+		fd = open(todo_file, O_WRONLY);
-+		if (fd < 0)
-+			res = error_errno(_("could not open '%s'"), todo_file);
-+		else if (write(fd, buf.buf, buf.len) < 0)
-+			res = error_errno(_("could not read '%s'."), todo_file);
-+		else if (ftruncate(fd, buf.len) < 0)
-+			res = error_errno(_("could not finish '%s'"),
-+					   todo_file);
 +		close(fd);
-+		strbuf_release(&buf);
++
++		fd = open(rebase_path_todo(), O_WRONLY, 0666);
++		if (write_in_full(fd, todo_list.buf.buf + offset,
++				todo_list.buf.len - offset) < 0) {
++			todo_list_release(&todo_list);
++			return error_errno(_("could not write to '%s'"),
++				rebase_path_todo());
++		}
++		if (ftruncate(fd, todo_list.buf.len - offset) < 0) {
++			todo_list_release(&todo_list);
++			return error_errno(_("could not truncate '%s'"),
++				rebase_path_todo());
++		}
++		close(fd);
++
++		todo_list.current = i;
++		if (is_fixup(peek_command(&todo_list, 0)))
++			record_in_rewritten(oid, peek_command(&todo_list, 0));
 +	}
 +
-+	free(next);
-+	free(tail);
-+	for (i = 0; i < todo_list.nr; i++)
-+		free(subjects[i]);
-+	free(subjects);
-+	hashmap_free(&subject2item, 1);
 +	todo_list_release(&todo_list);
++	printf("%s\n", oid_to_hex(oid));
 +
-+	return res;
++	return 0;
 +}
 diff --git a/sequencer.h b/sequencer.h
-index 28e1fc1e9bb..1c94bec7622 100644
+index 4978a61b83b..28e1fc1e9bb 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -51,6 +51,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
+@@ -50,6 +50,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
+ 
  int transform_todo_ids(int shorten_sha1s);
  int check_todo_list(void);
- int skip_unnecessary_picks(void);
-+int rearrange_squash(void);
++int skip_unnecessary_picks(void);
  
  extern const char sign_off_header[];
  
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 9fd629a6e21..b9e26008a79 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -278,7 +278,7 @@ set_backup_editor () {
- 	test_set_editor "$PWD/backup-editor.sh"
- }
- 
--test_expect_failure 'autosquash with multiple empty patches' '
-+test_expect_success 'autosquash with multiple empty patches' '
- 	test_tick &&
- 	git commit --allow-empty -m "empty" &&
- 	test_tick &&
 -- 
 2.12.2.windows.2.406.gd14a8f8640f
+
+
