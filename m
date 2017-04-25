@@ -2,114 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37AA3207E4
-	for <e@80x24.org>; Tue, 25 Apr 2017 21:04:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21C7F207E4
+	for <e@80x24.org>; Tue, 25 Apr 2017 21:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1954705AbdDYVEX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 17:04:23 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:34717 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1954682AbdDYVET (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 17:04:19 -0400
-Received: by mail-pg0-f45.google.com with SMTP id v1so22220678pgv.1
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 14:04:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6Hr+Ve87r4ZZSX2J1QwgD8nQdDDKZyKvCEYMUO8BuHU=;
-        b=dz1tCS5ksW6pIg/KYY//aaUUHhs/0Mbl0iko1wG+Nr9w1E83P19xg6FVQsSr8ZIxvr
-         JrSrwZe9oudcp4kNYVnX3dF8UJ3763bQgzozpASyqA1N5tXuHAM1PvKTQOLQXZ4cSGf6
-         lzxLcWptLbbBi/EJ+kgVIFzdInkVF/Ui8w/SVhRBPPZGEjSCG+1IXsfJ3C/CWaaM8L2C
-         thtP1p6zSTJCyQ7csVeyWkStcaPlzzfWZ2hVHNexy/W8VeLSQa1d8+2Yo0Hgaj/IgrQ7
-         oRX/UNZxgIqM8R8AUeP85cnDTtK02hTQVPhI1Ykrs7sdAwsqaBfPImSEGEgkjPTu8nxl
-         E0EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6Hr+Ve87r4ZZSX2J1QwgD8nQdDDKZyKvCEYMUO8BuHU=;
-        b=f074jepjYKWUd8GukyNRJFUz4oZ/AUnaD8fwFE96RpeZO9ioDWyXTI4FNIyXif2zlL
-         lqa91iRq3R+3gRAYaUQFqriUh8+FE1YUe71p+qBA9RfAqAPJUoGtjhhCjQP4/YtbF4cB
-         sr5WYTNOfcnQEaLkeW7LcdyGIshZ5DgqrueTn9k5p3QFDPyG+rNLjPa1xwt/HIHGjAoo
-         Xw8FStS3gFgFiWKaB8ne5ySqqNwuv5S7cpi4HlacCkGtcvE+Y4H2dDPpfGKNYv6tffgl
-         hIq1JAXRJtzV6mbYjpV0fkxnp9EBq71rMfLn6RBaoa4DWZapE7G//Rm1fFSz7i1xHwTl
-         47IQ==
-X-Gm-Message-State: AN3rC/4dTlQheMeYiyojxjHYJFcGO8p5xCmVqVTAqhhSCwHLFc7TU3qK
-        FeiSFhmUC1giUUM8kv56K190JAMCgF4L
-X-Received: by 10.99.44.140 with SMTP id s134mr29547631pgs.178.1493154258359;
- Tue, 25 Apr 2017 14:04:18 -0700 (PDT)
+        id S1946539AbdDYVFC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 17:05:02 -0400
+Received: from mout.gmx.net ([212.227.17.20]:60586 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1431660AbdDYVFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 17:05:00 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LuJDv-1c1VDf2LqB-011maP; Tue, 25
+ Apr 2017 23:04:36 +0200
+Date:   Tue, 25 Apr 2017 23:04:33 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        peff@peff.net, Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v7] read-cache: force_verify_index_checksum
+In-Reply-To: <xmqqk269xmmq.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1704252225450.3480@virtualbox>
+References: <20170414203221.43015-1-git@jeffhostetler.com>        <20170414203221.43015-2-git@jeffhostetler.com>        <870a8a36-fc6c-6b07-d09e-eec8a9f46a5c@kdbg.org>        <8bde0b54-c0f6-364d-1f08-ce5207eb6c86@jeffhostetler.com>
+ <xmqqk269xmmq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Tue, 25 Apr 2017 14:04:17 -0700 (PDT)
-In-Reply-To: <20170425190651.8910-1-jonathantanmy@google.com>
-References: <20170421220155.GA142345@google.com> <20170425190651.8910-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 25 Apr 2017 14:04:17 -0700
-Message-ID: <CAGZ79kapU5AL_iPJXCavCKAQ0Fw=pqWZS4F6Vri-Q1M1WMVs_w@mail.gmail.com>
-Subject: Re: [PATCH] sequencer: require trailing NL in footers
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Brian Norris <computersforpeace@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gCZXyCVyEo52lqAujjUU5IVssFQhdsASapWmXHd7EywPAwQAOka
+ Tq1hEau7aqNjzX8OqPEJKQtsAYFbp/7fEDpKRWUv4iCXGtMaJ5xn7kZqRMMuVyrAi3dhBjl
+ 5/2Vkf3DNrhntwK1Dm3ifKMXlKhNe1mACIBpOYFJETebJh44H03Pao9z1ynlo3pTIxbHst7
+ jBtwbDOLynToXXwzt6ZZQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YRPJsjXQO3k=:KF/HHvAg2cZhyDvq7sizLt
+ Jdmiy/d6XoBt62dJ7x834jwN7Ogvcaw9Cn1y/ZUKtgVjKugsoOMczT6Ph0oWFHAOutHkILvqZ
+ 6DpHnElV49h+kQBsbZqjnR/qzOtPr6kzAdas16zUdZu0aDWSqJkVsWVkeLNhnxQkoLdhaxMGW
+ 8wuIRObjlpK1z5+Mz9bVOymdbo5bT1GGsKG/C0NW9PGaDux8LAThykmI1m+vFWxNXRcJFFdaK
+ o5SRk8A3lXn35iv0N4puLoxvG4fp42jICuDAKKFPpdoK4u7tBaMFB8Egs8P3XZ+zYu7VD+vsS
+ PKUu4vSwx7hIKulm8yvKbR5J6iKS9uSpj0kEwwSHqt9WZ7D+pGizz9ubn0iPiNnbzp/jL9rPW
+ SIgeQuMr2cqUkACNNSGqkEeUog+JxoKZ6+mTOwR05P4jBpHdgAs3jlpIqp6TdHM3l02+E989v
+ 6ymxdhpcKYdK91vd+y7SDlivVG+i66lWncEAyUYQsD1UYF9gkVDIYQH98KcBiX/ElcXvuP4Dp
+ sbWB1XWnFfcXwBbqnwfHDLPKlvt3uWJ6HOUgZiqm91bRbRenFb7vmkgbcjjSD786zUFNm51Q5
+ eSLf2h3/mDEGGEWUu6bFmIKdUeRCBuA9oIniEk5abSZUHGWOfpSNJf+bB2WRbPVstXvW6m5Jb
+ kzXB03LMjj+tZwYb4VWJetLoU7wGa6cJZOdWcjXzHcZRDdFd5mwRmMFpmDg7/NEIBmm+TenvM
+ a+MzwdKj+35eUP1oeX3C6IRyy4Ykw+KpZUBx9uAoEsRt1wrDmBwut/SetkYCNu8bq/SBSGvGa
+ hEqmOfl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2017 at 12:06 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> In commit 967dfd4 ("sequencer: use trailer's trailer layout",
-> 2016-11-29), sequencer was taught to use the same mechanism as
-> interpret-trailers to determine the nature of the trailer of a commit
-> message (referred to as the "footer" in sequencer.c). However, the
-> requirement that a footer end in a newline character was inadvertently
-> removed. Restore that requirement.
->
-> While writing this commit, I noticed that if the "ignore_footer"
-> parameter in "has_conforming_footer" is greater than the distance
-> between the trailer start and sb->len, "has_conforming_footer" will
-> return an unexpected result. This does not occur in practice, because
-> "ignore_footer" is either zero or the return value of an invocation to
-> "ignore_non_trailer", which only skips empty lines and comment lines.
-> This commit contains a comment explaining this in the function's
-> documentation.
->
-> Reported-by: Brian Norris <computersforpeace@gmail.com>
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->
-> Thanks for the bug report. Here's a fix - I've verified this with the
-> way to reproduce provided in the original e-mail, and it seems to work
-> now.
->
-> The commit message of the referenced commit
-> (7b309aef0463340d3ad5449d1f605d14e10a4225) does not end in a newline,
-> which is probably why different behavior was observed with this commit
-> (as compared to others).
+Hi,
 
-Thanks for the fix. :)
-Do we want to test for this use case in the future?
+On Mon, 24 Apr 2017, Junio C Hamano wrote:
 
-> @@ -151,6 +151,12 @@ static const char *get_todo_path(const struct replay_opts *opts)
->   * Returns 1 for conforming footer
->   * Returns 2 when sob exists within conforming footer
->   * Returns 3 when sob exists within conforming footer as last entry
-> + *
-> + * A footer that does not end in a newline is considered non-conforming.
-> + *
-> + * ignore_footer, if not zero, should be the return value of an invocation to
-> + * ignore_non_trailer. See the documentation of that function for more
-> + * information.
->   */
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+> >>> +test_expect_success 'detect corrupt index file in fsck' '
+> >>> +    cp .git/index .git/index.backup &&
+> >>> +    test_when_finished "mv .git/index.backup .git/index" &&
+> >>> +    echo zzzzzzzz >zzzzzzzz &&
+> >>> +    git add zzzzzzzz &&
+> >>> +    sed -e "s/zzzzzzzz/yyyyyyyy/" .git/index >.git/index.yyy &&
+> >>
+> >> sed on a binary file? Sooner or later we are going to run into
+> >> portability issues.
+> >
+> > In v5 of this patch series I used "perl" and it was suggested that I
+> > use "sed" instead.  It doesn't matter to me which we use.  My testing
+> > showed that it was safe, but that was only Linux.
 
-Makes sense. Maybe s/ignore_non_trailer/ignore_non_trailer()/ which makes
-it easier to recognize it as a function? I'd also drop the last
-sentence as it is
-implied in the previous sentence (sort of).
+I am sorry to hear that the Git mailing list's review gives you whiplash.
 
-Thanks,
-Stefan
+The problem with sed is that BSD sed behaves a bit differently than GNU
+sed, and we quietly expect every contributor to be an expert in the
+portability aspects of sed.
+
+TBH I am quite surprised that anybody would have suggested to use sed
+rather than Perl to edit binary files in the first place. In my opinion,
+that was bad advice.
+
+> > Does the mailing list have a preference for this ?
+> 
+> Instead of munging pathnames z* to y*, I'd prefer to see the actual
+> checksum bytes at the end replaced in the index file.  After all
+> that is what this test really cares about, and it ensures that the
+> failure detected is due to checksum mismatch.
+
+I see that v8 uses a Perl script again, and it is well written and
+obvious.
+
+Just in case that certain reviewers favor length over readability, let me
+offer this snippet:
+
+	size=$(perl -e "print -s \".git/index\"") &&
+	dd if=/dev/zero of=.git/index bs=1 seek=$(($size-20) count=20
+
+Since whatever hash will be used in the future is most likely larger than
+20 bytes, this should still work fine (and even if somebody sane replaces
+the SHA-1 of the index with a CRC-32 for the same benefit we have now, the
+test will fail quickly and it is easy to replace the 20 by 4).
+
+Ciao,
+Dscho
