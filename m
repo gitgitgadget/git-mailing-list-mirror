@@ -2,110 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21C7F207E4
-	for <e@80x24.org>; Tue, 25 Apr 2017 21:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C0D7207E4
+	for <e@80x24.org>; Tue, 25 Apr 2017 21:06:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1946539AbdDYVFC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 17:05:02 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60586 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1431660AbdDYVFA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 17:05:00 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LuJDv-1c1VDf2LqB-011maP; Tue, 25
- Apr 2017 23:04:36 +0200
-Date:   Tue, 25 Apr 2017 23:04:33 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        peff@peff.net, Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v7] read-cache: force_verify_index_checksum
-In-Reply-To: <xmqqk269xmmq.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1704252225450.3480@virtualbox>
-References: <20170414203221.43015-1-git@jeffhostetler.com>        <20170414203221.43015-2-git@jeffhostetler.com>        <870a8a36-fc6c-6b07-d09e-eec8a9f46a5c@kdbg.org>        <8bde0b54-c0f6-364d-1f08-ce5207eb6c86@jeffhostetler.com>
- <xmqqk269xmmq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1951552AbdDYVGC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 17:06:02 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:34384 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1948415AbdDYVF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 17:05:59 -0400
+Received: by mail-wm0-f52.google.com with SMTP id r190so16944192wme.1
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 14:05:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EX4cMYyIH67rxDJsdEvFmTAxnw0vMmWJoVzYY1DUkuE=;
+        b=YVqQarbYBve/aWfJaRtWU9Y/tjSByPhJnViAHF30vbKttu+n/HwHjK5z/DLFI0bGxh
+         sL7M0sL93dKncl6qGMgXrTGYjeRHJ0WSjiS9Yoq2d+pHFW2BS09z5euJ/opItVGh3O1W
+         zMTgfEQiLZBJfc8v7yjeXSVwqRtM2hQFQnJaJk2aTqYMWYAuB4TOMFlsTx9Bi5Z7zxqu
+         mLmIMgMJ1vaXu4TZazFYg4s+KhgwxBTWfAS7o6vNycU/ohBIsNM/7Lysgmg0XGMhaK0A
+         YW4v6MN0D9ry4UDHx1zO/wYhUftFlwcWcgMsubWhDD5nixRmdqUlC+m+trO3LE9gDDSM
+         PBww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EX4cMYyIH67rxDJsdEvFmTAxnw0vMmWJoVzYY1DUkuE=;
+        b=VpuF6yD7v4wUTLw97gwE4HqhAyMVcDcHiIdtxYOe8aMAuuzlrfdJ1d6SM6CtX1LGH2
+         27h26qVSdloEwYCSt2aVZL/zzuVTqFjCgC3qlBfIv0xb6Rwap2a43IzjweRtrzCYd2VQ
+         HwK81xvQ81c0Krh/NJnDjV+uUHjlWmtobyEnna3Nkec7djrHKziVQS+1Rhy3jlTqFLPr
+         Lx5X/uc278m3ILTLIzkitDnVIdPqx172Qi6pLyfg+LjX0Fmoo3YmQVvHqCUQ6IeZ0OpB
+         8FfE9jb9EWY0apBHamH/hdnh+r88BnsDldSHrsCCprYehpeEpz/flu5Gv8Ti+gQRdEPD
+         NhOw==
+X-Gm-Message-State: AN3rC/6XyMjFBokx2jBvpwi7c/MoAV4tMOko9dglaqg/8lHQnW1OznPH
+        9ByG7fbnhoNpew==
+X-Received: by 10.28.158.82 with SMTP id h79mr3410025wme.59.1493154358371;
+        Tue, 25 Apr 2017 14:05:58 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id i71sm27519917wri.0.2017.04.25.14.05.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Apr 2017 14:05:57 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        =?UTF-8?q?Zolt=C3=A1n=20Herczeg?= <hzmester@freemail.hu>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 00/19] PCRE v1 improvements & PCRE v2 support
+Date:   Tue, 25 Apr 2017 21:05:29 +0000
+Message-Id: <20170425210548.24612-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:gCZXyCVyEo52lqAujjUU5IVssFQhdsASapWmXHd7EywPAwQAOka
- Tq1hEau7aqNjzX8OqPEJKQtsAYFbp/7fEDpKRWUv4iCXGtMaJ5xn7kZqRMMuVyrAi3dhBjl
- 5/2Vkf3DNrhntwK1Dm3ifKMXlKhNe1mACIBpOYFJETebJh44H03Pao9z1ynlo3pTIxbHst7
- jBtwbDOLynToXXwzt6ZZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YRPJsjXQO3k=:KF/HHvAg2cZhyDvq7sizLt
- Jdmiy/d6XoBt62dJ7x834jwN7Ogvcaw9Cn1y/ZUKtgVjKugsoOMczT6Ph0oWFHAOutHkILvqZ
- 6DpHnElV49h+kQBsbZqjnR/qzOtPr6kzAdas16zUdZu0aDWSqJkVsWVkeLNhnxQkoLdhaxMGW
- 8wuIRObjlpK1z5+Mz9bVOymdbo5bT1GGsKG/C0NW9PGaDux8LAThykmI1m+vFWxNXRcJFFdaK
- o5SRk8A3lXn35iv0N4puLoxvG4fp42jICuDAKKFPpdoK4u7tBaMFB8Egs8P3XZ+zYu7VD+vsS
- PKUu4vSwx7hIKulm8yvKbR5J6iKS9uSpj0kEwwSHqt9WZ7D+pGizz9ubn0iPiNnbzp/jL9rPW
- SIgeQuMr2cqUkACNNSGqkEeUog+JxoKZ6+mTOwR05P4jBpHdgAs3jlpIqp6TdHM3l02+E989v
- 6ymxdhpcKYdK91vd+y7SDlivVG+i66lWncEAyUYQsD1UYF9gkVDIYQH98KcBiX/ElcXvuP4Dp
- sbWB1XWnFfcXwBbqnwfHDLPKlvt3uWJ6HOUgZiqm91bRbRenFb7vmkgbcjjSD786zUFNm51Q5
- eSLf2h3/mDEGGEWUu6bFmIKdUeRCBuA9oIniEk5abSZUHGWOfpSNJf+bB2WRbPVstXvW6m5Jb
- kzXB03LMjj+tZwYb4VWJetLoU7wGa6cJZOdWcjXzHcZRDdFd5mwRmMFpmDg7/NEIBmm+TenvM
- a+MzwdKj+35eUP1oeX3C6IRyy4Ykw+KpZUBx9uAoEsRt1wrDmBwut/SetkYCNu8bq/SBSGvGa
- hEqmOfl
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Trivial changes since last time. Just sending this because I'd like
+the copy in pu updated. Changes noted below:
 
-On Mon, 24 Apr 2017, Junio C Hamano wrote:
+Ævar Arnfjörð Bjarmason (19):
+  grep: amend submodule recursion test in preparation for rx engine
+    testing
+  grep: add tests for grep pattern types being passed to submodules
 
-> Jeff Hostetler <git@jeffhostetler.com> writes:
-> 
-> >>> +test_expect_success 'detect corrupt index file in fsck' '
-> >>> +    cp .git/index .git/index.backup &&
-> >>> +    test_when_finished "mv .git/index.backup .git/index" &&
-> >>> +    echo zzzzzzzz >zzzzzzzz &&
-> >>> +    git add zzzzzzzz &&
-> >>> +    sed -e "s/zzzzzzzz/yyyyyyyy/" .git/index >.git/index.yyy &&
-> >>
-> >> sed on a binary file? Sooner or later we are going to run into
-> >> portability issues.
-> >
-> > In v5 of this patch series I used "perl" and it was suggested that I
-> > use "sed" instead.  It doesn't matter to me which we use.  My testing
-> > showed that it was safe, but that was only Linux.
+A s/PCRE/LIBPCRE/ on the test_have_prereq, now makes sense with the
+series in sequence (error added during rebasing).
 
-I am sorry to hear that the Git mailing list's review gives you whiplash.
+  grep: submodule-related case statements should die if new fields are
+    added
+  grep: remove redundant regflags assignment under PCRE
+  grep: remove redundant `regflags &= ~REG_EXTENDED` assignments
 
-The problem with sed is that BSD sed behaves a bit differently than GNU
-sed, and we quietly expect every contributor to be an expert in the
-portability aspects of sed.
+NEW: Similarly to how we didn't need to set regflags under PCRE, we
+were negating REG_EXTENDED under POSIX basic, without ever setting it
+in the first place.
 
-TBH I am quite surprised that anybody would have suggested to use sed
-rather than Perl to edit binary files in the first place. In my opinion,
-that was bad advice.
+This was just as confusing as the PCRE oddity, so remove it.
 
-> > Does the mailing list have a preference for this ?
-> 
-> Instead of munging pathnames z* to y*, I'd prefer to see the actual
-> checksum bytes at the end replaced in the index file.  After all
-> that is what this test really cares about, and it ensures that the
-> failure detected is due to checksum mismatch.
+  Makefile & configure: reword outdated comment about PCRE
+  grep: add a test for backreferences in PCRE patterns
+  log: add exhaustive tests for pattern style options & config
+  log: add -P as a synonym for --perl-regexp
+  grep & rev-list doc: stop promising libpcre for --perl-regexp
+  grep: make grep.patternType=[pcre|pcre1] a synonym for "perl"
+  test-lib: rename the LIBPCRE prerequisite to PCRE
 
-I see that v8 uses a Perl script again, and it is well written and
-obvious.
+One corresponding s/LIBPCRE/PCRE/ for the earlier change, see above.
 
-Just in case that certain reviewers favor length over readability, let me
-offer this snippet:
+  grep: change the internal PCRE macro names to be PCRE1
+  grep: change the internal PCRE code & header names to be PCRE1
+  perf: add a performance comparison test of grep -E and -P
+  grep: add support for the PCRE v1 JIT API
+  grep: add support for PCRE v2
 
-	size=$(perl -e "print -s \".git/index\"") &&
-	dd if=/dev/zero of=.git/index bs=1 seek=$(($size-20) count=20
+We now give proper error messages via pcre2_get_error_message() when
+pcre2_match() fails with errors other than "didn't match", the common
+case for this is that the engine gave up on a pathological pattern /
+input combination.
 
-Since whatever hash will be used in the future is most likely larger than
-20 bytes, this should still work fine (and even if somebody sane replaces
-the SHA-1 of the index with a CRC-32 for the same benefit we have now, the
-test will fail quickly and it is easy to replace the 20 by 4).
+  grep: remove support for concurrent use of both PCRE v1 & v2
+  Makefile & configure: make PCRE v2 the default PCRE implementation
 
-Ciao,
-Dscho
+Added more details to the commit message about why switching to PCRE
+v2 by default is a good idea. I hadn't noticed before that deep bugs
+in PCRE v1 are being WONTFIX'd on the bugtracker saying "nope, never
+fixing thath in v1, switch to v2".
+
+ Documentation/git-grep.txt         |   7 +-
+ Documentation/rev-list-options.txt |   9 +-
+ Makefile                           |  39 +++++--
+ builtin/grep.c                     |   4 +
+ configure.ac                       |  81 ++++++++++++--
+ grep.c                             | 222 +++++++++++++++++++++++++++++++------
+ grep.h                             |  32 +++++-
+ revision.c                         |   2 +-
+ t/README                           |   4 +-
+ t/perf/p7820-grep-engines.sh       |  25 +++++
+ t/t4202-log.sh                     |  86 +++++++++++++-
+ t/t7810-grep.sh                    |  41 ++++---
+ t/t7812-grep-icase-non-ascii.sh    |   4 +-
+ t/t7813-grep-icase-iso.sh          |  11 +-
+ t/t7814-grep-recurse-submodules.sh | 215 +++++++++++++++++++++--------------
+ t/test-lib.sh                      |   3 +-
+ 16 files changed, 613 insertions(+), 172 deletions(-)
+ create mode 100755 t/perf/p7820-grep-engines.sh
+
+-- 
+2.11.0
+
