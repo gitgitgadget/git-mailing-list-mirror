@@ -7,186 +7,145 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2233E207D6
-	for <e@80x24.org>; Tue, 25 Apr 2017 01:35:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78148207D6
+	for <e@80x24.org>; Tue, 25 Apr 2017 01:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1171960AbdDYBfi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 21:35:38 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34134 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S965820AbdDYBfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 21:35:36 -0400
-Received: by mail-pg0-f67.google.com with SMTP id t7so4099242pgt.1
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 18:35:35 -0700 (PDT)
+        id S979692AbdDYBrD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 21:47:03 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:32862 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S979634AbdDYBrC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 21:47:02 -0400
+Received: by mail-pg0-f65.google.com with SMTP id 63so7815468pgh.0
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 18:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=CyYVZj0SK2qf72v7gao9UvVrdleqVNRsu984V0Ukw1g=;
-        b=DV+yqz0RJO1JePbhlS1k91J9IwoXcZ17PB9MSZtdfopvyi5E4Xm1MGrnPlCAJxgzer
-         kJGyB8noBFXRcq8YENiAtwGDS+ueaHOuha9JZxRGNNrzHGg1R/Kjwgqq6MIXHqVNroDo
-         JfKaUUOefwg8ZbLS3T+duUCkX9oACNOaWnuUiCMmkmQgBq/PjZNh/NfNsmQvbZolMpLa
-         HmVmnmV4YvJc1vd4cSfFUUNIqby68CQ38DEQuSzrUIPyqJFMEtkpwqIDm8Bv5K6VdIuR
-         cGojCBUJVD024t/xSzyvM/lICMIKpJPPdt/eSJd3w32J8bgds1HOGy8HEfSLYZQVJs/J
-         1o5w==
+         :user-agent:mime-version;
+        bh=2tnpGf1ZEnJpkGMXFDbd59+xVTyBsmTvkktoiVNIrys=;
+        b=FE3E5D20MgyfkzkrevEBxlyg5kGrLA4YBkvHF6jY+aUJrPFPH9K8g9YM5wZh5bYIv3
+         gkUJsQfFK/iQ39vN+WPcLKIw0VonDMWu5X8Z5BKbw0yEYtLueyxlmQy8h01ebHbOL2NV
+         6MDG8bmxvZfb2DcT+gVWQa8YK4JZJa6BxU/SNctps3a2+ALSbCQArpfjWQUUBahuC8WN
+         XA3HkNEi5hbAXpNWAvoawNC+g+nQHenxkcMwRUu9uAef0dhmrQSb57HfBqr4GtRvZVQZ
+         +FDqHbDqXoGDFLZWlW+nydyqASKLJP3VCJdRRxVDLPaj2LYiaOnlB5Fy7TeeR8x7dav6
+         Zn7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=CyYVZj0SK2qf72v7gao9UvVrdleqVNRsu984V0Ukw1g=;
-        b=oThnepw2fb2Zgy6lEtqj/2MPDEZW/M7hu9Y3RBHnPUa8W0BzVCS/7YqB/p+dFvLa32
-         ChMs/7sycuy3e/420wwYw0mUfMiH8rZ40bRoXoufYwbjnluf3V6Fq10XKlP+PmgP/T/t
-         t/iPLRtkf6WvxlRlCvkt+Ir+hV2IMivtyUGN7gh32lvgSpstxELnKw9Xki6cDVWz3YQo
-         sd4qrjKNynnm4mUYxQ8nMOMwlfKivpiiyLuK7rZs5JXV4a+WVhw06cL2MMy80gF+vBpV
-         0utIsvyFHHUPsAQ5fprC/Yh7ZN27F6+Xf+GuPmr/CHtsfEWP64dRxCXq8y253ewVnvhh
-         JaVA==
-X-Gm-Message-State: AN3rC/6jaDM5M+H2CzRcFT4RVpYVdQrKHmhDKDKrBN2EBQW8mjNFkpxL
-        ++sr306Jd1fAtw==
-X-Received: by 10.98.204.155 with SMTP id j27mr26901493pfk.213.1493084135322;
-        Mon, 24 Apr 2017 18:35:35 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2tnpGf1ZEnJpkGMXFDbd59+xVTyBsmTvkktoiVNIrys=;
+        b=KNrit9nat7Y7q5uVg4Niu7KPoDBRz64JBOXO5F6p/cbW9XL7J2eO5G4GKM8JbkoAAP
+         5HrtqkDIDRSHvqNrVuUnlTplR7HNQha5X70nsiwAhCc+joASn2+bDyhUzKEblYku1A3O
+         NQm5CBFlXStBMmOZUAFLjwTIZETmWZ+aQTmxfQyUzg5JllIu3W7EEzdGQsYzmWFDlBmz
+         kyZKvccnDHPBYVvon0RLInBoSuf+ppCP1J2ywi3xaN1BbGm/4JgLmfKi+r7ejwelEqYb
+         v6Nr3utIA+y5p2oEbWIQSjs42R8Af61Ou3StmZWjr4Vw3myLJ4aOPksR3S/QhB4/Vx7z
+         2l4A==
+X-Gm-Message-State: AN3rC/4hL5XzNHdoRWnrAvJ7TYNHtE9v9lbEYpEoAwyGJYbhPc/c6ROk
+        tC3+f6KZ2cWsj4NJNNI=
+X-Received: by 10.98.196.88 with SMTP id y85mr27012735pff.49.1493084821437;
+        Mon, 24 Apr 2017 18:47:01 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:894:a17f:b6e3:25e8])
-        by smtp.gmail.com with ESMTPSA id k21sm934868pfg.14.2017.04.24.18.35.34
+        by smtp.gmail.com with ESMTPSA id n15sm32835279pfj.18.2017.04.24.18.47.00
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 24 Apr 2017 18:35:34 -0700 (PDT)
+        Mon, 24 Apr 2017 18:47:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christoph Michelbach <michelbach94@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] Documentation/git-checkout: make doc. of checkout <tree-ish> clearer
-References: <1492287435.14812.2.camel@gmail.com>
-        <9535BE255A654CADB7B0AE7599A6FA96@PhilipOakley>
-        <1492347718.19687.14.camel@gmail.com>
-        <2DCA89C3FDFF41E5B3651018BF837267@PhilipOakley>
-        <1492368692.22852.9.camel@gmail.com>
-        <DF5E72F5BD2F4BB99D8EC4DF1B4543F7@PhilipOakley>
-        <1492380399.19991.13.camel@gmail.com>
-        <5EBADDE444D141918F6873BE8456E026@PhilipOakley>
-        <1492452173.11708.22.camel@gmail.com>
-        <5FD0803E166B4D2F9F64D8D21AC23EB3@PhilipOakley>
-        <xmqqa87eimje.fsf@gitster.mtv.corp.google.com>
-        <1492518377.5720.47.camel@gmail.com>
-        <xmqq1sspdvjk.fsf@gitster.mtv.corp.google.com>
-        <1492881136.7368.3.camel@gmail.com>
-        <xmqqo9vm36xg.fsf@gitster.mtv.corp.google.com>
-        <1493038014.4708.21.camel@gmail.com>
-Date:   Mon, 24 Apr 2017 18:35:33 -0700
-In-Reply-To: <1493038014.4708.21.camel@gmail.com> (Christoph Michelbach's
-        message of "Mon, 24 Apr 2017 14:46:54 +0200")
-Message-ID: <xmqqzif5xo9m.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, j6t@kdbg.org, sbeller@google.com, e@80x24.org,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v6 12/11] run-command: don't try to execute directories
+References: <20170424223752.GB105623@google.com>
+        <20170424235042.26627-1-bmwill@google.com>
+Date:   Mon, 24 Apr 2017 18:47:00 -0700
+In-Reply-To: <20170424235042.26627-1-bmwill@google.com> (Brandon Williams's
+        message of "Mon, 24 Apr 2017 16:50:42 -0700")
+Message-ID: <xmqqvaptxnqj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christoph Michelbach <michelbach94@gmail.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> I'm sorry, somehow my email client deleted half of your message when I saved it
-> when replying. I only noticed this when wanting to delete your email and noticed
-> that it was pretty long.
-
-Please separate your discussion from the patch proper.  Check
-Documentation/SubmittingPatches and send a proper patch like other
-people do.
-
-
-> From fe0d1298cf4de841af994f4d9f72d49e25edea00 Mon Sep 17 00:00:00 2001
-> From: Christoph Michelbach <michelbach94@gmail.com>
-> Date: Sat, 22 Apr 2017 18:49:57 +0200
-> Subject: [PATCH] Doc./git-checkout: correct doc. of checkout <pathspec>...
-
-These we take from the e-mail header.  You usually remove them from
-the body of the message (and move the Subject: to e-mail subject), hence
-
-> The previous documentation states that the named paths are
-
-this line will become the first line in the body of the message.
-
-> A hint alerting the users that changes introduced by this
-> command when naming a tree-ish are automatically staged has
-> been introduced.
-
-We are still saying automatically here?
-
-> Signed-off-by: Christoph Michelbach <michelbach94@gmail.com>
-> ---
->  Documentation/git-checkout.txt | 15 ++++++++-------
->  1 file changed, 8 insertions(+), 7 deletions(-)
-
-This is not limited to your message, but from time to time, I see
-messages with SP substituted with non-breaking space like the above
-two lines (and they appear in the patch text).  I can still read and
-comment on the patch, but it is unusuable as an input to "git am" to
-be applied.  I wonder where these NBSP come from---perhaps some
-commmon MUAs corrupt text messages like this?
-
+> This is due to only checking 'access()' when locating an executable in
+> PATH, which doesn't distinguish between files and directories.  Instead
+> use 'stat()' and check that the path is to a regular file.  Now
+> run-command won't try to execute the directory 'git-remote-blah':
 >
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> index 8e2c066..ea3b4df 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -81,13 +81,14 @@ Omitting <branch> detaches HEAD at the tip of the current
-> branch.
->  'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
->  
->  	When <paths> or `--patch` are given, 'git checkout' does *not*
-> -	switch branches.  It updates the named paths in the working tree
-> -	from the index file or from a named <tree-ish> (most often a
-> -	commit).  In this case, the `-b` and `--track` options are
-> -	meaningless and giving either of them results in an error.  The
-> -	<tree-ish> argument can be used to specify a specific tree-ish
-> -	(i.e.  commit, tag or tree) to update the index for the given
-> -	paths before updating the working tree.
-> +	switch branches.  It copies the files matching the pathspecs in
+> 	$ git ls-remote blah://blah
+> 	fatal: Unable to find remote helper for 'blah'
 
-I am debating myself if rephrasing "in <tree-ish>" to "from
-<tree-ish>" makes the result clearer to understand.  When we say
-"Copy files from T to I and W", it would be obvious that what does
-not exist in T will not be copied.
+The above is not a very interesting example.  
 
-I also wonder "If no-tree-ish is provided" at the end of this
-paragraph you have is a bit too far from the above primary point of
-the description, because you have an unrelated "In this case,
--b/-t...", in between.  
+More important is that $PATH may have a directory with
+git-remote-blah directory (your setup above) and then another
+directory with the git-remote-blah executable that the user wanted
+to use.  Without this change, we won't get to the real one, and that
+makes this change truly valuable.
 
-	The blobs matching the pathspecs are checked out from the
-	index to the working tree.  Optionally, when <tree-ish> is
-	given, the blobs matching the pathspecs from the <tree-ish>
-	is copied to the index before that happens.
+The added test demostrates the "uninteresting" behaviour.  Even
+though it is correct and technically sufficient, it would make it
+more relevant to do something like this:
 
-is what I would want to say, but obviously that does not describe
-what happens in the chronological order, so it is the most clear
-description for people who understand what is written, but it will
-take two reading until the reader gets to that stage X-<.
+	mkdir -p bin/blah bin2 &&
+	write_script bin2/blah <<-\EOF &&
+	echo We found blah in bin2
+	EOF
+	PATH=bin:$PATH test_must_fail ... what you have
+	...
+	PATH=bin:bin2:$PATH test-run-command run-command blah >actual &&
+	bin2/blah >expect &&
+	test_cmp expect actual
 
-Perhaps the unrelated "In this case, the -b..." should go first; it
-is part of "does *not* switch branches".  Also even with your patch,
-it starts with "X is not Y" and does not clearly say "X is Z".
+as the point of locate_in_PATH() is to successfully find one,
+without getting confused by an earlier unusable one.
 
-	When <paths> or `--patch` ar given, 'git checkout' does
-	*not* switch branches (giving the `-b` and `--track` options
-	will cause an error, as they are meaningless).  It checks
-	out paths out of the <tree-ish> (if given) and the index to
-	the to working tree.  When an optional <tree-ish> is given
-	blobs in the <tree-ish> that match <pathspec> are copied to
-	the index.  The blobs that match <pathspec> are then copied
-	from the index to the working tree, overwriting what is in
-	(or missing from) the working tree.
+Thanks.
 
-May be an improvement (i.e. say what Z is: checking out paths from
-tree-ish and/or index to the working tree).  By explicitly phrasing
-that <tree-ish>, from which the index is updated, is optional, it is
-clear that without <tree-ish> there is no update to the index.
-"missing from" covers two cases: (1) the user removed the file from
-the working tree and <tree-ish>, e.g. HEAD, has the file, hence
-removed one is resurrected; (2) the user didn't touch the file and
-HEAD didn't have it, but by checking out from <tree-ish> that has
-the file, the user added that new file to the set of files the user
-is working with.
-
-Hmm?
-
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  run-command.c          | 3 ++-
+>  t/t0061-run-command.sh | 7 +++++++
+>  2 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/run-command.c b/run-command.c
+> index a97d7bf9f..ece0bf342 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -127,6 +127,7 @@ static char *locate_in_PATH(const char *file)
+>  
+>  	while (1) {
+>  		const char *end = strchrnul(p, ':');
+> +		struct stat st;
+>  
+>  		strbuf_reset(&buf);
+>  
+> @@ -137,7 +138,7 @@ static char *locate_in_PATH(const char *file)
+>  		}
+>  		strbuf_addstr(&buf, file);
+>  
+> -		if (!access(buf.buf, F_OK))
+> +		if (!stat(buf.buf, &st) && S_ISREG(st.st_mode))
+>  			return strbuf_detach(&buf, NULL);
+>  
+>  		if (!*end)
+> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+> index 98c09dd98..30c4ad75f 100755
+> --- a/t/t0061-run-command.sh
+> +++ b/t/t0061-run-command.sh
+> @@ -37,6 +37,13 @@ test_expect_success !MINGW 'run_command can run a script without a #! line' '
+>  	test_cmp empty err
+>  '
+>  
+> +test_expect_success 'run_command should not try to execute a directory' '
+> +	test_when_finished "rm -rf bin/blah" &&
+> +	mkdir -p bin/blah &&
+> +	PATH=bin:$PATH test_must_fail test-run-command run-command blah 2>err &&
+> +	test_i18ngrep "No such file or directory" err
+> +'
+> +
+>  test_expect_success POSIXPERM 'run_command reports EACCES' '
+>  	cat hello-script >hello.sh &&
+>  	chmod -x hello.sh &&
