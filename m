@@ -7,62 +7,99 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DE7A207E4
-	for <e@80x24.org>; Tue, 25 Apr 2017 21:15:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8157B207E4
+	for <e@80x24.org>; Tue, 25 Apr 2017 21:23:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1430531AbdDYVPP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 17:15:15 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62157 "EHLO mout.gmx.net"
+        id S1954853AbdDYVXb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 17:23:31 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50797 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1176661AbdDYVPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 17:15:12 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7pku-1c7qJM0Am8-00vRbk; Tue, 25
- Apr 2017 23:15:04 +0200
-Date:   Tue, 25 Apr 2017 23:15:00 +0200 (CEST)
+        id S1951359AbdDYVX3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 17:23:29 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MAloF-1crG6W0Syp-00BsEh; Tue, 25
+ Apr 2017 23:23:19 +0200
+Date:   Tue, 25 Apr 2017 23:23:17 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     suzuki-kenta <suzuki-kenta@sucseed.jp>
-cc:     git@vger.kernel.org
-Subject: Re: Inquiries about the use of captured images etc.
-In-Reply-To: <C9A2FF24EFE44B42B22FC4B81E9BD39F@ideaPC>
-Message-ID: <alpine.DEB.2.20.1704252313330.3480@virtualbox>
-References: <C9A2FF24EFE44B42B22FC4B81E9BD39F@ideaPC>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+cc:     Liam Beguin <liambeguin@gmail.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH v2] rebase -i: add config to abbreviate command-names
+In-Reply-To: <87zif4q0cy.fsf@linux-m68k.org>
+Message-ID: <alpine.DEB.2.20.1704252318080.3480@virtualbox>
+References: <20170424032347.10878-1-liambeguin@gmail.com> <20170425044320.17840-1-liambeguin@gmail.com> <87zif4q0cy.fsf@linux-m68k.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UIo/KBD9xnM0ZmSBTL9YPo43JWwyROBQnUCaDqklVyGqC1Wyg1h
- zVMN5X438S0GKlctArQwQUV6udXBgYuqNYiLAa82sMM7CFnohF+8vK+IIIws1O11JtcUHw4
- krx6Nss1Gmfp0jbECq4ifImM9MMAnT7eyKVm2u1XKmTAhZEAsptYwN4kJ9rD64C1k4Uh6Hs
- b5xAZYMLVBAYHO3vySuoA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SPy1wuve8x4=:/FjBGBMCHJxQ2fwm9VbEYY
- mMdMBvSAqN1uKEjvUPZAvRnBl6AgE+ef+P6rGiqmaXhWkDDoEy20JnxQ5hqtg0fo4umy3433l
- QnaTrpHnU4ZZaJx+fA+NebekLOn7wRwvfPCVrkrtvfD7EpgNHoy5GNoOZFVsZFkvkHu6kKDVt
- 9WEWe6t8ch9H5ENFa42pMEiqrk9IU2E6pgRq1cmGOEEzJQtmd/AHam852MG5vBS5rljJny6/L
- pg/v3Rj5+9edDooZY5+ZIykzVNRxRDy07dSxdRndHAZgYcJySLUJH5wufhLYZFyit8/YZb9uj
- FdAqqHSxP1GGaQbs3//XYS8lpreFvJJfa6kHd+YnnMoBOg+iQo+orBy0CzAyhGYeEBdjSWXzX
- BQVWHD6dchhEMIbFrJbzIx1Tle9leY4qmHjolxwswx7EWIUlrBXqnsJ0yDtdoc4TJF7W8dovP
- 4GzvRgBeAyVlQKOqowgUEuwyZ4mEGoMAZ8oNIpMrFk8LUY9pI1dZZAU+HMRRxdH9/nT5MN7u3
- WZ9nplxXwXISdIBTIw2wzxTQp32mcgAk+yk0DCgKzCJxq7wJ9bv27M9bty/EEutCNluDuJ1a5
- dZ0UaVubcgENSQRpRZkGlpHe+G0C0+bIfCeafU66sdVcqKHUynfa2AMUU8/OCLhQx2cW26ooh
- pJxRowK/d8vMLQ+k+ZyaP403AYhSw6MDVOkin5e54qLeOxe9KPmf0lSPcJTbrR58ye1KFT6OU
- IDpxOdEG9hJjEsv3GzIGCGMhROE/90FEorqlwOStGct0hRzOLZRYVKHPEvKJX2AiBCpqAt3gR
- 8EwcyIz
+X-Provags-ID: V03:K0:8f1k2iKovk8unbsRPc93xoXq4XFrRHQRJvhtc6ENY46nEl5Ollk
+ ySe7pRjT5HCAHuVaiYsnzbIfnWW2wFKUh3nY4H36f57O+l232ZmyXKtHl0r/EIpHI/swYoY
+ JVv/gcG8KyNzeaE7f+kCA7PGppurWqM4yLdUUrrsFsWL4ZHCEiNfCqUT0iEkdQhtbJnEDhy
+ BWQ6PCjFqIH66Kh4glxGQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MbPg1Q1gHnY=:e2gJnjJWG+eNCFa9g8L5CV
+ hL0joHrAJVlAfCO2f5OhFwTq872v8yHOO6Xn8sJwB6QflxAbFDzKRw8TlZXSFZ2l5RrciF5q2
+ K4v2HFLKXjHThkURUnNWpPjeCz8VXCWeeccFxTTB3AWDLHoys6h4CytzNyGQS3nBd8ecUCAch
+ eXMw4JzK4yEix4VUO9SkLQDufBw6cTYm1LCxESE+20V9Au1HYc2rX2I9gWwcGHi0opPdzN3DM
+ Ef1LrDMM5PMbwPu6MWOnc0jqrPayfpNGMOZ3jwCYjwfXjFD8uSUQy9J9+sYuFDbrPzDdYwrS0
+ 6ychv+4cY0ICMN60j6qEdc6c0IdWLq79ABTDXrKtVHGEfnbXgUWURTYZmD/wawhSlK23VgAmS
+ ssPynahxe6cO5Jqxg4vhU2UkVvVLyBL2XJhrWr8Nj1Z1WqkKUnyLvN+kMkxDnbgROE44RJxbJ
+ so8oeINMpVEoWhU0h1T3Zq5VNJwdyuZoPJ6OXUQ30gGaZYFTkPaoLSoYCYXAgEYL3TBiFQTX9
+ 2iAPHXABHjF/rZrFLOUfikCpx0OLwUv0zBS/UGupNF/dAXJ62zaT4hTYYXIHeucIbvpzviGVL
+ Fvmc4RjflAMfh90eAHU5h3+seLvmSY9Yud5lSE0/RBz955v1JpuF4rSL4qktOWWK+u0Wsg+eu
+ pODLEHX16Hy0772uQI//4js+r/LIxnfhXGfRRa9IUndEEXoX2834D5dcFPdB4HPot9DUF8lBK
+ +5SJ48Mr+8tSDSdSGHWGf9gpnAFrdpIEDxAVj8GAzoldsMMVDEJemJ/vfReBkEWnatvK3eaPR
+ WvUmtWr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Andreas,
 
-On Mon, 24 Apr 2017, suzuki-kenta wrote:
+On Tue, 25 Apr 2017, Andreas Schwab wrote:
 
-> Git image and capture screen,
-> I'd like to get a license but is it possible?
+> On Apr 25 2017, Liam Beguin <liambeguin@gmail.com> wrote:
+> 
+> > diff --git a/Documentation/config.txt b/Documentation/config.txt
+> > index 475e874d5155..8b1877f2df91 100644
+> > --- a/Documentation/config.txt
+> > +++ b/Documentation/config.txt
+> > @@ -2614,6 +2614,25 @@ rebase.instructionFormat::
+> >  	the instruction list during an interactive rebase.  The format will automatically
+> >  	have the long commit hash prepended to the format.
+> >  
+> > +rebase.abbrevCmd::
+> > +	If set to true, `git rebase -i` will abbreviate the command-names in the
+> > +	instruction list. This means that instead of looking like this,
+> > +
+> > +-------------------------------------------
+> > +	pick deadbee The oneline of this commit
+> > +	pick fa1afe1 The oneline of the next commit
+> > +	...
+> > +-------------------------------------------
+> > +
+> > +	the list would use the short version of the command resulting in
+> > +	something like this.
+> > +
+> > +-------------------------------------------
+> > +	p deadbee The oneline of this commit
+> > +	p fa1afe1 The oneline of the next commit
+> > +	...
+> > +-------------------------------------------
+> 
+> That doesn't explain the point of the option.
 
-If I understand correctly, you want to use screenshots of Git? As far as I
-can tell, there is no need to license those. There are tons of examples
-all over the internet where users blog about how they use Git...
+And what you forgot to say in order to make this a constructive criticism
+is: we probably want to add a sentence like this:
+
+
+	Using the one-letter abbreviations will align the lines better
+	in case that the non-abbreviated commands have different lengths.
+
+Speaking of commands with different lengths, I just thought of fixup and
+squash. I do not think those are handled by the patch, but they should be
+(the `action` in the first loop of `rearrange_squash` should abbreviate
+via `test p != "$pickcmd" || action=${action%${action#?}}`).
 
 Ciao,
 Johannes
