@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5A4207D6
-	for <e@80x24.org>; Tue, 25 Apr 2017 03:56:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFA98207D6
+	for <e@80x24.org>; Tue, 25 Apr 2017 03:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S980418AbdDYD4b (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 23:56:31 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:35080 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S977289AbdDYD42 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 23:56:28 -0400
-Received: by mail-it0-f66.google.com with SMTP id 70so1459559ita.2
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 20:56:28 -0700 (PDT)
+        id S980466AbdDYD7P (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 23:59:15 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:36018 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S980463AbdDYD7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 23:59:13 -0400
+Received: by mail-io0-f194.google.com with SMTP id x86so52396948ioe.3
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 20:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6raFdunoHUqXLNtq6fsurmEmrM1H8x7e5KYgdGfanrs=;
-        b=KwPD9lnpjjoiHeNAunvC++Kw4NrD5HWJSx6Vf8LjZXyIqvqfZftX6qR30D9wqOEduI
-         vxF0oUP/K+OikBOdVQedVD43oYZNl+7p07UzphdVydluCWaLbW6oFb9h+DTPBPvF9n/w
-         u19I4S0OBZj0GizROpOeElSYPC645BO/cOOo9MBBCHGaEiaSu1be6UDgC8yvqYqgyXc4
-         JiK9UYY+7JcX+XliFKdQFzckNe+OsTfbq1U0d5OdvumKAdSpUuPHgm18jSmoiKFxetIl
-         2OOc2S73ylZTSIc+hii5GjLAm3lAxzwftg600Wi13pf+R+hu3g/eG8dr5n7eAsjmOgGG
-         QcNw==
+        bh=4hM0cqwd9AFxEhQOWJErUylZTwpcbb3IsxUY3By3wx8=;
+        b=OQw1NOUKswhmY+FJhh2zIXR/MXugtSBjaEc+itH7ytAgy1Pq+sfmEwCF+bfbPqHo8l
+         Y7/mGmokcnYTEtYae3MBeO6EcCzmDutBFPr5HNeMz6HAUcNw+F75J6mH3YVDZ0MZGpry
+         kYjHW3QakMICA6ap0Qyv3xkugnX+hiHIBRPEqD4cM6keiiOEaeLeHhOkbfXUxFDh1+ZJ
+         x9jiatHLG9fDYTR/+BwowRHSFufVsMY2pAvHT1X0qxyFMInixMJqx8VqfRWF45Yyl6ek
+         fdON8NLxwS5MtRRlpUEWpGpswynOFphe83seMY8fS0DOqks2hcmR4SS65dnHhoYHfmru
+         eN7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6raFdunoHUqXLNtq6fsurmEmrM1H8x7e5KYgdGfanrs=;
-        b=NiHFiRBq+BwqCrUpKx1GBVg8bueYbDnR5Ui06hvdvj0tCAh9SLOIhCAk7oEid2YwwL
-         O+0xUPPpxhQMl8u1QJK8SgoOIwNGnD3Q2k2EJuhJIp0GbhrzAtq+F13kTcbWH/z3ucO9
-         VCL9JJSVxMawMWmVmvSjgEczUCVdjqIiCdVroFcpJlykS0Hgg2liLrOsVSIce7Bys9oT
-         iS2QuXaasC6Kg8WScDjzqYoSRm/W5oZeDYebjZxyyraiw61aMVe4bZmyFegOC+6Ju5U8
-         OsIaSZxQ7cIhU+q/aCoDFr+GxTRs2LCkoRpkpCj5XrW5D97YLu/BJSAD0xKgomEJVntF
-         MTxw==
-X-Gm-Message-State: AN3rC/6F2mK1iQqvrM/ifByYPcjvVbhsLt8qkawn4fWguxB4UteGkgVK
-        CSjM1MZwyBOreA==
-X-Received: by 10.36.0.200 with SMTP id 191mr18646910ita.87.1493092588070;
-        Mon, 24 Apr 2017 20:56:28 -0700 (PDT)
+        bh=4hM0cqwd9AFxEhQOWJErUylZTwpcbb3IsxUY3By3wx8=;
+        b=SV5+PZAVSQlCrs/WEhUB+4SucECDJoJn8Fo19b0SfO4r6i+861mnNyuGANRF3yzpeU
+         U74OF7IOxINzXh5w6LUf5tyhZnZ7rYa8J33WeZAmbsWyTJ1+hph7YELJ83mAUCfOVgs5
+         D2RAGIzhlV2xTnY+7xWAjj/SkBZ2DYdkcLUEje3mCf8hHmEMQDvzpjmiKk++Pm5nCps+
+         4r9JZHW024yirfasvguwoIRIU8zDjsmIYWpTTZbcIuoLrx0Tb23tq3wzn5h4qjm7npPB
+         ItK7XtFrYEnX0QBOwFb3FvypkT1CqzQAWW/mbLAumedM+VAd5KcZBD63bG0myUM+UFW9
+         ESWQ==
+X-Gm-Message-State: AN3rC/4XhzOnNrLM/tAuSLyBQzXhPvVrWb4jZJQUobaSNF4ojKXqQML2
+        CQXA0QeIXH3fY/TmWts=
+X-Received: by 10.107.63.11 with SMTP id m11mr12315024ioa.149.1493092752422;
+        Mon, 24 Apr 2017 20:59:12 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:894:a17f:b6e3:25e8])
-        by smtp.gmail.com with ESMTPSA id o64sm1808161ioe.19.2017.04.24.20.56.27
+        by smtp.gmail.com with ESMTPSA id r189sm970452ita.28.2017.04.24.20.59.11
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 24 Apr 2017 20:56:27 -0700 (PDT)
+        Mon, 24 Apr 2017 20:59:11 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     git@vger.kernel.org,
         Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 7/9] Abort if the system time cannot handle one of our timestamps
+Subject: Re: [PATCH v4 8/9] Use uintmax_t for timestamps
 References: <cover.1492721487.git.johannes.schindelin@gmx.de>
         <cover.1492771484.git.johannes.schindelin@gmx.de>
-        <2b7f90c003a1f60ede39813530617edbbdf29607.1492771484.git.johannes.schindelin@gmx.de>
-        <xmqqr30i1omp.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1704241228510.3480@virtualbox>
-Date:   Mon, 24 Apr 2017 20:56:26 -0700
-In-Reply-To: <alpine.DEB.2.20.1704241228510.3480@virtualbox> (Johannes
-        Schindelin's message of "Mon, 24 Apr 2017 15:57:28 +0200 (CEST)")
-Message-ID: <xmqqvaptw36d.fsf@gitster.mtv.corp.google.com>
+        <b59a414793492786937e910f6cd588b8e1751b4b.1492771484.git.johannes.schindelin@gmx.de>
+        <xmqqinlu1o8u.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1704241226440.3480@virtualbox>
+Date:   Mon, 24 Apr 2017 20:59:11 -0700
+In-Reply-To: <alpine.DEB.2.20.1704241226440.3480@virtualbox> (Johannes
+        Schindelin's message of "Mon, 24 Apr 2017 12:28:27 +0200 (CEST)")
+Message-ID: <xmqqr30hw31s.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,13 +72,20 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> The code would also be incorrect, as the `minutes` variable can be
-> negative, which the `unsigned_add_overflows()` macro cannot handle (it
-> would report very, very false positives, and it would hurt you more than
-> me because I live East of Greenwich).
+>> Should we at least clamp in date_overflows() so that large values
+>> representable with timestamp_t that will become unrepresentable when
+>> we start allowing negative timestamps would be rejected?  That way
+>> we won't have to hear complaints from the people who used timestamps
+>> far in the future that we regressed the implementation for them by
+>> halving the possible timestamp range.
+>
+> Please note that the date_overflows() command only tests when we are about
+> to call system functions. I do not think that it does what you think it
+> does (namely, validate timestamps when they enter Git).
 
-Yes and no.  If we were to care about integer wraparound to do this
-check, we'd still have to worry about negative offset applied to a
-time very close to the epoch that turns into a timestamp far far in
-the future (unsigned_sub_underflows, that is).
+OK, then please read my question without date_overflows(), that is,
+"should we at least clamp the values with some new mechanism to
+leave the door open for supporting times before the epoch, even if
+(and especially if) we leave the use of signed integral type for
+timestamps out of the scope of this series?"
 
