@@ -2,82 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CED85207E4
-	for <e@80x24.org>; Tue, 25 Apr 2017 21:27:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A9B81207E4
+	for <e@80x24.org>; Tue, 25 Apr 2017 21:33:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1952014AbdDYV1G (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 17:27:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40110 "EHLO cloud.peff.net"
+        id S2993788AbdDYVdw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 17:33:52 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53565 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1951934AbdDYV1E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 17:27:04 -0400
-Received: (qmail 16592 invoked by uid 109); 25 Apr 2017 21:27:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Apr 2017 21:27:02 +0000
-Received: (qmail 29043 invoked by uid 111); 25 Apr 2017 21:27:27 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Apr 2017 17:27:27 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Apr 2017 17:27:00 -0400
-Date:   Tue, 25 Apr 2017 17:27:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     Marc Branchaud <marcnarc@xiplink.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: BUG: diff-{index,files,tree} (and git-gui) do not respect the
- diff.indentHeuristic config setting
-Message-ID: <20170425212659.ds4vbj5fjcbyycpc@sigill.intra.peff.net>
-References: <19607a03-71e0-440b-7213-64d25f6fa8da@xiplink.com>
+        id S2993785AbdDYVdu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 17:33:50 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lmr1w-1cM7lP2hrg-00h2Mf; Tue, 25
+ Apr 2017 23:33:47 +0200
+Date:   Tue, 25 Apr 2017 23:33:47 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stepan Kasal <kasal@ucw.cz>
+cc:     git@vger.kernel.org
+Subject: Re: Git For Windows SDK - cannot build
+In-Reply-To: <20170425111315.GB13400@ucw.cz>
+Message-ID: <alpine.DEB.2.20.1704252330480.3480@virtualbox>
+References: <20170425111315.GB13400@ucw.cz>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <19607a03-71e0-440b-7213-64d25f6fa8da@xiplink.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:YJTQyK/ZXYMQSddPpwAf/ZhhSligFsnZikTcKbRqmHiggGcowBP
+ H1OypxtUf20huvbtuZZJ5R7yHGmo5SQUVSZnMWH4UKV9sy3Fbtf+AzvrEVcEdxonXypH5Ub
+ kteBFLuGjZtI+kuM+yPbhVUYM74f4RrwVGxmztwAsk9TZhRAJS/RbsouYbtC5EkRMPiPz6+
+ YpBLQGooRK8qtPM2ByR+g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:kyYO4cIY8KI=:1n2dzaQwpcV3RAQt+gax5Q
+ YB0Mksicn73NN6mCueTiQnTdQ5oNUPDZ2phXofS0tfkBeQC8kZOK9VJ66khDOafO4rDtzH8Gl
+ 19zczXEbFI3h1AIVJ3On5OvyYI2OF9CQG0VhEe3PfS4s9fNgGtj2hvA/gBw5iH1Pip2WZ3N8t
+ 7yMAPhTNENdZfCoHD+Upv1DMQAKajuAp7djiYr8EPjs/vBylfenCt2uP8sL8OgCYUUtA5LmcW
+ ig9RTzirHpkKsfhEg1Tls6KJnb34kQA0hCVxtdSgOo8x8oWj2ZlKa+V1/UbrjzavigsHByzOk
+ 6CywSAs1VFrulKua0lRP74UdiT/OrtOWzjwjehS5PCmVQdc1epA3ptWBSulG8WFmdel+mzVdS
+ XjEMZvpbxRJgTKYgw11A4BPkv6ZOvlb81V3JeLjjZMVz8cxDGoyZ+Iw9PmArvKXmA13TF17ll
+ Nw6k2m29bOSsnjqv5/eptUJgBb7iYouScDlZp6vKv67YKOcNYKQq9lOsq2N6Cto6EPDRL1Bd+
+ rr+crmFzI3VIpCCKKd2x2OTLHbco+PEJlFcR6xx+yfU0RS5Vn0oAsCPYWuDGHKUxcGHYwgMBC
+ J3M5EzGIpnhlqILmN5SU2zgFs/njndzwIS4yi04L3DDIhYWgPqcw2X3rrDyBgcJQ0H4KvVjg5
+ Chtdb/Iz0PvkPfEq+y86liQ6RM2LjP45iVhb3BgCf0xQJa1X9/l77wJgatqIaN+J2narrg7L5
+ eQHKERaHnAEunMRpjuOvx1mOJMgURHah03sOYY0TdlZ9q/mfGPztcc1ZRsO03CXouE3AW2y22
+ gtk9VBP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2017 at 01:21:09PM -0400, Marc Branchaud wrote:
+Hi Stepan,
 
-> So I have
-> 
-> 	diff.indentHeuristic = true
-> 
-> and I noticed that git-gui was not using the heuristic.  This is because
-> git-gui uses diff-index, and that does not respect the config setting, even
-> though it supports the --indent-heuristic option.
-> 
-> And it looks like diff-files and diff-tree also have the same problem.
-> 
-> I tried a couple of quick-n-dirty things to fix it in diff-index, without
-> success, and I've run out of git-hacking tame, so all I can do for now is
-> throw out a bug report.
+as I commented on your post to the Git for Windows mailing list:
 
-Right, this is intentional. Those commands are scriptable plumbing, and
-we try to avoid surprising their callers with behavior-changing config.
+On Tue, 25 Apr 2017, Stepan Kasal wrote:
 
-I could see an argument that the behavior change for this particular
-option is subtle enough that it any script caller would not need to
-care. The resulting diff is syntactically identical, and it's not like
-Git makes promises about the exact diff algorithm it uses. We generally
-tend to err on the side of caution with plumbing, though (for instance,
-if you piped the result through patch-id, you'd probably get different
-results with and without the config option set).
+> I have installed git for windows sdk from the web and tried to build it.
 
-> diff-index.c explicitly says "no 'diff' UI options" since 83ad63cfeb ("diff:
-> do not use configuration magic at the core-level", 2006-07-08), so maybe
-> this needs to be fixed in git-gui (and maybe elsewhere), but to me it feels
-> like the diff-foo commands should respect the setting.
+Nobody in the project found the time to update the website yet, but we do
+have a simpler way to install the SDK now:
 
-Yes, if git-gui wants to respect the option, it needs to read the config
-and turn on the command-line option. That's what add--interactive does,
-for example.
+	git clone https://github.com/git-for-windows/git-sdk-64
 
-It's possible we could make this simpler with a catch-all "allow diff
-ui config" command-line option. The effect is the same, but it makes
-things simpler for the caller.
+> $ make
+>     LINK git-credential-store
+> libgit.a(utf8.o): In function `reencode_string_iconv':
+> /usr/src/git/utf8.c:463: undefined reference to `libiconv'
+> /usr/src/git/utf8.c:463:(.text+0xf77): relocation truncated to fit: R_X86_64_PC32 against undefined symbol `libiconv'
 
--Peff
+This most likely means that `pacman -Sy mingw-w64-x86_64-libiconv` should
+be called before re-running `make`.
+
+The reason why the `libiconv` package (without `mingw-w64-` prefix) is not
+helping: that package is an *MSYS2* package, i.e. it implicitly links to
+the MSYS2 runtime (the POSIX emulation layer derived from Cygwin that we
+use in Git for Windows to run Shell and Perl scripts, as well as OpenSSH).
+
+Ciao,
+Johannes
