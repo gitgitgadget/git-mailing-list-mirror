@@ -2,155 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FEB6207D6
-	for <e@80x24.org>; Tue, 25 Apr 2017 04:30:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7778207D6
+	for <e@80x24.org>; Tue, 25 Apr 2017 04:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S973433AbdDYEaU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 00:30:20 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:33809 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753722AbdDYEaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 00:30:19 -0400
-Received: by mail-io0-f171.google.com with SMTP id a103so207335418ioj.1
-        for <git@vger.kernel.org>; Mon, 24 Apr 2017 21:30:18 -0700 (PDT)
+        id S974967AbdDYEjO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 00:39:14 -0400
+Received: from mail-io0-f196.google.com ([209.85.223.196]:35915 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S974918AbdDYEjM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 00:39:12 -0400
+Received: by mail-io0-f196.google.com with SMTP id x86so52481313ioe.3
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 21:39:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=lkqTobVf0WUcH1mxytEsSOQqo12YO0ZtPXlcXGBE76g=;
-        b=eXCdpBjlfGS7nKNq69204yC9SmncqdpY0lrv1tI6GZKwecB4epegVpoPeQyxa0a4OQ
-         rSLrSXlFBDMSeBosteiNpXkrkHVaBUhL5oDrxvOQpLibrrqvL6UUIrZvB7S9vq5CpWXt
-         5bT5tPJa2AyF1Wgkrf5fAYgjYDPjK27S5rUEJ17sZYm816vd7+MPsoc49nOVJt57DBFd
-         MBozR+3KHj5uh+BVg4UDTeeQ4lc0ml/R4pzBjigu0gk5XWRuYPt+88UstbqAnyx89TwY
-         ZcoV1wuS81lyONbQ4XQulFHYhnynGXJA8I3b8wBA/azPY7Ets4leJ3z6ipvEUAdJrDtr
-         3gVg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=CDoj8wx3vdUntVlVC1/L9AXlNI+ivBJgr3DnO/LkVmQ=;
+        b=tecFYS3rb1dWwg1xg8V0xnCDHzD3aa/oogZyRREe1O5nPjyIXP0YVHN2YeQMk6EUNq
+         BWiQrc9+iOXjYi0GlNhCeBHb/UDdZNFtN6uF+Zf16CGMAPLQyoFMGlX7Tbnpr69S1CAr
+         ZsjEqTSmhhLrHhcbGJ5wTBemVIUi9N8B4xd+1/Ohc+fPHm5i/R54ssorIxjT7Goye4Bq
+         iGeJTMiDPE4/qOdyYo3D5QZymqto+yfazAt2wNOPKvA77fo3qqR8PU88DpFBFTMlhwm5
+         UYnLQrmGLotpnY5sd11XqRZ/LTJshCfmRFwwv3YJVX4CjNrr1pIudD+UC5BNiDfY3gok
+         Kgog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=lkqTobVf0WUcH1mxytEsSOQqo12YO0ZtPXlcXGBE76g=;
-        b=oa/E0UDwkOsyElXaWTkptsZRcPttpEh69fwobxKF2hkiU7w+lVCIXVSuDVn8kPLfHx
-         SZxo3/iuo6+uYPPY7ve8Tkusk37AAQxuOP1e7GVTzJ4tACUHh79Vr3+Iqma0DbAgyjTk
-         UTLl8hymvl7TiHaCTEDg28EQD2WDFoarPlZDErEc2aBunp+LCI21DE6v+5y87D5LvPH3
-         tlTsLHIlf6Fwv5RgS0g3W2N2JqdX3Bs+wj1BlLJW0HgHTTVFyQk2qFodsb1Vz+fJzJ6M
-         tqA/q6UbnoZtSo0vHV8nbnyW/CMv7/+s24RZyLp/tkCp/SGEqyfcwWQfGh35WlnzthsQ
-         KXdA==
-X-Gm-Message-State: AN3rC/7W37BoY6C1tsiVa6wBm4OSG2p8i0HJaCDcJUxrKbnsmGi02OWP
-        18vrm5SlG7YSZg==
-X-Received: by 10.107.11.159 with SMTP id 31mr11656099iol.41.1493094617998;
-        Mon, 24 Apr 2017 21:30:17 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:894:a17f:b6e3:25e8])
-        by smtp.gmail.com with ESMTPSA id y22sm6903928ioi.26.2017.04.24.21.30.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 24 Apr 2017 21:30:17 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v5 0/6] Kill manual ref parsing code in worktree.c
-References: <20170404102123.25315-1-pclouds@gmail.com>
-        <20170424100124.24637-1-pclouds@gmail.com>
-Date:   Mon, 24 Apr 2017 21:30:16 -0700
-In-Reply-To: <20170424100124.24637-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Mon, 24 Apr 2017 17:01:18 +0700")
-Message-ID: <xmqqbmrlw1lz.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=CDoj8wx3vdUntVlVC1/L9AXlNI+ivBJgr3DnO/LkVmQ=;
+        b=r0ShG0IGFSPpt6uGhd7bW6jvbalTas+URLgb41BrlX7Ow5dsJrj/CMzx8zsLQopJJH
+         EtKAEllgF2BvtMaEnRpaoX6150tCxkcmK7mVz9D0V6atdbfqm4gwhfuLnJHe14toerYL
+         tUEuX1OaurMHHhhRsABwlhMMbehjSh/Vl8HrXgIfwb5fe61Mc5hWj6X6hd2w1BKzibfG
+         uE70Bj3nQCALPtE4qba+/+Wp65k+vlXVDT02TWE/WChyaYc2WgSW44Bl3nEWOi/XE9HF
+         2Dd0qtpl5DaExjyWqlYaUsWt1eWt2z9UlCxMIrMbNZ5SNv/h3rUPAwuXDXNUlbu5TXp1
+         jkJQ==
+X-Gm-Message-State: AN3rC/7Qew6RMv5BGadQt1JYTWOc8mOb2vtIB261PgwMqnEMj6PqlmwP
+        DiBptWhrHkazKQ==
+X-Received: by 10.107.164.142 with SMTP id d14mr11982839ioj.29.1493095151457;
+        Mon, 24 Apr 2017 21:39:11 -0700 (PDT)
+Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.gmail.com with ESMTPSA id p201sm990270itp.3.2017.04.24.21.38.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 24 Apr 2017 21:39:10 -0700 (PDT)
+From:   Liam Beguin <liambeguin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jhannes.Schindelin@gmx.de, peff@peff.net,
+        Liam Beguin <liambeguin@gmail.com>
+Subject: [PATCH v2] rebase -i: add config to abbreviate command-names
+Date:   Tue, 25 Apr 2017 00:37:42 -0400
+Message-Id: <20170425043742.15529-1-liambeguin@gmail.com>
+X-Mailer: git-send-email 2.9.3
+In-Reply-To: <20170424032347.10878-1-liambeguin@gmail.com>
+References: <20170424032347.10878-1-liambeguin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Add the 'rebase.abbrevCmd' boolean config option to allow `git rebase -i`
+to abbreviate the command-names in the instruction list.
 
-> v5 chanes are mostly cosmetic:
+This means that `git rebase -i` would print:
+    p deadbee The oneline of this commit
+    ...
 
-Good changes.  Will re-queue.
+instead of:
+    pick deadbee The oneline of this commit
+    ...
 
-Thanks.
+Using a single character command-name allows the lines to remain
+aligned, making the whole set more readable.
 
->
-> diff --git a/refs.c b/refs.c
-> index 5d31fb6bcf..7972720256 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1530,11 +1530,7 @@ struct ref_store *get_main_ref_store(void)
->  	if (main_ref_store)
->  		return main_ref_store;
->  
-> -	main_ref_store = ref_store_init(get_git_dir(),
-> -					(REF_STORE_READ |
-> -					 REF_STORE_WRITE |
-> -					 REF_STORE_ODB |
-> -					 REF_STORE_MAIN));
-> +	main_ref_store = ref_store_init(get_git_dir(), REF_STORE_ALL_CAPS);
->  	return main_ref_store;
->  }
->  
-> @@ -1597,9 +1593,6 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
->  struct ref_store *get_worktree_ref_store(const struct worktree *wt)
->  {
->  	struct ref_store *refs;
-> -	unsigned int refs_all_capabilities =
-> -		REF_STORE_READ | REF_STORE_WRITE |
-> -		REF_STORE_ODB | REF_STORE_MAIN;
->  	const char *id;
->  
->  	if (wt->is_current)
-> @@ -1612,10 +1605,10 @@ struct ref_store *get_worktree_ref_store(const struct worktree *wt)
->  
->  	if (wt->id)
->  		refs = ref_store_init(git_common_path("worktrees/%s", wt->id),
-> -				      refs_all_capabilities);
-> +				      REF_STORE_ALL_CAPS);
->  	else
->  		refs = ref_store_init(get_git_common_dir(),
-> -				      refs_all_capabilities);
-> +				      REF_STORE_ALL_CAPS);
->  
->  	if (refs)
->  		register_ref_store_map(&worktree_ref_stores, "worktree",
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index 690498698e..b26f7e41ce 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -467,6 +467,10 @@ struct ref_store;
->  #define REF_STORE_WRITE		(1 << 1) /* can perform update operations */
->  #define REF_STORE_ODB		(1 << 2) /* has access to object database */
->  #define REF_STORE_MAIN		(1 << 3)
-> +#define REF_STORE_ALL_CAPS	(REF_STORE_READ | \
-> +				 REF_STORE_WRITE | \
-> +				 REF_STORE_ODB | \
-> +				 REF_STORE_MAIN)
->  
->  /*
->   * Initialize the ref_store for the specified gitdir. These functions
->
-> Nguyễn Thái Ngọc Duy (6):
->   environment.c: fix potential segfault by get_git_common_dir()
->   refs.c: make submodule ref store hashmap generic
->   refs: add REFS_STORE_ALL_CAPS
->   refs: introduce get_worktree_ref_store()
->   worktree.c: kill parse_ref() in favor of refs_resolve_ref_unsafe()
->   refs: kill set_worktree_head_symref()
->
->  branch.c                               |  15 ++---
->  environment.c                          |   2 +
->  refs.c                                 | 100 ++++++++++++++++++++------------
->  refs.h                                 |  12 +---
->  refs/files-backend.c                   |  44 --------------
->  refs/refs-internal.h                   |   4 ++
->  t/helper/test-ref-store.c              |  18 ++++++
->  t/t1407-worktree-ref-store.sh (new +x) |  52 +++++++++++++++++
->  worktree.c                             | 102 +++++++++------------------------
->  worktree.h                             |   2 +-
->  10 files changed, 177 insertions(+), 174 deletions(-)
->  create mode 100755 t/t1407-worktree-ref-store.sh
+Signed-off-by: Liam Beguin <liambeguin@gmail.com>
+---
+Changes since v1:
+ - Improve Documentation and commit message
+
+ Documentation/config.txt     | 19 +++++++++++++++++++
+ Documentation/git-rebase.txt | 19 +++++++++++++++++++
+ git-rebase--interactive.sh   |  8 ++++++--
+ 3 files changed, 44 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 475e874d5155..8b1877f2df91 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2614,6 +2614,25 @@ rebase.instructionFormat::
+ 	the instruction list during an interactive rebase.  The format will automatically
+ 	have the long commit hash prepended to the format.
+ 
++rebase.abbrevCmd::
++	If set to true, `git rebase -i` will abbreviate the command-names in the
++	instruction list. This means that instead of looking like this,
++
++-------------------------------------------
++	pick deadbee The oneline of this commit
++	pick fa1afe1 The oneline of the next commit
++	...
++-------------------------------------------
++
++	the list would use the short version of the command resulting in
++	something like this.
++
++-------------------------------------------
++	p deadbee The oneline of this commit
++	p fa1afe1 The oneline of the next commit
++	...
++-------------------------------------------
++
+ receive.advertiseAtomic::
+ 	By default, git-receive-pack will advertise the atomic push
+ 	capability to its clients. If you don't want to advertise this
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 67d48e688315..7d97c0483241 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -222,6 +222,25 @@ rebase.missingCommitsCheck::
+ rebase.instructionFormat::
+ 	Custom commit list format to use during an `--interactive` rebase.
+ 
++rebase.abbrevCmd::
++	If set to true, `git rebase -i` will abbreviate the command-names in the
++	instruction list. This means that instead of looking like this,
++
++-------------------------------------------
++	pick deadbee The oneline of this commit
++	pick fa1afe1 The oneline of the next commit
++	...
++-------------------------------------------
++
++	the list would use the short version of the command resulting in
++	something like this.
++
++-------------------------------------------
++	p deadbee The oneline of this commit
++	p fa1afe1 The oneline of the next commit
++	...
++-------------------------------------------
++
+ OPTIONS
+ -------
+ --onto <newbase>::
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 2c9c0165b5ab..9f3e82b79615 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -1210,6 +1210,10 @@ else
+ 	revisions=$onto...$orig_head
+ 	shortrevisions=$shorthead
+ fi
++
++rebasecmd=pick
++test "$(git config --bool --get rebase.abbrevCmd)" = true && rebasecmd=p
++
+ format=$(git config --get rebase.instructionFormat)
+ # the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
+ git rev-list $merges_option --format="%m%H ${format:-%s}" \
+@@ -1228,7 +1232,7 @@ do
+ 
+ 	if test t != "$preserve_merges"
+ 	then
+-		printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
++		printf '%s\n' "${comment_out}${rebasecmd} $sha1 $rest" >>"$todo"
+ 	else
+ 		if test -z "$rebase_root"
+ 		then
+@@ -1246,7 +1250,7 @@ do
+ 		if test f = "$preserve"
+ 		then
+ 			touch "$rewritten"/$sha1
+-			printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
++			printf '%s\n' "${comment_out}${rebasecmd} $sha1 $rest" >>"$todo"
+ 		fi
+ 	fi
+ done
+-- 
+2.9.3
+
