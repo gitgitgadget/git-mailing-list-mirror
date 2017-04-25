@@ -2,128 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5534C207E4
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A75A207E4
 	for <e@80x24.org>; Tue, 25 Apr 2017 23:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1950184AbdDYXeM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 19:34:12 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:33145 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1949062AbdDYXeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 19:34:10 -0400
-Received: by mail-pf0-f195.google.com with SMTP id c198so12979960pfc.0
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 16:34:10 -0700 (PDT)
+        id S1950694AbdDYXex (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 19:34:53 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:33000 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1949062AbdDYXev (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 19:34:51 -0400
+Received: by mail-it0-f68.google.com with SMTP id z67so23569309itb.0
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 16:34:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1BbNbuucLcn6ItSaVkOazqg+Q89ZiQlRHxwRoihYCfY=;
-        b=quJnG1mIg8bWFccy5GPyIA3t9NnlP4fOg6Ev5dr83yIMWIf7Va/KipvuFZj0jr1Is4
-         tN2rjB+LQo24rNwKZEZnhLtyh5wmTWY91R8FeQVky1+ai0YvpI93Fs/+RZZATawZ3dE3
-         aiAUfqbQtQImm5MwU+5X9EDxCQmzyqtYwik+XH4nFjP0UIWKvSgVi9t456sM/3Ma6MyC
-         xaXtSzIGqYlwmrhoiizCMxzRGyNmdXOWCO9V4iW6PoUbHTfpo65jvutqC6dzQJRZQCL3
-         gtEqqzrpJiYdge1Su1Cs+kuWu8IOUcDPfQSudsxeXi+gN/fTiKi07tYVvtBJWepR0o3c
-         U/+A==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KEIYqcSL/wWnlTi0cw61MqY2MQ9g1Ad2TrqO4a8VrZw=;
+        b=oUaa3CoFi2rnxteumw/7ojnQRCdPu0FqAVtUyR/Xu3aK4/5aIZqDIMrf+tKysn989F
+         THRZ7tPzn/xkMIeimJ0S0ZYLupUxDIlzrVJlV0FuR6rFbMRetyigTZRkauaI3Sr2R3fL
+         oa2YnqNwrT2XFrZBzsTlP9pYImfuo/RaDEwb+QV2WcUkpQXR7vRb/Hws02gV17DMZpEI
+         y9DexBtVJP8mQ45OiaGaMzESSvBl9t1uLNPZSrL9oN2MNf6qCoVWlDd5A3YA6Mua1H1e
+         1ObJCFL9h/g/d7nh2ZxzgNWT/pu53s5cHkUKIrHXQBg/jEMXOjCEvAU7TBHE6tYu99x6
+         RKog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1BbNbuucLcn6ItSaVkOazqg+Q89ZiQlRHxwRoihYCfY=;
-        b=ZpZbZGpme/B88RLEajK9RK/8jF+yzx/DCpE/JOfaGji9Yzky7KQoFif7Pvhu5kO6J+
-         Gqje3200fJqfrVPubJOhycdedxJyLEOkYSNVtKrcvbkYiY375ugpiY5oM8EafzGM9R5i
-         JzOTR4TwOETjCGXNy7zK9a/MpCDbgB5T5xeT34lDMMvEDB7uzE3r+senH4HxQJHT+lr/
-         h7wiXenl6KCiFZTxrMBxhkdYc++coi0PRxkdLRhmd5M8osdqqAHEXjNjXyRYnI7oFEWU
-         cTFh1M9japTY8Q1Bp1M6Xh4I+AhBB9H0RY6vJd1ffvwnunexQvUMvn3tsNrDDGoszQ+/
-         6LZA==
-X-Gm-Message-State: AN3rC/6Nprv/poGWXfo/BC/QqlNy5ZSZoFRLTJ4PYsV6HCJ20URWHy5e
-        4uZTGkJVoBxgeQ==
-X-Received: by 10.99.124.71 with SMTP id l7mr29664702pgn.14.1493163249617;
-        Tue, 25 Apr 2017 16:34:09 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:c0ea:3a03:d3a7:cb53])
-        by smtp.gmail.com with ESMTPSA id m4sm38399977pgm.25.2017.04.25.16.34.08
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Apr 2017 16:34:09 -0700 (PDT)
-Date:   Tue, 25 Apr 2017 16:34:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, computersforpeace@gmail.com
-Subject: Re: [PATCH] sequencer: require trailing NL in footers
-Message-ID: <20170425233407.GO28740@aiede.svl.corp.google.com>
-References: <20170421220155.GA142345@google.com>
- <20170425190651.8910-1-jonathantanmy@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170425190651.8910-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=KEIYqcSL/wWnlTi0cw61MqY2MQ9g1Ad2TrqO4a8VrZw=;
+        b=ZlZlS6xDYPD3kdF6Gu4P9+GeL+eV4YQQ/QCqbeLWW6z/XI8u33GwMiv/AlM/qdjMyc
+         lWBXfuILYGnH4fdrLWhutOYUgzECebS7GxqA3WXPw/Pu4Er/2zSkK/KD/2XKRUTTGhNT
+         SHBB+TDE+/fx6Der9jyt6R3e+Q7aA2+TyrR/JHBQk8g2adFE9COVFEVJvmhn3pCOqs2L
+         LVsewwM8B8yFAUpE3y08NcUUc2/pl7kEGQYdZH/jJFJyKvD5txiwro1HJWy7JqL8q1dk
+         4JY516OPzBr75MyNV2k9Q0fzFSvKUeTr94Db+y7xVYLm6F00UutocjnGOje7/JXi0MQA
+         HguA==
+X-Gm-Message-State: AN3rC/51paKkg9plVMQtmgVHFxnn7MxAFY/lAexnPJfO17kUr04Djyti
+        1f8dR3VZm20XAQ==
+X-Received: by 10.36.70.204 with SMTP id j195mr4015683itb.22.1493163290735;
+        Tue, 25 Apr 2017 16:34:50 -0700 (PDT)
+Received: from atris (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.googlemail.com with ESMTPSA id r138sm2786640ita.24.2017.04.25.16.34.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 25 Apr 2017 16:34:50 -0700 (PDT)
+Message-ID: <1493163266.29673.29.camel@gmail.com>
+Subject: Re: [PATCH v2] rebase -i: add config to abbreviate command-names
+From:   liam Beguin <liambeguin@gmail.com>
+To:     Jacob Keller <jacob.keller@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Git mailing list <git@vger.kernel.org>, Jhannes.Schindelin@gmx.de,
+        Jeff King <peff@peff.net>
+Date:   Tue, 25 Apr 2017 19:34:26 -0400
+In-Reply-To: <CA+P7+xrXyguugTETd_C-JXDSZ5zHUC3d_1cU4CuiaJjAqWQ=RA@mail.gmail.com>
+References: <20170424032347.10878-1-liambeguin@gmail.com>
+         <20170425043742.15529-1-liambeguin@gmail.com>
+         <xmqqinltuhiv.fsf@gitster.mtv.corp.google.com>
+         <CA+P7+xrXyguugTETd_C-JXDSZ5zHUC3d_1cU4CuiaJjAqWQ=RA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.22.5 (3.22.5-1.fc25) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Jake, 
 
-Jonathan Tan wrote:
+On Tue, 2017-04-25 at 01:29 -0700, Jacob Keller wrote:
+> On Mon, Apr 24, 2017 at 11:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > Personally I am happy with the beginning of each instruction line
+> > aligned, so from that point of view, this patch is a mild Meh to me,
+> > even though I do a fair amount of "rebase -i" myself.  But obviously
+> > I am not the only user of Git you need to please, so...
+> 
+> I would instead justify this as making it easier to change the action,
+> since you only need to rewrite a single letter, which at least in vim
+> takes "r<letter>" to change the action, vs slightly more keystrokes
+> such as "ct <letter" or otherwise.
 
-> In commit 967dfd4 ("sequencer: use trailer's trailer layout",
-> 2016-11-29), sequencer was taught to use the same mechanism as
-> interpret-trailers to determine the nature of the trailer of a commit
-> message (referred to as the "footer" in sequencer.c). However, the
-> requirement that a footer end in a newline character was inadvertently
-> removed. Restore that requirement.
->
-> While writing this commit, I noticed that if the "ignore_footer"
-> parameter in "has_conforming_footer" is greater than the distance
-> between the trailer start and sb->len, "has_conforming_footer" will
-> return an unexpected result. This does not occur in practice, because
-> "ignore_footer" is either zero or the return value of an invocation to
-> "ignore_non_trailer", which only skips empty lines and comment lines.
-> This commit contains a comment explaining this in the function's
-> documentation.
->
-> Reported-by: Brian Norris <computersforpeace@gmail.com>
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-[...]
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -151,6 +151,12 @@ static const char *get_todo_path(const struct replay_opts *opts)
->   * Returns 1 for conforming footer
->   * Returns 2 when sob exists within conforming footer
->   * Returns 3 when sob exists within conforming footer as last entry
-> + *
-> + * A footer that does not end in a newline is considered non-conforming.
-> + *
-> + * ignore_footer, if not zero, should be the return value of an invocation to
-> + * ignore_non_trailer. See the documentation of that function for more
-> + * information.
->   */
->  static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
->  	int ignore_footer)
-> @@ -159,6 +165,11 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
->  	int i;
->  	int found_sob = 0, found_sob_last = 0;
->  
-> +	if (sb->len <= ignore_footer)
-> +		return 0;
-> +	if (sb->buf[sb->len - ignore_footer - 1] != '\n')
-> +		return 0;
-> +
+It's another reason that motivated the change but I didn't think the
+vim shortcuts would justify the patch. Since you pointed it out, 
+I'll probably add it.
 
-This is super subtle, but it does the right thing.  The caller will
-notice it's not a conforming footer, add a newline to separate the new
-footer from it, and repair the footer as a side effect.
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Followup question: what should happen if there is a non-footer-shaped
-thing with no trailing newline at the end of the commit message? Should
-we add two newlines in that case when producing a new footer?
+> 
+> Also, if you change the default commit hash length, it becomes long
+> enough to cover most commits and you see all commits at say 12 digits
+> commit hash and everything is nicely aligned.
+> 
+> Thanks,
+> Jake
 
 Thanks,
-Jonathan
+Liam 
