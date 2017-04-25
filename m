@@ -2,100 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13B15207BD
-	for <e@80x24.org>; Tue, 25 Apr 2017 11:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D79C207BD
+	for <e@80x24.org>; Tue, 25 Apr 2017 11:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1947010AbdDYLas (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 07:30:48 -0400
-Received: from mout.gmx.net ([212.227.17.22]:55746 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1947007AbdDYLaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 07:30:46 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGoU1-1cpS1J0MBl-00DVY2; Tue, 25
- Apr 2017 13:30:32 +0200
-Date:   Tue, 25 Apr 2017 13:30:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Philip Oakley <philipoakley@iee.org>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Ashutosh Bapat <ashutosh.bapat@enterprisedb.com>,
-        git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Michael J Gruber <git@drmicha.warpmail.net>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Bug with fixup and autosquash
-In-Reply-To: <93E7A279BF61414D9EE8BB12B88E16E8@PhilipOakley>
-Message-ID: <alpine.DEB.2.20.1704251328480.3480@virtualbox>
-References: <CAFjFpRe8zqxs4OLbCrjnuEzF=75sbBJ+HuZqek49B=O=TFHq8A@mail.gmail.com> <xmqqbmucuwb0.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092142020.3496@virtualbox> <xmqqwpcznjqi.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702092301070.3496@virtualbox>
- <xmqqd1ernh7g.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1702101654500.3496@virtualbox> <93E7A279BF61414D9EE8BB12B88E16E8@PhilipOakley>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1947063AbdDYLiq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 07:38:46 -0400
+Received: from mx2.suse.de ([195.135.220.15]:36290 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1946952AbdDYLio (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 07:38:44 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 0FAFAAC2E
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 11:38:43 +0000 (UTC)
+To:     git@vger.kernel.org
+From:   =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
+Subject: [PATCH] Add --indent-heuristic to bash completion.
+Message-ID: <bbcbdf11-5065-8fcb-d78e-74db03814781@suse.cz>
+Date:   Tue, 25 Apr 2017 13:37:59 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:qrUShiSoFDS0debYTPLPX3Qq5Rzp8WV4Gs0IYMybYdnhUx0Mh7h
- 0V2Pfp4cshJZLq10ttXkoi3D08yhovMnE947/zDunD9sO/DylM0wrpjJLNjmXZY3qnJGnLx
- FQOBxzYwGMDRwaG/+teh8juVfw68huVuKBUOrdiLHnkhBfcXh+LNBUHaCV8KGOarIeuwXNO
- fcmjafDTRwZYl1NDyd3Gw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dugPfh1nRrA=:ir2cCIEl+Kf6ZcnGqqoiDz
- lAzaUmZABul6JjvPLPL52T8YMlVe+D1qgzeBAvheDBE0ybTfm0MlFCiSE1XuQNN5hgePGL9Np
- qePFckJmc6Lf2OYVs1juHjJUHLzV8o+t4E7O/0+q22/xs/A1Udd6jJhbGpevZoaxjxpbBoJWM
- ATOqerOSSnTdvm5r2ox+/guc9cLpM0lvQTDnfjiWJL4dT+UWSF5fYIuYRXnrxjQyhKXmPjueo
- fjZuu/NQGVukYL7PLzMnXsfMsULlueZ2nYP8OWX0j6p1MR8OIxoGNs96Sh0PTGz81yeltHv7T
- g9x74i5h8ja9yI4C5iB9VIA//576kA9gnSJplhYVOsIcU2cHdYKRUcFlIfv+AFOGFmw8vGc4q
- lIENzvTjxqNJ7qlJcygqv/kFqkZaZo+MdAzf59OgSnc9AIYovnpOGYAr6H2uKeMEBQM7TS7fj
- cnF9tuUp7Wzdip0eGf4wecU4EIU9UR+Pq8JQStWWYPX75j0eDN3Qf5MhUNeMLBqsPMF17JdQ3
- HVJoJSfxtLTalK92U/HhPmtNkBAEUUYh18XsEgSeV5UEUDYyZ31lqrK2eIP81y/X6ks+tr1Ox
- WBqaGSrB+IQH8WgrSPOuwt0ASmtYl7jKB5v8++4PH/iTRx3i8PmKgfeLX9gJoHabAS6WvnuE/
- js52VHq+r9BJKch4UAGE1p4uNm6SuW7pQUxBaNwwBo8UGy22elf6vgTn47+nzRv8sRanJeV6X
- oqfBfgMKWx13EnsSsS2WYo+DBh8xzP4AC7XiPI5KPKYLzj+pwEZBJdNjikyoWuakAtaJZdV7U
- nCzm4Et
+Content-Type: multipart/mixed;
+ boundary="------------5BA49415AE751679784E55AA"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
+This is a multi-part message in MIME format.
+--------------5BA49415AE751679784E55AA
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, 10 Feb 2017, Philip Oakley wrote:
+Hello.
 
-> From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-> >
-> > On Thu, 9 Feb 2017, Junio C Hamano wrote:
-> >
-> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > >
-> > > > Almost. While I fixed the performance issues as well as the design
-> > > > allowed, I happened to "fix" the problem where an incomplete
-> > > > prefix match could be favored over an exact match.
-> > >
-> > > Hmph.  Would it require too much further work to do what you said
-> > > the code does:
-> >
-> > I was just being overly precise. I *did* fix the problem. But since it
-> > was not my intention, I quoted the verb "fix".
-> >
-> > > > The rebase--helper code (specifically, the patch moving autosquash
-> > > > logic into it: https://github.com/dscho/git/commit/7d0831637f) tries
-> > > > to match exact onelines first, and falls back to prefix matching only
-> > > > after that.
-> > >
-> > > If the code matches exact onlines and then falls back to prefix, I do
-> > > not think incomplete prefix would be mistakenly chosen over an exact
-> > > one, so perhaps your code already does the right thing?
-> >
-> > The code does exactly that. It does even more: as `fixup! <SHA-1>` is
-> > allowed (for SHA-1s that have been mentioned in previous `pick` lines), it
-> > tries to match that before falling back to the incomplete prefix match.
-> 
-> Now just the doc update to do.... ;-)
+The patch adds BASH completion for a newly added option.
 
-Right. I finally managed to work that in, and will send out v2 (is it only
-the second iteration? ... wow...) as soon as the test suite passes on
-Windows (which will take a bit over an hour, as you know).
+Thanks,
+Martin
 
-Ciao,
-Dscho
+--------------5BA49415AE751679784E55AA
+Content-Type: text/x-patch;
+ name="0001-Add-indent-heuristic-to-bash-completion.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="0001-Add-indent-heuristic-to-bash-completion.patch"
+
+From 316355276a9772cdfdd24a81f19400f176944df2 Mon Sep 17 00:00:00 2001
+From: marxin <mliska@suse.cz>
+Date: Tue, 25 Apr 2017 13:35:17 +0200
+Subject: [PATCH] Add --indent-heuristic to bash completion.
+
+Signed-off-by: Martin Liska <mliska@suse.cz>
+---
+ contrib/completion/git-completion.bash | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1150164d5..8fb25594c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1395,7 +1395,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--quiet --ext-diff --no-ext-diff
+ 			--no-prefix --src-prefix= --dst-prefix=
+ 			--inter-hunk-context=
+-			--patience --histogram --minimal
++			--patience --histogram --indent-heuristic --minimal
+ 			--raw --word-diff --word-diff-regex=
+ 			--dirstat --dirstat= --dirstat-by-file
+ 			--dirstat-by-file= --cumulative
+@@ -1482,6 +1482,7 @@ __git_format_patch_options="
+ 	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+ 	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
+ 	--output-directory --reroll-count --to= --quiet --notes
++	--indent-heuristic
+ "
+ 
+ _git_format_patch ()
+@@ -1681,6 +1682,7 @@ __git_log_common_options="
+ 	--min-age= --until= --before=
+ 	--min-parents= --max-parents=
+ 	--no-min-parents --no-max-parents
++	--indent-heuristic
+ "
+ # Options that go well for log and gitk (not shortlog)
+ __git_log_gitk_options="
+-- 
+2.12.2
+
+
+--------------5BA49415AE751679784E55AA--
