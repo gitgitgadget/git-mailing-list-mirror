@@ -2,70 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 540EB207D6
-	for <e@80x24.org>; Tue, 25 Apr 2017 03:39:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5A4207D6
+	for <e@80x24.org>; Tue, 25 Apr 2017 03:56:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S978497AbdDYDjP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Apr 2017 23:39:15 -0400
-Received: from cloud.peff.net ([104.130.231.41]:39520 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S978268AbdDYDjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Apr 2017 23:39:14 -0400
-Received: (qmail 17637 invoked by uid 109); 25 Apr 2017 03:39:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 25 Apr 2017 03:39:10 +0000
-Received: (qmail 3770 invoked by uid 111); 25 Apr 2017 03:39:35 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 24 Apr 2017 23:39:35 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 24 Apr 2017 23:39:08 -0400
-Date:   Mon, 24 Apr 2017 23:39:08 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Orgad Shaneh <orgads@gmail.com>,
-        Dakota Hawkins <dakotahawkins@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: Submodule/contents conflict
-Message-ID: <20170425033907.klufatsa7afcnfuu@sigill.intra.peff.net>
-References: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com>
- <CAGZ79kZ5440r1EHOVP3eXxe5u=u16y_jXTA0C4hLJA2kUkF-kg@mail.gmail.com>
- <4BF0A1BFFFFD421EB8C5F7E6FEF14357@PhilipOakley>
- <CAGZ79kZDzuSHw4siSkiekw73bBq9R8gg_R+a7NyNUG6bYxc2Og@mail.gmail.com>
- <20170425032242.wlmqrkgkeg3ytfle@sigill.intra.peff.net>
+        id S980418AbdDYD4b (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Apr 2017 23:56:31 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:35080 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S977289AbdDYD42 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Apr 2017 23:56:28 -0400
+Received: by mail-it0-f66.google.com with SMTP id 70so1459559ita.2
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 20:56:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=6raFdunoHUqXLNtq6fsurmEmrM1H8x7e5KYgdGfanrs=;
+        b=KwPD9lnpjjoiHeNAunvC++Kw4NrD5HWJSx6Vf8LjZXyIqvqfZftX6qR30D9wqOEduI
+         vxF0oUP/K+OikBOdVQedVD43oYZNl+7p07UzphdVydluCWaLbW6oFb9h+DTPBPvF9n/w
+         u19I4S0OBZj0GizROpOeElSYPC645BO/cOOo9MBBCHGaEiaSu1be6UDgC8yvqYqgyXc4
+         JiK9UYY+7JcX+XliFKdQFzckNe+OsTfbq1U0d5OdvumKAdSpUuPHgm18jSmoiKFxetIl
+         2OOc2S73ylZTSIc+hii5GjLAm3lAxzwftg600Wi13pf+R+hu3g/eG8dr5n7eAsjmOgGG
+         QcNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=6raFdunoHUqXLNtq6fsurmEmrM1H8x7e5KYgdGfanrs=;
+        b=NiHFiRBq+BwqCrUpKx1GBVg8bueYbDnR5Ui06hvdvj0tCAh9SLOIhCAk7oEid2YwwL
+         O+0xUPPpxhQMl8u1QJK8SgoOIwNGnD3Q2k2EJuhJIp0GbhrzAtq+F13kTcbWH/z3ucO9
+         VCL9JJSVxMawMWmVmvSjgEczUCVdjqIiCdVroFcpJlykS0Hgg2liLrOsVSIce7Bys9oT
+         iS2QuXaasC6Kg8WScDjzqYoSRm/W5oZeDYebjZxyyraiw61aMVe4bZmyFegOC+6Ju5U8
+         OsIaSZxQ7cIhU+q/aCoDFr+GxTRs2LCkoRpkpCj5XrW5D97YLu/BJSAD0xKgomEJVntF
+         MTxw==
+X-Gm-Message-State: AN3rC/6F2mK1iQqvrM/ifByYPcjvVbhsLt8qkawn4fWguxB4UteGkgVK
+        CSjM1MZwyBOreA==
+X-Received: by 10.36.0.200 with SMTP id 191mr18646910ita.87.1493092588070;
+        Mon, 24 Apr 2017 20:56:28 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:894:a17f:b6e3:25e8])
+        by smtp.gmail.com with ESMTPSA id o64sm1808161ioe.19.2017.04.24.20.56.27
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 24 Apr 2017 20:56:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v4 7/9] Abort if the system time cannot handle one of our timestamps
+References: <cover.1492721487.git.johannes.schindelin@gmx.de>
+        <cover.1492771484.git.johannes.schindelin@gmx.de>
+        <2b7f90c003a1f60ede39813530617edbbdf29607.1492771484.git.johannes.schindelin@gmx.de>
+        <xmqqr30i1omp.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1704241228510.3480@virtualbox>
+Date:   Mon, 24 Apr 2017 20:56:26 -0700
+In-Reply-To: <alpine.DEB.2.20.1704241228510.3480@virtualbox> (Johannes
+        Schindelin's message of "Mon, 24 Apr 2017 15:57:28 +0200 (CEST)")
+Message-ID: <xmqqvaptw36d.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170425032242.wlmqrkgkeg3ytfle@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Apr 24, 2017 at 11:22:42PM -0400, Jeff King wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> > > It also has a similarity to
-> > > https://public-inbox.org/git/1492287435.14812.2.camel@gmail.com/  regarding
-> > > how checkout operates.
-> 
-> I didn't look too deeply into this one, but it really looks like
-> somebody caring too much about when git needs to write (and I'd suspect
-> it's impacted by the racy-git thing, too).
+> The code would also be incorrect, as the `minutes` variable can be
+> negative, which the `unsigned_add_overflows()` macro cannot handle (it
+> would report very, very false positives, and it would hurt you more than
+> me because I live East of Greenwich).
 
-Oh, sorry, I got this confused with:
+Yes and no.  If we were to care about integer wraparound to do this
+check, we'd still have to worry about negative offset applied to a
+time very close to the epoch that turns into a timestamp far far in
+the future (unsigned_sub_underflows, that is).
 
-  https://public-inbox.org/git/CAM1zWBtfgHT=pT0pidQo1HD=DfrXLG3gNaUvs0vZKvYfG1BHFw@mail.gmail.com/
-
-which was mentioned earlier (and which I do think is just about
-timestamps).
-
-I don't think any of what I said is related to the doc update in
-
-  https://public-inbox.org/git/1492287435.14812.2.camel@gmail.com/
-
-which seems reasonable to me.
-
--Peff
