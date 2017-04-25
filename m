@@ -2,90 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BBA88207BD
-	for <e@80x24.org>; Tue, 25 Apr 2017 09:52:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DFA7207BD
+	for <e@80x24.org>; Tue, 25 Apr 2017 09:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1428335AbdDYJwK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 05:52:10 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:36448 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S941520AbdDYJwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 05:52:08 -0400
-Received: by mail-it0-f51.google.com with SMTP id g66so15346026ite.1
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 02:52:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TcBc+FVdXcxqD407FSdOKDYYblTbqpbcuqHMi5/pMHA=;
-        b=YTgSTU3+RC2VgZH4kUdpN4sPk9gmn71s3bGWb2iEJIMGcKHgOyDTLoejbGMLeWeVdJ
-         IgAHIBjhtFdrghOlekQrSZy9CCeT9RPV7FyljXoxInBrJxmVal3ETiPwooLudpsM0UGt
-         n3GiK5CPzjLUe5cMxtllSi/VVtZeBCBP9q9ZqHRzWp8AWS7jrJoFmdPkRaGTeb0Tx1c5
-         c2FEtPuFgEGwqPN4LYghZb0iqlsNh5eozcZh5ePKiSxK9yLC/pmLleSd/igM3Wu506ni
-         kNtNC03Y8LDVB1QRx7zCqIp6WQylIgi2Vs8m7ik0fNmRAu3t6wG+3HcUVNYp3CdEvVBl
-         n1GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TcBc+FVdXcxqD407FSdOKDYYblTbqpbcuqHMi5/pMHA=;
-        b=VVGKanJUD3GiNjyNHGWE3A0/WeVSLrOe0UtbmB0W6G/oX509ZK3p+HeIAFzP4DRWSB
-         OGhTjtzwI03xpgjoQP9om/HBiLC4TmEcVzEzLvj13cl4f7klZvVA+MPUAkDEPj3EtM6c
-         1c0TxD/ElrcT/RzNj90/MlRxLWGkAskuZzmxUdAqPb71AQGnCTZ0e1QdeETEHCMhMO4H
-         sZKh5g5vYEDuSAtZBnJbLqNv0OQXUXwsChvymbLOXK/1PsMgyqmhwI6DE+5DY1/ZaEb+
-         vq7XW1oxvMMftZdjc6dcI0/UWuLjqf0wVwxjI/U3oSgOmRnECg9M48ZG8XxyyCCZ/+I9
-         Xipw==
-X-Gm-Message-State: AN3rC/5GiwwYotuW7gqLVMsTMMTGgnaXqYLN5zqz5QiHNgR+7YP/Kyl0
-        JK3q3jmNZoVGOZpIi3ZCbkVTOAQRJA==
-X-Received: by 10.36.26.81 with SMTP id 78mr18791421iti.91.1493113927887; Tue,
- 25 Apr 2017 02:52:07 -0700 (PDT)
+        id S1428943AbdDYJx7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 05:53:59 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:57663 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1428706AbdDYJx5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 05:53:57 -0400
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 3wBz7R37lvz1r55Q;
+        Tue, 25 Apr 2017 11:53:55 +0200 (CEST)
+Received: from localhost (dynscan01.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 3wBz7R1m8rz3jgYs;
+        Tue, 25 Apr 2017 11:53:55 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan01.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id tzrVmcgUStBn; Tue, 25 Apr 2017 11:53:54 +0200 (CEST)
+X-Auth-Info: +yZuaZDWa1pFkdBe5/RKpnkYntaRwTm11kaQjRKvSLmqabp/Ag7BMNhy8rtqouvB
+Received: from igel.home (ppp-88-217-11-229.dynamic.mnet-online.de [88.217.11.229])
+        (using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Tue, 25 Apr 2017 11:53:54 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+        id 9F5B42C3AC5; Tue, 25 Apr 2017 11:53:49 +0200 (CEST)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     Liam Beguin <liambeguin@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de, peff@peff.net
+Subject: Re: [PATCH v2] rebase -i: add config to abbreviate command-names
+References: <20170424032347.10878-1-liambeguin@gmail.com>
+        <20170425044320.17840-1-liambeguin@gmail.com>
+X-Yow:  I hope the ``Eurythmics'' practice birth control...
+Date:   Tue, 25 Apr 2017 11:53:49 +0200
+In-Reply-To: <20170425044320.17840-1-liambeguin@gmail.com> (Liam Beguin's
+        message of "Tue, 25 Apr 2017 00:43:20 -0400")
+Message-ID: <87zif4q0cy.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Tue, 25 Apr 2017 02:51:47 -0700 (PDT)
-In-Reply-To: <20170425094453.9823-1-avarab@gmail.com>
-References: <20170425094453.9823-1-avarab@gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 25 Apr 2017 11:51:47 +0200
-Message-ID: <CACBZZX7x0hSy5PTCo1Cf0Hp09jBhnSF0T=BseH68kwMRmqGJig@mail.gmail.com>
-Subject: Re: [PATCH] test: remove unused parameter from the wildmatch test
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2017 at 11:44 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> Remove the unused second parameter to the match() function. Since
-> commit 70a8fc999d ("stop using fnmatch (either native or compat)",
-> 2014-02-15) this hasn't been used, but was previously used to indicate
-> ok/fail if the fnmatch() backend was in use.
->
-> The "x" argument meant that the test would be skipped for
-> fnmatch(). Support for that was implicitly added in commit
-> feabcc173b ("Integrate wildmatch to git", 2012-10-15) by leaving out
-> an "else" condition, and made use of starting in commit
-> b79c0c3755 ("wildmatch: properly fold case everywhere", 2013-05-30).
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
+On Apr 25 2017, Liam Beguin <liambeguin@gmail.com> wrote:
 
-Right now this is all dead code, but I wonder if instead we should be
-partially reverting commit 70a8fc999d ("stop using fnmatch (either
-native or compat)", 2014-02-15) by Duy to the extent of being able to
-extend t/helper/test-wildmatch.c to test fnmatch() as well.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 475e874d5155..8b1877f2df91 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2614,6 +2614,25 @@ rebase.instructionFormat::
+>  	the instruction list during an interactive rebase.  The format will automatically
+>  	have the long commit hash prepended to the format.
+>  
+> +rebase.abbrevCmd::
+> +	If set to true, `git rebase -i` will abbreviate the command-names in the
+> +	instruction list. This means that instead of looking like this,
+> +
+> +-------------------------------------------
+> +	pick deadbee The oneline of this commit
+> +	pick fa1afe1 The oneline of the next commit
+> +	...
+> +-------------------------------------------
+> +
+> +	the list would use the short version of the command resulting in
+> +	something like this.
+> +
+> +-------------------------------------------
+> +	p deadbee The oneline of this commit
+> +	p fa1afe1 The oneline of the next commit
+> +	...
+> +-------------------------------------------
 
-We wouldn't be using fnmatch(), but I think it's a probably a good
-idea for the tests to support a mode where we have to declare
-explicitly whether something should also match under fnmatch or not,
-so we document the differences.
+That doesn't explain the point of the option.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
