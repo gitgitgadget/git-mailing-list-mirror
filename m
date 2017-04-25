@@ -2,121 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 513A51FE90
-	for <e@80x24.org>; Tue, 25 Apr 2017 16:25:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F35AA1FE90
+	for <e@80x24.org>; Tue, 25 Apr 2017 17:26:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1948078AbdDYQZC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 12:25:02 -0400
-Received: from mout.web.de ([212.227.17.11]:64764 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1947162AbdDYQZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 12:25:00 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxODe-1bwJjM3OVm-016zVG; Tue, 25
- Apr 2017 18:24:50 +0200
-Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
-To:     Peter Krefting <peter@softwolves.pp.se>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Keith Goldfarb <keith@blackthorn-media.com>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
- <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
- <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
- <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
- <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
- <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
- <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
- <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
- <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se>
- <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de>
- <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
-Date:   Tue, 25 Apr 2017 18:24:47 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S1952065AbdDYR0o (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 13:26:44 -0400
+Received: from smtp74.iad3a.emailsrvr.com ([173.203.187.74]:48890 "EHLO
+        smtp74.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1952017AbdDYR0m (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 25 Apr 2017 13:26:42 -0400
+X-Greylist: delayed 332 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Apr 2017 13:26:42 EDT
+Received: from smtp18.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp18.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 2F84D254AB;
+        Tue, 25 Apr 2017 13:21:10 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp18.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 0936F252C9;
+        Tue, 25 Apr 2017 13:21:09 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Tue, 25 Apr 2017 13:21:10 -0400
+To:     Git List <git@vger.kernel.org>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Subject: BUG: diff-{index,files,tree} (and git-gui) do not respect the
+ diff.indentHeuristic config setting
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <19607a03-71e0-440b-7213-64d25f6fa8da@xiplink.com>
+Date:   Tue, 25 Apr 2017 13:21:09 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:ewIx6/oZtp7F+C7OucYDlfI1pwojuuDfKXFK4FxNdvVUuzJtc2Z
- OcgZIYz97CW0ENcForHfFy7CEciQkDLG0Zs7lg7WNG/H1aHgoJaloNxJYypZRouIbFt3iRL
- qATMwo5/3kZsgEzNdy9n7y2vPwM0tie0/Elb8sDomn+dEqFPp6VlFS53gR1QYdK2f+DIPT5
- 3T+PSajvXfiPvT/ePSk5g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:B+tvgaclnIc=:UC1yvau38UYMIAo3vGqnxy
- 7/oL/33IC6HeSe3dyTGRwoOv9BTMQLyyTW/KA39kTTZz6PbFEgtKaorJd3U0j15kaAc5ztqS6
- LfAHO0y47uhfJqUI0EZ8BaUNMunoHI0TiEwA/D6Ivdebemw57xKCpuYceEwPZZQtDD0o/GncL
- F7MZInD53/WdBLzPMW0yCMFHR4pHgNQY8o/affYRPJ1+Ugvd1dZ8Cg5wshm0vfTjvJUZleTVg
- m6PPcNYiRYSayIFH5UdCWBtho6ETd2YO6qV2zUJSwX3lHOIAjZyavMF2IJ6OdXeGU4Q/IfaUd
- 4CxpEZvxWapm374nXwCQHGEojlxYifeVIE0zWgqtBpUT3G9eDiFu+QBmD5DXsKTgu08ghnrtn
- 0whcMpHzqnwki2o9CNoDXvCJHFP73QN489L+dsqzzN5o5lsTppB12zT2fu88Lw686RdHfCMJh
- 3iTF9igBva4fdX0/35d+bKJnJZTPlZYHgNfz1dNVN+zFagmZEzD047kheXpMI+hk5w1mDDBS4
- 1nAn/9ndXBDqo0Fr8H1VItY+R/uVKmmEKozMJJJUHDm8c7y00iOQDWlPBw3Ado+J1E4BALutW
- Ie5C9D8FPL/lSExjWMC/5g3mlll+HpZVm2Z0ikL3tAahrRcExBiw3wwO2up4rXW/ZKopyJ8AV
- g00JeJuS0Z1Dqef8j1g57/uN55urp+vlV6q1J7KqtG1rYYHpoHAqFDUhCiAM4aTDbmSNtwCox
- yTzlPjEob20gARyawJan3Ij6WKcVtOnhjcYrxIV8lmaw0ivoHtPzdlWZgSEYak4g8+IYppTEH
- Nhe/VGr
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.04.2017 um 09:55 schrieb Peter Krefting:
-> René Scharfe:
-> 
->>> This needs to be >=. The spec says that if the value is 0xffffffff, 
->>> there should be a zip64 record with the actual size (even if it is 
->>> 0xffffffff).
->> Could you please cite the relevant part?
-> 
-> 4.4.8 compressed size: (4 bytes)
-> 4.4.9 uncompressed size: (4 bytes)
-> 
-> "If an archive is in ZIP64 format and the value in this field is 
-> 0xFFFFFFFF, the size will be in the corresponding 8 byte ZIP64 extended 
-> information extra field."
-> 
-> 
-> Of course, there is no definition of how they define that "an archive is 
-> in ZIP64 format", but I would say that is whenever it has any ZIP64 
-> structures.
+So I have
 
-I struggled with that sentence as well.  There is no explicit "format"
-field AFAICS.  The closest at the archive level are zip64 end of central
-directory record and locator.  But what really matters is the presence
-of a zip64 extended information extra field to hold the 64-bit size
-value.
+	diff.indentHeuristic = true
 
-There's also this general note a bit higher up:
+and I noticed that git-gui was not using the heuristic.  This is because 
+git-gui uses diff-index, and that does not respect the config setting, 
+even though it supports the --indent-heuristic option.
 
-       "4.4.1.4  If one of the fields in the end of central directory
-       record is too small to hold required data, the field should be
-       set to -1 (0xFFFF or 0xFFFFFFFF) and the ZIP64 format record
-       should be created."
+And it looks like diff-files and diff-tree also have the same problem.
 
-My interpretation: An archiver that can only emit 32-bit ZIP files
-(either because it doesn't support ZIP64 or due to a compatibility
-option set by the user) writes 32-bit size fields and has no defined way
-to deal with overflows.  An archiver that is allowed to use ZIP64 can
-emit zip64 extras as needed.
+I tried a couple of quick-n-dirty things to fix it in diff-index, 
+without success, and I've run out of git-hacking tame, so all I can do 
+for now is throw out a bug report.
 
-Or in other words: A legacy ZIP archive and a ZIP64 archive can be
-bit-wise the same if all values for all entries fit into the legacy
-fields, but the difference in terms of the spec is what the archiver was
-allowed to do when it created them.
+diff-index.c explicitly says "no 'diff' UI options" since 83ad63cfeb 
+("diff: do not use configuration magic at the core-level", 2006-07-08), 
+so maybe this needs to be fixed in git-gui (and maybe elsewhere), but to 
+me it feels like the diff-foo commands should respect the setting.
 
-	# 4-byte sizes, not ZIP64
-	arch --format=zip ...
+(CC'ing Michael Haggerty, who added the heuristic.)
 
-	# ZIP64, can use 8-byte sizes as needed
-	arch --format=zip64 ...
+(This is git v2.12.2.)
 
-Makes sense?
-
-René
+		M.
