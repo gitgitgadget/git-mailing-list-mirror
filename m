@@ -2,88 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47EC9207D6
-	for <e@80x24.org>; Tue, 25 Apr 2017 05:28:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2690207D6
+	for <e@80x24.org>; Tue, 25 Apr 2017 05:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S980414AbdDYF2K (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 01:28:10 -0400
-Received: from mout.web.de ([212.227.15.14]:61786 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S979307AbdDYF2H (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 01:28:07 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LiaAW-1cQEsN2LDY-00cdoi; Tue, 25
- Apr 2017 07:27:59 +0200
-Subject: Re: [PATCH v3 5/5] archive-zip: support files bigger than 4GB
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Peter Krefting <peter@softwolves.pp.se>,
-        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Keith Goldfarb <keith@blackthorn-media.com>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
- <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
- <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
- <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
- <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
- <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
- <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
- <e53f1d3f-be3a-ac28-89eb-63011da64586@web.de>
- <xmqq7f29w0uj.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <10e59c7b-d8e4-e941-893a-bf4a68a54da0@web.de>
-Date:   Tue, 25 Apr 2017 07:27:56 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S979740AbdDYFdP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 01:33:15 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:34442 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S979270AbdDYFdN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 01:33:13 -0400
+Received: by mail-pf0-f193.google.com with SMTP id g23so7851292pfj.1
+        for <git@vger.kernel.org>; Mon, 24 Apr 2017 22:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=1QfuyxuB2LEAWtVk1FOAd2Iqm88GFMPwNpYB0e07hgE=;
+        b=G7mJ2ayRwR0Zi3eRLqxgxw/v9x8dBZ7R0vXQc6WVWbyBWFq3UW3xF6e/Cm0J7mNGkO
+         8+wHyyCL1evRQfU2/bLGGPPKbVgnXVFmr+5B03k+C9pVbuW5imOXS0auQG99Z1z5dCHq
+         BB+yaIAjGZ/3+6+oEL14F9YCVHVhkIm/AjAOc4zHRELXkW+8FetzA8+HBd7fpp0Ndb9g
+         cz/Dbq/GZCydQUbsftPVgAAUYW/8Dk6FBKsdcadfxDVEzGqWZrgWHBOaWcyOVLF1xsa1
+         YUAZvdQi3od4sQ0Pv9R64EKjGkcKB8Bqef9UMuce1Ff+WRBPaO5JEhJLhfJfgg8rNsvR
+         4ajg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1QfuyxuB2LEAWtVk1FOAd2Iqm88GFMPwNpYB0e07hgE=;
+        b=Y0De/6Amrml6lvcBB4ckG+MofNH1Dv+AiNnLn4dykmhqTPYWbgHGMzhAASMKkpUnzE
+         CFw1l0UROEvP9g2rcQlSdg808xhjOEp1yvbw2EBzJWynW1NJRLh8+J34lEs+5qgq33gK
+         fupvaz7dSIbS8os34JFY1mFFpRNEwsHNfqH2HtPQZjvKSjxijTGdwH0o1+oztsMeyYea
+         U9ujfFdhRWZziv3JD11pJVAlkPoZ+RznWtMiHjq1UOJ1W44jwb1ORtnSvuJ559rk+0vp
+         eaSE+lcZ+RfMHe8W68/vnTmq51ZsG+fYy5eBFutstgDatM97N8md9pFCnkACanib56Dz
+         KAWg==
+X-Gm-Message-State: AN3rC/74TgC4mmfxTFm+FCRzF2zHiuNZB6H8vcrFR4Ykvtd7XyuuZeVx
+        tuf903tSG5Anvw==
+X-Received: by 10.84.128.47 with SMTP id 44mr36329614pla.35.1493098393086;
+        Mon, 24 Apr 2017 22:33:13 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:894:a17f:b6e3:25e8])
+        by smtp.gmail.com with ESMTPSA id p187sm1392914pfp.129.2017.04.24.22.33.12
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 24 Apr 2017 22:33:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Miguel Torroja <miguel.torroja@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] fast-export: deletion action first
+References: <1493079137-1838-1-git-send-email-miguel.torroja@gmail.com>
+        <20170425032927.74btvfcexbdq4rmz@sigill.intra.peff.net>
+        <xmqqfugxw1us.fsf@gitster.mtv.corp.google.com>
+        <20170425044641.sx5uoql4oiug6iq7@sigill.intra.peff.net>
+Date:   Mon, 24 Apr 2017 22:33:11 -0700
+In-Reply-To: <20170425044641.sx5uoql4oiug6iq7@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 25 Apr 2017 00:46:41 -0400")
+Message-ID: <xmqqy3upuk4o.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq7f29w0uj.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:zNwBklusi5nZptD9vRb1qn1j+sqEi/uoEnh55ylZ/EZUakLj/XD
- fNyovXeCx4TYW0VYaBS5LgFAMAGtmwgA9Sw9jqkIQcLrUh8qRsxNch1yrYqlIp0BKLraNtX
- RJogqNgMKfbuJbamSzw5YgaWRZTs/OdZ2pjB9WpwddEe6oq0dgs1gBM3ooF1rbBtNXo7YGY
- TonAmXUta9QsAkZJVAZAQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JIGUH53fnrs=:sBtpqcM6Pb4px5NSzn44ra
- ERjd/5a6F1h/gF03AK9Rriqr2aTnUnAQzCfo6NrKB84N2oE0vfumhG+G3+Vv8KwPWaWEg0GXZ
- 3qUiP65fIuZp2VNgRh+kR4iJu5XDtF9YgvEDy1D8mC0L1Visr6u/+vtCc7gEbvneMtXid3W2p
- wEPEK8DOn+NNmxE+uyUFjslCSBN5bFWN+NjlhhnyPsMIAjPYxeY4mwrodNuhc8g3rEiHXj8fP
- paLbLzRFTiMAAD5St/4iNct606IyLbzshVaGWQEKo4hVogwoIrBME22EL/oIZfVs89z8PsGO/
- VzSIPiST/6GTW3HwnOyYL1+6GXXcSi/EkE5gZZUv/aMuwSZMe+WwqGyPxRWzN60+A36aUX0lD
- Ff64Lja/ewqdhY17J3kfY8PiONjY54xROHoAdQAGQYpeVePY4qTWABqCrGypvtHhyvPvRJ/uj
- aCJ3ErgHgz08VROCdLbpod4MhwYdOScFtbnKxIk7Jb3qvT62U8l7DGFY+v/Jzsh/e1VoOSQOk
- gp7KCAuhO2gOYQkTCV6Ec5Tb/wcOp3HxMk3fIipSXcG3xU3ypDA1k3H6awM6Btv6Yma4r9jrh
- WZz/Ko1QIpxSGiFhHcWNFqfcpRcAJ85pelRXFfMbx1KQkbJEOXt+AwxIr5T1HXWpHvcHBFQLs
- DMMCH3/mkW6AW4Q5CFKzlB2p26oizkfsdX9b6xtquwDRBPeELuenIBQkEkMiveLkORumD7t0/
- xCllQFM9X+nIT1XCoS5Q71wiR/pCDJWpqFUhVsr8u+/Mi2nlqRsQWqIX8guj7aj3CgnCDITEm
- HXGH6XC
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.04.2017 um 06:46 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
->> index 0ac94b5cc9..a6875dfdb1 100755
->> --- a/t/t5004-archive-corner-cases.sh
->> +++ b/t/t5004-archive-corner-cases.sh
->> @@ -178,7 +178,7 @@ test_expect_success EXPENSIVE,UNZIP 'zip archive bigger than 4GB' '
->>   	"$GIT_UNZIP" -t many-big.zip
->>   '
->>   
->> -test_expect_failure EXPENSIVE,UNZIP 'zip archive with files bigger than 4GB' '
->> +test_expect_success EXPENSIVE,UNZIP,ZIPINFO 'zip archive with files bigger than 4GB' '
-> 
-> This is a bit curious, as 1/5 adds this test that expects a failure
-> with three prerequisites already.  I'll assume that this is a rebase
-> glitch and the preimage actually must have ,ZIPINFO there already.
+Jeff King <peff@peff.net> writes:
 
-Yes, indeed -- I shouldn't try to do last minute edits.
+> Anyway. I don't think Miguel's patch needs to solve all of the lingering
+> rename cases. But I am curious whether it makes some rename cases worse,
+> because the depth-sorting was kicking in before and making them work.
 
-René
+I agree with you on both counts, and I care more about the second
+sentence, not just "am curious", but "am worried".  I am not sure
+that this patch is safe---it looked more like robbing peter to pay
+paul or the other way around.  Fixing for one class of breakage
+without regressing is one thing and it is perfectly fine to leave
+some already broken case broken with such a fix.  Claiming to fix
+one class and breaking other class that was happily working is quite
+different, and that is where my "Wait, we also allow renames?" comes
+from.
+
