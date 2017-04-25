@@ -2,91 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D947207BD
-	for <e@80x24.org>; Tue, 25 Apr 2017 08:51:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12B72207BD
+	for <e@80x24.org>; Tue, 25 Apr 2017 08:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1176908AbdDYIv0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 04:51:26 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:38834 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1168456AbdDYIvX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 04:51:23 -0400
-Received: by mail-wm0-f46.google.com with SMTP id r190so89582700wme.1
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 01:51:22 -0700 (PDT)
+        id S1170776AbdDYI5J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 04:57:09 -0400
+Received: from mail-it0-f44.google.com ([209.85.214.44]:34569 "EHLO
+        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S943039AbdDYI5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 04:57:04 -0400
+Received: by mail-it0-f44.google.com with SMTP id b134so12483689iti.1
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 01:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=uyAqhsOeKPGPNVeMu/9+7euLSDLR8OeY41+uqYo58hs=;
-        b=Wxqn1Z3LMDQsHHTWFgJ6QHtAwhB/dKCur3+rBgyYW6S1BX9IuNqaOAEyrLJa55uraN
-         xGFOfosGpo1Dt5CcixxgetPvUni1ZEJlP67UxYuzR7EcJAibIjViWMz4o1xMRvCQZjqL
-         F0pHX6/6zpVhYncOHb/W7Xu3ZnF3Arj3qdU5c4RPmtN/CHbwixWHiOiamnNJanibaiVh
-         pjJS4jvefdWSbPEQPCMESVAcUiEy5jZIAHo92QucnR24p2NVB5nFdJJ1Htg38qiWehQq
-         Xs8FeIYaR8A7GEUDQDaKdB3EHA/6GYSNBheSTgTxfvKe3H8oKIuyBomDJnozX8z5MCoq
-         WrOA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KIq9lNixYeh0FHRuBvwPEVQoeKDZkB3yZw8Z+IODC3w=;
+        b=T+R7QY6rZWcayrUm1BcGwItI9rShoSpVapEw/+s5bAMRZRzs+BZYJO+0WHEnosZl5u
+         XVies4VrYf+YeSRArme3qnvSnW29bd+74MTBCnchYEv1wYs1QBufa/h5GWAjdAFhCDBC
+         cUZuJ5hr3ixgc884oEEVpNz9mpQ2bQjvLuqx4GxLK4OqKiaJkK+uuWi/j5Dhn/s1ETcC
+         F8fPJRuJvy/meX2OoHn48Yp+0Jc6++1pKucdgMZeqMGXr6wpwxpfhH/LPOLvyOz3vkjl
+         howvC5Kaaa3y9VQLFerDaHaRYurCEk4nVz+qqULHe7e2+W8JAUH3ADS2D5e3yFQeXWdD
+         npxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=uyAqhsOeKPGPNVeMu/9+7euLSDLR8OeY41+uqYo58hs=;
-        b=H8r0H6sbaxzpvFews2KWaoZrNaH48ZVPT8/8OrXMLztUvbvJVMRAJI+b0uPlFtBeea
-         avApuTq3poPekKDVYe98dMhDQeNqRRN7FezaC2Qd8jNQIRiaqlCPHKuY52wDIxP/ps5n
-         51PIGgvkZ9U/PB/C+81I15CJEk2z77pgcciA+fcapRcA2h3IC+kir/LKD8GO96cevowi
-         GSj0MEL9gnidpozNv5OfFxO+fJzlslCMIvWlBUNPBGJYSzD68wJIhMdRwU+t8jSCKskG
-         PKOpvu8Xe0Ow/CVLz3uCjzoIgYfxq/WfwzFzxacuKxJ7KNuTInWtPtnz6mvkbGyBhVCQ
-         EJAg==
-X-Gm-Message-State: AN3rC/4EEXssbAZIkZmFsDpodbgsCBxOOlarBoqpgVi4uAN2hr9hncBI
-        CfNOuDT9fmMTlw==
-X-Received: by 10.80.152.69 with SMTP id h5mr4175196edb.66.1493110281961;
-        Tue, 25 Apr 2017 01:51:21 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id y24sm4816726edb.62.2017.04.25.01.51.21
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 25 Apr 2017 01:51:21 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: [BUG] test suite broken with GETTEXT_POISON=YesPlease
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <20170424203710.cijg3bjdrb2eywmh@sigill.intra.peff.net>
-Date:   Tue, 25 Apr 2017 10:51:20 +0200
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: 7bit
-Message-Id: <054E67A2-56B0-4C91-89F5-F33E8C00ED61@gmail.com>
-References: <CACBZZX62+acvi1dpkknadTL827mtCm_QesGSZ=6+UnyeMpg8+Q@mail.gmail.com> <FDAE86E2-F607-4E82-8E0C-0E6DCEF7ED67@gmail.com> <CACsJy8BceB96D39gbjTFx=XQZ6ATHYYQGMRSeV=u4C3jEvTDbQ@mail.gmail.com> <20170424203710.cijg3bjdrb2eywmh@sigill.intra.peff.net>
-To:     Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KIq9lNixYeh0FHRuBvwPEVQoeKDZkB3yZw8Z+IODC3w=;
+        b=o1FGYKdZJGcMfy62ZRxnjNR/i4LnF+w7uOHBmJTuFQQpBeU2tZvneQoCqhwcALRmc6
+         zptT4cD4pU2juA9vDjuit1RJUxVy0mqZawaPP8faSuXBzQiO5vwVcLU9N/dnPo0ecmgk
+         AsTbuvFFNy/pjPODO1cRaDzZgKvBgJizUsB1/qd5MBraImxXTOx/wWRE/5Vmp4MSfbiN
+         rWMWnS9lZPzL/GOqkQY8LXoSnMUL47hi6UZWfcC7jm/ZfUUjW3ReKGP/1QAkOeMYvdPu
+         oPMQBxgT6SX5S0/Uq8TQP+aRbOz22ivwP2N8raIbJGLXyxIuKBZSbOeN+VaPs1xQp0ya
+         BozA==
+X-Gm-Message-State: AN3rC/5OUT9i4wWgcyxp75qEdpfuHfjDs5urGFinvF4GjIf+37IVkJ9S
+        1VfaajI6zOXF3NOcxibjDx9RiU0mzw==
+X-Received: by 10.36.103.86 with SMTP id u83mr2784591itc.91.1493110623906;
+ Tue, 25 Apr 2017 01:57:03 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.134.97 with HTTP; Tue, 25 Apr 2017 01:56:43 -0700 (PDT)
+In-Reply-To: <xmqqmvb5w2hj.fsf@gitster.mtv.corp.google.com>
+References: <FDAE86E2-F607-4E82-8E0C-0E6DCEF7ED67@gmail.com>
+ <20170421185757.28978-1-avarab@gmail.com> <xmqq1ssi4nci.fsf@gitster.mtv.corp.google.com>
+ <CACBZZX63VQK4fLSB2T8onXJ_hQE8dkOCAyFFM-C_yOfoMwxLMA@mail.gmail.com> <xmqqmvb5w2hj.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 25 Apr 2017 10:56:43 +0200
+Message-ID: <CACBZZX494g8CKoN0V1N4xRuDsErPtJcMjaZcLFAqJgDQ+Mz+yA@mail.gmail.com>
+Subject: Re: [PATCH] tests: fix tests broken under GETTEXT_POISON=YesPlease
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Michael J Gruber <git@grubix.eu>,
+        Lars Schneider <larsxschneider@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Apr 25, 2017 at 6:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> My general approach when writing & maintaining this poison has been
+>> that it's fine if we skip some tests, even though we could be bending
+>> over backwards to run them, or even if we don't know the root cause
+>> beyond "the rebase machinery is always broken with poison".
+>>
+>> This is because once I'm satisfied that the breaking test isn't
+>> because of some new plumbing message that got i18n'd I don't see the
+>> point of keeping digging, it's fine to just skip the test, because we
+>> run it when we're not under poison, and we're satisfied that it's not
+>> breaking because of a new plumbing message being i18n'd we've
+>> fulfilled the entire reason for why this poison facility exists in the
+>> first place.
+>
+> As to skipping tests, I am worried mostly because it is very easy to
+> mark one test as skipped under poison build, even where the side
+> effect from that test left behind in the trash repository is a
+> prerequisite for a later test to succeed.  For example, a test that
+> creates a tag may be marked as skipped-under-poison.  Then a new
+> test that is added to such a test may want to do something using
+> that tag, and it will succeed in the usual test.  As most people do
+> not test poison build, when somebody notices that the new test fails
+> under poison build, it is unclear if the breakage is due to new i18n
+> issues or something else, like a missing prerequisite tag due to
+> skipping an earlier test.
 
-> On 24 Apr 2017, at 22:37, Jeff King <peff@peff.net> wrote:
-> 
-> On Mon, Apr 24, 2017 at 08:22:36PM +0700, Duy Nguyen wrote:
-> 
->> Off topic, is it possible to receive mail notifications from Travis
->> when a fault is found in either 'pu', 'next' or 'master'? I know how
->> to do it in Jenkins, but I'm not familiar with Travis and there's no
->> obvious button from the web page..
-> 
-> I looked into this a bit for my personal builds. Notification config has
-> to go into the .travis.yml file[1].  So I think the best we could do is
-> send a notification email to some mailing list, and then let people
-> subscribe to that (or it could go to git@vger; I don't know how noisy it
-> would be).
+Indeed, I've tried to be careful not to introduce bugs like that, but
+in this skipped case the tests look completely stand-alone to me.
 
-A separate mailing list sounds like a very good idea to me!
-Maybe "git-builds@vger.kernel.org" or something?
-What would it take to set something up like this?
-
-- Lars
+In any case, I like my other patch to just remove this whole thing better.
