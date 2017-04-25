@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3723207E4
-	for <e@80x24.org>; Tue, 25 Apr 2017 21:06:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E10CD207E4
+	for <e@80x24.org>; Tue, 25 Apr 2017 21:06:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1954706AbdDYVGN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 17:06:13 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:32874 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1948415AbdDYVGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 17:06:11 -0400
-Received: by mail-wr0-f195.google.com with SMTP id w50so22366069wrc.0
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 14:06:11 -0700 (PDT)
+        id S1954710AbdDYVGS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 17:06:18 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:36448 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1948415AbdDYVGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 17:06:15 -0400
+Received: by mail-wr0-f193.google.com with SMTP id v42so18442832wrc.3
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 14:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NnqYVO826eWrlvWUsC/g7ecfgD1WkegPIgXns1skrYU=;
-        b=EaMQ/jMjz/h4qroxa/41+mHSwnRT4DxiskKqGpm+uJumUpbqV+jC4u4UnBNLgYQ4Qu
-         1lOr8UQTPjigArOrBB7aPGmaT/KIUKu8Kxt/OOvSit24GG1U3gEX1PWJzaevgOGa6XkS
-         fklV3D8p5t1my4e35rJJBiAY5KW/P5p/vbMW2tgEO8knRmrPmRWuMV+UR8JiNdTdC3AD
-         CnvS7NrsI9/D3gex0r42il/8/aVMaS0lAMuAejuLSvqOX8ICHRnl0pC6K4bRO8XFNV0f
-         658kf6/TJK5ICFUfe1UuLKcDuAthbt/mZf8LxtEyv16tnkADlhcznG1VS4uR/lwTAXIY
-         Vguw==
+        bh=Ek9SRIrMp28JyNExY1LVZ70lvR9VjOQkuLRQCU1exrI=;
+        b=PC8O9RkE5BgrcpwZIJT3Mcz6ZMhzJUnEXYK3CuvVttIuh2KaVF8pWP9mn0v2TuOkIv
+         BwMfovo1+Puoq4iVLygNGcCV9grhvfikXOpyEtuPlh4SSA1UULXFX1dUl81a+3t/Sz1U
+         p8EiNw66Gm1QZLZ+tolWyV6S7mSLNR3+8Qx3n1H29+wAHMXsanDj+GrPvUpMAz7QLmBo
+         IcGlT1mau4BYPvJtB8on+G25EeYfDU+bzVLhL3FwadB0TFFcgR2pFqybVaO03RpVVg6c
+         +N6eUs36JkgRDgwKFdZweRZYgSsPm/RE3M0D4u5igg6966KCKxqLkvGdUkttl8dla1wP
+         b4Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NnqYVO826eWrlvWUsC/g7ecfgD1WkegPIgXns1skrYU=;
-        b=H90wZr2hR8JOiU5Tm5BCWtCMOy/6pkaqA417iqHt5oKo9nBKLEWzQt9ADz57FSALjv
-         ncMNHc52eHJyrFJ3GNktKN+ebcXoV1Ilo8TjAzCZNC4WssSXIJHeIHmYI32NmAQHhTTn
-         KL1KhhHTQodvneNwQcrwXJzygY+KrEJdIriT3kRb/DT0q4necp1R5NSBZdblNtoWIbas
-         Tm16ux+xPO2Kx/1Icyvfk06Hw2cwgBvXvTJefHlQJbcKwBo95CNp5+T+MmZ3dgAIbb2g
-         3vBJ2rrC7ARftZFCR73HAYU3Gp15xVfWtswuUN7jjM899F7kD2caZeba+Lraf+jW/CDa
-         zCgQ==
-X-Gm-Message-State: AN3rC/4EW2CQmsZKHXu3niK5y1W1Qdx57vT441WcZhLSYRG3IhE9PTSV
-        LAD2iPvVVegXyQ==
-X-Received: by 10.223.142.35 with SMTP id n32mr12993129wrb.131.1493154370236;
-        Tue, 25 Apr 2017 14:06:10 -0700 (PDT)
+        bh=Ek9SRIrMp28JyNExY1LVZ70lvR9VjOQkuLRQCU1exrI=;
+        b=mCepuzKQ1PnkV/9OXZ8UfST+lOWoLgMoBgpBF5obKeRuOPRI++CHEntEpLAwrO8AjJ
+         vnrQxlghsufl7/7qOBRbGQcRKw5LA747ia8kJxS3OgAD3PSJQDHM42ijBsYtmMps4BFw
+         s1qB92pzO0NNHRdjiQCiS8LyX99zb3gWUl1nLyWEORxAfpwTDZEdfkDcfXAN+KzFPE9K
+         komNa3GEnETxzhXkFE70bWKdU8WuuYRWCnpkMQuRWsKhkZ2i/azoc5VXvVv1g84UINTW
+         Yu35XoMrfzUNgX/bWzOy4LwHhh0YB0vYt85+SCOgxWDywkXtTv3ykAf1TIXZXoUxnFkt
+         dzsw==
+X-Gm-Message-State: AN3rC/6HD+myWOdN3fLdGj/f0DX+qinkxkYAGfyGlfNOKlQCUaUR6A5a
+        glp+CS5DxTc2bg==
+X-Received: by 10.223.165.138 with SMTP id g10mr12638985wrc.19.1493154374045;
+        Tue, 25 Apr 2017 14:06:14 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id i71sm27519917wri.0.2017.04.25.14.06.08
+        by smtp.gmail.com with ESMTPSA id i71sm27519917wri.0.2017.04.25.14.06.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Apr 2017 14:06:09 -0700 (PDT)
+        Tue, 25 Apr 2017 14:06:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 03/19] grep: submodule-related case statements should die if new fields are added
-Date:   Tue, 25 Apr 2017 21:05:32 +0000
-Message-Id: <20170425210548.24612-4-avarab@gmail.com>
+Subject: [PATCH v4 04/19] grep: remove redundant regflags assignment under PCRE
+Date:   Tue, 25 Apr 2017 21:05:33 +0000
+Message-Id: <20170425210548.24612-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170425210548.24612-1-avarab@gmail.com>
 References: <20170425210548.24612-1-avarab@gmail.com>
@@ -76,48 +76,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change two case statements added in commit 0281e487fd ("grep:
-optionally recurse into submodules", 2016-12-16) so that they die if
-new GREP_PATTERN_* enum fields are added without updating them.
+Remove a redundant assignment to the "regflags" variable. This
+variable is only used for POSIX regular expression matching, not when
+the PCRE library is used.
 
-These case statements currently check for an exhaustive list of
-fields, but if a new field is added it's easy to introduce a bug here
-where the code will start subtly doing the wrong thing, e.g. if a new
-pattern type is added we'll fall through to
-GREP_PATTERN_TYPE_UNSPECIFIED, i.e. the "basic" POSIX regular
-expressions.
+This redundant assignment was added as a result of copy/paste
+programming in commit 84befcd0a4 ("grep: add a grep.patternType
+configuration setting", 2012-08-03). That commit modified already
+working code in commit cca2c172e0 ("git-grep: do not die upon -F/-P
+when grep.extendedRegexp is set.", 2011-05-09) which didn't assign to
+regflags when under PCRE.
 
-This should arguably be done for the switch(opt->binary)
-case-statement as well, but isn't trivial to add since that code isn't
-currently working with an exhaustive list.
+Revert back to that behavior, more to reduce "wait this is used under
+PCRE how?" confusion when reading the code, than to to save ourselves
+trivial CPU cycles by removing one assignment.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/grep.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ grep.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3ffb5b4e81..be3dbd6957 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -495,6 +495,8 @@ static void compile_submodule_options(const struct grep_opt *opt,
+diff --git a/grep.c b/grep.c
+index 47cee45067..59ae7809f2 100644
+--- a/grep.c
++++ b/grep.c
+@@ -197,7 +197,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 	case GREP_PATTERN_TYPE_PCRE:
+ 		opt->fixed = 0;
+ 		opt->pcre = 1;
+-		opt->regflags &= ~REG_EXTENDED;
  		break;
- 	case GREP_PATTERN_TYPE_UNSPECIFIED:
- 		break;
-+	default:
-+		die("BUG: Added a new grep pattern type without updating switch statement");
  	}
- 
- 	for (pattern = opt->pattern_list; pattern != NULL;
-@@ -515,6 +517,8 @@ static void compile_submodule_options(const struct grep_opt *opt,
- 		case GREP_PATTERN_BODY:
- 		case GREP_PATTERN_HEAD:
- 			break;
-+		default:
-+			die("BUG: Added a new grep token type without updating case statement");
- 		}
- 	}
- 
+ }
 -- 
 2.11.0
 
