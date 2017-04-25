@@ -2,133 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42CEC1FE90
-	for <e@80x24.org>; Tue, 25 Apr 2017 15:09:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7D981FE90
+	for <e@80x24.org>; Tue, 25 Apr 2017 15:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1948538AbdDYPJR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 11:09:17 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:33840 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1948623AbdDYPJO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 11:09:14 -0400
-Received: by mail-qt0-f196.google.com with SMTP id y33so25442137qta.1
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 08:09:13 -0700 (PDT)
+        id S1951115AbdDYPw4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 11:52:56 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:35024 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1950369AbdDYPwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 11:52:50 -0400
+Received: by mail-pf0-f180.google.com with SMTP id v14so25177533pfd.2
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 08:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=8KcnrCbRJR7MsNf6l6/jjxD3sH2/RVGIzOQgs70getY=;
-        b=f3Vps7Tr+ufp4929/jadJ5eD8/s+YNeHR6dYI2+OewWLaKj1FlO2KbdFvwO7iUSQeB
-         CIL1i4EBNmeqkYppWqmoxcY9r7AcMYzYbb+fCYsr84Xizc2tiLxOpFkcIMPMcZF4lObV
-         A8X8/pwHj8c8MVqkZf5udi1GyydfPMF48P9SXH5KbjdrQztbEFtdV/cmbdWKp+168by/
-         8lWfBfKvGQt3zPKrvVZV3a18CO4dzchUGCMKCMzfw39fz4L/Ku1ZCO45ag9NQmRewg8B
-         4lxcoqgxQTCAH21aecZqw6+N3BNGmlqxyL23BYaYS7ePTV3mx8RN1o5OwZPRMIp1lJpw
-         FoIQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=ixbiQ17bOsGVoiKlQj3qR3qpP3K+Dy29s0+VfiN1rTo=;
+        b=HiYyBsqMfugiCJ87Vdgoz/7jYNcttGavhWExfg5fmaadEmSKrmlhSEzAVBolw9FJv7
+         /+/jJSPridSG/DbWjztMstwDF7TVq5cyiITIhoAnPzUZf2DWwVTLp8ZyQl4srDwyMID2
+         dlr2bXTdPgcHMxzo0w9S/3liT0l5nPm6XCYiPAjw4ooIiVA2W1NcyUf1JodW4+B/HX/G
+         qab16YMw+V5AEYrjQVAo4RZE3tJxQJHWo4FeGOhgJHuFOXirKmvHpNTahl0UAtwqkW9r
+         P+u/z1YiHiFzGvVqB1aLP9DRf4eto01TGazUdCBGKLcKQYhvRvnnPjgDX4C2ku/bJ3nT
+         W/eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=8KcnrCbRJR7MsNf6l6/jjxD3sH2/RVGIzOQgs70getY=;
-        b=GsX1irghZ8+sI808rg7vp/X4Tizl0lN764gWLLioDB2WBHpgv8vSRAHQWgQLW4CHoe
-         B9nw7oT7b83FZmFM+PCR6w/3GzN8rx5LPVYQn+lz2Orh8qU0SoRQAWK5DP0PDo1iaC7l
-         JyfwOv7fR6rigPGJoFw8jQTXwIXcb/8WjWSNP3RDe11NX2zfIFoB4BgpBOm6g6zC4YH2
-         XDSrXRkPy53HYWtdIrzod5B8b/IYZiIzp+8rMNBuhUMZ6ZNU4Aiz7d7PM6g6wBrvD4Lj
-         uw1j1WBcvT+/gfNuDyT1membtVKx+n5cXN8cRmmoiE+U2RYkY9xeuNC00g9JVMRWCdVM
-         RcNg==
-X-Gm-Message-State: AN3rC/71ORCy8qjRAOQuj7Ba0u06w29w7QNpdDhF9bKBm0ny9iJPhETR
-        UWZm1oDYHjWNZA+gKYU=
-X-Received: by 10.237.39.146 with SMTP id a18mr34104450qtd.111.1493132953001;
-        Tue, 25 Apr 2017 08:09:13 -0700 (PDT)
-Received: from [192.168.1.13] ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id q6sm15191147qtg.39.2017.04.25.08.09.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Apr 2017 08:09:11 -0700 (PDT)
-Subject: Re: [PATCH v6 1/8] pkt-line: add packet_read_line_gently()
-To:     Junio C Hamano <gitster@pobox.com>
-References: <20170421172611.12152-1-benpeart@microsoft.com>
- <20170421172611.12152-2-benpeart@microsoft.com>
- <xmqqy3uqzb90.fsf@gitster.mtv.corp.google.com>
- <d6e8a63b-e95d-4194-5ad0-d68f557be083@gmail.com>
- <xmqqbmrlxm8m.fsf@gitster.mtv.corp.google.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com,
-        christian.couder@gmail.com, larsxschneider@gmail.com
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <4cadf613-7923-e8bb-c889-34e1bf5eb47c@gmail.com>
-Date:   Tue, 25 Apr 2017 11:09:11 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=ixbiQ17bOsGVoiKlQj3qR3qpP3K+Dy29s0+VfiN1rTo=;
+        b=hGXrWOihNLqcBWRJhphsk8QA8zz/kEblvD8bfOH3d4U9yAT57Ztti/1Bvy+YX8SHdB
+         BLf89ZUkHj0G7KCSNEm8jDpVVGnrY4vysg9Z39rnRKLFDXdJQs5VOpKCilen8qTJr1OR
+         8ujf27lvu6pozcmkZscJKlBu2eA3ly/MSKSVHNTd16X8HHarwKzvAwzB7D381eDFSMj5
+         B42ynPba1ZOZ63unyHX4Ys07SXqB1JgNUnFAQe3Gjqz2V/+Y/JLZ3yOk9NWgMUpTTsIL
+         iAHkZ+AvV6ieKLaqt2vUHC1kwLcQh8fsYWYzquFxsh+ZrbKsVhU9g4vph7Cl1iGZl+jY
+         ZIdQ==
+X-Gm-Message-State: AN3rC/6YPBBM3knikOxJqGJ6B+KiPHfD5mcp8I7m3npZiaNbHVWk6Aj4
+        kB/QWFSGiI2spMyeqEwD/Nasf8GP5jAmPC4=
+X-Received: by 10.98.24.195 with SMTP id 186mr29507382pfy.35.1493135568736;
+ Tue, 25 Apr 2017 08:52:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqbmrlxm8m.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: by 10.100.153.156 with HTTP; Tue, 25 Apr 2017 08:52:48 -0700 (PDT)
+In-Reply-To: <20170425005746.tulvexabonlexah3@sigill.intra.peff.net>
+References: <20170425005746.tulvexabonlexah3@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 25 Apr 2017 08:52:48 -0700
+Message-ID: <CAGZ79kb9hsvrzc=RnhhyJf-tTnr9rTfV-TQWimYFGwU_Kuew9w@mail.gmail.com>
+Subject: Re: [PATCH] submodule_init: die cleanly on submodules without url defined
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry if you get this twice, somehow Thunderbird converted my response 
-to HTML
-
-
-On 4/24/2017 10:19 PM, Junio C Hamano wrote:
-> Ben Peart <peartben@gmail.com> writes:
+On Mon, Apr 24, 2017 at 5:57 PM, Jeff King <peff@peff.net> wrote:
+> When we init a submodule, we try to die when it has no URL
+> defined:
 >
->> On 4/24/2017 12:21 AM, Junio C Hamano wrote:
->>> Ben Peart <peartben@gmail.com> writes:
->>>
->>> +{ 
->>>> +	int len = packet_read(fd, NULL, NULL,
->>>> +			      packet_buffer, sizeof(packet_buffer),
->>>> +			      PACKET_READ_CHOMP_NEWLINE|PACKET_READ_GENTLE_ON_EOF);
->>>> +	if (dst_len)
->>>> +		*dst_len = len;
->>>> +	if (dst_line)
->>>> +		*dst_line = (len > 0) ? packet_buffer : NULL;
->>> I have the same doubt as above for len == 0 case.
->> packet_read() returns -1 when PACKET_READ_GENTLE_ON_EOF is passed and
->> it hits truncated output from the remote process.
-> I know, but that is irrelevant to my question, which is about
-> CHOMP_NEWLINE.  I didn't even ask "why a negative len treated
-> specially?"  My question is about the case where len == 0.  Your
-> patch treats len==0 just like len==-1, i.e. an error, but I do not
-> know if that is correct, hence my question.  We both know len < 0
-> is an error and you do not need to waste time elaborating on it.
+>   url = xstrdup(sub->url);
+>   if (!url)
+>           die(...);
 >
+> But that's clearly nonsense. xstrdup() will never return
+> NULL, and if sub->url is NULL, we'll segfault.
 >
+> These two bits of code need to be flipped, so we check
+> sub->url before looking at it.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
 
-The packet_read_line() function returns NULL when len == 0 and 
-PACKET_READ_CHOMP_NEWLINE is passed so I wrote the similar 
-packet_read_line_gently() function to behave the same.
+Makes sense. At the time I assumed xstrdup had a _or_null
+behavior (i.e. if NULL goes in, it is not duplicated, but rather
+return NULL)
 
-How about I update the comment in the function header to make this more 
-clear:
-
-diff --git a/pkt-line.h b/pkt-line.h
-index 7c278a158b..b2965869ad 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -78,9 +78,10 @@ char *packet_read_line(int fd, int *size);
-   * Convenience wrapper for packet_read that sets the 
-PACKET_READ_GENTLE_ON_EOF
-   * and CHOMP_NEWLINE options. The return value specifies the number of 
-bytes
-   * read into the buffer or -1 on truncated input. If the *dst_line 
-parameter
-- * is not NULL it will return NULL for a flush packet and otherwise 
-points to
-- * a static buffer (that may be overwritten by subsequent calls). If 
-the size
-- * parameter is not NULL, the length of the packet is written to it.
-+ * is not NULL it will return NULL for a flush packet or when the number of
-+ * bytes copied is zero and otherwise points to a static buffer (that 
-may be
-+ * overwritten by subsequent calls). If the size parameter is not NULL, the
-+ * length of the packet is written to it.
-   */
-  int packet_read_line_gently(int fd, int *size, char **dst_line);
-
+Thanks,
+Stefan
