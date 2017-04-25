@@ -2,80 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44C8E207E4
-	for <e@80x24.org>; Tue, 25 Apr 2017 22:31:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C747207E4
+	for <e@80x24.org>; Tue, 25 Apr 2017 22:35:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1949072AbdDYWbB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 18:31:01 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35999 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1948704AbdDYWa7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 18:30:59 -0400
-Received: by mail-io0-f193.google.com with SMTP id x86so55457735ioe.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 15:30:59 -0700 (PDT)
+        id S1952708AbdDYWfj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 18:35:39 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:36464 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1952700AbdDYWfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 18:35:37 -0400
+Received: by mail-pg0-f54.google.com with SMTP id g2so34500495pge.3
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 15:35:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kZLS4ZXkWOI20DCHjkN5MpIG8uI20esfMVTflSrS5Wc=;
-        b=ByyUOLpcXjJMuNwOaRqHiC8b0lYWl7Dbdb+txCCF2tXGgTkHIhcPVnpJcts8CLWj03
-         osCpBZGdPMfTZ+aRgatH/k62Jsk22dZLtxdOacLwAwQ5qZJRB4v7HQgAPcjqayqMDAhj
-         6HpUAmymNGuULrKyEHfN5R4IAFEMhPsY5HqUNUXufldIYVwMqse5XLDppKTdpDlpE8aq
-         BsDrqesqXsHcXZcM0Aua4NAzL0dARTzUVOaBqGbhmo5mAhr/EWuYgak3MrRdhUqxKZ18
-         o87VftIOk/jzMU5EW9O9QLPAt/BmnjHoQXe59G9BiTyJayPj3ciabtC6I3YVsJOp+BRx
-         QtCQ==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=QZNfRdnWSkpinxJcCfCC6kcgQc7bIosCNUTAKX8maFE=;
+        b=AVRSiEch0qJKZi88KsmMErMZjGphpPs5O6T67+K784WHo74FZi1e01WN9RZLDALkPg
+         CJRJWCY/AKe6/FGrG0fW9ixIyS/JuhHmxrXTHIROYEl3cKAhS6eJav3etvCx6Gl25t0N
+         grePU1ahCkwFdlgGx4jse/Q9fS8m+Ha4roqOwqbslC9I0OggGwS0qjOkh07N92Y1nTEj
+         P7TNo8mYfDScjZi0uP1OzWyALzlyCeOkPLc+MVbclL3YE3yhx+7OBs0xoWQjuiG0bL7L
+         v8GlBuzq1ap8MsOB3YJnx/vFbgf16j7eYeONWH40q6Dh4NljwjnlN3dMYkpkbxUVHrn8
+         eDGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kZLS4ZXkWOI20DCHjkN5MpIG8uI20esfMVTflSrS5Wc=;
-        b=A9Ehlfmt97IY+UHgWayzJrhoq4/lowyOn8ZVUdsUGZ5J7AeXDXqpMNE5YeOQygjfG1
-         M3E/AQP/Kj5qLPcsx5tEFpgowmIXzp8BWlRzFP+PFAc9TAyH6VThTi+WHl1bBy4joKSd
-         rhCYo1YMrxeAFFhP0lB08qqy+LUpf/HYnCyCzRcfZ2a5tDQVAFUej3ms3cj38uzgJ9fo
-         K5MyYXsITN9Di96fOh+swkvNsKMa/4aGZkokmzKtp4FkBxiraJkfbRhSUIW+uS9EkRhi
-         oey4S77qX7uQqgX83MF9f8xt3uVT44Yk4nhA88iLwxXrco4yyALUekC5SRhTXzBc7uCU
-         RZqw==
-X-Gm-Message-State: AN3rC/7E42j19P/QZut/dka395kR10ASf/O1bHjGSYXNu3yw3+eJ0tS2
-        66WWIdIJXIlakNAp
-X-Received: by 10.107.31.78 with SMTP id f75mr19909246iof.44.1493159459024;
-        Tue, 25 Apr 2017 15:30:59 -0700 (PDT)
-Received: from google.com ([2620:0:1000:1301:1ce5:6571:c8aa:de2f])
-        by smtp.gmail.com with ESMTPSA id p75sm2628867itb.26.2017.04.25.15.30.58
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=QZNfRdnWSkpinxJcCfCC6kcgQc7bIosCNUTAKX8maFE=;
+        b=ULERkBmpjXlMlEYprw9UaJtX8v1641Rr0Z7o5DdtWIG+rbB2DQFpex5tl4P3QEcLrK
+         QTu3J+h3WBa88nV+5EyJSrrVyJQbLoLU96l6BuxqrnfUp3FLSdzWf14w/OX58vYRt4wx
+         JGUXItkkCUb5RFvzwO9C8rsfM4ilGXJfSHWSxz3bql8fDlIApvR/Gvt3AgHBsoyunEAt
+         Djvgtu0i6b1Z7BTgxODlrXYo1++pbM35xgoG1z9cs/RqKoTl2kP8rrRaMZqFTMc7anv4
+         IbFYj5Cw/xai9MdlJwT6+fZsaV850hVwuk7GyUL8gjTFr3htcKhkNBn877RQZnGVXUKo
+         gI4Q==
+X-Gm-Message-State: AN3rC/4Jy6yJLiQQ9Alwqh+CA9f1JZW+DUXzPLThUQYW7uOlns+nk+XB
+        6P0xl4ccGMvMmA==
+X-Received: by 10.98.158.205 with SMTP id f74mr30057466pfk.119.1493159736221;
+        Tue, 25 Apr 2017 15:35:36 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:c0ea:3a03:d3a7:cb53])
+        by smtp.gmail.com with ESMTPSA id f18sm2118140pfa.130.2017.04.25.15.35.34
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Apr 2017 15:30:58 -0700 (PDT)
-Date:   Tue, 25 Apr 2017 15:30:56 -0700
-From:   Brian Norris <computersforpeace@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH] sequencer: require trailing NL in footers
-Message-ID: <20170425223056.GA104886@google.com>
-References: <20170421220155.GA142345@google.com>
- <20170425190651.8910-1-jonathantanmy@google.com>
- <CAGZ79kapU5AL_iPJXCavCKAQ0Fw=pqWZS4F6Vri-Q1M1WMVs_w@mail.gmail.com>
- <f49a858b-26da-7e8c-e0f2-8d66158f016a@google.com>
- <CAGZ79kbhxjO-tFW4_kObTZiauetjsgY1NBSKvo1NV5nKNEy2xA@mail.gmail.com>
+        Tue, 25 Apr 2017 15:35:35 -0700 (PDT)
+Date:   Tue, 25 Apr 2017 15:35:33 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] clone: add a --no-tags option to clone without tags
+Message-ID: <20170425223533.GL28740@aiede.svl.corp.google.com>
+References: <CACBZZX584QwjphGfEgTn2V9P0yVkYSxfE1_Gp96bno8186SDyA@mail.gmail.com>
+ <20170418191553.15464-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kbhxjO-tFW4_kObTZiauetjsgY1NBSKvo1NV5nKNEy2xA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170418191553.15464-1-avarab@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2017 at 02:56:53PM -0700, Stefan Beller wrote:
-> In that case: Is it needed to hint at how this bug occurred in the wild?
-> (A different Git implementation, which may be fixed now?)
+Hi,
 
-I might contact the original author, but it's easy enough to imagine
-automated 'filter-branch' scripts that could produce this. e.g., this
-trivial example:
+Ævar Arnfjörð Bjarmason wrote:
 
-git filter-branch --msg-filter "perl -pe 'chomp if eof'" HEAD^..
+> Add a --no-tags option to "git clone" to clone without tags. Currently
+> there's no easy way to clone a repository and end up with just a
+> "master" branch via --single-branch, or track all branches and no
+> tags. Now --no-tags can be added to "git clone" with or without
+> --single-branch to clone a repository without tags.
+
+Could --single-branch be made to imply --no-tags, like --depth implies
+--single-branch?  After all, all I wanted is that one branch, not some
+tags.
+
+Callers who really want the tags could still pass --tags to request
+that.
+
+Just thinking out loud,
+Jonathan
