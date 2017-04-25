@@ -2,196 +2,481 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3902207BD
-	for <e@80x24.org>; Tue, 25 Apr 2017 09:11:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90477207BD
+	for <e@80x24.org>; Tue, 25 Apr 2017 09:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1428560AbdDYJLb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 05:11:31 -0400
-Received: from mail-wr0-f193.google.com ([209.85.128.193]:36323 "EHLO
-        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1428519AbdDYJL1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 05:11:27 -0400
-Received: by mail-wr0-f193.google.com with SMTP id v42so15848155wrc.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 02:11:26 -0700 (PDT)
+        id S1428809AbdDYJpI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 05:45:08 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36306 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1176238AbdDYJpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 05:45:06 -0400
+Received: by mail-wr0-f196.google.com with SMTP id v42so15969855wrc.3
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 02:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=T9J89T1ywRbBmmAyt0LHojpaeUA6Z4jdp64vaGceE8U=;
-        b=X66JEUBpjeW7nylcxRnPmMhqeWyEylPcaPibgYhPiq2hIlghDiYb+hzCmssh6fFNxv
-         AE94Osle2ePw+aZZIm4U3gSnlmesWiuW2eaLKr4geFBq5qWm+g9fIguDDG/iqI+xnGTX
-         zIIffFnPtajUT8qlIS9f+w6e5PYkgHnTT+m7PD968lWeRqzvK30sBmMpsi6Mpb0vTbwd
-         dAEwxH46qSj3+naFwKPEQZj13UhF12rqkgsRv5ueTmc8pTv7P6Msd4hJYY+N4jozioO9
-         aQbl7sSC1vztuSLfvZBGaM3gopZmcIIZf4e8LVHsbKh8/igk7IZLUloX6Vys5nCxWC9n
-         d64Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ww7eQn5OEdFMkqQRFDIw+CyjeAi/jxS+DXS2QptGUog=;
+        b=L5wfY+OGC6T1nzzlEahZ/LTRnARhVpNCGN//Ef9k/aTWviJ7XnJYrQ8SuR1jzweVhO
+         duXQB+KRNNn7RTYD0vHwlwVv9F4845K5itD5WvZBQ0BpTLr8qwEZN3wGbKeKNS9qLY8W
+         XklfiIl3TdP27dE1LddmqoaLsoPGLwRJ6QDjHLWf8mSK9bxuJfWG5EGaE8rlNLsvSN6Y
+         kAyFSTddFcziwUNOYg2a4avky3oZtXz7VWqHtFU4KWV4c9XuhgyrWAnJXHRC+3fYpLlf
+         T9/GvqbR9tEWaW8uh5B9LL7ywgL5bo56Fvk8xQxXK9p2knxasl7yCpvbb0ijYV7eIWQ6
+         /Pqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=T9J89T1ywRbBmmAyt0LHojpaeUA6Z4jdp64vaGceE8U=;
-        b=gjGyb6Xs5WqJiVFkML1KSA4P6mtVSpNg3iKyTzSYyJd0Ta0+HDKwP5Gj+qozD0sBSK
-         9hiB/XIEUZ15xXqm+0ESoskWlABK0sebJUZCj8LI2YtW3z4U1hhFN627Kzfc9hYMqmpS
-         PXxqI8ukNnMy5qeyAT7bZn8hSYLN7S2mlMhSjn9n/bT9Cquxm6Sg1HoM0DiBmGw4UykX
-         HL4RKIsLdP/S9TVdT5IWWkgqC0JgoqqJ5qp6LZelCnXlBUIfGk2GZhKabbxLr3hFfEjb
-         jFioSPR0IzSa8VYTiOSCKUjyX31v360N4RAvtAsuonI0iPtaTQrVSBnuCCkuVH5Uvd//
-         LeHw==
-X-Gm-Message-State: AN3rC/40TWyPAJJShMR76TzoK0ItE/WwJjJrwYnxMBd27PSl7YQHzA+G
-        32gX08CG+2e3PRm6
-X-Received: by 10.223.163.211 with SMTP id m19mr8598853wrb.56.1493111485975;
-        Tue, 25 Apr 2017 02:11:25 -0700 (PDT)
-Received: from ?IPv6:2a02:8071:3185:fe00:ac3c:9df3:cefe:1bc? ([2a02:8071:3185:fe00:ac3c:9df3:cefe:1bc])
-        by smtp.googlemail.com with ESMTPSA id u9sm2987423wme.8.2017.04.25.02.11.24
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ww7eQn5OEdFMkqQRFDIw+CyjeAi/jxS+DXS2QptGUog=;
+        b=FzphWMQVTYpD1gruAtxYQOuf8oju7btlgRc5vcfcvw0MhIrY8xSTQ1hElSLcU+NoEl
+         2qDDn686BBgq9+6y4KQAQX644JXeVDdP5opFX4Z4u5sacbGW7jOd7sbX27JPYHT1v8HB
+         sp6PUQq/gOW2ZkkhNbMbkvkOpNpowPHU2P3Bbs5+TjPKu4rwVwEgobzQabxMJUkCZqpc
+         Aqfx2Jzacog1dg2OU3KMYQhYwXuzVfItDErDTI0+NUOAz4bvBdozZFyFr06qwgF3ir/A
+         oeJBmVUB3QhiPv+gP7nbFOMN0pV7pLEwhb9GkcqhwMpsZN2exnjy8gy1oq0nfxaLAzP6
+         kjJA==
+X-Gm-Message-State: AN3rC/7tXdYSYub6QrcAQlfswlcSy87F+4FGyMR3jnnJdNlHxVruMeWI
+        zoo0xJrgCictpw==
+X-Received: by 10.223.136.75 with SMTP id e11mr9384235wre.14.1493113504354;
+        Tue, 25 Apr 2017 02:45:04 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id l45sm8142656wre.2.2017.04.25.02.45.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Apr 2017 02:11:24 -0700 (PDT)
-Message-ID: <1493111483.18809.0.camel@gmail.com>
-Subject: Re: [PATCH] Documentation/git-checkout: make doc. of checkout
- <tree-ish> clearer
-From:   Christoph Michelbach <michelbach94@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Git Mailing List <git@vger.kernel.org>
-Date:   Tue, 25 Apr 2017 11:11:23 +0200
-In-Reply-To: <xmqqzif5xo9m.fsf@gitster.mtv.corp.google.com>
-References: <1492287435.14812.2.camel@gmail.com>
-         <9535BE255A654CADB7B0AE7599A6FA96@PhilipOakley>
-         <1492347718.19687.14.camel@gmail.com>
-         <2DCA89C3FDFF41E5B3651018BF837267@PhilipOakley>
-         <1492368692.22852.9.camel@gmail.com>
-         <DF5E72F5BD2F4BB99D8EC4DF1B4543F7@PhilipOakley>
-         <1492380399.19991.13.camel@gmail.com>
-         <5EBADDE444D141918F6873BE8456E026@PhilipOakley>
-         <1492452173.11708.22.camel@gmail.com>
-         <5FD0803E166B4D2F9F64D8D21AC23EB3@PhilipOakley>
-         <xmqqa87eimje.fsf@gitster.mtv.corp.google.com>
-         <1492518377.5720.47.camel@gmail.com>
-         <xmqq1sspdvjk.fsf@gitster.mtv.corp.google.com>
-         <1492881136.7368.3.camel@gmail.com>
-         <xmqqo9vm36xg.fsf@gitster.mtv.corp.google.com>
-         <1493038014.4708.21.camel@gmail.com>
-         <xmqqzif5xo9m.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.18.5.2-0ubuntu3.1 
-Mime-Version: 1.0
+        Tue, 25 Apr 2017 02:45:03 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] test: remove unused parameter from the wildmatch test
+Date:   Tue, 25 Apr 2017 09:44:53 +0000
+Message-Id: <20170425094453.9823-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I give up. Bye.
-On Mon, 2017-04-24 at 18:35 -0700, Junio C Hamano wrote:
-> Christoph Michelbach <michelbach94@gmail.com> writes:
-> 
-> > 
-> > I'm sorry, somehow my email client deleted half of your message when I saved
-> > it
-> > when replying. I only noticed this when wanting to delete your email and
-> > noticed
-> > that it was pretty long.
-> Please separate your discussion from the patch proper.  Check
-> Documentation/SubmittingPatches and send a proper patch like other
-> people do.
-> 
-> 
-> > 
-> > From fe0d1298cf4de841af994f4d9f72d49e25edea00 Mon Sep 17 00:00:00 2001
-> > From: Christoph Michelbach <michelbach94@gmail.com>
-> > Date: Sat, 22 Apr 2017 18:49:57 +0200
-> > Subject: [PATCH] Doc./git-checkout: correct doc. of checkout <pathspec>...
-> These we take from the e-mail header.  You usually remove them from
-> the body of the message (and move the Subject: to e-mail subject), hence
-> 
-> > 
-> > The previous documentation states that the named paths are
-> this line will become the first line in the body of the message.
-> 
-> > 
-> > A hint alerting the users that changes introduced by this
-> > command when naming a tree-ish are automatically staged has
-> > been introduced.
-> We are still saying automatically here?
-> 
-> > 
-> > Signed-off-by: Christoph Michelbach <michelbach94@gmail.com>
-> > ---
-> >  Documentation/git-checkout.txt | 15 ++++++++-------
-> >  1 file changed, 8 insertions(+), 7 deletions(-)
-> This is not limited to your message, but from time to time, I see
-> messages with SP substituted with non-breaking space like the above
-> two lines (and they appear in the patch text).  I can still read and
-> comment on the patch, but it is unusuable as an input to "git am" to
-> be applied.  I wonder where these NBSP come from---perhaps some
-> commmon MUAs corrupt text messages like this?
-> 
-> > 
-> > 
-> > diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-> > index 8e2c066..ea3b4df 100644
-> > --- a/Documentation/git-checkout.txt
-> > +++ b/Documentation/git-checkout.txt
-> > @@ -81,13 +81,14 @@ Omitting <branch> detaches HEAD at the tip of the
-> > current
-> > branch.
-> >  'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
-> >  
-> >  	When <paths> or `--patch` are given, 'git checkout' does *not*
-> > -	switch branches.  It updates the named paths in the working tree
-> > -	from the index file or from a named <tree-ish> (most often a
-> > -	commit).  In this case, the `-b` and `--track` options are
-> > -	meaningless and giving either of them results in an error.  The
-> > -	<tree-ish> argument can be used to specify a specific tree-ish
-> > -	(i.e.  commit, tag or tree) to update the index for the given
-> > -	paths before updating the working tree.
-> > +	switch branches.  It copies the files matching the pathspecs in
-> I am debating myself if rephrasing "in <tree-ish>" to "from
-> <tree-ish>" makes the result clearer to understand.  When we say
-> "Copy files from T to I and W", it would be obvious that what does
-> not exist in T will not be copied.
-> 
-> I also wonder "If no-tree-ish is provided" at the end of this
-> paragraph you have is a bit too far from the above primary point of
-> the description, because you have an unrelated "In this case,
-> -b/-t...", in between.  
-> 
-> 	The blobs matching the pathspecs are checked out from the
-> 	index to the working tree.  Optionally, when <tree-ish> is
-> 	given, the blobs matching the pathspecs from the <tree-ish>
-> 	is copied to the index before that happens.
-> 
-> is what I would want to say, but obviously that does not describe
-> what happens in the chronological order, so it is the most clear
-> description for people who understand what is written, but it will
-> take two reading until the reader gets to that stage X-<.
-> 
-> Perhaps the unrelated "In this case, the -b..." should go first; it
-> is part of "does *not* switch branches".  Also even with your patch,
-> it starts with "X is not Y" and does not clearly say "X is Z".
-> 
-> 	When <paths> or `--patch` ar given, 'git checkout' does
-> 	*not* switch branches (giving the `-b` and `--track` options
-> 	will cause an error, as they are meaningless).  It checks
-> 	out paths out of the <tree-ish> (if given) and the index to
-> 	the to working tree.  When an optional <tree-ish> is given
-> 	blobs in the <tree-ish> that match <pathspec> are copied to
-> 	the index.  The blobs that match <pathspec> are then copied
-> 	from the index to the working tree, overwriting what is in
-> 	(or missing from) the working tree.
-> 
-> May be an improvement (i.e. say what Z is: checking out paths from
-> tree-ish and/or index to the working tree).  By explicitly phrasing
-> that <tree-ish>, from which the index is updated, is optional, it is
-> clear that without <tree-ish> there is no update to the index.
-> "missing from" covers two cases: (1) the user removed the file from
-> the working tree and <tree-ish>, e.g. HEAD, has the file, hence
-> removed one is resurrected; (2) the user didn't touch the file and
-> HEAD didn't have it, but by checking out from <tree-ish> that has
-> the file, the user added that new file to the set of files the user
-> is working with.
-> 
-> Hmm?
-> 
+Remove the unused second parameter to the match() function. Since
+commit 70a8fc999d ("stop using fnmatch (either native or compat)",
+2014-02-15) this hasn't been used, but was previously used to indicate
+ok/fail if the fnmatch() backend was in use.
+
+The "x" argument meant that the test would be skipped for
+fnmatch(). Support for that was implicitly added in commit
+feabcc173b ("Integrate wildmatch to git", 2012-10-15) by leaving out
+an "else" condition, and made use of starting in commit
+b79c0c3755 ("wildmatch: properly fold case everywhere", 2013-05-30).
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t3070-wildmatch.sh | 356 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 178 insertions(+), 178 deletions(-)
+
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+index ef509df351..a54fe1845f 100755
+--- a/t/t3070-wildmatch.sh
++++ b/t/t3070-wildmatch.sh
+@@ -6,12 +6,12 @@ test_description='wildmatch tests'
+ 
+ match() {
+     if [ $1 = 1 ]; then
+-	test_expect_success "wildmatch:     match '$3' '$4'" "
+-	    test-wildmatch wildmatch '$3' '$4'
++	test_expect_success "wildmatch:     match '$2' '$3'" "
++	    test-wildmatch wildmatch '$2' '$3'
+ 	"
+     else
+-	test_expect_success "wildmatch:  no match '$3' '$4'" "
+-	    ! test-wildmatch wildmatch '$3' '$4'
++	test_expect_success "wildmatch:  no match '$2' '$3'" "
++	    ! test-wildmatch wildmatch '$2' '$3'
+ 	"
+     fi
+ }
+@@ -41,176 +41,176 @@ pathmatch() {
+ }
+ 
+ # Basic wildmat features
+-match 1 1 foo foo
+-match 0 0 foo bar
+-match 1 1 '' ""
+-match 1 1 foo '???'
+-match 0 0 foo '??'
+-match 1 1 foo '*'
+-match 1 1 foo 'f*'
+-match 0 0 foo '*f'
+-match 1 1 foo '*foo*'
+-match 1 1 foobar '*ob*a*r*'
+-match 1 1 aaaaaaabababab '*ab'
+-match 1 1 'foo*' 'foo\*'
+-match 0 0 foobar 'foo\*bar'
+-match 1 1 'f\oo' 'f\\oo'
+-match 1 1 ball '*[al]?'
+-match 0 0 ten '[ten]'
+-match 0 1 ten '**[!te]'
+-match 0 0 ten '**[!ten]'
+-match 1 1 ten 't[a-g]n'
+-match 0 0 ten 't[!a-g]n'
+-match 1 1 ton 't[!a-g]n'
+-match 1 1 ton 't[^a-g]n'
+-match 1 x 'a]b' 'a[]]b'
+-match 1 x a-b 'a[]-]b'
+-match 1 x 'a]b' 'a[]-]b'
+-match 0 x aab 'a[]-]b'
+-match 1 x aab 'a[]a-]b'
+-match 1 1 ']' ']'
++match 1 foo foo
++match 0 foo bar
++match 1 '' ""
++match 1 foo '???'
++match 0 foo '??'
++match 1 foo '*'
++match 1 foo 'f*'
++match 0 foo '*f'
++match 1 foo '*foo*'
++match 1 foobar '*ob*a*r*'
++match 1 aaaaaaabababab '*ab'
++match 1 'foo*' 'foo\*'
++match 0 foobar 'foo\*bar'
++match 1 'f\oo' 'f\\oo'
++match 1 ball '*[al]?'
++match 0 ten '[ten]'
++match 0 ten '**[!te]'
++match 0 ten '**[!ten]'
++match 1 ten 't[a-g]n'
++match 0 ten 't[!a-g]n'
++match 1 ton 't[!a-g]n'
++match 1 ton 't[^a-g]n'
++match 1 'a]b' 'a[]]b'
++match 1 a-b 'a[]-]b'
++match 1 'a]b' 'a[]-]b'
++match 0 aab 'a[]-]b'
++match 1 aab 'a[]a-]b'
++match 1 ']' ']'
+ 
+ # Extended slash-matching features
+-match 0 0 'foo/baz/bar' 'foo*bar'
+-match 0 0 'foo/baz/bar' 'foo**bar'
+-match 0 1 'foobazbar' 'foo**bar'
+-match 1 1 'foo/baz/bar' 'foo/**/bar'
+-match 1 0 'foo/baz/bar' 'foo/**/**/bar'
+-match 1 0 'foo/b/a/z/bar' 'foo/**/bar'
+-match 1 0 'foo/b/a/z/bar' 'foo/**/**/bar'
+-match 1 0 'foo/bar' 'foo/**/bar'
+-match 1 0 'foo/bar' 'foo/**/**/bar'
+-match 0 0 'foo/bar' 'foo?bar'
+-match 0 0 'foo/bar' 'foo[/]bar'
+-match 0 0 'foo/bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
+-match 1 1 'foo-bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
+-match 1 0 'foo' '**/foo'
+-match 1 x 'XXX/foo' '**/foo'
+-match 1 0 'bar/baz/foo' '**/foo'
+-match 0 0 'bar/baz/foo' '*/foo'
+-match 0 0 'foo/bar/baz' '**/bar*'
+-match 1 0 'deep/foo/bar/baz' '**/bar/*'
+-match 0 0 'deep/foo/bar/baz/' '**/bar/*'
+-match 1 0 'deep/foo/bar/baz/' '**/bar/**'
+-match 0 0 'deep/foo/bar' '**/bar/*'
+-match 1 0 'deep/foo/bar/' '**/bar/**'
+-match 0 0 'foo/bar/baz' '**/bar**'
+-match 1 0 'foo/bar/baz/x' '*/bar/**'
+-match 0 0 'deep/foo/bar/baz/x' '*/bar/**'
+-match 1 0 'deep/foo/bar/baz/x' '**/bar/*/*'
++match 0 'foo/baz/bar' 'foo*bar'
++match 0 'foo/baz/bar' 'foo**bar'
++match 0 'foobazbar' 'foo**bar'
++match 1 'foo/baz/bar' 'foo/**/bar'
++match 1 'foo/baz/bar' 'foo/**/**/bar'
++match 1 'foo/b/a/z/bar' 'foo/**/bar'
++match 1 'foo/b/a/z/bar' 'foo/**/**/bar'
++match 1 'foo/bar' 'foo/**/bar'
++match 1 'foo/bar' 'foo/**/**/bar'
++match 0 'foo/bar' 'foo?bar'
++match 0 'foo/bar' 'foo[/]bar'
++match 0 'foo/bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
++match 1 'foo-bar' 'f[^eiu][^eiu][^eiu][^eiu][^eiu]r'
++match 1 'foo' '**/foo'
++match 1 'XXX/foo' '**/foo'
++match 1 'bar/baz/foo' '**/foo'
++match 0 'bar/baz/foo' '*/foo'
++match 0 'foo/bar/baz' '**/bar*'
++match 1 'deep/foo/bar/baz' '**/bar/*'
++match 0 'deep/foo/bar/baz/' '**/bar/*'
++match 1 'deep/foo/bar/baz/' '**/bar/**'
++match 0 'deep/foo/bar' '**/bar/*'
++match 1 'deep/foo/bar/' '**/bar/**'
++match 0 'foo/bar/baz' '**/bar**'
++match 1 'foo/bar/baz/x' '*/bar/**'
++match 0 'deep/foo/bar/baz/x' '*/bar/**'
++match 1 'deep/foo/bar/baz/x' '**/bar/*/*'
+ 
+ # Various additional tests
+-match 0 0 'acrt' 'a[c-c]st'
+-match 1 1 'acrt' 'a[c-c]rt'
+-match 0 0 ']' '[!]-]'
+-match 1 x 'a' '[!]-]'
+-match 0 0 '' '\'
+-match 0 x '\' '\'
+-match 0 x 'XXX/\' '*/\'
+-match 1 x 'XXX/\' '*/\\'
+-match 1 1 'foo' 'foo'
+-match 1 1 '@foo' '@foo'
+-match 0 0 'foo' '@foo'
+-match 1 1 '[ab]' '\[ab]'
+-match 1 1 '[ab]' '[[]ab]'
+-match 1 x '[ab]' '[[:]ab]'
+-match 0 x '[ab]' '[[::]ab]'
+-match 1 x '[ab]' '[[:digit]ab]'
+-match 1 x '[ab]' '[\[:]ab]'
+-match 1 1 '?a?b' '\??\?b'
+-match 1 1 'abc' '\a\b\c'
+-match 0 0 'foo' ''
+-match 1 0 'foo/bar/baz/to' '**/t[o]'
++match 0 'acrt' 'a[c-c]st'
++match 1 'acrt' 'a[c-c]rt'
++match 0 ']' '[!]-]'
++match 1 'a' '[!]-]'
++match 0 '' '\'
++match 0 '\' '\'
++match 0 'XXX/\' '*/\'
++match 1 'XXX/\' '*/\\'
++match 1 'foo' 'foo'
++match 1 '@foo' '@foo'
++match 0 'foo' '@foo'
++match 1 '[ab]' '\[ab]'
++match 1 '[ab]' '[[]ab]'
++match 1 '[ab]' '[[:]ab]'
++match 0 '[ab]' '[[::]ab]'
++match 1 '[ab]' '[[:digit]ab]'
++match 1 '[ab]' '[\[:]ab]'
++match 1 '?a?b' '\??\?b'
++match 1 'abc' '\a\b\c'
++match 0 'foo' ''
++match 1 'foo/bar/baz/to' '**/t[o]'
+ 
+ # Character class tests
+-match 1 x 'a1B' '[[:alpha:]][[:digit:]][[:upper:]]'
+-match 0 x 'a' '[[:digit:][:upper:][:space:]]'
+-match 1 x 'A' '[[:digit:][:upper:][:space:]]'
+-match 1 x '1' '[[:digit:][:upper:][:space:]]'
+-match 0 x '1' '[[:digit:][:upper:][:spaci:]]'
+-match 1 x ' ' '[[:digit:][:upper:][:space:]]'
+-match 0 x '.' '[[:digit:][:upper:][:space:]]'
+-match 1 x '.' '[[:digit:][:punct:][:space:]]'
+-match 1 x '5' '[[:xdigit:]]'
+-match 1 x 'f' '[[:xdigit:]]'
+-match 1 x 'D' '[[:xdigit:]]'
+-match 1 x '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
+-match 1 x '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
+-match 1 x '.' '[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:lower:][:space:][:upper:][:xdigit:]]'
+-match 1 x '5' '[a-c[:digit:]x-z]'
+-match 1 x 'b' '[a-c[:digit:]x-z]'
+-match 1 x 'y' '[a-c[:digit:]x-z]'
+-match 0 x 'q' '[a-c[:digit:]x-z]'
++match 1 'a1B' '[[:alpha:]][[:digit:]][[:upper:]]'
++match 0 'a' '[[:digit:][:upper:][:space:]]'
++match 1 'A' '[[:digit:][:upper:][:space:]]'
++match 1 '1' '[[:digit:][:upper:][:space:]]'
++match 0 '1' '[[:digit:][:upper:][:spaci:]]'
++match 1 ' ' '[[:digit:][:upper:][:space:]]'
++match 0 '.' '[[:digit:][:upper:][:space:]]'
++match 1 '.' '[[:digit:][:punct:][:space:]]'
++match 1 '5' '[[:xdigit:]]'
++match 1 'f' '[[:xdigit:]]'
++match 1 'D' '[[:xdigit:]]'
++match 1 '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
++match 1 '_' '[[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:graph:][:lower:][:print:][:punct:][:space:][:upper:][:xdigit:]]'
++match 1 '.' '[^[:alnum:][:alpha:][:blank:][:cntrl:][:digit:][:lower:][:space:][:upper:][:xdigit:]]'
++match 1 '5' '[a-c[:digit:]x-z]'
++match 1 'b' '[a-c[:digit:]x-z]'
++match 1 'y' '[a-c[:digit:]x-z]'
++match 0 'q' '[a-c[:digit:]x-z]'
+ 
+ # Additional tests, including some malformed wildmats
+-match 1 x ']' '[\\-^]'
+-match 0 0 '[' '[\\-^]'
+-match 1 x '-' '[\-_]'
+-match 1 x ']' '[\]]'
+-match 0 0 '\]' '[\]]'
+-match 0 0 '\' '[\]]'
+-match 0 0 'ab' 'a[]b'
+-match 0 x 'a[]b' 'a[]b'
+-match 0 x 'ab[' 'ab['
+-match 0 0 'ab' '[!'
+-match 0 0 'ab' '[-'
+-match 1 1 '-' '[-]'
+-match 0 0 '-' '[a-'
+-match 0 0 '-' '[!a-'
+-match 1 x '-' '[--A]'
+-match 1 x '5' '[--A]'
+-match 1 1 ' ' '[ --]'
+-match 1 1 '$' '[ --]'
+-match 1 1 '-' '[ --]'
+-match 0 0 '0' '[ --]'
+-match 1 x '-' '[---]'
+-match 1 x '-' '[------]'
+-match 0 0 'j' '[a-e-n]'
+-match 1 x '-' '[a-e-n]'
+-match 1 x 'a' '[!------]'
+-match 0 0 '[' '[]-a]'
+-match 1 x '^' '[]-a]'
+-match 0 0 '^' '[!]-a]'
+-match 1 x '[' '[!]-a]'
+-match 1 1 '^' '[a^bc]'
+-match 1 x '-b]' '[a-]b]'
+-match 0 0 '\' '[\]'
+-match 1 1 '\' '[\\]'
+-match 0 0 '\' '[!\\]'
+-match 1 1 'G' '[A-\\]'
+-match 0 0 'aaabbb' 'b*a'
+-match 0 0 'aabcaa' '*ba*'
+-match 1 1 ',' '[,]'
+-match 1 1 ',' '[\\,]'
+-match 1 1 '\' '[\\,]'
+-match 1 1 '-' '[,-.]'
+-match 0 0 '+' '[,-.]'
+-match 0 0 '-.]' '[,-.]'
+-match 1 1 '2' '[\1-\3]'
+-match 1 1 '3' '[\1-\3]'
+-match 0 0 '4' '[\1-\3]'
+-match 1 1 '\' '[[-\]]'
+-match 1 1 '[' '[[-\]]'
+-match 1 1 ']' '[[-\]]'
+-match 0 0 '-' '[[-\]]'
++match 1 ']' '[\\-^]'
++match 0 '[' '[\\-^]'
++match 1 '-' '[\-_]'
++match 1 ']' '[\]]'
++match 0 '\]' '[\]]'
++match 0 '\' '[\]]'
++match 0 'ab' 'a[]b'
++match 0 'a[]b' 'a[]b'
++match 0 'ab[' 'ab['
++match 0 'ab' '[!'
++match 0 'ab' '[-'
++match 1 '-' '[-]'
++match 0 '-' '[a-'
++match 0 '-' '[!a-'
++match 1 '-' '[--A]'
++match 1 '5' '[--A]'
++match 1 ' ' '[ --]'
++match 1 '$' '[ --]'
++match 1 '-' '[ --]'
++match 0 '0' '[ --]'
++match 1 '-' '[---]'
++match 1 '-' '[------]'
++match 0 'j' '[a-e-n]'
++match 1 '-' '[a-e-n]'
++match 1 'a' '[!------]'
++match 0 '[' '[]-a]'
++match 1 '^' '[]-a]'
++match 0 '^' '[!]-a]'
++match 1 '[' '[!]-a]'
++match 1 '^' '[a^bc]'
++match 1 '-b]' '[a-]b]'
++match 0 '\' '[\]'
++match 1 '\' '[\\]'
++match 0 '\' '[!\\]'
++match 1 'G' '[A-\\]'
++match 0 'aaabbb' 'b*a'
++match 0 'aabcaa' '*ba*'
++match 1 ',' '[,]'
++match 1 ',' '[\\,]'
++match 1 '\' '[\\,]'
++match 1 '-' '[,-.]'
++match 0 '+' '[,-.]'
++match 0 '-.]' '[,-.]'
++match 1 '2' '[\1-\3]'
++match 1 '3' '[\1-\3]'
++match 0 '4' '[\1-\3]'
++match 1 '\' '[[-\]]'
++match 1 '[' '[[-\]]'
++match 1 ']' '[[-\]]'
++match 0 '-' '[[-\]]'
+ 
+ # Test recursion and the abort code (use "wildtest -i" to see iteration counts)
+-match 1 1 '-adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 0 0 '-adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
+-match 1 1 'XXX/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+-match 0 0 'XXX/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
+-match 1 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n*t'
+-match 0 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*n*t'
+-match 0 x foo '*/*/*'
+-match 0 x foo/bar '*/*/*'
+-match 1 x foo/bba/arr '*/*/*'
+-match 0 x foo/bb/aa/rr '*/*/*'
+-match 1 x foo/bb/aa/rr '**/**/**'
+-match 1 x abcXdefXghi '*X*i'
+-match 0 x ab/cXd/efXg/hi '*X*i'
+-match 1 x ab/cXd/efXg/hi '*/*X*/*/*i'
+-match 1 x ab/cXd/efXg/hi '**/*X*/**/*i'
++match 1 '-adobe-courier-bold-o-normal--12-120-75-75-m-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
++match 0 '-adobe-courier-bold-o-normal--12-120-75-75-X-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
++match 0 '-adobe-courier-bold-o-normal--12-120-75-75-/-70-iso8859-1' '-*-*-*-*-*-*-12-*-*-*-m-*-*-*'
++match 1 'XXX/adobe/courier/bold/o/normal//12/120/75/75/m/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 0 'XXX/adobe/courier/bold/o/normal//12/120/75/75/X/70/iso8859/1' 'XXX/*/*/*/*/*/*/12/*/*/*/m/*/*/*'
++match 1 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txt' '**/*a*b*g*n*t'
++match 0 'abcd/abcdefg/abcdefghijk/abcdefghijklmnop.txtz' '**/*a*b*g*n*t'
++match 0 foo '*/*/*'
++match 0 foo/bar '*/*/*'
++match 1 foo/bba/arr '*/*/*'
++match 0 foo/bb/aa/rr '*/*/*'
++match 1 foo/bb/aa/rr '**/**/**'
++match 1 abcXdefXghi '*X*i'
++match 0 ab/cXd/efXg/hi '*X*i'
++match 1 ab/cXd/efXg/hi '*/*X*/*/*i'
++match 1 ab/cXd/efXg/hi '**/*X*/**/*i'
+ 
+ pathmatch 1 foo foo
+ pathmatch 0 foo fo
+@@ -235,20 +235,20 @@ pathmatch 1 ab/cXd/efXg/hi '*/*X*/*/*i'
+ pathmatch 1 ab/cXd/efXg/hi '*Xg*i'
+ 
+ # Case-sensitivy features
+-match 0 x 'a' '[A-Z]'
+-match 1 x 'A' '[A-Z]'
+-match 0 x 'A' '[a-z]'
+-match 1 x 'a' '[a-z]'
+-match 0 x 'a' '[[:upper:]]'
+-match 1 x 'A' '[[:upper:]]'
+-match 0 x 'A' '[[:lower:]]'
+-match 1 x 'a' '[[:lower:]]'
+-match 0 x 'A' '[B-Za]'
+-match 1 x 'a' '[B-Za]'
+-match 0 x 'A' '[B-a]'
+-match 1 x 'a' '[B-a]'
+-match 0 x 'z' '[Z-y]'
+-match 1 x 'Z' '[Z-y]'
++match 0 'a' '[A-Z]'
++match 1 'A' '[A-Z]'
++match 0 'A' '[a-z]'
++match 1 'a' '[a-z]'
++match 0 'a' '[[:upper:]]'
++match 1 'A' '[[:upper:]]'
++match 0 'A' '[[:lower:]]'
++match 1 'a' '[[:lower:]]'
++match 0 'A' '[B-Za]'
++match 1 'a' '[B-Za]'
++match 0 'A' '[B-a]'
++match 1 'a' '[B-a]'
++match 0 'z' '[Z-y]'
++match 1 'Z' '[Z-y]'
+ 
+ imatch 1 'a' '[A-Z]'
+ imatch 1 'A' '[A-Z]'
+-- 
+2.11.0
+
