@@ -2,81 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36345207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:19:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30C83207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:19:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967190AbdDZUT1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:19:27 -0400
-Received: from mout.gmx.net ([212.227.15.18]:62068 "EHLO mout.gmx.net"
+        id S967193AbdDZUT3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:19:29 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50196 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967179AbdDZUTZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:19:25 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LoVOE-1djzAK35J4-00gWzP; Wed, 26
- Apr 2017 22:19:18 +0200
-Date:   Wed, 26 Apr 2017 22:19:17 +0200 (CEST)
+        id S967185AbdDZUT0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 16:19:26 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyS5K-1e9Nme2P6k-015tJi; Wed, 26
+ Apr 2017 22:19:22 +0200
+Date:   Wed, 26 Apr 2017 22:19:21 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 01/26] mingw: avoid memory leak when splitting PATH
+Subject: [PATCH 02/26] winansi: avoid use of uninitialized value
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <da7b1af7d820c3f573d449e46407e2774ebc04db.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <ead7050c37093820e3fd097dc31bc56204eee59a.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:FkH2XoTvJKgaB+YefwkDsGtnYuRQsz+d8EXfOvJX2PSaXu4DENK
- 51J33VxNd+6MtoKRMVR4dRTumCH6EsNXv3Q7Sf+/NYTsE+/CjS+zPIERPNcg/8KlOEzeF2L
- z9VwA20o6irdaz8ZzJwaRCFiD3RFiDQoFWz9gO6WViZn4Z7FIUD39vD/3Y7k0bhYv3VvHAf
- vYNStgh3E3Ik9C2SefEVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:dzg2PaIKgKQ=:YTMVeWMRWJehcna8J2bPdc
- N3W5Nx6wfKrsqv0EM7dxsOVEPxskH6ZHWrvcd/7kj6otNxKE8n7FMtMUqzGbqPWi4SJWxgVF1
- ml+tqVLYDNAfASLduPgzli6mMQkrLQXqCmgDCDuEtbjmgws1Fqmtfsv3L+QYCqZU6IJgwW4Tx
- VyJ+J4lrHOAhIF7w21NUAs75drokEF4g7nId4lWKKiyFSrSWgWanbN4mEPRuZkSxdO2ns4Lms
- SY57S80QxBHwRpfojXC3/ihHrW48JHciWgsnRuXFdrTY3P0F7HZydOQ75FhbbVzZLVMfYp9Iw
- eEXjx4WEgZiAVm4DlmiSsC3YtwgWUhAgqpIMPQcdwjSRNSR3KmoGrXDLZ8GpTbHpsXZa4gh1c
- FLaMWqKQ2NGJ3BA0xuX5Z2bI19imjo3rU4hmS/zbfV+4Wg5KKeXWcvWR4tzh2Ki2qjSpPK0gP
- 0V6lug7kHyZaDdzfbtZj9E92cjJz6fQ/2YodFnz1dRWWj/FtCWaqmY6ROAv5myf2g3Czl8UO6
- AKapBgI8+ogFsWnK9+Ja75X9ABSmRDdsHkvM9IN5a6+RGab1JPkUvGrEPVqcdx2YJCO+Sxvw0
- KJUMk7a8P11t9y2J7ThiELqNKP7JOQalrY8ENtVvDPG1NIqqivKfEEu56vQHUuTcMtlPgTyos
- MzjxqAyQdE16GYiX+3gQ4v5HYqzsNcCG4MgkUHBnG8/3pzjCQ8krDJd4Neyku0tPqrtRXy8IL
- Qht4Lw/+W2hGofaCepVYiDWafgkeywchOx0Hlpw8kZw+Odd9WRfYdpD7J0wtuiMTuy3MtYgi3
- F0H0n8W
+X-Provags-ID: V03:K0:hZp0dwoOGXc7DzUcy4UcvtpoSrnFtmezVmCsiM/vatsoxfAkDQP
+ svwtxdLQwgih9qWLgbyXKwSvAhpoaDOnp3s/pkbqhuDm2Dk1e3nw+5RXs2oASXTKxb1oaq8
+ 1n6oTnjd4hfMgHNdxgONn44WypZKmtagIap+sWKUWuJ9i5xjiHjru4VsBtiT/QGhF3kUYwO
+ J9z05vU2SaAK1hkkGsjDg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OnCO54hli8o=:+7c43LcRd2bgRB8jTjDcK9
+ aMheI7K6n33A/mWks4aBEDzXSO0azadLTh70uu3hpgULu2UixkG2yhtSmtoJTN9D/6oGc3xVK
+ DgY2wqsp30qq0ihlEE6dN6Waw/nhDLskarSXABKBrEvHmEfqMEfWvT6gZKuuVged38tGOF6/G
+ PJOU7+9sw/ljZbBbrjuuAPG/DIlLd7JMwlqTFLzvf+LRSOVC29VJ4E/I469y7NDFkMuMZZYfF
+ PjnTyC1bBm6WFlhObV1Z3jOXsKEOSTDqWTk82m3de/RIyxxGhIdxtPsw3UZQ9mE2teIW1ifWZ
+ jfrw/etOaud8GawmBB9y9Jc8Sl96Z0QRsZ3bUb1V7Y/VpHotKvNGFcmOF1wAfjj6YFmo7sv37
+ jP6DboBYkl7O0Bv04Z2bwaAp6LgwYgwDUDCMQcNpNtXKdEaxEz8jYJVtFF7kwnKOINpfOinJ5
+ k09OZcKol291ObeD4TOx0UHsilCJQ/e6FRcyjrzo0BvnYA9BmTvw52zWjd7dkcj/XAb0aEmAh
+ fF7bGkDPRL1Jgx58MT9UzmzNgHp0i2DM4kVsqUZVYP2UG+8V51X9e4hI5pRMWR9bblUrJzixa
+ N5LKHw3d0uX0+ODdOKsKulOA5iFrg7CjnPUNksUueRq4w35v0ZYw+Uj97HdyUCsgESxhZlFzH
+ QxKM6uMSMKXY5hXewGxlnCvl78a8R4whfj7TMzILs/I2OoHFOW/2VUvD83dAIikl6CuvqlDum
+ rts4PVwO7w70w7dRGr1CK+n0bpuDvCe3hmLRJGGUlZQjFX9bQoZdGl+njz0VLs6n4tengdRXb
+ cNIcQes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the (admittedly, concocted) case that PATH consists only of colons, we
-would leak the duplicated string.
+When stdout is not connected to a Win32 console, we incorrectly used an
+uninitialized value for the "plain" character attributes.
+
+Detected by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/mingw.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ compat/winansi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 3fbfda5978b..fe0e3ccd248 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -961,8 +961,10 @@ static char **get_path_split(void)
- 			++n;
- 		}
- 	}
--	if (!n)
-+	if (!n) {
-+		free(envpath);
- 		return NULL;
-+	}
+diff --git a/compat/winansi.c b/compat/winansi.c
+index 793420f9d0d..fd6910746c8 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -105,6 +105,8 @@ static int is_console(int fd)
+ 	if (!fd) {
+ 		if (!GetConsoleMode(hcon, &mode))
+ 			return 0;
++		sbi.wAttributes = FOREGROUND_BLUE | FOREGROUND_GREEN |
++			FOREGROUND_RED;
+ 	} else if (!GetConsoleScreenBufferInfo(hcon, &sbi))
+ 		return 0;
  
- 	ALLOC_ARRAY(path, n + 1);
- 	p = envpath;
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
