@@ -2,137 +2,239 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 840F6207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 22:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4527D207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 22:51:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031680AbdDZWcO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 18:32:14 -0400
-Received: from mout.web.de ([212.227.17.12]:55159 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1031615AbdDZWcM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 18:32:12 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MI5ze-1d7LEP1Er8-003tez; Thu, 27
- Apr 2017 00:32:07 +0200
-Subject: Re: [PATCH v5 6/8] Introduce a new data type for timestamps
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <cover.1492771484.git.johannes.schindelin@gmx.de>
- <cover.1493042239.git.johannes.schindelin@gmx.de>
- <fea2df0e1ff5869572cf756d75fd3468d184457f.1493042239.git.johannes.schindelin@gmx.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <615c74de-0a9d-b5ff-f7f2-68feca5d1985@web.de>
-Date:   Thu, 27 Apr 2017 00:32:04 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S1032204AbdDZWvh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 18:51:37 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:36595 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031904AbdDZWvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 18:51:35 -0400
+Received: by mail-pf0-f170.google.com with SMTP id 194so7511412pfv.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 15:51:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=E2He40rWXJmxkS7VVdq6PYIb8b6KVtwukVrln7S0CUQ=;
+        b=SwW5mL0VLEcyqU1xa5SB/2sMzzfA7/JVjgbSpbJwdRd46u2WWBGGBg2B3JkDJT+qxX
+         5e0MR8wlRtElEdt430lnP41MYX3yFfSqrrA10cUevnsbh9qiHEyKFIuds/gxFEuwmKF7
+         onz1vzd0MmG18G12pjevGMhIsL2ssLuATftwZzsF/FXZlBCqVBmvx2IihtATQLejz9kz
+         gPJ5liF+s+gYRF653O9LvoAAvOmQKE6IvTQV/yjs4qMTL29KkvDq89b7jx6YXEwkBmd+
+         xEpiUIlk7fagru1VSfOgA+lsUmtmtcatLYKHwk4rCWrL6nonCt7Iokz6s4UW+2LOj9sx
+         0YGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=E2He40rWXJmxkS7VVdq6PYIb8b6KVtwukVrln7S0CUQ=;
+        b=gEzrUvXiBzkdLolQMWXB4pLfeFuJ//NtJPGn9nFQxwWTuYl/RQHxokajQiyFPpvzpA
+         W3srVMiW/DIIEGH6GPi3ZPG3Ez8hC/Zvu4GNm3Db6COwuqXXhf7SfPeFj8D8ihiF2ykp
+         /R/ZMHpsMrR7Je2i1WG6feGkV9Cj5maNGtLL+1jawwOY2UauMyu4nrtysxl+QOYW7qEO
+         AomtEfgaUGF2iCSg40/p/Oa0bGb+lqzBNZSKB9BQsCa2hZF/g04R9zbFp+mrJC0mkzZF
+         hzRBO1dy0ewsXQlhlOIcWPhcfsutYr5+H/g5IxLhDhAk51Jgn/gu/TcLuqxSwJngQGzz
+         fxdA==
+X-Gm-Message-State: AN3rC/5OGX7O5MUt4qtmtGQPNTteV4UOyVbt7kivVyqdbcbytdhJ41J3
+        Tqyq32N5PzXFI02z
+X-Received: by 10.84.168.131 with SMTP id f3mr2938664plb.160.1493247094156;
+        Wed, 26 Apr 2017 15:51:34 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:41b4:1b86:df1e:5e66])
+        by smtp.gmail.com with ESMTPSA id v63sm510775pfb.104.2017.04.26.15.51.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Apr 2017 15:51:32 -0700 (PDT)
+Subject: Re: Proposal for "fetch-any-blob Git protocol" and server design
+To:     Kevin David <Kevin.David@microsoft.com>,
+        Ben Peart <peartben@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+References: <ffd92ad9-39fe-c76b-178d-6e3d6a425037@google.com>
+ <CAGZ79ka-YaF5dBXJmhXsfwwrwSBy0tkun0yDysG581E0mpqDVw@mail.gmail.com>
+ <00bf01d2aed7$b13492a0$139db7e0$@gmail.com>
+ <BY2PR21MB0052067C2CDC6F727CCB6969EE030@BY2PR21MB0052.namprd21.prod.outlook.com>
+ <18ebcd04-4765-bdc7-3880-b0e8cb90d35c@google.com>
+ <CY4PR21MB05047397A12B8692C923FC67EE1A0@CY4PR21MB0504.namprd21.prod.outlook.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Mark Thomas <markbt@efaref.net>,
+        Jeff Hostetler <git@jeffhostetler.com>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <e9f18a53-c4cc-9927-7579-03d88a9169cd@google.com>
+Date:   Wed, 26 Apr 2017 15:51:31 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-In-Reply-To: <fea2df0e1ff5869572cf756d75fd3468d184457f.1493042239.git.johannes.schindelin@gmx.de>
+In-Reply-To: <CY4PR21MB05047397A12B8692C923FC67EE1A0@CY4PR21MB0504.namprd21.prod.outlook.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:NqPCr79E2GL5gQssZRCPPiokV/VXHFqlVHdnpGcip6saRGO3PlZ
- UDpQKKR+EliqDWCEAmknk+FR2oBGr80v8J59m1IUmy9koJ8Hk2MuESjPR0MnCD88zi8c4q9
- Yk5Czjpfizyb6xIDUyidHHqoAwBnPqeSZIo63IxOH8EZ9/kbOAUYd3Ctg9hh/oWNBzS7eFu
- CcXMPKO8xKSXQQWRXLIMQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RJSOJvh4YY0=:gQ/7AZh80cu+u+v04eE9EO
- VDGUsWWn89SJ/doX4wHYEEnL1Pzp/TpCskFwL6bmHEzOCwTt7MJsJp3YOfufpQeuRUQnNPK4L
- nDlaGtBuYLvuNY6pj1+xzz0IDXCZETT+DBGOjMEEYJNEQU8LrRE3pZhOZPHOMvcvIi712I2XO
- DfRBanZ64FBov0yHy6JESPxtQuP3AzSGoLSM6MvJgxdbj++dx92Xq/W8Iaucjp2BmHHq4o45U
- HrP0lNkIghIhYHNqgd2Rrx9g901EEAtEpni6h2UVfJEaKlP+oUMZ8HSnF0k/DDUMG1m1WKuCW
- okp71rQW0BlryPVPol1lu/LFagc5JHgueM+r2ZLuqbZeoCQsojPYbPRtGtVBQEJSR0mSqXyg9
- Ku7MEItRLkClsh1FIZkpXOFhA8KMISZyso6q/8G2yfgoF/B06eeFjNvxcoXqKtpf4HArFUgNi
- NQpHbdfUGSnVKxr/iMQoez4cItFWMy7hLr11J7PuQ+0rPcMConTfIEtlk/A3YVdZOLSnuQVIP
- p36QHLaX8Klmm9XObIO9gwJ34Q1wkM1I/G4LLXLs61mjJIhXBadK7RyEtOPxziJnVnFaGyWhs
- ydbrO3ZyKrXzG5phL4mjkwR3mtWhePfpJOAabvXeJw3z1pPHY6qgom8F9arAAUh1t+EFbGVu9
- Ro/yy1vtMuW6zhh54GEmbf7C4GMDwmaWHuN+/sZQuhWTfqKMVLwe+IE9v8buMVnoi7zg0tu1j
- I3eG2yMhhXNIqBySIi5g3Tjov1lY+xFGMViPQgaT28RfgT1WJZrVqFz8ufL4My6D1hs/Moz04
- EfskCix
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.04.2017 um 15:58 schrieb Johannes Schindelin:
-> diff --git a/archive-tar.c b/archive-tar.c
-> index 380e3aedd23..695339a2369 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -27,9 +27,12 @@ static int write_tar_filter_archive(const struct archiver *ar,
->    */
->   #if ULONG_MAX == 0xFFFFFFFF
->   #define USTAR_MAX_SIZE ULONG_MAX
-> -#define USTAR_MAX_MTIME ULONG_MAX
->   #else
->   #define USTAR_MAX_SIZE 077777777777UL
-> +#endif
-> +#if TIME_MAX == 0xFFFFFFFF
-> +#define USTAR_MAX_MTIME TIME_MAX
-> +#else
->   #define USTAR_MAX_MTIME 077777777777UL
->   #endif
->   
-> diff --git a/archive-zip.c b/archive-zip.c
-> index b429a8d974a..68df3d64402 100644
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
-> @@ -545,9 +545,17 @@ static void write_zip_trailer(const unsigned char *sha1)
->   		write_or_die(1, sha1_to_hex(sha1), GIT_SHA1_HEXSZ);
->   }
->   
-> -static void dos_time(time_t *time, int *dos_date, int *dos_time)
-> +static void dos_time(timestamp_t *timestamp, int *dos_date, int *dos_time)
->   {
-> -	struct tm *t = localtime(time);
-> +	time_t time;
-> +	struct tm *t;
-> +
-> +	if (date_overflows(*timestamp))
-> +		die("timestamp too large for this system: %"PRItime,
-> +		    *timestamp);
-> +	time = (time_t)*timestamp;
-> +	t = localtime(&time);
-> +	*timestamp = time;
->   
->   	*dos_date = t->tm_mday + (t->tm_mon + 1) * 32 +
->   	            (t->tm_year + 1900 - 1980) * 512;
-> diff --git a/archive.h b/archive.h
-> index 415e0152e2c..62d1d82c1af 100644
-> --- a/archive.h
-> +++ b/archive.h
-> @@ -9,7 +9,7 @@ struct archiver_args {
->   	struct tree *tree;
->   	const unsigned char *commit_sha1;
->   	const struct commit *commit;
-> -	time_t time;
-> +	timestamp_t time;
->   	struct pathspec pathspec;
->   	unsigned int verbose : 1;
->   	unsigned int worktree_attributes : 1;
+On 04/21/2017 09:41 AM, Kevin David wrote:
+> Hi Jonathan,
+>
+> Sorry for the delayed response - other work got in the way, unfortunately!
 
-time_t is converted to timestamp_t here.  Hmm.
+No worries!
 
-Truncation can already occur in archive.c::parse_treeish_arg() when
-assigning commit->date (of type timestamp_t) to archive_time (of type
-time_t).  The overflow check should either be moved there or the type of
-the latter variable should be changed, right?
+>> I am envisioning (1a) as described in Jeff Hostetler's e-mail [1] ("a
+>> pre-command or hook to identify needed blobs and pre-fetch them before
+>> allowing the actual command to start"), so a Git command would typically
+>> make a single request that contains all the blobs required, but my
+>> proposal can also handle (1c) ('"fault" them in as necessary in
+>> read_object() while the command is running and without any pre-fetch
+>> (either synchronously or asynchronously and with/without a helper
+>> process)').
+>>
+>> Even if we decided to go with single-blob requests and responses, it is
+>> still important to send them as packfiles, so that the server can serve
+>> them directly from its compressed storage without first having to
+>> uncompress them.
+>>
+>> [1] https://public-inbox.org/git/1488999039-37631-1-git-send-email-git@jeffhostetler.com/
+>
+> Ah, I missed this. If we think we can build meaningfully-sized requests via (1a) and (1b),
+> then I agree - packs are optimal.
+>
+> However, if single-blob requests/responses dominate, I have a few concerns, mostly from
+> experience playing with something similar:
+> * Regardless of the size of the object or number returned, the client will need to
+>   `index-pack` the result and create a corresponding `.idx` file, which requires
+>   decompression to construct (right?)
 
-Compilation and tests are still successful on Debian x86 and MinGW64
-even after removing the changes above.  On the former the test "generate
-tar with future mtime" in t5000 writes Epoch time stamps in both cases
-(and doesn't notice because tar is unable to handle times after 2038, so
-that check is skipped), on the latter it emits the correct future dates.
+Yes, although I think that loose objects would need to be decompressed 
+too to verify the SHA-1.
 
-So what are the benefits of these changes?
+> * Unless the client's repository is repacked aggressively, we'll pollute the
+>   `.git\objects\pack` directory with little indexes (somewhere around 4KiB minimum)
+>   and packfiles rapidly, which would degrade performance. One rudimentary workaround
+>   would be to loosen these packs on the client if they were under a certain
+>   size/object count. I think fetch does this already?
+>
+> In either case, shifting the pack decompression/loose object recompression problem
+> to the client instead of the server is probably a good principle, but in our case it
+> simply wasn't fast enough to serve single blobs interactively (e.g. opening a source
+> file you don't have locally). I'm hopeful that the proposed partial clone solutions you
+> referenced would reduce the frequency of this being required.
 
-Unless I'm missing something (very possible at this time of day) I'd say
-drop these hunks and let me handle the fallout of the series in archive.
-I was planning on improving its date handling code anyway (eventually)..
+I wrote up a proposal for how Git should handle missing blobs, including 
+a hook that, when invoked, is allowed to write packed or loose objects 
+[1]. I was thinking along similar lines too about the many-packfile 
+issue, and that was part of the reason why [1] was written the way it is.
 
-René
+I think that, by default, the wire protocol should transmit packs 
+because it causes less load on the server (as you describe) and it 
+supports batch requests. Also, this protocol with single-blob fetching 
+might be usable as-is for projects that only exclude large blobs (so 
+there are relatively few of them), and will be more and more usable as 
+we migrate the more commonly used Git commands to provide batch 
+requests. However, the ability to customize the hook allows users to use 
+another download scheme more suited to their use cases (for example, in 
+yours, where you can provision servers that are topologically close to 
+your clients).
+
+[1] <20170426221346.25337-1-jonathantanmy@google.com>
+
+>>> Being a bit more clever about packing objects (e.g. splitting blobs out from commits
+>>> and trees) improved this a bit, but we still hit a bottlenecks from what appeared to
+>>> be a large number of memory-mapping operations on a ~140GiB packfile of blobs.
+>>>
+>>> Each `pack-objects` process would consume approximately one CPU core for the
+>>> duration of the request. It's possible that further splitting of these large blob packs
+>>> would have improved performance in some scenarios, but that would increase the
+>>> amount of pack-index lookups necessary to find a single object.
+>>
+>> I'm not very experienced with mmap, but I thought that memory-mapping a
+>> large file in itself does not incur much of a performance penalty (if
+>> any) - it is the accesses that count. I experimented with 15,000 and
+>> 150,000 MiB files and mmap and they seem to be handled quite well. Also,
+>> how many objects are "pack-objects" packing here?
+>
+> Back when we took this approach, it was ~4000 blob objects at a time.
+> Perhaps we were being bitten by the Windows implementation of git_mmap[3]?.
+> When I profiled the 4k blob scenario, the majority of CPU and wall time was
+> spent in MapViewOfFileEx, which looks like it could mean accesses as well.
+>
+> [3] https://github.com/git/git/blob/master/compat/win32mmap.c
+
+Hmm...I don't have much experience with this, but this may be something 
+to keep in mind.
+
+>>> This seems like a clever way to avoid the canonical `/info/refs?service=git-upload-pack`
+>>> capability negotiation on every call. However, using error handling to fallback seems
+>>> slightly wonky to me. Hopefully users are incentivized to upgrade their clients.
+>>
+>> By "error handling to fallback", do you mean in my proposal or in a
+>> possible future one (assuming my proposal is implemented)? I don't think
+>> my proposal requires any error handling to fallback (since only new
+>> clients can clone partially - old clients will just clone totally and
+>> obliviously), but I acknowledge that this proposal does not mean that
+>> any future proposal can be done without requiring error handling to
+>> fallback.
+>
+> Right, I was talking about the possible future one - more around the
+> concept of back-compat in the event of any protocol changes. I don't want
+> to spend too much time focusing on what we might want in the future, but a
+> thought I just had: what about versioning as a part of the URL? For example,
+> `/server-endpoint?version=1.0`. This could also enable breaking changes for
+> existing commands.
+
+That could work, although we could put a version number in the command 
+name (e.g. "fetch-any-blob-2") too.
+
+> Ah, interesting. We solved the many-refs problem using a different approach -
+> basically, limiting what the server returns based on who the user is and preferences
+> they set via our web interface or an API. I've been promised by a few colleagues that
+> we'll have more to share here soon... With your proposal, how does the client choose
+> which refs they want to fetch?
+
+The "want" lines can now take names (including glob characters). A list 
+of refs (names and hashes) that correspond to those "want"s will be 
+returned by the server right before the packfile.
+
+(So the client doesn't "choose" in the sense that it has a list of 
+options and it picks a subset of them - it chooses by sending one or 
+more strings that the server will match.)
+
+> I took a look at look at your patch series. I'm nowhere near qualified to give feedback
+> given my lack of experience with the core git implementation and C in general, but it
+> looks reasonable. Hoping we can come up with a better name than "server-endpoint" though :)
+
+Thanks, and I'm open to suggestions for the name. :-)
+
+>>> Just to keep the discussion interesting, I'll throw an alternative out there that's
+>>> worked well for us. As I understand it, the HTTP-based dumb transfer protocol
+>>> supports returning objects in loose object format, but only if they already exist
+>>> in loose format.
+>>>
+>>> Extending this to have the remote provide these objects via a "dumb" protocol
+>>> when they are packed as well - i.e. the server would "loosens" them upon request -
+>>> is basically what we do and it works quite well for low-latency clients. To further improve
+>>> performance at the cost of complexity, we've added caching at the memory and disk layer
+>>> for these loose objects in the same format we send to the client.
+>>>
+>>> There's a clear tradeoff here - the servers must have adequate disk and/or memory to store
+>>> these loose objects in optimal format. In addition, the higher the latency is to the remote,
+>>> the worse this solution will perform. Fortunately, in our case, network topology allows us to
+>>> put these caching proxies close enough to clients for it not to matter.
+>>
+>> This does make sense in the situation you describe, but (as you said) I
+>> don't think we can guarantee this in the majority of situations. I think
+>> some sort of batching (like the (1a) solution I talked about near the
+>> start of this e-mail) and serving packed data from packed storage should
+>> form the baseline, and any situation-specific optimizations (e.g.
+>> serving unpacked data from topologically-close servers) can be
+>> additional steps.
+>
+> Agreed - our choice of solution was largely driven by our lack of ability to batch,
+> performance issues with `pack-objects` at scale, and ability to deploy the
+> previously-mentioned proxies very close to clients. If we can solve the first
+> problem (batching), optimizing for the hopefully-less-common single blob at a time
+> scenario becomes less important. If we assume that happens, I think your proposal
+> looks sound overall.
+
+Thanks.
