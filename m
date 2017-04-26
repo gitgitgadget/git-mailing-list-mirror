@@ -2,105 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 722F5207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 19:29:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6DFE207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 19:38:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966692AbdDZT3z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 15:29:55 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50047 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966690AbdDZT3u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 15:29:50 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LobGI-1djfHI15Io-00gUeY; Wed, 26
- Apr 2017 21:29:42 +0200
-Date:   Wed, 26 Apr 2017 21:29:42 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v6 8/8] Use uintmax_t for timestamps
-In-Reply-To: <cover.1493234408.git.johannes.schindelin@gmx.de>
-Message-ID: <7f9b6db618742a6dae6c491ba52dbe1f9a2bf745.1493234408.git.johannes.schindelin@gmx.de>
-References: <cover.1493042239.git.johannes.schindelin@gmx.de> <cover.1493234408.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1753982AbdDZTi5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 15:38:57 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:33779 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753975AbdDZTiz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 15:38:55 -0400
+Received: by mail-pg0-f47.google.com with SMTP id 63so4843664pgh.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 12:38:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1xwSIjE5rBRDv4RpsXoFvSBpC3PFdYmIyYTY7cY+R/0=;
+        b=LghGEg5cz43Pr0+pscQPVDuc9/hv2WKuTQM082JmY8/LgVsDq7lOviv1W+KbfmXHgk
+         RzGdBmSS/Bu4vgltTGJH+ejg/OpXLw1Bmh6x+/9CuIP7u2YKdjF8vwNCrnVrmOsco9/A
+         4OgGixTREtJ3/Fnc1vckuvRfICdw+qUK6Whr11Smxhv3NFFVtcTAQMvTKOzx2G4pLla5
+         j02Om00yER67Pil8W6tsPTs1QZQ3NQyzGnuTdMnqLZCzptFwYf1wfZZQb+Zus0Wgp7mk
+         qN1zI0IiV/ULyLLqoeDKwovIkjntYzuwXg3lLUBND0JApXVdMOQRbmnr7XOdYUgQ9zkh
+         hSOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1xwSIjE5rBRDv4RpsXoFvSBpC3PFdYmIyYTY7cY+R/0=;
+        b=czzKFZF57/govoFsd3VDYFslXY+pytx0ckFb3+K1YgEWI/2+uNuO5ZI0h5fU9xfohy
+         /B0PnMcZ13dKQNd4s6tZq32d5StYzwxBtIQViqkgeOt+v6xK6jjWKpODWEpr4HJv6YW2
+         XAiwMBN0GroSAu1/9PE10ENRdZ5nOIe31LfU1Zjg46Y6fQgTo4kpRHfUgHuJ/HUAXzxZ
+         6QHFUN3/ctepn+Vuwd1+OLij5TM9jVExnWo+Jm9xlV1vtklYOL/KH6N656Gn4DguuApd
+         /hgkD+V8dqjzMG2b20iUwBBLobavtHBJp23g+KYYG+CulZ3+NQ7XozHO5dFm4gGcp/6d
+         nJSw==
+X-Gm-Message-State: AN3rC/76aFQdWOLaiLay4oW85emBnWOIRmGxXdxkGJ7WX8YdYVSs8vVP
+        O/KehgZNbxW4AQ5M4Q+Uc/8YGAZZPYqXQJI=
+X-Received: by 10.99.126.23 with SMTP id z23mr1586029pgc.63.1493235534815;
+ Wed, 26 Apr 2017 12:38:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:KRvzbes7WCYms+F0s3dUqhxlZZG7siI1I+ot6kSiXgSxubpXR+R
- aR0/zebHFzsb/TEaiyHA+o8g7/nNABkTbMiIVhEzoEpsIeFwgTiduubSNiFEl0meqp9Aehx
- mbR4yKsyocce/6Ry8d9e4hkK9XdoJQREQpE7WjLFAqcpt17n500JH0Jv4wkz0fIFVdfMC7r
- z7qmXM3yb8Ko5tx709rgA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zJX/ykUY8LY=:T9sT22Cgm+tvKyflKmSoU9
- yENsvnumo7YXio+kfcUQ7AePbrMC/AIPoPKJHPtWPhpqUeFcqs8EpcyXpiphDvjBB8UaEMXRo
- dQN3IBMSQhl3U1MmRdTXvvMf8xjdi2hQaC2R7SW/JIYQEnpbPHa6WrZZJLgCtztACKZzIAJ/5
- UBqvTC86azEZncUKVnpE9KAyzN8Q1dp3PMCz7R9BcOdxDSkUBAV+j1LK/BunFZwtqRuyyYVtQ
- xVZkB+QAD3Xd5FB8cDkPtvfMU0UpkPBG5dug4Tl47OxhweluNCQeLRg3Wuk0kEamLT7JPpXsM
- Df+fm/LHTMHOUGqDLjbKU+pb5S04Iamqc8HMVTrYYnuYqUSidyzCll+LItT9x8S9XBz6hZibB
- h8mg1nIN8tEdJeW9lt5DHpm1P8hJYgGzx6s8fJuc+0xqz6/8bq8a8CuiD7+xBwYfKamkDlle/
- 4OS99w/YsrmlWmfxvNj163WwGV/6ZPL/9TVqaVBO13OU9Fr1oFGBS52kDynBDQ/CrsrVqUR+m
- Nu6FBXBzsFaDAkwAHgAS0Dr3zFDw2x5AJYEci7OBVcFgutPcR3bAef+VFzwS/SGa37gWSj5+c
- sTDW97i13lSh4NZr4IeDJC9UrxGuK6twQ9PytTJIwfQHdBHuil5lgq0OOAcJASxBJ2vLOGyxJ
- VFlksopuxzHQB/7m7IRrOVJFt1oPVl5L3iYTbcG9NHQuNJISKR8coPF7dxH9VC8WgD/PpZ8Mm
- ITUrXmpLmxnHlWdIndhj6jncu/DjXznjijRD342yHrTmn0JQkh0mjUClij2JAk/YS392jjLjp
- Yi27Hlv
+Received: by 10.100.153.156 with HTTP; Wed, 26 Apr 2017 12:38:54 -0700 (PDT)
+In-Reply-To: <bbcbdf11-5065-8fcb-d78e-74db03814781@suse.cz>
+References: <bbcbdf11-5065-8fcb-d78e-74db03814781@suse.cz>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 26 Apr 2017 12:38:54 -0700
+Message-ID: <CAGZ79kY2dmec17qdbpTqOx7Uro7X_UAyo0be5a08bdZyykA2nw@mail.gmail.com>
+Subject: Re: [PATCH] Add --indent-heuristic to bash completion.
+To:     =?UTF-8?Q?Martin_Li=C5=A1ka?= <mliska@suse.cz>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, we used `unsigned long` for timestamps. This was only a good
-choice on Linux, where we know implicitly that `unsigned long` is what is
-used for `time_t`.
+On Tue, Apr 25, 2017 at 4:37 AM, Martin Li=C5=A1ka <mliska@suse.cz> wrote:
+> Hello.
+>
+> The patch adds BASH completion for a newly added option.
+>
 
-However, we want to use a different data type for timestamps for two
-reasons:
+The looks good, though the format is unusual. (We prefer the
+format to be inline instead of an attachment)
 
-- there is nothing that says that `unsigned long` should be the same data
-  type as `time_t`, and indeed, on 64-bit Windows for example, it is not:
-  `unsigned long` is 32-bit but `time_t` is 64-bit.
-
-- even on 32-bit Linux, where `unsigned long` (and thereby `time_t`) is
-  32-bit, we *want* to be able to encode timestamps in Git that are
-  currently absurdly far in the future, *even if* the system library is
-  not able to format those timestamps into date strings.
-
-So let's just switch to the maximal integer type available, which should
-be at least 64-bit for all practical purposes these days. It certainly
-cannot be worse than `unsigned long`, so...
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-compat-util.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 594100e7652..f366180f4b9 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -319,10 +319,10 @@ extern char *gitdirname(char *);
- #define PRIo32 "o"
- #endif
- 
--typedef unsigned long timestamp_t;
--#define PRItime "lu"
--#define parse_timestamp strtoul
--#define TIME_MAX ULONG_MAX
-+typedef uintmax_t timestamp_t;
-+#define PRItime PRIuMAX
-+#define parse_timestamp strtoumax
-+#define TIME_MAX UINTMAX_MAX
- 
- #ifndef PATH_SEP
- #define PATH_SEP ':'
--- 
-2.12.2.windows.2.406.gd14a8f8640f
+Thanks,
+Stefan
