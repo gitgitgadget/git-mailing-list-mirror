@@ -7,88 +7,90 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E475207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:19:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D734A207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:20:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967212AbdDZUTr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:19:47 -0400
-Received: from mout.gmx.net ([212.227.17.20]:55240 "EHLO mout.gmx.net"
+        id S967216AbdDZUT7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:19:59 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57250 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967211AbdDZUTq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:19:46 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyB6P-1e8YZ92g5d-015cQN; Wed, 26
- Apr 2017 22:19:42 +0200
-Date:   Wed, 26 Apr 2017 22:19:37 +0200 (CEST)
+        id S967214AbdDZUT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 16:19:57 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LoE4f-1dj9wt1Jgf-00gDRs; Wed, 26
+ Apr 2017 22:19:34 +0200
+Date:   Wed, 26 Apr 2017 22:19:33 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 06/26] get_mail_commit_oid(): avoid resource leak
+Subject: [PATCH 05/26] git_config_rename_section_in_file(): avoid resource
+ leak
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <1a12ba40a2db3925534bd2192ed8e9ab9a87215e.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <d88e30ff9ada2f47b4f303269162b6e8e19b1baa.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iyiiAk0UIs91ZuzmQAUa9jAgrrdHsZfk54O/T3/tTxpboH8ML90
- l5gg4DuXNVjd/Jk3j77FsWQ2m39b7WfCKZxZKdOlq/Vg+4pAHw0JPRoKGpXNqXeYhnpF/cJ
- gJ9zmpAoGibDUFPbN/jX/SLPNKrR2E/ygLQ5Zo/5VrYjoUCO1AvszCFkeVVsgV+R1NJU4zT
- 00/yN9OmJfcaAf7ZdO9zQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:e/AjOmx1NPU=:uiV8D9b2OR8MRiFaeLrGK0
- AG8z96peVdkjJhGHvRgAVFLspaLzP6hlc6oamFDWGztMGRFfRtEM8iy6LGccQKlwzJ9xqLzX+
- m59RrhC9ZtceD9k8/CCUqmu4wbF4efHXXT62wuBbQtCT7Oh/Z5z5OLk3OopehDGuJDot/LhGN
- 5hPl1S3ADNUdgIt+OsvuBIe9zUpGQ3gbXqdHHZoEnhvzCGYrz33mS6aEgUF457rY3lUJKGUdC
- HcByEuAJY7r73gjKDheJEsuKy9YxZFf1fRrqMDQKLgrpJFyx/KmU6xwx3XIREC4ncx/gIy8DU
- ExAIz6yYB8JM7kyJGxjVHGzZiTRcJDWsy6Kh6EfDxFz4Ub2L35Ks+4c8Bk2cofyO7er130Isf
- DKSWvQhzKHYHA6ztLuRzL0rLUlnsoEOmFRxuj94q1naimTcns37md6JVHplbom3HNYgBylD5/
- uquCHpc0Wkeu6okn2tp961s5R9x1xSXwu6kIfgFbuiA3LPln8WbwVRK5WPzudodGxb3KEBkmr
- GPfvb4aC7qf2Yd/2ZrWkCSVB+5pZHmADpfWt/qDgrWrbx/bGmi6r+7hamTX7TQecZ+d6vepgZ
- atpd82Isw2ApWk7B6nLEl7EJ0fX8kpFxFf/kjhDhS/zgiHIPCKeBDjx1/PpnWuaYOf2J1erkl
- h76OGyX3PUcrGlQd1JHUH2fgdjF03L9xeqW4QogCaS/qxHzc1Xe7SJWt8+lAIJBqblUefXM9a
- OkqjqrX9dHgnH5FiwjLEEci4jbLhmsM8a7yMgtaUpI2idjvgpRAzw5aMXSjrAIoaA90IgyqYJ
- vyHSBem
+X-Provags-ID: V03:K0:4AxZfz5nnhCURYnlS5Pwl/KMTv9Iok6Nmv6Li/8A/NlrPzQKnex
+ OQF4CsNykyKP/w2K8/XDE3vBOLJ/AZjT0xLtf6FdP0OUZYTRUKCqXLWbBzfhyI+AV+OXQgY
+ c9Np5nAbO3gxZ1s7a9NL7uSrqXHRAROP4DqQNUCDLRP6LqMQPSZ5QRawI6S+kKFY7Wv0pKp
+ 5YPEcLuH3KNT0kfrey0CQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6uClC71G5bM=:NfcaJO5z3YFTfpSfZc0IYR
+ MY36DAgNDTQl46eoOM1nj5P0I1KcCoj6LTnk8L6xnhvV9N+u/RCV9pdeN+Hwz19YNUBpSLxWp
+ 9VkykHNiamoBRI7aW1UE4CDXWRBG/obaIMdTeDQzYsOXNlwfK3I13cs1pIzNSACCdxt4/GPcF
+ oAD6GvQoOOPoZnOEJpbmjAIqS7rzf3fqlwmHRhX0VR9BQe1PK4en4nCOmMfGcdpGJnDmCNiya
+ 0HTzTyaFdEWwqfDFaY15cjZSGrNJVbvGU+FMZ4cIMOdheNy+qEy/YHHIOlkEeLhJn5O4/vtDG
+ XxLD9XXRydqvxAFZxw3+BiAQ4VmKbeR0kVaINXSL2E1d4Z4J/DPfPXbqQ+aYcSlVxp6iEC+sV
+ 4IxVLO2ez1nK9u2Eoc7sZ3QAr8WZOXN/WwP9wOCqnZNKjJHsVS6tkjJofiVowULkaQ9OCSPsZ
+ Fa+730BIiaxJI3eE38xM1RFC/zaUMGF+S2DTcoNzsvHK2mbiNNiTPUIK1Te20hAzWLJ1rtq/E
+ 44uF2YpP58ZlP9i2272HyCkjZmKJczVAzO1YYl8u4uA4UP1L8y16t2KZbJBf3qo9Gk5GDpcHL
+ QkCShd2+Q0igBZmnFIdntOGUq85zONy+o7IFX7fzOLB7kzj/uu5oeRGMD51aQCGBx4N4odryt
+ u71l0IfyZwxqbVqxtyRpyEFeESCtLomGbiil1a5A7V05RgCbYrIFxjb+mqZJ8uqwELxqr5JAk
+ 3BkrtjsXzG/IBr1rfNcEB1/mKNPOKpLUKWaZR2sdXi5E1PvIGnoqNK80WFCPkd7HqvldvnBda
+ ZfeXhCJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we fail to read, or parse, the file, we still want to close the file
-descriptor and release the strbuf.
+In case of errors, we really want the file descriptor to be closed.
 
-Reported via Coverity.
+Discovered by a Coverity scan.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/am.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ config.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 805f56cec2f..01b700e5e74 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1359,15 +1359,16 @@ static int get_mail_commit_oid(struct object_id *commit_id, const char *mail)
- 	struct strbuf sb = STRBUF_INIT;
- 	FILE *fp = xfopen(mail, "r");
- 	const char *x;
-+	int ret = 0;
+diff --git a/config.c b/config.c
+index 0daaed338ea..ed1420fb096 100644
+--- a/config.c
++++ b/config.c
+@@ -2599,7 +2599,7 @@ int git_config_rename_section_in_file(const char *config_filename,
+ 	struct lock_file *lock;
+ 	int out_fd;
+ 	char buf[1024];
+-	FILE *config_file;
++	FILE *config_file = NULL;
+ 	struct stat st;
  
- 	if (strbuf_getline_lf(&sb, fp))
--		return -1;
-+		ret = -1;
- 
--	if (!skip_prefix(sb.buf, "From ", &x))
--		return -1;
-+	if (!ret && !skip_prefix(sb.buf, "From ", &x))
-+		ret = -1;
- 
--	if (get_oid_hex(x, commit_id) < 0)
--		return -1;
-+	if (!ret && get_oid_hex(x, commit_id) < 0)
-+		ret = -1;
- 
- 	strbuf_release(&sb);
- 	fclose(fp);
+ 	if (new_name && !section_name_is_ok(new_name)) {
+@@ -2681,11 +2681,14 @@ int git_config_rename_section_in_file(const char *config_filename,
+ 		}
+ 	}
+ 	fclose(config_file);
++	config_file = NULL;
+ commit_and_out:
+ 	if (commit_lock_file(lock) < 0)
+ 		ret = error_errno("could not write config file %s",
+ 				  config_filename);
+ out:
++	if (config_file)
++		fclose(config_file);
+ 	rollback_lock_file(lock);
+ out_no_rollback:
+ 	free(filename_buf);
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
