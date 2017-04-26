@@ -2,96 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41702207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 21:02:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53B97207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 21:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967610AbdDZVCh convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 26 Apr 2017 17:02:37 -0400
-Received: from lamora.getmail.no ([84.210.184.7]:50337 "EHLO lamora.getmail.no"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967606AbdDZVCf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 17:02:35 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by lamora.getmail.no (Postfix) with ESMTP id 0981B88259;
-        Wed, 26 Apr 2017 23:02:33 +0200 (CEST)
-Received: from lamora.getmail.no ([127.0.0.1])
-        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id gzpibxfZ47aS; Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by lamora.getmail.no (Postfix) with ESMTP id 8A09588A02;
-        Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at lamora.get.c.bitbit.net
-Received: from lamora.getmail.no ([127.0.0.1])
-        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id HI_bQVxVDFlC; Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
-Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
-        by lamora.getmail.no (Postfix) with ESMTPSA id 6443388259;
-        Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
-Received: from peter (helo=localhost)
-        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
-        (envelope-from <peter@softwolves.pp.se>)
-        id 1d3U53-0007eS-4e; Wed, 26 Apr 2017 23:02:33 +0200
-Date:   Wed, 26 Apr 2017 22:02:33 +0100 (CET)
-From:   Peter Krefting <peter@softwolves.pp.se>
-To:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Keith Goldfarb <keith@blackthorn-media.com>
-Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
-In-Reply-To: <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
-Message-ID: <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org> <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org> <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se> <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de> <85f2b6d1-107b-0624-af82-92446f28269e@web.de> <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
- <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se> <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de> <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se> <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
-User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+        id S967641AbdDZVGM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 17:06:12 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34265 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967638AbdDZVGK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 17:06:10 -0400
+Received: by mail-pf0-f182.google.com with SMTP id c198so6020248pfc.1
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 14:06:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=kpue+Hvo3GRe4Jsr14LtdHBEOit/xidm8q8UcftNQjc=;
+        b=aPPMF2+RZLkLhp07Hj6dwJsTYZTg5An2vX0EEwUlyiWcoNHDSNO4eMlTuy4QRU/PkU
+         8JX4qmpbWWjNO3q0oUIn78vGhaTZQZ30ADOn5RYevERKI1GS4YUnI0ti3SgrSALB96y9
+         Ube12m6mCOwFVLT4326CAnQd3F/J5YzDePSh2eMiskIv60cFqOaGi7xmVEnytqg8g07S
+         +4hHdT5YEvFX/8xvOKJvg9patdGcWSy1LIqf3s1uJCeE9Ji+IvdUEt+UFwIPyDdokFtv
+         mVjVoYCQ3Xs1L4P1I64SiS/WbWFRPkNLKeJrZr5MmYHDiS6OYNq6v/Ud9BlCE9WXbi6V
+         UaRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=kpue+Hvo3GRe4Jsr14LtdHBEOit/xidm8q8UcftNQjc=;
+        b=hultic/lAg+73Cit5Jmg6a1zaihoYYPuxsUxaJgNKwq4oiasPPQAQ3sCdEThbruXJR
+         Wy65oGmUrZTP3XqwovaB0g60ztYrgnrt4vPZbgrbziR73qMU0s8e34pU15pR1jjL5TVl
+         2YW2qkZoNkAHFRUofMMnyiKkIEmCCRo8wd13ibkDfhGVlmaE7S52wJhlF+5IBtJIcoHk
+         F023CeGiAu9mnXkTpUahA72t8hI91vSKZAVCUiaUMBCyQctBfemg66IYKc2JCGIBrOSx
+         BjOfxPYttbRoSxv/oBZ14fa8YcZVQG/+/T7lybGMgozPu0NoYYzy1TKaUOVEp5XFfqat
+         vs6w==
+X-Gm-Message-State: AN3rC/62qkFx1fFVgY8naCR+FMK0RV/8fgXOCcFiGaeHGQwXICharNcN
+        VjqgzQ0wcttosWPHhMFL07mOkrzGtiEQ
+X-Received: by 10.99.126.23 with SMTP id z23mr1942505pgc.63.1493240770062;
+ Wed, 26 Apr 2017 14:06:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
+Received: by 10.100.153.156 with HTTP; Wed, 26 Apr 2017 14:06:09 -0700 (PDT)
+In-Reply-To: <1a12ba40a2db3925534bd2192ed8e9ab9a87215e.1493237937.git.johannes.schindelin@gmx.de>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <1a12ba40a2db3925534bd2192ed8e9ab9a87215e.1493237937.git.johannes.schindelin@gmx.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 26 Apr 2017 14:06:09 -0700
+Message-ID: <CAGZ79kbQTbFEtg7N8kpnWDhPmuVyhc-=gey7ca0XobgOwE8Q3w@mail.gmail.com>
+Subject: Re: [PATCH 06/26] get_mail_commit_oid(): avoid resource leak
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe:
-
-> I struggled with that sentence as well.  There is no explicit 
-> "format" field AFAICS.
-
-Exactly. I interpret that as it is in zip64 format if there are any 
-zip64 structures in the archive (especially if there is a zip64 
-end of central directory locator).
-
-> Or in other words: A legacy ZIP archive and a ZIP64 archive can be 
-> bit-wise the same if all values for all entries fit into the legacy 
-> fields, but the difference in terms of the spec is what the archiver 
-> was allowed to do when it created them.
-
-As long as all sizes are below (unsigned) -1, then they would be 
-identical. If one, and only one, of the sizes are equal to (unsigned) 
--1 (and none overflow), then it is up to intepretation whether or not 
-a ZIP64-aware archiver is allowed to output an archive that is not in 
-ZIP64 format. If any single size or value overflows the 32 (16) bit 
-values, then ZIP64 format is needed.
-
-> 	# 4-byte sizes, not ZIP64
-> 	arch --format=zip ...
+On Wed, Apr 26, 2017 at 1:19 PM, Johannes Schindelin
+<johannes.schindelin@gmx.de> wrote:
+> When we fail to read, or parse, the file, we still want to close the file
+> descriptor and release the strbuf.
 >
-> 	# ZIP64, can use 8-byte sizes as needed
-> 	arch --format=zip64 ...
+> Reported via Coverity.
 >
-> Makes sense?
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/am.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 805f56cec2f..01b700e5e74 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1359,15 +1359,16 @@ static int get_mail_commit_oid(struct object_id *commit_id, const char *mail)
+>         struct strbuf sb = STRBUF_INIT;
+>         FILE *fp = xfopen(mail, "r");
+>         const char *x;
+> +       int ret = 0;
+>
+>         if (strbuf_getline_lf(&sb, fp))
+> -               return -1;
+> +               ret = -1;
+>
+> -       if (!skip_prefix(sb.buf, "From ", &x))
+> -               return -1;
+> +       if (!ret && !skip_prefix(sb.buf, "From ", &x))
+> +               ret = -1;
+>
+> -       if (get_oid_hex(x, commit_id) < 0)
+> -               return -1;
+> +       if (!ret && get_oid_hex(x, commit_id) < 0)
+> +               ret = -1;
+>
 
-Well, I would say that it would be a lot easier to always emit zip64 
-archives. An old-style unzipper should be able to read them anyway if 
-there are no overflowing fields, right? And, besides, who in 2017 has 
-an unzip tool that is unable to read zip64? Info-Zip UnZip has 
-supported Zip64 since 2009.
+In similar cases of fixing mem leaks, we'd put a label here
+and make excessive use of goto, instead of setting ret to -1.
+As "ret" and the commands are short, this is visually just as appealing.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Thanks,
+Stefan
