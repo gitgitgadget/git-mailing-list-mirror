@@ -2,101 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8AC207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 19:18:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 059F6207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 19:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965400AbdDZTS2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 15:18:28 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50597 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S964978AbdDZTS1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 15:18:27 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MK0bZ-1d4q223Jv3-001VPw; Wed, 26
- Apr 2017 21:18:19 +0200
-Date:   Wed, 26 Apr 2017 21:18:18 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v5 6/8] Introduce a new data type for timestamps
-In-Reply-To: <c6bcc382-f526-cf0c-8181-3985216e6c2b@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1704262117550.3480@virtualbox>
-References: <cover.1492771484.git.johannes.schindelin@gmx.de> <cover.1493042239.git.johannes.schindelin@gmx.de> <fea2df0e1ff5869572cf756d75fd3468d184457f.1493042239.git.johannes.schindelin@gmx.de> <c6bcc382-f526-cf0c-8181-3985216e6c2b@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:Sq6fU8aQtIBjzIdHcA4bdc+coDS/+fAY9kfrTaa5Ge2FCFiuqpw
- 4ddJjk2sKfdTclW3gFOeOWPlOyM2Qu0oCBAFvSymt3g6oN2tn7yTwlnbzHSI1aESytIXObb
- jkeRElXu2ly2bY+hD60nASgVai+HHQale8AViGHmt3yZMwGtDTbthHzqppHvzYgZUVT+MJ+
- h+e9bsETOTxp857U0kX4w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:BeFeoQCYimU=:2+9CXPu2ZjuGFqGtGSGovV
- o5XbIWKWoh9AiNFaLKPSD5/RsE3qljoL9nkPGqaltN35RRgXSIpMpkNVnkaas2tV34ILV9TL0
- bJvoo5eNBOgD+I3xmCG74m9WkWVQU7byVFQN8dhzGo2Cj++74jgdySHdwTzLmlpbwH/DTucZ0
- kNv7pykW9j7/9ib30UJgqdLfrNw+bpnInwrGi15MWUAcqborr8+7J2tlWXVPy50QNBXHLwth6
- 4MWui3F7Xm5a4KX1I9u2k8PpIgGGjU0xlU2cJSkydd9tNO2opnQU4HwVDHz3jQkCsKZbyIFPZ
- CACEqI3Mr9d6smbwWfPNhIFLyq7cdCvT0nultWHq2Tu2BjGd9KGVR7OtAu8nD4d5O+pI8ikhC
- L938Ribs+LcJ/3b56AspOXbY6ts8lsNTS5TLmz0g+WUN+TdCqkIsx1bYYSWoi/xj9kcQwjDV5
- 1RKC82M7Qh9hahPPnyihZvlnjagGrn1iFkP+IdiD6sbgZnZDrOp/K7xHI9XodN81GufZfeTFL
- N8obmVwXYwDIlrYm5InhHY760GUxjs8HZ+gEEUxOiuvuF/TSTGlf1sDnUDXzx6wVtkAOOx25J
- c1PjrE14U+fotAgHmgp5VSqFk8m/Ek+bXM4+d7tLOj3IpC0A1fmKUQxiQjuRyZn5QUx9ntrmr
- 8GkN5bHrv18+UhlAjzO6sTskKH9diT+wx2T7mmfxIVQDA5Z89e3OzTDQF+Nc46Dv7T0ofX2yA
- Ig2BvhETp+8RV4iuY7i0a96nzH21nOIv/lVpDkppOmGzJjSswUGsLIILkLIkR6BuqRrUGLxem
- 4KqFiyV
+        id S966099AbdDZTTB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 15:19:01 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:36576 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S965488AbdDZTTA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 15:19:00 -0400
+Received: by mail-wm0-f46.google.com with SMTP id u65so59651607wmu.1
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 12:18:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=kdzrxPY1X3HhVqw0mh3WKU9pH+4sXgxRMGl6WRyf5Rg=;
+        b=Nl9yG7Ue5WFrPvRvzkTEA6zZuUKA9kvSBr70TlYz2Zxdnm7hmUcJbtrqAX5Pia6wDj
+         Z074fytoUzb7G2JSCXTA45pZtVzZ8l0YgQHxZxY3C9GA30CJ/XfY31ifCdsDA/aPpg9O
+         Y7TRycq3ejIiZXzvOUP1LYm5Gv/FrmXJJez5qHZPimrXnWOG0ZswFih8PbGnpeKqUTCD
+         fUohoEUbwcCm53rEa3gcKNBxI01f005RRWHZVYgJ3vtqFI4yr+qPUBdRx7k284wffxhI
+         khGGxQwMbbrOuH2AmAplAbV11hZtZShPZEhPu94mFB7FFPdKWtl0Is8L8qg4F/hx3OEe
+         neDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=kdzrxPY1X3HhVqw0mh3WKU9pH+4sXgxRMGl6WRyf5Rg=;
+        b=AEzqmI1vMcydF8imNAKFlMND7AQ+P4UpMl9Y2QVsNoM41g0Yelr7ofK0BPvyaKgBFe
+         uMOTYAj+5hzT2GAacj9AEwx7zEuFukEEFqzqAtgkV5ISiqvgdqUY42uGUumKv+HMN/1u
+         AyKHcBIIMs1VH06e+dwB5E1yrIbYGAOQ1sCZ8x0rSZs72KQSSMCwQ/z9GX/9A+ipVqM1
+         1qeKYWf0M5NaXzTygzKRJRHCTB6eetNk9PmnWv7W6Zc8bmY0+vVg7XqZPh5Eufmu4nJW
+         6UWhmOMjaIgkUBZrdSOS8UGhfSHFecyxiZ2AKpzWOhwrzxo18xqvTq+N0hFlOWaIEStZ
+         aghQ==
+X-Gm-Message-State: AN3rC/5m9w2Gyk5c3ShyLq7W5BlVwHr8zSs1hUsD8axPU7h4KVQerw0x
+        r9NZz0oNZ0fTYAOC
+X-Received: by 10.80.147.89 with SMTP id n25mr2031699eda.69.1493234338691;
+        Wed, 26 Apr 2017 12:18:58 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id 4sm157580edt.64.2017.04.26.12.18.57
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 12:18:58 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH v1] travis-ci: set DEVELOPER knob for Linux32 build
+Date:   Wed, 26 Apr 2017 21:18:57 +0200
+Message-Id: <20170426191857.27928-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.12.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+The Linux32 build was not build with our strict compiler settings (e.g.
+warnings as errors). Fix this by passing the DEVELOPER environment
+variable to the docker container.
 
-On Wed, 26 Apr 2017, Johannes Sixt wrote:
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
 
-> Am 24.04.2017 um 15:58 schrieb Johannes Schindelin:
-> > diff --git a/archive-tar.c b/archive-tar.c
-> > index 380e3aedd23..695339a2369 100644
-> > --- a/archive-tar.c
-> > +++ b/archive-tar.c
-> > @@ -27,9 +27,12 @@ static int write_tar_filter_archive(const struct archiver *ar,
-> >   */
-> >  #if ULONG_MAX == 0xFFFFFFFF
-> >  #define USTAR_MAX_SIZE ULONG_MAX
-> > -#define USTAR_MAX_MTIME ULONG_MAX
-> >  #else
-> >  #define USTAR_MAX_SIZE 077777777777UL
-> > +#endif
-> 
-> This part of the hunk is fine: if ULONG_MAX is not 2^32-1, then 2^33-1
-> will fit in a long.
-> 
-> > +#if TIME_MAX == 0xFFFFFFFF
-> > +#define USTAR_MAX_MTIME TIME_MAX
-> > +#else
-> >  #define USTAR_MAX_MTIME 077777777777UL
-> >  #endif
-> 
-> But this is not: just because TIME_MAX is not 32 bits, does not mean that
-> long is also more than 32 bits. We need this:
-> 
-> diff --git a/archive-tar.c b/archive-tar.c
-> index aadd5865f6..b5d6ce27d3 100644
-> --- a/archive-tar.c
-> +++ b/archive-tar.c
-> @@ -33,7 +33,7 @@ static int write_tar_filter_archive(const struct archiver *ar,
->  #if TIME_MAX == 0xFFFFFFFF
->  #define USTAR_MAX_MTIME TIME_MAX
->  #else
-> -#define USTAR_MAX_MTIME 077777777777UL
-> +#define USTAR_MAX_MTIME 077777777777ULL
->  #endif
->  
->  /* writes out the whole block, but only if it is full */
+Notes:
+    Base Ref: master
+    Web-Diff: https://github.com/larsxschneider/git/commit/67bf8334d6
+    Checkout: git fetch https://github.com/larsxschneider/git travisci/linux32-dev-v1 && git checkout 67bf8334d6
 
-Right! Thank you, v6 coming up,
-Dscho
+ .travis.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.travis.yml b/.travis.yml
+index c757a111ce..658a219ee1 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -61,6 +61,7 @@ matrix:
+         - >
+           docker run
+           --interactive
++          --env DEVELOPER
+           --env DEFAULT_TEST_TARGET
+           --env GIT_PROVE_OPTS
+           --env GIT_TEST_OPTS
+
+base-commit: e2cb6ab84c94f147f1259260961513b40c36108a
+-- 
+2.12.2
+
