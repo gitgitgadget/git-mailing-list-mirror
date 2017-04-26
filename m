@@ -2,86 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E45AE207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:21:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8B8F207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:21:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936424AbdDZUVZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:21:25 -0400
-Received: from mout.gmx.net ([212.227.17.20]:63423 "EHLO mout.gmx.net"
+        id S967222AbdDZUVc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:21:32 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53637 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S935809AbdDZUVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:21:24 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaXmV-1dpERM1ur1-00mLSo; Wed, 26
- Apr 2017 22:21:19 +0200
-Date:   Wed, 26 Apr 2017 22:21:18 +0200 (CEST)
+        id S936147AbdDZUVb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 16:21:31 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LsgvV-1e5F992PdZ-012K7J; Wed, 26
+ Apr 2017 22:21:22 +0200
+Date:   Wed, 26 Apr 2017 22:21:21 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 19/26] receive-pack: plug memory leak in update()
+Subject: [PATCH 20/26] line-log: avoid memory leak
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <69b267b697cbf7f8948418e1b4d5eb52af911bf0.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <0051da81b5cffe53122c036122402418c7f8d55f.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:pApGbvFDyXODAeXMNDJ0X0XKjx7LcWAFMEh/nJclYeh8q0K0XX8
- qwvB8niJhgi/pAGotKNXlXs477TOcyZIsoPYn7o+hTXcbyQimgCI4NBLjCaBY7jUzDKWm4P
- ZhxIjPVyO+EslwPX9tZjvt6jYo4G8PoPaMxNqZzE1t9PIIbMyYsboWzaOIA9Wd+0bQ1jWc+
- ioveUQYZJbFY3X23W0hQg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V4DPD837r74=:ro8aFrOE/ki70S52+YYhxB
- Y5Z866HM3eLC5vaIcNvEtECxnJRhLYAcU+jagYG+uKY1+1uGZBt6S3pQNp9hi+7gyV9bUqgvw
- OtPSneruleaJm8hRDUX3CRlgvg5Sn30GmoOH1nYdM//wrTCSOmq/qLSoF6muPIw9AxxilOy81
- 9jes89h8QSdJcfNZ9e6JkcERDX8dlxnRUiFdhS+5IIWjVUS6NYXro8vs3JWUM9sdHw+vAQXQn
- kV9E0Sy1oPNbCKx0MMLIUtA6puYV1upwbhc/3VywYvr+4Fgj/4Y2XaSkc/AOUp7/MQ8XDTIbS
- bFHfNvQXl2SjaGe56G0kV8SClU6U19L17mLpes8rdufy8X4s2pFKBts8qOoT2tiJ4pnseJqhC
- xwkGe9u7OlNpmXQ48pIq9DhbYFMKZLYlFw5hOqy5gIatDJ6WHvmLEAs/vlOCVYiZ3zGDMR1ZV
- W1wx712cgG94ARUMb5L6Z1Hx/cCuF64a/AzITPtC3zCCUbb0kMV8M9+4Ycjoj0e+nPksLfo1M
- HlV4YevtTW5yVG/1w5zN41aYn+1tNcd1+yE9AbUyZ2kd3no5f4hZSLyo2pS8FA7heeRQgyd/e
- cx/BiOoTrYtsYedAapNdn1IgR1s+1kl2RNSHDVzMrdKOpUyNXIUohNI8W36y4zq2y0KBATW61
- I07aVibXEkNZ/E+M83RtcP+MHSG66BxdNjfTfany+ebO9OPfs5bjt+1pFX/jm6pUx7JUeMxwX
- IVL/XJQbJ4cEItDJaIK96g/Q/u5cJB9kDx14yrmSzVqTYr3tN2RQMns4DWPLiHt/DydQabhpP
- P7dpRgP
+X-Provags-ID: V03:K0:d1CJCtHX51dEVkjMm8KSH4scrXHkvWdgEzw3xQZ7uDVn/lavpyT
+ dG5v5RAJmfGxWotmqKEqsmVtwbkrQXiE4EYSpU3z0dCJ2AxUVkGUUkIVqfHccaqnzkozivX
+ jDAkCBeavvZX47nvLME3eoJWq+m7HEfI8Kv+1z8zDN17NfF76Xtr7QrGnDxRxsRPFQxxILo
+ CborUds5GlRUXzo+0z1dg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CYE04mlrDJ8=:eMkxd3KfpgQ5jpKjYIwoXt
+ yTasX6lH23+1Jqv93tcb7UxdSHgHF61lb7hRow3+Kirkg/dYoQAmjtTvzUWrfEaCYqXMKAuHF
+ fYeLTfgSHDRpjOTFqbhNpj4Ku8lJiu9kYXvlanGs/UqrSR3pRImE7W3o8ZLgUqlaavoN71FEo
+ MrnUiVpfrMTzuPcm75dTFcplF6xSnm4wUDRv+8VnAyXmhx/MVPN3EisP3REZrPMT0n8RH5q60
+ W4DIaketaLkKyxZ0nvDoD+LhqLz2YOuoAq+hQIk3p0dAbND9yJiYNJU8Ki1sBKiIkht/O65+q
+ sPgLyD7KzpFMZdyroci9jRk4HLPcCbJki8b7ias/sTCqvlnm587j71cvylxDHeXja5IJurDvE
+ G0sl3SL1BF5KdLAPy3taBpdGe/lC8E6c34lg13FDrIPS+Tr1Tc6yV3mBghM1wjSwQFfcwGmyo
+ 23fSGe8S8cq8xb1h0ipqudzG15cKKfm9pg/CouIPMobtgcxQhD/B4/Xh84gPpzA0J1cYwh7pw
+ WvjAK1296E3mR+UgIjiOefdPrsElncLFucbnMQqx5FZWiBjKQCUO+VsgiRYgeCjH8SlQnSg2c
+ zWESxfyKoKdkce6102KRjhqTE1VJBLl5eTQpqNcGiZ5bJzNvBgkrZYmr8M0qVkpQJh5eBR7z3
+ KXBl+7mOhbWI3+S1OAXdtCoStEOJ5MtKN8i6dCmZJZ0otyS233MhKqA0BuPSrMyO3tlgWr7Uu
+ GgpQ78ZhuA4E9dYIgEQoVYjlPuUv4s6cgbc/1XvUISJ0qswmGkPDZzqtsJPAVR5l9e1b/wmqS
+ dPWQAxM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reported via Coverity.
+Discovered by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/receive-pack.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ line-log.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index f96834f42c9..48c07ddb659 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -986,7 +986,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- {
- 	const char *name = cmd->ref_name;
- 	struct strbuf namespaced_name_buf = STRBUF_INIT;
--	const char *namespaced_name, *ret;
-+	static char *namespaced_name;
-+	const char *ret;
- 	struct object_id *old_oid = &cmd->old_oid;
- 	struct object_id *new_oid = &cmd->new_oid;
+diff --git a/line-log.c b/line-log.c
+index a23b910471b..19d46e9ea2c 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -1125,6 +1125,7 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
+ 	changed = process_all_files(&parent_range, rev, &queue, range);
+ 	if (parent)
+ 		add_line_range(rev, parent, parent_range);
++	free(parent_range);
+ 	return changed;
+ }
  
-@@ -997,6 +998,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	}
- 
- 	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
-+	free(namespaced_name);
- 	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
- 
- 	if (is_ref_checked_out(namespaced_name)) {
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
