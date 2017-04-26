@@ -2,97 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F8B4207E4
-	for <e@80x24.org>; Wed, 26 Apr 2017 03:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8062207E4
+	for <e@80x24.org>; Wed, 26 Apr 2017 04:02:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1948071AbdDZD7s (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 23:59:48 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:33776 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1948068AbdDZD7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 23:59:46 -0400
-Received: by mail-pf0-f196.google.com with SMTP id c198so13806209pfc.0
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 20:59:46 -0700 (PDT)
+        id S1751298AbdDZECO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 00:02:14 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:34611 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751243AbdDZECM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 00:02:12 -0400
+Received: by mail-pg0-f53.google.com with SMTP id v1so26150262pgv.1
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 21:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZYY/X4mP+YLNc0u/ry033exX/azDn2u1VcHFw4dnIiU=;
-        b=DrQvQELHY5T2tl/Q5wGmHM+9YaMNFFIC5EmlSOIP7L75eVPo5Dw+bRKYT8wV3VfqYR
-         LtEvuQ0MptGQugKAJS7i7rOWNDCdZXnSF4s/eJYqexci6dLtIR4rHOgxpt4VOMFTGT8y
-         g77KMnDi4NVLuEr60BjSiSW27zCyAHqwxzFVbjnmuH86h54xmpFnFdfRIjcFsJxta66z
-         5HjYVk2Bt4rlJULC4PBhQzkAomHUhiiZ6XL+ZPH5PsD5+3mmjzFT04F5uKGockqn77hQ
-         vissaAS2aAIW1CghYMkdSjN74mfU8wFfcN6HOckAnXVfIja8UFPLBAPKHgt2PJIhPzij
-         y6gA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=qiX3wkW4acKw5pW4AxvcDK+PIkOL3P45q+afhHUFGO0=;
+        b=NSlD7+XFCAWvH2zqJaRSmvEXIALkWGFEXgWMG1RLA+f6zgFDpvb6U6c7v+po1vbwlO
+         ZkQ87p5Ch1xYLQ46CaxrCBeml6a+ps+Lx8aqP4qBD3LbE/rkPJnndO19PSFXZfQpNcEj
+         O6HjiHSGXEmXy7ThcTbiotb9t6pQ+qKNVnu86Co4Z9GJUQGWy3hX/MvPri+8E/1S5M/v
+         73UsYbWskQJXjSuuvIin4vsE7JDV5sve0I1oRTXh/sTVxXxxolZcQex379at/eYnakl+
+         amTpbYaJmNNHuXoAh7jpGqnyuZSHQz+7UMlbjxZzToU1wCQ/JcKcmd764loYpIyi0yfg
+         TLyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZYY/X4mP+YLNc0u/ry033exX/azDn2u1VcHFw4dnIiU=;
-        b=QfucYNpVFNZ+RbjI1gSX4l22U1Hpgw9xniTiltLShgyJSgR/O/YiPrNkdRmVrLWsN0
-         QXgjskUCGvM02Y1Av/0C+XLyDK+mAG4GbXokAfFaNupvIUv13wQZcKkC4OjWERJKdHOq
-         QdUEDDoznKFtzQE0y1Pb/jjx1InGLqDU6tNfYdRlUhswLK/3Fbf8xp+KKaf7NoXFhwVT
-         UuoqyjcplfTyqVDScOSakH18GoGL9DS7MFBZXb+2ShHTeHR9nEftD0mpje8sD74+Jlxa
-         CMByyx/+YWVh8upc1lFrKdltM4QDjje0/+HFTcoqsp1/3nIMegQGrNrHPP22OkRTfYkM
-         qzng==
-X-Gm-Message-State: AN3rC/5GNHSKkBy6AXRO+yTqVcuyF45yNmpAebYAOASn7D0rFzCv/15j
-        de0dppbdx47Yp6qEttM=
-X-Received: by 10.98.58.149 with SMTP id v21mr31691253pfj.242.1493179185545;
-        Tue, 25 Apr 2017 20:59:45 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=qiX3wkW4acKw5pW4AxvcDK+PIkOL3P45q+afhHUFGO0=;
+        b=d7uKOptw6VJolk/kyGJN/NdRWv1/3lf/wA00d31u7yamhnpioibgTcXkUfV1DxeT+U
+         7G7HeApVZzLeYpgCNSDqauZXv9tAwGceJo8E8IwlYgvPuYXInexgPobdpunzGSgnl4JO
+         AoziQzsgFthLQdX7U9V7X/AaRQogpYKDZY7WbISwqAVnFSNHRVXfSqzsNhlMUXFpHbeU
+         8DP4dq63kk6fZ9UqDxrEVJUBPHK/3FcLyYmzyUtxEcOowtZ94A0xByazlqC8DJoq3NMg
+         lSrl0wM19EeDKsehz49RzNoQngl1Mw7q1OiU+kZoKzew1D2sdRaOcF2XZ8j1E8eEtZpH
+         DsFA==
+X-Gm-Message-State: AN3rC/6TwIZJBh05b2Wk/eucT2EObpoLO1aLcKQchgfuTSWvdFG51zxK
+        XodwhVf2q6QBQA==
+X-Received: by 10.84.232.69 with SMTP id f5mr1259194pln.137.1493179331500;
+        Tue, 25 Apr 2017 21:02:11 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3179:d004:20b:b383])
-        by smtp.gmail.com with ESMTPSA id n8sm38987762pgd.31.2017.04.25.20.59.44
+        by smtp.gmail.com with ESMTPSA id k196sm38946219pgc.0.2017.04.25.21.02.10
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Apr 2017 20:59:44 -0700 (PDT)
+        Tue, 25 Apr 2017 21:02:10 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     liam Beguin <liambeguin@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] rebase -i: add config to abbreviate command-names
-References: <20170424032347.10878-1-liambeguin@gmail.com>
-        <20170425044320.17840-1-liambeguin@gmail.com>
-        <alpine.DEB.2.20.1704252148400.3480@virtualbox>
-        <1493165607.29673.31.camel@gmail.com>
-        <20170426014704.blyczgmbuqd5amys@sigill.intra.peff.net>
-Date:   Tue, 25 Apr 2017 20:59:44 -0700
-In-Reply-To: <20170426014704.blyczgmbuqd5amys@sigill.intra.peff.net> (Jeff
-        King's message of "Tue, 25 Apr 2017 21:47:05 -0400")
-Message-ID: <xmqqpofzstsf.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGg=?= =?utf-8?B?w6FpIE5n4buNYw==?= Duy 
+        <pclouds@gmail.com>
+Subject: Re: [PATCH] test: remove unused parameter from the wildmatch test
+References: <20170425094453.9823-1-avarab@gmail.com>
+        <CACBZZX7x0hSy5PTCo1Cf0Hp09jBhnSF0T=BseH68kwMRmqGJig@mail.gmail.com>
+Date:   Tue, 25 Apr 2017 21:02:10 -0700
+In-Reply-To: <CACBZZX7x0hSy5PTCo1Cf0Hp09jBhnSF0T=BseH68kwMRmqGJig@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 25 Apr
+ 2017 11:51:47
+        +0200")
+Message-ID: <xmqqlgqnstod.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> I think the words "instruction list" may have come from my suggestion. I
-> used them because that is the term used in the rebase.instructionFormat
-> documentation directly above the option you are adding.
+> Right now this is all dead code, but I wonder if instead we should be
+> partially reverting commit 70a8fc999d ("stop using fnmatch (either
+> native or compat)", 2014-02-15) by Duy to the extent of being able to
+> extend t/helper/test-wildmatch.c to test fnmatch() as well.
 >
-> It may be worth a follow-on patch to convert that one to "todo list" if
-> that's the preferred name.
+> We wouldn't be using fnmatch(), but I think it's a probably a good
+> idea for the tests to support a mode where we have to declare
+> explicitly whether something should also match under fnmatch or not,
+> so we document the differences.
 
-Running
-
-$ git grep -i -e 'instruction [ls]' -e 'todo l'
-
-lets us count how we call them, and we can see there is only one
-instance of 'instruction list'.
-
-Running the above in v1.7.3 tree shows that it was originally called
-'todo list', and we can see that an enhancement of cherry-pick in
-cd4093b6 ("Merge branch 'rr/revert-cherry-pick-continue'",
-2011-10-05)) started calling this instruction sheet around v1.7.8.
-
-A follow-on patch to unify all three would be nice, indeed.
-
-Thanks.
-
+I am on the fence and can go either way.  What you suggest is
+intellectually intriguing even though I am unsure of its practical
+value.
