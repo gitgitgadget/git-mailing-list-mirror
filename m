@@ -2,98 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DC85207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 17:04:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F544207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 17:04:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752852AbdDZRD6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 13:03:58 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36041 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752832AbdDZRDz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 13:03:55 -0400
-Received: by mail-pg0-f68.google.com with SMTP id v1so1383246pgv.3
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 10:03:55 -0700 (PDT)
+        id S1752875AbdDZREB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 13:04:01 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:33720 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752838AbdDZRD4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 13:03:56 -0400
+Received: by mail-pf0-f194.google.com with SMTP id c198so1394040pfc.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 10:03:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pzFsU7KRWPNtGJQ7O+VFQO5PVBaIluekPP1yjXO8mQw=;
-        b=NLT+/iUiV20asTldONPfHdlWgL+rAtVfLHKbEa/zK3dkBAvADq7u5bRBfa9fJ+mlx8
-         4Nfdxs/B9cTTmGIckeBh0Bwr2DkNC6hNRcRejpBYs4ae35xLi2Som1gu3swLtBt983kc
-         ses/0zAyNPcRM8Ey1Bd7nFR9qMrLxhAep+Wa9djLJIds7t8v++PARePBZlTmU373qHNO
-         PdyIprjn/BHHr4tk6B9kBzRJGoYZwTw0J1wrNq0OOFEZdeOobfeJe3Y3qRBj17TC2G/Z
-         l5GxuxRI3KVKy0jE3JRMuILaPDW/cUcc7mRaNiRIrw2vp1e5dE+3Nbc2hxnvYeIeJKCb
-         fZjg==
+        h=from:to:cc:subject:date:message-id;
+        bh=MWFCyOMUuN4RdGRky42n2cJhZMTyq4TIsxpQ2uFduOM=;
+        b=osk0rF7lS+XtsOkIcN0wDARvVPK/HHtU5IXFctX1oGstHdHaWCz3Rqujm2JWOJghNG
+         voAJK6vxfuvAW+ILg8TtfTfJ2EDX1L9cXwWUeE/R+BAxNsnFtQHDRXHRUkMgW8hNUURb
+         AP9eejCAMORa02NE+QjvblN7w5mQpA793zCS9YXd1tZSLmIHX4p25eHP15XTf8VgvuIJ
+         nOfqCGsI16l/pRLmNmJVf8RDIdquilXhM0YhFD3nxh3XaxW42XscdV9BbxQVzzQx02/v
+         B/Mghh6soq0gX5aJpfw+QyWAPse/vSWB68roCtzUoeoc2bI3hCoPdn6NSBkExRfy0lF1
+         i9mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=pzFsU7KRWPNtGJQ7O+VFQO5PVBaIluekPP1yjXO8mQw=;
-        b=VKXTSmG2IQbnFBU2MB8Wo/BDxNG2zws8haLUYnRPA6FBa7zBEspyTzBaVIcoDNgicy
-         Pa/Vf5nzov50wgAqFMGP8IgkPlGJ4mBf1Iq7od+fxuW42PAAXuLforJla7iAX9G+ypYJ
-         px+jXLzrz8NNZmIaEsda7guAMzr5X3AmyQx97LidGFdqJziKqXU8F22ZVHHE6EjNmimr
-         tZHNKJHPLt1CjT4TGFrGFo2jAlk3GzLMJdHTQ8yu6wF+23yEaJEIk9htO0hxOa1zzV3t
-         9ZBAmscY0VV4CsASceQN100Fcdfq6W+L1DaeUay8nIhisv/rQ86U6qmbAIVr88A7Pu4x
-         kj5Q==
-X-Gm-Message-State: AN3rC/4nT9vXky7LnjllBt3gl3Iezl9Pwe+NPr29TvTepLGpWLAoe86k
-        PrB9ZCyuIxz3tw==
-X-Received: by 10.98.66.82 with SMTP id p79mr914085pfa.146.1493226234768;
-        Wed, 26 Apr 2017 10:03:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=MWFCyOMUuN4RdGRky42n2cJhZMTyq4TIsxpQ2uFduOM=;
+        b=SVOt6RTucpqTFoBmGoyLPXQzjNYHV0MF4ZUUsnDNeToB+PwedGvBj0S1QzCaTm8+0o
+         YOGtjsImxhNgUxtFPZQSKSu0WWg7W0LgsbQlntaZ+/7AP4zGW6uDC+4JDfURKSx/Jzcx
+         +HJO/3YhLD7aYlfQ1TVSknUzrue3C8KmjwgdPV7qPiP+ElGSKSxsUbumuZQg8CoPO4kM
+         nFkw2QeGymJ1QACUTZaLDzijbjo+pY1J1EmiWSaI1shAABkvojNiDpAtNQZi20njeKi1
+         z/HZuyB5bj47bKHQw9LHZa/3sr09T7ZP8Le5FFsoQVpnzxsfjni5gO60wt4xwxijgsF+
+         sf4w==
+X-Gm-Message-State: AN3rC/5ValaVrZvlJSr5lN8ikcaq7UV0dEuRa9XQZJvoJHT9cg1IRtBT
+        IRWAjDqQSocJuw==
+X-Received: by 10.84.176.129 with SMTP id v1mr1048982plb.192.1493226230214;
+        Wed, 26 Apr 2017 10:03:50 -0700 (PDT)
 Received: from Daniels-MacBook-Pro.local.net (c-76-102-227-215.hsd1.ca.comcast.net. [76.102.227.215])
-        by smtp.gmail.com with ESMTPSA id q70sm1376479pgq.45.2017.04.26.10.03.52
+        by smtp.gmail.com with ESMTPSA id q70sm1376479pgq.45.2017.04.26.10.03.48
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 10:03:53 -0700 (PDT)
+        Wed, 26 Apr 2017 10:03:49 -0700 (PDT)
 From:   Daniel Ferreira <bnmvco@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
         mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v11 2/5] remove_subtree(): test removing nested directories
-Date:   Wed, 26 Apr 2017 10:03:36 -0700
-Message-Id: <1493226219-33423-3-git-send-email-bnmvco@gmail.com>
+Subject: [PATCH v11 0/5] [GSoC] remove_subtree(): reimplement using iterators
+Date:   Wed, 26 Apr 2017 10:03:34 -0700
+Message-Id: <1493226219-33423-1-git-send-email-bnmvco@gmail.com>
 X-Mailer: git-send-email 2.7.4 (Apple Git-66)
-In-Reply-To: <1493226219-33423-1-git-send-email-bnmvco@gmail.com>
-References: <1493226219-33423-1-git-send-email-bnmvco@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test removing a nested directory when an attempt is made to restore the
-index to a state where it does not exist. A similar test could be found
-previously in t/t2000-checkout-cache-clash.sh, but it did not check for
-nested directories, which could allow a faulty implementation of
-remove_subtree() pass the tests.
+This is the eleventh version of a patch series that implements the GSoC
+microproject of converting a recursive call to readdir() to use
+dir_iterator.
 
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
----
- t/t2000-checkout-cache-clash.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+v1: https://public-inbox.org/git/CAGZ79kZwT-9mHTiOJ5CEjk2wDFkn6+NcogjX0=vjhsAh16ANYg@mail.gmail.com/T/#t
+v2: https://public-inbox.org/git/CACsJy8Dxh-QPBBLfaFWPAWUsbA9GVXA7x+mXLjEvYKhk1zOpig@mail.gmail.com/T/#t
+v3: https://public-inbox.org/git/CAGZ79kYtpmURSQWPumobA=e3JBFjKhWCdv_LPhKCd71ZRwMovA@mail.gmail.com/T/#t
+v4: https://public-inbox.org/git/1490747533-89143-1-git-send-email-bnmvco@gmail.com/T/#e437a63e0c22c00c69b5d92977c9b438ed2b9fd3a
+v5: https://public-inbox.org/git/1490844730-47634-1-git-send-email-bnmvco@gmail.com/T/#m2323f15e45de699f2e09364f40a62e17047cf453
+v6: https://public-inbox.org/git/1491107726-21504-1-git-send-email-bnmvco@gmail.com/T/#t
+v7: https://public-inbox.org/git/1491163388-41255-1-git-send-email-bnmvco@gmail.com/T/#t
+v8: https://public-inbox.org/git/a60b2ed6-2b99-b134-05af-7c8492a6949c@alum.mit.edu/T/#t
+v9: https://public-inbox.org/git/CAGZ79kaBRS0SFAvrV4mN7-mVk+8QmPKPJMD55zPQ+A14ZzYFYA@mail.gmail.com/T/#me8988b7dd4adbc4ea24946ccb24fc1cf7baf44e3
+v10: https://public-inbox.org/git/xmqqk26fahjn.fsf@gitster.mtv.corp.google.com/T/#m3071006ec67457adf69578b37f55b625d0e7fed7
 
-diff --git a/t/t2000-checkout-cache-clash.sh b/t/t2000-checkout-cache-clash.sh
-index de3edb5..ac10ba3 100755
---- a/t/t2000-checkout-cache-clash.sh
-+++ b/t/t2000-checkout-cache-clash.sh
-@@ -57,4 +57,15 @@ test_expect_success SYMLINKS 'checkout-index -f twice with --prefix' '
- 	git checkout-index -a -f --prefix=there/
- '
- 
-+test_expect_success 'git checkout-index -f should remove nested subtrees' '
-+	echo content >path &&
-+	git update-index --add path &&
-+	rm path &&
-+	mkdir -p path/with/nested/paths &&
-+	echo content >path/file1 &&
-+	echo content >path/with/nested/paths/file2 &&
-+	git checkout-index -f -a &&
-+	test ! -d path
-+'
-+
- test_done
--- 
+Travis CI build: https://travis-ci.org/theiostream/git/builds/226079792
+
+Okay, in this version I factored in Junio's request for a test rename
+to t0066, and most of Michael's suggestions from the last review. I'm
+sorry for the delay on this one.
+
+Instead of either removing the iterate root dir feature or return NULL
+as its basename, I chose to get the real_path() out of the dir we are
+iterating over and get the basename of that, to avoid the "/." or "/.."
+issues. I think this is actually less complex than the NULL solution in
+terms of code that would end up needing to be written, and I think the
+root dir feature is handy to have on dir-iterator.
+
+As for the suggestion to put strerror() on the test, I feared for the
+message compatibility across platforms (since we actually check which
+errno code we got). If you could give me a guarantee that this is not a
+problem and you think it'd be worthy of yet another series, I'm up for
+it.
+
+As for Junio's concern for a rebase issue on the test script, the
+reason for it was that the same file is used across two tests, so it
+seemed unnecessary to recreate the file within each of them.
+
+Daniel Ferreira (5):
+  dir_iterator: add tests for dir_iterator API
+  remove_subtree(): test removing nested directories
+  dir_iterator: refactor dir_iterator_advance
+  dir_iterator: rewrite state machine model
+  remove_subtree(): reimplement using iterators
+
+ Makefile                        |   1 +
+ dir-iterator.c                  | 244 ++++++++++++++++++++++++++++------------
+ dir-iterator.h                  |  35 ++++--
+ entry.c                         |  42 +++----
+ refs/files-backend.c            |  15 ++-
+ t/helper/.gitignore             |   1 +
+ t/helper/test-dir-iterator.c    |  53 +++++++++
+ t/t0066-dir-iterator.sh         | 121 ++++++++++++++++++++
+ t/t2000-checkout-cache-clash.sh |  11 ++
+ 9 files changed, 416 insertions(+), 107 deletions(-)
+ create mode 100644 t/helper/test-dir-iterator.c
+ create mode 100755 t/t0066-dir-iterator.sh
+
+--
 2.7.4 (Apple Git-66)
 
