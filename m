@@ -2,110 +2,403 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4501207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 22:09:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF7E7207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 22:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754529AbdDZWJ1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 18:09:27 -0400
-Received: from mout.web.de ([212.227.17.12]:62156 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754523AbdDZWJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 18:09:25 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MGzjq-1dHGVp2ATK-00DsxX; Thu, 27
- Apr 2017 00:09:19 +0200
-Subject: Re: [PATCH v5 0/8] Introduce timestamp_t for timestamps
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <cover.1492771484.git.johannes.schindelin@gmx.de>
- <cover.1493042239.git.johannes.schindelin@gmx.de>
- <7a2271ff-1386-18a6-5f6d-7eb13dc92509@web.de>
- <alpine.DEB.2.20.1704260005310.3480@virtualbox>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b6302244-7425-605e-8103-9aa845c03c3e@web.de>
-Date:   Thu, 27 Apr 2017 00:09:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
-MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.20.1704260005310.3480@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:0Ag9zWpgnXNX+qyNFmA0AlFM70HvFul1x10ObD/ZWLJ9UgnoBYG
- 3SR32w69Qc/6Kr5g+PxVRn7o2C813jo4RNIck13PXQE23UiPAMA7oGVeDWpZIZvdG4x+D7l
- i+IcSGCjVxAP0433HvckvamniOJWUNRX02+lCUQ2bcU2sI9FQCtAVcR95q3msOQz//Cdc6S
- y0FZ6xkTjFRSsivo/nstQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:xzD6r3eFcBQ=:z/ux3Q0PdCyoKfPIbZglVv
- zb0f4giQdtuCZwH3Brm2DuOhk//1tn2dDJO2e7/tnjYjzfkPbcUWIQxFcYAayXj5H989v2qkX
- vVnusyPIeBoKWISQ0nj0LUGFdNNmIw0ROh9qHg7VqvY0npD9+khKzJOE4P3Ij6p4qn0iWEmvX
- NvN1r4E7EQ4jkvEDYpmef83kMyRmjodcB4Yuo2++nSSIkfzTdG89+KzSy2L/20W23spa/Gbfz
- JxuZrFVOJ4qekG6srqORRFLGj/WhgwNiDV4uHXvqirTSn067wJngCPr8ckZYm7hxaTsBU06Ke
- 05ZZEKNPrOgSw9G4UrU9fxZSM/qv/ToLbPhZMPnCxFRKY/S7qqHnVE0/Ka78+XfkpdeInqsWv
- rqPDTxwk2e0sGuXlrnW6f0IV9fmlv+2Me0qebmwyakBiC8ye6B0Yz6T37f8Hxz2e5OSeLaxtc
- k2VyektIc32KJr7sMXjgQDiXMu7y1HJ7zDSHdpV3cpv0cj54poq5UUKQZ6EPU4zB7IKXFY6Pl
- rq/tjQoA72MkUU/AXGYbb/3gL6G1xE4U/BEh/gpV9Rt2HvVIGcn6gtisxUgWESS6dm4gTAiZo
- RoxF1zGgVibatiAhPA/Rfajgs+Ye9rf2XwZe/ft8rkPyx2uFigrO95Po0nTLuKCE7pUt6E1ql
- GiWz5RxzdZavDJfKE8V5g3wets17wcOXg5YN3w1RK1fiDAV/huSlWIC4BJRZbz5enf7YzZ/4y
- dfR+Npybb3FSkyZjS9Wn/v1knsb0Cyc+LMMPxi8TJMj9Bi0stJ9eOKTCpFC+32WO0LqFzZzEd
- F7Gz/Ik
+        id S1031349AbdDZWOG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 18:14:06 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:36028 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031323AbdDZWN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 18:13:56 -0400
+Received: by mail-pf0-f180.google.com with SMTP id 194so7049033pfv.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 15:13:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=XXzm8AxV9HTQRqU9jtTHkoBIx08ua93wNl2gZlPOynw=;
+        b=gt5CzbXK3PzxvuPMNCyuSGXiSmss33PDgnLsFv6/ZM7swvgfZvsrQi/98PIhfTiyZo
+         zyYuGOiUXoYvtnTIkFpTzWGiJu4rxD5OUBDcb5PX6ZjvfvNFwHcPjLccSkrMyXyQRcsB
+         8ImxZGWLDmHVTD1TGwgYaK07zOkHBNdxpiU6tHDdpyvKa1UsLrDe77FCK1EnFjpZ6SRF
+         HBfz3FDkDEKjiJYYedYDe6TnDtqM/W5idgVOrxKBpEk4EjNo/TkzuUHIlIxc1WGtB88m
+         1ftphi236FqkPcvwG37uNvnEqHMA+KvBT1/uPgHJey8ryV48E493QhMSBT3Iu4KxmKLG
+         oseA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=XXzm8AxV9HTQRqU9jtTHkoBIx08ua93wNl2gZlPOynw=;
+        b=XuNw1Tz/0ZA/6GTfUR66ExnP91a4daHvOkUR2KZ17hM7iUQhkvMq9PKgkksegKK3HI
+         ewdECY+/HbJosLtRJQRaIEt38M/3o/ToLwom1ZVDxq5Gvf2YSHcwxN+ts5KlsI276XSM
+         JMsCxDCa1AXFMielv5mQNUUUA6EVjBvmoBtSSkzmuvSsIEM/G7phTeG6kPIz7Mdg8OsQ
+         ezW1HWkQvy+52RtAdUm1Y7DnatJbrxP1pR1xPO/mQC2u+VNmsB04Sw2BvsR8Y/Xa1DhS
+         4WBwoQI77j/+tAbDRnOHAJN3QsPyWReRF8G1lW1fsHZoAPm7v6a3N8DeWlvmsFVVNtf0
+         uHwQ==
+X-Gm-Message-State: AN3rC/4+snmoyMdbkNZXJfFFLB0xXXaY/wN74hHwUy1CEkSSIHG0d7r3
+        aXS2aLESFL4mOGsV
+X-Received: by 10.98.5.5 with SMTP id 5mr2272848pff.36.1493244835316;
+        Wed, 26 Apr 2017 15:13:55 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id s89sm460123pfi.79.2017.04.26.15.13.53
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 15:13:54 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, markbt@efaref.net,
+        git@jeffhostetler.com, kevin.david@microsoft.com
+Subject: Proposal for missing blob support in Git repos
+Date:   Wed, 26 Apr 2017 15:13:46 -0700
+Message-Id: <20170426221346.25337-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Here is a proposal for missing blob support in Git repos. There have
+been several other proposals [1] [2]; this is similar to those except
+that I have provided a more comprehensive analysis of the changes that
+need to be done, and have made those changes (see commit below the
+scissors line).
 
-Am 26.04.2017 um 00:22 schrieb Johannes Schindelin:
-> On Tue, 25 Apr 2017, René Scharfe wrote:
->> Am 24.04.2017 um 15:57 schrieb Johannes Schindelin:
->> Can we leave time_t alone and just do the part where you replace
->> unsigned long with timestamp_t defined as uint64_t?  That should already
->> help on Windows, correct?  When/if timestamp_t is later changed to a
->> signed type then we could easily convert the time_t cases to timestamp_t
->> as well, or the other way around.
-> 
-> This patch series leaves time_t alone already, so your wish has been
-> fulfilled preemptively.
+This proposal is limited to local handling using a user-specified hook.
+I have another proposal out [3] for what a potential default hook should
+be - how Git on the server can serve blobs to repos that have missing
+blobs.
 
-Sounds good!  It does contain conversions from time_t to timestamp_t in
-archive-zip.c, though.  I'll comment in reply to the relevant patch.
+[1] <20170304191901.9622-1-markbt@efaref.net>
+[2] <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
+[3] <ffd92ad9-39fe-c76b-178d-6e3d6a425037@google.com>
 
->>> It is arguably a bug to paper over too-large author/committer dates and
->>> to replace them with Jan 1 1970 without even telling the user that we do
->>> that, but this is the behavior that t4212 verifies, so I reinstated that
->>> behavior. The change in behavior was missed because of the missing
->>> unsigned_add_overflows() test.
->>
->> I can't think of many ways to get future time stamps (broken clock,
->> broken CMOS battery, bit rot, time travel), so I wouldn't expect a
->> change towards better error reporting to affect a lot of users.  (Not
->> necessarily as part of this series, of course.)
-> 
-> If you want to suggest that we should stop verifying overflows when a
-> complex reasoning can prove that the overflow is not happening in a
-> billion years, I disagree. Not only is it unnecessarily time-consuming to
-> ask readers to perform the complex reasoning, and not only is there enough
-> room for bugs to hide in plain sight (because of the complexity), it also
-> makes the same code harder to reuse in other software where a different
-> timestamp data type was chosen (or inherited from previous Git versions).
-> 
-> I'd much rather have easy-to-reason code that does not cause head
-> scratching (like the "why do we ignore a too large timestamp?" triggering
-> `if (date_overflows(date)) date = 0;`) than pretending to be smart and
-> clever and make everybody else feel stupid by forcing them through hoops
-> of thinking bubbles until they also reached the conclusion that this
-> actually won't happen. Unless there is a bug in the code.
+-- 8< --
+sha1_file, fsck: add missing blob hook support
 
-No, I meant that the presence of tests does not necessarily cast an
-undesirable behavior into stone, especially if it's hard to trigger
-in real life.  And that improvements thereof can be done later.  In
-other words: It's OK to maintain the same behavior in this series,
-but cheer up, we may be able to fix the issue eventually.
+Currently, Git does not support repos with very large numbers of blobs
+or repos that wish to minimize manipulation of certain blobs (for
+example, because they are very large) very well, even if the user
+operates mostly on part of the repo, because Git is designed on the
+assumption that every blob referenced by a tree object is available
+somewhere in the repo storage.
 
-René
+As a first step to reducing this problem, add rudimentary support for
+missing blobs by teaching sha1_file to invoke a hook whenever a blob is
+requested but missing, and by updating fsck to tolerate missing blobs.
+The hook is a shell command that can be configured through "git config";
+this hook takes in a list of hashes and writes (if successful) the
+corresponding objects to the repo's local storage.
+
+This commit does not include support for generating such a repo; neither
+has any command (other than fsck) been modified to either tolerate
+missing blobs (without invoking the hook) or be more efficient in
+invoking the missing blob hook. Only a fallback is provided in the form
+of sha1_file invoking the missing blob hook when necessary.
+
+In order to determine the code changes in sha1_file.c necessary, I
+investigated the following:
+ (1) functions in sha1_file that take in a hash, without the user
+     regarding how the object is stored (loose or packed)
+ (2) functions in sha1_file that operate on packed objects (because I
+     need to check callers that know about the loose/packed distinction
+     and operate on both differently, and ensure that they can handle
+     the concept of objects that are neither loose nor packed)
+
+For (1), I looked through all non-static functions in sha1_file.c that
+take in an unsigned char * parameter. The ones that are relevant, and my
+modifications to them to resolve this problem, are:
+ - sha1_object_info_extended (fixed in this commit)
+ - sha1_object_info (auto-fixed by sha1_object_info_extended)
+ - read_sha1_file_extended (fixed by fixing read_object)
+ - read_object_with_reference (auto-fixed by read_sha1_file_extended)
+ - force_object_loose (only called from builtin/pack-objects.c, which
+   already knows that at least one pack contains this object)
+ - has_sha1_file_with_flags (fixed in this commit)
+ - assert_sha1_type (auto-fixed by sha1_object_info)
+
+As described in the list above, several changes have been included in
+this commit to fix the necessary functions.
+
+For (2), I looked through the same functions as in (1) and also
+for_each_packed_object. The ones that are relevant are:
+ - parse_pack_index
+   - http - indirectly from http_get_info_packs
+ - find_pack_entry_one
+   - this searches a single pack that is provided as an argument; the
+     caller already knows (through other means) that the sought object
+     is in a specific pack
+ - find_sha1_pack
+   - fast-import - appears to be an optimization to not store a
+     file if it is already in a pack
+   - http-walker - to search through a struct alt_base
+   - http-push - to search through remote packs
+ - has_sha1_pack
+   - builtin/fsck - fixed in this commit
+   - builtin/count-objects - informational purposes only (check if loose
+     object is also packed)
+   - builtin/prune-packed - check if object to be pruned is packed (if
+     not, don't prune it)
+   - revision - used to exclude packed objects if requested by user
+   - diff - just for optimization
+ - for_each_packed_object
+   - reachable - only to find recent objects
+   - builtin/fsck - fixed in this commit
+   - builtin/cat-file - see below
+
+As described in the list above, builtin/fsck has been updated. I have
+left builtin/cat-file alone; this means that cat-file
+--batch-all-objects will only operate on objects physically in the repo.
+
+Some alternative designs that I considered but rejected:
+
+ - Storing a list of hashes of missing blobs, possibly with metadata
+   (much like the shallow list). Having such a list would allow for
+   things like better error messages, attaching metadata (for example,
+   file size or binary/text nature) to each blob, and configuring
+   different hooks for each blob, but it is difficult to scale to large
+   repos.
+ - Adding a hook whenever a packed blob is requested, not on any blob.
+   That is, whenever we attempt to search the packfiles for a blob, if
+   it is missing (from the packfiles and from the loose object storage),
+   to invoke the hook (which must then store it as a packfile), open the
+   packfile the hook generated, and report that the blob is found in
+   that new packfile. This reduces the amount of analysis needed (in
+   that we only need to look at how packed blobs are handled), but
+   requires that the hook generate packfiles (or for sha1_file to pack
+   whatever loose objects are generated), creating one packfile for each
+   missing blob and potentially very many packfiles that must be
+   linearly searched. This may be tolerable now for repos that only have
+   a few missing blobs (for example, repos that only want to exclude
+   large blobs), and might be tolerable in the future if we have
+   batching support for the most commonly used commands, but is not
+   tolerable now for repos that exclude a large amount of blobs.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ Documentation/config.txt | 10 +++++++
+ builtin/fsck.c           |  6 +++++
+ sha1_file.c              | 69 +++++++++++++++++++++++++++++++++++++++++++++---
+ t/t3907-missing-blob.sh  | 50 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 131 insertions(+), 4 deletions(-)
+ create mode 100644 t/t3907-missing-blob.sh
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 475e874d5..04db83fe8 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -369,6 +369,16 @@ The default is false, except linkgit:git-clone[1] or linkgit:git-init[1]
+ will probe and set core.ignoreCase true if appropriate when the repository
+ is created.
+ 
++core.missingBlobCommand::
++	If set, whenever a blob in the local repo is attempted to be
++	read but is missing, invoke this shell command to generate or
++	obtain that blob before reporting an error. This shell command
++	should take one or more hashes, each terminated by a newline, as
++	standard input, and (if successful) should write the
++	corresponding objects to the local repo (packed or loose).
+++
++If set, fsck will not treat a missing blob as an error condition.
++
+ core.precomposeUnicode::
+ 	This option is only used by Mac OS implementation of Git.
+ 	When core.precomposeUnicode=true, Git reverts the unicode decomposition
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index f76e4163a..5c60c0916 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -37,6 +37,7 @@ static int verbose;
+ static int show_progress = -1;
+ static int show_dangling = 1;
+ static int name_objects;
++static int missing_blob_ok;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_PACK 04
+@@ -93,6 +94,9 @@ static int fsck_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.missingblobcommand"))
++		missing_blob_ok = 1;
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -222,6 +226,8 @@ static void check_reachable_object(struct object *obj)
+ 	if (!(obj->flags & HAS_OBJ)) {
+ 		if (has_sha1_pack(obj->oid.hash))
+ 			return; /* it is in pack - forget about it */
++		if (missing_blob_ok && obj->type == OBJ_BLOB)
++			return;
+ 		printf("missing %s %s\n", printable_type(obj),
+ 			describe_object(obj));
+ 		errors_found |= ERROR_REACHABLE;
+diff --git a/sha1_file.c b/sha1_file.c
+index 1577e2d7d..de8f137a9 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2955,6 +2955,49 @@ static int sha1_loose_object_info(const unsigned char *sha1,
+ 	return (status < 0) ? status : 0;
+ }
+ 
++static char *missing_blob_command;
++static int sha1_file_config(const char *conf_key, const char *value, void *cb)
++{
++	if (!strcmp(conf_key, "core.missingblobcommand")) {
++		missing_blob_command = xstrdup(value);
++	}
++	return 0;
++}
++
++static int configured;
++static void ensure_configured(void)
++{
++	if (configured)
++		return;
++
++	git_config(sha1_file_config, NULL);
++	configured = 1;
++}
++
++static void handle_missing_blob(const unsigned char *sha1)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	const char *argv[] = {missing_blob_command, NULL};
++	char input[GIT_MAX_HEXSZ + 1];
++
++	memcpy(input, sha1_to_hex(sha1), 40);
++	input[40] = '\n';
++
++	cp.argv = argv;
++	cp.env = local_repo_env;
++	cp.use_shell = 1;
++
++	if (pipe_command(&cp, input, sizeof(input), NULL, 0, NULL, 0)) {
++		die("failed to load blob %s", sha1_to_hex(sha1));
++	}
++
++	/*
++	 * The command above may have updated packfiles, so update our record
++	 * of them.
++	 */
++	reprepare_packed_git();
++}
++
+ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi, unsigned flags)
+ {
+ 	struct cached_object *co;
+@@ -2979,6 +3022,8 @@ int sha1_object_info_extended(const unsigned char *sha1, struct object_info *oi,
+ 		return 0;
+ 	}
+ 
++	if (!has_sha1_file_with_flags(sha1, 0))
++		return -1;
+ 	if (!find_pack_entry(real, &e)) {
+ 		/* Most likely it's a loose object. */
+ 		if (!sha1_loose_object_info(real, oi, flags)) {
+@@ -3091,6 +3136,8 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
+ 		return xmemdupz(co->buf, co->size);
+ 	}
+ 
++	if (!has_sha1_file_with_flags(sha1, 0))
++		return NULL;
+ 	buf = read_packed_sha1(sha1, type, size);
+ 	if (buf)
+ 		return buf;
+@@ -3480,17 +3527,31 @@ int has_sha1_pack(const unsigned char *sha1)
+ int has_sha1_file_with_flags(const unsigned char *sha1, int flags)
+ {
+ 	struct pack_entry e;
++	int already_retried = 0;
+ 
+ 	if (!startup_info->have_repository)
+ 		return 0;
++retry:
+ 	if (find_pack_entry(sha1, &e))
+ 		return 1;
+ 	if (has_loose_object(sha1))
+ 		return 1;
+-	if (flags & HAS_SHA1_QUICK)
+-		return 0;
+-	reprepare_packed_git();
+-	return find_pack_entry(sha1, &e);
++	if (!(flags & HAS_SHA1_QUICK)) {
++		reprepare_packed_git();
++		if (find_pack_entry(sha1, &e))
++			return 1;
++	}
++
++	if (!already_retried) {
++		ensure_configured();
++		if (missing_blob_command) {
++			already_retried = 1;
++			handle_missing_blob(sha1);
++			goto retry;
++		}
++	}
++
++	return 0;
+ }
+ 
+ int has_object_file(const struct object_id *oid)
+diff --git a/t/t3907-missing-blob.sh b/t/t3907-missing-blob.sh
+new file mode 100644
+index 000000000..f03e53c23
+--- /dev/null
++++ b/t/t3907-missing-blob.sh
+@@ -0,0 +1,50 @@
++#!/bin/sh
++
++test_description='core.missingblobcommand option'
++
++. ./test-lib.sh
++
++test_expect_success 'sha1_object_info_extended and read_sha1_file (through git cat-file -p)' '
++	rm -rf server client &&
++
++	git init server &&
++	test_commit -C server 1 &&
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++	HASH=$(git hash-object server/1.t) &&
++
++	git init client &&
++	test_config -C client core.missingblobcommand \
++		"git -C \"$(pwd)/server\" pack-objects --stdout | git unpack-objects" &&
++	git -C client cat-file -p "$HASH"
++'
++
++test_expect_success 'has_sha1_file (through git cat-file -e)' '
++	rm -rf server client &&
++
++	git init server &&
++	test_commit -C server 1 &&
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++	HASH=$(git hash-object server/1.t) &&
++
++	git init client &&
++	test_config -C client core.missingblobcommand \
++		"git -C \"$(pwd)/server\" pack-objects --stdout | git unpack-objects" &&
++	git -C client cat-file -e "$HASH"
++'
++
++test_expect_success 'fsck' '
++	rm -rf server client &&
++
++	git init server &&
++	test_commit -C server 1 &&
++	test_config -C server uploadpack.allowanysha1inwant 1 &&
++	HASH=$(git hash-object server/1.t) &&
++	echo hash is $HASH &&
++
++	cp -r server client &&
++	test_config -C client core.missingblobcommand "this-command-is-not-actually-run" &&
++	rm client/.git/objects/$(echo $HASH | cut -c1-2)/$(echo $HASH | cut -c3-40) &&
++	git -C client fsck
++'
++
++test_done
+-- 
+2.13.0.rc0.306.g87b477812d-goog
+
