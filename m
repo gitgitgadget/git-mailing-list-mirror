@@ -2,107 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B05C3207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 19:09:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 745AB207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 19:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S965748AbdDZTJO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 15:09:14 -0400
-Received: from mout.gmx.net ([212.227.15.15]:60222 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965730AbdDZTJM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 15:09:12 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lg0sd-1dshVR13ud-00paQk; Wed, 26
- Apr 2017 21:09:06 +0200
-Date:   Wed, 26 Apr 2017 21:09:05 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v5 8/8] Use uintmax_t for timestamps
-In-Reply-To: <02b74d66-97e6-c633-888a-0c6a628cc5bd@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1704262108160.3480@virtualbox>
-References: <cover.1492771484.git.johannes.schindelin@gmx.de> <cover.1493042239.git.johannes.schindelin@gmx.de> <50b62ed69c3239c076c28c5048bbd07396a25c5c.1493042239.git.johannes.schindelin@gmx.de> <02b74d66-97e6-c633-888a-0c6a628cc5bd@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iNUXM1dbycWq+etzB0LBWrnmZFBxgC2K+/5eu1BFpVCBGXiRNPi
- dcR6JH9+geGlX9TwlzqDPpo5XFnjoP0A0Vdydo2tCj60NWbXip2kZ690KJ60iU8pfbtWO7G
- c0Wu52MgOtzBuCLbCGtjeHeiJqOuE1/a2JkBPkZR62CNlncLv+/zAC4R5O4vTVWVEEP2wlb
- 79DDNv7cJXYEUvb0PS3jg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4ESIut2HCio=:0hpli5VW+VSKLfIqM9Hfza
- NHA8Yuf3yFdh9oYNl8LQ8c/EnUC4cPlFLN+1m+KtWeQw7qdFcVBl5prxOel3oeP4AAexL4ycj
- lKX3XjOiI1JhVA39VoLnzTLCC/aPw5v2sk6Gt/pB80n0ufJW46WivuXyhJ0GsrROpL9rLNLg9
- 67TtfhoQb+ygiqv5qMi7SyQ8H/6MOLyjQXsUVguh1CSof1YHCmamTfyxIYu+gJXw06tTiaUS6
- TCAfyYAld77EqjPxALFYkIAjERmBDULLBqvZlyMkRvennHOy9aXgWSjqUUNdV8dbJLGgujqJ7
- 1u3XbD0265/ZvkIWULKNj6n3f7LIV6xy0j7JH9W5D8ddYeZLlPsdZhaqm3wOlv+piYPZlhoVq
- x25DFDM+YErx1V5CPW6MchYhPab0U4n2nltfRLigtKwKMb98oRCQSZoPDROhmRuUZdl5l5Ted
- 4VWPe1qe/uTzNKKSnfDvEnwhYZKMAu+07++/w6+2hDTfV+nziR7uh2webiM6aqqOuizb/5AXv
- fqmOWJlMESNJP6qOhUUlcJjw70wSsuhQqT+SNNO+FDMfX+oiE3gXNoTefTfINb7V/kOMQ6MgJ
- ysTfNcJ95HCrGqM7A/mR4K+2vmBHljIxtM5Th/aYocHfKlkfIjycZKxjA3/+R0Gb5E+A73l8L
- btPZabBUH+5dV0x/OB03VhkRm6VBpnPW0BzSKOxcesrMT7T7fSWvja8OX1Ts5R/K+vROm4K0A
- MMA5n8N/em44ZsXG5XX4afymwUvkn07znp6T6Fc4XL7PGtoqgHPX3siK/WIW7mm+4lUEWDvJb
- KAke1jl
+        id S966064AbdDZTPu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 15:15:50 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:38168 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S966056AbdDZTPs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 15:15:48 -0400
+Received: by mail-wm0-f44.google.com with SMTP id r190so14170792wme.1
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 12:15:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=eyuBIHT+V+E7P/a6AVltC3CD7bsbFCHl0pfeVqP/Xo0=;
+        b=W4J80HWUZ2R5DSBF82jyAoUN99RC721yK3/AVrFFiRXmiXBBfeTNDxV/tz1eu2w2j6
+         2NbXKVxAgmkH4hVvZPv5cfbqImQAWEVQ0u9t8T6U2TLxZ6Raot0/MFbwkqtp9unAFsoA
+         dxp6DPdYB5KPBKsEwaUIOvBzj09bZ7LtR1b0NGbeJr88iGbi+L4l4Y5WZduAYb2GqFs1
+         +gd2AXL1iC/6X6o1cuFNBfUuYBeIVTFx1Y2qlj0LODmskBEvKpin37Vq0h3Q578KXXsM
+         LNbIkbpSg/IoO8BSR6tEagYLipM+KNZ+GeKGVIst4/Lak7N0LiUoquqlxCs/1lbrrpyF
+         9d9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=eyuBIHT+V+E7P/a6AVltC3CD7bsbFCHl0pfeVqP/Xo0=;
+        b=AbgwwLxJStc7mht2pA3JGqJB50KzOBMq0I9FvD/Nf70F2we9MvoWKfs/DzktMqxnKc
+         mrVTLf90x8wYCzxBiy4WHZovTMkAw3T/V6aZgaUq8Aiogn0mRlyb5E9xv60K0HOUbpoh
+         2BDEcFw1IxEk+9ySwX0svBlbUPOZZrDzju8AaAv+H4jjJMqFT+1d1GC9POMS+j83qXvq
+         6ES4+awjEi+XvQFv+r3Cq7HzLo0OuanAWqrCPqqK4yaYxr78UZgKoClb1t9fWhklkRuk
+         60pk23q7kW5FShNoJVeSw1LPocHiUO1Aix/Fcms72kbDftKpgIqH2jTc1+g8g8pk4Sg9
+         GfIw==
+X-Gm-Message-State: AN3rC/7i4tgaOfpPzKNKmAiHHWKwZSxERiyqn7KVP7N5/0kIRhh+/uGc
+        YxiBXjQLn6obnVMq
+X-Received: by 10.80.163.231 with SMTP id t36mr1994061edb.59.1493234147282;
+        Wed, 26 Apr 2017 12:15:47 -0700 (PDT)
+Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
+        by smtp.gmail.com with ESMTPSA id n40sm275426edd.12.2017.04.26.12.15.46
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 12:15:46 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+To:     git@vger.kernel.org
+Cc:     sandals@crustytoothpaste.net, gitster@pobox.com
+Subject: [PATCH v2 0/4] travis-ci: build docs with asciidoctor
+Date:   Wed, 26 Apr 2017 21:15:41 +0200
+Message-Id: <20170426191545.27552-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.12.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+Hi,
 
-On Wed, 26 Apr 2017, Johannes Sixt wrote:
+changes since v1:
 
-> Am 24.04.2017 um 15:58 schrieb Johannes Schindelin:
-> >  #define PRIo32 "o"
-> >  #endif
-> >  
-> > -typedef unsigned long timestamp_t;
-> > -#define PRItime "lu"
-> > -#define parse_timestamp strtoul
-> > +typedef uintmax_t timestamp_t;
-> > +#define PRItime PRIuMAX
-> > +#define parse_timestamp strtoumax
-> > +#ifdef ULLONG_MAX
-> > +#define TIME_MAX ULLONG_MAX
-> > +#else
-> >  #define TIME_MAX ULONG_MAX
-> > +#endif
-> >  
-> >  #ifndef PATH_SEP
-> >  #define PATH_SEP ':'
-> > 
-> 
-> I think you should squash in this:
-> 
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 26d2643667..b5f4a7bb2f 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -322,11 +322,7 @@ extern char *gitdirname(char *);
->  typedef uintmax_t timestamp_t;
->  #define PRItime PRIuMAX
->  #define parse_timestamp strtoumax
-> -#ifdef ULLONG_MAX
-> -#define TIME_MAX ULLONG_MAX
-> -#else
-> -#define TIME_MAX ULONG_MAX
-> -#endif
-> +#define TIME_MAX UINTMAX_MAX
->  
->  #ifndef PATH_SEP
->  #define PATH_SEP ':'
-> 
-> UINTMAX_MAX is already used git-compat-util.h
+* check Asciidoctor stderr output (Brian)
+  http://public-inbox.org/git/20170418104411.hdkzh3psvej63tqw@genre.crustytoothpaste.net/
 
-Good point. I very much appreciate your fresh eyes here, as I simply
-overlooked this in the humongous task to convert v1 to use uintmax_t
-instead of time_t.
+* fix make style nit (Junio)
+  http://public-inbox.org/git/xmqq37dcorr7.fsf@gitster.mtv.corp.google.com/
 
-Ciao,
-Dscho
+
+Thanks,
+Lars
+
+Base Ref: master
+Web-Diff: https://github.com/larsxschneider/git/commit/315affa7c0
+Checkout: git fetch https://github.com/larsxschneider/git travisci/asciidoctor-v2 && git checkout 315affa7c0
+Interdiff (v1..v2):
+
+diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
+index 81f123e68d..6214e6acb4 100755
+--- a/ci/test-documentation.sh
++++ b/ci/test-documentation.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/usr/bin/env bash
+ #
+ # Perform sanity checks on documentation and build it.
+ #
+@@ -9,7 +9,8 @@ make check-builtins
+ make check-docs
+
+ # Build docs with AsciiDoc
+-make --jobs=2 doc
++make --jobs=2 doc > >(tee stdout.log) 2> >(tee stderr.log >&2)
++! test -s stderr.log
+ test -s Documentation/git.html
+ test -s Documentation/git.xml
+ test -s Documentation/git.1
+@@ -17,6 +18,8 @@ grep '<meta name="generator" content="AsciiDoc ' Documentation/git.html
+
+ # Build docs with AsciiDoctor
+ make clean
+-make --jobs=2 doc USE_ASCIIDOCTOR=1
++make --jobs=2 USE_ASCIIDOCTOR=1 doc > >(tee stdout.log) 2> >(tee stderr.log >&2)
++sed '/^GIT_VERSION = / d' stderr.log
++! test -s stderr.log
+ test -s Documentation/git.html
+ grep '<meta name="generator" content="Asciidoctor ' Documentation/git.html
+
+\0
+
+Lars Schneider (4):
+  travis-ci: build documentation with AsciiDoc and Asciidoctor
+  travis-ci: parallelize documentation build
+  travis-ci: check AsciiDoc/AsciiDoctor stderr output
+  travis-ci: unset compiler for jobs that do not need one
+
+ .travis.yml              |  5 +++--
+ ci/test-documentation.sh | 15 +++++++++++++--
+ 2 files changed, 16 insertions(+), 4 deletions(-)
+
+
+base-commit: b14f27f91770e0f99f64135348977a0ce1c7993a
+--
+2.12.2
+
