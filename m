@@ -2,148 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F4E0207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 13:06:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72354207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 13:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1955032AbdDZNGk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 09:06:40 -0400
-Received: from siwi.pair.com ([209.68.5.199]:13490 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1034001AbdDZNGi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 09:06:38 -0400
-Received: from [10.181.8.102] (cpe-76-182-13-114.nc.res.rr.com [76.182.13.114])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 87AF4844F2;
-        Wed, 26 Apr 2017 09:06:37 -0400 (EDT)
-Subject: Re: [PATCH v8] read-cache: call verify_hdr() in a background thread
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, peff@peff.net, j6t@kdbg.org,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20170425184109.46168-1-git@jeffhostetler.com>
- <xmqqd1bzst95.fsf@gitster.mtv.corp.google.com>
- <xmqq8tmnss66.fsf@gitster.mtv.corp.google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5a97967d-5cf2-dc62-7f84-524556a9ca4c@jeffhostetler.com>
-Date:   Wed, 26 Apr 2017 09:06:37 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S3000376AbdDZNTI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 09:19:08 -0400
+Received: from mail-it0-f48.google.com ([209.85.214.48]:35341 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1953066AbdDZNTH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 09:19:07 -0400
+Received: by mail-it0-f48.google.com with SMTP id 70so38287882ita.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 06:19:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=3Gu+9Ut9rr98QxSKjFeyHjmGYBk6uwDRwWK1PCVSvOc=;
+        b=ra+e+f2B5wiSwpa+5pFtNiCZHOwmTHYHvIZN0rz6gEOcAAPodh+tKbBu5TCSR7375m
+         G5yTm7tL/+JNjYHvu9ykKqSIj5gFuLod/y4ipx1ccojvp1vkX60nlQY6YhaqjtvDQWXa
+         5er0lHCprE8Tk70wKPABtVJHCJlR6D34dbIruVPaZyAzZAr5TOkZ/t75U24gl2wjlPT3
+         6oDmLDON8fodDirHXhpQ1PL5gOJ7lbUXzWBQGxhcHDSO7Sbs/byV5sclhRRNvs0PR+rs
+         tG/aObnSW1c3UOyXjoXON2t3BqOD6F2CHOitdmcS8p6O2ihO5mKX8wy2Gr0y1zegtyJ0
+         VwsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=3Gu+9Ut9rr98QxSKjFeyHjmGYBk6uwDRwWK1PCVSvOc=;
+        b=l0DerhYGWQmsYB4rSig2ZRVDfvMLRWc4tYvH17jIUPqiBFZC+hMCMjLbaa2WLjD09N
+         3ez7sCRX23frQzQ+0TRr1tsAsOw5aZWhRlTxxFm0FLID9L2mT+Kss9ebS3ejGTWRSavV
+         MHkfYniSq+nL3ExmCS/hxwCnjddqJq7XQHCypBrSf07xI1isW3eU0coCCvnJhMqvqSOC
+         IpQG3tW2Oe1U86EO/uaX/KepVmlh0VE8q4uldm9YppLZ7A+zEoPz5C40a/bwP0bOCW6V
+         25w6taEMt8pDa7SkcKI3VSUNDO8FJdsCPrB8bqL80lM7jpAN53FDDi8EI9QCicMdKtUv
+         +oZA==
+X-Gm-Message-State: AN3rC/4MDsK6+CgsqNYtQBvL+NJojf6M++JWYcBSL6D3EYUZcxgJvKz8
+        uEuWfdpxXrrPyTIf5BX1IJ/8cEKG4g==
+X-Received: by 10.36.54.129 with SMTP id l123mr10808110itl.50.1493212745048;
+ Wed, 26 Apr 2017 06:19:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq8tmnss66.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Received: by 10.107.47.88 with HTTP; Wed, 26 Apr 2017 06:18:44 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1704261131500.3480@virtualbox>
+References: <cover.1492721487.git.johannes.schindelin@gmx.de>
+ <cover.1492771484.git.johannes.schindelin@gmx.de> <b59a414793492786937e910f6cd588b8e1751b4b.1492771484.git.johannes.schindelin@gmx.de>
+ <xmqqinlu1o8u.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1704241226440.3480@virtualbox>
+ <xmqqr30hw31s.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1704252208520.3480@virtualbox>
+ <xmqqvapsszoo.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1704261131500.3480@virtualbox>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Wed, 26 Apr 2017 22:18:44 +0900
+X-Google-Sender-Auth: SOv7cwuC3w4Gz8OJtjq2RpSh32Y
+Message-ID: <CAPc5daWzotQZoVQ40pmWrgWSPwrcgqEqAcEbjRcJ-Ev_9a73AA@mail.gmail.com>
+Subject: Re: [PATCH v4 8/9] Use uintmax_t for timestamps
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+(in gmail so pardon top posting)
+
+As I said, this series does *not* tighten the existing code anyway, so
+it is not like something that used to be accepted are now getting rejected.
+
+Happy?
+
+What I was worried about is actually the other way around, though.
 
 
-On 4/26/2017 12:34 AM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Apr 26, 2017 at 6:32 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi Junio,
 >
->> git@jeffhostetler.com writes:
->>
->>> From: Jeff Hostetler <jeffhost@microsoft.com>
->>>
->>> Version 8 of this patch converts the unit test to use
->>> perl to corrupt the index checksum (rather than altering
->>> a filename) and also verifies the fsck error message as
->>> suggested in response to v7 on the mailing list.
->>>
->>> If there are no other suggestions, I think this version
->>> should be considered final.
->> Oops.  The earlier one has already been in 'master' for a few days.
->> Let's make this an incremental update.
->>
->> Is the description in the following something you are OK with (so
->> that I can add your sign-off)?
->>
->> Thanks.
-> By the way, I said I am fine with the two-liner version in Dscho's
-> message, but I am also OK with this version that does not use a
-> separate dd and instead does everything in a single invocation of
-> Perl.  As long as you've tested this version, there is no point
-> replacing it with yet another one.
-
-Either version is fine.  I'd say use my perl version as I have tested it and
-it is simple enough and already in the tree.  I don't think it's worth the
-bother to switch it to the dd version.
-
-Thanks
-Jeff
-
-> Thanks.
+> On Tue, 25 Apr 2017, Junio C Hamano wrote:
 >
->> -- >8 --
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->> Date: Tue, 25 Apr 2017 18:41:09 +0000
->> Subject: t1450: avoid use of "sed" on the index, which is a binary file
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >>
->> The previous step added a path zzzzzzzz to the index, and then used
->> "sed" to replace this string to yyyyyyyy to create a test case where
->> the checksum at the end of the file does not match the contents.
+>> > In any case, it is a question unrelated to the work I performed in
+>> > this patch series: the raison d'=C3=AAtre of these patches is to allow
+>> > timestamps to refer to dates that are currently insanely far in the
+>> > future.
 >>
->> Unfortunately, use of "sed" on a non-text file is not portable.
->> Instead, use a Perl script that seeks to the end and modifies the
->> last byte of the file (where we _know_ stores the trailing
->> checksum).
->>
->>
->> ---
->>   t/t1450-fsck.sh | 33 ++++++++++++++++++++++++++-------
->>   1 file changed, 26 insertions(+), 7 deletions(-)
->>
->> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
->> index 677e15a7a4..eff1cd68e9 100755
->> --- a/t/t1450-fsck.sh
->> +++ b/t/t1450-fsck.sh
->> @@ -689,16 +689,35 @@ test_expect_success 'bogus head does not fallback to all heads' '
->>   	! grep $blob out
->>   '
->>   
->> +# Corrupt the checksum on the index.
->> +# Add 1 to the last byte in the SHA.
->> +corrupt_index_checksum () {
->> +    perl -w -e '
->> +	use Fcntl ":seek";
->> +	open my $fh, "+<", ".git/index" or die "open: $!";
->> +	binmode $fh;
->> +	seek $fh, -1, SEEK_END or die "seek: $!";
->> +	read $fh, my $in_byte, 1 or die "read: $!";
->> +
->> +	$in_value = unpack("C", $in_byte);
->> +	$out_value = ($in_value + 1) & 255;
->> +
->> +	$out_byte = pack("C", $out_value);
->> +
->> +	seek $fh, -1, SEEK_END or die "seek: $!";
->> +	print $fh $out_byte;
->> +	close $fh or die "close: $!";
->> +    '
->> +}
->> +
->> +# Corrupt the checksum on the index and then
->> +# verify that only fsck notices.
->>   test_expect_success 'detect corrupt index file in fsck' '
->>   	cp .git/index .git/index.backup &&
->>   	test_when_finished "mv .git/index.backup .git/index" &&
->> -	echo zzzzzzzz >zzzzzzzz &&
->> -	git add zzzzzzzz &&
->> -	sed -e "s/zzzzzzzz/yyyyyyyy/" .git/index >.git/index.yyy &&
->> -	mv .git/index.yyy .git/index &&
->> -	# Confirm that fsck detects invalid checksum
->> -	test_must_fail git fsck --cache &&
->> -	# Confirm that status no longer complains about invalid checksum
->> +	corrupt_index_checksum &&
->> +	test_must_fail git fsck --cache 2>expect &&
->> +	grep "bad index file" expect &&
->>   	git status
->>   '
->>   
-
+>> Yes, but the job of the maintainer is to prevent narrow-focused
+>> individual contributors from throwing us into a hole we cannot dig out
+>> of by closing the door for plausible future enhancements.
+>
+> You make it sound as if I made the code stricter in any way, or even
+> introduced a check that was not there before.
+>
+> As I did no such thing, you may want to reword your statement?
+>
+> Ciao,
+> Dscho
