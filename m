@@ -3,91 +3,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 955AF207E4
-	for <e@80x24.org>; Wed, 26 Apr 2017 05:29:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BF53207D6
+	for <e@80x24.org>; Wed, 26 Apr 2017 07:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1953988AbdDZF3E (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 01:29:04 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:35462 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1953985AbdDZF3C (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 01:29:02 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 68so1088444pgj.2
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 22:29:02 -0700 (PDT)
+        id S948081AbdDZHtg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 03:49:36 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34030 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1435291AbdDZHtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 03:49:11 -0400
+Received: by mail-wm0-f68.google.com with SMTP id z129so30976915wmb.1
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 00:49:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=KoC4pK2zhDeSHuFIff4Qdt29hxdu5FC/8z90IbvKi1c=;
-        b=rb9UF3QeUykZYEDvMjxlfIkrXjnawsQMFg3jtni8Jhz/2WBfZCtcX0fgBi8TcyKr+b
-         9uaoPtgkqoqv07bDAjLVNHw+bYZnVrVdweX1DlbFrnWglEDjxykmTd597bc1D3RSEKvq
-         Pw/Bgj96F5nqU9BZ5oWZRtQHgw7YBerMYwYA+0ZlOVPZLzPOA3fzWx2iuE8f9bBLtpFm
-         YXBbQycZOkFrvw6QUTrDx4Nhm9UvGkJ5T9EiSbqmb17i8LomgMH6U4bdpz7YD7CFpy8S
-         xD1SUNG+EUVs8orJ+eaZT8hNnmxoTNauaw2Bl/NtOnHKK7Wz7VPhTGMQg+wzg0sSK/3x
-         0BYA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=B/BII2U5tXVY/TMgQOk25KGPHixWfxCQClPbkO0Jq8I=;
+        b=a4NN0C8ScMpAbzFhawdagZmLLxolTw0fvsd6GEXeCCWna4qK3heThLpnrPZF+zRjrN
+         T5dlR4s/YeBRybO1fHnVKLHLAjpEV9tej794xWdAuTxIfjqhhLikUBNE6TLJa7R3U6zn
+         vCF5Rq0jFeWwRB42qGgqKtE+vo5Z1kjFkRgyqyh33JAGh778zM0xqe0KdrYCNVxASRsK
+         mtfzD8tRhsb2WTJF/BYqD0r373xKtGe2hwhdrJeEtgE/E31mysqBeveeJ34H0BEHlpI/
+         wgD+Pi9cMbetQ+MRuSHJ8l0384Slw91PMDDIcqSuKXPVXcOYi+CsO+jIz6BRWpZkLU8K
+         U+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=KoC4pK2zhDeSHuFIff4Qdt29hxdu5FC/8z90IbvKi1c=;
-        b=CtXGsDoiI2xBnvUdHzkx5lpKRQpTj2GLFOErn9hlbksTv+/6e/K29HTfZT0A69JJS9
-         wp6lJnB7TltOY7CDjOfa30o9AEpdDiQ4Y2UT9VWZNJNXV1Z41XoK6tb03YLs6Gch5/ik
-         QMcTli+NTRnmgVEMaqQugZxfXn9xX+ggbzYdoiE7y3naZfsYePomN+GN6uAC5GxQzwOk
-         nj5zmGYmn80vFk+GLiFalQkcEleAc1g1SeUlgTYsaOSeIAJI4rcl0i4ai4EMsONoOGlc
-         6chud9qYmVP93MgyUFbrhl1YrWeehJO+gYecssLhhDoUmQItJpJ9uVkvkpnbH7dXjPSc
-         8OKw==
-X-Gm-Message-State: AN3rC/4x5NCsdHFqv1s1Sv1FTykjl9b0Rl5a86iYTeHdXkBPdKAdd4VR
-        3MksFD7I8at1UA==
-X-Received: by 10.99.60.3 with SMTP id j3mr30342047pga.61.1493184541851;
-        Tue, 25 Apr 2017 22:29:01 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3179:d004:20b:b383])
-        by smtp.gmail.com with ESMTPSA id v62sm16430745pfv.44.2017.04.25.22.29.01
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Apr 2017 22:29:01 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=B/BII2U5tXVY/TMgQOk25KGPHixWfxCQClPbkO0Jq8I=;
+        b=maT+Y40Lo9bamJiwmcSmOS4FTKmWkKLU0sZq0gaUucBmJv4r09m7E0X+8uVwueJAYG
+         7PFziWUl8f7yIjaDUAPPNC5HNgVcx0BEO5oARcM4SBex4U95pSiTuhufiAlnEQ8C4Rzh
+         vozSDOTC4h6CgdaP1HjcnbvqrODT/JuqvQfx79H2zZd3NrUxaKdo+Z+Jp60i0N1fG2F3
+         zwN9USbJPa3W+tH4EcmNlH8XE5cVzI+O1OKC5FAu4PUQBbhZUUzV3QngIilX2mk/K0gE
+         M5dRGdZ+o2hOmzdCwOzUppS8SLmukE5j1aB5u2OTCduD8hNKtUkI41JRaqK04zbSX/fp
+         OgWw==
+X-Gm-Message-State: AN3rC/5X4ojdR0xPleukd68M8Wfvs1aJutX/2YodBlXNKOIrulnMLYQE
+        /eSg6rRqePI/VQ==
+X-Received: by 10.28.232.137 with SMTP id f9mr4520778wmi.116.1493192949973;
+        Wed, 26 Apr 2017 00:49:09 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id 3sm28892146wrv.33.2017.04.26.00.49.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Apr 2017 00:49:08 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jeffrey Walton <noloader@gmail.com>,
-        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
         J Smith <dark.panda@gmail.com>,
         Victor Leschuk <vleschuk@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Fredrik Kuivinen <frekui@gmail.com>,
-        =?utf-8?Q?Zol?= =?utf-8?Q?t=C3=A1n?= Herczeg 
-        <hzmester@freemail.hu>, Brandon Williams <bmwill@google.com>
-Subject: Re: [PATCH v4 05/19] grep: remove redundant `regflags &= ~REG_EXTENDED` assignments
-References: <20170425210548.24612-1-avarab@gmail.com>
-        <20170425210548.24612-6-avarab@gmail.com>
-Date:   Tue, 25 Apr 2017 22:29:00 -0700
-In-Reply-To: <20170425210548.24612-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 25 Apr 2017 21:05:34 +0000")
-Message-ID: <xmqqvaprrb37.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        =?UTF-8?q?Zolt=C3=A1n=20Herczeg?= <hzmester@freemail.hu>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 05/19] grep: remove redundant `regflags &= ~REG_EXTENDED` assignments
+Date:   Wed, 26 Apr 2017 07:48:56 +0000
+Message-Id: <20170426074856.29903-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <xmqqvaprrb37.fsf@gitster.mtv.corp.google.com>
+References: <xmqqvaprrb37.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Remove redundant assignments to the "regflags" variable. There are no
+code paths that have previously set the regflags to anything, and
+certainly not to `|= REG_EXTENDED`.
 
-> @@ -417,7 +415,6 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
->  	int regflags;
->  
->  	basic_regex_quote_buf(&sb, p->pattern);
-> -	regflags = opt->regflags & ~REG_EXTENDED;
->  	if (opt->ignore_case)
->  		regflags |= REG_ICASE;
->  	err = regcomp(&p->regexp, sb.buf, regflags);
+This code gave the impression that it had to reset its environment,
+but it doesn't. This dates back to the initial introduction of
+git-grep in commit 5010cb5fcc ("built-in "git grep"", 2006-04-30).
 
-This hunk is wrong.  Now the use of regflags we see in the post
-context is mixing ICASE bit into an uninitialized garbage on the
-stack.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+On Wed, Apr 26, 2017 at 7:29 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+>
+>> @@ -417,7 +415,6 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+>>       int regflags;
+>>
+>>       basic_regex_quote_buf(&sb, p->pattern);
+>> -     regflags = opt->regflags & ~REG_EXTENDED;
+>>       if (opt->ignore_case)
+>>               regflags |= REG_ICASE;
+>>       err = regcomp(&p->regexp, sb.buf, regflags);
+>
+> This hunk is wrong.  Now the use of regflags we see in the post
+> context is mixing ICASE bit into an uninitialized garbage on the
+> stack.
+
+Oops, sorry about that. Here's a fixed version. Just sending a v5 for
+this, not the entire rest of the series. If you'd like to grab it in
+.git form it's github.com/avar/git:avar/pcre2-5, this is the only
+change from v4.
+
+
+ grep.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/grep.c b/grep.c
+index 59ae7809f2..bf6c2494fd 100644
+--- a/grep.c
++++ b/grep.c
+@@ -179,7 +179,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 	case GREP_PATTERN_TYPE_BRE:
+ 		opt->fixed = 0;
+ 		opt->pcre = 0;
+-		opt->regflags &= ~REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_ERE:
+@@ -191,7 +190,6 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 	case GREP_PATTERN_TYPE_FIXED:
+ 		opt->fixed = 1;
+ 		opt->pcre = 0;
+-		opt->regflags &= ~REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_PCRE:
+@@ -414,10 +412,9 @@ static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int err;
+-	int regflags;
++	int regflags = opt->regflags;
+ 
+ 	basic_regex_quote_buf(&sb, p->pattern);
+-	regflags = opt->regflags & ~REG_EXTENDED;
+ 	if (opt->ignore_case)
+ 		regflags |= REG_ICASE;
+ 	err = regcomp(&p->regexp, sb.buf, regflags);
+-- 
+2.11.0
+
