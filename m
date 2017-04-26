@@ -2,199 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65F1B207E4
-	for <e@80x24.org>; Wed, 26 Apr 2017 00:25:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68A7F207E4
+	for <e@80x24.org>; Wed, 26 Apr 2017 01:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1432727AbdDZAZH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 20:25:07 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:34111 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S947933AbdDZAZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 20:25:05 -0400
-Received: by mail-io0-f195.google.com with SMTP id h41so55704698ioi.1
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 17:25:05 -0700 (PDT)
+        id S1434265AbdDZB0M (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 21:26:12 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36096 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1434262AbdDZB0L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 21:26:11 -0400
+Received: by mail-pf0-f195.google.com with SMTP id v14so12161798pfd.3
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 18:26:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=QajaI//Dt24BOqAwhYMcz26r3YmV6ziW3i56S+xrDLQ=;
-        b=WJMfGwH0Nff7W3Ca3fWtEneYVYU8wcGtlUiarXFJDKe14l0CF85BR5ZhNVG/kzQWAO
-         qh6GV4pV6hTo7Rf0SOzgbMYUoWGuz9+ClpmKEjYKG3xld0nKJeWrxAG21hcxwN0UFyE/
-         Fff93lfITXT3y6QTmxmDz76Og2WXP+kl2LuA7d55fwFccy+I+0I/G3m6T4MMo3ekjOZo
-         hPk9lN1TacY2C1iJq9yPfINLz8VJd7nMHb/gF+Z78VRm2m8f8pzXnzI08hArSf0EiiNC
-         zDqx7PfRh3MkfYmnB6VnIeZSuiAQVChnaRmmqa3upityRdqBAul6FKdDdyIU068SV7Fy
-         P4jQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=s4zP0/HDYQChk8qwknn7tuHgtDhZG1Gi4WBbb18F5Ag=;
+        b=nT/FkthUhLYG+6Oh7xv1UHaVmO+GBvR2fg/KgZAOM3lqC19kquBiUsa8PHDtjJNfju
+         naorEe6WpfRF+pgMutKxD04ujCnSQtIRcGik8XMpDTJ+CTGoTMpUyG2mIa9yhSuQG8O7
+         mWOR56Cieikmv7dkzYsdfhSlyyH/t5QaJrYixirTceJOgEoVvqqE69xuCNzp1XybLJ74
+         FdM+7NXGNPfMbQeGW6HYGW7s7qd/ahRU1cIuGyFjRUbwmh6FuQtHEW++Uaig1dN6WJB4
+         Gj4JQ2IDVl1knpooK/fazqoFZZexfkxV6uCnnP5T32mwZMXIUDxAN9OfmbK6Fj9pTPZ2
+         UEcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=QajaI//Dt24BOqAwhYMcz26r3YmV6ziW3i56S+xrDLQ=;
-        b=En9j/ZNCd5vfTJrwwqDFNggz2yFAMhRaJl0rleKn9IR76ttgwyaRzVx4KdHJeQJLws
-         Nkmh/CiKFFeyBJqByITbCNK9wGr15H1cpCF3XwVxx5dthP9J3GQx2hpUCzrH/v0J673x
-         HFeLbqTt9kAELCs0v9D2wo8k/nkuZLkDafuUb8AOwUUtGsbqUcUKNblNev8eZC2fBLlx
-         VHbzFGvqJntewzcuFMhOHd+vjorvUdBFWjCXw7g2Zzd/8SOMC0m8cQbDqBbSTTMdSVzl
-         2urdor7Qift5En/9aNoMuTTfuRMzGvGHe7hhpuguki4iPQdmlwbMctaEbCpEVRrBEapB
-         JzEw==
-X-Gm-Message-State: AN3rC/4x6nRvwTOvDU5T0R+X3IProvqx2UOk9CaVEYsQG/F5WLdqZxEk
-        wwrlj8rGPhgS8g==
-X-Received: by 10.107.146.139 with SMTP id u133mr19987121iod.160.1493165615413;
-        Tue, 25 Apr 2017 17:13:35 -0700 (PDT)
-Received: from atris (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.googlemail.com with ESMTPSA id 9sm880723iol.36.2017.04.25.17.13.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 25 Apr 2017 17:13:34 -0700 (PDT)
-Message-ID: <1493165607.29673.31.camel@gmail.com>
-Subject: Re: [PATCH v2] rebase -i: add config to abbreviate command-names
-From:   liam Beguin <liambeguin@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, peff@peff.net
-Date:   Tue, 25 Apr 2017 20:13:27 -0400
-In-Reply-To: <alpine.DEB.2.20.1704252148400.3480@virtualbox>
-References: <20170424032347.10878-1-liambeguin@gmail.com>
-         <20170425044320.17840-1-liambeguin@gmail.com>
-         <alpine.DEB.2.20.1704252148400.3480@virtualbox>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.5 (3.22.5-1.fc25) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=s4zP0/HDYQChk8qwknn7tuHgtDhZG1Gi4WBbb18F5Ag=;
+        b=cGniymcj2NSU2fx7hECwlw/cN+SXA0vi11Ut5bHlRR2MeD+uoezc91U9lbJZI6pdA4
+         0tQoBy/MWH9tGtw7rS0sJ7crGU4Bf38pxEtwksM2gyFNMQBBvWjiciY/GXvoCGqgTZsC
+         YLAadr25EeCu0QfqVB8zEXJPXRN8K5SySOh7brgJHcwRU/gkF2xz6QtqPxeU4731CXii
+         adqp4E+ejwpCRZ6mCbYyvaJPM6AUuEy6Vm0geAjBnJChtMXYlcPf2cIan7ObSgZTaGHP
+         nXqSNRXvSDh19ftoZjKpqro8JyFtT8YUMC22shivMzsCbSqSo7Ww2NWiAc2DZ5sjxXz+
+         EZEw==
+X-Gm-Message-State: AN3rC/4d6DZRV4PEPMcqrEIp13v++8EwFHp4/Fi1bi/Em96RHvQdjzAl
+        gR2yv+je5HJiJg==
+X-Received: by 10.84.217.148 with SMTP id p20mr39893256pli.164.1493169970513;
+        Tue, 25 Apr 2017 18:26:10 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3179:d004:20b:b383])
+        by smtp.gmail.com with ESMTPSA id r73sm38492471pfa.65.2017.04.25.18.26.09
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 25 Apr 2017 18:26:09 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2] clone: add a --no-tags option to clone without tags
+References: <xmqq60i1dvnk.fsf@gitster.mtv.corp.google.com>
+        <20170419143831.6868-1-avarab@gmail.com>
+        <20170425224521.GM28740@aiede.svl.corp.google.com>
+Date:   Tue, 25 Apr 2017 18:26:08 -0700
+In-Reply-To: <20170425224521.GM28740@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Tue, 25 Apr 2017 15:45:22 -0700")
+Message-ID: <xmqq60hsufgv.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes, 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Tue, 2017-04-25 at 22:08 +0200, Johannes Schindelin wrote:
-> Hi Liam,
-> 
-> On Tue, 25 Apr 2017, Liam Beguin wrote:
-> 
-> > Add the 'rebase.abbrevCmd' boolean config option to allow `git rebase -i`
-> > to abbreviate the command-names in the instruction list.
-> > 
-> > This means that `git rebase -i` would print:
-> >     p deadbee The oneline of this commit
-> >     ...
-> > 
-> > instead of:
-> >     pick deadbee The oneline of this commit
-> >     ...
-> > 
-> > Using a single character command-name allows the lines to remain
-> > aligned, making the whole set more readable.
-> > 
-> > Signed-off-by: Liam Beguin <liambeguin@gmail.com>
-> 
-> Apart from either abbreviating commands after --edit-todo, or documenting
-> explicitly that the new config option only concerns the initial todo list,
-> there is another problem that just occurred to me: --exec.
-> 
-> When you call `git rebase -x "make DEVELOPER=1 -j15"`, the idea is to
-> append an "exec make DEVELOPER=1 -j15" line after every pick line. The
-> code in question looks like this:
-> 
-> add_exec_commands () {
->         {
->                 first=t
->                 while read -r insn rest
->                 do
->                         case $insn in
->                         pick)
->                                 test -n "$first" ||
->                                 printf "%s" "$cmd"
->                                 ;;
->                         esac
->                         printf "%s %s\n" "$insn" "$rest"
->                         first=
->                 done
->                 printf "%s" "$cmd"
->         } <"$1" >"$1.new" &&
->         mv "$1.new" "$1"
-> }
-> 
-> Obviously, the git-rebase--interactive script expects at this point that
-> the command is spelled out, so your patch needs to change the `pick)` case
-> to `p|pick)`, I think.
-> 
-> In addition, since the rationale for the new option is to align the lines
-> better, the `exec` would need to be replaced by `x`, and as multiple `-x`
-> options are allowed, you would need something like this at the beginning
-> of `add_exec_commands`, too:
-> 
-> 	# abbreviate `exec` if rebase.abbrevCmd is true
-> 	test p != "$rebasecmd" ||
-> 	cmd="$(echo "$cmd" | sed 's/^exec/x/')"
-> 
+> In other words, I think the commit message needs a bit more detail about
+> the use case, to say why omitting those tags is useful.  The use case
+> is probably sane but it is not explained.  A side effect (and my main
+> motivation) is that this would make it crystal clear to people looking
+> at the patch in history that it is talking about tags that are part of
+> "master"'s history, not tags pointing elsewhere.
 
+I agree that it is unclear "having no tags, not even the harmless
+and usually useful ones that point at the history of the branch of
+interest" is the point of this new feature from the documentation
+and log message.  
 
+Responding to your other message, I do not think this new feature
+should be tied to --single-branch; I think having the tags to mark
+commits in the branch's history (while not fetching other tags
+irrelevant to the branch's history) is usually what users would
+want.
 
-> Also:
-> 
-> > diff --git a/Documentation/config.txt b/Documentation/config.txt
-> > index 475e874d5155..8b1877f2df91 100644
-> > --- a/Documentation/config.txt
-> > +++ b/Documentation/config.txt
-> > @@ -2614,6 +2614,25 @@ rebase.instructionFormat::
-> >  	the instruction list during an interactive rebase.  The format will automatically
-> >  	have the long commit hash prepended to the format.
-> >  
-> > +rebase.abbrevCmd::
-> 
-> It does not fail to amuse that the term "abbrevCmd" is abbreviated
-> heavily itself. However, I would strongly suggest to avoid that. It would
-> be much more pleasant to call the config option rebase.abbreviateCommands
+>> Before this the only way of doing this was either by manually tweaking
+>> the config in a fresh repository:
+>
+> Usually commit messages refer to the state of things without some
+> patch using the present tense --- e.g. "Without this patch, this
+> --no-tags option can be emulated by (1) manually tweaking the config
+> in a fresh repository, or (2) by setting tagOpt=--no-tags after
+> cloning and deleting any existing tags".
 
-I tried to use something similar to the rest of the options but I guess that
-would be best.
+Thanks--I'll use this myself when responding to patches from other
+people.  I recall getting irritated while reading some patches and
+couldn't pinpoint why they were irritating, and now I realize that
+it was because they said "Previously Git did X." and somesuch.
 
-> 
-> > +rebase.abbrevCmd::
-> > +	If set to true, `git rebase -i` will abbreviate the command-names in the
-> > +	instruction list. This means that instead of looking like this,
-> 
-> This is by no means your fault, but it is really horrible by how many
-> different names Git's documentation refers to the todo script, nothing
-> short of confusing. It is the todo script (which I called it initially,
-> maybe not a good name, but it has the merit of the longest tradition at
-> least), the todo list, the instruction sheet, the rebase script, the
-> instruction list... etc
-> 
-> However, the thing is called "todo list" elsewhere in the same file,
-> therefore lets try to avoid even more confusion and use that term instead
-> of "instruction list" here.
-
-thanks for pointing this out, I was not quite sure what to call this list.
-
-> 
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index 2c9c0165b5ab..9f3e82b79615 100644
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -1210,6 +1210,10 @@ else
-> >  	revisions=$onto...$orig_head
-> >  	shortrevisions=$shorthead
-> >  fi
-> > +
-> > +rebasecmd=pick
-> > +test "$(git config --bool --get rebase.abbrevCmd)" = true && rebasecmd=p
-> 
-> A better name would be "pickcmd", as there are more rebase commands than
-> just `pick` and what we want here is really only associated with one of
-> those commands.
-
-Wouldn't that make it confusing when the patch starts to handle other commands?
-A common name across the script would limit further confusion.
-I noticed that it is already called `action` in `rearrange_squash`.
-would that do? (even though it has no reference to 'command')
-
-> 
-> Ciao,
-> Johannes
-
-Thanks for the detailed answer,
-Liam
