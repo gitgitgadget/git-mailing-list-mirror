@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4A17207EB
-	for <e@80x24.org>; Wed, 26 Apr 2017 23:12:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FEB6207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 23:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032521AbdDZXMw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 19:12:52 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36014 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1032511AbdDZXMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 19:12:50 -0400
-Received: by mail-wm0-f65.google.com with SMTP id u65so822302wmu.3
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 16:12:49 -0700 (PDT)
+        id S1032525AbdDZXMz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 19:12:55 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34943 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032511AbdDZXMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 19:12:53 -0400
+Received: by mail-wm0-f66.google.com with SMTP id d79so832314wmi.2
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 16:12:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oUBTX56BEkweBkE67//gL8DL4GpIDHS+bhP/0jF93OY=;
-        b=ADs9elj3Gu8knRdtyEzS2ZHV7Drb9QCX8H0bZrEiyMgX3pTmPQsKX7ulEuB6EA74gH
-         8Lf+YeTNLfIeKDFeBAZ4BeZsYNYPW0kBQszrPszWU8hRxaaYykQu+wwDAc2h2fi+Mn3Z
-         Pp2t5+dZH6Q0I9hcxXnyASV/iAOrgwW71Y4j0hDHAM1HqTe61k2apRDONhjKnhrh9J5o
-         nO4fKqADNvUfRe/KdvI7REb064jdxIgm/g8NgByg0nszOTDjD0vSIzuR81W/Tu8hm66Z
-         EfGTR5RNgHvxJvu7VWAQtCm5cCe/geTK/DsQ2tq1VjnJppDe22UBUPbCSom5ILPoPeWO
-         uqMg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HX6B4p3lG0AyC3+2Ld7CvQOn5PQ/svh77LDYkTwJ3Os=;
+        b=GlwZ7Jhfgx8Whtqte5E9clh5DH+g/niMoVVY6iNc15vQYsZIpih/BAMLDYLZeaOkET
+         FMIyXFMep4Yc1TM/tcAEmsIZMrgzk5QwVykFzKfGGzEwKVhjaOfrUUlNh8WKlKcZW9OO
+         uIX+ZduEV+ilIyG0ahCkouyXn8gHv9mideJsDBOFsQXpsaH8dOwwYjred/Y3EgOz/Bvi
+         zqyMLtl5/g3P1U9jcYEnBee5O2yHaoPCRF3y3LpPkjznarwYDP+6Lqrj5BtZs5bYxFsd
+         QGcWu1wCBQl99ar9oz/LrF4U92b6O9EAWFmCujkosW0uCwD+sUYvHnrC6Fod5/ZS9zNa
+         gPfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oUBTX56BEkweBkE67//gL8DL4GpIDHS+bhP/0jF93OY=;
-        b=qEn1ho4RXD+DEWL0rI9PmB0x/LTedFkicL2JYT7njxvpM8/UF2+PONqazEkLtzuIpY
-         aVAAyKFqRPeVplaEVRWXXQvPrBBFgwhJ8xuoCSo441fJtzjdA9PJgZACkNRYjuV0q0ZA
-         LbTR973PS/NsvXjHhHcBJwFDTw8Po6K+fjFqx1dps0NfiSFxzGQLM7Sa0DMFcFsppDSS
-         mGC0uuc7TrqIx63R+bVq2MhmZAEmCxx0rD0lrkfRt01dgrTZTG2B5X5FZrILuSP3dWFc
-         94e0ihhUE9Y2Swi+2dEhreN6RymJXywmSbPu1LAz/0BxGEl9PORVF9LBxHNYeUUrE2o+
-         +VNw==
-X-Gm-Message-State: AN3rC/5uqZVpMoNajZQ8gV5jiw2J+eRv86TU3OzFrVNiTHdwAooWsctH
-        jL75OSz5jLtEDw==
-X-Received: by 10.28.31.200 with SMTP id f191mr169819wmf.63.1493248368649;
-        Wed, 26 Apr 2017 16:12:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HX6B4p3lG0AyC3+2Ld7CvQOn5PQ/svh77LDYkTwJ3Os=;
+        b=nZvIcSxiBIMJ6xl7kgyV4r5Bq60X5ycdu2whSiHVkBlbMHLhm6wu+XRCtvRNuplt7O
+         F5htN78OwoXsDUjoIwySuEdHC58yLHDw2J9eT7qlzpHX3p+EX/jnGxBoC+f/Zj24QPrL
+         zQa+ZWAOlYqPfFTpxpeAqEbsdJBhZ+mz5IL3gCYeENnhDR2IImyAGkBq4NfBVG756wDb
+         XNkueI1QE1Bd4ciUaf7j+RdS60CoFUbxcXrF/b02AwMMSpHtz7FwpzNRMf+d+I3JQ/KO
+         un3BhAjNbaIaAevLbt1Fj5vTwFSStwjS638g1IcKAfe08Qc0/Dmos1BCEeymmVc2G6b1
+         jOOw==
+X-Gm-Message-State: AN3rC/5w6TJN+0WcjLb0x3RjmZBjO2h2OEOzMJncXpZa1v2h/Dxm6cc6
+        tgSbEavYHSEIPg==
+X-Received: by 10.28.46.143 with SMTP id u137mr132447wmu.56.1493248372150;
+        Wed, 26 Apr 2017 16:12:52 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 133sm1053097wms.22.2017.04.26.16.12.45
+        by smtp.gmail.com with ESMTPSA id 133sm1053097wms.22.2017.04.26.16.12.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Apr 2017 16:12:46 -0700 (PDT)
+        Wed, 26 Apr 2017 16:12:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,10 +58,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/5] clone: --no-tags option
-Date:   Wed, 26 Apr 2017 23:12:31 +0000
-Message-Id: <20170426231236.27219-1-avarab@gmail.com>
+Subject: [PATCH v3 1/5] tests: change "cd ... && git fetch" to "cd &&\n\tgit fetch"
+Date:   Wed, 26 Apr 2017 23:12:32 +0000
+Message-Id: <20170426231236.27219-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170426231236.27219-1-avarab@gmail.com>
+References: <20170426231236.27219-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,50 +72,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an expansion of the previously solo 02/05 "clone: add a
---no-tags option to clone without tags" patch (see
-<20170418191553.15464-1-avarab@gmail.com>).
+Change occurrences "cd" followed by "fetch" on a single line to be on
+two lines.
 
-This addresses the comments by Junio & Jonathan Nieder on v2 (thanks a
-lot), and in addition implements a --no-tags-submodules option. That
-code was implemented by Brandon & sent to me privately after I'd
-failed to come up with it, but I added tests, a commit message & bash
-completion to it.
+This is purely a stylistic change pointed out in code review for an
+unrelated patch. Change the these tests use so new tests added later
+using the more common style don't look out of place.
 
-The WIP 5/5 patch implements a submodule.NAME.tags config facility for
-the option, but is broken currently & floats along in this submission
-as an RFC patch. AFAICT it *should* work and it goes through all the
-motions the similar existing *.shallow config does, but for some
-reason the tags=false option isn't picked up & propagated in a freshly
-cloned submodule.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t5612-clone-refspec.sh | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-I'm probably missing something trivial, but I can't see what it is,
-I'm hoping thath either Stefan or Brandon will see what that is.
-
-Brandon Williams (1):
-  clone: add a --no-tags-submodules to pass --no-tags to submodules
-
-Ævar Arnfjörð Bjarmason (4):
-  tests: change "cd ... && git fetch" to "cd &&\n\tgit fetch"
-  clone: add a --no-tags option to clone without tags
-  tests: rename a test having to do with shallow submodules
-  WIP clone: add a --[no-]recommend-tags & submodule.NAME.tags config
-
- Documentation/git-clone.txt                        |  21 ++++
- Documentation/git-submodule.txt                    |   8 +-
- builtin/clone.c                                    |  19 +++-
- builtin/submodule--helper.c                        |  21 +++-
- contrib/completion/git-completion.bash             |   3 +
- git-submodule.sh                                   |  13 ++-
- submodule-config.c                                 |   8 ++
- submodule-config.h                                 |   1 +
- t/t5612-clone-refspec.sh                           | 103 +++++++++++++++++---
- ...odules.sh => t5614-clone-submodules-shallow.sh} |   0
- t/t5616-clone-submodules-tags.sh                   | 106 +++++++++++++++++++++
- 11 files changed, 284 insertions(+), 19 deletions(-)
- rename t/{t5614-clone-submodules.sh => t5614-clone-submodules-shallow.sh} (100%)
- create mode 100755 t/t5616-clone-submodules-tags.sh
-
+diff --git a/t/t5612-clone-refspec.sh b/t/t5612-clone-refspec.sh
+index 7ace2535c8..97c847fab6 100755
+--- a/t/t5612-clone-refspec.sh
++++ b/t/t5612-clone-refspec.sh
+@@ -59,7 +59,8 @@ test_expect_success 'setup' '
+ 
+ test_expect_success 'by default all branches will be kept updated' '
+ 	(
+-		cd dir_all && git fetch &&
++		cd dir_all &&
++		git fetch &&
+ 		git for-each-ref refs/remotes/origin |
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" >../actual
+@@ -71,7 +72,8 @@ test_expect_success 'by default all branches will be kept updated' '
+ 
+ test_expect_success 'by default no tags will be kept updated' '
+ 	(
+-		cd dir_all && git fetch &&
++		cd dir_all &&
++		git fetch &&
+ 		git for-each-ref refs/tags >../actual
+ 	) &&
+ 	git for-each-ref refs/tags >expect &&
+@@ -80,7 +82,8 @@ test_expect_success 'by default no tags will be kept updated' '
+ 
+ test_expect_success '--single-branch while HEAD pointing at master' '
+ 	(
+-		cd dir_master && git fetch &&
++		cd dir_master &&
++		git fetch &&
+ 		git for-each-ref refs/remotes/origin |
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" >../actual
+@@ -92,7 +95,8 @@ test_expect_success '--single-branch while HEAD pointing at master' '
+ 
+ test_expect_success '--single-branch while HEAD pointing at side' '
+ 	(
+-		cd dir_side && git fetch &&
++		cd dir_side &&
++		git fetch &&
+ 		git for-each-ref refs/remotes/origin |
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" >../actual
+@@ -104,7 +108,8 @@ test_expect_success '--single-branch while HEAD pointing at side' '
+ 
+ test_expect_success '--single-branch with explicit --branch side' '
+ 	(
+-		cd dir_side2 && git fetch &&
++		cd dir_side2 &&
++		git fetch &&
+ 		git for-each-ref refs/remotes/origin |
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" >../actual
+@@ -116,7 +121,8 @@ test_expect_success '--single-branch with explicit --branch side' '
+ 
+ test_expect_success '--single-branch with explicit --branch with tag fetches updated tag' '
+ 	(
+-		cd dir_tag && git fetch &&
++		cd dir_tag &&
++		git fetch &&
+ 		git for-each-ref refs/tags >../actual
+ 	) &&
+ 	git for-each-ref refs/tags >expect &&
+@@ -125,7 +131,8 @@ test_expect_success '--single-branch with explicit --branch with tag fetches upd
+ 
+ test_expect_success '--single-branch with --mirror' '
+ 	(
+-		cd dir_mirror && git fetch &&
++		cd dir_mirror &&
++		git fetch &&
+ 		git for-each-ref refs > ../actual
+ 	) &&
+ 	git for-each-ref refs >expect &&
+@@ -134,7 +141,8 @@ test_expect_success '--single-branch with --mirror' '
+ 
+ test_expect_success '--single-branch with explicit --branch and --mirror' '
+ 	(
+-		cd dir_mirror_side && git fetch &&
++		cd dir_mirror_side &&
++		git fetch &&
+ 		git for-each-ref refs > ../actual
+ 	) &&
+ 	git for-each-ref refs >expect &&
+@@ -143,7 +151,8 @@ test_expect_success '--single-branch with explicit --branch and --mirror' '
+ 
+ test_expect_success '--single-branch with detached' '
+ 	(
+-		cd dir_detached && git fetch &&
++		cd dir_detached &&
++		git fetch &&
+ 		git for-each-ref refs/remotes/origin |
+ 		sed -e "/HEAD$/d" \
+ 		    -e "s|/remotes/origin/|/heads/|" >../actual
 -- 
 2.11.0
 
