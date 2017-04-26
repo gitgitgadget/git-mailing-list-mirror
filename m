@@ -7,81 +7,81 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBC30207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:22:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9561207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:22:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936467AbdDZUWK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:22:10 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57723 "EHLO mout.gmx.net"
+        id S936471AbdDZUWL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:22:11 -0400
+Received: from mout.gmx.net ([212.227.17.21]:63002 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S936456AbdDZUWI (ORCPT <rfc822;git@vger.kernel.org>);
+        id S933310AbdDZUWI (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 26 Apr 2017 16:22:08 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaXmV-1dpESB0Jcl-00mLSe; Wed, 26
- Apr 2017 22:22:04 +0200
-Date:   Wed, 26 Apr 2017 22:22:03 +0200 (CEST)
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbyUS-1dmkPs0sz6-00jGpc; Wed, 26
+ Apr 2017 22:22:00 +0200
+Date:   Wed, 26 Apr 2017 22:21:59 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 26/26] submodule_uses_worktrees(): plug memory leak
+Subject: [PATCH 25/26] show_worktree(): plug memory leak
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <f67439bafe4515179ff9dac4e5f1a325b1de6ef6.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <51890c396683ddc9485a44d50b8ccaf04e06a3e2.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:HxGCfrqYualDnydaImY5dXbOp0jhY/MJe4KNyfAN49/CVaOV7HR
- ES+2O9OF8vLXhVHCGv71wh/vvmysoJjBAyeFxs7IikYaIkwo1WT0UbnveLkosc9RslRJu9X
- Y6yTbxVC+D/h1g/tuAcieNWSqAn9GB/Iw3wSk/M2rndckWnXxvb4SKU0F6N5jHwfLyyLnP7
- +aOvMCdQdVtnRR0YESBLg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ejWU19XYWhk=:Fmn11y20ovVuR1u1aAdwYx
- Nl9iH/ThdbB/HShjtwVAKowuLklE4PHNCL4t5xIFEGxdKHRLjXSN3zl5TuHzTgJ7eHslZrsOd
- +BWXlbSvgGjPXM4d2WRgJ6k8VLF1Q0nCL/vbGatURcue5DxKC4imN2nESqDygHM1HBcm5+8TP
- iAweKpJvqjnT4aZu/nRXsQz/cKQ9qgkoUlQadDWU5Hywm588sqnYPdRLJWA8MUsekaAk08Se0
- X6brVTSu8xSEJA0AbZsa0xydBQx3lMtjf252yqvlKr7AUBPoES3QjghHQm//5l+0vM1DEKzQr
- XzlsPmP4/9A/xYzM+X8ti6v/AroeBPJjISF711ToeUhC9UpsQo5ade1UV+TncDH6I6YciOlAa
- xtZj5+iCj/JqprMv3vGuruydRV8KdNbg9OVAri2vARoulYsU8W5vbGJlPsHDb+/R9wnoQvRk5
- zCc5daI/KWvCpagJbCerbSmhqcr36/OYPxgq6++rQOnh837JKtgWAMRGlmETBq47QEXhMOMSP
- Rl8T8l1WNkR6Cx+fCgDS63TEppVEjcNODWd3AeSvHbHl1m5Z0Cqp2w0KxLE3D8+5qrFQ9QVyJ
- pei8LcLVodRA1y5tz4RoCb+3lM3Pn+owWe5dUsLaYKH1LJDZlkCJPO4db+Pn4R3txwbwJyOKH
- nmAAwcXGsIVZOpw1I6uvfUHl7qKYdrvJsedq4Sg+KmKbtvnDGzBAyc9ff+rVpr/5m244FzHq6
- ooBodyQ9uu2DAMOFN7trHyUyCZXJl5e5bphsf15myllwTrMpUXTG6t5BBepNaVpT/3JtCJRvp
- szmHOED
+X-Provags-ID: V03:K0:9l9YEWoss1VwMajdG8xDAHI0VBpFt/yIXDGSAychM06ybuwrMzy
+ 5uTkkovVRacruUCL/obmaHryyttgAO3j9/BKvhNCuQVXt7A6Y38ZmqK6rzQmfxUJzIkJtyE
+ BNeICO1pWej5VkwMlD6HycbuIjY7kL3Ppqx+NDS55Pw9bvB3dc57B1BrFdHzbR8Ikm3fk77
+ 5Hs83UZWlD7BTCkInj5Bg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Y60HYEAylg4=:ReTGrIHp9YpzvqmzniAr06
+ jZa7PB1O49MSITgSDuufcOaSSb9fr+5gqJYJvF+pTGA/lKTLAUr+4Fn4xnjOzhRLjP9CDoZMb
+ iXMBbzLmHoGDQAWrMhfBSjpM5b/sPPJviJBrfTQ6fhwEoUyLNa9WV+SKqidDZ8X+iCnc07PJC
+ RNSGUaDK3G05MmGZKuOA2hHjbqihZlueZ0LKBk+e03TJkFbuV9Jwc28rh5yQhiKXzUu4QWtvy
+ Ap94geArNPvmeFI8JpeZ0JIcL/eFWwVOcgIHd4Aihv3oDoIApkszYFrVGAlIueNF2rz9bDcha
+ fsLiaNS8u6rKslJgNSmFC0762PkEka/g0g/PI+R+Gm8tfeSOb1INfkJVnvYrv0oIwPkRjvnxs
+ qHK6MHKdhKDeSU5JgwDEE9n6Mvrh8U1To0ZxxwtZ23qUYlSarjUyMrMtpzJ3G7k7hFaybbynb
+ 3ukKuPfKVEyyHQIRXd0Afz5HKWy029Z6qN+FqXHsbHUvl6j5z7lxmIts8R9n9ha7ph4mRzUyb
+ eFyXH/DcjlSzEgHl4HoyNsV9qNmziyqSkJzabOws5dFjaHI5a04zdkh0+o5P0Mr/+yZybXcUw
+ MOsF5SY40Au/u71Ix5UhWuHiAx4O6VHzPFGZOT3pePP0GVazDltDBF+0kdekRqLICK+P9NkUR
+ uo5uZ+PC+nW5w8l2aINa1UJ7yxqopZQf+HsNL2Zet+qOiXaOhfj9aJVDYLfiBzJXdeoKyiW/5
+ r+hXDWGoWDL2dji/F8SyFzlB1kR3GRSF1wlKTX99Mwsaz05jMNTLmCqQ3pNi9n8L+548q5vAO
+ LIZyC/3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is really no reason why we would need to hold onto the allocated
-string longer than necessary.
+The buffer allocated by shorten_unambiguous_ref() needs to be released.
 
-Reported by Coverity.
+Discovered by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- worktree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/worktree.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/worktree.c b/worktree.c
-index bae787cf8d7..89a81b13de3 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -399,6 +399,7 @@ int submodule_uses_worktrees(const char *path)
- 
- 	/* The env would be set for the superproject. */
- 	get_common_dir_noenv(&sb, submodule_gitdir);
-+	free(submodule_gitdir);
- 
- 	/*
- 	 * The check below is only known to be good for repository format
-@@ -418,7 +419,6 @@ int submodule_uses_worktrees(const char *path)
- 	/* See if there is any file inside the worktrees directory. */
- 	dir = opendir(sb.buf);
- 	strbuf_release(&sb);
--	free(submodule_gitdir);
- 
- 	if (!dir)
- 		return 0;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 9993ded41aa..6bfd7ad5323 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -409,9 +409,11 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+ 				find_unique_abbrev(wt->head_sha1, DEFAULT_ABBREV));
+ 		if (wt->is_detached)
+ 			strbuf_addstr(&sb, "(detached HEAD)");
+-		else if (wt->head_ref)
+-			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(wt->head_ref, 0));
+-		else
++		else if (wt->head_ref) {
++			char *ref = shorten_unambiguous_ref(wt->head_ref, 0);
++			strbuf_addf(&sb, "[%s]", ref);
++			free(ref);
++		} else
+ 			strbuf_addstr(&sb, "(error)");
+ 	}
+ 	printf("%s\n", sb.buf);
 -- 
 2.12.2.windows.2.800.gede8f145e06
+
+
