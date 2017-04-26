@@ -2,148 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C006207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 17:04:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BFE5A207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 17:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752967AbdDZREL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 13:04:11 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:33084 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752911AbdDZREB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 13:04:01 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 63so1413932pgh.0
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 10:04:00 -0700 (PDT)
+        id S1751440AbdDZRK0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 13:10:26 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:33488 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751124AbdDZRKY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 13:10:24 -0400
+Received: by mail-pf0-f170.google.com with SMTP id a188so3013999pfa.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 10:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X7n7O2LUOye/IS48t/JDNEPA8KDu0lOI1UQ9/OoRNrU=;
-        b=nNRTikGJnqT5KGXJlANF+fMjA5DIUKUXjTlHF8fkXxpy6jzsOh/Bqg0cRnPm6nAhyn
-         RGqJQtonDHOzrf7239a+PQvHkqAdMHDpb59erDQeMV68Ar/t/8CqzC88Lg+27uUhvILa
-         hfkaeqEGcY0s3kIIu2syOI1s4jXH92LPZkVVbd/KEOQmRVvfa7a8K1zpQ5HaEmSLSbzI
-         /0mlr+eYSvO/MAa9rhv0KpaJk4LCAOqvCiSnMPaReqeqT8fuHCkxN5TM0WY5vMpJrulw
-         lmZx9umtOgovPNZmk6igqlYHRvyeEPxTAjxO0126mIbAvOwMHlb1JH1iE73SjCTOJQqb
-         d7Rg==
+        bh=KLnerhp2485ekfhk6Ynv0REv6kfPIGWhWDLi0uN/9qM=;
+        b=Q976M7PWfFs3yeiqnMToHEqsYlcuMsQ4F2eZwbPBRGXItlD8eFg1w1Wc9RFVJ7QiWS
+         wpl3/pcwfJ1kOno+MysI0PZMB1pZJymEYXKP/CQxgKYAB5MPvQoqvdIerEdC6WwjRMXA
+         orQisQzbQijKExVI9tKO4X/UcTCFEqKrD+jNv/VfEvnULumYEgn8Sk3U3qA7VZDnBqTW
+         62gRyiWrKSpM5W2b3sWqx8Av6vP4HW201HTbO9lPTFlbCGYDM/g9ZPzAf57mpDAAi+Ty
+         p565j91FaD0gJVxOE4bPn3s54hbaUIOsMO7p0wqgcIHD7W8pIzA9l23ftEcFFTXBOwLM
+         GAEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=X7n7O2LUOye/IS48t/JDNEPA8KDu0lOI1UQ9/OoRNrU=;
-        b=VAqaVtzvvyfM0+BXVI062qayp2ee5JQ8aeICInVJFU6a88ZSsfkZZmZqkhZrF8v0Jj
-         sPKrfqotaVlCpOHpDFf9mLn0+zwl0Ei/OhvFgO+U2/WkesGy89uOFiV49ZzzYOhEFrfq
-         bbn8PSe8T1NPeF6anaPA8t/CrG4gGKMC9a7e29LUz3BtcggfkbivXSwBUePYbtEvfRjM
-         n56H5PS0hK0cqm1YjgHIRfQfLKIWaUNMtWVERUiLXL20pFm+DJvDmJfomdIktwOtd8tx
-         LyTySNIyynb+SkspOC7a0PZGaGi8cgwg23wJHkhrf6CQhNLFThODCNcDNAnMWBu/8wMw
-         F37Q==
-X-Gm-Message-State: AN3rC/4cFQcfsC/57xQJ1DLzYpDizzqA1NiDQ8NDKbPowtBYIpmXik+S
-        auk03OMvnCeA1Q==
-X-Received: by 10.84.148.203 with SMTP id y11mr1125520plg.10.1493226240158;
-        Wed, 26 Apr 2017 10:04:00 -0700 (PDT)
-Received: from Daniels-MacBook-Pro.local.net (c-76-102-227-215.hsd1.ca.comcast.net. [76.102.227.215])
-        by smtp.gmail.com with ESMTPSA id q70sm1376479pgq.45.2017.04.26.10.03.58
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 10:03:59 -0700 (PDT)
-From:   Daniel Ferreira <bnmvco@gmail.com>
+        bh=KLnerhp2485ekfhk6Ynv0REv6kfPIGWhWDLi0uN/9qM=;
+        b=BVFA4boVNe548lgYAaUXy6bPoFGre8D5ZN/2dK6cHqEYKWnBcNW3NdjlbPwq7Nshnx
+         pR3SpocuCChyauC2/Aj4piPJ2iLsfRa9oi2QVUsRM3vM19eub3rL4lfkvH7irFPIiUPc
+         2ml1rLzDkOBTQmZqWln9NAR7RdLv19G+T8eY/CriWF1zUCahH0wxKiZwtcrkNOtSC6vd
+         jBQRD1y/zU1LXicw0HTYhHU2r5aU+0OWWeXXAAbuggrCouH3DutFWMaEq7saPOdfbgc2
+         n9hqasmzZioCF33tynAruuDXEYlmeIrs2rsRMZtvGHL4gLeHaWCeWYl89LXwUKOek0qE
+         1soQ==
+X-Gm-Message-State: AN3rC/5CRiCi3rHnQNps5VjQpIFlmGXbLLneCD/2kXCKch1dUgemeWEl
+        jL1NJs030hQH3Dl9
+X-Received: by 10.98.73.214 with SMTP id r83mr876797pfi.253.1493226623114;
+        Wed, 26 Apr 2017 10:10:23 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id u128sm1634093pfb.55.2017.04.26.10.10.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 10:10:22 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sbeller@google.com, pclouds@gmail.com,
-        mhagger@alum.mit.edu, Daniel Ferreira <bnmvco@gmail.com>
-Subject: [PATCH v11 5/5] remove_subtree(): reimplement using iterators
-Date:   Wed, 26 Apr 2017 10:03:39 -0700
-Message-Id: <1493226219-33423-6-git-send-email-bnmvco@gmail.com>
-X-Mailer: git-send-email 2.7.4 (Apple Git-66)
-In-Reply-To: <1493226219-33423-1-git-send-email-bnmvco@gmail.com>
-References: <1493226219-33423-1-git-send-email-bnmvco@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
+        j6t@kdbg.org, sbeller@google.com, e@80x24.org, jrnieder@gmail.com,
+        peff@peff.net
+Subject: [PATCH v9 2/2] run-command: restrict PATH search to executable files
+Date:   Wed, 26 Apr 2017 10:10:17 -0700
+Message-Id: <20170426171017.82737-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d-goog
+In-Reply-To: <xmqqzif4t01f.fsf@gitster.mtv.corp.google.com>
+References: <xmqqzif4t01f.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use dir_iterator to traverse through remove_subtree()'s directory tree,
-avoiding the need for recursive calls to readdir(). Simplify
-remove_subtree()'s code.
+In some situations run-command will incorrectly try (and fail) to
+execute a directory instead of an executable file.  This was observed by
+having a directory called "ssh" in $PATH before the real ssh and trying
+to use ssh protoccol, reslting in the following:
 
-A conversion similar in purpose was previously done at 46d092a
-("for_each_reflog(): reimplement using iterators", 2016-05-21).
+	$ git ls-remote ssh://url
+	fatal: cannot exec 'ssh': Permission denied
 
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+It ends up being worse and run-command will even try to execute a
+non-executable file if it preceeds the executable version of a file on
+the PATH.  For example, if PATH=~/bin1:~/bin2:~/bin3 and there exists a
+directory 'git-hello' in 'bin1', a non-executable file 'git-hello' in
+bin2 and an executable file 'git-hello' (which prints "Hello World!") in
+bin3 the following will occur:
+
+	$ git hello
+	fatal: cannot exec 'git-hello': Permission denied
+
+This is due to only checking 'access()' when locating an executable in
+PATH, which doesn't distinguish between files and directories.  Instead
+use 'is_executable()' which check that the path is to a regular,
+executable file.  Now run-command won't try to execute the directory or
+non-executable file 'git-hello':
+
+	$ git hello
+	Hello World!
+
+This matches what 'execvp()' would have done with a request to execute
+'git-hello' with such a $PATH.
+
+Reported-by: Brian Hatfield <bhatfield@google.com>
+Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- entry.c | 42 ++++++++++++++++--------------------------
- 1 file changed, 16 insertions(+), 26 deletions(-)
 
-diff --git a/entry.c b/entry.c
-index d2b512d..a939432 100644
---- a/entry.c
-+++ b/entry.c
-@@ -3,6 +3,8 @@
- #include "dir.h"
- #include "streaming.h"
- #include "submodule.h"
-+#include "iterator.h"
-+#include "dir-iterator.h"
- 
- static void create_directories(const char *path, int path_len,
- 			       const struct checkout *state)
-@@ -45,33 +47,21 @@ static void create_directories(const char *path, int path_len,
- 	free(buf);
+This [2/2] patch has the exact same diff as v8, the only difference is to the
+commit message per Junio's request to add an explanation for why this
+particular behavior is desirable (because it matches what execvp() does).
+
+I didn't resend out [1/2] of this fixup because it is identical to the v8
+version.
+
+ run-command.c          | 19 ++++++++++++++++++-
+ t/t0061-run-command.sh | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 1 deletion(-)
+
+diff --git a/run-command.c b/run-command.c
+index 2ffbd7e67..9e36151bf 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -159,6 +159,23 @@ int is_executable(const char *name)
+ 	return st.st_mode & S_IXUSR;
  }
  
--static void remove_subtree(struct strbuf *path)
-+static void remove_subtree(const char *path)
++/*
++ * Search $PATH for a command.  This emulates the path search that
++ * execvp would perform, without actually executing the command so it
++ * can be used before fork() to prepare to run a command using
++ * execve() or after execvp() to diagnose why it failed.
++ *
++ * The caller should ensure that file contains no directory
++ * separators.
++ *
++ * Returns the path to the command, as found in $PATH or NULL if the
++ * command could not be found.  The caller inherits ownership of the memory
++ * used to store the resultant path.
++ *
++ * This should not be used on Windows, where the $PATH search rules
++ * are more complicated (e.g., a search for "foo" should find
++ * "foo.exe").
++ */
+ static char *locate_in_PATH(const char *file)
  {
--	DIR *dir = opendir(path->buf);
--	struct dirent *de;
--	int origlen = path->len;
--
--	if (!dir)
--		die_errno("cannot opendir '%s'", path->buf);
--	while ((de = readdir(dir)) != NULL) {
--		struct stat st;
--
--		if (is_dot_or_dotdot(de->d_name))
--			continue;
--
--		strbuf_addch(path, '/');
--		strbuf_addstr(path, de->d_name);
--		if (lstat(path->buf, &st))
--			die_errno("cannot lstat '%s'", path->buf);
--		if (S_ISDIR(st.st_mode))
--			remove_subtree(path);
--		else if (unlink(path->buf))
--			die_errno("cannot unlink '%s'", path->buf);
--		strbuf_setlen(path, origlen);
-+	struct dir_iterator *diter = dir_iterator_begin(path,
-+		DIR_ITERATOR_POST_ORDER_TRAVERSAL | DIR_ITERATOR_LIST_ROOT_DIR);
-+	if (!diter) {
-+		die_errno("cannot remove path '%s'", path);
-+	}
-+
-+	while (dir_iterator_advance(diter) == ITER_OK) {
-+		if (S_ISDIR(diter->st.st_mode)) {
-+			if (rmdir(diter->path.buf))
-+				die_errno("cannot rmdir '%s'", diter->path.buf);
-+		} else if (unlink(diter->path.buf))
-+			die_errno("cannot unlink '%s'", diter->path.buf);
- 	}
--	closedir(dir);
--	if (rmdir(path->buf))
--		die_errno("cannot rmdir '%s'", path->buf);
- }
+ 	const char *p = getenv("PATH");
+@@ -179,7 +196,7 @@ static char *locate_in_PATH(const char *file)
+ 		}
+ 		strbuf_addstr(&buf, file);
  
- static int create_file(const char *path, unsigned int mode)
-@@ -312,7 +302,7 @@ int checkout_entry(struct cache_entry *ce,
- 				return 0;
- 			if (!state->force)
- 				return error("%s is a directory", path.buf);
--			remove_subtree(&path);
-+			remove_subtree(path.buf);
- 		} else if (unlink(path.buf))
- 			return error_errno("unable to unlink old '%s'", path.buf);
- 	} else if (state->not_new)
+-		if (!access(buf.buf, F_OK))
++		if (is_executable(buf.buf))
+ 			return strbuf_detach(&buf, NULL);
+ 
+ 		if (!*end)
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 98c09dd98..e4739170a 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -37,6 +37,36 @@ test_expect_success !MINGW 'run_command can run a script without a #! line' '
+ 	test_cmp empty err
+ '
+ 
++test_expect_success 'run_command does not try to execute a directory' '
++	test_when_finished "rm -rf bin1 bin2" &&
++	mkdir -p bin1/greet bin2 &&
++	write_script bin2/greet <<-\EOF &&
++	cat bin2/greet
++	EOF
++
++	PATH=$PWD/bin1:$PWD/bin2:$PATH \
++		test-run-command run-command greet >actual 2>err &&
++	test_cmp bin2/greet actual &&
++	test_cmp empty err
++'
++
++test_expect_success POSIXPERM 'run_command passes over non-executable file' '
++	test_when_finished "rm -rf bin1 bin2" &&
++	mkdir -p bin1 bin2 &&
++	write_script bin1/greet <<-\EOF &&
++	cat bin1/greet
++	EOF
++	chmod -x bin1/greet &&
++	write_script bin2/greet <<-\EOF &&
++	cat bin2/greet
++	EOF
++
++	PATH=$PWD/bin1:$PWD/bin2:$PATH \
++		test-run-command run-command greet >actual 2>err &&
++	test_cmp bin2/greet actual &&
++	test_cmp empty err
++'
++
+ test_expect_success POSIXPERM 'run_command reports EACCES' '
+ 	cat hello-script >hello.sh &&
+ 	chmod -x hello.sh &&
 -- 
-2.7.4 (Apple Git-66)
+2.13.0.rc0.306.g87b477812d-goog
 
