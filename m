@@ -2,191 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C98F3207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:50:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41702207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 21:02:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967453AbdDZUuM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:50:12 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:36173 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967449AbdDZUuK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:50:10 -0400
-Received: by mail-pf0-f182.google.com with SMTP id 194so5634396pfv.3
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 13:50:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=e6+w3Sav4eS0U0XU2jSvIY+IV2QA20JwosjjvsW8HtU=;
-        b=GQItO2eIi5MNJOuUsO91ZhoU0VJm25jb+OXKDLZOVS5zuRFFcpP64oZWM0SevdfMqR
-         CHqTdzlVuFvC7VpdswFgpVY9KhmvFW3b8ppw7ZvFcLqJYGsrEpoKCAbPJHMsiPG3FtFU
-         C8p5ocgAgJN3sj5YAoJYeeS224wE7erj2FxPW5wmtxwimzy9b+t5EbSyb+Xo42HuJuYs
-         2zIr/zwGo2Apd4U/hJvGqDGXi1+ht2fJ2HTqNXkNbMkIgPonZDBheR24MNlLpLubS2Kg
-         1ntvtXz3ZA+q5CAdguwmxuYYZ3uKwJEBXRXgiyL9/FkswqN9S5LL1flvodUuwmgFYZRD
-         jR2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=e6+w3Sav4eS0U0XU2jSvIY+IV2QA20JwosjjvsW8HtU=;
-        b=V9eOchLtzAvzJwwFjviZcbpSygplO9PrcpjoaGDiB2JomAeCf4eVRLE+AQDYr67gtD
-         bzGeQVv34zmqWFk+9rpgeLxTtkYdp4wSMBv+G63U+XU3e4ZQ59oG/HJRzddCBVyEBL6c
-         WTFAAo6JILLhcQ5K8xS4B1WbTwFHwSIRLdfdF0+1x26UOJW1+GhpGqMEjjFo1ZzvbruX
-         zHZshCQRCNINv38klkH5P6xJK55TxqvR5qB1xsZ+Ie7EoPHuKtOlk61ooHanZib6cUTw
-         QD+58ZlEXOdlIlAZ0iyhcOC4ZuQ7PzfmA96vzUpHoygVbLgqqC7ixl3/54uBlqC/jiKW
-         gYnQ==
-X-Gm-Message-State: AN3rC/5YN3U+GqFQb0fjoj+7HNuBWKy9Pl5Zdmreoz7ursc/qGGdYNMo
-        GfXNAfuj92RM0imi
-X-Received: by 10.84.215.218 with SMTP id g26mr2341831plj.22.1493239809618;
-        Wed, 26 Apr 2017 13:50:09 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id t18sm334335pfg.31.2017.04.26.13.50.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 13:50:07 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
-        gitster@pobox.com, Johannes.Schindelin@gmx.de
-Subject: [PATCH v3] sequencer: add newline before adding footers
-Date:   Wed, 26 Apr 2017 13:50:03 -0700
-Message-Id: <20170426205003.30825-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d-goog
-In-Reply-To: <20170425190651.8910-1-jonathantanmy@google.com>
-References: <20170425190651.8910-1-jonathantanmy@google.com>
+        id S967610AbdDZVCh convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 26 Apr 2017 17:02:37 -0400
+Received: from lamora.getmail.no ([84.210.184.7]:50337 "EHLO lamora.getmail.no"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S967606AbdDZVCf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 17:02:35 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by lamora.getmail.no (Postfix) with ESMTP id 0981B88259;
+        Wed, 26 Apr 2017 23:02:33 +0200 (CEST)
+Received: from lamora.getmail.no ([127.0.0.1])
+        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id gzpibxfZ47aS; Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by lamora.getmail.no (Postfix) with ESMTP id 8A09588A02;
+        Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at lamora.get.c.bitbit.net
+Received: from lamora.getmail.no ([127.0.0.1])
+        by localhost (lamora.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id HI_bQVxVDFlC; Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
+Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
+        by lamora.getmail.no (Postfix) with ESMTPSA id 6443388259;
+        Wed, 26 Apr 2017 23:02:32 +0200 (CEST)
+Received: from peter (helo=localhost)
+        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
+        (envelope-from <peter@softwolves.pp.se>)
+        id 1d3U53-0007eS-4e; Wed, 26 Apr 2017 23:02:33 +0200
+Date:   Wed, 26 Apr 2017 22:02:33 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
+To:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Keith Goldfarb <keith@blackthorn-media.com>
+Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
+In-Reply-To: <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
+Message-ID: <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se>
+References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org> <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
+ <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org> <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se> <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de> <85f2b6d1-107b-0624-af82-92446f28269e@web.de> <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
+ <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se> <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de> <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se> <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
+MIME-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When encountering a commit message that does not end in a newline,
-sequencer does not complete the line before determining if a blank line
-should be added.  This causes the "(cherry picked..." and sign-off lines
-to sometimes appear on the same line as the last line of the commit
-message.
+René Scharfe:
 
-This behavior was introduced by commit 967dfd4 ("sequencer: use
-trailer's trailer layout", 2016-11-29). However, a revert of that commit
-would not resolve this issue completely: prior to that commit, a
-conforming footer was deemed to be non-conforming by
-has_conforming_footer() if there was no terminating newline, resulting
-in both conforming and non-conforming footers being treated the same
-when they should not be.
+> I struggled with that sentence as well.  There is no explicit 
+> "format" field AFAICS.
 
-Resolve this issue, both for conforming and non-conforming footers, and
-in both do_pick_commit() and append_signoff(), by always adding a
-newline to the commit message if it does not end in one before checking
-the footer for conformity.
+Exactly. I interpret that as it is in zip64 format if there are any 
+zip64 structures in the archive (especially if there is a zip64 
+end of central directory locator).
 
-Reported-by: Brian Norris <computersforpeace@gmail.com>
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
+> Or in other words: A legacy ZIP archive and a ZIP64 archive can be 
+> bit-wise the same if all values for all entries fit into the legacy 
+> fields, but the difference in terms of the spec is what the archiver 
+> was allowed to do when it created them.
 
-The failure in the case of non-footers not being terminated by a newline
-turns out to be quite easy to fix, so I've added that fix here. I think
-this makes the overall fix more obvious too.
+As long as all sizes are below (unsigned) -1, then they would be 
+identical. If one, and only one, of the sizes are equal to (unsigned) 
+-1 (and none overflow), then it is up to intepretation whether or not 
+a ZIP64-aware archiver is allowed to output an archive that is not in 
+ZIP64 format. If any single size or value overflows the 32 (16) bit 
+values, then ZIP64 format is needed.
 
-I've used Jonathan Nieder's and Dscho's suggestions for the tests
-(except for --format vs --pretty, since --format seems to add an extra
-newline to the output).
+> 	# 4-byte sizes, not ZIP64
+> 	arch --format=zip ...
+>
+> 	# ZIP64, can use 8-byte sizes as needed
+> 	arch --format=zip64 ...
+>
+> Makes sense?
 
- sequencer.c              | 11 ++++-------
- t/t3511-cherry-pick-x.sh | 44 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+), 7 deletions(-)
+Well, I would say that it would be a lot easier to always emit zip64 
+archives. An old-style unzipper should be able to read them anyway if 
+there are no overflowing fields, right? And, besides, who in 2017 has 
+an unzip tool that is unable to read zip64? Info-Zip UnZip has 
+supported Zip64 since 2009.
 
-diff --git a/sequencer.c b/sequencer.c
-index 77afecaeb..ffac95545 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1045,6 +1045,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
- 			strbuf_addstr(&msgbuf, p);
- 
- 		if (opts->record_origin) {
-+			strbuf_complete_line(&msgbuf);
- 			if (!has_conforming_footer(&msgbuf, NULL, 0))
- 				strbuf_addch(&msgbuf, '\n');
- 			strbuf_addstr(&msgbuf, cherry_picked_prefix);
-@@ -2335,6 +2336,9 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
- 				getenv("GIT_COMMITTER_EMAIL")));
- 	strbuf_addch(&sob, '\n');
- 
-+	if (!ignore_footer)
-+		strbuf_complete_line(msgbuf);
-+
- 	/*
- 	 * If the whole message buffer is equal to the sob, pretend that we
- 	 * found a conforming footer with a matching sob
-@@ -2355,13 +2359,6 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
- 			 * the title and body to be filled in by the user.
- 			 */
- 			append_newlines = "\n\n";
--		} else if (msgbuf->buf[len - 1] != '\n') {
--			/*
--			 * Incomplete line.  Complete the line and add a
--			 * blank one so that there is an empty line between
--			 * the message body and the sob.
--			 */
--			append_newlines = "\n\n";
- 		} else if (len == 1) {
- 			/*
- 			 * Buffer contains a single newline.  Add another
-diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
-index bf0a5c988..9888bf34b 100755
---- a/t/t3511-cherry-pick-x.sh
-+++ b/t/t3511-cherry-pick-x.sh
-@@ -208,6 +208,50 @@ test_expect_success 'cherry-pick -x -s adds sob even when trailing sob exists fo
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'cherry-pick -x handles commits with no NL at end of message' '
-+	pristine_detach initial &&
-+	printf "title\n\nSigned-off-by: A <a@example.com>" >msg &&
-+	sha1=$(git commit-tree -p initial mesg-with-footer^{tree} <msg) &&
-+	git cherry-pick -x $sha1 &&
-+	git log -1 --pretty=format:%B >actual &&
-+
-+	printf "\n(cherry picked from commit %s)\n" $sha1 >>msg &&
-+	test_cmp msg actual
-+'
-+
-+test_expect_success 'cherry-pick -x handles commits with no footer and no NL at end of message' '
-+	pristine_detach initial &&
-+	printf "title\n\nnot a footer" >msg &&
-+	sha1=$(git commit-tree -p initial mesg-with-footer^{tree} <msg) &&
-+	git cherry-pick -x $sha1 &&
-+	git log -1 --pretty=format:%B >actual &&
-+
-+	printf "\n\n(cherry picked from commit %s)\n" $sha1 >>msg &&
-+	test_cmp msg actual
-+'
-+
-+test_expect_success 'cherry-pick -s handles commits with no NL at end of message' '
-+	pristine_detach initial &&
-+	printf "title\n\nSigned-off-by: A <a@example.com>" >msg &&
-+	sha1=$(git commit-tree -p initial mesg-with-footer^{tree} <msg) &&
-+	git cherry-pick -s $sha1 &&
-+	git log -1 --pretty=format:%B >actual &&
-+
-+	printf "\nSigned-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>\n" >>msg &&
-+	test_cmp msg actual
-+'
-+
-+test_expect_success 'cherry-pick -s handles commits with no footer and no NL at end of message' '
-+	pristine_detach initial &&
-+	printf "title\n\nnot a footer" >msg &&
-+	sha1=$(git commit-tree -p initial mesg-with-footer^{tree} <msg) &&
-+	git cherry-pick -s $sha1 &&
-+	git log -1 --pretty=format:%B >actual &&
-+
-+	printf "\n\nSigned-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>\n" >>msg &&
-+	test_cmp msg actual
-+'
-+
- test_expect_success 'cherry-pick -x treats "(cherry picked from..." line as part of footer' '
- 	pristine_detach initial &&
- 	sha1=$(git rev-parse mesg-with-cherry-footer^0) &&
 -- 
-2.13.0.rc0.306.g87b477812d-goog
-
+\\// Peter - http://www.softwolves.pp.se/
