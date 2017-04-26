@@ -2,79 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1C7B207D6
-	for <e@80x24.org>; Wed, 26 Apr 2017 09:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB799207D6
+	for <e@80x24.org>; Wed, 26 Apr 2017 09:29:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1956161AbdDZJCF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 05:02:05 -0400
-Received: from mail-oi0-f47.google.com ([209.85.218.47]:33222 "EHLO
-        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1434939AbdDZJAj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 05:00:39 -0400
-Received: by mail-oi0-f47.google.com with SMTP id y11so169087358oie.0
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 02:00:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=p8dpeB+agV15xsOV58p5vv8TzAqxHSm1HgJaLZkUM5s=;
-        b=hCtGo3+pTg9MlHkHJ9YG99H5dI81keRzxlPJscUiJ5GrnGdolkGKOK+3YiDDJRTvuC
-         t5H9JuIPgNh7jaWIWOyGdFGnAJjH+/vx3jhmmglMTSVi2hFAP49hg5SepJ0yYxu1T4Yq
-         9V0dI4wAih7j1Mc+7ELNzPeUoNdIogwS9yGivqhTEVcGswpfgIObOWnGii16Q9/nnFDA
-         TN8syzdRBcruzuRWUalZ/CpnRPWK8hmp1XgOCu5P51omKEls6aljbgjOwvkfDd0nu6xF
-         DPzB7cjEhHWSqRQRYbU6H0TlIF4wtTSVv81+jFj5sWPRDFmNDICUHjgrzvE1LRC0iDVX
-         gLpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=p8dpeB+agV15xsOV58p5vv8TzAqxHSm1HgJaLZkUM5s=;
-        b=bxA4dkyaAYFfMNiZx+aZwibJbT+T5D0zIyl3qnjlJSA5/DVgSixLgl3bDZaK68Wxi4
-         PiBH0cuj7QuL3ssFBHZNkKlddSX8y79vx4qCiRv4TcomIvqCLTjfgBoTBzhLWgeyFubp
-         QTbYuJrnEDQW++AiUjBoQI6lYC5q79jgbbwC72YbAlIqC6ObxACvcmiBQv4vut2f6let
-         bTWK+2IKrbjI3G6nxJzDmkMvvoKTvKHIKLuh9CCkn9bH3lDi0AlHlYhRiZxTMtNTHYv/
-         oPaSmUfklMsDk2QWZ/A2+V97XzL6iApqCVc/i/DRX888XaEx/HuCIq44FJNQNmwbVeqw
-         z9dQ==
-X-Gm-Message-State: AN3rC/4PbRT9Ukfob1c0rLZYW6rWCsRHmQkyisTsYyQ/vC+q6qo5MRFH
-        6wRbJ2zNgRZ3IriwkTwqsDGhblLzUw==
-X-Received: by 10.157.6.78 with SMTP id 72mr21052353otn.37.1493197237359; Wed,
- 26 Apr 2017 02:00:37 -0700 (PDT)
+        id S1956826AbdDZJ0W (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 05:26:22 -0400
+Received: from mout.gmx.net ([212.227.15.15]:55158 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S941308AbdDZJJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 05:09:29 -0400
+Received: from virtualbox ([95.208.59.147]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lck9X-1dnKYH1P5L-00k7S2; Wed, 26
+ Apr 2017 11:09:22 +0200
+Date:   Wed, 26 Apr 2017 11:09:06 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        sbeller@google.com, computersforpeace@gmail.com
+Subject: Re: [PATCH v2] sequencer: require trailing NL in footers
+In-Reply-To: <xmqqinlrudij.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1704261101250.3480@virtualbox>
+References: <20170425190651.8910-1-jonathantanmy@google.com> <20170425235741.32546-1-jonathantanmy@google.com> <20170426000741.GS28740@aiede.svl.corp.google.com> <xmqqinlrudij.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.74.158.70 with HTTP; Wed, 26 Apr 2017 02:00:06 -0700 (PDT)
-In-Reply-To: <CACBZZX7x0hSy5PTCo1Cf0Hp09jBhnSF0T=BseH68kwMRmqGJig@mail.gmail.com>
-References: <20170425094453.9823-1-avarab@gmail.com> <CACBZZX7x0hSy5PTCo1Cf0Hp09jBhnSF0T=BseH68kwMRmqGJig@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 26 Apr 2017 16:00:06 +0700
-Message-ID: <CACsJy8DDDG0YKsXG8JWhowJ7TOH7Psw6v8B3AHA-dTpCHs+vYA@mail.gmail.com>
-Subject: Re: [PATCH] test: remove unused parameter from the wildmatch test
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:RGz8fcct8O901+X5XvitdDOjOzRimW+VAIJh02FnDzLk7Yt19YB
+ S0lld4FwuKR04qwwTTIU0UwUhsyH0FU93jwdVHAzyfqJwaL5wfgvNG9lhP2jZPr4826k+uv
+ QHD76NpBClSq9ITdL54aLLnEguqz6Ty4lN/6sR7QXCj1ql92usGxDcNC3B9Bk+rKjllukTs
+ 9uAhmmE8u4WDvP5ymaAZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dF8ZadKAlyU=:urJOCctu721FENLwHj7BDR
+ CBYMlQdpyzNd/cKnNw1smyKjlfw5AgnMM9tLMVv+EXTLpsyq4uQnoM9mIdaBpk5dVeWTrIYgP
+ zQJ+VI4hOv9Q6WaNkGD3/IKNDekrGqh7CT7bh/0vFnTDenBekpJgY1bF/3PwePC0EnPAZTYFn
+ +zrL+6lTPebx2GCS+ldkthcru4XesEN1FHUaIwY0Mb5nXAgePVyEjcggi7OqTgXu2TE3rZiSG
+ 9WuSQeo0JJqr/JlGEULDsccB+dAfTdoSDzxqgjarToE3Fw3rEIxqHoKHVKHo94jt2RFoBl6Cw
+ UXye868XzQuvINyaHh9gDXobdJsH2JasuMSA+b6wonsrpM/mTXde8ZnRjpHCMLIrvr6nyszPq
+ gkdF4cbX3stw4J3v77ExvCB7JnB7RRstvp9he1CWd1MaZIMumYgDcmXmw52Nk+RhFTXoPooft
+ Mhz9oEkxoINPVUDaHOv3fUReTajaEPPe58160BKWr8MzwaIBvPIZBOdfDghz0dyoMCnnguNv3
+ ffZ3Msf5Xxs3ZrsqqrnX23nv/3lESdLRCp/oVkImDApPShx4YffhfBAp1Ige5U7y3h7wt3gEU
+ L/7NWsp4PzxJYt6sO9nAiw+YPeoXw8i49iS+Sf9xM/Of98z4RBST1wE409QhNME7g5Suao9Ff
+ 0oH0hqytTTDfNZ2XcNu60H4I+b/HOR+bH5E+x4aP/eEB96Ep9mWz2uoBDnoGLk8aOvnrkBuQi
+ FnIwyOSIqGo8by5AM1uRa6s34yvhs0Bq+ROwPmnGjB/Tr4et2ImkfzlFwvNFuubmrDWdnUCD6
+ Sg1k3A0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Apr 25, 2017 at 4:51 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> We wouldn't be using fnmatch(), but I think it's a probably a good
-> idea for the tests to support a mode where we have to declare
-> explicitly whether something should also match under fnmatch or not,
-> so we document the differences.
+Hi Junio,
 
-It was that way for a while (when wildmatch code was still "young")
-then we removed fnmatch tests because system fnmatch was inconsistent
-in some corner cases and because wildmatch code did not change much
-anymore.
+On Tue, 25 Apr 2017, Junio C Hamano wrote:
 
-If we start turning it upside down, yes some sort of checks like that
-may be a good idea (or at least until new code stablizes again).
---=20
-Duy
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> > Jonathan Tan wrote:
+> >
+> > [...]
+> >> --- a/t/t3511-cherry-pick-x.sh
+> >> +++ b/t/t3511-cherry-pick-x.sh
+> >> @@ -208,6 +208,20 @@ test_expect_success 'cherry-pick -x -s adds sob even when trailing sob exists fo
+> >>  	test_cmp expect actual
+> >>  '
+> >>  
+> >> +test_expect_success 'cherry-pick -x handles commits with no NL at end of message' '
+> >> +	pristine_detach initial &&
+> >> +	sha1=$(printf "title\n\nSigned-off-by: a" | git commit-tree -p initial mesg-with-footer^{tree}) &&
+> >
+> > nit: Should this use a more typical sign-off line with an email
+> > address, to avoid a false-positive success in case git becomes more
+> > strict about its signoffs in the future?
+> >
+> > Something like
+> >
+> > 	printf "title\n\nSigned-off-by: S. I. Gner <signer@example.com>" >msg &&
+> > 	sha1=$(git commit-tree -p initial mesg-with-footer^{tree} <msg) &&
+> > 	...
+> 
+> That is a good point and has an added benefit that the test script
+> becomes easier to follow.
+
+If you already try to make it easier to follow, you might just as well go
+the whole nine yards:
+
+> diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
+> index 6f518020b2..c2b143802d 100755
+> --- a/t/t3511-cherry-pick-x.sh
+> +++ b/t/t3511-cherry-pick-x.sh
+> @@ -210,12 +210,14 @@ test_expect_success 'cherry-pick -x -s adds sob even when trailing sob exists fo
+>  
+>  test_expect_success 'cherry-pick -x handles commits with no NL at end of message' '
+>  	pristine_detach initial &&
+> -	sha1=$(printf "title\n\nSigned-off-by: a" | git commit-tree -p initial mesg-with-footer^{tree}) &&
+> +	signer="S. I. Gner <signer@example.com>" &&
+> +	printf "title\n\nSigned-off-by: %s" "$signer" >msg &&
+> +	sha1=$(git commit-tree -p initial mesg-with-footer^{tree} <msg) &&
+>  	git cherry-pick -x $sha1 &&
+>  	cat <<-EOF >expect &&
+>  		title
+>  
+> -		Signed-off-by: a
+> +		Signed-off-by: $signer
+>  		(cherry picked from commit $sha1)
+>  	EOF
+>  	git log -1 --pretty=format:%B >actual &&
+
+It is even easier to read `--format=%B` than `--pretty=format:%B`, and as
+`%B` does *not* indent, the indentation in the lines writing the `expect`
+file is bogus anyway. And with the `msg` file having most of the stuff
+already, we Do Not Need To Repeat Ourselves:
+
+	printf '\n(cherry picked from commit %s)\n' $sha1 >>msg &&
+	git log -1 --format=%B >actual &&
+	test_cmp msg actual
+
+Ciao,
+Dscho
