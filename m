@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68A7F207E4
-	for <e@80x24.org>; Wed, 26 Apr 2017 01:26:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED32207E4
+	for <e@80x24.org>; Wed, 26 Apr 2017 01:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1434265AbdDZB0M (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Apr 2017 21:26:12 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36096 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1434262AbdDZB0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Apr 2017 21:26:11 -0400
-Received: by mail-pf0-f195.google.com with SMTP id v14so12161798pfd.3
-        for <git@vger.kernel.org>; Tue, 25 Apr 2017 18:26:10 -0700 (PDT)
+        id S1434423AbdDZBot (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Apr 2017 21:44:49 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:34319 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S948356AbdDZBor (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Apr 2017 21:44:47 -0400
+Received: by mail-pg0-f68.google.com with SMTP id t7so10831102pgt.1
+        for <git@vger.kernel.org>; Tue, 25 Apr 2017 18:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=s4zP0/HDYQChk8qwknn7tuHgtDhZG1Gi4WBbb18F5Ag=;
-        b=nT/FkthUhLYG+6Oh7xv1UHaVmO+GBvR2fg/KgZAOM3lqC19kquBiUsa8PHDtjJNfju
-         naorEe6WpfRF+pgMutKxD04ujCnSQtIRcGik8XMpDTJ+CTGoTMpUyG2mIa9yhSuQG8O7
-         mWOR56Cieikmv7dkzYsdfhSlyyH/t5QaJrYixirTceJOgEoVvqqE69xuCNzp1XybLJ74
-         FdM+7NXGNPfMbQeGW6HYGW7s7qd/ahRU1cIuGyFjRUbwmh6FuQtHEW++Uaig1dN6WJB4
-         Gj4JQ2IDVl1knpooK/fazqoFZZexfkxV6uCnnP5T32mwZMXIUDxAN9OfmbK6Fj9pTPZ2
-         UEcg==
+        bh=VY8nM+E0IXVHjYCodo4esYjudQG6IhINGnKMK6tYf5Q=;
+        b=lfcg85csZdRZe44WjL7odF1NDmMKH8Mf1P9oPRKDc1vxQe/Wfqcp4T455f8eHSJweq
+         ihsNAvJvShGY/8czUkxeqGumsZLCzeg0/JdlKoJ/bnoHLJtJ2f0kzjLYtvVxdMsVI/bN
+         A2V1cchOXxVHt2upTwTbQL+B/xB2lIwWKtRBpWkFviMWeeGSMR/Ps/ZwP/iKjlKTm7DO
+         VdPgVcSH84G9A9uUb/YNQKevTHiAhJpZy3Fk94aUgZd45MocZvW4eSkmP3G/u8TGlS3b
+         AwEdaCLav1YXrBCapwpuZ/0pojBL9Jmb+ic/+3pwrn7ISzisV/RG3ifuZx0Cg/LAuXbV
+         a3sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=s4zP0/HDYQChk8qwknn7tuHgtDhZG1Gi4WBbb18F5Ag=;
-        b=cGniymcj2NSU2fx7hECwlw/cN+SXA0vi11Ut5bHlRR2MeD+uoezc91U9lbJZI6pdA4
-         0tQoBy/MWH9tGtw7rS0sJ7crGU4Bf38pxEtwksM2gyFNMQBBvWjiciY/GXvoCGqgTZsC
-         YLAadr25EeCu0QfqVB8zEXJPXRN8K5SySOh7brgJHcwRU/gkF2xz6QtqPxeU4731CXii
-         adqp4E+ejwpCRZ6mCbYyvaJPM6AUuEy6Vm0geAjBnJChtMXYlcPf2cIan7ObSgZTaGHP
-         nXqSNRXvSDh19ftoZjKpqro8JyFtT8YUMC22shivMzsCbSqSo7Ww2NWiAc2DZ5sjxXz+
-         EZEw==
-X-Gm-Message-State: AN3rC/4d6DZRV4PEPMcqrEIp13v++8EwFHp4/Fi1bi/Em96RHvQdjzAl
-        gR2yv+je5HJiJg==
-X-Received: by 10.84.217.148 with SMTP id p20mr39893256pli.164.1493169970513;
-        Tue, 25 Apr 2017 18:26:10 -0700 (PDT)
+        bh=VY8nM+E0IXVHjYCodo4esYjudQG6IhINGnKMK6tYf5Q=;
+        b=j5VscdwkhYec1s5gOFqufOtlqA3w3Hz2eOdkT5VXwcqbYXeZqwlcithyjxbNoONBi+
+         fKeBZwAf6i4t4m8LSO8nnn9sqEfM21T7+CFzmNwI1vlGOFq9CLDyKdsbpe1fDpAJn9+K
+         HIAtmukAhO+xqTowdTYDAhIhpYHZbn8bLMInqXkFu/mag/zlnE7bAojspSFLqsCe5aeR
+         H20Xm+hyeWISAYybwBfDc/V6255cPRa5UZqWxz1gedDnj7j7aW7ax8bBdYDLVfv8KnBN
+         bwINUUhbsjhoB/AYkCwx/I6VhYZymq6e6UkmQmunSwcbxKl9IpUlxZdHl9HFedvOirNh
+         nhPw==
+X-Gm-Message-State: AN3rC/6xg9H/yCaGdOTnkSlGnmfOq1AsF2SIoU7FfIAVn/gynxtlL5ek
+        5F5r/f8UpmYptw==
+X-Received: by 10.99.96.204 with SMTP id u195mr29776638pgb.29.1493171086273;
+        Tue, 25 Apr 2017 18:44:46 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3179:d004:20b:b383])
-        by smtp.gmail.com with ESMTPSA id r73sm38492471pfa.65.2017.04.25.18.26.09
+        by smtp.gmail.com with ESMTPSA id p7sm21428771pfb.125.2017.04.25.18.44.45
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 25 Apr 2017 18:26:09 -0700 (PDT)
+        Tue, 25 Apr 2017 18:44:45 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] clone: add a --no-tags option to clone without tags
-References: <xmqq60i1dvnk.fsf@gitster.mtv.corp.google.com>
-        <20170419143831.6868-1-avarab@gmail.com>
-        <20170425224521.GM28740@aiede.svl.corp.google.com>
-Date:   Tue, 25 Apr 2017 18:26:08 -0700
-In-Reply-To: <20170425224521.GM28740@aiede.svl.corp.google.com> (Jonathan
-        Nieder's message of "Tue, 25 Apr 2017 15:45:22 -0700")
-Message-ID: <xmqq60hsufgv.fsf@gitster.mtv.corp.google.com>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org, j6t@kdbg.org, sbeller@google.com, e@80x24.org,
+        jrnieder@gmail.com, peff@peff.net
+Subject: Re: [PATCH v8 2/2] run-command: restrict PATH search to executable files
+References: <20170425175446.113553-1-bmwill@google.com>
+        <20170425234700.194277-1-bmwill@google.com>
+        <20170425234700.194277-2-bmwill@google.com>
+Date:   Tue, 25 Apr 2017 18:44:44 -0700
+In-Reply-To: <20170425234700.194277-2-bmwill@google.com> (Brandon Williams's
+        message of "Tue, 25 Apr 2017 16:47:00 -0700")
+Message-ID: <xmqqzif4t01f.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,37 +68,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> In other words, I think the commit message needs a bit more detail about
-> the use case, to say why omitting those tags is useful.  The use case
-> is probably sane but it is not explained.  A side effect (and my main
-> motivation) is that this would make it crystal clear to people looking
-> at the patch in history that it is talking about tags that are part of
-> "master"'s history, not tags pointing elsewhere.
-
-I agree that it is unclear "having no tags, not even the harmless
-and usually useful ones that point at the history of the branch of
-interest" is the point of this new feature from the documentation
-and log message.  
-
-Responding to your other message, I do not think this new feature
-should be tied to --single-branch; I think having the tags to mark
-commits in the branch's history (while not fetching other tags
-irrelevant to the branch's history) is usually what users would
-want.
-
->> Before this the only way of doing this was either by manually tweaking
->> the config in a fresh repository:
+> In some situations run-command will incorrectly try (and fail) to
+> execute a directory instead of an executable file.  This was observed by
+> having a directory called "ssh" in $PATH before the real ssh and trying
+> to use ssh protoccol, reslting in the following:
 >
-> Usually commit messages refer to the state of things without some
-> patch using the present tense --- e.g. "Without this patch, this
-> --no-tags option can be emulated by (1) manually tweaking the config
-> in a fresh repository, or (2) by setting tagOpt=--no-tags after
-> cloning and deleting any existing tags".
+> 	$ git ls-remote ssh://url
+> 	fatal: cannot exec 'ssh': Permission denied
+>
+> It ends up being worse and run-command will even try to execute a
+> non-executable file if it preceeds the executable version of a file on
+> the PATH.  For example, if PATH=~/bin1:~/bin2:~/bin3 and there exists a
+> directory 'git-hello' in 'bin1', a non-executable file 'git-hello' in
+> bin2 and an executable file 'git-hello' (which prints "Hello World!") in
+> bin3 the following will occur:
+>
+> 	$ git hello
+> 	fatal: cannot exec 'git-hello': Permission denied
+>
+> This is due to only checking 'access()' when locating an executable in
+> PATH, which doesn't distinguish between files and directories.  Instead
+> use 'is_executable()' which check that the path is to a regular,
+> executable file.  Now run-command won't try to execute the directory or
+> non-executable file 'git-hello':
+>
+> 	$ git hello
+> 	Hello World!
 
-Thanks--I'll use this myself when responding to patches from other
-people.  I recall getting irritated while reading some patches and
-couldn't pinpoint why they were irritating, and now I realize that
-it was because they said "Previously Git did X." and somesuch.
+Could you add a line after this example, that says something like
+"which matches what execvp() would have done with a request to
+execute git-hello with such a $PATH."
 
+That is because it can be argued that bin1/git-hello should be found
+and get complaint "not an executable file", or that bin1/git-hello
+should be skipped but bin2/git-hello should be found and get
+complaint "not an executable file", both to help the user diagnose
+and fix the broken $PATH (or director contents).  It is the easiest
+to justify why we chose this other definition to skip both git-hello
+in bin1 and bin2 if that is an established existing practice---we
+can say "sure, what you propose also may make sense, but we match
+what execvp(3) does".
+
+The patch text looks good.
+
+Thanks.
