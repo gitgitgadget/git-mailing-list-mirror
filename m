@@ -2,120 +2,259 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 310F6207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 17:38:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF8B2207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 17:41:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753664AbdDZRiV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 13:38:21 -0400
-Received: from mail-pg0-f49.google.com ([74.125.83.49]:34184 "EHLO
-        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753657AbdDZRiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 13:38:19 -0400
-Received: by mail-pg0-f49.google.com with SMTP id v1so3418231pgv.1
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 10:38:19 -0700 (PDT)
+        id S932068AbdDZRl1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 13:41:27 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:33154 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753695AbdDZRlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 13:41:13 -0400
+Received: by mail-pf0-f174.google.com with SMTP id a188so3378033pfa.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 10:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=unC9mjU3suxQUNl1//UPDkKKoJd3rU/7uR9lXfXvv00=;
-        b=bC0ewmECsXWGFMeOM3PGDDBlh+NnS+tRQ5gfuYfyh6SQxzeQCm+C5TLz8OPXKs6XYp
-         Lg0DoyfZTrzV5rx7DUWWXAwg7fBLwSHN7BaHZSj6lqWuoj960BiipDEZvql6+qbFON/u
-         8pivtuYo5IHWxlPGx6GOSBsIsu+eMMUaZbGZ6qrP9Ft6x/RUik8NYKpI9mVMaLT+zWrj
-         5P0dEyG2gxtvxXQt0Oe0jotYIr/9bwEK66H3LUx/EhLfT8UK0hrtCHRVKRqompx/Uh3q
-         ge0OJJSW4R9boibcX0CA8nLQMIwH5JJU2S1yDkkXuqZDT7CYMFpho+lH95uLVmdZU0E7
-         whEg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=yI9w1YYGOG5AAJfbvXZEF3dPjK3NFkv7bGCAmNWq+LI=;
+        b=eU0WWjOPp4OCQAPGXziUBveaVvQ9yWOWn5flflTn1knCjCxh61YEzDOng8lx6R6bug
+         Z+YP0D4jmSq7Acif5IvlTrbsoIwUWtde+hqguzX4peRzNYmU18vax4T8WXFusWwDuEUt
+         nN9qctoUwsKZpPMTHurT5/FVe8l9kHCgbJHVH3YNe70Hu5mo2tdXjmDgSt5LVQsGV3yw
+         4LSWTIEh696fyA379Hiq6BgIp97isJ9os/HzZkYrB2TOyRUM7ZbrTbrLVQ3uizRSjkNA
+         +ODCjKSQo2sxxRORzYXk48PbkXZm0PdVkdfQ3a8UyG9j4jxr8samV2j5Qk7hkGJsRjmA
+         cWlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=unC9mjU3suxQUNl1//UPDkKKoJd3rU/7uR9lXfXvv00=;
-        b=qB/5nuVm9/FZHRTa2jAMCfeUYBWol2JFjOnSIXUyYAj9SSjKBaxSzpHMXws2dp581a
-         6EWIeGeR3orkwmCOWCaTwwu590+IDL64ApC5SYKdarYwppkamKWCy57Cip8r/gWb4Wv2
-         BoSaoYqqrQJp2qnk/4J7vF3ODhgYfxxoVWC9C9GhZ5FwCuo0iMpzdfZFXYpRQw2rQd/C
-         gCVwKemODlMmzY9AGKqMeqylduMUmdGyMKYTGQzRJXhIi7C1HGVgIR8py1+4Lxwm9L7T
-         uyVw1BpW/r8DoWobZrqUps3mclEt2DjCyEfUMgLhvfefAhYNAe1dZLxIrpLaQehMMEd2
-         ngoQ==
-X-Gm-Message-State: AN3rC/6nmENL4ucW0r3XrYzHa+jQdpk54HJB4MEEzFDPoUO432zBnw3T
-        wVRQX/+0IGEwL685
-X-Received: by 10.84.224.136 with SMTP id s8mr1239721plj.93.1493228298475;
-        Wed, 26 Apr 2017 10:38:18 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:544c:eb40:b322:405])
-        by smtp.gmail.com with ESMTPSA id a77sm1546420pfe.33.2017.04.26.10.38.17
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 10:38:17 -0700 (PDT)
-Date:   Wed, 26 Apr 2017 10:38:16 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: BUG: wildmatches like foo/**/**/bar don't match properly due to
- internal optimizations
-Message-ID: <20170426173816.GA80265@google.com>
-References: <CACBZZX5u5fF4fJBJ3CwH0DmLBw4D32jN5o=Om-iqwQdPG93DFg@mail.gmail.com>
- <CACsJy8Ct4VU0XAgJruFECEVxb98MS4P+9Z6D8ag35ySL6OY-0g@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=yI9w1YYGOG5AAJfbvXZEF3dPjK3NFkv7bGCAmNWq+LI=;
+        b=gTycMg+WO+vkqd5enUGdpaen5Wth6vl3OjtKwzxkhK7NBCusVqijVOxPJOdEi6M7m/
+         uG0WQUbC07NQdBlEIE99GpON+gv3ycpzgdsQYCnxxG5+1x2jCiL/G7JYXh/4nCmXkOob
+         8G61vmIRO68sEHND6W4CjTOMN96/YkBKfunSuBUDbGYGUPXz6PpEem54PjNe2Q9cfXA2
+         zvLc6CS+Asf+o6LV5lvf/TCTCm+TzofvTLtJ0SSbFeTeV5m0rfjYBCuJEeK2qBMFonBI
+         jdlsmNbWwQb+bdctUAerZ8DCOHhH1WjqiqWapK2sCDuoggWienMoX4U4HioRxjDdlrYs
+         rpcw==
+X-Gm-Message-State: AN3rC/4zdBc1v5L1NbtZmYR+q+mPoIgYtcFCJuFzxMS74AGcDVqS+Tf3
+        BBYalsO09pCqkR64c1K9bvVOUkApHC3q
+X-Received: by 10.84.241.136 with SMTP id b8mr1240996pll.107.1493228472300;
+ Wed, 26 Apr 2017 10:41:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8Ct4VU0XAgJruFECEVxb98MS4P+9Z6D8ag35ySL6OY-0g@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Received: by 10.100.153.156 with HTTP; Wed, 26 Apr 2017 10:41:11 -0700 (PDT)
+In-Reply-To: <xmqqa873ubiw.fsf@gitster.mtv.corp.google.com>
+References: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com>
+ <CAGZ79kZ5440r1EHOVP3eXxe5u=u16y_jXTA0C4hLJA2kUkF-kg@mail.gmail.com>
+ <4BF0A1BFFFFD421EB8C5F7E6FEF14357@PhilipOakley> <CAGZ79kZDzuSHw4siSkiekw73bBq9R8gg_R+a7NyNUG6bYxc2Og@mail.gmail.com>
+ <C3A8A88B8DDD468095B7FD256330EEF7@PhilipOakley> <xmqqa873ubiw.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 26 Apr 2017 10:41:11 -0700
+Message-ID: <CAGZ79kZEveo8jQodvd0n6fEXc1OXDVa26BCumM0etjst74F_Hw@mail.gmail.com>
+Subject: Re: Submodule/contents conflict
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>,
+        Orgad Shaneh <orgads@gmail.com>,
+        Dakota Hawkins <dakotahawkins@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christoph Michelbach <michelbach94@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/26, Duy Nguyen wrote:
-> On Wed, Apr 26, 2017 at 2:13 AM, Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> > Thought I'd just start another thread for this rather than tack it
-> > onto the pathalogical case thread.
-> >
-> > In commit 4c251e5cb5 ("wildmatch: make /**/ match zero or more
-> > directories", 2012-10-15) Duy added support for ** in globs.
-> >
-> > One test-case for this is:
-> >
-> >     match 1 0 'foo/baz/bar' 'foo/**/**/bar'
-> >
-> > I.e. foo/**/**/bar matches foo/baz/bar. However due to some
-> > pre-pruning we do in pathspec/ls-tree we can't ever match it, because
-> > the first thing we do is peel the first part of the path/pattern off,
-> > i.e. foo/, and then match baz/bar against **/**/bar.
-> 
-> Yeah. I think the prefix compare trick predated wildmatch. When I
-> introduced positional wildcards "**/" I failed to spot this. Good
-> catch.
-> 
-> Ideally this sort of optimization should be contained within wildmatch
-> (or whatever matching engine we'll be using). It also opens up more
-> opportunity (like precompile pattern mentioned elsewhere in this
-> thread).
-> 
-> You need to be careful though, when we do case-insensitive matching,
-> sometimes we want to match the prefix case _sensitively_ instead. So
-> we need to pass the "prefix" info in some cases to the matching
-> engine.
-> 
-> I guess time is now ripe (i.e. somebody volunteers to work on this ;-)
-> to improve wildmatch. "improve" can also be "rewriting to pcre" if we
-> really want that route, which I have no opinion because I don't know
-> pcre availability on other (some obscure) platforms.
+On Tue, Apr 25, 2017 at 7:51 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> "Philip Oakley" <philipoakley@iee.org> writes:
+>
+>> As I recall Christoph was using checkout to copy a file (e.g. a
+>> template file) from an older commit/revision into his worktree, and
+>> was suprised that this (git checkout <tree> <path>) also _staged_ the
+>> file, rather than simply letting it be in a modified/untracked state.
+>
+> This probably is taking it even further than the original topic, but
+> I raise this weather-balloon to see if anybody is interested.
+>
+> In the modern day, it might be useful if the "--working-tree-only"
+> mode added a new file as an intent-to-add entry to the index, but
+> that is not what "git apply (no other options)" (which is the gold
+> standard for command that operates on the working tree and/or on the
+> index) does, so it is not done in this patch.  IOW, if you grab a
+> path that does not exist in your index out of <tree-ish>, you will
+> write out an untracked file to the working tree.
+>
+> -- >8 --
+> Subject: [PATCH] checkout: add --working-tree-only option
+>
+> "git checkout <tree-ish> <pathspec>" has always copied the blob from
+> the tree-ish to the index before checking them out to the working tree.
+>
+> Some users may want to grab a blob out of a tree-ish directly to the
+> working tree, without updating the index, so that "git diff" can be
+> used to assess the damage and adjust the file contents taken from a
+> different branch to be more appropriate for the current branch.
 
-If we do end up improving wildmatch, we may also want the functionality
-to (with a flag) have a pattern match a leading directory.  This would
-be useful in the submodule case where a user gives a pathspec which
-could go into a submodule but we don't want to launch a child process to
-operate on the submodule unless the first part of the pattern matches
-the submodule.  Right now with recursive grep, if wildcards are used
-then the code just punts and says "yeah this pattern may match something
-in the submodule but we won't know for sure till we actually try".
+That makes sense for the in-repo-point-of-view.
+I assumed a use case like this:
 
--- 
-Brandon Williams
+  A user may want to extract a file from a given tree-ish via
+  GIT_WORK_TREE=/tmp/place git checkout <tree> -- <file>
+  without modifying the repository (i.e. index) at all. For this
+  we'd need an option to modify the working tree only.
+
+> The new option "--working-tree-only" allows exactly that.
+>
+> In the hindsight, when a command works on the working tree and/or
+
+s/the// ?
+
+> the index, the usual convention is:
+>
+>  - with no other option, the command works only on the working tree;
+>
+>  - with "--cached" option, the command works only on the index; and
+>
+>  - with "--index" option, the command works on both the working tree
+>    and the index.
+
+I never realized this as a usual convention explicitly. Thanks for pointing
+it out.
+
+> So we probably should have triggered the default behaviour under the
+> "--index" option, and triggered this "--working-tree-only" mode of
+> behaviour when "--index" option is not given.  From the same point
+> of view, "git checkout --cached <tree-ish> <pathspec>" would have
+> done the same as "git reset <tree-ish> <pathspec>" would do.  And
+> that may have made the command set a bit more consistent.
+>
+> But that is merely a hindsight being 20/20, oh well.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-checkout.txt | 22 +++++++++++++++-------
+>  builtin/checkout.c             | 10 +++++++++-
+>  t/t2022-checkout-paths.sh      | 21 +++++++++++++++++++++
+>  3 files changed, 45 insertions(+), 8 deletions(-)
+>
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+> index 8e2c0662dd..201677752e 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -14,6 +14,7 @@ SYNOPSIS
+>  'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
+>  'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
+>  'git checkout' [-p|--patch] [<tree-ish>] [--] [<paths>...]
+> +'git checkout' --working-tree-only <tree-ish> [--] [<paths>...]
+>
+>  DESCRIPTION
+>  -----------
+> @@ -81,13 +82,14 @@ Omitting <branch> detaches HEAD at the tip of the current branch.
+>  'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
+>
+>         When <paths> or `--patch` are given, 'git checkout' does *not*
+> -       switch branches.  It updates the named paths in the working tree
+> -       from the index file or from a named <tree-ish> (most often a
+> -       commit).  In this case, the `-b` and `--track` options are
+> -       meaningless and giving either of them results in an error.  The
+> -       <tree-ish> argument can be used to specify a specific tree-ish
+> -       (i.e.  commit, tag or tree) to update the index for the given
+> -       paths before updating the working tree.
+> +       switch branches.  In this case, the `-b` and `--track` options
+> +       are meaningless and giving either of them results in an error.
+> ++
+> +The command checks out blobs for paths that match the given
+> +<pathspec> from the index to the working tree.  When an optional
+> +<tree-ish> is given, the blobs for paths that match the given
+> +<pathspec> are copied from the <tree-ish> to the index before
+> +they are checked out of the index.
+>  +
+>  'git checkout' with <paths> or `--patch` is used to restore modified or
+>  deleted paths to their original contents from the index or replace paths
+> @@ -101,6 +103,12 @@ specific side of the merge can be checked out of the index by
+>  using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
+>  file can be discarded to re-create the original conflicted merge result.
+>
+> +'git checkout' --working-tree-only <tree-ish> [--] <pathspec>...::
+> +       Similar to `git checkout <tree-ish> [--] <pathspec>`, but
+> +       the index file is left in the same state as it was before
+> +       running this command.
+
+Adding this as a new mode seems like a "patch after the fact",
+whereas the wording hints that this may be included in the prior
+part, but I find it hard to come up with a good description there.
+
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 9b2a5b31d4..d214e99521 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -37,6 +37,7 @@ struct checkout_opts {
+>         int overwrite_ignore;
+>         int ignore_skipworktree;
+>         int ignore_other_worktrees;
+> +       int no_index;
+>         int show_progress;
+>
+>         const char *new_branch;
+> @@ -268,6 +269,9 @@ static int checkout_paths(const struct checkout_opts *opts,
+>                 die(_("Cannot update paths and switch to branch '%s' at the same time."),
+>                     opts->new_branch);
+>
+> +       if (opts->no_index && !opts->source_tree)
+> +               die(_("'--working-tree-only' cannot be used without tree-ish"));
+
+double negation, maybe:
+
+  "--working-tree-only requires tree-ish"
+
+> @@ -370,7 +374,9 @@ static int checkout_paths(const struct checkout_opts *opts,
+>                 }
+>         }
+>
+> -       if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+> +       if (opts->no_index)
+> +               ; /* discard the in-core index */
+> +       else if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
+>                 die(_("unable to write new index file"));
+>
+>         read_ref_full("HEAD", 0, rev.hash, NULL);
+> @@ -1161,6 +1167,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+>                 OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
+>                          N_("do not check if another worktree is holding the given ref")),
+>                 OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
+> +               OPT_BOOL(0, "working-tree-only", &opts.no_index, N_("checkout to working tree only without touching the index")),
+> +
+
+nit: no need for extra empty line here.
+
+> +test_expect_success 'working-tree-only option leaves checked out files unadded' '
+> +       git reset --hard &&
+> +       git checkout -b pu next &&
+> +       echo another >>file1 &&
+> +       echo exists >file3 &&
+> +       git add file3 &&
+> +       git commit -a -m another &&
+> +       git checkout next &&
+
+Up to here it is all preparation; I started to give an argument
+on why using "another" for both the commit message and the file content
+was suboptimal, but I was wrong. This seems to be best after some consideration.
+
+The next paragraph checks for
+'working-tree-only option populates the working tree, but doesn't touch index'
+
+> +       ! grep another file1 &&
+> +       git checkout --working-tree-only pu file1 file3 &&
+> +       grep another file1 &&
+> +       test_must_fail git grep --cached another file1 &&
+
+but only for file1, whereas the next paragraph checks it for file3.
+
+> +       grep exists file3 &&
+> +       git ls-files file3 >actual &&
+> +       >expect &&
+> +       test_cmp expect actual
+
+Thanks,
+Stefan
