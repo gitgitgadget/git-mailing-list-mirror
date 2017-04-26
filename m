@@ -7,87 +7,85 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A3A5D207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 19:39:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DBE8207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 19:41:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967073AbdDZTji (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 15:39:38 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:37829 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967071AbdDZTjg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 15:39:36 -0400
-Received: by mail-wm0-f41.google.com with SMTP id m123so14558613wma.0
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 12:39:36 -0700 (PDT)
+        id S1753995AbdDZTlF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 15:41:05 -0400
+Received: from mail-wm0-f51.google.com ([74.125.82.51]:38705 "EHLO
+        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753989AbdDZTlD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 15:41:03 -0400
+Received: by mail-wm0-f51.google.com with SMTP id r190so14743978wme.1
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 12:41:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=OsykR+sr1a7JuzofTBiheUJjQ9Dg2OsWNdQ0rLmW72I=;
-        b=kX3/lphPMLkqJJ/b0CLXp88uFFK03RlhsPXFjpKg+C+aZQpHbar0vQZnlf/CWcSzlm
-         Z8tY7tZDfoom+YsPZsgoIbP9+zXdRaXvAoM98QwAC8mhyylXNJGjTR+HRNn4K+Dh1LQd
-         ag0Y+OrK0ufCp1kRO/mdgIPnuqOGprEgkoLmjGF2wuAG7ykG9aeXe/6i6QxPhbij6hQd
-         YZQrhrqtiZNbZtEaVtCEhtbzuxhYln/eNMsTUwLLVQc5sb/2ODXNMAZ6+VukX0PpMU3q
-         bR/lmo/UlSbnTM7dkMGXan2yYoEyPmp8TflJaQwR/MQhReP6KuTr5DFYTMfiv9nDDU5J
-         34Rg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=FyP5r629LJ/IK2e7KHg5BZP7qV1jqwQ3wz9k1r0FzEU=;
+        b=dxDc9iJfmfIvIXpTHCtTGJnAzFqLdK+d9Ewh/gluglFbw71tWHuo1H+QG61wR69zJd
+         ctXAhV46JaLqKnWrOHH/XEq9PdMTpq44Lz5RmjG65GZHjjrTdbKoxaVqJXFlQOz+5OaS
+         OryMI4nYTqsPCCcn0Y/4H5fLYwU5o7osEwLB7aMYWDr1TYtwTsAkActVk6oNx+M/I5fu
+         K+fvlPlRoGIpY5d+0LM7/9sXt3Zju9+dbVZiyz9bWSiqSFZb+h8n3xGodHqJcOy+XfTY
+         Cl8oEBWJ4GNM/xncPnYaOADVw6YzU3o9PGR/rexxIaVYw0Oz//sRitnIEAW2nx2vYmX7
+         YMzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=OsykR+sr1a7JuzofTBiheUJjQ9Dg2OsWNdQ0rLmW72I=;
-        b=Lt/IQxy+heoKRh56QNtCaA7lABiTM1aa9VFqnxIRgNzIk5myuG07ymOteQ31Vjyqu0
-         c3DgtcaIK2SlnBMdPKDjBXQtwNAGVPl5OMziEc7JbVno7MSHR2M0004LUBuE1X2KyW8R
-         DMHquiWORoUNs/9BA8HRRian63/W8IQv3sipAqXupvwLI5BPZyY2um1EAinCiywCAuSt
-         oZdBz2ef1Y1VyPITIVNvkHqvuh+Ce63tPWXNhgimacsSRDlcHb+qiIoDqa3qe7120b16
-         z6GC9wgEcRmp4OJYCA7C8ilYwD7gJ8+O3BOoyU9UNRF2vABz/YT/pOoIyyEejMAWvQzu
-         9GJg==
-X-Gm-Message-State: AN3rC/72uhDT2OpJDME+j+ynp6kkioHCBbcpjJYlOPlT9e4eUGzmGuxa
-        l3VsPrw4DkCrWA==
-X-Received: by 10.80.148.123 with SMTP id q56mr2145788eda.58.1493235575527;
-        Wed, 26 Apr 2017 12:39:35 -0700 (PDT)
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=FyP5r629LJ/IK2e7KHg5BZP7qV1jqwQ3wz9k1r0FzEU=;
+        b=kglgEZi0ME5ZCeZ5smXT+aMdhKByTNBfHdxJYU26g7Ko+Dg4wBU60CACyfsji/vXA2
+         7j7CEwDi3NSOvUe0ASNEd/5IGn+7/nON9m3a+F8BNfWs0GGZNeA9mXrAQgMhXzBGKoW5
+         /FEl7457FRHvt8+oLjISWv/UVBTi9JbcyBKpRZ1RDz76vRlwRmLH1vaMwOGPstlXP+cJ
+         FHDlGDC2wSCt9T6inh35tmT1heGdHH2DpOkh40DEd0y37ovc/qfBKX+yk/dW1EA8pQj2
+         IR4ycaW5zPn22qBH8VtMjoSU0Hyq/k+g88YtqRvy3abqZv/aFZFD6RrIiVRNAB0khDON
+         xY4w==
+X-Gm-Message-State: AN3rC/5cw90SuOcj4tfKYJGa+aCJALJzoTeUIt3hlsCgyIm9qnFIVSx4
+        DOzdhLn3u6dKIQ==
+X-Received: by 10.80.164.178 with SMTP id w47mr2096694edb.19.1493235662334;
+        Wed, 26 Apr 2017 12:41:02 -0700 (PDT)
 Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id f58sm189671edf.9.2017.04.26.12.39.34
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 12:39:34 -0700 (PDT)
+        by smtp.gmail.com with ESMTPSA id h29sm606079eda.45.2017.04.26.12.41.01
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 12:41:01 -0700 (PDT)
+Content-Type: text/plain; charset=windows-1252
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: t0025 flaky on OSX
 From:   Lars Schneider <larsxschneider@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de
-Subject: [PATCH v1] travis-ci: printf $STATUS as string
-Date:   Wed, 26 Apr 2017 21:39:33 +0200
-Message-Id: <20170426193933.28961-1-larsxschneider@gmail.com>
-X-Mailer: git-send-email 2.12.2
+In-Reply-To: <72445da2-04eb-5d51-42f6-7e7fce4d4843@web.de>
+Date:   Wed, 26 Apr 2017 21:41:00 +0200
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3AF5FF19-F0C6-43D2-85F6-7716CF22FA6B@gmail.com>
+References: <461E433C-DC8E-42FE-9B23-4A76BEFE0D11@gmail.com> <e6343f94-3fad-e323-cb38-8ea1148cec3f@web.de> <11da00e8-a62c-bf07-d97e-ab755647082b@web.de> <7D9AE52B-6A2D-408B-855E-3988514AAC45@gmail.com> <72445da2-04eb-5d51-42f6-7e7fce4d4843@web.de>
+To:     =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If the $STATUS variable contains a "%" character then printf will
-interpret that as invalid format string. Fix this by formatting $STATUS
-as string.
 
-Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
----
+> On 26 Apr 2017, at 06:12, Torsten B=F6gershausen <tboegi@web.de> =
+wrote:
+>=20
+>=20
+>>>=20
+>>> So all in all it seams as if there is a very old race condition =
+here,
+>>> which we "never" have seen yet.
+>>> Moving the file to a different inode number fixes the test case,
+>>> Git doesn't treat it as unchanged any more.
+>>=20
+>> Thanks a lot for investigating this! Would you mind posting the
+>> fix as patch?
+>=20
+> That's ongoing.
+> TC #3 and #4 are fixable, but #5 resists to be cured so far.
+> I think we need a touch and sleep or so, more the next days (or weeks)
 
-Notes:
-    Base Ref: master
-    Web-Diff: https://github.com/larsxschneider/git/commit/f08d4dc6a0
-    Checkout: git fetch https://github.com/larsxschneider/git travisci/win-fix-v1 && git checkout f08d4dc6a0
+Cool! Actually #3 seems to cause most of the trouble.
+Therefore I think a patch for #3 and #4 would already be valuable!
 
- ci/run-windows-build.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-index 4e3a50b60e..e043440799 100755
---- a/ci/run-windows-build.sh
-+++ b/ci/run-windows-build.sh
-@@ -55,7 +55,7 @@ while true
- do
- 	LAST_STATUS=$STATUS
- 	STATUS=$(gfwci "action=status&buildId=$BUILD_ID")
--	test "$STATUS" = "$LAST_STATUS" || printf "\nStatus: $STATUS "
-+	test "$STATUS" = "$LAST_STATUS" || printf "\nStatus: %s " "$STATUS"
- 	printf "."
- 
- 	case "$STATUS" in
-
-base-commit: e2cb6ab84c94f147f1259260961513b40c36108a
--- 
-2.12.2
-
+Thanks,
+Lars=
