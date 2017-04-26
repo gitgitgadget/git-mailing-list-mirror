@@ -2,93 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF481207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 21:11:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3065C207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 21:20:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1030207AbdDZVLI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 17:11:08 -0400
-Received: from mail-yw0-f178.google.com ([209.85.161.178]:33462 "EHLO
-        mail-yw0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1030199AbdDZVLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 17:11:06 -0400
-Received: by mail-yw0-f178.google.com with SMTP id 203so6776309ywe.0
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 14:11:06 -0700 (PDT)
+        id S1030452AbdDZVUT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 17:20:19 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:36794 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1030449AbdDZVUS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 17:20:18 -0400
+Received: by mail-pf0-f182.google.com with SMTP id 194so6257783pfv.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 14:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=A2vBbTXoX7V8ZkqyoLvMssEt9f9+Oc3YouEk7W+HNTI=;
-        b=ZZQ0neCv2yf1Esnin4b3Cph6f1brK/NjiSPFgtDFntFAJyiAeBbivJOgPvCiocqNP1
-         R1QdHwT+yqdEq8rqz4Hf/Pyj+FRW99CPaEnEI7CmFGuzlkWtknIs9k3iTQWEBjgdfRtp
-         IhiL8b/ev1/Jol7kXVkdLxdxVrONw6LL8S8hKG2cgki+1HomehcdKrZ+P6A/gQvnu6v5
-         9VVqC6X4K6tyjXNKZogiJ5KNvzZQxWkCDV66zI//c+oULXmA57wTMF9axlZQZhb0CqA+
-         MgPE+mfn9aYqFUflhvALsjdIlTY+OC75yRYaRz6T0llKEfRyv9mqTUSDjiDFBsoVcvoe
-         L6jQ==
+        bh=mojGHibEd85Y5pZHz44XicuMCgABVhK4rudT3UmJia0=;
+        b=tEamPTXfIC6AVlrB/TYlHQYvrFfpaqYMI9+8z7IFfsmF+K/4/waSEJSS/HYdVEDSFs
+         ve6wG3zRR3018hf03xcSy7YkJ9Mj2K8wOOOaPHFGgmh249oNmlfftGqjoVdwUTxxy72F
+         ZX4oBKlm6y0/mGeOf8i63Z0YeBAFMzHsE9vKtaDldeyetiIcreppmhzDvjB1/mFDt4kp
+         fKjQePFaK1B+M2JpZJz8S6/ZyHD9WYk5cXoXflvHHej101cyQiw1Q5Soobv1zMuydHUW
+         0iErEtQQnJ7eOzRAbBozAgT8RyupbgwZttugzrEErnJCIaAy3dT/soaWN/ZdJmVET+Nn
+         t2Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=A2vBbTXoX7V8ZkqyoLvMssEt9f9+Oc3YouEk7W+HNTI=;
-        b=nBhJr74n9XU0z63DInrdaNruwdH46weie0WP/gvLzOiALiPiydTxDLg6CZlGIHhVYD
-         RqCIY0O5CHZuKbrrTaFXxEwoW9vosMy6sfr5KC3o9KWXcn1otP8UeOf2f01MyhHa7fWq
-         vlxZKzsHGz8Y3N0Fz9aJ0iLJCdnIv4eep0MccNKAFDVnvnilIIBrheTfrappVgq5mHZu
-         xBKEAcljVy7T2BwkL+q9tj/h9PoZ+g60dkBCFYPhn7o9RhJqqMhp/BqPRFqwT0VZxmZG
-         qjO9m+rKTxVU56Cr0JEHI28D1mHwpxTCbWJwXdBsAjj7gbSJFM1lKUh5MO/h/3H4mKry
-         0uhA==
-X-Gm-Message-State: AN3rC/6X2BYUH8wnwiYrXTmKyBFXoGAblIBsgd6IoaqM2UI6p12axoIG
-        yGJ28wL6iyv/F1cz7yvvwC0w/S6ZgXhA
-X-Received: by 10.13.209.193 with SMTP id t184mr1595880ywd.293.1493241065869;
- Wed, 26 Apr 2017 14:11:05 -0700 (PDT)
+        bh=mojGHibEd85Y5pZHz44XicuMCgABVhK4rudT3UmJia0=;
+        b=Hz0EScYTzqrscCGqdZxqb1JtWr53MBeY8hxGLFdNNCWMIUCzrl7dwNmFKlEJcBTOXe
+         czpT85jd2BtfoKEdS/FDKv3aDWx0V/SzLQV+u7C4RUkTA9kmLo1kmk1+Lx1Ab2iaDbnD
+         QM36i7+Viu/so3tUBP+5+sOmLZHy56A0mdNAuFsBTTVlCcXcJsJNq3fILeoELJcQ7J53
+         61/191A6GIJn8Viz6BuP2x3vmEKRNGnDdz+TkVT4t6NRVnpkjgf0QZWrQnA5giuU89z4
+         nCToTawbEZrixRgWYI5RvtUhv5LTICU3QsWQE/HQSzpyypppEh5XnbW9gGz81NXWtYFB
+         /iFg==
+X-Gm-Message-State: AN3rC/4ayMCBIQDi+BKw7X+2kPcOLweTauBgSkw5UbNof0PctV2H8S8W
+        seqmhTxCzHMlF5uIT7vXTuZCedGLxltA
+X-Received: by 10.98.90.6 with SMTP id o6mr2046813pfb.101.1493241617396; Wed,
+ 26 Apr 2017 14:20:17 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.37.52.135 with HTTP; Wed, 26 Apr 2017 14:11:05 -0700 (PDT)
-In-Reply-To: <ffb8b1ddb7a8a22643d569565e1a4929b883fba5.1493234134.git.johannes.schindelin@gmx.de>
-References: <ffb8b1ddb7a8a22643d569565e1a4929b883fba5.1493234134.git.johannes.schindelin@gmx.de>
-From:   Steve Hicks <sdh@google.com>
-Date:   Wed, 26 Apr 2017 14:11:05 -0700
-Message-ID: <CAABDHWZdsbP_NYW36nXc7WwjZf53PeEQrfaCUQrDpU4Zd9R2ew@mail.gmail.com>
-Subject: Re: [PATCH] rebase -i: reread the todo list if `exec` touched it
+Received: by 10.100.153.156 with HTTP; Wed, 26 Apr 2017 14:20:16 -0700 (PDT)
+In-Reply-To: <042b3e98e9e5b8850c35103cc56cf651b2fb3f6e.1493237937.git.johannes.schindelin@gmx.de>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <042b3e98e9e5b8850c35103cc56cf651b2fb3f6e.1493237937.git.johannes.schindelin@gmx.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 26 Apr 2017 14:20:16 -0700
+Message-ID: <CAGZ79kaJGLQjg09WMuK6v9yPpwmFnNkDq+4Tg0O7JUYEPaCjOw@mail.gmail.com>
+Subject: Re: [PATCH 14/26] setup_bare_git_dir(): fix memory leak
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 26, 2017 at 12:17 PM, Johannes Schindelin
+On Wed, Apr 26, 2017 at 1:20 PM, Johannes Schindelin
 <johannes.schindelin@gmx.de> wrote:
-> From: Stephen Hicks <sdh@google.com>
+> Reported by Coverity.
 >
-> In the scripted version of the interactive rebase, there was no internal
-> representation of the todo list; it was re-read before every command.
-> That allowed the hack that an `exec` command could append (or even
-> completely rewrite) the todo list.
->
-> This hack was broken by the partial conversion of the interactive rebase
-> to C, and this patch reinstates it.
->
-> We also add a small test to verify that this fix does not regress in the
-> future.
->
-> Signed-off-by: Stephen Hicks <sdh@google.com>
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  setup.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/setup.c b/setup.c
+> index 0309c278218..0320a9ad14c 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -748,7 +748,7 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
+>
+>         /* --work-tree is set without --git-dir; use discovered one */
+>         if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
+> -               const char *gitdir;
+> +               static const char *gitdir;
 
-Thanks for shepherding this through, Johannes!
+This alone doesn't fix the memleak if the code were called multiple times.
+As by having it static it will be init'd to NULL, we could introduce a
 
-For context on this "hack", I have a script [1] that allows passing
-multiple branches at once (or all branches beneath a given root).  It
-rewrites the todo file with some extra operations, like "branch",
-"push", and "pop", allows editing the modified todo, and then rewrites
-back to exec's.  The "branch" operation, in particular, appends an
-"exec git checkout $branch; git reset --hard $commit" to the end of
-the todo, so that no branches are moved until after all rebases are
-successful.  I've found this multi-branch rebase workflow to be very
-productive, and have been missing it the last few months, so I'm
-looking forward to it working again soon.
+    static const char *gitdir; /* must live until the end of time because ... */
+    if (!gitdir)
+        die("BUG: called setup_bare_git_dir twice?");
 
-[1] https://github.com/shicks/git-ir
+I tried looking into setup_explicit_git_dir that is called with gitdir here
+and it looks like it duplicates the memory in most cases, so maybe we
+can even get away with no static variable here and instead either inline
+the gitdir computation in the arguments of setup_explicit_git_dir
+or have a variable here that holds the returns of setup_explicit_git_dir
+such that we can free after?
+
+Thanks,
+Stefan
