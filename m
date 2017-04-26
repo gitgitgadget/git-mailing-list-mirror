@@ -2,90 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DBE8207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 19:41:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F99E207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 19:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753995AbdDZTlF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 15:41:05 -0400
-Received: from mail-wm0-f51.google.com ([74.125.82.51]:38705 "EHLO
-        mail-wm0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753989AbdDZTlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 15:41:03 -0400
-Received: by mail-wm0-f51.google.com with SMTP id r190so14743978wme.1
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 12:41:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=FyP5r629LJ/IK2e7KHg5BZP7qV1jqwQ3wz9k1r0FzEU=;
-        b=dxDc9iJfmfIvIXpTHCtTGJnAzFqLdK+d9Ewh/gluglFbw71tWHuo1H+QG61wR69zJd
-         ctXAhV46JaLqKnWrOHH/XEq9PdMTpq44Lz5RmjG65GZHjjrTdbKoxaVqJXFlQOz+5OaS
-         OryMI4nYTqsPCCcn0Y/4H5fLYwU5o7osEwLB7aMYWDr1TYtwTsAkActVk6oNx+M/I5fu
-         K+fvlPlRoGIpY5d+0LM7/9sXt3Zju9+dbVZiyz9bWSiqSFZb+h8n3xGodHqJcOy+XfTY
-         Cl8oEBWJ4GNM/xncPnYaOADVw6YzU3o9PGR/rexxIaVYw0Oz//sRitnIEAW2nx2vYmX7
-         YMzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=FyP5r629LJ/IK2e7KHg5BZP7qV1jqwQ3wz9k1r0FzEU=;
-        b=kglgEZi0ME5ZCeZ5smXT+aMdhKByTNBfHdxJYU26g7Ko+Dg4wBU60CACyfsji/vXA2
-         7j7CEwDi3NSOvUe0ASNEd/5IGn+7/nON9m3a+F8BNfWs0GGZNeA9mXrAQgMhXzBGKoW5
-         /FEl7457FRHvt8+oLjISWv/UVBTi9JbcyBKpRZ1RDz76vRlwRmLH1vaMwOGPstlXP+cJ
-         FHDlGDC2wSCt9T6inh35tmT1heGdHH2DpOkh40DEd0y37ovc/qfBKX+yk/dW1EA8pQj2
-         IR4ycaW5zPn22qBH8VtMjoSU0Hyq/k+g88YtqRvy3abqZv/aFZFD6RrIiVRNAB0khDON
-         xY4w==
-X-Gm-Message-State: AN3rC/5cw90SuOcj4tfKYJGa+aCJALJzoTeUIt3hlsCgyIm9qnFIVSx4
-        DOzdhLn3u6dKIQ==
-X-Received: by 10.80.164.178 with SMTP id w47mr2096694edb.19.1493235662334;
-        Wed, 26 Apr 2017 12:41:02 -0700 (PDT)
-Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id h29sm606079eda.45.2017.04.26.12.41.01
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 12:41:01 -0700 (PDT)
-Content-Type: text/plain; charset=windows-1252
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: t0025 flaky on OSX
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <72445da2-04eb-5d51-42f6-7e7fce4d4843@web.de>
-Date:   Wed, 26 Apr 2017 21:41:00 +0200
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3AF5FF19-F0C6-43D2-85F6-7716CF22FA6B@gmail.com>
-References: <461E433C-DC8E-42FE-9B23-4A76BEFE0D11@gmail.com> <e6343f94-3fad-e323-cb38-8ea1148cec3f@web.de> <11da00e8-a62c-bf07-d97e-ab755647082b@web.de> <7D9AE52B-6A2D-408B-855E-3988514AAC45@gmail.com> <72445da2-04eb-5d51-42f6-7e7fce4d4843@web.de>
-To:     =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-Mailer: Apple Mail (2.3124)
+        id S967123AbdDZTtq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 15:49:46 -0400
+Received: from mout.gmx.net ([212.227.17.22]:53016 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S967118AbdDZTtp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 15:49:45 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lp8h6-1di0os3S56-00eq9F; Wed, 26
+ Apr 2017 21:49:42 +0200
+Date:   Wed, 26 Apr 2017 21:49:28 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Lars Schneider <larsxschneider@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v1] travis-ci: printf $STATUS as string
+In-Reply-To: <20170426193933.28961-1-larsxschneider@gmail.com>
+Message-ID: <alpine.DEB.2.20.1704262147550.3480@virtualbox>
+References: <20170426193933.28961-1-larsxschneider@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Vwk0zE52UQk/+/6tx3UBFa8CYIFnVDISrgUKvfyhr/AO7kPRGTP
+ hKxbB8jVNfnkvLvu90gi74Y2kICsqNfIKf2qaxU5oW56CD9HN/Vj9i4QdjDdsjEhYZdinTj
+ MfsAFr6cbewRqkvcE3S8aEufYXRhhuMhd5Wi8ZtBwBJm7Pa44cwftnpC0f5Qq2K2Svq1ocN
+ 9ECMSnRptbWRD7UCN3z+A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:M7DQ3GIm9U0=:gLjITAf67B24O+Wvji1YGO
+ 2Oiu93hp9GzOPd0xEbFuD6mHZb91k3wJL4wqITNofYtIOf9yJFsNEI92imaOf4mSmbhjI4QB0
+ h2E5AoRCFFny4T3r9iZgx6L7wtvNEXwysKsy5qlDtAdvCavAMgbDgOelZl6DtuhIBKLmbR3hE
+ Z95tpjVj3qo7m1ehduNjmnox4rxMhIMYSoZJRJ7iteGyXpvTZwbDuSoD7vjBK6wSZ/PoNsLAm
+ nyvbFGpH4VQGmeTftQU0r0ihw2jRiN0JzzPXjAGxiMv+Iapbb5O5xZOvElt+x1wM+N9pMVHt9
+ s0nkYUcgc5KJVBiG24CROsD+EYp5OawjixoSb5e1pQap9eXZnSRLxMTLXAJIHnItFUHjp3Rl1
+ jCpPgR7PWxktzXE7tvnh44BSR6WaX1pJ68XY58NtS5O2L5+PBqMlQYohRvSUXmLgxTFY2p6zP
+ k3x2ZI6CMlqFaGmgKS+EJHB7k+7cduZr5g4aLZH+ZuSD9NChfC2P1s5jBm6CuKQgj2ckiRfyK
+ LKzNjBzAPwwZdizCao/NsXAcv2OtrAjq8VV7gQp7nCygGZlfCgMy4mMoUc1Lh5JZas5vDSdO/
+ vpL1np3Go2zJrxcmGzaDaE+6RyfMoq5ys0g3Sef6OIpbyT5pyOch2R8NcPebftBZzIj8sMLCF
+ PO/p8q6rI0SrxWhyyoGCj5gmaV/dtQssDCoJWkLeKVm2NVT1C7cCgYGwudf4hOVTkXg069m6b
+ 12lLngu07GNis7oq6v7/gjYcFaNIsKzCith2oozRVOYE65W5SA4AWH99+Vg7FEtv2jnER4+IN
+ C6yHvuN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-> On 26 Apr 2017, at 06:12, Torsten B=F6gershausen <tboegi@web.de> =
-wrote:
->=20
->=20
->>>=20
->>> So all in all it seams as if there is a very old race condition =
-here,
->>> which we "never" have seen yet.
->>> Moving the file to a different inode number fixes the test case,
->>> Git doesn't treat it as unchanged any more.
->>=20
->> Thanks a lot for investigating this! Would you mind posting the
->> fix as patch?
->=20
-> That's ongoing.
-> TC #3 and #4 are fixable, but #5 resists to be cured so far.
-> I think we need a touch and sleep or so, more the next days (or weeks)
+On Wed, 26 Apr 2017, Lars Schneider wrote:
 
-Cool! Actually #3 seems to cause most of the trouble.
-Therefore I think a patch for #3 and #4 would already be valuable!
+> If the $STATUS variable contains a "%" character then printf will
+> interpret that as invalid format string. Fix this by formatting $STATUS
+> as string.
+> 
+> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 
-Thanks,
-Lars=
+ACK.
+
+For reference, the status should always be a single all-ASCII word, but
+sometimes it looks as if there is a server error that returns a full-blown
+HTML error page (including a style that contains something like 'width:
+10%;' which would be misinterpreted by printf as a format string).
+
+Ciao,
+Dscho
