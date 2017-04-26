@@ -7,90 +7,79 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D734A207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:20:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAC8B207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967216AbdDZUT7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:19:59 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57250 "EHLO mout.gmx.net"
+        id S967217AbdDZUUD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:20:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:50862 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967214AbdDZUT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:19:57 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LoE4f-1dj9wt1Jgf-00gDRs; Wed, 26
- Apr 2017 22:19:34 +0200
-Date:   Wed, 26 Apr 2017 22:19:33 +0200 (CEST)
+        id S967214AbdDZUUB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 16:20:01 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lbujs-1dmkJg3NtE-00jFkf; Wed, 26
+ Apr 2017 22:19:52 +0200
+Date:   Wed, 26 Apr 2017 22:19:53 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 05/26] git_config_rename_section_in_file(): avoid resource
- leak
+Subject: [PATCH 08/26] difftool: close file descriptors after reading
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <d88e30ff9ada2f47b4f303269162b6e8e19b1baa.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <c634ea5dad0ce1c1f424f54a12a5614e6fa4a847.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:4AxZfz5nnhCURYnlS5Pwl/KMTv9Iok6Nmv6Li/8A/NlrPzQKnex
- OQF4CsNykyKP/w2K8/XDE3vBOLJ/AZjT0xLtf6FdP0OUZYTRUKCqXLWbBzfhyI+AV+OXQgY
- c9Np5nAbO3gxZ1s7a9NL7uSrqXHRAROP4DqQNUCDLRP6LqMQPSZ5QRawI6S+kKFY7Wv0pKp
- 5YPEcLuH3KNT0kfrey0CQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6uClC71G5bM=:NfcaJO5z3YFTfpSfZc0IYR
- MY36DAgNDTQl46eoOM1nj5P0I1KcCoj6LTnk8L6xnhvV9N+u/RCV9pdeN+Hwz19YNUBpSLxWp
- 9VkykHNiamoBRI7aW1UE4CDXWRBG/obaIMdTeDQzYsOXNlwfK3I13cs1pIzNSACCdxt4/GPcF
- oAD6GvQoOOPoZnOEJpbmjAIqS7rzf3fqlwmHRhX0VR9BQe1PK4en4nCOmMfGcdpGJnDmCNiya
- 0HTzTyaFdEWwqfDFaY15cjZSGrNJVbvGU+FMZ4cIMOdheNy+qEy/YHHIOlkEeLhJn5O4/vtDG
- XxLD9XXRydqvxAFZxw3+BiAQ4VmKbeR0kVaINXSL2E1d4Z4J/DPfPXbqQ+aYcSlVxp6iEC+sV
- 4IxVLO2ez1nK9u2Eoc7sZ3QAr8WZOXN/WwP9wOCqnZNKjJHsVS6tkjJofiVowULkaQ9OCSPsZ
- Fa+730BIiaxJI3eE38xM1RFC/zaUMGF+S2DTcoNzsvHK2mbiNNiTPUIK1Te20hAzWLJ1rtq/E
- 44uF2YpP58ZlP9i2272HyCkjZmKJczVAzO1YYl8u4uA4UP1L8y16t2KZbJBf3qo9Gk5GDpcHL
- QkCShd2+Q0igBZmnFIdntOGUq85zONy+o7IFX7fzOLB7kzj/uu5oeRGMD51aQCGBx4N4odryt
- u71l0IfyZwxqbVqxtyRpyEFeESCtLomGbiil1a5A7V05RgCbYrIFxjb+mqZJ8uqwELxqr5JAk
- 3BkrtjsXzG/IBr1rfNcEB1/mKNPOKpLUKWaZR2sdXi5E1PvIGnoqNK80WFCPkd7HqvldvnBda
- ZfeXhCJ
+X-Provags-ID: V03:K0:85snzmnzIJEhnPb0XqYKbd8BiXFP1zb1e7Qm7xiE6G08MSlpVUY
+ XXJyK/R+caWT09Hfnd7d1D8bp1H121gV0oQem1T9hTqev2oXsecyShTIi3yIqkznqMBvPQM
+ MbTNNIpJDqDjo67PlhsdQT4azbl3ZG9OwsdSgLbjhrVclq0mOMBf6yxRrjuR4MiOVyY8cZF
+ Ve64qm1YrutTwNduQeHCQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:N04GJOso/lk=:gIwn6m1hDgZqCtEa6msBCP
+ 0NvXyFO/oLOlD+Ei2WgkCFLDHplLQB3GUtimkVLApYn7xdbtLZUyincApTuQuQ7vX/bphwLkB
+ HRW/PNJo1qPBlkX9mD3wlPKg4THXntn2naF/o+FX41jE67ZD5CwCpl75rcxWwGG6lxcy+nMpe
+ gE86sqVe9z4lM1lv6miiKsq9a0/VwByed76gvOuVJL7hm8cxyJPvI1MolAMCmLJmmR9hRo5J4
+ D9Edv0LsHEXP3cwj7Dgtw8h1c5N3R9X5hkenvK4M+A8ctMGxTAkmMIMZ31BS+e8Vm5107uYYu
+ rniC3bu9NiUAgV4BBW+Gw3x3twJUrzmN2QTsgWMU31Z6P5xlIZ4a0SDALV0Jro4G0Xo78P81u
+ HWhq+iu0DCfHHrEUveopLf5qW+dkprWqTOPia9y5rTWLVZvIYhXV1ztC425iAWlH17AcdRp+b
+ Qi2RrEI4Ed5kT/HrRyM4wPKNUAVbwUXnCOpZHXBBdyQMj2KaBlswxCgCsmMDHsQzxAfC9fPEa
+ gk8YkuH8LKdBeWhwPOQKADUOrlX0U1WCdHp0NvgCnYazzJLl4vRypbD16AQcTeAqkP8JFGPZ9
+ bS8S/38MY1IETqmNy/l46W0PTnLBDegXjeQq0hhb5N3OOXksQ0MJNzmzfAbQCP/JI3Gx9v3OS
+ 6qyXDrsntGCJPWyUxrWV0CqnB/thEOmsjuQLE6l61KCkRGRMFskqC+xsI0f1Vi5KNMqxdDz22
+ DecRCAoA0AeNxJohJmirAnIa9qM0eWy3zsHP+r1DqSQXxGCKmrBBwQ302QYl6RwgR2y2kYFGb
+ AOj7KJV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In case of errors, we really want the file descriptor to be closed.
-
-Discovered by a Coverity scan.
+Spotted by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ builtin/difftool.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/config.c b/config.c
-index 0daaed338ea..ed1420fb096 100644
---- a/config.c
-+++ b/config.c
-@@ -2599,7 +2599,7 @@ int git_config_rename_section_in_file(const char *config_filename,
- 	struct lock_file *lock;
- 	int out_fd;
- 	char buf[1024];
--	FILE *config_file;
-+	FILE *config_file = NULL;
- 	struct stat st;
- 
- 	if (new_name && !section_name_is_ok(new_name)) {
-@@ -2681,11 +2681,14 @@ int git_config_rename_section_in_file(const char *config_filename,
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 1354d0e4625..a4f1d117ef6 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -226,6 +226,7 @@ static void changed_files(struct hashmap *result, const char *index_path,
+ 		hashmap_entry_init(entry, strhash(buf.buf));
+ 		hashmap_add(result, entry);
+ 	}
++	fclose(fp);
+ 	if (finish_command(&diff_files))
+ 		die("diff-files did not exit properly");
+ 	strbuf_release(&index_env);
+@@ -497,6 +498,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
  		}
  	}
- 	fclose(config_file);
-+	config_file = NULL;
- commit_and_out:
- 	if (commit_lock_file(lock) < 0)
- 		ret = error_errno("could not write config file %s",
- 				  config_filename);
- out:
-+	if (config_file)
-+		fclose(config_file);
- 	rollback_lock_file(lock);
- out_no_rollback:
- 	free(filename_buf);
+ 
++	fclose(fp);
+ 	if (finish_command(&child)) {
+ 		ret = error("error occurred running diff --raw");
+ 		goto finish;
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
