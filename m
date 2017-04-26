@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AAF9207D6
-	for <e@80x24.org>; Wed, 26 Apr 2017 08:57:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1C7B207D6
+	for <e@80x24.org>; Wed, 26 Apr 2017 09:02:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1955971AbdDZI45 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 04:56:57 -0400
-Received: from mail-oi0-f45.google.com ([209.85.218.45]:34721 "EHLO
-        mail-oi0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1955961AbdDZI4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 04:56:53 -0400
-Received: by mail-oi0-f45.google.com with SMTP id x184so202186027oia.1
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 01:56:53 -0700 (PDT)
+        id S1956161AbdDZJCF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 05:02:05 -0400
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:33222 "EHLO
+        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1434939AbdDZJAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 05:00:39 -0400
+Received: by mail-oi0-f47.google.com with SMTP id y11so169087358oie.0
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 02:00:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=YGsYYGtlBptcI4GXbgV7YPhbUs0ykcOS+gnivVRUJfk=;
-        b=cm9oZTyGpVXMigZBc4d9htmWz5FDLpuAzNOC16vPMk4B49yrUcJj+7GozYmbC2KTC0
-         gD3exj6Pvq0pzZ05hKxxdlEbS++YsIpc+B8HaXqIqlbNuy3458HBpLh72ZIfBdTm5y63
-         /LNrqO+HzoLbuMD2wUiNhPybPxgG7nRf74UupdH5A7X4OVzyyKX9aJuC9qbvsyAPUcac
-         KLRzzUIIRYvsk8uCiLBh7ml8Tfm6yHbUqxLYSBbVhNC6sN9qLGP9x8dPLDgK+utmKzZB
-         iisvd/W5ayE42M2AU0PuXs50rXeDCkBG0OpXBcsDoJj4yy6N9lG7jKsb24+SRVlkJViq
-         O6XA==
+        bh=p8dpeB+agV15xsOV58p5vv8TzAqxHSm1HgJaLZkUM5s=;
+        b=hCtGo3+pTg9MlHkHJ9YG99H5dI81keRzxlPJscUiJ5GrnGdolkGKOK+3YiDDJRTvuC
+         t5H9JuIPgNh7jaWIWOyGdFGnAJjH+/vx3jhmmglMTSVi2hFAP49hg5SepJ0yYxu1T4Yq
+         9V0dI4wAih7j1Mc+7ELNzPeUoNdIogwS9yGivqhTEVcGswpfgIObOWnGii16Q9/nnFDA
+         TN8syzdRBcruzuRWUalZ/CpnRPWK8hmp1XgOCu5P51omKEls6aljbgjOwvkfDd0nu6xF
+         DPzB7cjEhHWSqRQRYbU6H0TlIF4wtTSVv81+jFj5sWPRDFmNDICUHjgrzvE1LRC0iDVX
+         gLpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YGsYYGtlBptcI4GXbgV7YPhbUs0ykcOS+gnivVRUJfk=;
-        b=GmsYp6zGo72oYjhSei7UaBJZy0hz1qBxhHED+AXC1h2oNZPFLbb2/KvbjTld5NVbGk
-         VsNT+N5jYkN4Iv9DNJXYXgRt57ClKQVliaU2v2viRnGJqzha5+bVTnvKX/EZ132Ud/z+
-         BSGuNGWHbfuqcUd07AVF8T5Suj8kk2fC8RU0wWpiD2CD769L36M1h0AoHryNWsCFx30+
-         k3SR4u1Oy6BqeFSwekDP4zb/p+WqLK7AtRh1t0f0TkGWoHSLiWfI/suMlMANWrfPb6Fd
-         02Z0XM4oH4tuXJWeF+U9k2/K6ZTTBP6m4ELITeGvAshrziZEwTTP2pqj4btayoG/ua6s
-         VS5w==
-X-Gm-Message-State: AN3rC/51qPbt7I1OCRVBZtjFbff7m1ylqBjR56bvJcArQBcin1Qy8bur
-        rYJOz6ayQLkouIYneNy2Zx1VXJJGBg==
-X-Received: by 10.157.29.235 with SMTP id w40mr8016641otw.128.1493197012901;
- Wed, 26 Apr 2017 01:56:52 -0700 (PDT)
+        bh=p8dpeB+agV15xsOV58p5vv8TzAqxHSm1HgJaLZkUM5s=;
+        b=bxA4dkyaAYFfMNiZx+aZwibJbT+T5D0zIyl3qnjlJSA5/DVgSixLgl3bDZaK68Wxi4
+         PiBH0cuj7QuL3ssFBHZNkKlddSX8y79vx4qCiRv4TcomIvqCLTjfgBoTBzhLWgeyFubp
+         QTbYuJrnEDQW++AiUjBoQI6lYC5q79jgbbwC72YbAlIqC6ObxACvcmiBQv4vut2f6let
+         bTWK+2IKrbjI3G6nxJzDmkMvvoKTvKHIKLuh9CCkn9bH3lDi0AlHlYhRiZxTMtNTHYv/
+         oPaSmUfklMsDk2QWZ/A2+V97XzL6iApqCVc/i/DRX888XaEx/HuCIq44FJNQNmwbVeqw
+         z9dQ==
+X-Gm-Message-State: AN3rC/4PbRT9Ukfob1c0rLZYW6rWCsRHmQkyisTsYyQ/vC+q6qo5MRFH
+        6wRbJ2zNgRZ3IriwkTwqsDGhblLzUw==
+X-Received: by 10.157.6.78 with SMTP id 72mr21052353otn.37.1493197237359; Wed,
+ 26 Apr 2017 02:00:37 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.158.70 with HTTP; Wed, 26 Apr 2017 01:56:22 -0700 (PDT)
-In-Reply-To: <CACBZZX5u5fF4fJBJ3CwH0DmLBw4D32jN5o=Om-iqwQdPG93DFg@mail.gmail.com>
-References: <CACBZZX5u5fF4fJBJ3CwH0DmLBw4D32jN5o=Om-iqwQdPG93DFg@mail.gmail.com>
+Received: by 10.74.158.70 with HTTP; Wed, 26 Apr 2017 02:00:06 -0700 (PDT)
+In-Reply-To: <CACBZZX7x0hSy5PTCo1Cf0Hp09jBhnSF0T=BseH68kwMRmqGJig@mail.gmail.com>
+References: <20170425094453.9823-1-avarab@gmail.com> <CACBZZX7x0hSy5PTCo1Cf0Hp09jBhnSF0T=BseH68kwMRmqGJig@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 26 Apr 2017 15:56:22 +0700
-Message-ID: <CACsJy8Ct4VU0XAgJruFECEVxb98MS4P+9Z6D8ag35ySL6OY-0g@mail.gmail.com>
-Subject: Re: BUG: wildmatches like foo/**/**/bar don't match properly due to
- internal optimizations
+Date:   Wed, 26 Apr 2017 16:00:06 +0700
+Message-ID: <CACsJy8DDDG0YKsXG8JWhowJ7TOH7Psw6v8B3AHA-dTpCHs+vYA@mail.gmail.com>
+Subject: Re: [PATCH] test: remove unused parameter from the wildmatch test
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,40 +62,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 26, 2017 at 2:13 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Tue, Apr 25, 2017 at 4:51 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
-> Thought I'd just start another thread for this rather than tack it
-> onto the pathalogical case thread.
->
-> In commit 4c251e5cb5 ("wildmatch: make /**/ match zero or more
-> directories", 2012-10-15) Duy added support for ** in globs.
->
-> One test-case for this is:
->
->     match 1 0 'foo/baz/bar' 'foo/**/**/bar'
->
-> I.e. foo/**/**/bar matches foo/baz/bar. However due to some
-> pre-pruning we do in pathspec/ls-tree we can't ever match it, because
-> the first thing we do is peel the first part of the path/pattern off,
-> i.e. foo/, and then match baz/bar against **/**/bar.
+> We wouldn't be using fnmatch(), but I think it's a probably a good
+> idea for the tests to support a mode where we have to declare
+> explicitly whether something should also match under fnmatch or not,
+> so we document the differences.
 
-Yeah. I think the prefix compare trick predated wildmatch. When I
-introduced positional wildcards "**/" I failed to spot this. Good
-catch.
+It was that way for a while (when wildmatch code was still "young")
+then we removed fnmatch tests because system fnmatch was inconsistent
+in some corner cases and because wildmatch code did not change much
+anymore.
 
-Ideally this sort of optimization should be contained within wildmatch
-(or whatever matching engine we'll be using). It also opens up more
-opportunity (like precompile pattern mentioned elsewhere in this
-thread).
-
-You need to be careful though, when we do case-insensitive matching,
-sometimes we want to match the prefix case _sensitively_ instead. So
-we need to pass the "prefix" info in some cases to the matching
-engine.
-
-I guess time is now ripe (i.e. somebody volunteers to work on this ;-)
-to improve wildmatch. "improve" can also be "rewriting to pcre" if we
-really want that route, which I have no opinion because I don't know
-pcre availability on other (some obscure) platforms.
+If we start turning it upside down, yes some sort of checks like that
+may be a good idea (or at least until new code stablizes again).
 --=20
 Duy
