@@ -7,75 +7,80 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 30C83207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:19:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20609207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967193AbdDZUT3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:19:29 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50196 "EHLO mout.gmx.net"
+        id S967206AbdDZUTl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:19:41 -0400
+Received: from mout.gmx.net ([212.227.17.20]:62041 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967185AbdDZUT0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:19:26 -0400
+        id S967201AbdDZUTj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 16:19:39 -0400
 Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyS5K-1e9Nme2P6k-015tJi; Wed, 26
- Apr 2017 22:19:22 +0200
-Date:   Wed, 26 Apr 2017 22:19:21 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MB1C4-1dDPZa1CCK-009wxV; Wed, 26
+ Apr 2017 22:19:26 +0200
+Date:   Wed, 26 Apr 2017 22:19:26 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 02/26] winansi: avoid use of uninitialized value
+Subject: [PATCH 03/26] winansi: avoid buffer overrun
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <ead7050c37093820e3fd097dc31bc56204eee59a.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <2299a84fff0232d90bdd4802bc7be15ff510a168.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:hZp0dwoOGXc7DzUcy4UcvtpoSrnFtmezVmCsiM/vatsoxfAkDQP
- svwtxdLQwgih9qWLgbyXKwSvAhpoaDOnp3s/pkbqhuDm2Dk1e3nw+5RXs2oASXTKxb1oaq8
- 1n6oTnjd4hfMgHNdxgONn44WypZKmtagIap+sWKUWuJ9i5xjiHjru4VsBtiT/QGhF3kUYwO
- J9z05vU2SaAK1hkkGsjDg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OnCO54hli8o=:+7c43LcRd2bgRB8jTjDcK9
- aMheI7K6n33A/mWks4aBEDzXSO0azadLTh70uu3hpgULu2UixkG2yhtSmtoJTN9D/6oGc3xVK
- DgY2wqsp30qq0ihlEE6dN6Waw/nhDLskarSXABKBrEvHmEfqMEfWvT6gZKuuVged38tGOF6/G
- PJOU7+9sw/ljZbBbrjuuAPG/DIlLd7JMwlqTFLzvf+LRSOVC29VJ4E/I469y7NDFkMuMZZYfF
- PjnTyC1bBm6WFlhObV1Z3jOXsKEOSTDqWTk82m3de/RIyxxGhIdxtPsw3UZQ9mE2teIW1ifWZ
- jfrw/etOaud8GawmBB9y9Jc8Sl96Z0QRsZ3bUb1V7Y/VpHotKvNGFcmOF1wAfjj6YFmo7sv37
- jP6DboBYkl7O0Bv04Z2bwaAp6LgwYgwDUDCMQcNpNtXKdEaxEz8jYJVtFF7kwnKOINpfOinJ5
- k09OZcKol291ObeD4TOx0UHsilCJQ/e6FRcyjrzo0BvnYA9BmTvw52zWjd7dkcj/XAb0aEmAh
- fF7bGkDPRL1Jgx58MT9UzmzNgHp0i2DM4kVsqUZVYP2UG+8V51X9e4hI5pRMWR9bblUrJzixa
- N5LKHw3d0uX0+ODdOKsKulOA5iFrg7CjnPUNksUueRq4w35v0ZYw+Uj97HdyUCsgESxhZlFzH
- QxKM6uMSMKXY5hXewGxlnCvl78a8R4whfj7TMzILs/I2OoHFOW/2VUvD83dAIikl6CuvqlDum
- rts4PVwO7w70w7dRGr1CK+n0bpuDvCe3hmLRJGGUlZQjFX9bQoZdGl+njz0VLs6n4tengdRXb
- cNIcQes
+X-Provags-ID: V03:K0:ToeXe7+E2jKxDGS1WqoG+v/xfHpoFku+eCuzAGjYCdbLfckJOSE
+ qIIJjJBDc/KxqFwhzx7XbiHEbukTqssiMi8/sMiMwaiTvoFGpW3AYCap6jlGTpAhhvF8Oqt
+ iuMigBAktmUQT95kEz+B09E8Rk6wkTBBic33oHUqYXL0fzhkSfoZSVGB5p88m15RPAEe3Oo
+ R5UdJ6TMXnH8dIFzCPVOg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jWtSa6rZJoA=:qDpFqfEwa9Tmwqa7CIOYc/
+ FGiiPtAopfSa9Z9PGnrdCpvEuVec2WYV+BeygxxB21pNbEj1bj4NezTYADrzm0A3pxDLkGXwW
+ gIm6gOeM6zrFDUeJCYxUzfatzH6OlxyqFvtFn9wpQdg/5BrbM6saiczWMqhekPi1dYWYUUcSD
+ eCA5ukxCdPX6EDjN7N9+bKMj2qm4S3lSsi1lveMAQ+vBDtPDGR7kB6vmnevuL3g0f5zYCDTuM
+ C2nDuK4jg+2TQ1jWZE3cBVV4sfTJmWyQ6ev2gdHHho4N46iktP008rr4imH6Mh/AZY0ziEUu+
+ F1hARD5bZzROgf7+RAaBxhVMfPNEz0/8kX3a8uamsq56iONbJRWhyhiucOmTcnl8EmY9jFN2F
+ gQ+dDBkEJBML2j/Wqv5vj+17ioSi/aUKWd/5PFrYC+toWw5OYfwbvxfF9soh/BfMWD8tbFqkr
+ kAPW9GgSu5Xaca79Qcdy8gN+CzvSp7q4C9dt//8otr/WllLrEjKt8r0gINacj1NBcWPQp2ByF
+ s2WnSXVfpBZdIvzP4qqQUiJ+Dss5LlVHXfebl06dGjNUNDfEU+iUggF3oia/UkqGZMeTRGoqu
+ clOgZtH6rD2cKRbpxBB+gULOKT+ghz+I2ghJs9rxCThgnVFlW+wrzP/M0ATUWgcbcf2VnBHrx
+ Fa5W//2aYyHY0gdlx3d8/gz0kR9JFzDRKPRKe6Np64oWUYPKlw6wmAZ9fjx8q2E1KyV9lg7SM
+ hm6AFcFToLBZwcMgbtYO4BjsbqghG1UtSIMD+e0smphwHQroeC5wO5ywp9KRGsRh1FDQFBWOA
+ Db+7KCq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When stdout is not connected to a Win32 console, we incorrectly used an
-uninitialized value for the "plain" character attributes.
+When we could not convert the UTF-8 sequence into Unicode for writing to
+the Console, we should not try to write an insanely-long sequence of
+invalid wide characters (mistaking the negative return value for an
+unsigned length).
 
-Detected by Coverity.
+Reported by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/winansi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ compat/winansi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/compat/winansi.c b/compat/winansi.c
-index 793420f9d0d..fd6910746c8 100644
+index fd6910746c8..861b79d8c31 100644
 --- a/compat/winansi.c
 +++ b/compat/winansi.c
-@@ -105,6 +105,8 @@ static int is_console(int fd)
- 	if (!fd) {
- 		if (!GetConsoleMode(hcon, &mode))
- 			return 0;
-+		sbi.wAttributes = FOREGROUND_BLUE | FOREGROUND_GREEN |
-+			FOREGROUND_RED;
- 	} else if (!GetConsoleScreenBufferInfo(hcon, &sbi))
- 		return 0;
+@@ -135,6 +135,11 @@ static void write_console(unsigned char *str, size_t len)
  
+ 	/* convert utf-8 to utf-16 */
+ 	int wlen = xutftowcsn(wbuf, (char*) str, ARRAY_SIZE(wbuf), len);
++	if (wlen < 0) {
++		wchar_t *err = L"[invalid]";
++		WriteConsoleW(console, err, wcslen(err), &dummy, NULL);
++		return;
++	}
+ 
+ 	/* write directly to console */
+ 	WriteConsoleW(console, wbuf, wlen, &dummy, NULL);
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
