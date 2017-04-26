@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BB13207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:20:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 930DD207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754269AbdDZUUL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:20:11 -0400
-Received: from mout.gmx.net ([212.227.15.15]:64861 "EHLO mout.gmx.net"
+        id S1754276AbdDZUUR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:20:17 -0400
+Received: from mout.gmx.net ([212.227.15.18]:59635 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754262AbdDZUUJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:20:09 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MKHMk-1d586c1OJK-001iFN; Wed, 26
- Apr 2017 22:19:48 +0200
-Date:   Wed, 26 Apr 2017 22:19:47 +0200 (CEST)
+        id S1754263AbdDZUUP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 16:20:15 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDyFr-1dKJaF1M7z-00HKh3; Wed, 26
+ Apr 2017 22:20:12 +0200
+Date:   Wed, 26 Apr 2017 22:19:56 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 07/26] http-backend: avoid memory leaks
+Subject: [PATCH 09/26] status: close file descriptor after reading
+ git-rebase-todo
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <366e4d805da9b4b610fe216537de5e4a4c3941ed.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <f5a4cd0c7c3b59e6b4b062b8f8a6b4aa1420a88d.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:SZueVflSL7uCV8F4IUOsLFR3T9M1381m3NfX//tNUd8807ZyCUn
- +HQPddY//FhHBgc1iiA+nRy8vzkFF/PdKq9QYIHL3W6EstE6chJw+HkvwQSs/1NKnUCDX29
- 1bKcaQnAhZ+unJO0ZADZlsd6LGjoT2u+KlbVnTpIc/JIFHd6Eyb4r/kaYZOmWHtqL5eVcwi
- zLMlGp6tsG6bHpPu/tOJw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:h+uaPS4W5lA=:xX/u2mw01h6AC3bkCbHqrC
- KSH9ivIRFPjLVCtvkWjc10+MrcHSOrZdmyRXd7Xmt5sxMzoCgETLebDplys3kJqA40arnI55b
- xEu6xanp0kyI5jrwTUL4kvh1QhdEPGS2wvNvHd7HWrtz9Lef4y6D1/BIg8MBTJZhuWnhHIFS4
- Zl4VDSPHqHxn0wpovnZtGenletSQ+70jKKF57lOY0fnKvcmRJRBuTWzGBC7NI/QDJyBSczIPu
- n0ueky0RVXvYd+uSwIGdKniQ2Ioaw41MKahw8PlmQjgbRpQDV1HkzyHDaeO1iJ48lQ9Zzrqo8
- qBS4VPRimukzZ9tt6Y928GPAVRsq1hFF1dVLNfMYZ7nBRMDLkl+EFdHWRiYh5dHVMmZm7T3LM
- dUkO17qs6L+UeCQZ5lj+aoWQQKWWBKyfUVJW8XFgDLkStvj8jC6yoQnE01CjBcichJAOJIDRS
- 7OfDw2XENJ+rc217qL2U2fzK+8eFtUgov79A1/ADX/xZa0FyhsThmfkUMbrl6Mdsjb9poGNSC
- RzFv1TBDKhpi700aL9AEi24y1XgQ/Bywr9KWzkEsLVuk/88VP+dq+1yrQhUtTIB8nF4v3lbm4
- n53WMTI9tY0M0pxIlOzW2OHAbTEEmd2txYN1JfA/gVxVu5mmQfjPURrjWZ1U2ig+v8PwJE1+D
- R2FwnWmkAl7dzwzpgDNSvMISOOk//EFIDn9IZ8dLYccUNlR8dXfYmAVq4PyMMnNSG2DiFvQee
- iKJ76PEMXC62s9VpgKI1W+oQSv32TFrhIbu97T4HEjZ9zkCjbFVDHL59tmwvoeip5Yt7kt+Wm
- XRt833r
+X-Provags-ID: V03:K0:6uHsMXtFUiZiLs0aA/sxbHAnnsHzXo4kyD6eV9j47WqXrNJcgKZ
+ kicGRtOsM9nnf4D3tZot8I5x0wUs1g8clXoxryg0C6QFl96QVzSlo5c3Uf3OTtIfiIz3pD7
+ 8nMQVSZtoF2TsNCRgJ3Ya0GORGhJvtH3CHs2094zkN5KU/yiw3R7xEZik6gAabX3mAJ4r5i
+ vgvy26ikW5DGrFknjqXdQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:3yBFFO1iW50=:4h+j5oOhlXuouq2Vc1kisf
+ XDA2RalgBzAr2WFFirmJZduwjr26+J1b3nUxtzQ5/MZK0BsrKR7FpWzD8boCotIQpAj+16SYm
+ n4Olj286bN9nnPPxenSmaYTTMQ6kudV4ZJnbpwLqNZ1Y4PPqiaQOhokyy9HZd0VvZz2WboFj9
+ 3XTSHrUwmBgZAvtotkKuMWrtGOf8OiC2dg6YO3+Y6H3JcwyG+dSNNHlruytsFQDFOXn8E/eOf
+ ix35C7Iah80EmXbIvSASTOktMrIotLCP8ofCIJ6YgY7hbp9UrWqKX2RmGPOjIFCiR0gQJt5qp
+ Hc5EC8yyeWbZuxGFQZhjUtW4zVMfhdMUeHPhICu3pc4eFmUWauEUM++rTDlxoZshxQINZWiuz
+ g5OGwgrEVM8e5lXLJySvwSyvfw0OTALx9vTx6aIVbY4nK3nclGHCjC1dy20iT2XDbT09yNEgk
+ Bg0TqhlbbUxAFZzESM2UsMGFwOLdDddvQ8+N6QOy29vSNnZsRNNCL7cUO3SawI5hStspQow5G
+ j+vBlSfc3vLNAA+zb1VDCiydAYtUguwl0+fiBLavesDXh8ak7h0g8mOZvHyG9GnmZ0XFSXJDg
+ KHX9ZgoN1aKOhvbf99ULGHQLIWN8IIijTDKvWkCdj70SAWx9Hury0QEazXXaZxRV0bdp0GSBM
+ KPV05LSMH/gdwib7oAqNh4iOVkv6dNK23qgQWFAAwHNLhR1R6i3DCRv8QONYM7BRILaxACxCL
+ yiXz2arhcEGnb3ApdiRmjpjH+DRl3qTNT25TNVbLAxBR2sdUwEUSNMz4sMbpfeYajFjyq20zv
+ CNe4ePD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,33 +58,21 @@ Reported via Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- http-backend.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ wt-status.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/http-backend.c b/http-backend.c
-index eef0a361f4f..d12572fda10 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -681,8 +681,10 @@ int cmd_main(int argc, const char **argv)
- 		if (!regexec(&re, dir, 1, out, 0)) {
- 			size_t n;
- 
--			if (strcmp(method, c->method))
-+			if (strcmp(method, c->method)) {
-+				free(dir);
- 				return bad_request(&hdr, c);
-+			}
- 
- 			cmd = c;
- 			n = out[0].rm_eo - out[0].rm_so;
-@@ -708,5 +710,7 @@ int cmd_main(int argc, const char **argv)
- 					   max_request_buffer);
- 
- 	cmd->imp(&hdr, cmd_arg);
-+	free(dir);
-+	free(cmd_arg);
+diff --git a/wt-status.c b/wt-status.c
+index 03754849626..0a6e16dbe0f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1168,6 +1168,7 @@ static int read_rebase_todolist(const char *fname, struct string_list *lines)
+ 		abbrev_sha1_in_line(&line);
+ 		string_list_append(lines, line.buf);
+ 	}
++	fclose(f);
  	return 0;
  }
+ 
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
