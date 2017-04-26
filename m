@@ -7,80 +7,81 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20609207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:19:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B498E207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967206AbdDZUTl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:19:41 -0400
-Received: from mout.gmx.net ([212.227.17.20]:62041 "EHLO mout.gmx.net"
+        id S967201AbdDZUTo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:19:44 -0400
+Received: from mout.gmx.net ([212.227.15.19]:65288 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967201AbdDZUTj (ORCPT <rfc822;git@vger.kernel.org>);
+        id S967200AbdDZUTj (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 26 Apr 2017 16:19:39 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MB1C4-1dDPZa1CCK-009wxV; Wed, 26
- Apr 2017 22:19:26 +0200
-Date:   Wed, 26 Apr 2017 22:19:26 +0200 (CEST)
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ln7wj-1dkGPX0crl-00hLvb; Wed, 26
+ Apr 2017 22:19:30 +0200
+Date:   Wed, 26 Apr 2017 22:19:29 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 03/26] winansi: avoid buffer overrun
+Subject: [PATCH 04/26] add_commit_patch_id(): avoid allocating memory
+ unnecessarily
 In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <2299a84fff0232d90bdd4802bc7be15ff510a168.1493237937.git.johannes.schindelin@gmx.de>
+Message-ID: <8a33cecef46887328fb5b6fd846385e04281a1db.1493237937.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ToeXe7+E2jKxDGS1WqoG+v/xfHpoFku+eCuzAGjYCdbLfckJOSE
- qIIJjJBDc/KxqFwhzx7XbiHEbukTqssiMi8/sMiMwaiTvoFGpW3AYCap6jlGTpAhhvF8Oqt
- iuMigBAktmUQT95kEz+B09E8Rk6wkTBBic33oHUqYXL0fzhkSfoZSVGB5p88m15RPAEe3Oo
- R5UdJ6TMXnH8dIFzCPVOg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jWtSa6rZJoA=:qDpFqfEwa9Tmwqa7CIOYc/
- FGiiPtAopfSa9Z9PGnrdCpvEuVec2WYV+BeygxxB21pNbEj1bj4NezTYADrzm0A3pxDLkGXwW
- gIm6gOeM6zrFDUeJCYxUzfatzH6OlxyqFvtFn9wpQdg/5BrbM6saiczWMqhekPi1dYWYUUcSD
- eCA5ukxCdPX6EDjN7N9+bKMj2qm4S3lSsi1lveMAQ+vBDtPDGR7kB6vmnevuL3g0f5zYCDTuM
- C2nDuK4jg+2TQ1jWZE3cBVV4sfTJmWyQ6ev2gdHHho4N46iktP008rr4imH6Mh/AZY0ziEUu+
- F1hARD5bZzROgf7+RAaBxhVMfPNEz0/8kX3a8uamsq56iONbJRWhyhiucOmTcnl8EmY9jFN2F
- gQ+dDBkEJBML2j/Wqv5vj+17ioSi/aUKWd/5PFrYC+toWw5OYfwbvxfF9soh/BfMWD8tbFqkr
- kAPW9GgSu5Xaca79Qcdy8gN+CzvSp7q4C9dt//8otr/WllLrEjKt8r0gINacj1NBcWPQp2ByF
- s2WnSXVfpBZdIvzP4qqQUiJ+Dss5LlVHXfebl06dGjNUNDfEU+iUggF3oia/UkqGZMeTRGoqu
- clOgZtH6rD2cKRbpxBB+gULOKT+ghz+I2ghJs9rxCThgnVFlW+wrzP/M0ATUWgcbcf2VnBHrx
- Fa5W//2aYyHY0gdlx3d8/gz0kR9JFzDRKPRKe6Np64oWUYPKlw6wmAZ9fjx8q2E1KyV9lg7SM
- hm6AFcFToLBZwcMgbtYO4BjsbqghG1UtSIMD+e0smphwHQroeC5wO5ywp9KRGsRh1FDQFBWOA
- Db+7KCq
+X-Provags-ID: V03:K0:GkVaQ0SrvTDTj2zH9Q0pil5c5hvPuWLGnqM7VmVwDPucFFfWZKE
+ J0EmdP6TDiqzH4jwcVw9VbesI2iXgFTbqB+cSgJEF/3F0+iVVO1+e3/NgnFtPTvW3PFTSC/
+ 9Ik24MkoPMTWdeTY/2V4+lDq0IvGhMO27ZslzfOOWEYZ9hjN+1HHp1eeF1gqzhVj887Snun
+ Wj+fsV2mpXYThUCqXsEBA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:b5T/yF6buXM=:5NLkyKQOKrPeGuSBQWU7Ev
+ nSe5dNsAp2QSXzn8UY9avXR6o9lqaPSGTG9Q/OgLjjd581FTQ9uk8fUuLeBoPeaEJKM0Jzgkd
+ JGvjwKyCaPgYqXRBGlwj+gi/C4qli5HPMzrkNQUOCHCIRc1G6bNRNyjPGZhz8PBVzWVo81l+C
+ EqEP+WoYEvy/aRCue6ADCqBi6FnlwarCSVCHGw659ewI67VGryh2uGwiH4GTUBmQJEH7mG67m
+ JBog8EFNhVAHIWmBjnI/Eceq2plpQF1rT3x5SwfljJj0mYnSqMyURIZq9Y8oSLOeKOseYHf1d
+ DiehlwvSN/SBJBZQAIKewuPpPQauH4/Osk93zBhz+bxbGjch6NlYhXv5VCPxTRnLIntGyAPn3
+ qJ8RHzmK2Ad1+Z+RqgvbYyxjKhhM81lHpf2rYBSvPi+XqmsZ91Z6eNJyWx8TIPNJQ62Tk1rtX
+ IMuBXJ2PUBfLQCbSLofW7kOLJgBE18/3JPwcidRNIjJy9ITn+HastVWopCJfnKYUjJZnNIQAw
+ 14YOflI2SrWLJqvpxb0qu9GJQHi24B77YsXbLfUt8I0rKhUHvrilCCDji+Htfnp43m2iUkcxX
+ BcLkI0Bp2AqIjc2NKerKjS85Zjc7G4iJ/fnx0yflwlZf9sGfTIqv0YukGYt1nEAoKbF7rKNtD
+ 23MSOQH8EK549Otjw+JoRCCvO/D8ddyqbb648ehIaPvvGhccYhyWg0oTB6izQugHnm0FcAg4A
+ Wzz28zasgx4ar3+qDNyTTtO6mmZkz3W3pDM/NmxGRHxKmkmY2ogybl9kR6a2bV/K54dYHXMi5
+ 5t6zJVz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we could not convert the UTF-8 sequence into Unicode for writing to
-the Console, we should not try to write an insanely-long sequence of
-invalid wide characters (mistaking the negative return value for an
-unsigned length).
+It would appear that we allocate (and forget to release) memory if the
+patch ID is not even defined.
 
-Reported by Coverity.
+Reported by the Coverity tool.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/winansi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ patch-ids.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index fd6910746c8..861b79d8c31 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -135,6 +135,11 @@ static void write_console(unsigned char *str, size_t len)
+diff --git a/patch-ids.c b/patch-ids.c
+index fa8f11de826..92eba7a059e 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -99,11 +99,12 @@ struct patch_id *has_commit_patch_id(struct commit *commit,
+ struct patch_id *add_commit_patch_id(struct commit *commit,
+ 				     struct patch_ids *ids)
+ {
+-	struct patch_id *key = xcalloc(1, sizeof(*key));
++	struct patch_id *key;
  
- 	/* convert utf-8 to utf-16 */
- 	int wlen = xutftowcsn(wbuf, (char*) str, ARRAY_SIZE(wbuf), len);
-+	if (wlen < 0) {
-+		wchar_t *err = L"[invalid]";
-+		WriteConsoleW(console, err, wcslen(err), &dummy, NULL);
-+		return;
-+	}
+ 	if (!patch_id_defined(commit))
+ 		return NULL;
  
- 	/* write directly to console */
- 	WriteConsoleW(console, wbuf, wlen, &dummy, NULL);
++	key = xcalloc(1, sizeof(*key));
+ 	if (init_patch_id_entry(key, commit, ids)) {
+ 		free(key);
+ 		return NULL;
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
