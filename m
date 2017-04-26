@@ -2,103 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BEE3207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 20:22:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D60A3207EB
+	for <e@80x24.org>; Wed, 26 Apr 2017 20:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S936473AbdDZUWQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 16:22:16 -0400
-Received: from mout.gmx.net ([212.227.15.18]:54573 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S967224AbdDZUWJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 16:22:09 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lw1vh-1eAlS53ZV7-017mq4; Wed, 26
- Apr 2017 22:21:56 +0200
-Date:   Wed, 26 Apr 2017 22:21:54 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 24/26] name-rev: avoid leaking memory in the `deref` case
-In-Reply-To: <cover.1493237937.git.johannes.schindelin@gmx.de>
-Message-ID: <a0c807b75ea55cf944554f4c2cd4dd4126572277.1493237937.git.johannes.schindelin@gmx.de>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S967248AbdDZUba (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 16:31:30 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35593 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S967241AbdDZUbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 16:31:25 -0400
+Received: by mail-pf0-f195.google.com with SMTP id a188so2431204pfa.2
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 13:31:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JA/k+GZr7u1Gb231u/gVVNqjkEMzQvTKlXVWB0ImIu8=;
+        b=U0fWvZBuPZYeC37A/UMCdAx17/AnVBHp3pF7Pkhjz/s4Ofad1KtFDeFcmOha6JK4l5
+         n6RIJL/aNPRze9A7sySR7GHtS9Iljjw39K2vIad7uekZ2B+f5Rm2sM6i83grsQLSF629
+         ia09Scs2vlzzd5AVTjcI8ps14bEUBkfri/6ndID7iTaw6pCHKWd531fUmVoZQYdpguPc
+         FjdHwm4w1D3qG3AJ3YcOSulw5UaSbZZ8SrKShLySEJxlsfKzazbCn/ee5WYZ7mbVkWkW
+         rwz4SR+7Qcf+OdOHTv8AfxLbLGytfuXLcMa1mR3hrEHkxLph0M/hGWsaCn7nBQZPK1fD
+         sJKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JA/k+GZr7u1Gb231u/gVVNqjkEMzQvTKlXVWB0ImIu8=;
+        b=gUYPmRpghi6SAvs/iUYglICUlu9NPX35qDHay9u3TebNqP9jtH6dKFdDpdO+T47x9b
+         dZUs1YI8jQC/yhbcgURp3qM0ZlIYfQkSWijWXVz56C1D48ZkD9TQkE13uoTWRUYCEUse
+         HgRDKRNuUinWOzvS+m6+rOJdtBobN7gXXvl6n5EjBSvZcbsiG5j7ZtRfLl9sEVqxBA4A
+         MhSha/ekLBeAfQkKaFB4WaAl2TMCROwgUJ3q1b6F0gT816qU2KyK/0oz/F5JxArVzkz7
+         QHMnddg2SCqYK0WRFBO/eSIfUfUc5vgRwrsBEBR3DSEH+3e2wO8Fx3kgrBfgyzacWM+P
+         ZVJA==
+X-Gm-Message-State: AN3rC/4TxOymrQjjmGqenKYeTOI334nc8j9RLVcfICzjQjrKUKssNqlb
+        QD02mMdd572e9Q==
+X-Received: by 10.98.149.196 with SMTP id c65mr1842796pfk.37.1493238679955;
+        Wed, 26 Apr 2017 13:31:19 -0700 (PDT)
+Received: from google.com ([2620:0:1000:1301:a06e:d212:7b5:7817])
+        by smtp.gmail.com with ESMTPSA id r90sm253517pfl.120.2017.04.26.13.31.18
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 13:31:18 -0700 (PDT)
+Date:   Wed, 26 Apr 2017 13:31:16 -0700
+From:   Brian Norris <computersforpeace@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] sequencer: require trailing NL in footers
+Message-ID: <20170426203116.GA37189@google.com>
+References: <20170421220155.GA142345@google.com>
+ <20170425190651.8910-1-jonathantanmy@google.com>
+ <CAGZ79kapU5AL_iPJXCavCKAQ0Fw=pqWZS4F6Vri-Q1M1WMVs_w@mail.gmail.com>
+ <f49a858b-26da-7e8c-e0f2-8d66158f016a@google.com>
+ <CAGZ79kbhxjO-tFW4_kObTZiauetjsgY1NBSKvo1NV5nKNEy2xA@mail.gmail.com>
+ <20170425223056.GA104886@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:wWUX9MlZE2tKlA4d8ZnWvBvNmdo8YbtU4RQ+tN4Yx4+3FJWChj2
- jxN3g5o6bcn/ymlfL7IT3pYCHxJXqdYmfzQlAvopsMCxfTZ/apwef4asknOYzP2QKcH+7ft
- ghhh14iD2Z4BI4ClcXF4Gn02UdCPxCYSXFVJjTEQqoxOv6ITJF4yrUS0Rk4uuRosuNAymA0
- a/o3NKHauGs3kFVYf98Gw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ys6XMMczGtc=:QLR7ET/e1IEAX+rrTtoxtR
- rsesqJdTXx6VrMYXk2yFEthKkx1oUx5gtwQ7uBerqCdsvgvLrbdiuW2MfoIXzXLN1axJZiT91
- cLFGimVLvPqC41QqWOi0vwelOsmGz4+Y1y+bTN/1Ovc/CHkj1cm1eyOagLt32HHgNDFs0/whi
- MyAWgMnllVOT/K5/Aw6gUNnn3ztZqXJ4HEThtF/N74XICg+52tvbIQx5IlOD64mpucx2S63j6
- Qajh/XpN+o0zPrcIxaN+GnKD1l2iLt6RY0BuWlcp/dGYU1ChzPs4fvS87ybtQjoahwsnTHxiq
- +Z3o1KeGrKpCw4lSlUeI3T6DoX+2pmMDte3M611bxWIfxkdcLWT/BXyTjLxOJ/onxU5b57zm2
- g6vIZdnLww48CCW9/4qf330p85kwXElPZCLqkhArFz6fXDpOrB+P5QKxvScS6Rb9EtL0OpxZ8
- PQxxvv+i7OB4BiuCJXmu5OAPZ3n/PWUnLe1RS6ALkN7nDuH0Jitrhd/enKyk7Bj8dY09NSRpv
- /63Cvv4Y3kN/GqzBlo3Fs3VihSjQyqJ8KPOT8PBuE+p49FejaccGvwirkAmsjyUXO8c9rsbx/
- Liy/2IK3WQqFE7i4JqczPqetU8Lw2jRUmLjfhe6DKL4RCG4VA27nR2FQWaIspzvu8ISI7y3tA
- feg2HzdW8tHJvuAEYnDN58U54IdZIFxqYGFOX17X43mpww3gRZiFvOvMkMD+HlSVchXPe1xbE
- kahe9IKsNJpveTG76eDdXHkl3fQM/7BA0BbkZmNRFYX+1kOa62cavNQiXp1OT9M+WAcfjtZVW
- BlCPNK5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170425223056.GA104886@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the `name_rev()` function is asked to dereference the tip name, it
-allocates memory. But when it turns out that another tip already
-described the commit better than the current one, we forgot to release
-the memory.
+On Tue, Apr 25, 2017 at 03:30:56PM -0700, Brian Norris wrote:
+> On Tue, Apr 25, 2017 at 02:56:53PM -0700, Stefan Beller wrote:
+> > In that case: Is it needed to hint at how this bug occurred in the wild?
+> > (A different Git implementation, which may be fixed now?)
+> 
+> I might contact the original author
 
-Pointed out by Coverity.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/name-rev.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 92a5d8a5d26..a4ce73fb1e9 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -28,6 +28,7 @@ static void name_rev(struct commit *commit,
- 	struct rev_name *name = (struct rev_name *)commit->util;
- 	struct commit_list *parents;
- 	int parent_number = 1;
-+	char *p = NULL;
- 
- 	parse_commit(commit);
- 
-@@ -35,7 +36,7 @@ static void name_rev(struct commit *commit,
- 		return;
- 
- 	if (deref) {
--		tip_name = xstrfmt("%s^0", tip_name);
-+		tip_name = p = xstrfmt("%s^0", tip_name);
- 
- 		if (generation)
- 			die("generation: %d, but deref?", generation);
-@@ -53,8 +54,10 @@ static void name_rev(struct commit *commit,
- 		name->taggerdate = taggerdate;
- 		name->generation = generation;
- 		name->distance = distance;
--	} else
-+	} else {
-+		free(p);
- 		return;
-+	}
- 
- 	for (parents = commit->parents;
- 			parents;
--- 
-2.12.2.windows.2.800.gede8f145e06
-
-
+Original author was using 'stgit', FYI.
