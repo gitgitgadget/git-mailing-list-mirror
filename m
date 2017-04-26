@@ -2,24 +2,24 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3021A207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 19:21:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64FE3207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 19:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966177AbdDZTVr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 15:21:47 -0400
-Received: from mout.gmx.net ([212.227.17.22]:52862 "EHLO mout.gmx.net"
+        id S966534AbdDZT0d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 15:26:33 -0400
+Received: from mout.gmx.net ([212.227.17.20]:51719 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S966069AbdDZTVp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 15:21:45 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MZwYd-1dP7ia0jAl-00LovK; Wed, 26
- Apr 2017 21:21:35 +0200
-Date:   Wed, 26 Apr 2017 21:20:43 +0200 (CEST)
+        id S966528AbdDZT0b (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 15:26:31 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSMr9-1dWn8j0m2l-00TRoz; Wed, 26
+ Apr 2017 21:26:19 +0200
+Date:   Wed, 26 Apr 2017 21:26:16 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -29,179 +29,115 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
         Jacob Keller <jacob.keller@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v6 0/8] Introduce timestamp_t for timestamps
-In-Reply-To: <cover.1493042239.git.johannes.schindelin@gmx.de>
-Message-ID: <cover.1493234408.git.johannes.schindelin@gmx.de>
-References: <cover.1493042239.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v6 1/8] ref-filter: avoid using `unsigned long` for catch-all
+ data type
+In-Reply-To: <cover.1493234408.git.johannes.schindelin@gmx.de>
+Message-ID: <alpine.DEB.2.20.1704262123080.3480@virtualbox>
+References: <cover.1493042239.git.johannes.schindelin@gmx.de> <cover.1493234408.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:jpHnlCN+HJeyENdMwcQZBSgvxVG8GaJbBpPZTD4qyrwwrATVKPs
- eKxRl2OSz9Z3OzCSQIg/yyR1XE/TVO7PNF94JQd5pDJFF1Z2VWpkKOSFjXBOJPRN1M/PMNv
- xT4hYgx/UrhdTCfN2TkpwMvZ/xM5rOYsaFK/G6HBotw93gJ0DoBDnE94qXEGSUZ8boWXgAi
- SPmFnkBSGOsfvt+C6gEYA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:eV3m58sedBc=:zk4bQ9kzcvHakMfYT+trf2
- hUaBG563/PvcSJQCq1zdPjALRANBazinaX9OeROfFSo4dEs+tVYrv6h8GX2aen21bcy9zdYha
- kNLrCO/ALyrwfNKwIaQtIDW0s3nUkSy00H7/sy2nCmd+L7PkLXrV+SWEbKZN9AmNBCry8LkVu
- I1q382XC1eNhQH13Bz6MRixp2z8CF9YS0UZTxRzzTvwCL0Y/yVXwOxm23/ksX8Q+UfyD8aD2d
- hswt79cAJMr7KtCvy7qFeXbcVw2YLHxdicKQxIgw5XsBK3GC6cd/5A+ovEehFniUuhlz1q+HX
- tDNGLSYOOEn/mpDriYzsLTum8fXAur70g+n1wu4c7MX/FzFRAG4HO5F2Ri5SUbdZ4UoByoW+Q
- WL/JqJ4iVe6/s9eRL6kPbzROAmTEE5AgXpjkA3MdafCD6X4t7I5IeuyKd159dFeADNLJeZ/kE
- kGqQZm5N7CQ5VtUv+RYvWZc4tAowu7H7gZJvDidrio4O/cFMFwxq5EN50p6PyAp71rSoj2CzD
- v5WrwFCf+3v5A+5qW6mJWLn3ykIIWsJK0pPtAfjMQIztVWx2nCuI5U+GIGsEhxlBh89XeWxvx
- 6SsTm6BxDaYfoYwzcMu3wggLrAkROOUols32WS9HfsHyI7rtJHA13Fm44nb5Cm74Iv1SGN9wD
- avdQdnjm+dW+BKmWgfrQ9RB4uc1ER8J2tVxmrjRXvCa506DoR5lmj9/XBOw0klckXs7nv3toD
- G/ltpGBapWf2Ukz77fVmulJIRsG0oDbRn0E3jyhUJUHbHIOwWRpSSQ6XbXw5ccbzOWVseoT9X
- TeD3flF
+X-Provags-ID: V03:K0:qIv0Mzo1L8hhRMRXT5BP8y+Et1nEZZ5vtaZFT/NSvReVuAJLXo0
+ r3lgjC8l6rH4q3iBXUSZS4Wiuk+2nHMWUVQXFVaa8/IN5DZIE1BTvxVQQWKI+JjgtbDzH8b
+ a24rsGTagb8iUQRsLOtMMI3iZyf7vrwhXIPxOCM404GMReFsYmDRW8g49WOILJMuhvw5Lnl
+ OwIky7npZB1KOfg7Z3z2Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:c2RwLqYpHXw=:qmiUFH2o7/dZfUmoI4DgHR
+ /8c2nKy+GYSvFAW523G76V/N1Luug+Vu+Ep8nBrevJaHllwZuHe90ULUMPXsSs6Ha/4JWS0zk
+ m9T/5FXYXd33XXLxKqloGBixQU4pz2k9LNEvS/sIO9AeYA/Qpjm9xIx4SVbpoktf84FVsAOY+
+ M1CgLnGO1TYnsqgwyNVh4BpbgSQf2NhwMIQq73CSmeUbkbVo3XgrjREv/UyHP9dNSSsuJugM6
+ GTbcSyRgpercs8jG6nD9k91kQZEPMNiwiVf82jfFio6PPHjBYZ9TtdEeeU8A+eImRxsgXPsGI
+ oQgVfCiBmlwm+lZISx2xuG/TMI5Me4VZqOGcb1c3Zob+XLzmQtRarQxYm6SR0WD2KSfxiuGuo
+ 9anHi2FyzfUqPBtHtrznyVJ8ybTfde43LrowoKf/RuC8e0V5BVshOUTRNMoXOuHDKV0DPKrve
+ NDISIri1kC6ypcJYcFRYUzgtL3VT3Y1X8yiFRRHhE8qJ7NfrTNZoDjUwXbZDK1txMRXleW2kV
+ qrmweWstkOBcDGGJAvrAgiM14fZeYApfJj/8TnXHFSgWEX3u2Ufgn0r3d1KSRGJmTzfc1uVu8
+ 1FNr5zGWDNfWJ1kP8McAVdXm/wnhOxJzSfU0Wy/z5+H94dj/su64wSLpZrkTyw3mQg7bMYEgH
+ 1vJCfurwyT9XrNXBE1i5ObcSCcn2PwNBZQeJg1EgUae9e5ybqWy9AAqdxwyAx1tbD1WqE3kyy
+ xnG7f/kW4CsHuJqPQ9GLSAwVnfdzr9CP+IVU9ei9nlR5YH3IpMW2jIgczO7CUh7CN0tG9x319
+ w0de0nX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git v2.9.2 was released in a hurry to accomodate for platforms like
-Windows, where the `unsigned long` data type is 32-bit even for 64-bit
-setups.
+In its `atom_value` struct, the ref-filter source code wants to store
+different values in a field called `ul` (for `unsigned long`), e.g.
+timestamps.
 
-The quick fix was to simply disable all the testing with "absurd" future
-dates.
+However, as we are about to switch the data type of timestamps away from
+`unsigned long` (because it may be 32-bit even when `time_t` is 64-bit),
+that data type is not large enough.
 
-However, we can do much better than that, as we already make use of
-64-bit data types internally. There is no good reason why we should not
-use the same for timestamps. Hence, let's use uintmax_t for timestamps.
+Simply change that field to use `uintmax_t` instead.
 
-Note: while the `time_t` data type exists and is meant to be used for
-timestamps, on 32-bit Linux it is *still* 32-bit. An earlier iteration
-used `time_t` for that reason, but it came with a few serious downsides:
-as `time_t` can be signed (and indeed, on Windows it is an int64_t),
-Git's expectation that 0 is the minimal value would no longer hold true,
-introducing its own set of interesting challenges. Besides, if we *can*
-handle far in the future timestamps (except for formatting them using
-the system libraries), it is more consistent to do so.
+This patch is a bit larger than the mere change of the data type
+because the field's name was tied to its data type, which has been fixed
+at the same time.
 
-The upside of using `uintmax_t` for timestamps is that we do a much
-better job to support far in the future timestamps across all platforms,
-including 32-bit ones. The downside is that those platforms that use a
-32-bit `time_t` will barf when parsing or formatting those timestamps.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ ref-filter.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Hannes Sixt found two more improvements which I incorporated into this
-iteration.
-
-Changes since v5:
-
-- use UINTMAX_MAX as TIME_MAX instead of rolling funny ULLONG_MAX games
-  (thanks Hannes Sixt)
-
-- mark the large constant in archive-tar.c as unsigned long long, as we
-  cannot know that unsigned long is large enough (again, thanks Hannes
-  Sixt)
-
-
-Johannes Schindelin (8):
-  ref-filter: avoid using `unsigned long` for catch-all data type
-  t0006 & t5000: prepare for 64-bit timestamps
-  t0006 & t5000: skip "far in the future" test when time_t is too
-    limited
-  Specify explicitly where we parse timestamps
-  Introduce a new "printf format" for timestamps
-  Introduce a new data type for timestamps
-  Abort if the system time cannot handle one of our timestamps
-  Use uintmax_t for timestamps
-
- Documentation/technical/api-parse-options.txt |   8 +-
- archive-tar.c                                 |   7 +-
- archive-zip.c                                 |  12 ++-
- archive.h                                     |   2 +-
- builtin/am.c                                  |   4 +-
- builtin/blame.c                               |  14 ++--
- builtin/fsck.c                                |   6 +-
- builtin/gc.c                                  |   2 +-
- builtin/log.c                                 |   4 +-
- builtin/merge-base.c                          |   2 +-
- builtin/name-rev.c                            |   6 +-
- builtin/pack-objects.c                        |   4 +-
- builtin/prune.c                               |   4 +-
- builtin/receive-pack.c                        |  14 ++--
- builtin/reflog.c                              |  24 +++---
- builtin/rev-list.c                            |   2 +-
- builtin/rev-parse.c                           |   2 +-
- builtin/show-branch.c                         |   4 +-
- builtin/worktree.c                            |   4 +-
- bundle.c                                      |   4 +-
- cache.h                                       |  14 ++--
- commit.c                                      |  18 ++--
- commit.h                                      |   2 +-
- config.c                                      |   2 +-
- credential-cache--daemon.c                    |  12 +--
- date.c                                        | 113 ++++++++++++++------------
- fetch-pack.c                                  |   8 +-
- fsck.c                                        |   2 +-
- git-compat-util.h                             |   5 ++
- http-backend.c                                |   4 +-
- parse-options-cb.c                            |   4 +-
- pretty.c                                      |   4 +-
- reachable.c                                   |   9 +-
- reachable.h                                   |   4 +-
- ref-filter.c                                  |  22 ++---
- reflog-walk.c                                 |   8 +-
- refs.c                                        |  14 ++--
- refs.h                                        |   8 +-
- refs/files-backend.c                          |   8 +-
- revision.c                                    |   6 +-
- revision.h                                    |   4 +-
- sha1_name.c                                   |   6 +-
- t/helper/test-date.c                          |  18 ++--
- t/helper/test-parse-options.c                 |   4 +-
- t/helper/test-ref-store.c                     |   4 +-
- t/t0006-date.sh                               |   4 +-
- t/t5000-tar-tree.sh                           |   6 +-
- t/test-lib.sh                                 |   3 +
- tag.c                                         |   6 +-
- tag.h                                         |   2 +-
- upload-pack.c                                 |   8 +-
- vcs-svn/fast_export.c                         |   8 +-
- vcs-svn/fast_export.h                         |   4 +-
- vcs-svn/svndump.c                             |   2 +-
- wt-status.c                                   |   2 +-
- 55 files changed, 257 insertions(+), 220 deletions(-)
-
-
-base-commit: e2cb6ab84c94f147f1259260961513b40c36108a
-Published-As: https://github.com/dscho/git/releases/tag/time_t-may-be-int64-v6
-Fetch-It-Via: git fetch https://github.com/dscho/git time_t-may-be-int64-v6
-
-Interdiff vs v5:
-
- diff --git a/archive-tar.c b/archive-tar.c
- index 695339a2369..319a5b1c7cd 100644
- --- a/archive-tar.c
- +++ b/archive-tar.c
- @@ -28,7 +28,7 @@ static int write_tar_filter_archive(const struct archiver *ar,
-  #if ULONG_MAX == 0xFFFFFFFF
-  #define USTAR_MAX_SIZE ULONG_MAX
-  #else
- -#define USTAR_MAX_SIZE 077777777777UL
- +#define USTAR_MAX_SIZE 077777777777ULL
-  #endif
-  #if TIME_MAX == 0xFFFFFFFF
-  #define USTAR_MAX_MTIME TIME_MAX
- diff --git a/git-compat-util.h b/git-compat-util.h
- index b66995685af..f366180f4b9 100644
- --- a/git-compat-util.h
- +++ b/git-compat-util.h
- @@ -322,11 +322,7 @@ extern char *gitdirname(char *);
-  typedef uintmax_t timestamp_t;
-  #define PRItime PRIuMAX
-  #define parse_timestamp strtoumax
- -#ifdef ULLONG_MAX
- -#define TIME_MAX ULLONG_MAX
- -#else
- -#define TIME_MAX ULONG_MAX
- -#endif
- +#define TIME_MAX UINTMAX_MAX
-  
-  #ifndef PATH_SEP
-  #define PATH_SEP ':'
-
+diff --git a/ref-filter.c b/ref-filter.c
+index 3a640448fd8..92871266001 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -351,7 +351,7 @@ struct ref_formatting_state {
+ struct atom_value {
+ 	const char *s;
+ 	void (*handler)(struct atom_value *atomv, struct ref_formatting_state *state);
+-	unsigned long ul; /* used for sorting when not FIELD_STR */
++	uintmax_t value; /* used for sorting when not FIELD_STR */
+ 	struct used_atom *atom;
+ };
+ 
+@@ -723,7 +723,7 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+ 		if (!strcmp(name, "objecttype"))
+ 			v->s = typename(obj->type);
+ 		else if (!strcmp(name, "objectsize")) {
+-			v->ul = sz;
++			v->value = sz;
+ 			v->s = xstrfmt("%lu", sz);
+ 		}
+ 		else if (deref)
+@@ -770,8 +770,8 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 			v->s = xstrdup(oid_to_hex(&commit->tree->object.oid));
+ 		}
+ 		else if (!strcmp(name, "numparent")) {
+-			v->ul = commit_list_count(commit->parents);
+-			v->s = xstrfmt("%lu", v->ul);
++			v->value = commit_list_count(commit->parents);
++			v->s = xstrfmt("%lu", (unsigned long)v->value);
+ 		}
+ 		else if (!strcmp(name, "parent")) {
+ 			struct commit_list *parents;
+@@ -875,11 +875,11 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ 	if ((tz == LONG_MIN || tz == LONG_MAX) && errno == ERANGE)
+ 		goto bad;
+ 	v->s = xstrdup(show_date(timestamp, tz, &date_mode));
+-	v->ul = timestamp;
++	v->value = timestamp;
+ 	return;
+  bad:
+ 	v->s = "";
+-	v->ul = 0;
++	v->value = 0;
+ }
+ 
+ /* See grab_values */
+@@ -1941,9 +1941,9 @@ static int cmp_ref_sorting(struct ref_sorting *s, struct ref_array_item *a, stru
+ 	else if (cmp_type == FIELD_STR)
+ 		cmp = cmp_fn(va->s, vb->s);
+ 	else {
+-		if (va->ul < vb->ul)
++		if (va->value < vb->value)
+ 			cmp = -1;
+-		else if (va->ul == vb->ul)
++		else if (va->value == vb->value)
+ 			cmp = cmp_fn(a->refname, b->refname);
+ 		else
+ 			cmp = 1;
 -- 
 2.12.2.windows.2.406.gd14a8f8640f
+
 
