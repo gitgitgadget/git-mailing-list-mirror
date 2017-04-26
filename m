@@ -2,160 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB6E9207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 19:18:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C8AC207BD
+	for <e@80x24.org>; Wed, 26 Apr 2017 19:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S966101AbdDZTSA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 15:18:00 -0400
-Received: from mout.gmx.net ([212.227.15.19]:51736 "EHLO mout.gmx.net"
+        id S965400AbdDZTS2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 15:18:28 -0400
+Received: from mout.gmx.net ([212.227.17.21]:50597 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965051AbdDZTR6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 15:17:58 -0400
-Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lx8OH-1e9gG330w5-016h1n; Wed, 26
- Apr 2017 21:17:46 +0200
-Date:   Wed, 26 Apr 2017 21:17:40 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S964978AbdDZTS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 15:18:27 -0400
+Received: from virtualbox ([95.208.59.152]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MK0bZ-1d4q223Jv3-001VPw; Wed, 26
+ Apr 2017 21:18:19 +0200
+Date:   Wed, 26 Apr 2017 21:18:18 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     git@vger.kernel.org
-cc:     Stephen Hicks <sdh@google.com>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] rebase -i: reread the todo list if `exec` touched it
-Message-ID: <ffb8b1ddb7a8a22643d569565e1a4929b883fba5.1493234134.git.johannes.schindelin@gmx.de>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v5 6/8] Introduce a new data type for timestamps
+In-Reply-To: <c6bcc382-f526-cf0c-8181-3985216e6c2b@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1704262117550.3480@virtualbox>
+References: <cover.1492771484.git.johannes.schindelin@gmx.de> <cover.1493042239.git.johannes.schindelin@gmx.de> <fea2df0e1ff5869572cf756d75fd3468d184457f.1493042239.git.johannes.schindelin@gmx.de> <c6bcc382-f526-cf0c-8181-3985216e6c2b@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:TFBn4km56saCpulpyfGCLl9EdgwFBjuAKcqufZ0ysMc4vxGk/uO
- lsEpRiJyZDrYUhMfpR6H1vLEyVyA3wjq0sCzEf7AHEt4RnTbNQTn9nZbQfvwRb1gZuEKd9G
- fvgUuqA/KpTs0pKXFo9y5lM5YuKSYzr0dAukSTLvLpe19QDU3mx5jrxRXC+1In2Bkopdn6G
- CSiGeWBEPNZWh/5MBeXFw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gcU0SfYsYdY=:ETHdSNedeX7/tL118ZOhu1
- hKIkx15FBFbRbb0PEiIvxvcmPJiZRVHRe+KGayexxaVhMa48bSJ54lyus5e79fmRObbQhld32
- 7NPKLp/jj0vlEKTo6ZkCg81n6gvPnmdSThDQMRlG+gKQ29+3ZGo0GyvMI2cEa9vH0CijgC+m2
- LWOK21gqPkBwZa1RNuAPThjtnCJ3562f98ncCRVcb8yUmOkv/EHjohAUgfIomBK6HsxPv37az
- WODLc95oxbl3ke7uEvg1BA81REUVG3tSzpmCb/QzzZJJlf5v0mbEqlQB+u/himwdB2HZHKfjo
- M0aPWTFFW62K8r5XHCc++F1L1IzGaxTyaFbQPXz+Kg/k6+1TAq0b7meegywsy7TMQ3tYxaWj7
- IlnFVh5nQH+QRkZmxWl6A3dHplyx5UtdZw+7iNZ4kik7A1UEdondTU8AGosIGCnjb9eyBkNK4
- ETk44z3Hmv9RE9kvYKRKqAwFVOICXZL2+D/52dJ8aJat1BwXW1YHHMi53m9u1CsI1ThaCxlxd
- mOPgm4f5M5WnbAspPVg7OmsbxYZYL7dYxL2ts4Dh+oO/BwWrmdgi7cDU+LjdU70iBb3DngcQ2
- J1e5sSOUXPK4IL3BNKZhm+KhuHhGXdcxXXe7C6V/SR0VvY2E3/Pnb+V/nVFgAFAUwml97EgPi
- b/koM6OkqEUfv4RmqyOCi9qQ7hWdR4f6c9CsyhU9eqBag1YRxjJedpM2z1FLTbwtvn/CokIEU
- 5yOisk5+IFHmctyXZnPuh3dVXiiiDoZ7auYf4EoeX/AsX/M7ZDWN3oAedQsrUasucQtoN6W/N
- YiG5H4x
+X-Provags-ID: V03:K0:Sq6fU8aQtIBjzIdHcA4bdc+coDS/+fAY9kfrTaa5Ge2FCFiuqpw
+ 4ddJjk2sKfdTclW3gFOeOWPlOyM2Qu0oCBAFvSymt3g6oN2tn7yTwlnbzHSI1aESytIXObb
+ jkeRElXu2ly2bY+hD60nASgVai+HHQale8AViGHmt3yZMwGtDTbthHzqppHvzYgZUVT+MJ+
+ h+e9bsETOTxp857U0kX4w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:BeFeoQCYimU=:2+9CXPu2ZjuGFqGtGSGovV
+ o5XbIWKWoh9AiNFaLKPSD5/RsE3qljoL9nkPGqaltN35RRgXSIpMpkNVnkaas2tV34ILV9TL0
+ bJvoo5eNBOgD+I3xmCG74m9WkWVQU7byVFQN8dhzGo2Cj++74jgdySHdwTzLmlpbwH/DTucZ0
+ kNv7pykW9j7/9ib30UJgqdLfrNw+bpnInwrGi15MWUAcqborr8+7J2tlWXVPy50QNBXHLwth6
+ 4MWui3F7Xm5a4KX1I9u2k8PpIgGGjU0xlU2cJSkydd9tNO2opnQU4HwVDHz3jQkCsKZbyIFPZ
+ CACEqI3Mr9d6smbwWfPNhIFLyq7cdCvT0nultWHq2Tu2BjGd9KGVR7OtAu8nD4d5O+pI8ikhC
+ L938Ribs+LcJ/3b56AspOXbY6ts8lsNTS5TLmz0g+WUN+TdCqkIsx1bYYSWoi/xj9kcQwjDV5
+ 1RKC82M7Qh9hahPPnyihZvlnjagGrn1iFkP+IdiD6sbgZnZDrOp/K7xHI9XodN81GufZfeTFL
+ N8obmVwXYwDIlrYm5InhHY760GUxjs8HZ+gEEUxOiuvuF/TSTGlf1sDnUDXzx6wVtkAOOx25J
+ c1PjrE14U+fotAgHmgp5VSqFk8m/Ek+bXM4+d7tLOj3IpC0A1fmKUQxiQjuRyZn5QUx9ntrmr
+ 8GkN5bHrv18+UhlAjzO6sTskKH9diT+wx2T7mmfxIVQDA5Z89e3OzTDQF+Nc46Dv7T0ofX2yA
+ Ig2BvhETp+8RV4iuY7i0a96nzH21nOIv/lVpDkppOmGzJjSswUGsLIILkLIkR6BuqRrUGLxem
+ 4KqFiyV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stephen Hicks <sdh@google.com>
+Hi Hannes,
 
-In the scripted version of the interactive rebase, there was no internal
-representation of the todo list; it was re-read before every command.
-That allowed the hack that an `exec` command could append (or even
-completely rewrite) the todo list.
+On Wed, 26 Apr 2017, Johannes Sixt wrote:
 
-This hack was broken by the partial conversion of the interactive rebase
-to C, and this patch reinstates it.
+> Am 24.04.2017 um 15:58 schrieb Johannes Schindelin:
+> > diff --git a/archive-tar.c b/archive-tar.c
+> > index 380e3aedd23..695339a2369 100644
+> > --- a/archive-tar.c
+> > +++ b/archive-tar.c
+> > @@ -27,9 +27,12 @@ static int write_tar_filter_archive(const struct archiver *ar,
+> >   */
+> >  #if ULONG_MAX == 0xFFFFFFFF
+> >  #define USTAR_MAX_SIZE ULONG_MAX
+> > -#define USTAR_MAX_MTIME ULONG_MAX
+> >  #else
+> >  #define USTAR_MAX_SIZE 077777777777UL
+> > +#endif
+> 
+> This part of the hunk is fine: if ULONG_MAX is not 2^32-1, then 2^33-1
+> will fit in a long.
+> 
+> > +#if TIME_MAX == 0xFFFFFFFF
+> > +#define USTAR_MAX_MTIME TIME_MAX
+> > +#else
+> >  #define USTAR_MAX_MTIME 077777777777UL
+> >  #endif
+> 
+> But this is not: just because TIME_MAX is not 32 bits, does not mean that
+> long is also more than 32 bits. We need this:
+> 
+> diff --git a/archive-tar.c b/archive-tar.c
+> index aadd5865f6..b5d6ce27d3 100644
+> --- a/archive-tar.c
+> +++ b/archive-tar.c
+> @@ -33,7 +33,7 @@ static int write_tar_filter_archive(const struct archiver *ar,
+>  #if TIME_MAX == 0xFFFFFFFF
+>  #define USTAR_MAX_MTIME TIME_MAX
+>  #else
+> -#define USTAR_MAX_MTIME 077777777777UL
+> +#define USTAR_MAX_MTIME 077777777777ULL
+>  #endif
+>  
+>  /* writes out the whole block, but only if it is full */
 
-We also add a small test to verify that this fix does not regress in the
-future.
-
-Signed-off-by: Stephen Hicks <sdh@google.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/rebase-reread-todo-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git rebase-reread-todo-v1
-
-	Based on https://github.com/git/git/pull/343
-
- sequencer.c                 | 22 ++++++++++++++++++++++
- t/t3428-rebase-edit-todo.sh | 14 ++++++++++++++
- 2 files changed, 36 insertions(+)
- create mode 100755 t/t3428-rebase-edit-todo.sh
-
-diff --git a/sequencer.c b/sequencer.c
-index 77afecaebf0..3fe9fcdab72 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1200,6 +1200,7 @@ struct todo_list {
- 	struct todo_item *items;
- 	int nr, alloc, current;
- 	int done_nr, total_nr;
-+	struct stat_data stat;
- };
- 
- #define TODO_LIST_INIT { STRBUF_INIT }
-@@ -1330,6 +1331,7 @@ static int count_commands(struct todo_list *todo_list)
- static int read_populate_todo(struct todo_list *todo_list,
- 			struct replay_opts *opts)
- {
-+	struct stat st;
- 	const char *todo_file = get_todo_path(opts);
- 	int fd, res;
- 
-@@ -1343,6 +1345,11 @@ static int read_populate_todo(struct todo_list *todo_list,
- 	}
- 	close(fd);
- 
-+	res = stat(todo_file, &st);
-+	if (res)
-+		return error(_("could not stat '%s'"), todo_file);
-+	fill_stat_data(&todo_list->stat, &st);
-+
- 	res = parse_insn_buffer(todo_list->buf.buf, todo_list);
- 	if (res) {
- 		if (is_rebase_i(opts))
-@@ -2028,10 +2035,25 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 		} else if (item->command == TODO_EXEC) {
- 			char *end_of_arg = (char *)(item->arg + item->arg_len);
- 			int saved = *end_of_arg;
-+			struct stat st;
- 
- 			*end_of_arg = '\0';
- 			res = do_exec(item->arg);
- 			*end_of_arg = saved;
-+
-+			/* Reread the todo file if it has changed. */
-+			if (res)
-+				; /* fall through */
-+			else if (stat(get_todo_path(opts), &st))
-+				res = error_errno(_("could not stat '%s'"),
-+						  get_todo_path(opts));
-+			else if (match_stat_data(&todo_list->stat, &st)) {
-+				todo_list_release(todo_list);
-+				if (read_populate_todo(todo_list, opts))
-+					res = -1; /* message was printed */
-+				/* `current` will be incremented below */
-+				todo_list->current = -1;
-+			}
- 		} else if (!is_noop(item->command))
- 			return error(_("unknown command %d"), item->command);
- 
-diff --git a/t/t3428-rebase-edit-todo.sh b/t/t3428-rebase-edit-todo.sh
-new file mode 100755
-index 00000000000..b9292dfc2a3
---- /dev/null
-+++ b/t/t3428-rebase-edit-todo.sh
-@@ -0,0 +1,14 @@
-+#!/bin/sh
-+
-+test_description='rebase should reread the todo file if an exec modifies it'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'rebase exec modifies rebase-todo' '
-+	test_commit initial &&
-+	todo=.git/rebase-merge/git-rebase-todo &&
-+	git rebase HEAD -x "echo exec touch F >>$todo" &&
-+	test -e F
-+'
-+
-+test_done
-
-base-commit: e2cb6ab84c94f147f1259260961513b40c36108a
--- 
-2.12.2.windows.2.406.gd14a8f8640f
+Right! Thank you, v6 coming up,
+Dscho
