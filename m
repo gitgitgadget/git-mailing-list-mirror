@@ -7,200 +7,210 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73F3E207D6
-	for <e@80x24.org>; Wed, 26 Apr 2017 11:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D9D4207D6
+	for <e@80x24.org>; Wed, 26 Apr 2017 11:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2999201AbdDZL7p (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 07:59:45 -0400
-Received: from mout.gmx.net ([212.227.15.18]:57215 "EHLO mout.gmx.net"
+        id S1954315AbdDZL7q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 07:59:46 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51757 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1954315AbdDZL7m (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2999140AbdDZL7m (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 26 Apr 2017 07:59:42 -0400
-Received: from virtualbox ([95.208.59.147]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDQI1-1dKAS00Oir-00Gmj4; Wed, 26
- Apr 2017 13:59:25 +0200
-Date:   Wed, 26 Apr 2017 13:59:23 +0200 (CEST)
+Received: from virtualbox ([95.208.59.147]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFctN-1dHybA2APF-00EeVq; Wed, 26
+ Apr 2017 13:59:09 +0200
+Date:   Wed, 26 Apr 2017 13:59:07 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 4/9] rebase -i: also expand/collapse the SHA-1s via the
- rebase--helper
-In-Reply-To: <cover.1493207864.git.johannes.schindelin@gmx.de>
-Message-ID: <df5263cc0cad5cffbd1932d4b9b8e5c0507536e6.1493207864.git.johannes.schindelin@gmx.de>
-References: <cover.1493128210.git.johannes.schindelin@gmx.de> <cover.1493207864.git.johannes.schindelin@gmx.de>
+Subject: [PATCH v3 0/9] The final building block for a faster rebase -i
+In-Reply-To: <cover.1493128210.git.johannes.schindelin@gmx.de>
+Message-ID: <cover.1493207864.git.johannes.schindelin@gmx.de>
+References: <cover.1493128210.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:glHg2fgVMBtQ1spOx8afzfOSCPcu/BptXxLSUfJsAb/UqGj3NXc
- Jx6Q+xdNY+vRu+e0JMLD8Z2XS8D1eCIOWhjBKkcbDPImQKKA53GHY/MRVaucotfsCo6bXTn
- eVdsHICZdTG6gMR1DiOtJKmSgk2NU2oeFXha9GQYPKHBGwFCcxVQAUxBRezPfHNwdYw52mr
- t5LmbgPthRZujFbZbe4Rw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:r5nI/a25hRs=:tq52T6Iz7V4LOLoxI3+MuO
- 9Jf7w0pO86P335R5wcOV+Bu4LeuuRq8QJVfmya4M8VEYVE0aRKAAsbXVQaKnPmxqoYl0xIYjy
- aVf7SNp8fkyKERer46zvIJuA4IZ8wUOYOOHkNCX9mfKV0uBJzoRyr0W8HtELR7tHb0QKqcu1v
- uju45qpzgs5FIVJDHrLMEMIFQ/y/0tNihphEmZr4f/nKRGP5m70CSYUFbQ6ycsEGrnCeyqgiL
- dMp+qQp02ylyaYfZe45F3qEUxS4ORsMJYbFIujnhyweNCX0AZ6g85SftCLyJN420b4dKzXqiH
- nNHgu70zM265PSgYM/c4zNF/ZiUV8Ak94LPp0hyVP7SU8rxM3nMUOQXFgBcqk1L4AUljfdhTN
- gJJPLZKOXzm2Y5LALbrjuMMuNA5AhEKMT0NRyqS5aWUgKTAz730spZx+xpQeo9PVXHhgguOcb
- lGQQYPLVtIR3v2O5ZSYgkWED5eY04Ny041DWGVdf1zGdtdBKfbTAmSgtyATpFCyQnxc4Ltt+a
- +F4ON3S1xAfODf703FlC2wwqSsUCUsFWnurUsFsY20NLYYSpoQv6cRMbgFd1jzXSgKBKCWKoQ
- yJ7EWyOQnVpFsYC/Wb8a11LGCKKJPV5zkwL/xyq4iaV83Bu6BwFSHvh/cTDfHLJIQQGEPFtu6
- OwCulXZJuXGuYRraNmuZpO8R7msfPAt3PSFyaTGB2hsNInLZY+Sf9wtmPAF/YBCBryfcFPqAA
- AKuRpwbbYRpi/4ZyoS9TGxxhWcPguEbvCbyFDeB8up1lZ2DFOkeJ9WePA1ilfZ9OAcjpZX1sQ
- 93dyg46
+X-Provags-ID: V03:K0:a6Q0muRlMBed7cWbTlkeww8yMWUS62K+1zC30KwCZsg6pZcf7uB
+ cvZLhxCsBgz6jarFlsRCI0cO/HGoOm6TZ/sBY91MB5012sP3yL8+tDJuehG6BhJfCPixAMr
+ wSdBN3ckX6eaDzvk1qhY/Eiq92mYGqICdqCkR2ptk5EA9uPtgSW01F/vnZTLn/iZUEg+Ou7
+ S4XcxNf82fN3dDDri7UxQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:r0fU5wKk+7I=:uoBPis3Ou1ScS5dWpS5WdQ
+ 2U34wlihOe18a075OZZtUlPEsvIwAvIj0ft8xL7g0qyTSTG4fr599VJ2CwfMHkETI4O0VJVrF
+ 59acg5wRur23znxR/lVdqSGSg691DWfoCjFKqrfsSqbhYCCjff27GzVbR9qvJfxqZcZqxuqYa
+ dYXDcfRmZlPHi9xswb2Qbkw+7HAL44pUzJ5rCM9cizWv964tDkpmZu65N7JUtL0Llv7QLYXAj
+ 9JBHVynzod6u9eY3XCmp96EBBbklaxlPnmVX0YHGAfhO4Fr0ZacShfE9gzLNJtSSBlTMAB8jE
+ vTqfh32aM+1C9hD5EvVw28yXJxVxEFTPD6yi1ZSEJ09dpsLeO89kglGDkhMH4B7IenJOj0aAH
+ /2aNaf9lcITuIe2ZXgaRp78Zz/1974etSyyeq9AfeH3f190CfBk//RFBesOlNHCN8rg9B53ZJ
+ HjjAOf8ZpytPbOfEg+lGXDPgfOZTZM/C4TUib3NqT+dhv+YCtWG40/x54Lvf/ZdQOeoZ4Q6EF
+ BTy4jJOztvJYYpd9TgplZXBTtFJXo+7eYJiwIAndLMNeMi0dp028OELnWJlixnvN9K1GnLw/B
+ Qptfsiy8jqmW/Gl9+wowK9cEcJYdo3XrhT3pzDSZoz4Cgq9Alwe3W+C9Og0yvanb5pLOa/GM1
+ Ph/ZPa2b7Tb/YqkRAGYYv6S2+kHXeNahtlkuKOcypJVD30qjNoXqPkOBmgm+lNVh0/7Pt8sDV
+ qxVUhegSrCB6LubmLJraljJEBIFbZJBgCpPXivK1pQ26Ef1UndMYQO26w+Mez3yuuRdpATlXu
+ aJ1EwpE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is crucial to improve performance on Windows, as the speed is now
-mostly dominated by the SHA-1 transformation (because it spawns a new
-rev-parse process for *every* line, and spawning processes is pretty
-slow from Git for Windows' MSYS2 Bash).
+This patch series reimplements the expensive pre- and post-processing of
+the todo script in C.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/rebase--helper.c   | 10 +++++++-
- git-rebase--interactive.sh |  4 ++--
- sequencer.c                | 59 ++++++++++++++++++++++++++++++++++++++++++++++
- sequencer.h                |  2 ++
- 4 files changed, 72 insertions(+), 3 deletions(-)
+And it concludes the work I did to accelerate rebase -i.
 
-diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index 821058d452d..9444c8d6c60 100644
---- a/builtin/rebase--helper.c
-+++ b/builtin/rebase--helper.c
-@@ -13,7 +13,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
- 	int keep_empty = 0;
- 	enum {
--		CONTINUE = 1, ABORT, MAKE_SCRIPT
-+		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_SHA1S, EXPAND_SHA1S
- 	} command = 0;
- 	struct option options[] = {
- 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
-@@ -24,6 +24,10 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 				ABORT),
- 		OPT_CMDMODE(0, "make-script", &command,
- 			N_("make rebase script"), MAKE_SCRIPT),
-+		OPT_CMDMODE(0, "shorten-sha1s", &command,
-+			N_("shorten SHA-1s in the todo list"), SHORTEN_SHA1S),
-+		OPT_CMDMODE(0, "expand-sha1s", &command,
-+			N_("expand SHA-1s in the todo list"), EXPAND_SHA1S),
- 		OPT_END()
- 	};
- 
-@@ -42,5 +46,9 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		return !!sequencer_remove_state(&opts);
- 	if (command == MAKE_SCRIPT && argc > 1)
- 		return !!sequencer_make_script(keep_empty, stdout, argc, argv);
-+	if (command == SHORTEN_SHA1S && argc == 1)
-+		return !!transform_todo_ids(1);
-+	if (command == EXPAND_SHA1S && argc == 1)
-+		return !!transform_todo_ids(0);
- 	usage_with_options(builtin_rebase_helper_usage, options);
- }
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 214af0372ba..52a19e0bdb3 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -774,11 +774,11 @@ transform_todo_ids () {
- }
- 
- expand_todo_ids() {
--	transform_todo_ids
-+	git rebase--helper --expand-sha1s
- }
- 
- collapse_todo_ids() {
--	transform_todo_ids --short
-+	git rebase--helper --shorten-sha1s
- }
- 
- # Rearrange the todo list that has both "pick sha1 msg" and
-diff --git a/sequencer.c b/sequencer.c
-index e858a976279..4b7f88b338f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2433,3 +2433,62 @@ int sequencer_make_script(int keep_empty, FILE *out,
- 	strbuf_release(&buf);
- 	return 0;
- }
-+
-+
-+int transform_todo_ids(int shorten_sha1s)
-+{
-+	const char *todo_file = rebase_path_todo();
-+	struct todo_list todo_list = TODO_LIST_INIT;
-+	int fd, res, i;
-+	FILE *out;
-+
-+	strbuf_reset(&todo_list.buf);
-+	fd = open(todo_file, O_RDONLY);
-+	if (fd < 0)
-+		return error_errno(_("could not open '%s'"), todo_file);
-+	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
-+		close(fd);
-+		return error(_("could not read '%s'."), todo_file);
-+	}
-+	close(fd);
-+
-+	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
-+	if (res) {
-+		todo_list_release(&todo_list);
-+		return error(_("unusable instruction sheet: '%s'"), todo_file);
-+	}
-+
-+	out = fopen(todo_file, "w");
-+	if (!out) {
-+		todo_list_release(&todo_list);
-+		return error(_("unable to open '%s' for writing"), todo_file);
-+	}
-+	for (i = 0; i < todo_list.nr; i++) {
-+		struct todo_item *item = todo_list.items + i;
-+		int bol = item->offset_in_buf;
-+		const char *p = todo_list.buf.buf + bol;
-+		int eol = i + 1 < todo_list.nr ?
-+			todo_list.items[i + 1].offset_in_buf :
-+			todo_list.buf.len;
-+
-+		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
-+			fwrite(p, eol - bol, 1, out);
-+		else {
-+			int eoc = strcspn(p, " \t");
-+			const char *sha1 = shorten_sha1s ?
-+				short_commit_name(item->commit) :
-+				oid_to_hex(&item->commit->object.oid);
-+
-+			if (!eoc) {
-+				p += strspn(p, " \t");
-+				eoc = strcspn(p, " \t");
-+			}
-+
-+			fprintf(out, "%.*s %s %.*s\n",
-+				eoc, p, sha1, item->arg_len, item->arg);
-+		}
-+	}
-+	fclose(out);
-+	todo_list_release(&todo_list);
-+	return 0;
-+}
-diff --git a/sequencer.h b/sequencer.h
-index 83f2943b7a9..47a81034e76 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -48,6 +48,8 @@ int sequencer_remove_state(struct replay_opts *opts);
- int sequencer_make_script(int keep_empty, FILE *out,
- 		int argc, const char **argv);
- 
-+int transform_todo_ids(int shorten_sha1s);
-+
- extern const char sign_off_header[];
- 
- void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
+Changes since v2:
+
+- rearranged error_errno() calls to come before any subsequent free()
+  and close()
+
+- now call close(fd) in case of error to avoid resource leaks
+
+- removed unused `format` variable holding the value of
+  rebase.instructionFormat from rearrange_squash()
+
+- modified rearrange_squash() to make it easier to reason about
+  subjects[i] taking custody of a strbuf's buffer (this should enable
+  Coverity to see that there is no resource leak here)
+
+
+Johannes Schindelin (9):
+  rebase -i: generate the script via rebase--helper
+  rebase -i: remove useless indentation
+  rebase -i: do not invent onelines when expanding/collapsing SHA-1s
+  rebase -i: also expand/collapse the SHA-1s via the rebase--helper
+  t3404: relax rebase.missingCommitsCheck tests
+  rebase -i: check for missing commits in the rebase--helper
+  rebase -i: skip unnecessary picks using the rebase--helper
+  t3415: test fixup with wrapped oneline
+  rebase -i: rearrange fixup/squash lines using the rebase--helper
+
+ Documentation/git-rebase.txt  |  16 +-
+ builtin/rebase--helper.c      |  29 ++-
+ git-rebase--interactive.sh    | 362 ++++------------------------
+ sequencer.c                   | 531 ++++++++++++++++++++++++++++++++++++++++++
+ sequencer.h                   |   8 +
+ t/t3404-rebase-interactive.sh |  22 +-
+ t/t3415-rebase-autosquash.sh  |  16 +-
+ 7 files changed, 641 insertions(+), 343 deletions(-)
+
+
+base-commit: e2cb6ab84c94f147f1259260961513b40c36108a
+Based-On: rebase--helper at https://github.com/dscho/git
+Fetch-Base-Via: git fetch https://github.com/dscho/git rebase--helper
+Published-As: https://github.com/dscho/git/releases/tag/rebase-i-extra-v3
+Fetch-It-Via: git fetch https://github.com/dscho/git rebase-i-extra-v3
+
+Interdiff vs v2:
+
+ diff --git a/sequencer.c b/sequencer.c
+ index 2b07fb9e0ce..7ac1792311e 100644
+ --- a/sequencer.c
+ +++ b/sequencer.c
+ @@ -2393,7 +2393,7 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+  int sequencer_make_script(int keep_empty, FILE *out,
+  		int argc, const char **argv)
+  {
+ -	char *format = "%s";
+ +	char *format = xstrdup("%s");
+  	struct pretty_print_context pp = {0};
+  	struct strbuf buf = STRBUF_INIT;
+  	struct rev_info revs;
+ @@ -2412,6 +2412,7 @@ int sequencer_make_script(int keep_empty, FILE *out,
+  	revs.pretty_given = 1;
+  	git_config_get_string("rebase.instructionFormat", &format);
+  	get_commit_format(format, &revs);
+ +	free(format);
+  	pp.fmt = revs.commit_format;
+  	pp.output_encoding = get_log_output_encoding();
+  
+ @@ -2676,24 +2677,41 @@ int skip_unnecessary_picks(void)
+  		const char *done_path = rebase_path_done();
+  
+  		fd = open(done_path, O_CREAT | O_WRONLY | O_APPEND, 0666);
+ +		if (fd < 0) {
+ +			error_errno(_("could not open '%s' for writing"),
+ +				    done_path);
+ +			todo_list_release(&todo_list);
+ +			return -1;
+ +		}
+  		if (write_in_full(fd, todo_list.buf.buf, offset) < 0) {
+ +			error_errno(_("could not write to '%s'"), done_path);
+  			todo_list_release(&todo_list);
+ -			return error_errno(_("could not write to '%s'"),
+ -				done_path);
+ +			close(fd);
+ +			return -1;
+  		}
+  		close(fd);
+  
+  		fd = open(rebase_path_todo(), O_WRONLY, 0666);
+ +		if (fd < 0) {
+ +			error_errno(_("could not open '%s' for writing"),
+ +				    rebase_path_todo());
+ +			todo_list_release(&todo_list);
+ +			return -1;
+ +		}
+  		if (write_in_full(fd, todo_list.buf.buf + offset,
+  				todo_list.buf.len - offset) < 0) {
+ +			error_errno(_("could not write to '%s'"),
+ +				    rebase_path_todo());
+ +			close(fd);
+  			todo_list_release(&todo_list);
+ -			return error_errno(_("could not write to '%s'"),
+ -				rebase_path_todo());
+ +			return -1;
+  		}
+  		if (ftruncate(fd, todo_list.buf.len - offset) < 0) {
+ +			error_errno(_("could not truncate '%s'"),
+ +				    rebase_path_todo());
+  			todo_list_release(&todo_list);
+ -			return error_errno(_("could not truncate '%s'"),
+ -				rebase_path_todo());
+ +			close(fd);
+ +			return -1;
+  		}
+  		close(fd);
+  
+ @@ -2768,6 +2786,7 @@ int rearrange_squash(void)
+  		struct strbuf buf = STRBUF_INIT;
+  		struct todo_item *item = todo_list.items + i;
+  		const char *commit_buffer, *subject, *p;
+ +		size_t subject_len;
+  		int i2 = -1;
+  		struct subject2item_entry *entry;
+  
+ @@ -2788,7 +2807,7 @@ int rearrange_squash(void)
+  		commit_buffer = get_commit_buffer(item->commit, NULL);
+  		find_commit_subject(commit_buffer, &subject);
+  		format_subject(&buf, subject, " ");
+ -		subject = subjects[i] = buf.buf;
+ +		subject = subjects[i] = strbuf_detach(&buf, &subject_len);
+  		unuse_commit_buffer(item->commit, commit_buffer);
+  		if ((skip_prefix(subject, "fixup! ", &p) ||
+  		     skip_prefix(subject, "squash! ", &p))) {
+ @@ -2835,19 +2854,16 @@ int rearrange_squash(void)
+  			tail[i2] = i;
+  		} else if (!hashmap_get_from_hash(&subject2item,
+  						strhash(subject), subject)) {
+ -			FLEX_ALLOC_MEM(entry, subject, buf.buf, buf.len);
+ +			FLEX_ALLOC_MEM(entry, subject, subject, subject_len);
+  			entry->i = i;
+  			hashmap_entry_init(entry, strhash(entry->subject));
+  			hashmap_put(&subject2item, entry);
+  		}
+ -		strbuf_detach(&buf, NULL);
+  	}
+  
+  	if (rearranged) {
+  		struct strbuf buf = STRBUF_INIT;
+ -		char *format = NULL;
+  
+ -		git_config_get_string("rebase.instructionFormat", &format);
+  		for (i = 0; i < todo_list.nr; i++) {
+  			enum todo_command command = todo_list.items[i].command;
+  			int cur = i;
+
 -- 
 2.12.2.windows.2.406.gd14a8f8640f
-
 
