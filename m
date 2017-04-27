@@ -2,80 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCAB5207D6
-	for <e@80x24.org>; Thu, 27 Apr 2017 19:36:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B7EE207EB
+	for <e@80x24.org>; Thu, 27 Apr 2017 19:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1164149AbdD0TgE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 15:36:04 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:34453 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1031818AbdD0TgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 15:36:02 -0400
-Received: by mail-pf0-f182.google.com with SMTP id c198so36036118pfc.1
-        for <git@vger.kernel.org>; Thu, 27 Apr 2017 12:36:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=nuktbscwk6QgCLqEYoBcj9Je8pRg7HR1PZeEJmMeP/c=;
-        b=Xy3XSZ32Jkt6rXMJkfbC3eUnMkhNmWm87jU4B3j+330KNah9Hkad7Gd2zP4Rn0/dw7
-         Idyh9gPZsby10vJ7DsdlFXdpBA4LvLJvS4x8ANQebbBSkYu7SLQv6F6GJssSKgIzc2rG
-         K6kZYkq77NEC6UeJEK8lQhg41KPRVJuPhxEasok0p6qJUiyQxc9XLcIDjSBNAzf7K5pU
-         nyQLpPprebXHXJP7Fk4BtS+M22tSfxKg4TPJq7FDlmGug/2PeH49Zljd05XeJupFEw/8
-         oJY3MI0fbh7ULWOwkUVdGGz8rma2a4IOmYKUIkSOIolCenIwDX4WcOVG3+kxCBj7bM4G
-         x+JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=nuktbscwk6QgCLqEYoBcj9Je8pRg7HR1PZeEJmMeP/c=;
-        b=C0vKpFXJc2R52sQ6hj9IQnIxNyUxUzQXK4BgmYPOdU+ao0MCNE5na1UzdooYo6D802
-         GChwbgpg2I46pWmZy8en70yQtgv7G+KybRHTGQ35cURjFR/NgOFFieE/U2IG3KbpYW9y
-         j2oHcJv8Q8xyn1k6JV/v2/dq3D5tDCxLiQMi+kSCB9O+Zj93hzCyOR4fQ4HX97ZcKVrA
-         SkuW9W/yVspc/q740f/EEiQDrmAVAN7J8Sh0ndo1CWQ3yfoSgxg3c7zl3DMNYNBZIoN4
-         b2tv/yjBMUlgiC5TUIVS/pm9AUkepYdSlEPgawSYwHfM6Ou99NR8gvNKBddlV624crGq
-         wvbg==
-X-Gm-Message-State: AN3rC/4QYUGOIEPUurzLRT/2I+BcxKWUTTGQGfEUYimtpxU5zbTEdPs3
-        7g9dtHp5D37dLXHwZY9jaBvTkqoUsHTJySIfaQ==
-X-Received: by 10.84.232.133 with SMTP id i5mr9683531plk.172.1493321761984;
- Thu, 27 Apr 2017 12:36:01 -0700 (PDT)
+        id S1422748AbdD0TzJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 15:55:09 -0400
+Received: from mout.web.de ([212.227.17.12]:51687 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1422739AbdD0TzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 15:55:00 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M5OYl-1e27vM1fgN-00zau6; Thu, 27
+ Apr 2017 21:54:55 +0200
+Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
+To:     Peter Krefting <peter@softwolves.pp.se>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Keith Goldfarb <keith@blackthorn-media.com>
+References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
+ <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
+ <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
+ <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
+ <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
+ <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
+ <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
+ <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
+ <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
+ <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se>
+ <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de>
+ <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se>
+ <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
+ <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se>
+ <87470c8c-e061-e4b3-42fe-84a30858fc0d@web.de>
+ <alpine.DEB.2.11.1704270552590.4681@perkele.intern.softwolves.pp.se>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <a9cb6572-500e-bbc6-2aac-7cb940d4b171@web.de>
+Date:   Thu, 27 Apr 2017 21:54:52 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Thu, 27 Apr 2017 12:36:01 -0700 (PDT)
-In-Reply-To: <20170426231236.27219-6-avarab@gmail.com>
-References: <20170426231236.27219-1-avarab@gmail.com> <20170426231236.27219-6-avarab@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Apr 2017 12:36:01 -0700
-Message-ID: <CAGZ79kadPPBxW01p8KFGrcj3XwT1VZCcNTG4O_vxpU5n-ZRPFA@mail.gmail.com>
-Subject: Re: [RFC/PATCH v3 5/5] WIP clone: add a --[no-]recommend-tags &
- submodule.NAME.tags config
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <alpine.DEB.2.11.1704270552590.4681@perkele.intern.softwolves.pp.se>
+Content-Type: text/plain; charset=iso-8859-15
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:7mjuY4j9Mca4Is9MZVpiAzqQtHzBSW+cts0lOBmr7VOqoY1CyFY
+ KxPtTDS8ZiGIgLuO+MbfaFCuDaRGMDufNqHm/ikKvaOdokdKZtx3spfgpZ1fs8z6pjgOgPZ
+ dQe2qR4kNqsGyQXV8ZzpOrZwGLuJOQrpZAv7VDpgIUAx6hsGYU/F3gk4tj9cUVFnUCnvtqb
+ KNfe6U611QW6zLr5Bbe7A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:wCopf7jU0wQ=:wNcbRUuimkPaHqk9ezDprG
+ z0aCli+1G3beyjMhMMKDEy/++tSZfi5zjYYhIkrd3IRTa1urJIhgqK+7L1Ju7ArOiS0dLuKDS
+ cpg0Vnc4ObalC8z10VbJf5miaTfqb1GDqxR0tNBgjmy50j38sSxMbCTj+TxSWoVvZWbadWnK3
+ GJM9PgNsV25I71VaINeY7K9lDjBNF0BDZMZ30/DE8S6aTH7QMnmDGwlMGXu+3ZytOmnrqjqsA
+ fRbxhKO5NX4vlqZ8Ieda3gAPCxQBR0jgZj0fZx8N/vsHhbjdZV05CAWOIEB2ycAqeGmEYJ+D6
+ ZwbcfYeyYHcwf8R4Yw3vrB4h9JBBl+MSLoylr6SMzgo489Cwy9lNML4c1dU73sdWHCfqx8zol
+ ab02Tgvvrdjz1jJawYiCukcjNECQpLTmcGJNboGvV1TE9fET4vcsd+mE8nzpsZkoLMF20Zw6U
+ 19ioUnK7zVp05RWGjPl31/qLRG+ZnhIKgLa7pILntWTGCZOHvjT8N9KYqv5j0i+L6VFqDtIK5
+ SZ6Pcqa++QbSBt2cl9RBFbTnnREBlhFTy8hDE8As84rWTaCS93jXTuAzLSXdtuDWYMP7SgDJ9
+ d+XnwB86vjJWS0MNVsi6JjNn9wKxBNri/3RybuLxToH9eAmlljO0Z2ydfl4+oxvk+B6XFrOdN
+ B02CjFv4xGNHOg6h0uN9AQBV/7wkHTnd/rvOS8JXBTAXx9uu4NK5XSLUU4a4OZlR5lGp+eoYi
+ DUSRO4vTg3ljtV8o2cnLLq25jJdpjYXcsAqjXj43HSrKyGDymWvZkg3PodSTE59ggw8lKHz5Y
+ kzxKxKD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Apr 26, 2017 at 4:12 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Am 27.04.2017 um 06:57 schrieb Peter Krefting:
+> René Scharfe:
+>> Windows XP.  Don't laugh. ;)
+>
+> You can always install 7-zip or something to extract on XP.
 
-> @@ -855,7 +856,7 @@ static int prepare_to_clone_next_submodule(const stru=
-ct cache_entry *ce,
->                 argv_array_pushl(&child->args, "--prefix", suc->prefix, N=
-ULL);
->         if (suc->recommend_shallow && sub->recommend_shallow =3D=3D 1)
->                 argv_array_push(&child->args, "--depth=3D1");
-> -       if (suc->no_tags)
-> +       if (suc->no_tags || suc->recommend_tags =3D=3D 0)
->                 argv_array_push(&child->args, "--no-tags");
+Sure, but if we were to start emitting zip64 records regardless of the
+size of entries then we'd break compatibility.  We should have a very
+good reason for doing that.  (I don't see the need so far.)
 
-Here you would also need to pay attention to sub->recommend_tags?
+>> What do other archivers do?
+> 
+> You should compare with what bsdtar (libarchive) does in zip64 mode. It 
+> also only ever does streaming mode (with data descriptors and such), and 
+> it does zip64.
+
+Good idea.  They do the same as InfoZIP (whose behavior I copied in
+the series), i.e. emit zip64 records only for big files by default:
+
+https://github.com/libarchive/libarchive/blob/master/libarchive/archive_write_set_format_zip.c#L722
+
+They set the bar much higher for the uncompressed size of streamed
+files; they emit zip64 extras only for sizes bigger than 0xff000000.
+
+>> But I think a more important question is: Can the generated files be 
+>> extracted by popular tools (most importantly Windows' built-in 
+>> functionality, I guess)?
+> 
+> OK, so only enable zip64 mode if there are files >4G or the archive ends 
+> up being >4G. But the question is how we can tell, especially in 
+> streaming mode, and especially if data descriptors are magical...
+
+The type of descriptor to use depends on the presence of 64-bit
+sizes in a zip64 extra for that record.  For streaming compression
+some kind of threshold lower than 0xffffffff needs to be set,
+because deflate can increase the size of the result.
+
+René
