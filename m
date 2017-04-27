@@ -2,99 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AC9A207E4
-	for <e@80x24.org>; Thu, 27 Apr 2017 08:24:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45677207E4
+	for <e@80x24.org>; Thu, 27 Apr 2017 08:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937626AbdD0IYQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 04:24:16 -0400
-Received: from fallback15.m.smailru.net ([94.100.179.50]:39128 "EHLO
-        fallback.mail.ru" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S934383AbdD0IYJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 04:24:09 -0400
-X-Greylist: delayed 2441 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Apr 2017 04:24:09 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
-        h=Content-Transfer-Encoding:Content-Type:Message-ID:Reply-To:Date:MIME-Version:Subject:To:From; bh=jj8EsuVQ41FbuDgdA3TEkFUg+RqPP4YcHl755QFWkrI=;
-        b=PK5h21SkNw2GnzW454NRqIdhTDYuhb5eJex4zUspz6Tj/54VndRy4FUxIKE0eWclLplgl3a/iT+kF/DFgB/rgpp+n2++EplokuDDaL+nIhen38NFpcTeNDp5IN01KsEtc5LzIyyo5Hmlhw+pO5ksOY/pdR0paphOEsSwlBAMdbw=;
-Received: from [10.161.63.25] (port=45090 helo=f402.i.mail.ru)
-        by fallback15.m.smailru.net with esmtp (envelope-from <fatemail@mail.ru>)
-        id 1d3e5E-0004Tg-0o
-        for git@vger.kernel.org; Thu, 27 Apr 2017 10:43:24 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
-        h=Content-Transfer-Encoding:Content-Type:Message-ID:Reply-To:Date:MIME-Version:Subject:To:From; bh=jj8EsuVQ41FbuDgdA3TEkFUg+RqPP4YcHl755QFWkrI=;
-        b=PK5h21SkNw2GnzW454NRqIdhTDYuhb5eJex4zUspz6Tj/54VndRy4FUxIKE0eWclLplgl3a/iT+kF/DFgB/rgpp+n2++EplokuDDaL+nIhen38NFpcTeNDp5IN01KsEtc5LzIyyo5Hmlhw+pO5ksOY/pdR0paphOEsSwlBAMdbw=;
-Received: by f402.i.mail.ru with local (envelope-from <fatemail@mail.ru>)
-        id 1d3e56-0008NV-VD
-        for git@vger.kernel.org; Thu, 27 Apr 2017 10:43:17 +0300
-Received: by e.mail.ru with HTTP;
-        Thu, 27 Apr 2017 10:43:16 +0300
-From:   =?UTF-8?B?TmlraXRhIE9ybG92?= <fatemail@mail.ru>
-To:     git@vger.kernel.org
-Subject: =?UTF-8?B?Z2l0IGxvc2VzIGEgY29tbWl0IGFmdGVyIHJlb3JkZXJpbmcu?=
+        id S968128AbdD0IyP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 04:54:15 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41144 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S968102AbdD0IyN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 04:54:13 -0400
+Received: (qmail 4981 invoked by uid 109); 27 Apr 2017 08:54:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 08:54:10 +0000
+Received: (qmail 21734 invoked by uid 111); 27 Apr 2017 08:54:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 04:54:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Apr 2017 04:54:08 -0400
+Date:   Thu, 27 Apr 2017 04:54:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stephen Kent <smkent@smkent.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Add color slots for branch names in "git status --short
+ --branch"
+Message-ID: <20170427085408.ugbor7mb6hflalh2@sigill.intra.peff.net>
+References: <201704556286334.8b7dc718029e6dd189dadb3703bfa@localhost>
+ <xmqqzifb8ubt.fsf@gitster.mtv.corp.google.com>
+ <201704235826023.e27fbbda3fdd0930bd9ff5eaaba99@localhost>
 MIME-Version: 1.0
-X-Mailer: Mail.Ru Mailer 1.0
-Date:   Thu, 27 Apr 2017 10:43:16 +0300
-Reply-To: =?UTF-8?B?TmlraXRhIE9ybG92?= <fatemail@mail.ru>
-X-Priority: 3 (Normal)
-Message-ID: <1493278996.239768474@f402.i.mail.ru>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-X-7FA49CB5: 0D63561A33F958A5C96D20351BD09DB888637F543DE7B7CEAD6BCC8F775474CA725E5C173C3A84C3FFCBA205665D830A31599A29F601418B26B9191E2D567F0EC4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F2AF38021CC9F462D574AF45C6390F7469DAA53EE0834AAEE
-X-Mailru-Sender: CC47F90F31E6EBC2D6EA5BB8262986BE9AB3DF8FB794258DFC09AB2512FAECA61D0473EF4C5A87F280683B1EBFD6753FB1152D1B4D482D2298F48FF2F4DE4FBB41A61023B3127A56F291BAC6EE93304399D53F0D51A6ADE1B4A721A3011E896F
-X-Mras: OK
-X-Spam: undefined
-X-7FA49CB5: 0D63561A33F958A552019A6B30D70642821AC8E5B3AA5B2DFFE7B80E09006C92462275124DF8B9C99B0B8D173C204012BD9CCCA9EDD067B1EDA766A37F9254B7
-X-Mras: OK
+Content-Disposition: inline
+In-Reply-To: <201704235826023.e27fbbda3fdd0930bd9ff5eaaba99@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGVsbG8sIG15IG5hbWUgaXMgTmlraXRhIChtYWxlKS4KCkNvdWxkIHlvdSBleHBsYWluIHRoaXMg
-KHN1YmplY3QpIGlzIGEgYnVnIG9yIGEgZmVhdHVyZT8KCkkgZm9sbG93IFBybyBHaXQgUmVvcmRl
-cmluZyBDb21taXRzIChodHRwczovL2dpdC1zY20uY29tL2Jvb2svZW4vdjIvR2l0LVRvb2xzLVJl
-d3JpdGluZy1IaXN0b3J5KSB0byByZW9yZGVyIGNvbW1pdHMgYW5kIGxvc2Ugb25lIHdpdGhvdXQg
-YW55IGNvbmZsaWN0LgoKSSd2ZSBnb3QgZ2l0IHVuZGVyIFdpbmRvd3MgMTAgRW50ZXJwcmlzZSA2
-NC1iaXQgaW5zdGFsbGVkIHRocm91Z2ggQ2hvY29sYXRleS4KCj4gY2hvY28gbGlzdCAtbCBnaXQK
-Q2hvY29sYXRleSB2MC4xMC41CmNob2NvbGF0ZXkgMC4xMC41CmdpdCAyLjEyLjIuMgpnaXRwYWQg
-MS4yCm1zeXNnaXQgMS43LjEwLjIwMTIwNTI2CjQgcGFja2FnZXMgaW5zdGFsbGVkLgoKJCBnaXQg
-LS12ZXJzaW9uCmdpdCB2ZXJzaW9uIDIuMTIuMi53aW5kb3dzLjEKCkV4YW1wbGUuCgpUaGVyZSBh
-cmUgdHdvIGJyYW5jaGVzOgotIG1hc3RlcgotIGZlYXR1cmUtYnJhbmNoCgpmZWF0dXJlLWJyYW5j
-aCBpcyBvbiBtYXN0ZXIuCgpNeVBDIE1JTkdXNjQgL3BhdGgvdG8vcmVwb3NpdG9yeSAoZmVhdHVy
-ZS1icmFuY2gpCgokIGdpdCBsb2cgLTkgLS1vbmVsaW5lCjUwNDVkMWVjYSBNZXJnZSBicmFuY2gg
-J2ZlYXR1cmUtMycgaW50byAnZmVhdHVyZS1icmFuY2gnCjAwNmZjNTQ5ZCBEb25lIFRhc2sgMwph
-MmE1MjQ0MWUgTWVyZ2UgYnJhbmNoICdmZWF0dXJlLTInIGludG8gJ2ZlYXR1cmUtYnJhbmNoJwpl
-NzM1MjcxMTUgRG9uZSBUYXNrIDIKZjA0NTQ2ODVlIE1lcmdlIGJyYW5jaCAnZmVhdHVyZS0xJyBp
-bnRvICdmZWF0dXJlLWJyYW5jaCcKM2FiODJlNGM2IERvbmUgVGFzayAxCmYxNTAzN2Q2NCBTb21l
-IGluZGVwZW5kZW50IGNoYW5nZXMgMgpjYmEzZWJiNGUgU29tZSBpbmRlcGVuZGVudCBjaGFuZ2Vz
-IDEKYmMxOTQ3M2NmIEhlYWQgb2YgbWFzdGVyCgokIGdpdCByZWJhc2UgLWkgLXAgbWFzdGVyCgpJ
-IGNoYW5nZSB0aGUgcmViYXNlIHNjcmlwdCBmcm9tOgoKcGljayBjYmEzZWJiNGUgU29tZSBpbmRl
-cGVuZGVudCBjaGFuZ2VzIDEKcGljayBmMTUwMzdkNjQgU29tZSBpbmRlcGVuZGVudCBjaGFuZ2Vz
-IDIKcGljayAzYWI4MmU0YzYgRG9uZSBUYXNrIDEKcGljayBmMDQ1NDY4NWUgTWVyZ2UgYnJhbmNo
-ICdmZWF0dXJlLTEnIGludG8gJ2ZlYXR1cmUtYnJhbmNoJwpwaWNrIGU3MzUyNzExNSBEb25lIFRh
-c2sgMgpwaWNrIGEyYTUyNDQxZSBNZXJnZSBicmFuY2ggJ2ZlYXR1cmUtMicgaW50byAnZmVhdHVy
-ZS1icmFuY2gnCnBpY2sgMDA2ZmM1NDlkIERvbmUgVGFzayAzCnBpY2sgNTA0NWQxZWNhIE1lcmdl
-IGJyYW5jaCAnZmVhdHVyZS0zJyBpbnRvICdmZWF0dXJlLWJyYW5jaCcKCnRvOgoKcGljayBmMTUw
-MzdkNjQgU29tZSBpbmRlcGVuZGVudCBjaGFuZ2VzIDIKcGljayBjYmEzZWJiNGUgU29tZSBpbmRl
-cGVuZGVudCBjaGFuZ2VzIDEKcGljayAzYWI4MmU0YzYgRG9uZSBUYXNrIDEKcGljayBmMDQ1NDY4
-NWUgTWVyZ2UgYnJhbmNoICdmZWF0dXJlLTEnIGludG8gJ2ZlYXR1cmUtYnJhbmNoJwpwaWNrIGU3
-MzUyNzExNSBEb25lIFRhc2sgMgpwaWNrIGEyYTUyNDQxZSBNZXJnZSBicmFuY2ggJ2ZlYXR1cmUt
-MicgaW50byAnZmVhdHVyZS1icmFuY2gnCnBpY2sgMDA2ZmM1NDlkIERvbmUgVGFzayAzCnBpY2sg
-NTA0NWQxZWNhIE1lcmdlIGJyYW5jaCAnZmVhdHVyZS0zJyBpbnRvICdmZWF0dXJlLWJyYW5jaCcK
-Ck5vIGFueSBjb25mbGljdCBhbmQgSSBzZWU6ClN1Y2Nlc3NmdWxseSByZWJhc2VkIGFuZCB1cGRh
-dGVkIHJlZnMvaGVhZHMvZmVhdHVyZS1icmFuY2guCgokIGdpdCBsb2cgLTkgLS1vbmVsaW5lCjQ3
-ZTU3OWNlMCBNZXJnZSBicmFuY2ggJ2ZlYXR1cmUtMycgaW50byAnZmVhdHVyZS1icmFuY2gnCmE3
-YzZiOGI4ZSBEb25lIFRhc2sgMwo1ZGY3Y2UxMDUgTWVyZ2UgYnJhbmNoICdmZWF0dXJlLTInIGlu
-dG8gJ2ZlYXR1cmUtYnJhbmNoJwowMTk3Nzk3ZDcgRG9uZSBUYXNrIDIKZTY4MDQ4OGZlIE1lcmdl
-IGJyYW5jaCAnZmVhdHVyZS0xJyBpbnRvICdmZWF0dXJlLWJyYW5jaCcKNzMxYTU3NTgwIERvbmUg
-VGFzayAxCjEwZGE5Y2Q4NSBTb21lIGluZGVwZW5kZW50IGNoYW5nZXMgMgpiYzE5NDczY2YgSGVh
-ZCBvZiBtYXN0ZXIKZDkxOTQ3YWJkIENvbW1pdCB1bmRlciB0aGUgaGVhZCBvZiBtYXN0ZXIKCiJT
-b21lIGluZGVwZW5kZW50IGNoYW5nZXMgMSIgaXMgbWlzc2VkIGFuZCBpdHMgY2hhbmdlcyBhcmUg
-bWlzc2VkIGFzIHdlbGwuCgpJIHRyaWVkIHRvIG1vdmUgYW5vdGhlciBjb21taXQgdG8gYSBmYXJ0
-aGVyIGRpc3RhbmNlIGJlbG93IGJ1dCB0aGVyZSB3YXMgc3RpbGwgb25seSBvbmUgbWlzc2VkIGNv
-bW1pdC4KCkNvdWxkIHlvdSBleHBsYWluIGl0PwoKVGhhbmsgeW91IGluIGFkdmFuY2UgYW5kIHNv
-cnJ5IGZvciBteSBFbmdsaXNoLgoKQmVzdCwgTmlraXRhCg==
+On Fri, Apr 21, 2017 at 10:40:30PM -0700, Stephen Kent wrote:
+
+> I've updated the commit message and updated one of the existing unit tests
+> for this feature. Patch version 2 will follow shortly after this email.
+
+Thanks, and sorry for the slow reply.
+
+> There is an existing color slot "color.status.branch" for the branch name in
+> the default (long) status format which is different than the new color
+> config slots this patch adds.
+> 
+> I'm wondering if it makes sense to also use color.status.branch for the
+> local branch color in short-format. On the other hand, I have configured
+> different colors in the short and long status format for the local branch
+> name and I find it useful for them to be separate color slots.
+
+Hrm. That does kind of make sense to me. But I'm not sure it is worth
+the backwards-compatibility weirdness. E.g., if I have
+color.status.branch set to "red" right now, that may look OK in the long
+status. But if we started picking it up for the local branch in "git
+status --short -b", then you'd end up with two red names.
+
+So I think we can probably just call it a historical wart that the short
+and long formats use two different color config schemes.
+
+> > I don't know if it's worth converting them or not. If we leave them all
+> > as strcasecmp(), I don't mind your camelCase names, for readability.
+> 
+> I chose the localBranch and remoteBranch camel case names for consistency
+> with the existing "color.decorate.remoteBranch" color config slot in
+> log-tree.c. The documentation for color.decorate.remoteBranch uses that
+> camel case name, but the config option is case-insensitive.
+
+Ah, I knew as soon as I said "we usually" that you would reveal a
+counter-example from the code. :)
+
+I think it's OK to leave it as-is for your patch. If somebody wants to
+clean up the useless strcasecmps in the slot name parsers, we can do
+that separately (but it's not really hurting anything, so it may not be
+worth caring about).
+
+> I see the existing tests for git status in t7508. The unit tests set up some
+> mock repository modifications to test git status output, so I've modified
+> one of the tests to include a custom color for the local branch in git
+> status -sb.
+
+What you have in your v2 makes sense. Usually we try to avoid modifying
+existing tests (as opposed to adding new ones), because it mixes up what
+is actually being tested. But in this case, the test is exactly about
+testing the colors, so that's the right place to put it.
+
+> t7508 doesn't seem to contain any tests that include an ahead or behind
+> commit count, so I didn't make any test changes for the remote tracking
+> branch color. What's the best course of action here?
+
+I think it would be reasonable to set up an ahead/behind situation at
+the start of the script so that we exercise that code through the
+various invocations. So I tried that, and behold, it found a bug. :)
+
+I'll post the patch in a minute.
+
+-Peff
