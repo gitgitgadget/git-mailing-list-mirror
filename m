@@ -2,72 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31A3B207E4
-	for <e@80x24.org>; Thu, 27 Apr 2017 06:28:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D0DD1207E4
+	for <e@80x24.org>; Thu, 27 Apr 2017 06:38:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162122AbdD0G1t (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 02:27:49 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:24968 "EHLO bsmtp1.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1162110AbdD0G1p (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 02:27:45 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wD6SZ3CkSz5tlH;
-        Thu, 27 Apr 2017 08:27:42 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 77FB2303E;
-        Thu, 27 Apr 2017 08:27:41 +0200 (CEST)
-Subject: Re: [PATCH 14/26] setup_bare_git_dir(): fix memory leak
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de>
- <042b3e98e9e5b8850c35103cc56cf651b2fb3f6e.1493237937.git.johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <51f2bd16-7c55-7ba0-c963-6f725b2f79e5@kdbg.org>
-Date:   Thu, 27 Apr 2017 08:27:41 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751958AbdD0GiO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 02:38:14 -0400
+Received: from a7-11.smtp-out.eu-west-1.amazonses.com ([54.240.7.11]:33308
+        "EHLO a7-11.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751191AbdD0GiM (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 27 Apr 2017 02:38:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+        s=shh3fegwg5fppqsuzphvschd53n6ihuv; d=amazonses.com; t=1493275080;
+        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
+        bh=gf+akqx9iR8gELPPBWOl1j7nvX2GVs1VG3mmf9u/ZlU=;
+        b=YxIUdYQ0CZWnAvXxciNIhhm/PRUAXpfH8yaGHByFSnSkNrWhOKNqX7oeEVp5Tbuc
+        t0I7Muo12K0QhWff1Pr/izAj6KS/Tp/kciXRS9z9LMckRf8ySHa4mnNbTNzIxevud5x
+        OT5nZRHfvBDl9PwjaYkHf2q6yIXSAbhGAWFiLZIw=
+From:   Sebastian Schuberth <sschuberth@gmail.com>
+To:     git@vger.kernel.org
+Message-ID: <0102015bae2176a2-8239cc7d-6510-4903-856b-e4fb0ef0cc71-000000@eu-west-1.amazonses.com>
+In-Reply-To: <0102015aa974d7a6-46afa73b-4378-4b01-9db4-723fb9e41d65-000000@eu-west-1.amazonses.com>
+References: <0102015aa974d7a6-46afa73b-4378-4b01-9db4-723fb9e41d65-000000@eu-west-1.amazonses.com>
+Subject: [PATCH v2] git-gui--askpass: generalize the wording
 MIME-Version: 1.0
-In-Reply-To: <042b3e98e9e5b8850c35103cc56cf651b2fb3f6e.1493237937.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
+Date:   Thu, 27 Apr 2017 06:38:00 +0000
+X-SES-Outgoing: 2017.04.27-54.240.7.11
+Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.04.2017 um 22:20 schrieb Johannes Schindelin:
-> Reported by Coverity.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  setup.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/setup.c b/setup.c
-> index 0309c278218..0320a9ad14c 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -748,7 +748,7 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
->
->  	/* --work-tree is set without --git-dir; use discovered one */
->  	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
-> -		const char *gitdir;
-> +		static const char *gitdir;
->
->  		gitdir = offset == cwd->len ? "." : xmemdupz(cwd->buf, offset);
->  		if (chdir(cwd->buf))
->
+git-gui--askpass is not only used for SSH authentication, but also for
+HTTPS. In that context it is confusing to only rfer to "OpenSSH", also
+because another SSH client like PuTTY might be in use. So generalize
+wording and also say which parent process, i.e. Git, requires
+authentication.
 
-Whoa! Look what values are assigned to the variable: Either a static 
-string or allocated memory. I suspect that this does not fix a memory 
-leak at all, but only shuts up Coverity.
+Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
+---
+ git-gui/git-gui--askpass | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
--- Hannes
+diff --git a/git-gui/git-gui--askpass b/git-gui/git-gui--askpass
+index 4277f30..4e3f00d 100755
+--- a/git-gui/git-gui--askpass
++++ b/git-gui/git-gui--askpass
+@@ -2,7 +2,7 @@
+ # Tcl ignores the next line -*- tcl -*- \
+ exec wish "$0" -- "$@"
+ 
+-# This is a trivial implementation of an SSH_ASKPASS handler.
++# This is a trivial implementation of an GIT_ASKPASS / SSH_ASKPASS handler.
+ # Git-gui uses this script if none are already configured.
+ 
+ package require Tk
+@@ -12,7 +12,7 @@ set yesno  0
+ set rc     255
+ 
+ if {$argc < 1} {
+-	set prompt "Enter your OpenSSH passphrase:"
++	set prompt "Enter your password / passphrase:"
+ } else {
+ 	set prompt [join $argv " "]
+ 	if {[regexp -nocase {\(yes\/no\)\?\s*$} $prompt]} {
+@@ -60,7 +60,7 @@ proc finish {} {
+ 	set ::rc 0
+ }
+ 
+-wm title . "OpenSSH"
++wm title . "Git Authentication"
+ tk::PlaceWindow .
+ vwait rc
+ exit $rc
 
-PS: stopping here as I'm running out of time.
-
+--
+https://github.com/git/git/pull/195
