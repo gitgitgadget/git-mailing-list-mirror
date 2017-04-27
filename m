@@ -2,98 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8CB1FC3E
-	for <e@80x24.org>; Thu, 27 Apr 2017 04:57:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79D731FC3E
+	for <e@80x24.org>; Thu, 27 Apr 2017 05:00:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753851AbdD0E5h convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 27 Apr 2017 00:57:37 -0400
-Received: from bouvier.getmail.no ([84.210.184.8]:53313 "EHLO
-        bouvier.getmail.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752029AbdD0E5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 00:57:36 -0400
-Received: from localhost (localhost [127.0.0.1])
-        by bouvier.getmail.no (Postfix) with ESMTP id 05E9144CA6;
-        Thu, 27 Apr 2017 06:57:33 +0200 (CEST)
-Received: from bouvier.getmail.no ([127.0.0.1])
-        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id I3d3L9RcCDkM; Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-        by bouvier.getmail.no (Postfix) with ESMTP id 896A644DA3;
-        Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at bouvier.get.c.bitbit.net
-Received: from bouvier.getmail.no ([127.0.0.1])
-        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id uAuJA-ZNBSCT; Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
-Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
-        by bouvier.getmail.no (Postfix) with ESMTPSA id 5E75544CA6;
-        Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
-Received: from peter (helo=localhost)
-        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
-        (envelope-from <peter@softwolves.pp.se>)
-        id 1d3bUi-0001Fj-8i; Thu, 27 Apr 2017 06:57:32 +0200
-Date:   Thu, 27 Apr 2017 05:57:32 +0100 (CET)
-From:   Peter Krefting <peter@softwolves.pp.se>
-To:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Keith Goldfarb <keith@blackthorn-media.com>
-Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
-In-Reply-To: <87470c8c-e061-e4b3-42fe-84a30858fc0d@web.de>
-Message-ID: <alpine.DEB.2.11.1704270552590.4681@perkele.intern.softwolves.pp.se>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org> <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org> <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se> <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de> <85f2b6d1-107b-0624-af82-92446f28269e@web.de> <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
- <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se> <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de> <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se> <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
- <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se> <87470c8c-e061-e4b3-42fe-84a30858fc0d@web.de>
-User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-Organization: /universe/earth/europe/norway/oslo
+        id S934436AbdD0FAU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 01:00:20 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:35580 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933955AbdD0FAS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 01:00:18 -0400
+Received: by mail-pf0-f193.google.com with SMTP id a188so5984080pfa.2
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 22:00:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=fAKay1VanpkTYU/BtyHi59DwHqtpH1CcR9OxHY10UO0=;
+        b=LJLonlrtuUTgMAF/44AVH83cxCEF3DMQhlMIwqkjnSnEQ2RyVYyfJ8Jh9aVD8AZmO5
+         1C6JydJ2a5QaYhvluNPtO7SBJnKnbsUaQuakzLt6QsU+CENB8d3ChJKP9n59c7oDRHKY
+         Qu/3dxAmLXzBgNYdgwm1p3yqeOv4FHLzhUd/bpunGulwRKwBBP2Q1imQZrFQ/hJbkjnW
+         +6IuAJrVDT8dV7JlD7hTerSEklDygFB19gnMGQNRo5U4KPMtR6bcf1JicdxSBmclm81b
+         ro5+/xrYPZ3UwQRKdDj3I00Ji1f33Ak+J3+baLnJlNgN8IIdAwPDITeKtyOHfUGyjxEQ
+         MSrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=fAKay1VanpkTYU/BtyHi59DwHqtpH1CcR9OxHY10UO0=;
+        b=lz2s5Vjt9EtMRy1tzKUVQHCHJxVJzrOJAT6ErR2Ve8iElXtLKBKzU57jEfdqVMrDyF
+         ETeWYNliUO73z6BelQ9JELthzX7fCgDBW86RsF+AP8p4+dEh+TAEVmqvMHt9BpRj7Lu4
+         OQ0K6UMbzuU/YCHQaJTlLErlrUSMB5b3JMKk1mGxKYeaDDsRXW55WoRtiV4oeL65HkcB
+         Bfs1/5st6I/eTbRV+rNgMa1zulIp/7cQEUoNtxbBc7787Vyb5AOL879PB8OnTnISJRyi
+         +R/GCmXzg/yLV0uDt4NuGhRYGCOMYwj/44IDTEcaPSbw7gz3F9fBsIhFUGCsmN+JjE87
+         yhhw==
+X-Gm-Message-State: AN3rC/7II3xgvXAXZuwRW1N3D0R0buNHoXxYsYJOAYbqMZcKJu0vLuhz
+        fQzuB3HhPNIPnQ==
+X-Received: by 10.84.238.194 with SMTP id l2mr4559803pln.7.1493269217834;
+        Wed, 26 Apr 2017 22:00:17 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:d550:ca2:cfe6:6d97])
+        by smtp.gmail.com with ESMTPSA id x2sm1615125pfi.80.2017.04.26.22.00.16
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 22:00:17 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 4/9] rebase -i: also expand/collapse the SHA-1s via the rebase--helper
+References: <cover.1493128210.git.johannes.schindelin@gmx.de>
+        <cover.1493207864.git.johannes.schindelin@gmx.de>
+        <df5263cc0cad5cffbd1932d4b9b8e5c0507536e6.1493207864.git.johannes.schindelin@gmx.de>
+Date:   Wed, 26 Apr 2017 22:00:16 -0700
+In-Reply-To: <df5263cc0cad5cffbd1932d4b9b8e5c0507536e6.1493207864.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Wed, 26 Apr 2017 13:59:23 +0200
+        (CEST)")
+Message-ID: <xmqqr30eo36n.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Sizes can be stored in zip64 entries even if they are lower (from a 
-> paragraph about the data descriptor):
->
-> "4.3.9.2 When compressing files, compressed and uncompressed sizes
->      should be stored in ZIP64 format (as 8 byte values) when a
->      file's size exceeds 0xFFFFFFFF.   However ZIP64 format may be
->      used regardless of the size of a file."
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 214af0372ba..52a19e0bdb3 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -774,11 +774,11 @@ transform_todo_ids () {
+>  }
+>  
+>  expand_todo_ids() {
+> -	transform_todo_ids
+> +	git rebase--helper --expand-sha1s
+>  }
+>  
+>  collapse_todo_ids() {
+> -	transform_todo_ids --short
+> +	git rebase--helper --shorten-sha1s
+>  }
 
-That is only for the data descriptor. And this is the really confusing 
-one as it only has the sizes, and do not have an indication anywhere 
-of which format it is in. So they are either 32-bit or 64-bit, 
-depending on whether it is a ZIP64 format archive, but it doesn't 
-define how to tell.
+Obviously correct ;-)  But doesn't this make transform_todo_ids ()
+helper unused and removable?
 
-For regular entries, the text is a bit clearer about the -1, though.
+> +int transform_todo_ids(int shorten_sha1s)
+> +{
+> +	const char *todo_file = rebase_path_todo();
+> +	struct todo_list todo_list = TODO_LIST_INIT;
+> +	int fd, res, i;
+> +	FILE *out;
+> +
+> +	strbuf_reset(&todo_list.buf);
+> +	fd = open(todo_file, O_RDONLY);
+> +	if (fd < 0)
+> +		return error_errno(_("could not open '%s'"), todo_file);
+> +	if (strbuf_read(&todo_list.buf, fd, 0) < 0) {
+> +		close(fd);
+> +		return error(_("could not read '%s'."), todo_file);
+> +	}
+> +	close(fd);
+> +
+> +	res = parse_insn_buffer(todo_list.buf.buf, &todo_list);
+> +	if (res) {
+> +		todo_list_release(&todo_list);
+> +		return error(_("unusable instruction sheet: '%s'"), todo_file);
+> +	}
+> +
+> +	out = fopen(todo_file, "w");
 
-> Windows XP.  Don't laugh. ;)
+The usual "open lockfile, write to it and then rename" dance is not
+necessary for the purpose of preventing other people from reading
+this file while we are writing to it.  But if we fail inside this
+function before we fclose(3) "out", the user will lose the todo
+list.  It probably is not a big deal, though.
 
-You can always install 7-zip or something to extract on XP.
+> +	if (!out) {
+> +		todo_list_release(&todo_list);
+> +		return error(_("unable to open '%s' for writing"), todo_file);
+> +	}
+> +	for (i = 0; i < todo_list.nr; i++) {
+> +		struct todo_item *item = todo_list.items + i;
+> +		int bol = item->offset_in_buf;
+> +		const char *p = todo_list.buf.buf + bol;
+> +		int eol = i + 1 < todo_list.nr ?
+> +			todo_list.items[i + 1].offset_in_buf :
+> +			todo_list.buf.len;
+> +
+> +		if (item->command >= TODO_EXEC && item->command != TODO_DROP)
+> +			fwrite(p, eol - bol, 1, out);
+> +		else {
+> +			int eoc = strcspn(p, " \t");
+> +			const char *sha1 = shorten_sha1s ?
+> +				short_commit_name(item->commit) :
+> +				oid_to_hex(&item->commit->object.oid);
+> +
+> +			if (!eoc) {
+> +				p += strspn(p, " \t");
+> +				eoc = strcspn(p, " \t");
+> +			}
 
-> What do other archivers do?
+It would be much easier to follow the logic if "int eoc" above were
+a mere declaration without initialization and "skip to the
+whitespaces" is done immediately before this if() statement.  It's
+not like the initialized value of eoc is needed there because it
+participates in the computation of sha1, and also having the
+assignment followed by "oops, the line begins with a whitespace"
+recovery that is done here.
 
-You should compare with what bsdtar (libarchive) does in zip64 mode. 
-It also only ever does streaming mode (with data descriptors and 
-such), and it does zip64.
+Wouldn't it be simpler to do:
 
-> But I think a more important question is: Can the generated files be 
-> extracted by popular tools (most importantly Windows' built-in 
-> functionality, I guess)?
+	else {
+		int eoc;
+		const char *sha1 = ...
+		p += strspn(p, " \t"); /* skip optional indent */
+		eoc = strcspn(p, " \t"); /* grab the command word */
 
-OK, so only enable zip64 mode if there are files >4G or the archive 
-ends up being >4G. But the question is how we can tell, especially in 
-streaming mode, and especially if data descriptors are magical...
+without conditional?
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+> +			fprintf(out, "%.*s %s %.*s\n",
+> +				eoc, p, sha1, item->arg_len, item->arg);
+> +		}
+> +	}
+> +	fclose(out);
+> +	todo_list_release(&todo_list);
+> +	return 0;
+> +}
+> diff --git a/sequencer.h b/sequencer.h
+> index 83f2943b7a9..47a81034e76 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -48,6 +48,8 @@ int sequencer_remove_state(struct replay_opts *opts);
+>  int sequencer_make_script(int keep_empty, FILE *out,
+>  		int argc, const char **argv);
+>  
+> +int transform_todo_ids(int shorten_sha1s);
+> +
+>  extern const char sign_off_header[];
+>  
+>  void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
