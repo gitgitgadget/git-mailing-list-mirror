@@ -2,81 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBDBD207EB
-	for <e@80x24.org>; Thu, 27 Apr 2017 18:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCAB5207D6
+	for <e@80x24.org>; Thu, 27 Apr 2017 19:36:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756223AbdD0ShW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 14:37:22 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:35889 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1756199AbdD0ShU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 14:37:20 -0400
-Received: by mail-it0-f47.google.com with SMTP id g66so21012573ite.1
-        for <git@vger.kernel.org>; Thu, 27 Apr 2017 11:37:20 -0700 (PDT)
+        id S1164149AbdD0TgE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 15:36:04 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:34453 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031818AbdD0TgC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 15:36:02 -0400
+Received: by mail-pf0-f182.google.com with SMTP id c198so36036118pfc.1
+        for <git@vger.kernel.org>; Thu, 27 Apr 2017 12:36:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=DdxM5LCtm2SUWBvB8/x5L7JOBMBl/aJGJZihBrDPs+8=;
-        b=HI7ISVAUIYbbcWlWnMX58o0vPXlES1k6H6KVnzwPSI0ESJPXnaC4f+8RNHzX2P23di
-         NeLE9sUiSSb087HDYuryZB46kzr62uJF8KsnBIWYleKi/IH/Z7BlE7lq+quKlUeZC1YW
-         Bl8ep+Hs/VceG9/qoTJHhXbJtvvxpEIKgeHlqoPh6B3n8Zxj9EiJ19BdNIXrcHpeJ0rI
-         mkXCg/Z9WPSM/zYjLTsU4/2fYGMm6+yKM9DasYB2snz3CfPqetY70pi8fH836RoTZpAT
-         1+K8GTV8ibe0+MRR5FgSEHRif5bidsMGyzhiMVOgGD1SiUi4tLdJDP1l8Z8WPVOuLtY2
-         qCQA==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=nuktbscwk6QgCLqEYoBcj9Je8pRg7HR1PZeEJmMeP/c=;
+        b=Xy3XSZ32Jkt6rXMJkfbC3eUnMkhNmWm87jU4B3j+330KNah9Hkad7Gd2zP4Rn0/dw7
+         Idyh9gPZsby10vJ7DsdlFXdpBA4LvLJvS4x8ANQebbBSkYu7SLQv6F6GJssSKgIzc2rG
+         K6kZYkq77NEC6UeJEK8lQhg41KPRVJuPhxEasok0p6qJUiyQxc9XLcIDjSBNAzf7K5pU
+         nyQLpPprebXHXJP7Fk4BtS+M22tSfxKg4TPJq7FDlmGug/2PeH49Zljd05XeJupFEw/8
+         oJY3MI0fbh7ULWOwkUVdGGz8rma2a4IOmYKUIkSOIolCenIwDX4WcOVG3+kxCBj7bM4G
+         x+JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=DdxM5LCtm2SUWBvB8/x5L7JOBMBl/aJGJZihBrDPs+8=;
-        b=I2eQ048uObsqKr8V9T1ex4wTD+RZP2+Bsb/5Artmu/vTcSfeJWzry+07qlW5AcxBfO
-         8wjd/0e6JsC3J+MBuZPlhH7fd107GqZ9nQdgCqW38KSyA/1Yaq5WZhvnM0RQL/tld/aw
-         SNr5AMrIKDIGO4uCQBlKXojbAf5T9+5tl+RWiBnzqmB56rMPI68LgC6LKKe0q0OA82oE
-         Bs0p525qk/iAc9MF5SUwxzHb9w07lghNQK3Cd2eioNbnwwNI/Bqi+AQa0cuqxuJfv69A
-         +auDvJl5UbVAd/jBlh7tBVFjPWPAFQu4hjogVr0h6cIuz569G0Wb+3Q3NYhP0W2fFoRY
-         2IRQ==
-X-Gm-Message-State: AN3rC/4jQNuZiiS4e2ij0W03BmK/Lcxc5+/GRl5Yhb789YVCoLqXZU1r
-        Bg3BUy7j6XFaVPI4zBKx4Aw/Ix1EMIzeqrE=
-X-Received: by 10.202.207.145 with SMTP id f139mr2987537oig.55.1493318239811;
- Thu, 27 Apr 2017 11:37:19 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=nuktbscwk6QgCLqEYoBcj9Je8pRg7HR1PZeEJmMeP/c=;
+        b=C0vKpFXJc2R52sQ6hj9IQnIxNyUxUzQXK4BgmYPOdU+ao0MCNE5na1UzdooYo6D802
+         GChwbgpg2I46pWmZy8en70yQtgv7G+KybRHTGQ35cURjFR/NgOFFieE/U2IG3KbpYW9y
+         j2oHcJv8Q8xyn1k6JV/v2/dq3D5tDCxLiQMi+kSCB9O+Zj93hzCyOR4fQ4HX97ZcKVrA
+         SkuW9W/yVspc/q740f/EEiQDrmAVAN7J8Sh0ndo1CWQ3yfoSgxg3c7zl3DMNYNBZIoN4
+         b2tv/yjBMUlgiC5TUIVS/pm9AUkepYdSlEPgawSYwHfM6Ou99NR8gvNKBddlV624crGq
+         wvbg==
+X-Gm-Message-State: AN3rC/4QYUGOIEPUurzLRT/2I+BcxKWUTTGQGfEUYimtpxU5zbTEdPs3
+        7g9dtHp5D37dLXHwZY9jaBvTkqoUsHTJySIfaQ==
+X-Received: by 10.84.232.133 with SMTP id i5mr9683531plk.172.1493321761984;
+ Thu, 27 Apr 2017 12:36:01 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.136.13 with HTTP; Thu, 27 Apr 2017 11:37:19 -0700 (PDT)
-From:   Andrew Watson <andwatsresearch@gmail.com>
-Date:   Thu, 27 Apr 2017 14:37:19 -0400
-Message-ID: <CAH6sfJUn99ezs-uZuYVj15qOeMv79ji7r0Ldvoreef0z3LzG8Q@mail.gmail.com>
-Subject: push fails with return code 22
-To:     git@vger.kernel.org
+Received: by 10.100.153.156 with HTTP; Thu, 27 Apr 2017 12:36:01 -0700 (PDT)
+In-Reply-To: <20170426231236.27219-6-avarab@gmail.com>
+References: <20170426231236.27219-1-avarab@gmail.com> <20170426231236.27219-6-avarab@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 27 Apr 2017 12:36:01 -0700
+Message-ID: <CAGZ79kadPPBxW01p8KFGrcj3XwT1VZCcNTG4O_vxpU5n-ZRPFA@mail.gmail.com>
+Subject: Re: [RFC/PATCH v3 5/5] WIP clone: add a --[no-]recommend-tags &
+ submodule.NAME.tags config
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Apr 26, 2017 at 4:12 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 
-I'm trying to setup git with Smart HTTP so we can move off of SVN.
+> @@ -855,7 +856,7 @@ static int prepare_to_clone_next_submodule(const stru=
+ct cache_entry *ce,
+>                 argv_array_pushl(&child->args, "--prefix", suc->prefix, N=
+ULL);
+>         if (suc->recommend_shallow && sub->recommend_shallow =3D=3D 1)
+>                 argv_array_push(&child->args, "--depth=3D1");
+> -       if (suc->no_tags)
+> +       if (suc->no_tags || suc->recommend_tags =3D=3D 0)
+>                 argv_array_push(&child->args, "--no-tags");
 
-I've used the blog post: https://git-scm.com/blog/2010/03/04/smart-http.html
-
-I'm getting "error: Cannot access URL ... return code 22" when I try
-to push. Clone works fine.
-
-I verified authentication by replacing my LDAP stuff, which looks to
-work according to Apache logs, with Require all granted.
-
-Done a lot of googling and posted on stackoverflow at this point.
-
-My system is CentOS 7 which reports git version 1.8.3.1 and Apache
-2.4.6. I also tried on Ubuntu 16.04 with git 2.7.4 and Apache 2.4.18.
-
-Using GIT_CURL_VERBOSE I can see it fail after a PROPFIND.
-
-My stackoverflow post with all the debug info I could think of is
-here: http://stackoverflow.com/questions/43643152/git-push-results-in-return-code-22
-
-I'll re-post whatever is requested here if needed.
-
-Really hoping to get this working.
+Here you would also need to pay attention to sub->recommend_tags?
