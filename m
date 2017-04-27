@@ -2,173 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0A52207D6
-	for <e@80x24.org>; Thu, 27 Apr 2017 14:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C3EF207D6
+	for <e@80x24.org>; Thu, 27 Apr 2017 16:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S937599AbdD0OTC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 10:19:02 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51820 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752697AbdD0OS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 10:18:59 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5tof-1e0dH51jbt-00xvUA; Thu, 27
- Apr 2017 16:18:46 +0200
-Date:   Thu, 27 Apr 2017 16:18:44 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S938475AbdD0QdT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 12:33:19 -0400
+Received: from mail-pf0-f180.google.com ([209.85.192.180]:34895 "EHLO
+        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932430AbdD0QdR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 12:33:17 -0400
+Received: by mail-pf0-f180.google.com with SMTP id v14so31737830pfd.2
+        for <git@vger.kernel.org>; Thu, 27 Apr 2017 09:33:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Az2Bdi0fslGz6HJ6LON0KMZPR7xduHZHCe13a2VZS2Q=;
+        b=Q/xDRb09CwtJzdiH6RilcJyRQW7fdRW4jOswxRQrZQ5tm3jEa+Yj/A6t9LQ28TDQWm
+         KBKuPQr+3VHCxzmDnwRCbUsQCz2mcBsFNpF+6JFo9P7JcvYfzSSKolXKnlQ5VVtYEskA
+         8wv3/va6Dk9vXqHEnQxvsnCmDk7Br66cOkq04b1uVJH1xTW3oBXcwLmto1UoWYJxgVDO
+         fqneN0OGZCVT/qCXTyO2LJJYFJNnuDg5R5FVnFLOWD/lAAdwB0LFt6hSAy6WwwHH3dAc
+         A4AnlCkYdNYrpsd0QtWG4AGKCeUUEzoIJPT4rS++DC1V0l+KVMXC65vTR0235QdVmaQJ
+         xVeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Az2Bdi0fslGz6HJ6LON0KMZPR7xduHZHCe13a2VZS2Q=;
+        b=KeYhdC9MCeK5hvkMEUwelYfFVDe0xa15djrjc+3ca58URp5FE0gCUvGvHi8BU2qQsb
+         E641pFINFeTC34FL2B8V1ReDK+N/UKROaNjBmONUtLhv+sLrKknJsu07QuxomVLm0BeK
+         L1xuxhWNxHD/eX7lcFYkIPeyiXnhaCa0MzKvywB1kfyV9RbZiNjDjFMTvSU/PiwPnus1
+         h60Z5sEP8d1FDbyL7p2XKPBhaPeFfEPHVn4Idleb/ZbIMY6GdlRi/6IDWIINRLs5a5r9
+         rtkguXsF2aZQf4gLS6XvZCfhf/AzLMqSGPurv6KOCSe7D+0/SJrs3vTqoB0S8ovQ9lNz
+         yWUA==
+X-Gm-Message-State: AN3rC/5JMPiOLbyTN3Q4zr/Bk1a0WMKrTKelILQup3iTo7QSc7weD2fQ
+        KEI3gJdr7S95uoyv
+X-Received: by 10.98.49.70 with SMTP id x67mr6949579pfx.177.1493310796725;
+        Thu, 27 Apr 2017 09:33:16 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:90aa:8d1f:3a06:d701])
+        by smtp.gmail.com with ESMTPSA id n126sm5423059pgn.32.2017.04.27.09.33.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 27 Apr 2017 09:33:15 -0700 (PDT)
+Date:   Thu, 27 Apr 2017 09:33:14 -0700
+From:   Brandon Williams <bmwill@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/9] rebase -i: generate the script via
- rebase--helper
-In-Reply-To: <xmqqvapqo4i8.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1704271607550.3480@virtualbox>
-References: <cover.1493128210.git.johannes.schindelin@gmx.de> <cover.1493207864.git.johannes.schindelin@gmx.de> <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de> <xmqqvapqo4i8.fsf@gitster.mtv.corp.google.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 4/5] clone: add a --no-tags-submodules to pass
+ --no-tags to submodules
+Message-ID: <20170427163314.GC80265@google.com>
+References: <20170426231236.27219-1-avarab@gmail.com>
+ <20170426231236.27219-5-avarab@gmail.com>
+ <xmqqk266poih.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:lxfwr7dwvTj2Oozduv1D+OAj+J98m1BcrpT/2oY5Cx+ytvLjAFd
- 2IdVFbw+0CIo2INdywEflPp69MItx7RzY3Or0yK5knIFXFxd/EzFlKU4wvKvww8aEYkHwV+
- ndq5G/d7dUiVteNkzLJIgS1PAzmYEg5lKSTgWSuYzItPuZEkiyvYKa2gYBLxx33Rtzqo2rV
- B9tBrcQrdC0FNdFVbP5kA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:vnGgKgs2MgY=:GfCo13ktS2lljfcHqFpL6Y
- m6JKnaWyP4blT78lIwHlboqYGvf+NXgWnzRtzhNW8oVHtzg1C1uzuCWYWZdpNVfCaKg614fKH
- I9eq9Z74AVG121WZcyrtC0jkLNLGqDN3jCPZ/zCk1Q0uzxfzhJjKNOI8CxjAnjs0HdoJb74jw
- I//YEfUC6fpXM253JXcakDMRRgZuLk/VehMAi6tl0hJMQWNnliIokB/6WgNBQfQtvzU36HAFh
- x1CGzwLVyjIrkoPk1jiWe4rtGlA97ChszbrliCgIHYZgf3crxI8K+cXLJU9RKAZV6k8AGpTKO
- PnSE2B6iW/MQcwfCWfNsdZl4CwmxZiGyEuPyS2KbOZz0FwGVmojZ1n8e6b6iicGCupydJk9JE
- WOKcBSvm7teWetXcUG1NnolnaY7oEGMphkfiJaUlcccLujq0T1qm5zkTLNVg8vKTzIKE+3YEi
- MkgZGD3JrJOoLU4UwkUa/9gNuLRw5aslj+QPxwJ6WLxRZoWoBA797pAiokBFfnosyaSzv1UUs
- lWZEsoX2PKICqOJVyVf9+lltQrSDH4A/5Vyg7SfsT/X4jodYWuk2AbVY05c0Bn3RxU5epHVBY
- umzegqf5s5PHf31/fXZS2PmE3F7ToYnZTo9kc6IljsXpctAi3p5vJDLcyTXtHYP4ZZ4NTpKWK
- WAXTMwpy70fDypyDYhsy6zwRHs9BWD9fn7QqfoCh6cJIwXjyl9+ozkDt4MLjYDix/LMzOyS6c
- aiS9gYE/8D33bY2but49Slt5fh2DIKo2iq5JIw3rN3K5bPnO155KqMmksxorkXj7AcV0UAuzS
- 90ic0oy
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqk266poih.fsf@gitster.mtv.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Wed, 26 Apr 2017, Junio C Hamano wrote:
-
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+On 04/26, Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 > 
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 77afecaebf0..e858a976279 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -2388,3 +2388,48 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
-> >  
-> >  	strbuf_release(&sob);
-> >  }
-> > +
-> > +int sequencer_make_script(int keep_empty, FILE *out,
-> > +		int argc, const char **argv)
-> > +{
-> > +	char *format = xstrdup("%s");
-> > +	struct pretty_print_context pp = {0};
-> > +	struct strbuf buf = STRBUF_INIT;
-> > +	struct rev_info revs;
-> > +	struct commit *commit;
-> > +
-> > +	init_revisions(&revs, NULL);
-> > +	revs.verbose_header = 1;
-> > +	revs.max_parents = 1;
-> > +	revs.cherry_pick = 1;
-> > +	revs.limited = 1;
-> > +	revs.reverse = 1;
-> > +	revs.right_only = 1;
-> > +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
-> > +	revs.topo_order = 1;
-> > +
-> > +	revs.pretty_given = 1;
-> > +	git_config_get_string("rebase.instructionFormat", &format);
-> > +	get_commit_format(format, &revs);
-> > +	free(format);
-> > +	pp.fmt = revs.commit_format;
-> > +	pp.output_encoding = get_log_output_encoding();
+> > From: Brandon Williams <bmwill@google.com>
+> >
+> > Add a --no-tags-submodules which does for --no-tags what the existing
+> > --shallow-submodules does for --depth, i.e. doing:
+> >
+> >     git clone --recurse-submodules --no-tags --no-tags-submodules <url>
+> >
+> > Will clone the superproject and all submodules with --no-tags
+> > semantics.
+> >
+> > This change does not implement a submodule.*.tags config .gitmodules
+> > configuration option corresponding to the existing submodule.*.shallow
+> > facility, which would make --no-tags have full feature parity with
+> > --shallow-submodules.
 > 
-> All of the above feels like inviting unnecessary future breakages by
-> knowing too much about the implementation the current version of
-> revision.c happens to use.
+> Shouldn't --no-tags automatically propagate down to submodules in
+> --recurse-submodules mode instead?  I know --shallow-submodules
+> exists but it looks to me more a misdesigned interface, rather than
+> something we want to mimic in a new option.
 
-You mean that the `--reverse` option gets translated into the `reverse`
-bit, and the other settings?
+I agree, I would think that the --no-tags option should be propagated
+down when --recurse-submodules is provided, without needed to provide
+another option for that.  Thinking about the recursive case here
+(submodules in side of submodules) you would then need to propagate down
+two options, --no-tags and --no-tags-submodules, which feels a bit
+awkward.
 
-:-)
-
-> A more careful implementation would be to allocate our own av[] and
-> prepare "--reverse", "--left-right", "--cherry-pick", etc. to be parsed
-> by setup_revisions() call we see below.
-
-Oh, so you were not joking.
-
-Part of why I think we should stay away from shell scripts has nothing to
-do with performance (which would already be worth it) nor portability
-issues (which also would already be worth it) nor requiring contributors to
-know more than C (which also would already be worth it), but static
-typing.
-
-What you are asking is to do away with the strong, static typing (which
-would show a breakage pretty quickly if that part of revision.c's API was
-changed, therefore I think your concern is a little curious) in favor of
-loose typing which would demonstrate breakages only upon use.
-
-That is the exact opposite direction of where I want to go.
-
-> The parsing is not an expensive part of the operation anyway,
-
-... but why, oh why make things more complicated than they need to be? The
-revision API is an API, yes, an internal one, but an API, for crying out
-loud.
-
-> and that way we do not have to worry about one less thing.
-
-Not that I don't mind no double or triple negations, but no, not this one.
-
-> > +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
-> > +		return error(_("make_script: unhandled options"));
-> > +
-> > +	if (prepare_revision_walk(&revs) < 0)
-> > +		return error(_("make_script: error preparing revisions"));
-> > +
-> > +	while ((commit = get_revision(&revs))) {
-> > +		strbuf_reset(&buf);
-> > +		if (!keep_empty && is_original_commit_empty(commit))
-> > +			strbuf_addf(&buf, "%c ", comment_line_char);
+> The design of the traditional "git submodule" support strived to
+> keep the superproject and its submodules distinct and separately
+> managed as much as possible, and I view the motivation behind the
+> recent push of "--recurse-submodules" as an attempt to make them
+> appear as seamless as possible, so I have a feeling that a new
+> option (like "--no-tags") that is applied to the superproject, as
+> long as it also makes sense to use it in submodules, should
+> propagate down in that mode by default (and most likely
+> unconditionally).  Those who want finer granularity of control can
+> use the traditional "work with superproject, and then initialize and
+> update the submodules you are interested in in any way you want
+> individually" mode anyway.
 > 
-> Presumably callers of this function (which does not exist yet at
-> this step) are expected to have done the configuration dance to
-> prepare comment_line_char to whatever the end-user specified?
+> > Signed-off-by: Brandon Williams <bmwill@google.com>
+> > Code-by: Brandon Williams <bmwill@google.com>
+> > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> > Commit-message-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> > Git-Completion-Code-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> > Docs-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> > Tests-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> 
+> Is it just me who finds this way of attribution unwieldy?  I would
+> have expected to see something like this at the end
+> 
+> 	The main code is by Brandon, Ævar added the docs, tests and
+> 	completion and wrapped them up into a commit with a log
+> 	message.
+> 
+> before two s-o-b.
 
-Yes. Just like they have to take care of discovering the .git/ directory.
+Yeah this looks a bit messy.  Ævar, you've spent much longer on this
+topic than I have and should probably take authorship.  I mean I only
+spent a little bit cobbling together a patch that I never tested. :)
+You're more than welcome to include my 'Signed-off-by' and/or a
+'Helped-by' line for this patch though.
 
-I guess I kind of fail to see your point. Of course the configuration has
-to be read at this point... This is an internal API function that has the
-same contract as all the other internal API functions: you have to set up
-and configure everything needed to run the API function beforehand.
-
-But maybe what you really wanted to ask is: How do we know that
-comment_line_char is initialized correctly at this point?
-
-If that is the question, I understand your puzzlement, and it is easy to
-dispell: comment_line_char is configured as part of
-git_default_core_config(), and initialized to '#' before Git even starts
-to run.
-
-So we're safe here, as long as the default config handling runs. The
-intended user is obviously the rebase--helper, which runs git_config()
-even before parsing the options.
-
-Meaning: the code is safe.
-
-Ciao,
-Dscho
+-- 
+Brandon Williams
