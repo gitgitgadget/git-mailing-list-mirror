@@ -2,149 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E40D207BD
-	for <e@80x24.org>; Wed, 26 Apr 2017 23:38:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87F54207BD
+	for <e@80x24.org>; Thu, 27 Apr 2017 00:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032854AbdDZXiO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 19:38:14 -0400
-Received: from mout.web.de ([217.72.192.78]:49265 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1032845AbdDZXiM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 19:38:12 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MXpdL-1dZjwV2x2V-00Wmcm; Thu, 27
- Apr 2017 01:38:08 +0200
-Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
-To:     Peter Krefting <peter@softwolves.pp.se>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Keith Goldfarb <keith@blackthorn-media.com>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
- <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
- <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
- <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
- <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
- <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
- <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
- <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
- <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se>
- <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de>
- <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se>
- <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
- <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <87470c8c-e061-e4b3-42fe-84a30858fc0d@web.de>
-Date:   Thu, 27 Apr 2017 01:38:06 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S1033219AbdD0AIn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 20:08:43 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35938 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1033215AbdD0AIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 20:08:41 -0400
+Received: by mail-pf0-f196.google.com with SMTP id v14so3830665pfd.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 17:08:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:subject:date:message-id:user-agent:mime-version;
+        bh=Ai1GZRK8FqHHHQ2lVf14yvDlJT626Y/34m5my2bKP3c=;
+        b=Mgv3DKcNMn4XjzNZ645zMKTL+nCmtq5F1qxPhGGg6TtHc/zTz8mSLAhIsy/+QGBtOj
+         LyvIyaidq6r79JW3J0isQFYhyP0wI0EAHiXlMtEaYxP3Wxu3loulc12kQdyKvgey2bdu
+         1me+n1CG7/guVCF0FMwTDHtvIrBg7OaSe+AQ9cnFKHATUoHozsnWvcPT7Xzs4W/IdK2i
+         hptytgNapiJCvwdw8/FN+UZ8JWTpFXQDbk9BsgUlc/bIQEgfP5QWcRmMIaEhlBNb2CtX
+         ezRIZOin4PAubUe2nPnyPVtPpZtlywEYeluBYE0tEfMrB4jC4bnG7G5UdwY7IWChNtEC
+         LREQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :user-agent:mime-version;
+        bh=Ai1GZRK8FqHHHQ2lVf14yvDlJT626Y/34m5my2bKP3c=;
+        b=GFLNawDTYFOGTKmgnw5wkav5u7mPK/aARjbmJWX4wR//G/+iOrYXEQMG/OxhTytYf7
+         gsb/kyMMUGi6UBIQOg8hPBNA79cIfJmvrnUKxxPZzoOquO0nuQ7UP5QK28qGw4WiiBGS
+         VISI61vUgai9l3onW7IFxSeSno28E3aT/en6NChEwNGXMZhlvdBCp/G/HHN5CR2iDLxT
+         14mrIuDeJpPptwyi5r2CtKiW8vdh6rrWU30ISCBmTWA0wQngaYE9/fqSJp4NBDrpimeU
+         eJLk1voxCoBlo7CkxxMtJSYOY2gMMOBQjJks00KwKmD+XBWA4COJ6CqqJUbruKzWIaL6
+         cruQ==
+X-Gm-Message-State: AN3rC/7+Keqza7OJv/aLnYg5/LQaSxVBlxrR/Nm4OJn8NzTyvY8ahOOA
+        wxZer/8GndyB0ics7JQJCA==
+X-Received: by 10.84.210.10 with SMTP id z10mr3218086plh.173.1493251720496;
+        Wed, 26 Apr 2017 17:08:40 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:d550:ca2:cfe6:6d97])
+        by smtp.gmail.com with ESMTPSA id r1sm702949pfg.12.2017.04.26.17.08.39
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 17:08:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] repack: accept --threads=<n> and pass it down to pack-objects
+Date:   Wed, 26 Apr 2017 17:08:39 -0700
+Message-ID: <xmqqr30er9tk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:G88Q2NHiKsKgi5VJzwNtzUBTLGsvc5vtiILYOlaNVxebJwm0lhM
- VOtCUH6u34/xojYFWnXjTPSajoQ2S8Pm9xPW0hcez6sqOaqxk8aIyZug1opBU/zFVWiSUZ8
- fgvX9ry4+lC8y8tyEUWuQfebkt9uKrWJv5hEsEDpsUiBCfCfS5WOPkQF2+b6beU3RYGbOZi
- kS/m8sj8oeYTTlI91wzyQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3m2M8Mm0dWI=:Tjbl96qXcuLNIGsSIfxmqn
- HJabwjwWiALSBN7gbmYolqzCNvepP5bgUTuBEmFKFkUSmC0fp0lHjc35AT+jTQ1E9ef6PPiVx
- XLbgQf7sfOR/XowhBETX5xiVvmdiCQ1b8vClxx+VIFrsnwCVD9/wv8ch5mguLvYs9ZqyBlT3f
- YmAOJYg0Q/Dvr/jxCnqOuzr7xA9xkvQ+tNW34DL3TAbtayenXw6JZahnFRsOS79HlYpkH1GzU
- 68bpMkdvyrgdcMmc4nMT/CyIIHiqeV/APIcR4OnkH+GmjjOT8HUjunlgjqRaLZrz3dSsj2/P5
- RqaXVLxR7Twza/oYWaZE6+9DHgSCZwCYXXEkEvM89wLcoqfJxB1CgDGGd9qa9YVbk9YvffDnz
- yPm5ujB780qzKQcEAQjhDt9HJFX5Y5QzO2w6gIXH3hq+2RqWsv1B+d+AuAlYDvJzzt5o01ceY
- ijd5s+6G8c6PrdRTFWmP2nlpLamYd60z8kPUDQoQVNym2vUMId45fWi6K4VG9CXvlFg24+rJ4
- cDZY0Slsmy5X+WRyvZpCOohFaf388/K8uy0OfWXtO6wXBFUcv6LLLxQsDtP5onT+4iiODJrtl
- ZrHpw/72e1mdQXasSs3ciTiSxlbsT8H001EtoZzX/t4lXCSMhHNPKmhqYmFeQnUWfXwRj8NSF
- 3Q84Uox4zGKzm9tiT5qrN1vaP0Jr6deAnF8zH9skXJt5jKTuBEbMvXkSxXXIHWvQ40otK8liw
- ueRo/cNqyyPD1Kz13haj70/7C5SBTUG4Fu+U0GvgW2R+jvYEwQm7OidRDmTSyY8FzWY6A/jbz
- kd+yzf8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.04.2017 um 23:02 schrieb Peter Krefting:
-> René Scharfe:
-> 
->> I struggled with that sentence as well.  There is no explicit "format" 
->> field AFAICS.
-> 
-> Exactly. I interpret that as it is in zip64 format if there are any 
-> zip64 structures in the archive (especially if there is a zip64 end of 
-> central directory locator).
+We already do so for --window=<n> and --depth=<n>; this will help
+when the user wants to force --threads=1 for reproducible testing
+without getting affected by racing multiple threads.
 
-The crucial point is that I think the choice is per entry, i.e. if we
-had to write a zip64 record for one file we can still emit a legacy
-record for the next file that has a size of 0xffffffff.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/git-repack.txt | 5 ++++-
+ builtin/repack.c             | 5 +++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
->> Or in other words: A legacy ZIP archive and a ZIP64 archive can be 
->> bit-wise the same if all values for all entries fit into the legacy 
->> fields, but the difference in terms of the spec is what the archiver 
->> was allowed to do when it created them.
-> 
-> As long as all sizes are below (unsigned) -1, then they would be 
-> identical. If one, and only one, of the sizes are equal to (unsigned) -1 
-> (and none overflow), then it is up to intepretation whether or not a 
-> ZIP64-aware archiver is allowed to output an archive that is not in 
-> ZIP64 format. If any single size or value overflows the 32 (16) bit 
-> values, then ZIP64 format is needed.
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index 26afe6ed54..ae750e9e11 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -9,7 +9,7 @@ git-repack - Pack unpacked objects in a repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [--window=<n>] [--depth=<n>]
++'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [--window=<n>] [--depth=<n>] [--threads=<n>]
+ 
+ DESCRIPTION
+ -----------
+@@ -92,6 +92,9 @@ other objects in that pack they already have locally.
+ 	to be applied that many times to get to the necessary object.
+ 	The default value for --window is 10 and --depth is 50.
+ 
++--threads=<n>::
++	This option is passed through to `git pack-objects`.
++
+ --window-memory=<n>::
+ 	This option provides an additional limit on top of `--window`;
+ 	the window size will dynamically scale down so as to not take
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 677bc7c81a..38ba4ef825 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -155,6 +155,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	int keep_unreachable = 0;
+ 	const char *window = NULL, *window_memory = NULL;
+ 	const char *depth = NULL;
++	const char *threads = NULL;
+ 	const char *max_pack_size = NULL;
+ 	int no_reuse_delta = 0, no_reuse_object = 0;
+ 	int no_update_server_info = 0;
+@@ -190,6 +191,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("same as the above, but limit memory size instead of entries count")),
+ 		OPT_STRING(0, "depth", &depth, N_("n"),
+ 				N_("limits the maximum delta depth")),
++		OPT_STRING(0, "threads", &threads, N_("n"),
++				N_("limits the maximum number of threads")),
+ 		OPT_STRING(0, "max-pack-size", &max_pack_size, N_("bytes"),
+ 				N_("maximum size of each packfile")),
+ 		OPT_BOOL(0, "pack-kept-objects", &pack_kept_objects,
+@@ -234,6 +237,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		argv_array_pushf(&cmd.args, "--window-memory=%s", window_memory);
+ 	if (depth)
+ 		argv_array_pushf(&cmd.args, "--depth=%s", depth);
++	if (threads)
++		argv_array_pushf(&cmd.args, "--threads=%s", threads);
+ 	if (max_pack_size)
+ 		argv_array_pushf(&cmd.args, "--max-pack-size=%s", max_pack_size);
+ 	if (no_reuse_delta)
+-- 
+2.13.0-rc1-202-gb5c0e471fc
 
-Sizes can be stored in zip64 entries even if they are lower (from a
-paragraph about the data descriptor):
-
-"4.3.9.2 When compressing files, compressed and uncompressed sizes
-       should be stored in ZIP64 format (as 8 byte values) when a
-       file's size exceeds 0xFFFFFFFF.   However ZIP64 format may be
-       used regardless of the size of a file."
-
-(But I don't see a benefit.)
-
->>     # 4-byte sizes, not ZIP64
->>     arch --format=zip ...
->>
->>     # ZIP64, can use 8-byte sizes as needed
->>     arch --format=zip64 ...
->>
->> Makes sense?
-> 
-> Well, I would say that it would be a lot easier to always emit zip64 
-> archives. An old-style unzipper should be able to read them anyway if 
-> there are no overflowing fields, right? And, besides, who in 2017 has an 
-> unzip tool that is unable to read zip64? Info-Zip UnZip has supported 
-> Zip64 since 2009.
-
-Windows XP.  Don't laugh. ;)
-
-If you write zip64 extras for all size records then an old extractor
-will only see the value 0xffffffff in them and ignore the zip64 part --
-or ignore the entries outright.
-
-Writing zip64 records only as needed saves space -- and that's what
-zipping is all about, isn't it?
-
-Adding unnecessary zip64 records would produce different ZIP files than
-earlier version of git archive.  That's not a strong argument as changes
-to libz can potentially do the same, but it still might affect someone
-who caches generated ZIP files.
-
-What I sent matches the behavior of InfoZIP zip (modulo bugs).  Why not
-follow their lead?
-
-(And one of the bugs in my patches not setting the version field to 45
-as you pointed out earlier already.  InfoZIP may forget to do that if it
-uses a zip64 extra for recording the offset, but it does set the version
-correctly for files bigger than 4GB.)
-
-What do other archivers do?
-
-But I think a more important question is: Can the generated files
-be extracted by popular tools (most importantly Windows' built-in
-functionality, I guess)?
-
-René
