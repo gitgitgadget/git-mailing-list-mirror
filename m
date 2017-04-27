@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A36571FC3E
-	for <e@80x24.org>; Thu, 27 Apr 2017 06:00:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 388711FC3E
+	for <e@80x24.org>; Thu, 27 Apr 2017 06:05:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932342AbdD0GAv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 02:00:51 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:35672 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932336AbdD0GAt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 02:00:49 -0400
-Received: by mail-pf0-f194.google.com with SMTP id a188so6447164pfa.2
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 23:00:49 -0700 (PDT)
+        id S1162009AbdD0GFO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 02:05:14 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36813 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S938517AbdD0GFM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 02:05:12 -0400
+Received: by mail-pf0-f193.google.com with SMTP id v14so6456328pfd.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 23:05:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=euUO//RgwfYG4hI35BRq97goRGDfMXUFmU7zjZLppaY=;
-        b=Aua6MhnuMMPQXC9iCUnd/HTTeaDYDrUks8ypJkArAMAI+zZzptdBgWdk7IMH/6n+Rq
-         ggt7Lg+pSyxguYglKfYQjQQ32oI5LdvOM7ZTgEkXN/adlaiaccHoSp0Pt4YlH7Ni7lBk
-         FUYhSWjb2qzAzpT3+z+Fkpk4E5JvQBbY0x48sALXPjc5c46Aae2dvNrk5ZwKRreyjgUZ
-         FzSuIUQk7Atoy9gRCiwavwa/MTBqUHyuaOBUaPJT65n0DOk9jTmYbX7XMFpLinxudLMd
-         BH//DOgCd+BUO1WlfTIM7PDkXhtunhchw3ELwsy0Gz9wbgth9j3ee9xm31h/HbGQtZfq
-         n5JQ==
+        bh=HiraggHoGQa36G3zLRtCQC7o4Q4qezKlf/KEYwEzij4=;
+        b=P8zUFKgptydu0/xEIma0llf0Rot7v39BQ5kcy/YA+COa8LQQRfXajE0jTyw8wHvfAt
+         SlQIgT/EmEnYQHEYpRz/COBazY3Ujj5LVgAnv1aM7ll+xkjHA6kQ3EwiBq0iHXBIJbIv
+         2dEZNudONBFGwsFIJmcvl7eDEsDLZbC4xyQs0hMVUKNAJP/+YqIC02C66kFDJA8150tZ
+         hAqsV37bWW3xm1rAupI/zekgwzZo5Kr05h3hgeJfi/2dBu0VMZvYLdXENIz+R3m04r0w
+         tgHfxgjZloMaa21uhLpYag+rtUN3Ngk6okyhCD2L3Ocl/cl13I+J/w3WUd9idirnwVOu
+         1xsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=euUO//RgwfYG4hI35BRq97goRGDfMXUFmU7zjZLppaY=;
-        b=IJMn2pPLDa01zoRs9En0+algawXkiy5lSPmeknKz7BAYbxHjgABLOMCmOq+KXj/YLp
-         8jPRGCp3a/HerZMIBvCroysz3Uetkpd33qwpRv51lonrtosrmeGF0VOrW1EjUqGD3J3S
-         4xaRZpHMRhKvYDyVIr59LHvkKIpXBlKjSXWKqDxAQtxJXbLa5go96LFFaQObgK3pLX6h
-         AdXxyuhMwC5nTIRCpyBICunR+IhB1UcFqIe2gfFgPrdmmkaHNz/GlU/ncJLK0CPlRnfE
-         RVYgFON2tdzgblA1xdUtFoiUjJIznXOfNKCJ0XJKeE2NyBO7YZH3SvQ8232UL/pT43ZE
-         UsuA==
-X-Gm-Message-State: AN3rC/5tsbsuJmHmG43oMMcu1qD1kCV1Be/ofCOyBKa4LHXjFJxok4Cd
-        ggtyZf4tp9HaGg==
-X-Received: by 10.98.85.6 with SMTP id j6mr3836733pfb.31.1493272848868;
-        Wed, 26 Apr 2017 23:00:48 -0700 (PDT)
+        bh=HiraggHoGQa36G3zLRtCQC7o4Q4qezKlf/KEYwEzij4=;
+        b=pHf/e/hMMEIRAx8De5mctcq8nWwe6UdnugxPCmL15TNsPttXyHEECJUktpj9U1zoil
+         bFem1W+qYd8LClFNjfziQCkBRuVnhyhCyrKPEhHzuiG8VmYLV2VmMjrAv6UWMbTzN72R
+         LxaN7Hy13hp/2rxf6/CqFKB2puqGBqvD/VhxGkAgm4uvXnRQzp8jvmUhj7+0WDO7tcOH
+         ASWuEQNJbflwQ8dLWQ0AlAtXWOjXWYsi+Qks9i87eMo81335c9TFdnI4yGnsGlxYYJLw
+         ejPwZKK+4n1cpfUAoXmBMljYrqFXgfbdHr/7ILaMdG/2ubar+Y3FIU6XRsKqeMSDGuUb
+         3pLQ==
+X-Gm-Message-State: AN3rC/6IBlpAxYw68PPgnjXvG3cjV5jMytiZhrdgqzd6W0iOXcMtHl03
+        5Hk4z6JiXL2jLQ==
+X-Received: by 10.84.214.130 with SMTP id j2mr4831105pli.133.1493273112031;
+        Wed, 26 Apr 2017 23:05:12 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:d550:ca2:cfe6:6d97])
-        by smtp.gmail.com with ESMTPSA id g89sm2003092pfk.25.2017.04.26.23.00.47
+        by smtp.gmail.com with ESMTPSA id v62sm1883455pfv.44.2017.04.26.23.05.11
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 23:00:47 -0700 (PDT)
+        Wed, 26 Apr 2017 23:05:11 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 07/26] http-backend: avoid memory leaks
+Subject: Re: [PATCH 08/26] difftool: close file descriptors after reading
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
-        <366e4d805da9b4b610fe216537de5e4a4c3941ed.1493237937.git.johannes.schindelin@gmx.de>
-Date:   Wed, 26 Apr 2017 23:00:47 -0700
-In-Reply-To: <366e4d805da9b4b610fe216537de5e4a4c3941ed.1493237937.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Wed, 26 Apr 2017 22:19:47 +0200
+        <c634ea5dad0ce1c1f424f54a12a5614e6fa4a847.1493237937.git.johannes.schindelin@gmx.de>
+Date:   Wed, 26 Apr 2017 23:05:10 -0700
+In-Reply-To: <c634ea5dad0ce1c1f424f54a12a5614e6fa4a847.1493237937.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Wed, 26 Apr 2017 22:19:53 +0200
         (CEST)")
-Message-ID: <xmqq4lxao0ds.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqzif2mlm1.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,43 +69,38 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 
-> Reported via Coverity.
+> Spotted by Coverity.
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  http-backend.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  builtin/difftool.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> diff --git a/http-backend.c b/http-backend.c
-> index eef0a361f4f..d12572fda10 100644
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -681,8 +681,10 @@ int cmd_main(int argc, const char **argv)
->  		if (!regexec(&re, dir, 1, out, 0)) {
->  			size_t n;
->  
-> -			if (strcmp(method, c->method))
-> +			if (strcmp(method, c->method)) {
-> +				free(dir);
->  				return bad_request(&hdr, c);
-> +			}
->  
->  			cmd = c;
->  			n = out[0].rm_eo - out[0].rm_so;
-> @@ -708,5 +710,7 @@ int cmd_main(int argc, const char **argv)
->  					   max_request_buffer);
->  
->  	cmd->imp(&hdr, cmd_arg);
-> +	free(dir);
-> +	free(cmd_arg);
->  	return 0;
->  }
+> diff --git a/builtin/difftool.c b/builtin/difftool.c
+> index 1354d0e4625..a4f1d117ef6 100644
+> --- a/builtin/difftool.c
+> +++ b/builtin/difftool.c
+> @@ -226,6 +226,7 @@ static void changed_files(struct hashmap *result, const char *index_path,
+>  		hashmap_entry_init(entry, strhash(buf.buf));
+>  		hashmap_add(result, entry);
+>  	}
+> +	fclose(fp);
+>  	if (finish_command(&diff_files))
+>  		die("diff-files did not exit properly");
+>  	strbuf_release(&index_env);
 
-Hmph.  I find a "leak" of a resource acquired inside the main
-function and not released when the main function leaves a lot less
-interesting than the other ones this series covers.
+This one looks sensible.
 
-When the "return" in the first hunk leaves the function and also
-the same block of the if () statement breaks out the loop, we also
-fail to call regfree(&re).  Shouldn't we be cleaning it up as well?
+> @@ -497,6 +498,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+>  		}
+>  	}
+>  
+> +	fclose(fp);
 
+The huge loop we see in the pre-context of this hunk has many
+"return"s and "goto finish"es that can leave fp still open; while
+this patch does not hurt, it is probably somewhat insufficient.
+
+>  	if (finish_command(&child)) {
+>  		ret = error("error occurred running diff --raw");
+>  		goto finish;
