@@ -6,24 +6,25 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 775D1207D6
-	for <e@80x24.org>; Thu, 27 Apr 2017 20:59:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C83C207EB
+	for <e@80x24.org>; Thu, 27 Apr 2017 20:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1422971AbdD0U7h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 16:59:37 -0400
-Received: from [192.252.130.194] ([192.252.130.194]:60548 "EHLO
+        id S1422957AbdD0U7d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 16:59:33 -0400
+Received: from [192.252.130.194] ([192.252.130.194]:34586 "EHLO
         cubert.xiplink.com" rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S968934AbdD0U7a (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S968933AbdD0U7a (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 27 Apr 2017 16:59:30 -0400
+X-Greylist: delayed 530 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Apr 2017 16:59:30 EDT
 Received: from xiplink.com (rincewind.xiplink.com [10.10.1.32])
-        by cubert.xiplink.com (Postfix) with ESMTP id 665DC61893;
+        by cubert.xiplink.com (Postfix) with ESMTP id 4FE8061813;
         Thu, 27 Apr 2017 16:50:37 -0400 (EDT)
 From:   Marc Branchaud <marcnarc@xiplink.com>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>, Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] Have the diff-* builtins configure diff before initializing revisions.
-Date:   Thu, 27 Apr 2017 16:50:37 -0400
-Message-Id: <20170427205037.1787-3-marcnarc@xiplink.com>
+Subject: [PATCH 1/2] Make the indent heuristic part of diff's basic configuration.
+Date:   Thu, 27 Apr 2017 16:50:36 -0400
+Message-Id: <20170427205037.1787-2-marcnarc@xiplink.com>
 X-Mailer: git-send-email 2.13.0.rc1.15.g7dbea34e1.dirty
 In-Reply-To: <20170427205037.1787-1-marcnarc@xiplink.com>
 References: <20170427205037.1787-1-marcnarc@xiplink.com>
@@ -32,61 +33,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes the commands respect diff configuration options, such as
-indentHeuristic.
-
 Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
 ---
- builtin/diff-files.c | 2 +-
- builtin/diff-index.c | 2 +-
- builtin/diff-tree.c  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ diff.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 15c61fd8d..a572da9d5 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -20,9 +20,9 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
- 	int result;
- 	unsigned options = 0;
+diff --git a/diff.c b/diff.c
+index 11eef1c85..da96577ea 100644
+--- a/diff.c
++++ b/diff.c
+@@ -290,9 +290,6 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
  
-+	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	init_revisions(&rev, prefix);
- 	gitmodules_config();
--	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	rev.abbrev = 0;
- 	precompose_argv(argc, argv);
+-	if (git_diff_heuristic_config(var, value, cb) < 0)
+-		return -1;
+-
+ 	if (!strcmp(var, "diff.wserrorhighlight")) {
+ 		int val = parse_ws_error_highlight(value);
+ 		if (val < 0)
+@@ -351,6 +348,9 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
+ 	if (starts_with(var, "submodule."))
+ 		return parse_submodule_config_option(var, value);
  
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 1af373d00..f084826a2 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -17,9 +17,9 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 	int i;
- 	int result;
++	if (git_diff_heuristic_config(var, value, cb) < 0)
++		return -1;
++
+ 	return git_default_config(var, value, cb);
+ }
  
-+	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	init_revisions(&rev, prefix);
- 	gitmodules_config();
--	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	rev.abbrev = 0;
- 	precompose_argv(argc, argv);
- 
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 326f88b65..36a3a1976 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -105,9 +105,9 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
- 	struct setup_revision_opt s_r_opt;
- 	int read_stdin = 0;
- 
-+	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	init_revisions(opt, prefix);
- 	gitmodules_config();
--	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 	opt->abbrev = 0;
- 	opt->diff = 1;
- 	opt->disable_stdin = 1;
 -- 
 2.13.0.rc1.15.g7dbea34e1.dirty
 
