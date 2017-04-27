@@ -2,267 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	STOX_REPLY_TYPE shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2D2207D6
-	for <e@80x24.org>; Thu, 27 Apr 2017 22:08:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7FAE207D6
+	for <e@80x24.org>; Thu, 27 Apr 2017 22:12:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423304AbdD0WIB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 18:08:01 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:35960 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162486AbdD0WH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 18:07:59 -0400
-Received: from PhilipOakley ([92.31.218.76])
-        by smtp.talktalk.net with SMTP
-        id 3rZsd1rA2cpsk3rZsdbDDC; Thu, 27 Apr 2017 23:07:57 +0100
-X-Originating-IP: [92.31.218.76]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=ILRAMUnG c=1 sm=1 tr=0 a=e6L6E7eW+5Nb7SO+DvSdIg==:117
- a=e6L6E7eW+5Nb7SO+DvSdIg==:17 a=8nJEP1OIZ-IA:10 a=ybZZDoGAAAAA:8
- a=xtxXYLxNAAAA:8 a=FOMDAfpskrF99ATBFH0A:9 a=wPNLvfGTeEIA:10
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=xts0dhWdiJbonKbuqhAr:22
-Message-ID: <DAB03BFCBBCA4C4F95D21A86E3B1DF2F@PhilipOakley>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-From:   "Philip Oakley" <philipoakley@iee.org>
-To:     "Junio C Hamano" <gitster@pobox.com>
-Cc:     "Stefan Beller" <sbeller@google.com>, "Jeff King" <peff@peff.net>,
-        "Orgad Shaneh" <orgads@gmail.com>,
-        "Dakota Hawkins" <dakotahawkins@gmail.com>,
-        "git" <git@vger.kernel.org>,
-        "Christoph Michelbach" <michelbach94@gmail.com>
-References: <CAGHpTBJCjNa8gQRkMah30ehESdsVVKNy+6CuLSf9hfDedR+tPA@mail.gmail.com>        <CAGZ79kZ5440r1EHOVP3eXxe5u=u16y_jXTA0C4hLJA2kUkF-kg@mail.gmail.com>        <4BF0A1BFFFFD421EB8C5F7E6FEF14357@PhilipOakley>        <CAGZ79kZDzuSHw4siSkiekw73bBq9R8gg_R+a7NyNUG6bYxc2Og@mail.gmail.com>        <C3A8A88B8DDD468095B7FD256330EEF7@PhilipOakley> <xmqqa873ubiw.fsf@gitster.mtv.corp.google.com>
-Subject: Re: Submodule/contents conflict
-Date:   Thu, 27 Apr 2017 23:07:57 +0100
-Organization: OPDS
+        id S1423352AbdD0WMg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 18:12:36 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34279 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1423349AbdD0WMe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 18:12:34 -0400
+Received: by mail-pf0-f181.google.com with SMTP id e64so1798274pfd.1
+        for <git@vger.kernel.org>; Thu, 27 Apr 2017 15:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=h2AJV0nDQrPOWDK+1akX7Nr5KEqbjdxJiyhEcnxohgc=;
+        b=ezY3JEuJG5V3VqDnieQ5/yY6xU5ZLSSaokvzXGxyRKpN/jd03EIuWa9glexCya2a3A
+         64ZvoDFk6PwTh5z3Ydm4qn5L2nDNdAQOw964WFdaCdgPWUQTRTckV7YGQX39EykPpZj3
+         sruMe0OstCg7xIFWaiCovABir4cXDo5sL+2LN6MkZWMdT22ibjjl8dBk1A9NC6kXKWt7
+         aFrjOGr0NVxquuWhjaNmvpbL1pKNnAfuO4l/XvZF04DoHK5RteMMU/YplHeOO+lubB++
+         Nrs7TYw4XOQJ4TG/agaO4YJHTFQDF5MqrE4NcV/mDh16pOBhT0Ds/L8jIPz8cwphmbQd
+         RSPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=h2AJV0nDQrPOWDK+1akX7Nr5KEqbjdxJiyhEcnxohgc=;
+        b=AlJmjDCl+fRaoweHP20KVu6mkejNwhiJNy1gcLzzc5fak2KlXpeWOkmkjot6wwf1OX
+         mrrmESFqfx52aZNrNVZgn/MI8+Ci9oPTHZ8RzZ3pClQXQGjb4Tglb8/eDSJuRFrYcZdl
+         IRArKzLoz3czjWZwGPywFl97GayNQqk5huWNQwCJ+9J5pdMbQHuFtSS0Pt+Mj/3JSUrk
+         qpVxMH+xwQHOWoJZXSWaCsWHg8GTt2N9Va3fNnlNWPlzs4gHlLLUSSV4j2tLhCWwsDl/
+         PHj5V/Yaw1RWVHKJYVhHJe4hhHszkgDjNkblHW7u1Do77jjuGWwCXCi5F9XplUl4wCsi
+         pTsw==
+X-Gm-Message-State: AN3rC/5UeNZXeVwV/OCVPOYZAkV8m69gLt+rTfosexGbM2UZT68sSFq3
+        eNNgnNGiB26LHN10wzFx/Q==
+X-Received: by 10.84.212.1 with SMTP id d1mr10462395pli.109.1493331153914;
+        Thu, 27 Apr 2017 15:12:33 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:6199:b109:ce03:97f2])
+        by smtp.gmail.com with ESMTPSA id t18sm6520018pfg.31.2017.04.27.15.12.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 27 Apr 2017 15:12:32 -0700 (PDT)
+Date:   Thu, 27 Apr 2017 15:12:31 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 2/5] clone: add a --no-tags option to clone without
+ tags
+Message-ID: <20170427221231.GA146047@google.com>
+References: <20170426231236.27219-1-avarab@gmail.com>
+ <20170426231236.27219-3-avarab@gmail.com>
+ <CAGZ79kbHuMpiavJ90kQLEL_AR0BEyArcZoEWAjPPhOFacN16YQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        format=flowed;
-        charset="iso-8859-1";
-        reply-type=original
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-X-CMAE-Envelope: MS4wfE7PblHoMfq63oQWmYBmIceAuP4YIjxl0zrDSiZDmfteoQZSoqnH60UG4nRneaNg+hhrZ9kakvxrRvKvyfKpj/S/hYwjfpqQD/fbCI3BsKocEzrxvOCD
- AiVCKOV6cdqCeJZC+I9rziY6koLEwZv+WkoQpP8sE2b85fnMoCEv+RxBSZSxSs2iaG8HCTKCNDrVx856oUQTsUnkIWnRonoDyhujxSXG0ZPvF9cFLiRKSPb6
- F/4EER/G+bXM7JNR+ouwdBH0+qT8LZjTel/WcD6cgnkYPn9tpkNjS4jSARbRm2yAWXZPyc4JCicQ1of3bGR2jMvpysKD/0fcWcH64g3sMB0=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbHuMpiavJ90kQLEL_AR0BEyArcZoEWAjPPhOFacN16YQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Junio C Hamano" <gitster@pobox.com> Sent: Wednesday, April 26, 2017 
-3:51 AM
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->> As I recall Christoph was using checkout to copy a file (e.g. a
->> template file) from an older commit/revision into his worktree, and
->> was suprised that this (git checkout <tree> <path>) also _staged_ the
->> file, rather than simply letting it be in a modified/untracked state.
->
-> This probably is taking it even further than the original topic, but
-> I raise this weather-balloon to see if anybody is interested.
->
-> In the modern day, it might be useful if the "--working-tree-only"
-> mode added a new file as an intent-to-add entry to the index, but
-> that is not what "git apply (no other options)" (which is the gold
+On 04/27, Stefan Beller wrote:
+> I like the option, though I dislike the implementation, specifically as you
+> brought up e.g. "[PATCH] various: disallow --no-no-OPT for --no-opt options".
+> 
+> Can we have an option "--tags" instead, which is on by default
+> and then you can negate it to --no-tags, without having to worry
+> about the no-no case.
 
-did you mean `git add` ? Or am I missing something.
+Yeah I agree that a "--tags" option would make the ui cleaner.
 
-> standard for command that operates on the working tree and/or on the
-> index) does, so it is not done in this patch.  IOW, if you grab a
-> path that does not exist in your index out of <tree-ish>, you will
-> write out an untracked file to the working tree.
-
-It sound like a good idea, as I wasn't aware of another easy way of doing 
-it.
-
->
-> -- >8 --
-> Subject: [PATCH] checkout: add --working-tree-only option
->
-> "git checkout <tree-ish> <pathspec>" has always copied the blob from
-> the tree-ish to the index before checking them out to the working tree.
->
-> Some users may want to grab a blob out of a tree-ish directly to the
-> working tree, without updating the index, so that "git diff" can be
-> used to assess the damage and adjust the file contents taken from a
-> different branch to be more appropriate for the current branch.
->
-> The new option "--working-tree-only" allows exactly that.
->
-> In the hindsight, when a command works on the working tree and/or
-> the index, the usual convention is:
->
-> - with no other option, the command works only on the working tree;
->
-> - with "--cached" option, the command works only on the index; and
->
-> - with "--index" option, the command works on both the working tree
->   and the index.
->
-> So we probably should have triggered the default behaviour under the
-> "--index" option, and triggered this "--working-tree-only" mode of
-> behaviour when "--index" option is not given.  From the same point
-> of view, "git checkout --cached <tree-ish> <pathspec>" would have
-> done the same as "git reset <tree-ish> <pathspec>" would do.  And
-> that may have made the command set a bit more consistent.
->
-> But that is merely a hindsight being 20/20, oh well.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> Documentation/git-checkout.txt | 22 +++++++++++++++-------
-> builtin/checkout.c             | 10 +++++++++-
-> t/t2022-checkout-paths.sh      | 21 +++++++++++++++++++++
-> 3 files changed, 45 insertions(+), 8 deletions(-)
->
-> diff --git a/Documentation/git-checkout.txt 
-> b/Documentation/git-checkout.txt
-> index 8e2c0662dd..201677752e 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -14,6 +14,7 @@ SYNOPSIS
-> 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] 
-> [<start_point>]
-> 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] 
-> [--] <paths>...
-> 'git checkout' [-p|--patch] [<tree-ish>] [--] [<paths>...]
-> +'git checkout' --working-tree-only <tree-ish> [--] [<paths>...]
->
-> DESCRIPTION
-> -----------
-> @@ -81,13 +82,14 @@ Omitting <branch> detaches HEAD at the tip of the 
-> current branch.
-> 'git checkout' [-p|--patch] [<tree-ish>] [--] <pathspec>...::
->
->  When <paths> or `--patch` are given, 'git checkout' does *not*
-> - switch branches.  It updates the named paths in the working tree
-> - from the index file or from a named <tree-ish> (most often a
-> - commit).  In this case, the `-b` and `--track` options are
-> - meaningless and giving either of them results in an error.  The
-> - <tree-ish> argument can be used to specify a specific tree-ish
-> - (i.e.  commit, tag or tree) to update the index for the given
-> - paths before updating the working tree.
-> + switch branches.  In this case, the `-b` and `--track` options
-> + are meaningless and giving either of them results in an error.
-> ++
-> +The command checks out blobs for paths that match the given
-> +<pathspec> from the index to the working tree.  When an optional
-> +<tree-ish> is given, the blobs for paths that match the given
-> +<pathspec> are copied from the <tree-ish> to the index before
-> +they are checked out of the index.
-> +
-> 'git checkout' with <paths> or `--patch` is used to restore modified or
-> deleted paths to their original contents from the index or replace paths
-> @@ -101,6 +103,12 @@ specific side of the merge can be checked out of the 
-> index by
-> using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
-> file can be discarded to re-create the original conflicted merge result.
->
-> +'git checkout' --working-tree-only <tree-ish> [--] <pathspec>...::
-> + Similar to `git checkout <tree-ish> [--] <pathspec>`, but
-> + the index file is left in the same state as it was before
-> + running this command.
-
-I feel that the docs should also contain a little of the commit message 
-highlighting that `This complements the usual convention of "--cached" and 
-"--index" options for other commands.`, and would pick up on Stefan's "I 
-didn't know that" response - A little education of the reader goes a long 
-way, maybe ;-)
-
-> +
-> +
-> OPTIONS
-> -------
-> -q::
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 9b2a5b31d4..d214e99521 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -37,6 +37,7 @@ struct checkout_opts {
->  int overwrite_ignore;
->  int ignore_skipworktree;
->  int ignore_other_worktrees;
-> + int no_index;
->  int show_progress;
->
->  const char *new_branch;
-> @@ -268,6 +269,9 @@ static int checkout_paths(const struct checkout_opts 
-> *opts,
->  die(_("Cannot update paths and switch to branch '%s' at the same time."),
->      opts->new_branch);
->
-> + if (opts->no_index && !opts->source_tree)
-> + die(_("'--working-tree-only' cannot be used without tree-ish"));
-> +
->  if (opts->patch_mode)
->  return run_add_interactive(revision, "--patch=checkout",
->     &opts->pathspec);
-> @@ -370,7 +374,9 @@ static int checkout_paths(const struct checkout_opts 
-> *opts,
->  }
->  }
->
-> - if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
-> + if (opts->no_index)
-> + ; /* discard the in-core index */
-> + else if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
->  die(_("unable to write new index file"));
->
->  read_ref_full("HEAD", 0, rev.hash, NULL);
-> @@ -1161,6 +1167,8 @@ int cmd_checkout(int argc, const char **argv, const 
-> char *prefix)
->  OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
->  N_("do not check if another worktree is holding the given ref")),
->  OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress 
-> reporting")),
-> + OPT_BOOL(0, "working-tree-only", &opts.no_index, N_("checkout to working 
-> tree only without touching the index")),
-> +
->  OPT_END(),
->  };
->
-> diff --git a/t/t2022-checkout-paths.sh b/t/t2022-checkout-paths.sh
-> index f46d0499bc..8ea2e34c90 100755
-> --- a/t/t2022-checkout-paths.sh
-> +++ b/t/t2022-checkout-paths.sh
-> @@ -78,4 +78,25 @@ test_expect_success 'do not touch files that are 
-> already up-to-date' '
->  test_cmp expect actual
-> '
->
-> +test_expect_success 'working-tree-only option leaves checked out files 
-> unadded' '
-> + git reset --hard &&
-> + git checkout -b pu next &&
-> + echo another >>file1 &&
-> + echo exists >file3 &&
-> + git add file3 &&
-> + git commit -a -m another &&
-> + git checkout next &&
-> +
-> + ! grep another file1 &&
-> + git checkout --working-tree-only pu file1 file3 &&
-> + grep another file1 &&
-> + test_must_fail git grep --cached another file1 &&
-> +
-> + grep exists file3 &&
-> + git ls-files file3 >actual &&
-> + >expect &&
-> + test_cmp expect actual
-> +
-> +'
-> +
-> test_done
-> -- 
-> 2.13.0-rc0-309-gb63395ed9e
->
---
-Thanks
-Philip 
-
+-- 
+Brandon Williams
