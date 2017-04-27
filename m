@@ -2,97 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E43761FC3E
-	for <e@80x24.org>; Thu, 27 Apr 2017 06:10:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A02A1FC3E
+	for <e@80x24.org>; Thu, 27 Apr 2017 06:14:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933097AbdD0GKY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 02:10:24 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:33755 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933091AbdD0GKW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 02:10:22 -0400
-Received: by mail-pf0-f193.google.com with SMTP id c198so6543983pfc.0
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 23:10:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=EQ1AejWX4y4YnR2+uH80cKG1pWyJEsKD0n4Dt9FTtRc=;
-        b=b5xtWJlh5p2ZMTHFXVFbFI3cgGHjyLC3lOmN0PHKe+sVWEHjXL/sHQ7IEmpsiJSAri
-         0ICkBdPCgjw6y1Z76AumZr/+0RbLstDKB80vkikccbyQ3Xoib93CwAnYndFKBUvCSl83
-         aNIv6JJfVb457yj3/rSXWq9nTu6HW53HhkHyoYqpv34ntLz5tKnuq273nuDXPCQK2+fo
-         2fcJw3myZkl3/hGqhj9mVUN4x7S45QUXVVscZ00Y8/tosP8Q7KHW3+jIcRDDSKj3uuFw
-         sq7bOQyxfn90ISTqcxGguOpl5M/8EYDDVRozevLWVlfor8MtL3FDMNd8CCizMi+SzBFZ
-         FsTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=EQ1AejWX4y4YnR2+uH80cKG1pWyJEsKD0n4Dt9FTtRc=;
-        b=EUmjMsQTQwSPV90zvBlCmHYdjYl9F+1ytckBTGxYKsFqXXF+almFm+QEIsnZit2Ujz
-         ESKBourI6dpDicbBypu7MQ76ij51KrPpgIyG9hWCdg0d1eSiZ8rgxwYev+cu3RuXTTf3
-         UYGv9i3Zhlo5TyT+RKclw2BeJtUqdgJZYKzYWHOzpU8dkIO15qD9yuJiPKJH9yFR9/cV
-         r9bK6+wK2lJp83emoonYw3/njPjGjhol5CuXvApTdfvTE0P9GfWvJmbt8tmLWfPXbpfK
-         OVoXOFpKQ75vzsxzsV5NEE6mmm85R7Agf+8g44RMGtw6RXJ29yl3DNa1Wkk/WUxy6jjV
-         fhHA==
-X-Gm-Message-State: AN3rC/5H0+g20maCukC07GL6QZ/k8M7sPpMCJ6NMorTQIdIuiEEJGtdc
-        wMYOb99qTCbcQQ==
-X-Received: by 10.98.151.17 with SMTP id n17mr4014811pfe.138.1493273421801;
-        Wed, 26 Apr 2017 23:10:21 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:d550:ca2:cfe6:6d97])
-        by smtp.gmail.com with ESMTPSA id h85sm1995180pfd.114.2017.04.26.23.10.21
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 26 Apr 2017 23:10:21 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S933603AbdD0GO0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 02:14:26 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:5598 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S933192AbdD0GOY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 02:14:24 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wD6922HLSz5tlJ;
+        Thu, 27 Apr 2017 08:14:14 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 65ABF303E;
+        Thu, 27 Apr 2017 08:14:13 +0200 (CEST)
+Subject: Re: [PATCH 06/26] get_mail_commit_oid(): avoid resource leak
 To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 11/26] cat-file: fix memory leak
 References: <cover.1493237937.git.johannes.schindelin@gmx.de>
-        <a1381df96c940f1edf5b7fb0c49abfc7b12b72fa.1493237937.git.johannes.schindelin@gmx.de>
-Date:   Wed, 26 Apr 2017 23:10:20 -0700
-In-Reply-To: <a1381df96c940f1edf5b7fb0c49abfc7b12b72fa.1493237937.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Wed, 26 Apr 2017 22:20:23 +0200
-        (CEST)")
-Message-ID: <xmqqo9vimldf.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+ <1a12ba40a2db3925534bd2192ed8e9ab9a87215e.1493237937.git.johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <ac257961-3133-0de4-d918-cfb8da8fbf89@kdbg.org>
+Date:   Thu, 27 Apr 2017 08:14:13 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <1a12ba40a2db3925534bd2192ed8e9ab9a87215e.1493237937.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> Discovered by Coverity.
+Am 26.04.2017 um 22:19 schrieb Johannes Schindelin:
+> When we fail to read, or parse, the file, we still want to close the file
+> descriptor and release the strbuf.
+>
+> Reported via Coverity.
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  builtin/cat-file.c | 1 +
->  1 file changed, 1 insertion(+)
+>  builtin/am.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
 >
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 1890d7a6390..9af863e7915 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -165,6 +165,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
->  		die("git cat-file %s: bad file", obj_name);
->  
->  	write_or_die(1, buf, size);
-> +	free(buf);
->  	return 0;
->  }
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 805f56cec2f..01b700e5e74 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1359,15 +1359,16 @@ static int get_mail_commit_oid(struct object_id *commit_id, const char *mail)
+>  	struct strbuf sb = STRBUF_INIT;
+>  	FILE *fp = xfopen(mail, "r");
+>  	const char *x;
+> +	int ret = 0;
+>
+>  	if (strbuf_getline_lf(&sb, fp))
+> -		return -1;
+> +		ret = -1;
+>
+> -	if (!skip_prefix(sb.buf, "From ", &x))
+> -		return -1;
+> +	if (!ret && !skip_prefix(sb.buf, "From ", &x))
+> +		ret = -1;
+>
+> -	if (get_oid_hex(x, commit_id) < 0)
+> -		return -1;
+> +	if (!ret && get_oid_hex(x, commit_id) < 0)
+> +		ret = -1;
+>
+>  	strbuf_release(&sb);
+>  	fclose(fp);
+>
 
-This is a border-line "Meh".  Just like we do not free resources
-immediately before calling die(), we can leave this as-is as the
-only thing that happens after this is a return from cmd_cat_file()
-back to main() that exits.
+You forgot to 'return ret;', didn't you?
 
-The patch is not wrong per-se, so I've applied it anyway, though.
+-- Hannes
 
-Thanks.
