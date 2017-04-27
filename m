@@ -2,182 +2,394 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2638207EB
-	for <e@80x24.org>; Thu, 27 Apr 2017 01:21:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 160391FC3E
+	for <e@80x24.org>; Thu, 27 Apr 2017 02:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934980AbdD0BVR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Apr 2017 21:21:17 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:34776 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752342AbdD0BVP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Apr 2017 21:21:15 -0400
-Received: by mail-it0-f68.google.com with SMTP id c26so662502itd.1
-        for <git@vger.kernel.org>; Wed, 26 Apr 2017 18:21:14 -0700 (PDT)
+        id S938156AbdD0CeT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Apr 2017 22:34:19 -0400
+Received: from mail-pf0-f169.google.com ([209.85.192.169]:36816 "EHLO
+        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S938126AbdD0CeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Apr 2017 22:34:17 -0400
+Received: by mail-pf0-f169.google.com with SMTP id 194so11765999pfv.3
+        for <git@vger.kernel.org>; Wed, 26 Apr 2017 19:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zSVXoT9lKRxb9YRGzqZru24GU5GjFVL18HcI1rCCgVE=;
-        b=JgEYPYwNC9mrz7715gDSXmW8NJ3Mzc1Qe79ti5WOwt/LyILQGjJF+Afn/mi6i5SdqL
-         qQCfs2CFk2AgyxNFdjxjvVjbwlFn8Iy4EP5UK1dqTlir1VonSVKNTM6fksSViFKYpgDK
-         tVwr50iV7kBot0UfpfI5MflS5DgctlaS+z2kvysOtANu0B6Hzlzxk3kxgHTRcB2dSYxO
-         FUELl2FuYU4AYQuQ6moNCnIGqim8epgeMTehaDcfkd6w4cUktmsXzF3rRGhPMS9Stpxz
-         +dYLJHZUP9wCdIqX9Fih1TpKt2H07KmU15tNqC23sE0CBycZwmw9r2tpRZp0/p6HSZvA
-         OTsg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=73WmXV0TmZmErUNU/BNm1N1DOGheE/d/QVD0taVjBlc=;
+        b=DCdNSGEBb3rOd1wABKEk8Vpb7GZLNvbdw2PKSYpspGw+izIc++4QaGHmTP5RSQj6On
+         2lS+5MOX8r2ryAP5UV4+GFGjGzZkPEiDgijna3kNZ1/KyNe6TfSeqm+r4KcJcl34E8CI
+         QhglBnie/gN7Qq+RptNn1KLcAvliKz1raT6iJhODIeEmmYl/XFA3g8imf75HEBx5aXnN
+         KS/97MFlscps3o0ZSzFtP4RV0XxnO2MV2lduDgJUB4UvXMeOa7BrMVPzCtjkVVCcLk3v
+         7X76v37Tp0iJ3v/vHc486xztIzuQgFEUWrYwZl6PpwXZzQz3P9QVOotj6NqJEDgYThhb
+         Nagw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zSVXoT9lKRxb9YRGzqZru24GU5GjFVL18HcI1rCCgVE=;
-        b=Tt+wu+7Znkz3MnkSZxnAs792H3VQDthU6kwgjsL0DZqf4NBF5j/pjvERJVzjurhko8
-         zWIUwRoWL7vSRUAAcngSyHaZPVZpohwX/05kcioFxWnPDPn7plSBw1IYhAJ+YCa+7PHY
-         fBVBAGnPr3pR7UFCufWPQm8LJVhpd0afvpoyXmRxodE54neeaccfPX6N3EIoKosbjSH7
-         vcssLJY/ayxW/tsL2R0eXbsFcaYjYsvLiXy53CwHnRaYzzSPzgjKjrROGqW6Q0naeJoW
-         YxMuERud3Uwk/J3wyy5iA5JSwLBwRuPJNFfXyf1b+0d6awEzPc2xYjpu4jS0mIk6VJm9
-         IWlQ==
-X-Gm-Message-State: AN3rC/4soX7HgeOUKsVYly8TLhlJCGzTKSSS6DdUFHXtV42LjDEFP1/D
-        otoH7AP20XQ4nQ==
-X-Received: by 10.36.121.135 with SMTP id z129mr58648itc.43.1493256074178;
-        Wed, 26 Apr 2017 18:21:14 -0700 (PDT)
-Received: from atris (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.googlemail.com with ESMTPSA id i184sm450541ioi.50.2017.04.26.18.21.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Apr 2017 18:21:13 -0700 (PDT)
-Message-ID: <1493256051.29673.35.camel@gmail.com>
-Subject: Re: [PATCH v2] rebase -i: add config to abbreviate command-names
-From:   liam Beguin <liambeguin@gmail.com>
-To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Date:   Wed, 26 Apr 2017 21:20:51 -0400
-In-Reply-To: <CACBZZX49HZbQ32TTM8V3hSHwEJxkewV3VwfJO75u+D-9RmsOtw@mail.gmail.com>
-References: <20170424032347.10878-1-liambeguin@gmail.com>
-         <20170425044320.17840-1-liambeguin@gmail.com>
-         <CACBZZX49HZbQ32TTM8V3hSHwEJxkewV3VwfJO75u+D-9RmsOtw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.5 (3.22.5-1.fc25) 
-Mime-Version: 1.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=73WmXV0TmZmErUNU/BNm1N1DOGheE/d/QVD0taVjBlc=;
+        b=NojW+HQIELXjNTR0NH3C+MfZzMmN/BEuHUC8S8Y6oyQJfX+E8Guj+AuyD5X/KRUq6H
+         ukfbWH/b75CZXA//9lx2deNji8s7f0tSgzaGrWzOvPKUCl9gTol6NXs+aMmrGj6PvUM+
+         /iY8vAoqIxZbFGbcG+I9/4JJwtqV44pIZZDt5Ex1dcMgeUw9KHslvvgCCVmHr4F43ylj
+         KuN2YmNtOMAqsTVq6zxv/DGXjLjZT/7zB9IBRJJ9Kg/szkTMbssQxGZPmAifDkN0CaS3
+         V97xtY6veIAjTcFgZ8D3tbxa2sUllM8W0MuT0T7HZsE5+F18d+Wf+yaf3mPlB618DQ3H
+         Z2DQ==
+X-Gm-Message-State: AN3rC/4Ri8legqOa1kjqlx4e+X2N1DXHr1j7H2w3yd3GvIB3fQq5NYcN
+        XkE6kNcWIunnMQ==
+X-Received: by 10.84.168.5 with SMTP id e5mr3873647plb.181.1493260456591;
+        Wed, 26 Apr 2017 19:34:16 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:d550:ca2:cfe6:6d97])
+        by smtp.gmail.com with ESMTPSA id a184sm981810pfb.118.2017.04.26.19.34.15
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 26 Apr 2017 19:34:15 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 4/5] clone: add a --no-tags-submodules to pass --no-tags to submodules
+References: <20170426231236.27219-1-avarab@gmail.com>
+        <20170426231236.27219-5-avarab@gmail.com>
+Date:   Wed, 26 Apr 2017 19:34:14 -0700
+In-Reply-To: <20170426231236.27219-5-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 26 Apr 2017 23:12:35 +0000")
+Message-ID: <xmqqk266poih.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar,
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-On Wed, 2017-04-26 at 17:24 +0200, Ævar Arnfjörð Bjarmason wrote:
-> On Tue, Apr 25, 2017 at 6:43 AM, Liam Beguin <liambeguin@gmail.com> wrote:
-> > Add the 'rebase.abbrevCmd' boolean config option to allow `git rebase -i`
-> > to abbreviate the command-names in the instruction list.
-> > 
-> > This means that `git rebase -i` would print:
-> >     p deadbee The oneline of this commit
-> >     ...
-> > 
-> > instead of:
-> >     pick deadbee The oneline of this commit
-> >     ...
-> > 
-> > Using a single character command-name allows the lines to remain
-> > aligned, making the whole set more readable.
-> 
-> Aside from the existing comments about the commit message from others,
-> you should be noting that we *already* have these abbreviations for
-> all the todo list options, and we note this in append_todo_help.
-> 
-> 
-> > +rebase.abbrevCmd::
-> > +       If set to true, `git rebase -i` will abbreviate the command-names in the
-> > +       instruction list. This means that instead of looking like this,
-> > +
-> > [...]
-> > +rebase.abbrevCmd::
-> > +       If set to true, `git rebase -i` will abbreviate the command-names in the
-> > +       instruction list. This means that instead of looking like this,
-> > [...]
-> 
-> Better to split this out into a new *.txt file and use the include::*
-> facility (grep for it) rather than copy/pasting this entirely across
-> two files.
-> 
+> From: Brandon Williams <bmwill@google.com>
+>
+> Add a --no-tags-submodules which does for --no-tags what the existing
+> --shallow-submodules does for --depth, i.e. doing:
+>
+>     git clone --recurse-submodules --no-tags --no-tags-submodules <url>
+>
+> Will clone the superproject and all submodules with --no-tags
+> semantics.
+>
+> This change does not implement a submodule.*.tags config .gitmodules
+> configuration option corresponding to the existing submodule.*.shallow
+> facility, which would make --no-tags have full feature parity with
+> --shallow-submodules.
 
-Thanks for pointing this out, I'll update the documentation
+Shouldn't --no-tags automatically propagate down to submodules in
+--recurse-submodules mode instead?  I know --shallow-submodules
+exists but it looks to me more a misdesigned interface, rather than
+something we want to mimic in a new option.
 
-> >  OPTIONS
-> >  -------
-> >  --onto <newbase>::
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index 2c9c0165b5ab..9f3e82b79615 100644
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -1210,6 +1210,10 @@ else
-> >         revisions=$onto...$orig_head
-> >         shortrevisions=$shorthead
-> >  fi
-> > +
-> > +rebasecmd=pick
-> > +test "$(git config --bool --get rebase.abbrevCmd)" = true && rebasecmd=p
-> 
-> Rather than hardcoding "p" here maybe it would be worthhwile to make
-> that into a variable used both here and in append_todo_help, maybe
-> not...
-> 
+The design of the traditional "git submodule" support strived to
+keep the superproject and its submodules distinct and separately
+managed as much as possible, and I view the motivation behind the
+recent push of "--recurse-submodules" as an attempt to make them
+appear as seamless as possible, so I have a feeling that a new
+option (like "--no-tags") that is applied to the superproject, as
+long as it also makes sense to use it in submodules, should
+propagate down in that mode by default (and most likely
+unconditionally).  Those who want finer granularity of control can
+use the traditional "work with superproject, and then initialize and
+update the submodules you are interested in in any way you want
+individually" mode anyway.
 
-I'm not sure I understand, do you mean that the option should also affect the
-message added by append_todo_help ?
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> Code-by: Brandon Williams <bmwill@google.com>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Commit-message-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Git-Completion-Code-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Docs-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Tests-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-> >  format=$(git config --get rebase.instructionFormat)
-> >  # the 'rev-list .. | sed' requires %m to parse; the instruction requires %H to parse
-> >  git rev-list $merges_option --format="%m%H ${format:-%s}" \
-> > @@ -1228,7 +1232,7 @@ do
-> > 
-> >         if test t != "$preserve_merges"
-> >         then
-> > -               printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
-> > +               printf '%s\n' "${comment_out}${rebasecmd} $sha1 $rest" >>"$todo"
-> >         else
-> >                 if test -z "$rebase_root"
-> >                 then
-> > @@ -1246,7 +1250,7 @@ do
-> >                 if test f = "$preserve"
-> >                 then
-> >                         touch "$rewritten"/$sha1
-> > -                       printf '%s\n' "${comment_out}pick $sha1 $rest" >>"$todo"
-> > +                       printf '%s\n' "${comment_out}${rebasecmd} $sha1 $rest" >>"$todo"
-> >                 fi
-> >         fi
-> >  done
-> 
-> I haven't tried applying & running this patch, but it seems you
-> definitely missed the case where --autosquash will add fixup or
-> squash, that should be f or s with your patch, but you didn't change
-> that code. See the rearrange_squash function.
-> 
-> Ditto for turning "exec" into "e" with --exec.
-> 
+Is it just me who finds this way of attribution unwieldy?  I would
+have expected to see something like this at the end
 
-I noticed this yesterday, I'll add both cases the next iteration.
+	The main code is by Brandon, Ævar added the docs, tests and
+	completion and wrapped them up into a commit with a log
+	message.
 
-> But if the motivation for this entire thing is to make sure the
-> commands are aligned this doesn't fix that, because the sha1s can be
-> of different lengths. So as others have pointed out maybe this entire
-> thing should be dropped & replaced with some bool command to align the
-> todo list, maybe turning that on by default.
-> 
-> Unless the real unstated reason is to make this easier to edit in vim
-> or something, in which case this approach seems reasonable.
+before two s-o-b.
 
-Keeping things aligned was the first motivation but the fact that it also
-makes changing the action faster is also nice to have. I didn't think it
-would help justify the patch.
-The SHA1s not having the same length can easily be 'fixed' by setting a
-higher value for 'core.abbrev'. 
-
-Thanks, 
-Liam 
+> ---
+>  Documentation/git-clone.txt            | 11 +++++-
+>  builtin/clone.c                        |  6 +++
+>  builtin/submodule--helper.c            | 16 ++++++--
+>  contrib/completion/git-completion.bash |  1 +
+>  git-submodule.sh                       |  4 ++
+>  t/t5616-clone-submodules-tags.sh       | 72 ++++++++++++++++++++++++++++++++++
+>  6 files changed, 106 insertions(+), 4 deletions(-)
+>  create mode 100755 t/t5616-clone-submodules-tags.sh
+>
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index 83c8e9b394..4a0e4aa4f4 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -13,7 +13,8 @@ SYNOPSIS
+>  	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+>  	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+>  	  [--dissociate] [--separate-git-dir <git dir>]
+> -	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+> +	  [--depth <depth>] [--[no-]single-branch]
+> +	  [--no-tags] [--no-tags-submodules]
+>  	  [--recurse-submodules] [--[no-]shallow-submodules]
+>  	  [--jobs <n>] [--] <repository> [<directory>]
+>  
+> @@ -226,6 +227,10 @@ Can be used in conjunction with `--single-branch` to clone and
+>  maintain a branch with no references other than a single cloned
+>  branch. This is useful e.g. to maintain minimal clones of the default
+>  branch of some repository for search indexing.
+> ++
+> +
+> +If you want to clone submodules without tags provide the
+> +`--no-tags-submodules` option.
+>  
+>  --recurse-submodules[=<pathspec]::
+>  	After the clone is created, initialize and clone submodules
+> @@ -243,6 +248,10 @@ branch of some repository for search indexing.
+>  --[no-]shallow-submodules::
+>  	All submodules which are cloned will be shallow with a depth of 1.
+>  
+> +--no-tags-submodules::
+> +	All submodules which are cloned will be cloned with the
+> +	`--no-tags` option.
+> +
+>  --separate-git-dir=<git dir>::
+>  	Instead of placing the cloned repository where it is supposed
+>  	to be, place the cloned repository at the specified directory,
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 05f52d6f2b..5a945777a8 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -42,6 +42,7 @@ static int option_no_checkout, option_bare, option_mirror, option_single_branch
+>  static int option_local = -1, option_no_hardlinks, option_shared;
+>  static int option_no_tags;
+>  static int option_shallow_submodules;
+> +static int option_no_tags_submodules;
+>  static int deepen;
+>  static char *option_template, *option_depth, *option_since;
+>  static char *option_origin = NULL;
+> @@ -125,6 +126,8 @@ static struct option builtin_clone_options[] = {
+>  		 N_("don't clone any tags, and make later fetches not to follow them")),
+>  	OPT_BOOL(0, "shallow-submodules", &option_shallow_submodules,
+>  		    N_("any cloned submodules will be shallow")),
+> +	OPT_BOOL(0, "no-tags-submodules", &option_no_tags_submodules,
+> +		     N_("any cloned submodules will have no tags")),
+>  	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
+>  		   N_("separate git dir from working tree")),
+>  	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
+> @@ -761,6 +764,9 @@ static int checkout(int submodule_progress)
+>  		if (option_shallow_submodules == 1)
+>  			argv_array_push(&args, "--depth=1");
+>  
+> +		if (option_no_tags_submodules)
+> +			argv_array_push(&args, "--no-tags");
+> +
+>  		if (max_jobs != -1)
+>  			argv_array_pushf(&args, "--jobs=%d", max_jobs);
+>  
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 36e4231821..caa4d252ee 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -489,7 +489,7 @@ static int module_name(int argc, const char **argv, const char *prefix)
+>  
+>  static int clone_submodule(const char *path, const char *gitdir, const char *url,
+>  			   const char *depth, struct string_list *reference,
+> -			   int quiet, int progress)
+> +			   int quiet, int progress, int no_tags)
+>  {
+>  	struct child_process cp = CHILD_PROCESS_INIT;
+>  
+> @@ -499,6 +499,8 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+>  		argv_array_push(&cp.args, "--quiet");
+>  	if (progress)
+>  		argv_array_push(&cp.args, "--progress");
+> +	if (no_tags)
+> +		argv_array_push(&cp.args, "--no-tags");
+>  	if (depth && *depth)
+>  		argv_array_pushl(&cp.args, "--depth", depth, NULL);
+>  	if (reference->nr) {
+> @@ -623,6 +625,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  	struct strbuf sb = STRBUF_INIT;
+>  	struct string_list reference = STRING_LIST_INIT_NODUP;
+>  	char *sm_alternate = NULL, *error_strategy = NULL;
+> +	int no_tags = 0;
+>  
+>  	struct option module_clone_options[] = {
+>  		OPT_STRING(0, "prefix", &prefix,
+> @@ -643,6 +646,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  		OPT_STRING(0, "depth", &depth,
+>  			   N_("string"),
+>  			   N_("depth for shallow clones")),
+> +		OPT_BOOL(0, "no-tags", &no_tags,
+> +			 N_("don't clone any tags, and make later fetches not to follow them")),
+>  		OPT__QUIET(&quiet, "Suppress output for cloning a submodule"),
+>  		OPT_BOOL(0, "progress", &progress,
+>  			   N_("force cloning progress")),
+> @@ -680,7 +685,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+>  		prepare_possible_alternates(name, &reference);
+>  
+>  		if (clone_submodule(path, sm_gitdir, url, depth, &reference,
+> -				    quiet, progress))
+> +				    quiet, progress, no_tags))
+>  			die(_("clone of '%s' into submodule path '%s' failed"),
+>  			    url, path);
+>  	} else {
+> @@ -745,11 +750,12 @@ struct submodule_update_clone {
+>  	/* failed clones to be retried again */
+>  	const struct cache_entry **failed_clones;
+>  	int failed_clones_nr, failed_clones_alloc;
+> +	int no_tags;
+>  };
+>  #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+>  	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, \
+>  	NULL, NULL, NULL, \
+> -	STRING_LIST_INIT_DUP, 0, NULL, 0, 0}
+> +	STRING_LIST_INIT_DUP, 0, NULL, 0, 0, 0}
+>  
+>  
+>  static void next_submodule_warn_missing(struct submodule_update_clone *suc,
+> @@ -849,6 +855,8 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+>  		argv_array_pushl(&child->args, "--prefix", suc->prefix, NULL);
+>  	if (suc->recommend_shallow && sub->recommend_shallow == 1)
+>  		argv_array_push(&child->args, "--depth=1");
+> +	if (suc->no_tags)
+> +		argv_array_push(&child->args, "--no-tags");
+>  	argv_array_pushl(&child->args, "--path", sub->path, NULL);
+>  	argv_array_pushl(&child->args, "--name", sub->name, NULL);
+>  	argv_array_pushl(&child->args, "--url", sub->url, NULL);
+> @@ -988,6 +996,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+>  			    N_("parallel jobs")),
+>  		OPT_BOOL(0, "recommend-shallow", &suc.recommend_shallow,
+>  			    N_("whether the initial clone should follow the shallow recommendation")),
+> +		OPT_BOOL(0, "no-tags", &suc.no_tags,
+> +			 N_("don't clone any tags, and make later fetches not to follow them")),
+>  		OPT__QUIET(&suc.quiet, N_("don't print cloning progress")),
+>  		OPT_BOOL(0, "progress", &suc.progress,
+>  			    N_("force cloning progress")),
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 6da997cf42..08fb1319c3 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1314,6 +1314,7 @@ _git_clone ()
+>  			--recurse-submodules
+>  			--no-single-branch
+>  			--shallow-submodules
+> +			--no-tags-submodules
+>  			"
+>  		return
+>  		;;
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index c0d0e9a4c6..3371775b0b 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -565,6 +565,9 @@ cmd_update()
+>  		--depth=*)
+>  			depth=$1
+>  			;;
+> +		--no-tags)
+> +			no_tags=1
+> +			;;
+>  		-j|--jobs)
+>  			case "$2" in '') usage ;; esac
+>  			jobs="--jobs=$2"
+> @@ -601,6 +604,7 @@ cmd_update()
+>  		${reference:+"$reference"} \
+>  		${depth:+--depth "$depth"} \
+>  		${recommend_shallow:+"$recommend_shallow"} \
+> +		${no_tags:+--no-tags} \
+>  		${jobs:+$jobs} \
+>  		"$@" || echo "#unmatched" $?
+>  	} | {
+> diff --git a/t/t5616-clone-submodules-tags.sh b/t/t5616-clone-submodules-tags.sh
+> new file mode 100755
+> index 0000000000..3c88265352
+> --- /dev/null
+> +++ b/t/t5616-clone-submodules-tags.sh
+> @@ -0,0 +1,72 @@
+> +#!/bin/sh
+> +
+> +test_description='Test cloning of repos with submodules & the --[no-]tags option'
+> +
+> +. ./test-lib.sh
+> +
+> +pwd=$(pwd)
+> +
+> +test_expect_success 'setup' '
+> +	git checkout -b master &&
+> +	test_commit commit1 &&
+> +	test_commit commit2 &&
+> +	mkdir sub &&
+> +	(
+> +		cd sub &&
+> +		git init &&
+> +		test_commit subcommit1 &&
+> +		test_commit subcommit2 &&
+> +		test_commit subcommit3
+> +	) &&
+> +	git submodule add "file://$pwd/sub" sub &&
+> +	git commit -m "add submodule" &&
+> +	git tag addsubcommit1
+> +'
+> +
+> +test_expect_success 'tags clone implies tags submodule' '
+> +	test_when_finished "rm -rf super_clone" &&
+> +	git clone --recurse-submodules "file://$pwd/." super_clone &&
+> +	git -C super_clone for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 3 tags &&
+> +	git -C super_clone/sub for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 3 tags
+> +'
+> +
+> +test_expect_success 'no-tags clone with no-tags submodule' '
+> +	test_when_finished "rm -rf super_clone" &&
+> +	git clone --recurse-submodules --no-tags --no-tags-submodules "file://$pwd/." super_clone &&
+> +	git -C super_clone for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 0 tags &&
+> +	git -C super_clone/sub for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 0 tags
+> +
+> +'
+> +
+> +test_expect_success 'no-tags clone does not imply no-tags submodule' '
+> +	test_when_finished "rm -rf super_clone" &&
+> +	git clone --recurse-submodules --no-tags "file://$pwd/." super_clone &&
+> +	git -C super_clone for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 0 tags &&
+> +	git -C super_clone/sub for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 3 tags
+> +'
+> +
+> +test_expect_success 'no-tags clone with tags submodule' '
+> +	test_when_finished "rm -rf super_clone" &&
+> +	git clone --recurse-submodules --no-tags --tags-submodules "file://$pwd/." super_clone &&
+> +	git -C super_clone for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 0 tags &&
+> +	git -C super_clone/sub for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 3 tags
+> +'
+> +
+> +test_expect_success 'tags clone with no-tags submodule' '
+> +	test_when_finished "rm -rf super_clone" &&
+> +	git clone --recurse-submodules --tags --no-tags-submodules "file://$pwd/." super_clone &&
+> +	git -C super_clone for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 3 tags &&
+> +	git -C super_clone/sub for-each-ref --format="%(refname:strip=2)" refs/tags/ >tags &&
+> +	test_line_count = 0 tags
+> +'
+> +
+> +test_done
