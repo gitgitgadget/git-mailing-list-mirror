@@ -6,103 +6,68 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C84BF207D6
-	for <e@80x24.org>; Thu, 27 Apr 2017 20:10:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FCDB207D6
+	for <e@80x24.org>; Thu, 27 Apr 2017 20:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753896AbdD0UKD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 16:10:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41313 "EHLO cloud.peff.net"
+        id S1756310AbdD0USH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 16:18:07 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41317 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752615AbdD0UKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 16:10:02 -0400
-Received: (qmail 20029 invoked by uid 109); 27 Apr 2017 20:09:59 -0000
+        id S1754875AbdD0USH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 16:18:07 -0400
+Received: (qmail 20559 invoked by uid 109); 27 Apr 2017 20:18:06 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 20:09:59 +0000
-Received: (qmail 8699 invoked by uid 111); 27 Apr 2017 20:10:25 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 20:18:06 +0000
+Received: (qmail 5025 invoked by uid 111); 27 Apr 2017 20:18:32 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 16:10:25 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Apr 2017 16:09:57 -0400
-Date:   Thu, 27 Apr 2017 16:09:57 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 16:18:32 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Apr 2017 16:18:04 -0400
+Date:   Thu, 27 Apr 2017 16:18:04 -0400
 From:   Jeff King <peff@peff.net>
-To:     Robert Stryker <rstryker@redhat.com>
+To:     Andrew Watson <andwatsresearch@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: 30min Script in git 2.7.4 takes 22+ hrs in git 2.9.3
-Message-ID: <20170427200956.ssubj74fkxxi6wjk@sigill.intra.peff.net>
-References: <CA+Up40iusByn-R55=2=2Ae8KH1mkj4hGF_E9dX3vn1vboyMwMw@mail.gmail.com>
+Subject: Re: push fails with return code 22
+Message-ID: <20170427201804.3abt5ht6dkwwqo4r@sigill.intra.peff.net>
+References: <CAH6sfJUn99ezs-uZuYVj15qOeMv79ji7r0Ldvoreef0z3LzG8Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+Up40iusByn-R55=2=2Ae8KH1mkj4hGF_E9dX3vn1vboyMwMw@mail.gmail.com>
+In-Reply-To: <CAH6sfJUn99ezs-uZuYVj15qOeMv79ji7r0Ldvoreef0z3LzG8Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Apr 27, 2017 at 12:36:54PM -0400, Robert Stryker wrote:
+On Thu, Apr 27, 2017 at 02:37:19PM -0400, Andrew Watson wrote:
 
-> The problem:  the script takes 30 minutes for one environment
-> including git 2.7.4, and generates a repo of about 30mb.   When run by
-> a coworker using git 2.9.3, it takes 22+ hours and generates a 10gb
-> repo.
+> I'm trying to setup git with Smart HTTP so we can move off of SVN.
 > 
-> Clearly something here is very wrong. Either there's a pretty horrible
-> regression or my idea is a pretty bad one ;)
+> I've used the blog post: https://git-scm.com/blog/2010/03/04/smart-http.html
 
-The large size makes me think that you're getting an auto-gc in the
-middle that is exploding the unreachable objects into loose storage.
-This can happen when objects are ready to be pruned, but Git holds on to
-them for a grace periods (2 weeks by default) as a precaution against
-simultaneous use.
+I'm not sure how that post will have aged. You might check your setup
+against the documentation in "git help http-backend", which is kept more
+up to date.
 
-Try doing:
+> My system is CentOS 7 which reports git version 1.8.3.1 and Apache
+> 2.4.6. I also tried on Ubuntu 16.04 with git 2.7.4 and Apache 2.4.18.
+> 
+> Using GIT_CURL_VERBOSE I can see it fail after a PROPFIND.
 
-  git config gc.auto 0
+That means the client isn't using smart-http. PROPFIND is part of the
+"dumb" http push-over-webdav.
 
-in the repositories before the slow step. Or alternatively, try:
+So the problem is likely in the very first request Git makes to
+/info/refs/?service=git-receive-pack. The response there is what the
+client uses to decide whether the server understands smart-http or not.
 
-  git config gc.pruneExpire now
+> My stackoverflow post with all the debug info I could think of is
+> here: http://stackoverflow.com/questions/43643152/git-push-results-in-return-code-22
 
-which will continue to do the auto-gc, but throw away unreachable
-objects immediately.
+I notice the response for that first request has:
 
-Or alternatively, we're failing to run gc at all and just getting tons
-of loose objects that need packed. What does running "git gc --auto" say
-if you run it in the slow repository? Does it improve the disk space
-problem?
+  Content-Length: 0
+  Content-Type: text/plain; charset=UTF-8
 
-Even if one of those helps, I'd still like to know why the gc behavior
-changed between the two versions. The best way to do that is via
-git-bisect.
-
-You should be able to do:
-
-  # make sure you can compile git from source
-  git clone git://git.kernel.org/pub/scm/git/git.git
-  cd git
-  make
-
-  git bisect start
-  git bisect good v2.7.4
-  git bisect bad v2.9.3
-
-  # for each commit bisect dumps you at, run your test. The bin-wrappers
-  # part is important, because it sets up the environment to run
-  # sub-programs from the built version. And as pull is a shell script,
-  # the problem is likely in a sub-program.
-  /path/to/git/bin-wrappers/git pull ...
-
-  # And then mark whether it was fast or slow. You obviously don't need
-  # to run the program to completion; just enough to decide if it's fast
-  # or slow (which might be better done by observing disk space rather
-  # than timing).
-  git bisect good ;# or "bad" if it was slow
-
-It's going to be tedious even if it takes 30 minutes per iteration. It
-might be worth trying to adjust the test case for smaller repos. :)
-
-It may also be worth trying the test with the latest tip of "master".
-v2.9.3 is several versions behind, and it's possible that something may
-have been fixed since then (nothing comes immediately to mind, but it's
-worth a shot).
+which implies to me that the git-http-backend CGI isn't being run.
 
 -Peff
