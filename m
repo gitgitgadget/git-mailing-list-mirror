@@ -2,74 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38DFC1FC3E
-	for <e@80x24.org>; Thu, 27 Apr 2017 04:56:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8CB1FC3E
+	for <e@80x24.org>; Thu, 27 Apr 2017 04:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751868AbdD0Ez6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 00:55:58 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:53205 "EHLO
-        alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751601AbdD0Ez4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Apr 2017 00:55:56 -0400
-X-AuditID: 1207440d-de7ff70000000e33-66-590179d81d13
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 68.97.03635.8D971095; Thu, 27 Apr 2017 00:55:55 -0400 (EDT)
-Received: from [192.168.69.190] (p5B104215.dip0.t-ipconnect.de [91.16.66.21])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v3R4to8g018647
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-        Thu, 27 Apr 2017 00:55:51 -0400
-Subject: Re: [PATCH 38/53] refs: convert struct ref_update to use struct
- object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
- <20170423213453.253425-39-sandals@crustytoothpaste.net>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1?= =?UTF-8?Q?y?= 
-        <pclouds@gmail.com>
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Message-ID: <c68038fc-5014-8b48-0ea3-a26a54e7d353@alum.mit.edu>
-Date:   Thu, 27 Apr 2017 06:55:49 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Icedove/45.6.0
+        id S1753851AbdD0E5h convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 27 Apr 2017 00:57:37 -0400
+Received: from bouvier.getmail.no ([84.210.184.8]:53313 "EHLO
+        bouvier.getmail.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752029AbdD0E5g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 00:57:36 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by bouvier.getmail.no (Postfix) with ESMTP id 05E9144CA6;
+        Thu, 27 Apr 2017 06:57:33 +0200 (CEST)
+Received: from bouvier.getmail.no ([127.0.0.1])
+        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id I3d3L9RcCDkM; Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+        by bouvier.getmail.no (Postfix) with ESMTP id 896A644DA3;
+        Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at bouvier.get.c.bitbit.net
+Received: from bouvier.getmail.no ([127.0.0.1])
+        by localhost (bouvier.get.c.bitbit.net [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id uAuJA-ZNBSCT; Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
+Received: from perkele.intern.softwolves.pp.se (cm-84.209.33.229.getinternet.no [84.209.33.229])
+        by bouvier.getmail.no (Postfix) with ESMTPSA id 5E75544CA6;
+        Thu, 27 Apr 2017 06:57:32 +0200 (CEST)
+Received: from peter (helo=localhost)
+        by perkele.intern.softwolves.pp.se with local-esmtp (Exim 4.84_2)
+        (envelope-from <peter@softwolves.pp.se>)
+        id 1d3bUi-0001Fj-8i; Thu, 27 Apr 2017 06:57:32 +0200
+Date:   Thu, 27 Apr 2017 05:57:32 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
+To:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Keith Goldfarb <keith@blackthorn-media.com>
+Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
+In-Reply-To: <87470c8c-e061-e4b3-42fe-84a30858fc0d@web.de>
+Message-ID: <alpine.DEB.2.11.1704270552590.4681@perkele.intern.softwolves.pp.se>
+References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org> <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
+ <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org> <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se> <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de> <85f2b6d1-107b-0624-af82-92446f28269e@web.de> <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
+ <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se> <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de> <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se> <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
+ <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se> <87470c8c-e061-e4b3-42fe-84a30858fc0d@web.de>
+User-Agent: Alpine 2.11 (DEB 23 2013-08-11)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 MIME-Version: 1.0
-In-Reply-To: <20170423213453.253425-39-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrPIsWRmVeSWpSXmKPExsUixO6iqHu7kjHSoPmmoEXXlW4mi+4pbxkt
-        frT0MFu0zfzB5MDisfzmXyaPnbPusns8693D6PF5k1wASxSXTUpqTmZZapG+XQJXxv75v9kL
-        upkq3p6/xdjAeJWxi5GTQ0LAROLaymlMXYxcHEICO5gkNqz6yg6SEBI4yySx7jc3iC0sECLR
-        cOcaC4gtIuAlMf/RDFaImhqJxs/vwWxmgQqJtw2n2UBsNgFdiUU9zUwgNq+AvcSsJ//BbBYB
-        VYmuDXfBbFGgmXMWPmCEqBGUODnzCdh8TgEXieY7PSwQM/Ukdlz/BTVfXmL72znMExj5ZyFp
-        mYWkbBaSsgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI30cjNL9FJTSjcxQsKWdwfj/3Uy
-        hxgFOBiVeHgdNjJECrEmlhVX5h5ilORgUhLl5fZjjBTiS8pPqcxILM6ILyrNSS0+xCjBwawk
-        wpteCJTjTUmsrEotyodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBwKEnwVlYANQoWpaan
-        VqRl5pQgpJk4OEGG8wAN9wCp4S0uSMwtzkyHyJ9i1OWYc+/reyYhlrz8vFQpcd5YkCIBkKKM
-        0jy4ObB084pRHOgtYd4JIFU8wFQFN+kV0BImoCUsLgwgS0oSEVJSDYyWU7xWbp5u+U96McuH
-        XYf2/JcMa3Ofq1n19rc/5zNJl2uPlWLM9epSX93kdK0yPbDROCF599yG65eVhL97+catUT7p
-        xzFzIr//RWuvzU17H8y5FBwg86AoXo3D/5r1hXre1I9yLD4d9VdmV3kf8D5tdq0kPyy3TkHR
-        YeLxKQ8va0seXHTqY68SS3FGoqEWc1FxIgAiSEFxEgMAAA==
+Content-Type: TEXT/PLAIN; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/23/2017 11:34 PM, brian m. carlson wrote:
-> Convert struct ref_array_item to use struct object_id by changing the
-> definition and applying the following semantic patch, plus the standard
-> object_id transforms:
-> [...]
+René Scharfe:
 
-This commit LGTM.
+> Sizes can be stored in zip64 entries even if they are lower (from a 
+> paragraph about the data descriptor):
+>
+> "4.3.9.2 When compressing files, compressed and uncompressed sizes
+>      should be stored in ZIP64 format (as 8 byte values) when a
+>      file's size exceeds 0xFFFFFFFF.   However ZIP64 format may be
+>      used regardless of the size of a file."
 
-Michael
+That is only for the data descriptor. And this is the really confusing 
+one as it only has the sizes, and do not have an indication anywhere 
+of which format it is in. So they are either 32-bit or 64-bit, 
+depending on whether it is a ZIP64 format archive, but it doesn't 
+define how to tell.
 
+For regular entries, the text is a bit clearer about the -1, though.
 
+> Windows XP.  Don't laugh. ;)
+
+You can always install 7-zip or something to extract on XP.
+
+> What do other archivers do?
+
+You should compare with what bsdtar (libarchive) does in zip64 mode. 
+It also only ever does streaming mode (with data descriptors and 
+such), and it does zip64.
+
+> But I think a more important question is: Can the generated files be 
+> extracted by popular tools (most importantly Windows' built-in 
+> functionality, I guess)?
+
+OK, so only enable zip64 mode if there are files >4G or the archive 
+ends up being >4G. But the question is how we can tell, especially in 
+streaming mode, and especially if data descriptors are magical...
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
