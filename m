@@ -2,76 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82FE7207D6
-	for <e@80x24.org>; Thu, 27 Apr 2017 21:46:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04732207D6
+	for <e@80x24.org>; Thu, 27 Apr 2017 22:01:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423167AbdD0VqK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 17:46:10 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:33238 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1423159AbdD0VqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 17:46:07 -0400
-Received: by mail-pf0-f170.google.com with SMTP id i4so1963787pfc.0
-        for <git@vger.kernel.org>; Thu, 27 Apr 2017 14:46:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=nZ+LaAl7WBa+b8441Ztznue53LY22Rz6I8vVPKFLziI=;
-        b=Fa3CJWHzn2dzyGpawohvDamjXvZs5OW0lal3GRNn1q/shZLbxw3adfa19j7rVFi4QJ
-         6x+t8G97q/9a/OS6Q1fimP1JDE5iKbceCAyq65BRLAPYZXFEdvvcsWCac8J7n9eUt3pM
-         /eSrmEZCzJNgivrC/jGf9LG95Y4m6bz2kbQs6ltDEYyP5DKmjQxrI+yRLp15Jm/0MY7y
-         6lCPKxB76J6hFQZRyQBJcFjYoox8lFAV4p4HQJRMcLqwyJymE2AgewdX/FVj8bRFebF7
-         9hu/yTFnl1FXkS1Bs0et/VGWxrHxBjmC0cXetLhWFf8RrilJyNiA7o/QLNMAY2D1ipOv
-         v24w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=nZ+LaAl7WBa+b8441Ztznue53LY22Rz6I8vVPKFLziI=;
-        b=nhk+vJ8zdLe1zER4Xfes+o0lItOeYagJTRQMRladgG6ffj41bfnng38ZDJcgO85pV2
-         t8HhO/AaMwt79RN7RNwS6FcZkxydH1ruxptIfQWwc35vxvhc7q9/KcIGKOmDPk1CWRM/
-         GtJJ55IoNA3hgycHgLb6FpAeg73M7hsc/9JYCJ369wvww4iggBRrAccUFqBd+5wBrLQY
-         /11fFH9IAMoxHz41DNPxWN/55sJGXgekY4ynYnJAI7ZuxQb7Q5l62V77G3DsT8nuTETt
-         Bf2Tdy0QpbxL0Q0PpUIs5D0QlzzqU2vXLTR60W6hvrnLl+H1jZ4WppYUUTzfVdl42Mib
-         mDBQ==
-X-Gm-Message-State: AN3rC/6/fRbd61qCcANK0uWExWo4J4Q7ifwBuC/J4/WZjbSUMXiDQRZ/
-        Vpte9W2+8N0gUu43xQQxZlo5tRTRe2JY
-X-Received: by 10.99.56.66 with SMTP id h2mr8411248pgn.40.1493329566988; Thu,
- 27 Apr 2017 14:46:06 -0700 (PDT)
+        id S1755559AbdD0WBf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 18:01:35 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53460 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754292AbdD0WBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 18:01:34 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Me8di-1dSYIM075C-00PxCb; Fri, 28
+ Apr 2017 00:01:24 +0200
+Date:   Fri, 28 Apr 2017 00:01:22 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 5/9] t3404: relax rebase.missingCommitsCheck tests
+In-Reply-To: <xmqqmvb2o2x7.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1704272345370.3480@virtualbox>
+References: <cover.1493128210.git.johannes.schindelin@gmx.de> <cover.1493207864.git.johannes.schindelin@gmx.de> <975e7749c2fba9dc263cca1d04879c703c0b3c66.1493207864.git.johannes.schindelin@gmx.de> <xmqqmvb2o2x7.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Thu, 27 Apr 2017 14:46:06 -0700 (PDT)
-In-Reply-To: <20170423213453.253425-54-sandals@crustytoothpaste.net>
-References: <20170423213453.253425-1-sandals@crustytoothpaste.net> <20170423213453.253425-54-sandals@crustytoothpaste.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 27 Apr 2017 14:46:06 -0700
-Message-ID: <CAGZ79kant7b0-+DB3Q6a4Brta8LmdrZdgdkwQLvWc5YNxv5eCg@mail.gmail.com>
-Subject: Re: [PATCH 53/53] object: convert parse_object* to take struct object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:+3mtui/hIHwAEe2apAIuWBP3rcUdcYRLPJ5VyYS2Aew8u964isA
+ bOSyR+bvoBcZ3hqJv3TJMuaVjOUmHTtAiUsFGUMpmopERvGbYDEFunQdrglOLo2hidJqaEe
+ 7Sf2kb+aC2rtaqaG/eruO+1MCigg5kfLrofzbnMhatGDAjuwpTRlWYtJg/ATYUWfKetfbvp
+ Dbhtv1J4/w0EiiNPy4TPA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EWEwRJquDsY=:kLx/OxPP8Nmn6fhhmQQ96Y
+ LG2K7cSC8YDeIWREEqpL6rDks7gnKnEpVvP4aAB4bQ8aiLi3Fx5X+ozLhyXBdpJDp+iei7gn/
+ PQTQ6mHIik++/ycTU6Ik4ELm2Upm0O5lWL4OqT0W1SWstqXhLFT193l/BBeA3W+YnGUt/EZ3/
+ /E2OcL1W4bKkSixYCPsSR/pC4Rf1SE9kEURQLUriEQerXQ6+Xqxyne3GNyiUSuSkHpMgkef6s
+ 7tpBCuhcskFjce8R22O/RdYY7J6XYqbEpASY+HxaT0SqKsxxe7xICDz74eAx4GVF/2u96a8wW
+ 7KYuTxtvVTubCxUZlRxKYs+w6h3C+EBPYhlX273AoTY4Z5SsQ/7ANvf4W2SzizLmdQGVzja5Y
+ PdxjUt4FvLuFi7LwI68zVVe1lHjbMsSQPxFPNwz9qDh4O6px+a8JTVkAQAAIUd/Gp2ykV3Jai
+ 1hINCYmnnOe/spjBmB0MHTe18lrRgf9ziDzLtUpj+cUHnZpO8jvvJptjYqLt9LSiD7owWjkwc
+ DUpGgFqLLFkVy2b9Uprku5A81+3y53TEsk9ZK7v88hdJ5wCi5I/1HPTDh7J408/RkbBh2STYJ
+ RzV125HKejXXjwvgRxQId/DlFUVN4MJAv3ZQ2JSwo+GgYIk427OoZeXCn/3KBJY6CdZ59wu/G
+ Tf3eb7dxspQafXEs3Ysl57zXtZ+ZMulDB8OVKDVCcG6OsexNTxTZHnrmSgAru+YjdPVSOnlq+
+ EMGKzX9z8/Ud46FtMHNPRVQCUZuGwXaRzHgbEJ1v001GZyLEnvHApyF4W6hdcaTSmdFQSFnWA
+ iDiznpV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Apr 23, 2017 at 2:34 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> Make parse_object, parse_object_or_die, and parse_object_buffer take a
-> pointer to struct object_id.  Remove the temporary variables inserted
-> earlier, since they are no longer necessary.  Transform all of the
-> callers using the following semantic patch:
+Hi Junio,
 
-I have finally reviewed the rest of the series and did not spot any other
-things to raise.
+On Wed, 26 Apr 2017, Junio C Hamano wrote:
 
-Thanks,
-Stefan
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> 
+> > These tests were a bit anal about the *exact* warning/error message
+> > printed by git rebase. But those messages are intended for the *end
+> > user*, therefore it does not make sense to test so rigidly for the
+> > *exact* wording.
+> >
+> > In the following, we will reimplement the missing commits check in
+> > the sequencer, with slightly different words.
+> 
+> Up to this point I thought your strategy was to mimic the original
+> as closely as possible, and changes to update (and/or improve) the
+> end user experience (like rewording messages) are left as a separate
+> step.  Changes to the test can be used to demonstrate the improved
+> end-user experience that way, and I found it a good way to structure
+> your series.  Is there a technical reason why you deviate from that
+> pattern here?  
+> 
+> Just being curious, as I do not particularly mind seeing things done
+> differently (especially if there is a good reason).
+
+Yes, I remember the qualms I had about this patch. It was simply too
+cumbersome to keep the exact error message, as it would have meant to
+deviate purposefully from the way we do things in C.
+
+In our C code, we error out using the error() function, with translateable
+messages. That is what the todo list parsing code in sequencer.c does:
+
+	error: invalid line 4: badcmd 0547e3f1350d D
+
+It even prints out the line number, which I think is a nice touch.
+
+Compare that to the non-standard way the rebase -i *shell* code reported
+the failure:
+
+	Warning: the command isn't recognized in the following line:
+	 - badcmd 0547e3f1350d D
+
+First of all, it reported it as a "Warning". Which is wrong, as it is a
+fatal error, and it was always treated as such.
+
+Second, it uses a capitalized prefix, which not even our warning()
+function does.
+
+Third, it uses two lines, and then indents the offending line with a
+leading dash (as if we were in the middle of an enumeration).
+
+I would have added that the previous message also imitated Lore in that it
+uses a contraction, but I was shocked to learn through a simple git grep
+that plenty of our error messages use that style, too.
+
+I could have simply re-written the error() as an `fprintf(stderr,
+"Warning: ...");` but that was just too inconsistent for my taste.
+
+Hence I settled for relaxing the error message, which I had already done
+much earlier so that running the test with a `set -x` inserted somewhere
+into git-rebase--interacive.sh would still work.
+
+Ciao,
+Dscho
