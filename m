@@ -2,82 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2635C207E4
-	for <e@80x24.org>; Thu, 27 Apr 2017 09:04:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6182D207E4
+	for <e@80x24.org>; Thu, 27 Apr 2017 09:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938506AbdD0JEc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 05:04:32 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41155 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S933115AbdD0JEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 05:04:31 -0400
-Received: (qmail 5784 invoked by uid 109); 27 Apr 2017 09:04:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 09:04:26 +0000
-Received: (qmail 8361 invoked by uid 111); 27 Apr 2017 09:04:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 27 Apr 2017 05:04:52 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Apr 2017 05:04:24 -0400
-Date:   Thu, 27 Apr 2017 05:04:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stephen Kent <smkent@smkent.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] status: add color config slots for branch info in
- "--short --branch"
-Message-ID: <20170427090423.amjqi7ca4xl7pzax@sigill.intra.peff.net>
-References: <201704939828871.4296cfa6a746a5004d28db265800a@localhost>
+        id S1031516AbdD0JJV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 05:09:21 -0400
+Received: from mx2.suse.de ([195.135.220.15]:34700 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1031467AbdD0JJT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 05:09:19 -0400
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id 2D2B375012;
+        Thu, 27 Apr 2017 09:09:18 +0000 (UTC)
+Subject: Re: [PATCH] Add --indent-heuristic to bash completion.
+To:     Stefan Beller <sbeller@google.com>
+References: <bbcbdf11-5065-8fcb-d78e-74db03814781@suse.cz>
+ <CAGZ79kY2dmec17qdbpTqOx7Uro7X_UAyo0be5a08bdZyykA2nw@mail.gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
+Message-ID: <71692231-0a76-99f7-3577-9076b0f2e8ad@suse.cz>
+Date:   Thu, 27 Apr 2017 11:09:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
+In-Reply-To: <CAGZ79kY2dmec17qdbpTqOx7Uro7X_UAyo0be5a08bdZyykA2nw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <201704939828871.4296cfa6a746a5004d28db265800a@localhost>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 21, 2017 at 10:42:02PM -0700, Stephen Kent wrote:
-
-> Add color config slots to be used in the status short-format when
-> displaying local and remote tracking branch information.
+On 04/26/2017 09:38 PM, Stefan Beller wrote:
+> On Tue, Apr 25, 2017 at 4:37 AM, Martin Liška <mliska@suse.cz> wrote:
+>> Hello.
+>>
+>> The patch adds BASH completion for a newly added option.
+>>
 > 
-> Signed-off-by: Stephen Kent <smkent@smkent.net>
+> The looks good, though the format is unusual. (We prefer the
+> format to be inline instead of an attachment)
 
-This looks good to me, and I'd be happy if we took it as-is.
+Good, adding inline version.
+I've read Documentation/SubmittingPatches, can you please help me which
+maintainer should I CC?
 
-But...
+Martin
+---
+ contrib/completion/git-completion.bash | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-> index fb00e6d..7d42085 100755
-> --- a/t/t7508-status.sh
-> +++ b/t/t7508-status.sh
-> @@ -610,7 +610,8 @@ test_expect_success 'status --porcelain ignores relative paths setting' '
->  test_expect_success 'setup unique colors' '
->  
->  	git config status.color.untracked blue &&
-> -	git config status.color.branch green
-> +	git config status.color.branch green &&
-> +	git config status.color.localBranch yellow
->  
->  '
->  
-> @@ -675,7 +676,7 @@ test_expect_success 'status -s with color.status' '
->  '
->  
->  cat >expect <<\EOF
-> -## <GREEN>master<RESET>
-> +## <YELLOW>master<RESET>
-
-As we discussed elsewhere, it would be nice if this tested remoteBranch,
-too. IMHO the simplest thing to is to rebase it on the t7508 update I
-just posted.
-
-The other option is to add config for remoteBranch which would do
-nothing for now, and then resolve it to check the correct colors when
-the two topics are merged (since the test will start failing then).
-That seems unnecessarily confusing.
-
--Peff
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 1150164d5..8fb25594c 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1395,7 +1395,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
+ 			--quiet --ext-diff --no-ext-diff
+ 			--no-prefix --src-prefix= --dst-prefix=
+ 			--inter-hunk-context=
+-			--patience --histogram --minimal
++			--patience --histogram --indent-heuristic --minimal
+ 			--raw --word-diff --word-diff-regex=
+ 			--dirstat --dirstat= --dirstat-by-file
+ 			--dirstat-by-file= --cumulative
+@@ -1482,6 +1482,7 @@ __git_format_patch_options="
+ 	--not --all --cover-letter --no-prefix --src-prefix= --dst-prefix=
+ 	--inline --suffix= --ignore-if-in-upstream --subject-prefix=
+ 	--output-directory --reroll-count --to= --quiet --notes
++	--indent-heuristic
+ "
+ 
+ _git_format_patch ()
+@@ -1681,6 +1682,7 @@ __git_log_common_options="
+ 	--min-age= --until= --before=
+ 	--min-parents= --max-parents=
+ 	--no-min-parents --no-max-parents
++	--indent-heuristic
+ "
+ # Options that go well for log and gitk (not shortlog)
+ __git_log_gitk_options="
+-- 
+2.12.2
