@@ -2,88 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 868C61FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 11:02:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B9BD1FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 11:08:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1425774AbdD1LCx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 07:02:53 -0400
-Received: from mout.gmx.net ([212.227.17.21]:51719 "EHLO mout.gmx.net"
+        id S1034269AbdD1LIc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 07:08:32 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41647 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1422810AbdD1LCv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 07:02:51 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyVcA-1e8nee24jG-015uUu; Fri, 28
- Apr 2017 13:02:34 +0200
-Date:   Fri, 28 Apr 2017 13:02:19 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 20/26] line-log: avoid memory leak
-In-Reply-To: <4ae94881-305f-380b-e786-c7f4ea5735e3@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1704281301530.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <0051da81b5cffe53122c036122402418c7f8d55f.1493237937.git.johannes.schindelin@gmx.de> <4ae94881-305f-380b-e786-c7f4ea5735e3@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1032305AbdD1LIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 07:08:31 -0400
+Received: (qmail 12859 invoked by uid 109); 28 Apr 2017 11:08:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Apr 2017 11:08:29 +0000
+Received: (qmail 18678 invoked by uid 111); 28 Apr 2017 11:08:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Apr 2017 07:08:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Apr 2017 07:08:27 -0400
+Date:   Fri, 28 Apr 2017 07:08:27 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/26] Check for EOF while parsing mails
+Message-ID: <20170428110827.7kiwidz7ks3o2d2o@sigill.intra.peff.net>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de>
+ <1fb841cee32996ee9194c2bd33b9dfe74cc37726.1493237937.git.johannes.schindelin@gmx.de>
+ <20170427062114.p367j6rojnw4aj5r@sigill.intra.peff.net>
+ <alpine.DEB.2.20.1704281241260.3480@virtualbox>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:q2wV3/JflbyeCbz3gIcHmpk/XuMy0O+deRw6AADB0N0aHcR66Wa
- KvRNALvh6vEn7yHNoHwkkEb5trumNwhCPhTS0KXfF0oADCBmnpAOMM5AgGx4OzV5RJ+H8f6
- uGcUuBNd4siXoucMP/zxll374f35K1nBQvWG3wEt6m7PvzRpQghcDX307y+2Yc1oZMtUGO/
- whqeV83WCM4okbKumlR9Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bR50MWiUPiA=:6sc/4TV50q4G06no7W3HLZ
- j+RXGGI6H6i8aE/z0VEpkmVGsEAkH/Ma6f01SkLNnWIMN6RYtEYqaCQJXFhj99cmvGaL8H/Ep
- 9ijLXYgjHNPR6f1z7IMQx+0b/3nEecYdWEoeXqlAdUmbD0Rf1JZ2Wy/DSeJawdCkp0tGh3rhe
- 86SKvKZRQei/M4s28e9TmfsA3sVtG6Qebo+fwuRpfjlzLO6w4jIJJn/fcECyeUrJFdDqpiTX/
- 08JLCH9Kl7SMvYjOEnZM50H5tagB3vE1VSeSjli7+5QZ3N9FHPn37kmDuN4UDoFL9IRw5xUCJ
- cajCcZoU8SPUvVZSE93mSrDs6+P62AhIY4txgkvCci2sQRxdLfWbvQof5OwPd357a8hhrQh3u
- MPunLADpNQ3knA9C+LEDLwlcwm9Yk+benA58X6w31vw6zU+bUJLqgSSxZ5du5midsQu+FUfRY
- D8WplcK2eMyJRsa0LeSkp5KHQosXahT5VqoVLNV0TQKWXCx+L7kgG5qA0UNlXBzqrqQSLxlkS
- KcGDguVDXDM283H7VFBNjSwANG7W5RfKS/z4EB6pUeQG27gGje7XvmtS2wmbk31LlJ6HXdCIi
- LKYnXAxamfqlWW51W9ZN2A5wdZVO4AGUbyp9SyGNxDHRUQE0juebej9CnkcIrI/+02VzpKKXp
- 7JE2lto/aGjJ4feLF/dvbYXKhQmNgrf4ry1NQKvkGO1JnGGZ3hAOS0Swm+J+iGqy1ojXAJXbf
- UE7x5hh2GbUQQHj67+fQkX0WwYBpbNOA3kQ7JjqaXL0+MZ0Vk6Kak3upAPcYy7tFeZ9WuVYAx
- Cza7y0H
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.20.1704281241260.3480@virtualbox>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+On Fri, Apr 28, 2017 at 12:44:52PM +0200, Johannes Schindelin wrote:
 
-On Thu, 27 Apr 2017, Johannes Sixt wrote:
-
-> Am 26.04.2017 um 22:21 schrieb Johannes Schindelin:
-> > Discovered by Coverity.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  line-log.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > diff --git a/line-log.c b/line-log.c
-> > index a23b910471b..19d46e9ea2c 100644
-> > --- a/line-log.c
-> > +++ b/line-log.c
-> > @@ -1125,6 +1125,7 @@ static int process_ranges_ordinary_commit(struct
-> > rev_info *rev, struct commit *c
-> >   changed = process_all_files(&parent_range, rev, &queue, range);
-> >   if (parent)
-> > 		add_line_range(rev, parent, parent_range);
-> > +	free(parent_range);
-> >  	return changed;
-> >  }
-> >
-> >
+> > Also, what is the behavior of ungetc when we pass it EOF?
 > 
-> parent_range is of type struct line_log_data *, which needs more than a mere
-> free(). I think it's free_line_log_data(parent_range).
+> According to the documentation, it would cast EOF to an unsigned char and
+> push that back. Definitely incorrect.
+> 
+> > It looks like POSIX does what we want (pushing EOF is a noop, and the
+> > stream retains its feof() status), but I don't know if there are other
+> > implementations to worry about.
+> 
+> That's not what my man page here says:
+> 
+> 	ungetc()  pushes  c  back to stream, cast to unsigned char, where
+> 	it is available for subsequent read operations.  Pushed-back
+> 	characters will be returned in reverse order; only one pushback is
+> 	guaranteed.
 
-Oh wow, thanks for pointing that out. Will be fixed in the next iteration.
+POSIX covers this this case explicitly:
 
-Ciao,
-Dscho
+  If the value of c equals that of the macro EOF, the operation shall
+  fail and the input stream shall be left unchanged.
+
+That comes straight from C99, which says:
+
+  If the value of c equals that of the macro EOF, the operation fails
+  and the input stream is unchanged.
+
+I don't have a copy of C89 handy, but I didn't see any mention of the
+behavior in the "changes from the previous edition" section of C99.
+
+So it's possible that there's an implementation that is unhappy with
+ungetc(EOF), but unless we know of one specifically, it seems pretty
+safe. Given that and the similar explicit rule for EOF via isspace(), I
+think the original code actually behaves fine.
+
+Of course, we do not use the standard isspace() anyway. Our
+implementation will cast the EOF to an unsigned char. If it's "-1", that
+ends up as 255, which matches no classes. But if the platform has an
+oddball EOF like 288, that would confuse our isspace().
+
+-Peff
