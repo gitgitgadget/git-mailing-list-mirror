@@ -6,62 +6,68 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F13F31FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 08:41:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 146891FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 08:41:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423073AbdD1IlO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 04:41:14 -0400
-Received: from mx2.suse.de ([195.135.220.15]:43381 "EHLO mx1.suse.de"
+        id S1423124AbdD1Ikr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 04:40:47 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:60983 "EHLO mail.cixit.se"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S969072AbdD1Ikx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 04:40:53 -0400
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id CA4D7AB46;
-        Fri, 28 Apr 2017 08:40:46 +0000 (UTC)
-Subject: Re: [PATCH] diff: prefer indent heuristic over compaction heuristic
-To:     Stefan Beller <sbeller@google.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Marc Branchaud <marcnarc@xiplink.com>
-References: <20161217005442.5866-1-jacob.e.keller@intel.com>
- <xmqq7f6zqr3i.fsf@gitster.mtv.corp.google.com>
- <CA+P7+xp=7h7oATwO6vunqO+nfGhvQgiRkwG0P44hC4YLW2MRhA@mail.gmail.com>
- <xmqqinqbfz2r.fsf@gitster.mtv.corp.google.com>
- <20161223072201.zw2lwkdcs6qmb4rp@sigill.intra.peff.net>
- <CA+P7+xrWsCkABzpSkYJ4fb2_JijmUx=Sf4Hgsr6Z+k=_GogE_Q@mail.gmail.com>
- <20161223161917.4a352c2wzerj5uyz@sigill.intra.peff.net>
- <xmqqh95uedzu.fsf@gitster.mtv.corp.google.com>
- <xmqq8tr6e46o.fsf@gitster.mtv.corp.google.com>
- <653b67e6-9dba-d331-c396-932a59cdb4da@alum.mit.edu>
- <CAGZ79kY2Yu=B+75D6DpNjdriAZnJ5pZSmYAUiYtF2aUK47_HPw@mail.gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Norbert Kiesel <nkiesel@gmail.com>
-From:   =?UTF-8?Q?Martin_Li=c5=a1ka?= <mliska@suse.cz>
-Message-ID: <86d57f89-b554-4268-6f4e-ea9812ad4b7a@suse.cz>
-Date:   Fri, 28 Apr 2017 10:40:46 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1424970AbdD1IkZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 04:40:25 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+        by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id v3S8eJHp003528
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Fri, 28 Apr 2017 10:40:19 +0200
+Received: from localhost (peter@localhost)
+        by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id v3S8e96S003512;
+        Fri, 28 Apr 2017 10:40:09 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Date:   Fri, 28 Apr 2017 09:40:09 +0100 (CET)
+From:   Peter Krefting <peter@softwolves.pp.se>
+To:     =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Keith Goldfarb <keith@blackthorn-media.com>
+Subject: Re: [PATCH v3 4/5] archive-zip: support archives bigger than 4GB
+In-Reply-To: <a9cb6572-500e-bbc6-2aac-7cb940d4b171@web.de>
+Message-ID: <alpine.DEB.2.00.1704280936290.1440@ds9.cixit.se>
+References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org> <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se> <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org> <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
+ <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org> <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se> <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de> <85f2b6d1-107b-0624-af82-92446f28269e@web.de> <02ddca3c-a11f-7c0c-947e-5ca87a62cdee@web.de>
+ <alpine.DEB.2.11.1704241912510.30460@perkele.intern.softwolves.pp.se> <d453610f-dbd5-3f6c-d386-69a74c238b11@web.de> <alpine.DEB.2.11.1704250851420.23677@perkele.intern.softwolves.pp.se> <fdc17512-94dc-4f7f-4fd3-f933e1b18e8f@web.de>
+ <alpine.DEB.2.11.1704262154420.29054@perkele.intern.softwolves.pp.se> <87470c8c-e061-e4b3-42fe-84a30858fc0d@web.de> <alpine.DEB.2.11.1704270552590.4681@perkele.intern.softwolves.pp.se> <a9cb6572-500e-bbc6-2aac-7cb940d4b171@web.de>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+Organization: /universe/earth/europe/norway/oslo
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kY2Yu=B+75D6DpNjdriAZnJ5pZSmYAUiYtF2aUK47_HPw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 28 Apr 2017 10:40:19 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/27/2017 11:17 PM, Stefan Beller wrote:
-> Maybe turning on this feature by default is the next step instead of
-> adding them to bash competition or making them available in plumbing
-> commands for the upcoming release.
+René Scharfe:
 
-Hello.
+> Sure, but if we were to start emitting zip64 records regardless of 
+> the size of entries then we'd break compatibility.  We should have a 
+> very good reason for doing that.  (I don't see the need so far.)
 
-Works for me, please ignore the patch I've sent ;)
+Sure, sounds good.
 
-Anyhow, nice option (functionality), I really like it.
-Martin
+> The type of descriptor to use depends on the presence of 64-bit 
+> sizes in a zip64 extra for that record.  For streaming compression 
+> some kind of threshold lower than 0xffffffff needs to be set, 
+> because deflate can increase the size of the result.
+
+Indeed. And it seems that they use the version identifier (>= 45) to 
+check whether it is in "zip64 format" or not. It seems a bit hit or 
+miss to me, the best would be to always use the pre-amble descriptor, 
+but that requires holding the entire compressed data in memory (or 
+using temporary files or running two passes), neither which are very 
+good ideas.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
