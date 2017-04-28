@@ -7,62 +7,57 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 173D6207D6
-	for <e@80x24.org>; Fri, 28 Apr 2017 02:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5608C207EB
+	for <e@80x24.org>; Fri, 28 Apr 2017 02:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S968491AbdD1CgS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 22:36:18 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:34861 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S967136AbdD1CgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 22:36:16 -0400
-Received: by mail-pg0-f67.google.com with SMTP id s1so620444pgc.2
-        for <git@vger.kernel.org>; Thu, 27 Apr 2017 19:36:16 -0700 (PDT)
+        id S1032239AbdD1Cuf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 22:50:35 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:36576 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S935814AbdD1Cue (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 22:50:34 -0400
+Received: by mail-pf0-f195.google.com with SMTP id v14so15223691pfd.3
+        for <git@vger.kernel.org>; Thu, 27 Apr 2017 19:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=mhmFxMiBJI+LhpvLEPJN/peFpiIhTcU0wbLSRayLNCI=;
-        b=GM3ewNc7BIjTVxOWY0xX4W+j9G/MPSeTBcXiswhm8Gl/V3kUJd6kt37aUEEeJUBnLC
-         PAlfgoELmpZqgucKNhRkTUho5En5ZoInFz9hITHMVTNWxAQCa1f58inQHJuEDhSqeER6
-         iY5r3tPfrOiWB8q3l4WMZtzdgYH4s0PNfYjk/fBgXMrHpABLx11NelL0SAF8b+H6fBdJ
-         btP8qpj5o2pWAIi+J3/lk1uk/PV7JhQx4XM+7O65/8Wbq0fUix39Po+LG1lGxz+OmbjY
-         261X3cxb3k42hFVthWmBPWg5RtuTzkW3pdqyhAVyPtvuF6M23/CezoxaIJacLmX6TF+u
-         Bqtw==
+        bh=QqDKo70HbfvWqKlme1/L8HTYW6YEKX6wbHUUesg6OtA=;
+        b=Hbs/WqymvmHDZLAxWLfo6B2yqIqacTnfFfzhRKYKDlABvz8EAu/dIhVBRuuy5s6lMM
+         CxD1g0Tc4l57BSIg+76gvtd6DIZaLlPM5wXRLO4i1qGst+97Kw6i2UTJTdNyHC56Pwjd
+         qFTjdgPQQc4B+WUeFOZCK6hTVswmZ5/BgT8xySuqvNN+jNnQxtnBN8kNezxgeP8KmkXr
+         DLQdc8K8g6b8gxx6Jb6oAQ7ynBFODxisEfhK6wCBndAzCZSgzRFZ7ENq/fJJExmkaLJf
+         gSLCDjBpUNDRhylfIr0geQdEppqqVOTeRti0jKNhghG6py0GXc2WXkFXaL8w8y4iJysp
+         vhJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=mhmFxMiBJI+LhpvLEPJN/peFpiIhTcU0wbLSRayLNCI=;
-        b=G4JrESvQyldkJCyRSflgrEmwTQ/JWCXl814KSrVmDx3hZf4Az0v5X7yZ9Xa2n1JjNR
-         K5rUZYx5jKpdA23kMPP9nixRL93p9v8jIp0z2BvA1aaRTTY5Afl2DeX3Ut5PVe/ceJUq
-         9L3+xZfVMw/EbgUfhY2V/Dpe2ps50OpkRWMJyqkx0njLvJwvR3BUKj254Frh4LGaRs9Q
-         tdWUIO3aR/l9r/Ao35Kr5qJd2NTXjjt+J5+RZwjioDnLrrR8JWndcnTAHVbuuIDy0xn3
-         YU+RXXzk94jpZtViilvH8UplFmXZKU4z1V1YeSV+U0Pyb+rFRTqwcQ2l7Ln9eLaezjkb
-         Pmuw==
-X-Gm-Message-State: AN3rC/6MpEtFA47BVmudKLAjeDkRBvle625G5i28Vs69uStykTK8rGBg
-        M0ky/IxCc/g2Kw==
-X-Received: by 10.84.224.141 with SMTP id s13mr11845479plj.169.1493346975997;
-        Thu, 27 Apr 2017 19:36:15 -0700 (PDT)
+        bh=QqDKo70HbfvWqKlme1/L8HTYW6YEKX6wbHUUesg6OtA=;
+        b=bSnNM+Ae5vMsv09eyaMC7KX7+oP4w1ATGGlJI2DTJ3xROOuMtq7qCx1c3Fjzz0cizH
+         hrqORZ3ZiVKVYHg9Xhoze6tOSCRX/Oh8dftGNn9g4wB+SqFoH1NRzUNtC92vl0ElqYul
+         tntC/W32AjC2R/qoeEDHdyt46xjZGvsd8+2nsrmgxVF4bKyq/ksRQQhd+F8rI4reUowT
+         dk1S5zKy5umuucCSLoa+gjLXXNseyF/UPfI3UUv13swIX1yNc0Pan5eXp/km74ahhFCJ
+         ddCqEHaY7ztOggrmm+INCZkSNRfgtW9R5fKeD0bShFIm1AZX7a9WyrRk0e2fjSy0IBHY
+         q3Ug==
+X-Gm-Message-State: AN3rC/5p62UhIkD35nDD/5RjHRRlmDeYSOnxZPDj+U3KMZ6ioTzJRQoB
+        K1+tsh2Y6XPwlw==
+X-Received: by 10.84.149.168 with SMTP id m37mr11888870pla.74.1493347833268;
+        Thu, 27 Apr 2017 19:50:33 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:51c2:e137:8e5a:b68b])
-        by smtp.gmail.com with ESMTPSA id j73sm6649357pfe.108.2017.04.27.19.36.15
+        by smtp.gmail.com with ESMTPSA id i30sm7468409pgn.39.2017.04.27.19.50.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 27 Apr 2017 19:36:15 -0700 (PDT)
+        Thu, 27 Apr 2017 19:50:32 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/9] rebase -i: generate the script via rebase--helper
-References: <cover.1493128210.git.johannes.schindelin@gmx.de>
-        <cover.1493207864.git.johannes.schindelin@gmx.de>
-        <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de>
-        <xmqqvapqo4i8.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1704271607550.3480@virtualbox>
-        <xmqqbmrhmlsw.fsf@gitster.mtv.corp.google.com>
-Date:   Thu, 27 Apr 2017 19:36:14 -0700
-In-Reply-To: <xmqqbmrhmlsw.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Thu, 27 Apr 2017 17:13:19 -0700")
-Message-ID: <xmqqy3ull0m9.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stephen Kent <smkent@smkent.net>, git@vger.kernel.org
+Subject: Re: [PATCH v2] status: add color config slots for branch info in "--short --branch"
+References: <201704939828871.4296cfa6a746a5004d28db265800a@localhost>
+        <20170427090423.amjqi7ca4xl7pzax@sigill.intra.peff.net>
+Date:   Thu, 27 Apr 2017 19:50:32 -0700
+In-Reply-To: <20170427090423.amjqi7ca4xl7pzax@sigill.intra.peff.net> (Jeff
+        King's message of "Thu, 27 Apr 2017 05:04:24 -0400")
+Message-ID: <xmqqo9vhkzyf.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,62 +66,111 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Yes.  The "pretty_given" trick is one example that the underlying
-> implementation can change over time.  If you wrote this patch before
-> 66b2ed09 ("Fix "log" family not to be too agressive about showing
-> notes", 2010-01-20) happened, you wouldn't have known to flip this
-> bit on to emulate the command line parsing of "--pretty" and
-> friends, and you would have required the author of that change to
-> know that you have this cut & pasted duplicated code here when the
-> commit is primarily about updating revision.c
+> As we discussed elsewhere, it would be nice if this tested remoteBranch,
+> too. IMHO the simplest thing to is to rebase it on the t7508 update I
+> just posted.
 >
-> So I am very serious when I say that this is adding an unnecessary
-> maintenance burden.
+> The other option is to add config for remoteBranch which would do
+> nothing for now, and then resolve it to check the correct colors when
+> the two topics are merged (since the test will start failing then).
+> That seems unnecessarily confusing.
 
-I _am_ sympathetic to your wish to have the compiler catch a
-misspelt "revs.verboes_header = 1".  A misspelt "--formta=..." 
-would not be caught until the execution time.
+Yes, let's do the former.
 
-But the compiler's static name checking helps only one time while
-you are writing _this_ patch, and it does not help at all to protect
-this duplicated code from future breakages.  The way "rev-list" and
-friends _internally_ implement "--format=..."  or any other options
-sed by the rev-list command whose behaviour you are recreating here
-can (and will) change in the future, just like it already did change
-in early 2010.  We didn't have pretty_given field for several years
-after "--pretty" etc. that currently set the field were originally
-introduced.
+This is to be applied on top of your
+<20170427090105.vaodugbqdaxunoin@sigill.intra.peff.net>
 
-In an ideal world, we would probably have specific methods to
-manipulate "struct rev_info" and set_format_string() method, which
-would be called when the command line parser is reacting to
-"--format=..." in setup_revisions(), may encapsulate the
-implementation detail of setting verbose_header and pretty_given
-fields in addition to calling get_commit_format() method on the
-rev_info object, and your new code may be calling that method,
-without having to know the implementation detail.
+-- >8 --
+From: Stephen Kent <smkent@smkent.net>
+Date: Fri, 21 Apr 2017 22:42:02 -0700
+Subject: [PATCH] status: add color config slots for branch info in "--short --branch"
 
-We do not live in that ideal world, and it is _not_ the theme of
-your topic to bring us closer to the ideal world.  Under that
-constraint, a future-proof way to set up the revision machinery is
-to have setup_revisions() parse an av[] array.  What will be done to
-your copy of revs will stay compatible with what rev-list would do
-after the implementation detail of setup_revisions() changes that
-way.  It is true that a misspelt "--formta=..."  would not be caught
-until the execution time, but once the code in this part is written,
-it is less likely to get broken by a change coming from needs by
-other parts of the system (e.g. the addition of pretty_given came
-not because we wanted to enhance how --format or --pretty worked; it
-came because we wanted to make sure they are not affected by changes
-to another option).
+Add color config slots to be used in the status short-format when
+displaying local and remote tracking branch information.
 
-So after being forced by your response to rethink about it, I feel
-even firmer about this than I felt when I sent my first review
-comment.
+[jc: rebased on top of Peff's fix to 'git status' and tweaked the
+test to check both local and remote-tracking branch output]
 
-Thanks.
+Signed-off-by: Stephen Kent <smkent@smkent.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.txt               | 5 ++++-
+ builtin/commit.c                       | 4 ++++
+ contrib/completion/git-completion.bash | 2 ++
+ t/t7508-status.sh                      | 6 ++++--
+ 4 files changed, 14 insertions(+), 3 deletions(-)
 
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 475e874d51..96e9cf8b73 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1137,7 +1137,10 @@ color.status.<slot>::
+ 	`untracked` (files which are not tracked by Git),
+ 	`branch` (the current branch),
+ 	`nobranch` (the color the 'no branch' warning is shown in, defaulting
+-	to red), or
++	to red),
++	`localBranch` or `remoteBranch` (the local and remote branch names,
++	respectively, when branch and tracking information is displayed in the
++	status short-format), or
+ 	`unmerged` (files which have unmerged changes).
+ 
+ color.ui::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1d805f5da8..9028bfacf8 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1263,6 +1263,10 @@ static int parse_status_slot(const char *slot)
+ 		return WT_STATUS_NOBRANCH;
+ 	if (!strcasecmp(slot, "unmerged"))
+ 		return WT_STATUS_UNMERGED;
++	if (!strcasecmp(slot, "localBranch"))
++		return WT_STATUS_LOCAL_BRANCH;
++	if (!strcasecmp(slot, "remoteBranch"))
++		return WT_STATUS_REMOTE_BRANCH;
+ 	return -1;
+ }
+ 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index b617019075..72c6d58965 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2378,7 +2378,9 @@ _git_config ()
+ 		color.status.added
+ 		color.status.changed
+ 		color.status.header
++		color.status.localBranch
+ 		color.status.nobranch
++		color.status.remoteBranch
+ 		color.status.unmerged
+ 		color.status.untracked
+ 		color.status.updated
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index a000ed4e7f..567c4d4bab 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -661,7 +661,9 @@ test_expect_success 'status --porcelain ignores relative paths setting' '
+ test_expect_success 'setup unique colors' '
+ 
+ 	git config status.color.untracked blue &&
+-	git config status.color.branch green
++	git config status.color.branch green &&
++	git config status.color.localBranch yellow &&
++	git config status.color.remoteBranch cyan
+ 
+ '
+ 
+@@ -730,7 +732,7 @@ test_expect_success 'status -s with color.status' '
+ '
+ 
+ cat >expect <<\EOF
+-## <GREEN>master<RESET>...<RED>upstream<RESET> [ahead <GREEN>1<RESET>, behind <RED>2<RESET>]
++## <YELLOW>master<RESET>...<CYAN>upstream<RESET> [ahead <YELLOW>1<RESET>, behind <CYAN>2<RESET>]
+  <RED>M<RESET> dir1/modified
+ <GREEN>A<RESET>  dir2/added
+ <BLUE>??<RESET> dir1/untracked
+-- 
+2.13.0-rc1-211-gd5d57c8556
 
