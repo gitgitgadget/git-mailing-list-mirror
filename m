@@ -7,47 +7,48 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F11B1FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 11:33:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEF1E1FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 11:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424933AbdD1Ld2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 07:33:28 -0400
-Received: from mout.gmx.net ([212.227.15.18]:50133 "EHLO mout.gmx.net"
+        id S933229AbdD1LhI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 07:37:08 -0400
+Received: from mout.gmx.net ([212.227.17.21]:64183 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1423444AbdD1Ld1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 07:33:27 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbPLI-1dMq1N259I-00IotA; Fri, 28
- Apr 2017 13:33:21 +0200
-Date:   Fri, 28 Apr 2017 13:33:20 +0200 (CEST)
+        id S1751112AbdD1LhG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 07:37:06 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Meduu-1dSLHY0Vei-00OHGB; Fri, 28
+ Apr 2017 13:37:00 +0200
+Date:   Fri, 28 Apr 2017 13:36:59 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Johannes Sixt <j6t@kdbg.org>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 22/26] add_reflog_for_walk: avoid memory leak
-In-Reply-To: <74da6153-2ce4-4224-d8d4-5be7481431ef@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1704281311500.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <aeb46b9436b1f5f54322cb818519db97801b9d7a.1493237937.git.johannes.schindelin@gmx.de> <74da6153-2ce4-4224-d8d4-5be7481431ef@kdbg.org>
+Subject: Re: [PATCH 00/26] Address a couple of issues identified by
+ Coverity
+In-Reply-To: <966db3c1-a2e4-1309-e178-b885d2a1108f@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1704281334060.3480@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <966db3c1-a2e4-1309-e178-b885d2a1108f@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:I2TxdwZP7a12TeJNQp97O8xwnWRlwd3+jtOOLo8IN4TRBJJUyBu
- CHkqjmuAjyeEPdeWjPLzzJHJv8+M/4eqAYpjJFhu3QWUnziadmM31e6Gex9LQRadtXPSQww
- LSMHUsTFZ1OfdLDz51+bKEZiQNGZdm8eHC2aMNu+2t/+cEnemtGEuV0lVuvqDIqQHlfhETR
- KV7XrCvp99ssjPUyIt+WQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jN3qXlct/Mk=:S2t4Z6DPaHyy7mJTa0nKXh
- 0x7LHaX8ZSr8IMrTPgHHGe7+3FkMgLuyhh7xJ2SNQnkYHdUL/bcC3TW5jp4WUN8opMW/TQkLV
- Xto7uF5xJsUiqFuQPV+Z65p7oIYoHTIexMQ5rywQqQboqA14prijUBx5fl6e322U4ufXKXeQz
- tSGl/bwQFoib+TWDtob/YbpZwz7TYvPCR6bOi5wkAytZ5/rcln2+7mnJLlWZSjvE3zCTD94/a
- 4ltKDuO3G8G2MlUh+NdE7vRjHRysNylDx5wMvu1b7Nv0gd9H3A449WVGX1RqdKtDWyBjRoTN6
- C/4XH9eHsH8SwD3TyBJ/7YKrIUQynwwoObth4IRvTUzpXBCSgHdAG4pwadIH52wX2mbwTGPzA
- 63sWrLAHC5QaSDkp9wDoDBZ8TdG6Hj2lP3lFBB3qJcU1qQwLx6J4qMV7f2yDwdFwNW4b3IgNI
- PyDeNGDRH7NYcABY8LHOOHA+TFWsZeK2yGUCuZ3XAJxLFmug3yIRSi61X04gpavVpDXfvYvRq
- EBLfHmzQnBNYE8BkAQMX7rOIjgirIElF7vzUkR8YYRYuIQLkM++I/BG1VNf1DYWRR+4j9ZeXI
- kGTEFjb1tGXKHAq/agJzth7ISXs+PJwPoRZdcNOgYyX+/okm2VhEIyrvaMOEqmKh8Gj4otPKa
- YkkENFf62u7bbG5GARDUZS75gNnVTwkrAMJhs7700PcBsa6Kd+3KTEYJNzdjTK/M8PFSaBydT
- EG5dYEHYzk+0opzLD/KHQBpcKWzjdJMuKCEohIps+QEMbfseOxoop0zIDmZM6W52vZHHTjlUv
- G7JB1o1
+X-Provags-ID: V03:K0:UG1zPUfhquSAJ/b1+60WzCtmV6k88DyVI+QUReW70VIWwMrp0yd
+ 0BTEvS6tca4y7LYfrH3+JeJRYTBjXBcVwPByvuaVRb80QUGfLYAzK5WriVtegLCcoQIds3F
+ 2RxRimc6S12j6OwKN2t8ry1PoR0tZzd6hJdn5igTgKGwATiI6CH5vuFHnDflDsoovIsM+nb
+ 2VE33RiiYSvj+TUseIVEw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AehKEs5t7fw=:Uw3d7SDdtT/sCyq7qZUSFH
+ ZqGybkkl2uH2ycfCVyriDOSPceME0ZtD7g7DfjevG9u83hudgrYv4Y8IOVMZhueDQFGi5DBlW
+ QCBrPumQtseldbl1pLwawvdroIGDgNTYczu3GJb6JaODf8SkNJJS/TDuAEQbFmzxNrE0miUrI
+ emr/L1DCf2/dsfaBPCAxy3qLPS8nqaOY1sJUmPjUHfONTIfXRqzqZhGZZ4tWTHncpYUq1nd0T
+ vMktrSptEBXEsfNeyil2lZTeW/1SphyaeGjhwUONl26bSCWv33DbcVPfRcM79jeuGzY7jvmbP
+ dzGmWn2L4RywRR5Mg8q4tBH2SU+w/rFL8bgTLQ15ib3r8+Llztey2ovqNOo+p1R6+KBo1WHsS
+ 8vm1prJgoeIMQY0wbXN75uo2Wyo5w6RWzQONsrZprZs9QHO72XXXDcC8ZlspB4HBvEP02FDbq
+ UWRY5uKLZJKBNxSd1sEGBzOtoRhQ/LhvWMiB4ha8riSIw0PtZDfyuFk6KlnZIdM/lonllmQ7k
+ J/rFQ4lsIchY/eNr9ywtdal7JVcIAzPRAaEgKaC/PQhx+8ZFv4WchEgMbSwYPi6NTaoIGlsOA
+ csKMIsEd/ABcmUy3CCUp5tKh7U2eECKqcWnPbpv2TWi69291eohXxsqQcEAJcVmubSKFdRinN
+ meCDzJ63PJyY6+GL49yNj3fBD0YS5PE50XYJt4ZxSTVlJn4u5zfd+DhduBqLfoVjO5FFHSHcK
+ ZXwG0ckmwp9u+BYABZLJpJkseVKlNn/40/7p/gwiUIuBJIM6bgQ5j5b7b0mG3XMrSXA8uc559
+ 6l7lfDD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,50 +58,36 @@ Hi Hannes,
 
 On Thu, 27 Apr 2017, Johannes Sixt wrote:
 
-> Am 26.04.2017 um 22:21 schrieb Johannes Schindelin:
-> > We free()d the `log` buffer when dwim_log() returned 1, but not when it
-> > returned a larger value (which meant that it still allocated the buffer
-> > but we simply ignored it).
+> Am 26.04.2017 um 22:19 schrieb Johannes Schindelin:
+> > I recently registered the git-for-windows fork with Coverity to ensure
+> > that even the Windows-specific patches get some static analysis love.
 > >
-> > Identified by Coverity.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  reflog-walk.c | 6 +++++-
-> >  1 file changed, 5 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/reflog-walk.c b/reflog-walk.c
-> > index 99679f58255..ec66f2b16e6 100644
-> > --- a/reflog-walk.c
-> > +++ b/reflog-walk.c
-> > @@ -183,7 +183,11 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
-> >    if (!reflogs || reflogs->nr == 0) {
-> >     struct object_id oid;
-> >     char *b;
-> > -			if (dwim_log(branch, strlen(branch), oid.hash, &b) ==
-> > 1) {
-> > +			int ret = dwim_log(branch, strlen(branch),
-> > +					   oid.hash, &b);
-> > +			if (ret > 1)
-> > +				free(b);
-> > +			else if (ret == 1) {
-> >      if (reflogs) {
-> >       free(reflogs->ref);
-> >       free(reflogs);
-> >
+> > While at it, I squashed a couple of obvious issues in the part that is
+> > not Windows-specific.
 > 
-> Right after this hunk, there is another conditional that looks like it
-> forgets to free reflogs.
+> Thanks for the fish. I'd looked at the series and had a few comments.
+> 
+> Hunting memory leaks is the way to insanity.
 
-Thanks! Seems I got too hung up with the line to which Coverity pointed
-and failed to see the bigger picture.
+I hear you. Loud and clear.
 
-It seems that there are plenty of leaks, even further down. For one, the
-`branch` variable is not released at the very end of the function! One
-might think that read_complete_reflogs() takes custody of it, but no, it
-xstrdup()s the refname right at the beginning.
+> Never again am I going to help with this.
 
-So there was a lot more memory leaking going on in that function...
+Awww? And here I thought I had your attention... *sniffle*
+
+;-)
+
+> I prefer to rewrite this codebase to C++ and have leak-free code by
+> design.
+
+I had the pleasure of working with some software developers in 2004 who
+were experts at introducing memory leaks into C++ code.
+
+The same bunch of people later produced Java code that sorted a string
+list in cubic time (carefully avoiding java.util.Collections.sort(), of
+course).
+
+For every fool-proof system invented, somebody invents a better fool.
 
 Ciao,
 Dscho
