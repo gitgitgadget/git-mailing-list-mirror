@@ -2,102 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13414207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 19:55:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CF05207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 20:29:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1425146AbdD1TzD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 15:55:03 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:29684 "EHLO bsmtp1.bon.at"
+        id S1424039AbdD1U3r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 16:29:47 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53690 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1423570AbdD1TzB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 15:55:01 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wF4Kb3bLJz5tlB;
-        Fri, 28 Apr 2017 21:54:59 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 8868642B7;
-        Fri, 28 Apr 2017 21:54:57 +0200 (CEST)
-Subject: Re: [PATCH] t7400: add BSLASHPSPEC prerequisite to 'add with \\ in
- path'
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-References: <5b8e0f3a-0b64-1384-d830-5b65a43e44c4@ramsayjones.plus.com>
- <xmqqk265kz2v.fsf@gitster.mtv.corp.google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <7cd09c17-30a1-b157-2454-4c9b399a8628@kdbg.org>
-Date:   Fri, 28 Apr 2017 21:54:57 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1163948AbdD1U3p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 16:29:45 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Luajs-1e3h7c24vI-00zrFl; Fri, 28
+ Apr 2017 22:29:32 +0200
+Date:   Fri, 28 Apr 2017 22:29:30 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Automating Coverity, was Re: [PATCH 00/26] Address a couple of issues
+ identified by Coverity
+In-Reply-To: <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1704282205320.3480@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk265kz2v.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:gbnK3typ4jDd+UAYypGHj2vVJhKaolPKSquKAVSWtFa3LwImUtf
+ RNMaTLiPRA27Ka1WibJIBFOdjiL3yT7r8sBn+tivWLwQ+qLtBS+4yD9pcTeNka9LygY5j4M
+ 0UNG2dqo+efVTMqYjyjhH6RRnBifgVURsQt5KkGIXCObC4AxbKxkGGxHpw7B7eCeCfBNeY7
+ ftxyVk8nQTFFQMI/n1lJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KhCLX9OmcAM=:eMX3fBepxFGlaDxITCiKWy
+ qUiCZfbOgH6rXktUykf7BH0W7D+ARIavKdex4URIOUme8jX0ZTTqSAi8SaXdl41nWY4bQgRd9
+ Os9vBRdOMO+Vpp4CAwGehx6lgrvVyDNgOI0LGK6i4k2RlboYrTsw+4sg1um+dfMC0fpTBOeCL
+ 7T+XdsGPZVmGlVt1Ny7uv8K4xSiJNfpt6SB4OBrylJwfclfSaTSLf40UpFy0QFbZxA8GKkb0U
+ nLQh24NjGmowLGwdrZ65wUDQiBVtE4HA1KunwzSrJJtfrZNoDIX9RdQRVH1YvCEB3PpoC5mE5
+ fWq4/Dzj9L7+9OZfw8dyy90sLfJeEKJ4jArVURtSy6YfpHMe0nuDf5LAi961G67B7x7gLv/lN
+ rHAnhWlla2RZQhsO0SANndvVhEKUjv9Tb7XoPLNsb0kGegon+JIlS6mZxKNDedlSAvu1KIv5I
+ CAFUAk2x72k8tefjz8TyJBxfj5tKJXdgvvK8ar7N37p0Np184ifLBraMjCqeCUe9qGfTR2SjO
+ qY1lZsBcrBbZyF+YVgCgVzDOip8W3EW44Dm/q9266+Y3j6jhJZ/pfMd+LlB3abfn5Bzw6MNxB
+ FhXlBaE/Ews9katgocLMBClFmuMcu42jyf4lixBADhCiIm2iWmRm1kqVrWKqEhbNrtVhJP2zv
+ S9E1FeQfrGcksMd7mqLXI86P78fq36btEQtKQF5qbP8jKxZBnCIoI5FcxLleh+pUM9Vp2nO/B
+ fWJuHOPSiw7Oks2KJb/eHf39UqQvXPUrckBXN2WcCmdEqlQfeOjW/QMWUmEmeNh+q+QMSoCuH
+ D16vj7I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.04.2017 um 05:09 schrieb Junio C Hamano:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->
->> Commit cf9e55f494 ("submodule: prevent backslash expantion in submodule
->> names", 07-04-2017) added a test which creates a git repository with
->> some backslash characters in the name. This test cannot work on windows,
->> since the backslash is used as the directory separator. In order to
->> suppress this test on cygwin, MinGW and Git for Windows, we add the
->> BSLASHPSPEC prerequisite. (see also commits 6fd1106aa4 and c51c0da222).
+Hi Stefan,
 
-First, let me say that meaning of BSLASHPSPEC was "keeps backslaches in 
-pathspec arguments" originally, but it apparently changed meaning since 
-then.
+On Fri, 28 Apr 2017, Stefan Beller wrote:
 
-The prerequisite was introduced in 6fd1106aa4 because the MinGW port 
-rewrites backslashes in command arguments that undergo the '\'->"/" 
-transformation introduced for prefix_filename() in 25fe217b86. It 
-destroys the backslashes that could otherwise be used to escape globbing 
-characters. t3700 does just that.
+> On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > I still have to find the time to figure out one more detail: how to
+> > download and extract the Coverity tool (the .zip archive has a
+> > variable name for the top-level directory), and doing that only every
+> > once in a while, say, only when there is no previously unpacked tool,
+> > or it is already 4 weeks old.
+> 
+> That is an interesting problem, which I ignored as the older versions of
+> their tools still works once they release new versions. So I just
+> manually check every once in a while if they have new versions out
+> there.
+> 
+> So if you find a nice solution to that problem, let me know, please.
 
-Since Cygwin does not do this rewriting, the original CYGWIN section in 
-test-lib.sh had the prerequisite, just like the default (POSIX). But it 
-was removed by 5b5d53cbe5 (t4135-*.sh: Skip the "backslash" tests on 
-cygwin), and that is where BSLASHPSPEC changed meaning. That commit even 
-carries my Acked-by (!), even though I can't recall giving it and I 
-don't find it in the conversation about the patch:
+I think I have a working idea (jotting it down in the editor, untested):
 
-https://public-inbox.org/git/4D07B977.9010502@ramsay1.demon.co.uk/
+	init_or_update_coverity_tool () {
+		# check once per week whether there is a new version
+		coverity_tool=.git/coverity-tool/
+		test ! -d $coverity_tool ||
+		test $(($(date +%s)-$(stat -c %Y $coverity_tool))) -gt
+			$((7*24*60*60)) ||
+		return
 
->> I built v2.13.0-rc1 and ran the test-suite on cygwin this evening and
->> had an additional failure, over and above the failures reported for
->> v2.13.0-rc0, namely t7400.20. This patch elides that test for cygwin
->> (and MinGW and GfW, so it would be good to hear success reports from
->> both Johannes).
+		curl --form "token=$(COVERITY.TOKEN)" \
+			--form "project=git-for-windows" \
+			--time-cond .git/coverity_tool.zip \
+			-o .git/coverity_tool.zip.new \
+			https://scan.coverity.com/download/win64 &&
+		test -f .git/coverity_tool.zip.new || {
+			# Try again in a week
+			touch $coverity_tool
+			return
+		}
 
-t7400.20 does not fail for the MinGW port because the test case only 
-operates on the file system, but never checks whether an entry 
-'sub\with\backslash' is present in the index.
+		mv -f .git/coverity_tool.zip.new .git/coverity_tool.zip ||
+		die "Could not overwrite coverity_tool.zip"
 
->> @@ -273,7 +273,7 @@ test_expect_success 'submodule add with ./, /.. and // in path' '
->>  	test_cmp empty untracked
->>  '
->>
->> -test_expect_success 'submodule add with \\ in path' '
->> +test_expect_success BSLASHPSPEC 'submodule add with \\ in path' '
->>  	test_when_finished "rm -rf parent sub\\with\\backslash" &&
->>
->>  	# Initialize a repo with a backslash in its name
->
+		mkdir $coverity_tool.new &&
+		(cd $coverity_tool.new &&
+		 unzip ../coverity_tool.zip) ||
+		die "Could not unpack coverity_tool.zip"
 
-I assume the test fails right at 'git init' under Cygwin?
+		rm -rf $coverity_tool &&
+		mv $coverity_tool.new $coverity_tool ||
+		die "Could not switch to new Coverity tool version"
+	}
 
-BSLASHPSPEC (with its *new* meaning) would be the right prerequisite if 
-the check for the index entry were added. Until then, !CYGWIN is more 
-appropriate.
+	init_or_update_coverity_tool
+	PATH=$(echo $coverity_tool/*/bin):$PATH
 
--- Hannes
+I guess I will start from that snippet once I have time to work on that
+Coverity automation.
 
+BTW I stumbled over an interesting tidbit today: if you define FLEX_ARRAY
+outside of git-compat-util.h, it will not be overridden by Git. That is,
+if you want to use 64kB flex arrays by default, you can call
+
+	make CPPFLAGS=-DFLEX_ARRAY=65536
+
+No need to patch the source code.
+
+Ciao,
+Dscho
