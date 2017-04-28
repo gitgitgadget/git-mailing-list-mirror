@@ -2,184 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D1241FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 10:16:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0C281FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 10:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1422754AbdD1KQb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 06:16:31 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:5917 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S939018AbdD1KQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 06:16:28 -0400
-X-Greylist: delayed 490 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Apr 2017 06:16:28 EDT
-Received: from [192.168.2.201] ([92.22.34.197])
-        by smtp.talktalk.net with SMTP
-        id 42oxddMqyHGLw42oxdwWkQ; Fri, 28 Apr 2017 11:08:16 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
-        t=1493374096; bh=8xBbCkcyCW0Daz2QWpyfEU6sXQa3ITE7iGNhWIg9Y+0=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=DafZUyfN2ci30JZ8mO5+affo5R7CejWdlGqcV6hw7klkMt+99YlZHaAC4f0iK90LJ
-         Ps5j/1GQUy4eYujeUMbu+5qSOAWKK4iHUdIWY90Gy+PmqVwkeKR/fG8yeKEAadaijj
-         Z3UpFLBY51z3FbYTrJehrXUB3TQUZGC+EIldwsRg=
-X-Originating-IP: [92.22.34.197]
-X-Spam: 0
-X-OAuthority: v=2.2 cv=dsCZMBo4 c=1 sm=1 tr=0 a=hA2HGApHRYQPBHGSl800fg==:117
- a=hA2HGApHRYQPBHGSl800fg==:17 a=IkcTkHD0fZMA:10 a=eo8JNWxsu0E-LZbjFUQA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 1/9] rebase -i: generate the script via rebase--helper
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>
-References: <cover.1493128210.git.johannes.schindelin@gmx.de>
- <cover.1493207864.git.johannes.schindelin@gmx.de>
- <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <8c1f3519-0768-69d9-4d15-782da0be8390@talktalk.net>
-Date:   Fri, 28 Apr 2017 11:08:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.0
+        id S1035736AbdD1KlQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 06:41:16 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54386 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1033907AbdD1KlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 06:41:14 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfTVx-1dsWQQ2GMr-00p15c; Fri, 28
+ Apr 2017 12:41:03 +0200
+Date:   Fri, 28 Apr 2017 12:41:02 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/26] Check for EOF while parsing mails
+In-Reply-To: <6cc5670f-2de3-33f2-3c85-5a6d99fcca12@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1704281206500.3480@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <1fb841cee32996ee9194c2bd33b9dfe74cc37726.1493237937.git.johannes.schindelin@gmx.de> <6cc5670f-2de3-33f2-3c85-5a6d99fcca12@kdbg.org>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-In-Reply-To: <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfGMraC0zGOkBytJfjDE8UDaToRChYoV4rUMAowQ1cKf5KQmIDIoqZwrXEW7IvF7gMo1f3/MGkd8BTJjWNcxUYuu+8lJpwZbBkrn283AlVwMLsHwYnvYA
- ZUiM1vf6O19+brP0z9JBJOBm6DXBENjAreGQJCmVVS2CpBnkIG87OZi3aK4CX0PR+13C/JY6FQ3MUPvxxEvz6iB/WkKwURcMgfeFUMlXkgGpcpUS8yc9juh4
- g7RWMrKGKIzircE/wOuFqK8z9P/YQMLpsVJ5HmqZONTq39AYHZW3nLh6q6ufRWi6
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:TZzFDaXdlLTB50uW0mbphxX6kJiLNwH23fi99uytfPZg7N6wW0P
+ LIts1vvdogs0NJavgqMsQm3/HFY02re+HZOeLmuJwMM27LDDszQS9+zV8zushjsueXd4C6U
+ 1Ww4rR39erw8SOnsTOW1TqzwNFI7qiJYwW+S6IqzwoeP5cMSlzM5HTzAYj9quKz3qYdg8jH
+ 5jU2QCWqF42D53rmM8HEQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:NbvrWW+HUb8=:tp/v9pa8pGKTGUar54jJQf
+ rFvQYUYUrur3MtLbdbnypnUpmoSTFDqaq5hF4AAzTciAHbm5AY2i+DYKiMMt81x3kZGL8lPYS
+ KRRPV3kGDQkKhNkwiE62diUykqQPgwuWZxXtUAugOYpccv98Jq72DDKMzWoMxgPTh21g9wUbm
+ YqU28CFzD9bT/wkIox//rx5+S+oAr/YW9axr03Bd83Ohkc0NdeLptNhkV2L6zduwBHQggNBj5
+ zmCRCXMddnY7+FiXGxXV6FCCjA5j2LrlNUNI6NDEkqWWMKj1SGTYZdWL0hIfX0QwBnw9Qs/aG
+ 8K0X6K47/E1mDl09IxhxH0UMDZa2jZ4XkC2jIVoigpJBmC9GgDm83VfHITt/7awRHmablrDdR
+ AWa+BOYtsqrlhZ6WFBtdV3PYhOxUByVnE6rfYYLcFzi7CB3lWsDzju7nQBunUFO4+ISOe++xq
+ dnDsgkIvOmF+K58lHY2FV/A7FGFFxDpk8YIrA2+8BZ+Hm9rqUt6y0NTlrRT+E3GZQaWvzFcWK
+ By0KRjuqHB6erv3TEKo3I+dshC78ecoZXKG/bySMxHOXqExqa+4/rzQmSLfGoSEb22E2zq9bf
+ Fe0tagzLJwbZrgX4QRzKyVCWThlnU066FmHGnJksS2wH1JnQANtyE0DCFx3lR1CrIM+agkB/I
+ rvCpmrwjtDd3HQdY1ZpkNbojUd6GvDwsRZ4eF/eAySj9B7zzb3gLz8m0GS2SJ243XDvKOGSGl
+ xaipmuK++uZ3f5vPklhWRhCk6p0Q/kSDoiwmk4RwZrA22N2JneIFin+OSs30dihviTBnbcZjD
+ RHYCfwd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/04/17 12:59, Johannes Schindelin wrote:
-> The first step of an interactive rebase is to generate the so-called "todo
-> script", to be stored in the state directory as "git-rebase-todo" and to
-> be edited by the user.
-> 
-> Originally, we adjusted the output of `git log <options>` using a simple
-> sed script. Over the course of the years, the code became more
-> complicated. We now use shell scripting to edit the output of `git log`
-> conditionally, depending whether to keep "empty" commits (i.e. commits
-> that do not change any files).
-> 
-> On platforms where shell scripting is not native, this can be a serious
-> drag. And it opens the door for incompatibilities between platforms when
-> it comes to shell scripting or to Unix-y commands.
-> 
-> Let's just re-implement the todo script generation in plain C, using the
-> revision machinery directly.
-> 
-> This is substantially faster, improving the speed relative to the
-> shell script version of the interactive rebase from 2x to 3x on Windows.
-> 
-> Note that the rearrange_squash() function in git-rebase--interactive
-> relied on the fact that we set the "format" variable to the config setting
-> rebase.instructionFormat. Relying on a side effect like this is no good,
-> hence we explicitly perform that assignment (possibly again) in
-> rearrange_squash().
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/rebase--helper.c   |  8 +++++++-
->  git-rebase--interactive.sh | 44 +++++++++++++++++++++++---------------------
->  sequencer.c                | 45 +++++++++++++++++++++++++++++++++++++++++++++
->  sequencer.h                |  3 +++
->  4 files changed, 78 insertions(+), 22 deletions(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index 77afecaebf0..e858a976279 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2388,3 +2388,48 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
->  
->  	strbuf_release(&sob);
->  }
-> +
-> +int sequencer_make_script(int keep_empty, FILE *out,
-> +		int argc, const char **argv)
-> +{
-> +	char *format = xstrdup("%s");
-> +	struct pretty_print_context pp = {0};
-> +	struct strbuf buf = STRBUF_INIT;
-> +	struct rev_info revs;
-> +	struct commit *commit;
-> +
-> +	init_revisions(&revs, NULL);
-> +	revs.verbose_header = 1;
-> +	revs.max_parents = 1;
-> +	revs.cherry_pick = 1;
-> +	revs.limited = 1;
-> +	revs.reverse = 1;
-> +	revs.right_only = 1;
-> +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
-> +	revs.topo_order = 1;
-> +
-> +	revs.pretty_given = 1;
-> +	git_config_get_string("rebase.instructionFormat", &format);
+Hi Hannes,
 
-Firstly thanks for all your work on speeding up rebase -i, it definitely
-feels faster.
+On Thu, 27 Apr 2017, Johannes Sixt wrote:
 
-This changes the behaviour of
-git -c rebase.instructionFormat= rebase -i
-The shell version treats the rebase.instructionFormat being unset or set
-to the empty string as equivalent. This version generates a todo list
-with lines like 'pick <abbrev sha1>' rather than 'pick <abbrev sha1>
-<subject>'
-
-I only picked this up because I have a script that does 'git -c
-rebase.instructionFormat= rebase -i' with a custom sequence editor. I
-can easily add '%s' in the appropriate place but I thought I'd point it
-out in case other people are affected by the change.
-
-Please CC me in any replies as I'm not subscribed to this list
-
-Best Wishes
-
-Phillip
-
-> +	get_commit_format(format, &revs);
-> +	free(format);
-> +	pp.fmt = revs.commit_format;
-> +	pp.output_encoding = get_log_output_encoding();
-> +
-> +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
-> +		return error(_("make_script: unhandled options"));
-> +
-> +	if (prepare_revision_walk(&revs) < 0)
-> +		return error(_("make_script: error preparing revisions"));
-> +
-> +	while ((commit = get_revision(&revs))) {
-> +		strbuf_reset(&buf);
-> +		if (!keep_empty && is_original_commit_empty(commit))
-> +			strbuf_addf(&buf, "%c ", comment_line_char);
-> +		strbuf_addf(&buf, "pick %s ", oid_to_hex(&commit->object.oid));
-> +		pretty_print_commit(&pp, commit, &buf);
-> +		strbuf_addch(&buf, '\n');
-> +		fputs(buf.buf, out);
-> +	}
-> +	strbuf_release(&buf);
-> +	return 0;
-> +}
-> diff --git a/sequencer.h b/sequencer.h
-> index f885b68395f..83f2943b7a9 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -45,6 +45,9 @@ int sequencer_continue(struct replay_opts *opts);
->  int sequencer_rollback(struct replay_opts *opts);
->  int sequencer_remove_state(struct replay_opts *opts);
->  
-> +int sequencer_make_script(int keep_empty, FILE *out,
-> +		int argc, const char **argv);
-> +
->  extern const char sign_off_header[];
->  
->  void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag);
+> Am 26.04.2017 um 22:20 schrieb Johannes Schindelin:
+>
+> > diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+> > index 30681681c13..c0d88f97512 100644
+> > --- a/builtin/mailsplit.c
+> > +++ b/builtin/mailsplit.c
+> > @@ -232,7 +232,7 @@ static int split_mbox(const char *file, const char *dir,
+> > int allow_bare,
+> >
+> >   do {
+> > 		peek = fgetc(f);
+> > -	} while (isspace(peek));
+> > +	} while (peek >= 0 && isspace(peek));
+> >   ungetc(peek, f);
+> >
+> > 	if (strbuf_getwholeline(&buf, f, '\n')) {
+> > diff --git a/mailinfo.c b/mailinfo.c
+> > index 68037758f2f..60dcad7b714 100644
+> > --- a/mailinfo.c
+> > +++ b/mailinfo.c
+> > @@ -1099,7 +1099,7 @@ int mailinfo(struct mailinfo *mi, const char *msg,
+> > const char *patch)
+> >
+> >   do {
+> > 		peek = fgetc(mi->input);
+> > -	} while (isspace(peek));
+> > +	} while (peek >= 0 && isspace(peek));
+> >   ungetc(peek, mi->input);
+> >
+> >   /* process the email header */
+> >
 > 
+> Why? isspace(EOF) is well-defined.
 
+So let's look at the man page on Linux:
+
+	These functions check whether c,  which  must  have  the  value  of  an
+	unsigned char or EOF, [...]
+
+That is the only mention of it. I find it highly unobvious whether EOF
+should be treated as a space or not. So let's look at the MSDN page
+(https://msdn.microsoft.com/en-us/library/y13z34da.aspx) whether they talk
+more about EOF:
+
+	The behavior of isspace and _isspace_l is undefined if c is not
+	EOF or in the range 0 through 0xFF, inclusive.
+
+That's it. So I kind of *guess* that EOF is treated as not being a
+whitespace character (why does this make me think of politics now? Focus,
+Johannes, focus...). But the mathematician in me protests: why would we
+be able to decide the character class of a character that does not exist?
+
+Technically, you are correct, of course. The specs of fgetc() specify
+quite clearly that either an unsigned char cast to an int is returned, or
+EOF on end-of-file *or error*. And a quick test verifies that isspace(EOF)
+returns 0.
+
+But then, I guess I misunderstood what Coverity complained about: maybe
+the problem was not so much the isspace() call but that EOF is not being
+handled correctly. We pass it, unchecked, to ungetc().
+
+It appears that I (or Coverity, if you will), missed another instance
+where we simply passed EOF unchecked to ungetc().
+
+The next iteration will have it completely reworked: I no longer guard the
+isspace() behind an `!= EOF` check, but rather handle an early EOF as I
+think it should be handled. Extra eyes very welcome (this is the fixup!
+patch):
+
+-- snip --
+diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+index c0d88f97512..9b3efc8e987 100644
+--- a/builtin/mailsplit.c
++++ b/builtin/mailsplit.c
+@@ -232,8 +232,9 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
+ 
+ 	do {
+ 		peek = fgetc(f);
+-	} while (peek >= 0 && isspace(peek));
+-	ungetc(peek, f);
++	} while (isspace(peek));
++	if (peek != EOF)
++		ungetc(peek, f);
+ 
+ 	if (strbuf_getwholeline(&buf, f, '\n')) {
+ 		/* empty stdin is OK */
+diff --git a/mailinfo.c b/mailinfo.c
+index 60dcad7b714..a319911b510 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -882,7 +882,10 @@ static int read_one_header_line(struct strbuf *line, FILE *in)
+ 	for (;;) {
+ 		int peek;
+ 
+-		peek = fgetc(in); ungetc(peek, in);
++		peek = fgetc(in);
++		if (peek == EOF)
++			break;
++		ungetc(peek, in);
+ 		if (peek != ' ' && peek != '\t')
+ 			break;
+ 		if (strbuf_getline_lf(&continuation, in))
+@@ -1094,14 +1097,18 @@ int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+ 		return -1;
+ 	}
+ 
+-	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
+-	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
+-
+ 	do {
+ 		peek = fgetc(mi->input);
+-	} while (peek >= 0 && isspace(peek));
++		if (peek == EOF) {
++			fclose(cmitmsg);
++			return error("empty patch: '%s'", patch);
++		}
++	} while (isspace(peek));
+ 	ungetc(peek, mi->input);
+ 
++	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
++	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
++
+ 	/* process the email header */
+ 	while (read_one_header_line(&line, mi->input))
+ 		check_header(mi, &line, mi->p_hdr_data, 1);
+-- snap --
+
+In the first hunk, I simply rely on the code after ungetc() to figure out
+that there are no headers and to handle that case as before.
+
+The second hunk handles the case where looking for a continuation line in
+the header section hits EOF; it is still a valid header, but we should
+avoid ungetc(EOF) to allow the next read to report EOF correctly.
+
+The third hunk moves the malloc()s around so that we can complain about an
+empty patch, close the file and return an error value without leaking
+memory.
+
+Ciao,
+Dscho
