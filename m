@@ -2,105 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44E47207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 19:22:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13414207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 19:55:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S642394AbdD1TWw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 15:22:52 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62680 "EHLO mout.gmx.net"
+        id S1425146AbdD1TzD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 15:55:03 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:29684 "EHLO bsmtp1.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756430AbdD1TWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 15:22:51 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtmK9-1e4ZFk3tCv-011D9E; Fri, 28
- Apr 2017 21:22:34 +0200
-Date:   Fri, 28 Apr 2017 21:22:30 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     phillip.wood@dunelm.org.uk
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/9] rebase -i: generate the script via
- rebase--helper
-In-Reply-To: <8c1f3519-0768-69d9-4d15-782da0be8390@talktalk.net>
-Message-ID: <alpine.DEB.2.20.1704282059100.3480@virtualbox>
-References: <cover.1493128210.git.johannes.schindelin@gmx.de> <cover.1493207864.git.johannes.schindelin@gmx.de> <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de> <8c1f3519-0768-69d9-4d15-782da0be8390@talktalk.net>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1423570AbdD1TzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 15:55:01 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wF4Kb3bLJz5tlB;
+        Fri, 28 Apr 2017 21:54:59 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 8868642B7;
+        Fri, 28 Apr 2017 21:54:57 +0200 (CEST)
+Subject: Re: [PATCH] t7400: add BSLASHPSPEC prerequisite to 'add with \\ in
+ path'
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <5b8e0f3a-0b64-1384-d830-5b65a43e44c4@ramsayjones.plus.com>
+ <xmqqk265kz2v.fsf@gitster.mtv.corp.google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <7cd09c17-30a1-b157-2454-4c9b399a8628@kdbg.org>
+Date:   Fri, 28 Apr 2017 21:54:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:VEU5bs06nmjd3YrkzInPkQtWA77Sir9zsd8KqvsrEHTi6XJEacG
- k+/qCJO3Fm+mgCuQtwnwSYYC09E8KITkXwuAfqUc6sAy2dLMeiHU1WIo3nn4o4pG5r11szk
- WDoR9N1/3npPExXk0VmpLLZrBI3WD5JA8+BpT/zpNyCIgmCzvOh8xFXXiVh7A+jtMhF10UW
- NHwdpY0Ip0lCqhZ+hjBhg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PBlYOz3UUcs=:fvEvvgfdOkfoE5H38J9/xm
- kwjmf029bdf0eI8x+2pJYJS8PWApzSi0S0+dI2KaWABX58Fm0CKa0LvEAk38vXosyhPX2buwJ
- hnbxPab5LJEB1+8ZR2+GRE01nLOlzdau/E6cRnBkfmzMUAWLdiwzki71HvTyMNtfMuLxYYUeu
- ufOBTubwuznyRSOr3VXchBIw8TFwpZr1NAdMsB9XqSv4mVV8tKuMO9JwDc20F527cm4/ej6cL
- Z2lKsQuBVzG71Dc9iNmdPycDwWnTX4f/5OQMvJIcK6vMnHWypjWClFFv36vF4sgPmPmZRHf2Q
- DObaYnintdiu62eHm36JIi8zQEtYKrosOGVK1+b90qx09c3ZV/O+Lu1i3Dk5X9Z4ua2lQ3mra
- Vbe4i1228+MrbUdpwZs1BW4LCCmcMV9ZmXSflJfHlxr6tPayFHPEo5ixNhSfUL3PSg7SS1lDF
- DfOB7GbjmT0/jiXXTAVV9CF9r3lSHhyeLeXa7CZzJG3SFYzWOrRW+BFMgwfEP9XsyMy4x9ZJY
- J0aCfroWSZ+o1FLxhEwZy0oCRln9CaeaqOl/u9dX+jdgQSK/J5iEsj/tN+tuyV4Ffmv58jSAJ
- fUr5kIxlim1lRTJBjzqI6fvdKKnPMnIp1Hr4jpYuOSM8i30sWTd8hdGy/z9G4s/XxXJkXqgTM
- awN+Kns4+CLtL2o2lravmxrsRIIqjPH7m6g0eT/TLTE+BpIWLU4pq1fxQ2mKfKufQuCWoxb/w
- rq2Aq14RkbQwVx4JoqegWCQdsk4oFXZ2iNiheLIDmXf4FhioCLcoIeiK1topGiuIllbo/DLce
- oWfdl6J
+In-Reply-To: <xmqqk265kz2v.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philip,
-
-On Fri, 28 Apr 2017, Phillip Wood wrote:
-
-> On 26/04/17 12:59, Johannes Schindelin wrote:
+Am 28.04.2017 um 05:09 schrieb Junio C Hamano:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 >
-> > The first step of an interactive rebase is to generate the so-called
-> > "todo script", to be stored in the state directory as
-> > "git-rebase-todo" and to be edited by the user.
-> > 
-> > Originally, we adjusted the output of `git log <options>` using a
-> > simple sed script. Over the course of the years, the code became more
-> > complicated. We now use shell scripting to edit the output of `git
-> > log` conditionally, depending whether to keep "empty" commits (i.e.
-> > commits that do not change any files).
-> > 
-> > On platforms where shell scripting is not native, this can be a
-> > serious drag. And it opens the door for incompatibilities between
-> > platforms when it comes to shell scripting or to Unix-y commands.
-> > 
-> > Let's just re-implement the todo script generation in plain C, using
-> > the revision machinery directly.
-> > 
-> > This is substantially faster, improving the speed relative to the
-> > shell script version of the interactive rebase from 2x to 3x on
-> > Windows.
-> 
-> This changes the behaviour of git -c rebase.instructionFormat= rebase -i
-> The shell version treats the rebase.instructionFormat being unset or set
-> to the empty string as equivalent. This version generates a todo list
-> with lines like 'pick <abbrev sha1>' rather than 'pick <abbrev sha1>
-> <subject>'
-> 
-> I only picked this up because I have a script that does 'git -c
-> rebase.instructionFormat= rebase -i' with a custom sequence editor. I
-> can easily add '%s' in the appropriate place but I thought I'd point it
-> out in case other people are affected by the change.
+>> Commit cf9e55f494 ("submodule: prevent backslash expantion in submodule
+>> names", 07-04-2017) added a test which creates a git repository with
+>> some backslash characters in the name. This test cannot work on windows,
+>> since the backslash is used as the directory separator. In order to
+>> suppress this test on cygwin, MinGW and Git for Windows, we add the
+>> BSLASHPSPEC prerequisite. (see also commits 6fd1106aa4 and c51c0da222).
 
-While I would argue that the C version is more correct, it would be
-backwards-incompatible.
+First, let me say that meaning of BSLASHPSPEC was "keeps backslaches in 
+pathspec arguments" originally, but it apparently changed meaning since 
+then.
 
-So I changed it.
+The prerequisite was introduced in 6fd1106aa4 because the MinGW port 
+rewrites backslashes in command arguments that undergo the '\'->"/" 
+transformation introduced for prefix_filename() in 25fe217b86. It 
+destroys the backslashes that could otherwise be used to escape globbing 
+characters. t3700 does just that.
 
-BTW in the future you could help me a *lot* by providing a patch that adds
-a test case to our test suite that not only demonstrates what exactly goes
-wrong, but also will help prevent future regressions.
+Since Cygwin does not do this rewriting, the original CYGWIN section in 
+test-lib.sh had the prerequisite, just like the default (POSIX). But it 
+was removed by 5b5d53cbe5 (t4135-*.sh: Skip the "backslash" tests on 
+cygwin), and that is where BSLASHPSPEC changed meaning. That commit even 
+carries my Acked-by (!), even though I can't recall giving it and I 
+don't find it in the conversation about the patch:
 
-Ciao,
-Johannes
+https://public-inbox.org/git/4D07B977.9010502@ramsay1.demon.co.uk/
+
+>> I built v2.13.0-rc1 and ran the test-suite on cygwin this evening and
+>> had an additional failure, over and above the failures reported for
+>> v2.13.0-rc0, namely t7400.20. This patch elides that test for cygwin
+>> (and MinGW and GfW, so it would be good to hear success reports from
+>> both Johannes).
+
+t7400.20 does not fail for the MinGW port because the test case only 
+operates on the file system, but never checks whether an entry 
+'sub\with\backslash' is present in the index.
+
+>> @@ -273,7 +273,7 @@ test_expect_success 'submodule add with ./, /.. and // in path' '
+>>  	test_cmp empty untracked
+>>  '
+>>
+>> -test_expect_success 'submodule add with \\ in path' '
+>> +test_expect_success BSLASHPSPEC 'submodule add with \\ in path' '
+>>  	test_when_finished "rm -rf parent sub\\with\\backslash" &&
+>>
+>>  	# Initialize a repo with a backslash in its name
+>
+
+I assume the test fails right at 'git init' under Cygwin?
+
+BSLASHPSPEC (with its *new* meaning) would be the right prerequisite if 
+the check for the index entry were added. Until then, !CYGWIN is more 
+appropriate.
+
+-- Hannes
+
