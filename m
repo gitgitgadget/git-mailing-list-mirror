@@ -2,87 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD370207D6
-	for <e@80x24.org>; Fri, 28 Apr 2017 00:15:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7DE0207D6
+	for <e@80x24.org>; Fri, 28 Apr 2017 00:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S939453AbdD1APa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 20:15:30 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36701 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754271AbdD1AP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 20:15:29 -0400
-Received: by mail-pg0-f66.google.com with SMTP id v1so2665822pgv.3
-        for <git@vger.kernel.org>; Thu, 27 Apr 2017 17:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=wjwYBfjN7FCkT5TCWpzCA6g3NBN4Wqs7jdFeXZFVbzw=;
-        b=dud22xumgKpPDGJyXoaHdchr+hQWgwwJxK4BqLu3svZL1JWiDXx1hJqK0hrw/lQlgs
-         RKw+Jf+XoAyvl2d9IgOx5ci3AakafqkpEMXHStJ2Tk/HwdQPNDcTkaY6N+yieYSie49v
-         MTuUYy8c5ifJlq/7SgDmgRgKTt5rXNNK47wByEGhgCW2hzL5WUBNywcFrHA6Vg8onwd4
-         2LlmWhHI/BKfdRN2uryhhQ7y4gCY+oz4iMGgQiMYohitFDM3B+YzpduedwLinSO+KB9b
-         CMGJYGyA/OuvcVO+WoodaMOoW+R1p44tSDiPsYFaWYhzF/hrHSOQXbNMiU1EPvEjnSN3
-         T2Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=wjwYBfjN7FCkT5TCWpzCA6g3NBN4Wqs7jdFeXZFVbzw=;
-        b=pHezQFZ7Ipv62Nh8pklTJ7yOblJwLh2kgJbXVSdcy2/lqzL1LHCbZrX0WVzOx6fnDl
-         3ly2GkHfl5OHrklqwG/8Qx60zBcUtfYWvZVTkoy77zCWagsjKsoPgf+y2lGwnUotmD2A
-         HXzsZeTlRDh2Y/DUKRfgtFTWZ1FFsQ6AMIkHygLXiqD6ymvJeqNhWXmZOJDkNgiBDYCH
-         GkS9qvCoKaipIx1p416MPCM1qonOGNJBLprtSjCcGdF42kZy+PjsAaGn6G4h/Sz906Au
-         owaVhMc+OrOneyavDH7/iRD059G1uMkVvr4Tgd+28bVixeXuGo5aUwgobCCbnjfhNNOL
-         mcAA==
-X-Gm-Message-State: AN3rC/7RM9h+0xS+2tCzU9TOlkk25wQ0D4vo1e1gCyhGrdefE/7GNwZE
-        /0YKuPar50PA6Q==
-X-Received: by 10.98.20.210 with SMTP id 201mr8854866pfu.70.1493338528774;
-        Thu, 27 Apr 2017 17:15:28 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:51c2:e137:8e5a:b68b])
-        by smtp.gmail.com with ESMTPSA id 29sm6327596pfo.9.2017.04.27.17.15.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 27 Apr 2017 17:15:27 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/9] rebase -i: also expand/collapse the SHA-1s via the rebase--helper
-References: <cover.1493128210.git.johannes.schindelin@gmx.de>
-        <cover.1493207864.git.johannes.schindelin@gmx.de>
-        <df5263cc0cad5cffbd1932d4b9b8e5c0507536e6.1493207864.git.johannes.schindelin@gmx.de>
-        <xmqqr30eo36n.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1704272331190.3480@virtualbox>
-Date:   Thu, 27 Apr 2017 17:15:27 -0700
-In-Reply-To: <alpine.DEB.2.20.1704272331190.3480@virtualbox> (Johannes
-        Schindelin's message of "Thu, 27 Apr 2017 23:44:35 +0200 (CEST)")
-Message-ID: <xmqq7f25mlpc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        id S967219AbdD1ASG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 20:18:06 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:38826 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754271AbdD1ASD (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 27 Apr 2017 20:18:03 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 87658280AD;
+        Fri, 28 Apr 2017 00:18:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1493338681;
+        bh=BSEkSnbdMhDCa2oNQScHBZ5lyGlnG9RQbWe/3umGdA0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=wM9f5snXqqtAghpTGaMiHQabn6+MZMXvq69BnSAMN7cBduZ8AnXqxyoxx0FTSZnfV
+         u2Xt37dXGhPiaMR3WW1b7x5xVJT66sa0kYqVxTfIrQRtnJcADvjkxNvVQYC0dth59G
+         my3pXz7gQsbeNXkykthl5gzcdIcRyBGwKn2UIagO6T1bbWXF27BkfhdoFXCGiXvrse
+         +e4Px3qvGo/MHv5Bqjf7dLFeS6XZkHeG/Bmo0nJOXvzMKbnhHzRBwLEy3AcnRra9Up
+         vvqbH6dRdhfBeJKXvPDtIn7dzuQmm37yOlyqM9wTtcypXDLrDF4IlckcRQNBfkStjV
+         umuU89rMTM2WrkbGYhHgaV+sGYXzNdKhC7jHNW9NNIo6+BjnJyoL51CJujc52mEwR4
+         U8pAlD3QTxiNYFN9symXFAWcc6k7eSwAnfnHfCGsGGRqb8qNCWe6NDTUb8mnlb56K6
+         /DIAuJbYhaEMn6wQ2colS6BPz2+euViueAg6XtFtWsV24CQubq6
+Date:   Fri, 28 Apr 2017 00:17:54 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 35/53] Convert the verify_pack callback to struct
+ object_id
+Message-ID: <20170428001754.7h7gblafh2faz4vf@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+References: <20170423213453.253425-1-sandals@crustytoothpaste.net>
+ <20170423213453.253425-36-sandals@crustytoothpaste.net>
+ <20170427055209.ock533opgzans6ew@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="4ueihqg3szvx7ini"
+Content-Disposition: inline
+In-Reply-To: <20170427055209.ock533opgzans6ew@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.9.0-2-amd64)
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> > +	out = fopen(todo_file, "w");
->> 
->> The usual "open lockfile, write to it and then rename" dance is not
->> necessary for the purpose of preventing other people from reading
->> this file while we are writing to it.  But if we fail inside this
->> function before we fclose(3) "out", the user will lose the todo
->> list.  It probably is not a big deal, though.
->
-> I guess you're right. It is bug-for-bug equivalent to the previous shell
-> function, though.
+--4ueihqg3szvx7ini
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the scripted version uses the "write to $todo.new and mv
-$todo.new to $todo" pattern so you'd at least have something to go
-back to when the loopfails.
+On Thu, Apr 27, 2017 at 01:52:09AM -0400, Jeff King wrote:
+> On Sun, Apr 23, 2017 at 09:34:35PM +0000, brian m. carlson wrote:
+> > Use a
+> > struct object_id to hold the pack checksum, even though it is not
+> > strictly an object ID.  Doing so ensures resilience against future hash
+> > size changes, and allows us to remove hard-coded assumptions about how
+> > big the buffer needs to be.
+>=20
+> But this part seems questionable to me. Sure, we may change the pack
+> checksum in the future. But there is a reasonable chance that it won't
+> follow the same rules for selecting a hash as object_id. And even if it
+> does, calling it object_id just seems misleading.
+>=20
+> What's the gain in converting it here? I know we want to get rid of the
+> bare "20", but we could switch it out for GIT_SHA1_RAWSZ. I suspect you
+> prefer in the long run to get rid of even those GIT_SHA1_RAWSZ defines,
+> though.  Could we define a new struct csumfile_hash, csumfile_cmp, etc
+> (and arguably change the name of "struct sha1file" and friends).  They'd
+> be boring wrappers around sha1 now, but I think the endgame will involve
+> us being able to read multiple versions of packs, with distinct
+> checksum algorithms.
+
+When I wrote this originally, the GIT_MAX_*SZ patch was in
+object-id-part9 and hadn't been merged yet.  And I think your concerns
+about this being kinda gross are legitimate.  I'll admit I had some
+hesitance about it at first.
+
+So I'll reroll this leaving it as an unsigned char with GIT_MAX_RAWSZ.
+I feel confident that we're not going to pick a third, different
+algorithm for the pack checksum, so that will get us to the point that
+we have a big enough buffer, and we can incrementally improve on it
+later by using a different struct if we like.
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: https://keybase.io/bk2204
+
+--4ueihqg3szvx7ini
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.1.18 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlkCijIACgkQv1NdgR9S
+9ot+aA/+L4WaZ82AAmJEaCmJZ8a4cLR2VUSu5IVQrBp2ew4MqrlAthNzJ09sLNQU
+r5sfH7SZbAXj1A9Z2VmZVJdtmEc71l1shFj9DiS6wQOJ6IXYkWfWCTuN27FAs8Xh
+RqUzZantTilBgmsSwsTyNLGfZl86UMVaTo+WxQdJ3BNGnAntdpi6P/p2VHZXN1NY
+TRZm1EWyKjx7B49I608DKcoocECKjmJd7oeVL/RqJVL0wynIKINsovcBLSuXGLYy
+Etb9zMSKgmkHz1bOFj1prrd9NS89Wevwygnu3tyzU253W/vNRZD8Vj1SW7xV6BuH
+SdXqCOTMEOFdmdfM+8TMSgYR7lZZAfAChADjumb396882/d7wycbcO/s6aaFh+1G
+k6AwghpN40OwOUrjtkrpOVAF1z9aQaqTMWRzFOncApH//2DXTv98HUtIboxnMkqP
+iNlZ8rOBt4E2pH0wXlM1woSzQdK6WBPSdn0YHiJ/ZytaCLhr9LgEsqwTDndomq+i
+W1JN/zqg78LnIdsmxEK5T4XtSUdDrsAi4ZjdBn1F1lwykc837yY49fislU6hH9Xj
+NYrcFT445MjWWTMjFr0XBnZMH30+MaNOU1+RMSy9vs1zQt6ppc5kMPXLGbUGjMie
+SzEAeg8MHa5IXIa3LAAYpDt/fxhsJYrrGRyDpVsWscBIaBab2z4=
+=vafg
+-----END PGP SIGNATURE-----
+
+--4ueihqg3szvx7ini--
