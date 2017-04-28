@@ -2,105 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5300E207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 14:04:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 248A1207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 14:04:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2997673AbdD1OEs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 10:04:48 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56634 "EHLO mout.gmx.net"
+        id S2997851AbdD1OEx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 10:04:53 -0400
+Received: from mout.gmx.net ([212.227.15.18]:49647 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2997363AbdD1OEr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 10:04:47 -0400
+        id S965808AbdD1OEu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 10:04:50 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LbM2k-1dnuZm1knS-00ktNz; Fri, 28
- Apr 2017 16:04:40 +0200
-Date:   Fri, 28 Apr 2017 16:04:39 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTCDO-1dV1HZ2thm-00S7X2; Fri, 28
+ Apr 2017 16:04:43 +0200
+Date:   Fri, 28 Apr 2017 16:04:42 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 23/25] name-rev: avoid leaking memory in the `deref`
- case
+Subject: [PATCH v2 24/25] show_worktree(): plug memory leak
 In-Reply-To: <cover.1493387231.git.johannes.schindelin@gmx.de>
-Message-ID: <9e897d6f263bcf9a2b2bab613946fe1bf452eb91.1493387231.git.johannes.schindelin@gmx.de>
+Message-ID: <61752ef33781402fe90dfa92dee2427e3cd00e5b.1493387231.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:YZ9glGnNogLUMThaeud5BzV66XVBhYolzQZr8XSip+qsfWK4DSS
- Vf29uS7v2zhFEc3tkyg1aaD3aaZdWi93f8PyzCYgpPM6RN8b/1vEKi8kzQIPXTiBCeTqoja
- K+fv/R9zmi7E/PlMckye8YPJMhkjEqNFj6cUSZRjY9b4U5Ay8wkzIiCw4EFeAmV3Jei442v
- +2ZpzGki9IWoi8tSnsvjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:5mxrL6FiGx8=:a8fEFCyWP3ZykWIglGTlS9
- YH3Y+lt1jH0JutT3kSeB5D7bfH5K8nHWWo8BXh/VLd/GArisJYBeJZHj1Y77+O2T5sCvXoak6
- +G4IkscSEIUsKNM7Zt2wDwt7Tw2Eu2vlznc2eit3yKb4TlA4nF/bzSI4SHIuGolO4YbOSQWz3
- FvZFMdzbbpj35WjmGUQbi0MTZGDxlBSofYcxJqLFbKLNkNU1Ulhe2tN9kN4S9a2NexNsgjtdf
- TH43b6TP8xkjRXPI+LIfuEFa/x9FYIf0y6zcKBclRY/wRS+MgNKXExY3EHcKJ5YfTvrJTwUtF
- u1C+aQsF9v+edcltM51CnCe1uHN/KWT8mxYqzse4+N3DGlQq1qVN6EBXXFfzpogLvkzchgKt7
- V0060as2vSpOSTKoegcTV3iMwpNmpVq+jG8EvCajOdgtZOwEwhkDClhBKlrz8gn5GObREnL2i
- MuYrLonQJsDKYbti7/Wu26uocW/L08apdz1VEN37wmYSzAIb4HhNoSj3zvNY5jm0mjIgt9AVm
- eVZ9sussJOCmzXjb8/ncxWvYyYAft4/s0qe/vdsgDbu53mvXpFRig3gNbuHG4qE9fjyez0Ip3
- FI9c+3l9I/r8P9f4/tNpsankhKGPvd4eGYiMbK1S3DAcRdaLgREKeZaxX+5OqxJbbg4BaGjMl
- cYb9R9iBEoR3IPpe7RWrZ6TA5qxblVKfbaUJjjxQxv6LEdF2EtB2RCa5gg3Dm+2n6hfNVOFPb
- 95zUHwIElXyzbqYszEXT1tKd4e/1u1dSQtb4OWC5v954mBQ42WvI1Bw/I+Dbg8sC+ifpwFy+M
- tQek39A
+X-Provags-ID: V03:K0:LuhEGbXLxgiqrRWxtKbGyb+ZMv5rhKNPGxTO95U4zdGJ2B/8PTw
+ XrGSkAf2MbVq+np+9fMmRmz8wJHRatD6E2fHszDqPAJN1ykn7uYCwzBUFwBgweB/7toAB/J
+ 3Kj2qTZ8GHsXSKaHFCP9BESxJoLWZVh6J/lsVe50f8ux3fhTiQ9VACCYU/uWOjF3rz8I3YP
+ GJ25P0XtXIaw8mxexNqBQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qQYWdj5DtiE=:g7iDe2TCGD+GFMUXP9zrHh
+ F10qb/+5XEY7DFB7mdL+XonKSMZHbwMn65NWzzb2i4i5Xm8i1j3TNp0SYsu4BJ8cREKcS/TTD
+ VZpLGduQNBDqRfUSGJJti2nWdw0BTbz3nzODMXws1df9GHuVxFXqUq13Q3tVBiNME1qQRh9rN
+ qsHbfIl4axs6yPmeON1EFHPZJXqHLr3v3KXbm4qblyIMf6MiIvfriPaHDtv6WRjnoxOwRyJlJ
+ bWeeLp+mmoikfpjqHgxrYccPn+sdmAnTJRTjaPsI+h1ba2FJJKDOCGM8U2UpwX7yITFa732KJ
+ uzddXNb6TYmiRiVcIuT8rWLWpa69ySGdfM4LbNr3qhFGpHumyCyiTNL9IX+S67zvemn9Un40e
+ RqqG9cEDt3j3Gp7bhBbbHh7M2MGcPwAChcSvmn40IphQ1thu4o5NI2SnUxlMogMzCPTa4ma5Y
+ mpd3DcxCl0lkIiKJ5+bpcLQWLDISLkd/t+r2PInk7R0fdbLKLUqg0aOB7d3o3BHWUltgdTdCO
+ u+iaNID5a+7vnoYH0G8EQoKLSUhGkObk8PgK00AriOhNiEmz+s44BDFn1ANAlBQ7FtyVruFWT
+ dTGixXCfnkjrwDSl8qT9MlLA2iHKeuge9FhYl5D8m+k9qZIal2AtXY7l1RzA/ysMGj3ZaxyNv
+ BmAOiYqsF3IuRLhyyQv3FoGWvQhAQLwweWwVTh/767/nbDFYdbdDpGFsK0vzEIRIO8IVhs9Ou
+ jn+638pW2pnupnvuxFoZjEWnGLAeZ3N8iUQ6y3BBA9KoLz1KOCiH9T8zCHnG4et1JqY/q+pjg
+ wqno5N8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the `name_rev()` function is asked to dereference the tip name, it
-allocates memory. But when it turns out that another tip already
-described the commit better than the current one, we forgot to release
-the memory.
+The buffer allocated by shorten_unambiguous_ref() needs to be released.
 
-Pointed out by Coverity.
+Discovered by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/name-rev.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ builtin/worktree.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 92a5d8a5d26..a4ce73fb1e9 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -28,6 +28,7 @@ static void name_rev(struct commit *commit,
- 	struct rev_name *name = (struct rev_name *)commit->util;
- 	struct commit_list *parents;
- 	int parent_number = 1;
-+	char *p = NULL;
- 
- 	parse_commit(commit);
- 
-@@ -35,7 +36,7 @@ static void name_rev(struct commit *commit,
- 		return;
- 
- 	if (deref) {
--		tip_name = xstrfmt("%s^0", tip_name);
-+		tip_name = p = xstrfmt("%s^0", tip_name);
- 
- 		if (generation)
- 			die("generation: %d, but deref?", generation);
-@@ -53,8 +54,10 @@ static void name_rev(struct commit *commit,
- 		name->taggerdate = taggerdate;
- 		name->generation = generation;
- 		name->distance = distance;
--	} else
-+	} else {
-+		free(p);
- 		return;
-+	}
- 
- 	for (parents = commit->parents;
- 			parents;
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 1722a9bdc2a..ff5dfd2b102 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -414,9 +414,11 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+ 				find_unique_abbrev(wt->head_sha1, DEFAULT_ABBREV));
+ 		if (wt->is_detached)
+ 			strbuf_addstr(&sb, "(detached HEAD)");
+-		else if (wt->head_ref)
+-			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(wt->head_ref, 0));
+-		else
++		else if (wt->head_ref) {
++			char *ref = shorten_unambiguous_ref(wt->head_ref, 0);
++			strbuf_addf(&sb, "[%s]", ref);
++			free(ref);
++		} else
+ 			strbuf_addstr(&sb, "(error)");
+ 	}
+ 	printf("%s\n", sb.buf);
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
