@@ -7,88 +7,73 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 185E5207EB
-	for <e@80x24.org>; Fri, 28 Apr 2017 14:03:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A4AF207EB
+	for <e@80x24.org>; Fri, 28 Apr 2017 14:03:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034213AbdD1ODd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 10:03:33 -0400
-Received: from mout.gmx.net ([212.227.15.19]:55282 "EHLO mout.gmx.net"
+        id S1035039AbdD1ODg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 10:03:36 -0400
+Received: from mout.gmx.net ([212.227.17.21]:61472 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1031528AbdD1OD3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 10:03:29 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVNDK-1dbd0H0N8o-00YiWa; Fri, 28
- Apr 2017 16:03:23 +0200
-Date:   Fri, 28 Apr 2017 16:03:22 +0200 (CEST)
+        id S1034206AbdD1ODe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 10:03:34 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNw0t-1d9sqz2DrX-007Qy6; Fri, 28
+ Apr 2017 16:03:26 +0200
+Date:   Fri, 28 Apr 2017 16:03:25 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 14/25] setup_discovered_git_dir(): help static analysis
+Subject: [PATCH v2 15/25] pack-redundant: plug memory leak
 In-Reply-To: <cover.1493387231.git.johannes.schindelin@gmx.de>
-Message-ID: <cbd8e917f1318190d9f979f4cc9b62dcd838bbb0.1493387231.git.johannes.schindelin@gmx.de>
+Message-ID: <7f627e2d67c165fcd2e3ef8642df468efd69224c.1493387231.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:He1ZzGG0kwuG2evpNZC1xQhGfH5hcCQGMsDKtU4udaSF9r6sp/s
- SzKn34VS9urXyafkEuL90o8OFgXTAeTOLINqdMmspWU8s7l2JxVm9gXtjS74F0Ts5OCU+Uw
- 5f1NKjDxj9L0YPlTJnrhJd0oQqTP5+kcGQgCg4YGbUvoGl5e/Y9dUJriOPGSRUfxT6zBOCH
- +YS1mkgGG3O/KJPmHoHGA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sKn8N2x7COQ=:KS9MTB8Z3KgOHyomkVnGUd
- zyE6gX36sEkByiP2ecvP5UtscCVJlBicZWoPSfPrH6F1vV8AuuBcBdL21jip943pFCMt4joia
- qqHU4Lwn08MKbHxr1lBluAIi6UMy5q0JQuxJxNFlSXI8xT1YFd+I86PtDOAU3l8zGw+1LgllD
- s69UGSojHfkZSUUTEEJ67rUvYAvSAbncVgHeYPq8ppqxnV1aIXsGmLpWxRX36/eVWAJ+d53hr
- V6ODQMZews/C2GVQtje5XvpmI4SVHxhJONVcPQwPNOPz/B/KLSOCdgYHZfTZyM7E5Uaq7/C7G
- HSzeWVDEF11m31vNZLlqvdEKYy1914JiAf4c8+e1XutqJmMJgKvtOznJqxWRVt2t3wP8BnK7Q
- LMYSxibpQlycUeQxGK8q4XYGRMJul2scEcdoP0KZw8VyjgxXiLAUWxLKY9f5Ea1WjvkJYZpeh
- 8OkyXeD91+F2Q312nlYDhWxFKBF0dmAyILYMJYlUZMwzMAeeMiE0xzHb8FggsBVmuP2G7r7S6
- DZNyVagt6lRovbioNdSMGFX5YKXRxHM/nyIcgiuZB3vfRJ8rIjIVEKUNBZg/GmHG2xGfmrY3T
- Qd84X+Mw4xqKNkRLHjrkrAFIN9XHchXjgktaFTYz/koLVZ9HiFZh5jrtz6OTk8hATo4HQLncJ
- BZBsiJiwyicn4T0VY9sLXWOJEVEjeedDoEcPq4vo4EBqObC+N9v3yn6oMO890MNDYOF8A+JSh
- BrgrhYx/dksW33TCtBltF6QiN8OS7+qms5zYzsO9Tu47HO0r1UdLuMZeXpRmao2BXWJLFzBzu
- vnI7o0B
+X-Provags-ID: V03:K0:1j10EkpDnHP3GpKMGuttn8kvYN8JUvjECp7YFMKb3iH80ZztVEc
+ AQEKCHvqH0kNeD0F82zpKqr+U4JGuZ9RcdkNwLcIBmc7FrGvjHsLd9hV4lQIPgwiHn1tg6t
+ htfWTswrwbCzGZRR0OGZ/T0PK2O4TTDnURfp0NLiVnD5NK2TE1Up/jNprDIp4iEStPSsYup
+ Qq2MIPq67IJqJUQhIERdA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7xq9MCwnN4A=:PkCFDvRBRK1gJX6MPk2css
+ ubOa20i7rSTwAbvmwSiprm88AtWxxTg6u5CwxFdZ/RBYkkfTnQaAAj41yBR2qEq6IcOS3Y7Ig
+ SNF0PP4yRECDJprs7qY6UAVBoN0KsHkNoMFV8Vacg/PwXMMVHLbnHXqdljeXeXy8EWPAdGqkI
+ k/GXv7ypJt2TIp83SYJ37fotjuOkVNLOr5HUWQXvuT02mmpqNuBTioOOJMBzg8/iw/+ZoJ2zW
+ XTjh+AmbgdextY5QYtVk5ZC948jFYFq4cO97uXZRNtLFfUduX4xh+rrjDdXij3Ki2XZFNZcws
+ xuLmFm0o0onCnaYHNUID8ZB4vDt5+ru633msdMcMIgOcAOwXzBqfRaWf7Npv7v0DO9OS8z7jB
+ bIFC9AA7pNZSBHZR0rFVNstWfmGcAB2CaentfZ93llKxEiRpeEy9APSNC9p8v+d2ueS3zyY+Y
+ Dc8QoU37K6PigvJogsnzVIiBSH/nEqeOYl1f/SJ83roHNHSxyetxz2mEeQW07hqG6tNSP6WmC
+ GbBJAyXdxXcX1UJmDgVBm98XBW5RpAKC6/gY4BgS2PG7PRJKFvW8g7+naGwgIy0iJEnwXLM/l
+ nc3nG7kED0kvbVM46lSoX2RmjOEBs1zxNNEMjFFW9Jogyi8M82myvPBRr8C1HRF+RsjTHcusE
+ TzVI90NI+faHeNYSAvZaNU1Ipzl237dgdjyGSV49SeuWOpdqLveerWMnxZXxDMLrDraaMaARp
+ xw50HZye+MsPr0EoJibB2mqhMf8Z7tot9/sU8CAcRDtLYFUPVriHTNrfYHv7lAoo8DqRdPk3x
+ F/nTou2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Coverity reported a memory leak in this function. However, it can only
-be called once, as setup_git_directory() changes global state and hence
-is not reentrant.
-
-Mark the variable as static to indicate that this is a singleton.
+Identified via Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- setup.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ builtin/pack-redundant.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/setup.c b/setup.c
-index 0320a9ad14c..12efca85a41 100644
---- a/setup.c
-+++ b/setup.c
-@@ -703,11 +703,16 @@ static const char *setup_discovered_git_dir(const char *gitdir,
- 
- 	/* --work-tree is set without --git-dir; use discovered one */
- 	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
-+		char *p = NULL;
-+		const char *ret;
-+
- 		if (offset != cwd->len && !is_absolute_path(gitdir))
--			gitdir = real_pathdup(gitdir, 1);
-+			gitdir = p = real_pathdup(gitdir, 1);
- 		if (chdir(cwd->buf))
- 			die_errno("Could not come back to cwd");
--		return setup_explicit_git_dir(gitdir, cwd, nongit_ok);
-+		ret = setup_explicit_git_dir(gitdir, cwd, nongit_ok);
-+		free(p);
-+		return ret;
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 72c815844dd..cb1df1c7614 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -442,6 +442,7 @@ static void minimize(struct pack_list **min)
+ 	/* return if there are no objects missing from the unique set */
+ 	if (missing->size == 0) {
+ 		*min = unique;
++		free(missing);
+ 		return;
  	}
  
- 	/* #16.2, #17.2, #20.2, #21.2, #24, #25, #28, #29 (see t1510) */
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
