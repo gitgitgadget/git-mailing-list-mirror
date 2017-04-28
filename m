@@ -7,71 +7,97 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 24AA0207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 14:03:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA1BF207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 14:03:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1031531AbdD1ODW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 10:03:22 -0400
-Received: from mout.gmx.net ([212.227.15.18]:49208 "EHLO mout.gmx.net"
+        id S938497AbdD1ODY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 10:03:24 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52164 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S937554AbdD1ODU (ORCPT <rfc822;git@vger.kernel.org>);
+        id S938012AbdD1ODU (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 Apr 2017 10:03:20 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwZtX-1eAge139f5-018KzN; Fri, 28
- Apr 2017 16:03:02 +0200
-Date:   Fri, 28 Apr 2017 16:03:01 +0200 (CEST)
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6ilI-1e0UQf3ct2-00wY4J; Fri, 28
+ Apr 2017 16:03:05 +0200
+Date:   Fri, 28 Apr 2017 16:03:05 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 10/25] cat-file: fix memory leak
+Subject: [PATCH v2 11/25] checkout: fix memory leak
 In-Reply-To: <cover.1493387231.git.johannes.schindelin@gmx.de>
-Message-ID: <633670d87f7080d1e21f1f639bc560499572f3f7.1493387231.git.johannes.schindelin@gmx.de>
+Message-ID: <7743bfd9e0cde54db7161007ea2208016d18bad3.1493387231.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:B5ZBpQk1OdrwxKsOmXcwLf1rX9YFvq4IikrMzx8kBQtRM4ourGt
- hx3lOFuhO6GlqcRBK482GNou1UiTuWhGTbDSKTf5r9kjiZgxmzzA3406fXXU/al9a5XkEL3
- B9CuCQ6vExLUrY1ev0tHyrb698Z172dxJAUa6nORRNoTeMzOMz+99uoDjLPBFT2Ji64nPgG
- q6GhgGNIBGVtw3pwcMVjg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:6JLj2qw6in0=:k/mixFbFFYAji3qGTy8bDK
- w5d+0iPFAC8Gq402DTcnk55Va1TchWhskdxyNgMz0EGWzQRXKkz9k+KaRdYR/5xc6fQ155nT3
- Bk/3taKnUc4m+H7B24whu472HQjKEN1av7ApcaDD6QMqubHdTi1dc+AkADdlsCawYgHEQeyl1
- HRhhjZvX4kmmv4M/uZX9PpLrk/D53PZaL1cGyC9A8x0DzD5oGIIquwlEbQbGyZGAFu62Rb+Os
- E0kBYzQqpfT7uzVujUnLaXiqGjpsQLm263T6CRI7m5SGA+D7YKIiiYaOB2rcDngvy6DSmrjWS
- NudfEU4Dx0TK8TQby+9e5k8guF4sNOUKtP/JiiUvJaVu8UXPnN7I+46mv3OYePptfjpGQlsCp
- n1UaKmhoR8utHwQW30At0t7ep3Xj+G/OBn4tERAE4HYaBhQzNAtBdhsq/dhlQEi20QwzGd0C8
- 1teMOSTW7lI//Fm2HckkyaIQmdXri+zaoTRftw9DUsnVitZ1IiGPmuvmbXo//H8FvETAqV0ri
- AyGIPkFkwaMGVUtTAKQ4JgfWOiq9hY5bkOCekqcu/aGseyJ4HGiFpbk5z5GvckeHQtfG+6iUr
- DB5ltDXw17/K0MfePH416GFioQoJcM4rWC9udYdHkJaQHpY0sG/8L/U5RM0JEc1A+JG4Puc5f
- nm6MPZFv4cMQVTu4LXoOfVJCPYK4F6a4ssgG0mifZ537UhPCOhpRmP+Yigm7jdGMDXy8DB/LQ
- M2Ex4Dkpyz9X1me113eo9pNzWOvQLh+W24oN524sBIztoZVocZX4OWySm72AGPght9IB6Y5kZ
- 09SM+vF
+X-Provags-ID: V03:K0:hCOe+DNk/R3AYEaIr9kPCBFnIyjIPp8xUWsG7FojFc4MMGXfe2h
+ ZVFIKWpWpjDnI6/T8T6dglVgtZPaU2hpO6aAgoogO0YjoKxY4VmMVQ5juZ0QcTLXcu/bBIT
+ ZBiGWGZL1jOZOoiKSIJUjgzyHZqETT6am+jTNUU5zUp7TwrN+LdN2Oobnd5CEt1GXj6m/Gc
+ YOEtlrds/yHDn5p+I9kzA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8/myxvfu7tM=:dm9/PLOk3UrbXiICuvm1Yc
+ cEMFtHURNArPWBvjjMmr471pmv29NJc33KArUc18on7DZEvtd7+h51DtCbYkXcGr4WVVsL9WT
+ F5HLdFCC+MM0t/mrgRnBkMPCiG+UAA/1x9SAhGVxAY7R36Oxb4ruM8OrqzoHhEv6Yvg2EGKeE
+ nxpNcULxytNwPUrssgTcqvxWtx+RRtWNHsQrFB5WnxE7wrjjbaphWs/ae8aiabNd10qAHbk6O
+ TV1ATe6kbEKVqelrCEKjqgiC0aJrb+m4aPSyLWLa4CZdg6oOBVZ0ah18O7eDr5p3JLlfFzn7f
+ NmbP8W2sFW3y3J3/hAsxK9WkflVNMKzkBUSqHEfHjR8MuCL83Vy/++BjE1NQu61xo25xpuVfP
+ va+7lkAxvKAxC6MtOSIEbjEuC8UU4cHKaZRwoXli95cLyQaTgmtvWFxZ9gXOmXqwRw00YEBv3
+ Y+Z79HJ6VGmpPGczjAZxuU2WRS1td/DLh1lO0HJFRGqg/bdjkb3/k6/WyjsrIoj6eLpPwWrrr
+ FZ/EfmfjWZujO0w6scoLFr+qzUJ6rWYqggAvnG3WDd0cS/xqSvVPsYq+F5zxd34vo6OFwlgrP
+ prp9RCADdZf+r2Q8xtt9WRTnsWQGdhhHHZpdMgNkUGOrZJmwo37rQjsdD1CJPaWgTT2yCeFbm
+ ThrriVMRL9B1uI64Jh/8vfXXh+j3A5EosoiRtuRLB1h7uofKt2jx01PawKBE3hyIdi8huTsuR
+ 9xFjmKgGyqFgdVMnMLgzYuWuE2/zteRy3QENW/Hof7nD63cHXQqbAyv8TR2wjmdFxDY5hfJs8
+ mvKnUns
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Discovered by Coverity.
+This change addresses part of the NEEDSWORK comment above the code,
+therefore the comment needs to be adjusted, too.
+
+Discovered via Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/cat-file.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/checkout.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 1890d7a6390..9af863e7915 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -165,6 +165,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		die("git cat-file %s: bad file", obj_name);
- 
- 	write_or_die(1, buf, size);
-+	free(buf);
- 	return 0;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index bfa5419f335..5faea3a05fa 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -235,14 +235,14 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 	/*
+ 	 * NEEDSWORK:
+ 	 * There is absolutely no reason to write this as a blob object
+-	 * and create a phony cache entry just to leak.  This hack is
+-	 * primarily to get to the write_entry() machinery that massages
+-	 * the contents to work-tree format and writes out which only
+-	 * allows it for a cache entry.  The code in write_entry() needs
+-	 * to be refactored to allow us to feed a <buffer, size, mode>
+-	 * instead of a cache entry.  Such a refactoring would help
+-	 * merge_recursive as well (it also writes the merge result to the
+-	 * object database even when it may contain conflicts).
++	 * and create a phony cache entry.  This hack is primarily to get
++	 * to the write_entry() machinery that massages the contents to
++	 * work-tree format and writes out which only allows it for a
++	 * cache entry.  The code in write_entry() needs to be refactored
++	 * to allow us to feed a <buffer, size, mode> instead of a cache
++	 * entry.  Such a refactoring would help merge_recursive as well
++	 * (it also writes the merge result to the object database even
++	 * when it may contain conflicts).
+ 	 */
+ 	if (write_sha1_file(result_buf.ptr, result_buf.size,
+ 			    blob_type, oid.hash))
+@@ -251,6 +251,7 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 	if (!ce)
+ 		die(_("make_cache_entry failed for path '%s'"), path);
+ 	status = checkout_entry(ce, state, NULL);
++	free(ce);
+ 	return status;
  }
  
 -- 
