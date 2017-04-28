@@ -7,103 +7,90 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D5831FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 10:45:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F6C71FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 10:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1422936AbdD1KpH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 06:45:07 -0400
-Received: from mout.gmx.net ([212.227.17.20]:50799 "EHLO mout.gmx.net"
+        id S1422876AbdD1Kve (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 06:51:34 -0400
+Received: from mout.gmx.net ([212.227.15.15]:61694 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1422839AbdD1KpF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 06:45:05 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFPyK-1dIMjK15HA-00ELqn; Fri, 28
- Apr 2017 12:44:54 +0200
-Date:   Fri, 28 Apr 2017 12:44:52 +0200 (CEST)
+        id S1035442AbdD1Kvd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 06:51:33 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lw1vh-1eBHrr3wg1-017mmI; Fri, 28
+ Apr 2017 12:51:23 +0200
+Date:   Fri, 28 Apr 2017 12:51:21 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Jeff King <peff@peff.net>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/26] Check for EOF while parsing mails
-In-Reply-To: <20170427062114.p367j6rojnw4aj5r@sigill.intra.peff.net>
-Message-ID: <alpine.DEB.2.20.1704281241260.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <1fb841cee32996ee9194c2bd33b9dfe74cc37726.1493237937.git.johannes.schindelin@gmx.de> <20170427062114.p367j6rojnw4aj5r@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 12/26] checkout: fix memory leak
+In-Reply-To: <xmqqk266mjzv.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1704281247540.3480@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <be7ff5f9b303bb42f0d2a6c8f144bcc8342450cc.1493237937.git.johannes.schindelin@gmx.de> <xmqqk266mjzv.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:uCeo427mjJk9HK5X3A+zgUYaAH8Ce82xnQez8a1LhRuHDdOqJaU
- YZbblVQGauDj3dQ3sKBwzjpC1hRkDjantMELXgVpAyflmJ9olZLLozNvtkBQQTkhd9F7Jn0
- kskDZVT70rGuJ2/0pGgQG8kqATJlJJl+7tDDcL/UO97110+LikLrZ7CoIh1WMkHPH6PNad8
- GuAYsvPG+FkfVejs3f61w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cyo1u21kDGY=:Ufk9Ua1rkXLJxlwDAejctv
- +BJKncltwCHcgUiAOvutPr12V68gtPYw/VyOX4aFYhQca50QexW/3PQXU7VnaoOL9ka8cTwla
- ih9jEzFXQkoxNf9k8Av/OAYXz5l5E0VA9dj9AQ9iv6KoulkIJKco2cdtWwHSm4RF+92zsB910
- 0qsakJSImP4EKkgVQWZFJI+8YjyPCfkMKxsT2cEdUJM3gojwqBwf28diew3ohmJHoRboxI7ez
- dGLXfhqxedIG3IwRsxDmhRlnP3Hagz+RdBdEzImko3PEX0K02CWdm3e27Eil2ZZ5WTn2l8LA0
- aGXRfgNvAVlKv4XHC/lU1rOYe1RwTJJIBRsiINnQBgZP7Xx9Nv3RO2zItyKAubyTLd8UEWsRo
- 0TTaDnJd/JuISHy4tqqhT1qsEncj68vuxvLQeo8grntcasJgNc+U9xaj9DJh+0Q/1K9GD1MbW
- ZQElJZjCIYO7hc5TOAd9dRELUknT09OEnUIQ7XieqpZQQccqyJ6atdoCgEKZhgG0wBTerCW3t
- 6vyp4EAknLql6oD5b2P7Fxyw8HppXMMx+wUWmax50omrZmdml+//RyJJBkIj60q2ArDnI1fuA
- 8bYJvclMSgMMLcX8pheSUf3e5NHHnvVses/2QpnYJaN4ie4ANONesARNVOJOj5HlT4QsMNgeJ
- ueFrSdGx583IsyLiNc3UCfVjQr0blFmI6QlhLK01KyywOYGQ8LfmEjQ24urO51IenUR2Thr5Y
- tfal9tzvpgwFfvXOqyf3ENSfPnac/Vqrw/Ghxyzyxgri2fJKTkQExLxfmr2ec6BBKr/iLeWwS
- /yRtFfj
+X-Provags-ID: V03:K0:HW6ubL3CrWmAam+avmaOKASr2i9fVKEZOOl/qheAxSU0GkRaLbq
+ rbKD6bTyQx/ZaQ8rlJeJQZe1Am3CNPqTmebU/TUPoWvVW1HJ1cNl/np3MIfiS8Kh72WYVia
+ HAUribRkf64I4ZbIi7kPNpRtMTx8o2b5S1LjQx22ukVnPLNAY8kaiUHaXiMG71ie5X3/zqc
+ /V+5iLqSKVgrfM4xfMJpQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:mfFFODYQR6U=:ky1r9eUtUsjDLKZH2XiHcp
+ 61sIJTsW90dKe+os0/RF189PePFZZ4lhlOyM9qzXj1S5a2Pqp6RJOCT15KhP2GdU21yWc4cO+
+ bjdNE/HqUNam4TvOYwDjpupm3La07H+QPOtzCNtaXLcmBPtQpM1S/lW58V0JAhdCMMRzkacrk
+ 1W1D/bGVV90LbcJ5athjllFYhExGJW0c+wocBGzeM1QlPqAbJx0BbA+Jd6tWhvXLxV4wl+a1W
+ XbL151CDnbaRS/OQRbYLM1mEloKt3W0uPqGZUIVVISaP3DJQv9DWaCSruu9pmF8Zmv78/mkwf
+ aomh2Uu37YU/iv/EETW+NLKQGn5kRtRmWC2J796Bh75Gun7XR/rqfPTLpZp+uleJGc6vsrJD6
+ C1vbB8QBYgCZwu8+R75k9l84W0nzCD3fg+syDj7yqudk93ybHo/2qK/j2NcObc3wEiNzdU1Wn
+ Y7Xt8pcG8cIrLxL2AouCxJwkx/xy8x2fXxMJriszXLRqfc8rSuwUSeKiYU+IgF4kzcFO9WcEM
+ p+TIU0meJCcLuIVZ/dcP67HW5kBjRrM/w3MVH/jyH2ZD+jE0rWtM7fOKAUgGzTGXQyddWwXU8
+ PaAZBMPYBHXlPAzTBFVA8+usL76F0a0Ec/4WGx5/d5CVYfPT5jcaFPRUP96CyS/j/kafse4b1
+ bWYnaPDi1lEnOxt1vkDx9kEpQPHvXeP850koY47KQbMuA6LslbhaCxGjysbBHwF3BseoXpEHA
+ bKMsT752vO/dpvZDVCybphCfcrEDdCsLHHPuQNyiDM0UT5rkJwaZRVVK2z+3OJS1tvdKTm2pn
+ /SHdar6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Junio,
 
-On Thu, 27 Apr 2017, Jeff King wrote:
+On Wed, 26 Apr 2017, Junio C Hamano wrote:
 
-> On Wed, Apr 26, 2017 at 10:20:16PM +0200, Johannes Schindelin wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
 > 
-> > diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-> > index 30681681c13..c0d88f97512 100644
-> > --- a/builtin/mailsplit.c
-> > +++ b/builtin/mailsplit.c
-> > @@ -232,7 +232,7 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
-> >  
-> >  	do {
-> >  		peek = fgetc(f);
-> > -	} while (isspace(peek));
-> > +	} while (peek >= 0 && isspace(peek));
-> >  	ungetc(peek, f);
+> > Discovered via Coverity.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/checkout.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/builtin/checkout.c b/builtin/checkout.c
+> > index bfa5419f335..98f98256608 100644
+> > --- a/builtin/checkout.c
+> > +++ b/builtin/checkout.c
+> > @@ -251,6 +251,7 @@ static int checkout_merged(int pos, const struct checkout *state)
+> >  	if (!ce)
+> >  		die(_("make_cache_entry failed for path '%s'"), path);
+> >  	status = checkout_entry(ce, state, NULL);
+> > +	free(ce);
+> >  	return status;
+> >  }
 > 
-> Are we guaranteed that EOF is a negative number?
-
-No, you're right.
-
-> Also, what is the behavior of ungetc when we pass it EOF?
-
-According to the documentation, it would cast EOF to an unsigned char and
-push that back. Definitely incorrect.
-
-> It looks like POSIX does what we want (pushing EOF is a noop, and the
-> stream retains its feof() status), but I don't know if there are other
-> implementations to worry about.
-
-That's not what my man page here says:
-
-	ungetc()  pushes  c  back to stream, cast to unsigned char, where
-	it is available for subsequent read operations.  Pushed-back
-	characters will be returned in reverse order; only one pushback is
-	guaranteed.
-
-> Perhaps:
+> Thanks for spotting this one and fixing it.  
 > 
->   /* soak up whitespace */
->   while ((peek = fgetc(f)) != EOF) {
-> 	if (!isspace(peek)) {
-> 		ungetc(peek, f);
-> 		break;
-> 	}
->   }
-> 
-> would be more portable.
+> In case anybody is wondering what the "only to leak" comment before
+> this part of the code is about (which by the way may need to be
+> updated, as the bulk of its reasoning still applies but at least we
+> are no longer leaking with this patch), back when this code was
+> written in 2008 or so it wasn't kosher to free cache_entry under
+> certain conditions, but it has been a long time since it became OK
+> to free any cache entries in later 2011---we should have done this a
+> long time ago.
 
-True. I changed it slightly differently, please see my reply to Hannes.
+Thanks for the background. The next iteration will change that comment,
+too (simply removing "just to leak" and rewrapping to 74 columns/line.
 
-Thanks,
+Ciao,
 Dscho
