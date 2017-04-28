@@ -2,83 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B784207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 18:05:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37C2F207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 19:11:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S642244AbdD1SFU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 14:05:20 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:33599 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S642241AbdD1SFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 14:05:18 -0400
-Received: by mail-pg0-f45.google.com with SMTP id y4so13131329pge.0
-        for <git@vger.kernel.org>; Fri, 28 Apr 2017 11:05:18 -0700 (PDT)
+        id S1755634AbdD1TLo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 15:11:44 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:34416 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755444AbdD1TLm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 15:11:42 -0400
+Received: by mail-io0-f178.google.com with SMTP id a103so72758754ioj.1
+        for <git@vger.kernel.org>; Fri, 28 Apr 2017 12:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=x+9ixg3GwARO04+RVZx6olz7Od98yyCTlUftbKlSaZ8=;
-        b=axipjz5/S/VpMt16Y2DJiH/0H8V8wZLkedeXeADI6nAncwMA6cze42BhuX3lpXeEjI
-         ivdzjkdIOuJJJR8bDASmndpTD+p5l9sSNrBiw7aLM4Fn/eub9gXP5Q1kUQUYoAzFS5Yr
-         pdrlrxkcOvdFjcAdx2MrZcNrfKhxCp95465kqodjQprjtfn+gd+JafS2biIuL70C87lD
-         ReJjNBGBI1mjV/f/0sPxG5Wo7ffDj+tj4VYPOK6qcHwR4kvXs2tGeIF6pprqUzCFPh6a
-         UOmPtC12axRWJBXGu/yAdH0h4QO2KFsBuMTDtvijrFwXirETugNecdpzDotRXh3Y5rhA
-         gOjw==
+         :cc:content-transfer-encoding;
+        bh=uM7A9M9VKFdOvHUuUId1xIYl5ugJjP0QmTDO4hDo8Qc=;
+        b=sIhk5cyk5/+Pgvg+vvgNfZzn3pwZh12qFxPxs/PvhFF91zVN3HqFrTtO3ncFxKMygU
+         q1smYos0xdjxAByrQ1Yk8Yb0wUGTfihOwH2A2rf4hg9ZDSCXi2qjl6To2e3qHSeWdvgV
+         mhvOL/CgbNmZrXUlr1vzUEc80Q4O2+5i2MDTqDAcDnjwxb+S66E+Jv3eBUtcg4d1EsFz
+         aV0Fmhhm7htYBEOYoP7tNyJyFm8/cA1RXIGgOIc9ZT+VVDuQwAm5JCwz1rps0KA4VoPk
+         qRY5mlenocmmbXmLx78mfrBMA0f7Hv9WBZKGx1g9ihlcO5v2Sn+k608CAR7rvg+RFRjC
+         HFig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=x+9ixg3GwARO04+RVZx6olz7Od98yyCTlUftbKlSaZ8=;
-        b=OUNOn6W4w5pNtNNA6CYIqYWbvWHeFHH/Ik3FKCuucuAtpxwEUCV6R7fR4JIgtAZcEV
-         UwEPggE4pJbnmINKh5PLQFRxF72+f5YMTFcy67Kq5IridxJRdGkPPczAVuYEmWMf9qyz
-         z/aSD4YpY/h3q0UpcSuf5/2FkwACz7IVGh6jWrFiGpqW0Ur5DoraXbnP+rS+KtFdEhpi
-         bZ/uLvdHgU+XTZlnTkZ6B9uNllbWVrYMDRfNrVs3JiIO4aJClKOHDmNIAYIQNfsbAAfZ
-         mxTXybAkk55r3btTT2cQ2OcPVxXHaClRPTzubP8crWS/EzCWYPfGntmWdgHusI+/BCBa
-         f4pA==
-X-Gm-Message-State: AN3rC/4AHfIAqU3kKsDas2QkYvmDCorCnIQB8GSo2DDjoLyaIpIeqK1L
-        nu1roG9/rJqye0QN5YBPbgJX2jCxVtIV
-X-Received: by 10.99.107.198 with SMTP id g189mr13244009pgc.162.1493402717539;
- Fri, 28 Apr 2017 11:05:17 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uM7A9M9VKFdOvHUuUId1xIYl5ugJjP0QmTDO4hDo8Qc=;
+        b=h0SVkjbZzYvN4YX/1qONkm2BgzUMpIBlH2g0KkcqxgWOIcSMMjHOyPlvO8ZHSJPcTE
+         2r4ucTmZzmspuBLO5p2sHt8fCb2WyQXjPsCjWIBffc5yWRCA+cxK30Z1lj+UFAbKpGTr
+         2HV1CSqHctba6XgNH3gV/wrwKYT6l7M8PEF0U/Ts1/tgknxveEDy8reIA2MrxKvE+4/h
+         mobaQSYH++RvC8GE2IP4ZTPBpb/QF3Jm4kfq6zs3/wWRY1eS2QYLSCzw6KjBHJgunK0k
+         sqpXJlKVgQ6g06iCqhT+bro0fgfcllk89M3pwF8osZWpOzUBNT8MkHcf1ovcHwW0iA75
+         9q/A==
+X-Gm-Message-State: AN3rC/60LoQo6pyfdd16F+Q2Kr/lCU3lRPWR8Akenn0QELCroD2Qkl4Z
+        vgKZe977flvzzkTWqRLLNe8XV8N+CA==
+X-Received: by 10.107.138.9 with SMTP id m9mr12194179iod.80.1493406701173;
+ Fri, 28 Apr 2017 12:11:41 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Fri, 28 Apr 2017 11:05:17 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1704280010160.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de>
- <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 28 Apr 2017 11:05:17 -0700
-Message-ID: <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
-Subject: Re: [PATCH 00/26] Address a couple of issues identified by Coverity
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.107.134.97 with HTTP; Fri, 28 Apr 2017 12:11:20 -0700 (PDT)
+In-Reply-To: <20170426231236.27219-1-avarab@gmail.com>
+References: <20170426231236.27219-1-avarab@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 28 Apr 2017 21:11:20 +0200
+Message-ID: <CACBZZX7bHai-CTiO1G1vOP41Uit3zeMAn64NKvA73aouoBWMng@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] clone: --no-tags option
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Thu, Apr 27, 2017 at 1:12 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> This is an expansion of the previously solo 02/05 "clone: add a
+> --no-tags option to clone without tags" patch (see
+> <20170418191553.15464-1-avarab@gmail.com>).
+>
+> This addresses the comments by Junio & Jonathan Nieder on v2 (thanks a
+> lot), and in addition implements a --no-tags-submodules option. That
+> code was implemented by Brandon & sent to me privately after I'd
+> failed to come up with it, but I added tests, a commit message & bash
+> completion to it.
+>
+> The WIP 5/5 patch implements a submodule.NAME.tags config facility for
+> the option, but is broken currently & floats along in this submission
+> as an RFC patch. AFAICT it *should* work and it goes through all the
+> motions the similar existing *.shallow config does, but for some
+> reason the tags=3Dfalse option isn't picked up & propagated in a freshly
+> cloned submodule.
+>
+> I'm probably missing something trivial, but I can't see what it is,
+> I'm hoping thath either Stefan or Brandon will see what that is.
 
-thanks for the reply.
+Junio, can you please just take patch 1-3 in this series, i.e.:
 
-On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+DROP:
 
-> I still have to find the time to figure out one more detail: how to
-> download and extract the Coverity tool (the .zip archive has a variable
-> name for the top-level directory), and doing that only every once
-> in a while, say, only when there is no previously unpacked tool, or it is
-> already 4 weeks old.
+> Brandon Williams (1):
+>   clone: add a --no-tags-submodules to pass --no-tags to submodules
+> [...]
+>   WIP clone: add a --[no-]recommend-tags & submodule.NAME.tags config
 
-That is an interesting problem, which I ignored as the older versions of their
-tools still works once they release new versions. So I just manually check
-every once in a while if they have new versions out there.
+KEEP:
 
-So if you find a nice solution to that problem, let me know, please.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
+>   tests: change "cd ... && git fetch" to "cd &&\n\tgit fetch"
+>   clone: add a --no-tags option to clone without tags
+>   tests: rename a test having to do with shallow submodules
 
-Thanks,
-Stefan
+I think a fair summary of the discussion so far is that the submodule
+interaction I copy/pasted from --shallow-submodules isn't how we want
+to do things at all, I defer to Stefan & Brandon on that.
+
+The only other objection to the patches marked as KEEP is from Stefan
+saying it should be --tags on by default not --no-tags off by default.
+As noted in <CACBZZX5dxaJDN18J5fAhjKcaP8cZSTtRw5-eScr2oq8OYyhKuQ@mail.gmail=
+.com>
+I don't disagree, but a lot of flags in git now use that pattern, and
+this change is consistent with those. Makes sense to discuss changing
+that as another series.
