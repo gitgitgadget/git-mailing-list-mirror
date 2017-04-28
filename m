@@ -2,102 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B052207D6
-	for <e@80x24.org>; Thu, 27 Apr 2017 23:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACDD5207EB
+	for <e@80x24.org>; Fri, 28 Apr 2017 00:13:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756480AbdD0XZI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Apr 2017 19:25:08 -0400
-Received: from mail-io0-f178.google.com ([209.85.223.178]:34093 "EHLO
-        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755613AbdD0XZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Apr 2017 19:25:07 -0400
-Received: by mail-io0-f178.google.com with SMTP id a103so39766164ioj.1
-        for <git@vger.kernel.org>; Thu, 27 Apr 2017 16:25:06 -0700 (PDT)
+        id S939440AbdD1ANZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Apr 2017 20:13:25 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35776 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754271AbdD1ANX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Apr 2017 20:13:23 -0400
+Received: by mail-pg0-f66.google.com with SMTP id s1so204676pgc.2
+        for <git@vger.kernel.org>; Thu, 27 Apr 2017 17:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=cadq0M5swM5n6rZutfJ4OwSC0+RZfAhpC8sBL1GOUTI=;
-        b=I8N11dyqyxzQsDatRSEEydybOncVGYqQYLChbwXN7sPR6hU3UV578KoCF6PnVjAeN4
-         E8s9lCj6z0QEa3rMKjH7JGvhokyYYL6RraepSDoain153AYI6JIY4QMKNUri9/wGZvMb
-         NgCg9edEBT/d38gqi+sNe8BZ1ohbeQlIcczduPjA/5Fr0WKBpfYm8j/ca36B6GjLp0YP
-         /IaCBqgm12V19n72H1JvBJfoY8ftlu+74D77HwGopID6oIsjFKdxEn9/S1tANrROjkf5
-         9BWjl4fFuwH8S9YZmyXFZmROe/U9dq3npRf8vaLadAzcdYGGGg6/Hz0DNd9JRBMhyqYh
-         idhw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=0fMCEhMHBxxrtRni42J+XUBMdAMgOxgP5C4MUE8l214=;
+        b=cn0kjWibPqrF0rIyVoYJi3fX+7MVyMEImFLt18XHzPrVq9dqhd3hJLwZW2uKvmS8ze
+         ibQsm6AgeGO8r4BMBXVgJnKL2ZPM96ZwbTI0xl9akZnuj5FIIMlmPlVrVyAK3oc9s2Ff
+         Kb8K1+uBCA0qwXxJkMzCgVQlPCxkj4OrEru8Nrmi60tCkbve2vC7jGg7ODvAasH28yTe
+         C0rFpQCs5q1oNK4AS0CkNACxFXkqzQJGo7WtjLeA3f1Q2GMH+N+gn7xSYCuPdUk7/0MI
+         xRGKlOj8xZ1i16zJR2gzxpvvrb8cRUzAO9neFJkjZrPiK8BjAsClgcONCaWgYNsxI36v
+         pXWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=cadq0M5swM5n6rZutfJ4OwSC0+RZfAhpC8sBL1GOUTI=;
-        b=BypBiLfSHC1tRHzZdZS995NpcbbuwpEdeLswvBvE881UCZj3F8GQc0plIS0I5ukOhs
-         aXt57rbnGDaMySxQcbuIumM7KCii9mBzyr8gbYTEKqWN8Pvk404l2C0ELoKYt9R0AiDs
-         YNP4FSFLTzfpBPxSj1DsT1eBh47X8+dAlo7UYN//vMq2NARjfOb5AbGADVat8iutlxjW
-         I3s+PKbWPYHBU4NcTJt6vH8q+5L0e5N+/psCi+9RDs191s8/jh+qinMa7BQaqkPeVAxr
-         zOmZakvirOYBW34BHKKLLoiJOkvDELfjnWWgO/+wjBdb7vS/tjerU5pOaXLgj7Ajenq4
-         1zpw==
-X-Gm-Message-State: AN3rC/42xp8nvIpwJwOPtjOu5rziAyDms9D+2BVpTPYi4/iv4lq6nowG
-        S5QfRGxbCLX7JW2irplLjFcSMD8qOIjI
-X-Received: by 10.157.56.196 with SMTP id k4mr3736058ote.198.1493335505874;
- Thu, 27 Apr 2017 16:25:05 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=0fMCEhMHBxxrtRni42J+XUBMdAMgOxgP5C4MUE8l214=;
+        b=qJVjtkYMUptyb0lZSBoPlIs+OHADA+u5pAOg34pYfeM7Lf0sWUW6CdMkray+QMJP7j
+         YcHGyNkUaWX8+ZZdNmhjsi181pV7gVAbtkDhDYbqiwayG3c9C9nQJQHlkkWaA+isIElh
+         UONA/3CVuY1l2Dzgo17/MPs+5kBKFBGHhHrEwMaXucNe06ytuqLZEGTIg80vUJKL9/rS
+         bkwUlmoLSWjjBP/NYGChw6G7VstJWDdo0Ek50Q7JHbfRPNgsFo9tq9kih+IDd2E5sHqB
+         WUyuXwam212UsZl1oivTaD4ibgpkrKJyHMsddQLBLVnpPqbKnrdrd/RoNgf0buU5nGuW
+         PUkQ==
+X-Gm-Message-State: AN3rC/6x2khduX8gv63A6ohzPp3u5XmZZwDBgOMCALZ5/DFqjvY9/75i
+        tGdr+QC+0UZXDw==
+X-Received: by 10.99.97.85 with SMTP id v82mr8856246pgb.186.1493338402713;
+        Thu, 27 Apr 2017 17:13:22 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:51c2:e137:8e5a:b68b])
+        by smtp.gmail.com with ESMTPSA id u23sm7450720pgo.58.2017.04.27.17.13.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 27 Apr 2017 17:13:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 1/9] rebase -i: generate the script via rebase--helper
+References: <cover.1493128210.git.johannes.schindelin@gmx.de>
+        <cover.1493207864.git.johannes.schindelin@gmx.de>
+        <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de>
+        <xmqqvapqo4i8.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1704271607550.3480@virtualbox>
+Date:   Thu, 27 Apr 2017 17:13:19 -0700
+In-Reply-To: <alpine.DEB.2.20.1704271607550.3480@virtualbox> (Johannes
+        Schindelin's message of "Thu, 27 Apr 2017 16:18:44 +0200 (CEST)")
+Message-ID: <xmqqbmrhmlsw.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.157.11.27 with HTTP; Thu, 27 Apr 2017 16:25:05 -0700 (PDT)
-From:   Erik Haller <erik.haller@gmail.com>
-Date:   Thu, 27 Apr 2017 16:25:05 -0700
-Message-ID: <CAJRbB6w2BnXXzA46a-uzpx9u554GndEXxZtkLVTc5XOXMn3kkA@mail.gmail.com>
-Subject: git with ssh won't pull submodule
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Getting the following error for a submodule when using git/ssh:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-$ git clone --recursive ssh://incense:/home/erik/git/nacl.git
-Cloning into 'nacl'...
-remote: Counting objects: 32, done.
-remote: Compressing objects: 100% (25/25), done.
-remote: Total 32 (delta 5), reused 0 (delta 0)
-Receiving objects: 100% (32/32), 16.50 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (5/5), done.
-Submodule 'vendor/golang.org/x/crypto'
-(file:///home/erik/git/github.com/golang/crypto.git) registered for
-path 'vendor/golang.org/x/crypto'
-Cloning into '/home/erik/go/src/nacl/vendor/golang.org/x/crypto'...
-fatal: '/home/erik/git/github.com/golang/crypto.git' does not appear
-to be a git repository
-fatal: Could not read from remote repository.
+> Hi Junio,
+>
+> On Wed, 26 Apr 2017, Junio C Hamano wrote:
+>
+>> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+>> 
+>> > diff --git a/sequencer.c b/sequencer.c
+>> > index 77afecaebf0..e858a976279 100644
+>> > --- a/sequencer.c
+>> > +++ b/sequencer.c
+>> > @@ -2388,3 +2388,48 @@ void append_signoff(struct strbuf *msgbuf, int ignore_footer, unsigned flag)
+>> >  
+>> >  	strbuf_release(&sob);
+>> >  }
+>> > +
+>> > +int sequencer_make_script(int keep_empty, FILE *out,
+>> > +		int argc, const char **argv)
+>> > +{
+>> > +	char *format = xstrdup("%s");
+>> > +	struct pretty_print_context pp = {0};
+>> > +	struct strbuf buf = STRBUF_INIT;
+>> > +	struct rev_info revs;
+>> > +	struct commit *commit;
+>> > +
+>> > +	init_revisions(&revs, NULL);
+>> > +	revs.verbose_header = 1;
+>> > +	revs.max_parents = 1;
+>> > +	revs.cherry_pick = 1;
+>> > +	revs.limited = 1;
+>> > +	revs.reverse = 1;
+>> > +	revs.right_only = 1;
+>> > +	revs.sort_order = REV_SORT_IN_GRAPH_ORDER;
+>> > +	revs.topo_order = 1;
+>> > +
+>> > +	revs.pretty_given = 1;
+>> > +	git_config_get_string("rebase.instructionFormat", &format);
+>> > +	get_commit_format(format, &revs);
+>> > +	free(format);
+>> > +	pp.fmt = revs.commit_format;
+>> > +	pp.output_encoding = get_log_output_encoding();
+>> 
+>> All of the above feels like inviting unnecessary future breakages by
+>> knowing too much about the implementation the current version of
+>> revision.c happens to use.
+>
+> You mean that the `--reverse` option gets translated into the `reverse`
+> bit, and the other settings?
 
-Please make sure you have the correct access rights
-and the repository exists.
-fatal: clone of 'file:///home/erik/git/github.com/golang/crypto.git'
-into submodule path
-'/home/erik/go/src/nacl/vendor/golang.org/x/crypto' failed
-Failed to clone 'vendor/golang.org/x/crypto'. Retry scheduled
-Cloning into '/home/erik/go/src/nacl/vendor/golang.org/x/crypto'...
-fatal: '/home/erik/git/github.com/golang/crypto.git' does not appear
-to be a git repository
-fatal: Could not read from remote repository.
+Yes.  The "pretty_given" trick is one example that the underlying
+implementation can change over time.  If you wrote this patch before
+66b2ed09 ("Fix "log" family not to be too agressive about showing
+notes", 2010-01-20) happened, you wouldn't have known to flip this
+bit on to emulate the command line parsing of "--pretty" and
+friends, and you would have required the author of that change to
+know that you have this cut & pasted duplicated code here when the
+commit is primarily about updating revision.c
 
-Please make sure you have the correct access rights
-and the repository exists.
-fatal: clone of 'file:///home/erik/git/github.com/golang/crypto.git'
-into submodule path
-'/home/erik/go/src/nacl/vendor/golang.org/x/crypto' failed
-Failed to clone 'vendor/golang.org/x/crypto' a second time, aborting
+So I am very serious when I say that this is adding an unnecessary
+maintenance burden.
 
-
-The git clone --recursive file:///home/erik/git/nacl.git works fine
-and pulls the submodule "crypto.git". Any ideas?
-
-- The crypto.git is a valid repo.
-- I have the correct permissions.
-- The crypto.git repo is a git --mirror repo.
-
-
-git version: 2.11.0
-system: linux debian/testing
