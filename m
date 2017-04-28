@@ -2,97 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32257207EB
-	for <e@80x24.org>; Fri, 28 Apr 2017 13:50:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C512E207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 13:50:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2998154AbdD1Nuc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 09:50:32 -0400
-Received: from mout.gmx.net ([212.227.15.19]:49693 "EHLO mout.gmx.net"
+        id S2998156AbdD1Nuf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 09:50:35 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56193 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2998139AbdD1Nub (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 09:50:31 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5cMq-1e1Zci0fHM-00xf6E; Fri, 28
- Apr 2017 15:50:20 +0200
-Date:   Fri, 28 Apr 2017 15:50:18 +0200 (CEST)
+        id S2998153AbdD1Nud (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 09:50:33 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvhC4-1eBVmw2wk0-017YuR; Fri, 28
+ Apr 2017 15:50:26 +0200
+Date:   Fri, 28 Apr 2017 15:50:25 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 05/25] git_config_rename_section_in_file(): avoid resource
- leak
+Subject: [PATCH v2 07/25] difftool: address a couple of resource/memory
+ leaks
 In-Reply-To: <cover.1493387231.git.johannes.schindelin@gmx.de>
-Message-ID: <aed88de3501817b6d3586a1a27cbd2006b1407cf.1493387231.git.johannes.schindelin@gmx.de>
+Message-ID: <254784d80407e0eb138f52ec5f9724fcbcda92c5.1493387231.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:h8aLkp/T88YF4pIiXe+Yap7r/cBEzmtMiqSwPavLJJqKjuRDRFJ
- 9bleZmfneRt3h38YNVoRtBWCBOj/oY3lsejdGL9qngjXRwKaFG6v++okMuztJuQfkmRJ3Gl
- xlLrVNT4fd49KLLwV8M1HvJ2nFw7J4tHn1adp//Dk5C2oSZzjZTFG7ciZb7JI1EyQuWUPZt
- 4x40wWnL58yRYeIRljIpA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:T19CAChQRmQ=:kvkICt2ZPq5B9wUy9DCByb
- Knl1rrj+FWgbgZC/dlA4eY9Q4FHyvwhlezK1pKDS5cXB4nCVjPC46M4xw8H+cgqUMzbWyhSEa
- SQuFWW2hqyzbcV8927/t2uPCRVZGw3kLKn/cmuav2g1TlXRifpGPymnY89+sApC07SmbDDhoH
- kP+IleQgTiZywWp7AUJBY0qufo7WQcdQWrbHuihk/yBFpCfupAkEeKrSAvXboMbAsWqWZmA9e
- 7YGbQak60x+y95ef3EBnqMU7dmAPyRgOJYRyc7nFqrOrFMMWfyIbs91eyKo88r2fZDlYtSIWq
- qoRBguEq9h0fEvbSp8sJx7UQ03P8viFygs+h08mG8TwOQrAyqmY+XoVdPINcDyyrgfM3BKmQA
- ZoeLa9b/V9LiXkN/WnBabilX27sOkw62jT9rCarOe3KJiAtQLIs4jAnR9XPg5sGKNRuv80qJA
- utv3eUfT4NVWPzx4NCxHIWVDlGUl7XfUAL9kA8RCrdL/kG+K8d9HUzl12NLIQbBdcH5W8E7rx
- HR3GlWGtaT+EPJ/BHM/D7trcW+6qvQiffpDiNn4Em6PO2fFR3aDSJltXi1TuURKOvswrStJuj
- zh0afvKDtiBPBeL9x4MCZQfEtAGKr7PbRnxkOXvthTzn9bP61lnvWHLAln+wb1tiuQsGqeaBn
- 1XrUDa6WvHYug3Dsg1l/q+2Sn7MY5H4BSXcAaHZcW3Q/1OjnpUdZVgm+so9YwJ1Por2BRhwp+
- tTpoftOPFMbreIeDAPwpFvSXUFdiJOn5qznX+ybSKx7gHNe7x9gPEfyHz6ea0jtPNCZN8OvsT
- pOuT+Dr
+X-Provags-ID: V03:K0:+CnIe3iW7Hb9ZXJ+4EIZA9v2ZueHAX3gZ+hij9fd8yfjmuML2M6
+ e0fdwLxZs0lhKyE9NIP6p5o4rJbKMJdc4FvuVofhL2dTCsJjqWHu0RPfaSpsTm++JaPMpZk
+ a1DbR5giqKNYdYdj7SaeshSCxR2HgAVLUubKYhvUIcHKQAuJnDsB6aHgQLTcMq3SBpXrxzd
+ awC+a3BEzwd6H1GNjwPRg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:TZhiulVsEic=:RuR/UdjrsnERyJd1JJfood
+ 3yRHUXVH06iN6vXQZmbx7OsZQag9LDmg+SMNq5V/EP7FCqsYP/qr45AWuU/2lnJO01gv2Hvvu
+ zw/RTQtswI0U8LVnT6wbZ1YRhhMlKUHQHMv3Ic1+qB310aYoTrYA599Adh4Gv/N4bABI4BM/i
+ vJJPQZX/6BdB8ArLOfMQj30u53fqBk/AhmQQV6QzE4zP4UGjko7FTvBCoLZfVomJwLEnNGlBV
+ 9PTHmZlzmlYNnMfmLXYYmdlhHO3Ci0fS5JUuhF/iMBUIiuVZrF80jlHoSDRxixplvovS1cr8L
+ nL0QXhk3M8MGZ7iI4f1yp7ZEXGWvS5373NHN6aDncx4Hs5UqTV9XY7dLy961GTTqMirdYY7Cp
+ geb8H72Fy5dWSl+Hte9hR88O/iZ4rsZ8K6WNR6cDCTgitwWDlxG8grajgx0WhT34GLfS1/8Ja
+ vfr233W5AzpzM/RUM3X+4OZiG3iTnrfUoRn2izQp2qOMW7xhguMOVyuYibLA98vz405L5m7Sd
+ 7JS21ZXEkmcoqRgFkAzaeIjrI/eIXZLZc4V61I1Ls98fzsutKKDnbzvemBdLVfH2BlXg5eAqa
+ FHv3TNEVlV4BYJUfLCEXMRU7gB8ebsWQE7qV9Wt6svd9U6Kwz/3c0o7MjKwwcGeUowrT3aKCg
+ rCvAvPw9GdKivAPeoIBy5Y2ww1958a7rn7vld92i89KbHqhkvsSqUcJvkbsyHMPFFc8ICYdU+
+ kY913x9uBTsMs6N18Hm/+ZRfx96z1E1/9ThkaGRVqgvXz0A96zDOiuey2D3b1ANZ8BYBvCpQZ
+ 9eMKvEc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In case of errors, we really want the file descriptor to be closed.
+This change plugs a couple of memory leaks and makes sure that the file
+descriptor is closed in run_dir_diff().
 
-Discovered by a Coverity scan.
+Spotted by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ builtin/difftool.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/config.c b/config.c
-index b4a3205da32..a30056ec7e9 100644
---- a/config.c
-+++ b/config.c
-@@ -2621,7 +2621,7 @@ int git_config_rename_section_in_file(const char *config_filename,
- 	struct lock_file *lock;
- 	int out_fd;
- 	char buf[1024];
--	FILE *config_file;
-+	FILE *config_file = NULL;
- 	struct stat st;
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index 1354d0e4625..b9a892f2693 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -226,6 +226,7 @@ static void changed_files(struct hashmap *result, const char *index_path,
+ 		hashmap_entry_init(entry, strhash(buf.buf));
+ 		hashmap_add(result, entry);
+ 	}
++	fclose(fp);
+ 	if (finish_command(&diff_files))
+ 		die("diff-files did not exit properly");
+ 	strbuf_release(&index_env);
+@@ -439,8 +440,10 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 		}
  
- 	if (new_name && !section_name_is_ok(new_name)) {
-@@ -2703,11 +2703,14 @@ int git_config_rename_section_in_file(const char *config_filename,
+ 		if (lmode && status != 'C') {
+-			if (checkout_path(lmode, &loid, src_path, &lstate))
+-				return error("could not write '%s'", src_path);
++			if (checkout_path(lmode, &loid, src_path, &lstate)) {
++				ret = error("could not write '%s'", src_path);
++				goto finish;
++			}
+ 		}
+ 
+ 		if (rmode && !S_ISLNK(rmode)) {
+@@ -456,9 +459,12 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 			hashmap_add(&working_tree_dups, entry);
+ 
+ 			if (!use_wt_file(workdir, dst_path, &roid)) {
+-				if (checkout_path(rmode, &roid, dst_path, &rstate))
+-					return error("could not write '%s'",
+-						     dst_path);
++				if (checkout_path(rmode, &roid, dst_path,
++						  &rstate)) {
++					ret = error("could not write '%s'",
++						    dst_path);
++					goto finish;
++				}
+ 			} else if (!is_null_oid(&roid)) {
+ 				/*
+ 				 * Changes in the working tree need special
+@@ -473,10 +479,12 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 						ADD_CACHE_JUST_APPEND);
+ 
+ 				add_path(&rdir, rdir_len, dst_path);
+-				if (ensure_leading_directories(rdir.buf))
+-					return error("could not create "
+-						     "directory for '%s'",
+-						     dst_path);
++				if (ensure_leading_directories(rdir.buf)) {
++					ret = error("could not create "
++						    "directory for '%s'",
++						    dst_path);
++					goto finish;
++				}
+ 				add_path(&wtdir, wtdir_len, dst_path);
+ 				if (symlinks) {
+ 					if (symlink(wtdir.buf, rdir.buf)) {
+@@ -497,13 +505,15 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
  		}
  	}
- 	fclose(config_file);
-+	config_file = NULL;
- commit_and_out:
- 	if (commit_lock_file(lock) < 0)
- 		ret = error_errno("could not write config file %s",
- 				  config_filename);
- out:
-+	if (config_file)
-+		fclose(config_file);
- 	rollback_lock_file(lock);
- out_no_rollback:
- 	free(filename_buf);
+ 
++	fclose(fp);
++	fp = NULL;
+ 	if (finish_command(&child)) {
+ 		ret = error("error occurred running diff --raw");
+ 		goto finish;
+ 	}
+ 
+ 	if (!i)
+-		return 0;
++		goto finish;
+ 
+ 	/*
+ 	 * Changes to submodules require special treatment.This loop writes a
+@@ -626,6 +636,9 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 		exit_cleanup(tmpdir, rc);
+ 
+ finish:
++	if (fp)
++		fclose(fp);
++
+ 	free(lbase_dir);
+ 	free(rbase_dir);
+ 	strbuf_release(&ldir);
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
