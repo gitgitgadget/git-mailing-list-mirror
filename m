@@ -2,92 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF1E1FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 11:37:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A12461FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 11:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933229AbdD1LhI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 07:37:08 -0400
-Received: from mout.gmx.net ([212.227.17.21]:64183 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751112AbdD1LhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 07:37:06 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Meduu-1dSLHY0Vei-00OHGB; Fri, 28
- Apr 2017 13:37:00 +0200
-Date:   Fri, 28 Apr 2017 13:36:59 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/26] Address a couple of issues identified by
- Coverity
-In-Reply-To: <966db3c1-a2e4-1309-e178-b885d2a1108f@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1704281334060.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <966db3c1-a2e4-1309-e178-b885d2a1108f@kdbg.org>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1756295AbdD1Lpe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 07:45:34 -0400
+Received: from mail-io0-f178.google.com ([209.85.223.178]:33886 "EHLO
+        mail-io0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755232AbdD1Lpc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 07:45:32 -0400
+Received: by mail-io0-f178.google.com with SMTP id a103so58965099ioj.1
+        for <git@vger.kernel.org>; Fri, 28 Apr 2017 04:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dinwoodie.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=fQi/R+7AH9XRWKgkvJpxYraUBmQAMRhJdNOikLCmQEU=;
+        b=cGtCr0Z/uKXlfksW6wkMTukC9I9T9XxofDMqqTwQrA9m8SotswrXzy4scbLVn4+cvq
+         ekirpr+E6/5oiNX7gpOSM5OLIWNGIMxYxHoyJYfMlwk+/YFnup7LBCRzrUU4gI2j4j8H
+         PmcSizowS6KlYtFvSh9JA2xgQtCGQzS06ba1k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=fQi/R+7AH9XRWKgkvJpxYraUBmQAMRhJdNOikLCmQEU=;
+        b=QdzssaIsLLfAzvssSnYAr7B3YlQOLmXab9o3aPYnWBR5Cu64miEwLfGfHMkGD5fUn1
+         vzOB0biTB+TVx1WD1/sn0rgmL/B+NMi6WBylnAsWk1tdhdVko8LbRkLcSbMY95Ip4W0h
+         eOazcZrBpK5j1+fD3L9NC7CML3E0AP8h3HPqMFPFB03XRhHStBlF0V89v7t3PNXOd0XT
+         7XW4JsCluCJWAW/qwszAu78u1/2oPSuKq9QkUV+xlgs9ggUIWf5l3NhA5ju9hPSk8n1P
+         alJ9uyjulwUvXU0CfxP/V4dIYroTY/UUrpLo+0XLLda5mM7jkFB+5h/xT/0htPGeaQaB
+         T+HA==
+X-Gm-Message-State: AN3rC/68ZT1vLsdnpZcYZJ/rfjS6xFjk4KAZ9tC0GBTgtAf7247nvFpW
+        v5dDxDvyfl+IfbyOFywKxF7T3FOY3g==
+X-Received: by 10.107.168.230 with SMTP id e99mr10754859ioj.23.1493379929046;
+ Fri, 28 Apr 2017 04:45:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:UG1zPUfhquSAJ/b1+60WzCtmV6k88DyVI+QUReW70VIWwMrp0yd
- 0BTEvS6tca4y7LYfrH3+JeJRYTBjXBcVwPByvuaVRb80QUGfLYAzK5WriVtegLCcoQIds3F
- 2RxRimc6S12j6OwKN2t8ry1PoR0tZzd6hJdn5igTgKGwATiI6CH5vuFHnDflDsoovIsM+nb
- 2VE33RiiYSvj+TUseIVEw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:AehKEs5t7fw=:Uw3d7SDdtT/sCyq7qZUSFH
- ZqGybkkl2uH2ycfCVyriDOSPceME0ZtD7g7DfjevG9u83hudgrYv4Y8IOVMZhueDQFGi5DBlW
- QCBrPumQtseldbl1pLwawvdroIGDgNTYczu3GJb6JaODf8SkNJJS/TDuAEQbFmzxNrE0miUrI
- emr/L1DCf2/dsfaBPCAxy3qLPS8nqaOY1sJUmPjUHfONTIfXRqzqZhGZZ4tWTHncpYUq1nd0T
- vMktrSptEBXEsfNeyil2lZTeW/1SphyaeGjhwUONl26bSCWv33DbcVPfRcM79jeuGzY7jvmbP
- dzGmWn2L4RywRR5Mg8q4tBH2SU+w/rFL8bgTLQ15ib3r8+Llztey2ovqNOo+p1R6+KBo1WHsS
- 8vm1prJgoeIMQY0wbXN75uo2Wyo5w6RWzQONsrZprZs9QHO72XXXDcC8ZlspB4HBvEP02FDbq
- UWRY5uKLZJKBNxSd1sEGBzOtoRhQ/LhvWMiB4ha8riSIw0PtZDfyuFk6KlnZIdM/lonllmQ7k
- J/rFQ4lsIchY/eNr9ywtdal7JVcIAzPRAaEgKaC/PQhx+8ZFv4WchEgMbSwYPi6NTaoIGlsOA
- csKMIsEd/ABcmUy3CCUp5tKh7U2eECKqcWnPbpv2TWi69291eohXxsqQcEAJcVmubSKFdRinN
- meCDzJ63PJyY6+GL49yNj3fBD0YS5PE50XYJt4ZxSTVlJn4u5zfd+DhduBqLfoVjO5FFHSHcK
- ZXwG0ckmwp9u+BYABZLJpJkseVKlNn/40/7p/gwiUIuBJIM6bgQ5j5b7b0mG3XMrSXA8uc559
- 6l7lfDD
+Received: by 10.107.46.16 with HTTP; Fri, 28 Apr 2017 04:44:48 -0700 (PDT)
+In-Reply-To: <bf7db655-d90f-e711-afc8-6565b71373d2@ramsayjones.plus.com>
+References: <bf7db655-d90f-e711-afc8-6565b71373d2@ramsayjones.plus.com>
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+Date:   Fri, 28 Apr 2017 12:44:48 +0100
+Message-ID: <CA+kUOanMdez0Gu1z=bULMm0vMnFx8p12nt-e7v5LvyAiLu_45Q@mail.gmail.com>
+Subject: Re: git v2.13.0-rc0 test failures on cygwin
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Devin Lehmacher <lehmacdj@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+On 23 April 2017 at 15:44, Ramsay Jones wrote:
+> [Adam, if you are no longer the git package maintainer for cygwin, then
+> please ignore this email and sorry for the noise!]
 
-On Thu, 27 Apr 2017, Johannes Sixt wrote:
+I am still the Cygwin Git package maintainer; I've been quiet of late
+because of personal health issues, but I'm now picking things back up
+again.
 
-> Am 26.04.2017 um 22:19 schrieb Johannes Schindelin:
-> > I recently registered the git-for-windows fork with Coverity to ensure
-> > that even the Windows-specific patches get some static analysis love.
-> >
-> > While at it, I squashed a couple of obvious issues in the part that is
-> > not Windows-specific.
-> 
-> Thanks for the fish. I'd looked at the series and had a few comments.
-> 
-> Hunting memory leaks is the way to insanity.
+> Test Summary Report
+> -------------------
+> t0301-credential-cache.sh                        (Wstat: 256 Tests: 29 Failed: 6)
+>   Failed tests:  12, 24-28
+>   Non-zero exit status: 1
 
-I hear you. Loud and clear.
+Confirmed I'm seeing this on v2.13.0-rc1, and this passed in v2.12.2.
+`git bisect` tells me this failure was introduced by commit
+v2.12.0-267-g612c49e94, added by Devin Lehmacher (added to the CC
+list).
 
-> Never again am I going to help with this.
+> t8010-cat-file-filters.sh                        (Wstat: 256 Tests: 8 Failed: 1)
+>   Failed test:  8
+>   Non-zero exit status: 1
+> Files=780, Tests=14700, 10398 wallclock secs ( 1.27 usr  0.78 sys + 1265.08 cusr 4076.38 csys = 5343.50 CPU)
+> Result: FAIL
+> make[1]: *** [Makefile:45: prove] Error 1
+> make[1]: Leaving directory '/home/ramsay/git/t'
+> make: *** [Makefile:2313: test] Error 2
 
-Awww? And here I thought I had your attention... *sniffle*
+I also see this failure; `git bisect` tells me it was introduced by
+v2.10.0-rc1-4-g321459439, added by Johannes Schindelin.
 
-;-)
+> I'm not sure how to proceed from here. (I don't know if it is even possible
+> to 'downgrade' my cygwin installation in order to confirm that the current
+> git-cat-file would work with the 2.7.0-1 version of the cygwin dll).
 
-> I prefer to rewrite this codebase to C++ and have leak-free code by
-> design.
+I believe (although I've never done it myself) you can get old
+versions of Cygwin packages via the Cygwin Time Machine at
+http://www.crouchingtigerhiddenfruitbat.org/Cygwin/timemachine.html.
 
-I had the pleasure of working with some software developers in 2004 who
-were experts at introducing memory leaks into C++ code.
+I'm sufficiently over-committed at the moment that I'm unlikely to be
+able to spend time investigating these problems myself, but I'm happy
+to test patches &c on my local installation if that would be valuable.
 
-The same bunch of people later produced Java code that sorted a string
-list in cubic time (carefully avoiding java.util.Collections.sort(), of
-course).
-
-For every fool-proof system invented, somebody invents a better fool.
-
-Ciao,
-Dscho
+Adam
