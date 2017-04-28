@@ -7,80 +7,78 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94E82207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 14:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2AA0207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 14:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1032534AbdD1OD1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 10:03:27 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53301 "EHLO mout.gmx.net"
+        id S1032519AbdD1ODb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 10:03:31 -0400
+Received: from mout.gmx.net ([212.227.15.15]:52238 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1031528AbdD1ODW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 10:03:22 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MVrQS-1db4m21iJs-00X8FF; Fri, 28
- Apr 2017 16:03:14 +0200
-Date:   Fri, 28 Apr 2017 16:03:08 +0200 (CEST)
+        id S938012AbdD1OD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 10:03:26 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfSeH-1dsbWg3RxR-00p2Pt; Fri, 28
+ Apr 2017 16:03:19 +0200
+Date:   Fri, 28 Apr 2017 16:03:18 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 12/25] split_commit_in_progress(): fix memory leak
+Subject: [PATCH v2 13/25] setup_bare_git_dir(): help static analysis
 In-Reply-To: <cover.1493387231.git.johannes.schindelin@gmx.de>
-Message-ID: <da7222c92aed4dc470965df7319411f1098e04e6.1493387231.git.johannes.schindelin@gmx.de>
+Message-ID: <e19e2bb59f9a81a59669385d5c69674808af8469.1493387231.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:rMey8003yDhJ61yyKARjUEL32XyfKjGnQ6jFHAjb5Sl8KlbS3jT
- BTL1OIPpdhm2YJ3Oqg6i/0htaolZxve/wTQSqKBNB+WJa1kgvWOew/aC5lBVoFp16P3uMk8
- gatcQqNUROLZbS73VLKRWkbk+a2HKsyHjwi0QHV4yhsAx+KltVMijoETz7aTI5OLvK/EnE/
- swLrYnEG6tFQEJu5R9m7w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:60iNslOIk2E=:gwYAzYdw37XNg/rPInWBbA
- oBZSfAuVTw3xMgg6EjYjImAAqHGpZlhmI2sSDFZBpnLqG4umyt+Df7ToV79U6FgGphLl379K2
- OgWIi+SFX0BFdqJ8wuxZiq9g/+5ltm7YLpy5p/v+BKBCyUzcgpzF95pLaUW1qD3KbPezYqqCz
- xrHcwso1DSMPjxhlJ2ey2kgohizQXJi773p78zkXuvdEvb8N2jdUSZr58IzJ7Z5GYuvL54B4j
- qnSuYe7lXyCRoXjtjhoxFyYgJV+q0S+1bF6SApeFFc2LfdY/ENTwtLZPyqMIoCXzlRiddN0IX
- HWkwfvyBIn8LGn+fANioC26TtHAa1q7DrJPGYF5U2PdFAQC09mOLx13PvHvoXRZlTB5xMh2oa
- hFIbI/oynFFoHdwqoDJl/Ic/ElMMrqiiymJp5FKNmxctMaEXKMmhReaW4Z7dSNS6XJ2TejkiJ
- NnOk2JByLgwwAYTV/WNgbWuYei3xckhB2u+nGAP3gHBj4rSPWncCRHYSDTL6shWCDNw4tC39m
- qEOwCnMZEttRM1khzrRACdohVWkjGgYR8Y2tSjHa6Gg3U8gRI3gXtaN6pY1I0XJggitsYvJRj
- NYABnuuv6R+azU8RsEgo3QJ43M5BezE/ODd2ZIbKpQULoHXnl8I3ivmv/PdWYuDadLE7KlN31
- 2Lickk7frNFXP3Z2m+OYTheypLD7NGBh1q6zGJiSaH/dhl8CEeBoH2UEroqIiYLQbyjkC65qU
- tXDysAhIRGkGkIjGY1+Ug6CCKUYTTqSH6sTdHOh1eK63TD/KN/yUt8nWC0seZt+Hv0DdVUwmk
- l/jNTp5
+X-Provags-ID: V03:K0:zGMJF1NZiOyznLZMCLl3ysf7jVbiESybGMGX0NzCoURMW16zyvB
+ MtKvQPJEJTRb0f3mEdEpmXgDNOs1MOAYuMxdfkWaD96znHk5nR1PPH6z+AK0y07UP61+QQU
+ FmVpUo4To7UWsltOffIGGmdcrzRUCHpa774YwLNVpzG5fi8pQvF28UCv7ySDo3UJUwfO7hS
+ 2bPqQvrNaCacuWo2ijmKg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rVluSuYZ10s=:JFSjJQumI71g8IF1ZQhJFd
+ /7/lZ4HXcLery9tJJE9NUIA9JSC21iXeGJhVacwSQucp6fBkEtQeGvQrnIDo2gucezfjOAVc0
+ G04snRQoDVN93Y3R5cikZHmGnkSLwjtoHHZFEwz1OvyOUPmkcz9D3yY1Amz7Oa2EYDILrlZ67
+ nrqyqySymtbhEs7f+phSk1J8Dj2JovRBwQluyZS1Lr+ie2/8cak4WMfp4BO36nQTU1xv3VmW3
+ tl+5XI+34sjSKgegL9/351WXqW/sT/6qovGdDfEiWDfE0I2FCEC2YxIHNJ63jPsmKMOOpTJdd
+ NfAfbdWwqLvN89on++GFfF03eoZY/khoiDF37ZZqEXh7hh3SedCk7IBO9ABqTyMnYvjqJtv+B
+ 98cE2KzKBg0zbcCge1JiY9TwrBZW7fk6Tw9MFImr21EqsIrS3Z0GqLhSeKyGzwUl8xP8tLO2/
+ +lfHQiYNxem5gYnyzx6M+4fg64H/9+zCReWKftHJxllsV4FGv+Og2C5MmDEH4yAvCcvghFg3n
+ jOo28WrIHcvlR4EH53mnKJNEzijdnFnYJFnCvDO8l+UQdyhYR3op42AOf2kS/98Jg1PbtWJAV
+ ElYH/iy5cQL5hjRlgFDM3ntF48j7rwR1ck86ZNi2V7EwDTsb5X8ftzwvsy/7iF9BUDQtKC18l
+ 1t5m21aJVxAqPtsHdn4giH+Tz9zZB84r2VPxxoGgduq6HZiEHdt4E6FqZrGTDjwK27RbC0cF0
+ 1pvN7U6ZoD7nLGTiYPwwfDXHDyZJ/mwI64gIsMG+/auVbCd0S9N+xFPtelwPqOnvdWWwfEg1U
+ te7dvd3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reported via Coverity.
+Coverity reported a memory leak in this function. However, it can only
+be called once, as setup_git_directory() changes global state and hence
+is not reentrant.
+
+Mark the variable as static to indicate that this is a singleton.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- wt-status.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ setup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 0a6e16dbe0f..1f3f6bcb980 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1088,8 +1088,13 @@ static int split_commit_in_progress(struct wt_status *s)
- 	char *rebase_orig_head = read_line_from_git_path("rebase-merge/orig-head");
+diff --git a/setup.c b/setup.c
+index 0309c278218..0320a9ad14c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -748,7 +748,7 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
  
- 	if (!head || !orig_head || !rebase_amend || !rebase_orig_head ||
--	    !s->branch || strcmp(s->branch, "HEAD"))
-+	    !s->branch || strcmp(s->branch, "HEAD")) {
-+		free(head);
-+		free(orig_head);
-+		free(rebase_amend);
-+		free(rebase_orig_head);
- 		return split_in_progress;
-+	}
+ 	/* --work-tree is set without --git-dir; use discovered one */
+ 	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
+-		const char *gitdir;
++		static const char *gitdir;
  
- 	if (!strcmp(rebase_amend, rebase_orig_head)) {
- 		if (strcmp(head, rebase_amend))
+ 		gitdir = offset == cwd->len ? "." : xmemdupz(cwd->buf, offset);
+ 		if (chdir(cwd->buf))
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
