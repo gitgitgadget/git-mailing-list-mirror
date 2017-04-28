@@ -7,57 +7,58 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC1DC1FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 08:58:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CB441FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 08:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1162903AbdD1I6L (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 04:58:11 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:33787 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1033719AbdD1I6H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 04:58:07 -0400
-Received: by mail-io0-f193.google.com with SMTP id k87so9605426ioi.0
-        for <git@vger.kernel.org>; Fri, 28 Apr 2017 01:58:06 -0700 (PDT)
+        id S1162915AbdD1I7r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 04:59:47 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34368 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162908AbdD1I7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 04:59:43 -0400
+Received: by mail-io0-f195.google.com with SMTP id h41so9634385ioi.1
+        for <git@vger.kernel.org>; Fri, 28 Apr 2017 01:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=M5EE7qsIxXIry4dNlAwj3zteJ28D7AFWoKiw0iMz12g=;
-        b=lYztI3qBvCYaKIGg1f6sPt9IWX+mDxT1Q4l9MOFK5ZpB1koV5wfECf3xH/B7Myzf6e
-         pNuNYRWTon178ldlqdWJvnF/+2qfZFvHZp0IuwHAMqVgGH/norQkxaufK2ugp0vYvu2V
-         OkiGl/YH4O101HLLkGciAeqRX5ihDd9bFZWv8Ag3Jslf8zW1CUOmvGstCN6szZZQsPlY
-         Pidq7quAJHZci3XvC0c2R6MWQbK0Qc37KqeDDUYU6MmmT7Qjs+HG0Em6EgwdDsv/nivd
-         n8Ioe725HjUkt1J3jqubKtx2aKkl9D+SGUQP8IXHb9Qy0nWD78aSW4vYqtdwFG6LLTps
-         DsZQ==
+        bh=sEabrSARw8VjP8OZ9cS4RYrpzOUfL48hhm3QWTYgLMQ=;
+        b=VGgClwDrm+5iL4mFQdKb+MDxGR84MyENkRz1dS3k3qN3cwbF91ZyOgBBCg4fRxELiV
+         kVwZ1AiyRnDoLghZ0WIsvRy9EVYqTookIThBQVLDhBbWrRB91Z+ASiZy2BgbgRYEJklt
+         XGTcv5vqVlM00Iv4xS/UdYc8PU4py58dFgGH50IsW728yMFrpauB3DE6bTKR3XctKofO
+         HvWce5Aw1jk20YU81tN8zpKuIzdiQrxT0UMsKwGu1SbrnVj6dVX9P7FoUVMH2Uc4gceq
+         /v+TJiWWY8Q4l+tGtUoa5nzLHGky/Gtck02caC/1e+CGjoau8OGOp/80DIhWnI4jNGaj
+         Fh+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=M5EE7qsIxXIry4dNlAwj3zteJ28D7AFWoKiw0iMz12g=;
-        b=SfI/zeSr5RWZ9zQ1ESpB9bwLJQ+KfFhpCp66+MbeT2ePFXbO7k8Me9e3btwlLg6rZK
-         xl1yi+32vRWEquIzGzEf6OWSJVfjqzr6rKpcadgB0i2m1eImhUR6Wr+NfAQBUNCFW4M3
-         z1jkv/rxk/c84tgsfyQIlDF97S0ofbcHMuL/7L9Px3HZjAYn4PdXp2AC81BUl2s0P3LR
-         hMeFRn5HD4BoEnkpC2hW6P//VEsTdjuTey793m4JGzRdD/1epw2go6nSyIaxNbGMM0//
-         hBe+oTnGYdJ0dXPMF6o1F9u/UHSg/G7ZHFMspqq7AOeKp1SMV2kGQsuzxQYvtPL9yG40
-         QY7w==
-X-Gm-Message-State: AN3rC/7vSteMydAkMLAB/M0pC/WK7SKi2SeTyzJsPktaWkCnwrRL/spl
-        UkmIZzZtijV+QqwXOru1VjQ+lPqnBA==
-X-Received: by 10.107.138.9 with SMTP id m9mr9296439iod.80.1493369881294; Fri,
- 28 Apr 2017 01:58:01 -0700 (PDT)
+        bh=sEabrSARw8VjP8OZ9cS4RYrpzOUfL48hhm3QWTYgLMQ=;
+        b=uaiZB089cHg/H9lXV67DvVMlGzEShQ+/pLBqX0gk1Hw31kjbobCmnSkdRKibf/Gnkz
+         nyj3ndbtR+e54Z4ht9OdFOcCc/DD+FVAne7eF9Wyzqnjb1BK8E0V7Gk6VvWLyCNM/IaO
+         LGtZKSqZDs+W0wwLOSQvVFG86bbu3Qa4gyhkv8RnhES0TjfkDmA/EZ3VbxLCYMtM41hT
+         wEfGr3OvxnVI9Uezb/Uax8uX3XqQENo1RZ8bA1RWc2JD4YDcY0GmzZI3lvSz9iEtq3fF
+         /cuLnEG8P+s4P3t1fg3hY8D0j8c+7v9SUsA5e3WN7QRQ7S4WYTB42r5TNC2fJRqLaLc7
+         dAjA==
+X-Gm-Message-State: AN3rC/6PWVYWgv3i8fq944baRxUlhAAp2s9guo1ofvYi2kk4+ZTO031J
+        RZp7RESpCj+RjpE6MZUfmb2pUGIH6sgi6Uc=
+X-Received: by 10.107.146.139 with SMTP id u133mr8706704iod.160.1493369982727;
+ Fri, 28 Apr 2017 01:59:42 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Fri, 28 Apr 2017 01:57:40 -0700 (PDT)
-In-Reply-To: <20170427222700.GD146047@google.com>
-References: <20170426231236.27219-1-avarab@gmail.com> <20170427222700.GD146047@google.com>
+Received: by 10.107.134.97 with HTTP; Fri, 28 Apr 2017 01:59:22 -0700 (PDT)
+In-Reply-To: <20170427221337.GB146047@google.com>
+References: <20170426231236.27219-1-avarab@gmail.com> <20170426231236.27219-4-avarab@gmail.com>
+ <CAGZ79ka1_eJEa56TU5v++1FKsGY=nvZ4rWBK1begKvqecH17mQ@mail.gmail.com> <20170427221337.GB146047@google.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 28 Apr 2017 10:57:40 +0200
-Message-ID: <CACBZZX7H5KwHXiQd=YFSuoY=VLMb7kXyaxDQg-iiiBb=DL8X8w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] clone: --no-tags option
+Date:   Fri, 28 Apr 2017 10:59:22 +0200
+Message-ID: <CACBZZX7VHURHOoRMmcJq1e-pv7x3gKhYyWF5F5X+FgbunY-xhA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/5] tests: rename a test having to do with shallow submodules
 To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+Cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
-        Stefan Beller <sbeller@google.com>
+        <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,80 +66,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 28, 2017 at 12:27 AM, Brandon Williams <bmwill@google.com> wrot=
+On Fri, Apr 28, 2017 at 12:13 AM, Brandon Williams <bmwill@google.com> wrot=
 e:
-> On 04/26, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> This is an expansion of the previously solo 02/05 "clone: add a
->> --no-tags option to clone without tags" patch (see
->> <20170418191553.15464-1-avarab@gmail.com>).
+> On 04/27, Stefan Beller wrote:
+>> On Wed, Apr 26, 2017 at 4:12 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>> > Rename the t5614-clone-submodules.sh test to
+>> > t5614-clone-submodules-shallow.sh. It's not a general test of
+>> > submodules, but of shallow cloning in relation to submodules. Move it
+>> > to create another similar t56*-clone-submodules-*.sh test.
+>> >
+>> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+>> > ---
+>> >  t/{t5614-clone-submodules.sh =3D> t5614-clone-submodules-shallow.sh} =
+| 0
+>> >  1 file changed, 0 insertions(+), 0 deletions(-)
+>> >  rename t/{t5614-clone-submodules.sh =3D> t5614-clone-submodules-shall=
+ow.sh} (100%)
+>> >
+>> > diff --git a/t/t5614-clone-submodules.sh b/t/t5614-clone-submodules-sh=
+allow.sh
+>> > similarity index 100%
+>> > rename from t/t5614-clone-submodules.sh
+>> > rename to t/t5614-clone-submodules-shallow.sh
 >>
->> This addresses the comments by Junio & Jonathan Nieder on v2 (thanks a
->> lot), and in addition implements a --no-tags-submodules option. That
->> code was implemented by Brandon & sent to me privately after I'd
->> failed to come up with it, but I added tests, a commit message & bash
->> completion to it.
+>> Thanks for formatting the patches with rename detection. :)
+>> The rename looks good.
 >
-> Na you would have come up with it, I've just lived in submodule land a
-> little too long (though not as long as Stephan has!) :D
->
->> The WIP 5/5 patch implements a submodule.NAME.tags config facility for
->> the option, but is broken currently & floats along in this submission
->> as an RFC patch. AFAICT it *should* work and it goes through all the
->> motions the similar existing *.shallow config does, but for some
->> reason the tags=3Dfalse option isn't picked up & propagated in a freshly
->> cloned submodule.
->>
->> I'm probably missing something trivial, but I can't see what it is,
->> I'm hoping thath either Stefan or Brandon will see what that is.
->
-> Overall the series looks good.  I've mentioned in the other threads that
-> it probably makes more sense to have --recurse-submodules simply pass
-> through known good commands to its children (e.g. --no-tags) simply
-> because it makes the UX a little bit easier to work with (I don't have
-> to remember all the fancy --OPT-submodules stuff, only
-> --recurse-submodules).  That is unless you have some good rational that
-> I'm not considering (completely possible :D).
+> Do you have to turn that on or is that on by default?
 
-I have no good (or bad) reason for that other than just wanting to add
---no-tags to submodules while I was at it, and then I was just
-following the pattern the option to pass along --depth was
-establishing.
-
-But if that's some anti-pattern and the consensus is that this
-submodule feature should instead work as you describe (which looks
-like the case) I'll change it to work like that.
-
->>
->> Brandon Williams (1):
->>   clone: add a --no-tags-submodules to pass --no-tags to submodules
->>
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
->>   tests: change "cd ... && git fetch" to "cd &&\n\tgit fetch"
->>   clone: add a --no-tags option to clone without tags
->>   tests: rename a test having to do with shallow submodules
->>   WIP clone: add a --[no-]recommend-tags & submodule.NAME.tags config
->>
->>  Documentation/git-clone.txt                        |  21 ++++
->>  Documentation/git-submodule.txt                    |   8 +-
->>  builtin/clone.c                                    |  19 +++-
->>  builtin/submodule--helper.c                        |  21 +++-
->>  contrib/completion/git-completion.bash             |   3 +
->>  git-submodule.sh                                   |  13 ++-
->>  submodule-config.c                                 |   8 ++
->>  submodule-config.h                                 |   1 +
->>  t/t5612-clone-refspec.sh                           | 103 ++++++++++++++=
-+++---
->>  ...odules.sh =3D> t5614-clone-submodules-shallow.sh} |   0
->>  t/t5616-clone-submodules-tags.sh                   | 106 ++++++++++++++=
-+++++++
->>  11 files changed, 284 insertions(+), 19 deletions(-)
->>  rename t/{t5614-clone-submodules.sh =3D> t5614-clone-submodules-shallow=
-.sh} (100%)
->>  create mode 100755 t/t5616-clone-submodules-tags.sh
->>
->> --
->> 2.11.0
->>
->
-> --
-> Brandon Williams
+Looks like it just uses the diff.renames setting which I don't tweak,
+I didn't do anything special, but maybe it picked up some part of my
+.gitconfig that doesn't look like it has anything to do with
+renames...
