@@ -2,119 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2331F207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 17:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F287207EB
+	for <e@80x24.org>; Fri, 28 Apr 2017 17:34:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S938897AbdD1RFT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 13:05:19 -0400
-Received: from mout.web.de ([217.72.192.78]:54175 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755333AbdD1RFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 13:05:18 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MduMb-1dT5nE0G8j-00Pdyt; Fri, 28
- Apr 2017 19:04:53 +0200
-Subject: Re: [PATCH 1/5] add SWAP macro
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
- <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
- <20170424112928.rty5xejep4mnxph2@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <070a4b85-98e0-12a4-6c9c-557f3dfa733c@web.de>
-Date:   Fri, 28 Apr 2017 19:04:51 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S1424870AbdD1ReS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 13:34:18 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:34560 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1422832AbdD1ReQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 13:34:16 -0400
+Received: by mail-pg0-f54.google.com with SMTP id v1so18091197pgv.1
+        for <git@vger.kernel.org>; Fri, 28 Apr 2017 10:34:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VOLdvRDrCt6MBUGOqEsefGCihS7Ltn+ZZTNYxEWe5pw=;
+        b=RocPykdySXUYm0X/oZh84d2T+KumDX/cSy3xa2tpPYcbpgMgV4kK+Ej6FUQaydUtXv
+         9ahuXhT7GIu27AWFpoDiE+lNtWvQhZ/lQjuZEei57UpQM1oQoKcsUDzm30DDT3KHI/+y
+         dvJ+CWqoxhlAW7yjNgWPtxhkMjdRgNZ6Sm+3So29KYyy1BHos/XXub1v7v/8C/oY05DT
+         dYg0dUYL6rUfFrxh0RPxj0cNwGB67brW/RiCb36wvW3LgA+u3zMK1Afyx3dsplBGXJ3a
+         CbsGBK7iBEvfRSElaayfLWyKK5q6SiTCOUHDCue/kC8coNEc636PPG7K1V4CI++QvMdI
+         c0VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VOLdvRDrCt6MBUGOqEsefGCihS7Ltn+ZZTNYxEWe5pw=;
+        b=Xzro1ltr8mcaeVokP6qmBIAV98KoZCAYCyJF2Y7Cke4Dbf3c+LZ27NNBpLvAR5B28t
+         o2TJ94bYXaOn9W61lc8pmSrumObw1DxlveHgFkk4JlFxD2thWJ+bPq2zkoCGNK2OF0GH
+         +zlA7+LkOzl0eLiK5+qBZdFY/sxCM1m0JWM+Mp4Kt37mcqUEWd0IHF0ion35CBBpGtl8
+         qyKw07VS+JqU0wngog7P5QFwwL37W7Nl1Lt2ErMDkCUMzImMYEP9JRIMtbchGNOSOHRG
+         +Bl3y7t0CTQJbjUPuK9YyCHKZslOXejTxEFCCvNByfyKBNX7c2ijzrmhgdJHt52bFmW8
+         Sq4Q==
+X-Gm-Message-State: AN3rC/6mc75RSpK/HRvecUzZQWL8Yql1QexhZqhyQh9svZ/UibDewTnk
+        7xumrMmZwYvyvdtAtS+caSkClv6DYXawn4yCIw==
+X-Received: by 10.98.204.93 with SMTP id a90mr13267462pfg.6.1493400856028;
+ Fri, 28 Apr 2017 10:34:16 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20170424112928.rty5xejep4mnxph2@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:arclMJrEGzm5cXHBfnP4mwuzOC0dfq+Shr7EjwlhcFgFs/JuigW
- 20wKdG2PGhKY2f09iQkumowzCN71Hcl9wKv6v2sEudUAs8+E1fk1vBlZNLCO0dsK8KB7MIm
- B50eU3YBggxagqSACIbwe8pCC6+GQa6vHvcQe1Eo0eTeW121h+FiZsc5erlcQrjPU+gmJKf
- nAbYgYl/Un3znDy3sBdQw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RorVnqz+DJo=:wg/oQW+3gf2ycVU66MIUnY
- Lr3QASA5lQkN7XHsuwjhrznTZy90Vfg11Xw0w4T7Nd01/TUvI45KMUC/nvCx1rceHL0m4X0Ei
- myehJyKN4IAc5VfEnuUXgEJqLcos6gbyL0Fxl0Jnqt8iGJ2KZzsvRYxBUfpySSDXKeVS7Wv/X
- RorjJygj6LFj+N8AshwBPPqpPPKbESxoxTQJT0fMjsiG+Kh6h+rTqxcWjyf/DOpVHkxWSL3+h
- YjMk54GHZsxZZ/YC1s3wJawaIwgYvWsuzKkM0hINx8og2c6KYselj4PgrpGLr3r7F/bQ7TQQ1
- epljk2KWF4yzDZ/ZMlSWjSP8mLiI5E5MaHqL4cD16QJPnKKkmmHSOlKmOM4eOAKK48jambpmr
- /JZ1XTp7GXxmNcEz1YNeEy6+YbBTN1b5B9mCW58OHACLKQTPXNurcqpJDbql6iYg4uQy2uQ6r
- Y+v8tgC8UF3dJnSAkWSWVMi1PggLc/2Eo8RUgEFGnhiUmfQqwMJIFcOfZDKSmgl9VOpsE8jGW
- /1rLIUtMUcl4BlWd+ObjMkccedZ/sJ+JcOscXi1FNHoq9vFfUJe5Sg7V3+3M7pICr8xRU5QEu
- KE3xCYGI3vEqg5IudRGk5TckYiOMLZy0MMK7nMVRPK/MxhZcLfsbqJp4fE5b6WDWP+Qd7C8xW
- nZqv6IekogvD9PI6REnX3+dNNTTWEEhaeCMN4ORoQUGBDSaGXhneXXDb6r7ZCPkajIx1fUDtt
- rWLu5COgokRxtvydC1QQx0DdhRIUBhIupt2x7xVPci1aDXD9FroaQ5JCarQ/j3+fJFZcVG166
- rxZzf3b
+Received: by 10.100.153.156 with HTTP; Fri, 28 Apr 2017 10:34:15 -0700 (PDT)
+In-Reply-To: <20170427205037.1787-1-marcnarc@xiplink.com>
+References: <19607a03-71e0-440b-7213-64d25f6fa8da@xiplink.com> <20170427205037.1787-1-marcnarc@xiplink.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 28 Apr 2017 10:34:15 -0700
+Message-ID: <CAGZ79kbUqVfz+6Y0XkTL7FCZfaD+2YRMZ_v0vP8-DOFhWc+ELw@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Make diff plumbing commands respect the indentHeuristic.
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 24.04.2017 um 13:29 schrieb Jeff King:
-> On Sat, Jan 28, 2017 at 10:38:21PM +0100, René Scharfe wrote:
-> 
->> diff --git a/git-compat-util.h b/git-compat-util.h
->> index 87237b092b..66cd466eea 100644
->> --- a/git-compat-util.h
->> +++ b/git-compat-util.h
->> @@ -527,6 +527,16 @@ static inline int ends_with(const char *str, const char *suffix)
->>   	return strip_suffix(str, suffix, &len);
->>   }
->>   
->> +#define SWAP(a, b) do {						\
->> +	void *_swap_a_ptr = &(a);				\
->> +	void *_swap_b_ptr = &(b);				\
->> +	unsigned char _swap_buffer[sizeof(a)];			\
->> +	memcpy(_swap_buffer, _swap_a_ptr, sizeof(a));		\
->> +	memcpy(_swap_a_ptr, _swap_b_ptr, sizeof(a) +		\
->> +	       BUILD_ASSERT_OR_ZERO(sizeof(a) == sizeof(b)));	\
->> +	memcpy(_swap_b_ptr, _swap_buffer, sizeof(a));		\
->> +} while (0)
-> 
-> What should:
-> 
->    SWAP(foo[i], foo[j]);
-> 
-> do when i == j? With this code, it ends up calling
-> 
->    memcpy(&foo[i], &foo[j], ...);
-> 
-> which can cause valgrind to complain about overlapping memory. I suspect
-> in practice that noop copies are better off than partial overlaps, but I
-> think it does still violate the standard.
-> 
-> Is it worth comparing the pointers and bailing early?
+On Thu, Apr 27, 2017 at 1:50 PM, Marc Branchaud <marcnarc@xiplink.com> wrote:
+> So here's my attempt at fixing this.
+>
+> The thing I was missing is that init_revisions() calls diff_setup(), which
+> sets the xdl options.  It's therefore necessary to have the
+> diff_indent_heuristic flag set before calling init_revisions().
+>
+> A naive way to get the indentHeuristic config option respected in the
+> diff-* plumbing commands is to make them use the git_diff_heuristic_config()
+> callback right at the start of their main cmd functions.
+>
+> But I did not like that for two reasons:
+>
+> * It would make these commands invoke git_config() twice.
+>
+> * It doesn't avoid the problem if/when someone creates a new diff-something
+>   plumbing command, and forgets to set the diff_indent_heuristic flag before
+>   calling init_revisions().
+>
+> So instead I chose to make the indentHeuristic option part of diff's basic
+> configuration, and in each of the diff plumbing commands I moved the call to
+> git_config() before the call to init_revisions().
+>
+> This still doesn't really future-proof things for possible new diff plumbing
+> commands, because someone could still invoke init_revisions() before setting
+> up diff's basic configuration.  But I don't see an obvious way of ensuring
+> that the diff_indent_heuristic flag is respected regardless of when
+> diff_setup() is invoked.
+>
 
-Hmm, so swapping a value with itself can be a useful thing to do?
-Otherwise an assert would be more appropriate.
+The feature was included in v2.11 (released 2016-11-29) and we got no
+negative feedback. Quite the opposite, all feedback we got, was positive.
+This could be explained by having the feature as an experimental feature
+and users who would be broken by it, did not test it yet or did not speak up.
 
-Swapping with *partial* overlap sounds tricky, or even evil.  If
-we want to support that for some reason we'd have to use memmove
-in the middle.  But that would still corrupt at least one of the
-objects, wouldn't it?
+So I'd propose to turn it on by default and anyone negatively impacted by that
+could then use the config to turn it off for themselves (including plumbing).
 
-> A related question is whether the caller should ever be asking to swap
-> something with itself. This particular case[1] comes from
-> prio_queue_reverse(). I suspect its "<=" could become a "<", but I
-> haven't thought it through carefully.
+Something like this, maybe?
 
-The line in question is this one:
+---8<---
+From 58d9a1ef135eff9f85b165986e4bc13479914f8e Mon Sep 17 00:00:00 2001
+From: Stefan Beller <sbeller@google.com>
+Date: Thu, 27 Apr 2017 14:26:59 -0700
+Subject: [PATCH] diff.c: enable indent heuristic by default
 
-	for (i = 0; i <= (j = (queue->nr - 1) - i); i++)
+The feature was included in v2.11 (released 2016-11-29) and we got no
+negative feedback. Quite the opposite, all feedback we got was positive.
 
-Assignment in the middle?  Hmm.  Why not do it like this?
+Turn it on by default. users who dislike the feature can turn it off
+using by setting diff.compactionHeuristic (which includes plumbing
+commands, see prior patches)
 
-	for (i = 0, j = queue->nr - 1; i < j; i++, j--)
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+diff --git a/diff.c b/diff.c
+index 11eef1c85d..7f301c1b62 100644
+--- a/diff.c
++++ b/diff.c
+@@ -27,7 +27,7 @@
+ #endif
 
-Looks less complicated to me.
-
-René
+ static int diff_detect_rename_default;
+-static int diff_indent_heuristic; /* experimental */
++static int diff_indent_heuristic = 1;
+ static int diff_rename_limit_default = 400;
+ static int diff_suppress_blank_empty;
+ static int diff_use_color_default = -1;
