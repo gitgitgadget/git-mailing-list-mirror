@@ -7,48 +7,47 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ECC41FC3E
-	for <e@80x24.org>; Fri, 28 Apr 2017 10:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 868C61FC3E
+	for <e@80x24.org>; Fri, 28 Apr 2017 11:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1424991AbdD1K66 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 06:58:58 -0400
-Received: from mout.gmx.net ([212.227.15.19]:62083 "EHLO mout.gmx.net"
+        id S1425774AbdD1LCx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 07:02:53 -0400
+Received: from mout.gmx.net ([212.227.17.21]:51719 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1424987AbdD1K65 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 06:58:57 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfBX6-1dsmd00jjU-00olCi; Fri, 28
- Apr 2017 12:58:50 +0200
-Date:   Fri, 28 Apr 2017 12:58:48 +0200 (CEST)
+        id S1422810AbdD1LCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 07:02:51 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LyVcA-1e8nee24jG-015uUu; Fri, 28
+ Apr 2017 13:02:34 +0200
+Date:   Fri, 28 Apr 2017 13:02:19 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Johannes Sixt <j6t@kdbg.org>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 18/26] fast-export: avoid leaking memory in
- handle_tag()
-In-Reply-To: <885f5dbc-b5d0-5113-d2ee-e9bac47c4271@kdbg.org>
-Message-ID: <alpine.DEB.2.20.1704281257340.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <1eda2649781a15264e9995e705d19206185dbbb1.1493237937.git.johannes.schindelin@gmx.de> <885f5dbc-b5d0-5113-d2ee-e9bac47c4271@kdbg.org>
+Subject: Re: [PATCH 20/26] line-log: avoid memory leak
+In-Reply-To: <4ae94881-305f-380b-e786-c7f4ea5735e3@kdbg.org>
+Message-ID: <alpine.DEB.2.20.1704281301530.3480@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <0051da81b5cffe53122c036122402418c7f8d55f.1493237937.git.johannes.schindelin@gmx.de> <4ae94881-305f-380b-e786-c7f4ea5735e3@kdbg.org>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:F98EP6wpO8BNp52mWiadYaL8ZKUi5cYq48ve6+fkoEz2qZG1HcD
- lz0+IIPNeVOiQeUVZ/aA22Nn3nhLOZfw6haoudz+poB4Bi/eRxPokkVTWwqZONbhw+cxchQ
- nKe6jCgdYfevYR0gyQWSHSufKpRMd0cJKBd3txq0fWOz3SrC2u+P/AShbV4WKP4cI1Rq5Db
- pWkdCWB7vA4JCoE7gUhng==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jQlz3NDVYRE=:Iyqj2eYIF9R4i5SL+Y9swf
- eHW03tr/lL0qwMWmmTUonRLDVw9gEkHy2VtD9f+8e6baW/3sgzh+vDsrREzuzr67CObqbujvL
- /3E8hqy+qECEtpN4K9zEsE1F4syX180uOnbsLyhU2xudy2LWIK1UapYhQjHFdLDQvyU0YnYRd
- OWT9yI4rawNvlbKYy8cIvw7akVUo/GGgjGkYgkP5BglcKKR1KSmPIUf0Wtv7IVxEPT2Z5VFC9
- e5RPOIl0Bejfmrl2q/zHnZajvS/5BEkUvK3JBgiw9uX4jnVO2Z8cZy936ZcKpVQAkXEp9sUmc
- GkrG3L005c/R8y4Sn+d1WLA91sopYL/p6Q09xLtAQxrhuhhvP/U1qXd7+mx0IQo/OYZOclaWH
- SK7YeOquRHzkjZKt0kO8kGtWRxVDMw6QsQOIs9u2PhqGMjzJfKF1eXO29ZKUPB0G4vQIPBJi/
- 0EHdLmb97AfbnRfxohilyF9rdERhqbZ0AYH68/GQsjUdPp0HLoxacyt6u9XfWUDHcka/ViBfa
- 178fGuJUVqaIdVpPOZdSov25NN6G7Z90KKiiF5/yGsWrNDpqn5rYQ1o43DbtIx1G9a8ypr9On
- DAdoxT9tveZpoh9GI2ycgwCKa4eZysldEHpHlGQcHLWFFAcvCcM/ouJ5KoUvv50S1uvyG6b9Y
- /VcFojKfeWi8UfVhm63pR6suSeC8m5kSjTTRf5Q/QnwJ1bd9xYQIluYRVyvl9dJoLMqFLPUDY
- FXeZWsW1ogxQC7gCgkmDg/ydkJALLpAsHTjNziB3NoImPELrZgZZp8xk0D3NHzSsOx2qm70MI
- zhWlL8s
+X-Provags-ID: V03:K0:q2wV3/JflbyeCbz3gIcHmpk/XuMy0O+deRw6AADB0N0aHcR66Wa
+ KvRNALvh6vEn7yHNoHwkkEb5trumNwhCPhTS0KXfF0oADCBmnpAOMM5AgGx4OzV5RJ+H8f6
+ uGcUuBNd4siXoucMP/zxll374f35K1nBQvWG3wEt6m7PvzRpQghcDX307y+2Yc1oZMtUGO/
+ whqeV83WCM4okbKumlR9Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bR50MWiUPiA=:6sc/4TV50q4G06no7W3HLZ
+ j+RXGGI6H6i8aE/z0VEpkmVGsEAkH/Ma6f01SkLNnWIMN6RYtEYqaCQJXFhj99cmvGaL8H/Ep
+ 9ijLXYgjHNPR6f1z7IMQx+0b/3nEecYdWEoeXqlAdUmbD0Rf1JZ2Wy/DSeJawdCkp0tGh3rhe
+ 86SKvKZRQei/M4s28e9TmfsA3sVtG6Qebo+fwuRpfjlzLO6w4jIJJn/fcECyeUrJFdDqpiTX/
+ 08JLCH9Kl7SMvYjOEnZM50H5tagB3vE1VSeSjli7+5QZ3N9FHPn37kmDuN4UDoFL9IRw5xUCJ
+ cajCcZoU8SPUvVZSE93mSrDs6+P62AhIY4txgkvCci2sQRxdLfWbvQof5OwPd357a8hhrQh3u
+ MPunLADpNQ3knA9C+LEDLwlcwm9Yk+benA58X6w31vw6zU+bUJLqgSSxZ5du5midsQu+FUfRY
+ D8WplcK2eMyJRsa0LeSkp5KHQosXahT5VqoVLNV0TQKWXCx+L7kgG5qA0UNlXBzqrqQSLxlkS
+ KcGDguVDXDM283H7VFBNjSwANG7W5RfKS/z4EB6pUeQG27gGje7XvmtS2wmbk31LlJ6HXdCIi
+ LKYnXAxamfqlWW51W9ZN2A5wdZVO4AGUbyp9SyGNxDHRUQE0juebej9CnkcIrI/+02VzpKKXp
+ 7JE2lto/aGjJ4feLF/dvbYXKhQmNgrf4ry1NQKvkGO1JnGGZ3hAOS0Swm+J+iGqy1ojXAJXbf
+ UE7x5hh2GbUQQHj67+fQkX0WwYBpbNOA3kQ7JjqaXL0+MZ0Vk6Kak3upAPcYy7tFeZ9WuVYAx
+ Cza7y0H
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,40 +58,32 @@ Hi Hannes,
 On Thu, 27 Apr 2017, Johannes Sixt wrote:
 
 > Am 26.04.2017 um 22:21 schrieb Johannes Schindelin:
-> > Reported by, you guessed it, Coverity.
+> > Discovered by Coverity.
 > >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  builtin/fast-export.c | 1 +
+> >  line-log.c | 1 +
 > >  1 file changed, 1 insertion(+)
 > >
-> > diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> > index e0220630d00..828d41c0c11 100644
-> > --- a/builtin/fast-export.c
-> > +++ b/builtin/fast-export.c
-> > @@ -765,6 +765,7 @@ static void handle_tag(const char *name, struct tag
-> > *tag)
-> >          (int)(tagger_end - tagger), tagger,
-> >          tagger == tagger_end ? "" : "\n",
-> >          (int)message_size, (int)message_size, message ? message : "");
-> > +	free(buf);
+> > diff --git a/line-log.c b/line-log.c
+> > index a23b910471b..19d46e9ea2c 100644
+> > --- a/line-log.c
+> > +++ b/line-log.c
+> > @@ -1125,6 +1125,7 @@ static int process_ranges_ordinary_commit(struct
+> > rev_info *rev, struct commit *c
+> >   changed = process_all_files(&parent_range, rev, &queue, range);
+> >   if (parent)
+> > 		add_line_range(rev, parent, parent_range);
+> > +	free(parent_range);
+> >  	return changed;
 > >  }
 > >
-> >  static struct commit *get_commit(struct rev_cmdline_entry *e, char
-> >  *full_name)
 > >
 > 
-> There is an early return in the function that is not covered by this patch.
+> parent_range is of type struct line_log_data *, which needs more than a mere
+> free(). I think it's free_line_log_data(parent_range).
 
-Thanks!
+Oh wow, thanks for pointing that out. Will be fixed in the next iteration.
 
-> Look for "case DROP".
-
-Or for "return" ;-)
-
-I briefly looked into simply releasing the memory earlier, but the tagger
-variable used just before the inserted free(buf) actually points into the
-buffer, so I had to repeat the free(buf) for the early return.
-
-Thank you!
+Ciao,
 Dscho
