@@ -6,91 +6,98 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85F0B207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 21:49:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 209C2207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 22:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2993427AbdD1Vtm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 17:49:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42035 "EHLO cloud.peff.net"
+        id S642763AbdD1WFD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 18:05:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42050 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2993368AbdD1Vtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 17:49:40 -0400
-Received: (qmail 30089 invoked by uid 109); 28 Apr 2017 21:49:37 -0000
+        id S2993823AbdD1WE4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 18:04:56 -0400
+Received: (qmail 31417 invoked by uid 109); 28 Apr 2017 22:04:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Apr 2017 21:49:37 +0000
-Received: (qmail 25585 invoked by uid 111); 28 Apr 2017 21:50:03 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Apr 2017 22:04:52 +0000
+Received: (qmail 25760 invoked by uid 111); 28 Apr 2017 22:05:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Apr 2017 17:50:03 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Apr 2017 17:49:34 -0400
-Date:   Fri, 28 Apr 2017 17:49:34 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Fri, 28 Apr 2017 18:05:18 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 28 Apr 2017 18:04:50 -0400
+Date:   Fri, 28 Apr 2017 18:04:50 -0400
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] add SWAP macro
-Message-ID: <20170428214934.tuqihgch6qeen3ni@sigill.intra.peff.net>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
- <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
- <20170424112928.rty5xejep4mnxph2@sigill.intra.peff.net>
- <070a4b85-98e0-12a4-6c9c-557f3dfa733c@web.de>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/2] Make diff plumbing commands respect the
+ indentHeuristic.
+Message-ID: <20170428220450.olqitnuwhrxzg3pv@sigill.intra.peff.net>
+References: <19607a03-71e0-440b-7213-64d25f6fa8da@xiplink.com>
+ <20170427205037.1787-1-marcnarc@xiplink.com>
+ <CAGZ79kbUqVfz+6Y0XkTL7FCZfaD+2YRMZ_v0vP8-DOFhWc+ELw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <070a4b85-98e0-12a4-6c9c-557f3dfa733c@web.de>
+In-Reply-To: <CAGZ79kbUqVfz+6Y0XkTL7FCZfaD+2YRMZ_v0vP8-DOFhWc+ELw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Apr 28, 2017 at 07:04:51PM +0200, René Scharfe wrote:
+On Fri, Apr 28, 2017 at 10:34:15AM -0700, Stefan Beller wrote:
 
-> > What should:
-> > 
-> >    SWAP(foo[i], foo[j]);
-> > 
-> > do when i == j? With this code, it ends up calling
-> > 
-> >    memcpy(&foo[i], &foo[j], ...);
-> > 
-> > which can cause valgrind to complain about overlapping memory. I suspect
-> > in practice that noop copies are better off than partial overlaps, but I
-> > think it does still violate the standard.
-> > 
-> > Is it worth comparing the pointers and bailing early?
+> > So instead I chose to make the indentHeuristic option part of diff's basic
+> > configuration, and in each of the diff plumbing commands I moved the call to
+> > git_config() before the call to init_revisions().
+> [...]
 > 
-> Hmm, so swapping a value with itself can be a useful thing to do?
-> Otherwise an assert would be more appropriate.
+> The feature was included in v2.11 (released 2016-11-29) and we got no
+> negative feedback. Quite the opposite, all feedback we got, was positive.
+> This could be explained by having the feature as an experimental feature
+> and users who would be broken by it, did not test it yet or did not speak up.
 
-No, I doubt that it's useful, and it's probably a sign of a bug
-elsewhere. But it's likely a _harmless_ bug, so it may be irritating to
-die when we hit it rather than continuing.
+Yeah, if the point you're trying to make is "nobody will be mad if this
+is turned on by default", I don't think shipping it as a config option
+is very conclusive.
 
-I dunno. I could go either way. Or we could leave it as-is, and let
-valgrind find the problem. That has zero run-time cost, but of course
-nobody bothers to run valgrind outside of the test suite, so the inputs
-are not usually very exotic.
+I think a more interesting argument is: we turned on renames by default
+a few versions ago, which changes the diff in a much bigger way, and
+nobody complained.
 
-> Swapping with *partial* overlap sounds tricky, or even evil.  If
-> we want to support that for some reason we'd have to use memmove
-> in the middle.  But that would still corrupt at least one of the
-> objects, wouldn't it?
+  As a side note, I do happen to know of one program that depends
+  heavily on diffs remaining stable. Imagine you have a Git hosting site
+  which lets people comment on lines of diffs. You need some way to
+  address the lines of the diff so that the annotations appear in the
+  correct position when you regenerate the diff later.
 
-Yes, the overlap case is probably an actual bug. Detecting it is a bit
-harder, but definitely possible. I hate to pay the run-time cost for it,
-but I wonder if a compiler could optimize it out.
+  One way to do it is to just position the comment at the n'th line of
+  the diff. Which obviously breaks if the diff changes. IMHO that is a
+  bug in that program, which should be fixed to use the line numbers
+  from the original blob (which is still not foolproof, because a
+  different diff algorithm may move a change such that the line isn't
+  even part of the diff anymore).
 
-> The line in question is this one:
+  I'm not worried about this particular program, as I happen to know it
+  has already been fixed. But it's possible others have made a similar
+  mistake.
+
+> So I'd propose to turn it on by default and anyone negatively impacted by that
+> could then use the config to turn it off for themselves (including plumbing).
 > 
-> 	for (i = 0; i <= (j = (queue->nr - 1) - i); i++)
-> 
-> Assignment in the middle?  Hmm.  Why not do it like this?
-> 
-> 	for (i = 0, j = queue->nr - 1; i < j; i++, j--)
-> 
-> Looks less complicated to me.
+> Something like this, maybe?
 
-Yes, see my other reply. :)
+Yeah, as long as this is on top of Marc's patches, I think it is the
+natural conclusion that we had planned.
+
+I don't know if we would want to be extra paranoid about patch-ids.
+There is no helping:
+
+  git rev-list HEAD | git diff-tree --stdin -p | git patch-id --stable
+
+because diff-tree doesn't know that it's trying for "--stable" output.
+But the diffs we compute internally for patch-id could disable the
+heuristics. I'm not sure if those matter, though. AFAIK those are used
+only for internal comparisons within a single program. I.e., we never
+compare them against input from the user, nor do we output them to the
+user. So they'll change, but I don't think anybody would care.
 
 -Peff
