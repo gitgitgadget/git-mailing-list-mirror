@@ -7,83 +7,116 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2B63207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 14:05:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 719CF207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 14:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2997990AbdD1OFI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 10:05:08 -0400
-Received: from mout.gmx.net ([212.227.17.20]:62474 "EHLO mout.gmx.net"
+        id S966333AbdD1OGa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 10:06:30 -0400
+Received: from mout.gmx.net ([212.227.17.22]:55036 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S965808AbdD1OFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 10:05:07 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LeSOH-1dthh341O9-00q9TE; Fri, 28
- Apr 2017 16:05:01 +0200
-Date:   Fri, 28 Apr 2017 16:04:46 +0200 (CEST)
+        id S1165488AbdD1OEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 10:04:39 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzoSt-1e7OIU2CeZ-0154uL; Fri, 28
+ Apr 2017 16:04:33 +0200
+Date:   Fri, 28 Apr 2017 16:04:18 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 25/25] submodule_uses_worktrees(): plug memory leak
+Subject: [PATCH v2 21/25] add_reflog_for_walk: avoid memory leak
 In-Reply-To: <cover.1493387231.git.johannes.schindelin@gmx.de>
-Message-ID: <f3a803b812e74c7ea4166fdc443a16129784d133.1493387231.git.johannes.schindelin@gmx.de>
+Message-ID: <8d0c58714830e7c4566382f94617848b411b5535.1493387231.git.johannes.schindelin@gmx.de>
 References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:3CCASvrkSl7ivu2xD1ffSi37U5MBXOgB9PoYOs6rbuVzPK0PFTz
- BJoMJkobNJcZZ2AaL47sA8Inj2mDUxJXYTSm0AuToxaDdjLcsHXkCvsQ/t6zlgSec9LVhG+
- 27aNvAijnXvsjgxTPgGSqlwXj0SpVnnsKH4TinopM9N+pAq4LqGfNSQOhnztbl7wpEZ+sth
- ipkPn0BZNymFo75Jy+tHA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:a6LmYVzln+0=:Xn4FZDWSAdYOiJjcEK/+wo
- j5L9CxFGyVOG5IV1lQdN1S23xpxGInDn4ihnKcgJ5nw+ubmnwGs+tp6W5UoqBvisqMgFXBY/4
- Bq1myVNAws7x0t8xFZS/k+KEWRXvfvl+F97hXGmHMMfDBlu7p/WcjKwOWZGzv8iRODUU2aPOu
- lvsMjn72UJnBZF+H0cqH8y3IukkdsGz3HrF39gEbOFrGjliSuy4MhXjLDQednq8nKl8OoVoW1
- bHPrkgRmTArxXJZU0nu8Y2E6XKMgf/ZfJ+jjb3ZPkJzNhL5vPSE2DAmThs8Eo7Cs3lmi8rD+O
- 2IbkOSG7MW/l9jTsBc6uWMINzcdeAGGooaUhCfKtADhCXNgttXNLNeUeWcTa2/GNy9pN7aqEr
- U5+DrByDWAaihHi9CvUYN4+eqLDYM9j+YQ4HOjFxCd4yv65i0jI9x9sR0Hwqx/Nrr9JYt7jet
- 8VaXxIa+rkrkhQgyZnFDTF/K/NWvCVeYp88ebCzaSdFBYo3sbBIewDbzgc8BhZ9LPDfV2GTeJ
- r+BRus+b0z4noKIMreq6RQmkBhIIjT8MRWF2fEf88d+XCtuGrJxE2vo7pqryEuuX5aHxD7QLL
- frXhBD/5V0pe/sZ8kaj3A0miZHpZFBm9ShGlarmuz6RwVktkqXJW3JT//DLGl7pvw3r6hVxKC
- D5DtBBi25tppFlMo5yXoo9mjbnosxXcpM+8lG1fiH4CpHItmmGFSog8v/xs84i2jJ5U6Zi51Y
- AbYSIyiLI1GiYCJCT9rys7Hc+ZyGPkKX4fBXrvmp2QJbECMk7cONljj9XLPgnnbAGpZamDtQQ
- jmxMrh4
+X-Provags-ID: V03:K0:iZcgzwJXU2WclmrhGfMQYh+kQqN18pdG08JzyJCWrHIiZRmAvHL
+ 1m8o0u/TZVko2WSOMyMMZO4yEAWpQYPp3VDPA200oO5tXQTLWs5PBtKEwfjolJuSZt8GAN8
+ U6xI+NcO1uunKLmDNz6SRK0FV+e5vWxgZo6bDpXHrWkFD3JiC7x7FVuYck8zbhN06O6cxOo
+ LUPZo+zZ6K0iHTfD360eQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:csgnVQnYNjQ=:j+SYHXBJf4QIgdUo0Sgll4
+ UyVFNIE6uCPMpwPA4Z4GHxsgIuVWp0vAds382UDmTJKVx3M5v4SM8/fTVPRjTBfXJT4LdnAn2
+ I4WYIEKLkwz0ttdRjVRVYJNrJ02WB3Q5BoNrfXMjudPV3bEBR9D7aKh64tfSeboAOBby7t8FP
+ YUJZ/Mv4q9KndsWo7fqcFvE/KSOJBHuy1uyaPZTL6yhi+Twz47q8uzBNWSmSLSlYaZqpSARYS
+ aYTmTQZWdpW5zIIM6JHJFM0s+1l2hbjYiOLlrp4NC6od+PwrXs5xc7ODZ37XeJJhuBuFfNOJY
+ mDAtvJ2ZiK4vp3610FOzQ9ncK22FQgo6HhZ1AznULzEu4CCmSYOTHn9HKkYhqatL7uQfbJ4Ca
+ rQtfO50wd5BVnZ9fQlFV9BIEwtbyhaXaci97BnwdJ2zle5C//Y688BtLQrzCVFm4PTfL9rxk4
+ 3eeNGl/ijkaprcfEPTUF2UCCLZVT9qKtZV77eCQhIxKGUT2lRL7YdS6TRb4aB2FNGFNHLmVDq
+ pKAKNMtiKQXiLyhC0+N42JcIQBSKbKfcmMmsHjizP9LGyHzriBCzLBrxfEnsEQgyLhQ1sJrmb
+ tp1KH27Co6Zn7dlMCtXrxDvaF1oYGGci+dxZvYBFiLMC3D1NT+HnJLr6LyOq6aNqHaDPsFaas
+ YF7M4ZEt0rI/byRUGIjqKPhQPsw/zhRnScrVt+LIcELd8XawkbQivBxsx6i4pIJSHno4e+zZJ
+ POPcbZy2i1wgAVOjybFeSED86YsI73aLWvtNm9BuYMP0KxFLZ58eFPsLtso9MwN6jZLtwAnhx
+ cPCX/bm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There is really no reason why we would need to hold onto the allocated
-string longer than necessary.
+We free()d the `log` buffer when dwim_log() returned 1, but not when it
+returned a larger value (which meant that it still allocated the buffer
+but we simply ignored it).
 
-Reported by Coverity.
+While in the vicinity, make sure that the `reflogs` structure as well as
+the `branch` variable are released properly, too.
+
+Identified by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- worktree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ reflog-walk.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/worktree.c b/worktree.c
-index bae787cf8d7..89a81b13de3 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -399,6 +399,7 @@ int submodule_uses_worktrees(const char *path)
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 99679f58255..c63eb1a3fd7 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -183,7 +183,11 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 		if (!reflogs || reflogs->nr == 0) {
+ 			struct object_id oid;
+ 			char *b;
+-			if (dwim_log(branch, strlen(branch), oid.hash, &b) == 1) {
++			int ret = dwim_log(branch, strlen(branch),
++					   oid.hash, &b);
++			if (ret > 1)
++				free(b);
++			else if (ret == 1) {
+ 				if (reflogs) {
+ 					free(reflogs->ref);
+ 					free(reflogs);
+@@ -193,17 +197,27 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 				reflogs = read_complete_reflog(branch);
+ 			}
+ 		}
+-		if (!reflogs || reflogs->nr == 0)
++		if (!reflogs || reflogs->nr == 0) {
++			if (reflogs) {
++				free(reflogs->ref);
++				free(reflogs);
++			}
++			free(branch);
+ 			return -1;
++		}
+ 		string_list_insert(&info->complete_reflogs, branch)->util
+ 			= reflogs;
+ 	}
++	free(branch);
  
- 	/* The env would be set for the superproject. */
- 	get_common_dir_noenv(&sb, submodule_gitdir);
-+	free(submodule_gitdir);
- 
- 	/*
- 	 * The check below is only known to be good for repository format
-@@ -418,7 +419,6 @@ int submodule_uses_worktrees(const char *path)
- 	/* See if there is any file inside the worktrees directory. */
- 	dir = opendir(sb.buf);
- 	strbuf_release(&sb);
--	free(submodule_gitdir);
- 
- 	if (!dir)
- 		return 0;
+ 	commit_reflog = xcalloc(1, sizeof(struct commit_reflog));
+ 	if (recno < 0) {
+ 		commit_reflog->recno = get_reflog_recno_by_time(reflogs, timestamp);
+ 		if (commit_reflog->recno < 0) {
+-			free(branch);
++			if (reflogs) {
++				free(reflogs->ref);
++				free(reflogs);
++			}
+ 			free(commit_reflog);
+ 			return -1;
+ 		}
 -- 
 2.12.2.windows.2.800.gede8f145e06
+
+
