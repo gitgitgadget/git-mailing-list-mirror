@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 120F9207E4
-	for <e@80x24.org>; Fri, 28 Apr 2017 23:54:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F11E2207E4
+	for <e@80x24.org>; Fri, 28 Apr 2017 23:54:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2999774AbdD1Xy0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 19:54:26 -0400
-Received: from mail-pf0-f169.google.com ([209.85.192.169]:33929 "EHLO
-        mail-pf0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1951458AbdD1XyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 19:54:16 -0400
-Received: by mail-pf0-f169.google.com with SMTP id e64so17545211pfd.1
-        for <git@vger.kernel.org>; Fri, 28 Apr 2017 16:54:16 -0700 (PDT)
+        id S2999767AbdD1XyY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Apr 2017 19:54:24 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:34901 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1948703AbdD1XyO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Apr 2017 19:54:14 -0400
+Received: by mail-pg0-f42.google.com with SMTP id o3so16379894pgn.2
+        for <git@vger.kernel.org>; Fri, 28 Apr 2017 16:54:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Yud+dx8ZGzLP/KtNm3r3oMmwGSiq4W9jGc20wb/6Leg=;
-        b=fOlwIjGD1iiMYJpY6no+UwyidPHR0QUBSOajmbGtKvTPDLa4ZjRXb9853s2Vh18IIP
-         0PbKDTr92HC3hDRuUhUet841WNwlWwsJvpakcpFU9ntaCgMTDkfPpiLxOB04W/UUdmMt
-         Xo439SeNRGP0wXVNdAsoVJWpqho1t01qM7V/uPQKfjm4DU6qA5BY4q29aaMpTN6LM97+
-         NU1rxcf7VXbH7847fg8wjwUKT+UbI6KElfeevBNlLVlHljMmk22cseQyb1WkZDcZ4UB9
-         AuekAdv+KZIMn7zNv/XUkEYsczaRHeX6hTuO9fbf0wrjoaLSHsB/1Ubx34DAOBd3R0fR
-         Qgig==
+        bh=zBD1Ikf3DOWcW/kStRZD9jtlpwrxMHTmV5Vj4m43ocQ=;
+        b=vPxF+zn0kpBfbeczluE1pFZ2OxPAe/UkO+WUmEzSBGDIrLDuDnovU2SmdWV8cPhL45
+         uIx212uRd+9pcu2MK9lt4S8iq+yB+hIAf/bgKAEVyl4p9HwvwVa02ICBOHpFwjTBNVOC
+         tqYeVk9CdG77ObN4C4R3LEkVTuBVd6EF5LasEV+YM12m/Ay4ItdhPniLKzF+w2l7rSbr
+         Hz1sjd/yy4LWc22YTLtaZUOtYj3s3jgzMKxgab2A68xAyJhb3y5EmNDJLtGz22rHIfHH
+         bFYP+g9Qxb1GY3O9gQV8BWi5TbosRbQP9NmGWKIMNYHuvWV5wllxmMOEAd8yoLTQ2Iqv
+         6Ogg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Yud+dx8ZGzLP/KtNm3r3oMmwGSiq4W9jGc20wb/6Leg=;
-        b=sHdkE2l2MgGcME/OORFkPv30GCKrzjUSCMz54mVnSMl/ya27XzTYzjxJfsyszevRVW
-         AD00aavqhOY1GnObjynyFUh3oPs/7RempkO/XuxP5JiTdPppfYubawUPYqyGN1FjtECO
-         GLrGMeHqTdSalUCmi/OfHG3jCqv5kstPepwxDhboc8FwQgKWzv7MBOxb1ppl4gXmjmfZ
-         VLXLPCqgSoW+s5VS2cFq4Nb09AzwLf2+FCl6+Nj1qzXRypACPNH1HCrdwt5lmZuQCRKf
-         GYCqWHFMN1UsN/60ZPMNcfLH/KKF8IVUYBaXWbycLNYaNxYL8R4EJ4XOvpRPG4k0ERfl
-         mz5Q==
-X-Gm-Message-State: AN3rC/6piY7nfnytOsPeutyx48NcRSRZI7gneQHGAL+yApHHdI/8iR52
-        XlzpzfmrsQn1Q27w
-X-Received: by 10.84.236.79 with SMTP id h15mr18354541pln.110.1493423655189;
-        Fri, 28 Apr 2017 16:54:15 -0700 (PDT)
+        bh=zBD1Ikf3DOWcW/kStRZD9jtlpwrxMHTmV5Vj4m43ocQ=;
+        b=A8W1fg/r9xeIV4X+9eoD3QzlGu0VepbCtz30z4Kt8ZA/d8VA/o0S360w5Y6AXWewvL
+         JewUmMLXq7h1R64Xk+gNHcAotsRhBaKibXfcLIDJz/93mxnf5+8SJVCa20CR9rL3JGNL
+         xRpipZQZ51DyQgUm/2EAV5d/8gDiXSLJNFQ3v/0g7zUpfQyZ3jS7UKcI2M8SaGvE8g8F
+         uPbFATOad/OJ72CZSMPLsk/D35OD+bpJRfVY49W9Chw8YJUm/EZGM1Z4AhQykUYyVXxO
+         K6WY1D2AONDTbDd52+AM/JYfnCZds3VC3HNSHtCzAA9EIAIr5YvW4NClpc3cOFoPITmL
+         Brlw==
+X-Gm-Message-State: AN3rC/4EZdhrMIM4YejJTWTPU7YdI1Ls/pldvYoHHkv9newNqE9lkRRU
+        5QFpW6t4xbLt9PNo
+X-Received: by 10.84.137.1 with SMTP id 1mr18451647plm.68.1493423653869;
+        Fri, 28 Apr 2017 16:54:13 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id 188sm5332429pfu.15.2017.04.28.16.54.13
+        by smtp.gmail.com with ESMTPSA id 188sm5332429pfu.15.2017.04.28.16.54.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 28 Apr 2017 16:54:14 -0700 (PDT)
+        Fri, 28 Apr 2017 16:54:12 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 3/6] submodule: remove add_oid_to_argv
-Date:   Fri, 28 Apr 2017 16:53:59 -0700
-Message-Id: <20170428235402.162251-4-bmwill@google.com>
+Subject: [PATCH 2/6] submodule: rename free_submodules_sha1s
+Date:   Fri, 28 Apr 2017 16:53:58 -0700
+Message-Id: <20170428235402.162251-3-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d-goog
 In-Reply-To: <20170428235402.162251-1-bmwill@google.com>
 References: <20170428235402.162251-1-bmwill@google.com>
@@ -60,45 +60,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function 'add_oid_to_argv()' provides the same functionality as
-'append_oid_to_argv()'.  Remove this duplicate function and instead use
-'append_oid_to_argv()' where 'add_oid_to_argv()' was previously used.
+Rename 'free_submodules_sha1s()' to 'free_submodules_oids()' since the
+function frees a 'struct string_list' which has a 'struct oid_array'
+stored in the 'util' field.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- submodule.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ submodule.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index 46abd52b1..7baa28ae0 100644
+index be0f5d847..46abd52b1 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -970,12 +970,6 @@ void check_for_new_submodule_commits(struct object_id *oid)
- 	oid_array_append(&ref_tips_after_fetch, oid);
+@@ -738,7 +738,7 @@ static void find_unpushed_submodule_commits(struct commit *commit,
+ 	diff_tree_combined_merge(commit, 1, &rev);
  }
  
--static int add_oid_to_argv(const struct object_id *oid, void *data)
--{
--	argv_array_push(data, oid_to_hex(oid));
--	return 0;
--}
--
- static void calculate_changed_submodule_paths(void)
+-static void free_submodules_sha1s(struct string_list *submodules)
++static void free_submodules_oids(struct string_list *submodules)
  {
- 	struct rev_info rev;
-@@ -989,10 +983,10 @@ static void calculate_changed_submodule_paths(void)
- 	init_revisions(&rev, NULL);
- 	argv_array_push(&argv, "--"); /* argv[0] program name */
- 	oid_array_for_each_unique(&ref_tips_after_fetch,
--				   add_oid_to_argv, &argv);
-+				   append_oid_to_argv, &argv);
- 	argv_array_push(&argv, "--not");
- 	oid_array_for_each_unique(&ref_tips_before_fetch,
--				   add_oid_to_argv, &argv);
-+				   append_oid_to_argv, &argv);
- 	setup_revisions(argv.argc, argv.argv, &rev, NULL);
- 	if (prepare_revision_walk(&rev))
- 		die("revision walk setup failed");
+ 	struct string_list_item *item;
+ 	for_each_string_list_item(item, submodules)
+@@ -779,7 +779,8 @@ int find_unpushed_submodules(struct oid_array *commits,
+ 		if (submodule_needs_pushing(submodule->string, commits))
+ 			string_list_insert(needs_pushing, submodule->string);
+ 	}
+-	free_submodules_sha1s(&submodules);
++
++	free_submodules_oids(&submodules);
+ 
+ 	return needs_pushing->nr;
+ }
 -- 
 2.13.0.rc0.306.g87b477812d-goog
 
