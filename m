@@ -2,108 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34FFF1FC3E
-	for <e@80x24.org>; Sat, 29 Apr 2017 21:01:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A7391FC3E
+	for <e@80x24.org>; Sat, 29 Apr 2017 22:23:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756654AbdD2VBI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 17:01:08 -0400
-Received: from mout.web.de ([212.227.15.3]:64880 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755726AbdD2VBG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 17:01:06 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkyTl-1dcnm721u1-00anyj; Sat, 29
- Apr 2017 23:01:02 +0200
-Subject: Re: [PATCH v3 0/5] archive-zip: support files and archives bigger
- than 4GB
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Johannes Sixt <j6t@kdbg.org>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
- <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
- <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
- <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
- <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
- <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
- <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
-Cc:     git@vger.kernel.org, Keith Goldfarb <keith@blackthorn-media.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <3df2b03f-ab86-09ac-0fc8-3c6eb10c6704@web.de>
-Date:   Sat, 29 Apr 2017 23:00:52 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
+        id S3000223AbdD2WXQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 18:23:16 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:33871 "EHLO
+        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2998642AbdD2WXN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 18:23:13 -0400
+Received: by mail-oi0-f49.google.com with SMTP id x184so59386725oia.1
+        for <git@vger.kernel.org>; Sat, 29 Apr 2017 15:23:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=FLTDwQE+LE9h0xgh9n3BRhnuKtFcUZeiwaz5qeBtjrg=;
+        b=ZHrgUQwDj0z3xUldXe5hywKg0hxinRUdfD0izhUHXx5hXNZ/uMpXxVojNiyYA42d4f
+         AnZI3TIsijvJhv9his0fbFRG3yJxvLY7+EGzt35PAlVzeR15XyjSzCzZYyN9GRpsblYD
+         YDXj5jn/bg/Nzc/zTR/jsvFlrzalOL7dKKquWcgL1Hu11x/zsDbBAs0z1etY2BQEGMXq
+         JZvjx1R7UFpvON4a6WucNDj/K3JZrgeFNxdcdhCmkkKF71qM5uqMBMG42WWsHgdZGaeK
+         SeMWqo8OUjHTA7Krshpr0CrgvIOfzm85hEecrFTbtfhvXGjCLdG+13hyfadEw51oklQ1
+         i/tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=FLTDwQE+LE9h0xgh9n3BRhnuKtFcUZeiwaz5qeBtjrg=;
+        b=Qf6CtXZlnEGgcFSc7YejgN6n6pFON0FdRTgUjYGZWNE7nNtBh46Fo0Awg5CHFJF2q6
+         8XlMRLF0DLHE3UYcYpQiA8VvQpsbiC73AdAwGa1VATBqMOPOpWUBTj2TOK4faZarkzO/
+         beRZl0vKKXseDBFl3XBIzOyq2Agc1+xNSpJ6TyaAfE+MgBLwfbawuid1byPB+NFVizFK
+         FlXHOP4vMML6WaQ4N6fihd1e51JI00mqWqS7ogfvLd54T2NA7Z7h4ZkjP6b7uJteGxVu
+         OaNYjV6mNHzGZjLpiFBwaBPAiZFyL8xmRHL4WN6U4ua1epKxT81phET5KUDQ+WCOSnnE
+         Wx/A==
+X-Gm-Message-State: AN3rC/4pQ79AzZHP0NKXTT+DYQLyqC676AHxHnmDwENXvRFoeV1rHyAx
+        WP/H22iv9fPawWMqXOun3E1fSvF/vQ==
+X-Received: by 10.202.81.83 with SMTP id f80mr7630972oib.9.1493504593110; Sat,
+ 29 Apr 2017 15:23:13 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:+qtZq4Im/v2JsNU88MtYn289UTHc6jWSrCcOXWIzuqe9Hsh9H4x
- seUqTbP09xgaeby3bQais3uNuBFSmY8vznRs/SOq2srPIp3I4gt+fT37WQY5y60xS4m7JSd
- CHNTdepEzDrttGkIxRsmZNZcXmSCfrBn7l/pWluh3f9AuGN8IFRsylaPs9uhxB02762byiw
- SUKTnGdQw/wIqnx2UdnPA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:f1M+jp9VxNs=:Iv71d/hUmotR7yjel/OVjO
- lWEYDt/wJxzAcS6yWLYfP+nVK9oHGcELOls3Cn5qY0gcqIec46lyoqO8GaIngSPPE7Myv0Hlf
- d0J/ALYISDKvWddHPTSaNhVZMu9PWluYfp5/AvDiTAQuT4l8T23Vv0GYqdntUFHVD2dTcCIF5
- yh3wJnpvviFfRTF1dP0EilipXF6JqQsYuzVTHrS7VyDhLx+OdhjxXwoVne072tGodWNl5lf7A
- ZmNzvvedbWJ/rKWyuYBOtJjU7oUOpFn+ww7oGfHh8vMqvoNk2Ol8+wslvFU5ax6ta7G/qZgjS
- 7zpaDi6GhDtHp2Cp/uZIaOAl42d75O9/y8DQ+3lxrGINgAPdMZRFB/nwrGwGtWX0qb1hwETej
- /f8c7aOnz5SgAAPS90/0klAAEagjm5Bt/4+5NwRctbemRt0vfQxmEGhJTKkB4I8EXDozOq8QV
- v1YSPn9yYESfzJ3wVunlx9gcbiOFvZH9EOkumIlv7Ha36jQJhXJ2zYotrJoDI+MG0eXzQkIJL
- wZof2xZp15s49AA9amrtaUJjLUWT8u5jXnr3gQ5sjp5GV3YszRzkEejomGikUOGOOuO/UTG9o
- jfijNiWVb8dwMx3A32+aSOJC4mAGYOJcA6HiSC9nEP7pt1ZtqxC43L9teh63mSyae+UVhgzun
- 2HWgnDe1STlg93zl7B9ZPLkidQidEKvrfbJbzQFePxW95aDetSJP35GtvjKY7BqB57xXMXIKw
- 8F9+gvkGzWMwL4/bibOl0rEXbdS+hrbRYC+1ybAnzoyCBm8Q7oxl8Q74ytB/E46bm/yDOGWye
- EXtD2at
+Received: by 10.157.11.27 with HTTP; Sat, 29 Apr 2017 15:23:12 -0700 (PDT)
+In-Reply-To: <CAFOYHZAsGp8Fw4euxsr=hRbTm5voBSRf_tJ9y3Sz25AE=VQ3hw@mail.gmail.com>
+References: <CAJRbB6w2BnXXzA46a-uzpx9u554GndEXxZtkLVTc5XOXMn3kkA@mail.gmail.com>
+ <CAFOYHZAsGp8Fw4euxsr=hRbTm5voBSRf_tJ9y3Sz25AE=VQ3hw@mail.gmail.com>
+From:   Erik Haller <erik.haller@gmail.com>
+Date:   Sat, 29 Apr 2017 15:23:12 -0700
+Message-ID: <CAJRbB6wz5y=GJLq1gWnmWC7CbPJdqjUn97dAW9SaftnSWVaaag@mail.gmail.com>
+Subject: Re: git with ssh won't pull submodule
+To:     Chris Packham <judge.packham@gmail.com>
+Cc:     GIT <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-04-24 19:22, René Scharfe wrote:
-> The first patch adds (expensive) tests, the next two are cleanups which
-> set the stage for the remaining two to actually implement zip64 support
-> for offsets and file sizes.
-> 
-> Half of the series had been laying around for months, half-finished and
-> forgotten because I got distracted by the holiday season. :-/
-> 
->   archive-zip: add tests for big ZIP archives
->   archive-zip: use strbuf for ZIP directory
->   archive-zip: write ZIP dir entry directly to strbuf
->   archive-zip: support archives bigger than 4GB
->   archive-zip: support files bigger than 4GB
-> 
->  archive-zip.c                   | 211 ++++++++++++++++++++++++----------------
->  t/t5004-archive-corner-cases.sh |  45 +++++++++
->  t/t5004/big-pack.zip            | Bin 0 -> 7373 bytes
->  3 files changed, 172 insertions(+), 84 deletions(-)
->  create mode 100644 t/t5004/big-pack.zip
-> 
-This fails here under Mac OS:
-commit 4cdf3f9d84568da72f1dcade812de7a42ecb6d15
-Author: René Scharfe <l.s.r@web.de>
-Date:   Mon Apr 24 19:33:34 2017 +0200
+Ah. I was able to get it to work with the ssh protocol and a relative
+path. Thank you for your help.
 
-    archive-zip: support files bigger than 4GB
-
----------------------------
-Parts of t5004.log, hope this is helpful:
-
-"$GIT_UNZIP" -t many-big.zip
-
-Archive:  many-big.zip
-warning [many-big.zip]:  577175 extra bytes at beginning or within zipfile
-  (attempting to process anyway)
-error [many-big.zip]:  start of central directory not found;
-  zipfile corrupt.
-  (please check that you have transferred or created the zipfile in the
-  appropriate BINARY mode and that you have compiled UnZip properly)
-not ok 12 - zip archive bigger than 4GB
-#	
-#		# build string containing 65536 characters
-
+On Fri, Apr 28, 2017 at 8:45 AM, Chris Packham <judge.packham@gmail.com> wrote:
+> Hi Erik,
+>
+> On Fri, Apr 28, 2017 at 11:25 AM, Erik Haller <erik.haller@gmail.com> wrote:
+>> Getting the following error for a submodule when using git/ssh:
+>>
+>> $ git clone --recursive ssh://incense:/home/erik/git/nacl.git
+>> Cloning into 'nacl'...
+>> remote: Counting objects: 32, done.
+>> remote: Compressing objects: 100% (25/25), done.
+>> remote: Total 32 (delta 5), reused 0 (delta 0)
+>> Receiving objects: 100% (32/32), 16.50 KiB | 0 bytes/s, done.
+>> Resolving deltas: 100% (5/5), done.
+>> Submodule 'vendor/golang.org/x/crypto'
+>> (file:///home/erik/git/github.com/golang/crypto.git) registered for
+>> path 'vendor/golang.org/x/crypto'
+>
+> This is the problem. The .gitmodules entry in nacl.git uses an
+> absolute path (or URI in this case) for the submodule. Git does
+> exactly what it should and tries to clone it.
+>
+> The solution to this is to use a relative path[1] in .gitmodules
+> (either edit it by hand or do git rm & git submodule add). Note that
+> by using a relative path it assumes that the parent and submodule
+> repositories are hosted in the same location (which may or may not be
+> true for your use-case).
+>
+> --
+> [1] - see the 3rd paragraph for the add command in
+> https://git-scm.com/docs/git-submodule
+>
+>> Cloning into '/home/erik/go/src/nacl/vendor/golang.org/x/crypto'...
+>> fatal: '/home/erik/git/github.com/golang/crypto.git' does not appear
+>> to be a git repository
+>> fatal: Could not read from remote repository.
+>>
+>> Please make sure you have the correct access rights
+>> and the repository exists.
+>> fatal: clone of 'file:///home/erik/git/github.com/golang/crypto.git'
+>> into submodule path
+>> '/home/erik/go/src/nacl/vendor/golang.org/x/crypto' failed
+>> Failed to clone 'vendor/golang.org/x/crypto'. Retry scheduled
+>> Cloning into '/home/erik/go/src/nacl/vendor/golang.org/x/crypto'...
+>> fatal: '/home/erik/git/github.com/golang/crypto.git' does not appear
+>> to be a git repository
+>> fatal: Could not read from remote repository.
+>>
+>> Please make sure you have the correct access rights
+>> and the repository exists.
+>> fatal: clone of 'file:///home/erik/git/github.com/golang/crypto.git'
+>> into submodule path
+>> '/home/erik/go/src/nacl/vendor/golang.org/x/crypto' failed
+>> Failed to clone 'vendor/golang.org/x/crypto' a second time, aborting
+>>
+>>
+>> The git clone --recursive file:///home/erik/git/nacl.git works fine
+>> and pulls the submodule "crypto.git". Any ideas?
+>>
+>> - The crypto.git is a valid repo.
+>> - I have the correct permissions.
+>> - The crypto.git repo is a git --mirror repo.
+>>
+>>
+>> git version: 2.11.0
+>> system: linux debian/testing
