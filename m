@@ -2,141 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9051FC3E
-	for <e@80x24.org>; Sat, 29 Apr 2017 18:16:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80BAD1FC3E
+	for <e@80x24.org>; Sat, 29 Apr 2017 18:48:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S969613AbdD2SQf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 14:16:35 -0400
-Received: from mout.web.de ([212.227.17.12]:52710 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S969491AbdD2SQd (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 14:16:33 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6V1T-1e2WSG3hYB-00yUT9; Sat, 29
- Apr 2017 20:16:19 +0200
-Subject: Re: [PATCH 1/5] add SWAP macro
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
- <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
- <20170424112928.rty5xejep4mnxph2@sigill.intra.peff.net>
- <070a4b85-98e0-12a4-6c9c-557f3dfa733c@web.de>
- <20170428214934.tuqihgch6qeen3ni@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <11699799-6bdf-484d-5a1c-8e8fa7981594@web.de>
-Date:   Sat, 29 Apr 2017 20:16:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
-MIME-Version: 1.0
-In-Reply-To: <20170428214934.tuqihgch6qeen3ni@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:LMad1AvfBfsw9qLj0dCBlVsFKIRDljGDQG96QkupU/78bmBMmat
- E5BBM01lr78183hp+xr6/zUBAabtVuXHiVWmm5eyIijHM7o1E7xK5BGFGCelb37mQ3bcnUo
- fTJVeTexq5kI7bIIpYHpK+DUBtZqfQ9T3bfX51GcmlBbVgot2Rx5yzwLl2unvcs1FLuqJdA
- 43gzLrG9jqgvamgahyKFQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CH3wXBqi93s=:wMQJsLSLHtr7MR4iBNaAIN
- AeJpLhFsSW2AKmlNF32kdaWOa9ZH1/nohGCfqgjxUrINXOnIowkyO/bF6mWH7WIHbGO+anhPq
- 5AaQpmveL2EVx1IktzfTZ0fBOrtgXy8ZWgBDgw4faOEUVMQmYL5xnnQtTff98UjhqhvjUdBVH
- WdpX7q/ZDZHtA12xihqvcxGjaYelBRZ4+yth4JW31P5VvDsCIW3+ADldJKru3AWE9WkCmExeP
- 28da+AMK7FSaTTw62KC7RH5xCJwryK2MH5vz1TrMFAxETW0gF/E2xQSO7lLMViuyFIvkY/8nr
- nvXF0nEH/ojSr1cfPS417LO70kz6HrUs8WKJalh88TgGzaOEOQbyqTkYHg/ka9Hgb2ae8y98M
- OMjvCM7MmxpHI9iunx/X7P64b3c2U1geyzESrJgzb3pyElGnb3EWedSOrI0Rag6dTk8LX4im0
- lhM3uk6beMc4dA2mFojgW5TOMPHDP8pjFqMH/Utl/KnEZLJHXhb8eFwQS2nnV6x81TCTz5ARJ
- 91FZNWEL4SvezRkZVoUjWiQqQFcPDmjSZKmqZgomERI0DUTFnTTcVD0IXqxrunlgwWAyoPuF4
- zAYiptdNNx0jTITkCHACa15eeZZx9PuII0UoldIgrpTq7kbeHEDj3wOr72l441GEQt2pzHXhz
- FlnRWQWdOO0MjTwxiQVFlDyZLMspD2UfOBNf4ypHs+/qEimTFsQBiFtzgp3Hyfc00mMh+Ima4
- +wcgP0tcEQwloh/mSw29MA47SyhAVTp/8BrMxUgXynJjtvIEyYS6yrc5rboq6j1/nvjW+k0wm
- hl/k8iW
+        id S1035309AbdD2SsZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 14:48:25 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36186 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1031957AbdD2SsY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 14:48:24 -0400
+Received: by mail-wm0-f66.google.com with SMTP id u65so16829211wmu.3
+        for <git@vger.kernel.org>; Sat, 29 Apr 2017 11:48:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=vzX++Wqvs4XXsuFiihT6xsVB7yKP9+9e1cX0bBLCaa8=;
+        b=s8O/1Bie3j59BAGpHpgakrkrhiSHYdH667pK6MZg/KCoNnfmNpuy3wdcBvLu5yAbDq
+         LobldxKcWC22KhdB/FFpq62EPKn5nLcojEZeIpf5+E9IKANWseN2qmzRV8AVJbp4CpoG
+         Pd+8bxL+mjrpDnHxRzmHHR8MzMgMxuGS1U6VSmN7JyAiguykyKpveFBBtHhCJnZdGofw
+         y562kxnGMubE77oskoDLK+bYZlFJxAUZUVV6Q4VT9NWiP4rvWCd6TO1JPdbTdV54EilP
+         5ZNmEsDjjLLhV920LdmvipWhhONSejkXp2dJcljaNtlMBM44iv/DW6vP8ncOWUoLv4bR
+         SvpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vzX++Wqvs4XXsuFiihT6xsVB7yKP9+9e1cX0bBLCaa8=;
+        b=hZi1nPUsvMgOGt8WSaBqVVTiHcJVH0Sp/gdYwKzQTHijxJJibPWMxBQ62Ebx8lOc/A
+         AGhI0UgBDnfSKCEQqUvLJGED1svKuX6XwpUoTNDFUZeNPGzztY1mLCBujtwiH6wF7rxC
+         hC7WRvigl7fNOFH9/0osbVC0iNzGOTcfTFLVgKSceFJlR2+5YKmam8Ghxw4dRuoS+TDa
+         isz8S4/RPLfM4GIAeaZ5qVveZKLenjxAlywJK7AP0b8TpcMKWb3c9L2dv79UEMeWBop/
+         z2+zGdWjLdVyDSXN/to6YI1PmoB8xzx7QnP9yjlMVj8ly7dZvCtjHkPAuHifH8cSlNMg
+         DsXA==
+X-Gm-Message-State: AN3rC/5aCO3hBtYxcDoM/Rs1TIORDp2bFklbyiqEG3ibRgpmqhQKVxV5
+        fYPdDW4S2h16dg==
+X-Received: by 10.28.68.134 with SMTP id r128mr2410786wma.60.1493491703349;
+        Sat, 29 Apr 2017 11:48:23 -0700 (PDT)
+Received: from slxBook4.fritz.box (p5DDB6C59.dip0.t-ipconnect.de. [93.219.108.89])
+        by smtp.gmail.com with ESMTPSA id t124sm8654767wma.10.2017.04.29.11.48.22
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Sat, 29 Apr 2017 11:48:22 -0700 (PDT)
+From:   Lars Schneider <larsxschneider@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: [PATCH v1] travis-ci: retry if Git for Windows CI returns HTTP error 502 or 503
+Date:   Sat, 29 Apr 2017 20:48:22 +0200
+Message-Id: <20170429184822.10128-1-larsxschneider@gmail.com>
+X-Mailer: git-send-email 2.12.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.04.2017 um 23:49 schrieb Jeff King:
-> On Fri, Apr 28, 2017 at 07:04:51PM +0200, René Scharfe wrote:
-> 
->>> What should:
->>>
->>>     SWAP(foo[i], foo[j]);
->>>
->>> do when i == j? With this code, it ends up calling
->>>
->>>     memcpy(&foo[i], &foo[j], ...);
->>>
->>> which can cause valgrind to complain about overlapping memory. I suspect
->>> in practice that noop copies are better off than partial overlaps, but I
->>> think it does still violate the standard.
->>>
->>> Is it worth comparing the pointers and bailing early?
->>
->> Hmm, so swapping a value with itself can be a useful thing to do?
->> Otherwise an assert would be more appropriate.
-> 
-> No, I doubt that it's useful, and it's probably a sign of a bug
-> elsewhere. But it's likely a _harmless_ bug, so it may be irritating to
-> die when we hit it rather than continuing.
-> 
-> I dunno. I could go either way. Or we could leave it as-is, and let
-> valgrind find the problem. That has zero run-time cost, but of course
-> nobody bothers to run valgrind outside of the test suite, so the inputs
-> are not usually very exotic.
+The Git for Windows CI web app sometimes returns HTTP errors of
+"502 bad gateway" or "503 service unavailable" [1]. Wait a little and
+retry the request if this happens.
 
-It would be  problematic on platforms where memcpy has to erase the
-destination before writing new values (I don't know any example).
+[1] https://docs.microsoft.com/en-in/azure/app-service-web/app-service-web-troubleshoot-http-502-http-503
 
-We could use two temporary buffers.  The object code is the same with
-GCC around 5 and Clang 3.2 or higher -- at least for prio-queue.c.
+Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+---
 
-With GCC 4.9.2 (that's what Debian stable currently has) the result is
-actually slightly better with two buffers because a 128-bit move starts
-to get used (https://godbolt.org/g/18HQDQ).
+Hi,
 
->> Swapping with *partial* overlap sounds tricky, or even evil.  If
->> we want to support that for some reason we'd have to use memmove
->> in the middle.  But that would still corrupt at least one of the
->> objects, wouldn't it?
-> 
-> Yes, the overlap case is probably an actual bug. Detecting it is a bit
-> harder, but definitely possible. I hate to pay the run-time cost for it,
-> but I wonder if a compiler could optimize it out.
+this should make the Git for Windows build a bit more stable. We saw
+a few 502's recently. E.g. https://travis-ci.org/git/git/jobs/226669324
 
-How is it possible to arrive at such a situation?  We'd need two objects
-of the same size (we check that in SWAP) and one of them would start
-inside of the other one, i.e. the pointer difference between them would
-be a fraction of 1.  So the type system would have to be tricked into
-it, right?
+I did not add any checks to avoid an endless loop because TravisCI would
+shutdown the worker if there is no output for more than 10min. Therefore
+I think we don't need to handle this case ourselves.
 
-How *would* we detect overlaps?  The obvious checks (a+len<=b||b+len<=a)
-are undefined if applied to objects that don't belong to the same array.
-And members of the same array would not overlap to begin with..
+Cheers,
+Lars
 
-It may be my laziness speaking, but do we really need such a check?  If
-someone constructs interleaving objects then they'd need to implement
-the necessary checks themselves IMHO.
+Notes:
+    Base Ref: next
+    Web-Diff: https://github.com/larsxschneider/git/commit/b57ebf31ab
+    Checkout: git fetch https://github.com/larsxschneider/git travisci/win-retry-v1 && git checkout b57ebf31ab
 
->> The line in question is this one:
->>
->> 	for (i = 0; i <= (j = (queue->nr - 1) - i); i++)
->>
->> Assignment in the middle?  Hmm.  Why not do it like this?
->>
->> 	for (i = 0, j = queue->nr - 1; i < j; i++, j--)
->>
->> Looks less complicated to me.
-> 
-> Yes, see my other reply. :)
+ ci/run-windows-build.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Ah, so that's where I stole it from. ;)  Perhaps my source amnesia was
-in part caused by confusion about your reasoning there: The code does A,
-B would be better, so let's do C.  Wait, what? :)
+diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
+index e043440799..7a9aa9c6a7 100755
+--- a/ci/run-windows-build.sh
++++ b/ci/run-windows-build.sh
+@@ -15,6 +15,8 @@ COMMIT=$2
+ gfwci () {
+ 	local CURL_ERROR_CODE HTTP_CODE
+ 	exec 3>&1
++	while test -z $HTTP_CODE
++	do
+ 	HTTP_CODE=$(curl \
+ 		-H "Authentication: Bearer $GFW_CI_TOKEN" \
+ 		--silent --retry 5 --write-out '%{HTTP_CODE}' \
+@@ -22,6 +24,16 @@ gfwci () {
+ 		"https://git-for-windows-ci.azurewebsites.net/api/TestNow?$1" \
+ 	)
+ 	CURL_ERROR_CODE=$?
++		# The GfW CI web app sometimes returns HTTP errors of
++		# "502 bad gateway" or "503 service unavailable".
++		# Wait a little and retry if it happens. More info:
++		# https://docs.microsoft.com/en-in/azure/app-service-web/app-service-web-troubleshoot-http-502-http-503
++		if test $HTTP_CODE -eq 502 || test $HTTP_CODE -eq 503
++		then
++			sleep 10
++			HTTP_CODE=
++		fi
++	done
+ 	if test $CURL_ERROR_CODE -ne 0
+ 	then
+ 		return $CURL_ERROR_CODE
 
-René
+base-commit: 1ea7e62026c5dde4d8be80b2544696fc6aa70121
+--
+2.12.2
+
