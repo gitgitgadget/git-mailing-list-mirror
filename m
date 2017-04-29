@@ -6,100 +6,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61A211FC3E
-	for <e@80x24.org>; Sat, 29 Apr 2017 12:28:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BF681FC3E
+	for <e@80x24.org>; Sat, 29 Apr 2017 12:41:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1952014AbdD2M2d (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 08:28:33 -0400
-Received: from zucker.schokokeks.org ([178.63.68.96]:45791 "EHLO
-        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1166721AbdD2M2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 08:28:31 -0400
-Received: from localhost ([::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
-  by zucker.schokokeks.org with ESMTPSA; Sat, 29 Apr 2017 14:28:56 +0200
-  id 0000000000000044.0000000059048708.00005EE6
-Date:   Sat, 29 Apr 2017 14:28:29 +0200
-From:   Simon Ruderich <simon@ruderich.org>
-To:     "=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] githooks.txt: clarify push hooks are always executed in
- $GIT_DIR
-Message-ID: <20170429122829.lz56r7exh3ecynxb@ruderich.org>
-References: <20170409130126.uqmjop25jidhblhd@ruderich.org>
- <CACBZZX4uBL99y=ZaKZ7dqyP9Ne-cx=kYkh8p51p3VYOr3PQGSw@mail.gmail.com>
+        id S2999861AbdD2Mk7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 08:40:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42201 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2997860AbdD2Mk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 08:40:58 -0400
+Received: (qmail 32261 invoked by uid 109); 29 Apr 2017 12:40:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sat, 29 Apr 2017 12:40:54 +0000
+Received: (qmail 29442 invoked by uid 111); 29 Apr 2017 12:41:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 29 Apr 2017 08:41:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Apr 2017 08:40:52 -0400
+Date:   Sat, 29 Apr 2017 08:40:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2 0/3] Make diff plumbing commands respect the
+ indentHeuristic.
+Message-ID: <20170429124052.yhgwofbbd5pkd24p@sigill.intra.peff.net>
+References: <20170427205037.1787-1-marcnarc@xiplink.com>
+ <20170428223315.17140-1-marcnarc@xiplink.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX4uBL99y=ZaKZ7dqyP9Ne-cx=kYkh8p51p3VYOr3PQGSw@mail.gmail.com>
-User-Agent: NeoMutt/20170306 (1.8.0)
+In-Reply-To: <20170428223315.17140-1-marcnarc@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Listing the specific hooks might feel verbose but without it the
-reader is left to wonder which hooks are triggered during the
-push. Something which is not immediately obvious when only trying
-to find out where the hook is executed.
+On Fri, Apr 28, 2017 at 06:33:12PM -0400, Marc Branchaud wrote:
 
-Signed-off-by: Simon Ruderich <simon@ruderich.org>
----
- Documentation/githooks.txt | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+> v2: Fixed up the commit messages and added tests.
+> 
+> Marc Branchaud (2):
+>   diff: make the indent heuristic part of diff's basic configuration
+>   diff: have the diff-* builtins configure diff before initializing
+>     revisions
+> 
+> Stefan Beller (1):
+>   diff: enable indent heuristic by default
 
-On Mon, Apr 10, 2017 at 01:13:15PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> [snip]
->
-> Can we say as we do now that:
->
-> * All hooks regardless of type in bare repos execute in the bare repo
-> * If you have a working tree hooks use that
->
-> But add:
->
-> * Working trees are ignored by any hooks invoked on your behalf during a push.
+Thanks, these look fine to me. I'd like to get an ACK from Michael, in
+case he had some other reason for omitting them from git_diff_ui_config
+(from my recollection, it's probably just a mix of conservatism and
+following what the compaction heuristic had done).
 
-Hello,
-
-Maybe like this? I reordered the cases as it felt more natural
-that the general case is first and followed by the one with the
-exception.
-
-> Some ad-hoc testing reveals that this rule also goes for the
-> push-to-checkout hook. Should it? Wouldn't it be more useful if it
-> broke the pattern, since it's dealing with the working tree on the
-> other side? Junio?
-
-I added push-to-checkout to the patch. Changing the behavior will
-break backwards compatibility so I think that's a no-go.
-
-Regards
-Simon
-
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 32343ae29..706091a56 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -22,8 +22,10 @@ changed via the `core.hooksPath` configuration variable (see
- linkgit:git-config[1]).
- 
- Before Git invokes a hook, it changes its working directory to either
--the root of the working tree in a non-bare repository, or to the
--$GIT_DIR in a bare repository.
-+$GIT_DIR in a bare repository or the root of the working tree in a non-bare
-+repository. An exception are hooks triggered during a push ('pre-receive',
-+'update', 'post-receive', 'post-update', 'push-to-checkout') which are always
-+executed in $GIT_DIR.
- 
- Hooks can get their arguments via the environment, command-line
- arguments, and stdin. See the documentation for each hook below for
--- 
-2.11.0
-
--- 
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+-Peff
