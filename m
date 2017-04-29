@@ -2,138 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C7211FC3E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61A211FC3E
 	for <e@80x24.org>; Sat, 29 Apr 2017 12:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166724AbdD2M1H (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 08:27:07 -0400
-Received: from m12-16.163.com ([220.181.12.16]:37046 "EHLO m12-16.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1166721AbdD2M1F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 08:27:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id; bh=2CvTy5vkt4jAKQdnD5
-        RkIHzFUc3VzCRbqqLNbR8f1GA=; b=JmB0IUlVRyQ/fOxzvv3HME3ksaf1JGiGIX
-        CMmNSfxyL5zZwA1fTh2tQ6a75Ek30SqqaAFmStj0Qk/Z76dj9jwD6L+FBBSuKKjk
-        dkxrBhuA/ILZpOcCGkEc6ogyhOD60YYklGpNQeVdwEQnr5aKC6gvCVEp91RGJ/J8
-        99TJR9+PY=
-Received: from localhost.localdomain (unknown [1.203.183.82])
-        by smtp12 (Coremail) with SMTP id EMCowAC33fJ4hgRZin5bBQ--.9167S2;
-        Sat, 29 Apr 2017 20:26:39 +0800 (CST)
-From:   xiaoqiang zhao <zxq_yx_007@163.com>
-To:     git@vger.kernel.org
-Cc:     viktorin@rehivetech.com, mst@kernel.org, pbonzini@redhat.com,
-        mina86@mina86.com, artagnon@gmail.com
-Subject: [PATCH] send-email: new option to walkaround email server limits
-Date:   Sat, 29 Apr 2017 20:26:32 +0800
-Message-Id: <20170429122632.7122-1-zxq_yx_007@163.com>
-X-Mailer: git-send-email 2.11.0
-X-CM-TRANSID: EMCowAC33fJ4hgRZin5bBQ--.9167S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7try7tr4UGF1xXr1kCryUZFb_yoW8Kw1xpw
-        sF9FZxWryxJFZF9wn2y3Wayr909rykGF9xt3yDtr1UAF45Xr9FyrnIyw1vyw18Krn293yU
-        ZwnFgr48uF40ywUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jmuWdUUUUU=
-X-Originating-IP: [1.203.183.82]
-X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/xtbBEh-IxlZX2sB6JgAAsE
+        id S1952014AbdD2M2d (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 08:28:33 -0400
+Received: from zucker.schokokeks.org ([178.63.68.96]:45791 "EHLO
+        zucker.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1166721AbdD2M2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 08:28:31 -0400
+Received: from localhost ([::1])
+  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-GCM-SHA384)
+  by zucker.schokokeks.org with ESMTPSA; Sat, 29 Apr 2017 14:28:56 +0200
+  id 0000000000000044.0000000059048708.00005EE6
+Date:   Sat, 29 Apr 2017 14:28:29 +0200
+From:   Simon Ruderich <simon@ruderich.org>
+To:     "=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] githooks.txt: clarify push hooks are always executed in
+ $GIT_DIR
+Message-ID: <20170429122829.lz56r7exh3ecynxb@ruderich.org>
+References: <20170409130126.uqmjop25jidhblhd@ruderich.org>
+ <CACBZZX4uBL99y=ZaKZ7dqyP9Ne-cx=kYkh8p51p3VYOr3PQGSw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX4uBL99y=ZaKZ7dqyP9Ne-cx=kYkh8p51p3VYOr3PQGSw@mail.gmail.com>
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some email server(e.g. smtp.163.com) limits a fixed number emails to be send per
-session(connection) and this will lead to a send faliure.
-With --split <num> option, a auto reconnection will occur when number of sended
-email reaches <num> and the problem is solved.
+Listing the specific hooks might feel verbose but without it the
+reader is left to wonder which hooks are triggered during the
+push. Something which is not immediately obvious when only trying
+to find out where the hook is executed.
 
-Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
+Signed-off-by: Simon Ruderich <simon@ruderich.org>
 ---
- git-send-email.perl | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ Documentation/githooks.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index eea0a517f..0de9b7058 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -81,6 +81,8 @@ git send-email --dump-aliases
-                                      This setting forces to use one of the listed mechanisms.
-     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
+On Mon, Apr 10, 2017 at 01:13:15PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> [snip]
+>
+> Can we say as we do now that:
+>
+> * All hooks regardless of type in bare repos execute in the bare repo
+> * If you have a working tree hooks use that
+>
+> But add:
+>
+> * Working trees are ignored by any hooks invoked on your behalf during a push.
+
+Hello,
+
+Maybe like this? I reordered the cases as it felt more natural
+that the general case is first and followed by the one with the
+exception.
+
+> Some ad-hoc testing reveals that this rule also goes for the
+> push-to-checkout hook. Should it? Wouldn't it be more useful if it
+> broke the pattern, since it's dealing with the working tree on the
+> other side? Junio?
+
+I added push-to-checkout to the patch. Changing the behavior will
+break backwards compatibility so I think that's a no-go.
+
+Regards
+Simon
+
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 32343ae29..706091a56 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -22,8 +22,10 @@ changed via the `core.hooksPath` configuration variable (see
+ linkgit:git-config[1]).
  
-+    --split                 <int>  * send \$num message per connection.
-+
-   Automating:
-     --identity              <str>  * Use the sendemail.<id> options.
-     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
-@@ -153,6 +155,7 @@ my $have_email_valid = eval { require Email::Valid; 1 };
- my $have_mail_address = eval { require Mail::Address; 1 };
- my $smtp;
- my $auth;
-+my $send_count = 0;
+ Before Git invokes a hook, it changes its working directory to either
+-the root of the working tree in a non-bare repository, or to the
+-$GIT_DIR in a bare repository.
++$GIT_DIR in a bare repository or the root of the working tree in a non-bare
++repository. An exception are hooks triggered during a push ('pre-receive',
++'update', 'post-receive', 'post-update', 'push-to-checkout') which are always
++executed in $GIT_DIR.
  
- # Regexes for RFC 2047 productions.
- my $re_token = qr/[^][()<>@,;:\\"\/?.= \000-\037\177-\377]+/;
-@@ -186,6 +189,7 @@ my $format_patch;
- my $compose_filename;
- my $force = 0;
- my $dump_aliases = 0;
-+my $split = 0;
- 
- # Handle interactive edition of files.
- my $multiedit;
-@@ -358,6 +362,7 @@ $rc = GetOptions(
- 		    "force" => \$force,
- 		    "xmailer!" => \$use_xmailer,
- 		    "no-xmailer" => sub {$use_xmailer = 0},
-+		    "split=i" => \$split,
- 	 );
- 
- usage() if $help;
-@@ -1158,10 +1163,15 @@ sub smtp_host_string {
- # (smtp_user was not specified), and 0 otherwise.
- 
- sub smtp_auth_maybe {
--	if (!defined $smtp_authuser || $auth) {
-+	if (!defined $smtp_authuser || $send_count != 0) {
- 		return 1;
- 	}
- 
-+	if ($auth && $send_count == 0) {
-+		print "Auth use saved password. \n";
-+		return !!$smtp->auth($smtp_authuser, $smtp_authpass);
-+	}
-+
- 	# Workaround AUTH PLAIN/LOGIN interaction defect
- 	# with Authen::SASL::Cyrus
- 	eval {
-@@ -1187,6 +1197,7 @@ sub smtp_auth_maybe {
- 		'password' => $smtp_authpass
- 	}, sub {
- 		my $cred = shift;
-+		$smtp_authpass = $cred->{'password'};
- 
- 		if ($smtp_auth) {
- 			my $sasl = Authen::SASL->new(
-@@ -1442,6 +1453,15 @@ EOF
- 		}
- 	}
- 
-+	$send_count++;
-+	if ($send_count == $split) {
-+		$smtp->quit;
-+		$smtp = undef;
-+		$send_count = 0;
-+		print "Reconnect SMTP server required. \n";
-+
-+	}
-+
- 	return 1;
- }
- 
+ Hooks can get their arguments via the environment, command-line
+ arguments, and stdin. See the documentation for each hook below for
 -- 
 2.11.0
 
-
+-- 
++ privacy is necessary
++ using gnupg http://gnupg.org
++ public key id: 0x92FEFDB7E44C32F9
