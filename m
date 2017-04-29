@@ -2,142 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8667F207E4
-	for <e@80x24.org>; Sat, 29 Apr 2017 00:53:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90FA5207D6
+	for <e@80x24.org>; Sat, 29 Apr 2017 06:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1165475AbdD2Axt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Apr 2017 20:53:49 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33842 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1163856AbdD2Axr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Apr 2017 20:53:47 -0400
-Received: by mail-pf0-f172.google.com with SMTP id e64so17930197pfd.1
-        for <git@vger.kernel.org>; Fri, 28 Apr 2017 17:53:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=67LhRlTMA0LeBTJvNodhjX0yOw7GqSh/lk5sPuXQic4=;
-        b=Tr2fXbwzd5sG/txAHmLz6Fr+CGz3YPjqm+l+ePPLIRiBxb4d5EtmcQZFhdjaEKF/rS
-         b8xcEOzYn3zGVVjEd2qUVrX/zqZoCOzjA32/0LirGYN/jq3WiESVj6ITjPiZpJdqfxwn
-         Vc65rFgxzXZoYd+QVoFYEBFvN+q5xrYToT0MgPvQT/30kFVMMstOibNfukTnOgWRX7zl
-         YSXcHuRkqbt+L9PI4CuvDAimlq0dBDr+M0eTvLpOAmnrmecBZtfUm7BWEd7QL9xj1chA
-         XebOosfA95dDK3dCkH3hdREscIoEp7Hc50BbrtD+Opl1sRLQkxlN8Va12yv0pL7gFI6R
-         d7/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=67LhRlTMA0LeBTJvNodhjX0yOw7GqSh/lk5sPuXQic4=;
-        b=ENu4nGtyFMwvfCVXZkK11pI6pJHzPgN9wAPAkqLs/udVmsMq1O7S7Ev3vU2UCQlLCB
-         nOKww2nwYWA5vNXzW6ou9/IAFvuuJ0CKWGMnDHOa6a9rhdHfx8popI6R14huKn+fMP1D
-         QfyyPknR/+ziwTka4Bds0/MD6EdRja+qNTtazgGbeVZfH9AznqALutnhWYDtmOLQODBC
-         S4lPuHP6dsoluwEcvSP4e9Eiufj9FpGOj1y9DfFwXlrVEiHUmC/enHiaGEmMJIDaShXJ
-         6OOlt+qf+nS45rZSB/voYhmBqCiJB+X//0UERSriefDQ3uqrUAbkuwbyvZMhCNb9T8Vh
-         IWmA==
-X-Gm-Message-State: AN3rC/4A2Axvg4gc8ay3TUujmR/lipVUmRzVa+9x0Ho0G1kiZdBAlaj4
-        /l7lf+uki6pSqkNLImX+xtTe9N80qOYT
-X-Received: by 10.98.24.195 with SMTP id 186mr14802419pfy.35.1493427226443;
- Fri, 28 Apr 2017 17:53:46 -0700 (PDT)
+        id S1166339AbdD2GrG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 02:47:06 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:56615 "EHLO bsmtp1.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1165747AbdD2GrE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 02:47:04 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wFLnx1B3Wz5tlF;
+        Sat, 29 Apr 2017 08:47:01 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 1603B434;
+        Sat, 29 Apr 2017 08:47:00 +0200 (CEST)
+Subject: Re: [PATCH] t7400: add BSLASHPSPEC prerequisite to 'add with \\ in
+ path'
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+References: <5b8e0f3a-0b64-1384-d830-5b65a43e44c4@ramsayjones.plus.com>
+ <xmqqk265kz2v.fsf@gitster.mtv.corp.google.com>
+ <7cd09c17-30a1-b157-2454-4c9b399a8628@kdbg.org>
+ <a575542a-e5b6-389f-e240-d5ac5a4b4107@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <f9dfd9b4-e753-1a53-175e-8f20fe904501@kdbg.org>
+Date:   Sat, 29 Apr 2017 08:46:59 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Fri, 28 Apr 2017 17:53:46 -0700 (PDT)
-In-Reply-To: <20170428235402.162251-7-bmwill@google.com>
-References: <20170428235402.162251-1-bmwill@google.com> <20170428235402.162251-7-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 28 Apr 2017 17:53:46 -0700
-Message-ID: <CAGZ79kYqiSyxtpux77RSGx56Bzj3YA7Tu180=oFbPb1fMgEMkA@mail.gmail.com>
-Subject: Re: [PATCH 6/6] submodule: refactor logic to determine changed submodules
-To:     Brandon Williams <bmwill@google.com>,
-        Heiko Voigt <hvoigt@hvoigt.net>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <a575542a-e5b6-389f-e240-d5ac5a4b4107@ramsayjones.plus.com>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+ Heiko, who touched the pushing code end of last year.
-
-On Fri, Apr 28, 2017 at 4:54 PM, Brandon Williams <bmwill@google.com> wrote:
-> There are currently two instances (fetch and push) where we want to
-> determine if submodules have changed given some revision specification.
-> These two instances don't use the same logic to generate a list of
-> changed submodules and as a result there is a fair amount of code
-> duplication.
+Am 29.04.2017 um 02:15 schrieb Ramsay Jones:
 >
-> This patch refactors these two code paths such that they both use the
-> same logic to generate a list of changed submodules.  This also makes it
-> easier for future callers to be able to reuse this logic as they only
-> need to create an argv_array with the revision specification to be using
-> during the revision walk.
-
-Thanks for doing some refactoring. :)
-
-> -static struct oid_array *submodule_commits(struct string_list *submodules,
-> -                                           const char *path)
-> ...
-
-> -static void free_submodules_oids(struct string_list *submodules)
-> -{
-> ...
-
-These are just moved north, no change in code.
-If you want to be extra nice to reviewers this could have been an extra patch,
-as it makes reviewing easier if you just have to look at the lines of code with
-one goal ("shuffling code around, no change intended" vs "make a change
-to improve things with no bad side effects")
-
-
-
-> +
-> +static void collect_changed_submodules_cb(struct diff_queue_struct *q,
-> +                                         struct diff_options *options,
-> +                                         void *data)
-> +{
-
-This one combines both collect_submodules_from_diff and
-submodule_collect_changed_cb ?
-
-> @@ -921,61 +948,6 @@ int push_unpushed_submodules(struct oid_array *commits,
->         return ret;
->  }
 >
-> -static int is_submodule_commit_present(const char *path, unsigned char sha1[20])
-> -{
-> -       int is_present = 0;
-> -       if (!add_submodule_odb(path) && lookup_commit_reference(sha1)) {
-> -               /* Even if the submodule is checked out and the commit is
-> -                * present, make sure it is reachable from a ref. */
-> -               struct child_process cp = CHILD_PROCESS_INIT;
-> -               const char *argv[] = {"rev-list", "-n", "1", NULL, "--not", "--all", NULL};
-> -               struct strbuf buf = STRBUF_INIT;
-> -
-> -               argv[3] = sha1_to_hex(sha1);
-> -               cp.argv = argv;
-> -               prepare_submodule_repo_env(&cp.env_array);
-> -               cp.git_cmd = 1;
-> -               cp.no_stdin = 1;
-> -               cp.dir = path;
-> -               if (!capture_command(&cp, &buf, 1024) && !buf.len)
-> -                       is_present = 1;
+> On 28/04/17 20:54, Johannes Sixt wrote:
+>> Am 28.04.2017 um 05:09 schrieb Junio C Hamano:
+>>> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+>>>
+>>>> Commit cf9e55f494 ("submodule: prevent backslash expantion in submodule
+>>>> names", 07-04-2017) added a test which creates a git repository with
+>>>> some backslash characters in the name. This test cannot work on windows,
+>>>> since the backslash is used as the directory separator. In order to
+>>>> suppress this test on cygwin, MinGW and Git for Windows, we add the
+>>>> BSLASHPSPEC prerequisite. (see also commits 6fd1106aa4 and c51c0da222).
+>>
+>> First, let me say that meaning of BSLASHPSPEC was
+>> "keeps backslaches in pathspec arguments" originally,
+>> but it apparently changed meaning since then.
+>
+> Indeed. I started to give some of the history in the commit message, but
+> it was nearly 3am, so I punted with the 'see also commits 6fd1106aa4 and
+> c51c0da222' ... ;-)
+>
+>> t7400.20 does not fail for the MinGW port because the
+>> test case only operates on the file system, but never
+>> checks whether an entry 'sub\with\backslash' is present
+>> in the index.
+>
+> Ah, OK. I only looked at my (64-bit) MSYS2 build, which fails
+> exactly the same as cygwin. Hmm, wait, let me just rebuild on
+> MinGW64 ... indeed it passes (well it passes t7400.20, but it
+> fails on t7400.11, 61, 63, 87 and 89)!
 
-Oh, I see where the nit in patch 5/6 is coming from. Another note
-on that: The hint is way off. The hint should be on the order of
-GIT_SHA1_HEXSZ
+I don't observe these failures. Are you using a vanila MSYS2 
+environment? The exact failure modes would be interesting, if you want 
+to hear "Ah, Git for Windows does this and that to make this work". ;)
 
->  int find_unpushed_submodules(struct oid_array *commits,
->                 const char *remotes_name, struct string_list *needs_pushing)
+>> I assume the test fails right at 'git init' under Cygwin?
+>
+> Indeed. Also on MSYS2 (exactly as on cygwin):
+>
+> ramsay@satellite  MSYS $ ./t7400-submodule-basic.sh -i -v
+>
 > ...
+>
+> ok 19 - submodule add with ./, /.. and // in path
+>
+> expecting success:
+>         test_when_finished "rm -rf parent sub\\with\\backslash" &&
+>
+>         # Initialize a repo with a backslash in its name
+>         git init sub\\with\\backslash &&
+>         touch sub\\with\\backslash/empty.file &&
+>         git -C sub\\with\\backslash add empty.file &&
+>         git -C sub\\with\\backslash commit -m "Added empty.file" &&
+>
+>         # Add that repository as a submodule
+>         git init parent &&
+>         git -C parent submodule add ../sub\\with\\backslash
+>
+> fatal: cannot mkdir sub\with\backslash: No such file or directory
+> not ok 20 - submodule add with \\ in path
+> #
+> #               test_when_finished "rm -rf parent sub\\with\\backslash" &&
+> #
+> #               # Initialize a repo with a backslash in its name
+> #               git init sub\\with\\backslash &&
+> #               touch sub\\with\\backslash/empty.file &&
+> #               git -C sub\\with\\backslash add empty.file &&
+> #               git -C sub\\with\\backslash commit -m "Added empty.file" &&
+> #
+> #               # Add that repository as a submodule
+> #               git init parent &&
+> #               git -C parent submodule add ../sub\\with\\backslash
+> #
+> ramsay@satellite  MSYS $
+>
+> ramsay@satellite  MSYS $ cd trash\ directory.t7400-submodule-basic/
+>
+> ramsay@satellite  MSYS $ ls
+> a       addtest/         empty   expect-head   head   head-sha1  untracked
+> actual  addtest-ignore/  expect  expect-heads  heads  t          z
+>
+> ramsay@satellite  MSYS $ git init sub\\with\\backslash
+> fatal: cannot mkdir sub\with\backslash: No such file or directory
+>
+> ramsay@satellite  MSYS $ mkdir -p sub\\with
 
->  static void calculate_changed_submodule_paths(void)
-> ...
+OK: git init calls mkdir("sub\\with\\backslash"), which does not create 
+the missing directories automatically. Therefore, this mkdir helps. In 
+the next call, the OS functions behind mkdir simply take the backslashes 
+as directory separators:
 
-These are both nicely clean now.
+>
+> ramsay@satellite  MSYS $ git init sub\\with\\backslash
+> Initialized empty Git repository in /home/ramsay/git/t/trash directory.t7400-submodule-basic/sub/with/backslash/.git/
+>
+> ramsay@satellite  MSYS $ touch sub\\with\\backslash/empty.file
+> ramsay@satellite  MSYS $ git -C sub\\with\\backslash add empty.file
+> ramsay@satellite  MSYS $ git -C sub\\with\\backslash commit -m "Added empty.file"
+> [master (root-commit) 6fde90b] Added empty.file
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 empty.file
+>
+> ramsay@satellite  MSYS $ git init parent
+> Initialized empty Git repository in /home/ramsay/git/t/trash directory.t7400-submodule-basic/parent/.git/
+>
+> ramsay@satellite  MSYS $ git -C parent submodule add ../sub\\with\\backslash
+> Cloning into '/home/ramsay/git/t/trash directory.t7400-submodule-basic/parent/sub/with/backslash'...
+> done.
+> fatal: Not a git repository: /home/ramsay/git/t/trash directory.t7400-submodule-basic/parent/sub\with\backslash/../.git/modules/sub/with/backslash
 
-Thanks,
-Stefan
+MSYS git does not know that the backslash is a directory separator. 
+Hence, it constructs a path with only a single .. component thinking 
+that this walks above sub\with\backslash to end up in parent/; but the 
+underlying OS operation interprets the backslashes as directory 
+separator and ends up in parent/sub\with\. Of coures, no .git directory 
+is at this point, hence the failure.
+
+MinGW git, however, knows about the backslash's meaning and constructs a 
+path containing ../../.. to walk sufficiently high up in the hierarchy 
+and finds the .git directory.
+
+-- Hannes
+
