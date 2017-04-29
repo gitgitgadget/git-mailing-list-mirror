@@ -2,129 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEE2D1FC3E
-	for <e@80x24.org>; Sat, 29 Apr 2017 15:50:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9051FC3E
+	for <e@80x24.org>; Sat, 29 Apr 2017 18:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166944AbdD2Ppv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 11:45:51 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:34504 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1161076AbdD2Ppt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 11:45:49 -0400
-Received: by mail-it0-f67.google.com with SMTP id c26so8706211itd.1
-        for <git@vger.kernel.org>; Sat, 29 Apr 2017 08:45:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=NssIRn8KBshSOHriEKCR8uCSQenUpJKvEyWfH5Cwtkk=;
-        b=LRu8VxIojwGmj7ohyocj7X+RY/4SChhmlAGnzY5eQ5JUw1eXL+TSf0XEffJGb1xiLF
-         FBeftvKTfw5TeLo5zZWbV1RH2HkJr53t6BVCjEOx6T2WP8gkBhmekVOvSPZxeTCgj2/I
-         Km0pEty/yYpoCVf9Q6M7zaXPVQcLD13/JjAL48UNDZuaI744BMb1kxrseK4bYybE/tDA
-         XxEFGdOZncAXG7dl+zLdwskcUjGGGNHc5kO4PlAVWbORhQl0BT7M4MPNZg92a5HHZczM
-         b2QCtJ8HEP4moEsTw7KaK5WjNC7McwEf5G5v3/Z/2RZnrlPiwb4rVKFfkfhk5McRYabr
-         uNsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NssIRn8KBshSOHriEKCR8uCSQenUpJKvEyWfH5Cwtkk=;
-        b=eMVYxB2Q5xBjKYkL2rsHbFAEocuiIZzkO02ZH4mcMUNjZLVDRVc5ZrfDOmA8d+WTYf
-         VkCH7paK/ORU+T5B6etZhFWHmDQYGfOvRTm8pJBDp/BerBNy6s8uU3VisCYESVfM1nDt
-         DEQL06Mkh67I2/uxSnm4UTYQKydYwZ/8XuKANDqKhySLRfTDnODBjbVxUmseL+v9bwLK
-         SFPhhIMBd39V0pK1C6FV23WOwxRBkwU7tAvlXPk3sSYhhm3KXqNNjZJPVCePkIVaDL1W
-         bZjOp8XNRYqz/Nctx6hV51hexT/6118j0z+/PwuMobrF58Ed+gsI1W+D9EE07gbJl2Tb
-         f6jQ==
-X-Gm-Message-State: AN3rC/4MWNyj7R91k96Ypht5vEqBakbpIIwPy/EQMnsCCeyXCt34utSt
-        JBc5VAGN8YxSscHmBDVmwU+lStavAg==
-X-Received: by 10.36.98.21 with SMTP id d21mr14172908itc.94.1493480748632;
- Sat, 29 Apr 2017 08:45:48 -0700 (PDT)
+        id S969613AbdD2SQf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 14:16:35 -0400
+Received: from mout.web.de ([212.227.17.12]:52710 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S969491AbdD2SQd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 14:16:33 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6V1T-1e2WSG3hYB-00yUT9; Sat, 29
+ Apr 2017 20:16:19 +0200
+Subject: Re: [PATCH 1/5] add SWAP macro
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
+ <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
+ <20170424112928.rty5xejep4mnxph2@sigill.intra.peff.net>
+ <070a4b85-98e0-12a4-6c9c-557f3dfa733c@web.de>
+ <20170428214934.tuqihgch6qeen3ni@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <11699799-6bdf-484d-5a1c-8e8fa7981594@web.de>
+Date:   Sat, 29 Apr 2017 20:16:17 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Sat, 29 Apr 2017 08:45:27 -0700 (PDT)
-In-Reply-To: <20170429122829.lz56r7exh3ecynxb@ruderich.org>
-References: <20170409130126.uqmjop25jidhblhd@ruderich.org> <CACBZZX4uBL99y=ZaKZ7dqyP9Ne-cx=kYkh8p51p3VYOr3PQGSw@mail.gmail.com>
- <20170429122829.lz56r7exh3ecynxb@ruderich.org>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Sat, 29 Apr 2017 17:45:27 +0200
-Message-ID: <CACBZZX5EdWHWjnYG2YFj7P4Ec+qm80DurUmP4JAR+sSaBjWWtA@mail.gmail.com>
-Subject: Re: [PATCH] githooks.txt: clarify push hooks are always executed in $GIT_DIR
-To:     Simon Ruderich <simon@ruderich.org>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20170428214934.tuqihgch6qeen3ni@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:LMad1AvfBfsw9qLj0dCBlVsFKIRDljGDQG96QkupU/78bmBMmat
+ E5BBM01lr78183hp+xr6/zUBAabtVuXHiVWmm5eyIijHM7o1E7xK5BGFGCelb37mQ3bcnUo
+ fTJVeTexq5kI7bIIpYHpK+DUBtZqfQ9T3bfX51GcmlBbVgot2Rx5yzwLl2unvcs1FLuqJdA
+ 43gzLrG9jqgvamgahyKFQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:CH3wXBqi93s=:wMQJsLSLHtr7MR4iBNaAIN
+ AeJpLhFsSW2AKmlNF32kdaWOa9ZH1/nohGCfqgjxUrINXOnIowkyO/bF6mWH7WIHbGO+anhPq
+ 5AaQpmveL2EVx1IktzfTZ0fBOrtgXy8ZWgBDgw4faOEUVMQmYL5xnnQtTff98UjhqhvjUdBVH
+ WdpX7q/ZDZHtA12xihqvcxGjaYelBRZ4+yth4JW31P5VvDsCIW3+ADldJKru3AWE9WkCmExeP
+ 28da+AMK7FSaTTw62KC7RH5xCJwryK2MH5vz1TrMFAxETW0gF/E2xQSO7lLMViuyFIvkY/8nr
+ nvXF0nEH/ojSr1cfPS417LO70kz6HrUs8WKJalh88TgGzaOEOQbyqTkYHg/ka9Hgb2ae8y98M
+ OMjvCM7MmxpHI9iunx/X7P64b3c2U1geyzESrJgzb3pyElGnb3EWedSOrI0Rag6dTk8LX4im0
+ lhM3uk6beMc4dA2mFojgW5TOMPHDP8pjFqMH/Utl/KnEZLJHXhb8eFwQS2nnV6x81TCTz5ARJ
+ 91FZNWEL4SvezRkZVoUjWiQqQFcPDmjSZKmqZgomERI0DUTFnTTcVD0IXqxrunlgwWAyoPuF4
+ zAYiptdNNx0jTITkCHACa15eeZZx9PuII0UoldIgrpTq7kbeHEDj3wOr72l441GEQt2pzHXhz
+ FlnRWQWdOO0MjTwxiQVFlDyZLMspD2UfOBNf4ypHs+/qEimTFsQBiFtzgp3Hyfc00mMh+Ima4
+ +wcgP0tcEQwloh/mSw29MA47SyhAVTp/8BrMxUgXynJjtvIEyYS6yrc5rboq6j1/nvjW+k0wm
+ hl/k8iW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 29, 2017 at 2:28 PM, Simon Ruderich <simon@ruderich.org> wrote:
-> Listing the specific hooks might feel verbose but without it the
-> reader is left to wonder which hooks are triggered during the
-> push. Something which is not immediately obvious when only trying
-> to find out where the hook is executed.
->
-> Signed-off-by: Simon Ruderich <simon@ruderich.org>
-> ---
->  Documentation/githooks.txt | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> On Mon, Apr 10, 2017 at 01:13:15PM +0200, =C4=98var Arnfj=C3=B6r=C5=A1 Bj=
-armason wrote:
->> [snip]
+Am 28.04.2017 um 23:49 schrieb Jeff King:
+> On Fri, Apr 28, 2017 at 07:04:51PM +0200, René Scharfe wrote:
+> 
+>>> What should:
+>>>
+>>>     SWAP(foo[i], foo[j]);
+>>>
+>>> do when i == j? With this code, it ends up calling
+>>>
+>>>     memcpy(&foo[i], &foo[j], ...);
+>>>
+>>> which can cause valgrind to complain about overlapping memory. I suspect
+>>> in practice that noop copies are better off than partial overlaps, but I
+>>> think it does still violate the standard.
+>>>
+>>> Is it worth comparing the pointers and bailing early?
 >>
->> Can we say as we do now that:
->>
->> * All hooks regardless of type in bare repos execute in the bare repo
->> * If you have a working tree hooks use that
->>
->> But add:
->>
->> * Working trees are ignored by any hooks invoked on your behalf during a=
- push.
->
-> Hello,
->
-> Maybe like this? I reordered the cases as it felt more natural
-> that the general case is first and followed by the one with the
-> exception.
->
->> Some ad-hoc testing reveals that this rule also goes for the
->> push-to-checkout hook. Should it? Wouldn't it be more useful if it
->> broke the pattern, since it's dealing with the working tree on the
->> other side? Junio?
->
-> I added push-to-checkout to the patch. Changing the behavior will
-> break backwards compatibility so I think that's a no-go.
->
-> Regards
-> Simon
->
-> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-> index 32343ae29..706091a56 100644
-> --- a/Documentation/githooks.txt
-> +++ b/Documentation/githooks.txt
-> @@ -22,8 +22,10 @@ changed via the `core.hooksPath` configuration variabl=
-e (see
->  linkgit:git-config[1]).
->
->  Before Git invokes a hook, it changes its working directory to either
-> -the root of the working tree in a non-bare repository, or to the
-> -$GIT_DIR in a bare repository.
-> +$GIT_DIR in a bare repository or the root of the working tree in a non-b=
-are
-> +repository. An exception are hooks triggered during a push ('pre-receive=
-',
-> +'update', 'post-receive', 'post-update', 'push-to-checkout') which are a=
-lways
-> +executed in $GIT_DIR.
->
->  Hooks can get their arguments via the environment, command-line
->  arguments, and stdin. See the documentation for each hook below for
+>> Hmm, so swapping a value with itself can be a useful thing to do?
+>> Otherwise an assert would be more appropriate.
+> 
+> No, I doubt that it's useful, and it's probably a sign of a bug
+> elsewhere. But it's likely a _harmless_ bug, so it may be irritating to
+> die when we hit it rather than continuing.
+> 
+> I dunno. I could go either way. Or we could leave it as-is, and let
+> valgrind find the problem. That has zero run-time cost, but of course
+> nobody bothers to run valgrind outside of the test suite, so the inputs
+> are not usually very exotic.
 
-This looks good to me. Thanks for working on this.
+It would be  problematic on platforms where memcpy has to erase the
+destination before writing new values (I don't know any example).
+
+We could use two temporary buffers.  The object code is the same with
+GCC around 5 and Clang 3.2 or higher -- at least for prio-queue.c.
+
+With GCC 4.9.2 (that's what Debian stable currently has) the result is
+actually slightly better with two buffers because a 128-bit move starts
+to get used (https://godbolt.org/g/18HQDQ).
+
+>> Swapping with *partial* overlap sounds tricky, or even evil.  If
+>> we want to support that for some reason we'd have to use memmove
+>> in the middle.  But that would still corrupt at least one of the
+>> objects, wouldn't it?
+> 
+> Yes, the overlap case is probably an actual bug. Detecting it is a bit
+> harder, but definitely possible. I hate to pay the run-time cost for it,
+> but I wonder if a compiler could optimize it out.
+
+How is it possible to arrive at such a situation?  We'd need two objects
+of the same size (we check that in SWAP) and one of them would start
+inside of the other one, i.e. the pointer difference between them would
+be a fraction of 1.  So the type system would have to be tricked into
+it, right?
+
+How *would* we detect overlaps?  The obvious checks (a+len<=b||b+len<=a)
+are undefined if applied to objects that don't belong to the same array.
+And members of the same array would not overlap to begin with..
+
+It may be my laziness speaking, but do we really need such a check?  If
+someone constructs interleaving objects then they'd need to implement
+the necessary checks themselves IMHO.
+
+>> The line in question is this one:
+>>
+>> 	for (i = 0; i <= (j = (queue->nr - 1) - i); i++)
+>>
+>> Assignment in the middle?  Hmm.  Why not do it like this?
+>>
+>> 	for (i = 0, j = queue->nr - 1; i < j; i++, j--)
+>>
+>> Looks less complicated to me.
+> 
+> Yes, see my other reply. :)
+
+Ah, so that's where I stole it from. ;)  Perhaps my source amnesia was
+in part caused by confusion about your reasoning there: The code does A,
+B would be better, so let's do C.  Wait, what? :)
+
+René
