@@ -2,103 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3945C1FC3E
-	for <e@80x24.org>; Sat, 29 Apr 2017 22:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD9FB1FC3E
+	for <e@80x24.org>; Sat, 29 Apr 2017 23:02:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1165629AbdD2W2Z (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 18:28:25 -0400
-Received: from mout.web.de ([212.227.17.11]:54762 "EHLO mout.web.de"
+        id S3000173AbdD2W4q (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 18:56:46 -0400
+Received: from ikke.info ([178.21.113.177]:56368 "EHLO vps892.directvps.nl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1033306AbdD2W2X (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 18:28:23 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MPpIE-1d9WXB1DOM-004yrj; Sun, 30
- Apr 2017 00:28:19 +0200
-Subject: Re: [PATCH v3 0/5] archive-zip: support files and archives bigger
- than 4GB
-To:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org, Keith Goldfarb <keith@blackthorn-media.com>
-References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
- <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
- <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
- <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
- <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
- <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
- <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
- <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
- <3df2b03f-ab86-09ac-0fc8-3c6eb10c6704@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <edf33657-f74b-3cd5-44a7-8e16231bd978@web.de>
-Date:   Sun, 30 Apr 2017 00:28:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.0.1
+        id S1427054AbdD2W4p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 18:56:45 -0400
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id A3056440082; Sun, 30 Apr 2017 00:56:42 +0200 (CEST)
+Date:   Sun, 30 Apr 2017 00:56:42 +0200
+From:   Kevin Daudt <me@ikke.info>
+To:     Nikita Orlov <fatemail@mail.ru>
+Cc:     git@vger.kernel.org
+Subject: Re: git loses a commit after reordering.
+Message-ID: <20170429225642.GA25902@alpha.vpn.ikke.info>
+References: <1493278996.239768474@f402.i.mail.ru>
 MIME-Version: 1.0
-In-Reply-To: <3df2b03f-ab86-09ac-0fc8-3c6eb10c6704@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:kb+DHFEbW8bhG8UxYRWZpTaOJ2+hIIekGiPMAQLoDSn8d6EFIYQ
- zvyEXeJi/NtkdB+eLi3LZNqVu+lYXoJhBUoNGpdrXYuUmP5xXeQLgk7S5h9dQq2uh2QHL8w
- BkkHay3Dl33uf6U/71ZMA9rUQJwLbvL6DD6MYaGZZDJAdk+K1Opi4ycEDsWvmjAmLL8VXpd
- +G6/xPem9DbA2ft4nzYjA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ys6oI9/X7nQ=:CKAr0q5gbR2hf+S/09ynLj
- ApjstYQeesFkQYHTI19EwD+JXUSjlAXRb1UFPyaBw25hF2hDnCtORu5GgYd/O87FRCDxmj2sS
- tmEGpuGOkMFvTui+jUJQ8jBptCygQT21r4iQDCrpPXR1gVq9VPUPAUIZ2MVTGAcWgPQ880qjH
- lecqHWGi4EVvEmW6/jmjbYv66oLshlE75/mttqR9Ja5UmzDk4bR+60o2vtLlNUXRFDwjn13uh
- 0Zx3PangjfXgaRkB7aR66IgcWQd+BztQPq3q5CsHM87MNJ/rC6Hhib2ckWvhMPR07/PcrKxsZ
- hzTYiEiq+DWV/TbdzvixwfKK+8wI4sztLKunPWTrzQVod3m8jGtGwXfz/ho/jLOm+iZxBiKFq
- gYdm8m44y3m5aNFSE3JVKfy/aAc/TMVYxgD0cS1W+f5TQDTJPc96UwyrERZlZv/+dLE/Pw0EG
- tZeI+oCzxfG1eZdqy2hdl8uEzrgHsSEuQhl0EOrzrUcu3uZMLo0gAMcmOdR6B5F5uxi003y0X
- M8WS/JT/1sz4S69dSldP/LC137AveQtH1PT3FB0cmj/Da/ByK8JXQqabhozgLyffakcpO++gG
- j3c5zL0aCqO0ZVpBQWpYTB9Ajr4YMaRFJtM76hv7wmKsrTdCxcWYxN35KOP4FSpnFrbWWW3rk
- AQIODo/B3SuDFvK7OmRtYB8173F7ESXBAa+WCagLeuqvPT/DiFrk6SotepsAcLmpaXdVU5x0E
- /GUVb7REG9E7X2LWAQzFtSfj0/Kwc7w3+O3JbUmJMNk6/0FHm/JOeNOn9F2hDeE4gY3nES6/A
- DClBPnx
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1493278996.239768474@f402.i.mail.ru>
+User-Agent: Mutt/1.8.2 (2017-04-18)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 29.04.2017 um 23:00 schrieb Torsten Bögershausen:
-> This fails here under Mac OS:
-> commit 4cdf3f9d84568da72f1dcade812de7a42ecb6d15
-> Author: René Scharfe <l.s.r@web.de>
-> Date:   Mon Apr 24 19:33:34 2017 +0200
+On Thu, Apr 27, 2017 at 10:43:16AM +0300, Nikita Orlov wrote:
+> Hello, my name is Nikita (male).
 > 
->      archive-zip: support files bigger than 4GB
+> Could you explain this (subject) is a bug or a feature?
 > 
-> ---------------------------
-> Parts of t5004.log, hope this is helpful:
+> [snip]
 > 
-> "$GIT_UNZIP" -t many-big.zip
+> "Some independent changes 1" is missed and its changes are missed as well.
 > 
-> Archive:  many-big.zip
-> warning [many-big.zip]:  577175 extra bytes at beginning or within zipfile
->    (attempting to process anyway)
-> error [many-big.zip]:  start of central directory not found;
->    zipfile corrupt.
->    (please check that you have transferred or created the zipfile in the
->    appropriate BINARY mode and that you have compiled UnZip properly)
-> not ok 12 - zip archive bigger than 4GB
-> #	
-> #		# build string containing 65536 characters
+> I tried to move another commit to a farther distance below but there was still only one missed commit.
+> 
+> Could you explain it?
+> 
+> Thank you in advance and sorry for my English.
+> 
+> Best, Nikita
 
-Which version of unzip do you have (unzip -v, look for ZIP64_SUPPORT)?
-It seems that (some version of?) OS X ships with an older unzip which
-can't handle big files:
+[man git-rebase][0] mentions this under the bug section:
 
-   https://superuser.com/questions/114011/extract-large-zip-file-50-gb-on-mac-os-x
+> The todo list presented by --preserve-merges --interactive does not
+> represent the topology of the revision graph. Editing commits and
+> rewording their commit messages should work fine, but attempts to
+> reorder commits tend to produce counterintuitive results.
 
-Is the following check (zip archive with files bigger than 4GB) skipped,
-e.g. because ZIPINFO is missing?  Otherwise I would expect it to fail as
-well.
+Not sure if this is the case here, but it at least confirms that rebase
+--preserve-merges was not meant to reorder commits.
 
-René
+See [this][1] thread for more background on this limitation.
 
+[0]:https://git-scm.com/docs/git-rebase#_bugs
+[1]:https://public-inbox.org/git/1mtveu4.19lvgi1c0hmhaM%25lists@haller-berlin.de/
