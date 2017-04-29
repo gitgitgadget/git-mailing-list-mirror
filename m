@@ -2,80 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFE8C207D6
-	for <e@80x24.org>; Sat, 29 Apr 2017 10:47:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C7211FC3E
+	for <e@80x24.org>; Sat, 29 Apr 2017 12:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166588AbdD2KrT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 06:47:19 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:32860 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162723AbdD2KrR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 06:47:17 -0400
-Received: by mail-wr0-f194.google.com with SMTP id w50so9384791wrc.0
-        for <git@vger.kernel.org>; Sat, 29 Apr 2017 03:47:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=xarg-org.20150623.gappssmtp.com; s=20150623;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=RK5vCSqvnjetgGaHhRxNXpw1z7tytZD9uWcFL63y8XM=;
-        b=kUOgSB36w9hJo3fe5sF8/985lGlViUFO3jaMoZdvixR1ff2PR3BDB+ko9oBiATmSvV
-         9aQqR9oaQLOiHHutASWgSGGxQbiNQTtZZsjN/pg3ZOLx6u4mTsUZ+k1rd5M0Xpfjy4W1
-         nh7bVMCBg3RMyh4C+onH9Hmpwdc35lgb0tkwm71IFwWlwKz7Ncfc8qkxu0bFuFBKpgGH
-         w6+cGfBNcUialnYhXdsjjpvGhdOxoxpuLGHCwKD/NhddMVO9voK5B/QOWlsIi6AV1nyo
-         oXEyoKYuIe5Bgw9zIcVxQcuL2anBdeHflz9gKTY1UH/Dgc5ZkExHJwZTV20m1pRK/BwZ
-         3uyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=RK5vCSqvnjetgGaHhRxNXpw1z7tytZD9uWcFL63y8XM=;
-        b=q2ebs6SD2wluB77A8jQXuf7xPZtc+F9b6LkT1vuKt2OGO7TieNH0sLS9GR0DPvdRAT
-         GWncWe09qTar6wDonzPmREVxefkwaoQyHLXgozIrI4Frm0FgHUD8la8FEAA+MTljQxeM
-         8eFI7/iIQ0eV9RbuigbWA2U4q6SoX56JRiL8scQLHZl5F20zZTWXcc18Xg+BdVqRmYqE
-         QuzT+Rvwp6rkIeGySxDmU54gemTe4tcq9nOQMTL0ZmNKV0CJqQ/FD6eazDxtMpGrnaPx
-         24QFqb1z8fBsRoE1qkQYQiQO4iTb3ng6CpNLHH8BPaUU5qv/TXRJb5RdFe0gPmOIWbyJ
-         7f3A==
-X-Gm-Message-State: AN3rC/5e0sXjWSEjGDm/J46WxHPA1AhWQu1qykqdU2QEmqndm+SkVkCN
-        lWndoRfebsHz4gWUwbs=
-X-Received: by 10.223.130.104 with SMTP id 95mr10443110wrb.150.1493462835731;
-        Sat, 29 Apr 2017 03:47:15 -0700 (PDT)
-Received: from ghostship.local (HSI-KBW-134-3-57-106.hsi14.kabel-badenwuerttemberg.de. [134.3.57.106])
-        by smtp.gmail.com with ESMTPSA id y16sm10426923wry.46.2017.04.29.03.47.14
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Apr 2017 03:47:15 -0700 (PDT)
+        id S1166724AbdD2M1H (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 08:27:07 -0400
+Received: from m12-16.163.com ([220.181.12.16]:37046 "EHLO m12-16.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1166721AbdD2M1F (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 08:27:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id; bh=2CvTy5vkt4jAKQdnD5
+        RkIHzFUc3VzCRbqqLNbR8f1GA=; b=JmB0IUlVRyQ/fOxzvv3HME3ksaf1JGiGIX
+        CMmNSfxyL5zZwA1fTh2tQ6a75Ek30SqqaAFmStj0Qk/Z76dj9jwD6L+FBBSuKKjk
+        dkxrBhuA/ILZpOcCGkEc6ogyhOD60YYklGpNQeVdwEQnr5aKC6gvCVEp91RGJ/J8
+        99TJR9+PY=
+Received: from localhost.localdomain (unknown [1.203.183.82])
+        by smtp12 (Coremail) with SMTP id EMCowAC33fJ4hgRZin5bBQ--.9167S2;
+        Sat, 29 Apr 2017 20:26:39 +0800 (CST)
+From:   xiaoqiang zhao <zxq_yx_007@163.com>
 To:     git@vger.kernel.org
-From:   Robert Eisele <robert@xarg.org>
-Subject: Bug: Git rename does not work if folder naming was changed from lower
- to upper case on OSX
-Message-ID: <10d4f73b-b4bd-4cf8-5727-cdaf10ab713a@xarg.org>
-Date:   Sat, 29 Apr 2017 12:47:13 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc:     viktorin@rehivetech.com, mst@kernel.org, pbonzini@redhat.com,
+        mina86@mina86.com, artagnon@gmail.com
+Subject: [PATCH] send-email: new option to walkaround email server limits
+Date:   Sat, 29 Apr 2017 20:26:32 +0800
+Message-Id: <20170429122632.7122-1-zxq_yx_007@163.com>
+X-Mailer: git-send-email 2.11.0
+X-CM-TRANSID: EMCowAC33fJ4hgRZin5bBQ--.9167S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7try7tr4UGF1xXr1kCryUZFb_yoW8Kw1xpw
+        sF9FZxWryxJFZF9wn2y3Wayr909rykGF9xt3yDtr1UAF45Xr9FyrnIyw1vyw18Krn293yU
+        ZwnFgr48uF40ywUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jmuWdUUUUU=
+X-Originating-IP: [1.203.183.82]
+X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/xtbBEh-IxlZX2sB6JgAAsE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Some email server(e.g. smtp.163.com) limits a fixed number emails to be send per
+session(connection) and this will lead to a send faliure.
+With --split <num> option, a auto reconnection will occur when number of sended
+email reaches <num> and the problem is solved.
 
-after having committed folders with lower case naming, I decided to 
-rename them to upper-case names. Expecting git to detect them as 
-renamings, it started a new parallel hierarchy with new files, which I 
-had to add/commit.
+Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
+---
+ git-send-email.perl | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-It was a kinda strange behavior, which I fixed by rename the folder to 
-something completely different, commit and rename the folder again to 
-the desired value.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index eea0a517f..0de9b7058 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -81,6 +81,8 @@ git send-email --dump-aliases
+                                      This setting forces to use one of the listed mechanisms.
+     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
+ 
++    --split                 <int>  * send \$num message per connection.
++
+   Automating:
+     --identity              <str>  * Use the sendemail.<id> options.
+     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
+@@ -153,6 +155,7 @@ my $have_email_valid = eval { require Email::Valid; 1 };
+ my $have_mail_address = eval { require Mail::Address; 1 };
+ my $smtp;
+ my $auth;
++my $send_count = 0;
+ 
+ # Regexes for RFC 2047 productions.
+ my $re_token = qr/[^][()<>@,;:\\"\/?.= \000-\037\177-\377]+/;
+@@ -186,6 +189,7 @@ my $format_patch;
+ my $compose_filename;
+ my $force = 0;
+ my $dump_aliases = 0;
++my $split = 0;
+ 
+ # Handle interactive edition of files.
+ my $multiedit;
+@@ -358,6 +362,7 @@ $rc = GetOptions(
+ 		    "force" => \$force,
+ 		    "xmailer!" => \$use_xmailer,
+ 		    "no-xmailer" => sub {$use_xmailer = 0},
++		    "split=i" => \$split,
+ 	 );
+ 
+ usage() if $help;
+@@ -1158,10 +1163,15 @@ sub smtp_host_string {
+ # (smtp_user was not specified), and 0 otherwise.
+ 
+ sub smtp_auth_maybe {
+-	if (!defined $smtp_authuser || $auth) {
++	if (!defined $smtp_authuser || $send_count != 0) {
+ 		return 1;
+ 	}
+ 
++	if ($auth && $send_count == 0) {
++		print "Auth use saved password. \n";
++		return !!$smtp->auth($smtp_authuser, $smtp_authpass);
++	}
++
+ 	# Workaround AUTH PLAIN/LOGIN interaction defect
+ 	# with Authen::SASL::Cyrus
+ 	eval {
+@@ -1187,6 +1197,7 @@ sub smtp_auth_maybe {
+ 		'password' => $smtp_authpass
+ 	}, sub {
+ 		my $cred = shift;
++		$smtp_authpass = $cred->{'password'};
+ 
+ 		if ($smtp_auth) {
+ 			my $sasl = Authen::SASL->new(
+@@ -1442,6 +1453,15 @@ EOF
+ 		}
+ 	}
+ 
++	$send_count++;
++	if ($send_count == $split) {
++		$smtp->quit;
++		$smtp = undef;
++		$send_count = 0;
++		print "Reconnect SMTP server required. \n";
++
++	}
++
+ 	return 1;
+ }
+ 
+-- 
+2.11.0
 
-Is this an actual desired behavior or is it a bug?
-
-Robert
 
