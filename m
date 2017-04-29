@@ -7,71 +7,87 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE849207D6
-	for <e@80x24.org>; Sat, 29 Apr 2017 09:25:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9390207D6
+	for <e@80x24.org>; Sat, 29 Apr 2017 10:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1166520AbdD2JZW convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 29 Apr 2017 05:25:22 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:35886 "EHLO smtp2-g21.free.fr"
+        id S1166531AbdD2KDN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 06:03:13 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:3356 "EHLO smtp2-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1166511AbdD2JZV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 05:25:21 -0400
-Received: from cayenne.localnet (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
-        by smtp2-g21.free.fr (Postfix) with ESMTPS id DC4152003DF;
-        Sat, 29 Apr 2017 11:25:08 +0200 (CEST)
-From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Changwoo Ryu <cwryu@debian.org>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Cornelius Weig <cornelius.weig@tngtech.com>
-Subject: Re: [L10N] Kickoff of translation for Git 2.13.0 round 1
-Date:   Sat, 29 Apr 2017 11:25:09 +0200
-Message-ID: <3236444.6iDnrtGAq4@cayenne>
-User-Agent: KMail/5.2.3 (Linux/4.9.0-2-amd64; KDE/5.28.0; x86_64; ; )
-In-Reply-To: <CANYiYbFPjHqjn-wdPUghLNZ2nsKggUWe3j=JwKXaYdbJqSy9PQ@mail.gmail.com>
-References: <CANYiYbFPjHqjn-wdPUghLNZ2nsKggUWe3j=JwKXaYdbJqSy9PQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Type: text/plain; charset="UTF-8"
+        id S1166527AbdD2KDL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Apr 2017 06:03:11 -0400
+Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 4FEE42003CE;
+        Sat, 29 Apr 2017 12:03:08 +0200 (CEST)
+From:   Jean-Noel Avila <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Cc:     worldhello.net@gmail.com, Jean-Noel Avila <jn.avila@free.fr>
+Subject: [PATCH] i18n: remove i18n from tag reflog message
+Date:   Sat, 29 Apr 2017 12:02:53 +0200
+Message-Id: <20170429100253.4710-1-jn.avila@free.fr>
+X-Mailer: git-send-email 2.12.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le dimanche 23 avril 2017, 10:49:27 CEST Jiang Xin a écrit :
-> Hi,
-> 
-> Git v2.13.0-rc0 has been released, and it's time to start new round of git
-> l10n. This time there are 96 updated messages need to be translated since
-> last update:
-> 
->     l10n: git.pot: v2.13.0 round 1 (96 new, 37 removed)
-> 
->     Generate po/git.pot from v2.13.0-rc0 for git v2.13.0 l10n round 1.
-> 
->     Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-> 
-> You can get it from the usual place:
-> 
->     https://github.com/git-l10n/git-po/
-> 
-> As how to update your XX.po and help to translate Git, please see
-> "Updating a XX.po file" and other sections in “po/README" file.
-> 
-> --
-> Jiang Xin
+The building of the reflog message is using strbuf, which is not
+friendly with internationalization frameworks. No other reflog
+messages are translated right now and switching all the messages to
+i18n would require a major rework of the way the messages are built.
 
+Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+---
+ builtin/tag.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-In builtin/tag.c, the newly added function 'create_reflog_msg' is a sentence 
-lego that is not fitted for internationalization.
-
-Thanks
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 222404522..bdf1e88e9 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -309,7 +309,7 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
+ 	if (rla) {
+ 		strbuf_addstr(sb, rla);
+ 	} else {
+-		strbuf_addstr(sb, _("tag: tagging "));
++		strbuf_addstr(sb, "tag: tagging ");
+ 		strbuf_add_unique_abbrev(sb, sha1, DEFAULT_ABBREV);
+ 	}
+ 
+@@ -317,14 +317,14 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
+ 	type = sha1_object_info(sha1, NULL);
+ 	switch (type) {
+ 	default:
+-		strbuf_addstr(sb, _("object of unknown type"));
++		strbuf_addstr(sb, "object of unknown type");
+ 		break;
+ 	case OBJ_COMMIT:
+ 		if ((buf = read_sha1_file(sha1, &type, &size)) != NULL) {
+ 			subject_len = find_commit_subject(buf, &subject_start);
+ 			strbuf_insert(sb, sb->len, subject_start, subject_len);
+ 		} else {
+-			strbuf_addstr(sb, _("commit object"));
++			strbuf_addstr(sb, "commit object");
+ 		}
+ 		free(buf);
+ 
+@@ -332,13 +332,13 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
+ 			strbuf_addf(sb, ", %s", show_date(c->date, 0, DATE_MODE(SHORT)));
+ 		break;
+ 	case OBJ_TREE:
+-		strbuf_addstr(sb, _("tree object"));
++		strbuf_addstr(sb, "tree object");
+ 		break;
+ 	case OBJ_BLOB:
+-		strbuf_addstr(sb, _("blob object"));
++		strbuf_addstr(sb, "blob object");
+ 		break;
+ 	case OBJ_TAG:
+-		strbuf_addstr(sb, _("other tag object"));
++		strbuf_addstr(sb, "other tag object");
+ 		break;
+ 	}
+ 	strbuf_addch(sb, ')');
+-- 
+2.12.0
 
