@@ -2,52 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB6BA1F829
-	for <e@80x24.org>; Sun, 30 Apr 2017 18:47:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D4CE1F829
+	for <e@80x24.org>; Sun, 30 Apr 2017 19:12:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1946090AbdD3SrN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 14:47:13 -0400
-Received: from mail-wr0-f195.google.com ([209.85.128.195]:34576 "EHLO
-        mail-wr0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1427452AbdD3SrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2017 14:47:08 -0400
-Received: by mail-wr0-f195.google.com with SMTP id 6so12178238wrb.1
-        for <git@vger.kernel.org>; Sun, 30 Apr 2017 11:47:07 -0700 (PDT)
+        id S1425075AbdD3TL5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 15:11:57 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:33126 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S968772AbdD3TLz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 15:11:55 -0400
+Received: by mail-wm0-f52.google.com with SMTP id n198so5613509wmg.0
+        for <git@vger.kernel.org>; Sun, 30 Apr 2017 12:11:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MjLBuPVuJYRoG8epw+rU/kd4Wv2iLCLB4BkiOi8SWao=;
-        b=SI5fL5WKW/DF1bWskSP4yXujQf+yaJ7tYz7cMYrKeV31IwmH3fynZA64Zquxedo8kc
-         eeqsk9Vr7SaC5mt9rSJfXlPff2m2lXyG2JysZHcWa7IiaUW/CSgtiONUUxyO9bNh6btd
-         6mAHYhxxcsEcSudCmNjnQKZo56w5zbrEzwovLVVDTFBK9ILXngCIvxqx/+RAkhhOvLSu
-         gPCqZ+Zd+z/FfU8V4xa3M5ekAZvxela/pcfRCHXDsUQT2/WOCHYXKLcHqgJ82z/zIEoF
-         CaPVaCHprWHc2di8y4vev3h8+ro1q+WLdou5Od6cjCCzc6u0WB2Mr7qHrQB1ssgY+f4F
-         K1PA==
+        h=from:to:cc:subject:date:message-id:mime-version:in-reply-to
+         :references:content-transfer-encoding;
+        bh=roELFPJFrRP1B25czfLqPilbOnaH3kNaFtlD+Y0lcok=;
+        b=bPCF6rwlj8LAkJxXbgd5d7/XXZdm1HENm7jwXgI63LtpWxepNAgTPVfNwfYlwLZBb6
+         7ovlIYQ+0w+OnE4mcNY7TN+7g1uHluWvxCKoeLfS6RxP64AwRzzDH69zHu1BbAB5mowh
+         56Kuiof0u1lbo2xurkUF6QGACyZi/v1D/pBDmak8NxxObTs5FBwjv5bINj/4Aa8aZDA/
+         z7QiVtAvtQ/0nXB8C85bpw/YHzBjQKrrc3HxXYCVbVjOt9+0ekghR4Wzu6noQyPM77Cs
+         dKiH8jxZdqHRW5H357PBDmkQ645CCJ/NkBcwUHh02f7HFn2QvLepVF3iPnCbRoZxB+eV
+         jl7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=MjLBuPVuJYRoG8epw+rU/kd4Wv2iLCLB4BkiOi8SWao=;
-        b=gzls4Yy5iimfaOcOJp/IjapI+vIkuEjv/32bFqJs2w1w94nWjeaWbh22dsiDcV4Y6B
-         BPeKuiwbUCHDNsTzuOv+7GgXbbpRu/PDsLomVCipE1ZbDpwYvNEsLkehp2p1HLyXq7Mp
-         msKjj+nOxvkkRR13MX1wzjFio9gMfTLVuZ09TKYpgqmd64h0ItN607g0qchKPZcc5lpm
-         5LdCPJm/5q51fkgu5B0Rhc+oh8xkkEXwa7gcUH1Dv96YqOUjRVMqAH99ts3564omfpAe
-         ddse43o8dPdGQCU5plifpmQPf9pjemnzXA4j4inAL8NS+lyAs8vbCCDqQ2xoiw+xCJR0
-         QxDQ==
-X-Gm-Message-State: AN3rC/6CvWAlQWKSvT5TGLCEzjRxXJXYsALF7wiUdacSnwGAffZRtXLq
-        hxjEXl6KoYb+mKv5
-X-Received: by 10.223.162.219 with SMTP id t27mr13913999wra.28.1493578026235;
-        Sun, 30 Apr 2017 11:47:06 -0700 (PDT)
+         :in-reply-to:references:content-transfer-encoding;
+        bh=roELFPJFrRP1B25czfLqPilbOnaH3kNaFtlD+Y0lcok=;
+        b=KDW6Ukr2Mrkfo6xyUR4Oc2KqbNbTFW9sbxmTdYI+PiILc//Ei+iuJbeos/A1TwMf8I
+         jfZ21nrdMW6dAnCRqZ/R4rizCZzUiqFdLyiyeyidEVpccz44Gvs5Z+YMUI2qxdzomokV
+         5kxEWUyzPPwb8K/nhmaRL89L9U64zR9itObB5WdSQsQsLPsU4woT3rlsF7ccw0htIdps
+         b6tzsCDYBBjvCYuyI9FTtcXAlRK2oM+kfw3QkiqQQz3O/sePIvpwtj5fN5ZzgInxLrbx
+         6dSbkmbXWJ/sGB26jkUv+QYJIevGiphQANQBfO6Kj5GjoLPnnY4BZvccciCh+qhugLrw
+         labg==
+X-Gm-Message-State: AN3rC/7ieEWaLB0+oKee2StY7aAW7kEqRj9mAjJs1WF8iLelDhY7ozcr
+        U38qkt+WmwZY8A==
+X-Received: by 10.28.23.198 with SMTP id 189mr4883877wmx.38.1493579513326;
+        Sun, 30 Apr 2017 12:11:53 -0700 (PDT)
 Received: from localhost (cable-86-56-21-109.cust.telecolumbus.net. [86.56.21.109])
-        by smtp.gmail.com with ESMTPSA id i199sm13374245wmf.33.2017.04.30.11.47.04
+        by smtp.gmail.com with ESMTPSA id 1sm4940152wrw.32.2017.04.30.12.11.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Apr 2017 11:47:05 -0700 (PDT)
+        Sun, 30 Apr 2017 12:11:51 -0700 (PDT)
 From:   Ralf Thielow <ralf.thielow@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Thomas Rast <tr@thomasrast.ch>,
@@ -57,11 +58,13 @@ Cc:     Thomas Rast <tr@thomasrast.ch>,
         =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
         =?UTF-8?q?Magnus=20G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>,
         Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: update German translation
-Date:   Sun, 30 Apr 2017 20:47:02 +0200
-Message-Id: <20170430184702.17351-1-ralf.thielow@gmail.com>
+Subject: [PATCH v2] l10n: de.po: update German translation
+Date:   Sun, 30 Apr 2017 21:11:49 +0200
+Message-Id: <20170430191149.19290-1-ralf.thielow@gmail.com>
 X-Mailer: git-send-email 2.13.0.rc0.207.gb44265493
 MIME-Version: 1.0
+In-Reply-To: <20170430184702.17351-1-ralf.thielow@gmail.com>
+References: <20170430184702.17351-1-ralf.thielow@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -74,11 +77,14 @@ git.pot: v2.13.0 round 1 (96 new, 37 removed)).
 
 Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
 ---
- po/de.po | 309 +++++++++++++++++++++++++++------------------------------------
- 1 file changed, 134 insertions(+), 175 deletions(-)
+:/ It turned out de.po was not up-to-date with the git.pot update
+mentioned. So here we go again.
+
+ po/de.po | 323 ++++++++++++++++++++++++++++-----------------------------------
+ 1 file changed, 142 insertions(+), 181 deletions(-)
 
 diff --git a/po/de.po b/po/de.po
-index e2d15c4aa..14289e564 100644
+index b92c4fe11..416da4724 100644
 --- a/po/de.po
 +++ b/po/de.po
 @@ -866,9 +866,9 @@ msgid "Argument not supported for format '%s': -%d"
@@ -454,33 +460,52 @@ index e2d15c4aa..14289e564 100644
  
  #: setup.c:1041
  #, c-format
-@@ -3642,9 +3639,9 @@ msgid "could not run 'git status in submodule '%s'"
+@@ -3632,24 +3629,24 @@ msgid "negative values not allowed for submodule.fetchJobs"
+ msgstr "Negative Werte für submodule.fetchJobs nicht erlaubt"
+ 
+ #: submodule.c:1194
+-#, fuzzy, c-format
++#, c-format
+ msgid "'%s' not recognized as a git repository"
+-msgstr "--stdin erfordert ein Git-Repository"
++msgstr "'%s' nicht als Git-Repository erkannt"
+ 
+ #: submodule.c:1332
+-#, fuzzy, c-format
++#, c-format
+ msgid "could not start 'git status' in submodule '%s'"
+ msgstr "Konnte 'git status' in Submodul '%s' nicht starten."
+ 
+ #: submodule.c:1345
+-#, fuzzy, c-format
++#, c-format
+ msgid "could not run 'git status' in submodule '%s'"
  msgstr "konnte 'git status' in Submodul '%s' nicht ausführen"
  
- #: submodule.c:1343
+ #: submodule.c:1421
 -#, fuzzy, c-format
 +#, c-format
  msgid "submodule '%s' has dirty index"
 -msgstr "Submodul '%s' kann Alternative nicht hinzufügen: %s"
 +msgstr "Submodul '%s' hat geänderten Index"
  
- #: submodule.c:1601
+ #: submodule.c:1679
  #, c-format
-@@ -3682,18 +3679,17 @@ msgid "could not recurse into submodule '%s'"
+@@ -3687,18 +3684,17 @@ msgid "could not recurse into submodule '%s'"
  msgstr "Fehler bei Rekursion in Submodul-Pfad '%s'"
  
- #: submodule.c:1748
+ #: submodule.c:1826
 -#, fuzzy
  msgid "could not start ls-files in .."
 -msgstr "Konnte '%s' nicht lesen"
 +msgstr "Konnte 'ls-files' nicht in .. starten"
  
- #: submodule.c:1768
+ #: submodule.c:1846
  msgid "BUG: returned path string doesn't match cwd?"
 -msgstr ""
 +msgstr "FEHLER: zurückgegebene Zeichenkette für Pfad entspricht nicht cwd?"
  
- #: submodule.c:1787
+ #: submodule.c:1865
  #, c-format
  msgid "ls-tree returned unexpected return code %d"
 -msgstr ""
@@ -488,19 +513,23 @@ index e2d15c4aa..14289e564 100644
  
  #: submodule-config.c:380
  #, c-format
-@@ -4060,9 +4056,9 @@ msgstr ""
+@@ -4065,11 +4061,13 @@ msgstr ""
  "%s"
  
  #: unpack-trees.c:170
 -#, fuzzy, c-format
 +#, c-format
- msgid "Submodule '%s' cannot checkout new HEAD"
--msgstr "Submodul '%s' kann Alternative nicht hinzufügen: %s"
-+msgstr "Submodul '%s' kann neuen HEAD nicht auschecken"
+ msgid ""
+ "Cannot update submodule:\n"
+ "%s"
+-msgstr "fehlerhafter Patch für Submodul %s"
++msgstr ""
++"Kann Submodul nicht aktualisieren:\n"
++"%s"
  
  #: unpack-trees.c:247
  #, c-format
-@@ -4070,9 +4066,9 @@ msgid "Aborting\n"
+@@ -4077,9 +4075,9 @@ msgid "Aborting\n"
  msgstr "Abbruch\n"
  
  #: unpack-trees.c:272
@@ -512,7 +541,7 @@ index e2d15c4aa..14289e564 100644
  
  #: unpack-trees.c:340
  msgid "Checking out files"
-@@ -5441,9 +5437,8 @@ msgid "git branch [<options>] [-r | -a] [--points-at]"
+@@ -5453,9 +5451,8 @@ msgid "git branch [<options>] [-r | -a] [--points-at]"
  msgstr "git branch [<Optionen>] [-r | -a] [--points-at]"
  
  #: builtin/branch.c:31
@@ -523,7 +552,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/branch.c:144
  #, c-format
-@@ -5618,12 +5613,11 @@ msgstr "auf Remote-Tracking-Branches wirken"
+@@ -5630,12 +5627,11 @@ msgstr "auf Remote-Tracking-Branches wirken"
  
  #: builtin/branch.c:564 builtin/branch.c:566
  msgid "print only branches that contain the commit"
@@ -538,7 +567,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/branch.c:570
  msgid "Specific git-branch actions:"
-@@ -6577,9 +6571,8 @@ msgid "setup as shared repository"
+@@ -6589,9 +6585,8 @@ msgid "setup as shared repository"
  msgstr "als verteiltes Repository einrichten"
  
  #: builtin/clone.c:93 builtin/clone.c:97
@@ -549,7 +578,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/clone.c:93 builtin/clone.c:97
  msgid "initialize submodules in the clone"
-@@ -7844,9 +7837,8 @@ msgid "only consider tags matching <pattern>"
+@@ -7851,9 +7846,8 @@ msgid "only consider tags matching <pattern>"
  msgstr "nur Tags, die <Muster> entsprechen, betrachten"
  
  #: builtin/describe.c:452
@@ -558,9 +587,9 @@ index e2d15c4aa..14289e564 100644
 -msgstr "nur Tags, die <Muster> entsprechen, betrachten"
 +msgstr "keine Tags betrachten, die <Muster> entsprechen"
  
- #: builtin/describe.c:454 builtin/name-rev.c:354
+ #: builtin/describe.c:454 builtin/name-rev.c:357
  msgid "show abbreviated commit object as fallback"
-@@ -7858,16 +7850,11 @@ msgstr "Kennzeichen"
+@@ -7865,16 +7859,11 @@ msgstr "Kennzeichen"
  
  #: builtin/describe.c:456
  msgid "append <mark> on dirty working tree (default: \"-dirty\")"
@@ -579,7 +608,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/describe.c:477
  msgid "--long is incompatible with --abbrev=0"
-@@ -7882,9 +7869,8 @@ msgid "--dirty is incompatible with commit-ishes"
+@@ -7889,9 +7878,8 @@ msgid "--dirty is incompatible with commit-ishes"
  msgstr "Die Option --dirty kann nicht mit Commits verwendet werden."
  
  #: builtin/describe.c:551
@@ -590,7 +619,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/diff.c:83
  #, c-format
-@@ -7925,19 +7911,19 @@ msgid "failed: %d"
+@@ -7932,19 +7920,19 @@ msgid "failed: %d"
  msgstr "fehlgeschlagen: %d"
  
  #: builtin/difftool.c:283
@@ -613,9 +642,9 @@ index e2d15c4aa..14289e564 100644
 -msgstr "Kann Objekt %s nicht lesen."
 +msgstr "Konnte Objekt '%s' für symbolische Verknüpfung '%s' nicht lesen."
  
- #: builtin/difftool.c:383
+ #: builtin/difftool.c:395
  msgid ""
-@@ -8399,14 +8385,12 @@ msgid "git for-each-ref [--points-at <object>]"
+@@ -8406,14 +8394,12 @@ msgid "git for-each-ref [--points-at <object>]"
  msgstr "git for-each-ref [--points-at <Objekt>]"
  
  #: builtin/for-each-ref.c:11
@@ -632,7 +661,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/for-each-ref.c:27
  msgid "quote placeholders suitably for shells"
-@@ -8445,9 +8429,8 @@ msgid "print only refs which contain the commit"
+@@ -8452,9 +8438,8 @@ msgid "print only refs which contain the commit"
  msgstr "nur Referenzen ausgeben, die diesen Commit enthalten"
  
  #: builtin/for-each-ref.c:46
@@ -643,7 +672,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/fsck.c:554
  msgid "Checking object directories"
-@@ -8514,9 +8497,9 @@ msgid "git gc [<options>]"
+@@ -8521,14 +8506,14 @@ msgid "git gc [<options>]"
  msgstr "git gc [<Optionen>]"
  
  #: builtin/gc.c:78
@@ -653,33 +682,28 @@ index e2d15c4aa..14289e564 100644
 -msgstr "Konnte '%s' nicht lesen"
 +msgstr "Konnte '%s' nicht lesen: %s"
  
- #: builtin/gc.c:150
- #, c-format
-@@ -8524,9 +8507,9 @@ msgid "insanely long object directory %.*s"
- msgstr "zu langes Objekt-Verzeichnis %.*s"
- 
- #: builtin/gc.c:312
+ #: builtin/gc.c:306
 -#, fuzzy, c-format
 +#, c-format
  msgid "Can't stat %s"
 -msgstr "Kann '%s' nicht lesen"
 +msgstr "Kann '%s' nicht lesen."
  
- #: builtin/gc.c:321
+ #: builtin/gc.c:315
  #, c-format
-@@ -8563,9 +8546,9 @@ msgstr ""
+@@ -8565,9 +8550,9 @@ msgstr ""
  "\"git gc\" bereits ausgeführt wird"
  
- #: builtin/gc.c:381
+ #: builtin/gc.c:375
 -#, fuzzy, c-format
 +#, c-format
  msgid "Failed to parse gc.logexpiry value %s"
 -msgstr "konnte Standard-Farbwert nicht parsen"
 +msgstr "Fehler beim Parsen des Wertes '%s' von gc.logexpiry"
  
- #: builtin/gc.c:409
+ #: builtin/gc.c:403
  #, c-format
-@@ -8647,7 +8630,6 @@ msgid "ignore files specified via '.gitignore'"
+@@ -8649,7 +8634,6 @@ msgid "ignore files specified via '.gitignore'"
  msgstr "Dateien, die über '.gitignore' angegeben sind, ignorieren"
  
  #: builtin/grep.c:988
@@ -687,7 +711,7 @@ index e2d15c4aa..14289e564 100644
  msgid "recursively search in each submodule"
  msgstr "rekursive Suche in jedem Submodul"
  
-@@ -8824,16 +8806,13 @@ msgid "no pattern given."
+@@ -8826,16 +8810,13 @@ msgid "no pattern given."
  msgstr "keine Muster angegeben"
  
  #: builtin/grep.c:1189
@@ -705,20 +729,32 @@ index e2d15c4aa..14289e564 100644
 -msgstr "Konnte %s nicht nach %s verschieben"
 +msgstr "Konnte Commit nicht auflösen: %s"
  
- #: builtin/grep.c:1228 builtin/index-pack.c:1481
+ #: builtin/grep.c:1228 builtin/index-pack.c:1485
  #, c-format
-@@ -10637,9 +10616,8 @@ msgid "only use refs matching <pattern>"
+@@ -9157,9 +9138,9 @@ msgid "unable to read %s"
+ msgstr "kann %s nicht lesen"
+ 
+ #: builtin/index-pack.c:814
+-#, fuzzy, c-format
++#, c-format
+ msgid "cannot read existing object info %s"
+-msgstr "Kann existierendes Objekt %s nicht lesen."
++msgstr "Kann existierende Informationen zu Objekt %s nicht lesen."
+ 
+ #: builtin/index-pack.c:822
+ #, c-format
+@@ -10644,9 +10625,8 @@ msgid "only use refs matching <pattern>"
  msgstr "nur Referenzen verwenden die <Muster> entsprechen"
  
- #: builtin/name-rev.c:348
+ #: builtin/name-rev.c:351
 -#, fuzzy
  msgid "ignore refs matching <pattern>"
 -msgstr "nur Referenzen verwenden die <Muster> entsprechen"
 +msgstr "ignoriere Referenzen die <Muster> entsprechen"
  
- #: builtin/name-rev.c:350
+ #: builtin/name-rev.c:353
  msgid "list all commits reachable from all refs"
-@@ -11879,18 +11857,16 @@ msgid "debug unpack-trees"
+@@ -11886,18 +11866,16 @@ msgid "debug unpack-trees"
  msgstr "unpack-trees protokollieren"
  
  #: builtin/rebase--helper.c:7
@@ -740,7 +776,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/receive-pack.c:27
  msgid "git receive-pack <git-dir>"
-@@ -12880,13 +12856,12 @@ msgid "edit the commit message"
+@@ -12887,13 +12865,12 @@ msgid "edit the commit message"
  msgstr "Commit-Beschreibung bearbeiten"
  
  #: builtin/revert.c:105
@@ -755,7 +791,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/revert.c:108
  msgid "merge strategy"
-@@ -13301,6 +13276,8 @@ msgid ""
+@@ -13308,6 +13285,8 @@ msgid ""
  "could not lookup configuration '%s'. Assuming this repository is its own "
  "authoritative upstream."
  msgstr ""
@@ -764,7 +800,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/submodule--helper.c:406
  #, c-format
-@@ -13540,13 +13517,12 @@ msgid "git tag -d <tagname>..."
+@@ -13547,13 +13526,12 @@ msgid "git tag -d <tagname>..."
  msgstr "git tag -d <Tagname>..."
  
  #: builtin/tag.c:25
@@ -779,92 +815,92 @@ index e2d15c4aa..14289e564 100644
  "\t\t[--format=<Muster>] [--[no-]merged [<Commit>]] [<Muster>...]"
  
  #: builtin/tag.c:27
-@@ -13623,32 +13599,27 @@ msgstr "Die Tag-Beschreibung wurde gelassen in %s\n"
+@@ -13621,32 +13599,27 @@ msgstr "Die Tag-Beschreibung wurde gelassen in %s\n"
  
- #: builtin/tag.c:318
+ #: builtin/tag.c:312
  msgid "tag: tagging "
 -msgstr ""
 +msgstr "Tag: tagge "
  
- #: builtin/tag.c:326
+ #: builtin/tag.c:320
 -#, fuzzy
  msgid "object of unknown type"
 -msgstr "Art des Objektes"
 +msgstr "Art des Objektes unbekannt"
  
- #: builtin/tag.c:333
+ #: builtin/tag.c:327
 -#, fuzzy
  msgid "commit object"
 -msgstr "Fehler in Objekt"
 +msgstr "Commit-Objekt"
  
- #: builtin/tag.c:341
+ #: builtin/tag.c:335
 -#, fuzzy
  msgid "tree object"
 -msgstr "Objekt"
 +msgstr "Tree-Objekt"
  
- #: builtin/tag.c:344
+ #: builtin/tag.c:338
 -#, fuzzy
  msgid "blob object"
 -msgstr "Objekt"
 +msgstr "Blob-Objekt"
  
- #: builtin/tag.c:347
+ #: builtin/tag.c:341
 -#, fuzzy
  msgid "other tag object"
 -msgstr "zu kurzes Tree-Objekt"
-+msgstr "anderes Tree-Objekt"
++msgstr "anderes Tag-Objekt"
  
- #: builtin/tag.c:403
+ #: builtin/tag.c:397
  msgid "list tag names"
-@@ -13707,9 +13678,8 @@ msgid "print only tags that contain the commit"
+@@ -13705,9 +13678,8 @@ msgid "print only tags that contain the commit"
  msgstr "nur Tags ausgeben, die diesen Commit beinhalten"
  
- #: builtin/tag.c:427 builtin/tag.c:429
+ #: builtin/tag.c:421 builtin/tag.c:423
 -#, fuzzy
  msgid "print only tags that don't contain the commit"
 -msgstr "nur Tags ausgeben, die diesen Commit beinhalten"
 +msgstr "nur Tags ausgeben, die diesen nicht Commit enthalten"
  
- #: builtin/tag.c:430
+ #: builtin/tag.c:424
  msgid "print only tags that are merged"
-@@ -13728,29 +13698,24 @@ msgid "--column and -n are incompatible"
+@@ -13726,29 +13698,24 @@ msgid "--column and -n are incompatible"
  msgstr "--column und -n sind inkompatibel"
  
- #: builtin/tag.c:497
+ #: builtin/tag.c:491
 -#, fuzzy
  msgid "-n option is only allowed in list mode"
 -msgstr "-n Option ist nur erlaubt mit -l."
-+msgstr "-n Option ist nur im Listenmodus erlaubt"
++msgstr "Option -n ist nur im Listenmodus erlaubt"
  
- #: builtin/tag.c:499
+ #: builtin/tag.c:493
 -#, fuzzy
  msgid "--contains option is only allowed in list mode"
 -msgstr "--contains Option ist nur erlaubt mit -l."
 +msgstr "--contains Option ist nur im Listenmodus erlaubt"
  
- #: builtin/tag.c:501
+ #: builtin/tag.c:495
 -#, fuzzy
  msgid "--no-contains option is only allowed in list mode"
 -msgstr "--contains Option ist nur erlaubt mit -l."
-+msgstr "--no-contains Option ist nur im Listenmodus erlaubt"
++msgstr "Option --no-contains ist nur im Listenmodus erlaubt"
  
- #: builtin/tag.c:503
+ #: builtin/tag.c:497
 -#, fuzzy
  msgid "--points-at option is only allowed in list mode"
 -msgstr "--points-at Option ist nur erlaubt mit -l."
-+msgstr "--points-at Option ist nur im Listenmodus erlaubt"
++msgstr "Option --points-at ist nur im Listenmodus erlaubt"
  
- #: builtin/tag.c:505
+ #: builtin/tag.c:499
 -#, fuzzy
  msgid "--merged and --no-merged options are only allowed in list mode"
 -msgstr "Die Optionen --merged und --no-merged sind nur mit -l erlaubt."
 +msgstr "Die Optionen --merged und --no-merged sind nur im Listenmodus erlaubt."
  
- #: builtin/tag.c:516
+ #: builtin/tag.c:510
  msgid "only one -F or -m option is allowed."
-@@ -13977,23 +13942,20 @@ msgstr ""
+@@ -13975,23 +13942,20 @@ msgstr ""
  "Cache für unversionierte Dateien ohne Prüfung des Dateisystems aktivieren"
  
  #: builtin/update-index.c:1107
@@ -892,7 +928,7 @@ index e2d15c4aa..14289e564 100644
  
  #: builtin/update-index.c:1127
  msgid ""
-@@ -16270,7 +16232,6 @@ msgstr "Diff überprüfen"
+@@ -16259,7 +16223,6 @@ msgstr "Diff überprüfen"
  #. TRANSLATORS: please do not translate the command names
  #. 'status', 'update', 'revert', etc.
  #: git-add--interactive.perl:1668
@@ -900,7 +936,7 @@ index e2d15c4aa..14289e564 100644
  msgid ""
  "status        - show paths with changes\n"
  "update        - add working tree state to the staged set of changes\n"
-@@ -16281,12 +16242,10 @@ msgid ""
+@@ -16270,12 +16233,10 @@ msgid ""
  "changes\n"
  msgstr ""
  "status        - Pfade mit Änderungen anzeigen\n"
