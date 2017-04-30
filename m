@@ -2,93 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 251FA1FC3E
-	for <e@80x24.org>; Sun, 30 Apr 2017 23:15:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F16F1F829
+	for <e@80x24.org>; Sun, 30 Apr 2017 23:49:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2993557AbdD3XOm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 19:14:42 -0400
-Received: from mail-pf0-f170.google.com ([209.85.192.170]:35328 "EHLO
-        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2993550AbdD3XOi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2017 19:14:38 -0400
-Received: by mail-pf0-f170.google.com with SMTP id v14so68824717pfd.2
-        for <git@vger.kernel.org>; Sun, 30 Apr 2017 16:14:38 -0700 (PDT)
+        id S2999279AbdD3XtJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 19:49:09 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35574 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1032155AbdD3XtH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 19:49:07 -0400
+Received: by mail-pf0-f195.google.com with SMTP id o68so6772937pfj.2
+        for <git@vger.kernel.org>; Sun, 30 Apr 2017 16:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1UTbiJakRZV6txJAhyzijdYN7Advc+t+AV1l0d453sw=;
-        b=MUcUnoHF++PpB3PU4c3cmSlTloJ4V0BH+f6LcZVF0mzXqlfnXUJsoeh3xFHkIqSoNG
-         rZKjnR29/BdhsV0HG4puFG5yvhRRQ7aXWwCNOtUFFEuQ/HSa800/vJ5eqSE1gti9iPAX
-         /QGNvh3WJM2Uy1rT5KbbfYeSwBiI29elvE1sXXIft66Afi6hr/uLFvlChhobGPF6RrWU
-         66JlAJFqHlDGhyYiTRJHuNumjB6w+btVhzwOR1ZnFaO41lf0TKTlyvKQWrxYOZIV6XZd
-         48zl4isiLd21SkFxAGLkQeskO2dqjZoraBPbpWIcQtZ2YFK6IczB4JVRBfs7AYaRWtF9
-         egFw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=xoJsCvjXulsRClEgU/628IWtlsp7jkyoUo4C9koSMBQ=;
+        b=ZBkm1wbjtsWb6NMP/MWm0HYvYd2ISBbnDoxFRA0u2R1iJdz4WIds3Iadrcx7XH+14m
+         cQW9u6wwka+PkCs7BMjtPj5Gr7CAX1l5nxOT5BG05afB0rEzpFORNFHQV22Ay/S0h3hX
+         /QThEMZESwkHFQVzlXScscK370lcat0BjuNT4mPrOCXCN2uF7PGGdokLSS7BUZgeCGtP
+         XR9BiiZHz1ZnJGhg+wwqaAOdcOe56yOugR2W1SWJVXJqC+b7y4LXNXr9Zw9OnBiXq1ii
+         OTpPApdVOa16PubD6qgaziYuMwhZMuzqRp70VOsB70s/B8cXTQxVOLMy+SLRjeg7psJA
+         lvRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1UTbiJakRZV6txJAhyzijdYN7Advc+t+AV1l0d453sw=;
-        b=o0BOqSIyXpEi8Ov3gTFlfoKigwWB/jmsKXr+IKGY5vbKuzDeJmYdy0muWoV6OKegBN
-         9FEb7X6u0uOmKUoKM7ubwHdPP+DYvF91fnKZekiBkNN5aNMnmqJWhCV9zDaG/XUB2xKI
-         voHIS0uCw/ZizbTStlaUw5XoUJP6nP5uD2dE+gPAujmk65DDZ1wYomB5HfsoWv55HSSt
-         uGOHMLnReUNwb+MNBs+48oowk6faN46DvXD520Liv/WVl/oxK0hiKTmhCpAXX5Yfi9cy
-         C0xKVkWb+asry7SqbnIimm8XNonG8MnR8XBXmi4skA1fW7eD08NVyFJ1Hu8PTbNAvs40
-         7JEw==
-X-Gm-Message-State: AN3rC/7B49PIX2wW/eB5OskASupNZ8v9e74bxuwBXhZVd3TJ9gOcwZb9
-        qrxUCsGcEDSqxIzs
-X-Received: by 10.99.44.140 with SMTP id s134mr23912607pgs.178.1493594077491;
-        Sun, 30 Apr 2017 16:14:37 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5e10:a85d:c301:1013:7c76])
-        by smtp.gmail.com with ESMTPSA id p62sm3854114pfp.48.2017.04.30.16.14.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 30 Apr 2017 16:14:35 -0700 (PDT)
-Date:   Sun, 30 Apr 2017 16:14:34 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 5/6] submodule: improve submodule_has_commits
-Message-ID: <20170430231434.GA70010@google.com>
-References: <20170428235402.162251-1-bmwill@google.com>
- <20170428235402.162251-6-bmwill@google.com>
- <CAGZ79kZzpyw0ijiM12TwMHAx1Ung-xKPEm2rVY9803hvk=+UMQ@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=xoJsCvjXulsRClEgU/628IWtlsp7jkyoUo4C9koSMBQ=;
+        b=C7XHllz3GX+Mcb7NSKroOML0Wxeqrbkh2py1OCp22s/3TCjZwkNDvZRhDqWQVJWwb8
+         pr7RGuAotycfGeDunDtk96Tq8lu8LCtmqQamV5v4tHx5194wr+YUPGx+948GsIR5vURM
+         dDI1ibk2pbnqb2InAcGMKk4gM84EFQ9yPGjnOjzS5pbMNVqJwNigx74175Eh1+zKlICq
+         KY0KHTWIZIHmUGE83pgcH2pW/nn+UXqUZ4lUZTe0VZ61CAW6abJAS1yYqzNtkP+wCRu3
+         ZyurrbWLPaTn+FElsGLu/YDOOJfQxG/qkS33ocZPlfH3NlYwZ9HAi6QRO37UMmF4jEAx
+         CckQ==
+X-Gm-Message-State: AN3rC/4XsPiFpkE3fh4dH98W9MSPwJXWApzocK3bcYfjxER60OEibLgZ
+        lFtR7anUJ+R8w0h7skc=
+X-Received: by 10.98.192.129 with SMTP id g1mr23619228pfk.254.1493596146808;
+        Sun, 30 Apr 2017 16:49:06 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:216d:aa3e:248d:bf63])
+        by smtp.gmail.com with ESMTPSA id k196sm20965579pgc.0.2017.04.30.16.49.04
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 30 Apr 2017 16:49:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Peter Krefting <peter@softwolves.pp.se>, git@vger.kernel.org,
+        Keith Goldfarb <keith@blackthorn-media.com>
+Subject: Re: [PATCH v3 0/5] archive-zip: support files and archives bigger than 4GB
+References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
+        <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
+        <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
+        <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
+        <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
+        <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
+        <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
+        <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
+        <3df2b03f-ab86-09ac-0fc8-3c6eb10c6704@web.de>
+        <edf33657-f74b-3cd5-44a7-8e16231bd978@web.de>
+        <e30554f3-1aa3-acea-500b-6392fce902be@web.de>
+        <d8a1edfc-e4d6-2bd2-7b07-a1a10d89490a@web.de>
+        <9f6cb421-db61-51ca-6a4b-ea7c94bd513e@kdbg.org>
+        <d1cea1c3-f974-c839-dbdd-5bc95756be84@web.de>
+Date:   Sun, 30 Apr 2017 16:49:04 -0700
+In-Reply-To: <d1cea1c3-f974-c839-dbdd-5bc95756be84@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 30 Apr 2017 18:40:00 +0200")
+Message-ID: <xmqqfugplamn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZzpyw0ijiM12TwMHAx1Ung-xKPEm2rVY9803hvk=+UMQ@mail.gmail.com>
-User-Agent: Mutt/1.7.0 (2016-08-17)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/28, Stefan Beller wrote:
-> On Fri, Apr 28, 2017 at 4:54 PM, Brandon Williams <bmwill@google.com> wrote:
-> > Teach 'submodule_has_commits()' to ensure that if a commit exists in a
-> > submodule, that it is also reachable from a ref.
-> >
-> > This is a prepritory step prior to merging the logic which checkes for
-> 
-> s/prepritory/preparatory/
-> s/checkes/checks/
-> 
-> This is the first commit in the series that changes user observable behavior,
-> I guess there will be tests in a later patch? Can you elaborate in this commit
-> message more about why it is useful (or at least harmless for performing
-> this check in the case of fetch/push)?
+René Scharfe <l.s.r@web.de> writes:
 
-This hunk of logic is essentially a copy and paste from elsewhere in the
-file.  Essentially both code paths were essentially doing the same thing
-(checking if a submodule has a commit) but one of the code paths included
-this logic to ensure that it was reachable from a ref in the submodule.
-In order to merge the two code paths, I included that logic here.
+> Am 30.04.2017 um 18:32 schrieb Johannes Sixt:
+>> Am 30.04.2017 um 09:53 schrieb René Scharfe:
+>>> @@ -178,7 +182,8 @@ test_expect_success EXPENSIVE,UNZIP 'zip
+>>> archive bigger than 4GB' '
+>>>      "$GIT_UNZIP" -t many-big.zip
+>>>  '
+>>>
+>>> -test_expect_success EXPENSIVE,UNZIP,ZIPINFO 'zip archive with
+>>> files bigger than 4GB' '
+>>> +test_expect_success
+>>> EXPENSIVE,LONG_IS_64BIT,UNZIP,UNZIP_ZIP64_SUPPORT,ZIPINFO \
+>>
+>> Why is LONG_IS_64BIT required?
+>
+> Blob sizes are kept in variables of type unsigned long.  64 bits are
+> required to store file sizes bigger than 4GB, and this test is about
+> such a file.  A 32-bit git can't use the pack we supply the test file
+> in, so we have to skip this test.
+>
+>>> +    'zip archive with files bigger than 4GB' '
+>>>      # Pack created with:
+>>>      #   dd if=/dev/zero of=file bs=1M count=4100 && git
+>>> hash-object -w file
+>>>      mkdir -p .git/objects/pack &&
 
-Maybe it would make sense to squash this into the next patch as the
-place where this was copied from is removed?
+OK, so let's queue this on top and have it in 'next' to unblock
+users of older unzip and unzip compiled wihtout zip64 support?
 
--- 
-Brandon Williams
+Thanks.
+
+
