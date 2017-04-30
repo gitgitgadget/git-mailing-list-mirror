@@ -2,118 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 332131F829
-	for <e@80x24.org>; Sun, 30 Apr 2017 15:51:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6B91F829
+	for <e@80x24.org>; Sun, 30 Apr 2017 16:32:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S967182AbdD3PvJ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 11:51:09 -0400
-Received: from mout1.freenet.de ([195.4.92.91]:60838 "EHLO mout1.freenet.de"
+        id S1424831AbdD3Qc2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 12:32:28 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:20235 "EHLO bsmtp1.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S939360AbdD3PvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2017 11:51:07 -0400
-Received: from [195.4.92.141] (helo=mjail1.freenet.de)
-        by mout1.freenet.de with esmtpa (ID liebundartig@freenet.de) (port 25) (Exim 4.85 #1)
-        id 1d4r7p-0005Q4-RQ; Sun, 30 Apr 2017 17:51:05 +0200
-Received: from localhost ([::1]:47369 helo=mjail1.freenet.de)
-        by mjail1.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
-        id 1d4r7p-0002XC-Mt; Sun, 30 Apr 2017 17:51:05 +0200
-Received: from mx2.freenet.de ([195.4.92.12]:50416)
-        by mjail1.freenet.de with esmtpa (ID liebundartig@freenet.de) (Exim 4.85 #1)
-        id 1d4r5i-000861-Tr; Sun, 30 Apr 2017 17:48:54 +0200
-Received: from p200300454467fa13e06c29e09bd4ce99.dip0.t-ipconnect.de ([2003:45:4467:fa13:e06c:29e0:9bd4:ce99]:52675 helo=p200300454467fa4464be414ec96be51f.dip0.t-ipconnect.de)
-        by mx2.freenet.de with esmtpsa (ID liebundartig@freenet.de) (TLSv1.2:AES128-SHA256:128) (port 465) (Exim 4.85 #1)
-        id 1d4r5i-0008Mv-L0; Sun, 30 Apr 2017 17:48:54 +0200
-From:   =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?Ren=C3=A9=20Genz?= <liebundartig@freenet.de>
-Subject: [PATCH v2] fix minor typing mistakes
-Date:   Sun, 30 Apr 2017 17:48:27 +0200
-Message-Id: <1493567307-4188-1-git-send-email-liebundartig@freenet.de>
-X-Mailer: git-send-email 1.9.1
+        id S1164592AbdD3Qc1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 12:32:27 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp1.bon.at (Postfix) with ESMTPSA id 3wGCkw47vsz5tlG;
+        Sun, 30 Apr 2017 18:32:24 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id C96A743E;
+        Sun, 30 Apr 2017 18:32:23 +0200 (CEST)
+Subject: Re: [PATCH v3 0/5] archive-zip: support files and archives bigger
+ than 4GB
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <37eb7c14-eb61-7a63-bdf0-ee1ccf40723f@kdbg.org>
+ <alpine.DEB.2.11.1704222341300.22361@perkele.intern.softwolves.pp.se>
+ <a1504d15-36d6-51f8-f2c9-a6563789bb6f@kdbg.org>
+ <alpine.DEB.2.11.1704231526450.3944@perkele.intern.softwolves.pp.se>
+ <e0d1c923-a9f5-9ffc-a7e7-67f558e50796@kdbg.org>
+ <alpine.DEB.2.00.1704240901520.31537@ds9.cixit.se>
+ <b3f2f12c-2736-46ed-62c9-16334c5e3483@web.de>
+ <85f2b6d1-107b-0624-af82-92446f28269e@web.de>
+ <3df2b03f-ab86-09ac-0fc8-3c6eb10c6704@web.de>
+ <edf33657-f74b-3cd5-44a7-8e16231bd978@web.de>
+ <e30554f3-1aa3-acea-500b-6392fce902be@web.de>
+ <d8a1edfc-e4d6-2bd2-7b07-a1a10d89490a@web.de>
+Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Keith Goldfarb <keith@blackthorn-media.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <9f6cb421-db61-51ca-6a4b-ea7c94bd513e@kdbg.org>
+Date:   Sun, 30 Apr 2017 18:32:23 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <d8a1edfc-e4d6-2bd2-7b07-a1a10d89490a@web.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originated-At: 2003:45:4467:fa13:e06c:29e0:9bd4:ce99!52675
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Helped-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: René Genz <liebundartig@freenet.de>
----
- Documentation/git-commit.txt        | 4 ++--
- Documentation/gitremote-helpers.txt | 2 +-
- ci/run-windows-build.sh             | 2 +-
- diff.c                              | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+Am 30.04.2017 um 09:53 schrieb René Scharfe:
+> @@ -178,7 +182,8 @@ test_expect_success EXPENSIVE,UNZIP 'zip archive bigger than 4GB' '
+>  	"$GIT_UNZIP" -t many-big.zip
+>  '
+>
+> -test_expect_success EXPENSIVE,UNZIP,ZIPINFO 'zip archive with files bigger than 4GB' '
+> +test_expect_success EXPENSIVE,LONG_IS_64BIT,UNZIP,UNZIP_ZIP64_SUPPORT,ZIPINFO \
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index ed0f5b9..afb06ad 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -95,7 +95,7 @@ OPTIONS
- 
- --reset-author::
- 	When used with -C/-c/--amend options, or when committing after a
--	a conflicting cherry-pick, declare that the authorship of the
-+	conflicting cherry-pick, declare that the authorship of the
- 	resulting commit now belongs to the committer. This also renews
- 	the author timestamp.
- 
-@@ -112,7 +112,7 @@ OPTIONS
- 	`--dry-run`.
- 
- --long::
--	When doing a dry-run, give the output in a the long-format.
-+	When doing a dry-run, give the output in the long-format.
- 	Implies `--dry-run`.
- 
- -z::
-diff --git a/Documentation/gitremote-helpers.txt b/Documentation/gitremote-helpers.txt
-index e4b785e..4a584f3 100644
---- a/Documentation/gitremote-helpers.txt
-+++ b/Documentation/gitremote-helpers.txt
-@@ -463,7 +463,7 @@ set by Git if the remote helper has the 'option' capability.
- 	GPG sign pushes.
- 
- 'option push-option <string>::
--	Transmit <string> as a push option. As the a push option
-+	Transmit <string> as a push option. As the push option
- 	must not contain LF or NUL characters, the string is not encoded.
- 
- SEE ALSO
-diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-index 4e3a50b..9f89d54 100755
---- a/ci/run-windows-build.sh
-+++ b/ci/run-windows-build.sh
-@@ -1,6 +1,6 @@
- #!/usr/bin/env bash
- #
--# Script to trigger the a Git for Windows build and test run.
-+# Script to trigger the Git for Windows build and test run.
- # Set the $GFW_CI_TOKEN as environment variable.
- # Pass the branch (only branches on https://github.com/git/git are
- # supported) and a commit hash.
-diff --git a/diff.c b/diff.c
-index 11eef1c..74283d9 100644
---- a/diff.c
-+++ b/diff.c
-@@ -911,7 +911,7 @@ static int fn_out_diff_words_write_helper(FILE *fp,
- /*
-  * '--color-words' algorithm can be described as:
-  *
-- *   1. collect a the minus/plus lines of a diff hunk, divided into
-+ *   1. collect the minus/plus lines of a diff hunk, divided into
-  *      minus-lines and plus-lines;
-  *
-  *   2. break both minus-lines and plus-lines into words and
--- 
-1.9.1
+Why is LONG_IS_64BIT required?
+
+> +	'zip archive with files bigger than 4GB' '
+>  	# Pack created with:
+>  	#   dd if=/dev/zero of=file bs=1M count=4100 && git hash-object -w file
+>  	mkdir -p .git/objects/pack &&
+>
+
+-- Hannes
 
