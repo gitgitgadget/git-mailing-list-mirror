@@ -6,109 +6,85 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC4BE207EB
-	for <e@80x24.org>; Sun, 30 Apr 2017 03:12:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82D8B1FC3E
+	for <e@80x24.org>; Sun, 30 Apr 2017 03:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S3000565AbdD3DMA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Apr 2017 23:12:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:42339 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2992510AbdD3DL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Apr 2017 23:11:58 -0400
-Received: (qmail 7492 invoked by uid 109); 30 Apr 2017 03:11:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Sun, 30 Apr 2017 03:11:57 +0000
-Received: (qmail 32343 invoked by uid 111); 30 Apr 2017 03:12:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Sat, 29 Apr 2017 23:12:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 29 Apr 2017 23:11:55 -0400
-Date:   Sat, 29 Apr 2017 23:11:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] add SWAP macro
-Message-ID: <20170430031154.qurrbdb3wqrdxd37@sigill.intra.peff.net>
-References: <8ef4c833-45bd-6831-0683-6d01f30aa518@web.de>
- <0bdb58a6-3a7f-2218-4b70-c591ae90e95e@web.de>
- <20170424112928.rty5xejep4mnxph2@sigill.intra.peff.net>
- <070a4b85-98e0-12a4-6c9c-557f3dfa733c@web.de>
- <20170428214934.tuqihgch6qeen3ni@sigill.intra.peff.net>
- <11699799-6bdf-484d-5a1c-8e8fa7981594@web.de>
+        id S1035833AbdD3D0s (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Apr 2017 23:26:48 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:49493 "EHLO
+        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1030854AbdD3D0r (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 29 Apr 2017 23:26:47 -0400
+X-AuditID: 12074413-0e1ff70000001dc3-59-590559744388
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+        (using TLS with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 41.12.07619.47955095; Sat, 29 Apr 2017 23:26:45 -0400 (EDT)
+Received: from [192.168.69.190] (p57906CBA.dip0.t-ipconnect.de [87.144.108.186])
+        (authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+        by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id v3U3Qf10026625
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+        Sat, 29 Apr 2017 23:26:42 -0400
+Subject: Re: [PATCHv2 0/3] Make diff plumbing commands respect the
+ indentHeuristic.
+To:     Jeff King <peff@peff.net>, Marc Branchaud <marcnarc@xiplink.com>
+References: <20170427205037.1787-1-marcnarc@xiplink.com>
+ <20170428223315.17140-1-marcnarc@xiplink.com>
+ <20170429124052.yhgwofbbd5pkd24p@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+From:   Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <a0d14b53-01c2-c653-15c9-ff566d24a782@alum.mit.edu>
+Date:   Sun, 30 Apr 2017 05:26:41 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Icedove/45.6.0
 MIME-Version: 1.0
+In-Reply-To: <20170429124052.yhgwofbbd5pkd24p@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <11699799-6bdf-484d-5a1c-8e8fa7981594@web.de>
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrEIsWRmVeSWpSXmKPExsUixO6iqFsayRpp8PmhiUXXlW4mi5UzbjBa
+        /GjpYbbYvLmdxYHFY8GmUo9nvXsYPT5vkvM4cPkxWwBLFJdNSmpOZllqkb5dAlfG2ctfWAra
+        OSouHHjD1MC4l62LkZNDQsBE4vuluSwgtpDADiaJUwecIOwLTBJ/ZzGB2MICoRKfFzWA2SIC
+        LhIz1jYA9XIB1SxilFj35BIzSIJZwFpi9YNmVhCbTUBXYlFPM1gDr4C9xO3dc8GWsQioSkzs
+        eAxmiwqESMxZ+IARokZQ4uTMJ2BHcAItmPd9JhPETHWJP/Ng5stLbH87h3kCI/8sJC2zkJTN
+        QlK2gJF5FaNcYk5prm5uYmZOcWqybnFyYl5eapGuuV5uZoleakrpJkZI0ArvYNx1Uu4QowAH
+        oxIP74RjLJFCrIllxZW5hxglOZiURHkfarNGCvEl5adUZiQWZ8QXleakFh9ilOBgVhLh9fQF
+        yvGmJFZWpRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHhPRwA1ChalpqdWpGXm
+        lCCkmTg4QYbzAA1vAqnhLS5IzC3OTIfIn2JUlBLn3Q6SEABJZJTmwfXCksorRnGgV4R5a0Gq
+        eIAJCa77FdBgJqDB9WosIINLEhFSUg2MqdsYbxxOOhTX/66gW/PBdMnQZ/2cNcdnbdvxr15c
+        cmJatvqUORF5UptWPJgl5bVvYl6r8vPUyRMNgg88Tjy8+fTCR5u2fPN3O/rg8JYrm5P1jy6S
+        E3nMO01G+2mbafBdPveSrok+PvnGM9ds+/1zlsC8D6aVcq+F51R8jTHx0jvh9itxn/LqA0os
+        xRmJhlrMRcWJAPJHL3gFAwAA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 29, 2017 at 08:16:17PM +0200, René Scharfe wrote:
-
-> > I dunno. I could go either way. Or we could leave it as-is, and let
-> > valgrind find the problem. That has zero run-time cost, but of course
-> > nobody bothers to run valgrind outside of the test suite, so the inputs
-> > are not usually very exotic.
+On 04/29/2017 02:40 PM, Jeff King wrote:
+> On Fri, Apr 28, 2017 at 06:33:12PM -0400, Marc Branchaud wrote:
 > 
-> It would be  problematic on platforms where memcpy has to erase the
-> destination before writing new values (I don't know any example).
+>> v2: Fixed up the commit messages and added tests.
+>>
+>> Marc Branchaud (2):
+>>   diff: make the indent heuristic part of diff's basic configuration
+>>   diff: have the diff-* builtins configure diff before initializing
+>>     revisions
+>>
+>> Stefan Beller (1):
+>>   diff: enable indent heuristic by default
 > 
-> We could use two temporary buffers.  The object code is the same with
-> GCC around 5 and Clang 3.2 or higher -- at least for prio-queue.c.
+> Thanks, these look fine to me. I'd like to get an ACK from Michael, in
+> case he had some other reason for omitting them from git_diff_ui_config
+> (from my recollection, it's probably just a mix of conservatism and
+> following what the compaction heuristic had done).
 
-Hmm, yeah, that's an easy solution that covers the overlap case, too. If
-the generated code is the same, that seems like it might not be bad (I
-am a little sad how complex this simple swap operation is getting,
-though).
+That's exactly right. The only discussion I remember about broadening
+the scope of diff options was with regards to `blame` [1]. I don't
+really have enough overview of these configuration topics to have much
+an opinion.
 
-> > Yes, the overlap case is probably an actual bug. Detecting it is a bit
-> > harder, but definitely possible. I hate to pay the run-time cost for it,
-> > but I wonder if a compiler could optimize it out.
-> 
-> How is it possible to arrive at such a situation?  We'd need two objects
-> of the same size (we check that in SWAP) and one of them would start
-> inside of the other one, i.e. the pointer difference between them would
-> be a fraction of 1.  So the type system would have to be tricked into
-> it, right?
+Michael
 
-Yeah, I guess it would be pretty odd. I was thinking of swapping a
-struct and one of its components, but that fail the size equality check.
-And anyway that would be a silly thing to do in the first place, so it's
-probably not worth thinking too much about.
+[1]
+http://public-inbox.org/git/xmqqtwebwhbg.fsf@gitster.mtv.corp.google.com/
 
-> It may be my laziness speaking, but do we really need such a check?  If
-> someone constructs interleaving objects then they'd need to implement
-> the necessary checks themselves IMHO.
-
-Yeah, I think we can live without it. I was mostly trying to think
-through whether there were worse cases than the one we saw. But you've
-convinced me that there probably aren't.
-
-> > > The line in question is this one:
-> > > 
-> > > 	for (i = 0; i <= (j = (queue->nr - 1) - i); i++)
-> > > 
-> > > Assignment in the middle?  Hmm.  Why not do it like this?
-> > > 
-> > > 	for (i = 0, j = queue->nr - 1; i < j; i++, j--)
-> > > 
-> > > Looks less complicated to me.
-> > 
-> > Yes, see my other reply. :)
-> 
-> Ah, so that's where I stole it from. ;)  Perhaps my source amnesia was
-> in part caused by confusion about your reasoning there: The code does A,
-> B would be better, so let's do C.  Wait, what? :)
-
-My reasoning was that there's a bug, and the patch does the minimal fix.
-I don't mind making a readability improvement on top, but the two are
-orthogonal. I.e., you could still write:
-
-  for (i = 0, j = queue->nr - 1; i <= j; i++, j--)
-
-which is more readable but still buggy. :)
-
--Peff
