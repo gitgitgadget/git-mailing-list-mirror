@@ -2,117 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 869A7207D6
-	for <e@80x24.org>; Mon,  1 May 2017 23:24:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 376D5207D6
+	for <e@80x24.org>; Mon,  1 May 2017 23:25:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751967AbdEAXY1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 19:24:27 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:34329 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750757AbdEAXY0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 19:24:26 -0400
-Received: by mail-pg0-f42.google.com with SMTP id v1so51367272pgv.1
-        for <git@vger.kernel.org>; Mon, 01 May 2017 16:24:26 -0700 (PDT)
+        id S1750829AbdEAXZo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 19:25:44 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:33929 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750757AbdEAXZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 19:25:43 -0400
+Received: by mail-pg0-f68.google.com with SMTP id t7so18106901pgt.1
+        for <git@vger.kernel.org>; Mon, 01 May 2017 16:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=eDBVWAXhdfoDRztLR/G5PMYMjZsZmI+Z1K9XVPBg4ng=;
-        b=DhQ8Qdzi3GVw9pXQRmVi9tjFX4V8Akjf2ZIN73T6D5PtJgg8tldVfRckBE754Z1f6f
-         fMcDESnmpjAHnFxKS7yzkOMLJ9F3bhjyZ3O39tOnggsIH2Q0X6qkbCbwUr5p/xMGoDLH
-         nrvQMOkWAEpRDtTBzCSWoBajf9KmQ5idDO3nt1touXAB9+WjIZECMsBSpT6Tt8f46Etc
-         2WF2ZzarjR24Z6svH1XXklxp+yGbFjxhapK80jT2Q8ERvS28zPKwsWsNxIpAms2p7Q1U
-         BW98INzS9knM00baDo/EumXlJvulPLQc0MAwhGkTMljyKp51VLLZDRI3Mn/ZdpYJalpy
-         dGvA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=YQI7UYsayCImuSJjtoJpIotrwIlU7GsEJn1yF9pK5Hs=;
+        b=ICd8QJPkQAvf0FkzksFstY8k2xCcwAlDSoK/PxlLaFWQ8nQYLXcDtJThPuCUOeeiy+
+         Dbnjwj6kE0maKil18A9Ax9NmGHjV931UKUSoy06WwmyRMHUOqqOuIJya2n7O4RnnYxOe
+         drt0x9joxhKL54UeuVmKb8xzJTZdTNBDoI/UtOSFBSY8fzVBNiSLq72W0e29xFiv69On
+         a1jHysL36J0m3IaScIb8aeUnSdxAEQ7U76ykVudubVIS7ZcR14kVD42ETDHIdA6bo2X2
+         /TvxMtyX0x6wWTAF2KFhskERwUJxK63JesyQ2l2Umyt5OqLdhYrEHOiPevk/UvYENvv2
+         z4CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=eDBVWAXhdfoDRztLR/G5PMYMjZsZmI+Z1K9XVPBg4ng=;
-        b=B+ZAsne2qndzFb3VlC4/RKqczBuu+51m68uEGRNEV2Iepk7+6Q0OkRbom8+Eacj7PP
-         /7KMZ0bh2KePP1L3OZ3JqbLhpUApC9r33C/tQLbeD6sCgfhgcs/v1DKwTnOrXaTIb0bU
-         hIMAatpZ5pvCMkPw5hiqNYBLlBp9zK8ZGuEoK2V83LZqrn5e7Mk9Rbz5h/QkneCpbuxU
-         yhOQh6fy7dqnnuQyzW+dIPYlf+2QvPdq2+r7XMJIXA8xkCxOacP/+vp5Xh4VHtR3ko8o
-         PYBBDYk6G67m8BB8fRmInZA+BvlYNygL3wEmNfAIoGnME01ejOFxkHFUOtc6hJergoF+
-         AaoA==
-X-Gm-Message-State: AN3rC/5V6ZB5ZikbwGgwgdU+PXHNye2A6ah3fg01q0/oPLsnHgdr8QcZ
-        tNsLe2hGnLefipUW
-X-Received: by 10.98.57.71 with SMTP id g68mr28180776pfa.53.1493681065705;
-        Mon, 01 May 2017 16:24:25 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a910:d570:c34e:20d9])
-        by smtp.gmail.com with ESMTPSA id b68sm16148187pfa.127.2017.05.01.16.24.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 May 2017 16:24:24 -0700 (PDT)
-Subject: Re: [PATCH v2 39/53] refs/files-backend: convert many internals to
- struct object_id
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <20170501022946.258735-1-sandals@crustytoothpaste.net>
- <20170501022946.258735-40-sandals@crustytoothpaste.net>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Message-ID: <95a85924-6f5b-a625-e460-ecd14540a621@google.com>
-Date:   Mon, 1 May 2017 16:24:23 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=YQI7UYsayCImuSJjtoJpIotrwIlU7GsEJn1yF9pK5Hs=;
+        b=I30Ut2BM0Boh6V5SPIS2lmKv8/4JWT39MJluwRz6m9szKh+iwxQYpUPTuv1VdgZx8J
+         MgYigyqEJ3hB6QqwfeUysJOgJ7zz6jYCRurcaIBP3wsWO30haSu4kBkkJ2DxOabhWFy8
+         HeAqDXxeazEjx+kRVbco6ax3N3lw0liQf29FUCWYYQdHlTdB/v2cWHvHCTM5fd5fN4o/
+         VXXeMhr0hZyrgr3xbQ9rXvhDbnN5NyzGY5QmDHaDGOXKwJoP1ki17SBy0GrUEJCisLt6
+         u9Tu/qPwHe8s/MzpW5zk1IT9AumwS5jBDPQxtIriA5Jvz/xeliOFh5zNAo7v2B1DzRtY
+         30GA==
+X-Gm-Message-State: AN3rC/6j6MyBqv5o1rRz84auHyPMmgThKPZYTcet6PSQX8KjkU3MMXgm
+        63h1Gz/Qx7g0wQ==
+X-Received: by 10.99.53.207 with SMTP id c198mr29326089pga.182.1493681142900;
+        Mon, 01 May 2017 16:25:42 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3c5e:d1c1:579c:ef99])
+        by smtp.gmail.com with ESMTPSA id n65sm23670508pga.8.2017.05.01.16.25.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 01 May 2017 16:25:42 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCHv2 0/3] Make diff plumbing commands respect the indentHeuristic.
+References: <20170427205037.1787-1-marcnarc@xiplink.com>
+        <20170428223315.17140-1-marcnarc@xiplink.com>
+        <20170429124052.yhgwofbbd5pkd24p@sigill.intra.peff.net>
+        <20170429131439.ohgren3i7xr4tjex@sigill.intra.peff.net>
+        <xmqqlgqhjs8b.fsf@gitster.mtv.corp.google.com>
+        <20170501051528.tpw3zlcpercdwdln@sigill.intra.peff.net>
+Date:   Mon, 01 May 2017 16:25:41 -0700
+In-Reply-To: <20170501051528.tpw3zlcpercdwdln@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 1 May 2017 01:15:28 -0400")
+Message-ID: <xmqq60hkgnwq.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20170501022946.258735-40-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 04/30/2017 07:29 PM, brian m. carlson wrote:
-> @@ -195,27 +195,18 @@ static const char PACKED_REFS_HEADER[] =
->   * Return a pointer to the refname within the line (null-terminated),
->   * or NULL if there was a problem.
->   */
-> -static const char *parse_ref_line(struct strbuf *line, unsigned char *sha1)
-> +static const char *parse_ref_line(struct strbuf *line, struct object_id *oid)
->  {
->  	const char *ref;
->
-> -	/*
-> -	 * 42: the answer to everything.
-> -	 *
-> -	 * In this case, it happens to be the answer to
-> -	 *  40 (length of sha1 hex representation)
-> -	 *  +1 (space in between hex and name)
-> -	 *  +1 (newline at the end of the line)
-> -	 */
-> -	if (line->len <= 42)
-> +	if (!line->len)
->  		return NULL;
+Jeff King <peff@peff.net> writes:
 
-I would omit this check - parse_oid_hex already exits early if the first 
-character is NUL. (The existing code makes a bit more sense, in that it 
-avoids checking the first few characters if we already know a bit more 
-about the string.)
-
+> PS Outside of our test scripts, I'd probably just have written:
 >
-> -	if (get_sha1_hex(line->buf, sha1) < 0)
-> +	if (parse_oid_hex(line->buf, oid, &ref) < 0)
->  		return NULL;
-> -	if (!isspace(line->buf[40]))
-> +	if (!isspace(*ref++))
->  		return NULL;
+>      perl -lpe 'print "extra line" if $. == 2'
 >
-> -	ref = line->buf + 41;
->  	if (isspace(*ref))
->  		return NULL;
->
+>    I think we have traditionally preferred sed/awk to perl, but given
+>    the heavy use of vanilla perl elsewhere in the test suite, I think
+>    that is maybe just superstition at this point.
 
-Looks fine, up to here.
+I would have avoided sed with 'a', 'i' and 'c' in one-liners myself,
+and a Perl script like the above would probably have been my choice.
 
-(Also, you requested extra-careful review for this patch, but this patch 
-seems mostly mechanical to me.)
+
