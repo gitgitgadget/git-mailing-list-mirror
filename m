@@ -2,146 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12FED1F78F
-	for <e@80x24.org>; Mon,  1 May 2017 13:00:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26B8A1F78F
+	for <e@80x24.org>; Mon,  1 May 2017 13:27:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752733AbdEANAb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 09:00:31 -0400
-Received: from m12-13.163.com ([220.181.12.13]:40820 "EHLO m12-13.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1949290AbdEANAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 09:00:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id; bh=AMtGZITom1K8iwukmz
-        DRT1CBH87y7UzPxH4DGqfRyLg=; b=NcmvU471DTd6nEYVg0OHipTTzl95CHcPF/
-        T2z/JrhK96KR6UNr38DzwVqNVcCyhzgIlMN8rMI9LlcMyPn9AlUUqjBcthFjdqnM
-        PsxQNnf6V5pN+C1uc1v3qazI2hCeyT5wTx7CeOd2Ll1ijQJNHfAnDQSQug4W1RgG
-        qzgoIuQcs=
-Received: from localhost.localdomain (unknown [1.203.183.82])
-        by smtp9 (Coremail) with SMTP id DcCowABXHlcwMQdZtzqABg--.37387S2;
-        Mon, 01 May 2017 20:59:40 +0800 (CST)
-From:   xiaoqiang zhao <zxq_yx_007@163.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, viktorin@rehivetech.com, mst@kernel.org,
-        pbonzini@redhat.com, mina86@mina86.com, artagnon@gmail.com
-Subject: [PATCH v2] send-email: new options to walkaround email server limits
-Date:   Mon,  1 May 2017 20:59:28 +0800
-Message-Id: <20170501125928.11291-1-zxq_yx_007@163.com>
-X-Mailer: git-send-email 2.13.0.rc1.16.g49e904895
-X-CM-TRANSID: DcCowABXHlcwMQdZtzqABg--.37387S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxZF4xKw1DXFyDGr47XrykuFg_yoW5Xw4Dp3
-        9IkFZxWrykJFW7Za4IyF1aqrn0kFyktFnrta97Kr1jyF45Ar9IyrnayF9Yya4rGrn293yF
-        vw1qqF48uF1jyr7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jdqXdUUUUU=
-X-Originating-IP: [1.203.183.82]
-X-CM-SenderInfo: 520ts5t0bqili6rwjhhfrp/1tbiOx3KxlXlYb9QkwAAsH
+        id S2997107AbdEAN1D (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 09:27:03 -0400
+Received: from mail-wm0-f45.google.com ([74.125.82.45]:36043 "EHLO
+        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1950857AbdEAN1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 09:27:02 -0400
+Received: by mail-wm0-f45.google.com with SMTP id u65so87784749wmu.1
+        for <git@vger.kernel.org>; Mon, 01 May 2017 06:27:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=a0mJ7nGKOMTaTJt5ROQRnTsDuVD5DC+HBLh/W1zkTxk=;
+        b=qapMEfXgwP251emEAi3fNovZa89/EAhu4JnntcnTF+VyIuYHk+LldhfzJUzQIts2sC
+         hxtz2HGDLLmgCti80BL8rzarqrI/vTfhuW292HTcQ1SXEsvdsPenHLH2z929+i6PsBbZ
+         a/3HEamPZf1HbT3LrusqcByQckt5kDiL6V/wP7WM5xoMvy915KIg17tT/5JgbU9LwPBl
+         axe7aojfdhIWyEHhfM/nzukrwhw1oe2gOQ4smh5MrCZFwFVSSXwnqHCEb2tl2HypW8d5
+         dIv5Q5uYhQGNFwdZ4kYT0RU4ImTwzf9tpo6t2+d9M0ElGfAnJrodx0wc/MH1po9qhkQ3
+         cMIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=a0mJ7nGKOMTaTJt5ROQRnTsDuVD5DC+HBLh/W1zkTxk=;
+        b=dotDgEdey8SHqHUclehIq93eoX3idSR6ddW/y3lk3P6c3BhFfo0/VEykI3gm8kGrPu
+         F0xFN1b4eNNaqli9Yh2O89j8ozjne1ZtoLIMzVQdDJ4NDs0izl4sE7Qiou5KoEKOiWjl
+         TFoGD54dKbEo23rPbeRHzjoiw+jVHimm8J4zNXyJknD0WAwZjFsiuCzL5jNi85lQqwLx
+         yNsc52gW7lpftunURsuwMBStbyo2KkDgJ5yJQYzow54s95zCNc6o/V6slDjySJ1vspVN
+         4du14J3BdCT8NSlhYAAo3lS63kmmidGVlpPpTuwyIoa5sVbsB18vp2q9YkG7QH3KawIe
+         BgnQ==
+X-Gm-Message-State: AN3rC/7A+8HEnNF/StOrE7UmyJWQgzEF69sMZ2/aLr6tOdIKauJA7w+g
+        42ngerDovQmozbGK+xJhR0JOPNNtLQ==
+X-Received: by 10.28.229.81 with SMTP id c78mr36111wmh.66.1493645220626; Mon,
+ 01 May 2017 06:27:00 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.223.160.6 with HTTP; Mon, 1 May 2017 06:26:30 -0700 (PDT)
+In-Reply-To: <874lx68abt.fsf@linux-m68k.org>
+References: <CACUV5oeKoVdncK3RjtusiqrACj1xLiS--z8vC+Rsvy5TF09Lsw@mail.gmail.com>
+ <874lx68abt.fsf@linux-m68k.org>
+From:   Tomi Belan <tomi.belan@gmail.com>
+Date:   Mon, 1 May 2017 15:26:30 +0200
+Message-ID: <CACUV5ocdADaXYpcQG6kJ0CaR+d+EwyaSFFReaO2ni+1CnJMvyw@mail.gmail.com>
+Subject: Re: Bug: wrong documentation for git-fast-import's option command
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some email server(e.g. smtp.163.com) limits a fixed number emails to
-be send per session(connection) and this will lead to a send faliure.
+On Sun, Apr 30, 2017 at 12:21 PM, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> Unless <option> starts with 'git', as you have seen.  Other importers
+> may recognize other options, eg 'option hg ...'.
 
-With --batch-size=<num> option, an auto reconnection will occur when
-number of sent email reaches <num> and the problem is solved.
+Hmm? Are you disagreeing with how I described the issue, or saying
+there is no issue at all? I'm not sure.
 
---relogin-delay option will make some delay between two successive
-email server login.
+I know the syntax is meant for other importers, which might accept
+different options. My point is that the man page doesn't say anything
+about that. If a frontend follows the man page and just prints e.g.
+"option quiet", git-fast-import will silently ignore it.
 
-Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
----
- git-send-email.perl | 26 +++++++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
+If you dislike my suggested fix "'option' SP 'git' SP ...", then how about
+'option' SP <program> SP <option> ('=' <argument>)? LF
+and saying that for options supported by Git, <program> must be 'git'?
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index eea0a517f..cd9981cc6 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -81,6 +81,10 @@ git send-email --dump-aliases
-                                      This setting forces to use one of the listed mechanisms.
-     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
- 
-+    --batch-size            <int>  * send max \$num message per connection.
-+    --relogin-delay         <int>  * delay \$num seconds between two successive login, default to 1,
-+                                     This option can only be used with --batch-size
-+
-   Automating:
-     --identity              <str>  * Use the sendemail.<id> options.
-     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
-@@ -153,6 +157,7 @@ my $have_email_valid = eval { require Email::Valid; 1 };
- my $have_mail_address = eval { require Mail::Address; 1 };
- my $smtp;
- my $auth;
-+my $num_sent = 0;
- 
- # Regexes for RFC 2047 productions.
- my $re_token = qr/[^][()<>@,;:\\"\/?.= \000-\037\177-\377]+/;
-@@ -186,6 +191,8 @@ my $format_patch;
- my $compose_filename;
- my $force = 0;
- my $dump_aliases = 0;
-+my $batch_size = 0;
-+my $relogin_delay = 1;
- 
- # Handle interactive edition of files.
- my $multiedit;
-@@ -358,6 +365,8 @@ $rc = GetOptions(
- 		    "force" => \$force,
- 		    "xmailer!" => \$use_xmailer,
- 		    "no-xmailer" => sub {$use_xmailer = 0},
-+		    "batch-size=i" => \$batch_size,
-+		    "relogin-delay=i" => \$relogin_delay,
- 	 );
- 
- usage() if $help;
-@@ -1158,10 +1167,15 @@ sub smtp_host_string {
- # (smtp_user was not specified), and 0 otherwise.
- 
- sub smtp_auth_maybe {
--	if (!defined $smtp_authuser || $auth) {
-+	if (!defined $smtp_authuser || $num_sent != 0) {
- 		return 1;
- 	}
- 
-+	if ($auth && $num_sent == 0) {
-+		print "Auth use saved password. \n";
-+		return !!$smtp->auth($smtp_authuser, $smtp_authpass);
-+	}
-+
- 	# Workaround AUTH PLAIN/LOGIN interaction defect
- 	# with Authen::SASL::Cyrus
- 	eval {
-@@ -1187,6 +1201,7 @@ sub smtp_auth_maybe {
- 		'password' => $smtp_authpass
- 	}, sub {
- 		my $cred = shift;
-+		$smtp_authpass = $cred->{'password'};
- 
- 		if ($smtp_auth) {
- 			my $sasl = Authen::SASL->new(
-@@ -1442,6 +1457,15 @@ EOF
- 		}
- 	}
- 
-+	$num_sent++;
-+	if ($num_sent == $batch_size) {
-+		$smtp->quit;
-+		$smtp = undef;
-+		$num_sent = 0;
-+		print "Reconnect SMTP server required. \n";
-+		sleep($relogin_delay);
-+	}
-+
- 	return 1;
- }
- 
--- 
-2.13.0.rc1.16.g49e904895
+Cheers,
 
-
+Tomi
