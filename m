@@ -6,229 +6,314 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46B491FC3E
-	for <e@80x24.org>; Mon,  1 May 2017 02:30:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1887D1FC3E
+	for <e@80x24.org>; Mon,  1 May 2017 02:30:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S642333AbdEACaP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 22:30:15 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:35600 "EHLO
+        id S642342AbdEACaR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 22:30:17 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:35610 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S642310AbdEACaE (ORCPT
+        by vger.kernel.org with ESMTP id S642312AbdEACaE (ORCPT
         <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:30:04 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 193F2280AD;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id DD9AA280B0;
         Mon,  1 May 2017 02:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1493605802;
-        bh=cwgC8hI8FEvCHeaRk751TLWEOa7Tj8QUKlyP1D24XwQ=;
-        h=From:To:Cc:Subject:Date:From;
-        b=nFaj/qU8iuWoo2NWDpvHZHH3AqQjTJZBkx9OeDA/FTWcsj9D7hh5Qmjyna+yEio/o
-         sBg1wlyhWtOqwNjoGxkOsCG2OCqocnejeUUj8WZkS1H4HRye1a2stKTFFgzTDG0/RE
-         UTGestRZ8of/0CZVp2XzvLnSTKi5rXziTqS+G1FeQ2x8dJ9o+8osx/FDhD4Oeo5sR1
-         Hqjn4xg93Y0kSNH3btmbnhiZAPomeQQg0XNcyMdAhy4XQSlHB6GBmCS9sNiAsWzWXL
-         gq+JvfGwcxknk/+3R231UBySd3Rqnu7OdnTgLiRksARUYQqcm1UBOBZ2L32zwP+HfI
-         P5fVBhMGQ3xQuI8TlHz4wL6ZwfBDnhSyU7vdKyXhYpFr6hF0tw5m1UhzIKh51ZsFXJ
-         6HfsHDnspUHgxf3K8R5u0pT4n887xUK+kndg7ZT+hzyLxSLz9I9Q/ExgP2dDQt1J8t
-         6cC8sj5G4SpNqsAnRUbI+7KbcE01jakz3LaHERRlfd09ihhzKe+
+        bh=hs6UB7B0gNtK9O0S/cc/uMVJ8+J+sW5TwTn1Mwcb2gg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=fY8qUrO/A8E/Ea/KRTXR7qUhW6tgjGSr743u+69LuTC26yAz3NXmRcO2EwTvOELJi
+         SGWiCubmUhT5JZIdhEp6UazdkKRgjRFZ1sGi0XStPI+A6WwjhTqN7Kwzattr/SnWby
+         IB/XEEpOvynVGwJ2yX4sp1phNs1ZYHU23U/gLFpivwQim+NrD5R4QdooudTBRyM9jC
+         s3Vtc9WEGbRGKAhqFjXsCFY6MZ7/HhRNi21nwApfYx8SPHvSdXJhvfAnkOajNWyRIk
+         Rj6nmZSxlm4UFxpGPpHrpfE9PJBKfHraUsUcAPVBiJEi9++l7pw1co0RsAgGxdGpYr
+         8cYcKhA4QYZChVeKaZSoMAfOc247KWXW4AesYFZY65uySO9pHjBUAO1lr/UJ065oYD
+         ptRWoIy42xjmWiKlzKrp2cMiE/fA1oZjocEvoFYF3kKW8faGz/so8eCgOeVQF6QuEd
+         CXyDqbDL4RapNvMnirPBUKXFTrAqNUtm/jmCmuXNMOSZLBoQUdu
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 00/53] object_id part 8
-Date:   Mon,  1 May 2017 02:28:53 +0000
-Message-Id: <20170501022946.258735-1-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 03/53] Convert struct cache_tree to use struct object_id
+Date:   Mon,  1 May 2017 02:28:56 +0000
+Message-Id: <20170501022946.258735-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d
+In-Reply-To: <20170501022946.258735-1-sandals@crustytoothpaste.net>
+References: <20170501022946.258735-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the eighth series of patches to convert unsigned char [20] to
-struct object_id.  This series converts lookup_commit, lookup_blob,
-lookup_tree, lookup_tag, and finally parse_object to struct object_id.
+Convert the sha1 member of struct cache_tree to struct object_id by
+changing the definition and applying the following semantic patch, plus
+the standard object_id transforms:
 
-A small number of functions have temporaries inserted during the
-conversion in order to allow conversion of functions that still need to
-take unsigned char *; they are removed either later in the series or
-will be in a future series.
+@@
+struct cache_tree E1;
+@@
+- E1.sha1
++ E1.oid.hash
 
-This series can be fetched from the object-id-part8 branch from either
-of the follwing:
+@@
+struct cache_tree *E1;
+@@
+- E1->sha1
++ E1->oid.hash
 
-https://github.com/bk2204/git
-https://git.crustytoothpaste.net/git/bmc/git.git
+Fix up one reference to active_cache_tree which was not automatically
+caught by Coccinelle.  These changes are prerequisites for converting
+parse_object.
 
-Changes from v1:
-* Rebase on master.  This led to a conflict with the ref-cache changes in patch
-  39.  Extra-careful review here would be welcome.
-* Undo the needless line rewrapping.
-* Fix the commit message typo.
-* Use GIT_MAX_RAWSZ instead of struct object_id for the pack checksum.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/commit.c                |  2 +-
+ builtin/fsck.c                  |  4 ++--
+ cache-tree.c                    | 31 ++++++++++++++++---------------
+ cache-tree.h                    |  3 ++-
+ merge-recursive.c               |  2 +-
+ revision.c                      |  2 +-
+ sequencer.c                     |  3 ++-
+ t/helper/test-dump-cache-tree.c |  4 ++--
+ 8 files changed, 27 insertions(+), 24 deletions(-)
 
-brian m. carlson (53):
-  fetch-pack: convert to struct object_id
-  Clean up outstanding object_id transforms.
-  Convert struct cache_tree to use struct object_id
-  builtin/name-rev: convert to struct object_id
-  builtin/prune: convert to struct object_id
-  bundle: convert to struct object_id
-  branch: convert to struct object_id
-  builtin/blame: convert static function to struct object_id
-  builtin/rev-parse: convert to struct object_id
-  fast-import: convert internal structs to struct object_id
-  fast-import: convert to struct object_id
-  submodule: convert merge_submodule to use struct object_id
-  notes-cache: convert to struct object_id
-  parse-options-cb: convert to struct object_id
-  reflog_expire: convert to struct object_id
-  builtin/verify-commit: convert to struct object_id
-  tag: convert parse_tag_buffer to struct object_id
-  http-push: convert some static functions to struct object_id
-  notes-utils: convert internals to struct object_id
-  revision: convert prepare_show_merge to struct object_id
-  shallow: convert shallow registration functions to object_id
-  sequencer: convert some functions to struct object_id
-  builtin/tag: convert to struct object_id
-  Convert remaining callers of lookup_commit_reference* to object_id
-  Convert lookup_commit* to struct object_id
-  pack: convert struct pack_idx_entry to struct object_id
-  builtin/unpack-objects: convert to struct object_id
-  Convert remaining callers of lookup_blob to object_id
-  Convert lookup_blob to struct object_id
-  tree: convert read_tree_1 to use struct object_id internally
-  builtin/reflog: convert tree_is_complete to take struct object_id
-  Convert lookup_tree to struct object_id
-  log-tree: convert to struct object_id
-  Convert lookup_tag to struct object_id
-  Convert the verify_pack callback to struct object_id
-  Convert struct ref_array_item to struct object_id
-  ref-filter: convert some static functions to struct object_id
-  refs: convert struct ref_update to use struct object_id
-  refs/files-backend: convert many internals to struct object_id
-  http-push: convert process_ls_object and descendants to object_id
-  revision: rename add_pending_sha1 to add_pending_oid
-  revision: convert remaining parse_object callers to object_id
-  upload-pack: convert remaining parse_object callers to object_id
-  sha1_name: convert internals of peel_onion to object_id
-  builtin/read-tree: convert to struct object_id
-  builtin/ls-files: convert overlay_tree_on_cache to object_id
-  sequencer: convert fast_forward_to to struct object_id
-  merge: convert checkout_fast_forward to struct object_id
-  builtin/ls-tree: convert to struct object_id
-  diff-lib: convert do_diff_cache to struct object_id
-  sequencer: convert do_recursive_merge to struct object_id
-  tree: convert parse_tree_indirect to struct object_id
-  object: convert parse_object* to take struct object_id
-
- archive.c                       |   6 +-
- bisect.c                        |   2 +-
- blob.c                          |   6 +-
- blob.h                          |   2 +-
- branch.c                        |  16 +-
- builtin/am.c                    |  18 +-
- builtin/blame.c                 |  14 +-
- builtin/branch.c                |   6 +-
- builtin/checkout.c              |  18 +-
- builtin/clone.c                 |   4 +-
- builtin/commit-tree.c           |   2 +-
- builtin/commit.c                |   8 +-
- builtin/describe.c              |  10 +-
- builtin/diff-tree.c             |   8 +-
- builtin/diff.c                  |   6 +-
- builtin/fast-export.c           |   8 +-
- builtin/fetch.c                 |   7 +-
- builtin/fmt-merge-msg.c         |   8 +-
- builtin/fsck.c                  |  16 +-
- builtin/grep.c                  |   2 +-
- builtin/index-pack.c            |  56 ++---
- builtin/log.c                   |  10 +-
- builtin/ls-files.c              |   6 +-
- builtin/ls-tree.c               |   6 +-
- builtin/merge-base.c            |   6 +-
- builtin/merge-tree.c            |  10 +-
- builtin/merge.c                 |  12 +-
- builtin/name-rev.c              |  32 +--
- builtin/notes.c                 |   2 +-
- builtin/pack-objects.c          |  71 ++++---
- builtin/prune.c                 |   7 +-
- builtin/pull.c                  |  14 +-
- builtin/read-tree.c             |  10 +-
- builtin/receive-pack.c          |   8 +-
- builtin/reflog.c                |  36 ++--
- builtin/replace.c               |   6 +-
- builtin/reset.c                 |  10 +-
- builtin/rev-list.c              |   2 +-
- builtin/rev-parse.c             |  56 ++---
- builtin/show-branch.c           |   4 +-
- builtin/tag.c                   |  66 +++---
- builtin/unpack-objects.c        |  65 +++---
- builtin/verify-commit.c         |  12 +-
- bulk-checkin.c                  |   4 +-
- bundle.c                        |  39 ++--
- bundle.h                        |   4 +-
- cache-tree.c                    |  33 +--
- cache-tree.h                    |   3 +-
- cache.h                         |   4 +-
- commit.c                        |  38 ++--
- commit.h                        |  16 +-
- diff-lib.c                      |  12 +-
- diff.c                          |   4 +-
- diff.h                          |   2 +-
- fast-import.c                   | 443 ++++++++++++++++++++--------------------
- fetch-pack.c                    |  97 ++++-----
- fsck.c                          |   6 +-
- http-backend.c                  |   2 +-
- http-push.c                     |  55 ++---
- list-objects.c                  |   4 +-
- log-tree.c                      |  26 +--
- merge-recursive.c               |  16 +-
- merge.c                         |   4 +-
- notes-cache.c                   |  29 ++-
- notes-cache.h                   |   4 +-
- notes-merge.c                   |  26 +--
- notes-utils.c                   |  18 +-
- object.c                        |  38 ++--
- object.h                        |   8 +-
- pack-bitmap-write.c             |   8 +-
- pack-bitmap.c                   |   4 +-
- pack-check.c                    |  25 ++-
- pack-objects.c                  |   8 +-
- pack-write.c                    |  10 +-
- pack.h                          |   4 +-
- parse-options-cb.c              |   6 +-
- pretty.c                        |   2 +-
- reachable.c                     |   8 +-
- ref-filter.c                    |  38 ++--
- ref-filter.h                    |   2 +-
- reflog-walk.c                   |   6 +-
- refs.c                          |   4 +-
- refs.h                          |   6 +-
- refs/files-backend.c            | 155 +++++++-------
- refs/ref-cache.c                |   4 +-
- refs/ref-cache.h                |   2 +-
- refs/refs-internal.h            |   4 +-
- remote.c                        |  17 +-
- revision.c                      |  76 +++----
- revision.h                      |   6 +-
- sequencer.c                     |  59 +++---
- server-info.c                   |   2 +-
- sha1_name.c                     |  38 ++--
- shallow.c                       |  34 +--
- submodule.c                     |  32 +--
- submodule.h                     |   8 +-
- t/helper/test-dump-cache-tree.c |   4 +-
- t/helper/test-match-trees.c     |   4 +-
- tag.c                           |  25 ++-
- tag.h                           |   2 +-
- transport.c                     |   2 +-
- tree.c                          |  22 +-
- tree.h                          |   4 +-
- upload-pack.c                   |  60 +++---
- walker.c                        |   8 +-
- wt-status.c                     |   2 +-
- 106 files changed, 1174 insertions(+), 1136 deletions(-)
-
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 1d805f5da..8685c888f 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1758,7 +1758,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		append_merge_tag_headers(parents, &tail);
+ 	}
+ 
+-	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->sha1,
++	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->oid.hash,
+ 			 parents, oid.hash, author_ident.buf, sign_commit, extra)) {
+ 		rollback_index_files();
+ 		die(_("failed to write commit object"));
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index b5e13a455..c40e14de6 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -599,10 +599,10 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 		fprintf(stderr, "Checking cache tree\n");
+ 
+ 	if (0 <= it->entry_count) {
+-		struct object *obj = parse_object(it->sha1);
++		struct object *obj = parse_object(it->oid.hash);
+ 		if (!obj) {
+ 			error("%s: invalid sha1 pointer in cache-tree",
+-			      sha1_to_hex(it->sha1));
++			      oid_to_hex(&it->oid));
+ 			errors_found |= ERROR_REFS;
+ 			return 1;
+ 		}
+diff --git a/cache-tree.c b/cache-tree.c
+index 345ea3596..35d507ed7 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -225,7 +225,7 @@ int cache_tree_fully_valid(struct cache_tree *it)
+ 	int i;
+ 	if (!it)
+ 		return 0;
+-	if (it->entry_count < 0 || !has_sha1_file(it->sha1))
++	if (it->entry_count < 0 || !has_sha1_file(it->oid.hash))
+ 		return 0;
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		if (!cache_tree_fully_valid(it->down[i]->cache_tree))
+@@ -253,7 +253,7 @@ static int update_one(struct cache_tree *it,
+ 
+ 	*skip_count = 0;
+ 
+-	if (0 <= it->entry_count && has_sha1_file(it->sha1))
++	if (0 <= it->entry_count && has_sha1_file(it->oid.hash))
+ 		return it->entry_count;
+ 
+ 	/*
+@@ -340,7 +340,7 @@ static int update_one(struct cache_tree *it,
+ 				die("cache-tree.c: '%.*s' in '%s' not found",
+ 				    entlen, path + baselen, path);
+ 			i += sub->count;
+-			sha1 = sub->cache_tree->sha1;
++			sha1 = sub->cache_tree->oid.hash;
+ 			mode = S_IFDIR;
+ 			contains_ita = sub->cache_tree->entry_count < 0;
+ 			if (contains_ita) {
+@@ -402,12 +402,13 @@ static int update_one(struct cache_tree *it,
+ 		unsigned char sha1[20];
+ 		hash_sha1_file(buffer.buf, buffer.len, tree_type, sha1);
+ 		if (has_sha1_file(sha1))
+-			hashcpy(it->sha1, sha1);
++			hashcpy(it->oid.hash, sha1);
+ 		else
+ 			to_invalidate = 1;
+ 	} else if (dryrun)
+-		hash_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1);
+-	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1)) {
++		hash_sha1_file(buffer.buf, buffer.len, tree_type,
++			       it->oid.hash);
++	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->oid.hash)) {
+ 		strbuf_release(&buffer);
+ 		return -1;
+ 	}
+@@ -417,7 +418,7 @@ static int update_one(struct cache_tree *it,
+ #if DEBUG
+ 	fprintf(stderr, "cache-tree update-one (%d ent, %d subtree) %s\n",
+ 		it->entry_count, it->subtree_nr,
+-		sha1_to_hex(it->sha1));
++		oid_to_hex(&it->oid));
+ #endif
+ 	return i;
+ }
+@@ -457,14 +458,14 @@ static void write_one(struct strbuf *buffer, struct cache_tree *it,
+ 	if (0 <= it->entry_count)
+ 		fprintf(stderr, "cache-tree <%.*s> (%d ent, %d subtree) %s\n",
+ 			pathlen, path, it->entry_count, it->subtree_nr,
+-			sha1_to_hex(it->sha1));
++			oid_to_hex(&it->oid));
+ 	else
+ 		fprintf(stderr, "cache-tree <%.*s> (%d subtree) invalid\n",
+ 			pathlen, path, it->subtree_nr);
+ #endif
+ 
+ 	if (0 <= it->entry_count) {
+-		strbuf_add(buffer, it->sha1, 20);
++		strbuf_add(buffer, it->oid.hash, 20);
+ 	}
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		struct cache_tree_sub *down = it->down[i];
+@@ -521,7 +522,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 	if (0 <= it->entry_count) {
+ 		if (size < 20)
+ 			goto free_return;
+-		hashcpy(it->sha1, (const unsigned char*)buf);
++		hashcpy(it->oid.hash, (const unsigned char*)buf);
+ 		buf += 20;
+ 		size -= 20;
+ 	}
+@@ -530,7 +531,7 @@ static struct cache_tree *read_one(const char **buffer, unsigned long *size_p)
+ 	if (0 <= it->entry_count)
+ 		fprintf(stderr, "cache-tree <%s> (%d ent, %d subtree) %s\n",
+ 			*buffer, it->entry_count, subtree_nr,
+-			sha1_to_hex(it->sha1));
++			oid_to_hex(&it->oid));
+ 	else
+ 		fprintf(stderr, "cache-tree <%s> (%d subtrees) invalid\n",
+ 			*buffer, subtree_nr);
+@@ -641,10 +642,10 @@ int write_index_as_tree(unsigned char *sha1, struct index_state *index_state, co
+ 		subtree = cache_tree_find(index_state->cache_tree, prefix);
+ 		if (!subtree)
+ 			return WRITE_TREE_PREFIX_ERROR;
+-		hashcpy(sha1, subtree->sha1);
++		hashcpy(sha1, subtree->oid.hash);
+ 	}
+ 	else
+-		hashcpy(sha1, index_state->cache_tree->sha1);
++		hashcpy(sha1, index_state->cache_tree->oid.hash);
+ 
+ 	if (0 <= newfd)
+ 		rollback_lock_file(lock_file);
+@@ -663,7 +664,7 @@ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
+ 	struct name_entry entry;
+ 	int cnt;
+ 
+-	hashcpy(it->sha1, tree->object.oid.hash);
++	oidcpy(&it->oid, &tree->object.oid);
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+ 	cnt = 0;
+ 	while (tree_entry(&desc, &entry)) {
+@@ -718,7 +719,7 @@ int cache_tree_matches_traversal(struct cache_tree *root,
+ 
+ 	it = find_cache_tree_from_traversal(root, info);
+ 	it = cache_tree_find(it, ent->path);
+-	if (it && it->entry_count > 0 && !hashcmp(ent->oid->hash, it->sha1))
++	if (it && it->entry_count > 0 && !oidcmp(ent->oid, &it->oid))
+ 		return it->entry_count;
+ 	return 0;
+ }
+diff --git a/cache-tree.h b/cache-tree.h
+index 41c574663..f7b9cab7e 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -1,6 +1,7 @@
+ #ifndef CACHE_TREE_H
+ #define CACHE_TREE_H
+ 
++#include "cache.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+ 
+@@ -15,7 +16,7 @@ struct cache_tree_sub {
+ 
+ struct cache_tree {
+ 	int entry_count; /* negative means "invalid" */
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int subtree_nr;
+ 	int subtree_alloc;
+ 	struct cache_tree_sub **down;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 62decd51c..9d6fd577e 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -304,7 +304,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+ 		return NULL;
+ 	}
+ 
+-	result = lookup_tree(active_cache_tree->sha1);
++	result = lookup_tree(active_cache_tree->oid.hash);
+ 
+ 	return result;
+ }
+diff --git a/revision.c b/revision.c
+index 7ff61ff5f..2b56c3baf 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1249,7 +1249,7 @@ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
+ 	int i;
+ 
+ 	if (it->entry_count >= 0) {
+-		struct tree *tree = lookup_tree(it->sha1);
++		struct tree *tree = lookup_tree(it->oid.hash);
+ 		add_pending_object_with_path(revs, &tree->object, "",
+ 					     040000, path->buf);
+ 	}
+diff --git a/sequencer.c b/sequencer.c
+index 130cc868e..d119baa51 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -508,7 +508,8 @@ static int is_index_unchanged(void)
+ 		if (cache_tree_update(&the_index, 0))
+ 			return error(_("unable to update cache tree\n"));
+ 
+-	return !hashcmp(active_cache_tree->sha1, head_commit->tree->object.oid.hash);
++	return !oidcmp(&active_cache_tree->oid,
++		       &head_commit->tree->object.oid);
+ }
+ 
+ static int write_author_script(const char *message)
+diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
+index 7af116d49..ebf3aab22 100644
+--- a/t/helper/test-dump-cache-tree.c
++++ b/t/helper/test-dump-cache-tree.c
+@@ -10,7 +10,7 @@ static void dump_one(struct cache_tree *it, const char *pfx, const char *x)
+ 		       "invalid", x, pfx, it->subtree_nr);
+ 	else
+ 		printf("%s %s%s (%d entries, %d subtrees)\n",
+-		       sha1_to_hex(it->sha1), x, pfx,
++		       oid_to_hex(&it->oid), x, pfx,
+ 		       it->entry_count, it->subtree_nr);
+ }
+ 
+@@ -32,7 +32,7 @@ static int dump_cache_tree(struct cache_tree *it,
+ 	}
+ 	else {
+ 		dump_one(it, pfx, "");
+-		if (hashcmp(it->sha1, ref->sha1) ||
++		if (oidcmp(&it->oid, &ref->oid) ||
+ 		    ref->entry_count != it->entry_count ||
+ 		    ref->subtree_nr != it->subtree_nr) {
+ 			/* claims to be valid but is lying */
