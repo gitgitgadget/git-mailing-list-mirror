@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D235E1F78F
-	for <e@80x24.org>; Mon,  1 May 2017 19:08:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 401FD1F78F
+	for <e@80x24.org>; Mon,  1 May 2017 19:08:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751292AbdEATIL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 15:08:11 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:34474 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751261AbdEATIJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 15:08:09 -0400
-Received: by mail-pg0-f52.google.com with SMTP id v1so48837094pgv.1
-        for <git@vger.kernel.org>; Mon, 01 May 2017 12:08:09 -0700 (PDT)
+        id S1751311AbdEATIV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 15:08:21 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:32954 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751261AbdEATIT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 15:08:19 -0400
+Received: by mail-pf0-f174.google.com with SMTP id q20so24475109pfg.0
+        for <git@vger.kernel.org>; Mon, 01 May 2017 12:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rWEgKqv2gRRhywQpebMGi4r7FLiOn6WlpOwqAms05ew=;
-        b=qe11TAHGSNESpJuoW+KETrLrY3HDW3FwzcF1YOqm0LSS5wNzJ7H9JOmM0wgCDXpAhg
-         Xl2YG500xMdi0EZwTYoF5TytWOx+X5XSiXgIEEkBHpqEBGCK2g+iyD5JrhjKGBGXxiLf
-         0yu85MYXMdZijTzPO+FzMHDjyrZEB2gOULYO8lBwt/a2blqJSH5PQzJbdN5ez0FLcHlh
-         uX0/IE4gWkcAvDqahOuto/Hp2x7fO74yY6MirKaBzLGQyLqi7UPO+Jw+LoWjYSdPGD1m
-         yBk85irHY/ABYXRQKeSJGLpAfg263CpcwWeGafFyr9YNCpwBmFv1YRfN45RoPUv1RYtL
-         /1pQ==
+        bh=8ihOiPCkRV/SbjKBHSaU265gIzTk3m4iZcJKKDDASXI=;
+        b=lZtIfAmtpEVR1loxg4sb3UkiIsDwX+QKkrkGgPbCCjUQ81ZcSxccSq+d7ZxPSYIO66
+         joqO72Y24WOIVhhF5Znq9UL95k4r4d/Nfqro0If/uNd2EbkpHAVORxMUMdLWRkymZvr4
+         ImVaF3Zxl74IcV9t3xetEcB0SD4bf631EmGA1UOhcHUOtq2GrPb3Rc4XZbEwJt8JT0Ye
+         +2s5yO6geI51HFLbZJgZQbjUO4RIqYSI9CpeF76uy+eTCVeUUCXZlZWkvdzWn4NDFFuW
+         b8g5Dx5UZpYYoogB+r2DaNKWZ5bHoGA2SLoGqVd7qNZY1Aq63S0iTbEP5pm+MnaEZEi2
+         sz8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rWEgKqv2gRRhywQpebMGi4r7FLiOn6WlpOwqAms05ew=;
-        b=RGw1maF79fAfsRo7l04rhiDStOI6t+/pjGrdEyMlcaANQqYiTMRBgy36FRP9mnMp3p
-         3mx42cafOv4OPs2wetbnW3jwdNTeXMVAyVwgEUclyKQYE3GZRCMpw2oBABRq/VwhBpm2
-         WxK4VjC9yh6YmE69dzZLvWv44Vun4RdLLn4+vgcw21kTV6e5/6pF2O7Het3DSbPk/LTX
-         DNn5nRcMadYbPyt/EatFjRta8ZG1lBILHbiDiRLXi3t0n69afz6tdrgRuM87cGsZSHv4
-         jFtLLc64G43ZMCqKyTJytBh7mZBwHu5kARj/qSzRZkATdcAmIXSB5BqiMliuwSvm7RKN
-         /8SQ==
-X-Gm-Message-State: AN3rC/5sZWiJNepIEXrNEuNDFt9rR9msgV62R4hd1jOfjtYAnSwBjnmr
-        AM+pl+WdAIiujiz6skIbiA==
-X-Received: by 10.98.215.94 with SMTP id v30mr27277931pfl.121.1493665683361;
-        Mon, 01 May 2017 12:08:03 -0700 (PDT)
+        bh=8ihOiPCkRV/SbjKBHSaU265gIzTk3m4iZcJKKDDASXI=;
+        b=An+DDjFVQWC8+hJbKYKko28lNmbB+6MUrTkexFb9HhmhOyvXJxHp2GH4pZ8+InhzOg
+         KNcsSnicMfL0oA2Tpt1EtIQL4nNCCbP5ucchRv1/ZocRRTl+97CwIUQHcPubt+QilDK2
+         rERPRldkXauroTirjecobPagxaXRqvwn8FI6678QgWivCBUDlr2U5EnMieqVLGRDUinI
+         0dN+sP3LsDi1Faw0zkkInJG1CgRCyTBgT2yFk4GPlVpXkvMBiyCI8Aq86LygaC9sPhQn
+         C6fF5SHO32X4VKcYS9aqF9PLysmh6QrMbJDFfaJDWuWemJxSYh36YqgzvNox2JwrOQSC
+         0v/g==
+X-Gm-Message-State: AN3rC/68SjSE31xmgRs7DLcPYf5NBHcqMrNSMBjpKb76pReJ0yhN2RW3
+        mhyGUlx941n3StRxQKtbIw==
+X-Received: by 10.98.33.29 with SMTP id h29mr28112563pfh.248.1493665692672;
+        Mon, 01 May 2017 12:08:12 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c4be:9746:6a14:c7a4])
-        by smtp.gmail.com with ESMTPSA id j65sm25061185pfc.86.2017.05.01.12.07.58
+        by smtp.gmail.com with ESMTPSA id w17sm25039419pfg.75.2017.05.01.12.08.07
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 01 May 2017 12:08:02 -0700 (PDT)
+        Mon, 01 May 2017 12:08:07 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/5] cache.h: drop read_cache()
-Date:   Mon,  1 May 2017 12:07:15 -0700
-Message-Id: <20170501190719.10669-2-sbeller@google.com>
+Subject: [PATCH 2/5] cache.h: drop active_* macros
+Date:   Mon,  1 May 2017 12:07:16 -0700
+Message-Id: <20170501190719.10669-3-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.rc1.1.gbc33f0f778
 In-Reply-To: <20170501190719.10669-1-sbeller@google.com>
 References: <20170501190719.10669-1-sbeller@google.com>
@@ -61,669 +61,1616 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch is produced via coccinelle using this semantic patch:
+Based on the coccinelle patch:
 
 @@ @@
--read_cache()
-+read_index(&the_index)
+-active_cache
++the_index.cache
+@@ @@
+-active_nr
++the_index.cache_nr
+@@ @@
+-active_alloc
++the_index.cache_alloc
+@@ @@
+-active_cache_changed
++the_index.cache_changed
+@@ @@
+-active_cache_tree
++the_index.cache_tree
 
 Additional manual editing:
-* drop define in cache.h
-* a comment in builtin/check-ignore.c and read-cache.c were
-  converted
-* builtin/diff.c: fix error message referencing the function.
+* drop the macros from cache.h
+* fix the whitespace issue that apply complained about in
+  builtin/checkout.c
+* builtin/commit.c had an occurrence of active_cache_tree->sha1, which
+  was not picked up with the coccinelle patch.
+* diff.c and t/t2107-update-index-basic.sh referenced
+  active_cache[_changed] in comments, fix them up.
+* ative_nr was referenced in comments in read-cache.c and
+  builtin/update-index.c, fix them.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- apply.c                              |  2 +-
- builtin/add.c                        |  4 ++--
- builtin/am.c                         |  2 +-
- builtin/blame.c                      |  4 ++--
- builtin/check-attr.c                 |  2 +-
- builtin/check-ignore.c               |  4 ++--
- builtin/checkout-index.c             |  2 +-
- builtin/clean.c                      |  2 +-
- builtin/commit.c                     |  4 ++--
- builtin/diff-index.c                 |  2 +-
- builtin/diff.c                       |  6 +++---
- builtin/fsck.c                       |  2 +-
- builtin/grep.c                       |  2 +-
- builtin/ls-files.c                   |  2 +-
- builtin/merge-index.c                |  2 +-
- builtin/mv.c                         |  2 +-
- builtin/reset.c                      |  2 +-
- builtin/rev-parse.c                  |  2 +-
- builtin/rm.c                         |  2 +-
- builtin/submodule--helper.c          |  2 +-
- builtin/update-index.c               |  2 +-
- cache.h                              |  1 -
- check-racy.c                         |  2 +-
- diff.c                               |  2 +-
- merge-recursive.c                    |  2 +-
- merge.c                              |  2 +-
- read-cache.c                         |  2 +-
- rerere.c                             |  6 +++---
- revision.c                           |  4 ++--
- sequencer.c                          |  6 +++---
- sha1_name.c                          |  2 +-
- submodule.c                          |  4 ++--
- t/helper/test-dump-cache-tree.c      |  2 +-
- t/helper/test-dump-untracked-cache.c |  2 +-
- t/helper/test-lazy-init-name-hash.c  | 10 +++++-----
- t/helper/test-read-cache.c           |  2 +-
- t/helper/test-scrap-cache-tree.c     |  2 +-
- 37 files changed, 52 insertions(+), 53 deletions(-)
+ apply.c                          |  6 ++---
+ builtin/add.c                    |  6 ++---
+ builtin/am.c                     |  6 ++---
+ builtin/blame.c                  |  6 ++---
+ builtin/checkout-index.c         |  8 +++----
+ builtin/checkout.c               | 49 ++++++++++++++++++++--------------------
+ builtin/commit.c                 | 20 ++++++++--------
+ builtin/fsck.c                   | 12 +++++-----
+ builtin/grep.c                   |  8 +++----
+ builtin/ls-files.c               | 36 ++++++++++++++---------------
+ builtin/merge-index.c            | 10 ++++----
+ builtin/merge.c                  | 12 +++++-----
+ builtin/mv.c                     | 10 ++++----
+ builtin/read-tree.c              |  2 +-
+ builtin/rm.c                     | 16 ++++++-------
+ builtin/submodule--helper.c      |  8 +++----
+ builtin/update-index.c           | 48 ++++++++++++++++++++-------------------
+ cache.h                          |  6 -----
+ check-racy.c                     |  4 ++--
+ diff-lib.c                       |  6 ++---
+ diff.c                           |  8 +++----
+ dir.c                            | 20 ++++++++--------
+ merge-recursive.c                | 28 +++++++++++------------
+ pathspec.c                       | 14 ++++++------
+ read-cache.c                     |  2 +-
+ rerere.c                         | 26 ++++++++++-----------
+ revision.c                       | 18 +++++++--------
+ sequencer.c                      | 19 ++++++++--------
+ sha1_name.c                      | 14 ++++++------
+ submodule.c                      | 12 +++++-----
+ t/helper/test-dump-cache-tree.c  |  2 +-
+ t/helper/test-scrap-cache-tree.c |  2 +-
+ t/t2107-update-index-basic.sh    |  2 +-
+ tree.c                           |  8 +++----
+ wt-status.c                      | 12 +++++-----
+ 35 files changed, 232 insertions(+), 234 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index e6dbab26ad..82701d6580 100644
+index 82701d6580..ae1b659b68 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -3987,7 +3987,7 @@ static int read_apply_cache(struct apply_state *state)
- 	if (state->index_file)
- 		return read_cache_from(state->index_file);
- 	else
--		return read_cache();
-+		return read_index(&the_index);
+@@ -3499,7 +3499,7 @@ static int load_current(struct apply_state *state,
+ 	pos = cache_name_pos(name, strlen(name));
+ 	if (pos < 0)
+ 		return error(_("%s: does not exist in index"), name);
+-	ce = active_cache[pos];
++	ce = the_index.cache[pos];
+ 	if (lstat(name, &st)) {
+ 		if (errno != ENOENT)
+ 			return error_errno("%s", name);
+@@ -3671,7 +3671,7 @@ static int check_preimage(struct apply_state *state,
+ 				goto is_new;
+ 			return error(_("%s: does not exist in index"), old_name);
+ 		}
+-		*ce = active_cache[pos];
++		*ce = the_index.cache[pos];
+ 		if (stat_ret < 0) {
+ 			if (checkout_target(&the_index, *ce, st))
+ 				return -1;
+@@ -4001,7 +4001,7 @@ static int get_current_oid(struct apply_state *state, const char *path,
+ 	pos = cache_name_pos(path, strlen(path));
+ 	if (pos < 0)
+ 		return -1;
+-	oidcpy(oid, &active_cache[pos]->oid);
++	oidcpy(oid, &the_index.cache[pos]->oid);
+ 	return 0;
  }
  
- /* This function tries to read the object name from the current index */
 diff --git a/builtin/add.c b/builtin/add.c
-index 9f53f020d0..ab6d04e8db 100644
+index ab6d04e8db..f6d71b10d0 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -205,7 +205,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+@@ -34,8 +34,8 @@ static void chmod_pathspec(struct pathspec *pathspec, int force_mode)
+ {
+ 	int i;
  
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		struct cache_entry *ce = the_index.cache[i];
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("Could not read the index"));
+ 		if (pathspec && !ce_path_match(ce, pathspec, NULL))
+ 			continue;
+@@ -458,7 +458,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	unplug_bulk_checkin();
  
- 	init_revisions(&rev, prefix);
-@@ -376,7 +376,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		return 0;
+ finish:
+-	if (active_cache_changed) {
++	if (the_index.cache_changed) {
+ 		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 			die(_("Unable to write new index file"));
  	}
- 
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("index file corrupt"));
- 
- 	/*
 diff --git a/builtin/am.c b/builtin/am.c
-index a95dd8b4e6..4405d7307c 100644
+index 4405d7307c..c6a679d8e1 100644
 --- a/builtin/am.c
 +++ b/builtin/am.c
-@@ -1633,7 +1633,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	say(state, stdout, _("Falling back to patching base and 3-way merge..."));
+@@ -1155,12 +1155,12 @@ static int index_has_changes(struct strbuf *sb)
+ 		diff_flush(&opt);
+ 		return DIFF_OPT_TST(&opt, HAS_CHANGES) != 0;
+ 	} else {
+-		for (i = 0; sb && i < active_nr; i++) {
++		for (i = 0; sb && i < the_index.cache_nr; i++) {
+ 			if (i)
+ 				strbuf_addch(sb, ' ');
+-			strbuf_addstr(sb, active_cache[i]->name);
++			strbuf_addstr(sb, the_index.cache[i]->name);
+ 		}
+-		return !!active_nr;
++		return !!the_index.cache_nr;
+ 	}
+ }
  
- 	discard_cache();
--	read_cache();
-+	read_index(&the_index);
- 
- 	/*
- 	 * This is not so wrong. Depending on which base we picked, orig_tree
 diff --git a/builtin/blame.c b/builtin/blame.c
-index 07506a3e45..59955208fd 100644
+index 59955208fd..cbb7c1fd9d 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -2313,7 +2313,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 	unsigned mode;
- 	struct strbuf msg = STRBUF_INIT;
- 
--	read_cache();
-+	read_index(&the_index);
- 	time(&now);
- 	commit = alloc_commit_node();
- 	commit->object.parsed = 1;
-@@ -2395,7 +2395,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 	 * want to run "diff-index --cached".
- 	 */
- 	discard_cache();
--	read_cache();
-+	read_index(&the_index);
- 
- 	len = strlen(path);
+@@ -2242,8 +2242,8 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
+ 	pos = cache_name_pos(path, strlen(path));
+ 	if (pos >= 0)
+ 		; /* path is in the index */
+-	else if (-1 - pos < active_nr &&
+-		 !strcmp(active_cache[-1 - pos]->name, path))
++	else if (-1 - pos < the_index.cache_nr &&
++		 !strcmp(the_index.cache[-1 - pos]->name, path))
+ 		; /* path is in the index, unmerged */
+ 	else
+ 		die("no such path '%s' in HEAD", path);
+@@ -2401,7 +2401,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
  	if (!mode) {
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 4d01ca0c8b..9cc3675d62 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -114,7 +114,7 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, check_attr_options,
- 			     check_attr_usage, PARSE_OPT_KEEP_DASHDASH);
- 
--	if (read_cache() < 0) {
-+	if (read_index(&the_index) < 0) {
- 		die("invalid cache");
- 	}
- 
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 1d73d3ca3d..e526b27151 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -167,8 +167,8 @@ int cmd_check_ignore(int argc, const char **argv, const char *prefix)
- 	if (show_non_matching && !verbose)
- 		die(_("--non-matching is only valid with --verbose"));
- 
--	/* read_cache() is only necessary so we can watch out for submodules. */
--	if (!no_index && read_cache() < 0)
-+	/* read_index() is only necessary so we can watch out for submodules. */
-+	if (!no_index && read_index(&the_index) < 0)
- 		die(_("index file corrupt"));
- 
- 	memset(&dir, 0, sizeof(dir));
+ 		int pos = cache_name_pos(path, len);
+ 		if (0 <= pos)
+-			mode = active_cache[pos]->ce_mode;
++			mode = the_index.cache[pos]->ce_mode;
+ 		else
+ 			/* Let's not bother reading from HEAD tree */
+ 			mode = S_IFREG | 0644;
 diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index 07631d0c9c..676b9419f0 100644
+index 676b9419f0..1c3dcc1a8b 100644
 --- a/builtin/checkout-index.c
 +++ b/builtin/checkout-index.c
-@@ -185,7 +185,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	prefix_length = prefix ? strlen(prefix) : 0;
+@@ -54,8 +54,8 @@ static int checkout_file(const char *name, const char *prefix)
+ 	if (pos < 0)
+ 		pos = -pos - 1;
  
--	if (read_cache() < 0) {
-+	if (read_index(&the_index) < 0) {
- 		die("invalid cache");
+-	while (pos < active_nr) {
+-		struct cache_entry *ce = active_cache[pos];
++	while (pos < the_index.cache_nr) {
++		struct cache_entry *ce = the_index.cache[pos];
+ 		if (ce_namelen(ce) != namelen ||
+ 		    memcmp(ce->name, name, namelen))
+ 			break;
+@@ -95,8 +95,8 @@ static void checkout_all(const char *prefix, int prefix_length)
+ 	int i, errs = 0;
+ 	struct cache_entry *last_ce = NULL;
+ 
+-	for (i = 0; i < active_nr ; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr ; i++) {
++		struct cache_entry *ce = the_index.cache[i];
+ 		if (ce_stage(ce) != checkout_stage
+ 		    && (CHECKOUT_ALL != checkout_stage || !ce_stage(ce)))
+ 			continue;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index bfa5419f33..0aac616ad6 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -109,7 +109,7 @@ static int update_some(const unsigned char *sha1, struct strbuf *base,
+ 	 */
+ 	pos = cache_name_pos(ce->name, ce->ce_namelen);
+ 	if (pos >= 0) {
+-		struct cache_entry *old = active_cache[pos];
++		struct cache_entry *old = the_index.cache[pos];
+ 		if (ce->ce_mode == old->ce_mode &&
+ 		    !oidcmp(&ce->oid, &old->oid)) {
+ 			old->ce_flags |= CE_UPDATE;
+@@ -135,17 +135,17 @@ static int read_tree_some(struct tree *tree, const struct pathspec *pathspec)
+ 
+ static int skip_same_name(const struct cache_entry *ce, int pos)
+ {
+-	while (++pos < active_nr &&
+-	       !strcmp(active_cache[pos]->name, ce->name))
++	while (++pos < the_index.cache_nr &&
++	       !strcmp(the_index.cache[pos]->name, ce->name))
+ 		; /* skip */
+ 	return pos;
+ }
+ 
+ static int check_stage(int stage, const struct cache_entry *ce, int pos)
+ {
+-	while (pos < active_nr &&
+-	       !strcmp(active_cache[pos]->name, ce->name)) {
+-		if (ce_stage(active_cache[pos]) == stage)
++	while (pos < the_index.cache_nr &&
++	       !strcmp(the_index.cache[pos]->name, ce->name)) {
++		if (ce_stage(the_index.cache[pos]) == stage)
+ 			return 0;
+ 		pos++;
+ 	}
+@@ -160,8 +160,8 @@ static int check_stages(unsigned stages, const struct cache_entry *ce, int pos)
+ 	unsigned seen = 0;
+ 	const char *name = ce->name;
+ 
+-	while (pos < active_nr) {
+-		ce = active_cache[pos];
++	while (pos < the_index.cache_nr) {
++		ce = the_index.cache[pos];
+ 		if (strcmp(name, ce->name))
+ 			break;
+ 		seen |= (1 << ce_stage(ce));
+@@ -176,10 +176,11 @@ static int check_stages(unsigned stages, const struct cache_entry *ce, int pos)
+ static int checkout_stage(int stage, const struct cache_entry *ce, int pos,
+ 			  const struct checkout *state)
+ {
+-	while (pos < active_nr &&
+-	       !strcmp(active_cache[pos]->name, ce->name)) {
+-		if (ce_stage(active_cache[pos]) == stage)
+-			return checkout_entry(active_cache[pos], state, NULL);
++	while (pos < the_index.cache_nr &&
++	       !strcmp(the_index.cache[pos]->name, ce->name)) {
++		if (ce_stage(the_index.cache[pos]) == stage)
++			return checkout_entry(the_index.cache[pos], state,
++					      NULL);
+ 		pos++;
+ 	}
+ 	if (stage == 2)
+@@ -190,7 +191,7 @@ static int checkout_stage(int stage, const struct cache_entry *ce, int pos,
+ 
+ static int checkout_merged(int pos, const struct checkout *state)
+ {
+-	struct cache_entry *ce = active_cache[pos];
++	struct cache_entry *ce = the_index.cache[pos];
+ 	const char *path = ce->name;
+ 	mmfile_t ancestor, ours, theirs;
+ 	int status;
+@@ -200,7 +201,7 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 	unsigned mode = 0;
+ 
+ 	memset(threeway, 0, sizeof(threeway));
+-	while (pos < active_nr) {
++	while (pos < the_index.cache_nr) {
+ 		int stage;
+ 		stage = ce_stage(ce);
+ 		if (!stage || strcmp(path, ce->name))
+@@ -209,7 +210,7 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 		if (stage == 2)
+ 			mode = create_ce_mode(ce->ce_mode);
+ 		pos++;
+-		ce = active_cache[pos];
++		ce = the_index.cache[pos];
+ 	}
+ 	if (is_null_oid(&threeway[1]) || is_null_oid(&threeway[2]))
+ 		return error(_("path '%s' does not have necessary versions"), path);
+@@ -306,8 +307,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	 * Make sure all pathspecs participated in locating the paths
+ 	 * to be checked out.
+ 	 */
+-	for (pos = 0; pos < active_nr; pos++) {
+-		struct cache_entry *ce = active_cache[pos];
++	for (pos = 0; pos < the_index.cache_nr; pos++) {
++		struct cache_entry *ce = the_index.cache[pos];
+ 		ce->ce_flags &= ~CE_MATCHED;
+ 		if (!opts->ignore_skipworktree && ce_skip_worktree(ce))
+ 			continue;
+@@ -349,8 +350,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		unmerge_marked_index(&the_index);
+ 
+ 	/* Any unmerged paths? */
+-	for (pos = 0; pos < active_nr; pos++) {
+-		const struct cache_entry *ce = active_cache[pos];
++	for (pos = 0; pos < the_index.cache_nr; pos++) {
++		const struct cache_entry *ce = the_index.cache[pos];
+ 		if (ce->ce_flags & CE_MATCHED) {
+ 			if (!ce_stage(ce))
+ 				continue;
+@@ -374,8 +375,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	state.force = 1;
+ 	state.refresh_cache = 1;
+ 	state.istate = &the_index;
+-	for (pos = 0; pos < active_nr; pos++) {
+-		struct cache_entry *ce = active_cache[pos];
++	for (pos = 0; pos < the_index.cache_nr; pos++) {
++		struct cache_entry *ce = the_index.cache[pos];
+ 		if (ce->ce_flags & CE_MATCHED) {
+ 			if (!ce_stage(ce)) {
+ 				errs |= checkout_entry(ce, &state, NULL);
+@@ -597,10 +598,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		}
  	}
  
-diff --git a/builtin/clean.c b/builtin/clean.c
-index d861f836a2..9bdefca6dc 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -916,7 +916,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
++	if (!the_index.cache_tree)
++		the_index.cache_tree = cache_tree();
  
- 	dir.flags |= DIR_SHOW_OTHER_DIRECTORIES;
+-	if (!cache_tree_fully_valid(active_cache_tree))
++	if (!cache_tree_fully_valid(the_index.cache_tree))
+ 		cache_tree_update(&the_index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("index file corrupt"));
- 
- 	if (!ignored)
+ 	if (write_locked_index(&the_index, lock_file, COMMIT_LOCK))
 diff --git a/builtin/commit.c b/builtin/commit.c
-index 1d805f5da8..7cd08841a1 100644
+index 7cd08841a1..01d298c836 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -465,7 +465,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 		exit(1);
+@@ -257,8 +257,8 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 		free(max_prefix);
+ 	}
  
- 	discard_cache();
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("cannot read the index"));
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		const struct cache_entry *ce = the_index.cache[i];
+ 		struct string_list_item *item;
  
- 	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
+ 		if (ce->ce_flags & CE_UPDATE)
+@@ -418,10 +418,10 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 	if (!only && !pathspec.nr) {
+ 		hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
+ 		refresh_cache_or_die(refresh_flags);
+-		if (active_cache_changed
+-		    || !cache_tree_fully_valid(active_cache_tree))
++		if (the_index.cache_changed
++		    || !cache_tree_fully_valid(the_index.cache_tree))
+ 			update_main_cache_tree(WRITE_TREE_SILENT);
+-		if (active_cache_changed) {
++		if (the_index.cache_changed) {
+ 			if (write_locked_index(&the_index, &index_lock,
+ 					       COMMIT_LOCK))
+ 				die(_("unable to write new_index file"));
 @@ -888,7 +888,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
  		struct object_id oid;
  		const char *parent = "HEAD";
  
--		if (!active_nr && read_cache() < 0)
-+		if (!active_nr && read_index(&the_index) < 0)
+-		if (!active_nr && read_index(&the_index) < 0)
++		if (!the_index.cache_nr && read_index(&the_index) < 0)
  			die(_("Cannot read index"));
  
  		if (amend)
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index 1af373d002..49fd64d4ce 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -48,7 +48,7 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
- 			perror("read_cache_preload");
- 			return -1;
- 		}
--	} else if (read_cache() < 0) {
-+	} else if (read_index(&the_index) < 0) {
- 		perror("read_cache");
- 		return -1;
+@@ -897,10 +897,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		if (get_sha1(parent, oid.hash)) {
+ 			int i, ita_nr = 0;
+ 
+-			for (i = 0; i < active_nr; i++)
+-				if (ce_intent_to_add(active_cache[i]))
++			for (i = 0; i < the_index.cache_nr; i++)
++				if (ce_intent_to_add(the_index.cache[i]))
+ 					ita_nr++;
+-			commitable = active_nr - ita_nr > 0;
++			commitable = the_index.cache_nr - ita_nr > 0;
+ 		} else {
+ 			/*
+ 			 * Unless the user did explicitly request a submodule
+@@ -1758,7 +1758,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		append_merge_tag_headers(parents, &tail);
  	}
-diff --git a/builtin/diff.c b/builtin/diff.c
-index d184aafab9..ed9edb2d0c 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -148,8 +148,8 @@ static int builtin_diff_index(struct rev_info *revs,
- 			perror("read_cache_preload");
- 			return -1;
- 		}
--	} else if (read_cache() < 0) {
--		perror("read_cache");
-+	} else if (read_index(&the_index) < 0) {
-+		perror("read_index");
- 		return -1;
- 	}
- 	return run_diff_index(revs, cached);
-@@ -210,7 +210,7 @@ static void refresh_index_quietly(void)
- 	if (fd < 0)
- 		return;
- 	discard_cache();
--	read_cache();
-+	read_index(&the_index);
- 	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
- 	update_index_if_able(&the_index, lock_file);
- }
+ 
+-	if (commit_tree_extended(sb.buf, sb.len, active_cache_tree->sha1,
++	if (commit_tree_extended(sb.buf, sb.len, the_index.cache_tree->sha1,
+ 			 parents, oid.hash, author_ident.buf, sign_commit, extra)) {
+ 		rollback_index_files();
+ 		die(_("failed to write commit object"));
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index b5e13a4556..35e03556cb 100644
+index 35e03556cb..c5d6593d30 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -772,7 +772,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 
+@@ -773,15 +773,15 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
  	if (keep_cache_objects) {
  		verify_index_checksum = 1;
--		read_cache();
-+		read_index(&the_index);
- 		for (i = 0; i < active_nr; i++) {
+ 		read_index(&the_index);
+-		for (i = 0; i < active_nr; i++) {
++		for (i = 0; i < the_index.cache_nr; i++) {
  			unsigned int mode;
  			struct blob *blob;
+ 			struct object *obj;
+ 
+-			mode = active_cache[i]->ce_mode;
++			mode = the_index.cache[i]->ce_mode;
+ 			if (S_ISGITLINK(mode))
+ 				continue;
+-			blob = lookup_blob(active_cache[i]->oid.hash);
++			blob = lookup_blob(the_index.cache[i]->oid.hash);
+ 			if (!blob)
+ 				continue;
+ 			obj = &blob->object;
+@@ -789,11 +789,11 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 			if (name_objects)
+ 				add_decoration(fsck_walk_options.object_names,
+ 					obj,
+-					xstrfmt(":%s", active_cache[i]->name));
++					xstrfmt(":%s", the_index.cache[i]->name));
+ 			mark_object_reachable(obj);
+ 		}
+-		if (active_cache_tree)
+-			fsck_cache_tree(active_cache_tree);
++		if (the_index.cache_tree)
++			fsck_cache_tree(the_index.cache_tree);
+ 	}
+ 
+ 	check_connectivity();
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 3ffb5b4e81..5153dbf262 100644
+index 5153dbf262..a1150e6f87 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -676,7 +676,7 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec,
- 		strbuf_addstr(&name, super_prefix);
- 	}
+@@ -678,8 +678,8 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec,
  
--	read_cache();
-+	read_index(&the_index);
+ 	read_index(&the_index);
  
- 	for (nr = 0; nr < active_nr; nr++) {
- 		const struct cache_entry *ce = active_cache[nr];
+-	for (nr = 0; nr < active_nr; nr++) {
+-		const struct cache_entry *ce = active_cache[nr];
++	for (nr = 0; nr < the_index.cache_nr; nr++) {
++		const struct cache_entry *ce = the_index.cache[nr];
+ 		strbuf_setlen(&name, name_base_len);
+ 		strbuf_addstr(&name, ce->name);
+ 
+@@ -711,8 +711,8 @@ static int grep_cache(struct grep_opt *opt, const struct pathspec *pathspec,
+ 		if (ce_stage(ce)) {
+ 			do {
+ 				nr++;
+-			} while (nr < active_nr &&
+-				 !strcmp(ce->name, active_cache[nr]->name));
++			} while (nr < the_index.cache_nr &&
++				 !strcmp(ce->name, the_index.cache[nr]->name));
+ 			nr--; /* compensate for loop control */
+ 		}
+ 		if (hit && opt->status_only)
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index a6c70dbe9e..da4779ec0b 100644
+index da4779ec0b..edcad6e8e1 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -578,7 +578,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	super_prefix = get_super_prefix();
- 	git_config(git_default_config, NULL);
+@@ -139,20 +139,20 @@ static void show_killed_files(struct dir_struct *dir)
+ 					die("BUG: killed-file %.*s not found",
+ 						ent->len, ent->name);
+ 				pos = -pos - 1;
+-				while (pos < active_nr &&
+-				       ce_stage(active_cache[pos]))
++				while (pos < the_index.cache_nr &&
++				       ce_stage(the_index.cache[pos]))
+ 					pos++; /* skip unmerged */
+-				if (active_nr <= pos)
++				if (the_index.cache_nr <= pos)
+ 					break;
+ 				/* pos points at a name immediately after
+ 				 * ent->name in the cache.  Does it expect
+ 				 * ent->name to be a directory?
+ 				 */
+-				len = ce_namelen(active_cache[pos]);
++				len = ce_namelen(the_index.cache[pos]);
+ 				if ((ent->len < len) &&
+-				    !strncmp(active_cache[pos]->name,
++				    !strncmp(the_index.cache[pos]->name,
+ 					     ent->name, ent->len) &&
+-				    active_cache[pos]->name[ent->len] == '/')
++				    the_index.cache[pos]->name[ent->len] == '/')
+ 					killed = 1;
+ 				break;
+ 			}
+@@ -340,8 +340,8 @@ static void show_files(struct dir_struct *dir)
+ 			show_killed_files(dir);
+ 	}
+ 	if (show_cached || show_stage) {
+-		for (i = 0; i < active_nr; i++) {
+-			const struct cache_entry *ce = active_cache[i];
++		for (i = 0; i < the_index.cache_nr; i++) {
++			const struct cache_entry *ce = the_index.cache[i];
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+ 			    !ce_excluded(dir, ce))
+ 				continue;
+@@ -354,8 +354,8 @@ static void show_files(struct dir_struct *dir)
+ 		}
+ 	}
+ 	if (show_deleted || show_modified) {
+-		for (i = 0; i < active_nr; i++) {
+-			const struct cache_entry *ce = active_cache[i];
++		for (i = 0; i < the_index.cache_nr; i++) {
++			const struct cache_entry *ce = the_index.cache[i];
+ 			struct stat st;
+ 			int err;
+ 			if ((dir->flags & DIR_SHOW_IGNORED) &&
+@@ -388,19 +388,19 @@ static void prune_cache(const char *prefix, size_t prefixlen)
+ 	if (pos < 0)
+ 		pos = -pos-1;
+ 	first = pos;
+-	last = active_nr;
++	last = the_index.cache_nr;
+ 	while (last > first) {
+ 		int next = (last + first) >> 1;
+-		const struct cache_entry *ce = active_cache[next];
++		const struct cache_entry *ce = the_index.cache[next];
+ 		if (!strncmp(ce->name, prefix, prefixlen)) {
+ 			first = next+1;
+ 			continue;
+ 		}
+ 		last = next;
+ 	}
+-	memmove(active_cache, active_cache + pos,
++	memmove(the_index.cache, the_index.cache + pos,
+ 		(last - pos) * sizeof(struct cache_entry *));
+-	active_nr = last - pos;
++	the_index.cache_nr = last - pos;
+ }
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die("index file corrupt");
+ /*
+@@ -426,8 +426,8 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+ 		die("bad tree-ish %s", tree_name);
  
- 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
+ 	/* Hoist the unmerged entries up to stage #3 to make room */
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		struct cache_entry *ce = the_index.cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+ 		ce->ce_flags |= CE_STAGEMASK;
+@@ -443,8 +443,8 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+ 	if (read_tree(tree, 1, &pathspec))
+ 		die("unable to read tree entries %s", tree_name);
+ 
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		struct cache_entry *ce = the_index.cache[i];
+ 		switch (ce_stage(ce)) {
+ 		case 0:
+ 			last_stage0 = ce;
 diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index c99443b095..51fb590dfa 100644
+index 51fb590dfa..d867ee73f0 100644
 --- a/builtin/merge-index.c
 +++ b/builtin/merge-index.c
-@@ -77,7 +77,7 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
- 	if (argc < 3)
- 		usage("git merge-index [-o] [-q] <merge-program> (-a | [--] [<filename>...])");
+@@ -12,11 +12,11 @@ static int merge_entry(int pos, const char *path)
+ 	char hexbuf[4][GIT_MAX_HEXSZ + 1];
+ 	char ownbuf[4][60];
  
--	read_cache();
-+	read_index(&the_index);
+-	if (pos >= active_nr)
++	if (pos >= the_index.cache_nr)
+ 		die("git merge-index: %s not in the cache", path);
+ 	found = 0;
+ 	do {
+-		const struct cache_entry *ce = active_cache[pos];
++		const struct cache_entry *ce = the_index.cache[pos];
+ 		int stage = ce_stage(ce);
  
- 	i = 1;
- 	if (!strcmp(argv[i], "-o")) {
+ 		if (strcmp(ce->name, path))
+@@ -26,7 +26,7 @@ static int merge_entry(int pos, const char *path)
+ 		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+ 		arguments[stage] = hexbuf[stage];
+ 		arguments[stage + 4] = ownbuf[stage];
+-	} while (++pos < active_nr);
++	} while (++pos < the_index.cache_nr);
+ 	if (!found)
+ 		die("git merge-index: %s not in the cache", path);
+ 
+@@ -57,8 +57,8 @@ static void merge_one_path(const char *path)
+ static void merge_all(void)
+ {
+ 	int i;
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		const struct cache_entry *ce = the_index.cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+ 		i += merge_entry(i, ce->name)-1;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 703827f006..4d4c56050c 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -615,7 +615,7 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
+ 	if (!trees[nr_trees++])
+ 		return -1;
+ 	opts.fn = threeway_merge;
+-	cache_tree_free(&active_cache_tree);
++	cache_tree_free(&the_index.cache_tree);
+ 	for (i = 0; i < nr_trees; i++) {
+ 		parse_tree(trees[i]);
+ 		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
+@@ -640,7 +640,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 
+ 	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+ 	refresh_cache(REFRESH_QUIET);
+-	if (active_cache_changed &&
++	if (the_index.cache_changed &&
+ 	    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+ 		return error(_("Unable to write index."));
+ 	rollback_lock_file(&lock);
+@@ -680,7 +680,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 				remoteheads->item, reversed, &result);
+ 		if (clean < 0)
+ 			exit(128);
+-		if (active_cache_changed &&
++		if (the_index.cache_changed &&
+ 		    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+ 			die (_("unable to write %s"), get_index_file());
+ 		rollback_lock_file(&lock);
+@@ -703,8 +703,8 @@ static int count_unmerged_entries(void)
+ {
+ 	int i, ret = 0;
+ 
+-	for (i = 0; i < active_nr; i++)
+-		if (ce_stage(active_cache[i]))
++	for (i = 0; i < the_index.cache_nr; i++)
++		if (ce_stage(the_index.cache[i]))
+ 			ret++;
+ 
+ 	return ret;
+@@ -787,7 +787,7 @@ static int merge_trivial(struct commit *head, struct commit_list *remoteheads)
+ 
+ 	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
+ 	refresh_cache(REFRESH_QUIET);
+-	if (active_cache_changed &&
++	if (the_index.cache_changed &&
+ 	    write_locked_index(&the_index, &lock, COMMIT_LOCK))
+ 		return error(_("Unable to write index."));
+ 	rollback_lock_file(&lock);
 diff --git a/builtin/mv.c b/builtin/mv.c
-index 61d20037ad..6fd7a3a9d8 100644
+index 6fd7a3a9d8..3b887a9490 100644
 --- a/builtin/mv.c
 +++ b/builtin/mv.c
-@@ -139,7 +139,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_mv_usage, builtin_mv_options);
+@@ -78,7 +78,7 @@ static void prepare_move_submodule(const char *src, int first,
+ 				   const char **submodule_gitfile)
+ {
+ 	struct strbuf submodule_dotgit = STRBUF_INIT;
+-	if (!S_ISGITLINK(active_cache[first]->ce_mode))
++	if (!S_ISGITLINK(the_index.cache[first]->ce_mode))
+ 		die(_("Directory %s is in index and no submodule?"), src);
+ 	if (!is_staging_gitmodules_ok())
+ 		die(_("Please stage your changes to .gitmodules or stash them to proceed"));
+@@ -102,8 +102,8 @@ static int index_range_of_same_dir(const char *src, int length,
+ 		die(_("%.*s is in index"), len_w_slash, src_w_slash);
  
- 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("index file corrupt"));
- 
- 	source = internal_prefix_pathspec(prefix, argv, argc, 0);
-diff --git a/builtin/reset.c b/builtin/reset.c
-index fc3b906c47..03c5498d6e 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -231,7 +231,7 @@ static void parse_args(struct pathspec *pathspec,
+ 	first = -1 - first;
+-	for (last = first; last < active_nr; last++) {
+-		const char *path = active_cache[last]->name;
++	for (last = first; last < the_index.cache_nr; last++) {
++		const char *path = the_index.cache[last]->name;
+ 		if (strncmp(path, src_w_slash, len_w_slash))
+ 			break;
  	}
- 	*rev_ret = rev;
+@@ -209,7 +209,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 				dst_len = strlen(dst);
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("index file corrupt"));
+ 				for (j = 0; j < last - first; j++) {
+-					const char *path = active_cache[first + j]->name;
++					const char *path = the_index.cache[first + j]->name;
+ 					source[argc + j] = path;
+ 					destination[argc + j] =
+ 						prefix_path(dst, dst_len, path + length + 1);
+@@ -293,7 +293,7 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 	if (gitmodules_modified)
+ 		stage_updated_gitmodules();
  
- 	parse_pathspec(pathspec, 0,
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 0513330910..0c6352a018 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -868,7 +868,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 				continue;
- 			}
- 			if (!strcmp(arg, "--shared-index-path")) {
--				if (read_cache() < 0)
-+				if (read_index(&the_index) < 0)
- 					die(_("Could not read the index"));
- 				if (the_index.split_index) {
- 					const unsigned char *sha1 = the_index.split_index->base_sha1;
+-	if (active_cache_changed &&
++	if (the_index.cache_changed &&
+ 	    write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 		die(_("Unable to write new index file"));
+ 
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 23e212ee8c..f997814933 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -251,7 +251,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 	if (opts.debug_unpack)
+ 		opts.fn = debug_merge;
+ 
+-	cache_tree_free(&active_cache_tree);
++	cache_tree_free(&the_index.cache_tree);
+ 	for (i = 0; i < nr_trees; i++) {
+ 		struct tree *tree = trees[i];
+ 		parse_tree(tree);
 diff --git a/builtin/rm.c b/builtin/rm.c
-index fb79dcab18..d0eecbdaac 100644
+index d0eecbdaac..0813d0a853 100644
 --- a/builtin/rm.c
 +++ b/builtin/rm.c
-@@ -267,7 +267,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+@@ -30,8 +30,8 @@ static int get_ours_cache_pos(const char *path, int pos)
+ {
+ 	int i = -pos - 1;
  
- 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
+-	while ((i < active_nr) && !strcmp(active_cache[i]->name, path)) {
+-		if (ce_stage(active_cache[i]) == 2)
++	while ((i < the_index.cache_nr) && !strcmp(the_index.cache[i]->name, path)) {
++		if (ce_stage(the_index.cache[i]) == 2)
+ 			return i;
+ 		i++;
+ 	}
+@@ -73,7 +73,7 @@ static void submodules_absorb_gitdir_if_needed(const char *prefix)
+ 			if (pos < 0)
+ 				continue;
+ 		}
+-		ce = active_cache[pos];
++		ce = the_index.cache[pos];
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("index file corrupt"));
+ 		if (!S_ISGITLINK(ce->ce_mode) ||
+ 		    !file_exists(ce->name) ||
+@@ -122,11 +122,11 @@ static int check_local_mod(struct object_id *head, int index_only)
+ 			if (pos < 0)
+ 				continue;
  
- 	parse_pathspec(&pathspec, 0,
+-			if (!S_ISGITLINK(active_cache[pos]->ce_mode) ||
++			if (!S_ISGITLINK(the_index.cache[pos]->ce_mode) ||
+ 			    is_empty_dir(name))
+ 				continue;
+ 		}
+-		ce = active_cache[pos];
++		ce = the_index.cache[pos];
+ 
+ 		if (lstat(ce->name, &st) < 0) {
+ 			if (errno != ENOENT && errno != ENOTDIR)
+@@ -278,8 +278,8 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 
+ 	seen = xcalloc(pathspec.nr, 1);
+ 
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		const struct cache_entry *ce = the_index.cache[i];
+ 		if (!ce_path_match(ce, &pathspec, seen))
+ 			continue;
+ 		ALLOC_GROW(list.entry, list.nr + 1, list.alloc);
+@@ -386,7 +386,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+ 			stage_updated_gitmodules();
+ 	}
+ 
+-	if (active_cache_changed) {
++	if (the_index.cache_changed) {
+ 		if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+ 			die(_("Unable to write new index file"));
+ 	}
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 566a5b6a6f..1281056312 100644
+index 1281056312..822c3b3e57 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -240,7 +240,7 @@ static int module_list_compute(int argc, const char **argv,
- 	if (pathspec->nr)
- 		ps_matched = xcalloc(pathspec->nr, 1);
- 
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
+@@ -243,8 +243,8 @@ static int module_list_compute(int argc, const char **argv,
+ 	if (read_index(&the_index) < 0)
  		die(_("index file corrupt"));
  
- 	for (i = 0; i < active_nr; i++) {
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		const struct cache_entry *ce = the_index.cache[i];
+ 
+ 		if (!match_pathspec(pathspec, ce->name, ce_namelen(ce),
+ 				    0, ps_matched, 1) ||
+@@ -253,8 +253,8 @@ static int module_list_compute(int argc, const char **argv,
+ 
+ 		ALLOC_GROW(list->entries, list->nr + 1, list->alloc);
+ 		list->entries[list->nr++] = ce;
+-		while (i + 1 < active_nr &&
+-		       !strcmp(ce->name, active_cache[i + 1]->name))
++		while (i + 1 < the_index.cache_nr &&
++		       !strcmp(ce->name, the_index.cache[i + 1]->name))
+ 			/*
+ 			 * Skip entries with the same name in different stages
+ 			 * to make sure an entry is returned only once.
 diff --git a/builtin/update-index.c b/builtin/update-index.c
-index ebfc09faa0..7a4b914af4 100644
+index 7a4b914af4..9b93e09765 100644
 --- a/builtin/update-index.c
 +++ b/builtin/update-index.c
-@@ -1021,7 +1021,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 	if (newfd < 0)
- 		lock_error = errno;
+@@ -228,12 +228,12 @@ static int mark_ce_flags(const char *path, int flag, int mark)
+ 	int pos = cache_name_pos(path, namelen);
+ 	if (0 <= pos) {
+ 		if (mark)
+-			active_cache[pos]->ce_flags |= flag;
++			the_index.cache[pos]->ce_flags |= flag;
+ 		else
+-			active_cache[pos]->ce_flags &= ~flag;
+-		active_cache[pos]->ce_flags |= CE_UPDATE_IN_BASE;
++			the_index.cache[pos]->ce_flags &= ~flag;
++		the_index.cache[pos]->ce_flags |= CE_UPDATE_IN_BASE;
+ 		cache_tree_invalidate_path(&the_index, path);
+-		active_cache_changed |= CE_ENTRY_CHANGED;
++		the_index.cache_changed |= CE_ENTRY_CHANGED;
+ 		return 0;
+ 	}
+ 	return -1;
+@@ -321,7 +321,7 @@ static int process_directory(const char *path, int len, struct stat *st)
  
--	entries = read_cache();
-+	entries = read_index(&the_index);
- 	if (entries < 0)
- 		die("cache corrupted");
+ 	/* Exact match: file or existing gitlink */
+ 	if (pos >= 0) {
+-		const struct cache_entry *ce = active_cache[pos];
++		const struct cache_entry *ce = the_index.cache[pos];
+ 		if (S_ISGITLINK(ce->ce_mode)) {
  
+ 			/* Do nothing to the index if there is no HEAD! */
+@@ -336,8 +336,8 @@ static int process_directory(const char *path, int len, struct stat *st)
+ 
+ 	/* Inexact match: is there perhaps a subdirectory match? */
+ 	pos = -pos-1;
+-	while (pos < active_nr) {
+-		const struct cache_entry *ce = active_cache[pos++];
++	while (pos < the_index.cache_nr) {
++		const struct cache_entry *ce = the_index.cache[pos++];
+ 
+ 		if (strncmp(ce->name, path, len))
+ 			break;
+@@ -369,7 +369,7 @@ static int process_path(const char *path)
+ 		return error("'%s' is beyond a symbolic link", path);
+ 
+ 	pos = cache_name_pos(path, len);
+-	ce = pos < 0 ? NULL : active_cache[pos];
++	ce = pos < 0 ? NULL : the_index.cache[pos];
+ 	if (ce && ce_skip_worktree(ce)) {
+ 		/*
+ 		 * working directory version is assumed "good"
+@@ -431,7 +431,7 @@ static void chmod_path(char flip, const char *path)
+ 	pos = cache_name_pos(path, strlen(path));
+ 	if (pos < 0)
+ 		goto fail;
+-	ce = active_cache[pos];
++	ce = the_index.cache[pos];
+ 	if (chmod_cache_entry(ce, flip) < 0)
+ 		goto fail;
+ 
+@@ -614,8 +614,8 @@ static int unresolve_one(const char *path)
+ 	if (0 <= pos) {
+ 		/* already merged */
+ 		pos = unmerge_cache_entry_at(pos);
+-		if (pos < active_nr) {
+-			const struct cache_entry *ce = active_cache[pos];
++		if (pos < the_index.cache_nr) {
++			const struct cache_entry *ce = the_index.cache[pos];
+ 			if (ce_stage(ce) &&
+ 			    ce_namelen(ce) == namelen &&
+ 			    !memcmp(ce->name, path, namelen))
+@@ -628,8 +628,8 @@ static int unresolve_one(const char *path)
+ 		 * want to do anything in the former case.
+ 		 */
+ 		pos = -pos-1;
+-		if (pos < active_nr) {
+-			const struct cache_entry *ce = active_cache[pos];
++		if (pos < the_index.cache_nr) {
++			const struct cache_entry *ce = the_index.cache[pos];
+ 			if (ce_namelen(ce) == namelen &&
+ 			    !memcmp(ce->name, path, namelen)) {
+ 				fprintf(stderr,
+@@ -724,8 +724,8 @@ static int do_reupdate(int ac, const char **av,
+ 		 */
+ 		has_head = 0;
+  redo:
+-	for (pos = 0; pos < active_nr; pos++) {
+-		const struct cache_entry *ce = active_cache[pos];
++	for (pos = 0; pos < the_index.cache_nr; pos++) {
++		const struct cache_entry *ce = the_index.cache[pos];
+ 		struct cache_entry *old = NULL;
+ 		int save_nr;
+ 		char *path;
+@@ -740,16 +740,18 @@ static int do_reupdate(int ac, const char **av,
+ 			free(old);
+ 			continue; /* unchanged */
+ 		}
+-		/* Be careful.  The working tree may not have the
++		/*
++		 * Be careful.  The working tree may not have the
+ 		 * path anymore, in which case, under 'allow_remove',
+-		 * or worse yet 'allow_replace', active_nr may decrease.
++		 * or worse yet 'allow_replace', the_index.cache_nr
++		 * may decrease.
+ 		 */
+-		save_nr = active_nr;
++		save_nr = the_index.cache_nr;
+ 		path = xstrdup(ce->name);
+ 		update_one(path);
+ 		free(path);
+ 		free(old);
+-		if (save_nr != active_nr)
++		if (save_nr != the_index.cache_nr)
+ 			goto redo;
+ 	}
+ 	clear_pathspec(&pathspec);
+@@ -878,7 +880,7 @@ static int unresolve_callback(struct parse_opt_ctx_t *ctx,
+ 	*has_errors = do_unresolve(ctx->argc, ctx->argv,
+ 				prefix, prefix ? strlen(prefix) : 0);
+ 	if (*has_errors)
+-		active_cache_changed = 0;
++		the_index.cache_changed = 0;
+ 
+ 	ctx->argv += ctx->argc - 1;
+ 	ctx->argc = 1;
+@@ -896,7 +898,7 @@ static int reupdate_callback(struct parse_opt_ctx_t *ctx,
+ 	*has_errors = do_reupdate(ctx->argc, ctx->argv,
+ 				prefix, prefix ? strlen(prefix) : 0);
+ 	if (*has_errors)
+-		active_cache_changed = 0;
++		the_index.cache_changed = 0;
+ 
+ 	ctx->argv += ctx->argc - 1;
+ 	ctx->argc = 1;
+@@ -1075,7 +1077,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			    INDEX_FORMAT_LB, INDEX_FORMAT_UB);
+ 
+ 		if (the_index.version != preferred_index_format)
+-			active_cache_changed |= SOMETHING_CHANGED;
++			the_index.cache_changed |= SOMETHING_CHANGED;
+ 		the_index.version = preferred_index_format;
+ 	}
+ 
+@@ -1146,7 +1148,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 		die("BUG: bad untracked_cache value: %d", untracked_cache);
+ 	}
+ 
+-	if (active_cache_changed) {
++	if (the_index.cache_changed) {
+ 		if (newfd < 0) {
+ 			if (refresh_args.flags & REFRESH_QUIET)
+ 				exit(128);
 diff --git a/cache.h b/cache.h
-index e1f0e182ad..9a1ea38a14 100644
+index 9a1ea38a14..4e913d1346 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -360,7 +360,6 @@ extern void free_name_hash(struct index_state *istate);
- #define active_cache_changed (the_index.cache_changed)
- #define active_cache_tree (the_index.cache_tree)
+@@ -354,12 +354,6 @@ extern void free_name_hash(struct index_state *istate);
  
--#define read_cache() read_index(&the_index)
+ 
+ #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
+-#define active_cache (the_index.cache)
+-#define active_nr (the_index.cache_nr)
+-#define active_alloc (the_index.cache_alloc)
+-#define active_cache_changed (the_index.cache_changed)
+-#define active_cache_tree (the_index.cache_tree)
+-
  #define read_cache_from(path) read_index_from(&the_index, (path))
  #define read_cache_preload(pathspec) read_index_preload(&the_index, (pathspec))
  #define is_cache_unborn() is_index_unborn(&the_index)
 diff --git a/check-racy.c b/check-racy.c
-index 24b6542352..f50b21cb06 100644
+index f50b21cb06..6599ae84cf 100644
 --- a/check-racy.c
 +++ b/check-racy.c
-@@ -6,7 +6,7 @@ int main(int ac, char **av)
- 	int dirty, clean, racy;
+@@ -7,8 +7,8 @@ int main(int ac, char **av)
  
  	dirty = clean = racy = 0;
--	read_cache();
-+	read_index(&the_index);
- 	for (i = 0; i < active_nr; i++) {
- 		struct cache_entry *ce = active_cache[i];
+ 	read_index(&the_index);
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		struct cache_entry *ce = the_index.cache[i];
  		struct stat st;
+ 
+ 		if (lstat(ce->name, &st)) {
+diff --git a/diff-lib.c b/diff-lib.c
+index 52447466b5..de59ec0459 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -95,10 +95,10 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 
+ 	if (diff_unmerged_stage < 0)
+ 		diff_unmerged_stage = 2;
+-	entries = active_nr;
++	entries = the_index.cache_nr;
+ 	for (i = 0; i < entries; i++) {
+ 		unsigned int oldmode, newmode;
+-		struct cache_entry *ce = active_cache[i];
++		struct cache_entry *ce = the_index.cache[i];
+ 		int changed;
+ 		unsigned dirty_submodule = 0;
+ 		const unsigned char *old_sha1, *new_sha1;
+@@ -142,7 +142,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 			dpath->mode = wt_mode;
+ 
+ 			while (i < entries) {
+-				struct cache_entry *nce = active_cache[i];
++				struct cache_entry *nce = the_index.cache[i];
+ 				int stage;
+ 
+ 				if (strcmp(ce->name, nce->name))
 diff --git a/diff.c b/diff.c
-index 11eef1c85d..05d0312265 100644
+index 05d0312265..37083914c5 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -3497,7 +3497,7 @@ void diff_setup_done(struct diff_options *options)
+@@ -2736,7 +2736,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+ 	 * by diff-cache --cached, which does read the cache before
+ 	 * calling us.
+ 	 */
+-	if (!active_cache)
++	if (!the_index.cache)
+ 		return 0;
+ 
+ 	/* We want to avoid the working directory if our caller
+@@ -2762,7 +2762,7 @@ static int reuse_worktree_file(const char *name, const unsigned char *sha1, int
+ 	pos = cache_name_pos(name, len);
+ 	if (pos < 0)
+ 		return 0;
+-	ce = active_cache[pos];
++	ce = the_index.cache[pos];
+ 
+ 	/*
+ 	 * This is not the sha1 we are looking for, or
+@@ -3490,10 +3490,10 @@ void diff_setup_done(struct diff_options *options)
+ 	if (options->detect_rename && options->rename_limit < 0)
+ 		options->rename_limit = diff_rename_limit_default;
+ 	if (options->setup & DIFF_SETUP_USE_CACHE) {
+-		if (!active_cache)
++		if (!the_index.cache)
+ 			/* read-cache does not die even when it fails
+ 			 * so it is safe for us to do this here.  Also
+-			 * it does not smudge active_cache or active_nr
++			 * it does not smudge cache or nr of the_index
  			 * when it fails, so we do not have to worry about
  			 * cleaning it up ourselves either.
  			 */
--			read_cache();
-+			read_index(&the_index);
+diff --git a/dir.c b/dir.c
+index f451bfa48c..8abad1b969 100644
+--- a/dir.c
++++ b/dir.c
+@@ -599,9 +599,9 @@ static void *read_skip_worktree_file_from_index(const char *path, size_t *size,
+ 	pos = cache_name_pos(path, len);
+ 	if (pos < 0)
+ 		return NULL;
+-	if (!ce_skip_worktree(active_cache[pos]))
++	if (!ce_skip_worktree(the_index.cache[pos]))
+ 		return NULL;
+-	data = read_sha1_file(active_cache[pos]->oid.hash, &type, &sz);
++	data = read_sha1_file(the_index.cache[pos]->oid.hash, &type, &sz);
+ 	if (!data || type != OBJ_BLOB) {
+ 		free(data);
+ 		return NULL;
+@@ -609,7 +609,7 @@ static void *read_skip_worktree_file_from_index(const char *path, size_t *size,
+ 	*size = xsize_t(sz);
+ 	if (sha1_stat) {
+ 		memset(&sha1_stat->stat, 0, sizeof(sha1_stat->stat));
+-		hashcpy(sha1_stat->sha1, active_cache[pos]->oid.hash);
++		hashcpy(sha1_stat->sha1, the_index.cache[pos]->oid.hash);
  	}
- 	if (40 < options->abbrev)
- 		options->abbrev = 40; /* full */
+ 	return data;
+ }
+@@ -786,11 +786,11 @@ static int add_excludes(const char *fname, const char *base, int baselen,
+ 				; /* no content change, ss->sha1 still good */
+ 			else if (check_index &&
+ 				 (pos = cache_name_pos(fname, strlen(fname))) >= 0 &&
+-				 !ce_stage(active_cache[pos]) &&
+-				 ce_uptodate(active_cache[pos]) &&
++				 !ce_stage(the_index.cache[pos]) &&
++				 ce_uptodate(the_index.cache[pos]) &&
+ 				 !would_convert_to_git(fname))
+ 				hashcpy(sha1_stat->sha1,
+-					active_cache[pos]->oid.hash);
++					the_index.cache[pos]->oid.hash);
+ 			else
+ 				hash_sha1_file(buf, size, "blob", sha1_stat->sha1);
+ 			fill_stat_data(&sha1_stat->stat, &st);
+@@ -1293,8 +1293,8 @@ static enum exist_status directory_exists_in_index(const char *dirname, int len)
+ 	pos = cache_name_pos(dirname, len);
+ 	if (pos < 0)
+ 		pos = -pos-1;
+-	while (pos < active_nr) {
+-		const struct cache_entry *ce = active_cache[pos++];
++	while (pos < the_index.cache_nr) {
++		const struct cache_entry *ce = the_index.cache[pos++];
+ 		unsigned char endchar;
+ 
+ 		if (strncmp(ce->name, dirname, len))
+@@ -1478,8 +1478,8 @@ static int get_index_dtype(const char *path, int len)
+ 	if (pos >= 0)
+ 		return DT_UNKNOWN;
+ 	pos = -pos-1;
+-	while (pos < active_nr) {
+-		ce = active_cache[pos++];
++	while (pos < the_index.cache_nr) {
++		ce = the_index.cache[pos++];
+ 		if (strncmp(ce->name, path, len))
+ 			break;
+ 		if (ce->name[len] > '/')
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 62decd51cc..3cfaf33faa 100644
+index 3cfaf33faa..57ca250c88 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -2075,7 +2075,7 @@ int merge_recursive(struct merge_options *o,
+@@ -275,7 +275,7 @@ static int git_merge_trees(int index_only,
+ 	init_tree_desc_from_tree(t+2, merge);
  
- 	discard_cache();
- 	if (!o->call_depth)
--		read_cache();
-+		read_index(&the_index);
+ 	rc = unpack_trees(3, t, &opts);
+-	cache_tree_free(&active_cache_tree);
++	cache_tree_free(&the_index.cache_tree);
+ 	return rc;
+ }
  
- 	o->ancestor = "merged common ancestors";
- 	clean = merge_trees(o, h1->tree, h2->tree, merged_common_ancestors->tree,
-diff --git a/merge.c b/merge.c
-index 04ee5fc911..748305031e 100644
---- a/merge.c
-+++ b/merge.c
-@@ -37,7 +37,7 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
- 	argv_array_clear(&args);
+@@ -286,8 +286,8 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+ 	if (unmerged_cache()) {
+ 		int i;
+ 		fprintf(stderr, "BUG: There are unmerged index entries:\n");
+-		for (i = 0; i < active_nr; i++) {
+-			const struct cache_entry *ce = active_cache[i];
++		for (i = 0; i < the_index.cache_nr; i++) {
++			const struct cache_entry *ce = the_index.cache[i];
+ 			if (ce_stage(ce))
+ 				fprintf(stderr, "BUG: %d %.*s\n", ce_stage(ce),
+ 					(int)ce_namelen(ce), ce->name);
+@@ -295,16 +295,16 @@ struct tree *write_tree_from_memory(struct merge_options *o)
+ 		die("BUG: unmerged index entries in merge-recursive.c");
+ 	}
  
- 	discard_cache();
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die(_("failed to read the cache"));
- 	resolve_undo_clear();
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
++	if (!the_index.cache_tree)
++		the_index.cache_tree = cache_tree();
  
+-	if (!cache_tree_fully_valid(active_cache_tree) &&
++	if (!cache_tree_fully_valid(the_index.cache_tree) &&
+ 	    cache_tree_update(&the_index, 0) < 0) {
+ 		err(o, _("error building trees"));
+ 		return NULL;
+ 	}
+ 
+-	result = lookup_tree(active_cache_tree->sha1);
++	result = lookup_tree(the_index.cache_tree->sha1);
+ 
+ 	return result;
+ }
+@@ -370,10 +370,10 @@ static struct string_list *get_unmerged(void)
+ 
+ 	unmerged->strdup_strings = 1;
+ 
+-	for (i = 0; i < active_nr; i++) {
++	for (i = 0; i < the_index.cache_nr; i++) {
+ 		struct string_list_item *item;
+ 		struct stage_data *e;
+-		const struct cache_entry *ce = active_cache[i];
++		const struct cache_entry *ce = the_index.cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+ 
+@@ -683,8 +683,8 @@ static int dir_in_way(const char *path, int check_working_copy, int empty_ok)
+ 
+ 	if (pos < 0)
+ 		pos = -1 - pos;
+-	if (pos < active_nr &&
+-	    !strncmp(dirpath.buf, active_cache[pos]->name, dirpath.len)) {
++	if (pos < the_index.cache_nr &&
++	    !strncmp(dirpath.buf, the_index.cache[pos]->name, dirpath.len)) {
+ 		strbuf_release(&dirpath);
+ 		return 1;
+ 	}
+@@ -709,9 +709,9 @@ static int was_tracked(const char *path)
+ 	 * had the path tracked (and resulted in a conflict).
+ 	 */
+ 	for (pos = -1 - pos;
+-	     pos < active_nr && !strcmp(path, active_cache[pos]->name);
++	     pos < the_index.cache_nr && !strcmp(path, the_index.cache[pos]->name);
+ 	     pos++)
+-		if (ce_stage(active_cache[pos]) == 2)
++		if (ce_stage(the_index.cache[pos]) == 2)
+ 			return 1;
+ 	return 0;
+ }
+@@ -2145,7 +2145,7 @@ int merge_recursive_generic(struct merge_options *o,
+ 	if (clean < 0)
+ 		return clean;
+ 
+-	if (active_cache_changed &&
++	if (the_index.cache_changed &&
+ 	    write_locked_index(&the_index, lock, COMMIT_LOCK))
+ 		return err(o, _("Unable to write index."));
+ 
+diff --git a/pathspec.c b/pathspec.c
+index 50f76fff45..25c2afef30 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -32,8 +32,8 @@ void add_pathspec_matches_against_index(const struct pathspec *pathspec,
+ 			num_unmatched++;
+ 	if (!num_unmatched)
+ 		return;
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		const struct cache_entry *ce = the_index.cache[i];
+ 		ce_path_match(ce, pathspec, seen);
+ 	}
+ }
+@@ -391,7 +391,7 @@ static void strip_submodule_slash_cheap(struct pathspec_item *item)
+ 	if (item->len >= 1 && item->match[item->len - 1] == '/') {
+ 		int i = cache_name_pos(item->match, item->len - 1);
+ 
+-		if (i >= 0 && S_ISGITLINK(active_cache[i]->ce_mode)) {
++		if (i >= 0 && S_ISGITLINK(the_index.cache[i]->ce_mode)) {
+ 			item->len--;
+ 			item->match[item->len] = '\0';
+ 		}
+@@ -402,8 +402,8 @@ static void strip_submodule_slash_expensive(struct pathspec_item *item)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		struct cache_entry *ce = the_index.cache[i];
+ 		int ce_len = ce_namelen(ce);
+ 
+ 		if (!S_ISGITLINK(ce->ce_mode))
+@@ -428,8 +428,8 @@ static void die_inside_submodule_path(struct pathspec_item *item)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		struct cache_entry *ce = the_index.cache[i];
+ 		int ce_len = ce_namelen(ce);
+ 
+ 		if (!S_ISGITLINK(ce->ce_mode))
 diff --git a/read-cache.c b/read-cache.c
-index b3d0f3c30b..f1bdb006f4 100644
+index f1bdb006f4..6681376f5b 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -2506,7 +2506,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
-  * index_state, dropping any unmerged entries.  Returns true if
-  * the index is unmerged.  Callers who want to refuse to work
-  * from an unmerged state can call this and check its return value,
-- * instead of calling read_cache().
-+ * instead of calling read_index().
-  */
- int read_index_unmerged(struct index_state *istate)
- {
+@@ -1791,7 +1791,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	istate->timestamp.nsec = ST_MTIME_NSEC(st);
+ 
+ 	while (src_offset <= mmap_size - 20 - 8) {
+-		/* After an array of active_nr index entries,
++		/* After an array of the_index.cache_nr index entries,
+ 		 * there can be arbitrary number of extended
+ 		 * sections, each of which is prefixed with
+ 		 * extension name (4-byte) and section length
 diff --git a/rerere.c b/rerere.c
-index 3bd55caf3b..770b34a5c9 100644
+index 770b34a5c9..b9b39a959e 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -566,7 +566,7 @@ static int check_one_conflict(int i, int *type)
- static int find_conflict(struct string_list *conflict)
+@@ -523,7 +523,7 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
+  */
+ static int check_one_conflict(int i, int *type)
  {
- 	int i;
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
+-	const struct cache_entry *e = active_cache[i];
++	const struct cache_entry *e = the_index.cache[i];
+ 
+ 	if (!ce_stage(e)) {
+ 		*type = RESOLVED;
+@@ -531,13 +531,13 @@ static int check_one_conflict(int i, int *type)
+ 	}
+ 
+ 	*type = PUNTED;
+-	while (ce_stage(active_cache[i]) == 1)
++	while (ce_stage(the_index.cache[i]) == 1)
+ 		i++;
+ 
+ 	/* Only handle regular files with both stages #2 and #3 */
+-	if (i + 1 < active_nr) {
+-		const struct cache_entry *e2 = active_cache[i];
+-		const struct cache_entry *e3 = active_cache[i + 1];
++	if (i + 1 < the_index.cache_nr) {
++		const struct cache_entry *e2 = the_index.cache[i];
++		const struct cache_entry *e3 = the_index.cache[i + 1];
+ 		if (ce_stage(e2) == 2 &&
+ 		    ce_stage(e3) == 3 &&
+ 		    ce_same_name(e, e3) &&
+@@ -547,7 +547,7 @@ static int check_one_conflict(int i, int *type)
+ 	}
+ 
+ 	/* Skip the entries with the same name */
+-	while (i < active_nr && ce_same_name(e, active_cache[i]))
++	while (i < the_index.cache_nr && ce_same_name(e, the_index.cache[i]))
+ 		i++;
+ 	return i;
+ }
+@@ -569,9 +569,9 @@ static int find_conflict(struct string_list *conflict)
+ 	if (read_index(&the_index) < 0)
  		return error("Could not read index");
  
- 	for (i = 0; i < active_nr;) {
-@@ -599,7 +599,7 @@ int rerere_remaining(struct string_list *merge_rr)
- 	int i;
- 	if (setup_rerere(merge_rr, RERERE_READONLY))
- 		return 0;
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
+-	for (i = 0; i < active_nr;) {
++	for (i = 0; i < the_index.cache_nr;) {
+ 		int conflict_type;
+-		const struct cache_entry *e = active_cache[i];
++		const struct cache_entry *e = the_index.cache[i];
+ 		i = check_one_conflict(i, &conflict_type);
+ 		if (conflict_type == THREE_STAGED)
+ 			string_list_insert(conflict, (const char *)e->name);
+@@ -602,9 +602,9 @@ int rerere_remaining(struct string_list *merge_rr)
+ 	if (read_index(&the_index) < 0)
  		return error("Could not read index");
  
- 	for (i = 0; i < active_nr;) {
-@@ -1104,7 +1104,7 @@ int rerere_forget(struct pathspec *pathspec)
- 	struct string_list conflict = STRING_LIST_INIT_DUP;
- 	struct string_list merge_rr = STRING_LIST_INIT_DUP;
+-	for (i = 0; i < active_nr;) {
++	for (i = 0; i < the_index.cache_nr;) {
+ 		int conflict_type;
+-		const struct cache_entry *e = active_cache[i];
++		const struct cache_entry *e = the_index.cache[i];
+ 		i = check_one_conflict(i, &conflict_type);
+ 		if (conflict_type == PUNTED)
+ 			string_list_insert(merge_rr, (const char *)e->name);
+@@ -718,7 +718,7 @@ static void update_paths(struct string_list *update)
+ 			item->string);
+ 	}
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		return error("Could not read index");
+-	if (active_cache_changed) {
++	if (the_index.cache_changed) {
+ 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+ 			die("Unable to write new index file");
+ 	} else
+@@ -971,11 +971,11 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
+ 		return -1;
+ 	pos = -pos - 1;
  
- 	fd = setup_rerere(&merge_rr, RERERE_NOAUTOUPDATE);
+-	while (pos < active_nr) {
++	while (pos < the_index.cache_nr) {
+ 		enum object_type type;
+ 		unsigned long size;
+ 
+-		ce = active_cache[pos++];
++		ce = the_index.cache[pos++];
+ 		if (ce_namelen(ce) != len || memcmp(ce->name, path, len))
+ 			break;
+ 		i = ce_stage(ce) - 1;
 diff --git a/revision.c b/revision.c
-index 7ff61ff5f7..bb6250ef02 100644
+index bb6250ef02..57d71abdbf 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -1267,7 +1267,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
- {
+@@ -1268,8 +1268,8 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
  	int i;
  
--	read_cache();
-+	read_index(&the_index);
- 	for (i = 0; i < active_nr; i++) {
- 		struct cache_entry *ce = active_cache[i];
+ 	read_index(&the_index);
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		struct cache_entry *ce = the_index.cache[i];
  		struct blob *blob;
-@@ -1408,7 +1408,7 @@ static void prepare_show_merge(struct rev_info *revs)
+ 
+ 		if (S_ISGITLINK(ce->ce_mode))
+@@ -1282,9 +1282,9 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
+ 					     ce->ce_mode, ce->name);
+ 	}
+ 
+-	if (active_cache_tree) {
++	if (the_index.cache_tree) {
+ 		struct strbuf path = STRBUF_INIT;
+-		add_cache_tree(active_cache_tree, revs, &path);
++		add_cache_tree(the_index.cache_tree, revs, &path);
+ 		strbuf_release(&path);
+ 	}
+ }
+@@ -1407,10 +1407,10 @@ static void prepare_show_merge(struct rev_info *revs)
+ 	free_commit_list(bases);
  	head->object.flags |= SYMMETRIC_LEFT;
  
- 	if (!active_nr)
--		read_cache();
-+		read_index(&the_index);
- 	for (i = 0; i < active_nr; i++) {
- 		const struct cache_entry *ce = active_cache[i];
+-	if (!active_nr)
++	if (!the_index.cache_nr)
+ 		read_index(&the_index);
+-	for (i = 0; i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; i < the_index.cache_nr; i++) {
++		const struct cache_entry *ce = the_index.cache[i];
  		if (!ce_stage(ce))
+ 			continue;
+ 		if (ce_path_match(ce, &revs->prune_data, NULL)) {
+@@ -1419,8 +1419,8 @@ static void prepare_show_merge(struct rev_info *revs)
+ 			prune[prune_num-2] = ce->name;
+ 			prune[prune_num-1] = NULL;
+ 		}
+-		while ((i+1 < active_nr) &&
+-		       ce_same_name(ce, active_cache[i+1]))
++		while ((i+1 < the_index.cache_nr) &&
++		       ce_same_name(ce, the_index.cache[i+1]))
+ 			i++;
+ 	}
+ 	clear_pathspec(&revs->prune_data);
 diff --git a/sequencer.c b/sequencer.c
-index 10c3b4ff81..b7ec4e3221 100644
+index b7ec4e3221..9409b65aaa 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -381,7 +381,7 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
- 	struct strbuf sb = STRBUF_INIT;
- 	struct strbuf err = STRBUF_INIT;
+@@ -413,12 +413,12 @@ void append_conflicts_hint(struct strbuf *msgbuf)
  
--	read_cache();
-+	read_index(&the_index);
- 	if (checkout_fast_forward(from, to, 1))
- 		return -1; /* the callee should have complained already */
+ 	strbuf_addch(msgbuf, '\n');
+ 	strbuf_commented_addf(msgbuf, "Conflicts:\n");
+-	for (i = 0; i < active_nr;) {
+-		const struct cache_entry *ce = active_cache[i++];
++	for (i = 0; i < the_index.cache_nr;) {
++		const struct cache_entry *ce = the_index.cache[i++];
+ 		if (ce_stage(ce)) {
+ 			strbuf_commented_addf(msgbuf, "\t%s\n", ce->name);
+-			while (i < active_nr && !strcmp(ce->name,
+-							active_cache[i]->name))
++			while (i < the_index.cache_nr && !strcmp(ce->name,
++							the_index.cache[i]->name))
+ 				i++;
+ 		}
+ 	}
+@@ -462,7 +462,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	if (clean < 0)
+ 		return clean;
  
-@@ -437,7 +437,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+-	if (active_cache_changed &&
++	if (the_index.cache_changed &&
+ 	    write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+ 		/* TRANSLATORS: %s will be "revert", "cherry-pick" or
+ 		 * "rebase -i".
+@@ -501,14 +501,15 @@ static int is_index_unchanged(void)
+ 	if (parse_commit(head_commit))
+ 		return -1;
  
- 	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
+-	if (!active_cache_tree)
+-		active_cache_tree = cache_tree();
++	if (!the_index.cache_tree)
++		the_index.cache_tree = cache_tree();
  
--	read_cache();
-+	read_index(&the_index);
+-	if (!cache_tree_fully_valid(active_cache_tree))
++	if (!cache_tree_fully_valid(the_index.cache_tree))
+ 		if (cache_tree_update(&the_index, 0))
+ 			return error(_("unable to update cache tree\n"));
  
- 	init_merge_options(&o);
- 	o.ancestor = base ? base_label : "(empty tree)";
-@@ -1844,7 +1844,7 @@ static int do_exec(const char *command_line)
- 	status = run_command_v_opt(child_argv, RUN_USING_SHELL);
+-	return !hashcmp(active_cache_tree->sha1, head_commit->tree->object.oid.hash);
++	return !hashcmp(the_index.cache_tree->sha1,
++			head_commit->tree->object.oid.hash);
+ }
  
- 	/* force re-reading of the cache */
--	if (discard_cache() < 0 || read_cache() < 0)
-+	if (discard_cache() < 0 || read_index(&the_index) < 0)
- 		return error(_("could not read index"));
- 
- 	dirty = require_clean_work_tree("rebase", NULL, 1, 1);
+ static int write_author_script(const char *message)
 diff --git a/sha1_name.c b/sha1_name.c
-index 8eec9f7c1b..38473b1e6d 100644
+index 38473b1e6d..b73e261498 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -1552,7 +1552,7 @@ static int get_sha1_with_context_1(const char *name,
+@@ -1444,8 +1444,8 @@ static void diagnose_invalid_index_path(int stage,
+ 	pos = cache_name_pos(filename, namelen);
+ 	if (pos < 0)
+ 		pos = -pos - 1;
+-	if (pos < active_nr) {
+-		ce = active_cache[pos];
++	if (pos < the_index.cache_nr) {
++		ce = the_index.cache[pos];
+ 		if (ce_namelen(ce) == namelen &&
+ 		    !memcmp(ce->name, filename, namelen))
+ 			die("Path '%s' is in the index, but not at stage %d.\n"
+@@ -1460,8 +1460,8 @@ static void diagnose_invalid_index_path(int stage,
+ 	pos = cache_name_pos(fullname.buf, fullname.len);
+ 	if (pos < 0)
+ 		pos = -pos - 1;
+-	if (pos < active_nr) {
+-		ce = active_cache[pos];
++	if (pos < the_index.cache_nr) {
++		ce = the_index.cache[pos];
+ 		if (ce_namelen(ce) == fullname.len &&
+ 		    !memcmp(ce->name, fullname.buf, fullname.len))
+ 			die("Path '%s' is in the index, but not '%s'.\n"
+@@ -1551,13 +1551,13 @@ static int get_sha1_with_context_1(const char *name,
+ 
  		strlcpy(oc->path, cp, sizeof(oc->path));
  
- 		if (!active_cache)
--			read_cache();
-+			read_index(&the_index);
+-		if (!active_cache)
++		if (!the_index.cache)
+ 			read_index(&the_index);
  		pos = cache_name_pos(cp, namelen);
  		if (pos < 0)
  			pos = -pos - 1;
+-		while (pos < active_nr) {
+-			ce = active_cache[pos];
++		while (pos < the_index.cache_nr) {
++			ce = the_index.cache[pos];
+ 			if (ce_namelen(ce) != namelen ||
+ 			    memcmp(ce->name, cp, namelen))
+ 				break;
 diff --git a/submodule.c b/submodule.c
-index d3299e29c0..4d77291b11 100644
+index 4d77291b11..b225ff6d1f 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -177,7 +177,7 @@ void gitmodules_config(void)
- 		int pos;
- 		strbuf_addstr(&gitmodules_path, work_tree);
- 		strbuf_addstr(&gitmodules_path, "/.gitmodules");
--		if (read_cache() < 0)
-+		if (read_index(&the_index) < 0)
- 			die("index file corrupt");
+@@ -182,16 +182,16 @@ void gitmodules_config(void)
  		pos = cache_name_pos(".gitmodules", 11);
  		if (pos < 0) { /* .gitmodules not found or isn't merged */
-@@ -1151,7 +1151,7 @@ int fetch_populated_submodules(const struct argv_array *options,
- 	if (!spf.work_tree)
- 		goto out;
+ 			pos = -1 - pos;
+-			if (active_nr > pos) {  /* there is a .gitmodules */
+-				const struct cache_entry *ce = active_cache[pos];
++			if (the_index.cache_nr > pos) {  /* there is a .gitmodules */
++				const struct cache_entry *ce = the_index.cache[pos];
+ 				if (ce_namelen(ce) == 11 &&
+ 				    !memcmp(ce->name, ".gitmodules", 11))
+ 					gitmodules_is_unmerged = 1;
+ 			}
+-		} else if (pos < active_nr) {
++		} else if (pos < the_index.cache_nr) {
+ 			struct stat st;
+ 			if (lstat(".gitmodules", &st) == 0 &&
+-			    ce_match_stat(active_cache[pos], &st, 0) & DATA_CHANGED)
++			    ce_match_stat(the_index.cache[pos], &st, 0) & DATA_CHANGED)
+ 				gitmodules_is_modified = 1;
+ 		}
  
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die("index file corrupt");
+@@ -1038,11 +1038,11 @@ static int get_next_submodule(struct child_process *cp,
+ 	int ret = 0;
+ 	struct submodule_parallel_fetch *spf = data;
  
- 	argv_array_push(&spf.args, "fetch");
+-	for (; spf->count < active_nr; spf->count++) {
++	for (; spf->count < the_index.cache_nr; spf->count++) {
+ 		struct strbuf submodule_path = STRBUF_INIT;
+ 		struct strbuf submodule_git_dir = STRBUF_INIT;
+ 		struct strbuf submodule_prefix = STRBUF_INIT;
+-		const struct cache_entry *ce = active_cache[spf->count];
++		const struct cache_entry *ce = the_index.cache[spf->count];
+ 		const char *git_dir, *default_argv;
+ 		const struct submodule *submodule;
+ 
 diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
-index 7af116d49e..ed037a52f4 100644
+index ed037a52f4..1ba09f86d6 100644
 --- a/t/helper/test-dump-cache-tree.c
 +++ b/t/helper/test-dump-cache-tree.c
-@@ -59,7 +59,7 @@ int cmd_main(int ac, const char **av)
- 	struct index_state istate;
- 	struct cache_tree *another = cache_tree();
- 	setup_git_directory();
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die("unable to read index file");
+@@ -64,5 +64,5 @@ int cmd_main(int ac, const char **av)
  	istate = the_index;
  	istate.cache_tree = another;
-diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
-index f752532ffb..7832e833af 100644
---- a/t/helper/test-dump-untracked-cache.c
-+++ b/t/helper/test-dump-untracked-cache.c
-@@ -47,7 +47,7 @@ int cmd_main(int ac, const char **av)
- 	ignore_untracked_cache_config = 1;
- 
- 	setup_git_directory();
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
- 		die("unable to read index file");
- 	uc = the_index.untracked;
- 	if (!uc) {
-diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
-index 6368a89345..bd747dcbcd 100644
---- a/t/helper/test-lazy-init-name-hash.c
-+++ b/t/helper/test-lazy-init-name-hash.c
-@@ -31,7 +31,7 @@ static void dump_run(void)
- 	struct dir_entry *dir;
- 	struct cache_entry *ce;
- 
--	read_cache();
-+	read_index(&the_index);
- 	if (single) {
- 		test_lazy_init_name_hash(&the_index, 0);
- 	} else {
-@@ -69,7 +69,7 @@ static uint64_t time_runs(int try_threaded)
- 
- 	for (i = 0; i < count; i++) {
- 		t0 = getnanotime();
--		read_cache();
-+		read_index(&the_index);
- 		t1 = getnanotime();
- 		nr_threads_used = test_lazy_init_name_hash(&the_index, try_threaded);
- 		t2 = getnanotime();
-@@ -116,7 +116,7 @@ static void analyze_run(void)
- 	int i;
- 	int nr;
- 
--	read_cache();
-+	read_index(&the_index);
- 	cache_nr_limit = the_index.cache_nr;
- 	discard_cache();
- 
-@@ -131,7 +131,7 @@ static void analyze_run(void)
- 			nr = cache_nr_limit;
- 
- 		for (i = 0; i < count; i++) {
--			read_cache();
-+			read_index(&the_index);
- 			the_index.cache_nr = nr; /* cheap truncate of index */
- 			t1s = getnanotime();
- 			test_lazy_init_name_hash(&the_index, 0);
-@@ -140,7 +140,7 @@ static void analyze_run(void)
- 			the_index.cache_nr = cache_nr_limit;
- 			discard_cache();
- 
--			read_cache();
-+			read_index(&the_index);
- 			the_index.cache_nr = nr; /* cheap truncate of index */
- 			t1m = getnanotime();
- 			nr_threads_used = test_lazy_init_name_hash(&the_index, 1);
-diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
-index 48255eef31..b4aa339ddb 100644
---- a/t/helper/test-read-cache.c
-+++ b/t/helper/test-read-cache.c
-@@ -7,7 +7,7 @@ int cmd_main(int argc, const char **argv)
- 		cnt = strtol(argv[1], NULL, 0);
- 	setup_git_directory();
- 	for (i = 0; i < cnt; i++) {
--		read_cache();
-+		read_index(&the_index);
- 		discard_cache();
- 	}
- 	return 0;
+ 	cache_tree_update(&istate, WRITE_TREE_DRY_RUN);
+-	return dump_cache_tree(active_cache_tree, another, "");
++	return dump_cache_tree(the_index.cache_tree, another, "");
+ }
 diff --git a/t/helper/test-scrap-cache-tree.c b/t/helper/test-scrap-cache-tree.c
-index d2a63bea43..b02a679166 100644
+index b02a679166..1c640752cd 100644
 --- a/t/helper/test-scrap-cache-tree.c
 +++ b/t/helper/test-scrap-cache-tree.c
-@@ -9,7 +9,7 @@ int cmd_main(int ac, const char **av)
- {
- 	setup_git_directory();
+@@ -11,7 +11,7 @@ int cmd_main(int ac, const char **av)
  	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
--	if (read_cache() < 0)
-+	if (read_index(&the_index) < 0)
+ 	if (read_index(&the_index) < 0)
  		die("unable to read index file");
- 	active_cache_tree = NULL;
+-	active_cache_tree = NULL;
++	the_index.cache_tree = NULL;
  	if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+ 		die("unable to write index file");
+ 	return 0;
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+index 32ac6e09bd..224d509f9f 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -74,7 +74,7 @@ test_expect_success '.lock files cleaned up' '
+ 	cd repo &&
+ 	git config core.worktree ../../worktree &&
+ 	# --refresh triggers late setup_work_tree,
+-	# active_cache_changed is zero, rollback_lock_file fails
++	# the_index.cache_changed is zero, rollback_lock_file fails
+ 	git update-index --refresh &&
+ 	! test -f .git/index.lock
+ 	)
+diff --git a/tree.c b/tree.c
+index ce345c5511..82a6ae2a19 100644
+--- a/tree.c
++++ b/tree.c
+@@ -164,8 +164,8 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match)
+ 	 * do it the original slow way, otherwise, append and then
+ 	 * sort at the end.
+ 	 */
+-	for (i = 0; !fn && i < active_nr; i++) {
+-		const struct cache_entry *ce = active_cache[i];
++	for (i = 0; !fn && i < the_index.cache_nr; i++) {
++		const struct cache_entry *ce = the_index.cache[i];
+ 		if (ce_stage(ce) == stage)
+ 			fn = read_one_entry;
+ 	}
+@@ -179,8 +179,8 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match)
+ 	/*
+ 	 * Sort the cache entry -- we need to nuke the cache tree, though.
+ 	 */
+-	cache_tree_free(&active_cache_tree);
+-	QSORT(active_cache, active_nr, cmp_cache_name_compare);
++	cache_tree_free(&the_index.cache_tree);
++	QSORT(the_index.cache, the_index.cache_nr, cmp_cache_name_compare);
+ 	return 0;
+ }
+ 
+diff --git a/wt-status.c b/wt-status.c
+index 0375484962..750ed28b49 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -487,8 +487,8 @@ static int unmerged_mask(const char *path)
+ 
+ 	mask = 0;
+ 	pos = -pos-1;
+-	while (pos < active_nr) {
+-		ce = active_cache[pos++];
++	while (pos < the_index.cache_nr) {
++		ce = the_index.cache[pos++];
+ 		if (strcmp(ce->name, path) || !ce_stage(ce))
+ 			break;
+ 		mask |= (1 << (ce_stage(ce) - 1));
+@@ -614,10 +614,10 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
+ {
+ 	int i;
+ 
+-	for (i = 0; i < active_nr; i++) {
++	for (i = 0; i < the_index.cache_nr; i++) {
+ 		struct string_list_item *it;
+ 		struct wt_status_change_data *d;
+-		const struct cache_entry *ce = active_cache[i];
++		const struct cache_entry *ce = the_index.cache[i];
+ 
+ 		if (!ce_path_match(ce, &s->pathspec, NULL))
+ 			continue;
+@@ -2099,8 +2099,8 @@ static void wt_porcelain_v2_print_unmerged_entry(
+ 	pos = cache_name_pos(it->string, strlen(it->string));
+ 	assert(pos < 0);
+ 	pos = -pos-1;
+-	while (pos < active_nr) {
+-		ce = active_cache[pos++];
++	while (pos < the_index.cache_nr) {
++		ce = the_index.cache[pos++];
+ 		stage = ce_stage(ce);
+ 		if (strcmp(ce->name, it->string) || !stage)
+ 			break;
 -- 
 2.13.0.rc1.1.gbc33f0f778
 
