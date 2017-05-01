@@ -2,122 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86C731F829
-	for <e@80x24.org>; Mon,  1 May 2017 01:57:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F15121F829
+	for <e@80x24.org>; Mon,  1 May 2017 02:04:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S642179AbdEAB5G (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 21:57:06 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34325 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S642176AbdEAB5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2017 21:57:04 -0400
-Received: by mail-pf0-f180.google.com with SMTP id e64so32538135pfd.1
-        for <git@vger.kernel.org>; Sun, 30 Apr 2017 18:57:04 -0700 (PDT)
+        id S642163AbdEACEB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 22:04:01 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35079 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1164160AbdEACD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 22:03:59 -0400
+Received: by mail-pg0-f67.google.com with SMTP id c2so3811654pga.2
+        for <git@vger.kernel.org>; Sun, 30 Apr 2017 19:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=V3bFIhtJK36K2DSEIo278UISby/AsKefLt8/a9SkjUI=;
-        b=tLgbbfs60MpCuyEH8dM+/yPbVEug9G3AC5FPpnWHmByFGgAIVc2CCxlny2JST7GfDo
-         E6QmfRWM4li41jB1uNHP7y3uKfG4vP2+xfoYWLXhL5dg7yF7Eb28QZPzRgi8LKdBNBkN
-         vhAqeotDn9/uk3cqpzRGE5CSg3+fZP/P6D3vSnJIlpyy1JrTfSsQfeAhQN658xvh/CzT
-         wMvrHTBwxiQ4yIifX7xx0DMkX7Ei4JenO4ZpEVJJroMMCkTvwFJer8J5xt6PO4TVhTdI
-         eYvnM1aHWzpmq/go408zNgzW66lg/IaaJrDVNnJRSkoq2rp8IDuN63uXYGfhGy4mFsYw
-         qncw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=G5Xav7WVojjXHlQZxzdfJelRHY4pClW/sDTQbaEvLzw=;
+        b=Oqqd7c/AzZCNUnpIKvPgPbEsjX+ZHQyK6+WIcCX62zR+UQ7ywi8rUNuMu3vXX3DD90
+         cewlb5hP0gf4NLMR4sOeucbkJxX9Nyas1at3c0OgY8SLbMnWfdwLNeSbbXUjY9WIL+Ib
+         s5FVWGTJNYtK+iURnPPA+xQi3cWza55KvunZNKGHc4k1uB7ARZ5/wuSY5s6pOzBbbzgS
+         bk8pJwMBj9KvXiz4P7+YM+wOFUTesefZuXnmIYZN5lgAbkHpiw14anxR9JzRk4K+FGUB
+         BjjyxdqrMqMPex4fFnIPRev/iYg2RrLbsP8JR58Yvr/eeXRDJHz2ksopuJJx1nJjFYVI
+         JDQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=V3bFIhtJK36K2DSEIo278UISby/AsKefLt8/a9SkjUI=;
-        b=RBNGcWVJ06ToAGjAIvwBJJcuY1Zo+77iy/8+7QHD2p7Gdn13qXsKLkIML2aEjNQEBb
-         YvSPgtREQgyLGS6tYrdZ1HfHHCIyX9HfJ61pSJaUmQaM6apIEqIygTNC+nbN0bv2R3b0
-         6UpNQQLqVtKWQDJLffZ2nIRhL6A8B7TpiNQST10/II1yGowg0ChPe/K9semoGm+EALCe
-         09hu429V2UryxwYT/Ma4r+74OgVeWpRf5CMuU+gNDm0YIbPf4rW6w3DuVa5WPg+khSvE
-         NgiD06WEX2rU9o1iwyMBylqpAfM1uuQskhk5BJYatDIot/Bj1ALqjXh5B8exzYF9+Pvu
-         3+9w==
-X-Gm-Message-State: AN3rC/7C6ck9hPFuTQzqYj5FQkmkFHUX58+5HjeRBHbmJQPNAaCcht3A
-        9yxm+WMZOq8Gm7Vsd+5huH5nnrAB/nK/
-X-Received: by 10.99.62.11 with SMTP id l11mr7551158pga.238.1493603824076;
- Sun, 30 Apr 2017 18:57:04 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=G5Xav7WVojjXHlQZxzdfJelRHY4pClW/sDTQbaEvLzw=;
+        b=REIDlE/rtu5t5/2z0teo086FZZEF2YELsUJCnGdQtyZd3xPgeH+6pR8G096nXhl70z
+         ID/XrvO453d+SaIOzfPdovLlIPSVstCYxvtFiNLHXxAnASzNcidthQUwx5PJvui6Rr5W
+         GCxYABN60xJhJzpZVoPGJKfkeXBO8gx/FA9/CG/a048awFJzpURecastE+4v8prbWes6
+         o58uP/Wr9AGYiM5p6BdmzhrwD2kuDNsGOKqTDze9jk7Bzv5FMwySocuSTY5Z81fNkmwJ
+         j7WdM+Cfv13G2aE0WfIIq+fhs+56tfK0lAaBaR9dmkctSewjb5gJRm55svR/VjZRjEL/
+         Ziag==
+X-Gm-Message-State: AN3rC/4sX/ROPqBnRcNP0nuV2UTpSKbwuJmP0pDvN8P5yfHIl4yIFsRJ
+        UeTozyO4PdZk2joIPPY=
+X-Received: by 10.84.218.15 with SMTP id q15mr9615893pli.141.1493604239102;
+        Sun, 30 Apr 2017 19:03:59 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:216d:aa3e:248d:bf63])
+        by smtp.gmail.com with ESMTPSA id b74sm22016956pfl.58.2017.04.30.19.03.58
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 30 Apr 2017 19:03:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH v2] t7400: add !CYGWIN prerequisite to 'add with \\ in path'
+References: <bd5e3dc3-14f2-da03-4487-a52d3c0b52fe@ramsayjones.plus.com>
+Date:   Sun, 30 Apr 2017 19:03:57 -0700
+In-Reply-To: <bd5e3dc3-14f2-da03-4487-a52d3c0b52fe@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Sun, 30 Apr 2017 18:29:30 +0100")
+Message-ID: <xmqqk261ib8y.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.176.161 with HTTP; Sun, 30 Apr 2017 18:56:43 -0700 (PDT)
-In-Reply-To: <xmqq60hljqud.fsf@gitster.mtv.corp.google.com>
-References: <CABfTTAchc61aB02sCD=Oa9gRMGr94h7mC53B9q6Qy2k2hDqzAQ@mail.gmail.com>
- <xmqq60hljqud.fsf@gitster.mtv.corp.google.com>
-From:   Chris Johnson <chrisjohnson0@gmail.com>
-Date:   Sun, 30 Apr 2017 21:56:43 -0400
-Message-ID: <CABfTTAdQPGei6CZoHGJGUtKHdJ4eT822pzc=DATynfeaZ94gxA@mail.gmail.com>
-Subject: Re: Bug Report: .gitignore behavior is not matching in git clean and
- git status
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good assessment/understanding of the issue. git clean -n  does not
-report anything as being targeted for removal, and git clean -f
-matches that behavior. I agree with it probably being related
-specifically to the -d flag.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-As another experiment I modified .gitignore to ignore /A/B/C instead
-of /A/B/ and the same result occurs (-n reports nothing, -dn reports
-removing A/)
+> Commit cf9e55f494 ("submodule: prevent backslash expantion in submodule
+> names", 07-04-2017) added a test which creates a git repository with
+> some backslash characters in the name. On windows, where the backslash
+> character is a directory separator, it is not possible to create a
+> repository with the name 'sub\with\backslash'. (The NTFS filesystem would
+> probably allow it, but the win32 api does not). The MinGW and Git for
+> Windows versions of git actually create a repository called 'backslash'
+> in the sub-directory 'sub/with'.
+>
+> On cygwin, however, due to the slightly schizophrenic treatment of the
+> backslash character by cygwin-git, this test fails at the 'git init'
+> stage. The git-init command does not recognise the directory separators
+> in the input path (eg. is_dir_sep('\\') is false), so it does not
+> attempt to create the leading directories 'sub/with'. (The call to
+> mkdir('sub\\with\\backslash') actually does recognise the directory
+> separators, but fails because the 'sub/with' directory doesn't exist).
+>
+> In order to suppress the test failure (for now), add the !CYGWIN test
+> prerequisite.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Junio,
+>
+> This is the 'v2' re-roll of the 'BSLASHPSEC' patch. :-D
+>
 
-Lastly, I changed .gitignore to just be /A/, and in doing so, clean
--dn stops reporting that it will remove A/. I=E2=80=99m not exactly sure if
-this last one is surprising or not.
+Thanks.
 
-Also, and sorry for the noise, but I did a reply-all here, but will a
-reply automatically include the rest of the list? Or was reply-all the
-right move?
 
-On Sun, Apr 30, 2017 at 9:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Chris Johnson <chrisjohnson0@gmail.com> writes:
+> ATB,
+> Ramsay Jones
 >
->> I am a mailing list noob so I=E2=80=99m sorry if this is the wrong forma=
-t or
->> the wrong please.
->>
->> Here=E2=80=99s the setup for the bug (I will call it a bug but I half ex=
-pect
->> somebody to tell me I=E2=80=99m an idiot):
->>
->> git init
->> echo "/A/B/" > .gitignore
+>  t/t7400-submodule-basic.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> You tell Git that anything in A/B/ are uninteresting.
->
->> git add .gitignore && git commit -m 'Add ignore'
->> mkdir -p A/B
->> touch A/B/C
->
-> And create an uninteresting cruft.
->
->> git status
->
-> And Git does not bug you about it.
->
->> git clean -dn
->
-> This incorrectly reports "Would remove A/" and if you gave 'f'
-> instead of 'n', it does remove A/, A/B, and A/B/C.
->
-> Despite that "git clean --help" says 'only files unknown to Git are
-> removed' (with an undefined term 'unknown to Git').  What it wants
-> the term mean can be guessed by seeing 'if the -x option is
-> specified, ignored files are also removed'---so 'unknown to Git'
-> does not include what you told .gitignore that they are
-> uninteresting.  IOW, Git knows they are not interesting.
->
-> It looks like a bug in "git clean -d" to me.  Do you see the same
-> issue if you use "git clean" without "-d"?  IOW, does it offer to
-> remove A/B/C?
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index c2706fe47..d0357f1d8 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -273,7 +273,7 @@ test_expect_success 'submodule add with ./, /.. and // in path' '
+>  	test_cmp empty untracked
+>  '
+>  
+> -test_expect_success 'submodule add with \\ in path' '
+> +test_expect_success !CYGWIN 'submodule add with \\ in path' '
+>  	test_when_finished "rm -rf parent sub\\with\\backslash" &&
+>  
+>  	# Initialize a repo with a backslash in its name
