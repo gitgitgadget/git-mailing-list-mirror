@@ -6,167 +6,96 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0F51F78F
-	for <e@80x24.org>; Mon,  1 May 2017 19:08:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4FEC1F78F
+	for <e@80x24.org>; Mon,  1 May 2017 19:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751388AbdEATIm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 15:08:42 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:33038 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750831AbdEATIl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 15:08:41 -0400
-Received: by mail-pf0-f180.google.com with SMTP id q20so24479298pfg.0
-        for <git@vger.kernel.org>; Mon, 01 May 2017 12:08:41 -0700 (PDT)
+        id S1750778AbdEATMb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 15:12:31 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:35423 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750741AbdEATMa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 15:12:30 -0400
+Received: by mail-pg0-f51.google.com with SMTP id o3so43580335pgn.2
+        for <git@vger.kernel.org>; Mon, 01 May 2017 12:12:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Onyu361tnNqCHEEtqtnMKPYzsUu8y5kEvM/jrN2adbI=;
-        b=c1XxXo5qnGnqMeKw6hxoaVvCuMWDftujY03vXmDYb5gA7uXuBRQ2ajOtzEwAykti8G
-         kmCd6vk8y+afprvQlJqCujLtd8u0kPo+doKWTJfNEbCkgxwfQtQ7CpVvDQUNHXv1kSB+
-         kIAMp3oLoKqQOguTLf+lPIcmNHt59F+enC/i5gVuv9mP8TT/Fpg8zENvxHuZEGrKAmKD
-         om4b3Sl0wA0ZnqfhT+gd5QYiWudSBbg+FadOBdmk1NjytoxlrcdtVYCxnMh/slPCpCEk
-         ETLClhUB6Pkl6oLbSV3YSjG0yv7WcyXBhSF3TCFFxxzEWZTTl70iSsODd8odG72DQor2
-         Pv4Q==
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=G8i0dGBiuoeTZ5ZnEj8jDlDSHV9NMcx01DoT2kAY7lc=;
+        b=c5T64/+m6P1mKP8SpPMovyKzQOLXlof4KSzCeA3pSOkwQEPRb6SvEmOowTXRqq/EYk
+         TarLrbkxsXA1L3KkkbGycZyUIUDckAifL/5+FS3WlqulqbybsVJQMy78Dd1Jc0tKEXhq
+         YEZeWFekqw9+a/Mns0K7EsbvTVMpNlBeEHHv8eR4X4AC1BZoKNlY1GgreLacjP9fjK45
+         DJUG8gdXC1dEvoHywHjua2Wd21q4ruJpsOiRo0Ld+ZK7cvFIOemRpKNQ0tIt+DRp3jzu
+         e/f0LtidsztXpl2ZCO+4HibdH4UNrt+okDA6OA6IfONaVj/WcuuddCQ+IrKDwSZnZYTz
+         GdCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Onyu361tnNqCHEEtqtnMKPYzsUu8y5kEvM/jrN2adbI=;
-        b=hZxErV5nD8uYwVkQ+uqLCpmny00oYzAFDhRm+hlm2PS37MfGSLyN13dMYwsGHLZOyo
-         QYMWfczzPQbO2qcP4p/so3uOTcHVXnVZzxsY/gmIdvxU1uLVSzZbuy1OT3XY7uCP2ozY
-         NVbZmpmnQ3hydtUZn7lj+u6jfRgLZkh8yGXN+he3YF4ZZTGGXfM9Ebr0pVt+MSLg64Jq
-         3Oh0CPhK4cBeY02HLur45HrGmSoFpE9EB3nCqJ0PzbQzpFZkNDf5nAdHklqEo3qL5HBJ
-         mymNNfcyTTLrxOceVMwQoOiIMSlmlRi+kxsWPsNHD7MAWg1b1ESvU2iteMNkWBz3vxzc
-         OHIA==
-X-Gm-Message-State: AN3rC/6Kg7K8a8Xd4UtrNggIvijagtKw4pPXkSVPoztVaZCbJIqW3GkM
-        fnVxR5eAnTy07sv7GdotmA==
-X-Received: by 10.99.107.198 with SMTP id g189mr27972136pgc.162.1493665720587;
-        Mon, 01 May 2017 12:08:40 -0700 (PDT)
-Received: from localhost ([2620:0:100e:422:c4be:9746:6a14:c7a4])
-        by smtp.gmail.com with ESMTPSA id n65sm23219098pga.8.2017.05.01.12.08.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 01 May 2017 12:08:36 -0700 (PDT)
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 5/5] cache.h: drop read_cache_unmerged()
-Date:   Mon,  1 May 2017 12:07:19 -0700
-Message-Id: <20170501190719.10669-6-sbeller@google.com>
-X-Mailer: git-send-email 2.13.0.rc1.1.gbc33f0f778
-In-Reply-To: <20170501190719.10669-1-sbeller@google.com>
-References: <20170501190719.10669-1-sbeller@google.com>
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=G8i0dGBiuoeTZ5ZnEj8jDlDSHV9NMcx01DoT2kAY7lc=;
+        b=ARAzTJLXW6v4UcCcw7qednnv8Tw+EmL5lsQVWyl0Jj8PXBuqDtgaLdN/OUt+T5mUiO
+         N0ZX6J6ci5mR7qIls/C9OARIQoiWAiT6jS9h/20Cgn+AMQJoY5k5rzRffHEF/tjuTULy
+         h8dlbkObWYCpcCikReq2tbAFtHHh+xxlhZmIME104BaW3jvrt59eChID7kgSsbG4/7TE
+         ya8eULK9bNsqEZ3yZ2EPfVdTjeo1yDUVvWr83wOV9TFaiRm4fAr3hXQXVKp2F5pjoo2w
+         okoFDL4NvQhHO3KbKIY7rp9LVXk4VHiGhOzu+CecfWeCuTIf4UTxi/qbqyyi5sLn/Sf8
+         S+cg==
+X-Gm-Message-State: AN3rC/4DVYupuh22jistTRn7YWJ9/DK1fNj0KjC7xyfsc0omwNui1f4i
+        9mEdnKu65TF5ef3MbFZBvQ==
+X-Received: by 10.98.142.25 with SMTP id k25mr27980757pfe.238.1493665949697;
+        Mon, 01 May 2017 12:12:29 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:a910:d570:c34e:20d9])
+        by smtp.gmail.com with ESMTPSA id r18sm25845470pfk.109.2017.05.01.12.12.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 May 2017 12:12:28 -0700 (PDT)
+Subject: Re: Proposal for missing blob support in Git repos
+To:     Junio C Hamano <gitster@pobox.com>
+References: <20170426221346.25337-1-jonathantanmy@google.com>
+ <xmqqinllgrfl.fsf@gitster.mtv.corp.google.com>
+Cc:     git@vger.kernel.org, markbt@efaref.net, git@jeffhostetler.com,
+        kevin.david@microsoft.com
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <193d1d84-2386-c4c8-81ef-0042f0d8bb02@google.com>
+Date:   Mon, 1 May 2017 12:12:27 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqinllgrfl.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-@@ @@
--read_cache_unmerged()
-+read_index_unmerged(&the_index)
+On 04/30/2017 08:57 PM, Junio C Hamano wrote:
+> One thing I wonder is what the performance impact of a change like
+> this to the codepath that wants to see if an object does _not_ exist
+> in the repository.  When creating a new object by hashing raw data,
+> we see if an object with the same name already exists before writing
+> the compressed loose object out (or comparing the payload to detect
+> hash collision).  With a "missing blob" support, we'd essentially
+> spawn an extra process every time we want to create a new blob
+> locally, and most of the time that is done only to hear the external
+> command to say "no, we've never heard of such an object", with a
+> possibly large latency.
+>
+> If we do not have to worry about that (or if it is no use to worry
+> about it, because we cannot avoid it if we wanted to do the lazy
+> loading of objects from elsewhere), then the patch presented here
+> looked like a sensible first step towards the stated goal.
+>
+> Thanks.
 
-Additionally drop the define from cache.h manually.
+Thanks for your comments. If you're referring to the codepath involving 
+write_sha1_file() (for example, builtin/hash-object -> index_fd or 
+builtin/unpack-objects), that is fine because write_sha1_file() invokes 
+freshen_packed_object() and freshen_loose_object() directly to check if 
+the object already exists (and thus does not invoke the new mechanism in 
+this patch).
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/am.c        | 2 +-
- builtin/merge.c     | 2 +-
- builtin/pull.c      | 2 +-
- builtin/read-tree.c | 2 +-
- builtin/reset.c     | 2 +-
- cache.h             | 1 -
- sequencer.c         | 2 +-
- 7 files changed, 6 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/am.c b/builtin/am.c
-index cb3e4dff63..bb0927fbcc 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2053,7 +2053,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
- 	if (!remote_tree)
- 		return error(_("Could not parse object '%s'."), oid_to_hex(remote));
- 
--	read_cache_unmerged();
-+	read_index_unmerged(&the_index);
- 
- 	if (fast_forward_to(head_tree, head_tree, 1))
- 		return -1;
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 4d4c56050c..c27c806ac1 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1170,7 +1170,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		goto done;
- 	}
- 
--	if (read_cache_unmerged())
-+	if (read_index_unmerged(&the_index))
- 		die_resolve_conflict("merge");
- 
- 	if (file_exists(git_path_merge_head())) {
-diff --git a/builtin/pull.c b/builtin/pull.c
-index dd1a4a94e4..42578cee05 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -788,7 +788,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_pull_config, NULL);
- 
--	if (read_cache_unmerged())
-+	if (read_index_unmerged(&the_index))
- 		die_resolve_conflict("pull");
- 
- 	if (file_exists(git_path_merge_head()))
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index f997814933..0bcf021ead 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -195,7 +195,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 	 */
- 
- 	if (opts.reset || opts.merge || opts.prefix) {
--		if (read_cache_unmerged() && (opts.prefix || opts.merge))
-+		if (read_index_unmerged(&the_index) && (opts.prefix || opts.merge))
- 			die("You need to resolve your current index first");
- 		stage = opts.merge = 1;
- 	}
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 03c5498d6e..4a4eb723dd 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -66,7 +66,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
- 		opts.reset = 1;
- 	}
- 
--	read_cache_unmerged();
-+	read_index_unmerged(&the_index);
- 
- 	if (reset_type == KEEP) {
- 		struct object_id head_oid;
-diff --git a/cache.h b/cache.h
-index a66ae97fb7..9b94339573 100644
---- a/cache.h
-+++ b/cache.h
-@@ -355,7 +355,6 @@ extern void free_name_hash(struct index_state *istate);
- 
- #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
- #define is_cache_unborn() is_index_unborn(&the_index)
--#define read_cache_unmerged() read_index_unmerged(&the_index)
- #define discard_cache() discard_index(&the_index)
- #define unmerged_cache() unmerged_index(&the_index)
- #define cache_name_pos(name, namelen) index_name_pos(&the_index,(name),(namelen))
-diff --git a/sequencer.c b/sequencer.c
-index 9409b65aaa..f20e05fe60 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -349,7 +349,7 @@ static struct tree *empty_tree(void)
- 
- static int error_dirty_index(struct replay_opts *opts)
- {
--	if (read_cache_unmerged())
-+	if (read_index_unmerged(&the_index))
- 		return error_resolve_conflict(_(action_name(opts)));
- 
- 	error(_("your local changes would be overwritten by %s."),
--- 
-2.13.0.rc1.1.gbc33f0f778
-
+Having said that, looking at other parts of the fetching mechanism, 
+there are a few calls to has_sha1_file() and others that might need to 
+be checked. (We have already discussed one - the one in rev-list when 
+invoked to check connectivity.) I could take a look at that, but was 
+hoping for discussion on what I've sent so far (so that I know that I'm 
+on the right track, and because it somewhat works, albeit slowly).
