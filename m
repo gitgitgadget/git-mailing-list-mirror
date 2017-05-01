@@ -2,111 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF561F78F
-	for <e@80x24.org>; Mon,  1 May 2017 19:00:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 566921F78F
+	for <e@80x24.org>; Mon,  1 May 2017 19:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751377AbdEATAw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 15:00:52 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:33548 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751336AbdEATAu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 15:00:50 -0400
-Received: by mail-pf0-f175.google.com with SMTP id q20so24402833pfg.0
-        for <git@vger.kernel.org>; Mon, 01 May 2017 12:00:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=NbsZX5UIvsmMSxSJYBVmRfodzFY7jZy5fV/3H/K2HpA=;
-        b=fW0Ui/QjwMvAg+I4NYyEUz6fDVPHOZfZiHo5GhrmOIR82eX2KajJ0qW9AEOTJ/cwDE
-         Je45try43bdCwsms4R7NwqecLQL4ygypQq8Tdhwrw2RyuZElgg52g5JIU4Vt6nWrKkZg
-         LSAW6rVFAv84YJSMRms9Z3WFy2HmhgEP9RObIY6qbFHeU54VpxBYcIpc7DvpYSnD/8y8
-         8tEZdvrSPmpK8prxevk7g+gIFcMYX8mjHFTpQ7smx9Zy89gnGdSJtcki1maD8xiujuNR
-         hcmgNLf0bqZ23MiroC/Sl/sycMagCpydhTmDyGOAb4pCZgO0QrfbHn6iKM5gsCMQe0in
-         xYhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=NbsZX5UIvsmMSxSJYBVmRfodzFY7jZy5fV/3H/K2HpA=;
-        b=cTaFHJ6+N9wvo8PLo8ll7w4fw63SYaiNIzWZ5iyasJWiqGqvXfIg69AExZoqZa31Me
-         h6M+jmktT0dA9Xe51DfK9qHjNMvnqneZbcHQuQDZFuFCFcmcVZCrl/TDLQ2g0QHQIeBp
-         58I+JiSa+fOPJ/gMPLwPzcwdHiqejMY0nBwDatbPII45gIv3jhEZiGIvfw30yONT4EoM
-         XOhYkjtzXmR9KnchPp2lYQzteW4bmuBoUjcHPdMRquMQaaTxxbTHSe0ZjN+x/+2ACoVv
-         f2N1DaoSgIwiZ0TcVaBbKgtv1UNdbGPJxn9hzYUR0COo66rgWdgylobV/4IeQanwh8HN
-         uIqA==
-X-Gm-Message-State: AN3rC/6bG1zIVblELihExjyKKz12T+fK/rGuzQ67lfQQV+KYTjZf/HbW
-        MVf+mmlMlssgyuID3gdGgDW+RM7AbNVg
-X-Received: by 10.84.231.136 with SMTP id g8mr35480385plk.12.1493665250107;
- Mon, 01 May 2017 12:00:50 -0700 (PDT)
+        id S1750841AbdEATFx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 15:05:53 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52443 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750753AbdEATFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 15:05:52 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCfcc-1dDY7519Gc-009PIY; Mon, 01
+ May 2017 21:05:41 +0200
+Date:   Mon, 1 May 2017 21:05:38 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 07/26] http-backend: avoid memory leaks
+In-Reply-To: <xmqqh915jrw2.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1705011358260.3480@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <366e4d805da9b4b610fe216537de5e4a4c3941ed.1493237937.git.johannes.schindelin@gmx.de> <xmqq4lxao0ds.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1704281117040.3480@virtualbox>
+ <xmqqh915jrw2.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Mon, 1 May 2017 12:00:49 -0700 (PDT)
-In-Reply-To: <20170501183656.GH39135@google.com>
-References: <20170501180058.8063-1-sbeller@google.com> <20170501180058.8063-5-sbeller@google.com>
- <20170501183656.GH39135@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 1 May 2017 12:00:49 -0700
-Message-ID: <CAGZ79kb-J6W4XSWoD7LBFB_o4Dp86o1oK5ReBmeqV7WB0h5VgA@mail.gmail.com>
-Subject: Re: [RFC PATCH 4/5] submodule--helper: reattach-HEAD
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:8h2ZagYN82nOD34ja7CwTRmoASqdXLWTRIjP8BoiK8LB6qqXjSb
+ Dz+GLV/hIt0LBVFSJfZIeYjFjSmHi2VkU2Dg7SZi8TrHl5FRUaQim9VEba9o4yAK4hHs9w2
+ zAVnDx9Ali3zqxrc6GMbWyuWHrCmoUPDy+nFPNcAjl/hCK6zhU0hDgj9qot18xWnNFvHY8x
+ p///fQHKZtxmQOViwYATQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Cgm40gj80lc=:b9wmp4d2TjWttmKor9wDli
+ ZhnjE0bAMmMVw3HN9J4H9MJQfWNTg/hQvpx7NZTO8CGBAhLVGQI16KIPodZooBUuTyi0mICmP
+ 3zK9cA4nqhqndP0HbMso4xOabjUqN62y3ZMCzO/bQHJKFNmhv4EX50o/TGWAzAfm54doi1Hq1
+ GFqu/Evt8DTCkdUhviQLA6kMugi9gcHuu1jrhsg0FaWjdhbKVi1y7Swjw7KNndFiIbPGnPgNe
+ 3f8gdlL9yADcMGK93wBZ+NWTHARpU4wqvX59inNAkGGkeAGGkeJepE3BMSXY0otA9r9uzXcjS
+ v5uEvNe4GYT1ZTL0YIx9oEWMLaVDNmGmF+9Uq4eYlw93KIUs4w/IWOo8fBnWSOT/eA+KcY/5Z
+ RnmOTBrDuhw673p9X5Tg2JIk0M2rb92nb0ekcNMyqQBM9b/oB/VBAnJAGk4Wk/pjuC6aT0pce
+ 1C3lwZQcxnWhOmJxdbbz0SHHNVBAgDQrBUOQrPZehNZc2I3btKcR6lgOr+Mm9+H26TKxRgFZq
+ ur9PqYQxtyjJFhBGq4ptnnXSwuukX2slw0JCLQGQ0j/PvmyIlDmtxSXD5B75r70pn5L5sP7TN
+ sH6mvL4ChWWBiLjcCZFOZHTHc/4msjaaNOCLTXB5Xm29f58eOzSMlGC3xDL4Bv8Yo3J/PV5QP
+ +ayIt7RUuFYAXmEZ9KfJAztVcpB+PoOEJHMs0GNhx/eHs+P///dvEJcEPlqdKoxBDRW+iQl6/
+ 8S6BlyGNCG8XvXs5UZLr6yKy9ZGvbNeJyPClYCCtRo+j5h4XnlKpDeMXzymWDwBfACACan/KQ
+ 8It33V+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 1, 2017 at 11:36 AM, Brandon Williams <bmwill@google.com> wrote:
->   if (flags & REATTACH_HEAD_DIE_ON_ERROR)
->     die(...);
->
->   return -1;
->
-> It just feels weird to me to have the inverted logic, that's my opinion
-> though.
+Hi Junio,
 
-Yeah, me too. But my feelings were not as important as staying
-under 80 characters a line. And as the error message is longer than
-the "return -1", I wanted to have it not indented yet another level.
+On Sun, 30 Apr 2017, Junio C Hamano wrote:
 
->
->> +     }
->> +
->> +     if (!sub->branch) {
->> +             if (!(flags & REATTACH_HEAD_DIE_ON_ERROR))
->> +                     return -1;
->> +             die(_("no branch configured to follow for submodule '%s'"),
->> +                     sub->path);
->> +     }
->> +
->> +     /* lookup branch value in .gitmodules */
->> +     if (strcmp(".", sub->branch)) {
->> +             branch = sub->branch;
->> +     } else {
->> +             /* special care for '.': Is the superproject on a branch? */
->> +             struct object_id oid;
->> +             branch = resolve_refdup("HEAD", 0, oid.hash, NULL);
->> +             if (!branch) {
->> +                     if (!(flags & REATTACH_HEAD_DIE_ON_ERROR))
->> +                             return -1;
->> +                     die(_("Not on any branch, but submodule configured to follow superprojects branch"));
->> +             }
->> +     }
->> +
->> +     if (!strcmp("HEAD", branch))
->> +             return 0;
->
-> So this is the case where the superproject is in a detached-HEAD state?
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Hmph.  I find a "leak" of a resource acquired inside the main
+> >> function and not released when the main function leaves a lot less
+> >> interesting than the other ones this series covers.
+> >
+> > Ah, I missed that this falls squarely into the "one-shot programs are
+> > allowed to be sloppy in their memory management, essentially using
+> > exit() as garbage collector" category.
+> 
+> I actually think it was a good intention of yours and I would agree
+> with the patch.  The automated tools that find and complain about
+> these issues do not know about our local house rules like "do not
+> bother freeing immediately before exit" and will keep notifying us
+> of leaks.
 
-and the submodule config is branch='.'
+In Coverity, I marked them as "Intentional", so that they can be dropped
+from the default view.
 
-> In that case then we don't need to continue because if the superproject
-> isn't on a branch, then there isn't a reason the submodule should be on
-> a branch.
+Unfortunately, the verdict "Intentional" does not percolate to other
+projects, so I will probably have to do the entire shebang in the `git`
+project again.
 
-agreed.
+Of course, we could also decide that we want to shut up static analyzers
+by actually *not* leaking memory, by *not* using exit() as our garbage
+collector in one-shot commands, with the added benefit of making the code
+easier to libify/reuse.
+
+But I fear that I distract the discussion away from a more focused
+attention to the actual patch series, which is actually still in flight
+and in actual need for review, as I actually want to get those patches
+integrated into git.git.
+
+Ciao,
+Dscho
