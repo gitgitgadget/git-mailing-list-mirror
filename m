@@ -2,150 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07D641F790
-	for <e@80x24.org>; Mon,  1 May 2017 10:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56BA01F790
+	for <e@80x24.org>; Mon,  1 May 2017 10:59:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2993264AbdEAKfC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 06:35:02 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:35398 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2992797AbdEAKfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 06:35:00 -0400
-Received: by mail-io0-f195.google.com with SMTP id d203so21153905iof.2
-        for <git@vger.kernel.org>; Mon, 01 May 2017 03:34:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Cohf5/LSIOjfgk4Z9KRKIlkQmZ7ThFikPrDwSiyS5Pc=;
-        b=pTOcRtQ+13aNjOBxp12TCs4cdVhPajnnQjN6Gp94Dz4wWy77vpLjsrGGOaDEIzfcbC
-         vio/lSx+9ooTCny26jEt6xL/XWZ4NMqS+F6k0tFvPgldNINPxXhdwxQKOK5eOsZXvxN+
-         lMOAzXnWAfzIkSzRuvTJrBxKfxKrdtjvOay+0GV+NA97hYDrV2x7NPG2StsDZghF4zxV
-         KghBmVvpoOmnBeetAjU+R4Dznl1I1dPu47r7CfvcIu0q2PLtpqSYC1ItCKV+wHZFM5+y
-         ErSdK1bpJG6D0taOzdj0u6rmLVVluLwvEZXNzZiqJsCUeLpqM3TvIYTjjZ86yPYbvJ+/
-         AoRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Cohf5/LSIOjfgk4Z9KRKIlkQmZ7ThFikPrDwSiyS5Pc=;
-        b=f4sLjGnpXZSzCeR1eOeJxtfGAKsemCCYUOh6LiMEVvzExCa9WPfQdb+LKBHFypSaGr
-         MbxecScEbX1BLjthS+1S2zFRM/2tFWfbPUQ/NprIbPbNTO1Cvk3hUdQXVvaUjD9MU1kg
-         cjp33BHITas9rYAIn1DdNbqezpClNDzmsAovu/YP+GZOQrPoXLy+Fv/6hxrPr8VyPBtM
-         nmKGDyOdd1nMr6hppvn5JxAlFkRkqjLp7HmhsMduzcYt3LPNlBoUj5+mNNL4yIE/Cfp0
-         lXo+VQz7Eo705fbxwgcdz0HQfQ3w5+GO/0XN+BJGz9BNDWfUGxwzB19i0VoUNIs1pnGD
-         IeJA==
-X-Gm-Message-State: AN3rC/4YXot5C9Lhg3TX+uHLNr5S68qgT9WJO1Wc5CT2rt483bW34d5h
-        5SwCEck+5w/enyouIkmSb9FB9bpmOg==
-X-Received: by 10.107.178.129 with SMTP id b123mr20999763iof.50.1493634899252;
- Mon, 01 May 2017 03:34:59 -0700 (PDT)
+        id S969233AbdEAK73 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 06:59:29 -0400
+Received: from mout.gmx.net ([212.227.15.19]:54094 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S969229AbdEAK71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 06:59:27 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MAxyW-1dCsHw0CSi-009vUI; Mon, 01
+ May 2017 12:59:16 +0200
+Date:   Mon, 1 May 2017 12:59:14 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [PATCH] t7400: add BSLASHPSPEC prerequisite to 'add with \\ in
+ path'
+In-Reply-To: <4f88f1ec-eedc-1249-ef12-238a73d1dc7a@ramsayjones.plus.com>
+Message-ID: <alpine.DEB.2.20.1705011221480.3480@virtualbox>
+References: <5b8e0f3a-0b64-1384-d830-5b65a43e44c4@ramsayjones.plus.com> <xmqqk265kz2v.fsf@gitster.mtv.corp.google.com> <7cd09c17-30a1-b157-2454-4c9b399a8628@kdbg.org> <a575542a-e5b6-389f-e240-d5ac5a4b4107@ramsayjones.plus.com> <f9dfd9b4-e753-1a53-175e-8f20fe904501@kdbg.org>
+ <alpine.DEB.2.20.1704291232410.3480@virtualbox> <4f88f1ec-eedc-1249-ef12-238a73d1dc7a@ramsayjones.plus.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Mon, 1 May 2017 03:34:38 -0700 (PDT)
-In-Reply-To: <20170428220450.olqitnuwhrxzg3pv@sigill.intra.peff.net>
-References: <19607a03-71e0-440b-7213-64d25f6fa8da@xiplink.com>
- <20170427205037.1787-1-marcnarc@xiplink.com> <CAGZ79kbUqVfz+6Y0XkTL7FCZfaD+2YRMZ_v0vP8-DOFhWc+ELw@mail.gmail.com>
- <20170428220450.olqitnuwhrxzg3pv@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 1 May 2017 12:34:38 +0200
-Message-ID: <CACBZZX5f81HKCjRjTDyXzNMVuef9Z_ECS+0SVk2xpbwXudgxCw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Make diff plumbing commands respect the indentHeuristic.
-To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Marc Branchaud <marcnarc@xiplink.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:TxasvlatYBwkVnBja4ThbqQXGI+uF/XzDOUTSI8HYE6KOcT1Tso
+ EU64v4ststJP+6LMdQCHX97QPxa5dsO4ZUCkjm6L6hxXMMGPaIGly2v7WbodHBblBalTW3Q
+ AB84ev+zcOPtwScCwNjcwOye2g2X2tN0IkBAcPQTnAJvWKEuUkUNKEZwFzNLz+2JOiGB6NV
+ GVU1HELOo0NJ/oyTvQBVw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:c9B0/i5owNU=:B4QlJndsbXefxo01l05NcD
+ kr+wJhGTzwDLI+ocmxcrj+3Eh/hEQWY8V2dmejTAVEZRaVmwTag/2i8xi0/G+RPy1F6JXRCfD
+ 2UmDCdyDoK6vLjlWOlA50SJ1qWTtbgNZphOaUloZPOvN49d2x8R86drPQus8O+6COzJ3KNdXx
+ tt64UDDs2xC/PDABYSJnXiRkvqzZpWJqo0FBVhQA3UREvUQ+OdoH0OCUN9mNeOl4mhGxE/Fgv
+ gqIL7ThNq/Hyw7Qi6HBN+fgz0gRlGUW3qhJO7hgjyg1BXIiAPieCbJk2nRukU3fnO0PNa8+ao
+ qPyUCVD3xch0GraVUGa1fbCr4EhnwufzwINH5IDizNxLuYMXFM8tzVJaOQYnTRVySZLXICKHg
+ rwSO6/pbOTLZZv9uIGxLCjrQPsKQKCrtCUopwtoIcsd3x7rDuthOmdEjn5SfwXQ7FnUbWGi0n
+ 3Z2UwGfx86++jph/42neiUU5PsQ5p4fT6VajKPSigCuLzk/KT/RxbDCFbtgY2J4EMn4Ktw66B
+ oXzTNJa7UNeGuFkFAQXqKcQ8/jX1sCuUHswEUgjjiN8tgWoXvt5qSCtjbpwIOoCMi2JzDWW3k
+ 4lKzcsokeGzDjhWaAd0d9+KGeAaYFXiERmrIlZPxkMfHjLz/PYiWXQAdVaxts/YGLM84p9POZ
+ y3yoWcAzwVMyUoG1vHrDXhx+En1FMqa8Fhmo+qeHHotmvO81zCXyXH1+FZTolNF9fCd+/uKbV
+ o42qY8LZA2xyghqEegi8IQ8xQBat9Qz7gzztbHAljdT7kWOsNlgUU6x07qt4qk+iLvDwjnH5B
+ reaFPtu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 29, 2017 at 12:04 AM, Jeff King <peff@peff.net> wrote:
-> On Fri, Apr 28, 2017 at 10:34:15AM -0700, Stefan Beller wrote:
->
->> > So instead I chose to make the indentHeuristic option part of diff's basic
->> > configuration, and in each of the diff plumbing commands I moved the call to
->> > git_config() before the call to init_revisions().
->> [...]
->>
->> The feature was included in v2.11 (released 2016-11-29) and we got no
->> negative feedback. Quite the opposite, all feedback we got, was positive.
->> This could be explained by having the feature as an experimental feature
->> and users who would be broken by it, did not test it yet or did not speak up.
->
-> Yeah, if the point you're trying to make is "nobody will be mad if this
-> is turned on by default", I don't think shipping it as a config option
-> is very conclusive.
->
-> I think a more interesting argument is: we turned on renames by default
-> a few versions ago, which changes the diff in a much bigger way, and
-> nobody complained.
->
->   As a side note, I do happen to know of one program that depends
->   heavily on diffs remaining stable. Imagine you have a Git hosting site
->   which lets people comment on lines of diffs. You need some way to
->   address the lines of the diff so that the annotations appear in the
->   correct position when you regenerate the diff later.
->
->   One way to do it is to just position the comment at the n'th line of
->   the diff. Which obviously breaks if the diff changes. IMHO that is a
->   bug in that program, which should be fixed to use the line numbers
->   from the original blob (which is still not foolproof, because a
->   different diff algorithm may move a change such that the line isn't
->   even part of the diff anymore).
->
->   I'm not worried about this particular program, as I happen to know it
->   has already been fixed. But it's possible others have made a similar
->   mistake.
->
->> So I'd propose to turn it on by default and anyone negatively impacted by that
->> could then use the config to turn it off for themselves (including plumbing).
->>
->> Something like this, maybe?
->
-> Yeah, as long as this is on top of Marc's patches, I think it is the
-> natural conclusion that we had planned.
->
-> I don't know if we would want to be extra paranoid about patch-ids.
-> There is no helping:
->
->   git rev-list HEAD | git diff-tree --stdin -p | git patch-id --stable
->
-> because diff-tree doesn't know that it's trying for "--stable" output.
-> But the diffs we compute internally for patch-id could disable the
-> heuristics. I'm not sure if those matter, though. AFAIK those are used
-> only for internal comparisons within a single program. I.e., we never
-> compare them against input from the user, nor do we output them to the
-> user. So they'll change, but I don't think anybody would care.
+Hi Ramsay,
 
-I have a few-million row table with commit_id as one column & patch_id
-as another. I.e. a commit -> patch_id mapping.
 
-This is used for an hourly reporting system of sorts, i.e. you can see
-that you were working on commit X on Friday. It uses the patch-id to
-de-duplicate that commit against some commit Y you may have pushed to
-a topic branch, and already used for filling in hours.
+On Sun, 30 Apr 2017, Ramsay Jones wrote:
 
-I.e. it's a thing do DWYM in a rebase-heavy workflow where the commit
-ids change, and where you're too lazy to have deleted the topic branch
-afterwards (because they get pruned anyway).
+> On 29/04/17 11:44, Johannes Schindelin wrote:
+> 
+> > On Sat, 29 Apr 2017, Johannes Sixt wrote:
+> >> Am 29.04.2017 um 02:15 schrieb Ramsay Jones:
+> >>> On 28/04/17 20:54, Johannes Sixt wrote:
+> >>>> Am 28.04.2017 um 05:09 schrieb Junio C Hamano:
+> >>>>> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+> >> I don't observe these failures. Are you using a vanila MSYS2
+> >> environment?
+> > 
+> > Please note that the "vanilla MSYS2 environment" is *not* expected to
+> > pass the test suite when compiling in MINGW mode. In fact, it is
+> > expected to fail.
+> > 
+> > In 2015, I made a couple of changes to the MSYS2 runtime in
+> > preparation for the big bump to Git for Windows 2.x (which switched
+> > from the old MSys environment to the new MSYS2 environment), and
+> > released Git for Windows 2.5.0 with a heavily patched msys-2.0.dll. My
+> > hope was that those changes would be welcome in the MSYS2 project, but
+> > well, they kinda weren't. So I was forced to abandon my original plan
+> > to contribute all of those fixes to "upstream MSYS2".
+> 
+> Oh WOW. I didn't know you were maintaining your own version of
+> the MSYS2 runtime. That must be a huge PITA. :-D
 
-It's fine for me if the patch-id changes, for most diffs it'll be the
-same, and if not it'll auto-adjust eventually since the records I'm
-inserting will all use the new algorithm.
+I manage. The long years of maintaining Git for Windows as a fork of Git
+helps. I use the exact same strategy: merging rebases.
 
-But as the diff algorithm changes this system will start presenting
-both X and Y in the UI as not-duplicate, because it'll have computed
-the patch id of X with an older version of git, and the id of Y with
-the new one.
+Amazingly, the Cygwin project itself has been quite open to accept my
+patches, and the only problem there is time: I would like to contribute
+more patches there, I get really valuable feedback, and I just need to
+find the time to iterate the patches so they can be accepted.
 
-I'm surely not the only one who's written something like this. Just
-wanted to point out that systems like this do exist, I don't know of
-any easier way with git to get a "is this rebased commit the same"
-than patch-id, and for performance reasons you may be comparing patch
-ids across git versions.
+> > I even started collecting the exact tests that are failing with the
+> > vanilla MSYS2 runtime vs Git for Windows' fork, when I still had hopes
+> > that we could test things with AppVeyor (but the builds were already
+> > too slow, we hit the timeout even before trying to run the tests, so I
+> > gave up on that front):
+> > 
+> > 	REM MSYS2's runtime does not carry Git for Windows' tweaks yet, so these
+> > 	tests cannot pass:
+> > 	set GIT_SKIP_TESTS='t0003 t0006 t0024 t1100 t1400 t1402 t1501 t1504 t1506
+> > 	t1508 t1513 t3001 t3070 t3200 t3301 t3400 t3404 t3513 t3703 t4116 t4150
+> > 	t4208 t4211 t5000 t5001 t5002 t5004 t5500 t5601 t5602 t5603 t5801 t6006
+> > 	t6018 t6041 t6130 t6132 t6300 t7201 t7400 t7501 t7502 t8002 t8006 t9001
+> > 	t9350 t9700 t9903'
+> 
+> I have only (fairly) recently installed MSYS2, so I've only ever
+> run the MinGW64 test-suite once, which for me failed on tests:
+> 
+>    t0003, t0006, t0026, t0060, t0200, t0204, t1100, t1400, t1402,
+>    t1501, t1504, t1506, t1508, t1513, t3001, t3070, t3200, t3301,
+>    t3400, t3404, t3406, t3703, t3903, t3905, t4208, t4211, t5000,
+>    t5500, t5516, t5601, t5602, t5603, t5615, t5801, t6006, t6018,
+>    t6030, t6038, t6130, t6132, t6300, t7201, t7400, t7401, t7406,
+>    t7501, t7610, t9001, t9020, t9350, t9700, t9903
+> 
+> (which I found somewhat intimidating!).
+
+Yes, I expected the number to rise. Note that almost every patch in Git
+for Windows' fork fixes a couple of test scripts at a time.
+
+> So, as you would expect, it hasn't improved much! :-P
+> 
+> Hmm, I was hoping to use this installation to test some git patches
+> on MinGW, but that looks like a lost cause. I may as well save some
+> disk space and delete it!
+
+Hopefully I (or other Git for Windows contributors) will have some time to
+make installing a Git for Windows development environment as easy as
+
+	git clone --depth 1 https://github.com/git-for-windows/git-skd-64
+
+Then you do not even need to worry to keep a local installation
+up-to-date. You'd just reclone when (if) needed.
+
+Ciao,
+Dscho
