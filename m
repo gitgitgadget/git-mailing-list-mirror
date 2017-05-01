@@ -6,57 +6,57 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11F371FC3E
-	for <e@80x24.org>; Mon,  1 May 2017 03:45:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1ED91F829
+	for <e@80x24.org>; Mon,  1 May 2017 03:57:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1164097AbdEADh1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 23:37:27 -0400
-Received: from mail-pf0-f173.google.com ([209.85.192.173]:35304 "EHLO
-        mail-pf0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753059AbdEADh1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2017 23:37:27 -0400
-Received: by mail-pf0-f173.google.com with SMTP id v14so70530655pfd.2
-        for <git@vger.kernel.org>; Sun, 30 Apr 2017 20:37:26 -0700 (PDT)
+        id S1946067AbdEAD5W (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 23:57:22 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:33705 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1425014AbdEAD5U (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 23:57:20 -0400
+Received: by mail-pg0-f66.google.com with SMTP id s62so2858597pgc.0
+        for <git@vger.kernel.org>; Sun, 30 Apr 2017 20:57:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=wo13xqcYNdyKQgF1Lm3JEzyrDD/v7oOvu02thFWgbN0=;
-        b=QjLQFBIyawwoopmTo+iE3eoB9YEmUXQYRj3Wfsfz4592mnS0S2ECW4zOSirnFni5ss
-         Q28hE6KwGAPDzvUYoreYo1/vnjalSDZaudPc4aEw23gA6azPsfNH2bsx3UY0nTBn79DC
-         TxurNkeixypoRwtU1LZo4Sz1SqvLV54XM/IuZTMoCvDuNc+KuOjgi6vox+LgkHdSZ27r
-         uDlzHGD0DxZXE7G6fCU+dWs4/8jZnv8kp++y32NVV0JL+PJcD4gbn3vV1U1S5HquN6/w
-         lfrMshYmnQBToCjZXwWFqLNxvV5kr4ZR/cVG7rusvCiQ6t2UO6XAJVwgBdtLyOF6Nmfq
-         5gXw==
+        bh=/GoI3dMOlllm+laxtIhhyRJo597KH49i82i7ibdHgAQ=;
+        b=XH03vAUL1Cz9/8Lx1eY/Cb9/4r4v9/847MSZvK/JD8Sv3uV+Ucrnz0pZl4AJt22daq
+         epFQyTOVUn2Cr96bFhJApPhMIqPPyw2qammR4eC/3g7s0FmfsMN+Zy4aiHUXuIocAk0G
+         91Gf/NRDKLiVnMnI3yIWT7qZENfApy3MT026A+3k9IkzPNVys+PfNDXf/3vHKzYAZAW1
+         GrNRknGU6ePhdmVY/b6KHO/jmwlthwjCggHx+hhTQThdmejgeaar050RkNwL987o8rQK
+         T/IwEP/CRgBdKN5a3HJv1z1RR9IePIr79PN8S8owQrjFvCtJ6cwxZbTx+CNm2sOFrLKz
+         Umkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=wo13xqcYNdyKQgF1Lm3JEzyrDD/v7oOvu02thFWgbN0=;
-        b=bhxgwKm/6lXe6YaFq+C9mD6klmQIiwP1DHWJkFMjdF3e/My5DkrzK3pSlsaDp4FR8E
-         +Jwcx/TnrP1qQYwVVjr0vFaZHXXQ6FEZyohabaI0T7IcRwxUoa7B46ZMjlXmMBtVDArL
-         vZ5ny+UL/e0ATKGR6xQj1XQJUk+No2KhSQw1XOvZOBAde3cwC8Nutw2yFaM4Z/0vFX/Y
-         Mm2nrxIuMGQ1SE0U2W1GGJb5I35uV17oYfAmqVwCDzUhONb3E+YWHMXSetUw/k+25oOT
-         d7TQyaydKSEqCC1ihv6zAkflNVFjN+x+MBOsZhi3LIYzRu8TQdWMlTDNQJp1Cp/4UWxa
-         FZ6g==
-X-Gm-Message-State: AN3rC/47jMHAuXLEnL9fq2VCEp03RN24YZUp4yIkKQ0SLwdhXbEJgDyz
-        NPtzkbtGveTAKB40fWI=
-X-Received: by 10.99.63.203 with SMTP id m194mr25686060pga.210.1493609846306;
-        Sun, 30 Apr 2017 20:37:26 -0700 (PDT)
+        bh=/GoI3dMOlllm+laxtIhhyRJo597KH49i82i7ibdHgAQ=;
+        b=bTj9QoHIXzo2QIYrpZTct19Y5PXfCw5ghyiVQlWMZms6JiXlAyTLuAMVgT1dJMaHvc
+         LYUDkVdf3g9AkgcAFxiPHtPQnWj3CF1eo/We8/E1hZEniSxVDlBdDUD/R7EJxkxZzUOt
+         z7wab+KR9UeXejN8C/8+tJYb9YJU3+D/yQhbJRYyHMvVndAhflO5uQuyCfPWo1VM46B7
+         qMFphMZbIcMdM449LUhp1FDYrvbEc8CjLiZpBTRJ4WRub4OO+CwEZHj0aQCc+nE2lbSt
+         6NcFYkKBm5EvqfqZ0hkIqtOqKMj3821aruik9otzdAadyOXjumXrpC2YrdTNTIpHsT16
+         JGmQ==
+X-Gm-Message-State: AN3rC/5JvAJuwre3gawX6eGXDHJUPnSF4w1er/Ym6+T3fI7shkO4zf5C
+        JbHNj+vsO7A8iw==
+X-Received: by 10.99.44.9 with SMTP id s9mr982636pgs.132.1493611039918;
+        Sun, 30 Apr 2017 20:57:19 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:216d:aa3e:248d:bf63])
-        by smtp.gmail.com with ESMTPSA id o62sm25498846pfj.87.2017.04.30.20.37.25
+        by smtp.gmail.com with ESMTPSA id p62sm21479969pfi.7.2017.04.30.20.57.18
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 30 Apr 2017 20:37:25 -0700 (PDT)
+        Sun, 30 Apr 2017 20:57:19 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 5/6] submodule: improve submodule_has_commits
-References: <20170428235402.162251-1-bmwill@google.com>
-        <20170428235402.162251-6-bmwill@google.com>
-Date:   Sun, 30 Apr 2017 20:37:24 -0700
-In-Reply-To: <20170428235402.162251-6-bmwill@google.com> (Brandon Williams's
-        message of "Fri, 28 Apr 2017 16:54:01 -0700")
-Message-ID: <xmqqmvaxgscr.fsf@gitster.mtv.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, markbt@efaref.net, git@jeffhostetler.com,
+        kevin.david@microsoft.com
+Subject: Re: Proposal for missing blob support in Git repos
+References: <20170426221346.25337-1-jonathantanmy@google.com>
+Date:   Sun, 30 Apr 2017 20:57:18 -0700
+In-Reply-To: <20170426221346.25337-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Wed, 26 Apr 2017 15:13:46 -0700")
+Message-ID: <xmqqinllgrfl.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,54 +65,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
->  	oid_array_for_each_unique(commits, check_has_commit, &has_commit);
-> +
-> +	if (has_commit) {
-> +		/*
-> +		 * Even if the submodule is checked out and the commit is
-> +		 * present, make sure it is reachable from a ref.
-> +		 */
-> +		struct child_process cp = CHILD_PROCESS_INIT;
-> +		struct strbuf out = STRBUF_INIT;
-> +
-> +		argv_array_pushl(&cp.args, "rev-list", "-n", "1", NULL);
-> +		oid_array_for_each_unique(commits, append_oid_to_argv, &cp.args);
-> +		argv_array_pushl(&cp.args, "--not", "--all", NULL);
-> +
-> +		prepare_submodule_repo_env(&cp.env_array);
-> +		cp.git_cmd = 1;
-> +		cp.no_stdin = 1;
-> +		cp.dir = path;
-> +
-> +		if (capture_command(&cp, &out, 1024) || out.len)
-> +			has_commit = 0;
-> +
-> +		strbuf_release(&out);
-> +	}
-> +
->  	return has_commit;
->  }
+> In order to determine the code changes in sha1_file.c necessary, I
+> investigated the following:
+>  (1) functions in sha1_file that take in a hash, without the user
+>      regarding how the object is stored (loose or packed)
+>  (2) functions in sha1_file that operate on packed objects (because I
+>      need to check callers that know about the loose/packed distinction
+>      and operate on both differently, and ensure that they can handle
+>      the concept of objects that are neither loose nor packed)
+>
+> For (1), I looked through all non-static functions in sha1_file.c that
+> take in an unsigned char * parameter. The ones that are relevant, and my
+> modifications to them to resolve this problem, are:
+>  - sha1_object_info_extended (fixed in this commit)
+>  - sha1_object_info (auto-fixed by sha1_object_info_extended)
+>  - read_sha1_file_extended (fixed by fixing read_object)
+>  - read_object_with_reference (auto-fixed by read_sha1_file_extended)
+>  - force_object_loose (only called from builtin/pack-objects.c, which
+>    already knows that at least one pack contains this object)
+>  - has_sha1_file_with_flags (fixed in this commit)
+>  - assert_sha1_type (auto-fixed by sha1_object_info)
+>
+> As described in the list above, several changes have been included in
+> this commit to fix the necessary functions.
+>
+> For (2), I looked through the same functions as in (1) and also
+> for_each_packed_object. The ones that are relevant are:
+>  - parse_pack_index
+>    - http - indirectly from http_get_info_packs
+>  - find_pack_entry_one
+>    - this searches a single pack that is provided as an argument; the
+>      caller already knows (through other means) that the sought object
+>      is in a specific pack
+>  - find_sha1_pack
+>    - fast-import - appears to be an optimization to not store a
+>      file if it is already in a pack
+>    - http-walker - to search through a struct alt_base
+>    - http-push - to search through remote packs
+>  - has_sha1_pack
+>    - builtin/fsck - fixed in this commit
+>    - builtin/count-objects - informational purposes only (check if loose
+>      object is also packed)
+>    - builtin/prune-packed - check if object to be pruned is packed (if
+>      not, don't prune it)
+>    - revision - used to exclude packed objects if requested by user
+>    - diff - just for optimization
+>  - for_each_packed_object
+>    - reachable - only to find recent objects
+>    - builtin/fsck - fixed in this commit
+>    - builtin/cat-file - see below
+>
+> As described in the list above, builtin/fsck has been updated. I have
+> left builtin/cat-file alone; this means that cat-file
+> --batch-all-objects will only operate on objects physically in the repo.
 
-The "check-has-commit" we see in the pre-context is "we contaminated
-our in-core object store by tentatively borrowing from submodule's
-object store---now do we see these commits in our in-core view?"
-Which is a wrong thing to do from two separate point of view.  Even
-though the commit in question may be visible in our contaminated
-view, there is no guarantee that the commit exists in the object
-store of the correct submodule.  And of course the commit may exist
-but may not be anchored by any ref.
+One thing I wonder is what the performance impact of a change like
+this to the codepath that wants to see if an object does _not_ exist
+in the repository.  When creating a new object by hashing raw data,
+we see if an object with the same name already exists before writing
+the compressed loose object out (or comparing the payload to detect
+hash collision).  With a "missing blob" support, we'd essentially
+spawn an extra process every time we want to create a new blob
+locally, and most of the time that is done only to hear the external
+command to say "no, we've never heard of such an object", with a
+possibly large latency.
 
-This patch fixes the latter, and if we remove that check-has-commit
-call before it, we can fix the former at the same time.
+If we do not have to worry about that (or if it is no use to worry
+about it, because we cannot avoid it if we wanted to do the lazy
+loading of objects from elsewhere), then the patch presented here
+looked like a sensible first step towards the stated goal.
 
-There is value in leaving the check-has-commit code if we anticipate
-that we would very often have to say "no, the submodule does not
-have these commits"---a cheap but wrong check it does can be used as
-an optimization.  If we do not have the commit object anywhere,
-there is no chance we have it in the object store of the correct
-submodule and have it reachable from a ref, so we can fail without
-spawning rev-list which is expensive.
-
-
+Thanks.
