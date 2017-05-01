@@ -6,52 +6,52 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C633C1F78F
-	for <e@80x24.org>; Mon,  1 May 2017 18:01:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C34571F78F
+	for <e@80x24.org>; Mon,  1 May 2017 18:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750890AbdEASBL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 14:01:11 -0400
-Received: from mail-pg0-f51.google.com ([74.125.83.51]:35016 "EHLO
-        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750881AbdEASBI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 14:01:08 -0400
-Received: by mail-pg0-f51.google.com with SMTP id o3so42790406pgn.2
-        for <git@vger.kernel.org>; Mon, 01 May 2017 11:01:08 -0700 (PDT)
+        id S1750903AbdEASBN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 14:01:13 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:34107 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750888AbdEASBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 14:01:10 -0400
+Received: by mail-pg0-f53.google.com with SMTP id v1so48102359pgv.1
+        for <git@vger.kernel.org>; Mon, 01 May 2017 11:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YiZqLs5b2TxrHRVlGw/YMMqIoF6U5+MBimNuPxAQR18=;
-        b=IGKPhBy5EWPFvSi0sd3wHBND+SDlwxv+kW+AEjWBtvF20w7JLyBJuopWtvbRZ40J6f
-         GStESCYtWSu3orfPmd1mtZDbqev38ddnOKj/NVo7k5B15pYcaCcjf5iwkII7muT58Gqi
-         V1UaKL7m2UoFmFCdIl2IPzQvu2/eT3wvgMeT24wLENFiEl9dP8MQVo/idD77y49c1HVH
-         Rvah7jgcuOCUGkkahvqZlLPU2S4jON+yrT6RDXZfOnD8RcJd2n40ibyPtEf7wQ+xi3yj
-         EMkcmkKVnnhIEQBulK9K6TTC+1/vYb9zBU7q4Mx5koxC/J4AVVpmKg8CDjmY7CNyp1ne
-         /U4Q==
+        bh=Pt9/nOTcfinSSuGg90ddFR2HkrpDqx/AqESMVgrqKpM=;
+        b=O6fXscwh8jJg28wl/jApajQbBIMQ/L9QQtvCXqTleQhpJb3kg8S0JMp/tCa69s6/Ls
+         BXdbaatAvkdfHNes/yY2DWOFUCoq/W+YbZc/NdjS4vt4vzfrKuj//TzJLgV3rS06FUul
+         H/z/l0drHwm1PgbjJDGQCtjKfHRLvHxCsNkBhe+k4Bm8nt9c2+5dsSDTNWNXgy0aXT5Y
+         zsynimi+kRgfOm25kbpXToPTcY8IDGifsDDA4zZJ9XMX2ZcdbXhzKIZFOnVBQDC6O3ef
+         DPTJsVDWXmJq3hjIomoR8kxFAi29S33OtlYQNi1Eu0OowP6LX/ZottIJ2qFZx89hWbBB
+         Rjkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=YiZqLs5b2TxrHRVlGw/YMMqIoF6U5+MBimNuPxAQR18=;
-        b=TDhkHeQ0sJQKvyU7CWq8ONRTUZSZuBl08N7xJ3j7Z//oREk1x/o/Pvl5TrPqncESvr
-         T0z36XWYbARjD2tiFLyApxJVVTrtYnD+zgOWfoFmeDCua3YJ1I14veuIsb4TQxNMKucj
-         uVLgVAcp5Qx/DiPU+gOi1milbmLSNPy0Lrgk8At5BIkLDiWXkigHdknr7KH+wk/uhIh8
-         ralCnAwdX7aHXsSbOPQEvLTtgt7I/Stvwv+j774gmiEUON60fwhbUGo4xPx1wLXLpaiw
-         s2OpGcnaf502wBrzlr6JXjxTNXCsc0fLKjwxLjruBu3AEWgLkb48G3kMiZ8XFVQGjh78
-         cFtQ==
-X-Gm-Message-State: AN3rC/7PvEMXSgFL5IJo4FjkbEGyKs+TCYWspAPBRvuUtSC9wlSJM6oS
-        u1kJZdPiAkPEnjYA
-X-Received: by 10.99.254.69 with SMTP id x5mr28378636pgj.2.1493661667550;
-        Mon, 01 May 2017 11:01:07 -0700 (PDT)
+        bh=Pt9/nOTcfinSSuGg90ddFR2HkrpDqx/AqESMVgrqKpM=;
+        b=mTlUSibCHftp67V8qvq6Bg27EqD0DA9JPcRIRziIusSJ7UQVdxSS8HrmGVpOcbanRu
+         /Z2gMnB4KhfY01atTrzUeXAzCgBAvUmpKD00abe9n67TLKmTfll14oQkOxA0UxTSxwLj
+         Vm5G604SxfNHitpWh8gZ429/G2kbwvScl8kfoDkLtrBTK54JXcH3JnBrKsMpc1kNY15Q
+         3M+Gsj0H0aZLwsUX/OLut2ZaqYzJb0Op6QNQWTQl2TPlqJc+GM+l2qrmALqD895NGVlk
+         fl/o4uJbW5pZPC60vJU+43WXfY8fPRuqadSul/rrzKCozn9E7J6fUQHpyq29DZ/REaDK
+         2glw==
+X-Gm-Message-State: AN3rC/6nH1UREYCJWFlh1H8UIKDo84+dR7vJIHJFWfY2fP6qBTCGCjWw
+        jhtkZqBPf0kwziEc
+X-Received: by 10.84.215.23 with SMTP id k23mr35209044pli.104.1493661669856;
+        Mon, 01 May 2017 11:01:09 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c4be:9746:6a14:c7a4])
-        by smtp.gmail.com with ESMTPSA id m8sm24507739pgd.59.2017.05.01.11.01.06
+        by smtp.gmail.com with ESMTPSA id x2sm25436735pfi.80.2017.05.01.11.01.09
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 01 May 2017 11:01:06 -0700 (PDT)
+        Mon, 01 May 2017 11:01:09 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     jrnieder@gmail.com, bmwill@google.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 1/5] submodule_move_head: fix leak of struct child_process
-Date:   Mon,  1 May 2017 11:00:54 -0700
-Message-Id: <20170501180058.8063-2-sbeller@google.com>
+Subject: [PATCH 3/5] submodule: avoid auto-discovery in new working tree manipulator code
+Date:   Mon,  1 May 2017 11:00:56 -0700
+Message-Id: <20170501180058.8063-4-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.rc1.1.gbc33f0f778
 In-Reply-To: <20170501180058.8063-1-sbeller@google.com>
 References: <20170501180058.8063-1-sbeller@google.com>
@@ -60,52 +60,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While fixing the leak of `cp`, reuse it instead of having to declare
-another struct child_process.
+All commands that are run in a submodule, are run in a correct setup,
+there is no need to prepare the environment without setting the GIT_DIR
+variable. By setting the GIT_DIR variable we fix issues as discussed in
+10f5c52656 (submodule: avoid auto-discovery in
+prepare_submodule_repo_env(), 2016-09-01)
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ submodule.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index d3299e29c0..cd098cf12b 100644
+index c7a7a33916..df03691199 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1466,17 +1466,19 @@ int submodule_move_head(const char *path,
- 		goto out;
- 	}
+@@ -1363,7 +1363,7 @@ static int submodule_has_dirty_index(const struct submodule *sub)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
  
-+	child_process_clear(&cp);
-+
- 	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
- 		if (new) {
--			struct child_process cp1 = CHILD_PROCESS_INIT;
-+			child_process_init(&cp);
- 			/* also set the HEAD accordingly */
--			cp1.git_cmd = 1;
--			cp1.no_stdin = 1;
--			cp1.dir = path;
-+			cp.git_cmd = 1;
-+			cp.no_stdin = 1;
-+			cp.dir = path;
+-	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++	prepare_submodule_repo_env(&cp.env_array);
  
--			argv_array_pushl(&cp1.args, "update-ref", "HEAD", new, NULL);
-+			argv_array_pushl(&cp.args, "update-ref", "HEAD", new, NULL);
+ 	cp.git_cmd = 1;
+ 	argv_array_pushl(&cp.args, "diff-index", "--quiet",
+@@ -1380,7 +1380,7 @@ static int submodule_has_dirty_index(const struct submodule *sub)
+ static void submodule_reset_index(const char *path)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+-	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++	prepare_submodule_repo_env(&cp.env_array);
  
--			if (run_command(&cp1)) {
-+			if (run_command(&cp)) {
- 				ret = -1;
- 				goto out;
- 			}
-@@ -1492,6 +1494,7 @@ int submodule_move_head(const char *path,
+ 	cp.git_cmd = 1;
+ 	cp.no_stdin = 1;
+@@ -1438,7 +1438,7 @@ int submodule_move_head(const char *path,
  		}
  	}
- out:
-+	child_process_clear(&cp);
- 	return ret;
- }
  
+-	prepare_submodule_repo_env_no_git_dir(&cp.env_array);
++	prepare_submodule_repo_env(&cp.env_array);
+ 
+ 	cp.git_cmd = 1;
+ 	cp.no_stdin = 1;
 -- 
 2.13.0.rc1.1.gbc33f0f778
 
