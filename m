@@ -2,66 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E5EB1F829
-	for <e@80x24.org>; Mon,  1 May 2017 03:11:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C51E1F829
+	for <e@80x24.org>; Mon,  1 May 2017 03:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1034880AbdEADL5 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 23:11:57 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35787 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1034816AbdEADLz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2017 23:11:55 -0400
-Received: by mail-pf0-f196.google.com with SMTP id o68so7203539pfj.2
-        for <git@vger.kernel.org>; Sun, 30 Apr 2017 20:11:55 -0700 (PDT)
+        id S1163718AbdEADPP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 23:15:15 -0400
+Received: from mail-pg0-f47.google.com ([74.125.83.47]:36599 "EHLO
+        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162660AbdEADPN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 23:15:13 -0400
+Received: by mail-pg0-f47.google.com with SMTP id t7so40277471pgt.3
+        for <git@vger.kernel.org>; Sun, 30 Apr 2017 20:15:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=TxFkUQgOavZIeFuLsXbLfvqZphJRD8xOdhmRHKdGSjw=;
-        b=iQALiEF+R7RUYU4Bq2hpTmhM19i3G8Az95DgCSGy9p9TyrWIPX6b9d0xhvdngR52ID
-         c5JrCZJByoWS4AL3d7g7w22KXp2dm9BWHSLCsKNzRK//p6YZEGKmATvYzr77pvt8IH7m
-         Ajo1W4th+2kdM6lqQl7PFQOXhi2Ox5gbyPBvcMCSX06e2d6k4OVoxDJKa1WveEIijE+H
-         NBjMoKfGFPq3Crsm2J4Y2488GWSl9papZsspfHdq5+uIm2rlBaQ+3INmFu7h7scxoH1d
-         qEMdu+n7Fibz98Dv4Xp6aeXDNMmTriZ6/pBwWd8PjymCcrD/AVSz13cod0pGOftQR9qN
-         BzMg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mfTEaRInYYjhqdfzOejuzUEY+eyqjdu06I5kfj35+bA=;
+        b=bxXM+w/8kkav8ojyUl54rsoMr8N44MJ6csehd89DDCyVYoxdmOQTf8Fq/cswBJqW0D
+         E069+wFLjo84R2p5NaDSDhX2biH72a3/qIazD+wX1GUn4RGh9Iz3oM2yhNGgAmc+3IFU
+         BaFvQZuoozeU3WMv7GI3OlgQPsCXl9UfctMJ+AKcFPKRPqGNDTH+nQfvjJQHtqW1+OUc
+         Gk2WajnoAj2oA7eSVzHjXy5RkKqNuCP7FtKxM7zBcTN2C8et/tyQ8KfwgUhArAOk26HY
+         dWJbrm2RusWATzryDSLI7mFjoU65qvN4f+oFZQfaVkevHUxQg03I1sTvLj5Jz0nhVRtP
+         +6uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=TxFkUQgOavZIeFuLsXbLfvqZphJRD8xOdhmRHKdGSjw=;
-        b=qqQS1rn8vMuuaDq+rcGjxObj6MqZohtNuy6kFNgqoiNHsQfUc0YsnFCOvy2h7n/RJf
-         VmqffRmN5BzJB4Sx9W1JQRypYDiVT0IQwTmtUvnZIKDKUG++oRymKHhDgcU5IcDEuIyS
-         X2XdHgWSP/uBmkscvTmw1IHu0ucjoXhKbSQThkHeUhBu1asppW8aEEEJzUdR0Tr4GEoT
-         zbq8yuvfpZ29HUC8+h7a9gaUDI9A9Gb+q7yvscZlG00U/CCEmhF8ViLFPdX0melka+Jj
-         KqvMOWg2ugysNjW3SqCy8jAu0gWXjFGRsRCVqZuhKapL3ZnKWXIbnRECKKJIh5B/TSG5
-         P2JA==
-X-Gm-Message-State: AN3rC/5d8RyVM1eXo8CdIHhZ8KL/meiVcPVV1T+k9Ja/nAG/1l2Qcohr
-        AXZVpKyBPFmjXyOh6D4=
-X-Received: by 10.99.111.1 with SMTP id k1mr24710163pgc.194.1493608314772;
-        Sun, 30 Apr 2017 20:11:54 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mfTEaRInYYjhqdfzOejuzUEY+eyqjdu06I5kfj35+bA=;
+        b=YlgIEg+/FIwGqP1o9M05ykwkZ9hIpz21dxEnW26NIk21WTugtENvT2H/cR5gZfTywU
+         G1+NFY4NvK1kwd5VFttrhEiQgLKhQjND6ujMJSkIaRq346DbJoo0qLPlBkmLQlri/Nue
+         uYNfJdL3ioATV9ZHp+FtltFuISkMIIg8M8QRLHWcfrPjq7P9Cngl9gk9iF1vxzPNs0cL
+         pK+r+KkgEAbyp4eqsr308cQMuyLwfehPVS/zl4Z5GsUIMzd6C4g7QehXAaVm51WzKuGi
+         QdRcqYYRce1/sabNsx7AQIBrXOncbp2LBv9vuVpU72xAPQ/dwY8+B4Uu7oD6R1+BGgXS
+         NjUg==
+X-Gm-Message-State: AN3rC/5JFa5SVb0GytsI2QuIkdtpUf0nCJUZxokoG3EsYjB41+j72W1R
+        9MbyCrBwq+GfyQ==
+X-Received: by 10.84.210.72 with SMTP id z66mr30971050plh.191.1493608512914;
+        Sun, 30 Apr 2017 20:15:12 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:216d:aa3e:248d:bf63])
-        by smtp.gmail.com with ESMTPSA id c83sm20974576pfd.113.2017.04.30.20.11.53
+        by smtp.gmail.com with ESMTPSA id p80sm21330208pfk.50.2017.04.30.20.15.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 30 Apr 2017 20:11:53 -0700 (PDT)
+        Sun, 30 Apr 2017 20:15:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Philip Oakley <philipoakley@iee.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/9] rebase -i: generate the script via rebase--helper
-References: <cover.1493128210.git.johannes.schindelin@gmx.de>
-        <cover.1493207864.git.johannes.schindelin@gmx.de>
-        <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de>
-        <xmqqvapqo4i8.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1704271607550.3480@virtualbox>
-        <xmqqbmrhmlsw.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1704281711540.3480@virtualbox>
-Date:   Sun, 30 Apr 2017 20:11:53 -0700
-Message-ID: <xmqq4lx5i83q.fsf@gitster.mtv.corp.google.com>
+To:     Chris Johnson <chrisjohnson0@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug Report: .gitignore behavior is not matching in git clean and git status
+References: <CABfTTAchc61aB02sCD=Oa9gRMGr94h7mC53B9q6Qy2k2hDqzAQ@mail.gmail.com>
+        <xmqq60hljqud.fsf@gitster.mtv.corp.google.com>
+        <CABfTTAdQPGei6CZoHGJGUtKHdJ4eT822pzc=DATynfeaZ94gxA@mail.gmail.com>
+Date:   Sun, 30 Apr 2017 20:15:11 -0700
+In-Reply-To: <CABfTTAdQPGei6CZoHGJGUtKHdJ4eT822pzc=DATynfeaZ94gxA@mail.gmail.com>
+        (Chris Johnson's message of "Sun, 30 Apr 2017 21:56:43 -0400")
+Message-ID: <xmqqziexgtds.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,42 +66,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Chris Johnson <chrisjohnson0@gmail.com> writes:
 
-> In that case, I would strongly advise to consider redesigning the API.
+> Also, and sorry for the noise, but I did a reply-all here, but will a
+> reply automatically include the rest of the list? Or was reply-all the
+> right move?
 
-The API we currently have and is used by "log", "rev-list" and
-friends is to have setup_revisions() parse the av[], i.e. the
-textual API, and it is sufficient to hide from the caller the
-implementation detail of what bit rev_info structure has and which
-bits are flipped when reacting to say "--format=..."  option [*1*].
+The convention around here is to do reply-all (in other words, make
+sure that Cc: line has git@vger.kernel.org and others involved in
+the discussion and mentioned on To: or Cc: line of the message you
+are responding to).  Your message (i.e. the one I am responding to)
+has correct addresses on To:/Cc: lines AFAICS.
 
-As the implementaiton detail of which bits are flipped when reacting
-to each options is _not_ the API, we are essentially left with two
-choices: write this series to the current textual API, or invent an
-alternate API [*2*] and write this series to that new API.
-
-Besides, the original was already using the textual interface to
-set-up the revision traversal machinery (after all, it was a shell
-script that invoked rev-list), and the series attempts a faithful
-rewrite of it in C; writing to the current textual API is a
-future-proof way to do so, and something you can do without waiting
-for a new API to materialize (that is, assuming that we need an
-alternate API, favoured over the current textual API).
-
-
-[Footnote]
-
-*1* You'll notice that there already are (and were in 2010) users
-    that cheated and peeked into the implementation detail by
-    looking at unnecessary places the patch that added pretty_given
-    bit; some of the places it needed to touch probably didn't have
-    to be touched if they were writing to the API and had their av[]
-    parsed.
-
-*2* Quite honestly, I do not get how much you would gain dumping the
-    current API.  It uses the same codepath "git rev-list" and
-    friends use to parse the requests by the end-users and scripts,
-    guaranteeing that it will stay stable, unlike the underlying
-    implementation that may and will change.  And the set-up of the
-    machinery is not even the expensive part anyway.
