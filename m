@@ -6,41 +6,41 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B41661FC3E
-	for <e@80x24.org>; Mon,  1 May 2017 02:30:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CACE1FC3E
+	for <e@80x24.org>; Mon,  1 May 2017 02:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S642319AbdEACaY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 22:30:24 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:35626 "EHLO
+        id S642350AbdEACa0 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 22:30:26 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:35662 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S642313AbdEACaE (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:30:04 -0400
+        by vger.kernel.org with ESMTP id S642316AbdEACaH (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:30:07 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4F12A280B1;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C560C280B3;
         Mon,  1 May 2017 02:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1493605803;
-        bh=B746u6Sm7BmkcOL+7Oi1j/JhEhYh1PbxHLbpo1vd0QE=;
+        bh=tPy2ko+j/g10Df4wjtQ/Dhm7MtB6Njhmh38YsjkP6H4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=z1zwJL15VwuEYM/Q7B9lQABlIfS5vWc1g5bmakd5aLDBn+Ep/EqUUHNK0nT0mZI2F
-         UkjvJARW7OWx8NBaysgw/N+20vzqMFED89WoMswM7+60Qafcw4sJ7YiWz9T4Dk/XtG
-         XtGxyPWs0tCe6+wWqcmfDMO2lVc6OCd/b1l0yusIp/KCFhbyWpq7c4/e2NY1EYW1qh
-         0fP7qdr5CdUaZscwnhvefEtzPKPX7gnadG4KXQDiVg0xTm+H+zeGT9+ZywxVSxSFUz
-         hD4aWmV8J+2GrDX7omrwULe/7kZLHmKChfDfOR5CPSoRgZ3yjVDd7Mv8Cf+nPMJREW
-         xWOsFrO0MGbqn4e6dfkDKSM5/NZ0z1ky313ibMhd5eiNBHp7fjSQgbT+TbVOGHCQBg
-         9RoCG/VS3VoN+McCbb6rtaCmAhGcu0YNbOAPTlwS4uHT5g5eLBPjcRO9TPAPs4SlDl
-         p88/XFG1aKyMzEYg780clJDDpOGy67g06KN4NiK0uIoSkIy/zGO
+        b=cupDNZTMp+UJQHyvbxv1+tZDVyoCQcNOBiCr+BeG5arx0vsvGbnjXfnzFkgODLxIg
+         7BC3xuyJ1hSda9gHduYXpYWNkO/+xDUUH6nW2gv8AheqdJ+I6M54eltM5INBsc+MFj
+         uqVXmUrpLNWW3vhW6SiOTItDsItr7coaMdNsYPU7IcoAwOosn6BGtrA4hpqP5f5H/U
+         5QIGoftqfY+iRRSrhmDQsng8v7UTEd6faHjX4u2MrhUZiEcwN3aIcA5FoUuaXSungM
+         KaCKOWQdHbajeuN68G2RDKe6Vm776+vM1JnvfcIm3bXA51QYJS5C+7JQ9knz+PFD6k
+         m9L9yMh5Nxren2ZNKFFrtdHwjTlGSUXoDtQi/fsZsV8GPuGj+5ULWKgApi6GG8cCph
+         FNedv1FHAp4f792piRLzWK/6Nfrpyf+OYtst5TYv6W8swTx5udOEq5zk7uvPwHL8Mb
+         5w3e4kBXxt3GOji3Nnanl607Z2SVlhR8g8PsDoa3xLyf8t8spRu
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 04/53] builtin/name-rev: convert to struct object_id
-Date:   Mon,  1 May 2017 02:28:57 +0000
-Message-Id: <20170501022946.258735-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 06/53] bundle: convert to struct object_id
+Date:   Mon,  1 May 2017 02:28:59 +0000
+Message-Id: <20170501022946.258735-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d
 In-Reply-To: <20170501022946.258735-1-sandals@crustytoothpaste.net>
 References: <20170501022946.258735-1-sandals@crustytoothpaste.net>
@@ -49,129 +49,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert all the uses of unsigned char [20] to struct object_id.  Also,
-convert some hard-coded integers into constants.
-
-name_rev_line accepts a wide variety of free-form input and only
-interprets 40-character hex values, passing through everything else.
-Consequently, it is not a good candidate for parse_oid_hex, which is
-much stricter.
-
-This change is a prerequisite for converting parse_object.
+Convert the bundle code, plus the sole external user of struct
+ref_list_entry, to use struct object_id.  Include cache.h from within
+bundle.h to provide the definition.  Convert some of the hash parsing
+code to use parse_oid_hex to avoid needing to hard-code constant values.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/name-rev.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ bundle.c    | 33 +++++++++++++++++----------------
+ bundle.h    |  4 +++-
+ transport.c |  2 +-
+ 3 files changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 92a5d8a5d..00760ecc6 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -114,7 +114,7 @@ struct name_ref_data {
+diff --git a/bundle.c b/bundle.c
+index bbf4efa0a..6e181bb3d 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -12,11 +12,11 @@
  
- static struct tip_table {
- 	struct tip_table_entry {
+ static const char bundle_signature[] = "# v2 git bundle\n";
+ 
+-static void add_to_ref_list(const unsigned char *sha1, const char *name,
++static void add_to_ref_list(const struct object_id *oid, const char *name,
+ 		struct ref_list *list)
+ {
+ 	ALLOC_GROW(list->list, list->nr + 1, list->alloc);
+-	hashcpy(list->list[list->nr].sha1, sha1);
++	oidcpy(&list->list[list->nr].oid, oid);
+ 	list->list[list->nr].name = xstrdup(name);
+ 	list->nr++;
+ }
+@@ -40,8 +40,9 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
+ 	/* The bundle header ends with an empty line */
+ 	while (!strbuf_getwholeline_fd(&buf, fd, '\n') &&
+ 	       buf.len && buf.buf[0] != '\n') {
 -		unsigned char sha1[20];
 +		struct object_id oid;
- 		const char *refname;
- 	} *table;
- 	int nr;
-@@ -122,13 +122,13 @@ static struct tip_table {
- 	int sorted;
- } tip_table;
+ 		int is_prereq = 0;
++		const char *p;
  
--static void add_to_tip_table(const unsigned char *sha1, const char *refname,
-+static void add_to_tip_table(const struct object_id *oid, const char *refname,
- 			     int shorten_unambiguous)
- {
- 	refname = name_ref_abbrev(refname, shorten_unambiguous);
- 
- 	ALLOC_GROW(tip_table.table, tip_table.nr + 1, tip_table.alloc);
--	hashcpy(tip_table.table[tip_table.nr].sha1, sha1);
-+	oidcpy(&tip_table.table[tip_table.nr].oid, oid);
- 	tip_table.table[tip_table.nr].refname = xstrdup(refname);
- 	tip_table.nr++;
- 	tip_table.sorted = 0;
-@@ -137,7 +137,7 @@ static void add_to_tip_table(const unsigned char *sha1, const char *refname,
- static int tipcmp(const void *a_, const void *b_)
- {
- 	const struct tip_table_entry *a = a_, *b = b_;
--	return hashcmp(a->sha1, b->sha1);
-+	return oidcmp(&a->oid, &b->oid);
- }
- 
- static int name_ref(const char *path, const struct object_id *oid, int flags, void *cb_data)
-@@ -194,7 +194,7 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
- 			return 0;
+ 		if (*buf.buf == '-') {
+ 			is_prereq = 1;
+@@ -54,9 +55,9 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
+ 		 * Prerequisites have object name that is optionally
+ 		 * followed by SP and subject line.
+ 		 */
+-		if (get_sha1_hex(buf.buf, sha1) ||
+-		    (buf.len > 40 && !isspace(buf.buf[40])) ||
+-		    (!is_prereq && buf.len <= 40)) {
++		if (parse_oid_hex(buf.buf, &oid, &p) ||
++		    (*p && !isspace(*p)) ||
++		    (!is_prereq && !*p)) {
+ 			if (report_path)
+ 				error(_("unrecognized header: %s%s (%d)"),
+ 				      (is_prereq ? "-" : ""), buf.buf, (int)buf.len);
+@@ -64,9 +65,9 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
+ 			break;
+ 		} else {
+ 			if (is_prereq)
+-				add_to_ref_list(sha1, "", &header->prerequisites);
++				add_to_ref_list(&oid, "", &header->prerequisites);
+ 			else
+-				add_to_ref_list(sha1, buf.buf + 41, &header->references);
++				add_to_ref_list(&oid, p + 1, &header->references);
+ 		}
  	}
  
--	add_to_tip_table(oid->hash, path, can_abbreviate_output);
-+	add_to_tip_table(oid, path, can_abbreviate_output);
- 
- 	while (o && o->type == OBJ_TAG) {
- 		struct tag *t = (struct tag *) o;
-@@ -216,7 +216,7 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
- static const unsigned char *nth_tip_table_ent(size_t ix, void *table_)
- {
- 	struct tip_table_entry *table = table_;
--	return table[ix].sha1;
-+	return table[ix].oid.hash;
- }
- 
- static const char *get_exact_ref_match(const struct object *o)
-@@ -301,9 +301,9 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- #define ishex(x) (isdigit((x)) || ((x) >= 'a' && (x) <= 'f'))
- 		if (!ishex(*p))
- 			forty = 0;
--		else if (++forty == 40 &&
-+		else if (++forty == GIT_SHA1_HEXSZ &&
- 			 !ishex(*(p+1))) {
--			unsigned char sha1[40];
-+			struct object_id oid;
- 			const char *name = NULL;
- 			char c = *(p+1);
- 			int p_len = p - p_start + 1;
-@@ -311,9 +311,9 @@ static void name_rev_line(char *p, struct name_ref_data *data)
- 			forty = 0;
- 
- 			*(p+1) = 0;
--			if (!get_sha1(p - 39, sha1)) {
-+			if (!get_oid(p - (GIT_SHA1_HEXSZ - 1), &oid)) {
- 				struct object *o =
--					lookup_object(sha1);
-+					lookup_object(oid.hash);
- 				if (o)
- 					name = get_rev_name(o, &buf);
- 			}
-@@ -323,7 +323,7 @@ static void name_rev_line(char *p, struct name_ref_data *data)
+@@ -115,7 +116,7 @@ static int list_refs(struct ref_list *r, int argc, const char **argv)
+ 			if (j == argc)
  				continue;
- 
- 			if (data->name_only)
--				printf("%.*s%s", p_len - 40, p_start, name);
-+				printf("%.*s%s", p_len - GIT_SHA1_HEXSZ, p_start, name);
- 			else
- 				printf("%.*s (%s)", p_len, p_start, name);
- 			p_start = p + 1;
-@@ -374,18 +374,18 @@ int cmd_name_rev(int argc, const char **argv, const char *prefix)
- 		cutoff = 0;
- 
- 	for (; argc; argc--, argv++) {
+ 		}
+-		printf("%s %s\n", sha1_to_hex(r->list[i].sha1),
++		printf("%s %s\n", oid_to_hex(&r->list[i].oid),
+ 				r->list[i].name);
+ 	}
+ 	return 0;
+@@ -141,7 +142,7 @@ int verify_bundle(struct bundle_header *header, int verbose)
+ 	init_revisions(&revs, NULL);
+ 	for (i = 0; i < p->nr; i++) {
+ 		struct ref_list_entry *e = p->list + i;
+-		struct object *o = parse_object(e->sha1);
++		struct object *o = parse_object(e->oid.hash);
+ 		if (o) {
+ 			o->flags |= PREREQ_MARK;
+ 			add_pending_object(&revs, o, e->name);
+@@ -149,7 +150,7 @@ int verify_bundle(struct bundle_header *header, int verbose)
+ 		}
+ 		if (++ret == 1)
+ 			error("%s", message);
+-		error("%s %s", sha1_to_hex(e->sha1), e->name);
++		error("%s %s", oid_to_hex(&e->oid), e->name);
+ 	}
+ 	if (revs.pending.nr != p->nr)
+ 		return ret;
+@@ -285,16 +286,16 @@ static int compute_and_write_prerequisites(int bundle_fd,
+ 		return -1;
+ 	rls_fout = xfdopen(rls.out, "r");
+ 	while (strbuf_getwholeline(&buf, rls_fout, '\n') != EOF) {
 -		unsigned char sha1[20];
 +		struct object_id oid;
- 		struct object *object;
- 		struct commit *commit;
- 
--		if (get_sha1(*argv, sha1)) {
-+		if (get_oid(*argv, &oid)) {
- 			fprintf(stderr, "Could not get sha1 for %s. Skipping.\n",
- 					*argv);
- 			continue;
+ 		if (buf.len > 0 && buf.buf[0] == '-') {
+ 			write_or_die(bundle_fd, buf.buf, buf.len);
+-			if (!get_sha1_hex(buf.buf + 1, sha1)) {
+-				struct object *object = parse_object_or_die(sha1, buf.buf);
++			if (!get_oid_hex(buf.buf + 1, &oid)) {
++				struct object *object = parse_object_or_die(oid.hash, buf.buf);
+ 				object->flags |= UNINTERESTING;
+ 				add_pending_object(revs, object, buf.buf);
+ 			}
+-		} else if (!get_sha1_hex(buf.buf, sha1)) {
+-			struct object *object = parse_object_or_die(sha1, buf.buf);
++		} else if (!get_oid_hex(buf.buf, &oid)) {
++			struct object *object = parse_object_or_die(oid.hash, buf.buf);
+ 			object->flags |= SHOWN;
  		}
+ 	}
+diff --git a/bundle.h b/bundle.h
+index 1584e4d82..e9a4cb6a7 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -1,10 +1,12 @@
+ #ifndef BUNDLE_H
+ #define BUNDLE_H
  
- 		commit = NULL;
--		object = parse_object(sha1);
-+		object = parse_object(oid.hash);
- 		if (object) {
- 			struct object *peeled = deref_tag(object, *argv, 0);
- 			if (peeled && peeled->type == OBJ_COMMIT)
++#include "cache.h"
++
+ struct ref_list {
+ 	unsigned int nr, alloc;
+ 	struct ref_list_entry {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		char *name;
+ 	} *list;
+ };
+diff --git a/transport.c b/transport.c
+index 4d33138a7..9bfcf870f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -87,7 +87,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport, int for_pus
+ 	for (i = 0; i < data->header.references.nr; i++) {
+ 		struct ref_list_entry *e = data->header.references.list + i;
+ 		struct ref *ref = alloc_ref(e->name);
+-		hashcpy(ref->old_oid.hash, e->sha1);
++		oidcpy(&ref->old_oid, &e->oid);
+ 		ref->next = result;
+ 		result = ref;
+ 	}
