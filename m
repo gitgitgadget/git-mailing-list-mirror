@@ -2,157 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B92621F790
-	for <e@80x24.org>; Mon,  1 May 2017 11:22:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A40271F790
+	for <e@80x24.org>; Mon,  1 May 2017 11:23:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1423912AbdEALWP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 07:22:15 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:36790 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1164085AbdEALWN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 07:22:13 -0400
-Received: by mail-wr0-f194.google.com with SMTP id v42so13532746wrc.3
-        for <git@vger.kernel.org>; Mon, 01 May 2017 04:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=HvrMtYICP6OqO2hwm6PcWjvczTt80LTZ+4lV3wsJ2JY=;
-        b=L//ckGck/Qg5ZsYEsULtRuFVBwAXVTqIANxea/uRDkzdSoBegl/fGK5WORqkpVtSF9
-         VCkPqGiONpkMDJI88TGAAc+hqBbt22KEo3E6RS6k788BKOWfnsW/MALK0LH2zcFkhigW
-         wNSGuWMLcdLvo/Lr5iMB7Basrj5aW0Lp5xbL2bj2SfSgwwHo1/ioiYn+P6cbEnB3vNqO
-         K+YIfkDZMbeEv1326VUkSmaAOokJzEML40A6KKt2vZFJmoBDTUJO37E7nmjiKmBF3ZS7
-         h9MGkJ5QTdgUShwHRRWrEEbsh3VHfCcRFmzkFiXnZhlAo/7euc2ZVXxn57m43JAbPBrD
-         Tl9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=HvrMtYICP6OqO2hwm6PcWjvczTt80LTZ+4lV3wsJ2JY=;
-        b=eqkKcNYNugZieziSzDkNQNWflRRnPBpksbIv5HW43mkDGTsE6favsuN9OnZyBkmUm9
-         Kfy55hosW6JbVLDojUmM79cpOEnFmcxBdLhP98VTO1fzQ3sXQSIhXdyfbywQ8flktQmu
-         BsV5eZxYS4X3X2c5Ms19QOkpWI3xGv1QyXeC5+x5QPhhGIAd/swumDCJ4SSTnkOwd5Ht
-         x4dJtdA9dkzv4wK/CoOTtXDOL5fO/a9gU/0k2gYFvYzJ+VfTxbvmpFSpIfHkLbeG5t9U
-         YKfa6iTd81Yva7gCtTxGgjBlwdxjMMujPxlzu5rA5qUUbWRvfmnp/0e+DESzcx3GAHyL
-         A49A==
-X-Gm-Message-State: AN3rC/6ZWFjeAvrbQoMG8yIGgVgMwwLt9YMWwO5Ly8qpOodix5DBzfS5
-        TEAD8Tf5nWaYGg==
-X-Received: by 10.223.133.182 with SMTP id 51mr1212202wrt.86.1493637731953;
-        Mon, 01 May 2017 04:22:11 -0700 (PDT)
-Received: from slxbook4.fritz.box (p5DDB4780.dip0.t-ipconnect.de. [93.219.71.128])
-        by smtp.gmail.com with ESMTPSA id p187sm10548518wmd.24.2017.05.01.04.22.10
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 01 May 2017 04:22:11 -0700 (PDT)
-Content-Type: text/plain; charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: Automating Coverity, was Re: [PATCH 00/26] Address a couple of issues identified by Coverity
-From:   Lars Schneider <larsxschneider@gmail.com>
-In-Reply-To: <alpine.DEB.2.20.1704282205320.3480@virtualbox>
-Date:   Mon, 1 May 2017 13:22:10 +0200
-Cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <73A81857-0083-4A70-88AE-FAA025B6A4B7@gmail.com>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com> <alpine.DEB.2.20.1704282205320.3480@virtualbox>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3124)
+        id S1424010AbdEALXn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 07:23:43 -0400
+Received: from mout.web.de ([212.227.17.12]:57211 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1034705AbdEALXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 07:23:41 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MCqsR-1dD9to008p-009jw5; Mon, 01
+ May 2017 13:23:31 +0200
+Subject: Re: [PATCH] cache-tree: reject entries with null sha1
+To:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <20170421184617.lc5bioa5px6ninrj@sigill.intra.peff.net>
+ <CACsJy8AAtV5KJHBqWvnYb3Mw9CVzEdG3M-UJA+jd5MR5e-UMsA@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <12c3312c-30a1-2cb1-8f05-63bb663bd0a0@web.de>
+Date:   Mon, 1 May 2017 13:23:28 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
+MIME-Version: 1.0
+In-Reply-To: <CACsJy8AAtV5KJHBqWvnYb3Mw9CVzEdG3M-UJA+jd5MR5e-UMsA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:/17lkCGw02Ufl8Rtegn7Omw4XAYN1Kq7NK1uQWh7V8XHYR84rWR
+ w9y2yip7fcvTR9DbJiVkvP5d7uXPOeB/rZh2Rv/IFlMsa8JDYNGE1ab8IJkIHvNw7D93qH2
+ lYgdx42rSVGCqmbtr9Q1LOBT2cekXbwlm2LsCczILVcZJ1A4+tWC0JHVln6VwVLYLhIFmka
+ 48ysbd7mPzC/wzTNcn1BQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QuQnltReX0k=:GOapCN/ZXoxIBNUoNdxYRY
+ /xIEeZSKJks4ARL1Ua0wtWO+uBEhFMGFrf0O+aRvzgYOVZRnuu8HfAyA8vQ8LNib38FDzOpDN
+ rHg1Ys7W2RQ+7Vyqm3BlTwB/c5y7KNxEn+dz0nAXaRGwVDGCvlvmai8ZhhyeSg1vf+gCVsQ+f
+ EF000y6XKLJz3uOiv9uO95d1mq26kvYiogoW4AaFD/d6Pk51nVi4NOpOmbbhVca8ISnrqXqxS
+ M9FtaGQ7tG3fYm2XSdM4sAx1Ck5wsURuXNmD9E7x4vcRldpq8tZZrlvjeE+8UfDLRUXYpm/VO
+ eHGGDEJvPusJLOE5wJ1rcJm3btvMvDVfXCaAG3puTGsPzlqrjOs40sIKzfywsFQlZob/8G39r
+ mgpSz/psCvtO1ENJjMp+ZSM839yELjUgCNn4jIW0wGmEQm6OyIlhtTDC7i2N4vaNEHuhEnhWd
+ sCZQ6vXS48ui7dN/TsVUHMIHVGJXJsNva1zEYAcYNkZy3kfw935bSvDxfDiLQay3njmClBh4D
+ FM9jPGE76bGPdiEfqrkJp6wTJazhFfNOp+08eKn3rTCmi7sGVMzT6iCg268341dEE3AzuB/1g
+ 1AfOMpg6Pbc6y/tk/SqmJMyS0oJ9ttzOK7HlA+iY39f+Ue+PyVZfyCLETGohrDoD6hXodEIKQ
+ 7wzSdV09iazMJMa7K+VrhWl31IHaxxh88GR2JNcRJjm2prdz4zM8HqiKx5osQ0J8x4T4f5oax
+ so0hSNde+jqH9pzgH/K09PlZtZ5EiJxO2NXXOi5bG4hfcmdjLzFAm2JiGRq+xA+7T7AjPt1eB
+ 4WSU3XW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 24.04.2017 um 12:39 schrieb Duy Nguyen:
+> BTW, I ran t7009 with valgrind and it reported this. Is it something
+> we should be worried about? I vaguely recall you're doing something
+> with prio-queue...
+> 
+> ==4246== Source and destination overlap in memcpy(0x5952990, 0x5952990, 16)
+> ==4246==    at 0x4C2EACD: memcpy@@GLIBC_2.14 (in
+> /usr/lib64/valgrind/vgpreload_memcheck-amd64-linux.so)
+> ==4246==    by 0x545D05: swap (prio-queue.c:15)
+> ==4246==    by 0x545D72: prio_queue_reverse (prio-queue.c:25)
+> ==4246==    by 0x4CBC0C: sort_in_topological_order (commit.c:723)
+> ==4246==    by 0x574C97: prepare_revision_walk (revision.c:2858)
+> ==4246==    by 0x48A2BA: cmd_rev_list (rev-list.c:385)
+> ==4246==    by 0x405A6F: run_builtin (git.c:371)
+> ==4246==    by 0x405CDC: handle_builtin (git.c:572)
+> ==4246==    by 0x405E51: run_argv (git.c:624)
+> ==4246==    by 0x405FF3: cmd_main (git.c:701)
+> ==4246==    by 0x4A48CE: main (common-main.c:43)
 
-> On 28 Apr 2017, at 22:29, Johannes Schindelin =
-<johannes.schindelin@gmx.de> wrote:
->=20
-> Hi Stefan,
->=20
-> On Fri, 28 Apr 2017, Stefan Beller wrote:
->=20
->> On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->>=20
->>> I still have to find the time to figure out one more detail: how to
->>> download and extract the Coverity tool (the .zip archive has a
->>> variable name for the top-level directory), and doing that only =
-every
->>> once in a while, say, only when there is no previously unpacked =
-tool,
->>> or it is already 4 weeks old.
->>=20
->> That is an interesting problem, which I ignored as the older versions =
-of
->> their tools still works once they release new versions. So I just
->> manually check every once in a while if they have new versions out
->> there.
->>=20
->> So if you find a nice solution to that problem, let me know, please.
->=20
-> I think I have a working idea (jotting it down in the editor, =
-untested):
->=20
-> 	init_or_update_coverity_tool () {
-> 		# check once per week whether there is a new version
-> 		coverity_tool=3D.git/coverity-tool/
-> 		test ! -d $coverity_tool ||
-> 		test $(($(date +%s)-$(stat -c %Y $coverity_tool))) -gt
-> 			$((7*24*60*60)) ||
-> 		return
->=20
-> 		curl --form "token=3D$(COVERITY.TOKEN)" \
-> 			--form "project=3Dgit-for-windows" \
-> 			--time-cond .git/coverity_tool.zip \
-> 			-o .git/coverity_tool.zip.new \
-> 			https://scan.coverity.com/download/win64 &&
-> 		test -f .git/coverity_tool.zip.new || {
-> 			# Try again in a week
-> 			touch $coverity_tool
-> 			return
-> 		}
->=20
-> 		mv -f .git/coverity_tool.zip.new .git/coverity_tool.zip =
-||
-> 		die "Could not overwrite coverity_tool.zip"
->=20
-> 		mkdir $coverity_tool.new &&
-> 		(cd $coverity_tool.new &&
-> 		 unzip ../coverity_tool.zip) ||
-> 		die "Could not unpack coverity_tool.zip"
->=20
-> 		rm -rf $coverity_tool &&
-> 		mv $coverity_tool.new $coverity_tool ||
-> 		die "Could not switch to new Coverity tool version"
-> 	}
->=20
-> 	init_or_update_coverity_tool
-> 	PATH=3D$(echo $coverity_tool/*/bin):$PATH
->=20
-> I guess I will start from that snippet once I have time to work on =
-that
-> Coverity automation.
->=20
-> BTW I stumbled over an interesting tidbit today: if you define =
-FLEX_ARRAY
-> outside of git-compat-util.h, it will not be overridden by Git. That =
-is,
-> if you want to use 64kB flex arrays by default, you can call
->=20
-> 	make CPPFLAGS=3D-DFLEX_ARRAY=3D65536
->=20
-> No need to patch the source code.
+I can only get gcc and clang to call memcpy instead of inlining it by
+specifying -fno-builtin.  Do you use that option?  If yes, why?  (Just
+curious.)
 
-Looks like Coverity has TravisCI integration and I assume you wouldn't
-need to worry about downloading the tool in that setup:
-https://scan.coverity.com/travis_ci
+But I can't get Valgrind to report overlapping (nicely explained in
+http://valgrind.org/docs/manual/mc-manual.html#mc-manual.overlap, by
+the way), not for t7009 and not for the short test program at the
+bottom.  Do you set flags in GIT_VALGRIND_OPTIONS or use a special
+version of Valgrind?  I use valgrind-3.12.0.SVN from Debian testing.
 
-I think we should be able to enable it without trouble for the 'master' =
-branch?
+Thanks,
+René
 
-Cheers,
-Lars=
+
+/* Compile with -fno-builtin. */
+#include <string.h>
+int main(void) {int i = 1; memcpy(&i, &i, sizeof(i)); return i;}
