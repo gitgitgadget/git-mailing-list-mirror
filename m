@@ -2,155 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDDE61F829
-	for <e@80x24.org>; Mon,  1 May 2017 02:33:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C23F21F829
+	for <e@80x24.org>; Mon,  1 May 2017 03:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S642397AbdEACcg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 22:32:36 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:36060 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2999569AbdEACbd (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:31:33 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 35291280DE;
-        Mon,  1 May 2017 02:30:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1493605816;
-        bh=xZnSTljgVcUbAMUwk8CzXoxOLaqg+O9LtvdzMFEp06k=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=kCkvenTOvTwabxVYlsTPh/sUWaqfRdXQfqD5JASlSPjAUrI/iMwFCzKqvOyx75Rjm
-         6uAfZnIFsNlPI+9WOuI8S3oO4oQl4rp26pm5M6aC42+6dAxqbLkm3qQCbJgj2x1QTv
-         QqNldMZOnjhiSN7gy5nCkaqLMv1eYMTxHfbpxTXp8i1/74VN7kWPqND/Uk8lxvOUEO
-         Qxsmyr0bKMUhKgu0MquxAqpdkWlCXIqkId/Y0camNr41P9Ww8TiojAjUrKqjwIJyB2
-         CVSVg6EXVTTEGiFJC2sW9Df7SrzFhqAMmLgdEtXzUFidfHjA2RHMu+DZtKLYF34Aha
-         YBlw7L3xfisZIIaz42V44E0qHRuFfwK8/4JNYBKNcEp/pnoDfQ9cfOClsn2q87xlZS
-         GA1Gk593Jkr6B7ldLYvCV2VF3lwhTNU9fsdaN0xM/6HLgGiMD+GMc7UOs/AKAcPsdl
-         HfNMGWmGhmU56/ENScvvm9M8W7J0ocP/mR9Pob8TKTfPreSSJcD
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v2 48/53] merge: convert checkout_fast_forward to struct object_id
-Date:   Mon,  1 May 2017 02:29:41 +0000
-Message-Id: <20170501022946.258735-49-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d
-In-Reply-To: <20170501022946.258735-1-sandals@crustytoothpaste.net>
-References: <20170501022946.258735-1-sandals@crustytoothpaste.net>
+        id S1032442AbdEADHP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 23:07:15 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:35318 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S939227AbdEADHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 23:07:13 -0400
+Received: by mail-pg0-f65.google.com with SMTP id c2so3959210pga.2
+        for <git@vger.kernel.org>; Sun, 30 Apr 2017 20:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=rgFKfu54iotYzRgiKhg8gLGymgdJlZbfQtGzHSWRVTk=;
+        b=ivbpA7LAT8fesVrlwMd9Wz8WruM+xNB9cdqeX96wHvNHCSQqzQBRMfwIcn0oErgMAm
+         8uExN3Q0i9OpCts/ueP4sF3qUcKFzbbOro2MIhKutW29mrWK+ah364bowFSd8vIpVA1P
+         IFEKyz5vhfsdF1qR6vF7HDM7xcIJIlNLXEAc6iFwVigaGrVpnfGa1JsRxERro06SIhjn
+         9WkYo3u+TzkOzU+0CxDnyWfoJDlwON82d6f2NgYhVnhGrZs1F4kkh0t72oT7rZdLgPF+
+         xsj9gAGyN5MxlrXnwo4E9Wh2vpqCEhMk+2r8oy6N7bP7tDljZl81XpZ/RF33912PbhxL
+         QcgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=rgFKfu54iotYzRgiKhg8gLGymgdJlZbfQtGzHSWRVTk=;
+        b=crped6IwKk4JAG0j35uT7td8DH36Zj+6MONlnJ+forQmxl50tRCOg/ePv5+E3XhI5G
+         hLL/l+C/TU18ZM0O0DH63DzMZBLj/D3TdWLRHT8WWURqtxfn0zHoN+i7Y+kXUlLi0L8P
+         wtB+0CI3vTpCUMHO4X9VmnAGK7kZ/L0MK6nN8DxGZXOw0CdIwwAFS29412JDE65XA7jV
+         fhsyOsBaMAARsXSU/ZlzB0A4eN64TD2vbpkM2PiMYIdkBm1WQRWEplXm3C70N3rgP5z9
+         jF+tktJqCuMFqfO+z58eXXGi2ZjnfTUJjjcIr/zElMBAMmQcDPoAD27wQxSd0E7dP3Xr
+         8dcw==
+X-Gm-Message-State: AN3rC/7l07JlYSTdin62ewldjDRqCk8XzzyqcVtYpMBC+a2uxtk4E1Pb
+        cg2t9lJeQfM7xFepQSo=
+X-Received: by 10.98.211.27 with SMTP id q27mr24476079pfg.126.1493608032835;
+        Sun, 30 Apr 2017 20:07:12 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:216d:aa3e:248d:bf63])
+        by smtp.gmail.com with ESMTPSA id v12sm20123788pgn.5.2017.04.30.20.07.11
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 30 Apr 2017 20:07:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, larsxschneider@gmail.com
+Subject: Re: [PATCH/RFC 1/1] t0027: Some tests are not expensive
+References: <11da00e8-a62c-bf07-d97e-ab755647082b@web.de>
+        <20170429153454.16879-1-tboegi@web.de>
+Date:   Sun, 30 Apr 2017 20:07:11 -0700
+In-Reply-To: <20170429153454.16879-1-tboegi@web.de> (tboegi@web.de's message
+        of "Sat, 29 Apr 2017 17:34:54 +0200")
+Message-ID: <xmqqfugpi8bk.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Converting checkout_fast_forward is required to convert
-parse_tree_indirect.
+tboegi@web.de writes:
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- builtin/merge.c | 4 ++--
- builtin/pull.c  | 4 ++--
- cache.h         | 4 ++--
- merge.c         | 8 ++++----
- sequencer.c     | 2 +-
- 5 files changed, 11 insertions(+), 11 deletions(-)
+> From: Torsten Bögershausen <tboegi@web.de>
+> ...
+> The execution time for the non-expansive part is 6..8 seconds under Linux,
+> and 32 seconds under Mac Os X.
+>
+> Running the "expensive" version roughly doubles the time.
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index f11b5f3de..5ea7f7da9 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1372,8 +1372,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 			goto done;
- 		}
- 
--		if (checkout_fast_forward(head_commit->object.oid.hash,
--					  commit->object.oid.hash,
-+		if (checkout_fast_forward(&head_commit->object.oid,
-+					  &commit->object.oid,
- 					  overwrite_ignore)) {
- 			ret = 1;
- 			goto done;
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 2ffb6569a..318c273eb 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -523,7 +523,7 @@ static int pull_into_void(const struct object_id *merge_head,
- 	 * index/worktree changes that the user already made on the unborn
- 	 * branch.
- 	 */
--	if (checkout_fast_forward(EMPTY_TREE_SHA1_BIN, merge_head->hash, 0))
-+	if (checkout_fast_forward(&empty_tree_oid, merge_head, 0))
- 		return 1;
- 
- 	if (update_ref("initial pull", "HEAD", merge_head->hash, curr_head->hash, 0, UPDATE_REFS_DIE_ON_ERR))
-@@ -839,7 +839,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			"fast-forwarding your working tree from\n"
- 			"commit %s."), oid_to_hex(&orig_head));
- 
--		if (checkout_fast_forward(orig_head.hash, curr_head.hash, 0))
-+		if (checkout_fast_forward(&orig_head, &curr_head, 0))
- 			die(_("Cannot fast-forward your working tree.\n"
- 				"After making sure that you saved anything precious from\n"
- 				"$ git diff %s\n"
-diff --git a/cache.h b/cache.h
-index e1f0e182a..8862510f9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -2198,8 +2198,8 @@ struct commit_list;
- int try_merge_command(const char *strategy, size_t xopts_nr,
- 		const char **xopts, struct commit_list *common,
- 		const char *head_arg, struct commit_list *remotes);
--int checkout_fast_forward(const unsigned char *from,
--			  const unsigned char *to,
-+int checkout_fast_forward(const struct object_id *from,
-+			  const struct object_id *to,
- 			  int overwrite_ignore);
- 
- 
-diff --git a/merge.c b/merge.c
-index 04ee5fc91..b0cffe16f 100644
---- a/merge.c
-+++ b/merge.c
-@@ -44,8 +44,8 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
- 	return ret;
- }
- 
--int checkout_fast_forward(const unsigned char *head,
--			  const unsigned char *remote,
-+int checkout_fast_forward(const struct object_id *head,
-+			  const struct object_id *remote,
- 			  int overwrite_ignore)
- {
- 	struct tree *trees[MAX_UNPACK_TREES];
-@@ -79,10 +79,10 @@ int checkout_fast_forward(const unsigned char *head,
- 	opts.fn = twoway_merge;
- 	setup_unpack_trees_porcelain(&opts, "merge");
- 
--	trees[nr_trees] = parse_tree_indirect(head);
-+	trees[nr_trees] = parse_tree_indirect(head->hash);
- 	if (!trees[nr_trees++])
- 		return -1;
--	trees[nr_trees] = parse_tree_indirect(remote);
-+	trees[nr_trees] = parse_tree_indirect(remote->hash);
- 	if (!trees[nr_trees++])
- 		return -1;
- 	for (i = 0; i < nr_trees; i++) {
-diff --git a/sequencer.c b/sequencer.c
-index 68e032630..b295004af 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -382,7 +382,7 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
- 	struct strbuf err = STRBUF_INIT;
- 
- 	read_cache();
--	if (checkout_fast_forward(from->hash, to->hash, 1))
-+	if (checkout_fast_forward(from, to, 1))
- 		return -1; /* the callee should have complained already */
- 
- 	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
+Hmph, perhaps none of these is truly expensive if that is the case?
+I am not talking about ~10 or ~30 seconds in absolute terms, but
+reacting to "excluding the ones only halves the time."
+
+The files used in the test vector seem to be all small.
+Is the expensiveness due to the fact that there are so many of them,
+and not due to some specific conversion being very slow?
