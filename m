@@ -2,116 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 653471F78F
-	for <e@80x24.org>; Mon,  1 May 2017 20:51:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33F631F78F
+	for <e@80x24.org>; Mon,  1 May 2017 21:01:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751947AbdEAUu7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 16:50:59 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:33086 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751941AbdEAUu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 16:50:58 -0400
-Received: by mail-pg0-f42.google.com with SMTP id y4so44588181pge.0
-        for <git@vger.kernel.org>; Mon, 01 May 2017 13:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=QwBZeARoUMyAioFBTpaPXVTd/M/nRXI2yOlov7OC25M=;
-        b=wRXbL0FNPG6m/gBDHc4VnmL4+/RHYY9sYn1IJibux5if3e8qarmycYXuNCRQiENjTv
-         qSXlg9XNWVOHpvxfsZoJZY7s0kf1XkOrlYvumSa7nKoeuJUA264XxEm58zNWAMaEKn8o
-         HOh+h5qj7E4N/30QbrKUJ01RtNnztqm9Fwew+TJrCYjJjOW0FmciJkVg/hfxbYUkI6AE
-         LkFkurpTRrkkT3o8fE59/pUP3z3pomn36QHuxkjfl6VzsnxbESfIljrwp8DomlrrlFtI
-         mnVgB9Biza7RgXiv0Koc5gPciOoRQJvMpomRL2Yta4BjHs6OOWuQ4PabQTUXeTMFsQSX
-         LKeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=QwBZeARoUMyAioFBTpaPXVTd/M/nRXI2yOlov7OC25M=;
-        b=P0SxtF/iOsXVnLXQvU7mSqHwhkhqO7yrC1GUUquLhNBeX0W0zs9UToXMywCz4jXweI
-         5IX2yZwaZkNocwSHADhqSgOGTbHVWQ0cFPnxVJuJ/JBOs/NPsBXUzvXZ7qmvdtdYAf1w
-         6X0d9MpEFhsYQDzJzhySgdzQ58HVLji2BjHrHdHFyTw0C/wtzUte7OR2mCvF9psTK4x7
-         OZDgKuvELCXrzYH0Rtkaot0jvVsq2sZVot9r/2hs10GjUdm9hDXIpTzVpRWenDqhk98D
-         Pg8Mi5w2QmdV62EYbG8c9ueHUOCRqHYmzkGNwlwSilMPmUlZzA2aRn3L2uI5qwallanP
-         Rw1w==
-X-Gm-Message-State: AN3rC/4wC2DKGdh403E1y1myx+bLVtKg+4K6imAMVveFx+0YS53i+8Gy
-        DRdwemWpA1A/juVGFTyD2B+gbg91autd1Cks0w==
-X-Received: by 10.99.60.81 with SMTP id i17mr18525019pgn.183.1493671857504;
- Mon, 01 May 2017 13:50:57 -0700 (PDT)
+        id S1750974AbdEAVBL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 17:01:11 -0400
+Received: from mout.web.de ([212.227.17.12]:53006 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750868AbdEAVBK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 17:01:10 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M5wzV-1e2NPR3wjZ-00xtuV; Mon, 01
+ May 2017 23:01:01 +0200
+Subject: Re: [PATCH] cache-tree: reject entries with null sha1
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <20170421184617.lc5bioa5px6ninrj@sigill.intra.peff.net>
+ <CACsJy8AAtV5KJHBqWvnYb3Mw9CVzEdG3M-UJA+jd5MR5e-UMsA@mail.gmail.com>
+ <12c3312c-30a1-2cb1-8f05-63bb663bd0a0@web.de>
+ <20170501192212.xy5o72tinb2hy2a3@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <456378ba-a117-8003-eea2-69272ed9bb58@web.de>
+Date:   Mon, 1 May 2017 23:00:58 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Mon, 1 May 2017 13:50:57 -0700 (PDT)
-In-Reply-To: <C3A43A45-9120-4755-AE42-FD33F68F3FCB@gmail.com>
-References: <C3A43A45-9120-4755-AE42-FD33F68F3FCB@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 1 May 2017 13:50:57 -0700
-Message-ID: <CAGZ79kYfoBOc+hVhm7XEg1TvYQ8myF4f=0wSwDs-agYxaArsWQ@mail.gmail.com>
-Subject: Re: [PATCH] small memory leak fix
-To:     David CARLIER <devnexen@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170501192212.xy5o72tinb2hy2a3@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:M2Po9NkSNiSf+E/MYRb9FR0pKV6ivtYWC913jR1WH6tq4riSIZ5
+ B2kQGpJn8oP16dwxh5lDt/XyarIfelBOTUt5Djd9CERuTEsjqk0Du7Zo4zyEWxkPtUeqDQu
+ t+1aoKXankXhO78zfw6ZXzHiokZqg95xYRhi4xL5qxpMZ39btrFChTtofBXj9x4q3GcbVq1
+ do51jC3dVsCIeYaVewF+w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:B5qcy5K+b5E=:Yjb4nYYGxnADrcrgafdIIM
+ fLueYes69x0ogDfLa5T0aOuiNHoyPfoLM8mlNK8CsqP/0CTBiSSJrDXtfzIf6GFKqgMKAxgFs
+ QD84Qh0hxvpPEyJAcUbSb09zdRvOjCUh1nlXt/MDmk2iJ+99UcIejm7tv+mzlk2E2R1ab1OIP
+ ZfPN+QHHYRpRKFpuu0VT3P7ultSSrBMFjYIOA5ITnKKhmpBxg7gdXkFoeZNSouY2NQsR6f6v9
+ lFX5ULIo+MgOa0mC/b0H13qkpjCU9yeyoPxHi9KOFFu5CkbdoFrrj6qX2Cil2SNiErMRwMgtT
+ e2v06xr/h0r7I4JO+i7o4zPo4PvBTBY6Nte9YhoOSMhUZ3G01LnW1TGBGeEUeTMVKB5sGKF/b
+ lbfLiHVBPxVcoGi2TnCJPgjkv5I2Bf7jywB4jksVzQo0kmiln637CuwScWiqIY+rnDYsR2Lnq
+ 9UyCBCEK3F2cTLRbSg2tSHDbtbNNpn9m7dJekgbT08VqLHM+NLlZnYMryZUqwyprWp3mkamIL
+ 1wqWo/w5cLtuW2gYcCOh+W4A/PodLvEN/HUFvIhm3fQdkkzC8XtWRuE7A6XZd1nM2jlD0q9Qg
+ VJIEodn9/tLpJWih8o0DxKFRrc+jvbrRI9LTAdyxHcaJwkcaIC/gvAKxPkJgmgfb8CTT38fHL
+ uGKnPGY8DsmqpI1vAN5N+1NYLES3OflC/r2r/3jyhpN32n+wG/KWtOsPqBbV7p5uOSORwLnSG
+ ugK71o5xKKWfVJzAC4ubnQTIlx512mYf+IHtcSGvpUdAOMfqH0VrrD+iWTIDZY4nF6DiSVF6K
+ XVl1ov7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 1, 2017 at 1:40 PM, David CARLIER <devnexen@gmail.com> wrote:
-> Hi this is my first submission, a memory leak found in the maint branch (might be in master as well).
->
-> Kind regards.
+Am 01.05.2017 um 21:22 schrieb Jeff King:
+> On Mon, May 01, 2017 at 01:23:28PM +0200, René Scharfe wrote:
+>> I can only get gcc and clang to call memcpy instead of inlining it by
+>> specifying -fno-builtin.  Do you use that option?  If yes, why?  (Just
+>> curious.)
+> 
+> I do my normal edit-compile cycles with -O0 because it's fast, and
+> because it makes debugging much easier.
 
-Hi and welcome to Git!
+GCC and Clang still inline memcpy with -O0 alone (at least the versions
+I tested).
 
-> From d98f3944780730447f111a4178c9d99f5110c260 Mon Sep 17 00:00:00 2001
-> From: David Carlier <devnexen@gmail.com>
-> Date: Mon, 1 May 2017 21:14:09 +0100
-> Subject: [PATCH] memory leaks fixes for remote lists.
-
-We usually word the subject line as "area: what we do"
-(C.f. $ git log --oneline --no-merges -- remote.c)
-Maybe:
-
-    remote.c: plug memleak in for_each_remote
-
->
-> both push and fetch lists were not freed thus
-> using free_refspecs usage.
->
-> Signed-off-by: David Carlier <devnexen@gmail.com>
-> ---
-> remote.c | 2 ++
-> 1 file changed, 2 insertions(+)
->
-> diff --git a/remote.c b/remote.c
-> index 9f83fe2c4..2f8cb35a3 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -742,6 +742,8 @@ int for_each_remote(each_remote_fn fn, void *priv)
->  r->push = parse_push_refspec(r->push_refspec_nr,
->      r->push_refspec);
->  result = fn(r, priv);
-> + free_refspecs(r->push, r->push_refspec_nr);
-> + free_refspecs(r->fetch, r->fetch_refspec_nr);
-
-After freeing the refspec, r->push/fetch still points to
-the (now free'd) memory. We'd want to reset it to NULL as well,
-such that e.g. in this function
-
-    if (!r->fetch)
-        ...
-
-still works.
-
-After reading this, I think we'd rather want to keep the fetch/push refspec
-around for the next access of the struct remote, and only free the memory
-when the remote itself is freed?
-
-That however is a problem as we never free them, they are globals :(
-
-Thanks,
-Stefan
+René
