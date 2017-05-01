@@ -2,146 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A11351F790
-	for <e@80x24.org>; Mon,  1 May 2017 09:15:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC6F41F790
+	for <e@80x24.org>; Mon,  1 May 2017 10:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1426713AbdEAJPo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 05:15:44 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:34413 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1425972AbdEAJPm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 05:15:42 -0400
-Received: by mail-io0-f194.google.com with SMTP id h41so20797549ioi.1
-        for <git@vger.kernel.org>; Mon, 01 May 2017 02:15:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=GcSzd+88uhIoMV2EQ2fbhmb6e/zDVf0tMNdtBqTe5bY=;
-        b=K7GUFIWtFZn6yivyVD0fOLlmoVfg5zFxD6sWzh5Xt+RHLgt5n3p7hxUywA3OmOjwUF
-         tLLfwGWq9bhTq85TVRBCBOyeXtDQR3m1IokYW/R0eiKZjO54RKDMeew5tcjzhkLBCL5R
-         aS17qvy9MQeD5sPQXaj60exi2avNrma1V2C1bEiyHGhbIhgItEBXMX46q7M/72rVGcXO
-         LfsT+jORRq07+tAeNMWyIW9qfm7OaOhFnxEDel3jejzQPSSJb0sY3gBlAnns1IBIJ7VH
-         s4Zj3x2xr3XxJCTDQEycRdV73+237hamzFqJkf7MyzAR0esZ7WeTG+ePs5bj4bw34Ib+
-         33Qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=GcSzd+88uhIoMV2EQ2fbhmb6e/zDVf0tMNdtBqTe5bY=;
-        b=aBnJO1/Bh38R9LU1OIK/4l7nXeTdITsxTjPOREPmKiUWoak/aA1BFJG9z9fTSCIBty
-         2lTinzzzETU3552XdGs4MvfUVuj+GDDt2V7yvIGRbT+vpA2Yc/8mJW5nVeJHYdUpcHde
-         5YONL5DrlLH1LrzxpoPmy6VpR/LhrkbNuuAyrQJeghFdr5qcH+43cfgUogMmT9wVx+Jn
-         CmAxWig9SMCiGWT3/37WvIs9p4iEdcfP0txwugWqR3qztjmIQrbAuThhapx27sl1GcaK
-         XJN09IxJ6SY4NYsECMabh2SBN3jrtI5dBCA9knE0U4nP+yxTwC5TMrgmKp5/kC6eJ5L6
-         4AXQ==
-X-Gm-Message-State: AN3rC/5e3QSl1NhAsHWohnkXSp8+rDdz1eHIP4EUQg1uL/FU+RgEdyn/
-        eDuM4eU/dR2HXeV1cwZALouF/MDrsg==
-X-Received: by 10.107.146.139 with SMTP id u133mr20209888iod.160.1493630141729;
- Mon, 01 May 2017 02:15:41 -0700 (PDT)
+        id S378681AbdEAKGZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 06:06:25 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:28940 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S378678AbdEAKGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 06:06:23 -0400
+Received: from [192.168.2.201] ([92.22.34.197])
+        by smtp.talktalk.net with SMTP
+        id 58DkdS78y9tMz58DkdIMhh; Mon, 01 May 2017 11:06:21 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net; s=1605;
+        t=1493633181; bh=D0Ji6oghG1hpWOKgg2Wo/Vi8/m+UF1wQMngaI+UXggs=;
+        h=Reply-To:Subject:To:References:From:Cc:Date:In-Reply-To;
+        b=WCKiMl7xt20+HsS7pq5AOZKAVr0R89Sbr6hoGQ9gkSMmDl2jfq7azgAPhSo4igTPK
+         vSbt9HKOupYcKpeNuTdMMQbsFLvFGT87yu3bPdazHFAQiKrFd9j+v1uwWbdntSu2Al
+         eoNHeuFYL15Kt20miLAtMs7eguKRwEGTQ+GuXHGQ=
+X-Originating-IP: [92.22.34.197]
+X-Spam: 0
+X-OAuthority: v=2.2 cv=WOE9ZTkR c=1 sm=1 tr=0 a=hA2HGApHRYQPBHGSl800fg==:117
+ a=hA2HGApHRYQPBHGSl800fg==:17 a=IkcTkHD0fZMA:10 a=Kv9d0ukAiKx9rihItDgA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 1/9] rebase -i: generate the script via rebase--helper
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <cover.1493128210.git.johannes.schindelin@gmx.de>
+ <cover.1493207864.git.johannes.schindelin@gmx.de>
+ <c44a15ed1f1015d7e9377e18610a0c428786995b.1493207864.git.johannes.schindelin@gmx.de>
+ <8c1f3519-0768-69d9-4d15-782da0be8390@talktalk.net>
+ <alpine.DEB.2.20.1704282059100.3480@virtualbox>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>, Jeff King <peff@peff.net>
+Message-ID: <42892d55-965d-af9d-fb80-518797d590c0@talktalk.net>
+Date:   Mon, 1 May 2017 11:06:19 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Mon, 1 May 2017 02:15:20 -0700 (PDT)
-In-Reply-To: <20170429100253.4710-1-jn.avila@free.fr>
-References: <20170429100253.4710-1-jn.avila@free.fr>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Mon, 1 May 2017 11:15:20 +0200
-Message-ID: <CACBZZX6kVihx43o7AKkb+DZtPUoHOw027VpLcMD-09fN=XnxbA@mail.gmail.com>
-Subject: Re: [PATCH] i18n: remove i18n from tag reflog message
-To:     Jean-Noel Avila <jn.avila@free.fr>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Cornelius Weig <cornelius.weig@tngtech.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <alpine.DEB.2.20.1704282059100.3480@virtualbox>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOXDkwAYTFVESfaZYMnUBd71B0nrx8BgI6PpkEcx/hOp5XsYvrUhKmin34wT/1A7ftT9oBiWedIzcRfWcEKugvWMrJjkCZscwAAgmbcu7ed7FCdcVpk6
+ zZV5Y82b4UwIcll510TZhL1Na+rOC3Svo2MxacxFRj+LAeZnuwwv5c7Gbnas/FJ7wruOCS3f9XfFe19ztdFXwdvSAcmfyKOLjlo7ayI8fKiWxje6XbWdXOdp
+ nxU4c+tbCIgJe0oxBt785s2ic03RP0xMoFRwMoILGXRUIbsvihkYt63+DuX+BJx+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Apr 29, 2017 at 12:02 PM, Jean-Noel Avila <jn.avila@free.fr> wrote:
-> The building of the reflog message is using strbuf, which is not
-> friendly with internationalization frameworks. No other reflog
-> messages are translated right now and switching all the messages to
-> i18n would require a major rework of the way the messages are built.
+On 28/04/17 20:22, Johannes Schindelin wrote:
+> Hi Philip,
+> 
+> On Fri, 28 Apr 2017, Phillip Wood wrote:
+> 
+>> On 26/04/17 12:59, Johannes Schindelin wrote:
+>>
+>>> The first step of an interactive rebase is to generate the so-called
+>>> "todo script", to be stored in the state directory as
+>>> "git-rebase-todo" and to be edited by the user.
+>>>
+>>> Originally, we adjusted the output of `git log <options>` using a
+>>> simple sed script. Over the course of the years, the code became more
+>>> complicated. We now use shell scripting to edit the output of `git
+>>> log` conditionally, depending whether to keep "empty" commits (i.e.
+>>> commits that do not change any files).
+>>>
+>>> On platforms where shell scripting is not native, this can be a
+>>> serious drag. And it opens the door for incompatibilities between
+>>> platforms when it comes to shell scripting or to Unix-y commands.
+>>>
+>>> Let's just re-implement the todo script generation in plain C, using
+>>> the revision machinery directly.
+>>>
+>>> This is substantially faster, improving the speed relative to the
+>>> shell script version of the interactive rebase from 2x to 3x on
+>>> Windows.
+>>
+>> This changes the behaviour of git -c rebase.instructionFormat= rebase -i
+>> The shell version treats the rebase.instructionFormat being unset or set
+>> to the empty string as equivalent. This version generates a todo list
+>> with lines like 'pick <abbrev sha1>' rather than 'pick <abbrev sha1>
+>> <subject>'
+>>
+>> I only picked this up because I have a script that does 'git -c
+>> rebase.instructionFormat= rebase -i' with a custom sequence editor. I
+>> can easily add '%s' in the appropriate place but I thought I'd point it
+>> out in case other people are affected by the change.
+> 
+> While I would argue that the C version is more correct, it would be
+> backwards-incompatible.
 
-[CC'd Cornelius Weig who added the code you're modifying]
+I was going to make a point about resetting config variables to their
+default value on the command line but Junio beat me to it.
 
-If I'm reading this correctly this is a good patch but quite a bad
-explanation of what we're changing.
+> So I changed it.
 
-The problem here is not that it's cumbersome to translate this using
-strbuf, but that we're injecting i18n'd messages into the reflog, so
-e.g. someone with a Chinese locale creating a tag in a shared repo
-will cause the Chinese i18n message to be inserted into the reflog,
-and then someone with e.g. a German or English locale will see the
-Chinese messages when they run "git reflog".
+That's great, thanks
 
-That's a very bad thing, and in some ways worse than translating
-plumbing messages, because here we're injecting i18n'd messages into
-the on-disk format.
+> BTW in the future you could help me a *lot* by providing a patch that adds
+> a test case to our test suite that not only demonstrates what exactly goes
+> wrong, but also will help prevent future regressions.
 
-Luckily this hasn't made it into 2.13 yet. Junio, if the above
-description is accurate then this is something we definitely want in
-the final 2.13.
+I'll bear that in mind, it does assume that reporters have a good
+understanding of the test suite layout and helper functions though. Is
+there a particular reason you put the test case in the autosquash tests?
+I wouldn't have thought of doing that.
 
+Thanks again
 
-> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
-> ---
->  builtin/tag.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 222404522..bdf1e88e9 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -309,7 +309,7 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
->         if (rla) {
->                 strbuf_addstr(sb, rla);
->         } else {
-> -               strbuf_addstr(sb, _("tag: tagging "));
-> +               strbuf_addstr(sb, "tag: tagging ");
->                 strbuf_add_unique_abbrev(sb, sha1, DEFAULT_ABBREV);
->         }
->
-> @@ -317,14 +317,14 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
->         type = sha1_object_info(sha1, NULL);
->         switch (type) {
->         default:
-> -               strbuf_addstr(sb, _("object of unknown type"));
-> +               strbuf_addstr(sb, "object of unknown type");
->                 break;
->         case OBJ_COMMIT:
->                 if ((buf = read_sha1_file(sha1, &type, &size)) != NULL) {
->                         subject_len = find_commit_subject(buf, &subject_start);
->                         strbuf_insert(sb, sb->len, subject_start, subject_len);
->                 } else {
-> -                       strbuf_addstr(sb, _("commit object"));
-> +                       strbuf_addstr(sb, "commit object");
->                 }
->                 free(buf);
->
-> @@ -332,13 +332,13 @@ static void create_reflog_msg(const unsigned char *sha1, struct strbuf *sb)
->                         strbuf_addf(sb, ", %s", show_date(c->date, 0, DATE_MODE(SHORT)));
->                 break;
->         case OBJ_TREE:
-> -               strbuf_addstr(sb, _("tree object"));
-> +               strbuf_addstr(sb, "tree object");
->                 break;
->         case OBJ_BLOB:
-> -               strbuf_addstr(sb, _("blob object"));
-> +               strbuf_addstr(sb, "blob object");
->                 break;
->         case OBJ_TAG:
-> -               strbuf_addstr(sb, _("other tag object"));
-> +               strbuf_addstr(sb, "other tag object");
->                 break;
->         }
->         strbuf_addch(sb, ')');
-> --
-> 2.12.0
->
+Phillip
+
