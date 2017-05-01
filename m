@@ -6,41 +6,41 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 506E21F829
-	for <e@80x24.org>; Mon,  1 May 2017 02:33:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 771E51F829
+	for <e@80x24.org>; Mon,  1 May 2017 02:33:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S642409AbdEACdA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 22:33:00 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:36046 "EHLO
+        id S642411AbdEACdE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 22:33:04 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:36064 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2999546AbdEACb0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:31:26 -0400
+        by vger.kernel.org with ESMTP id S2999562AbdEACbm (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:31:42 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A05AF280B2;
-        Mon,  1 May 2017 02:30:15 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 389AF280E3;
+        Mon,  1 May 2017 02:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1493605815;
-        bh=8UI2oKXgbvWcYqUbOjf0DKULWPgoMyG02e1Xdpe/Hg8=;
+        s=default; t=1493605817;
+        bh=RipwxM0koEmnQG4iNPgWdtcYTf9smqjRHL3n8dq3BME=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ZIC3YkO8gl4xuIYFK86+uUFD3YDu4pj/C11mcxavM0qnguoZ1aBcoVA6ZWk7NtBMJ
-         hPcIHYWwQnOAoicFB9HHz98XXm8XaPoRtU6rPT1WGRJvwGRs0qVrZP1FUIXaYaQB6S
-         Pg+FV/WOhFaE6x7f9zydJv/J9TFerf9DJNaoH5EKXpWWWtQANaUhdAb2hVSVfbnv3u
-         06VDfvAXtKAD1O94k6HJHkOEsR0RNV/uIk5zbiWU8mcC8TyB8wUzvRQBS9tdiyP1B7
-         F5grQr6qAOy3LL3brVpEBbjEMBnXWQ6k24brroqP0WqjDEXx8TT+1XMpVXD15umz6d
-         EKXA427bzFjaZFL4vrf9nMRPGY/z/wCtTKfSDvqQO70chh0lTHgZB8hvYhGkgyyQgd
-         zkMROvyoHqr2sp71E6Wv31DoalAmmjJBwGmMEVRZn+SKaonvd6kRGZmvU9RtWUqvHA
-         DymrAoOcwsxq52pkMm4hALBokMeNHey8TcJzKkU2QnhKW2ppGhb
+        b=L7Yf4nr3Q3cHiqYk8nICMbjSkqvgCTxFl5hmIRLj78AAb3RRNzToxFyk0zJ2uVyk5
+         jhnlHEWFmokq62tMHDYZqBMNiHk36N+VRevpewsbdJum5MvTyfeq5w1mtCZUo42/Ap
+         FsmB5YoQQDlQTU/MKpfvEc9+BQzyEw9KSr8UDSBuuHwnxIRIsEVtHjI7QSCGdjbDbN
+         zdA7pBEBUYxQ5GRmRdE7JVudHgYrRqFViouRGakHrKxT2zvXwQmeIkCd1D4mO3FHG4
+         cS5UXsaNHjfeX+lSQ9d0dsFmx6cPXOiPZINOH08EJP5YAfGaYykGPy+Xvu96mKXYdI
+         97lj/GV00AHR5MaTWdit796hCM0Tnxu2ufpc54DDVt3que5TnH0kRI/b14l3FT0S27
+         4/Uk5LEf/2MX4a0K9J1A6QP6THCnLHxXcvLNTHmINhGLRDfNBCbboTGRAjloFEbBLv
+         2C3ibctBTf7egqE4tuLkJuQF+hAdVXEadc1qQ2aW8PUYiBOuKHn
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 46/53] builtin/ls-files: convert overlay_tree_on_cache to object_id
-Date:   Mon,  1 May 2017 02:29:39 +0000
-Message-Id: <20170501022946.258735-47-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 52/53] tree: convert parse_tree_indirect to struct object_id
+Date:   Mon,  1 May 2017 02:29:45 +0000
+Message-Id: <20170501022946.258735-53-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d
 In-Reply-To: <20170501022946.258735-1-sandals@crustytoothpaste.net>
 References: <20170501022946.258735-1-sandals@crustytoothpaste.net>
@@ -49,32 +49,314 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is another caller of parse_tree_indirect.
+Convert parse_tree_indirect to take a pointer to struct object_id.
+Update all the callers.  This transformation was achieved using the
+following semantic patch and manual updates to the declaration and
+definition.  Update builtin/checkout.c manually as well, since it uses a
+ternary expression not handled by the semantic patch.
+
+@@
+expression E1;
+@@
+- parse_tree_indirect(E1.hash)
++ parse_tree_indirect(&E1)
+
+@@
+expression E1;
+@@
+- parse_tree_indirect(E1->hash)
++ parse_tree_indirect(E1)
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/ls-files.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ archive.c                   | 4 ++--
+ builtin/am.c                | 6 +++---
+ builtin/checkout.c          | 8 ++++----
+ builtin/clone.c             | 2 +-
+ builtin/commit.c            | 2 +-
+ builtin/ls-files.c          | 2 +-
+ builtin/ls-tree.c           | 2 +-
+ builtin/merge.c             | 6 +++---
+ builtin/read-tree.c         | 2 +-
+ builtin/reset.c             | 4 ++--
+ diff-lib.c                  | 2 +-
+ merge.c                     | 4 ++--
+ sequencer.c                 | 2 +-
+ t/helper/test-match-trees.c | 4 ++--
+ tree.c                      | 4 ++--
+ tree.h                      | 2 +-
+ 16 files changed, 28 insertions(+), 28 deletions(-)
 
+diff --git a/archive.c b/archive.c
+index 54701e8bb..b15a922da 100644
+--- a/archive.c
++++ b/archive.c
+@@ -369,7 +369,7 @@ static void parse_treeish_arg(const char **argv,
+ 		archive_time = time(NULL);
+ 	}
+ 
+-	tree = parse_tree_indirect(oid.hash);
++	tree = parse_tree_indirect(&oid);
+ 	if (tree == NULL)
+ 		die("not a tree object");
+ 
+@@ -383,7 +383,7 @@ static void parse_treeish_arg(const char **argv,
+ 		if (err || !S_ISDIR(mode))
+ 			die("current working directory is untracked");
+ 
+-		tree = parse_tree_indirect(tree_oid.hash);
++		tree = parse_tree_indirect(&tree_oid);
+ 	}
+ 	ar_args->tree = tree;
+ 	ar_args->commit_sha1 = commit_sha1;
+diff --git a/builtin/am.c b/builtin/am.c
+index 200d9dbed..a2867f347 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2045,11 +2045,11 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+ 	struct tree *head_tree, *remote_tree, *index_tree;
+ 	struct object_id index;
+ 
+-	head_tree = parse_tree_indirect(head->hash);
++	head_tree = parse_tree_indirect(head);
+ 	if (!head_tree)
+ 		return error(_("Could not parse object '%s'."), oid_to_hex(head));
+ 
+-	remote_tree = parse_tree_indirect(remote->hash);
++	remote_tree = parse_tree_indirect(remote);
+ 	if (!remote_tree)
+ 		return error(_("Could not parse object '%s'."), oid_to_hex(remote));
+ 
+@@ -2061,7 +2061,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+ 	if (write_cache_as_tree(index.hash, 0, NULL))
+ 		return -1;
+ 
+-	index_tree = parse_tree_indirect(index.hash);
++	index_tree = parse_tree_indirect(&index);
+ 	if (!index_tree)
+ 		return error(_("Could not parse object '%s'."), oid_to_hex(&index));
+ 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 7f1eeea94..13365fb62 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -527,10 +527,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 			setup_standard_excludes(topts.dir);
+ 		}
+ 		tree = parse_tree_indirect(old->commit ?
+-					   old->commit->object.oid.hash :
+-					   EMPTY_TREE_SHA1_BIN);
++					   &old->commit->object.oid :
++					   &empty_tree_oid);
+ 		init_tree_desc(&trees[0], tree->buffer, tree->size);
+-		tree = parse_tree_indirect(new->commit->object.oid.hash);
++		tree = parse_tree_indirect(&new->commit->object.oid);
+ 		init_tree_desc(&trees[1], tree->buffer, tree->size);
+ 
+ 		ret = unpack_trees(2, trees, &topts);
+@@ -1050,7 +1050,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	new->commit = lookup_commit_reference_gently(rev, 1);
+ 	if (!new->commit) {
+ 		/* not a commit */
+-		*source_tree = parse_tree_indirect(rev->hash);
++		*source_tree = parse_tree_indirect(rev);
+ 	} else {
+ 		parse_commit_or_die(new->commit);
+ 		*source_tree = new->commit->tree;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 646f28792..da2d3c1ae 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -739,7 +739,7 @@ static int checkout(int submodule_progress)
+ 	opts.src_index = &the_index;
+ 	opts.dst_index = &the_index;
+ 
+-	tree = parse_tree_indirect(oid.hash);
++	tree = parse_tree_indirect(&oid);
+ 	parse_tree(tree);
+ 	init_tree_desc(&t, tree->buffer, tree->size);
+ 	if (unpack_trees(1, &t, &opts) < 0)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e69f466d5..6adc908b3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -313,7 +313,7 @@ static void create_base_index(const struct commit *current_head)
+ 	opts.dst_index = &the_index;
+ 
+ 	opts.fn = oneway_merge;
+-	tree = parse_tree_indirect(current_head->object.oid.hash);
++	tree = parse_tree_indirect(&current_head->object.oid);
+ 	if (!tree)
+ 		die(_("failed to unpack HEAD tree object"));
+ 	parse_tree(tree);
 diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index a6c70dbe9..da0ff849f 100644
+index da0ff849f..f20edabe6 100644
 --- a/builtin/ls-files.c
 +++ b/builtin/ls-files.c
-@@ -414,14 +414,14 @@ static void prune_cache(const char *prefix, size_t prefixlen)
- void overlay_tree_on_cache(const char *tree_name, const char *prefix)
- {
- 	struct tree *tree;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct pathspec pathspec;
- 	struct cache_entry *last_stage0 = NULL;
- 	int i;
+@@ -421,7 +421,7 @@ void overlay_tree_on_cache(const char *tree_name, const char *prefix)
  
--	if (get_sha1(tree_name, sha1))
-+	if (get_oid(tree_name, &oid))
+ 	if (get_oid(tree_name, &oid))
  		die("tree-ish %s not found.", tree_name);
--	tree = parse_tree_indirect(sha1);
-+	tree = parse_tree_indirect(oid.hash);
+-	tree = parse_tree_indirect(oid.hash);
++	tree = parse_tree_indirect(&oid);
  	if (!tree)
  		die("bad tree-ish %s", tree_name);
  
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 5baac3ef2..ee7b293b1 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -180,7 +180,7 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
+ 	for (i = 0; i < pathspec.nr; i++)
+ 		pathspec.items[i].nowildcard_len = pathspec.items[i].len;
+ 	pathspec.has_wildcard = 0;
+-	tree = parse_tree_indirect(oid.hash);
++	tree = parse_tree_indirect(&oid);
+ 	if (!tree)
+ 		die("not a tree object");
+ 	return !!read_tree_recursive(tree, "", 0, 0, &pathspec, show_tree, NULL);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5ea7f7da9..a4a098f40 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -605,13 +605,13 @@ static int read_tree_trivial(struct object_id *common, struct object_id *head,
+ 	opts.verbose_update = 1;
+ 	opts.trivial_merges_only = 1;
+ 	opts.merge = 1;
+-	trees[nr_trees] = parse_tree_indirect(common->hash);
++	trees[nr_trees] = parse_tree_indirect(common);
+ 	if (!trees[nr_trees++])
+ 		return -1;
+-	trees[nr_trees] = parse_tree_indirect(head->hash);
++	trees[nr_trees] = parse_tree_indirect(head);
+ 	if (!trees[nr_trees++])
+ 		return -1;
+-	trees[nr_trees] = parse_tree_indirect(one->hash);
++	trees[nr_trees] = parse_tree_indirect(one);
+ 	if (!trees[nr_trees++])
+ 		return -1;
+ 	opts.fn = threeway_merge;
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 92eff23e4..6d45175f6 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -29,7 +29,7 @@ static int list_tree(struct object_id *oid)
+ 
+ 	if (nr_trees >= MAX_UNPACK_TREES)
+ 		die("I cannot read more than %d trees", MAX_UNPACK_TREES);
+-	tree = parse_tree_indirect(oid->hash);
++	tree = parse_tree_indirect(oid);
+ 	if (!tree)
+ 		return -1;
+ 	trees[nr_trees++] = tree;
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 3415dac5d..c782739c2 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -84,7 +84,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
+ 		return -1;
+ 
+ 	if (reset_type == MIXED || reset_type == HARD) {
+-		tree = parse_tree_indirect(oid->hash);
++		tree = parse_tree_indirect(oid);
+ 		prime_cache_tree(&the_index, tree);
+ 	}
+ 
+@@ -311,7 +311,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 		struct tree *tree;
+ 		if (get_sha1_treeish(rev, oid.hash))
+ 			die(_("Failed to resolve '%s' as a valid tree."), rev);
+-		tree = parse_tree_indirect(oid.hash);
++		tree = parse_tree_indirect(&oid);
+ 		if (!tree)
+ 			die(_("Could not parse object '%s'."), rev);
+ 		oidcpy(&oid, &tree->object.oid);
+diff --git a/diff-lib.c b/diff-lib.c
+index ee9df0f84..2982bf055 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -486,7 +486,7 @@ static int diff_cache(struct rev_info *revs,
+ 	struct tree_desc t;
+ 	struct unpack_trees_options opts;
+ 
+-	tree = parse_tree_indirect(tree_oid->hash);
++	tree = parse_tree_indirect(tree_oid);
+ 	if (!tree)
+ 		return error("bad tree object %s",
+ 			     tree_name ? tree_name : oid_to_hex(tree_oid));
+diff --git a/merge.c b/merge.c
+index b0cffe16f..1d441ad94 100644
+--- a/merge.c
++++ b/merge.c
+@@ -79,10 +79,10 @@ int checkout_fast_forward(const struct object_id *head,
+ 	opts.fn = twoway_merge;
+ 	setup_unpack_trees_porcelain(&opts, "merge");
+ 
+-	trees[nr_trees] = parse_tree_indirect(head->hash);
++	trees[nr_trees] = parse_tree_indirect(head);
+ 	if (!trees[nr_trees++])
+ 		return -1;
+-	trees[nr_trees] = parse_tree_indirect(remote->hash);
++	trees[nr_trees] = parse_tree_indirect(remote);
+ 	if (!trees[nr_trees++])
+ 		return -1;
+ 	for (i = 0; i < nr_trees; i++) {
+diff --git a/sequencer.c b/sequencer.c
+index d2963c6c5..625f0bd64 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -446,7 +446,7 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	if (is_rebase_i(opts))
+ 		o.buffer_output = 2;
+ 
+-	head_tree = parse_tree_indirect(head->hash);
++	head_tree = parse_tree_indirect(head);
+ 	next_tree = next ? next->tree : empty_tree();
+ 	base_tree = base ? base->tree : empty_tree();
+ 
+diff --git a/t/helper/test-match-trees.c b/t/helper/test-match-trees.c
+index e93950286..356d8edef 100644
+--- a/t/helper/test-match-trees.c
++++ b/t/helper/test-match-trees.c
+@@ -12,10 +12,10 @@ int cmd_main(int ac, const char **av)
+ 		die("cannot parse %s as an object name", av[1]);
+ 	if (get_oid(av[2], &hash2))
+ 		die("cannot parse %s as an object name", av[2]);
+-	one = parse_tree_indirect(hash1.hash);
++	one = parse_tree_indirect(&hash1);
+ 	if (!one)
+ 		die("not a tree-ish %s", av[1]);
+-	two = parse_tree_indirect(hash2.hash);
++	two = parse_tree_indirect(&hash2);
+ 	if (!two)
+ 		die("not a tree-ish %s", av[2]);
+ 
+diff --git a/tree.c b/tree.c
+index 28ce930b9..9adcd8bd4 100644
+--- a/tree.c
++++ b/tree.c
+@@ -232,9 +232,9 @@ void free_tree_buffer(struct tree *tree)
+ 	tree->object.parsed = 0;
+ }
+ 
+-struct tree *parse_tree_indirect(const unsigned char *sha1)
++struct tree *parse_tree_indirect(const struct object_id *oid)
+ {
+-	struct object *obj = parse_object(sha1);
++	struct object *obj = parse_object(oid->hash);
+ 	do {
+ 		if (!obj)
+ 			return NULL;
+diff --git a/tree.h b/tree.h
+index 2b2c8dbbe..0d4734b94 100644
+--- a/tree.h
++++ b/tree.h
+@@ -24,7 +24,7 @@ static inline int parse_tree(struct tree *tree)
+ void free_tree_buffer(struct tree *tree);
+ 
+ /* Parses and returns the tree in the given ent, chasing tags and commits. */
+-struct tree *parse_tree_indirect(const unsigned char *sha1);
++struct tree *parse_tree_indirect(const struct object_id *oid);
+ 
+ #define READ_TREE_RECURSIVE 1
+ typedef int (*read_tree_fn_t)(const unsigned char *, struct strbuf *, const char *, unsigned int, int, void *);
