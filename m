@@ -6,41 +6,41 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D3D61FC3E
-	for <e@80x24.org>; Mon,  1 May 2017 02:31:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29C301FC3E
+	for <e@80x24.org>; Mon,  1 May 2017 02:31:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2999524AbdEACbN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 22:31:13 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:35794 "EHLO
+        id S2999530AbdEACbR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 22:31:17 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:35792 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S642349AbdEACa1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:30:27 -0400
+        by vger.kernel.org with ESMTP id S642359AbdEACae (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 30 Apr 2017 22:30:34 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id C86D4280C3;
-        Mon,  1 May 2017 02:30:07 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 84C00280C7;
+        Mon,  1 May 2017 02:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1493605807;
-        bh=jsmmLBuwYXV7YbRefepcXmSJPkUPo1EGUV2ZMXp6J64=;
+        s=default; t=1493605808;
+        bh=5WYWGIn4xuVlH+3fKSSN3Z6IkbWHSebzkkAxIQelxLc=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=XSVBnzQ9XpVFG/jsEa4cGLG+Dj/sPAE7CSLWygfsrz7SHaon/2EL7ncAESse9mYAY
-         EicgdkTBqQTb1AKWcMQaY8kMO1W9142DPC4UHTeNY0vPJssV+Cw3leFZNTYnKZyePl
-         LbqKBh/X/Sr+sL87UvAn98SN5VTqu8Sue+ivmRz0A6XH0XvIx5xTmHCCIH4UJD9QKo
-         SoFWyJN7CXBO20AZVdKvXvwmfvpKg/B0VYPOytlyWlOp7ke63wNzKBRwrysDbkr73B
-         gy+hkoXUTJ8Oh23LdIY5xDdceTjRb+21neSQAzqyktzQ/pPa1lnPin+LX17Ok2coKv
-         slUBVcm4lbkHSkRar3P6vwYEENmJSt0Vryxp5ciGZOzXWCmfdIlq3zVDJsaQCd/UFD
-         dnzg16cw9iIM960UxrRjMgJaxVvMXSBsZp4PO7yftLASDv2LMoCdVPghIwM+w3wp1h
-         Nj4WcY0o3InRlj6rclde1mjIY0thiyaP0NszXuuG1VgxUILECeY
+        b=yCkuCdWh+QUO8ImpuakUr9Grxw4m8tRxXbo3MKbO62wHOiiQ69l8prXBMrcir2QTW
+         4w9oEZIlmTCks478AynSvweFthPSbZZsbI9mP8535JQsCMTlCJv/6OwYFHwHIAcBHk
+         ZyANdb+vogjECsb1SSY06azaF4fAlpd6NOaC3LktUyJafGCBd67wvmeGBblhmxjeO6
+         1sHeMCXT1E0wNh04t1EDILPa2rqCCWPqlZQlQXqhDlO4KJ7rZaIHznopp4aqz0QrDZ
+         DkiA1xwSbW53kg0TSrpy0XNI0/w8UVKg4isf701t4xqdCM++Y1kO6uwxErP/ZNpuFq
+         OHJZhCDo4rFSZxkzt4SppcI7ctcwAU0JBL8Ea8fuKz/KHFRCNt9QYkuRvVEeCvre1/
+         4ICWaqDpUenuVk/8uKk7yY4BYITVhqUKr7/FAikLwLwS1FfWxB0Pi0GO993iGdsLgL
+         kY20OS32qCAT/CarSeWX9i7mX2nnjmlakxE8eC85AXRH7ABoM0U
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 21/53] shallow: convert shallow registration functions to object_id
-Date:   Mon,  1 May 2017 02:29:14 +0000
-Message-Id: <20170501022946.258735-22-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 24/53] Convert remaining callers of lookup_commit_reference* to object_id
+Date:   Mon,  1 May 2017 02:29:17 +0000
+Message-Id: <20170501022946.258735-25-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc0.306.g87b477812d
 In-Reply-To: <20170501022946.258735-1-sandals@crustytoothpaste.net>
 References: <20170501022946.258735-1-sandals@crustytoothpaste.net>
@@ -49,179 +49,293 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert register_shallow and unregister_shallow to take struct
-object_id.  register_shallow is a caller of lookup_commit, which we will
-convert later.  It doesn't make sense for the registration and
-unregistration functions to have incompatible interfaces, so convert
-them both.
+There are a small number of remaining callers of lookup_commit_reference
+and lookup_commit_reference_gently that still need to be converted to
+struct object_id.  Convert these.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/pack-objects.c |  6 +++---
- builtin/receive-pack.c |  2 +-
- commit.c               |  4 ++--
- commit.h               |  4 ++--
- fetch-pack.c           |  4 ++--
- shallow.c              | 12 ++++++------
- upload-pack.c          |  8 ++++----
- 7 files changed, 20 insertions(+), 20 deletions(-)
+ notes-merge.c | 26 +++++++++++++-------------
+ ref-filter.c  |  6 +++---
+ sequencer.c   | 20 ++++++++++----------
+ sha1_name.c   | 12 ++++++------
+ shallow.c     |  6 +++---
+ submodule.c   |  8 ++++----
+ 6 files changed, 39 insertions(+), 39 deletions(-)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0fe35d1b5..477070806 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2777,10 +2777,10 @@ static void get_object_list(int ac, const char **av)
- 				continue;
- 			}
- 			if (starts_with(line, "--shallow ")) {
--				unsigned char sha1[20];
--				if (get_sha1_hex(line + 10, sha1))
-+				struct object_id oid;
-+				if (get_oid_hex(line + 10, &oid))
- 					die("not an SHA-1 '%s'", line + 10);
--				register_shallow(sha1);
-+				register_shallow(&oid);
- 				use_bitmap_index = 0;
- 				continue;
- 			}
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index f96834f42..6f0f788b0 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -858,7 +858,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- 	 * not lose these new roots..
- 	 */
- 	for (i = 0; i < extra.nr; i++)
--		register_shallow(extra.oid[i].hash);
-+		register_shallow(&extra.oid[i]);
+diff --git a/notes-merge.c b/notes-merge.c
+index 32caaaff7..06d8be9cb 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -535,7 +535,7 @@ int notes_merge(struct notes_merge_options *o,
+ 		struct notes_tree *local_tree,
+ 		unsigned char *result_sha1)
+ {
+-	unsigned char local_sha1[20], remote_sha1[20];
++	struct object_id local_oid, remote_oid;
+ 	struct commit *local, *remote;
+ 	struct commit_list *bases = NULL;
+ 	const unsigned char *base_sha1, *base_tree_sha1;
+@@ -549,46 +549,46 @@ int notes_merge(struct notes_merge_options *o,
+ 	       o->local_ref, o->remote_ref);
  
- 	si->shallow_ref[cmd->index] = 0;
- 	oid_array_clear(&extra);
-diff --git a/commit.c b/commit.c
-index 73c78c2b8..ec41ba5e0 100644
---- a/commit.c
-+++ b/commit.c
-@@ -216,9 +216,9 @@ int for_each_commit_graft(each_commit_graft_fn fn, void *cb_data)
+ 	/* Dereference o->local_ref into local_sha1 */
+-	if (read_ref_full(o->local_ref, 0, local_sha1, NULL))
++	if (read_ref_full(o->local_ref, 0, local_oid.hash, NULL))
+ 		die("Failed to resolve local notes ref '%s'", o->local_ref);
+ 	else if (!check_refname_format(o->local_ref, 0) &&
+-		is_null_sha1(local_sha1))
++		is_null_oid(&local_oid))
+ 		local = NULL; /* local_sha1 == null_sha1 indicates unborn ref */
+-	else if (!(local = lookup_commit_reference(local_sha1)))
++	else if (!(local = lookup_commit_reference(local_oid.hash)))
+ 		die("Could not parse local commit %s (%s)",
+-		    sha1_to_hex(local_sha1), o->local_ref);
+-	trace_printf("\tlocal commit: %.7s\n", sha1_to_hex(local_sha1));
++		    oid_to_hex(&local_oid), o->local_ref);
++	trace_printf("\tlocal commit: %.7s\n", oid_to_hex(&local_oid));
+ 
+ 	/* Dereference o->remote_ref into remote_sha1 */
+-	if (get_sha1(o->remote_ref, remote_sha1)) {
++	if (get_oid(o->remote_ref, &remote_oid)) {
+ 		/*
+ 		 * Failed to get remote_sha1. If o->remote_ref looks like an
+ 		 * unborn ref, perform the merge using an empty notes tree.
+ 		 */
+ 		if (!check_refname_format(o->remote_ref, 0)) {
+-			hashclr(remote_sha1);
++			oidclr(&remote_oid);
+ 			remote = NULL;
+ 		} else {
+ 			die("Failed to resolve remote notes ref '%s'",
+ 			    o->remote_ref);
+ 		}
+-	} else if (!(remote = lookup_commit_reference(remote_sha1))) {
++	} else if (!(remote = lookup_commit_reference(remote_oid.hash))) {
+ 		die("Could not parse remote commit %s (%s)",
+-		    sha1_to_hex(remote_sha1), o->remote_ref);
++		    oid_to_hex(&remote_oid), o->remote_ref);
+ 	}
+-	trace_printf("\tremote commit: %.7s\n", sha1_to_hex(remote_sha1));
++	trace_printf("\tremote commit: %.7s\n", oid_to_hex(&remote_oid));
+ 
+ 	if (!local && !remote)
+ 		die("Cannot merge empty notes ref (%s) into empty notes ref "
+ 		    "(%s)", o->remote_ref, o->local_ref);
+ 	if (!local) {
+ 		/* result == remote commit */
+-		hashcpy(result_sha1, remote_sha1);
++		hashcpy(result_sha1, remote_oid.hash);
+ 		goto found_result;
+ 	}
+ 	if (!remote) {
+ 		/* result == local commit */
+-		hashcpy(result_sha1, local_sha1);
++		hashcpy(result_sha1, local_oid.hash);
+ 		goto found_result;
+ 	}
+ 	assert(local && remote);
+diff --git a/ref-filter.c b/ref-filter.c
+index 3a640448f..47cce0a18 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2090,7 +2090,7 @@ int parse_opt_ref_sorting(const struct option *opt, const char *arg, int unset)
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
+ {
+ 	struct ref_filter *rf = opt->value;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int no_merged = starts_with(opt->long_name, "no");
+ 
+ 	if (rf->merge) {
+@@ -2105,10 +2105,10 @@ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset)
+ 		? REF_FILTER_MERGED_OMIT
+ 		: REF_FILTER_MERGED_INCLUDE;
+ 
+-	if (get_sha1(arg, sha1))
++	if (get_oid(arg, &oid))
+ 		die(_("malformed object name %s"), arg);
+ 
+-	rf->merge_commit = lookup_commit_reference_gently(sha1, 0);
++	rf->merge_commit = lookup_commit_reference_gently(oid.hash, 0);
+ 	if (!rf->merge_commit)
+ 		return opterror(opt, "must point to a commit", 0);
+ 
+diff --git a/sequencer.c b/sequencer.c
+index 1a4729d9d..e0d0e98a4 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1221,7 +1221,7 @@ static struct todo_item *append_new_todo(struct todo_list *todo_list)
+ 
+ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ {
+-	unsigned char commit_sha1[20];
++	struct object_id commit_oid;
+ 	char *end_of_object_name;
+ 	int i, saved, status, padding;
+ 
+@@ -1270,7 +1270,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 	end_of_object_name = (char *) bol + strcspn(bol, " \t\n");
+ 	saved = *end_of_object_name;
+ 	*end_of_object_name = '\0';
+-	status = get_sha1(bol, commit_sha1);
++	status = get_oid(bol, &commit_oid);
+ 	*end_of_object_name = saved;
+ 
+ 	item->arg = end_of_object_name + strspn(end_of_object_name, " \t");
+@@ -1279,7 +1279,7 @@ static int parse_insn_line(struct todo_item *item, const char *bol, char *eol)
+ 	if (status < 0)
+ 		return -1;
+ 
+-	item->commit = lookup_commit_reference(commit_sha1);
++	item->commit = lookup_commit_reference(commit_oid.hash);
+ 	return !item->commit;
+ }
+ 
+@@ -2259,7 +2259,7 @@ static int single_pick(struct commit *cmit, struct replay_opts *opts)
+ int sequencer_pick_revisions(struct replay_opts *opts)
+ {
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	int i, res;
+ 
+ 	assert(opts->revs);
+@@ -2267,16 +2267,16 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 		return -1;
+ 
+ 	for (i = 0; i < opts->revs->pending.nr; i++) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		const char *name = opts->revs->pending.objects[i].name;
+ 
+ 		/* This happens when using --stdin. */
+ 		if (!strlen(name))
+ 			continue;
+ 
+-		if (!get_sha1(name, sha1)) {
+-			if (!lookup_commit_reference_gently(sha1, 1)) {
+-				enum object_type type = sha1_object_info(sha1, NULL);
++		if (!get_oid(name, &oid)) {
++			if (!lookup_commit_reference_gently(oid.hash, 1)) {
++				enum object_type type = sha1_object_info(oid.hash, NULL);
+ 				return error(_("%s: can't cherry-pick a %s"),
+ 					name, typename(type));
+ 			}
+@@ -2313,9 +2313,9 @@ int sequencer_pick_revisions(struct replay_opts *opts)
+ 	if (walk_revs_populate_todo(&todo_list, opts) ||
+ 			create_seq_dir() < 0)
+ 		return -1;
+-	if (get_sha1("HEAD", sha1) && (opts->action == REPLAY_REVERT))
++	if (get_oid("HEAD", &oid) && (opts->action == REPLAY_REVERT))
+ 		return error(_("can't revert as initial commit"));
+-	if (save_head(sha1_to_hex(sha1)))
++	if (save_head(oid_to_hex(&oid)))
+ 		return -1;
+ 	if (save_opts(opts))
+ 		return -1;
+diff --git a/sha1_name.c b/sha1_name.c
+index 8eec9f7c1..8889190a9 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -722,14 +722,14 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1,
+ static int get_parent(const char *name, int len,
+ 		      unsigned char *result, int idx)
+ {
+-	unsigned char sha1[20];
+-	int ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
++	struct object_id oid;
++	int ret = get_sha1_1(name, len, oid.hash, GET_SHA1_COMMITTISH);
+ 	struct commit *commit;
+ 	struct commit_list *p;
+ 
+ 	if (ret)
+ 		return ret;
+-	commit = lookup_commit_reference(sha1);
++	commit = lookup_commit_reference(oid.hash);
+ 	if (parse_commit(commit))
+ 		return -1;
+ 	if (!idx) {
+@@ -750,14 +750,14 @@ static int get_parent(const char *name, int len,
+ static int get_nth_ancestor(const char *name, int len,
+ 			    unsigned char *result, int generation)
+ {
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct commit *commit;
+ 	int ret;
+ 
+-	ret = get_sha1_1(name, len, sha1, GET_SHA1_COMMITTISH);
++	ret = get_sha1_1(name, len, oid.hash, GET_SHA1_COMMITTISH);
+ 	if (ret)
+ 		return ret;
+-	commit = lookup_commit_reference(sha1);
++	commit = lookup_commit_reference(oid.hash);
+ 	if (!commit)
+ 		return -1;
+ 
+diff --git a/shallow.c b/shallow.c
+index c520ae3ae..1327ee16f 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -466,7 +466,7 @@ static uint32_t *paint_alloc(struct paint_info *info)
+  * UNINTERESTING or BOTTOM is hit. Set the id-th bit in ref_bitmap for
+  * all walked commits.
+  */
+-static void paint_down(struct paint_info *info, const unsigned char *sha1,
++static void paint_down(struct paint_info *info, const struct object_id *oid,
+ 		       unsigned int id)
+ {
+ 	unsigned int i, nr;
+@@ -475,7 +475,7 @@ static void paint_down(struct paint_info *info, const unsigned char *sha1,
+ 	size_t bitmap_size = st_mult(sizeof(uint32_t), bitmap_nr);
+ 	uint32_t *tmp = xmalloc(bitmap_size); /* to be freed before return */
+ 	uint32_t *bitmap = paint_alloc(info);
+-	struct commit *c = lookup_commit_reference_gently(sha1, 1);
++	struct commit *c = lookup_commit_reference_gently(oid->hash, 1);
+ 	if (!c)
+ 		return;
+ 	memset(bitmap, 0, bitmap_size);
+@@ -604,7 +604,7 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
+ 	}
+ 
+ 	for (i = 0; i < ref->nr; i++)
+-		paint_down(&pi, ref->oid[i].hash, i);
++		paint_down(&pi, ref->oid + i, i);
+ 
+ 	if (used) {
+ 		int bitmap_size = ((pi.nr_bits + 31) / 32) * sizeof(uint32_t);
+diff --git a/submodule.c b/submodule.c
+index 9bdd5f605..d5c28b9f1 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -896,17 +896,17 @@ int push_unpushed_submodules(struct oid_array *commits,
  	return ret;
  }
  
--int unregister_shallow(const unsigned char *sha1)
-+int unregister_shallow(const struct object_id *oid)
+-static int is_submodule_commit_present(const char *path, unsigned char sha1[20])
++static int is_submodule_commit_present(const char *path, struct object_id *oid)
  {
--	int pos = commit_graft_pos(sha1);
-+	int pos = commit_graft_pos(oid->hash);
- 	if (pos < 0)
- 		return -1;
- 	if (pos + 1 < commit_graft_nr)
-diff --git a/commit.h b/commit.h
-index 7b1986d5c..884177b8f 100644
---- a/commit.h
-+++ b/commit.h
-@@ -263,8 +263,8 @@ extern struct commit_list *get_merge_bases_many_dirty(struct commit *one, int n,
+ 	int is_present = 0;
+-	if (!add_submodule_odb(path) && lookup_commit_reference(sha1)) {
++	if (!add_submodule_odb(path) && lookup_commit_reference(oid->hash)) {
+ 		/* Even if the submodule is checked out and the commit is
+ 		 * present, make sure it is reachable from a ref. */
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+ 		const char *argv[] = {"rev-list", "-n", "1", NULL, "--not", "--all", NULL};
+ 		struct strbuf buf = STRBUF_INIT;
  
- struct oid_array;
- struct ref;
--extern int register_shallow(const unsigned char *sha1);
--extern int unregister_shallow(const unsigned char *sha1);
-+extern int register_shallow(const struct object_id *oid);
-+extern int unregister_shallow(const struct object_id *oid);
- extern int for_each_commit_graft(each_commit_graft_fn, void *);
- extern int is_repository_shallow(void);
- extern struct commit_list *get_shallow_commits(struct object_array *heads,
-diff --git a/fetch-pack.c b/fetch-pack.c
-index b42d01f42..d455ef97a 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -417,7 +417,7 @@ static int find_common(struct fetch_pack_args *args,
- 			if (skip_prefix(line, "shallow ", &arg)) {
- 				if (get_oid_hex(arg, &oid))
- 					die(_("invalid shallow line: %s"), line);
--				register_shallow(oid.hash);
-+				register_shallow(&oid);
- 				continue;
- 			}
- 			if (skip_prefix(line, "unshallow ", &arg)) {
-@@ -428,7 +428,7 @@ static int find_common(struct fetch_pack_args *args,
- 				/* make sure that it is parsed as shallow */
- 				if (!parse_object(oid.hash))
- 					die(_("error in object: %s"), line);
--				if (unregister_shallow(oid.hash))
-+				if (unregister_shallow(&oid))
- 					die(_("no shallow found: %s"), line);
- 				continue;
- 			}
-diff --git a/shallow.c b/shallow.c
-index 25b6db989..c520ae3ae 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -27,13 +27,13 @@ void set_alternate_shallow_file(const char *path, int override)
- 	alternate_shallow_file = xstrdup_or_null(path);
- }
- 
--int register_shallow(const unsigned char *sha1)
-+int register_shallow(const struct object_id *oid)
- {
- 	struct commit_graft *graft =
- 		xmalloc(sizeof(struct commit_graft));
--	struct commit *commit = lookup_commit(sha1);
-+	struct commit *commit = lookup_commit(oid->hash);
- 
--	hashcpy(graft->oid.hash, sha1);
-+	oidcpy(&graft->oid, oid);
- 	graft->nr_parent = -1;
- 	if (commit && commit->object.parsed)
- 		commit->parents = NULL;
-@@ -65,10 +65,10 @@ int is_repository_shallow(void)
- 	is_shallow = 1;
- 
- 	while (fgets(buf, sizeof(buf), fp)) {
--		unsigned char sha1[20];
--		if (get_sha1_hex(buf, sha1))
-+		struct object_id oid;
-+		if (get_oid_hex(buf, &oid))
- 			die("bad shallow line: %s", buf);
--		register_shallow(sha1);
-+		register_shallow(&oid);
- 	}
- 	fclose(fp);
- 	return is_shallow;
-diff --git a/upload-pack.c b/upload-pack.c
-index ffb028d62..20f87cd38 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -642,7 +642,7 @@ static void send_shallow(struct commit_list *result)
- 		if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
- 			packet_write_fmt(1, "shallow %s",
- 					 oid_to_hex(&object->oid));
--			register_shallow(object->oid.hash);
-+			register_shallow(&object->oid);
- 			shallow_nr++;
- 		}
- 		result = result->next;
-@@ -667,7 +667,7 @@ static void send_unshallow(const struct object_array *shallows)
- 			 * parse and add the parents to the want list, then
- 			 * re-register it.
- 			 */
--			unregister_shallow(object->oid.hash);
-+			unregister_shallow(&object->oid);
- 			object->parsed = 0;
- 			parse_commit_or_die((struct commit *)object);
- 			parents = ((struct commit *)object)->parents;
-@@ -679,7 +679,7 @@ static void send_unshallow(const struct object_array *shallows)
- 			add_object_array(object, NULL, &extra_edge_obj);
- 		}
- 		/* make sure commit traversal conforms to client */
--		register_shallow(object->oid.hash);
-+		register_shallow(&object->oid);
- 	}
- }
- 
-@@ -883,7 +883,7 @@ static void receive_needs(void)
- 		if (shallows.nr > 0) {
- 			int i;
- 			for (i = 0; i < shallows.nr; i++)
--				register_shallow(shallows.objects[i].item->oid.hash);
-+				register_shallow(&shallows.objects[i].item->oid);
- 		}
- 
- 	shallow_nr += shallows.nr;
+-		argv[3] = sha1_to_hex(sha1);
++		argv[3] = oid_to_hex(oid);
+ 		cp.argv = argv;
+ 		prepare_submodule_repo_env(&cp.env_array);
+ 		cp.git_cmd = 1;
+@@ -937,7 +937,7 @@ static void submodule_collect_changed_cb(struct diff_queue_struct *q,
+ 			 * being moved around. */
+ 			struct string_list_item *path;
+ 			path = unsorted_string_list_lookup(&changed_submodule_paths, p->two->path);
+-			if (!path && !is_submodule_commit_present(p->two->path, p->two->oid.hash))
++			if (!path && !is_submodule_commit_present(p->two->path, &p->two->oid))
+ 				string_list_append(&changed_submodule_paths, xstrdup(p->two->path));
+ 		} else {
+ 			/* Submodule is new or was moved here */
