@@ -6,58 +6,57 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C51E1F829
-	for <e@80x24.org>; Mon,  1 May 2017 03:15:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9D531F829
+	for <e@80x24.org>; Mon,  1 May 2017 03:18:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1163718AbdEADPP (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Apr 2017 23:15:15 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:36599 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1162660AbdEADPN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Apr 2017 23:15:13 -0400
-Received: by mail-pg0-f47.google.com with SMTP id t7so40277471pgt.3
-        for <git@vger.kernel.org>; Sun, 30 Apr 2017 20:15:13 -0700 (PDT)
+        id S1163934AbdEADSP (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Apr 2017 23:18:15 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35053 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1162660AbdEADSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Apr 2017 23:18:14 -0400
+Received: by mail-pg0-f66.google.com with SMTP id c2so3985984pga.2
+        for <git@vger.kernel.org>; Sun, 30 Apr 2017 20:18:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=mfTEaRInYYjhqdfzOejuzUEY+eyqjdu06I5kfj35+bA=;
-        b=bxXM+w/8kkav8ojyUl54rsoMr8N44MJ6csehd89DDCyVYoxdmOQTf8Fq/cswBJqW0D
-         E069+wFLjo84R2p5NaDSDhX2biH72a3/qIazD+wX1GUn4RGh9Iz3oM2yhNGgAmc+3IFU
-         BaFvQZuoozeU3WMv7GI3OlgQPsCXl9UfctMJ+AKcFPKRPqGNDTH+nQfvjJQHtqW1+OUc
-         Gk2WajnoAj2oA7eSVzHjXy5RkKqNuCP7FtKxM7zBcTN2C8et/tyQ8KfwgUhArAOk26HY
-         dWJbrm2RusWATzryDSLI7mFjoU65qvN4f+oFZQfaVkevHUxQg03I1sTvLj5Jz0nhVRtP
-         +6uw==
+        bh=YKWpI5toJzxmgiRQ69NiJ/NiYRsjOBfeeRLLqEXf6CE=;
+        b=Mkfn76VGIFmNRgb9NuXvWJ7WLCXzi1Dmns7HFcBe/kwGKpj/oQCbHgg5NjZdGCUdSN
+         0IjYGUKDsZP2wjdKVsSYl3CFLw5UyJYbDvG3YFf7LTLBv5sT5pUPLsJQ/6BLxIZ/DjO6
+         6o4N2oWPxxA17auVi457LrVadk66ly9/b0XTLiETEoRX7UAUfGj1fH/5rRihCXo1dnqB
+         yG/pbCfsirr1jHySgxg+19WDgFthOeynUII5L06RQlp7I9+O5ywAP3FMJGlibYOmt9Ut
+         qUZHZNinv5jElTOMQXWAW8zWfLEEhrAoQ4AIUnlRY/mhZ3z8r7yxuEduTmwXol1vljVy
+         RaLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=mfTEaRInYYjhqdfzOejuzUEY+eyqjdu06I5kfj35+bA=;
-        b=YlgIEg+/FIwGqP1o9M05ykwkZ9hIpz21dxEnW26NIk21WTugtENvT2H/cR5gZfTywU
-         G1+NFY4NvK1kwd5VFttrhEiQgLKhQjND6ujMJSkIaRq346DbJoo0qLPlBkmLQlri/Nue
-         uYNfJdL3ioATV9ZHp+FtltFuISkMIIg8M8QRLHWcfrPjq7P9Cngl9gk9iF1vxzPNs0cL
-         pK+r+KkgEAbyp4eqsr308cQMuyLwfehPVS/zl4Z5GsUIMzd6C4g7QehXAaVm51WzKuGi
-         QdRcqYYRce1/sabNsx7AQIBrXOncbp2LBv9vuVpU72xAPQ/dwY8+B4Uu7oD6R1+BGgXS
-         NjUg==
-X-Gm-Message-State: AN3rC/5JFa5SVb0GytsI2QuIkdtpUf0nCJUZxokoG3EsYjB41+j72W1R
-        9MbyCrBwq+GfyQ==
-X-Received: by 10.84.210.72 with SMTP id z66mr30971050plh.191.1493608512914;
-        Sun, 30 Apr 2017 20:15:12 -0700 (PDT)
+        bh=YKWpI5toJzxmgiRQ69NiJ/NiYRsjOBfeeRLLqEXf6CE=;
+        b=QOZkY6x3GClR9CuD2LMI6UOnh7T5Mp0DDz+ELIDy9QvxdACLLQa/FlrNKCC56o7qPs
+         9Qf8XQHYUzWtJyHGlNrCgdlOrOiUxaWXnKSWJG8oupujtvfAYJiwTp0n/auenco1s5Bs
+         LT0fYCeJdydP7P7KrA9C9G3fapGX0D25NEx79sedhwrA6k13jhB4lguSnpkcxHvtG7qv
+         45rGNLGVKlgxqFxvyimabvlHGqdfnrN1nWIHu1zWQKHe/BmWc2TT3qsC+1G+D5FWjfVu
+         8rTapQ9RXL+8YYYkfmrGI+q7f1z5DvN7IE43n41mNMoiMJKQNCXoxaaRGlZERgvauxqD
+         f8aw==
+X-Gm-Message-State: AN3rC/5T2BhtlKSpMpaq61WTtW5Y9d9V+JL5Za3tyS/+ve+6MKHzUf7z
+        AVfzdJYnnzq8HQ==
+X-Received: by 10.99.113.75 with SMTP id b11mr24476802pgn.173.1493608693367;
+        Sun, 30 Apr 2017 20:18:13 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:216d:aa3e:248d:bf63])
-        by smtp.gmail.com with ESMTPSA id p80sm21330208pfk.50.2017.04.30.20.15.12
+        by smtp.gmail.com with ESMTPSA id n77sm15237457pfj.66.2017.04.30.20.18.12
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 30 Apr 2017 20:15:12 -0700 (PDT)
+        Sun, 30 Apr 2017 20:18:12 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Chris Johnson <chrisjohnson0@gmail.com>
+To:     Brandon Williams <bmwill@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Bug Report: .gitignore behavior is not matching in git clean and git status
-References: <CABfTTAchc61aB02sCD=Oa9gRMGr94h7mC53B9q6Qy2k2hDqzAQ@mail.gmail.com>
-        <xmqq60hljqud.fsf@gitster.mtv.corp.google.com>
-        <CABfTTAdQPGei6CZoHGJGUtKHdJ4eT822pzc=DATynfeaZ94gxA@mail.gmail.com>
-Date:   Sun, 30 Apr 2017 20:15:11 -0700
-In-Reply-To: <CABfTTAdQPGei6CZoHGJGUtKHdJ4eT822pzc=DATynfeaZ94gxA@mail.gmail.com>
-        (Chris Johnson's message of "Sun, 30 Apr 2017 21:56:43 -0400")
-Message-ID: <xmqqziexgtds.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH 1/6] submodule: rename add_sha1_to_array
+References: <20170428235402.162251-1-bmwill@google.com>
+        <20170428235402.162251-2-bmwill@google.com>
+Date:   Sun, 30 Apr 2017 20:18:12 -0700
+In-Reply-To: <20170428235402.162251-2-bmwill@google.com> (Brandon Williams's
+        message of "Fri, 28 Apr 2017 16:53:57 -0700")
+Message-ID: <xmqqvaplgt8r.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,15 +65,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Chris Johnson <chrisjohnson0@gmail.com> writes:
+Brandon Williams <bmwill@google.com> writes:
 
-> Also, and sorry for the noise, but I did a reply-all here, but will a
-> reply automatically include the rest of the list? Or was reply-all the
-> right move?
+> Rename 'add_sha1_to_array()' to 'append_oid_to_array()' to more
+> accuratly describe what the function does since it handles 'struct
 
-The convention around here is to do reply-all (in other words, make
-sure that Cc: line has git@vger.kernel.org and others involved in
-the discussion and mentioned on To: or Cc: line of the message you
-are responding to).  Your message (i.e. the one I am responding to)
-has correct addresses on To:/Cc: lines AFAICS.
+accurately.   Will fix while queuing.
 
+Makes sense.  Thanks.
+
+> object_id' and not sha1 character arrays.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>  submodule.c | 9 +++++----
+>  1 file changed, 5 insertions(+), 4 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index d3299e29c..be0f5d847 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -951,17 +951,18 @@ static void submodule_collect_changed_cb(struct diff_queue_struct *q,
+>  	}
+>  }
+>  
+> -static int add_sha1_to_array(const char *ref, const struct object_id *oid,
+> -			     int flags, void *data)
+> +static int append_oid_to_array(const char *ref, const struct object_id *oid,
+> +			       int flags, void *data)
+>  {
+> -	oid_array_append(data, oid);
+> +	struct oid_array *array = data;
+> +	oid_array_append(array, oid);
+>  	return 0;
+>  }
+>  
+>  void check_for_new_submodule_commits(struct object_id *oid)
+>  {
+>  	if (!initialized_fetch_ref_tips) {
+> -		for_each_ref(add_sha1_to_array, &ref_tips_before_fetch);
+> +		for_each_ref(append_oid_to_array, &ref_tips_before_fetch);
+>  		initialized_fetch_ref_tips = 1;
+>  	}
