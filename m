@@ -2,104 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 393881F790
-	for <e@80x24.org>; Tue,  2 May 2017 17:55:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E16DE1F790
+	for <e@80x24.org>; Tue,  2 May 2017 18:05:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751226AbdEBRzi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 13:55:38 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:34516 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751064AbdEBRzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 13:55:36 -0400
-Received: by mail-pg0-f43.google.com with SMTP id v1so65003950pgv.1
-        for <git@vger.kernel.org>; Tue, 02 May 2017 10:55:36 -0700 (PDT)
+        id S1751007AbdEBSFS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 14:05:18 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:34536 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750827AbdEBSFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 14:05:17 -0400
+Received: by mail-pf0-f174.google.com with SMTP id e64so811749pfd.1
+        for <git@vger.kernel.org>; Tue, 02 May 2017 11:05:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wBmaP5oMBBEPRTImbljZYkIFi+oh9gEOyr63eitk1Qs=;
-        b=fj0tAkDCwF1CmGZt7W+22wqd/d9aCFApQ6aJuDXeOvHxYhCQ9c/VSiElvEWr9gPM5m
-         vzrJxmGroyewi+zN2dhnBJ/U+YdaOkH79GBpRWL+0917lcllzYm6QTGS3NLWSEL9++p8
-         /ljZZ9Wjr/o96+Oe58LzLAsrDHgMxR33oZiTQwQZ/UI9aBcaLeqCuGa3j58RIZwz6kjM
-         fpiTuTketqgdUQxNzXxKxWA7JHPEIp1Y+wNUOrkEnJ8GHv3tLjiAfLa3CqXg/8ZtjiwU
-         jYrRRcIZOLvGhvZnQuVS0wMUmKKN2wM8t7ZYbYP0ts5D6Npr8j94xNYkSsmBHo0fb3LQ
-         5EQg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LxBPfy7TfFKXOnfCQl27v67wV9vdabF/0ty6B7VI9aU=;
+        b=ID85qNhYgbIHly1Nsdl37ahvj1IRg0xAoAS1sdYnVgfROcSyqqR+YxBjcOxN62cJdd
+         8EaUb9lcRKOnVif60aC+CPZ+k3ajtgkQSrC4QBxSWJVogPvRHWK9Kb6qa0F2l0hEMIsU
+         K6hn2c/fzkHE7xc3MU/OhK2ANraWupnkOgmFHKgA7/qhohB3sqM1aHBQ0JEUVp44wsDK
+         CAT3llvWzQKkCu7v2BsrriafYnW4j0TiIxZ8SjlHLfOP6GZFphXRF9tz7wNa8m1zYEni
+         iQJNrBH+VF9nPP+5nbU9Tlfd/330y87DAZQDk3fAnauKuvva7M6XxVPTFaW8ZzuB50Fh
+         aRGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wBmaP5oMBBEPRTImbljZYkIFi+oh9gEOyr63eitk1Qs=;
-        b=lPSwCt7FD/2yzwunoqkE5qoHQDT5SBJFHx2ZpEVSmpF8Ixs+U6yvot6ZvnSF6aTs+A
-         MApz+Jr7bTFvj1Sl9MDanc6WGHupcbb7GBIHVd/q+E5i1lxKZlz21X6g30AnJVEIr+pF
-         h7kDPlERoc7AfO4AT2ShkqfBWO88F+BwntSjlMXKNVCcZCcgz0I1gB3PWxpWeV/HdYqE
-         bFg0TuJrZR0DLd0B1YDMklNYbYtfLd6sZYraZN+cNTB5/9IcwTYFPlWgXbwfsa/cJ+Yh
-         95oPk/IKkQ66GQOREbnfasVukd5b1dA4zMiGslD/YxTkpmXVlCKpbJ/W8BApq2VsCYzk
-         oRHw==
-X-Gm-Message-State: AN3rC/6Cs2oGGgml3MVOuUMhNNuCPz7fFHN4c0cdQsTbS+Me/tPUgOSt
-        7Z+aES8s3fxowi780ssI+VXRUPJBIBUc
-X-Received: by 10.84.241.136 with SMTP id b8mr43566893pll.107.1493747736016;
- Tue, 02 May 2017 10:55:36 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LxBPfy7TfFKXOnfCQl27v67wV9vdabF/0ty6B7VI9aU=;
+        b=YJzkYYhhZq71V0gIejfyENezIfOkZAXi9ZUUA8iwT2TVq4DdnJcdsnjKGNAk9UtZDy
+         FfRNuT4j7EePL89FKADAzlQveBc39nqRpwJaXsIob8Nuqemh5PJE74njlCXab89oLmGJ
+         21pxPvRlgQKeI0IxnuNdv2EU5ARxmT3MdzpDaKnNS52Vi+4Px/KvpidRTna16NliIDys
+         8D1G22wU2gV0Oqm1M7xGOGBgFOWI3ua3zQKjXs6pgtk8f8n8vG0SmyGH2OW+9arP68hh
+         gHuSpT8aNtPC52kY5VycHmR2pVeQ6NUsPwEe5F/nFmI+50wIMoUna9ytfEncPp/O59dt
+         Tqnw==
+X-Gm-Message-State: AN3rC/47nkSHUv3wAyHaCeLB/puWze7j9GMz7p6lci14e5GnFABx2W0f
+        FLs68iDUiCOXguTZ
+X-Received: by 10.98.11.205 with SMTP id 74mr305978pfl.214.1493748316916;
+        Tue, 02 May 2017 11:05:16 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:61ee:b5d7:71fe:5285])
+        by smtp.gmail.com with ESMTPSA id 194sm4143352pgf.62.2017.05.02.11.05.14
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 02 May 2017 11:05:15 -0700 (PDT)
+Date:   Tue, 2 May 2017 11:05:14 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2 02/53] Clean up outstanding object_id transforms.
+Message-ID: <20170502180514.GC181268@google.com>
+References: <20170501022946.258735-1-sandals@crustytoothpaste.net>
+ <20170501022946.258735-3-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Tue, 2 May 2017 10:55:35 -0700 (PDT)
-In-Reply-To: <20170502172555.GA181268@google.com>
-References: <20170428235402.162251-1-bmwill@google.com> <20170502010239.179369-1-bmwill@google.com>
- <20170502010239.179369-6-bmwill@google.com> <CAGZ79kbbz3AAjbg_dV9RVS8kgLs-zWZxt5tsFbQczCm78LcTVw@mail.gmail.com>
- <20170502172555.GA181268@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 2 May 2017 10:55:35 -0700
-Message-ID: <CAGZ79kZxYCr+H3PLdnxJp7_aG=JmeMTGry51ppCe3=R2xLrP1w@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] submodule: improve submodule_has_commits
-To:     Brandon Williams <bmwill@google.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170501022946.258735-3-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 2, 2017 at 10:25 AM, Brandon Williams <bmwill@google.com> wrote=
-:
-> On 05/01, Stefan Beller wrote:
->> On Mon, May 1, 2017 at 6:02 PM, Brandon Williams <bmwill@google.com> wro=
-te:
->> > +
->> > +               if (capture_command(&cp, &out, GIT_MAX_HEXSZ + 1) || o=
-ut.len)
->>
->> eh, I gave too much and self-contradicting feedback here earlier,
->> ideally I'd like to review this to be similar as:
->>
->>     if (capture_command(&cp, &out, GIT_MAX_HEXSZ + 1)
->>         die("cannot capture git-rev-list in submodule '%s', sub->path);
->
-> This wouldn't really work because if you provide a SHA1 to rev-list
-> which it isn't able to find then it returns a non-zero exit code which
-> would cause this to die, which isn't the desired behavior.
+On 05/01, brian m. carlson wrote:
+> The semantic patch for standard object_id transforms found two
+> outstanding places where we could make a transformation automatically.
+> Apply these changes.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/diff.c | 2 +-
+>  reflog-walk.c  | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/diff.c b/builtin/diff.c
+> index d184aafab..a25b4e4ae 100644
+> --- a/builtin/diff.c
+> +++ b/builtin/diff.c
+> @@ -408,7 +408,7 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+>  		} else if (obj->type == OBJ_BLOB) {
+>  			if (2 <= blobs)
+>  				die(_("more than two blobs given: '%s'"), name);
+> -			hashcpy(blob[blobs].oid.hash, obj->oid.hash);
+> +			oidcpy(&blob[blobs].oid, &obj->oid);
+>  			blob[blobs].name = name;
+>  			blob[blobs].mode = entry->mode;
+>  			blobs++;
+> diff --git a/reflog-walk.c b/reflog-walk.c
+> index 99679f582..c8fdf051d 100644
+> --- a/reflog-walk.c
+> +++ b/reflog-walk.c
+> @@ -241,7 +241,7 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
+>  		logobj = parse_object(reflog->ooid.hash);
+>  	} while (commit_reflog->recno && (logobj && logobj->type != OBJ_COMMIT));
+>  
+> -	if (!logobj && commit_reflog->recno >= 0 && is_null_sha1(reflog->ooid.hash)) {
+> +	if (!logobj && commit_reflog->recno >= 0 && is_null_oid(&reflog->ooid)) {
 
-Oh. In that case, why do we even check for its stdout?
-(from rev-lists man page)
-       --quiet
-           Don=E2=80=99t print anything to standard output. This form is pr=
-imarily
-           meant to allow the caller to test the exit status to see if a ra=
-nge
-           of objects is fully connected (or not). It is faster than
-           redirecting stdout to /dev/null as the output does not have to b=
-e
-           formatted.
+Not relevant to this series but I was confused for a second seeing
+'ooid' as I have no clue what that means :)
 
->
-> I feel like you're making this a little too complicated, as all I'm
-> doing is shuffling around already existing logic.  I understand the want
-> to make things more robust but this seems unnecessarily complex.
+>  		/* a root commit, but there are still more entries to show */
+>  		reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
+>  		logobj = parse_object(reflog->noid.hash);
 
-ok. I was just giving my thoughts on how I would approach it.
-
-Thanks,
-Stefan
+-- 
+Brandon Williams
