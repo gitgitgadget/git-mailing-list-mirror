@@ -2,98 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 095C61F790
-	for <e@80x24.org>; Tue,  2 May 2017 19:49:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 891A41F790
+	for <e@80x24.org>; Tue,  2 May 2017 20:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751240AbdEBTtM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 15:49:12 -0400
-Received: from us-smtp-delivery-131.mimecast.com ([63.128.21.131]:59374 "EHLO
-        us-smtp-delivery-131.mimecast.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1750825AbdEBTtL (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 2 May 2017 15:49:11 -0400
-X-Greylist: delayed 921 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 May 2017 15:49:10 EDT
+        id S1751039AbdEBUGd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 16:06:33 -0400
+Received: from mail-it0-f49.google.com ([209.85.214.49]:36413 "EHLO
+        mail-it0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750758AbdEBUGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 16:06:32 -0400
+Received: by mail-it0-f49.google.com with SMTP id o5so21340924ith.1
+        for <git@vger.kernel.org>; Tue, 02 May 2017 13:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=StratusTechnologies.onmicrosoft.com; s=selector1-stratus-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
- bh=dVAtTGHkm6S68DuiM9WgawAjpOF5Cihla6HLfI3oz20=;
- b=JwdK3iAh7lu//VHMmiX1s1Ia+YWnSDUjphHrDfJzhUZbO/kVmGAGra/lcbi5boQ8a9HxTWHf6RG/Gm1/Z4DJiAnnLMQuUb+0WmLpS1bejHBOAPDwySdfqog8Ol+wyuQvqYtXpknRob0WyBaGIlBZH/Ii4YmCb5d1+oF8CfUDUv0=
-Received: from NAM02-CY1-obe.outbound.protection.outlook.com
- (mail-cys01nam02lp0054.outbound.protection.outlook.com [207.46.163.54])
- (Using TLS) by us-smtp-1.mimecast.com with ESMTP id
- us-mta-84-8yKIv5GGPySQV77g4FzASg-1; Tue, 02 May 2017 15:33:46 -0400
-Received: from SN2PR0801MB575.namprd08.prod.outlook.com (10.160.15.152) by
- SN2PR0801MB574.namprd08.prod.outlook.com (10.160.15.151) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.1047.13; Tue, 2 May 2017 19:33:44 +0000
-Received: from SN2PR0801MB575.namprd08.prod.outlook.com ([10.160.15.152]) by
- SN2PR0801MB575.namprd08.prod.outlook.com ([10.160.15.152]) with mapi id
- 15.01.1047.023; Tue, 2 May 2017 19:33:45 +0000
-From:   "Desjardin, Donald" <Donald.Desjardin@stratus.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Reference help
-Thread-Topic: Reference help
-Thread-Index: AdLDcvC9JHqcF7mkSFuGCB5GRj+s0w==
-Date:   Tue, 2 May 2017 19:33:45 +0000
-Message-ID: <SN2PR0801MB575DC31D49660CF33DFFE2599170@SN2PR0801MB575.namprd08.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [198.97.42.5]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;SN2PR0801MB574;7:seT4vhIg6RAnXlWwm5fmXfYVS1RgHXSv6XQPgPvFcDTqPLow9YIOrP2qfH45FJ0xk8ejNoeywivx6I7WWMGq4ZqyRHrqypC3AyaBkRtjsbXXBWhhTVSGY8EhNM1RFk7L8T4iR/PxVBXgNAI6tEp3V7dnyAGtjgfvFk5OQIV/ERMgFY9DH2HrNmVigvJtaFymFgb2u4A0J52pH5c7MQ0tfgXwknO45+c/5ZrxRjH4oTiAIcALNFu6/3jCt3s8hohgf1yzP7eoF+jEYpVpGwQi011GP+Q1lKMxkZ1oqUtDprB5Idj5YI2jczxqylHdKiUdacN9OW6CY7sXZzYTTHiPKQ==;20:VbJSSioK90znyPyLGZjeH0rbMad1z7qNwAiD0hNjfqwV8O6FJ5rEc1fbaiTAVn9ZcoR6/1vgII45xyW9XgXBA6hNiUpzkNdPHKMvStVPzmdfJkTD2m69dtbvmr966Y1Oh87KtHwGin7CtHgIiQgXiskQzZAP725eg1Qw2tDOwmg=
-x-ms-office365-filtering-correlation-id: 2d567e93-b4e0-4a06-c1ed-08d4919225f0
-x-microsoft-antispam: UriScan:;BCL:0;PCL:0;RULEID:(22001)(2017030254075)(201703131423075)(201703031133081);SRVR:SN2PR0801MB574;
-x-microsoft-antispam-prvs: <SN2PR0801MB574C8B0956F8BE4F57B50AB99170@SN2PR0801MB574.namprd08.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:;
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040450)(601004)(2401047)(8121501046)(5005006)(3002001)(93006095)(93001095)(10201501046)(6041248)(20161123562025)(20161123555025)(201703131423075)(201702281528075)(201703061421075)(20161123560025)(20161123564025)(6072148);SRVR:SN2PR0801MB574;BCL:0;PCL:0;RULEID:;SRVR:SN2PR0801MB574;
-x-forefront-prvs: 02951C14DC
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(6009001)(39400400002)(39840400002)(39410400002)(6916009)(25786009)(6116002)(7696004)(110136004)(8676002)(221733001)(9686003)(54356999)(50986999)(1730700003)(77096006)(6506006)(3280700002)(53936002)(38730400002)(2906002)(99286003)(6436002)(5640700003)(2900100001)(33656002)(3660700001)(81166006)(7736002)(66066001)(5660300001)(305945005)(2501003)(3480700004)(7116003)(189998001)(3846002)(102836003)(8936002)(122556002)(2351001)(74316002)(86362001);DIR:OUT;SFP:1102;SCL:1;SRVR:SN2PR0801MB574;H:SN2PR0801MB575.namprd08.prod.outlook.com;FPR:;SPF:None;MLV:sfv;LANG:en;
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=1VTKOgpV8kjczCISvAzUt/U6XFG4P3E3AMvFohGoBRE=;
+        b=h6chzXoMZWQsiu8ZThw06yCbZDUnhxLB3ETx6LwrsPAO0DLUCaRFG5yapB4caCkPa0
+         osGWJlfRue5RixxNIT2XY/5tMGkxT9avZjCHqDz/38ex82D4x8Tzh3/vlmfLHcEEF9jM
+         wKN/elTvDga9aZzkZC50IcjcNBysA5v0nuRhPQzt5mhAKIMscvzHs2J8cZMrdb/7CTkZ
+         RDZ1JARwdQWCljc7oQhQhxOyKnv/zUNtbr3y+jIvIbDAhUAtARm+PKSi2g8VLwa/9DmV
+         asqZ/fiNPdmm0qhcIr9TfiOCLDo6u8gpQHHyWsTF7P0Ld2on2YJwQ0YFszj6bixFhgX4
+         Fdrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=1VTKOgpV8kjczCISvAzUt/U6XFG4P3E3AMvFohGoBRE=;
+        b=pEc0bwP5TcSfpKiwmIznrHv62XqQR+JoZJwfuuN8KjwumYjGDkNWmzZcN/1Qd2INJ+
+         upDGRkFoLoWC6g8ClYDo8F+vZ7qW45NuYmUZxYvYJYzdM7OORLLRar/F/owrVZ5exdM6
+         ZJcMjmlM/Y+nan9ln3qyXXJ/gwuc+M9/yu/34dDWrYkzFJNy4pvZG9f1pkMUT2E69MRQ
+         qJ/JSgqgmLvU274odev5b3TR7Eymgcib2CebIXYfPAgqigvnghC7Z/CfW8E3cAPHmRy6
+         SH89gKTuNqkY906i9NpcBxHi3X5SKnVdP/pbVxL5xoEjAjsvS/DPviQe/xOtCLroWXhn
+         cbyA==
+X-Gm-Message-State: AN3rC/4y+w9dD6IB9nQakzDUChFgUUjSeQMsQtB5s/QcBrqO9CF/VCXN
+        XMPoiLVTKrgx9sFmOIrp41Ai2bRnxFY5jGA=
+X-Received: by 10.36.98.21 with SMTP id d21mr5142805itc.94.1493755591576; Tue,
+ 02 May 2017 13:06:31 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: stratus.com
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 May 2017 19:33:45.2679
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: de36b473-b8ad-46ff-837f-9da16b8d1b77
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN2PR0801MB574
-X-MC-Unique: 8yKIv5GGPySQV77g4FzASg-1
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
+Received: by 10.107.134.97 with HTTP; Tue, 2 May 2017 13:06:10 -0700 (PDT)
+In-Reply-To: <SN2PR0801MB575DC31D49660CF33DFFE2599170@SN2PR0801MB575.namprd08.prod.outlook.com>
+References: <SN2PR0801MB575DC31D49660CF33DFFE2599170@SN2PR0801MB575.namprd08.prod.outlook.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 2 May 2017 22:06:10 +0200
+Message-ID: <CACBZZX4WnHSXBWu2AJ1+Gic=4M0kuF8Fysqky_XTPWPUPeNzaA@mail.gmail.com>
+Subject: Re: Reference help
+To:     "Desjardin, Donald" <Donald.Desjardin@stratus.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry if this is not the place for this.
+On Tue, May 2, 2017 at 9:33 PM, Desjardin, Donald
+<Donald.Desjardin@stratus.com> wrote:
+> Sorry if this is not the place for this.
+>
+> I'm looking for any reference to potential problems when updating a git client (say from 1.7.N to 1.8.N) with old workspaces.
+>
+> The scenario is this:
+>         Lots of developers use a single machine for work
+>         They have lots of workspaces created using the old client
+>         We want to upgrade to the new client
+>
+> Are there any potential problems just upgrading the client and NOT re-cloning their workspaces (or stashing or committing or pushing)?
+>
+> Subversion had/has some feature that could tell that the workspace was created using an older client and you could magically run something to update the workspace.
+>
+> I'm not above telling all my developers to commit/push to a feature branch, remove the workspaces and re-clone as needed on a flag-day, but I'd like to know if I have to.
+>
+> If there is any documentation that talks about this (I know 1.7 is old).
 
-I'm looking for any reference to potential problems when updating a git cli=
-ent (say from 1.7.N to 1.8.N) with old workspaces.
+Git, unlike Subversion has used the same stable underlying storage
+format for all of its history. So you certainly don't need to migrate
+these checkouts when you upgrade git, they'll just work.
 
-The scenario is this:
-=09Lots of developers use a single machine for work
-=09They have lots of workspaces created using the old client
-=09We want to upgrade to the new client
+There are several things that changed in the UI, some in incompatible
+ways, most prominently the behavior of "git push", but it's unlikely
+anyone will be affected by that beyond some minor annoyance.
 
-Are there any potential problems just upgrading the client and NOT re-cloni=
-ng their workspaces (or stashing or committing or pushing)?
+You can see announcements of major changes in git's release notes,
+which you can browse here:
+https://github.com/git/git/tree/master/Documentation/RelNotes
 
-Subversion had/has some feature that could tell that the workspace was crea=
-ted using an older client and you could magically run something to update t=
-he workspace.
+E.g. 1.8.0.txt in that directory will have notes for upgrading from
+1.7.x to 1.8.0.
 
-I'm not above telling all my developers to commit/push to a feature branch,=
- remove the workspaces and re-clone as needed on a flag-day, but I'd like t=
-o know if I have to.
-
-If there is any documentation that talks about this (I know 1.7 is old).
-
-Thanks,
-
-Don Desjardin
-
+Note that both 1.7.0 and 1.8.0 are really old, from 2010 & 2012
+respectively. Although it'll be a bigger jump you might want to
+consider updating to the most recent release directly, currently
+2.12.2, this'll be more changes at once, but you won't have to go from
+1.7 to 1.8, 1.8 to 1.9 etc.
