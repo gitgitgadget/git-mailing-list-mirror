@@ -2,152 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4952207D6
-	for <e@80x24.org>; Tue,  2 May 2017 04:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 211F0207D6
+	for <e@80x24.org>; Tue,  2 May 2017 04:11:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751360AbdEBEEe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 00:04:34 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:33977 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751023AbdEBEEd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 00:04:33 -0400
-Received: by mail-pf0-f176.google.com with SMTP id e64so45613946pfd.1
-        for <git@vger.kernel.org>; Mon, 01 May 2017 21:04:33 -0700 (PDT)
+        id S1751230AbdEBELK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 00:11:10 -0400
+Received: from mail-pf0-f193.google.com ([209.85.192.193]:36569 "EHLO
+        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751148AbdEBELJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 00:11:09 -0400
+Received: by mail-pf0-f193.google.com with SMTP id v14so30346747pfd.3
+        for <git@vger.kernel.org>; Mon, 01 May 2017 21:11:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=l1t+HjmLhXPPFtRRkE1gDKltR6D4rKbTLLrcPOi2dR8=;
-        b=j1fKs1OSpvsg1Ox7Bx6DrE8Tlold91yvy8SmHDdagU+8I8LQ5PdaRddfK0YLWbRltN
-         BiZMW9aM9Ui6aaU1sKLl2VDlP1oQRnLa9m5bDGtgOOJXT1Oc4rFZOY7VBgB6bver83vl
-         Vwo0xu8aDy2nZLK0WW5yg677DEaayNVKmMe19/FITlqaT3NjAA1BEj/NmBsXH7SUCDOD
-         jUNmCdoI37kINc/8UJtW748sOB6SfxMgHg07obT6GYTzg7pDBkn9O+nUpFTc7bTwgJ6X
-         gau1dEPSaPECOJocqhGllwq6UBG/RhoxgejuqCwy5TWUTCvtToNtRZ4MEuTxS+/xMlfs
-         WnXg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=eDN0QEjNU0tVDtHU9cDWVtZOUYDTTMQI2csQcf/uv2c=;
+        b=Dtxk9PLi+vnyZbnU7GKvySvU2mWIBvhwRG6RgnDkmiB8vgk4XTsZAThfBPJej71rwR
+         lFF3WkaIfMqmhvMtLd8eG2SmO8FqIPv7jm/TS+pfJNHtWlfHEHNYJ7EVVZ2z7Og7wOxm
+         syCex9F9P9k+J3BjIEkHghx6xjTdJeXBauKewOOVwWX2yKyTvzoXZCQTH/oCaZl4CIsK
+         LEIcw3//WEsQpH+dVycyUcSolZrJQ6BHXqDOIsppwWvQFH05n9kviP05QickjcnuVs2Q
+         lUwhvtEDgUoBUpl82fOv7eb0QozKk74R9Xk3I0glXYdQItrQSPAzqwAQ+tQEq8JpBVMT
+         e0ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=l1t+HjmLhXPPFtRRkE1gDKltR6D4rKbTLLrcPOi2dR8=;
-        b=ROWEnWjNVA3048wiLhS+TXbAiWsxK+/7zYsOOdth3jZvqtoG1BrIzvCE1KitMVRTPl
-         b9w16gX3tXwFdEn+e6l/YEGHbfLv6muqRuEthP0qYaZGQawTRxPZPKLJ5GMh/Kxrncqa
-         WvKZtMUfzRcLIqKRAif9a1EqUNHbvauYjOeDW7kpbp5bUBiMcpNn8A3UyB9CAq+T01dx
-         uJfHMG1S5dAoihc7IdEsPvmUeruLtin0fBRhL61lXXB9a/xAZKgBmX0LsrT0RI+aNFXG
-         +xczxHOEYNJHu4yda0UhbgT0t41PXckQXKGWsjLXI6BY8lP3bHoDkJcuS7Oghj6pvRn/
-         HSYg==
-X-Gm-Message-State: AN3rC/7MRIYXxCl3ld7Vs0DYquhWUUWRSVmkB66eYdzswi8fpHCRwfMJ
-        1Vyj0ATVu5TJp2Mb3U0USzJNV8TwOhfIcjU=
-X-Received: by 10.99.95.14 with SMTP id t14mr15131368pgb.64.1493697872781;
- Mon, 01 May 2017 21:04:32 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=eDN0QEjNU0tVDtHU9cDWVtZOUYDTTMQI2csQcf/uv2c=;
+        b=pbG3oZxNLny+Vi+ELbTios2eXqiAVqYb9zd4yRm+VuHdyDBXXkr1gBAHlsHECUv2NH
+         mD7Pu+iFWtuhLpSaY3SjguYJwQVG7YhYunnLYSWLFn4okeg3j2rYlBRSZuLaAnnImIOQ
+         uy3OJfO5A1yNOonuH1NxV4M74tniGVTtA0WkjE5EDMtADWdIyTeZx+zTP6PJiJgboWdi
+         40UGuR4WvEhJALODSMKQ8Z7WvLjiqp+9uSo3wW8v/XAcGib84+NNTuZzC4E3IZyz2gXt
+         4ljH1Dx4IDLwDIHvJfKDF95gsO+cXWmeK69toIrNb26YN6EoYJzCyGMW2VwycbN+YHwC
+         WmXQ==
+X-Gm-Message-State: AN3rC/7IffE1vYd7iKYkmecz8p8Fg2vRkVtlvvPeZYe9ZtlmXomB+WM4
+        Fpq5NVgFufKmcQ==
+X-Received: by 10.84.230.131 with SMTP id e3mr39416193plk.100.1493698268280;
+        Mon, 01 May 2017 21:11:08 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3c5e:d1c1:579c:ef99])
+        by smtp.gmail.com with ESMTPSA id u8sm27093817pfk.103.2017.05.01.21.11.07
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 01 May 2017 21:11:07 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 09/25] mailinfo & mailsplit: check for EOF while parsing
+References: <cover.1493237937.git.johannes.schindelin@gmx.de>
+        <cover.1493387231.git.johannes.schindelin@gmx.de>
+        <32a2d16902734c8794de61b5e86a0d2a6cf43fa3.1493387231.git.johannes.schindelin@gmx.de>
+Date:   Mon, 01 May 2017 21:11:06 -0700
+In-Reply-To: <32a2d16902734c8794de61b5e86a0d2a6cf43fa3.1493387231.git.johannes.schindelin@gmx.de>
+        (Johannes Schindelin's message of "Fri, 28 Apr 2017 16:02:57 +0200
+        (CEST)")
+Message-ID: <xmqqzievdhk5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.100.169.14 with HTTP; Mon, 1 May 2017 21:04:32 -0700 (PDT)
-In-Reply-To: <xmqqbmrcf3cn.fsf@gitster.mtv.corp.google.com>
-References: <20170501180058.8063-1-sbeller@google.com> <20170501182405.GG39135@google.com>
- <xmqqbmrcf3cn.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 1 May 2017 21:04:32 -0700
-Message-ID: <CAGZ79kb52QDUG0RtTXNEEpMJR1CSMYMrRHTRRvGn0-cF=HnzWw@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Some submodule bugfixes and "reattaching detached HEADs"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 1, 2017 at 6:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Brandon Williams <bmwill@google.com> writes:
+Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+
+> While POSIX states that it is okay to pass EOF to isspace() (and it seems
+> to be implied that EOF should *not* be treated as whitespace), and also to
+> pass EOF to ungetc() (which seems to be intended to fail without buffering
+> the character), it is much better to handle these cases explicitly. Not
+> only does it reduce head-scratching (and helps static analysis avoid
+> reporting false positives), it also lets us handle files containing
+> nothing but whitespace by erroring out.
 >
->> I don't know why submodules were originally designed to be in a
->> detached HEAD state but I much prefer working on branches (as I'm sure
->> many other developers do) so the prospect of this becoming the norm is
->> exciting! :D
+> Reported via Coverity.
 >
-> The reason is because the superproject already records where the
-> HEAD in the submodule should be, when any of its commits is checked
-> out.  The tip of a branch (which one???)
-
-The one as configured (submodule.NAME.branch
-
->  in a submodule may match
-> that commit, in which case there is nothing gained by having you on
-> that branch,
-
-Being on a branch has some advantages, e.g. easier pushing, not
-worrying about losing commits due to gc, an easier "name" in a literal sense.
-
-
->  or it may not match that commit, in which case it is
-> unclear what should happen.
-
-Yes, I anticipate this to be the main point of discussion.
-
->  Leaving your submodule on the branch
-> would mean the state of your tree as a whole does not match what the
-> checkout operation in the superproject wanted to create.  Resetting
-> the branch would mean you may lose the history of the branch.
-
-or telling the user via die(), that there is a mismatch.
-(you may want to run git submodule update --remote to fix the situation)
-
-> Thinking of the detached HEAD state as an implicit unnamed branch
-> that matches the state the superproject checkout expects was
-> conceptually one of the cleanest choices.
-
-Assuming this is the cleanest design, we may want to change the
-message of git-status, then.
-Unlike the scary detached HEAD message (incl long hint), we may just
-want to say
-
-    $ git status
-    In submodule 'foo'
-    You're detached exactly as the superprojects wants you to be.
-    Nothing to worry.
-
-
-
-> But all of the above concentrates on what should happen immediately
-> after you do a checkout in the superproject, and it would be OK for
-> a sight-seer.  Once you want to work in the submodules to build on
-> their histories, not being on a branch does become awkward.  For one
-> thing, after you are done with the work in your submodule, you would
-> want to update the superproject and make a commit that records the
-> commit in the submodule, and then you would want to publish both the
-> superproject and the submodule because both of them are now
-> updated.  The commit in the superproject may be on the branch that
-> is currently checked out, but we don't know what branch the commit
-> in the submoudule should go.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/mailsplit.c |  3 ++-
+>  mailinfo.c          | 15 +++++++++++----
+>  2 files changed, 13 insertions(+), 5 deletions(-)
 >
-> The submodule.<name>.branch configuration may be a good source to
-> learn that piece of information,
+> diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+> index 30681681c13..9b3efc8e987 100644
+> --- a/builtin/mailsplit.c
+> +++ b/builtin/mailsplit.c
+> @@ -233,7 +233,8 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
+>  	do {
+>  		peek = fgetc(f);
+>  	} while (isspace(peek));
+> -	ungetc(peek, f);
+> +	if (peek != EOF)
+> +		ungetc(peek, f);
 
-Glad we agree up to this point.
+I agree more with the first sentence in the proposed log message
+than what this code actually does.  I.e. breaking upon seeing an EOF
+explicitly would be nice, just like the change to mailinfo.c in this
+patch we see below.
 
-> but it does not fully solve the
-> issue.  It is OK for the tip of that branch to be at or behind the
-> commit the superproject records, but it is unclear what should
-> happen if the local tip of that branch is ahead of the commit in the
-> superproject when checkout happens.
+> @@ -1094,14 +1097,18 @@ int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+>  		return -1;
+>  	}
+>  
+> -	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
+> -	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
+> -
+>  	do {
+>  		peek = fgetc(mi->input);
+> +		if (peek == EOF) {
+> +			fclose(cmitmsg);
+> +			return error("empty patch: '%s'", patch);
+> +		}
+>  	} while (isspace(peek));
+>  	ungetc(peek, mi->input);
 
-right. It is still unclear to me as well. I'll have to think about the
-various modes of operation.
+The handling of EOF is improved, but is it correct to move the
+allocation of p/s_hdr_data down?
 
-> By the way, how does this topic work with the various checkout modes
-> that can be specified with submodule.<name>.update?
+Among the two callers, builtin/am.c just dies when it sees
+mailinfo() returns an error, but builtin/mailinfo.c tries to be
+nicer and calls clear_mailinfo().  Wouldn't this make that codepath
+dereference a NULL pointer?
 
-This series currently does not touch git-submodule, but in principle
-we could just run "submodule--helper reattach-HEAD" after any operation
-and then see if we can attach a HEAD (likely for "update=checkout",
-but in  "merge" we may want to fast-forward the branch, and in "rebase"
-we might want to reset (noff) to the tip.
+I think the moral of the story is that people tend to get sloppier
+when doing "while we are at it" than the main task, and a reviewer
+needs to be more careful while reviewing the "while we are at it"
+part of the change than the primary thing a patch wants to do ;-)
 
-I'll think about this more.
-Thanks,
-Stefan
+> +	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
+> +	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
+> +
+>  	/* process the email header */
+>  	while (read_one_header_line(&line, mi->input))
+>  		check_header(mi, &line, mi->p_hdr_data, 1);
