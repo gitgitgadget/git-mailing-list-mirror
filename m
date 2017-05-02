@@ -2,156 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6ECC1F829
-	for <e@80x24.org>; Tue,  2 May 2017 08:24:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C78E1F829
+	for <e@80x24.org>; Tue,  2 May 2017 08:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751038AbdEBIYO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 04:24:14 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:34062 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750792AbdEBIYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 04:24:11 -0400
-Received: by mail-io0-f181.google.com with SMTP id a103so147627563ioj.1
-        for <git@vger.kernel.org>; Tue, 02 May 2017 01:24:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rtYHJ9W5SfRiIQY2gMgl8qWGc8nkwS8lG99Kmv5DjaA=;
-        b=jg1MFG30UlQIENXqmNufYU4ua7R38fp5ZLOj/NPAGQHneGV/M2SWdcSohERyKQzcPj
-         XIEp9W9gK/aDMHGe13pIatrnJ7WmQcf/mqcwX6FS6AB9t1ZhReNY3CjQqwT4YrrLhEG+
-         /3JJHi/UtXDok9PtOn+EBUTGKmMslFlRDSEa8s8urr8yXxiCONRXx0OYEJDJ/czcp8rY
-         WgKGT4Vuju9+fzCSg4nhHjC9DtWw/1nwomqys5BPaob0XOfaPlu+BWS0XhDk4DyIhg6j
-         TeaBoAy0/1JkzIE2WfQqy8lj4JvRXVk3g2MJ5DzA0cJiXlGAL411Z6//wB5JittaJmPK
-         wU4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rtYHJ9W5SfRiIQY2gMgl8qWGc8nkwS8lG99Kmv5DjaA=;
-        b=BIrrglZznDgsYQCbmZM+vkXK5SdraJnRx2ABVlkNbQdebhNq4NZbdeouW/WqoIyygi
-         DI5qhTZlpw+YhUzgKe87WLhTOplV7/todsxZ2xZrk44iRysITb46JZwTQ1wsmJvBS52V
-         gLZVxBZT4VJIFSe1CJul434hjTqTF9JuEt9hFUDsEC037bLnwsRrjshBnk3OjxXl+B6H
-         eZnLrplCnRFVb/BgSeCR8ogqvkctFQgGCKTxpS/DGchCOQob9Bbw+K8kgLG6aogItD/B
-         rd/nwAnCuawWog1Rpp7sXhaJJWD9ABsZReOnIi+3Ghl0NCjvh3XTllM3lh+bIlnGmCpW
-         zRnQ==
-X-Gm-Message-State: AN3rC/4W9kkp2n/pHG/kc5Kx0tOHRvOjjBXhmQcEJjeaUanbt85leZ1m
-        RUHxv68xI9KiTIAWrdT/XOaxqo7p2Q==
-X-Received: by 10.107.178.129 with SMTP id b123mr25766341iof.50.1493713447802;
- Tue, 02 May 2017 01:24:07 -0700 (PDT)
+        id S1751445AbdEBIng (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 04:43:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43722 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751411AbdEBInc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 04:43:32 -0400
+Received: (qmail 5137 invoked by uid 109); 2 May 2017 08:43:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 May 2017 08:43:28 +0000
+Received: (qmail 10595 invoked by uid 111); 2 May 2017 08:43:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 02 May 2017 04:43:56 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 02 May 2017 04:43:26 -0400
+Date:   Tue, 2 May 2017 04:43:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] pack-objects: disable pack reuse for object-selection options
+Message-ID: <20170502084326.65eisqmr4th5cbf7@sigill.intra.peff.net>
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Tue, 2 May 2017 01:23:46 -0700 (PDT)
-In-Reply-To: <xmqqa86wgo33.fsf@gitster.mtv.corp.google.com>
-References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com> <CACBZZX4ty91vh=ykMtpF0pV8Ru3BKWBXyQYsFRdPkKkxMd8pzw@mail.gmail.com>
- <xmqqa86wgo33.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 2 May 2017 10:23:46 +0200
-Message-ID: <CACBZZX5N0L_M9b4RTRLSvcA2u69H=s=S-VEc-Nr71wW6Scyjvw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2017, #01; Mon, 1)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 2, 2017 at 1:21 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->>> * ab/grep-pcre-v2 (2017-04-25) 20 commits
->>>  - SQUASH???
->>>  - Makefile & configure: make PCRE v2 the default PCRE implementation
->>>  - grep: remove support for concurrent use of both PCRE v1 & v2
->>>  - grep: add support for PCRE v2
->>>  - grep: add support for the PCRE v1 JIT API
->>>  - perf: add a performance comparison test of grep -E and -P
->>>  - grep: change the internal PCRE code & header names to be PCRE1
->>>  - grep: change the internal PCRE macro names to be PCRE1
->>>  - test-lib: rename the LIBPCRE prerequisite to PCRE
->>>  - grep: make grep.patternType=3D[pcre|pcre1] a synonym for "perl"
->>>  - grep & rev-list doc: stop promising libpcre for --perl-regexp
->>>  - log: add -P as a synonym for --perl-regexp
->>>  - log: add exhaustive tests for pattern style options & config
->>>  - grep: add a test for backreferences in PCRE patterns
->>>  - Makefile & configure: reword outdated comment about PCRE
->>>  - grep: remove redundant `regflags &=3D ~REG_EXTENDED` assignments
->>>  - grep: remove redundant regflags assignment under PCRE
->>>  - grep: submodule-related case statements should die if new fields are=
- added
->>>  - grep: add tests for grep pattern types being passed to submodules
->>>  - grep: amend submodule recursion test in preparation for rx engine te=
-sting
->>>
->>>  PCRE2, which has an API different from and incompatible with PCRE,
->>>  can now be chosen to support "grep -P -e '<pattern>'" and friends.
->>
->> That squash looks good to me.
->
-> Thanks.
->
-> That is not a particulary helpful comment, by the way.  I can help
-> topics by contributors by queuing emergency fix at the tip to make
-> ones that do not build correctly buildable and testable (which is
-> what the "SQUASH???" commits are about), but I'd rather not see me
-> forced to find among 19 commits which one is broken and needs the
-> hotfix squashed in myself.
+If certain options like --honor-pack-keep, --local, or
+--incremental are used with pack-objects, then we need to
+feed each potential object to want_object_in_pack() to see
+if it should be filtered out.  This is totally contrary to
+the purpose of the pack-reuse optimization, which tries hard
+to avoid doing any per-object work.  Therefore we need to
+disable this optimization when these options are in use.
 
-I'm happy to change what I'm doing to be more helpful, but it's not
-clear to me from this & the context what that would be.
+This bug has been present since the inception of the
+pack-reuse code, but was unlikely to come up in practice.
+These options are generally used for on-disk packing, not
+transfer packs (which go to stdout), but we've never allowed
+pack reuse for non-stdout packs (until 645c432d6, we did not
+even use bitmaps, which the reuse optimization relies on;
+after that, we explicitly turned it off when not packing to
+stdout).
 
-* I sent a v4 that had this bug in <20170425210548.24612-6-avarab@gmail.com=
->
-* You pointed out that initialization bug in response
-* I sent a v5 of just that patch (not the rest of the series) in
-response to that in <20170426074856.29903-1-avarab@gmail.com>
-* You replied in <xmqq1sser7ty.fsf@gitster.mtv.corp.google.com> in a
-reply I (probably mis-)read as "no worries, I'll just squash the fix
-in"
+There are tests in t5310 that check these options with
+bitmaps and --stdout, but they didn't catch the bug, and
+it's hard to adapt them to do so.
 
-So now a ~week later in WCIG you've taken the series but added that
-squash instead of using my v5 of that one patch, that looks good to me
-(i.e. your hotfix does the same thing as my v5) but you don't think
-that's a helpful comment.
+One problem is that they don't use --delta-base-offset;
+without that option, we always disable the reuse
+optimization entirely. It would be fine to add it in (it
+actually makes the test more realistic), but that still
+isn't quite enough.
 
-So what would you like to have happen instead? If it's easier I could
-just re-sent a v6 of the whole thing and we could do away with this
-squash/replace-one-patch dance.
+Another problem is that the reuse code is very picky; it
+only kicks in when it can reuse most of a pack, starting
+from the first byte. So we'd have to start from a fully
+repacked and bitmapped state to trigger it. But the tests
+for these options use a much more subtle state; they want to
+be sure that the want_object_in_pack() code is allowing some
+objects but not others. Doing a full repack runs counter to
+that.
 
->>> * ab/grep-threading-cleanup (2017-04-16) 8 commits
->>>  - grep: given --threads with NO_PTHREADS=3DYesPlease, warn
->>>  - pack-objects: fix buggy warning about threads under NO_PTHREADS=3DYe=
-sPlease
->>>  - pack-object & index-pack: add test for --threads warning under NO_PT=
-HREADS
->>>  - tests: add a PTHREADS prerequisite
->>>  - grep: skip pthreads overhead when using one thread
->>>  - grep: don't redundantly compile throwaway patterns under threading
->>>  - grep: add tests for --threads=3DN and grep.threads
->>>  - grep: assert that threading is enabled when calling grep_{lock,unloc=
-k}
->>>
->>>  Code cleanup.
->>>
->>>  Needs review.
->>
->> Between these two series there's 27 patches, and I understand it's a
->> bit of a PITA to review/get comments on it.
->>
->> Anything I should be doing differently here other than just waiting
->> for 2.13 to come out so they can be cooked further & merged down to
->> next & then master if there's no objections?
->
-> There are topics that need fresh eyes to be reviewed by other
-> contributors, so perhaps you can help unblock them by reviewing,
-> while they pick lints from yours?
+So this patch adds new tests at the end of the script which
+create the fully-packed state and make sure that each option
+is not fooled by reusable pack.
 
-*nod*
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I happened to notice this because I have a series which makes the reuse
+code much less picky (it kicks in more often, and can even convert to
+non-ofs-delta clients on the fly). And it fails the tests when merged
+with 702d1b958 (pack-objects: respect --local/--honor-pack-keep/--incremental
+when bitmap is in use, 2016-09-10).
+
+But the bug is much older than that.  So this isn't at all urgent for
+v2.13.
+
+ builtin/pack-objects.c  |  6 +++++-
+ t/t5310-pack-bitmaps.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0fe35d1b5..50e01aa80 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2717,7 +2717,11 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+  */
+ static int pack_options_allow_reuse(void)
+ {
+-	return pack_to_stdout && allow_ofs_delta;
++	return pack_to_stdout &&
++	       allow_ofs_delta &&
++	       !ignore_packed_keep &&
++	       (!local || !have_non_local_packs) &&
++	       !incremental;
+ }
+ 
+ static int get_object_list_from_bitmap(struct rev_info *revs)
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 424bec7d7..c3ddfa217 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -289,4 +289,42 @@ test_expect_success 'splitting packs does not generate bogus bitmaps' '
+ 	git -C no-bitmaps.git fetch .. HEAD
+ '
+ 
++test_expect_success 'set up reusable pack' '
++	rm -f .git/objects/pack/*.keep &&
++	git repack -adb &&
++	reusable_pack () {
++		git for-each-ref --format="%(objectname)" |
++		git pack-objects --delta-base-offset --revs --stdout "$@"
++	}
++'
++
++test_expect_success 'pack reuse respects --honor-pack-keep' '
++	test_when_finished "rm -f .git/objects/pack/*.keep" &&
++	for i in .git/objects/pack/*.pack; do
++		>${i%.pack}.keep
++	done &&
++	reusable_pack --honor-pack-keep >empty.pack &&
++	git index-pack empty.pack &&
++	>expect &&
++	git show-index <empty.idx >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'pack reuse respects --local' '
++	mv .git/objects/pack/* alt.git/objects/pack/ &&
++	test_when_finished "mv alt.git/objects/pack/* .git/objects/pack/" &&
++	reusable_pack --local >empty.pack &&
++	git index-pack empty.pack &&
++	>expect &&
++	git show-index <empty.idx >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'pack reuse respects --incremental' '
++	reusable_pack --incremental >empty.pack &&
++	git index-pack empty.pack &&
++	>expect &&
++	git show-index <empty.idx >actual &&
++	test_cmp expect actual
++'
+ test_done
+-- 
+2.13.0.rc1.437.g927e4246e
