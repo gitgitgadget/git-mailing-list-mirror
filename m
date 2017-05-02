@@ -2,88 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 620BC207E3
-	for <e@80x24.org>; Tue,  2 May 2017 00:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 201DF207D6
+	for <e@80x24.org>; Tue,  2 May 2017 01:02:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751016AbdEBA75 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 20:59:57 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34279 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750732AbdEBA74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 20:59:56 -0400
-Received: by mail-pf0-f196.google.com with SMTP id g23so29868193pfj.1
-        for <git@vger.kernel.org>; Mon, 01 May 2017 17:59:56 -0700 (PDT)
+        id S1750991AbdEBBCp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 1 May 2017 21:02:45 -0400
+Received: from mail-pg0-f51.google.com ([74.125.83.51]:33841 "EHLO
+        mail-pg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750732AbdEBBCp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 1 May 2017 21:02:45 -0400
+Received: by mail-pg0-f51.google.com with SMTP id v1so52293348pgv.1
+        for <git@vger.kernel.org>; Mon, 01 May 2017 18:02:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=fen+AbQx47befWVxlCaxTYrdxi391q/M1xf+8BIjuVw=;
-        b=LwsYECjShKwulBdqpMXvCS+MSJMD+vwfxEmNV89Qnmrq1SkkCdYFIuogSwF0kaAB+p
-         FVRp45MXp1v8+O0QB1Uadoi10B6tC4Jsc7XDktGp5V/XZd/D1j3HjNhH9nluF3d6fAms
-         glULnfKIuumzl+/DgZ5kLFzxqKLEobVJ+yD/ApTLG/V1fw/emQq8dEZgOIYN57qnRme1
-         sVp+u1u0853miAhJ/nCyCmBBxMkmDmndL7NOaZ/9gGl7FIl3+MqTaArWkCwTkAhvVDT4
-         lLIqrgmvppKkfJbGs2CZ2/u28rblz9I1lThPOqH0bSJ3+fjvFC09KoawKvrvzTOceEln
-         cVxA==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=NyioRPGf7UbHQJ8lhoakXQ7/ZnlbIa2fub2T7c3aXKo=;
+        b=sm7V+vkP6mNkmVcVFVE99IGPAXvvPRHso5GM+vshK3cN9HpDnQDNZq36sRYnUHifZ+
+         5qOv0XPKEBT21tNMiMQYgLuQtnJUN2JtafL0euhZ5BbYHpbBvRGH1aCSXNNPYSizuRW1
+         dcepmYvpotmbgEa0ENzyCKGCjCT2/N6eeeYipm/TfVrEb+zeRCEHf5z/4YQf8GCHexg8
+         dVvgoK+vYmsp0TsnWGvgQ56SqUUQzUP4srLc8o1nvVpHAMlNKZvLM0ZZGBFLaKttZG1h
+         q2OWd6dwDF3TNgQ+uVFVZlsTfErafztH+2uIayLYjua6aqtB+AP+OkYGD6fl3a4EHXWA
+         7X0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=fen+AbQx47befWVxlCaxTYrdxi391q/M1xf+8BIjuVw=;
-        b=a47TCcYxXwUaC0LRrb/nhr2s6opWkN6FkNYyEt1yq/O/U2KFw5etCBpzw9FTzq92lb
-         Kc+a6ByEsIQiOYwmXTPtMCTWYXzN1Zte6939aGtWrNlUy2S/1htk193T2xpBZP+H0OTj
-         Vj3VwE4cFjQsXhr8CeDHJzr1qiYKAhTYgcwbZcxKONvY+R7ZMFq+nhDk9SDMRTKj7AoQ
-         JuXTjoI9XBx4vdGFQ/KRtC3JcvIVlP293bQwd4b/mI4EDYQ+15iaTjeCBzdzxQxmp+K/
-         0hc3A4JI9ijRi+tvINZrV915ztoeGqQCu8gYZ5EyA9FfIC+c6nmg+0LBUXI5nO5mJZoP
-         SFpQ==
-X-Gm-Message-State: AN3rC/7D4OZfJNtISKptHYZeY68nJ6fmCyC7AOaGnvcIqrjeafOTO8ex
-        v623Ih/iqKg8NA==
-X-Received: by 10.99.181.25 with SMTP id y25mr6740710pge.192.1493686795725;
-        Mon, 01 May 2017 17:59:55 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3c5e:d1c1:579c:ef99])
-        by smtp.gmail.com with ESMTPSA id s68sm3629705pgc.5.2017.05.01.17.59.53
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 01 May 2017 17:59:53 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Samuel Lijin <sxlijin@gmail.com>
-Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Terrible bad performance for it blame --date=iso -C -C master -- <file>
-References: <58DE0598020000A1000256CE@gwsmtp1.uni-regensburg.de>
-        <xmqq60ip1m0f.fsf@gitster.mtv.corp.google.com>
-        <CAJZjrdUt+=oLt0cDcs2+bJMCFR4h8UUSFmZkx6-1menz4haPig@mail.gmail.com>
-Date:   Mon, 01 May 2017 17:59:52 -0700
-In-Reply-To: <CAJZjrdUt+=oLt0cDcs2+bJMCFR4h8UUSFmZkx6-1menz4haPig@mail.gmail.com>
-        (Samuel Lijin's message of "Mon, 1 May 2017 12:58:42 -0500")
-Message-ID: <xmqqfugof4zb.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=NyioRPGf7UbHQJ8lhoakXQ7/ZnlbIa2fub2T7c3aXKo=;
+        b=DU0/23rJGtbYHS10wTfbpVeVNVxu3uCE7HClJQrDdy7BwSHdX+LUrTmTvUiIivthBF
+         LVyJjNR9w89pOBD+WladhpCiFo4xU9OfTRCNS1vHWmngVP4k4TP61Z/bKWN3V1lIk6pz
+         tcuLMqB05YKZbhg4H5Ul7usutXdC2ff10/TiW0RNnNu1NFfU8Rmr85rJfO8paxGpEtDr
+         VHqND1GStWsNf0yqDB9cbLIaJpjrfnTt3PQ0FVFlFNxJrskrdk8vvhbA/NFxttvyagTj
+         E//wDAJ31US9qiOZM60bNI5RCVF3KuPs5JRl/wG47bvlPLZU0GO1zbU847347zfjfTT8
+         CjNg==
+X-Gm-Message-State: AN3rC/69+2v3mpSLPtzqP8/mF7R/ctKyF++XV+2EEct1cjsCP2dIC/oP
+        ZWmpyF9IwvXQ0xDZ
+X-Received: by 10.99.43.199 with SMTP id r190mr9984453pgr.131.1493686964290;
+        Mon, 01 May 2017 18:02:44 -0700 (PDT)
+Received: from roshar.svl.corp.google.com ([100.96.218.30])
+        by smtp.gmail.com with ESMTPSA id d1sm13532526pfa.56.2017.05.01.18.02.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 01 May 2017 18:02:43 -0700 (PDT)
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>, gitster@pobox.com,
+        sbeller@google.com
+Subject: [PATCH v2 0/6] changed submodules
+Date:   Mon,  1 May 2017 18:02:33 -0700
+Message-Id: <20170502010239.179369-1-bmwill@google.com>
+X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f-goog
+In-Reply-To: <20170428235402.162251-1-bmwill@google.com>
+References: <20170428235402.162251-1-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Samuel Lijin <sxlijin@gmail.com> writes:
+Changes in v2:
+- few tweaks in the commit messages of a couple of the commits
+- use 'GIT_MAX_HEXSZ + 1' as the hint size in [5/6]
+- added a comment in [5/6] better explaining the rational for having a quick,
+  incorrect check for the existence of a commit in a submodule.
 
-> On Fri, Mar 31, 2017 at 10:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
->> It might not be a bad idea to teach "blame" not to pay attention to
->> any path that is marked as "-diff" (e.g. binary files) when trying
->> to see if remaining contents appeared by borrowing from them.  We do
->> not have that heuristics (yet).
->
-> Could you elaborate on this? Do you mean to tell diffcore-rename to
-> ignore diff_filespec objects if they're binary?
+Brandon Williams (6):
+  submodule: rename add_sha1_to_array
+  submodule: rename free_submodules_sha1s
+  submodule: remove add_oid_to_argv
+  submodule: change string_list changed_submodule_paths
+  submodule: improve submodule_has_commits
+  submodule: refactor logic to determine changed submodules
 
-No and yes ;-).  I do not think it is a good idea to unconditionally
-ignore binary in diffcore-rename.
+ submodule.c | 305 +++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 149 insertions(+), 156 deletions(-)
 
-But when we know that the rename detection is called from inside
-blame.c, where by definition we would be digging line-oriented
-contents, there is no point checking if the contents we are looking
-for came from an existing binary file.
+-- 
+2.13.0.rc1.294.g07d810a77f-goog
+
