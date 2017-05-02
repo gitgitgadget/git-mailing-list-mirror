@@ -7,49 +7,50 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 251F81F790
-	for <e@80x24.org>; Tue,  2 May 2017 13:57:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 740641F790
+	for <e@80x24.org>; Tue,  2 May 2017 14:01:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750954AbdEBN5v (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 09:57:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:60652 "EHLO mout.gmx.net"
+        id S1751245AbdEBOBD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 10:01:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:59847 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750740AbdEBN5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 09:57:50 -0400
+        id S1751218AbdEBOBC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 10:01:02 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lw1vh-1e8gao1qkH-017mpP; Tue, 02
- May 2017 15:57:35 +0200
-Date:   Tue, 2 May 2017 15:57:19 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMShK-1d9OuR28je-008I8o; Tue, 02
+ May 2017 16:00:45 +0200
+Date:   Tue, 2 May 2017 16:00:44 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 09/25] mailinfo & mailsplit: check for EOF while
- parsing
-In-Reply-To: <xmqqzievdhk5.fsf@gitster.mtv.corp.google.com>
-Message-ID: <alpine.DEB.2.20.1705021553420.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de> <32a2d16902734c8794de61b5e86a0d2a6cf43fa3.1493387231.git.johannes.schindelin@gmx.de> <xmqqzievdhk5.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 23/25] name-rev: avoid leaking memory in the `deref`
+ case
+In-Reply-To: <xmqq8tmfexg6.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.20.1705021433060.3480@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <cover.1493387231.git.johannes.schindelin@gmx.de> <9e897d6f263bcf9a2b2bab613946fe1bf452eb91.1493387231.git.johannes.schindelin@gmx.de> <xmqqd1bsdjmw.fsf@gitster.mtv.corp.google.com>
+ <xmqq8tmfexg6.fsf@gitster.mtv.corp.google.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:iX9kgOX6QbZdPQhhmBtu8wxXwDPmOiTP1ItbHofRNPBYP9JPcAc
- 2Y23EzDIzpBXP+Lhg+QQCxDOiVrCJtnetJmJbazcER3DhpijYUDIeLXqd9ZA5OXB8cpYT6N
- dBwQQysIezX8iFFgj7mIRGTgqsqtvKvu0RslTuOMzl1WeQJ/CLRO4HAugyaI0rmPZo/RlH4
- GGIelSz52Iee5APlp7LuQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:z2lzUm60SWc=:rHZEcyj6LqrQUY3m6ZuNxv
- d5TVWp7DV4Lv9zZX37aryfB+7pYBvvu4S7oe56mkEfOY47/EhnngGo2UFHYSywfmIDolvFTKk
- 1aNOm2VOsHwQn9OYgwCTshJ+afrpVp4OqocRh0AfFcRE19RyT0HYrl9IJu9A3on8ZoSvE6yxu
- oemcirFsB3YkQBXy30WOD4PY49dDiwZeaG7Fx9x03xA07lhF3M4lB7/dmInXLkMpT6C4XiNjB
- FSqbJNK5xcyedmiUNOv6kFd6szh4juAdJgpjqdf6WHUKnr7tHp0JQ0MjOf2SbNg+gOYtPA0Z1
- 9CfcUqHu6fQyDjE9IFlTFfRb1IbuY7QbqUJIr/D6dY8ymazhGT0HCZaTffmzbVNuNkVYaOHht
- gxct3j0dtMLxCcjx0u8VxetP+3e56NTK56fPhj1v6NSN92LdadORJIedReQ2iijSEMBItCuDp
- kwXZeqC+cmgcAWJAUo30lte4/8ejh7vD3U+Za6h+VXMPNYHyerSae8WsRSj6rWH1+G64UtnUs
- OpqmYvO1bMuKBnJQU0tkqbt3Glbp0x/x89/jvTz2LPjTjj5Rw6mNdHS3PiNzRHcriLkOYnrdP
- 4Wo2/iyUDruRydOFR+cgznyBaREYgQR3RckRhdG89zc3oZPco1MW0ZhUvthabTq8voUGYBo/j
- GEjGzow+8yxqkE0I6LLzd2UgvLqUWypkInh6s7B/Rk2l7Lc2LOaevpGoUc3lFDlSH1pdmly61
- /b2XCwpvPJxfYtsd/ELfwfEQ9c7uFUQPht3UJ+erMlBRTia3tnfodmuzxaqTSNN6g3j8fkHx0
- EymyqOu
+X-Provags-ID: V03:K0:7pZN18hggw7b9NHkhHLznDpuPmYwfI8UwKfPWoa2u36/1mOiq2o
+ c4PzLbOyGYEmUlg9fTRzsJOjc0nT5bHi2dki+PLEYa6MQaKr0l2IB5pV8t7bAsUHK7iBu/O
+ 6+sAnyTHk+Sib6FobUb87Iins07VbCEop5RlSWuBqKdaNObhhsQR6QEubCudKFHmXPqrSCQ
+ EROEZbQIFVD0AChHIjCcA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QFDdlcepWFs=:4bjE8yBOER6e+F2FD/E9YS
+ 4QdKALvyhknCQAoeqXm8tqmF0vQjlMtxmRS/5pw7avC8SFINLapo/jRkxzgLuwnpNyzlk1tSd
+ 7l2KLCT+pVGx9sTcdquwEvJ+mrbTZMlKRwow4pEoPHIZMCkcnEBUX0nwtF5CHVTwdsvgUhvuY
+ OAxySlA6x6Dpbg+mX+zi3ikuoW2vZwe5WjB7X4MXb8bZ5pHFtqxUvjOsySBSsUza7i/lvlvIS
+ 4ggJ5XHbFdI6QoaYRWh7dnC6lF9kqJIt58Y8TRHUsMjf7hNJXybYMlFbjVK05/Vn0TnlIrsAh
+ eMwCf7R8CIv0jkhCtJsmtYU4kLC+zG2FpFKhTw0WAAx037HfcsBLCfPOrenMQg7K+F9Mkpopw
+ NX27mmfPhhbUI9oLoDpJoQ0q2UCiHV8Augw1iBNYNrYa7ldqRDRJufvNodB2SK7i+Pd+Kcfhs
+ sXPLpyo19yuv19vYblW2d+LgedYJV061kw3fXj+SQfR4sUKXeo0rn3PdYr4pEMo8UFzpbViRv
+ WcjnBmy2bOeb5wavmVoPTqXMpf3u6L3YZLLjVZcshBFxO+VlGkqzScwzLU4eEOPLO3Peiaj9v
+ Nfj5W5uXSrHStddka075P0e/NkIVoKoFi/0EijbtQxU25jcNZDqd+QcKJGQYHoaYx8GiUqfPY
+ cvD++ezzreE/UL3fdF0dG4nKi/Tq+WLFk9NkP9Z5f/0sufl0Ma94ixK/MAGYYN6tmS6ZCpAtQ
+ lfGxWVOQ1y7LTWdD0P7+QTKjNGNHZcCB4atBg9nq9DXfpK0E2QvlVEdXE3CNsg7rBdOCJrKaj
+ V+104Zj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,56 +60,36 @@ Hi Junio,
 
 On Mon, 1 May 2017, Junio C Hamano wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-> > index 30681681c13..9b3efc8e987 100644
-> > --- a/builtin/mailsplit.c
-> > +++ b/builtin/mailsplit.c
-> > @@ -233,7 +233,8 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
-> >  	do {
-> >  		peek = fgetc(f);
-> >  	} while (isspace(peek));
-> > -	ungetc(peek, f);
-> > +	if (peek != EOF)
-> > +		ungetc(peek, f);
+> > Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+> >
+> >> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+> >> index 92a5d8a5d26..a4ce73fb1e9 100644
+> >> --- a/builtin/name-rev.c
+> >> +++ b/builtin/name-rev.c
+> >> @@ -28,6 +28,7 @@ static void name_rev(struct commit *commit,
+> >>  	struct rev_name *name = (struct rev_name *)commit->util;
+> >>  	struct commit_list *parents;
+> >>  	int parent_number = 1;
+> >> +	char *p = NULL;
+> >>  
+> >>  	parse_commit(commit);
+> >>  
+> >> @@ -35,7 +36,7 @@ static void name_rev(struct commit *commit,
+> >>  		return;
+> >>  
+> >>  	if (deref) {
+> >> -		tip_name = xstrfmt("%s^0", tip_name);
+> >> +		tip_name = p = xstrfmt("%s^0", tip_name);
 > 
-> I agree more with the first sentence in the proposed log message
-> than what this code actually does.  I.e. breaking upon seeing an EOF
-> explicitly would be nice, just like the change to mailinfo.c in this
-> patch we see below.
+> I'll rename 'p' to 'to_free' while queuing, though.  Without a
+> descriptive name, it was confusing to view while resolving conflicts
+> with another in-flight topic.
 
-I changed it to error out with a (translated) "empty mbox: '%s'" as the
-other hunks.
-
-> > @@ -1094,14 +1097,18 @@ int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
-> >  		return -1;
-> >  	}
-> >  
-> > -	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
-> > -	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
-> > -
-> >  	do {
-> >  		peek = fgetc(mi->input);
-> > +		if (peek == EOF) {
-> > +			fclose(cmitmsg);
-> > +			return error("empty patch: '%s'", patch);
-> > +		}
-> >  	} while (isspace(peek));
-> >  	ungetc(peek, mi->input);
-> 
-> The handling of EOF is improved, but is it correct to move the
-> allocation of p/s_hdr_data down?
-
-Sorry, I *assumed* that the function was passed a zero-initialized
-mailinfo struct. And as you pointed out, that assumption was wrong.
-
-My thinking was that I did not want to introduce another leakage by my
-patch, but as your careful analysis determined: the only caller that does
-not die() afterwards releases the data (and would not even be able to
-handle p_hdr_data == NULL...).
-
-I reverted that move.
+Good point. I also used `p` in builtin/mktree.c and setup.c. While you
+seem to have renamed it in builtin/mktree.c, I think setup.c also needs
+the same fixup.
 
 Ciao,
 Dscho
