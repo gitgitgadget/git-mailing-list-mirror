@@ -7,83 +7,115 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 825101F790
-	for <e@80x24.org>; Tue,  2 May 2017 16:02:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2839D1F790
+	for <e@80x24.org>; Tue,  2 May 2017 16:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751210AbdEBQCp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 12:02:45 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53594 "EHLO mout.gmx.net"
+        id S1751279AbdEBQDA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 12:03:00 -0400
+Received: from mout.gmx.net ([212.227.15.15]:54861 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751181AbdEBQCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 12:02:44 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQeET-1dVB5w41V7-00U5PU; Tue, 02
- May 2017 18:02:34 +0200
-Date:   Tue, 2 May 2017 18:02:33 +0200 (CEST)
+        id S1750929AbdEBQC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 12:02:57 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLfLH-1d6PTU3X2R-000t5v; Tue, 02
+ May 2017 18:02:51 +0200
+Date:   Tue, 2 May 2017 18:02:51 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 18/25] receive-pack: plug memory leak in update()
+Subject: [PATCH v3 21/25] add_reflog_for_walk: avoid memory leak
 In-Reply-To: <cover.1493740497.git.johannes.schindelin@gmx.de>
-Message-ID: <aab8cdfa2878f23b4d046d8303757031bb6ad0fb.1493740497.git.johannes.schindelin@gmx.de>
+Message-ID: <ba954872659d96aec305836b32a3adbb2c1c2a07.1493740497.git.johannes.schindelin@gmx.de>
 References: <cover.1493387231.git.johannes.schindelin@gmx.de> <cover.1493740497.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XVKpjxLA0qQc3+5iUvlrTZNAMk4Mco4d07I9jac/Wx8580mClFn
- yDeqqyGN7Y6h01c81ICaKGe7LSgKrKqhroBE+fMbqryWsOtPLEh9USnn8zuKCidnoI0vTwJ
- mcFISpaCj9G8buj0H+RAzc8y4YLB6YbND6L431c9lkYUM3Hj5nWRF+ItUZP/QLy5XckqLCZ
- taVq4b1OJrIp6fdZSXErg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aAOw13nqRJg=:qS1Mv8gIqVX5g5EqksVaoZ
- 60dVBzZwR+LZbOtx8vfhJXgZ12661VKcgmH9lP0Td4bN0/ddEor4ROY7PPhOIxzfWqTWQbdeV
- tWZZg8s5KsFZsr6++YMkgmOUcdPADbSTytbACxsiY+SooJzgZwS+DeBoY8EM0Q6MrNHHMO2Ms
- zcZ2nE/AI36ios4DRV47/TFmqEf61dm4LeMupEwYCM1dAwiTppuVwIQDwrzc3kcOgWByB1vqu
- hqQTFT85rLaob4jbHj0e2XwpYc00Txb7QmXHBnjsWtEOZ6hCcpFsS1Byn2TMRuxyiHv/gt9pk
- Vh+2bZTkR4ZqpAXXVkD7ljRqH6eK0qeq7JJLQO1M1zV9RUXoDpHEs1MDioPxGf2HVSs4JdT1v
- iDUDwmwzIfjW/rPJG2+QsORiK0MylYL6vNAtmCR9Dy77NGKb6o2NIDu3akgm1IgUW8TMAWZ9c
- eLzrS0+XPAJa+ee6g2yDJU8zu3/3QdKYeH15KTCHJkhIhuxKPqaW12BCTToOMjiQJ96VMs8yn
- JpBIWkzDkc6+9nCNOzXPynxgdU4amo3mni51PASOcHmoh6hdXMDqJyPuIifnutD4JKSynIX9V
- Si8E2KhmlPC0S1Cw9/y301aXEpuyNsJipFrTSPFzgCWLJwdm127dc+WD4FZL7WJGtw+ZfzH/2
- CxdQ0MqYOCHa+hKpkIRYITNPSttxiykxrq2H0K9RVDBsERMfaVbvp3272SiB8Yr26sTZWH63p
- fy24nRwdzm8E58xBJG+yGL9yIef2k3z0Y9LuMWLqdgSQJ3aQr1H/o+rTAWb9tor1i0fcWtLXb
- MFtpt59
+X-Provags-ID: V03:K0:kSuHaRxcS89yaOmqm8u+PGu7kc//izQkTyjcRfK/y4/m0qFs3aa
+ aRLpE97RBE8JVa2PCO5jc1ABhFR9njZL72lj1arrLMuw7HI9Zy1awhyNrWxZMb2qMs73ZAY
+ KQtrE37TDPtJc45o4x+nYXxIN6tXObzXqrVQcIICmW1B6165wLLngQdzPcw5HlsSICKy95a
+ ycc1xBi6WyIgoRM6ZTUew==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aqchCl8X3dA=:oGYBedw1Ob3BukjVW1wsZP
+ kExuXlLTcvXOkWMnmdlBSF1idTt9cszg1FVLFuFc/jEbJXuMctoduM+7rpDb6bTklQRuAz4HY
+ ZCpFSAqQDinSTrJ1dVTbSruwhTpwOyOBMuFBs56GmqJXaDDoZ0s5dF/AXoWz82exRWXxP8dJ5
+ zZogz+21mEehcMNr7xB0fKn1OApE6WpB8ii/BQE1fKNXfsmA8NN8qI+6y8Laj7wNmnzkipiCc
+ c+jYd6WFSHQmp1nIrT7NCJvqo3jM1YkxKrJu5axJEj7KorKTtwxtJxkQC+4d+hE8w0ihcF4Wo
+ d/aXKI+9oH/YAcXJ0Rnm+TcehA5SluF6Jy4BoC/u+EWfwkD9YElnb/YHuH7hFmkG+3s+idDsl
+ +zfyb3Ci78NaMEGW3RechSM0PGwYGbTNKXX3SXGFJfkruVm+xLuyLqjGyDZsTsCtdPk23h8VN
+ y8WdPJ/Exqq1UffVHRvR+pjZKynClMbCelJZhdjp1PPUGYb+dFUV6jVWLxzg2VBpU3BaxfRUK
+ IVp5jhDd1rf7rc+dz9mScCgIsfl4oAAfvGs/hbagEnIDDTxsd7qv6Vb7akPVnl9WIJlNyh6SC
+ gT+ZyHdAxRb51afH+OoWu5NDxzC8YENPkL6LdnKz6Yquw+u9gxY5+oWtBsoGlIBnTwfQmXOIn
+ 0AopSK8z04Iht0D40G7djGguFaSNJ8wz54F2EZRQK9fI/fYiwErnDnboMoKfzkRJE0ZMT6zEa
+ WV+cxTCFauOH0ImFpuGB4TZDm8gi8F0s6VtoJ9GmAk6Kw1HJafuTmutaLZJFTB/+aCS6jNfol
+ SnyJiol
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Reported via Coverity.
+We free()d the `log` buffer when dwim_log() returned 1, but not when it
+returned a larger value (which meant that it still allocated the buffer
+but we simply ignored it).
+
+While in the vicinity, make sure that the `reflogs` structure as well as
+the `branch` variable are released properly, too.
+
+Identified by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/receive-pack.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ reflog-walk.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index f96834f42c9..48c07ddb659 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -986,7 +986,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- {
- 	const char *name = cmd->ref_name;
- 	struct strbuf namespaced_name_buf = STRBUF_INIT;
--	const char *namespaced_name, *ret;
-+	static char *namespaced_name;
-+	const char *ret;
- 	struct object_id *old_oid = &cmd->old_oid;
- 	struct object_id *new_oid = &cmd->new_oid;
- 
-@@ -997,6 +998,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 99679f58255..c63eb1a3fd7 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -183,7 +183,11 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 		if (!reflogs || reflogs->nr == 0) {
+ 			struct object_id oid;
+ 			char *b;
+-			if (dwim_log(branch, strlen(branch), oid.hash, &b) == 1) {
++			int ret = dwim_log(branch, strlen(branch),
++					   oid.hash, &b);
++			if (ret > 1)
++				free(b);
++			else if (ret == 1) {
+ 				if (reflogs) {
+ 					free(reflogs->ref);
+ 					free(reflogs);
+@@ -193,17 +197,27 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 				reflogs = read_complete_reflog(branch);
+ 			}
+ 		}
+-		if (!reflogs || reflogs->nr == 0)
++		if (!reflogs || reflogs->nr == 0) {
++			if (reflogs) {
++				free(reflogs->ref);
++				free(reflogs);
++			}
++			free(branch);
+ 			return -1;
++		}
+ 		string_list_insert(&info->complete_reflogs, branch)->util
+ 			= reflogs;
  	}
++	free(branch);
  
- 	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
-+	free(namespaced_name);
- 	namespaced_name = strbuf_detach(&namespaced_name_buf, NULL);
- 
- 	if (is_ref_checked_out(namespaced_name)) {
+ 	commit_reflog = xcalloc(1, sizeof(struct commit_reflog));
+ 	if (recno < 0) {
+ 		commit_reflog->recno = get_reflog_recno_by_time(reflogs, timestamp);
+ 		if (commit_reflog->recno < 0) {
+-			free(branch);
++			if (reflogs) {
++				free(reflogs->ref);
++				free(reflogs);
++			}
+ 			free(commit_reflog);
+ 			return -1;
+ 		}
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
