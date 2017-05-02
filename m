@@ -7,78 +7,97 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6A11F790
-	for <e@80x24.org>; Tue,  2 May 2017 15:41:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F4601F790
+	for <e@80x24.org>; Tue,  2 May 2017 15:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751050AbdEBPl4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 11:41:56 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62925 "EHLO mout.gmx.net"
+        id S1750767AbdEBPsU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 11:48:20 -0400
+Received: from mout.gmx.net ([212.227.17.21]:61622 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750724AbdEBPlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 11:41:55 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MI5rO-1d51hV2V2c-003yOP; Tue, 02
- May 2017 17:41:47 +0200
-Date:   Tue, 2 May 2017 17:41:32 +0200 (CEST)
+        id S1750733AbdEBPsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 11:48:19 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LguAU-1dtTUu3Itq-00oEpj; Tue, 02
+ May 2017 17:48:14 +0200
+Date:   Tue, 2 May 2017 17:48:13 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Liam Beguin <liambeguin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
+To:     Liam Beguin <liambeguin@gmail.com>
+cc:     git@vger.kernel.org, peff@peff.net
 Subject: Re: [PATCH v3 0/6] rebase -i: add config to abbreviate
  command-names
-In-Reply-To: <CACBZZX5MacQZHVjSymWm0_RHjc_Q41J9vhqMuDGwz3L_4LjtzQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.20.1705021740530.3480@virtualbox>
-References: <20170502040048.9065-1-liambeguin@gmail.com> <CACBZZX5MacQZHVjSymWm0_RHjc_Q41J9vhqMuDGwz3L_4LjtzQ@mail.gmail.com>
+In-Reply-To: <20170502040048.9065-1-liambeguin@gmail.com>
+Message-ID: <alpine.DEB.2.20.1705021741580.3480@virtualbox>
+References: <20170502040048.9065-1-liambeguin@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-1946652013-1493739707=:3480"
-X-Provags-ID: V03:K0:hv0cwiiezD/VjC3RVp0uINT+X93VSyqPusf5QoGHayh34fA+T+i
- 7h4Yk+xlT8PxbBux+RQq9/HhrQ9uXkYXZEAvGhmdZrgtkwUW9foB1XjCxue8CKZm3oUWp4S
- jPRll1tS+G3hptFUn9zrFAXe1QnvBYPgMeif9oCb0UcQY5HAoTKRn9Ohc+Gy7RhPd+jEqko
- stYMDfdi8Gajra4MxPdhg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:i0tYW3hE+8c=:sgqflM1EC5i+HxMneNbdnF
- +KQQJjOeY+EbpDYG7uZg4j19HBrZtkKaW1lIo9WCiE5fK1XZ1Osmd7pOMRGOPs946LDXTRLYU
- 9U/IfNJHU8LvpdsRUoSmnKBEXfooOawBsVM7LuBAT6nmEE4YZQtXvgv2KNuU79Bn06dLDYEyN
- bqqeSVZ/dx+Kv1TMqk7r0sCBdEjemII4AYtdZ2gKzmHrJoXB/EkuCQp8nzKd8otEcq3R0FkCf
- lLEK4xUAMkkIrdu3xzYvTrIB3nrWTgKMZPvkaMbXkChgUOIkq1o09fO3DQLiDbWK5xHtpfZK4
- BdOVT6gSS/f+oDQ9CaFXRFepDOwH1UFJ5HwpSps2XhPDz6FrJ1Q0VzjBYwRnXrV/ofm1Fd9h8
- hVQ1kON9lLVsGeBCTMBP6NmUxk+Vv1mhhmnSeOET2M01XTTFh+Ga/cPMBrGv0kop1eE4gxDH1
- Ao+KsiS3F7cHYgZSheiS2+TTmGGxWDqORWEf4OtvnfHxM2ZWPDSZgFWgVgFBK2PVVoMBwKqm5
- tUPmk3Ef5iLKNhXfOMhHZuVeluoskpKN4vCLjmIoRbFK4Jn1+St9/V5ZL0Ne3CjN/GldEhyHo
- x8ba8qLCJSRetddNHEKdfBjk6qEl3G4EFJrREmvGRx4ED1cOvcDh/V1GS8pagzkyf39rjQ153
- nejZTagksTsyKUkRvPLUU8hFe0tLzRVFZqbsRfPrXENRsXG9TpioWGJBStsyl3fI/Q/8yshPD
- 9JTVkdLkofaLBMzmS844+Tibh7iYyANTYgkoGLZ5KkyQVp+ENA5LEre2FpRYuq9saulsYWZGf
- PL/bw4y
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:0Y50zlOD04a6y4noKrcd0lSvLB12QP2zqsAmfMIl6FC8bL5QpPY
+ uOOp07iw0Lgl9kcUhZzRNPnKQnPT8+UKEXvJOSbkPFfFI0fkNiQ2aGLHGkw6rJ8hxo0Q/By
+ ql6i9sb9TznqXKPDy2HEGGp48Hkh4pOpT408i5mKyrLygros9JFcTe99mgNb7u2pLLao62y
+ Kpw0yM2jzF3jmKxy2/d/Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EVzBjuDh9gI=:qR2mUlX+PPijLyqGjkV+4D
+ M8J1tqW4RkXX5uXjMxp0tHOvLfNixnT5qsMKAvJx/AuvlolfbQfEl9wq1GuC1hOj9YgH58iNs
+ W751LeiQznl+3AaZTC2lNCrIMURUD0aQJ3E4PC9Yu1OnnjB+PHu5OnFpgrgYK5aAvrzAjLFCt
+ hZPD/+HLpalFkfQFMuBZMBms+zlW2Hn4mJd2nvpGQJBbhrSjC4dpw8oHsuHv3Eb46vaFJ7NTY
+ ebfzt/3uhWkOLG2wJmQnWbJukyIY0WjRqmqrYn3t/yH+PIKb0wW4Gcd2xaEpkpc2gxNGxAWzc
+ 6yOhKtvYqOos8j5TVFNfeyWaHlFtBVRfwToXkEUPJDR6tfv//qo1DkjwZqIrvPack96KUuXFC
+ j3idO7AvMIpbKwlBLrq28rz8PMGxPVHUtMo1Ga6P6IOx3ULgqPbpkcheSTCkhnb86UeZVRK4U
+ 2XHZR0pARo1fG2WMuel6VM8ecpV73ev6npwwTGiYZRJm1V8q3AdMO1OM4w+OQ0rq8uDSgjshk
+ jdBpvWPBdVhqHHSJBpY2EuymrDvpFCxQ0NGDJYsnvbDuO4ALOXZh4LSc69zw2KjOoEzyz570v
+ 1vov8ArgyzTDS8e0DVxRjFwso6qgINryAITaRcHUOyiqUIiXXrNMp5KQ61408+bFihDfnI03w
+ c6dFM+YIS5uujeXg3we8q14dfFs3SCWpXsPWCEZkpFXQOeSN22APVxnoFzpb6K7ma10vxdED8
+ 1S5fGCwY1qt2AKM7ywhS5YBOj/rpmaOjDUax4SxBsKbitpTSK0stuxmpiQ2lWpRRo90wVTK3H
+ upJnfqt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Liam,
 
---8323329-1946652013-1493739707=:3480
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Tue, 2 May 2017, Liam Beguin wrote:
 
-Hi,
+> Add the 'rebase.abbreviateCommands' configuration option to allow `git
+> rebase -i` to default to the single-letter command-names in the todo
+> list.
+> 
+> Using single-letter command-names can present two benefits.  First, it
+> makes it easier to change the action since you only need to replace a
+> single character (i.e.: in vim "r<character>" instead of
+> "ciw<character>").  Second, using this with a large enough value of
+> 'core.abbrev' enables the lines of the todo list to remain aligned
+> making the files easier to read.
+> 
+> Changes from v1 to v2:
+>  - Improve Documentation and commit message
+> 
+> Changes from v2 to v3:
+>  - Transform a single patch into a series
+>  - change option name from 'rebase.abbrevCmd' to 'rebase.abbreviateCommands'
+>  - abbreviate all commands (not just pick)
+>  - teach `git rebase -i --autosquash` to recognise single-letter command-names
+>  - move rebase configuration documentation to Documentation/rebase-config.txt
+>  - update Documentation to use the preferred naming for the todo list
+>  - update Documentation and commit messages according to feedback
 
+Thank you for this pleasant read. It is an excellent contribution, and the
+way you communicate what you changed and why is very welcome.
 
-On Tue, 2 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+I offered a couple of comments, my biggest one probably being that this
+patch series is crossing paths with my patch series that tries to move
+more functionality out of the git-rebase--interactive.sh script into the
+git-rebase--helper that is written in C, closely followed by my suggestion
+to fold at least part of the functionality into the SHA-1
+collapsing/expanding.
 
-> I locally rebased this into just 3 patches, i.e. in this sequence:
->=20
-> - Documentation: move rebase.* config variables to a separate rebase-conf=
-ig.txt
-> - Documentation: use preferred name for the 'todo list' script
-> - *all the rest of this squashed*
+If your patch series "wins", I can easily forward-port your changes to the
+rebase-i-extra branch, but it may actually make sense to build on top of
+the rebase-i-extra branch to begin with. If you agree: I pushed the
+proposed change to the `rebase-i-extra+abbrev` branch at
+https://github.com/dscho/git.
 
-I think that makes a lot of sense. (I would drop the part about f!/s!, as
-I pointed out, though)
+I look forward to see this story unfold!
 
 Ciao,
 Johannes
---8323329-1946652013-1493739707=:3480--
