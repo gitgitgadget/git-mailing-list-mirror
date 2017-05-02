@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91AF5207E3
-	for <e@80x24.org>; Tue,  2 May 2017 22:23:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B89E207E3
+	for <e@80x24.org>; Tue,  2 May 2017 22:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751728AbdEBWXv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 18:23:51 -0400
-Received: from mail-pf0-f174.google.com ([209.85.192.174]:33235 "EHLO
-        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751447AbdEBWXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 18:23:36 -0400
-Received: by mail-pf0-f174.google.com with SMTP id q20so3539588pfg.0
-        for <git@vger.kernel.org>; Tue, 02 May 2017 15:23:35 -0700 (PDT)
+        id S1751734AbdEBWXy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 18:23:54 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:36096 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751637AbdEBWXl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 18:23:41 -0400
+Received: by mail-pg0-f49.google.com with SMTP id t7so67987056pgt.3
+        for <git@vger.kernel.org>; Tue, 02 May 2017 15:23:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=C5rwTukvDeVGo3QkQuk7q3D8JRZIk2p3PT2JclLQ8tY=;
-        b=kqwPiMmzqnIRfGxdy2TzMRPyq+rBX7DEoAEMqSId/cD2CqTZvUxtgNImphI0cetamz
-         FSFXVOA1Q8YHaWBXSt4n5N5EcovncPE4sLhRUgKZ54YlwAYzMU29maxmHh73eRuCEOn6
-         neiM8Wyia9IyjVu52g0H7UG1dm3+PU043gAemLHFFq3YHrX0AuXHA0a5bJHY0QNKrwHE
-         ND7nihvuKg9ech9vtNRAqtO8AfK17aUXijFh8LJPC9KUlEUszdadxoYMPI8rjdKtDG0O
-         EnZRf47cs6DInOr8HbbCLIUQ5nxytYmu7fRbgrAFVko6dQMMkni+iJPsYnqcX/R2rAIi
-         T35A==
+        bh=iLyqmSbLCpxd5hVo/Z0DPGFVfX0QNOKndA5YhPNd0sE=;
+        b=Mv+vsOmFj3vdihavMP748Gw3xJfGE4ZPRQ7WMPLyEp56Fgiuaxxqfbd3jd85eBRYSB
+         xmHHpdccrtIVkBi4BEHaShsktopAzsKjFyu++emMfYozLNVS6hXRe5rbqXQNsmvPqqeP
+         FKxBcjeMho7ca/HtO8q4Eoau9TB3B6oxuceJQ6BtW/qhu2LYbRWsanKKfi9yuPDkLgm+
+         qANnriZDgfOU6qBzzcYVHuql+gXekXWIMJEdLrMU/a/5PGoTtQn19/DZWDs80dFpJzf+
+         ZrIMBMTyU79z4wIppUm6rn14ojb9gti9Z4ChJpuChzHLUymWBwXE1RCP+XG3I1eQwUqW
+         3ohw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=C5rwTukvDeVGo3QkQuk7q3D8JRZIk2p3PT2JclLQ8tY=;
-        b=EYI1DVHnrCrJ0E8UJt17T9C+O6yrbRG+6X+cKv/dNR0SS6Y228FJg2ozmDaqPbF2ZT
-         GlzduI1F1C2RkKgl+CeV532l/SAr7mDf0gdjZjxnsL8t7LneOgNXB1/dlIt9ab0FMY6h
-         7BHsEwyn21LtLbEXHNUqcTyLPV/JFWxzxdrOOFMgmM4nF0BkwWDiKiTpVn1TZL8M7XFG
-         xnCNsPkT5tiwVHcus9Aw/MjV3KqJD7kvyFRdbxJsvv3wbFmUVZKDw1Q/J0scPdvGAPnt
-         A4w//Wc1XvxsZawYvqMcnTk/h6zUyaoyb4TtAUpFbV3Vyh3lQUwQcJH05gN5zwQhyHF0
-         L9DA==
-X-Gm-Message-State: AN3rC/5Hr3hM3n8fNVaaAVtKlDAOCfkKMDdL2Ndv2KWy+bI+JUyOxEhD
-        8EC/b85Avkt40W+X
-X-Received: by 10.98.209.24 with SMTP id z24mr1425954pfg.200.1493763815085;
-        Tue, 02 May 2017 15:23:35 -0700 (PDT)
+        bh=iLyqmSbLCpxd5hVo/Z0DPGFVfX0QNOKndA5YhPNd0sE=;
+        b=V2ZSHg/FQ1/6tGCYeWXOUHNjl/lUYpG24tJhenvQZllCQgjqguyV13MP84fnKbWOqb
+         Jv2DP6Qeibc8Yg+QwWLfOP5ZHtFnDVqapGit3L+J6I9w2VwWbSPYfpPSFsCY+6ngmHAm
+         S8b4cz4Xrm9qDPAsXGEKmnMmsb6H4oUQnv/sUHbwgROtBFUqBCHHnpcPpZnDDCCP0rYb
+         yf4SIW/JcouUjX5rvWTadkSZF9fb6w3BnXH7wf+7PJ1Q/4oWQoj/i4DO+Yd1VNmrRwIo
+         vy4vaFH+hubkU5+kJLRtqw9lcg08F/RmOriV1MQKIHaAaizS+V9XxhU4C4nMKsyp8c00
+         qjvg==
+X-Gm-Message-State: AN3rC/4RHP+bGXQRTbPkd9sMQC+aC7hwE8VBz1RdgS+NF0iHd+ncCuL8
+        /xvNBCpEII8Qby2r
+X-Received: by 10.84.230.229 with SMTP id e92mr44781956plk.2.1493763821023;
+        Tue, 02 May 2017 15:23:41 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c805:cf1:74c5:2e74])
-        by smtp.gmail.com with ESMTPSA id x9sm706049pff.98.2017.05.02.15.23.34
+        by smtp.gmail.com with ESMTPSA id 29sm734022pfo.9.2017.05.02.15.23.40
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 02 May 2017 15:23:34 -0700 (PDT)
+        Tue, 02 May 2017 15:23:40 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@jeffhostetler.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 05/24] cache.h: drop read_cache_unmerged()
-Date:   Tue,  2 May 2017 15:23:03 -0700
-Message-Id: <20170502222322.21055-6-sbeller@google.com>
+Subject: [PATCH 10/24] cache.h: drop cache_name_is_other
+Date:   Tue,  2 May 2017 15:23:08 -0700
+Message-Id: <20170502222322.21055-11-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.rc1.39.ga6db8bfa24
 In-Reply-To: <20170502222322.21055-1-sbeller@google.com>
 References: <20170502222322.21055-1-sbeller@google.com>
@@ -61,113 +60,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-@@ @@
--read_cache_unmerged()
-+read_index_unmerged(&the_index)
-
-Additionally drop the define from cache.h manually.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- builtin/am.c        | 2 +-
- builtin/merge.c     | 2 +-
- builtin/pull.c      | 2 +-
- builtin/read-tree.c | 2 +-
- builtin/reset.c     | 2 +-
- cache.h             | 1 -
- sequencer.c         | 2 +-
- 7 files changed, 6 insertions(+), 7 deletions(-)
+ builtin/clean.c    | 2 +-
+ builtin/ls-files.c | 2 +-
+ cache.h            | 1 -
+ dir.c              | 2 +-
+ wt-status.c        | 4 ++--
+ 5 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index cb3e4dff63..bb0927fbcc 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2053,7 +2053,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
- 	if (!remote_tree)
- 		return error(_("Could not parse object '%s'."), oid_to_hex(remote));
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 9bdefca6dc..c6aacbb0f0 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -938,7 +938,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 		struct stat st;
+ 		const char *rel;
  
--	read_cache_unmerged();
-+	read_index_unmerged(&the_index);
+-		if (!cache_name_is_other(ent->name, ent->len))
++		if (!index_name_is_other(&the_index, ent->name, ent->len))
+ 			continue;
  
- 	if (fast_forward_to(head_tree, head_tree, 1))
- 		return -1;
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 4d4c56050c..c27c806ac1 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1170,7 +1170,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		goto done;
+ 		if (pathspec.nr)
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index edcad6e8e1..6f7ecec1b0 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -114,7 +114,7 @@ static void show_other_files(struct dir_struct *dir)
+ 
+ 	for (i = 0; i < dir->nr; i++) {
+ 		struct dir_entry *ent = dir->entries[i];
+-		if (!cache_name_is_other(ent->name, ent->len))
++		if (!index_name_is_other(&the_index, ent->name, ent->len))
+ 			continue;
+ 		show_dir_entry(tag_other, ent);
  	}
- 
--	if (read_cache_unmerged())
-+	if (read_index_unmerged(&the_index))
- 		die_resolve_conflict("merge");
- 
- 	if (file_exists(git_path_merge_head())) {
-diff --git a/builtin/pull.c b/builtin/pull.c
-index dd1a4a94e4..42578cee05 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -788,7 +788,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 
- 	git_config(git_pull_config, NULL);
- 
--	if (read_cache_unmerged())
-+	if (read_index_unmerged(&the_index))
- 		die_resolve_conflict("pull");
- 
- 	if (file_exists(git_path_merge_head()))
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index f997814933..0bcf021ead 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -195,7 +195,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 	 */
- 
- 	if (opts.reset || opts.merge || opts.prefix) {
--		if (read_cache_unmerged() && (opts.prefix || opts.merge))
-+		if (read_index_unmerged(&the_index) && (opts.prefix || opts.merge))
- 			die("You need to resolve your current index first");
- 		stage = opts.merge = 1;
- 	}
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 03c5498d6e..4a4eb723dd 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -66,7 +66,7 @@ static int reset_index(const struct object_id *oid, int reset_type, int quiet)
- 		opts.reset = 1;
- 	}
- 
--	read_cache_unmerged();
-+	read_index_unmerged(&the_index);
- 
- 	if (reset_type == KEEP) {
- 		struct object_id head_oid;
 diff --git a/cache.h b/cache.h
-index a66ae97fb7..9b94339573 100644
+index abf1474034..5de8ab4e69 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -355,7 +355,6 @@ extern void free_name_hash(struct index_state *istate);
+@@ -370,7 +370,6 @@ extern void free_name_hash(struct index_state *istate);
+ #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
+ #define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
+ #define cache_file_exists(name, namelen, igncase) index_file_exists(&the_index, (name), (namelen), (igncase))
+-#define cache_name_is_other(name, namelen) index_name_is_other(&the_index, (name), (namelen))
+ #endif
  
- #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
- #define is_cache_unborn() is_index_unborn(&the_index)
--#define read_cache_unmerged() read_index_unmerged(&the_index)
- #define discard_cache() discard_index(&the_index)
- #define unmerged_cache() unmerged_index(&the_index)
- #define cache_name_pos(name, namelen) index_name_pos(&the_index,(name),(namelen))
-diff --git a/sequencer.c b/sequencer.c
-index 9409b65aaa..f20e05fe60 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -349,7 +349,7 @@ static struct tree *empty_tree(void)
+ enum object_type {
+diff --git a/dir.c b/dir.c
+index 8abad1b969..d5e1c462bb 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1244,7 +1244,7 @@ static struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathna
  
- static int error_dirty_index(struct replay_opts *opts)
+ struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
  {
--	if (read_cache_unmerged())
-+	if (read_index_unmerged(&the_index))
- 		return error_resolve_conflict(_(action_name(opts)));
+-	if (!cache_name_is_other(pathname, len))
++	if (!index_name_is_other(&the_index, pathname, len))
+ 		return NULL;
  
- 	error(_("your local changes would be overwritten by %s."),
+ 	ALLOC_GROW(dir->ignored, dir->ignored_nr+1, dir->ignored_alloc);
+diff --git a/wt-status.c b/wt-status.c
+index 750ed28b49..ff0e70a25a 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -669,7 +669,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 
+ 	for (i = 0; i < dir.nr; i++) {
+ 		struct dir_entry *ent = dir.entries[i];
+-		if (cache_name_is_other(ent->name, ent->len) &&
++		if (index_name_is_other(&the_index, ent->name, ent->len) &&
+ 		    dir_path_match(ent, &s->pathspec, 0, NULL))
+ 			string_list_insert(&s->untracked, ent->name);
+ 		free(ent);
+@@ -677,7 +677,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 
+ 	for (i = 0; i < dir.ignored_nr; i++) {
+ 		struct dir_entry *ent = dir.ignored[i];
+-		if (cache_name_is_other(ent->name, ent->len) &&
++		if (index_name_is_other(&the_index, ent->name, ent->len) &&
+ 		    dir_path_match(ent, &s->pathspec, 0, NULL))
+ 			string_list_insert(&s->ignored, ent->name);
+ 		free(ent);
 -- 
 2.13.0.rc1.39.ga6db8bfa24
 
