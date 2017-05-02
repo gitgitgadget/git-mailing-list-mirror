@@ -7,73 +7,82 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0381C1F790
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A0FD1F790
 	for <e@80x24.org>; Tue,  2 May 2017 16:03:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751271AbdEBQDO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 12:03:14 -0400
-Received: from mout.gmx.net ([212.227.17.21]:64544 "EHLO mout.gmx.net"
+        id S1751290AbdEBQDS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 12:03:18 -0400
+Received: from mout.gmx.net ([212.227.17.22]:60851 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750929AbdEBQDN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 12:03:13 -0400
+        id S1750967AbdEBQDR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 12:03:17 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0McEDD-1dPAoQ2Zux-00JaCq; Tue, 02
- May 2017 18:02:41 +0200
-Date:   Tue, 2 May 2017 18:02:35 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M3ARX-1dyEWM2Vgl-00suzu; Tue, 02
+ May 2017 18:03:05 +0200
+Date:   Tue, 2 May 2017 18:03:04 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 19/25] line-log: avoid memory leak
+Subject: [PATCH v3 24/25] show_worktree(): plug memory leak
 In-Reply-To: <cover.1493740497.git.johannes.schindelin@gmx.de>
-Message-ID: <e0a836073648c9ea2cc1784d61780b806a81dfc0.1493740497.git.johannes.schindelin@gmx.de>
+Message-ID: <ca9a9f22ffaebd6f59bdbe45fd6cc719d92b8d52.1493740497.git.johannes.schindelin@gmx.de>
 References: <cover.1493387231.git.johannes.schindelin@gmx.de> <cover.1493740497.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:eAZOTqxKAB/j1cnsmQQNxCK9rny8/Rj+p23vk9OSArFpSXZ7PdF
- vm0bivpWIhvyvs0rcmXRIwTiihL849CCBnqqthciaPanYmi8Msip8afcgvYWeYE+Qi3+hLD
- VWqs4Yvg3mnbG4tQyk69WmhC+M7DLFjwbeajWg4aqRTZ2AQSDVdT2+GPpiNqWKcC8Wid4q9
- st6+zzYkpKXJswfxlzHJA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ZBbJ/TtXJCU=:3HfMjK+wgGk9Xn+W/UjWr5
- EkdHTutRzMqoDxSGCnuaEvZ/sDHiif/AqQ9wbrWwaLppkjkbX4Uo5a79NuPBmENTFMLe74GYE
- bnGXG0jBh3x0xLAhUf1xQVG+GIRbp/PdUtn6zpWMVAG5YoIsN/0wS6NZl7+xgNbgXk99C5fC5
- we368Adhl8nN07YIj7zaKcdz09ewZ1/eGVf1ngD+2YG0AB+LMiHUlpSYav558Ar2lGukCqyr0
- SbgYq48Ozyc6tie1iXZhTS+18iQYUDTIewOJYy0s46D6QGq906dc5HXjXkbTuFWlce2aBjgap
- 9RxILhfS862mGDwAQu8OISamlhaLxg4CkZczEgkoDgwjXvpPOTm78/ZBFjw59OFeTaBWcvlX7
- +R6tZvS32WoizBLn2bXv0m56aHyYco17Ax/OqHJBIWyBHLPqGnBkYVFRVFBuczst62P6LCgfM
- wBUukGuojPcpm3BiqxnuA601bUOToH54juTFj3adcByosXDYaOOAX/t1IdOCrVWO47wbuy6hD
- sPEU/r1XzQ3r0zAYOrpVHAQIsqB/oGxh2Te0NFmHQiGBQMPNb0I3Ex2vr7u3gyDTaGkb5bG3u
- nYC0rwbeqvE3OgX7Laz7cVewcQG8a3KLpYdV6v0pYqHvUKax7vfRk+4dBTGQB83ZFo3gkbVdP
- Higg7xlF8112of1K90cCDPzm7n2fe2oDsLiDk6mRVT/NNqDDrmyJGxZasze2oj0k4rnEKhf7r
- Nwk8PMmaJsTGvQCw0jJGTNV4XKZRU8dfuG5SFvsX5gqPeezjHyLwRreOJS5krtU92gFs/k4Bq
- birJy3c
+X-Provags-ID: V03:K0:OZ6SSqlqsJ6uJnGQzGDPCdmS6eStLfJ6MgY5BuwhLq1rL/Midq2
+ Lu5AOOo7nFIRg5AWAsTkJogE8n8O+G0g6rC65wpTM8Ah2AwpTxPt1LZXCon8FhGrcoU/uo7
+ JS+PxLeeEXJtoe6iJeWjAbShGWkbhZiiuwRLDt1DtvBTR02nEW9l7JVtAQyiCnsqo9ty/mu
+ 6ZlbQrTFc91PwiNcQhgSQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XJg3sVFMteM=:OfpJvCOOzXF9HATn5qj1pN
+ Bcyx+ijayKnihGNf9uXKhSAJXGnwUHVXP4tz1q/ssNgRDyWzlbvnKk3wD/4B9BcaFk4R+7vLL
+ P79RZwJRXFBieiGxIRvZsK8crY5shUf1+pqEBQVq4HkFo5YJcimDfzdLMvJlKiVXyDy65E0UL
+ bS6TJfNjpYAe6PTSOhuRAGrrczpiDcQadUe8dX009DiHyo3RBAcmlHPpByxipFPBBfO1YINc0
+ 1q/WtG2PIC4bHtZ8U8fQRG1/QwNLkrpziXoO9LuWylVZ/5aQEwcJYQn/Tdcn5B2o0q/I8/7aU
+ zb4XSTfkaHKwG+8k6kt5qmb20ilOSfXyKRYzatGrwqoOso1uOKBMJdBpzxU76QomsFN/kmxE3
+ HUyq2e0EQN+UuXfVWy4tqN5BczC6JcRhkESIQekNFj1aTKqJbEPZwdzmQX9PdZHYFkvYAJ+Tx
+ Fa7P1WAz1RT2xQi52oeSVFB56y/82r1Jv/wNkYzf8gQs0o9IkhoUK9/4Y1939Kc5W0iWJZN+g
+ KmZ1rK4iS+ou7mdp4jg4RNSY14Ktb8B1TJsoQPNaeAI7fzmXNBIRNQ08oHeDLNR9Bl0XbURGa
+ Xcs0fEFSFBKCDHACWIBeWY0ZBAqt4Mv+A8J3hHvx/mr0efDjYKmCpVrhDSD+dfIhEPzDcFglE
+ +T6DMU7Zk2+DGnPFV/zwHJ7CYhTIFlKCOWNh3DFLGmm7xqOdZMqyZeGCPvjxc0b+wDDp9S56q
+ 5LygJHZ5CrlY+ZlkGI6RyiHKJ40iPtx8ZTkRmNzRy8JfMg6mYxmrUp0GlsLDJ0YHUCSon7RZa
+ z5yD7lX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The buffer allocated by shorten_unambiguous_ref() needs to be released.
+
 Discovered by Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- line-log.c | 1 +
- 1 file changed, 1 insertion(+)
+ builtin/worktree.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/line-log.c b/line-log.c
-index a23b910471b..b9087814b8c 100644
---- a/line-log.c
-+++ b/line-log.c
-@@ -1125,6 +1125,7 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
- 	changed = process_all_files(&parent_range, rev, &queue, range);
- 	if (parent)
- 		add_line_range(rev, parent, parent_range);
-+	free_line_log_data(parent_range);
- 	return changed;
- }
- 
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 1722a9bdc2a..ff5dfd2b102 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -414,9 +414,11 @@ static void show_worktree(struct worktree *wt, int path_maxlen, int abbrev_len)
+ 				find_unique_abbrev(wt->head_sha1, DEFAULT_ABBREV));
+ 		if (wt->is_detached)
+ 			strbuf_addstr(&sb, "(detached HEAD)");
+-		else if (wt->head_ref)
+-			strbuf_addf(&sb, "[%s]", shorten_unambiguous_ref(wt->head_ref, 0));
+-		else
++		else if (wt->head_ref) {
++			char *ref = shorten_unambiguous_ref(wt->head_ref, 0);
++			strbuf_addf(&sb, "[%s]", ref);
++			free(ref);
++		} else
+ 			strbuf_addstr(&sb, "(error)");
+ 	}
+ 	printf("%s\n", sb.buf);
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
