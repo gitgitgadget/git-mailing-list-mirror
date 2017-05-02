@@ -7,71 +7,78 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89CF21F790
-	for <e@80x24.org>; Tue,  2 May 2017 15:40:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6A11F790
+	for <e@80x24.org>; Tue,  2 May 2017 15:41:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750791AbdEBPkV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 11:40:21 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52649 "EHLO mout.gmx.net"
+        id S1751050AbdEBPl4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 11:41:56 -0400
+Received: from mout.gmx.net ([212.227.17.22]:62925 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750996AbdEBPkU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 11:40:20 -0400
+        id S1750724AbdEBPlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 11:41:55 -0400
 Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLvLE-1d8tHw37PA-007nx8; Tue, 02
- May 2017 17:40:09 +0200
-Date:   Tue, 2 May 2017 17:40:07 +0200 (CEST)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MI5rO-1d51hV2V2c-003yOP; Tue, 02
+ May 2017 17:41:47 +0200
+Date:   Tue, 2 May 2017 17:41:32 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     Liam Beguin <liambeguin@gmail.com>
-cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v3 4/6] Documentation: move rebase.* config variables to
- a separate rebase-config.txt
-In-Reply-To: <20170502040048.9065-5-liambeguin@gmail.com>
-Message-ID: <alpine.DEB.2.20.1705021736470.3480@virtualbox>
-References: <20170502040048.9065-1-liambeguin@gmail.com> <20170502040048.9065-5-liambeguin@gmail.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Liam Beguin <liambeguin@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/6] rebase -i: add config to abbreviate
+ command-names
+In-Reply-To: <CACBZZX5MacQZHVjSymWm0_RHjc_Q41J9vhqMuDGwz3L_4LjtzQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.20.1705021740530.3480@virtualbox>
+References: <20170502040048.9065-1-liambeguin@gmail.com> <CACBZZX5MacQZHVjSymWm0_RHjc_Q41J9vhqMuDGwz3L_4LjtzQ@mail.gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:M2fhfAS0y6oEqIJZApkmTuDzxa8PNnt0wuEEjrC8NvJj7fHCzmZ
- UoEYNIIT/aJu5mT6RcbzCKNkdO5udQ/xFYIkk7LtQwRNKixOrfvc8XWe57VX6CVrr3srfcT
- OTIDsqGasJZNUpA6xJ/jrubD81fdwOoiujPQ392s+TXjVAvjFh77d3jwG/6e/hoEOithP6e
- 8AHOA/XQgPeolI9c364VQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:um9Ax4TtW9o=:QdNe8nb905RAoiDLpzDHPq
- RLJnj4tzLLBJEoIij6sXnqH4UCSTfS3qLtkOXLZSeLOxy9nFJab8ya7EAEEuQutEzm6P09PC9
- AKMhvBGAlmDAw6xY4OA5fQYXWPQVN2oNOfp9x1WM7mbqGQlBQJ682rhSE6jlf/QtGyPq2pUrh
- As1qz8MHfk+NwI4Jr3iJ1RTm3TjqljyvU3Y5+IebPq2Qu9CMLuR55peF+0mq9WDuqXjDj6UVA
- MwEfu1kN0xBGPWWEJGWv4fWrikMNFi7jx+TlJJ3qkJKpj0WXhx/mRC4zV2rP//5g4TOLOVELn
- RS9PQf5x9u0Zj1eXh0lAZDFoszdJda97PF8BdG8Fx0SsZhO21qy8Rg6dZoJ5KZEFKcQdrdpRd
- bli1Mg0rAqxwBdJQw7RJ0VHbZnFjbShmN7UbIZtsxyHtD+VsVyw+nPFJ6NJPmqLgD88nPFrRR
- 5XB/XOLrPFzhJR9VS626xYpqQp9DAYAPsoZIIep/5WVJ+TJLXjvp+zS2wA7XkDYZFeVPsKNoD
- w0JwATTNE7mTImE2XWE1BpzATaXRrXs+xAcIqHAfzMKXFKEl6crJKZOfMbbagOq+u5ldDoH7a
- Df/rnELcH1q3Nqmfg/1s11dwK0mKXh3cVvHUAqCH1pbjveFC9jZsPnDbfftfEyc9l4DPVEd4D
- G29u5ZbCn1pk/YyebSbeBJGYikWRilA/10db0Mug8/LygTbK3cMiB91Y5HtKCL+7b7l8eGYyw
- vuDX6pXrUsau7UV2NwjQ8hFKQDRPE0glgdTlA7mLFuO8tCcvPn2sCZrP63x3e4MQKKPhPAMU5
- AQsQfyP
+Content-Type: multipart/mixed; BOUNDARY="8323329-1946652013-1493739707=:3480"
+X-Provags-ID: V03:K0:hv0cwiiezD/VjC3RVp0uINT+X93VSyqPusf5QoGHayh34fA+T+i
+ 7h4Yk+xlT8PxbBux+RQq9/HhrQ9uXkYXZEAvGhmdZrgtkwUW9foB1XjCxue8CKZm3oUWp4S
+ jPRll1tS+G3hptFUn9zrFAXe1QnvBYPgMeif9oCb0UcQY5HAoTKRn9Ohc+Gy7RhPd+jEqko
+ stYMDfdi8Gajra4MxPdhg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:i0tYW3hE+8c=:sgqflM1EC5i+HxMneNbdnF
+ +KQQJjOeY+EbpDYG7uZg4j19HBrZtkKaW1lIo9WCiE5fK1XZ1Osmd7pOMRGOPs946LDXTRLYU
+ 9U/IfNJHU8LvpdsRUoSmnKBEXfooOawBsVM7LuBAT6nmEE4YZQtXvgv2KNuU79Bn06dLDYEyN
+ bqqeSVZ/dx+Kv1TMqk7r0sCBdEjemII4AYtdZ2gKzmHrJoXB/EkuCQp8nzKd8otEcq3R0FkCf
+ lLEK4xUAMkkIrdu3xzYvTrIB3nrWTgKMZPvkaMbXkChgUOIkq1o09fO3DQLiDbWK5xHtpfZK4
+ BdOVT6gSS/f+oDQ9CaFXRFepDOwH1UFJ5HwpSps2XhPDz6FrJ1Q0VzjBYwRnXrV/ofm1Fd9h8
+ hVQ1kON9lLVsGeBCTMBP6NmUxk+Vv1mhhmnSeOET2M01XTTFh+Ga/cPMBrGv0kop1eE4gxDH1
+ Ao+KsiS3F7cHYgZSheiS2+TTmGGxWDqORWEf4OtvnfHxM2ZWPDSZgFWgVgFBK2PVVoMBwKqm5
+ tUPmk3Ef5iLKNhXfOMhHZuVeluoskpKN4vCLjmIoRbFK4Jn1+St9/V5ZL0Ne3CjN/GldEhyHo
+ x8ba8qLCJSRetddNHEKdfBjk6qEl3G4EFJrREmvGRx4ED1cOvcDh/V1GS8pagzkyf39rjQ153
+ nejZTagksTsyKUkRvPLUU8hFe0tLzRVFZqbsRfPrXENRsXG9TpioWGJBStsyl3fI/Q/8yshPD
+ 9JTVkdLkofaLBMzmS844+Tibh7iYyANTYgkoGLZ5KkyQVp+ENA5LEre2FpRYuq9saulsYWZGf
+ PL/bw4y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Liam,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-1946652013-1493739707=:3480
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi,
 
 
-On Tue, 2 May 2017, Liam Beguin wrote:
+On Tue, 2 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> Move configuration variables to a separate file in order to remove
-> duplicates, and include it in config.txt and git-rebase.txt.
-> The new descriptions are taken from config.txt as they are more verbose.
+> I locally rebased this into just 3 patches, i.e. in this sequence:
+>=20
+> - Documentation: move rebase.* config variables to a separate rebase-conf=
+ig.txt
+> - Documentation: use preferred name for the 'todo list' script
+> - *all the rest of this squashed*
 
-This is a nice cleanup in its own right. My only complaint: the
-rebase.autoStash documentation no longer says that it is related to the
-command-line option `--autosquash`.
-
-While the original description in `git-rebase.txt` was suboptimal, maybe
-we can add back the reference by adding something like:
-
-	This option can be overridden by the `--no-autosquash` and
-	`--autosquash` options of linkgit:git-rebase[1].
+I think that makes a lot of sense. (I would drop the part about f!/s!, as
+I pointed out, though)
 
 Ciao,
 Johannes
+--8323329-1946652013-1493739707=:3480--
