@@ -2,106 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DF1F1F790
-	for <e@80x24.org>; Tue,  2 May 2017 21:16:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6C631F790
+	for <e@80x24.org>; Tue,  2 May 2017 21:45:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751225AbdEBVQo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 17:16:44 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:36841 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750710AbdEBVQn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 17:16:43 -0400
-Received: by mail-it0-f53.google.com with SMTP id o5so22979288ith.1
-        for <git@vger.kernel.org>; Tue, 02 May 2017 14:16:43 -0700 (PDT)
+        id S1751504AbdEBVpK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 17:45:10 -0400
+Received: from mail-pg0-f46.google.com ([74.125.83.46]:35506 "EHLO
+        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751074AbdEBVpJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 17:45:09 -0400
+Received: by mail-pg0-f46.google.com with SMTP id o3so62436985pgn.2
+        for <git@vger.kernel.org>; Tue, 02 May 2017 14:45:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=AIoCFrpsYNz0BZbfgKzP7hIJkI6VPOEGWK1JchNAKbs=;
-        b=bPdnC0G6ONQ0rgtxV01Qa4Ady2If4RQWd0qjazOb8jrxdjuhVNlYB1R5Iuh7ODQviH
-         2xVZR090iaVyQRW7QtgGm2gyzHb6QPi9DdVAh7Ed5JF4YdEx1zS2h68WmsqtsZVTic0G
-         fmZ/0CcEDrnv+3j4zp7kuHLt6t4v+dsNg1F94RIh9s/uJuF0KBcY+grz4wXjF8E/0etA
-         +g125Nyxfr9G96Z7TXkEulj92sXYBBpkMgbtIWoIyEUNL156O7hAtPTQZwI/88hJUQci
-         MTTnHfLnGxwCnkMpbXy1UYukMTqlnexneVTwB1S5FAQJmUbuE6mVHculjbMZ5WPjQ05E
-         GMng==
+        d=google.com; s=20161025;
+        h=subject:to:references:cc:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding;
+        bh=wIdcgQrbWHDPi6KqMgdp9g1Nj+gWMiNESSdnME1cnr0=;
+        b=E4BGRN144Ur6291bTT+0IBK8W0wuHK5Mk4cvBvmn5k/eTuJLYQBFjVq4nvNoYzOWXH
+         EWPY2LiS2VZ0uHVs+X1sFLZPHwwT8p46Mr2Z9+1DlcYWpoSw90eJtw4zj4o1+ZY96dLj
+         XEICey5ZsJjO4u8dX4WnioXNacXNW+0u0bkaHWtpbn3tPSMaUEpRsU8kncw387Ci8tt+
+         CBGicV7q16YvDWguAMl+qjMXFRP51UtbOKS5H4b/uHg0pKgAjzk5ADeMAhyHP4JKsmj4
+         kqnvEqtvudQR4GDYmtMyAihA4bmOoyxeqqjvIkDqAMmAjGflHPn32HwmtuCTED9DR6fp
+         K2sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=AIoCFrpsYNz0BZbfgKzP7hIJkI6VPOEGWK1JchNAKbs=;
-        b=BZYHO/tRnpM38MZhnTQQbmQDKaTB2TCqYhcb4lKqrjzr1FVi1YFOCxHkGpRjKb2Odu
-         bCOtulI3QUnDRncRs/L/e8vaunA6ZnmiVywgoZKhdHyxwxTT14k8TV7Rqttnt3x4xtMY
-         /vreksvD4YZVdwZnLnFg1JY+ell0exyiMbhYvnvfeemtieHJRxe7F05k0zmaItcXhGc/
-         J/uyhtcYed4s6ogEKJ7VTYlBMlMqXxAvM2FtTpxiyqTp7l2AGTUS/QGOOcPQalzhBNkH
-         oLwOiS9i88MhwO3H0NffZ/Khe5BdvoRhcHyVy89bqstCgTPiqb/9kqfAeOjzDtJP5y24
-         e2Yg==
-X-Gm-Message-State: AN3rC/5Qi70kZzKC846/PAWYSlFr9NaxRDDAmE+O7LRvGRqlDfjlts8y
-        lp+65uXeTASMOXDymQsC/wqjbXh86g==
-X-Received: by 10.36.26.87 with SMTP id 84mr13257272iti.94.1493759803028; Tue,
- 02 May 2017 14:16:43 -0700 (PDT)
+        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
+        bh=wIdcgQrbWHDPi6KqMgdp9g1Nj+gWMiNESSdnME1cnr0=;
+        b=QPZfy+x2M8KVftour3KnG9msQvcEqDnW1QDayiDGzy/c0lDZiqTn8yPe6l0fYKvmd6
+         k3dzMc0X9ZCsNLSxVWTHmgind7IS61KV5GMpVzf/pwxOznzolDZJtdjIpI2UZCnzXkrx
+         Cg7s1nO05e5j8DEKJrbdDmrlZYX9YU+2uJbguHu7Za7O451SaISl4EjoMtXWj/zra/i3
+         K4gShwUMoQdGU6kdwwnnl50gaa8BJ2kSS1sYwgTzcM0nF37rWGChwaMv/SFg0PMrSMh4
+         QHDRBw8CqARgInZSzAIvB7Mn/4VYTTIW546nXJv1IeTCiYcHKixGWh/d0pjaCv7bdlqu
+         I84A==
+X-Gm-Message-State: AN3rC/7LroZGVUDAIQgr+Ug/4Yo7KRKo7wMjo8xkc7TXqYENHB0IVAjN
+        jcS5O3YtDvh7h/+SKlBarg==
+X-Received: by 10.84.234.8 with SMTP id m8mr44214138plk.41.1493761508563;
+        Tue, 02 May 2017 14:45:08 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([2620:0:100e:422:20ea:317d:54df:5c57])
+        by smtp.gmail.com with ESMTPSA id y5sm41504906pge.19.2017.05.02.14.45.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 May 2017 14:45:07 -0700 (PDT)
+Subject: Re: Proposal for missing blob support in Git repos
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20170426221346.25337-1-jonathantanmy@google.com>
+ <xmqqinllgrfl.fsf@gitster.mtv.corp.google.com>
+ <193d1d84-2386-c4c8-81ef-0042f0d8bb02@google.com>
+ <xmqq1ss8gnqn.fsf@gitster.mtv.corp.google.com>
+ <c0c8a0c3-582c-cf3b-3833-c918a0630f9f@google.com>
+ <xmqq37cof320.fsf@gitster.mtv.corp.google.com>
+ <CAGf8dgK05+f4uX-8+iMFvQd0n2JP6YxJ18ag8uDaEH6qc6SgVQ@mail.gmail.com>
+ <CACBZZX6jQtO_3zYjnvq0dhtWvUxb7vYLtQUWpFHLw1v-SteHcQ@mail.gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Mark Thomas <markbt@efaref.net>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Kevin David <kevin.david@microsoft.com>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Message-ID: <daed427f-b39e-c3d9-76ee-9c37203e1988@google.com>
+Date:   Tue, 2 May 2017 14:45:06 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Tue, 2 May 2017 14:16:22 -0700 (PDT)
-In-Reply-To: <20170502205138.GB17703@alpha.vpn.ikke.info>
-References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1705021406510.3480@virtualbox>
- <CACBZZX5M1Pnvw01wP8id75Ja9NJ3nwVfydsX6g0Ys_QD72r6dQ@mail.gmail.com>
- <alpine.DEB.2.20.1705021756530.3480@virtualbox> <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com>
- <20170502205138.GB17703@alpha.vpn.ikke.info>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 2 May 2017 23:16:22 +0200
-Message-ID: <CACBZZX5ani4DLj4-63yZFPaJnWXquuFb+pXKvyHL61kja6YghA@mail.gmail.com>
-Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May
- 2017, #01; Mon, 1)
-To:     Kevin Daudt <me@ikke.info>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACBZZX6jQtO_3zYjnvq0dhtWvUxb7vYLtQUWpFHLw1v-SteHcQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 2, 2017 at 10:51 PM, Kevin Daudt <me@ikke.info> wrote:
-> On Tue, May 02, 2017 at 08:52:21PM +0200, =C4=98var Arnfj=C3=B6r=C5=A1 Bj=
-armason wrote:
+On 05/02/2017 11:32 AM, Ævar Arnfjörð Bjarmason wrote:
+> On Tue, May 2, 2017 at 7:21 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+>> On Mon, May 1, 2017 at 6:41 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>> Jonathan Tan <jonathantanmy@google.com> writes:
+>>>
+>>>> On 05/01/2017 04:29 PM, Junio C Hamano wrote:
+>>>>> Jonathan Tan <jonathantanmy@google.com> writes:
+>>>>>
+>>>>>> Thanks for your comments. If you're referring to the codepath
+>>>>>> involving write_sha1_file() (for example, builtin/hash-object ->
+>>>>>> index_fd or builtin/unpack-objects), that is fine because
+>>>>>> write_sha1_file() invokes freshen_packed_object() and
+>>>>>> freshen_loose_object() directly to check if the object already exists
+>>>>>> (and thus does not invoke the new mechanism in this patch).
+>>>>>
+>>>>> Is that a good thing, though?  It means that you an attacker can
+>>>>> feed one version to the remote object store your "grab blob" hook
+>>>>> gets the blobs from, and have you add a colliding object locally,
+>>>>> and the usual "are we recording the same object as existing one?"
+>>>>> check is bypassed.
+>>>>
+>>>> If I understand this correctly, what you mean is the situation where
+>>>> the hook adds an object to the local repo, overriding another object
+>>>> of the same name?
+>>>
+>>> No.
+>>>
+>>> write_sha1_file() pays attention to objects already in the local
+>>> object store to avoid hash collisions that can be used to replace a
+>>> known-to-be-good object and that is done as a security measure.
+>>> What I am reading in your response was that this new mechanism
+>>> bypasses that, and I was wondering if that is a good thing.
 >>
->>  * Due to the bizarro existing semantics of the configure script noted
->> upthread if you have a git build script that does --with-libpcre & you
->> have libpcre1 installed, it'll link to it, but now since
->> --with-libpcre defaults to libpcre2 it'll silently skip linking to it
->> if you don't have it installed.
+>> Oh, what I meant was that write_sha1_file() bypasses the new
+>> mechanism, not that the new mechanism bypasses the checks in
+>> write_sha1_file().
 >>
+>> To be clear, here's what happens when write_sha1_file() is invoked
+>> (before and after this patch - this patch does not affect
+>> write_sha1_file at all):
+>> 1. (some details omitted)
+>> 2. call freshen_packed_object
+>> 3, call freshen_loose_object if necessary
+>> 4. write object (if freshen_packed_object and freshen_loose_object do
+>> not both return 0)
+>>
+>> Nothing changes in this patch (whether a hook is defined or not).
 >
-> Case in point: The Archlinux git-git aur package[0] (community maintained=
-,
-> latest git version) does run ./configure without --with-libpcre, but
->  requests it from make with USE_LIBPCRE=3D1.
+> But don't the semantics change in the sense that before
+> core.missingBlobCommand you couldn't write a new blob SHA1 that was
+> already part of your history,
+
+Strictly speaking, you can already do this if you don't have the blob in 
+your local repo (for example, with shallow clones - you likely wouldn't 
+have blobs pointed to by historical commits outside whatever depth is set).
+
+ > whereas with this change
+> write_sha1_file() might write what it considers to be a new blob, but
+> it's actually colliding with an existing blob, but write_sha1_file()
+> doesn't know that because knowing would involve asking the hook to
+> fetch the blob?
+
+Yes, this might happen.
+
+I see the semantics as "don't write what you already have", where "have" 
+means what you have in local storage, but if you extend "have" to what 
+upstream has, then yes, you're right that this changes (ignoring shallow 
+clones).
+
+This does remove a resistance that we have against hash collision (in 
+that normally we would have the correct object for a given hash and can 
+resist other servers trying to introduce a wrong object, but now that is 
+no longer the case), but I think it's better than consulting the hook 
+whenever you want to write anything (which is also a change in semantics 
+in that you're consulting an external source whenever you're writing an 
+object, besides the performance implications).
+
+>> And here's what happens when has_sha1_file (or another function listed
+>> in the commit message) is invoked:
+>> 1. check for existence of packed object of the requested name
+>> 2. check for existence of loose object of the requested name
+>> 3. check again for existence of packed object of the requested name
+>> 4. if a hook is defined, invoke the hook and repeat 1-3
+>>
+>> Here, in step 4, the hook could do whatever it wants to the repository.
 >
-> I noticed when trying git grep -P which then failed.
+> This might be a bit of early bikeshedding, but then again the lack of
+> early bikeshedding tends to turn into standards.
 >
-> [0]: https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=3Dgit-git
+> Wouldn't it be better to name this core.missingObjectCommand & have
+> the hook take a list on stdin like:
+>
+>     <id> <TAB> <object_type> <TAB> <object_id> <TAB> <request_type> <TAB> [....]
+>
+> And have the hook respond:
+>
+>     <id> <TAB> <status> <TAB> [....]
+>
+> I.e. what you'd do now is send this to the hook:
+>
+>     1 <TAB> blob <TAB> <sha1> <TAB> missing
+>
+> And the hook would respond:
+>
+>     1 <TAB> ok
+>
+> But this leaves open the door addressing this potential edge case with
+> writing new blobs in the future, i.e. write_sha1_file() could call it
+> as:
+>
+>     1 <TAB> blob <TAB> <sha1> <TAB> new
+>
+> And the hook could either respond immediately as:
+>
+>     1 <TAB> ok
+>
+> If it's in some #YOLO mode where it's not going to check for colliding
+> blobs over the network, or alternatively & ask the parent repo if it
+> has those blobs, and if so print:
+>
+>     1 <TAB> collision
+>
+> Or something like that.
+>
+> This also enables future lazy loading of trees/commits from the same
+> API, and for the hook to respond out-of-order to the input it gets as
+> it can, since each request is prefixed with an incrementing request
+> id.
 
-Whatever's going on there is unrelated to the issue I'm talking about,
-but if that's producing a package where -P doesn't work that looks
-like a bug in the Makefile.
+My initial thought is that it would be better to extend hook support by 
+adding configuration options for separate hooks instead of extending an 
+existing protocol. For example, with this, the hook would probably need 
+to declare capabilities so that Git knows what the hook supports; also, 
+even if the user and the hook have no issue with Git writing any object, 
+Git would have to invoke the hook since it wouldn't know.
 
-The way --with-libpcre works now is that it second guesses you, i.e.
-it'll put USE_LIBPCRE=3DYesPlease into config.mak.autogen (sourced by
-the Makefile) only if you supply --with-libpcre *and* it can find a
-working libpcre on the system, otherwise it silently ignores you.
-
-Whatever you supply to the configure script it'll be overridden by
-Makefile arguments if present, but even if there was another bug where
-./configure arguments took precedence over Makefile arguments I don't
-see how it would apply here, in this case nothing libpcre related will
-be written to config.mak.autogen.
-
-So I must be missing something. I don't see how that package build
-doesn't either fail at compile time because it doesn't have pcre, or
-work, in which case the -P option will work.
+Having said that, I'm not too attached to the existing protocol and it 
+can change to something like what you suggested if necessary.
