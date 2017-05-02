@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6C26207D6
-	for <e@80x24.org>; Tue,  2 May 2017 04:01:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 340D9207D6
+	for <e@80x24.org>; Tue,  2 May 2017 04:01:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750979AbdEBEBY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 00:01:24 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:33626 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750781AbdEBEBV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 00:01:21 -0400
-Received: by mail-io0-f194.google.com with SMTP id o22so1895129iod.0
-        for <git@vger.kernel.org>; Mon, 01 May 2017 21:01:21 -0700 (PDT)
+        id S1751058AbdEBEB0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 00:01:26 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:33634 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750747AbdEBEBX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 00:01:23 -0400
+Received: by mail-io0-f193.google.com with SMTP id o22so1895222iod.0
+        for <git@vger.kernel.org>; Mon, 01 May 2017 21:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5jh8muBcbZbMDvZUXpn4kx1vLbR713r5Qr3nTm335wU=;
-        b=Xm5EM8pHRGMuOfqP1/bHCGLVfbCP7kgUTWX+vqZfa4eMLGU7X7xlkcVglLLMWc6tx2
-         BIgzeEbiE5v/jr9mzDBn8KwRV+chVsfeNd1TI4YXcoF4AknqiSnzhaD7DERwNHJAK/g+
-         16y3BFOKRodXSw6MLxYzih6ZsVzKXOoUQ3COJRVLkv3ySwaQUtvd0+zWVgv1JgqBhyyR
-         pb8sgEjTAA5EIe41Bqs9gkCZn/MN1Nt+TRPQ1kW0C82/mqVJf45Gxu6sldrq3jw7iv/+
-         oaiv7C6uuG5a64BQMcd19LUDILqOWVP84AbiXOPjviB/XSxuScQmxQWnYOeN8FxzlZOr
-         3iaQ==
+        bh=Y1mrJjAyKfziu+2XHNlUFseRR1vKe2mxIgpWdhQd/88=;
+        b=NMbju9N8SdH3bfbk82slsJc+7PKwd7ZiKQH2gS/BDt9xSMVRIhXvADBKk3Tkm2u4f1
+         nejHqW22JYeyC69DfLcpuVc1SfUGH0g2ezOU2q4JcJFhLTzjQi8CYRfmP1gJmaFcOF7d
+         JHEC8ypv0Ni7PsPmNEdePpYbHYEDO2GivKl+icrew9C/+XgfJ4/4xYX1ijjMCsVN3iW4
+         fce4rsmjj5Dk11bH7ynAZ+FfcKAWYKGy5oV/61jcxcuJMgZLNLSN5jU3NEEYh2UiW0+P
+         NFT0ASt4T7H1gJUQ3bkbengexvmQFsDePaNr4F+6lcBQujAm2CFuLvHogU6RjbQuFYpz
+         oiTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5jh8muBcbZbMDvZUXpn4kx1vLbR713r5Qr3nTm335wU=;
-        b=nxF0wqCrB2kprYcCbMnQx0RUWDsMKwje0cqS/HC5bQ/hb3RmfQ2uX0b4gscb+e1EiU
-         tSIBrEoK6jnwVeSS0T0YOGbyAL1/Tmpvk03ag7SvEJOSOxkNAfrJolPPMvE6IS+iGGc8
-         RAsIUDmE+bw86hz6R3HKRiCVp1Jf+0TwyR3o9uVk81gS2KHfsG/v8aKfz1Cu9x+6W0h6
-         BA/flLmBhDPvlHiFgSint3oh0N8xQSb3/w2nuoUJWiZU871D6i6d7rXT51wsxih1qulv
-         hNn0L4EY4KidbKTbpjCgfm5/bP4ZVCya8AlNYa7eY5iIMoAHSK5vXJQYn0s1SJAYbdzb
-         LWKg==
-X-Gm-Message-State: AN3rC/6KBN3EDQMcIBV6j0iimM10qzYKHdtg0ucLfVypneJJJuX9NQee
-        2UI80aOAzjPsHVJr
-X-Received: by 10.107.46.215 with SMTP id u84mr27530940iou.147.1493697680562;
-        Mon, 01 May 2017 21:01:20 -0700 (PDT)
+        bh=Y1mrJjAyKfziu+2XHNlUFseRR1vKe2mxIgpWdhQd/88=;
+        b=PxOGAypx+sS2t1HRhx/D6qubnmUL1I9phfKXlK59Y5GQ+HVuilVrO5w3JK1y3M9o5+
+         oRAAlxI6NfEa0LxgzHC1HEEWqua5MisAAWNt7EJ4zHOePHWJujo8BIz4GG/FOjPJF7vP
+         wQzG5szF0/o72DbLxO0iOTOt1NChITj32cJv0FI0Cx4toVxuqlr77LlOgOUK7+H+7Pbh
+         HghpblUjToRY0sbrFlBzqIPvBzdsLA7eUmNJPAbaoxrxSQp+On19Rs0Cpj2S4vIgSy9z
+         yhhu1mT171pdH34Wrqgq5eHGudfBPuZaUmhIOiItWYksS8S6ViJf/cRy73rsMPkAagoO
+         3cTQ==
+X-Gm-Message-State: AN3rC/7UgT258svXT/UgIWuwno1cPlSiLWIX/4o3RRp50VGKT1DNuw3+
+        +ucbsE1sdVWOpw==
+X-Received: by 10.107.34.201 with SMTP id i192mr27860872ioi.222.1493697682243;
+        Mon, 01 May 2017 21:01:22 -0700 (PDT)
 Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.gmail.com with ESMTPSA id p65sm7211762ioe.3.2017.05.01.21.01.19
+        by smtp.gmail.com with ESMTPSA id p65sm7211762ioe.3.2017.05.01.21.01.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 01 May 2017 21:01:20 -0700 (PDT)
+        Mon, 01 May 2017 21:01:21 -0700 (PDT)
 From:   Liam Beguin <liambeguin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes.Schindelin@gmx.de, peff@peff.net,
         Liam Beguin <liambeguin@gmail.com>
-Subject: [PATCH v3 2/6] rebase -i: add abbreviate_commands function
-Date:   Tue,  2 May 2017 00:00:44 -0400
-Message-Id: <20170502040048.9065-3-liambeguin@gmail.com>
+Subject: [PATCH v3 3/6] rebase -i: add short command-name in --autosquash
+Date:   Tue,  2 May 2017 00:00:45 -0400
+Message-Id: <20170502040048.9065-4-liambeguin@gmail.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170502040048.9065-1-liambeguin@gmail.com>
 References: <20170502040048.9065-1-liambeguin@gmail.com>
@@ -62,57 +62,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Once the rest of the processing is done, the `abbreviate_commands`
-function is called. If the 'rebase.abbreviateCommands' option is set to
-true, the function will replace each command-name by its abbreviated
-form.
+teach `git rebase -i` to recognise short command-names when using the
+'--autosquash' option. This allows commit with titles beginning with
+"s! ..." and "f! ..." to be treated the same way as "squash! ..." and
+"fixup! ..." respectively.
 
 Signed-off-by: Liam Beguin <liambeguin@gmail.com>
 ---
- git-rebase--interactive.sh | 16 ++++++++++++++++
- 1 file changed, 17 insertions(+)
+ Documentation/git-rebase.txt | 2 ++
+ git-rebase--interactive.sh   | 4 ++--
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 53f4e144444a..3e49d8b046ca 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -437,6 +437,8 @@ without an explicit `--interactive`.
+ 	commit from `pick` to `squash` (or `fixup`).  Ignores subsequent
+ 	"fixup! " or "squash! " after the first, in case you referred to an
+ 	earlier fixup/squash with `git commit --fixup/--squash`.
++	Note that their short counterparts, namely "s! ..." and "f! ..."
++	behave the same way.
+ +
+ This option is only valid when the `--interactive` option is used.
+ +
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 9b8a030ff045..4fa621062cdf 100644
+index 4fa621062cdf..61450064c5c4 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -884,6 +884,20 @@ add_exec_commands () {
- 	mv "$1.new" "$1"
- }
- 
-+abbreviate_commands () {
-+	test "$(git config --bool rebase.abbreviateCommands)" = true || return
-+
-+	while read -r command rest
-+	do
-+		case $command in
-+		x|exec) command=x ;;
-+		*)      command=${command%${command#?}} ;;
-+		esac
-+		printf "%s\n" "$command $rest"
-+	done <"$1" >"$1.new" &&
-+	mv -f "$1.new" "$1"
-+}
-+
- # Check if the SHA-1 passed as an argument is a
- # correct one, if not then print $2 in "$todo".badsha
- # $1: the SHA-1 to test
-@@ -1143,6 +1158,7 @@ edit-todo)
- 	git stripspace --strip-comments <"$todo" >"$todo".new
- 	mv -f "$todo".new "$todo"
- 	collapse_todo_ids
-+	abbreviate_commands "$todo"
- 	append_todo_help
- 	gettext "
- You are editing the todo file of an ongoing interactive rebase.
-@@ -1281,6 +1297,7 @@ fi
- test -s "$todo" || echo noop >> "$todo"
- test -n "$autosquash" && rearrange_squash "$todo"
- test -n "$cmd" && add_exec_commands "$todo"
-+abbreviate_commands "$todo"
- 
- todocount=$(git stripspace --strip-comments <"$todo" | wc -l)
- todocount=${todocount##* }
+@@ -790,7 +790,7 @@ rearrange_squash () {
+ 	do
+ 		test -z "${format}" || message=$(git log -n 1 --format="%s" ${sha1})
+ 		case "$message" in
+-		"squash! "*|"fixup! "*)
++		"squash! "*|"s! "*|"fixup! "*|"f! "*)
+ 			action="${message%%!*}"
+ 			rest=$message
+ 			prefix=
+@@ -798,7 +798,7 @@ rearrange_squash () {
+ 			while :
+ 			do
+ 				case "$rest" in
+-				"squash! "*|"fixup! "*)
++				"squash! "*|"s! "*|"fixup! "*|"f! "*)
+ 					prefix="$prefix${rest%%!*},"
+ 					rest="${rest#*! }"
+ 					;;
 -- 
 2.9.3
 
