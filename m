@@ -2,58 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B737207E3
-	for <e@80x24.org>; Tue,  2 May 2017 12:11:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55D661F790
+	for <e@80x24.org>; Tue,  2 May 2017 12:27:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751132AbdEBMLS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 08:11:18 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:35682 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751049AbdEBMLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 08:11:17 -0400
-Received: by mail-qt0-f176.google.com with SMTP id n4so11304958qte.2
-        for <git@vger.kernel.org>; Tue, 02 May 2017 05:11:17 -0700 (PDT)
+        id S1751081AbdEBM1b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 08:27:31 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:35386 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750886AbdEBM13 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 08:27:29 -0400
+Received: by mail-it0-f53.google.com with SMTP id c15so36123856ith.0
+        for <git@vger.kernel.org>; Tue, 02 May 2017 05:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=ayuiY+0LNrbQPJHQ3b+ZN9cHgtBJULafLQPcFophzLU=;
-        b=IaxqeE/We1I+NYOmR+WSteheQnOLl+8DS6otwxD01vc9VyaJ5vtEoZ12CSUGt6X2Gk
-         RZfX7yDAgX4xDLbwT6wH25i3MHrNbcods3S3+2uhTOXVMoSYo2S/phoGBFm2j3yAnE45
-         22DPg3EgoOCLQUSaFq3Qc9fTVaCpMomjdD1e4fDWoBh1NOl8T9TrVZ1Pf7eDDy/wi3Li
-         0p/wWlQhKVAkieBva4mNNNLQ+ElA60E2aCquvw+fTfYNOmu5tsAoKBWil5N6NilKbgT0
-         Rw1ghsXts5tTJs2AhyaGianeTJa0UX24IeBW2bcJ89Jj4VGUomYbjmA9g7oyNwRPgDeO
-         K3Xg==
+        bh=MpD72X/pV9Ymszh0WvT+Ga9/0BZGvF5xH6A+ZQfCuuA=;
+        b=oHNFymoKFCLtoieIabsByQCfn9Tmga/PtLjYuFbuyBsgG1U5ZxkhryE3csG2hPhyox
+         mxPJ0TxNU2R4w08IjgPVYz3C/5KfNw/S59WDlMqEfNwlc2SyYvLk+sCOEaHS0gBc26uV
+         adA/mYd3q6lR25UX7NAFKdAyBx1XZRgf5SbAv/7rYzR1fXvnpPojAnhpnzkiI1FQZKWb
+         4dsPdHdD2ssRNCd1zcr0Hvdmua+zemeUsz92cw9HG4tmXQKFnjDVaqirajY1lWDCuQDs
+         O96nda733tijMXqK/4Gaj5sYJpEXmZOCYzqnAnv6+3LyqBvw47JQaT8mI2F4Uo5Ckh/5
+         TUDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ayuiY+0LNrbQPJHQ3b+ZN9cHgtBJULafLQPcFophzLU=;
-        b=UwvuLFOzzCWWGYLYBQftvDeWTkGtwHBJWvDhjr5OlkhHSzJ8vayiHH2tCqlTE/Otl6
-         C7xjKMATuz4s5ZcREfRMkZVu43Jr5Tm8oWIkeDI+5/KwgohreadzNgYuqK9Ini+h3w1n
-         lDeiJtp8J9jWSI/ro9lp8bMpEtNO7Vk4uyhLRgkbgXKeWHcfrgHL0yQv5wcZbHRMrRr5
-         RYhpL2gGD4s+dP0Eqna97w1vvkRAf/RqOQS9v7qMP4nUBkPhUOXgdjRznXRWByiiG8k0
-         /6PK1p2g/cM+cGeHBo9L2Stivq+ZRJwqnCqulrKP9P3jmyeP9EQ3o03mZ3ju/jPN9/4j
-         gBXg==
-X-Gm-Message-State: AN3rC/60d8mOSgVJWHIOOkPku5Ktd5NRzukiuPeJQFooUlPVwG8ncV4L
-        NGMkNQcCWFE32vKowaApjjI2DkaefQ==
-X-Received: by 10.237.47.100 with SMTP id l91mr25790123qtd.258.1493727076677;
- Tue, 02 May 2017 05:11:16 -0700 (PDT)
+        bh=MpD72X/pV9Ymszh0WvT+Ga9/0BZGvF5xH6A+ZQfCuuA=;
+        b=dxdeC8E5Tc9hfQfzcijvGQgX/md/fh8q/2XJhIZkIzhxel7yu6QUXQBXVznSAkP9PI
+         X5Hyk4g1qhOlMDsUucRWq+vT5MOV/mSk247vAzig80ywNH40HEmaAxOOzMzrkkfE4d+T
+         7DLRVPdBaC0gdSSyAWKzZ2352oiz1uyq/TcFIFLMEpY4EUHf/HpHuBXo6pM5pE3W40b2
+         nFTNo9W1lV2OZ1yyBJNyrmNDTmHSpb0nzzbSmHM5/YXYWU9HQ9oNe4L9liys3cFtq//G
+         YdsAoJl4qu9RMvUAegUvSzDOPIv7wJq4NBD4lwKIA3fBLoIq4CJvjTz7htfZvOB9aD2R
+         hYtw==
+X-Gm-Message-State: AN3rC/4BN1eIvlsJFh8U1sHtt12/DHfXQZBDRg+FfPMr7mU4kmt6N4O0
+        doQBRto/98vwdK04JmvnpT4rm9bQYg==
+X-Received: by 10.36.83.144 with SMTP id n138mr2756512itb.71.1493728049067;
+ Tue, 02 May 2017 05:27:29 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.55.78.212 with HTTP; Tue, 2 May 2017 05:11:16 -0700 (PDT)
-In-Reply-To: <135C7A92C7D64E488B830ADC2970C70132AE6407@SVGEA-EMAIL.gea.fr>
-References: <135C7A92C7D64E488B830ADC2970C70132AE6407@SVGEA-EMAIL.gea.fr>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 2 May 2017 14:11:16 +0200
-Message-ID: <CAP8UFD0NrTyGYgHeEOWpUH5v0ejKvcKu+Mzd8_scYbvzL4b4zg@mail.gmail.com>
-Subject: Re: Could GIT manage revision headers embedded in code ?
-To:     Delanoe Eric <e.delanoe@gea.fr>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.107.134.97 with HTTP; Tue, 2 May 2017 05:27:08 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1705021406510.3480@virtualbox>
+References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1705021406510.3480@virtualbox>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Tue, 2 May 2017 14:27:08 +0200
+Message-ID: <CACBZZX5M1Pnvw01wP8id75Ja9NJ3nwVfydsX6g0Ys_QD72r6dQ@mail.gmail.com>
+Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May
+ 2017, #01; Mon, 1)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -61,27 +63,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Tue, May 2, 2017 at 1:48 PM, Delanoe Eric <e.delanoe@gea.fr> wrote:
-> Hello,
+On Tue, May 2, 2017 at 2:09 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi =C3=86var,
 >
-> We need a great deal of traceability for our source, made of many scripts=
- in interpreted languages, spread in many "independent" modules, as far as =
-can be ;-).
-> In particular, somebody troubleshooting a script in production should be =
-able to know exactly the revision or commit ID (or tag label) of a given fi=
-le, and its location in the GIT source directory tree.
+> On Sun, 30 Apr 2017, Junio C Hamano wrote:
 >
-> Our old CVS... let's say it was its only advantage... was doing this with=
- keywords embedded in code comments: $Header$, $Id$, $Rev$, $File$ etc... W=
-hen a file was committed, its $Header$ keyword was expanded into a rich pie=
-ce of "version" information like '' $Header: /cvsstore/SourcesOracle/Instal=
-l/COMMUN/CST.sql,v 1.69.2.10 2017/04/14 09:38:48 edelanoe $".
+>> * ab/grep-pcre-v2 (2017-04-25) 20 commits
+>>  - SQUASH???
+>>  - Makefile & configure: make PCRE v2 the default PCRE implementation
+>>  - grep: remove support for concurrent use of both PCRE v1 & v2
+>>  - grep: add support for PCRE v2
+>>  - grep: add support for the PCRE v1 JIT API
+>>  - perf: add a performance comparison test of grep -E and -P
+>>  - grep: change the internal PCRE code & header names to be PCRE1
+>>  - grep: change the internal PCRE macro names to be PCRE1
+>>  - test-lib: rename the LIBPCRE prerequisite to PCRE
+>>  - grep: make grep.patternType=3D[pcre|pcre1] a synonym for "perl"
+>>  - grep & rev-list doc: stop promising libpcre for --perl-regexp
+>>  - log: add -P as a synonym for --perl-regexp
+>>  - log: add exhaustive tests for pattern style options & config
+>>  - grep: add a test for backreferences in PCRE patterns
+>>  - Makefile & configure: reword outdated comment about PCRE
+>>  - grep: remove redundant `regflags &=3D ~REG_EXTENDED` assignments
+>>  - grep: remove redundant regflags assignment under PCRE
+>>  - grep: submodule-related case statements should die if new fields are =
+added
+>>  - grep: add tests for grep pattern types being passed to submodules
+>>  - grep: amend submodule recursion test in preparation for rx engine tes=
+ting
+>>
+>>  PCRE2, which has an API different from and incompatible with PCRE,
+>>  can now be chosen to support "grep -P -e '<pattern>'" and friends.
 >
-> Could this kind of "keyword expansion" feature be added into GIT ?
+> FWIW for quite a couple of recent builds, `pu` fails on Windows with a
+> variation of this error:
+>
+>             CC blob.o
+>         In file included from revision.h:5:0,
+>                          from bisect.c:4:
+>         grep.h:16:19: fatal error: pcre2.h: No such file or directory
+>          #include <pcre2.h>
+>                            ^
+>         compilation terminated.
+>
+> Maybe this can be fixed before hitting `next`?
 
-You can already do it with "smudge" and "clean" filters. Look for
-"Keyword Expansion" in:
+This will be due to a combination of the build machine not having pcre
+v2 (but having v1) & my "Makefile & configure: make PCRE v2 the
+default PCRE implementation" patch, which makes v2 the default for
+USE_LIBPCRE=3DYesPlease.
 
-https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes
+Is it easy to install v2 on these build machines? Alternatively that
+patch could be ejected out of pu, or you could USE_LIBPCRE1=3DYesPlease
+to use v1, but as explained in that commit I think it makes sense to
+make v2 the default.
