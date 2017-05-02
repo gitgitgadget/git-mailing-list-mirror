@@ -2,104 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA7C51F790
-	for <e@80x24.org>; Tue,  2 May 2017 16:02:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 258AC1F790
+	for <e@80x24.org>; Tue,  2 May 2017 16:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751191AbdEBQC1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 12:02:27 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62503 "EHLO mout.gmx.net"
+        id S1751200AbdEBQCb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 12:02:31 -0400
+Received: from mout.gmx.net ([212.227.17.20]:65122 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751144AbdEBQCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 12:02:24 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MSIf1-1dUdKy1XOV-00TXWY; Tue, 02
- May 2017 18:02:03 +0200
-Date:   Tue, 2 May 2017 18:02:02 +0200 (CEST)
+        id S1751161AbdEBQCa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 12:02:30 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLNeQ-1d68U90sLK-000gTR; Tue, 02
+ May 2017 18:02:23 +0200
+Date:   Tue, 2 May 2017 18:02:22 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 11/25] checkout: fix memory leak
+Subject: [PATCH v3 16/25] mktree: plug memory leaks reported by Coverity
 In-Reply-To: <cover.1493740497.git.johannes.schindelin@gmx.de>
-Message-ID: <7a78e949226251174c1b3a10b9a18addc2b52193.1493740497.git.johannes.schindelin@gmx.de>
+Message-ID: <7b4d9dbb201ee3311e5e686d69ff158cc829f0c2.1493740497.git.johannes.schindelin@gmx.de>
 References: <cover.1493387231.git.johannes.schindelin@gmx.de> <cover.1493740497.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:T2lB+yf0huAUJZT0903DQTJm4uDWvUBR+zHNHfr0cuz51mFPp0p
- jc0PQSgVZOwEkxSc48xbYNcZts916VZp4pVn2U/opeDBg8MigQjEUb2ruOPB0J8uv7j6u7j
- uKtknHeo1HuGV2hwlVOU0VYO/c2tLiCc5TN66Qmjj5pXskOgEmj2HyjMpe8CB719plY3Hqz
- FK/J7FGOiwMh1CrbrMreg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:QqMbrfD6N4s=:Kt48tz66iGVQ5T7TLI0nqp
- Cl4cL05nMWuRow0HFt6N2mS7RbI0bH5SgdN8j7n9EEYMhPPYQZHAhiR3dkrXyl4fUEldAG14m
- GkYJAAXKeRKsMqqVmez0+oa0iJ/BKkpxfAzJZkuxzvOk5l1RADicyKxRgwKd/YJ+25cXS68xk
- nS1ieRZ66FQMvTpwf141xMHMyxHIQZdhtCAmQpUdV83YYNKtw4BgjagMgISnuVM5+8sjXOYBz
- CO5aTaWKfd66rAjl7LhxVwSDHol5DmoKfFSrITAD/grjVUWBQWerTm2ciN856VONwY1mX+FAA
- JStjdk03r7zAD/2Yszv8VKgwpHiujwAd7mEe3yptOlOVEkI7NhserZwhUXBkatiff9TIQGnA0
- Ng/TDmfknt/P3mdCxIw4RLmTLVVr3Qm/dgqkg5SGWkZw/LC2FSOQlUrv9ZGLloDUSItz6Z+O4
- B7nv0XUIkaq88565sTvhcZ3jVzZUZMi22VLxyjvDt069KHQv40oJrVs8q7yWzW9AovczflgqK
- 8hG4DQc2ehY/nUUcXijCcfaDagGIuqIgEuUKjXW9hm8nliEssKIxcZXhVm4hRFyFwV3joowyk
- JLXV2of1cfQW9jnw0365nYhVzc6luwp2nW0DQjUV6lpFf2AoKtJqpIXjFB6I9T5m2gJoLSZSW
- 3Xpqy2hJr3WXzZIazoJkr9sbrCDnJzB6WkwSqqwX+7gGovEBomnNp3nMFU3+YZ4qbo7Y+30jj
- d2fyJiDo7pxs91Z2+8M83LW5kz+CUbs+yXEIs+wl7fcoksN3XIYmTgs9O2VPixjoI9PmgJnne
- pGABOB8
+X-Provags-ID: V03:K0:WXgOCyGsHWaDaNdiHbCCKRvpFEjTTYUOpOoy8273JfBFCNrrc84
+ mXKHIeT/1VwOPNA2iaMNv9iZ7Y+fMJCDiLls73DVzw/M6Dx4ftUlhNxjRnbyO5PeqoVaF0I
+ G/OblwTxjWnC/dxSXsl6XYKepAo6HEF5orgsoE7zfWDHNvsnSXYJLj9ombnZaSsAzgWUqMr
+ R/tME3EUAIgOP+ZXaV1RQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xgCvy8hCeuQ=:3uSJctvEnpbLrx2c9lN3/y
+ oFRvPt9pX90UONjGu1GBAXiGLot7zO16Cb3mMPNauWwC0J8tsw9WKo7E1EalQPZ6fvXwbVT/o
+ XtyMd8kKF5TQ3x0EqG+jI1Ajw+z8ufCdMOltIyZYQJnthhJZsyovQKWwWaVl6CafedFNLF4k6
+ 8CnloQS9fhT5v1K6alcswaUJUigz4ovXi5MfgIAfGEfCyyQJSsA9l3w+2YpyRUc5z8pk2PEy+
+ ET5a2cYhn8mfDoDDCWdlSeVjDMrIP27URhojfXhC69DZU8ZbLmAfAorjLJs/UdZVUyE7Inenu
+ U32XDixlPffJJXjAwYzSXz9Bm/ohIxk6k+S3gDAZn81E9sX5aiPIwS9tduwtM8Psn8IE1YWuT
+ Nni0UdrJPYUWzV1z9zAJ/G7aWDiScM7zFs4KNNUfm5yuCW5GcUNRsBcEVAdalEvaAfrPSk9HU
+ hRpCbKbpzzBcG0ZReqE3LmvCtlZ7Bi44Q5ZafqdiSvvAQcOJa3aL2EqJ+E1FG6Cs6XBP5D3WL
+ Ca2VIb+W/6hXD18/0EJ4mPlPf5dw7d4FFV8gIuTNE35Pmz71fTr0r0tLG03hPj8wpY30I0Cpx
+ IK5L9FqJZXKnI6PvcnlRNtmIs/Mw3TTHb4igvRfq4LNO39qBvLrJbzMNPFWHU+S+nPHA6L4+O
+ ZY5iGdfFRELdsUXif+YQ8YoUexMw4ChlfiP87o7pVpo0n8GbMtwtoMPlhcZ0llEVLtiLjcx3C
+ wGISIsM+SQib1oqZEuD3AYMdGKIoauiQzbQyXJ2oFeSLwseA6NriT9VF2SPoO+qItFXLaMtnr
+ 3zzGhzo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change addresses part of the NEEDSWORK comment above the code,
-therefore the comment needs to be adjusted, too.
-
-Discovered via Coverity.
-
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/checkout.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ builtin/mktree.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index bfa5419f335..5faea3a05fa 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -235,14 +235,14 @@ static int checkout_merged(int pos, const struct checkout *state)
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index de9b40fc63b..da0fd8cd706 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -72,7 +72,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
+ 	unsigned mode;
+ 	enum object_type mode_type; /* object type derived from mode */
+ 	enum object_type obj_type; /* object type derived from sha */
+-	char *path;
++	char *path, *to_free = NULL;
+ 	unsigned char sha1[20];
+ 
+ 	ptr = buf;
+@@ -102,7 +102,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
+ 		struct strbuf p_uq = STRBUF_INIT;
+ 		if (unquote_c_style(&p_uq, path, NULL))
+ 			die("invalid quoting");
+-		path = strbuf_detach(&p_uq, NULL);
++		path = to_free = strbuf_detach(&p_uq, NULL);
+ 	}
+ 
  	/*
- 	 * NEEDSWORK:
- 	 * There is absolutely no reason to write this as a blob object
--	 * and create a phony cache entry just to leak.  This hack is
--	 * primarily to get to the write_entry() machinery that massages
--	 * the contents to work-tree format and writes out which only
--	 * allows it for a cache entry.  The code in write_entry() needs
--	 * to be refactored to allow us to feed a <buffer, size, mode>
--	 * instead of a cache entry.  Such a refactoring would help
--	 * merge_recursive as well (it also writes the merge result to the
--	 * object database even when it may contain conflicts).
-+	 * and create a phony cache entry.  This hack is primarily to get
-+	 * to the write_entry() machinery that massages the contents to
-+	 * work-tree format and writes out which only allows it for a
-+	 * cache entry.  The code in write_entry() needs to be refactored
-+	 * to allow us to feed a <buffer, size, mode> instead of a cache
-+	 * entry.  Such a refactoring would help merge_recursive as well
-+	 * (it also writes the merge result to the object database even
-+	 * when it may contain conflicts).
- 	 */
- 	if (write_sha1_file(result_buf.ptr, result_buf.size,
- 			    blob_type, oid.hash))
-@@ -251,6 +251,7 @@ static int checkout_merged(int pos, const struct checkout *state)
- 	if (!ce)
- 		die(_("make_cache_entry failed for path '%s'"), path);
- 	status = checkout_entry(ce, state, NULL);
-+	free(ce);
- 	return status;
+@@ -136,6 +136,7 @@ static void mktree_line(char *buf, size_t len, int nul_term_line, int allow_miss
+ 	}
+ 
+ 	append_to_tree(mode, sha1, path);
++	free(to_free);
  }
  
+ int cmd_mktree(int ac, const char **av, const char *prefix)
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
