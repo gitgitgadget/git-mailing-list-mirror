@@ -7,115 +7,82 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2839D1F790
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D6DB1F790
 	for <e@80x24.org>; Tue,  2 May 2017 16:03:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751279AbdEBQDA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 12:03:00 -0400
-Received: from mout.gmx.net ([212.227.15.15]:54861 "EHLO mout.gmx.net"
+        id S1751284AbdEBQDD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 12:03:03 -0400
+Received: from mout.gmx.net ([212.227.15.18]:53310 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750929AbdEBQC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 12:02:57 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLfLH-1d6PTU3X2R-000t5v; Tue, 02
- May 2017 18:02:51 +0200
-Date:   Tue, 2 May 2017 18:02:51 +0200 (CEST)
+        id S1751271AbdEBQDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 12:03:00 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSuMn-1dXO0Z2iBR-00Rs2M; Tue, 02
+ May 2017 18:02:54 +0200
+Date:   Tue, 2 May 2017 18:02:54 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 21/25] add_reflog_for_walk: avoid memory leak
+Subject: [PATCH v3 22/25] remote: plug memory leak in match_explicit()
 In-Reply-To: <cover.1493740497.git.johannes.schindelin@gmx.de>
-Message-ID: <ba954872659d96aec305836b32a3adbb2c1c2a07.1493740497.git.johannes.schindelin@gmx.de>
+Message-ID: <359c39c36a234c318b46ff934baa3757fdfc361d.1493740497.git.johannes.schindelin@gmx.de>
 References: <cover.1493387231.git.johannes.schindelin@gmx.de> <cover.1493740497.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:kSuHaRxcS89yaOmqm8u+PGu7kc//izQkTyjcRfK/y4/m0qFs3aa
- aRLpE97RBE8JVa2PCO5jc1ABhFR9njZL72lj1arrLMuw7HI9Zy1awhyNrWxZMb2qMs73ZAY
- KQtrE37TDPtJc45o4x+nYXxIN6tXObzXqrVQcIICmW1B6165wLLngQdzPcw5HlsSICKy95a
- ycc1xBi6WyIgoRM6ZTUew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aqchCl8X3dA=:oGYBedw1Ob3BukjVW1wsZP
- kExuXlLTcvXOkWMnmdlBSF1idTt9cszg1FVLFuFc/jEbJXuMctoduM+7rpDb6bTklQRuAz4HY
- ZCpFSAqQDinSTrJ1dVTbSruwhTpwOyOBMuFBs56GmqJXaDDoZ0s5dF/AXoWz82exRWXxP8dJ5
- zZogz+21mEehcMNr7xB0fKn1OApE6WpB8ii/BQE1fKNXfsmA8NN8qI+6y8Laj7wNmnzkipiCc
- c+jYd6WFSHQmp1nIrT7NCJvqo3jM1YkxKrJu5axJEj7KorKTtwxtJxkQC+4d+hE8w0ihcF4Wo
- d/aXKI+9oH/YAcXJ0Rnm+TcehA5SluF6Jy4BoC/u+EWfwkD9YElnb/YHuH7hFmkG+3s+idDsl
- +zfyb3Ci78NaMEGW3RechSM0PGwYGbTNKXX3SXGFJfkruVm+xLuyLqjGyDZsTsCtdPk23h8VN
- y8WdPJ/Exqq1UffVHRvR+pjZKynClMbCelJZhdjp1PPUGYb+dFUV6jVWLxzg2VBpU3BaxfRUK
- IVp5jhDd1rf7rc+dz9mScCgIsfl4oAAfvGs/hbagEnIDDTxsd7qv6Vb7akPVnl9WIJlNyh6SC
- gT+ZyHdAxRb51afH+OoWu5NDxzC8YENPkL6LdnKz6Yquw+u9gxY5+oWtBsoGlIBnTwfQmXOIn
- 0AopSK8z04Iht0D40G7djGguFaSNJ8wz54F2EZRQK9fI/fYiwErnDnboMoKfzkRJE0ZMT6zEa
- WV+cxTCFauOH0ImFpuGB4TZDm8gi8F0s6VtoJ9GmAk6Kw1HJafuTmutaLZJFTB/+aCS6jNfol
- SnyJiol
+X-Provags-ID: V03:K0:tfJdM7SRXk1Xu3Q941+14X6zOQFqAN9A+X8vfrPWaoG/Zt2RpZU
+ M8GGjCDsznxQbQV4fDMOiVhk9h4NP/23jSUG2RF5eIZDzOT8L1x7gFszSfkbq9vSWMcfTI4
+ Gvr+XKoVTba6x7tg64n8urCQ09iS5rABThZmIauIM6lEoKH1m4hjfSm84+5TEwAW9BPFvdD
+ LM0ZKmHc3nMILkzPkd4nA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ehBAlvsh1vg=:akErjqT9cYaYyCIQx6nzdW
+ cHSD+0oc7T88cxEEkqoIykzefjIXbnoJ4jRNInPHPJN/gV2i0uZb+UHpaq9IwpHGr+GZYvCe0
+ RlijZKybHeRqspSZjQO2taYN2HRRulH+z3VyyqqAJt7k0Ktt1ZvsLMMv6iOcPV0yYRXbqkGlF
+ XmvEdR7/Lu8DCwBVTKwe2csBk/6ukQJHsWj6WvM1lHt25OcnPIGXVnZ4b5qIkWvLqMQoqpiXZ
+ SqVGGz5dhdUQK+WMqrHLBDFhQrBvLKpY6/MwCDAzI9conrELcB3VgXTzzNX+HOD2luhlBHxIa
+ 1vuEqOy/JkDgUAU0xQ2Dp62e7z+mK8vB+Djx9AVdDQxeSg9OlnkCjTM36+M9uX+RFaIm3d85L
+ c3s1o8EO9Qow+yggGASr1eZGWMEdl5SCCt7sKBlvnj5FSQlEIMXOr5NC2yL8wdUcd8PktZ2ak
+ P4r9UXgeyKq2mAhz0NZoqjXxy7n3KocW0A6Wp+bSR6iOZeLn6STDS1u47iCMMOcFIxZYoewUE
+ qhdhmO1T7Os3tG8Tqr0YXEZCHH3nUlG8Xw8VvDGKPSmveWXoR6+vpBSQmE/cFh5iQmYYwTEAm
+ SFKi6GC1SwhC6iFglmSM7Z4DD5G2xfK7jGI2h06+buUQQPEnTqevjut0qYNaAWcIleye4oyfY
+ QJvTATb6ODcEfZnpbwDi0zcJfAkdQzM0InAL+SWCjZamUSJHMOY/nrNNcLutalHJ1dyMzbR+y
+ VJAp85TRQUg4Qv82rGdfskh3MGCdv7sCnbVQcjS+51jehc8gRv640gYEwnGpvma/7abGhFdiP
+ bP1RRFa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We free()d the `log` buffer when dwim_log() returned 1, but not when it
-returned a larger value (which meant that it still allocated the buffer
-but we simply ignored it).
+The `guess_ref()` returns an allocated buffer of which `make_linked_ref()`
+does not take custody (`alloc_ref()` makes a copy), therefore we need to
+release the buffer afterwards.
 
-While in the vicinity, make sure that the `reflogs` structure as well as
-the `branch` variable are released properly, too.
-
-Identified by Coverity.
+Noticed via Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- reflog-walk.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ remote.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 99679f58255..c63eb1a3fd7 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -183,7 +183,11 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 		if (!reflogs || reflogs->nr == 0) {
- 			struct object_id oid;
- 			char *b;
--			if (dwim_log(branch, strlen(branch), oid.hash, &b) == 1) {
-+			int ret = dwim_log(branch, strlen(branch),
-+					   oid.hash, &b);
-+			if (ret > 1)
-+				free(b);
-+			else if (ret == 1) {
- 				if (reflogs) {
- 					free(reflogs->ref);
- 					free(reflogs);
-@@ -193,17 +197,27 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 				reflogs = read_complete_reflog(branch);
- 			}
- 		}
--		if (!reflogs || reflogs->nr == 0)
-+		if (!reflogs || reflogs->nr == 0) {
-+			if (reflogs) {
-+				free(reflogs->ref);
-+				free(reflogs);
-+			}
-+			free(branch);
- 			return -1;
-+		}
- 		string_list_insert(&info->complete_reflogs, branch)->util
- 			= reflogs;
- 	}
-+	free(branch);
- 
- 	commit_reflog = xcalloc(1, sizeof(struct commit_reflog));
- 	if (recno < 0) {
- 		commit_reflog->recno = get_reflog_recno_by_time(reflogs, timestamp);
- 		if (commit_reflog->recno < 0) {
--			free(branch);
-+			if (reflogs) {
-+				free(reflogs->ref);
-+				free(reflogs);
-+			}
- 			free(commit_reflog);
- 			return -1;
- 		}
+diff --git a/remote.c b/remote.c
+index 801137c72eb..72b4591b983 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1191,9 +1191,10 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 		else if (is_null_oid(&matched_src->new_oid))
+ 			error("unable to delete '%s': remote ref does not exist",
+ 			      dst_value);
+-		else if ((dst_guess = guess_ref(dst_value, matched_src)))
++		else if ((dst_guess = guess_ref(dst_value, matched_src))) {
+ 			matched_dst = make_linked_ref(dst_guess, dst_tail);
+-		else
++			free(dst_guess);
++		} else
+ 			error("unable to push to unqualified destination: %s\n"
+ 			      "The destination refspec neither matches an "
+ 			      "existing ref on the remote nor\n"
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
