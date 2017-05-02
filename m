@@ -2,109 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B65F1F829
-	for <e@80x24.org>; Tue,  2 May 2017 09:35:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E50C81F829
+	for <e@80x24.org>; Tue,  2 May 2017 09:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751542AbdEBJfi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 05:35:38 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:36497 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750915AbdEBJfh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 05:35:37 -0400
-Received: by mail-pg0-f44.google.com with SMTP id t7so58287050pgt.3
-        for <git@vger.kernel.org>; Tue, 02 May 2017 02:35:37 -0700 (PDT)
+        id S1751349AbdEBJwX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 05:52:23 -0400
+Received: from mail-it0-f48.google.com ([209.85.214.48]:36802 "EHLO
+        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751015AbdEBJwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 05:52:22 -0400
+Received: by mail-it0-f48.google.com with SMTP id r185so46605393itd.1
+        for <git@vger.kernel.org>; Tue, 02 May 2017 02:52:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=nooyqwNQrDnIwt0opoG2P0dYmFP5ofh/tP2V04DQYaE=;
-        b=GMfOyNFTlRkrzCHlxiNGDf80UNPB75b7tD9VHrv88z9rl6qJb7gxeck57KcDyawolG
-         MkHzoobTCP8NyLxGLMo0M9JtplncdSY00TCiIvlswXPCSUoH8w1GLdAU6zgS4O3x3MB7
-         c8R8mkSraEZ4TbL4Og8s7rP/0f2ueMoRvvRUQrfc8SHnVRd3IEy3RCoPVVTs/heCKjor
-         yVcHvwjBb+xdYI/z4byM2qzs0tWW9AuLhW9uGmGmThxFBBTsk/AFAtHCp9fj897nhDRM
-         +L2Y55gm25WyiB9Q8uaJj2eDrdeGi/bsF4GXYiXV5ZFhh2mg72SymSg5YUdWT8RIGLb8
-         2SIA==
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=iHCm+04OIN5xejNFbPpaKU9NBJts3i6wT8x6Ng+LSzI=;
+        b=rnOCWaXzmUhXDZlzMZWAn+VnRldpdoCcs4+UJ2NYz+h8YA5hgu9DM4dEnSfriO4Amc
+         G/AWmCxhEKQhgaIcWrC2BakGqKgd2dMKYoreS0e68mRR4F8/zsPtoXFhFIi1m3hEWj/P
+         ihENN5gr5lBfeQe3fOgSxdIe5Gr3yj+FnZsUQSgw5DtWmBqHuXep5KS7hvY9S+BTY7h9
+         6FhKlqils/GakWVoKXmOfiIOxMq4lNT9GcGjLlNIUCuPkIehvIoRpGJCGp/tHtZ/keap
+         VKhnL2MFAdw0eOiL/C5l/E7owQqOQFIOhcXe7JYz0Oc+cEPJVCeSZy+Ska/MfySM5y/u
+         uA3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=nooyqwNQrDnIwt0opoG2P0dYmFP5ofh/tP2V04DQYaE=;
-        b=OtKJb20OiijinVPApC+hi2wWbwssmhvF0MZBv+u65ADKC9y+mHz/RQBNUh9ROckHTz
-         4WgPVLLRw9MVnIQdgWcv8uTlwttOTNoIJnk5aagxMvnFNP0PrCXAIooiaeJuoSJVT4eT
-         x5WLpYuW2jvSWFniZYPMlQ20tbn24QmWUiWCcWdudwRSVE9paEF0/QF7KOo7vSFhkbNF
-         GhXOvgp6KQxrVH9mEQ8DRvyKT0HISA6iXwGyvhPM5lvUPFa03EQwjIyhJLGLPuUyav7I
-         rSAoqRKW3j2mbRXi9r9eVxgLERmFdcndKo/4wQSVHWA3SqBN3E2Bo5GLA7l9cvEPoiBO
-         I9+w==
-X-Gm-Message-State: AN3rC/70OVH0MLV/QJPvtc6i0RMGqqc2iHbm9OkkU6kRd62CTCyANXpj
-        p8vvMtPxA2sVzA==
-X-Received: by 10.98.9.68 with SMTP id e65mr22594483pfd.177.1493717736836;
-        Tue, 02 May 2017 02:35:36 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3c5e:d1c1:579c:ef99])
-        by smtp.gmail.com with ESMTPSA id o23sm29664150pfi.100.2017.05.02.02.35.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 02 May 2017 02:35:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: What's cooking in git.git (May 2017, #01; Mon, 1)
-References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX4ty91vh=ykMtpF0pV8Ru3BKWBXyQYsFRdPkKkxMd8pzw@mail.gmail.com>
-        <xmqqa86wgo33.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX5N0L_M9b4RTRLSvcA2u69H=s=S-VEc-Nr71wW6Scyjvw@mail.gmail.com>
-Date:   Tue, 02 May 2017 02:35:35 -0700
-In-Reply-To: <CACBZZX5N0L_M9b4RTRLSvcA2u69H=s=S-VEc-Nr71wW6Scyjvw@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 2 May
- 2017 10:23:46
-        +0200")
-Message-ID: <xmqqr307d2jc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=iHCm+04OIN5xejNFbPpaKU9NBJts3i6wT8x6Ng+LSzI=;
+        b=efip3BM+jpLSJWuyBcQT7hCCDSedWQ0lgTUv0UqHIym1dr307rGJtbBzOE+n2l6h/X
+         RgJDm16vIdIzEoyoyHUbvOfYiMlmRAJ84FAKfAQ1NUzVPT6Tbr0LgFwwF+c5B7Nrsb9i
+         AIFjiEE6abz6b9I1hTpTsaA2m1OFaQHRRDkRzn2zZW/nqc0+XH9okHol4Um1HGc2H0lI
+         6sMYiveP5TeS1ef3v8Mlc+HfMKLoBLJ4GkYxO3a5VTCy4DYwKm0Jq9x59beW6L+LQuJP
+         /IM9MGCpKi0I6aJgCdeIyPqjzecaHkjm8BMe5n8yMOPR8NAJQd2hGJW95xLcN34VEj+f
+         A6SA==
+X-Gm-Message-State: AN3rC/5UO3l98nDqH9FyhW6Mt3rBvM9t7oioCxaJB+Gluo4eS1MlTit+
+        +aVDHzuZ+rhCDlhsQZncRTRvAK5rYg==
+X-Received: by 10.36.43.79 with SMTP id h76mr2056420ita.92.1493718741692; Tue,
+ 02 May 2017 02:52:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Received: by 10.107.47.88 with HTTP; Tue, 2 May 2017 02:52:01 -0700 (PDT)
+In-Reply-To: <C434AB60-F2BB-44A1-B40D-449EA27E2314@gmail.com>
+References: <20170429184822.10128-1-larsxschneider@gmail.com> <C434AB60-F2BB-44A1-B40D-449EA27E2314@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+Date:   Tue, 2 May 2017 18:52:01 +0900
+X-Google-Sender-Auth: KWaiBMclndnsNvAy_RwE14WTuH0
+Message-ID: <CAPc5daUOQVu66RDspzScUjufJvLs7TUS0UtqTZjJ=5sMBuF=TQ@mail.gmail.com>
+Subject: Re: [PATCH v1] travis-ci: retry if Git for Windows CI returns HTTP
+ error 502 or 503
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
->>> That squash looks good to me.
+On Mon, May 1, 2017 at 8:32 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
 >>
->> Thanks.
+>> this should make the Git for Windows build a bit more stable. We saw
+>> a few 502's recently. E.g. https://travis-ci.org/git/git/jobs/226669324
 >>
->> That is not a particulary helpful comment, by the way.  I can help
->> topics by contributors by queuing emergency fix at the tip to make
->> ones that do not build correctly buildable and testable (which is
->> what the "SQUASH???" commits are about), but I'd rather not see me
->> forced to find among 19 commits which one is broken and needs the
->> hotfix squashed in myself.
->
-> I'm happy to change what I'm doing to be more helpful, but it's not
-> clear to me from this & the context what that would be.
->
-> * I sent a v4 that had this bug in <20170425210548.24612-6-avarab@gmail.com>
-> * You pointed out that initialization bug in response
-> * I sent a v5 of just that patch (not the rest of the series) in
-> response to that in <20170426074856.29903-1-avarab@gmail.com>
-> * You replied in <xmqq1sser7ty.fsf@gitster.mtv.corp.google.com> in a
-> reply I (probably mis-)read as "no worries, I'll just squash the fix
-> in"
+> Please don't move this to next, yet. This seems not to work as expected :-(
+> https://travis-ci.org/git/git/jobs/227513693
 
-Sorry, I completely forgot about our exchange around your v5.  If
-your comment were "squash is good but you've seen a replacement sent
-as v5 that is not there yet", I wouldn't have made such a silly
-comment, but given that I've already responded to your v5 saying
-I'll handle it, that is asking too much from you.
+Sure. I am wondering if your other one to run both asciidoc & asciidoctor
+tee'ed to log files should be ready to work on 'next', though.
 
-What I pushed out a few hours ago should already have the fix in.
-Thanks for clarifying the situation, and sorry again.
-
-
-
+Thanks.
