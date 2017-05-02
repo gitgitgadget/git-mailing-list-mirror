@@ -2,97 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12971207D6
-	for <e@80x24.org>; Tue,  2 May 2017 04:20:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38532207D6
+	for <e@80x24.org>; Tue,  2 May 2017 04:21:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751052AbdEBEUx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 00:20:53 -0400
-Received: from mail-pf0-f195.google.com ([209.85.192.195]:36783 "EHLO
-        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751014AbdEBEUw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 00:20:52 -0400
-Received: by mail-pf0-f195.google.com with SMTP id v14so30373011pfd.3
-        for <git@vger.kernel.org>; Mon, 01 May 2017 21:20:52 -0700 (PDT)
+        id S1751091AbdEBEVA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 00:21:00 -0400
+Received: from mail-pf0-f179.google.com ([209.85.192.179]:35492 "EHLO
+        mail-pf0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751066AbdEBEU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 00:20:59 -0400
+Received: by mail-pf0-f179.google.com with SMTP id v14so83108293pfd.2
+        for <git@vger.kernel.org>; Mon, 01 May 2017 21:20:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0TGXQY5I/ntJZCQ4GqUKkv+grnHj0DsM22E6vm7eMuo=;
-        b=Hra6++XzUZqthe7seKYvo03rLmMMGX6SohaY27pfVGqFVxlPw/wPc8PAgZPPdj2dJh
-         Q/ndAdX23zm3MJXv5P/+cb095JbFZLxGYnNPRh7xpoqRdDDQvTnRsGjKAEnRMv93UNar
-         h4xKyRJ6jZ46Qd+efCEKmYAGLKdwbn72VoypmpIJwkpKNbiLmJFHoOQqFE3bmGJAO3iN
-         e0hD0r/IPRwC4Q9GkTxnFsWyIafV/tM3RD9z4MpwIwcH+QNsyxtcZ9ix5Q9KWAw4IaHN
-         Ch6EiUYOY1chz7laznkyBs/rrZdyFdX08TfKCX0/HWIxNxbguvN1R2ciL6LTgGmtYdAF
-         eyrQ==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=lPx8gEm8KgLdHtu/66Nxsq8h7Xa1bEbb6IqV13gL/9c=;
+        b=o+6jOLBn15nO/5rX60Cqtc4iKbwAcq3A23hxoEebt9JVA1t2xfSgQZYcVdqMBjjNjQ
+         AZedI7b9slQJt3qHzHhP5R+BpPbzBFw/FxtXG182yyuKhgzfucRkeSfw92Yn/UHpytF4
+         scmxxznFn1ipdMWA/glBvjYvWAwHZVv/hDImT2CqGCTpT0h6SosU7iknaiOPk9ByyaTA
+         b2L0OuEg7r/xhoyFHLgJgigBpwRsCARllu1cP8G2C6U/rHpSEkbb3ocNoWHPrrB525zT
+         u82cV9SWn9MmEbaA0K8gZFimUUFTMdgSSsez8HJKnwmkOQ50ipP1u9j6w8TLf8CAXreX
+         1ENg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0TGXQY5I/ntJZCQ4GqUKkv+grnHj0DsM22E6vm7eMuo=;
-        b=JxgTrvXzurU3Cl5FMm6JnYqp9sTj4kWHUPr7Ic3sv5xvZKM3llET9yWTux9Gvt8HGG
-         tx2Gtw7PGoXaHFzNWhI7pNZ9MQuETiBRjtlnaJilgodYWehhdfXBlkp2+rDlVMmJFkNk
-         /gG6LPIluWB7nKdwTUlSurNwVOhZqoFQ1WF7Hph1CMe+c84BA5ZNzIF0nADY761S7iQK
-         KpkFIdDVr2UQQftLHW91pZuoPh2bz71VhwrVlWQYUbaKhVFNElf31F1A29RijwtQ560t
-         pw3PJ9CWD9GRM+WgD601S4NToyjRPNIyebVam5svjB754cBw3GIhT5KP60vQWZ2CM1Ct
-         J9nw==
-X-Gm-Message-State: AN3rC/7P5EwJx2YYi/r4D6U4idUNypfFiXyDTy7Ib00S0tqlQ/0SPVGD
-        bz+FCG0AfzALLg==
-X-Received: by 10.99.60.21 with SMTP id j21mr15847635pga.99.1493698851596;
-        Mon, 01 May 2017 21:20:51 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3c5e:d1c1:579c:ef99])
-        by smtp.gmail.com with ESMTPSA id l7sm33080142pgn.10.2017.05.01.21.20.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 01 May 2017 21:20:50 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Daniel Ferreira \(theiostream\)" <bnmvco@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC] [GSoC] Port git-add--interactive.perl:status_cmd to C
-References: <CAEA2_RLvjRDytE03hfe84TTqvCQm324BXV=GvTU3UVqNWJUXiQ@mail.gmail.com>
-        <xmqqo9vcf68f.fsf@gitster.mtv.corp.google.com>
-Date:   Mon, 01 May 2017 21:20:50 -0700
-In-Reply-To: <xmqqo9vcf68f.fsf@gitster.mtv.corp.google.com> (Junio C. Hamano's
-        message of "Mon, 01 May 2017 17:32:48 -0700")
-Message-ID: <xmqqvapjdh3x.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=lPx8gEm8KgLdHtu/66Nxsq8h7Xa1bEbb6IqV13gL/9c=;
+        b=HO/BCNh3AAET2cBpTeHKrl35Zq/7VGSxhBz1vBdzFiY6r+ZueegyC7XOuKvGSITAWm
+         rkPUgIOh6TBVV7AcPrS/t5gSOYeyNe8l0AlMtgj6JROuxOoDerCfkeZdQrQ7zt22c+3v
+         0po+1vjpIgLysMMl2kE8enhTS4Qi4xnw5trRRK7ZTjDOCm1nfIxDT7mZxq+QSMXxeiec
+         ZqyTnM9wbaNuI/7j07E3+p8D54790D6X4Lw6cI7wxViYp3ZcRMg/oa5HZbarlBn7CdtN
+         92iNLGnQWMPUUtIx4isRnHYyq2RrYc99A2CeVrsWVpcOo5q3T+lMs3gk3/dBHNl9k9XL
+         djfA==
+X-Gm-Message-State: AN3rC/5ItCvZdTt5RoVhm5xf1pwFq0BnEDos8l3hy2kYAJG5IDrRTcF9
+        CtiE6JXygQi7KFnVvgNPKc1c+cb/qWrc
+X-Received: by 10.84.241.136 with SMTP id b8mr38680451pll.107.1493698858551;
+ Mon, 01 May 2017 21:20:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.153.156 with HTTP; Mon, 1 May 2017 21:20:58 -0700 (PDT)
+In-Reply-To: <xmqqpofsdkim.fsf@gitster.mtv.corp.google.com>
+References: <20170501180058.8063-1-sbeller@google.com> <20170501180058.8063-2-sbeller@google.com>
+ <20170501180610.GF39135@google.com> <xmqqpofsdkim.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 1 May 2017 21:20:58 -0700
+Message-ID: <CAGZ79kYC9sycR_R-EM0jFA2YrMjA6jZvXqQud7ShPziW6WaMBA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] submodule_move_head: fix leak of struct child_process
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> "Daniel Ferreira (theiostream)" <bnmvco@gmail.com> writes:
+On Mon, May 1, 2017 at 8:07 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Brandon Williams <bmwill@google.com> writes:
 >
->> Reproducing either of these comparisons "natively" would simply
->> require running run_diff_index() or run_diff_files() with
->> DIFF_FORMAT_NUMSTAT and tweaking diff_flush() to format appropriately
->> for the "interactive--add case".
+>> On 05/01, Stefan Beller wrote:
+>>> While fixing the leak of `cp`, reuse it instead of having to declare
+>>> another struct child_process.
+>>>
+>>> Signed-off-by: Stefan Beller <sbeller@google.com>
+>>
+>> This shouldn't be needed as 'finish_command' does the cleanup for you by
+>> calling 'child_prcoess_clear()'.
 >
-> A more usual way to drive the diff machinery and react to its
-> findings is to use DIFF_FORMAT_CALLBACK interface, and walk the
-> collected diff_queue to work on the paths discovered.  The way
-> wt-status.c builds "Changes to be committed" list out of the
-> "diff-index --cached" it internally runs and "Changes not staged for
-> commit" out of the "diff-files" it internally runs would be a good
-> example to study.
+> Yes, indeed.
+>
+> It might not hurt to update the code so that the cp is reused in the
+> second run instead of using a separate instance cp1, but that is a
+> topic separate from fixing a non-existing leak.
 
-Ahh, you'd also want to show the numstat equivalent and eventually
-you'd need to spool the actual textual diff in-core, so that you can
-present hunks to the user and have them accepted/rejected
-interactively. CALLBACK interface is not a good match for that task.
+ok, I'll drop the patch and may send another patch later for re-using cp
 
-Of course, using a temporary file to buffer output from diff would
-be an obvious and simple workaround (and this is not a performance
-critical part of the system---we are talking about end user choosing
-hunks interactively after all).  A cleaner may be to spawn diff-index
-and diff-files and read from them via pipe into core.
-
+Thanks,
+Stefan
