@@ -2,71 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 809F51F829
-	for <e@80x24.org>; Tue,  2 May 2017 11:46:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 657DB1F829
+	for <e@80x24.org>; Tue,  2 May 2017 11:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750995AbdEBLqc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 07:46:32 -0400
-Received: from mout.gmx.net ([212.227.17.22]:62731 "EHLO mout.gmx.net"
+        id S1750990AbdEBLyF convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 2 May 2017 07:54:05 -0400
+Received: from mail.gea.fr ([89.225.222.218]:36019 "EHLO mail.gea.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750886AbdEBLqc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 07:46:32 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOfQw-1dBYfk0pLq-006A7r; Tue, 02
- May 2017 13:46:18 +0200
-Date:   Tue, 2 May 2017 13:46:16 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Lars Schneider <larsxschneider@gmail.com>
-cc:     Stefan Beller <sbeller@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Automating Coverity, was Re: [PATCH 00/26] Address a couple of
- issues identified by Coverity
-In-Reply-To: <73A81857-0083-4A70-88AE-FAA025B6A4B7@gmail.com>
-Message-ID: <alpine.DEB.2.20.1705021345100.3480@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
- <alpine.DEB.2.20.1704282205320.3480@virtualbox> <73A81857-0083-4A70-88AE-FAA025B6A4B7@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1750848AbdEBLyE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 07:54:04 -0400
+X-Greylist: delayed 327 seconds by postgrey-1.27 at vger.kernel.org; Tue, 02 May 2017 07:54:04 EDT
+Received: from SVGEA-EMAIL.gea.fr ([2002:8526:28::8526:28]) by
+ SVGEA-EMAIL.gea.fr ([2002:8526:28::8526:28]) with mapi id 14.01.0438.000;
+ Tue, 2 May 2017 13:48:36 +0200
+From:   Delanoe Eric <e.delanoe@gea.fr>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Could GIT manage revision headers embedded in code ?
+Thread-Topic: Could GIT manage revision headers embedded in code ?
+Thread-Index: AdLDNoNKrV9VmwHgQBaB7bZ4RuR4nA==
+Date:   Tue, 2 May 2017 11:48:35 +0000
+Message-ID: <135C7A92C7D64E488B830ADC2970C70132AE6407@SVGEA-EMAIL.gea.fr>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [133.38.10.48]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:nOZ5D6pKy9ulVP8DvcpD2pChAuEEY6ylkeO9V69Por6PFcbIayJ
- tRDjyeJYxFFenAi0L6TtEuLeGciXYt7om2giq+CAncN4N637ncyer/EjYpqLEt+AYug2dWH
- Z3PzgskXv8UOKnrMRSHgBEqKWUmGvHEQuGZsXVqStfdrXdPVFKudmjI4kzcG9ruvc641/PG
- ZZkTirxRC4tpYChWd3Ivg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XBsl+/zfRR8=:CIyqVCCutIz/1SCm0rELyB
- 2GIYo4XOklgmwmM9I67l8wKvZP6K/rOzh5R68Q12pozITS9ILjbygqOODrmPPPMUyxelPzUXG
- 3zmnbFLZtYuR1YfAwxRBQMRoJgM1q+6/fs+lSrYlzorHiloolAbmIdXk1Zvt4ocdUITzQgcSw
- BkaSNhyj9h1pNi49Gcxf+rH0l7BX6PnmX9qpQipRURbS/83PnH/RanlQnD/hCZnP9dl57o/Yt
- c1xundZnDAHpkhCdtRt1sifQH0CTIlqRlyWFrDOWPXbbAEq0WZJRhlGae2biPH0UX8259FCXv
- ovapDquxs0DzmnFgteo+4bySZf787wcqoujGU+Mju56eAIcyzg0I+5RdqUo2hbXKU8DmnqJDg
- 9HSE4c5CZ//XsoMzjsbUs+2h09D0iHzYIsCpQZawH80b+5OWlPSP7g9k/urehhWgI9CGwZifw
- pDi9KFZBo0P6DzBpjL3BqHY5+18lz458PPZeLu0AQBAr2W64Umnt80CkWLXFrmt0YbfNndQA7
- r64SRx3+KUKHiJ5E0RJVfvnTaxaQhbN5dCJDdTgomoKvzdZ/GLlETrYty9oZPPGQNLsPpUA0V
- yJxlJgpCjpZ0D1jQrqxBKd2faGFqcy3sHtYCWa68p+6uJzPWGfKbFEKKNJilVj/QwD4jOz26l
- C/rs9/4EP9RHszUxmA57gNFlIAQ+OAVVXGfdm7xunudfy6aK+hreY8o/O6W2W/TYa5gYrKj0U
- 5lfhX0gtTFriKcd+btaPmV0bYeK/b2JnG6yzN4LOPxMwYjtboEyBtDy25F9mW3qE3pzgg6dvW
- i4tgBy4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Lars,
+Hello,
 
-On Mon, 1 May 2017, Lars Schneider wrote:
+We need a great deal of traceability for our source, made of many scripts in interpreted languages, spread in many "independent" modules, as far as can be ;-).
+In particular, somebody troubleshooting a script in production should be able to know exactly the revision or commit ID (or tag label) of a given file, and its location in the GIT source directory tree.
 
-> Looks like Coverity has TravisCI integration and I assume you wouldn't
-> need to worry about downloading the tool in that setup:
-> https://scan.coverity.com/travis_ci
+Our old CVS... let's say it was its only advantage... was doing this with keywords embedded in code comments: $Header$, $Id$, $Rev$, $File$ etc... When a file was committed, its $Header$ keyword was expanded into a rich piece of "version" information like '' $Header: /cvsstore/SourcesOracle/Install/COMMUN/CST.sql,v 1.69.2.10 2017/04/14 09:38:48 edelanoe $".
 
-Except for that tiny little fact that Travis CI does not support Windows
-backends (nor would they even respond to my offer to work with them).
+Could this kind of "keyword expansion" feature be added into GIT ?
+Focusing on the goal: enable the identification of a file and its revision(*) inside the committed code itself.
+(*) the "revision" information or a commit ID. The tag(s) attached at commit time would be less reliable, as a tag can be moved between revisions.
 
-Ciao,
-Dscho
+Thank you in advance for any answer,
+Best regards,
+E.Delanoë
+
+Grenobloise d'Electronique et d'Automatismes
+Inovallée - 12, Chemin de Malacher
+38243 MEYLAN CEDEX 
+FRANCE
