@@ -2,140 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 211F0207D6
-	for <e@80x24.org>; Tue,  2 May 2017 04:11:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3924C207D6
+	for <e@80x24.org>; Tue,  2 May 2017 04:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751230AbdEBELK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 00:11:10 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:36569 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751148AbdEBELJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 00:11:09 -0400
-Received: by mail-pf0-f193.google.com with SMTP id v14so30346747pfd.3
-        for <git@vger.kernel.org>; Mon, 01 May 2017 21:11:08 -0700 (PDT)
+        id S1750916AbdEBERs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 00:17:48 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:36323 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750730AbdEBERr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 00:17:47 -0400
+Received: by mail-pg0-f44.google.com with SMTP id t7so54247900pgt.3
+        for <git@vger.kernel.org>; Mon, 01 May 2017 21:17:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=eDN0QEjNU0tVDtHU9cDWVtZOUYDTTMQI2csQcf/uv2c=;
-        b=Dtxk9PLi+vnyZbnU7GKvySvU2mWIBvhwRG6RgnDkmiB8vgk4XTsZAThfBPJej71rwR
-         lFF3WkaIfMqmhvMtLd8eG2SmO8FqIPv7jm/TS+pfJNHtWlfHEHNYJ7EVVZ2z7Og7wOxm
-         syCex9F9P9k+J3BjIEkHghx6xjTdJeXBauKewOOVwWX2yKyTvzoXZCQTH/oCaZl4CIsK
-         LEIcw3//WEsQpH+dVycyUcSolZrJQ6BHXqDOIsppwWvQFH05n9kviP05QickjcnuVs2Q
-         lUwhvtEDgUoBUpl82fOv7eb0QozKk74R9Xk3I0glXYdQItrQSPAzqwAQ+tQEq8JpBVMT
-         e0ag==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YpY0d6b3gbxuIZPydJ17M0AbYXUx++x1U7V4T0srlBw=;
+        b=AvXzcJg7XkF/KYDgiboyS9i4oR3V3SNFnYIJH8ZCjtkAOq4DWupul1d1thUTsu0t8p
+         uNWEWISV4D00Cl3h4TOkFCpXr6SEtaziZuXtL9TylKlUItcFns5OhbaYlGmKbpBUv5F7
+         N8I9wQWc5n3+mpBASVRLif2VhsB5l1ieUGVvmSBf9pkjWlHvQcc7DPJL+piquttIBJ6R
+         CtFATIOCuUNoz5Wb+Zs7907w00g8sNs38LTQUhWvohbTPA4hTe44nWFJ4bWy0BOhyQ4l
+         DzcJuqqG8rlPcwWMGFMFfY3HVaL2F9vaI5XGrSJ8ycegDy2V9DiSu+6KmgvdyLbUfGSv
+         ClPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=eDN0QEjNU0tVDtHU9cDWVtZOUYDTTMQI2csQcf/uv2c=;
-        b=pbG3oZxNLny+Vi+ELbTios2eXqiAVqYb9zd4yRm+VuHdyDBXXkr1gBAHlsHECUv2NH
-         mD7Pu+iFWtuhLpSaY3SjguYJwQVG7YhYunnLYSWLFn4okeg3j2rYlBRSZuLaAnnImIOQ
-         uy3OJfO5A1yNOonuH1NxV4M74tniGVTtA0WkjE5EDMtADWdIyTeZx+zTP6PJiJgboWdi
-         40UGuR4WvEhJALODSMKQ8Z7WvLjiqp+9uSo3wW8v/XAcGib84+NNTuZzC4E3IZyz2gXt
-         4ljH1Dx4IDLwDIHvJfKDF95gsO+cXWmeK69toIrNb26YN6EoYJzCyGMW2VwycbN+YHwC
-         WmXQ==
-X-Gm-Message-State: AN3rC/7IffE1vYd7iKYkmecz8p8Fg2vRkVtlvvPeZYe9ZtlmXomB+WM4
-        Fpq5NVgFufKmcQ==
-X-Received: by 10.84.230.131 with SMTP id e3mr39416193plk.100.1493698268280;
-        Mon, 01 May 2017 21:11:08 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3c5e:d1c1:579c:ef99])
-        by smtp.gmail.com with ESMTPSA id u8sm27093817pfk.103.2017.05.01.21.11.07
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 01 May 2017 21:11:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 09/25] mailinfo & mailsplit: check for EOF while parsing
-References: <cover.1493237937.git.johannes.schindelin@gmx.de>
-        <cover.1493387231.git.johannes.schindelin@gmx.de>
-        <32a2d16902734c8794de61b5e86a0d2a6cf43fa3.1493387231.git.johannes.schindelin@gmx.de>
-Date:   Mon, 01 May 2017 21:11:06 -0700
-In-Reply-To: <32a2d16902734c8794de61b5e86a0d2a6cf43fa3.1493387231.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Fri, 28 Apr 2017 16:02:57 +0200
-        (CEST)")
-Message-ID: <xmqqzievdhk5.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YpY0d6b3gbxuIZPydJ17M0AbYXUx++x1U7V4T0srlBw=;
+        b=cVsVhvLoA4r0hUjAbagpVhwIGdCRsgEmsWZDVEb6bgcb8GTAn4WwAP4L5FRqVd+ts9
+         bj1FUhYgFnnokcsThMQreaLhMkD5hjaqrNMwxvt5CkeqImhBkOPwH21B1UjwQY6MJxi7
+         PcbiOrV6ItYNuQc82/x9zq2r/lCIRsfKnoTLh57bVw4X1Wme64+j1TNCt1DtyaBJhbf9
+         iw5Ect2lCERGspzfQKnuDyN0k0k/+lS2HdGQdZXnZoVWCG3TO20Euc9jefxAcRneAler
+         mOybpxh9mG0FX2rHDJGXv9xuh4viRO5pu62lTRuKTZtNaXUkqygT86IdGd9Cemc+oqla
+         7nqA==
+X-Gm-Message-State: AN3rC/5xiogJl7oq2pW9W/vxUvYMdJFZ7yKsbsnKBqbvOqt0WzkdgNeQ
+        KO+X6j1XufND7zori/zP7UPmAlUso6qV+6z8GA==
+X-Received: by 10.84.142.133 with SMTP id 5mr38698356plx.52.1493698666477;
+ Mon, 01 May 2017 21:17:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.169.14 with HTTP; Mon, 1 May 2017 21:17:44 -0700 (PDT)
+In-Reply-To: <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
+References: <20170501190719.10669-1-sbeller@google.com> <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 1 May 2017 21:17:44 -0700
+Message-ID: <CAGZ79kZkssTEdNyzYh1YYv89szvig=rn2j3DJcHxsbzdADRw-w@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Start of a journey: drop NO_THE_INDEX_COMPATIBILITY_MACROS
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
-
-> While POSIX states that it is okay to pass EOF to isspace() (and it seems
-> to be implied that EOF should *not* be treated as whitespace), and also to
-> pass EOF to ungetc() (which seems to be intended to fail without buffering
-> the character), it is much better to handle these cases explicitly. Not
-> only does it reduce head-scratching (and helps static analysis avoid
-> reporting false positives), it also lets us handle files containing
-> nothing but whitespace by erroring out.
+On Mon, May 1, 2017 at 6:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Reported via Coverity.
+>> This applies to origin/master.
+>>
+>> For better readability and understandability for newcomers it is a good idea
+>> to not offer 2 APIs doing the same thing with on being the #define of the other.
+>>
+>> In the long run we may want to drop the macros guarded by
+>> NO_THE_INDEX_COMPATIBILITY_MACROS. This converts a couple of them.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin/mailsplit.c |  3 ++-
->  mailinfo.c          | 15 +++++++++++----
->  2 files changed, 13 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-> index 30681681c13..9b3efc8e987 100644
-> --- a/builtin/mailsplit.c
-> +++ b/builtin/mailsplit.c
-> @@ -233,7 +233,8 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
->  	do {
->  		peek = fgetc(f);
->  	} while (isspace(peek));
-> -	ungetc(peek, f);
-> +	if (peek != EOF)
-> +		ungetc(peek, f);
+> Why?  Why should we keep typing &the_index, when most of the time we
+> are given _the_ index and working on it?
 
-I agree more with the first sentence in the proposed log message
-than what this code actually does.  I.e. breaking upon seeing an EOF
-explicitly would be nice, just like the change to mailinfo.c in this
-patch we see below.
+As someone knowledgeable with the code base you know that the cache_*
+and index_* functions only differ by an index argument. A newcomer may not
+know this, so they wonder why we have (A) so many functions [and which is the
+right function to use]; it is an issue of ease of use of the code base.
 
-> @@ -1094,14 +1097,18 @@ int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
->  		return -1;
->  	}
->  
-> -	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
-> -	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
-> -
->  	do {
->  		peek = fgetc(mi->input);
-> +		if (peek == EOF) {
-> +			fclose(cmitmsg);
-> +			return error("empty patch: '%s'", patch);
-> +		}
->  	} while (isspace(peek));
->  	ungetc(peek, mi->input);
+Anything you do In submodule land today needs to spawn new processes in
+the submodule. This is cumbersome and not performant. So in the far future
+we may want to have an abstraction of a repo (B), i.e. all repository state in
+one struct/class. That way we can open a submodule in-process and perform
+the required actions without spawning a process.
 
-The handling of EOF is improved, but is it correct to move the
-allocation of p/s_hdr_data down?
+The road to (B) is a long road, but we have to art somewhere. And this seemed
+like a good place by introducing a dedicated argument for the
+repository. In a follow
+up in the future we may want to replace &the_index by "the_main_repo.its_index"
+and then could also run the commands on other (submodule) indexes. But more
+importantly, all these commands would operate on a repository object.
 
-Among the two callers, builtin/am.c just dies when it sees
-mailinfo() returns an error, but builtin/mailinfo.c tries to be
-nicer and calls clear_mailinfo().  Wouldn't this make that codepath
-dereference a NULL pointer?
+In such a far future we would have functions like the cmd_* functions
+that would take a repository object instead of doing its setup discovery
+on their own.
 
-I think the moral of the story is that people tend to get sloppier
-when doing "while we are at it" than the main task, and a reviewer
-needs to be more careful while reviewing the "while we are at it"
-part of the change than the primary thing a patch wants to do ;-)
+Another reason may be its current velocity (or absence of it) w.r.t. to these
+functions, such that fewer merge conflicts may arise.
 
-> +	mi->p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->p_hdr_data)));
-> +	mi->s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(*(mi->s_hdr_data)));
-> +
->  	/* process the email header */
->  	while (read_one_header_line(&line, mi->input))
->  		check_header(mi, &line, mi->p_hdr_data, 1);
+---
+This discussion is similar to the "free memory at the end of cmd_*" discussion,
+as it aims to make code reusable, and accepting a minor drawback for it.
+Typing "the_index" re-enforces the object thinking model and may have people
+start on thinking if they would like to declare yet another global variable.
+
+Thanks,
+Stefan
