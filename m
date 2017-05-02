@@ -2,57 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60F98207E3
-	for <e@80x24.org>; Tue,  2 May 2017 22:23:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 799CC207E3
+	for <e@80x24.org>; Tue,  2 May 2017 22:23:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751658AbdEBWXn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 18:23:43 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:33238 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751518AbdEBWXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 18:23:37 -0400
-Received: by mail-pf0-f182.google.com with SMTP id q20so3539745pfg.0
-        for <git@vger.kernel.org>; Tue, 02 May 2017 15:23:36 -0700 (PDT)
+        id S1751646AbdEBWXm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 18:23:42 -0400
+Received: from mail-pf0-f176.google.com ([209.85.192.176]:35688 "EHLO
+        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751328AbdEBWXf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 18:23:35 -0400
+Received: by mail-pf0-f176.google.com with SMTP id v14so3486387pfd.2
+        for <git@vger.kernel.org>; Tue, 02 May 2017 15:23:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=87bGvMR2t+FQTPWf4sT6GOUyE3X41iATG4sw0YGbIk8=;
-        b=Cq7nIsjwjV9JXdu81DMIx32sJP3bi8qhO6O6dzvvwhj29r4FuL33YsxlvxXHXOiBwd
-         B2PNKbnzrn/eqMdFdkjXVNV24lpT3kKMdMRhcpp4O9u3n0O3zpoEPLD8YalpPETPJqFg
-         uqwAd2HVFefsIrgkb+3EZdI2gkL+/6eD8F5JQz9y45zizyNZMe/90NiVYStGuivvfpKR
-         HHfwzpgli/MUxkjYCjXqvze86uOQ+1Q4OFBzTkx2EotSugDLaMLGnHbNH8I7U/KcRlXm
-         HamrdUi3TRYcNTU44BwNaDW5m8omPPDW1QtjLhu/18jdeVM4iDVAvH5MNwbqk+FDMrua
-         d7Gw==
+        bh=w+c80jLMk46oQVeHnLdLSW/SQU/q+0DsypTtEzpQe5s=;
+        b=jnkA91eg/IEeNqvRi5pQK+K4JpMD0hIGdRxl1oSMCOTIiiMv0KFVvckFprTt3Xqq9u
+         g/teOj/o/1se/6I6H0qIewdDdqJnvAK++KbgSL/bdBll6aghsqpACbr40m83IiFuK+BV
+         CbDkhBZZCorkUsOhFFKD4etwqFHnE58CRqdL/s51/dz/6c/yOR/XqOuAy8/u25XHG7pF
+         vzSH4ngJSyznFJMdyLHQ/09hNifs0Nyan/Mm2zKYIVRtkvdmEIDHe1jHzDnb7Ekvov24
+         J9LDHSA7uBALrRiUW4JLrbSvjnShImJtbq4JBm1AlhflTscc58TFgpFfhnSOVyIT+N2p
+         VYbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=87bGvMR2t+FQTPWf4sT6GOUyE3X41iATG4sw0YGbIk8=;
-        b=kJFJ6m5dB4k4g4PE/J1dElW7j8ENDm9jVtOINZ4Y4OR5XQnE6Ped/+sdIJoGJOwbfI
-         WyWu1zYCHGNzc+0OCkCjreYb1gbEL4UCRHKnIZV+P/2cVlabQb2dtlK0TM4IlE75g6YM
-         hVYEt1na3ltyzyRBzXfE0STHTkD0TKZY/Mn3Xz7d0N8OkXdig7hj/bBF0quoZdLbPbms
-         Wcn22dk/CabyElKIt299IMUiQJuWeTur92ZRYKWhjGv9s6b+goNSLSQhCpYOl7ymHpBy
-         j0VaBZP142veAtZ1sVmTjKlTf3TMxISzVPsTxPvYEam6IMD3zqkUzIWobSJ+M0WpqdAf
-         Q2ng==
-X-Gm-Message-State: AN3rC/5zvN1oWB5p0aTKa4wiBVyYUCScri/Dh/uhSYbeOn1bENGxoaB0
-        Mun18ldIYl3DfUTK
-X-Received: by 10.98.1.22 with SMTP id 22mr1354395pfb.263.1493763816193;
-        Tue, 02 May 2017 15:23:36 -0700 (PDT)
+        bh=w+c80jLMk46oQVeHnLdLSW/SQU/q+0DsypTtEzpQe5s=;
+        b=iVyYiYxVT2vOGT8zKjEMw+fuKD3qBKg+qNc2Y5+Zlfza8srgM8kWgcuV5Dsn/TrDxb
+         Z2EJiIBw81c7K/rSHqG2UAfufduYTumMBkYyWzw1pjNpKn+rCiRWkBgtcSqibNkpYDMn
+         Kea3aNDOBffFk6jKePvoM/q8akVphYrp46dAKC9agwyfpKd95gtJq9XKUqq3I3p3c+Dl
+         ox4TxrUizXFU+mTRcSYz4i58y5YgC6kw8Z20rM+k4nn4oIlsMiz1+IimPXe+UzXXR7lU
+         eaNOV2ooYt2gUo8unOE7cW/YAZ/bAwQr5uubxefpUMkA0DMFErGyHYhEp2Jon7LyKUzL
+         npLg==
+X-Gm-Message-State: AN3rC/6zKHDkQJ533pOjAOLOSzWATwqEQD4csTMYCTx5qZZAUAdneb4u
+        2KI1v9T8ZyixUhtC
+X-Received: by 10.84.197.131 with SMTP id n3mr45157766pld.154.1493763813997;
+        Tue, 02 May 2017 15:23:33 -0700 (PDT)
 Received: from localhost ([2620:0:100e:422:c805:cf1:74c5:2e74])
-        by smtp.gmail.com with ESMTPSA id y78sm674670pff.107.2017.05.02.15.23.35
+        by smtp.gmail.com with ESMTPSA id g89sm732839pfk.25.2017.05.02.15.23.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 02 May 2017 15:23:35 -0700 (PDT)
+        Tue, 02 May 2017 15:23:33 -0700 (PDT)
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, git@jeffhostetler.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH 06/24] unpack-trees.c: rename parameter 'the_index'
-Date:   Tue,  2 May 2017 15:23:04 -0700
-Message-Id: <20170502222322.21055-7-sbeller@google.com>
+Subject: [PATCH 04/24] cache.h: drop read_cache_preload(pathspec)
+Date:   Tue,  2 May 2017 15:23:02 -0700
+Message-Id: <20170502222322.21055-5-sbeller@google.com>
 X-Mailer: git-send-email 2.13.0.rc1.39.ga6db8bfa24
 In-Reply-To: <20170502222322.21055-1-sbeller@google.com>
 References: <20170502222322.21055-1-sbeller@google.com>
@@ -61,47 +60,167 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As "the_index" is already a global variable, we do not want to confuse
-the local variable with the global variable.
+coccinelle patch:
+@@ expression E; @@
+-read_cache_preload(E)
++read_index_preload(&the_index, E)
+
+Additionally manual editing:
+* drop the define from cache.h.
+* builtin/{commit,describe}.c were not picked up as we have NULL and
+  the address of an expression. Converted them manually.
+* builtin/diff{-files,-index}.c error messages converted as well.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- unpack-trees.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/checkout.c     | 4 ++--
+ builtin/commit.c       | 4 ++--
+ builtin/describe.c     | 2 +-
+ builtin/diff-files.c   | 4 ++--
+ builtin/diff-index.c   | 4 ++--
+ builtin/diff.c         | 8 ++++----
+ builtin/update-index.c | 2 +-
+ cache.h                | 1 -
+ 8 files changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index aa15111fef..3dd8f60fc1 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1199,7 +1199,7 @@ static int clear_ce_flags(struct cache_entry **cache, int nr,
-  * Set/Clear CE_NEW_SKIP_WORKTREE according to $GIT_DIR/info/sparse-checkout
-  */
- static void mark_new_skip_worktree(struct exclude_list *el,
--				   struct index_state *the_index,
-+				   struct index_state *index,
- 				   int select_flag, int skip_wt_flag)
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 0aac616ad6..2328a475ea 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -295,7 +295,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	lock_file = xcalloc(1, sizeof(struct lock_file));
+ 
+ 	hold_locked_index(lock_file, LOCK_DIE_ON_ERROR);
+-	if (read_cache_preload(&opts->pathspec) < 0)
++	if (read_index_preload(&the_index, &opts->pathspec) < 0)
+ 		return error(_("index file corrupt"));
+ 
+ 	if (opts->source_tree)
+@@ -488,7 +488,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 	struct lock_file *lock_file = xcalloc(1, sizeof(struct lock_file));
+ 
+ 	hold_locked_index(lock_file, LOCK_DIE_ON_ERROR);
+-	if (read_cache_preload(NULL) < 0)
++	if (read_index_preload(&the_index, NULL) < 0)
+ 		return error(_("index file corrupt"));
+ 
+ 	resolve_undo_clear();
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 65a04ac199..687e7c8a3a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -346,7 +346,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		       PATHSPEC_PREFER_FULL,
+ 		       prefix, argv);
+ 
+-	if (read_cache_preload(&pathspec) < 0)
++	if (read_index_preload(&the_index, &pathspec) < 0)
+ 		die(_("index file corrupt"));
+ 
+ 	if (interactive) {
+@@ -1377,7 +1377,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 		       PATHSPEC_PREFER_FULL,
+ 		       prefix, argv);
+ 
+-	read_cache_preload(&s.pathspec);
++	read_index_preload(&the_index, &s.pathspec);
+ 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, &s.pathspec, NULL, NULL);
+ 
+ 	fd = hold_locked_index(&index_lock, 0);
+diff --git a/builtin/describe.c b/builtin/describe.c
+index a5cd8c513f..0229458ac6 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -531,7 +531,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			static struct lock_file index_lock;
+ 			int fd;
+ 
+-			read_cache_preload(NULL);
++			read_index_preload(&the_index, NULL);
+ 			refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED,
+ 				      NULL, NULL, NULL);
+ 			fd = hold_locked_index(&index_lock, 0);
+diff --git a/builtin/diff-files.c b/builtin/diff-files.c
+index 15c61fd8d1..d400d8c1fc 100644
+--- a/builtin/diff-files.c
++++ b/builtin/diff-files.c
+@@ -62,8 +62,8 @@ int cmd_diff_files(int argc, const char **argv, const char *prefix)
+ 	    (rev.diffopt.output_format & DIFF_FORMAT_PATCH))
+ 		rev.combine_merges = rev.dense_combined_merges = 1;
+ 
+-	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
+-		perror("read_cache_preload");
++	if (read_index_preload(&the_index, &rev.diffopt.pathspec) < 0) {
++		perror("read_index_preload");
+ 		return -1;
+ 	}
+ 	result = run_diff_files(&rev, options);
+diff --git a/builtin/diff-index.c b/builtin/diff-index.c
+index 49fd64d4ce..3fbe33a90a 100644
+--- a/builtin/diff-index.c
++++ b/builtin/diff-index.c
+@@ -44,8 +44,8 @@ int cmd_diff_index(int argc, const char **argv, const char *prefix)
+ 		usage(diff_cache_usage);
+ 	if (!cached) {
+ 		setup_work_tree();
+-		if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
+-			perror("read_cache_preload");
++		if (read_index_preload(&the_index, &rev.diffopt.pathspec) < 0) {
++			perror("read_index_preload");
+ 			return -1;
+ 		}
+ 	} else if (read_index(&the_index) < 0) {
+diff --git a/builtin/diff.c b/builtin/diff.c
+index ed9edb2d0c..0ae33bce2b 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -144,8 +144,8 @@ static int builtin_diff_index(struct rev_info *revs,
+ 		usage(builtin_diff_usage);
+ 	if (!cached) {
+ 		setup_work_tree();
+-		if (read_cache_preload(&revs->diffopt.pathspec) < 0) {
+-			perror("read_cache_preload");
++		if (read_index_preload(&the_index, &revs->diffopt.pathspec) < 0) {
++			perror("read_index_preload");
+ 			return -1;
+ 		}
+ 	} else if (read_index(&the_index) < 0) {
+@@ -246,8 +246,8 @@ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv
+ 		revs->combine_merges = revs->dense_combined_merges = 1;
+ 
+ 	setup_work_tree();
+-	if (read_cache_preload(&revs->diffopt.pathspec) < 0) {
+-		perror("read_cache_preload");
++	if (read_index_preload(&the_index, &revs->diffopt.pathspec) < 0) {
++		perror("read_index_preload");
+ 		return -1;
+ 	}
+ 	return run_diff_files(revs, options);
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 9b93e09765..8667c48446 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -766,7 +766,7 @@ struct refresh_params {
+ static int refresh(struct refresh_params *o, unsigned int flag)
  {
- 	int i;
-@@ -1208,8 +1208,8 @@ static void mark_new_skip_worktree(struct exclude_list *el,
- 	 * 1. Pretend the narrowest worktree: only unmerged entries
- 	 * are checked out
- 	 */
--	for (i = 0; i < the_index->cache_nr; i++) {
--		struct cache_entry *ce = the_index->cache[i];
-+	for (i = 0; i < index->cache_nr; i++) {
-+		struct cache_entry *ce = index->cache[i];
- 
- 		if (select_flag && !(ce->ce_flags & select_flag))
- 			continue;
-@@ -1224,7 +1224,7 @@ static void mark_new_skip_worktree(struct exclude_list *el,
- 	 * 2. Widen worktree according to sparse-checkout file.
- 	 * Matched entries will have skip_wt_flag cleared (i.e. "in")
- 	 */
--	clear_ce_flags(the_index->cache, the_index->cache_nr,
-+	clear_ce_flags(index->cache, index->cache_nr,
- 		       select_flag, skip_wt_flag, el);
+ 	setup_work_tree();
+-	read_cache_preload(NULL);
++	read_index_preload(&the_index, NULL);
+ 	*o->has_errors |= refresh_cache(o->flags | flag);
+ 	return 0;
  }
+diff --git a/cache.h b/cache.h
+index 6abf48dcc3..a66ae97fb7 100644
+--- a/cache.h
++++ b/cache.h
+@@ -354,7 +354,6 @@ extern void free_name_hash(struct index_state *istate);
  
+ 
+ #ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
+-#define read_cache_preload(pathspec) read_index_preload(&the_index, (pathspec))
+ #define is_cache_unborn() is_index_unborn(&the_index)
+ #define read_cache_unmerged() read_index_unmerged(&the_index)
+ #define discard_cache() discard_index(&the_index)
 -- 
 2.13.0.rc1.39.ga6db8bfa24
 
