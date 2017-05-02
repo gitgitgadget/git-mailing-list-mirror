@@ -2,129 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D62391F829
-	for <e@80x24.org>; Tue,  2 May 2017 08:49:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A884207E3
+	for <e@80x24.org>; Tue,  2 May 2017 09:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751104AbdEBItF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 04:49:05 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:36368 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750934AbdEBItD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 04:49:03 -0400
-Received: by mail-it0-f67.google.com with SMTP id x188so1171140itb.3
-        for <git@vger.kernel.org>; Tue, 02 May 2017 01:49:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=lFiIGI86Jbkt9yIQaes0M1KMlPDH+s/KLEvmaIwNSkY=;
-        b=jxlnBKxJFhaZ3xG2mzGggJH8kLLeSDhYrvN/3NXaoDGPtfxKWoS/IMjKaE2/uDjU9x
-         0cHHPOIf+um5tvpBICZOnP8eyp54O3/PgIirBnP9VUwxTV1ZspQxsz2YCV/korEC4XD4
-         N9O83/X1cWZf8fo33HAFySm7Vz2741iFRipAvQ8g6Ew0Pygyv9bjUuQZdqwbSPDVHSu/
-         4Ku+TtPzj1XZH4eCSUXgEqQphOeaGdZ1+mCxDp5/HmGuZbtiM8g/AAl9wqiqYnt2x144
-         9Qu9aUlFaMAvUAGLyCtdivqBxUHmH85lbHXo8NoDPOCuDtPyUS0BtS65En0gW8aDAAKi
-         t9lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=lFiIGI86Jbkt9yIQaes0M1KMlPDH+s/KLEvmaIwNSkY=;
-        b=WeVz4CkptRlvljH3Wtub+PZozOBLKp2kElYEujEyXqJFeIrLntGhMoPmdZ5I571ayg
-         0lgtQSiHwN1xqYjm0ZQBKTp/dRr1Wvy+vxRVuwClQMv6DxfKiWLYiKOl8Ovdndcg1XsZ
-         26DjeEDaMutdS64uq2VfjOv7hjQiAKW7q4YOGL49hfOCT5pDoQlNlPlROIgml0A78smH
-         kmdMqAKWfxMkVNpAOZv5BmhRcMQulDZTR9VSK8WH/dAtDZygIhOjCRj66gVH/Rk7AV5T
-         5U3wtESv9BP4LeD/hwGy2OyuqR5+nFkFq27BrOw4ShNPtUZsur+lJHr4O12A3HlrDH8z
-         K0yg==
-X-Gm-Message-State: AN3rC/4o4pH1RPY2b6L7HPYYli2/zqoLC0OXPOzEilNyzRcfQA4pCI0I
-        VEE5yZ4JE8Gca5QvWlRVL1LORv/rCw==
-X-Received: by 10.36.124.129 with SMTP id a123mr1962029itd.66.1493714942646;
- Tue, 02 May 2017 01:49:02 -0700 (PDT)
+        id S1751182AbdEBJcV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 05:32:21 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:35849 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750915AbdEBJcU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 05:32:20 -0400
+Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 538A2C143CA4;
+        Tue,  2 May 2017 09:32:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 mx1.redhat.com 538A2C143CA4
+Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; dmarc=none (p=none dis=none) header.from=redhat.com
+Authentication-Results: ext-mx07.extmail.prod.ext.phx2.redhat.com; spf=pass smtp.mailfrom=pbonzini@redhat.com
+DKIM-Filter: OpenDKIM Filter v2.11.0 mx1.redhat.com 538A2C143CA4
+Received: from [10.36.117.83] (ovpn-117-83.ams2.redhat.com [10.36.117.83])
+        by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id v429WEL1005835
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+        Tue, 2 May 2017 05:32:17 -0400
+Subject: Re: [PATCH] send-email: new option to walkaround email server limits
+To:     xiaoqiang zhao <zxq_yx_007@163.com>, git@vger.kernel.org
+References: <20170429122632.7122-1-zxq_yx_007@163.com>
+Cc:     viktorin@rehivetech.com, mst@kernel.org, mina86@mina86.com,
+        artagnon@gmail.com
+From:   Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <6bef306b-0bfb-2314-50fd-9c152888b344@redhat.com>
+Date:   Tue, 2 May 2017 11:32:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Received: by 10.107.134.97 with HTTP; Tue, 2 May 2017 01:48:41 -0700 (PDT)
-In-Reply-To: <20170502040048.9065-1-liambeguin@gmail.com>
-References: <20170502040048.9065-1-liambeguin@gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 2 May 2017 10:48:41 +0200
-Message-ID: <CACBZZX5MacQZHVjSymWm0_RHjc_Q41J9vhqMuDGwz3L_4LjtzQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] rebase -i: add config to abbreviate command-names
-To:     Liam Beguin <liambeguin@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20170429122632.7122-1-zxq_yx_007@163.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.5.110.31]); Tue, 02 May 2017 09:32:19 +0000 (UTC)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 2, 2017 at 6:00 AM, Liam Beguin <liambeguin@gmail.com> wrote:
-> Add the 'rebase.abbreviateCommands' configuration option to allow
-> `git rebase -i` to default to the single-letter command-names in
-> the todo list.
->
-> Using single-letter command-names can present two benefits.
-> First, it makes it easier to change the action since you only need to
-> replace a single character (i.e.: in vim "r<character>" instead of
-> "ciw<character>").
-> Second, using this with a large enough value of 'core.abbrev' enables the
-> lines of the todo list to remain aligned making the files easier to
-> read.
->
-> Changes from v1 to v2:
->  - Improve Documentation and commit message
->
-> Changes from v2 to v3:
->  - Transform a single patch into a series
->  - change option name from 'rebase.abbrevCmd' to 'rebase.abbreviateCommands'
->  - abbreviate all commands (not just pick)
->  - teach `git rebase -i --autosquash` to recognise single-letter command-names
->  - move rebase configuration documentation to Documentation/rebase-config.txt
->  - update Documentation to use the preferred naming for the todo list
->  - update Documentation and commit messages according to feedback
->
-> Liam Beguin (6):
->   rebase -i: add abbreviated command-names handling
->   rebase -i: add abbreviate_commands function
->   rebase -i: add short command-name in --autosquash
->   Documentation: move rebase.* config variables to a separate
->     rebase-config.txt
->   Documentation: use prefered name for the 'todo list' script
->   Documentation: document the rebase.abbreviateCommands option
 
-I locally rebased this into just 3 patches, i.e. in this sequence:
 
-- Documentation: move rebase.* config variables to a separate rebase-config.txt
-- Documentation: use preferred name for the 'todo list' script
-- *all the rest of this squashed*
+On 29/04/2017 14:26, xiaoqiang zhao wrote:
+> Some email server(e.g. smtp.163.com) limits a fixed number emails to be send per
+> session(connection) and this will lead to a send faliure.
+> With --split <num> option, a auto reconnection will occur when number of sended
+> email reaches <num> and the problem is solved.
+> 
+> Signed-off-by: xiaoqiang zhao <zxq_yx_007@163.com>
 
-I think that's much less confusing than having 3x "rebase -i" patches.
-If you look at any one of those you have very little context for
-what's going on, and there seems to be no point in splitting them
-since the end result is tiny (3 files changed, 45 insertions(+), 4
-deletions(-)).
+I think you should also add a matching configuration option, or you are
+going to forget it on the command line sooner or later!
 
-I think with that this looks good, but it also needs tests, if you
-apply your series and then comment out the new calls to
-abbreviate_commands all tests still pass, if you look at git-config(1)
-and search for the other rebase.* commands & grep the test suite for
-those you can see how they're tested for.
+Paolo
 
-I don't think this needs a lot of testing since it's a rather trivial
-feature, but just one test to make sure that the todo list ends up as
-"p ..." "e  ..." instead of "pick ..." "exec ..." etc. would be good.
-
->  Documentation/config.txt        | 31 +-----------------------
->  Documentation/git-rebase.txt    | 21 +++-------------
->  Documentation/rebase-config.txt | 53 +++++++++++++++++++++++++++++++++++++++++
->  git-rebase--interactive.sh      | 24 ++++++++++++++++++++----
->  4 files changed, 78 insertions(+), 52 deletions(-)
->  create mode 100644 Documentation/rebase-config.txt
->
-> --
-> 2.9.3
->
+> ---
+>  git-send-email.perl | 22 +++++++++++++++++++++-
+>  1 file changed, 21 insertions(+), 1 deletion(-)
+> 
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index eea0a517f..0de9b7058 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -81,6 +81,8 @@ git send-email --dump-aliases
+>                                       This setting forces to use one of the listed mechanisms.
+>      --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
+>  
+> +    --split                 <int>  * send \$num message per connection.
+> +
+>    Automating:
+>      --identity              <str>  * Use the sendemail.<id> options.
+>      --to-cmd                <str>  * Email To: via `<str> \$patch_path`
+> @@ -153,6 +155,7 @@ my $have_email_valid = eval { require Email::Valid; 1 };
+>  my $have_mail_address = eval { require Mail::Address; 1 };
+>  my $smtp;
+>  my $auth;
+> +my $send_count = 0;
+>  
+>  # Regexes for RFC 2047 productions.
+>  my $re_token = qr/[^][()<>@,;:\\"\/?.= \000-\037\177-\377]+/;
+> @@ -186,6 +189,7 @@ my $format_patch;
+>  my $compose_filename;
+>  my $force = 0;
+>  my $dump_aliases = 0;
+> +my $split = 0;
+>  
+>  # Handle interactive edition of files.
+>  my $multiedit;
+> @@ -358,6 +362,7 @@ $rc = GetOptions(
+>  		    "force" => \$force,
+>  		    "xmailer!" => \$use_xmailer,
+>  		    "no-xmailer" => sub {$use_xmailer = 0},
+> +		    "split=i" => \$split,
+>  	 );
+>  
+>  usage() if $help;
+> @@ -1158,10 +1163,15 @@ sub smtp_host_string {
+>  # (smtp_user was not specified), and 0 otherwise.
+>  
+>  sub smtp_auth_maybe {
+> -	if (!defined $smtp_authuser || $auth) {
+> +	if (!defined $smtp_authuser || $send_count != 0) {
+>  		return 1;
+>  	}
+>  
+> +	if ($auth && $send_count == 0) {
+> +		print "Auth use saved password. \n";
+> +		return !!$smtp->auth($smtp_authuser, $smtp_authpass);
+> +	}
+> +
+>  	# Workaround AUTH PLAIN/LOGIN interaction defect
+>  	# with Authen::SASL::Cyrus
+>  	eval {
+> @@ -1187,6 +1197,7 @@ sub smtp_auth_maybe {
+>  		'password' => $smtp_authpass
+>  	}, sub {
+>  		my $cred = shift;
+> +		$smtp_authpass = $cred->{'password'};
+>  
+>  		if ($smtp_auth) {
+>  			my $sasl = Authen::SASL->new(
+> @@ -1442,6 +1453,15 @@ EOF
+>  		}
+>  	}
+>  
+> +	$send_count++;
+> +	if ($send_count == $split) {
+> +		$smtp->quit;
+> +		$smtp = undef;
+> +		$send_count = 0;
+> +		print "Reconnect SMTP server required. \n";
+> +
+> +	}
+> +
+>  	return 1;
+>  }
+>  
+> 
