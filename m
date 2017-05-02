@@ -2,109 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92192207D6
-	for <e@80x24.org>; Tue,  2 May 2017 03:57:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DD22207D6
+	for <e@80x24.org>; Tue,  2 May 2017 04:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751167AbdEBD5b (ORCPT <rfc822;e@80x24.org>);
-        Mon, 1 May 2017 23:57:31 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:35471 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751135AbdEBD53 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 1 May 2017 23:57:29 -0400
-Received: by mail-pf0-f193.google.com with SMTP id o68so11286827pfj.2
-        for <git@vger.kernel.org>; Mon, 01 May 2017 20:57:29 -0700 (PDT)
+        id S1750734AbdEBEBT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 00:01:19 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:33607 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750713AbdEBEBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 00:01:18 -0400
+Received: by mail-io0-f194.google.com with SMTP id o22so1894863iod.0
+        for <git@vger.kernel.org>; Mon, 01 May 2017 21:01:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+07kvmrziPD7qFrt8SGVH20UCxR+8ha7Uowm8dVsm5M=;
-        b=WEn8glg4EdGWIofHnm6YPGCyHujh87UFgge6Rsm4rBMKS6PU7tB/weoUEWWkjZf2+N
-         f9KbZO9QrwldfJNN9wVlVefKPJiFHAYXPSV7VQXCegQCnI+yDft4GHRVsfzh1J05d+hP
-         r+RKq1ZRY+FYtflyZEhRvBhagJiMwH4BcMje7qh2/OPLaweKbDuMzDtt/wLZGIz6lHTf
-         tdnqM5mpQbpxC7+6HvzlYjKWicZ7H4Nq2rLRg8xY3TejGppDSzyyOg9vIBoeaCZ6H9Gs
-         8Fr54u69yqyCUp85LfFq1rYr7sCL23iyNcrB2XMSi5JzU48iJtymAikuJQm942KdKmb2
-         7phA==
+        h=from:to:cc:subject:date:message-id;
+        bh=vzA6ckdC54ogaoXZiOi+jlHsSpFGV13/1R9UAH/Wsn8=;
+        b=Ac9uarjlVIW3uixyJIyzbHpHsbYL+L62v0jPovXMZcgYuet4dPnXaKAs/RppAcp/wk
+         CQ7uRAs4HdfIiGTYaFCYXdGKUCEzCVPn7FXRI46FGB+VuBC4NKTMzDveFNBLiLiUUVaM
+         su4ah4w2QGVOxyusmPdYTInbAsl7jPtoDzu5bliaFzyvlazfJSXGNvPMwksCdzPsW8I/
+         Yz9N4OHmMVrfDd7Ef1FGGDmWmqA+UF4opao5t4vnn/+MpqYeB98KJ+dybIGlNaNKhkNm
+         0kvtS67IzwgRi+0sRq3j6mFWgoaypVVIfcg9amFHwtDwJjVcd5Kv7pQuv2Yocir1z/fv
+         khjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+07kvmrziPD7qFrt8SGVH20UCxR+8ha7Uowm8dVsm5M=;
-        b=UR1iL7kTHU7DWkPoEUhph2tfZv+R5fsIaFiJ1wLPVEMMh+eblL6NtFqP8TRgUCFEpe
-         THsoqtOu5RDNTdM4iHg9+WKgoCtTRQT6nu5LyUmFDcX91ca5ukHb1o5eiwMRM30gQxf2
-         sRjjqL9qVzNeUMgQ0I6YMjdATG8RmlvAqB6LzRgGJhL4UC83EBQNailDAlvkwrXKiU3Q
-         WVElwwc0D64JrrURMVttLgKHiFkQjuz78ILRgf+wTEHQDHTSSpcRfnGYsire9AQdzpLj
-         d+pXzWKYX6tIz8XbEhNl0iD9KrPXA1M9zuGGm3InGUAfCGE+h63LILFpJVmmxfpZy/AA
-         t7/Q==
-X-Gm-Message-State: AN3rC/6UBECU4/+CFoRDwqEsis/C9f+dbEBD1WWFl2+CkEGIgA0ajH+H
-        rXcIvZCj1iGeLA==
-X-Received: by 10.99.177.75 with SMTP id g11mr15695538pgp.8.1493697448998;
-        Mon, 01 May 2017 20:57:28 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:3c5e:d1c1:579c:ef99])
-        by smtp.gmail.com with ESMTPSA id t187sm24151182pfb.116.2017.05.01.20.57.28
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 01 May 2017 20:57:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 14/25] setup_discovered_git_dir(): help static analysis
-References: <cover.1493237937.git.johannes.schindelin@gmx.de>
-        <cover.1493387231.git.johannes.schindelin@gmx.de>
-        <cbd8e917f1318190d9f979f4cc9b62dcd838bbb0.1493387231.git.johannes.schindelin@gmx.de>
-Date:   Mon, 01 May 2017 20:57:27 -0700
-In-Reply-To: <cbd8e917f1318190d9f979f4cc9b62dcd838bbb0.1493387231.git.johannes.schindelin@gmx.de>
-        (Johannes Schindelin's message of "Fri, 28 Apr 2017 16:03:22 +0200
-        (CEST)")
-Message-ID: <xmqq4lx3ewrc.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=vzA6ckdC54ogaoXZiOi+jlHsSpFGV13/1R9UAH/Wsn8=;
+        b=jURaG3vbFoJXORtY+XCyl/yfG9sp0C5Q0c538EfEMLSWsz6m6kG8J7a37fgKXgCgyc
+         IwziWy3noGSf89ZrurNMXjW95OsX50GnmnLdKOcx1JC/igrLxX9Npl1UlMqMx1x3h87C
+         MnRWjnHHPeQEIbOMCgZpXGtTY4ySy/4P6wzCmPrRyib4wbxJd8jIDBPdv1LfWjKG6vHU
+         UmmGRo/9rsdhHcBqRF9HdPKaWBYYTJxVwgvFHLqhK0NPVZpUeweQPsNkiK8AXWkkOb/W
+         ZoF9/1gWcfDOX0q8jJGoBvaZ3fcHrB+SDeleFeIoekTwqPEYd8NadApO5i+Xgt5E71f0
+         08tw==
+X-Gm-Message-State: AN3rC/71i/jOm9yTV99/M/yEqL0sAQDH3pjPejh+uLMaFT/rjitgbytH
+        U3QtuOqV++ZUWw==
+X-Received: by 10.107.9.37 with SMTP id j37mr26529163ioi.43.1493697677570;
+        Mon, 01 May 2017 21:01:17 -0700 (PDT)
+Received: from localhost.localdomain (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
+        by smtp.gmail.com with ESMTPSA id p65sm7211762ioe.3.2017.05.01.21.01.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 01 May 2017 21:01:17 -0700 (PDT)
+From:   Liam Beguin <liambeguin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, peff@peff.net,
+        Liam Beguin <liambeguin@gmail.com>
+Subject: [PATCH v3 0/6] rebase -i: add config to abbreviate command-names
+Date:   Tue,  2 May 2017 00:00:42 -0400
+Message-Id: <20170502040048.9065-1-liambeguin@gmail.com>
+X-Mailer: git-send-email 2.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Add the 'rebase.abbreviateCommands' configuration option to allow
+`git rebase -i` to default to the single-letter command-names in
+the todo list.
 
-> Coverity reported a memory leak in this function. However, it can only
-> be called once, as setup_git_directory() changes global state and hence
-> is not reentrant.
->
-> Mark the variable as static to indicate that this is a singleton.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+Using single-letter command-names can present two benefits.
+First, it makes it easier to change the action since you only need to
+replace a single character (i.e.: in vim "r<character>" instead of
+"ciw<character>").
+Second, using this with a large enough value of 'core.abbrev' enables the
+lines of the todo list to remain aligned making the files easier to
+read.
 
-Does something different from what is explained above.  Rebase gotcha?
+Changes from v1 to v2:
+ - Improve Documentation and commit message
 
->  setup.c | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index 0320a9ad14c..12efca85a41 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -703,11 +703,16 @@ static const char *setup_discovered_git_dir(const char *gitdir,
->  
->  	/* --work-tree is set without --git-dir; use discovered one */
->  	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
-> +		char *p = NULL;
-> +		const char *ret;
-> +
->  		if (offset != cwd->len && !is_absolute_path(gitdir))
-> -			gitdir = real_pathdup(gitdir, 1);
-> +			gitdir = p = real_pathdup(gitdir, 1);
->  		if (chdir(cwd->buf))
->  			die_errno("Could not come back to cwd");
-> -		return setup_explicit_git_dir(gitdir, cwd, nongit_ok);
-> +		ret = setup_explicit_git_dir(gitdir, cwd, nongit_ok);
-> +		free(p);
-> +		return ret;
->  	}
->  
->  	/* #16.2, #17.2, #20.2, #21.2, #24, #25, #28, #29 (see t1510) */
+Changes from v2 to v3:
+ - Transform a single patch into a series
+ - change option name from 'rebase.abbrevCmd' to 'rebase.abbreviateCommands'
+ - abbreviate all commands (not just pick)
+ - teach `git rebase -i --autosquash` to recognise single-letter command-names
+ - move rebase configuration documentation to Documentation/rebase-config.txt
+ - update Documentation to use the preferred naming for the todo list
+ - update Documentation and commit messages according to feedback
+
+Liam Beguin (6):
+  rebase -i: add abbreviated command-names handling
+  rebase -i: add abbreviate_commands function
+  rebase -i: add short command-name in --autosquash
+  Documentation: move rebase.* config variables to a separate
+    rebase-config.txt
+  Documentation: use prefered name for the 'todo list' script
+  Documentation: document the rebase.abbreviateCommands option
+
+ Documentation/config.txt        | 31 +-----------------------
+ Documentation/git-rebase.txt    | 21 +++-------------
+ Documentation/rebase-config.txt | 53 +++++++++++++++++++++++++++++++++++++++++
+ git-rebase--interactive.sh      | 24 ++++++++++++++++++++----
+ 4 files changed, 78 insertions(+), 52 deletions(-)
+ create mode 100644 Documentation/rebase-config.txt
+
+-- 
+2.9.3
+
