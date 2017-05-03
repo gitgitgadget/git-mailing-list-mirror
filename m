@@ -2,98 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAD77207F8
-	for <e@80x24.org>; Wed,  3 May 2017 19:47:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2E37207F8
+	for <e@80x24.org>; Wed,  3 May 2017 19:48:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932195AbdECTrN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 15:47:13 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:36479 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932125AbdECTrM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 15:47:12 -0400
-Received: by mail-pg0-f52.google.com with SMTP id t7so83312079pgt.3
-        for <git@vger.kernel.org>; Wed, 03 May 2017 12:47:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=T204H3JF2ATp+1S9x/2bRRhXhfZkqoyJndob5UGJo5g=;
-        b=lej5zPgjulJzDDMuDShdFuubxmk61OBP48dxyU+2Ni9pl8zuQf2z/S1vJQtqiSdJ8+
-         ANBfHxom5dhh0gt2u4RiNhC0omBFOoOwSTjsjZOcTAqOrIhQeWs/RYWsmpxQAN1IZCLS
-         8LYvrE7vVjn8N6esVWubEZd67+XN8uijC8/8f8D7GVEMqQysL+BUfj4fLOZCPQmYNKCP
-         z/G/Q50c3sHsNC0CdIpiv8DvjQcsEYEb1JPhKewIAyKF1sIMr5z2w0xim9Fdou/KVMSP
-         ySG+/8bw2eHzW1CmPtV5ZbzgiHmMFQb+GOrsr2c2Q++jCV5QQGg6v7D0of0s6MfnwYZz
-         7gyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=T204H3JF2ATp+1S9x/2bRRhXhfZkqoyJndob5UGJo5g=;
-        b=VwExYIJaZTnQHEduQ9h3RAlY2JkzvX8aU8Gj+0iFtn2/C59vXLzizyVHBVGkIqHP7f
-         7BL93rcbveEtC3zjnnapkH3f8T5+hqc4L+I/uqzYM3QB3O/qSN4shZ6Y6hrcx8DYDVCY
-         TOFvPHtZhoHGtAeMHwQXHlQ8/Sbo7ZBxRWRrnK64dnd1qgSiHJ+kUR9vl9EtT5KLWXwT
-         rgT8i6bMY0qll/6YP1wEEbdTQE0q8yyXK0LUvnY3T5frokL4mS6zlXEa3IEXQCKuvqKi
-         /8qK2PPqBOFIE07HUO6zK8sNeff8d9/MWcX9Ek+3moeFzZWHk/MehrDnH1Ne56vxeryG
-         liJg==
-X-Gm-Message-State: AN3rC/5XACks22k7m2ImvAgmXtq5Gi/ELXmIHX2ZakdD50VUWDgGWhfR
-        fi1u9atIhQOO5A==
-X-Received: by 10.98.141.16 with SMTP id z16mr6852812pfd.91.1493840831415;
-        Wed, 03 May 2017 12:47:11 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:8ce6:bd0b:35b6:826c])
-        by smtp.gmail.com with ESMTPSA id f27sm4466577pga.41.2017.05.03.12.47.10
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 03 May 2017 12:47:10 -0700 (PDT)
-Date:   Wed, 3 May 2017 12:47:08 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] config.mak.uname: set NO_REGEX=NeedsStartEnd on AIX
-Message-ID: <20170503194708.GE28740@aiede.svl.corp.google.com>
-References: <20170503135430.7785-1-avarab@gmail.com>
+        id S1757449AbdECTso (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 15:48:44 -0400
+Received: from mout.web.de ([212.227.15.4]:64072 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754402AbdECTsm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 15:48:42 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MNP6P-1d8TEX3yHZ-006tIN; Wed, 03
+ May 2017 21:48:33 +0200
+Subject: Re: [PATCH] cache-tree: reject entries with null sha1
+To:     Duy Nguyen <pclouds@gmail.com>, Jeff King <peff@peff.net>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <20170421184617.lc5bioa5px6ninrj@sigill.intra.peff.net>
+ <CACsJy8AAtV5KJHBqWvnYb3Mw9CVzEdG3M-UJA+jd5MR5e-UMsA@mail.gmail.com>
+ <12c3312c-30a1-2cb1-8f05-63bb663bd0a0@web.de>
+ <20170501192212.xy5o72tinb2hy2a3@sigill.intra.peff.net>
+ <CACsJy8CdjLySD+UEKE2NkbYqEoVOQtvydFBui6UbbnFLo8U1Ug@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <cddd09e5-8e8a-3dc9-001f-f307d3647619@web.de>
+Date:   Wed, 3 May 2017 21:48:31 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+In-Reply-To: <CACsJy8CdjLySD+UEKE2NkbYqEoVOQtvydFBui6UbbnFLo8U1Ug@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170503135430.7785-1-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Provags-ID: V03:K0:rcAPf0tLy1j4z+IWGIBufOwomonCsD4uRz/hZo6A+YJVWH7xWpV
+ Pyi3PlXSE79g5KhGiWBJPX3gKVc/Ox/O7Ast3cI3Le7Z+fbumo3Nwy7tLeZC1KuPWq0X6SG
+ F+FdeGQLx3CSOgFEJZMtKmN60krSaVRlVCDOT15aej0Tve512/0b1Fx95ud15M2p+7fCZnW
+ gyqrxewjvy0rP4isDvjDw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qdwOBZV/AJo=:1ulS8tTM5PRmbtBFlaAAqO
+ +2X8eAkRxNPzT+5v5F3jgrY1juiPeFqJs2kRNTfQCJGEvE8OD3GvCFeYc1Gf+uq+TLm5UGfeE
+ lOErxKypgUrSLOwOv7lyvTaKIy1e4slBH1PfeHHjyDB87yprjJ9eY6pSkR9zdoKmycNP2Mlb7
+ xhij3Sk91Ltp7y5qj67eB7n4obJT47gz3mLWPND6haxCKVi8OQwAEBTuqVAFXZjeagQWHYtde
+ HU/zETOalBzVXwOI3JkR/xm20ftcVvNABTLMdbJffBmhjf4r+/A9vYL9jR46mkhJ4gLc8g/Zt
+ A/c8ZrtO4WAqORzzfiyvXjguxYplL/IlcZrPk8fd76OFOBHF9y8hgb0RvPF1lR+SMIavhJEcd
+ eDzBfqnHU9SXNLWzC0ZAKkUNG/vgM20h9q1psxl8bLK6XttHH4UbLZqFK35DIJWC+PYjqjOS9
+ Xo/v8LA0nKRMEIb9caThdNBYVbZumGgo8EbpVfEdnfnRUxHv4SgpY5WRrNSI5MfwNL8w0WF4I
+ h+OlbK7eMlauTFLylgcZ4q7EZqtZVtFOUtK/fL3E4H4cNNOp9ZldZocfdqgb4qUe6FWXsB7nT
+ 3xWeDOnSTVY0rb6J62vqmJ2MqcLi4fjTIm7S6bw3ZWvXpZP5XlxOyJ27P9j4PSkBl9SYIGEwO
+ HhHrBG6nnkQ0HvpXxOZJzaMJ1OoOS0XNlqBduEDbW22eFrOnvlm39/DaJ88tqZUrpdVR2JzaW
+ RuTlxjkbAZhHuYAku7FCcd1ZP8Tjx5xilnucZepC7fXBEo+lzd4+7vd2Lay4DcvwIJ6v4d5fj
+ s2UKaoi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
+Am 03.05.2017 um 11:46 schrieb Duy Nguyen:
+> On Tue, May 2, 2017 at 2:22 AM, Jeff King <peff@peff.net> wrote:
+>> On Mon, May 01, 2017 at 01:23:28PM +0200, RenÃ© Scharfe wrote:
+>>>
+>>> I can only get gcc and clang to call memcpy instead of inlining it by
+>>> specifying -fno-builtin.  Do you use that option?  If yes, why?  (Just
+>>> curious.)
+>>
+>> I do my normal edit-compile cycles with -O0 because it's fast, and
+>> because it makes debugging much easier.
+> 
+> Same here. My CFLAGS (without lots of -Wstuff)
+> 
+> CFLAGS =  -g -O0 -fstack-protector
+> 
+> Maybe it's -fstack-protector then? This is gcc 4.9.3. I think Gentoo
+> does not add any distro-specific patches on this particular version.
 
-> Set the NO_REGEX=NeedsStartEnd Makefile flag by default on AIX.
->
-> Since commit 2f8952250a ("regex: add regexec_buf() that can work on a
-> non NUL-terminated string", 2016-09-21) git has errored out at
-> compile-time if the regular expression library doesn't support
-> REG_STARTEND.
->
-> While looking through Google search results for the use of NO_REGEX I
-> found a Chef recipe that set this on AIX[1], looking through the
-> documentation for the latest version of AIX (7.2, released October
-> 2015) shows that its regexec() doesn't have REG_STARTEND.
->
-> 1. https://github.com/chef/omnibus-software/commit/e247e36761#diff-3df898345d670979b74acc0bf71d8c47
-> 2. https://www.ibm.com/support/knowledgecenter/ssw_aix_72/com.ibm.aix.basetrf2/regexec.htm
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  config.mak.uname | 1 +
->  1 file changed, 1 insertion(+)
+gcc 4.9.2 on Debian i386 still inlines memcpy for me with these options.
 
-Thanks.
+https://packages.debian.org/jessie/gcc-4.9 links to a 5MB diff, and it
+adds these lines to NEWS.gcc (plus changing a whole lot of other files,
+of course):
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
++ - Better inlining of memcpy and memset that is aware of value ranges
++   and produces shorter alignment prologues.
 
-Is there e.g. a build farm where we can check for this kind of thing
-more systematically on supported platforms?
+That might be it.
+
+RenÃ©
