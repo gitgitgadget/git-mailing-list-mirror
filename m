@@ -2,87 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 952AB207D6
-	for <e@80x24.org>; Wed,  3 May 2017 07:12:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40EA6207D6
+	for <e@80x24.org>; Wed,  3 May 2017 09:21:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751218AbdECHMt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 03:12:49 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:33548 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751014AbdECHMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 03:12:47 -0400
-Received: by mail-it0-f47.google.com with SMTP id w68so6228814itc.0
-        for <git@vger.kernel.org>; Wed, 03 May 2017 00:12:47 -0700 (PDT)
+        id S1752694AbdECJVm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 05:21:42 -0400
+Received: from mail-vk0-f44.google.com ([209.85.213.44]:34233 "EHLO
+        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752658AbdECJVk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 05:21:40 -0400
+Received: by mail-vk0-f44.google.com with SMTP id y190so6239424vkc.1
+        for <git@vger.kernel.org>; Wed, 03 May 2017 02:21:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=FZ3AEgM7lFB7uNJ6OfDjkeLhwBB7w8AbmXYSOYc+mMk=;
-        b=NjMPnupzrlVk3bRvpdRXIVfCf6XwBR0gFvjdiOzulQ1PQF4mdaZRZphyvAHOyLaivQ
-         yyVK7G95wFJgnzfoQ1vMWLakbRNlQhrMV9FMjZri5ku8ZyMHgzoqGhyts/vn0JFfk4Qu
-         rL5mQF6d50ktb69XRotp3rv9xdCH2AATUDhFyIK4ZxPnd4XkKQOUpbxxha79Siu8bGmU
-         joqw0A98NO8d/AK91tbLTQaOMDoRPJoS7QzOi/v0kHwHRwfhHg1puOmlIox+2nR23KKf
-         AtfTv6nDioniO0s3zhv8v36a7T7kGbTBlkHQOyDQqsRWXBYbBvIDsPiqvCEy2lc7j4Qj
-         HaCg==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WM/P+emVYQO2h1lKWWvZ7+9yHWxwvtvTn0/v+je2IFU=;
+        b=pY4Wfjlu4wcM+LWC5K573bbaRyiFMscUKHB0f7jRymNasMpLAL1RHZneutB+coxpu8
+         P5iJ17bzyr+TMbbAM8GQt4VysdvyjNBGkH1LOMpBIH4BYtP5KHAFSBOxghiDi4xk6hoB
+         pK3QiXi6iCrqZhLVu7CKOJxmBK5CdPWxta24bpdnTOn73rhvEywZNag200XvPbCEf18/
+         l64wymRndGiEWpl+u0nfoQzidtAf16MdPgkh2hUuwaL955dkMh/H8VxLeJFwYEJ7cVgl
+         92Qe4GkNydrHJLdhdVcGsSS00C1wCS9wz5cYt1+UTxy3xJXnBpeJ91Ji4HiQ7MWQU440
+         4okA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=FZ3AEgM7lFB7uNJ6OfDjkeLhwBB7w8AbmXYSOYc+mMk=;
-        b=bokWIwPQpravQDmMRE1PnMqQkx3asQ267oHYgI9BbetEjkMapVS9Epaqcvm5i1Pcm5
-         tq81bPW+nbi/iJ7lmAYdDUcf2F0F/xQcd1brBlRKCKPBe0iCtUefW1KR50KtQsPClj+f
-         fIeQ7b1OV3mII7M5xaACM4m1FlrJXv7tjsjp5P96GU/d92BY9tWKIaniwYl9mM3yNVY0
-         MxOCxnqz3W4jd8/H2Gd51acBjwNMXVKHxbjyuDGnYYIQTf+UcmhXjgiuIR0cMu9AiIaw
-         uzvSxrYIqAiAkMkI1d/4KZTT+p8JQ3CjeQpMlzn7QoVlOENkag/DtQjsv4D+RRQR6Og4
-         O+Bw==
-X-Gm-Message-State: AN3rC/7VgucPkgLxTsqS6uGZkBp1JewWSv5KHxD5aovRGLwXyvg/L8mf
-        jY/W6vv6inH0ZlVTiw4wFjqqPuCS5A==
-X-Received: by 10.36.66.67 with SMTP id i64mr15125696itb.22.1493795566679;
- Wed, 03 May 2017 00:12:46 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WM/P+emVYQO2h1lKWWvZ7+9yHWxwvtvTn0/v+je2IFU=;
+        b=FAEjw6dyVnrjgPZnBAZnY2qOrzBHLnfCp1vK6MwMLvFQ/O5DrPFZGpoFSFcnTK7PJm
+         2fTrXjdw4tm0CUflnz645r+UUsYU40EWi64zq3QTpIDaQJD3qBI6QkfO04Q47KccQ3pf
+         vxgx104NKiRt2+H+ojn53fU2cCkp667J/79J2icpHCmdkWx4JFS2cBQKUjn1pcDD48i9
+         mEqYWAcFeBZONdt6EsAMcgvTyQP5MEfeS88NuhYE0gwteZnsxE/XtI3Lxd2cZe6HFK20
+         65Gl4s0rUcp3FSp/AeJifpTqiwkf3+hdRAIQmjpQaCwjQf07VeIEcRyob5hEYPxiBVMh
+         I4RA==
+X-Gm-Message-State: AN3rC/7w02lhrqYEMOqid2jNtv/o82YydhAqbvgiC1HRf5GaJtqFjGL4
+        xFOoUSApYDNZ6lpjG+8+4IZtDHGF57jC
+X-Received: by 10.31.171.206 with SMTP id u197mr14477532vke.22.1493803299431;
+ Wed, 03 May 2017 02:21:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.150.90 with HTTP; Wed, 3 May 2017 00:12:06 -0700 (PDT)
-In-Reply-To: <xmqqfugof4zb.fsf@gitster.mtv.corp.google.com>
-References: <58DE0598020000A1000256CE@gwsmtp1.uni-regensburg.de>
- <xmqq60ip1m0f.fsf@gitster.mtv.corp.google.com> <CAJZjrdUt+=oLt0cDcs2+bJMCFR4h8UUSFmZkx6-1menz4haPig@mail.gmail.com>
- <xmqqfugof4zb.fsf@gitster.mtv.corp.google.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 3 May 2017 02:12:06 -0500
-Message-ID: <CAJZjrdVZ7gTZvm=CcG7pUPWtXjsMsHgyMRiE8xoXm=bZ4j6FEQ@mail.gmail.com>
-Subject: Re: Terrible bad performance for it blame --date=iso -C -C master -- <file>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.31.9.133 with HTTP; Wed, 3 May 2017 02:21:39 -0700 (PDT)
+From:   Rashmi Pai <rashmipai36@gmail.com>
+Date:   Wed, 3 May 2017 14:51:39 +0530
+Message-ID: <CAOqCAXSOZCG8mijV+yATtmC1PFGYiOSqtraSdbhbP2rRHBO_Qg@mail.gmail.com>
+Subject: Bug report: Git Stash; spelling mistake of stash followed by a yes
+ prints character 'y' infinite times.
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 1, 2017 at 7:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Samuel Lijin <sxlijin@gmail.com> writes:
->
->> On Fri, Mar 31, 2017 at 10:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> It might not be a bad idea to teach "blame" not to pay attention to
->>> any path that is marked as "-diff" (e.g. binary files) when trying
->>> to see if remaining contents appeared by borrowing from them.  We do
->>> not have that heuristics (yet).
->>
->> Could you elaborate on this? Do you mean to tell diffcore-rename to
->> ignore diff_filespec objects if they're binary?
->
-> No and yes ;-).  I do not think it is a good idea to unconditionally
-> ignore binary in diffcore-rename.
->
-> But when we know that the rename detection is called from inside
-> blame.c, where by definition we would be digging line-oriented
-> contents, there is no point checking if the contents we are looking
-> for came from an existing binary file.
+Hi,
+I am a corporate user of git. I noticed that when you switch between
+the branches and do a git stash ( I miss spelled it as git stahs). Git
+asked if i meant git stash. and i entered yes. and git printed the
+character y infinite times.
 
-A followup thought: perhaps it would make sense for blame.c rename
-detection to only consider files with the same extension?
+Below are the steps to reproduce.
+1. create a local branch and make some code changes in the same branch.
+2. now checkout another branch. git says Your local changes to the
+following files would be overwritten by checkout.
+3. Now do git stahs ( spelling mistake )
+4. Now git says git: 'stahs' is not a git command. See 'git --help'.
+
+Did you mean this?
+
+stash
+
+5. Now types yes. and you will see character 'y' getting printed
+infinite times!.
+
+Though this is not a major bug, I thought notifying this would be a
+good idea. The above mentioned issue is reproducible in Mac Yosemite
+in git version 2.4.5
+
+Thank you all for making our lives easier and better :)..
+
+-- 
+REGARDS
+Rashmi Pai :)
