@@ -7,49 +7,50 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9A901F829
-	for <e@80x24.org>; Wed,  3 May 2017 15:08:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 892631F829
+	for <e@80x24.org>; Wed,  3 May 2017 15:10:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751634AbdECPIA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 11:08:00 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54941 "EHLO mout.gmx.net"
+        id S1751536AbdECPKN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 11:10:13 -0400
+Received: from mout.gmx.net ([212.227.17.21]:61715 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751243AbdECPH6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 11:07:58 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMTZa-1d9mAc0BSg-008LwF; Wed, 03
- May 2017 17:07:48 +0200
-Date:   Wed, 3 May 2017 17:07:46 +0200 (CEST)
+        id S1751275AbdECPKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 11:10:11 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LxMgg-1e81jm3v90-01705E; Wed, 03
+ May 2017 17:09:53 +0200
+Date:   Wed, 3 May 2017 17:09:51 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
         <pclouds@gmail.com>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 04/21] wrapper.c: add warn_on_fopen_errors()
-In-Reply-To: <20170503101706.9223-5-pclouds@gmail.com>
-Message-ID: <alpine.DEB.2.20.1705031704400.3480@virtualbox>
-References: <20170420112609.26089-1-pclouds@gmail.com> <20170503101706.9223-1-pclouds@gmail.com> <20170503101706.9223-5-pclouds@gmail.com>
+Subject: Re: [PATCH v2 06/21] attr.c: use fopen_or_warn()
+In-Reply-To: <20170503101706.9223-7-pclouds@gmail.com>
+Message-ID: <alpine.DEB.2.20.1705031708350.3480@virtualbox>
+References: <20170420112609.26089-1-pclouds@gmail.com> <20170503101706.9223-1-pclouds@gmail.com> <20170503101706.9223-7-pclouds@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-785956825-1493824068=:3480"
-X-Provags-ID: V03:K0:smGsKSxory+t2H6xi6GMgubGvZr0PI0P5c6LNbgWZFTW8FD9tKS
- VutFnyaXRzIvHLOtDyvfb8ACWcDLn+32sJx6YC/5XvjsKVHe9MrKCU294c8Tcd4+oeBmQ7n
- azgSBPSu4afYgG+KMc85t7Ei3zGFYCT+Lz89iaP/a6SnA/H5ah+iLJC2MhEx62JR59M3hUZ
- 4vMOAnd4Fk3ZGPsCnLabg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ptd2ma4z9Xg=:x4y8ahCwiJRIU2/inft9hs
- vJObLoQ5TUJandcT/TNORvWHwZ48+yP3Wni3t5NOruko6COcg+b1hv+OoRNeYV6s+oiYlALBy
- Kn8SDyIAAtF+EZe3va2CxOW37h/DRTB8tzR9RV1EfEh+mbh+jRvd3z4BwnWbUsmHe+dlCwJ0a
- Bq8iXElIM6YEw3aoUiKgbbpO+TW9ujMnn7zrLn0OzuZYl0heCNWpkg4ZdmAFCBzwipA9RsBD/
- eeuH+CGGRrNrFnCvsXEaH67Ee2LAi3QS/C+9G1SX2fWWjHovFX/oZgYWPIIUkQR/M0DAcRPRn
- BIt2GIzojzIRWg4arUn/px0hwkND1GPeAyA/XHjIV9hn5nNS6BVkArNIfW+3SgPsb7NTt6KAJ
- r0jlHE4HPuAzR3DzGqhkh9nwdE0L9YY5YAnXECBmb5EmMM8A97iurCns8KcGkBUAfB/18c4H5
- 2STnNBVVdjqWfMcNZa2A9nj8ZnDWydoD5yMWLv6oiu633MXE9wyOPcOBsSOFWcrXehidpW4Yj
- H9wvTdd2PvwOcInWQW3XOvjhLcK0sz/AIUQDlqKnG8axekSdeyQvpvWQmWwC3VJ6UXWjo1s79
- b3tceCwc1GN39HB54QAqbJ2VB8KYtA0j6fgoO/M8ypjDrAgkI0IRLu7fPA5GoSaZqeVd74XVC
- tstHvb7Sf7VvaIsN9OTG1f7gqnNbwUgs+fKeIEJq36NlTT3FBhewxX8xzAqsmxLON9b+DYEaH
- 9Hh3FNr06PrP1IqnlC/eN2lGtCsho7uJYnHjH3P77wJ0eW45aUJrURhZ7nMQqn8KyqOQzzPns
- dTbm1F1
+Content-Type: multipart/mixed; BOUNDARY="8323329-1219580826-1493824134=:3480"
+Content-ID: <alpine.DEB.2.20.1705031709030.3480@virtualbox>
+X-Provags-ID: V03:K0:TQJOnD+L83aWSxISjEfyqtQqNQJVJ3Rfo77DSgvnRl1JzrX6v55
+ N00wk9E9Qk5mFn4p5kwhLCjEuxer4uzJB+wCoTM/MAjil0gk/InAwhW7Pt0I4jB0nuHa3z3
+ PA+faorRGinjBlk4Ze1xa7CQM8KV0cexJL7QtCMbdct2LF/1aHgYL/VPYYJpP2F8izUYPEC
+ 2OzKye8P/zXxKXjNG9IfA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:My6RMNNrfhM=:8xL40XhB8hCEeBFed4wzyP
+ 2+yAcws6XqlqJYhI7fps9S/l3kQqVUzCi8VSDZdBbJnpNMVokA3eLFS2Jkt4BHFty4ZAerabh
+ 5OBUJ+hrczXcSU4g1oewhFo8XS6wDUcvHMIAyBM8sEfqG4rfsO8hCipXl19qodPuE0SBkQ+g3
+ wjNX7NklBGXeuC3bvP1S5O3yb8aduGoEbukAUAkWu4Vt08eWUD98RW2lt5dNShEhrFiK43F+F
+ ensBTjnPYPFNZSdmkf/S1Vpc0Z05dvmwyxPxAPY71EIjaYGx27S8VNBVK74EpcaEEPlC6wkBX
+ 3ELkWO0Q07ch5sAZUskb7VGKd1W1wpT+KeFp5TvFhflcn2mJgUPkShNVWxlBwyYNZEgyA7nNL
+ TVUUr5gSkjiR28C8yNkklBEqULNEXtdZyYE8PxwFu+BRllInV5ayZQ5uCChA0I1gcuOdOi62W
+ cm54juOPEuFSgyBoN9tfos7JNSQLyq8heHoJBn1Ilre0Ka64qof2zBPk+xdNrmb2bwReTwE5R
+ d+sNVACT0ESAjBKY3BRzPXBHPByHT2ITWA+RS7Cq7VR2yr6jPT4GKpyIdgjsqRXNPAgf73aVA
+ FKz0YLopim5IMW9Qo7W1DKwxbDMDrAPpGlPSI2ACHFj7i/L3tdgmEvwyxaCDtqfrdiBDw2XPe
+ T91VuJ7+dEFOdXdTJmGkPEEMv4lAhJcPprWQXFHtX7+1cZk+Ygbw/1wvUxvyBe8uiIJRmwO6s
+ PradvHyX1JTgEjk/7dP+01VMTAXVfvTkPreY7Vm2Y1HasZR+AKwt8s/qQy4fJi9hU8eEm6Ruo
+ Lz+9Job
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,44 +59,23 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-785956825-1493824068=:3480
-Content-Type: text/plain; charset=UTF-8
+--8323329-1219580826-1493824134=:3480
+Content-Type: text/plain; CHARSET=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-ID: <alpine.DEB.2.20.1705031709031.3480@virtualbox>
 
 Hi Duy,
+
 
 On Wed, 3 May 2017, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
 > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
 om>
 
-This commit message is a bit empty. How about:
-
-=09In many places, Git warns about an inaccessible file after a
-=09fopen() failed. To discern these cases from other cases where we
-=09want to warn about inaccessible files, introduce a new helper
-=09specifically to test whether fopen() failed because the current
-=09user lacks the permission to open file in question.
-
-> diff --git a/dir.c b/dir.c
-> index f451bfa48c..8218a24962 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -745,8 +745,7 @@ static int add_excludes(const char *fname, const char=
- *base, int baselen,
-> =20
->  =09fd =3D open(fname, O_RDONLY);
->  =09if (fd < 0 || fstat(fd, &st) < 0) {
-> -=09=09if (errno !=3D ENOENT)
-> -=09=09=09warn_on_inaccessible(fname);
-> +=09=09warn_on_fopen_errors(fname);
->  =09=09if (0 <=3D fd)
->  =09=09=09close(fd);
-
-I see you already converted one location. Why not simply fold all of them
-into this patch? It's not like it would be easier to review those changes
-if you separate patches addressing this class of problems.
+As commented about warn_on_fopen_errors(), I do not see a benefit in
+separating the introduction of this small function from the individual
+files' changes to use it. Let's bring it all together.
 
 Ciao,
 Dscho
---8323329-785956825-1493824068=:3480--
+--8323329-1219580826-1493824134=:3480--
