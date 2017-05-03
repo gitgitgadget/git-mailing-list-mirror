@@ -2,86 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40EA6207D6
-	for <e@80x24.org>; Wed,  3 May 2017 09:21:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70BEC207D6
+	for <e@80x24.org>; Wed,  3 May 2017 09:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752694AbdECJVm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 05:21:42 -0400
-Received: from mail-vk0-f44.google.com ([209.85.213.44]:34233 "EHLO
-        mail-vk0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752658AbdECJVk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 05:21:40 -0400
-Received: by mail-vk0-f44.google.com with SMTP id y190so6239424vkc.1
-        for <git@vger.kernel.org>; Wed, 03 May 2017 02:21:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=WM/P+emVYQO2h1lKWWvZ7+9yHWxwvtvTn0/v+je2IFU=;
-        b=pY4Wfjlu4wcM+LWC5K573bbaRyiFMscUKHB0f7jRymNasMpLAL1RHZneutB+coxpu8
-         P5iJ17bzyr+TMbbAM8GQt4VysdvyjNBGkH1LOMpBIH4BYtP5KHAFSBOxghiDi4xk6hoB
-         pK3QiXi6iCrqZhLVu7CKOJxmBK5CdPWxta24bpdnTOn73rhvEywZNag200XvPbCEf18/
-         l64wymRndGiEWpl+u0nfoQzidtAf16MdPgkh2hUuwaL955dkMh/H8VxLeJFwYEJ7cVgl
-         92Qe4GkNydrHJLdhdVcGsSS00C1wCS9wz5cYt1+UTxy3xJXnBpeJ91Ji4HiQ7MWQU440
-         4okA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=WM/P+emVYQO2h1lKWWvZ7+9yHWxwvtvTn0/v+je2IFU=;
-        b=FAEjw6dyVnrjgPZnBAZnY2qOrzBHLnfCp1vK6MwMLvFQ/O5DrPFZGpoFSFcnTK7PJm
-         2fTrXjdw4tm0CUflnz645r+UUsYU40EWi64zq3QTpIDaQJD3qBI6QkfO04Q47KccQ3pf
-         vxgx104NKiRt2+H+ojn53fU2cCkp667J/79J2icpHCmdkWx4JFS2cBQKUjn1pcDD48i9
-         mEqYWAcFeBZONdt6EsAMcgvTyQP5MEfeS88NuhYE0gwteZnsxE/XtI3Lxd2cZe6HFK20
-         65Gl4s0rUcp3FSp/AeJifpTqiwkf3+hdRAIQmjpQaCwjQf07VeIEcRyob5hEYPxiBVMh
-         I4RA==
-X-Gm-Message-State: AN3rC/7w02lhrqYEMOqid2jNtv/o82YydhAqbvgiC1HRf5GaJtqFjGL4
-        xFOoUSApYDNZ6lpjG+8+4IZtDHGF57jC
-X-Received: by 10.31.171.206 with SMTP id u197mr14477532vke.22.1493803299431;
- Wed, 03 May 2017 02:21:39 -0700 (PDT)
+        id S1752529AbdECJgT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 05:36:19 -0400
+Received: from mout.gmx.net ([212.227.15.18]:52009 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752289AbdECJgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 05:36:18 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LkgAG-1dg0Oh1BtE-00aUHk; Wed, 03
+ May 2017 11:35:59 +0200
+Date:   Wed, 3 May 2017 11:35:56 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Jeff King <peff@peff.net>
+cc:     Stefan Beller <sbeller@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v3 14/25] setup_discovered_git_dir(): plug memory leak
+In-Reply-To: <20170502181511.wxr75p2uuwc4nni2@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.20.1705031134250.3480@virtualbox>
+References: <cover.1493387231.git.johannes.schindelin@gmx.de> <cover.1493740497.git.johannes.schindelin@gmx.de> <ab131705c4383dc408860b516b1e18b0753b0cbf.1493740497.git.johannes.schindelin@gmx.de> <CAGZ79kbsy1qh02WjX0nt6ci4r+5DVxJcPzwburBf0TP0qaEMTA@mail.gmail.com>
+ <20170502181511.wxr75p2uuwc4nni2@sigill.intra.peff.net>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.31.9.133 with HTTP; Wed, 3 May 2017 02:21:39 -0700 (PDT)
-From:   Rashmi Pai <rashmipai36@gmail.com>
-Date:   Wed, 3 May 2017 14:51:39 +0530
-Message-ID: <CAOqCAXSOZCG8mijV+yATtmC1PFGYiOSqtraSdbhbP2rRHBO_Qg@mail.gmail.com>
-Subject: Bug report: Git Stash; spelling mistake of stash followed by a yes
- prints character 'y' infinite times.
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:izbpntlcqCIRAQYGdqgPCRIqlEb8xi52e4GsHW8nTXAG3FoPuQE
+ Rhcr7lqEevhD8AL4H/52fa9Mi3bWfWhOzPA6B1PlzZ5+vmFkgYMwwPW4RYh9m5l1VfzNeHJ
+ pQfcTWhw4B04cLcwh1rV7KTeG6/zLUnSy9fvz6QdlBk2DCq3mHkSnMc/bmLLpvrezVWz8un
+ rHlA/RLjqvmvvoq+FaALw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ep2b3T4Fpe0=:2OvA4cnDJnnLV5lNIGZo8L
+ 9zUj8zaZB1hOqfAqLXIA07IpNhFwXyshkBoZ4NxbMEku9fQtWvbDBXHgIiTOBSYKfwwT5X5bu
+ TwOUaIzYC38a6SmPRTNOhR0UQYDiq3TQugNmkn7DRxw+62/6ZZgCuQs17+ggBdZjW9Edct4ZZ
+ uKmQD4iVeyHeCAaqZ6l4DjQYahu+DR+C/d+O6jx6mLr0Tywyw/n/Q6RW8kBvq6zQMkdMCtsal
+ SwqryruR1eXXbCpIKaPcf8xGouDoFR52hxdqtnP8WsrsHZqJlQId2CNwQInUExwph/lp6TgT7
+ p+IQkdEN7H9YJTNI6RubdRsrFH4sqokvuu7wRvtwz62xksQ/SDszW9g5EEPzKQAf63PyFsJ1O
+ S96lbYVEZPCe57zEqW1jMM/+C6IlbBKqZ2RaspDUWShHJBPcfa5QlIv5AaBMjx3Y8hE7ncy5Q
+ gQSeqB47sfjXEvVCvZeSf97voF4DC6HgbXm9B1QmnHbMiw4HtHIAPioCewsmN3nnVgLiHUA/w
+ A2+SpHYRyRKlrqo6BnZYnbdb/IMZoC6jDUDKTc8Al/3Q3iHq0+VRBZzI3Vz8/sVoKVr51NdK8
+ VCFOjwdcvW5Np/+c3IiXd8Adi1wX91ghnq39X5mzWwvPCQOQ0QXjASPCwuCkvYbF/cFUfN0EN
+ 8Bmy3EPsgkqLvcOY88auAy4zNRh6xxVHi/egoVp0X4++LY+4W269y3hztMTEfYSeaF5pOmTQo
+ pyNoxuNgBH7vJlpbo4QABuKlztXNNbBBn6HpBsXopLNsCRasi3Cx+7OqFxyMdZFjhD6pfZGr9
+ 5qlKFsq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-I am a corporate user of git. I noticed that when you switch between
-the branches and do a git stash ( I miss spelled it as git stahs). Git
-asked if i meant git stash. and i entered yes. and git printed the
-character y infinite times.
+Hi Peff,
 
-Below are the steps to reproduce.
-1. create a local branch and make some code changes in the same branch.
-2. now checkout another branch. git says Your local changes to the
-following files would be overwritten by checkout.
-3. Now do git stahs ( spelling mistake )
-4. Now git says git: 'stahs' is not a git command. See 'git --help'.
+On Tue, 2 May 2017, Jeff King wrote:
 
-Did you mean this?
+> On Tue, May 02, 2017 at 10:20:29AM -0700, Stefan Beller wrote:
+> 
+> > > -                       gitdir = real_pathdup(gitdir, 1);
+> > > +                       gitdir = to_free = real_pathdup(gitdir, 1);
+> > >                 if (chdir(cwd->buf))
+> > >                         die_errno("Could not come back to cwd");
+> > 
+> > As the original motivation was to shut up Coverity, this may not
+> > accomplish that goal, as in the path of taking the die_errno, we do not
+> > free `to_free`. But that is ok as the actual goal is to hav no memleaks
+> > in the good case. A memleak just before a die is no big deal.
+> 
+> I think Coverity understands our NORETURN attributes, so this should be
+> fine (and if it doesn't, then we should fix that in the model file; but
+> from the general results I've seen, it does).
 
-stash
+That matches my impression.
 
-5. Now types yes. and you will see character 'y' getting printed
-infinite times!.
+Note that Coverity cannot figure out that all of our cmd_*() functions are
+called in code paths that exit() with their return value. Otherwise we
+would not see reports about those tons of intentional "let's abuse exit()
+as our garbage collector" instances.
 
-Though this is not a major bug, I thought notifying this would be a
-good idea. The above mentioned issue is reproducible in Mac Yosemite
-in git version 2.4.5
-
-Thank you all for making our lives easier and better :)..
-
--- 
-REGARDS
-Rashmi Pai :)
+Ciao,
+Dscho
