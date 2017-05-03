@@ -2,133 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D10C61F790
-	for <e@80x24.org>; Tue,  2 May 2017 23:56:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B96C1F790
+	for <e@80x24.org>; Wed,  3 May 2017 01:33:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750853AbdEBX4b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 19:56:31 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35059 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750769AbdEBX4a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 19:56:30 -0400
-Received: by mail-io0-f193.google.com with SMTP id v34so409503iov.2
-        for <git@vger.kernel.org>; Tue, 02 May 2017 16:56:29 -0700 (PDT)
+        id S1754699AbdECBdE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 21:33:04 -0400
+Received: from mail-qt0-f170.google.com ([209.85.216.170]:34013 "EHLO
+        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751046AbdECBdD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 21:33:03 -0400
+Received: by mail-qt0-f170.google.com with SMTP id c45so126809697qtb.1
+        for <git@vger.kernel.org>; Tue, 02 May 2017 18:33:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZSnr3tn2mCJ+n4FExbQ4vLmYzJ7fpDTWsBwoVdX0GII=;
-        b=LGVs3zyyb+3MpJe33bp9UWU3L2O+rA2JAdSmZo+LPPgyuhD7om+xp+Q/2eLzqP7dBS
-         jgx4XWARJ09GOfE6yNicFvE0GPn+SblOn5U0pi2yGZgSUdno25BuT50mWdF5QnmMOPzb
-         UjdaHQDG3L1CTdOOvs0ByvdlZ0I8JeufvuxTHmNJ3xrkw61g/UvcMzRMpkWDn53hsutU
-         Kcrqd3IC+d074IVZE0CEt6Yp/f5gKDgAspUtyaBxa0TKlWFDq75dL1OCZ9uAUdyUgSe+
-         GY0mgu2jE4LSZV1LGQNElsBVJtL2E2LHMQlm+b2PQtjOTkUatan0XIgFgKyVXzuhLsci
-         /D4A==
+        d=cloudcheckr-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ZIpryIdBrxBFC2nH9z1ZWDWeGu/FJDafr5jUoke9H/I=;
+        b=KW7pGY7l55qRnPkWnt5HarVabTMu+ZLuhPNr9GpXJP4vyHZp4Xa+utEDbOWSEjYtlN
+         ShsUCbGdRqJ0xv2CIQQJuOhwfsq7/EooGmqPz4ijuXRYaLEWPBwbAHln5oyciN+wCilY
+         cZT5mJGEwKU4dJjY2uFG5i+CHYwopDn+lpT/YzBvtzvK475eXSgl7XSWGHDI8WQtJBKf
+         +TypMy7zePr7gLunrtqiNOtIucLFxL3uJjO7R/AzpU+U7pwOi4/fqMwX2gpOHieQ5KSS
+         08aaATqWvaqht8y+6F+IUCbsMHouF676zzhRF/qCLQ7H58L2+WMv8UhmfWGDUh4+9GcC
+         JmZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZSnr3tn2mCJ+n4FExbQ4vLmYzJ7fpDTWsBwoVdX0GII=;
-        b=t5owUkK8JaRE58+QCaRMLbzoE71kHrlbIQNPWr7ARUTDXyzcSvkufGaHBhKhEpWAld
-         MP5nQnAtQ4vncGCc5AuOYyW00tGHc7XNv9aCOpGlwUWGGvUCvPMmqu7J7GnLjActSWT+
-         6QhvbWzESh9RdpL0Ub5WSwoWIaLA0JyGy0ArjWALQ2FmHG+D17wzd1qyYVPIThz07IKz
-         vDhun1kDyVWmYLirmyi9e/hBX9el55R5A9vDbsb28O+ktYY6TkDN18RBe3txrESLrYui
-         uJb0/TY6UCnOIOHFkHhzL9EdRnegT3fnfav91rmu2ImoXCwPw274Pd8te9rr7eVZDQmF
-         wZ0A==
-X-Gm-Message-State: AN3rC/43fxPQBJPbHj0OedFq/J6dsnfaVdjRcXf6wOP37AZKGv0ohhtI
-        fpulGNp2CmePow==
-X-Received: by 10.107.48.144 with SMTP id w138mr34783408iow.30.1493769389396;
-        Tue, 02 May 2017 16:56:29 -0700 (PDT)
-Received: from atris (24-212-246-46.cable.teksavvy.com. [24.212.246.46])
-        by smtp.googlemail.com with ESMTPSA id u187sm955906ita.27.2017.05.02.16.56.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 02 May 2017 16:56:28 -0700 (PDT)
-Message-ID: <1493769381.29673.39.camel@gmail.com>
-Subject: Re: [PATCH v3 0/6] rebase -i: add config to abbreviate command-names
-From:   Liam Beguin <liambeguin@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, peff@peff.net
-Date:   Tue, 02 May 2017 19:56:21 -0400
-In-Reply-To: <alpine.DEB.2.20.1705021741580.3480@virtualbox>
-References: <20170502040048.9065-1-liambeguin@gmail.com>
-         <alpine.DEB.2.20.1705021741580.3480@virtualbox>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.5 (3.22.5-1.fc25) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ZIpryIdBrxBFC2nH9z1ZWDWeGu/FJDafr5jUoke9H/I=;
+        b=aQot/EreQSAs0D6IhM1ADBvcgNUzsHBkYToXnfgPeM56cOBE1KCUmymQ3XbdpJTXU4
+         Je5WxZR5nmMDXi279WCpJicDVv9RqC7TbSS05uc6I+n54k1x8b0QTeCguEI0yiof8akI
+         8e5kbDXPnP1eHVRkvWcnRimLOICWt+Jgw47FRSeQyVHENJMBRI9hLgIGJFfwEAmvxshR
+         UVi8ovKCLfpSzJpItCHeZSkzBjllVBYH3vtmEjcc6rCGkhWoyzqrFMVRtFVSqqGaK0IP
+         SUx5VzNsBRk0i5/dxjgvt9RBsuP074PirhiQ72j8Ui6hVA+4pSDONolPU893Qt1a3trw
+         4jvA==
+X-Gm-Message-State: AN3rC/4/Gku8AoRfYtsDY7702D7YJaBKGpAKoMXTH0nCpOdZLp4W5N75
+        YwcFlWg+ouN6sPcs78RQwCdRuOMzHNoauFM=
+X-Received: by 10.237.60.77 with SMTP id u13mr28491599qte.267.1493775182750;
+ Tue, 02 May 2017 18:33:02 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.140.105.246 with HTTP; Tue, 2 May 2017 18:33:02 -0700 (PDT)
+From:   Paul van Wichen <paul.vanwichen@cloudcheckr.com>
+Date:   Tue, 2 May 2017 21:33:02 -0400
+Message-ID: <CAK6FQHcHxwCgzGFCnV_3wvX-sVvL8cHpZH11x6ffbzxUJTTGCQ@mail.gmail.com>
+Subject: Git checkout issue - deleting file without apparent reason
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes, 
+Hi,
 
-On Tue, 2017-05-02 at 17:48 +0200, Johannes Schindelin wrote:
-> Hi Liam,
-> 
-> On Tue, 2 May 2017, Liam Beguin wrote:
-> 
-> > Add the 'rebase.abbreviateCommands' configuration option to allow `git
-> > rebase -i` to default to the single-letter command-names in the todo
-> > list.
-> > 
-> > Using single-letter command-names can present two benefits.  First, it
-> > makes it easier to change the action since you only need to replace a
-> > single character (i.e.: in vim "r<character>" instead of
-> > "ciw<character>").  Second, using this with a large enough value of
-> > 'core.abbrev' enables the lines of the todo list to remain aligned
-> > making the files easier to read.
-> > 
-> > Changes from v1 to v2:
-> >  - Improve Documentation and commit message
-> > 
-> > Changes from v2 to v3:
-> >  - Transform a single patch into a series
-> >  - change option name from 'rebase.abbrevCmd' to 'rebase.abbreviateCommands'
-> >  - abbreviate all commands (not just pick)
-> >  - teach `git rebase -i --autosquash` to recognise single-letter command-names
-> >  - move rebase configuration documentation to Documentation/rebase-config.txt
-> >  - update Documentation to use the preferred naming for the todo list
-> >  - update Documentation and commit messages according to feedback
-> 
-> Thank you for this pleasant read. It is an excellent contribution, and the
-> way you communicate what you changed and why is very welcome.
-> 
+We are having a strange issue that we haven't been able to pin down.
+Scenario: master branch and feature branch both have a specific file.
+1. Master checked out.
+2. git status show no changes / clean staging area.
+3. Checkout feature branch .
+4. git status show no changes / clean staging area.
+5. Checkout master again.
+6. git status shows that a file has been deleted (i.e. the file was
+removed from the file system and the staging area shows it as
+deleted).
 
-Thanks! and thank you for the support and help.
+The file exists in both the feature branch and the master branch. As
+best as we can tell, the file is identical on both commits.
+The issue occurs on multiple platforms - tested on Windows and OS X.
+It only occurs for 1 specific file.
 
-> I offered a couple of comments, my biggest one probably being that this
-> patch series is crossing paths with my patch series that tries to move
-> more functionality out of the git-rebase--interactive.sh script into the
-> git-rebase--helper that is written in C, closely followed by my suggestion
-> to fold at least part of the functionality into the SHA-1
-> collapsing/expanding.
-> 
+Based on the activity of the file, nothing stands out as unusual.
 
-I've seen a few messages about this migration, but I'm not yet sure I understand
-the difference between the shell and the C implementations. Is the C version going
-to replace 'git-rebase--interactive.sh'?
+How we go about troubleshooting this and determining the cause?
 
-> If your patch series "wins", I can easily forward-port your changes to the
-> rebase-i-extra branch, but it may actually make sense to build on top of
-> the rebase-i-extra branch to begin with. If you agree: I pushed the
-> proposed change to the `rebase-i-extra+abbrev` branch at
-> https://github.com/dscho/git.
-> 
-
-If 'git-rebase--interactive.sh' is bound to be replaced, I could
-just shrink this to the Documentation cleanup (patches 4 and 5)
-and rework the rest on top of your new implementation.
-
-> I look forward to see this story unfold!
-> 
-> Ciao,
-> Johannes
-
-Thanks, 
-Liam
+Thanks,
+Paul van Wichen.
