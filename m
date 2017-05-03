@@ -2,69 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,URIBL_RHS_DOB shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 820A5207B3
-	for <e@80x24.org>; Wed,  3 May 2017 02:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D99B207B3
+	for <e@80x24.org>; Wed,  3 May 2017 03:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751617AbdECCkK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 22:40:10 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35667 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751163AbdECCkJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 22:40:09 -0400
-Received: by mail-pg0-f68.google.com with SMTP id i63so6288232pgd.2
-        for <git@vger.kernel.org>; Tue, 02 May 2017 19:40:08 -0700 (PDT)
+        id S1751970AbdECD3r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 23:29:47 -0400
+Received: from mail-yw0-f176.google.com ([209.85.161.176]:36668 "EHLO
+        mail-yw0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751927AbdECD3n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 23:29:43 -0400
+Received: by mail-yw0-f176.google.com with SMTP id l18so79311246ywh.3
+        for <git@vger.kernel.org>; Tue, 02 May 2017 20:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:mime-version:reply-to:to:subject:content-transfer-encoding
-         :date:message-id;
-        bh=nM3AA/fYrN6qCDlMR4RjiYD39VtEtJb7tWn0me0Be60=;
-        b=M7brEbpUyHpSv9F708Czyv/Q3jsgx45hZvN3jrSF/HyG6v407yJI35HSjRWGkZIXSx
-         /YhPDweQqQhTClmzEgdAIricPure6/SBMS/nS5OkkxJTj4MDDnDB7UQGsTHxjdpQdn+M
-         9cnTvuF4Izy2e+0xfVAPSkMkbYU4kuPAxCA/4TnlTC64VTYn6cLYrpCZokHPMmDX1xXx
-         rHVxkZ3LArK/7I+HBZLXs+Ivem/fCFOHZVyhTX4RxxWx0W/yJ6xbbbUhG3dXjhvmY8tv
-         MQ/4R5814rvQGSEK1aECPG5iIkKUAHinZ+J/5qwA4YbvY/YLK8nDUyE4HGwlo++kFZou
-         BeWA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=wR8113/KTbbkHqLhdk+XI0/6S7aWGML0sV1/lBan5h8=;
+        b=ZvMaTsANwk848FOb8Zp8N9r5Z41vCpGrvz+psCm2jrzUXScKJQ14BVl88au8JQt9vT
+         ltpdBP0iOX37LSr41YRLIMXz+41V5aHldoSWEN3ZsS9zCUgw2lrQRYYiHqY4ygZl5x+l
+         7617cF3bTe41KhaSiX6wSBDJgqBDt3KbigTumcvWr4WYaE7+R6zwFp2KVUF7HX8IlBPT
+         RNarMk5ATGBrqvprfhvjqmbXL/qFJFNLlBoLcpQyeYe/riorfdppERpKRRCFwdj5WAAA
+         lpC39i9yMhXHj7kbOe02do6UGD/kQCZ6R1FpVjRSXSyk+dGu/RqJ5Zu0zMlSy3JQBhUb
+         FagQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:mime-version:reply-to:to:subject
-         :content-transfer-encoding:date:message-id;
-        bh=nM3AA/fYrN6qCDlMR4RjiYD39VtEtJb7tWn0me0Be60=;
-        b=EQkZ7ZL3Spy9cu6XmrWMzK7kv6E6aUi1bbknPNn+d79Ie+thjPa9IsbopWlZ70s9Ek
-         N0c1/83EiBu0Di3qOuW8vwtQxp5bSxymOMjIp4ceyoMrWGtM9KUjQVd+72+9x+4/F/Ts
-         vBRMvy/vzrkfkjEiUl/CITLOuHOVW1CSjJM9nStaqVw2pn8gHKpw+HS+lpt8RVepn9IE
-         6D7CFCUXwTynPhLNwuwfNDg+GOF6zFWKYESsAUDh1m2Z97sNnAG9ob4KvpGD/mws5IZ/
-         2RlmNeOsyJlWbVhZJYsAL2s15AAG/EwEdsh/3gVGswMYIcaeWQpCX4TaG6FYoi5z3Mh3
-         7jSQ==
-X-Gm-Message-State: AN3rC/6K6QHAPQFgEJG2EbHp7SMkgJXnNF2SgBREjlYexIAZ0C4vhisE
-        e5A6+kFoF5fNPmDqIpkq4w==
-X-Received: by 10.99.51.79 with SMTP id z76mr36373315pgz.137.1493779207933;
-        Tue, 02 May 2017 19:40:07 -0700 (PDT)
-Received: from 45.77.32.35.vultr.com ([45.77.32.35])
-        by smtp.gmail.com with ESMTPSA id p62sm1156681pfp.48.2017.05.02.19.40.06
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 02 May 2017 19:40:06 -0700 (PDT)
-From:   BAC Credomatic <nadia.q18@gmail.com>
-X-Google-Original-From: "BAC Credomatic" <info@baccredomatic.com>
-MIME-Version: 1.0
-Reply-To: info@baccredomatic.com
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=wR8113/KTbbkHqLhdk+XI0/6S7aWGML0sV1/lBan5h8=;
+        b=Q0dd/dU4OP7FveJ0itWxlQUgdc7F/wzPRqM0h/LABgz9iUul2tMFk7QK5eQuPK527G
+         KfJP0FMM2uCxTeupF6nGcLNB5kYNEuDz+Kbv/wZ7pHEGGPWxxvlJobTT3s78i/FrLsir
+         oXnPWvvmzWkH2+I20fNgmpZ1EI03IgwcoJWg30EOH+CY+tG0GX71b/sMBxGyeGy6Kjda
+         Ltke8Kbo0rodiebvWQz/jW7Z7ylsZsFaT0HOMmMvq3hBF5XI8jVX36+HE/ql+13hvcTn
+         MvSMopELBDbJP/MsStqNQwd88eKMOhTO7/zRXSbKHeX7LvNx/L5mINrQc1wzH70e/nFm
+         ijMg==
+X-Gm-Message-State: AN3rC/7TFPn6c+mkb7s8IZ1DItRyNsD8n1YKIwM6VAs8pGBNgpZwmao5
+        sNcL61xRKeImEA==
+X-Received: by 10.129.77.7 with SMTP id a7mr3892084ywb.104.1493782182585;
+        Tue, 02 May 2017 20:29:42 -0700 (PDT)
+Received: from localhost.localdomain ([129.59.122.23])
+        by smtp.gmail.com with ESMTPSA id v3sm11329586ywi.79.2017.05.02.20.29.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 02 May 2017 20:29:41 -0700 (PDT)
+From:   Samuel Lijin <sxlijin@gmail.com>
 To:     git@vger.kernel.org
-Subject: Su cuenta bancaria esta bloqueada
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Smart_Send_4_1_3
-Date:   Wed, 3 May 2017 02:40:03 +0000
-Message-ID: <4900226159944185612131@vultr-guest>
+Cc:     Samuel Lijin <sxlijin@gmail.com>
+Subject: [PATCH 0/7] Keep git clean -d from inadvertently removing ignored files 
+Date:   Tue,  2 May 2017 22:29:25 -0500
+Message-Id: <20170503032932.16043-1-sxlijin@gmail.com>
+X-Mailer: git-send-email 2.12.2
+In-Reply-To: <xmqqshkof6jd.fsf@gitster.mtv.corp.google.com>
+References: <xmqqshkof6jd.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Su cuenta bancaria esta bloqueada. Para desbloquear tu cuenta, haz click aq=
-ui: http://baccredomaatic.com
+This patch series fixes the bug where git clean -d culls directories containing
+only untracked and ignored files, by first teaching read_directory() and
+read_directory_recursive() to search "untracked" directories (read: directories
+*treated* as untracked because they only contain untracked and ignored files)
+for ignored contents, and then teaching cmd_clean() to skip untracked
+directories containing ignored files.
+
+This does, however, introduce a breaking change in the behavior of git status:
+when invoked with --ignored, git status will now return ignored files in an
+untracked directory, whereas previously it would not.
+
+First patches to the actual C code that I'm sending out! :D Looking forward to
+feedback - the changes I made in read_directory_recursive() and read_directory()
+feel a bit hacky, but I'm not sure how to get around that.
+
+Samuel Lijin (7):
+  t7300: skip untracked dirs containing ignored files
+  dir: recurse into untracked dirs for ignored files
+  dir: add method to check if a dir_entry lexically contains another
+  dir: hide untracked contents of untracked dirs
+  dir: change linkage of cmp_name() and check_contains()
+  builtin/clean: teach clean -d to skip dirs containing ignored files
+  t7061: check for ignored file in untracked dir
+
+ builtin/clean.c            | 24 ++++++++++++++++--
+ dir.c                      | 61 ++++++++++++++++++++++++++++++++++++++++++++--
+ dir.h                      |  3 +++
+ t/t7061-wtstatus-ignore.sh |  1 +
+ t/t7300-clean.sh           | 10 ++++++++
+ 5 files changed, 95 insertions(+), 4 deletions(-)
+
+-- 
+2.12.2
+
