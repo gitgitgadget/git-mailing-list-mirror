@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9250207B3
-	for <e@80x24.org>; Wed,  3 May 2017 03:30:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 355C2207B3
+	for <e@80x24.org>; Wed,  3 May 2017 03:30:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751997AbdECD3t (ORCPT <rfc822;e@80x24.org>);
-        Tue, 2 May 2017 23:29:49 -0400
-Received: from mail-yw0-f194.google.com ([209.85.161.194]:36828 "EHLO
-        mail-yw0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751932AbdECD3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 2 May 2017 23:29:44 -0400
-Received: by mail-yw0-f194.google.com with SMTP id j9so13368985ywj.3
-        for <git@vger.kernel.org>; Tue, 02 May 2017 20:29:44 -0700 (PDT)
+        id S1752092AbdECD34 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 2 May 2017 23:29:56 -0400
+Received: from mail-yw0-f196.google.com ([209.85.161.196]:34437 "EHLO
+        mail-yw0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752004AbdECD3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 2 May 2017 23:29:50 -0400
+Received: by mail-yw0-f196.google.com with SMTP id u70so13433428ywe.1
+        for <git@vger.kernel.org>; Tue, 02 May 2017 20:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vrJlBSo+/bncGW5tgT5KGiQWbkkdRK1cTMCdbHmh/sQ=;
-        b=FKgcQEdwILQ0TKrwlYbvyLrinNVbQPjMb9T/cLhnZz+NmFxhAUX5xyHs88BJ3RzxaG
-         Fsboit8c29h54RetJqcE+8f1BZqbggDdggmtTuw1Czv0DX7B1Q22zDHUIC+EpE0OkQ5m
-         wqAxB+pkTp5n55DnNEblVUZaF4DbfjrVChJH46kjEDBdEkj21eSK3CjtSssy+yqDU+D1
-         gSp2lksUJhxXI2h/TJLf1XQZZV38B95I+6+VOqvY87wWXmTSGoZ5ith0gT5B9weoEUDV
-         TazDzDN5ltxR9o97cP2+Za9YDLW85rOb2JCL4CVxivAasY8hThRTXrBjlvNxL02a5L3/
-         JUJg==
+        bh=1Ztn3vT8RtUzy5JPyN+b2t2ZFCpYXFPMQZfoX6pEkYs=;
+        b=rugG+KSwPKwlUEPuBojIc4yD9AhjyZyiA/sZjiy652wdqVtHEUKthrMbf16N3b+GGa
+         dLPhhu/kKUEW71LjndYiawHBB8cx9wIAJacVMDmv2ex7il0IJvTPcBgmdmUyffamhUKq
+         /O4j7dBkYpnR8dKXHw97eO/D/ZXXIVhP8JdR84A96RJ6CTPd9uTEiM7vY3wFNUFBK023
+         VOJLSHw4iEts+M8e/sJCngq5NbJ9id30dptS80RMPtPPI8IWU58fiYCPakxmkBbebJAB
+         YplObd4vA5+O+7uXs+RUek2lYfAEa7WPl3BX0+WqOKKOW8VHDUrbLL3dIQv2nP81Bvvw
+         xd5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vrJlBSo+/bncGW5tgT5KGiQWbkkdRK1cTMCdbHmh/sQ=;
-        b=ijP3f0ZGwAUkfLs4/iyDYmoJVwFBoSM2IkChy3rfVZSFH7zL1ls+EcdYoYUDyXIPhE
-         T/Sbihts22vp+hpT6xTbJpIABaIqMv8b7X7z5p2Q5Kk2pcyOAmV990WtVKUoZlVcYWAK
-         3kvfeQraFds6o7ArMvCjYDGLfESHKterqwXW9b/BVFObaD1RU6OnZHKjpWaFT8waeCvQ
-         IePUHxjDGNM1Xu79SWQpE7fhF7Xq8/1f3wJF2Tm/MCZ1PCcpWqEqneVZbA6CsYSQoUH0
-         PrkZ/sm+EN12gEnUHouQYsWosAWJ42dZ1ByU39J1BeG7xbtYwmDNlcT1OyPf8/txoBHQ
-         s5BA==
-X-Gm-Message-State: AN3rC/6fX+cRwKH0cUwuLq5h9T/AjPPY1YX8FL5DiWiKPzGgcLLbmFhy
-        0LRdcSvJG6aUnQ==
-X-Received: by 10.129.124.214 with SMTP id x205mr26906905ywc.8.1493782183342;
-        Tue, 02 May 2017 20:29:43 -0700 (PDT)
+        bh=1Ztn3vT8RtUzy5JPyN+b2t2ZFCpYXFPMQZfoX6pEkYs=;
+        b=LiywBLFn/nlyQhrLHsWtb88RhzM/Z2usRG1Oa+dLDryFX8j/Sv9b/7lgD77QiQOJ6y
+         uRvsS0NUcFOnWGRxgHs8pCTHNiW1BNs/SbaSmkvGyRXs4hWkOEIWeqh9XzET7zYF+xtU
+         6Zc35YYZno0GBpXk+LhrRtQ/uJS9yNAZhmvg3JqczsKdKrkoT4RjpF8dwVv6zpvXjwCC
+         HlglurHjCcUp3Dj7jS7RDZ/KrTLo7OlrmS/7iLnKgm/PQh688UsqQDIXwSclEXITjEVE
+         6XAuS+1lk9s0yF1K/ouGq6Dq+ZzuIinyqNOIwy29UYv2fB3i4H66jdJ5uEvQfpgm3H3y
+         9v9w==
+X-Gm-Message-State: AN3rC/6Xi9khSfZCDVB4TXSANw1l97hQRSfn6FqpaJNtj5mM2PBGg1e2
+        JkkdKjqTzLMbFA==
+X-Received: by 10.13.223.196 with SMTP id i187mr1493577ywe.185.1493782189153;
+        Tue, 02 May 2017 20:29:49 -0700 (PDT)
 Received: from localhost.localdomain ([129.59.122.23])
-        by smtp.gmail.com with ESMTPSA id v3sm11329586ywi.79.2017.05.02.20.29.42
+        by smtp.gmail.com with ESMTPSA id v3sm11329586ywi.79.2017.05.02.20.29.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 02 May 2017 20:29:42 -0700 (PDT)
+        Tue, 02 May 2017 20:29:48 -0700 (PDT)
 From:   Samuel Lijin <sxlijin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH 1/7] t7300: skip untracked dirs containing ignored files
-Date:   Tue,  2 May 2017 22:29:26 -0500
-Message-Id: <20170503032932.16043-2-sxlijin@gmail.com>
+Subject: [PATCH 7/7] t7061: check for ignored file in untracked dir
+Date:   Tue,  2 May 2017 22:29:32 -0500
+Message-Id: <20170503032932.16043-8-sxlijin@gmail.com>
 X-Mailer: git-send-email 2.12.2
 In-Reply-To: <20170503032932.16043-1-sxlijin@gmail.com>
 References: <xmqqshkof6jd.fsf@gitster.mtv.corp.google.com>
@@ -62,31 +62,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If git sees a directory which contains only untracked and ignored
-files, clean -d should not remove that directory.
 ---
- t/t7300-clean.sh | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ t/t7061-wtstatus-ignore.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index b89fd2a6a..948a455e8 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -653,4 +653,14 @@ test_expect_success 'git clean -d respects pathspecs (pathspec is prefix of dir)
- 	test_path_is_dir foobar
- '
+diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+index cdc0747bf..fc6013ba3 100755
+--- a/t/t7061-wtstatus-ignore.sh
++++ b/t/t7061-wtstatus-ignore.sh
+@@ -9,6 +9,7 @@ cat >expected <<\EOF
+ ?? actual
+ ?? expected
+ ?? untracked/
++!! untracked/ignored
+ EOF
  
-+test_expect_success 'git clean -d skips untracked dirs containing ignored files' '
-+	echo /foo/bar >.gitignore &&
-+	rm -rf foo &&
-+	mkdir -p foo &&
-+	touch foo/bar &&
-+	git clean -df &&
-+	test_path_is_file foo/bar &&
-+	test_path_is_dir foo
-+'
-+
- test_done
+ test_expect_success 'status untracked directory with --ignored' '
 -- 
 2.12.2
 
