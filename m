@@ -2,89 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFA001F829
-	for <e@80x24.org>; Wed,  3 May 2017 12:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C627207F8
+	for <e@80x24.org>; Wed,  3 May 2017 12:29:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751266AbdECMQv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 08:16:51 -0400
-Received: from mail-io0-f169.google.com ([209.85.223.169]:33325 "EHLO
-        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750966AbdECMQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 08:16:49 -0400
-Received: by mail-io0-f169.google.com with SMTP id p24so4607887ioi.0
-        for <git@vger.kernel.org>; Wed, 03 May 2017 05:16:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=BwoykM7Typ3G8YV0XM78VkFZxrlOjnxihTXN4/gcj+s=;
-        b=NrGnPGnJ7I8YpoJY6ABdyzAECkRR3qgK3tIty4MDwY8si6PHcabpdNp5KtaaG7WrP8
-         12RXqvpMEZGDVaiNgQ8vFkaAb8vCO+Mg3hnBqTpsi/vFwcShUIAX5CcVX7ezbkF9+zzx
-         nPWbqBfvlLQGusuz0wgEEv4ndv0N/awSBTavmo2g/rlchXCTrTCvEzDJ83IRzhBfIYEi
-         7M9044+71rI6bMtbQqmV+L7SmtDEJ8tfKjq4dGBeQc0NX3gfibIjiG93eACAYUaXXkNf
-         DRotts2+EEn6hIkkIk9pJxom1w1z7bId5Xk8bNd1L9LASJ3TNwwRjdb5SOhSauaYIBc/
-         Dn6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=BwoykM7Typ3G8YV0XM78VkFZxrlOjnxihTXN4/gcj+s=;
-        b=gI9ga9jwKNaZ6jr6Ni50sj47cToNqQn4YdnRPI1i0TEm0GckfigcqCy+WC3WDRx+lp
-         6jmK9LilZR+4P/oz8QESI9aUS1KvR+a0UKBakKkYcQBm9K621o/zLJn72+RBnU3qdEWj
-         uZgrc0b8a4bPkibqIswqT3w2G3MFcJoXGJ5fNmxjmYTS1GlCAjagM+eaAzAkAjTSTrwA
-         U/AmO0c+X22tRof8x+ykzp307jiehmu9ovQ3ybLOqw+w6ZH/v12kOtm9k6CroqbWEhhD
-         CVlNv/53Qp60/kSn2gOsy6cVIkgaU9xLTmB3IBhS/HOEFX0o5BF8j/W8anHpsKmJytTQ
-         dvDw==
-X-Gm-Message-State: AN3rC/4CvK/FTCmhIPeQyK3asnWMqcmbWo4gaGmkHptWu6f/vaQZkzGf
-        RnZmYNA0kmuT+2rKdjMP6p6XBDfXqCRhI2w=
-X-Received: by 10.107.203.1 with SMTP id b1mr37771157iog.29.1493813808347;
- Wed, 03 May 2017 05:16:48 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.79.30.67 with HTTP; Wed, 3 May 2017 05:16:47 -0700 (PDT)
-From:   Sebastian Schuberth <sschuberth@gmail.com>
-Date:   Wed, 3 May 2017 14:16:47 +0200
-Message-ID: <CAHGBnuMUrNFv30d+pjheiCAikM89XshQTFuDXBzu+EcxNY_94w@mail.gmail.com>
-Subject: Cloning a custom refspec does not work as expected
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+        id S1751382AbdECM3r convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 3 May 2017 08:29:47 -0400
+Received: from rrzmta2.uni-regensburg.de ([194.94.155.52]:37593 "EHLO
+        rrzmta2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751048AbdECM3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 08:29:46 -0400
+Received: from rrzmta2.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id 2F05073492
+        for <git@vger.kernel.org>; Wed,  3 May 2017 14:29:44 +0200 (CEST)
+Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by rrzmta2.uni-regensburg.de (Postfix) with ESMTP id 0F2CD73388
+        for <git@vger.kernel.org>; Wed,  3 May 2017 14:29:44 +0200 (CEST)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
+        with Novell_GroupWise; Wed, 03 May 2017 14:29:43 +0200
+Message-Id: <5909CD36020000A100025CC7@gwsmtp1.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 14.2.2 
+Date:   Wed, 03 May 2017 14:29:42 +0200
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     "Samuel Lijin" <sxlijin@gmail.com>, <gitster@pobox.com>
+Cc:     <git@vger.kernel.org>
+Subject: Antw: Re: Terrible bad performance for it blame --date=iso -C
+ -C master -- <file>
+References: <58DE0598020000A1000256CE@gwsmtp1.uni-regensburg.de>
+ <xmqq60ip1m0f.fsf@gitster.mtv.corp.google.com>
+ <CAJZjrdUt+=oLt0cDcs2+bJMCFR4h8UUSFmZkx6-1menz4haPig@mail.gmail.com>
+ <xmqqfugof4zb.fsf@gitster.mtv.corp.google.com>
+ <CAJZjrdVZ7gTZvm=CcG7pUPWtXjsMsHgyMRiE8xoXm=bZ4j6FEQ@mail.gmail.com>
+In-Reply-To: <CAJZjrdVZ7gTZvm=CcG7pUPWtXjsMsHgyMRiE8xoXm=bZ4j6FEQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8BIT
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+>>> Samuel Lijin <sxlijin@gmail.com> schrieb am 03.05.2017 um 09:12 in Nachricht
+<CAJZjrdVZ7gTZvm=CcG7pUPWtXjsMsHgyMRiE8xoXm=bZ4j6FEQ@mail.gmail.com>:
+> On Mon, May 1, 2017 at 7:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Samuel Lijin <sxlijin@gmail.com> writes:
+>>
+>>> On Fri, Mar 31, 2017 at 10:52 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>>> It might not be a bad idea to teach "blame" not to pay attention to
+>>>> any path that is marked as "-diff" (e.g. binary files) when trying
+>>>> to see if remaining contents appeared by borrowing from them.  We do
+>>>> not have that heuristics (yet).
+>>>
+>>> Could you elaborate on this? Do you mean to tell diffcore-rename to
+>>> ignore diff_filespec objects if they're binary?
+>>
+>> No and yes ;-).  I do not think it is a good idea to unconditionally
+>> ignore binary in diffcore-rename.
+>>
+>> But when we know that the rename detection is called from inside
+>> blame.c, where by definition we would be digging line-oriented
+>> contents, there is no point checking if the contents we are looking
+>> for came from an existing binary file.
+> 
+> A followup thought: perhaps it would make sense for blame.c rename
+> detection to only consider files with the same extension?
 
-I'm trying to clone a custom ref, avoiding the need to init && fetch
-manually. From reading [1] which says:
+As traditionally file type and file name extension had little to do with each other in UNIX, I thing that would not be a good solution (to assume the opposite). I also know that Git does not care too much about hierarchies also, but my idea was so find candidates "nearby", i.e. look in the subdirectories of the first level and in the parent directory; then, if needed, widen the radius of the search...
 
-"Set a configuration variable in the newly-created repository; this
-takes effect immediately after the repository is initialized, but
-before the remote history is fetched or any files checked out. [...]
-This makes it safe, for example, to add additional fetch refspecs to
-the origin remote."
+Regards,
+Ulrich
 
-I'd assume that this would work:
 
-$ git clone -c remote.origin.fetch=+refs/changes/*:refs/remotes/origin/changes/*
-https://gerrit.googlesource.com/git-repo
 
-In fact, this *does* add the custom refs correct to .git/config, but
-they are not fetched during the clone. I can manually fix that by
-doing
 
-$ cd git-repo
-$ git fetch
 
-afterwards, but the whole point is to avoid exactly that separate step.
-
-Is this a code bug or documentation bug?
-
-I'm using git version 2.12.2.windows.2.
-
-[1] https://git-scm.com/docs/git-clone#git-clone---configltkeygtltvaluegt
-
--- 
-Sebastian Schuberth
