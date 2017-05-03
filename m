@@ -2,96 +2,144 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 511A9207D6
-	for <e@80x24.org>; Wed,  3 May 2017 11:22:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCEB7207D6
+	for <e@80x24.org>; Wed,  3 May 2017 11:32:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752011AbdECLWU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 07:22:20 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53949 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751766AbdECLWS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 07:22:18 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9KR0-1dE5223fAs-00ChRK; Wed, 03
- May 2017 13:22:04 +0200
-Date:   Wed, 3 May 2017 13:22:03 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Liam Beguin <liambeguin@gmail.com>
-cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v3 0/6] rebase -i: add config to abbreviate
- command-names
-In-Reply-To: <1493769381.29673.39.camel@gmail.com>
-Message-ID: <alpine.DEB.2.20.1705031315460.3480@virtualbox>
-References: <20170502040048.9065-1-liambeguin@gmail.com>  <alpine.DEB.2.20.1705021741580.3480@virtualbox> <1493769381.29673.39.camel@gmail.com>
-User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
+        id S1752050AbdECLca (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 07:32:30 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:34123 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751556AbdECLc3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 07:32:29 -0400
+Received: by mail-io0-f193.google.com with SMTP id h41so34796787ioi.1
+        for <git@vger.kernel.org>; Wed, 03 May 2017 04:32:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=sH7PljIzka4brWQFKcmRBoLAi/LtY1RyJ9+QF4Y5BKw=;
+        b=H9rCI5sCUHEBdTobD3qhg4Ticl+IsdkBq0/v+dl7YnKeziRpPVqAb4FRImVkVpeTTw
+         HLgafajNt+6JnNvNGNPjMOQzNKqXsPWvS2r8HHIxC39wJN26ZFfRrdRD89nDs87OFD7b
+         NyQDmH02PGLjOxe0LjVjnZZ4ukU0xXZpVshcaX0J5n9F3Mk0kmcbuHIxkg4P4wrxmxR/
+         lkSDD611ipgTfMjiIth8X9SYmJu/HvxKRl/Yt+2T4KIXQhKCM/LmdOHeA/IJLOmjuYMM
+         cyYt3yxOE9UWWnkWSS5Zf1o5pK9zNQLmecYoIRgczCIK5IaKvVNCFH/BK9YOSRJ3fJOS
+         yrNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=sH7PljIzka4brWQFKcmRBoLAi/LtY1RyJ9+QF4Y5BKw=;
+        b=RBfwb2FeSc5icqmiyoIPBQyJIsHS4PbiOB3plvt04flN8TqaFyXZ19OYjVWIYzDqA2
+         01YbGiS0z+DN+fApxFa0+rVTLzt57AukKgdNyT9s1YFhjf4PfkV4Jdhxh1xe5mk0dGyC
+         fGeSj5nB42rLMWPTX1ioLNwOr7K0hKe3w40qfp3hfO04qk8bTkPDgnuA3DPtW6NLcZKH
+         MxJm24Ca8aPdpnH55O6ebvC58pYQIU+A14RRzC2BQH53l3/EZiGgw6BSX05CX5BHVMT/
+         j1gVzFWyku5oLPNC911wY+WKyRP6MQ6IFfFA6psvE+Bvo42z9/0fF0YegHO1YssHPTIB
+         87Nw==
+X-Gm-Message-State: AN3rC/7ELxEOweTnn1xLPSaI0clugvvMXkjqnlIvlRI4ZdouOBqPQRfL
+        3eyrFzR4kkpQCeZBY7gkzqPeHUrbhIA8
+X-Received: by 10.107.11.89 with SMTP id v86mr39105630ioi.85.1493811148503;
+ Wed, 03 May 2017 04:32:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:5U1OdrTx9wyzjDs3mheyvIPePE4aUhm9BRPC6BuGkW3nXl8rFlu
- OujAwUbzqyCHytm5HUHk8nV6+wNGRQ1WKyLNXRy2W7XVAVH7rmOcdq22GI3YBUWie8rtJS+
- d9p3fzulhQ80VEUzwdu1EYvu4tH6Qyefwepb8xLNA/zM18YZjduTnnO2OMel/StNDQjym27
- rFtEaEAWYbRgKkgGJGFSQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MJ4rnhv0miU=:ZJ/q+wddaGeFKoMKxdwKCi
- SlSxj2xFK1nP1YZZf/oce/CeWvFn8rRfcPWakeGMM4DrDG8cDK5/3vnTf8Ll05ukPDLZF6s4+
- uXIhRMeNDMlZt8OVUbKFKpqGafuggF3zg5aIVf6BYHyPv4mWfMvrOzVOVTAXqMS8jLD26lyGQ
- ewqyRWbnwbh5bOrnYzN5fETZLKrM+50W+HQ5kuf9DqgC1b0bEc1iDEsi3NvqzEJwE2KWGqVvu
- N/OK+MvBvqUk0sCQKkUiHGuZslkZxQHErkGkae6HCCSzVcaXquTxfcJ81dDSmYvqAcrGubKFP
- W/5aOv8xEHVPB4zJ9GzRh1ACh0rGKCc2IA4QYyDkxuSdqV/uSgFwZEZcpsV/Lvj6O+a+rVDVn
- vAz82cS7bA3mir6gXr8+SIB0F2ZBJRa2ooDekKBh8CIVBETSG8zJ1EoeeYdY+khD9vyLb7KSo
- JnMtIj8r0gwayAW5ysYPrzuwS12KljR43PgpUM2SqbNn3jeXgWzuTASckZej+ab4g3hQVvvVQ
- tMu9/grZ8FIq4GkUxnoy/WzWE9VMu8lxu66QXRqxhYXt2o/vRQQoxW3ldSZIj2NEwGPOkk2vX
- EnbHZ4zlv4wNp18H8jCbYO0bc2bCvx8CRtTFUoX3HSYDsj5EcMg9dF35atHDKjc6Rie32TCV0
- DYh0hx9R7wVaNDi17U+Lfd55tyzTIliuozfZYYuZ6oc/IA4GIaHx6WUnDEKd25MmCYGY9XGg0
- c2lkisNztaGKAfRnxiUbsYA1GhJUghbO6LpP9VYDPIcqRk+9itCPATvPFNcBRWd7IO46X6dk5
- Okru/5W
+Received: by 10.79.150.90 with HTTP; Wed, 3 May 2017 04:31:48 -0700 (PDT)
+In-Reply-To: <b2d1d2fe-1b9b-4afa-192f-267bbb5df487@jeffhostetler.com>
+References: <20170501190719.10669-1-sbeller@google.com> <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZkssTEdNyzYh1YYv89szvig=rn2j3DJcHxsbzdADRw-w@mail.gmail.com> <b2d1d2fe-1b9b-4afa-192f-267bbb5df487@jeffhostetler.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Wed, 3 May 2017 06:31:48 -0500
+Message-ID: <CAJZjrdWF4NLPty81wmPsgUoVz1FddYhTGdjrNuB1LcME5qrwDQ@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Start of a journey: drop NO_THE_INDEX_COMPATIBILITY_MACROS
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Liam,
+On Tue, May 2, 2017 at 9:05 AM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+>
+>
+> On 5/2/2017 12:17 AM, Stefan Beller wrote:
+>>
+>> On Mon, May 1, 2017 at 6:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>> Stefan Beller <sbeller@google.com> writes:
+>>>
+>>>> This applies to origin/master.
+>>>>
+>>>> For better readability and understandability for newcomers it is a good
+>>>> idea
+>>>> to not offer 2 APIs doing the same thing with on being the #define of
+>>>> the other.
+>>>>
+>>>> In the long run we may want to drop the macros guarded by
+>>>> NO_THE_INDEX_COMPATIBILITY_MACROS. This converts a couple of them.
+>
+>
+> Thank you for bringing this up and making this proposal.
+> I started a similar effort internally last fall, but
+> stopped because of the footprint size.
+>
+>>>
+>>> Why?  Why should we keep typing &the_index, when most of the time we
+>>> are given _the_ index and working on it?
+>>
+>>
+>> As someone knowledgeable with the code base you know that the cache_*
+>> and index_* functions only differ by an index argument. A newcomer may not
+>> know this, so they wonder why we have (A) so many functions [and which is
+>> the
+>> right function to use]; it is an issue of ease of use of the code base.
+>>
+>> Anything you do In submodule land today needs to spawn new processes in
+>> the submodule. This is cumbersome and not performant. So in the far future
+>> we may want to have an abstraction of a repo (B), i.e. all repository
+>> state in
+>> one struct/class. That way we can open a submodule in-process and perform
+>> the required actions without spawning a process.
+>>
+>> The road to (B) is a long road, but we have to art somewhere. And this
+>> seemed
+>> like a good place by introducing a dedicated argument for the
+>> repository. In a follow
+>> up in the future we may want to replace &the_index by
+>> "the_main_repo.its_index"
+>> and then could also run the commands on other (submodule) indexes. But
+>> more
+>> importantly, all these commands would operate on a repository object.
+>>
+>> In such a far future we would have functions like the cmd_* functions
+>> that would take a repository object instead of doing its setup discovery
+>> on their own.
+>>
+>> Another reason may be its current velocity (or absence of it) w.r.t. to
+>> these
+>> functions, such that fewer merge conflicts may arise.
+>
+>
+> In addition to (eventually) allowing multiple repos be open at
+> the same time for submodules, it would also help with various
+> multi-threading efforts.  For example, we have loops that do a
+> "for (k = 0, k < active_nr; k++) {...}"  There is no visual clue
+> in that code that it references "the_index" and therefore should
+> be subject to the same locking.  Granted, this is a trivial example,
+> but goes to the argument that the code has lots of subtle global
+> variables and macros that make it difficult to reason about the
+> code.
 
-On Tue, 2 May 2017, Liam Beguin wrote:
-
-> On Tue, 2017-05-02 at 17:48 +0200, Johannes Schindelin wrote:
-> 
-> > I offered a couple of comments, my biggest one probably being that
-> > this patch series is crossing paths with my patch series that tries to
-> > move more functionality out of the git-rebase--interactive.sh script
-> > into the git-rebase--helper that is written in C, closely followed by
-> > my suggestion to fold at least part of the functionality into the
-> > SHA-1 collapsing/expanding.
-> 
-> I've seen a few messages about this migration, but I'm not yet sure I
-> understand the difference between the shell and the C implementations.
-> Is the C version going to replace 'git-rebase--interactive.sh'?
-
-The C version has already started to replace the shell script, yes. In
-adding and using git-rebase--helper, there are already parts of the
-interactive rebase functionality that are run using C code only. The idea
-is to move more and more functionality over (separating out the
---preserve-merges handling into a different shell script, as I have no
-plans to convert that code to C, and as far as I can see nobody else wants
-to step up to that task, either). Eventually, we may be able to finish
-that gigantic task of having git-rebase be all builtin C code.
-
-> > If your patch series "wins", I can easily forward-port your changes to
-> > the rebase-i-extra branch, but it may actually make sense to build on
-> > top of the rebase-i-extra branch to begin with. If you agree: I pushed
-> > the proposed change to the `rebase-i-extra+abbrev` branch at
-> > https://github.com/dscho/git.
-> 
-> If 'git-rebase--interactive.sh' is bound to be replaced, I could
-> just shrink this to the Documentation cleanup (patches 4 and 5)
-> and rework the rest on top of your new implementation.
-
-I kind of hoped that Junio would chime in with his verdict. That would be
-the ultimate deciding factor, I think.
-
-Ciao,
-Johannes
+Just to throw out an example, I'm relatively new to the codebase (I've
+been lurking on the mailing list for a few months now) and for a
+recent project (I'm an undergrad wrapping up my senior year, and one
+of my classes' final projects was to do something that involved
+concurrency) I took a shot at parallelizing the estimate_similarity()
+calls in diffcore_rename(). The only way I was able to get it to work
+was by dropping global mutexes in one or two files (the code for those
+mutexes still makes me cringe), because of concurrent writes to global
+data structures.
