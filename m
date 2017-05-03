@@ -2,95 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6C0C207F8
-	for <e@80x24.org>; Wed,  3 May 2017 11:16:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 511A9207D6
+	for <e@80x24.org>; Wed,  3 May 2017 11:22:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751650AbdECLQ2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 07:16:28 -0400
-Received: from mail-oi0-f54.google.com ([209.85.218.54]:34226 "EHLO
-        mail-oi0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751046AbdECLQ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 07:16:26 -0400
-Received: by mail-oi0-f54.google.com with SMTP id b204so17759661oii.1
-        for <git@vger.kernel.org>; Wed, 03 May 2017 04:16:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eIHyDmDXpQTjDfeuPpCQ64/Ia+MuXUMh/+CqTBViluU=;
-        b=VJK0HA5G5WqQS9LqfucgI3xJr6vMHYu6ogiOpM0reSNu+hni00FwhXMi9FVJd1csO9
-         Qv55WKh1OpboED0T0A1rMhFpsZRXUam/Q4QoF6uPu25zEVB261sxsYGkUEJ/gHWKcZHJ
-         sTGWTGNkMSLAGVzwKAvxuFvuAhiQwODhUR8WuAJwJcCwXUwVdJoW2MbaUPrkN12TXzrV
-         UXv5SRvxN0VhEEO91OrRQaUq5ZZ9QKIFgz8WywIaq7QhlB0kPGuKYwM3PzTdFzEFNRgY
-         ciT4Ru+r/Zus3jJjYfN2Sq8uepGowKznA+3h9J+XiXuq9bw3Fp2SeFLMn52jzHzVQC4t
-         JGtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eIHyDmDXpQTjDfeuPpCQ64/Ia+MuXUMh/+CqTBViluU=;
-        b=c+X10IoLlSDTidhegdZDJEpeN112wsNZvEelm7hIe8v8XI2ruRmp/zPKKg+KTJDGM8
-         8zAfLN5t0d7yUXg7AMu2bfV7Ku2cQ68aZynFVOoud75QcPhfkophG3QgE8cxZ/cEIXMw
-         CmuGrF/Lh9ZqsThWQIv+AdbTM8j8fkP2nwzyhlVvfuTsTXTf9Xy97uY95T7rPoRKp5o1
-         m5doteW+G+VSJaL+qX0Mkw/91kuvMgU9DakdUfmHyeyMcVFz3ynGMlDr/umq8O4WYfPO
-         mSofStihP9KeF6bfboQYhIvYe0BoxOBp6RKmnzsOm+qD4Ny7MJrW+K7jB7YATn6yUTgY
-         6oGw==
-X-Gm-Message-State: AN3rC/7MCwKWTqbrYm350wK2er0oeMlW9d7A7VXuWhYkeR5VOLmc85Al
-        S3a1Y+4FYMROck+CSZna57+McEyqGg==
-X-Received: by 10.202.82.205 with SMTP id g196mr7177320oib.153.1493810186155;
- Wed, 03 May 2017 04:16:26 -0700 (PDT)
+        id S1752011AbdECLWU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 07:22:20 -0400
+Received: from mout.gmx.net ([212.227.17.21]:53949 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751766AbdECLWS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 07:22:18 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9KR0-1dE5223fAs-00ChRK; Wed, 03
+ May 2017 13:22:04 +0200
+Date:   Wed, 3 May 2017 13:22:03 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Liam Beguin <liambeguin@gmail.com>
+cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v3 0/6] rebase -i: add config to abbreviate
+ command-names
+In-Reply-To: <1493769381.29673.39.camel@gmail.com>
+Message-ID: <alpine.DEB.2.20.1705031315460.3480@virtualbox>
+References: <20170502040048.9065-1-liambeguin@gmail.com>  <alpine.DEB.2.20.1705021741580.3480@virtualbox> <1493769381.29673.39.camel@gmail.com>
+User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Received: by 10.74.145.140 with HTTP; Wed, 3 May 2017 04:15:55 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.20.1705031139090.3480@virtualbox>
-References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1705021406510.3480@virtualbox>
- <CACBZZX5M1Pnvw01wP8id75Ja9NJ3nwVfydsX6g0Ys_QD72r6dQ@mail.gmail.com>
- <alpine.DEB.2.20.1705021756530.3480@virtualbox> <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com>
- <alpine.DEB.2.20.1705031139090.3480@virtualbox>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 3 May 2017 18:15:55 +0700
-Message-ID: <CACsJy8C1vaNFint17-ASy=RQnQswEJf-goQ-wiRCFdkeh+punw@mail.gmail.com>
-Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May
- 2017, #01; Mon, 1)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:5U1OdrTx9wyzjDs3mheyvIPePE4aUhm9BRPC6BuGkW3nXl8rFlu
+ OujAwUbzqyCHytm5HUHk8nV6+wNGRQ1WKyLNXRy2W7XVAVH7rmOcdq22GI3YBUWie8rtJS+
+ d9p3fzulhQ80VEUzwdu1EYvu4tH6Qyefwepb8xLNA/zM18YZjduTnnO2OMel/StNDQjym27
+ rFtEaEAWYbRgKkgGJGFSQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MJ4rnhv0miU=:ZJ/q+wddaGeFKoMKxdwKCi
+ SlSxj2xFK1nP1YZZf/oce/CeWvFn8rRfcPWakeGMM4DrDG8cDK5/3vnTf8Ll05ukPDLZF6s4+
+ uXIhRMeNDMlZt8OVUbKFKpqGafuggF3zg5aIVf6BYHyPv4mWfMvrOzVOVTAXqMS8jLD26lyGQ
+ ewqyRWbnwbh5bOrnYzN5fETZLKrM+50W+HQ5kuf9DqgC1b0bEc1iDEsi3NvqzEJwE2KWGqVvu
+ N/OK+MvBvqUk0sCQKkUiHGuZslkZxQHErkGkae6HCCSzVcaXquTxfcJ81dDSmYvqAcrGubKFP
+ W/5aOv8xEHVPB4zJ9GzRh1ACh0rGKCc2IA4QYyDkxuSdqV/uSgFwZEZcpsV/Lvj6O+a+rVDVn
+ vAz82cS7bA3mir6gXr8+SIB0F2ZBJRa2ooDekKBh8CIVBETSG8zJ1EoeeYdY+khD9vyLb7KSo
+ JnMtIj8r0gwayAW5ysYPrzuwS12KljR43PgpUM2SqbNn3jeXgWzuTASckZej+ab4g3hQVvvVQ
+ tMu9/grZ8FIq4GkUxnoy/WzWE9VMu8lxu66QXRqxhYXt2o/vRQQoxW3ldSZIj2NEwGPOkk2vX
+ EnbHZ4zlv4wNp18H8jCbYO0bc2bCvx8CRtTFUoX3HSYDsj5EcMg9dF35atHDKjc6Rie32TCV0
+ DYh0hx9R7wVaNDi17U+Lfd55tyzTIliuozfZYYuZ6oc/IA4GIaHx6WUnDEKd25MmCYGY9XGg0
+ c2lkisNztaGKAfRnxiUbsYA1GhJUghbO6LpP9VYDPIcqRk+9itCPATvPFNcBRWd7IO46X6dk5
+ Okru/5W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 3, 2017 at 4:45 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->>     So it makes sense to give our downstream distributors a nudge to
->>     switch over to it.
+Hi Liam,
 
-Some contributor (i.e. me) was not happy with this nudging though. The
-other day I switched to some branch (probably 'pu') and the build
-failed because, guess what, I didn't have pcre2 installed. If I set
-USE_LIBPCRE1 then I lose pcre support when switching to other
-branches. And no, I don't want to install libpcre2, not when I'm
-forced to this way.
+On Tue, 2 May 2017, Liam Beguin wrote:
 
-188 packages on Gentoo optionally depend on libpcre, 6 packages on
-libpcre2. Chances that a Gentoo user has libpcre2 already are rather
-low. I'll revisit my installation when the level of libpcre2 support
-grows a bit more than that. You can nudge distributors directly,
-probably more efficient too.
+> On Tue, 2017-05-02 at 17:48 +0200, Johannes Schindelin wrote:
+> 
+> > I offered a couple of comments, my biggest one probably being that
+> > this patch series is crossing paths with my patch series that tries to
+> > move more functionality out of the git-rebase--interactive.sh script
+> > into the git-rebase--helper that is written in C, closely followed by
+> > my suggestion to fold at least part of the functionality into the
+> > SHA-1 collapsing/expanding.
+> 
+> I've seen a few messages about this migration, but I'm not yet sure I
+> understand the difference between the shell and the C implementations.
+> Is the C version going to replace 'git-rebase--interactive.sh'?
 
-> ...
->
-> I hate to be that someone, but it has to be said: this is a disruptive
-> change, and it would be a lot better to make it an opt-in at first, and
-> when the dust settled about this option and many distributions have opted
-> in already because of the benefits and tested this thoroughly in practice,
+The C version has already started to replace the shell script, yes. In
+adding and using git-rebase--helper, there are already parts of the
+interactive rebase functionality that are run using C code only. The idea
+is to move more and more functionality over (separating out the
+--preserve-merges handling into a different shell script, as I have no
+plans to convert that code to C, and as far as I can see nobody else wants
+to step up to that task, either). Eventually, we may be able to finish
+that gigantic task of having git-rebase be all builtin C code.
 
-Agreed.
--- 
-Duy
+> > If your patch series "wins", I can easily forward-port your changes to
+> > the rebase-i-extra branch, but it may actually make sense to build on
+> > top of the rebase-i-extra branch to begin with. If you agree: I pushed
+> > the proposed change to the `rebase-i-extra+abbrev` branch at
+> > https://github.com/dscho/git.
+> 
+> If 'git-rebase--interactive.sh' is bound to be replaced, I could
+> just shrink this to the Documentation cleanup (patches 4 and 5)
+> and rework the rest on top of your new implementation.
+
+I kind of hoped that Junio would chime in with his verdict. That would be
+the ultimate deciding factor, I think.
+
+Ciao,
+Johannes
