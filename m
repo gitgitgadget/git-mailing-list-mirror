@@ -7,87 +7,111 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 831F9207D6
-	for <e@80x24.org>; Wed,  3 May 2017 10:28:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6E02207D6
+	for <e@80x24.org>; Wed,  3 May 2017 10:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753355AbdECK2A (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 06:28:00 -0400
-Received: from mail-oi0-f42.google.com ([209.85.218.42]:35222 "EHLO
-        mail-oi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752586AbdECK16 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 06:27:58 -0400
-Received: by mail-oi0-f42.google.com with SMTP id l18so27624095oig.2
-        for <git@vger.kernel.org>; Wed, 03 May 2017 03:27:58 -0700 (PDT)
+        id S1752956AbdECKze (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 06:55:34 -0400
+Received: from mail-oi0-f47.google.com ([209.85.218.47]:35826 "EHLO
+        mail-oi0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754155AbdECKzU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 06:55:20 -0400
+Received: by mail-oi0-f47.google.com with SMTP id l18so28241571oig.2
+        for <git@vger.kernel.org>; Wed, 03 May 2017 03:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=2fzNPRGx5WAU2yDScMf8B0mEbjJSZR2FgKRGR8C3Ta8=;
-        b=SN7Ki0VwK89KJa4ulhYo0bqK+z5hx/IZT7VLVFzk8JQPP3CATEVwcl5QJfTNZlnMuP
-         ePc9CzS0x0pdQH4fd6O1wRhaMxOyPKH8VhrUSQBSAK3gVedj+R84D0idOc7fg4/IUxIn
-         zbIGAzDv44kyqIQ46Vs1kzO0qfUcmkEWCN3PfAtccSloLu2uJfsQYXgt1dB+xvGO51Fc
-         ZGh9BeU9ywyNuRKy3KLM9NgSJ6FmZJIUmjg64RoKO9+RcfeksZt5H9ldewThg/YUrqZh
-         1kLWYDjVsIfTiOHnLSLYwJDvy/fzsRYloDN6RM4nKtS9S4kF2IA6tn4Ep/LB+nUrwuL0
-         vbZQ==
+        bh=U7FCV670UEuBaAWoTCL54IHEayQ8585L5caUrn6m1YE=;
+        b=OwX5zxSYy/aQ0tUWXJUQ8TMlAOQqlGwanFfhOPuFkQpQ5OIO5w8AWj1akt67j4Wyum
+         1M7hM5b4cilFI4nfoRWW/vJNVwK6NMBgi6qGF0TvkI6Om6OvOfcLCuvdGVUbb+bqFdBa
+         2W3fZKZ7P/pbKBY5/wUHFd4L7qrhqVAHlR3iLUesDr410oyzdkQjfW851pEYCBACMAFe
+         GUWIqwspaVZr4i5So5SzuQBE4La1tYctYKK9MN7v+0DNOW6C9N4GVhT1DlOJWQiP4fNz
+         Wuqt5uCCzq1nsr6uJjFkF5UKTxo2Il4qlRn9djkuvMRMUeHsEIcDSF4f2VNz1YLWL5WH
+         MC9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=2fzNPRGx5WAU2yDScMf8B0mEbjJSZR2FgKRGR8C3Ta8=;
-        b=bMmNdGdAO/nb8XCugL3VC/E3wmNH5CLTZEpI0a0PkK8SD8MKlPAzA8mNcg46hckGOn
-         0X3+qvtNtC1sVHou3mv7TGMyJb96xWDRcDEGbv6NnE4mw/sGI25k0leeZf9Ue9+lM4u3
-         JlmdJAg2dpMWzO4iqXVAiMifJevPcHdG7QpQMN5q1DjSfgAlESsrWhPygttG/5cuqRG7
-         rSYZVf+ixydBwG7CVLPY6kyXldJ0eO2toUJMNCqBhA7G0J5FxP0moAgS57uwWt6sYtdv
-         Iht3KEmFCtRuWn82jDdC53mRHF1cJZIkmNYpiJrpGvLjh4DEyp2kAsSojekDMa14sYRf
-         6Ibw==
-X-Gm-Message-State: AN3rC/7Rk4ChysSGkWTlzjOz09v0S+krReFb55P9FyAjDXrce0b6rc7g
-        v9RdhwDhnqKbndjd+RALLM95dzdMHw==
-X-Received: by 10.157.12.253 with SMTP id o58mr13682028otd.122.1493807278032;
- Wed, 03 May 2017 03:27:58 -0700 (PDT)
+        bh=U7FCV670UEuBaAWoTCL54IHEayQ8585L5caUrn6m1YE=;
+        b=k0KIShsxtOZs6Cxp2n18X8hj7/5Y+GHe/G8fnsxZx1AwN05VJ4NO5KjUunrp5fJKCf
+         vERBIqWBh14Q/5/t0/z9uOTlrvVjNkMjlFpoGxM6zVZ06qaw1GK6ME/dyTaKfChCVbmV
+         juqESNi62fGf47mzphYN4xVXP8nY+T7KjPrceYycAGbn9CTPEX6WF8n0rcOGfw1KNxmU
+         BAmr4IKtMqRLrCqWgpK6aXJdM1PObEd0gSBJn8jMjDFseonviIGoqbwzuldleTqHVwac
+         y/ex56KKS/GYjATg4tgd8SGjSlea2YA9k9BhGW6PYsm20iXovUUFcU67aQWUDlHHlAj6
+         TOIA==
+X-Gm-Message-State: AN3rC/7tqZQwYEVF0+yKzWJpFG+I6oK78Q+v+eA135oZx4wQ8uu0FXRT
+        l3lPs2LvJ+N3RUwZUX9H9RZ6yX0PX6rS
+X-Received: by 10.202.93.85 with SMTP id r82mr13425958oib.5.1493808919868;
+ Wed, 03 May 2017 03:55:19 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.74.145.140 with HTTP; Wed, 3 May 2017 03:27:27 -0700 (PDT)
-In-Reply-To: <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
-References: <20170501190719.10669-1-sbeller@google.com> <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
+Received: by 10.74.145.140 with HTTP; Wed, 3 May 2017 03:54:49 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.20.1705031202470.3480@virtualbox>
+References: <alpine.DEB.2.20.1705031202470.3480@virtualbox>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 3 May 2017 17:27:27 +0700
-Message-ID: <CACsJy8AZevgFda4ZJAmH_Nyrtuk72FUjdk6B8_SJB=n6quPnbw@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Start of a journey: drop NO_THE_INDEX_COMPATIBILITY_MACROS
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 3 May 2017 17:54:49 +0700
+Message-ID: <CACsJy8BasKLSuMuoqT1MNWbp93qxuG1Z+auiM6SaN7fBYT8sFw@mail.gmail.com>
+Subject: Re: RFA: untracked cache vs git reset --hard
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 2, 2017 at 8:36 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Stefan Beller <sbeller@google.com> writes:
+On Wed, May 3, 2017 at 5:27 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi all,
 >
->> This applies to origin/master.
->>
->> For better readability and understandability for newcomers it is a good idea
->> to not offer 2 APIs doing the same thing with on being the #define of the other.
->>
->> In the long run we may want to drop the macros guarded by
->> NO_THE_INDEX_COMPATIBILITY_MACROS. This converts a couple of them.
+> I have a problem and would like to solicit advice how to fix it.
 >
-> Why?
+> The untracked cache has made a real difference on rather large
+> repositories with tons of directories, and it is really, really useful.
+>
+> But. One innocuous `git reset --hard` will just blow it away.
+>
+> How? reset_index() calls unpack_trees() which in turn tries to populate a
+> new index and then discards the old one:
+>
+>         https://github.com/git/git/blob/v2.12.2/unpack-trees.c#L1293
+>
+> That discard_index() unfortunately also blows away each and every index
+> extension that had been read carefully before.
 
-Well.. why did you add NO_THE_INDEX_COMP... in the first place? ;-) j/k
+This is a real problem when we introduce non-optional extensions (i.e.
+extension name in lower case). Dropping them is not an option because
+they may contain vital/original information. We haven't any so far,
+but I've been wanting to add one for years (narrow clone). So I'm all
+for tackling the problem now :)
 
-> Why should we keep typing &the_index, when most of the time we are given _the_ index and working on it?
+> All users of `git reset --hard` (including `git stash`) suffer this.
+>
+> In fact, it looks as if *any* caller of unpack_trees() would suffer the
+> same problem: git-am, git-checkout, git-commit, git-merge, etc
+>
+> Now, I could imagine that maybe we could just "move"
+> o->dst_index.untracked to o->result.untracked, and that the machinery then
+> would do the right thing.
 
-I attempted the same thing once or twice in the past, had the same
-impression and dropped it. But I think it's good to get rid of cache_*
-macros, at least outside builtin/ directory. It makes it clearer about
-the index dependency. Maybe one day we could libify sha1_file.c and
-finally introduce "struct repository", where the_index, object db and
-ref-store belong (hmm.. the index may belong to "struct worktree", not
-the repo one...).
+These extensions may have dependencies in the o->result.cache[] (do we
+allow an extension to depend on another?). If invalidation is not
+handled correctly then it's not safe to simply copy the extension
+over.
 
-So yeah it may look a bit more verbose (and probably causes a lot more
-conflicts on 'pu') but in my opinion it's a good direction. I wish
-Stefan good luck. Brave soul :D
+For untracked cache, I think we do invalidation right and just moving
+it over dst_index (and resetting NULL in o->result so it does not get
+accidentally deleted) is fine.
+
+I'd rather we have a common way of dealing with this for any extension
+though. Split index needs special treatment too [1]. Maybe we can add
+
+int migrate_index_extensions(struct index_state *dst, struct index_state *src);
+
+in read-cache.c where it calls migrate_XXX() for each extension. In
+some cases (cache-tree) we could even do more, like repair cache-tree
+there to avoid hitting performance regressions.
+
+[1] https://github.com/git/git/blob/v2.12.2/unpack-trees.c#L1165-L1167
 -- 
 Duy
