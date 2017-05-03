@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07F8A207F8
-	for <e@80x24.org>; Wed,  3 May 2017 15:22:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DE84207F8
+	for <e@80x24.org>; Wed,  3 May 2017 15:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752089AbdECPWO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 11:22:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:51768 "EHLO mout.gmx.net"
+        id S1752428AbdECPZY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 11:25:24 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49228 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751046AbdECPWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 11:22:14 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaIsi-1dLH7u2u1w-00JvoP; Wed, 03
- May 2017 17:22:06 +0200
-Date:   Wed, 3 May 2017 17:22:04 +0200 (CEST)
+        id S1752091AbdECPZW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 11:25:22 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHX4u-1d4qDr0VZM-003LWd; Wed, 03
+ May 2017 17:25:11 +0200
+Date:   Wed, 3 May 2017 17:24:41 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
         <pclouds@gmail.com>
 cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 13/21] remote.c: report error on failure to fopen()
-In-Reply-To: <20170503101706.9223-14-pclouds@gmail.com>
-Message-ID: <alpine.DEB.2.20.1705031720000.3480@virtualbox>
-References: <20170420112609.26089-1-pclouds@gmail.com> <20170503101706.9223-1-pclouds@gmail.com> <20170503101706.9223-14-pclouds@gmail.com>
+Subject: Re: [PATCH v2 15/21] rerere.c: report correct errno
+In-Reply-To: <20170503101706.9223-16-pclouds@gmail.com>
+Message-ID: <alpine.DEB.2.20.1705031722420.3480@virtualbox>
+References: <20170420112609.26089-1-pclouds@gmail.com> <20170503101706.9223-1-pclouds@gmail.com> <20170503101706.9223-16-pclouds@gmail.com>
 User-Agent: Alpine 2.20 (DEB 67 2015-01-07)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323329-70922210-1493824926=:3480"
-X-Provags-ID: V03:K0:duUg0J/aE+HqdmsYUyv+E4Gk7L9LIGuD6QQmFpT7ykDTIJQmC+Q
- 0BFKJy/4aaLbRWXgz5bpsf6H9XsA6FhDFmBxIULr21Dd0xSTDGsjK0TtNpEfyQkAzOp5V+y
- 6Pdi2wFHF3+kVt7Y3OmUlMN/LfXaUv8G7JWNvLs5mJIa4y1jMoIBrPBsATiCgSZpy1hFNwT
- YXknOHdkQGwjzk93J9H0w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MMPNWaEd9tc=:ziSuXmRS6wDeLY+SL6f9e9
- B7SKk/epKqOIxrfFXC6i47ShViE0Nho0vIdv6eZh3QFq8CneffW9JL13vj7RkwOWscxv/IscK
- tCZg4oU7ikjUK5J5rsuYfMg2Ei0+hnD2U+SLXha2aP7CMtU0wdhG3JieAPZ7l//8Fj5gJklqD
- DAk2I67ShpyuZI2f7aYmK/+cXmzGbJr9XPgaleZFNXQowcstYpouqZ/H6krGBsEEN+3Dmai7m
- MelMYWZ6RAnz/MRVqUYJ3JQQ2f3ZNwPU1KtbjvWTqA1UckmpF6BOcPozNg1OhVcsdvW6kqrQt
- nNE3ENGZJLxOunFNVQgvoLOJW9lO17hrF6yciH4kZ9CjnXobxFZ26T13emCfz1P48y5uTtSjg
- J0Q3y9CosaYDWBp12PBnsKDlNHqoyml4DoBtcbhO0zn+iVo2bdIdfWUC1+8HQpNUjNhbmlNdo
- 82G55B2efjQto43Zo2IFWKQZjIuTlXzUeB8w4fGlGRrRF60j0yFJhyK14/6Nqpli8aDFbKuvp
- EjYwBuvkaoSYgvp4f9FP+mIGSwgx4aFwKfgHml9VevLbdcb3LWy24hgAFnHh3iQZ2Axj0NHR9
- wlAebHRZbxD3oyNDimuc/xNXRqUfLX+H42JHLtd5rWzZpy9CbHXoHJaATFAH+WDSw26cJK/NR
- W82VDuUQCjPE6qTcvF3AgjG/svZSD3pmvP5m9OgsXNRjNBRrOluYiWAcuVNnrstg8VtpX62Tj
- xScV+3qTK4d9MYS8S2FySMrM0a32j3fIiEvlavkGKpcpd7YULOQnK6zWrLIQTThEAk5AoFgQu
- rwvENrK
+Content-Type: multipart/mixed; BOUNDARY="8323329-237359341-1493825111=:3480"
+X-Provags-ID: V03:K0:vgPOq5N8BwbeRo6C+1rHXKkdo8zyZ2ZFmc83eppGhDlT51ZZEW5
+ rr3tmK97Pb6Z8sUSTM4FcZmLm0v97XZqviEmzLP36y0DNbiZGJ73PW9mPOStXI8fZFelpV4
+ KN3los0dIPqKaq6YBItnkn/FKyVztJ2SOdUxFWrBwMH0PNxECOSRv5BJ1UNmMwDkHSSj7V8
+ QEYbRhAWnZXwK3g8l29mQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:7mhihIxWMdM=:9w9kudBvF/6Pl9V5zpNinq
+ nQ9NzoHPRkcb/iBhUTNLsuvlUXYAr64DxiyVJKUQgmvtAwOnCZ8+UFYYSWlSJ6lUDB4DycAjC
+ lIV3ErynNjWnomqM+Vsl1jMKPzHU1YUUrDPKS0KLxh8y9w3qr9I8D6Dn1Hd7lBK5zB8yM6gFM
+ eQfk8bx/x+SwxBECAdQsuquv0EX0ActwGxypGYS49sI5foOnxoNNgkYACzGK75UZ2SISZCu+x
+ gNNgBxXstOCMQnbpJviOH/LUPuHR44A7TQMdJPQwFxrue/Uxrc24sw+X2wNgz9gzOLgztSge3
+ S8mv490PqY30GskjKEuI4g1UI674FbMWM5Ur9HFN0p/Rp6wjn+CeS55WlltJxQ9SydSH3BcHZ
+ 0TNzUu551g6bh1l7X+dc4EJC4KX2X6jagHgEeL4bocVcEaAOEhrrZiePIO/x1YN/Jmj4Ox51F
+ k1oOgSSVatg/cMCnDVCaprflvGoXkLmrIDYd4d5GwdEtfxo9Df5KLmScXqKHdpmgC7RYtrC8w
+ DMiO2t1O6lKbOxaFy12KYgKwxB2d5yCO4la+N6p0dLLcdeii0tKCXCcTQKr7E+X2I6S2tj1ZX
+ W9+TnH//FIaQ0P6Ew3J1nS+4N3CvUhmaDtQJL5ghog9AsPk8ihUx0SkhwTrRfznUplhfPfDgL
+ A6QfCyxZpk7zY2hsb4JwjtlHn0HffEQU4JbwQlDSWgk9lVv+/fllcRD7GQsJ+8QGTXI6WUSSk
+ Dzo549eFQtgo4nHlWii/jVcXD21la+dlhzqQGh1YgzFmBLG/dTGYrvi7L321i70qdvZUN48zn
+ vUUvFOA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,62 +58,43 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323329-70922210-1493824926=:3480
+--8323329-237359341-1493825111=:3480
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 
 Hi Duy,
 
-
 On Wed, 3 May 2017, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-> There's plenty of error() in this code to safely assume --quiet is not a
-> concern.
->=20
-> t5512 needs update because if we check the path 'refs*master' (i.e. the
-> asterisk is part of the path) then we'll get an EINVAL error.
+> diff --git a/rerere.c b/rerere.c
+> index 971bfedfb2..c26c29f87a 100644
+> --- a/rerere.c
+> +++ b/rerere.c
+> @@ -484,13 +484,14 @@ static int handle_file(const char *path, unsigned c=
+har *sha1, const char *output
+>  =09io.input =3D fopen(path, "r");
+>  =09io.io.wrerror =3D 0;
+>  =09if (!io.input)
+> -=09=09return error("Could not open %s", path);
+> +=09=09return error_errno("Could not open %s", path);
 
-So the first change in this patch unmasks a bug that is fixed by the
-second patch?
+IMO the error() -> error_errno() changes should all be part of the same
+commit, as they probably share the explanation why fopen_or_warn() is not
+appropriate here.
 
-> diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-> index 94fc9be9ce..02106c9226 100755
-> --- a/t/t5512-ls-remote.sh
-> +++ b/t/t5512-ls-remote.sh
-> @@ -85,8 +85,15 @@ test_expect_success 'use branch.<name>.remote if possi=
-ble' '
->  '
-> =20
->  test_expect_success 'confuses pattern as remote when no remote specified=
-' '
-> -=09cat >exp <<-\EOF &&
-> -=09fatal: '\''refs*master'\'' does not appear to be a git repository
-> +=09if test_have_prereq MINGW
-> +=09then
-> +=09=09# Windows does not like asterisks in pathname
-> +=09=09does_not_exist=3Dmaster
-> +=09else
-> +=09=09does_not_exist=3D"refs*master"
-> +=09fi &&
-> +=09cat >exp <<-EOF &&
-> +=09fatal: '\''$does_not_exist'\'' does not appear to be a git repository
->  =09fatal: Could not read from remote repository.
-> =20
->  =09Please make sure you have the correct access rights
-> @@ -98,7 +105,7 @@ test_expect_success 'confuses pattern as remote when n=
-o remote specified' '
->  =09# fetch <branch>.
->  =09# We could just as easily have used "master"; the "*" emphasizes its
->  =09# role as a pattern.
-> -=09test_must_fail git ls-remote refs*master >actual 2>&1 &&
-> +=09test_must_fail git ls-remote "$does_not_exist" >actual 2>&1 &&
->  =09test_i18ncmp exp actual
->  '
+>  =09if (output) {
+>  =09=09io.io.output =3D fopen(output, "w");
+>  =09=09if (!io.io.output) {
+> +=09=09=09error_errno("Could not write %s", output);
+>  =09=09=09fclose(io.input);
+> -=09=09=09return error("Could not write %s", output);
+> +=09=09=09return -1;
+>  =09=09}
 
-Sure enough. This totally looks like it needs to be a preparatory bug fix.
-Please separate it out and make sure that it comes before the
-fopen_or_warn() change in the patch series.
+This one is logically different from the change above, as it not only
+cannot be replaced by fopen_or_warn(), but also requires the reordering
+due to the different nature of the change.
 
 Ciao,
 Dscho
---8323329-70922210-1493824926=:3480--
+--8323329-237359341-1493825111=:3480--
