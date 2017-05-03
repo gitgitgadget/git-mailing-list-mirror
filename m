@@ -2,101 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0AEB207F8
-	for <e@80x24.org>; Wed,  3 May 2017 20:04:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 270D2207F8
+	for <e@80x24.org>; Wed,  3 May 2017 20:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1757924AbdECUEl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 16:04:41 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35094 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1757897AbdECUEh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 16:04:37 -0400
-Received: by mail-pf0-f196.google.com with SMTP id o68so23952pfj.2
-        for <git@vger.kernel.org>; Wed, 03 May 2017 13:04:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=odWyl3+yFLL0sTI+SgTRToi6XXn5HRF/4YFqzhv/tLo=;
-        b=ay1LZPAFu1OizbfJyUS26+CPzWW1GT5fNlb3Jz8c2Hzq08ED/sq9JRS6FuoIl3lGUm
-         FDTLDcCd0WYfBKqROMkoYO7Q3SIb4EM1BLSD2MVSYyTBMA+cRyoF2UrrwXPgf3uja4yx
-         tdqhilmD+qQ1HdfwK46eEui+d6v7gCX0EFDhbd8ulyHwajUvVYDwzdpCHEGmIfJcFC5a
-         N9gfwuaHTk3j+A8NpFbU+kbDFehnMX7ouR8++p5gjsnahKV82BKlxNyoVcQrLSVhpXnw
-         D54XJX1eeEV7eTjT9sKboHKvmzvcuhFXuztpiFURcaosmzDC05MyePs19l26NdQ3Opv3
-         4xvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=odWyl3+yFLL0sTI+SgTRToi6XXn5HRF/4YFqzhv/tLo=;
-        b=eVTK25TmCI0K1aWurNgTdyM99lFfOLI6PIeLzPECz4UhmUUn0G+AXMgFWriojCFvkM
-         nTfIot4qwG0cMI3O4qQLgW5JLkoZmZd+bUoZQSiys9O1CsIITXrz71s6UHA1VQDH5gtF
-         grnfX6qnCFLemlTVYVEj82w2JZQ0+mtdqP91YKKthSOI8jjbb7ncjWlUxqOE93i1+2Lg
-         Sep1lpOqXXOVg+QBR04CL+czPPb0KEKnZzuP1xEww1x6sqKmCwQpda5ZNuKoWn1y2yjo
-         a8gvqaS2uC0Rfd7ceoWm48Oh6rp1lAaWpV8anYPYQHQDQ/D3LJ08fP73kBPPWgxjK8Ca
-         IXRg==
-X-Gm-Message-State: AN3rC/6gm495de1SzIqHR/IrKxryYNu6bUi+GnjiUCt2qebY+BKxi47F
-        t/OSnGD6qP70eQ==
-X-Received: by 10.99.139.195 with SMTP id j186mr18001351pge.134.1493841877053;
-        Wed, 03 May 2017 13:04:37 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:8ce6:bd0b:35b6:826c])
-        by smtp.gmail.com with ESMTPSA id t66sm7238666pfe.134.2017.05.03.13.04.36
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 03 May 2017 13:04:36 -0700 (PDT)
-Date:   Wed, 3 May 2017 13:04:34 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] config.mak.uname: set NO_REGEX=NeedsStartEnd on AIX
-Message-ID: <20170503200434.GF28740@aiede.svl.corp.google.com>
-References: <20170503135430.7785-1-avarab@gmail.com>
- <20170503194708.GE28740@aiede.svl.corp.google.com>
- <CAGZ79kZHhAsoWKhGHfccspikANjK7z=Zdh1us8r1+hw+4kHUHg@mail.gmail.com>
+        id S1757495AbdECUWe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 16:22:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44878 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1756493AbdECUWc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 16:22:32 -0400
+Received: (qmail 14469 invoked by uid 109); 3 May 2017 20:22:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 May 2017 20:22:27 +0000
+Received: (qmail 27916 invoked by uid 111); 3 May 2017 20:22:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 03 May 2017 16:22:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 May 2017 16:22:24 -0400
+Date:   Wed, 3 May 2017 16:22:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: git-clone --config order & fetching extra refs during initial
+ clone
+Message-ID: <20170503202224.arjszzbruxjgpkt5@sigill.intra.peff.net>
+References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
+ <20170225205052.j3p7obbf4onf6cbf@sigill.intra.peff.net>
+ <xmqqd1e3xx4c.fsf@gitster.mtv.corp.google.com>
+ <20170227211217.73gydlxb2qu2sp3m@sigill.intra.peff.net>
+ <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
+ <20170315170829.7gp44typsyrlw6kg@sigill.intra.peff.net>
+ <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZHhAsoWKhGHfccspikANjK7z=Zdh1us8r1+hw+4kHUHg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, May 03, 2017 at 04:42:58PM +0200, SZEDER Gábor wrote:
 
-Stefan Beller wrote:
-> On Wed, May 3, 2017 at 12:47 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> write_refspec_config() nicely encapsulates writing the proper fetch
+> refspec configuration according to the given command line options.  Of
+> course these options are already known right at the start, so solely
+> in this regard we could call this function earlier.  However, in some
+> cases, e.g. '--single-branch', the refspec to be written to the config
+> depends not only on the given options but on the refs in the remote
+> repository, too, so it can only be written after we got the remote's
+> refs.
 
->> Is there e.g. a build farm where we can check for this kind of thing
->> more systematically on supported platforms?
->
-> There is the OpenSuse build farm that provides builds for all kinds of
-> linux distributions, though we'd rather be looking for *all*
-> operating systems, not just various flavors of linux.
->
-> After some research, I found
-> https://gcc.gnu.org/wiki/CompileFarm
-> https://launchpad.net/builders
-> https://buildd.debian.org/
->
-> The gcc build farm would include AIX, maybe we could talk to
-> them to have more CI support on more platforms?
+Good point. We can't really consider clone to be a blind "init + config
++ fetch + checkout" because those middle two steps sometimes overlap
+each other.  It really does need to be its own beast.
 
-Thanks for the pointers.
+> The root issue is that 'git clone' calls directly into the fetch
+> machinery instead of running 'git fetch' (either via run_command() or
+> cmd_fetch()), and some of these "higher-level" config variables are
+> only handled in 'builtin/fetch.c' but not in 'git clone'.  By
+> "handle" I mean "parse and act accordingly": as it happens, these
+> config values are parsed alright when 'git clone' calls remote_get(),
+> but it never looks at the relevant fields in the resulting 'struct
+> remote'.
+> 
+> Luckily, many "lower-level" config variables are working properly even
+> during 'git clone', because they are handled in the transport layer,
+> e.g. 'git clone -c url.https://github.com/.insteadof=gh: gh:git/git'
+> does the right thing.
 
-> Also you're a DD, maybe we could hook up git testing on debian
-> to test for different hardware platforms?
+Yeah, and I think that insteadOf is working as intended there (clone
+sets it early enough that all of the rest of the code sees it). And the
+bug is just that there's special handling in builtin/fetch.c that clone
+needs to replicate.
 
-https://buildd.debian.org/status/package.php?p=git&suite=experimental
-shows test suite results for Debian's various platforms running "next".
+The right solution there is probably pushing that logic down into the
+transport layer. Or at the very least abstracting it into a function so
+that both clone and fetch can call it without replicating the logic.
 
-Hope that helps,
-Jonathan
+> My patch deals with 'remote.<name>.refspec', i.e. 'remote->fetch'.
+> Apparently some extra care is necessary for 'remote.<name>.tagOpt' and
+> 'remote->fetch_tags', too.  Perhaps there are more, I haven't checked
+> again, and maybe we'll add similar config variables in the future.  So
+> I don't think that dealing with such config variables one by one in
+> 'git clone', too, is the right long-term solution...  but perhaps it's
+> sufficient for the time being?
+
+I think your patch is a strict improvement and we don't need to hold up
+waiting for a perfect fix (and because of the --single-branch thing you
+mentioned, this may be the best we can do anyway).
+
+> Running a fully-fledged 'git fetch' seems to be simpler and safer
+> conceptually, as it would naturally handle all fetch-related config
+> variables, present and future.  However, it's not without drawbacks:
+> 'git clone' must set the proper config before running 'git fetch' (or
+> at least set equivalent cmdline options), which in some cases requires
+> the refs in the remote repository, making an additional "list remote
+> refs" step necessary (i.e. both 'clone' and 'fetch' would have to
+> retrieve the refs from the remote, resulting in more network I/O).
+
+I don't think we ever want to request two ref advertisements; they're
+too expensive. If clone needs to do work between the advertisement and
+the actual fetch (and it sounds like it does), then it should be using
+the transport layer directly. Which is what it's already doing.
+
+-Peff
