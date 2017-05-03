@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB37B207D6
-	for <e@80x24.org>; Wed,  3 May 2017 10:18:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 207A8207D6
+	for <e@80x24.org>; Wed,  3 May 2017 10:18:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752983AbdECKSQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 06:18:16 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:36139 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752850AbdECKSN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 06:18:13 -0400
-Received: by mail-pg0-f68.google.com with SMTP id v1so27630967pgv.3
-        for <git@vger.kernel.org>; Wed, 03 May 2017 03:18:13 -0700 (PDT)
+        id S1753121AbdECKS0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 06:18:26 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33993 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753114AbdECKSY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 06:18:24 -0400
+Received: by mail-pg0-f65.google.com with SMTP id t7so27645870pgt.1
+        for <git@vger.kernel.org>; Wed, 03 May 2017 03:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8Kfmfd6B6+MG5xIrKLM1CcudX7VM+32OfpP1ZqlZWU8=;
-        b=Ih3zvPu5dxYq/tudiXwI8fjsMaBQIvKffnTnxEyp/tQqKrbsBugp2zc2YUkVahhRTr
-         I6zE5Q3poQdZUb/OD7D3pKBxUIJ57tp9MxoDSeiykI+4ENteciFFsH+NgHbKvQ7UsEcM
-         JVYUIu0Wz0lro7mgK9Gw3hWKO71jjWIjTIfb0dvLZcHb1Fbspz4yOzASPcj2LIdhGrxU
-         4Mo1gCTNopJ3Emhw4OWb1NBCPOZSMVHrJH/iOGB7AKOR3Su8+w8JEKb+Wj2pjkPwmUbh
-         Ott8R/f7a6yNFarfyk2Lvu/4a4DHO8Fbjs/gvZ0CnDw1T4THF5Tsk/d4593FXSiWXK0d
-         kqAw==
+        bh=VXtRINX1ByqqKowcefovxBjm9qrh8qwJMqBEVuoy03Y=;
+        b=VSEMoFqWFCRJlpAhb+lQ1ot/a7/JHz3mbGpqZTUa12boj87cgl4OlRAxrQB3Rx5mFu
+         uuNFa2ccl4N067y987nW+AXc82O3khCZjiGrlXDzKw6SuWXtrq6vNU8Fjh+sKykSd4tZ
+         h3UjBDod7ErCDhbPcGfKLf9Y74gSRWwRRcvDwfk5cTkDbx//e+/qnQMSfTqtxHt4gaZp
+         1R35HBfC9HfM2ghIbYvAlJvMLdVYA8tkglZmARM5w6PEZs4mnvilVdfyxUSJYBu4GwWB
+         Gt0BXpEOnyhlnJKJam7nvu4VZtK9rKE5OBEBm8HAb8aIMEgFCOFjNaznB26SbtMWtuZP
+         4xRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8Kfmfd6B6+MG5xIrKLM1CcudX7VM+32OfpP1ZqlZWU8=;
-        b=LE+8HsQiIiadsqNey3nL/yQbxBHLJKBRLr+CR41IGs0z+M6NGA5JJ30Xw6WUJrF7Rr
-         opMhEj7yltHr1ZzZvDgB/BdilvUoIWCUqLKacAE/O+iYXlGlpAIMKlE0wptHC3ILcjx8
-         5+BLqmziL9Nu1vb1YqEgczNYhG+iurmKuvcB6e18+yqNNDr3CUi6plv6jhTqBRCBPQpw
-         nf/3i5zIiCDHN3Q8kAB4iILpYevHQcvatjL+HAhmrIds9ul+hygcNPJcywNhSatNmaMV
-         lKWJox38PbHnZe1/UNxZC4W+aW40OqGTVdbgA3KHf3QJwWrcPATW6C78FKGMYi4aR9Y/
-         qrsQ==
-X-Gm-Message-State: AN3rC/671qHWz4PisvDJUsMD3StsH3zXwMwAFfeKBspCqFvtnlu8b1zf
-        f8FJDy914OFAbqf9
-X-Received: by 10.98.37.135 with SMTP id l129mr4048606pfl.38.1493806692670;
-        Wed, 03 May 2017 03:18:12 -0700 (PDT)
+        bh=VXtRINX1ByqqKowcefovxBjm9qrh8qwJMqBEVuoy03Y=;
+        b=t5JvnyyyidjAlqzyepuWFiiY4ltIhMAuroaAPNKypODSxnH4qxc7ISMMJECEv5APsg
+         8EOeOBGY1u1D9K0HEyQTh0tTMDNi5oWXTSGL9j+kjxvAHCvJx0tFbQ5n5dlmzqCNQ3fR
+         m6FV/1RH3UJLBWZDYWiuBCl+E5nxCXgdXnrtcraWUPKiXF0XxJug/LFcWR+wkpzZ/0AA
+         GgmChBCjkrCP21ngU/ROySqVctnzP2I8nRl7FNKX1iEvWyAT9wP31CYcOxX7BwGAKfrm
+         wGRdYjF5aEowjSag/xJ6FxF7DdEFK9h1B7vYsakG3Aulp++EKEUGP0/+PJs+2Nsc/b79
+         Ahrw==
+X-Gm-Message-State: AN3rC/6WDOr07oOaog67DUxo7hkqu1gB2ujEKAdHUL4dxkBtcmaBVl8k
+        UjjvKlntNjMDdw==
+X-Received: by 10.98.46.69 with SMTP id u66mr3975927pfu.262.1493806703409;
+        Wed, 03 May 2017 03:18:23 -0700 (PDT)
 Received: from ash ([115.73.171.114])
-        by smtp.gmail.com with ESMTPSA id 65sm34393426pgc.1.2017.05.03.03.18.09
+        by smtp.gmail.com with ESMTPSA id q6sm3955076pfq.18.2017.05.03.03.18.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 03 May 2017 03:18:12 -0700 (PDT)
-Received: by ash (sSMTP sendmail emulation); Wed, 03 May 2017 17:18:07 +0700
+        Wed, 03 May 2017 03:18:22 -0700 (PDT)
+Received: by ash (sSMTP sendmail emulation); Wed, 03 May 2017 17:18:18 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 02/21] clone: use xfopen() instead of fopen()
-Date:   Wed,  3 May 2017 17:16:47 +0700
-Message-Id: <20170503101706.9223-3-pclouds@gmail.com>
+Subject: [PATCH v2 04/21] wrapper.c: add warn_on_fopen_errors()
+Date:   Wed,  3 May 2017 17:16:49 +0700
+Message-Id: <20170503101706.9223-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.11.0.157.gd943d85
 In-Reply-To: <20170503101706.9223-1-pclouds@gmail.com>
 References: <20170420112609.26089-1-pclouds@gmail.com>
@@ -72,28 +72,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This code uses the result FILE pointer right away without the NULL
-check. Let's use xfopen() and die if we could not open the file. That's
-still better than crashing,
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/clone.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ dir.c             |  3 +--
+ git-compat-util.h |  2 ++
+ wrapper.c         | 10 ++++++++++
+ 3 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index de85b85254..dde4fe73af 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -357,7 +357,7 @@ static void copy_alternates(struct strbuf *src, struct strbuf *dst,
- 	 * to turn entries with paths relative to the original
- 	 * absolute, so that they can be used in the new repository.
- 	 */
--	FILE *in = fopen(src->buf, "r");
-+	FILE *in = xfopen(src->buf, "r");
- 	struct strbuf line = STRBUF_INIT;
+diff --git a/dir.c b/dir.c
+index f451bfa48c..8218a24962 100644
+--- a/dir.c
++++ b/dir.c
+@@ -745,8 +745,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
  
- 	while (strbuf_getline(&line, in) != EOF) {
+ 	fd = open(fname, O_RDONLY);
+ 	if (fd < 0 || fstat(fd, &st) < 0) {
+-		if (errno != ENOENT)
+-			warn_on_inaccessible(fname);
++		warn_on_fopen_errors(fname);
+ 		if (0 <= fd)
+ 			close(fd);
+ 		if (!check_index ||
+diff --git a/git-compat-util.h b/git-compat-util.h
+index bd04564a69..c5b59c23e8 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1099,6 +1099,8 @@ int access_or_die(const char *path, int mode, unsigned flag);
+ 
+ /* Warn on an inaccessible file that ought to be accessible */
+ void warn_on_inaccessible(const char *path);
++/* Warn on an inaccessible file if errno indicates this is an error */
++int warn_on_fopen_errors(const char *path);
+ 
+ #ifdef GMTIME_UNRELIABLE_ERRORS
+ struct tm *git_gmtime(const time_t *);
+diff --git a/wrapper.c b/wrapper.c
+index d837417709..20c25e7e65 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -418,6 +418,16 @@ FILE *fopen_for_writing(const char *path)
+ 	return ret;
+ }
+ 
++int warn_on_fopen_errors(const char *path)
++{
++	if (errno != ENOENT && errno != ENOTDIR) {
++		warn_on_inaccessible(path);
++		return -1;
++	}
++
++	return 0;
++}
++
+ int xmkstemp(char *template)
+ {
+ 	int fd;
 -- 
 2.11.0.157.gd943d85
 
