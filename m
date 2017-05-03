@@ -7,92 +7,108 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4A71F829
-	for <e@80x24.org>; Wed,  3 May 2017 18:23:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADD301F829
+	for <e@80x24.org>; Wed,  3 May 2017 18:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752272AbdECSXd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 14:23:33 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:34836 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751893AbdECSXc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 14:23:32 -0400
-Received: by mail-io0-f196.google.com with SMTP id v34so3415039iov.2
-        for <git@vger.kernel.org>; Wed, 03 May 2017 11:23:32 -0700 (PDT)
+        id S1752660AbdECS1X (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 14:27:23 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:35367 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752476AbdECS1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 14:27:21 -0400
+Received: by mail-it0-f65.google.com with SMTP id 131so7168092itz.2
+        for <git@vger.kernel.org>; Wed, 03 May 2017 11:27:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=Zse5RBbRHgacSCKBKdiM66IN6pdxlXkD+/FeD+O9/cU=;
-        b=j10e3lWg4YCI7eA1bXlyYgzo/aZArsSv8RAdHKf3NW7S70WXbjY1UtIU57xD+CUzpp
-         ghCyiKODDQfM827T4xvnMEs6LRIzY1blmScta8wAUWGyGmJe8dyy+QxgWtCTFtSbAPQ+
-         ta0j0vcCeJkOd9ZidOqMPTKg5rCb3n7/LovA76YXtnskweQGzauRov1Y2TuutEoP2Mvb
-         kqAbFIl+SkVOUBCtIpNiF+9/zQce6bPlrAH1MGyygJp+FTcni3DurSFQ8jpM4te8ltiP
-         J6Cu0jVq9wHHumeSPReTNtFqBU7cAzFiioWQD8YR9rWq35UiBMfMxoZCz7kCK4NiU65t
-         T5wA==
+        bh=zkFXSgsinaSZO8EYYm+WTxo5vA/kf7IvZl7BWWrPPU8=;
+        b=NR16opewADXVNrPyfhAiAGEZ0yZGwczsqV0iov0W7cPzDDyVAFVSyFkwee3T3yW6Gz
+         gMvS0udUbSeUtkURQX1csnq4ZHpBymQ6SD1FnFlSuSiWCpO4EN+q5BfxBJIy1bhor1jh
+         QwqaVnIRi9KyIa095rSNro5sH6FSCtylcMba3BlIIBB/8h5ZLFLXyL97X0kst2ei8E4a
+         YvAX+zG9/UoFaggQSIi9YoMxGPJeRApLJyXHE17D9QrEOO+OMAFgFKOZ0RcJQ5jr4mjt
+         WabKxOv06KpSuifVWq1Xnkj2rct0hRHn8bmIqDAp9dMwo5T7weXVp2XNucb93HyQRMto
+         qKTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=Zse5RBbRHgacSCKBKdiM66IN6pdxlXkD+/FeD+O9/cU=;
-        b=SgiTUoXsF/5eCi0w2l4V9KKhJPsuGGMUho0oqiXQWEZLBxU31pxhTzTJ8hQdZC8dWR
-         eF5z8EdkGLPWfIDkHej2EZRCeS11fdsMcu3ljt+7YQKybK08nxZrcMSU/HTQJGvc58aE
-         zGxrs59QUs+8jMb0NVNhgiLsyK3cD7u/VGtncOH0sbVlGLUDfSmJUju6meW+PlGxz2Jp
-         H5eAR2knua9OQjxyaSZq4anI8bzdbLRC55i1DFo19JQpYFrLE0jfSi+hOojyBXcdvQzE
-         E5YKK94Wm7Nnm6CIQkXPM1Jzs9deGYZRArZ06iywDHc1MA9slDuok3osocRctUTiZSLq
-         OdtA==
-X-Gm-Message-State: AN3rC/6dlncbfKTPTfCBvdQ9C35ACO4GF07rIq6PyXqzLyjiwvWNXb3l
-        UJb8MZAivC32pBwrZQfUcoeTAO3oLQ==
-X-Received: by 10.107.140.197 with SMTP id o188mr33438607iod.180.1493835811661;
- Wed, 03 May 2017 11:23:31 -0700 (PDT)
+        bh=zkFXSgsinaSZO8EYYm+WTxo5vA/kf7IvZl7BWWrPPU8=;
+        b=SrW4iY0pnYyLZ3p1I0Om3ynJ6+y0XVlV4LI1C3MaFVeXGPlALaIr4F+6twfmEfDkQW
+         +i7pQ6DopSO/eKWg1qzrLah/ODVLFG7jxwHyZPj3XhRnfKvnMrX/cUPg51O++FlWVX2L
+         9iqmcPangZ97TevbUpKFFI/SzWBJP0Fh0klCsOsqUDA4w7NB7Bmu5mLkUmhZHnqCswH3
+         6ij+0gd5Qt3+ybjyyM7q6dH+T7/jY9yEiHTTT3rEgC8B0qSrOcW1VCu2J21M91au98rB
+         JWkGP1aQxhVqWQ70+rXj6zcAnbeCB90ZtA0B2M1B1mcOgixZLICFJO4Jfx4HkCVif8ru
+         Vdow==
+X-Gm-Message-State: AN3rC/434AR5ydVyDvj2NArz0VsW1XjexBhqFmW6h92A1bpwmPTf/wg/
+        QNbBM6qdASu+9r+Ws+9wvR6EvE1MGA==
+X-Received: by 10.36.46.193 with SMTP id i184mr2323346ita.51.1493836040745;
+ Wed, 03 May 2017 11:27:20 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.150.90 with HTTP; Wed, 3 May 2017 11:22:51 -0700 (PDT)
-In-Reply-To: <CAGZ79kZs8q2cn7wJr-2ZFGZEwSsy8K2RZ_xBXfUuZBiGM0Gjog@mail.gmail.com>
-References: <20170501190719.10669-1-sbeller@google.com> <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZkssTEdNyzYh1YYv89szvig=rn2j3DJcHxsbzdADRw-w@mail.gmail.com>
- <b2d1d2fe-1b9b-4afa-192f-267bbb5df487@jeffhostetler.com> <CAJZjrdWF4NLPty81wmPsgUoVz1FddYhTGdjrNuB1LcME5qrwDQ@mail.gmail.com>
- <CAGZ79kZs8q2cn7wJr-2ZFGZEwSsy8K2RZ_xBXfUuZBiGM0Gjog@mail.gmail.com>
+Received: by 10.79.150.90 with HTTP; Wed, 3 May 2017 11:26:39 -0700 (PDT)
+In-Reply-To: <CAGZ79kauf5tAEv1JJCbTsuKhPYFKq0DVChBBt2EjHxRRZEzYAw@mail.gmail.com>
+References: <xmqqshkof6jd.fsf@gitster.mtv.corp.google.com> <20170503032932.16043-1-sxlijin@gmail.com>
+ <20170503032932.16043-2-sxlijin@gmail.com> <CAGZ79kauf5tAEv1JJCbTsuKhPYFKq0DVChBBt2EjHxRRZEzYAw@mail.gmail.com>
 From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 3 May 2017 13:22:51 -0500
-Message-ID: <CAJZjrdWRjAC4GbJExhHw7OBRbjuUs2bs5bpvaD91W_aj5e3a9g@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Start of a journey: drop NO_THE_INDEX_COMPATIBILITY_MACROS
+Date:   Wed, 3 May 2017 13:26:39 -0500
+Message-ID: <CAJZjrdWLuXF7c=kt4SM1CcOUPpmmZXmOZPUCuzcO0z2nNsVMLQ@mail.gmail.com>
+Subject: Re: [PATCH 1/7] t7300: skip untracked dirs containing ignored files
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 3, 2017 at 12:14 PM, Stefan Beller <sbeller@google.com> wrote:
-> On Wed, May 3, 2017 at 4:31 AM, Samuel Lijin <sxlijin@gmail.com> wrote:
+On Wed, May 3, 2017 at 1:19 PM, Stefan Beller <sbeller@google.com> wrote:
+> On Tue, May 2, 2017 at 8:29 PM, Samuel Lijin <sxlijin@gmail.com> wrote:
+>> If git sees a directory which contains only untracked and ignored
+>> files, clean -d should not remove that directory.
+>
+> Yes that states a fact; it is not clear why we want to have this test here
+> and now. (Is it testing for a recently fixed regression?)
+
+It was recently discovered that this is not true of clean -d (and I'm
+not sure if it ever was, to be honest). See
+http://public-inbox.org/git/xmqqshkof6jd.fsf@gitster.mtv.corp.google.com/T/#mf541c06250724bb000461d210b4ed157e415a596
+
+> Are you just introducing the test to demonstrate it keeps working later on?
+> Do you plan on changing this behavior in a later patch?)
+
+The idea was to introduce the broken test and then have the rest of
+the patch series fix it; Junio pointed out to me (off-list, since he
+was responding from his phone, I think) that I got the convention
+backwards, so I'll be changing this in the next version.
+
+>> ---
+>>  t/t7300-clean.sh | 10 ++++++++++
+>>  1 file changed, 10 insertions(+)
 >>
->> Just to throw out an example, I'm relatively new to the codebase (I've
->> been lurking on the mailing list for a few months now) and for a
->> recent project (I'm an undergrad wrapping up my senior year, and one
->> of my classes' final projects was to do something that involved
->> concurrency) I took a shot at parallelizing the estimate_similarity()
->> calls in diffcore_rename(). The only way I was able to get it to work
->> was by dropping global mutexes in one or two files (the code for those
->> mutexes still makes me cringe), because of concurrent writes to global
->> data structures.
+>> diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+>> index b89fd2a6a..948a455e8 100755
+>> --- a/t/t7300-clean.sh
+>> +++ b/t/t7300-clean.sh
+>> @@ -653,4 +653,14 @@ test_expect_success 'git clean -d respects pathspecs (pathspec is prefix of dir)
+>>         test_path_is_dir foobar
+>>  '
+>>
+>> +test_expect_success 'git clean -d skips untracked dirs containing ignored files' '
+>> +       echo /foo/bar >.gitignore &&
+>> +       rm -rf foo &&
+>> +       mkdir -p foo &&
+>> +       touch foo/bar &&
+>> +       git clean -df &&
+>> +       test_path_is_file foo/bar &&
+>> +       test_path_is_dir foo
+>> +'
 >
-> That sounds like a challenge. As we have many globals, we need to be
-> very careful about threading.
+> The test makes sense, though I am wondering if we can integrate
+> this test into another test e.g. "ok 15 - git clean -d".
 >
-> Also an interesting discussion about threading:
-> https://public-inbox.org/git/9e4733910708111412t48c1beaahfbaa2c68a02f64f1@mail.gmail.com/
+> Is the -f flag needed?
 
-Thanks.
-
-> Are the patches available for discussion?
-
-I was planning on revisiting the patch series before sending it out -
-the changes in attr.c and sha1_file.c are not pretty (and I'm pretty
-sure one of them is non-portable) - but it is published at
-https://github.com/sxlijin/git/commits/parallelize.thread-pool.1 (it's
-based off v2.12.2).
+Will look into both.
 
 > Thanks,
 > Stefan
