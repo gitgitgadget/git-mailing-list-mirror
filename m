@@ -2,63 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCDEA207F8
-	for <e@80x24.org>; Wed,  3 May 2017 21:07:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4ED9207F8
+	for <e@80x24.org>; Wed,  3 May 2017 21:08:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754931AbdECVHx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 17:07:53 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:15804 "EHLO smtp2-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751940AbdECVHw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 17:07:52 -0400
-Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
-        by smtp2-g21.free.fr (Postfix) with ESMTP id 3E9492003D9;
-        Wed,  3 May 2017 23:07:48 +0200 (CEST)
-From:   Jean-Noel Avila <jn.avila@free.fr>
-To:     git@vger.kernel.org
-Cc:     rashmipai36@gmail.com, Jean-Noel Avila <jn.avila@free.fr>
-Subject: [PATCH v2 3/3] git-filter-branch: make the error msg when missing branch more open
-Date:   Wed,  3 May 2017 23:07:26 +0200
-Message-Id: <20170503210726.24121-3-jn.avila@free.fr>
-X-Mailer: git-send-email 2.12.0
-In-Reply-To: <20170503210726.24121-1-jn.avila@free.fr>
-References: <20170503162931.30721-1-jn.avila@free.fr>
- <20170503210726.24121-1-jn.avila@free.fr>
+        id S1755033AbdECVIz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 17:08:55 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36498 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753507AbdECVIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 17:08:53 -0400
+Received: by mail-pg0-f68.google.com with SMTP id v1so210567pgv.3
+        for <git@vger.kernel.org>; Wed, 03 May 2017 14:08:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=m0DFOH/EYSvlsN/i+oaGw+04cbJz6lCEuvCWSrP8I5U=;
+        b=cz82Id4PMJwZZ3wCQD0RuNLONFYUgVMz6NuID7ipjeyUVBvH6pffUrYcU0CtiYFxy5
+         SWnn9ZoA435deQTHFoqOwaxOU0BGbjaRgRJSYALfrKk3JXrt0jAXsnSFpYquG3xaYWBo
+         SgU0hplXQzQKe/xl3NOa7rQR50X9/AyJE6T6RhOL3Oc2Vt9vxOyVJ0LCwDBVZZ/2ZQhv
+         GcGMZCo2z29ws84Ja+dGPWKMvuGpsCTWzfIwzudylPYemILZptYyFkxoKP4ivVPN/9/c
+         8hZJwKviDOQsbKrJdLhu1plY7KrFQzamBvN5ZKMyyqGsBRO1pnYWUi0RV2H2rWN4+pbG
+         DG3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=m0DFOH/EYSvlsN/i+oaGw+04cbJz6lCEuvCWSrP8I5U=;
+        b=NaqM6KHuzKwNKspvaApxPfbSGucEvdDtHyOz7GPeIb1Rks/4ecJqO8kNJP24JUX2Ai
+         nY4Jm3BxZpp7Jq5eoynZuo4ThtJL+SbnJBKPIyJ0KPqpsZEPOjC1FBOrMVIfhhDYNVXv
+         AtsX3aHqOCwLddnsN9bUNQGEnICsciNuKH/5Xx1HZl1nsD5jb1lSFIIgBvA0STf/UgX6
+         K8ZoI6gmDlK1bukzPSv1E42enHQ2O/QAQmnmiTiu+EFtYeK6sS4VK5BnigTMj+FU4fUR
+         Wa3nxE/5mS87fDCQjVJKMQXL5yxji339AM//fBdVkWwosuTo1sR1jyiNN6ExibS2n7W/
+         wYQw==
+X-Gm-Message-State: AN3rC/54MMftjX5Pt5hIssP2dJWXaEwq7Oz3w2ZmqIgWbfr+tLUFvh6a
+        sZhTAt/gt/CN7Q==
+X-Received: by 10.99.163.67 with SMTP id v3mr40665322pgn.206.1493845732973;
+        Wed, 03 May 2017 14:08:52 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:8ce6:bd0b:35b6:826c])
+        by smtp.gmail.com with ESMTPSA id b8sm111214pgn.51.2017.05.03.14.08.52
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 03 May 2017 14:08:52 -0700 (PDT)
+Date:   Wed, 3 May 2017 14:08:50 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        jeffhost@microsoft.com, peff@peff.net, gitster@pobox.com,
+        markbt@efaref.net, benpeart@microsoft.com
+Subject: Re: [PATCH 00/10] RFC Partial Clone and Fetch
+Message-ID: <20170503210850.GG28740@aiede.svl.corp.google.com>
+References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
+ <777ab8f2-c31a-d07b-ffe3-f8333f408ea1@jeffhostetler.com>
+ <2b1b504a-07c9-81b3-fed2-e9c029a5b284@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2b1b504a-07c9-81b3-fed2-e9c029a5b284@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-filter-branch requires the specification of a branch by one way or
-another. If no branch appears to have been specified, we know the user
-got the usage wrong but we don't know what they were trying to do ---
-e.g. maybe they specified the ref to rewrite but in the wrong place.
+Hi,
 
-The safest solution is to just print the usage in this case.
+Jonathan Tan wrote:
 
-Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
----
- git-filter-branch.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> The binary search to lookup a packfile offset from a .idx file
+> (which involves disk reads) would take longer for all lookups (not
+> just lookups for missing blobs) - I think I prefer keeping the lists
+> separate, to avoid pessimizing the (likely) usual case where the
+> relevant blobs are all already in local repo storage.
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 2b8cdba15..bda2bae23 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -239,7 +239,7 @@ git rev-parse --no-flags --revs-only --symbolic-full-name \
- sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
- 
- test -s "$tempdir"/heads ||
--	die "Which ref do you want to rewrite?"
-+	usage
- 
- GIT_INDEX_FILE="$(pwd)/../index"
- export GIT_INDEX_FILE
--- 
-2.12.0
+Another relevant operation is looking up objects by offset or
+index_nr.  The current implementation involves building an in-memory
+reverse index on demand by reading the idx file and sorting it by
+offset --- see pack-revindex.c::create_pack_revindex.  This takes O(n
+log n) time where n is the size of the idx file.
 
+That said, it could be avoided by storing an on-disk reverse index
+with the pack.  That's something we've been wanting to do anyway.
+
+Thanks,
+Jonathan
