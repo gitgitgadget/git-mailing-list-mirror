@@ -7,62 +7,61 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B7E2207FF
-	for <e@80x24.org>; Thu,  4 May 2017 05:35:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1268207FF
+	for <e@80x24.org>; Thu,  4 May 2017 05:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752579AbdEDFfd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 01:35:33 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33122 "EHLO
+        id S1754611AbdEDFpI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 01:45:08 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:36620 "EHLO
         mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752181AbdEDFfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 01:35:32 -0400
-Received: by mail-pg0-f68.google.com with SMTP id s62so740813pgc.0
-        for <git@vger.kernel.org>; Wed, 03 May 2017 22:35:32 -0700 (PDT)
+        with ESMTP id S1751606AbdEDFpG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 01:45:06 -0400
+Received: by mail-pg0-f68.google.com with SMTP id v1so756483pgv.3
+        for <git@vger.kernel.org>; Wed, 03 May 2017 22:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=MNQommfWGr+Ibv8PkE40iDJVWs+UFLpIy5CcRrEQSns=;
-        b=LWFsiJ07NLDkYGMggT3YTZoeO5LaqYVxR8jZQ7Cp6JXpxD6fvGGvogjuLzqPHIcxcQ
-         B1GtqGS0lbemCxdNtYS5NiwBzA2NqgOK2xnnaPtUPbtH4a7a4N5OO1o8AGyvNlZi58GG
-         eSjLwoW+es8JfT6mwmrld9gcMUkNAED1G7riRtf9Tdo8iHd99IvJNhX7ruu4rGazIeFz
-         vMnWn+9P4ZGODdX4hrmIl4qGXDveUO+EGMdssra40Bk//L8iSdSCtj1KkIqTY8Y1gLzG
-         OL4YkRP99buSOjzLwbop/9Pt++KHgxsXvbYssl8hKf2IQoaN+1Um7N2uWNqqVTuD5Q5R
-         JC+w==
+        bh=qnDXiC2aA7iRNruL0TjAGC52bK3zP66jReO+kT4AhVU=;
+        b=XxVULUxvVMFBqyBDwi1mtCwdKnAaMqrKpk/N3jhVVtO9eoJNU9lvPUz3ItSoUBAnWa
+         bt04bV+nYNJ417FJ3YAvbFRpvqGWd7MN0cRLC0ZIXaWHsTH5GcMJ7t9Z1MCFWuNK4vbj
+         rCp0Dbn1cIO1XU0HMqQvkGZ7joc942QxA1SZ7D2BvgRr+a8B9niytEBekBhE7/BmBSV+
+         Y4tBp+D8KqE+6ufg6eQp6JpwjNn8VL1nJ/Drh4lWPUA8cH88lZ6qmWPmHU+VTxWCsYL2
+         cPWgD8PaB3y5UwrJQtSvWn9sguCWTP3W98t90K1QfDwCvfKjed41pAGEiy88StGE2fsr
+         tNRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=MNQommfWGr+Ibv8PkE40iDJVWs+UFLpIy5CcRrEQSns=;
-        b=P4IsaoP7RbP4s20v1vI4fCAxxitKa1z3/30zY4M7GBQespFnqwDQKUqxAapV2xFVy5
-         eL/bt7IQ6vhNfc28cJ6K8+2buBCBUEO95DQCafHlPjqr4P0DEy2GgnilSTgnJiPT6r00
-         VTRs9UqsKu0ohEGOJZaoRnf4boDpxvIidprqkzeDVHKHDPN6dKYpRr29b2Rm7i0bu5af
-         XKFXF3ZEvtcmeY9Vx35DvZDnz6F9d+sjf5ZqmKa97m3SwB0wy9U7Xef2eEZk3of9hJiZ
-         TyARJREmtCLvyCVaObJp6Uepqv82ZAWTfZVyXcmg4bf26Yr+LS2t+o2clj2f/G7u+9+s
-         B4WA==
-X-Gm-Message-State: AN3rC/7S65c3eopFheYUnOdy7dF9Twoa/atl7MXPokeBit/siKqqpM2z
-        XQzz6E2xyl4Qtw==
-X-Received: by 10.99.116.82 with SMTP id e18mr15860422pgn.1.1493876131986;
-        Wed, 03 May 2017 22:35:31 -0700 (PDT)
+        bh=qnDXiC2aA7iRNruL0TjAGC52bK3zP66jReO+kT4AhVU=;
+        b=kyVLN9gMmbJO5oAWGmpVknFqs+HzD1iq7UBvVJm1oPDP7Bua4a2FhVn0/M7a8HlkrP
+         EZDNaXhMjKf7cc+5dtVgQxyyxTUZCqf9tBhz2xWPzul7hDCqNNTCMaWCGhCNrwsggEJm
+         fb1PqltpZ/2WFH8jLgIU2RKPRtih+EYVWzxqNdTotLqnuon8/v+RZWQwyrBJGO2/sdRi
+         jQsE2NF9cGwXUi9vSbg3FyH/NWtRxrggCC1I+yzp+guBbBrUMge3wWryl9/sE3bEw7TY
+         ztSmz8g55f15pDFIN/GGPZGgGS3YaRJmVhFQYA7T/Ul+cOHFh9a9dAgIH+JaXVjdM+iP
+         zPRg==
+X-Gm-Message-State: AN3rC/7PL9dYVLQkqLBsxXwhFmIVyqLU3nKWUMVtSzF3Sa+34p2elkoM
+        61FQwYqHL9dv3A==
+X-Received: by 10.99.44.9 with SMTP id s9mr19670354pgs.132.1493876705679;
+        Wed, 03 May 2017 22:45:05 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:21be:aa3e:8063:4b3])
-        by smtp.gmail.com with ESMTPSA id p3sm1487212pgd.36.2017.05.03.22.35.31
+        by smtp.gmail.com with ESMTPSA id 79sm1620206pfh.38.2017.05.03.22.45.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 03 May 2017 22:35:31 -0700 (PDT)
+        Wed, 03 May 2017 22:45:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 04/21] wrapper.c: add warn_on_fopen_errors()
+Subject: Re: [PATCH v2 00/21]
 References: <20170420112609.26089-1-pclouds@gmail.com>
         <20170503101706.9223-1-pclouds@gmail.com>
-        <20170503101706.9223-5-pclouds@gmail.com>
-Date:   Wed, 03 May 2017 22:35:30 -0700
-In-Reply-To: <20170503101706.9223-5-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
+Date:   Wed, 03 May 2017 22:45:04 -0700
+In-Reply-To: <20170503101706.9223-1-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
  =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Wed, 3 May 2017 17:16:49 +0700")
-Message-ID: <xmqqh9119obh.fsf@gitster.mtv.corp.google.com>
+        Duy"'s message of "Wed, 3 May 2017 17:16:45 +0700")
+Message-ID: <xmqqd1bp9nvj.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,66 +73,50 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  dir.c             |  3 +--
->  git-compat-util.h |  2 ++
->  wrapper.c         | 10 ++++++++++
->  3 files changed, 13 insertions(+), 2 deletions(-)
+> Changes since v1:
 >
-> diff --git a/dir.c b/dir.c
-> index f451bfa48c..8218a24962 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -745,8 +745,7 @@ static int add_excludes(const char *fname, const char *base, int baselen,
->  
->  	fd = open(fname, O_RDONLY);
->  	if (fd < 0 || fstat(fd, &st) < 0) {
-> -		if (errno != ENOENT)
-> -			warn_on_inaccessible(fname);
-> +		warn_on_fopen_errors(fname);
+>  - fopen_or_warn() and warn_on_fopen_errors() are introduced. The
+>    latter's name is probably not great...
+>  - A new patch (first one) to convert a bunch to using xfopen()
+>  - Fix test failure on Windows, found by Johannes Sixt
+>  - Fix the memory leak in log.c, found by Jeff
+>
+> There are still a couple of fopen() remained, but I'm getting slow
+> again so let's get these in first and worry about the rest when
+> somebody has time.
+>
+> Nguyễn Thái Ngọc Duy (21):
+>   Use xfopen() in more places
+>   clone: use xfopen() instead of fopen()
+>   config.mak.uname: set FREAD_READS_DIRECTORIES for Linux and FreeBSD
+>   wrapper.c: add warn_on_fopen_errors()
+>   wrapper.c: add fopen_or_warn()
+>   attr.c: use fopen_or_warn()
+>   ident.c: use fopen_or_warn()
+>   bisect: report on fopen() error
+>   blame: report error on open if graft_file is a directory
+>   log: report errno on failure to fopen() a file
+>   log: fix memory leak in open_next_file()
+>   commit.c: report error on failure to fopen() the graft file
+>   remote.c: report error on failure to fopen()
+>   rerere.c: report error on failure to fopen()
+>   rerere.c: report correct errno
+>   sequencer.c: report error on failure to fopen()
+>   server-info: report error on failure to fopen()
+>   wt-status.c: report error on failure to fopen()
+>   xdiff-interface.c: report errno on failure to stat() or fopen()
+>   config.c: handle error on failing to fopen()
+>   t1308: add a test case on open a config directory
 
-At least in the original, a reader can guess that, because errno
-cannot be NOENT if open(2) succeeded and fstat(2) failed, we call
-warn_on_inaccessible() only when we fail to open.
+Thanks.  If the number of parts affected by this series were
+smaller, it may have made the review easier to have the introduction
+of a helper and its use in a single larger patch, but there are
+spread across many, some with files that are touched by different
+in-flight topics, and these "collection of smaller patches" makes it
+easier to manage both while reviewing and also merging.
 
-This change makes it harder to see why this is OK when the failure
-is not in open(2) but in fstat(2).
+All looked good, even though I do share the doubt on the name
+"warn-on-fopen-errors"; when something applies equally to fopen(3)
+and underlying open(2), I would tend to call that with open not
+fopen myself.  But that is a minor point.
 
-	fd = open(fname, O_RDONLY);
-	if (fd < 0 || fstat(fd, &st) < 0) {
--		if (errno != ENOENT);
--			warn_on_inaccessible(fname);
--		if (0 <= fd)
-+		if (fd < 0)
-+			warn_on_fopen_errors(fname);
-+		else
-			close(fd);
-		... and the remainder of the original ...
-
-or something like that, perhaps?
-
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -418,6 +418,16 @@ FILE *fopen_for_writing(const char *path)
->  	return ret;
->  }
->  
-> +int warn_on_fopen_errors(const char *path)
-> +{
-
-Does this need to be returning "int", or should it be "void",
-because it always warns when there is an issue, the caller does not
-get to choose to give its own warning?
-
-> +	if (errno != ENOENT && errno != ENOTDIR) {
-> +		warn_on_inaccessible(path);
-> +		return -1;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->  int xmkstemp(char *template)
->  {
->  	int fd;
