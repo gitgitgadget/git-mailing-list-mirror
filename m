@@ -2,170 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
+	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8E9D207D6
-	for <e@80x24.org>; Thu,  4 May 2017 19:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5664207D6
+	for <e@80x24.org>; Thu,  4 May 2017 21:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752785AbdEDTTc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 15:19:32 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36410 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751211AbdEDTTa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 15:19:30 -0400
-Received: by mail-pg0-f67.google.com with SMTP id v1so3480189pgv.3
-        for <git@vger.kernel.org>; Thu, 04 May 2017 12:19:30 -0700 (PDT)
+        id S1751648AbdEDVg0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 17:36:26 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:35424 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751351AbdEDVgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 17:36:25 -0400
+Received: by mail-io0-f194.google.com with SMTP id v34so6629098iov.2
+        for <git@vger.kernel.org>; Thu, 04 May 2017 14:36:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=R/mTs8AhLY4gpVMnG3BNci4VqcRjsAAube/HbrDPHGQ=;
-        b=PwIXXh7qDhxJX1+kFL3amxY1sgn4kmFSLacimJf3xnf4jyh7QaDwUg2tLE9fhv2Vve
-         NCcIDTg6UQJRIfpIEFkxYbmhAXpR+V8RVTyg4gUQjLk/bT5J1TCiqyDieEWpynalYkTT
-         8hlymlLjA2/kXsLv0pURsElQc+otB2d1Fr4jebtoN9i4tCf1iz1wej4pAvkgwM36yqg8
-         o4mlddPE9HOBQ5w+oIrkdK4sYZp8taEXHClUWzXfNNy4Eja77U+3b3o9y443Pk2Benkk
-         pg3IqgPYb0ocbVHK8FU0Qy7ThvVcYW3vTRTFhXTYar0uHwo9/mG9xJdq5r30g1o9wETp
-         eAig==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=rFqQqKGdyyGTNE8GhU5LuQD/d8SCUq8HAmp578zBMsQ=;
+        b=o+KfEZboNw07ArXDDMK1ZyHNBJGclreWtu7NOTabO7uIC/C6UhezOFiJiR1gB+BWHP
+         m3EfSWmjEPMbd70zWV9PjAux1rjtfKizyCOgSe2bJR1Fu/VLbC7XLrgGefJ7d44/gnMa
+         PloBYvzAsjmrSvWEHNM9iUymQ8F8fojLFF8RQHqmeDhej5Y6GQ3G65h6uyF4D7Jq4Dmu
+         nAWuUYWwfUlYKgNSW3QIqArPxf+IVlWTht2eZaRbZ6aAxTy8gtAf84520NdJoGE9zl5+
+         PoLV9MORtHX3ZrFVr84a3wm0uxe28buk3oy5/fxX8SgpsGXljzH8YGq9mbtPxvOA3dLw
+         BjUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=R/mTs8AhLY4gpVMnG3BNci4VqcRjsAAube/HbrDPHGQ=;
-        b=HW/tbrDAl5CaRyMt5bq3D+yf4JCGb85JfFf1QQNCY/Y2RItahRjr8wf2THWnr7gKkm
-         5nPBlik0cHOH3f6/HJqFyMocMosUcjVTj6WwlvdkYb4H6LYAKcVrbZAAxsZBHQaItBmL
-         IhcVXaWirdkEzZGXNkGjKVud0YvlJHEA15gI1rXmHWYSuDnTb7run5jDn2X4p3RKxI3p
-         IfmE6SCw8BETugDX2Yk91TeCx2a1tZR7dppM0w8Dy4RTxpKlMZ60w75gVoBeXeOVC3mj
-         iLSFbNS3cc6O8bTDHrqx8bnJ9l2fWxqpKupXgKAtaKTUP+IW6UsG66czGANCZV6vd5hw
-         O6zw==
-X-Gm-Message-State: AN3rC/7jvXs2buM3PhADN0pFrFSe1E9P8KBRnKDpdOlAXZ2vDI3oaQxy
-        ixeoH3Lcf9HCoA==
-X-Received: by 10.98.42.2 with SMTP id q2mr12414265pfq.165.1493925569566;
-        Thu, 04 May 2017 12:19:29 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:5588:c10f:2622:1a6])
-        by smtp.gmail.com with ESMTPSA id g71sm5400004pfc.41.2017.05.04.12.19.28
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 04 May 2017 12:19:29 -0700 (PDT)
-Date:   Thu, 4 May 2017 12:19:27 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/5] Start of a journey: drop
- NO_THE_INDEX_COMPATIBILITY_MACROS
-Message-ID: <20170504191927.GB15203@aiede.svl.corp.google.com>
-References: <20170501190719.10669-1-sbeller@google.com>
- <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
- <CACsJy8AZevgFda4ZJAmH_Nyrtuk72FUjdk6B8_SJB=n6quPnbw@mail.gmail.com>
- <xmqqa86tbamh.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa86tbamh.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=rFqQqKGdyyGTNE8GhU5LuQD/d8SCUq8HAmp578zBMsQ=;
+        b=JpUVPNIV9H9FpfOItEALYRKCi4anboLRLkCQvpaoteIt4hGt8v6O/XqISHiuW/THjb
+         DNPNKux5wbQG1AMQS+8TY5N1YQtWUrq8ftSFW0ojgHjOUQCjShJz7oz2GmJQLi65y7Nq
+         77+zPNJVzh1ewnP0HsVM7ah2K/+HY596Vb6GHhy9k2cieLTt2OkAHIC70y1Oc0efnYNc
+         F/r0qmEEZTSAKS8Mwpbk8rOs/1ggeOdhmEt2FLivZdvALlE9ML9wB3cCujDR/gQL9GZr
+         PozRNtaJAykMHnTqrpu2DLvM5TFaTCSw6xLbsPJvZMIWSTxqDQ7Svnz2FTCRwBdf2FZN
+         hm+g==
+X-Gm-Message-State: AN3rC/76RzGwjc9DsRJ3qP7H/5VOOBXl6nC1yggayjgr+B0PKdhDjp+z
+        q38hHlaJ7WfeO6t1
+X-Received: by 10.107.8.71 with SMTP id 68mr6430989ioi.66.1493933784416;
+        Thu, 04 May 2017 14:36:24 -0700 (PDT)
+Received: from berenguela.cam.broadcom.com ([192.19.248.250])
+        by smtp.gmail.com with ESMTPSA id a137sm11169716ioe.41.2017.05.04.14.36.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 04 May 2017 14:36:23 -0700 (PDT)
+From:   Miguel Torroja <miguel.torroja@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Miguel Torroja <miguel.torroja@gmail.com>
+Subject: [PATCH] fast-export: deletion action first
+Date:   Thu,  4 May 2017 14:36:19 -0700
+Message-Id: <1493933779-25611-1-git-send-email-miguel.torroja@gmail.com>
+X-Mailer: git-send-email 2.1.4
+In-Reply-To: <20170425055817.codq2q3fd54uebfx@sigill.intra.peff.net>
+References: <20170425055817.codq2q3fd54uebfx@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The delete operations of the fast-export output should precede any addition
+belonging to the same commit, Addition and deletion with the same name
+entry could happen in case of file to directory and viceversa.
 
-Junio C Hamano wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
+As an equal comparison doesn't have any deterministic final order,
+it's better to keep original diff order input when there is no prefer order
+( that's done comparing pointers)
 
->> I attempted the same thing once or twice in the past, had the same
->> impression and dropped it. But I think it's good to get rid of cache_*
->> macros, at least outside builtin/ directory.
->
-> One thing that needs to be kept in mind is that a mechanical
-> replacement of active_cache[] to the_index.cache[] in the
-> infrastructure code does not get us closer to such an improvement.
-> In fact, such a patch only has negative value (keep reading until
-> the end of the paragraph that begins with "One thing is certain" to
-> understand why).
->
-> The entry point to a codechain for an important infrastructure code
-> that can currently only work with the_index needs to be identified.
-> There may be many.  They need to be made to take an index_state
-> instance and to pass it through the callchain.  That kind of change
-> would be an improvement, and will get us closer to mark the
-> resulting code with NO_THE_INDEX_COMP thing.
+The fast-export sorting was added in 060df62 (fast-export: Fix output
+order of D/F changes). That change was made in order to fix the case of
+directory to file in the same commit, but it broke the reverse case
+(File to directory).
 
-Thanks for articulating this.  I agree with this general goal.
+The test "file becomes directory" has been added in order to exercise
+the original motivation of the deletion reorder.
 
-[...]
-> But one thing is certain. Many users of the API, just like a lot of
-> builtin/ code works only with the_index today, will not have to work
-> with a non-default repository or a non-default index_state.  Only
-> the more advanced and complex "multi-repo" Porcelains would have to
-> care.  Keeping active_cache[], active_nr, etc. abstraction would
-> isolate the simpler callers from the inevitable code churn we would
-> need while getting the "repository" abstraction right.  This is why
-> I see that you understood the issues well when you said "builtiln/".
+Signed-off-by: Miguel Torroja <miguel.torroja@gmail.com>
+---
+ builtin/fast-export.c  | 32 +++++++++++++++-----------------
+ t/t9350-fast-export.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+), 17 deletions(-)
 
-One small change we could make is to reverse the sense of the
-NO_THE_INDEX_COMPATIBILITY_MACROS macro.  That way, new library code
-authors have to define USE_THE_INDEX_COMPATIBILITY_MACROS at the top
-of the file, providing a hint to reviewers that they are using
-the_index implicitly instead of relying on explicit repository or
-index parameters.
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index e022063..e82f654 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -260,26 +260,19 @@ static void export_blob(const struct object_id *oid)
+ 		free(buf);
+ }
+ 
+-static int depth_first(const void *a_, const void *b_)
++/*
++ * Compares two diff types to order based on output priorities.
++ */
++static int diff_type_cmp(const void *a_, const void *b_)
+ {
+ 	const struct diff_filepair *a = *((const struct diff_filepair **)a_);
+ 	const struct diff_filepair *b = *((const struct diff_filepair **)b_);
+-	const char *name_a, *name_b;
+-	int len_a, len_b, len;
+ 	int cmp;
+ 
+-	name_a = a->one ? a->one->path : a->two->path;
+-	name_b = b->one ? b->one->path : b->two->path;
+-
+-	len_a = strlen(name_a);
+-	len_b = strlen(name_b);
+-	len = (len_a < len_b) ? len_a : len_b;
+-
+-	/* strcmp will sort 'd' before 'd/e', we want 'd/e' before 'd' */
+-	cmp = memcmp(name_a, name_b, len);
+-	if (cmp)
+-		return cmp;
+-	cmp = len_b - len_a;
++	/*
++	 * Move Delete entries first so that an addition is always reported after
++	 */
++	cmp = (b->status == DIFF_STATUS_DELETED) - (a->status == DIFF_STATUS_DELETED);
+ 	if (cmp)
+ 		return cmp;
+ 	/*
+@@ -287,7 +280,12 @@ static int depth_first(const void *a_, const void *b_)
+ 	 * appear in the output before it is renamed (e.g., when a file
+ 	 * was copied and renamed in the same commit).
+ 	 */
+-	return (a->status == 'R') - (b->status == 'R');
++	cmp = (a->status == DIFF_STATUS_RENAMED) - (b->status == DIFF_STATUS_RENAMED);
++	if (cmp)
++		return cmp;
++
++	/* For the remaining cases we keep the original ordering comparing the pointers */
++	return (a-b);
+ }
+ 
+ static void print_path_1(const char *path)
+@@ -347,7 +345,7 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 	 * Handle files below a directory first, in case they are all deleted
+ 	 * and the directory changes to a file or symlink.
+ 	 */
+-	QSORT(q->queue, q->nr, depth_first);
++	QSORT(q->queue, q->nr, diff_type_cmp);
+ 
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filespec *ospec = q->queue[i]->one;
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index b5149fd..d4f369a 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -419,6 +419,31 @@ test_expect_success 'directory becomes symlink'        '
+ 	(cd result && git show master:foo)
+ '
+ 
++test_expect_success 'file becomes directory'  '
++	git init filetodir_orig &&
++	git init --bare filetodir_replica.git &&
++	(
++		cd filetodir_orig &&
++		echo foo > filethendir &&
++		git add filethendir &&
++		test_tick &&
++		git commit -mfile &&
++		git rm filethendir &&
++		mkdir filethendir &&
++		echo bar > filethendir/a &&
++		git add filethendir/a &&
++		test_tick &&
++		git commit -mdir
++	) &&
++	git --git-dir=filetodir_orig/.git fast-export master  |
++		git --git-dir=filetodir_replica.git/ fast-import &&
++	(
++		ORIG=$(git --git-dir=filetodir_orig/.git rev-parse --verify master) &&
++		REPLICA=$(git --git-dir=filetodir_replica.git rev-parse --verify master) &&
++		test $ORIG = $REPLICA
++	)
++'
++
+ test_expect_success 'fast-export quotes pathnames' '
+ 	git init crazy-paths &&
+ 	(cd crazy-paths &&
+-- 
+2.1.4
 
-More generally, if we are willing to follow through then I see
-Stefan's change as a step in the right direction.  Sure, it replaces
-calls like read_cache with read_the_index(&the_index, ...) which does
-not change semantics and may not look like progress.  But:
-
-- uses of 'the_index' are easy to grep for and it is easy to
-  understand that they are using global state.  In builtins, this is
-  not important (which may be an argument for making builtins get
-  USE_THE_INDEX_COMPATIBILITY_MACROS implicitly instead and
-  restricting this change to library code), but in libraries it
-  communicates what is happening to developers looking at the code.
-  It is like a /* NEEDSWORK */ comment, except in code instead of
-  comments.
-
-  See Go's context.TODO <https://golang.org/pkg/context/#TODO> for a
-  similar example in another set of projects.
-
-- it makes code consistently use the term "index" instead of mixing
-  "index" and "cache".  This makes code easier to understand for new
-  contributors.
-
-- a minor thing: it means more of git is using functions instead of
-  macros.  IDEs, grep habits, etc cope better with functions.  That is
-  minor, though: the compatibility macros could easily be replaced
-  with compatibility inline functions to achieve the same effect.
-
-[...]
-> Also, dropping compatibility macros at the end of the series is
-> unfriendly to fellow developers with WIPs that depend on the
-> traditional way of doing things.
-
-Agreed with this as well --- for widely used APIs like these, it is
-more friendly to decouple adapting callers (in a separate patch) from
-the patch that removes the API.
-
-That is, one way to do what this series attempts would be the
-following:
-
- 1. rename variables that shadow the_index.
-
- 2. add coccinelle patches (or one coccinelle patch) to
-    contrib/coccinelle implementing *_cache -> *_index migration.
-    Is there a way to do this without making it fail "make coccicheck"?
-
- 3. migrate library code (but not builtins) using that semantic patch
-
- 4. make compatibility macros opt-in instead of opt-out
-    (USE_THE_INDEX_COMPATIBILITY_MACROS). Opt-in all builtins.
-
- 5. optional: change the compatibility macros to compatibility inline
-    functions, perhaps.
- 6. optional: rename *_cache to *_the_index for clarity, perhaps.
- 7. optional: migrate builtins, if there is a way to make the patches
-    for that look sensible.
-
-Thoughts?
-Jonathan
