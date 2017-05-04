@@ -2,169 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B35D207B3
-	for <e@80x24.org>; Thu,  4 May 2017 07:01:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56307207B3
+	for <e@80x24.org>; Thu,  4 May 2017 07:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751519AbdEDHBq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 03:01:46 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34405 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751400AbdEDHBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 03:01:45 -0400
-Received: by mail-wm0-f67.google.com with SMTP id z129so1249623wmb.1
-        for <git@vger.kernel.org>; Thu, 04 May 2017 00:01:44 -0700 (PDT)
+        id S1751615AbdEDH2g (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 03:28:36 -0400
+Received: from mail-io0-f169.google.com ([209.85.223.169]:33446 "EHLO
+        mail-io0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751434AbdEDH2e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 03:28:34 -0400
+Received: by mail-io0-f169.google.com with SMTP id p24so11545724ioi.0
+        for <git@vger.kernel.org>; Thu, 04 May 2017 00:28:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=I0n8axGaNFxGTHt0U4nebb2zvcvMkPZzW9WmhfkY4cw=;
-        b=RdVno2wDKn31iWfHAM7negM3dbKxFIB087tFYhLg6T8OZYKkTvSVM3MxKjwWPNSfTB
-         4fXEl6XzUrNmjE6gvPAlHM5WbY1HhKH6tWjRlulbpetdU1qzXpXx+zpspFxpbKY1J/SO
-         M9O7fl9H5eUkeoSZnkh/ohnqfeHt1UZZ1p1GeYM7vDr0pxFTyHozwBc84uBtntNP89kE
-         d7/E8fgZ2dEPQZjBptIi+rwZdYtS0Z9uoFX+rrU2QUPzXoBv51HuYC+RXJRRAjDxbd6W
-         R9oVQFuiIAM0kMJEa29qrWVBXEBAF86vzMLYnVKBRvzPpqbZT3khMmUZ9NUCGL8AeZC5
-         CFAw==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=P4Qi9SPSribUX9Y0u1FIcvnIUzRWfZTqinZPjli3gUI=;
+        b=Par+Ax9EO2QXfhigPenCCXKMZ4UD1KRdZVC6LkqY6zBpbBn9HU6ByM7NiKcvcK/oK2
+         HsIIefc0F6laeMRgryUyQiCqaWSf9P5lZ8erPE23a4sT+Zk+EjOpnlSOQzMZ01PV0REb
+         jZ//YFWr/Vj3Svxpp7JJ2QVUyFZnnFqLwc6xW+HuO6iFF1XgGeRZmhYvgj2HSQed/GUH
+         OktaTWfkq4DFRn9807eJQmyoJX0kylbY/DKMhZ1rQpW/sEQEWW7skSOpSknsHftHrOZc
+         +k1ly5hUGLROOvwzfeLr+OwwvgSLj202AqemhQhI1XFRSd35ZzASPSt89ZQeqgK7x/Jr
+         Wh6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=I0n8axGaNFxGTHt0U4nebb2zvcvMkPZzW9WmhfkY4cw=;
-        b=W7dWpVPmh3vuvJJXmTkYVOhSzX+bsPDy/aozpMVpd+H0iorUiksbj+E8Vp7f1iiU0/
-         rEFouP9W/BwqZV76hLhSEaU+mI67WHuiwixrw7HzDCYCmRdxIF6MZWAlBQPaDOKMjDM0
-         kOjEdMhS/VnLXcL6jbDhPik4wg0n2H6ZX+UUcysiO1nndLe8I28wS8VkfUyifpocWphV
-         5MuODmuLcYdUVBJGgnM/bzxxpjQrK30A0s+1YkkW1YKV1vnh4ru/k42AwxBaV+ffTLtL
-         gBlw2BeZEjqZm/qAk+9UhB8IJ44ES70+2P+DdoOzcJlyQKPRm8PeKQOAzvF2IglYtBXJ
-         G9vQ==
-X-Gm-Message-State: AN3rC/6iCybNHsKqG+4pLga/l1wbivGet46aDv3p/nVnaOgR6CfGwjVg
-        edDYC61cthVdw3fJ+Yc=
-X-Received: by 10.80.215.155 with SMTP id w27mr6502138edi.70.1493881303362;
-        Thu, 04 May 2017 00:01:43 -0700 (PDT)
-Received: from [192.168.1.80] ([145.129.9.233])
-        by smtp.gmail.com with ESMTPSA id z34sm428865edz.57.2017.05.04.00.01.42
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 04 May 2017 00:01:42 -0700 (PDT)
-Message-ID: <1493881302.20467.3.camel@kaarsemaker.net>
-Subject: Re: [PATCH v2] send-email: Net::SMTP::SSL is obsolete, use only
- when necessary
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     git@vger.kernel.org
-Date:   Thu, 04 May 2017 09:01:42 +0200
-In-Reply-To: <20170324213732.29932-1-dennis@kaarsemaker.net>
-References: <CACBZZX5j1dYk8aeRED7T7iJ=b32aFUpfUWPpMpmtofBL3QnVXQ@mail.gmail.com>
-         <20170324213732.29932-1-dennis@kaarsemaker.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=P4Qi9SPSribUX9Y0u1FIcvnIUzRWfZTqinZPjli3gUI=;
+        b=TaNQOfy3QcAkL2QfKUp6lXt8YItssEoxH70b4/3M0hq1d8tFcRsPXko0QvsZfpJpho
+         PuZPoCnpap3BKx6sg+GuK16htiarMazok1mnbrSsJIeY0QK8cNKZ/7EhxpyR19X+STSf
+         aHOWrJ5xJTX+L7sibM0j9sG3dPOUSBnXUH5U7Qj37vqpl/k8oH60GUuZLjTMY/40j/Lg
+         l90DP9/c2wAym/BMKsLsPUM+jwLQLxuF+Dmb3cosjHi3WCh7mgu+nNRSzX7JuNLhwXqa
+         3+xgv4tTKoz+EHaQHjs6hKeQuBYXTxi68eVQ/VSXL1SKUTqFor4BZJAZ3qLtbEaOyGNd
+         cOrQ==
+X-Gm-Message-State: AN3rC/5/+BLHsnMZ31P5JqBpLUM/AJJYkkg9Ntz9gKqoYoDsFSsDOUEs
+        ByGp3vsTFXW6+dDCjFTv1x4h8hTF6A==
+X-Received: by 10.107.146.139 with SMTP id u133mr35191171iod.160.1493882913140;
+ Thu, 04 May 2017 00:28:33 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Thu, 4 May 2017 00:28:12 -0700 (PDT)
+In-Reply-To: <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
+References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
+ <20170225205052.j3p7obbf4onf6cbf@sigill.intra.peff.net> <xmqqd1e3xx4c.fsf@gitster.mtv.corp.google.com>
+ <20170227211217.73gydlxb2qu2sp3m@sigill.intra.peff.net> <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
+ <20170315170829.7gp44typsyrlw6kg@sigill.intra.peff.net> <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 4 May 2017 09:28:12 +0200
+Message-ID: <CACBZZX5706NELxAOWRVAx-QFPtZ_rAsRkTX811+jfrN4u47XfA@mail.gmail.com>
+Subject: Re: git-clone --config order & fetching extra refs during initial clone
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ping. It's a little over a month since I sent this, but I haven't seen
-any comments. Is this commit good to go?
+On Wed, May 3, 2017 at 4:42 PM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+> Cc'ing =C3=86var because of his work on 'clone --no-tags'.
+>
+> On Wed, Mar 15, 2017 at 6:08 PM, Jeff King <peff@peff.net> wrote:
+>> On Sat, Mar 11, 2017 at 01:41:34AM +0100, SZEDER G=C3=A1bor wrote:
+>>> > Though if I'm bikeshedding, I'd probably have written the whole thing
+>>> > with an argv_array and avoided counting at all.
+>>>
+>>> Yeah, I did notice that you love argv_array :)  I had to raise an
+>>> eyebrow recently while looking at send-pack and how it uses argv_array
+>>> to read refspecs from stdin into an array.  I think argv_array feels a
+>>> bit out of place in both cases.  Yes, it does exactly what's needed.
+>>> However, it's called *argv*_array, indicating that its contents is
+>>> destined to become the options of some command.  But that's not the
+>>> case in these two cases, we are not dealing with arguments to a
+>>> command, these are just arrays of strings.
+>>
+>> In my mind, "argv" is synonymous with "NULL-terminated array of
+>> strings". If the name is the only thing keeping it from wider use, I'd
+>> much prefer us to give it a more generic name. All I really care about
+>> is simplifying memory management. :)
+>
+> Whether its name is the _only_ thing keeping it from wider use, I
+> don't know :)
+>
+> All I can say is that I was aware of argv_array, but because of
+> its name it didn't even occur to me.  And even if I had considered it,
+> I still wouldn't have used it here.  Had it been called string_array,
+> I think I would have used it.
+>
+> On a related note, we have string_list, which is not a list but an
+> ALLOC_GROW()-able array, and not that of strings (i.e. plan char*),
+> but of structs with a string and an additional data field.
+> Oh, well :)
+>
+>
+>>> > I do also notice that right _after_ this parsing, we use remote_get()=
+,
+>>> > which is supposed to give us this config anyway. Which makes me wonde=
+r
+>>> > if we could just reorder this to put remote_get() first, and then rea=
+d
+>>> > the resulting refspecs from remote->fetch.
+>>>
+>>> Though get_remote() does give us this config, at this point the
+>>> default fetch refspec has not been configured yet, therefore it's not
+>>> included in the resulting remote->fetch array.  The default refspec is
+>>> set in write_refspec_config(), but that's called only about two
+>>> screenfulls later.  So there is a bit of extra work to do in order to
+>>> leverage get_remote()'s parsing.
+>>>
+>>> I think the simplest way is to keep parsing the default fetch refspec
+>>> manually, and then append it to the remote->fetch array.  Definitely
+>>> shorter and simpler than that parsing in the current patch.
+>>> Alternatively, we could set the default fetch refspec in the
+>>> configuration temporarily, only for the duration of the get_remote()
+>>> call, but it feels a bit too hackish...
+>>
+>> Yeah, I think manually combining the two here is fine. Though I won't
+>> complain if you want to look into setting the config earlier. If the
+>> refactoring isn't too bad, it would probably provide the nicest outcome.
+>
+> I did actually look into that, but don't think it's a good idea.
+>
+> write_refspec_config() nicely encapsulates writing the proper fetch
+> refspec configuration according to the given command line options.  Of
+> course these options are already known right at the start, so solely
+> in this regard we could call this function earlier.  However, in some
+> cases, e.g. '--single-branch', the refspec to be written to the config
+> depends not only on the given options but on the refs in the remote
+> repository, too, so it can only be written after we got the remote's
+> refs.
+>
+>
+> Unfortunately, there is more to this issue.  Earlier I though that the
+> fetch refspec is the only config that is ignored during a clone.
+> However, =C3=86var's 'clone --no-tags' patches[1] drew my attention to th=
+e
+> 'remote.<name>.tagOpt' config variable, that I overlooked earlier...
+> and apparently 'git clone' overlooks it as well, grabbing all tags
+> even when it's set to '--no-tags'.
+>
+> The root issue is that 'git clone' calls directly into the fetch
+> machinery instead of running 'git fetch' (either via run_command() or
+> cmd_fetch()), and some of these "higher-level" config variables are
+> only handled in 'builtin/fetch.c' but not in 'git clone'.  By
+> "handle" I mean "parse and act accordingly": as it happens, these
+> config values are parsed alright when 'git clone' calls remote_get(),
+> but it never looks at the relevant fields in the resulting 'struct
+> remote'.
+>
+> Luckily, many "lower-level" config variables are working properly even
+> during 'git clone', because they are handled in the transport layer,
+> e.g. 'git clone -c url.https://github.com/.insteadof=3Dgh: gh:git/git'
+> does the right thing.
+>
+>
+> I'm not sure what the right way forward would be.
+>
+> My patch deals with 'remote.<name>.refspec', i.e. 'remote->fetch'.
+> Apparently some extra care is necessary for 'remote.<name>.tagOpt' and
+> 'remote->fetch_tags', too.  Perhaps there are more, I haven't checked
+> again, and maybe we'll add similar config variables in the future.  So
+> I don't think that dealing with such config variables one by one in
+> 'git clone', too, is the right long-term solution...  but perhaps it's
+> sufficient for the time being?
+>
+> Running a fully-fledged 'git fetch' seems to be simpler and safer
+> conceptually, as it would naturally handle all fetch-related config
+> variables, present and future.  However, it's not without drawbacks:
+> 'git clone' must set the proper config before running 'git fetch' (or
+> at least set equivalent cmdline options), which in some cases requires
+> the refs in the remote repository, making an additional "list remote
+> refs" step necessary (i.e. both 'clone' and 'fetch' would have to
+> retrieve the refs from the remote, resulting in more network I/O).
+>
+> Or we should libify more of 'builtin/fetch.c', but with all those
+> static variables and functions in there...  Ugh :)
 
-On Fri, 2017-03-24 at 22:37 +0100, Dennis Kaarsemaker wrote:
-> Net::SMTP itself can do the necessary SSL and STARTTLS bits just fine
-> since version 1.28, and Net::SMTP::SSL is now deprecated. Since 1.28
-> isn't that old yet, keep the old code in place and use it when
-> necessary.
-> 
-> While we're in the area, mark some messages for translation that were
-> not yet marked as such.
-> 
-> Signed-off-by: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-> ---
->  git-send-email.perl | 54 ++++++++++++++++++++++++++++++++++-------------------
->  1 file changed, 35 insertions(+), 19 deletions(-)
-> 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index eea0a517f7..0d90439d9a 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -1353,10 +1353,12 @@ EOF
->  			die __("The required SMTP server is not properly defined.")
->  		}
->  
-> +		require Net::SMTP;
-> +		my $use_net_smtp_ssl = version->parse($Net::SMTP::VERSION) < version->parse("1.28");
-> +		$smtp_domain ||= maildomain();
-> +
->  		if ($smtp_encryption eq 'ssl') {
->  			$smtp_server_port ||= 465; # ssmtp
-> -			require Net::SMTP::SSL;
-> -			$smtp_domain ||= maildomain();
->  			require IO::Socket::SSL;
->  
->  			# Suppress "variable accessed once" warning.
-> @@ -1368,34 +1370,48 @@ EOF
->  			# Net::SMTP::SSL->new() does not forward any SSL options
->  			IO::Socket::SSL::set_client_defaults(
->  				ssl_verify_params());
-> -			$smtp ||= Net::SMTP::SSL->new($smtp_server,
-> -						      Hello => $smtp_domain,
-> -						      Port => $smtp_server_port,
-> -						      Debug => $debug_net_smtp);
-> +
-> +			if ($use_net_smtp_ssl) {
-> +				require Net::SMTP::SSL;
-> +				$smtp ||= Net::SMTP::SSL->new($smtp_server,
-> +							      Hello => $smtp_domain,
-> +							      Port => $smtp_server_port,
-> +							      Debug => $debug_net_smtp);
-> +			}
-> +			else {
-> +				$smtp ||= Net::SMTP->new($smtp_server,
-> +							 Hello => $smtp_domain,
-> +							 Port => $smtp_server_port,
-> +							 Debug => $debug_net_smtp,
-> +							 SSL => 1);
-> +			}
->  		}
->  		else {
-> -			require Net::SMTP;
-> -			$smtp_domain ||= maildomain();
->  			$smtp_server_port ||= 25;
->  			$smtp ||= Net::SMTP->new($smtp_server,
->  						 Hello => $smtp_domain,
->  						 Debug => $debug_net_smtp,
->  						 Port => $smtp_server_port);
->  			if ($smtp_encryption eq 'tls' && $smtp) {
-> -				require Net::SMTP::SSL;
-> -				$smtp->command('STARTTLS');
-> -				$smtp->response();
-> -				if ($smtp->code == 220) {
-> +				if ($use_net_smtp_ssl) {
-> +					$smtp->command('STARTTLS');
-> +					$smtp->response();
-> +					if ($smtp->code != 220) {
-> +						die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
-> +					}
-> +					require Net::SMTP::SSL;
->  					$smtp = Net::SMTP::SSL->start_SSL($smtp,
->  									  ssl_verify_params())
-> -						or die "STARTTLS failed! ".IO::Socket::SSL::errstr();
-> -					$smtp_encryption = '';
-> -					# Send EHLO again to receive fresh
-> -					# supported commands
-> -					$smtp->hello($smtp_domain);
-> -				} else {
-> -					die sprintf(__("Server does not support STARTTLS! %s"), $smtp->message);
-> +						or die sprintf(__("STARTTLS failed! %s"), IO::Socket::SSL::errstr());
-> +				}
-> +				else {
-> +					$smtp->starttls(ssl_verify_params())
-> +						or die sprintf(__("STARTTLS failed! %s"), IO::Socket::SSL::errstr());
->  				}
-> +				$smtp_encryption = '';
-> +				# Send EHLO again to receive fresh
-> +				# supported commands
-> +				$smtp->hello($smtp_domain);
->  			}
->  		}
->  
+Yes from my (limited) understanding of the code after hacking in
+--no-tags this all seems correct. I.e. that a large part of my patch
+wouldn't be needed if we were able to just set tagOpt earlier & then
+call fetch.
+
+But as you point out there's a big chicken & egg problem with the
+likes of --single-branch where we'd either need to run upload-pack on
+the remote side twice, once to get the branch and once to fetch (ew!).
+
+The way to get around that that I can see would be to have some deep
+hooking into the fetch machinery where first we set our config like
+tagOpt=3D--no-tags for --no-tags, then we call `fetch`, but `fetch`
+would need to have some hook where in the case of --single-branch it
+would immediately write the branch name to the fetch spec in the
+config, then do the actual fetching.
