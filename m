@@ -6,61 +6,61 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 818BD207F8
-	for <e@80x24.org>; Thu,  4 May 2017 01:35:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A2DE207F8
+	for <e@80x24.org>; Thu,  4 May 2017 01:38:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932178AbdEDBfT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 3 May 2017 21:35:19 -0400
-Received: from mail-pf0-f182.google.com ([209.85.192.182]:34682 "EHLO
-        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932170AbdEDBfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 3 May 2017 21:35:17 -0400
-Received: by mail-pf0-f182.google.com with SMTP id e64so79338pfd.1
-        for <git@vger.kernel.org>; Wed, 03 May 2017 18:35:17 -0700 (PDT)
+        id S932460AbdEDBin (ORCPT <rfc822;e@80x24.org>);
+        Wed, 3 May 2017 21:38:43 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:32849 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932456AbdEDBil (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 3 May 2017 21:38:41 -0400
+Received: by mail-pf0-f171.google.com with SMTP id q20so125204pfg.0
+        for <git@vger.kernel.org>; Wed, 03 May 2017 18:38:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=2e/7GF7uuw/Ah4qjwbtcjlawZ+m2uDiB0Iin91LtP3U=;
-        b=RLsOSapNmvUjmjR0XY987fFWXmek4UefzvsmC9CbbOxRQAaqExM0Xr5Y/4qEr/XAFn
-         oHAZbRV9DILHB3MiVJ45bRtZZn24OkuYjWz+/oiCXP8l/wVSeyIFXGQhFWRkEiAfUck5
-         +wvn7UZMRAf/2cQKekL4bnhqBetRIq8mhhIKkNJ2UxX+Q7gAGK5Sk01cnCU4CoCsDDXW
-         EW4H/F3RmN5BY3Jp8Mryam3GbKgb6wuFVK+YtbGiDwiNRnEConRX0+/dVQGS0KtxfRfB
-         7THCjeDeXRI5IV8FAOjnKrlPHx/pArZM3BvAUjXWrWNeJ1oyYiADliOMJ2o4R/JHjGiw
-         N4xA==
+        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=CDctdeGTXQ4vt0S9hLjTRbOgOE4yy3+vUYE35RrDAGQ=;
+        b=TfL6hQEq4hKcW+7qZG3t6oo/2HR++C6zzo8HudKdYHfV4euzYWsuaKYXPKsl7taTLe
+         7cleLy8KawIDH48xW08ToW6HdRPfky00y37doQUW6emx2B0Ob8/E91QOfHjYfmgNn2Vu
+         SRL1OMieN0aZYJw3+p7Ph4Z44uwDwjKQ3GVI3pMpojzU+JmFBB/EMa0UrGvxBADfNlLl
+         eOvPs6A5N0fFpjfKM2ZZff8w882CjXizxOxVH7K/77xywBsMYrGRNvhhOMu24DIPaVtW
+         0ncQW+J4qE+H/7cqVMyUCARv9FKG7VfYX9OcV0xNHrQCoNgzaUBQ8iAWGFWpdfS6hSDK
+         0q4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=2e/7GF7uuw/Ah4qjwbtcjlawZ+m2uDiB0Iin91LtP3U=;
-        b=gYqtWFHG/HcggThpORryaE4PPNlLueTwZmKIIEKM7PjRlUXwn2+IpSAUem7qnit1uz
-         ZPFJ3ibwRvh4E46OfyGBF2IH72N8Ng0swNDg8Yr++U7qQkmocg5UGq7K8ZQGrFZOtdZp
-         218RIGg1TOxf4bdn2Xy0+jXPMunFJO4suK/BWF4UsynsYD4KlEkGtd/BgAqcbKXMTIB2
-         AE2Vkea2qu/LIbmKPRCdXs2BD7CedFtBM19j9lTh5Mx4QZpVjgqYEXLFO2IdYpG6fuxa
-         4kDqT8o+PcffbIkQMHbuFSNNyvze7qHxzFxmhdyqGp7hTmUOcw6nI7S3DE8hDHnCuBIo
-         hadA==
-X-Gm-Message-State: AN3rC/4wIP8le9OhS0LK2E0kKTqu3eVCHnTUulSckHYoChOMeY7dLrQD
-        GZOo32tEbvdAlQ==
-X-Received: by 10.98.87.203 with SMTP id i72mr8163348pfj.151.1493861716661;
-        Wed, 03 May 2017 18:35:16 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version:content-transfer-encoding;
+        bh=CDctdeGTXQ4vt0S9hLjTRbOgOE4yy3+vUYE35RrDAGQ=;
+        b=iQBu4TXWDvDcq87Qax8v+1E+MaDgFc8TETnjqEY3mRMfo1A0LX2uAlble8AMNB7ymq
+         Nfl6HXvmiEjF1BrMOwYiyTcmN1iVO2jyj3LUNNpFpcw7Bmq5dAN25tox6ODrnYk1KQen
+         9r3XSz70Q5c9YsQ/Jtuui4gq/8LmcCvn48bjY71Ctr7/J5/qJ/mNqjvJZujDMQ/NYy2W
+         oPzkRv2atoSPxIPmJ9xQpf7ANC6x6SIHcIrqalcDDkoc1T8LkSKM5HIDS2KpdHY6Idmh
+         B+a4x71OLpITRejM77JPFM/SxCMQgLuh2/VqDYtat9GajcxeJITHveiR9uVpRRdShVUh
+         tYiw==
+X-Gm-Message-State: AN3rC/4wXCUkmDgsOu+FBLjEJemy1nBRLrq0h51ogCaHp9c+WCnIz830
+        VPuj7wxWaKisdQ==
+X-Received: by 10.98.80.156 with SMTP id g28mr7908557pfj.163.1493861920770;
+        Wed, 03 May 2017 18:38:40 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:21be:aa3e:8063:4b3])
-        by smtp.gmail.com with ESMTPSA id r2sm606353pfd.1.2017.05.03.18.35.15
+        by smtp.gmail.com with ESMTPSA id 202sm585926pfy.83.2017.05.03.18.38.39
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 03 May 2017 18:35:15 -0700 (PDT)
+        Wed, 03 May 2017 18:38:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc:     git@vger.kernel.org, worldhello.net@gmail.com
+Cc:     git@vger.kernel.org, worldhello.net@gmail.com,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Subject: Re: [PATCH] i18n: remove i18n from tag reflog message
-References: <20170429100253.4710-1-jn.avila@free.fr>
-        <xmqqwpa1ic4e.fsf@gitster.mtv.corp.google.com>
-        <2070499.EYhsb04HyH@cayenne>
-Date:   Wed, 03 May 2017 18:35:14 -0700
 In-Reply-To: <2070499.EYhsb04HyH@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
  AVILA"'s message of
         "Wed, 03 May 2017 18:38:45 +0200")
-Message-ID: <xmqqfuglcskt.fsf@gitster.mtv.corp.google.com>
+References: <20170429100253.4710-1-jn.avila@free.fr>
+        <xmqqwpa1ic4e.fsf@gitster.mtv.corp.google.com>
+        <2070499.EYhsb04HyH@cayenne>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+Date:   Wed, 03 May 2017 18:38:39 -0700
+Message-ID: <xmqqefw5csf4.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -114,7 +114,12 @@ reflog record would give the message-id to gettext and feed the
 parameters recorded using the result of gettext() as the format
 string to fprintf(), or something like that.
 
-
-
+That would solve the issue in multi-user repository Ævar raised,
+too.  You'd see Chinese reflog entry not because the person who did
+the operation that created the reflog entry were writing Chinese,
+but because your locale is set to show Chinese when you tried to
+read the reflog.  German users would see the reflog entry that
+records what the Chinese developer did in German if we follow that
+route.
 
 
