@@ -2,163 +2,240 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD113207B3
-	for <e@80x24.org>; Thu,  4 May 2017 08:58:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE33B207B3
+	for <e@80x24.org>; Thu,  4 May 2017 09:10:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751378AbdEDI6L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 04:58:11 -0400
-Received: from smtppost.atos.net ([193.56.114.166]:21863 "EHLO
-        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750758AbdEDI6I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 04:58:08 -0400
-X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 May 2017 04:58:08 EDT
-Received: from mail1-ext.my-it-solutions.net (mail1-ext.my-it-solutions.net) by smarthost6.atos.net with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-SHA)
-         id 386c_4b82_71e82335_d224_4f00_a0c9_f6d57573c867;
-        Thu, 04 May 2017 10:52:45 +0200
-Received: from mail3-int.my-it-solutions.net ([10.92.32.10])
-        by mail1-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id v448qhOO026455
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Thu, 4 May 2017 10:52:43 +0200
-Received: from DEFTHW99ETRMSX.ww931.my-it-solutions.net ([10.86.142.99])
-        by mail3-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id v448qhdn022721
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Thu, 4 May 2017 10:52:43 +0200
-Received: from DEERLM99EZ1MSX.ww931.my-it-solutions.net ([169.254.4.240]) by
- DEFTHW99ETRMSX.ww931.my-it-solutions.net ([10.86.142.99]) with mapi id
- 14.03.0339.000; Thu, 4 May 2017 10:52:43 +0200
-From:   "Kerry, Richard" <richard.kerry@atos.net>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH v2 1/3] usability: don't ask questions if no reply is
- required
-Thread-Topic: [PATCH v2 1/3] usability: don't ask questions if no reply is
- required
-Thread-Index: AQHSxFFTMoBghxZwiEeKbGFf8Gd7kqHj3kvw
-Date:   Thu, 4 May 2017 08:52:43 +0000
-Message-ID: <61C67DC73308BD49B2D4B65072480DBA2BDA554E@DEERLM99EZ1MSX.ww931.my-it-solutions.net>
-References: <20170503162931.30721-1-jn.avila@free.fr>
- <20170503210726.24121-1-jn.avila@free.fr>
-In-Reply-To: <20170503210726.24121-1-jn.avila@free.fr>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.86.142.12]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1752367AbdEDJKO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 05:10:14 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36859 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753399AbdEDJKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 05:10:09 -0400
+Received: by mail-it0-f68.google.com with SMTP id x188so923459itb.3
+        for <git@vger.kernel.org>; Thu, 04 May 2017 02:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SqQvEnBb+Lrh6ePvvd5vsMk8iih8zoWam2MKt0f3sT0=;
+        b=QJUDn0vPORwXpi6PzQo67fE8cfnwlR19Qn2mAx8CrBOWaAx4w5cSj6X389EW6xMjiK
+         lUIgf0gxjooN79IWXVv/tYKS9E3NUC4z8iX9auBUPVBuxBCrWY4s4V1U0e5/JIasKTaV
+         QW/XyBmYLRAKThhHDUzh9G7L+UU9n5tDrXPLCcdFhDdejGAGjCA0jNnMglO7JhnUexhn
+         BYg1oTHw+8Q5L6A59Q1DE5wvbmBXmWV2zHZ3zrxkd7X7ynlje8Xgv78JpeUoacH4XV4N
+         Cysedxls4ZUB33PTFyPHI6khktRRjtkEJHu/v/X0JzAQu20F3JAQRrhyRFq8uhx+FUMS
+         ICbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SqQvEnBb+Lrh6ePvvd5vsMk8iih8zoWam2MKt0f3sT0=;
+        b=KqT/a/TqNLlytu7USJ7VfcbiMr46PUn9fPeLk16B/70wvTDHWUymqYA5rO/SFWCwIl
+         X13/gM74YdE6ky89/hB8jKgLfPgq9wESE//YBZVNsXEZBfvDlsYPInsSVnArtgm5Dw1U
+         cm8ohP37JRbGRg6+EDyI5EQhQFkhhuey85Pfn5q2SoStuo8GUCcrRzSmUU9BpVlOcZmn
+         sYfMU8qI/Dn8gbTduEVSvGGawBZoz1p6o2pYSSalgy0uvFbEPQOk6bEDrYRyPjdEeW2O
+         9oufxDGQO/6NMIgvJuHfoMrBMt9s2sEMbhNFpkd7EXQyyXrZD7kFieIfok7i2lQSpbaF
+         qpog==
+X-Gm-Message-State: AN3rC/53NZ9tEg6erfc5G/1gSCN+1ZUGPRRbuJ9TnIzlY/1orjFzrdN5
+        N03iKOkEVcw89sYBaT7+hTXidfsN6w==
+X-Received: by 10.36.89.207 with SMTP id p198mr958030itb.71.1493889007992;
+ Thu, 04 May 2017 02:10:07 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Thu, 4 May 2017 02:09:47 -0700 (PDT)
+In-Reply-To: <61C67DC73308BD49B2D4B65072480DBA2BDA554E@DEERLM99EZ1MSX.ww931.my-it-solutions.net>
+References: <20170503162931.30721-1-jn.avila@free.fr> <20170503210726.24121-1-jn.avila@free.fr>
+ <61C67DC73308BD49B2D4B65072480DBA2BDA554E@DEERLM99EZ1MSX.ww931.my-it-solutions.net>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 4 May 2017 11:09:47 +0200
+Message-ID: <CACBZZX77Ad120bgTxJd+jqvPEX81BEYWrXnN2TeK+UgT63816w@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] usability: don't ask questions if no reply is required
+To:     "Kerry, Richard" <richard.kerry@atos.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-DQpNYXkgSSBzdWdnZXN0IHRoYXQgIiBUaGUgbW9zdCBhcHByb2FjaGluZyBjb21tYW5kcyIgZG9l
-c24ndCBtYWtlIG11Y2ggc2Vuc2UgYXMgRW5nbGlzaCAoSSBkb24ndCB0aGluayBhIGNvbW1hbmQg
-Y2FuICJhcHByb2FjaCIpLg0KUGVyaGFwcyBpdCBzaG91bGQgYmUgIiBUaGUgbW9zdCBhcHByb3By
-aWF0ZSBjb21tYW5kcyIuDQoNCg0KUmVnYXJkcywNClJpY2hhcmQuDQoNCg0KDQoNCg0KUmljaGFy
-ZCBLZXJyeQ0KQk5DUyBFbmdpbmVlciwgU0kgU09MIFRlbGNvICYgTWVkaWEgVmVydGljYWwgUHJh
-Y3RpY2UNCg0KVDogKzQ0ICgwKTIwIDM2MTggMjY2OQ0KTTogKzQ0ICgwKTc4MTIgMzI1NTE4DQpM
-eW5jOiArNDQgKDApIDIwIDM2MTggMDc3OA0KUm9vbSBHMzAwLCBTdGFkaXVtIEhvdXNlLCBXb29k
-IExhbmUsIExvbmRvbiwgVzEyIDdUQQ0KcmljaGFyZC5rZXJyeUBhdG9zLm5ldA0KDQoNCg0KDQot
-LS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogZ2l0LW93bmVyQHZnZXIua2VybmVsLm9y
-ZyBbbWFpbHRvOmdpdC1vd25lckB2Z2VyLmtlcm5lbC5vcmddIE9uIEJlaGFsZiBPZiBKZWFuLU5v
-ZWwgQXZpbGENClNlbnQ6IFdlZG5lc2RheSwgTWF5IDAzLCAyMDE3IDEwOjA3IFBNDQpUbzogZ2l0
-QHZnZXIua2VybmVsLm9yZw0KQ2M6IHJhc2htaXBhaTM2QGdtYWlsLmNvbTsgSmVhbi1Ob2VsIEF2
-aWxhIDxqbi5hdmlsYUBmcmVlLmZyPg0KU3ViamVjdDogW1BBVENIIHYyIDEvM10gdXNhYmlsaXR5
-OiBkb24ndCBhc2sgcXVlc3Rpb25zIGlmIG5vIHJlcGx5IGlzIHJlcXVpcmVkDQoNClRoZXJlIGhh
-cyBiZWVuIGEgYnVnIHJlcG9ydCBieSBhIGNvcnBvcmF0ZSB1c2VyIHRoYXQgc3RhdGVkIHRoYXQg
-InNwZWxsaW5nIG1pc3Rha2Ugb2Ygc3Rhc2ggZm9sbG93ZWQgYnkgYSB5ZXMgcHJpbnRzIGNoYXJh
-Y3RlciAneScNCmluZmluaXRlIHRpbWVzLiINCg0KVGhpcyBhbmFseXNpcyB3YXMgZmFsc2UuIFdo
-ZW4gdGhlIHNwZWxsaW5nIG9mIGEgY29tbWFuZCBjb250YWlucyBlcnJvcnMsIHRoZSBnaXQgcHJv
-Z3JhbSB0cmllcyB0byBoZWxwIHRoZSB1c2VyIGJ5IHByb3ZpZGluZyBjYW5kaWRhdGVzIHdoaWNo
-IGFyZSBjbG9zZSB0byB0aGUgdW5leGlzdGluZyBjb21tYW5kLiBFLmcgR2l0IHByaW50cyB0aGUN
-CmZvbGxvd2luZzoNCg0KICAgICAgICBnaXQ6ICdzdGFocycgaXMgbm90IGEgZ2l0IGNvbW1hbmQu
-IFNlZSAnZ2l0IC0taGVscCcuDQogICAgICAgIERpZCB5b3UgbWVhbiB0aGlzPw0KDQogICAgICAg
-IHN0YXNoDQoNCmFuZCB0aGVuIGV4aXRzLg0KDQpUaGUgcHJvYmxlbSB3aXRoIHRoaXMgaGludCBp
-cyB0aGF0IGl0IGlzIG5vdCBmb3JtYWxseSBpbmRpY2F0ZWQgYXMgYW4gaGludCBhbmQgdGhlIHVz
-ZXIgaXMgaW4gZmFjdCBlbmNvdXJhZ2VkIHRvIHJlcGx5IHRvIHRoZSBxdWVzdGlvbiwgd2hlcmVh
-cyB0aGUgR2l0IGNvbW1hbmQgaXMgYWxyZWFkeSBmaW5pc2hlZC4NCg0KVGhlIHVzZXIgd2FzIHVu
-bHVja3kgZW5vdWdoIHRoYXQgaXQgd2FzIHRoZSBjb21tYW5kIGhlIHdhcyBsb29raW5nIGZvciwg
-YW5kIHJlcGxpZWQgInllcyIgb24gdGhlIGNvbW1hbmQgbGluZSwgZWZmZWN0aXZlbHkgbGF1bmNo
-aW5nIHRoZSBgeWVzYCBwcm9ncmFtLg0KDQpUaGUgaW5pdGlhbCBlcnJvciBpcyB0aGF0IHRoZSBH
-aXQgcHJvZ3JhbXMsIHdoZW4gbGF1bmNoZWQgaW4gY29tbWFuZC1saW5lIG1vZGUgKHdpdGhvdXQg
-aW50ZXJhY3Rpb24pIG11c3Qgbm90IGFzayBxdWVzdGlvbnMsIGJlY2F1c2UgdGhlc2UgcXVlc3Rp
-b25zIHdvdWxkIG5vcm1hbGx5IHJlcXVpcmUgYSB1c2VyIGlucHV0IGFzIGEgcmVwbHkgd2hpbGUg
-dGhleSB3b24ndCBoYW5kbGUgaW5kZWVkLiBUaGF0J3MgYSBzb3VyY2Ugb2YgY29uZnVzaW9uIG9u
-IFVYIGxldmVsLg0KDQpUbyBpbXByb3ZlIHRoZSBnZW5lcmFsIHVzYWJpbGl0eSBvZiB0aGUgR2l0
-IHN1aXRlLCB0aGUgZm9sbG93aW5nIHJ1bGUgd2FzIGFwcGxpZWQ6DQoNCmlmIHRoZSBzZW50ZW5j
-ZQ0KICogYXBwZWFycyBpbiBhIG5vbi1pbnRlcmFjdGl2ZSBzZXNzaW9uDQogKiBpcyBwcmludGVk
-IGxhc3QgYmVmb3JlIGV4aXQNCiAqIGlzIGEgcXVlc3Rpb24gYWRkcmVzc2luZyB0aGUgdXNlciAo
-InlvdSIpDQoNCnRoZSBzZW50ZW5jZSBpcyB0dXJuZWQgaW50byBhZmZpcm1hdGl2ZSBhbmQgcHJv
-cG9zZXMgdGhlIG9wdGlvbi4NCg0KVGhlIGJhc2ljIHJld29yZGluZyBvZiB0aGUgcXVlc3Rpb24g
-c2VudGVuY2VzIGhhcyBiZWVuIGV4dGVuZGVkIHRvIG90aGVyIHNwb3RzIGZvdW5kIGluIHRoZSBz
-b3VyY2UuDQoNClJlcXVlc3RlZCBhdCBodHRwczovL2dpdGh1Yi5jb20vZ2l0L2dpdC1zY20uY29t
-L2lzc3Vlcy85OTkgYnkgcnBhaTENCg0KU2lnbmVkLW9mZi1ieTogSmVhbi1Ob2VsIEF2aWxhIDxq
-bi5hdmlsYUBmcmVlLmZyPg0KLS0tDQogYnVpbHRpbi9hbS5jICAgICAgIHwgNCArKy0tDQogYnVp
-bHRpbi9jaGVja291dC5jIHwgMiArLQ0KIGhlbHAuYyAgICAgICAgICAgICB8IDQgKystLQ0KIDMg
-ZmlsZXMgY2hhbmdlZCwgNSBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQ0KDQpkaWZmIC0t
-Z2l0IGEvYnVpbHRpbi9hbS5jIGIvYnVpbHRpbi9hbS5jIGluZGV4IGE5NWRkOGI0ZS4uZjVhZmE0
-MzhkIDEwMDY0NA0KLS0tIGEvYnVpbHRpbi9hbS5jDQorKysgYi9idWlsdGluL2FtLmMNCkBAIC0x
-MzEyLDcgKzEzMTIsNyBAQCBzdGF0aWMgaW50IHBhcnNlX21haWwoc3RydWN0IGFtX3N0YXRlICpz
-dGF0ZSwgY29uc3QgY2hhciAqbWFpbCkNCiAgICAgICAgfQ0KDQogICAgICAgIGlmIChpc19lbXB0
-eV9maWxlKGFtX3BhdGgoc3RhdGUsICJwYXRjaCIpKSkgew0KLSAgICAgICAgICAgICAgIHByaW50
-Zl9sbihfKCJQYXRjaCBpcyBlbXB0eS4gV2FzIGl0IHNwbGl0IHdyb25nPyIpKTsNCisgICAgICAg
-ICAgICAgICBwcmludGZfbG4oXygiUGF0Y2ggaXMgZW1wdHkuIEl0IG1heSBoYXZlIGJlZW4gc3Bs
-aXQgd3JvbmcuIikpOw0KICAgICAgICAgICAgICAgIGRpZV91c2VyX3Jlc29sdmUoc3RhdGUpOw0K
-ICAgICAgICB9DQoNCkBAIC0xOTQwLDcgKzE5NDAsNyBAQCBzdGF0aWMgdm9pZCBhbV9yZXNvbHZl
-KHN0cnVjdCBhbV9zdGF0ZSAqc3RhdGUpDQoNCiAgICAgICAgaWYgKHVubWVyZ2VkX2NhY2hlKCkp
-IHsNCiAgICAgICAgICAgICAgICBwcmludGZfbG4oXygiWW91IHN0aWxsIGhhdmUgdW5tZXJnZWQg
-cGF0aHMgaW4geW91ciBpbmRleC5cbiINCi0gICAgICAgICAgICAgICAgICAgICAgICJEaWQgeW91
-IGZvcmdldCB0byB1c2UgJ2dpdCBhZGQnPyIpKTsNCisgICAgICAgICAgICAgICAgICAgICAgICJZ
-b3UgbWlnaHQgd2FudCB0byB1c2UgJ2dpdCBhZGQnIG9uIHRoZW0uIikpOw0KICAgICAgICAgICAg
-ICAgIGRpZV91c2VyX3Jlc29sdmUoc3RhdGUpOw0KICAgICAgICB9DQoNCmRpZmYgLS1naXQgYS9i
-dWlsdGluL2NoZWNrb3V0LmMgYi9idWlsdGluL2NoZWNrb3V0LmMgaW5kZXggYmZhNTQxOWYzLi4w
-NTAzN2I5YjYgMTAwNjQ0DQotLS0gYS9idWlsdGluL2NoZWNrb3V0LmMNCisrKyBiL2J1aWx0aW4v
-Y2hlY2tvdXQuYw0KQEAgLTEyODcsNyArMTI4Nyw3IEBAIGludCBjbWRfY2hlY2tvdXQoaW50IGFy
-Z2MsIGNvbnN0IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpDQogICAgICAgICAgICAg
-ICAgICovDQogICAgICAgICAgICAgICAgaWYgKG9wdHMubmV3X2JyYW5jaCAmJiBhcmdjID09IDEp
-DQogICAgICAgICAgICAgICAgICAgICAgICBkaWUoXygiQ2Fubm90IHVwZGF0ZSBwYXRocyBhbmQg
-c3dpdGNoIHRvIGJyYW5jaCAnJXMnIGF0IHRoZSBzYW1lIHRpbWUuXG4iDQotICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAiRGlkIHlvdSBpbnRlbmQgdG8gY2hlY2tvdXQgJyVzJyB3aGljaCBj
-YW4gbm90IGJlIHJlc29sdmVkIGFzIGNvbW1pdD8iKSwNCisgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICInJXMnIGNhbiBub3QgYmUgcmVzb2x2ZWQgYXMgY29tbWl0LCBidXQgaXQgc2hvdWxk
-LiIpLA0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIG9wdHMubmV3X2JyYW5jaCwgYXJndlsw
-XSk7DQoNCiAgICAgICAgICAgICAgICBpZiAob3B0cy5mb3JjZV9kZXRhY2gpDQpkaWZmIC0tZ2l0
-IGEvaGVscC5jIGIvaGVscC5jDQppbmRleCBiYzZjZDE5Y2YuLjQ2NThhNTVjNiAxMDA2NDQNCi0t
-LSBhL2hlbHAuYw0KKysrIGIvaGVscC5jDQpAQCAtNDExLDggKzQxMSw4IEBAIGNvbnN0IGNoYXIg
-KmhlbHBfdW5rbm93bl9jbWQoY29uc3QgY2hhciAqY21kKQ0KDQogICAgICAgIGlmIChTSU1JTEFS
-X0VOT1VHSChiZXN0X3NpbWlsYXJpdHkpKSB7DQogICAgICAgICAgICAgICAgZnByaW50Zl9sbihz
-dGRlcnIsDQotICAgICAgICAgICAgICAgICAgICAgICAgICBRXygiXG5EaWQgeW91IG1lYW4gdGhp
-cz8iLA0KLSAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIlxuRGlkIHlvdSBtZWFuIG9uZSBv
-ZiB0aGVzZT8iLA0KKyAgICAgICAgICAgICAgICAgICAgICAgICAgUV8oIlxuVGhlIG1vc3QgYXBw
-cm9hY2hpbmcgY29tbWFuZCBpcyIsDQorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiXG5U
-aGUgbW9zdCBhcHByb2FjaGluZyBjb21tYW5kcyBhcmUiLA0KICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgbikpOw0KDQogICAgICAgICAgICAgICAgZm9yIChpID0gMDsgaSA8IG47IGkrKykNCi0t
-DQoyLjEyLjANCg0KQXRvcywgQXRvcyBDb25zdWx0aW5nLCBXb3JsZGxpbmUgYW5kIENhbm9weSBU
-aGUgT3BlbiBDbG91ZCBDb21wYW55IGFyZSB0cmFkaW5nIG5hbWVzIHVzZWQgYnkgdGhlIEF0b3Mg
-Z3JvdXAuIFRoZSBmb2xsb3dpbmcgdHJhZGluZyBlbnRpdGllcyBhcmUgcmVnaXN0ZXJlZCBpbiBF
-bmdsYW5kIGFuZCBXYWxlczogQXRvcyBJVCBTZXJ2aWNlcyBVSyBMaW1pdGVkIChyZWdpc3RlcmVk
-IG51bWJlciAwMTI0NTUzNCksIEF0b3MgQ29uc3VsdGluZyBMaW1pdGVkIChyZWdpc3RlcmVkIG51
-bWJlciAwNDMxMjM4MCksIEF0b3MgV29ybGRsaW5lIFVLIExpbWl0ZWQgKHJlZ2lzdGVyZWQgbnVt
-YmVyIDA4NTE0MTg0KSBhbmQgQ2Fub3B5IFRoZSBPcGVuIENsb3VkIENvbXBhbnkgTGltaXRlZCAo
-cmVnaXN0cmF0aW9uIG51bWJlciAwODAxMTkwMikuIFRoZSByZWdpc3RlcmVkIG9mZmljZSBmb3Ig
-ZWFjaCBpcyBhdCA0IFRyaXRvbiBTcXVhcmUsIFJlZ2VudOKAmXMgUGxhY2UsIExvbmRvbiwgTlcx
-IDNIRy5UaGUgVkFUIE5vLiBmb3IgZWFjaCBpczogR0IyMzIzMjc5ODMuDQoNClRoaXMgZS1tYWls
-IGFuZCB0aGUgZG9jdW1lbnRzIGF0dGFjaGVkIGFyZSBjb25maWRlbnRpYWwgYW5kIGludGVuZGVk
-IHNvbGVseSBmb3IgdGhlIGFkZHJlc3NlZSwgYW5kIG1heSBjb250YWluIGNvbmZpZGVudGlhbCBv
-ciBwcml2aWxlZ2VkIGluZm9ybWF0aW9uLiBJZiB5b3UgcmVjZWl2ZSB0aGlzIGUtbWFpbCBpbiBl
-cnJvciwgeW91IGFyZSBub3QgYXV0aG9yaXNlZCB0byBjb3B5LCBkaXNjbG9zZSwgdXNlIG9yIHJl
-dGFpbiBpdC4gUGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5IGFuZCBkZWxldGUg
-dGhpcyBlbWFpbCBmcm9tIHlvdXIgc3lzdGVtcy4gQXMgZW1haWxzIG1heSBiZSBpbnRlcmNlcHRl
-ZCwgYW1lbmRlZCBvciBsb3N0LCB0aGV5IGFyZSBub3Qgc2VjdXJlLiBBdG9zIHRoZXJlZm9yZSBj
-YW4gYWNjZXB0IG5vIGxpYWJpbGl0eSBmb3IgYW55IGVycm9ycyBvciB0aGVpciBjb250ZW50LiBB
-bHRob3VnaCBBdG9zIGVuZGVhdm91cnMgdG8gbWFpbnRhaW4gYSB2aXJ1cy1mcmVlIG5ldHdvcmss
-IHdlIGRvIG5vdCB3YXJyYW50IHRoYXQgdGhpcyB0cmFuc21pc3Npb24gaXMgdmlydXMtZnJlZSBh
-bmQgY2FuIGFjY2VwdCBubyBsaWFiaWxpdHkgZm9yIGFueSBkYW1hZ2VzIHJlc3VsdGluZyBmcm9t
-IGFueSB2aXJ1cyB0cmFuc21pdHRlZC4gVGhlIHJpc2tzIGFyZSBkZWVtZWQgdG8gYmUgYWNjZXB0
-ZWQgYnkgZXZlcnlvbmUgd2hvIGNvbW11bmljYXRlcyB3aXRoIEF0b3MgYnkgZW1haWwuDQo=
+On Thu, May 4, 2017 at 10:52 AM, Kerry, Richard <richard.kerry@atos.net> wr=
+ote:
+>
+> May I suggest that " The most approaching commands" doesn't make much sen=
+se as English (I don't think a command can "approach").
+> Perhaps it should be " The most appropriate commands".
+
+I had the same concern, saying "appropriate" is IMO also confusing.
+The point of this UI is not to point out what you should be running,
+which "appropriate" implies, but just "we couldn't find what you
+meant, did you mean one of these?".
+
+I think nothing needs to change here. The whole premise here is that a
+program should never ask a question when you can't give an answer, I
+think that's nonsense. There's such a thing as a rhetorical question,
+and sometimes using that form is the most obvious & succinct way to
+put things.
+
+Which is not to say that phrasing these things as a non-question can't
+be better, but the suggestions so far just seem more complex.
+
+Also keep in mind that a huge part of the user base for git using the
+English UI consists of non-native speakers, and when in doubt we
+should definitely be picking simpler English like "did you mean?" v.s.
+alternatives with >10 character more obscure words.
+
+> Richard Kerry
+> BNCS Engineer, SI SOL Telco & Media Vertical Practice
+>
+> T: +44 (0)20 3618 2669
+> M: +44 (0)7812 325518
+> Lync: +44 (0) 20 3618 0778
+> Room G300, Stadium House, Wood Lane, London, W12 7TA
+> richard.kerry@atos.net
+>
+>
+>
+>
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Beh=
+alf Of Jean-Noel Avila
+> Sent: Wednesday, May 03, 2017 10:07 PM
+> To: git@vger.kernel.org
+> Cc: rashmipai36@gmail.com; Jean-Noel Avila <jn.avila@free.fr>
+> Subject: [PATCH v2 1/3] usability: don't ask questions if no reply is req=
+uired
+>
+> There has been a bug report by a corporate user that stated that "spellin=
+g mistake of stash followed by a yes prints character 'y'
+> infinite times."
+>
+> This analysis was false. When the spelling of a command contains errors, =
+the git program tries to help the user by providing candidates which are cl=
+ose to the unexisting command. E.g Git prints the
+> following:
+>
+>         git: 'stahs' is not a git command. See 'git --help'.
+>         Did you mean this?
+>
+>         stash
+>
+> and then exits.
+>
+> The problem with this hint is that it is not formally indicated as an hin=
+t and the user is in fact encouraged to reply to the question, whereas the =
+Git command is already finished.
+>
+> The user was unlucky enough that it was the command he was looking for, a=
+nd replied "yes" on the command line, effectively launching the `yes` progr=
+am.
+>
+> The initial error is that the Git programs, when launched in command-line=
+ mode (without interaction) must not ask questions, because these questions=
+ would normally require a user input as a reply while they won't handle ind=
+eed. That's a source of confusion on UX level.
+>
+> To improve the general usability of the Git suite, the following rule was=
+ applied:
+>
+> if the sentence
+>  * appears in a non-interactive session
+>  * is printed last before exit
+>  * is a question addressing the user ("you")
+>
+> the sentence is turned into affirmative and proposes the option.
+>
+> The basic rewording of the question sentences has been extended to other =
+spots found in the source.
+>
+> Requested at https://github.com/git/git-scm.com/issues/999 by rpai1
+>
+> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+> ---
+>  builtin/am.c       | 4 ++--
+>  builtin/checkout.c | 2 +-
+>  help.c             | 4 ++--
+>  3 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/am.c b/builtin/am.c index a95dd8b4e..f5afa438d 10064=
+4
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1312,7 +1312,7 @@ static int parse_mail(struct am_state *state, const=
+ char *mail)
+>         }
+>
+>         if (is_empty_file(am_path(state, "patch"))) {
+> -               printf_ln(_("Patch is empty. Was it split wrong?"));
+> +               printf_ln(_("Patch is empty. It may have been split wrong=
+."));
+>                 die_user_resolve(state);
+>         }
+>
+> @@ -1940,7 +1940,7 @@ static void am_resolve(struct am_state *state)
+>
+>         if (unmerged_cache()) {
+>                 printf_ln(_("You still have unmerged paths in your index.=
+\n"
+> -                       "Did you forget to use 'git add'?"));
+> +                       "You might want to use 'git add' on them."));
+>                 die_user_resolve(state);
+>         }
+>
+> diff --git a/builtin/checkout.c b/builtin/checkout.c index bfa5419f3..050=
+37b9b6 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1287,7 +1287,7 @@ int cmd_checkout(int argc, const char **argv, const=
+ char *prefix)
+>                  */
+>                 if (opts.new_branch && argc =3D=3D 1)
+>                         die(_("Cannot update paths and switch to branch '=
+%s' at the same time.\n"
+> -                             "Did you intend to checkout '%s' which can =
+not be resolved as commit?"),
+> +                             "'%s' can not be resolved as commit, but it=
+ should."),
+>                             opts.new_branch, argv[0]);
+>
+>                 if (opts.force_detach)
+> diff --git a/help.c b/help.c
+> index bc6cd19cf..4658a55c6 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -411,8 +411,8 @@ const char *help_unknown_cmd(const char *cmd)
+>
+>         if (SIMILAR_ENOUGH(best_similarity)) {
+>                 fprintf_ln(stderr,
+> -                          Q_("\nDid you mean this?",
+> -                             "\nDid you mean one of these?",
+> +                          Q_("\nThe most approaching command is",
+> +                             "\nThe most approaching commands are",
+>                            n));
+>
+>                 for (i =3D 0; i < n; i++)
+> --
+> 2.12.0
+>
+> Atos, Atos Consulting, Worldline and Canopy The Open Cloud Company are tr=
+ading names used by the Atos group. The following trading entities are regi=
+stered in England and Wales: Atos IT Services UK Limited (registered number=
+ 01245534), Atos Consulting Limited (registered number 04312380), Atos Worl=
+dline UK Limited (registered number 08514184) and Canopy The Open Cloud Com=
+pany Limited (registration number 08011902). The registered office for each=
+ is at 4 Triton Square, Regent=E2=80=99s Place, London, NW1 3HG.The VAT No.=
+ for each is: GB232327983.
+>
+> This e-mail and the documents attached are confidential and intended sole=
+ly for the addressee, and may contain confidential or privileged informatio=
+n. If you receive this e-mail in error, you are not authorised to copy, dis=
+close, use or retain it. Please notify the sender immediately and delete th=
+is email from your systems. As emails may be intercepted, amended or lost, =
+they are not secure. Atos therefore can accept no liability for any errors =
+or their content. Although Atos endeavours to maintain a virus-free network=
+, we do not warrant that this transmission is virus-free and can accept no =
+liability for any damages resulting from any virus transmitted. The risks a=
+re deemed to be accepted by everyone who communicates with Atos by email.
