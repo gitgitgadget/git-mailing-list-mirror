@@ -7,109 +7,84 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 196BF207F8
-	for <e@80x24.org>; Thu,  4 May 2017 09:51:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6EFC207F8
+	for <e@80x24.org>; Thu,  4 May 2017 09:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751407AbdEDJvB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 05:51:01 -0400
-Received: from mout.gmx.net ([212.227.15.15]:50105 "EHLO mout.gmx.net"
+        id S1752647AbdEDJvG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 05:51:06 -0400
+Received: from mout.gmx.net ([212.227.17.22]:63555 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751389AbdEDJu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 05:50:59 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MVui8-1dYgTM0OwC-00X6mX; Thu, 04
- May 2017 11:50:52 +0200
-Date:   Thu, 4 May 2017 11:50:37 +0200 (CEST)
+        id S1752434AbdEDJvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 05:51:06 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcVOE-1dob3M13yQ-00jqDy; Thu, 04
+ May 2017 11:50:58 +0200
+Date:   Thu, 4 May 2017 11:50:57 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 6/7] Fix the remaining tests that failed with
- core.autocrlf=true
+Subject: [PATCH v2 7/7] t4051: mark supporting files as requiring LF-only
+ line endings
 In-Reply-To: <cover.1493891336.git.johannes.schindelin@gmx.de>
-Message-ID: <daa27cca688e864c0b85a92639e0fb46261dad5c.1493891336.git.johannes.schindelin@gmx.de>
+Message-ID: <f648bb03c7fe3945042480f05b9ac229350412b3.1493891336.git.johannes.schindelin@gmx.de>
 References: <cover.1493728172.git.johannes.schindelin@gmx.de> <cover.1493891336.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:e5i7qgitCPzqtVJ64XRWn2TlghB/agqedrUYr60pbJv1UgmJc6J
- pKUUCaCG3I+7yM5GyKd1oKflMK2yrC+vYdl9vVfSx7khJbbh2ELstDO5+mCdjxLyPQ+owjf
- bcr0sHzaFSmGSJ82+w6HQs8gLLAoZqJaQybc/xqk6YEMga/fSfeOv9muX/qmIqC5xZyG6H8
- HC+GI04zprgo1SzmOzYQg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HgyBdvCqtE8=:D0fqK9k4ysgvD4KwRXIsL6
- Jvo0YmDjG22dYdB7MPPk5egORjSYZLN9276y3rVp7C9+lDCi1yECJrZIXbdVFVtPjfVyPO1FT
- G923iY+W+3EX/EPXlPexgIZKvExpQxwTrvEkqHPK46IPcSfIOEcKBrgkQd8lovh87ovBcAJU/
- zUJJcwXQn7gVzYbG5zX5b3IW5yfRmyGLy3STSgOzuqLSKf1C/zMXSp3hdsipz3CyvPsPN+xBp
- msTE6W3Otl1YBNput8eQWBZEWldCpuhob0UcUGZKKamukiu69r82J+fkbgCS3r24zLmGC8Vxb
- wLVvZvkaiGhgdFlMzYuHcyY1rHjep0JyBpaUYowSF6BVcUOMOxYvA+eqwpzPYltX84bmAcdPE
- SSd5SNMeCoPRmLPBOxXv8w3dhOdh7QpwtKfWyGirAi7/zyOLuL5DdjJw5HodsbdFFz9N9NQ6V
- ZKF+eIQBC2Q0ez10FfintJwXEiAInKAqHLe/A23VmzFdz0uEK258TPlL7uRfAHfIaubAJ6EkH
- E3rfZ2kWDY5I3pJ92jzuE4WdxmpEByDiMeiBxC3Mdj0FTid4875HAN2VKYlf9BvrWaVs0Mf8s
- tUtVnggA8p4ZK/UsIVEs7dj31rHG60YJuxirZtu3c1NpyIiJJS8XPlbruzy+uIpSg1Dzm27bU
- 0c1+dZycjXGc0ZsiXzFyvsMo2926ERx2QoKcDU0dB2l9R6TdtTZmextbJ9VAPUUTVbAKZl7eX
- 6bD0JhAHSyHHIP3f9LtYs7ZHtCAJxZLMMKz/x/wYF4HYSArowGG70KdsJV9d9XEEnm99ZvkGU
- wiyCvB4
+X-Provags-ID: V03:K0:/NSy5TEwTbwb7fuRbvFekJ4LdqU6uqpfWOEmMJJmvMUdb1FOp/Z
+ LnFWIs+ABQZtEbci7ly33HBjmwt7qRXVafvr2we4NYyJBluq0Jwa7DuMyljSOhChzLZSaqt
+ IEn2a6sUmAiKhd6gmVdsaJN3nvh26jt+0j7fWS3VZviZf1o94HvcWtOx2L8+dT85zmRS4w2
+ 7qQ0MZNwx7n4eMDWCNVQQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:t6utraY0/RQ=:O9Sw9vqaHR76AJYR4AmiFE
+ CVwIAhJmDrR0TIpEIMDUOkkWx9JjyfqM4SuOYTBK6idEA0Dn/1xZ4ag127QKzqcl+SkgswaTh
+ M5WvkaHwRoVusEBUKF4SzTEyIY11d4usFqP1kVTxyPNBuHUw3H9op++BUF+hbQT166Bnv/iLv
+ lP/qlT36zjZtL9OqOJVLOgRz+RHFTtjnBUZltGM5ogDTMjb1m4VCSTHgF6juzaVKU5wLilpBU
+ y3EyG6RJJR9wHzJbYIe7UiYrZhfrLGY04jRC7PK4czqzuCs6gs6EfTwR7CSmbLqll9L6pVY2G
+ b1YWBvtJ2AsO5PGfktPzdNpaj/CTctmEG2hCq9SvNJ5zl6HoAQ35yUh5RB6qvb93/3nshYVaB
+ QnG1KeoH3YX2WPQBotXP1Xiy8/Awl6dq3NmKJvmAEKhmuVRpQlS+fHuTSHNAsASnEtho4TODg
+ Q1hjPxTF9YSB7R5YoyK6PuK6KwPl7KCa3AJE21SDwrjRXpN5/SOCZXQ9ZBYU9kzsdZ6N4f1oO
+ 9bSpseVOXf4tX0V7zHT4ayYXvepZ2XwqWCyR5PgQfi1DsunEe2qlO7ZmWKjMeVkubVomg52ND
+ xzrgiaPII1QxaeQ46/1KMIlltEk1ROm60z3bZvOEwWkfeeBlyLmsQl7aj08Cs35xFlNYJ9xDn
+ DlpQloJam3LWVm4ELCw9eibCT6deT8S+x0/cxQW3aSdQA58zQy0dwziOX0zqTN0L3nB+l+MEg
+ 2yc2ihEpGgBu4GM4kjKreAtPls7FRKnNE59UJoIchQmT8pFOhE2D1cHVJnfhnHioU0I/f8UK6
+ efGw53N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test suite is mainly developed on Linux and MacOSX, which is the
-reason that nobody thought to mark files as LF-only as needed.
+The test t4051-diff-function-context.sh passes on Linux when
+core.autocrlf=true even without marking its support files as LF-only,
+but they fail when core.autocrlf=true in Git for Windows' SDK.
 
-The symptom is a test suite that fails left and right when being checked
-out using Git for Windows (which defaults to core.autocrlf=true).
+The reason is that `grep ... >file.c.new` will keep CR/LF line endings
+on Linux (obviously treating CRs as if they were regular characters),
+but will be converted to LF-only line endings with MSYS2's grep that is
+used in Git for Windows.
 
-Mostly, the problems stem from Git's (LF-only) output being compared to
-hard-coded files that are checked out with line endings according to
-core.autocrlf (which is of course incorrect).
-
-Note: the test suite also uses the t/README file as well as the COPYING
-file in t/diff-lib/, expecting LF-only line endings explicitly and
-failing if that assumption does not hold true. That is why we mark them
-as LF-only in the .gitattributes, too.
-
-This patch can be validated even on Linux by using this cadence:
-
-	git config core.autocrlf true
-	rm .git/index && git stash
-	make -j15 DEVELOPER=1 test
+As we do not want to validate the way the available `grep` works, let's
+just mark the input as LF-only and move on.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/.gitattributes | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ t/.gitattributes | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/.gitattributes b/t/.gitattributes
-index 2d44088f56e..3525ca43f30 100644
+index 3525ca43f30..bdd82cf31f7 100644
 --- a/t/.gitattributes
 +++ b/t/.gitattributes
-@@ -1,2 +1,20 @@
- t[0-9][0-9][0-9][0-9]/* -whitespace
--t0110/url-* binary
-+/t0110/url-* binary
-+/t3900/*.txt eol=lf
-+/t3901/*.txt eol=lf
-+/t4034/*/* eol=lf
-+/t4013/* eol=lf
-+/t4018/* eol=lf
-+/t4100/* eol=lf
-+/t4101/* eol=lf
-+/t4109/* eol=lf
-+/t4110/* eol=lf
-+/t4135/* eol=lf
-+/t4211/* eol=lf
-+/t4252/* eol=lf
-+/t5100/* eol=lf
-+/t5515/* eol=lf
-+/t556x_common eol=lf
-+/t7500/* eol=lf
-+/t8005/*.txt eol=lf
-+/t9*/*.dump eol=lf
+@@ -5,6 +5,7 @@ t[0-9][0-9][0-9][0-9]/* -whitespace
+ /t4034/*/* eol=lf
+ /t4013/* eol=lf
+ /t4018/* eol=lf
++/t4051/* eol=lf
+ /t4100/* eol=lf
+ /t4101/* eol=lf
+ /t4109/* eol=lf
 -- 
 2.12.2.windows.2.800.gede8f145e06
-
-
