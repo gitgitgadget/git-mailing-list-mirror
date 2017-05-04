@@ -2,87 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B047C207D6
-	for <e@80x24.org>; Thu,  4 May 2017 12:55:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27396207D6
+	for <e@80x24.org>; Thu,  4 May 2017 13:55:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753626AbdEDMza (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 08:55:30 -0400
-Received: from mail-wr0-f170.google.com ([209.85.128.170]:33378 "EHLO
-        mail-wr0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753397AbdEDMzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 08:55:20 -0400
-Received: by mail-wr0-f170.google.com with SMTP id w50so7390531wrc.0
-        for <git@vger.kernel.org>; Thu, 04 May 2017 05:55:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=aIlayM0r349jEB8xTrpHTXJSD+0MSXiPs3eYDxWvCQw=;
-        b=PrXVkYUhOQdVnu7HzYrIL/sh0pW6wn70vm+byrzNKFEV/hvaV76tUWVymdz4itnSzg
-         g2/xPVjnKZxUNhKhI4O9TszIvr1I7nwZzihICAuhUdQGWAy2/dwwyf5p2B4fo4dlvp3K
-         sWUBrX+JfQ93LN5LAyAlR9SBKW0Hig6voPMMO1NFPM1JR83dN3O+Sld9C9shBKT1jcbT
-         juITrQKcYxOb5O2fbDpaybeSn2eBbZxuxRn1smzDmXcvT45hEWT3WCqzfJLSGgZsEaQR
-         o5mW4uC85sQaIObYVhVXgXMQ0GJsZGvKor/+zsrrcwlUUWpvdX4aZcx7QdsCfr6PrqsV
-         kdHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=aIlayM0r349jEB8xTrpHTXJSD+0MSXiPs3eYDxWvCQw=;
-        b=T5oFMaEZe/NlmfQDcTRd+Ucy9jaTH8CAqNTlEi+KAzTbkg783FAFTVSiKTGsava39j
-         hY2Umaga1vAjFaDcChQYBGjk5FEgA9qr1Kiya2Rt97YKbg5D/QZbPYbjTsP5xjZJfy2C
-         fDtV3it5LQc5XpDLq/RFX+w/7M1rYpxz6C12TivPEjCXrCF7aNAU4D9BQjvltfpPfzxw
-         krDFauDRQC9/LxefzkuNCJPqzYuRHk4AbwR+zq5EfJBj4+xFM14z01NvUB4jggnE6qrD
-         yfXa0Dft+dObmo3Vf04EAfLmvXkl8Eh6rpVnS/vus1ao2ApXscL/ZUS08P3cciBhIiaK
-         qV3w==
-X-Gm-Message-State: AN3rC/6AQRjXtuNpiFnFaf1Cmbyz/6/EOuSBuvEh3AZZxv9vvbwrqQ4h
-        LQKQlzmTMnj4JHk9oyA0HfgbODDSow==
-X-Received: by 10.223.149.33 with SMTP id 30mr27863079wrs.61.1493902518097;
- Thu, 04 May 2017 05:55:18 -0700 (PDT)
+        id S1755250AbdEDNz4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 09:55:56 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63863 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755186AbdEDNzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 09:55:45 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Le5bY-1drfjr0CVA-00ps40; Thu, 04
+ May 2017 15:55:39 +0200
+Date:   Thu, 4 May 2017 15:55:38 +0200 (CEST)
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     git@vger.kernel.org
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH v4 04/25] add_commit_patch_id(): avoid allocating memory
+ unnecessarily
+In-Reply-To: <cover.1493906084.git.johannes.schindelin@gmx.de>
+Message-ID: <c20dfea3a2cbf5905d52d5a550653736dd71ea4c.1493906085.git.johannes.schindelin@gmx.de>
+References: <cover.1493740497.git.johannes.schindelin@gmx.de> <cover.1493906084.git.johannes.schindelin@gmx.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.28.28.146 with HTTP; Thu, 4 May 2017 05:55:17 -0700 (PDT)
-In-Reply-To: <20170503192734.GD9226@256bit.org>
-References: <20170430191149.19290-1-ralf.thielow@gmail.com>
- <20170502163612.3381-1-ralf.thielow@gmail.com> <20170503123826.GE30941@256bit.org>
- <CAN0XMOKMwzYEwHJECk0w5rJBRr4CAGo+wzfN=u55OxCYN+WcSw@mail.gmail.com> <20170503192734.GD9226@256bit.org>
-From:   Ralf Thielow <ralf.thielow@gmail.com>
-Date:   Thu, 4 May 2017 14:55:17 +0200
-Message-ID: <CAN0XMOLQ-9yu-Hmb9eQ5KZTcghMt3czj_auYjCFByJufVSHa9g@mail.gmail.com>
-Subject: Re: [PATCH v3] l10n: de.po: update German translation
-To:     Ralf Thielow <ralf.thielow@gmail.com>, git <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-        Christian Stimming <stimming@tuhh.de>,
-        Phillip Szelat <phillip.szelat@gmail.com>,
-        =?UTF-8?Q?Matthias_R=C3=BCster?= <matthias.ruester@gmail.com>,
-        =?UTF-8?Q?Magnus_G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>,
-        Simon Ruderich <simon@ruderich.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:0cJ4poDeSj75NcAyz3Of+bMa94r8KNaD0G49bapzVTbmwBZ0t4l
+ IVNqCGHue4uBuPte+xTu62hOUD9HoB1zjv+D3zfGETqDt1WRh9RFjv84Q/BpLCv5on60oZy
+ 5Vo/QYZKZbujqaryzCN5Z7cP+YzfeRM4FTronLiAtGNUUNg2ekq1+ABvi3DiK7qc6+X+pzR
+ NBGi3oD2ey+2Nt42MN3aA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:U3hUy9xHqPM=:ynLKlftn+Eojo7s8BqClfT
+ mTuf03WSLP+umrGozPVejV85qv1QMrOny4fh2bME2N/Jdhdjc5jofUvDLFGZ/4GgDd5yYuyva
+ pzNFQpeSaKN+JJQMWdUC5adtQkeby5edLCNmPHpdoYsANrE9vbCzLkIA6ZVYUXpSflg9Z6256
+ eeAq5+LMWzu4FWZCVjJH1Tqg3YCu5XNFMk/U9vzf7J0DbtdYaWJ5Aii2QRIddNSSTDJMistkC
+ U75ZFzTVrgoZV66UsLV2XzExnLtYoyqOnFUAdsLW4wIuDHLnupxf4nq+CUgH+LatcdPwBOyfJ
+ 2uetduUuxatCP4kdKn6nVkNmvz9YjIS0UDq9OlcMT4VrdFiuUziGEPvc37R0jAWS13QecGxLd
+ UeltpgBiLTl70m+lH1GveFOTTcAKYNu9FiZJ0oS75kAt/GIuptRDQP4IhdLVrLrbQjs5EVNfq
+ MUpn+d4ZfeViM/OTf+/FLfqveu3N66/xBShk2b0lZk9ufp0ZP56oph3pIzyVt2Vr6dZjBVG4n
+ wMa6+ngM1QpRSacQH/8K7FvuWNaaoDv615L4R6/tCVqoLLJSGooccy79fQFRSAhl14EgNErDj
+ 4ohgFR93hosgH5HMPIbqtzHP5SjNkAwe2O77VmlEiYiWyEGP/XZe4xZlqlPU28ZgQVy7G1ucE
+ HEdoH0IwYKAp4pW/YVE45K6tUBGqCqKXfPAIHOxdc+C7xuVLZAWpSMD/dmE/JrDp3u6FOKaAt
+ WrLQ6Pm0GSQrAf/4dmME3waUQvYOtJ49TYUKkX/n0W1cZ1r2xW/NL91L0yCKytkobRmg+75tI
+ U7gwHOg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-2017-05-03 21:27 GMT+02:00 Christian Brabandt <cb@256bit.org>:
-> On Mi, 03 Mai 2017, Ralf Thielow wrote:
->
->> Ref or Reference is translated as "Referenz" while
->> Rev or Revision is translated as "Commit" so I think
->> the translation is correct.
->
-> Oh right. I also noticed that sometimes complete sentences were used and
-> sometimes not. It would be nice to have a consistent style there too.
->
+It would appear that we allocate (and forget to release) memory if the
+patch ID is not even defined.
 
-Sure.  Using only one style for those messages is a point on my TODO list.
+Reported by the Coverity tool.
 
-> Thanks for updating.
->
-> Best,
-> Christian
-> --
-> Hallo Briefmarkensammler!
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ patch-ids.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/patch-ids.c b/patch-ids.c
+index fa8f11de826..92eba7a059e 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -99,11 +99,12 @@ struct patch_id *has_commit_patch_id(struct commit *commit,
+ struct patch_id *add_commit_patch_id(struct commit *commit,
+ 				     struct patch_ids *ids)
+ {
+-	struct patch_id *key = xcalloc(1, sizeof(*key));
++	struct patch_id *key;
+ 
+ 	if (!patch_id_defined(commit))
+ 		return NULL;
+ 
++	key = xcalloc(1, sizeof(*key));
+ 	if (init_patch_id_entry(key, commit, ids)) {
+ 		free(key);
+ 		return NULL;
+-- 
+2.12.2.windows.2.800.gede8f145e06
+
+
