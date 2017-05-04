@@ -7,76 +7,150 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3806207B3
-	for <e@80x24.org>; Thu,  4 May 2017 09:50:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1770207F8
+	for <e@80x24.org>; Thu,  4 May 2017 09:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752681AbdEDJuQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 05:50:16 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61577 "EHLO mout.gmx.net"
+        id S1752202AbdEDJuk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 05:50:40 -0400
+Received: from mout.gmx.net ([212.227.15.18]:50897 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751608AbdEDJuN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 05:50:13 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqALY-1djess0tua-00dmB1; Thu, 04
- May 2017 11:49:54 +0200
-Date:   Thu, 4 May 2017 11:49:53 +0200 (CEST)
+        id S1751262AbdEDJui (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 05:50:38 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfEMs-1dPN5Z395O-00OsS6; Thu, 04
+ May 2017 11:50:31 +0200
+Date:   Thu, 4 May 2017 11:50:31 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v2 3/7] completion: mark bash script as LF-only
+Subject: [PATCH v2 5/7] t4003, t4005, t4007 & t4008: handle CR/LF in t/README
+ & t/diff-lib/README
 In-Reply-To: <cover.1493891336.git.johannes.schindelin@gmx.de>
-Message-ID: <a36f1684d302dc961f91e3ac0651b1aac7e00710.1493891336.git.johannes.schindelin@gmx.de>
+Message-ID: <8afbd831b79b5978c1c2f8641a911c02e4175de2.1493891336.git.johannes.schindelin@gmx.de>
 References: <cover.1493728172.git.johannes.schindelin@gmx.de> <cover.1493891336.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XcHGByOm9O19OPbD+QfgSzxbLFTAQbkZ4YeKf7GqljgtqPdE8Fp
- PikB9pMfDhUka0h6HdybexbNWXO4DI01w7YWwOIavS9lBK1WjRMzaAlp9BOHEwG60/38y/V
- AKuvG8doE3KRA7Soe1JATaP0n+7jPVEDaxc0Ds6TDrI6OHwiOpX36Sbhq7n1fnDvcEvPE7m
- n//ZITRjy2XPNQIXl7/Ag==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jjoISxFncsg=:FtBkp0Kxqp2EosFaG5Ko6x
- P5Dc6UgUadASuZnTRFtX3WDeU4SmRQOniZOkwcFC9bTo0I5bzrNRo74zx7YGLLJM7fZH++ndj
- 3YqyceAXkC8sLoNK8XzdWTEwxrEsOrsJ2XexuDafIOn9M42udyplVlzltnphf9k/w8wksc2xb
- 1io0IC8V9EV0OQFdVxEstUZyyNCqaqctfEemFNCaYBwOZgsOwrSZQ+Y9vL44uUKYRZnurQ6DT
- J+XGYD5oMyw65gFKJlTg7pH7p84CMlFgorE+2boBBGu2dlNLMUd95bF0aTS3CsWyL3uZIRIgu
- 0m/CCzX8aLAsYkxFlt4xamqd15y+3S+trekqnNIGxRBuOgnDArlQyeubhVbemz72lDwsr0mRA
- KO3yWh0+Uji4xt+q47KPsqHfyzBydnxW3yRxKvGJZ06Zkk7T7O6NFp3OcTixuZU7NBmSgkIcl
- 2GZTG/3fanK6B8WcugmMQn1AZ7+6dgDVyX9kTNxhzeV51HNQHbtgXPmdnqFO7YyRLLjbbneO0
- i59715l9rjyRoH0XqIYA/KWs3JdXY3HpdhRd7FzkgmUbf16sP13LE7pYvM4PU5S1xJ7HtmDsR
- Y4VDSn2wmheyQ/O/qRoRo34aetTzTQbLVe7XLlQoBNQ44/eeV50nLgZftKzLlHVdfSp31lvcA
- 9uOrbeOVlkq8AX6SQNrwF2Yy/4fsuWLmVkbvGaxa4wjUJI/9jzOanD16mk6of3aywaUakwbM4
- MQHY1wXYfwpjkcNhAzHiogZZIGkgMgSqrz3oVvrDeP+QbRoplQGZq33/Br9SoeDUO8hPTFlf4
- v/yKADc
+X-Provags-ID: V03:K0:KRnbcso738TMZYVzFksYXZ5aMKnyy2+yssFYPsUUBnAcuAUbqgY
+ qifVXQujK2uc+suMC2jdG5UFlaLqHnwtHcxMLkmU1NVE6GI/epu3bgGChZfcQV71WPcnzS8
+ 9GxymzDmtK0am8r1ndFT84n20hkHvGnAUqDPoQlILIlx4yqPMUjuboINH581STHamIazpt5
+ 1b8eERz8tHVYhhouFfRAA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:xWdlteBUgvM=:cOmabizd8r+8SIPJmp1Wk2
+ /snkrbcKQrrt6gor/yE+erlF8AmsXs7DEJDnAJrMuMq8UBIbuoP6RmN2XqLuwuI2nk6gEBlDt
+ huw1ejP5EWy+sgEykQh9M2y+wS52BsfgtA6IocvuAO03vYOylAQ6QiCrfwKTlRJVPLWYEOGNb
+ wd0w1j7gbU80qDe0oa55M0VnS3T/B8nY9vKYiRX5XyTG8Qq9l1L8UsHPJ5/Ya32FT9rxWP615
+ CEQHY2hryMcoJ5OjlgC3lGsW+ayeFbJaiwCTqc+Yryv3v01Yy3aujAppFW5KtllBXgmfol49Y
+ Sv3BNO3tSiB/TLQqHvRmEp9GE+gr/odx5M/JJdh14/BPX68rCKDYCKjIoX0uPnratpSh9fUl+
+ eq0ZJqIKnVOcRoavYLwou/pwaa/EQAxRKc8bl53vMmw+Ksp7CMAWk/BzT0XF49/ApgYItBHDT
+ h26dOGrlZZXTX63NLBKOUGBPpKDu1RhXcPsvTcQMuzbMNRnlk/3Bq4o37Cd/JnSseBIJeCqW6
+ JNqOko5Z+OD2y3RuehroKINSHGuN6YLEfPYL9dSz+Tb7T8kxM9up2nqvjle2CMpdNJ2k6lU5G
+ dVa4OgyIpqh6/Xaz+FfoAlkkYuHOax4fRyIM3R7vr9IPiKhtbCcGBt7TSBfvzys2OAK499QJh
+ b+NZGh7LZHi5PWJtbLhz2IAMTJHup6UIhJj/9maMHR25MOGBY9FWyuAoPr+yq7iFjrt//QJyv
+ FwPfiranrE7/6hHcwYpMkMUQqzof1/eagy5fWSkJ1B0syQ4luDQgZIQ2r173qcLr/1vENlRwY
+ l/1NHag
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Without this change, the completion script does not work, as Bash expects
-its scripts to have line feeds as end-of-line markers (this is
-particularly prominent in quoted multi-line strings, where carriage
-returns would slip into the strings as verbatim characters otherwise).
+Seeing as Git originates from the Linux ecosystem, it is understandable
+that the assumption of Unix line endings is deeply ingrained in Git's
+source code as well as its test suite.
 
-This change is required to let t9902-completion pass when Git's source
-code is checked out with `core.autocrlf = true`.
+However, we must not force files that are otherwise unrelated to tests
+to have Unix line endings just to appease test scripts that may use
+them. Instead, the test scripts should be indifferent what line endings
+files outside their corresponding tNNNN/ directories have.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+As t4003-diff-rename-1.sh, t4005-diff-rename-2.sh, t4007-rename-3.sh &
+t4008-diff-break-rewrite.sh make hard-coded assumptions about the SHA-1
+of the tested files, and as those files' contents originate from outside
+this script's sphere of authority, it must handle CR/LF line endings in
+those files gracefully. We do that by simply stripping out CR bytes.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/completion/.gitattributes | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 contrib/completion/.gitattributes
+ t/t4003-diff-rename-1.sh      | 4 ++--
+ t/t4005-diff-rename-2.sh      | 4 ++--
+ t/t4007-rename-3.sh           | 2 +-
+ t/t4008-diff-break-rewrite.sh | 4 ++--
+ 4 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/completion/.gitattributes b/contrib/completion/.gitattributes
-new file mode 100644
-index 00000000000..19116944c15
---- /dev/null
-+++ b/contrib/completion/.gitattributes
-@@ -0,0 +1 @@
-+*.bash eol=lf
+diff --git a/t/t4003-diff-rename-1.sh b/t/t4003-diff-rename-1.sh
+index df2accb6555..c3e0a3c3fc9 100755
+--- a/t/t4003-diff-rename-1.sh
++++ b/t/t4003-diff-rename-1.sh
+@@ -11,7 +11,7 @@ test_description='More rename detection
+ 
+ test_expect_success \
+     'prepare reference tree' \
+-    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
++    'tr -d "\015" <"$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
+      echo frotz >rezrov &&
+     git update-index --add COPYING rezrov &&
+     tree=$(git write-tree) &&
+@@ -99,7 +99,7 @@ test_expect_success \
+ 
+ test_expect_success \
+     'prepare work tree once again' \
+-    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
++    'tr -d "\015" <"$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
+      git update-index --add --remove COPYING COPYING.1'
+ 
+ # tree has COPYING and rezrov.  work tree has COPYING and COPYING.1,
+diff --git a/t/t4005-diff-rename-2.sh b/t/t4005-diff-rename-2.sh
+index 135addbfbda..f1641c35ee2 100755
+--- a/t/t4005-diff-rename-2.sh
++++ b/t/t4005-diff-rename-2.sh
+@@ -11,7 +11,7 @@ test_description='Same rename detection as t4003 but testing diff-raw.
+ 
+ test_expect_success \
+     'prepare reference tree' \
+-    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
++    'tr -d "\015" <"$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
+      echo frotz >rezrov &&
+     git update-index --add COPYING rezrov &&
+     tree=$(git write-tree) &&
+@@ -71,7 +71,7 @@ test_expect_success \
+ 
+ test_expect_success \
+     'prepare work tree once again' \
+-    'cat "$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
++    'tr -d "\015" <"$TEST_DIRECTORY"/diff-lib/COPYING >COPYING &&
+      git update-index --add --remove COPYING COPYING.1'
+ 
+ git diff-index -C --find-copies-harder $tree >current
+diff --git a/t/t4007-rename-3.sh b/t/t4007-rename-3.sh
+index dae327fabbf..0157fde5503 100755
+--- a/t/t4007-rename-3.sh
++++ b/t/t4007-rename-3.sh
+@@ -11,7 +11,7 @@ test_description='Rename interaction with pathspec.
+ 
+ test_expect_success 'prepare reference tree' '
+ 	mkdir path0 path1 &&
+-	cp "$TEST_DIRECTORY"/diff-lib/COPYING path0/COPYING &&
++	tr -d "\015" <"$TEST_DIRECTORY"/diff-lib/COPYING >path0/COPYING &&
+ 	git update-index --add path0/COPYING &&
+ 	tree=$(git write-tree) &&
+ 	echo $tree
+diff --git a/t/t4008-diff-break-rewrite.sh b/t/t4008-diff-break-rewrite.sh
+index 9dd1bc5e162..5af4fa6aadb 100755
+--- a/t/t4008-diff-break-rewrite.sh
++++ b/t/t4008-diff-break-rewrite.sh
+@@ -25,8 +25,8 @@ Further, with -B and -M together, these should turn into two renames.
+ . "$TEST_DIRECTORY"/diff-lib.sh ;# test-lib chdir's into trash
+ 
+ test_expect_success setup '
+-	cat "$TEST_DIRECTORY"/diff-lib/README >file0 &&
+-	cat "$TEST_DIRECTORY"/diff-lib/COPYING >file1 &&
++	tr -d "\015" <"$TEST_DIRECTORY"/diff-lib/README >file0 &&
++	tr -d "\015" <"$TEST_DIRECTORY"/diff-lib/COPYING >file1 &&
+ 	git update-index --add file0 file1 &&
+ 	git tag reference $(git write-tree)
+ '
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
