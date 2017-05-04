@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65F9B207FF
-	for <e@80x24.org>; Thu,  4 May 2017 05:19:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D731F207FF
+	for <e@80x24.org>; Thu,  4 May 2017 05:23:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932198AbdEDFTs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 01:19:48 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:34847 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754126AbdEDFTq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 01:19:46 -0400
-Received: by mail-pf0-f196.google.com with SMTP id o68so624563pfj.2
-        for <git@vger.kernel.org>; Wed, 03 May 2017 22:19:46 -0700 (PDT)
+        id S1754553AbdEDFXf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 01:23:35 -0400
+Received: from mail-pg0-f53.google.com ([74.125.83.53]:33739 "EHLO
+        mail-pg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754524AbdEDFXd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 01:23:33 -0400
+Received: by mail-pg0-f53.google.com with SMTP id y4so2568883pge.0
+        for <git@vger.kernel.org>; Wed, 03 May 2017 22:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=PnHvzF50158acROyPHtgp6YL5VMCNsXK8PsTC3F4VJ0=;
-        b=fFE6U3xnP9hXXD4Wl5oOB9MsMY6SDCXDKqHFn+TTi5VsmbfEhtm5AlpaH9jsYOq2JW
-         8c85YIvHozVqkvNfGimRKYkZ/z05poi5cNXJeKjBn0W+puLX3fQPCDniMboOGykiD7p7
-         MFHe6Ye8fDiyZTh0h8PJGhm0Tfx8WOmVxCEjiETNXxRtlNu5OwrLZxEMCoKT4ggeIf4y
-         sA08CxEFLs6L+Tbr12KvN3WAMG1lEBdVGxgEEu9DDsYlF//U1tf1voD0DXoSWSN+m0In
-         rmZB6m7yKmIbzpt4Gg1jx9B7MKCMJLGXhcbrtbov225SOQfwyz5rUrT1sjhpiV9noyWd
-         rslw==
+        bh=jjhPvCcS9x8V+8P2YIX2Qfir+cXdu+Vwj+4m/y5A4/k=;
+        b=adAxqYIiLmWsbazT5cDfD+p5JSsd0Ymww3I03kIg1RcV6ZodY702uCfrgTqGTlKvVY
+         NNGTp+pjfWs3DEsir/elrPEGfvvqxIdCRGOqiu0c2AjTRDVBOiYdUoajjBqGmNZ2DBEj
+         s99W1uEmGS7bLI3SdugGN9ZJz9llnPMPh2mRlqF74t7vbfPGbqSntiwLKJYKr43Osq+9
+         EklDDem8udbYPFMg3Ab72hLCkLFya5bEyExLyTC6rZAozZ2c7n5EPIpjh6vruDJi+Yr6
+         RLe4bR28cqJLeJ8QDVv/A/E74oCPlXX+SOa5TXKjWsUQ4MmBXuWwG3fOYIG0Snx3qGQn
+         XKqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=PnHvzF50158acROyPHtgp6YL5VMCNsXK8PsTC3F4VJ0=;
-        b=WstkfXRVrFqIdPg8SVZql5RBnvr0qtWx2heNR8eVIeDimn035pqaE5qF1PPLxAjU+x
-         KzcztIUXFsWIfj+J1ybctmIyL1bYWqodT1p+m73Oemexf3J213ZA+XOlvF+gvSyFX5g8
-         gKi06ePjwLazLtlaS1u9u5TBO9CuqdW4nNtYuZOAojSYZW5KjgK+n8twVuiJMCav0n1Q
-         8EEo+AEdpCxO8T+bXzXp9ejspQSXd85oapzvb2c7i9Jxyk8qqFk4/sboz1DzdzkQkmt1
-         6B1s0BoiTv8Ehxt7nqZPgFBAcwL4ss2MlJ/undBCrhpoFByIJSS5ZUXmrrwZBPsvsYm8
-         OHNg==
-X-Gm-Message-State: AN3rC/59/Q70deaIv61itsQG9e0aF7lJlW6AFaQMyPECgqlq8i3ZmINz
-        lLoEbEz18jcphTIIM+c=
-X-Received: by 10.98.76.76 with SMTP id z73mr456210pfa.99.1493875186028;
-        Wed, 03 May 2017 22:19:46 -0700 (PDT)
+        bh=jjhPvCcS9x8V+8P2YIX2Qfir+cXdu+Vwj+4m/y5A4/k=;
+        b=Oc/8lcybv4RWMD8wPg43GCutPdl7+uh4siw/TKA13ey9LA9+KpjFo5t7yi8I1HGmAw
+         uXNsoKmEkF/3LFx99BDllh9oQU/7mekaruDuCUkiJH1JZcxnb+AlqLYMR5Q1R3P9JHe6
+         tDFZgavwLCZAIhTH2fd/zR0j4EF+ZQtbyqMMk0xF1yCIz+v3QH04mOkp3ZNvg7CLefkR
+         VGPauL4s4PsFmKi1mMgQ417vM5NJsM7HJFDLux+Mu8ZLRj5OiLGjXDtb86jUJ1hWlbOy
+         bs9+JqUMw8iwdYcZYwmsbYJW7yFYIV1YQJjuZHGsycUDCUmnj/KLESNiV6oU3oJaEGE/
+         ck4g==
+X-Gm-Message-State: AN3rC/6iu7DZciilGMrKeRHPY+THuiWwEdlhtV3tqaWeZJhVFcQaQMbP
+        thGfN6erfeWGAg==
+X-Received: by 10.84.233.196 with SMTP id m4mr23537996pln.177.1493875412576;
+        Wed, 03 May 2017 22:23:32 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:21be:aa3e:8063:4b3])
-        by smtp.gmail.com with ESMTPSA id k23sm1528537pgn.11.2017.05.03.22.19.45
+        by smtp.gmail.com with ESMTPSA id w23sm1402790pfl.133.2017.05.03.22.23.31
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 03 May 2017 22:19:45 -0700 (PDT)
+        Wed, 03 May 2017 22:23:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/5] Abide by our own rules regarding line endings
-References: <cover.1493728172.git.johannes.schindelin@gmx.de>
-Date:   Wed, 03 May 2017 22:19:44 -0700
-In-Reply-To: <cover.1493728172.git.johannes.schindelin@gmx.de> (Johannes
-        Schindelin's message of "Tue, 2 May 2017 14:29:44 +0200 (CEST)")
-Message-ID: <xmqqpofp9p1r.fsf@gitster.mtv.corp.google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Rashmi Pai <rashmipai36@gmail.com>, git@vger.kernel.org
+Subject: Re: Bug report: Git Stash; spelling mistake of stash followed by a yes prints character 'y' infinite times.
+References: <CAOqCAXTN6_dR=+As_i6yxOL+A3dOzs4bM5Lzbj6qzyT_3ecRcw@mail.gmail.com>
+        <20170503094709.rn252pina4vdm6lv@sigill.intra.peff.net>
+Date:   Wed, 03 May 2017 22:23:31 -0700
+In-Reply-To: <20170503094709.rn252pina4vdm6lv@sigill.intra.peff.net> (Jeff
+        King's message of "Wed, 3 May 2017 05:47:09 -0400")
+Message-ID: <xmqqlgqd9ovg.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,37 +65,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <johannes.schindelin@gmx.de> writes:
+Jeff King <peff@peff.net> writes:
 
-> For starters, those files include shell scripts: the most prevalent
-> shell interpreter in use (and certainly used in Git for Windows) is
-> Bash, and Bash does not handle CR/LF line endings gracefully.
+>> 4. Now git says git: 'stahs' is not a git command. See 'git --help'.
+>> 
+>> Did you mean this?
+>> 
+>> stash
+>
+> After this step git exits, and you're back at your shell prompt...
 
-Good to know.  I am not sure if it is OK for shell scripts not to
-honor the platform convention, though.
-
-Stated from the opposite angle, I would not be surprised if your
-shell scripts do not work on Linux if you set core.autocrlf to true.
-Git may honor it, but shells on Linux (or BSD for that matter) do
-not pay attention to core.autocrlf and they are within their rights
-to complain on an extra CR at the end of the line.  IOW, I would
-doubt that it should be our goal to set core.autocrlf on a platform
-whose native line endings is LF and make the tests to pass.
-
-> Related to shell scripts: when generating common-cmds.h, we use tools
-> that generally operate on the assumption that input and output
-> deliminate their lines using LF-only line endings. Consequently, they
-> would happily copy the CR byte verbatim into the strings in
-> common-cmds.h, which in turn makes the C preprocessor barf (that
-> interprets them as MacOS-style line endings).
-
-This indeed is a problem.  "add\r" is not a name of a common
-command, obviously, regardless of how the text file that lists the
-names of the commands is encoded.  I am undecided if it is a problem
-in the source text (i.e. command-list.txt is not a platform neutral
-"text" but has to be encoded with LF endings) or the bug in the
-tools used in the generate-cmdlist.sh script, though.  Shouldn't the
-tools be aware of the platform convention of what text files are and
-how their eol looks like?
-
-
+Perhaps the suggestion message should be rephrased not to sound like
+it is asking confirmation?
