@@ -7,19 +7,19 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCB4F207D6
-	for <e@80x24.org>; Thu,  4 May 2017 13:56:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C8F4207D6
+	for <e@80x24.org>; Thu,  4 May 2017 13:56:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755331AbdEDN4I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 09:56:08 -0400
-Received: from mout.gmx.net ([212.227.17.21]:57417 "EHLO mout.gmx.net"
+        id S1755343AbdEDN4Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 09:56:24 -0400
+Received: from mout.gmx.net ([212.227.15.15]:64005 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755290AbdEDN4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 09:56:05 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LeeNW-1dr7VR0Exy-00qS3z; Thu, 04
- May 2017 15:55:43 +0200
-Date:   Thu, 4 May 2017 15:55:41 +0200 (CEST)
+        id S1755186AbdEDN4X (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 09:56:23 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lu874-1e6b1N2FmQ-011TKs; Thu, 04
+ May 2017 15:56:15 +0200
+Date:   Thu, 4 May 2017 15:56:14 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
@@ -27,73 +27,99 @@ cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH v4 05/25] git_config_rename_section_in_file(): avoid resource
- leak
+Subject: [PATCH v4 09/25] mailinfo & mailsplit: check for EOF while parsing
 In-Reply-To: <cover.1493906084.git.johannes.schindelin@gmx.de>
-Message-ID: <9f1b809e84b1f175d1c56e58c53c785faab79ae2.1493906085.git.johannes.schindelin@gmx.de>
+Message-ID: <2f54cb32079186abea8ca12c3e81f3d993500673.1493906085.git.johannes.schindelin@gmx.de>
 References: <cover.1493740497.git.johannes.schindelin@gmx.de> <cover.1493906084.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:oypYIOHIuuk4g64oLmTQy3J2UUvC7ePo3Iatve4ZT6fvnU7HUji
- QZSlD7/PIc8zWD+js3hXEYg5a+/xNbxr9EgQ6wBQhQ7M1QxNUM+M3CRAMG+5Sb64iDvOMN+
- n+hNEef7FYqv6I9wQu+a5BYg5dZqX1bqIXdjCVIHc+BA4vs8wX6imKTJNPS2pNe+oVrp6H2
- 7K2G0gBA/TXel80hDJ0GQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:NaL/JAtGNHU=:cvuAfLshO+JUFqGkKLeBzG
- U1bJ8x/nbXuLHAGaF/pv2b3ozbkYsLKzqqUGOEE2Oyu+kK3g3Pvwi0pcoUXf/PrnLK5VHUVcm
- vCT/vyoQ0nPghRAag9hq0JtdvZzmH+b4+ofjdKYtD76+SeivCAO/V2VXAs6be8uVy3AgjnQDh
- QXF4/c3nUW3rNo7c2uZjCgsc0nxDJ7UbrqEIDVjxBQmi8P4GL1HsFbLSesofAEdF3/PRPL13/
- GXxfJtMPCHplnwopxb/upEp0paFgzsl4WxwalQMXVqyQ2Q7bEbnbi/VkKYgH0vUmRKeOsQ66J
- UVx9AZp04p/+A/wZMJkZQC2HEPSIzOXYknCQKHKvVLjSTXV3yVSl3AUA4yjPmoph5RXWkSqE+
- n+T1EINJbjvfdC83sXeP0msSQY8WUWivRloihuO9oe5wpBeyF4GAOMyRIXyi69C/gdOE/xvR0
- sitHhQdEC3bg7LWV4EOXA+OgRClHgfD+CESnegvOJGGKkb93bU0OHEzF8/kcmPHsJj6LzG31B
- IUFjq0QcnAXGHTOUd0bpKAhZ9lnGgn5ZeMBvoTj3eJHZeP3xOT+sHs7+PwbcrcDAZEQ5WF0vK
- 3/6H/ZfdYdGY0utm1Lz9hFQXM5yxf1ZHxoQ6Gw2zemAuEmTHOHsbNqOkFUQYORf3SwKhOvFDB
- vt5K85axgvqW2IpdNH1OeyePlZFsSG1uY9hHphXWNA+Ml0XE2fd7J3ZoHYjVfU20ETqZsy5WW
- NHgBv0256IprST/dfHXS2ZsrdtYzAttzvV7wnWmCPYcc5GSMHQfjbLTkRQcCds+eR3P0CRx43
- F5Zg5VJ
+X-Provags-ID: V03:K0:yNjwt6ebGlGPX9LAt/FiY7bCpvKNNdgX5BvMq0FN8A4zXPKVJaR
+ WXpcfUzeIPFLJkesaI6NrPeYy6mohhJmu4sqH02o9FTb3okjDDCDrFJrUZDOZggZLHjVvsN
+ ca6GqukJVB19rv6EgGVUBlC65r6GhxOeohQlKUUT6RnwNvWSnyD1+vL1YdeaFmwCtIg+snF
+ nYr9bGjFRsvMAt09rTWVQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ldy2ksw1AGI=:SWW/B9wSIluuu8GpkWlun3
+ 4ZGXoi4T4yPf2MLS1PLW6Acmw4LLtMYySWhGj6V4v2fyaj5jIETaMCMGhu1TD7Fh1G4X+Spyb
+ O73DyFDKFsG/vHOSZDEBD8LlumZ8+xrJVWRBjHst7qd7CUMrnqOAQRJ53krqHzNP4YSgJto49
+ UxQTaEEpLn3cBogu0gT2mYdyki3272g/hdfEABZjmGGCJPzpQ8sZW8mImj+vCSQVcGwWlfYgz
+ bxF1STLJ17JQZ/DZB495gPcaXVF2BjiDLsGEDFQKNZiKzsKFofA9VCG5Zcga+HwJXNFkimmGh
+ VdZ4qJbVn6ZlF5X6PTYB9a3k5AGSu4DpUdA7PPE2KHcJwrnZ9ZNYhdg824L4DIm3ZnjJIgyay
+ pjvwJi3zBzbSDQ8TR+LjzkCwgLbzdvP8Wgejc+qkgpL6LOcgSAcpJFyepy1PdBkDW3sT4vxkN
+ gs4NPeMyFOq14NVyfuyXVVYFnRaYVKd0MGw93g7wl7/IlS9kA/e7F/zizeNkIhcrYV/QBHWaa
+ +pewTla5jnQ+sVVcT/gVTk5Cha4mAU5ntjUe3geN3HRdiAkVSwbbP8CuwxlUuI4EY+Ugzv2yb
+ Gny1sGLTk+21TFMZH4504Hh6opIeVmyOVQQwEovyARE7THtHgSXJyTaDMHYCSK+9SeQhaLPDL
+ F0+o9QaviY39fbgEKUdk24ZLbxRTckPRKF8fwT8qanBtBQNEv2kCuXZG4Br45+qD+TXJgTS7G
+ CUQrbutP7t8wAxwEHNwj1JVKBVqk/8leKBMKMxnlnB592SpVXm2ZcY0SPVaS3x1Ian2p15Xua
+ Bgsj3Um
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In case of errors, we really want the file descriptor to be closed.
+While POSIX states that it is okay to pass EOF to isspace() (and it seems
+to be implied that EOF should *not* be treated as whitespace), and also to
+pass EOF to ungetc() (which seems to be intended to fail without buffering
+the character), it is much better to handle these cases explicitly. Not
+only does it reduce head-scratching (and helps static analysis avoid
+reporting false positives), it also lets us handle files containing
+nothing but whitespace by erroring out.
 
-Discovered by a Coverity scan.
+Reported via Coverity.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ builtin/mailsplit.c | 10 ++++++++++
+ mailinfo.c          |  9 ++++++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/config.c b/config.c
-index b4a3205da32..a30056ec7e9 100644
---- a/config.c
-+++ b/config.c
-@@ -2621,7 +2621,7 @@ int git_config_rename_section_in_file(const char *config_filename,
- 	struct lock_file *lock;
- 	int out_fd;
- 	char buf[1024];
--	FILE *config_file;
-+	FILE *config_file = NULL;
- 	struct stat st;
+diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
+index 30681681c13..664400b8169 100644
+--- a/builtin/mailsplit.c
++++ b/builtin/mailsplit.c
+@@ -232,6 +232,16 @@ static int split_mbox(const char *file, const char *dir, int allow_bare,
  
- 	if (new_name && !section_name_is_ok(new_name)) {
-@@ -2703,11 +2703,14 @@ int git_config_rename_section_in_file(const char *config_filename,
- 		}
- 	}
- 	fclose(config_file);
-+	config_file = NULL;
- commit_and_out:
- 	if (commit_lock_file(lock) < 0)
- 		ret = error_errno("could not write config file %s",
- 				  config_filename);
- out:
-+	if (config_file)
-+		fclose(config_file);
- 	rollback_lock_file(lock);
- out_no_rollback:
- 	free(filename_buf);
+ 	do {
+ 		peek = fgetc(f);
++		if (peek == EOF) {
++			if (f == stdin)
++				/* empty stdin is OK */
++				ret = skip;
++			else {
++				fclose(f);
++				error(_("empty mbox: '%s'"), file);
++			}
++			goto out;
++		}
+ 	} while (isspace(peek));
+ 	ungetc(peek, f);
+ 
+diff --git a/mailinfo.c b/mailinfo.c
+index 68037758f2f..f92cb9f729c 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -882,7 +882,10 @@ static int read_one_header_line(struct strbuf *line, FILE *in)
+ 	for (;;) {
+ 		int peek;
+ 
+-		peek = fgetc(in); ungetc(peek, in);
++		peek = fgetc(in);
++		if (peek == EOF)
++			break;
++		ungetc(peek, in);
+ 		if (peek != ' ' && peek != '\t')
+ 			break;
+ 		if (strbuf_getline_lf(&continuation, in))
+@@ -1099,6 +1102,10 @@ int mailinfo(struct mailinfo *mi, const char *msg, const char *patch)
+ 
+ 	do {
+ 		peek = fgetc(mi->input);
++		if (peek == EOF) {
++			fclose(cmitmsg);
++			return error("empty patch: '%s'", patch);
++		}
+ 	} while (isspace(peek));
+ 	ungetc(peek, mi->input);
+ 
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
