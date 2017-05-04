@@ -2,178 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 993EB207B3
-	for <e@80x24.org>; Thu,  4 May 2017 10:24:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF80207B3
+	for <e@80x24.org>; Thu,  4 May 2017 10:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751572AbdEDKYS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 06:24:18 -0400
-Received: from mout.gmx.net ([212.227.17.22]:61513 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751609AbdEDKYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 06:24:16 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8ZtH-1e0our1tOl-00wFZa; Thu, 04
- May 2017 12:23:58 +0200
-Date:   Thu, 4 May 2017 12:23:56 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 02/25] winansi: avoid use of uninitialized value
-In-Reply-To: <243bb3c1-d01f-f5e5-544e-2ece2a4e5844@web.de>
-Message-ID: <alpine.DEB.2.21.1.1705041206030.4905@virtualbox>
-References: <cover.1493387231.git.johannes.schindelin@gmx.de> <cover.1493740497.git.johannes.schindelin@gmx.de> <758b5a5dbe83832db7362246127b8bd1ca7beb9f.1493740497.git.johannes.schindelin@gmx.de> <243bb3c1-d01f-f5e5-544e-2ece2a4e5844@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751347AbdEDKZG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 06:25:06 -0400
+Received: from mail-io0-f171.google.com ([209.85.223.171]:32975 "EHLO
+        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751897AbdEDKZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 06:25:04 -0400
+Received: by mail-io0-f171.google.com with SMTP id p24so16726113ioi.0
+        for <git@vger.kernel.org>; Thu, 04 May 2017 03:25:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=tGvnRBit88354V+NkwyMqufLCpbrmKWXFnnXO+gOT0k=;
+        b=Egl+kKpdH36fPkk9RSl683rppFj4roAymowUU+ysuvo8K1Nohs2YqwB8E0h6NH51CE
+         J87HrnHEKk4vlx7i0qk5ga7NZXq7bU4xa7MPtSPbWAZx11HtV5ILcj+FBMf0waTlT4mk
+         TCyK8Xhb/UF8KtX4yD9OmmfrZcKXOuIxsGbbOyKEBLAVw5wKrYJOPMRWQkbH6HbFWBP3
+         yj3KX39jz+Kmck39JN1VfISD+8AC0R7iphmrkDInOl605cRO8PiM8bKYyadTrPzvaT95
+         mH268jmzDJ6DJ1eH/jjW83cKGlZEzmksWsDRKp48sbYtEZzvfPUIA1tQdkd/olzcMYRf
+         jMCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=tGvnRBit88354V+NkwyMqufLCpbrmKWXFnnXO+gOT0k=;
+        b=bej7j1uLAX0a5bnxoR7EVcDB+czM2zghhWRbXexaEryPfQBjx10TAXplN8OxvbNlx8
+         1i2hnVnwKq4pJye8QXL08660taCYXPNOF0Erzy9WGoLxu/3scU30nBl5wTahKLd7ama+
+         h+lg/w5L9DIv4m3sCr/Km/kfnQicAuZwNa2SQI0qjLbpKJ1DKYCV6EDamkpchH2jDT7v
+         mEUcXhk8Aa193O7OeYcWjP3zoMkMfV77k0ZTewMv1FpPbw/NbQX9DqoWdsJubdtHHr9U
+         0xTmam6dsDDmQhsDQ6vURZndO1y/xvKSBO8O3Yh1a87RjaW/2fs7814B+tqJ3BZU6Y1N
+         ngCQ==
+X-Gm-Message-State: AN3rC/4lF8Rhc+q5KtkfQRQ71HwsYwKcNBGTTOMX/PNkg+ftdrVFA91M
+        JgL51S6uzkHeE/9mSUSRxgGIG9/vXQ==
+X-Received: by 10.107.138.9 with SMTP id m9mr37657782iod.80.1493893503149;
+ Thu, 04 May 2017 03:25:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1782443062-1493893438=:4905"
-X-Provags-ID: V03:K0:ihGYUi7v3p7tK2I98uxXCvcH1ArPn5qCahgfs9YmKwxmyc/CTkb
- v7UsgUHs1IR8+WZUuqz4LgJkc9Rm/jwaMykBrPOTg5oOW8AKuHrBReI4+ACvzZj0i6JKsjE
- me26cpOjtC5NwGHNjsv0K2y72j2Nx09C1kqvGPdrWKwJ6gUOSZBAAxLb+LsLiHT/POK8ym1
- c0QqzikDC7XmHYZ4y2GNw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/5j5hiqPewo=:lTtxUCJ/epH9WoA9S4Om5S
- cbAIfuT4zmJMGejlBXFGJKK73qHW6hvsZbQVOnuJirOin7PYomwqK+G3olGjL7+TzzUn+mfnG
- ZPuvQCIZsUF9aHGnZxwwFoEGxwymTQNJzT4D8xfAA1McRCFrT3k5uXAaveeTVVRVDe7eEqK2y
- ByYblaLyRA4qEgvr4TdNqLaUzeKyBZy+LDOqlumYo4CvT9cgG1fZv4AglUr11ChkBeim/SyXa
- iKW47puFTEdD7a3Skd0yqh1JQPevtGIe0fA+jdzmoKJ2NMcyNOnXBQjqlV9FXqN8c0tlSFA4Y
- cm/XZ0DesHOqKjCpq/JA3pRUxxBBaCayVSQdiiQQRiusC08IB/j63u9gm9yJMU3Mxzg3iKGAm
- kf60hMexV4dHiBEwIRO8L9Xnj8z1zGET33yvxtm2KBiIKuSvNmuEVDtAOkXXGf/LjwQNZIerp
- upEwib/GDNsj2bbNTU20gqgZn7I5rP8oiFK4MxGxVAwcvMoshFvgq5pVexIiadoZgPBEHtT1W
- P7azeqUE1v/GKc4T28fUv3pbOtnsiioiHTlclilDoCVqOY49oBH18/mOlewZICBfWd0g/J5f2
- kcwjcoaGt6aGjWPWfYUoRMFSKkFRu8d4ZsZI84MtSI61eP5b52wzxLax2ZUMmBHMCZS/T5957
- x2Xn6pFvQLuyEY8//Sy/q++InOlaDA0g71G8sSEbifZhiY/+kM6HEA7wEZd3s2PzEwkxdu5J5
- d3mo/gZwIyJezp/z2SWMmZB/4hfpWjql2mldDmi5/4+Xu9J6dU5tpYK2t+SP1W6P7bEHG90C+
- SnFp3PZ
+Received: by 10.107.8.220 with HTTP; Thu, 4 May 2017 03:24:42 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.21.1.1705041104070.4905@virtualbox>
+References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com> <alpine.DEB.2.20.1705021406510.3480@virtualbox>
+ <CACBZZX5M1Pnvw01wP8id75Ja9NJ3nwVfydsX6g0Ys_QD72r6dQ@mail.gmail.com>
+ <alpine.DEB.2.20.1705021756530.3480@virtualbox> <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com>
+ <alpine.DEB.2.20.1705031139090.3480@virtualbox> <CACBZZX6_5krLp93PmsW639-N4f1efUT5rPnN+5im=d9-66=QbQ@mail.gmail.com>
+ <alpine.DEB.2.21.1.1705041104070.4905@virtualbox>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 4 May 2017 12:24:42 +0200
+Message-ID: <CACBZZX5bPN3vZhE=0TSQNdRvKYuV3635=VCQAppAfcZ_tuGpvg@mail.gmail.com>
+Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May
+ 2017, #01; Mon, 1)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, May 4, 2017 at 11:11 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Hi =C3=86var,
+>
+> On Wed, 3 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> [Just replying to you & Duy in the same mail, easier]
+>
+> It makes it harder on everybody else, though, as two slightly different
+> discussion points are conflated now. Also, no single online mail archive
+> will be able to render the thread correctly (assuming that you edited in
+> the In-Reply-To header to loop back to Duy's mail).
+>
+>> On Wed, May 3, 2017 at 11:45 AM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>> >
+>> > At this point, I feel that someone should recall into our collective
+>> > memory what happened when we made a change similar in nature that
+>> > broke existing build setups: by requiring REG_STARTEND all of a sudden
+>> > ("you can easily flip the NO_REGEX switch", as if everybody should
+>> > know about those Makefile flags we have).
+>>
+>> And as a result grep/log -G got faster by default,
+>
+> Sure. For those developers where the build was not broken.
+>
+> Software maintenance is always a trade-off, and with software as popular
+> as Git, maintainers bear a special responsibility to *not* break builds
+> easily, as it is more likely than not that anybody who wants to build Git
+> is *unfamiliar* with the specifics.
+>
+> That is the main reason why we have a configure, even if we try hard to
+> make things work with a straight `make`: people who are happily oblivious
+> of our discussions on this here high-volume mailing list will be able to
+> build Git without even consulting the documentation, just by doing what
+> they would do with any Unix-based software: ./configure && make
 
---8323329-1782443062-1493893438=:4905
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+And they still will. That sort of invocation will not build with
+PCRE[1]. This change to v2 by default only impacts builders who are
+already going out of their way to customize their build with
+USE_LIBPCRE=3DYesPlease.
 
-Hi Ren=C3=A9,
+I don't think your comments make sense in that context. We're not even
+talking about the advanced user/newbie developer who wants to build
+git for the first time, we're talking about the user who's already
+involved enough to start scouring the Makefile & tweaking the various
+flags there.
 
-On Wed, 3 May 2017, Ren=C3=A9 Scharfe wrote:
+Changing the current advice from "if you want PCRE enable this" to "if
+you want PCRE enable this, we use v2 then, turn this other thing on if
+you want v1" is a *very* small imposition on people already deeply
+customizing their build to the extent of turning on the non-default
+PCRE in the first place.
 
-> Am 02.05.2017 um 18:01 schrieb Johannes Schindelin:
-> >=20
-> > diff --git a/compat/winansi.c b/compat/winansi.c
-> > index 793420f9d0d..fd6910746c8 100644
-> > --- a/compat/winansi.c
-> > +++ b/compat/winansi.c
-> > @@ -105,6 +105,8 @@ static int is_console(int fd)
-> >    if (!fd) {
-> >     if (!GetConsoleMode(hcon, &mode))
-> >   =09=09=09return 0;
-> > +=09=09sbi.wAttributes =3D FOREGROUND_BLUE | FOREGROUND_GREEN |
-> > +=09=09=09FOREGROUND_RED;
-> >    } else if (!GetConsoleScreenBufferInfo(hcon, &sbi))
-> >     return 0;
-> >  =20
->=20
-> So is_console is called with fd being 1 (stdout), 2 (stderr) and 0
-> (stdin), in that order.
+Yes that's a trade-off, and I'm not denying that some advanced users
+will notice / be annoyed by that change. I just think the end-user
+benefit of bringing v2 to the attention of distributors who are doing
+such customized builds outweighs that.
 
-Correct. I guess this is the important part missing from the commit
-message.
+>> and more importantly since v2.10.1 which includes your 2f8952250a and
+>> made a REG_STARTEND engine a hard requirement nobody using git is
+>> mysteriously going to miss grep results because of some stray \0 in the
+>> string being matched.
+>
+> That is a misinterpretation of what the REG_STARTEND flag is supposed to
+> do. In *some* implementations, REG_STARTEND allows NULs in the haystack.
+> Some other implementations do not allow that. It is ill-defined.
 
-Oh, I also saw that I talked about stdout in the commit message, but !fd
-tests for stdin!
+We have a test in t7008-grep-binary.sh that'll fail if REG_STARTEND
+doesn't behave as I described. Actually I think I got the history a
+bit wrong here, I marked that test as succeeding in commit 7e36de5859
+("t/t7008-grep-binary.sh: un-TODO a test that needs REG_STARTEND",
+2010-08-17).
 
-> If the first two calls abort early for some reason we may end up here.
+So I think since 2010 either distributors without REG_STARTEND have
+been enabling NO_REGEX=3DYesPlease giving users the right behavior with
+a \0 in their haystack, or their tests have been consistently failing
+for 7 years, hopefully the former is the case.
 
-Yep. "some reason" being: there is no console attached to stdout nor
-stderr.
+>> I agree that I should drop the patch to make v2 the default from this
+>> series for now. Clearly it's controversial, and can be considered on
+>> its own merits once the supporting code is in. I'll do that in the
+>> next submission, which I'm planning to send after v2.13.0 comes out.
+>
+> Good. I am really glad that we agree that the move to v2 should be a
+> two-step process, with the uncontroversial "optionally use PCRE v2 for
+> speed and robustness" first.
+>
+> Once enough users like it (and speaking for myself, once I heard from
+> enough users how good it is so that I can justify to set aside enough tim=
+e
+> to support PCRE v2 in MSYS2), you will find it much smoother sailing to g=
+o
+> to phase 2.
 
-> The added code is for white text on black background.  An alias for that
-> combination, FOREGROUND_ALL, is defined a few lines down; for a minimal
-> fix it's not worth moving it up.  attr and plain_attr are both
-> initialized to sbi.wAttributes.
+The v2 API is not a user-visible change. It'll help performance, and
+over the long term subject users to fewer internal PCRE bugs in v1
+that'll never get fixed.
 
-Exactly.
+That's pretty much a textbook example of the sort of thing users will
+never even notice, but which is a good thing to do anyway, users don't
+notice most of the incremental performance improvements made to git,
+but they matter to them in the aggregate.
 
-> That as a bit more complicated than it looked initially.  The order of
-> calls is important, "stdout" in the commit message includes stderr as
-> well and it doesn't just affect plain_attr.
+So I think if your criteria for working on integrating v2 is users
+noticing it elsewhere and asking you for it you'll likely never switch
+to it. I think that's a bit unfortunate & a strange way to evaluate
+whether you should turn on incremental performance improvements, but
+whatever, your build & your users.
 
-Right, it also affects the "current" attributes.
+Regardless of that, I think it's a different question whether most
+other distributors of git feel the same way. I'd hope that most of
+them would be happy to take a performance/reliability improvement like
+that, most of them likely have v2 packaged already so it would be
+trivial for them, and if not they'd either be happy to package it up
+for such an improvement, or alternatively change USE_LIBPCRE=3DY to
+USE_LIBPCRE1=3DY.
 
-> Would a value of 0 (black text on black background) suffice if only
-> stdin is connected to a console?  Colors don't matter if there is
-> nothing to see, right?
-
-I think that would make it both easier to understand the patch and to
-catch regressions in case anybody feels the order of the is_console()
-calls should be changed...
-
-This is my current squash! commit (the original commit message will be
-replaced by the commit message body of this commit):
-
--- snipsnap --
-Subject: [PATCH] squash! winansi: avoid use of uninitialized value
-
-winansi: avoid use of uninitialized value
-
-To initialize the foreground color attributes of "plain text", our ANSI
-emulation tries to infer them from the currently attached console while
-running the is_console() function. This function first tries to detect any
-console attached to stdout, then it is called with stderr.
-
-If neither stdout nor stderr has any console attached, it does not
-actually matter what we use for "plain text" attributes, as we never need
-to output any text to any console in that case.
-
-However, after working on stdout and stderr, is_console() is called with
-stdin, and it still tries to initialize the "plain text" attributes if
-they had not been initialized earlier. In this case, we cannot detect any
-attributes, and we used an uninitialized value for them.
-
-Naturally, Coverity complained about this use case because it could not
-reason about the code deeply enough to figure out that we do not even use
-those attributes in that case.
-
-Let's just initialize the value to 0 in that case, both to avoid future
-Coverity reports, and to help catch future regressions in case anybody
-changes the order of the is_console() calls (which would make the text
-black on black).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/winansi.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/compat/winansi.c b/compat/winansi.c
-index 861b79d8c31..a11a0f16d27 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -105,8 +105,13 @@ static int is_console(int fd)
- =09if (!fd) {
- =09=09if (!GetConsoleMode(hcon, &mode))
- =09=09=09return 0;
--=09=09sbi.wAttributes =3D FOREGROUND_BLUE | FOREGROUND_GREEN |
--=09=09=09FOREGROUND_RED;
-+=09=09/*
-+=09=09 * This code path is only reached if there is no console
-+=09=09 * attached to stdout/stderr, i.e. we will not need to output
-+=09=09 * any text to any console, therefore we might just as well
-+=09=09 * use black as foreground color.
-+=09=09 */
-+=09=09sbi.wAttributes =3D 0;
- =09} else if (!GetConsoleScreenBufferInfo(hcon, &sbi))
- =09=09return 0;
-=20
---=20
-2.12.2.windows.2.800.gede8f145e06
-
---8323329-1782443062-1493893438=:4905--
+1.  Which I think is a bug as noted upthread in
+<CACBZZX5_45KnU7qzW2ojJiznmfkef44YGL8-CYkHFLOvhLSASg@mail.gmail.com>,
+but this behavior is what users use/rely on now.
