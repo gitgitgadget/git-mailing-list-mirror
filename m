@@ -2,190 +2,213 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 683A6207D6
-	for <e@80x24.org>; Thu,  4 May 2017 18:35:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21C24207D6
+	for <e@80x24.org>; Thu,  4 May 2017 18:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751350AbdEDSah (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 14:30:37 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:35928 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755729AbdEDSaI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 14:30:08 -0400
-Received: by mail-pg0-f54.google.com with SMTP id q4so5015287pga.3
-        for <git@vger.kernel.org>; Thu, 04 May 2017 11:30:08 -0700 (PDT)
+        id S1756333AbdEDSmZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 14:42:25 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:35937 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756306AbdEDSmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 14:42:21 -0400
+Received: by mail-pg0-f67.google.com with SMTP id v1so3358122pgv.3
+        for <git@vger.kernel.org>; Thu, 04 May 2017 11:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZMaFoXC6fGKhFnt3NPT+Zp7mS84NmNV4KoaQqkLHE7Q=;
-        b=KasfovtD0WI4dec4PZ4bEk01/zeT1wXk+HCoHD5yAE8JAj+fbjTYaiAz1BrWEeDeY3
-         ymiEka6UbpDQVqZAubrhnGw2biMxAsGpRkUu2ws+yU6/p9USjbdPSYJ0t1MB/nf8FOKJ
-         azCGFSpAzOz2YNb0qzjVIDiiw28qb1Jp860XMdekyOHfHCpFP6v/fOG/DXXdbTTKHJf/
-         EByFkZFdRVE+7i8rdxGpGGiAOQLnd0PMvr34P0bdO4fWGO6YpRtFXPEKc5R8/FUt1GZP
-         jDxZ45JPDBuqN8XSQW6MEjZ4OpFTMkV2vRnwbmPITGBnQieHLf7p95Bhx0SPJJRyXmTE
-         WLdA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=E8U3rHgCGqvTbkGTkn8F5ySibPbFHzJ0c93l4frITh8=;
+        b=OjzxMXzAtgmcdZZuBbDWKybReYL/JSz9myttHIm2Xxuvdal11E+95ckVxPrxg+sL2c
+         lpAlRebiY/+avqLqCfoxfxQ2dxeGUpVw1ZKVZZOm6AKpAiko0O/E4D2OP4Vh+DiA4oeO
+         Dd+/Q0HdKbl2u4cZA3yYHWEz25oHw4TIvx6YnZZT0duW2j4JFO4rVxNE8JFYHsMjfUBl
+         89bSOw6U7cHGttN3oiNYOIJIITLP0ahda20iy84Z+1JuTHeKG8sj8itliMTpEGMO0B8a
+         lFzfvBiZvrNzElwYDZIPn/PeHHFDMwpDmDzkWJAlS6VQvg0/hE89Q49x1lhuBsQF2h+r
+         nnjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZMaFoXC6fGKhFnt3NPT+Zp7mS84NmNV4KoaQqkLHE7Q=;
-        b=jXrZbNG0mxDpBpnu/rPOXnE8nAR2IkmcDZKIeLD4GEfFtaipOXySB2VJTPEQFWgqGc
-         gLC5ezbk03xOdd1Zt2xSszFGNbY0iQwn1MxAlRr8xN63ZmI/os71C6DfObHVKcb2S3Uu
-         tKygAEHxHAWpqj/NvMcjxjn+tm9nK1L+OpzzAN8zwfWawTS0rl7hE4I1EhwjWuc4bbAa
-         p6Ayqr41O560Oprsq9lmWgy7Mxd3qURZzeFpbTJj4aVHljCqaem77z9Ga+dhJDZLXd/g
-         lI5BjAhn8pOlXIqYYvKKijuft6EqSIJR8ZkRPMPczx61YnSpkBiVlBq4eO4htChahaha
-         CEMw==
-X-Gm-Message-State: AN3rC/70PFWSZR/OQz97NGoEix8vtHkrvz5/Z7i2GEjIb2fF4TNyVg24
-        KQHXI6JwFgGx/agzQIe0VRLpaQpyH7c8Dt4=
-X-Received: by 10.98.2.213 with SMTP id 204mr12356468pfc.125.1493922607295;
- Thu, 04 May 2017 11:30:07 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=E8U3rHgCGqvTbkGTkn8F5ySibPbFHzJ0c93l4frITh8=;
+        b=WlKKfEDxHS5Go4cF7SKR79w1M6SCs+KGNnNBkdruiaqggTiPqMWp+AKhnfTlyMwWeR
+         VQICGz5uJWhWydBVjVfCJeRn+FAUYHEJfFSfO1tLTTuIwFUfVvbzMTVd7tRNsi4eMuLD
+         Lf9BXFJCvTNXvmuO8I3YJIEXywMarK0493eYfJSa+rxIkREpLseOzjGMfAXGgxklf4fm
+         8voZrsoCVbGX+vIWvwUvQjs93AKP+VavaTA9eN48bDjdMYMfj3/zXLybqhxjtEi0JA4i
+         uiMxhDCj2D756D8HwL/pN/Na5P52iLzW4QgQX4nXUJ0U5+PiarzBrTVOhLlWuI4ck5zr
+         YeYg==
+X-Gm-Message-State: AN3rC/7qJSv8S6rkQmt8Q64614gcBH2OaplMpbvFee3fziS1mAXMQ/yP
+        NSWfgB4VxcgSwA/oiuY=
+X-Received: by 10.84.224.70 with SMTP id a6mr33702428plt.57.1493923340512;
+        Thu, 04 May 2017 11:42:20 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:5588:c10f:2622:1a6])
+        by smtp.gmail.com with ESMTPSA id d83sm5889931pfe.40.2017.05.04.11.42.19
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 04 May 2017 11:42:19 -0700 (PDT)
+Date:   Thu, 4 May 2017 11:41:51 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org, jeffhost@microsoft.com, peff@peff.net,
+        gitster@pobox.com, markbt@efaref.net, benpeart@microsoft.com,
+        jonathantanmy@google.com
+Subject: Re: [PATCH 00/10] RFC Partial Clone and Fetch
+Message-ID: <20170504184150.GA15203@aiede.svl.corp.google.com>
+References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
+ <777ab8f2-c31a-d07b-ffe3-f8333f408ea1@jeffhostetler.com>
+ <20170503182725.GC28740@aiede.svl.corp.google.com>
+ <9b58bec9-dafb-aebc-d421-5327f2f607eb@jeffhostetler.com>
 MIME-Version: 1.0
-Received: by 10.100.153.156 with HTTP; Thu, 4 May 2017 11:30:06 -0700 (PDT)
-In-Reply-To: <xmqqa86tbamh.fsf@gitster.mtv.corp.google.com>
-References: <20170501190719.10669-1-sbeller@google.com> <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
- <CACsJy8AZevgFda4ZJAmH_Nyrtuk72FUjdk6B8_SJB=n6quPnbw@mail.gmail.com> <xmqqa86tbamh.fsf@gitster.mtv.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 4 May 2017 11:30:06 -0700
-Message-ID: <CAGZ79kZiBOrY6Qno_wFpvFHpbpCY0BtriqYGW5JKG+1hfgJwiQ@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Start of a journey: drop NO_THE_INDEX_COMPATIBILITY_MACROS
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9b58bec9-dafb-aebc-d421-5327f2f607eb@jeffhostetler.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 3, 2017 at 7:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->>>> In the long run we may want to drop the macros guarded by
->>>> NO_THE_INDEX_COMPATIBILITY_MACROS. This converts a couple of them.
->>>
->>> Why?
->>
->> Well.. why did you add NO_THE_INDEX_COMP... in the first place? ;-) j/k
->
-> That was to mark the code that implements the underlying machinery
-> that the code in a particular file has already been vetted and
-> converted to be capable of working with an arbitrary index_state
-> instance, not just the_index instance.
->
-> Your mentioning "at least outside builtin/" shows that you have a
-> good understanding of the issue; they are infrastructure code and
-> many of them may become more useful if they are enhanced to take an
-> index_state instance instead of always working with the_index.  With
-> an infrastructure code that insists on working on the_index, an
-> application that has something valuable in the_index already needs
-> to somehow save it elsewhere before calling the function and use the
-> result from the_index before restoring its version.
->
-> I think unpack-trees.c used to assume that it is OK to use the_index,
-> but after it started taking src/dst_index, it gained NO_THE_INDEX_COMP
-> thing.  That's the kind of change in this area we would want to see.
->
->> I attempted the same thing once or twice in the past, had the same
->> impression and dropped it. But I think it's good to get rid of cache_*
->> macros, at least outside builtin/ directory.
->
-> One thing that needs to be kept in mind is that a mechanical
-> replacement of active_cache[] to the_index.cache[] in the
-> infrastructure code does not get us closer to such an improvement.
-> In fact, such a patch only has negative value (keep reading until
-> the end of the paragraph that begins with "One thing is certain" to
-> understand why).
->
-> The entry point to a codechain for an important infrastructure code
-> that can currently only work with the_index needs to be identified.
-> There may be many.  They need to be made to take an index_state
-> instance and to pass it through the callchain.  That kind of change
-> would be an improvement, and will get us closer to mark the
-> resulting code with NO_THE_INDEX_COMP thing.
->
-> I think somebody else said this, but I agree that in the longer
-> term, we would want to have a "repository" abstraction for in-core
-> data structure.
->
-> Imagine that a program wants to read into an index_state the tip
-> commit of a branch whose name is the same as the current branch in
-> one submodule and do something with the objects, while keeping
-> the_index for the top-level superproject.  Thanks to Michael's and
-> your recent work, we are almost there to have "ref-store" that
-> represents the set of refs the submodule in question has that a
-> "repository" object that represents the submodule can point at.  We
-> can learn the object name at the tip of a specific ref using that
-> infrastructure.  Thanks to an ancient change under discussion, we
-> can already read the contents of the index file into an instance of
-> an index_state that is different from the_index.  But after doing
-> these operations, we'd need to actually get to the contents of the
-> objects the index_state holds.  How should that work in the
-> "repository object represents an in-core repository" world?
->
-> What is missing is a way to represent the object store, so that the
-> "repository" object can point at an instance of it (which in turn
-> may point at a set of its alternates) [*1*].  With that, perhaps the
-> most general kind of the infrastructure API that works with an
-> index_state instance may additionally take a repository object, or
-> perhaps an index_state may have a pointer to the repository where
-> the objects listed in it must be taken from (in which case the
-> function may take only an index_state).  In the end the enhanced
-> function has to allow us to read from the object store of the
-> submodule, not from the superproject's.
->
-> Depending on how the design of the repository object goes, the
-> interface to these functions may have to change.
->
-> But one thing is certain. Many users of the API, just like a lot of
-> builtin/ code works only with the_index today, will not have to work
-> with a non-default repository or a non-default index_state.  Only
-> the more advanced and complex "multi-repo" Porcelains would have to
-> care.  Keeping active_cache[], active_nr, etc. abstraction would
-> isolate the simpler callers from the inevitable code churn we would
-> need while getting the "repository" abstraction right.  This is why
-> I see that you understood the issues well when you said "builtiln/".
->
-> If we want to have the "repository" abstraction, the "object store"
-> is the next thing we should be working on, and such a work can take
-> inspiration from how the old <active_cache[], active_nr,
-> active_alloc, active_cache_changed and *active_cache_tree> tuple was
-> turned into an "index" object while allowing the majority of code
-> that want to deal with the singleton instance keep using the old
-> names via CPP macros.
+Hi again,
 
-Thanks for the reply.
+Jeff Hostetler wrote:
 
-So instead of a mechanical replacement, we'd rather want to
-see "the_index" not appearing at all outside of builtins, which
-implies two things:
-* If done properly we can move the macros from cache.h to
-  e.g. builtin.h. That way future developers are less tempted
-  to use the cache_* macros in the library code.
-* we'd have to pass through the_index from the builtin function
-  down to the library code, potentially going through multiple
-  function. For this it is unclear if we want to start this now, or wait
-  until Brandon presents his initial repository object struct, which
-  may be suited better for passing-around.
+> In my original RFC there were comments/complaints that with
+> missing blobs we lose the ability to detect corruptions.  My
+> proposed changes to index-pack and rev-list (and suggestions
+> for other commands like fsck) just disabled those errors.
+> Personally, I'm OK with that, but I understand that others
+> would like to save the ability to distinguish between missing
+> and corrupted.
 
-So if I want to further look into refactoring, I'll have a look into
-the object store and hold off sending a series that drops the_index.
+I'm also okay with it.  In a partial clone, in the same way as a
+missing ref represents a different valid state and thus passes fsck
+regardless of how it happened, a missing blob is a valid state and it
+is sensible for it to pass fsck.
 
-> Also, dropping compatibility macros at the end of the series is
-> unfriendly to fellow developers with WIPs that depend on the
-> traditional way of doing things.  It is doubly insulting to them to
-> send such a series during the feature freeze period, when it is more
-> likely that they are holding off their WIP in an attempt to allow us
-> to concentrate more on what we should be, i.e. finding and fixing
-> possible regressions at the tip of 'master' to polish the upcoming
-> release and help the end users.
+A person might object that previously a repository that passed "git
+fsck" was a repository where "git fast-export --all" would succeed,
+and if I omit a blob that is not present on the remote server then
+that invariant is gone.  But that problem exists even if we have a
+list of missing blobs.  The server could rewind history and garbage
+collect, causing attempts on the client to fetch a previously
+advertised missing blob to fail.  Or the server can disappear
+completely, or it can lose all its data and have to be restored from
+an older backup that is missing newer blobs.
 
-Personally I have not noticed large variations of patch volume
-correlated to pre-release times.
+> Right, only the .pack is sent over the wire.  And that's why I
+> suggest listing the missing SHAs in it.  I think we need the server
+> to send a list of them -- whether in individual per-file type-5
+> records as I suggested, or a single record containing a list of
+> SHAs+data (which I think I prefer in hindsight).
 
-Thanks,
-Stefan
+A list of SHAs+data sounds sensible as a way of conveying additional
+per-blob information (such as size).
+
+> WRT being able to discover the missing blobs, is that true in
+> all cases?  I don't think it is for thin-packs -- where the server
+> only sends stuff you don't (supposedly) already have, right ?
+
+Generate the list of blobs referenced by trees in the pack, when you
+are inflating them in git index-pack.  Omit any objects that you
+already know about.  The remainder is the set of missing blobs.
+
+One thing this doesn't tell you is if the same missing blob is
+available from multiple remotes.  It associates each blob with a
+single remote, the first one it was discovered from.
+
+> If instead, we have pack-object indicate that it *would have*
+> sent this blob normally, we don't change any of the semantics
+> of how pack files are assembled.  This gives the client a
+> definitive list of what's missing.
+
+If there is additional information the server wants to convey about
+the missing blobs, then this makes sense to me --- it has to send it
+somewhere, and a separate list outside the pack seems like a good
+place to put that.
+
+When there is no additional information beyond "this is a blob I am
+omitting", there is nothing the wire protocol needs to convey.  But
+you've convinced me that that's usually moot because the blob size
+is valuable information.
+
+[...]
+> The more I think about it, I'd like to NOT put the list in the .idx
+> file.  If we put it in a separate peer file next to the *.{pack,idx}
+> we could decorate it with the name of the remote used in the fetch
+> or clone.
+
+I have no strong opinions about this in either direction.
+
+Since it only affects the local repository format and doesn't affect
+the protocol, we can experiment without too much fuss. :)
+
+[...]
+> I've always wondered if repack, fetch, and friends should build
+> a meta-idx that merges all of the current .idx files, but that
+> is a different conversation....
+
+Yes, we've been thinking about a one-index-for-many-packs facility
+to deal with the proliferation of packfiles with only one or a few
+large objects without having to waste I/O copying them into a
+concatenated pack file.
+
+Another thing we're looking into is incorporating something like
+Martin Fick's "git exproll" (
+http://public-inbox.org/git/1375756727-1275-1-git-send-email-artagnon@gmail.com/)
+into "git gc --auto" to more aggressively keep the number of packs
+down.
+
+> On 5/3/2017 2:27 PM, Jonathan Nieder wrote:
+
+>> If we were starting over, would this belong in the tree object?
+>> (Part of the reason I ask is that we have an opportunity to sort
+>> of start over as part of the transition away from SHA-1.)
+>
+> Yes, putting the size in the tree would be nice.  That does
+> add 5-8 bytes to every entry in every tree (on top of the
+> larger hash), but it would be useful.
+>
+> If we're going there, we might just define the new hash
+> as the concatenation of the SHA* and the length of the data
+> hashed.  So instead of a 32-byte SHA256, we'd have a (32 + 8)
+> byte value.  (Or maybe a (32 + 5) if we want to squeeze it.)
+
+Thanks --- that feedback helps.
+
+It doesn't stop us from having to figure something else out in the
+short term, of course.
+
+[...]
+>> I am worried about the implications of storing this kind of policy
+>> information in the pack file.  There may be useful information along
+>> these lines for a server to advertise, but I don't think it belongs in
+>> the pack file.  Git protocol relies on it being cheap to stream pack
+>> files as is.
+>
+> Perhaps.  I'm not sure it would be that expensive -- I'm thinking
+> about it being a server constant rather than a per-user/per-fetch
+> field.  But maybe we don't need it.  Assuming we can correctly
+> associate a missing blob with the server/remote that omitted it.
+
+Right.
+
+I think we're heading toward a consensus:
+
+- that the server should (at least if requested?) inform the client of
+  the blobs it is omitting and their sizes
+
+- that this would go in the same response as the packfile, but
+  out-of-line from the pack
+
+- that it (at least optionally?) gets stored *somewhere* locally
+  associated with the pack --- either through an extension to the idx
+  file format or in a separate file alongside the pack file and idx
+  file.  This doesn't affect the protocol so it's not expensive to
+  experiment
+
+Thanks for the thoughtful replies.
+
+Sincerely,
+Jonathan
