@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2654207D6
-	for <e@80x24.org>; Thu,  4 May 2017 22:01:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B500207D6
+	for <e@80x24.org>; Thu,  4 May 2017 22:01:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752174AbdEDWBI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 4 May 2017 18:01:08 -0400
-Received: from mail-wr0-f194.google.com ([209.85.128.194]:35088 "EHLO
-        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751459AbdEDWBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 4 May 2017 18:01:07 -0400
-Received: by mail-wr0-f194.google.com with SMTP id g12so2692213wrg.2
-        for <git@vger.kernel.org>; Thu, 04 May 2017 15:01:06 -0700 (PDT)
+        id S1752303AbdEDWBN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 4 May 2017 18:01:13 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36111 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751459AbdEDWBL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 4 May 2017 18:01:11 -0400
+Received: by mail-wm0-f66.google.com with SMTP id u65so6179256wmu.3
+        for <git@vger.kernel.org>; Thu, 04 May 2017 15:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JrVKONKNBtRAZf62lemopNTSasQyinEZSb64FXlO2ac=;
-        b=RQnvXk/gtPUqNv7pMVAxU5aPeejPc4KvCfPSmr094mYbWvbxhZg7+Elm4K9w8zcijy
-         vILONP9uvKQ46NjsG0p1epy9JTXgfshWAKkmAfjFZp38eC0dBbAGrKOxayToctJYZRM1
-         BguJellvuTt+1mUWUvy8gBtFjnjqSlEXR1c3a8EdLxfzNnxJG7UjjcEXzOpbc8U24PAw
-         EFaB6SgXcRXf5r2ZXqpxVh79M93WP0wm0wd9t5QQ7ETIodRQZ0e4/j0eevJBsSqEpGrJ
-         oAxfx28ckxl20fr/5FYX7p5UCyVmuhSiYojRelPTKOy9TTPUXm9xOt9+1ilH7HQnZL4y
-         C9ZQ==
+        bh=dYMtEv+EKr+Ca3qqVufqnBgeiMLK79M2RQg0mVziUbE=;
+        b=MUhHaW/l0bfOCjkNdpDUPUZOLSJHQV2wK8oEIxOwSIjF7FNCrYBDFZH68MQyVAmhi0
+         qdQAMaxceXcKGJxy9i2i11mDfq6g0pK4aKxvHEqvhi89r7ezWEg7c2PIA20nH4gu2U63
+         6XGoe4hInTIA60R+6BcBRO4/UOJycbDRp4hkc8vLqZITHbw9p6j0ecHIWHBg0vbuVuHL
+         fRdgEQ/haj3xCxddyJVDt/LOJ/gw3+1yeCBQ3V1/6YprPa23HkDWijNkVQVg5iLC4vF4
+         GM8WzLspnnMgigIwX+TXJp1tKbfqR2aYli1k248tF3UzGNDvIZDU+phB3iQ2dzi1pLdg
+         31Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JrVKONKNBtRAZf62lemopNTSasQyinEZSb64FXlO2ac=;
-        b=tSoML+hJL7cJBzwRmjJG1AWwkSIv1s/XwfVdgcXmfqoSB6B3kAQPr17PqzS9RPuWkP
-         NU6chpsXgBUdEWvTu3VDUDm0MIke/PC6obS8Wq0KCtakWRp2GYP3fnHN2Cd1QWTfb7gm
-         H+35/Ep7sc0Q2nXf1Bat8/9XC5ua+B8O/qDlpK9O4yqU1aabM4evsuHoF0KjyNQjY2FM
-         IVUC5knk0qN6F/vcmcY6/JGRbdWa47x9xGHL858+CQjjDIUfp12DC89HkMJLlrJJAkjv
-         0F3TSFtszgSIG+Ll6CGmEgwNavsldip6lL9cq46QK8TXpkAspbGHWIniCPhaxeM2Spuh
-         6GYA==
-X-Gm-Message-State: AN3rC/7h+v6vrzEW2KYQv+bkQR1ht10yZ/s6AznLm2S23gnFgy3NBPRY
-        m8JBlOj+6XzIgQ==
-X-Received: by 10.223.151.203 with SMTP id t11mr22458511wrb.18.1493935266105;
-        Thu, 04 May 2017 15:01:06 -0700 (PDT)
+        bh=dYMtEv+EKr+Ca3qqVufqnBgeiMLK79M2RQg0mVziUbE=;
+        b=jSubtxMfdHu2wHu8GO+AWK+bscE+MUcZytZiHstRIxlBUhmep7kWgC62UOLLnlV4jI
+         hIiIdGTR0vmOvqWwXNnxid4xnw9ZOwsCqphUKAIT8WL1Wyb6zOD/iROAB6EoQo6lrHS4
+         O+HpOCz7QxSgkSmDvsD2Zv2N0eq+mkzRTWYQsmE8Rvfde94ikBx4rCLiZP+GTqI4/TSn
+         E9W/rclBIzpBbhx6o1GbQ+FlXXKzFhPaS8WwI0M2+XzYRmJR4Itk6NYgn+9WUuVkAe6m
+         mRNsqhbzd9Rh9LCAdZfmGOhVXhkSmxGgAtafcNYc8oX1RK1Bki5DSGT2zuQRcQW6ghxq
+         FWvQ==
+X-Gm-Message-State: AN3rC/6ML3+CqKFOmiWNC+84PPqVreTq0rTUylUoFC+v3Dw2LFtPWAPi
+        xUWMxH/NKxaefw==
+X-Received: by 10.28.33.66 with SMTP id h63mr3524885wmh.86.1493935269452;
+        Thu, 04 May 2017 15:01:09 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w136sm2424680wmd.0.2017.05.04.15.01.04
+        by smtp.gmail.com with ESMTPSA id w136sm2424680wmd.0.2017.05.04.15.01.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 May 2017 15:01:05 -0700 (PDT)
+        Thu, 04 May 2017 15:01:08 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
         "Arnold D . Robbins" <arnold@skeeve.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/7] compat/regex: add a README with a maintenance guide
-Date:   Thu,  4 May 2017 22:00:37 +0000
-Message-Id: <20170504220043.25702-2-avarab@gmail.com>
+Subject: [PATCH 2/7] compat/regex: update the gawk regex engine from upstream
+Date:   Thu,  4 May 2017 22:00:38 +0000
+Message-Id: <20170504220043.25702-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170504220043.25702-1-avarab@gmail.com>
 References: <20170504220043.25702-1-avarab@gmail.com>
@@ -72,73 +72,254 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a README file to compat/regex describing how the copy of the gawk
-engine should be maintained.
+Update the gawk regex engine from the upstream gawk.git as detailed in
+the README added in a previous change.
 
-Since gawk's regex engine was originally imported in git.git in commit
-d18f76dccf ("compat/regex: use the regex engine from gawk for compat",
-2010-08-17) the Git project has forked the upstream code.
+This is from gawk.git's gawk-4.1.0-2558-gb2651a80 which is the same
+code as in the stable gawk-4.1.4 release, but with one trivial change
+on top added in commit 725d2f78 ("Add small regex fix. Add support
+directory.", 2016-12-22)[1]
 
-Most of the changes that have been made in that time have been made
-redundant by similar changes made upstream. Out of all the
-modifications made to it since then, which can be found via:
+The two patches applied on top of the upstream engine are to,
+respectively:
 
-    $ git log --oneline d18f76dccf..v2.13.0-rc2 -- compat/regex/
+ * Add a notice at the top of each file saying that this copy is
+   maintained by the Git project.f
 
-These are the only real code changes that aren't made fully redundant
-by upstream patches:
+ * Remove the dependency on gawk's verify.h. The library compiles
+   as-is when this header file is present, but unfortunately it's
+   under GPL v3, unlike the rest of the files which is under LGPL 2.1
+   or later.
 
-    ce518bbd6c ("Fix compat/regex ANSIfication on MinGW", 2010-08-26)
-    5b62e6374a ("compat/regex/regexec.c: Fix some sparse warnings", 2013-04-27)
-    d099b7173d ("Fix some sparse warnings", 2013-07-18)
+The changes made in commit a997bf423d ("compat/regex: get the gawk
+regex engine to compile within git", 2010-08-17) turned out to be
+redundant to achieving the same with defining a few flags to make the
+code itself do similar things.
 
-These look to me like they might be a non-issue due to subsequent
-changes, or perhaps aren't needed anymore due to compiler updates.
+In addition the -DNO_MBSUPPORT flag is not needed, upstream removed
+the code that relied on that. It's possible that either -DHAVE_BTOWC
+or -D_GNU_SOURCE could cause some problems on non-GNU systems.
 
-In addition a few style & typo changes have been made in that time:
+The -DHAVE_BTOWC flag indicates that wchar.h has a btowc(3). This
+function is defined in POSIX.1-2001 & C99 and later.
 
-    ce9171cd63 ("compat/regex: fix spelling and grammar in comments", 2013-04-12)
-    749f763dbb ("typofix: in-code comments", 2013-07-22)
-    c01499ef69 ("C: have space around && and || operators", 2013-10-16)
+The -D_GNU_SOURCE flag is needed because the library itself does:
 
-Some of these could still be applied, but I don't see any point in
-doing so. These are typo & style nits, if anyone really cares that
-much they should send updates to gawk.git instead of making the
-re-merging of code into git.git harder over such trivial issues.
+    #ifndef _LIBC
+    #define __USE_GNU	1
+    #endif
+
+Which is subsequently picked up by GNU C library headers:
+
+    In file included from compat/regex/regex_internal.h:32:0,
+                     from compat/regex/regex.c:76:
+    /usr/include/stdio.h:316:6: error: unknown type name ‘_IO_cookie_io_functions_t’; did you mean ‘__fortify_function’?
+          _IO_cookie_io_functions_t __io_funcs) __THROW __wur;
+          ^~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. http://git.savannah.gnu.org/cgit/gawk.git/commit/?id=725d2f78
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- compat/regex/README | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
- create mode 100644 compat/regex/README
+ Makefile                                           |   8 +-
+ .../0001-Add-notice-at-top-of-copied-files.patch   | 120 +++++++++++++++++++++
+ .../0002-Remove-verify.h-use-from-intprops.h.patch |  41 +++++++
+ 3 files changed, 168 insertions(+), 1 deletion(-)
+ create mode 100644 compat/regex/patches/0001-Add-notice-at-top-of-copied-files.patch
+ create mode 100644 compat/regex/patches/0002-Remove-verify.h-use-from-intprops.h.patch
 
-diff --git a/compat/regex/README b/compat/regex/README
+diff --git a/Makefile b/Makefile
+index e35542e631..6235e1b954 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2060,7 +2060,13 @@ endif
+ 
+ ifdef NO_REGEX
+ compat/regex/regex.sp compat/regex/regex.o: EXTRA_CPPFLAGS = \
+-	-DGAWK -DNO_MBSUPPORT
++	-DGAWK \
++	-DHAVE_WCHAR_H \
++	-DHAVE_WCTYPE_H \
++	-DHAVE_STDDEF_H \
++	-DHAVE_STDBOOL_H \
++	-DHAVE_BTOWC \
++	-D_GNU_SOURCE
+ endif
+ 
+ ifdef USE_NED_ALLOCATOR
+diff --git a/compat/regex/patches/0001-Add-notice-at-top-of-copied-files.patch b/compat/regex/patches/0001-Add-notice-at-top-of-copied-files.patch
 new file mode 100644
-index 0000000000..345d322d8c
+index 0000000000..4b4acc45ba
 --- /dev/null
-+++ b/compat/regex/README
-@@ -0,0 +1,21 @@
-+This is the Git project's copy of the GNU awk (Gawk) regex
-+engine. It's used when Git is build with e.g. NO_REGEX=NeedsStartEnd,
-+or when the C library's regular expression functions are otherwise
-+deficient.
-+
-+This is not a fork, but a source code copy. Upstream is the Gawk
-+project, and the sources should be periodically updated from their
-+copy, which can be done with:
-+
-+    for f in $(find . -name '*.[ch]' -printf "%f\n"); do wget http://git.savannah.gnu.org/cgit/gawk.git/plain/support/$f -O $f; done
-+
-+For ease of maintenance, and to intentionally make it inconvenient to
-+diverge from upstream (since it makes it harder to re-merge) any local
-+changes should be stored in the patches/ directory, which after doing
-+the above can be applied as:
-+
-+    for p in patches/*; do patch -p3 < $p; done
-+
-+For any changes that aren't specific to the git.git copy please submit
-+a patch to the Gawk project and/or to the GNU C library (the Gawk
-+regex engine is a periodically & forked copy from glibc.git).
++++ b/compat/regex/patches/0001-Add-notice-at-top-of-copied-files.patch
+@@ -0,0 +1,120 @@
++diff --git a/compat/regex/intprops.h b/compat/regex/intprops.h
++index 716741adc5..2aef98d290 100644
++--- a/compat/regex/intprops.h
+++++ b/compat/regex/intprops.h
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* intprops.h -- properties of integer types
++ 
++    Copyright (C) 2001-2016 Free Software Foundation, Inc.
++diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
++index 5ac5370142..a1fb2e400e 100644
++--- a/compat/regex/regcomp.c
+++++ b/compat/regex/regcomp.c
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* Extended regular expression matching and search library.
++    Copyright (C) 2002-2016 Free Software Foundation, Inc.
++    This file is part of the GNU C Library.
++diff --git a/compat/regex/regex.c b/compat/regex/regex.c
++index 9f133fab84..d6e525e567 100644
++--- a/compat/regex/regex.c
+++++ b/compat/regex/regex.c
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* Extended regular expression matching and search library.
++    Copyright (C) 2002-2016 Free Software Foundation, Inc.
++    This file is part of the GNU C Library.
++diff --git a/compat/regex/regex.h b/compat/regex/regex.h
++index 143b3afa89..b602b5567f 100644
++--- a/compat/regex/regex.h
+++++ b/compat/regex/regex.h
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* Definitions for data structures and routines for the regular
++    expression library.
++    Copyright (C) 1985, 1989-2016 Free Software Foundation, Inc.
++diff --git a/compat/regex/regex_internal.c b/compat/regex/regex_internal.c
++index 18641ef1c0..6d766114a1 100644
++--- a/compat/regex/regex_internal.c
+++++ b/compat/regex/regex_internal.c
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* Extended regular expression matching and search library.
++    Copyright (C) 2002-2016 Free Software Foundation, Inc.
++    This file is part of the GNU C Library.
++diff --git a/compat/regex/regex_internal.h b/compat/regex/regex_internal.h
++index 01465e7678..9c88a6a57b 100644
++--- a/compat/regex/regex_internal.h
+++++ b/compat/regex/regex_internal.h
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* Extended regular expression matching and search library.
++    Copyright (C) 2002-2016 Free Software Foundation, Inc.
++    This file is part of the GNU C Library.
++diff --git a/compat/regex/regexec.c b/compat/regex/regexec.c
++index c8f11e52e7..c79ff38b1c 100644
++--- a/compat/regex/regexec.c
+++++ b/compat/regex/regexec.c
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* Extended regular expression matching and search library.
++    Copyright (C) 2002-2016 Free Software Foundation, Inc.
++    This file is part of the GNU C Library.
++diff --git a/compat/regex/verify.h b/compat/regex/verify.h
++index 5c8381d290..e865af5298 100644
++--- a/compat/regex/verify.h
+++++ b/compat/regex/verify.h
++@@ -1,3 +1,10 @@
+++/*
+++ * This is git.git's copy of gawk.git's regex engine. Please see that
+++ * project for the latest version & to submit patches to this code,
+++ * and git.git's compat/regex/README for information on how git's copy
+++ * of this code is maintained.
+++ */
+++
++ /* Compile-time assert-like macros.
++ 
++    Copyright (C) 2005-2006, 2009-2016 Free Software Foundation, Inc.
+diff --git a/compat/regex/patches/0002-Remove-verify.h-use-from-intprops.h.patch b/compat/regex/patches/0002-Remove-verify.h-use-from-intprops.h.patch
+new file mode 100644
+index 0000000000..16c3fd30dd
+--- /dev/null
++++ b/compat/regex/patches/0002-Remove-verify.h-use-from-intprops.h.patch
+@@ -0,0 +1,41 @@
++diff --git a/compat/regex/intprops.h b/compat/regex/intprops.h
++index 2aef98d290..29f7f40837 100644
++--- a/compat/regex/intprops.h
+++++ b/compat/regex/intprops.h
++@@ -28,7 +28,6 @@
++ #define _GL_INTPROPS_H
++ 
++ #include <limits.h>
++-#include <verify.h>
++ 
++ #ifndef __has_builtin
++ # define __has_builtin(x) 0
++@@ -88,28 +87,6 @@
++ # define LLONG_MIN __INT64_MIN
++ #endif
++ 
++-/* This include file assumes that signed types are two's complement without
++-   padding bits; the above macros have undefined behavior otherwise.
++-   If this is a problem for you, please let us know how to fix it for your host.
++-   As a sanity check, test the assumption for some signed types that
++-   <limits.h> bounds.  */
++-verify (TYPE_MINIMUM (signed char) == SCHAR_MIN);
++-verify (TYPE_MAXIMUM (signed char) == SCHAR_MAX);
++-verify (TYPE_MINIMUM (short int) == SHRT_MIN);
++-verify (TYPE_MAXIMUM (short int) == SHRT_MAX);
++-verify (TYPE_MINIMUM (int) == INT_MIN);
++-verify (TYPE_MAXIMUM (int) == INT_MAX);
++-verify (TYPE_MINIMUM (long int) == LONG_MIN);
++-verify (TYPE_MAXIMUM (long int) == LONG_MAX);
++-#ifdef LLONG_MAX
++-verify (TYPE_MINIMUM (long long int) == LLONG_MIN);
++-verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
++-#endif
++-/* Similarly, sanity-check one ISO/IEC TS 18661-1:2014 macro if defined.  */
++-#ifdef UINT_WIDTH
++-verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
++-#endif
++-
++ /* Does the __typeof__ keyword work?  This could be done by
++    'configure', but for now it's easier to do it by hand.  */
++ #if (2 <= __GNUC__ \
 -- 
 2.11.0
 
