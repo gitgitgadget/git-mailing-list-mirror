@@ -2,116 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2BB8207FF
-	for <e@80x24.org>; Fri,  5 May 2017 17:50:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F814207FF
+	for <e@80x24.org>; Fri,  5 May 2017 17:51:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751125AbdEERuw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 13:50:52 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:34763 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751104AbdEERuv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 13:50:51 -0400
-Received: by mail-io0-f194.google.com with SMTP id 12so3003286iol.1
-        for <git@vger.kernel.org>; Fri, 05 May 2017 10:50:51 -0700 (PDT)
+        id S1751166AbdEERu6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 13:50:58 -0400
+Received: from mail-pg0-f41.google.com ([74.125.83.41]:34724 "EHLO
+        mail-pg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751134AbdEERu4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 13:50:56 -0400
+Received: by mail-pg0-f41.google.com with SMTP id 12so6300791pgc.1
+        for <git@vger.kernel.org>; Fri, 05 May 2017 10:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=ld+jT5twfOWQQft6GEzCGHGxS7b+txDQZs2S/Vct/yI=;
-        b=uSPbwZKDWEUq6ws/Cvy6JWFEVWeq64/1+PjiASn2kbRxVyrpQzWg0DYC5xyu43ixKs
-         ZwGcrNbhP5WgJn55/HnefssTBylbndzA+0PLjiZp14swq8Q9fBtwm/aywFgcVH/QNaA/
-         Y3Ky/VBpRcl+TeGRI3dCLKdO539a2n91Jnwzl7GFmKS27fOJP6m1Kt2m6iLdHoVcaK+r
-         2KV6GI2o5VDGFGbLIMITrTXsGS0gbSPBq7g5W9OOzrqVnGfx8rBaGZmWMVBeShuc3Ss+
-         Lt/p1aJYC10H/xQBGGCKTqhEMcIg+w998WH9nMxkQ9BcfLybCNtGUTYPCdRAdJ++O3iW
-         CNCg==
+        bh=X0/UGovSXjN5kE1dGEDrp6+0ta+dsvfj8G0KmvvoCXk=;
+        b=qVwAdd2YtpWt7haivI6444KJrwWFIR4gteqR2F9EiuNR+GCH2tOs4BItvEQEeMvmh5
+         KSGTpNTnc2+Ac2g4T8yktjlIxn9j+MN1KsFGQ+w3jZqAUmu9MkBRZiGKhBIUL855+KY3
+         yI42YvGqMdyzV1VHZFMQlw32aNsBJbEzlh/UT/3QRIlTKrZOFsPWp9y+kI7BwL3aXR3s
+         WyBjKYIGSn02BmqoHw0SYJYtis9e4US846GpNVTF/V9iimGrsWz763IV1qWBJwToW4Hr
+         RCg4x/X3jWqUF+mqnUmNNRs0b9cd8UlGIC/AX/mtKZ2sFwHb0gAM5dih5lcjpryuDpGv
+         Lkpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=ld+jT5twfOWQQft6GEzCGHGxS7b+txDQZs2S/Vct/yI=;
-        b=bXMD3kqj9M4NxJ2DGqWDHik80t0qLfMUYYffgrH2a0Syk7Zlkz/XwLdU6EgX1ZOXjf
-         jLEjwExLa3u/JEApaCo0eVkI4qYAMYlTgmZRIyL2S6BjmvLganTEPSPibNiv6erdPdia
-         QuZy6+H6WbFCbygFhtJEzsh7kY1YNYe4U8LBWnMJayrfva3Oh6QMb4tmCkK1IcNSC67m
-         tOEeyxeHEU0vxVPWd78JyOA/UwA+oENp57/oGLuVnQBqIGWY74P0w/oKvgc50ATZRlTJ
-         tA9DQt3Q3nK4t88p31/mvcHMVk07+aTl0nLCiOUDUVM5SNt2kzskdQ6Tuh0NQWrgLnX/
-         7Bxw==
-X-Gm-Message-State: AN3rC/51N8qBOuk2SxejCO3H3qbDIRm5AjpFrq4GMfccIIN57cWVtWyy
-        g7NPYzvIvbPC+QREW8cbsgLqfu0gdA==
-X-Received: by 10.107.138.9 with SMTP id m9mr45920696iod.80.1494006650589;
- Fri, 05 May 2017 10:50:50 -0700 (PDT)
+        bh=X0/UGovSXjN5kE1dGEDrp6+0ta+dsvfj8G0KmvvoCXk=;
+        b=gGdAU1/WlxWC0TWWhb+1SwpQFfZyeGp3y7ghMAiWlGg12vpQNimyk13t6CNZl10NQ/
+         H6Cp8rVip8++mN6ckelmFffo5GXL5DQUzvJ6acgX7Z/07lfUhyeRTnzkDKj9Jkr/UcTO
+         4jISQgoSDxv8CAUq+Jw/2JUtFOwl0FdGCQaSIVUC+alFo9G5FKWEiwyaQvYS95yQy3ct
+         NW3tMTz/vvCB66r8O+cccBLYIkw95VB4Tngde0QkhpEfkKUnkFiNWgkLqRrQWKCpjLdD
+         cT6cAnQz67yyP3tYe9U67KIAbB6EBPvaaHfZ/M+qWIHpsKPCfcaDl2SxUmj+19Z7HVRv
+         VUfw==
+X-Gm-Message-State: AN3rC/5cBt5eNVH5ta/Zm+jrZ8Xe0GXpJLveQFU0mJ9raFs+Vr2QQIDX
+        EFzx+VHKa0whq4sJo+ZbkWyMqw81twy+
+X-Received: by 10.99.60.81 with SMTP id i17mr4834870pgn.183.1494006656156;
+ Fri, 05 May 2017 10:50:56 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Fri, 5 May 2017 10:50:29 -0700 (PDT)
-In-Reply-To: <20170505173841.20555-1-sbeller@google.com>
-References: <20170505154053.58128-1-larsxschneider@gmail.com> <20170505173841.20555-1-sbeller@google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 5 May 2017 19:50:29 +0200
-Message-ID: <CACBZZX6ZzrJk77ReJ592rJrNR1xhVCQid6_5KTonwTot5eq-hQ@mail.gmail.com>
-Subject: Re: [PATCH] t7406: fix i18n expectation of error message
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Received: by 10.100.162.140 with HTTP; Fri, 5 May 2017 10:50:55 -0700 (PDT)
+In-Reply-To: <xmqqwp9v6vw2.fsf@gitster.mtv.corp.google.com>
+References: <20170505052729.7576-1-whydoubt@gmail.com> <20170505052729.7576-3-whydoubt@gmail.com>
+ <xmqqwp9v6vw2.fsf@gitster.mtv.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 5 May 2017 10:50:55 -0700
+Message-ID: <CAGZ79kZ4k7qVKE7OpSEELorwSx5hUgJksLAeNgVGs0w1JC_Ffg@mail.gmail.com>
+Subject: Re: [RFC PATCH 02/10] Move textconv_object to be with other textconv methods
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff Smith <whydoubt@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 5, 2017 at 7:38 PM, Stefan Beller <sbeller@google.com> wrote:
-> The error message from "submodule update" is internationalized, which
-> makes sense. The test however did not check for the translated version,
-> but used a hardcoded string, which breaks the test when run with
-> GETTEXT_POISON.
+On Fri, May 5, 2017 at 10:44 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jeff Smith <whydoubt@gmail.com> writes:
 >
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  t/t7406-submodule-update.sh | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
+>> Signed-off-by: Jeff Smith <whydoubt@gmail.com>
+>> ---
+>>  builtin.h          |  2 --
+>>  builtin/blame.c    | 28 ----------------------------
+>>  builtin/cat-file.c |  1 +
+>>  diff.c             | 23 +++++++++++++++++++++++
+>>  diff.h             |  7 +++++++
+>>  5 files changed, 31 insertions(+), 30 deletions(-)
 >
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index 4ac386d98b..12f6435ab0 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -441,13 +441,11 @@ test_expect_success 'submodule update - command in .git/config catches failure -
->         test_i18ncmp actual expect
->  '
+> This change makes sense regardless of your primary goal of the
+> series.  It was not good that one builtin borrowing a helper from
+> another.  The common helper should live outside builtin/ as a common
+> code, and in this case, diff.[ch] may be an OK place for it.
 >
-> +sq="'"
->  test_expect_success 'submodule update - command run for initial population of submodule' '
-> -       cat >expect <<-EOF &&
-> -       Execution of '\''false $submodulesha1'\'' failed in submodule path '\''submodule'\''
-> -       EOF
->         rm -rf super/submodule &&
->         test_must_fail git -C super submodule update 2>actual &&
-> -       test_cmp expect actual &&
-> +       test_i18ngrep "Execution of ${sq}false $submodulesha1${sq} failed in submodule path ${sq}submodule${sq}" actual &&
->         git -C super submodule update --checkout
->  '
 
-I have a fix for this in my gettext fixup series (so far lingering on
-the list, not in pu):
-https://public-inbox.org/git/20170421185757.28978-1-avarab@gmail.com/
+My kneejerk reaction to this is would be:
+    Please don't grow diff.[ch] even more. It has
+    5k lines which is a lot IMHO. Although it might be
+    ok for the compiler and from a logical point of view,
+    I'd rather prefer to deal with lots of small files, than
+    with such large files. I am undecided if this hints at
+    bad tooling on my side or at how I think of code
+    and their location.
 
-The diff is quite a bit smaller than yours:
+I guess it is ok for now and in this series, but we may want
+to split up diff.[ch] in the future into multiple finer grained files.
 
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 4ac386d98b..034914a14f 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -447,7 +447,7 @@ test_expect_success 'submodule update - command
-run for initial population of su
-        EOF
-        rm -rf super/submodule &&
-        test_must_fail git -C super submodule update 2>actual &&
--       test_cmp expect actual &&
-+       test_i18ncmp expect actual &&
-        git -C super submodule update --checkout
- '
-
-Do you prefer to use i18ngrep for whatever reason? Seems better to use
-i18ncmp there.
+Thanks,
+Stefan
