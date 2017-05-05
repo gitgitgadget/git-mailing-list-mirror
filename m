@@ -2,126 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 605A3207B3
-	for <e@80x24.org>; Fri,  5 May 2017 16:18:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 347A2207B3
+	for <e@80x24.org>; Fri,  5 May 2017 17:20:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750792AbdEEQSy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 12:18:54 -0400
-Received: from mail-wr0-f173.google.com ([209.85.128.173]:34694 "EHLO
-        mail-wr0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750727AbdEEQSx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 12:18:53 -0400
-Received: by mail-wr0-f173.google.com with SMTP id l9so6654602wre.1
-        for <git@vger.kernel.org>; Fri, 05 May 2017 09:18:52 -0700 (PDT)
+        id S1750877AbdEERUx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 13:20:53 -0400
+Received: from mail-pf0-f181.google.com ([209.85.192.181]:34034 "EHLO
+        mail-pf0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750759AbdEERUw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 13:20:52 -0400
+Received: by mail-pf0-f181.google.com with SMTP id e64so5574835pfd.1
+        for <git@vger.kernel.org>; Fri, 05 May 2017 10:20:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:cc:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding;
-        bh=jtjcb5HAKbisizo37/9dtZJeCqgAmbFeRytxsE/PRqA=;
-        b=tx8rV+ntiNidP5XJpntGSAsndOuueuA36XQZWz/iMp6imocw7c58V8FGLwwcsuz0Yx
-         d3sR+ny96Kc2PDU7tYjFDJgeNJc2fzw+/dD8IJjfLsAk3IT2Kv45/B3rsDebaXnrx1ui
-         HJ3GUFb10YhiNxdA0p6M2PN6OukhdDZk8X6nLH7QwYpliWsUK9j/jNbWfEU96rQ2x2QJ
-         3i/M5RH6HZw4PIrfsV+yDXDxqZ5865Dw558WdPhrTD4j8AZ2hYKbx+lW3l0Po1/vJhJS
-         L3Snl7Ksr71iVf/t987JDZb9pRLVK3NIoOHBi76QzFyfzNZ+0tExIAm+wxIrsEs/Lmup
-         6COw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0i5CL9q/pMF78qqGWuqtwuCDuSo+8qEFXiUP16IWl2A=;
+        b=daC1e4t6F9W5WvP68WFwlgT2K5K/PRyqqyDkbKFWp3J23XkB/CTEHXefREC/t2g4FG
+         JLsyqHjVkBGjYZnrdGWyNEcHQAJ25gWaKJyOdwBuCgs6TnnhXPiLZamQJ4ipMTPEb2Zt
+         X1j8fzOWwtit4AIov+xmn3LwMVwmtF8LdKs2kpAVRsT/b7H+KQ/Vi3ZFwprTXBGO3GSv
+         VjyIoVZP43UaQ7J+5r8euV9WDIrTF9QmFRIKCNiM/NpZeNZ8JdYidZJQ72+QEnrIP8TZ
+         aeOfJutpeHk+givSiGcJRVI3ey0KSGfyJBb79Lb5cU6s2K+ByepTadcib/R1FzGBSEhi
+         Mqww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:cc:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding;
-        bh=jtjcb5HAKbisizo37/9dtZJeCqgAmbFeRytxsE/PRqA=;
-        b=AMYD8E++/gIXk24f63BXD6zO9zNoATXYG3VZetMkWbTZJn1M/6lNHu7tqDuOh8emxv
-         hAJDNh4QmQXNFhjAtxpbdVntEn5XjSpFOmIu7sAfY+MQtBPVYgCaRNIt9IcX6u4awt2v
-         gcJooCmpF5yZvTZ211oszehySjKERJJLAq+XF5obU1AbnXKc9D9hi7qsVxILbXHJ2hF7
-         /1GBQkFV8/3yxhmZYcFVsnjifN+mjMEzyHffULLqJSokPz6SI82I+GpjqMcq/nVZpjvh
-         V7EQfl6OLXJHpkjkC2xY0z88+MsJBBoQ1sX2XBnbtztHY40JGORzsy1RcPe9zOAXowYB
-         C+xw==
-X-Gm-Message-State: AN3rC/5TsiHOKMzlTSNJyRL2hlQYVRCRqKceaPhb3FO6Eh+WXPpPbfF4
-        jR/wn+Jw2m0Xcw==
-X-Received: by 10.223.164.65 with SMTP id e1mr30518170wra.21.1494001132051;
-        Fri, 05 May 2017 09:18:52 -0700 (PDT)
-Received: from [192.168.0.136] (ip5f5be416.dynamic.kabel-deutschland.de. [95.91.228.22])
-        by smtp.googlemail.com with ESMTPSA id h80sm2442860wmd.7.2017.05.05.09.18.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 May 2017 09:18:51 -0700 (PDT)
-Subject: Re: [PATCH] l10n: de.po: translate 4 new messages
-To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-References: <20170505161704.4666-1-ralf.thielow@gmail.com>
-Cc:     Thomas Rast <tr@thomasrast.ch>,
-        =?UTF-8?Q?Jan_Kr=c3=bcger?= <jk@jk.gs>,
-        Christian Stimming <stimming@tuhh.de>,
-        Phillip Szelat <phillip.szelat@gmail.com>,
-        =?UTF-8?Q?Magnus_G=c3=b6rlitz?= <magnus.goerlitz@googlemail.com>
-From:   =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
-Message-ID: <4f6fb471-d253-68a3-bb4e-f9b9369f8ea7@gmail.com>
-Date:   Fri, 5 May 2017 18:18:49 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0i5CL9q/pMF78qqGWuqtwuCDuSo+8qEFXiUP16IWl2A=;
+        b=ftiGHMkKznGO721tga+TaCc3QXFynhsnKSzB5d2xLMtCOpKZR29/PK5S2U7GBA8Mc8
+         y8BUzijus1xU144h9QESvT8X/kvabhqk8fHaGv/iT1c7pYiGXqUf7BvHkHT59maD5L1p
+         F+csUZ1IaIOlk1+mo1b/KQKlTuHwihxRMR+PaL5ZJmd8f6jSdWdomZQw2kr388mILA0L
+         OTDkcVFL/FczO1pFFJKKUgrq+3re/GUbQVXnStG7RAAq7W3QH56ClTB+ZGxpRmRm6SFJ
+         WwtwKUWfK7hIZUJk3AJcsozmd1WnsRDc/kkJe2Bg8V/FwNn+t2yLpOEOEHH/qKG1eHhH
+         lvBg==
+X-Gm-Message-State: AODbwcDOFjZPomS2BoVouUVW+hEo7zpGEIQT776uTBZhdR8JklkhMB5w
+        srjOAwsXCqUeouYo
+X-Received: by 10.98.210.199 with SMTP id c190mr2322503pfg.87.1494004852038;
+        Fri, 05 May 2017 10:20:52 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:2d18:25e6:8c0f:28a2])
+        by smtp.gmail.com with ESMTPSA id j65sm11740579pfc.86.2017.05.05.10.20.50
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 05 May 2017 10:20:50 -0700 (PDT)
+Date:   Fri, 5 May 2017 10:20:49 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/5] Start of a journey: drop
+ NO_THE_INDEX_COMPATIBILITY_MACROS
+Message-ID: <20170505172049.GA55152@google.com>
+References: <20170501190719.10669-1-sbeller@google.com>
+ <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com>
+ <CACsJy8AZevgFda4ZJAmH_Nyrtuk72FUjdk6B8_SJB=n6quPnbw@mail.gmail.com>
+ <xmqqa86tbamh.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZiBOrY6Qno_wFpvFHpbpCY0BtriqYGW5JKG+1hfgJwiQ@mail.gmail.com>
+ <alpine.DEB.2.21.1.1705051244310.146734@virtualbox>
 MIME-Version: 1.0
-In-Reply-To: <20170505161704.4666-1-ralf.thielow@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.21.1.1705051244310.146734@virtualbox>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Acked-by: Matthias Rüster <matthias.ruester@gmail.com>
+On 05/05, Johannes Schindelin wrote:
+> Hi Stefan & Junio,
+> 
+> On Thu, 4 May 2017, Stefan Beller wrote:
+> 
+> > So instead of a mechanical replacement, we'd rather want to
+> > see "the_index" not appearing at all outside of builtins, which
+> > implies two things:
+> >
+> > * If done properly we can move the macros from cache.h to
+> >   e.g. builtin.h. That way future developers are less tempted
+> >   to use the cache_* macros in the library code.
+> 
+> Yessss!
+> 
+> > * we'd have to pass through the_index from the builtin function
+> >   down to the library code, potentially going through multiple
+> >   function. For this it is unclear if we want to start this now, or wait
+> >   until Brandon presents his initial repository object struct, which
+> >   may be suited better for passing-around.
+> 
+> Or the other way round. I guess passing a struct index_state can be a
+> first step, and we can later convert it to struct repository. I fathom
+> that more places will need a struct repository parameter than a struct
+> index_state parameter. That is, if you first identify all the places where
+> the index_state parameter is required, it should make the struct
+> repository change easier.
 
+Exactly this.  I have a local series which converts ls-files to use a
+repository struct but it turns out, for that to work, dir.c needs to be
+converted to take in an index_state struct for fill_directory().  So I
+then started working on doing that conversion and hopefully will have
+something clean enough to send out later today for people to comment on.
 
-Am 05.05.2017 um 18:17 schrieb Ralf Thielow:
-> Translate 4 new messages came from git.pot update in 28e1aaa48 (l10n:
-> git.pot: v2.13.0 round 2 (4 new, 7 removed)).
-> 
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-> ---
->  po/de.po | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
-> 
-> diff --git a/po/de.po b/po/de.po
-> index 12c3d36a0..679f8f472 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -2493,7 +2493,7 @@ msgstr ""
->  "Verwende Version %i"
->  
->  #: read-cache.c:2375 sequencer.c:1350 sequencer.c:2048
-> -#, fuzzy, c-format
-> +#, c-format
->  msgid "could not stat '%s'"
->  msgstr "Konnte '%s' nicht lesen."
->  
-> @@ -2514,7 +2514,7 @@ msgstr "Konnte '%s' nicht zum Schreiben öffnen."
->  
->  #: refs.c:1667
->  msgid "ref updates forbidden inside quarantine environment"
-> -msgstr ""
-> +msgstr "Aktualisierungen von Referenzen ist innerhalb der Quarantäne-Umgebung verboten."
->  
->  #: refs/files-backend.c:1631
->  #, c-format
-> @@ -14135,9 +14135,8 @@ msgid "populate the new working tree"
->  msgstr "das neue Arbeitsverzeichnis auschecken"
->  
->  #: builtin/worktree.c:335
-> -#, fuzzy
->  msgid "keep the new working tree locked"
-> -msgstr "das neue Arbeitsverzeichnis auschecken"
-> +msgstr "das neue Arbeitsverzeichnis gesperrt lassen"
->  
->  #: builtin/worktree.c:343
->  msgid "-b, -B, and --detach are mutually exclusive"
-> @@ -14243,7 +14242,7 @@ msgstr ""
->  #: http.c:336
->  #, c-format
->  msgid "negative value for http.postbuffer; defaulting to %d"
-> -msgstr ""
-> +msgstr "negativer Wert für http.postbuffer; benutze Standardwert %d"
->  
->  #: http.c:357
->  msgid "Delegation control is not supported with cURL < 7.22.0"
-> 
+-- 
+Brandon Williams
