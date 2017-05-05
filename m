@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 655D3207FF
-	for <e@80x24.org>; Fri,  5 May 2017 17:42:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5948A207FF
+	for <e@80x24.org>; Fri,  5 May 2017 17:44:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750942AbdEERmT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 13:42:19 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35497 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750762AbdEERmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 13:42:18 -0400
-Received: by mail-pg0-f65.google.com with SMTP id i63so1621836pgd.2
-        for <git@vger.kernel.org>; Fri, 05 May 2017 10:42:18 -0700 (PDT)
+        id S1750890AbdEERos (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 13:44:48 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:35367 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750762AbdEERor (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 13:44:47 -0400
+Received: by mail-pg0-f66.google.com with SMTP id i63so1628419pgd.2
+        for <git@vger.kernel.org>; Fri, 05 May 2017 10:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=raMnMLzGNrpsev1GesndyoF6ymrn4j3BgfSCj/HfWrQ=;
-        b=kdTgFbRy0hS5/+bQEetv1O7EVLX/iwh/fm64D2iXAN1vksh1JM+o32/2jCvuD29cET
-         h5ZUmQzQdzs9ZOlMzhsPQYiueMfl06ILvLJ9tCZ7vZH0FweiPx6ooDZmJD2TyhKVVYv0
-         8QVEIQ9XZJwIuRYi4hll5A4gmEqV7cNZoIBR4HwaYQT4YOKD/k9uIj4YQR5+8qvEJx2T
-         JBTpJP/VzDMnpIn0l7ICgRvB+D5rCbyOK/ndIMYiess8kx68s+sHX4URrgozebENh4XI
-         XNwxONzoX2NuQa073pkyLzDmOATCt1Wv26+bX2ZGKjn8l1aaiRyoXYNY7GXo0xRNa6OJ
-         BOCQ==
+        bh=9Fq5CNmMc5igCQ1ziR5x5TcPAC2LAt4D3CsEzv/9ZlM=;
+        b=BrRZcn7AT3DlG0H+6QwdR/S2Uh762wStArdqUajRkb9BxXWUlibGk55hHAmFEuRgaj
+         HLNZrmOQcL9Blg+Ijzpy5ACVjsMRcykjoB/+9ylWffnIj8TGvKDl6rq6yAKQ2cIK6nIC
+         sV4wykuVBxg4todMv2U7qjI0HLz2ssruQh4wSWZ9G5r9VQJyyv8x1+py42S1PMaoAAGi
+         Hvz6BilGONdHCeZxhJ8sBaSAeEIcy3nnbthZ9eXwf7vxbdhbfeSI6Uo8xlXUXzPVgm/R
+         3hFQWCy6IczCpq9+Vb0ZXQ/aFrRvCWv1zr2DA7Sbup8PciqC1BDkFkVa7g7UskZxvrqW
+         /lNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=raMnMLzGNrpsev1GesndyoF6ymrn4j3BgfSCj/HfWrQ=;
-        b=QZqyKzadP3SvSKBeGD0leJDx80op2r5hLCEkg1A1LOSQijTjZxVyCGysPwQi9bThM3
-         r5mgsPBoke2xgRh+6G6TdWTB+k3HWjRXC1jEuTFlrl9PE5nBHP9Av84wLlNyTBCIWWle
-         bpkVjLBh7KxtVmuf8NPAZQKePaKM1oUDo/8N0TRCFOH8lxF1iFlLCJtVlPew3LnE+6wS
-         FNQIxN1WJLWZfV4UuPMZRhdKbp4KLv5Il55oHaWH6/bUfICbWZe7QPZuc1b23jHyc9af
-         xYw/9lTO1jpi9nHPQjhOaD6ZiZf7JH0nbjD1RESSarwbzMo+plumRtNfuZQTHwpdpsNS
-         lCQw==
-X-Gm-Message-State: AN3rC/7LSXnSArzHr0UdrKII5uGpwFwx2QKeCwkG87tIjmC1oLAxKjdk
-        g7U6DosdKU0BnTezgFQ=
-X-Received: by 10.98.201.15 with SMTP id k15mr11132122pfg.14.1494006137562;
-        Fri, 05 May 2017 10:42:17 -0700 (PDT)
+        bh=9Fq5CNmMc5igCQ1ziR5x5TcPAC2LAt4D3CsEzv/9ZlM=;
+        b=S8zsQbQv0W2cu/yfn0YkleoEkJEPlW3kORFx6KCz61oodjqHWlEGrbQMRmeFKXpeFI
+         SA10TF+e1kXmIaXmd3O87cgOCqW6yK0Yy06XycjGU+/ZYdJFwLZSvsm4B2RtiUErX3HK
+         ZPXE6ay1vTbRR+nwk0iPhfwyONrhyf0/O08lKfHb06Nen6QSLxS9hVTjLqkRMSSXhksj
+         7RHydJ3sIKhf7l5sKm8lqlR0YvwPNLfPofitbVPXWzD8rwfZUHDEeCkB8z4Doa3vZd2K
+         Ymijl5QbWkSyRjYLGYr5lxjrej34CeBCwh9X6N51FTorkIWm1TymJQfxbG2Zo8C++o6t
+         Q3DA==
+X-Gm-Message-State: AN3rC/6PSuyBmNFs09WdNQUR9R9pmpDvrLyU3acz3p+4xXI79KGCz43Q
+        Ts3B8E8DoH+3KQ==
+X-Received: by 10.84.193.3 with SMTP id e3mr31269104pld.21.1494006286948;
+        Fri, 05 May 2017 10:44:46 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:aca8:b828:d7c5:8258])
-        by smtp.gmail.com with ESMTPSA id o5sm13934414pfk.126.2017.05.05.10.42.16
+        by smtp.gmail.com with ESMTPSA id o5sm13941074pfk.126.2017.05.05.10.44.46
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 05 May 2017 10:42:16 -0700 (PDT)
+        Fri, 05 May 2017 10:44:46 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff Smith <whydoubt@gmail.com>
 Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [RFC PATCH 03/10] Add some missing definitions to header files
+Subject: Re: [RFC PATCH 02/10] Move textconv_object to be with other textconv methods
 References: <20170505052729.7576-1-whydoubt@gmail.com>
-        <20170505052729.7576-4-whydoubt@gmail.com>
-Date:   Fri, 05 May 2017 10:42:15 -0700
-In-Reply-To: <20170505052729.7576-4-whydoubt@gmail.com> (Jeff Smith's message
-        of "Fri, 5 May 2017 00:27:22 -0500")
-Message-ID: <xmqq1ss38ako.fsf@gitster.mtv.corp.google.com>
+        <20170505052729.7576-3-whydoubt@gmail.com>
+Date:   Fri, 05 May 2017 10:44:45 -0700
+In-Reply-To: <20170505052729.7576-3-whydoubt@gmail.com> (Jeff Smith's message
+        of "Fri, 5 May 2017 00:27:21 -0500")
+Message-ID: <xmqqwp9v6vw2.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,72 +69,133 @@ Jeff Smith <whydoubt@gmail.com> writes:
 
 > Signed-off-by: Jeff Smith <whydoubt@gmail.com>
 > ---
->  object.h    | 2 ++
->  pathspec.h  | 4 ++++
->  refs.h      | 3 +++
->  tree-walk.h | 2 ++
->  4 files changed, 11 insertions(+)
+>  builtin.h          |  2 --
+>  builtin/blame.c    | 28 ----------------------------
+>  builtin/cat-file.c |  1 +
+>  diff.c             | 23 +++++++++++++++++++++++
+>  diff.h             |  7 +++++++
+>  5 files changed, 31 insertions(+), 30 deletions(-)
 
-As the coding rule of this codebase is not to include system headers
-in anything other than git-compat-util.h which should be the first
-thing to be included in the *.c files (cache.h and other selected
-and well-known header files can be the first one in place of
-git-compat-util, as they include it as the first thing), all changes
-in this patch, except possibly the one to tree-walk.h, are wrong.
+This change makes sense regardless of your primary goal of the
+series.  It was not good that one builtin borrowing a helper from
+another.  The common helper should live outside builtin/ as a common
+code, and in this case, diff.[ch] may be an OK place for it.
+
 
 >
-> diff --git a/object.h b/object.h
-> index f52957d..9737582 100644
-> --- a/object.h
-> +++ b/object.h
-> @@ -1,6 +1,8 @@
->  #ifndef OBJECT_H
->  #define OBJECT_H
+> diff --git a/builtin.h b/builtin.h
+> index 9e4a898..498ac80 100644
+> --- a/builtin.h
+> +++ b/builtin.h
+> @@ -25,8 +25,6 @@ struct fmt_merge_msg_opts {
+>  extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
+>  			 struct fmt_merge_msg_opts *);
 >  
-> +#include "cache.h"
-> +
->  struct object_list {
->  	struct object *item;
->  	struct object_list *next;
-> diff --git a/pathspec.h b/pathspec.h
-> index 55e9769..ea18e24 100644
-> --- a/pathspec.h
-> +++ b/pathspec.h
-> @@ -1,6 +1,10 @@
->  #ifndef PATHSPEC_H
->  #define PATHSPEC_H
+> -extern int textconv_object(const char *path, unsigned mode, const struct object_id *oid, int oid_valid, char **buf, unsigned long *buf_size);
+> -
+>  extern int is_builtin(const char *s);
 >  
-> +#include <stddef.h>
-> +#include <string.h>
-> +#include <strings.h>
-> +
->  /* Pathspec magic */
->  #define PATHSPEC_FROMTOP	(1<<0)
->  #define PATHSPEC_MAXDEPTH	(1<<1)
-> diff --git a/refs.h b/refs.h
-> index 07cf4cd..e9d19fd 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -1,6 +1,9 @@
->  #ifndef REFS_H
->  #define REFS_H
+>  extern int cmd_add(int argc, const char **argv, const char *prefix);
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 42c56eb..c419981 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -147,34 +147,6 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
+>  }
 >  
-> +#include <stdio.h>
-> +#include <string.h>
-> +
->  struct object_id;
->  struct ref_store;
->  struct strbuf;
-> diff --git a/tree-walk.h b/tree-walk.h
-> index 68bb78b..8b0fccd 100644
-> --- a/tree-walk.h
-> +++ b/tree-walk.h
-> @@ -1,6 +1,8 @@
->  #ifndef TREE_WALK_H
->  #define TREE_WALK_H
+>  /*
+> - * Prepare diff_filespec and convert it using diff textconv API
+> - * if the textconv driver exists.
+> - * Return 1 if the conversion succeeds, 0 otherwise.
+> - */
+> -int textconv_object(const char *path,
+> -		    unsigned mode,
+> -		    const struct object_id *oid,
+> -		    int oid_valid,
+> -		    char **buf,
+> -		    unsigned long *buf_size)
+> -{
+> -	struct diff_filespec *df;
+> -	struct userdiff_driver *textconv;
+> -
+> -	df = alloc_filespec(path);
+> -	fill_filespec(df, oid->hash, oid_valid, mode);
+> -	textconv = get_textconv(df);
+> -	if (!textconv) {
+> -		free_filespec(df);
+> -		return 0;
+> -	}
+> -
+> -	*buf_size = fill_textconv(textconv, df, buf);
+> -	free_filespec(df);
+> -	return 1;
+> -}
+> -
+> -/*
+>   * Given an origin, prepare mmfile_t structure to be used by the
+>   * diff machinery
+>   */
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 1890d7a..79a2c82 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -5,6 +5,7 @@
+>   */
+>  #include "cache.h"
+>  #include "builtin.h"
+> +#include "diff.h"
+>  #include "parse-options.h"
+>  #include "userdiff.h"
+>  #include "streaming.h"
+> diff --git a/diff.c b/diff.c
+> index 11eef1c..a62e989 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -5270,6 +5270,29 @@ size_t fill_textconv(struct userdiff_driver *driver,
+>  	return size;
+>  }
 >  
-> +struct strbuf;
+> +int textconv_object(const char *path,
+> +		    unsigned mode,
+> +		    const struct object_id *oid,
+> +		    int oid_valid,
+> +		    char **buf,
+> +		    unsigned long *buf_size)
+> +{
+> +	struct diff_filespec *df;
+> +	struct userdiff_driver *textconv;
 > +
->  struct name_entry {
->  	const struct object_id *oid;
->  	const char *path;
+> +	df = alloc_filespec(path);
+> +	fill_filespec(df, oid->hash, oid_valid, mode);
+> +	textconv = get_textconv(df);
+> +	if (!textconv) {
+> +		free_filespec(df);
+> +		return 0;
+> +	}
+> +
+> +	*buf_size = fill_textconv(textconv, df, buf);
+> +	free_filespec(df);
+> +	return 1;
+> +}
+> +
+>  void setup_diff_pager(struct diff_options *opt)
+>  {
+>  	/*
+> diff --git a/diff.h b/diff.h
+> index 5be1ee7..52ebd54 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -385,6 +385,13 @@ extern size_t fill_textconv(struct userdiff_driver *driver,
+>   */
+>  extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
+>  
+> +/*
+> + * Prepare diff_filespec and convert it using diff textconv API
+> + * if the textconv driver exists.
+> + * Return 1 if the conversion succeeds, 0 otherwise.
+> + */
+> +extern int textconv_object(const char *path, unsigned mode, const struct object_id *oid, int oid_valid, char **buf, unsigned long *buf_size);
+> +
+>  extern int parse_rename_score(const char **cp_p);
+>  
+>  extern long parse_algorithm_value(const char *value);
