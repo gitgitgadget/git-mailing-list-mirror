@@ -2,89 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F404207B3
-	for <e@80x24.org>; Fri,  5 May 2017 21:07:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44356207B3
+	for <e@80x24.org>; Fri,  5 May 2017 21:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755323AbdEEVHO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 17:07:14 -0400
-Received: from mail-io0-f175.google.com ([209.85.223.175]:35152 "EHLO
-        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753123AbdEEVHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 17:07:13 -0400
-Received: by mail-io0-f175.google.com with SMTP id f102so22638442ioi.2
-        for <git@vger.kernel.org>; Fri, 05 May 2017 14:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7uWlvH2NVZ6MQs8Z6L9kWHx5o0xxxLjeOyrmKHwhS+0=;
-        b=df3ZscREzU/czOmnYDv8Q5zcl6fBTZ13cGKrDMmICU/Tu3C4mvmGRCvIm0vluu69Jg
-         2b9aWcxa6A42FJeTi7w+s/9Tj8YKTLNQ0P44AoVCGSKUZ10uhEMNxMiIN0bzBKbFoHXx
-         jBe6MHZYBWW3asM9M6NiBQFqVYAq47sGrs3ppB9Nx4SQsNOlX2IDBxJ7cRbgXhUthWMp
-         USQugqBxaKJBhlIrHPl/fSOrRbqgamyhaAZ4WjaI7mGn/tg6m0w3YLflzIkXfyL2JOZC
-         CqtiyHapy0C69DnAmmfGiHx4NaeSQ9YOue3yPZdRAvoC8Tzv+EW3bSP6Zp1qUfawRbB/
-         97eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7uWlvH2NVZ6MQs8Z6L9kWHx5o0xxxLjeOyrmKHwhS+0=;
-        b=qy7c8AJANOlM6bhAQgf3D/pVOwEFjSD4r1zeELjwWf1J3ehX4xvqraxR81Zz6G3zDt
-         B6o6xm7luYYAd9g2RayVrG2IksMTJj48lflMFEg4S/G0vPhj9L1EIa3HYxoGeM3Vkgf6
-         H7+mQiHV+lgkHcvjciKHG/7AFXN8NHoDjCiXXS2z1a7dtjFcId42E4mpoVACVYZixa2z
-         j6DFO8xcGyrmz0pomIpYzuqDeT0b9QlJ7UWThUWyMnLAOqqaLJzijlnV3/anuRSBVtJw
-         Bi3kvlsyuhpznjz5MdjMH2YbZBvooLCsMJcAgrczjGhzAr8kYSnte8LnQk3QAHIHMxkq
-         K04Q==
-X-Gm-Message-State: AODbwcAlfdR+D8ZNZGUjskI5qtonI2/ZM5T9eseehEaKtIwSmetpW2+6
-        cBLYn1+h4ZT3BdD1ScIXOc29UXdIJQ==
-X-Received: by 10.107.35.75 with SMTP id j72mr4549775ioj.180.1494018433065;
- Fri, 05 May 2017 14:07:13 -0700 (PDT)
+        id S1755593AbdEEVWA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 17:22:00 -0400
+Received: from mout.gmx.net ([212.227.17.20]:63475 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1754341AbdEEVVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 17:21:48 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcmN9-1doIgD1lKR-00k78M; Fri, 05
+ May 2017 23:21:42 +0200
+Date:   Fri, 5 May 2017 23:21:40 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Daniel Ferreira <bnmvco@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] add--interactive: add builtin helper for interactive
+ add
+In-Reply-To: <20170505201621.25560-1-avarab@gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1705052320270.146734@virtualbox>
+References: <1494009820-2090-3-git-send-email-bnmvco@gmail.com> <20170505201621.25560-1-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.79.150.90 with HTTP; Fri, 5 May 2017 14:06:32 -0700 (PDT)
-In-Reply-To: <CACBZZX7Q36rFiO9SwBCzM2M3ae=vOPJ2dfaVQ6=geZLgkLAuWA@mail.gmail.com>
-References: <86bmr7xuy9.fsf@local.lan> <CACBZZX7Q36rFiO9SwBCzM2M3ae=vOPJ2dfaVQ6=geZLgkLAuWA@mail.gmail.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Fri, 5 May 2017 16:06:32 -0500
-Message-ID: <CAJZjrdVSX_HB0O_eiQk6bg_UF0=71PNVa1rBwSbpHFCbOrpAOQ@mail.gmail.com>
-Subject: Re: How to `git status' without scrambling modified with new, etc
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Harry Putnam <reader@newsguy.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323329-572000080-1494019302=:146734"
+X-Provags-ID: V03:K0:MHEOXnvKCH/+kxhJ1N9ZjfoRe3YcrFEbsunYwc0Z43D3QXoqdwR
+ ZJursottF7Ckprdq/8wlcYXlW66XLDPneGPwt2bLA4ODmrhJJKLmnpJwBlHFLFUGBkqIzyF
+ /pkaEcqvkL/j6wQOBsuRBFcOrJzZnOHPvcod8jJZUJANslzpSIoi/QR8X5No/WxfFEDvmPW
+ v97U1xgmwqD6JCQroiuyA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0wNxIECiRsE=:TpBuL8zj6LVFM+kv/NF6nL
+ 3Bi7miaBb1It98pMDLKl9lJuIyKR8EA1dA/j/b6+TEAcZYfWuePMaQ4JgrZLP1R6ukGsRhU2T
+ j6flqQB03LQZN/8LsJui9uRRx5SjYPUKj0b8t9PfRnKI6flE/Xs9yj+LD+AwsAVccPvLQhWxP
+ yisvpbKkb4iCBQ0oPe+y3zA9us7vAtWWYmUkYYLKqFDoL8ePYUb1K+xfyL/EEthSd34npnVkc
+ IHAsFaCAl8mghsgokIqNmDonTIseUNvOE+hleYF2KXELjQzBKJElB5H+n9os7fQL6tRBuv65o
+ Jfg7+RyNC2+biMLMmXD5PqxspTKEOVppiY9sDBKvLVS2M1IWmrlbtB7KoUxYgx18nYBXxjLHi
+ G67xfWUHeznmEupMXfc8Vz4H0PnDkwWIBafYyf49C0AWMlQTslO1O0zMvCHc202kaGFE1q7jW
+ aLNm8PGrcVB9M2Tgi+IUpJOEP6wf/XewjsNTga2bHjqPJ2jyKdt12UnsH/u3vLNBPbg6L12Au
+ uveXOvaGTGuPVhLOXBbAPJVb+NsddgiJzacwyA2qsoWPMoJfQAMz62a4OVhXeoUse2UG9VT+A
+ ARL8eYu1d/NP4uW4hXS4S2f4ez03hdpwodrAo4suZJEKEqa2ds3ujLVbaFqRW5roVAWCHc/k+
+ Yn6lzoqtYjkJTbIQU0FDFP51Avbcdj4lGBEh2oZm5R/1UMZoMaSr3NH4wEckAECeD033XTZGf
+ +E17S3Bo2TqgNofNyPe2YzP8RRhZshQxEY7A6dLuwH9sInXQXjr/zo5RfjwqtbgjWB+dHyQws
+ 05qDJ3O
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 5, 2017 at 9:24 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Fri, May 5, 2017 at 4:02 PM, Harry Putnam <reader@newsguy.com> wrote:
->> This is probably what everyone sees:
->>
->> When I run `git status'; I see  modified and newfiles scrambled together
->>
->> Is there a trick or technique to make that output show each category
->> separately?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-You can use `git status -s` and match on the modification type (M
-corresponds to modified, A to new files). See the man page for more
-details on the interface.
+--8323329-572000080-1494019302=:146734
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
->> Or do folks just a throw a `sort' in there (git status|sort) and lose
->> the color ouput?
->
-> If you set color.ui=3Dauto it'll disable coloring when it detects that
-> the output isn't to a terminal, i.e. being piped.
->
-> It sounds like you want:
->
->     git -c color.ui=3Dalways status --short|sort
->
-> But there's no native option to sort the status output, but that'll do
-> it for you.
+Hi,
+
+On Fri, 5 May 2017, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+>  int cmd_add_interactive__helper(int argc, const char **argv, const char =
+*prefix)
+>  {
+> -=09int i, found_opt =3D 0;
+> -
+> -=09git_config(git_add_interactive_config, NULL);
+> +=09int opt_status =3D 0;
+> =20
+> -=09for (i =3D 1; i < argc; i++) {
+> -=09=09const char *arg =3D argv[i];
+> +=09struct option options[] =3D {
+> +=09=09OPT_BOOL(0, "status", &opt_status,
+> +=09=09=09 N_("print status information with diffstat")),
+
+Please use OPT_CMDMODE() instead; it was invented exactly for this kind of
+scenario.
+
+> --=20
+> 2.11.0
+
+Really? ;-)
+
+Ciao,
+Dscho
+--8323329-572000080-1494019302=:146734--
