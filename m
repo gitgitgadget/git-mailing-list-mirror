@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9824E207B3
-	for <e@80x24.org>; Fri,  5 May 2017 15:28:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50B5F207FF
+	for <e@80x24.org>; Fri,  5 May 2017 15:28:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754853AbdEEP2w (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 11:28:52 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:36578 "EHLO
+        id S1754041AbdEEP2y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 11:28:54 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:33248 "EHLO
         mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752915AbdEEP2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 11:28:50 -0400
-Received: by mail-qt0-f196.google.com with SMTP id j13so1230031qta.3
-        for <git@vger.kernel.org>; Fri, 05 May 2017 08:28:50 -0700 (PDT)
+        with ESMTP id S1754836AbdEEP2w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 11:28:52 -0400
+Received: by mail-qt0-f196.google.com with SMTP id a46so1235017qte.0
+        for <git@vger.kernel.org>; Fri, 05 May 2017 08:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=wMGAim+rHifwbGUmjfd+IDaOJ2UcWFDURoGSPkFZ8I8=;
-        b=KqFciUjmZjqtng5VmZC3Y+QasV2Sj6P/Uu4wuTA7imZcq9wbqfVHzc0aahdYa5xUtk
-         4b86CndQegXeyq9WmOYcNbKsd4kxea42+wncsCQK6TXaY/O8B0InA65QHBtqwYE3hW4a
-         8l72brLVFvMHKBLZPd3zgzAWOJWHPub5ksDShEQhjPUYmDwFjfKMgVoda7Nf/Y+uaQSt
-         MEbl9N3cAxrZEBplHvO1ikeR0Aw1lroqy0hVeSuMY9LS0Z3SvH3kX91ytZeR0ZmwKDBR
-         JFCD4RPx5zpLTIJgz5byAdbISn5Zey2PzGD82RIeue0hKJUZrvpOrE0gG03KIYlc0LK+
-         vsYw==
+        bh=jcYsBRqxRkDbiAcXJMkNDZi9wuKxsajefpkNWfZemzY=;
+        b=NN9np+0Clre8B3LXAvaRoRqEGAUu9/s3w21FraWD08DE3FlnA+eaENXUlZa2ap94gj
+         qjycPd4W+38RxacZ51QAW/QW2b99ZOF4p4MEifqKBXCE6LnCAFAD0ljIcbG8N6bDF712
+         eHmDIIC0CAXG67/cAe5GSceRYsD/XY/2J92TVljkbT5oBBIE3uS5hhEDthwORDZEiKsj
+         ABSOxGUrBF11n+76aflBDgfBJCaUZAByVCmcMrnyX0aa4jRVoKAt2rmmTZbSqmLB0t5n
+         fCOapMFldniNNC+cm63Wo4R4srGynWByU8CrEmMXPEajVBESvj1EU+G1T2qJF3MPKEcR
+         mdDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=wMGAim+rHifwbGUmjfd+IDaOJ2UcWFDURoGSPkFZ8I8=;
-        b=SEqOK+aDVww98bpCSMwlHi2K5/pmOegWrDyU5yXSKxWs2LAdCVggVIphVPN9c/cRKo
-         IUhirw0hm5sKoheftWdx6V9/dKjIQ0Dn2SyF/99Q3tdWjfzilBeUQWDJ3H8Lgy7q+mQv
-         EGNCrrtQntrgsuRqDlMxTgoIdy/zgtDxoXix7OUfEvALj4AcQ2Oz271GyqLDjhGcMOui
-         V9XzTy7vncHAlvyE7CA9fdW9BRqXwcTvRt6SGNA1oHtPaclfTzsOZ2kdMzz3tDOZdjQP
-         xoOd1nnnjBc4KJuN6am8xaLWnglUyj9wwT94fhf6Y35Twkuw7C6DUUeIuHvQStjd+pc5
-         JKCQ==
-X-Gm-Message-State: AN3rC/7fMgWG9D9SdnoDCXYnzZD0D4agbQYoCwf0Mj1Hl3rGmL28dTI9
-        +6zcbRQ+HhYv1TExa30=
-X-Received: by 10.200.39.100 with SMTP id h33mr41306071qth.280.1493998129346;
-        Fri, 05 May 2017 08:28:49 -0700 (PDT)
+        bh=jcYsBRqxRkDbiAcXJMkNDZi9wuKxsajefpkNWfZemzY=;
+        b=ll1hz2xIuEkfFpSzjNjiwYNvyyMt8IS3LiywRhTL5JR0ICa8boc0A+tOVIDxDp1v0r
+         o/IdlLOEegfkgdr6Km0Ln7MVyJPOL9fAx0qUBQFCUgcDVixKjF2l03PaxNsJn8CHFE5R
+         +/K59B8TXupvYX3Qr3IJW/+0C9vAXv1F9dTEnJdS0oLvgDOLj4coA2yynwa6tr3e5/WR
+         Cg4y3sKzEM0GqovxDOt8nE/fIFQ/25kmutWznJEM6LQzc4micRrIq1gJWNGWrZzwmb0d
+         HhNxxUVD/vzv5eDe8hIyg0yKedRkQ38OLF7NxDVi67CKxm8o83dkqDwUZXunZMX08Pqh
+         w7oQ==
+X-Gm-Message-State: AN3rC/5R1uBGDxwlnJOtkZzwE036sacK6t4iPmTHCmRiXnp7pmtaXdwS
+        6su4wFNJzutyPQ==
+X-Received: by 10.200.41.8 with SMTP id y8mr43123579qty.220.1493998131185;
+        Fri, 05 May 2017 08:28:51 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id t68sm3392792qkc.44.2017.05.05.08.28.47
+        by smtp.gmail.com with ESMTPSA id t68sm3392792qkc.44.2017.05.05.08.28.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 May 2017 08:28:48 -0700 (PDT)
+        Fri, 05 May 2017 08:28:50 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com, larsxschneider@gmail.com, peff@peff.net
-Subject: [PATCH v7 09/10] sub-process: move sub-process functions into separate files
-Date:   Fri,  5 May 2017 11:28:01 -0400
-Message-Id: <20170505152802.6724-10-benpeart@microsoft.com>
+Subject: [PATCH v7 10/10] convert: Update subprocess_read_status to not die on EOF
+Date:   Fri,  5 May 2017 11:28:02 -0400
+Message-Id: <20170505152802.6724-11-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.2.gvfs.2.20.g3624a68d62.dirty
 In-Reply-To: <20170505152802.6724-1-benpeart@microsoft.com>
 References: <20170505152802.6724-1-benpeart@microsoft.com>
@@ -63,397 +63,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the sub-proces functions into sub-process.h/c.  Add documentation
-for the new module in Documentation/technical/api-sub-process.txt
+Enable sub-processes to gracefully handle when the process dies by
+updating subprocess_read_status to return an error on EOF instead of
+dying.
+
+Update apply_multi_file_filter to take advantage of the revised
+subprocess_read_status.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- Documentation/technical/api-sub-process.txt |  59 ++++++++++++++++
- Makefile                                    |   1 +
- convert.c                                   | 104 +---------------------------
- sub-process.c                               | 102 +++++++++++++++++++++++++++
- sub-process.h                               |  49 +++++++++++++
- 5 files changed, 212 insertions(+), 103 deletions(-)
- create mode 100644 Documentation/technical/api-sub-process.txt
- create mode 100644 sub-process.c
- create mode 100644 sub-process.h
+ convert.c     | 10 ++++++++--
+ sub-process.c | 10 +++++++---
+ sub-process.h |  2 +-
+ 3 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/technical/api-sub-process.txt b/Documentation/technical/api-sub-process.txt
-new file mode 100644
-index 0000000000..793508cf3e
---- /dev/null
-+++ b/Documentation/technical/api-sub-process.txt
-@@ -0,0 +1,59 @@
-+sub-process API
-+===============
-+
-+The sub-process API makes it possible to run background sub-processes
-+for the entire lifetime of a Git invocation. If Git needs to communicate
-+with an external process multiple times, then this can reduces the process
-+invocation overhead. Git and the sub-process communicate through stdin and
-+stdout.
-+
-+The sub-processes are kept in a hashmap by command name and looked up
-+via the subprocess_find_entry function.  If an existing instance can not
-+be found then a new process should be created and started.  When the
-+parent git command terminates, all sub-processes are also terminated.
-+
-+This API is based on the run-command API.
-+
-+Data structures
-+---------------
-+
-+* `struct subprocess_entry`
-+
-+The sub-process structure.  Members should not be accessed directly.
-+
-+Types
-+-----
-+
-+'int(*subprocess_start_fn)(struct subprocess_entry *entry)'::
-+
-+	User-supplied function to initialize the sub-process.  This is
-+	typically used to negotiate the interface version and capabilities.
-+
-+
-+Functions
-+---------
-+
-+`cmd2process_cmp`::
-+
-+	Function to test two subprocess hashmap entries for equality.
-+
-+`subprocess_start`::
-+
-+	Start a subprocess and add it to the subprocess hashmap.
-+
-+`subprocess_stop`::
-+
-+	Kill a subprocess and remove it from the subprocess hashmap.
-+
-+`subprocess_find_entry`::
-+
-+	Find a subprocess in the subprocess hashmap.
-+
-+`subprocess_get_child_process`::
-+
-+	Get the underlying `struct child_process` from a subprocess.
-+
-+`subprocess_read_status`::
-+
-+	Helper function to read packets looking for the last "status=<foo>"
-+	key/value pair.
-diff --git a/Makefile b/Makefile
-index 47827aa129..3239dcbf0a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -832,6 +832,7 @@ LIB_OBJS += streaming.o
- LIB_OBJS += string-list.o
- LIB_OBJS += submodule.o
- LIB_OBJS += submodule-config.o
-+LIB_OBJS += sub-process.o
- LIB_OBJS += symlinks.o
- LIB_OBJS += tag.o
- LIB_OBJS += tempfile.o
 diff --git a/convert.c b/convert.c
-index 84c4ff8a01..acf51416d1 100644
+index acf51416d1..85238e4976 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -4,6 +4,7 @@
- #include "quote.h"
- #include "sigchain.h"
- #include "pkt-line.h"
-+#include "sub-process.h"
+@@ -635,7 +635,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	if (err)
+ 		goto done;
  
- /*
-  * convert.c - convert a file when checking it out and checking it in.
-@@ -496,12 +497,6 @@ static int apply_single_file_filter(const char *path, const char *src, size_t le
- #define CAP_CLEAN    (1u<<0)
- #define CAP_SMUDGE   (1u<<1)
+-	subprocess_read_status(process->out, &filter_status);
++	err = subprocess_read_status(process->out, &filter_status);
++	if (err)
++		goto done;
++
+ 	err = strcmp(filter_status.buf, "success");
+ 	if (err)
+ 		goto done;
+@@ -644,7 +647,10 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	if (err)
+ 		goto done;
  
--struct subprocess_entry {
--	struct hashmap_entry ent; /* must be the first member! */
--	const char *cmd;
--	struct child_process process;
--};
--
- struct cmd2process {
- 	struct subprocess_entry subprocess; /* must be the first member! */
- 	unsigned int supported_capabilities;
-@@ -510,65 +505,6 @@ struct cmd2process {
- static int subprocess_map_initialized;
- static struct hashmap subprocess_map;
+-	subprocess_read_status(process->out, &filter_status);
++	err = subprocess_read_status(process->out, &filter_status);
++	if (err)
++		goto done;
++
+ 	err = strcmp(filter_status.buf, "success");
  
--static int cmd2process_cmp(const struct subprocess_entry *e1,
--			   const struct subprocess_entry *e2,
--			   const void *unused)
--{
--	return strcmp(e1->cmd, e2->cmd);
--}
--
--static struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const char *cmd)
--{
--	struct subprocess_entry key;
--
--	hashmap_entry_init(&key, strhash(cmd));
--	key.cmd = cmd;
--	return hashmap_get(hashmap, &key, NULL);
--}
--
--static void subprocess_read_status(int fd, struct strbuf *status)
--{
--	struct strbuf **pair;
--	char *line;
--	for (;;) {
--		line = packet_read_line(fd, NULL);
--		if (!line)
--			break;
--		pair = strbuf_split_str(line, '=', 2);
--		if (pair[0] && pair[0]->len && pair[1]) {
--			/* the last "status=<foo>" line wins */
--			if (!strcmp(pair[0]->buf, "status=")) {
--				strbuf_reset(status);
--				strbuf_addbuf(status, pair[1]);
--			}
--		}
--		strbuf_list_free(pair);
--	}
--}
--
--static void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry)
--{
--	if (!entry)
--		return;
--
--	entry->process.clean_on_exit = 0;
--	kill(entry->process.pid, SIGTERM);
--	finish_command(&entry->process);
--
--	hashmap_remove(hashmap, entry, NULL);
--}
--
--static void subprocess_exit_handler(struct child_process *process)
--{
--	sigchain_push(SIGPIPE, SIG_IGN);
--	/* Closing the pipe signals the subprocess to initiate a shutdown. */
--	close(process->in);
--	close(process->out);
--	sigchain_pop(SIGPIPE);
--	/* Finish command will wait until the shutdown is complete. */
--	finish_command(process);
--}
--
- static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- {
- 	int err;
-@@ -629,44 +565,6 @@ static int start_multi_file_filter_fn(struct subprocess_entry *subprocess)
- 	return err;
+ done:
+diff --git a/sub-process.c b/sub-process.c
+index 536b60cced..92f8aea70a 100644
+--- a/sub-process.c
++++ b/sub-process.c
+@@ -21,13 +21,15 @@ struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const ch
+ 	return hashmap_get(hashmap, &key, NULL);
  }
  
--typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
--int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
--	subprocess_start_fn startfn)
--{
--	int err;
--	struct child_process *process;
--	const char *argv[] = { cmd, NULL };
--
--	entry->cmd = cmd;
--	process = &entry->process;
--
--	child_process_init(process);
--	process->argv = argv;
--	process->use_shell = 1;
--	process->in = -1;
--	process->out = -1;
--	process->clean_on_exit = 1;
--	process->clean_on_exit_handler = subprocess_exit_handler;
--
--	err = start_command(process);
--	if (err) {
--		error("cannot fork to run subprocess '%s'", cmd);
--		return err;
--	}
--
--	hashmap_entry_init(entry, strhash(cmd));
--
--	err = startfn(entry);
--	if (err) {
--		error("initialization for subprocess '%s' failed", cmd);
--		subprocess_stop(hashmap, entry);
--		return err;
--	}
--
--	hashmap_add(hashmap, entry);
--	return 0;
--}
--
- static int apply_multi_file_filter(const char *path, const char *src, size_t len,
- 				   int fd, struct strbuf *dst, const char *cmd,
- 				   const unsigned int wanted_capability)
-diff --git a/sub-process.c b/sub-process.c
-new file mode 100644
-index 0000000000..536b60cced
---- /dev/null
-+++ b/sub-process.c
-@@ -0,0 +1,102 @@
-+/*
-+ * Generic implementation of background process infrastructure.
-+ */
-+#include "sub-process.h"
-+#include "sigchain.h"
-+#include "pkt-line.h"
+-void subprocess_read_status(int fd, struct strbuf *status)
++int subprocess_read_status(int fd, struct strbuf *status)
+ {
+ 	struct strbuf **pair;
+ 	char *line;
++	int len;
 +
-+int cmd2process_cmp(const struct subprocess_entry *e1,
-+			   const struct subprocess_entry *e2,
-+			   const void *unused)
-+{
-+	return strcmp(e1->cmd, e2->cmd);
-+}
+ 	for (;;) {
+-		line = packet_read_line(fd, NULL);
+-		if (!line)
++		len = packet_read_line_gently(fd, NULL, &line);
++		if ((len < 0) || !line)
+ 			break;
+ 		pair = strbuf_split_str(line, '=', 2);
+ 		if (pair[0] && pair[0]->len && pair[1]) {
+@@ -39,6 +41,8 @@ void subprocess_read_status(int fd, struct strbuf *status)
+ 		}
+ 		strbuf_list_free(pair);
+ 	}
 +
-+struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const char *cmd)
-+{
-+	struct subprocess_entry key;
-+
-+	hashmap_entry_init(&key, strhash(cmd));
-+	key.cmd = cmd;
-+	return hashmap_get(hashmap, &key, NULL);
-+}
-+
-+void subprocess_read_status(int fd, struct strbuf *status)
-+{
-+	struct strbuf **pair;
-+	char *line;
-+	for (;;) {
-+		line = packet_read_line(fd, NULL);
-+		if (!line)
-+			break;
-+		pair = strbuf_split_str(line, '=', 2);
-+		if (pair[0] && pair[0]->len && pair[1]) {
-+			/* the last "status=<foo>" line wins */
-+			if (!strcmp(pair[0]->buf, "status=")) {
-+				strbuf_reset(status);
-+				strbuf_addbuf(status, pair[1]);
-+			}
-+		}
-+		strbuf_list_free(pair);
-+	}
-+}
-+
-+void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry)
-+{
-+	if (!entry)
-+		return;
-+
-+	entry->process.clean_on_exit = 0;
-+	kill(entry->process.pid, SIGTERM);
-+	finish_command(&entry->process);
-+
-+	hashmap_remove(hashmap, entry, NULL);
-+}
-+
-+static void subprocess_exit_handler(struct child_process *process)
-+{
-+	sigchain_push(SIGPIPE, SIG_IGN);
-+	/* Closing the pipe signals the subprocess to initiate a shutdown. */
-+	close(process->in);
-+	close(process->out);
-+	sigchain_pop(SIGPIPE);
-+	/* Finish command will wait until the shutdown is complete. */
-+	finish_command(process);
-+}
-+
-+int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
-+	subprocess_start_fn startfn)
-+{
-+	int err;
-+	struct child_process *process;
-+	const char *argv[] = { cmd, NULL };
-+
-+	entry->cmd = cmd;
-+	process = &entry->process;
-+
-+	child_process_init(process);
-+	process->argv = argv;
-+	process->use_shell = 1;
-+	process->in = -1;
-+	process->out = -1;
-+	process->clean_on_exit = 1;
-+	process->clean_on_exit_handler = subprocess_exit_handler;
-+
-+	err = start_command(process);
-+	if (err) {
-+		error("cannot fork to run subprocess '%s'", cmd);
-+		return err;
-+	}
-+
-+	hashmap_entry_init(entry, strhash(cmd));
-+
-+	err = startfn(entry);
-+	if (err) {
-+		error("initialization for subprocess '%s' failed", cmd);
-+		subprocess_stop(hashmap, entry);
-+		return err;
-+	}
-+
-+	hashmap_add(hashmap, entry);
-+	return 0;
-+}
++	return (len < 0) ? len : 0;
+ }
+ 
+ void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry)
 diff --git a/sub-process.h b/sub-process.h
-new file mode 100644
-index 0000000000..a88e782bfc
---- /dev/null
+index a88e782bfc..7d451e1cde 100644
+--- a/sub-process.h
 +++ b/sub-process.h
-@@ -0,0 +1,49 @@
-+#ifndef SUBPROCESS_H
-+#define SUBPROCESS_H
-+
-+#include "git-compat-util.h"
-+#include "hashmap.h"
-+#include "run-command.h"
-+
-+/*
-+ * Generic implementation of background process infrastructure.
-+ * See Documentation/technical/api-background-process.txt.
-+ */
-+
-+ /* data structures */
-+
-+struct subprocess_entry {
-+	struct hashmap_entry ent; /* must be the first member! */
-+	const char *cmd;
-+	struct child_process process;
-+};
-+
-+/* subprocess functions */
-+
-+int cmd2process_cmp(const struct subprocess_entry *e1,
-+	const struct subprocess_entry *e2, const void *unused);
-+
-+typedef int(*subprocess_start_fn)(struct subprocess_entry *entry);
-+int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, const char *cmd,
-+		subprocess_start_fn startfn);
-+
-+void subprocess_stop(struct hashmap *hashmap, struct subprocess_entry *entry);
-+
-+struct subprocess_entry *subprocess_find_entry(struct hashmap *hashmap, const char *cmd);
-+
-+/* subprocess helper functions */
-+
-+static inline struct child_process *subprocess_get_child_process(
-+		struct subprocess_entry *entry)
-+{
-+	return &entry->process;
-+}
-+
-+/*
-+ * Helper function that will read packets looking for "status=<foo>"
-+ * key/value pairs and return the value from the last "status" packet
-+ */
-+
-+void subprocess_read_status(int fd, struct strbuf *status);
-+
-+#endif
+@@ -44,6 +44,6 @@ static inline struct child_process *subprocess_get_child_process(
+  * key/value pairs and return the value from the last "status" packet
+  */
+ 
+-void subprocess_read_status(int fd, struct strbuf *status);
++int subprocess_read_status(int fd, struct strbuf *status);
+ 
+ #endif
 -- 
 2.12.2.gvfs.2.20.g3624a68d62.dirty
 
