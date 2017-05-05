@@ -2,92 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57E05207B3
-	for <e@80x24.org>; Fri,  5 May 2017 20:30:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F404207B3
+	for <e@80x24.org>; Fri,  5 May 2017 21:07:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752047AbdEEUab (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 16:30:31 -0400
-Received: from mout.gmx.net ([212.227.17.22]:51651 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751465AbdEEUab (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 16:30:31 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6B6s-1e06dM33OM-00y7hM; Fri, 05
- May 2017 22:30:18 +0200
-Date:   Fri, 5 May 2017 22:30:15 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Automating Coverity, was Re: [PATCH 00/26] Address a couple of
- issues identified by Coverity
-In-Reply-To: <alpine.DEB.2.20.1704282205320.3480@virtualbox>
-Message-ID: <alpine.DEB.2.21.1.1705052227120.146734@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
- <alpine.DEB.2.20.1704282205320.3480@virtualbox>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1755323AbdEEVHO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 17:07:14 -0400
+Received: from mail-io0-f175.google.com ([209.85.223.175]:35152 "EHLO
+        mail-io0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753123AbdEEVHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 17:07:13 -0400
+Received: by mail-io0-f175.google.com with SMTP id f102so22638442ioi.2
+        for <git@vger.kernel.org>; Fri, 05 May 2017 14:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=7uWlvH2NVZ6MQs8Z6L9kWHx5o0xxxLjeOyrmKHwhS+0=;
+        b=df3ZscREzU/czOmnYDv8Q5zcl6fBTZ13cGKrDMmICU/Tu3C4mvmGRCvIm0vluu69Jg
+         2b9aWcxa6A42FJeTi7w+s/9Tj8YKTLNQ0P44AoVCGSKUZ10uhEMNxMiIN0bzBKbFoHXx
+         jBe6MHZYBWW3asM9M6NiBQFqVYAq47sGrs3ppB9Nx4SQsNOlX2IDBxJ7cRbgXhUthWMp
+         USQugqBxaKJBhlIrHPl/fSOrRbqgamyhaAZ4WjaI7mGn/tg6m0w3YLflzIkXfyL2JOZC
+         CqtiyHapy0C69DnAmmfGiHx4NaeSQ9YOue3yPZdRAvoC8Tzv+EW3bSP6Zp1qUfawRbB/
+         97eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7uWlvH2NVZ6MQs8Z6L9kWHx5o0xxxLjeOyrmKHwhS+0=;
+        b=qy7c8AJANOlM6bhAQgf3D/pVOwEFjSD4r1zeELjwWf1J3ehX4xvqraxR81Zz6G3zDt
+         B6o6xm7luYYAd9g2RayVrG2IksMTJj48lflMFEg4S/G0vPhj9L1EIa3HYxoGeM3Vkgf6
+         H7+mQiHV+lgkHcvjciKHG/7AFXN8NHoDjCiXXS2z1a7dtjFcId42E4mpoVACVYZixa2z
+         j6DFO8xcGyrmz0pomIpYzuqDeT0b9QlJ7UWThUWyMnLAOqqaLJzijlnV3/anuRSBVtJw
+         Bi3kvlsyuhpznjz5MdjMH2YbZBvooLCsMJcAgrczjGhzAr8kYSnte8LnQk3QAHIHMxkq
+         K04Q==
+X-Gm-Message-State: AODbwcAlfdR+D8ZNZGUjskI5qtonI2/ZM5T9eseehEaKtIwSmetpW2+6
+        cBLYn1+h4ZT3BdD1ScIXOc29UXdIJQ==
+X-Received: by 10.107.35.75 with SMTP id j72mr4549775ioj.180.1494018433065;
+ Fri, 05 May 2017 14:07:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:zGxecLsZiucoLKDGUuYV1UqlVY2didmGDWvUom6IMne4BYx/H0/
- 6GXNi9SeIt73MIPeDXZBHPytPAhS5kD+NrabRMTvhUP6mQS4VJVWxXCpbnzaHamJ5cg+kOH
- VE4NM+Wh1K+7UK67c4SG4jEnf9g6VpIwyfYa0liTd2AWh6mSRssMddvw9tGcf1aCkkEL/HM
- Fz/p85NCeuWz5sWO5ubYw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:uPnXK3aCJDU=:kJPxHZaT2ssetbsphEibGb
- Ak0J4ZRuFVPC8aJsLYJV0mAjpp4smysj2Nr4KU5ClZvG4TWYhMe26k+uKCrbr/GQ/Drhx0VGj
- NfGhg1asdaM6H6hotukj9Kq8ChMXgnvnWW0WkVkxWRZDCLOio1zys7NkD2QHOVleF1Ek2h6o0
- taOMQGNmU48eJxqr6Z9u/RpWV4y6070vAIbuPY+QdfaTJioaO4vNqext1FjtjCISoBREAPKgW
- x+AmDmTqnNHa6g9WeYlCWUAQZzuLR9ow9G+hARA6O/JH10Sb8Y8sIxOF2Rr+IVPwCXMJ8J64K
- iPdDG6RjgDvQK0X1NMqxRQCK2v6ZcaW2tLt44eEYiSAbWo0OiHewiC7NJKtIRUAU1lybdSMkz
- jS+i0HHeijhQjoGpfKnrYe9yjSKoGX2W+J4l8iitMa88qfJqvexLKDaqIcODDeMaGidaG08fd
- 76mymO1DQMKfO8j3UrKM2I+pmcWIUBdQl819AeaQUb5WY4RbriUrB7evFFXpytiA2yQrykYXM
- pyE86Y3jb6qkhfO136WzKbsmm22/fZ+21tYeP3elMClAPej7bS/6Orjbfjqqz6PttL5k17iwc
- QzfF3rr+rx14OQ8bOWLlVVyC56wRCp1GLoop5tmyweI5tWNYUfwLb+lQmfTCRrLJdt9tbUnA5
- 78yvNsYr1JUvkix8zVbI7ICVZGZQ00X6pGlK9csSUHNBEqHRT2FWyOQhJvu7ry25y9gowa/8N
- rrvNNdajFgQyhXdHKLfLzkY/9WOr3vobuvy2khtQcnwZc7ROHgBrO4IcW9RSjDvw/jffqT0Kx
- xPAU7Go
+Received: by 10.79.150.90 with HTTP; Fri, 5 May 2017 14:06:32 -0700 (PDT)
+In-Reply-To: <CACBZZX7Q36rFiO9SwBCzM2M3ae=vOPJ2dfaVQ6=geZLgkLAuWA@mail.gmail.com>
+References: <86bmr7xuy9.fsf@local.lan> <CACBZZX7Q36rFiO9SwBCzM2M3ae=vOPJ2dfaVQ6=geZLgkLAuWA@mail.gmail.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Fri, 5 May 2017 16:06:32 -0500
+Message-ID: <CAJZjrdVSX_HB0O_eiQk6bg_UF0=71PNVa1rBwSbpHFCbOrpAOQ@mail.gmail.com>
+Subject: Re: How to `git status' without scrambling modified with new, etc
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Harry Putnam <reader@newsguy.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+On Fri, May 5, 2017 at 9:24 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Fri, May 5, 2017 at 4:02 PM, Harry Putnam <reader@newsguy.com> wrote:
+>> This is probably what everyone sees:
+>>
+>> When I run `git status'; I see  modified and newfiles scrambled together
+>>
+>> Is there a trick or technique to make that output show each category
+>> separately?
 
+You can use `git status -s` and match on the modification type (M
+corresponds to modified, A to new files). See the man page for more
+details on the interface.
 
-On Fri, 28 Apr 2017, Johannes Schindelin wrote:
-
-> On Fri, 28 Apr 2017, Stefan Beller wrote:
-> 
-> > On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> > 
-> > > I still have to find the time to figure out one more detail: how to
-> > > download and extract the Coverity tool (the .zip archive has a
-> > > variable name for the top-level directory), and doing that only
-> > > every once in a while, say, only when there is no previously
-> > > unpacked tool, or it is already 4 weeks old.
-> > 
-> > That is an interesting problem, which I ignored as the older versions
-> > of their tools still works once they release new versions. So I just
-> > manually check every once in a while if they have new versions out
-> > there.
-> > 
-> > So if you find a nice solution to that problem, let me know, please.
-> 
-> I think I have a working idea (jotting it down in the editor, untested):
-> 
-> [... totally untested snippet ...]
-
-And now I edited it and tested it. The code is now part of the script I
-use for pretty much all administrative (i.e. recurring and boring) tasks
-in the Git for Windows project:
-
-	https://github.com/git-for-windows/build-extra/commit/05b5342128
-
-May it be useful to you, too, at least as a starting point,
-Dscho
+>> Or do folks just a throw a `sort' in there (git status|sort) and lose
+>> the color ouput?
+>
+> If you set color.ui=3Dauto it'll disable coloring when it detects that
+> the output isn't to a terminal, i.e. being piped.
+>
+> It sounds like you want:
+>
+>     git -c color.ui=3Dalways status --short|sort
+>
+> But there's no native option to sort the status output, but that'll do
+> it for you.
