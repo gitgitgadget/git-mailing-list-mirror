@@ -7,105 +7,66 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C560F207B3
-	for <e@80x24.org>; Fri,  5 May 2017 19:27:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26B0A207B3
+	for <e@80x24.org>; Fri,  5 May 2017 19:31:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751511AbdEET1O (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 15:27:14 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35463 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751209AbdEET1O (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 15:27:14 -0400
-Received: by mail-io0-f173.google.com with SMTP id f102so20063638ioi.2
-        for <git@vger.kernel.org>; Fri, 05 May 2017 12:27:13 -0700 (PDT)
+        id S1751388AbdEETbl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 15:31:41 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:33605 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751258AbdEETbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 15:31:40 -0400
+Received: by mail-it0-f66.google.com with SMTP id v135so1952741itv.0
+        for <git@vger.kernel.org>; Fri, 05 May 2017 12:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=bEfkoFPsxdzt2Ed9kBh/IXje0/8XPxJXaxh3sAd39WA=;
-        b=hGM708Rd7lw/RNbCvq1jYmouzLyFbwjZkgJ2fiGsTSiBG18SXFeWDssg4WnFg2i3Td
-         slxRS2ZbkiXj0WbF6kx7gdfLGzWp1wRXA7TI0wmQMNrMBNIoIWPUSLUdcOznZC2qWP4L
-         xDYRxzhuGrc1VuS3e5uCpKVq8N+ns/jWj+PxkLICNz6p+2VDRBMq/W/1FqTQxddv17zR
-         1xijMnxbP3BdTQBPK8YeG1j6uID7Si19yaGdvambKnrbYvceXtQ3qB4h66Gb7Fv7RdxC
-         lptChnPCFHhHMHtVY3H/12J2lzsh1vpbq/MoHMvRUCSaP36W6WvSge8JLkg0j7FqvxSz
-         SX2w==
+        bh=1p8Jt7n3GZpuHR9I7Jfx3PD4J2qRL90aiNoRWehPDn0=;
+        b=sSm4B87r3s9Ycxek5KDTp8B3jkyXjwgUs5REyT4oY8ozeSRI7iKhGyNX1fQ/1wOCLP
+         ucax8Csu2GUeVQyskftExeONLjfynTtGBRSb3QAN8s2MrnurjGKz4YZrLUVwLIXU3pYb
+         Y87UN1wmriNfKs5QdoCpddez5MRcJ9aW4wT/ET8QqC5DdvC9VnJALcX6Bwu+h5wWqZUL
+         RGlon1m0Z5ag0VNSBRh2aqVBfe9/UPfZ1NA8wHfbxI/y+Gd+jkaZhXVlTz3WugGc7T28
+         qFw9Fvu9eJTg8A9NXAnzAr2+qbsFKB3vVhABr3QSKxOdcphO1qeLgpfM3mbD4QBAFet9
+         O3pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=bEfkoFPsxdzt2Ed9kBh/IXje0/8XPxJXaxh3sAd39WA=;
-        b=cikyyUQR16W2NjI7NJ4CEyqFcsVQQA0jcYhtS6bvBfOSJ0KZk+nLISWIRv8JR0T9dU
-         emgueCuOIVSHCNT9eKv8wC/JDXqBFN5o03o1itF3V7cVJPEEV3ok+uLyqHSZ6Ky0BT9L
-         R5o6XCp0tNDOmuiGjFJCVq+h7H4iSZgQy7wcrLnuLrCUthF3pP/osu67ZiSob1EiH9Ji
-         rVGyu4g5BM88CcbCM3Xd6zDBKqPHxKvz/kf5tPRDti7uIamvmVjmd1cnAdUTcg/sP0Ww
-         cNPRG3kckyGN8xmP1WNOmXKakm76RJFrdu1vUWaXSoNpQkd8zOOu1gbBAnXLErQlsnLb
-         TJyA==
-X-Gm-Message-State: AN3rC/49LolUWIjLGZXofPTIJS80HoI94IpmDvaSB06EU5gxK9ujC0nl
-        HXM5e4WBRjmfp8RZKvWvdeoRWtWk3g==
-X-Received: by 10.107.178.129 with SMTP id b123mr45190841iof.50.1494012432762;
- Fri, 05 May 2017 12:27:12 -0700 (PDT)
+        bh=1p8Jt7n3GZpuHR9I7Jfx3PD4J2qRL90aiNoRWehPDn0=;
+        b=J0R06lnppXYpJCU/RLHATOvc9Zljt0IzNOkaiXhXktsauATcr6VCj3HJIYhXhVjhJ9
+         /UEhG0IuDKxe9BKeQyX5OewdSKQ8V/Ek4pcRrCvnTBXFR9CgwjTHzBkyw/aTczY9PUs5
+         dZA5+XCqow1QJWbrjJsg7+lLzzRFDcaUUqbN78/SD/TwmJ/gK7VAwWfwOlbVqmLDxRAD
+         TKqncpB8o2MrRp2NGKMdB6UI+TGSlWs96z3mJB2tmW6DnM7wbEo0cjIvPx/AAD3quF6W
+         6USjBILUmdQJ3zksRRpsu4jPOKJXiYR9Bh+cFFxrX1USAeYckLSec4k2HzSpAgb9sJMm
+         DGeg==
+X-Gm-Message-State: AN3rC/4HVWZ0W4Nts8/OGlIDNnlfWJzzI6gCrubiI1yil7rpWoY0Vdbd
+        rXj1mjjpksXdrtMsIkkU9nHkWtD4fg==
+X-Received: by 10.36.89.207 with SMTP id p198mr10132744itb.71.1494012699540;
+ Fri, 05 May 2017 12:31:39 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Fri, 5 May 2017 12:26:51 -0700 (PDT)
-In-Reply-To: <20170505154053.58128-2-larsxschneider@gmail.com>
-References: <20170505154053.58128-1-larsxschneider@gmail.com> <20170505154053.58128-2-larsxschneider@gmail.com>
+Received: by 10.107.8.220 with HTTP; Fri, 5 May 2017 12:31:18 -0700 (PDT)
+In-Reply-To: <1494009820-2090-1-git-send-email-bnmvco@gmail.com>
+References: <1494009820-2090-1-git-send-email-bnmvco@gmail.com>
 From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 5 May 2017 21:26:51 +0200
-Message-ID: <CACBZZX7p3cNi6YUef4tRCck2vE5URoNuo1W1TyFK0H2fC_XfDA@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] travis-ci: setup "prove cache" in "script" step
-To:     Lars Schneider <larsxschneider@gmail.com>
+Date:   Fri, 5 May 2017 21:31:18 +0200
+Message-ID: <CACBZZX6oTEToPPFF0LpAXBCru9_B+VcaBL=KQUjkUhNdyanF1g@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Port git-add--interactive.perl:status_cmd to C
+To:     Daniel Ferreira <bnmvco@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 5, 2017 at 5:40 PM, Lars Schneider <larsxschneider@gmail.com> wrote:
-> The command that made the "prove cache" persistent across builds was
-> executed in the "before_install" step. Consequently, every job that
-> wanted to make use of the cache had to run this step.
->
-> The "prove cache" is only used in the "script" step for the
-> "make test" command. Therefore, we should configure the "prove cache"
-> in this step.
->
-> This change is useful for a subsequent patch that adds a job which does
-> not need the "before_install" step but wants to run the "script" step to
-> execute the tests.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  .travis.yml | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/.travis.yml b/.travis.yml
-> index 48cb00a581..aa03f8eb82 100644
-> --- a/.travis.yml
-> +++ b/.travis.yml
-> @@ -135,12 +135,14 @@ before_install:
->      p4 -V | grep Rev.;
->      echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)";
->      git-lfs version;
-> -    mkdir -p $HOME/travis-cache;
-> -    ln -s $HOME/travis-cache/.prove t/.prove;
->
->  before_script: make --jobs=2
->
-> -script: make --quiet test
-> +script:
-> +  - >
-> +    mkdir -p $HOME/travis-cache;
-> +    ln -s $HOME/travis-cache/.prove t/.prove;
-> +    make --quiet test;
->
->  after_failure:
->    - >
+On Fri, May 5, 2017 at 8:43 PM, Daniel Ferreira <bnmvco@gmail.com> wrote:
+> This series introduces git-add-interactive--helper (or should it be
+> called git-add--interactive--helper?) as a builtin capable of doing
+> what the Perl script's status_cmd() would do.
 
-This reminded me to submit a patch to prove itself to allow for
-customizing the location of the .prove file:
-https://github.com/Perl-Toolchain-Gang/Test-Harness/pull/66
-
-Hopefully in the not too distant future we can then do away with this
-minor hack. Doesn't matter much to us, but just inflexible that such
-symlink hacks are needed.
+The existing script is git-add--interactive.perl, so
+git-add--interactive--helper.c would be consistent with that, since
+there's no git-add-interactive command.
