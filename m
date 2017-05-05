@@ -2,87 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HK_RANDOM_FROM,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8458B207B3
-	for <e@80x24.org>; Fri,  5 May 2017 23:38:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64997207B3
+	for <e@80x24.org>; Fri,  5 May 2017 23:46:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751405AbdEEXiM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 19:38:12 -0400
-Received: from mail-lf0-f50.google.com ([209.85.215.50]:33613 "EHLO
-        mail-lf0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751242AbdEEXiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 19:38:11 -0400
-Received: by mail-lf0-f50.google.com with SMTP id r17so10916654lfg.0
-        for <git@vger.kernel.org>; Fri, 05 May 2017 16:38:10 -0700 (PDT)
+        id S1751662AbdEEXqv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 19:46:51 -0400
+Received: from mail-pf0-f172.google.com ([209.85.192.172]:33155 "EHLO
+        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751370AbdEEXqu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 19:46:50 -0400
+Received: by mail-pf0-f172.google.com with SMTP id q20so9062513pfg.0
+        for <git@vger.kernel.org>; Fri, 05 May 2017 16:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=+74SOK+GPe3Vs6L8wGZ7YUf/GnOCvNPxJtqMOpRcPho=;
-        b=HD9Z5sLdzyff49/H+I8btmFyqoUFytala3XpiAHM0CpDYUTo1qk/5KChIEwloa5vLe
-         1etDGjX1L3m7GZwHI/Moh+Ky6LFomn9xovVCHIrGcOG0R12sYxFClOKYyNweyNhE5RD7
-         iBiPFHjam9e0UMyUqNFKe//FC31CvwVerUO6sAV9wX9ACYeeNcHWRdjLs2sNQJQS6rcj
-         LcwlmtU7GpFINXACQ6fjGBh5J7ohQFe5uU+u20yxf5ikQE5XrD832U3TBoInya9fn7Hp
-         oGScLalwNbSW+hG31m7Epg2CR5y2xsCqjh3BCvmojXIWGDP9M6iIw/1xG0qGlchA7rsv
-         uqlw==
+        d=google.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=ojwieKzIFpytvUJ09MY58dQoiVPsGK0d8kzxQW6UXVs=;
+        b=dc9140XfJgRymNRbX3OJtc3rMBKgImwM5ZhIcqUTgl5ELGa0c+M69MkFFD32c8oWvq
+         yjsaplJpkNFYWzh+MnqNr3r18og+x2c660Jyw/K8BDhYY3Pa39s6dEnNNvUurB2mVZTp
+         2tgOn6FKRqiAkKuS9jv7eZyv445ioQdn8/VxmnkHlkAEyB5H0FkBfpNNvhYaT1bfqY5H
+         RcJ0AfNAOI3Yself72xzkGiQm0poLfcfa9zocbBZMVKXwoqvROLyy4hhgfe1t/h+p3kI
+         MxSS3RiyriBOrjtp08OVDJeZajThXEd/e+iBNnfzIWQXyzSeXe1VzAZp/LFXyCtBzytC
+         nQfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=+74SOK+GPe3Vs6L8wGZ7YUf/GnOCvNPxJtqMOpRcPho=;
-        b=o53JeZdcNhoLkqGLSnhF0plwSF4IS80EHpkA8cH6RV/856FhT4bpojpQWSZogT12aQ
-         CgFJW++VhAMDQGrIxGSr00syRkQj5jo2fnYwddSocnyEIsvqp5l95fXDhrD2ENAbmjRQ
-         7ZKHRuvZNEA8ZuY8XANGhjWhsSX2UQNKwTV0il3V1TqEvRBvxlX1LnK5F3y6CmJwBnDD
-         /r8Sc3CgmcsvppHpPxE/qXbmC3pcthDXY7QbyXcObRykQE0CGiJzAHwG1Sn5mIuIxpWs
-         x1hHT4ARwvqmKIUYVkq/JFjI51ffU/QRDj8cMN5zDCQf2OXq3yhwH1yxbq9AJgBPEsTq
-         kvjA==
-X-Gm-Message-State: AODbwcDSiZaFDTgG/8A89ZSO7iaGi11F1P1C9+s0FJvFkfWN7asW9vC5
-        uo1iJleQJ4lrabWFIKUQFClH6wpwUA==
-X-Received: by 10.46.92.67 with SMTP id q64mr507656ljb.37.1494027490053; Fri,
- 05 May 2017 16:38:10 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.25.229.213 with HTTP; Fri, 5 May 2017 16:37:39 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1705052316250.146734@virtualbox>
-References: <1494009820-2090-1-git-send-email-bnmvco@gmail.com> <alpine.DEB.2.21.1.1705052316250.146734@virtualbox>
-From:   "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
-Date:   Fri, 5 May 2017 20:37:39 -0300
-Message-ID: <CAEA2_RJFPZ6-ZMQCjX5pXoA8RL6qscLO4QWP3gi46uWXYyD44Q@mail.gmail.com>
-Subject: Re: [PATCH 0/3] Port git-add--interactive.perl:status_cmd to C
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ojwieKzIFpytvUJ09MY58dQoiVPsGK0d8kzxQW6UXVs=;
+        b=HXgEZ8AQcC20fExOaVq+JeHVkUQMgOGx33J5F6OwcpBwI/nY1aHUdoq9kPiwnNlay+
+         s/rnADCYebsO/85eUZxK6cuwypSGs0aAJ4AHbeT9UKfrr/Y69pcI8gckMqCatFiBGGe6
+         mFdvJumBRLCjhiprzaTRvtw5oPkk352kMdZ/2mUBQr00tv2QoQ0Fn2nFfw8/k9jmOwqk
+         /EtCuLCSLvJeftBdkyNuREF6iaumPB6EdNd2qYtU3tRgN4S9OlutpxX7kQ/vnPVaJl7o
+         /i0fPyWuVJVwMtJDSG7fXcCJ54bvHKv+WJB/Z4mbTUyBIiJabuIJ9FhC6TR5qsWV3U5W
+         l9LA==
+X-Gm-Message-State: AN3rC/49LHAbW+o/10K53Y1zsPSvT/q5iPrq1JEX542WrKyDAMhGbpF+
+        lg0dwRbzkIip056X
+X-Received: by 10.99.123.81 with SMTP id k17mr6354297pgn.125.1494028009483;
+        Fri, 05 May 2017 16:46:49 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id c77sm11096576pfe.37.2017.05.05.16.46.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 May 2017 16:46:48 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, sbeller@google.com
+Subject: [PATCH 0/3] Clarify interaction between signed pushes and push options
+Date:   Fri,  5 May 2017 16:46:41 -0700
+Message-Id: <cover.1494027001.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f-goog
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 5, 2017 at 7:38 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> But maybe you want to keep the naming a little more consistent with the
-> Perl script, e.g. instead of calling the function `print_modified()` call
-> it already `list()` (and rename it later to `list_and_choose()` once you
-> have taught it to ask for a choice)?
+We noticed this when trying to use Git to make a signed push with push
+options to a server using JGit (which rejects such pushes because the
+Git client makes requests that are, strictly speaking, incompatible with
+the documented protocol).
 
-Actually, I named it print_modified() because I anticipated there
-would be no list_and_choose() equivalent in C. I don't think the
-builtin should have the interactive menu + modified list + untracked
-list being handled by one function. Rather, I think a saner way to go
-on with it would be to create functions like print_untracked();
-choose_from_input(); print_menu() etc.
+There have been several commits (see the commits linked in the commit
+messages of the patches sent in reply to this e-mail) to support push
+options (that are read by receive hooks) when using "git push", but the
+interaction between push options and signed pushes are not very clear.
+Here are some patches (containing both code and documentation) that
+clarify this interaction.
 
-This is still pure speculation from what I've written until now and
-from the roadmap I have in my head (I do not know how writing code
-from now on will actually be), but I have a hunch that
-list_and_choose() is already convoluted enough in Perl; in C it might
-become a monster.
+I would appreciate a review of this - if we could make the protocol
+clear, we could then update JGit to use the updated protocol and be no
+longer incompatible with existing Git clients.
 
-> Thank you for this pleasant read!
+Jonathan Tan (3):
+  docs: correct receive.advertisePushOptions default
+  receive-pack: verify push options in cert
+  protocol docs: explain receive-pack push options
 
-Thank *you* for the quick and thorough review :)
+ Documentation/config.txt                  |  5 ++--
+ Documentation/git-receive-pack.txt        | 10 +++++++
+ Documentation/technical/pack-protocol.txt | 32 ++++++++++++++++----
+ builtin/receive-pack.c                    | 49 ++++++++++++++++++++++++++++---
+ t/t5534-push-signed.sh                    | 15 ++++++++++
+ 5 files changed, 98 insertions(+), 13 deletions(-)
 
--- Daniel.
+-- 
+2.13.0.rc1.294.g07d810a77f-goog
+
