@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED0AF207D6
-	for <e@80x24.org>; Fri,  5 May 2017 05:27:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C073207D6
+	for <e@80x24.org>; Fri,  5 May 2017 05:27:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754190AbdEEF1m (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 01:27:42 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:33352 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751561AbdEEF1l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 01:27:41 -0400
-Received: by mail-io0-f195.google.com with SMTP id l196so8640592ioe.0
-        for <git@vger.kernel.org>; Thu, 04 May 2017 22:27:40 -0700 (PDT)
+        id S1755091AbdEEF1r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 01:27:47 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:35851 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751561AbdEEF1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 01:27:44 -0400
+Received: by mail-io0-f193.google.com with SMTP id x86so8559968ioe.3
+        for <git@vger.kernel.org>; Thu, 04 May 2017 22:27:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=q5njyQyJu0DZesbDxRp+MdIc6W9smLSiusrR9QJHcPo=;
-        b=DUNrWWhpZblfkjQxSHnTEB+qk2MI3ctUQc8EEYxWyWWq3q0rlFU76+z3LmJMNV8I4i
-         0akwio5ZfhrWik9y07A1q6S/OK5qQqkz0macEf4p5qkpclFROPFKi3bFavjtlY6Jp8bI
-         tCC6KoaMZkWElngtnDgAkAVS3J7tTvMFS38X1O4xOX237ZQuyR17ZNt/5Z4SGQ4OoKiN
-         /2rkKkheJdEKx+b7PORjaVH3mC6JDI2dub7sMBu55C08U8e2aDa2xarJH/VFKFyAR1vQ
-         RXRHCKXvqoZI3MQWvDyCLtll9Bm5QNm60xXwoTipoujFPS4XVM2UL/YwZDW9qxX8wnhU
-         oxuQ==
+        bh=QbXzZy9BxEUct1UfO/Ft5TNuVWIV9xcPHCXfUwql7pk=;
+        b=jFBBr9u/I8RSW2IpqmCGG13JDY0px+SISiP/K5K+KMuDGbslTzQWD5xxDcTwLDo/2G
+         Q1jeu7lG55km9IQyxCQxXJOyGe64hOuY4E3z9TqQScirg+tv8kZPzT4e7lJjek4A+Acf
+         ybwPXvzwKRTm18eMdFhq4Yo/z8H9dEsvmjesB3VQriJv7uJwm8l7Qhiy/67rqIkY/1ud
+         1HDkkoe8r8bdsc35wvn/Oeel1Wd22tKVUnTZkbKlymmbxiEVy/GjVcPHo48q4ix1mH0S
+         PzLfkd84KZRX+Q+QRDPHY/l95f2brcD6WMAFsvs21S3y9ZxwHlO7z4TvUXK9Q95p8uBs
+         KJFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=q5njyQyJu0DZesbDxRp+MdIc6W9smLSiusrR9QJHcPo=;
-        b=pa2nUyGaCm/SINdcJXqz9sUtfMVQFZ2YbzaCF2nM0zXgEYXDcSzDdT5PkjBVbTbWnG
-         xOu8UOiHTeE1aBtkqhPCagvzzEl5JMt6WzoxY2NjjWb87N0lQvILUeJwca3zhI5gAdoI
-         1891DvD9MvurfB1kPyGTt9g3ouHVF25ktWC84No9edjq0ThJwPMSu+rCAbCoBmg+vvFB
-         PNoJgJHX5gYOd+PkKpbhiPnPuBnIDao8sjNVkcBQXVCdYOKjrUjyesmOkc9ugMpb1w03
-         HUkrC8l6fFzl65T89YP4fzZsOtzrPd8UDwvXv/SBUXlO8f5j/l3Nbu4nkfImN9ph8mmA
-         i9IA==
-X-Gm-Message-State: AN3rC/5+pCVpCzofAyushdRSvgc9vX1KWkG2iidqfst/1eqpNLtXlF2I
-        XRQRat9WFiqjhA==
-X-Received: by 10.202.170.12 with SMTP id t12mr3968029oie.44.1493962060088;
-        Thu, 04 May 2017 22:27:40 -0700 (PDT)
+        bh=QbXzZy9BxEUct1UfO/Ft5TNuVWIV9xcPHCXfUwql7pk=;
+        b=CHT0iVgbpOMhg1XN2P50IYbGil6kT/He37RfIiyXatRwmqBCbylIngWl52uR7W/poC
+         GXsRZyHH5dofYBmH38oIQ6kaLryjvvuanyYIOXHT9vLMhWxeC9o0yUqIrl3aVXa1AZzo
+         x8TNgomQ++nbWIYt+ig9cPqS2aDoMbjM/p5J+B5DzThUFPuDQDS5oPvx1kucsC5uq/kw
+         f5G/FTnOk+V483PXYBIryuirWjEEEGGbTqt63021vUKwM8Pwe5oXW8RPDRQIYqa5cPe0
+         kKTjFD3rHXKaxOaSrCo7IA0JDb0jUpzrUPw1Pompf3gucwuACAb9e9S4QHBFCB/MVeoE
+         0s3w==
+X-Gm-Message-State: AN3rC/4X1YnkoOAkc23lkzJBcB81nA/832W+2BX2yAHDiERqUuVF03+g
+        JafJHnvHJj6gqg==
+X-Received: by 10.157.7.114 with SMTP id 105mr16912897ote.170.1493962062975;
+        Thu, 04 May 2017 22:27:42 -0700 (PDT)
 Received: from whydoubt.T-mobile.com (ip68-12-240-88.ok.ok.cox.net. [68.12.240.88])
-        by smtp.gmail.com with ESMTPSA id 2sm2179586ota.46.2017.05.04.22.27.38
+        by smtp.gmail.com with ESMTPSA id 2sm2179586ota.46.2017.05.04.22.27.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 04 May 2017 22:27:39 -0700 (PDT)
+        Thu, 04 May 2017 22:27:41 -0700 (PDT)
 From:   Jeff Smith <whydoubt@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, Jeff Smith <whydoubt@gmail.com>
-Subject: [RFC PATCH 05/10] Split blame origin into its own file
-Date:   Fri,  5 May 2017 00:27:24 -0500
-Message-Id: <20170505052729.7576-6-whydoubt@gmail.com>
+Subject: [RFC PATCH 07/10] Break out scoreboard a little better
+Date:   Fri,  5 May 2017 00:27:26 -0500
+Message-Id: <20170505052729.7576-8-whydoubt@gmail.com>
 X-Mailer: git-send-email 2.9.3
 In-Reply-To: <20170505052729.7576-1-whydoubt@gmail.com>
 References: <20170505052729.7576-1-whydoubt@gmail.com>
@@ -63,391 +63,405 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Jeff Smith <whydoubt@gmail.com>
 ---
- Makefile        |   1 +
- builtin/blame.c | 151 +-------------------------------------------------------
- origin.c        |  62 +++++++++++++++++++++++
- origin.h        | 101 +++++++++++++++++++++++++++++++++++++
- 4 files changed, 165 insertions(+), 150 deletions(-)
- create mode 100644 origin.c
- create mode 100644 origin.h
+ builtin/blame.c | 149 +++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 93 insertions(+), 56 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e35542e..8cbb56c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -791,6 +791,7 @@ LIB_OBJS += notes-merge.o
- LIB_OBJS += notes-utils.o
- LIB_OBJS += object.o
- LIB_OBJS += oidset.o
-+LIB_OBJS += origin.o
- LIB_OBJS += pack-bitmap.o
- LIB_OBJS += pack-bitmap-write.o
- LIB_OBJS += pack-check.o
 diff --git a/builtin/blame.c b/builtin/blame.c
-index cc46f56..7ee84c1 100644
+index c873cc2..dc7600c 100644
 --- a/builtin/blame.c
 +++ b/builtin/blame.c
-@@ -28,6 +28,7 @@
- #include "line-log.h"
- #include "dir.h"
- #include "progress.h"
-+#include "origin.h"
+@@ -62,11 +62,6 @@ static struct string_list mailmap = STRING_LIST_INIT_NODUP;
+ #define DEBUG 0
+ #endif
  
- static char blame_usage[] = N_("git blame [<options>] [<rev-opts>] [<rev>] [--] <file>");
- 
-@@ -84,50 +85,6 @@ static unsigned blame_copy_score;
- #define METAINFO_SHOWN		(1u<<12)
- #define MORE_THAN_ONE_PATH	(1u<<13)
- 
--/*
-- * One blob in a commit that is being suspected
-- */
--struct origin {
--	int refcnt;
--	/* Record preceding blame record for this blob */
--	struct origin *previous;
--	/* origins are put in a list linked via `next' hanging off the
--	 * corresponding commit's util field in order to make finding
--	 * them fast.  The presence in this chain does not count
--	 * towards the origin's reference count.  It is tempting to
--	 * let it count as long as the commit is pending examination,
--	 * but even under circumstances where the commit will be
--	 * present multiple times in the priority queue of unexamined
--	 * commits, processing the first instance will not leave any
--	 * work requiring the origin data for the second instance.  An
--	 * interspersed commit changing that would have to be
--	 * preexisting with a different ancestry and with the same
--	 * commit date in order to wedge itself between two instances
--	 * of the same commit in the priority queue _and_ produce
--	 * blame entries relevant for it.  While we don't want to let
--	 * us get tripped up by this case, it certainly does not seem
--	 * worth optimizing for.
--	 */
--	struct origin *next;
--	struct commit *commit;
--	/* `suspects' contains blame entries that may be attributed to
--	 * this origin's commit or to parent commits.  When a commit
--	 * is being processed, all suspects will be moved, either by
--	 * assigning them to an origin in a different commit, or by
--	 * shipping them to the scoreboard's ent list because they
--	 * cannot be attributed to a different commit.
--	 */
--	struct blame_entry *suspects;
--	mmfile_t file;
--	struct object_id blob_oid;
--	unsigned mode;
--	/* guilty gets set when shipping any suspects to the final
--	 * blame list instead of other commits
--	 */
--	char guilty;
--	char path[FLEX_ARRAY];
--};
+-/* stats */
+-static int num_read_blob;
+-static int num_get_patch;
+-static int num_commits;
 -
- struct progress_info {
- 	struct progress *progress;
- 	int blamed_lines;
-@@ -176,39 +133,6 @@ static void fill_origin_blob(struct diff_options *opt,
- 		*file = o->file;
- }
+ #define PICKAXE_BLAME_MOVE		01
+ #define PICKAXE_BLAME_COPY		02
+ #define PICKAXE_BLAME_COPY_HARDER	04
+@@ -91,7 +86,7 @@ struct progress_info {
+ };
  
--/*
-- * Origin is refcounted and usually we keep the blob contents to be
-- * reused.
-- */
--static inline struct origin *origin_incref(struct origin *o)
--{
--	if (o)
--		o->refcnt++;
--	return o;
--}
--
--static void origin_decref(struct origin *o)
--{
--	if (o && --o->refcnt <= 0) {
--		struct origin *p, *l = NULL;
--		if (o->previous)
--			origin_decref(o->previous);
--		free(o->file.ptr);
--		/* Should be present exactly once in commit chain */
--		for (p = o->commit->util; p; l = p, p = p->next) {
--			if (p == o) {
--				if (l)
--					l->next = p->next;
--				else
--					o->commit->util = p->next;
--				free(o);
--				return;
--			}
--		}
--		die("internal error in blame::origin_decref");
--	}
--}
--
- static void drop_origin_blob(struct origin *o)
+ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
+-		      xdl_emit_hunk_consume_func_t hunk_func, void *cb_data)
++		      xdl_emit_hunk_consume_func_t hunk_func, void *cb_data, int xdl_opts)
  {
- 	if (o->file.ptr) {
-@@ -218,40 +142,6 @@ static void drop_origin_blob(struct origin *o)
+ 	xpparam_t xpp = {0};
+ 	xdemitconf_t xecfg = {0};
+@@ -108,13 +103,13 @@ static int diff_hunks(mmfile_t *file_a, mmfile_t *file_b,
+  * diff machinery
+  */
+ static void fill_origin_blob(struct diff_options *opt,
+-			     struct origin *o, mmfile_t *file)
++			     struct origin *o, mmfile_t *file, int *num_read_blob)
+ {
+ 	if (!o->file.ptr) {
+ 		enum object_type type;
+ 		unsigned long file_size;
+ 
+-		num_read_blob++;
++		(*num_read_blob)++;
+ 		if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
+ 		    textconv_object(o->path, o->mode, &o->blob_oid, 1, &file->ptr, &file_size))
+ 			;
+@@ -265,9 +260,36 @@ struct scoreboard {
+ 	/* look-up a line in the final buffer */
+ 	int num_lines;
+ 	int *lineno;
++
++	/*
++	 * blame for a blame_entry with score lower than these thresholds
++	 * is not passed to the parent using move/copy logic.
++	 */
++	unsigned blame_move_score;
++	unsigned blame_copy_score;
++
++	/* stats */
++	int num_read_blob;
++	int num_get_patch;
++	int num_commits;
++
++	/* options */
++	int show_root;
++	int reverse;
++	int xdl_opts;
++	int no_whole_file_rename;
++
++	/* callbacks */
++	void(*sanity_check)(struct scoreboard *);
++	void(*found_guilty_entry)(struct blame_entry *, void *);
++
++	void *found_guilty_entry_data;
+ };
+ 
+-static void sanity_check_refcnt(struct scoreboard *);
++static void blame_sort_final(struct scoreboard *sb)
++{
++	sb->ent = blame_sort(sb->ent, compare_blame_final);
++}
+ 
+ /*
+  * If two blame entries that are next to each other came from
+@@ -290,8 +312,8 @@ static void coalesce(struct scoreboard *sb)
+ 		}
+ 	}
+ 
+-	if (DEBUG) /* sanity */
+-		sanity_check_refcnt(sb);
++	if (sb->sanity_check) /* sanity */
++		sb->sanity_check(sb);
  }
  
  /*
-- * Each group of lines is described by a blame_entry; it can be split
-- * as we pass blame to the parents.  They are arranged in linked lists
-- * kept as `suspects' of some unprocessed origin, or entered (when the
-- * blame origin has been finalized) into the scoreboard structure.
-- * While the scoreboard structure is only sorted at the end of
-- * processing (according to final image line number), the lists
-- * attached to an origin are sorted by the target line number.
-- */
--struct blame_entry {
--	struct blame_entry *next;
--
--	/* the first line of this group in the final image;
--	 * internally all line numbers are 0 based.
--	 */
--	int lno;
--
--	/* how many lines this group has */
--	int num_lines;
--
--	/* the commit that introduced this group into the final image */
--	struct origin *suspect;
--
--	/* the line number of the first line of this group in the
--	 * suspect's file; internally all line numbers are 0 based.
--	 */
--	int s_lno;
--
--	/* how significant this entry is -- cached to avoid
--	 * scanning the lines over and over.
--	 */
--	unsigned score;
--};
--
--/*
-  * Any merge of blames happens on lists of blames that arrived via
-  * different parents in a single suspect.  In this case, we want to
-  * sort according to the suspect line numbers as opposed to the final
-@@ -429,45 +319,6 @@ static void queue_blames(struct scoreboard *sb, struct origin *porigin,
+@@ -787,11 +809,11 @@ static void pass_blame_to_parent(struct scoreboard *sb,
+ 	d.offset = 0;
+ 	d.dstq = &newdest; d.srcq = &target->suspects;
+ 
+-	fill_origin_blob(&sb->revs->diffopt, parent, &file_p);
+-	fill_origin_blob(&sb->revs->diffopt, target, &file_o);
+-	num_get_patch++;
++	fill_origin_blob(&sb->revs->diffopt, parent, &file_p, &sb->num_read_blob);
++	fill_origin_blob(&sb->revs->diffopt, target, &file_o, &sb->num_read_blob);
++	sb->num_get_patch++;
+ 
+-	if (diff_hunks(&file_p, &file_o, blame_chunk_cb, &d))
++	if (diff_hunks(&file_p, &file_o, blame_chunk_cb, &d, sb->xdl_opts))
+ 		die("unable to generate diff (%s -> %s)",
+ 		    oid_to_hex(&parent->commit->object.oid),
+ 		    oid_to_hex(&target->commit->object.oid));
+@@ -940,7 +962,7 @@ static void find_copy_in_blob(struct scoreboard *sb,
+ 	 * file_p partially may match that image.
+ 	 */
+ 	memset(split, 0, sizeof(struct blame_entry [3]));
+-	if (diff_hunks(file_p, &file_o, handle_split_cb, &d))
++	if (diff_hunks(file_p, &file_o, handle_split_cb, &d, sb->xdl_opts))
+ 		die("unable to generate diff (%s)",
+ 		    oid_to_hex(&parent->commit->object.oid));
+ 	/* remainder, if any, all match the preimage */
+@@ -993,7 +1015,7 @@ static void find_move_in_parent(struct scoreboard *sb,
+ 	if (!unblamed)
+ 		return; /* nothing remains for this target */
+ 
+-	fill_origin_blob(&sb->revs->diffopt, parent, &file_p);
++	fill_origin_blob(&sb->revs->diffopt, parent, &file_p, &sb->num_read_blob);
+ 	if (!file_p.ptr)
+ 		return;
+ 
+@@ -1009,7 +1031,7 @@ static void find_move_in_parent(struct scoreboard *sb,
+ 			next = e->next;
+ 			find_copy_in_blob(sb, e, parent, split, &file_p);
+ 			if (split[1].suspect &&
+-			    blame_move_score < ent_score(sb, &split[1])) {
++			    sb->blame_move_score < ent_score(sb, &split[1])) {
+ 				split_blame(blamed, &unblamedtail, split, e);
+ 			} else {
+ 				e->next = leftover;
+@@ -1018,7 +1040,7 @@ static void find_move_in_parent(struct scoreboard *sb,
+ 			decref_split(split);
+ 		}
+ 		*unblamedtail = NULL;
+-		toosmall = filter_small(sb, toosmall, &unblamed, blame_move_score);
++		toosmall = filter_small(sb, toosmall, &unblamed, sb->blame_move_score);
+ 	} while (unblamed);
+ 	target->suspects = reverse_blame(leftover, NULL);
+ }
+@@ -1122,7 +1144,7 @@ static void find_copy_in_parent(struct scoreboard *sb,
+ 			norigin = get_origin(parent, p->one->path);
+ 			oidcpy(&norigin->blob_oid, &p->one->oid);
+ 			norigin->mode = p->one->mode;
+-			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p);
++			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p, &sb->num_read_blob);
+ 			if (!file_p.ptr)
+ 				continue;
+ 
+@@ -1139,7 +1161,7 @@ static void find_copy_in_parent(struct scoreboard *sb,
+ 		for (j = 0; j < num_ents; j++) {
+ 			struct blame_entry *split = blame_list[j].split;
+ 			if (split[1].suspect &&
+-			    blame_copy_score < ent_score(sb, &split[1])) {
++			    sb->blame_copy_score < ent_score(sb, &split[1])) {
+ 				split_blame(blamed, &unblamedtail, split,
+ 					    blame_list[j].ent);
+ 			} else {
+@@ -1150,7 +1172,7 @@ static void find_copy_in_parent(struct scoreboard *sb,
+ 		}
+ 		free(blame_list);
+ 		*unblamedtail = NULL;
+-		toosmall = filter_small(sb, toosmall, &unblamed, blame_copy_score);
++		toosmall = filter_small(sb, toosmall, &unblamed, sb->blame_copy_score);
+ 	} while (unblamed);
+ 	target->suspects = reverse_blame(leftover, NULL);
+ 	diff_flush(&diff_opts);
+@@ -1186,7 +1208,8 @@ static void pass_whole_blame(struct scoreboard *sb,
+  * "parent" (and "porigin"), but what we mean is to find scapegoat to
+  * exonerate ourselves.
+  */
+-static struct commit_list *first_scapegoat(struct rev_info *revs, struct commit *commit)
++static struct commit_list *first_scapegoat(struct rev_info *revs, struct commit *commit,
++					int reverse)
+ {
+ 	if (!reverse) {
+ 		if (revs->first_parent_only &&
+@@ -1200,9 +1223,9 @@ static struct commit_list *first_scapegoat(struct rev_info *revs, struct commit
+ 	return lookup_decoration(&revs->children, &commit->object);
  }
  
- /*
-- * Given a commit and a path in it, create a new origin structure.
-- * The callers that add blame to the scoreboard should use
-- * get_origin() to obtain shared, refcounted copy instead of calling
-- * this function directly.
-- */
--static struct origin *make_origin(struct commit *commit, const char *path)
--{
--	struct origin *o;
--	FLEX_ALLOC_STR(o, path, path);
--	o->commit = commit;
--	o->refcnt = 1;
--	o->next = commit->util;
--	commit->util = o;
--	return o;
--}
+-static int num_scapegoats(struct rev_info *revs, struct commit *commit)
++static int num_scapegoats(struct rev_info *revs, struct commit *commit, int reverse)
+ {
+-	struct commit_list *l = first_scapegoat(revs, commit);
++	struct commit_list *l = first_scapegoat(revs, commit, reverse);
+ 	return commit_list_count(l);
+ }
+ 
+@@ -1240,7 +1263,7 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
+ 	struct blame_entry *toosmall = NULL;
+ 	struct blame_entry *blames, **blametail = &blames;
+ 
+-	num_sg = num_scapegoats(revs, commit);
++	num_sg = num_scapegoats(revs, commit, sb->reverse);
+ 	if (!num_sg)
+ 		goto finish;
+ 	else if (num_sg < ARRAY_SIZE(sg_buf))
+@@ -1252,12 +1275,12 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
+ 	 * The first pass looks for unrenamed path to optimize for
+ 	 * common cases, then we look for renames in the second pass.
+ 	 */
+-	for (pass = 0; pass < 2 - no_whole_file_rename; pass++) {
++	for (pass = 0; pass < 2 - sb->no_whole_file_rename; pass++) {
+ 		struct origin *(*find)(struct scoreboard *,
+ 				       struct commit *, struct origin *);
+ 		find = pass ? find_rename : find_origin;
+ 
+-		for (i = 0, sg = first_scapegoat(revs, commit);
++		for (i = 0, sg = first_scapegoat(revs, commit, sb->reverse);
+ 		     i < num_sg && sg;
+ 		     sg = sg->next, i++) {
+ 			struct commit *p = sg->item;
+@@ -1288,8 +1311,8 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
+ 		}
+ 	}
+ 
+-	num_commits++;
+-	for (i = 0, sg = first_scapegoat(revs, commit);
++	sb->num_commits++;
++	for (i = 0, sg = first_scapegoat(revs, commit, sb->reverse);
+ 	     i < num_sg && sg;
+ 	     sg = sg->next, i++) {
+ 		struct origin *porigin = sg_origin[i];
+@@ -1308,9 +1331,9 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
+ 	 * Optionally find moves in parents' files.
+ 	 */
+ 	if (opt & PICKAXE_BLAME_MOVE) {
+-		filter_small(sb, &toosmall, &origin->suspects, blame_move_score);
++		filter_small(sb, &toosmall, &origin->suspects, sb->blame_move_score);
+ 		if (origin->suspects) {
+-			for (i = 0, sg = first_scapegoat(revs, commit);
++			for (i = 0, sg = first_scapegoat(revs, commit, sb->reverse);
+ 			     i < num_sg && sg;
+ 			     sg = sg->next, i++) {
+ 				struct origin *porigin = sg_origin[i];
+@@ -1327,17 +1350,17 @@ static void pass_blame(struct scoreboard *sb, struct origin *origin, int opt)
+ 	 * Optionally find copies from parents' files.
+ 	 */
+ 	if (opt & PICKAXE_BLAME_COPY) {
+-		if (blame_copy_score > blame_move_score)
+-			filter_small(sb, &toosmall, &origin->suspects, blame_copy_score);
+-		else if (blame_copy_score < blame_move_score) {
++		if (sb->blame_copy_score > sb->blame_move_score)
++			filter_small(sb, &toosmall, &origin->suspects, sb->blame_copy_score);
++		else if (sb->blame_copy_score < sb->blame_move_score) {
+ 			origin->suspects = blame_merge(origin->suspects, toosmall);
+ 			toosmall = NULL;
+-			filter_small(sb, &toosmall, &origin->suspects, blame_copy_score);
++			filter_small(sb, &toosmall, &origin->suspects, sb->blame_copy_score);
+ 		}
+ 		if (!origin->suspects)
+ 			goto finish;
+ 
+-		for (i = 0, sg = first_scapegoat(revs, commit);
++		for (i = 0, sg = first_scapegoat(revs, commit, sb->reverse);
+ 		     i < num_sg && sg;
+ 		     sg = sg->next, i++) {
+ 			struct origin *porigin = sg_origin[i];
+@@ -1566,9 +1589,10 @@ static int emit_one_suspect_detail(struct origin *suspect, int repeat)
+  * The blame_entry is found to be guilty for the range.
+  * Show it in incremental output.
+  */
+-static void found_guilty_entry(struct blame_entry *ent,
+-			   struct progress_info *pi)
++static void found_guilty_entry(struct blame_entry *ent, void *data)
+ {
++	struct progress_info *pi = (struct progress_info *)data;
++
+ 	if (incremental) {
+ 		struct origin *suspect = ent->suspect;
+ 
+@@ -1591,11 +1615,6 @@ static void assign_blame(struct scoreboard *sb, int opt)
+ {
+ 	struct rev_info *revs = sb->revs;
+ 	struct commit *commit = prio_queue_get(&sb->commits);
+-	struct progress_info pi = { NULL, 0 };
 -
--/*
-- * Locate an existing origin or create a new one.
-- * This moves the origin to front position in the commit util list.
-- */
--static struct origin *get_origin(struct commit *commit, const char *path)
--{
--	struct origin *o, *l;
+-	if (show_progress)
+-		pi.progress = start_progress_delay(_("Blaming lines"),
+-						   sb->num_lines, 50, 1);
+ 
+ 	while (commit) {
+ 		struct blame_entry *ent;
+@@ -1618,7 +1637,7 @@ static void assign_blame(struct scoreboard *sb, int opt)
+ 		 */
+ 		origin_incref(suspect);
+ 		parse_commit(commit);
+-		if (reverse ||
++		if (sb->reverse ||
+ 		    (!(commit->object.flags & UNINTERESTING) &&
+ 		     !(revs->max_age != -1 && commit->date < revs->max_age)))
+ 			pass_blame(sb, suspect, opt);
+@@ -1628,7 +1647,7 @@ static void assign_blame(struct scoreboard *sb, int opt)
+ 				mark_parents_uninteresting(commit);
+ 		}
+ 		/* treat root commit as boundary */
+-		if (!commit->parents && !show_root)
++		if (!commit->parents && !sb->show_root)
+ 			commit->object.flags |= UNINTERESTING;
+ 
+ 		/* Take responsibility for the remaining entries */
+@@ -1637,7 +1656,8 @@ static void assign_blame(struct scoreboard *sb, int opt)
+ 			suspect->guilty = 1;
+ 			for (;;) {
+ 				struct blame_entry *next = ent->next;
+-				found_guilty_entry(ent, &pi);
++				if (sb->found_guilty_entry)
++					sb->found_guilty_entry(ent, sb->found_guilty_entry_data);
+ 				if (next) {
+ 					ent = next;
+ 					continue;
+@@ -1650,11 +1670,9 @@ static void assign_blame(struct scoreboard *sb, int opt)
+ 		}
+ 		origin_decref(suspect);
+ 
+-		if (DEBUG) /* sanity */
+-			sanity_check_refcnt(sb);
++		if (sb->sanity_check) /* sanity */
++			sb->sanity_check(sb);
+ 	}
 -
--	for (o = commit->util, l = NULL; o; l = o, o = o->next) {
--		if (!strcmp(o->path, path)) {
--			/* bump to front */
--			if (l) {
--				l->next = o->next;
--				o->next = commit->util;
--				commit->util = o;
--			}
--			return origin_incref(o);
--		}
--	}
--	return make_origin(commit, path);
--}
--
--/*
-  * Fill the blob_sha1 field of an origin if it hasn't, so that later
-  * call to fill_origin_blob() can use it to locate the data.  blob_sha1
-  * for an origin is also used to pass the blame for the entire file to
-diff --git a/origin.c b/origin.c
-new file mode 100644
-index 0000000..2ec25c7
---- /dev/null
-+++ b/origin.c
-@@ -0,0 +1,62 @@
-+#include "origin.h"
+-	stop_progress(&pi.progress);
+ }
+ 
+ static const char *format_time(unsigned long time, const char *tz_str,
+@@ -2187,6 +2205,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	char *final_commit_name = NULL;
+ 	enum object_type type;
+ 	struct commit *final_commit = NULL;
++	struct progress_info pi = { NULL, 0 };
+ 
+ 	struct string_list range_list = STRING_LIST_INIT_NODUP;
+ 	int output_option = 0, opt = 0;
+@@ -2476,7 +2495,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 			    oid_to_hex(&o->blob_oid),
+ 			    path);
+ 	}
+-	num_read_blob++;
++	sb.num_read_blob++;
+ 	lno = prepare_lines(&sb);
+ 
+ 	if (lno && !range_list.nr)
+@@ -2529,10 +2548,28 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	sb.ent = NULL;
+ 	sb.path = path;
+ 
++	sb.blame_move_score = blame_move_score;
++	sb.blame_copy_score = blame_copy_score;
 +
-+void origin_decref(struct origin *o)
-+{
-+	if (o && --o->refcnt <= 0) {
-+		struct origin *p, *l = NULL;
-+		if (o->previous)
-+			origin_decref(o->previous);
-+		free(o->file.ptr);
-+		/* Should be present exactly once in commit chain */
-+		for (p = o->commit->util; p; l = p, p = p->next) {
-+			if (p == o) {
-+				if (l)
-+					l->next = p->next;
-+				else
-+					o->commit->util = p->next;
-+				free(o);
-+				return;
-+			}
-+		}
-+		die("internal error in blame::origin_decref");
-+	}
-+}
++	sb.sanity_check = DEBUG ? &sanity_check_refcnt : NULL;
 +
-+/*
-+ * Given a commit and a path in it, create a new origin structure.
-+ * The callers that add blame to the scoreboard should use
-+ * get_origin() to obtain shared, refcounted copy instead of calling
-+ * this function directly.
-+ */
-+struct origin *make_origin(struct commit *commit, const char *path)
-+{
-+	struct origin *o;
-+	FLEX_ALLOC_STR(o, path, path);
-+	o->commit = commit;
-+	o->refcnt = 1;
-+	o->next = commit->util;
-+	commit->util = o;
-+	return o;
-+}
++	sb.show_root = show_root;
++	sb.reverse = reverse;
++	sb.xdl_opts = xdl_opts;
++	sb.no_whole_file_rename = no_whole_file_rename;
 +
-+/*
-+ * Locate an existing origin or create a new one.
-+ * This moves the origin to front position in the commit util list.
-+ */
-+struct origin *get_origin(struct commit *commit, const char *path)
-+{
-+	struct origin *o, *l;
+ 	read_mailmap(&mailmap, NULL);
+ 
++	sb.found_guilty_entry = &found_guilty_entry;
++	sb.found_guilty_entry_data = &pi;
++	if (show_progress)
++		pi.progress = start_progress_delay(_("Blaming lines"),
++						   sb.num_lines, 50, 1);
 +
-+	for (o = commit->util, l = NULL; o; l = o, o = o->next) {
-+		if (!strcmp(o->path, path)) {
-+			/* bump to front */
-+			if (l) {
-+				l->next = o->next;
-+				o->next = commit->util;
-+				commit->util = o;
-+			}
-+			return origin_incref(o);
-+		}
-+	}
-+	return make_origin(commit, path);
-+}
-diff --git a/origin.h b/origin.h
-new file mode 100644
-index 0000000..a189b78
---- /dev/null
-+++ b/origin.h
-@@ -0,0 +1,101 @@
-+#ifndef ORIGIN_H
-+#define ORIGIN_H
+ 	assign_blame(&sb, opt);
+ 
++	stop_progress(&pi.progress);
 +
-+#include "cache.h"
-+#include "commit.h"
-+#include "xdiff-interface.h"
-+
-+/*
-+ * One blob in a commit that is being suspected
-+ */
-+struct origin {
-+	int refcnt;
-+	/* Record preceding blame record for this blob */
-+	struct origin *previous;
-+	/* origins are put in a list linked via `next' hanging off the
-+	 * corresponding commit's util field in order to make finding
-+	 * them fast.  The presence in this chain does not count
-+	 * towards the origin's reference count.  It is tempting to
-+	 * let it count as long as the commit is pending examination,
-+	 * but even under circumstances where the commit will be
-+	 * present multiple times in the priority queue of unexamined
-+	 * commits, processing the first instance will not leave any
-+	 * work requiring the origin data for the second instance.  An
-+	 * interspersed commit changing that would have to be
-+	 * preexisting with a different ancestry and with the same
-+	 * commit date in order to wedge itself between two instances
-+	 * of the same commit in the priority queue _and_ produce
-+	 * blame entries relevant for it.  While we don't want to let
-+	 * us get tripped up by this case, it certainly does not seem
-+	 * worth optimizing for.
-+	 */
-+	struct origin *next;
-+	struct commit *commit;
-+	/* `suspects' contains blame entries that may be attributed to
-+	 * this origin's commit or to parent commits.  When a commit
-+	 * is being processed, all suspects will be moved, either by
-+	 * assigning them to an origin in a different commit, or by
-+	 * shipping them to the scoreboard's ent list because they
-+	 * cannot be attributed to a different commit.
-+	 */
-+	struct blame_entry *suspects;
-+	mmfile_t file;
-+	struct object_id blob_oid;
-+	unsigned mode;
-+	/* guilty gets set when shipping any suspects to the final
-+	 * blame list instead of other commits
-+	 */
-+	char guilty;
-+	char path[FLEX_ARRAY];
-+};
-+
-+/*
-+ * Each group of lines is described by a blame_entry; it can be split
-+ * as we pass blame to the parents.  They are arranged in linked lists
-+ * kept as `suspects' of some unprocessed origin, or entered (when the
-+ * blame origin has been finalized) into the scoreboard structure.
-+ * While the scoreboard structure is only sorted at the end of
-+ * processing (according to final image line number), the lists
-+ * attached to an origin are sorted by the target line number.
-+ */
-+struct blame_entry {
-+	struct blame_entry *next;
-+
-+	/* the first line of this group in the final image;
-+	 * internally all line numbers are 0 based.
-+	 */
-+	int lno;
-+
-+	/* how many lines this group has */
-+	int num_lines;
-+
-+	/* the commit that introduced this group into the final image */
-+	struct origin *suspect;
-+
-+	/* the line number of the first line of this group in the
-+	 * suspect's file; internally all line numbers are 0 based.
-+	 */
-+	int s_lno;
-+
-+	/* how significant this entry is -- cached to avoid
-+	 * scanning the lines over and over.
-+	 */
-+	unsigned score;
-+};
-+
-+/*
-+ * Origin is refcounted and usually we keep the blob contents to be
-+ * reused.
-+ */
-+static inline struct origin *origin_incref(struct origin *o)
-+{
-+	if (o)
-+		o->refcnt++;
-+	return o;
-+}
-+void origin_decref(struct origin *o);
-+
-+struct origin *make_origin(struct commit *commit, const char *path);
-+struct origin *get_origin(struct commit *commit, const char *path);
-+
-+#endif /* ORIGIN_H */
+ 	if (!incremental)
+ 		setup_pager();
+ 
+@@ -2541,7 +2578,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	if (incremental)
+ 		return 0;
+ 
+-	sb.ent = blame_sort(sb.ent, compare_blame_final);
++	blame_sort_final(&sb);
+ 
+ 	coalesce(&sb);
+ 
+@@ -2557,9 +2594,9 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (show_stats) {
+-		printf("num read blob: %d\n", num_read_blob);
+-		printf("num get patch: %d\n", num_get_patch);
+-		printf("num commits: %d\n", num_commits);
++		printf("num read blob: %d\n", sb.num_read_blob);
++		printf("num get patch: %d\n", sb.num_get_patch);
++		printf("num commits: %d\n", sb.num_commits);
+ 	}
+ 	return 0;
+ }
 -- 
 2.9.3
 
