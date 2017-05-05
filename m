@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1C77207B3
-	for <e@80x24.org>; Fri,  5 May 2017 15:41:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F166207B3
+	for <e@80x24.org>; Fri,  5 May 2017 15:41:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752677AbdEEPlA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 11:41:00 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34563 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752007AbdEEPk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1752560AbdEEPk7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 11:40:59 -0400
+Received: from mail-wr0-f196.google.com ([209.85.128.196]:36529 "EHLO
+        mail-wr0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751951AbdEEPk6 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 5 May 2017 11:40:58 -0400
-Received: by mail-wm0-f66.google.com with SMTP id z129so2095130wmb.1
-        for <git@vger.kernel.org>; Fri, 05 May 2017 08:40:57 -0700 (PDT)
+Received: by mail-wr0-f196.google.com with SMTP id v42so1056917wrc.3
+        for <git@vger.kernel.org>; Fri, 05 May 2017 08:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4am4UUukk4tYDOcpDYVtl4NVayTE7OD5V8JFdw1kDSA=;
-        b=UgedlErcuuCKZeQ3l+MwezWjBEYl358cIPI0Sm14qdRqEn+OWmGevBNe93/rVp9adk
-         k2JgP1hvjWiXT1T04fufh9BoE4V+MLG/6Rjnv+U2n4+ASl72XiaK1RX8ICbHdlpIXtXn
-         0liW5hg9sxcHTIsckhJkajkX1ZNwL5nxH6VpuKKUvIor2GBcqQUHF1Y0XbaDbsE+pN9V
-         z2/2Oz8Zsn6FWZauFFEe6yy1VJc24tD0u4WucGtUCOs+JjYMysbbBzZQT49/OI21JZSc
-         TXiJ/B1viq5s79IEkhqmkgnobqKbP4KAIuCks3e/vOSQ862lAHXJ1+iFgn8Z7PC5fmeo
-         bEuA==
+        bh=hJgZasKUpo1XXf3ahRN/XLDCPnLwze9rCopaW5W4TG8=;
+        b=aVVp1uqoO4gg/KR2TSqfLvsd2g4BFAsEBuwo5Cg4YLF9XId2PNTneq6c0Z9vEHZoSE
+         8OImAggwaDPABVhf701wkYPMXYF6aUYwpHFI2IxFhFa6rPCv36Xgk9qUYSA42fRbye0v
+         03hK7p/0g7ud2/vrUsrjZsCh7eBAyjci51Ad2jTjuwQQYH/YT4eCEQMln1JaS3Zb+vYN
+         HfAbtO/zrQNkaRPcczR2Mg8KRNzibS0aDdshMGmslWHhWwO58sebIyU+nFWXP4uEdfJs
+         D0nT+YD4NZ5RqHErm2w9jrs4z7ofz5uTgiTPZ7hKew7G57FD4c6RzZ05DH5G5E2E50aY
+         W0AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4am4UUukk4tYDOcpDYVtl4NVayTE7OD5V8JFdw1kDSA=;
-        b=OcSEROPPDGfZz1okzd9wjA3SP7//wIzOKCss/gjzAo6cbIFkkp0/LFerrLdJg6BMhT
-         KotFtwFqfAHmDHYqhjM/JSC7UrN3nILXSdrhLt6x6nyVZloXFiBLn+Ebw+/UZvI02HqB
-         vTsGY9iJBM+4/PcmwABTPWoZsGZ5VhE3Gt48Kh4hCoy0qPApFsg4h5c3VcjmSbfbOCUx
-         OKkdwxxyuLhVDyGky1VXUC+d0HOtJS+gTEJoKvrOjDYbfKB35WdAm0NLDwjuJgQnq6Ct
-         9oQLZURNTEvpaFNstb8WSsbvu0UJ9t8waE/iWpH42anLSs9hCXkU2UzTnmEV27eujdZD
-         rDSQ==
-X-Gm-Message-State: AN3rC/5MPaFoLqDPRFG7cXU0XaiyTs7l6KjwI3QfZ5PQhU41vkKDCzpm
-        7jKRfXINfIinFeB8
-X-Received: by 10.28.217.66 with SMTP id q63mr5445005wmg.10.1493998856478;
-        Fri, 05 May 2017 08:40:56 -0700 (PDT)
+        bh=hJgZasKUpo1XXf3ahRN/XLDCPnLwze9rCopaW5W4TG8=;
+        b=c/hEIIyvOAN+TNuR+p+RPk97uUBpe4AfuerK2SxCfVDS1oQKICDX/676/C/WYW2qps
+         m6JLNFDt7bLFqHKP1Yn26w+TOWs41YJkOOFYlNnXB3kx+CI519WRB/lVS4HDFikz7of+
+         uX3hvIidtepwADnWr38PY871l9hEpZ8YQdjb42AEzoC9um1x3InjsmcYCqwaBMECtz0j
+         TRZHQqRSqmDP1aZpScO6+FAAKDPPdsAmjHBMOHWLTE1NtaD0c4aFKL2xNe3Exrrb6Ati
+         07nIwAKuOOiSahAOSaABy7Zvjhb1ZC6ZuV4y3vF9141DLGpX4uXc2qoy8LRcCBq5dJv8
+         LEmA==
+X-Gm-Message-State: AN3rC/6YVHo2yQNKVBoClEb4hYXc1CeBEkNbMzMP8TWXajcLWw7E0PS1
+        G4LIb21PV01b8Q==
+X-Received: by 10.223.143.13 with SMTP id p13mr31642837wrb.3.1493998857210;
+        Fri, 05 May 2017 08:40:57 -0700 (PDT)
 Received: from slxbook4.ads.autodesk.com ([62.159.156.210])
-        by smtp.gmail.com with ESMTPSA id f63sm2531979wmh.8.2017.05.05.08.40.55
+        by smtp.gmail.com with ESMTPSA id f63sm2531979wmh.8.2017.05.05.08.40.56
         (version=TLS1 cipher=AES128-SHA bits=128/128);
         Fri, 05 May 2017 08:40:56 -0700 (PDT)
 From:   Lars Schneider <larsxschneider@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, avarab@gmail.com
-Subject: [PATCH v1 1/2] travis-ci: setup "prove cache" in "script" step
-Date:   Fri,  5 May 2017 17:40:52 +0200
-Message-Id: <20170505154053.58128-2-larsxschneider@gmail.com>
+Subject: [PATCH v1 2/2] travis-ci: add job to run tests with GETTEXT_POISON
+Date:   Fri,  5 May 2017 17:40:53 +0200
+Message-Id: <20170505154053.58128-3-larsxschneider@gmail.com>
 X-Mailer: git-send-email 2.12.2
 In-Reply-To: <20170505154053.58128-1-larsxschneider@gmail.com>
 References: <20170505154053.58128-1-larsxschneider@gmail.com>
@@ -61,45 +61,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The command that made the "prove cache" persistent across builds was
-executed in the "before_install" step. Consequently, every job that
-wanted to make use of the cache had to run this step.
-
-The "prove cache" is only used in the "script" step for the
-"make test" command. Therefore, we should configure the "prove cache"
-in this step.
-
-This change is useful for a subsequent patch that adds a job which does
-not need the "before_install" step but wants to run the "script" step to
-execute the tests.
+Add a job to run Git tests with GETTEXT_POISON. In this job we don't run
+the git-p4, git-svn, and HTTPD tests to save resources/time (those tests
+are already executed in other jobs). Since we don't run these tests, we
+can also skip the "before_install" step (which would install the
+necessary dependencies) with an empty override.
 
 Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
 ---
- .travis.yml | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ .travis.yml | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/.travis.yml b/.travis.yml
-index 48cb00a581..aa03f8eb82 100644
+index aa03f8eb82..278943d14a 100644
 --- a/.travis.yml
 +++ b/.travis.yml
-@@ -135,12 +135,14 @@ before_install:
-     p4 -V | grep Rev.;
-     echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)";
-     git-lfs version;
--    mkdir -p $HOME/travis-cache;
--    ln -s $HOME/travis-cache/.prove t/.prove;
+@@ -39,6 +39,11 @@ env:
  
- before_script: make --jobs=2
- 
--script: make --quiet test
-+script:
-+  - >
-+    mkdir -p $HOME/travis-cache;
-+    ln -s $HOME/travis-cache/.prove t/.prove;
-+    make --quiet test;
- 
- after_failure:
-   - >
+ matrix:
+   include:
++    - env: GETTEXT_POISON=YesPlease
++      os: linux
++      compiler:
++      addons:
++      before_install:
+     - env: Windows
+       os: linux
+       compiler:
 -- 
 2.12.2
 
