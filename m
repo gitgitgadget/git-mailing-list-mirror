@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11FBD207B3
-	for <e@80x24.org>; Fri,  5 May 2017 15:28:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83C0D207B3
+	for <e@80x24.org>; Fri,  5 May 2017 15:28:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754224AbdEEP2r (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 11:28:47 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:33965 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752915AbdEEP2l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 11:28:41 -0400
-Received: by mail-qt0-f194.google.com with SMTP id l39so1237253qtb.1
-        for <git@vger.kernel.org>; Fri, 05 May 2017 08:28:41 -0700 (PDT)
+        id S1754816AbdEEP2q (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 11:28:46 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:36540 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752410AbdEEP2n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 11:28:43 -0400
+Received: by mail-qt0-f195.google.com with SMTP id j13so1229671qta.3
+        for <git@vger.kernel.org>; Fri, 05 May 2017 08:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ai3UT0+Ssx0fcQdMqcKKwkiisOpPG5A7s0DnrYPttAI=;
-        b=ktApeOUANzew9HgHe0lFprBZLjIWV7snf+p0H/Per8IuZOlbbj7LlALTF2cBduBU9Z
-         eabx4QIwN9aLdvjQMCKakXolxopGgaOnsV3b4yexwlPyjbfjUvUs8MZl1gFEZJdtv+UW
-         gC3aMzGSiEOy6gkRvS9SwwJgks4O8IQ+/deqQCUx1nl+GO7cmgjDC0Q/BhtIumaYWwH3
-         1CU22hJI4PnUCeMcDyt6QBM7YafwNyov0ajKRvzE3TDpif/9QAE7gPsgwiy+Hw4cfjqJ
-         HHnLcp5uLIwlRbemTXL72cN6ObMD/Gha+yFyfeU7Lv/iRwYgTecHxvKV42Wez9tc+3RG
-         GaZQ==
+        bh=Gv7t0QZ4Eo5OJQiLTRKWb93a1siKOZ78Cr4hM4EJdbU=;
+        b=XOdKWrQOzAw4j9fK73NQUi8bwfteC5F+VDbEWpn67cHa5NQd0ldQhoVJnw+rZBbyHu
+         elWx/MhU5DGzOERvdjQwpFd3IxpFLNGzbOsMoIgym9eeYvT2qzXde7ps6vq8NMPcLLem
+         VfagzavdUzM44XJDv7Y9OcUVZpAtUOpPqg4tm51wt2AD3/JiWdwj9GbX5FPWaHreAdcG
+         C/Bh71E2dUm2RVS1DrAgYf9BGJuj7zTBqnMLEPnXfNV7u1gHXFYTpHBubw/gV9YPUUIY
+         5wbHytWN/gz+KLV5FbrPt/cwGvUqZImxWsbeOUs4OSJtsjB9aNNGziPzTtnF3mJNr+bj
+         Tapg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ai3UT0+Ssx0fcQdMqcKKwkiisOpPG5A7s0DnrYPttAI=;
-        b=dZMWNmaBsxIIdzYGRWka2UXjzaec7ainyxDhZnA35cd7b8NQuEhEuHMLbLjbm5gA+y
-         i+ZyakOnEiF2r5LFqjEwVBwt6BW+HZP/WLiCuwXZGvjhFs+9rOHSGmHqEMPAOsPF4xYv
-         us4vRZWL9O+CE8wykdUz03J2wVl25kq9qq8aHzf255tPewi6sv7mOkw8moN1nxpFSR50
-         doXHP9zMTgDQSS8g7ol0RQrv3tFAm6c8Am1b+L8bpd74zSeOzVX2nimXxSF/gjuz3WX/
-         Sz/2dHgIjSejwm32R8NAIV5VSA5kpq9SSA5R4qz7gKdV2nKAKIrDXwSGQyJL2sFYrhcY
-         KoSQ==
-X-Gm-Message-State: AN3rC/7vWAU4YCKLG4ou7XzNCwSsHhJzIlkbzMKBQG82TlqTcl0nxUxC
-        5/Oe5cwpHg5iM+q6Gzc=
-X-Received: by 10.200.56.216 with SMTP id g24mr8371411qtc.267.1493998120696;
-        Fri, 05 May 2017 08:28:40 -0700 (PDT)
+        bh=Gv7t0QZ4Eo5OJQiLTRKWb93a1siKOZ78Cr4hM4EJdbU=;
+        b=bNch9MVoU3YohY8M4SnDlroOX2ts8CzjEhzhq5S/43FCUHjCVuA8bmqVRmEAe74Cxh
+         dfXOMS+RVicj34yb+O6WvRJAtrcI2grFEAcU20gyOdu0ZJyGlRHffa6EakgfcjI/FMxI
+         5C7a2EZL09CE3tfumkNpob/OJ+Ys2e15Sgikf6ndD0c9XDO0XEgWpFYjve4fnaNZEc19
+         UlEG9btU52keUMwK5Qdj8hq6CvDWfJMkeFCXWEwvSOSMx+KbrHr5ruSXc/D5CVGW6pjG
+         J9sOrTm7cVzEOIF8jY+1f44PdtZ+THQa0CD2VhaJT4/FPwWlL+g2xJQ28Cs7R/cEPu0C
+         xl2w==
+X-Gm-Message-State: AN3rC/7G4J00zN6061ON53XImn8SnSKTG7fUv+mVhJdNPwxN61WEF4j9
+        Avbr0zz53LrGaQ==
+X-Received: by 10.237.62.200 with SMTP id o8mr11407154qtf.152.1493998122307;
+        Fri, 05 May 2017 08:28:42 -0700 (PDT)
 Received: from localhost.localdomain ([65.222.173.206])
-        by smtp.gmail.com with ESMTPSA id t68sm3392792qkc.44.2017.05.05.08.28.39
+        by smtp.gmail.com with ESMTPSA id t68sm3392792qkc.44.2017.05.05.08.28.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 May 2017 08:28:39 -0700 (PDT)
+        Fri, 05 May 2017 08:28:41 -0700 (PDT)
 From:   Ben Peart <peartben@gmail.com>
 X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, benpeart@microsoft.com,
         christian.couder@gmail.com, larsxschneider@gmail.com, peff@peff.net
-Subject: [PATCH v7 04/10] convert: move packet_write_line() into pkt-line as packet_writel()
-Date:   Fri,  5 May 2017 11:27:56 -0400
-Message-Id: <20170505152802.6724-5-benpeart@microsoft.com>
+Subject: [PATCH v7 05/10] convert: split start_multi_file_filter() into two separate functions
+Date:   Fri,  5 May 2017 11:27:57 -0400
+Message-Id: <20170505152802.6724-6-benpeart@microsoft.com>
 X-Mailer: git-send-email 2.12.2.gvfs.2.20.g3624a68d62.dirty
 In-Reply-To: <20170505152802.6724-1-benpeart@microsoft.com>
 References: <20170505152802.6724-1-benpeart@microsoft.com>
@@ -63,107 +63,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add packet_writel() which writes multiple lines in a single call and
-then calls packet_flush_gently(). Update convert.c to use the new
-packet_writel() function from pkt-line.
+To enable future reuse of the filter.<driver>.process infrastructure,
+split start_multi_file_filter() into two separate parts.
+
+start_multi_file_filter() will now only contain the generic logic to
+manage the creation and tracking of the child process in a hashmap.
+
+start_multi_file_filter_fn() is a protocol specific initialization
+function that will negotiate the multi-file-filter interface version
+and capabilities.
 
 Signed-off-by: Ben Peart <benpeart@microsoft.com>
 ---
- convert.c  | 23 ++---------------------
- pkt-line.c | 19 +++++++++++++++++++
- pkt-line.h |  1 +
- 3 files changed, 22 insertions(+), 21 deletions(-)
+ convert.c | 58 ++++++++++++++++++++++++++++++++++------------------------
+ 1 file changed, 34 insertions(+), 24 deletions(-)
 
 diff --git a/convert.c b/convert.c
-index bdd528086f..1f18d947b9 100644
+index 1f18d947b9..4e1d018577 100644
 --- a/convert.c
 +++ b/convert.c
-@@ -521,25 +521,6 @@ static struct cmd2process *find_multi_file_filter_entry(struct hashmap *hashmap,
- 	return hashmap_get(hashmap, &key, NULL);
+@@ -565,35 +565,14 @@ static void stop_multi_file_filter(struct child_process *process)
+ 	finish_command(process);
  }
  
--static int packet_write_list(int fd, const char *line, ...)
--{
--	va_list args;
--	int err;
--	va_start(args, line);
--	for (;;) {
--		if (!line)
--			break;
--		if (strlen(line) > LARGE_PACKET_DATA_MAX)
--			return -1;
--		err = packet_write_fmt_gently(fd, "%s\n", line);
--		if (err)
--			return err;
--		line = va_arg(args, const char*);
--	}
--	va_end(args);
--	return packet_flush_gently(fd);
--}
--
- static void read_multi_file_filter_status(int fd, struct strbuf *status)
+-static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
++static int start_multi_file_filter_fn(struct cmd2process *entry)
  {
- 	struct strbuf **pair;
-@@ -616,7 +597,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ 	int err;
+-	struct cmd2process *entry;
+-	struct child_process *process;
+-	const char *argv[] = { cmd, NULL };
+ 	struct string_list cap_list = STRING_LIST_INIT_NODUP;
+ 	char *cap_buf;
+ 	const char *cap_name;
+-
+-	entry = xmalloc(sizeof(*entry));
+-	entry->cmd = cmd;
+-	entry->supported_capabilities = 0;
+-	process = &entry->process;
+-
+-	child_process_init(process);
+-	process->argv = argv;
+-	process->use_shell = 1;
+-	process->in = -1;
+-	process->out = -1;
+-	process->clean_on_exit = 1;
+-	process->clean_on_exit_handler = stop_multi_file_filter;
+-
+-	if (start_command(process)) {
+-		error("cannot fork to run external filter '%s'", cmd);
+-		return NULL;
+-	}
+-
+-	hashmap_entry_init(entry, strhash(cmd));
++	struct child_process *process = &entry->process;
++	const char *cmd = entry->cmd;
  
  	sigchain_push(SIGPIPE, SIG_IGN);
  
--	err = packet_write_list(process->in, "git-filter-client", "version=2", NULL);
-+	err = packet_writel(process->in, "git-filter-client", "version=2", NULL);
- 	if (err)
- 		goto done;
+@@ -642,6 +621,37 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
+ done:
+ 	sigchain_pop(SIGPIPE);
  
-@@ -632,7 +613,7 @@ static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, cons
- 	if (err)
- 		goto done;
- 
--	err = packet_write_list(process->in, "capability=clean", "capability=smudge", NULL);
-+	err = packet_writel(process->in, "capability=clean", "capability=smudge", NULL);
- 
- 	for (;;) {
- 		cap_buf = packet_read_line(process->out, NULL);
-diff --git a/pkt-line.c b/pkt-line.c
-index 7db9119573..9d845ecc3c 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -171,6 +171,25 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
- 	return status;
- }
- 
-+int packet_writel(int fd, const char *line, ...)
-+{
-+	va_list args;
-+	int err;
-+	va_start(args, line);
-+	for (;;) {
-+		if (!line)
-+			break;
-+		if (strlen(line) > LARGE_PACKET_DATA_MAX)
-+			return -1;
-+		err = packet_write_fmt_gently(fd, "%s\n", line);
-+		if (err)
-+			return err;
-+		line = va_arg(args, const char*);
-+	}
-+	va_end(args);
-+	return packet_flush_gently(fd);
++	return err;
 +}
 +
- static int packet_write_gently(const int fd_out, const char *buf, size_t size)
- {
- 	static char packet_write_buffer[LARGE_PACKET_MAX];
-diff --git a/pkt-line.h b/pkt-line.h
-index 66ef610fc4..b2965869ad 100644
---- a/pkt-line.h
-+++ b/pkt-line.h
-@@ -25,6 +25,7 @@ void packet_buf_flush(struct strbuf *buf);
- void packet_buf_write(struct strbuf *buf, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
- int packet_flush_gently(int fd);
- int packet_write_fmt_gently(int fd, const char *fmt, ...) __attribute__((format (printf, 2, 3)));
-+int packet_writel(int fd, const char *line, ...);
- int write_packetized_from_fd(int fd_in, int fd_out);
- int write_packetized_from_buf(const char *src_in, size_t len, int fd_out);
- 
++static struct cmd2process *start_multi_file_filter(struct hashmap *hashmap, const char *cmd)
++{
++	int err;
++	struct cmd2process *entry;
++	struct child_process *process;
++	const char *argv[] = { cmd, NULL };
++
++	entry = xmalloc(sizeof(*entry));
++	entry->cmd = cmd;
++	entry->supported_capabilities = 0;
++	process = &entry->process;
++
++	child_process_init(process);
++	process->argv = argv;
++	process->use_shell = 1;
++	process->in = -1;
++	process->out = -1;
++	process->clean_on_exit = 1;
++	process->clean_on_exit_handler = stop_multi_file_filter;
++
++	if (start_command(process)) {
++		error("cannot fork to run external filter '%s'", cmd);
++		return NULL;
++	}
++
++	hashmap_entry_init(entry, strhash(cmd));
++
++	err = start_multi_file_filter_fn(entry);
+ 	if (err) {
+ 		error("initialization for external filter '%s' failed", cmd);
+ 		kill_multi_file_filter(hashmap, entry);
 -- 
 2.12.2.gvfs.2.20.g3624a68d62.dirty
 
