@@ -2,123 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E024207B3
-	for <e@80x24.org>; Fri,  5 May 2017 14:31:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCDDD207FF
+	for <e@80x24.org>; Fri,  5 May 2017 14:57:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752180AbdEEOby (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 10:31:54 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53464 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751384AbdEEObx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 10:31:53 -0400
-Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LbPza-1dmszA2iCY-00kx20; Fri, 05
- May 2017 16:31:46 +0200
-Date:   Fri, 5 May 2017 16:31:31 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/5] Start of a journey: drop
- NO_THE_INDEX_COMPATIBILITY_MACROS
-In-Reply-To: <CAGZ79kZiBOrY6Qno_wFpvFHpbpCY0BtriqYGW5JKG+1hfgJwiQ@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1705051244310.146734@virtualbox>
-References: <20170501190719.10669-1-sbeller@google.com> <xmqq7f20f3a8.fsf@gitster.mtv.corp.google.com> <CACsJy8AZevgFda4ZJAmH_Nyrtuk72FUjdk6B8_SJB=n6quPnbw@mail.gmail.com> <xmqqa86tbamh.fsf@gitster.mtv.corp.google.com>
- <CAGZ79kZiBOrY6Qno_wFpvFHpbpCY0BtriqYGW5JKG+1hfgJwiQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1752896AbdEEO51 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 10:57:27 -0400
+Received: from mail-wr0-f176.google.com ([209.85.128.176]:33784 "EHLO
+        mail-wr0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752446AbdEEO5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 10:57:25 -0400
+Received: by mail-wr0-f176.google.com with SMTP id w50so5391248wrc.0
+        for <git@vger.kernel.org>; Fri, 05 May 2017 07:57:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aQ/5KbURtFTtAB2mNK6pP+MrO26rylEYyzC2GvUHIc4=;
+        b=MhBHHS6C/UYNysrIuPyPbu3B3RQg8JauNhETv+gcR7zqYiX3X7qLBcWSaAOgpkZuG7
+         h2G4sVqEHQYhbR2f6s/J+qnH+It1n1tJ6hCGBqRvy/8ZEKGXvPkhfHPk3ciRgEV981/a
+         8622E4E1jVNtvt0R/UgkFOhN0wSINXax3hoptJIZnrnv4K5iI58swEUHgdzJ4pNpqn0P
+         WlAlOFdeM+LzSbMXHfMXQbQa1ag/6LImKUe3BX8dQ59A2hJ73oDaCxHC1E34ww38iJ+3
+         4oE1hQ+EM4If61o+egmGnIjItNXdeFOl9ei2keNqwAPFDPVeWTPTfVQqmjZQu95MP4P7
+         TjzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=aQ/5KbURtFTtAB2mNK6pP+MrO26rylEYyzC2GvUHIc4=;
+        b=MaeHQicG3rM+f4SbJnTmTGEN0SxNp+sv5QCNXOU9DDc6sBxjoQCTUQOrfepGJTi2fR
+         SI8/PGa3ZgFmdVzjH3Xn+kCnPtm13UOT+4pxtnNo7Dpqs03RwqutcN/JhVqT6Jk6zavi
+         eWgX9WyQMFWEvD4shsamvwzKtoJi79GOEJca3HGUGSkFUkwNWNCJMGNBeDXSW7Ke2u+d
+         CVXThp44MRmHtRp2z9uvBikQUY4DpC75AcXhyltyjbhIV2wVBCz9ws69Lz9e2zI5oFY/
+         NrDEPlWQ5+mcFD2O8n08b9OaU2WAVTIkoI6p+VKdndgRI0jZW9HzqKy6i7BTgrLEW4xf
+         PujA==
+X-Gm-Message-State: AN3rC/7jBM3AXOR50oPXbcaBoGsa9uwYF9Yd9Nii8pT4OjxKnxbh7PkL
+        hgKKLfc/4z9XLA==
+X-Received: by 10.223.164.9 with SMTP id d9mr28567668wra.91.1493996244484;
+        Fri, 05 May 2017 07:57:24 -0700 (PDT)
+Received: from christian-Latitude-E6330.booking.pcln.com ([185.24.142.26])
+        by smtp.gmail.com with ESMTPSA id k4sm1994431wmf.12.2017.05.05.07.57.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 May 2017 07:57:23 -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 0/2] split index extra bits 
+Date:   Fri,  5 May 2017 16:57:11 +0200
+Message-Id: <20170505145713.8837-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.13.0.rc1.83.g83955d3ecd.dirty
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:0RcpwX+uxqXMaErofOxr66BZrpRXMmDfKc09n19tcdXgsFpYJQR
- fkE9VTMIlsVL5pNoLfUBLt8VsA9276nQKtinlFtofNs71M5xXOjvgTg2hsSgpFuTY96Hz95
- iLypKDhNL8PsV/sJd5Amx5Bp1XP/k3XiD1YwurWFZkj205t+6EkjxOHVKI/UYdO80JMreoO
- b9ZSNThRLgEViaOM2QqCQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:0iN7N9wvFC4=:2bnBghVbB4zWcvTb90NGro
- KtkMlGFXkiCWNzy1gvXwQoaj1bCGSB+cdAlpw6tjEfuiCxbBr6j+DrsbPveyaSoY5XumaIMV2
- ttV/xxy0L+jr57iPWMJm1C+sFSbQ14hBnJjcOSOnZHFX7liLE7Kc7MqghnK6RNZ0sXDCLo9Xi
- iwSzW8HKQDFUEUjOXVkXV/eRPfhYBpvHbcDSsr65mv5odptY3/eD8eU1wYVL6PdFP0bOLSN4e
- wXuNqX5su3/a/tVdW6ZK4hwTVym6JaaTnWENz1DYv6TSMyzBwfHaQZuSDzNFiYnsW7DxggcOu
- mCpOzHkfJbojgXSJj9zNpYS3fAKDmC+8HgoMBLOoBUUK0SNTs0N52wEFxrzm+pqGLvn//9//E
- yVEiXS47tFj5tnsep5TmrO5n2jt7qfwkLgcMcPpO+0LjWD1GjokhtNNq84VMGNcbDeRKPcDZy
- NhWjrfxdCgsOVFcIPIfb3wYR6Zau7Otq+eTFdn2DDXsRKrfUeLzIK9GZdHBCSDk14j/W8K46S
- SbOe68Y3zeFpp8K3o5BkCuXDH2lJB5JC3Xo/4l33PKhoQky2w1xdzZSVNaYVznoCTukrjKEFC
- f0A5sRggev1bcFXLNHk+DDXFQChVzIYlKI4xb577ID/HXIr23N3wgtmgN8QU9pCXeYkvCj1+1
- QUYTexl/YR1kmxfA31L7LoHy+wjjiIITsDYzks7FjU5PQnNCBqI6ctIrtnqN/k87cU5Vp6YG2
- vvydJzHs5dnJq984Wq5E6L+hDHz4fUbzh/hSooTPBS67jhbjlZIkSM2jKtwWXwLvMJxklOOFD
- YLi2W0g
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan & Junio,
+This patch series contains 2 patches that have already been sent to
+the list but have felt through the cracks. It would be nice if they
+could be considered for v2.13.0.
 
-On Thu, 4 May 2017, Stefan Beller wrote:
+Patch 1/2 (split-index: add and use unshare_split_index()) by Duy
+fixes a memory leak when a new shared index file is created and memory
+used by the old one should be freed.
 
-> So instead of a mechanical replacement, we'd rather want to
-> see "the_index" not appearing at all outside of builtins, which
-> implies two things:
->
-> * If done properly we can move the macros from cache.h to
->   e.g. builtin.h. That way future developers are less tempted
->   to use the cache_* macros in the library code.
+Patch 2/2 (p3400: add perf tests for rebasing many changes) adds a
+test in t/perf that can help see what performance improvements can be
+gained by using the split index feature. For example using this patch
+at one point I got the following results on a Linux machine on the Git
+repository:
 
-Yessss!
+Test                                                            v2.10.0             v2.11.0                  v2.12.0                  origin/master         
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+3400.2: rebase on top of a lot of unrelated changes             2.62(2.19+0.55)     2.54(2.15+0.49) -3.1%    2.59(2.19+0.49) -1.1%    2.66(2.27+0.52) +1.5% 
+3400.4: rebase a lot of unrelated changes without split-index   14.08(10.12+3.92)   7.20(5.85+1.36) -48.9%   8.06(6.54+1.60) -42.8%   7.53(6.40+1.12) -46.5%
+3400.6: rebase a lot of unrelated changes with split-index      14.10(10.11+3.94)   6.94(5.71+1.27) -50.8%   7.99(6.49+1.57) -43.3%   6.10(5.12+1.07) -56.7%
 
-> * we'd have to pass through the_index from the builtin function
->   down to the library code, potentially going through multiple
->   function. For this it is unclear if we want to start this now, or wait
->   until Brandon presents his initial repository object struct, which
->   may be suited better for passing-around.
+On bigger repositories results are likely to be better.
 
-Or the other way round. I guess passing a struct index_state can be a
-first step, and we can later convert it to struct repository. I fathom
-that more places will need a struct repository parameter than a struct
-index_state parameter. That is, if you first identify all the places where
-the index_state parameter is required, it should make the struct
-repository change easier.
+Christian Couder (1):
+  p3400: add perf tests for rebasing many changes
 
-> So if I want to further look into refactoring, I'll have a look into
-> the object store and hold off sending a series that drops the_index.
-> 
-> > Also, dropping compatibility macros at the end of the series is
-> > unfriendly to fellow developers with WIPs that depend on the
-> > traditional way of doing things.  It is doubly insulting to them to
-> > send such a series during the feature freeze period, when it is more
-> > likely that they are holding off their WIP in an attempt to allow us
-> > to concentrate more on what we should be, i.e. finding and fixing
-> > possible regressions at the tip of 'master' to polish the upcoming
-> > release and help the end users.
-> 
-> Personally I have not noticed large variations of patch volume
-> correlated to pre-release times.
+Nguyễn Thái Ngọc Duy (1):
+  split-index: add and use unshare_split_index()
 
-Speaking for myself, I also use this "slow" time to prepare patch series
-that should be submitted directly after a major version bump, patch series
-like the timestamp_t one (with which I failed miserably: it got to a
-usable state only now, very short *before* a major version bump).
+ read-cache.c           | 10 ++-------
+ split-index.c          | 57 ++++++++++++++++++++++++++++++++++++++------------
+ split-index.h          |  1 +
+ t/perf/p3400-rebase.sh | 22 ++++++++++++++++++-
+ 4 files changed, 68 insertions(+), 22 deletions(-)
 
-But yes, part of why I set aside a substantial chunk of time to work on
-the Coverity report was to prepare for the major version, to make sure
-that we did not have anything blatant (like the difftool use-after-free,
-which was embarrassing) in v2.13.0.
+-- 
+2.13.0.rc1.83.g83955d3ecd.dirty
 
-It may look as if the coverity patches do not focus on critical fixes, but
-that's only because I did not find anything major in the Coverity report
-(I looked primarily for Git for Windows-specific stuff, though, to be
-honest).
-
-Maybe it is a similar situation for other patch contributors: they tried
-to focus on critical fixes and ended up not finding anything really
-critical?
-
-Having said that, I did see a little shift toward cppcheck & sparse
-related patches ;-)
-
-Ciao,
-Dscho
