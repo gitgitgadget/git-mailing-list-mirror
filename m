@@ -2,58 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5A13207B3
-	for <e@80x24.org>; Fri,  5 May 2017 19:53:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AD03207B3
+	for <e@80x24.org>; Fri,  5 May 2017 19:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755575AbdEETx4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 15:53:56 -0400
-Received: from mail-pf0-f176.google.com ([209.85.192.176]:35798 "EHLO
-        mail-pf0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751245AbdEETxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 15:53:53 -0400
-Received: by mail-pf0-f176.google.com with SMTP id v14so7091280pfd.2
-        for <git@vger.kernel.org>; Fri, 05 May 2017 12:53:53 -0700 (PDT)
+        id S1755586AbdEETyA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 15:54:00 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:36484 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751266AbdEETxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 15:53:54 -0400
+Received: by mail-pf0-f174.google.com with SMTP id q66so7063304pfi.3
+        for <git@vger.kernel.org>; Fri, 05 May 2017 12:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vbv6WXAbOtUpqQTbyZxyln9EBHuKQ7Uas8fHmLYTphU=;
-        b=mHlK14PEpdKos5X05jdal4ub/KZdx3tmFQcI/NdBpctXaJnyRuQ6friYcI85cBGfp1
-         uW4wDenPX41Xl5WJ21zb37LY+ZpYns98BOe0eHsHQ+GB4eDuXa9kf35xsIusdQ9oKops
-         7TxRCdor5wiSb3teA4ZgCoGpStEHo3iKlMXYv+N50+BEEq7If5mMLkPvohyIzo8o5JPD
-         IDcDULM9YUybFz/eW/3e3UTS5JjsKM1DhoDLPd7Xcn1G0XCimLGLWGh8vp3mvgYwdUpT
-         QwzvCv0Opu1HTDrNYAHA0QqpgsAX26PoMLQlrWZdp3wyU+kXz+gSBLQcJL9eiez+QCxC
-         ARyg==
+        bh=zpHcskpUZY4fc5uPBUeifJONJmY3v9NKCh6v89g7tdw=;
+        b=GgpR6bG6UpKIGmzH5fYyF/S++5SMcHyUejippUtqePyDDU2iQsEVZaivLTvSxSU6tK
+         4lgfu3fHwCALOFKFdhK1yxfTQPQYtwjaefT5Tr94iheYUXCa+Oi4XaQxQIQ8LYxrP6mS
+         qGQiqY4fFdbn7VIAxCz2M+nDXhA4KHKFfIdWiN9U8LKtDGYK0ZcJJzu8cBVmNd9sLUzZ
+         Qv3pGZWbqljiz7AiagWDr2REiMvY9T4vzuLmKjcTIFqjsTkD7fgrUJx+m716zEGB4X+2
+         KW2mR6U7hE/FSilDBnNKTNgp6svjn/1t1DUOL2+8N7ib2OFeAvRdZn2Tto6EUa5Natu8
+         JGKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vbv6WXAbOtUpqQTbyZxyln9EBHuKQ7Uas8fHmLYTphU=;
-        b=ZW693ii/HnDyivR8KNGyj45xrcffIlO55Xu1IBDsph4kobfi+vyLqut4jPdSDo9WUc
-         RrJfusR7dK5vlk4bxyq9af7yfXGkjUY4sBfrJJXLqQlgGEmwyEAdg70ZZvj85DSg8Ywm
-         7R/QPJrEIUKAg5FCaVS1EkS/fEAsyRzqNR//kteQhmprDLNrHKGhO867hgY3XqVSi/8T
-         tzOf/OXraRl7e1i864qpVgZqE2TEKfCR/pKVafH6lvfaLLgPZnq7fjzvJyI7Pt+pgC2P
-         rLROUO/j69Imv2mBUufZ4rW1deO5xNiuBs6A5sqieBV9zQ+8nFU8urYy0cb1ZB04aOkz
-         5+aw==
-X-Gm-Message-State: AN3rC/4VLqc7+D+VdIgah3A76HZFgBziF5bHSNRUm8sk4gnXHU83l3Qx
-        pBpEdlOg/Y/3etmn
-X-Received: by 10.84.168.131 with SMTP id f3mr67776075plb.160.1494014032460;
-        Fri, 05 May 2017 12:53:52 -0700 (PDT)
+        bh=zpHcskpUZY4fc5uPBUeifJONJmY3v9NKCh6v89g7tdw=;
+        b=d6iO1CAMw49/WUipPOAJlY33VJFCwt2ocMWWrJ2Kf3vC17wh/EyDmDp3dLW/Penhoz
+         HmiLjzE+SUofUkkMN7HJJoH2PitoAItpYtVZcnJ5lWYDAulE3p0kpav0nYMdOBl/fnU3
+         I54mekGLNYZgE1FonqrodXmwzlCtd+i3uJETOgxO3d2vZFuvLhvHj1yXBBDMDqpB/RMj
+         frT2kq/GBjR9MyyWVnymjz9Vi42m/OEXg0VxY9w3emEZ8GvhuNJI0fPQecKE0GRDF37a
+         86OJ51erupd+FEUOg9AGA9H6umuZjeEz96H36UupA7niigrmZCmHD9apleFhyI6KfIOF
+         Ck0A==
+X-Gm-Message-State: AN3rC/4XalUJhjkRiQwNJ1CU5r/vGVKBU6rS9+d+s+JedbOcCdeqleq2
+        ZfFEOYn3C3JXWGIg
+X-Received: by 10.84.224.10 with SMTP id r10mr43295459plj.25.1494014033862;
+        Fri, 05 May 2017 12:53:53 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id r86sm12395967pfb.24.2017.05.05.12.53.50
+        by smtp.gmail.com with ESMTPSA id r86sm12395967pfb.24.2017.05.05.12.53.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 May 2017 12:53:51 -0700 (PDT)
+        Fri, 05 May 2017 12:53:52 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
         Johannes.Schindelin@gmx.de, pclouds@gmail.com,
         Brandon Williams <bmwill@google.com>
-Subject: [RFC 05/14] dir: convert dir_add* to take an index
-Date:   Fri,  5 May 2017 12:53:25 -0700
-Message-Id: <20170505195334.121856-6-bmwill@google.com>
+Subject: [RFC 06/14] dir: convert last_exclude_matching_from_list to take an index
+Date:   Fri,  5 May 2017 12:53:26 -0700
+Message-Id: <20170505195334.121856-7-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f-goog
 In-Reply-To: <20170505195334.121856-1-bmwill@google.com>
 References: <20170505195334.121856-1-bmwill@google.com>
@@ -64,93 +65,74 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/add.c |  3 ++-
- dir.c         | 18 +++++++++++-------
- dir.h         |  4 +++-
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ dir.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 9f53f020d..bf5e676e4 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -437,7 +437,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 				if (ignore_missing) {
- 					int dtype = DT_UNKNOWN;
- 					if (is_excluded(&dir, path, &dtype))
--						dir_add_ignored(&dir, path, pathspec.items[i].len);
-+						dir_add_ignored(&dir, &the_index,
-+								path, pathspec.items[i].len);
- 				} else
- 					die(_("pathspec '%s' did not match any files"),
- 					    pathspec.items[i].original);
 diff --git a/dir.c b/dir.c
-index 4515f0083..a508e8076 100644
+index a508e8076..077b756c2 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1236,18 +1236,22 @@ static struct dir_entry *dir_entry_new(const char *pathname, int len)
- 	return ent;
+@@ -961,7 +961,8 @@ static struct exclude *last_exclude_matching_from_list(const char *pathname,
+ 						       int pathlen,
+ 						       const char *basename,
+ 						       int *dtype,
+-						       struct exclude_list *el)
++						       struct exclude_list *el,
++						       struct index_state *istate)
+ {
+ 	struct exclude *exc = NULL; /* undecided */
+ 	int i;
+@@ -976,7 +977,7 @@ static struct exclude *last_exclude_matching_from_list(const char *pathname,
+ 
+ 		if (x->flags & EXC_FLAG_MUSTBEDIR) {
+ 			if (*dtype == DT_UNKNOWN)
+-				*dtype = get_dtype(NULL, &the_index, pathname, pathlen);
++				*dtype = get_dtype(NULL, istate, pathname, pathlen);
+ 			if (*dtype != DT_DIR)
+ 				continue;
+ 		}
+@@ -1012,13 +1013,14 @@ int is_excluded_from_list(const char *pathname,
+ 			  struct exclude_list *el)
+ {
+ 	struct exclude *exclude;
+-	exclude = last_exclude_matching_from_list(pathname, pathlen, basename, dtype, el);
++	exclude = last_exclude_matching_from_list(pathname, pathlen, basename, dtype, el, &the_index);
+ 	if (exclude)
+ 		return exclude->flags & EXC_FLAG_NEGATIVE ? 0 : 1;
+ 	return -1; /* undecided */
  }
  
--static struct dir_entry *dir_add_name(struct dir_struct *dir, const char *pathname, int len)
-+static struct dir_entry *dir_add_name(struct dir_struct *dir,
-+				      struct index_state *istate,
-+				      const char *pathname, int len)
+ static struct exclude *last_exclude_matching_from_lists(struct dir_struct *dir,
++							struct index_state *istate,
+ 		const char *pathname, int pathlen, const char *basename,
+ 		int *dtype_p)
  {
--	if (index_file_exists(&the_index, pathname, len, ignore_case))
-+	if (index_file_exists(istate, pathname, len, ignore_case))
- 		return NULL;
+@@ -1030,7 +1032,7 @@ static struct exclude *last_exclude_matching_from_lists(struct dir_struct *dir,
+ 		for (j = group->nr - 1; j >= 0; j--) {
+ 			exclude = last_exclude_matching_from_list(
+ 				pathname, pathlen, basename, dtype_p,
+-				&group->el[j]);
++				&group->el[j], istate);
+ 			if (exclude)
+ 				return exclude;
+ 		}
+@@ -1121,6 +1123,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 			int dt = DT_DIR;
+ 			dir->basebuf.buf[stk->baselen - 1] = 0;
+ 			dir->exclude = last_exclude_matching_from_lists(dir,
++									&the_index,
+ 				dir->basebuf.buf, stk->baselen - 1,
+ 				dir->basebuf.buf + current, &dt);
+ 			dir->basebuf.buf[stk->baselen - 1] = '/';
+@@ -1209,7 +1212,7 @@ struct exclude *last_exclude_matching(struct dir_struct *dir,
+ 	if (dir->exclude)
+ 		return dir->exclude;
  
- 	ALLOC_GROW(dir->entries, dir->nr+1, dir->alloc);
- 	return dir->entries[dir->nr++] = dir_entry_new(pathname, len);
+-	return last_exclude_matching_from_lists(dir, pathname, pathlen,
++	return last_exclude_matching_from_lists(dir, &the_index, pathname, pathlen,
+ 			basename, dtype_p);
  }
  
--struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
-+struct dir_entry *dir_add_ignored(struct dir_struct *dir,
-+				  struct index_state *istate,
-+				  const char *pathname, int len)
- {
--	if (!index_name_is_other(&the_index, pathname, len))
-+	if (!index_name_is_other(istate, pathname, len))
- 		return NULL;
- 
- 	ALLOC_GROW(dir->ignored, dir->ignored_nr+1, dir->ignored_alloc);
-@@ -1819,18 +1823,18 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 		switch (state) {
- 		case path_excluded:
- 			if (dir->flags & DIR_SHOW_IGNORED)
--				dir_add_name(dir, path.buf, path.len);
-+				dir_add_name(dir, &the_index, path.buf, path.len);
- 			else if ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
- 				((dir->flags & DIR_COLLECT_IGNORED) &&
- 				exclude_matches_pathspec(path.buf, path.len,
- 							 pathspec)))
--				dir_add_ignored(dir, path.buf, path.len);
-+				dir_add_ignored(dir, &the_index, path.buf, path.len);
- 			break;
- 
- 		case path_untracked:
- 			if (dir->flags & DIR_SHOW_IGNORED)
- 				break;
--			dir_add_name(dir, path.buf, path.len);
-+			dir_add_name(dir, &the_index, path.buf, path.len);
- 			if (cdir.fdir)
- 				add_untracked(untracked, path.buf + baselen);
- 			break;
-diff --git a/dir.h b/dir.h
-index bf23a470a..a9f809983 100644
---- a/dir.h
-+++ b/dir.h
-@@ -219,7 +219,9 @@ extern int read_directory(struct dir_struct *, const char *path, int len, const
- 
- extern int is_excluded_from_list(const char *pathname, int pathlen, const char *basename,
- 				 int *dtype, struct exclude_list *el);
--struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len);
-+struct dir_entry *dir_add_ignored(struct dir_struct *dir,
-+				  struct index_state *istate,
-+				  const char *pathname, int len);
- 
- /*
-  * these implement the matching logic for dir.c:excluded_from_list and
 -- 
 2.13.0.rc1.294.g07d810a77f-goog
 
