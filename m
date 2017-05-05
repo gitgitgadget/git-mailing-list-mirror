@@ -2,99 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E05D2207B3
-	for <e@80x24.org>; Fri,  5 May 2017 19:55:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8032207B3
+	for <e@80x24.org>; Fri,  5 May 2017 20:16:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755987AbdEETzG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 15:55:06 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:34709 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755302AbdEETxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 15:53:46 -0400
-Received: by mail-pf0-f171.google.com with SMTP id e64so7111919pfd.1
-        for <git@vger.kernel.org>; Fri, 05 May 2017 12:53:45 -0700 (PDT)
+        id S1755493AbdEEUQe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 16:16:34 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:33371 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754527AbdEEUQd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 16:16:33 -0400
+Received: by mail-wm0-f68.google.com with SMTP id y10so3411326wmh.0
+        for <git@vger.kernel.org>; Fri, 05 May 2017 13:16:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=51o0hSnPC5r6to6oIRc6iQ9daD4QseqvV/4TZ/IgcNo=;
-        b=jNlvCxrAhnQYSTj/qd2vYREM+QotOuL5bOKhcIKqf7TALtXN6Ac7c3Y6QSwd/Xr0Ad
-         2Bq1Pe3yHMBb3Fp14nO6/YQAu0aHZa9oWhQouFYu/RvbjRFmVjPIze/eJuYc4hgRF4Rv
-         f3D0SmD3fgxMUwFvj4BrTPEvuyA22Zl7G34Tl6CPuDwdb/WOqipe6RBwBYPsy4Z4XrQC
-         GGjMjYy14w4bEhXyFEtoYToqAmvW3qGmt6mX6Q+K/Ogmppn3UYBhteDv/ezFW5HFBe+B
-         bFd920W3/yVGFsFNwb9bZBOVHvaYSzEF7kgPkHOBzLdKKgiOxbnrgJxgvFFHhOOmOZj0
-         npIg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jIRc1jKAdK2WOhSEdxd+XA3wQkNb7RhFTxQuObxBRME=;
+        b=n3TPK2373ree5jNJC10PjlFHsli7iZsfX+iFXybQdPjMgoIraJSEUy/2mWKVtnGySz
+         ARaMdUI7zPWNCnZAm2hBpOb5717zvdnA1WDxfyD4glJ/kH8mwYQAqf8tkuTKuymqqSQl
+         SejVAF8fWYgXkuBLcZ4WlJ0bbmO5EwmOJVh+aMxBIhvBpAybuY8M74LPuwUgg2XqsD4F
+         RAX+rDXe6GEEYuX3zEv5leQ49R8wdjMksCG15fwx4sds2/7W99SLT5J4cpTI/V+Pg5Q1
+         sVntfm1LnaaozNX9AlXd6L6EH4D+AQEFSbKF9o0NkiOb/BzSL5QB/QJZkJA51vVwG+Ta
+         7T/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=51o0hSnPC5r6to6oIRc6iQ9daD4QseqvV/4TZ/IgcNo=;
-        b=D2pNwGMrU9cRHx2m+4pYEVNuoSeNwUVwFuahiQ8aRyVTdRTSO69TPEJIF2IWx6UV66
-         onomT91hDb03rS1wuQIS6f4dENqCEcLqrfmnvLpqMNJv+31Vhovc+b6b+xlGhT6iw/9v
-         BV1mq8pXiKM66PRVMill2NWpl5x+uKNk7KuZpr65bGizBLUJhjg/bRbJuPZR55qv9Ehx
-         0iarLj2bjTl11ntYoc100ZQHJfu7i0/lhhA0/+DlStKC+Kk4+wRXscd0O/yqHGa7Y7UQ
-         3j68I4pox/s16Ey1cjNP5qtuTE0FUouZccKdDdkbnD8n2p2EBMnoV+DCqESlRt5WXm2W
-         L1bQ==
-X-Gm-Message-State: AN3rC/4uRSuV/ySARpkIP/j3FQMVkMaZHj16hQ6OhFRje6vPjVN0Ul/y
-        9D63XDCrZtOuf69X
-X-Received: by 10.98.137.5 with SMTP id v5mr18841545pfd.183.1494014025088;
-        Fri, 05 May 2017 12:53:45 -0700 (PDT)
-Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id r86sm12395967pfb.24.2017.05.05.12.53.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 May 2017 12:53:44 -0700 (PDT)
-From:   Brandon Williams <bmwill@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jIRc1jKAdK2WOhSEdxd+XA3wQkNb7RhFTxQuObxBRME=;
+        b=eBKHDNInHqu4sA3JN97QoICpXr1U0D4l4WWiVUtCjPyimDFnQl2JXTCn0VHK07fwN/
+         /GAUQ4Ts9ZXuGg7MzbnLzcCRzh9KuinUlhe3OLK2NFctwHIVRWKW19bCHIG82TIbb4eh
+         4vye/JbpILY12XFiXKypd2O9rAmFoOCv4WQgo6/JBm8vl8tJCvmxYAwYSgPtCQWnRQ1J
+         hK2N/FGyziwUH+yL19dM7kuq4JOGDLpDClg/xcPJCU6xEPatp4c/2JdR22zCw4FjS2ha
+         HZOH2+X1om3wXHqqnLc2fViZ7BmnaddTQhw3Zmvd6L7hHnnpLH8TOIR0xpobzopfdpV4
+         tQUA==
+X-Gm-Message-State: AN3rC/5j8yzgP58Wa9TBZAkmj/Qi6a419ubzDpEDHhVTvC9v3mYe46Ki
+        UD94nISfZm0dhw==
+X-Received: by 10.28.30.135 with SMTP id e129mr5926228wme.127.1494015391740;
+        Fri, 05 May 2017 13:16:31 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id h80sm2952796wmd.7.2017.05.05.13.16.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 May 2017 13:16:30 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     sbeller@google.com, gitster@pobox.com, jrnieder@gmail.com,
-        Johannes.Schindelin@gmx.de, pclouds@gmail.com,
-        Brandon Williams <bmwill@google.com>
-Subject: [RFC 00/14] convert dir.c to take an index parameter
-Date:   Fri,  5 May 2017 12:53:20 -0700
-Message-Id: <20170505195334.121856-1-bmwill@google.com>
-X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f-goog
+Cc:     Daniel Ferreira <bnmvco@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: Re: [PATCH 2/3] add--interactive: add builtin helper for interactive add
+Date:   Fri,  5 May 2017 20:16:21 +0000
+Message-Id: <20170505201621.25560-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <1494009820-2090-3-git-send-email-bnmvco@gmail.com>
+References: <1494009820-2090-3-git-send-email-bnmvco@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the things brought up on the list in the past few days has been
-migrating away from using the index compatibility macros.  One of the issues
-brought up in that thread was how simply doing that conversion doesn't
-eliminate the reliance on global state (specifically the_index).  If one day we
-want to have a 'repository object' passed around then we first need to convert
-different subsystems to be prepared to handle that.  This series provides a
-first step, converting the code in dir.c to take a 'struct index_state' and
-using that instead of implicitly using 'the_index'.
+On Fri, May 5, 2017 at 8:43 PM, Daniel Ferreira <bnmvco@gmail.com> wrote:
+> Create a builtin helper for git-add--interactive, which right now is
+> only able to reproduce git-add--interactive.perl's status_cmd()
+> function, providing a summarized diff numstat to the user.
 
-Brandon Williams (14):
-  dir: stop using the index compatibility macros
-  dir: convert read_skip_worktree_file_from_index to take an index
-  dir: convert directory_exists_in_index to take index
-  dir: convert get_dtype to take index
-  dir: convert dir_add* to take an index
-  dir: convert last_exclude_matching_from_list to take an index
-  dir: convert is_excluded_from_list to take an index
-  dir: convert add_excludes to take an index
-  dir: convert prep_exclude to take an index
-  dir: convert is_excluded to take an index
-  dir: convert open_cached_dir to take an index
-  dir: convert read_directory_recursive to take an index
-  dir: convert read_directory to take an index
-  dir: convert fill_directory to take an index
+I'm not a user of add -i and didn't review the main logic in detail,
+but I ran this, and aside from two issues this LGTM:
 
- builtin/add.c          |   7 +-
- builtin/check-ignore.c |   3 +-
- builtin/clean.c        |   4 +-
- builtin/grep.c         |   2 +-
- builtin/ls-files.c     |   4 +-
- dir.c                  | 200 ++++++++++++++++++++++++++++---------------------
- dir.h                  |  27 +++++--
- unpack-trees.c         |  10 +--
- wt-status.c            |   2 +-
- 9 files changed, 151 insertions(+), 108 deletions(-)
+ * You missed a trailing \n in the output, so your formatting is
+   different from the current behavior.
 
+ * You should be using the getopt API instead of rolling your own.
+
+Fixes for both below, thanks a lot for hacking on this. As you pointed
+out this doesn't help with removing any of the perl code for now, but
+after replacing a few more command modes we can start chopping away at
+the perl code.
+
+diff --git a/builtin/add-interactive--helper.c b/builtin/add-interactive--helper.c
+index 97ca1b38dc..ea0f790bd3 100644
+--- a/builtin/add-interactive--helper.c
++++ b/builtin/add-interactive--helper.c
+@@ -226,6 +226,7 @@ static void print_modified(void)
+ 		printf(modified_fmt, index_changes, worktree_changes, f.path);
+ 		printf("\n");
+ 	}
++	printf("\n");
+ }
+ 
+ static void status_cmd(void)
+@@ -233,26 +234,31 @@ static void status_cmd(void)
+ 	print_modified();
+ }
+ 
+-static const char add_interactive_helper_usage[] =
+-"git add-interactive--helper <command>";
++static const char * const builtin_add_interactive_helper_usage[] = {
++	N_("git add-interactive--helper <command>"),
++	NULL
++};
+ 
+ int cmd_add_interactive__helper(int argc, const char **argv, const char *prefix)
+ {
+-	int i, found_opt = 0;
+-
+-	git_config(git_add_interactive_config, NULL);
++	int opt_status = 0;
+ 
+-	for (i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
++	struct option options[] = {
++		OPT_BOOL(0, "status", &opt_status,
++			 N_("print status information with diffstat")),
++		OPT_END()
++	};
+ 
+-		if (!strcmp(arg, "--status")) {
+-			status_cmd();
+-			found_opt = 1;
+-		}
+-	}
+-
+-	if (!found_opt)
+-		usage(add_interactive_helper_usage);
++	git_config(git_add_interactive_config, NULL);
++	argc = parse_options(argc, argv, NULL, options,
++			     builtin_add_interactive_helper_usage,
++			     PARSE_OPT_KEEP_ARGV0);
++
++	if (opt_status)
++		status_cmd();
++	else
++		usage_with_options(builtin_add_interactive_helper_usage,
++				   options);
+ 
+ 	return 0;
+ }
 -- 
-2.13.0.rc1.294.g07d810a77f-goog
+2.11.0
 
