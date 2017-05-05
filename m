@@ -2,93 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B106207B3
-	for <e@80x24.org>; Fri,  5 May 2017 15:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A711207B3
+	for <e@80x24.org>; Fri,  5 May 2017 15:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752218AbdEEPZ2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 11:25:28 -0400
-Received: from mout.web.de ([212.227.15.4]:63406 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751464AbdEEPZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 11:25:27 -0400
-Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Mcnuz-1dObSq3oy9-00Hszc; Fri, 05
- May 2017 17:25:22 +0200
-Subject: Re: not uptodate. Cannot merge
-To:     "G. Sylvie Davies" <sylvie@bit-booster.com>,
-        Git Users <git@vger.kernel.org>
-References: <CAAj3zPzHiwgS=2CSKP1y8zGUxHUWiq9TSeMhixeL+9ZfffY-pw@mail.gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <8b15577d-f997-79b5-5a77-2a8c01e20cf7@web.de>
-Date:   Fri, 5 May 2017 17:25:16 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
-MIME-Version: 1.0
-In-Reply-To: <CAAj3zPzHiwgS=2CSKP1y8zGUxHUWiq9TSeMhixeL+9ZfffY-pw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:bXVmBb7StiREVF1P+Rb4ubuNhnE6ynIBOkNQMF9RYa9/yFFAGC9
- 15BtXyFdll9g2y9z3eIXOLlFgH4LaH1m/9va3L9KPYVF1KY1yfK+X4rdNlBXlBjjOlFF6D8
- wifL+RIkG1smxyco1Ok1X73OjSUbQmCdUE8EZU/Z+/9jfKes/rJXSuHaBKovUbIN7t8FjE5
- FTsYuSPjB+8RDprD25Jew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KikCclffqqo=:KmAmUM9ZBQrI7kF9lPOE+e
- 5A/zOoJU3oZ6kPQ9OkPRknS4OJPYVU1UylfvgDpM23I/19H1QXMbbCGH/7b5pJ50fxPGBlp6h
- 6Lk6We1g6qKQSqGdXzDHr6WeQroNA/1bX1hLGad04OzuJt5ppJ2itJmwkvp5Z6U4vLYznkjrY
- fttRgp4/kyfurL2W7x4q6IYHafXtS3xCi3Nj/AhC8taGP1/d9wNpSZjiohw/1I0FUawWAyHO5
- 8sWczzsc5I/Z7FfcS9wwO/4ALL/YiUAxTcXE7mgTUfvOoAbexbUMNPfOGN1mywSurzPjMvGDm
- PRgGG23wEKKACcB1Tswv5PemklOJfy0r6KXhaIGZMNbrGd2w1lqsLdkrZQbQzaqDPyQJDL23u
- p/qI+jsYhoDZtRnTxNrUcQJ5eSNnl02XvLc92jZi++mZlO1LCjER07wUHa5BWqNJ/OoZaAaaX
- frYfXHj6IevTHhDUvMbBnAbFwFmEgaIelBID4CFiS4Jc5tYEZPvbiB4+tliEbTl9t9Emvoeq7
- c+FUaxyylzVbWWfwn6aRU/hZoAUDltJamxUjAgowjCpIa0VgpTncR06p1nCysde6MwqrF1CVM
- O/p43j6QPauILj/fhIfHW9E5i+yoJqXmGcNZEY3g2/D18NnOTRbOKqpe2XWHty6gyUFnbejMp
- jdL9N5j7Lx4VULMmX7WVPckKrYdSsek7KzGwbgvS/TAxGOhawAv+bYHNZNihaMGykLk+aqiYr
- gR44C/Wjfp9d8/T53+6xcO4zujq4Q7QPHn93WviFdl1qnELbgQ9cFm/2xUigTFjiCs1Z/AQSH
- JfWvofM
+        id S1754803AbdEEP2R (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 11:28:17 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:34802 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753362AbdEEP2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 11:28:15 -0400
+Received: by mail-qt0-f195.google.com with SMTP id l39so1235296qtb.1
+        for <git@vger.kernel.org>; Fri, 05 May 2017 08:28:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=ON/jVuZ/5g/lQp9BTDsODHjG413QwN+XFd0jNuTaT3Y=;
+        b=s8+LQF2UYRcFoNmyrnIdZJ7Y34cc3L2T1+pxCKiG+9LXIa32hyb8NLHid1UmG2R64G
+         oEsOYtlo+8kzVaG6s5PFEyvS9h5q5qW3CzLnxfToQuO27SjHdQ+IiqkszAAAivJtVUXI
+         6Fhc5RZrh/SPZJa9dvmDeROpLPlxr86qVlWOAs3xAGcYl0io5EXepMtn2TY9adLT3rJ5
+         lhI5TiRF5AMM6xyPrT6w/Ol01j9iZ/Yo5Od3tuenTEEp9Z6qtykigDWq1UC9trXSyREd
+         evipcEP7A4vNFhYlqg2QRxR2WqWBn8LerUcdu6BGFlMrWB1U1DQipd5qDXgy8QkSc5Kh
+         pQeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ON/jVuZ/5g/lQp9BTDsODHjG413QwN+XFd0jNuTaT3Y=;
+        b=m4uIIZz952bpsYkTjIGJrXgghZ53NKq1sDLULNGS0XJznwYmVMnKlh8ducuFL/B3My
+         +Gkhjod6yIqXuVHhRMJ+MlVXSFT/Y4bb98tHIKe23MDVnqE5JwVy0w6odreewVa5xtxt
+         bDnPynCi/n7c/53LybaXzzE6Cwu2vWOqHds37QNaT1GQV/gvXpuBcR94yKVfjflGSPXL
+         FGFeBlKj/e6oxEL994+qBGxvuQUBv4a9lonqh50pc0CEIpPBHA6u1F5jH14g53FnOCpW
+         1nqZCBa0K83t3CupvA4d7VdTxFMM4nXJL5Un9Sez7EMnvgojJMeOK4grzEszccEX7nHG
+         OmdA==
+X-Gm-Message-State: AN3rC/4WKh1FaRUDFqAKDYwby1XF57j9QuWtIOgE3x4eIz3ZVil7YNp7
+        A/LsobXofoQuBg==
+X-Received: by 10.237.63.20 with SMTP id p20mr45312052qtf.98.1493998094846;
+        Fri, 05 May 2017 08:28:14 -0700 (PDT)
+Received: from localhost.localdomain ([65.222.173.206])
+        by smtp.gmail.com with ESMTPSA id t68sm3392792qkc.44.2017.05.05.08.28.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 05 May 2017 08:28:13 -0700 (PDT)
+From:   Ben Peart <peartben@gmail.com>
+X-Google-Original-From: Ben Peart <benpeart@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, benpeart@microsoft.com,
+        christian.couder@gmail.com, larsxschneider@gmail.com, peff@peff.net
+Subject: [PATCH v7 00/10] refactor the filter process code into a reusable module
+Date:   Fri,  5 May 2017 11:27:52 -0400
+Message-Id: <20170505152802.6724-1-benpeart@microsoft.com>
+X-Mailer: git-send-email 2.12.2.gvfs.2.20.g3624a68d62.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-05-04 23:40, G. Sylvie Davies wrote:
-> Hi,
-> 
-> My little bitbucket "cherry-pick" button is failing on Windows from a
-> "git reset --hard" blowing up.
-> 
-> My situation:  Git-2.10.2.windows.1 / Bitbucket-4.14.3 / Windows
-> 10-10.0-amd64.   But I suspect even more recent Git will have the same
-> problem.
-> 
-> Now, I'm pretty far from Kansas here as you'll see from my "git clone"
-> invocation:
-> 
-> git.exe clone -c core.checkStat=minimal -c core.fileMode=false -c
-> core.ignoreStat=true -c core.trustctime=false -c
-> core.logAllRefUpdates=false --shared
-> C:\Users\gsylvie\dev\bb\target\bitbucket\home\shared\data\repositories\1
-> C:\Users\gsylvie\dev\bb\target\bitbucket\home\caches\bbClones\1
-> 
-> 
-> Right after cloning I create a ".git/info/attributes" file containing
-> just this one line:
-> 
-> * -text
-This -may- be part of the problem.
-In general, it is possible to add attributes on your local copy like
-this, but it is not recommendet, at least not from me.
-In general, the project should have a .gitattributes file, which
-belongs to the project and which travels together with push and pull.
-And of course, files should have been "normalized" and have LF in the repo.
+Changes from V6 include:
 
-In your case:
-What does
-git config core.autocrlf
-say?
+convert: remove erroneous tests for errno == EPIPE
+ - split into separate patch to fix a preexisting bug discovered in the review process
 
-[]
+pkt-line: Update packet_read_line() to test for len > 0
+ - split into separate patch to deal with errors that return negative lengths
+
+pkt-line: add packet_read_line_gently()
+ - update documentation to clarify return values
+ - update white space in function definition
+
+
+Refactor the filter.<driver>.process code into a separate sub-process
+module that can be used to reduce the cost of starting up a sub-process
+for multiple commands.  It does this by keeping the external process
+running and processing all commands by communicating over standard input
+and standard output using the packet format (pkt-line) based protocol.
+Full documentation is in Documentation/technical/api-sub-process.txt.
+
+This code is refactored from:
+
+	Commit edcc85814c ("convert: add filter.<driver>.process option", 2016-10-16)
+	keeps the external process running and processes all commands
+
+Ben Peart (10):
+  convert: remove erroneous tests for errno == EPIPE
+  pkt-line: fix packet_read_line() to handle len < 0 errors
+  pkt-line: add packet_read_line_gently()
+  convert: move packet_write_line() into pkt-line as packet_writel()
+  convert: split start_multi_file_filter() into two separate functions
+  convert: Separate generic structures and variables from the filter
+    specific ones
+  convert: Update generic functions to only use generic data structures
+  convert: rename reusable sub-process functions
+  sub-process: move sub-process functions into separate files
+  convert: Update subprocess_read_status to not die on EOF
+
+ Documentation/technical/api-sub-process.txt |  59 ++++++++++
+ Makefile                                    |   1 +
+ convert.c                                   | 161 ++++++----------------------
+ pkt-line.c                                  |  33 +++++-
+ pkt-line.h                                  |  12 +++
+ sub-process.c                               | 106 ++++++++++++++++++
+ sub-process.h                               |  49 +++++++++
+ 7 files changed, 292 insertions(+), 129 deletions(-)
+ create mode 100644 Documentation/technical/api-sub-process.txt
+ create mode 100644 sub-process.c
+ create mode 100644 sub-process.h
+
+-- 
+2.12.2.gvfs.2.20.g3624a68d62.dirty
 
