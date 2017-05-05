@@ -2,93 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D59D0207B3
-	for <e@80x24.org>; Fri,  5 May 2017 16:08:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4414B207B3
+	for <e@80x24.org>; Fri,  5 May 2017 16:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750938AbdEEQIR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 12:08:17 -0400
-Received: from mail-pf0-f196.google.com ([209.85.192.196]:35643 "EHLO
-        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750720AbdEEQIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 12:08:16 -0400
-Received: by mail-pf0-f196.google.com with SMTP id u26so1295020pfd.2
-        for <git@vger.kernel.org>; Fri, 05 May 2017 09:08:16 -0700 (PDT)
+        id S1750801AbdEEQRK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 12:17:10 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35914 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750753AbdEEQRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 12:17:09 -0400
+Received: by mail-wm0-f68.google.com with SMTP id u65so2270261wmu.3
+        for <git@vger.kernel.org>; Fri, 05 May 2017 09:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=obJRyNUQo3ma6FJTo2IxcAlVjuZn0CV/2Pc51XXKvDg=;
-        b=LJB4hfGFC6TJYEh+JWMYx9ycUoR3E6tMITNbKYo0vS14R1AXFQCfL2yA1wAzU/U8WK
-         AfGs1J9kIO+n6PHYABHmEbcyc6YHnbDd7jXSZuas3v7BspnYPESESzfb4+M8HMnVrTA0
-         24TfhVV9CUVDlmOaHEcsoYG8U4TROKKt71ZvAINXybPNx6GNzRU2vA/fvnyubGpmkXSK
-         XDsjhWv2r3JCEmEc0+6uh/Ql4s3FNzMKbjMJQgPiSYyW8gtHRSkdjyWplvRHHjQL4BDL
-         cfxxtpxHq6mGEG1777ipV+rHx8FRPvWXUubb6m8jS7KExO1AxI87M+7Y/MNoaWcQK062
-         ZwcQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KT755pj0uksb/wpCfOmOADo1Y7ILUzIsjifCgpTLYl8=;
+        b=BBL29K2euuEcu/sRHs4QPZHUNdLYa8pv/dXHmfhV9bL1RH/8xJ6oV/sS/O1i1qk7+2
+         54HL36jiW0uc7Lyx6b3f9VAyVLsElIOI1Ngz85Lj5L0IPpDvEze8U7DqlLn8UOFarjjP
+         DFuy+GbJt8XSu5bD5qu2tpzii62u2Z62h22hU7qJCvzkVATIhwL2bnWzfoSusWwqltEn
+         ezvZiLfx8Idj3JCkwKgCiAi3jfRgHKPvqJHGrHLAKFtPSkWux5dYO/Pnf1kVoUx0pKoH
+         Qcrt3Avoykj6R6WQf6KzbcHYbjqHphnYRGlcV7LvBdx0Pi7+18mi0rvGAyU7rlRkI/XR
+         F5gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=obJRyNUQo3ma6FJTo2IxcAlVjuZn0CV/2Pc51XXKvDg=;
-        b=jfCq3NeSHXfFR1t4xOda9LUtCwtWEjDG8Tke+72qgSX3LcIjcH3GRC2bpPlAncT7GY
-         5Y2u+VojrVBM4gWnwxNpS3p1RxtOl5gkpteatXwlz6J7ESBJDrl36oiC96dMjWDKhvx4
-         z977LJWDXn6QwIeCcYVgLzznUCRDZWJcMHzsVixOP9fO311Vp7EkgmJxECyc8VuCoYAe
-         5ZoezGpDtPux8mKPHCWQ+i/4KjFFjC9xig/HoJoJlxIVVMXSmPa8xXkfZCsXqklL4Fkv
-         +IXqU0Dyv0C3RM8ALcG9l9dJPqoJmdO4ZapM5ggXit1CzPmiOschpy8UCpnN9zL8pTuy
-         IN7g==
-X-Gm-Message-State: AN3rC/5U9AWARDXNjJ1tC/CJYZRrNM3ZdgP0mAJSeBOHiotOM2ucEcO7
-        19Orhuow4MmQ0g==
-X-Received: by 10.98.198.4 with SMTP id m4mr18214146pfg.160.1494000495826;
-        Fri, 05 May 2017 09:08:15 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:5d98:2d3c:6099:849])
-        by smtp.gmail.com with ESMTPSA id 7sm6448939pff.36.2017.05.05.09.08.14
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 05 May 2017 09:08:15 -0700 (PDT)
-Date:   Fri, 5 May 2017 09:08:13 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Lars Schneider <larsxschneider@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
-Subject: Re: [PATCH v1 2/2] travis-ci: add job to run tests with
- GETTEXT_POISON
-Message-ID: <20170505160813.GH28740@aiede.svl.corp.google.com>
-References: <20170505154053.58128-1-larsxschneider@gmail.com>
- <20170505154053.58128-3-larsxschneider@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KT755pj0uksb/wpCfOmOADo1Y7ILUzIsjifCgpTLYl8=;
+        b=RW8bENielpjVaMw7khnwcQnAHoSXYxMgYFYSoyKfg69yRW6Gdc9ptSzLzFHZ+IlVNq
+         NQQ42FjKkM1LbgktXAO2Uq3BcwDfWThQIKqJJQd4nG/Plvrr58Nm1xme5BIrW4H7UJLi
+         s5QikBedncKfrV3fFNHO5kuMPnt/12DKyTswEabL/f6jvKZW3loc2fXnT9ELJHNCbDSx
+         ki0PtLq0uEfOmxyCdhKUGvIDKsmHPZhUhxDD4aL0YnwMNsGKyvpe5e2diu1036tphIt2
+         mnm42tuoKdc4bjA3XLcr1cFvsdMfjEc/kzycF9BOK9PlXaykzEq/DB/yvNPLvrkKm1Yh
+         oBKw==
+X-Gm-Message-State: AN3rC/4jS9QosVWGmPGcbPTHNNbszMGGCTSixpNpVbOKnz0WAyLUtKoP
+        pJFIwzcnba101Oa426g=
+X-Received: by 10.80.214.215 with SMTP id l23mr8513097edj.147.1494001027603;
+        Fri, 05 May 2017 09:17:07 -0700 (PDT)
+Received: from localhost (cable-62-117-25-91.cust.telecolumbus.net. [62.117.25.91])
+        by smtp.gmail.com with ESMTPSA id i2sm250193eda.18.2017.05.05.09.17.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 May 2017 09:17:06 -0700 (PDT)
+From:   Ralf Thielow <ralf.thielow@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Thomas Rast <tr@thomasrast.ch>,
+        =?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
+        Christian Stimming <stimming@tuhh.de>,
+        Phillip Szelat <phillip.szelat@gmail.com>,
+        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
+        =?UTF-8?q?Magnus=20G=C3=B6rlitz?= <magnus.goerlitz@googlemail.com>,
+        Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: translate 4 new messages
+Date:   Fri,  5 May 2017 18:17:04 +0200
+Message-Id: <20170505161704.4666-1-ralf.thielow@gmail.com>
+X-Mailer: git-send-email 2.13.0.rc0.207.gb44265493
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170505154053.58128-3-larsxschneider@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Translate 4 new messages came from git.pot update in 28e1aaa48 (l10n:
+git.pot: v2.13.0 round 2 (4 new, 7 removed)).
 
-Lars Schneider wrote:
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ po/de.po | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-> Add a job to run Git tests with GETTEXT_POISON. In this job we don't run
-> the git-p4, git-svn, and HTTPD tests to save resources/time (those tests
-> are already executed in other jobs). Since we don't run these tests, we
-> can also skip the "before_install" step (which would install the
-> necessary dependencies) with an empty override.
->
-> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
-> ---
->  .travis.yml | 5 +++++
->  1 file changed, 5 insertions(+)
+diff --git a/po/de.po b/po/de.po
+index 12c3d36a0..679f8f472 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -2493,7 +2493,7 @@ msgstr ""
+ "Verwende Version %i"
+ 
+ #: read-cache.c:2375 sequencer.c:1350 sequencer.c:2048
+-#, fuzzy, c-format
++#, c-format
+ msgid "could not stat '%s'"
+ msgstr "Konnte '%s' nicht lesen."
+ 
+@@ -2514,7 +2514,7 @@ msgstr "Konnte '%s' nicht zum Schreiben öffnen."
+ 
+ #: refs.c:1667
+ msgid "ref updates forbidden inside quarantine environment"
+-msgstr ""
++msgstr "Aktualisierungen von Referenzen ist innerhalb der Quarantäne-Umgebung verboten."
+ 
+ #: refs/files-backend.c:1631
+ #, c-format
+@@ -14135,9 +14135,8 @@ msgid "populate the new working tree"
+ msgstr "das neue Arbeitsverzeichnis auschecken"
+ 
+ #: builtin/worktree.c:335
+-#, fuzzy
+ msgid "keep the new working tree locked"
+-msgstr "das neue Arbeitsverzeichnis auschecken"
++msgstr "das neue Arbeitsverzeichnis gesperrt lassen"
+ 
+ #: builtin/worktree.c:343
+ msgid "-b, -B, and --detach are mutually exclusive"
+@@ -14243,7 +14242,7 @@ msgstr ""
+ #: http.c:336
+ #, c-format
+ msgid "negative value for http.postbuffer; defaulting to %d"
+-msgstr ""
++msgstr "negativer Wert für http.postbuffer; benutze Standardwert %d"
+ 
+ #: http.c:357
+ msgid "Delegation control is not supported with cURL < 7.22.0"
+-- 
+2.13.0.rc0.207.gb44265493
 
-Yay!  I like this.
-
-What I like most about GETTEXT_POISON is that it verifies that
-translatable strings are not affecting other functionality of Git.
-It's a valuable thing to test continuously.
-
-For what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
