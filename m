@@ -2,151 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8032207B3
-	for <e@80x24.org>; Fri,  5 May 2017 20:16:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57E05207B3
+	for <e@80x24.org>; Fri,  5 May 2017 20:30:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755493AbdEEUQe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 16:16:34 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:33371 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754527AbdEEUQd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 16:16:33 -0400
-Received: by mail-wm0-f68.google.com with SMTP id y10so3411326wmh.0
-        for <git@vger.kernel.org>; Fri, 05 May 2017 13:16:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=jIRc1jKAdK2WOhSEdxd+XA3wQkNb7RhFTxQuObxBRME=;
-        b=n3TPK2373ree5jNJC10PjlFHsli7iZsfX+iFXybQdPjMgoIraJSEUy/2mWKVtnGySz
-         ARaMdUI7zPWNCnZAm2hBpOb5717zvdnA1WDxfyD4glJ/kH8mwYQAqf8tkuTKuymqqSQl
-         SejVAF8fWYgXkuBLcZ4WlJ0bbmO5EwmOJVh+aMxBIhvBpAybuY8M74LPuwUgg2XqsD4F
-         RAX+rDXe6GEEYuX3zEv5leQ49R8wdjMksCG15fwx4sds2/7W99SLT5J4cpTI/V+Pg5Q1
-         sVntfm1LnaaozNX9AlXd6L6EH4D+AQEFSbKF9o0NkiOb/BzSL5QB/QJZkJA51vVwG+Ta
-         7T/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=jIRc1jKAdK2WOhSEdxd+XA3wQkNb7RhFTxQuObxBRME=;
-        b=eBKHDNInHqu4sA3JN97QoICpXr1U0D4l4WWiVUtCjPyimDFnQl2JXTCn0VHK07fwN/
-         /GAUQ4Ts9ZXuGg7MzbnLzcCRzh9KuinUlhe3OLK2NFctwHIVRWKW19bCHIG82TIbb4eh
-         4vye/JbpILY12XFiXKypd2O9rAmFoOCv4WQgo6/JBm8vl8tJCvmxYAwYSgPtCQWnRQ1J
-         hK2N/FGyziwUH+yL19dM7kuq4JOGDLpDClg/xcPJCU6xEPatp4c/2JdR22zCw4FjS2ha
-         HZOH2+X1om3wXHqqnLc2fViZ7BmnaddTQhw3Zmvd6L7hHnnpLH8TOIR0xpobzopfdpV4
-         tQUA==
-X-Gm-Message-State: AN3rC/5j8yzgP58Wa9TBZAkmj/Qi6a419ubzDpEDHhVTvC9v3mYe46Ki
-        UD94nISfZm0dhw==
-X-Received: by 10.28.30.135 with SMTP id e129mr5926228wme.127.1494015391740;
-        Fri, 05 May 2017 13:16:31 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id h80sm2952796wmd.7.2017.05.05.13.16.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 05 May 2017 13:16:30 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Daniel Ferreira <bnmvco@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH 2/3] add--interactive: add builtin helper for interactive add
-Date:   Fri,  5 May 2017 20:16:21 +0000
-Message-Id: <20170505201621.25560-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <1494009820-2090-3-git-send-email-bnmvco@gmail.com>
-References: <1494009820-2090-3-git-send-email-bnmvco@gmail.com>
+        id S1752047AbdEEUab (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 16:30:31 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51651 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751465AbdEEUab (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 16:30:31 -0400
+Received: from virtualbox ([37.201.193.73]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6B6s-1e06dM33OM-00y7hM; Fri, 05
+ May 2017 22:30:18 +0200
+Date:   Fri, 5 May 2017 22:30:15 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Automating Coverity, was Re: [PATCH 00/26] Address a couple of
+ issues identified by Coverity
+In-Reply-To: <alpine.DEB.2.20.1704282205320.3480@virtualbox>
+Message-ID: <alpine.DEB.2.21.1.1705052227120.146734@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
+ <alpine.DEB.2.20.1704282205320.3480@virtualbox>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:zGxecLsZiucoLKDGUuYV1UqlVY2didmGDWvUom6IMne4BYx/H0/
+ 6GXNi9SeIt73MIPeDXZBHPytPAhS5kD+NrabRMTvhUP6mQS4VJVWxXCpbnzaHamJ5cg+kOH
+ VE4NM+Wh1K+7UK67c4SG4jEnf9g6VpIwyfYa0liTd2AWh6mSRssMddvw9tGcf1aCkkEL/HM
+ Fz/p85NCeuWz5sWO5ubYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:uPnXK3aCJDU=:kJPxHZaT2ssetbsphEibGb
+ Ak0J4ZRuFVPC8aJsLYJV0mAjpp4smysj2Nr4KU5ClZvG4TWYhMe26k+uKCrbr/GQ/Drhx0VGj
+ NfGhg1asdaM6H6hotukj9Kq8ChMXgnvnWW0WkVkxWRZDCLOio1zys7NkD2QHOVleF1Ek2h6o0
+ taOMQGNmU48eJxqr6Z9u/RpWV4y6070vAIbuPY+QdfaTJioaO4vNqext1FjtjCISoBREAPKgW
+ x+AmDmTqnNHa6g9WeYlCWUAQZzuLR9ow9G+hARA6O/JH10Sb8Y8sIxOF2Rr+IVPwCXMJ8J64K
+ iPdDG6RjgDvQK0X1NMqxRQCK2v6ZcaW2tLt44eEYiSAbWo0OiHewiC7NJKtIRUAU1lybdSMkz
+ jS+i0HHeijhQjoGpfKnrYe9yjSKoGX2W+J4l8iitMa88qfJqvexLKDaqIcODDeMaGidaG08fd
+ 76mymO1DQMKfO8j3UrKM2I+pmcWIUBdQl819AeaQUb5WY4RbriUrB7evFFXpytiA2yQrykYXM
+ pyE86Y3jb6qkhfO136WzKbsmm22/fZ+21tYeP3elMClAPej7bS/6Orjbfjqqz6PttL5k17iwc
+ QzfF3rr+rx14OQ8bOWLlVVyC56wRCp1GLoop5tmyweI5tWNYUfwLb+lQmfTCRrLJdt9tbUnA5
+ 78yvNsYr1JUvkix8zVbI7ICVZGZQ00X6pGlK9csSUHNBEqHRT2FWyOQhJvu7ry25y9gowa/8N
+ rrvNNdajFgQyhXdHKLfLzkY/9WOr3vobuvy2khtQcnwZc7ROHgBrO4IcW9RSjDvw/jffqT0Kx
+ xPAU7Go
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, May 5, 2017 at 8:43 PM, Daniel Ferreira <bnmvco@gmail.com> wrote:
-> Create a builtin helper for git-add--interactive, which right now is
-> only able to reproduce git-add--interactive.perl's status_cmd()
-> function, providing a summarized diff numstat to the user.
+Hi Stefan,
 
-I'm not a user of add -i and didn't review the main logic in detail,
-but I ran this, and aside from two issues this LGTM:
 
- * You missed a trailing \n in the output, so your formatting is
-   different from the current behavior.
+On Fri, 28 Apr 2017, Johannes Schindelin wrote:
 
- * You should be using the getopt API instead of rolling your own.
+> On Fri, 28 Apr 2017, Stefan Beller wrote:
+> 
+> > On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > > I still have to find the time to figure out one more detail: how to
+> > > download and extract the Coverity tool (the .zip archive has a
+> > > variable name for the top-level directory), and doing that only
+> > > every once in a while, say, only when there is no previously
+> > > unpacked tool, or it is already 4 weeks old.
+> > 
+> > That is an interesting problem, which I ignored as the older versions
+> > of their tools still works once they release new versions. So I just
+> > manually check every once in a while if they have new versions out
+> > there.
+> > 
+> > So if you find a nice solution to that problem, let me know, please.
+> 
+> I think I have a working idea (jotting it down in the editor, untested):
+> 
+> [... totally untested snippet ...]
 
-Fixes for both below, thanks a lot for hacking on this. As you pointed
-out this doesn't help with removing any of the perl code for now, but
-after replacing a few more command modes we can start chopping away at
-the perl code.
+And now I edited it and tested it. The code is now part of the script I
+use for pretty much all administrative (i.e. recurring and boring) tasks
+in the Git for Windows project:
 
-diff --git a/builtin/add-interactive--helper.c b/builtin/add-interactive--helper.c
-index 97ca1b38dc..ea0f790bd3 100644
---- a/builtin/add-interactive--helper.c
-+++ b/builtin/add-interactive--helper.c
-@@ -226,6 +226,7 @@ static void print_modified(void)
- 		printf(modified_fmt, index_changes, worktree_changes, f.path);
- 		printf("\n");
- 	}
-+	printf("\n");
- }
- 
- static void status_cmd(void)
-@@ -233,26 +234,31 @@ static void status_cmd(void)
- 	print_modified();
- }
- 
--static const char add_interactive_helper_usage[] =
--"git add-interactive--helper <command>";
-+static const char * const builtin_add_interactive_helper_usage[] = {
-+	N_("git add-interactive--helper <command>"),
-+	NULL
-+};
- 
- int cmd_add_interactive__helper(int argc, const char **argv, const char *prefix)
- {
--	int i, found_opt = 0;
--
--	git_config(git_add_interactive_config, NULL);
-+	int opt_status = 0;
- 
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
-+	struct option options[] = {
-+		OPT_BOOL(0, "status", &opt_status,
-+			 N_("print status information with diffstat")),
-+		OPT_END()
-+	};
- 
--		if (!strcmp(arg, "--status")) {
--			status_cmd();
--			found_opt = 1;
--		}
--	}
--
--	if (!found_opt)
--		usage(add_interactive_helper_usage);
-+	git_config(git_add_interactive_config, NULL);
-+	argc = parse_options(argc, argv, NULL, options,
-+			     builtin_add_interactive_helper_usage,
-+			     PARSE_OPT_KEEP_ARGV0);
-+
-+	if (opt_status)
-+		status_cmd();
-+	else
-+		usage_with_options(builtin_add_interactive_helper_usage,
-+				   options);
- 
- 	return 0;
- }
--- 
-2.11.0
+	https://github.com/git-for-windows/build-extra/commit/05b5342128
 
+May it be useful to you, too, at least as a starting point,
+Dscho
