@@ -7,82 +7,130 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE40C207F8
-	for <e@80x24.org>; Fri,  5 May 2017 07:08:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1A7E207F8
+	for <e@80x24.org>; Fri,  5 May 2017 10:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753252AbdEEHIE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 03:08:04 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:34001 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751216AbdEEHID (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 03:08:03 -0400
-Received: by mail-io0-f194.google.com with SMTP id 12so2605805iol.1
-        for <git@vger.kernel.org>; Fri, 05 May 2017 00:08:02 -0700 (PDT)
+        id S1752322AbdEEKIP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 06:08:15 -0400
+Received: from mail-wr0-f193.google.com ([209.85.128.193]:33664 "EHLO
+        mail-wr0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751486AbdEEKIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 06:08:14 -0400
+Received: by mail-wr0-f193.google.com with SMTP id w50so187440wrc.0
+        for <git@vger.kernel.org>; Fri, 05 May 2017 03:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=6g5sydc/PURXIaEx2nLeA0LV+5p58Hw/3dgZZxE/dn0=;
-        b=PhDc/t062NKvHbcQluI2RxUIN/bt+cF6tOXtTRhfWhCpHpZCcr+fheIf5/xYUdv+m/
-         2fNWmCR16hWsYnZWRMNX7pCA2OceRKgkgncAlJwkuvyyL4STS49wT/19jDBIbdf8+wyi
-         PHkkVgP0rURa+HXijOyDO09aGdnuywLP/TGaNkgqPxa6O9xfqEKKOCAePqCPE++9OAQc
-         rh/KtSN1aOLutTe+UmOHB8JSJKdUepkYm3Gk0UQ9O0s9mLIKOGgk+31YakzQRzAGYkKR
-         w3WaRBy8wJVT3DEHNfwdo0o6NP8xVH2wnFk9mI7iH6qbZuj92jCmTrMwfOPAGp9YB95t
-         ndDg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nkS9sIqzE5SEfCOFeDotjBCYvlt75sncqYcdbvnBaho=;
+        b=QXIKDzdSJ9tyLirfJ8rM0PWTFQQucDBaUhnIbxItnq4WZ96/uxpWZEsHNlD5QhPHa4
+         FXlFbWDSk+9fvrO/iXjh36prSgp9l0mx1E4kNw0EBBIsB3V2xf3VMIGXRhgMZU4Ta1Bv
+         X+HjMdop9Jc3if78VyMunPysr+WvJxP2VnhyER7Z3DIAnfKExpvmdk9RqcrYigi5o1mx
+         WKqfeNXbzvrVlkMxdgA0r2wiagtKm1g2ilNE6+rQ8N2R80l9vflFeFxjXngbP3pOgbrY
+         KTl/+A9/i5gxt307vAOvpkepsrFR9XxxuoUHe12yrZJf+EKjmkoG6bVdXuLd501qkvmW
+         CoxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=6g5sydc/PURXIaEx2nLeA0LV+5p58Hw/3dgZZxE/dn0=;
-        b=GT9YKFRBPyxTUJjnX6bofcMylsXd2LJikffXMYt6OWznn/Sw5heUXLi6krUX2FrGVF
-         6Qcga6GxjkBxOjopgsumvEw401hF48wyl3kZ7GsVfo5Ti7/CZcvjGYT36OpXn8THjGot
-         Pq6XVuKtYyjJUzkxm7+H2Lkoc2dl9m1/p4qg01ZxtyTeSh4FmoiYRoDiB8REFXW5p0hB
-         jm9UXETJKYeqaFCcxV7gLYyU16a2ePlcVScRNbp1g19OvlG8YnAWTCpRjU0lLycryzvG
-         r7NXgOsKOubKo0isL2DPYQUc0Ba3u6/g7TW0TTFv7vIr/1zfn/63jMQXZTI5RbTIgZLl
-         WVSw==
-X-Gm-Message-State: AN3rC/6RWt2g0bht1EMtI2FboV9J9ek5jJMX164rmmzZ0YBnCc6wL9aN
-        xp9sMkQq7Uc/ZyNeqNUdF7nDb73N8g==
-X-Received: by 10.107.178.129 with SMTP id b123mr41733821iof.50.1493968082134;
- Fri, 05 May 2017 00:08:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=nkS9sIqzE5SEfCOFeDotjBCYvlt75sncqYcdbvnBaho=;
+        b=IQJ2aI8Ggk+S4yCR/zLVKfIPVh0tjoPvzrKo6Q3YYD1txT8lgkvgTqAz08D2TKvZd5
+         2nEeTkLdFtNu3IFwEwZj4bbCPSwhigods7Y6gDMEg9ONUDtr1AAseLM6tkikrZcZeNYm
+         nNmiEY0l7Y9nZxxohJWmqX38gl0Na53zlqwLEpvsZNwrv+xUrZs+PdK2jwuX8VChRJS2
+         na3OsE5+C/7eRsgzO7K9O/jgARKobR2BkXTBrHKMgjb5fMWobqTdDJUlKNUSDYj489pG
+         XGFIArMUvu+daXKmQtZ1XIGuSKt6j69m1J0b4NJojfW6f9PqE9/ygSl5iMv7eg1I0OSv
+         zqcQ==
+X-Gm-Message-State: AN3rC/6yy7ryk0T6OcgaHCj0byUcpjgtO412/5bsA7uizP/51CzbXfwv
+        T/Y7vVNI39eqlw==
+X-Received: by 10.223.154.226 with SMTP id a89mr31999236wrc.192.1493978892509;
+        Fri, 05 May 2017 03:08:12 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id f25sm6515337wrf.13.2017.05.05.03.08.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 05 May 2017 03:08:11 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] doc: replace a couple of broken gmane links
+Date:   Fri,  5 May 2017 10:08:03 +0000
+Message-Id: <20170505100803.13238-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Fri, 5 May 2017 00:07:41 -0700 (PDT)
-In-Reply-To: <20170505052729.7576-2-whydoubt@gmail.com>
-References: <20170505052729.7576-1-whydoubt@gmail.com> <20170505052729.7576-2-whydoubt@gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 5 May 2017 09:07:41 +0200
-Message-ID: <CACBZZX6EuS86Kp5H+zPf9a_4PrOQqnxPwKdpEdYCXWPspYYp5A@mail.gmail.com>
-Subject: Re: [RFC PATCH 01/10] Remove unneeded dependency on blob.h from blame
-To:     Jeff Smith <whydoubt@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For commit message: This was originally added in commit acca687fa9
-("git-pickaxe: retire pickaxe", 2006-11-08), but has never been
-needed.
+Replace a couple of broken links to gmane with links to other
+archives. See commit 54471fdcc3 ("README: replace gmane link with
+public-inbox", 2016-12-15) for prior art.
 
-On Fri, May 5, 2017 at 7:27 AM, Jeff Smith <whydoubt@gmail.com> wrote:
-> Signed-off-by: Jeff Smith <whydoubt@gmail.com>
-> ---
->  builtin/blame.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 07506a3..42c56eb 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -8,7 +8,6 @@
->  #include "cache.h"
->  #include "refs.h"
->  #include "builtin.h"
-> -#include "blob.h"
->  #include "commit.h"
->  #include "tag.h"
->  #include "tree-walk.h"
-> --
-> 2.9.3
->
+With this change there's still 4 references left in the code:
+
+    $ git grep -E '(article|thread)\.gmane.org' -- |grep -v RelNotes|wc -l
+    4
+
+I couldn't find alternative links for those.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+Perhaps someone else will have better luck with the other ones, which
+are:
+
+    Documentation/git-bisect-lk2009.txt-1355-- [[[6]]] https://lwn.net/Articles/277872/[Jonathan Corbet. 'Bisection divides users and developers'. LWN.net.]
+    Documentation/git-bisect-lk2009.txt:1356:- [[[7]]] http://article.gmane.org/gmane.linux.scsi/36652/[Ingo Molnar. 'Re: BUG 2.6.23-rc3 can't see sd partitions on Alpha'. Gmane.]
+    Documentation/git-bisect-lk2009.txt-1357-- [[[8]]] https://www.kernel.org/pub/software/scm/git/docs/git-bisect.html[Junio C Hamano and the git-list. 'git-bisect(1) Manual Page'. Linux Kernel Archives.]
+    --
+    git-rebase--interactive.sh-7-# The original idea comes from Eric W. Biederman, in
+    git-rebase--interactive.sh:8:# http://article.gmane.org/gmane.comp.version-control.git/22407
+    git-rebase--interactive.sh-9-#
+    --
+    t/t4038-diff-combined.sh-356-# Test for a bug reported at
+    t/t4038-diff-combined.sh:357:# http://thread.gmane.org/gmane.comp.version-control.git/224410
+    t/t4038-diff-combined.sh-358-# where a delete lines were missing from combined diff output when they
+    --
+    tree-walk.c-1077-                * in future, see
+    tree-walk.c:1078:                * http://thread.gmane.org/gmane.comp.version-control.git/163757/focus=163840
+    tree-walk.c-1079-                */
+
+ Documentation/CodingGuidelines      | 2 +-
+ Documentation/git-bisect-lk2009.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index a4191aa388..2248cf7324 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -24,7 +24,7 @@ code.  For Git in general, a few rough rules are:
+ 
+    "Once it _is_ in the tree, it's not really worth the patch noise to
+    go and fix it up."
+-   Cf. http://article.gmane.org/gmane.linux.kernel/943020
++   Cf. http://lkml.iu.edu/hypermail/linux/kernel/1001.3/01069.html
+ 
+ Make your code readable and sensible, and don't try to be clever.
+ 
+diff --git a/Documentation/git-bisect-lk2009.txt b/Documentation/git-bisect-lk2009.txt
+index 8ac75fcc25..b5d5e8b544 100644
+--- a/Documentation/git-bisect-lk2009.txt
++++ b/Documentation/git-bisect-lk2009.txt
+@@ -1350,7 +1350,7 @@ References
+ - [[[1]]] https://www.nist.gov/sites/default/files/documents/director/planning/report02-3.pdf['The Economic Impacts of Inadequate Infratructure for Software Testing'.  Nist Planning Report 02-3], see Executive Summary and Chapter 8.
+ - [[[2]]] http://www.oracle.com/technetwork/java/codeconvtoc-136057.html['Code Conventions for the Java Programming Language'. Sun Microsystems.]
+ - [[[3]]] https://en.wikipedia.org/wiki/Software_maintenance['Software maintenance'. Wikipedia.]
+-- [[[4]]] http://article.gmane.org/gmane.comp.version-control.git/45195/[Junio C Hamano. 'Automated bisect success story'. Gmane.]
++- [[[4]]] https://public-inbox.org/git/7vps5xsbwp.fsf_-_@assigned-by-dhcp.cox.net/[Junio C Hamano. 'Automated bisect success story'.]
+ - [[[5]]] https://lwn.net/Articles/317154/[Christian Couder. 'Fully automated bisecting with "git bisect run"'. LWN.net.]
+ - [[[6]]] https://lwn.net/Articles/277872/[Jonathan Corbet. 'Bisection divides users and developers'. LWN.net.]
+ - [[[7]]] http://article.gmane.org/gmane.linux.scsi/36652/[Ingo Molnar. 'Re: BUG 2.6.23-rc3 can't see sd partitions on Alpha'. Gmane.]
+-- 
+2.11.0
+
