@@ -6,85 +6,95 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64997207B3
-	for <e@80x24.org>; Fri,  5 May 2017 23:46:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63722207B3
+	for <e@80x24.org>; Fri,  5 May 2017 23:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751662AbdEEXqv (ORCPT <rfc822;e@80x24.org>);
+        id S1751905AbdEEXqw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 19:46:52 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:34351 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751370AbdEEXqv (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 5 May 2017 19:46:51 -0400
-Received: from mail-pf0-f172.google.com ([209.85.192.172]:33155 "EHLO
-        mail-pf0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751370AbdEEXqu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 19:46:50 -0400
-Received: by mail-pf0-f172.google.com with SMTP id q20so9062513pfg.0
-        for <git@vger.kernel.org>; Fri, 05 May 2017 16:46:50 -0700 (PDT)
+Received: by mail-pg0-f42.google.com with SMTP id 12so9637426pgc.1
+        for <git@vger.kernel.org>; Fri, 05 May 2017 16:46:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=ojwieKzIFpytvUJ09MY58dQoiVPsGK0d8kzxQW6UXVs=;
-        b=dc9140XfJgRymNRbX3OJtc3rMBKgImwM5ZhIcqUTgl5ELGa0c+M69MkFFD32c8oWvq
-         yjsaplJpkNFYWzh+MnqNr3r18og+x2c660Jyw/K8BDhYY3Pa39s6dEnNNvUurB2mVZTp
-         2tgOn6FKRqiAkKuS9jv7eZyv445ioQdn8/VxmnkHlkAEyB5H0FkBfpNNvhYaT1bfqY5H
-         RcJ0AfNAOI3Yself72xzkGiQm0poLfcfa9zocbBZMVKXwoqvROLyy4hhgfe1t/h+p3kI
-         MxSS3RiyriBOrjtp08OVDJeZajThXEd/e+iBNnfzIWQXyzSeXe1VzAZp/LFXyCtBzytC
-         nQfQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references;
+        bh=BUx7WMX0fvuW5nZVxDekLDx3CVSxcmG8K/j5/eBNtfw=;
+        b=dXFOnIrSkeIM1c41GsZhPB+fDHRsPcdD29xz4p7jPmTlJtBGDXPenJI/dkxbkvXZCQ
+         L+03Mm7Fg+rYIoqpN4t75Rwnpwx2d5Qdakyh4Z48SBP5FVcjxLHtWod160U3K8Esty78
+         s+5Or823/V0Wqn4DjxRGpKSdZg1VVp9hbLtZ3Du0Gp6dbdDYRid/vSpvvOVNJl9JWw4r
+         2Iq/iKAnmn/XDMMEphoYZopV9uHG91zGFadqU0X3HY/6jKc8iADj8VT+0kwEVYq+0rpk
+         DEBiVmvIxsdRlsth0HCmVg5FSrguczQKVVtLIqgVwfV8hvVq5JmgWbnbAMtPh8Eb/Te3
+         rDpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=ojwieKzIFpytvUJ09MY58dQoiVPsGK0d8kzxQW6UXVs=;
-        b=HXgEZ8AQcC20fExOaVq+JeHVkUQMgOGx33J5F6OwcpBwI/nY1aHUdoq9kPiwnNlay+
-         s/rnADCYebsO/85eUZxK6cuwypSGs0aAJ4AHbeT9UKfrr/Y69pcI8gckMqCatFiBGGe6
-         mFdvJumBRLCjhiprzaTRvtw5oPkk352kMdZ/2mUBQr00tv2QoQ0Fn2nFfw8/k9jmOwqk
-         /EtCuLCSLvJeftBdkyNuREF6iaumPB6EdNd2qYtU3tRgN4S9OlutpxX7kQ/vnPVaJl7o
-         /i0fPyWuVJVwMtJDSG7fXcCJ54bvHKv+WJB/Z4mbTUyBIiJabuIJ9FhC6TR5qsWV3U5W
-         l9LA==
-X-Gm-Message-State: AN3rC/49LHAbW+o/10K53Y1zsPSvT/q5iPrq1JEX542WrKyDAMhGbpF+
-        lg0dwRbzkIip056X
-X-Received: by 10.99.123.81 with SMTP id k17mr6354297pgn.125.1494028009483;
-        Fri, 05 May 2017 16:46:49 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:in-reply-to:references;
+        bh=BUx7WMX0fvuW5nZVxDekLDx3CVSxcmG8K/j5/eBNtfw=;
+        b=UoDO/B6vCx8n7gGzFpB9Qp+n9d5V7RJU4RS7dJqBM4Jhj/+KMoGMomBhJBzuicmibZ
+         Rr3H5OzOjjOuDxSEj8gv+YLVt59VQOurOH/8j+LAPiSTq6QKwoFYV+41ahdlsQ6gaHlM
+         PXHakBj0ZJI9y0R43U+lm4KepKgtAWVjh1Q6DfKNTR8lB9j4Az7roNOY23Sdt2u6AVvv
+         ElnXbSR70ryU+iH1RMkukHn0EnOPKHmtdMl6IOjt9Xf830C3D5+bvnjaS9gyLXGkovvd
+         MIpYIA5P3tNoFqREqeLHCKl/ZbBPN1VVv2td/ETL79abM26WGXmrdBIRJ50mYClGeNlv
+         vZtg==
+X-Gm-Message-State: AN3rC/6ZJqfduHiXq4VRiEbD1wd++HNFIZF4KD/XOBRrWANR4mBkTMu3
+        WrPRUpu/byqQEd0a
+X-Received: by 10.99.160.68 with SMTP id u4mr6303254pgn.39.1494028010903;
+        Fri, 05 May 2017 16:46:50 -0700 (PDT)
 Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id c77sm11096576pfe.37.2017.05.05.16.46.47
+        by smtp.gmail.com with ESMTPSA id c77sm11096576pfe.37.2017.05.05.16.46.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 05 May 2017 16:46:48 -0700 (PDT)
+        Fri, 05 May 2017 16:46:49 -0700 (PDT)
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, sbeller@google.com
-Subject: [PATCH 0/3] Clarify interaction between signed pushes and push options
-Date:   Fri,  5 May 2017 16:46:41 -0700
-Message-Id: <cover.1494027001.git.jonathantanmy@google.com>
+Subject: [PATCH 1/3] docs: correct receive.advertisePushOptions default
+Date:   Fri,  5 May 2017 16:46:42 -0700
+Message-Id: <28c40105e53a4d4d828092bc1697fff8992419d6.1494027001.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f-goog
+In-Reply-To: <cover.1494027001.git.jonathantanmy@google.com>
+References: <cover.1494027001.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1494027001.git.jonathantanmy@google.com>
+References: <cover.1494027001.git.jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We noticed this when trying to use Git to make a signed push with push
-options to a server using JGit (which rejects such pushes because the
-Git client makes requests that are, strictly speaking, incompatible with
-the documented protocol).
+In commit c714e45 ("receive-pack: implement advertising and receiving
+push options", 2016-07-14), receive-pack was taught to (among other
+things) advertise that it understood push options, depending on
+configuration. It was documented that it advertised such ability by
+default; however, it actually does not. (In that commit, notice that
+advertise_push_options defaults to 0, unlike advertise_atomic_push which
+defaults to 1.)
 
-There have been several commits (see the commits linked in the commit
-messages of the patches sent in reply to this e-mail) to support push
-options (that are read by receive hooks) when using "git push", but the
-interaction between push options and signed pushes are not very clear.
-Here are some patches (containing both code and documentation) that
-clarify this interaction.
+Update the documentation to state that it does not advertise the ability
+by default.
 
-I would appreciate a review of this - if we could make the protocol
-clear, we could then update JGit to use the updated protocol and be no
-longer incompatible with existing Git clients.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+ Documentation/config.txt | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-Jonathan Tan (3):
-  docs: correct receive.advertisePushOptions default
-  receive-pack: verify push options in cert
-  protocol docs: explain receive-pack push options
-
- Documentation/config.txt                  |  5 ++--
- Documentation/git-receive-pack.txt        | 10 +++++++
- Documentation/technical/pack-protocol.txt | 32 ++++++++++++++++----
- builtin/receive-pack.c                    | 49 ++++++++++++++++++++++++++++---
- t/t5534-push-signed.sh                    | 15 ++++++++++
- 5 files changed, 98 insertions(+), 13 deletions(-)
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 475e874d5..f49a2f3cb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2620,9 +2620,8 @@ receive.advertiseAtomic::
+ 	capability, set this variable to false.
+ 
+ receive.advertisePushOptions::
+-	By default, git-receive-pack will advertise the push options
+-	capability to its clients. If you don't want to advertise this
+-	capability, set this variable to false.
++	When set to true, git-receive-pack will advertise the push options
++	capability to its clients.
+ 
+ receive.autogc::
+ 	By default, git-receive-pack will run "git-gc --auto" after
 -- 
 2.13.0.rc1.294.g07d810a77f-goog
 
