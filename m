@@ -2,81 +2,240 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34F56207F8
-	for <e@80x24.org>; Sat,  6 May 2017 21:42:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D8DD207F8
+	for <e@80x24.org>; Sat,  6 May 2017 22:11:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752913AbdEFVmZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 17:42:25 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:60158 "EHLO dcvr.yhbt.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750836AbdEFVmY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 May 2017 17:42:24 -0400
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 0BD9B207F8;
-        Sat,  6 May 2017 21:42:24 +0000 (UTC)
-Date:   Sat, 6 May 2017 21:42:23 +0000
-From:   Eric Wong <e@80x24.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Samuel Lijin <sxlijin@gmail.com>,
-        Jonathan Tirado <tiradojonathan32@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        meta@public-inbox.org
-Subject: Re: vger not relaying some of Junio's messages today?
-Message-ID: <20170506214223.GA28534@starla>
-References: <v26esrmyqyqykypjs75fx2vy.1494092763967@email.android.com>
- <CAJZjrdWYDMFHRrbeFk89p+GebLpWJBUQfnpC6w87aVh8czL5_w@mail.gmail.com>
- <20170506205041.GA26189@starla>
- <CACBZZX42rhmrq8z0u1aRXw87oT22YywwnaFHUMjDYgtE_i56nw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX42rhmrq8z0u1aRXw87oT22YywwnaFHUMjDYgtE_i56nw@mail.gmail.com>
+        id S1754142AbdEFWLH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 18:11:07 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37550 "EHLO
+        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1751656AbdEFWLF (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:05 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2BE89280AD;
+        Sat,  6 May 2017 22:11:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
+        s=default; t=1494108664;
+        bh=AZ863SvUvUOtjXlBVq2VozZf1nv9G0huUCftOE6drMA=;
+        h=From:To:Cc:Subject:Date:From;
+        b=JZvCAKtL/69NP7PYPNGEEWcH3Ml4lNUfP/3Y6WC85td9luo2W5rYrxrgne/Q/KVjJ
+         SBaxSIDGiNjtarEjVglDEda6RN/KiBB7DxpjjHC9ZGm9laVQFhNNLXN/VhbtrnAuN0
+         ecvIWOF4hR+rBSr0WmJGyWuYW+yY7P6G2t3ADWHjn+UjxH+JQj5JVzSdcdl62tq0T5
+         IZdQPglxBiXDRa55t9eFF8fOEQ2X5oloW+EJ40HLleEgwpjT+iT2hOtxOsnPjlqnnV
+         vinJPbTKNCrwpSfEXDSdLSPx2/uLmYDFJwMvB3BIxpHQ+tkSv6mHStt017nfpfDJI6
+         cgO6hjgy+qcts3MqJV2tluijP4cC05pT/e1nLKl7MQ+IJsLCpClS+I2hhqcpZRXI6s
+         QtU2xtZKlpvzV24FNHuWHnnKpardRqN1ObRYDJ3CYUU2qVBUzo/+vMdPbcW6Y8jWDo
+         iX7PGbPcbEPsSNEvgFarSNpiavsC5Zai7T0pKSzDSAy4tG+6fhG
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
+Subject: [PATCH v3 00/53] object_id part 8
+Date:   Sat,  6 May 2017 22:09:45 +0000
+Message-Id: <20170506221038.296722-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Thanks a lot for public-inbox, my only problem with it is that it
-> doesn't cover every single mailing list I'm on, just git :)
+This is the eighth series of patches to convert unsigned char [20] to
+struct object_id.  This series converts lookup_commit, lookup_blob,
+lookup_tree, lookup_tag, and finally parse_object to struct object_id.
 
-Yes, I'm hoping more folks can start running their own
-instances.  I notice you're on p5p where I started to
-occasionally lurk a few years back.  Is that something you'd be
-interesting in mirroring? :)
+A small number of functions have temporaries inserted during the
+conversion in order to allow conversion of functions that still need to
+take unsigned char *; they are removed either later in the series or
+will be in a future series.
 
-Some lists I'm involved in tend to be centralized
-(reply-to-list, not reply-to-all); so UI changes will be needed
-in public-inbox...
+This series can be fetched from the object-id-part8 branch from either
+of the follwing:
 
-> Are you or someone else maintaining some ancillary scripts for it? I
-> probably need to fix my patch workflow but my usual mode is browsing
-> in GMail & then manually 'git am'-ing some file I find with git-log
-> commands.
+https://github.com/bk2204/git
+https://git.crustytoothpaste.net/git/bmc/git.git
 
-Not really.  I started out ssoma(*) just for archival/mirroring,
-but it's mostly forgotten at this point.  I would rather people
-build on existing protocols like NNTP.
+Changes from v2:
+* Remove spurious space after ampersand.
+* Undo more needless line rewrapping.
+* Expand computation for notes path.
+* Remove check for line->len with parse_oid_hex.
 
-> I have one to git am a patch from a msgid, thought I should write
-> something to handle a series in some DWIM fashion (e.g. apply the
-> latest continuous sequence of patches matching --author) but figured
-> that someone's probably wrote this already & I don't need to hack it
-> up myself...
+Changes from v1:
+* Rebase on master.  This led to a conflict with the ref-cache changes in patch
+  39.  Extra-careful review here would be welcome.
+* Undo the needless line rewrapping.
+* Fix the commit message typo.
+* Use GIT_MAX_RAWSZ instead of struct object_id for the pack checksum.
 
-I've been meaning to wire up the web search to allow downloading
-an entire mbox worth of search results.  But it could be a bit
-expensive for some queries and there needs to be a limit.  The
-current limit for web display is too small; so maybe 1000
-messages per-mbox at a time to avoid DoS-ing the server.
+brian m. carlson (53):
+  fetch-pack: convert to struct object_id
+  Clean up outstanding object_id transforms.
+  Convert struct cache_tree to use struct object_id
+  builtin/name-rev: convert to struct object_id
+  builtin/prune: convert to struct object_id
+  bundle: convert to struct object_id
+  branch: convert to struct object_id
+  builtin/blame: convert static function to struct object_id
+  builtin/rev-parse: convert to struct object_id
+  fast-import: convert internal structs to struct object_id
+  fast-import: convert to struct object_id
+  submodule: convert merge_submodule to use struct object_id
+  notes-cache: convert to struct object_id
+  parse-options-cb: convert to struct object_id
+  reflog_expire: convert to struct object_id
+  builtin/verify-commit: convert to struct object_id
+  tag: convert parse_tag_buffer to struct object_id
+  http-push: convert some static functions to struct object_id
+  notes-utils: convert internals to struct object_id
+  revision: convert prepare_show_merge to struct object_id
+  shallow: convert shallow registration functions to object_id
+  sequencer: convert some functions to struct object_id
+  builtin/tag: convert to struct object_id
+  Convert remaining callers of lookup_commit_reference* to object_id
+  Convert lookup_commit* to struct object_id
+  pack: convert struct pack_idx_entry to struct object_id
+  builtin/unpack-objects: convert to struct object_id
+  Convert remaining callers of lookup_blob to object_id
+  Convert lookup_blob to struct object_id
+  tree: convert read_tree_1 to use struct object_id internally
+  builtin/reflog: convert tree_is_complete to take struct object_id
+  Convert lookup_tree to struct object_id
+  log-tree: convert to struct object_id
+  Convert lookup_tag to struct object_id
+  Convert the verify_pack callback to struct object_id
+  Convert struct ref_array_item to struct object_id
+  ref-filter: convert some static functions to struct object_id
+  refs: convert struct ref_update to use struct object_id
+  refs/files-backend: convert many internals to struct object_id
+  http-push: convert process_ls_object and descendants to object_id
+  revision: rename add_pending_sha1 to add_pending_oid
+  revision: convert remaining parse_object callers to object_id
+  upload-pack: convert remaining parse_object callers to object_id
+  sha1_name: convert internals of peel_onion to object_id
+  builtin/read-tree: convert to struct object_id
+  builtin/ls-files: convert overlay_tree_on_cache to object_id
+  sequencer: convert fast_forward_to to struct object_id
+  merge: convert checkout_fast_forward to struct object_id
+  builtin/ls-tree: convert to struct object_id
+  diff-lib: convert do_diff_cache to struct object_id
+  sequencer: convert do_recursive_merge to struct object_id
+  tree: convert parse_tree_indirect to struct object_id
+  object: convert parse_object* to take struct object_id
 
-(*) some-sort-of-mail archiver: git clone git://80x24.org/ssoma
+ archive.c                       |   6 +-
+ bisect.c                        |   2 +-
+ blob.c                          |   6 +-
+ blob.h                          |   2 +-
+ branch.c                        |  16 +-
+ builtin/am.c                    |  18 +-
+ builtin/blame.c                 |  14 +-
+ builtin/branch.c                |   6 +-
+ builtin/checkout.c              |  18 +-
+ builtin/clone.c                 |   4 +-
+ builtin/commit-tree.c           |   2 +-
+ builtin/commit.c                |   8 +-
+ builtin/describe.c              |  10 +-
+ builtin/diff-tree.c             |   8 +-
+ builtin/diff.c                  |   6 +-
+ builtin/fast-export.c           |   8 +-
+ builtin/fetch.c                 |   7 +-
+ builtin/fmt-merge-msg.c         |   8 +-
+ builtin/fsck.c                  |  16 +-
+ builtin/grep.c                  |   2 +-
+ builtin/index-pack.c            |  56 ++---
+ builtin/log.c                   |  10 +-
+ builtin/ls-files.c              |   6 +-
+ builtin/ls-tree.c               |   6 +-
+ builtin/merge-base.c            |   6 +-
+ builtin/merge-tree.c            |  10 +-
+ builtin/merge.c                 |  12 +-
+ builtin/name-rev.c              |  32 +--
+ builtin/notes.c                 |   2 +-
+ builtin/pack-objects.c          |  71 ++++---
+ builtin/prune.c                 |   7 +-
+ builtin/pull.c                  |  14 +-
+ builtin/read-tree.c             |  10 +-
+ builtin/receive-pack.c          |   8 +-
+ builtin/reflog.c                |  36 ++--
+ builtin/replace.c               |   6 +-
+ builtin/reset.c                 |  10 +-
+ builtin/rev-list.c              |   2 +-
+ builtin/rev-parse.c             |  56 ++---
+ builtin/show-branch.c           |   4 +-
+ builtin/tag.c                   |  66 +++---
+ builtin/unpack-objects.c        |  65 +++---
+ builtin/verify-commit.c         |  12 +-
+ bulk-checkin.c                  |   4 +-
+ bundle.c                        |  39 ++--
+ bundle.h                        |   4 +-
+ cache-tree.c                    |  33 +--
+ cache-tree.h                    |   3 +-
+ cache.h                         |   4 +-
+ commit.c                        |  38 ++--
+ commit.h                        |  16 +-
+ diff-lib.c                      |  12 +-
+ diff.c                          |   4 +-
+ diff.h                          |   2 +-
+ fast-import.c                   | 447 ++++++++++++++++++++--------------------
+ fetch-pack.c                    |  97 ++++-----
+ fsck.c                          |   6 +-
+ http-backend.c                  |   2 +-
+ http-push.c                     |  55 ++---
+ list-objects.c                  |   4 +-
+ log-tree.c                      |  26 +--
+ merge-recursive.c               |  16 +-
+ merge.c                         |   4 +-
+ notes-cache.c                   |  29 ++-
+ notes-cache.h                   |   4 +-
+ notes-merge.c                   |  26 +--
+ notes-utils.c                   |  18 +-
+ object.c                        |  38 ++--
+ object.h                        |   8 +-
+ pack-bitmap-write.c             |   8 +-
+ pack-bitmap.c                   |   4 +-
+ pack-check.c                    |  25 ++-
+ pack-objects.c                  |   8 +-
+ pack-write.c                    |  10 +-
+ pack.h                          |   4 +-
+ parse-options-cb.c              |   6 +-
+ pretty.c                        |   2 +-
+ reachable.c                     |   8 +-
+ ref-filter.c                    |  38 ++--
+ ref-filter.h                    |   2 +-
+ reflog-walk.c                   |   6 +-
+ refs.c                          |   4 +-
+ refs.h                          |   6 +-
+ refs/files-backend.c            | 158 +++++++-------
+ refs/ref-cache.c                |   4 +-
+ refs/ref-cache.h                |   2 +-
+ refs/refs-internal.h            |   4 +-
+ remote.c                        |  17 +-
+ revision.c                      |  76 +++----
+ revision.h                      |   6 +-
+ sequencer.c                     |  59 +++---
+ server-info.c                   |   2 +-
+ sha1_name.c                     |  38 ++--
+ shallow.c                       |  34 +--
+ submodule.c                     |  32 +--
+ submodule.h                     |   8 +-
+ t/helper/test-dump-cache-tree.c |   4 +-
+ t/helper/test-match-trees.c     |   4 +-
+ tag.c                           |  25 ++-
+ tag.h                           |   2 +-
+ transport.c                     |   2 +-
+ tree.c                          |  22 +-
+ tree.h                          |   4 +-
+ upload-pack.c                   |  60 +++---
+ walker.c                        |   8 +-
+ wt-status.c                     |   2 +-
+ 106 files changed, 1178 insertions(+), 1139 deletions(-)
+
