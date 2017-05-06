@@ -2,102 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_24_48,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB49D207F8
-	for <e@80x24.org>; Sat,  6 May 2017 18:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8102207F8
+	for <e@80x24.org>; Sat,  6 May 2017 19:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752666AbdEFSt4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 14:49:56 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:35414 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752829AbdEFStx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 May 2017 14:49:53 -0400
-Received: by mail-qt0-f194.google.com with SMTP id r58so4880710qtb.2
-        for <git@vger.kernel.org>; Sat, 06 May 2017 11:49:43 -0700 (PDT)
+        id S1752600AbdEFTOr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 15:14:47 -0400
+Received: from mail-io0-f174.google.com ([209.85.223.174]:36132 "EHLO
+        mail-io0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751469AbdEFTOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 May 2017 15:14:46 -0400
+Received: by mail-io0-f174.google.com with SMTP id o12so3668156iod.3
+        for <git@vger.kernel.org>; Sat, 06 May 2017 12:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=gqd/Me2GBEVK2M6W9C9uR5X1CmyAGpjMaIyCiZsc+YI=;
-        b=Cfdijg9XnETW4AVI4WepnjmPCeFZu0a+6pAua/CMSy9nU9SGdqKDSr3H9AA7kvft7p
-         2hBFSoGliLoMkTHD1VFxhw9HtDWl29TPNfGVKq9VQl2Eo1nByqXg4GotjLNsc1qgOpXc
-         G/cdrJZnqBhutEeJxVUMqrosUXDAbrzLpdNbq431rEzLMAOm1i/DXy3L4Io15hce2pou
-         O6cLFLszYxMYmDcsfP6fLjszLZo0N5aA48AOJDcMfZkyum7m+fJ4jji1MXdb6UtvIlaN
-         82cW37XRCatrk8kdN+FliAXzrY/GJpXxVC/sfssY/uVS0k7nzoo/tiynoT+8tLU+utRZ
-         BTaA==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=YnhwWwfXWXlPPWldB7vvqTqGYe3hnQtaWnKf75nVjMU=;
+        b=QV2i+2sE3M/E13pywZR4E82jg3gJLVqbFe8s59vE1KweI8h/MFUGtjhBIpgGZmiy98
+         tLLscijQEm4veWtvTnDe04/5QtEW1Jy/mIPeAikfR7xrPAMDTmIdJI/eYnnOQrjmwR9A
+         3lpJ6Dhutu0Vv+rXNS6qWbLga65VzVxhkTc6UgSfLseKlPMpS8lb/dCH84CnWWbNkWXR
+         r1f/WqzWFV3TYRTloiQWpyscnoTO687B28khFAkbkrQHaBniXn50XI1s/wwp8fjsqPl/
+         inHBPzAe9cYs5PKwjoGmEQ3x+qRFIaFus1OWsDiGw4LKxdHeOHwSmHutBJEhylL6L406
+         tIfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=gqd/Me2GBEVK2M6W9C9uR5X1CmyAGpjMaIyCiZsc+YI=;
-        b=Wux2U9/8UolauDZJ6Mj2sF+CkFzwEXqlXHScZCNGl7PoVwwevUzHvo+oHbK/CZiZMa
-         aVrhazStwrAKjtGxIlpnmzNJiRcMn61g87XHozQpncLRY2hwQtCj0cJ3EdCctMWigGi7
-         HdlRPCaYmQ4yKmqZHS0Y1JwBmab475ly2/QBH7K8BwjqYSn2si9u5gW8ZMMz9TifLH/7
-         NzP0b2Ml7QewK/sPX6cXOR0jiykuIIVs1sRoIulOP4gvvH+146oPaJX8bbwi8/eCNkZl
-         YBKCg/JaBxcSUSva6gQvg3p13YGrU2pgKlIaiYHG4AdZdz+C2/SwpK/gyZZfwiBnDJob
-         Kdcw==
-X-Gm-Message-State: AODbwcAqVscHfuJ/bY71NBIJGFBTmsSHBEaadTw499++ctM4jtTTnJ+s
-        gDownDb044Z0RMrGmAQ=
-X-Received: by 10.200.37.227 with SMTP id f32mr10303280qtf.221.1494096577344;
-        Sat, 06 May 2017 11:49:37 -0700 (PDT)
-Received: from localhost.localdomain ([129.59.122.17])
-        by smtp.gmail.com with ESMTPSA id 83sm6866347qkq.26.2017.05.06.11.49.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 06 May 2017 11:49:36 -0700 (PDT)
-From:   Samuel Lijin <sxlijin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Samuel Lijin <sxlijin@gmail.com>
-Subject: [PATCH v2 9/9] t7061: expect ignored files in untracked dirs
-Date:   Fri,  5 May 2017 05:46:11 -0500
-Message-Id: <20170505104611.17845-10-sxlijin@gmail.com>
-X-Mailer: git-send-email 2.12.2
-In-Reply-To: <20170505104611.17845-1-sxlijin@gmail.com>
-References: <20170505104611.17845-1-sxlijin@gmail.com>
-In-Reply-To: <20170503032932.16043-1-sxlijin@gmail.com>
-References: <20170503032932.16043-1-sxlijin@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=YnhwWwfXWXlPPWldB7vvqTqGYe3hnQtaWnKf75nVjMU=;
+        b=GxwehVT9m9hsBl3AVo8xtIIQj8seit1wuUIGMN9dYRSPXIUiEMgjS2tdkl+whL3SGl
+         5qfNbzXupxPnde2S8OJhaUg9X/Vsw4fxhUda/VSDHECawH8DbKqFU6fIBsNFvwb9Z37j
+         TpT+aJHwtQhwbre0oPSamUPyMKP7qRhi7aCINjSmKtT8oEXwBM1y3znlRsMWF25vbSBi
+         Hgkbm87VXITchqGz1ht9IlnpH9dQDlT2bW6dSClkbH1uIYtxdtqdY/rbqqB3gLMoczX+
+         oJh8IbLHFKNZ0XMIGD61pMPL0lM51ChT8nYk9SEM+nHbTD4aNp8eJ4Ca9Yci4Ag9eLjs
+         fotA==
+X-Gm-Message-State: AN3rC/5PNpLBEYIEhh0SAQitET8i+BGVfrwDpUEhJUFUR2nmJR2jfD32
+        DsT/pKJoxQ2OGTmYmnUA5M9P1meXG/70
+X-Received: by 10.107.131.205 with SMTP id n74mr21250700ioi.97.1494098085291;
+ Sat, 06 May 2017 12:14:45 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.0.223 with HTTP; Sat, 6 May 2017 12:14:44 -0700 (PDT)
+In-Reply-To: <7DA6022F-02F0-41AC-ABAB-64565E81481F@gmail.com>
+References: <7DA6022F-02F0-41AC-ABAB-64565E81481F@gmail.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Sat, 6 May 2017 12:14:44 -0700
+Message-ID: <CAGyf7-EDHPdL_YvNoC9QNy11=YfxSpmZBFZ5UR50ub1o2yqAug@mail.gmail.com>
+Subject: Re: Git smart http: parsing commit messages in git-receive-pack
+To:     akos tajti <akos.tajti@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We now expect `status --ignored` to list ignored files even if they are
-in an untracked directory.
+On Sat, May 6, 2017 at 5:30 AM, akos tajti <akos.tajti@gmail.com> wrote:
+> Dear All,
+>
+> we implemented a java servlet around the git-http-backend. This servlet i=
+ntercepts the requests sent by the git client when pushing. One thing I wan=
+t to achieve is parsing the commit messages in the pre push phase (request =
+param service=3D=3Dgit-receive-pack) and after checking if the commit messa=
+ges contain a given string reject/accept the request. The problem is that I=
+ couldn't find a way of parsing the commit messages in git-receive-pack (I =
+can do this in the post  push phase but in that case I cannot reject the pu=
+sh because the changes are already on the server). Is there a way of gettin=
+g the commit messages before they're actually on the server so that I can r=
+eject the push?
 
-Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
----
- t/t7061-wtstatus-ignore.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+The protocol isn't really intended for use to try and parse pack data
+before it's spooled to disk. It might be possible, but it's likely to
+be brittle (due to things like delta compression, for example).
 
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index dc3be92a2..fc6013ba3 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -9,9 +9,10 @@ cat >expected <<\EOF
- ?? actual
- ?? expected
- ?? untracked/
-+!! untracked/ignored
- EOF
- 
--test_expect_failure 'status untracked directory with --ignored' '
-+test_expect_success 'status untracked directory with --ignored' '
- 	echo "ignored" >.gitignore &&
- 	mkdir untracked &&
- 	: >untracked/ignored &&
-@@ -20,7 +21,7 @@ test_expect_failure 'status untracked directory with --ignored' '
- 	test_cmp expected actual
- '
- 
--test_expect_failure 'same with gitignore starting with BOM' '
-+test_expect_success 'same with gitignore starting with BOM' '
- 	printf "\357\273\277ignored\n" >.gitignore &&
- 	mkdir -p untracked &&
- 	: >untracked/ignored &&
--- 
-2.12.2
+I believe what you're looking for is a pre-receive hook[1] on your
+server. This is how Bitbucket Server (which is also written in Java)
+works. It opens a socket on localhost and installs a pre-receive hook
+into each repository which uses a Perl script to pipe all of its input
+to the listening socket and then read any response from the server
+back. After the push has written all of its objects to disk, Git
+invokes any pre-receive hooks and passes in all the ref changes. The
+Perl script pipes those to the server, which applies whatever checks
+are desired and writes any errors or info back to the hook, which then
+prints it for Git to use before exiting with the correct status code
+(0 to accept the push, 1 to reject it).
 
+This means the objects are on the server, but in Git 2.11 Peff added
+"quarantine" functionality which writes those new objects into an
+"incoming" directory[2]. That means, while they're on disk, they're
+_not_ in the repository itself. If the pre-receive hook rejects the
+push, those objects are immediately deleted from disk.
+
+That means if you pair a pre-receive hook with Git 2.11 or newer on
+the server, you should be able to achieve what you're looking for.
+Once the objects have been written to the quarantine directory, you
+can use normal Git commands, like cat-file, rev-list or log, to review
+them. If they don't meet your requirements, just reject the push and
+Git will delete the objects automatically
+
+Hope this helps!
+Bryan Turner
+
+>
+> Thanks in advance,
+> =C3=81kos Tajti
+>
+
+[1]: https://git-scm.com/docs/githooks includes documentation for
+pre-receive inputs and outputs
+[2]: https://github.com/git/git/blob/master/Documentation/git-receive-pack.=
+txt#L219-L243
+includes some additional documentation about the quarantine
+environment
