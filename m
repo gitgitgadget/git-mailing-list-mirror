@@ -7,61 +7,59 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 491A7207B3
-	for <e@80x24.org>; Sat,  6 May 2017 00:20:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 909C7207B3
+	for <e@80x24.org>; Sat,  6 May 2017 00:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751510AbdEFAUM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 20:20:12 -0400
-Received: from mail-pg0-f67.google.com ([74.125.83.67]:36522 "EHLO
-        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751326AbdEFAUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 20:20:11 -0400
-Received: by mail-pg0-f67.google.com with SMTP id 12so2512988pgc.3
-        for <git@vger.kernel.org>; Fri, 05 May 2017 17:20:10 -0700 (PDT)
+        id S1751784AbdEFA0J (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 20:26:09 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35402 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751633AbdEFA0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 20:26:08 -0400
+Received: by mail-pf0-f195.google.com with SMTP id u26so2403470pfd.2
+        for <git@vger.kernel.org>; Fri, 05 May 2017 17:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ARvlP8Pxo89DvMMR2iweTAdGCBbSbKbLXt16sOPmXpc=;
-        b=pM3jS1b+QKVOr7gpyk0LLy7lJRA8c/TWt6AJX2zsQhXYObWgHg00mqzxaZ+kjaBwaW
-         DfJw+Ps8+L09BxCiF5w2xQYz3e4mlZClPwjmCK+72cnoB8X+VhEXJ/dBcIA0yOekoPCx
-         qx3OkwavaSAuJazPiQRPlpAeNKqgFdhR/Kxa9caftpJ6HG8Mq+HiDnqggrB25r4d7q9w
-         dV++ufW2aCIKqOggaSIgiPX8Uyf3qiOuLik6cy5ls8h/UfctuSgQC4XmShYPd973q8cb
-         a9htfBnREDPDY9hV8PfwczcZnBWdttNoMJ1zaqh99S7aGRYfYVj4L7EfSlH96iWjaUb3
-         guBQ==
+        bh=Df9IET3VyBqq6lPAuiDLouVxVvGX7V3Cx3z2HEGh4zQ=;
+        b=YN5ArDJAy+yT+HLbbsn/ND66nRD25HGGZuLYuTMLqwc3D6gDTHFpWH26GmE+oKMRVZ
+         fKqFBwxGcxFGoqUvEmydMKqyFInAcIMMkszkleh8JAWJYOchyIaTOMWOpAj5kiA6E9dM
+         DhpEw2MNJzej54PUZdFp03Ug3IemzojFOzU3JssUyGszaLlLRwwviQNEGLiErI+BT+Bw
+         YlpckrFD2E98x498E3nyDkUNl2hL+flSTSKG+gRlMkao3NaJDBPmQoUbTwOLgZN7AVXz
+         4ycQGFq2+sb9/VVd7xnKSrlden3iXQlTz/da7OQVt3QWoNsscgmLx11iU4Yl2ZxM+FPn
+         b5ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ARvlP8Pxo89DvMMR2iweTAdGCBbSbKbLXt16sOPmXpc=;
-        b=kR5DSsO8V4XHSzRLjj7hNdcd7Yl6FbnN8kyq7HFM24/84SBSwnc9qhUXSTd41Tx6eH
-         MCJ7tvMgvtHeqdD6YdbDMiGlHlx8brR0MnsWNwbCjjJEE4HoYrAg0/UZhOZ89aZOgblN
-         E5Z9ZjI1StcjuTthlVGKcuVRSSk+jiIX+u5BpvrSnMncl9TxgBnhA47ry1XEM3ToNRrI
-         aKV02Jty1DFOTQhLPUPPHgroEGxrcfgsxCdpZUngFWOm902N1cyMMDvEuwK5+uxQ1zam
-         ogseyRrUuBPdQAji1BB2xTNoNrxJlh1Jc2LLquW7x9RGZ3SCJsV+a1KTsCZ9n8aTATqD
-         Nb0w==
-X-Gm-Message-State: AN3rC/5ej+SGVBjvXxSWrlodrlmQvirlowqt+/yh8OCgUN4mb2eNbgP/
-        te03/7+bjMDKrg==
-X-Received: by 10.99.39.194 with SMTP id n185mr6534894pgn.15.1494030010388;
-        Fri, 05 May 2017 17:20:10 -0700 (PDT)
+        bh=Df9IET3VyBqq6lPAuiDLouVxVvGX7V3Cx3z2HEGh4zQ=;
+        b=e7kx5TOS6m4KZ8C1D6qh2VsZrDimt1lME/Q/Hio1Kp+02d7P7WaWAxOcJ9hTVm7cOA
+         /g0+1SGyNFJSYlA98439xbLZpr8gekBrsAlSEHFGJKocsY/DtSLs3DHFBLw5VBMY9T3P
+         XWX7q6AWI0c/0I69DjVRK+EidLynFyLb2sKbRQsk64YVJsY2eEhTp2MTl0uUygxpa6CG
+         JVXWU6gx6aP+lr+qgsP7XMqvQfr12P2EtLGL2Sh6BxVjDIXIcbHsO618Y0Hrsg7Bd8jn
+         Bls6Cl5uZJURHFIZ7PIHI9JwsPTZ2g0zt6Ypj1Ixx7nrRYw3AGofwYWB/epKeLmAUfC9
+         B9cw==
+X-Gm-Message-State: AN3rC/6AAoPh+TEfcjBc9t12izM73Xj70Hr9tqTCTxqwH50QxDXKSEi1
+        tgnJZmfifZxAEg==
+X-Received: by 10.99.126.92 with SMTP id o28mr6594881pgn.63.1494030367884;
+        Fri, 05 May 2017 17:26:07 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:5d98:2d3c:6099:849])
-        by smtp.gmail.com with ESMTPSA id 29sm11767032pfo.9.2017.05.05.17.20.09
+        by smtp.gmail.com with ESMTPSA id t5sm5147605pgo.48.2017.05.05.17.26.07
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 05 May 2017 17:20:09 -0700 (PDT)
-Date:   Fri, 5 May 2017 17:20:07 -0700
+        Fri, 05 May 2017 17:26:07 -0700 (PDT)
+Date:   Fri, 5 May 2017 17:26:05 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 2/3] receive-pack: verify push options in cert
-Message-ID: <20170506002007.GL28740@aiede.svl.corp.google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: Re: [PATCH 3/3] protocol docs: explain receive-pack push options
+Message-ID: <20170506002605.GM28740@aiede.svl.corp.google.com>
 References: <cover.1494027001.git.jonathantanmy@google.com>
- <01e098de2da2e5f0b341ab6d967d032d840c365e.1494027001.git.jonathantanmy@google.com>
- <CAGZ79ka4vG1yd1JtK9bDBjWPUG0UCPMvw2XQUsfX_e_xFCpVLA@mail.gmail.com>
+ <615007182a5e205a7074317a4c8788aa4eb009ff.1494027001.git.jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79ka4vG1yd1JtK9bDBjWPUG0UCPMvw2XQUsfX_e_xFCpVLA@mail.gmail.com>
+In-Reply-To: <615007182a5e205a7074317a4c8788aa4eb009ff.1494027001.git.jonathantanmy@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -70,58 +68,87 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Stefan Beller wrote:
-> On Fri, May 5, 2017 at 4:46 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
+Jonathan Tan wrote:
 
->> This sets in stone the requirement that send-pack redundantly send its
->> push options in 2 places, but I think that this is better than the
->> alternatives. Sending push options only within the cert is
->> backwards-incompatible with existing Git servers (which read push
->> options only from outside the cert), and sending push options only
->> outside the cert means that the push options are not signed for.
->
-> As the combination of push certs and push options are broken
-> (at least when using JGit as well, which are used in Gerrit
-> installations), I would not feel too bad about actually going
-> the backwards-incompatible way.
+> Support for push options in the receive-pack protocol (and all Git
+> components that speak it) have been added over a few commits, but not
+> fully documented (especially its interaction with signed pushes). Update
+> the protocol documentation to include the relevant details.
 
-Per offline discussion, what you're proposing is to omit the second
-copy of push options from the client request, so the server does not
-have to see two copies.  I agree that that would be a better protocol,
-but I think that ship has sailed.
+Thanks.  This could be combined with the previous patch, since that
+patch is enforcing what this patch documents.
 
-Current versions of git the client and git the server are able to
-interoperate without trouble (though the server-side bug is ugly in
-terms of what the push certs mean).
+[...]
+> -This list is followed by a flush-pkt. Then the push options are transmitted
+> -one per packet followed by another flush-pkt. After that the packfile that
+> -should contain all the objects that the server will need to complete the new
+> -references will be sent.
+> +This list is followed by a flush-pkt.
 
-Current versions of JGit the server *require* that the push options be
-omitted from the push certificate.  I don't think there exists a
-sensible way to interoperate with that, so we can ignore that JGit
-server behavior as a bug (like you've said).
+I think this removed more than intended.
 
-If we want to omit the second copy of the push certs (which sounds
-like a reasonable thing to want), that would require a new capability
-to be added to the protocol to do so.  That way, interoperability with
-existing versions of git the client wouldn't be broken.  That could
-happen on top of this series --- it is not needed for fixing the bug
-that this series fixes.
+Before c714e45f (receive-pack: implement advertising and receiving
+push options, 2016-07-14), this said
 
-To summarize:
+	This list is followed by a flush-pkt and then the packfile that should
+	contain all the objects that the server will need to complete the new
+	references.
 
- 1. I agree that we shouldn't feel bad about breaking compatibility
-    with the JGit server behavior at issue, since there is no
-    reasonable way to be compatible with it.  And that's what this
-    series does --- it breaks compatibility with the broken versions
-    of JGit server and picks what the Git client has been doing
-    instead.
+which I think would work fine.
 
- 2. I don't think we should break new versions of Git's ability to
-    interoperate with current versions of the server, even though I
-    consider the current server behavior to be broken.
+[...]
+> -  update-request    =  *shallow ( command-list | push-cert ) [packfile]
+> +  update-request    =  *shallow ( command-list | push-cert )
 
- 3. If someone is interested in getting rid of the redundant second
-    copy of push options, we have a way to do so, by introducing a
-    new capability
+This seems confusing to me both before and after.  How does
+update-request get used?  Is it supposed to include the packfile or not?
+
+Where do push-options fit into an unsigned request?
+
+[...]
+> @@ -500,12 +497,35 @@ references will be sent.
+>  		      PKT-LINE("pusher" SP ident LF)
+>  		      PKT-LINE("pushee" SP url LF)
+>  		      PKT-LINE("nonce" SP nonce LF)
+> +		      *PKT-LINE("push-option" SP push-option LF)
+>  		      PKT-LINE(LF)
+>  		      *PKT-LINE(command LF)
+>  		      *PKT-LINE(gpg-signature-lines LF)
+>  		      PKT-LINE("push-cert-end" LF)
+>  
+> -  packfile          = "PACK" 28*(OCTET)
+> +  push-option       =  1*CHAR
+> +----
+> +
+> +If the server has advertised the 'push-options' capability and the client has
+> +specified 'push-options' as part of the capability list above, the client then
+> +sends its push options followed by a flush-pkt.
+> +
+> +----
+> +  push-options      =  *PKT-LINE(push-option) flush-pkt
+> +----
+> +
+> +For backwards compatibility with older Git servers, if the client sends a push
+> +cert and push options, it SHOULD send its push options both embedded within the
+
+This needs to be a MUST, not SHOULD.
+
+> +push cert and after the push cert. (Note that the push options within the cert
+> +are prefixed, but the push options after the cert are not.) Both these lists
+> +SHOULD be consistent.
+
+Likewise this one.
+
+What does it mean to be consistent?
+
+> +
+> +After that the packfile that
+> +should contain all the objects that the server will need to complete the new
+> +references will be sent.
+> +
+> +----
+> +  packfile          =  "PACK" 28*(OCTET)
+>  ----
 
 Thanks,
 Jonathan
