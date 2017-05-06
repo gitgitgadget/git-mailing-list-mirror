@@ -2,104 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9D4D207B3
-	for <e@80x24.org>; Sat,  6 May 2017 00:06:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1A8C207B3
+	for <e@80x24.org>; Sat,  6 May 2017 00:10:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751691AbdEFAGM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 5 May 2017 20:06:12 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:35740 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751370AbdEFAGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 5 May 2017 20:06:11 -0400
-Received: by mail-pg0-f54.google.com with SMTP id o3so9764194pgn.2
-        for <git@vger.kernel.org>; Fri, 05 May 2017 17:06:11 -0700 (PDT)
+        id S1751557AbdEFAKG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 5 May 2017 20:10:06 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:34018 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751344AbdEFAKF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 5 May 2017 20:10:05 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u187so2505538pgb.1
+        for <git@vger.kernel.org>; Fri, 05 May 2017 17:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Gp6G3cqvLUAufQBfiuwrT/K+7w+APvm2ih7LPG6BWnk=;
-        b=sIqb4NItU3epwIIpjmUKpLSPUO60nLH3F4oIeEblGQhp48fWK1i8lI0KMDHAx3KDWl
-         FoFFPqXkJFbFdj88dV6qunLL6lepGp2WbUQ+n8iY5qDyON5qtQ0Gwp5cMs66NY/bH0Nt
-         ksO+/IW71rB5vgTVnfirFmCWvGpLA15jC6w98BmfW+YSmy5oeFp3IEcBwjc69WEWsA6V
-         wtiLg/wUHCGmoYkYENnY5q+1fPnHjaX76ga4CTIROWxaaONQD63x/s7a+5xdndAvAmt/
-         iMPtfesd8CIvaCKOOzdZ1qzfqaweFX8pR//MVVSq3oyABnTKsuJUg0gVH9zLCXS6yL1u
-         1VsA==
+        bh=OybZR2Y4yOxaUY0e5JcF4zoaawUboXWcpdJd4jSq5Bg=;
+        b=K1akeav3CMA7P4BrM/aMwGS1qE+Tl1448EtVXVLKWS2Fqt+yRmBQ7KY1qUJvYX+1my
+         fUTaS7tIHXMZiUW2/czonpJECn+CotKkmMzkuIzBZ9RXh5JkWkXijOVNfWaCZP9afdot
+         WBpr/Bl++PiVcqRhl7i9UcHGBcaYyoqoaN9d0e1GmtMx8rTNCugBSvvMf4btnsiVtiV4
+         cf+B1fVPIRKrrnZVa1Zl//GAXsBDpVVwG/z5YciGE4S4KHYUM1muAvP8aj44neIVsaV6
+         K3tjBUOmqceD67u+cgPJPWA+R+2ic1fychhRnP9uylgnEDUaEZCaw5HJ4vwZL+swGlri
+         sOfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Gp6G3cqvLUAufQBfiuwrT/K+7w+APvm2ih7LPG6BWnk=;
-        b=YwsGbaJ7k9zUSarvo05wAu3l+WHfBDhL2Wr5yO0LiA0G+6ixpNHA9TdIpWtT881m4Q
-         NCm5eV2QWTy6WuaRp3SkjanJwBydRoHydGGNuymXnPlA5yZA8A8TRTuJouNKrskd4e4D
-         ap5SkVWzTBxFxX+qN+svl5l4hqRhzTuO6P5fobh1HfPdS+6yyCJ06uKYjSJ7haqba+56
-         nBKrym2GKgiOhW/ERM8Bq82WYkefLfXkDFAYzgIw+CRDwu/ICtRhP41QsKkNBr+1IViH
-         3M02X5h4ufKn6mo4l40QxVEH60TyaM8zbqc2ecwuSuJjLgAuBAfV3Y/Lk1F3SEIVHUip
-         tW1Q==
-X-Gm-Message-State: AN3rC/6HGyKYksx8j31WZ5E//D9u0ONAS0wB0U9UY0esF2dlM/4fTx8v
-        npbn5HCfZyx6cEn4J8rAvQ==
-X-Received: by 10.98.17.156 with SMTP id 28mr4605445pfr.267.1494029170407;
-        Fri, 05 May 2017 17:06:10 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:68f1:1fe9:5380:71aa])
-        by smtp.gmail.com with ESMTPSA id 186sm10746399pfx.72.2017.05.05.17.06.09
+        bh=OybZR2Y4yOxaUY0e5JcF4zoaawUboXWcpdJd4jSq5Bg=;
+        b=ab3IcyTdHfdfzoV4pKqEPts6jW6Kx0TZ2ugIDH1ICIOUV58ufu+kTxVfe9LvDD+nNx
+         9/eeEF55Sia5uZGs0Td+juYal5xJSwEluAXrDfWESBDcNnDZDQcZfYImd2/i6TXTGL+P
+         fwnoIHrWsPU4TebSNAtOXZ+QCPce39XtmqnKKe10gU7XrTDkMp1oCnEqyfA5DdrDVOlN
+         lm0YvFvCYN5CNcXohKFFWv8JcB5oKaTdBr0TQYtGLN1QstNeFwgm6Oc8mi0rNiQvOK6v
+         cE9bEoj54A2wQ8wLTdGrUDemK3hZZoA3T2lGp6uoV3MeQVeL7QCAHUa6DTItJqBOapqq
+         IV0g==
+X-Gm-Message-State: AN3rC/4a5U6V6st7XPksV2cFbsYByQqksEnuGeoIvnbYoPAu1V2P1ke/
+        rblsaW/JXgBpoQ==
+X-Received: by 10.98.61.150 with SMTP id x22mr20085107pfj.170.1494029405084;
+        Fri, 05 May 2017 17:10:05 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:5d98:2d3c:6099:849])
+        by smtp.gmail.com with ESMTPSA id 202sm5483905pge.12.2017.05.05.17.10.04
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 05 May 2017 17:06:09 -0700 (PDT)
-Date:   Fri, 5 May 2017 17:06:08 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
+        Fri, 05 May 2017 17:10:04 -0700 (PDT)
+Date:   Fri, 5 May 2017 17:10:02 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, sbeller@google.com
 Subject: Re: [PATCH 2/3] receive-pack: verify push options in cert
-Message-ID: <20170506000608.GD55152@google.com>
+Message-ID: <20170506001002.GK28740@aiede.svl.corp.google.com>
 References: <cover.1494027001.git.jonathantanmy@google.com>
  <01e098de2da2e5f0b341ab6d967d032d840c365e.1494027001.git.jonathantanmy@google.com>
- <CAGZ79ka4vG1yd1JtK9bDBjWPUG0UCPMvw2XQUsfX_e_xFCpVLA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79ka4vG1yd1JtK9bDBjWPUG0UCPMvw2XQUsfX_e_xFCpVLA@mail.gmail.com>
+In-Reply-To: <01e098de2da2e5f0b341ab6d967d032d840c365e.1494027001.git.jonathantanmy@google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/05, Stefan Beller wrote:
-> On Fri, May 5, 2017 at 4:46 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> > In commit f6a4e61 ("push: accept push options", 2016-07-14), send-pack
-> > was taught to include push options both within the signed cert (if the
-> > push is a signed push) and outside the signed cert; however,
-> > receive-pack ignores push options within the cert, only handling push
-> > options outside the cert.
-> >
-> > Teach receive-pack, in the case that push options are provided for a
-> > signed push, to verify that the push options both within the cert and
-> > outside the cert are consistent, and to provide the results of that
-> > verification to the receive hooks as an environment variable (just like
-> > it currently does for the nonce verification).
-> >
-> > This sets in stone the requirement that send-pack redundantly send its
-> > push options in 2 places, but I think that this is better than the
-> > alternatives. Sending push options only within the cert is
-> > backwards-incompatible with existing Git servers (which read push
-> > options only from outside the cert), and sending push options only
-> > outside the cert means that the push options are not signed for.
-> 
-> As the combination of push certs and push options are broken
-> (at least when using JGit as well, which are used in Gerrit
-> installations), I would not feel too bad about actually going
-> the backwards-incompatible way.
+Hi,
 
-yeah just think of the bits that could be saved!
+Jonathan Tan wrote:
 
-But in all seriousness, I'd agree that doing the backwards-incompatible
-way would be cleaner in the longer run (esp since they are broken
-currently).
+> In commit f6a4e61 ("push: accept push options", 2016-07-14), send-pack
+> was taught to include push options both within the signed cert (if the
+> push is a signed push) and outside the signed cert; however,
+> receive-pack ignores push options within the cert, only handling push
+> options outside the cert.
 
+Yikes.  Thanks for fixing it.
 
--- 
-Brandon Williams
+[...]
+> --- a/Documentation/git-receive-pack.txt
+> +++ b/Documentation/git-receive-pack.txt
+> @@ -106,6 +106,16 @@ the following environment variables:
+>  	Also read about `receive.certNonceSlop` variable in
+>  	linkgit:git-config[1].
+>  
+> +`GIT_PUSH_CERT_OPTION_STATUS`::
+> +`BAD`;;
+> +	For backwards compatibility reasons, when accepting a signed
+> +	push, receive-pack requires that push options be written both
+> +	inside and outside the certificate. ("git push" does this
+> +	automatically.) `BAD` is returned if they are inconsistent.
+
+In this manual page the reader doesn't need to know it's for backword
+compatibility.  It is simply what the protocol requires.
+
+The protocol doc and especially the commit message are better places
+to talk about rationale (as you already are doing nicely in patch 3).
+
+> +`OK`;;
+> +	The push options inside and outside the certificate are
+> +	consistent.
+
+Hm.  I would have thought it would be simpler to simply reject the
+push without invoking hooks in the BAD case.  But
+GIT_PUSH_CERT_NONCE_STATUS provides precedent for this, forcing me to
+think longer.
+
+Is the idea that invoking the hook despite a bad client is a way to
+provide an opportunity to audit log the error?
+
+... okay, I've thought longer.  I think this is a different kind of
+error than a bad nonce: for example, a bad nonce might be the result
+of a misconfiguration that makes the client get the wrong nonce or a
+sign of a caller trying to brute-force a stable nonce.  For
+comparison, this error is a more simple protocol violation, like a
+malformed pkt-line.
+
+When we see a malformed pkt-line, we error out and do not invoke the
+pre-receive hook.  For this error I think we should behave the same
+way: show an error to the user and abort the connection, without
+invoking hooks.
+
+[...]
+> --- a/t/t5534-push-signed.sh
+> +++ b/t/t5534-push-signed.sh
+> @@ -124,6 +124,21 @@ test_expect_success GPG 'signed push sends push certificate' '
+>  	test_cmp expect dst/push-cert-status
+>  '
+>  
+> +test_expect_success GPG 'signed push reports push option status in receive hook' '
+
+Is there a straightforward way to test the error case?  (If there
+isn't, I can live with that --- it would just be nice to have a test
+that the behavior introduced here is preserved.)
+
+Thanks and hope that helps,
+Jonathan
