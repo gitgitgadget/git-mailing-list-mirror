@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA25207F8
-	for <e@80x24.org>; Sat,  6 May 2017 22:13:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3519F207F8
+	for <e@80x24.org>; Sat,  6 May 2017 22:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755098AbdEFWNN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 18:13:13 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37652 "EHLO
+        id S1755134AbdEFWNP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 18:13:15 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37944 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754618AbdEFWLs (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:48 -0400
+        by vger.kernel.org with ESMTP id S1754211AbdEFWLx (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:53 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 2D913280D7;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 50119280D9;
         Sat,  6 May 2017 22:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1494108678;
-        bh=4Aah0QPZnN3sMvpWAVWvYLoUrYEdAmoP/LF2fg9FgwE=;
+        bh=v47/5DpeWArSIuwy3i7qvugzLYHomigldtTkBBJFnl0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JR8ptHAQzyZtbQjBrlTbsJ3xflud3wg1FqdNYfXKSNzK1zmJHI6VQFQrA3S77wdAK
-         mjBfnte7frwK0ei1K1T7vQrP21GhibB44fnygrg6rChnYoFsv7So14E+xwH/rjbIMl
-         lHodU/8N+jBgFvBD1pgv/sYNEIaQeQyoznuZuOi7Z3gXSbSPrI2OqluUhqy28HYzPL
-         ylEf9VUZxzlMwiJWM7scROlXsm40zuFKin6Nna0G96IrgY23W8IpC5zyLIvrGX+JFI
-         kPR41QUHSiaRPM8Yaif2sK1G48ykhYHE18NVIjVxOg5dI15fbi9o/CKq4agGYjhTGW
-         wBZ63nrAGc1wNNwlYZImrAynZjPF4E1IPlelsDQmMVRNw0bMxmzVhCNrLLHTo2LPHS
-         1FIz22mm+yLKZc3Kmm9caKmNZWG2WOKMXHkCG1H0KmfybB4RoYwXeb4qv3CanpJbBS
-         0bNRfgkX/eUY46J73639BEqdGO9rxTP64jcN+kWazRJYU6FQXsw
+        b=q56l6GpZq8hCItGmV9USiwpaEF4PdwWOHn3lSIr7qHOK3UjTXeT+jk1qMhylJBpEN
+         S56LoyXp5H26e7nSBpPbR8yWmzuQ+dL6epmcgR809LWrF9U30Zy1e6HC9sQkK5XI1A
+         uDRBc2jwoO4cdDkbrsgHNHacqEoF4Ez9GyRQoHgR8SzLsW50Lsb4/cZvWd0aAyydib
+         3TCm3zRssNQEsV4UhxcZn9ZQw6tmCvECp7rmfUw9FvjCgzRIjLW1/dSzrY/4ORvc1W
+         cnWgMhOjdQ8ufWQTbgTpVV/LcMHf+meSPN6KjSyGd07GIGTT7e502X5VKPee5RcP8F
+         YAM/cOjl3m+Xh9bRXHT3l7UMRcqF36bmqM2BmZ77p1FW31cvcu4j3eqSFKs3n+4Pp6
+         UvUWRE137a2U2wsxkS9iPpbrniBwjMV+s/MtzkXufCixrZNm1POHWHxBzLbmojKEWz
+         5Tl1yM0z5KM8BCVmrnaoEE60CX0WsOInio+glGPAYMbItrj9jWZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -39,9 +39,9 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 44/53] sha1_name: convert internals of peel_onion to object_id
-Date:   Sat,  6 May 2017 22:10:29 +0000
-Message-Id: <20170506221038.296722-45-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 45/53] builtin/read-tree: convert to struct object_id
+Date:   Sat,  6 May 2017 22:10:30 +0000
+Message-Id: <20170506221038.296722-46-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f
 In-Reply-To: <20170506221038.296722-1-sandals@crustytoothpaste.net>
 References: <20170506221038.296722-1-sandals@crustytoothpaste.net>
@@ -50,34 +50,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is a caller of parse_tree_indirect, which must be converted in
+order to convert parse_object.
+
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- sha1_name.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/read-tree.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index b7e09ac13..72e72ab9a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -798,7 +798,7 @@ struct object *peel_to_type(const char *name, int namelen,
- static int peel_onion(const char *name, int len, unsigned char *sha1,
- 		      unsigned lookup_flags)
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index 23e212ee8..92eff23e4 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -23,13 +23,13 @@ static int read_empty;
+ static struct tree *trees[MAX_UNPACK_TREES];
+ static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
+ 
+-static int list_tree(unsigned char *sha1)
++static int list_tree(struct object_id *oid)
  {
--	unsigned char outer[20];
-+	struct object_id outer;
- 	const char *sp;
- 	unsigned int expected_type = 0;
- 	struct object *o;
-@@ -846,10 +846,10 @@ static int peel_onion(const char *name, int len, unsigned char *sha1,
- 	else if (expected_type == OBJ_TREE)
- 		lookup_flags |= GET_SHA1_TREEISH;
+ 	struct tree *tree;
  
--	if (get_sha1_1(name, sp - name - 2, outer, lookup_flags))
-+	if (get_sha1_1(name, sp - name - 2, outer.hash, lookup_flags))
+ 	if (nr_trees >= MAX_UNPACK_TREES)
+ 		die("I cannot read more than %d trees", MAX_UNPACK_TREES);
+-	tree = parse_tree_indirect(sha1);
++	tree = parse_tree_indirect(oid->hash);
+ 	if (!tree)
  		return -1;
+ 	trees[nr_trees++] = tree;
+@@ -121,7 +121,7 @@ static struct lock_file lock_file;
+ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ {
+ 	int i, stage = 0;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct tree_desc t[MAX_UNPACK_TREES];
+ 	struct unpack_trees_options opts;
+ 	int prefix_set = 0;
+@@ -204,9 +204,9 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 	for (i = 0; i < argc; i++) {
+ 		const char *arg = argv[i];
  
--	o = parse_object(outer);
-+	o = parse_object(outer.hash);
- 	if (!o)
- 		return -1;
- 	if (!expected_type) {
+-		if (get_sha1(arg, sha1))
++		if (get_oid(arg, &oid))
+ 			die("Not a valid object name %s", arg);
+-		if (list_tree(sha1) < 0)
++		if (list_tree(&oid) < 0)
+ 			die("failed to unpack tree object %s", arg);
+ 		stage++;
+ 	}
