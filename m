@@ -2,79 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2882A207F8
-	for <e@80x24.org>; Sat,  6 May 2017 17:14:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2B6207F8
+	for <e@80x24.org>; Sat,  6 May 2017 17:14:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751828AbdEFROR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 13:14:17 -0400
-Received: from mail-wm0-f47.google.com ([74.125.82.47]:38669 "EHLO
-        mail-wm0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751593AbdEFROQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 May 2017 13:14:16 -0400
-Received: by mail-wm0-f47.google.com with SMTP id 142so28827460wma.1
-        for <git@vger.kernel.org>; Sat, 06 May 2017 10:14:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
-        h=message-id:subject:from:to:date:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=c6kC6MgusozTPwvgcB03nZViVr5ANPQRHrviGiPJLms=;
-        b=ci8CZvPs/sUNejA/uoySOYGh9DX0JWmmRfzVBFeMxnxO/VUQ3TGySI2L6xXXuvzpEn
-         nS14grVLVQj0DskIDKinwa4+ZG4ZMFtydPSaiDxQ6gySru838gk1FkZMaqckuPW+X2zV
-         V0lMZFlY2eo+LMZJZCY65IjO1On95O9pI63sH+XVi/XG+VtKmimE18vaSKZX87ZrOAIn
-         YXD3Nr4byH22PTUkhb5NdiJJAiUHUlb3xoSByinRWXUXwqkRP59Pt2bw7pNK6E2NNOUg
-         WrYyR0fHkdlVbaXthG86Mkq4zbPPXHV2cfI2TqFaazxGIwJmG1rgBDTdVkfoVgc54ADo
-         mb8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=c6kC6MgusozTPwvgcB03nZViVr5ANPQRHrviGiPJLms=;
-        b=Fqp9FSb6u0aGc4KLPtySctNPPLZwPMR6uAAojPlikYEtStzgaz6PY+aWEczV7qQ4rz
-         dfnt5TWSbAQdjnPIUwZ/KCYtpBNOEjS6DTTB0fUSA+jbXaUDYd1Q0MHdqaV8OzSO6akP
-         0zDdsGMMVplmZ6WgIxFtIbuFeRty7ieaoqi7gN3SqCAH3AwkEKhxxjJGRM9UPliEQA6q
-         Ss3nk11Uo5U9thc54L/CMnHJdBcOKx677GW5tu9wg/sq3jpZIgbEo7exDUuFPnxITUHN
-         MjQj7AagoOpXa8ZMAxf+LAlNYClnfKr1wlRpeAMmvya0Kj+Ju9XElyNzQ1/i3a1Sl8vk
-         +oag==
-X-Gm-Message-State: AN3rC/5R4YnD+F31sTdsI8oSRoLJ7mXGPxDNAwDcjEaAIYWkJ0uIzQ5q
-        qPn3DCCA9CGtpw==
-X-Received: by 10.80.172.28 with SMTP id v28mr16857079edc.38.1494090849349;
-        Sat, 06 May 2017 10:14:09 -0700 (PDT)
-Received: from [192.168.1.80] ([145.129.9.233])
-        by smtp.gmail.com with ESMTPSA id i28sm2620456ede.38.2017.05.06.10.14.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 06 May 2017 10:14:08 -0700 (PDT)
-Message-ID: <1494090847.24179.7.camel@kaarsemaker.net>
-Subject: Re: Script to rebase branches
-From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
-To:     Lars Schneider <larsxschneider@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Date:   Sat, 06 May 2017 19:14:07 +0200
-In-Reply-To: <8D018370-79F9-450F-97AF-31EF4C95BA44@gmail.com>
-References: <8D018370-79F9-450F-97AF-31EF4C95BA44@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.22.6-1ubuntu1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1751864AbdEFROa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 13:14:30 -0400
+Received: from mout.web.de ([212.227.15.4]:57969 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751593AbdEFRO2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 May 2017 13:14:28 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M3k9J-1dyKaY27qT-00rE0U; Sat, 06
+ May 2017 19:14:03 +0200
+Subject: Re: [PATCH v4 11/25] checkout: fix memory leak
+To:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
+References: <cover.1493740497.git.johannes.schindelin@gmx.de>
+ <cover.1493906084.git.johannes.schindelin@gmx.de>
+ <2704e145927c851c4163a68cfdfd5ada48fff21d.1493906085.git.johannes.schindelin@gmx.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <36a581f6-077e-ca89-49d0-ad487ff222a3@web.de>
+Date:   Sat, 6 May 2017 19:14:01 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.1.0
+MIME-Version: 1.0
+In-Reply-To: <2704e145927c851c4163a68cfdfd5ada48fff21d.1493906085.git.johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K0:mlk7QJ4Vrdj0+n/Bx2tevR9bp1GbfMJeCDRy2bONUIbC1NCezmE
+ zpqCKevRgG/ANhTIchcE6DVe7177FN9VODENhll/re4qSekv50jNfeYWjRJhXBDsJDOYrub
+ 8kt4a0xSpnoxc14Ou6PT1oig8/0if1aYdzfpu8H5i+ZpCqy71Rr2UpghJ/9l8MpNy0aZZNr
+ UCGuhozGIalp+iWjVEzKg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KZMa7DX/TiE=:/uNaKz6fhAlwt3Fixq+s4S
+ uJNtD9GIvAtlVuT4/Bi8j5uYOOU8Mj5J6XBb7pxl7FtV95n7WcEbtl+slt9OkSiRU+LQFlwfM
+ 8dlBjziHLwrQ6CEeOn+xdPlZ0DIXT/hImxMNwv1wR+4baYg8nyK/QHLTk0koidpdr9Le8WB4I
+ KYw6s0GRmO4nvm14KUG1PbspGUAF22cA8O3fyDlCE08nHnT5+0Q7D4zr2W9l3xSSCpGD1rEuW
+ KNB3AJc1SthgF04zNf6boty9RoO/mvOxau9gEM6BJq9+SJ0L+j6oRxfA4qSmkKYiAhyQEr0Zd
+ hcLvRsxygPiF7feS5vxsAYcAe0POGvtiV8rDvLNfBZdUYvDU6cWFcAbZ80sZwBM8K1esW/DNi
+ 6G27gG4lQp3fK0xXNh8mmTAutX752p5+JAxeU9Yssjkyi5pq23j0P0EWdenPTm2mY7oY8bmiu
+ XLJM5zRbN8YPUjKn2DWQKcU0RaZ90+eupAhK5Y7AH2RnVHZ6AsrlEIpTLukfr2LxPoitzjAP8
+ 5c87aNmMIWw6zmswjlJ3aAVtfhgJfyKf+ys6YnNk5FcZtk0kvE71OvST60w+KZbov2+Hyhgxx
+ 0azSwtAyVz2+JxEzZqTyFDFfRSNYF1jy6+cEQcvMTTIfIWUdaym238mx/CaLuhBSjnnQ++5/j
+ aDN3ofOKYOAdxoFadxtp2TvfYKi9tVDVGFDFmRt5hWj3qeWLxXUHfptwUflSLsAQZelqgoVDp
+ b51sKEsCXu4L13K/E+Zoo39YyW6rgFtQPkrrdbv1O1cKvQEHErtMzP5Q9AkSdA1ZwdrH57VFw
+ 5wNoJQZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 2017-05-06 at 12:23 +0200, Lars Schneider wrote:
-> Hi,
+Am 04.05.2017 um 15:56 schrieb Johannes Schindelin:
+> This change addresses part of the NEEDSWORK comment above the code,
+> therefore the comment needs to be adjusted, too.
 > 
-> I am about to write a bash/sh script that helps me to rebase a bunch of 
-> branches (e.g. select branches based on prefix, conflict resolution/
-> rerere support, ...).
+> Discovered via Coverity.
 > 
-> I wonder if anyone has such a script already and is willing to share it.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   builtin/checkout.c | 17 +++++++++--------
+>   1 file changed, 9 insertions(+), 8 deletions(-)
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index bfa5419f335..5faea3a05fa 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -235,14 +235,14 @@ static int checkout_merged(int pos, const struct checkout *state)
+>   	/*
+>   	 * NEEDSWORK:
+>   	 * There is absolutely no reason to write this as a blob object
+> -	 * and create a phony cache entry just to leak.  This hack is
+> -	 * primarily to get to the write_entry() machinery that massages
+> -	 * the contents to work-tree format and writes out which only
+> -	 * allows it for a cache entry.  The code in write_entry() needs
+> -	 * to be refactored to allow us to feed a <buffer, size, mode>
+> -	 * instead of a cache entry.  Such a refactoring would help
+> -	 * merge_recursive as well (it also writes the merge result to the
+> -	 * object database even when it may contain conflicts).
+> +	 * and create a phony cache entry.  This hack is primarily to get
+> +	 * to the write_entry() machinery that massages the contents to
+> +	 * work-tree format and writes out which only allows it for a
+> +	 * cache entry.  The code in write_entry() needs to be refactored
+> +	 * to allow us to feed a <buffer, size, mode> instead of a cache
+> +	 * entry.  Such a refactoring would help merge_recursive as well
+> +	 * (it also writes the merge result to the object database even
+> +	 * when it may contain conflicts).
+>   	 */
+>   	if (write_sha1_file(result_buf.ptr, result_buf.size,
+>   			    blob_type, oid.hash))
 
-Dscho's git garden shears perhaps?
+Random observation: Using pretend_sha1_file here would at least avoid
+writing the blob.
 
-https://github.com/git-for-windows/build-extra/blob/master/shears.sh
+> @@ -251,6 +251,7 @@ static int checkout_merged(int pos, const struct checkout *state)
+>   	if (!ce)
+>   		die(_("make_cache_entry failed for path '%s'"), path);
+>   	status = checkout_entry(ce, state, NULL);
+> +	free(ce);
+>   	return status;
+>   }
 
-D.
+I wonder if that's safe.  Why document a leak when it could have been
+plugged this easily instead?  A leak is better than a use after free, so
+let's be extra careful here.  Would it leave the index inconsistent?  Or
+perhaps freeing it has become safe in the meantime?
+
+@Junio: Do you remember the reason for the leaks in 0cf8581e330
+(checkout -m: recreate merge when checking out of unmerged index).
+
+And result_buf is still leaked here, right?
+
+FWIW, after fixing a different issue (patch just sent separately)
+t*checkout*.sh complete successfully for me with --valgrind, with and
+without freeing both ce and result_buf.ptr.  So it *seems* safe..
+
+René
