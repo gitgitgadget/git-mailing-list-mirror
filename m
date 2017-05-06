@@ -7,47 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7E3F207F8
-	for <e@80x24.org>; Sat,  6 May 2017 17:14:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0948B207F8
+	for <e@80x24.org>; Sat,  6 May 2017 17:14:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751561AbdEFROH (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 13:14:07 -0400
-Received: from mout.web.de ([212.227.15.14]:63212 "EHLO mout.web.de"
+        id S1751645AbdEFROJ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 13:14:09 -0400
+Received: from mout.web.de ([212.227.15.3]:52173 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751458AbdEFROD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 May 2017 13:14:03 -0400
-Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LmhQx-1dg7FO21pr-00aAao; Sat, 06
- May 2017 19:13:57 +0200
+        id S1751537AbdEFROF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 May 2017 13:14:05 -0400
+Received: from [192.168.178.36] ([79.213.114.92]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0ML8F7-1d7KOP42nx-000MCQ; Sat, 06
+ May 2017 19:13:53 +0200
 To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] am: check return value of resolve_refdup before using hash
-Message-ID: <f0ca65bf-aaf9-2cd6-1deb-c55c9e7a8fa3@web.de>
-Date:   Sat, 6 May 2017 19:13:56 +0200
+Subject: [PATCH] checkout: check return value of resolve_refdup before using
+ hash
+Message-ID: <f2e1a050-13e8-89be-ec6e-778054882ea3@web.de>
+Date:   Sat, 6 May 2017 19:13:52 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.1.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K0:M9EsMNLI01g/j5EPBL3SVV0OcnoKnE5cn+bbDWIzLAN11AXy5ei
- kseNNPSILqeSwbkLgpBV+P33J+fRKwu4+5Cpq3DRU8Jbx7QZtzBMUOcEnIs2bdoESUZaFps
- I6Qx4CsFHj7AMZNZDT+1UMTzUZkUuNZof7fewr7us8YFsJ88YQeiqCX8+5dqOsvd19+H8cO
- HCRNydlia6i5s0I4U8aFQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:aRX9ikWuZdM=:PoUhJUbgfWvSFVG1Va/suN
- FfwlDv0zCd2O1wSi2VlMylrzxH/8VwKUtP0DJt/Lge93QcQqVrqkHhh/DObICfmzd/HatTKQv
- WBJKXprqkl5qK4Kodu9/eH5/aYPYlMOir66yQ/+dRrucJm/CCoBZLBeyqNJu7JoLWg6gkv03r
- imuiaEUny1Wr818XMc3kby+c8eqIeq01QBoTip7F4yDOmfMgsShkTNLES4Bcm4So71P4GHY1K
- kfg6/a3xreGXiEsn8XQIudAGQ/IydaDe9wU9rf6MjfLFJtqHozKeODRCDlI3LuOqYtQ4F7DrD
- TnyzPi36Ufgwc7zIIwIQrt28JWfoBWtXzokRL7YKFhrM2Ck531F12tUifAjsChxiWW2JacgbP
- a7Jcnvx89a+fmLnA2n5jXTmWW2l4cyoBjQAaqhu8qHsc4DDhvdERmLXiUpqoUhr9AyRokWspu
- b4Nmu2C1INDvuaQ1Dh6Rz/U1N/Ixx5URvAhy2IUC5G//XKeOl9h3fo/ZJGaevAtXRNKypOAEZ
- kkGsfxEks8z/EQFVWISWASIHVRMsvOkKlyndqzDPZ+kcn+YL7FRwONnJjYwcjLbjuKGDkYhpP
- 3mwaEllTTS+KWffqYgLPtxTMR+AiZzUy3NlmsuPkKoNI2RfW5Q42u0QRXT2sCZrYBqNqED+gP
- DxY2liOU49jbqISnOoyAhs3g3NMtXdAPLMFW4Z4pOD+3sJsZ+BMrrKIMtWG8zfKMt82AHl1WC
- kUKdonTER5d9mmWxq+Ok5wXaxgv0Kqusm3M/6UHBNKqF+esiuWbqNiZuuaSwYJi2w8PS/Q7iY
- 8JIoHQb
+X-Provags-ID: V03:K0:JyK0ciUOWAXibjT1RQEUhviLk2UFM75XrUOtOSS5urqis8oEcjG
+ gTlZRohSOfRYeIYfCC+9v7NrnV5p+ZFTy8ge7WeCQ4g+BviWanvFWq8JnjD0lIKFkrEQuBf
+ JL2oLMUB4PF9sg57x3nVDf1wHikS9IlpGXIgq6wg6yuXiBW4mhmANz8Jw81SKwX9laZm671
+ LeHJ/f9ar3tXf8Ft2NN/w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:K7F5XItsrZg=:ykW31s/W6Cbcnjh6EWXVKU
+ BqF47uDiagLABRmBsVxXiqvf8WB5AosZ0ndytMVM3Yehb6g2o1rLkTIWUtaVnEnMeMMBdqB3t
+ Wp0kmz3eHv+AbFBP052VO8Pa8vj+249n3HA9dZgpBYrS2acCoGRV6/uHXmBaYEn8HuRjx2PSU
+ dKvREKVJTV+BN5GWtJhJGIjJUJ/ezavQ5GSungyKZQ6YgGUjkG+Pc5C+QjgGSsKnuofpM0PAB
+ VwDKCcFJ7W7Md2nanzJ2gEVgm1lwzk1zya21DsivY5qhvpxq6EsTth5724cynAuXS9noggbF7
+ clgFcZ6W0BGO9ZL2WfBTLS2+RxjMq+ei+ICNFlbhGlz3pv50iD6FLRfG929pYwdwKCQ7y3FNa
+ 89ZJ3TzldiuYy6P7XXkG5L6kxwqRiBpaprCNNmsEKDuRCfMUK4L301y9N3GGaxKLn/2uK9OJ+
+ jrJspgK2GALd1eCmwV8/eYSrOlbA1+mdHlpx71ss/ozcr08hbXJE8l8GDpWUVLGO04JxxUkdO
+ FBPaoFApKy/I7X4SiFuZ+fVYzlKjgjPlt4Zwcyk5VV0XQb1PC8a+5hXwBION/we/dSEhwpT4G
+ 0KU6HP94LicCLCBdFwBCaq3JOxABcKAn+rfwvDPaZZqQCdDVAMX3AMcBWuDr0pgLHHCl3/Sb6
+ QnRBwkvVkIEkLVV/d0ZxJyVSMOBfY884LUSeFvL6FjxWSZRex8+C0MvjDREWwIndGwBAsR5sg
+ bIPgaYlVnZpx9TUclmiRHXkUBR9BsQsJdnte5YUhrU6+hZGMqtK7bw4OfqZPBulkNQYGk3pMa
+ Rey0IIh
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,23 +60,26 @@ If resolve_refdup() fails it returns NULL and possibly leaves its hash
 output parameter untouched.  Make sure to use it only if the function
 succeeded, in order to avoid accessing uninitialized memory.
 
+Found with t/t2011-checkout-invalid-head.sh --valgrind.
+
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/am.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/checkout.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index a95dd8b4e6..2c52c820aa 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2156,7 +2156,7 @@ static void am_abort(struct am_state *state)
- 	am_rerere_clear();
- 
- 	curr_branch = resolve_refdup("HEAD", 0, curr_head.hash, NULL);
--	has_curr_head = !is_null_oid(&curr_head);
-+	has_curr_head = curr_branch && !is_null_oid(&curr_head);
- 	if (!has_curr_head)
- 		hashcpy(curr_head.hash, EMPTY_TREE_SHA1_BIN);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index bfa5419f33..6c3d2e4f4c 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -833,7 +833,8 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	int flag, writeout_error = 0;
+ 	memset(&old, 0, sizeof(old));
+ 	old.path = path_to_free = resolve_refdup("HEAD", 0, rev.hash, &flag);
+-	old.commit = lookup_commit_reference_gently(rev.hash, 1);
++	if (old.path)
++		old.commit = lookup_commit_reference_gently(rev.hash, 1);
+ 	if (!(flag & REF_ISSYMREF))
+ 		old.path = NULL;
  
 -- 
 2.12.2
