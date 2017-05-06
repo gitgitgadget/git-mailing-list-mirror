@@ -2,121 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D581E207D6
-	for <e@80x24.org>; Sat,  6 May 2017 10:26:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B03BD207F8
+	for <e@80x24.org>; Sat,  6 May 2017 12:30:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751830AbdEFK0h (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 06:26:37 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:33890 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750815AbdEFK0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 6 May 2017 06:26:35 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u187so3873915pgb.1
-        for <git@vger.kernel.org>; Sat, 06 May 2017 03:26:35 -0700 (PDT)
+        id S1751215AbdEFMam (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 08:30:42 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:34597 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750995AbdEFMal (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 6 May 2017 08:30:41 -0400
+Received: by mail-wm0-f50.google.com with SMTP id u65so7171108wmu.1
+        for <git@vger.kernel.org>; Sat, 06 May 2017 05:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Fw9GYaQIrYIIcFJDzxUu/2EfiyLqiaunKdUzDMLZUyo=;
-        b=rWcHc+eocjAydHY/yVbgKoFLCdko+FJrLh3CWxKQKd6zXSX12P5HOcNLzlGz9lHJ9D
-         sr+zoFXBuMrqZj1+/+lmqBea/bOTq6cqzpE/ZFXFzgsmtrRqkRk5CrE/ri4rmdcIKyP7
-         am5h37XVJhrq6QIHCW+uzZYb8on7S27Mk+MLVyrRu1pij1BLKlPmuXtR6IqoaDqY/RwY
-         RHyJed3ZEvFQHLk+3LnnS1JurnyudboG5qGF0EjPtWs7ksOlWasSG6tgSSr2ZUcUzpl5
-         LHVHM4XBS/nkSP6yfYn1oTFjuTuAVwGaU4kN0+v7leRFoSoB51MlXA+W1iqu+fMmc7Pg
-         Zuug==
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=WC8NLhKSX2kceM/EAO1/fFkI1OO5pmVfIPg0lW2nxxA=;
+        b=I1DbTJmNhVabYyDhodowUBnv41VBAzmxo3SX/J8fzxamBr1aFIf+0EvkbdIbtZSQdk
+         l9odiZfaLDeLU2gj8Ibf//iDo1oU6TJSCCQCAIz+gyXpxut9KdursVg1mViKAigO/Vvh
+         YjS4hDdXZxKvqwWDNMu/N818MFh4pg2WKXkBIaxCaE9mNeWDQTgjwI7SVtEGht4e+vFK
+         GLlvvVedoQ6Yr7Ga0eavUJ39DjbYeoM7F5IIwte9SSjxPw1TDC75mIoie9c+65FuaSmp
+         6qGnhnA2u+72KERmZqHT51hkIvvH32Bm+o2EGQzqAfTW7E6zxpBXgJfxJTdjprss5b+3
+         Qh9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Fw9GYaQIrYIIcFJDzxUu/2EfiyLqiaunKdUzDMLZUyo=;
-        b=rE8EC6jd6Bo9ngkv+aglIFPKN66nP6zRFp4Kao1qf+chT/JMUl0yodnvkq+tbcmiSi
-         of7xup/z2LgaBoB4v4sRxbYnZ2miHDVFtWhpu23bxLPMVzTiQHB7gQbvHHkALt3M66Dw
-         VCsMjxtDNRptYPnhd4zmfi3ooDwAsUGgEHQDp9CToTf/GhDBE08e3D8Eta7gA0Kv84kA
-         y+cUFfqtw9FZj/pHuQ8Up+lXyNvFEzrIKCyoy/4UQZdtpFjBOOdtz2oBqdUlfwckcYV3
-         OfGOBsvI8HLwMJQcu+B64gsu6Q0iTFnkQ/O0/49sZaBK26zQWPTr5LSYsCpFOM4+fbcG
-         hiiw==
-X-Gm-Message-State: AN3rC/49OuEk+vj5JDiOV8MIF53FIZHSlr/RuhESjh7EDTWmUrwLiUR2
-        dWABHK53fmeIVw==
-X-Received: by 10.84.213.2 with SMTP id f2mr51783328pli.22.1494066395057;
-        Sat, 06 May 2017 03:26:35 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:6e:7c24:6026:f8b7])
-        by smtp.gmail.com with ESMTPSA id z21sm8975921pgc.15.2017.05.06.03.26.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 06 May 2017 03:26:34 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
-        Johannes.Schindelin@gmx.de, pclouds@gmail.com
-Subject: Re: [RFC 00/14] convert dir.c to take an index parameter
-References: <20170505195334.121856-1-bmwill@google.com>
-Date:   Sat, 06 May 2017 03:26:33 -0700
-In-Reply-To: <20170505195334.121856-1-bmwill@google.com> (Brandon Williams's
-        message of "Fri, 5 May 2017 12:53:20 -0700")
-Message-ID: <xmqqmvaq702u.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=WC8NLhKSX2kceM/EAO1/fFkI1OO5pmVfIPg0lW2nxxA=;
+        b=oMFu3EY9eSM9Ngb3LIzDn2/cqfUvanaNkHMQoxIVrM8qiRSREB3YnrsciuDf0L8y23
+         dcNyQ0PaLwYrlH5tEccVSRc0nAJYim/u7CAMlEnkT/VtT82jSfRXgwMYQLaAsS2ILyG8
+         aWK2YdAPHV2Q3D+KYs/9jLeSGbT8lJrPmYgAEd9BiMqPWtg+pKFA8OhCOAtvhhT+2+Pg
+         xDlGAKV9RojvJ6tV/Ve+sKDKBCtmdnVaSOhTcCSYI0oENIKFpuyDTatsrEM/XMTYyLOY
+         lXsABPiN5W9KS5gDIScrFvbOZ94nDp+XQ68/jtYLaAVZk9WQgxtmxjrWqrmbCpZylek0
+         ilNQ==
+X-Gm-Message-State: AN3rC/4RxblEip/PwML174tJ17rsxj/65DdDMB9LBJwf1wGAI/jtongY
+        MBaUbFmGV3wxZfeAt0w=
+X-Received: by 10.28.6.199 with SMTP id 190mr8442265wmg.15.1494073839324;
+        Sat, 06 May 2017 05:30:39 -0700 (PDT)
+Received: from ?IPv6:2a02:ab88:3ec2:1200:5891:3333:d19e:cdda? ([2a02:ab88:3ec2:1200:5891:3333:d19e:cdda])
+        by smtp.gmail.com with ESMTPSA id x20sm5831920wme.0.2017.05.06.05.30.37
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 06 May 2017 05:30:38 -0700 (PDT)
+From:   akos tajti <akos.tajti@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.0 \(3226\))
+Subject: Git smart http: parsing commit messages in git-receive-pack
+Message-Id: <7DA6022F-02F0-41AC-ABAB-64565E81481F@gmail.com>
+Date:   Sat, 6 May 2017 14:30:35 +0200
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3226)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Brandon Williams <bmwill@google.com> writes:
+Dear All,
 
-> One of the things brought up on the list in the past few days has been
-> migrating away from using the index compatibility macros.  One of the issues
-> brought up in that thread was how simply doing that conversion doesn't
-> eliminate the reliance on global state (specifically the_index).  If one day we
-> want to have a 'repository object' passed around then we first need to convert
-> different subsystems to be prepared to handle that.  This series provides a
-> first step, converting the code in dir.c to take a 'struct index_state' and
-> using that instead of implicitly using 'the_index'.
+we implemented a java servlet around the git-http-backend. This servlet =
+intercepts the requests sent by the git client when pushing. One thing I =
+want to achieve is parsing the commit messages in the pre push phase =
+(request param service=3D=3Dgit-receive-pack) and after checking if the =
+commit messages contain a given string reject/accept the request. The =
+problem is that I couldn't find a way of parsing the commit messages in =
+git-receive-pack (I can do this in the post  push phase but in that case =
+I cannot reject the push because the changes are already on the server). =
+Is there a way of getting the commit messages before they're actually on =
+the server so that I can reject the push?
 
-Very nicely done (I only skimmed "dir.c" in the end result and didn't
-go through the changes with fine toothed comb, though).
+Thanks in advance,
+=C3=81kos Tajti
 
-I would have done this without the first step and then instead had a
-final patch that only inserts a single
-
-    #define NO_THE_INDEX_COMPATIBILITY_MACROS
-
-at the beginning of dir.c once everybody in dir.c loses the
-reference to all "cache" macros at the end, if I were doing this
-series, but it is a personal taste.  
-
-The resulting dir.c does not even refer to the_index, which is very
-nice.
-
-Thanks.
-
-> Brandon Williams (14):
->   dir: stop using the index compatibility macros
->   dir: convert read_skip_worktree_file_from_index to take an index
->   dir: convert directory_exists_in_index to take index
->   dir: convert get_dtype to take index
->   dir: convert dir_add* to take an index
->   dir: convert last_exclude_matching_from_list to take an index
->   dir: convert is_excluded_from_list to take an index
->   dir: convert add_excludes to take an index
->   dir: convert prep_exclude to take an index
->   dir: convert is_excluded to take an index
->   dir: convert open_cached_dir to take an index
->   dir: convert read_directory_recursive to take an index
->   dir: convert read_directory to take an index
->   dir: convert fill_directory to take an index
->
->  builtin/add.c          |   7 +-
->  builtin/check-ignore.c |   3 +-
->  builtin/clean.c        |   4 +-
->  builtin/grep.c         |   2 +-
->  builtin/ls-files.c     |   4 +-
->  dir.c                  | 200 ++++++++++++++++++++++++++++---------------------
->  dir.h                  |  27 +++++--
->  unpack-trees.c         |  10 +--
->  wt-status.c            |   2 +-
->  9 files changed, 151 insertions(+), 108 deletions(-)
