@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B0A8207F8
-	for <e@80x24.org>; Sat,  6 May 2017 22:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCDA9207F8
+	for <e@80x24.org>; Sat,  6 May 2017 22:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754433AbdEFWNd (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 18:13:33 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37712 "EHLO
+        id S1755233AbdEFWNf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 18:13:35 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:38000 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754083AbdEFWL7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:59 -0400
+        by vger.kernel.org with ESMTP id S1754759AbdEFWMH (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:12:07 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 773DA280DA;
-        Sat,  6 May 2017 22:11:18 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7A2C4280DD;
+        Sat,  6 May 2017 22:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1494108678;
-        bh=8UI2oKXgbvWcYqUbOjf0DKULWPgoMyG02e1Xdpe/Hg8=;
+        s=default; t=1494108679;
+        bh=b9bqnZEUaUem62pHUnJyKiABsa7bm5SIkxqipwE124Y=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=F5ckjyBRBWWNnQixHkhey/S5wDI06KJpmMbxadtc52VroyTR/IN4M8B0fIGdk9j3m
-         z28jANiBrPZxwPSlJrEg5U2KpCavs9MXMcJL6K5MlTnSrQrY7KwD6u7Jzxwm08Ozjp
-         HFXhOpoPGJSVLdfYtD/ZK7/Q2RJhvHziU1qPoJ385sXt8QmtensT6PZ/ynkT0CrhDK
-         gxLhtb3nyQzROo1SMz8ly0iA+L+xU/xPJeAzccv7Q+qcMbY9bmDhhY62XyDN67JxoC
-         NfJ4T8HsweVdoIPO0shGUX9o+47LRK7QOom1ejn6wUa1G9XTfaSP9Oq9wa18Hhp0Pm
-         Gy+i304ktKCbnmAU2+rsjNtgN4o0ITKQqvVO8G1BvxyNVJMXSJc11IXl920wkSHlhf
-         ArXMSbjbbXjZBaI5TzclRGkXSmItV4jShYt7k83oCEXUJCZMJmht8QNuMFcAv2BxTp
-         j7AHbs5qS56wO2NVFybI0tsC+V2yVP/N09aPgDW4O2x70JIqoM7
+        b=axlJbEYDAegFjMtEC2ia3CJo/cfoLzNVQNaHaIAA9/ZjjMUYx3xDY3jFUEtNfd5FU
+         KuelHz1U6WPM6iOCZLHUJfjdCPFLUPBymlRXmPcsMGCulv601vxNvmIcd52YA4Jhxs
+         CxsjnKkOqcrECWNVI9XB+mTVlB8CxDY2J1/YaZVU9bBttF0x03DU2Y6NNWL4mHj1P9
+         oIEA5UteCjfwzIKS75Y/C7aTBWA1gyNk1uA2qF9RFSywe1boJ0SjHGTcKdlJLh7MRY
+         eAHS3Iud26lvtku5CUywJ0OEzKLAWJ+18kgXjz6qSZ3Pn881xfb+yvgTkBLnv8oI3O
+         0RTMdNuos9B1UIhCCpwOIZ+uNc+Em51AN+2GmxbTxCl62JIIa0DuImdiHvF4AfCqXI
+         O1+4ywuomB8iop8IFqLuYXYmrHsHpiXyJiPew785aaZQcMMiqRBfU/u1vJPZylaiH/
+         29DLlzDmAA1nmYwv42Ml963BMYIqiMnKtGvNMMMb46WF3dVIznC
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -39,9 +39,9 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 46/53] builtin/ls-files: convert overlay_tree_on_cache to object_id
-Date:   Sat,  6 May 2017 22:10:31 +0000
-Message-Id: <20170506221038.296722-47-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 50/53] diff-lib: convert do_diff_cache to struct object_id
+Date:   Sat,  6 May 2017 22:10:35 +0000
+Message-Id: <20170506221038.296722-51-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f
 In-Reply-To: <20170506221038.296722-1-sandals@crustytoothpaste.net>
 References: <20170506221038.296722-1-sandals@crustytoothpaste.net>
@@ -50,32 +50,137 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is another caller of parse_tree_indirect.
+This is needed to convert parse_tree_indirect.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/ls-files.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/am.c    |  2 +-
+ builtin/blame.c |  6 +++---
+ builtin/reset.c |  2 +-
+ diff-lib.c      | 12 ++++++------
+ diff.h          |  2 +-
+ 5 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index a6c70dbe9..da0ff849f 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -414,14 +414,14 @@ static void prune_cache(const char *prefix, size_t prefixlen)
- void overlay_tree_on_cache(const char *tree_name, const char *prefix)
+diff --git a/builtin/am.c b/builtin/am.c
+index 642d7047d..200d9dbed 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1145,7 +1145,7 @@ static int index_has_changes(struct strbuf *sb)
+ 		DIFF_OPT_SET(&opt, EXIT_WITH_STATUS);
+ 		if (!sb)
+ 			DIFF_OPT_SET(&opt, QUICK);
+-		do_diff_cache(head.hash, &opt);
++		do_diff_cache(&head, &opt);
+ 		diffcore_std(&opt);
+ 		for (i = 0; sb && i < diff_queued_diff.nr; i++) {
+ 			if (i)
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 58bb274d0..e920314a7 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -563,7 +563,7 @@ static struct origin *find_origin(struct scoreboard *sb,
+ 	diff_setup_done(&diff_opts);
+ 
+ 	if (is_null_oid(&origin->commit->object.oid))
+-		do_diff_cache(parent->tree->object.oid.hash, &diff_opts);
++		do_diff_cache(&parent->tree->object.oid, &diff_opts);
+ 	else
+ 		diff_tree_sha1(parent->tree->object.oid.hash,
+ 			       origin->commit->tree->object.oid.hash,
+@@ -633,7 +633,7 @@ static struct origin *find_rename(struct scoreboard *sb,
+ 	diff_setup_done(&diff_opts);
+ 
+ 	if (is_null_oid(&origin->commit->object.oid))
+-		do_diff_cache(parent->tree->object.oid.hash, &diff_opts);
++		do_diff_cache(&parent->tree->object.oid, &diff_opts);
+ 	else
+ 		diff_tree_sha1(parent->tree->object.oid.hash,
+ 			       origin->commit->tree->object.oid.hash,
+@@ -1272,7 +1272,7 @@ static void find_copy_in_parent(struct scoreboard *sb,
+ 		DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
+ 
+ 	if (is_null_oid(&target->commit->object.oid))
+-		do_diff_cache(parent->tree->object.oid.hash, &diff_opts);
++		do_diff_cache(&parent->tree->object.oid, &diff_opts);
+ 	else
+ 		diff_tree_sha1(parent->tree->object.oid.hash,
+ 			       target->commit->tree->object.oid.hash,
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 0be52fa36..3415dac5d 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -154,7 +154,7 @@ static int read_from_tree(const struct pathspec *pathspec,
+ 	opt.format_callback = update_index_from_diff;
+ 	opt.format_callback_data = &intent_to_add;
+ 
+-	if (do_diff_cache(tree_oid->hash, &opt))
++	if (do_diff_cache(tree_oid, &opt))
+ 		return 1;
+ 	diffcore_std(&opt);
+ 	diff_flush(&opt);
+diff --git a/diff-lib.c b/diff-lib.c
+index 52447466b..ee9df0f84 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -478,7 +478,7 @@ static int oneway_diff(const struct cache_entry * const *src,
+ }
+ 
+ static int diff_cache(struct rev_info *revs,
+-		      const unsigned char *tree_sha1,
++		      const struct object_id *tree_oid,
+ 		      const char *tree_name,
+ 		      int cached)
  {
- 	struct tree *tree;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	struct pathspec pathspec;
- 	struct cache_entry *last_stage0 = NULL;
- 	int i;
+@@ -486,10 +486,10 @@ static int diff_cache(struct rev_info *revs,
+ 	struct tree_desc t;
+ 	struct unpack_trees_options opts;
  
--	if (get_sha1(tree_name, sha1))
-+	if (get_oid(tree_name, &oid))
- 		die("tree-ish %s not found.", tree_name);
--	tree = parse_tree_indirect(sha1);
-+	tree = parse_tree_indirect(oid.hash);
+-	tree = parse_tree_indirect(tree_sha1);
++	tree = parse_tree_indirect(tree_oid->hash);
  	if (!tree)
- 		die("bad tree-ish %s", tree_name);
+ 		return error("bad tree object %s",
+-			     tree_name ? tree_name : sha1_to_hex(tree_sha1));
++			     tree_name ? tree_name : oid_to_hex(tree_oid));
+ 	memset(&opts, 0, sizeof(opts));
+ 	opts.head_idx = 1;
+ 	opts.index_only = cached;
+@@ -512,7 +512,7 @@ int run_diff_index(struct rev_info *revs, int cached)
+ 	struct object_array_entry *ent;
  
+ 	ent = revs->pending.objects;
+-	if (diff_cache(revs, ent->item->oid.hash, ent->name, cached))
++	if (diff_cache(revs, &ent->item->oid, ent->name, cached))
+ 		exit(128);
+ 
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "c/", cached ? "i/" : "w/");
+@@ -522,7 +522,7 @@ int run_diff_index(struct rev_info *revs, int cached)
+ 	return 0;
+ }
+ 
+-int do_diff_cache(const unsigned char *tree_sha1, struct diff_options *opt)
++int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
+ {
+ 	struct rev_info revs;
+ 
+@@ -530,7 +530,7 @@ int do_diff_cache(const unsigned char *tree_sha1, struct diff_options *opt)
+ 	copy_pathspec(&revs.prune_data, &opt->pathspec);
+ 	revs.diffopt = *opt;
+ 
+-	if (diff_cache(&revs, tree_sha1, NULL, 1))
++	if (diff_cache(&revs, tree_oid, NULL, 1))
+ 		exit(128);
+ 	return 0;
+ }
+diff --git a/diff.h b/diff.h
+index 5be1ee77a..d75e6d15e 100644
+--- a/diff.h
++++ b/diff.h
+@@ -354,7 +354,7 @@ extern const char *diff_aligned_abbrev(const struct object_id *sha1, int);
+ extern int run_diff_files(struct rev_info *revs, unsigned int option);
+ extern int run_diff_index(struct rev_info *revs, int cached);
+ 
+-extern int do_diff_cache(const unsigned char *, struct diff_options *);
++extern int do_diff_cache(const struct object_id *, struct diff_options *);
+ extern int diff_flush_patch_id(struct diff_options *, unsigned char *, int);
+ 
+ extern int diff_result_code(struct diff_options *, int);
