@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9282207F8
-	for <e@80x24.org>; Sat,  6 May 2017 22:12:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80844207F8
+	for <e@80x24.org>; Sat,  6 May 2017 22:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754841AbdEFWMX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 18:12:23 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37978 "EHLO
+        id S1754843AbdEFWM1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 18:12:27 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37866 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754385AbdEFWLV (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:21 -0400
+        by vger.kernel.org with ESMTP id S1754400AbdEFWLW (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:22 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B3EDB280C7;
-        Sat,  6 May 2017 22:11:13 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 1E04A280B0;
+        Sat,  6 May 2017 22:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1494108673;
-        bh=QSurIkEtvNtVm9ZS5KApGCEdMOS8Eo8px/1oCXZhAm4=;
+        s=default; t=1494108671;
+        bh=jsmmLBuwYXV7YbRefepcXmSJPkUPo1EGUV2ZMXp6J64=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=lGgfGKAt6ZGVder8yY9CLmBEylaeT1aMMzAt3OB7/RWj+0twppHv5fl633GahXPWC
-         5gwUv3MddzWEXMeoe+62ECRS7fGKIuFM0MJ8N+3cxa1EDRCdHFqYIV7P7tnHjFxY+U
-         8reoF89/j2R5QcQOsoqIPBjMtgu4gWQ/MDgjPRjWnmEzN/S7jyvUXrD8lIxzbAowAd
-         5HLHCXf6tvRjanpqZRIglU91kjAiW5ZeEyfUUOUb3b45zfVIDg1tq2A1eGSoT4Xh6g
-         RSAD5mOfWIxlYvTo9AFskzakMo7nW4IR1/YIFvlpsR1INI9MEfXkuOHQKbJTUWwGic
-         0dP4qKJz/LWR6tsYZIocLj4a4aTqCzjf75kekKezRSEuEPD4cAM1yHJahBXLxgCKn6
-         C/O1eDGCuVTYvRcqEHaQnwlQBUdEjKB9bI3b4G5gSCZro6gEpGyHhffF68biHM3los
-         Aw9g6C0OQ5KAaa7ltURd8xsmzFEmdPHJrNKY03egkRFeMu3lUXI
+        b=E5HFdO6zV8OSlWjEn3zqrIjp+X+poPFyoF4YqN7hlU5f+ZP9Atf8W1RA0ZZ7Ypds2
+         vhUVf3g6NUS1jPkxzpGkGHsKOWFtC4cdxMtMhCiA/cQnsaiHJpighh8GiAKp7XdMe9
+         107Zpqkws1WXJAP5SGjOLdyp2A7sjBs8kKT0viTUAzDj7d1m4YYr+yS6rN9SLM1VAm
+         /tVh1q7FYkQasvPl2HKT0z+FJi/+PMyyrjGNDqSJ0oPW2/w3czfCwAC2CIUWbel5vB
+         pgiMdAlzIp/U/+wR3VUxa9i32D2Ua8dQP/kP2+ujNEBkUjErmqvlPw6YLB07i1FpBj
+         6+qnDLj2rrmzaWBwlJxb5QnljSCjRq6rZcz/uPnkcfL9q8TmJuoyaygHIChbs4mmbo
+         HZta3Hxeds5j5xjZW9jOtJuBn4adKYL3yGR+VnKj25YRf3MtjOkyfw8pZLQ1XaKMr9
+         5YJRdbvhDymdcHKN3qJd9pgX8uupgyW9x8OjbAo3h1jiBQU/Gjc
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -39,9 +39,9 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 28/53] Convert remaining callers of lookup_blob to object_id
-Date:   Sat,  6 May 2017 22:10:13 +0000
-Message-Id: <20170506221038.296722-29-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 21/53] shallow: convert shallow registration functions to object_id
+Date:   Sat,  6 May 2017 22:10:06 +0000
+Message-Id: <20170506221038.296722-22-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f
 In-Reply-To: <20170506221038.296722-1-sandals@crustytoothpaste.net>
 References: <20170506221038.296722-1-sandals@crustytoothpaste.net>
@@ -50,189 +50,179 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All but a few callers of lookup_blob have been converted to struct
-object_id.  Introduce a temporary, which will be removed later, into
-parse_object to ease the transition, and convert the remaining callers
-so that we can update lookup_blob to take struct object_id *.
+Convert register_shallow and unregister_shallow to take struct
+object_id.  register_shallow is a caller of lookup_commit, which we will
+convert later.  It doesn't make sense for the registration and
+unregistration functions to have incompatible interfaces, so convert
+them both.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/index-pack.c | 28 ++++++++++++++--------------
- builtin/merge-tree.c | 10 +++++-----
- object.c             |  9 ++++++---
- 3 files changed, 25 insertions(+), 22 deletions(-)
+ builtin/pack-objects.c |  6 +++---
+ builtin/receive-pack.c |  2 +-
+ commit.c               |  4 ++--
+ commit.h               |  4 ++--
+ fetch-pack.c           |  4 ++--
+ shallow.c              | 12 ++++++------
+ upload-pack.c          |  8 ++++----
+ 7 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index fef0025e4..2241ee68e 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -785,7 +785,7 @@ static int check_collison(struct object_entry *entry)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0fe35d1b5..477070806 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2777,10 +2777,10 @@ static void get_object_list(int ac, const char **av)
+ 				continue;
+ 			}
+ 			if (starts_with(line, "--shallow ")) {
+-				unsigned char sha1[20];
+-				if (get_sha1_hex(line + 10, sha1))
++				struct object_id oid;
++				if (get_oid_hex(line + 10, &oid))
+ 					die("not an SHA-1 '%s'", line + 10);
+-				register_shallow(sha1);
++				register_shallow(&oid);
+ 				use_bitmap_index = 0;
+ 				continue;
+ 			}
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index f96834f42..6f0f788b0 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -858,7 +858,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ 	 * not lose these new roots..
+ 	 */
+ 	for (i = 0; i < extra.nr; i++)
+-		register_shallow(extra.oid[i].hash);
++		register_shallow(&extra.oid[i]);
  
- static void sha1_object(const void *data, struct object_entry *obj_entry,
- 			unsigned long size, enum object_type type,
--			const unsigned char *sha1)
-+			const struct object_id *oid)
+ 	si->shallow_ref[cmd->index] = 0;
+ 	oid_array_clear(&extra);
+diff --git a/commit.c b/commit.c
+index 73c78c2b8..ec41ba5e0 100644
+--- a/commit.c
++++ b/commit.c
+@@ -216,9 +216,9 @@ int for_each_commit_graft(each_commit_graft_fn fn, void *cb_data)
+ 	return ret;
+ }
+ 
+-int unregister_shallow(const unsigned char *sha1)
++int unregister_shallow(const struct object_id *oid)
  {
- 	void *new_data = NULL;
- 	int collision_test_needed = 0;
-@@ -794,7 +794,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+-	int pos = commit_graft_pos(sha1);
++	int pos = commit_graft_pos(oid->hash);
+ 	if (pos < 0)
+ 		return -1;
+ 	if (pos + 1 < commit_graft_nr)
+diff --git a/commit.h b/commit.h
+index 7b1986d5c..884177b8f 100644
+--- a/commit.h
++++ b/commit.h
+@@ -263,8 +263,8 @@ extern struct commit_list *get_merge_bases_many_dirty(struct commit *one, int n,
  
- 	if (startup_info->have_repository) {
- 		read_lock();
--		collision_test_needed = has_sha1_file_with_flags(sha1, HAS_SHA1_QUICK);
-+		collision_test_needed = has_sha1_file_with_flags(oid->hash, HAS_SHA1_QUICK);
- 		read_unlock();
- 	}
- 
-@@ -809,31 +809,31 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 		enum object_type has_type;
- 		unsigned long has_size;
- 		read_lock();
--		has_type = sha1_object_info(sha1, &has_size);
-+		has_type = sha1_object_info(oid->hash, &has_size);
- 		if (has_type < 0)
--			die(_("cannot read existing object info %s"), sha1_to_hex(sha1));
-+			die(_("cannot read existing object info %s"), oid_to_hex(oid));
- 		if (has_type != type || has_size != size)
--			die(_("SHA1 COLLISION FOUND WITH %s !"), sha1_to_hex(sha1));
--		has_data = read_sha1_file(sha1, &has_type, &has_size);
-+			die(_("SHA1 COLLISION FOUND WITH %s !"), oid_to_hex(oid));
-+		has_data = read_sha1_file(oid->hash, &has_type, &has_size);
- 		read_unlock();
- 		if (!data)
- 			data = new_data = get_data_from_pack(obj_entry);
- 		if (!has_data)
--			die(_("cannot read existing object %s"), sha1_to_hex(sha1));
-+			die(_("cannot read existing object %s"), oid_to_hex(oid));
- 		if (size != has_size || type != has_type ||
- 		    memcmp(data, has_data, size) != 0)
--			die(_("SHA1 COLLISION FOUND WITH %s !"), sha1_to_hex(sha1));
-+			die(_("SHA1 COLLISION FOUND WITH %s !"), oid_to_hex(oid));
- 		free(has_data);
- 	}
- 
- 	if (strict) {
- 		read_lock();
- 		if (type == OBJ_BLOB) {
--			struct blob *blob = lookup_blob(sha1);
-+			struct blob *blob = lookup_blob(oid->hash);
- 			if (blob)
- 				blob->object.flags |= FLAG_CHECKED;
- 			else
--				die(_("invalid blob object %s"), sha1_to_hex(sha1));
-+				die(_("invalid blob object %s"), oid_to_hex(oid));
- 		} else {
- 			struct object *obj;
- 			int eaten;
-@@ -845,7 +845,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 			 * we do not need to free the memory here, as the
- 			 * buf is deleted by the caller.
- 			 */
--			obj = parse_object_buffer(sha1, type, size, buf, &eaten);
-+			obj = parse_object_buffer(oid->hash, type, size, buf, &eaten);
- 			if (!obj)
- 				die(_("invalid %s"), typename(type));
- 			if (do_fsck_object &&
-@@ -960,7 +960,7 @@ static void resolve_delta(struct object_entry *delta_obj,
- 		       typename(delta_obj->real_type),
- 		       delta_obj->idx.oid.hash);
- 	sha1_object(result->data, NULL, result->size, delta_obj->real_type,
--		    delta_obj->idx.oid.hash);
-+		    &delta_obj->idx.oid);
- 	counter_lock();
- 	nr_resolved_deltas++;
- 	counter_unlock();
-@@ -1149,7 +1149,7 @@ static void parse_pack_objects(unsigned char *sha1)
- 			nr_delays++;
- 		} else
- 			sha1_object(data, NULL, obj->size, obj->type,
--				    obj->idx.oid.hash);
-+				    &obj->idx.oid);
- 		free(data);
- 		display_progress(progress, i+1);
- 	}
-@@ -1176,7 +1176,7 @@ static void parse_pack_objects(unsigned char *sha1)
- 			continue;
- 		obj->real_type = obj->type;
- 		sha1_object(NULL, obj, obj->size, obj->type,
--			    obj->idx.oid.hash);
-+			    &obj->idx.oid);
- 		nr_delays--;
- 	}
- 	if (nr_delays)
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 5b7ab9b96..cdeb6562d 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -161,14 +161,14 @@ static int both_empty(struct name_entry *a, struct name_entry *b)
- 	return !(a->oid || b->oid);
+ struct oid_array;
+ struct ref;
+-extern int register_shallow(const unsigned char *sha1);
+-extern int unregister_shallow(const unsigned char *sha1);
++extern int register_shallow(const struct object_id *oid);
++extern int unregister_shallow(const struct object_id *oid);
+ extern int for_each_commit_graft(each_commit_graft_fn, void *);
+ extern int is_repository_shallow(void);
+ extern struct commit_list *get_shallow_commits(struct object_array *heads,
+diff --git a/fetch-pack.c b/fetch-pack.c
+index b42d01f42..d455ef97a 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -417,7 +417,7 @@ static int find_common(struct fetch_pack_args *args,
+ 			if (skip_prefix(line, "shallow ", &arg)) {
+ 				if (get_oid_hex(arg, &oid))
+ 					die(_("invalid shallow line: %s"), line);
+-				register_shallow(oid.hash);
++				register_shallow(&oid);
+ 				continue;
+ 			}
+ 			if (skip_prefix(line, "unshallow ", &arg)) {
+@@ -428,7 +428,7 @@ static int find_common(struct fetch_pack_args *args,
+ 				/* make sure that it is parsed as shallow */
+ 				if (!parse_object(oid.hash))
+ 					die(_("error in object: %s"), line);
+-				if (unregister_shallow(oid.hash))
++				if (unregister_shallow(&oid))
+ 					die(_("no shallow found: %s"), line);
+ 				continue;
+ 			}
+diff --git a/shallow.c b/shallow.c
+index 25b6db989..c520ae3ae 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -27,13 +27,13 @@ void set_alternate_shallow_file(const char *path, int override)
+ 	alternate_shallow_file = xstrdup_or_null(path);
  }
  
--static struct merge_list *create_entry(unsigned stage, unsigned mode, const unsigned char *sha1, const char *path)
-+static struct merge_list *create_entry(unsigned stage, unsigned mode, const struct object_id *oid, const char *path)
+-int register_shallow(const unsigned char *sha1)
++int register_shallow(const struct object_id *oid)
  {
- 	struct merge_list *res = xcalloc(1, sizeof(*res));
+ 	struct commit_graft *graft =
+ 		xmalloc(sizeof(struct commit_graft));
+-	struct commit *commit = lookup_commit(sha1);
++	struct commit *commit = lookup_commit(oid->hash);
  
- 	res->stage = stage;
- 	res->path = path;
- 	res->mode = mode;
--	res->blob = lookup_blob(sha1);
-+	res->blob = lookup_blob(oid->hash);
- 	return res;
- }
+-	hashcpy(graft->oid.hash, sha1);
++	oidcpy(&graft->oid, oid);
+ 	graft->nr_parent = -1;
+ 	if (commit && commit->object.parsed)
+ 		commit->parents = NULL;
+@@ -65,10 +65,10 @@ int is_repository_shallow(void)
+ 	is_shallow = 1;
  
-@@ -188,8 +188,8 @@ static void resolve(const struct traverse_info *info, struct name_entry *ours, s
- 		return;
- 
- 	path = traverse_path(info, result);
--	orig = create_entry(2, ours->mode, ours->oid->hash, path);
--	final = create_entry(0, result->mode, result->oid->hash, path);
-+	orig = create_entry(2, ours->mode, ours->oid, path);
-+	final = create_entry(0, result->mode, result->oid, path);
- 
- 	final->link = orig;
- 
-@@ -239,7 +239,7 @@ static struct merge_list *link_entry(unsigned stage, const struct traverse_info
- 		path = entry->path;
- 	else
- 		path = traverse_path(info, n);
--	link = create_entry(stage, n->mode, n->oid->hash, path);
-+	link = create_entry(stage, n->mode, n->oid, path);
- 	link->link = entry;
- 	return link;
- }
-diff --git a/object.c b/object.c
-index fe2222356..0208c407a 100644
---- a/object.c
-+++ b/object.c
-@@ -190,7 +190,7 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
- 
- 	obj = NULL;
- 	if (type == OBJ_BLOB) {
--		struct blob *blob = lookup_blob(sha1);
-+		struct blob *blob = lookup_blob(oid.hash);
- 		if (blob) {
- 			if (parse_blob_buffer(blob, buffer, size))
- 				return NULL;
-@@ -251,8 +251,11 @@ struct object *parse_object(const unsigned char *sha1)
- 	const unsigned char *repl = lookup_replace_object(sha1);
- 	void *buffer;
- 	struct object *obj;
-+	struct object_id oid;
- 
--	obj = lookup_object(sha1);
-+	hashcpy(oid.hash, sha1);
-+
-+	obj = lookup_object(oid.hash);
- 	if (obj && obj->parsed)
- 		return obj;
- 
-@@ -263,7 +266,7 @@ struct object *parse_object(const unsigned char *sha1)
- 			error("sha1 mismatch %s", sha1_to_hex(repl));
- 			return NULL;
+ 	while (fgets(buf, sizeof(buf), fp)) {
+-		unsigned char sha1[20];
+-		if (get_sha1_hex(buf, sha1))
++		struct object_id oid;
++		if (get_oid_hex(buf, &oid))
+ 			die("bad shallow line: %s", buf);
+-		register_shallow(sha1);
++		register_shallow(&oid);
+ 	}
+ 	fclose(fp);
+ 	return is_shallow;
+diff --git a/upload-pack.c b/upload-pack.c
+index ffb028d62..20f87cd38 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -642,7 +642,7 @@ static void send_shallow(struct commit_list *result)
+ 		if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
+ 			packet_write_fmt(1, "shallow %s",
+ 					 oid_to_hex(&object->oid));
+-			register_shallow(object->oid.hash);
++			register_shallow(&object->oid);
+ 			shallow_nr++;
  		}
--		parse_blob_buffer(lookup_blob(sha1), NULL, 0);
-+		parse_blob_buffer(lookup_blob(oid.hash), NULL, 0);
- 		return lookup_object(sha1);
+ 		result = result->next;
+@@ -667,7 +667,7 @@ static void send_unshallow(const struct object_array *shallows)
+ 			 * parse and add the parents to the want list, then
+ 			 * re-register it.
+ 			 */
+-			unregister_shallow(object->oid.hash);
++			unregister_shallow(&object->oid);
+ 			object->parsed = 0;
+ 			parse_commit_or_die((struct commit *)object);
+ 			parents = ((struct commit *)object)->parents;
+@@ -679,7 +679,7 @@ static void send_unshallow(const struct object_array *shallows)
+ 			add_object_array(object, NULL, &extra_edge_obj);
+ 		}
+ 		/* make sure commit traversal conforms to client */
+-		register_shallow(object->oid.hash);
++		register_shallow(&object->oid);
  	}
+ }
  
+@@ -883,7 +883,7 @@ static void receive_needs(void)
+ 		if (shallows.nr > 0) {
+ 			int i;
+ 			for (i = 0; i < shallows.nr; i++)
+-				register_shallow(shallows.objects[i].item->oid.hash);
++				register_shallow(&shallows.objects[i].item->oid);
+ 		}
+ 
+ 	shallow_nr += shallows.nr;
