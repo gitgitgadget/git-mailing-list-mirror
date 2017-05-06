@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B3F6207F8
-	for <e@80x24.org>; Sat,  6 May 2017 22:12:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D13C5207F8
+	for <e@80x24.org>; Sat,  6 May 2017 22:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754878AbdEFWMf (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 18:12:35 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37710 "EHLO
+        id S1754882AbdEFWMj (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 18:12:39 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37750 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754427AbdEFWLX (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:23 -0400
+        by vger.kernel.org with ESMTP id S1754433AbdEFWLY (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:24 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E642A280C8;
-        Sat,  6 May 2017 22:11:13 +0000 (UTC)
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 0A517280CD;
+        Sat,  6 May 2017 22:11:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1494108674;
-        bh=F94DVmMlVh5E6Atu/HDxMuRsMH+ebdO5vTjGPvgqUTI=;
+        s=default; t=1494108675;
+        bh=gAuqBFCaRKDczK4nKXJsphk4CAUYgR38Dfche2gqQKs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=thspNxeyApNkZu1OCZR+2aP7XQXI54D78dOKcGRvxtUxJq8iZNWlsjWO/IXq5D43P
-         +i0OrC0ELYYPQsCxySOTJpPOPwSjDkOT4/BTtVY/oAuJNxwF5fkaSNPqzAuxHzAivP
-         +E/i1q5wGd81NoFJvFrBU/eGxPnAD7Q782JLv313DvRw1ViKjwkFqJV0/c0spBps2n
-         2/J//Q8gzqLn4hhpnHqJ27DKiLXpWOqLKlpIJ+v0tMycxdN36PjUjN4yp8ZVoh1Jza
-         4nTIXhgWyyU3bCLIMsDu8FX00iob5b/OGjbs5GkzdF9R7gqKJjG5FlOAXVn9gqGszc
-         jltt6v38RsYz2FjdcHHgir+NsBtEsKB1aFyiGyv2c2CF8bjQTYKRTOKJVNdRkk7qFh
-         UWQDZhtl/RfbIBi8hlJxKAcQP6idUjc/SxthZhsiMdamGbRsns8ZOp+TvAMoLm31WE
-         4WzC4nbk3QJ2SjLp9AhWxzCubChDZsdaOvy44wtzHg88IUA19FW
+        b=vJiRqxEyStmY4LWom/xg9iJu3y5ihAR32yWUjkMqlutN+Fvs6eYnRtaJFCtMGoy2g
+         +fjRmWh+5rUVaCpzy7Nv3witoXo1tAg9Tm62xvI3VCGy/EYFDjJ4eB5PbAfc18N42T
+         /iwx5G782vM5JQ8kG2XWeFuGhY0+vgVYIYORpUlHy/d2zRAkwlVvTCHB3ZMIQztnli
+         ys+RadBERXrvDY6vXMnuneRscckc0+t0Ti+GjLOMDGMqVVab/euLX3cP945Bej5cbf
+         r4B7HXwD4MEECXWNCRKNZZT++58SpPOMxML5xA0DaKdiuC+w7dROkzcFws2wHzblWu
+         qRkXg93b7cHIjkiQZsrqnLpR/y91WQDyi4Io+F7D0yei+SG2I9g53svxWtWYMPu02b
+         iTIVRd247ZNVFj8RwAVtIhdPeOUI9/8cD//Xfs9dQgj1Q47NCTCGiU7hihXSIr+SLB
+         c3WO6/bLwtux6a0t/kN/OtZhp5WTQi5GedVaQ/U59ih+BeJ9rEr
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -39,9 +39,9 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 29/53] Convert lookup_blob to struct object_id
-Date:   Sat,  6 May 2017 22:10:14 +0000
-Message-Id: <20170506221038.296722-30-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 33/53] log-tree: convert to struct object_id
+Date:   Sat,  6 May 2017 22:10:18 +0000
+Message-Id: <20170506221038.296722-34-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f
 In-Reply-To: <20170506221038.296722-1-sandals@crustytoothpaste.net>
 References: <20170506221038.296722-1-sandals@crustytoothpaste.net>
@@ -50,258 +50,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert lookup_blob to take a pointer to struct object_id.
-
-The commit was created with manual changes to blob.c and blob.h, plus
-the following semantic patch:
-
-@@
-expression E1;
-@@
-- lookup_blob(E1.hash)
-+ lookup_blob(&E1)
-
-@@
-expression E1;
-@@
-- lookup_blob(E1->hash)
-+ lookup_blob(E1)
+Convert the remaining functions to take pointers to struct object_id
+instead of pointers to unsigned char, and update the internals of these
+functions as well.  Among these functions is a caller of lookup_tag,
+which we will convert shortly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- blob.c                   | 6 +++---
- blob.h                   | 2 +-
- builtin/fast-export.c    | 2 +-
- builtin/fsck.c           | 2 +-
- builtin/index-pack.c     | 2 +-
- builtin/merge-tree.c     | 2 +-
- builtin/unpack-objects.c | 2 +-
- fsck.c                   | 2 +-
- http-push.c              | 2 +-
- list-objects.c           | 2 +-
- object.c                 | 4 ++--
- reachable.c              | 2 +-
- revision.c               | 4 ++--
- tag.c                    | 2 +-
- walker.c                 | 2 +-
- 15 files changed, 19 insertions(+), 19 deletions(-)
+ log-tree.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/blob.c b/blob.c
-index 1fcb8e44b..fa2ab4f7a 100644
---- a/blob.c
-+++ b/blob.c
-@@ -3,11 +3,11 @@
- 
- const char *blob_type = "blob";
- 
--struct blob *lookup_blob(const unsigned char *sha1)
-+struct blob *lookup_blob(const struct object_id *oid)
+diff --git a/log-tree.c b/log-tree.c
+index 7fb1a85d2..169fd039f 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -184,7 +184,7 @@ static const struct name_decoration *current_pointed_by_HEAD(const struct name_d
  {
--	struct object *obj = lookup_object(sha1);
-+	struct object *obj = lookup_object(oid->hash);
- 	if (!obj)
--		return create_object(sha1, alloc_blob_node());
-+		return create_object(oid->hash, alloc_blob_node());
- 	return object_as_type(obj, OBJ_BLOB, 0);
+ 	const struct name_decoration *list, *head = NULL;
+ 	const char *branch_name = NULL;
+-	unsigned char unused[20];
++	struct object_id unused;
+ 	int rru_flags;
+ 
+ 	/* First find HEAD */
+@@ -197,7 +197,7 @@ static const struct name_decoration *current_pointed_by_HEAD(const struct name_d
+ 		return NULL;
+ 
+ 	/* Now resolve and find the matching current branch */
+-	branch_name = resolve_ref_unsafe("HEAD", 0, unused, &rru_flags);
++	branch_name = resolve_ref_unsafe("HEAD", 0, unused.hash, &rru_flags);
+ 	if (!(rru_flags & REF_ISSYMREF))
+ 		return NULL;
+ 
+@@ -456,13 +456,13 @@ static void show_signature(struct rev_info *opt, struct commit *commit)
+ 	strbuf_release(&signature);
  }
  
-diff --git a/blob.h b/blob.h
-index 59b394eea..446061683 100644
---- a/blob.h
-+++ b/blob.h
-@@ -9,7 +9,7 @@ struct blob {
- 	struct object object;
- };
+-static int which_parent(const unsigned char *sha1, const struct commit *commit)
++static int which_parent(const struct object_id *oid, const struct commit *commit)
+ {
+ 	int nth;
+ 	const struct commit_list *parent;
  
--struct blob *lookup_blob(const unsigned char *sha1);
-+struct blob *lookup_blob(const struct object_id *oid);
- 
- int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size);
- 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index b4521cb62..ae36b14db 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -232,7 +232,7 @@ static void export_blob(const struct object_id *oid)
- 
- 	if (anonymize) {
- 		buf = anonymize_blob(&size);
--		object = (struct object *)lookup_blob(oid->hash);
-+		object = (struct object *)lookup_blob(oid);
- 		eaten = 0;
- 	} else {
- 		buf = read_sha1_file(oid->hash, &type, &size);
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index c40e14de6..2f67e8217 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -781,7 +781,7 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
- 			mode = active_cache[i]->ce_mode;
- 			if (S_ISGITLINK(mode))
- 				continue;
--			blob = lookup_blob(active_cache[i]->oid.hash);
-+			blob = lookup_blob(&active_cache[i]->oid);
- 			if (!blob)
- 				continue;
- 			obj = &blob->object;
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2241ee68e..b75133f62 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -829,7 +829,7 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 	if (strict) {
- 		read_lock();
- 		if (type == OBJ_BLOB) {
--			struct blob *blob = lookup_blob(oid->hash);
-+			struct blob *blob = lookup_blob(oid);
- 			if (blob)
- 				blob->object.flags |= FLAG_CHECKED;
- 			else
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index cdeb6562d..bad6735c7 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -168,7 +168,7 @@ static struct merge_list *create_entry(unsigned stage, unsigned mode, const stru
- 	res->stage = stage;
- 	res->path = path;
- 	res->mode = mode;
--	res->blob = lookup_blob(oid->hash);
-+	res->blob = lookup_blob(oid);
- 	return res;
- }
- 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 3dc5e5691..7d5efa2b3 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -249,7 +249,7 @@ static void write_object(unsigned nr, enum object_type type,
- 		added_object(nr, type, buf, size);
- 		free(buf);
- 
--		blob = lookup_blob(obj_list[nr].oid.hash);
-+		blob = lookup_blob(&obj_list[nr].oid);
- 		if (blob)
- 			blob->object.flags |= FLAG_WRITTEN;
- 		else
-diff --git a/fsck.c b/fsck.c
-index e6152e4e6..ab3016c0e 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -365,7 +365,7 @@ static int fsck_walk_tree(struct tree *tree, void *data, struct fsck_options *op
- 			result = options->walk(obj, OBJ_TREE, data, options);
- 		}
- 		else if (S_ISREG(entry.mode) || S_ISLNK(entry.mode)) {
--			obj = &lookup_blob(entry.oid->hash)->object;
-+			obj = &lookup_blob(entry.oid)->object;
- 			if (name)
- 				put_object_name(options, obj, "%s%s", name,
- 					entry.path);
-diff --git a/http-push.c b/http-push.c
-index 04568e4fb..9bb5e0648 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1315,7 +1315,7 @@ static struct object_list **process_tree(struct tree *tree,
- 			p = process_tree(lookup_tree(entry.oid->hash), p);
- 			break;
- 		case OBJ_BLOB:
--			p = process_blob(lookup_blob(entry.oid->hash), p);
-+			p = process_blob(lookup_blob(entry.oid), p);
- 			break;
- 		default:
- 			/* Subproject commit - not in this repository */
-diff --git a/list-objects.c b/list-objects.c
-index f3ca6aafb..721e5fb08 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -119,7 +119,7 @@ static void process_tree(struct rev_info *revs,
- 					cb_data);
- 		else
- 			process_blob(revs,
--				     lookup_blob(entry.oid->hash),
-+				     lookup_blob(entry.oid),
- 				     show, base, entry.path,
- 				     cb_data);
+ 	for (nth = 0, parent = commit->parents; parent; parent = parent->next) {
+-		if (!hashcmp(parent->item->object.oid.hash, sha1))
++		if (!oidcmp(&parent->item->object.oid, oid))
+ 			return nth;
+ 		nth++;
  	}
-diff --git a/object.c b/object.c
-index 0208c407a..2c8d1e5d3 100644
---- a/object.c
-+++ b/object.c
-@@ -190,7 +190,7 @@ struct object *parse_object_buffer(const unsigned char *sha1, enum object_type t
+@@ -481,14 +481,14 @@ static void show_one_mergetag(struct commit *commit,
+ 			      void *data)
+ {
+ 	struct rev_info *opt = (struct rev_info *)data;
+-	unsigned char sha1[20];
++	struct object_id oid;
+ 	struct tag *tag;
+ 	struct strbuf verify_message;
+ 	int status, nth;
+ 	size_t payload_size, gpg_message_offset;
  
- 	obj = NULL;
- 	if (type == OBJ_BLOB) {
--		struct blob *blob = lookup_blob(oid.hash);
-+		struct blob *blob = lookup_blob(&oid);
- 		if (blob) {
- 			if (parse_blob_buffer(blob, buffer, size))
- 				return NULL;
-@@ -266,7 +266,7 @@ struct object *parse_object(const unsigned char *sha1)
- 			error("sha1 mismatch %s", sha1_to_hex(repl));
- 			return NULL;
- 		}
--		parse_blob_buffer(lookup_blob(oid.hash), NULL, 0);
-+		parse_blob_buffer(lookup_blob(&oid), NULL, 0);
- 		return lookup_object(sha1);
- 	}
+-	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), sha1);
+-	tag = lookup_tag(sha1);
++	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), oid.hash);
++	tag = lookup_tag(oid.hash);
+ 	if (!tag)
+ 		return; /* error message already given */
  
-diff --git a/reachable.c b/reachable.c
-index a8a979bd4..8ea0bdd7c 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -88,7 +88,7 @@ static void add_recent_object(const struct object_id *oid,
- 		obj = (struct object *)lookup_tree(oid->hash);
- 		break;
- 	case OBJ_BLOB:
--		obj = (struct object *)lookup_blob(oid->hash);
-+		obj = (struct object *)lookup_blob(oid);
- 		break;
- 	default:
- 		die("unknown object type for %s: %s",
-diff --git a/revision.c b/revision.c
-index f8e0dee6d..db2de7a7a 100644
---- a/revision.c
-+++ b/revision.c
-@@ -62,7 +62,7 @@ static void mark_tree_contents_uninteresting(struct tree *tree)
- 			mark_tree_uninteresting(lookup_tree(entry.oid->hash));
- 			break;
- 		case OBJ_BLOB:
--			mark_blob_uninteresting(lookup_blob(entry.oid->hash));
-+			mark_blob_uninteresting(lookup_blob(entry.oid));
- 			break;
- 		default:
- 			/* Subproject commit - not in this repository */
-@@ -1275,7 +1275,7 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned flags)
- 		if (S_ISGITLINK(ce->ce_mode))
- 			continue;
+@@ -500,7 +500,7 @@ static void show_one_mergetag(struct commit *commit,
+ 			  &commit->parents->next->item->object.oid))
+ 		strbuf_addf(&verify_message,
+ 			    "merged tag '%s'\n", tag->tag);
+-	else if ((nth = which_parent(tag->tagged->oid.hash, commit)) < 0)
++	else if ((nth = which_parent(&tag->tagged->oid, commit)) < 0)
+ 		strbuf_addf(&verify_message, "tag %s names a non-parent %s\n",
+ 				    tag->tag, tag->tagged->oid.hash);
+ 	else
+@@ -536,7 +536,7 @@ void show_log(struct rev_info *opt)
+ 	struct strbuf msgbuf = STRBUF_INIT;
+ 	struct log_info *log = opt->loginfo;
+ 	struct commit *commit = log->commit, *parent = log->parent;
+-	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : 40;
++	int abbrev_commit = opt->abbrev_commit ? opt->abbrev : GIT_SHA1_HEXSZ;
+ 	const char *extra_headers = opt->extra_headers;
+ 	struct pretty_print_context ctx = {0};
  
--		blob = lookup_blob(ce->oid.hash);
-+		blob = lookup_blob(&ce->oid);
- 		if (!blob)
- 			die("unable to add index blob to traversal");
- 		add_pending_object_with_path(revs, &blob->object, "",
-diff --git a/tag.c b/tag.c
-index 79b78d358..dff251673 100644
---- a/tag.c
-+++ b/tag.c
-@@ -142,7 +142,7 @@ int parse_tag_buffer(struct tag *item, const void *data, unsigned long size)
- 	bufptr = nl + 1;
- 
- 	if (!strcmp(type, blob_type)) {
--		item->tagged = &lookup_blob(oid.hash)->object;
-+		item->tagged = &lookup_blob(&oid)->object;
- 	} else if (!strcmp(type, tree_type)) {
- 		item->tagged = &lookup_tree(oid.hash)->object;
- 	} else if (!strcmp(type, commit_type)) {
-diff --git a/walker.c b/walker.c
-index b499fcb72..3d6029c8e 100644
---- a/walker.c
-+++ b/walker.c
-@@ -52,7 +52,7 @@ static int process_tree(struct walker *walker, struct tree *tree)
- 				obj = &tree->object;
- 		}
- 		else {
--			struct blob *blob = lookup_blob(entry.oid->hash);
-+			struct blob *blob = lookup_blob(entry.oid);
- 			if (blob)
- 				obj = &blob->object;
- 		}
