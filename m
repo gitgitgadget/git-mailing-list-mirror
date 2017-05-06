@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34EAF207F8
-	for <e@80x24.org>; Sat,  6 May 2017 22:12:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40ADE20803
+	for <e@80x24.org>; Sat,  6 May 2017 22:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754723AbdEFWL5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 18:11:57 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37852 "EHLO
+        id S1754744AbdEFWMA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 18:12:00 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37622 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754083AbdEFWLR (ORCPT
+        by vger.kernel.org with ESMTP id S1754224AbdEFWLR (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:17 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 3DA5A280BF;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7D68A280C0;
         Sat,  6 May 2017 22:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1494108670;
-        bh=qETeohCd45sT5pTpefYGNi6MafKhVx8ZCbTbEQEvCvU=;
+        bh=LN8wkSzE1wZmdGdw+SRTDnx2DORuPoqICeG0SDni2UM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=vX6z3tIvDL4Nq7KiHm0mWwNAgXVZhJEHNddpY8Ud0lZYDp9jRp/guVoSe6zaKVUtC
-         83RNeCKTUDdXcNjvQerzBCd3Gc9BFrrY2DFVLuGG9vn2xiM1mgj4SMaeT7SIb1NJfU
-         /GI0WUYn84SzP7AXgUl6A0y0GoWanY/HKfUBQ3ugPjAEYysFWRj8Udu9TuCS86n+a0
-         WyC6UStKpLwIucdO+D0nzdbb+DmmOacrul1KgK10IybFWg+BwxogH7FNYjgHAwfA87
-         C94KovJu/1aStGKxXo0l7pFII+1il++4WcKN24z8fLzyGqjFGHNLHwDo05cEsLnjUC
-         uhYKKLU4/1UGgvrhNIECs2dxPYd8BDosyBv0C3T1ZYgjOTheEpWGDyMC2YbVFgfBnW
-         21YOks4mfE4foEVos5OXMWdOHjaZPiGNNRiwahHdqCziLEZtXuqTWvm2bWDkDRpi1h
-         P5ci84RVQUyILFetmiLhYHnqbJpgUDJXO5zXHbiKGacknhsMgou
+        b=0Eca/sfdqnwTqezbp9DwiKJKUt5eShQQ3GXb6UWV0pc+9yHQ9sZfBu+CChyYK4J1z
+         zgQ+3a3X9I6FmSeaXYu9kzj35i/GKnwWoq5qpZGJhTHSURilyeFK9iu49FOOSfgfVm
+         LfOfCVb/Zk5pfosZqjMyVWERnNk0S+5z7QUphTzYCG8F2nM/e+mWmD0SOVn4tAxbA1
+         B9KtECA6mL7xaqATqQQ7V1ahHhjys3Lbw+l937w/T0Bgk+QAe5JNmDeXC8kG0giW7c
+         zrCcKdN/t+TF0NnqvHaFPq3RLx8vvQjBPmPswZxJ2yvjB69OSZiHbnTMUpNP74YbY1
+         Sy+GJHCo5n0vi8iRkF0YZPwxx1b1mSyzREUTjvvIk0uC/FU70QRgDZ+QBOlpQjIBHP
+         YqLFz62kdF6SP9oNty6I7Y/f064/pe8UQACVmTep14reWQMS0jzIHJd6HjZKDszBy2
+         jhvcgWfZUEuUAuqp0oZGmg7twZwkuAhWDwM1inTSa3+l+eioAmi
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -39,9 +39,9 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 18/53] http-push: convert some static functions to struct object_id
-Date:   Sat,  6 May 2017 22:10:03 +0000
-Message-Id: <20170506221038.296722-19-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 19/53] notes-utils: convert internals to struct object_id
+Date:   Sat,  6 May 2017 22:10:04 +0000
+Message-Id: <20170506221038.296722-20-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f
 In-Reply-To: <20170506221038.296722-1-sandals@crustytoothpaste.net>
 References: <20170506221038.296722-1-sandals@crustytoothpaste.net>
@@ -50,102 +50,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Among the functions converted is a caller of lookup_commit_or_die, which
-we will convert later on.
+Convert the internals of create_notes_comit and commit_notes to use
+struct object_id.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- http-push.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ notes-utils.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index f0e3108f7..f3dd0a560 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1536,7 +1536,7 @@ static int remote_exists(const char *path)
- 	return ret;
- }
- 
--static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
-+static void fetch_symref(const char *path, char **symref, struct object_id *oid)
+diff --git a/notes-utils.c b/notes-utils.c
+index 24a33616a..36c1490aa 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -7,18 +7,18 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 			 const char *msg, size_t msg_len,
+ 			 unsigned char *result_sha1)
  {
- 	char *url = xstrfmt("%s%s", repo->url, path);
- 	struct strbuf buffer = STRBUF_INIT;
-@@ -1549,7 +1549,7 @@ static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
+-	unsigned char tree_sha1[20];
++	struct object_id tree_oid;
  
- 	free(*symref);
- 	*symref = NULL;
--	hashclr(sha1);
-+	oidclr(oid);
+ 	assert(t->initialized);
  
- 	if (buffer.len == 0)
- 		return;
-@@ -1561,15 +1561,15 @@ static void fetch_symref(const char *path, char **symref, unsigned char *sha1)
- 	if (skip_prefix(buffer.buf, "ref: ", &name)) {
- 		*symref = xmemdupz(name, buffer.len - (name - buffer.buf));
- 	} else {
--		get_sha1_hex(buffer.buf, sha1);
-+		get_oid_hex(buffer.buf, oid);
+-	if (write_notes_tree(t, tree_sha1))
++	if (write_notes_tree(t, tree_oid.hash))
+ 		die("Failed to write notes tree to database");
+ 
+ 	if (!parents) {
+ 		/* Deduce parent commit from t->ref */
+-		unsigned char parent_sha1[20];
+-		if (!read_ref(t->ref, parent_sha1)) {
+-			struct commit *parent = lookup_commit(parent_sha1);
++		struct object_id parent_oid;
++		if (!read_ref(t->ref, parent_oid.hash)) {
++			struct commit *parent = lookup_commit(parent_oid.hash);
+ 			if (parse_commit(parent))
+ 				die("Failed to find/parse commit %s", t->ref);
+ 			commit_list_insert(parent, &parents);
+@@ -26,14 +26,14 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
+ 		/* else: t->ref points to nothing, assume root/orphan commit */
  	}
  
- 	strbuf_release(&buffer);
+-	if (commit_tree(msg, msg_len, tree_sha1, parents, result_sha1, NULL, NULL))
++	if (commit_tree(msg, msg_len, tree_oid.hash, parents, result_sha1, NULL, NULL))
+ 		die("Failed to commit notes tree to database");
  }
  
--static int verify_merge_base(unsigned char *head_sha1, struct ref *remote)
-+static int verify_merge_base(struct object_id *head_oid, struct ref *remote)
+ void commit_notes(struct notes_tree *t, const char *msg)
  {
--	struct commit *head = lookup_commit_or_die(head_sha1, "HEAD");
-+	struct commit *head = lookup_commit_or_die(head_oid->hash, "HEAD");
- 	struct commit *branch = lookup_commit_or_die(remote->old_oid.hash, remote->name);
+ 	struct strbuf buf = STRBUF_INIT;
+-	unsigned char commit_sha1[20];
++	struct object_id commit_oid;
  
- 	return in_merge_bases(branch, head);
-@@ -1579,7 +1579,7 @@ static int delete_remote_branch(const char *pattern, int force)
- {
- 	struct ref *refs = remote_refs;
- 	struct ref *remote_ref = NULL;
--	unsigned char head_sha1[20];
-+	struct object_id head_oid;
- 	char *symref = NULL;
- 	int match;
- 	int patlen = strlen(pattern);
-@@ -1610,7 +1610,7 @@ static int delete_remote_branch(const char *pattern, int force)
- 	 * Remote HEAD must be a symref (not exactly foolproof; a remote
- 	 * symlink to a symref will look like a symref)
- 	 */
--	fetch_symref("HEAD", &symref, head_sha1);
-+	fetch_symref("HEAD", &symref, &head_oid);
- 	if (!symref)
- 		return error("Remote HEAD is not a symref");
+ 	if (!t)
+ 		t = &default_notes_tree;
+@@ -46,9 +46,9 @@ void commit_notes(struct notes_tree *t, const char *msg)
+ 	strbuf_addstr(&buf, msg);
+ 	strbuf_complete_line(&buf);
  
-@@ -1619,7 +1619,7 @@ static int delete_remote_branch(const char *pattern, int force)
- 		if (!strcmp(remote_ref->name, symref))
- 			return error("Remote branch %s is the current HEAD",
- 				     remote_ref->name);
--		fetch_symref(symref, &symref, head_sha1);
-+		fetch_symref(symref, &symref, &head_oid);
- 	}
+-	create_notes_commit(t, NULL, buf.buf, buf.len, commit_sha1);
++	create_notes_commit(t, NULL, buf.buf, buf.len, commit_oid.hash);
+ 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
+-	update_ref(buf.buf, t->update_ref, commit_sha1, NULL, 0,
++	update_ref(buf.buf, t->update_ref, commit_oid.hash, NULL, 0,
+ 		   UPDATE_REFS_DIE_ON_ERR);
  
- 	/* Run extra sanity checks if delete is not forced */
-@@ -1627,10 +1627,10 @@ static int delete_remote_branch(const char *pattern, int force)
- 		/* Remote HEAD must resolve to a known object */
- 		if (symref)
- 			return error("Remote HEAD symrefs too deep");
--		if (is_null_sha1(head_sha1))
-+		if (is_null_oid(&head_oid))
- 			return error("Unable to resolve remote HEAD");
--		if (!has_sha1_file(head_sha1))
--			return error("Remote HEAD resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", sha1_to_hex(head_sha1));
-+		if (!has_object_file(&head_oid))
-+			return error("Remote HEAD resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", oid_to_hex(&head_oid));
- 
- 		/* Remote branch must resolve to a known object */
- 		if (is_null_oid(&remote_ref->old_oid))
-@@ -1640,7 +1640,7 @@ static int delete_remote_branch(const char *pattern, int force)
- 			return error("Remote branch %s resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", remote_ref->name, oid_to_hex(&remote_ref->old_oid));
- 
- 		/* Remote branch must be an ancestor of remote HEAD */
--		if (!verify_merge_base(head_sha1, remote_ref)) {
-+		if (!verify_merge_base(&head_oid, remote_ref)) {
- 			return error("The branch '%s' is not an ancestor "
- 				     "of your current HEAD.\n"
- 				     "If you are sure you want to delete it,"
+ 	strbuf_release(&buf);
