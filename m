@@ -6,32 +6,32 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA5A6207F8
-	for <e@80x24.org>; Sat,  6 May 2017 22:11:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD480207F8
+	for <e@80x24.org>; Sat,  6 May 2017 22:11:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754408AbdEFWLW (ORCPT <rfc822;e@80x24.org>);
-        Sat, 6 May 2017 18:11:22 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:37612 "EHLO
+        id S1754443AbdEFWLZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 6 May 2017 18:11:25 -0400
+Received: from castro.crustytoothpaste.net ([75.10.60.170]:37610 "EHLO
         castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1754128AbdEFWLH (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:07 -0400
+        by vger.kernel.org with ESMTP id S1751656AbdEFWLI (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 6 May 2017 18:11:08 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B4C78280B4;
+        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 6E53B280B3;
         Sat,  6 May 2017 22:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
         s=default; t=1494108666;
-        bh=hutjRo5HsKDbF/+SRuxzdwpgjZ2+YgA4SPBCk5IDydU=;
+        bh=tPy2ko+j/g10Df4wjtQ/Dhm7MtB6Njhmh38YsjkP6H4=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=S5ZHjxHcTx4L0RVI3fsNa4F3c3U1Wb29jTNL71D2SBljoaTpQYRPwdve2uUe9EIzt
-         DL+HV5Lvr5+UMgKLXNmgoxptkGMi6bz11n+mvRta0mnrykuYYqc+cSAdilpusYcMFG
-         lB36J4t2jbifxhc9rhcwYN96V7gRDyXpTEOdpy9UHqbrVXUWTalfNaKr+TvF3xPd2q
-         cN/TjQ4ESiwcTxFKRr5aOZzLe06mi+rjva18bTUdnq5yhTyJUh3X2789OW7YNXxFKh
-         Mlf1B2bKbiptZnEWyu2LY8DuR3rtEHGrcQTXAZXmYwoMWbuMVKXmsmeKwLQvBGyNKR
-         25SfuHR2zUOWNXWCgUVT2LOSP2ygOyQwAcxlPTwmtk+73FTHrgLakEE6AjNEokZvum
-         4+t37364uhsQxnAgYDfr8aDTqCfeIyyflL6FvRTCe7NUkVPVKfulBU/gV24wjgG97s
-         r533nGbRBoNYecV06bGJ+bEONf65wMqcH22P4rXkV2AW3kebEiN
+        b=ASYvMz/2ECA7TFuOkMlK9ByWfnYXGyqTwBa1DxRfUn36lxRR3T0hceuANomfgN6qf
+         0IoXTZseC7JF+imi3lv95GL40SmjPyyUg2MinbLFPri04NuiNhjXlKFaEeuOJ/lceB
+         IeySvqqd+RreGyx8gzJYIjEZVECGIBYMm5yEeYUAZ004pe93x4mfodgR36WFWpplX4
+         yBCIDE/f0NF8eE2oHAeaOg7B7rRQpflucgTJpymhkrt0+CPp+jOlbEBj6YRuGuvM5H
+         pIBkR81SPwdYIerFWhGKv1paMjiTPbIo3wc4gBQkwfrT324Zi27ItHRKaI5648fbcL
+         qoFxzM3gQkDx/ls2I5sfnDK2ZvF6ovE5cr0CE8gj/T7Kp2VPKnqXXSZf0P6cBlFWpf
+         RgySbvNZsPIEbMrzokrLVWCXAHkLdT8rVwNix3IIIrfVdv2yPtmiV3adXuS+RO5BOr
+         WJYCrghktClt5ENFayj82p76hvFLCctEqiGshIpR1APf2S+iLJJ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
@@ -39,9 +39,9 @@ Cc:     Michael Haggerty <mhagger@alum.mit.edu>,
         Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Brandon Williams <bmwill@google.com>
-Subject: [PATCH v3 07/53] branch: convert to struct object_id
-Date:   Sat,  6 May 2017 22:09:52 +0000
-Message-Id: <20170506221038.296722-8-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 06/53] bundle: convert to struct object_id
+Date:   Sat,  6 May 2017 22:09:51 +0000
+Message-Id: <20170506221038.296722-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f
 In-Reply-To: <20170506221038.296722-1-sandals@crustytoothpaste.net>
 References: <20170506221038.296722-1-sandals@crustytoothpaste.net>
@@ -50,74 +50,149 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change is required to convert lookup_commit_reference later.
+Convert the bundle code, plus the sole external user of struct
+ref_list_entry, to use struct object_id.  Include cache.h from within
+bundle.h to provide the definition.  Convert some of the hash parsing
+code to use parse_oid_hex to avoid needing to hard-code constant values.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- branch.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ bundle.c    | 33 +++++++++++++++++----------------
+ bundle.h    |  4 +++-
+ transport.c |  2 +-
+ 3 files changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index ad5a2299b..1758c9708 100644
---- a/branch.c
-+++ b/branch.c
-@@ -191,9 +191,9 @@ int validate_new_branchname(const char *name, struct strbuf *ref,
+diff --git a/bundle.c b/bundle.c
+index bbf4efa0a..6e181bb3d 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -12,11 +12,11 @@
  
- 	if (!attr_only) {
- 		const char *head;
+ static const char bundle_signature[] = "# v2 git bundle\n";
+ 
+-static void add_to_ref_list(const unsigned char *sha1, const char *name,
++static void add_to_ref_list(const struct object_id *oid, const char *name,
+ 		struct ref_list *list)
+ {
+ 	ALLOC_GROW(list->list, list->nr + 1, list->alloc);
+-	hashcpy(list->list[list->nr].sha1, sha1);
++	oidcpy(&list->list[list->nr].oid, oid);
+ 	list->list[list->nr].name = xstrdup(name);
+ 	list->nr++;
+ }
+@@ -40,8 +40,9 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
+ 	/* The bundle header ends with an empty line */
+ 	while (!strbuf_getwholeline_fd(&buf, fd, '\n') &&
+ 	       buf.len && buf.buf[0] != '\n') {
 -		unsigned char sha1[20];
 +		struct object_id oid;
+ 		int is_prereq = 0;
++		const char *p;
  
--		head = resolve_ref_unsafe("HEAD", 0, sha1, NULL);
-+		head = resolve_ref_unsafe("HEAD", 0, oid.hash, NULL);
- 		if (!is_bare_repository() && head && !strcmp(head, ref->buf))
- 			die(_("Cannot force update the current branch."));
- 	}
-@@ -233,7 +233,7 @@ void create_branch(const char *name, const char *start_name,
- 		   int quiet, enum branch_track track)
- {
- 	struct commit *commit;
--	unsigned char sha1[20];
-+	struct object_id oid;
- 	char *real_ref;
- 	struct strbuf ref = STRBUF_INIT;
- 	int forcing = 0;
-@@ -253,7 +253,7 @@ void create_branch(const char *name, const char *start_name,
- 	}
- 
- 	real_ref = NULL;
--	if (get_sha1(start_name, sha1)) {
-+	if (get_oid(start_name, &oid)) {
- 		if (explicit_tracking) {
- 			if (advice_set_upstream_failure) {
- 				error(_(upstream_missing), start_name);
-@@ -265,7 +265,7 @@ void create_branch(const char *name, const char *start_name,
- 		die(_("Not a valid object name: '%s'."), start_name);
- 	}
- 
--	switch (dwim_ref(start_name, strlen(start_name), sha1, &real_ref)) {
-+	switch (dwim_ref(start_name, strlen(start_name), oid.hash, &real_ref)) {
- 	case 0:
- 		/* Not branching from any existing branch */
- 		if (explicit_tracking)
-@@ -286,9 +286,9 @@ void create_branch(const char *name, const char *start_name,
- 		break;
+ 		if (*buf.buf == '-') {
+ 			is_prereq = 1;
+@@ -54,9 +55,9 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
+ 		 * Prerequisites have object name that is optionally
+ 		 * followed by SP and subject line.
+ 		 */
+-		if (get_sha1_hex(buf.buf, sha1) ||
+-		    (buf.len > 40 && !isspace(buf.buf[40])) ||
+-		    (!is_prereq && buf.len <= 40)) {
++		if (parse_oid_hex(buf.buf, &oid, &p) ||
++		    (*p && !isspace(*p)) ||
++		    (!is_prereq && !*p)) {
+ 			if (report_path)
+ 				error(_("unrecognized header: %s%s (%d)"),
+ 				      (is_prereq ? "-" : ""), buf.buf, (int)buf.len);
+@@ -64,9 +65,9 @@ static int parse_bundle_header(int fd, struct bundle_header *header,
+ 			break;
+ 		} else {
+ 			if (is_prereq)
+-				add_to_ref_list(sha1, "", &header->prerequisites);
++				add_to_ref_list(&oid, "", &header->prerequisites);
+ 			else
+-				add_to_ref_list(sha1, buf.buf + 41, &header->references);
++				add_to_ref_list(&oid, p + 1, &header->references);
+ 		}
  	}
  
--	if ((commit = lookup_commit_reference(sha1)) == NULL)
-+	if ((commit = lookup_commit_reference(oid.hash)) == NULL)
- 		die(_("Not a valid branch point: '%s'."), start_name);
--	hashcpy(sha1, commit->object.oid.hash);
-+	oidcpy(&oid, &commit->object.oid);
+@@ -115,7 +116,7 @@ static int list_refs(struct ref_list *r, int argc, const char **argv)
+ 			if (j == argc)
+ 				continue;
+ 		}
+-		printf("%s %s\n", sha1_to_hex(r->list[i].sha1),
++		printf("%s %s\n", oid_to_hex(&r->list[i].oid),
+ 				r->list[i].name);
+ 	}
+ 	return 0;
+@@ -141,7 +142,7 @@ int verify_bundle(struct bundle_header *header, int verbose)
+ 	init_revisions(&revs, NULL);
+ 	for (i = 0; i < p->nr; i++) {
+ 		struct ref_list_entry *e = p->list + i;
+-		struct object *o = parse_object(e->sha1);
++		struct object *o = parse_object(e->oid.hash);
+ 		if (o) {
+ 			o->flags |= PREREQ_MARK;
+ 			add_pending_object(&revs, o, e->name);
+@@ -149,7 +150,7 @@ int verify_bundle(struct bundle_header *header, int verbose)
+ 		}
+ 		if (++ret == 1)
+ 			error("%s", message);
+-		error("%s %s", sha1_to_hex(e->sha1), e->name);
++		error("%s %s", oid_to_hex(&e->oid), e->name);
+ 	}
+ 	if (revs.pending.nr != p->nr)
+ 		return ret;
+@@ -285,16 +286,16 @@ static int compute_and_write_prerequisites(int bundle_fd,
+ 		return -1;
+ 	rls_fout = xfdopen(rls.out, "r");
+ 	while (strbuf_getwholeline(&buf, rls_fout, '\n') != EOF) {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		if (buf.len > 0 && buf.buf[0] == '-') {
+ 			write_or_die(bundle_fd, buf.buf, buf.len);
+-			if (!get_sha1_hex(buf.buf + 1, sha1)) {
+-				struct object *object = parse_object_or_die(sha1, buf.buf);
++			if (!get_oid_hex(buf.buf + 1, &oid)) {
++				struct object *object = parse_object_or_die(oid.hash, buf.buf);
+ 				object->flags |= UNINTERESTING;
+ 				add_pending_object(revs, object, buf.buf);
+ 			}
+-		} else if (!get_sha1_hex(buf.buf, sha1)) {
+-			struct object *object = parse_object_or_die(sha1, buf.buf);
++		} else if (!get_oid_hex(buf.buf, &oid)) {
++			struct object *object = parse_object_or_die(oid.hash, buf.buf);
+ 			object->flags |= SHOWN;
+ 		}
+ 	}
+diff --git a/bundle.h b/bundle.h
+index 1584e4d82..e9a4cb6a7 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -1,10 +1,12 @@
+ #ifndef BUNDLE_H
+ #define BUNDLE_H
  
- 	if (reflog)
- 		log_all_ref_updates = LOG_REFS_NORMAL;
-@@ -306,7 +306,7 @@ void create_branch(const char *name, const char *start_name,
- 		transaction = ref_transaction_begin(&err);
- 		if (!transaction ||
- 		    ref_transaction_update(transaction, ref.buf,
--					   sha1, forcing ? NULL : null_sha1,
-+					   oid.hash, forcing ? NULL : null_sha1,
- 					   0, msg, &err) ||
- 		    ref_transaction_commit(transaction, &err))
- 			die("%s", err.buf);
++#include "cache.h"
++
+ struct ref_list {
+ 	unsigned int nr, alloc;
+ 	struct ref_list_entry {
+-		unsigned char sha1[20];
++		struct object_id oid;
+ 		char *name;
+ 	} *list;
+ };
+diff --git a/transport.c b/transport.c
+index 4d33138a7..9bfcf870f 100644
+--- a/transport.c
++++ b/transport.c
+@@ -87,7 +87,7 @@ static struct ref *get_refs_from_bundle(struct transport *transport, int for_pus
+ 	for (i = 0; i < data->header.references.nr; i++) {
+ 		struct ref_list_entry *e = data->header.references.list + i;
+ 		struct ref *ref = alloc_ref(e->name);
+-		hashcpy(ref->old_oid.hash, e->sha1);
++		oidcpy(&ref->old_oid, &e->oid);
+ 		ref->next = result;
+ 		result = ref;
+ 	}
