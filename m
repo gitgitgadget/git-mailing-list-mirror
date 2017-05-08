@@ -2,71 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45B0420188
-	for <e@80x24.org>; Sun,  7 May 2017 23:46:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F29B42018D
+	for <e@80x24.org>; Mon,  8 May 2017 00:15:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752541AbdEGXqW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 May 2017 19:46:22 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:35260 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752150AbdEGXqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2017 19:46:21 -0400
-Received: by mail-pg0-f65.google.com with SMTP id i63so8091874pgd.2
-        for <git@vger.kernel.org>; Sun, 07 May 2017 16:46:21 -0700 (PDT)
+        id S1750839AbdEHAPg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 May 2017 20:15:36 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:35183 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750782AbdEHAPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2017 20:15:35 -0400
+Received: by mail-pf0-f195.google.com with SMTP id u26so7666675pfd.2
+        for <git@vger.kernel.org>; Sun, 07 May 2017 17:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=w+z+oo4ulDfgrfc2cg6rjCQcQvPRiXYISXe8rlOrtiY=;
-        b=kNwwHaCpRV1p3dQ2Oy7PMqXMGFvWxxwT1OED9kaayNoxWvKMksEWX6qAEgBMVH511C
-         eKyCCECrbhnYoTut9KMl61Bbfhz/4/ZhebdcegqSP0I8dFW3u+1hdYtDI2f1iaKwTSR+
-         mOGzdphpM+C5sKylwm9JKzWgWCHjgy6F72D4R9ydlpXuWqXDHBbg9ewUCVetlogvaxYl
-         PehL+2WLkhSd/PpqjeHYktXbGE6sr22EmCbJY78Q2yTxpRXplqHqfa5RDXGN6Gm3gbX7
-         7YfuF3c+WAV0jXo0QEtY9fP3/E75cmoiGH/K4csQe84ORCuqJDKtp4FneNy79dAMCxdM
-         /NsQ==
+        bh=2OHyXbu9nsDFZkZh/TJ+Z7Ks3/Jg7t08pNmpaw5/PU4=;
+        b=RSwx9P4PwssDxDzJr+lhOdjd0PQUNANrY8rmPqaUXZgGf+XFEFVuwPiZHKnoCHCb5H
+         vQlvM48hCWxBzgOysKpmC8NAEK8VALdUhv0zHUX/At6J71vEr+o4qE09a1uRhhyDWQzb
+         Ak8DSE4HeXkR44ExkUBPQTh+NsEvDWJqXBcyRb8jKa+DEpqjMq88RFUqpzbMQwVz+NKz
+         55Zt/e4pk0YVx1Ay9cEXsC4Pqs/942HPar3eZV58cMPIKsb6MiuBWapRfxv2OgQ9ImZq
+         t33Qq9nSyDPlmLAYIGZMXcEz6Kx4NKJ4Oo/u8LPHZSSvEOZXOWpMDrlH4zzWN70zd+Bu
+         a2yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=w+z+oo4ulDfgrfc2cg6rjCQcQvPRiXYISXe8rlOrtiY=;
-        b=X03QOs6h+3npiAdBLuKeQDXLVXOkois9o50HIKNAql0gVmJynQ99v8MKY567pS+JVL
-         QZv29/a3Q95K18ZkG9aw9CuYRbU3ZI2FIW/041t8BrrM5o/ztNXLdm2uwRzfNi0jHtFZ
-         GXkg89LWbyPOFXmXBEDEo5HYwnGg5voqaAJqomS2NwMpWweGcF9C0nha+dDqVEL8vD3i
-         6A7I2VTCTCXiZaeB0QmM3/EtBjUmtCg6eF02iV88HEsWH8kdrnypoU8jiSd4gxAjUsVG
-         ixM0q0sOcuJwtJhn7pgJNtNzZHfMkHAkZu0C7SskrW7j2JjkKFd/aprCTt/D9TIFwWxi
-         cy0w==
-X-Gm-Message-State: AN3rC/4mrJ7KhbgcbfAacj1fE6QW8TM3Ff/oExS0Grx+trhKUmg/HjG8
-        XtKnQZsfiwApEcXfJOA=
-X-Received: by 10.84.232.141 with SMTP id i13mr45549635plk.143.1494126034308;
-        Sat, 06 May 2017 20:00:34 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:503b:fcc1:2b99:f95])
-        by smtp.gmail.com with ESMTPSA id n22sm8606695pfj.27.2017.05.06.20.00.33
+        bh=2OHyXbu9nsDFZkZh/TJ+Z7Ks3/Jg7t08pNmpaw5/PU4=;
+        b=jVx3Y1bSESH4KsCp8QThraIzSI97McpSZsiY4Cdo6tvZz/YcucZ3cEuX8nLE0vV7Ci
+         NbhpRYAz+ijl2wzrygnKpF/PF5ja1vx5K/wVvJnFEbtC506MOhkYt0rzCO1LFrpXYEKW
+         eZD9TupzupJMcbVLCaea3UM9wbm6zJnFRVCUJy8XQ4pUZjH4cgSKfuM4yrIzqAv/DArp
+         3SFU3L1JJbNObtxkYNNKP/QxFfHmFhZ6eIQJBNSv5qJzb9dX4uKTLbK1u7zNAU7rGLM1
+         uUVOQuE7M84nnziP4AHZgOpTuqeOEJGXOksgjACFWRvjvtlQLKvSpVcA29yYN1wvC2SE
+         0bcA==
+X-Gm-Message-State: AN3rC/47NBRT+4eR91dGyVMPN/HG7E3OqEHYCNTbljPTkJ0Hume3uh4S
+        MW3f7PzBmA1dIA==
+X-Received: by 10.98.11.205 with SMTP id 74mr28375146pfl.214.1494202535098;
+        Sun, 07 May 2017 17:15:35 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3011:642f:81a0:efbd])
+        by smtp.gmail.com with ESMTPSA id 20sm27574197pfq.42.2017.05.07.17.15.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sat, 06 May 2017 20:00:33 -0700 (PDT)
+        Sun, 07 May 2017 17:15:34 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     Samuel Lijin <sxlijin@gmail.com>,
-        Jonathan Tirado <tiradojonathan32@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        meta@public-inbox.org
-Subject: Re: vger not relaying some of Junio's messages today?
-References: <v26esrmyqyqykypjs75fx2vy.1494092763967@email.android.com>
-        <CAJZjrdWYDMFHRrbeFk89p+GebLpWJBUQfnpC6w87aVh8czL5_w@mail.gmail.com>
-        <20170506205041.GA26189@starla>
-        <CAJZjrdXPgrSAHJPsQiW756XFK1-XyGY0skJTefczaqJpOy6yKQ@mail.gmail.com>
-        <20170507010537.GA21703@starla>
-Date:   Sat, 06 May 2017 20:00:32 -0700
-In-Reply-To: <20170507010537.GA21703@starla> (Eric Wong's message of "Sun, 7
-        May 2017 01:05:37 +0000")
-Message-ID: <xmqqfugh74mn.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.1.91 (gnu/linux)
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, git@vger.kernel.org,
+        jeffhost@microsoft.com, peff@peff.net, markbt@efaref.net,
+        benpeart@microsoft.com, jonathantanmy@google.com
+Subject: Re: [PATCH 00/10] RFC Partial Clone and Fetch
+References: <1488999039-37631-1-git-send-email-git@jeffhostetler.com>
+        <777ab8f2-c31a-d07b-ffe3-f8333f408ea1@jeffhostetler.com>
+        <20170503182725.GC28740@aiede.svl.corp.google.com>
+Date:   Mon, 08 May 2017 09:15:33 +0900
+In-Reply-To: <20170503182725.GC28740@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 3 May 2017 11:27:26 -0700")
+Message-ID: <xmqqwp9scifu.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -74,28 +69,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Samuel Lijin <sxlijin@gmail.com> wrote:
->> Sorry, should've been clearer - I did check my spambox in my original
->> message. Some old patches from Brandon were in there, but the ones I
->> mentioned in my original message just seem to have been dropped.
->
-> Apparently, vger also throttles mail to gmail aggressively, so
-> maybe some show up eventually:
->
-> https://marc.info/?i=20170501.105057.824365162373797902.davem@davemloft.net
->
+> - there shouldn't be any need for the blobs to even be mentioned in
+>   the .pack stored locally.  The .idx file maps from sha1 to offset
+>   within the packfile --- a special offset could mean "this is a
+>   missing blob".
 
-Thanks for a pointer. That does explain the symptom I saw number of
-times, seeing list traffic that directly came to me hours before I
-see a copy on the public list mirrors like gmane and public-inbox.
+Clever.
 
-As it is a pain to access gmail inbox via imap (I was told that
-something called "offline imap" may alleviate the pain, but I
-haven't tried it yet), I tend to use NNTP interface to either gmane
-or public-inbox almost exclusively, so like everybody else, it often
-takes a message hours before I see it due to this throttling.  I do
-not see the message I am responding to on public-inbox, and I am
-responding to the copy I got direct from you, for example.
+> - However, the list of missing blobs can be inferred from the existing
+>   pack format, without a change to the pack format used in git
+>   protocol.  As part of constructing the idx, "git index-pack"
+>   inflates every object in the pack file sent by the server.  This
+>   means we know what blobs they reference, so we can easily produce a
+>   list for the idx file without changing the pack file format.
 
+A minor wrinkle to keep in mind if you were to go this route is that
+you'd need a way to tell the reason why a blob that is referenced by
+a tree in the pack stream is not in the same pack stream.  
+
+If the resulting repository on the receiving side has that blob
+after the transfer, it is likely that the reason why the blob does
+not appear in the pack is because the want/have/ack exchange told
+the sending side that the receiving side has a commit that contains
+the blob.  But when the blob does not exist in the receiving side
+after the transfer, we cannot tell between two possible cases.  The
+server may have actively wanted to omit it (i.e. the case we are
+interested in in this discussion thread).  Or the receiving end said
+that it has a commit that contains the blob, but due to preexisting
+corruption, the receiving repository was missing the blob in
+reality.
