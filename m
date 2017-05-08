@@ -2,100 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_06_12,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8E8A20188
-	for <e@80x24.org>; Mon,  8 May 2017 04:27:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 956C720188
+	for <e@80x24.org>; Mon,  8 May 2017 04:34:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751426AbdEHE1W (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 00:27:22 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:34452 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750862AbdEHE1V (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 00:27:21 -0400
-Received: by mail-pg0-f68.google.com with SMTP id u187so8821729pgb.1
-        for <git@vger.kernel.org>; Sun, 07 May 2017 21:27:21 -0700 (PDT)
+        id S1751759AbdEHEeH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 00:34:07 -0400
+Received: from mail-pg0-f67.google.com ([74.125.83.67]:33885 "EHLO
+        mail-pg0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751378AbdEHEeG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 00:34:06 -0400
+Received: by mail-pg0-f67.google.com with SMTP id u187so8843090pgb.1
+        for <git@vger.kernel.org>; Sun, 07 May 2017 21:34:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=V75bzINf/vZJakISPOE3x2BInu/Bh6q88RMpa3YqziY=;
-        b=Wv0CF6pyN5q4UT81fXt16qFjDNSuK1v62Mqx5BRmXi+zw+ApK7wO4Q2MLxWi7ZCW5U
-         T5AfxF4nkxtjflP8mrXNCE51+jj1V2sV+p/ET0BtjzFzSsenN/AYBmNe4lZRzqgR8K4a
-         TXytM0V1xLe03eXtXP2opQoxxFRz/ElhZKECeIytFVglMPfJmngqGm5dKYiGYCJ03xtO
-         lO9R3OqkfhNKxuFZFYIl5KyrFsjwV2XRddJHv2WHt+DRDDeOWopuWNXil89QYFkWHNb+
-         JhpvcSWDv8A7vyBL6KO3tW4slTsC4JDby2AJxxsOfVWy2ghJ9KWmzdjjtxBx+GPMWYrk
-         ifxg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4roubhocDCMjs0NEnXagYXPsg2zICgrvEfM72jg/EP8=;
+        b=jGd/rmN1asnigBFz72zr6U3GHV+NlM/oexpmstnOPVOP2gY5d7CvHoSJGJ9UGzCf9U
+         bseDvzL9/9jVW97xt41ololSPfoS9L4e0pYIFozcxsuX1Z6wn6VawOzHJ5myojGFrM5y
+         dutH3o+2qoIMDJCAGDx6QZLfuHR5Pk8FIAlEZMkmsyflEVptGOUhdEp4oZZW3BWY75OO
+         24By94hs156V4grwQ7CUQrPvxGPUs2dg9HltYgKgsrSqaaD5ST0cvTrfTIdgTWg28HDd
+         Y7CNrPfvagHohmG4Sy6i/sk88L++sLzLE4Y97wbN0KbvUq18ZerD7t224LwGXPtQAbNv
+         oJzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=V75bzINf/vZJakISPOE3x2BInu/Bh6q88RMpa3YqziY=;
-        b=UZ/KrobNgJlaXJfa14e4FagnDzfo9kyIBSSS10A8mZZJ/cKht2PHJeFZoStyOuI6o2
-         GAOOHU7TWuuPpss6AuQcFkWaa6F3rOpzhsbZuX0ES/HRKcyYX5Fbjlwa89JiPWYmUzJX
-         deG6j95oHmCpDQAKA+T8ZjGHgC2+MbPSR3sbK4rIbG/EZwZTfVdEIy4lpIHoQErtfy5z
-         C8XYeDDNcR6EoRBdBky7R1QVN7uZWE9vD0lX/LiELpEbF1/ddRChDkc846iH87elEH26
-         Xppk9bvrCcgano/mgDaG6PTas5IFWdcHNWvamXE2BNom0mSyKi4VRv0jNgBS8//EeGza
-         gFdQ==
-X-Gm-Message-State: AN3rC/47c0EMFvRNibWDtzzJmkGsXwFzYf2Ie9LQ9Pg6iH4x4m9qugfo
-        +oXUnl+hXGU/HaeA
-X-Received: by 10.84.222.136 with SMTP id x8mr42530004pls.50.1494217640591;
-        Sun, 07 May 2017 21:27:20 -0700 (PDT)
-Received: from HP ([116.56.129.184])
-        by smtp.gmail.com with ESMTPSA id e207sm20106155pfh.121.2017.05.07.21.27.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 May 2017 21:27:19 -0700 (PDT)
-Date:   Mon, 8 May 2017 20:27:08 +0800
-From:   Yubin Ruan <ablacktshirt@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4roubhocDCMjs0NEnXagYXPsg2zICgrvEfM72jg/EP8=;
+        b=SkiZIE6VZmHsTnvPER3tctPEv6b3nq36Ps7pOXnI9d0/trVMpUjLF/IcgQo6hGYQEP
+         /n3wvKcdoFsljz6HvCvnU2eTxJG04eEn5NiHhDzFVBGGEZPmcYb6DXigAuHn2qtZWnyU
+         7IRTpCYeoDE8aNzOkVcgt9w/PlE5MXtq/2a5qQkjfOOlkBp02M1IsAeXbiCrjKx/8giK
+         K+muVmpaD0yKIdsFKscGvHR6FR+/mO7MBh48vkG12c4rxyxWWYi/I7kdisjk4QknwV1s
+         SIQpZ3wMDk0t+Cw3+wiUDcwLLuSGCHrRt4NR6Z3yVpNtqDMi4bLqDQiV/eUOoR4cQmqf
+         e4cw==
+X-Gm-Message-State: AODbwcCHP3poRMn50nlC1uL2B6lt1EPc/wGEaeRtzQNLDoB3Nakzg7dc
+        1PfQIdfMfMLXMQ==
+X-Received: by 10.99.103.70 with SMTP id b67mr9192739pgc.96.1494218045555;
+        Sun, 07 May 2017 21:34:05 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3011:642f:81a0:efbd])
+        by smtp.gmail.com with ESMTPSA id 15sm21320324pfl.110.2017.05.07.21.34.04
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 07 May 2017 21:34:04 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Samuel Lijin <sxlijin@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC] Add warning when git discard changes on another branch?
-Message-ID: <20170508122705.GB3540@HP>
-References: <20170507233512.GA9332@HP>
- <xmqqzieo9hfo.fsf@gitster.mtv.corp.google.com>
- <20170508111836.GB3014@HP>
- <xmqqvapc9fsg.fsf@gitster.mtv.corp.google.com>
- <xmqqlgq89dzl.fsf@gitster.mtv.corp.google.com>
+Subject: Re: [PATCH v2 2/9] t7061: expect failure where expected behavior will change
+References: <20170505104611.17845-1-sxlijin@gmail.com>
+        <20170503032932.16043-1-sxlijin@gmail.com>
+        <20170505104611.17845-3-sxlijin@gmail.com>
+Date:   Mon, 08 May 2017 13:34:04 +0900
+In-Reply-To: <20170505104611.17845-3-sxlijin@gmail.com> (Samuel Lijin's
+        message of "Fri, 5 May 2017 05:46:04 -0500")
+Message-ID: <xmqqd1bk9dc3.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlgq89dzl.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 08, 2017 at 01:19:58PM +0900, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > But to help "some users are not aware of this" situation, an opt-in
-> > "feature" would not help all that much.  The same number of lines in
-> > the documentation to tell end-users how to toggle on such a "safety"
-> > feature can be spent to teach them that their local changes in the
-> > working tree do *not* belong to any particular branch, and as soon
-> > as it is understood, the user would be OK.
-> >
-> > So...
-> 
-> It might help if we treat this similarly to how we treat the
-> "detached HEAD" state.  By default when you do "git checkout HEAD^0"
-> (not "git checkout --detach HEAD"), you would get a large warning,
-> which you can silence by the advice.detachedhead configuration.  In
-> addition to the list of "these paths have local modifications" that
-> we show as a reminder, perhaps you want to show a warning that tells
-> the user that the local modifications in these paths are not
-> recorded anywhere else, or somesuch, and silence it with a new
-> advice.* variable?
+Samuel Lijin <sxlijin@gmail.com> writes:
 
-That would be helpful. But, frankly, if a user would be aware of that `advice.*'
-variable, he would have enough knowledge of Git to be aware of that situation.
-So, I think that 'M lala.txt' in transitions from branch to branch would be
-sufficient.
+> This changes tests for `status --ignored` from test_expect_success to
+> test_expect_failure in preparation for a change in its expected behavior
+> (namely, that ignored files in untracked dirs will be reported).
+>
+> Signed-off-by: Samuel Lijin <sxlijin@gmail.com>
+> ---
 
----
-Yubin
+This is an odd way to do this.  If we stop applying your patches at
+this step, these tests will still see output from "status --ignored"
+that is expected by them, so there is no expect_failure here.
+
+If we decide that the current output from "status --ignored" is
+WRONG, and your series to fix "clean -d" FIXES "status --ignored" as
+a side effect, then having a step to describe a desired behaviour in
+the new world order in the test like this patch does makes sense,
+but if that is what is going on, then not just flipping "success" to
+"failure", the patch would be changing the expected output as well,
+i.e. by adding the ignored files in untracked directories in the
+expected output.  Obviously the code at this point after applying
+only patches 1 & 2 will not produce such an output, so marking the
+test that expects output based on the new world order as "expect
+failure" would make sense.  Then your future commit that FIXES
+"status --ignored" output would flip _failure to _success.
+
+It is unclear to me if the new behaviour of "status --ignored" is a
+bugfix, or a new bug, though.
+
+
+>  t/t7061-wtstatus-ignore.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+> index cdc0747bf..dc3be92a2 100755
+> --- a/t/t7061-wtstatus-ignore.sh
+> +++ b/t/t7061-wtstatus-ignore.sh
+> @@ -11,7 +11,7 @@ cat >expected <<\EOF
+>  ?? untracked/
+>  EOF
+>  
+> -test_expect_success 'status untracked directory with --ignored' '
+> +test_expect_failure 'status untracked directory with --ignored' '
+>  	echo "ignored" >.gitignore &&
+>  	mkdir untracked &&
+>  	: >untracked/ignored &&
+> @@ -20,7 +20,7 @@ test_expect_success 'status untracked directory with --ignored' '
+>  	test_cmp expected actual
+>  '
+>  
+> -test_expect_success 'same with gitignore starting with BOM' '
+> +test_expect_failure 'same with gitignore starting with BOM' '
+>  	printf "\357\273\277ignored\n" >.gitignore &&
+>  	mkdir -p untracked &&
+>  	: >untracked/ignored &&
