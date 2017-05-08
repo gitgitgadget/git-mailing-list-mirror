@@ -2,54 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 899641FC44
-	for <e@80x24.org>; Mon,  8 May 2017 14:43:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 970472018D
+	for <e@80x24.org>; Mon,  8 May 2017 14:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754687AbdEHOnE convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 8 May 2017 10:43:04 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:57342 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753237AbdEHOnD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 10:43:03 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.238.41.215])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id v48Eh0dV091936
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 8 May 2017 10:43:00 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Ciro Santilli'" <ciro.santilli@gmail.com>, <git@vger.kernel.org>
-References: <CAFXrp_do8Jn-k18_FSRNeHQrWNydwdj2y3y5gw+XoZPGAzPL-w@mail.gmail.com>
-In-Reply-To: <CAFXrp_do8Jn-k18_FSRNeHQrWNydwdj2y3y5gw+XoZPGAzPL-w@mail.gmail.com>
-Subject: RE: Add an option to automatically submodule update on checkout
-Date:   Mon, 8 May 2017 10:42:52 -0400
-Message-ID: <001b01d2c809$62ac8520$28058f60$@nexbridge.com>
+        id S1754864AbdEHOyM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 10:54:12 -0400
+Received: from smtp106.iad3a.emailsrvr.com ([173.203.187.106]:46300 "EHLO
+        smtp106.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1754152AbdEHOyL (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 8 May 2017 10:54:11 -0400
+Received: from smtp38.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp38.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id 9BAE25B75;
+        Mon,  8 May 2017 10:54:10 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp38.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 5048D5B48;
+        Mon,  8 May 2017 10:54:10 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Mon, 08 May 2017 10:54:10 -0400
+Subject: Enabling the diff "indent" heuristic by default
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqlgq77pse.fsf@gitster.mtv.corp.google.com>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Message-ID: <f867af6f-b601-251a-86a4-ede0bb942efb@xiplink.com>
+Date:   Mon, 8 May 2017 10:54:10 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJFtsy+gX9bRxHg9rX7flyynOAlG6EEo5Rg
-Content-Language: en-ca
+In-Reply-To: <xmqqlgq77pse.fsf@gitster.mtv.corp.google.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On May 6, 2017 4:38 AM Ciro Santilli wrote:
-> This is a must if you are working with submodules, otherwise every git checkout requires a git submodule update,
-> and you forget it, and things break, and you understand, and you go to stack overflow questions
-> http://stackoverflow.com/questions/22328053/why-doesnt-git-checkout-automatically-do-git-submodule-update-recursive
-> http://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules
-> and you give up and create aliases :-)
+On 2017-05-08 03:48 AM, Junio C Hamano wrote:
+>
+> * mb/diff-default-to-indent-heuristics (2017-05-02) 4 commits
+>   (merged to 'next' on 2017-05-08 at 158f401a92)
 
-I rather like the concept of supporting --recurse-submodules. The complexity is that the branches in all submodules all have to have compatible semantics when doing the checkout, which is by no means guaranteed. In the scenario where you are including a submodule from a third-party (very common - see gnulib), the branches likely won't be there, so you have a high probability of having the command fail or produce the same results as currently exists if you allow the checkout even with problems (another option?). If you have control of everything, then this makes sense.
+I think there's a general open question about this, which is whether or 
+not we should just drop the diff.indentHeuristic configuration setting 
+altogether.
 
-Cheers,
-Randall
+Peff made the point [0] that if we keep the setting then t4061 should be 
+rewritten.
+
+My instinct is to keep the setting, at least until the changed default 
+has a bit of time to settle in.  So I'll re-send the topic with the 
+renovated t4061.
+
+The topic would of course change more drastically if we decide to drop 
+the setting right away.
+
+>  + add--interactive: drop diff.indentHeuristic handling
+>  + diff: enable indent heuristic by default
+>  + diff: have the diff-* builtins configure diff before initializing revisions
+>  + diff: make the indent heuristic part of diff's basic configuration
+>
+>  Make the "indent" heuristics the default in "diff" and diff.indentHeuristics
+
+s/heuristics/heuristic/  (both places)
+
+>  configuration variable an escape hatch for those who do no want it.
+
+s/do no/do not/
+
+>  Will cook in 'next'.
+
+Both Peff [1] and Ævar [2] mentioned situations where enabling the 
+heuristic has a small impact on them.  If/when this graduates, it's 
+perhaps worth adding a backward-compatibility note that the default 
+patch IDs are changing.  Maybe something like:
+
+The diff "indent" heuristic is now enabled by default.  This changes the 
+patch IDs calculated by git-patch-id and used by git-cherry, which could 
+affect patch-based workflows that rely on previously-computed patch IDs. 
+  The heuristic can be disabled by setting diff.indentHeuristic to false.
+
+[0] 
+https://public-inbox.org/git/20170501222051.svylxazjwnot3wwg@sigill.intra.peff.net/
+
+[1] 
+https://public-inbox.org/git/20170428220450.olqitnuwhrxzg3pv@sigill.intra.peff.net/
+
+[2] 
+https://public-inbox.org/git/CACBZZX5f81HKCjRjTDyXzNMVuef9Z_ECS+0SVk2xpbwXudgxCw@mail.gmail.com/
+
+		M.
 
