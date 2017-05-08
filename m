@@ -2,288 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 336071FC44
-	for <e@80x24.org>; Mon,  8 May 2017 21:34:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AB981FC44
+	for <e@80x24.org>; Mon,  8 May 2017 21:38:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753269AbdEHVeD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 17:34:03 -0400
-Received: from mail-pg0-f46.google.com ([74.125.83.46]:34006 "EHLO
-        mail-pg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752908AbdEHVeB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 17:34:01 -0400
-Received: by mail-pg0-f46.google.com with SMTP id u28so29434173pgn.1
-        for <git@vger.kernel.org>; Mon, 08 May 2017 14:34:00 -0700 (PDT)
+        id S1751580AbdEHVia (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 17:38:30 -0400
+Received: from mail-io0-f182.google.com ([209.85.223.182]:36505 "EHLO
+        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750839AbdEHVi3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 17:38:29 -0400
+Received: by mail-io0-f182.google.com with SMTP id o12so30755696iod.3
+        for <git@vger.kernel.org>; Mon, 08 May 2017 14:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=9fexETmyJKIJHwij51YCvDygsf6eoCPrIYhth4a2/Q4=;
-        b=aMWLFvXZ+AeXd2sEuTo0m5PUwbUZJ2+IGkgZCk1IcSFDdLmnWl0scJTdLirvGxoaQf
-         w+UQCVIHuP528vczBV/ziCy+nDv4tQQik2C8TRYtAsQDQsgALXA677Oos8Ah/uH9XcKg
-         6TndxCpVMXHsnsmg8mSff3HCJuoU7TDvlEOR93A7PgCCz8SeOno7Vq20t7iQys4tWpqM
-         bKQA8Rl2PHz6eMUkOdxJK7pY4GK7I+twwPB1lKL8ym53tQ/aSeyb0Kyj3UBfdEFmVs3u
-         rHUvPVm5QgRJwuu0auE5D0lWEGfEbmNsZi9mlIJ301+u1qwy504eiOHkuVQIk4h4Lt1X
-         sc2w==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=q09SA2qfudzfAKUVVEfBcqYGoPmBm2EV957Ym1cJH0k=;
+        b=PmgUPb2ff1GTEwACJdYhzTN93KhcTwOpMpoL2G2+CuLZSvNsbswKsiI/tB9hDK3BNG
+         nYLTZ3SQHp0FZCLZfiLkcqnLGr/ajYaGlooL0qSAdefk7xQlA1qLI7I0P2pnc4V/cn9b
+         ZMvzCu6Kv+fNEtbC2HrswuBG+Aydio58JxcRrz3yK+CsCjqezg0ol3f9/32OZ2EpggoZ
+         MuXQdhxrDozPnkeNsqnVcul6OCfAXAdtPMDzUxG6ojWLWt2CUmq800tEiScY7j0TLTUB
+         crUEF5a9dbjrWmA108LU0/U49S3dcWJq2TG9cVeRRsLUICQ+SWC9d5+wUkXF1M4XzZQ3
+         SHpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:in-reply-to:references;
-        bh=9fexETmyJKIJHwij51YCvDygsf6eoCPrIYhth4a2/Q4=;
-        b=B/iRuerY0pxclAl1nQGILp6txgcPeaFwo/ifHW/8LdGZd10Hj7KdgpU3ZPSuiDemoC
-         pCp+qOSw4GUole+8oun3H6cQ1f9s4EvK0+d0en8wxEamIUo2KBe2/2qTcUN31nMgY71U
-         Kdh4dfiBFok0JWYeMtjqxjI55/5zn8wp3AQFR0za86I/oi3Nq7y5iuBvpEYjyxrRtcbz
-         J/nyUrjADTTV0bd1M4nOXRAl/CKc06sXXn9iPiW4rYIfbhJW6p3Ep0KscCTjkXMy2SYP
-         YTvIlukNCHcNK/IXcv4p1iDWP7xaNKlrw9Xq8je6C3D1Bja3Qfc4ytYzBephdzSk1gGr
-         NXJQ==
-X-Gm-Message-State: AN3rC/4o8dfE6do/iFU570pEYkURiZLAefCOK9pYgMqQeDIHrZEFfM+T
-        fxp2niDFYD+ilISa
-X-Received: by 10.99.95.79 with SMTP id t76mr20501891pgb.82.1494279240129;
-        Mon, 08 May 2017 14:34:00 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id c196sm11229854pga.23.2017.05.08.14.33.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 08 May 2017 14:33:59 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com,
-        sbeller@google.com, gitster@pobox.com
-Subject: [PATCH v2 2/2] receive-pack: verify push options in cert
-Date:   Mon,  8 May 2017 14:33:51 -0700
-Message-Id: <cc21a5566dcf10e4683465ac253c76370b7b6a7f.1494279020.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.13.0.rc1.294.g07d810a77f-goog
-In-Reply-To: <cover.1494279020.git.jonathantanmy@google.com>
-References: <cover.1494279020.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1494279020.git.jonathantanmy@google.com>
-References: <cover.1494027001.git.jonathantanmy@google.com> <cover.1494279020.git.jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=q09SA2qfudzfAKUVVEfBcqYGoPmBm2EV957Ym1cJH0k=;
+        b=CqK4LrdzEZqytvFyJ1mJ8MwVkONP+X2SaLPKSC5HbHorcVy+cyGunMMDFZofAlmtnR
+         ChbsPZrAsjnSVGb/D2lChvI2eFzEOy0sRln1hP5zQZQvl0GP8eDDptLsatqyiCX9qq9t
+         yCJV2+a4FPu3JyfbKofi3Wdw+nMc1xEAWw3T9siNABiow+2dr+07BPQtPU+TjIFAbNsL
+         zD02uP3CDgm9GAepE54HMUtBWUPv7dkBHhzLzYHBDYq0Q8RTHf6hbnjRdW3lGIQVMxwV
+         Ve1EIEIGrlRspDxZuhIEW6W7VRy3O7+y9lP4LdoylL/++JXOr4NWixP7XfIyKaA4LpPa
+         H91Q==
+X-Gm-Message-State: AODbwcDxufbHXvtGXKRB8NX+wWSTUzrOhFmVwFr/oHoGRnDlVOMVH2M3
+        YBu+k0m5gIWtTD3USfuTZvY77TPEKQ==
+X-Received: by 10.107.201.206 with SMTP id z197mr2606218iof.85.1494279508571;
+ Mon, 08 May 2017 14:38:28 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.79.150.90 with HTTP; Mon, 8 May 2017 14:37:48 -0700 (PDT)
+In-Reply-To: <xmqqh90w9do7.fsf@gitster.mtv.corp.google.com>
+References: <20170503032932.16043-1-sxlijin@gmail.com> <20170505104611.17845-1-sxlijin@gmail.com>
+ <xmqqh90w9do7.fsf@gitster.mtv.corp.google.com>
+From:   Samuel Lijin <sxlijin@gmail.com>
+Date:   Mon, 8 May 2017 16:37:48 -0500
+Message-ID: <CAJZjrdVTRdTOiHXdVzVY3CLoi7KMbGozg8rDvrmJOJADMXRFuw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/9] Keep git clean -d from inadvertently removing
+ ignored files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In commit f6a4e61 ("push: accept push options", 2016-07-14), send-pack
-was taught to include push options both within the signed cert (if the
-push is a signed push) and outside the signed cert; however,
-receive-pack ignores push options within the cert, only handling push
-options outside the cert.
+On Sun, May 7, 2017 at 11:26 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Samuel Lijin <sxlijin@gmail.com> writes:
+>
+>> Addresses the issues raised by Stefan and Junio (thanks for your
+>> feedback) about not using C99-style comments and keeping tests
+>> working on every commit to prevent breaking git bisect. (About the
+>> latter one: is it necessary to prevent compiler warnings, in
+>> addition to compiler errors? Because if so I should probably
+>> squash some of the commits together.)
+>
+> Some of us build with -Werror, so yes.  If by "squashing" you mean
+> "instead of piling a fix on top of a broken patch, I need to do
+> things right from the beginning", then yes, please do so, not just
+> for compiler warnings but for all forms of changes.
 
-Teach receive-pack, in the case that push options are provided for a
-signed push, to verify that the push options both within the cert and
-outside the cert are consistent.
+Got it - will keep this in mind when I reroll the patch series.
 
-This sets in stone the requirement that send-pack redundantly send its
-push options in 2 places, but I think that this is better than the
-alternatives. Sending push options only within the cert is
-backwards-incompatible with existing Git servers (which read push
-options only from outside the cert), and sending push options only
-outside the cert means that the push options are not signed for.
+>> Note that this introduces a breaking change in the behavior of git
+>> status: when invoked with --ignored, git status will now return
+>> ignored files in an untracked directory, whereas previously it
+>> would not.
+>
+> What do you mean by a "breaking change"?  Is it just "a new bug"?
+> Or "the current behaviour is logically broken, but people and
+> scripts might have relied on that odd behaviour and fixing it this
+> late in the game would break their expectations"?
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- Documentation/technical/pack-protocol.txt | 32 +++++++++++++++----
- builtin/receive-pack.c                    | 51 +++++++++++++++++++++++++++++--
- t/t5534-push-signed.sh                    | 37 ++++++++++++++++++++++
- 3 files changed, 112 insertions(+), 8 deletions(-)
+The latter, as I believe you noticed in your reply about patch 9/9.
 
-diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-index 5b0ba3ef2..a34917153 100644
---- a/Documentation/technical/pack-protocol.txt
-+++ b/Documentation/technical/pack-protocol.txt
-@@ -473,13 +473,10 @@ that it wants to update, it sends a line listing the obj-id currently on
- the server, the obj-id the client would like to update it to and the name
- of the reference.
- 
--This list is followed by a flush-pkt. Then the push options are transmitted
--one per packet followed by another flush-pkt. After that the packfile that
--should contain all the objects that the server will need to complete the new
--references will be sent.
-+This list is followed by a flush-pkt.
- 
- ----
--  update-request    =  *shallow ( command-list | push-cert ) [packfile]
-+  update-requests   =  *shallow ( command-list | push-cert )
- 
-   shallow           =  PKT-LINE("shallow" SP obj-id)
- 
-@@ -500,12 +497,35 @@ references will be sent.
- 		      PKT-LINE("pusher" SP ident LF)
- 		      PKT-LINE("pushee" SP url LF)
- 		      PKT-LINE("nonce" SP nonce LF)
-+		      *PKT-LINE("push-option" SP push-option LF)
- 		      PKT-LINE(LF)
- 		      *PKT-LINE(command LF)
- 		      *PKT-LINE(gpg-signature-lines LF)
- 		      PKT-LINE("push-cert-end" LF)
- 
--  packfile          = "PACK" 28*(OCTET)
-+  push-option       =  1*( VCHAR | SP )
-+----
-+
-+If the server has advertised the 'push-options' capability and the client has
-+specified 'push-options' as part of the capability list above, the client then
-+sends its push options followed by a flush-pkt.
-+
-+----
-+  push-options      =  *PKT-LINE(push-option) flush-pkt
-+----
-+
-+For backwards compatibility with older Git servers, if the client sends a push
-+cert and push options, it MUST send its push options both embedded within the
-+push cert and after the push cert. (Note that the push options within the cert
-+are prefixed, but the push options after the cert are not.) Both these lists
-+MUST be the same, modulo the prefix.
-+
-+After that the packfile that
-+should contain all the objects that the server will need to complete the new
-+references will be sent.
-+
-+----
-+  packfile          =  "PACK" 28*(OCTET)
- ----
- 
- If the receiving end does not support delete-refs, the sending end MUST
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index f96834f42..fff5c7a54 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -473,7 +473,8 @@ static char *prepare_push_cert_nonce(const char *path, unsigned long stamp)
-  * after dropping "_commit" from its name and possibly moving it out
-  * of commit.c
-  */
--static char *find_header(const char *msg, size_t len, const char *key)
-+static char *find_header(const char *msg, size_t len, const char *key,
-+			 const char **next_line)
- {
- 	int key_len = strlen(key);
- 	const char *line = msg;
-@@ -486,6 +487,8 @@ static char *find_header(const char *msg, size_t len, const char *key)
- 		if (line + key_len < eol &&
- 		    !memcmp(line, key, key_len) && line[key_len] == ' ') {
- 			int offset = key_len + 1;
-+			if (next_line)
-+				*next_line = *eol ? eol + 1 : eol;
- 			return xmemdupz(line + offset, (eol - line) - offset);
- 		}
- 		line = *eol ? eol + 1 : NULL;
-@@ -495,7 +498,7 @@ static char *find_header(const char *msg, size_t len, const char *key)
- 
- static const char *check_nonce(const char *buf, size_t len)
- {
--	char *nonce = find_header(buf, len, "nonce");
-+	char *nonce = find_header(buf, len, "nonce", NULL);
- 	unsigned long stamp, ostamp;
- 	char *bohmac, *expect = NULL;
- 	const char *retval = NONCE_BAD;
-@@ -575,6 +578,45 @@ static const char *check_nonce(const char *buf, size_t len)
- 	return retval;
- }
- 
-+/*
-+ * Return 1 if there is no push_cert or if the push options in push_cert are
-+ * the same as those in the argument; 0 otherwise.
-+ */
-+static int check_cert_push_options(const struct string_list *push_options)
-+{
-+	const char *buf = push_cert.buf;
-+	int len = push_cert.len;
-+
-+	char *option;
-+	const char *next_line;
-+	int options_seen = 0;
-+
-+	int retval = 1;
-+
-+	if (!len)
-+		return 1;
-+
-+	while ((option = find_header(buf, len, "push-option", &next_line))) {
-+		len -= (next_line - buf);
-+		buf = next_line;
-+		options_seen++;
-+		if (options_seen > push_options->nr
-+		    || strcmp(option,
-+			      push_options->items[options_seen - 1].string)) {
-+			retval = 0;
-+			goto leave;
-+		}
-+		free(option);
-+	}
-+
-+	if (options_seen != push_options->nr)
-+		retval = 0;
-+
-+leave:
-+	free(option);
-+	return retval;
-+}
-+
- static void prepare_push_cert_sha1(struct child_process *proc)
- {
- 	static int already_done;
-@@ -1929,6 +1971,11 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 
- 		if (use_push_options)
- 			read_push_options(&push_options);
-+		if (!check_cert_push_options(&push_options)) {
-+			struct command *cmd;
-+			for (cmd = commands; cmd; cmd = cmd->next)
-+				cmd->error_string = "inconsistent push options";
-+		}
- 
- 		prepare_shallow_info(&si, &shallow);
- 		if (!si.nr_ours && !si.nr_theirs)
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index ecb8d446a..0ef6f66b5 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -124,6 +124,43 @@ test_expect_success GPG 'signed push sends push certificate' '
- 	test_cmp expect dst/push-cert-status
- '
- 
-+test_expect_success GPG 'inconsistent push options in signed push not allowed' '
-+	# First, invoke receive-pack with dummy input to obtain its preamble.
-+	prepare_dst &&
-+	git -C dst config receive.certnonceseed sekrit &&
-+	git -C dst config receive.advertisepushoptions 1 &&
-+	printf xxxx | test_might_fail git receive-pack dst >preamble &&
-+
-+	# Then, invoke push. Simulate a receive-pack that sends the preamble we
-+	# obtained, followed by a dummy packet.
-+	write_script myscript <<-\EOF &&
-+		cat preamble &&
-+		printf xxxx &&
-+		cat >push
-+	EOF
-+	test_might_fail git push --push-option="foo" --push-option="bar" \
-+		--receive-pack="\"$(pwd)/myscript\"" --signed dst --delete ff &&
-+
-+	# Replay the push output on a fresh dst, checking that ff is truly
-+	# deleted.
-+	prepare_dst &&
-+	git -C dst config receive.certnonceseed sekrit &&
-+	git -C dst config receive.advertisepushoptions 1 &&
-+	git receive-pack dst <push &&
-+	test_must_fail git -C dst rev-parse ff &&
-+
-+	# Tweak the push output to make the push option outside the cert
-+	# different, then replay it on a fresh dst, checking that ff is not
-+	# deleted.
-+	sed -i "s/\\([^ ]\\)bar/\\1baz/" push &&
-+	prepare_dst &&
-+	git -C dst config receive.certnonceseed sekrit &&
-+	git -C dst config receive.advertisepushoptions 1 &&
-+	git receive-pack dst <push >out &&
-+	git -C dst rev-parse ff &&
-+	grep "inconsistent push options" out
-+'
-+
- test_expect_success GPG 'fail without key and heed user.signingkey' '
- 	prepare_dst &&
- 	mkdir -p dst/.git/hooks &&
--- 
-2.13.0.rc1.294.g07d810a77f-goog
+What happens right now is that because (1) directories containing only
+untracked and ignored files are considered "untracked" and (2)
+read_directory_recursive() skips over untracked directories, even with
+DIR_SHOW_IGNORED_TOO set. As a result, `status --ignored` never lists
+ignored files if they're in an "untracked" directory (and this is the
+currently defined behavior per t7061).
 
+By teaching read_directory_recursive() to recurse into untracked
+directories in search of ignored files when DIR_SHOW_IGNORED_TOO is
+set, though, `status --ignored` now learns to report the existence of
+these ignored files, whereas previously it did not.
+
+>> It's possible that there are standard practices that I might have
+>> missed, so if there is anything along those lines, I'd appreciate
+>> you letting me know. (As an aside, about the git bisect thing: is
+>> there a script somewhere that people use to test patch series
+>> before sending them out?)
+>
+> I hear that people use variations of
+>
+>     git rebase -x "make test"
+>
+> on their topic.
+
+Aha - thanks.
