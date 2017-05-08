@@ -2,53 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E3A21FC44
-	for <e@80x24.org>; Mon,  8 May 2017 20:08:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B2AE1FC44
+	for <e@80x24.org>; Mon,  8 May 2017 20:18:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756772AbdEHUIl (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 16:08:41 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47597 "EHLO cloud.peff.net"
+        id S1756804AbdEHUSo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 16:18:44 -0400
+Received: from siwi.pair.com ([209.68.5.199]:41090 "EHLO siwi.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753888AbdEHUIj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 16:08:39 -0400
-Received: (qmail 18831 invoked by uid 109); 8 May 2017 20:08:39 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 20:08:39 +0000
-Received: (qmail 16174 invoked by uid 111); 8 May 2017 20:09:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 16:09:09 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 16:08:37 -0400
-Date:   Mon, 8 May 2017 16:08:37 -0400
-From:   Jeff King <peff@peff.net>
-To:     Luciano Moreira <lucianomx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Commits messages numbered only until 10 when squashed
-Message-ID: <20170508200836.ijarpzoqdyk4m4jb@sigill.intra.peff.net>
-References: <CAPmMLfj9NYP8LBt8KrMq3-dyTeCvUCheRaUiXtrGv2CG_fGQTw@mail.gmail.com>
+        id S1756773AbdEHUSo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 16:18:44 -0400
+Received: from [10.160.98.126] (unknown [167.220.148.155])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 9C9FF844DA;
+        Mon,  8 May 2017 16:18:32 -0400 (EDT)
+Subject: Re: [PATCH v7] read-cache: force_verify_index_checksum
+To:     Christian Couder <christian.couder@gmail.com>
+References: <20170414203221.43015-1-git@jeffhostetler.com>
+ <20170414203221.43015-2-git@jeffhostetler.com>
+ <CAP8UFD2v8R8bSjUi8+1271fJ=jR5JbbGfgO_fdeYpzE=EGx_Pw@mail.gmail.com>
+ <962eefec-2ea6-6b43-7bd5-51da4150bb6a@jeffhostetler.com>
+ <CAP8UFD1dR1QY81tCAcbB6RP61vBxXy-u8zFAhLpk9uP71Jna-Q@mail.gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <c9f77c02-c498-1b0d-26c2-27d6f576ee71@jeffhostetler.com>
+Date:   Mon, 8 May 2017 16:18:31 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPmMLfj9NYP8LBt8KrMq3-dyTeCvUCheRaUiXtrGv2CG_fGQTw@mail.gmail.com>
+In-Reply-To: <CAP8UFD1dR1QY81tCAcbB6RP61vBxXy-u8zFAhLpk9uP71Jna-Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 08, 2017 at 04:13:51PM -0300, Luciano Moreira wrote:
 
-> Git version: 2.11.0
-> 
-> THE CASE:
-> I have 15 commit to be squashed (the hashes are real, but the commit
-> messages were changed for privacy). When it's rebase interactively
-> squashing all the 15 commits, the numbering goes from 1 to 10 and
-> after it starts again from 1 to 5.
 
-This is fixed already by 356b8ecff (rebase--interactive: count squash
-commits above 10 correctly, 2017-01-07). It's in v2.11.1.
+On 5/8/2017 4:03 PM, Christian Couder wrote:
+> On Mon, May 8, 2017 at 6:50 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
+>>
+>>
+>> On 5/8/2017 5:45 AM, Christian Couder wrote:
+>>>
+>>> This test does not pass when the GIT_TEST_SPLIT_INDEX env variable is
+>>> set on my Linux machine.
+>>>
+>>> Also it looks like you sent a v8 of this patch series with a different
+>>> test, but what is in master looks like the above test instead of the
+>>> test in your v8.
+>>
+>> There was concern about using sed on a binary file not being portable
+>> and a request to change the test to just corrupt the checksum rather
+>> than an index-entry, so I changed it in v8.
+>>
+>> Does the v8 version of the test also fail on your machine ?
+>
+> The v8 version of the test succeeds on my machine.
 
--Peff
+OK, thanks.  It worked on mine too.  Since the v8 version is a
+better test, I'm content to stick with it and not try to address
+the problem with the previous version.
+
+Jeff
