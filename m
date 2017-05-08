@@ -2,106 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D36320196
-	for <e@80x24.org>; Mon,  8 May 2017 19:26:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD4961FC44
+	for <e@80x24.org>; Mon,  8 May 2017 20:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755486AbdEHT0P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 15:26:15 -0400
-Received: from mail.aegee.org ([144.76.142.78]:43121 "EHLO mail.aegee.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753622AbdEHT0N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 15:26:13 -0400
-Authentication-Results: aegeeserv.aegee.org; auth=pass (PLAIN) smtp.auth=didopalauzov
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.aegee.org v48JRUvN028653
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aegee.org; s=k4096;
-        t=1494271650; i=dkim+MSA-tls@aegee.org; r=y;
-        bh=ZLD+ndkrXDrf/AGmEHAddakfTDAEVwAKS51c97bgEzk=;
-        h=Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=jp6A6Ed8604wokvwSIG8gJ4izXl+zFGZxkfV3Nd6K1aDqw0OlYnotVZ1s38LnfcdH
-         7XeksgFQk0ZQluqpugB1sUxWt/6xuYye10VIFe9BAczTeb4KLX924Q3GVOSegovNd0
-         KIX1YAId638cNNtJaXfCzTWW0+FZrc4WFDMTvlDbp2gjRp+/MTkarS4h1ua/3xAklg
-         28MW525d9dVhXmKdiMGzgEO48SJEGZPjq717xvMPjNjBqkc6RiaZ1Pafg2/WqMvVqe
-         4JjFPutkLYTPgKGiDR98utkY2m7aV+eZ0QesMi9fHX8M3VY1G1D8cE31fRbwzFJ2AJ
-         t7wnOq55jnd9dXomCDxislYKq0/xRrsOnLQg/WP5dqbVafbtx65oYItAZMsC24zrBt
-         CxDIQVSJHs5KtuD0iEPBlqiu5sIz7aT9mQdrWDJnJTMENSrahLFDq+tsdRPogQuAwI
-         JLWtfFm4qR/D0ZUxpVnLdzTQKKwWIxy+qCbZmfMZsITrLtiuSu9TBMW0KeNj4dTptW
-         i3fPSp59SsgFcvWgGaKC8rFx+2ggVObFmebbhMcA7C0x165AkcSf2b2XuVylfr0Wla
-         /xZrqYKsyZoxyuCv6F65/0qSR2+mCrz+ByObcnCCQ2oCURe1CfvMT8keuJ+LgutYd4
-         b93Lwx0+O9HxpGxhDURLkomM=
-Authentication-Results: mail.aegee.org; dkim=none
-Received: from [10.128.8.92] (port-87-193-154-82.static.qsc.de [87.193.154.82])
-        (authenticated bits=0)
-        by mail.aegee.org (8.15.2/8.15.2) with ESMTPSA id v48JRUvN028653
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-        Mon, 8 May 2017 19:27:30 GMT
-Subject: Re: git and the Clang Static Analyzer
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-References: <5696a8a3-0a17-18ac-8da4-4556586acee7@aegee.org>
- <alpine.DEB.2.21.1.1705081250550.146734@virtualbox>
-From:   =?UTF-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-        <dilyan.palauzov@aegee.org>
-Message-ID: <373a6f4b-1b4d-6c75-30b1-c2498555c3d9@aegee.org>
-Date:   Mon, 8 May 2017 21:26:11 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1756715AbdEHUDC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 16:03:02 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:32854 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751883AbdEHUDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 16:03:02 -0400
+Received: by mail-qt0-f194.google.com with SMTP id a46so11036510qte.0
+        for <git@vger.kernel.org>; Mon, 08 May 2017 13:03:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=9JLrYpd/Xr5FlC4pfQ92gFAykw5vhU5BbK51ibdR1x4=;
+        b=oxgQE2uF5yteLXuyWz0Abe035NBLLVWgSyYg1EMtUSm/722k1EkAubLdJz8bgcW45/
+         2vWV8aEwuW+mrTc0iWsvq31kqEaJoU32LJOGjmxLtDBXLow7VCRnKDKZkX7YgRVSaDCd
+         21MDW4ZiRHyfT8ulJfx+lLmDfKGtYwcvUTHuuBofz17FBnbnPvGQMH/NeEkpH7HoGRc3
+         DWaMzCaPYWydqAoGAgcoEwFRaA/L7YqvLvOUmZbXn7/yhifCbfBdo8/TbZ2e7xYu794f
+         Af0tHq1yuNnIYiVFvqsRxd28NO7eWugBTWJ+cek2ku+OwSEUxnX1fECvsTJK2UUYSjmJ
+         Izdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=9JLrYpd/Xr5FlC4pfQ92gFAykw5vhU5BbK51ibdR1x4=;
+        b=pLxTtrWC+5WOcXsk90v5h65gFGh5sae0BeQestqrDzvAxVd8vBxCw76qlzPH2vDLP4
+         nrJOVA2lDxVB5DpumvURHbWQGzxVAIaaEe9CpTRab2ZNtm39CJ7sru0NAywPuTiWC+OP
+         usVYgjnmOu3nwjGgKaFD0JXjZReRs+H4iZwBXgET7cxqwoiYQfPy29yzS4SksXxTWmpR
+         axVfQ6mxnDoz0XbW6ddfm4GIDIk2vufoClPH4l9nF6pvY6wNv7mWNZ+emv5JuQKpRlIh
+         ynizCdwbV+oSdlUbiafjTyMujO/HnFacxRoLLGPbnmmrMZyBhTGeXmqMcKB+2HhkJq8a
+         hQcg==
+X-Gm-Message-State: AODbwcDGhzD4RpLQvGA58APsbSFkQK34Xhw+VGYA/O5tfQw0sNuuEdpV
+        +XlRFBIEMwWs2owbYP3jjv/VzW3QGQ==
+X-Received: by 10.200.48.196 with SMTP id w4mr13944232qta.226.1494273781145;
+ Mon, 08 May 2017 13:03:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1705081250550.146734@virtualbox>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: clamav-milter 0.99.2 at mail.aegee.org
-X-Virus-Status: Clean
+Received: by 10.55.78.212 with HTTP; Mon, 8 May 2017 13:03:00 -0700 (PDT)
+In-Reply-To: <962eefec-2ea6-6b43-7bd5-51da4150bb6a@jeffhostetler.com>
+References: <20170414203221.43015-1-git@jeffhostetler.com> <20170414203221.43015-2-git@jeffhostetler.com>
+ <CAP8UFD2v8R8bSjUi8+1271fJ=jR5JbbGfgO_fdeYpzE=EGx_Pw@mail.gmail.com> <962eefec-2ea6-6b43-7bd5-51da4150bb6a@jeffhostetler.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 8 May 2017 22:03:00 +0200
+Message-ID: <CAP8UFD1dR1QY81tCAcbB6RP61vBxXy-u8zFAhLpk9uP71Jna-Q@mail.gmail.com>
+Subject: Re: [PATCH v7] read-cache: force_verify_index_checksum
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes,
-
->> I compiled git/master
+On Mon, May 8, 2017 at 6:50 PM, Jeff Hostetler <git@jeffhostetler.com> wrote:
 >
-> ... which advances from time to time, so you definitely want to include a
-> more informative data point here, e.g. 4fa66c85f11 (Git 2.13-rc2,
-> 2017-05-04) ...
 >
-
-The 4fa66c85f11 you mentioned is part of the URL I sent.
-
->> Please note, that the information is only about what gets actually compiled,
->> code disabled by #if .. #endif is not considered (e.g. when determining
->> whether a variable assignment is useless).
+> On 5/8/2017 5:45 AM, Christian Couder wrote:
+>>
+>> This test does not pass when the GIT_TEST_SPLIT_INDEX env variable is
+>> set on my Linux machine.
+>>
+>> Also it looks like you sent a v8 of this patch series with a different
+>> test, but what is in master looks like the above test instead of the
+>> test in your v8.
 >
-> So you already know that the report is specific to your setup. It may make
-> a lot of sense to actually state what your setup is, i.e. Operating
-> System, installed libraries (and their respective versions), CPU, etc.
-
-I don't think this is of much relevance.  The hints provided encourage one to look at the code and to evaluate mentally the lines.  By tweaking the preprocessor directives, you could get less warnings (a previously unused variable now appears within an asser()), or more warnings (as more code gets compiled).  Getting more warnings makes sense, after the current ones are processed.  Getting less warnings means (again) compiling more code.  I use already pcre and openssl, what else can I enable?
-  
->> There are probably false-positives.
+> There was concern about using sed on a binary file not being portable
+> and a request to change the test to just corrupt the checksum rather
+> than an index-entry, so I changed it in v8.
 >
-> Probably. So why don't you give it a try and look through the report? Then
-> summarize your findings here. That would definitely find a warm welcome, I
-> would expect.
->
->> However in case of e.g. builtin/notes.c:1018, builtin/reset.c:294 or
->> fast-import.c:2057 I consider the hints as justified.
->
-> Okay. And those hint are...?
+> Does the v8 version of the test also fail on your machine ?
 
-Click on  https://mail.aegee.org/dpa/scan-build-git-4fa66c85f11/ and then on "fast-import.c: line 2057 -> View Report" and you will see pointless assignment.
-
-I cannot organize the report much better, as filtering out the false positives requires usually too deep understanding of the code organization of git, which I do not have.
-
-This is the analysis done on the pu-branch:
-   https://mail.aegee.org/dpa/scan-build-git-7dd243c75
-
-Both reports do not list files in the same order, as I did parallel builds, but I do not see on the spot any difference.
-
-Learning Travis is not on my priority list, I sent the commands I called to get the report.  I also compiled clang by myself.  For those who mistrust sites, there are no-javascipt, no-css browsers like lynx.
-
-Greetings
-   Dilyan
+The v8 version of the test succeeds on my machine.
