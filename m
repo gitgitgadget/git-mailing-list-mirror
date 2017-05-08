@@ -2,81 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DA5320188
-	for <e@80x24.org>; Mon,  8 May 2017 02:03:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B20220188
+	for <e@80x24.org>; Mon,  8 May 2017 02:08:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751596AbdEHCDB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 May 2017 22:03:01 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:35042 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751068AbdEHCDA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2017 22:03:00 -0400
-Received: by mail-pg0-f68.google.com with SMTP id i63so8411833pgd.2
-        for <git@vger.kernel.org>; Sun, 07 May 2017 19:03:00 -0700 (PDT)
+        id S1751293AbdEHCIe (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 May 2017 22:08:34 -0400
+Received: from mail-pf0-f171.google.com ([209.85.192.171]:35270 "EHLO
+        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750943AbdEHCId (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2017 22:08:33 -0400
+Received: by mail-pf0-f171.google.com with SMTP id v14so25735780pfd.2
+        for <git@vger.kernel.org>; Sun, 07 May 2017 19:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=XCBegB3OfCk2VwSYfxlVLn+W2lBEoKWc22POdmh9qJ8=;
-        b=C/+YlHO00LTOkyJy3BPjV8nS+TN6O+YujI60sLNfhrF13dW8SJouYdlToI0Mlx38pJ
-         faAATEaSKcASgFIhMirMer+8fGl17EA14G6Knc2E8GqJM5Xbetxa8a9PPl10sBhU6XLH
-         jV61XAllarUyEETqCrNJ3DG2eGFXKovDp8NVJPyo7wpsiLmGwJD+xitjpI/LMWhAzYwH
-         uZFYtCZ9axIvzAEdj34ywiIR2T42olAcg0TGY40MQeF7IyUq8DhV/xo+7y9rPAHb9+/+
-         7YLCWmQh+U2NvH0T6sG55NG+SQ6QoF0lmKs9BzDeaGMWLJkMrqyDlVN0iYoqqqPTjptp
-         Tzuw==
+         :user-agent:mime-version;
+        bh=ZUgXEGiEUd4VWrLFOHOMe9UCQ+msE+O8xqxZCnfk/rg=;
+        b=lrxKHTrD6Gr2NPh7sK8M+CPPbeuJO6CCuX9EM0LtLX0z8tP9fdmc2zbP+RRk1+yOg/
+         /rOLGoH4DAvgxL+n9nJWtQb3jkHoeJLncah0xzqCsU7X1hYCGmbbF7PDAx4GIURkC0NU
+         v06DuvzNmkrDOIKDzFbN19chL3kq/8YCgu27qkixnRmWusmfiRa4VLf1KuWDmDnvRdUF
+         oVekp2outBJUwgtvTHDI5r7bTxymrMgRMAmuyzJcN4ws4kd8g5HxfRI63HnwKFVe3Jps
+         mIpHNP4o5aGmzppHElMRQddxSRI7EmwrETrk90ZejRFXLuEuqKqgK4aWDlAMnVeK4RDT
+         zEvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=XCBegB3OfCk2VwSYfxlVLn+W2lBEoKWc22POdmh9qJ8=;
-        b=tfhj/Ux9EMc1kG0s7kBvAUZojb88A9WPV+3RopVgGbW9rsRfj4BBR6mdJJthwoBGxp
-         A1Z7AkP4tj3xiJSrEiTGU8pEP7tUIfg+zYXiMLL3RMl3u92ysBHO9svZATNN/MAV0wuO
-         x2ZFtaJ9kwcNnpG3fwgBpaR1G+Qcl2wih8ZxwM6RD3T1CT2szb3j7hHTMDTrhzP+pQlk
-         wUeVKGi4YPKeUUwYU47ENNC/qlBiRM7km01SWpI2Bv/qbzKuRfG9BygCcJH/Qh7oEzfG
-         V4XY0CIN7uXtgCpM2YwB9Gdq1z/8gTAR9vcUJBEeuiZSfgluIUHG0BSxsKBntuhVVFS+
-         A2tA==
-X-Gm-Message-State: AN3rC/64jqlxCkXiSiu3yogflKD8fxuddM7Pk2ZwxqDzcmRlhDiHYB+L
-        6y0Lyq7+beoSrQ==
-X-Received: by 10.84.229.75 with SMTP id d11mr78883930pln.66.1494208980022;
-        Sun, 07 May 2017 19:03:00 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZUgXEGiEUd4VWrLFOHOMe9UCQ+msE+O8xqxZCnfk/rg=;
+        b=o1hK4Um0ICuYxMpQOeT4ISYK0k+GFC3l7g+SZiyep4v2Q8zFFLWtDPs2J0s6iM5TYD
+         Iz63Peas4TxVMs3Lt7LMQr9QnyECFc81d20dAWiiO1GNyaqB6bZbpoO3CbfQn84mfIpj
+         /It9DXj06wAt9KpU9pZkyVQNjV34QX0c+7sB2+EkESs868XHQQkz9qcnnYLP7EQAX+ld
+         95hjPfEfD7CY2Vh9czi1j18y1U7w+v4md3ve+AixzJP2sZ1EGw3ZtNH1WNsk5vY2bA4d
+         LCbc0eySjoM8sj6kxtaBtMgfARzKkT9BLRG9eLnrkA0W62dLMPh3nOCg/yt9lefnGmZf
+         Zc1g==
+X-Gm-Message-State: AN3rC/5ml6P+IyjWOamoObwCQ7oH+hMMTW6scuGASOw4uZXXRvO5G1sy
+        kPuYH/wZfbw2Bg==
+X-Received: by 10.99.97.215 with SMTP id v206mr16100142pgb.235.1494209312584;
+        Sun, 07 May 2017 19:08:32 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3011:642f:81a0:efbd])
-        by smtp.gmail.com with ESMTPSA id r131sm16886541pgr.67.2017.05.07.19.02.59
+        by smtp.gmail.com with ESMTPSA id z22sm21382975pfg.117.2017.05.07.19.08.31
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 07 May 2017 19:02:59 -0700 (PDT)
+        Sun, 07 May 2017 19:08:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] tests: fix tests broken under GETTEXT_POISON=YesPlease
-References: <20170505154053.58128-1-larsxschneider@gmail.com>
-        <20170505181932.14317-1-avarab@gmail.com>
-Date:   Mon, 08 May 2017 11:02:58 +0900
-In-Reply-To: <20170505181932.14317-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 5 May 2017 18:19:32 +0000")
-Message-ID: <xmqq8tm8aywd.fsf@gitster.mtv.corp.google.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     akos tajti <akos.tajti@gmail.com>, Git Users <git@vger.kernel.org>
+Subject: Re: Git smart http: parsing commit messages in git-receive-pack
+References: <7DA6022F-02F0-41AC-ABAB-64565E81481F@gmail.com>
+        <CAGyf7-EDHPdL_YvNoC9QNy11=YfxSpmZBFZ5UR50ub1o2yqAug@mail.gmail.com>
+Date:   Mon, 08 May 2017 11:08:31 +0900
+In-Reply-To: <CAGyf7-EDHPdL_YvNoC9QNy11=YfxSpmZBFZ5UR50ub1o2yqAug@mail.gmail.com>
+        (Bryan Turner's message of "Sat, 6 May 2017 12:14:44 -0700")
+Message-ID: <xmqq4lwwayn4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Bryan Turner <bturner@atlassian.com> writes:
 
-> Junio: I think between Travis now testing for this & the scary i18n
-> reflog regression (not that poison caught that, but that was lack of
-> testing, poisoining catches that class of issue) it makes sense to
-> discard my patch for removing GETTEXT_POISON & queue this up instead.
+> That means if you pair a pre-receive hook with Git 2.11 or newer on
+> the server, you should be able to achieve what you're looking for.
 
-Let's queue this and then the travis patches on top.  Thanks.
+It probably is worth mentioning that even without the "quarantine"
+changes of 2.11, the new objects brought in by a rejected push
+cannot be used because they are not reachable from any ref, and will
+be discarded as garbage when the next GC run.  So pre-receive should
+be sufficient for the purpose of "not accepting" an undesirable
+push, with older versions of Git.  You can view the "quarantine"
+feature mostly as "quality of implementation" issue.
+
+
+
