@@ -2,64 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EFBF20188
-	for <e@80x24.org>; Mon,  8 May 2017 00:19:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 091A520188
+	for <e@80x24.org>; Mon,  8 May 2017 00:28:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750795AbdEHATS (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 May 2017 20:19:18 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:36364 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750782AbdEHATR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2017 20:19:17 -0400
-Received: by mail-pg0-f65.google.com with SMTP id 64so571274pgb.3
-        for <git@vger.kernel.org>; Sun, 07 May 2017 17:19:17 -0700 (PDT)
+        id S1750968AbdEHA2C (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 May 2017 20:28:02 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35694 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750782AbdEHA2B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2017 20:28:01 -0400
+Received: by mail-pg0-f68.google.com with SMTP id i63so8176677pgd.2
+        for <git@vger.kernel.org>; Sun, 07 May 2017 17:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=iouGdlueUs1No8vV2+UYobl9ZzmekRiJSLFottreJQU=;
-        b=uMm7XgSJI9K11TMjluyQt47inP6tABlYUraa/+hPTEphVuts4mTaiOOFgWT1KLrqw4
-         2ynSZpxsc8o38rONTFJh9vwJGgn8lgktL3++VRnPAp+7Jpp5Idx5CfKcl9F18HNNezoE
-         nIl50xPAjR+CwchHMhHP5AGkyT2NXN2TlhlXA7eyI1rbFWSIiD+topqqn3gymYjAcfio
-         gt+9qAWXtX+wGLeV8UIdWSbfXy5Vh/SfrjDQ1ZQvPKWHOJ0HawXNXuGnsDfvhjvkF039
-         M+4mgDg2dMmdly00dgPNk8Q9IAybUTfSNP1jSmEhXi8mb1XibyrKwF/+ZKEuykjo628n
-         7iAQ==
+        bh=tlZt5IwWaF3IJv15nX/dizdbQFA8J8YqmAO/fyRjPyo=;
+        b=kH01RQ+8kqFWzOuLZkCfQMk266Q1qr0mlp9kS6bmLRE3F87Z0V59sk0jEesJnfbWvo
+         pa7epGMmwQbVpwCsx3BtXNkPrhSSqubi2JsY2GrkbwHS6xHvtZIOlvA109H4y91mlrXn
+         lOm92/TIbcvm2zmDNn+ZkuPoMYGMExZClD0X8tNtA9WzDbJwT3Wt128t+Z7Kru7lBd2C
+         unVW+pvijJEYb7UtDyXUbI5XOwcfF+L8Ioz7jCVJyRtEfHYXqZrzgGC5GInoJEHEg/y8
+         DtFkJKnIP+3MeDKa0WhKTSD51v8bxctJPDWuSxZfn6p7jwrQljhjoB9T0xKcKeh/43ny
+         53FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=iouGdlueUs1No8vV2+UYobl9ZzmekRiJSLFottreJQU=;
-        b=QIhkkTXD30ZgRV9FtUAediq3wJXdeGnF6mvm+uYxg7T+DmG07UDn/WuaHJG6O0I+uV
-         UzzJZCMD1M+x2rS8roTAS49RGErstu1Wet25vINPvXWhbi7k/2WsYfWT09P89V8GccHl
-         GM20ALiwqJ6PH1wkvgNY1Oyq+UAXVmO3OQnDAr3YPD5QygnNNDhC/U90MmF3+ofmYzt2
-         P5tytWjy0k5d2XPnlfD/5erN2stLNcx8DI01aRUeCX4D38E4SkvLaIQiV0PS8UdSL/LC
-         7KnNgYoFUmB6l4upJIejx9KWcQtpZnu2utcu6BMYdcb3FjtM4GWH4HufnKKJWWqII+0U
-         Xr+w==
-X-Gm-Message-State: AODbwcClkaBdNpNPqT/XmvGypvkzkvUCZnIKwQPtuNzddE/4RxE0QArP
-        Wophe7d9IVNZGw==
-X-Received: by 10.98.32.132 with SMTP id m4mr5511608pfj.131.1494202757074;
-        Sun, 07 May 2017 17:19:17 -0700 (PDT)
+        bh=tlZt5IwWaF3IJv15nX/dizdbQFA8J8YqmAO/fyRjPyo=;
+        b=Y5q75q/l6RQairL/IR4jb+U38EaFxwU7g0UHnEMsfo38ClYQUEvFaFoQDPah5r2vWj
+         NoqN7PBnzWeYSmMuUN/nAJt6tPmoktRRBVRyzBJzV0zm0L50sCj5DbQk/j0QuRS4aQTv
+         p1msQrUbS6NfpnoQOByb3A1Gt2aMDP4L9jOB9in7r3V4LOg2ynt+iysvTyOCQw5BhlzT
+         ri23JE2iTOpQD393b7PkROcfptmS7ObIsgnm98FZRParAupnffMb9lPD6BXKdVCzzySA
+         dtKfYwpl0J0oHQzPuwjEGmmLyHeUySVXMMWBlJmv7PySxYL45MarO/bs10BStuYc57qK
+         fCFA==
+X-Gm-Message-State: AN3rC/5cXIVn3sV4OMRWUJBj0TWlC/FMMU1MQBsgzqbWd271pX9cKxBN
+        0CesTZcrxxTcCw==
+X-Received: by 10.84.241.206 with SMTP id t14mr23950940plm.48.1494203281111;
+        Sun, 07 May 2017 17:28:01 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3011:642f:81a0:efbd])
-        by smtp.gmail.com with ESMTPSA id m24sm20813962pfi.129.2017.05.07.17.19.15
+        by smtp.gmail.com with ESMTPSA id 20sm27593746pfq.42.2017.05.07.17.27.59
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 07 May 2017 17:19:16 -0700 (PDT)
+        Sun, 07 May 2017 17:27:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+To:     Liam Beguin <liambeguin@gmail.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH] archive-tar: fix a sparse 'constant too large' warning
-References: <252ddd6a-3516-6619-8ea6-d3897f13d93d@ramsayjones.plus.com>
-        <alpine.DEB.2.21.1.1705041121520.4905@virtualbox>
-        <70b431dc-c5cc-e376-b63e-6a58ee1385f1@ramsayjones.plus.com>
-Date:   Mon, 08 May 2017 09:19:15 +0900
-In-Reply-To: <70b431dc-c5cc-e376-b63e-6a58ee1385f1@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Fri, 5 May 2017 02:21:50 +0100")
-Message-ID: <xmqqshkgci9o.fsf@gitster.mtv.corp.google.com>
+        git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v3 0/6] rebase -i: add config to abbreviate command-names
+References: <20170502040048.9065-1-liambeguin@gmail.com>
+        <alpine.DEB.2.20.1705021741580.3480@virtualbox>
+        <1493769381.29673.39.camel@gmail.com>
+        <alpine.DEB.2.20.1705031315460.3480@virtualbox>
+        <xmqqwp9x9prp.fsf@gitster.mtv.corp.google.com>
+        <1494177195.32697.2.camel@gmail.com>
+Date:   Mon, 08 May 2017 09:27:59 +0900
+In-Reply-To: <1494177195.32697.2.camel@gmail.com> (Liam Beguin's message of
+        "Sun, 07 May 2017 13:13:15 -0400")
+Message-ID: <xmqqo9v4chv4.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,12 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Liam Beguin <liambeguin@gmail.com> writes:
 
-> Sure, I can add this. (Although, I don't think it actually
-> matters).
->
-> Hmm, unless somebody objects in the meantime, I will re-roll
-> the patch (tomorrow, it's late!).
+> Sorry for the delay, I don't mind switching to C but it would probably
+> be easier to see if the scripted version gets approved first.
+> If it does, I could then get started on the C implementation.
+> If you prefer I could also forget about the scripted version, make a C
+> implementation work and see if that gets approved.
 
-Thanks.
+I am not sure what "approved" would mean in the context of this
+project, though ;-) Your patch to the scripted version would
+certainly not be in the upcoming release.  If you define the
+"approval" as "it is queued to my tree somewhere", the patch would
+start its life like everybody else by getting merged to the 'pu'
+branch, where there already is a topic that removes the code you
+patch your enhancement into.
+
+The list _can_ agree that it is a good idea to have an option to
+populate the todo list with shortened insn words from the beginning
+(instead of merely accepting a short-hand while executing), which is
+what your patch wants to do, without actually having the updated
+scripted "rebase -i" merged in any of the integration branches in my
+tree.  If you meant by "approval" to have such a list concensus, I
+think you may already have one.  I personally do not think it is a
+great idea but I do not think it is a horrible one, either.  As long
+as it is an opt-in feature that many people find useful (which may
+be the case already, judging from the list traffic), I do not mind
+;-)
+
+
+
