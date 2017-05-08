@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B20220188
-	for <e@80x24.org>; Mon,  8 May 2017 02:08:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3B7520188
+	for <e@80x24.org>; Mon,  8 May 2017 03:05:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751293AbdEHCIe (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 May 2017 22:08:34 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:35270 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750943AbdEHCId (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2017 22:08:33 -0400
-Received: by mail-pf0-f171.google.com with SMTP id v14so25735780pfd.2
-        for <git@vger.kernel.org>; Sun, 07 May 2017 19:08:33 -0700 (PDT)
+        id S1751522AbdEHDFg (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 May 2017 23:05:36 -0400
+Received: from mail-pf0-f195.google.com ([209.85.192.195]:34412 "EHLO
+        mail-pf0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751250AbdEHDFf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2017 23:05:35 -0400
+Received: by mail-pf0-f195.google.com with SMTP id w69so2284450pfk.1
+        for <git@vger.kernel.org>; Sun, 07 May 2017 20:05:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ZUgXEGiEUd4VWrLFOHOMe9UCQ+msE+O8xqxZCnfk/rg=;
-        b=lrxKHTrD6Gr2NPh7sK8M+CPPbeuJO6CCuX9EM0LtLX0z8tP9fdmc2zbP+RRk1+yOg/
-         /rOLGoH4DAvgxL+n9nJWtQb3jkHoeJLncah0xzqCsU7X1hYCGmbbF7PDAx4GIURkC0NU
-         v06DuvzNmkrDOIKDzFbN19chL3kq/8YCgu27qkixnRmWusmfiRa4VLf1KuWDmDnvRdUF
-         oVekp2outBJUwgtvTHDI5r7bTxymrMgRMAmuyzJcN4ws4kd8g5HxfRI63HnwKFVe3Jps
-         mIpHNP4o5aGmzppHElMRQddxSRI7EmwrETrk90ZejRFXLuEuqKqgK4aWDlAMnVeK4RDT
-         zEvw==
+        bh=vAwzdTz+vLzi4dZN9Xji4df23oOvtgYn36LGEEIy+C4=;
+        b=EINtfYaRy0uYP8HXmmKn/16WCA8oRPijBh+QPTh28YV/OORG4dRxNOV+s+bCc7q029
+         tHbUXI4VDKQs0VoJMpJP2RLn/BPpS9h+I8LqLLqw278N9k3y5MDGQeY8XTqHO7ZaoFWG
+         gwUsgXMPcXKv8eDHPMa+ScQFVlKs6/kZ2wNqlaKVfh97owys68BrFQDS7YYhyFEYhVMz
+         PDGHfADCMkJtqfwbZlFAwDA3G+pFUWb8kRJ6LMi8nSvb3Z14wsomRWp9UPJePxQHha1Y
+         F/kBt7txiBdVIPfPe0uTuDeDQTvmA32+ukm3GhVOIWhRS3ytrjED+l0oyETEop9ks8df
+         FuzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZUgXEGiEUd4VWrLFOHOMe9UCQ+msE+O8xqxZCnfk/rg=;
-        b=o1hK4Um0ICuYxMpQOeT4ISYK0k+GFC3l7g+SZiyep4v2Q8zFFLWtDPs2J0s6iM5TYD
-         Iz63Peas4TxVMs3Lt7LMQr9QnyECFc81d20dAWiiO1GNyaqB6bZbpoO3CbfQn84mfIpj
-         /It9DXj06wAt9KpU9pZkyVQNjV34QX0c+7sB2+EkESs868XHQQkz9qcnnYLP7EQAX+ld
-         95hjPfEfD7CY2Vh9czi1j18y1U7w+v4md3ve+AixzJP2sZ1EGw3ZtNH1WNsk5vY2bA4d
-         LCbc0eySjoM8sj6kxtaBtMgfARzKkT9BLRG9eLnrkA0W62dLMPh3nOCg/yt9lefnGmZf
-         Zc1g==
-X-Gm-Message-State: AN3rC/5ml6P+IyjWOamoObwCQ7oH+hMMTW6scuGASOw4uZXXRvO5G1sy
-        kPuYH/wZfbw2Bg==
-X-Received: by 10.99.97.215 with SMTP id v206mr16100142pgb.235.1494209312584;
-        Sun, 07 May 2017 19:08:32 -0700 (PDT)
+        bh=vAwzdTz+vLzi4dZN9Xji4df23oOvtgYn36LGEEIy+C4=;
+        b=TZz1iFE9fOE47l5gHJwGvRMyN0sNtfs2+sY4ZvyB+5BNPx+ZPPcEAAxBRnCx4MFKE8
+         R5UvMuH4x2YDeOpEzmVnLZzuVaeSFu9qQ3gC41ALPWK8OQaOm2YelucTJLjnWKRc/SuC
+         3TgDfe7EHWADkJYL11UR2Efnk4TxAmViViBvRoGUB1v/Vf7hxZJ7AreZ5aLMVQ/8+5XQ
+         B5Bx2z7KgvODKUGaj7ibqnOnx9VyHyzZ6kO0hA+buP2dgETk3X28I7uPeYc34NR1q6QM
+         lZhbqnXQz4qYAAO2JYc0dyf62cVg5vhK/u8S9Dnq3TOe7bxUlz1RdoPzpL4w7vWnb+Ln
+         FjWQ==
+X-Gm-Message-State: AN3rC/47LQrkGLy1ttktouclzECFuiZ7afzsx4ySmwWuyzodbxlQSLEn
+        V7uYN7RSVphKNQ==
+X-Received: by 10.84.232.141 with SMTP id i13mr51510513plk.143.1494212734978;
+        Sun, 07 May 2017 20:05:34 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3011:642f:81a0:efbd])
-        by smtp.gmail.com with ESMTPSA id z22sm21382975pfg.117.2017.05.07.19.08.31
+        by smtp.gmail.com with ESMTPSA id g66sm19833679pfj.11.2017.05.07.20.05.32
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 07 May 2017 19:08:31 -0700 (PDT)
+        Sun, 07 May 2017 20:05:32 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     akos tajti <akos.tajti@gmail.com>, Git Users <git@vger.kernel.org>
-Subject: Re: Git smart http: parsing commit messages in git-receive-pack
-References: <7DA6022F-02F0-41AC-ABAB-64565E81481F@gmail.com>
-        <CAGyf7-EDHPdL_YvNoC9QNy11=YfxSpmZBFZ5UR50ub1o2yqAug@mail.gmail.com>
-Date:   Mon, 08 May 2017 11:08:31 +0900
-In-Reply-To: <CAGyf7-EDHPdL_YvNoC9QNy11=YfxSpmZBFZ5UR50ub1o2yqAug@mail.gmail.com>
-        (Bryan Turner's message of "Sat, 6 May 2017 12:14:44 -0700")
-Message-ID: <xmqq4lwwayn4.fsf@gitster.mtv.corp.google.com>
+To:     Yubin Ruan <ablacktshirt@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] Add warning when git discard changes on another branch?
+References: <20170507233512.GA9332@HP>
+Date:   Mon, 08 May 2017 12:05:31 +0900
+In-Reply-To: <20170507233512.GA9332@HP> (Yubin Ruan's message of "Mon, 8 May
+        2017 07:35:14 +0800")
+Message-ID: <xmqqzieo9hfo.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,18 +65,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Turner <bturner@atlassian.com> writes:
+Yubin Ruan <ablacktshirt@gmail.com> writes:
 
-> That means if you pair a pre-receive hook with Git 2.11 or newer on
-> the server, you should be able to achieve what you're looking for.
+> I think it would be better if git can warn use if we switch to another branch
+> without committing the modification. Git will warn if the modification is based
+> on a commit different from where the checkout happened.
+>
+> For example, say I am now on branch 'master' and all files *clean*. Now if I do:
+>     $ git checkout -b issue
+> and make some changes to a file:
+>     $ echo "modification on branch issue" >> lala.txt
+> and then switch back to branch 'master':
+>     $ git checkout master
+> and git can see the changes:
+>     $ git status
+>       On branch master
+>       Changes not staged for commit:
+>         (use "git add <file>..." to update what will be committed)
+>         (use "git checkout -- <file>..." to discard changes in working directory)
+>       
+>       	modified:   lala.txt
+>       
+>       no changes added to commit (use "git add" and/or "git commit -a")
+>       
+> Now, if I do "git checkout -- lala.txt", then I will lose that change on branch
+> 'issue' too!!! 
 
-It probably is worth mentioning that even without the "quarantine"
-changes of 2.11, the new objects brought in by a rejected push
-cannot be used because they are not reachable from any ref, and will
-be discarded as garbage when the next GC run.  So pre-receive should
-be sufficient for the purpose of "not accepting" an undesirable
-push, with older versions of Git.  You can view the "quarantine"
-feature mostly as "quality of implementation" issue.
+There may be a fundamental misunderstanding here.  In Git, changes
+you make in the working tree do *not* belong to any branch.  The
+request "git checkout -- lala.txt" you made in this step does *not*
+say "Hey, Git, these changes to lala.txt are not necessary in the
+'master' branch".  It says "I started editing lala.txt, but it turns
+out that I do not need that change at all, anywhere, please remove
+it."
 
-
+If you meant the changes while you were on "issues" branch were not
+yet ready to be committed, but now you want to work on "master"
+branch without having to worry about these changes, "git stash" may
+be a useful tool.  Alternatively, you can just create a temporary
+commit while on "issues" branch before checking out "master" branch
+to work on something else, and when you are ready to continue
+working on the "issues" branch, check out "issues" branch and either
+(1) start with "reset HEAD^" or (2) just continue working on it and
+conclude with "commit --amend".
 
