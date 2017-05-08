@@ -2,71 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 605701FDEA
-	for <e@80x24.org>; Mon,  8 May 2017 07:04:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BC4D1FDEA
+	for <e@80x24.org>; Mon,  8 May 2017 07:10:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752513AbdEHHD6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 03:03:58 -0400
-Received: from mail-pg0-f42.google.com ([74.125.83.42]:33563 "EHLO
-        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751375AbdEHHD5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 03:03:57 -0400
-Received: by mail-pg0-f42.google.com with SMTP id u187so22129907pgb.0
-        for <git@vger.kernel.org>; Mon, 08 May 2017 00:03:57 -0700 (PDT)
+        id S1752709AbdEHHKo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 03:10:44 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:34119 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752164AbdEHHKn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 03:10:43 -0400
+Received: by mail-pf0-f178.google.com with SMTP id e64so28901439pfd.1
+        for <git@vger.kernel.org>; Mon, 08 May 2017 00:10:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=zewWSdliRhMS3acgWRtGdSJje5JFnH7xLv8zx34IFXo=;
-        b=kknD3ZzuETaqRK5c2gFE95CPJC2iOjEycCOiRdxNDrGhytB9RlOvqc3BJk5rv+O4KC
-         vMaNVBm2REOihS7efLHAEEJxdy+G0sK/vPHDYvkrLSlwVMFMR5isuOpfaviF7XxGvdpI
-         cQ1kVLzg+HIRMPp/K9OOslt7tgpemSBfzHw5GxBFv9Nht61ISeg5+5X3L9yuuSw8U/ec
-         QoL8DrJY6kN2FK86jH8B213Hj8sTzmqaWTJnrKVyqoKMCQs8iRdgRjJSdnAKQY4fPIFG
-         cTOdXBwXd/IbaqLUW55/GA9pfdKhQTm20xZkr9hvxDemiTKZLCuSeie95Wybx0iFvUAx
-         cNFg==
+        bh=3DT6hXnbqsj6C9f4ItNI+ULV7f+mIB7IJUb8ldUNJcg=;
+        b=PKGdsdrkDzUl0Bjmxd5f1frcMRYyj1QKQ7+VECdEcPSw8JkEW+FWyW/266huh/ixOt
+         boNy0Ro3hx09u4C++YKAH5+rRp3FmmRK2O/9fIRTRP2348htEx6Zg2Zqcd+WmCvSxPty
+         0hBYfcZjoWasZaHcGuYm1sATuTlLnH/p9hrw5jvrxr8BDnVe8TcVgNyOb5qUGMLrX3Wp
+         rce2N/R8l3XXX44E3bL3onQicUEasK0BhlQX7BGHvo6K+/b6VYXsv70qD3wNL8Sx5Pmi
+         8gb7PX2MGvHjz7TJzY2CDyRIXYtUfWzDGx2/pmgf5h1XYDjSMAeYnKM26tSokthuAi6R
+         gdfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=zewWSdliRhMS3acgWRtGdSJje5JFnH7xLv8zx34IFXo=;
-        b=NTgAp/2ZIqW69xWggFA7+GUteuhde9kJ2WihFwvx7baiQOqgXCBS88+WY7jQ2r06UL
-         w8i/yWwq/i/RE97PoNQ3MfLuqZfYqPZ0I++BpmkAUSPMxZ4KK9Md5RRk5iX/9oHK185L
-         tz0IUrXDSeFZFYrvXwY3YJ/9UyJaZD6ioTxNQFdWjc86+n+oMOnQyOI2OGdgpY5pqu6i
-         WvYiE/5AZQZIUDx2D8D2nxbNmXu8pgteltv6HJ5LcKZmLus9xiUW4s7H+StdSI/EdWWT
-         g2LfK44Loz8lfkfiLZSJI5qm32usmx2LYaYCacKljT1qYfiwbkHU5AXc6O0WNXXBcJ6o
-         /LcA==
-X-Gm-Message-State: AN3rC/6SBwM0MEr7yqTjkts6923FOwspzraDKFjU9ywrhNd3h+aqo789
-        0DWOoPOBbJzd5ROIE8d3jQ==
-X-Received: by 10.99.114.6 with SMTP id n6mr17094715pgc.175.1494227036790;
-        Mon, 08 May 2017 00:03:56 -0700 (PDT)
+        bh=3DT6hXnbqsj6C9f4ItNI+ULV7f+mIB7IJUb8ldUNJcg=;
+        b=AqK23fjQbV0tZP3VFfy1CodLbpTF/OdpbJKNQ85OE/EaB61v6YOFcjGGVPGIbmEfWi
+         nSXQVd552M6Wdyjf6QXZsiZNWZ9syyt9yBDBPMlN0zIzCwOzyWBt0/O0Vw0q6nDGMcYS
+         AiFomR1crUcN0qVumMDMKL61hrKEKK86nCn7gYwfeBYGDyXfUsnDuMmEc2HC+ZyaaOWW
+         cksJ7vQSeUm1smRskf4XZ2NzFXaOUKLyAVSFGv+PfKm11q3QfwpLpVdnZIMZCXcAmyjZ
+         ZQl4oOqY7rZE2g9Tvzq4VuwvlV5Q9VOkpjeEEFz+qX8RckCU5l+yhvPYYcPMLG78Bkr8
+         8/Pw==
+X-Gm-Message-State: AN3rC/7l2VDc+IlNfz/QL5XUjjB0rSognf2AEDFiFx51xgfadpYuxqGE
+        nbdZb/H25r+TQg==
+X-Received: by 10.84.232.71 with SMTP id f7mr49451947pln.168.1494227442440;
+        Mon, 08 May 2017 00:10:42 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
-        by smtp.gmail.com with ESMTPSA id e5sm21630277pga.13.2017.05.08.00.03.54
+        by smtp.gmail.com with ESMTPSA id l3sm23056342pfj.130.2017.05.08.00.10.41
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 00:03:54 -0700 (PDT)
+        Mon, 08 May 2017 00:10:41 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-        Stefano Lattarini <stefano.lattarini@gmail.com>,
-        =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>,
-        "Arnold D . Robbins" <arnold@skeeve.com>
-Subject: Re: [PATCH 0/7] Update the compat/regex engine from upstream
-References: <20170504220043.25702-1-avarab@gmail.com>
-        <xmqq8tm8cglo.fsf@gitster.mtv.corp.google.com>
-        <CACBZZX4UzmFxDUwTA8JBX-UHDm4+c90qX7VmKqfDi+=783LmdQ@mail.gmail.com>
-Date:   Mon, 08 May 2017 16:03:53 +0900
-In-Reply-To: <CACBZZX4UzmFxDUwTA8JBX-UHDm4+c90qX7VmKqfDi+=783LmdQ@mail.gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May 2017, #01; Mon, 1)
+References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com>
+        <alpine.DEB.2.20.1705021406510.3480@virtualbox>
+        <CACBZZX5M1Pnvw01wP8id75Ja9NJ3nwVfydsX6g0Ys_QD72r6dQ@mail.gmail.com>
+        <alpine.DEB.2.20.1705021756530.3480@virtualbox>
+        <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com>
+        <alpine.DEB.2.20.1705031139090.3480@virtualbox>
+        <CACBZZX6_5krLp93PmsW639-N4f1efUT5rPnN+5im=d9-66=QbQ@mail.gmail.com>
+        <alpine.DEB.2.21.1.1705041104070.4905@virtualbox>
+        <CACBZZX5bPN3vZhE=0TSQNdRvKYuV3635=VCQAppAfcZ_tuGpvg@mail.gmail.com>
+        <alpine.DEB.2.21.1.1705041328190.4905@virtualbox>
+        <CACBZZX75nvfQft-gjUG+YP0Y-e-=Knm3bMeDWHSUF=Juz9Ua5Q@mail.gmail.com>
+Date:   Mon, 08 May 2017 16:10:41 +0900
+In-Reply-To: <CACBZZX75nvfQft-gjUG+YP0Y-e-=Knm3bMeDWHSUF=Juz9Ua5Q@mail.gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 8 May
- 2017 08:38:54
+ 2017 08:30:56
         +0200")
-Message-ID: <xmqqtw4v7rty.fsf@gitster.mtv.corp.google.com>
+Message-ID: <xmqqpofj7rim.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -78,25 +82,22 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> It's just to bring us in line with upstream which as noted in that
-> commit has fixed the issues we locally patched (and more), and for us
-> to stop maintaining a fork of an old version of part of Gawk.
+> This won't be in my next PCRE submission, but I have a path locally to
+> simply import PCRE into git.git as compat/pcre2, so it can be compiled
+> with NO_PCRE=Y similar to how NO_REGEX=Y works.
 >
-> There's no known issue with the existing engine that I'm aware of
-> which impacts git, but given ~7 years of bugfixes & improvements
-> there's surely something.
->
->> Having these "fixup!" as separate patches on the list makes them
->> smaller and easier to understand.  What do we want to do with them
->> once they are applied?  Squash them all up, because these do not
->> have their own explanations in their log message and it is not worth
->> keeping them separate?
->
-> Please squash them all up into this commit ("compat/regex: update the
-> gawk regex engine from upstream"), as noted having them as separate
-> patches was a hack to get around mailing list limits.
->
-> Also, un-squashed they'd break the NO_REGEX=Y build for a few commits,
-> which would be a pain during bisecting.
+> This will hopefully address your concerns partially, i.e. when you do
+> want to try it out it'll be easier.
 
-OK.  Thanks for clarification.
+Eek, please don't.  
+
+Until pcre2 becomes _so_ stable that all reasonable distros give
+choice to the end-users to install it easily in a packaged form,
+such a "not a fork, but a copy" will be a moving target that I'd
+rather not to have in compat/.  IOW, our compat/$pkg should be a
+last resort to help those on distros that are so hard to convince to
+carry the version/variant of $pkg we would like to use.
+
+
+
+
