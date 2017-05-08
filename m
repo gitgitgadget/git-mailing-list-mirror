@@ -7,88 +7,76 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69F3A20188
-	for <e@80x24.org>; Mon,  8 May 2017 01:58:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DA5320188
+	for <e@80x24.org>; Mon,  8 May 2017 02:03:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752150AbdEHB6t (ORCPT <rfc822;e@80x24.org>);
-        Sun, 7 May 2017 21:58:49 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34629 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751037AbdEHB6s (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 7 May 2017 21:58:48 -0400
-Received: by mail-pg0-f66.google.com with SMTP id u187so8395375pgb.1
-        for <git@vger.kernel.org>; Sun, 07 May 2017 18:58:48 -0700 (PDT)
+        id S1751596AbdEHCDB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 7 May 2017 22:03:01 -0400
+Received: from mail-pg0-f68.google.com ([74.125.83.68]:35042 "EHLO
+        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751068AbdEHCDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 7 May 2017 22:03:00 -0400
+Received: by mail-pg0-f68.google.com with SMTP id i63so8411833pgd.2
+        for <git@vger.kernel.org>; Sun, 07 May 2017 19:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rg4SWMJOCCjEKGI13plKS6aRwDFUc8S9BqmdH+6uMrc=;
-        b=tAK/fyGPMMYuzVbEYalADJtCCUPu+HLzuwSL3EJcCpJQ4a/32AiGf4CmYIoRoO75KK
-         c04kXBC0+lEh90Rt5DtB+dczPqUv2Gy8k0UoCGn67sGLeddnIdcLwcFijiiZZQMANg3u
-         fj3Y5mfrj4/nTYgWlqPGCptFTLWe2Sawx8o4zIfbKYsi7U7O1h1ArTCZivDSltPN6NpH
-         UH+KBU1N4PQ8JFQhP5kmyrUFXKHTZHnO8kufcOEuyKVQfd7KWOJuZgRvQsh948CMBv3T
-         YkltE4Q5cFVkxXmYUIJaR5t4n6RAscweYJDU+heII0UFPzN8AIoYzEZmiolmK1HhM+xT
-         4D8Q==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=XCBegB3OfCk2VwSYfxlVLn+W2lBEoKWc22POdmh9qJ8=;
+        b=C/+YlHO00LTOkyJy3BPjV8nS+TN6O+YujI60sLNfhrF13dW8SJouYdlToI0Mlx38pJ
+         faAATEaSKcASgFIhMirMer+8fGl17EA14G6Knc2E8GqJM5Xbetxa8a9PPl10sBhU6XLH
+         jV61XAllarUyEETqCrNJ3DG2eGFXKovDp8NVJPyo7wpsiLmGwJD+xitjpI/LMWhAzYwH
+         uZFYtCZ9axIvzAEdj34ywiIR2T42olAcg0TGY40MQeF7IyUq8DhV/xo+7y9rPAHb9+/+
+         7YLCWmQh+U2NvH0T6sG55NG+SQ6QoF0lmKs9BzDeaGMWLJkMrqyDlVN0iYoqqqPTjptp
+         Tzuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rg4SWMJOCCjEKGI13plKS6aRwDFUc8S9BqmdH+6uMrc=;
-        b=K22TwrL/+s91snZtc6dfy8TxYdk8DjtDehC9x9sdbufjirRjRLA6DqWKXETQ35Xxc5
-         7Erilc8t2zeSzf4dVRRRzicCxsyaQvwb99WwsfXez7D9knzWS2P35GZwxNavO+c6mmF1
-         v+z3xyue7ldO2xNAlzm3f43RxT7bo61HcYnpo47Mmpwj1crPEqcULB5dB6LWUth6y4ca
-         i0TVIC4kmP4eWPBKNifrkQEWI9EU//apjPjo+8U29boL/kLYlT11dnsFnzEBD5qjFLBB
-         X3zyHtAnEStZ9eOqr8/+Ek0TEO2iK4de5TZYpPSDfg9rZt1FCVrbF7bxXIfvOvGInoDY
-         pBbg==
-X-Gm-Message-State: AN3rC/6unq35wZTslqF0hcB/z8Raqqg7tLrzpyO9Y5DOHwm2tw8FLJVu
-        VpSpKclLD3BaKg==
-X-Received: by 10.99.150.17 with SMTP id c17mr16043250pge.160.1494208727608;
-        Sun, 07 May 2017 18:58:47 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=XCBegB3OfCk2VwSYfxlVLn+W2lBEoKWc22POdmh9qJ8=;
+        b=tfhj/Ux9EMc1kG0s7kBvAUZojb88A9WPV+3RopVgGbW9rsRfj4BBR6mdJJthwoBGxp
+         A1Z7AkP4tj3xiJSrEiTGU8pEP7tUIfg+zYXiMLL3RMl3u92ysBHO9svZATNN/MAV0wuO
+         x2ZFtaJ9kwcNnpG3fwgBpaR1G+Qcl2wih8ZxwM6RD3T1CT2szb3j7hHTMDTrhzP+pQlk
+         wUeVKGi4YPKeUUwYU47ENNC/qlBiRM7km01SWpI2Bv/qbzKuRfG9BygCcJH/Qh7oEzfG
+         V4XY0CIN7uXtgCpM2YwB9Gdq1z/8gTAR9vcUJBEeuiZSfgluIUHG0BSxsKBntuhVVFS+
+         A2tA==
+X-Gm-Message-State: AN3rC/64jqlxCkXiSiu3yogflKD8fxuddM7Pk2ZwxqDzcmRlhDiHYB+L
+        6y0Lyq7+beoSrQ==
+X-Received: by 10.84.229.75 with SMTP id d11mr78883930pln.66.1494208980022;
+        Sun, 07 May 2017 19:03:00 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:3011:642f:81a0:efbd])
-        by smtp.gmail.com with ESMTPSA id g66sm14195265pgc.2.2017.05.07.18.58.46
+        by smtp.gmail.com with ESMTPSA id r131sm16886541pgr.67.2017.05.07.19.02.59
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Sun, 07 May 2017 18:58:46 -0700 (PDT)
+        Sun, 07 May 2017 19:02:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com,
-        christian.couder@gmail.com, larsxschneider@gmail.com, peff@peff.net
-Subject: Re: [PATCH v7 00/10] refactor the filter process code into a reusable module
-References: <20170505152802.6724-1-benpeart@microsoft.com>
-Date:   Mon, 08 May 2017 10:58:46 +0900
-In-Reply-To: <20170505152802.6724-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Fri, 5 May 2017 11:27:52 -0400")
-Message-ID: <xmqqfuggaz3d.fsf@gitster.mtv.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Michael J Gruber <git@grubix.eu>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] tests: fix tests broken under GETTEXT_POISON=YesPlease
+References: <20170505154053.58128-1-larsxschneider@gmail.com>
+        <20170505181932.14317-1-avarab@gmail.com>
+Date:   Mon, 08 May 2017 11:02:58 +0900
+In-Reply-To: <20170505181932.14317-1-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 5 May 2017 18:19:32 +0000")
+Message-ID: <xmqq8tm8aywd.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Changes from V6 include:
->
-> convert: remove erroneous tests for errno == EPIPE
->  - split into separate patch to fix a preexisting bug discovered in the review process
+> Junio: I think between Travis now testing for this & the scary i18n
+> reflog regression (not that poison caught that, but that was lack of
+> testing, poisoining catches that class of issue) it makes sense to
+> discard my patch for removing GETTEXT_POISON & queue this up instead.
 
-Thanks.
-
-
-> pkt-line: Update packet_read_line() to test for len > 0
->  - split into separate patch to deal with errors that return negative lengths
->
-> pkt-line: add packet_read_line_gently()
->  - update documentation to clarify return values
->  - update white space in function definition
->
-
-I also see some style fixes applied to a few patches.  Thanks for
-paying attention to details.
-
-Will queue; during the pre-release freeze, new things would move
-slowly, but let's see if we have more comments from others and then
-merge it to 'next' soon after the 2.13 final.
-
-Thanks.
+Let's queue this and then the travis patches on top.  Thanks.
