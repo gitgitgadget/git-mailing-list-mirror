@@ -2,83 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.6 required=3.0 tests=BAYES_50,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FB181FC44
-	for <e@80x24.org>; Mon,  8 May 2017 17:14:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84A221FC44
+	for <e@80x24.org>; Mon,  8 May 2017 17:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754152AbdEHROw convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 8 May 2017 13:14:52 -0400
-Received: from amusatlup22002.alere.com ([198.97.231.21]:57945 "EHLO
-        amusatlup22002.alere.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753047AbdEHROv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 13:14:51 -0400
-Received: from pps.filterd (amusatlup22002.alereinc.com [127.0.0.1])
-        by amusatlup22002.alereinc.com (8.15.0.59/8.15.0.59) with SMTP id v48H8Nbh031143
-        for <git@vger.kernel.org>; Mon, 8 May 2017 13:14:50 -0400
-Received: from amusatlwp20004.alereinc.com (amusatlwp20004.alereinc.com [10.85.20.56])
-        by amusatlup22002.alereinc.com with ESMTP id 2a99tw8mfw-2
-        (version=TLSv1/SSLv3 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT)
-        for <git@vger.kernel.org>; Mon, 08 May 2017 13:14:50 -0400
-Received: from AMUSATLWP20005.alereinc.com (10.85.20.54) by
- AMUSATLWP20004.alereinc.com (10.85.20.56) with Microsoft SMTP Server (TLS) id
- 15.0.1178.4; Mon, 8 May 2017 13:14:52 -0400
-Received: from AMUSATLWP20005.alereinc.com ([fe80::3469:73a0:398:9c2d]) by
- AMUSATLWP20005.alereinc.com ([fe80::3469:73a0:398:9c2d%22]) with mapi id
- 15.00.1178.000; Mon, 8 May 2017 13:14:51 -0400
-From:   "Robertson, Todd" <Todd.Robertson@alere.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Questions about validation/verification done for Git Software
-Thread-Topic: Questions about validation/verification done for Git Software
-Thread-Index: AdLIHnH1MALzao8UR7aGupgKERwOog==
-Date:   Mon, 8 May 2017 17:14:51 +0000
-Message-ID: <504208edac024b2dba0c1743dc86683e@AMUSATLWP20005.alereinc.com>
-Accept-Language: en-CA, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.85.20.5]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1755218AbdEHRPn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 13:15:43 -0400
+Received: from mail-pg0-f52.google.com ([74.125.83.52]:33155 "EHLO
+        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1754764AbdEHRPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 13:15:42 -0400
+Received: by mail-pg0-f52.google.com with SMTP id u187so30170583pgb.0
+        for <git@vger.kernel.org>; Mon, 08 May 2017 10:15:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=H7OUiEJPoHwOj59xWgwzXYickrG8amogOmjPqSM77So=;
+        b=Dn4rAeL04EOJRa5d9kMm98ri6q9RLxJXi877v14h0xL3J3mcpm2U3cMP27f4/s+O/w
+         TqTD9ghWq+UF4jBY8E9PHvapkqudlDe4Je1OWb+0CCVqDqm6799vn+8HIlCqFlTrMRdK
+         IAw96Tk2R20bjob0AS/HINn8TcBqMK++Tx0ArAq0gWNve49pSqFRNbCk8GlAKJoRD7mH
+         TZ2pRrrI32iTx37dfkTvdoGExzP/W77eiOGS11kIFDJ6jzjajVhwSDrbUmJXWpL3u4ih
+         OIpXPJKOHXHWRWXh5eQ3rDqqx7XoSwtk4KPWoK0CExcQDlTqeVR/ofhFJW1B/8pxulSe
+         0AMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=H7OUiEJPoHwOj59xWgwzXYickrG8amogOmjPqSM77So=;
+        b=JiEKuOPb0PoNBhNOWieWTT00u/jTAw7s+8cbex7oQ/uvnbeeRqXyMkRp9sAFjRhWI7
+         b06lg1mU+PuzftPTxcYbarG8y3Ce9NhLODwJATE2V9BNYVPF7ipEcEMfsgoCg/8TmiTu
+         hEh0mXyA3o7mPI+lkig+FHl289O9HtCdrjlpqD0vZd8iFz1bblf+L7gXfQNeKqHoSUyk
+         kuBVySZx6qbwbM110BQNdzgc+MMks/x7heUh7hNdeBYclYFU0R+8IqrXlKxeNUElGJum
+         H/dtFWnaffurdZraa3nW0LwA9yI34dg6jAUQcLOjCyUbvMh+b8yShWrja3zaiw3qifTi
+         Futg==
+X-Gm-Message-State: AN3rC/4enwfvavU8GaNptiYHI++LTHdek7eIf53PFQLvpIUcn8OPMAsH
+        +WLuKtKvnxf6/cgmaDWwFT4d4TN7JT+x
+X-Received: by 10.84.228.207 with SMTP id y15mr46340698pli.172.1494263736490;
+ Mon, 08 May 2017 10:15:36 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:,, definitions=2017-05-08_10:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 suspectscore=0
- malwarescore=0 phishscore=0 adultscore=0 bulkscore=0 classifier=spam
- adjust=0 reason=mlx scancount=1 engine=8.0.1-1703280000
- definitions=main-1705080090
+Received: by 10.100.162.140 with HTTP; Mon, 8 May 2017 10:15:35 -0700 (PDT)
+In-Reply-To: <20170508170846.GD179149@google.com>
+References: <CAFXrp_do8Jn-k18_FSRNeHQrWNydwdj2y3y5gw+XoZPGAzPL-w@mail.gmail.com>
+ <001b01d2c809$62ac8520$28058f60$@nexbridge.com> <CAGZ79kaES-3ftadorYnx2wMDc-q7qsG376E1zy-C67Ldt2BO5g@mail.gmail.com>
+ <002201d2c81a$9ff76060$dfe62120$@nexbridge.com> <CAGZ79kbxdXhhG3+4v9qH_oDi5o_zseGsQf8KCyTN3+axZB9sUA@mail.gmail.com>
+ <002301d2c81d$4728aae0$d57a00a0$@nexbridge.com> <20170508170846.GD179149@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 8 May 2017 10:15:35 -0700
+Message-ID: <CAGZ79kbNEAL6dYFPzquDDAsMNqpFsE3_VEHXeKu1VuaLV+m8_w@mail.gmail.com>
+Subject: Re: Add an option to automatically submodule update on checkout
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        Ciro Santilli <ciro.santilli@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Mon, May 8, 2017 at 10:08 AM, Brandon Williams <bmwill@google.com> wrote=
+:
+>>
+>> >[submodule "gnulib"]
+>> >    path=3D./gnulib
+>> >    external =3D true # implies no branch for checkout -b --recurse-sub=
+modules
+>>
+>> >I think there are a couple more situations where such "external" submod=
+ules are treated differently, so maybe we'd want to think carefully about t=
+he >actual name as different workflows would want to have different feature=
+s for an internal/external submodule.
+>>
+>> I didn't want to open up that one, but yes. That makes sense. However, I=
+ don't like overloading what "external" means or might mean in the future. =
+Would you consider a distinct Boolean for that, like inherit-branch=3Dtrue?
+>
+> Something like that kind of already exists.  The 'branch' field.
+> Internal repos would most likely use the '.' value to indicate that the
+> submodules should track the superproject's branch.  While a value of say
+> 'foo' would indicate that the submodule should always be on branch
+> 'foo'; this could be used for external repositories.
 
-I'm a Sr. Software Quality Assurance Engineer at Epocal Inc. in Ottawa, Ontario,
-Canada.  We are a medical device manufacturer that is required to comply with
-the Food & Drug Administration's (FDA) regulations.
-I'm in charge of what is known as Non-Product Software, essentially any piece of
-SW that is used in the day-to-day work of creating our products.
-Part of complying with the FDA regulations is to ensure that all Non-Product Software
-has been validated.
+so for external repos you'd keep the branch unset, such that
+you strictly checkout the sha1 object into a detached HEAD.
 
-Some of our engineers are planning on using your software "Git" for their software
-development processes (latest version) to replace our current software "SVN" and I was 
-hoping you could answer some questions for me?
+Makes sense.
 
-Are you able to provide me with a copy of your Test Plans and/or Test Cases for the "Git" product?
-
-Is the software FDA certified?
-
-Please contact me with your reply and/or any questions you have.
-
-Thank you,
-Todd Robertson
-Sr. Software QA Engineer
-Epocal Inc.
-Ottawa, Ontario, Canada
-todd.robertson@alere.com
-613-688-3982 ext.2229
+Thanks,
+Stefan
