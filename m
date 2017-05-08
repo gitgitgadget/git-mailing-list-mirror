@@ -1,90 +1,122 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=2.8 required=3.0 tests=BAYES_20,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,
+	RP_MATCHES_RCVD,ZIPFILE shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6CEE51FDEA
-	for <e@80x24.org>; Mon,  8 May 2017 07:42:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B11CE1FDEA
+	for <e@80x24.org>; Mon,  8 May 2017 07:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752243AbdEHHmu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 03:42:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47249 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750797AbdEHHmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 03:42:49 -0400
-Received: (qmail 21788 invoked by uid 109); 8 May 2017 07:42:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 07:42:46 +0000
-Received: (qmail 27098 invoked by uid 111); 8 May 2017 07:43:16 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 03:43:16 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 03:42:44 -0400
-Date:   Mon, 8 May 2017 03:42:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= 
-        <dilyan.palauzov@aegee.org>
-Cc:     git@vger.kernel.org
-Subject: Re: git clone -b
-Message-ID: <20170508074244.tcu2ywil2m47375k@sigill.intra.peff.net>
-References: <219f3882-ec66-5c36-a157-5b920a2e4d04@aegee.org>
+        id S1753389AbdEHHr4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 03:47:56 -0400
+Received: from conm200-58-214-114.epm.net.co ([200.58.214.114]:36539 "HELO
+        epm.net.co" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with SMTP
+        id S1753087AbdEHHrz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 03:47:55 -0400
+X-Greylist: delayed 340 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 May 2017 03:47:54 EDT
+From:   <ncontact@deyodesigns.com>
+To:     <git@vger.kernel.org>
+Content-Transfer-Encoding: base64
+Reply-To: <ncontact@deyodesigns.com>
+Content-Disposition: attachment
+Subject: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <219f3882-ec66-5c36-a157-5b920a2e4d04@aegee.org>
+Date:   Mon, 08 May 2017 07:47:09 -0000
+Importance: High
+Content-Type: application/zip; name="819762_git.zip"
+Message-ID: <149422962989.19571.5387819850257137568@epm.net.co>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 08, 2017 at 08:30:49AM +0200, Дилян Палаузов wrote:
-
-> why do these work:
-> 
-> git clone --bare -b 3.5 https://github.com/python/cpython A
-> git clone -b 3.6 A B
-
-From the description of --bare in "git help clone":
-
-  [...]the branch heads at the remote are copied directly to
-  corresponding local branch heads, without mapping them to
-  refs/remotes/origin/. When this option is used, neither
-  remote-tracking branches nor the related configuration variables are
-  created.
-
-So because the upstream has a refs/heads/3.6 branch, so too does the
-bare clone "A". And thus when you clone it asking for that branch, Git
-can find it.
-
-But in your non-bare example:
-
-> git clone -b 3.5 https://github.com/python/cpython C
-> 
-> but these not:
-> 
-> git clone -b 3.6 C D
-> git clone --no-local -b 3.6 C D
-
-In the non-bare clone C, there is no local 3.6 branch. You only have the
-remote-tracking branch refs/remotes/origin/3.6. So when you try to clone
-from it, Git can't find the branch:
-
-  $ git clone -b 3.6 C D
-  Cloning into 'D'...
-  fatal: Remote branch 3.6 not found in upstream origin
-  fatal: The remote end hung up unexpectedly
-
-It works if you create a local branch based on upstream's branch:
-
-  $ git -C C checkout 3.6
-  Branch 3.6 set up to track remote branch 3.6 from origin.
-  Switched to a new branch '3.6'
-
-  $ git clone -b 3.6 C D
-  Cloning into 'D'...
-  done.
-
--Peff
+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
+VgAAAMQSAAAAAA==
