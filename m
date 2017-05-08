@@ -2,108 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.3 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 821381FC44
-	for <e@80x24.org>; Mon,  8 May 2017 12:23:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 899641FC44
+	for <e@80x24.org>; Mon,  8 May 2017 14:43:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753238AbdEHMXo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 08:23:44 -0400
-Received: from mout.gmx.net ([212.227.15.15]:61678 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752143AbdEHMXn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 08:23:43 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrvBu-1eBCA001vS-013fw7; Mon, 08
- May 2017 14:23:38 +0200
-Date:   Mon, 8 May 2017 14:23:37 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     "Daniel Ferreira (theiostream)" <bnmvco@gmail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Port git-add--interactive.perl:status_cmd to C
-In-Reply-To: <CAEA2_RJFPZ6-ZMQCjX5pXoA8RL6qscLO4QWP3gi46uWXYyD44Q@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1705081415370.146734@virtualbox>
-References: <1494009820-2090-1-git-send-email-bnmvco@gmail.com> <alpine.DEB.2.21.1.1705052316250.146734@virtualbox> <CAEA2_RJFPZ6-ZMQCjX5pXoA8RL6qscLO4QWP3gi46uWXYyD44Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1754687AbdEHOnE convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 8 May 2017 10:43:04 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:57342 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753237AbdEHOnD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 10:43:03 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.238.41.215])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id v48Eh0dV091936
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 8 May 2017 10:43:00 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Ciro Santilli'" <ciro.santilli@gmail.com>, <git@vger.kernel.org>
+References: <CAFXrp_do8Jn-k18_FSRNeHQrWNydwdj2y3y5gw+XoZPGAzPL-w@mail.gmail.com>
+In-Reply-To: <CAFXrp_do8Jn-k18_FSRNeHQrWNydwdj2y3y5gw+XoZPGAzPL-w@mail.gmail.com>
+Subject: RE: Add an option to automatically submodule update on checkout
+Date:   Mon, 8 May 2017 10:42:52 -0400
+Message-ID: <001b01d2c809$62ac8520$28058f60$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:zkzf0KfaqtqKbKL/rqu3GezdEKewb470BtsaP4Y3++ABuWUZ73I
- JctJoaP7zxi77UZUw0S7axXgMxdzTBICGbljyvJeFnqvwYJZB+6RRVJsEsztbSxsAnvgvwc
- h5pgI6hPx/4HLAB6hDgIES+sPqRspVMfn1Y2RwfPfH209IrwpUOqzupNt3NFt9VGJJ/EuGd
- Lfec9Rf+9Qktl1gYlZeGA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HjGWkYfqUco=:641nz22ks2rvIAPdZQujgm
- UfhipcJgcoBUK+iuGdSHxGUQ1BRLEK0LG4esZkS2PcxUBG5gL8dfelOO2jSWlvymT3ia/Yx//
- 7D1Q2UET5reDCPV89IfwM+aQc9EtwoSaQHUwS+4k7LLbrumLGiYbpTdHxjrJWGpn76tElwiof
- +oaRHCcg8hF1j4ok+re0QokRy9G4BY1+tJRoUDyeSR1LEYZds86E3jdQQZuyserqd4jpaQ+L3
- y3KnQgavyqI0G01LzZTnrITLYR09CaGaXMbdnDvVExrMJSQTM3gZgoaHNiAVf/0Y7zTKCLFKU
- erQk+awolstTSzpAsgznJ971zXB7iwhEy3kpYIB24WGx8HQG01jIFqenGhcqg8HsDBIDCTABT
- K57hZ1WHLD+1bKTLQTEaRT3XEv1edo61IUl0+jx7pFdywuiuEPXTRYuJCkQbsidzsSWaLXQPN
- +hAGPvsEq6jF6ed3WLzU8IBgFHhpxv/6n2cyhA7L5r83FHrzMHE5xt/1CLK5DKT0gqukDi8zN
- t3eZz72ALGGcuv2eal/VONSWLlztGMXiWaLpL1milDUPwj82Oa7IqQdA9QJ99txuJ7PZj8Yl+
- +PG6crioHnWR9hBJdSetJKlUPl1UkMB2QxQTglJCCp8iFAQRqomLSqOYtN13NzG7HhtS7RvKY
- zzaE//8YZS+R+LZIhzIy6lZw0BJeD8GzXmsOZtoukavYg1SiYztxIxdhUm5zpdDbEZmM28T8+
- 5KL5bB90Yi6NqjyUHdwfy18EDh1rqWvg0V/kwGFeJfzFlfu2XbIAMkKhUAe2kg2N8CVrzgbXJ
- w4i//AP
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJFtsy+gX9bRxHg9rX7flyynOAlG6EEo5Rg
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Daniel,
+On May 6, 2017 4:38 AM Ciro Santilli wrote:
+> This is a must if you are working with submodules, otherwise every git checkout requires a git submodule update,
+> and you forget it, and things break, and you understand, and you go to stack overflow questions
+> http://stackoverflow.com/questions/22328053/why-doesnt-git-checkout-automatically-do-git-submodule-update-recursive
+> http://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules
+> and you give up and create aliases :-)
 
-On Fri, 5 May 2017, Daniel Ferreira (theiostream) wrote:
+I rather like the concept of supporting --recurse-submodules. The complexity is that the branches in all submodules all have to have compatible semantics when doing the checkout, which is by no means guaranteed. In the scenario where you are including a submodule from a third-party (very common - see gnulib), the branches likely won't be there, so you have a high probability of having the command fail or produce the same results as currently exists if you allow the checkout even with problems (another option?). If you have control of everything, then this makes sense.
 
-> On Fri, May 5, 2017 at 7:38 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
->
-> > But maybe you want to keep the naming a little more consistent with
-> > the Perl script, e.g. instead of calling the function
-> > `print_modified()` call it already `list()` (and rename it later to
-> > `list_and_choose()` once you have taught it to ask for a choice)?
-> 
-> Actually, I named it print_modified() because I anticipated there
-> would be no list_and_choose() equivalent in C. I don't think the
-> builtin should have the interactive menu + modified list + untracked
-> list being handled by one function. Rather, I think a saner way to go
-> on with it would be to create functions like print_untracked();
-> choose_from_input(); print_menu() etc.
+Cheers,
+Randall
 
-Okay. But maybe then the `selected` field should not (at least not yet) be
-a part of this patch.
-
-> This is still pure speculation from what I've written until now and from
-> the roadmap I have in my head (I do not know how writing code from now
-> on will actually be), but I have a hunch that list_and_choose() is
-> already convoluted enough in Perl; in C it might become a monster.
-
-True.
-
-To be honest, I would love for this patch to become part of a
-"work-in-progress" patch series that lays out the plan a little bit more
-concretely (I typically implement functions with a single `die("TODO")` in
-the function body in such patch series). This patch series would of course
-not be expected to pass the test suite yet, but it would allow other
-developers (e.g. myself) to jump in and complete individual patches...
-
-There would be real advantages in such a patch series:
-
-- it could be worked on in parallel (coordination required, of course);
-  may be a ton of fun, and
-
-- the overall design could be iterated according with the needs of later
-  patches in the series.
-
-> > Thank you for this pleasant read!
-> 
-> Thank *you* for the quick and thorough review :)
-
-Heh... I would not call it "quick"... it took a long time. But not as much
-time as you spent crafting it!
-
-Thank you,
-Johannes
