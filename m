@@ -2,102 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BC4D1FDEA
-	for <e@80x24.org>; Mon,  8 May 2017 07:10:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E5A11FDEA
+	for <e@80x24.org>; Mon,  8 May 2017 07:31:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752709AbdEHHKo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 03:10:44 -0400
-Received: from mail-pf0-f178.google.com ([209.85.192.178]:34119 "EHLO
-        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752164AbdEHHKn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 03:10:43 -0400
-Received: by mail-pf0-f178.google.com with SMTP id e64so28901439pfd.1
-        for <git@vger.kernel.org>; Mon, 08 May 2017 00:10:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=3DT6hXnbqsj6C9f4ItNI+ULV7f+mIB7IJUb8ldUNJcg=;
-        b=PKGdsdrkDzUl0Bjmxd5f1frcMRYyj1QKQ7+VECdEcPSw8JkEW+FWyW/266huh/ixOt
-         boNy0Ro3hx09u4C++YKAH5+rRp3FmmRK2O/9fIRTRP2348htEx6Zg2Zqcd+WmCvSxPty
-         0hBYfcZjoWasZaHcGuYm1sATuTlLnH/p9hrw5jvrxr8BDnVe8TcVgNyOb5qUGMLrX3Wp
-         rce2N/R8l3XXX44E3bL3onQicUEasK0BhlQX7BGHvo6K+/b6VYXsv70qD3wNL8Sx5Pmi
-         8gb7PX2MGvHjz7TJzY2CDyRIXYtUfWzDGx2/pmgf5h1XYDjSMAeYnKM26tSokthuAi6R
-         gdfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=3DT6hXnbqsj6C9f4ItNI+ULV7f+mIB7IJUb8ldUNJcg=;
-        b=AqK23fjQbV0tZP3VFfy1CodLbpTF/OdpbJKNQ85OE/EaB61v6YOFcjGGVPGIbmEfWi
-         nSXQVd552M6Wdyjf6QXZsiZNWZ9syyt9yBDBPMlN0zIzCwOzyWBt0/O0Vw0q6nDGMcYS
-         AiFomR1crUcN0qVumMDMKL61hrKEKK86nCn7gYwfeBYGDyXfUsnDuMmEc2HC+ZyaaOWW
-         cksJ7vQSeUm1smRskf4XZ2NzFXaOUKLyAVSFGv+PfKm11q3QfwpLpVdnZIMZCXcAmyjZ
-         ZQl4oOqY7rZE2g9Tvzq4VuwvlV5Q9VOkpjeEEFz+qX8RckCU5l+yhvPYYcPMLG78Bkr8
-         8/Pw==
-X-Gm-Message-State: AN3rC/7l2VDc+IlNfz/QL5XUjjB0rSognf2AEDFiFx51xgfadpYuxqGE
-        nbdZb/H25r+TQg==
-X-Received: by 10.84.232.71 with SMTP id f7mr49451947pln.168.1494227442440;
-        Mon, 08 May 2017 00:10:42 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
-        by smtp.gmail.com with ESMTPSA id l3sm23056342pfj.130.2017.05.08.00.10.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 00:10:41 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May 2017, #01; Mon, 1)
-References: <xmqqefw9gmvq.fsf@gitster.mtv.corp.google.com>
-        <alpine.DEB.2.20.1705021406510.3480@virtualbox>
-        <CACBZZX5M1Pnvw01wP8id75Ja9NJ3nwVfydsX6g0Ys_QD72r6dQ@mail.gmail.com>
-        <alpine.DEB.2.20.1705021756530.3480@virtualbox>
-        <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com>
-        <alpine.DEB.2.20.1705031139090.3480@virtualbox>
-        <CACBZZX6_5krLp93PmsW639-N4f1efUT5rPnN+5im=d9-66=QbQ@mail.gmail.com>
-        <alpine.DEB.2.21.1.1705041104070.4905@virtualbox>
-        <CACBZZX5bPN3vZhE=0TSQNdRvKYuV3635=VCQAppAfcZ_tuGpvg@mail.gmail.com>
-        <alpine.DEB.2.21.1.1705041328190.4905@virtualbox>
-        <CACBZZX75nvfQft-gjUG+YP0Y-e-=Knm3bMeDWHSUF=Juz9Ua5Q@mail.gmail.com>
-Date:   Mon, 08 May 2017 16:10:41 +0900
-In-Reply-To: <CACBZZX75nvfQft-gjUG+YP0Y-e-=Knm3bMeDWHSUF=Juz9Ua5Q@mail.gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 8 May
- 2017 08:30:56
-        +0200")
-Message-ID: <xmqqpofj7rim.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752610AbdEHHbu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 03:31:50 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47245 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752553AbdEHHbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 03:31:49 -0400
+Received: (qmail 21072 invoked by uid 109); 8 May 2017 07:31:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 07:31:45 +0000
+Received: (qmail 27068 invoked by uid 111); 8 May 2017 07:32:15 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 03:32:15 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 03:31:43 -0400
+Date:   Mon, 8 May 2017 03:31:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] pack-objects: disable pack reuse for object-selection
+ options
+Message-ID: <20170508073143.lu73w5b54lvstty2@sigill.intra.peff.net>
+References: <20170502084326.65eisqmr4th5cbf7@sigill.intra.peff.net>
+ <xmqq4lww9cas.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqq4lww9cas.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Mon, May 08, 2017 at 01:56:27PM +0900, Junio C Hamano wrote:
 
-> This won't be in my next PCRE submission, but I have a path locally to
-> simply import PCRE into git.git as compat/pcre2, so it can be compiled
-> with NO_PCRE=Y similar to how NO_REGEX=Y works.
->
-> This will hopefully address your concerns partially, i.e. when you do
-> want to try it out it'll be easier.
+> Jeff King <peff@peff.net> writes:
+> 
+> > If certain options like --honor-pack-keep, --local, or
+> > --incremental are used with pack-objects, then we need to
+> > feed each potential object to want_object_in_pack() to see
+> > if it should be filtered out.  This is totally contrary to
+> > the purpose of the pack-reuse optimization, which tries hard
+> > to avoid doing any per-object work.  Therefore we need to
+> > disable this optimization when these options are in use.
+> 
+> I read this five times, as I wanted to understand what you are
+> saying, but I am not sure if I got it right.  One of the reasons why
+> I was confused was that I originally thought this "reuse" was about
+> delta reuse, but it is not.  It is "sending a slice of the original
+> packfile straight to the output".
 
-Eek, please don't.  
+Right. The "send a slice" goes under the name "reuse_packfile" in the
+code, but I'm not surprised you're not familiar with it. We added it
+long ago as part of the bitmap feature, and it's not often talked about
+(and in its current incarnation, isn't actually very useful; I have
+patches to improve that, but haven't gotten around to upstreaming them).
 
-Until pcre2 becomes _so_ stable that all reasonable distros give
-choice to the end-users to install it easily in a packaged form,
-such a "not a fork, but a copy" will be a moving target that I'd
-rather not to have in compat/.  IOW, our compat/$pkg should be a
-last resort to help those on distros that are so hard to convince to
-carry the version/variant of $pkg we would like to use.
+> But even after getting myself out
+> of that confusion, I still do not see why we "need to disable".
+> Surely, even if we need to exclude some objects from an existing
+> packfile due to these selection options, we should be able to reuse
+> the non-excluded part, no?  The end result may involve having to
+> pick and reuse more and smaller slices from existing packfiles,
+> which may be much less efficient, but it is no immediately obvious
+> to me if it leads to "need to disable".  I would understand it if it
+> were "it becomes much less efficient and we are better off not using
+> the bitmap code at all", though.
 
+Yes, it's this last bit. The main win of the packfile reuse code is that
+it builds on the bitmaps to avoid doing as much per-object work as
+possible. So the objects don't even get added to the list of "struct
+object_entry", and we never consider them for the "should they be in the
+result" checks beyond the have/want computation done by the bitmaps.
 
+We could add those checks in, but what's the point? The idea of the
+reuse code is to be a fast path for serving vanilla clones. Searching
+through all of the packfiles for a .keep entry is the antithesis of
+that.
 
+> Is the real reason why we want to disable the "reuse" because it is
+> not easy to update the reuse_partial_packfile_from_bitmap() logic to
+> take these selection options into account?  If so, I would also
+> understand why this is a good change.
 
+This is a side concern for the current form. With the patches I
+mentioned above, it's not too hard to omit some objects and still reuse
+the other bits verbatim. But again, even evaluating the function for
+each pack is too expensive, even if the implementation supported it.
+
+> > +test_expect_success 'pack reuse respects --honor-pack-keep' '
+> > +	test_when_finished "rm -f .git/objects/pack/*.keep" &&
+> > +	for i in .git/objects/pack/*.pack; do
+> > +		>${i%.pack}.keep
+> > +	done &&
+> 
+> Micronit: style.
+
+I assume you mean putting "do" on a separate line. Sorry, the "; do" is
+my native tongue and I sometimes slip back into it without thinking.
+
+-Peff
