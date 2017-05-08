@@ -7,140 +7,124 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 871E21FC44
-	for <e@80x24.org>; Mon,  8 May 2017 17:08:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45F3D1FC44
+	for <e@80x24.org>; Mon,  8 May 2017 17:13:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754976AbdEHRIv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 13:08:51 -0400
-Received: from mail-pf0-f175.google.com ([209.85.192.175]:36027 "EHLO
-        mail-pf0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754948AbdEHRIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 13:08:49 -0400
-Received: by mail-pf0-f175.google.com with SMTP id m17so6847995pfg.3
-        for <git@vger.kernel.org>; Mon, 08 May 2017 10:08:49 -0700 (PDT)
+        id S1754843AbdEHRM7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 13:12:59 -0400
+Received: from mail-pg0-f42.google.com ([74.125.83.42]:35258 "EHLO
+        mail-pg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753819AbdEHRM6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 13:12:58 -0400
+Received: by mail-pg0-f42.google.com with SMTP id o3so38649553pgn.2
+        for <git@vger.kernel.org>; Mon, 08 May 2017 10:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=PFvJFwpZnjyTTHYW8Wl9Eif8e+wutc1GhNo8xHvglwA=;
-        b=pr2ZNUouTM5l6QAZi9BPRiTU+GEZaEtPupOK8shholdRMFIxnR9zzageEMofrwDKVA
-         B8g3ROHd5auM22VJTVZPmX93YTvMYJIsBq+ZfZTWU+DG1IdiDvfh0sbYDd4ifRmyENZw
-         V4RVQDjfwQOG0HHAvA1UwQBtFhXnMkC4PQ+wp3TMRsZKhb9aexiapgoPQDis8QBJ6CNj
-         mgvlTshqJyceXiRlCuLzR+SHAND8kyTqliqz2ZArtnwEBHhJ2uTDMK4zPWkkfsRxHq8o
-         Ov77VdyYGgv53ZIFfpx/yVbQDg9aPn2pJgd5JcVRqouq570ccjK6vsPNxkZFLGMeT4FI
-         iqWw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=0/rejUCSXBjB3BTLdeIDVc27ylU2z6F6Y6w13tedQjo=;
+        b=YfOeomCL34ZNBpKgc3p89YUrkmgi3nFMUfhBO4gmUOkIvUThmBvD/xfC9Io4W/TaPH
+         uSRhPdIUkNVip0J/QfrUxf6SjwycLTmpxxRBvG3pDKd2hC9Ov1G6DDVvkOeZav7iGtLV
+         I7g1zg1MVXqJCIseQijgPlhTfsJBthx1zMo9INNvfL1loGYVuFmE25zzktogrgmSjeD8
+         hDxF1BqMU+6DW1CMKZNnV0ZYFBrSjDn6qb6JbNqgzBggIVzoLhifg86KHMEZjnOPt9HE
+         i4DaKNEWxkCRtcPn0HRk9h7D84cPqrn30bMVJlV3dc/W22Ai46+PqhnRJkFXdgac/hWl
+         ZNfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=PFvJFwpZnjyTTHYW8Wl9Eif8e+wutc1GhNo8xHvglwA=;
-        b=RTYYIjYqWxhd/Xh6SG7nHAxv1Rq3iXndm49flSMjjOm7/LmOXxI8qvN1WPBXARWqOH
-         B5ag5UC4YlDH6shYxKjTRLeNU1u4CuPy/UA2o59X6rSlQyg9sXKs3H2qgB3XCzWfem3H
-         I/bgdgkRKLFRTqXHeAq4naz1QU+nGtb+FqUniXuOVpg/SVbFWTBoSc3M+28J097nH7uu
-         bruICT+f869YKshDq+6c6edNJu7CQNJTZBX5GB9/dO7yQMKiNDcsaZ1kqNuid/jbaSaX
-         9p/z3irFslrxIIuag/SO1MR3wfrIx4fqImfoqhMJZX18xeEwbYfiO38b0IZoIuuunLcN
-         awMg==
-X-Gm-Message-State: AODbwcBJoBG1avMzLTrLvjzzMKgNf53KVOixpPvaLvtnrkA5N3Lxlfdy
-        UhqulJOZT+8ni3k0BtL+3g==
-X-Received: by 10.84.133.36 with SMTP id 33mr6321474plf.161.1494263328510;
-        Mon, 08 May 2017 10:08:48 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0/rejUCSXBjB3BTLdeIDVc27ylU2z6F6Y6w13tedQjo=;
+        b=RlM8AJLisGzsfAoD+u9ssiFXGNspG4aB772jFZKvl550/dS6TfFN8T6LheOQt0Hzy8
+         WfY8gEd2OyOM2utXexiZNff/YQA5mxNvVR4AYI9VamvzlqjZsjMobLlgUN9jq+RtF4Wo
+         5ifRgPqGgBefnTKy/u8xUaJqBQV+6s8Vnl/AI9eG48FGbFvG46u0qzRDoQxm4dKKf4D7
+         Zu/+KLy52iEFxkoz8CfHVF5edHKt0zxWpt+IF01gsaC40rIU+AlJHt0iF9e/ZTJGBECp
+         0NCWUNElYLV0bRtezf6Fa3J/Yp8icxxHbduo2vkR3KtnONv+VCRFuTvtePS9+xh2F4FD
+         NSFQ==
+X-Gm-Message-State: AN3rC/6TdEXwzg6XKKhrrFrlky5ZboVPMsSs3u0ngFCkwq5JqrbPB650
+        rTT3irKq2qygXwoQ
+X-Received: by 10.84.129.1 with SMTP id 1mr83846835plb.125.1494263577555;
+        Mon, 08 May 2017 10:12:57 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:998e:2b7a:726f:b074])
-        by smtp.gmail.com with ESMTPSA id i63sm18192014pgc.26.2017.05.08.10.08.47
+        by smtp.gmail.com with ESMTPSA id o29sm17993023pgc.27.2017.05.08.10.12.56
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 10:08:47 -0700 (PDT)
-Date:   Mon, 8 May 2017 10:08:46 -0700
+        Mon, 08 May 2017 10:12:56 -0700 (PDT)
+Date:   Mon, 8 May 2017 10:12:55 -0700
 From:   Brandon Williams <bmwill@google.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     'Stefan Beller' <sbeller@google.com>,
-        'Ciro Santilli' <ciro.santilli@gmail.com>, git@vger.kernel.org
-Subject: Re: Add an option to automatically submodule update on checkout
-Message-ID: <20170508170846.GD179149@google.com>
-References: <CAFXrp_do8Jn-k18_FSRNeHQrWNydwdj2y3y5gw+XoZPGAzPL-w@mail.gmail.com>
- <001b01d2c809$62ac8520$28058f60$@nexbridge.com>
- <CAGZ79kaES-3ftadorYnx2wMDc-q7qsG376E1zy-C67Ldt2BO5g@mail.gmail.com>
- <002201d2c81a$9ff76060$dfe62120$@nexbridge.com>
- <CAGZ79kbxdXhhG3+4v9qH_oDi5o_zseGsQf8KCyTN3+axZB9sUA@mail.gmail.com>
- <002301d2c81d$4728aae0$d57a00a0$@nexbridge.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com,
+        Johannes.Schindelin@gmx.de, pclouds@gmail.com
+Subject: Re: [RFC 00/14] convert dir.c to take an index parameter
+Message-ID: <20170508171255.GE179149@google.com>
+References: <20170505195334.121856-1-bmwill@google.com>
+ <xmqqmvaq702u.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <002301d2c81d$4728aae0$d57a00a0$@nexbridge.com>
+In-Reply-To: <xmqqmvaq702u.fsf@gitster.mtv.corp.google.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/08, Randall S. Becker wrote:
-> On May 8, 2017 12:55 PM, Stefan Beller wrote:
-> >On Mon, May 8, 2017 at 9:46 AM, Randall S. Becker <rsbecker@nexbridge.com> wrote:
-> >> On May 8, 2017 12:25 PM, Stefan Beller wrote:
-> >>>On Mon, May 8, 2017 at 7:42 AM, Randall S. Becker <rsbecker@nexbridge.com> wrote:
-> >>>> On May 6, 2017 4:38 AM Ciro Santilli wrote:
-> >>>>> This is a must if you are working with submodules, otherwise every 
-> >>>>> git checkout requires a git submodule update, and you forget it, 
-> >>>>> and things break, and you understand, and you go to stack overflow 
-> >>>>> questions 
-> >>>>> http://stackoverflow.com/questions/22328053/why-doesnt-git-checkout
-> >>>>> -a utomatically-do-git-submodule-update-recursive
-> >>>>> http://stackoverflow.com/questions/4611512/is-there-a-way-to-make-g
-> >>>>> it -pull-automatically-update-submodules
-> >>>>> and you give up and create aliases :-)
-> >>
-> >>> The upcoming release (2.13) will have "git checkout 
-> >>> --recurse-submodules", which will checkout the submodules at the commit as recorded in the superproject.
-> >>> I plan to add an option "submodule.recurse" (name is subject to 
-> >>> bikeshedding), which would make the --recurse-submodules flag given 
-> >>> by default for all commands that support the flag. (Currently cooking we have reset --recurse-submodules, already existing there is push/pull).
-> >>
-> >> Brilliant! 😊
-> >>
-> >>>> I rather like the concept of supporting --recurse-submodules. The complexity is that the branches in all submodules all have to have compatible >>>semantics when doing the checkout, which is by no means guaranteed. In the scenario where you are including a submodule from a third-party (very >>>common - see gnulib), the branches likely won't be there, so you have a high probability of having the command fail or produce the same results as >>>currently exists if you allow the checkout even with problems (another option?). If you have control of everything, then this makes sense.
-> >>
-> >>>I am trying to give the use case of having control over everything (or rather mixed) more thought as well, e.g. "checkout --recurse-submodules -b >><name>" may want to create the branches in a subset of submodules as well.
-> >>
-> >> I have to admit that I just assumed it would have to work that way 
-> >> this would not be particularly useful. However, in thinking about it, 
-> >> we might want to limit the depth of how far -b <name> takes effect. If 
-> >> the super module brings in submodules entirely within control of the 
-> >> development group, having -b <name> apply down to leaf submodules 
-> >> makes sense (in some policies). However, if some submodules span out 
-> >> to, say, gnulib, that might not make particular sense. Some downward 
-> >> limit might be appropriate. Perhaps, in the submodule ref, you might 
-> >> want to qualify it as <commit>:<ref> (but the impact of that is 
-> >> probably and admittedly pretty horrid). I hesitate to suggest a 
-> >> numeric limit, as that assumes that submodules are organized in a 
-> >> balanced tree - which is axiomatically unreasonable. Maybe something 
-> >> in .git/config, like
-> >>
-> >> [branch "topic*"]
-> >>         submodules=a,b,c
-> >>
-> >> But I suspect that would make things even more confusing.
+On 05/06, Junio C Hamano wrote:
+> Brandon Williams <bmwill@google.com> writes:
 > 
-> >I thought about having yet-another-flag in the .gitmodules file, which states if the submodule is extern or internal.
+> > One of the things brought up on the list in the past few days has been
+> > migrating away from using the index compatibility macros.  One of the issues
+> > brought up in that thread was how simply doing that conversion doesn't
+> > eliminate the reliance on global state (specifically the_index).  If one day we
+> > want to have a 'repository object' passed around then we first need to convert
+> > different subsystems to be prepared to handle that.  This series provides a
+> > first step, converting the code in dir.c to take a 'struct index_state' and
+> > using that instead of implicitly using 'the_index'.
 > 
-> >[submodule "gnulib"]
-> >    path=./gnulib
-> >    external = true # implies no branch for checkout -b --recurse-submodules
+> Very nicely done (I only skimmed "dir.c" in the end result and didn't
+> go through the changes with fine toothed comb, though).
 > 
-> >I think there are a couple more situations where such "external" submodules are treated differently, so maybe we'd want to think carefully about the >actual name as different workflows would want to have different features for an internal/external submodule.
+> I would have done this without the first step and then instead had a
+> final patch that only inserts a single
 > 
-> I didn't want to open up that one, but yes. That makes sense. However, I don't like overloading what "external" means or might mean in the future. Would you consider a distinct Boolean for that, like inherit-branch=true?
+>     #define NO_THE_INDEX_COMPATIBILITY_MACROS
+> 
+> at the beginning of dir.c once everybody in dir.c loses the
+> reference to all "cache" macros at the end, if I were doing this
+> series, but it is a personal taste.  
+> 
+> The resulting dir.c does not even refer to the_index, which is very
+> nice.
 
-Something like that kind of already exists.  The 'branch' field.
-Internal repos would most likely use the '.' value to indicate that the
-submodules should track the superproject's branch.  While a value of say
-'foo' would indicate that the submodule should always be on branch
-'foo'; this could be used for external repositories.
+Thanks! I'm glad there's a few people who see this as a positive change.
 
 > 
-> Cheers,
-> Randall
+> Thanks.
 > 
+> > Brandon Williams (14):
+> >   dir: stop using the index compatibility macros
+> >   dir: convert read_skip_worktree_file_from_index to take an index
+> >   dir: convert directory_exists_in_index to take index
+> >   dir: convert get_dtype to take index
+> >   dir: convert dir_add* to take an index
+> >   dir: convert last_exclude_matching_from_list to take an index
+> >   dir: convert is_excluded_from_list to take an index
+> >   dir: convert add_excludes to take an index
+> >   dir: convert prep_exclude to take an index
+> >   dir: convert is_excluded to take an index
+> >   dir: convert open_cached_dir to take an index
+> >   dir: convert read_directory_recursive to take an index
+> >   dir: convert read_directory to take an index
+> >   dir: convert fill_directory to take an index
+> >
+> >  builtin/add.c          |   7 +-
+> >  builtin/check-ignore.c |   3 +-
+> >  builtin/clean.c        |   4 +-
+> >  builtin/grep.c         |   2 +-
+> >  builtin/ls-files.c     |   4 +-
+> >  dir.c                  | 200 ++++++++++++++++++++++++++++---------------------
+> >  dir.h                  |  27 +++++--
+> >  unpack-trees.c         |  10 +--
+> >  wt-status.c            |   2 +-
+> >  9 files changed, 151 insertions(+), 108 deletions(-)
 
 -- 
 Brandon Williams
