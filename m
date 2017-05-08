@@ -2,126 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.9 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_FUTURE_06_12,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6174120188
-	for <e@80x24.org>; Mon,  8 May 2017 04:01:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7785C20188
+	for <e@80x24.org>; Mon,  8 May 2017 04:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752816AbdEHEBs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 00:01:48 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36014 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751610AbdEHEBs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 00:01:48 -0400
-Received: by mail-pf0-f194.google.com with SMTP id v14so8175355pfd.3
-        for <git@vger.kernel.org>; Sun, 07 May 2017 21:01:47 -0700 (PDT)
+        id S1751449AbdEHELW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 00:11:22 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33962 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750848AbdEHELW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 00:11:22 -0400
+Received: by mail-pg0-f65.google.com with SMTP id u187so8773054pgb.1
+        for <git@vger.kernel.org>; Sun, 07 May 2017 21:11:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=A3tYBVht9OQ7H0p3muLZu1CFdofKqnY2mtcogxHKk/o=;
-        b=rOqfmrBYLZ/FmmhRtBoDJqGnRtVu+4DNJdCpk791B5jDfPPL3qCgwRFWgdGp0AiWPE
-         cYvAD071wcobK9xGnfjTHflRTX1Wfc+BDYiqWqDL5sOrUFAldYb0b25d+Gw5IsaSGU+r
-         HqcSl9QM+QPtWejpORefKfbhnoQM2St73CS686iR1E8q+BICneq/0IQi56piN+iy9gCJ
-         qWC24hFJKjhHmrz91EfVCdw4BcsvQZje2fJtXPR1MqorFn2dA4AwWvhZgImGxw2BMwKq
-         GDqguxNNdpE/oSkqvOG/vdJPzoq1zrdHBT8s8Uzv+sbbw+nBc2hSE20tkc/18nHCHNSF
-         2Gew==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HY5Agwqgd0vv/dr4QGCfqpg3SMrrojxntwHYDEgW8Gc=;
+        b=R2qPwBSYmsvjGNT1/SZzy09sTD8sVScUiCg8LBT5jZvy9teEqEnbFxgWesEm+VuFq4
+         p4GEl5mlaytjc3dia35T3u90HQ+N2jGEGK0YohTM4jrUOzaMuBKZOhCaJuRTvraKXexy
+         Z7LWVjqPU4hurWb42/UECE2BnHD6mO3pCv29YPS0GaFClbXM2ordZHto2CiVQZhHbOoD
+         LnOR7Zgw0EemTwEISQSHpBzMmt6T4Y7I/l1j6s55Py3g/OeuQ9H2Qzt0IurhK7D9Uzl7
+         IPMeLmFAD3TzrXf+3EYFkWNb92qR9VLKQVnNInlzpDXMbdQXDgnKx7/zdj3GdsmuMFtk
+         AWZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=A3tYBVht9OQ7H0p3muLZu1CFdofKqnY2mtcogxHKk/o=;
-        b=ibhqmt+ffCFv+J8PHQkwZ5SRdMDklevQlLfkhOKViQHiWVGXpxADpOF/a6vbd+0eQV
-         OH7XcMT4jx9jYKEEWcKwSep2zXdCCC10QJA/OUHAP61dJsqFhsZBw70S8YbNxyuUvF+a
-         OkLHkqsZ73rqH7ytFu8ba6CnNPJ00Vv/JUZHBF9Zx6EWX7qyCzrG2wT4qLXoM0DHSTUn
-         jE/Eyk5Om6y/x774J4Y4u2FjYJRrVmm2qRWgO92trpi6YfP9w3thSKMGi3jLd+prk6Nj
-         raQ9I75yBCgztqiR+ShMbwE3rZRizj9bOrwD1903F+K9C6zs5AN+xyrd6p8mOXm96C77
-         Ye1g==
-X-Gm-Message-State: AN3rC/4CrWDvhMeDGpxfOT+gbCz0TC2xp0hOG5pNqUKs9wcgfu5JzLeB
-        HICtZ/bgBGpHbg==
-X-Received: by 10.84.234.8 with SMTP id m8mr81008615plk.41.1494216107326;
-        Sun, 07 May 2017 21:01:47 -0700 (PDT)
-Received: from HP ([116.56.129.184])
-        by smtp.gmail.com with ESMTPSA id q27sm2487384pfk.4.2017.05.07.21.01.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 07 May 2017 21:01:46 -0700 (PDT)
-Date:   Mon, 8 May 2017 20:01:32 +0800
-From:   Yubin Ruan <ablacktshirt@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] Add warning when git discard changes on another branch?
-Message-ID: <20170508120129.GA3540@HP>
-References: <20170507233512.GA9332@HP>
- <xmqqzieo9hfo.fsf@gitster.mtv.corp.google.com>
- <20170508111836.GB3014@HP>
- <xmqqvapc9fsg.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HY5Agwqgd0vv/dr4QGCfqpg3SMrrojxntwHYDEgW8Gc=;
+        b=WwRrdfLGKTLE535B/6o7SRRFejcd4q+jcNSN25+XgfEwu14r/qPtFj2DWjs0bx9xCw
+         8xS4iZ7fC+ty7jVk4PgYslJ6suxuQUzyXOnOD0OWzKhSMoLKWfPWdV/KFBm7sN+8I1o2
+         YLt+GYjyiaOkKKFbye7ZivK2a4iRNKzPf+ptZUATqW3N1VS7eZJVB7hIoNBLdvr+sVN7
+         QfEsSvCYbPhwQujdloccdXvQAOZ86oZ7gjHyyKW1q9U9b5ZJpHPlEP2xs3ctHRmq0RN4
+         mVxcx57kaz4RtDlmt2BUWDv8fLKc44cuwqiN+ZmSfntYVTdy+q2tv82TPY7U6iPveZav
+         ZaRw==
+X-Gm-Message-State: AN3rC/4qjH+1yGKo14lT27UCp1PHbd4LZZRyrm2eaFAU0DyU5FWs4Scr
+        QvhZOcoxQz4XQA==
+X-Received: by 10.84.254.4 with SMTP id b4mr81518638plm.64.1494216681522;
+        Sun, 07 May 2017 21:11:21 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:3011:642f:81a0:efbd])
+        by smtp.gmail.com with ESMTPSA id o5sm27671214pfk.126.2017.05.07.21.11.20
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Sun, 07 May 2017 21:11:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     xiaoqiang zhao <zxq_yx_007@163.com>
+Cc:     git@vger.kernel.org, viktorin@rehivetech.com, mst@kernel.org,
+        pbonzini@redhat.com, mina86@mina86.com, artagnon@gmail.com,
+        avarab@gmail.com
+Subject: Re: [PATCH v3] send-email: --batch-size to work around some SMTP server limit
+References: <20170507043648.24143-1-zxq_yx_007@163.com>
+Date:   Mon, 08 May 2017 13:11:20 +0900
+In-Reply-To: <20170507043648.24143-1-zxq_yx_007@163.com> (xiaoqiang zhao's
+        message of "Sun, 7 May 2017 12:36:48 +0800")
+Message-ID: <xmqqpofk9edz.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqvapc9fsg.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 08, 2017 at 12:41:03PM +0900, Junio C Hamano wrote:
-> Yubin Ruan <ablacktshirt@gmail.com> writes:
-> 
-> > I understand this. I just suggest that git add some warning in case some users
-> > are not aware of this, as it does when , on branch 'issue', changes to 'lala.txt'
-> > are based on a commit different from where the checkout happened, i.e.
-> >       
-> >      on branch 'master'
-> >          |
-> >          |  <-- git checkout -b issue
-> >           \
-> >            \  <-- modification to git happened on a commit different from where
-> >                   the checkout happened
-> >  
-> > in this situation, git would warn us something like this:
-> >  
-> >      error: Your local changes to the following files would be overwritten by checkout:
-> >      	lala.txt
-> >      Please, commit your changes or stash them before you can switch branches.
-> >      Aborting
-> 
-> That does not have much to do with "are commits the same?".  If
-> 'master' and 'issue' branches are pointing at different commit, as
-> long as they record the same content at the path "lala.txt", you can
-> check out between these branches freely, as we can do so without
-> having to resort to merging the edit the user made to the working
-> tree to the different contents of "lala.txt".
-> 
-> There already is an indication that you have local modification in
-> the working tree when we check out another branch (you would have
-> seen "M lala.txt" when you did a "checkout" of another branch while
-> you have local changes to the path).  
+xiaoqiang zhao <zxq_yx_007@163.com> writes:
 
-That is convincing :)
- 
-> Because it is a quite commonly used feature that you can checkout
-> another branch and carry local changes with you, making it error out
-> like we do when the branches record different contents for the
-> locally changed paths when we do not have to would be a bad change
-> that hurts productivity of users who do use Git correctly, which
-> would mean that we need to make it an opt-in feature. 
+> @@ -1664,6 +1674,14 @@ foreach my $t (@files) {
+>  		}
+>  	}
+>  	$message_id = undef;
+> +	$num_sent++;
+> +	if ($num_sent == $batch_size) {
+> +		$num_sent = 0;
+> +		$smtp->quit;
+> +		$smtp = undef;
+> +		$auth = 0;
 
-I agree.
+Two suggestions.
 
-> But to help "some users are not aware of this" situation, an opt-in
-> "feature" would not help all that much.  The same number of lines in
-> the documentation to tell end-users how to toggle on such a "safety"
-> feature can be spent to teach them that their local changes in the
-> working tree do *not* belong to any particular branch, and as soon
-> as it is understood, the user would be OK.
-> 
-> So...
-> 
+ (1) I do not think $smtp is always valid when we come here; it is
+     unsafe to unconditionally say $smtp->quit like this patch does.
 
----
-Yubin
+	$smtp->quit if defined $smtp;
+
+     may help codepaths like $dry_run and also the case where
+     $smtp_server is the absolute path to a local program.
+
+ (2) You are setting $auth to zero to force re-authentication to
+     happen.  It would be more consistent to the state of $auth that
+     is not-yet-used to "undef $auth;" here instead.  After all, the
+     variable starts its life in an undefined state.
+
+
+So all in all
+
+	$smtp->quit if defined $smtp;
+	undef $smtp;
+	undef $auth;
+
+perhaps?
+
+This change of course forces re-authentication every N messages,
+which may not hurt those who use some form of credential helper, but
+that may be something we want to mention in the log message.
+
+> +		sleep($relogin_delay);
+> +	}
+>  }
+
+Thanks.
