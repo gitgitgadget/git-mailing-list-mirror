@@ -2,98 +2,208 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 541F01FC44
-	for <e@80x24.org>; Tue,  9 May 2017 02:50:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B2CF1FC44
+	for <e@80x24.org>; Tue,  9 May 2017 02:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754879AbdEICut (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 22:50:49 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:36811 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754660AbdEICur (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 22:50:47 -0400
-Received: by mail-pg0-f54.google.com with SMTP id 64so20673781pgb.3
-        for <git@vger.kernel.org>; Mon, 08 May 2017 19:50:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=rK/NzT6KtCrVj7ND0MGi39EMiCH5D8HBgVYdOccMyEo=;
-        b=HsV6EESp4+U/SRtFafCmkQhO5FTrwAFdiuKJffDTebF2A6G8hnkExU2wGM1YkdlI3R
-         ZPZfhZs9yCD8+slqYM7ZuSdCCRnb5cTpPgeFQpQcXaGHe+McYm3Jn4X3/JWtfDdc7Zeg
-         +F0doygI2J/H1dCXsG6Jcly6ykM+JyDlHggEraRSnVbIv2TVlaG/f8FXrIBsPnfUgdYa
-         korKqtX4HheMIbLXG6T/iCKIPgCqx+bWcfeUED63nQKZKbv9hccNfbTrk6d4NcJ1Eauw
-         cgEKXbvjOziklYdCN1YMhXUrfbNsls2R83X43UbWa45lTO6SR0HqTxX90ILLCZjOdyqC
-         z8CA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=rK/NzT6KtCrVj7ND0MGi39EMiCH5D8HBgVYdOccMyEo=;
-        b=OuLo8hlDVhQ+j9Vq9l5vulY8/hGo3hwtx0x9R9k1DZwGu6xwyGF9RRArkOLrNwL+Gn
-         fcMyD+OxeRAnPcrp6a3lqNYbDVoehU2PHZv0+KIQ3ldGYJEasXa39/QEvN13C2V8GMDF
-         8GlXj3IPD1qL8K0FzjrfQrCSMlt1YybDplVxXJGcgWXURrgpHc20Bkb0RAoAWGm58S9n
-         j5tUnlA+J2un2X/lVEVkWMoS8l0Qjtl9nHun8qiPBEXSTLaJYloNZuCRHC//RjzvdDlR
-         OZpmsWe4Evh+54mdu7XR/jpMyPQkQx8ako57KMIyReXrdmoV2uw/FGWOqRmT47NbsL8w
-         pKUw==
-X-Gm-Message-State: AODbwcARn5liHnW95KTmv7Nk8I1YQEY5Z4CDyc5Azei3QJd6LWJqbZMs
-        uly7CRAJjB6gsQ==
-X-Received: by 10.98.9.92 with SMTP id e89mr1629486pfd.177.1494298246596;
-        Mon, 08 May 2017 19:50:46 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
-        by smtp.gmail.com with ESMTPSA id o29sm19211265pgc.27.2017.05.08.19.50.45
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 19:50:45 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: git-clone --config order & fetching extra refs during initial clone
-References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
-        <20170225205052.j3p7obbf4onf6cbf@sigill.intra.peff.net>
-        <xmqqd1e3xx4c.fsf@gitster.mtv.corp.google.com>
-        <20170227211217.73gydlxb2qu2sp3m@sigill.intra.peff.net>
-        <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
-        <20170315170829.7gp44typsyrlw6kg@sigill.intra.peff.net>
-        <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
-        <20170503202224.arjszzbruxjgpkt5@sigill.intra.peff.net>
-        <xmqq4lwu7r0s.fsf@gitster.mtv.corp.google.com>
-        <20170509021028.fr5mc76kcbpnn4zs@sigill.intra.peff.net>
-        <20170509022621.ku6pozb2zdeltz6o@sigill.intra.peff.net>
-Date:   Tue, 09 May 2017 11:50:45 +0900
-In-Reply-To: <20170509022621.ku6pozb2zdeltz6o@sigill.intra.peff.net> (Jeff
-        King's message of "Mon, 8 May 2017 22:26:21 -0400")
-Message-ID: <xmqqy3u64ube.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751531AbdEICyR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 22:54:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47804 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750980AbdEICyQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 22:54:16 -0400
+Received: (qmail 11516 invoked by uid 109); 9 May 2017 02:54:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 02:54:16 +0000
+Received: (qmail 19019 invoked by uid 111); 9 May 2017 02:54:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 22:54:45 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 22:54:13 -0400
+Date:   Mon, 8 May 2017 22:54:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] pack-objects: disable pack reuse for object-selection
+ options
+Message-ID: <20170509025412.6fkrlnbsdk6qmoia@sigill.intra.peff.net>
+References: <20170502084326.65eisqmr4th5cbf7@sigill.intra.peff.net>
+ <xmqq4lww9cas.fsf@gitster.mtv.corp.google.com>
+ <20170508073143.lu73w5b54lvstty2@sigill.intra.peff.net>
+ <xmqqd1bi7ta5.fsf@gitster.mtv.corp.google.com>
+ <20170509020010.meefcustv7uufard@sigill.intra.peff.net>
+ <xmqqfuge6akl.fsf@gitster.mtv.corp.google.com>
+ <20170509022114.s3tpxrgtplsopr4x@sigill.intra.peff.net>
+ <xmqq4lwu68zy.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqq4lwu68zy.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Tue, May 09, 2017 at 11:48:17AM +0900, Junio C Hamano wrote:
 
-> Actually, it's not too bad, because we can pick up things like
-> option_origin from the globals. Here it is for reference. The nice thing
-> about it (IMHO) is that it makes the lifetimes of the helper variables
-> much more shorter and more clear.
->
-> But I'm OK with any of Gábor's original, my earlier squash, or this one.
->
-> (Also, as a side note, the free(refspec) in the context at the bottom
-> seems like it probably ought to be free_refspec() in the original and
-> free_refspecs() after this change, but I didn't investigate).
+> > I guess what I was asking was: do you still think it was unclear, or do
+> > you think you were just being dense?
+> >
+> > I don't feel like I gave any information in the follow-on explanation
+> > that wasn't in the commit message, so I wasn't clear if I worded it
+> > better or if it just sunk in better.
+> 
+> At least, "the current code is buggy when --local and friend are
+> given and includes needless objects in the result" was something I
+> learned only during the discussion, and would never have guessed by
+> reading the log message.  The second paragraph does talk about "This
+> bug has been present since...", but the first paragraph does not say
+> anything about the current output being broken.
 
-I'll tentatively queue this on top of the original and wait for
-Gábor to say something, then ;-) as I do agree that this one looks
-reasonable.
+While waiting for your response I took a look to see if I could improve
+it and came to the same conclusion. The result is below.
 
-Thanks.
+> So, I am not sure if this was a case where I was dense.  I think the
+> first paragraph needs a bit more clarity.
+
+Yeah, you were not being dense. I just wrote it badly. Sorry
+for the confusion.
+
+-- >8 --
+Subject: pack-objects: disable pack reuse for object-selection options
+
+If certain options like --honor-pack-keep, --local, or
+--incremental are used with pack-objects, then we need to
+feed each potential object to want_object_in_pack() to see
+if it should be filtered out. But when the bitmap
+reuse_packfile optimization is in effect, we do not call
+that function at all, and in fact skip adding the objects to
+the to_pack list entirely.  This means we have a bug: for
+certain requests we will silently ignore those options and
+include objects in that pack that should not be there.
+
+The problem has been present since the inception of the
+pack-reuse code in 6b8fda2db (pack-objects: use bitmaps when
+packing objects, 2013-12-21), but it was unlikely to come up
+in practice.  These options are generally used for on-disk
+packing, not transfer packs (which go to stdout), but we've
+never allowed pack reuse for non-stdout packs (until
+645c432d6, we did not even use bitmaps, which the reuse
+optimization relies on; after that, we explicitly turned it
+off when not packing to stdout).
+
+We can fix this by just disabling the reuse_packfile
+optimization when the options are in use. In theory we could
+teach the pack-reuse code to satisfy these checks, but it's
+not worth the complexity. The purpose of the optimization is
+to keep the amount of per-object work we do to a minimum.
+But these options inherently require us to search for other
+copies of each object, drowning out any benefit of the
+pack-reuse optimization. But note that the optimizations
+from 56dfeb626 (pack-objects: compute local/ignore_pack_keep
+early, 2016-07-29) happen before pack-reuse, meaning that
+specifying "--honor-pack-keep" in a repository with no .keep
+files can still follow the fast path.
+
+There are tests in t5310 that check these options with
+bitmaps and --stdout, but they didn't catch the bug, and
+it's hard to adapt them to do so.
+
+One problem is that they don't use --delta-base-offset;
+without that option, we always disable the reuse
+optimization entirely. It would be fine to add it in (it
+actually makes the test more realistic), but that still
+isn't quite enough.
+
+The other problem is that the reuse code is very picky; it
+only kicks in when it can reuse most of a pack, starting
+from the first byte. So we'd have to start from a fully
+repacked and bitmapped state to trigger it. But the tests
+for these options use a much more subtle state; they want to
+be sure that the want_object_in_pack() code is allowing some
+objects but not others. Doing a full repack runs counter to
+that.
+
+So this patch adds new tests at the end of the script which
+create the fully-packed state and make sure that each option
+is not fooled by reusable pack.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Contents are the same. I decided to leave the "; do" as it
+matches the rest of the script. If we're going to fix it, we
+should do them all.
+
+ builtin/pack-objects.c  |  6 +++++-
+ t/t5310-pack-bitmaps.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 0fe35d1b5..50e01aa80 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2717,7 +2717,11 @@ static void loosen_unused_packed_objects(struct rev_info *revs)
+  */
+ static int pack_options_allow_reuse(void)
+ {
+-	return pack_to_stdout && allow_ofs_delta;
++	return pack_to_stdout &&
++	       allow_ofs_delta &&
++	       !ignore_packed_keep &&
++	       (!local || !have_non_local_packs) &&
++	       !incremental;
+ }
+ 
+ static int get_object_list_from_bitmap(struct rev_info *revs)
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 424bec7d7..c3ddfa217 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -289,4 +289,42 @@ test_expect_success 'splitting packs does not generate bogus bitmaps' '
+ 	git -C no-bitmaps.git fetch .. HEAD
+ '
+ 
++test_expect_success 'set up reusable pack' '
++	rm -f .git/objects/pack/*.keep &&
++	git repack -adb &&
++	reusable_pack () {
++		git for-each-ref --format="%(objectname)" |
++		git pack-objects --delta-base-offset --revs --stdout "$@"
++	}
++'
++
++test_expect_success 'pack reuse respects --honor-pack-keep' '
++	test_when_finished "rm -f .git/objects/pack/*.keep" &&
++	for i in .git/objects/pack/*.pack; do
++		>${i%.pack}.keep
++	done &&
++	reusable_pack --honor-pack-keep >empty.pack &&
++	git index-pack empty.pack &&
++	>expect &&
++	git show-index <empty.idx >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'pack reuse respects --local' '
++	mv .git/objects/pack/* alt.git/objects/pack/ &&
++	test_when_finished "mv alt.git/objects/pack/* .git/objects/pack/" &&
++	reusable_pack --local >empty.pack &&
++	git index-pack empty.pack &&
++	>expect &&
++	git show-index <empty.idx >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'pack reuse respects --incremental' '
++	reusable_pack --incremental >empty.pack &&
++	git index-pack empty.pack &&
++	>expect &&
++	git show-index <empty.idx >actual &&
++	test_cmp expect actual
++'
+ test_done
+-- 
+2.13.0.rc2.436.g524cea07c
+
