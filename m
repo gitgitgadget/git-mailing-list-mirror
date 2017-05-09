@@ -2,90 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 371091FF34
-	for <e@80x24.org>; Tue,  9 May 2017 04:11:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F29211FF34
+	for <e@80x24.org>; Tue,  9 May 2017 04:31:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753888AbdEIELp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 00:11:45 -0400
-Received: from mout.web.de ([212.227.17.12]:50727 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753679AbdEIELp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 00:11:45 -0400
-Received: from [192.168.88.106] ([194.47.243.242]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MQedF-1dbLJ12tJ7-00U2Rl; Tue, 09
- May 2017 06:11:38 +0200
-Subject: Re: [PATCH v2 1/1] t0027: tests are not expensive; remove t0025
-To:     Junio C Hamano <gitster@pobox.com>
-References: <11da00e8-a62c-bf07-d97e-ab755647082b@web.de>
- <20170502155631.24848-1-tboegi@web.de>
- <alpine.DEB.2.20.1705021809340.3480@virtualbox>
- <xmqq8tm67r89.fsf@gitster.mtv.corp.google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, larsxschneider@gmail.com
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <f1183dc1-e2e5-f189-2df5-e46ec8930faa@web.de>
-Date:   Tue, 9 May 2017 06:12:16 +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0)
- Gecko/20100101 Thunderbird/45.8.0
+        id S1751837AbdEIEbm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 00:31:42 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35194 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750909AbdEIEbl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 00:31:41 -0400
+Received: by mail-pf0-f196.google.com with SMTP id u26so12266658pfd.2
+        for <git@vger.kernel.org>; Mon, 08 May 2017 21:31:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zJnJMs+iix5cC0xKeRgiCYjyWjoYrt/VFvxihNp3OVs=;
+        b=rX281WEQIP3GIjEsHm2OYx//t5d9i6+j0BpAvAf3Qm7sLYqcUdqqYQ7Ri3N05u+DO0
+         YZ3Fhn9Uy4P9Dxv+uM6pXBZyPPe226cYOFSbmjep4/dSvOeV4FTi2N8k9muQ5vS3kj2f
+         s1msZvl/t3HG196hzV5SHqKJKtXbaVYttQpa+BKmY6NZmKX3lqV7sr+1+pbbfjX9VQ23
+         zLFUW7Vf0pZ7IkWu3vuWbcp1/jnXHJ6o6KMaktJIejo5QyxCkm3N0W4DRUr3jvklHC68
+         qfbiz//jj5XrMaPIms9jUcgJxSLGr5s5/vQyUSSLfxuFto7BemS8A44eAqaTpqDwiNwv
+         ysTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zJnJMs+iix5cC0xKeRgiCYjyWjoYrt/VFvxihNp3OVs=;
+        b=HmeQIZ7LJxZdzJvMwDUoiHEWH4Nsd8TbpazGqZRvoDuBmL75v8RWt13qLWEMy6JqlB
+         s2y0C/5PURfMhXn4uSNF6021r2QUPa0thNTqLi3i8Rsmlv900/n9rYwvP31r+fGslFOB
+         YoEMjFZy1MhFyqoOi75Vbj6/+37Sl3VPUr7KMfsuMgiIuPHgHaqnI6d1aUJWquSDDWgy
+         zQqFFb8x7Gpf6PxggkluZHINU1w8H/a669NC/ZOcOrrH1gi+ox5vCw/yPax6DIBhDss/
+         7qsSTXTK1jvkIzOtZ7iel4yqCJtCiBIBovgd0f3OWqtgbUlRSIKozveERgXRzxIOkRX+
+         Vt2Q==
+X-Gm-Message-State: AN3rC/4ZlW+r3COeMnXoeA4WF0Wey791CKx8B/MK67mGo06ctPVOIKoZ
+        jaQ3+ZDidUk6OA==
+X-Received: by 10.98.200.23 with SMTP id z23mr34608667pff.18.1494304300846;
+        Mon, 08 May 2017 21:31:40 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
+        by smtp.gmail.com with ESMTPSA id n22sm18698498pfj.27.2017.05.08.21.31.39
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 08 May 2017 21:31:40 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jordi Mas <jmas@softcatala.org>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Not translatable strings in Git
+References: <f3bfb85c-1722-e720-3d36-40c29a692867@softcatala.org>
+        <CAGZ79kbtT6QCbd3-MpWiTm3r_cyBOLsa9kvd-KLNr8eEe+9v9Q@mail.gmail.com>
+        <20170509040722.dd2yt4254g3raeev@sigill.intra.peff.net>
+Date:   Tue, 09 May 2017 13:31:39 +0900
+In-Reply-To: <20170509040722.dd2yt4254g3raeev@sigill.intra.peff.net> (Jeff
+        King's message of "Tue, 9 May 2017 00:07:22 -0400")
+Message-ID: <xmqq7f1q4pn8.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq8tm67r89.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K0:8P8METgo0QoLk4nOa15dLcI00icwEC/HeM495eKelfXtEkn4PJh
- tpRq5IGJeCQjE1wsbQNlrKq+mtpT7APYowbRhlUSJ1aAjNOwLrMyD9wOv2Rp2IjkJhTLHlh
- hS8JH9YvHSJMVT3l84na81NLDKc8n85Zpj3H/cght0dGNlzCAZJ5K4LJC2FTAnBxCM+eN9U
- Le2J6g+PnJ7P4uPQCx/aw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:CBH1ncM7HG4=:ZxNCukd9rKuLguUJV1dw7G
- XqGvzFlTPom5xQeFOZ9ddcjcsvfne5/Og1SJXFD9I2FJt0a3kD6hjawHAntnHMKXJp5wScA93
- SxfKtA3sGnRRtj0VFcI4K1fyFM8g3bY5m1pnZ2s4rN4Toi4zCcIvn6JMqzQ/16JncM6tPXNqo
- M/CMe6c4AwO9lVWJJ0qnvlOI1dB4gL6TtUU2iqCg2IFOeOf+zSZID75Nofxyh9cC70vAVM1tj
- zfQ/FcM4fnU1JlNfVkEDvVRujJTD8Kuu/wQAYmXRm4yGEKVp6A4LFMoo5ZEv0cwz1AfevZU+v
- 7nN519PppB4P2SBeBpwcJ0CLyAtDPNr/EEOVKJksLqyODuB1w3+8OZHmVO2AkAYj4lnGpjhlq
- WcidgFqPq/PgkYzLQuBjZIdsyqF5g9HrZJxGyfstF1wDOxUELZLXyS5YD2KuMoaTLejermyg9
- mvORZukiG5vDehUop4Q71oMgAQczd9k7FuqjYAf/FvbvbdGITpBcpRx7eY2O+14D2T5oRAghN
- CRtlaOq1+JUtXUh5P46lE8ESqxXq5CSmqZQt1Rx1Eer81dwh3ZWM+sATrTpFhO6C5EeTzv13R
- DLxYOVtMuWmg82xSq0ykj80snLsprIT2mfjmDMOvGm+xA18ODIwxz4DFAl5ARmXNRqgONug9f
- v2B0JsFNo9NTnXw0OxJQMxJwN0nQ4rpfVV4plE/2O6P1pfp7G9HE/naqonh3n923dtVnET2yQ
- 4vGko7egBibmAlqnnBtQsVJzUKVkJYw3HfwtjXdt6Hq8RkYF1APIYVr3Ul5Ksqu6P6P+4HQTx
- nEKharD
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-
-On 09/05/17 03:29, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> I don't think the diffstat summary is marked for translation at all,
+> plumbing or not.  There's some history there:
 >
->>> Recent "stress" tests show that t0025 if flaky, reported by Lars Schneider,
->>> larsxschneider@gmail.com
->>>
->>> All tests from t0025 are covered in t0027 already, so that t0025 can be
->>> retiered:
->>
->> s/retiered/retired/
->>
->>> The execution time for t0027 is 14 seconds under Linux,
->>> and 63 seconds under Mac Os X.
->>> And in case you ask, things are not going significantly faster using a SSD
->>> instead of a spinning disk.
->>>
->>> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
->>
->> Thank you for this patch.
->>
->> Apart from the tyop, would it be possible to fix the formatting to look
->> less strange? (Unless you use this to transport a super-secret message
->> steganographically to an alien planet or some such, of course.)
->
-> Ping?
+>   http://public-inbox.org/git/1345922816-20616-1-git-send-email-pclouds@gmail.com/t/#u
 
-I didn't had the time to send a patch yet -
-so either you feel free to amend the commit message locally and queue
-that - or I send a new version in  2 weeks.
+Wow, that's a long thread.
+
+> There was an attempt to re-enable it for local-only commands:
+>
+>   http://public-inbox.org/git/alpine.DEB.2.00.1210231323480.602@ds9.cixit.se/
+>
+> but nobody seems to have responded (I don't have much of an opinion
+> myself).
+
+I still think that the latter is wrong, especially the part that
+touches log-tree.c, pp_header(), and other lower level things that
+will be read and interpreted by scripts.  The change to diff.c about
+the diffstat reverts a bugfix made in v1.8.0 timeperiod, it seems.
+
+
+
