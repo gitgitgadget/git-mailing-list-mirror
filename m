@@ -2,105 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87EB92018D
-	for <e@80x24.org>; Tue,  9 May 2017 22:52:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F5402018D
+	for <e@80x24.org>; Tue,  9 May 2017 22:52:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751009AbdEIWwX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 18:52:23 -0400
-Received: from mail-pg0-f50.google.com ([74.125.83.50]:34478 "EHLO
-        mail-pg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750987AbdEIWwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 18:52:22 -0400
-Received: by mail-pg0-f50.google.com with SMTP id u28so6764986pgn.1
-        for <git@vger.kernel.org>; Tue, 09 May 2017 15:52:22 -0700 (PDT)
+        id S1751035AbdEIWwf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 18:52:35 -0400
+Received: from mail-pg0-f54.google.com ([74.125.83.54]:36543 "EHLO
+        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751016AbdEIWwf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 18:52:35 -0400
+Received: by mail-pg0-f54.google.com with SMTP id 64so6729733pgb.3
+        for <git@vger.kernel.org>; Tue, 09 May 2017 15:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=J3a8ZVtmPkrRQ9FNwx7CzMnY6JMbXSdRmqJPEWB0q2o=;
-        b=gkSL505uDkth2B5kvHdnlvKQyg38ZPaEqVB+a9YOyx8m+nXIgunWqYC9nrQGOi4geR
-         B4IuzPIHQXwFInNjPFnccKpZTSjD9DeY1Aj7z9kWxrNXzflCzbZ8oOuMBLuOuWidOa3z
-         FIAcQvK2npTiwqZyD7OOBs8i6J9E8cIqZ1GvzwrOD//JJigcgU03IClkVkWLd7V4BKBZ
-         OOQbZK5xkUftzIAIjb2cYyHtTBq2oT4eInigC+8mo6ZuG2X6Xhz+6Sjb9WZ7lw5Pw4me
-         ipJn/7oyGB18VzwkI83vO1ccETYjugHPLLE2p3dO46uTvG5RhR6+lZVOvJJ430xw7V+w
-         gIIw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=D5S0Fhp7Nv5cZom1HShB1BIO3INhcJ0jnAORc89BMmI=;
+        b=euNqg6U11hS/5FmMGBYhojpKMnS857tAXEixV6psA3Y49bf/XYKLqIECSY/XfdX2ir
+         kQRnpDSLGb00cwrxRJ2lyzSb4W4kWLejM1VoKvlAOkIh2x3Rv9LWZ50WO7tHxZjWHzS4
+         /j8XEo74zApSc6g0VP5sTZcSWL/zsYB9h/PtM872ij1LitBGvE8jcYAucuTrGA66ulwh
+         qI7+ipFH7lTkZfxwrp9UOQjmGBn9oaQxCClKHq0/id0lVm48M33BOUD7o4jumzivnKZM
+         oSe1Y57C0gkbBQC0FVEl7hpUCmrG2NatDYWwFSduGj+HEmc3nzpSw90o33BM43xRnr6X
+         S0tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=J3a8ZVtmPkrRQ9FNwx7CzMnY6JMbXSdRmqJPEWB0q2o=;
-        b=cjELlqZUO/mQ23XxfaJ3azVTbefWMACU6Ifpfwm7Zw91PSz+k7f8yJDGZJJ8DKGWNI
-         Dd3Sq+PqJEfF3TMojEOCS71Zc6ip5+lU97ZotZIiBsC+DX+xDjjl4mSaK9WZ+vNaspas
-         sRO2T0SkXGZRHFj+TKL6p6iFyrBD88oO+EFte/iZIbnxO8m4F+ZaJbash1rOLfkqJsuG
-         WoRTh9bfxS0bfA0Ur7N+yqgqmItiSu38GGngGCG6Rs+gWumKSC/o71rtVqN8DkbwOIWJ
-         TZs95CYNO83VkyHDUlD9BpMEpd9XG5fK54O3boNaO0CzG7nJ75mN5W6YX+f2tVZlU9CZ
-         gncA==
-X-Gm-Message-State: AODbwcBW3GYHM/PV/d/pQ8FmZsn9arO4FnJkGzup2dDPbSG02dPpiGIw
-        7AzO/q2MoQyzeLTP
-X-Received: by 10.99.101.130 with SMTP id z124mr2883190pgb.8.1494370341967;
-        Tue, 09 May 2017 15:52:21 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:b127:d26b:19a3:378d])
-        by smtp.gmail.com with ESMTPSA id p68sm1694117pga.6.2017.05.09.15.52.20
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=D5S0Fhp7Nv5cZom1HShB1BIO3INhcJ0jnAORc89BMmI=;
+        b=lCCPvAyDM+pD/e6gR2q062NuwMAWLRqt7D/F1ijLGiO8UyGIGZaPIFJGfJQiqRHF0q
+         p191zhlHf1DRWAR44hjH5wSqVIMTBJPJcGl2GQgzHBKfqho9/aN/A1EcSXHyIWHEwyhy
+         BQBIzTXFPleVIGXmK3Zx7PnNAV2i7GehT9doXUrMyQvpoQ5+06vF6g6ju+cx4kGWLleI
+         UBS2OvbjYl9u7Pb8ozSTmZ+LiTero+v7oKKembcsbSsR/IsZzy7gj67A7zofPSvr8eOd
+         AI2TGO7sMrj9+aWRsm1wucWbZejQpzOC4x6QN/Qj4qSZqmi/N7mRb5Wkv6fba47TWxv2
+         XQvg==
+X-Gm-Message-State: AODbwcA9nx7VeDVrmbsQZa1nASq9d15ZhQ1MRWK47xZaHGfn3/hjIHt/
+        GPexgUy/9GOkgA==
+X-Received: by 10.98.87.203 with SMTP id i72mr2618776pfj.151.1494370354357;
+        Tue, 09 May 2017 15:52:34 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:9133:cf19:b689:27d6])
+        by smtp.gmail.com with ESMTPSA id u19sm1656722pfd.63.2017.05.09.15.52.33
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 09 May 2017 15:52:21 -0700 (PDT)
-Date:   Tue, 9 May 2017 15:52:19 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] :(attr) pathspecs can die("BUG") in the tree-walker
-Message-ID: <20170509225219.GB106700@google.com>
-References: <20170509222432.3dxt7osjt2zjtaiw@sigill.intra.peff.net>
+        Tue, 09 May 2017 15:52:33 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 00/21]
+References: <20170420112609.26089-1-pclouds@gmail.com>
+        <20170503101706.9223-1-pclouds@gmail.com>
+        <xmqqd1bp9nvj.fsf@gitster.mtv.corp.google.com>
+        <CAPc5daVwnsC2iqrX4PYL9LJyfD76dA1TS3xCNM7qHtmfHd0aWg@mail.gmail.com>
+        <CACsJy8DyAV4y_-gsjk1QSGkcq+-jGX6y-ymuHvUEMfV3gxJa_g@mail.gmail.com>
+Date:   Wed, 10 May 2017 07:52:33 +0900
+In-Reply-To: <CACsJy8DyAV4y_-gsjk1QSGkcq+-jGX6y-ymuHvUEMfV3gxJa_g@mail.gmail.com>
+        (Duy Nguyen's message of "Tue, 9 May 2017 17:22:45 +0700")
+Message-ID: <xmqqzielzlqm.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170509222432.3dxt7osjt2zjtaiw@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/09, Jeff King wrote:
-> I was playing with the new :(attr) pathspecs in the upcoming v2.13
-> today, and noticed:
-> 
->   $ git ls-files -- ':(attr:-diff)'
->   t/t0110/url-1
->   t/t0110/url-10
->   [etc]
-> 
-> So far so good.
-> 
->   $ git ls-tree HEAD -- ':(attr:-diff)'
->   fatal: :(attr:-diff): pathspec magic not supported by this command: 'attr'
-> 
-> Bummer, but I understand that sometimes the options need to be plumbed
-> through to work everywhere.
-> 
->   $ git log HEAD -- ':(attr:-diff)'
->   fatal: BUG:tree-walk.c:947: unsupported magic 40
-> 
-> Whoops. This is presumably ls-tree is protected, but I think we are
-> missing a GUARD_PATHSPEC call somewhere.
-> 
-> This isn't a huge deal, as the correct behavior is probably to die like
-> ls-tree does, but we probably shouldn't be hitting BUG assertions as a
-> general rule.
-> 
-> -Peff
+Duy Nguyen <pclouds@gmail.com> writes:
 
-The die("BUG: ..."); is from a GAURD_PATHSPEC call.  What really needs
-to happen is to update the magic_mask passed into the parse_pathspec
-call which initializes the pathspec object.  Its this magic_mask which
-catches unsupported magic and prints a better message.
+> On Sun, May 7, 2017 at 11:20 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> On Thu, May 4, 2017 at 2:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>>>
+>>> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+>>>
+>>> > Changes since v1:
+>>> >
+>>> >  - fopen_or_warn() and warn_on_fopen_errors() are introduced. The
+>>> >    latter's name is probably not great...
+>>> >  - A new patch (first one) to convert a bunch to using xfopen()
+>>> >  - Fix test failure on Windows, found by Johannes Sixt
+>>> >  - Fix the memory leak in log.c, found by Jeff
+>>> >
+>>> > There are still a couple of fopen() remained, but I'm getting slow
+>>> > again so let's get these in first and worry about the rest when
+>>> > somebody has time.
+>>
+>> Hmm, is this topic responsible for recent breakage Travis claims on MacOS X?
+>>
+>> https://travis-ci.org/git/git/jobs/229585098#L3091
+>>
+>> seems to expect an error when test-config is fed a-directory but we are
+>> not getting the expected warning and error?
+>
+> Sounds about right. Let me see if defining FREAD_READS_DIRECTORIES on
+> MacOS X makes travis happy.
 
-I guess this means I (or someone else :D) should audit all the
-parse_pathspec calls and ensure that 'attr' magic is turned off until we
-won't run into these GAURD_PATHSPEC die's.
-
--- 
-Brandon Williams
+Thanks.  I should have suspected that myself to save a round-trip.
