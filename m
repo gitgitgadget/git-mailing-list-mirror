@@ -2,97 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C3362018D
-	for <e@80x24.org>; Tue,  9 May 2017 02:06:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB9C22018D
+	for <e@80x24.org>; Tue,  9 May 2017 02:10:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753191AbdEICGx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 22:06:53 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:34928 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752608AbdEICGv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 22:06:51 -0400
-Received: by mail-pg0-f66.google.com with SMTP id i63so12982866pgd.2
-        for <git@vger.kernel.org>; Mon, 08 May 2017 19:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=aebDxccQpcP9pdC0TnE8XXaNcc/6TjWn5oldu7T7rFM=;
-        b=Cg2fvWZyJERJaeE+o/aTCpFpZer4fJCDV3F01MfTi8V8TPZv3EVb9kCFZwkHp0xBUN
-         pbOqsykiPzTUQTMOfdqjNLVC940CayMgBykqMXAxjft92eYPmzHkiLJg1NltlfW8WnOz
-         +PnBopo8xkTxmOIwc+0jmDFFNBvTSwEflysV0vh5NbmqyXp7mHxa5KjsYkNDl+zpdStN
-         IJkewKp1/zkOmnVlxh4WTWCne1f6GKelYar+tIotm0W33sA41bXlO3kAzkfsP/qGYh2C
-         HYK7dlaKNOLVpiLUUSGJkh0vDRMDU2VTkDYl1MoWjDcldDH+okwS+mNhIB0zF8wcfnKh
-         zQmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=aebDxccQpcP9pdC0TnE8XXaNcc/6TjWn5oldu7T7rFM=;
-        b=doF+Z8BAKXxC1r3sT4yB8HwEpt8JeHk/ebIOjUMm6UFm5mcdmj+j/lqgDkvzHmuHge
-         Q5uLzc/xiauvOgPll60rO1M5l0dakELHsk4ozHS5SfPgvqNgkW3KdlaX5Gzs/IQ3fF66
-         b3thccg+jFGUBRP11o5xMThkRPWlqs1UddeCDIEZRp365TjQuvlmkfo5SxS/sEs814cd
-         hsuZdCyZqL9/3Y2mxzRyN2guOIIIzxRm0qjpvGf8dQKe1K1a4G/Ehaai8r320l9r3F8Q
-         uMTlsId5NiqsQwXqp0J4kWOlYTcm06oGQVjAmtQRYbc5aRDbCPNUqQ05PPetDLuZ6sYt
-         Vc3w==
-X-Gm-Message-State: AN3rC/4jrDBrfsCAwk7EvWorw0LSZEzIpEnIwgBGEHReB79pY3L0ljzv
-        IgfS0Ctp/uTXaK58jiFdAg==
-X-Received: by 10.98.74.135 with SMTP id c7mr34188463pfj.140.1494295611215;
-        Mon, 08 May 2017 19:06:51 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
-        by smtp.gmail.com with ESMTPSA id a24sm24447783pfl.70.2017.05.08.19.06.50
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 19:06:50 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] diff.c: Fix whitespace issues due to a mismerge(?)
-References: <20170508184354.31671-1-sbeller@google.com>
-Date:   Tue, 09 May 2017 11:06:50 +0900
-In-Reply-To: <20170508184354.31671-1-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 8 May 2017 11:43:54 -0700")
-Message-ID: <xmqqo9v26ax1.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1752194AbdEICKd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 22:10:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47758 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751094AbdEICKd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 22:10:33 -0400
+Received: (qmail 8781 invoked by uid 109); 9 May 2017 02:10:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 02:10:31 +0000
+Received: (qmail 18370 invoked by uid 111); 9 May 2017 02:11:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 22:11:00 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 22:10:28 -0400
+Date:   Mon, 8 May 2017 22:10:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        "Robin H. Johnson" <robbat2@gentoo.org>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: git-clone --config order & fetching extra refs during initial
+ clone
+Message-ID: <20170509021028.fr5mc76kcbpnn4zs@sigill.intra.peff.net>
+References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
+ <20170225205052.j3p7obbf4onf6cbf@sigill.intra.peff.net>
+ <xmqqd1e3xx4c.fsf@gitster.mtv.corp.google.com>
+ <20170227211217.73gydlxb2qu2sp3m@sigill.intra.peff.net>
+ <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
+ <20170315170829.7gp44typsyrlw6kg@sigill.intra.peff.net>
+ <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
+ <20170503202224.arjszzbruxjgpkt5@sigill.intra.peff.net>
+ <xmqq4lwu7r0s.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4lwu7r0s.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, May 09, 2017 at 10:33:39AM +0900, Junio C Hamano wrote:
 
-> It looks like all these lines were introduced by one of the conflict chunks
-> in 4af9a7d344 (Merge branch 'bc/object-id', 2016-09-19). Viewing that
-> commit in gitk, the indentation seems fine, i.e. there is just one
-> whitespace in front of the lines, as you would expect from a formatted
-> patch.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->
->  Junio, 
->  I do not think it is worth to apply this patch on its own,
->  but maybe it is worth to investigate your setup? (Assuming it is
->  git that did the merge, we may have a bug in whitespacing and
->  merge conflicts.)
+> >> My patch deals with 'remote.<name>.refspec', i.e. 'remote->fetch'.
+> >> Apparently some extra care is necessary for 'remote.<name>.tagOpt' and
+> >> 'remote->fetch_tags', too.  Perhaps there are more, I haven't checked
+> >> again, and maybe we'll add similar config variables in the future.  So
+> >> I don't think that dealing with such config variables one by one in
+> >> 'git clone', too, is the right long-term solution...  but perhaps it's
+> >> sufficient for the time being?
+> >
+> > I think your patch is a strict improvement and we don't need to hold up
+> > waiting for a perfect fix (and because of the --single-branch thing you
+> > mentioned, this may be the best we can do anyway).
+> 
+> OK, so where does this patch stand now?  It already is too late for
+> the upcoming release, but should we merge it to 'next' once the
+> release is made, cook it in 'next' and shoot for the next release
+> as-is, or do we want to allow minor tweaks before it hits 'next'?
 
-Thanks for spotting.  
+I'd be OK with it as-is, but here are my nitpicks as a diff (keep the
+assignment of refspec_count in one place, and free fetch_patterns as
+soon as it is no longer used).
 
-I do not think you have to worry about any bug in Git-the-program
-with this merge.  If you try to reproduce the merge yourself (which
-by the way is easy to do, with "M=4af9a7d344 && git checkout $M^ &&
-git merge $M^2"), you'll see that quite a lot of changes made to
-"builtin/apply.c" had to be hand-ported to the corresponding lines
-that are now in "apply.c" at the top-level, because in the meantime
-13b5af22 ("apply: move libified code from builtin/apply.c to
-apply.{c,h}", 2016-04-22) moved things around while the merged side
-branch has been cooking.  
+I actually think it might be nice to pull the whole thing out into its
+own function, but the parameters it takes would be oddly specific.
 
-It is very likely that manual killing and yanking in Emacs
-introduced the screw-up.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 0630202c8..577529a11 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -861,7 +861,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	int err = 0, complete_refs_before_fetch = 1;
+ 
+ 	struct refspec *refspec;
+-	unsigned int refspec_count = 1;
++	unsigned int refspec_count;
+ 	const char **fetch_patterns;
+ 	const struct string_list *config_fetch_patterns;
+ 
+@@ -994,6 +994,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	config_fetch_patterns = git_config_get_value_multi(key.buf);
+ 	if (config_fetch_patterns)
+ 		refspec_count = 1 + config_fetch_patterns->nr;
++	else
++		refspec_count = 1;
+ 	fetch_patterns = xcalloc(refspec_count, sizeof(*fetch_patterns));
+ 	fetch_patterns[0] = value.buf;
+ 	if (config_fetch_patterns) {
+@@ -1003,6 +1005,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 			fetch_patterns[i++] = fp->string;
+ 	}
+ 	refspec = parse_fetch_refspec(refspec_count, fetch_patterns);
++	free(fetch_patterns);
+ 
+ 	strbuf_reset(&key);
+ 	strbuf_reset(&value);
+@@ -1129,7 +1132,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&value);
+ 	junk_mode = JUNK_LEAVE_ALL;
+ 
+-	free(fetch_patterns);
+ 	free(refspec);
+ 	return err;
+ }
+
+-Peff
