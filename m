@@ -2,114 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5D31FDEA
-	for <e@80x24.org>; Tue,  9 May 2017 17:00:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1EEB1FDEA
+	for <e@80x24.org>; Tue,  9 May 2017 17:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754186AbdEIRAh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 13:00:37 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:32878 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753322AbdEIRAg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 13:00:36 -0400
-Received: by mail-io0-f196.google.com with SMTP id l196so813668ioe.0
-        for <git@vger.kernel.org>; Tue, 09 May 2017 10:00:35 -0700 (PDT)
+        id S1754423AbdEIRkE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 13:40:04 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:36821 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753366AbdEIRkD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 13:40:03 -0400
+Received: by mail-wr0-f194.google.com with SMTP id v42so1921410wrc.3
+        for <git@vger.kernel.org>; Tue, 09 May 2017 10:40:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=B46jdoTWDm6vvZYGOrBAgnTT4/us96/Ghay/GILUE1I=;
-        b=T6cqJDMByeFrB/J636nF0Jzy4tzCYTVTNp1lUIZ1lRLSR+Ioo0XUeQCmn99yyCjKay
-         Z0fW3R5I/C8pxhT4UO/OWaFgdwSOqIoL9sFAgc1c+SA3nHQ1e+88Zo7qpf+5o+bEBO3J
-         Mt4e3x5Pxw41WqjaYks385IZrk0FdoWYpL3IWxA0osZWMpnYPs9H89vx67kLGAbBAkNr
-         1/RTe43an8lXWs9rPvtn6oDuv3OeblOz7B8Xx5G0wNO1ihufq2AlXyJJK+OqQrM72Yxk
-         zlY7ACVmr3Kyooai/YUPoXe0cKAKdNKVzVUWhSQ68B/znjd+wZ2iLBjb08YUHruvynk6
-         1AUg==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=n9Hiq0fCMtTPlni7HFWKR2FNrdourjcHOVmhzcqxO+M=;
+        b=trhyFtzwt8MPBp6COx+o1Oh+5TaT6C4kf/WJoO8kDp/a0eOHd73AUGCKZONJ4dO3rT
+         Z3hijpQC4xd1QdnsX2hSJfOzdsrSbBsejlmdBLjxJOU8e8yQ+2b9QoGmiD9vLBh6apl4
+         4Lz3V89MOxNj5WdEdwA3uc/oUpIdBNvDaGDWZAC3KWPHZioFOH+7pM4WwYdwbZomMqqO
+         ictD5ZFyZgq4RKFF1ubL6Yq/ChknRV/sNza9GCKQIl0zr8J/HRsAQ4aD2NjUd4ZdhnIr
+         Uc6g29ZBJrZJ10bZNRY/cv+IQzvTI16UrCxP2VjO21nh1ASgHkW6jc116AtN8lPADbnV
+         cEyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=B46jdoTWDm6vvZYGOrBAgnTT4/us96/Ghay/GILUE1I=;
-        b=j9Oh8xGIGYCUf+x1Ia3W/nv29xsteTLjsbHD9pySXLj7lyE/G83zLBu3skgpISAXWR
-         SL5+IKI6ZzKAgj2q0nTqiPM5lBhytVSapewQCuRIsKWnWLLjSfSj4zbhvP9zRvirKn2V
-         2SWJx+2Vw18rhYA9k9+S0W69+B8vCI8ZqRIFbywqle94NLlI+nPf/e8VEdZo12fNgHeo
-         r3mc3j7ZRrHv6Xu54G2p0aIngcV2k3oj0VBTfiZmmBZZNa+pRhYkGZeu3ZOo2wryDsYM
-         LBS5xzjGB49dOApVmBxzAWKCAmUTNnWL0NANvJH9uKL4auobRLiTNtw9Gyg+lrqVJBRU
-         Px1A==
-X-Gm-Message-State: AODbwcBW1ZPgzDR1KXkJHaXvokzR29n+8LtMRwiBAPophK54qnOi9TYM
-        7V5/S774dhsCdxDPU1+27aUHHxn/jw==
-X-Received: by 10.107.138.21 with SMTP id m21mr971999iod.80.1494349235346;
- Tue, 09 May 2017 10:00:35 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 9 May 2017 10:00:14 -0700 (PDT)
-In-Reply-To: <20170509164515.31942-1-jonathantanmy@google.com>
-References: <xmqqfuge4sak.fsf@gitster.mtv.corp.google.com> <20170509164515.31942-1-jonathantanmy@google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 9 May 2017 19:00:14 +0200
-Message-ID: <CACBZZX5DF6sTTYSUpYnvas925N-XsoUGrM-bYbAN_67g8-w2GQ@mail.gmail.com>
-Subject: Re: [PATCH] fixup! use perl instead of sed
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=n9Hiq0fCMtTPlni7HFWKR2FNrdourjcHOVmhzcqxO+M=;
+        b=U38JPC1zruqPnbNJXkBihRw7Soyq69uELQvXCBCJrOSkvNtNJHKu8/rt61AF9Hpy93
+         HLHRJyI/wDcHYph0UbzhU1zV0kBc9pEpe5MtVqMFDlDRgsdAKll/LYk3jhUZ8yxg31ql
+         zXTaGVL8mmwSVY2TGCLGKZj3xLywDyL1ltQhcL599wHE4V3BJ7FIzglrhntU9N8U1nuL
+         LuRPMSKziQpPNR7T6l8xQAIGJ8dhtrj26m+9ymUocCVbVFor24uUD3Y9kTem8bBd+MJp
+         ZoshKOFQHDEO71MK+ted8WpO5RXWhAz3sterGJUPcqcJ24zaaCauYo8dCmq3eOanRUuE
+         1U+w==
+X-Gm-Message-State: AODbwcCx9iU7Gck9fM47uOXUluWVM1E7kbELZnFNu/nbQGYXSfxbTn/X
+        WfLpm5AK7liDazhkgNU=
+X-Received: by 10.28.184.207 with SMTP id i198mr842419wmf.104.1494351602467;
+        Tue, 09 May 2017 10:40:02 -0700 (PDT)
+Received: from [10.207.198.252] (host86-187-76-40.range86-187.btcentralplus.com. [86.187.76.40])
+        by smtp.gmail.com with ESMTPSA id n49sm624749wrn.30.2017.05.09.10.40.01
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 09 May 2017 10:40:01 -0700 (PDT)
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v2] travis-ci: retry if Git for Windows CI returns HTTP error 502 or 503
+From:   Lars Schneider <larsxschneider@gmail.com>
+In-Reply-To: <xmqqpofi35ik.fsf@gitster.mtv.corp.google.com>
+Date:   Tue, 9 May 2017 18:40:01 +0100
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1ADD08FD-1DC0-4AC5-9E69-AC1A5DCBED83@gmail.com>
+References: <20170503215015.17949-1-larsxschneider@gmail.com> <xmqqpofi35ik.fsf@gitster.mtv.corp.google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 9, 2017 at 6:45 PM, Jonathan Tan <jonathantanmy@google.com> wrote:
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
->
-> Thanks - I didn't realize the existence of the test lint. Here's a
-> fixup. Let me know if you prefer a full reroll.
->
-> I had to use perl because "push" is a binary file (the first line
-> contains a NUL).
->
->
->  t/t5534-push-signed.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-> index 0ef6f66b5..3ee58dafb 100755
-> --- a/t/t5534-push-signed.sh
-> +++ b/t/t5534-push-signed.sh
-> @@ -152,11 +152,11 @@ test_expect_success GPG 'inconsistent push options in signed push not allowed' '
->         # Tweak the push output to make the push option outside the cert
->         # different, then replay it on a fresh dst, checking that ff is not
->         # deleted.
-> -       sed -i "s/\\([^ ]\\)bar/\\1baz/" push &&
-> +       perl -pe "s/([^ ])bar/\\1baz/" push >push.tweak &&
->         prepare_dst &&
->         git -C dst config receive.certnonceseed sekrit &&
->         git -C dst config receive.advertisepushoptions 1 &&
-> -       git receive-pack dst <push >out &&
-> +       git receive-pack dst <push.tweak >out &&
 
-The test should have a PERL prerequisite now, that's missing.
+> On 09 May 2017, at 07:31, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Lars Schneider <larsxschneider@gmail.com> writes:
+>=20
+>> The Git for Windows CI web app sometimes returns HTTP errors of
+>> "502 bad gateway" or "503 service unavailable" [1]. We also need to
+>> check the HTTP content because the GfW web app seems to pass through
+>> (error) results from other Azure calls with HTTP code 200.
+>> Wait a little and retry the request if this happens.
+>>=20
+>> [1] =
+https://docs.microsoft.com/en-in/azure/app-service-web/app-service-web-tro=
+ubleshoot-http-502-http-503
+>>=20
+>> Signed-off-by: Lars Schneider <larsxschneider@gmail.com>
+>> ---
+>>=20
+>> Hi Junio,
+>>=20
+>> I can't really test this as my TravisCI account does not have the
+>> extended timeout and I am unable to reproduce the error.
+>>=20
+>> It would be great if we could test this is a little bit in pu.
+>=20
+> This has been in 'pu' for a while. =20
+>=20
+> As the patch simply discards 502 (and others), it is unclear if the
+> failing test on 'next' is now gone, or the attempt to run 'pu'
+> happened to be lucky not to get one, from the output we can see in
+> https://travis-ci.org/git/git/jobs/229867212
+>=20
+> Are you comfortable enough to move this forward?
 
-Also using \1 will likely be deprecated in future versions of perl at
-some point:
+Yes, please move it forward. I haven't seen a "502 - Web server=20
+received an invalid response" on pu for a while. That means the
+patch should work as expected.
 
-    $ echo hifoo | perl -wpe "s/([^ ])bar/\\1baz/"
-    \1 better written as $1 at -e line 1.
-    hifoo
 
-Finally, you can just use -i like you did with sed, no need for the tempfile:
+Unrelated to this patch I have, however, seen two kinds of timeouts:
 
-    $ echo hibar >push
-    $ perl -pi -e 's/([^ ])bar/$1baz/' push
-    $ cat push
-    hibaz
+(1) Timeout in the "notStarted" state. This job eventually finished
+with a failure but it did start only *after* 3h:
+https://travis-ci.org/git/git/jobs/230225611
 
->         git -C dst rev-parse ff &&
->         grep "inconsistent push options" out
->  '
-> --
-> 2.13.0.rc2.291.g57267f2277-goog
->
+(2) Timeout in the "in progress" state. This job eventually finished
+successfully but it took longer than 3h:
+https://travis-ci.org/git/git/jobs/229867248
+
+Right now the timeout generates potential false negative results.=20
+I would like to change that and respond with a successful build=20
+*before* we approach the 3h timeout. This means we could generate
+false positives. Although this is not ideal, I think that is the better=20=
+
+compromise as a failing Windows build would usually fail quickly=20
+(e.g. in the compile step).
+
+What do you guys think? Would you be OK with that reasoning?
+If the Git for Windows builds get more stable over time then
+we could reevaluate this compromise.
+
+
+- Lars=
