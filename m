@@ -2,70 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C97661FC44
-	for <e@80x24.org>; Tue,  9 May 2017 01:33:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A7751FC44
+	for <e@80x24.org>; Tue,  9 May 2017 01:49:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751963AbdEIBdm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 21:33:42 -0400
-Received: from mail-pg0-f47.google.com ([74.125.83.47]:33640 "EHLO
-        mail-pg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751243AbdEIBdl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 21:33:41 -0400
-Received: by mail-pg0-f47.google.com with SMTP id u187so35677486pgb.0
-        for <git@vger.kernel.org>; Mon, 08 May 2017 18:33:41 -0700 (PDT)
+        id S1752483AbdEIBtW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 21:49:22 -0400
+Received: from mail-pg0-f49.google.com ([74.125.83.49]:36410 "EHLO
+        mail-pg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751785AbdEIBtV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 21:49:21 -0400
+Received: by mail-pg0-f49.google.com with SMTP id 64so20002062pgb.3
+        for <git@vger.kernel.org>; Mon, 08 May 2017 18:49:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=mOv1OfmTx1lZWtn2DlIwq4Yvk+oCAe6tfIhhRTyzqFI=;
-        b=Sns82p9y7XqkRovQHrG31if4mR38+RU3hrALck4aoQOfSX0ckvb5UHk37D14P+Q4gl
-         3r59oPqZWCYNIk9Q7c6pCftVO0LdfsqEo/YOjnDfoR/LxwSuzkLUw5ffzbeATz9izZrU
-         eZOuhEz/TaLdo/57Rk1A/prMApgmmAooET2olciLffaZWBhdosgg43s1NiY4UXUCZtq7
-         maNqJeOVvacUK0s1JEwgNQBKXd6KTfouNHbqLBzgWw729NEiZKUiozD40HilaerLEzkv
-         eHbyMK/9R5xBcPV6pRoCHAhObP4je1ZsrMMy8e0CEKBdZG0eu+Hx9P8hK64fTf4R7UaT
-         YIgQ==
+        bh=ReURAF+lSr7fOetApxv7XqOvODgLcViyc/Fzgae0k9c=;
+        b=h/pYsqH8Xn2QxWz0E448VMOQl+rEZ+c1P29kh5QdeM1AL8I5P+0v+HAL/sh8nsxIrt
+         FACEWoW2qzHvBU6ieYxN+3u60QKcz2i5CKDH4THuDv1ZzgLkUIT3gaAXTGVTGDrDYCgf
+         NeKCgKdUyHBVTfVePaKewigO/0DH/m+RhRWT3X+Yu32v9w493vHmJRcsWlYVQxX8fHim
+         9rnFeat30+gD+PdRyZ2VPtHTcXjFe5kN+rJqth4O2uX8aacQLnfRfJuPJiRGyJg6EvNH
+         RgnMJKOCNs2DdBZEVn5nyHjvc59IgKttJcYunMX6irWyl6A0CnRdTfHCkl7IlFYg6EtW
+         TioQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=mOv1OfmTx1lZWtn2DlIwq4Yvk+oCAe6tfIhhRTyzqFI=;
-        b=ekaqji5nlIYUkkek4I8vUur1j7pdwUnjQur2/o0Xx12mNvWIQyN6Jmjt4uIzDHjeaw
-         oeoyHBXACR9lBVoJkyTHTz6ulEE1InODAd0QXCib4MeipbbWeUMOi/JzAaE4LtQqNgit
-         HhyhN3L0pif5oIa7hX3/h4ky6J0CxZwRrcJeKq6m7BHTo1zEoTuK5pvfRelMkp8VKp8D
-         iNr0l40h9PFGPXJzkYQkcd/XlFphYpB8iY0YcnnZCDcfF4iojVKBe6wimOauyAgog+dL
-         npjOxZ6xIeRtgTnssOU/sQwcWEHeB10rS1feTh27jOz6gQAIP/us9CqV9N/1UoWW6kCh
-         Dqfg==
-X-Gm-Message-State: AODbwcAmLZvGIB4sXuq1BajQHp0YX9OwpvdpCUZb+f3ws9nhyUdgtz87
-        +l0+uC3Ya+qNGA==
-X-Received: by 10.98.192.143 with SMTP id g15mr6843773pfk.219.1494293620978;
-        Mon, 08 May 2017 18:33:40 -0700 (PDT)
+        bh=ReURAF+lSr7fOetApxv7XqOvODgLcViyc/Fzgae0k9c=;
+        b=FEhuV014oVQnDfT/pSYMXjydHom+ZlLbqE6ZsKnL4tmDtswCSOjCk+kEgy7E+/UD1Z
+         SajyIoDaWqrMwjcc6de3p2RzunSybTyrslrTy4CgG/seIDdwRjlGfUaiJPsGLEPQT63p
+         Ny+rx8vP38YcvALcfHgs8ULxYR4N+3M0R0C3RQ4oqQ5mGx8txWf8N2wciYxqP5Ok0GnN
+         z9KFiPVF/5wWzcEmcYRQAUAwKji6ucpDkAk3ODNDm89ZRbTFlzIyGupqkg+Ez/Z+mu0r
+         d1yZo5XimnlQKmvMyRQSNPLZsPcwu30cpTG+vI2/E6/ECHH5f9rdzB5Ac37vcyAXB5+Z
+         vsFA==
+X-Gm-Message-State: AODbwcCStCywAJEDW3ewO3lYICm3xpOHu2fX1DdDkLBujM1khK+XafG4
+        Omzr4cpw9lTOkw==
+X-Received: by 10.99.123.21 with SMTP id w21mr7310445pgc.106.1494294560800;
+        Mon, 08 May 2017 18:49:20 -0700 (PDT)
 Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
-        by smtp.gmail.com with ESMTPSA id r73sm28013391pfa.65.2017.05.08.18.33.40
+        by smtp.gmail.com with ESMTPSA id n8sm24437467pgd.31.2017.05.08.18.49.19
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 18:33:40 -0700 (PDT)
+        Mon, 08 May 2017 18:49:19 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: git-clone --config order & fetching extra refs during initial clone
-References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
-        <20170225205052.j3p7obbf4onf6cbf@sigill.intra.peff.net>
-        <xmqqd1e3xx4c.fsf@gitster.mtv.corp.google.com>
-        <20170227211217.73gydlxb2qu2sp3m@sigill.intra.peff.net>
-        <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
-        <20170315170829.7gp44typsyrlw6kg@sigill.intra.peff.net>
-        <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
-        <20170503202224.arjszzbruxjgpkt5@sigill.intra.peff.net>
-Date:   Tue, 09 May 2017 10:33:39 +0900
-In-Reply-To: <20170503202224.arjszzbruxjgpkt5@sigill.intra.peff.net> (Jeff
-        King's message of "Wed, 3 May 2017 16:22:24 -0400")
-Message-ID: <xmqq4lwu7r0s.fsf@gitster.mtv.corp.google.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 02/10] Move textconv_object to be with other textconv methods
+References: <20170505052729.7576-1-whydoubt@gmail.com>
+        <20170505052729.7576-3-whydoubt@gmail.com>
+        <xmqqwp9v6vw2.fsf@gitster.mtv.corp.google.com>
+        <CAGZ79kZ4k7qVKE7OpSEELorwSx5hUgJksLAeNgVGs0w1JC_Ffg@mail.gmail.com>
+        <xmqq1ss0cg8t.fsf@gitster.mtv.corp.google.com>
+        <20170508215525.gcyzzntqvm52mqcc@sigill.intra.peff.net>
+Date:   Tue, 09 May 2017 10:49:19 +0900
+In-Reply-To: <20170508215525.gcyzzntqvm52mqcc@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 8 May 2017 17:55:25 -0400")
+Message-ID: <xmqqziem6bq8.fsf@gitster.mtv.corp.google.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,29 +74,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> Good point. We can't really consider clone to be a blind "init + config
-> + fetch + checkout" because those middle two steps sometimes overlap
-> each other.  It really does need to be its own beast.
-> ...
-> The right solution there is probably pushing that logic down into the
-> transport layer. Or at the very least abstracting it into a function so
-> that both clone and fetch can call it without replicating the logic.
+> The specific helpers have less visibility, which is good. The public
+> functions a() and b() were already public, so no change. But now the
+> common helper is public, too, even though nobody except a() and b() care
+> about it.
 >
->> My patch deals with 'remote.<name>.refspec', i.e. 'remote->fetch'.
->> Apparently some extra care is necessary for 'remote.<name>.tagOpt' and
->> 'remote->fetch_tags', too.  Perhaps there are more, I haven't checked
->> again, and maybe we'll add similar config variables in the future.  So
->> I don't think that dealing with such config variables one by one in
->> 'git clone', too, is the right long-term solution...  but perhaps it's
->> sufficient for the time being?
->
-> I think your patch is a strict improvement and we don't need to hold up
-> waiting for a perfect fix (and because of the --single-branch thing you
-> mentioned, this may be the best we can do anyway).
+> So it's a tradeoff. And the important question is: is the bleed-over
+> between a() and b() worse than the common bits being made public?
 
-OK, so where does this patch stand now?  It already is too late for
-the upcoming release, but should we merge it to 'next' once the
-release is made, cook it in 'next' and shoot for the next release
-as-is, or do we want to allow minor tweaks before it hits 'next'?
+At this point you are saying the same thing as I said ;-) 
 
-Thanks.
+I haven't touched diff.c for a while, but my impression was that it
+was already a smallest logical unit, especially since some bits like
+diff-lib.c (the interface for the front-end programs to drive the
+machinery via the three standard pairs of sources) and ws.c (diff
+subsystem to deal with whitespace errors) are already split out (and
+needless to say, the diffcore transformations are all in their own
+separate files).  Over time people may have added what does not
+belong there merely for convenience, which may want to get ejected,
+but I do not think of many instances of them offhand.
+
+    ... goes and looks ...
+
+It appears that the textconv related helpers (which was where this
+discussion thread started from) could be first restructured so that
+they do not depend on diff_filespec and turned into a more generic
+"I have this path and a blob object name, please run textconv to it
+and..." interface and then moved out of the file into its own
+textconv.[ch].  It does not need access to quite a few fields in
+diff_filespec structure (e.g.  it shouldn't care what filemode the
+thing has).  The diff machinery wants the result in a contiguous
+piece of memory and that could be a good starting point, but I said
+"and..." above because I am not sure if it is the best generic
+thing the restructured interface can do to the result.
+
+
+
+
+
