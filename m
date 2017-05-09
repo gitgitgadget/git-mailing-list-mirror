@@ -2,101 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23E7F2018D
-	for <e@80x24.org>; Tue,  9 May 2017 22:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B8E12018D
+	for <e@80x24.org>; Tue,  9 May 2017 22:16:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750780AbdEIWN0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 18:13:26 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:33387 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750727AbdEIWNZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 18:13:25 -0400
-Received: by mail-pg0-f43.google.com with SMTP id u187so6371600pgb.0
-        for <git@vger.kernel.org>; Tue, 09 May 2017 15:13:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8gmPGOeHHaSfH0Vlxhuful7J+KAAZhUYJVl/aqNGCOk=;
-        b=d6evq+YOk/7rZ17ie4XmY2gmTTrg/hfoU1iI/ToNntUQoJuVEg5WG/BBb36kaMJpE6
-         eNk1Mayzb4apSHjZJdsm+L94R6yahC8PLRHq67Vx2rV/zrlSa05zwgfhEHXD+8Cd2xBq
-         DlJ7DR4Wsw0Y+OJh0j7j8fqy8l4wcPsdC8adyQncTNrU0CJTnwRhI936jmfP0TdwDpX0
-         P8Ys69WSWPqPioadW3u1PVd/960QQcqNzyUN4uZZv3x69+6mNAAPYFzLtLvo8nHR7QMz
-         j7tFvg9ZtApO4weV5nnSzFMRXiPnRawXpQ1TOPyhFmM1ltbKLn8bH4HnwpAUEGS+L+Kr
-         Frbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8gmPGOeHHaSfH0Vlxhuful7J+KAAZhUYJVl/aqNGCOk=;
-        b=iP/baQNGPf9kZkDjP9es+p0cpfKAaYk73jeURjCciNTyB3amupoD4vzZZyGELwnEHX
-         3Avz002lIlAR0uxhUPkJMros+wnkkEntOh86sYIC55WHiLDkKQu+WOmAN+mcBvXqWVdq
-         qo4j3rHq5wj0whq/Du+y6xtdDfEmtiCF8OAS+s4v/+3lJFd09Tw3jHO7Y0IX+OEeWtI1
-         97ixa61NQJPHYuAARgpvyA6sRwHZ6Km5C2n74FqlIAexz20gOjRVRfmijgE8XelrD/s7
-         btPzkOk+USGKvL5BBcy8AhOpDAo8oiQnpqTTucrWMS8RAbRzvmvsjOKd/C0pFiTqXvTt
-         tHmA==
-X-Gm-Message-State: AODbwcB3uRbSJp0Q6m85m5AxivratKriqsFWwMwjr5P1/fqiPCdsWGcN
-        M1wRvxapOtewlG2P
-X-Received: by 10.84.143.129 with SMTP id 1mr3363648plz.105.1494368004559;
-        Tue, 09 May 2017 15:13:24 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:b127:d26b:19a3:378d])
-        by smtp.gmail.com with ESMTPSA id o5sm1561351pga.64.2017.05.09.15.13.23
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 09 May 2017 15:13:23 -0700 (PDT)
-Date:   Tue, 9 May 2017 15:13:22 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>, Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 00/53] object_id part 8
-Message-ID: <20170509221322.GA106700@google.com>
-References: <20170506221038.296722-1-sandals@crustytoothpaste.net>
+        id S1750767AbdEIWQe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 18:16:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48405 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750727AbdEIWQd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 18:16:33 -0400
+Received: (qmail 22314 invoked by uid 109); 9 May 2017 22:16:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 22:16:32 +0000
+Received: (qmail 29126 invoked by uid 111); 9 May 2017 22:17:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 18:17:02 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 May 2017 18:16:30 -0400
+Date:   Tue, 9 May 2017 18:16:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170509221629.3z35qcz36oiix3kh@sigill.intra.peff.net>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170506221038.296722-1-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20170509182042.28389-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/06, brian m. carlson wrote:
-> This is the eighth series of patches to convert unsigned char [20] to
-> struct object_id.  This series converts lookup_commit, lookup_blob,
-> lookup_tree, lookup_tag, and finally parse_object to struct object_id.
-> 
-> A small number of functions have temporaries inserted during the
-> conversion in order to allow conversion of functions that still need to
-> take unsigned char *; they are removed either later in the series or
-> will be in a future series.
-> 
-> This series can be fetched from the object-id-part8 branch from either
-> of the follwing:
-> 
-> https://github.com/bk2204/git
-> https://git.crustytoothpaste.net/git/bmc/git.git
-> 
-> Changes from v2:
-> * Remove spurious space after ampersand.
-> * Undo more needless line rewrapping.
-> * Expand computation for notes path.
-> * Remove check for line->len with parse_oid_hex.
-> 
-> Changes from v1:
-> * Rebase on master.  This led to a conflict with the ref-cache changes in patch
->   39.  Extra-careful review here would be welcome.
-> * Undo the needless line rewrapping.
-> * Fix the commit message typo.
-> * Use GIT_MAX_RAWSZ instead of struct object_id for the pack checksum.
+On Tue, May 09, 2017 at 11:20:42AM -0700, Jonathan Tan wrote:
 
-I wasn't able to find any issues with v3.  Looks good.
+> fetch-pack, when fetching a literal SHA-1 from a server that is not
+> configured with uploadpack.allowtipsha1inwant (or similar), always
+> returns an error message of the form "Server does not allow request for
+> unadvertised object %s". However, it is sometimes the case that such
+> object is advertised.
+> 
+> Teach fetch-pack to also check the SHA-1s of the refs in the received
+> ref advertisement if a literal SHA-1 was given by the user.
 
--- 
-Brandon Williams
+Hmm. That makes sense generally, as the request should succeed. But it
+seems like we're creating a client that will sometimes succeed and
+sometimes fail, and the reasoning will be somewhat opaque to the user.
+I have a feeling I'm missing some context on when you'd expect this to
+kick in.
+
+> +static int is_literal_sha1(const struct ref *ref)
+> +{
+> +	struct object_id oid;
+> +	return !get_oid_hex(ref->name, &oid) &&
+> +	       !ref->name[40] &&
+> +	       !oidcmp(&oid, &ref->old_oid);
+> +}
+
+I think the preferred method these days is to avoid the bare "40":
+
+  struct object_oid oid;
+  const char *end;
+  return !parse_oid_hex(ref->name, &oid, &end) &&
+         !*end &&
+	 !oidcmp(&oid, &ref->old_oid);
+
+I was confused at first why we need this oidcmp() and the one below. But
+this one is checking "does the name parse to itself", and the other is
+checking "does this parse to our sought ref?". So both checks are
+needed.
+
+> +			for (i = 0; i < nr_sought; i++) {
+> +				struct ref *s = sought[i];
+> +				if (!strcmp(ref->name, s->name) ||
+> +				    (is_literal_sha1(s) &&
+> +				     !oidcmp(&ref->old_oid, &s->old_oid))) {
+> +					keep = 1;
+> +					s->match_status = REF_MATCHED;
+>  				}
+> -				i++;
+>  			}
+
+This will reparse ref->name as an oid via is_literal_sha1() for each
+pass through the loop. Should it be hoisted out? Maybe that is just
+premature optimization, though.
+
+Other than those minor nits, the code itself looks fine to me.
+
+-Peff
