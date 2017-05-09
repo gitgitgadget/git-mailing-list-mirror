@@ -2,91 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84C7B1FC44
-	for <e@80x24.org>; Tue,  9 May 2017 03:15:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C124A1FC44
+	for <e@80x24.org>; Tue,  9 May 2017 03:16:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751423AbdEIDPz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 23:15:55 -0400
-Received: from mail-pg0-f66.google.com ([74.125.83.66]:36358 "EHLO
-        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751130AbdEIDPy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 23:15:54 -0400
-Received: by mail-pg0-f66.google.com with SMTP id 64so5599249pgb.3
-        for <git@vger.kernel.org>; Mon, 08 May 2017 20:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=i8Hq6N80G13ZBYsxLdEIrllQRUolUkHP70yNgnPX3RE=;
-        b=i5Qd4lWrO+SX2JAezEiTY+4ocQZ06o43x0duRnBipzuJce2rFkHP33fwVrE54CopDP
-         n+71z/OUnxoXdFE0+/Yh7TB9twTg8pCbEoxG2F0BqSfx+JRVh5/t45/360rpqUf9OV2i
-         gwEa1poONahNbTr+vKVYYp7uSO8GAQKaJ73vC98nbMrAPiG4sHAzlATWsgCgd+umMNov
-         sgLmgRkXfeFggUlZBgSgwu7lbBE11zybAdH290HToihZbLgIP5UoFi6Toe/h0AtkdcOX
-         b3adH1ssrdh4+Fyjtbxvu27/n4zlAIy5kw/yS3Z2vlIQU5L6Ieloybey1u+o9r3oBUU7
-         TnDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=i8Hq6N80G13ZBYsxLdEIrllQRUolUkHP70yNgnPX3RE=;
-        b=ZjtgjOCihJ7PmjKbNNIqNQUYmwhlaOYdTow1yWP4KKK9r3yj0SuzGAm7hY346QChVq
-         /N9tLKASwcG9OP3nPQTtEGkb5E/rAg496lKNHn/IJ5ZCh/gqbOl2I2sxe006nRVBjqkN
-         aAJgcRxSTJBYteFbo8p+nxq3jB3xV9864QDr8fCluz0sfKtGgsmbg3RVd8GbArvWKuq1
-         3giOLcxiLKLCECN089YDL6ZR5APtmhk9/UIejLRo6WK5ZTyhC2GOmcUXbBHeX3DNfUp9
-         7739QrPN3dmMfB/502v9VQmqmpZLYjNHkVxtXGmx+ZaWDmeeda0ggBcpTpa7JmJLirbI
-         82pw==
-X-Gm-Message-State: AN3rC/6phPwOnp7Pheq0ByX6F2md/SZ+dR7r72L/QxEDCilnfoRE4atd
-        BT/E8xY6xrO3Fr+VRLz5cQ==
-X-Received: by 10.84.143.195 with SMTP id 61mr88452252plz.158.1494299753629;
-        Mon, 08 May 2017 20:15:53 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
-        by smtp.gmail.com with ESMTPSA id p16sm29908195pgc.4.2017.05.08.20.15.52
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 20:15:52 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com
-Subject: Re: [PATCH v2 2/2] receive-pack: verify push options in cert
-References: <cover.1494279020.git.jonathantanmy@google.com>
-        <cover.1494027001.git.jonathantanmy@google.com>
-        <cover.1494279020.git.jonathantanmy@google.com>
-        <cc21a5566dcf10e4683465ac253c76370b7b6a7f.1494279020.git.jonathantanmy@google.com>
-Date:   Tue, 09 May 2017 12:15:51 +0900
-In-Reply-To: <cc21a5566dcf10e4683465ac253c76370b7b6a7f.1494279020.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Mon, 8 May 2017 14:33:51 -0700")
-Message-ID: <xmqqlgq64t5k.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751475AbdEIDQ5 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 23:16:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47828 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751130AbdEIDQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 23:16:56 -0400
+Received: (qmail 12962 invoked by uid 109); 9 May 2017 03:16:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 03:16:56 +0000
+Received: (qmail 19281 invoked by uid 111); 9 May 2017 03:17:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 23:17:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 23:16:54 -0400
+Date:   Mon, 8 May 2017 23:16:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Marc Branchaud <marcnarc@xiplink.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 0/2] Make diff plumbing commands respect the
+ indentHeuristic.
+Message-ID: <20170509031653.7hc36pil3vzrobsz@sigill.intra.peff.net>
+References: <19607a03-71e0-440b-7213-64d25f6fa8da@xiplink.com>
+ <20170427205037.1787-1-marcnarc@xiplink.com>
+ <CAGZ79kbUqVfz+6Y0XkTL7FCZfaD+2YRMZ_v0vP8-DOFhWc+ELw@mail.gmail.com>
+ <20170428220450.olqitnuwhrxzg3pv@sigill.intra.peff.net>
+ <CACBZZX5f81HKCjRjTDyXzNMVuef9Z_ECS+0SVk2xpbwXudgxCw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACBZZX5f81HKCjRjTDyXzNMVuef9Z_ECS+0SVk2xpbwXudgxCw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Mon, May 01, 2017 at 12:34:38PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> Teach receive-pack, in the case that push options are provided for a
-> signed push, to verify that the push options both within the cert and
-> outside the cert are consistent.
+> > I don't know if we would want to be extra paranoid about patch-ids.
+> > There is no helping:
+> >
+> >   git rev-list HEAD | git diff-tree --stdin -p | git patch-id --stable
+> >
+> > because diff-tree doesn't know that it's trying for "--stable" output.
+> > But the diffs we compute internally for patch-id could disable the
+> > heuristics. I'm not sure if those matter, though. AFAIK those are used
+> > only for internal comparisons within a single program. I.e., we never
+> > compare them against input from the user, nor do we output them to the
+> > user. So they'll change, but I don't think anybody would care.
+> 
+> I have a few-million row table with commit_id as one column & patch_id
+> as another. I.e. a commit -> patch_id mapping.
 
-Thanks.  The idea was that the certificate should record how the
-push was made fully, hence we need two copies.  The one outside the
-certificate is meant to be actually used, but obviously we need to
-make sure that matches what is recorded in the certificate.
+Thanks for this data point. It's always interesting to hear about
+unforeseen uses of the tools.
 
-In retrospect, we could have required the receiver who groks signed
-pushes to only look inside the certificate for options etc. so that
-the sender can omit the "extra" copies outside the certificate, but
-that is not how the current protocol is structured, hence ...
+Out of curiosity, how do you generate the patch-ids? Is it with
+something like diff-tree piped to patch-id?
 
-> This sets in stone the requirement that send-pack redundantly send its
-> push options in 2 places,...
+I do feel a bit sad about breaking this case (or at the very least
+forcing you to set an option to retain cross-version compatibility). But
+my gut says that we don't want to lock ourselves into never changing the
+diff algorithm (and I'm sure we've done it inadvertently a few times
+over the years; even the recent switch to turning on renames would have
+had that impact).
 
-... this requirement.
-
-Thanks.
+-Peff
