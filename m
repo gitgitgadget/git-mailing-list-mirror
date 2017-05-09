@@ -6,181 +6,104 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 916411FC44
-	for <e@80x24.org>; Tue,  9 May 2017 02:26:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03EB01FC44
+	for <e@80x24.org>; Tue,  9 May 2017 02:34:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753409AbdEIC0Y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 22:26:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47779 "EHLO cloud.peff.net"
+        id S1751785AbdEICei (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 22:34:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47790 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1752232AbdEIC0Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 22:26:24 -0400
-Received: (qmail 9759 invoked by uid 109); 9 May 2017 02:26:24 -0000
+        id S1751094AbdEICei (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 22:34:38 -0400
+Received: (qmail 10333 invoked by uid 109); 9 May 2017 02:34:37 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 02:26:24 +0000
-Received: (qmail 18560 invoked by uid 111); 9 May 2017 02:26:53 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 02:34:37 +0000
+Received: (qmail 18599 invoked by uid 111); 9 May 2017 02:35:06 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 22:26:53 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 22:26:21 -0400
-Date:   Mon, 8 May 2017 22:26:21 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 22:35:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 22:34:34 -0400
+Date:   Mon, 8 May 2017 22:34:34 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: git-clone --config order & fetching extra refs during initial
- clone
-Message-ID: <20170509022621.ku6pozb2zdeltz6o@sigill.intra.peff.net>
-References: <robbat2-20170225T185056-448272755Z@orbis-terrarum.net>
- <20170225205052.j3p7obbf4onf6cbf@sigill.intra.peff.net>
- <xmqqd1e3xx4c.fsf@gitster.mtv.corp.google.com>
- <20170227211217.73gydlxb2qu2sp3m@sigill.intra.peff.net>
- <CAM0VKj=rsAfKvVccOMOoo5==Q1yW1U0zJBbUV=faKppWFm-u+g@mail.gmail.com>
- <20170315170829.7gp44typsyrlw6kg@sigill.intra.peff.net>
- <CAM0VKjnjMEThuMvLEQByxWvxVvdzMSVsFKKstKLMweEx5UwTcg@mail.gmail.com>
- <20170503202224.arjszzbruxjgpkt5@sigill.intra.peff.net>
- <xmqq4lwu7r0s.fsf@gitster.mtv.corp.google.com>
- <20170509021028.fr5mc76kcbpnn4zs@sigill.intra.peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 02/10] Move textconv_object to be with other textconv
+ methods
+Message-ID: <20170509023434.hxhmvemmrymgu5ij@sigill.intra.peff.net>
+References: <20170505052729.7576-1-whydoubt@gmail.com>
+ <20170505052729.7576-3-whydoubt@gmail.com>
+ <xmqqwp9v6vw2.fsf@gitster.mtv.corp.google.com>
+ <CAGZ79kZ4k7qVKE7OpSEELorwSx5hUgJksLAeNgVGs0w1JC_Ffg@mail.gmail.com>
+ <xmqq1ss0cg8t.fsf@gitster.mtv.corp.google.com>
+ <20170508215525.gcyzzntqvm52mqcc@sigill.intra.peff.net>
+ <xmqqziem6bq8.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170509021028.fr5mc76kcbpnn4zs@sigill.intra.peff.net>
+In-Reply-To: <xmqqziem6bq8.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, May 08, 2017 at 10:10:28PM -0400, Jeff King wrote:
+On Tue, May 09, 2017 at 10:49:19AM +0900, Junio C Hamano wrote:
 
-> On Tue, May 09, 2017 at 10:33:39AM +0900, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
 > 
-> > >> My patch deals with 'remote.<name>.refspec', i.e. 'remote->fetch'.
-> > >> Apparently some extra care is necessary for 'remote.<name>.tagOpt' and
-> > >> 'remote->fetch_tags', too.  Perhaps there are more, I haven't checked
-> > >> again, and maybe we'll add similar config variables in the future.  So
-> > >> I don't think that dealing with such config variables one by one in
-> > >> 'git clone', too, is the right long-term solution...  but perhaps it's
-> > >> sufficient for the time being?
-> > >
-> > > I think your patch is a strict improvement and we don't need to hold up
-> > > waiting for a perfect fix (and because of the --single-branch thing you
-> > > mentioned, this may be the best we can do anyway).
-> > 
-> > OK, so where does this patch stand now?  It already is too late for
-> > the upcoming release, but should we merge it to 'next' once the
-> > release is made, cook it in 'next' and shoot for the next release
-> > as-is, or do we want to allow minor tweaks before it hits 'next'?
+> > The specific helpers have less visibility, which is good. The public
+> > functions a() and b() were already public, so no change. But now the
+> > common helper is public, too, even though nobody except a() and b() care
+> > about it.
+> >
+> > So it's a tradeoff. And the important question is: is the bleed-over
+> > between a() and b() worse than the common bits being made public?
 > 
-> I'd be OK with it as-is, but here are my nitpicks as a diff (keep the
-> assignment of refspec_count in one place, and free fetch_patterns as
-> soon as it is no longer used).
-> 
-> I actually think it might be nice to pull the whole thing out into its
-> own function, but the parameters it takes would be oddly specific.
+> At this point you are saying the same thing as I said ;-) 
 
-Actually, it's not too bad, because we can pick up things like
-option_origin from the globals. Here it is for reference. The nice thing
-about it (IMHO) is that it makes the lifetimes of the helper variables
-much more shorter and more clear.
+Maybe, but I think my hunch is that the answer to the question is
+different than yours. ;)
 
-But I'm OK with any of Gábor's original, my earlier squash, or this one.
+> I haven't touched diff.c for a while, but my impression was that it
+> was already a smallest logical unit, especially since some bits like
+> diff-lib.c (the interface for the front-end programs to drive the
+> machinery via the three standard pairs of sources) and ws.c (diff
+> subsystem to deal with whitespace errors) are already split out (and
+> needless to say, the diffcore transformations are all in their own
+> separate files).  Over time people may have added what does not
+> belong there merely for convenience, which may want to get ejected,
+> but I do not think of many instances of them offhand.
 
-(Also, as a side note, the free(refspec) in the context at the bottom
-seems like it probably ought to be free_refspec() in the original and
-free_refspecs() after this change, but I didn't investigate).
+Just skimming the file, I suspect diff_filespec could be broken out into
+a semi-public interface (many of its functions already are public
+anyway), probably dirstat could be broken out, and possibly other
+specific formats could be broken into their own files. But I didn't
+spend much time on it.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 0630202c8..645cfa4fd 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -841,6 +841,37 @@ static void dissociate_from_references(void)
- 	free(alternates);
- }
- 
-+static struct refspec *get_clone_refspecs(const char *base_refspec,
-+					  unsigned int *count)
-+{
-+	char *key;
-+	const struct string_list *config_fetch_patterns;
-+	struct refspec *ret;
-+
-+	key = xstrfmt("remote.%s.fetch", option_origin);
-+	config_fetch_patterns = git_config_get_value_multi(key);
-+
-+	if (!config_fetch_patterns) {
-+		*count = 1;
-+		ret = parse_fetch_refspec(1, &base_refspec);
-+	} else {
-+		const char **fetch_patterns;
-+		struct string_list_item *fp;
-+		unsigned int i = 1;
-+
-+		*count = 1 + config_fetch_patterns->nr;
-+		ALLOC_ARRAY(fetch_patterns, *count);
-+		fetch_patterns[0] = base_refspec;
-+		for_each_string_list_item(fp, config_fetch_patterns)
-+			fetch_patterns[i++] = fp->string;
-+		ret = parse_fetch_refspec(*count, fetch_patterns);
-+		free(fetch_patterns);
-+	}
-+
-+	free(key);
-+	return ret;
-+}
-+
- int cmd_clone(int argc, const char **argv, const char *prefix)
- {
- 	int is_bundle = 0, is_local;
-@@ -861,9 +892,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	int err = 0, complete_refs_before_fetch = 1;
- 
- 	struct refspec *refspec;
--	unsigned int refspec_count = 1;
--	const char **fetch_patterns;
--	const struct string_list *config_fetch_patterns;
-+	unsigned int refspec_count;
- 
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
-@@ -982,7 +1011,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 		strbuf_addf(&branch_top, "refs/remotes/%s/", option_origin);
- 	}
- 
--	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
- 	strbuf_addf(&key, "remote.%s.url", option_origin);
- 	git_config_set(key.buf, repo);
- 	strbuf_reset(&key);
-@@ -990,21 +1018,8 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_reference.nr)
- 		setup_reference();
- 
--	strbuf_addf(&key, "remote.%s.fetch", option_origin);
--	config_fetch_patterns = git_config_get_value_multi(key.buf);
--	if (config_fetch_patterns)
--		refspec_count = 1 + config_fetch_patterns->nr;
--	fetch_patterns = xcalloc(refspec_count, sizeof(*fetch_patterns));
--	fetch_patterns[0] = value.buf;
--	if (config_fetch_patterns) {
--		struct string_list_item *fp;
--		unsigned int i = 1;
--		for_each_string_list_item(fp, config_fetch_patterns)
--			fetch_patterns[i++] = fp->string;
--	}
--	refspec = parse_fetch_refspec(refspec_count, fetch_patterns);
--
--	strbuf_reset(&key);
-+	strbuf_addf(&value, "+%s*:%s*", src_ref_prefix, branch_top.buf);
-+	refspec = get_clone_refspecs(value.buf, &refspec_count);
- 	strbuf_reset(&value);
- 
- 	remote = remote_get(option_origin);
-@@ -1129,7 +1144,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&value);
- 	junk_mode = JUNK_LEAVE_ALL;
- 
--	free(fetch_patterns);
- 	free(refspec);
- 	return err;
- }
+> It appears that the textconv related helpers (which was where this
+> discussion thread started from) could be first restructured so that
+> they do not depend on diff_filespec and turned into a more generic
+> "I have this path and a blob object name, please run textconv to it
+> and..." interface and then moved out of the file into its own
+> textconv.[ch].  It does not need access to quite a few fields in
+> diff_filespec structure (e.g.  it shouldn't care what filemode the
+> thing has).  The diff machinery wants the result in a contiguous
+> piece of memory and that could be a good starting point, but I said
+> "and..." above because I am not sure if it is the best generic
+> thing the restructured interface can do to the result.
+
+I think some of the users of textconv do have to go through some
+contortions to turn their buffers into diff_filespecs (e.g., blame and
+grep), and it would be nice to fix that. But the diff-driver lookup and
+caching is tied to the diff_filespec, too (which is perhaps a sign of a
+misfeature in the first place, as the "diff" attribute is being used for
+things like "grep" and "cat-file"). So we'd have to resolve that.
+
+So I think there is room for improvement there, but I'm also not sure it
+is worth the trouble. AFAIK neither textconv nor the general length of
+diff.c is holding up anybody's work or even making it significantly more
+difficult. If people have spare cycles, they are free to work on
+anything, of course. But I can think of code that is probably in more
+dire need of refactoring. :)
+
+-Peff
