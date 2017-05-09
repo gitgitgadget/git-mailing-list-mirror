@@ -3,112 +3,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F0FE92018D
-	for <e@80x24.org>; Tue,  9 May 2017 23:44:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 82EC52018D
+	for <e@80x24.org>; Tue,  9 May 2017 23:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750867AbdEIXoc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 19:44:32 -0400
-Received: from mail-io0-f180.google.com ([209.85.223.180]:36460 "EHLO
-        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750733AbdEIXob (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 19:44:31 -0400
-Received: by mail-io0-f180.google.com with SMTP id o12so3781554iod.3
-        for <git@vger.kernel.org>; Tue, 09 May 2017 16:44:31 -0700 (PDT)
+        id S1750986AbdEIXu7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 19:50:59 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:35499 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750734AbdEIXu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 19:50:58 -0400
+Received: by mail-pf0-f196.google.com with SMTP id u26so1716044pfd.2
+        for <git@vger.kernel.org>; Tue, 09 May 2017 16:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fmRuPspTA0d605b9H+rWP0tB7EJ6XNQq0ZIp4c3TTDc=;
-        b=jJyhIG7yRzfmDDE4/BonzPZwGvqBXwL55X8PUEAdAfzcxpGPzKiIvUQImCK9xZD12m
-         cusAi6vkqq518QVf8UClxATy25lLnOyEyC+5L7dxEP4bspyD21AuWNo9AKEnzr2VkmTP
-         6Nsor9O0YxBoFn4NMfdxHe4I5nGT0e8zfGwnZUx5w02BEU/nWk+4kNKlIYvmDUJb0Agf
-         DP3hAE+YjNWaviZxeRU0votdhUhmkM/ao0FkHSrkHx7kNBXHXpLL3BJFTBWVtqrZ3Yjj
-         IT82o0P5htPMCRqCsU+tMRyU1dX+RSWEc1Aek4ChcD5yXiyy5l5xye8ZN6GD8uLF4Ihq
-         eSbw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=7cUhFiEFThQ9F3GHLKK95EeSriu3NPFkgEsv6jVkFaU=;
+        b=smEJrkOoN+dMa9kd1Qz1o4Kj0sUKUKHPES34OeI4x3ySSSiPRHp7ks+JjQLGVLSv+S
+         V6moCBaIOJEEsStchT0LpPvZ9UHsUp8rpVNSMy1yzBEsvlzOuRUwnEIVv+vo99uqWsqp
+         Jsl0TpgK+jM4xyDeEJeCptx1GfxKs3LBJd5TA1qzvBWdPRug2tX92wPb1SdsyJv73C8w
+         OGCoDURIljwC4If7stMwPXR/3qPVdKUA/KhHmQ+XbXaxtYnCtsUxxMaTL89nUBpKLXbM
+         pIRHz2/cTuD4vzjrjwPga3BDIHkNWEWNX5g9BXZiK6APDrhZG+hY5hVXljVNrMxwRo4G
+         4TJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fmRuPspTA0d605b9H+rWP0tB7EJ6XNQq0ZIp4c3TTDc=;
-        b=L/eRJbw9/ux0AkcUfeixr14NChF7ItKDlja5yCGJz0EoYDYBN/6cAnQKUNcr+s+RIH
-         hBf4pBLNl4L0++4OiI2MWiV9p+Xl/JkEiq5ocN/Rcur9eqsY9Sp2CGUr9xrrITS5Ub3n
-         aDZVi+ntSrFh7xfsx41kAv2UKurBUUJNHk6Hp2d+yz810tIFRxsGSKKg1XjB3LbJkTAu
-         dhZhnHzHsO/gUMlJS59H2hcigrWXpCSJq+iemWg4ISdOVqhL00zWz5BQXh6DIbAfpPpi
-         K2SNSgew60RebZeGwlWXGs0q5pBFZz8Ywsq110ILdDS3j8A/jbL6SPneL/I/LAXUmqEd
-         lgTg==
-X-Gm-Message-State: AODbwcCNn8kYEjwxn94DXZGvjtkic8U8fo4oUybkDEvgRWtrOKNgwAqI
-        geFaOeVThYfd6RSxKLS1gTDoDR3yUQ7M
-X-Received: by 10.107.178.12 with SMTP id b12mr960256iof.50.1494373470640;
- Tue, 09 May 2017 16:44:30 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=7cUhFiEFThQ9F3GHLKK95EeSriu3NPFkgEsv6jVkFaU=;
+        b=C+FMQBrClhRGj+NEeff1d2ua8W+z64hz9bsxtsri1FExjTNHdiuT/R1jZJtxk7IzHX
+         ZfMxSINMHJVP5LkwotSxNSqiR/flXP0DE1TqvuKY5zzu9GVE+FqEOKuHAWmPYlTCnrV5
+         Su6KuMYTeha1wXQ2lzWJBi6lLtgF2YF1Ic23ahAlrD0GhnMGQxv3Iyz+qExm6RLA90zw
+         PKtBBweJlrPBHucVbr0fpTXYL5ZgwjyPsCI9abehuNflu15MYNo+wq4NnQDq/4tvnJ6u
+         xWt3F6FrVVo4JCXxRb4Xqjh0GMtOeECbL2kZlbQIY9Pn4I8Sgo2/DHQM465sp70GXF1/
+         mVgA==
+X-Gm-Message-State: AODbwcAR4esG97B//bZolhcNYv8DvnCJXnwJf0aEeKNsF+X8nq+oH3eO
+        2gMQjMTl3lX8WQ==
+X-Received: by 10.84.231.206 with SMTP id g14mr3881996pln.152.1494373857907;
+        Tue, 09 May 2017 16:50:57 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:9133:cf19:b689:27d6])
+        by smtp.gmail.com with ESMTPSA id s186sm1589396pfb.98.2017.05.09.16.50.57
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 09 May 2017 16:50:57 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v2] travis-ci: retry if Git for Windows CI returns HTTP error 502 or 503
+References: <20170503215015.17949-1-larsxschneider@gmail.com>
+        <xmqqpofi35ik.fsf@gitster.mtv.corp.google.com>
+        <1ADD08FD-1DC0-4AC5-9E69-AC1A5DCBED83@gmail.com>
+Date:   Wed, 10 May 2017 08:50:56 +0900
+In-Reply-To: <1ADD08FD-1DC0-4AC5-9E69-AC1A5DCBED83@gmail.com> (Lars
+        Schneider's message of "Tue, 9 May 2017 18:40:01 +0100")
+Message-ID: <xmqqmvalzj1b.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 9 May 2017 16:44:09 -0700 (PDT)
-In-Reply-To: <xmqqd1bh1wqy.fsf@gitster.mtv.corp.google.com>
-References: <xmqqfuge4sak.fsf@gitster.mtv.corp.google.com> <20170509164515.31942-1-jonathantanmy@google.com>
- <CACBZZX5DF6sTTYSUpYnvas925N-XsoUGrM-bYbAN_67g8-w2GQ@mail.gmail.com> <xmqqd1bh1wqy.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 10 May 2017 01:44:09 +0200
-Message-ID: <CACBZZX7diKKuz0r2uWQsAmxDkWm_2Afi=zWSTRMYRwiobEGwpw@mail.gmail.com>
-Subject: Re: [PATCH] fixup! use perl instead of sed
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 10, 2017 at 12:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Tue, May 9, 2017 at 6:45 PM, Jonathan Tan <jonathantanmy@google.com> =
-wrote:
->> ...
->>>         # Tweak the push output to make the push option outside the cer=
-t
->>>         # different, then replay it on a fresh dst, checking that ff is=
- not
->>>         # deleted.
->>> -       sed -i "s/\\([^ ]\\)bar/\\1baz/" push &&
->>> +       perl -pe "s/([^ ])bar/\\1baz/" push >push.tweak &&
->>>         prepare_dst &&
->>>         git -C dst config receive.certnonceseed sekrit &&
->>>         git -C dst config receive.advertisepushoptions 1 &&
->>> -       git receive-pack dst <push >out &&
->>> +       git receive-pack dst <push.tweak >out &&
->>
->> The test should have a PERL prerequisite now, that's missing.
->
-> For a single-liner like this, our stance has always been that t/
-> scripts can assume _some_ version of Perl interpreter available for
-> use, cf. t/README where it lists prerequisites and explains them:
->
->      - PERL
->
->        Git wasn't compiled with NO_PERL=3DYesPlease.
->
->        Even without the PERL prerequisite, tests can assume there is a
->        usable perl interpreter at $PERL_PATH, though it need not be
->        particularly modern.
->
-> So unless "receive-pack" that is being tested here requires Perl at
-> runtime, we do not want PERL prerequisite for this test.
+Lars Schneider <larsxschneider@gmail.com> writes:
 
-Oops, sorry about that.
-
->> Also using \1 will likely be deprecated in future versions of perl at
->> some point:
->>
->>     $ echo hifoo | perl -wpe "s/([^ ])bar/\\1baz/"
->>     \1 better written as $1 at -e line 1.
->>     hifoo
+>>> It would be great if we could test this is a little bit in pu.
+>> 
+>> This has been in 'pu' for a while.  
+>> 
+>> As the patch simply discards 502 (and others), it is unclear if the
+>> failing test on 'next' is now gone, or the attempt to run 'pu'
+>> happened to be lucky not to get one, from the output we can see in
+>> https://travis-ci.org/git/git/jobs/229867212
+>> 
+>> Are you comfortable enough to move this forward?
 >
-> Very good advice from a Perl expert; thanks.
+> Yes, please move it forward. I haven't seen a "502 - Web server 
+> received an invalid response" on pu for a while. That means the
+> patch should work as expected.
 
-No problem. Hopefully my noisy advice will at least lead to fixing a
-bug in perl if there is one :)
+Will do, thanks.
+
+> Unrelated to this patch I have, however, seen two kinds of timeouts:
+>
+> (1) Timeout in the "notStarted" state. This job eventually finished
+> with a failure but it did start only *after* 3h:
+> https://travis-ci.org/git/git/jobs/230225611
+>
+> (2) Timeout in the "in progress" state. This job eventually finished
+> successfully but it took longer than 3h:
+> https://travis-ci.org/git/git/jobs/229867248
+>
+> Right now the timeout generates potential false negative results. 
+> I would like to change that and respond with a successful build 
+> *before* we approach the 3h timeout. This means we could generate
+> false positives. Although this is not ideal, I think that is the better 
+> compromise as a failing Windows build would usually fail quickly 
+> (e.g. in the compile step).
+>
+> What do you guys think? Would you be OK with that reasoning?
+> If the Git for Windows builds get more stable over time then
+> we could reevaluate this compromise.
+
+I'd rather see a false breakage on Windows build (i.e. "this might
+have succeeded given enough time, but it didn't finish within the
+alloted time") than a false sucess (i.e. "we successfully launched
+and the build is still running, so let's assume the test succeeds").
+Because I do not pay attention to what the overall build page [*1*]
+says about a particular branch tip, and I instead look at the
+summary list of the indiviaul "Build Jobs", e.g. [*2*]), seeing
+errored/failed on [*1*] does not bother me personally, if that is
+what you are getting at.
+
+
+[References]
+
+*1* https://travis-ci.org/git/git/builds/
+*2* https://travis-ci.org/git/git/builds/230235081
