@@ -2,114 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CAA91FDEA
-	for <e@80x24.org>; Tue,  9 May 2017 13:40:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6E381FDEA
+	for <e@80x24.org>; Tue,  9 May 2017 13:42:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753562AbdEINko (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 09:40:44 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:37535 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753271AbdEINkn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 09:40:43 -0400
-Received: by mail-it0-f44.google.com with SMTP id g126so1600055ith.0
-        for <git@vger.kernel.org>; Tue, 09 May 2017 06:40:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oype+gMUfa6tJflmjYZEbs7yzJNcugK4VYP82Vg5POk=;
-        b=l6sPrfWMNosLpHTVlPYlZ7m9V5FSx4/cqjZHedPgKLlJUttS9izdgQ7GEC1o9anBv7
-         09B9meS6L3TtvE0VL5UXsbZzvoPmFgyBNywXFPvBVwZOwmb4tCPfmti+T2yQXXF9Lkf3
-         bwQlOCIvMZ88FcPTwXhGvLXRv7NwHIxoPkknm/7g03EmHW79/KtDhHSGXnoRwXFGTEij
-         Nsab4JJ71FnlPwSOoDv3XpuilP8ZQo/coEq5TJnrCKXv0vxcg6Vp81OaioHs38Oepz7r
-         ATCVvMkus+k/WuGr4KtJIw4sC1qxZG8PyKIWUWC7YSD3fQ9Q4F9LCgtST6nyw5qVVFiH
-         W3+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oype+gMUfa6tJflmjYZEbs7yzJNcugK4VYP82Vg5POk=;
-        b=N005x3B516tJEj13v6SHPnKv/aPfUSLhe29iyZ8fXiOHCBfGqLkcd10AZ192PVqgui
-         98rtKx/asbiFHgQg7KFCJSWX/4FUwOWa1S3Ea0Pj+KVOEsn4OXB5wUAqmEaibDVS3y32
-         uRXg0EEcQX4QV80/uw054SCMXrvRY3NDqkIraPONKLxyzdiLxCdPWimmM4bQ79J0K/Ih
-         J7blz0oW/EQbtyPmTJ3Cgk2J0Eg1UBdTATyM4HZAwC7yehapbynfNpFzkx7p/GlUDfYI
-         0gxwCq46clMHSwZOd18XS8kPJ6kBeLjrWmoh1PFuo1q4Iv3g5xaAgI8fohiGGF5ffkaN
-         k+bA==
-X-Gm-Message-State: AODbwcAzNVSM/iMh0Tv+dwTqwFqQNZ5GO/PdzwZmG01mEJHodO1dVCfd
-        WIsaK49im5VLA3HGytLDaMz7ReXTs1AXzJU=
-X-Received: by 10.36.37.78 with SMTP id g75mr266224itg.94.1494337242755; Tue,
- 09 May 2017 06:40:42 -0700 (PDT)
+        id S1752986AbdEINma (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 09:42:30 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52157 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752576AbdEINm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 09:42:29 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MA9FV-1dIqtm1NSD-00BJhv; Tue, 09
+ May 2017 15:42:19 +0200
+Date:   Tue, 9 May 2017 15:42:17 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 11/25] checkout: fix memory leak
+In-Reply-To: <xmqqk25sch89.fsf@gitster.mtv.corp.google.com>
+Message-ID: <alpine.DEB.2.21.1.1705091540130.146734@virtualbox>
+References: <cover.1493740497.git.johannes.schindelin@gmx.de>        <cover.1493906084.git.johannes.schindelin@gmx.de>        <2704e145927c851c4163a68cfdfd5ada48fff21d.1493906085.git.johannes.schindelin@gmx.de>        <36a581f6-077e-ca89-49d0-ad487ff222a3@web.de>
+ <xmqqk25sch89.fsf@gitster.mtv.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Tue, 9 May 2017 06:40:22 -0700 (PDT)
-In-Reply-To: <etPan.5911baaf.74b0dc51.6b4c@MacMini>
-References: <etPan.5911baaf.74b0dc51.6b4c@MacMini>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Tue, 9 May 2017 15:40:22 +0200
-Message-ID: <CACBZZX4p=h7G2F+khZL6X2LSccPBpa__Op+ouO4mPAY9=2r7rQ@mail.gmail.com>
-Subject: Re: Would this tool be useful - encoding repository data into single URL
-To:     Sebastian Gniazdowski <psprint@zdharma.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323329-2142021902-1494337339=:146734"
+X-Provags-ID: V03:K0:FWthnxCG4GujNvL6GgHyu30h6OsYoR+8rclRwcwO86AOb+q54wF
+ M48wQCgT6KDCH5HZDQdhZCdFueVgYB5d07layLIpqkIRv60fTMxruTfgJu6AEONB9h/JpYm
+ mAEARhnvsbjB/JTMfdbP+ABgnQRpvRRZId+zPjieE2s1wJjb3rVLvgspXrwo/ldkSiB7w7p
+ qyOyHc899KbP7USE1xhew==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2FXZtbIn0AQ=:1AZOja8sce7IpoKoGqg9Zc
+ pDLa/gRVJOvNF+ie/1KTkRM+yp7IspzvJ8TSKFJOQAZUIa+AHIvfMydAWQkzENWp4aK6QVtTK
+ 8Kei0/HpOxxZfQ3g7ylV3mtgi6ISKUH/kBQGWFFOe/UkCSG+Vbj1vv+QXRuIQ/oBdIGjbD1/q
+ B7YiXaz5Fx+L1UGA1iFRmab8u6sHoBz6gUaqdUFEqDAgSzj+8Ry4mf4azKltQbpDfSBQIIgxP
+ l3KH1JyNngXZIT/eWw6SAq190CfKX3p7gBVi2yE1y/DkYG8ITLnoTb1s27b7TI3KDxX4N8tlf
+ ce/7eBeT8nhYg80UHFwQ+RJMXrwDuMNeVa2CPo5ZWCRS/GAsv6z8k+3YqEhYHdwXvmtx6S54V
+ bLRVU5PSY8w+ikNdsjOu8XxJv8wWXEZyhIZxJY1Dok63qKFTjnaVfzajg+mFupRV4UcvcSt+V
+ ZHxdAoV8SiHxvzLt/0cYWrUd94UhMFRrItrGeELWlrWQPSh36iPGzXPumgiwPZ5g7igxtTjt8
+ jduPb49omBw/hAdsVJfiELTVxKu3ptvJSSUwwVt7ZQegZbQhYbb7v9/pwaA9a/UiYyS9IOpKG
+ Jh8+DbsBx9zZUrZkTanr+VOzPGjv9C1zwRf0M1fplVgleTjA9zQ/Zv8Hn3M3/gFN75VO09T3P
+ xA+x6905QgQm5dbz/OdO///e10D0yy2JvIMJXTIOfahFbrrFopRtdDQ9yz/tYTNrAMA9+bR1a
+ T0ULtJ0mlC3SSkCpuQM0xfG0enN2vwIuuBaWlLBHIdwWwr2D7Q+WXIbJuCgl0E4xLNUPl8tQE
+ CmJcSOv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 9, 2017 at 2:48 PM, Sebastian Gniazdowski
-<psprint@zdharma.org> wrote:
-> Hello
-> I wonder about usability of following tool. Quick-start:
->
->     giturl https://github.com/zdharma/giturl -r devel -p lib/coding_funct=
-ions.cpp
->
->     Protocol: https
->     Site:     github.com
->     Repo:     zdharma/giturl
->     Revision: devel
->     File:     lib/coding_functions.cpp
->
->     gitu://=C5=AC=E1=B9=BD=C7=9A=C7=ABo=C5=92=E1=BA=976=E1=BA=8F=C8=85c=
-=D0=AD=C3=91=E1=BA=A9=C5=91n4=E1=BA=A7=C5=98=D1=97=E1=BB=87=CE=B1=D0=83=C8=
-=A3=CF=9F=E1=B9=88=D3=9B=C5=80=D1=97
->
-> It does Huffman encoding and base-1024 encoding to pack given data into s=
-ingle URL. The Unicode characters selected for base-1024 encoding are lette=
-rs, not symbols, so double-clicking in e.g. web browser selects the whole c=
-ode, making it easy to grab a repository data.
->
-> Decoding:
->
->     giturl -qd =C5=AC=E1=B9=BD=C7=9A=C7=ABo=C5=92=E1=BA=976=E1=BA=8F=C8=
-=85c=D0=AD=C3=91=E1=BA=A9=C5=91n4=E1=BA=A7=C5=98=D1=97=E1=BB=87=CE=B1=D0=83=
-=C8=A3=CF=9F=E1=B9=88=D3=9B=C5=80=D1=97
->     https://github.com/zdharma/giturl / rev:devel / file:lib/coding_funct=
-ions.cpp
->
-> I can also encode commits relative to given revision, e.g. bits 10011 are=
- commits 1, 4, 5. Easy to add to the g-code. Selecting 10th commit is only =
-1 character in base-1024.
->
-> However I wonder if this has any uses. Could be patches sent this way? Ha=
-ving refs/patches/<name>, encoding <name> in URL, sending it instead of inl=
-ining/attaching a diff, selecting e.g. 3 commits via the bit-mask mentioned=
-. That said, it's more about easy-grab of repository data and storage in we=
-ll-defined, consistent format, not in language "the branch is ..., commit a=
-7a35cb". Does this make sense?
->
-> There are 2 implementations, in Zsh (uses Zshell like e.g. Ruby, not inte=
-ractively) and C++11 (mostly because of std::regex):
->
-> https://github.com/zdharma/giturl
-> https://github.com/zdharma/cgiturl
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This looks really cool. Yeah patches can be sent this way, see
-Documentation/SubmittingPatches in the git.git repository, online
-version: https://github.com/git/git/blob/master/Documentation/SubmittingPat=
-ches
+--8323329-2142021902-1494337339=:146734
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi Junio & Ren=C3=A9,
+
+On Mon, 8 May 2017, Junio C Hamano wrote:
+
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> >>   =09/*
+> >>   =09 * NEEDSWORK:
+> >>   =09 * There is absolutely no reason to write this as a blob object
+> >> -=09 * and create a phony cache entry just to leak.  This hack is
+> >> -=09 * primarily to get to the write_entry() machinery that massages
+> >> -=09 * the contents to work-tree format and writes out which only
+> >> -=09 * allows it for a cache entry.  The code in write_entry() needs
+> >> -=09 * to be refactored to allow us to feed a <buffer, size, mode>
+> >> -=09 * instead of a cache entry.  Such a refactoring would help
+> >> -=09 * merge_recursive as well (it also writes the merge result to the
+> >> -=09 * object database even when it may contain conflicts).
+> >> +=09 * and create a phony cache entry.  This hack is primarily to get
+> >> +=09 * to the write_entry() machinery that massages the contents to
+> >> +=09 * work-tree format and writes out which only allows it for a
+> >> +=09 * cache entry.  The code in write_entry() needs to be refactored
+> >> +=09 * to allow us to feed a <buffer, size, mode> instead of a cache
+> >> +=09 * entry.  Such a refactoring would help merge_recursive as well
+> >> +=09 * (it also writes the merge result to the object database even
+> >> +=09 * when it may contain conflicts).
+> >>   =09 */
+> >>   =09if (write_sha1_file(result_buf.ptr, result_buf.size,
+> >>   =09=09=09    blob_type, oid.hash))
+> >
+> > Random observation: Using pretend_sha1_file here would at least avoid
+> > writing the blob.
+>=20
+> Yup, you should have told that to me back in Aug 2008 ;-) when I did
+> 0cf8581e ("checkout -m: recreate merge when checking out of unmerged
+> index", 2008-08-30); pretend_sha1_file() was available since early
+> 2007, and there is no excuse that this codepath did not use it.
+
+I hope y'all agree that this is outside the scope of my patch series...
+
+> >> @@ -251,6 +251,7 @@ static int checkout_merged(int pos, const struct c=
+heckout *state)
+> >>   =09if (!ce)
+> >>   =09=09die(_("make_cache_entry failed for path '%s'"), path);
+> >>   =09status =3D checkout_entry(ce, state, NULL);
+> >> +=09free(ce);
+> >>   =09return status;
+> >>   }
+> >
+> > I wonder if that's safe.  Why document a leak when it could have been
+> > plugged this easily instead?
+> >
+> > A leak is better than a use after free, so
+> > let's be extra careful here.  Would it leave the index inconsistent?  O=
+r
+> > perhaps freeing it has become safe in the meantime?
+> >
+> > @Junio: Do you remember the reason for the leaks in 0cf8581e330
+> > (checkout -m: recreate merge when checking out of unmerged index).
+>=20
+> Yes.
+>=20
+> In the very old days it was not allowed to free(3) contents of
+> active_cache[] and this was an old brain fart that came out of
+> inertia.  We are manufacturing a brand new ce, only to feed it to
+> checkout_entry() without even registering it to the active_cache[]
+> array, and the ancient rule doesn't even apply to such a case.
+>=20
+> So I think it was safe to free(3) even back then.
+
+So this patch is good, then?
+
+> > And result_buf is still leaked here, right?
+>=20
+> Good spotting.  It typically would make a larger leak than a single
+> ce, I would suppose ;-)
+
+I saw you added this as a fixup! commit. If you don't mind, and if no
+other changes are requested, would you mind rebase'ing this yourself?
+
+Thanks,
+Dscho
+--8323329-2142021902-1494337339=:146734--
