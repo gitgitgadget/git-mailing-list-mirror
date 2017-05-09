@@ -7,115 +7,87 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59CA520188
-	for <e@80x24.org>; Tue,  9 May 2017 10:41:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4461020188
+	for <e@80x24.org>; Tue,  9 May 2017 10:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752027AbdEIKlG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 06:41:06 -0400
-Received: from mout.gmx.net ([212.227.15.18]:53885 "EHLO mout.gmx.net"
+        id S1752186AbdEIKub (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 06:50:31 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53381 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751653AbdEIKlF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 06:41:05 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDhGw-1dGIQp2rxm-00H3n1; Tue, 09
- May 2017 12:40:41 +0200
-Date:   Tue, 9 May 2017 12:40:40 +0200 (CEST)
+        id S1751723AbdEIKua (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 06:50:30 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MX16a-1dVDrY4428-00VyeN; Tue, 09
+ May 2017 12:50:25 +0200
+Date:   Tue, 9 May 2017 12:50:22 +0200 (CEST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>
-Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May
- 2017, #01; Mon, 1)
-In-Reply-To: <20170509003714.ylwn5ezvu5h36kj7@genre.crustytoothpaste.net>
-Message-ID: <alpine.DEB.2.21.1.1705091234210.146734@virtualbox>
-References: <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com> <alpine.DEB.2.20.1705031139090.3480@virtualbox> <CACBZZX6_5krLp93PmsW639-N4f1efUT5rPnN+5im=d9-66=QbQ@mail.gmail.com> <alpine.DEB.2.21.1.1705041104070.4905@virtualbox>
- <CACBZZX5bPN3vZhE=0TSQNdRvKYuV3635=VCQAppAfcZ_tuGpvg@mail.gmail.com> <alpine.DEB.2.21.1.1705041328190.4905@virtualbox> <CACBZZX75nvfQft-gjUG+YP0Y-e-=Knm3bMeDWHSUF=Juz9Ua5Q@mail.gmail.com> <xmqqpofj7rim.fsf@gitster.mtv.corp.google.com>
- <20170508233224.udpuuzlygjpsjogt@genre.crustytoothpaste.net> <CACBZZX4G_ThE55Gi53QJt1=9K4jQXqJ3QL8JSGpiSSSDRrKeNA@mail.gmail.com> <20170509003714.ylwn5ezvu5h36kj7@genre.crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+cc:     Lars Schneider <larsxschneider@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Script to rebase branches
+In-Reply-To: <20170509040943.j3n5li7fapiuvgbj@sigill.intra.peff.net>
+Message-ID: <alpine.DEB.2.21.1.1705091244420.146734@virtualbox>
+References: <8D018370-79F9-450F-97AF-31EF4C95BA44@gmail.com> <20170509040943.j3n5li7fapiuvgbj@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-1187481368-1494326441=:146734"
-X-Provags-ID: V03:K0:MJvDph51diFpuFqQ4aTcg+zxs77h6JRL/JQ6CS67dMGhsxZXuWT
- l0wBtlfsiQ7NHbyHfJ1HFd/qLlqqauQRG9/iUDZqvmxLgqJbcZ0Cm6NJjrqls5HD25zCylS
- Dba+HyH0RBBf0U5JCzD75ii6S8rivMvpZDP3kBl4Ofib6AbBrMkJn6AUA882SoCf5C8HTSs
- m2c5U0QHjNk6xoV/bGIZQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:thpesmDcm9A=:wewGslOEPuVUrMNgFcoh2G
- ooGA7eAtZ0eRlq5t6+Fa1Kj9C+iZRZesMH6EEVLlzcjVV9T16T2/5TjwNUNHd5jbc9Icr0gQQ
- 9SK8nVLK63l078nvXKHabeFt90TwlgCzC3v7L+Y8DhvjufXeNu6sRyhSTd7v2LO8//j7cL1ij
- TLnQhZrbNOqWB/3x06T/7xGik9SWemwDddV8w3lk8VdXVbT+MQmy0zBYPXRqkuXMvdf3zmuw/
- /lFvMCjk6dkXq0XPP7XXNBWxII0GEpMpyh7rJFu5m30meponLqCXMYFRli9E9+s0Q32ExYkoN
- fvnOZuV40OPosh83Cbasv9RZj/3cwn02xn3J3hhpuwiJfjCbDpL+jJJh8EhX5ifm8B49ik1Fy
- v8bFMp/jphBqNIr3/JiGU5QZAvHTZddYBp1btED5esRw0+5lAN7a2im6qQ2pU2higbOzFOOvk
- 3XMsOEf7XKdP3bWuqpioC4mJ9Kj040xEoCoZs8+ihBqKnUXnpZ1ZMktnx0ZBIYgbd4WhW9yuB
- F4Vo49hju3nKMIj0LHLrlAgWF+ot2lT0THWLj6mwBncsV5/lylp8IaVkzEdefpS7JMfD/99b6
- qbA0AOPAYQlLVNpotRAZvY65Nk7qVussp8Pu4+9xfcobxvF+0g7r1cfORGtLCRjIeGVSiZZkN
- fEWuBNmiUdfuCiBCwb08QcijlvUeHP8yrZH+9V36OouTZ9zVU0OxY8td6+NT+BFCokWQeS8RW
- raRnYfULphamAy5wFmVN+/tB2JssjUfrL0/XjgLt9+8JluHS0fTbiw2z+50PPr3y89SvQAquv
- 1qs41mP
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:zMIjlEjYeMYIR6ThR68gkysPPuof3yzUQnUAp2zz4Xlhuc6+lx1
+ HNSrM9O0gCw4Sm5Xh93BVsdadJ6d/3rOuz5V/KMdExMU79R3dD79q+jiV6i8p8xcpPwBy4c
+ fKuckiHjp7NEwKB6yUWrNNlsdmxeGYlDTuTf18I/AS016D4lpsjdv173AKaLwhOxzY01rFq
+ U2gzh3QZFMt+KiCiVxfVA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:lr0RyDxXEY0=:sE3PAWInWg6grwBYwvmQp5
+ Kj4vB/X9gkmsVbZPHPUy1K4Hr/YkpITF5f9WHLfKikpUm9k7VuPEWQI4Sdwbc9BWpwwvg7GIV
+ FtNu5Xll3j/6ZBjWyTp8SUaMFsI2f8UfXW/UZ6qpYT0fb72zzGohpe/7PASJwPwxllmeSaKXu
+ 19E1ECcnEMGo2VDf0RBlkzpPwvZyhbOI4AKfu3CxW/DqHXSnrxO1wvqXPUX6UtTXzEoV5e4bv
+ /FF8jacfi9SEyphQsqB+AbCQTy9iCC6bGutMbXJ1PGP5xTsXwrdR7XaL7fH/sSvR3pR4hl2GN
+ o+iMpcQG5hcaAb+kibCyu5VPvcyGSlkjYd5/sL4+HzcpUqSQYn0Xx81Y4ft2rYtj1gcL77wIE
+ XmVdyt9kYeBwIW86G1eZ2DICZsbcUk/LUkMG7UHXWsLuskigTtuq4XQvArdWtDM3BI/nuXZUc
+ KwdumH4l0gPLHBAz07TA0Wxu6qthEdYP7HEbDX7szn7dK7V+TXyJJjHDATgOsjbufTF9jNcCF
+ Ho69rmKbhMXrqDUmIWClmIkbxzkJe5AeLP24Weu4D+Q/ipDYMIUHXLzsIr/tFiR5VNSTUR+zi
+ bJ2AlCJK2gSzKahYgLdMCsvZOvVt4iqk2xZLAhPHoLdDQMtfYzL/HV51oTNUohXUFC9JnNqrg
+ GrlwC1YeufnqDDUpazIqLFk7+NRVIQxSxkMB3d0aRwkGekOWyAlJ68SDrEg3a+E8nKphHphBs
+ iQEH0TZX+0LEmWfkZbNWnafGV7hkkFEUeCbKFfxxb73//cFlZgMDvcvrIDF6esx1PDCcvQice
+ 0c/f0M8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Peff,
 
---8323329-1187481368-1494326441=:146734
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+On Tue, 9 May 2017, Jeff King wrote:
 
-Hi,
+> On Sat, May 06, 2017 at 12:23:32PM +0200, Lars Schneider wrote:
+> 
+> > I am about to write a bash/sh script that helps me to rebase a bunch of 
+> > branches (e.g. select branches based on prefix, conflict resolution/
+> > rerere support, ...).
+> > 
+> > I wonder if anyone has such a script already and is willing to share it.
+> 
+> This is what I use:
+> 
+>   https://github.com/peff/git/blob/meta/rebase
+> 
+> There's no documentation in the script, but the commit message in its
+> history should give a good sense of what each part does.
 
-On Tue, 9 May 2017, brian m. carlson wrote:
+That requires Meta/ to be checked out and up-to-date. I'd bet there are
+exactly two people who fall into that category.
 
-> On Tue, May 09, 2017 at 02:00:18AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
-> > On Tue, May 9, 2017 at 1:32 AM, brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> > > PCRE and PCRE2 also tend to have a lot of security updates, so I
-> > > would prefer if we didn't import them into the tree.  It is far
-> > > better for users to use their distro's packages for PCRE, as it
-> > > means they get automatic security updates even if they're using an
-> > > old Git.
-> > >
-> > > We shouldn't consider shipping anything with a remotely frequent
-> > > history of security updates in our tree, since people very
-> > > frequently run old or ancient versions of Git.
-> >=20
-> > I'm aware of its security record[1], but I wonder what threat model
-> > you have in mind here. I'm not aware of any parts of git (except maybe
-> > gitweb?) where we take regexes from untrusted sources.
-> >=20
-> > I.e. yes there have been DoS's & even some overflow bugs leading code
-> > execution in PCRE, but in the context of powering git-grep & git-log
-> > with PCRE this falls into the "stop hitting yourself" category.
->=20
-> Just because you don't drive Git with untrusted regexes doesn't mean
-> other people don't.
+Also, I see that you do not use worktrees. Otherwise your script would
+fail.
 
-Or other applications.
+When I still hoped to be able to get the rebase--helper related topic
+branches in by August last year, I had grandiose plans to teach the
+sequencer not only to perform the Git garden shears' trick (i.e. recreate
+merges), but also to optionally update local branches corresponding to the
+merge commits, including updates to the worktrees that checked them out
+(if any).
 
-> It's not a good idea to require a stronger security model than we
-> absolutely have to, since people can and will violate it.  Think how
-> devastating Shellshock was even though technically nobody should provide
-> insecure environment variables to the shell.
->=20
-> And, yes, gitweb does in fact call git grep. That means that git grep
-> must in fact be secure against untrusted regexes, or you have a remote
-> code execution vulnerability.
-
-And not only grep is affected. Think HEAD^{/<regex>}. There are plenty of
-sites where you are allowed to specify revs in a freer form than SHA-1s.
-
-Having said that, I do like the prospect of a faster git grep.
-
-Hopefully there will be a way to make use of PCRE that can be switched
-off? Like, a compile-time replacement of the regex API backed by PCRE v2
-*iff* PCRE v2 is used for building?
+Maybe I'll still get around to do this, some time this year. And it'll
+probably hit git.git by mid next year ;-)
 
 Ciao,
 Dscho
---8323329-1187481368-1494326441=:146734--
