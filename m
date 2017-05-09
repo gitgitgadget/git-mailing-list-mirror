@@ -7,77 +7,76 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B242F1FDEA
-	for <e@80x24.org>; Tue,  9 May 2017 12:53:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CFF41FDEA
+	for <e@80x24.org>; Tue,  9 May 2017 12:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753807AbdEIMxr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 08:53:47 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54844 "EHLO mout.gmx.net"
+        id S1753891AbdEIMya (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 08:54:30 -0400
+Received: from mout.gmx.net ([212.227.15.18]:64631 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753105AbdEIMxq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 08:53:46 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0McEDD-1dR7Kd1yUR-00JaRk; Tue, 09
- May 2017 14:53:40 +0200
-Date:   Tue, 9 May 2017 14:53:25 +0200 (CEST)
+        id S1753210AbdEIMy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 08:54:29 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Md3li-1dQHzr1xDu-00IGyy; Tue, 09
+ May 2017 14:54:21 +0200
+Date:   Tue, 9 May 2017 14:54:20 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v3 2/6] git-new-workdir: mark script as LF-only
+Subject: [PATCH v3 3/6] completion: mark bash script as LF-only
 In-Reply-To: <cover.1494334366.git.johannes.schindelin@gmx.de>
-Message-ID: <8f7119839285970b14f1bcc36567d9093e3d73d1.1494334366.git.johannes.schindelin@gmx.de>
+Message-ID: <c5bf4bad101cceec942d88c884b237e3e2e9f3da.1494334366.git.johannes.schindelin@gmx.de>
 References: <cover.1493891336.git.johannes.schindelin@gmx.de> <cover.1494334366.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:sT6m+LGcuJmvEa4UDCN0TkQyRFO+3LqDV/wMtJGhG3ZZtyHsGBr
- 6y4AHPpjRs0jBF87d+hBVzlMu6n1Cu8RngcxWRRbaOwn2YKIXK/1X2TEq/qQb46wpTmspEG
- e+yILa6h8Rr3p4cFerwl9aioejSijc5u0kAMGBCYiXrtfqhZOXrVFQ2yV99KdcE8F9O1gPQ
- 5UJDIXmnQnuL/nK6lAVbw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:mY7F0XL/Zng=:9P+m36NdrV+KQo55DvwzES
- lChgJw/gIK48Om4a6T55X18PXMBUqWxmNphZK0YL7knxE3p7+vyauf8Em38wN7wuNyZsfySmq
- H0hc1U6jMHk3MqxWj0wMrOxstjKaiuwhyUnXZboLCW1KyrLWetDzUpsYJFwff8n41hF9zFANg
- SpleXeRATOmMIVzUUDvdBssc9ITrzC5FibxyWxzZ+0izW/cSnOhIPQ24AqrOJsQx0AC0q04e6
- sSnQBfxeV2pOrRUg+Is6aqsB1Fghcrsyy1teRgJbGYxA57//tD7gEFzZ3uaiHPMvCng4fuJv0
- pP90JmCFpSsZnAtLkz/O+3ypLuVW7XbVIxufzUCcfPAKPbCG5KchsAdBBcOQtefE3Z+WOYJNs
- LHvqWP5zXyD3IQAexbWx3RpzUIP9lhc52cavQ9OK038KzH+4CODjqrCBOcxEY2HZHr3cHBUAo
- +Q48ePzPOzHGJTP/ZPfPdXTLjULlxr6Ip0AKx3LA7780uZvO/lV775FXHy4ckRtTSVxBh6mnh
- FEqN/Z0GBcnvXIP/y4RDSio+BQSA/TqCM8jOHnngqt5dgbidRK2TDM2txzwfetK1Lxfl9wdV9
- CVsc/HOnX3sRoCui1l0AxLf+nOo4J0AE2+tLkLrhnImsPRxrlWKJTV2Sav8AToba8Iz0HtDni
- IoNkiw/UnxJbZrWcEod3OkhpZY1cocSkCaTckLkEi6Hu7HbsYYGGQ+TyXHjiy4nyFY4t+l1/R
- dqLg99eTZZ4tgQgsmqswTinZBAWT5iCO3DWGUISQkDb4zdLpufLEHv5OhikmsnYZWeqGr+mCJ
- ETDnc36
+X-Provags-ID: V03:K0:FMdJcIpCx0woVPOPqRi/MYuLa8ZtGh7rmBD4XuOg1fPqAdFtITZ
+ 1D97BIuF9Q/5fDYZZz4cWF2a6FQT+EFoQDg9frPm7jcLE3BE/rcAquG6dJiBkS/HmD3d2Oz
+ HMkASI2QxTLDpPiqzw/MIan6A1pbbKv6v2ab29yKXAQFGS2be6mO0kESIg2qXEPfoUXpS0o
+ WI5evnME67qIMdoqs3PdQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:a0KbRXwRG7U=:4Hvh9zHgGPrFN1/QkXquJ4
+ zdbTveugfiY6Ec67fOLc4rJWfm2n/0TGM5lQJwtWuMgs7+YyX8EScYfC1MjLoIplf8XP3cifT
+ oYde7jmME56Z/MdUW//I0OcR1nakJhcMeSnROucjUsgvUFrWHZoNP94TQuxbWr0XHR6mMivm7
+ pZlhf8o9pMwi4KLvEtEkfWpPj9GnluQddGHjjgDx6JNf1/w3r70bpTO8TSrNUOY22C33nf8p/
+ JspYTXJ/qCsg2r+dLsInEMK7DC7H/v9hLcfwhei1uqYUVtOBMCjwhimw+Czt8FJi09LGgsUH9
+ 7opKiOId/mLhYYWBQnPC6U+Air84PBFAZeV+geZ7s+gbntWhknvLvi08/n5f83fF5Em38RrHL
+ 1D/FDq/Pl1ASCKV6YZrPbMZn6/M9N5UoMgrKmuxJ3O/bfJYx7SfH3JtdwUFPKTcIsfasoBCAO
+ /Dr9Ljq42x0kIbOfC8+wR4ckvZNxiQalui1Dk9B+M7OHRlE13Ut6rCDhyUM8YP7Z3aDlmWv8D
+ F2y0G7+kDwy/eFV1iNxSDmJiICuJX9HPmh7NGskiFwLzepDUZQAzQLKrPS1LsmPHO/gQG2dtf
+ Ao9AR5N3o/PaUeXhq+alPjpGwrL2UIG+b74WERm9EWTX/gcuAPITh3U8WSrxb48TBeNbIioH/
+ xrgPg8O0s/lWRgtsso9qBCbwappbqBRWuyFFCTBTAJ4F1c4ndoLa2KSQTV9DxkIOHDcRNMh9S
+ C/KEekDiSNqKg07NzcJhPR5hUbq0+usBgRLOKzZICymF20lbIanhJM7QJevsypvecYIw0c73o
+ WeNXF0j
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bash does not handle scripts with CR/LF line endings correctly, therefore
-they *have* to be forced to LF-only line endings.
+Without this change, the completion script does not work, as Bash expects
+its scripts to have line feeds as end-of-line markers (this is
+particularly prominent in quoted multi-line strings, where carriage
+returns would slip into the strings as verbatim characters otherwise).
 
-Funnily enough, this fixes t3000-ls-files-others and
-t1021-rerere-in-workdir when git.git was checked out with
-core.autocrlf=true, as these test still use git-new-workdir (once `git
-worktree` is no longer marked as experimental, both scripts probably
-want to be ported to using that command instead).
+This change is required to let t9902-completion pass when Git's source
+code is checked out with `core.autocrlf = true`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- contrib/workdir/.gitattributes | 1 +
+ contrib/completion/.gitattributes | 1 +
  1 file changed, 1 insertion(+)
- create mode 100644 contrib/workdir/.gitattributes
+ create mode 100644 contrib/completion/.gitattributes
 
-diff --git a/contrib/workdir/.gitattributes b/contrib/workdir/.gitattributes
+diff --git a/contrib/completion/.gitattributes b/contrib/completion/.gitattributes
 new file mode 100644
-index 00000000000..1f78c5d1bd3
+index 00000000000..19116944c15
 --- /dev/null
-+++ b/contrib/workdir/.gitattributes
++++ b/contrib/completion/.gitattributes
 @@ -0,0 +1 @@
-+/git-new-workdir eol=lf
++*.bash eol=lf
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
