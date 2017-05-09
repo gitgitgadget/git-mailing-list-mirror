@@ -3,85 +3,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F6F02018D
-	for <e@80x24.org>; Tue,  9 May 2017 23:42:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0FE92018D
+	for <e@80x24.org>; Tue,  9 May 2017 23:44:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1750984AbdEIXmp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 19:42:45 -0400
-Received: from mail-pg0-f52.google.com ([74.125.83.52]:34855 "EHLO
-        mail-pg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751353AbdEIXmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 19:42:36 -0400
-Received: by mail-pg0-f52.google.com with SMTP id o3so7245833pgn.2
-        for <git@vger.kernel.org>; Tue, 09 May 2017 16:42:36 -0700 (PDT)
+        id S1750867AbdEIXoc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 19:44:32 -0400
+Received: from mail-io0-f180.google.com ([209.85.223.180]:36460 "EHLO
+        mail-io0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750733AbdEIXob (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 19:44:31 -0400
+Received: by mail-io0-f180.google.com with SMTP id o12so3781554iod.3
+        for <git@vger.kernel.org>; Tue, 09 May 2017 16:44:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=8iZLZ1aFGx6dQA094Ryt2VeG+2ptJqcgdcuT9jQbxM4=;
-        b=RPLSO9znuTl8FogVkMszFxy4u6RUy7mUOgFwegxvvM5uTU87xtYPUYrkBo6KTjb7ph
-         j20yg8BnnBBwZdziHw5dcm6U561W7bzR5JXFVYdSgTwTLRf96/I27BRzZybpkye23m8j
-         Rurxb3YAX+RDo3cjJyCt0+xc/DgFtS8UZsW5JDnikiIhb7/4hepemOfg2+6vxh/IdoVy
-         rMhhoPh+fY7fCRAHqX/dn3WWHHyGIhUD9WEWBWVeFh3rN/meJEnfi+UC8fGd2maseVCr
-         XwtoktUi6Z0yJOr0RNIJUHQzr84QB4jDLtugJrQzAi6B5gcIEE0lPbSIeuw8WIs/+Gse
-         DTWQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fmRuPspTA0d605b9H+rWP0tB7EJ6XNQq0ZIp4c3TTDc=;
+        b=jJyhIG7yRzfmDDE4/BonzPZwGvqBXwL55X8PUEAdAfzcxpGPzKiIvUQImCK9xZD12m
+         cusAi6vkqq518QVf8UClxATy25lLnOyEyC+5L7dxEP4bspyD21AuWNo9AKEnzr2VkmTP
+         6Nsor9O0YxBoFn4NMfdxHe4I5nGT0e8zfGwnZUx5w02BEU/nWk+4kNKlIYvmDUJb0Agf
+         DP3hAE+YjNWaviZxeRU0votdhUhmkM/ao0FkHSrkHx7kNBXHXpLL3BJFTBWVtqrZ3Yjj
+         IT82o0P5htPMCRqCsU+tMRyU1dX+RSWEc1Aek4ChcD5yXiyy5l5xye8ZN6GD8uLF4Ihq
+         eSbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=8iZLZ1aFGx6dQA094Ryt2VeG+2ptJqcgdcuT9jQbxM4=;
-        b=qmgK/znsM7h/nXRbGeLDQiPbK9rWUuOluQyd06cXFCT/JwfldLyWG3yL41uiapnDsE
-         tw5jsCix2BdsErTKpVBDJvbvsX3kutA6xIK0NWebaycb3koweBmuHcaE0AXC73Bwl9ov
-         eBz7EMBu//ye2ZszIbDP5CFM2qMHacDFaRByeIFC9uYMHPBz/nG1uNEO7Z2VFzPpShfg
-         FeIZD6gG2nXKm8J/nxIZH/5DeeSuGw+bbl223Ykp6FcMv+HTsqnZa6DsSh+oTOs4N05I
-         +hJR8PwVP+lf1QS/3PVMKeH5ASwVXag5CdxPCLmDqRbF9ZOAI/nrNU1/Sv/qh/Jw5DWx
-         whyA==
-X-Gm-Message-State: AODbwcBljMx3aFekJlILFDcjjJxiib6SFzLr38k63DlYGKQ7mwUSAdpZ
-        iiMgWDbpAfC3OQ==
-X-Received: by 10.99.122.21 with SMTP id v21mr3123809pgc.98.1494373355885;
-        Tue, 09 May 2017 16:42:35 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:9133:cf19:b689:27d6])
-        by smtp.gmail.com with ESMTPSA id x5sm1704938pfd.94.2017.05.09.16.42.35
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Tue, 09 May 2017 16:42:35 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: [PATCH v2] archive-tar: fix a sparse 'constant too large' warning
-References: <4bf9be3c-5d19-09e3-b8b3-dd58e00e623d@ramsayjones.plus.com>
-        <alpine.DEB.2.21.1.1705091223190.146734@virtualbox>
-        <5068a9b6-c77a-737d-9d80-40108c5f22c3@ramsayjones.plus.com>
-Date:   Wed, 10 May 2017 08:42:34 +0900
-In-Reply-To: <5068a9b6-c77a-737d-9d80-40108c5f22c3@ramsayjones.plus.com>
-        (Ramsay Jones's message of "Tue, 9 May 2017 21:13:01 +0100")
-Message-ID: <xmqqr2zxzjf9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fmRuPspTA0d605b9H+rWP0tB7EJ6XNQq0ZIp4c3TTDc=;
+        b=L/eRJbw9/ux0AkcUfeixr14NChF7ItKDlja5yCGJz0EoYDYBN/6cAnQKUNcr+s+RIH
+         hBf4pBLNl4L0++4OiI2MWiV9p+Xl/JkEiq5ocN/Rcur9eqsY9Sp2CGUr9xrrITS5Ub3n
+         aDZVi+ntSrFh7xfsx41kAv2UKurBUUJNHk6Hp2d+yz810tIFRxsGSKKg1XjB3LbJkTAu
+         dhZhnHzHsO/gUMlJS59H2hcigrWXpCSJq+iemWg4ISdOVqhL00zWz5BQXh6DIbAfpPpi
+         K2SNSgew60RebZeGwlWXGs0q5pBFZz8Ywsq110ILdDS3j8A/jbL6SPneL/I/LAXUmqEd
+         lgTg==
+X-Gm-Message-State: AODbwcCNn8kYEjwxn94DXZGvjtkic8U8fo4oUybkDEvgRWtrOKNgwAqI
+        geFaOeVThYfd6RSxKLS1gTDoDR3yUQ7M
+X-Received: by 10.107.178.12 with SMTP id b12mr960256iof.50.1494373470640;
+ Tue, 09 May 2017 16:44:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.107.8.220 with HTTP; Tue, 9 May 2017 16:44:09 -0700 (PDT)
+In-Reply-To: <xmqqd1bh1wqy.fsf@gitster.mtv.corp.google.com>
+References: <xmqqfuge4sak.fsf@gitster.mtv.corp.google.com> <20170509164515.31942-1-jonathantanmy@google.com>
+ <CACBZZX5DF6sTTYSUpYnvas925N-XsoUGrM-bYbAN_67g8-w2GQ@mail.gmail.com> <xmqqd1bh1wqy.fsf@gitster.mtv.corp.google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Wed, 10 May 2017 01:44:09 +0200
+Message-ID: <CACBZZX7diKKuz0r2uWQsAmxDkWm_2Afi=zWSTRMYRwiobEGwpw@mail.gmail.com>
+Subject: Re: [PATCH] fixup! use perl instead of sed
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Wed, May 10, 2017 at 12:38 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> On Tue, May 9, 2017 at 6:45 PM, Jonathan Tan <jonathantanmy@google.com> =
+wrote:
+>> ...
+>>>         # Tweak the push output to make the push option outside the cer=
+t
+>>>         # different, then replay it on a fresh dst, checking that ff is=
+ not
+>>>         # deleted.
+>>> -       sed -i "s/\\([^ ]\\)bar/\\1baz/" push &&
+>>> +       perl -pe "s/([^ ])bar/\\1baz/" push >push.tweak &&
+>>>         prepare_dst &&
+>>>         git -C dst config receive.certnonceseed sekrit &&
+>>>         git -C dst config receive.advertisepushoptions 1 &&
+>>> -       git receive-pack dst <push >out &&
+>>> +       git receive-pack dst <push.tweak >out &&
+>>
+>> The test should have a PERL prerequisite now, that's missing.
+>
+> For a single-liner like this, our stance has always been that t/
+> scripts can assume _some_ version of Perl interpreter available for
+> use, cf. t/README where it lists prerequisites and explains them:
+>
+>      - PERL
+>
+>        Git wasn't compiled with NO_PERL=3DYesPlease.
+>
+>        Even without the PERL prerequisite, tests can assume there is a
+>        usable perl interpreter at $PERL_PATH, though it need not be
+>        particularly modern.
+>
+> So unless "receive-pack" that is being tested here requires Perl at
+> runtime, we do not want PERL prerequisite for this test.
 
-> Yeah, I had a similar comment in the commit message (but much more
-> verbose than your concise addition above), but I edited it several
-> times, without finding a wording that I liked. I eventually removed
-> it, because it didn't really add any value. :(
+Oops, sorry about that.
 
-I tend to agree that the proposed additional comment does not add
-much value.  It assures the readers that we (at the time of applying
-this patch) know that the earlier use of ULL was not done with a
-good reason but was merely an accident, and strengthens the claim
-that this is a good change, but the correctness of the change is
-already obvious, and the readers would understand without being
-explained where the incorrectness we have to fix with this patch
-came from, I would think.
-.
+>> Also using \1 will likely be deprecated in future versions of perl at
+>> some point:
+>>
+>>     $ echo hifoo | perl -wpe "s/([^ ])bar/\\1baz/"
+>>     \1 better written as $1 at -e line 1.
+>>     hifoo
+>
+> Very good advice from a Perl expert; thanks.
+
+No problem. Hopefully my noisy advice will at least lead to fixing a
+bug in perl if there is one :)
