@@ -2,56 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C5891FDEA
-	for <e@80x24.org>; Tue,  9 May 2017 19:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DFBD1FDEA
+	for <e@80x24.org>; Tue,  9 May 2017 19:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753849AbdEITS3 (ORCPT <rfc822;e@80x24.org>);
+        id S1754075AbdEITSb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 15:18:31 -0400
+Received: from mail-pf0-f182.google.com ([209.85.192.182]:33554 "EHLO
+        mail-pf0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750911AbdEITS3 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 9 May 2017 15:18:29 -0400
-Received: from mail-pg0-f44.google.com ([74.125.83.44]:32880 "EHLO
-        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750911AbdEITS1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 15:18:27 -0400
-Received: by mail-pg0-f44.google.com with SMTP id u187so4410213pgb.0
-        for <git@vger.kernel.org>; Tue, 09 May 2017 12:18:27 -0700 (PDT)
+Received: by mail-pf0-f182.google.com with SMTP id e193so4574288pfh.0
+        for <git@vger.kernel.org>; Tue, 09 May 2017 12:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EcVWHv2JOB8BYNS9mxFDw3iMQscgaM0cCZc4K4AWtGs=;
-        b=TYZzAVbjaL+Mq6NJCBhafpde8YVUTP+yEkTAz9MvaMSISSE2qSl7gQ6irX1V5afjCU
-         pnqUujZNQurE9tKVvWw6N0BWdcCeVdz3RlDm3MF1rvtjtnI4bimv1ghAJlYTJrsx8vs4
-         gFF7FLqZQTMCKPU2k53ulMCDUtnTgj4+f5mix9yFVjvxftJHN3QDwqL/pnx4oCk2rjTJ
-         9IpcIsOpoMwLF/NJx/XDExnbj9bfE7s7ArsaFTyrcXc/RgJmLMEyzz2ye/WRTHRs4yYN
-         I38c2SOsS72zurEo9p6FME68nY47wyr4r2LSK6SLQHQXQ99PVdA+7nkxtNRg4ZuuWI8n
-         cWxQ==
+        bh=COr4eRoSYaIqmcOLu9dSA/EF/M0/umcDv0bxvAxw4vw=;
+        b=PG5uhz6F6H0PsjKNmYWLKNOS12y1r/XEl1f7GK1YB9QZd++qMK1YFxDCB7acjuiwkn
+         HxBWzDt4/qHNWYxV+sCfGBOc55xse3L2YIbpAhO/b6Hz8AqZgpxNy7XzXgBRDmDQ5Fcm
+         5mFgW5zSslBwM9CcCjmhL/k44SXqySGlp9APU4UqHskFA+72nwaYe1dAddX7ItBtMS/J
+         g1uM+3EESy4RfJP1fFCLGZ6QUvrTr/bFHkw+hUXZ6JsC4GgiPtoN4Liby3Wi1hWHU/rC
+         eniE0rqYjFeszojeAeNIw19HsFSFNdUYdk2sPt9bjnAuR+mQis4hP+Nj5tL4blyU1E2e
+         KxVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=EcVWHv2JOB8BYNS9mxFDw3iMQscgaM0cCZc4K4AWtGs=;
-        b=LtH16n6OXyi6/OZm1IYy8rjkcWJ7zXfOsUYQNTJQj2DsOTJD4w0X7Vl6RmhnMfPfw0
-         FH4j6KRxykujsjfjy7ZuAo9xAdQpl2+xXjkfEIxyNfypkEn88RGCD5sEhbIkBe4LgMM1
-         uOVZQcqdNgQqlM72iqqXX3C9HUXk+1BH6s46taUJV9wrSd5r3WaCL0AoUAU+rfQV7Jto
-         ct2BjNBGt6hI/58UV6+uWChKTfEkCI6ssrxRebeKjg+ylVgzPL5LCDc2shvYoD1srFem
-         5cf4+N0a6hfx+hGadH8k3ukUFLOfMrd0gZgGNYg7cSvTIGCuVnz5wueXXZ/kk4v1Wo0T
-         NyLw==
-X-Gm-Message-State: AODbwcDHpxDSOTNN5t/+wnjdFwqXYXdRhHHOsJ8U/VqOeqTiOjQmndk2
-        3JH2hOJWGldMSCmR
-X-Received: by 10.98.131.142 with SMTP id h136mr1763163pfe.138.1494357506971;
-        Tue, 09 May 2017 12:18:26 -0700 (PDT)
+        bh=COr4eRoSYaIqmcOLu9dSA/EF/M0/umcDv0bxvAxw4vw=;
+        b=M+OV9gDXr3DiXRQ1nTRrrJZcPuxdT+ZV7hpF24oM7I5L7SgMjTspcgF4QUEjuyyB59
+         dOIFbcakge/GzW/AeOC+4OYBCR/eOZL9xGk3J1vKiNnRGZQs9tr+Lq2KchSmY6eVxnNf
+         uQwyIpEVHQ0jm/KJbtRzhF1Qwr8chS314d6rKZLsYY7/DNW6zcFAPFt9Zlpge/6aDvfr
+         t0zDgMh4LzDXMJiDJ6Smj3DEUdCH5IwArpvH8zRaM1QRNTarDrtaMbzyGt2gm7vpxzoS
+         73J0JVHxK04nkczfDoVoZqJujcodz+ebHrHj5gsmRobbib9xri6zoCXmGFiCfnSCWlfs
+         zImw==
+X-Gm-Message-State: AODbwcApjgE0WQrFs+Xn183+6x5Aw8W/3Gzxx+oYTL+f2kd/DhlSzeF/
+        gQxWwjFpkpv0u7WHMFTBXQ==
+X-Received: by 10.99.107.198 with SMTP id g189mr1902135pgc.162.1494357508428;
+        Tue, 09 May 2017 12:18:28 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id w23sm1124427pfl.133.2017.05.09.12.18.25
+        by smtp.gmail.com with ESMTPSA id w23sm1124427pfl.133.2017.05.09.12.18.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 09 May 2017 12:18:25 -0700 (PDT)
+        Tue, 09 May 2017 12:18:27 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>
-Subject: [PATCH 2/8] submodule: add die_in_unpopulated_submodule function
-Date:   Tue,  9 May 2017 12:17:59 -0700
-Message-Id: <20170509191805.176266-3-bmwill@google.com>
+Subject: [PATCH 3/8] pathspec: change PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag
+Date:   Tue,  9 May 2017 12:18:00 -0700
+Message-Id: <20170509191805.176266-4-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.rc2.291.g57267f2277-goog
 In-Reply-To: <20170509191805.176266-1-bmwill@google.com>
 References: <20170509191805.176266-1-bmwill@google.com>
@@ -60,165 +61,147 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently 'git add' is the only command which dies when launched from an
-unpopulated submodule (the place-holder directory for a submodule which
-hasn't been checked out).  This is triggered implicitly by passing the
-PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag to 'parse_pathspec()'.
+It's confusing to have two different 'strip submodule slash' flags which
+do subtly different things.  Both
+PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE and
+PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP will accomplish the same task of
+striping a slash from a pathspec which matches a submodule entry in the
+index.  The only difference is that
+PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE will perform additional checks
+and die if a pathspec has a leading path component which corresponds to
+a submodule.  This additional functionality should be split out into its
+own flag.
 
-Instead make this desire more explicit by creating a function
-'die_in_unpopulated_submodule()' which dies if the provided 'prefix' has
-a leading path component which matches a submodule in the the index.
+To this end, rename the PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag to
+PATHSPEC_SUBMODULE_LEADING_PATH and change its behavior to only die if a
+path descends into a submodule.  In addition add the
+PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag to callers which relied on the
+old slash stripping functionality.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/add.c                    |  3 +++
- pathspec.c                       | 29 -----------------------------
- submodule.c                      | 30 ++++++++++++++++++++++++++++++
- submodule.h                      |  2 ++
- t/t6134-pathspec-in-submodule.sh |  6 +-----
- 5 files changed, 36 insertions(+), 34 deletions(-)
+ builtin/add.c          |  3 ++-
+ builtin/check-ignore.c |  3 ++-
+ pathspec.c             | 32 ++++++++++++++++----------------
+ pathspec.h             |  9 +++------
+ 4 files changed, 23 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/add.c b/builtin/add.c
-index 9f53f020d..ec58e3679 100644
+index ec58e3679..2aa9aeab9 100644
 --- a/builtin/add.c
 +++ b/builtin/add.c
-@@ -17,6 +17,7 @@
- #include "revision.h"
- #include "bulk-checkin.h"
- #include "argv-array.h"
-+#include "submodule.h"
+@@ -389,7 +389,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	parse_pathspec(&pathspec, 0,
+ 		       PATHSPEC_PREFER_FULL |
+ 		       PATHSPEC_SYMLINK_LEADING_PATH |
+-		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE,
++		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP |
++		       PATHSPEC_SUBMODULE_LEADING_PATH,
+ 		       prefix, argv);
  
- static const char * const builtin_add_usage[] = {
- 	N_("git add [<options>] [--] <pathspec>..."),
-@@ -379,6 +380,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
+ 	if (add_new_files) {
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 1d73d3ca3..73237b2b1 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -87,7 +87,8 @@ static int check_ignore(struct dir_struct *dir,
+ 	parse_pathspec(&pathspec,
+ 		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
+ 		       PATHSPEC_SYMLINK_LEADING_PATH |
+-		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE |
++		       PATHSPEC_SUBMODULE_LEADING_PATH |
++		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP |
+ 		       PATHSPEC_KEEP_ORDER,
+ 		       prefix, argv);
  
-+	die_in_unpopulated_submodule(&the_index, prefix);
-+
- 	/*
- 	 * Check the "pathspec '%s' did not match any files" block
- 	 * below before enabling new magic.
 diff --git a/pathspec.c b/pathspec.c
-index 61b5b1273..e37256c3b 100644
+index e37256c3b..f37d5769d 100644
 --- a/pathspec.c
 +++ b/pathspec.c
-@@ -424,27 +424,6 @@ static void strip_submodule_slash_expensive(struct pathspec_item *item)
+@@ -398,29 +398,29 @@ static void strip_submodule_slash_cheap(struct pathspec_item *item)
  	}
  }
  
--static void die_inside_submodule_path(struct pathspec_item *item)
--{
--	int i;
--
+-static void strip_submodule_slash_expensive(struct pathspec_item *item)
++static void die_path_inside_submodule(const struct pathspec_item *item,
++				      const struct index_state *istate)
+ {
+ 	int i;
+ 
 -	for (i = 0; i < active_nr; i++) {
 -		struct cache_entry *ce = active_cache[i];
--		int ce_len = ce_namelen(ce);
--
--		if (!S_ISGITLINK(ce->ce_mode))
--			continue;
--
--		if (item->len < ce_len ||
--		    !(item->match[ce_len] == '/' || item->match[ce_len] == '\0') ||
--		    memcmp(ce->name, item->match, ce_len))
--			continue;
--
--		die(_("Pathspec '%s' is in submodule '%.*s'"),
--		    item->original, ce_len, ce->name);
--	}
--}
--
- /*
-  * Perform the initialization of a pathspec_item based on a pathspec element.
-  */
-@@ -547,14 +526,6 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
- 	/* sanity checks, pathspec matchers assume these are sane */
- 	if (item->nowildcard_len > item->len ||
- 	    item->prefix         > item->len) {
--		/*
--		 * This case can be triggered by the user pointing us to a
--		 * pathspec inside a submodule, which is an input error.
--		 * Detect that here and complain, but fallback in the
--		 * non-submodule case to a BUG, as we have no idea what
--		 * would trigger that.
--		 */
--		die_inside_submodule_path(item);
- 		die ("BUG: error initializing pathspec_item");
- 	}
- }
-diff --git a/submodule.c b/submodule.c
-index 7c3c4b17f..9e0502f25 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -281,6 +281,36 @@ int is_submodule_populated_gently(const char *path, int *return_error_code)
- 	return ret;
- }
- 
-+/*
-+ * Dies if the provided 'prefix' corresponds to an unpopulated submodule
-+ */
-+void die_in_unpopulated_submodule(const struct index_state *istate,
-+				  const char *prefix)
-+{
-+	int i, prefixlen;
-+
-+	if (!prefix)
-+		return;
-+
-+	prefixlen = strlen(prefix);
-+
 +	for (i = 0; i < istate->cache_nr; i++) {
 +		struct cache_entry *ce = istate->cache[i];
-+		int ce_len = ce_namelen(ce);
-+
-+		if (!S_ISGITLINK(ce->ce_mode))
-+			continue;
-+		if (prefixlen <= ce_len)
-+			continue;
-+		if (strncmp(ce->name, prefix, ce_len))
-+			continue;
-+		if (prefix[ce_len] != '/')
-+			continue;
-+
-+		die(_("in unpopulated submodule '%s'"), ce->name);
-+	}
-+}
-+
- int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst)
- {
-diff --git a/submodule.h b/submodule.h
-index 8a8bc49dc..f4fe6374d 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -48,6 +48,8 @@ extern int is_submodule_initialized(const char *path);
-  * Otherwise the return error code is the same as of resolve_gitdir_gently.
-  */
- extern int is_submodule_populated_gently(const char *path, int *return_error_code);
-+extern void die_in_unpopulated_submodule(const struct index_state *istate,
-+					 const char *prefix);
- extern int parse_submodule_update_strategy(const char *value,
- 		struct submodule_update_strategy *dst);
- extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
-diff --git a/t/t6134-pathspec-in-submodule.sh b/t/t6134-pathspec-in-submodule.sh
-index fd401ca60..0f1cb49ce 100755
---- a/t/t6134-pathspec-in-submodule.sh
-+++ b/t/t6134-pathspec-in-submodule.sh
-@@ -24,13 +24,9 @@ test_expect_success 'error message for path inside submodule' '
- 	test_cmp expect actual
- '
+ 		int ce_len = ce_namelen(ce);
  
--cat <<EOF >expect
--fatal: Pathspec '.' is in submodule 'sub'
--EOF
+ 		if (!S_ISGITLINK(ce->ce_mode))
+ 			continue;
+ 
+-		if (item->len <= ce_len || item->match[ce_len] != '/' ||
+-		    memcmp(ce->name, item->match, ce_len))
++		if (item->len <= ce_len)
++			continue;
++		if (item->match[ce_len] != '/')
++			continue;
++		if (strncmp(ce->name, item->match, ce_len))
++			continue;
++		if (item->len == ce_len + 1)
+ 			continue;
+ 
+-		if (item->len == ce_len + 1) {
+-			/* strip trailing slash */
+-			item->len--;
+-			item->match[item->len] = '\0';
+-		} else {
+-			die(_("Pathspec '%s' is in submodule '%.*s'"),
+-			    item->original, ce_len, ce->name);
+-		}
++		die(_("Pathspec '%s' is in submodule '%.*s'"),
++		    item->original, ce_len, ce->name);
+ 	}
+ }
+ 
+@@ -499,9 +499,6 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
+ 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
+ 		strip_submodule_slash_cheap(item);
+ 
+-	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+-		strip_submodule_slash_expensive(item);
 -
- test_expect_success 'error message for path inside submodule from within submodule' '
- 	test_must_fail git -C sub add . 2>actual &&
--	test_cmp expect actual
-+	test_i18ngrep "in unpopulated submodule" actual
- '
+ 	if (magic & PATHSPEC_LITERAL) {
+ 		item->nowildcard_len = item->len;
+ 	} else {
+@@ -639,6 +636,9 @@ void parse_pathspec(struct pathspec *pathspec,
+ 			die(_("pathspec '%s' is beyond a symbolic link"), entry);
+ 		}
  
- test_done
++		if (flags & PATHSPEC_SUBMODULE_LEADING_PATH)
++			die_path_inside_submodule(item + i, &the_index);
++
+ 		if (item[i].nowildcard_len < item[i].len)
+ 			pathspec->has_wildcard = 1;
+ 		pathspec->magic |= item[i].magic;
+diff --git a/pathspec.h b/pathspec.h
+index 55e976972..93a819cbf 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -63,13 +63,10 @@ struct pathspec {
+ /* die if a symlink is part of the given path's directory */
+ #define PATHSPEC_SYMLINK_LEADING_PATH (1<<4)
+ /*
+- * This is like a combination of ..LEADING_PATH and .._SLASH_CHEAP
+- * (but not the same): it strips the trailing slash if the given path
+- * is a gitlink but also checks and dies if gitlink is part of the
+- * leading path (i.e. the given path goes beyond a submodule). It's
+- * safer than _SLASH_CHEAP and also more expensive.
++ * Checks and dies if gitlink is part of the leading path
++ * (i.e. the given path goes beyond a submodule).
+  */
+-#define PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE (1<<5)
++#define PATHSPEC_SUBMODULE_LEADING_PATH (1<<5)
+ #define PATHSPEC_PREFIX_ORIGIN (1<<6)
+ #define PATHSPEC_KEEP_ORDER (1<<7)
+ /*
 -- 
 2.13.0.rc2.291.g57267f2277-goog
 
