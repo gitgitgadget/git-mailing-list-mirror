@@ -2,100 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D39F62018D
-	for <e@80x24.org>; Tue,  9 May 2017 20:13:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 944C12018D
+	for <e@80x24.org>; Tue,  9 May 2017 20:25:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752667AbdEIUNF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 16:13:05 -0400
-Received: from avasout08.plus.net ([212.159.14.20]:54181 "EHLO
-        avasout08.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751423AbdEIUNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 16:13:05 -0400
-Received: from [10.0.2.15] ([143.159.212.80])
-        by avasout08 with smtp
-        id JLD11v0081keHif01LD3xf; Tue, 09 May 2017 21:13:03 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.2 cv=JPdLi4Cb c=1 sm=1 tr=0
- a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
- a=N659UExz7-8A:10 a=EBOSESyhAAAA:8 a=1EXLD2x9LzD5l57MLF8A:9 a=pILNOxqGKmIA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v2] archive-tar: fix a sparse 'constant too large' warning
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <4bf9be3c-5d19-09e3-b8b3-dd58e00e623d@ramsayjones.plus.com>
- <alpine.DEB.2.21.1.1705091223190.146734@virtualbox>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        GIT Mailing-list <git@vger.kernel.org>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <5068a9b6-c77a-737d-9d80-40108c5f22c3@ramsayjones.plus.com>
-Date:   Tue, 9 May 2017 21:13:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1751883AbdEIUZj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 16:25:39 -0400
+Received: from mail-wr0-f194.google.com ([209.85.128.194]:34779 "EHLO
+        mail-wr0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750911AbdEIUZi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 16:25:38 -0400
+Received: by mail-wr0-f194.google.com with SMTP id 6so3046230wrb.1
+        for <git@vger.kernel.org>; Tue, 09 May 2017 13:25:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=OHcbqNQxAtW54vbKXD3Z2tNe1PDFxiTNP1x/0omFfSY=;
+        b=X/aSnuyxtBPPePdKr+JVCTF5f8NEPg+hHPqIpIFtl+vyF9QJp/d+JpftGi6QLwpv+l
+         KDw2L0PWr6ktl18TPhGtdydFl9p8i6Um9pCYjYsILhcJwZk3tlyfusWZha5YKBUVgN8F
+         Nd+IIz7h1JIb7W8wyjIHiXHMLu3mjfTwn17+n5aOnwGoK2s6EQM3laTwmHMhcO02a7iB
+         I/gbsu8WPwzThDJMBQvgUrFXJ3AKAv2y5eb2NjTZIyfJn5d+53DOTIEowkFjLJpI5gmK
+         ePmj/rHl5bYXeUCjhBPCrRyNu4q0zfrFoW9ZfcvcgCbKSZ/1OKuq5tWVXJF+Xp7lZcbF
+         imlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OHcbqNQxAtW54vbKXD3Z2tNe1PDFxiTNP1x/0omFfSY=;
+        b=lhGc5FBFHA3fDliKNAr9+8p2wV0vwxb0sXiEH7YevDGG+tG55KukffRLyhZQxsM6oV
+         lGnAnX/wnGaRSKjsa1i+BTGw15q9G2244U0F86N+eNSgC48HXt/YbfOm/VQw4y2KipIv
+         aG50jdsMoYl80deMMK3dqEvdoNopV4Ot+KXesmHgdO/MG9ZuIfg2YGLOZuCcG3yRhHDA
+         Mcys42igsr3c7KH4oojaUarVJFeZAtI0qq0pDIdJrFz0pmqfDmXTsPWob8dDzbQN2y/S
+         9QRteSxmEEqN0gmXYpP9KNtu7kJth60lO7LTamlM03QZAAZRxlmhcMlSC/toCqp2sSqM
+         tVhg==
+X-Gm-Message-State: AODbwcB8gGBKHBK4WKOkJji0owlKw9kjhNfLWjXg2IYMhwgAi7Y6nHlh
+        UttiimUHV8jmraiiqN0=
+X-Received: by 10.223.166.48 with SMTP id k45mr1152718wrc.190.1494361536233;
+        Tue, 09 May 2017 13:25:36 -0700 (PDT)
+Received: from [192.168.5.102] ([87.116.180.192])
+        by smtp.gmail.com with ESMTPSA id s29sm867403wrb.21.2017.05.09.13.25.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 May 2017 13:25:35 -0700 (PDT)
+Subject: Re: [noob] is this normal behavior
+To:     Harry Putnam <reader@newsguy.com>, git@vger.kernel.org
+References: <868tm6w5bz.fsf@local.lan>
+From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
+Message-ID: <03ef09e8-62a1-b6bb-041a-bad83dc353f4@gmail.com>
+Date:   Tue, 9 May 2017 22:25:27 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.0.1
 MIME-Version: 1.0
-In-Reply-To: <alpine.DEB.2.21.1.1705091223190.146734@virtualbox>
-Content-Type: text/plain; charset=windows-1252
+In-Reply-To: <868tm6w5bz.fsf@local.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Harry,
 
+Both behaviours you report are normal, specifically:
 
-On 09/05/17 11:24, Johannes Schindelin wrote:
-> Hi Ramsay,
+On 09/05/2017 15:02, Harry Putnam wrote:
+> Shouldn't files that changed but are already being tracked just show
+> up as modified and not need adding?
+> ...
+> Since that file is already being tracked; shouldn't `git status' show
+> that file as modified but ready to be committed instead of a file that
+> is modified but needs to be added before a commit can happen?
+
+No, it shouldn`t - even though the file you`ve modified is already 
+being tracked, it doesn`t have to mean you want the modification 
+inside your very next commit, and Git doesn`t force that upon you.
+
+That is where index (or "staging area") comes in handy, allowing you 
+to `git add` only the changes you actually want to commit now, 
+leaving the others for later decision.
+
+You don`t even have to add all the modifications inside the single 
+file at once, for example by using `git add --patch`[1] you can 
+select just some of the them, fine tuning what gets committed and when.
+
+With some precaution/steps needed not to commit broken project states 
+by accident, and some discipline not to overdo it, this allows you to 
+fully focus on the actual work you do, making logically unrelated 
+changes in place as you see fit, on the go, and only later organizing 
+them into logically grouped commits, through diligent use of `git add`.
+
+> Another side of this is that a `git diff FILE' only works before an
+> `git add .' operation is done.
 > 
-> On Mon, 8 May 2017, Ramsay Jones wrote:
+> That is, if I run `git diff FILE' AFTER `git add' .. no diff is
+> reported, even though it is not committed yet.
 > 
->> Commit dddbad728c ("timestamp_t: a new data type for timestamps",
->> 26-04-2017) introduced a new typedef 'timestamp_t', as a synonym for an
->> unsigned long, which was used at the time to represent timestamps in
->> git. A later commit 28f4aee3fb ("use uintmax_t for timestamps",
->> 26-04-2017) changed the typedef to use an 'uintmax_t' for the timestamp
->> representation type.
->>
->> When building on a 32-bit Linux system, sparse complains that a constant
->> (USTAR_MAX_MTIME) used to detect a 'far-future mtime' timestamp, is too
->> large; 'warning: constant 077777777777UL is so big it is unsigned long
->> long' on lines 335 and 338 of archive-tar.c. Note that both gcc and
->> clang only issue a warning if this constant is used in a context that
->> requires an 'unsigned long' (rather than an uintmax_t). (Since TIME_MAX
->> is no longer equal to 0xFFFFFFFF, even on a 32-bit system, the macro
->> USTAR_MAX_MTIME is set to 077777777777UL, which cannot be represented as
->> an 'unsigned long' constant).
->>
->> In order to suppress the warning, change the definition of the macro
->> constant USTAR_MAX_MTIME to use an 'ULL' type suffix.
->>
->> In a similar vein, on systems which use a 64-bit representation of the
->> 'unsigned long' type, the USTAR_MAX_SIZE constant macro is defined with
->> the value 077777777777ULL. Although this does not cause any warning
->> messages to be issued, it would be more appropriate for this constant
->> to use an 'UL' type suffix rather than 'ULL'.
+> So, for example: if I'm committing and in the vi buffer of the commit
+> and want to see a diff of FILE to aid my log notes.
 > 
-> 	The reason for the current situation is that an earlier fix for
-> 	the USTAR_MAX_MTIME constant was applied to the USTAR_MAX_SIZE
-> 	constant by mistake.
-
-Yeah, I had a similar comment in the commit message (but much more
-verbose than your concise addition above), but I edited it several
-times, without finding a wording that I liked. I eventually removed
-it, because it didn't really add any value. :(
-
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>  git diff FILE will report nothing whatever.
 > 
-> With that addition to the commit message: ACK
+> Is that expected behavior?
 
-This patch is now in the 'next' branch, so I guess it's too late
-to add this to the commit message (which I would be quite happy to do).
+Yes, that is as expected - in the form you`ve given, `git diff` shows 
+the differences between your working tree and index (staging area), 
+so only changes you haven`t added yet. Once you `git add` the changes 
+from the working to the index, there are no more differences to show, 
+so no diff is produced.
 
-Well, at the beginning of the next cycle, 'next' will be rebuilt, so
-I guess (if we remember!) this patch could be updated then.
+If you want to see the added changes, what will be included in the 
+commit if you make it, you can use `git diff --cached`, as per 
+git-diff[2] documentation (--staged can also be used instead, being a synonym 
+for --cached, but maybe easier to remember, relating it to "staging 
+area").
 
-ATB,
-Ramsay Jones
+That option shows differences between the staging area (index) and 
+the specific commit - with none provided, it implies your currently 
+checked-out position (referred to as HEAD), usually being your 
+latest/previous commit, which is exactly what you`re interested in.
 
+
+As a side note, if you think you don`t need it, you can skip staging 
+area and commit all the modifications/deletions without a need of 
+adding them first by using `git commit --all`, as per git-commit[3] 
+documentation.
+
+Just pay attention that untracked files are not affected, you still 
+need to add them first to tell Git to start tracking them, including 
+them in the next commit, but that seems to align nicely with your 
+expectations already.
+
+I personally find the staging area to be one of the greatest Git 
+possibilities, but I do understand beginners getting confused by it, 
+as admittedly I once was myself.
+
+
+In the end, you may want to ask questions like this on Git users 
+mailing list[4] on Google Groups, being a a nice place for beginners 
+to get answers to their concerns.
+
+[1] https://git-scm.com/docs/git-add
+[2] https://git-scm.com/docs/git-diff
+[3] https://git-scm.com/docs/git-commit
+[4] https://groups.google.com/forum/?fromgroups#!forum/git-users
+
+Regards,
+Buga
