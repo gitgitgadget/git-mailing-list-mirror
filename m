@@ -2,105 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 134431FC44
-	for <e@80x24.org>; Tue,  9 May 2017 03:34:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C25291FC44
+	for <e@80x24.org>; Tue,  9 May 2017 03:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751537AbdEIDea (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 23:34:30 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34149 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751166AbdEIDe3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 8 May 2017 23:34:29 -0400
-Received: by mail-pf0-f193.google.com with SMTP id w69so6354350pfk.1
-        for <git@vger.kernel.org>; Mon, 08 May 2017 20:34:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=tk1pSEMg8zAWNh/X0DpqqcikYF0FipxDS8Ox2i98ve8=;
-        b=sXUjlqpexYury/2DEKfmK9hNrCceFFcS+keUY/fQIb3ByZ4r8749in+6tgB0qqQMII
-         bKgc8EdDnAwML+4in7b4a7EXW4B5agz/b5YOZfXkuSn/abdAxXYlqStPDhpk+DLteJHT
-         aZlU4Gsr5IN0pxfcPPFj5AUzhcFYgsm7ov3CtjRf9THiBHA35CNNqiOFvKGk3jA1P9ux
-         LaS4URUnHomBf1VIOLSFdZAth9/vHxSjvpQGDUDwGPPLtAiBF1L7/kUAbtf5ZTpecpVE
-         n+Fj04/PoIqfpNyVPvaZHH/83PTUtGrHvVrv7BCsHDz6cCjgXJ9ZKGMfTf7HwOghPQf5
-         6KsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=tk1pSEMg8zAWNh/X0DpqqcikYF0FipxDS8Ox2i98ve8=;
-        b=sMO+vWPA4/snaXflScBqaSSA4krscrjvViQ6mIZkqHVekfMSHvxAFig1tLWCt8R8UJ
-         ajaS17YvwZ8RhJG7lJwJk8q11ScK5DwnkE0gjmuzW4jDFKlk3kIyyNYlOvaobBc8muUx
-         zKNsGNWq9+XYfLX+8N4w7JexsHhYoZYdDGKB/JlOMGnRylJznACezXYNP2IuVycZJZxH
-         1jc+s5vO13mCrMY9mSxfoaeGN6DXFM8255Vh3ZfepKvXVbnfOr/I/3gq1wUO4jnPegGj
-         i6k1/pgaQjRAiDx5GBwYMJ9p+huxlDkOFspBxMvwdK6qmp6TwHQ8DofGi9AUaBHd9zBW
-         njiA==
-X-Gm-Message-State: AODbwcCHpsSvSky2/9cmX5ZvYBVazp7eWUkC39scVkgoACKZwl6UNNIO
-        g3iokG+ux74iZAnmKMuqRQ==
-X-Received: by 10.99.173.12 with SMTP id g12mr1772127pgf.225.1494300868676;
-        Mon, 08 May 2017 20:34:28 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
-        by smtp.gmail.com with ESMTPSA id l186sm21137919pgd.42.2017.05.08.20.34.27
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Mon, 08 May 2017 20:34:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, sbeller@google.com
-Subject: Re: [PATCH v2 2/2] receive-pack: verify push options in cert
-References: <cover.1494279020.git.jonathantanmy@google.com>
-        <cover.1494027001.git.jonathantanmy@google.com>
-        <cover.1494279020.git.jonathantanmy@google.com>
-        <cc21a5566dcf10e4683465ac253c76370b7b6a7f.1494279020.git.jonathantanmy@google.com>
-Date:   Tue, 09 May 2017 12:34:27 +0900
-In-Reply-To: <cc21a5566dcf10e4683465ac253c76370b7b6a7f.1494279020.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Mon, 8 May 2017 14:33:51 -0700")
-Message-ID: <xmqqfuge4sak.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1751475AbdEID47 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 23:56:59 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47892 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1750990AbdEID47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 23:56:59 -0400
+Received: (qmail 15548 invoked by uid 109); 9 May 2017 03:56:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 03:56:57 +0000
+Received: (qmail 19851 invoked by uid 111); 9 May 2017 03:57:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Mon, 08 May 2017 23:57:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 May 2017 23:56:54 -0400
+Date:   Mon, 8 May 2017 23:56:54 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] checkout: check return value of resolve_refdup before
+ using hash
+Message-ID: <20170509035654.ywjabvwxj6rwelcn@sigill.intra.peff.net>
+References: <f2e1a050-13e8-89be-ec6e-778054882ea3@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f2e1a050-13e8-89be-ec6e-778054882ea3@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Sat, May 06, 2017 at 07:13:52PM +0200, René Scharfe wrote:
 
-> +	# Tweak the push output to make the push option outside the cert
-> +	# different, then replay it on a fresh dst, checking that ff is not
-> +	# deleted.
-> +	sed -i "s/\\([^ ]\\)bar/\\1baz/" push &&
+> If resolve_refdup() fails it returns NULL and possibly leaves its hash
+> output parameter untouched.  Make sure to use it only if the function
+> succeeded, in order to avoid accessing uninitialized memory.
+> 
+> Found with t/t2011-checkout-invalid-head.sh --valgrind.
+> 
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  builtin/checkout.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index bfa5419f33..6c3d2e4f4c 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -833,7 +833,8 @@ static int switch_branches(const struct checkout_opts *opts,
+>  	int flag, writeout_error = 0;
+>  	memset(&old, 0, sizeof(old));
+>  	old.path = path_to_free = resolve_refdup("HEAD", 0, rev.hash, &flag);
+> -	old.commit = lookup_commit_reference_gently(rev.hash, 1);
+> +	if (old.path)
+> +		old.commit = lookup_commit_reference_gently(rev.hash, 1);
 
-This is not portable.  Didn't you get an error from the lint
-checker?
+I wondered for a second what the value of old.commit would be in the
+error case. But it should be NULL due to the memset above.
 
-The attached may not be enough if "push" is a binary file, though,
-in which case perl may be your friend ;-)
+But what happens after that? Is everybody OK with NULL? I briefly poked
+through the callees (merge_working_tree, update_refs_for_switch, and
+post_checkout_hook) and they all seem to explicitly handle the NULL.
+So I think this is good (well, clearly your change was an improvement
+either way, but I feel more confident now that there is nothing else to
+be fixed on top of it).
 
- t/t5534-push-signed.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t5534-push-signed.sh b/t/t5534-push-signed.sh
-index 0ef6f66b5d..effe769688 100755
---- a/t/t5534-push-signed.sh
-+++ b/t/t5534-push-signed.sh
-@@ -152,11 +152,11 @@ test_expect_success GPG 'inconsistent push options in signed push not allowed' '
- 	# Tweak the push output to make the push option outside the cert
- 	# different, then replay it on a fresh dst, checking that ff is not
- 	# deleted.
--	sed -i "s/\\([^ ]\\)bar/\\1baz/" push &&
-+	sed -e "s/\\([^ ]\\)bar/\\1baz/" push >push.tweak &&
- 	prepare_dst &&
- 	git -C dst config receive.certnonceseed sekrit &&
- 	git -C dst config receive.advertisepushoptions 1 &&
--	git receive-pack dst <push >out &&
-+	git receive-pack dst <push.tweak >out &&
- 	git -C dst rev-parse ff &&
- 	grep "inconsistent push options" out
- '
-
-
+-Peff
