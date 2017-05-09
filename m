@@ -2,89 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEF001FDEA
-	for <e@80x24.org>; Tue,  9 May 2017 14:22:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECD021FDEA
+	for <e@80x24.org>; Tue,  9 May 2017 14:23:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754342AbdEIOW3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 10:22:29 -0400
-Received: from mail-lf0-f52.google.com ([209.85.215.52]:34562 "EHLO
-        mail-lf0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754334AbdEIOWZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 10:22:25 -0400
-Received: by mail-lf0-f52.google.com with SMTP id 99so1910964lfu.1
-        for <git@vger.kernel.org>; Tue, 09 May 2017 07:22:24 -0700 (PDT)
+        id S1753862AbdEIOX0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 10:23:26 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:33080 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753957AbdEIOXZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 10:23:25 -0400
+Received: by mail-pg0-f65.google.com with SMTP id s62so117306pgc.0
+        for <git@vger.kernel.org>; Tue, 09 May 2017 07:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Nlz0J4L27/OaCBHDwwMcB2Hc7/HBDfBX2qF5ut3pCJg=;
-        b=drFKDyNnsDQs632aQODmkLe7ixzBfUNIz+xOOrJBSY2BPs/DDh4dQcG5nfwoUXqmz7
-         d91tjWeGm98NypIGFrqXb5KvzCOV65UWw1q0fKvs6pByGSVA+7xxBXh9PFnduFLfHZ9J
-         mviDFq+z+P0qyOEUU/lwdVCq38xPLICXSGVTZE/7KBFxhlLAYcBodGfMvRModecbl68q
-         DD/rm6Lz9Ugo+QW8yw+A8uewVtl31KuCYSKcNTM685olcyI2O6cd88uJ/gP0vrPY4K5R
-         iXBYGYemAtWkEC1DPiR8y645wA1UdDKwI210skkaEqbCAberA7Cn4eNXVY8+8UPy21Gr
-         WAjw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=eIkX+mM/dtD30uOwYXSziXIy3Av0sd0apDAn9yKSgTA=;
+        b=BZmRFiDPZ69S3Lie+LHutHuVbMGJtgWEo9ybepjxETuIViU6TCJbfmKtI5n+y+7zPf
+         7ytVkMHJ+H8kxFQyu7CepTXJ8BYlLDK86bwBH706wlu+IQForlu6YiWHPbOnA+GKHZnT
+         bNZmFe+Gd41uOMDTjYtS4khjbpByDBXNRaxq/D2ScMlxNzRJK/1NiUxe517CLKy/YTHW
+         qh4b0fS18Q5CnZkpEDxBoOPOz1IlOBk+m7xWuexAC2xvvWzFUICfxMbEC++ciwA8ediB
+         rQcI9xfYUhY+JgbYPWgweZvQLxt4PKOX2WEXnNhYJXn0EYiKdM1WVRqTW7nXVbbo2rqI
+         Myww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Nlz0J4L27/OaCBHDwwMcB2Hc7/HBDfBX2qF5ut3pCJg=;
-        b=l3Pe/JN7JWWtfMP8aa+eGfn6cJTd9lCNaojWt4qlJuF0Vy0jcCQpYNhuyGb9oo4wMe
-         hNdoKlg9tKfERecKh5meliusACp0ArfpeXd3PT/uGjIYTKd6KpPL0/85s9LZtIYAhOrI
-         IhPd/KncRg+3Cdjxwm/4favHCg/JsKcI4VIV0g8hJbr3GkDZ6RseUeThnQlgrSkTK3H9
-         8ZTFDrG20lGCNsUZEWbkTRP221knsQrZP4rcEojj86k1mgr5ZAK/7mm1BKbogp5jLggO
-         FodfMjAmame6feLXfeP4mV+gGI1mufSQWb9VTbqj8JbeV7jU/JWBrcyFQ9bq0QHCwxMH
-         EH5w==
-X-Gm-Message-State: AODbwcC+n2IVtFqoXhvukG4wqZ5YxJjKF5FDTG8OKGA8k5tSKYK61rO6
-        enbuc9SaU0WVkOD0D+aL+C6gRWzTgQ==
-X-Received: by 10.25.19.31 with SMTP id j31mr165137lfi.79.1494339743551; Tue,
- 09 May 2017 07:22:23 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=eIkX+mM/dtD30uOwYXSziXIy3Av0sd0apDAn9yKSgTA=;
+        b=M7erFvrONGQMJWDMknYDgpZLiO7hWfI4cD8prHiGjHvAfvkIfLiNZL/f7ZiOIbvufw
+         +X2ViyGghmEapZRfTOB4DaLpiJTq4BqAFFs/8adHMIQBJwBS0KmlIY+SI1tDPidytCuo
+         SWKX/arDFUOBt9rKf4YTuP++FZLVzRwETIncOuPzyZL0J8DeV0OAlc9vgEcU12Cx91Jf
+         5JKAIiX8SwJMSsjPtQ5J3GEfPm4WZsD1umQ2ukRtm5TbmpG5S36dQk7LlRibwuHPaZ63
+         mKmGPLQJbsyPY6u8PBCwW1itMklQk2/ecKPxqXZH4scmOYBHq6/CxAx/zxIFOAbtHXkV
+         5z/g==
+X-Gm-Message-State: AODbwcDv6HNdAbEUdNvoxOUUIeDEZTQuTw84n8JZYVqrNp4pTJO2TMbY
+        BedIfxDMk6J5jA==
+X-Received: by 10.84.222.133 with SMTP id x5mr592694pls.36.1494339805161;
+        Tue, 09 May 2017 07:23:25 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:9133:cf19:b689:27d6])
+        by smtp.gmail.com with ESMTPSA id y63sm276865pfa.107.2017.05.09.07.23.24
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Tue, 09 May 2017 07:23:24 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Ray Chen <oldsharp@gmail.com>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Changwoo Ryu <cwryu@debian.org>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOi?= =?utf-8?B?bg==?= 
+        <vnwildman@gmail.com>, Git List <git@vger.kernel.org>
+Subject: Re: [GIT PULL] l10n updates for 2.13.0 round 2
+References: <CANYiYbGfDXj4jJTcd3PpXqsDN-TwCC8Dm8B9Ov_3NaSzwsrCfg@mail.gmail.com>
+Date:   Tue, 09 May 2017 23:23:23 +0900
+In-Reply-To: <CANYiYbGfDXj4jJTcd3PpXqsDN-TwCC8Dm8B9Ov_3NaSzwsrCfg@mail.gmail.com>
+        (Jiang Xin's message of "Tue, 9 May 2017 22:08:11 +0800")
+Message-ID: <xmqq4lwu2jok.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.25.168.196 with HTTP; Tue, 9 May 2017 07:22:22 -0700 (PDT)
-In-Reply-To: <CACBZZX6V8qbnrZAdhRvPthy5Z91iEG8rrJ=Sf9tdkOt52M9j1Q@mail.gmail.com>
-References: <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com>
- <alpine.DEB.2.20.1705031139090.3480@virtualbox> <CACBZZX6_5krLp93PmsW639-N4f1efUT5rPnN+5im=d9-66=QbQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1705041104070.4905@virtualbox> <CACBZZX5bPN3vZhE=0TSQNdRvKYuV3635=VCQAppAfcZ_tuGpvg@mail.gmail.com>
- <alpine.DEB.2.21.1.1705041328190.4905@virtualbox> <CACBZZX75nvfQft-gjUG+YP0Y-e-=Knm3bMeDWHSUF=Juz9Ua5Q@mail.gmail.com>
- <xmqqpofj7rim.fsf@gitster.mtv.corp.google.com> <20170508233224.udpuuzlygjpsjogt@genre.crustytoothpaste.net>
- <CACBZZX4G_ThE55Gi53QJt1=9K4jQXqJ3QL8JSGpiSSSDRrKeNA@mail.gmail.com>
- <20170509003714.ylwn5ezvu5h36kj7@genre.crustytoothpaste.net> <CACBZZX6V8qbnrZAdhRvPthy5Z91iEG8rrJ=Sf9tdkOt52M9j1Q@mail.gmail.com>
-From:   demerphq <demerphq@gmail.com>
-Date:   Tue, 9 May 2017 16:22:22 +0200
-Message-ID: <CANgJU+Vc2EC6o9CQ8O_Q52u0Q=3rkQDWafYWs9DzsFACBzX3Lw@mail.gmail.com>
-Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May
- 2017, #01; Mon, 1)
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9 May 2017 at 13:12, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmai=
-l.com> wrote:
-> On Tue, May 9, 2017 at 2:37 AM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->> On Tue, May 09, 2017 at 02:00:18AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
-> * gitweb is vulnerable to CPU DoS now in its default configuration.
-> It's easy to provide an ERE that ends up slurping up 100% CPU for
-> several seconds on any non-trivial sized repo, do that in parallel &
-> you have a DoS vector.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-Does one need an ERE? Can't one do that now to many parts of git just
-with a glob?
+> Hi Junio,
+>
+> I can not send email outside at work, but now I am back home. Here is
+> the pull request:
+>
+> The following changes since commit 4fa66c85f11bc5a541462ca5ae3246aa0ce02e74:
+>
+>   Git 2.13-rc2 (2017-05-04 16:27:19 +0900)
+>
+> are available in the git repository at:
+>
+>   git://github.com/git-l10n/git-po tags/l10n-2.13.0-rnd2
+>
+> for you to fetch changes up to 60638e9816d0aae40d4234d1a068f94fabc2fd4d:
+>
+>   l10n: zh_CN: for git v2.13.0 l10n round 2 (2017-05-09 21:55:38 +0800)
 
-Yves
+Thanks.  
+
+I see another merge for sv and the tag is now l10n-2.13.0-rnd2.1
+(i.e. I couldn't find -rnd2 tag), which I assume is what you meant
+me to fetch?
