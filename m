@@ -7,317 +7,105 @@ X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 420951FDEA
-	for <e@80x24.org>; Tue,  9 May 2017 12:54:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E80B1FDEA
+	for <e@80x24.org>; Tue,  9 May 2017 12:54:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754086AbdEIMye (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 08:54:34 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53142 "EHLO mout.gmx.net"
+        id S1754105AbdEIMyg (ORCPT <rfc822;e@80x24.org>);
+        Tue, 9 May 2017 08:54:36 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60725 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753210AbdEIMyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 08:54:33 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mb45P-1dSDAw1K4B-00KhVW; Tue, 09
- May 2017 14:54:25 +0200
-Date:   Tue, 9 May 2017 14:54:24 +0200 (CEST)
+        id S1753210AbdEIMyf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 9 May 2017 08:54:35 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfBsk-1dO4Jb03cQ-00OpPC; Tue, 09
+ May 2017 14:54:29 +0200
+Date:   Tue, 9 May 2017 14:54:27 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v3 4/6] t3901: move supporting files into t/t3901/
+Subject: [PATCH v3 5/6] Fix the remaining tests that failed with
+ core.autocrlf=true
 In-Reply-To: <cover.1494334366.git.johannes.schindelin@gmx.de>
-Message-ID: <f76799ec601a0d7142c30c9ca9424d1d761df2e0.1494334366.git.johannes.schindelin@gmx.de>
+Message-ID: <aa7ebfea3bb72cc1fba8cbb988705e52e7dd5551.1494334366.git.johannes.schindelin@gmx.de>
 References: <cover.1493891336.git.johannes.schindelin@gmx.de> <cover.1494334366.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:u5nZTWK4AI9Xa0HCjHRb9cLUhp0ubjip/75IHzgfE7GLI8KWFNA
- 1rw0WwRWbXnPMjV/GqrN3ezGkSiHBMTuCaG+QDiou5pP9FEyr+eehiK7J/72TMXzTqQBZ6M
- Z0KVMgr3SKq90VjXXVCYqIopcSU2lzt7xdKdzOEdR5L61HzAJGy9cRWWERiMINUmhEUAq7J
- noo20AMxuwtV3y+X4HUlA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hI31q09PB2k=:BpgRlmYpcGmebDtJW0+wCH
- pH3NcAd4oZpBa+c/5Kn1axJdRpcFy29HeHUcF+iTENRRLYX9AsqTv/Gi4LxrurA/2ejn1FlUC
- QE+cnrVJE0W1N7OQ4Zpq6I8fqBGzeHy6SRzZFFx9baoh6VmkYkpbqq+luoqIqmML3HCRrQuSR
- GQ7z/fNXFYq5BMNrP42jf3KaoC4TteqgAxxOcbJr9e1wX8hYyKM5U8qQ3zEBCeQW3K/0mu4X8
- tqdOrTp0jIv3HMlZ9d+kwiaHr0fo6Hj9UTxd2SyzYD/ePcrOpWlRlJZYeoPmM24dpLmoJlDDD
- LGZfu6XvBaNtNk4cPrBplbHFiW9sohduUhoNUGzbT61wy75VTw4Hqpkv8bsyWKLj4TYxI4BEY
- 6TUGwCQ3lmT6bo8a5DoDk1KPPDecLeitkrvseQmMvKPuPAhuIFIZScUMqB1ATo86PAWNcrDvu
- 170lfCqUnoMyUZ0q2Ep4gIzk5nwxuFDLL5u5XEZOvH+re1qJAlCeVooQhgCCifV4IbC/1+ygN
- NbmizVmLI4mq3mXekVICm1rPws8VIJoZqh3LzcXEXnMKQFPAmoynBPmKHN7c4+Ov1KyjIM0vE
- bWQhSqO0Uc94lVc/arfQs78mNm8VRN/fHQiLZjIQzplUAlhmY1X6Sa823+AV5aqpPYlnmNzi4
- s1Y/UW/d0beZsRf0ui59O6KNGoB/lyggacvhpfkn4hl+hKLBs9tyeikq+R536v3sRgXta811k
- T/ZNL94yy79VaCu/yIJi8HYLr3BCP48AMGsIqaUDko4ZpmhqH8pKHzoKo9a8GNbfmVRl4IXYp
- OEoZZeO
+X-Provags-ID: V03:K0:raQInPPRLm2s4L8LCMO+nxKLnDP9jDcF1pzaCZVezbTRqoZ0gr4
+ 3QGQgvsjYec1vKLcV/f0lmxDCmSGAKXHZSL2EmpvCmqTcK6b3LchK1Z6vGiwS64mwx7LOc/
+ dV+E2ubpbEDfPJT67Bo8IHFdGXaNmjLKgeBWDt/V6+qN7rH2mfvcnWJ7FSqJbi8s8k2PT25
+ QdEgAvqVAmEMfLwsBXlxg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:VzLxkLUsTd8=:sSSIeoNJWOtDYFcONGPPih
+ 3L3nLV2j5z1guvSzdPQ5q3XEylsk3XrEHJ1tdvbvgsgNt3o3joC3rODbMbCeOdsGrK1CumT/2
+ iHjGyEFryKpHJryQ4r7uQbec0jS9HOaFqNGGLIirJbx8ZZK6hsitkR0i6vzvunyUGWOm9u+FM
+ k0y+jX4CMYlJyRsK0MPzJ/SZLSNtukkQJ/mh5xC/lnFJQs24ntwa+s+1WGws16hG/LUcdaptH
+ 8uJ9ZQl4PkfMnNJHT4hMOiWlYepV77wa/YBa6vK+0DtQqMDncguna6MCeEnNI6g/GGQ0NDAXQ
+ Vwx9t3we69c75H4Qst/1+tPNWuKjYkLSX6R9sAEEvzt9z3RLfTFrpMIZgdwRxINu1tnar/MgE
+ GeuqXU+W3jA056IWxzyOfToZJfTFiXYzSJ/djhX9wU6k51e+GyH5fUwRQ+Gk+J+oom6L/nfpA
+ quBYGVgqrWK+m+EXOM6pbcxQckSiL1x+jImHdX6rk0pRhil7B5/2oVNPAijrohl6gDPJnPM7t
+ QEESXYrwHlPU5LlQMLqt/vyKd2E72y5WdLx24maeh7zT3lPQLV5dorGoDt89clHovwGMdjx7s
+ tkZkLotigGbm+nbPwvAt7xkpP+JX6vRW1miu1xuqBvaEHMsG5uEQLqtWzIxd+irzDuoCy8FDc
+ WnX86c2ciCN44a9bjwHRZ6RCtaRCz+Km3Pi8Y0twCzYfxIlW7/5REwgRsNio3/io/xZIT92TU
+ WmZwBrFk74qKmRzl9+2WlPDxNnSDAKLaDjUtPGOvKar/Nbla6P92H5GdzTN2OVwFoZz4EQHgt
+ xMZpOHL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The current convention is to either generate files on the fly in tests,
-or to use supporting files taken from a t/tNNNN/ directory (where NNNN
-matches the test's number, or the number of the test from which we
-borrow supporting files).
+The test suite is mainly developed on Linux and MacOSX, which is the
+reason that nobody thought to mark files as LF-only as needed.
 
-The test t3901-i18n-patch.sh was obviously introduced before that
-convention was in full swing, hence its supporting files still lived in
-t/t3901-8859-1.txt and t/t3901-utf8.txt, respectively.
+The symptom is a test suite that fails left and right when being checked
+out using Git for Windows (which defaults to core.autocrlf=true).
 
-Let's adjust to the current convention.
+Mostly, the problems stem from Git's (LF-only) output being compared to
+hard-coded files that are checked out with line endings according to
+core.autocrlf (which is of course incorrect). This includes the two test
+files in t/diff-lib/, README and COPYING.
+
+This patch can be validated even on Linux by using this cadence:
+
+	git config core.autocrlf true
+	rm .git/index && git stash
+	make -j15 DEVELOPER=1 test
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- t/t0203-gettext-setlocale-sanity.sh      |  4 ++--
- t/t3901-i18n-patch.sh                    | 38 ++++++++++++++++----------------
- t/{t3901-8859-1.txt => t3901/8859-1.txt} |  0
- t/{t3901-utf8.txt => t3901/utf8.txt}     |  0
- t/t9350-fast-export.sh                   |  2 +-
- t/t9500-gitweb-standalone-no-errors.sh   |  4 ++--
- 6 files changed, 24 insertions(+), 24 deletions(-)
- rename t/{t3901-8859-1.txt => t3901/8859-1.txt} (100%)
- rename t/{t3901-utf8.txt => t3901/utf8.txt} (100%)
+ t/.gitattributes | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/t/t0203-gettext-setlocale-sanity.sh b/t/t0203-gettext-setlocale-sanity.sh
-index a2124600811..71b0d74b4dd 100755
---- a/t/t0203-gettext-setlocale-sanity.sh
-+++ b/t/t0203-gettext-setlocale-sanity.sh
-@@ -8,7 +8,7 @@ test_description="The Git C functions aren't broken by setlocale(3)"
- . ./lib-gettext.sh
- 
- test_expect_success 'git show a ISO-8859-1 commit under C locale' '
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 	test_commit "iso-c-commit" iso-under-c &&
- 	git show >out 2>err &&
- 	! test -s err &&
-@@ -16,7 +16,7 @@ test_expect_success 'git show a ISO-8859-1 commit under C locale' '
- '
- 
- test_expect_success GETTEXT_LOCALE 'git show a ISO-8859-1 commit under a UTF-8 locale' '
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 	test_commit "iso-utf8-commit" iso-under-utf8 &&
- 	LANGUAGE=is LC_ALL="$is_IS_locale" git show >out 2>err &&
- 	! test -s err &&
-diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
-index f663d567c8a..923eb01f0ea 100755
---- a/t/t3901-i18n-patch.sh
-+++ b/t/t3901-i18n-patch.sh
-@@ -31,7 +31,7 @@ test_expect_success setup '
- 
- 	# use UTF-8 in author and committer name to match the
- 	# i18n.commitencoding settings
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	test_tick &&
- 	echo "$GIT_AUTHOR_NAME" >mine &&
-@@ -55,7 +55,7 @@ test_expect_success setup '
- 		# the second one on the side branch is ISO-8859-1
- 		git config i18n.commitencoding ISO8859-1 &&
- 		# use author and committer name in ISO-8859-1 to match it.
--		. "$TEST_DIRECTORY"/t3901-8859-1.txt
-+		. "$TEST_DIRECTORY"/t3901/8859-1.txt
- 	fi &&
- 	test_tick &&
- 	echo Yet another >theirs &&
-@@ -100,7 +100,7 @@ test_expect_success 'rebase (U/U)' '
- 
- 	# The result will be committed by GIT_COMMITTER_NAME --
- 	# we want UTF-8 encoded name.
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 	git checkout -b test &&
- 	git rebase master &&
- 
-@@ -110,7 +110,7 @@ test_expect_success 'rebase (U/U)' '
- test_expect_success 'rebase (U/L)' '
- 	git config i18n.commitencoding UTF-8 &&
- 	git config i18n.logoutputencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	git reset --hard side &&
- 	git rebase master &&
-@@ -122,7 +122,7 @@ test_expect_success !MINGW 'rebase (L/L)' '
- 	# In this test we want ISO-8859-1 encoded commits as the result
- 	git config i18n.commitencoding ISO8859-1 &&
- 	git config i18n.logoutputencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard side &&
- 	git rebase master &&
-@@ -135,7 +135,7 @@ test_expect_success !MINGW 'rebase (L/U)' '
- 	# to get ISO-8859-1 results.
- 	git config i18n.commitencoding ISO8859-1 &&
- 	git config i18n.logoutputencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard side &&
- 	git rebase master &&
-@@ -148,7 +148,7 @@ test_expect_success 'cherry-pick(U/U)' '
- 
- 	git config i18n.commitencoding UTF-8 &&
- 	git config i18n.logoutputencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	git reset --hard master &&
- 	git cherry-pick side^ &&
-@@ -163,7 +163,7 @@ test_expect_success !MINGW 'cherry-pick(L/L)' '
- 
- 	git config i18n.commitencoding ISO8859-1 &&
- 	git config i18n.logoutputencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard master &&
- 	git cherry-pick side^ &&
-@@ -178,7 +178,7 @@ test_expect_success 'cherry-pick(U/L)' '
- 
- 	git config i18n.commitencoding UTF-8 &&
- 	git config i18n.logoutputencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	git reset --hard master &&
- 	git cherry-pick side^ &&
-@@ -194,7 +194,7 @@ test_expect_success !MINGW 'cherry-pick(L/U)' '
- 
- 	git config i18n.commitencoding ISO8859-1 &&
- 	git config i18n.logoutputencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard master &&
- 	git cherry-pick side^ &&
-@@ -207,7 +207,7 @@ test_expect_success !MINGW 'cherry-pick(L/U)' '
- test_expect_success 'rebase --merge (U/U)' '
- 	git config i18n.commitencoding UTF-8 &&
- 	git config i18n.logoutputencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	git reset --hard side &&
- 	git rebase --merge master &&
-@@ -218,7 +218,7 @@ test_expect_success 'rebase --merge (U/U)' '
- test_expect_success 'rebase --merge (U/L)' '
- 	git config i18n.commitencoding UTF-8 &&
- 	git config i18n.logoutputencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	git reset --hard side &&
- 	git rebase --merge master &&
-@@ -230,7 +230,7 @@ test_expect_success 'rebase --merge (L/L)' '
- 	# In this test we want ISO-8859-1 encoded commits as the result
- 	git config i18n.commitencoding ISO8859-1 &&
- 	git config i18n.logoutputencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard side &&
- 	git rebase --merge master &&
-@@ -243,7 +243,7 @@ test_expect_success 'rebase --merge (L/U)' '
- 	# to get ISO-8859-1 results.
- 	git config i18n.commitencoding ISO8859-1 &&
- 	git config i18n.logoutputencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard side &&
- 	git rebase --merge master &&
-@@ -254,7 +254,7 @@ test_expect_success 'rebase --merge (L/U)' '
- test_expect_success 'am (U/U)' '
- 	# Apply UTF-8 patches with UTF-8 commitencoding
- 	git config i18n.commitencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	git reset --hard master &&
- 	git am out-u1 out-u2 &&
-@@ -265,7 +265,7 @@ test_expect_success 'am (U/U)' '
- test_expect_success !MINGW 'am (L/L)' '
- 	# Apply ISO-8859-1 patches with ISO-8859-1 commitencoding
- 	git config i18n.commitencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard master &&
- 	git am out-l1 out-l2 &&
-@@ -276,7 +276,7 @@ test_expect_success !MINGW 'am (L/L)' '
- test_expect_success 'am (U/L)' '
- 	# Apply ISO-8859-1 patches with UTF-8 commitencoding
- 	git config i18n.commitencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 	git reset --hard master &&
- 
- 	# am specifies --utf8 by default.
-@@ -288,7 +288,7 @@ test_expect_success 'am (U/L)' '
- test_expect_success 'am --no-utf8 (U/L)' '
- 	# Apply ISO-8859-1 patches with UTF-8 commitencoding
- 	git config i18n.commitencoding UTF-8 &&
--	. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 
- 	git reset --hard master &&
- 	git am --no-utf8 out-l1 out-l2 2>err &&
-@@ -303,7 +303,7 @@ test_expect_success 'am --no-utf8 (U/L)' '
- test_expect_success !MINGW 'am (L/U)' '
- 	# Apply UTF-8 patches with ISO-8859-1 commitencoding
- 	git config i18n.commitencoding ISO8859-1 &&
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 
- 	git reset --hard master &&
- 	# mailinfo will re-code the commit message to the charset specified by
-diff --git a/t/t3901-8859-1.txt b/t/t3901/8859-1.txt
-similarity index 100%
-rename from t/t3901-8859-1.txt
-rename to t/t3901/8859-1.txt
-diff --git a/t/t3901-utf8.txt b/t/t3901/utf8.txt
-similarity index 100%
-rename from t/t3901-utf8.txt
-rename to t/t3901/utf8.txt
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index b5149fde6ec..8dcb05c4a57 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -70,7 +70,7 @@ test_expect_success 'iso-8859-1' '
- 
- 	git config i18n.commitencoding ISO8859-1 &&
- 	# use author and committer name in ISO-8859-1 to match it.
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 	test_tick &&
- 	echo rosten >file &&
- 	git commit -s -m den file &&
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 6d06ed96cbc..cc8d463e01a 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -519,7 +519,7 @@ test_expect_success \
- 
- test_expect_success \
- 	'encode(commit): utf8' \
--	'. "$TEST_DIRECTORY"/t3901-utf8.txt &&
-+	'. "$TEST_DIRECTORY"/t3901/utf8.txt &&
- 	 test_when_finished "GIT_AUTHOR_NAME=\"A U Thor\"" &&
- 	 test_when_finished "GIT_COMMITTER_NAME=\"C O Mitter\"" &&
- 	 echo "UTF-8" >> file &&
-@@ -529,7 +529,7 @@ test_expect_success \
- 
- test_expect_success \
- 	'encode(commit): iso-8859-1' \
--	'. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	'. "$TEST_DIRECTORY"/t3901/8859-1.txt &&
- 	 test_when_finished "GIT_AUTHOR_NAME=\"A U Thor\"" &&
- 	 test_when_finished "GIT_COMMITTER_NAME=\"C O Mitter\"" &&
- 	 echo "ISO-8859-1" >> file &&
+diff --git a/t/.gitattributes b/t/.gitattributes
+index 2d44088f56e..11e5fe37281 100644
+--- a/t/.gitattributes
++++ b/t/.gitattributes
+@@ -1,2 +1,21 @@
+ t[0-9][0-9][0-9][0-9]/* -whitespace
+-t0110/url-* binary
++/diff-lib/* eol=lf
++/t0110/url-* binary
++/t3900/*.txt eol=lf
++/t3901/*.txt eol=lf
++/t4034/*/* eol=lf
++/t4013/* eol=lf
++/t4018/* eol=lf
++/t4100/* eol=lf
++/t4101/* eol=lf
++/t4109/* eol=lf
++/t4110/* eol=lf
++/t4135/* eol=lf
++/t4211/* eol=lf
++/t4252/* eol=lf
++/t5100/* eol=lf
++/t5515/* eol=lf
++/t556x_common eol=lf
++/t7500/* eol=lf
++/t8005/*.txt eol=lf
++/t9*/*.dump eol=lf
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
