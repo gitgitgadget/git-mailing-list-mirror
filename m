@@ -2,142 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72CE01FC44
-	for <e@80x24.org>; Tue,  9 May 2017 00:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79FE51FC44
+	for <e@80x24.org>; Tue,  9 May 2017 00:44:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752367AbdEIAhW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 8 May 2017 20:37:22 -0400
-Received: from castro.crustytoothpaste.net ([75.10.60.170]:38536 "EHLO
-        castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1751243AbdEIAhV (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 8 May 2017 20:37:21 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:254c:7dd1:74c7:cde0])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by castro.crustytoothpaste.net (Postfix) with ESMTPSA id ACE8C280AD;
-        Tue,  9 May 2017 00:37:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=crustytoothpaste.net;
-        s=default; t=1494290240;
-        bh=KitOD5b90ethfQHchZni1c39jw5I+m38WT9wdP+cNFQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FnYeKnavuFMpYmukUhX472vM4T0kRxMV83QdNwaoxhUGQMLvHgxiKfah9kOiMhTQ4
-         6LkaYVn+1WTvAvkEFtSbKE6zUjVe8UbrvJz2xlUuT7Yd0cAqv7dv0FfoETeMZ0K3EU
-         4vrGNxm6xbE4iXn/XZJNjfc+nk4/vGaz8D4XDNXFw2XRcbu04+XfHtvn0D+t68B8Ap
-         yUIYWWPe04avbY1+wBsdks335T91qs7FzmK+g2bXDCT6BiWxvEkBigstivtConVXgn
-         w2TORsjEfM7lzsoYy+REsZUyn2bo0R8ysSWMdGAK2kI6BBldN0VNOMfSb/XTelM6Fx
-         KsRgQVpXHsqz3c4J5i0tb1ZpHi2van7559knJiAsIglcBrmFWZAqr8d97ob98uhvmb
-         6f5OZvJ32x8kq+R/eMWuz6UoaUmyxqi7KOi61FXFn1aQrcfjxw5AocxMotcioJbXun
-         re3xDVRsp9Tp5SwnvUvDc4ToNuDkuOfhUgfj5Ug5KeE1226WO1i
-Date:   Tue, 9 May 2017 00:37:14 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: PCRE v2 compile error, was Re: What's cooking in git.git (May
- 2017, #01; Mon, 1)
-Message-ID: <20170509003714.ylwn5ezvu5h36kj7@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-References: <CACBZZX6-qZLEGob6CEwpJ7jtEBG6WLPdHQsO4DsbkNZ8di5mjg@mail.gmail.com>
- <alpine.DEB.2.20.1705031139090.3480@virtualbox>
- <CACBZZX6_5krLp93PmsW639-N4f1efUT5rPnN+5im=d9-66=QbQ@mail.gmail.com>
- <alpine.DEB.2.21.1.1705041104070.4905@virtualbox>
- <CACBZZX5bPN3vZhE=0TSQNdRvKYuV3635=VCQAppAfcZ_tuGpvg@mail.gmail.com>
- <alpine.DEB.2.21.1.1705041328190.4905@virtualbox>
- <CACBZZX75nvfQft-gjUG+YP0Y-e-=Knm3bMeDWHSUF=Juz9Ua5Q@mail.gmail.com>
- <xmqqpofj7rim.fsf@gitster.mtv.corp.google.com>
- <20170508233224.udpuuzlygjpsjogt@genre.crustytoothpaste.net>
- <CACBZZX4G_ThE55Gi53QJt1=9K4jQXqJ3QL8JSGpiSSSDRrKeNA@mail.gmail.com>
+        id S1752367AbdEIAoy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 8 May 2017 20:44:54 -0400
+Received: from mail-pf0-f196.google.com ([209.85.192.196]:33072 "EHLO
+        mail-pf0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751243AbdEIAox (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 8 May 2017 20:44:53 -0400
+Received: by mail-pf0-f196.google.com with SMTP id b23so11703779pfc.0
+        for <git@vger.kernel.org>; Mon, 08 May 2017 17:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=R1iqEAQWeN63pd137cTHKM5M/IXRL8lvb1Up9OIRRiQ=;
+        b=q9QelcHOgMFf54h/QF4rZ4+vc0uVPRjg8Ucieiv0zG7eD7zF1EKq4dNGKLBzAY9Z28
+         y3s+/rLAx4lvUCYBDawzwx59XysVSlBmKJyX1kRlEo5ShubNkT4V9QpA8cduYc97qpBZ
+         lmSp76WZ4UOAmi66Y07RCNzE1phhBco2FKDHXDGswMYQMA2fPkTYxjyPvlu3qugQfYxW
+         Ry7Y01SqWZRCRX04xwyCfJnBPa41ORb1KWOewRMUrhuTIUVATnnBm+hPhcClA5ympPWG
+         EW1VoA1UPR63vkLXClPyzwsis4wkHZufSMlBQJMJVJOQQV8UfBt/7m+tElSQzanD20sX
+         /5Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=R1iqEAQWeN63pd137cTHKM5M/IXRL8lvb1Up9OIRRiQ=;
+        b=q+ox9ywh9R0khxRMY7A4g6agfnU9Y4CLRoWf9wryLD4gILY6GhkWHHj30p034GMwg+
+         aBzEijqvMb0lfzo1n9zdWGWKROOBkagTpGrOmkdAjd3EiFovZgt9Hg/Ej9heDlYjOgXs
+         fytRMXUV8yDIZq7fZGBirLX9QMkj6Sfr7F7/8/WXDyUMdiB0ULtRsddE4jQkQhU/kz/s
+         hbqwjssoEoVW0CBDw60XDSScJWtDh37zzC+VPCvbOOZYjgq1KfTvcdJlu2ktj/qutLar
+         99TdxIvDK+T0WlSYRvDYHi/NcrNmCIRwZNzuRShTveTOkhVu7TvmPNWIPI/hAI/TDKyL
+         RDYw==
+X-Gm-Message-State: AN3rC/5EBtynoLCAtcXiVmP44+DK2rw4qKrb08RHEAQLHVy4Odq0M/wT
+        eLgiD2faZOEPkg==
+X-Received: by 10.98.101.5 with SMTP id z5mr34127744pfb.96.1494290692399;
+        Mon, 08 May 2017 17:44:52 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:2823:d4da:fd9a:464a])
+        by smtp.gmail.com with ESMTPSA id z22sm27189448pfg.117.2017.05.08.17.44.51
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Mon, 08 May 2017 17:44:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] pack-objects: disable pack reuse for object-selection options
+References: <20170502084326.65eisqmr4th5cbf7@sigill.intra.peff.net>
+        <xmqq4lww9cas.fsf@gitster.mtv.corp.google.com>
+        <20170508073143.lu73w5b54lvstty2@sigill.intra.peff.net>
+Date:   Tue, 09 May 2017 09:44:50 +0900
+In-Reply-To: <20170508073143.lu73w5b54lvstty2@sigill.intra.peff.net> (Jeff
+        King's message of "Mon, 8 May 2017 03:31:43 -0400")
+Message-ID: <xmqqd1bi7ta5.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="mucbvnyvql3d42cl"
-Content-Disposition: inline
-In-Reply-To: <CACBZZX4G_ThE55Gi53QJt1=9K4jQXqJ3QL8JSGpiSSSDRrKeNA@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.9.0-3-amd64)
-User-Agent: NeoMutt/20170306 (1.8.0)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
---mucbvnyvql3d42cl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, May 08, 2017 at 01:56:27PM +0900, Junio C Hamano wrote:
+>
+>> Surely, even if we need to exclude some objects from an existing
+>> packfile due to these selection options, we should be able to reuse
+>> the non-excluded part, no?  The end result may involve having to
+>> pick and reuse more and smaller slices from existing packfiles,
+>> which may be much less efficient, but it is no immediately obvious
+>> to me if it leads to "need to disable".  I would understand it if it
+>> were "it becomes much less efficient and we are better off not using
+>> the bitmap code at all", though.
+>
+> Yes, it's this last bit. The main win of the packfile reuse code is that
+> it builds on the bitmaps to avoid doing as much per-object work as
+> possible. So the objects don't even get added to the list of "struct
+> object_entry", and we never consider them for the "should they be in the
+> result" checks beyond the have/want computation done by the bitmaps.
+>
+> We could add those checks in, but what's the point? The idea of the
+> reuse code is to be a fast path for serving vanilla clones. Searching
+> through all of the packfiles for a .keep entry is the antithesis of
+> that.
 
-On Tue, May 09, 2017 at 02:00:18AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> On Tue, May 9, 2017 at 1:32 AM, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> > PCRE and PCRE2 also tend to have a lot of security updates, so I would
-> > prefer if we didn't import them into the tree.  It is far better for
-> > users to use their distro's packages for PCRE, as it means they get
-> > automatic security updates even if they're using an old Git.
-> >
-> > We shouldn't consider shipping anything with a remotely frequent history
-> > of security updates in our tree, since people very frequently run old or
-> > ancient versions of Git.
->=20
-> I'm aware of its security record[1], but I wonder what threat model
-> you have in mind here. I'm not aware of any parts of git (except maybe
-> gitweb?) where we take regexes from untrusted sources.
->=20
-> I.e. yes there have been DoS's & even some overflow bugs leading code
-> execution in PCRE, but in the context of powering git-grep & git-log
-> with PCRE this falls into the "stop hitting yourself" category.
+Ah, OK, and now I understand why you called this a "bug" (which is
+older and do not need to be addressed as part of 2.13) in the
+original message.  The new tests check requests that ought to
+produce an empty packfile as the result actually do, but with the
+current code, the reuse code does not work with --local and friends
+and ends up including what was requested to be excluded.
 
-Just because you don't drive Git with untrusted regexes doesn't mean
-other people don't.  It's not a good idea to require a stronger security
-model than we absolutely have to, since people can and will violate it.
-Think how devastating Shellshock was even though technically nobody
-should provide insecure environment variables to the shell.
-
-And, yes, gitweb does in fact call git grep.  That means that git grep
-must in fact be secure against untrusted regexes, or you have a remote
-code execution vulnerability.
-
-Furthermore, at work we distribute Git with all releases of our product.
-We normally only do non-security updates to the last couple of releases,
-but we provide security updates to all supported versions.  I'm not
-comfortable shipping the entirety of PCRE or PCRE2 to customers without
-providing security updates, so you're going to make my job (and my
-coworkers') a lot harder by shipping it.  Please don't.
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | https://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: https://keybase.io/bk2204
-
---mucbvnyvql3d42cl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.1.20 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlkRDzoACgkQv1NdgR9S
-9otiQBAAoEBDUkvfKkqIqXakc8wQS1x1u+LHoZUnkb9jFKtJdC/FA6crqw6y1hP1
-vraHfZj1YdX17zxTdo/jyy4EH+lgqlFOhKnCKOPDhwY0eSDeYvUiiUZ5Zo+muKIW
-G+zRlfB3ILZbvZQtgc/ZOHD2FQ4gT9wtjh99RHlfBdlxOoaZqc0yRtw0mdPf++S6
-jE5DzaIFmCiS38pOPVJu1HZoFMgJ6LK9deEi72HbkvSv4q7IBHONJcgER3GEiiCB
-d9FIH8tPjrAjik7XVpA1xh0Pnfoag9ytCW2fcLaqZ69r/Obzn+nqi8wobtffpKV9
-yD8DiGlldYCqIk3vNTE2Tu9gnqd9u+rsJPRv7+psRP3L46k3SNHhyIQqhpMlVC4F
-VXVgwOAvizExM0qPfK3UVzLL8SX+Sj6EVpR9QiJGVsmg+h/EtvHDD5EJT+Ao0UR0
-63DrPRlazjAxf2yC+n0AMF5QJ8MdZS6vzH4kZTYMgk+h/yENEI0x+mAKZRpLSWAs
-xT0MeeQOYxTDU7hHkOYK4Qi8koFDPBhPU4q677kpev4jBtYFYLZwC8TyGotkGFBc
-UZEQZd8ScezvpPtl07KL7SoRgjBb6wZMD2cTI6J4ZexIZOTszuFuJrAppq+5kIfg
-AZYm7vRlebTvIfRjkv1zQON+p7fTRtdwqieBNBjFjUE9qi/5W8s=
-=iEAl
------END PGP SIGNATURE-----
-
---mucbvnyvql3d42cl--
+Thanks.
