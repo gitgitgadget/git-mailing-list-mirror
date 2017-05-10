@@ -7,146 +7,147 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBD4F20188
-	for <e@80x24.org>; Wed, 10 May 2017 22:53:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4584820188
+	for <e@80x24.org>; Wed, 10 May 2017 23:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753704AbdEJWxg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 18:53:36 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34242 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753180AbdEJWxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 18:53:34 -0400
-Received: by mail-wm0-f68.google.com with SMTP id d127so2988074wmf.1
-        for <git@vger.kernel.org>; Wed, 10 May 2017 15:53:34 -0700 (PDT)
+        id S1754265AbdEJXWf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 19:22:35 -0400
+Received: from mail-pg0-f44.google.com ([74.125.83.44]:35064 "EHLO
+        mail-pg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751454AbdEJXWe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 19:22:34 -0400
+Received: by mail-pg0-f44.google.com with SMTP id o3so5008217pgn.2
+        for <git@vger.kernel.org>; Wed, 10 May 2017 16:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xRXsNNB8EPQ8wQ1UNi7lMaPoJtMBUe7wYFb9NzE4kVY=;
-        b=tJbT8D501l/Heh7jVcAbQPlSdLMTvee0CB6Dvx/qetncM2IrHE5xSUwW9r8nHVRWDh
-         A8ypOhISLp0NqkhVdC7zF1cOuwK7IsrUL6vntCHrsV9ddhvZtt/y5ruYDPh/bbyy4GMm
-         sukzJiD7XLKf0O4FJFHsqZkED21rw9Zue/i17dnWESyqhXviHdrcQzmDyNa9DFyMzQ/h
-         C6gCtc5mO5ZY4PpK6/bpegk+I/5iJCygkjf0L0FcEKAlF5awt2ATM51civQ3nmL8KKcn
-         U8/ToixZ68SVQms/5Ig8hwke5Xe1L+c01kUZJYxeAkR2/yhZ48LqfLPARct+87VWaaQ/
-         wZew==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UlEy6HzCjhRiY7mRal/d3I3dEIlJxu50eYhZxsMNZ6g=;
+        b=ZrXygXKBxIRw/EAg1lkor0/OCiV6463t/0N/AgXe8MJfN9x0ckLcmlzLRWk+T/5YES
+         JK0pCPSK/TA+fzWBABi7abEyFOPjB+8Y6ch49dJ1Wr4bua1PLFv3gL1kr1uosF3m0J/1
+         nra0aB6H+QIpx18M4Aa8xFx+77c81Y2SvokvM4bVzNSw+A2tLZMFCszX6i1v7hAstR5S
+         FE6WjoMg0myn5JhY+8efGgNY4U+lywwkWR/6pWy04uX3eRix/XhWkIYCxap7ZkY8vLWb
+         ZByplzbgIpMJneyRW3d1aaJgU+P9fckEBMyV3kenOB4S6tmGJ6j28nG3UfDQPyEfC+rz
+         ockg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xRXsNNB8EPQ8wQ1UNi7lMaPoJtMBUe7wYFb9NzE4kVY=;
-        b=QAvYE/4eH8EzSo49oWASJ/SusvzLK4wXQ94M6vHMmW33IifWRstsVi2d2F8itVjrnl
-         +aaPIk3dGuiL8qYiST1bFdYoJrOsK3hEFTtHzvelfup3H+3I69QZCS/LDw4ZSPq8GLDk
-         oIsGnxDi36Mw3QUA6PYpXMmzGDDPcXu9AlM24uVm9P1+xhKnZT++5EFlF6GsMc1yzmd4
-         FICBrM5wJT1vu09w3gWyTYZN/aqj0O32vova5rC+94opAih21FI4x6kZZ8aHpSyluV6i
-         0pZ6cLEP2ZND0IuEoS8iIXF2S/M0KFoCqwwIY//6TwsxXXxvILPFBD2X19HsQhahkjRS
-         hGIA==
-X-Gm-Message-State: AODbwcDkpdOTUzSPPohxD9Ha047eAxD3+w4mYTmaKuHFGX+n8gerBntX
-        s61LXPHgnsjJlg==
-X-Received: by 10.80.137.155 with SMTP id g27mr1860598edg.125.1494456813528;
-        Wed, 10 May 2017 15:53:33 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id x26sm86722edx.60.2017.05.10.15.53.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 May 2017 15:53:32 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 2/2] perf: add test showing exponential growth in path globbing
-Date:   Wed, 10 May 2017 22:53:16 +0000
-Message-Id: <20170510225316.31680-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170510225316.31680-1-avarab@gmail.com>
-References: <20170510225316.31680-1-avarab@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UlEy6HzCjhRiY7mRal/d3I3dEIlJxu50eYhZxsMNZ6g=;
+        b=LxxVCxtr/OJXxkfqjSyPi4CQxllbxVcRDOEV2QtTpw1BdYA9yMasFiA+ryiWqM0ar3
+         5+hMwuAc0p0tTSigWL4/EUXVA2E1B+HrV0em0VCo32onKJCCInzeL8Vg2MQcZeLdhCRO
+         1sfRPX19b2EkVqkRfnLN7kt61uJPWMAeSh4N/kPrr2VRIrf5BLUOJEfbKx6PRZxYrX0s
+         Dp/0VSY/1bRjk1ggnUG2wJrs1Llnotna/ZlmHG394a5xUa2pPJEPEzW5pcmNb8ZqO08A
+         /Xf5ws7Q2qtxNMZkeqP4woJ22dcmXBjaRqjt5vH4djPcZi3NAYP25jPt3MJfNicZlpeB
+         o4eA==
+X-Gm-Message-State: AODbwcBO+q0hGf4P0t0Kq3JVUiR3ZIBVFOpnjHOuxc3mu4eNxjYdkvfC
+        Y6HEdikd7SDEFl2yhAU=
+X-Received: by 10.98.80.66 with SMTP id e63mr8938972pfb.180.1494458553765;
+        Wed, 10 May 2017 16:22:33 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:55dd:a079:3f06:9176])
+        by smtp.gmail.com with ESMTPSA id m89sm347842pfg.22.2017.05.10.16.22.32
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 10 May 2017 16:22:33 -0700 (PDT)
+Date:   Wed, 10 May 2017 16:22:31 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, spearce@spearce.org
+Subject: Re: [PATCH v3] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170510232231.GC28740@aiede.svl.corp.google.com>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170510221157.8971-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170510221157.8971-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test showing that ls-files times grow exponentially in the face
-of some pathological globs, whereas refglobs via for-each-ref don't in
-practice suffer from the same issue.
+Hi,
 
-As noted in the test description this is a test to see whether Git
-suffers from the issue noted in an article Russ Cox posted today about
-common bugs in various glob implementations:
-https://research.swtch.com/glob
+Jonathan Tan wrote:
 
-The pathological git-ls-files globbing is done by wildmatch() in
-wildmatch.c. The for-each-ref codepath also uses wildmatch(), but will
-always match against e.g. "refs/tags/aaa...", not "aaa.." as
-git-ls-files will.
+> fetch-pack, when fetching a literal SHA-1 from a server that is not
+> configured with uploadpack.allowtipsha1inwant (or similar), always
+> returns an error message of the form "Server does not allow request for
+> unadvertised object %s". However, it is sometimes the case that such
+> object is advertised. This situation would occur, for example, if a user
+> or a script was provided a SHA-1 instead of a branch or tag name for
+> fetching, and wanted to invoke "git fetch" or "git fetch-pack" using
+> that SHA-1.
 
-I'm unsure why the pathological case isn't triggered by for-each-ref,
-but in any case, now we have a performance test for it.
+Yay, thanks again.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/perf/p0100-globbing.sh | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
- create mode 100755 t/perf/p0100-globbing.sh
+[...]
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -598,6 +598,7 @@ static void filter_refs(struct fetch_pack_args *args,
+>  {
+>  	struct ref *newlist = NULL;
+>  	struct ref **newtail = &newlist;
+> +	struct ref *unmatched = NULL;
+>  	struct ref *ref, *next;
+>  	int i;
+>  
+> @@ -631,13 +632,15 @@ static void filter_refs(struct fetch_pack_args *args,
+>  			ref->next = NULL;
+>  			newtail = &ref->next;
+>  		} else {
+> -			free(ref);
+> +			ref->next = unmatched;
+> +			unmatched = ref;
 
-diff --git a/t/perf/p0100-globbing.sh b/t/perf/p0100-globbing.sh
-new file mode 100755
-index 0000000000..e98fd7ce4b
---- /dev/null
-+++ b/t/perf/p0100-globbing.sh
-@@ -0,0 +1,48 @@
-+#!/bin/sh
-+
-+test_description="Tests pathalogical globbing performance
-+
-+Shows how Git's globbing performance performs when given the sort of
-+pathalogical patterns described in at https://research.swtch.com/glob
-+"
-+
-+. ./perf-lib.sh
-+
-+test_globs_big='10 25 50 75 100'
-+test_globs_small='1 2 3 4 5 6'
-+
-+test_perf_fresh_repo
-+
-+test_expect_success 'setup' '
-+	for i in $(test_seq 1 100)
-+	do
-+		printf "a" >>refname &&
-+		for j in $(test_seq 1 $i)
-+		do
-+			printf "a*" >>refglob.$i
-+		done &&
-+		echo b >>refglob.$i
-+	done &&
-+	test_commit $(cat refname) &&
-+	for i in $(test_seq 1 100)
-+	do
-+	echo	git tag $(cat refname)-$i
-+	done &&
-+	test_commit hello
-+'
-+
-+for i in $test_globs_big
-+do
-+	test_perf "refglob((a*)^nb) against tag a^100; n = $i" '
-+		git for-each-ref "refs/tags/$(cat refglob.'$i')b"
-+	'
-+done
-+
-+for i in $test_globs_small
-+do
-+	test_perf "fileglob((a*)^nb) against file (a^100).t; n = $i" '
-+		git ls-files "$(cat refglob.'$i')b"
-+	'
-+done
-+
-+test_done
--- 
-2.11.0
+Interesting.  Makes sense.
 
+[...]
+>  	/* Append unmatched requests to the list */
+>  	for (i = 0; i < nr_sought; i++) {
+>  		unsigned char sha1[20];
+> +		int can_append = 0;
+
+Can this be simplified by factoring out a function?  I.e. something
+like
+
+	if ((... ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1)
+	    || find_oid_among_refs(unmatched, oid)
+	    || find_oid_among_refs(newlist, oid)) {
+		ref->match_status = REF_MATCHED;
+		...
+	} else {
+		ref->match_status = REF_UNADVERTISED_NOT_ALLOWED;
+	}
+
+[...]
+> @@ -657,6 +679,11 @@ static void filter_refs(struct fetch_pack_args *args,
+>  		}
+>  	}
+>  	*refs = newlist;
+> +
+> +	for (ref = unmatched; ref; ref = next) {
+> +		next = ref->next;
+> +		free(ref);
+> +	}
+>  }
+
+optional nit: keeping the "*refs =" line as the last line of the
+function would make it easier to see the contract at a glance.  (That
+said, a doc comment at the top would make it even clearer.)
+
+> --- a/t/t5500-fetch-pack.sh
+> +++ b/t/t5500-fetch-pack.sh
+> @@ -547,6 +547,41 @@ test_expect_success 'fetch-pack can fetch a raw sha1' '
+
+Yay, thanks much for these.
+
+[...]
+> +test_expect_success 'fetch-pack can fetch a raw sha1 overlapping a named ref' '
+
+Ha, you read my mind. :)
+
+Except for the search-ref-list-for-oid function needing to be factored out,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
