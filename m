@@ -2,107 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3595620188
-	for <e@80x24.org>; Wed, 10 May 2017 19:48:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53D8820188
+	for <e@80x24.org>; Wed, 10 May 2017 19:48:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932106AbdEJTs2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 15:48:28 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:35949 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753586AbdEJTs1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 15:48:27 -0400
-Received: by mail-it0-f53.google.com with SMTP id o5so31719082ith.1
-        for <git@vger.kernel.org>; Wed, 10 May 2017 12:48:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=UM1h6qi2XTPyEHms/ld3+NR79kDkFgbFhlT9820whrw=;
-        b=BQrG3yrjbBaD+7Gvn15siG8FZWaoLdi2K7tKOTzvNhzOcIfNkV3dNNdzkKa1keyyzO
-         OrNtPUGmjzOChGA4FH/pKrss8zrB4Aw6+jGv2cGNT32BnkZV85o4aYlx75kBThpkaHBb
-         JLo5FF+HU7hqRPoPJgiWlnCDpCaot1AdR5cgtfSRIceDweG3pN4KteMwsvXZmQjQzEmf
-         0ITPurQ01anY+/53VqevHj4QtFp15pO0JRd2jO8+b4aRXC4CZMNe+NM4vc3iHIh88Jrm
-         eHKWpaNP2We/Y2zdPy5Csg23MA6/zmnMB7RaRna9cNIf8igYOFx6mvnbUBXy5o7vuA2H
-         YXkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=UM1h6qi2XTPyEHms/ld3+NR79kDkFgbFhlT9820whrw=;
-        b=V9bRTX2KqvRxTZ0OY+UMpoivjQDwlcsPvG2li+z21iD4TTzHuf0kc2CHQw9ChyUOuh
-         xmR3f2w/6lwqt8i75LFNBeW9KZdr7oghLl3ayss/rr00GcbA5LoClqmyB9r1a9nIeAbP
-         jr2f5ajMbEjpCqCYlwhrncrKIOMbEJN9q7WqY4YRkJ5b4w7xGpv84m2Fv2cWXrOVfyWz
-         cxKIw5g09JorJ/qEuRRvoxBo6zh0A5BzFTiJxtszxbu6B1AAXaciKzC89Pgs1F9lsLax
-         qUDzkuyiSv9ic2QBvRJq/w61+fMqJvDsd/QF+BkdbPUcORieXh575JNfhzFH2AsYsERy
-         Hd8Q==
-X-Gm-Message-State: AODbwcCayl5zgJNqSey2aNe6lD93goQxUpJphR4FBx+OpxFonhBPzM3R
-        ljTtwkk0F7czjHY6zYamExoTnLuZs3QjZag=
-X-Received: by 10.36.83.144 with SMTP id n138mr7013312itb.71.1494445706570;
- Wed, 10 May 2017 12:48:26 -0700 (PDT)
+        id S1754595AbdEJTsz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 15:48:55 -0400
+Received: from mout.gmx.net ([212.227.17.21]:52048 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753724AbdEJTsy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 15:48:54 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQMBU-1dc7iF1VSm-00Tpf5; Wed, 10
+ May 2017 21:48:47 +0200
+Date:   Wed, 10 May 2017 21:48:46 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: Automating Coverity, was Re: [PATCH 00/26] Address a couple of
+ issues identified by Coverity
+In-Reply-To: <alpine.DEB.2.21.1.1705052227120.146734@virtualbox>
+Message-ID: <alpine.DEB.2.21.1.1705101801300.146734@virtualbox>
+References: <cover.1493237937.git.johannes.schindelin@gmx.de> <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
+ <alpine.DEB.2.20.1704282205320.3480@virtualbox> <alpine.DEB.2.21.1.1705052227120.146734@virtualbox>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Wed, 10 May 2017 12:48:05 -0700 (PDT)
-In-Reply-To: <b80c68fa-fe1e-3cf8-3c7e-527a4d941108@gmail.com>
-References: <C1ACB28C-F1B4-42A1-8135-797DEFD9F03C@gmail.com> <b80c68fa-fe1e-3cf8-3c7e-527a4d941108@gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Wed, 10 May 2017 21:48:05 +0200
-Message-ID: <CACBZZX7CgeW1OK+g9Mbir62MMaCx4sHFZngUuWz_H241Sb355g@mail.gmail.com>
-Subject: Re: Possible bug in includeIf / conditional includes
-To:     Sebastian Schuberth <sschuberth@gmail.com>, raphael.stolt@gmail.com
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:Q/Mf5xofivDsd/SqjAmTUlXp9U9wU0lHz5OKAA6+qmww0YOc36b
+ uVGAEQyKf2I4OKyzNg/oHOsuBqyFlfd6zW0yDhQVO9nQEwfU5hnQlpIybhxUMToUULGOovd
+ BawJPZPpGd7Hbsowm7o2Rg0jHBwMBrOFFs1T9UQFxj552QajL3zEapXIlTmis3KjYCRX09u
+ pKKoOPQiTDVAcGhEZTf1g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:deZjcEZhDt8=:vAD91jNiZW3UQSB77p6x8/
+ 8J4JAZYWBG5JLMN3q0LCE9kvO6WHSQMuaRWPc5IogtpaZG8RH+LoYUzK5N5ggyy5MwScs3x4u
+ 227otRwj4VPK5lsGXzsVLE7xE7P3TIEl3tswf7K7A+ZemI3+l67hFmNwR///44qCsW5M/XwIS
+ b+GY+ZMtBDutr7vx5nqKckYfIzxuAFIxhNW/JZOPpX6tW/ZhU7TjcvebZHEZcBPIR/OBYSwap
+ lwjIRBFEIEMr2MNmu60Qy/x8MB/CoZAcEOWhsa1EaBQFBsna5j5KvtRmsg/MbcXFaDsOubLop
+ zYUtHDhgTFK6ZCfCjKAavlKQvjx3Na0BIZG2VpgFBLl7eTtRLO0JQGz5M/v0TAU6Awcio96in
+ jSM+9Vr9/abAbY2dh3WHofsiw1XHVvMDTnQ1n4dSQn0zfPamj8mEOiO/8YJ5ZBGp0dmz1k2sx
+ 9Q6I9GPrye0WJ3b5eWs92SXhkHE0qgznJANzAp7u9tCN5QrD9EoWPiP390c6+ALRSiMPAlZCS
+ XNBC3XRZUy2b6/oQCoiGwj0g/0PGqik9ZyHbNKZJY4mqHmCOeZYRi+/+UryAbkvvtnh5Iki6J
+ Bh0YwPZB8cDTJhoT4f6mgMIenKcNOEOf4nMWAe6Urj4dbqMpJQDSmFVrsvxeWFimPrF0CsOXA
+ cX4qDaVxLBQbFXu876TNKohRcZpXzmNK2HWAaetoPxAJ5l4dr1MwRAC5MYGDrlNdmib3Kmc0L
+ C/0GlC7YX/fefyr054jcFZ0IeGSaMjYqknoYxuESXpACBMhzlvGJ0/6ldQAsE7jUfE0GsFNyd
+ A55bRkU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 10, 2017 at 8:58 PM, Sebastian Schuberth
-<sschuberth@gmail.com> wrote:
-> On 2017-05-10 19:00, raphael.stolt@gmail.com wrote:
->
->> Current configuration which finds the conditional configuration.
->>
->> ~/.gitconfig
->> [includeIf "gitdir:~/Work/git-repos/oss/"]
->>    path = ~/Work/git-repos/oss/.oss-gitconfig
->>
->> Expected configuration which doesn't find the conditional configuration:
->>
->> ~/.gitconfig
->> [includeIf "gitdir:~/Work/git-repos/oss/"]
->>    path = .oss-gitconfig
->
->
-> My guess is, because includeIf might contain other conditionals than
-> "gitdir", the generic convention is to always use an absolute path for
-> "path".
+Hi Stefan,
 
-[CC'd OP Raphael Stolt, please reply-all]
+On Fri, 5 May 2017, Johannes Schindelin wrote:
 
-In both cases the conditional is the same, but the path is relative
-v.s. absolute.
+> On Fri, 28 Apr 2017, Johannes Schindelin wrote:
+> 
+> > On Fri, 28 Apr 2017, Stefan Beller wrote:
+> > 
+> > > On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > 
+> > > > I still have to find the time to figure out one more detail: how
+> > > > to download and extract the Coverity tool (the .zip archive has a
+> > > > variable name for the top-level directory), and doing that only
+> > > > every once in a while, say, only when there is no previously
+> > > > unpacked tool, or it is already 4 weeks old.
+> > > 
+> > > That is an interesting problem, which I ignored as the older
+> > > versions of their tools still works once they release new versions.
+> > > So I just manually check every once in a while if they have new
+> > > versions out there.
+> > > 
+> > > So if you find a nice solution to that problem, let me know, please.
+> > 
+> > I think I have a working idea (jotting it down in the editor,
+> > untested):
+> > 
+> > [... totally untested snippet ...]
+> 
+> And now I edited it and tested it. The code is now part of the script I
+> use for pretty much all administrative (i.e. recurring and boring) tasks
+> in the Git for Windows project:
+> 
+> 	https://github.com/git-for-windows/build-extra/commit/05b5342128
 
-Raphael: Does the config get included if you cd to
-~/Work/git-repos/oss/? From git-config(1):
+Oh, I completely forgot to mention that I tried to set the FLEX_ARRAY
+constant to something quite large (I used 64k), but apparently that does
+not work as expected, Coverity still insists on complaining about strbufs.
 
----cut---
-The included file is expanded immediately, as if its contents had been
-found at the location of the include directive. If the value of the
-`include.path` variable is a relative path, the path is considered to
-be relative to the configuration file in which the include directive
-was found.  See below for examples.
----cut---
+On a second thought, it is actually quite obvious why it does not fix
+those reports: STRBUF_INIT has nothing to do with FLEX_ARRAY. D'oh.
 
-The commit that added IncludeIf (3efd0bedc6) does something with
-relative path (just skimming, need to get to other things), but unlike
-[Include] the docs don't explicitly mention what it's supposed to do
-with that, and all the examples show absolute paths.
+My next attempt to work around these bogus claims was to modify the "model
+file" by adding a line saying "char strbuf_slopbuf[64];", but that was
+sadly not picked up by Coverity either.
 
-So whether this is a bug in the code or not it seems to definitely be
-a doc bug, whatever it does with relative files should be in the docs.
+My current thinking is that I will simply patch strbuf.c via `sed
+'s/^\(char struct_slopbuf\[\)1\[/&64[/'`.
+
+Ciao,
+Dscho
