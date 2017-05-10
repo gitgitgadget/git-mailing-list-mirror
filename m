@@ -2,78 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D71132018D
-	for <e@80x24.org>; Wed, 10 May 2017 01:25:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B28C2018D
+	for <e@80x24.org>; Wed, 10 May 2017 04:22:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751399AbdEJBZ4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 9 May 2017 21:25:56 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48538 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1750931AbdEJBZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 9 May 2017 21:25:56 -0400
-Received: (qmail 2537 invoked by uid 109); 10 May 2017 01:25:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 May 2017 01:25:52 +0000
-Received: (qmail 31226 invoked by uid 111); 10 May 2017 01:26:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Tue, 09 May 2017 21:26:23 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 May 2017 21:25:50 -0400
-Date:   Tue, 9 May 2017 21:25:50 -0400
-From:   Jeff King <peff@peff.net>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] :(attr) pathspecs can die("BUG") in the tree-walker
-Message-ID: <20170510012550.3qs3ra2c7ehbnixs@sigill.intra.peff.net>
-References: <20170509222432.3dxt7osjt2zjtaiw@sigill.intra.peff.net>
- <20170509225219.GB106700@google.com>
+        id S1751609AbdEJEWd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 00:22:33 -0400
+Received: from mail-ua0-f171.google.com ([209.85.217.171]:36662 "EHLO
+        mail-ua0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751301AbdEJEWd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 00:22:33 -0400
+Received: by mail-ua0-f171.google.com with SMTP id j17so22356812uag.3
+        for <git@vger.kernel.org>; Tue, 09 May 2017 21:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=VAtdb037BBfUIREpQOupOB58SrrxP848TucZ1fD+lCI=;
+        b=ZT1KwXIGq4L05YdPhXNmjibDE+fRLhDknBmvp8hFXQBjKJ5R6/DCkCMCUYKbR/Xz3c
+         QzvMxJMXEWKCSO1ZM93WUy20RNiRAdIuevCiUYR99eJX8egywMtpm/QndyOFwlcD8P7F
+         vVepCl12YHqcLdhVG94657nzOPuyveIDKcvXc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=VAtdb037BBfUIREpQOupOB58SrrxP848TucZ1fD+lCI=;
+        b=PJdES/8j5ARZl3cTNXtf05d1xsi8RQ6wxokGd802xwMWkpgD+JbptT1w7XwxDRAUZT
+         UX9BK+YimZ3gvFb/oreL8ZmnUbF1WDqVqve4B4U2ep2/2QfHMoGTSGc3SKvTsWFlOC6D
+         wdemC0NwOAEJWi9LmnOD8pBKYpGlYNGfyoB9d2Vk9qkQkM8+K1Ngi/MJEDPRB7/Ebsfb
+         09JB/5tSIMnREp9eUrlkD91ekWwjJW6gEtfLm3ejm/Uzk7d5dxyA+8W+/zS5mLrfdkIG
+         txwar/TKUXQCQ2Ki0X5egv89hdYoFEyYVde3n4bmtaKFWOy3KP7SnMo8Gi7yFGWje57O
+         b94w==
+X-Gm-Message-State: AODbwcC+nileP+T08m9DHxoSMZlZ5VV7DYDEggY1rrccSZbn9tYZGUh7
+        bFYrEQ9pikRztIg0N7F0uRcupeyH3w==
+X-Received: by 10.31.93.4 with SMTP id r4mr1612854vkb.28.1494390151962; Tue,
+ 09 May 2017 21:22:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20170509225219.GB106700@google.com>
+Received: by 10.103.71.89 with HTTP; Tue, 9 May 2017 21:22:11 -0700 (PDT)
+In-Reply-To: <20170509221629.3z35qcz36oiix3kh@sigill.intra.peff.net>
+References: <20170509182042.28389-1-jonathantanmy@google.com> <20170509221629.3z35qcz36oiix3kh@sigill.intra.peff.net>
+From:   Shawn Pearce <spearce@spearce.org>
+Date:   Tue, 9 May 2017 21:22:11 -0700
+Message-ID: <CAJo=hJvAg2WqpiuykpbHcB5vgQiHJ74CZ8Y4qudkYqZrmd30zg@mail.gmail.com>
+Subject: Re: [PATCH] fetch-pack: always allow fetching of literal SHA1s
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 09, 2017 at 03:52:19PM -0700, Brandon Williams wrote:
+On Tue, May 9, 2017 at 3:16 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, May 09, 2017 at 11:20:42AM -0700, Jonathan Tan wrote:
+>
+>> fetch-pack, when fetching a literal SHA-1 from a server that is not
+>> configured with uploadpack.allowtipsha1inwant (or similar), always
+>> returns an error message of the form "Server does not allow request for
+>> unadvertised object %s". However, it is sometimes the case that such
+>> object is advertised.
+>>
+>> Teach fetch-pack to also check the SHA-1s of the refs in the received
+>> ref advertisement if a literal SHA-1 was given by the user.
+>
+> Hmm. That makes sense generally, as the request should succeed. But it
+> seems like we're creating a client that will sometimes succeed and
+> sometimes fail, and the reasoning will be somewhat opaque to the user.
+> I have a feeling I'm missing some context on when you'd expect this to
+> kick in.
 
-> >   $ git log HEAD -- ':(attr:-diff)'
-> >   fatal: BUG:tree-walk.c:947: unsupported magic 40
-> > 
-> > Whoops. This is presumably ls-tree is protected, but I think we are
-> > missing a GUARD_PATHSPEC call somewhere.
-> > 
-> > This isn't a huge deal, as the correct behavior is probably to die like
-> > ls-tree does, but we probably shouldn't be hitting BUG assertions as a
-> > general rule.
-> 
-> The die("BUG: ..."); is from a GAURD_PATHSPEC call.  What really needs
-> to happen is to update the magic_mask passed into the parse_pathspec
-> call which initializes the pathspec object.  Its this magic_mask which
-> catches unsupported magic and prints a better message.
+Specifically, someone I know was looking at building an application
+that is passed only a SHA-1 for the tip of a ref on a popular hosting
+site[1]. They wanted to run `git fetch URL SHA1`, but this failed
+because the site doesn't have upload.allowtipsha1inwant enabled.
+However the SHA1 was clearly in the output of git ls-remote.
 
-Ah, right, I always get the pathspec safety bits mixed up. I think the
-parse_pathspec() call in setup_revisions is a bit permissive:
+So a workaround is to do this in shell, which is just weird:
 
-  parse_pathspec(&revs->prune_data, 0, 0,
-		 revs->prefix, prune_data.path);
+  r=$(git ls-remote $url | grep ^$sha1);
+  if [ -n "$r" ]; then
+    exec git fetch $url $r:refs/tmp/foo
+  else
+    echo >&2 "cannot find $sha1"
+    exit 1
+  fi
 
-You _shouldn't_ need to audit all the callers when you add new pathspec
-magic. The callers should be masking out the bits that they know they
-support, but this one isn't.  It looks like there are a number of such
-permissive calls, though. I guess it was an attempt to not have to list
-them manually at each call site (but then we suffer from the exact
-problem I ran into).
+For various reasons they expected this to work, because it works
+against other sites that do have upload.allowtipsha1inwant enabled.
+And I personally just expected it to work because the fetch client
+accepts SHA-1s, and the wire protocol uses "want SHA1" not "want ref",
+and the SHA-1 passed on the command line was currently in the
+advertisement when the connection opened, so its certainly something
+the server is currently willing to serve.
 
-> I guess this means I (or someone else :D) should audit all the
-> parse_pathspec calls and ensure that 'attr' magic is turned off until we
-> won't run into these GAURD_PATHSPEC die's.
+The application in question is using a SHA-1 rather than a ref name,
+because thats what it was given by something else. And the other thing
+basically wants this to fail-fast if it can't get that exact SHA-1. So
+to pass a ref name to git fetch the supplier would have to actually
+pass a tuple of ref+sha1, and then the fetcher has to check that the
+ref it just obtained provides the sha1 it expected.
 
-Of course it would be nicer still if the 'attr' magic actually worked
-via the tree-walking code. :)
+So this all turned into a bug report by me to Jonathan Tan, because
+git fetch violated my assumption of what it would do if I handed it a
+SHA-1 and the SHA-1 was currently the tip of a remote ref.
 
--Peff
+
+[1] github.com
