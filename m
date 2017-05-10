@@ -2,123 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8665920188
-	for <e@80x24.org>; Wed, 10 May 2017 19:54:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6752920188
+	for <e@80x24.org>; Wed, 10 May 2017 19:55:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754628AbdEJTyc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 15:54:32 -0400
-Received: from mail-pg0-f48.google.com ([74.125.83.48]:36254 "EHLO
-        mail-pg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753479AbdEJTyb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 15:54:31 -0400
-Received: by mail-pg0-f48.google.com with SMTP id 64so2838107pgb.3
-        for <git@vger.kernel.org>; Wed, 10 May 2017 12:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=Z9ZGwnc9BwsXQZX4hpjrpKlGXZ2BsytI6OUSp6D2l0Y=;
-        b=RyyUsZXpYIQJjNJMw6hK53XO+2Qnvcd9EnWlBZVHw2g66iSTKl4iYB9DWER/0xKRNO
-         X4VDPoOuaMPy4D1u5sMO9lDkoSoCzcTHjw3PkPsrMiEhgAueipGW/K+tKVoXr1xSFOBZ
-         ySF2lvxz04vzVU42Vs53Qb1/T/Fe21isNERd+Lxr9ht9NInMd2lS1s7e8LtMDorqWzDQ
-         cu0bJuuRlnCKHiV/gtzGIVL8v9mVWz6fOSkXA6SJilVdKZra8UnN1+jheaMo3a5Ldsj2
-         ShMi8udiNgLR6urwrD5Ju3rWLE1O3xSZ3dHXaOQ+Q5jh9458ZCIeErFcagNJnzaiWOyT
-         ffbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=Z9ZGwnc9BwsXQZX4hpjrpKlGXZ2BsytI6OUSp6D2l0Y=;
-        b=IaZ9/E4Q5TX0XZDXmAufnzjyL271GMO1QIN0l27TNGqOrl03xPiMmhStLr/oSg6gCQ
-         wGZFbb3T8uapo+7URDwB3cYaN9F8WsK7iu1szkyXR5Iv5lB4e4IEh5vR91wjX6j9WUn2
-         kqs/Oi4I/upu+BX1J7bzlRZZYtUZ7s2UH4S4BBB3uXgBN2jvxxc+rn67Isb8b5t4d748
-         jxz0xddhHQAHCsiyaupELAX+sko5CB6LIkSk5moJfwszOF3SyI63rwxkV8xgbp0QWNRQ
-         Z0iGNtyUuWK9lffIOH1Ux/EgKAOSuvY1h+VdWuykLaQHag9LLLAg8NJZH+3GvZXgFAy2
-         ms3A==
-X-Gm-Message-State: AODbwcCb5ctl0fkmdsFZp4O704e4iZMhsdNneOxPUoFiL+7Bfe+zNqsS
-        G23FwUxLimiipxYSwr28X/ej+FPyVeRBoz8nSQ==
-X-Received: by 10.98.104.4 with SMTP id d4mr7919064pfc.94.1494446070423; Wed,
- 10 May 2017 12:54:30 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 10.100.162.140 with HTTP; Wed, 10 May 2017 12:54:29 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.21.1.1705101801300.146734@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de>
- <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com>
- <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
- <alpine.DEB.2.20.1704282205320.3480@virtualbox> <alpine.DEB.2.21.1.1705052227120.146734@virtualbox>
- <alpine.DEB.2.21.1.1705101801300.146734@virtualbox>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 10 May 2017 12:54:29 -0700
-Message-ID: <CAGZ79kaAYU3cSRdXZTvukib3VNmx+_GdeSV5NkZ1g_OWt07i9A@mail.gmail.com>
-Subject: Re: Automating Coverity, was Re: [PATCH 00/26] Address a couple of
- issues identified by Coverity
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+        id S1751970AbdEJTzX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 10 May 2017 15:55:23 -0400
+Received: from mout.web.de ([217.72.192.78]:56622 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751208AbdEJTzW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 15:55:22 -0400
+Received: from [192.168.209.63] ([195.198.252.176]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MC1fA-1dHJ832L7g-008v5V; Wed, 10
+ May 2017 21:55:19 +0200
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v3 1/1] t0027: tests are not expensive; remove t0025
+From:   =?utf-8?Q?Torstem_B=C3=B6gershausen?= <tboegi@web.de>
+X-Mailer: iPad Mail (12F69)
+In-Reply-To: <alpine.DEB.2.21.1.1705101746470.146734@virtualbox>
+Date:   Wed, 10 May 2017 21:55:22 +0200
 Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset=UTF-8
+        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <7BD61CA1-47DC-481D-8491-5945333C8E55@web.de>
+References: <11da00e8-a62c-bf07-d97e-ab755647082b@web.de> <20170510140619.22808-1-tboegi@web.de> <alpine.DEB.2.21.1.1705101746470.146734@virtualbox>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-Provags-ID: V03:K0:kLlT1MUIQn5X1uPMH/qJi5w0+vdz4dLiEZk6kyYLplyffQlWpSe
+ jEXp20E8dnhQ8TVAVPPAKwg7Sf0oA+vDmOh+G+wrsEYRD9Eq9NJoapWRmm4RhUPIYPAsP5x
+ 0rqoLi84LePPq7d1vHNCfvfrgLrMbn8OJp2+6rUzmCUoZn2M1YA4lfjWShWQP5p21G0x2fz
+ n4ot1tC4cjooCoP3QdbfA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HXyHWRd1MC4=:1GISWpsbEn4kKvnYpjDkk4
+ DqDVofwQzKbQXH9GI9+ZOFhoh0cQGgDe9YiMSVjxZ8RcxUj27U4he9aQUuw5uuUzZdfIUseNA
+ TOK1OM50L2C6pg5eQqAmS5BSk+6E8ZpOYU8U/1RgnNUgpllxtOlpMdnogzqkEn+7HJSjq4f9z
+ aXTwrr3hinTzzy+m+G3I7tJaUCOgFFWUmUf6lYexHyTxU4kFhcWCurZYNk7krN1V81E8MZi6a
+ Sen4x8eP+LlZYpdrFJV+5FgxEBzTeGxTW3fw/P0lSQRmvdrPiThogIwE1gMUPjlTWot0u7q3s
+ 9pZuydvXK7TviSMI3LaqCojhXUmIodAGIHKczRvEazJX/bF8BYu3NkyRFQ68BTQ1+gfnYz8TL
+ Vtx9LHkozAH2/qJA6ZehrLj/TYAUn72w3zGlh5PntqNDcYnsT1zTK5zTUeQLThje5ESsW1B5T
+ /dAvSxYdAPh95/lyHWbwn5NLpYMSqS9A21C0KoRC9ZaQdo2mlfOCAgn/uW4EyLdkQ6scu0zQ2
+ tsjUBR910BlS8HkCx1ytV6EpBFkmmL3xWHjP6JGsM+u7KttKNaG97GP2EKV+YyHRZ2ToG7oQl
+ sXG8XLAg4Zv1CXzGHdb+bP+tETcN2QANMhYxDXEf4A3YsZnfsg12EYjbzG9jIm1VSFSyGkgOl
+ oNC3yYPz5DYXeG6BSph2cUtjVSRaYrCOGob9WGDu4Asa34Q9aTEL155gTQD3KWS9PyNUYrBzq
+ ZmdtPM19gtkSPG83hOi2ejf7fESn1DezObGP49KJu0bB2bYpWvcnq1ZmHzgeOgeUhLbFJnFyN
+ dkpPEq9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 10, 2017 at 12:48 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Stefan,
->
-> On Fri, 5 May 2017, Johannes Schindelin wrote:
->
->> On Fri, 28 Apr 2017, Johannes Schindelin wrote:
->>
->> > On Fri, 28 Apr 2017, Stefan Beller wrote:
->> >
->> > > On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
->> > > <Johannes.Schindelin@gmx.de> wrote:
->> > >
->> > > > I still have to find the time to figure out one more detail: how
->> > > > to download and extract the Coverity tool (the .zip archive has a
->> > > > variable name for the top-level directory), and doing that only
->> > > > every once in a while, say, only when there is no previously
->> > > > unpacked tool, or it is already 4 weeks old.
->> > >
->> > > That is an interesting problem, which I ignored as the older
->> > > versions of their tools still works once they release new versions.
->> > > So I just manually check every once in a while if they have new
->> > > versions out there.
->> > >
->> > > So if you find a nice solution to that problem, let me know, please.
->> >
->> > I think I have a working idea (jotting it down in the editor,
->> > untested):
->> >
->> > [... totally untested snippet ...]
->>
->> And now I edited it and tested it. The code is now part of the script I
->> use for pretty much all administrative (i.e. recurring and boring) tasks
->> in the Git for Windows project:
->>
->>       https://github.com/git-for-windows/build-extra/commit/05b5342128
->
-> Oh, I completely forgot to mention that I tried to set the FLEX_ARRAY
-> constant to something quite large (I used 64k), but apparently that does
-> not work as expected, Coverity still insists on complaining about strbufs.
->
-> On a second thought, it is actually quite obvious why it does not fix
-> those reports: STRBUF_INIT has nothing to do with FLEX_ARRAY. D'oh.
+Ok for me, thanks for helping out.
 
-D'oh. I must have been living in an alternate universe for quite some time
-as I seemed to have confused different things here.
 
-Checkout this commit,
-https://github.com/stefanbeller/git/commit/977f81d6dec4461a1a12da2df6c5c919b41129b4
-that is cherry-picked for the coverity build. That fixes it.
 
-That is about the only patch I apply before sending it off to coverity.
-I am still contemplating a nice solution for FLEX_ARRAYs in other cases.
-
-Thanks,
-Stefan
+> Am 10.05.2017 um 17:52 schrieb Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> 
+> Hi,
+> 
+>> On Wed, 10 May 2017, tboegi@web.de wrote:
+>> 
+>> From: Torsten Bögershausen <tboegi@web.de>
+>> 
+>> The purpose of t0027 is to test all CRLF related conversions at "git checkout"
+>> and "git add".
+>> 
+>> Running t0027 under Git for Windows takes 3-4 minutes, so the whole script had
+>> been marked as "EXPENSIVE".
+>> 
+>> The source code for "Git for Windows" overrides this since 2014:
+>> "t0027 is marked expensive, but really, for MinGW we want to run these
+>> tests always."
+>> 
+>> Recent "stress" tests show that t0025 if flaky, reported by Lars Schneider,
+>> larsxschneider@gmail.com
+>> 
+>> All tests in t0025 are covered by t0027 already, so that t0025 can be retired.
+>> t0027 takes less than 14 seconds under Linux, and 63 seconds under Mac Os X,
+>> and this is more or less the same with a SSD or a spinning disk.
+>> 
+>> Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+> 
+> This is still formatted very awkwardly. How about this instead (I fixed
+> the formatting, reworded a little here and there, and fixed the order of
+> the footers)?
+> 
+> -- snipsnap --
+> From: Torsten Bögershausen <tboegi@web.de>
+> 
+> The purpose of t0027 is to test all CRLF related conversions at "git
+> checkout" and "git add".  Running t0027 under Git for Windows takes 3-4
+> minutes, so the whole script had been marked as "EXPENSIVE".
+> 
+> However, the "Git for Windows" fork overrides this since 2014: "t0027
+> is marked expensive, but really, for MinGW we want to run these tests
+> always."
+> 
+> The test seems not to be expensive on other platforms at all: it takes
+> less than 14 seconds under Linux, and 63 seconds under Mac Os X, and
+> this is more or less the same with a SSD or a spinning disk.
+> 
+> So let's drop the "EXPENSIVE" prereq.
+> 
+> While at it, retire t0025: Recent "stress" tests show that t0025 if
+> flaky, reported by Lars Schneider <larsxschneider@gmail.com>, but all
+> tests in t0025 are covered by t0027 already.
+> 
+> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+> Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
