@@ -2,115 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6752920188
-	for <e@80x24.org>; Wed, 10 May 2017 19:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4705920188
+	for <e@80x24.org>; Wed, 10 May 2017 20:25:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1751970AbdEJTzX convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 10 May 2017 15:55:23 -0400
-Received: from mout.web.de ([217.72.192.78]:56622 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751208AbdEJTzW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 15:55:22 -0400
-Received: from [192.168.209.63] ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MC1fA-1dHJ832L7g-008v5V; Wed, 10
- May 2017 21:55:19 +0200
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v3 1/1] t0027: tests are not expensive; remove t0025
-From:   =?utf-8?Q?Torstem_B=C3=B6gershausen?= <tboegi@web.de>
-X-Mailer: iPad Mail (12F69)
-In-Reply-To: <alpine.DEB.2.21.1.1705101746470.146734@virtualbox>
-Date:   Wed, 10 May 2017 21:55:22 +0200
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "larsxschneider@gmail.com" <larsxschneider@gmail.com>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <7BD61CA1-47DC-481D-8491-5945333C8E55@web.de>
-References: <11da00e8-a62c-bf07-d97e-ab755647082b@web.de> <20170510140619.22808-1-tboegi@web.de> <alpine.DEB.2.21.1.1705101746470.146734@virtualbox>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Provags-ID: V03:K0:kLlT1MUIQn5X1uPMH/qJi5w0+vdz4dLiEZk6kyYLplyffQlWpSe
- jEXp20E8dnhQ8TVAVPPAKwg7Sf0oA+vDmOh+G+wrsEYRD9Eq9NJoapWRmm4RhUPIYPAsP5x
- 0rqoLi84LePPq7d1vHNCfvfrgLrMbn8OJp2+6rUzmCUoZn2M1YA4lfjWShWQP5p21G0x2fz
- n4ot1tC4cjooCoP3QdbfA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:HXyHWRd1MC4=:1GISWpsbEn4kKvnYpjDkk4
- DqDVofwQzKbQXH9GI9+ZOFhoh0cQGgDe9YiMSVjxZ8RcxUj27U4he9aQUuw5uuUzZdfIUseNA
- TOK1OM50L2C6pg5eQqAmS5BSk+6E8ZpOYU8U/1RgnNUgpllxtOlpMdnogzqkEn+7HJSjq4f9z
- aXTwrr3hinTzzy+m+G3I7tJaUCOgFFWUmUf6lYexHyTxU4kFhcWCurZYNk7krN1V81E8MZi6a
- Sen4x8eP+LlZYpdrFJV+5FgxEBzTeGxTW3fw/P0lSQRmvdrPiThogIwE1gMUPjlTWot0u7q3s
- 9pZuydvXK7TviSMI3LaqCojhXUmIodAGIHKczRvEazJX/bF8BYu3NkyRFQ68BTQ1+gfnYz8TL
- Vtx9LHkozAH2/qJA6ZehrLj/TYAUn72w3zGlh5PntqNDcYnsT1zTK5zTUeQLThje5ESsW1B5T
- /dAvSxYdAPh95/lyHWbwn5NLpYMSqS9A21C0KoRC9ZaQdo2mlfOCAgn/uW4EyLdkQ6scu0zQ2
- tsjUBR910BlS8HkCx1ytV6EpBFkmmL3xWHjP6JGsM+u7KttKNaG97GP2EKV+YyHRZ2ToG7oQl
- sXG8XLAg4Zv1CXzGHdb+bP+tETcN2QANMhYxDXEf4A3YsZnfsg12EYjbzG9jIm1VSFSyGkgOl
- oNC3yYPz5DYXeG6BSph2cUtjVSRaYrCOGob9WGDu4Asa34Q9aTEL155gTQD3KWS9PyNUYrBzq
- ZmdtPM19gtkSPG83hOi2ejf7fESn1DezObGP49KJu0bB2bYpWvcnq1ZmHzgeOgeUhLbFJnFyN
- dkpPEq9
+        id S1753001AbdEJUZS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 16:25:18 -0400
+Received: from esa6.dell-outbound.iphmx.com ([68.232.149.229]:52598 "EHLO
+        esa6.dell-outbound.iphmx.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1750897AbdEJUZR (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 10 May 2017 16:25:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=dell.com; i=@dell.com; q=dns/txt; s=smtpout;
+  t=1494447917; x=1525983917;
+  h=from:to:subject:date:message-id:
+   content-transfer-encoding:mime-version;
+  bh=YID97HsiBZ5AFfh8qjh1IaLoPoMhtu90kVTc6jaK1FM=;
+  b=qEghoP50Zu6OnZ7TJQwvDZ9eTluXvqD6lYhmqp9VgNkKwhh4er1peoQE
+   ellGUcSo8BhKC+OSnBh6h7D2GwFxQZYyyw5jtV2olLcvSYRA6oijrDsju
+   Mo8Teh23KRZKnYCXJhA7yCToID4NKstK6N370gkHf8KkjJf4SozsGvpk9
+   4=;
+Received: from esa3.dell-outbound2.iphmx.com ([68.232.154.63])
+  by esa6.dell-outbound.iphmx.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 10 May 2017 15:25:17 -0500
+From:   "taylor, david" <David.Taylor@dell.com>
+Received: from mailuogwdur.emc.com ([128.221.224.79])
+  by esa3.dell-outbound2.iphmx.com with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 11 May 2017 02:18:38 +0600
+Received: from maildlpprd54.lss.emc.com (maildlpprd54.lss.emc.com [10.106.48.158])
+        by mailuogwprd51.lss.emc.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.0) with ESMTP id v4AKPFYf022115
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
+        for <git@vger.kernel.org>; Wed, 10 May 2017 16:25:16 -0400
+X-DKIM: OpenDKIM Filter v2.4.3 mailuogwprd51.lss.emc.com v4AKPFYf022115
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=emc.com; s=jan2013;
+        t=1494447916; bh=iRl/DDtdE0Wv1R3MUYnV8X50h0w=;
+        h=From:To:Subject:Date:Message-ID:Content-Type:
+         Content-Transfer-Encoding:MIME-Version;
+        b=fZk8ntrWsrnLkFkxPsvXelFfV6BXip9KByqIWJgIww+/cC8DPOaxrb+fSu7Dg3p8X
+         wz2DLA0bA6f4Uf4Ml6imRpJr+yKdvl4a8O6hTr8juZ4qL+PJhsPj14FHMKMxaDobr4
+         66WtMZ5RnMB7/bQeFyibZIXHGGTnHDbPN9TEw44c=
+X-DKIM: OpenDKIM Filter v2.4.3 mailuogwprd51.lss.emc.com v4AKPFYf022115
+Received: from mailusrhubprd01.lss.emc.com (mailusrhubprd01.lss.emc.com [10.253.24.19]) by maildlpprd54.lss.emc.com (RSA Interceptor) for <git@vger.kernel.org>; Wed, 10 May 2017 16:24:53 -0400
+Received: from MXHUB219.corp.emc.com (MXHUB219.corp.emc.com [10.253.68.89])
+        by mailusrhubprd01.lss.emc.com (Sentrion-MTA-4.3.1/Sentrion-MTA-4.3.0) with ESMTP id v4AKP135013256
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=FAIL)
+        for <git@vger.kernel.org>; Wed, 10 May 2017 16:25:02 -0400
+Received: from MX203CL03.corp.emc.com ([fe80::4dee:b763:b476:8fbc]) by
+ MXHUB219.corp.emc.com ([10.253.68.89]) with mapi id 14.03.0266.001; Wed, 10
+ May 2017 16:24:59 -0400
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: git worktrees must exist even if locked
+Thread-Topic: git worktrees must exist even if locked
+Thread-Index: AdLJxLnaduSLoWUtQTOTfBkbFAeChA==
+Date:   Wed, 10 May 2017 20:24:59 +0000
+Message-ID: <63F1AEE13FAE864586D589C671A6E18B0D5F2C@MX203CL03.corp.emc.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.238.48.71]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Sentrion-Hostname: mailusrhubprd01.lss.emc.com
+X-RSA-Classifications: public
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ok for me, thanks for helping out.
+The Git documentation in describing worktrees says that one reason
+why you might want to lock a worktree is to prevent it from being pruned
+if it is on a removable media that isn't currently mounted.
 
+So, my expectation was that if the worktree is inaccessible (and locked), G=
+it
+would pretend that there is no worktree by that name.
 
+In reality, if you have such a worktree, Git gets an error.
 
-> Am 10.05.2017 um 17:52 schrieb Johannes Schindelin <Johannes.Schindelin@gmx.de>:
-> 
-> Hi,
-> 
->> On Wed, 10 May 2017, tboegi@web.de wrote:
->> 
->> From: Torsten Bögershausen <tboegi@web.de>
->> 
->> The purpose of t0027 is to test all CRLF related conversions at "git checkout"
->> and "git add".
->> 
->> Running t0027 under Git for Windows takes 3-4 minutes, so the whole script had
->> been marked as "EXPENSIVE".
->> 
->> The source code for "Git for Windows" overrides this since 2014:
->> "t0027 is marked expensive, but really, for MinGW we want to run these
->> tests always."
->> 
->> Recent "stress" tests show that t0025 if flaky, reported by Lars Schneider,
->> larsxschneider@gmail.com
->> 
->> All tests in t0025 are covered by t0027 already, so that t0025 can be retired.
->> t0027 takes less than 14 seconds under Linux, and 63 seconds under Mac Os X,
->> and this is more or less the same with a SSD or a spinning disk.
->> 
->> Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-> 
-> This is still formatted very awkwardly. How about this instead (I fixed
-> the formatting, reworded a little here and there, and fixed the order of
-> the footers)?
-> 
-> -- snipsnap --
-> From: Torsten Bögershausen <tboegi@web.de>
-> 
-> The purpose of t0027 is to test all CRLF related conversions at "git
-> checkout" and "git add".  Running t0027 under Git for Windows takes 3-4
-> minutes, so the whole script had been marked as "EXPENSIVE".
-> 
-> However, the "Git for Windows" fork overrides this since 2014: "t0027
-> is marked expensive, but really, for MinGW we want to run these tests
-> always."
-> 
-> The test seems not to be expensive on other platforms at all: it takes
-> less than 14 seconds under Linux, and 63 seconds under Mac Os X, and
-> this is more or less the same with a SSD or a spinning disk.
-> 
-> So let's drop the "EXPENSIVE" prereq.
-> 
-> While at it, retire t0025: Recent "stress" tests show that t0025 if
-> flaky, reported by Lars Schneider <larsxschneider@gmail.com>, but all
-> tests in t0025 are covered by t0027 already.
-> 
-> Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-> Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+ On local systems, /home is local to a machine; home directories are elsewh=
+ere.
+Home directories are NFS mounted; /home is not.
+
+. create a repository in /my/home/dir/my-repo.git with
+
+    git clone --bare <some arguments>
+
+. create an empty directory /home/somedir/worktree-tests
+
+. use 'git worktree add' to add /home/somedir/worktree-tests/<branch-name>
+  as a worktree on branch <branch-name>.  It gets populated with the correc=
+t
+  content.
+
+. lock it using'git worktree lock'
+
+So far, so good.  Now, go to a different computer -- one on which
+/home/somedir/worktree-tests does not exist (and therefore
+/home/somedir/worktree-tests/<branch-name> does not exist).
+
+. cd /my/home/dir/my-repo.git
+
+Now, try issuing Git commands.  Many will fail.
+
+  git fetch =3D=3D> fails:
+
+  fatal: Invalid path '/home/somedir/worktree-tests': No such file or direc=
+tory
+
+  git status =3D=3D> fails -- same error as above
+  git help worktree =3D=3D> fails -- same error as above
