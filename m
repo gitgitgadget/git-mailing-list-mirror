@@ -2,72 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54D8320188
-	for <e@80x24.org>; Wed, 10 May 2017 14:47:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C665120188
+	for <e@80x24.org>; Wed, 10 May 2017 15:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753019AbdEJOrU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 10:47:20 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:35408 "EHLO
-        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752037AbdEJOrT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 10:47:19 -0400
-Received: by mail-oi0-f49.google.com with SMTP id l18so38180254oig.2
-        for <git@vger.kernel.org>; Wed, 10 May 2017 07:47:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=L8vfPRaVXvORpUhRUEeUGCB3E+s9UsXXri+UpPpA+rs=;
-        b=gPHdupypPzdhHSSZYKjsGR7PfLNzGJApefiGyTq4v156W50GdeSo5MQ39/8Kfa1LsZ
-         fsM/WG29eEOPt4Kbs99kCAgU58sBilzDyaUusewMcXUv0n0jHCJsEYlTBxUeR6rEJ0MR
-         0muAZo5DU4UP5a+3HaV+cKWuKeJY8rolRTS2VZriCZjtbigzlFzI38grXDDaIr/cB6xY
-         4Rx+FMZYbjBkusiXI8eG/SCISjgH1yqZml3PfftWY/t3U8QnELcmRMOmeh3pKKMo4tC8
-         +vlr6LD0fhZh+AMz1rVQccEnVvSU28PoEYRaARXdCB8odZTLb2NyBLosAlh357IqmA5U
-         kRmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=L8vfPRaVXvORpUhRUEeUGCB3E+s9UsXXri+UpPpA+rs=;
-        b=lJDbfPF7fITemgIQjLpuLQUV/yeK5LxVjggOx2kX8c7P8S/9DXAoF8m+EBXANy7TQ0
-         3V3xWMOo/S4W8tibDh4oKfDraIyEZ40rnBUpm1Ne2afoBnJ1nlt0I/j+63tyU7yge3ZL
-         ayo/mT5GGDJq/uwStTa69J0CsHsuwtn8g5fFu9+Nbd7k6G1gjiWBLeiP2pmw0GUwH4sf
-         E+XqgDgPdjzu/sXG3ngTxPrhdFcJI7Ze3I3GC6h1x7RN3V/Pb1uCwxPojl71CEsL1ZKi
-         3JswWfOnncw7BXQ8Hc24G+fqRyB2boV0A11w4POCjtyUbiNbWs5ko0hh4GnKrdsAH9Bc
-         hmpw==
-X-Gm-Message-State: AODbwcBoueU4ojwWXvG1ksD3qhbXwcgWAaDtbg34GjOr+xUN+LjHlMu+
-        bYPgPMnAzzqSBrr0u9ABVxuUa/WZ7rkI
-X-Received: by 10.157.82.87 with SMTP id q23mr2512346otg.52.1494427638752;
- Wed, 10 May 2017 07:47:18 -0700 (PDT)
+        id S1753913AbdEJPwo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 11:52:44 -0400
+Received: from mout.gmx.net ([212.227.15.15]:53098 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1753860AbdEJPwn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 11:52:43 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXZw6-1dV2ac3X4I-00WYme; Wed, 10
+ May 2017 17:52:40 +0200
+Date:   Wed, 10 May 2017 17:52:40 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+cc:     git@vger.kernel.org, larsxschneider@gmail.com
+Subject: Re: [PATCH v3 1/1] t0027: tests are not expensive; remove t0025
+In-Reply-To: <20170510140619.22808-1-tboegi@web.de>
+Message-ID: <alpine.DEB.2.21.1.1705101746470.146734@virtualbox>
+References: <11da00e8-a62c-bf07-d97e-ab755647082b@web.de> <20170510140619.22808-1-tboegi@web.de>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 10.202.90.85 with HTTP; Wed, 10 May 2017 07:46:58 -0700 (PDT)
-From:   Jonny Gilchrist <jonnygilchrist@gmail.com>
-Date:   Wed, 10 May 2017 15:46:58 +0100
-Message-ID: <CA+qhfwO4=1X9fNCW2PeKSgqUHV-z26qhvr_yXfz1QGApJ_roRQ@mail.gmail.com>
-Subject: git log --follow after subtree merge
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/mixed; boundary="8323329-249887116-1494431560=:146734"
+X-Provags-ID: V03:K0:pp3o+9RFN81B7UE+dVenXXBvtKquoROrF2zMNZ8dD+3VdfuwTLE
+ uo6uyrw9Y9AKQQUgcl5TIZyMlaZzNlPb5/bD2UVXXi/jtJveZtD33huJkj1IcBgZJPw1wQX
+ CfppFwKmImD0KpbMgfIOrAS/OWwzk7g+CpkhTdz0CRJn3SyJNm1fq1SJ8W8cEFym5iprNQu
+ lYGFsUQmDAJyLMNGn00HA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:I4X3J2zNBN0=:29nomF68V8JwbmbOVgjICh
+ h87Zlw0Rc1tEV96KriOot7nxPk59kcmNuarKGDncl2WAUfuccihoCqiNzsWHbMi7o2RMJvBW+
+ TsotsShUx5q75eIfjjuX5ca+mWEp2zpvoJJmCvqazS2RE1kTlWxcC1SLbk0JirIBy4GHaRMnt
+ 3cbh9aAa+x8Y0ZchAufiu59McGIpwZ2/qAl0wczMyVLIO9q71QW79xG2r5ysCDWXGeXoJtMW6
+ evlfWcQcdGEocvRuwAVd0nFraIqZ8fjw+b69aNVjFmXwgIpmCBlsOVeyFvNDBugu1lQ+1oIbi
+ 11Uy3PiMqPsAgLZE3RQKoVVeLFQmr6XffGmI+PArDu4u+nQ5xPnpWX5mAeYNcrrxpIQ2yfGRa
+ 1SWHtaUPQk9znLVjzKEEF/uWNAjR+X1qK5CG4J0Rol8XHEMNtPJVa59PCsDar9I0PXGiNSUrB
+ 7iOQO8yQUmf4wZMUbfHJp1auy7sr2teBn9Eigdg1OqqTMbbyxuXD//Qr82MlsIAJRNp/ybEDz
+ O3s2udGKIBUW0uM4LMp7gZ+uheKhIQW+wLlvSzrM4CS+JBgjI5QTz0p9+jeZsOHw8LMW/Eubu
+ byTVdILg2egG1bMKEUvXO/ygF5LlKLofZzhCdZ7nhxYC5RCe2OlEck9rtTh9WavoiK2hqyknW
+ dW18AwafZxBPNAguAg58oabtx1F0mm2pb9jq+Pz1MAcmLp72cubgw4sYm/ePbQrZdpDNzT+gm
+ Yt04CqqNfIe3KtBjBnaZUkiwt4+F6oZ7u6bFEPbrTqNxumCyzStAr6HQzXhuHHhKUVJU3BT7L
+ dcVm0GF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323329-249887116-1494431560=:146734
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
 Hi,
 
-After doing a subtree merge, using 'git log' and 'git log --follow' on
-files in the subtree show only the merge commit in which they were
-added.
+On Wed, 10 May 2017, tboegi@web.de wrote:
 
-After reading around I understand that the issue is that git log
---follow doesn't track renames that occur during a merge.
+> From: Torsten B=C3=B6gershausen <tboegi@web.de>
+>=20
+> The purpose of t0027 is to test all CRLF related conversions at "git chec=
+kout"
+> and "git add".
+>=20
+> Running t0027 under Git for Windows takes 3-4 minutes, so the whole scrip=
+t had
+> been marked as "EXPENSIVE".
+>=20
+> The source code for "Git for Windows" overrides this since 2014:
+> "t0027 is marked expensive, but really, for MinGW we want to run these
+> tests always."
+>=20
+> Recent "stress" tests show that t0025 if flaky, reported by Lars Schneide=
+r,
+> larsxschneider@gmail.com
+>=20
+> All tests in t0025 are covered by t0027 already, so that t0025 can be ret=
+ired.
+> t0027 takes less than 14 seconds under Linux, and 63 seconds under Mac Os=
+ X,
+> and this is more or less the same with a SSD or a spinning disk.
+>=20
+> Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
 
-Has there been any work (or are there any plans) to allow git log
---follow to work in this case? I couldn't find anything in the mailing
-list archives aside from a couple of threads from 2011 explaining the
-issue.
+This is still formatted very awkwardly. How about this instead (I fixed
+the formatting, reworded a little here and there, and fixed the order of
+the footers)?
 
-Thanks,
-J.
+-- snipsnap --
+From: Torsten B=C3=B6gershausen <tboegi@web.de>
+
+The purpose of t0027 is to test all CRLF related conversions at "git
+checkout" and "git add".  Running t0027 under Git for Windows takes 3-4
+minutes, so the whole script had been marked as "EXPENSIVE".
+
+However, the "Git for Windows" fork overrides this since 2014: "t0027
+is marked expensive, but really, for MinGW we want to run these tests
+always."
+
+The test seems not to be expensive on other platforms at all: it takes
+less than 14 seconds under Linux, and 63 seconds under Mac Os X, and
+this is more or less the same with a SSD or a spinning disk.
+
+So let's drop the "EXPENSIVE" prereq.
+
+While at it, retire t0025: Recent "stress" tests show that t0025 if
+flaky, reported by Lars Schneider <larsxschneider@gmail.com>, but all
+tests in t0025 are covered by t0027 already.
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+--8323329-249887116-1494431560=:146734--
