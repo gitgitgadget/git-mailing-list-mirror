@@ -2,120 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C665120188
-	for <e@80x24.org>; Wed, 10 May 2017 15:52:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86E9C20188
+	for <e@80x24.org>; Wed, 10 May 2017 16:14:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1753913AbdEJPwo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 11:52:44 -0400
-Received: from mout.gmx.net ([212.227.15.15]:53098 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1753860AbdEJPwn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 11:52:43 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MXZw6-1dV2ac3X4I-00WYme; Wed, 10
- May 2017 17:52:40 +0200
-Date:   Wed, 10 May 2017 17:52:40 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:     git@vger.kernel.org, larsxschneider@gmail.com
-Subject: Re: [PATCH v3 1/1] t0027: tests are not expensive; remove t0025
-In-Reply-To: <20170510140619.22808-1-tboegi@web.de>
-Message-ID: <alpine.DEB.2.21.1.1705101746470.146734@virtualbox>
-References: <11da00e8-a62c-bf07-d97e-ab755647082b@web.de> <20170510140619.22808-1-tboegi@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1751760AbdEJQOg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 12:14:36 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:40922 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1750711AbdEJQOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 12:14:35 -0400
+Received: from [10.0.2.15] ([143.159.212.80])
+        by avasout07 with smtp
+        id JgEY1v0071keHif01gEaQX; Wed, 10 May 2017 17:14:34 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.2 cv=HP2zLslv c=1 sm=1 tr=0
+ a=n+zECcf3rkBNBoU0FNF4VQ==:117 a=n+zECcf3rkBNBoU0FNF4VQ==:17
+ a=IkcTkHD0fZMA:10 a=QkUOtHvLYzltmqQDersA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: t6134 test failure in 'pu'
+Message-ID: <361a3331-4d48-9ad3-42d4-3bf4b97dca22@ramsayjones.plus.com>
+Date:   Wed, 10 May 2017 17:14:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-249887116-1494431560=:146734"
-X-Provags-ID: V03:K0:pp3o+9RFN81B7UE+dVenXXBvtKquoROrF2zMNZ8dD+3VdfuwTLE
- uo6uyrw9Y9AKQQUgcl5TIZyMlaZzNlPb5/bD2UVXXi/jtJveZtD33huJkj1IcBgZJPw1wQX
- CfppFwKmImD0KpbMgfIOrAS/OWwzk7g+CpkhTdz0CRJn3SyJNm1fq1SJ8W8cEFym5iprNQu
- lYGFsUQmDAJyLMNGn00HA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I4X3J2zNBN0=:29nomF68V8JwbmbOVgjICh
- h87Zlw0Rc1tEV96KriOot7nxPk59kcmNuarKGDncl2WAUfuccihoCqiNzsWHbMi7o2RMJvBW+
- TsotsShUx5q75eIfjjuX5ca+mWEp2zpvoJJmCvqazS2RE1kTlWxcC1SLbk0JirIBy4GHaRMnt
- 3cbh9aAa+x8Y0ZchAufiu59McGIpwZ2/qAl0wczMyVLIO9q71QW79xG2r5ysCDWXGeXoJtMW6
- evlfWcQcdGEocvRuwAVd0nFraIqZ8fjw+b69aNVjFmXwgIpmCBlsOVeyFvNDBugu1lQ+1oIbi
- 11Uy3PiMqPsAgLZE3RQKoVVeLFQmr6XffGmI+PArDu4u+nQ5xPnpWX5mAeYNcrrxpIQ2yfGRa
- 1SWHtaUPQk9znLVjzKEEF/uWNAjR+X1qK5CG4J0Rol8XHEMNtPJVa59PCsDar9I0PXGiNSUrB
- 7iOQO8yQUmf4wZMUbfHJp1auy7sr2teBn9Eigdg1OqqTMbbyxuXD//Qr82MlsIAJRNp/ybEDz
- O3s2udGKIBUW0uM4LMp7gZ+uheKhIQW+wLlvSzrM4CS+JBgjI5QTz0p9+jeZsOHw8LMW/Eubu
- byTVdILg2egG1bMKEUvXO/ygF5LlKLofZzhCdZ7nhxYC5RCe2OlEck9rtTh9WavoiK2hqyknW
- dW18AwafZxBPNAguAg58oabtx1F0mm2pb9jq+Pz1MAcmLp72cubgw4sYm/ePbQrZdpDNzT+gm
- Yt04CqqNfIe3KtBjBnaZUkiwt4+F6oZ7u6bFEPbrTqNxumCyzStAr6HQzXhuHHhKUVJU3BT7L
- dcVm0GF
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Junio,
 
---8323329-249887116-1494431560=:146734
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+t6134 fails for me in 'pu', but I think it is just a question
+of merge 641f3ad90a3 dropping the last line of the test from
+the change introduced by commit bdab972153.
 
-Hi,
+In other words, this fixes the test for me:
 
-On Wed, 10 May 2017, tboegi@web.de wrote:
+$ git diff
+diff --git a/t/t6134-pathspec-in-submodule.sh b/t/t6134-pathspec-in-submodule.sh
+index 6d5df294a..c67066840 100755
+--- a/t/t6134-pathspec-in-submodule.sh
++++ b/t/t6134-pathspec-in-submodule.sh
+@@ -26,6 +26,7 @@ test_expect_success 'error message for path inside submodule' '
+ 
+ test_expect_success 'error message for path inside submodule from within submodule' '
+        test_must_fail git -C sub add . 2>actual &&
++       test_i18ngrep "in unpopulated submodule" actual
+ '
+ 
+ test_done
+$ 
 
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
->=20
-> The purpose of t0027 is to test all CRLF related conversions at "git chec=
-kout"
-> and "git add".
->=20
-> Running t0027 under Git for Windows takes 3-4 minutes, so the whole scrip=
-t had
-> been marked as "EXPENSIVE".
->=20
-> The source code for "Git for Windows" overrides this since 2014:
-> "t0027 is marked expensive, but really, for MinGW we want to run these
-> tests always."
->=20
-> Recent "stress" tests show that t0025 if flaky, reported by Lars Schneide=
-r,
-> larsxschneider@gmail.com
->=20
-> All tests in t0025 are covered by t0027 already, so that t0025 can be ret=
-ired.
-> t0027 takes less than 14 seconds under Linux, and 63 seconds under Mac Os=
- X,
-> and this is more or less the same with a SSD or a spinning disk.
->=20
-> Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+Thanks!
 
-This is still formatted very awkwardly. How about this instead (I fixed
-the formatting, reworded a little here and there, and fixed the order of
-the footers)?
+ATB,
+Ramsay Jones
 
--- snipsnap --
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
-
-The purpose of t0027 is to test all CRLF related conversions at "git
-checkout" and "git add".  Running t0027 under Git for Windows takes 3-4
-minutes, so the whole script had been marked as "EXPENSIVE".
-
-However, the "Git for Windows" fork overrides this since 2014: "t0027
-is marked expensive, but really, for MinGW we want to run these tests
-always."
-
-The test seems not to be expensive on other platforms at all: it takes
-less than 14 seconds under Linux, and 63 seconds under Mac Os X, and
-this is more or less the same with a SSD or a spinning disk.
-
-So let's drop the "EXPENSIVE" prereq.
-
-While at it, retire t0025: Recent "stress" tests show that t0025 if
-flaky, reported by Lars Schneider <larsxschneider@gmail.com>, but all
-tests in t0025 are covered by t0027 already.
-
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
---8323329-249887116-1494431560=:146734--
