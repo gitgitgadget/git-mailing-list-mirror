@@ -2,109 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BF6C20188
-	for <e@80x24.org>; Wed, 10 May 2017 16:16:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EA1220188
+	for <e@80x24.org>; Wed, 10 May 2017 16:44:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754106AbdEJQQh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 12:16:37 -0400
-Received: from mail-pg0-f43.google.com ([74.125.83.43]:36281 "EHLO
-        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754087AbdEJQQg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 12:16:36 -0400
-Received: by mail-pg0-f43.google.com with SMTP id 64so128771pgb.3
-        for <git@vger.kernel.org>; Wed, 10 May 2017 09:16:36 -0700 (PDT)
+        id S1753331AbdEJQoo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 12:44:44 -0400
+Received: from mail-pf0-f170.google.com ([209.85.192.170]:34488 "EHLO
+        mail-pf0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1752929AbdEJQon (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 12:44:43 -0400
+Received: by mail-pf0-f170.google.com with SMTP id e64so539637pfd.1
+        for <git@vger.kernel.org>; Wed, 10 May 2017 09:44:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hUSLR0PQ/xiKehabT+KnBoJs3DKoAZ0ClyaptAyqso4=;
-        b=Yzg2K5mqE1QQdBS/0LUhVkz/6AZLqen2hoGuFVTZVPjGsE9fxaN/oOJUqNADBxbt1q
-         rlw8RWVRRQUX6HFabsrhxDyToUzPtKexzYFVMduWDpz55kXc0lyqjr5n3B97Uvz8upaH
-         auDmDcz2hxy9OPuWGKJH033kun1FqYaGPOisbQ5DqMcmqz/J55xkUMhWxdwdqTAvKf+L
-         XdqWXivkvqFv87ilojT81qmriYSAT9OOBWMpCqU6bQf1Z2aeRBt7kKD2b6QFDQgiomFx
-         XlT6q3YPH82j/SsdrYnp/xfkRVqSe4f3tjbu2w5s/PFW9GBqCQ/CCENORuYA9nX9mANc
-         nV7Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=jDKBfYGzXTQ2PDAzDSzDRlucggLitr86OHWhIPjS67s=;
+        b=u8mttZnVD5514zzWSZAutMtkoeTqWlfxIV0fZq/IGmMHDeCjDUJj6K67SLs6eGiOJC
+         5yGNtzWaQDCtZCh0c3zQoIEC17a8Ue/P5xOr8X7ljiWZRfDQ3ZhdWdvbQq5zFHB+wdOL
+         QsYmnTLCNDpm94k6h2uQ2HjTCSDtWkc/RqZ5Yql0ITpCVsR/SDaPsFqrC0O+sdngdCj3
+         fqPWhAxYSkE7uT9Oi7qLj8K9goYYiHqqbj1lMxrHHgsgtPa1DwkdrKGrIJObKwzmsvv0
+         Pc5PJp+HqmcN+isS6fTUwoguUgxCIu5tKGAbvBBW96/bgKFJ4bTagg0GnputDfhoVlU5
+         j/dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hUSLR0PQ/xiKehabT+KnBoJs3DKoAZ0ClyaptAyqso4=;
-        b=Ee0H1eyRbUR0jB2fyOutRHxSRC5MzKh4nZlWm+ah70xATyMXSjp5De4E4ZS2iwpn7a
-         yj4AqaILXn1UlvewfCe6GieUj9iRhQkDKc6C2gvRyNN0o4SPBdUNFi3a/ova6uO0eTV7
-         aY2NPMFyAAs72Kqh6g6LuOas7yCOFoMigqhERtLkjUq+aCamUu/UgwDbpTmNMuIPBxmG
-         DKtQPpvebM9h/dJFG2d36MYB/Xf1G5MEz9fs0m82htF/wNe6lyq1zNItr5u5hHjGc1EN
-         jV9xDO8nX+zBf2sglqbT0RI5xhNmfhwduDArk1txTky1bPMLarF4d7ZwyDcuWXulPL2T
-         PrUA==
-X-Gm-Message-State: AODbwcDYTDJqn6Qko/cWNKPXJkF6qdUSkK2MpI1M/EuMxmMcfOM4d/jS
-        wbgnQdsHL/ptNri3
-X-Received: by 10.99.112.86 with SMTP id a22mr7328221pgn.52.1494432995957;
-        Wed, 10 May 2017 09:16:35 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:b127:d26b:19a3:378d])
-        by smtp.gmail.com with ESMTPSA id p3sm6535495pgd.36.2017.05.10.09.16.34
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 10 May 2017 09:16:34 -0700 (PDT)
-Date:   Wed, 10 May 2017 09:16:33 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/8] pathspec: change
- PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag
-Message-ID: <20170510161633.GA41649@google.com>
-References: <20170509191805.176266-1-bmwill@google.com>
- <20170509191805.176266-4-bmwill@google.com>
- <xmqqefvxxnpq.fsf@gitster.mtv.corp.google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqefvxxnpq.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=jDKBfYGzXTQ2PDAzDSzDRlucggLitr86OHWhIPjS67s=;
+        b=PN1PDNVkQ4Z9lWq2UpBS8Z4VUye+bb8kFWKqoMO9n+cLABhaVkyr6Ok0A7gMKfgFQm
+         Y6qYXZ/DZ2+fNH7UVGLeH7XgxsGxJSbDpM4NhCRlDh7AA8UOLU7JpHHcUC18guVZAqPc
+         QsuapzgOPwRA21ztDyiT9c+PO+uF+rIyvwbuCW0vLZaA6a0XIuAMRGlGSCstqIz7BaJU
+         7sSC5yjjuQrdC8wHwhkCQL8YXjUF1V+J78k1plmBuW4fQUDiOyWNqhy1drwNSlJbf1/6
+         KksKHRzzngv613oS9lXpy26U5plZKGqkF3Fh/zKH5SriucwqOetpiCzTjwlA48ejYPM/
+         3Uig==
+X-Gm-Message-State: AODbwcAq9SMxqyIV/4ydJ9valFSX7gT4lKUz9r9OURew3k3VBxeRDf3s
+        hpK8CN5rjQFG4baP
+X-Received: by 10.99.147.5 with SMTP id b5mr7394304pge.218.1494434682152;
+        Wed, 10 May 2017 09:44:42 -0700 (PDT)
+Received: from twelve2.svl.corp.google.com ([100.96.218.24])
+        by smtp.gmail.com with ESMTPSA id n65sm6920972pga.8.2017.05.10.09.44.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 10 May 2017 09:44:40 -0700 (PDT)
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, spearce@spearce.org,
+        peff@peff.net
+Subject: [PATCH v2] fetch-pack: always allow fetching of literal SHA1s
+Date:   Wed, 10 May 2017 09:44:32 -0700
+Message-Id: <20170510164432.5447-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.13.0.rc2.291.g57267f2277-goog
+In-Reply-To: <20170509182042.28389-1-jonathantanmy@google.com>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/10, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > It's confusing to have two different 'strip submodule slash' flags which
-> > do subtly different things.  Both
-> > PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE and
-> > PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP will accomplish the same task of
-> > striping a slash from a pathspec which matches a submodule entry in the
-> > index.  The only difference is that
-> > PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE will perform additional checks
-> > and die if a pathspec has a leading path component which corresponds to
-> > a submodule.  This additional functionality should be split out into its
-> > own flag.
-> >
-> > To this end, rename the PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag to
-> > PATHSPEC_SUBMODULE_LEADING_PATH and change its behavior to only die if a
-> > path descends into a submodule.  In addition add the
-> > PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag to callers which relied on the
-> > old slash stripping functionality.
-> 
-> "PATHSPEC_SUBMODULE_LEADING_PATH" feels like an unfinished sentence
-> to me.  Do I understand your description correctly if I say it is
-> about "checking" the leading path to see if it overlaps with a
-> submodule path?  IOW, I am wondering if the name should have the
-> word CHECK somewhere in it.
-> 
+fetch-pack, when fetching a literal SHA-1 from a server that is not
+configured with uploadpack.allowtipsha1inwant (or similar), always
+returns an error message of the form "Server does not allow request for
+unadvertised object %s". However, it is sometimes the case that such
+object is advertised. This situation would occur, for example, if a user
+or a script was provided a SHA-1 instead of a branch or tag name for
+fetching, and wanted to invoke "git fetch" or "git fetch-pack" using
+that SHA-1.
 
-You're probably right, the name has something left to be desired.  I
-chose it simply because it conforms to another flag
-"PATHSPEC_SYMLINK_LEADING_PATH" which dies if there is a symlink in the
-leading path.
+Teach fetch-pack to also check the SHA-1s of the refs in the received
+ref advertisement if a literal SHA-1 was given by the user.
 
-And you are correct, it checks if the leading path overlaps with a
-submodule path.  If it strictly matches a submodule path that's alright
-though.  The point of this flag is to disallow paths which descend into
-submodules.  One such use case is to prevent a user from trying to 'git
-add' a file from a submodule.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
 
+Thanks, peff, for your suggestions. Changes from v1:
+ - updated commit message to explain a bit of the context
+ - use parse_oid_hex instead of get_oid_hex to avoid the constant 40
+
+peff also suggested a possible optimization in computing is_literal_sha1
+outside the loop. After some thought, I don't think that it takes that
+much time in the general case where the ref name starts with "refs/",
+because parse_oid_hex will see the "r" (which is not in "[0-9a-f]") and
+immediately return. So I left it as-is.
+
+ fetch-pack.c          | 31 +++++++++++++++++--------------
+ t/t5500-fetch-pack.sh |  6 ++++++
+ 2 files changed, 23 insertions(+), 14 deletions(-)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index afb8b0502..d4b57b9ba 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -592,6 +592,15 @@ static void mark_recent_complete_commits(struct fetch_pack_args *args,
+ 	}
+ }
+ 
++static int is_literal_sha1(const struct ref *ref)
++{
++	struct object_id oid;
++	const char *end;
++	return !parse_oid_hex(ref->name, &oid, &end) &&
++	       !*end &&
++	       !oidcmp(&oid, &ref->old_oid);
++}
++
+ static void filter_refs(struct fetch_pack_args *args,
+ 			struct ref **refs,
+ 			struct ref **sought, int nr_sought)
+@@ -601,7 +610,6 @@ static void filter_refs(struct fetch_pack_args *args,
+ 	struct ref *ref, *next;
+ 	int i;
+ 
+-	i = 0;
+ 	for (ref = *refs; ref; ref = next) {
+ 		int keep = 0;
+ 		next = ref->next;
+@@ -610,15 +618,14 @@ static void filter_refs(struct fetch_pack_args *args,
+ 		    check_refname_format(ref->name, 0))
+ 			; /* trash */
+ 		else {
+-			while (i < nr_sought) {
+-				int cmp = strcmp(ref->name, sought[i]->name);
+-				if (cmp < 0)
+-					break; /* definitely do not have it */
+-				else if (cmp == 0) {
+-					keep = 1; /* definitely have it */
+-					sought[i]->match_status = REF_MATCHED;
++			for (i = 0; i < nr_sought; i++) {
++				struct ref *s = sought[i];
++				if (!strcmp(ref->name, s->name) ||
++				    (is_literal_sha1(s) &&
++				     !oidcmp(&ref->old_oid, &s->old_oid))) {
++					keep = 1;
++					s->match_status = REF_MATCHED;
+ 				}
+-				i++;
+ 			}
+ 		}
+ 
+@@ -637,14 +644,10 @@ static void filter_refs(struct fetch_pack_args *args,
+ 
+ 	/* Append unmatched requests to the list */
+ 	for (i = 0; i < nr_sought; i++) {
+-		unsigned char sha1[20];
+-
+ 		ref = sought[i];
+ 		if (ref->match_status != REF_NOT_MATCHED)
+ 			continue;
+-		if (get_sha1_hex(ref->name, sha1) ||
+-		    ref->name[40] != '\0' ||
+-		    hashcmp(sha1, ref->old_oid.hash))
++		if (!is_literal_sha1(ref))
+ 			continue;
+ 
+ 		if ((allow_unadvertised_object_request &
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index b5865b385..d87983bc2 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -547,6 +547,12 @@ test_expect_success 'fetch-pack can fetch a raw sha1' '
+ 	git fetch-pack hidden $(git -C hidden rev-parse refs/hidden/one)
+ '
+ 
++test_expect_success 'fetch-pack can fetch a raw sha1 that is advertised as a ref' '
++	git init server &&
++	test_commit -C server 4 &&
++	git fetch-pack server $(git -C server rev-parse refs/heads/master)
++'
++
+ check_prot_path () {
+ 	cat >expected <<-EOF &&
+ 	Diag: url=$1
 -- 
-Brandon Williams
+2.13.0.rc2.291.g57267f2277-goog
+
