@@ -2,81 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DD5C20188
-	for <e@80x24.org>; Wed, 10 May 2017 19:16:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3595620188
+	for <e@80x24.org>; Wed, 10 May 2017 19:48:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754541AbdEJTQG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 15:16:06 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:34546 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754066AbdEJTQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 15:16:04 -0400
-Received: by mail-io0-f177.google.com with SMTP id k91so8024310ioi.1
-        for <git@vger.kernel.org>; Wed, 10 May 2017 12:16:04 -0700 (PDT)
+        id S932106AbdEJTs2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 15:48:28 -0400
+Received: from mail-it0-f53.google.com ([209.85.214.53]:35949 "EHLO
+        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1753586AbdEJTs1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 15:48:27 -0400
+Received: by mail-it0-f53.google.com with SMTP id o5so31719082ith.1
+        for <git@vger.kernel.org>; Wed, 10 May 2017 12:48:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=2+rjgZ6n/LFflNQ2iPa+jTbmr/OJxu+rN8QX/vnQQWk=;
-        b=ZSPhkmMBDosLwdTNtOSXVyhsgOrqKB2HZLvkPaqW6i5kdUSNy4+jbsO2Y66AcWjEQb
-         LTNE5sggS6JI/y9ytYQxiVL7KKqlBet11HkSeTjqdRQroa0BWwwdyGTwdUDHIuiu8V6x
-         8o8hy9PP3S/z0+eqRv8Z64581MSsgPSNonu0dfCvQOWdYL/WORvbkqSjxjugSz9kPoMi
-         xdy6JG/IMfEwfL7kwBOBUQtilI9E5jKQaR80HQfpPJJhjcd9CKql5tQtAobmeyrPTRjx
-         mo1Z8JMPjWhdIhH18SmeiWyOGnTVRQfRFwMXzo9S25lgD5fTB49zwE5Z6XHmfwgR/oad
-         /RyA==
+        bh=UM1h6qi2XTPyEHms/ld3+NR79kDkFgbFhlT9820whrw=;
+        b=BQrG3yrjbBaD+7Gvn15siG8FZWaoLdi2K7tKOTzvNhzOcIfNkV3dNNdzkKa1keyyzO
+         OrNtPUGmjzOChGA4FH/pKrss8zrB4Aw6+jGv2cGNT32BnkZV85o4aYlx75kBThpkaHBb
+         JLo5FF+HU7hqRPoPJgiWlnCDpCaot1AdR5cgtfSRIceDweG3pN4KteMwsvXZmQjQzEmf
+         0ITPurQ01anY+/53VqevHj4QtFp15pO0JRd2jO8+b4aRXC4CZMNe+NM4vc3iHIh88Jrm
+         eHKWpaNP2We/Y2zdPy5Csg23MA6/zmnMB7RaRna9cNIf8igYOFx6mvnbUBXy5o7vuA2H
+         YXkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=2+rjgZ6n/LFflNQ2iPa+jTbmr/OJxu+rN8QX/vnQQWk=;
-        b=JijfKu74nZhFZGLAloXBBlhgmO9fldkubr5b1C2W+Bey1g851R7XZKD5pNqk8b7ZjI
-         2xhwi/prLGLSSUICozsq4hSJTZJETLZnC8rYqzY+JxdEU8A01II3zd9b+akGryp8+jpz
-         3AifoOfpIhbP3tupFjo9kKHw1QLTbZxkmUV13mfCV2/9RjmaB4LvxD6b0KUpHgXOhAKh
-         bAgEyNpP9UTmW9lqwC6JVJKHpwaOXEuzN4KlmsTbpZOwclTN8JtTYmO8VvTR5+kGvDLQ
-         X6hf51Aw/yFBp1p5sPFaOolWPBYRBhPOzQmjsgLM38nRLfxQ9+J2jpAVqyWC4cnoffwF
-         GeKA==
-X-Gm-Message-State: AODbwcDM/QucnijttFft/l0bzn1MEHc6qIC0n6T+KtxmboGJk0Sr6A9h
-        mJVmESm+UpN3GkMrbXXOd8BG7f1nRU1o
-X-Received: by 10.107.195.68 with SMTP id t65mr5767943iof.17.1494443763644;
- Wed, 10 May 2017 12:16:03 -0700 (PDT)
+        bh=UM1h6qi2XTPyEHms/ld3+NR79kDkFgbFhlT9820whrw=;
+        b=V9bRTX2KqvRxTZ0OY+UMpoivjQDwlcsPvG2li+z21iD4TTzHuf0kc2CHQw9ChyUOuh
+         xmR3f2w/6lwqt8i75LFNBeW9KZdr7oghLl3ayss/rr00GcbA5LoClqmyB9r1a9nIeAbP
+         jr2f5ajMbEjpCqCYlwhrncrKIOMbEJN9q7WqY4YRkJ5b4w7xGpv84m2Fv2cWXrOVfyWz
+         cxKIw5g09JorJ/qEuRRvoxBo6zh0A5BzFTiJxtszxbu6B1AAXaciKzC89Pgs1F9lsLax
+         qUDzkuyiSv9ic2QBvRJq/w61+fMqJvDsd/QF+BkdbPUcORieXh575JNfhzFH2AsYsERy
+         Hd8Q==
+X-Gm-Message-State: AODbwcCayl5zgJNqSey2aNe6lD93goQxUpJphR4FBx+OpxFonhBPzM3R
+        ljTtwkk0F7czjHY6zYamExoTnLuZs3QjZag=
+X-Received: by 10.36.83.144 with SMTP id n138mr7013312itb.71.1494445706570;
+ Wed, 10 May 2017 12:48:26 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 10.79.150.90 with HTTP; Wed, 10 May 2017 12:15:23 -0700 (PDT)
-In-Reply-To: <CA+qhfwO4=1X9fNCW2PeKSgqUHV-z26qhvr_yXfz1QGApJ_roRQ@mail.gmail.com>
-References: <CA+qhfwO4=1X9fNCW2PeKSgqUHV-z26qhvr_yXfz1QGApJ_roRQ@mail.gmail.com>
-From:   Samuel Lijin <sxlijin@gmail.com>
-Date:   Wed, 10 May 2017 14:15:23 -0500
-Message-ID: <CAJZjrdX-oAP7GFcPJ_FVNCMuErF7DNkq97KhjwgBX_G5tGXoFg@mail.gmail.com>
-Subject: Re: git log --follow after subtree merge
-To:     Jonny Gilchrist <jonnygilchrist@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Received: by 10.107.8.220 with HTTP; Wed, 10 May 2017 12:48:05 -0700 (PDT)
+In-Reply-To: <b80c68fa-fe1e-3cf8-3c7e-527a4d941108@gmail.com>
+References: <C1ACB28C-F1B4-42A1-8135-797DEFD9F03C@gmail.com> <b80c68fa-fe1e-3cf8-3c7e-527a4d941108@gmail.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Wed, 10 May 2017 21:48:05 +0200
+Message-ID: <CACBZZX7CgeW1OK+g9Mbir62MMaCx4sHFZngUuWz_H241Sb355g@mail.gmail.com>
+Subject: Re: Possible bug in includeIf / conditional includes
+To:     Sebastian Schuberth <sschuberth@gmail.com>, raphael.stolt@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 10, 2017 at 9:46 AM, Jonny Gilchrist
-<jonnygilchrist@gmail.com> wrote:
-> Hi,
+On Wed, May 10, 2017 at 8:58 PM, Sebastian Schuberth
+<sschuberth@gmail.com> wrote:
+> On 2017-05-10 19:00, raphael.stolt@gmail.com wrote:
 >
-> After doing a subtree merge, using 'git log' and 'git log --follow' on
-> files in the subtree show only the merge commit in which they were
-> added.
+>> Current configuration which finds the conditional configuration.
+>>
+>> ~/.gitconfig
+>> [includeIf "gitdir:~/Work/git-repos/oss/"]
+>>    path = ~/Work/git-repos/oss/.oss-gitconfig
+>>
+>> Expected configuration which doesn't find the conditional configuration:
+>>
+>> ~/.gitconfig
+>> [includeIf "gitdir:~/Work/git-repos/oss/"]
+>>    path = .oss-gitconfig
 >
-> After reading around I understand that the issue is that git log
-> --follow doesn't track renames that occur during a merge.
+>
+> My guess is, because includeIf might contain other conditionals than
+> "gitdir", the generic convention is to always use an absolute path for
+> "path".
 
-Try git log --follow -M. (You may also want to combine this with -l and/or -C).
+[CC'd OP Raphael Stolt, please reply-all]
 
-> Has there been any work (or are there any plans) to allow git log
-> --follow to work in this case? I couldn't find anything in the mailing
-> list archives aside from a couple of threads from 2011 explaining the
-> issue.
->
-> Thanks,
-> J.
+In both cases the conditional is the same, but the path is relative
+v.s. absolute.
+
+Raphael: Does the config get included if you cd to
+~/Work/git-repos/oss/? From git-config(1):
+
+---cut---
+The included file is expanded immediately, as if its contents had been
+found at the location of the include directive. If the value of the
+`include.path` variable is a relative path, the path is considered to
+be relative to the configuration file in which the include directive
+was found.  See below for examples.
+---cut---
+
+The commit that added IncludeIf (3efd0bedc6) does something with
+relative path (just skimming, need to get to other things), but unlike
+[Include] the docs don't explicitly mention what it's supposed to do
+with that, and all the examples show absolute paths.
+
+So whether this is a bug in the code or not it seems to definitely be
+a doc bug, whatever it does with relative files should be in the docs.
