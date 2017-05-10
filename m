@@ -6,77 +6,73 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 763632018D
-	for <e@80x24.org>; Wed, 10 May 2017 04:33:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 634D72018D
+	for <e@80x24.org>; Wed, 10 May 2017 04:36:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1752033AbdEJEdu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 00:33:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48585 "EHLO cloud.peff.net"
+        id S1751547AbdEJEgt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 00:36:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48588 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751955AbdEJEdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 00:33:50 -0400
-Received: (qmail 14799 invoked by uid 109); 10 May 2017 04:33:46 -0000
+        id S1751429AbdEJEgt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 00:36:49 -0400
+Received: (qmail 15006 invoked by uid 109); 10 May 2017 04:36:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 May 2017 04:33:46 +0000
-Received: (qmail 32055 invoked by uid 111); 10 May 2017 04:34:17 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 May 2017 04:36:49 +0000
+Received: (qmail 32076 invoked by uid 111); 10 May 2017 04:37:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 May 2017 00:34:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 May 2017 00:33:44 -0400
-Date:   Wed, 10 May 2017 00:33:44 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Wed, 10 May 2017 00:37:19 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 10 May 2017 00:36:46 -0400
+Date:   Wed, 10 May 2017 00:36:46 -0400
 From:   Jeff King <peff@peff.net>
-To:     Shawn Pearce <spearce@spearce.org>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH] fetch-pack: always allow fetching of literal SHA1s
-Message-ID: <20170510043343.mgb7heqzu2etcgvf@sigill.intra.peff.net>
-References: <20170509182042.28389-1-jonathantanmy@google.com>
- <20170509221629.3z35qcz36oiix3kh@sigill.intra.peff.net>
- <CAJo=hJvAg2WqpiuykpbHcB5vgQiHJ74CZ8Y4qudkYqZrmd30zg@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Script to rebase branches
+Message-ID: <20170510043646.seh73ejdperb2ym7@sigill.intra.peff.net>
+References: <8D018370-79F9-450F-97AF-31EF4C95BA44@gmail.com>
+ <20170509040943.j3n5li7fapiuvgbj@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1.1705091244420.146734@virtualbox>
+ <20170509110249.eluxns2zz5jqh42k@sigill.intra.peff.net>
+ <xmqq8tm51wch.fsf@gitster.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAJo=hJvAg2WqpiuykpbHcB5vgQiHJ74CZ8Y4qudkYqZrmd30zg@mail.gmail.com>
+In-Reply-To: <xmqq8tm51wch.fsf@gitster.mtv.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, May 09, 2017 at 09:22:11PM -0700, Shawn Pearce wrote:
+On Wed, May 10, 2017 at 07:47:26AM +0900, Junio C Hamano wrote:
 
-> > Hmm. That makes sense generally, as the request should succeed. But it
-> > seems like we're creating a client that will sometimes succeed and
-> > sometimes fail, and the reasoning will be somewhat opaque to the user.
-> > I have a feeling I'm missing some context on when you'd expect this to
-> > kick in.
+> > Yes, the script predates the invention of worktrees by several years. I
+> > have occasionally played with worktrees, but don't use them extensively
+> > (I'd usually use them for a one-off change, and then remove the
+> > worktree).
 > 
-> Specifically, someone I know was looking at building an application
-> that is passed only a SHA-1 for the tip of a ref on a popular hosting
-> site[1]. They wanted to run `git fetch URL SHA1`, but this failed
-> because the site doesn't have upload.allowtipsha1inwant enabled.
-> However the SHA1 was clearly in the output of git ls-remote.
+> I check out a different Meta/ at the top-level of my working tree
+> when working on Git, but I do use an equivalent of "worktree" to
+> have separate build areas for four integration branches.  It is
+> trivial to check out Meta/ just once to the primary working tree and
+> symlink it to others ;-)
 
-OK. So this is basically a case where we expect that the user knows what
-they're doing.
+Yeah, I guess I'd need to do that, too, if I used worktrees extensively.
+I think the specific problem with the rebase script is just that it
+expects to be able to checkout all the branches.
 
-> For various reasons they expected this to work, because it works
-> against other sites that do have upload.allowtipsha1inwant enabled.
-> And I personally just expected it to work because the fetch client
-> accepts SHA-1s, and the wire protocol uses "want SHA1" not "want ref",
-> and the SHA-1 passed on the command line was currently in the
-> advertisement when the connection opened, so its certainly something
-> the server is currently willing to serve.
+> One thing that struck me odd about your "rebase" script was that it
+> didn't seem to have a special provision to handle a topic that
+> builds on another topic. I saw toposort, but is that sufficient?
 
-Right, makes sense.  I wondered if GitHub should be turning on
-allowTipSHA1InWant, but it really doesn't make sense to. We _do_ hide
-some internal refs[1], and they're things that users wouldn't want to
-fetch. The problem for your case really is just on the client side, and
-this patch fixes it.
+It topo-sorts so that a single run rebases everything (otherwise you may
+need to run N times, where N is the deepest dependency chain). But it
+also uses reflogs to try to find the fork point when the upstream topic
+has been rebased.
 
-Some of this context might be useful in the commit message.
+The logic is in find_base(). Once upon a time it used "git pull
+--rebase", but there were some complications. These days I think it
+could probably use "rebase --fork-point", but I just never got around to
+testing it.
 
 -Peff
-
-[1] The reachability checks from upload-pack don't actually do much on
-    GitHub, because you can generally access the objects via the API or
-    the web site anyway. So I'm not really opposed to turning on
-    allowTipSHA1InWant if it would be useful for users, but after
-    Jonathan's patch I don't see how it would be.
