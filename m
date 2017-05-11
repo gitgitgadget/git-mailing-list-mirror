@@ -2,256 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21E052018D
-	for <e@80x24.org>; Thu, 11 May 2017 13:48:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74FBF2018D
+	for <e@80x24.org>; Thu, 11 May 2017 13:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756030AbdEKNsW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 09:48:22 -0400
-Received: from mout.gmx.net ([212.227.15.19]:57924 "EHLO mout.gmx.net"
+        id S932952AbdEKNsU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 09:48:20 -0400
+Received: from mout.gmx.net ([212.227.17.20]:50501 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755714AbdEKNrr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 09:47:47 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MKIEQ-1d8GTQ1KFS-001fy6; Thu, 11
- May 2017 15:47:34 +0200
-Date:   Thu, 11 May 2017 15:47:33 +0200 (CEST)
+        id S1756030AbdEKNrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 09:47:49 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MELdk-1dFO0A119E-00FRer; Thu, 11
+ May 2017 15:47:38 +0200
+Date:   Thu, 11 May 2017 15:47:37 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 00/11] Start retiring .git/remotes/ and .git/branches/ for
- good
-Message-ID: <cover.1494509599.git.johannes.schindelin@gmx.de>
+Subject: [PATCH 01/11] git-parse-remote: fix highly misleading man page
+In-Reply-To: <cover.1494509599.git.johannes.schindelin@gmx.de>
+Message-ID: <b26882e61ef466c787b575d3fd60bfeec8a9281a.1494509599.git.johannes.schindelin@gmx.de>
+References: <cover.1494509599.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:cmr4sGHGAYT13Zj2jLgLL0/YM+D/var3lyOKOoe8280zxH97+Y3
- 0e3dELY5I1gkZbLJiu2GbYUVu2qYpj8KaioonedivF5yyirgE5i9E0QVZfz1QyIHowMHsBx
- tU6TQuGtHaxzp+JpfOn7ZhgFIjBsLFRLuHFQkZZn1Mu6OIcq95/BHIXHQgZMzd7qSsH/tNk
- xjj8u6tL+9tADO0pKRIlA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:/x7i7wqC9ek=:cA2BqNqlOEcpXdBWfEOfLl
- RbGcOhHF1dFJWjEbGgBBOfST9I7dEDD6Z0D/tHZI5Nye7a6ZhZE+RLlBh2TnPf/q1D9cN2R1q
- NMqaOM1gcrl+8W9cN/aAXveEwvYu2Q/w3MGs/ZREGQsFyer/QQwLwc1ajDfcc3dg7lGZ82zLE
- GIJtP5c/oWpCeJsytf8+ADUIC0hfU+PizrDO5S+6LyOwYobVrKV8rNYo8Z+YGKvBYmTSNu/xc
- QyCag4ueKehlOOA1mdk8vOg0IutlGm21lN06KXGc0oR47YeC5WQ7xv0wGHWNdGSirx/Kjo34G
- FaRY/RlHl2SsZj9aPPGwVJYhV65GgwkiQg7/uCINWyyCqrqw6jIbwbTlwtWyM4m6ftoA97TrO
- m7PThEH2IPMZjF0oge4sFYxOzhEvVk8EcAPbLgGtuaS+Nb/ZW6vxM6oIrbbv7FTvjuZYwEiBd
- MJBxlPia3OU8j/KMU/fLY3vu34+pphWtn4+kssFVLIeSvgVcbTIm0jYUFEBXzUzVyzNIB9NXW
- eN8LsEnXyR0ZLwuC7xt6a+HhamKwrXclsQ0S/HHXE9Huxp1BX/BxmbJr7kGfnNndPWrl2moPu
- kpxAsIyif7LccyxFUe46HHPLlOc3YEex76oTn0GDCHCYEr1+B+CTc8LN8hyDrTKvaF+L5OPtI
- akn2n6Es6Hr1s8ulaZahe0hHHve59C5rnTrXjBZGtGwMncPqplA8xB19cmhSBOoIKIMHf6V5T
- /nwInIYrOW8s0fP5Y5l9ENiGdLIgufj3WXeEgjlb/F2ZO+4kgwrsvQ0TEuQfgCPVp2lAxKfCs
- 1TdSMn2
+X-Provags-ID: V03:K0:QP9/+dzmS46G49FQffdRaLrQ7X3UMVszIafmMwLdCfe0nrwokis
+ hNmYhR+4cYZQ7RlPoHGP85lE5ljFztJ7EOgIucj6YAaXwe3byy2Ydkn5rkYiLcvs5Z/f9ei
+ Uvxcjbi1XSbcPsmpSbzu9zp/WAZDjxgrEjg6SlnmijDG2MCNHA8kipKINak9jDism63/nl9
+ gfgzjBUYVghT9+GldhlLA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:+U9C3LUt7B4=:/Vz1ZANehU4aYyw2O1vsX4
+ TUOPoPrGlxVbaVKtEn+durvryRjhU0ePHwR6Y794a6vEc7zLWM+ojtnHpciqWN4y8P423Pr9j
+ TpymgSPUymn4rsb+uTQajGXODvCeybOpY3GfDQ0afkbZSEQ8ehk/Ia/yfP4mduDlMW2mxwEvr
+ 5GeJkxmBsygP4Q/b7PY/+eGY2qzMDv5IzZC5yi9TW+FNhbG9ixV98P9Rgiu53Jhzj3ETT8CyG
+ sBCpmfVMJUCdSC1zXYHiiht5n+7Ap8OC0P2+SZSL6TVvkl3KXqu9iVBvex3Hdu3enM3yeYFvE
+ a0ZP9t8lifTFjNeJqebVseLyMD1rXftGcjRVXqbb5LamSu9T3LXyoVvSmHBdhmrGdrcs86wvf
+ DpIBeHSqKSIqd3ZIJADySe39DPGCI36Gf8B8tc7TLU2SWKk2Be5MWpo59dm9VoinM1tfE86ds
+ oZOqly52pGSGgcUCvmbtoAvW6FkHFR1WkyXkihexPp7TFw275ViLzT6/mo5awphfJ+5SiEGQV
+ 1mjhat3in6pMfU3NSciXV5BgXIp6z1GHOeZ8pJ9rmmLbmjJcp2vUQchOsDM3jNMP2PK0X84bE
+ ocXTbLlgfvzNhSuuJtwWFk7o6FRGpoE1ImpCu1CQBQd/2mFpqTDQqxSgeMJWuWESN1DXGWk4n
+ lyrAQU6IFTE8nHfxR4mqTFdQit6iXpAcIIfWbh7O2sRyNNAfC8WgykTzhhQ++/6sQqhu+AD1D
+ MsUeBMdICVwWFaFkMuuQRirjj2dM/xaeDgiMrHlVTQLL8AR8w19+6CgnwYXweOiOIdv+pbO6o
+ Mj1XZ4e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Git uses the config for remote/upstream information in favor of the
-previously-used .git/remotes/ and .git/branches/ for a decade now.
+The man page still talked about the .git/remotes/ directory (which is no
+longer in use, as of 75c384efb52 (Do not create $GIT_DIR/remotes/
+directory anymore., 2006-12-19)).
 
-Nothing in Git writes to these files any longer, and the most prominent
-user of .git/branches/ (Cogito) is long abandoned.
+Let's just revamp it almost completely to reflect the *purpose* of that
+scriptlet, as opposed to its implementation details.
 
-It is time to start not only deprecating this feature, but *really*
-deprecating it. Like, really, *really*. For reals.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/git-parse-remote.txt | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-Half of this patch series does that.
-
-The second half is a preview of the patches to finally rip out the code
-that implements .git/remotes/ & .git/branches/ support. We we will want
-to apply them to a future major version of Git, after *really*
-deprecating .git/remotes/ & .git/branches/ support for at least one
-major version (I would be more comfortable with three major versions,
-actually).
-
-Note: even after these patches, there is still a file mentioning
-.git/remote/ (sic!) and .git/branches/:
-Documentation/git-show-branch.txt. The reference is not, however,
-describing Git's internals, but merely uses existing commit history
-(from the olden days) in an example.
-
-There is also a reference in contrib/examples/git-fetch.sh, but that
-should remain there, for historians' purposes.
-
-Oh, and the reason that I split out the changes to t5505, t5510, t5515 &
-t5516 in the PREVIEW part is that those changes are unfortunately not
-quite as trivial as I hoped, and require a bit of a rationale for the
-way they were performed in the commit message. Read: I wanted to make
-this patch series easier to review. And as I already split out all the
-t/ patches, it felt silly to *not* split out the t0060 patch.
-
-
-Johannes Schindelin (11):
-  git-parse-remote: fix highly misleading man page
-  Documentation: really deprecate .git/remotes/ and .git/branches/
-  remote: warn loud and clear when .git/branches/ is *still* used
-  remote: warn loud and clear when .git/remotes/ is *still* used
-  Revert "Revert "Don't create the $GIT_DIR/branches directory on init""
-  PREVIEW: t5510: convert .git/remotes/ test to use a regular remote
-  PREVIEW: t5516: stop testing .git/branches/ functionality
-  PREVIEW: remote: remove support for migrating ancient remotes
-  PREVIEW: t5515: remove .git/remotes/ and .git/branches/ tests
-  PREVIEW: t0060: stop testing support for .git/remotes/ and
-    .git/branches/
-  PREVIEW: remove support for .git/remotes/ and .git/branches/
-
- Documentation/git-parse-remote.txt                 |  7 +-
- Documentation/git-remote.txt                       |  4 -
- Documentation/gitrepository-layout.txt             | 19 +++--
- Documentation/urls-remotes.txt                     | 65 +---------------
- builtin/remote.c                                   | 27 -------
- path.c                                             |  2 -
- remote.c                                           | 89 ----------------------
- remote.h                                           |  4 +-
- t/t0060-path-utils.sh                              |  2 -
- t/t5505-remote.sh                                  | 55 -------------
- t/t5510-fetch.sh                                   | 10 +--
- t/t5515-fetch-merge-logic.sh                       | 23 ------
- t/t5515/fetch.br-branches-default                  |  8 --
- t/t5515/fetch.br-branches-default-merge            |  9 ---
- ...etch.br-branches-default-merge_branches-default |  9 ---
- t/t5515/fetch.br-branches-default-octopus          | 10 ---
- ...ch.br-branches-default-octopus_branches-default | 10 ---
- t/t5515/fetch.br-branches-default_branches-default |  8 --
- t/t5515/fetch.br-branches-one                      |  8 --
- t/t5515/fetch.br-branches-one-merge                |  9 ---
- t/t5515/fetch.br-branches-one-merge_branches-one   |  9 ---
- t/t5515/fetch.br-branches-one-octopus              |  9 ---
- t/t5515/fetch.br-branches-one-octopus_branches-one |  9 ---
- t/t5515/fetch.br-branches-one_branches-one         |  8 --
- t/t5515/fetch.br-remote-explicit                   | 11 ---
- t/t5515/fetch.br-remote-explicit-merge             | 11 ---
- .../fetch.br-remote-explicit-merge_remote-explicit | 11 ---
- t/t5515/fetch.br-remote-explicit-octopus           | 11 ---
- ...etch.br-remote-explicit-octopus_remote-explicit | 11 ---
- t/t5515/fetch.br-remote-explicit_remote-explicit   | 11 ---
- t/t5515/fetch.br-remote-glob                       | 11 ---
- t/t5515/fetch.br-remote-glob-merge                 | 11 ---
- t/t5515/fetch.br-remote-glob-merge_remote-glob     | 11 ---
- t/t5515/fetch.br-remote-glob-octopus               | 11 ---
- t/t5515/fetch.br-remote-glob-octopus_remote-glob   | 11 ---
- t/t5515/fetch.br-remote-glob_remote-glob           | 11 ---
- t/t5515/fetch.br-unconfig_branches-default         |  8 --
- t/t5515/fetch.br-unconfig_branches-one             |  8 --
- t/t5515/fetch.br-unconfig_remote-explicit          | 11 ---
- t/t5515/fetch.br-unconfig_remote-glob              | 11 ---
- t/t5515/fetch.master_branches-default              |  8 --
- t/t5515/fetch.master_branches-one                  |  8 --
- t/t5515/fetch.master_remote-explicit               | 11 ---
- t/t5515/fetch.master_remote-glob                   | 11 ---
- t/t5515/refs.br-branches-default                   | 12 ---
- t/t5515/refs.br-branches-default-merge             | 12 ---
- ...refs.br-branches-default-merge_branches-default | 12 ---
- t/t5515/refs.br-branches-default-octopus           | 12 ---
- ...fs.br-branches-default-octopus_branches-default | 12 ---
- t/t5515/refs.br-branches-default_branches-default  | 12 ---
- t/t5515/refs.br-branches-one                       | 12 ---
- t/t5515/refs.br-branches-one-merge                 | 12 ---
- t/t5515/refs.br-branches-one-merge_branches-one    | 12 ---
- t/t5515/refs.br-branches-one-octopus               | 12 ---
- t/t5515/refs.br-branches-one-octopus_branches-one  | 12 ---
- t/t5515/refs.br-branches-one_branches-one          | 12 ---
- t/t5515/refs.br-remote-explicit                    | 15 ----
- t/t5515/refs.br-remote-explicit-merge              | 15 ----
- .../refs.br-remote-explicit-merge_remote-explicit  | 15 ----
- t/t5515/refs.br-remote-explicit-octopus            | 15 ----
- ...refs.br-remote-explicit-octopus_remote-explicit | 15 ----
- t/t5515/refs.br-remote-explicit_remote-explicit    | 15 ----
- t/t5515/refs.br-remote-glob                        | 15 ----
- t/t5515/refs.br-remote-glob-merge                  | 15 ----
- t/t5515/refs.br-remote-glob-merge_remote-glob      | 15 ----
- t/t5515/refs.br-remote-glob-octopus                | 15 ----
- t/t5515/refs.br-remote-glob-octopus_remote-glob    | 15 ----
- t/t5515/refs.br-remote-glob_remote-glob            | 15 ----
- t/t5515/refs.br-unconfig_branches-default          | 12 ---
- t/t5515/refs.br-unconfig_branches-one              | 12 ---
- t/t5515/refs.br-unconfig_remote-explicit           | 15 ----
- t/t5515/refs.br-unconfig_remote-glob               | 15 ----
- t/t5515/refs.master_branches-default               | 12 ---
- t/t5515/refs.master_branches-one                   | 12 ---
- t/t5515/refs.master_remote-explicit                | 15 ----
- t/t5515/refs.master_remote-glob                    | 15 ----
- t/t5516-fetch-push.sh                              | 55 +------------
- templates/branches--                               |  1 -
- 78 files changed, 20 insertions(+), 1089 deletions(-)
- delete mode 100644 t/t5515/fetch.br-branches-default
- delete mode 100644 t/t5515/fetch.br-branches-default-merge
- delete mode 100644 t/t5515/fetch.br-branches-default-merge_branches-default
- delete mode 100644 t/t5515/fetch.br-branches-default-octopus
- delete mode 100644 t/t5515/fetch.br-branches-default-octopus_branches-default
- delete mode 100644 t/t5515/fetch.br-branches-default_branches-default
- delete mode 100644 t/t5515/fetch.br-branches-one
- delete mode 100644 t/t5515/fetch.br-branches-one-merge
- delete mode 100644 t/t5515/fetch.br-branches-one-merge_branches-one
- delete mode 100644 t/t5515/fetch.br-branches-one-octopus
- delete mode 100644 t/t5515/fetch.br-branches-one-octopus_branches-one
- delete mode 100644 t/t5515/fetch.br-branches-one_branches-one
- delete mode 100644 t/t5515/fetch.br-remote-explicit
- delete mode 100644 t/t5515/fetch.br-remote-explicit-merge
- delete mode 100644 t/t5515/fetch.br-remote-explicit-merge_remote-explicit
- delete mode 100644 t/t5515/fetch.br-remote-explicit-octopus
- delete mode 100644 t/t5515/fetch.br-remote-explicit-octopus_remote-explicit
- delete mode 100644 t/t5515/fetch.br-remote-explicit_remote-explicit
- delete mode 100644 t/t5515/fetch.br-remote-glob
- delete mode 100644 t/t5515/fetch.br-remote-glob-merge
- delete mode 100644 t/t5515/fetch.br-remote-glob-merge_remote-glob
- delete mode 100644 t/t5515/fetch.br-remote-glob-octopus
- delete mode 100644 t/t5515/fetch.br-remote-glob-octopus_remote-glob
- delete mode 100644 t/t5515/fetch.br-remote-glob_remote-glob
- delete mode 100644 t/t5515/fetch.br-unconfig_branches-default
- delete mode 100644 t/t5515/fetch.br-unconfig_branches-one
- delete mode 100644 t/t5515/fetch.br-unconfig_remote-explicit
- delete mode 100644 t/t5515/fetch.br-unconfig_remote-glob
- delete mode 100644 t/t5515/fetch.master_branches-default
- delete mode 100644 t/t5515/fetch.master_branches-one
- delete mode 100644 t/t5515/fetch.master_remote-explicit
- delete mode 100644 t/t5515/fetch.master_remote-glob
- delete mode 100644 t/t5515/refs.br-branches-default
- delete mode 100644 t/t5515/refs.br-branches-default-merge
- delete mode 100644 t/t5515/refs.br-branches-default-merge_branches-default
- delete mode 100644 t/t5515/refs.br-branches-default-octopus
- delete mode 100644 t/t5515/refs.br-branches-default-octopus_branches-default
- delete mode 100644 t/t5515/refs.br-branches-default_branches-default
- delete mode 100644 t/t5515/refs.br-branches-one
- delete mode 100644 t/t5515/refs.br-branches-one-merge
- delete mode 100644 t/t5515/refs.br-branches-one-merge_branches-one
- delete mode 100644 t/t5515/refs.br-branches-one-octopus
- delete mode 100644 t/t5515/refs.br-branches-one-octopus_branches-one
- delete mode 100644 t/t5515/refs.br-branches-one_branches-one
- delete mode 100644 t/t5515/refs.br-remote-explicit
- delete mode 100644 t/t5515/refs.br-remote-explicit-merge
- delete mode 100644 t/t5515/refs.br-remote-explicit-merge_remote-explicit
- delete mode 100644 t/t5515/refs.br-remote-explicit-octopus
- delete mode 100644 t/t5515/refs.br-remote-explicit-octopus_remote-explicit
- delete mode 100644 t/t5515/refs.br-remote-explicit_remote-explicit
- delete mode 100644 t/t5515/refs.br-remote-glob
- delete mode 100644 t/t5515/refs.br-remote-glob-merge
- delete mode 100644 t/t5515/refs.br-remote-glob-merge_remote-glob
- delete mode 100644 t/t5515/refs.br-remote-glob-octopus
- delete mode 100644 t/t5515/refs.br-remote-glob-octopus_remote-glob
- delete mode 100644 t/t5515/refs.br-remote-glob_remote-glob
- delete mode 100644 t/t5515/refs.br-unconfig_branches-default
- delete mode 100644 t/t5515/refs.br-unconfig_branches-one
- delete mode 100644 t/t5515/refs.br-unconfig_remote-explicit
- delete mode 100644 t/t5515/refs.br-unconfig_remote-glob
- delete mode 100644 t/t5515/refs.master_branches-default
- delete mode 100644 t/t5515/refs.master_branches-one
- delete mode 100644 t/t5515/refs.master_remote-explicit
- delete mode 100644 t/t5515/refs.master_remote-glob
- delete mode 100644 templates/branches--
-
-
-base-commit: b06d3643105c8758ed019125a4399cb7efdcce2c
-Published-As: https://github.com/dscho/git/releases/tag/retire-cogito-branches-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git retire-cogito-branches-v1
-
+diff --git a/Documentation/git-parse-remote.txt b/Documentation/git-parse-remote.txt
+index a45ea1ece81..7f865f33898 100644
+--- a/Documentation/git-parse-remote.txt
++++ b/Documentation/git-parse-remote.txt
+@@ -3,7 +3,7 @@ git-parse-remote(1)
+ 
+ NAME
+ ----
+-git-parse-remote - Routines to help parsing remote repository access parameters
++git-parse-remote - Routines to help parsing remote repository information
+ 
+ 
+ SYNOPSIS
+@@ -14,9 +14,8 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ This script is included in various scripts to supply
+-routines to parse files under $GIT_DIR/remotes/ and
+-$GIT_DIR/branches/ and configuration variables that are related
+-to fetching, pulling and pushing.
++routines to query the remote repository and its branch
++associated with the current branch.
+ 
+ GIT
+ ---
 -- 
 2.12.2.windows.2.800.gede8f145e06
+
 
