@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75FF920196
-	for <e@80x24.org>; Thu, 11 May 2017 09:20:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50C1E20196
+	for <e@80x24.org>; Thu, 11 May 2017 09:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755298AbdEKJT7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 05:19:59 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33234 "EHLO
+        id S1755321AbdEKJUC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 05:20:02 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:33342 "EHLO
         mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755241AbdEKJT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:19:57 -0400
-Received: by mail-wm0-f65.google.com with SMTP id y10so5507474wmh.0
-        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:57 -0700 (PDT)
+        with ESMTP id S1755241AbdEKJUA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 05:20:00 -0400
+Received: by mail-wm0-f65.google.com with SMTP id y10so5507790wmh.0
+        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZMfXT8yuCq71PyWoJ5tFyN70k4hTPI7H1G1a6V5ZSl0=;
-        b=sm6kNfeWViTI6EG/nGnU30t6LhChKgwTf7qzWnx47jb0JrkD3rGSqMI+y2scPKXkXM
-         GsvAeEYYIWMvk4y+5ffCBl3QxAqpMFVcr8ZAkgjZxaYikxUGLubFZ1KE2J7ytSXUevGV
-         NVM+dmxb9S/nO2/jvGPfjyEEdEO9664hy/gRvU4R7zdxtztK36CTgMb747OIEYevcqLC
-         IKTaZmxGffRJn9gv7LelZiTQJuRmnkkALD6XP5Vj20f8pU3nAvsh8E87z3+nmMk6EqV1
-         kKHAnc9SvQgwGf9qGDMkPzhy0McSXSS6R0KXHDnaVzVgEq+Ak3appEcbEwCSZvCiZ5sk
-         o2mA==
+        bh=AGvPPxxHgtVIIsw7ZBkH/PyLn/7tANXGtETPaIIXg2I=;
+        b=ABAreEHsBeyyN8cnIP0hF3eZKINDbilLucLSd3gomwskUbCTFlHKhIhCjnz/a5HnnN
+         Qn/aQ/knyD0Frao7Je5jL2EmjWzAH3O/tMknRntMVzjXCjhzxfpak5SDM9WjbMZzcDGk
+         d/YcvZraHbpA3JyWE4Lw4kMoCLuu7uq3KxCaD2nzeNK2f0Q7rfLK9s4Ivvt4neTw0tzp
+         HvDgAArpMYVeEBTH6Slv/7jGydjchqIORV32sXqv3akBrsj5K7E5UAcBIdyjwMY0q/5l
+         8R51VQ1WeS8zznjYVHGA0dFn4k2SXqUOeomSm0rFhp+qtT8pzROiMR0hNecknjISSh8Z
+         5QuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZMfXT8yuCq71PyWoJ5tFyN70k4hTPI7H1G1a6V5ZSl0=;
-        b=p1vfjQvCnwPodkB0yJdhN1LXctAGXy5RrHNOy2acxsmxzXDaErXa0jwTxyz6HNiIzg
-         YPMKz+eVulQErGGSODKvQbBh/diP6hbP1mA9s42z269bgI8dw4Bqf4xJu311lUvSgU5X
-         Uu1vfA5nOuZK/iQ7/bepcQQtdjqbKIAMHaw36pU+fOOjw32AQX/f/Gki4/DD2dJvJ6+A
-         xWixjvpRiXPKsSl8nMmsG2NIBrICM9RqBoOxucNSfrcKO1xqILu4e0u6iGKh06NOUdkC
-         HrXn9UA2cvf6V2oQeFX2Pp279Dws3h8keGkd/CJ35aSjN25kf4PegCErVTn9OAB+ya+E
-         /x1A==
-X-Gm-Message-State: AODbwcDLqMf+BOjiKc5/ZD7iD6AWtx03b65T1dXaFEpRPtGLQF7Fl9vZ
-        jJF+xnKce4CZhA==
-X-Received: by 10.80.158.131 with SMTP id a3mr7725289edf.169.1494494396353;
-        Thu, 11 May 2017 02:19:56 -0700 (PDT)
+        bh=AGvPPxxHgtVIIsw7ZBkH/PyLn/7tANXGtETPaIIXg2I=;
+        b=NuHFFgUZbNcWIkDNqHPuVN0ui7tl0IYO93/lUIQ1JRHhSYEo3XOAOJ4E/fHFP7+2RJ
+         j/7lCvba/MbviBmUH2mwNwbx39XkMoFJ2YVJ0+utivF/R1ExC55rfFjJe44518C75xQ0
+         aF7qBmDRnb/FiryR/QW+z6Adr6kgc1PVgTsutzovR+9pnYoOF1pgU405TjltLNOV5Hop
+         +sP5GW9PzQtpT5vJGWbaGOJFhMRBBIY52fcnok0uUvt43WiuS0eHBVzxtP48XgowAQrL
+         R5zX/7urLElYrkIGBTdaJv2emHD7FavlnjeQGS0Fi5bDTtDnUioD/Ua8mSIgX/e88xJA
+         dyaQ==
+X-Gm-Message-State: AODbwcCjjj/O+JJh9nUQ7kXOEBUFJCArSvWvsIfZjroQ5tzfjX1l1YHU
+        V0O/oF5+dKgLPw==
+X-Received: by 10.80.136.43 with SMTP id b40mr17503edb.25.1494494399023;
+        Thu, 11 May 2017 02:19:59 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.55
+        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 02:19:55 -0700 (PDT)
+        Thu, 11 May 2017 02:19:58 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 22/29] grep: change the internal PCRE macro names to be PCRE1
-Date:   Thu, 11 May 2017 09:18:22 +0000
-Message-Id: <20170511091829.5634-23-avarab@gmail.com>
+Subject: [PATCH 23/29] grep: change internal *pcre* variable & function names to be *pcre1*
+Date:   Thu, 11 May 2017 09:18:23 +0000
+Message-Id: <20170511091829.5634-24-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511091829.5634-1-avarab@gmail.com>
 References: <20170511091829.5634-1-avarab@gmail.com>
@@ -75,118 +75,193 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the internal USE_LIBPCRE define, & build options flag to use a
-naming convention ending in PCRE1, without changing the long-standing
-USE_LIBPCRE Makefile flag which enables this code.
+Change the internal PCRE variable & function names to have a "1"
+suffix. This is for preparation for libpcre2 support, where having
+non-versioned names would be confusing.
 
-This is for preparation for libpcre2 support where having things like
-USE_LIBPCRE and USE_LIBPCRE2 in any more places than we absolutely
-need to for backwards compatibility with old Makefile arguments would
-be confusing.
-
-In some ways it would be better to change everything that now uses
-USE_LIBPCRE to use USE_LIBPCRE1, and to make specifying
-USE_LIBPCRE (or --with-pcre) an error. This would impose a one-time
-burden on packagers of git to s/USE_LIBPCRE/USE_LIBPCRE1/ in their
-build scripts.
-
-However I'd like to leave the door open to making
-USE_LIBPCRE=YesPlease eventually mean USE_LIBPCRE2=YesPlease,
-i.e. once PCRE v2 is ubiquitous enough that it makes sense to make it
-the default.
-
-This code and the USE_LIBPCRE Makefile argument was added in commit
-63e7e9d8b6 ("git-grep: Learn PCRE", 2011-05-09). At the time there was
-no indication that the PCRE project would release an entirely new &
-incompatible API around 3 years later.
+An earlier change in this series ("grep: change the internal PCRE
+macro names to be PCRE1", 2017-04-07) elaborates on the motivations
+behind this change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile      | 4 ++--
- grep.c        | 6 +++---
- grep.h        | 2 +-
- t/test-lib.sh | 2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ grep.c | 52 ++++++++++++++++++++++++++--------------------------
+ grep.h |  8 ++++----
+ 2 files changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d1587452f1..374fbc7e58 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1088,7 +1088,7 @@ ifdef NO_LIBGEN_H
- endif
- 
- ifdef USE_LIBPCRE
--	BASIC_CFLAGS += -DUSE_LIBPCRE
-+	BASIC_CFLAGS += -DUSE_LIBPCRE1
- 	ifdef LIBPCREDIR
- 		BASIC_CFLAGS += -I$(LIBPCREDIR)/include
- 		EXTLIBS += -L$(LIBPCREDIR)/$(lib) $(CC_LD_DYNPATH)$(LIBPCREDIR)/$(lib)
-@@ -2240,7 +2240,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo TAR=\''$(subst ','\'',$(subst ','\'',$(TAR)))'\' >>$@+
- 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@+
- 	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
--	@echo USE_LIBPCRE=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
-+	@echo USE_LIBPCRE1=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
 diff --git a/grep.c b/grep.c
-index 27de615209..0977cac723 100644
+index 0977cac723..4507765811 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -321,7 +321,7 @@ static NORETURN void compile_regexp_failed(const struct grep_pat *p,
- 	die("%s'%s': %s", where, p->pattern, error);
+@@ -178,23 +178,23 @@ static void grep_set_pattern_type_option(enum grep_pattern_type pattern_type, st
+ 
+ 	case GREP_PATTERN_TYPE_BRE:
+ 		opt->fixed = 0;
+-		opt->pcre = 0;
++		opt->pcre1 = 0;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_ERE:
+ 		opt->fixed = 0;
+-		opt->pcre = 0;
++		opt->pcre1 = 0;
+ 		opt->regflags |= REG_EXTENDED;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_FIXED:
+ 		opt->fixed = 1;
+-		opt->pcre = 0;
++		opt->pcre1 = 0;
+ 		break;
+ 
+ 	case GREP_PATTERN_TYPE_PCRE:
+ 		opt->fixed = 0;
+-		opt->pcre = 1;
++		opt->pcre1 = 1;
+ 		break;
+ 	}
+ }
+@@ -322,7 +322,7 @@ static NORETURN void compile_regexp_failed(const struct grep_pat *p,
  }
  
--#ifdef USE_LIBPCRE
-+#ifdef USE_LIBPCRE1
- static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ #ifdef USE_LIBPCRE1
+-static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
++static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
  {
  	const char *error;
-@@ -373,7 +373,7 @@ static void free_pcre_regexp(struct grep_pat *p)
- 	pcre_free(p->pcre_extra_info);
- 	pcre_free((void *)p->pcre_tables);
+ 	int erroffset;
+@@ -330,23 +330,23 @@ static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 
+ 	if (opt->ignore_case) {
+ 		if (has_non_ascii(p->pattern))
+-			p->pcre_tables = pcre_maketables();
++			p->pcre1_tables = pcre_maketables();
+ 		options |= PCRE_CASELESS;
+ 	}
+ 	if (is_utf8_locale() && has_non_ascii(p->pattern))
+ 		options |= PCRE_UTF8;
+ 
+-	p->pcre_regexp = pcre_compile(p->pattern, options, &error, &erroffset,
+-				      p->pcre_tables);
+-	if (!p->pcre_regexp)
++	p->pcre1_regexp = pcre_compile(p->pattern, options, &error, &erroffset,
++				      p->pcre1_tables);
++	if (!p->pcre1_regexp)
+ 		compile_regexp_failed(p, error);
+ 
+-	p->pcre_extra_info = pcre_study(p->pcre_regexp, 0, &error);
+-	if (!p->pcre_extra_info && error)
++	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, 0, &error);
++	if (!p->pcre1_extra_info && error)
+ 		die("%s", error);
  }
--#else /* !USE_LIBPCRE */
-+#else /* !USE_LIBPCRE1 */
- static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
+ 
+-static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
++static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 		regmatch_t *match, int eflags)
+ {
+ 	int ovector[30], ret, flags = 0;
+@@ -354,7 +354,7 @@ static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
+ 	if (eflags & REG_NOTBOL)
+ 		flags |= PCRE_NOTBOL;
+ 
+-	ret = pcre_exec(p->pcre_regexp, p->pcre_extra_info, line, eol - line,
++	ret = pcre_exec(p->pcre1_regexp, p->pcre1_extra_info, line, eol - line,
+ 			0, flags, ovector, ARRAY_SIZE(ovector));
+ 	if (ret < 0 && ret != PCRE_ERROR_NOMATCH)
+ 		die("pcre_exec failed with error code %d", ret);
+@@ -367,25 +367,25 @@ static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
+ 	return ret;
+ }
+ 
+-static void free_pcre_regexp(struct grep_pat *p)
++static void free_pcre1_regexp(struct grep_pat *p)
+ {
+-	pcre_free(p->pcre_regexp);
+-	pcre_free(p->pcre_extra_info);
+-	pcre_free((void *)p->pcre_tables);
++	pcre_free(p->pcre1_regexp);
++	pcre_free(p->pcre1_extra_info);
++	pcre_free((void *)p->pcre1_tables);
+ }
+ #else /* !USE_LIBPCRE1 */
+-static void compile_pcre_regexp(struct grep_pat *p, const struct grep_opt *opt)
++static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
  {
  	die("cannot use Perl-compatible regexes when not compiled with USE_LIBPCRE");
-@@ -388,7 +388,7 @@ static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
- static void free_pcre_regexp(struct grep_pat *p)
+ }
+ 
+-static int pcrematch(struct grep_pat *p, const char *line, const char *eol,
++static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+ 		regmatch_t *match, int eflags)
+ {
+ 	return 1;
+ }
+ 
+-static void free_pcre_regexp(struct grep_pat *p)
++static void free_pcre1_regexp(struct grep_pat *p)
  {
  }
--#endif /* !USE_LIBPCRE */
-+#endif /* !USE_LIBPCRE1 */
+ #endif /* !USE_LIBPCRE1 */
+@@ -476,8 +476,8 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
+ 		return;
+ 	}
  
- static int is_fixed(const char *s, size_t len)
- {
+-	if (opt->pcre) {
+-		compile_pcre_regexp(p, opt);
++	if (opt->pcre1) {
++		compile_pcre1_regexp(p, opt);
+ 		return;
+ 	}
+ 
+@@ -833,8 +833,8 @@ void free_grep_patterns(struct grep_opt *opt)
+ 		case GREP_PATTERN_BODY:
+ 			if (p->kws)
+ 				kwsfree(p->kws);
+-			else if (p->pcre_regexp)
+-				free_pcre_regexp(p);
++			else if (p->pcre1_regexp)
++				free_pcre1_regexp(p);
+ 			else
+ 				regfree(&p->regexp);
+ 			free(p->pattern);
+@@ -913,8 +913,8 @@ static int patmatch(struct grep_pat *p, char *line, char *eol,
+ 
+ 	if (p->fixed)
+ 		hit = !fixmatch(p, line, eol, match);
+-	else if (p->pcre_regexp)
+-		hit = !pcrematch(p, line, eol, match, eflags);
++	else if (p->pcre1_regexp)
++		hit = !pcre1match(p, line, eol, match, eflags);
+ 	else
+ 		hit = !regexec_buf(&p->regexp, line, eol - line, 1, match,
+ 				   eflags);
 diff --git a/grep.h b/grep.h
-index 267534ca24..073b0e4c92 100644
+index 073b0e4c92..38ac82b638 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -1,7 +1,7 @@
- #ifndef GREP_H
- #define GREP_H
- #include "color.h"
--#ifdef USE_LIBPCRE
-+#ifdef USE_LIBPCRE1
- #include <pcre.h>
- #else
- typedef int pcre;
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6abf1d1918..e5cfbcc36b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1010,7 +1010,7 @@ esac
- ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
- test -z "$NO_PERL" && test_set_prereq PERL
- test -z "$NO_PYTHON" && test_set_prereq PYTHON
--test -n "$USE_LIBPCRE" && test_set_prereq PCRE
-+test -n "$USE_LIBPCRE1" && test_set_prereq PCRE
- test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
- 
- # Can we rely on git's output in the C locale?
+@@ -46,9 +46,9 @@ struct grep_pat {
+ 	size_t patternlen;
+ 	enum grep_header_field field;
+ 	regex_t regexp;
+-	pcre *pcre_regexp;
+-	pcre_extra *pcre_extra_info;
+-	const unsigned char *pcre_tables;
++	pcre *pcre1_regexp;
++	pcre_extra *pcre1_extra_info;
++	const unsigned char *pcre1_tables;
+ 	kwset_t kws;
+ 	unsigned fixed:1;
+ 	unsigned ignore_case:1;
+@@ -111,7 +111,7 @@ struct grep_opt {
+ 	int allow_textconv;
+ 	int extended;
+ 	int use_reflog_filter;
+-	int pcre;
++	int pcre1;
+ 	int relative;
+ 	int pathname;
+ 	int null_following_name;
 -- 
 2.11.0
 
