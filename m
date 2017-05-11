@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8EC2018D
-	for <e@80x24.org>; Thu, 11 May 2017 17:02:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ABB32018D
+	for <e@80x24.org>; Thu, 11 May 2017 17:02:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933127AbdEKRCi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 13:02:38 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:34345 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932405AbdEKRCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 13:02:34 -0400
-Received: by mail-qt0-f194.google.com with SMTP id l39so3619087qtb.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 10:02:33 -0700 (PDT)
+        id S933140AbdEKRCl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 13:02:41 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:36660 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933121AbdEKRCh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 13:02:37 -0400
+Received: by mail-qk0-f196.google.com with SMTP id y128so4483297qka.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 10:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Zm/VmHPHSjlATD1Du548itSjvJFcOQMHLGAh073DaHA=;
-        b=TaADpAZvC14r3dOiYfmWWfDOsReiMkQlNoHElCC2XpwItPoy82J9hcDGX7sPAXygjb
-         y3k/WKg7ZRjYUkEPUInZDA51nUIc9En09TPRkfUqPLOjK1shecWNrE8yD+lhViZ5ItjS
-         X1m3gOdRUIJ7qsgXGHoFmx8JWK29qn2AqVvreA8MJ7ZB1KqwrU3AZWwa2mhsvxDMJ2o1
-         l64CL5VJnFHZIU0Q7x/EQawaXrykv9heo/vOnp5WmFtf20S74m9YB9E9N+eRkplVeK1B
-         pJw9C6++Ekh3SB4zAR/dHrXDowlYw9bjdKrE3eForjypuM4RPc7yBUM6NydYDTtpzv13
-         ZS7g==
+        bh=lq+2/Mo2yDorJ0O3vWFcbpiGK2EtMtlzZ6uviMlAqaY=;
+        b=d9mcpo3H/bp2CPJoUSOEXVLNE1CIQB7z/IXyXcDCMvj+9FRfdHzDjqlcplBpTR5o9I
+         ZkdRVVLF+b9ALjz1OEXET2vfHMdzOlRkr7S+A/LEu6B0GHJmmHFTognZ+UgXZey/IPlz
+         1mUGGaiOgGPkGLxC85ZoGsEQfEzQGm5IprOEFPchV+eSvFX9F3vHyh0+6MedUmsSdJlG
+         PL6Wiflo+ST4i4UG6krUJgIKcAW0swnrBHQRb+MLPDjD/Je5/9gybVPrkwHvEzCmxrFh
+         8Cj0UUHE7uJiNFmuYvjNpWJ2XZcrc67jGKSRkntMjGxTDAjzSKsrHzmzLB5WuKBi6OkW
+         EHvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Zm/VmHPHSjlATD1Du548itSjvJFcOQMHLGAh073DaHA=;
-        b=AoILEGnqgrzNQ83Txu/JG56KXHQboTe4a7hSb8o0Qqp5yfCQa/WB/pxC3nqUHI1X4P
-         5guVoCp9cSFxdPmlfo9VRQf5P8WCFa6xauFEnv+iwC1Y3uQ6B2pNRVMbI8xW2ju0Ofqr
-         9m38TdoOJsqo35KZ5KpkN/cNWT5w/kgWuocijGn9UruKYklu+BOSu72kwXszw0WJt9ZQ
-         LckEfMzBIuJ6X1odTHAWBzV8+ihQrNMNOLAVBeF8SCt6QYOVikidup9YVKwmtgK3Mb2E
-         HZs2som0AKdFsV2BrfxSElgXwIcGl4rwEUBRNXx1tVEADvkEGVZrJTnQ8JLVNALfBMQG
-         zzFg==
-X-Gm-Message-State: AODbwcAnd4ZvTSqlWRcZES8+WSjWal7XEox7la+I4dWuOzCFetNw3D91
-        RKY7K5ems0J+1A==
-X-Received: by 10.200.2.159 with SMTP id p31mr133759qtg.55.1494522153012;
-        Thu, 11 May 2017 10:02:33 -0700 (PDT)
+        bh=lq+2/Mo2yDorJ0O3vWFcbpiGK2EtMtlzZ6uviMlAqaY=;
+        b=aku0No1gywg60v8w4BjgZ2MAnEFZZegcssVQ2F6dQRXGiWpfuSXVRHR8oLaZX6QMV5
+         HLnkpAfFv0jtejZPbBsEziKxsT0Y0aQfDBXslicLd4K5S/Rs1EY/hBz5cOR7EHNNrauh
+         83KEDMUjnb1b6bNrVBeEcvplfEIkVHmop2M/YhuDcqj2UZyAoxKON/nBox03WW8O4NnZ
+         dpoNyE9au2OXRAPuvhLAojHOBDQcqOvoIM/d3j9HVMJziUp704S6s635y93eZNVpjZ10
+         3Jjb/bQ8w7N6Br3/ZC57Cc/8oN0qbAUB7FlMVldW49IJS5t6MLTZHuyTKvtYGHAYKNB1
+         bh/A==
+X-Gm-Message-State: AODbwcApxEefeMm7Btl81arGrX5eBUE/GoNkceaExrcccrRMqCTaaKlY
+        Or2kcV23L0nrRw==
+X-Received: by 10.55.217.155 with SMTP id q27mr100886qkl.217.1494522156473;
+        Thu, 11 May 2017 10:02:36 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l10sm480407qte.15.2017.05.11.10.02.30
+        by smtp.gmail.com with ESMTPSA id l10sm480407qte.15.2017.05.11.10.02.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 10:02:32 -0700 (PDT)
+        Thu, 11 May 2017 10:02:35 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 5/7] grep: un-break building with PCRE < 8.32
-Date:   Thu, 11 May 2017 17:01:40 +0000
-Message-Id: <20170511170142.15934-6-avarab@gmail.com>
+Subject: [PATCH 6/7] grep: un-break building with PCRE < 8.20
+Date:   Thu, 11 May 2017 17:01:41 +0000
+Message-Id: <20170511170142.15934-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511170142.15934-1-avarab@gmail.com>
 References: <20170511170142.15934-1-avarab@gmail.com>
@@ -77,96 +77,44 @@ X-Mailing-List: git@vger.kernel.org
 
 Amend my change earlier in this series ("grep: add support for the
 PCRE v1 JIT API", 2017-04-11) to un-break the build on PCRE v1
-versions earlier than 8.32.
+versions earlier than 8.20.
 
-The JIT support was added in version 8.20 released on 2011-10-21, but
-it wasn't until 8.32 released on 2012-11-30 that the fast code path to
-use the JIT via pcre_jit_exec() was added[1] (see also [2]).
+The 8.20 release was the first release to have JIT & pcre_jit_stack in
+the headers, so a mock type needs to be provided for it on those
+releases.
 
-This means that versions 8.20 through 8.31 could still use the JIT,
-but supporting it on those versions would add to the already verbose
-macro soup around JIT support it, and I don't expect that the use-case
-of compiling a brand new git against a 5 year old PCRE is particularly
-common, and if someone does that they can just get the existing
-pre-JIT slow codepath.
+Now git should compile with all PCRE versions that it supported before
+my JIT change.
 
-So just take the easy way out and disable the JIT on any version older
-than 8.32.
+I've tested it as far back as version 7.5 released on 2008-01-10, once
+I got down to version 7.0 it wouldn't build anymore with GCC 7.1.1,
+and I couldn't be bothered to anything older than 7.5 as I'm confident
+that if the build breaks on those older versions it's not because of
+my JIT change.
 
-The reason this change isn't part of the initial change PCRE JIT
-support is because possibly slightly annoying someone who's bisecting
-with an ancient PCRE is worth it to have a cleaner history showing
-which parts of the implementation are only used for ancient PCRE
-versions. This also makes it easier to revert this change if we ever
-decide to stop supporting those old versions.
-
-1. http://www.pcre.org/original/changelog.txt ("28. Introducing a
-   native interface for JIT. Through this interface, the
-   compiled[...]")
-2. https://bugs.exim.org/show_bug.cgi?id=2121
+See the "un-break" change in this series ("grep: un-break building
+with PCRE < 8.32", 2017-05-10) for why this isn't squashed into the
+main PCRE JIT commit.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 8 ++++----
- grep.h | 5 +++++
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ grep.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/grep.c b/grep.c
-index 593e72f92a..9ba9aab1a9 100644
---- a/grep.c
-+++ b/grep.c
-@@ -350,7 +350,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
- 	const char *error;
- 	int erroffset;
- 	int options = PCRE_MULTILINE;
--#ifdef PCRE_CONFIG_JIT
-+#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
- 	int canjit;
- #endif
- 
-@@ -371,7 +371,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
- 	if (!p->pcre1_extra_info && error)
- 		die("%s", error);
- 
--#ifdef PCRE_CONFIG_JIT
-+#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
- 	pcre_config(PCRE_CONFIG_JIT, &canjit);
- 	if (canjit == 1) {
- 		p->pcre1_jit_stack = pcre_jit_stack_alloc(1, 1024 * 1024);
-@@ -391,7 +391,7 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
- 	if (eflags & REG_NOTBOL)
- 		flags |= PCRE_NOTBOL;
- 
--#ifdef PCRE_CONFIG_JIT
-+#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
- 	if (p->pcre1_jit_on)
- 		ret = pcre_jit_exec(p->pcre1_regexp, p->pcre1_extra_info, line,
- 				    eol - line, 0, flags, ovector,
-@@ -419,7 +419,7 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
- static void free_pcre1_regexp(struct grep_pat *p)
- {
- 	pcre_free(p->pcre1_regexp);
--#ifdef PCRE_CONFIG_JIT
-+#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
- 	if (p->pcre1_jit_on) {
- 		pcre_free_study(p->pcre1_extra_info);
- 		pcre_jit_stack_free(p->pcre1_jit_stack);
 diff --git a/grep.h b/grep.h
-index 14f47189f9..73ef0ef8ec 100644
+index 73ef0ef8ec..b7b9d487b0 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -3,6 +3,11 @@
- #include "color.h"
- #ifdef USE_LIBPCRE1
- #include <pcre.h>
-+#ifdef PCRE_CONFIG_JIT
-+#if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
-+#define GIT_PCRE1_CAN_DO_MODERN_JIT
-+#endif
-+#endif
+@@ -11,6 +11,9 @@
  #ifndef PCRE_STUDY_JIT_COMPILE
  #define PCRE_STUDY_JIT_COMPILE 0
  #endif
++#if PCRE_MAJOR <= 8 && PCRE_MINOR < 20
++typedef int pcre_jit_stack;
++#endif
+ #else
+ typedef int pcre;
+ typedef int pcre_extra;
 -- 
 2.11.0
 
