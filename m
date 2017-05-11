@@ -6,72 +6,68 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38402201A0
-	for <e@80x24.org>; Thu, 11 May 2017 20:05:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 729C6201A0
+	for <e@80x24.org>; Thu, 11 May 2017 20:08:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932876AbdEKUFS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 16:05:18 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36431 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932585AbdEKUFR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 16:05:17 -0400
-Received: by mail-pf0-f171.google.com with SMTP id m17so18860348pfg.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 13:05:17 -0700 (PDT)
+        id S932882AbdEKUII (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 16:08:08 -0400
+Received: from mail-pf0-f174.google.com ([209.85.192.174]:35811 "EHLO
+        mail-pf0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932294AbdEKUIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 16:08:07 -0400
+Received: by mail-pf0-f174.google.com with SMTP id n23so13973928pfb.2
+        for <git@vger.kernel.org>; Thu, 11 May 2017 13:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=nQhhSogqGU7zx9PwS/u9ux5CKJzp8pnd/lzwNC96Esw=;
-        b=haXdNcubn8XEvHF2pTOyHmopmlw4Vkd7zvA9Kvv29ixgwfglNWVZOi/7XGtHrX0+Nq
-         b/3w21W1f4WPZrP//ExING5jXohMVixHYGjObAdfhBOs/VSuqHZ8BuTO6SWHGsyUj13f
-         e8FNDySF2+CxPw1WmUMAZg4mNcOSd5t+smexBIVAL8kt/mdgFYzgA6dEq0G+40qFRP9O
-         zrIUhPCbOgVk5ZpOMpiuI1iqaSIM/3Bj6jzI9D8QPQKwAJJBRdM0EzHrmW0kle98Mq2O
-         R4PdVIqrslzA/h85RA8OGLC0h6Hd8NYq0bKzWvGGLHRPAp+R/VAjmEIiyU28L9xHIGFe
-         sdzg==
+        bh=xrm0Kg088wN7yVJYlDhiaohDXdX6m2VjhsUY9Xis4Mk=;
+        b=UmP8nHjyF8rNh3vDfA7nYljiNykSRjzO/R0lKh/iLtcyfXy99T8zoPTHc9NMLjaNhi
+         pqtHWLop/jzoYWx/hNsGyXuBONmedr9UV3CWiayMJzPf+attWGMSTgJMHqPlpW0WLSPn
+         /R3THbmn9pCmJPDylW1QSfV68R+N4NZfhzr8GkIal5Isjsf40Er6rwytaeAMQV5X19PV
+         A1V2CyfKJ4t0cZBXAPRZS1c0sL1x7flGbKLTxK3GDYEJSD7FeTts2eG5RkkQSexs3gC6
+         qdwpCvP9/TwUA18baKu4o7ZA/I1UM+HdSkJ2RYDUw8K0aCwmc9Va+PfUsi/HJx5HFhmq
+         +seQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=nQhhSogqGU7zx9PwS/u9ux5CKJzp8pnd/lzwNC96Esw=;
-        b=WbnK7MU/XOtzv9cY9/PTSCdGPd/UxTg5aaFd5HGHg+uFFrKwSgRNxBTA9l+vZxNuWe
-         5VLXJU3yVWgJVhBt0LG+7qfrpDYpjYe9a7pEcatGCtcUUW7sj3lrIoUinY6XBuhyzEJy
-         B0SvpIYnpB3q4loIG9R3o5TcWRL2Fnq/6NUTL0d2n5HYLN4XgflulYcRupmt+jRvAfDi
-         MsL94sVgs9ZyN9y/PBFB7Z3OEGe+/2X+oUcb+d8SlsqbAj7HN8q+jHGcBQaE9UsWGH3l
-         4BgYY6pP4xcChEQT3UzPl/88tKLCN0zFT3aDl9z5/CAVSO106YmJzho2I5YanAtfL2wI
-         w3gw==
-X-Gm-Message-State: AODbwcCW+VPilrKIgaYAe+vSwJol8KLaOA64DsjBCH+Ges3mMTO+hds9
-        xBXnl/aJr/fPR+tk
-X-Received: by 10.98.67.140 with SMTP id l12mr309495pfi.110.1494533116494;
-        Thu, 11 May 2017 13:05:16 -0700 (PDT)
+        bh=xrm0Kg088wN7yVJYlDhiaohDXdX6m2VjhsUY9Xis4Mk=;
+        b=ufjhk/VsPoSbUbOu02nOeOjSegMnQ1G3aI9VgzoI6rpMihEBCvYcIOKDZ/q4FbGmGu
+         YRuijfw6Zl7KK65B7nsbiG37v00kZac9x/rV/j1MIjVsTuYkyWm2rqOy0EWXNplieQCG
+         1gHCrkMmVzXpfgN+fJMr98FEz/izGYskGFkwZxo/nZgelha5ZR3wy7S1NT/P3S9wUOVT
+         YaXPM3/RNSEiK5R/7eL8FUFo5YnyPT+Ms6ejnhmqSI85q3dsqFyhojfVx3C8/eR16eXQ
+         QdCeiO6ot7pcrLbIUPardcV8EZCKwTZGyLIcWjHWbNMxnUtsi0ZYEql93CyZTxY0ZWfn
+         qzCQ==
+X-Gm-Message-State: AODbwcDLxM3qYPHGIrYy4EVuTlcT3QlHNVaqlcOxbwyCBSe/nBHnBcFI
+        MSbe76n+1AIcEusK
+X-Received: by 10.84.168.69 with SMTP id e63mr391395plb.124.1494533286604;
+        Thu, 11 May 2017 13:08:06 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:938:3d1d:44aa:d816])
-        by smtp.gmail.com with ESMTPSA id y6sm1557048pgc.40.2017.05.11.13.05.15
+        by smtp.gmail.com with ESMTPSA id g10sm2098904pgn.35.2017.05.11.13.08.05
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 13:05:15 -0700 (PDT)
-Date:   Thu, 11 May 2017 13:05:14 -0700
+        Thu, 11 May 2017 13:08:05 -0700 (PDT)
+Date:   Thu, 11 May 2017 13:08:04 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
         =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
         J Smith <dark.panda@gmail.com>,
         Victor Leschuk <vleschuk@gmail.com>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
         Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH 07/29] grep: change non-ASCII -i test to stop using
- --debug
-Message-ID: <20170511200514.GE83655@google.com>
+Subject: Re: [PATCH 18/29] grep: catch a missing enum in switch statement
+Message-ID: <20170511200804.GF83655@google.com>
 References: <20170511091829.5634-1-avarab@gmail.com>
- <20170511091829.5634-8-avarab@gmail.com>
- <20170511183109.GC83655@google.com>
- <CACBZZX4mhhx3i2crQbON-_UEHMBRfw+FHQctiN9gU2pHQrvCng@mail.gmail.com>
+ <20170511091829.5634-19-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACBZZX4mhhx3i2crQbON-_UEHMBRfw+FHQctiN9gU2pHQrvCng@mail.gmail.com>
+In-Reply-To: <20170511091829.5634-19-avarab@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -79,10 +75,50 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 05/11, Ævar Arnfjörð Bjarmason wrote:
-> Thanks a lot for looking this giant deluge of patches over.
+> Add a die(...) to a default case for the switch statement selecting
+> between grep pattern types under --recurse-submodules.
+> 
+> Normally this would be caught by -Wswitch, but the grep_pattern_type
+> type is converted to int by going through parse_options(). Changing
+> the argument type passed to compile_submodule_options() won't work,
+> the value will just get coerced.
+> 
+> Thus catching this at runtime is the least worst option. This won't
+> ever trigger in practice, but if a new pattern type were to be added
+> this catches an otherwise silent bug during development.
+> 
+> See commit 0281e487fd ("grep: optionally recurse into submodules",
+> 2016-12-16) for the initial addition of this code.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/grep.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 3ffb5b4e81..1c0adb30f3 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -495,6 +495,12 @@ static void compile_submodule_options(const struct grep_opt *opt,
+>  		break;
+>  	case GREP_PATTERN_TYPE_UNSPECIFIED:
+>  		break;
+> +	default:
+> +		/*
+> +		 * -Wswitch doesn't catch this due to casting &
+> +		 * -Wswitch-default is too noisy.
+> +		 */
+> +		die("BUG: Added a new grep pattern type without updating switch statement");
+>  	}
 
-No problem, I'm no expert in some of the areas you're touching but
-at least I can catch little things like this :)
+Thanks for adding this, as I got it wrong while developing this bit of
+code.
+
+>  
+>  	for (pattern = opt->pattern_list; pattern != NULL;
+> -- 
+> 2.11.0
+> 
 
 -- 
 Brandon Williams
