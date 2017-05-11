@@ -2,87 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97A58201A0
-	for <e@80x24.org>; Thu, 11 May 2017 19:18:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB92201A0
+	for <e@80x24.org>; Thu, 11 May 2017 19:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S934572AbdEKTSp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 15:18:45 -0400
-Received: from mail-pg0-f65.google.com ([74.125.83.65]:32922 "EHLO
-        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S934419AbdEKTR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 15:17:28 -0400
-Received: by mail-pg0-f65.google.com with SMTP id s62so4650001pgc.0
-        for <git@vger.kernel.org>; Thu, 11 May 2017 12:17:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=XPEGqSizkcmF5RqoAlBvHj69SHLNN0SZMT+DTV7osow=;
-        b=G1gH6JB/TzsBPYNHK/huFQ9/vm/Gv/i6+mVzq6X82uClzuwDyEcgXyHY6UElDVz0dw
-         BcUPMGYH5TNiTOmThROw2oHD68xGPOtdH7vxdaU1ozAv0Z/3zGOcPWtDhJvpoK8pmV1s
-         VEiBq1Vv5lpKiQ4LOrC5eOfRskaZ53NWsWggzwLcrKbYqywWUO0Er2cq2aqLBne0peOO
-         BwLddcRUZol710SRAVB3AwhKsHbFxBTQeE30jPGjucDZYrZqtBp4Nsw5Tau4lgblpI2g
-         fHE3GETB+U1zpSa14Q3mNxBtqMYjOjN6bBj0yhJixX5iME/jLivJkpTvJPPL/oUk1xTn
-         f66g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=XPEGqSizkcmF5RqoAlBvHj69SHLNN0SZMT+DTV7osow=;
-        b=JoV43nOYQMR84bgwyO0A06AjplShxj6qc4IzEoKSZcKXDFeWF0jJZbfK3lLjRN7WaL
-         3eNpNm3TO0Sc7Qi2bPRtBLPvwfvAJwWMtPVKezhcIOxIea97F3+khNTY5XJQA7UUNDep
-         PIjcY8Ku2i42q+OIiMInq5cQSyrAHRUOv9VCcU7rpgKS4XgVvY9FnJbLDfaglReWmu0Y
-         sems6vSZMkRhiIPQiJ+mejgfMTMW2DBJiYYmi37Tj68/9qzSsJyUGvJ2Ld7G+AID8+i9
-         rMkUya+cesQlxq1wlJadYlFuNOFLOAETCBfBqIOr/4mht7QhQtp4gDh70apwfPucn87Z
-         YH+g==
-X-Gm-Message-State: AODbwcC5pOVq3+tA7AIrYJoJdj1HrZmU6IDEF39foELmZ/gRAUKgo1Et
-        mzZZIPpE2Z+CSg==
-X-Received: by 10.84.179.99 with SMTP id a90mr174312plc.26.1494530242565;
-        Thu, 11 May 2017 12:17:22 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:ac23:a158:2bd3:569b])
-        by smtp.gmail.com with ESMTPSA id 134sm1244199pgh.43.2017.05.11.12.17.21
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 12:17:21 -0700 (PDT)
-Date:   Thu, 11 May 2017 12:17:19 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v4 0/2] perf: show that wildmatch() regressed for
- pathological cases in v2.0
-Message-ID: <20170511191719.GC12516@aiede.svl.corp.google.com>
-References: <20170511074354.11336-1-avarab@gmail.com>
- <20170511094108.8756-1-avarab@gmail.com>
+        id S1756277AbdEKTTj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 15:19:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49618 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751588AbdEKTTi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 15:19:38 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxgnf-1e6zRI1yw7-017A9I; Thu, 11
+ May 2017 21:19:23 +0200
+Date:   Thu, 11 May 2017 21:19:08 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 11/11] PREVIEW: remove support for .git/remotes/ and
+ .git/branches/
+In-Reply-To: <CAGZ79kaM30ExQT6m9k5F5FqhKc-RwP4gsH6AaW_YgDL_ixs1Qg@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1705112115370.146734@virtualbox>
+References: <cover.1494509599.git.johannes.schindelin@gmx.de> <c73881261cc3021410695126989c6f1596f638b0.1494509599.git.johannes.schindelin@gmx.de> <CAGZ79kaM30ExQT6m9k5F5FqhKc-RwP4gsH6AaW_YgDL_ixs1Qg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170511094108.8756-1-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:vVL12p80TOSonMlm1xY+YZCm/fOyWxIs5eDryX7KLTX+jJL/y/l
+ s4VG5i6HUXx96VymMD2gSF4QUsylcCorzMFGCrK3WUKKqzMLviTi0YMZf3Al9JVV0CmYkBr
+ 2uhIMeMlq76lgbcBBehQAN44zSp/x0INeok20ek/6XpMQEGaUgtGNGwQsULkNjiRGGCnx6j
+ EU6SffXO1tIWO4a0p9GVw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fmO59ILnNJM=:X8lsvPM/VdKeCOiMvFUgaZ
+ QibPZEhiK1706Np0hA2Uq4+5LF1QdwMiVnAD85JwNsiuWm1PqhBawuEMe/SOxoDxWvrIlIhU3
+ 0fmwtwDOjtqhecZ+uaXEpJxr/RORK4WyCGdIhny9FQcMrtSsv/NXUUqxBWgQpWq1OksDghO6r
+ vg+I5EuBCr7KYctPhRAWKXFDVHqG8OpnU8FyyUetRKjeruP1XMkQsrZJxS61Ty6L9r4Y7Lcbk
+ y/kpRicqyB1U+kbT4ePYShLPVWx++F8HrWDYqgTM2/K9OKfD5hkVpkpZ7e4tCwX7Py5nds6cx
+ k5eImbSloyEisv8+XhM2R54eogrHCX+O3IV5NeEw7G5OIBcm5f6I7TXHxI4HZaxfswvikcuW5
+ B437X3j/fIZ7pRwaU1rggL5Mgiw1I6Z+dhAj1idwkYBfqmAoUti13IzvTgv6Tq3hOUc91kX2O
+ vLXyZi9t9gX9dcQv+nLEpXjkva8vPD0LJOZxoB/o1yH2tszkqF8Kj1o+sdvR5B5gDSmXXDdVq
+ 1sAVmhifi0CshsastqWsfM1nBkfqBGQ+AmITRN4OdG86Fs4fmG6Bv3qf6Xb43b7SZjIUfNLVd
+ JGyR6+aa6NjG+ihBOEMPiNE7YYvJRDm7zNIQGASD1TR4wH/zm+hvQBZrLAi4UU9GWlnK4h9sK
+ Hp8ohKuV5zLAarpw7rtptJWzZcuLpj2aGh4DB7yyoTou0cex+kDRbvHPcEOOwFRWjZ/qRlGCC
+ rDZLnRxnOpZDJG+LdfYjgREgApgMY1Q6qMCjl+Yp+9SMrV4SvZt426TiapcHY7K06sX86wIEi
+ 2J+EC1Y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
+Hi Stefan,
 
-> Ævar Arnfjörð Bjarmason (2):
->   perf: add function to setup a fresh test repo
->   perf: add test showing exponential growth in path globbing
+On Thu, 11 May 2017, Stefan Beller wrote:
+
+> On Thu, May 11, 2017 at 6:48 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > At long last, after a cycle or three of warning users who *still* use
+> > the ancient feature of .git/remotes/ and .git/branches/, it is time to
+> > retire the code.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
 > 
->  t/perf/README            |  1 +
->  t/perf/p0100-globbing.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
->  t/perf/perf-lib.sh       | 19 +++++++++++++++----
->  3 files changed, 59 insertions(+), 4 deletions(-)
->  create mode 100755 t/perf/p0100-globbing.sh
+> The PREVIEW patches also look good to me, though I just
+> skimmed them and other may chime in on the timing of them.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks for the review!
 
-Thanks.
+I agree that the PREVIEW part is not quite as important as the first half.
+I only bothered with it because I did want to make sure that the first
+half is correct, that it does cover all the places we will need to delete
+in the end.
+
+In other words: the PREVIEW part should become its own patch series, that
+I hope Junio will carry in pu (or next) for a while, similar to the
+changes that removed the historical wart of the funny argument order in
+`git merge`.
+
+Ciao,
+Dscho
