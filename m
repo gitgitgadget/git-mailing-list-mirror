@@ -2,203 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 963E5201A0
-	for <e@80x24.org>; Thu, 11 May 2017 19:38:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2061A201A0
+	for <e@80x24.org>; Thu, 11 May 2017 19:41:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756319AbdEKTiA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 15:38:00 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:33857 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755224AbdEKTh7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 15:37:59 -0400
-Received: by mail-pg0-f54.google.com with SMTP id u28so19314680pgn.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 12:37:59 -0700 (PDT)
+        id S1751853AbdEKTln (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 15:41:43 -0400
+Received: from mail-vk0-f49.google.com ([209.85.213.49]:36847 "EHLO
+        mail-vk0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751272AbdEKTlm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 15:41:42 -0400
+Received: by mail-vk0-f49.google.com with SMTP id g23so7282798vke.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 12:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=Toti5rXEebOo12vCNQOanUcB5004b/GXjVmvghecm6Q=;
-        b=k6Cl46Pio2lAIy3YWBf0hdkk9nchhrp3PLDF2Bdv5eObrdddQGoQbLHsXP69xdtfO/
-         mThVjiecFEU9XOnQBQ7ur19QvRyOR4V3j4+76n+8ZwyYlqh4RtG80My+GlMPFihv3cye
-         JUIYCqbyUJXfIdd4FUHiK9qdZsxUMzG4DCXeBrC+geH9uSm5CRM4mWwsizhGBsS+faPh
-         wlH32O1wmVTqsdp24adFSY9hdrOZnMhjgChiULtl/cC/zrOck7NLsklWbvOH0fImYGJp
-         fdUbuHJGNJqqXMr7p5YTUcPNKNPHlgBknfUEOQDzEGGdg/aWH83ECj1Ecj5QUxpZfoav
-         XOdg==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=UhuWUDPoc1LEtg5ofo7mfMcDgK6V5TZiL6a+rZK3cJA=;
+        b=cMcWew1oSic0m5lmIn8AhzSjmIKJQOcfKqXD5FwepGSh/BK7i9r7MggfEJWemK352g
+         9QoxOWc8+0lFF44TRbWWQZ28zuxWn1+6sic2XprSixMsq/hA9l3FpnAyiN+Pzi6qpRfv
+         1FSE44B+sSiI1f9FpHhqj120D81Bk6HwuWjaOHkb2LgLH18PkSAWR+Uc6HIPiFjzDZm0
+         hX5nrqYNEzG93wKPgV7q2DXGP3VV5TU4Wm81pQheAn2mR0RRWgN8SSnKmfjhqJrwXzTG
+         rPmViejuv2ziVZW5+LjVR7Sfpxm3znm2WLUvk/gaYrbJHeQyeW/rrk7dauCjilfibj2+
+         6MIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=Toti5rXEebOo12vCNQOanUcB5004b/GXjVmvghecm6Q=;
-        b=SxR4/7d8aYfCqyvtKjixuDxO52lFlMnXmDBo285m0L1zKv0uAYuWobmOI88icQCCvT
-         yT2bxbetHTpSoXc8HOyxKr7A/ONaNcnRQj9/7VrKXu3c4L3GAPDd/3OEtAyZUsHDzSd8
-         lGvLdtgMJqijS/VM18yNWrMWd34PuI1qCsEm+sqV6GzMCtxHKsqoo1imX5P4Kn3YT9Et
-         neeVhpRw7VIsyHuiKzlsJhiUoCJkO7AVlpo4p4z7NKoQp0CneClZY4QcE0l3Q41UqHc2
-         J3xZf0gnMAb24xkXmtn4zXOJVCpJuX1COtYp+4XEeEnah8lzg6nwbG2B65bj3sq6YFa2
-         HH3Q==
-X-Gm-Message-State: AODbwcATjniN0O6I5+e3XZZyEfxyjMz0mfL2tHS8Eyffwbu6qW9K7YVy
-        KqjICDRjiF2jGiRT
-X-Received: by 10.98.14.137 with SMTP id 9mr171720pfo.169.1494531478422;
-        Thu, 11 May 2017 12:37:58 -0700 (PDT)
-Received: from twelve2.svl.corp.google.com ([100.96.218.24])
-        by smtp.gmail.com with ESMTPSA id t5sm1789794pgt.19.2017.05.11.12.37.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 May 2017 12:37:57 -0700 (PDT)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: [RFC] send-email: support validate hook
-Date:   Thu, 11 May 2017 12:37:53 -0700
-Message-Id: <20170511193753.19594-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.13.0.rc2.291.g57267f2277-goog
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=UhuWUDPoc1LEtg5ofo7mfMcDgK6V5TZiL6a+rZK3cJA=;
+        b=oWZfqsqGhNb86AAiFG71aXey/b+9PHv+CScF/yhj3VXPJAs9zrMTav4LRa+7o32jEC
+         /5Tqx4zyiCRYx2SzzGCK9kq7W9ycKtk/Rv5msP9slaNes5w7Ju3fD73mS2wRMVMSY6ch
+         K/DANtmT7uXAGIT1vL/J4ub6qeJow9/i9k8v8P5I1jU/9XQlwLPr+YxFE7RC5q09PR1f
+         Lm6rkWIfFgsOVs+i9Qozuaa62UAoMb1uA/8q1dNDpEeb1uMqqSiyj1+qGT8DK7damO96
+         tpo4jO8eZP3WoFOqCRKGEMzOUTZHVF36NQ8EckGrqI+cv7CDavdIuOi5y90wUiqH7Otw
+         wLtg==
+X-Gm-Message-State: AODbwcDrxRQRTPIVPHYi5enqZ1bs+H136mjGtcEGCy1cao18WC/zgBdK
+        i6OF4RKsqzzftw/juO1+jG8HsUxgvfUr
+X-Received: by 10.31.96.8 with SMTP id u8mr153506vkb.124.1494531701890; Thu,
+ 11 May 2017 12:41:41 -0700 (PDT)
+MIME-Version: 1.0
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.159.55.168 with HTTP; Thu, 11 May 2017 12:41:41 -0700 (PDT)
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Thu, 11 May 2017 14:41:41 -0500
+X-Google-Sender-Auth: GEtH_ajd3KOx0Lh7rriFMoyE6t4
+Message-ID: <CAHd499DjBHsWCf8h+i4EstR7qs-9hkO4En5-B-WA17DoPZQNoQ@mail.gmail.com>
+Subject: Best "triangle" workflow setup?
+To:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, send-email has support for rudimentary e-mail validation.
-Allow the user to add support for more validation by providing a
-sendemail-validate hook.
+I know Git has evolved to support the "triangle" workflow model in
+different ways, with the goal of making it better. However because
+there are so many different options from separate push URLs for
+remotes to various ways to manage tracking branches, it's not clear to
+me which specific configuration suits this workflow the best.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
+So my situation is that I have 3 repositories: The original upstream
+repository, a fork of that repository (also remote), and my local
+clone of the upstream repository.
 
-This is motivated by situations in which we discuss a work in progress
-using Gerrit (which requires Change-Id trailers in patches), and then,
-forgetting to remove the Change-Id trailers, send them to the Git
-mailing list (which does not want such trailers). I can envision such
-functionality being useful in other situations, hence this patch
-submission.
+What I want (as a default) is for `git pull` to pull from the
+same-named branch on the upstream repository, but for `git push` to
+push to the same-named branch on the fork repository. However to
+override this behavior for when I want to push directly to upstream
+repo, I should be able to use an explicit `git push origin my-topic`
+(but `git push` by default will act as `git push fork my-topic`).
 
-I'm not very familiar with Perl, and "There Is More Than One Way To Do
-It", so advice on Perl style is appreciated.
----
- Documentation/git-send-email.txt |  1 +
- Documentation/githooks.txt       |  8 ++++++++
- git-send-email.perl              | 18 +++++++++++++++++-
- t/t9001-send-email.sh            | 40 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 66 insertions(+), 1 deletion(-)
+What is the best way to achieve this? Is there a different workflow
+from what I'm imagining that works a little better (in other words, I
+don't need it to work *exactly* as I've described, mainly I just want
+to avoid accidentally pushing changes to the upstream repo in the
+default case when I want to push to the fork instead for pull
+request)?
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 9d66166f6..bb23b02ca 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -377,6 +377,7 @@ have been specified, in which case default to 'compose'.
- 	Currently, validation means the following:
- +
- --
-+		*	Invoke the sendemail-validate hook if present (see linkgit:githooks[5]).
- 		*	Warn of patches that contain lines longer than 998 characters; this
- 			is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
- --
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 706091a56..b2514f4d4 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -447,6 +447,14 @@ rebase::
- The commits are guaranteed to be listed in the order that they were
- processed by rebase.
- 
-+sendemail-validate
-+~~~~~~~~~~~~~~~~~~
-+
-+This hook is invoked by 'git send-email'.  It takes a single parameter,
-+the name of the file that holds the e-mail to be sent.  Exiting with a
-+non-zero status causes 'git send-email' to abort before sending any
-+e-mails.
-+
- 
- GIT
- ---
-diff --git a/git-send-email.perl b/git-send-email.perl
-index eea0a517f..7de91ca7c 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -27,6 +27,7 @@ use Term::ANSIColor;
- use File::Temp qw/ tempdir tempfile /;
- use File::Spec::Functions qw(catfile);
- use Error qw(:try);
-+use Cwd qw(abs_path cwd);
- use Git;
- use Git::I18N;
- 
-@@ -628,9 +629,24 @@ if (@rev_list_opts) {
- @files = handle_backup_files(@files);
- 
- if ($validate) {
-+	my @hook = ($repo->repo_path().'/hooks/sendemail-validate', '');
-+	my $use_hook = -x $hook[0];
-+	if ($use_hook) {
-+		# The hook needs a correct GIT_DIR.
-+		$ENV{"GIT_DIR"} = $repo->repo_path();
-+	}
- 	foreach my $f (@files) {
- 		unless (-p $f) {
--			my $error = validate_patch($f);
-+			my $error;
-+			if ($use_hook) {
-+				$hook[1] = abs_path($f);
-+				my $cwd_save = cwd();
-+				chdir($repo->wc_path() or $repo->repo_path());
-+				$error = "rejected by sendemail-validate hook"
-+					unless system(@hook) == 0;
-+				chdir($cwd_save);
-+			}
-+			$error = validate_patch($f) unless $error;
- 			$error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
- 						  $f, $error);
- 		}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 60a80f60b..f3f238d40 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1913,4 +1913,44 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
- 	test_cmp expected-list actual-list
- '
- 
-+test_expect_success $PREREQ 'invoke hook' '
-+	mkdir -p .git/hooks &&
-+
-+	write_script .git/hooks/sendemail-validate <<-\EOF &&
-+		# test that we have the correct environment variable, pwd, and
-+		# argument
-+		case "$GIT_DIR" in
-+			*.git)
-+				true
-+				;;
-+			*)
-+				false
-+				;;
-+		esac &&
-+		test -e 0001-add-master.patch &&
-+		grep "add master" "$1"
-+	EOF
-+
-+	mkdir subdir &&
-+	(
-+		# Test that it works even if we are not at the root of the
-+		# working tree
-+		cd subdir &&
-+		git send-email \
-+			--from="Example <nobody@example.com>" \
-+			--to=nobody@example.com \
-+			--smtp-server="$(pwd)/../fake.sendmail" \
-+			../0001-add-master.patch &&
-+
-+		# Verify error message when a patch is rejected by the hook
-+		sed -e "s/add master/x/" ../0001-add-master.patch >../another.patch &&
-+		git send-email \
-+			--from="Example <nobody@example.com>" \
-+			--to=nobody@example.com \
-+			--smtp-server="$(pwd)/../fake.sendmail" \
-+			../another.patch 2>err
-+		test_i18ngrep "rejected by sendemail-validate hook" err
-+	)
-+'
-+
- test_done
--- 
-2.13.0.rc2.291.g57267f2277-goog
-
+Thanks in advance for any advice.
