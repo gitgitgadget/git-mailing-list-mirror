@@ -2,101 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7D5F1FF34
-	for <e@80x24.org>; Thu, 11 May 2017 09:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E51DD1FF34
+	for <e@80x24.org>; Thu, 11 May 2017 09:59:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755409AbdEKJ7a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 05:59:30 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:35692 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755398AbdEKJ71 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:59:27 -0400
-Received: by mail-it0-f67.google.com with SMTP id 67so2645705itx.2
-        for <git@vger.kernel.org>; Thu, 11 May 2017 02:59:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jZmy2kbwX4OdXpunYCrWvYXMp6elwIFS7KpC2RdtQ3s=;
-        b=ZvFwhfyQn0Wb2Zmz4Srj7BHU+cfnY01XKl+1u27h3pdHIUxir9883zuffn6H2qORts
-         1cTu7lTx4hF8O0Y1Jg2qaEEk1VoyVaXVLr/JxP0+FhuN+GrbQx0M8yNosXQ/8LSoGld9
-         s8nAVmwTN0/cxoyYX1u0AT8pL1WrwuRfWLIrunlDBKg83riXlrSjhDS/u47QH3Jy7ja5
-         qay3RRlUEAR62zdMbXm2eap8K45C8Ag0n8r00cdcLct05MPTKFi4MhSB8I6MLJH8LyyV
-         7tj3Nc3ktPti2uaFbQCn3v8B24pli7PVueHVtmKLGOrA1vbCDuEDzpJBeQLl6StcfIaT
-         IrtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jZmy2kbwX4OdXpunYCrWvYXMp6elwIFS7KpC2RdtQ3s=;
-        b=Fgwrcw+tRA+DIU0Rf8qNu+VXbrzNOUBLPJDKWiEuiKP2LzKjCir/1TRItCGAsQ1YhU
-         n4sluKPehO4y8k6bdoPlpsWhag2Yy+EKotlYrCvyQUQR3eb4luFl7sWsqh+2aBAo4yX3
-         saUh4o4lsqJ0z4ncDP9m328eVFT8R3anLjXgi6QEYMVV6UQFpUTR+VFnpJuEy5wi6i3b
-         RNuUdjgEHIpM0byUhBo8VG/s3+vj857FBrEul10PWaFHpbZOikFiAekEkTyYiQ0kWhHS
-         iDxSO/DtI261w6xDQo9MoLbNin9H4CEFetSDTSyT5s22ECABk0+RuhKljQ8qOp+XFBue
-         37Bw==
-X-Gm-Message-State: AODbwcC7OAHcfK6T0iA7v79pHmiwrT1nwOlkUr/7achwEXKRglNziZ1V
-        2AZoLAk5miuWePfFakUmZV4nlFQ3CQ==
-X-Received: by 10.36.89.207 with SMTP id p198mr5344008itb.71.1494496761849;
- Thu, 11 May 2017 02:59:21 -0700 (PDT)
+        id S1755418AbdEKJ7f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 05:59:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49423 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1755402AbdEKJ73 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 05:59:29 -0400
+Received: (qmail 4895 invoked by uid 109); 11 May 2017 09:59:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 09:59:27 +0000
+Received: (qmail 12236 invoked by uid 111); 11 May 2017 09:59:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 05:59:58 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 May 2017 05:59:25 -0400
+Date:   Thu, 11 May 2017 05:59:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Shawn Pearce <spearce@spearce.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170511095925.grmyagv4hesxqprj@sigill.intra.peff.net>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170509221629.3z35qcz36oiix3kh@sigill.intra.peff.net>
+ <CAJo=hJvAg2WqpiuykpbHcB5vgQiHJ74CZ8Y4qudkYqZrmd30zg@mail.gmail.com>
+ <20170510043343.mgb7heqzu2etcgvf@sigill.intra.peff.net>
+ <20170510170044.GX28740@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 11 May 2017 02:59:01 -0700 (PDT)
-In-Reply-To: <xmqq8tm3afaa.fsf@gitster.mtv.corp.google.com>
-References: <20170510225316.31680-1-avarab@gmail.com> <20170510225316.31680-2-avarab@gmail.com>
- <20170510233032.GD28740@aiede.svl.corp.google.com> <CACBZZX50-0uzMyYJo5Z92nRH0m-Q70=P4Wr-LwBqH71nXdsmcA@mail.gmail.com>
- <xmqq8tm3afaa.fsf@gitster.mtv.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 11 May 2017 11:59:01 +0200
-Message-ID: <CACBZZX5gXWLb4oePjC+aCRQ5HsVD8-M9Ao6akgvEKf1+gx-79A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] perf: add function to setup a fresh test repo
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170510170044.GX28740@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 11:55 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Thu, May 11, 2017 at 1:30 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
->>> Hi,
->>>
->>> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason wrote:
->>>
->>> [...]
->>>>  # call at least one of these to establish an appropriately-sized repo=
-sitory
->>>> +test_perf_fresh_repo () {
->>>> +     repo=3D"${1:-$TRASH_DIRECTORY}"
->>>> +     "$MODERN_GIT" init -q "$repo" &&
->>>> +     cd "$repo" &&
->>>> +     test_perf_do_repo_symlink_config_
->>>> +}
->>>
->>> Unlike the other two variants, wouldn't this leave the cwd inside the
->>> new repo?
->>>
->>> In other words, I wonder if the commands starting with the 'cd' should
->>> be in a subshell.
->>>
->>> Thanks and hope that helps,
->>
->> Yup, I'll fix that. Thanks for the review & also on the other patch.
->> Will send a v3 with these issues fixed.
->
-> Hmph, does v3 actually have this change?
+On Wed, May 10, 2017 at 10:00:44AM -0700, Jonathan Nieder wrote:
 
-Nope, sent v4 to fix it, sorry:
-https://public-inbox.org/git/20170511094108.8756-1-avarab@gmail.com/
+> > Right, makes sense.  I wondered if GitHub should be turning on
+> > allowTipSHA1InWant, but it really doesn't make sense to. We _do_ hide
+> > some internal refs[1], and they're things that users wouldn't want to
+> > fetch. The problem for your case really is just on the client side, and
+> > this patch fixes it.
+> [...]
+> > [1] The reachability checks from upload-pack don't actually do much on
+> >     GitHub, because you can generally access the objects via the API or
+> >     the web site anyway. So I'm not really opposed to turning on
+> >     allowTipSHA1InWant if it would be useful for users, but after
+> >     Jonathan's patch I don't see how it would be.
+> 
+> Given that, what would make me really happy is if github enables
+> uploadpack.allowAnySHA1InWant.  That would be useful for me, at least.
+
+One of my hesitations is that we've actually considered moving in the
+opposite direction. The object storage for all of the repositories in a
+network is shared, so I can fork git.git, push up malicious crap, and
+then point people to:
+
+  https://github.com/git/git/commit/$sha1
+
+and it resolves. Obviously there's a social-engineering component to any
+such attack, but it's not great. And even without security in mind, it's
+potentially confusing. So we've looked at enforcing reachability from
+the refs of git/git for a case like that. There's some collateral
+damage, though (e.g., people might actually want to look at unreferenced
+objects after a force-push). And there are complications around things
+like refs/pull (which could still come from another fork, but which you
+might reasonably want to reference as part of a PR in the context of
+git/git).
+
+Turning on allowAnySHA1InWant brings that confusion to "git fetch", too.
+To some degree it's already there for refs/pull, but with the current
+client you at least know that you're fetching PR refs (and they're not
+even fetched by default). Whereas after Jonathan Tan's patch, you can
+social-engineer somebody into:
+
+  git fetch https://github.com/git/git $sha1
+
+if you open a PR that points to some malicious $sha1. I don't think
+that's a reason not to take his patch, though.
+
+Arguably refs/pull/ is an abomination that mixes up ownership and should
+be destroyed. There really isn't a great alternative, though, short of
+representing it as a completely separate repository (which would mean
+anybody fetching those refs would have to make a separate fetch
+request).
+
+But even leaving all the refs/pull stuff aside, allowAnySHA1InWant does
+seem to increase that confusion, and I don't see a way around it short
+of never sharing objects between repositories at all. So I think at most
+we'd do allowReachableSHA1InWant.
+
+-Peff
