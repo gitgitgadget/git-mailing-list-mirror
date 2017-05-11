@@ -2,136 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07855201A0
-	for <e@80x24.org>; Thu, 11 May 2017 19:08:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41B9F201A0
+	for <e@80x24.org>; Thu, 11 May 2017 19:15:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933824AbdEKTIN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 15:08:13 -0400
-Received: from mail-pf0-f193.google.com ([209.85.192.193]:34612 "EHLO
-        mail-pf0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932925AbdEKTIM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 15:08:12 -0400
-Received: by mail-pf0-f193.google.com with SMTP id w69so4249269pfk.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 12:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ajBhY/JDoOoniqeWule77ngO7jOKe93zuFWDKy08gVk=;
-        b=i6id8LJsM61wRLgFtW7TDb1Zz8g2natIZu/XlLDe903XdqdN9DoEwqg0qtZXXpuobV
-         o0LJc1kFV3fOKj98jNmbrJC6bFkIQPUFzdNv4sV3bLfvPEWFwtT2slVv3PC/rNKDGqdi
-         Z44ZBzSCifbT1w80HIXoHyihlEqdSt1KDhAXrciJ6zygzvNfgfO2x8Y3QZNqlgGeSxeJ
-         W3QodypdVZ9TB2gTobAJKtvlbNGeCPaDZ62kq8axiGKmCB5GMPLN6awcMoRlyrQFUy+I
-         HBid81GZlMykLLcoeAB3MC6HG1zPm0rvpz5ujDG99RCaWnyv/LviDmzu5HB40iPeIPrM
-         srTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ajBhY/JDoOoniqeWule77ngO7jOKe93zuFWDKy08gVk=;
-        b=SjQ7R7GKF3WsGtZl3giqO6t5SyTTa2HFdjeUoIS80+YHiGRGr+N7IO3Lhc3ps8Jtbj
-         iUC+xl0/WN6fgC9H3+U65UikXDghRLvqh9LjazqTik3u4rWh4yfpaM5EB+YY3c1iVB22
-         lt6B9LeOQqLO2CvxrogymyWaTH/57Ttd5AfLbNdgZboNgoZcSzE8UNrqcFfsWG5thVSI
-         di57ew02TEea9f1FQ6VxYcZYHLNYzgxkKX0z9oNlaq8eevN+eRBweKZf5tmUX5bv2CGs
-         xETrn24AazGxxGn+W5hGoEn68lr5I8JZZK0bfZlV5ytXMED9eLgeD/Uf1ePUbWPmHrkr
-         lAoQ==
-X-Gm-Message-State: AODbwcBB+OC0klcltYgBOcMGWenPlw2NJ3T3zWtELt1U4oX3CYQuW0gX
-        1SDndUmds3QiHA==
-X-Received: by 10.84.217.203 with SMTP id d11mr62946plj.141.1494529691742;
-        Thu, 11 May 2017 12:08:11 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:ac23:a158:2bd3:569b])
-        by smtp.gmail.com with ESMTPSA id k192sm1616294pgc.31.2017.05.11.12.08.11
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 12:08:11 -0700 (PDT)
-Date:   Thu, 11 May 2017 12:08:09 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jean-Noel Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 2/3] read-tree -m: make error message for merging 0
- trees less smart aleck
-Message-ID: <20170511190809.GB12516@aiede.svl.corp.google.com>
-References: <20170503162931.30721-1-jn.avila@free.fr>
- <20170511120634.17683-1-jn.avila@free.fr>
- <20170511120634.17683-2-jn.avila@free.fr>
+        id S1756851AbdEKTPA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 15:15:00 -0400
+Received: from mout.gmx.net ([212.227.17.20]:49607 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1752505AbdEKTO7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 15:14:59 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lmazv-1dimfG0cGB-00aIHg; Thu, 11
+ May 2017 21:14:53 +0200
+Date:   Thu, 11 May 2017 21:14:52 +0200 (CEST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@virtualbox
+To:     Stefan Beller <sbeller@google.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/11] git-parse-remote: fix highly misleading man page
+In-Reply-To: <CAGZ79kb57HzJQ4VLFD_NMKvEnriPVXoAAPimg6BG_Z+PPjJ4aQ@mail.gmail.com>
+Message-ID: <alpine.DEB.2.21.1.1705112109410.146734@virtualbox>
+References: <cover.1494509599.git.johannes.schindelin@gmx.de> <b26882e61ef466c787b575d3fd60bfeec8a9281a.1494509599.git.johannes.schindelin@gmx.de> <CAGZ79kb57HzJQ4VLFD_NMKvEnriPVXoAAPimg6BG_Z+PPjJ4aQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170511120634.17683-2-jn.avila@free.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K0:X/XuxSfmA1umOL5yaPfFxaaWQzvmdqkoDBtCtQLvg40wfZN9wHx
+ Jurf/n6RyXz+oIkRInI15jgOoVtWX6fWFmBes1aK6kRGoIpL9DjYPxIdFYm121zOXLiUFbb
+ ZQt+qyNxQ3SCmefLADiE6TnmswQ/RtLKRAtz/vOaxMDSn7OWrbvnPLYm2PCYnBShG3f2Hlx
+ /5fMaN5EzlE2I9yuCJl3w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:AYEEN6Q7Nbs=:K5E/myMB5FMY8P6sJk63th
+ zak2rjbDI3CMm9dijYWW8xiJUO7ZRIVCK8hlYOW1bjXXapsq1Xvgx6Y9aiWboeWAGqTkrAQbU
+ e5hVHy1cuuvJmJ9V1Kn9Qe18WBnLX3OrlkwFz6yqQO1PhXFpvZfGm0TRYy+sF/FTXpCLyOgjE
+ h+USf46aX482rhuEWzbphrt0JaoB7jAeSbPPO1pqL9XEJHchCLSU3zJvTS37ZIQyUwDm9hyxL
+ TgK5/CxP6YImBoCCpBe5o3anXLUF/RVlJxfTJ3BJJulH0/qZJyJcGym58KpMGyrO0mOTYsfvA
+ eb9kB74h5qqu2tlBee90u/Pm1C1tnP5BuoNkPWktIKUfrRU3tpn4LQ9Or7EEoqq13bWQB6W1A
+ cf8arPNUK1BMuqRF4uzH/+Xf6Z6Rq/OXG//XDrjdlAHFYGLCY74/LM/EeJWnVpuKzN2iYlQ18
+ ON5zk98uo2CiWxVDNoof3jDPZXXZGuA2Fa13mVMp+hcdP3VLyMVoxTwcoT1GwK3i2FDa56F4D
+ BwYfZw4ZH19auP3JH4KGE7UDRije0vKHRljxcu0PqikBo8jFUFKz5i1QA+FTRYkYkxI2340K6
+ r/bpNmAxaCfIUOftZjuJuSWhPQmzIj5//KBw2j3xoQBU3UG5DgmaWttKUxPCf3BxtyOxpLBAq
+ RJff9XfxQcE2NKBpBZCO+aPx5nUH9HsNCSifXwyakPCBp+NwyJUDB1D8XXIGUUcljAJxWfnib
+ uegROOp9GbuiJYpqSBBsu5pe6/6OloMBo/49vY+aQwjJ+Jap+ht8ncu4exgXfnMi+Z+7bf/zO
+ 5/Nn7gE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Jean-Noel Avila wrote:
-
-> Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Please remove my sign-off.  I didn't write or carry this patch.
-
-If you want to acknowledge my contribution, you can use something
-like Helped-by, but it's not necessary.
-
-[...]
-> +++ b/Documentation/git-read-tree.txt
-> @@ -135,10 +135,10 @@ OPTIONS
->  
->  Merging
->  -------
-> -If `-m` is specified, 'git read-tree' can perform 3 kinds of
-> -merge, a single tree merge if only 1 tree is given, a
-> -fast-forward merge with 2 trees, or a 3-way merge if 3 trees are
-> -provided.
-> +If `-m` is specified, at least one tree must be given on the command
-> +line.
-
-As I mentioned before, this sentence feels redundant and doesn't fix
-the real problem of the `-m` reference elsewhere in this file not
-pointing to this section.
-
-[...]
-> --- a/builtin/read-tree.c
-> +++ b/builtin/read-tree.c
-> @@ -132,7 +132,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->  		OPT_BOOL(0, "empty", &read_empty,
->  			    N_("only empty the index")),
->  		OPT__VERBOSE(&opts.verbose_update, N_("be verbose")),
-> -		OPT_GROUP(N_("Merging")),
-> +		OPT_GROUP(N_("Merging (needs at least one tree-ish")),
-
-This also seems a little too much of a special detail to put in the
-prominent section title.  If you run "git read-tree -h", where would
-you expect to find this information?
-
-The "git read-tree -h" output turns out to not be useful for much more
-than a reminder of supported options --- it doesn't give a useful
-overview of the usage, since the usage string at the start is very
-long.  That's unfortunate but it seems outside the scope of this
-patch.  Probably the simplest thing is to drop this hunk from the
-patch.
+Hi Stefan,
 
 
-[...]
-> @@ -226,9 +226,10 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
->  		setup_work_tree();
->  
->  	if (opts.merge) {
-> -		if (stage < 2)
-> -			die("just how do you expect me to merge %d trees?", stage-1);
->  		switch (stage - 1) {
-> +		case 0:
-> +			die(_("you must specify at least one tree to merge"));
-> +			break;
+On Thu, 11 May 2017, Stefan Beller wrote:
 
-This part looks good.
+> On Thu, May 11, 2017 at 6:47 AM, Johannes Schindelin
+> <johannes.schindelin@gmx.de> wrote:
+> > The man page still talked about the .git/remotes/ directory (which is
+> > no longer in use, as of 75c384efb52 (Do not create $GIT_DIR/remotes/
+> > directory anymore., 2006-12-19)).
+> >
+> > Let's just revamp it almost completely to reflect the *purpose* of
+> > that scriptlet, as opposed to its implementation details.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  Documentation/git-parse-remote.txt | 7 +++----
+> >  1 file changed, 3 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/Documentation/git-parse-remote.txt b/Documentation/git-parse-remote.txt
+> > index a45ea1ece81..7f865f33898 100644
+> > --- a/Documentation/git-parse-remote.txt
+> > +++ b/Documentation/git-parse-remote.txt
+> > @@ -3,7 +3,7 @@ git-parse-remote(1)
+> >
+> >  NAME
+> >  ----
+> > -git-parse-remote - Routines to help parsing remote repository access parameters
+> > +git-parse-remote - Routines to help parsing remote repository information
+> 
+> Today I learned about git-parse-remote. Upon further inspection it is
+> just a lib, not anything useful for a user. (The man page with or
+> without this patch is not very helpful to me)
 
-Thanks for your patient work.
-Jonathan
+Yes, I figured as much when I read the man page. It shows how much most of
+our man pages of the olden days improved when you find an unchanged one...
+
+> Only git-rebase as well as git-submodule include this lib, the
+> submodules only need get_default_remote (4 lines of sh), which is also
+> available in the submodule--helper, we'd just have to expose it and make
+> it accessible.
+> 
+> I wonder if we'd want to retire this script in the long run.
+
+I do not think that we can. Just like git-sh-setup, we advertised it for
+use in custom scripts.
+
+> I also wonder if rewriting the man page is good use of (your) time, as
+> the last contribution specifically to Documentation/git-parse-remote.txt
+> is 62d955fd43 (parse-remote: remove unused functions, 2009-06-12), which
+> has been a while since.
+
+1) we still advertise those "shell library files" for consumption in
+   users' scripts, so I think we have to keep the man page, too, and
+
+2) The fact that the man page is stale just shows how dearly it is in need
+   of being edited, no? ;-)
+
+> The outline in the coverletter promised more than just rewording, but
+> I am fine with the change as is; it's a good start.
+
+You mean the commit message (I do not think I talked about the
+git-parse-remote man page in the cover letter)?
+
+If so, I think I only promised to completely revamp it and to stop talking
+about implementation details...
+
+Ciao,
+Dscho
