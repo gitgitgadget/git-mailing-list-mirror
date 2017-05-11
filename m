@@ -7,59 +7,64 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96F6C201A0
-	for <e@80x24.org>; Thu, 11 May 2017 21:35:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47AF7201A0
+	for <e@80x24.org>; Thu, 11 May 2017 21:41:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755856AbdEKVfu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 17:35:50 -0400
-Received: from mail-pf0-f194.google.com ([209.85.192.194]:36179 "EHLO
-        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755040AbdEKVfo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 17:35:44 -0400
-Received: by mail-pf0-f194.google.com with SMTP id n23so3488259pfb.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 14:35:44 -0700 (PDT)
+        id S1755966AbdEKVla (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 17:41:30 -0400
+Received: from mail-pg0-f65.google.com ([74.125.83.65]:36353 "EHLO
+        mail-pg0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755474AbdEKVl3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 17:41:29 -0400
+Received: by mail-pg0-f65.google.com with SMTP id h64so277829pge.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 14:41:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=CirP1zQPqpoZx0XQECSQRBDtOpCgFJJlgS2r40WIUfg=;
-        b=pduHGX14IOAR8yfjHzkqYgqjxhwJduUsCFVEyuhRGril88y1wpue0PWl98+L5vNc1s
-         KzatJqs6F+IR4d26jmHrCOti26PvZKD8rCHI/9zp+yLUkbPPBvBJISUzIn4ytK8syDhz
-         v4HRTbNFBx4RMqlwtJT1bbMYCqlnmvP0XKq2jlT0FbvNo4cfJWUzWP4Ads0x0qojf4RD
-         vdvRMAdGOnh3TkOULv9nOTcqLWsy9nML9ki9iMweEnL5SvXkPU20MT/79COiBjGPLQih
-         A9Y4O19g3yVdYP0i6jD/r8UyXAuIO2HQTXx6/d4nu15voq7rBX3YmRveHHr+koWfzTdT
-         BK3A==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=3ps39CDLZgNwRCPFfOSarMtNirzH+BDaGQc0KQ7UZVU=;
+        b=tb1kwBjwc31zGC007qX6kN8Z2feYbIifsLA8tM4/I2BXAmYx1JpMcBXxEQxqwK9JQd
+         i+Zgs9AjokLxmtX8yXw6PgNjHWAtNMxDaOciRBSGnlIMlCNuQ4G5ZP9SutYIos2ga9+w
+         CA+i10jTYO8dRLWcxFBDygroHhBphRSeSugkpImjB8NBNpxIVmSk/b32blZh5YHaVChQ
+         Doe1t8wWzZYPynSYMRDMtgGDUFJy91zPRs6y9F2t/t0MndRERSSxTk1GVCvcl6EMBp8h
+         PEyEmLVC/ZWOKLeMLMbUOrlrKDXMjXimdZK1I3qNuclmgUncwOdHoAN4OKjSYT0JZ8++
+         eWyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=CirP1zQPqpoZx0XQECSQRBDtOpCgFJJlgS2r40WIUfg=;
-        b=quAiNnv+zqxiuhij/s5FB13yDLvyJ7fxpqxEVb5anL+2nA71rFC3Z5+xqMZRgiZrHL
-         M7fMzE4Oa2UQHJ5APMVnNplYKP6M0hOKRg+yhYuve9fZCR3/KQU/6blY9TyqS9f4ATmu
-         HYW56uC/BnVsj+IAr2Jn3Rylgu2QmbOvsXOpSS+vdfOiqAmlxzHRbd5Z5v3aFgr8tp8y
-         E1YkMQINvdA7RdVc4h7VhYE34UhMJN4Pgws3mKPpS8NSrCANdicnM8PQNLePA6+Y4B2K
-         yfGMgQO7VurCCkJC0yOH2BI/JOw/NtqpOQdfArPyFKwKc55qSK9C3PxhayYQM3D6wsQQ
-         qu0g==
-X-Gm-Message-State: AODbwcAGNAGc4eUwyayBwKsD2OVVrS4L94l1gitSAfgu4fnfF2Tc5f6z
-        rtI/x9EmxMdNnQ==
-X-Received: by 10.98.139.21 with SMTP id j21mr649832pfe.5.1494538543735;
-        Thu, 11 May 2017 14:35:43 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=3ps39CDLZgNwRCPFfOSarMtNirzH+BDaGQc0KQ7UZVU=;
+        b=Q+3VaoswQNCsLhJzRBLlYmQ8PNAitD5nTBgfZul/bkfNObgTu2iuo54bnsJmc0WO6Q
+         /b89S8oit3yigyIbzwKE/ENEa3OzIUOapuxk9cZ0/fd5f18gj3mpRd+IyACr2FjJT4aG
+         MBZt4u54xJa+A48bh+PY55iCt4SK7vZv+h2f5QaELz3v6hwlJ2I8RjTzY2mBvFdFzKeb
+         Y/HyirFnYMSzmpAuwjMJCjzOLWKUtKwGCA4RMqh4sWGU9d4SqVUIfjFVPGMkx5IL8bG/
+         sOJ0Qhb8bcxhI715zjkVutAI8Uu1OS6JxHe2f4XpjzH+vJly8P6044m6GUXHiHmpEXCd
+         6AvA==
+X-Gm-Message-State: AODbwcBHVuo+Y5pKu4Ri/NrxgRcE3PgmXd2c8tEJTERpysT4V6vKB/WY
+        4XD+LAsoehnCtQ==
+X-Received: by 10.84.137.169 with SMTP id 38mr825604pln.134.1494538888632;
+        Thu, 11 May 2017 14:41:28 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:ac23:a158:2bd3:569b])
-        by smtp.gmail.com with ESMTPSA id c83sm1688512pfd.113.2017.05.11.14.35.42
+        by smtp.gmail.com with ESMTPSA id s83sm1684364pfa.128.2017.05.11.14.41.27
         (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 14:35:42 -0700 (PDT)
-Date:   Thu, 11 May 2017 14:35:17 -0700
+        Thu, 11 May 2017 14:41:28 -0700 (PDT)
+Date:   Thu, 11 May 2017 14:41:26 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v4] fetch-pack: always allow fetching of literal SHA1s
-Message-ID: <20170511213517.GA21723@aiede.svl.corp.google.com>
-References: <20170509182042.28389-1-jonathantanmy@google.com>
- <20170511211403.5252-1-jonathantanmy@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] C style: use standard style for "TRANSLATORS" comments
+Message-ID: <20170511214125.GB21723@aiede.svl.corp.google.com>
+References: <20170511204334.GM83655@google.com>
+ <20170511212012.6782-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20170511211403.5252-1-jonathantanmy@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20170511212012.6782-1-avarab@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,77 +73,78 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Jonathan Tan wrote:
+Ævar Arnfjörð Bjarmason wrote:
 
-> Thanks, peff. I've incorporated your suggestions - I don't feel very
-> strongly about this, but I guess it's worthwhile to avoid the quadratic
-> behavior if we can.
->
-> Also incorporated Jonathan Nieder's suggestion about the placement of
-> the last line. The relevant function is also factored out (following
-> peff's suggestion).
+> Change all the "TRANSLATORS: [...]" comments in the C code to use the
+> regular Git coding style, and amend the style guide so that the
+> example there uses that style.
 
-Thanks.  The structure still seems more complicated than it needs to
-be.  More details below.
+Hooray!
 
 [...]
-> +++ b/fetch-pack.c
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -256,12 +256,12 @@ For C programs:
+>  
+>     Note however that a comment that explains a translatable string to
+
+The "Note however" isn't needed since it's not contradicting
+the previous point any more.  This can be an entirely separate item:
+
+ - A comment that explains a translatable string to translators
+   uses a convention of starting with a magic token "TRANSLATORS: "
+   [etc]
+
+It might even make sense to remove the explanation of TRANSLATORS
+comments from this file altogether, since they're intuitive to use.
+A more common place to want to learn about them is po/README, which
+already explains them.
+
 [...]
-> @@ -592,13 +593,22 @@ static void mark_recent_complete_commits(struct fetch_pack_args *args,
->  	}
->  }
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -995,8 +995,10 @@ int bisect_next_all(const char *prefix, int no_checkout)
 >  
-> +static void add_refs_to_oidset(struct oidset *oids, const struct ref *refs)
-> +{
-> +	for (; refs; refs = refs->next)
-> +		oidset_insert(oids, &refs->old_oid);
+>  	steps_msg = xstrfmt(Q_("(roughly %d step)", "(roughly %d steps)",
+>  		  steps), steps);
+> -	/* TRANSLATORS: the last %s will be replaced with
+> -	   "(roughly %d steps)" translation */
+> +	/*
+> +	 * TRANSLATORS: the last %s will be replaced with "(roughly %d
+> +	 * steps)" translation.
+> +	 */
 
-Makes sense.
+Nice.
 
 [...]
->  	/* Append unmatched requests to the list */
->  	for (i = 0; i < nr_sought; i++) {
->  		unsigned char sha1[20];
-> +		int can_append = 0;
->  
->  		ref = sought[i];
->  		if (ref->match_status != REF_NOT_MATCHED)
-> @@ -649,6 +661,21 @@ static void filter_refs(struct fetch_pack_args *args,
->  
->  		if ((allow_unadvertised_object_request &
->  		    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
-> +			can_append = 1;
-> +		} else {
-> +			if (!tip_oids_initialized) {
-> +				/*
-> +				 * Check all refs, including those already
-> +				 * matched
-> +				 */
-> +				add_refs_to_oidset(&tip_oids, unmatched);
-> +				add_refs_to_oidset(&tip_oids, newlist);
-> +				tip_oids_initialized = 1;
-> +			}
-> +			can_append = oidset_contains(&tip_oids, &ref->old_oid);
-> +		}
-> +
-> +		if (can_append) {
+> +++ b/ref-filter.c
+> @@ -1251,13 +1251,17 @@ char *get_head_description(void)
+>  			    state.branch);
+>  	else if (state.detached_from) {
+>  		if (state.detached_at)
+> -			/* TRANSLATORS: make sure this matches
+> -			   "HEAD detached at " in wt-status.c */
+> +			/*
+> +			 * TRANSLATORS: make sure this matches "HEAD
+> +			 * detached at " in wt-status.c
+> +			 */
 
-This structure could be simplified by putting the lazy-initializing
-tip_oids lookup in a separate function.  For example:
+optional: could treat "HEAD detached at " as an unbreakable phrase
+for the sake of line-breaking, for easier grepping.
 
-	int tip_oids_contain(struct oidset *tip_oids,
-		struct ref *unmatched, struct ref *newlist,
-		const struct oid *id)
-	{
-		if (oidset_is_empty(tip_oids)) {
-			add_refs_to_oidset(tip_oids, unmatched);
-			add_refs_to_oidset(tip_oids, newlist);
-		}
-		return oidset_contains(tip_oids, id);
-	}
+But what's here is also perfectly fine.
 
-That way, the caller could be kept simple (eliminating can_append
-and the repeated if).
+[...]
+> -			/* TRANSLATORS: make sure this matches
+> -			   "HEAD detached from " in wt-status.c */
+> +			/*
+> +			 * TRANSLATORS: make sure this matches "HEAD
+> +			 * detached from " in wt-status.c
+> +			 */
+
+Likewise.
+
+The rest also look good. This is great.
 
 Thanks,
 Jonathan
