@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85E011FF34
-	for <e@80x24.org>; Thu, 11 May 2017 09:20:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 97B921FF34
+	for <e@80x24.org>; Thu, 11 May 2017 09:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755324AbdEKJUH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 05:20:07 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35518 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755241AbdEKJUD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:20:03 -0400
-Received: by mail-wm0-f67.google.com with SMTP id v4so5494646wmb.2
-        for <git@vger.kernel.org>; Thu, 11 May 2017 02:20:03 -0700 (PDT)
+        id S1755329AbdEKJUJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 05:20:09 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:35642 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755093AbdEKJUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 05:20:06 -0400
+Received: by mail-wm0-f68.google.com with SMTP id v4so5494960wmb.2
+        for <git@vger.kernel.org>; Thu, 11 May 2017 02:20:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TnjFfGtrsB3pjXABhAF1h6QlcdMY1K/Pqg8ffqeb+ZY=;
-        b=fjOD8fH8vqiXNFXsT8KzDcrzmcu0VE8HAdM1WFO01ye0VEqqJ2Qgx6bIS9T7Ks8TdL
-         fAqgLhxjaTWtm6XJVtLdH6M6mCMyJVx1kpjXVkX41epm3gYdwy0nsMZtn7+KvQyDwkao
-         En5Hycn2GNmc5cF0A8wC4rJDMhOvJRA+QrpoipaW+LZ08CRsjt+J4QaMe/RRve/Dr+lJ
-         yh9OrwteJwvCjiU5Xywch9s20P/lMmL0MsThuVB/dkWr1kOtATwq39GkauXMDpqjlMb2
-         AI9w6eoueGwTvaFySjw1ydu7hQsZTUzZi1SzGSAXkrv5oVIkvj9EPNiuoNo3vZ5u2tk+
-         nJcw==
+        bh=4Bi3Xd/hOA6Q5eWw0aVp5WilKroER69eGoNdzZ09QRA=;
+        b=EQj0SEuzTzw33hZLHjYeAaQPN4qVzY5BJOQaMlugj473N8sKgOw7tF2zfY/UyOvPCk
+         Vg8634Hr7n+e4Xg2Yz+vRia5RbEPogDcObyNyI25/HFfk5PWqqvdhA3VnmoH9d6nauEx
+         YIYgpGJWR7KIc9QEiQwDMB/m3hQFgdTUG7VZlT/KpQ/QspJ//p1/gjP7jfm7RBggNIio
+         n9xvGlpmDX/2ogK4CtzmsBKE6NTqh6gB9r/8CvBKeonmgsutkQyufZmjIG928yzmwy4K
+         i+doDM6NpiwliYfiHBxDivKsHDbKO7jaSJT6h5fg2G5ZuQOS39Wx8ZGFG6MomjcPT9fb
+         oCgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TnjFfGtrsB3pjXABhAF1h6QlcdMY1K/Pqg8ffqeb+ZY=;
-        b=Po02oAR9Ilh8xj8C7Y7eAL/xAWmBUY9n89JeQrAJU1n11a9Qk/ouN6HHropCXJHPWb
-         b3V5qKrDACZ0pdo4XyRG50+d+tgs1E7NibvruqlABAkYEztTFi5v2cUKrOtO/sf4ZKmm
-         dKAZrOjP+QhoOU8FVFj/LonZ1a9I8T1CxYwHvUUfd+ec5T0MUnBKlCXi3tlreZTXiPwc
-         2ZFumLPCnM2WQmSItxYWMvpoS4sDWmMvsPdu1LbM7AuecLfjdRkDqp/Z1cxc1edbSRZV
-         HaiKPd8/4Eh6+hiWBBOVR+7AVvXWzmlu4En/dXUcVz9wmRjGqrEy4X09E2YGboaJFctU
-         XNTg==
-X-Gm-Message-State: AODbwcCMDCxiL2xuuPj/j1hBNuYkejGeG0E8S/cLZD0LHUoRyeQFZGxt
-        m2h3ubq66mupR/n1V3I=
-X-Received: by 10.80.173.4 with SMTP id y4mr52735edc.16.1494494402072;
-        Thu, 11 May 2017 02:20:02 -0700 (PDT)
+        bh=4Bi3Xd/hOA6Q5eWw0aVp5WilKroER69eGoNdzZ09QRA=;
+        b=E5ar7GAbWZpTStmHbsWftXkzEF6D2xJkAQcwR9PMKObysmosTKdlcfyzitE+4J1xld
+         Wf68PciF3BukS00k1kX6HzSAqkhxVsumj9MabDSTPVuns9RUChEBfmDC2lVq0xAq3+90
+         ctlm3ZSE/fcTyAzPHK27olPwiqOWps2B1YmmdWF1yvpBc3PSG7K/fD/wKY6WVF6tNbrZ
+         RCOoJbvL27EX7srSVXdNlrHRqGtxSzIJEJp7ahlrMUxUHzs9HIF+HwLZNoQ7z/ycCj30
+         fTDHp8/N4ZfU55muCvWOxNiarpNFV7Q1Np5YW/xnMbwUq541Jpyrwzz6OvrCaSh+JmxG
+         vA9w==
+X-Gm-Message-State: AODbwcBYLrCZI+l7ThXK7Nu91N65c6pE+UByUgCIV4HdHMkxqSscpvLN
+        7hujLiRKbT+0C5o4JE8=
+X-Received: by 10.80.148.185 with SMTP id s54mr54668eda.34.1494494405149;
+        Thu, 11 May 2017 02:20:05 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.20.00
+        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.20.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 02:20:01 -0700 (PDT)
+        Thu, 11 May 2017 02:20:04 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 24/29] grep: move two functions to avoid forward declaration
-Date:   Thu, 11 May 2017 09:18:24 +0000
-Message-Id: <20170511091829.5634-25-avarab@gmail.com>
+Subject: [PATCH 25/29] test-lib: add a PTHREADS prerequisite
+Date:   Thu, 11 May 2017 09:18:25 +0000
+Message-Id: <20170511091829.5634-26-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511091829.5634-1-avarab@gmail.com>
 References: <20170511091829.5634-1-avarab@gmail.com>
@@ -75,79 +75,58 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the is_fixed() and has_null() functions which are currently only
-used in compile_regexp() earlier so they can be used in the PCRE
-family of functions in a later change.
+Add a PTHREADS prerequisite which is false when git is compiled with
+NO_PTHREADS=YesPlease.
+
+There's lots of custom code that runs when threading isn't available,
+but before this prerequisite there was no way to test it.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 46 +++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ Makefile      | 1 +
+ t/README      | 4 ++++
+ t/test-lib.sh | 1 +
+ 3 files changed, 6 insertions(+)
 
-diff --git a/grep.c b/grep.c
-index 4507765811..5c808f8971 100644
---- a/grep.c
-+++ b/grep.c
-@@ -321,6 +321,29 @@ static NORETURN void compile_regexp_failed(const struct grep_pat *p,
- 	die("%s'%s': %s", where, p->pattern, error);
- }
+diff --git a/Makefile b/Makefile
+index 374fbc7e58..a79274e5e6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2242,6 +2242,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_EXPAT=\''$(subst ','\'',$(subst ','\'',$(NO_EXPAT)))'\' >>$@+
+ 	@echo USE_LIBPCRE1=\''$(subst ','\'',$(subst ','\'',$(USE_LIBPCRE)))'\' >>$@+
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@+
++	@echo NO_PTHREADS=\''$(subst ','\'',$(subst ','\'',$(NO_PTHREADS)))'\' >>$@+
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@+
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+diff --git a/t/README b/t/README
+index a90cb62583..2f95860369 100644
+--- a/t/README
++++ b/t/README
+@@ -817,6 +817,10 @@ use these, and "test_set_prereq" for how to define your own.
+    Test is run on a filesystem which converts decomposed utf-8 (nfd)
+    to precomposed utf-8 (nfc).
  
-+static int is_fixed(const char *s, size_t len)
-+{
-+	size_t i;
++ - PTHREADS
 +
-+	for (i = 0; i < len; i++) {
-+		if (is_regex_special(s[i]))
-+			return 0;
-+	}
++   Git wasn't compiled with NO_PTHREADS=YesPlease.
 +
-+	return 1;
-+}
-+
-+static int has_null(const char *s, size_t len)
-+{
-+	/* regcomp cannot accept patterns with NULs so when using it
-+	 * we consider any pattern containing a NUL fixed.
-+	 */
-+	if (memchr(s, 0, len))
-+		return 1;
-+
-+	return 0;
-+}
-+
- #ifdef USE_LIBPCRE1
- static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
- {
-@@ -390,29 +413,6 @@ static void free_pcre1_regexp(struct grep_pat *p)
- }
- #endif /* !USE_LIBPCRE1 */
+ Tips for Writing Tests
+ ----------------------
  
--static int is_fixed(const char *s, size_t len)
--{
--	size_t i;
--
--	for (i = 0; i < len; i++) {
--		if (is_regex_special(s[i]))
--			return 0;
--	}
--
--	return 1;
--}
--
--static int has_null(const char *s, size_t len)
--{
--	/* regcomp cannot accept patterns with NULs so when using it
--	 * we consider any pattern containing a NUL fixed.
--	 */
--	if (memchr(s, 0, len))
--		return 1;
--
--	return 0;
--}
--
- static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *opt)
- {
- 	struct strbuf sb = STRBUF_INIT;
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e5cfbcc36b..ab92c0ebaa 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1009,6 +1009,7 @@ esac
+ 
+ ( COLUMNS=1 && test $COLUMNS = 1 ) && test_set_prereq COLUMNS_CAN_BE_1
+ test -z "$NO_PERL" && test_set_prereq PERL
++test -z "$NO_PTHREADS" && test_set_prereq PTHREADS
+ test -z "$NO_PYTHON" && test_set_prereq PYTHON
+ test -n "$USE_LIBPCRE1" && test_set_prereq PCRE
+ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
 -- 
 2.11.0
 
