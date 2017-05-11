@@ -2,86 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB92201A0
-	for <e@80x24.org>; Thu, 11 May 2017 19:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 853A0201A0
+	for <e@80x24.org>; Thu, 11 May 2017 19:22:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756277AbdEKTTj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 15:19:39 -0400
-Received: from mout.gmx.net ([212.227.17.22]:49618 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1751588AbdEKTTi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 15:19:38 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxgnf-1e6zRI1yw7-017A9I; Thu, 11
- May 2017 21:19:23 +0200
-Date:   Thu, 11 May 2017 21:19:08 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/11] PREVIEW: remove support for .git/remotes/ and
- .git/branches/
-In-Reply-To: <CAGZ79kaM30ExQT6m9k5F5FqhKc-RwP4gsH6AaW_YgDL_ixs1Qg@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1705112115370.146734@virtualbox>
-References: <cover.1494509599.git.johannes.schindelin@gmx.de> <c73881261cc3021410695126989c6f1596f638b0.1494509599.git.johannes.schindelin@gmx.de> <CAGZ79kaM30ExQT6m9k5F5FqhKc-RwP4gsH6AaW_YgDL_ixs1Qg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1756319AbdEKTWN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 15:22:13 -0400
+Received: from smtp114.iad3a.emailsrvr.com ([173.203.187.114]:35457 "EHLO
+        smtp114.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1756275AbdEKTWM (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 11 May 2017 15:22:12 -0400
+Received: from smtp39.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
+        by smtp39.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id CAE1D57DD;
+        Thu, 11 May 2017 15:22:11 -0400 (EDT)
+X-Auth-ID: mbranchaud@xiplink.com
+Received: by smtp39.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 834C13D05;
+        Thu, 11 May 2017 15:22:11 -0400 (EDT)
+X-Sender-Id: mbranchaud@xiplink.com
+Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
+        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
+        by 0.0.0.0:465 (trex/5.7.12);
+        Thu, 11 May 2017 15:22:11 -0400
+Subject: Re: [PATCH v4 2/4] diff: have the diff-* builtins configure diff
+ before initializing revisions
+To:     Jeff King <peff@peff.net>
+References: <f867af6f-b601-251a-86a4-ede0bb942efb@xiplink.com>
+ <20170508160339.4551-1-marcnarc@xiplink.com>
+ <20170508160339.4551-3-marcnarc@xiplink.com>
+ <20170509032238.uvgg7sezfzlig2ko@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From:   Marc Branchaud <marcnarc@xiplink.com>
+Message-ID: <c9a878df-1c3e-09ad-3b48-aa123123622b@xiplink.com>
+Date:   Thu, 11 May 2017 15:22:11 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:vVL12p80TOSonMlm1xY+YZCm/fOyWxIs5eDryX7KLTX+jJL/y/l
- s4VG5i6HUXx96VymMD2gSF4QUsylcCorzMFGCrK3WUKKqzMLviTi0YMZf3Al9JVV0CmYkBr
- 2uhIMeMlq76lgbcBBehQAN44zSp/x0INeok20ek/6XpMQEGaUgtGNGwQsULkNjiRGGCnx6j
- EU6SffXO1tIWO4a0p9GVw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fmO59ILnNJM=:X8lsvPM/VdKeCOiMvFUgaZ
- QibPZEhiK1706Np0hA2Uq4+5LF1QdwMiVnAD85JwNsiuWm1PqhBawuEMe/SOxoDxWvrIlIhU3
- 0fmwtwDOjtqhecZ+uaXEpJxr/RORK4WyCGdIhny9FQcMrtSsv/NXUUqxBWgQpWq1OksDghO6r
- vg+I5EuBCr7KYctPhRAWKXFDVHqG8OpnU8FyyUetRKjeruP1XMkQsrZJxS61Ty6L9r4Y7Lcbk
- y/kpRicqyB1U+kbT4ePYShLPVWx++F8HrWDYqgTM2/K9OKfD5hkVpkpZ7e4tCwX7Py5nds6cx
- k5eImbSloyEisv8+XhM2R54eogrHCX+O3IV5NeEw7G5OIBcm5f6I7TXHxI4HZaxfswvikcuW5
- B437X3j/fIZ7pRwaU1rggL5Mgiw1I6Z+dhAj1idwkYBfqmAoUti13IzvTgv6Tq3hOUc91kX2O
- vLXyZi9t9gX9dcQv+nLEpXjkva8vPD0LJOZxoB/o1yH2tszkqF8Kj1o+sdvR5B5gDSmXXDdVq
- 1sAVmhifi0CshsastqWsfM1nBkfqBGQ+AmITRN4OdG86Fs4fmG6Bv3qf6Xb43b7SZjIUfNLVd
- JGyR6+aa6NjG+ihBOEMPiNE7YYvJRDm7zNIQGASD1TR4wH/zm+hvQBZrLAi4UU9GWlnK4h9sK
- Hp8ohKuV5zLAarpw7rtptJWzZcuLpj2aGh4DB7yyoTou0cex+kDRbvHPcEOOwFRWjZ/qRlGCC
- rDZLnRxnOpZDJG+LdfYjgREgApgMY1Q6qMCjl+Yp+9SMrV4SvZt426TiapcHY7K06sX86wIEi
- 2J+EC1Y
+In-Reply-To: <20170509032238.uvgg7sezfzlig2ko@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+On 2017-05-08 11:22 PM, Jeff King wrote:
+> On Mon, May 08, 2017 at 12:03:37PM -0400, Marc Branchaud wrote:
+>
+>> This matches how the diff Porcelain works.  It makes the plumbing commands
+>> respect diff's configuration options, such as indentHeuristic, because
+>> init_revisions() calls diff_setup() which fills in the diff_options struct.
+>
+> I don't know if you want to note here that this is only _some_ options.
+> I.e., ones that we handle by copying via diff_setup(). Maybe it's
+> obvious from the description already (it's hard for me to tell because I
+> already know it either way :) ).
 
-On Thu, 11 May 2017, Stefan Beller wrote:
+(shrug)  I'm fine with the way it is, but I'd also be OK with "respect 
+some of diff's configuration options".
 
-> On Thu, May 11, 2017 at 6:48 AM, Johannes Schindelin
-> <johannes.schindelin@gmx.de> wrote:
-> > At long last, after a cycle or three of warning users who *still* use
-> > the ancient feature of .git/remotes/ and .git/branches/, it is time to
-> > retire the code.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> 
-> The PREVIEW patches also look good to me, though I just
-> skimmed them and other may chime in on the timing of them.
+Junio, please feel free to reword the message if you like.  Or I can 
+send out a v5, if that's easier for you.
 
-Thanks for the review!
+		M.
 
-I agree that the PREVIEW part is not quite as important as the first half.
-I only bothered with it because I did want to make sure that the first
-half is correct, that it does cover all the places we will need to delete
-in the end.
-
-In other words: the PREVIEW part should become its own patch series, that
-I hope Junio will carry in pu (or next) for a while, similar to the
-changes that removed the historical wart of the funny argument order in
-`git merge`.
-
-Ciao,
-Dscho
