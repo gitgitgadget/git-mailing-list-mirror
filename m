@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E83C1FF34
-	for <e@80x24.org>; Thu, 11 May 2017 09:19:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3310C1FF34
+	for <e@80x24.org>; Thu, 11 May 2017 09:19:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755233AbdEKJTd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 05:19:33 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36055 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755226AbdEKJTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:19:31 -0400
-Received: by mail-wm0-f67.google.com with SMTP id u65so5450246wmu.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:31 -0700 (PDT)
+        id S1755193AbdEKJTY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 05:19:24 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34210 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755191AbdEKJTW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 05:19:22 -0400
+Received: by mail-wm0-f68.google.com with SMTP id d127so5504052wmf.1
+        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5rl0Indxe4Sbsgj0FtQ8anmUKrW1lYu0eqzAFnE3Y04=;
-        b=e5ar6qP/hyHSoSOoGmtqtl06cPXLlEiq8tO8yzGw6v2xoL6OK4UE34ALcaMkVo3oXu
-         +88UbthCbmA2GSmj6VI6mLZJnZH8SGZvnemvfSR+lgVsw/ReucGmm5tUoJOZfjHDAati
-         HarOMPWDblXMjmiiT90OoppezKwNxr10YP6oe/R4ouoEFhFlV/tVIHJ51Te1nEBNg4Gg
-         jrCxHcDN4gaYJcdIee2v2xbu/fqWfJQAP0Vgsoro8bEbUo93uw4tEvb1TxMRr7fltjLu
-         3ek7FdjcykV+e9C1gVkbli/nRSHtYep2uAgYml7vR1eDHmvKxyyeIuWzVJTSWVHVWpv4
-         zvpQ==
+        bh=D0ktaPZ3aFyCQi8mS/t/SXgrhBY7oOmKZMCMNrhzqUc=;
+        b=RF8IzdC/ni7Fi6z4+aCwHjWgWqW0SymcCHm2akXNvYmEAJma3zTOUDCEn3sSa60g5I
+         i5xRV39sfKTEjR7E9ePysni6DQkLkEeoxB+vYhaxkTaZKdg3iLJKNo3Fve2VxZY+yY9m
+         QyAV3rD3FcH/iyu0pBGKC66xgZvy1nGi01uwiuMOSwbXJpNbDe5syVvezMGlpdg8MJhk
+         QpTiMi6KAKBfjnhr5wr2iz9eu2V/V5M6XgCKbc5LVdbyE5eDDOuhUKoiq6M8RNDZrA3q
+         SmboUQb5PFdRTHiZtNQMhnpHrb4dLaPZtPqhzBzZPWim2Olatc8+Fqm/NjhMlosYJHo0
+         0b2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5rl0Indxe4Sbsgj0FtQ8anmUKrW1lYu0eqzAFnE3Y04=;
-        b=FUgoGUaSQM6PorUybqaP7QZ5o7GFMQKcEDU5s+bBsBLQvZnWZPOHj0cdKakGpqM7rb
-         dhXoCZZzrB3CitI/xDa7M2yVBjUIYh2pPSfJtvW7XBvb6ZT7v4/cjUghse4IrCdYaKwj
-         WlDUl0r5S5vnn1yeRyjHwTbxgsYhRlKnFZlwS98amm48Nir4y00Q74za+kPAay4ZkwzD
-         DfNOrrTJTxvwiENdJWh5ApSpPaP3ed0ZkpfBv+42zunkR6MYd/tT+sU2z1xskt/T+Ygm
-         WJpSCbYFXRKQ1lPs9TjD4prKWiep0DzPqExtQqtOGz83y4guZIljVYi7+L1xgBFfeiCx
-         dPvg==
-X-Gm-Message-State: AODbwcDEgmW05YRRXVmZ+W+GQ+T0L5lfOQoz+/ACZjHirpHa9GsIpInC
-        zkW7Cm7en09FXQ==
-X-Received: by 10.80.174.131 with SMTP id e3mr21080edd.166.1494494370392;
-        Thu, 11 May 2017 02:19:30 -0700 (PDT)
+        bh=D0ktaPZ3aFyCQi8mS/t/SXgrhBY7oOmKZMCMNrhzqUc=;
+        b=BQ18mUk0FchdjMMIxiycrGtkOYPHKZm5ORN2sJ3/EArgt+3NDVvkAr+tMabcccZ9AS
+         33u3UMhYCW/WEGIsZoTYmv8VM0HMtbzAa4P4b7SWQ7rcQrb64uJQgBWYdGlWeFfRg8xi
+         ky6gJsR6daoDZfd9H3+Gj5gwTVhaX4aeOUfpVRmTX6brg6EdXH4wS7zIiRDlbR5HNb5j
+         jYSj0GEpQKdqyzoYsFuarJDyAJl7/ZC88coBAVbczjuJAQ7EewiUvMExcigdTOWDJSms
+         2BGoDIBeIXBcBDG12YaWSnEbDXGJWPaAMyyBQsRtsqC/Y4nYnYQCByBOGcIOH8VJym/7
+         diHw==
+X-Gm-Message-State: AODbwcBJ7Fl8i4bSlL6nQcafzyxM5PBlEsRq/YqcHQrzME9fhTZHZuT3
+        RSsqM4WiKYfGLQ==
+X-Received: by 10.80.165.23 with SMTP id y23mr41020edb.64.1494494360459;
+        Thu, 11 May 2017 02:19:20 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.29
+        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 02:19:29 -0700 (PDT)
+        Thu, 11 May 2017 02:19:19 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 14/29] perf: add a GIT_PERF_MAKE_COMMAND for when *_MAKE_OPTS won't do
-Date:   Thu, 11 May 2017 09:18:14 +0000
-Message-Id: <20170511091829.5634-15-avarab@gmail.com>
+Subject: [PATCH 11/29] grep: add a test helper function for less verbose -f \0 tests
+Date:   Thu, 11 May 2017 09:18:11 +0000
+Message-Id: <20170511091829.5634-12-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511091829.5634-1-avarab@gmail.com>
 References: <20170511091829.5634-1-avarab@gmail.com>
@@ -75,98 +75,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a git GIT_PERF_MAKE_COMMAND variable to compliment the existing
-GIT_PERF_MAKE_OPTS facility. This allows specifying an arbitrary shell
-command to execute instead of 'make'.
+Add a helper function to make the tests which check for patterns with
+\0 in them more succinct. Right now this isn't a big win, but
+subsequent commits will add a lot more of these tests.
 
-This is useful e.g. in cases where the name, semantics or defaults of
-a Makefile flag have changed over time. It can even be used to change
-the contents of the tree, useful for monkeypatching ancient versions
-of git to get them to build.
-
-This opens Pandora's box in some ways, it's now possible to
-"jailbreak" the perf environment and e.g. modify the source tree via
-this arbitrary instead of just issuing a custom "make" command, such a
-command has to be re-entrant in the sense that subsequent perf runs
-will re-use the possibly modified tree.
-
-It would be pointless to try to mitigate or work around that caveat in
-a tool purely aimed at Git developers, so this change makes no attempt
-to do so.
+The helper is based on the match() function in t3070-wildmatch.sh.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile      |  3 +++
- t/perf/README | 19 +++++++++++++++++--
- t/perf/run    | 11 +++++++++--
- 3 files changed, 29 insertions(+), 4 deletions(-)
+ t/t7008-grep-binary.sh | 58 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index eedadb8056..d1587452f1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2272,6 +2272,9 @@ endif
- ifdef GIT_PERF_MAKE_OPTS
- 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@+
- endif
-+ifdef GIT_PERF_MAKE_COMMAND
-+	@echo GIT_PERF_MAKE_COMMAND=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_COMMAND)))'\' >>$@+
-+endif
- ifdef GIT_INTEROP_MAKE_OPTS
- 	@echo GIT_INTEROP_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_INTEROP_MAKE_OPTS)))'\' >>$@+
- endif
-diff --git a/t/perf/README b/t/perf/README
-index 49ea4349be..b3d95042a8 100644
---- a/t/perf/README
-+++ b/t/perf/README
-@@ -60,8 +60,23 @@ You can set the following variables (also in your config.mak):
+diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
+index 9c9c378119..6c1952eafa 100755
+--- a/t/t7008-grep-binary.sh
++++ b/t/t7008-grep-binary.sh
+@@ -4,6 +4,29 @@ test_description='git grep in binary files'
  
-     GIT_PERF_MAKE_OPTS
- 	Options to use when automatically building a git tree for
--	performance testing.  E.g., -j6 would be useful.
+ . ./test-lib.sh
+ 
++nul_match() {
++	status=$1
++	flags=$2
++	pattern=$3
++	pattern_human=$(echo $pattern | sed 's/Q/<NUL>/g')
++
++	if test $status = "1"
++	then
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			git grep -f f $flags a
++		"
++	elif test $status = "0"
++	then
++		test_expect_success "git grep -f f $flags '$pattern_human' a" "
++			printf '$pattern' | q_to_nul >f &&
++			test_must_fail git grep -f f $flags a
++		"
++	else
++		test_expect_success "PANIC: Test framework error. Unknown status $status" 'false'
++	fi
++}
++
+ test_expect_success 'setup' "
+ 	echo 'binaryQfile' | q_to_nul >a &&
+ 	git add a &&
+@@ -69,35 +92,12 @@ test_expect_failure 'git grep .fi a' '
+ 	git grep .fi a
+ '
+ 
+-test_expect_success 'git grep -F y<NUL>f a' "
+-	printf 'yQf' | q_to_nul >f &&
+-	git grep -f f -F a
+-"
 -
-+	performance testing. E.g., -j6 would be useful. Passed
-+	directly to make as "make $GIT_PERF_MAKE_OPTS".
-+
-+    GIT_PERF_MAKE_COMMAND
-+	An arbitrary command that'll be run in place of the make
-+	command, if set the GIT_PERF_MAKE_OPTS variable is
-+	ignored. Useful in cases where source tree changes might
-+	require issuing a different make command to different
-+	revisions.
-+
-+	This can be (ab)used to monkeypatch or otherwise change the
-+	tree about to be built. Note that the build directory can be
-+	re-used for subsequent runs so the make command might get
-+	executed multiple times on the same tree, but don't count on
-+	any of that, that's an implementation detail that might change
-+	in the future.
-+ 
-     GIT_PERF_REPO
-     GIT_PERF_LARGE_REPO
- 	Repositories to copy for the performance tests.  The normal
-diff --git a/t/perf/run b/t/perf/run
-index c788d713ae..b61024a830 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -37,8 +37,15 @@ build_git_rev () {
- 			cp "../../$config" "build/$rev/"
- 		fi
- 	done
--	(cd build/$rev && make $GIT_PERF_MAKE_OPTS) ||
--	die "failed to build revision '$mydir'"
-+	(
-+		cd build/$rev &&
-+		if test -n "$GIT_PERF_MAKE_COMMAND"
-+		then
-+			sh -c "$GIT_PERF_MAKE_COMMAND"
-+		else
-+			make $GIT_PERF_MAKE_OPTS
-+		fi
-+	) || die "failed to build revision '$mydir'"
- }
+-test_expect_success 'git grep -F y<NUL>x a' "
+-	printf 'yQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f -F a
+-"
+-
+-test_expect_success 'git grep -Fi Y<NUL>f a' "
+-	printf 'YQf' | q_to_nul >f &&
+-	git grep -f f -Fi a
+-"
+-
+-test_expect_success 'git grep -Fi Y<NUL>x a' "
+-	printf 'YQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f -Fi a
+-"
+-
+-test_expect_success 'git grep y<NUL>f a' "
+-	printf 'yQf' | q_to_nul >f &&
+-	git grep -f f a
+-"
+-
+-test_expect_success 'git grep y<NUL>x a' "
+-	printf 'yQx' | q_to_nul >f &&
+-	test_must_fail git grep -f f a
+-"
++nul_match 1 '-F' 'yQf'
++nul_match 0 '-F' 'yQx'
++nul_match 1 '-Fi' 'YQf'
++nul_match 0 '-Fi' 'YQx'
++nul_match 1 '' 'yQf'
++nul_match 0 '' 'yQx'
  
- run_dirs_helper () {
+ test_expect_success 'grep respects binary diff attribute' '
+ 	echo text >t &&
 -- 
 2.11.0
 
