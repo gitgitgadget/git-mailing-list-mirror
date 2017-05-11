@@ -7,25 +7,24 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 287572018D
-	for <e@80x24.org>; Thu, 11 May 2017 12:06:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 192872018D
+	for <e@80x24.org>; Thu, 11 May 2017 12:06:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932524AbdEKMGr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 08:06:47 -0400
-Received: from smtp2-g21.free.fr ([212.27.42.2]:18029 "EHLO smtp2-g21.free.fr"
+        id S932548AbdEKMGu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 08:06:50 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:18144 "EHLO smtp2-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755463AbdEKMGq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 08:06:46 -0400
+        id S932528AbdEKMGs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 08:06:48 -0400
 Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
-        by smtp2-g21.free.fr (Postfix) with ESMTP id 20DC22003D3;
-        Thu, 11 May 2017 14:06:42 +0200 (CEST)
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 532E9200373;
+        Thu, 11 May 2017 14:06:45 +0200 (CEST)
 From:   Jean-Noel Avila <jn.avila@free.fr>
 To:     git@vger.kernel.org
-Cc:     Jean-Noel Avila <jn.avila@free.fr>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3 2/3] read-tree -m: make error message for merging 0 trees less smart aleck
-Date:   Thu, 11 May 2017 14:06:33 +0200
-Message-Id: <20170511120634.17683-2-jn.avila@free.fr>
+Cc:     Jean-Noel Avila <jn.avila@free.fr>
+Subject: [PATCH v3 3/3] git-filter-branch:
+Date:   Thu, 11 May 2017 14:06:34 +0200
+Message-Id: <20170511120634.17683-3-jn.avila@free.fr>
 X-Mailer: git-send-email 2.13.0
 In-Reply-To: <20170511120634.17683-1-jn.avila@free.fr>
 References: <20170503162931.30721-1-jn.avila@free.fr>
@@ -35,75 +34,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"git read-tree -m" requires a tree argument to name the tree to be
-merged in.  Git uses a cutesy error message to say so and why:
+git-filter-branch requires the specification of a branch by one way or
+another. If no branch appears to have been specified, we know the user
+got the usage wrong but we don't know what they were trying to do ---
+e.g. maybe they specified the ref to rewrite but in the wrong place.
 
-    $ git read-tree -m
-    warning: read-tree: emptying the index with no arguments is
-    deprecated; use --empty
-    fatal: just how do you expect me to merge 0 trees?
-    $ git read-tree -m --empty
-    fatal: just how do you expect me to merge 0 trees?
-
-When lucky, that could produce an ah-hah moment for the user, but it's
-more likely to irritate and distract them.
-
-Instead, tell the user plainly that the tree argument is
-required. Also document this requirement in the git-read-tree(1)
-manpage where there is room to explain it in a more straightforward way.
+In this case, just state that the branch specification is missing.
 
 Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/git-read-tree.txt | 8 ++++----
- builtin/read-tree.c             | 7 ++++---
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ git-filter-branch.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/git-read-tree.txt b/Documentation/git-read-tree.txt
-index ed9d63ef4..97df00043 100644
---- a/Documentation/git-read-tree.txt
-+++ b/Documentation/git-read-tree.txt
-@@ -135,10 +135,10 @@ OPTIONS
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index 2b8cdba15..aafaf708d 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -239,7 +239,7 @@ git rev-parse --no-flags --revs-only --symbolic-full-name \
+ sed -e '/^^/d' "$tempdir"/raw-heads >"$tempdir"/heads
  
- Merging
- -------
--If `-m` is specified, 'git read-tree' can perform 3 kinds of
--merge, a single tree merge if only 1 tree is given, a
--fast-forward merge with 2 trees, or a 3-way merge if 3 trees are
--provided.
-+If `-m` is specified, at least one tree must be given on the command
-+line. 'git read-tree' can perform 3 kinds of merge, a single tree
-+merge if only 1 tree is given, a fast-forward merge with 2 trees, or a
-+3-way merge if 3 or more trees are provided.
+ test -s "$tempdir"/heads ||
+-	die "Which ref do you want to rewrite?"
++	die "You must specify a ref to rewrite."
  
- 
- Single Tree Merge
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 23e212ee8..de1a58d17 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -132,7 +132,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 		OPT_BOOL(0, "empty", &read_empty,
- 			    N_("only empty the index")),
- 		OPT__VERBOSE(&opts.verbose_update, N_("be verbose")),
--		OPT_GROUP(N_("Merging")),
-+		OPT_GROUP(N_("Merging (needs at least one tree-ish")),
- 		OPT_BOOL('m', NULL, &opts.merge,
- 			 N_("perform a merge in addition to a read")),
- 		OPT_BOOL(0, "trivial", &opts.trivial_merges_only,
-@@ -226,9 +226,10 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
- 		setup_work_tree();
- 
- 	if (opts.merge) {
--		if (stage < 2)
--			die("just how do you expect me to merge %d trees?", stage-1);
- 		switch (stage - 1) {
-+		case 0:
-+			die(_("you must specify at least one tree to merge"));
-+			break;
- 		case 1:
- 			opts.fn = opts.prefix ? bind_merge : oneway_merge;
- 			break;
+ GIT_INDEX_FILE="$(pwd)/../index"
+ export GIT_INDEX_FILE
 -- 
 2.13.0
 
