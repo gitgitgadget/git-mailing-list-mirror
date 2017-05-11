@@ -2,114 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 523CD2018D
-	for <e@80x24.org>; Thu, 11 May 2017 17:01:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CF1E2018D
+	for <e@80x24.org>; Thu, 11 May 2017 17:02:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755898AbdEKRA4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 13:00:56 -0400
-Received: from mail-pf0-f171.google.com ([209.85.192.171]:36243 "EHLO
-        mail-pf0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755720AbdEKRAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 13:00:54 -0400
-Received: by mail-pf0-f171.google.com with SMTP id m17so16712676pfg.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 10:00:53 -0700 (PDT)
+        id S1757127AbdEKRCE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 13:02:04 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:36283 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756019AbdEKRCD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 13:02:03 -0400
+Received: by mail-qk0-f180.google.com with SMTP id u75so27684085qka.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 10:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hDEKwyvggY57Bvisk2EltEBMiIR+8RtK4FuSuHXE4ks=;
-        b=a6mYljjocKkpkyjGBvN0NRoET+Y4nUkCmJwEgiB3tLsdtJmFwhYjZg6ktufoShn9D+
-         caBCq57s7HUVmMDJDS+Yja3E1bJFa85IP97RjuQQ4fL8W5Mhcg96QddbFD6aNMU2Tj9B
-         7VC8jKPNj1Kn5hwJEnOFJn2fIScttB3g9OuAiMGIvp8+djKS0EYp419ywCeNnLzKd5KA
-         /GLL7qVsqTgIwRqe2B2bzvR0arV224CW3UWXz3L8TVDisX6gJRca1HF1n8/u5YVAfNyp
-         dyastI/Y3xam/yhACedkyMmDYANgcPTOq3U9xwAsHN+yW8E2e7gjH8EoqFlKav+Y7EKn
-         c6qw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ctxe5CkvXpE7pwBOeA5brhoP15g/DnfHrsz5Us/qmTk=;
+        b=A7d9k0MHDEVdVWLwCvRIQaSr4NZ8sb2rcNFxEdfokJk8dHiWmDrDieA3rgglneJxGe
+         byfZZBQ1t2v7Eh72xo6dKClHRDPTLrCBOrL7qS7nGjqKe3lBdohix7/LUfWa0wA6Cnnc
+         WghSLFdOhLfevo17ZpSBQ38Swl/B1FZNl1gWSRvS1CiBKALJCXnvpXGGWtENn6aKTj5D
+         5QjfkgsuY5JsDr5DKLYdvWAwQFwV+xI76fAZxP82bqjnWdgOifcYn26svg9P8qMBP9NW
+         lvaoiRrXp9SqOvWSu6k5qOdtG8w67mx0guafReBCb/aTCo1vcTmnzvjrbT0Tyd4o6guw
+         LHDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hDEKwyvggY57Bvisk2EltEBMiIR+8RtK4FuSuHXE4ks=;
-        b=jT+42phfLIVmN2WrCsQLrPFyCHe5/5lMq1KmtF0LhpogPyRAKehOWFFUU7gYXCHBTc
-         QFmH9DVb/a0b2jwyGIwqQY8qi1SVoMrU5h1YHFpqLe4pih3N5S8e3nwZQzTaehgl8jZh
-         7494YEg5n1/pXquo9/YbLethYbT/kT07sKT2QJkqQXNY+xA2TvYdRKcmZ/rBHi7tPGSk
-         d8Y4MCNF6BDPjNAOT76Cv4qsN8ljkOpZp3LPjRQtSHcoHsDogYEHArWQ/kmfQ26gIO7K
-         mZmU8aG9jSKoImxkNpFc089EHRnhnAsy6sGVpUR3l/wafY1FCprJhMDJi4fsQBp/KdSf
-         jXgQ==
-X-Gm-Message-State: AODbwcD+gVwrQASG4+4KX9Bj3gNYs2XxefRl4Du3n/ENq+xA1KXdIoH0
-        4nBP9F2uQysdtZhk
-X-Received: by 10.98.69.193 with SMTP id n62mr118552pfi.216.1494522053280;
-        Thu, 11 May 2017 10:00:53 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:938:3d1d:44aa:d816])
-        by smtp.gmail.com with ESMTPSA id q28sm1150936pgc.0.2017.05.11.10.00.51
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 10:00:52 -0700 (PDT)
-Date:   Thu, 11 May 2017 10:00:50 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        jrnieder@gmail.com, spearce@spearce.org
-Subject: Re: [PATCH v3] fetch-pack: always allow fetching of literal SHA1s
-Message-ID: <20170511170050.GA83655@google.com>
-References: <20170509182042.28389-1-jonathantanmy@google.com>
- <20170510221157.8971-1-jonathantanmy@google.com>
- <20170511100553.ptyazchujgdfxotl@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ctxe5CkvXpE7pwBOeA5brhoP15g/DnfHrsz5Us/qmTk=;
+        b=GsjEfZqhu07yCtoKcrZ/Iz5EuFlCQlRsZ6azuOwzrcprHDj+bupWn8n881kwBiJtWb
+         qxBGnMMC3uQkNXM2XkO1N4ArVwSmWzkIsZLVn0Y1jaJArq33Sjrvx/3iyk8M6Oqfpcpe
+         Avrej4vF3BfHstlO9XPDp7/4Xu3sr3w4zKS/tA3xU8BOU8a5MoXGNxV/USl8ndJWNNjx
+         E0cKVyEz1gy+g8PZ6+V4xBWCOziaWPDN1suFOshHxVblmz04VCR2fH7GPWnW/v6XJsgi
+         crCIaPiZky937Ee66kLHUAo9U2hqOSb3EOCRhUf5lMUAsuCyGnxWV6wocuJcONHmQ2m9
+         1Ldg==
+X-Gm-Message-State: AODbwcAl1GP3+OGn37PYa1MsFH5oS9L6gVnqhEp748OLNQmeJMwTwbAt
+        jtpl0TPGGG6LJQ==
+X-Received: by 10.55.97.202 with SMTP id v193mr131073qkb.186.1494522122271;
+        Thu, 11 May 2017 10:02:02 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id l10sm480407qte.15.2017.05.11.10.01.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 May 2017 10:02:01 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/7] PCRE v2, PCRE v1 JIT, log -P & fixes
+Date:   Thu, 11 May 2017 17:01:35 +0000
+Message-Id: <20170511170142.15934-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20170511100553.ptyazchujgdfxotl@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/11, Jeff King wrote:
-> On Wed, May 10, 2017 at 03:11:57PM -0700, Jonathan Tan wrote:
-> 
-> > fetch-pack, when fetching a literal SHA-1 from a server that is not
-> > configured with uploadpack.allowtipsha1inwant (or similar), always
-> > returns an error message of the form "Server does not allow request for
-> > unadvertised object %s". However, it is sometimes the case that such
-> > object is advertised. This situation would occur, for example, if a user
-> > or a script was provided a SHA-1 instead of a branch or tag name for
-> > fetching, and wanted to invoke "git fetch" or "git fetch-pack" using
-> > that SHA-1.
-> > 
-> > Teach fetch-pack to also check the SHA-1s of the refs in the received
-> > ref advertisement if a literal SHA-1 was given by the user.
-> 
-> Stepping back a bit, what does this mean for a world where we implement
-> protocol extensions to let the client specify a set of refspecs to limit
-> the advertisement?
-> 
-> If we give the server our usual set of fetch refspecs, then we might
-> fail to fulfill a request that would have been advertised outside of
-> that set. And the behavior is confusing and non-transparent to the user.
-> I don't think that really makes sense, though; the advertisement we ask
-> for from the server should include only the bits we're interested in for
-> _this_ fetch.
-> 
-> If we tell the server "we are interested in abcd1234", then it's not
-> going to find any matching ref by name, obviously. So should servers
-> then treat 40-hex names in the incoming refspecs as a request to show
-> any names which have a matching sha1? That works against any server-side
-> optimizations to avoid looking at the complete set of refs, but it would
-> only have to kick in when the user actually specified a single SHA-1
-> (and even then only when allowAnySHA1 isn't on). So that's probably
-> workable.
-> 
-> None of this is your problem now either way; the advertisement-limiting
-> extension is still vaporware, albeit one we've discussed a lot. I just
-> wanted to make sure we weren't painting ourselves into any corners. And
-> I think this case could probably be handled.
+This goes on top of the 29 patch series of "Easy to review grep &
+pre-PCRE changes" (<20170511091829.5634-1-avarab@gmail.com>;
+https://public-inbox.org/git/20170511091829.5634-1-avarab@gmail.com/).
 
-I can't remember, is there any reason why it is still vaporware? As in
-what is holding us back from doing the advertisement-limiting (or doing
-away with the initial ref  advertisement)?
+This could be split into 3 unrelated things, but I have think it's
+probably easier for everyone to bundle these up, since they all go on
+top of the other series. Comments below:
+
+Ævar Arnfjörð Bjarmason (7):
+  grep: don't redundantly compile throwaway patterns under threading
+  grep: skip pthreads overhead when using one thread
+
+Internal changes to grep to not redundantly spawn threads. No
+functional changes, just internal cleanup.
+
+  log: add -P as a synonym for --perl-regexp
+
+Trivial change to add -P.
+
+  grep: add support for the PCRE v1 JIT API
+  grep: un-break building with PCRE < 8.32
+  grep: un-break building with PCRE < 8.20
+
+I tested ancient versions of PCRE, which turned up build issues that
+are fixed this time around.
+
+  grep: add support for PCRE v2
+
+The main point of this whole thing.
+
+ Documentation/rev-list-options.txt |   1 +
+ Makefile                           |  30 +++++--
+ builtin/grep.c                     |  16 +++-
+ configure.ac                       |  77 +++++++++++++---
+ grep.c                             | 180 ++++++++++++++++++++++++++++++++++++-
+ grep.h                             |  31 +++++++
+ revision.c                         |   2 +-
+ t/t4202-log.sh                     |  12 +++
+ t/test-lib.sh                      |   2 +-
+ 9 files changed, 327 insertions(+), 24 deletions(-)
 
 -- 
-Brandon Williams
+2.11.0
+
