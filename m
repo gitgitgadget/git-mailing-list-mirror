@@ -2,126 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9122D2018D
-	for <e@80x24.org>; Thu, 11 May 2017 13:50:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB2892018D
+	for <e@80x24.org>; Thu, 11 May 2017 13:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932403AbdEKNur (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 09:50:47 -0400
-Received: from mout.gmx.net ([212.227.17.20]:62824 "EHLO mout.gmx.net"
+        id S1755742AbdEKNxC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 09:53:02 -0400
+Received: from relay01.pair.com ([209.68.5.15]:36334 "EHLO relay01.pair.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932493AbdEKNuo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 09:50:44 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOkQc-1d3sWu2ml4-0063GR; Thu, 11
- May 2017 15:50:22 +0200
-Date:   Thu, 11 May 2017 15:50:21 +0200 (CEST)
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
+        id S1755604AbdEKNwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 09:52:41 -0400
+X-Greylist: delayed 459 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 May 2017 09:52:41 EDT
+Received: from orac.inputplus.co.uk (unknown [84.93.78.16])
+        by relay01.pair.com (Postfix) with ESMTP id A98AFD01203
+        for <git@vger.kernel.org>; Thu, 11 May 2017 09:45:01 -0400 (EDT)
+Received: from orac.inputplus.co.uk (orac.inputplus.co.uk [IPv6:::1])
+        by orac.inputplus.co.uk (Postfix) with ESMTP id 4EA9E20162;
+        Thu, 11 May 2017 14:45:00 +0100 (BST)
 To:     git@vger.kernel.org
-cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] compat/regex: fix compilation on Windows
-Message-ID: <6a6782863a74432094a1d7fba7f2477991ef2d16.1494510612.git.johannes.schindelin@gmx.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+From:   Ralph Corderoy <ralph@inputplus.co.uk>
+Subject: git-log(1) Doesn't Describe -L start,end Fully.
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:A/ADwkQzX6/+CKq/kLoodju+dtl7nqdrN60mZl1NQYp2VmiJT1l
- dC0v354vr0nDxJchBuhvAlpA0B9mvH3/VztN7IGV9YkX1GNvo0GI4fFDFrmRdk5pOgHVf2V
- CHLLEr+CXRovku6mH3mcVaKCSoTUFUvIaJ9WubgSR4jUVgCB9vz0qRFqf0jurPvtRou6F4Z
- XEH4MY7JPQpsHfTjAIKOQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Rc/Ji36bMTE=:zEjfrL8x4pvOPjobqdwkhQ
- FBiLTmkxjibAlnHOl96HlbxPBGTEzTt2zFEQS0po6rbDTaurd/NdQP7rsJAUzeAIDbwJe2+nd
- KYTaA2wOv6WzyeXSV7cEekihaLunuj67QzYJiprnLcWUWhB/Htn7M+3hNKJ49siJPQCvE8+KH
- k1ED7TKSgtXbYyU40Xgc34WitZ8IwNwehN1PM3u+fRaJcAu6P5JVhHrTeN+6zbUNMGs8xi/jZ
- mhhidPDcjnxjqRbTUc0U7MPcQGDt7+7sUA//dj2a/dnsOcHcY2ihoXcqwaRjNlQZKxpdNQJjS
- dKdlxWiY4x/PhBPgEvJKx2fTS5JDYhWC4Hd7HpZHigNZ3lr7bM3zPe2Q1HCtHtu/qN8JebSXI
- D9D3+sQ0p9D6ogML3neszZlP6AknS8/auUv+/WF5rL21nwG98kXKX3gZnhBHQ7Ckrx84nK4+j
- odiSgS2xEWe+okoe2GEQJo1uo9DEywl6sFpKI3+RNz3Q+xVe8ECibwz18jrxn7RmQPF8HttpM
- U2t0ikc/xHPsgBBuzFbYUlCxXaa2lmKwfcCedQOQXLW5qjx+QFks3EmAEUgoS8/a3FH115sal
- CbRtKZUDUlnJoDUazJqNzxmhrP5lvgzkFxjGMSlDFPg8FHcAhQAWnsRbTFxOC4BHFGJLB0BvS
- KtXnpGWUuyeQyG+r2108GBPCo17Q/BJdX9p+YEq3JmVm/ATXzUTphh0OrfJdG/jFGx87Yq9U/
- dgjl6UorID6nOX1PetTFXYysc9kCoxO+rrD1bc7Yjoyi/mMU0+o0E2T2yUGch4bhpQwO19X2b
- ThtQ00J
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Date:   Thu, 11 May 2017 14:45:00 +0100
+Message-Id: <20170511134500.4EA9E20162@orac.inputplus.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The real issue here is that GNU awk's regex implementation assumes a bit
-too much about the relative sizes of pointers and long integers. What they
-really want is to use intptr_t.
+Hi,
 
-This patch recapitulates what 56a1a3ab449 (Silence GCC's "cast of pointer
-to integer of a different size" warning, 2015-10-26) did to our previous
-copy of GNU awk's regex engine.
+Arch Linux's git 2.12.2-4's git-log(1) says
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-Published-As: https://github.com/dscho/git/releases/tag/compat-regex-fixes-v1
-Fetch-It-Via: git fetch https://github.com/dscho/git compat-regex-fixes-v1
+    -L <start>,<end>:<file>, -L :<funcname>:<file>
+        Trace the evolution of the line range given by "<start>,<end>"
+        (or the function name regex <funcname>) within the <file>.  You
+        may not give any pathspec limiters.  This is currently limited
+        to a walk starting from a single revision, i.e. you may only
+        give zero or one positive revision arguments.  You can specify
+        this option more than once.
 
- .../0003-Use-intptr_t-instead-of-long.patch        | 22 ++++++++++++++++++++++
- compat/regex/regcomp.c                             |  4 ++--
- 2 files changed, 24 insertions(+), 2 deletions(-)
- create mode 100644 compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch
+	<start> and <end> can take one of these forms:
 
-diff --git a/compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch b/compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch
-new file mode 100644
-index 00000000000..246ff256fb8
---- /dev/null
-+++ b/compat/regex/patches/0003-Use-intptr_t-instead-of-long.patch
-@@ -0,0 +1,22 @@
-+diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-+index 5e9ea26cd46..e6469167a80 100644
-+--- a/compat/regex/regcomp.c
-++++ b/compat/regex/regcomp.c
-+@@ -2641,7 +2641,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
-+     old_tree = NULL;
-+ 
-+   if (elem->token.type == SUBEXP)
-+-    postorder (elem, mark_opt_subexp, (void *) (long) elem->token.opr.idx);
-++    postorder (elem, mark_opt_subexp, (void *) (intptr_t) elem->token.opr.idx);
-+ 
-+   tree = create_tree (dfa, elem, NULL, (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
-+   if (BE (tree == NULL, 0))
-+@@ -3868,7 +3868,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
-+ static reg_errcode_t
-+ mark_opt_subexp (void *extra, bin_tree_t *node)
-+ {
-+-  int idx = (int) (long) extra;
-++  int idx = (int) (intptr_t) extra;
-+   if (node->token.type == SUBEXP && node->token.opr.idx == idx)
-+     node->token.opt_subexp = 1;
-+ 
-diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-index 5e9ea26cd46..e6469167a80 100644
---- a/compat/regex/regcomp.c
-+++ b/compat/regex/regcomp.c
-@@ -2641,7 +2641,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
-     old_tree = NULL;
- 
-   if (elem->token.type == SUBEXP)
--    postorder (elem, mark_opt_subexp, (void *) (long) elem->token.opr.idx);
-+    postorder (elem, mark_opt_subexp, (void *) (intptr_t) elem->token.opr.idx);
- 
-   tree = create_tree (dfa, elem, NULL, (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
-   if (BE (tree == NULL, 0))
-@@ -3868,7 +3868,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
- static reg_errcode_t
- mark_opt_subexp (void *extra, bin_tree_t *node)
- {
--  int idx = (int) (long) extra;
-+  int idx = (int) (intptr_t) extra;
-   if (node->token.type == SUBEXP && node->token.opr.idx == idx)
-     node->token.opt_subexp = 1;
- 
+	number
+            If <start> or <end> is a number, it specifies an absolute
+            line number (lines count from 1).
 
-base-commit: 4e23cefb4da69a2d884c2d5a303825f40008ca42
+It doesn't say one or both of start and end may be omitted.  Thus `-L
+,:foobar.c' is valid with start defaulting to 1 and end to the number of
+lines in foobar.c.  
+
+Nor does it explain if 1,42 covering all of foobar.c as it is now swells
+to be 1,314 as the commits are walked to larger versions of foobar.c.
+
+This was noticed because I've started with foo.c and bar.c, and each was
+`git mv'd to foobar.c in separate commits that were then each merged.
+I'm trying to `git log' HEAD's foobar.c and have it walk past the merges
+to show be foo.c and bar.c's history.
+
+`git log HEAD -- foobar.c foo.c bar.c' works, but one has to specify all
+the old names.  `git log -L ,:foobar.c' works for a simple test case,
+but I don't know if changes outside of foobar.c's current 1,42 lines
+would always show up.  And also -L triggers patches and --no-patch
+doesn't stop that;  bug?  The -L logic seems particular to `git log' so
+I can't have git-rev-list(1) do that work to provide the commits and
+then log them separately.
+
 -- 
-2.12.2.windows.2.800.gede8f145e06
+Cheers, Ralph.
+https://plus.google.com/+RalphCorderoy
