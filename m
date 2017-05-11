@@ -2,176 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F02841FF34
-	for <e@80x24.org>; Thu, 11 May 2017 10:10:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B03671FF34
+	for <e@80x24.org>; Thu, 11 May 2017 10:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932259AbdEKKKQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 06:10:16 -0400
-Received: from smtppost.atos.net ([193.56.114.166]:11433 "EHLO
-        smtppost.atos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932149AbdEKKKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 06:10:14 -0400
-Received: from mail3-ext.my-it-solutions.net (mail3-ext.my-it-solutions.net) by smarthost2.atos.net with smtp
-        (TLS: TLSv1/SSLv3,256bits,ECDHE-RSA-AES256-SHA)
-         id 471a_ce43_130b83f4_a8d3_40bd_9d84_d21b5c90cb93;
-        Thu, 11 May 2017 12:10:06 +0200
-Received: from mail2-int.my-it-solutions.net ([10.92.32.13])
-        by mail3-ext.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id v4BAA6Ji018183
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-        for <git@vger.kernel.org>; Thu, 11 May 2017 12:10:06 +0200
-Received: from DEERLM99ETVMSX.ww931.my-it-solutions.net ([10.86.142.97])
-        by mail2-int.my-it-solutions.net (8.15.2/8.15.2) with ESMTPS id v4BAA64i018706
-        (version=TLSv1 cipher=DHE-RSA-AES256-SHA bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Thu, 11 May 2017 12:10:06 +0200
-Received: from DEERLM99EZ1MSX.ww931.my-it-solutions.net ([169.254.4.240]) by
- DEERLM99ETVMSX.ww931.my-it-solutions.net ([10.86.142.97]) with mapi id
- 14.03.0339.000; Thu, 11 May 2017 12:10:06 +0200
-From:   "Kerry, Richard" <richard.kerry@atos.net>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: [PATCH v2 1/3] usability: don't ask questions if no reply is
+        id S932290AbdEKK2Q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 06:28:16 -0400
+Received: from mailhub.007spb.ru ([84.204.203.130]:42125 "EHLO
+        mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932275AbdEKK2P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 06:28:15 -0400
+Received: from tigra (tigra.domain007.com [192.168.2.102])
+        by hermes.domain007.com (Postfix) with SMTP id F20DDD400A6;
+        Thu, 11 May 2017 13:28:12 +0300 (MSK)
+Date:   Thu, 11 May 2017 13:28:12 +0300
+From:   Konstantin Khomoutov <kostix+git@007spb.ru>
+To:     "Kerry, Richard" <richard.kerry@atos.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/3] usability: don't ask questions if no reply is
  required
-Thread-Topic: [PATCH v2 1/3] usability: don't ask questions if no reply is
- required
-Thread-Index: AQHSxFFTMoBghxZwiEeKbGFf8Gd7kqHugVxcgABxfzA=
-Date:   Thu, 11 May 2017 10:10:05 +0000
-Message-ID: <61C67DC73308BD49B2D4B65072480DBA2BDAB97D@DEERLM99EZ1MSX.ww931.my-it-solutions.net>
+Message-ID: <20170511102812.3ed3sqycjmapfj35@tigra>
 References: <20170503162931.30721-1-jn.avila@free.fr>
-        <20170503210726.24121-1-jn.avila@free.fr>
+ <20170503210726.24121-1-jn.avila@free.fr>
  <xmqqa86kccca.fsf@gitster.mtv.corp.google.com>
-In-Reply-To: <xmqqa86kccca.fsf@gitster.mtv.corp.google.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.86.142.12]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <61C67DC73308BD49B2D4B65072480DBA2BDAB97D@DEERLM99EZ1MSX.ww931.my-it-solutions.net>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <61C67DC73308BD49B2D4B65072480DBA2BDAB97D@DEERLM99EZ1MSX.ww931.my-it-solutions.net>
+User-Agent: NeoMutt/20170306 (1.8.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-U29tZSBtb3JlIGdyYW1tYXIvdXNhZ2Ugbm90ZXMgLi4uLi4NCg0KPiAtLS0tLU9yaWdpbmFsIE1l
-c3NhZ2UtLS0tLQ0KPiBGcm9tOiBnaXQtb3duZXJAdmdlci5rZXJuZWwub3JnIFttYWlsdG86Z2l0
-LW93bmVyQHZnZXIua2VybmVsLm9yZ10gT24NCj4gQmVoYWxmIE9mIEp1bmlvIEMgSGFtYW5vDQo+
-IFNlbnQ6IFRodXJzZGF5LCBNYXkgMTEsIDIwMTcgNDoxNiBBTQ0KPiBUbzogSmVhbi1Ob2VsIEF2
-aWxhIDxqbi5hdmlsYUBmcmVlLmZyPg0KPiBDYzogZ2l0QHZnZXIua2VybmVsLm9yZzsgcmFzaG1p
-cGFpMzZAZ21haWwuY29tDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMS8zXSB1c2FiaWxpdHk6
-IGRvbid0IGFzayBxdWVzdGlvbnMgaWYgbm8gcmVwbHkgaXMNCj4gcmVxdWlyZWQNCj4NCj4gSmVh
-bi1Ob2VsIEF2aWxhIDxqbi5hdmlsYUBmcmVlLmZyPiB3cml0ZXM6DQo+DQo+ID4gZGlmZiAtLWdp
-dCBhL2J1aWx0aW4vYW0uYyBiL2J1aWx0aW4vYW0uYyBpbmRleCBhOTVkZDhiNGUuLmY1YWZhNDM4
-ZA0KPiA+IDEwMDY0NA0KPiA+IC0tLSBhL2J1aWx0aW4vYW0uYw0KPiA+ICsrKyBiL2J1aWx0aW4v
-YW0uYw0KPiA+IEBAIC0xMzEyLDcgKzEzMTIsNyBAQCBzdGF0aWMgaW50IHBhcnNlX21haWwoc3Ry
-dWN0IGFtX3N0YXRlICpzdGF0ZSwgY29uc3QNCj4gY2hhciAqbWFpbCkNCj4gPiAgICAgfQ0KPiA+
-DQo+ID4gICAgIGlmIChpc19lbXB0eV9maWxlKGFtX3BhdGgoc3RhdGUsICJwYXRjaCIpKSkgew0K
-PiA+IC0gICAgICAgICAgIHByaW50Zl9sbihfKCJQYXRjaCBpcyBlbXB0eS4gV2FzIGl0IHNwbGl0
-IHdyb25nPyIpKTsNCj4gPiArICAgICAgICAgICBwcmludGZfbG4oXygiUGF0Y2ggaXMgZW1wdHku
-IEl0IG1heSBoYXZlIGJlZW4gc3BsaXQgd3JvbmcuIikpOw0KPiA+ICAgICAgICAgICAgIGRpZV91
-c2VyX3Jlc29sdmUoc3RhdGUpOw0KPiA+ICAgICB9DQo+DQo+IFdoaWxlIEkgZG8gbm90IGJlbG9u
-ZyB0byAid2Ugc2hvdWxkIGZlZWwgZnJlZSB0byBhc2sgcmhldG9yaWNhbCBxdWVzdGlvbnMiDQo+
-IGNhbXAsIEkgZG8gbm90IG1pbmQgdGhpcyBwYXJ0aWN1bGFyIHJld3JpdGUuICBBbiBvYnZpb3Vz
-IGFsdGVybmF0aXZlIGlzIGp1c3QgdG8NCj4gc3RvcCB0aGUgc2VudGVuY2Ugd2l0aCAiUGF0Y2gg
-aXMgZW1wdHkuIg0KPg0KPiBBdCB0aGlzIHBvaW50IGluIHRoZSBjb2RlLCB3ZSBkbyBub3QgZXZl
-biBrbm93IHdoeSB3ZSBhcmUgc2VlaW5nIGFuIGVtcHR5DQo+IHBhdGNoLCBhbmQgInBlcmhhcHMg
-aXQgd2FzIGluY29ycmVjdGx5IHNwbGl0IiBpcyBub3QgYSBwYXJ0aWN1bGFybHkgdXNlZnVsIGlk
-bGUNCj4gc3BlY3VsYXRpb24gdGhhdCB3b3VsZCBoZWxwIHRoZSB1c2VyIHdobyBzZWVzIGl0Lg0K
-DQpzL3NwbGl0IHdyb25nL3NwbGl0IHdyb25nbHkvDQpUaG91Z2ggdGhlIGZ1cnRoZXIgZGlzY3Vz
-c2lvbiBzdWdnZXN0cyB0aGF0IHBhcnQgb2YgdGhlIHBocmFzZSBtaWdodCBiZXN0IGJlIHJlbW92
-ZWQgZW50aXJlbHkuDQoNCg0KPiA+IEBAIC0xOTQwLDcgKzE5NDAsNyBAQCBzdGF0aWMgdm9pZCBh
-bV9yZXNvbHZlKHN0cnVjdCBhbV9zdGF0ZSAqc3RhdGUpDQo+ID4NCj4gPiAgICAgaWYgKHVubWVy
-Z2VkX2NhY2hlKCkpIHsNCj4gPiAgICAgICAgICAgICBwcmludGZfbG4oXygiWW91IHN0aWxsIGhh
-dmUgdW5tZXJnZWQgcGF0aHMgaW4geW91ciBpbmRleC5cbiINCj4gPiAtICAgICAgICAgICAgICAg
-ICAgICJEaWQgeW91IGZvcmdldCB0byB1c2UgJ2dpdCBhZGQnPyIpKTsNCj4gPiArICAgICAgICAg
-ICAgICAgICAgICJZb3UgbWlnaHQgd2FudCB0byB1c2UgJ2dpdCBhZGQnIG9uIHRoZW0uIikpOw0K
-Pg0KPiBUaGlzIGNhc2UgaXMgKm5vdCogYW4gInJoZXRvcmljYWwgcXVlc3Rpb24gaXMgdGhlIG1v
-c3Qgc3VjY2luY3Qgd2F5IHRvIGNvbnZleQ0KPiB0aGUgaW5mb3JtYXRpb24iIHNpdHVhdGlvbjsg
-SSB0aGluayB0aGlzIHJld3JpdGUgaXMgYSBkZWZpbml0ZSBpbXByb3ZlbWVudC4NCj4gIllvdSBt
-aWdodCB3YW50IHRvICdnaXQgYWRkJyB0aGVtIiBtYXkgYmUgbW9yZSBzdWNjaW5jdCwgdGhvdWdo
-Lg0KDQoiWW91IG1pZ2h0IHdhbnQgdG8gdXNlICdnaXQgYWRkJyBvbiB0aGVtLiINCkl0IGlzbid0
-IGFib3V0IHdoYXQgeW91ICp3YW50KiB0byB1c2UsIGl0J3Mgd2hhdCB5b3UgKm5lZWQqIHRvIHVz
-ZSwgaXNuJ3QgaXQ/ICBBbmQgSSdtIG5vdCBoYXBweSBhYm91dCAib24gdGhlbSIuICBJJ20gbm90
-IHN1cmUgcXVpdGUgd2h5LCBidXQgdGhlIHBocmFzaW5nIHNlZW1zIG9kZC4NCkhvdyBhYm91dCAi
-WW91IG1pZ2h0IG5lZWQgdG8gdXNlICdnaXQgYWRkJy4iLCBvciAiWW91IG1pZ2h0IG5lZWQgdG8g
-dXNlICdnaXQgYWRkJyBmaXJzdC4iLCBvciAiJ2dpdCBhZGQnIG5lZWRzIHRvIGJlIHVzZWQgdG8g
-YWRkIGZpbGVzLiIgLCAgb3IgIidnaXQgYWRkJyBuZWVkcyB0byBiZSB1c2VkIGJlZm9yZSBhbnkg
-b3RoZXIgZ2l0IGNvbW1hbmQgbWF5IGJlIHVzZWQuIi4NCg0KDQo+ID4gZGlmZiAtLWdpdCBhL2J1
-aWx0aW4vY2hlY2tvdXQuYyBiL2J1aWx0aW4vY2hlY2tvdXQuYyBpbmRleA0KPiA+IGJmYTU0MTlm
-My4uMDUwMzdiOWI2IDEwMDY0NA0KPiA+IC0tLSBhL2J1aWx0aW4vY2hlY2tvdXQuYw0KPiA+ICsr
-KyBiL2J1aWx0aW4vY2hlY2tvdXQuYw0KPiA+IEBAIC0xMjg3LDcgKzEyODcsNyBAQCBpbnQgY21k
-X2NoZWNrb3V0KGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndiwNCj4gY29uc3QgY2hhciAqcHJl
-Zml4KQ0KPiA+ICAgICAgICAgICAgICAqLw0KPiA+ICAgICAgICAgICAgIGlmIChvcHRzLm5ld19i
-cmFuY2ggJiYgYXJnYyA9PSAxKQ0KPiA+ICAgICAgICAgICAgICAgICAgICAgZGllKF8oIkNhbm5v
-dCB1cGRhdGUgcGF0aHMgYW5kIHN3aXRjaCB0byBicmFuY2ggJyVzJw0KPiBhdCB0aGUgc2FtZSB0
-aW1lLlxuIg0KPiA+IC0gICAgICAgICAgICAgICAgICAgICAgICAgIkRpZCB5b3UgaW50ZW5kIHRv
-IGNoZWNrb3V0ICclcycgd2hpY2ggY2FuIG5vdCBiZQ0KPiByZXNvbHZlZCBhcyBjb21taXQ/Iiks
-DQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAiJyVzJyBjYW4gbm90IGJlIHJlc29sdmVk
-IGFzIGNvbW1pdCwgYnV0IGl0DQo+IHNob3VsZC4iKSwNCg0KPiBJIGFtIG5vdCBzdXJlIGEgZmly
-bSBzdGF0ZW1lbnQgImJ1dCBpdCBzaG91bGQiIGlzIGFuIGltcHJvdmVtZW50Lg0KPiBUaGlzIG1l
-c3NhZ2UgaXMgZ2l2ZW4gd2hlbiB0aGUgdXNlciBzYXlzOg0KPg0KPiAgICAgJCBnaXQgY2hlY2tv
-dXQgLWIgbmV3b25lIG5hc3Rlcg0KPg0KPiBBbmQgImJ1dCBpdCBzaG91bGQiIGlzIGFwcHJvcHJp
-YXRlIHdoZW4gaXQgaXMgYSBtaXN0eXBlZCAiSSB3YW50IHRvIGNyZWF0ZSBhbmQNCj4gY2hlY2tv
-dXQgJ25ld29uZScgYnJhbmNoIGF0IHRoZSBzYW1lIGNvbW1pdCBhcyAnbWFzdGVyJw0KPiBicmFu
-Y2giLCBpLmUuDQo+DQo+ICAgICAkIGdpdCBjaGVja291dCAtYiBuZXdvbmUgbWFzdGVyDQo+DQo+
-IFRoZSByZWFzb24gd2h5IHRoZSBtZXNzYWdlIGJlZ2lucyB3aXRoICJDYW5ub3QgdXBkYXRlIHBh
-dGhzIGFuZCAuLi4iDQo+IGlzIGJlY2F1c2UgaXQgY291bGQgYmUgYSBtaXN0eXBlZCAiSSB3YW50
-IHRvIGdyYWIgdGhlIGZpbGUgJ25hc3RlcicNCj4gb3V0IG9mICduZXdvbmUnIGJyYW5jaCIsIGku
-ZS4gdGhlIHVzZXIgbWVhbnQgdG8gc2F5IHRoaXM6DQo+DQo+ICAgICAkIGdpdCBjaGVja291dCBu
-ZXdvbmUgbmFzdGVyDQo+DQo+IElPVywgdGhlIGN1cnJlbnQgZXJyb3IgbWVzc2FnZSBpcyBoZWRn
-aW5nIGl0cyBiZXRzLCBiZWNhdXNlIGl0IGRvZXMgbm90IHdhbnQNCj4gdG8gZXhjbHVkZSB0aGUg
-cG9zc2liaWxpdHkgdGhhdCAiLWIiIGlzIHRoZXJlIGJ5IG1pc3Rha2UgKGFzIG9wcG9zZWQgdG8g
-J25hc3RlcicNCj4gaXMgdGhlIHR5cG8pLg0KPg0KPiBJZiB3ZSBpZ25vcmUgdGhhdCBwb3NzaWJp
-bGl0eSBhbmQgYXNzdW1lIHRoYXQgJ25hc3RlcicgaXMgdGhlIHR5cG8gKGlvdywgdGhlDQo+IHVz
-ZXIgZGlkIG1lYW4gIi1iIiksIHRoZW4geW91ciB1cGRhdGVkIG1lc3NhZ2UgbWFrZXMgc2Vuc2Uu
-ICBCdXQgaWYgd2UNCj4gY29tbWl0IHRvICJ0aGUgdXNlciBtZWFudCAtYiIsIHdlIGNvdWxkIG1h
-a2UgdGhlIG1lc3NhZ2UgZXZlbiBtb3JlDQo+IGhlbHBmdWwgYnkgYmVpbmcgbW9yZSBkaXJlY3Qs
-IGUuZy4NCj4NCj4gICAgICAgZGllKCInJXMnIGlzIG5vdCBhIGNvbW1pdCBhbmQgYSBicmFuY2gg
-JyVzJyBjYW5ub3QgYmUgY3JlYXRlZCBmcm9tDQo+IGl0IiwNCj4gICAgICAgICAgIGFyZ3ZbMF0s
-IG9wdHMubmV3X2JyYW5jaCk7DQoNCiInJXMnIGNhbiBub3QgYmUgcmVzb2x2ZWQgYXMgY29tbWl0
-LCBidXQgaXQgc2hvdWxkLiINCkl0IHNob3VsZCB3aGF0ID8gIEJlIHJlc29sdmVkLCBvciBjb21t
-aXQ/ICBPciBzb21ldGhpbmcgZWxzZT8NClRoZSBmdXJ0aGVyIGNvbW1lbnRzIGFib3ZlIHN1Z2dl
-c3QgdGhhdCBpdCBtaWdodCBldmVuIGJlIGp1c3QgIiclcycgY2FuIG5vdCBiZSByZXNvbHZlZC4i
-DQoNCg0KPiA+IGRpZmYgLS1naXQgYS9oZWxwLmMgYi9oZWxwLmMNCj4gPiBpbmRleCBiYzZjZDE5
-Y2YuLjQ2NThhNTVjNiAxMDA2NDQNCj4gPiAtLS0gYS9oZWxwLmMNCj4gPiArKysgYi9oZWxwLmMN
-Cj4gPiBAQCAtNDExLDggKzQxMSw4IEBAIGNvbnN0IGNoYXIgKmhlbHBfdW5rbm93bl9jbWQoY29u
-c3QgY2hhciAqY21kKQ0KPiA+DQo+ID4gICAgIGlmIChTSU1JTEFSX0VOT1VHSChiZXN0X3NpbWls
-YXJpdHkpKSB7DQo+ID4gICAgICAgICAgICAgZnByaW50Zl9sbihzdGRlcnIsDQo+ID4gLSAgICAg
-ICAgICAgICAgICAgICAgICBRXygiXG5EaWQgeW91IG1lYW4gdGhpcz8iLA0KPiA+IC0gICAgICAg
-ICAgICAgICAgICAgICAgICAgIlxuRGlkIHlvdSBtZWFuIG9uZSBvZiB0aGVzZT8iLA0KPiA+ICsg
-ICAgICAgICAgICAgICAgICAgICAgUV8oIlxuVGhlIG1vc3QgYXBwcm9hY2hpbmcgY29tbWFuZCBp
-cyIsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAiXG5UaGUgbW9zdCBhcHByb2FjaGlu
-ZyBjb21tYW5kcyBhcmUiLA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgbikpOw0KPg0KPiBX
-aXRoICJjbG9zZXN0IiBvciAibW9zdCBzaW1pbGFyIiwgYXMgb3RoZXJzIHBvaW50ZWQgb3V0LCBJ
-IHRoaW5rIHRoaXMgbWF5IGJlIGFuDQo+IGltcHJvdmVtZW50Lg0KPg0KPiBUaGFua3MuDQoNClJp
-Y2hhcmQgS2VycnkNCkJOQ1MgRW5naW5lZXIsIFNJIFNPTCBUZWxjbyAmIE1lZGlhIFZlcnRpY2Fs
-IFByYWN0aWNlDQoNClQ6ICs0NCAoMCkyMCAzNjE4IDI2NjkNCk06ICs0NCAoMCk3ODEyIDMyNTUx
-OA0KTHluYzogKzQ0ICgwKSAyMCAzNjE4IDA3NzgNClJvb20gRzMwMCwgU3RhZGl1bSBIb3VzZSwg
-V29vZCBMYW5lLCBMb25kb24sIFcxMiA3VEENCnJpY2hhcmQua2VycnlAYXRvcy5uZXQNCg0KDQpB
-dG9zLCBBdG9zIENvbnN1bHRpbmcsIFdvcmxkbGluZSBhbmQgQ2Fub3B5IFRoZSBPcGVuIENsb3Vk
-IENvbXBhbnkgYXJlIHRyYWRpbmcgbmFtZXMgdXNlZCBieSB0aGUgQXRvcyBncm91cC4gVGhlIGZv
-bGxvd2luZyB0cmFkaW5nIGVudGl0aWVzIGFyZSByZWdpc3RlcmVkIGluIEVuZ2xhbmQgYW5kIFdh
-bGVzOiBBdG9zIElUIFNlcnZpY2VzIFVLIExpbWl0ZWQgKHJlZ2lzdGVyZWQgbnVtYmVyIDAxMjQ1
-NTM0KSwgQXRvcyBDb25zdWx0aW5nIExpbWl0ZWQgKHJlZ2lzdGVyZWQgbnVtYmVyIDA0MzEyMzgw
-KSwgQXRvcyBXb3JsZGxpbmUgVUsgTGltaXRlZCAocmVnaXN0ZXJlZCBudW1iZXIgMDg1MTQxODQp
-IGFuZCBDYW5vcHkgVGhlIE9wZW4gQ2xvdWQgQ29tcGFueSBMaW1pdGVkIChyZWdpc3RyYXRpb24g
-bnVtYmVyIDA4MDExOTAyKS4gVGhlIHJlZ2lzdGVyZWQgb2ZmaWNlIGZvciBlYWNoIGlzIGF0IDQg
-VHJpdG9uIFNxdWFyZSwgUmVnZW504oCZcyBQbGFjZSwgTG9uZG9uLCBOVzEgM0hHLlRoZSBWQVQg
-Tm8uIGZvciBlYWNoIGlzOiBHQjIzMjMyNzk4My4NCg0KVGhpcyBlLW1haWwgYW5kIHRoZSBkb2N1
-bWVudHMgYXR0YWNoZWQgYXJlIGNvbmZpZGVudGlhbCBhbmQgaW50ZW5kZWQgc29sZWx5IGZvciB0
-aGUgYWRkcmVzc2VlLCBhbmQgbWF5IGNvbnRhaW4gY29uZmlkZW50aWFsIG9yIHByaXZpbGVnZWQg
-aW5mb3JtYXRpb24uIElmIHlvdSByZWNlaXZlIHRoaXMgZS1tYWlsIGluIGVycm9yLCB5b3UgYXJl
-IG5vdCBhdXRob3Jpc2VkIHRvIGNvcHksIGRpc2Nsb3NlLCB1c2Ugb3IgcmV0YWluIGl0LiBQbGVh
-c2Ugbm90aWZ5IHRoZSBzZW5kZXIgaW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSB0aGlzIGVtYWlsIGZy
-b20geW91ciBzeXN0ZW1zLiBBcyBlbWFpbHMgbWF5IGJlIGludGVyY2VwdGVkLCBhbWVuZGVkIG9y
-IGxvc3QsIHRoZXkgYXJlIG5vdCBzZWN1cmUuIEF0b3MgdGhlcmVmb3JlIGNhbiBhY2NlcHQgbm8g
-bGlhYmlsaXR5IGZvciBhbnkgZXJyb3JzIG9yIHRoZWlyIGNvbnRlbnQuIEFsdGhvdWdoIEF0b3Mg
-ZW5kZWF2b3VycyB0byBtYWludGFpbiBhIHZpcnVzLWZyZWUgbmV0d29yaywgd2UgZG8gbm90IHdh
-cnJhbnQgdGhhdCB0aGlzIHRyYW5zbWlzc2lvbiBpcyB2aXJ1cy1mcmVlIGFuZCBjYW4gYWNjZXB0
-IG5vIGxpYWJpbGl0eSBmb3IgYW55IGRhbWFnZXMgcmVzdWx0aW5nIGZyb20gYW55IHZpcnVzIHRy
-YW5zbWl0dGVkLiBUaGUgcmlza3MgYXJlIGRlZW1lZCB0byBiZSBhY2NlcHRlZCBieSBldmVyeW9u
-ZSB3aG8gY29tbXVuaWNhdGVzIHdpdGggQXRvcyBieSBlbWFpbC4NCg==
+On Thu, May 11, 2017 at 10:10:05AM +0000, Kerry, Richard wrote:
+
+[...]
+> > > @@ -1940,7 +1940,7 @@ static void am_resolve(struct am_state *state)
+> > >
+> > >     if (unmerged_cache()) {
+> > >             printf_ln(_("You still have unmerged paths in your index.\n"
+> > > -                   "Did you forget to use 'git add'?"));
+> > > +                   "You might want to use 'git add' on them."));
+> >
+> > This case is *not* an "rhetorical question is the most succinct way to convey
+> > the information" situation; I think this rewrite is a definite improvement.
+> > "You might want to 'git add' them" may be more succinct, though.
+> 
+> "You might want to use 'git add' on them." It isn't about what you
+> *want* to use, it's what you *need* to use, isn't it?  And I'm not
+> happy about "on them".  I'm not sure quite why, but the phrasing seems
+> odd.  How about "You might need to use 'git add'.", or "You might need
+> to use 'git add' first.", or "'git add' needs to be used to add
+> files." ,  or "'git add' needs to be used before any other git command
+> may be used.".
+
+Why not just
+
+  You should run `git add` on each file with resolved conflicts to mark
+  them as such.
+
+I'm not an English speaker but IMHO this phrasing concentrates on the
+essense of the problem.  It's far from being succint, unfortunately.
+
+I also wonder what to do with "deleted by them" state of certain files
+which are also "unmerged" but `git add`-ing them would be a wrong thing
+to do if we want to accept the upstream's decision to delete the file.
+So maybe something like
+
+  You might run `git rm` on a file to accept "deleted by them" for it.
+
+appended to the original hint would be good.
+
