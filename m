@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEC5D1FF34
-	for <e@80x24.org>; Thu, 11 May 2017 09:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E83C1FF34
+	for <e@80x24.org>; Thu, 11 May 2017 09:19:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755228AbdEKJTb (ORCPT <rfc822;e@80x24.org>);
+        id S1755233AbdEKJTd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 05:19:33 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36055 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755226AbdEKJTb (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 May 2017 05:19:31 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35317 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755191AbdEKJT2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:19:28 -0400
-Received: by mail-wm0-f65.google.com with SMTP id v4so5490991wmb.2
-        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:28 -0700 (PDT)
+Received: by mail-wm0-f67.google.com with SMTP id u65so5450246wmu.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8l9J7M9lSiv6oD3DEdxpI6o+oIlf9hNDjG7nPDYwTRE=;
-        b=JUcFuSAOq0md/EBf0JiTGanrxBSBdYeJg3Mt3w5dxxRP7EAZc4zN7KziAEIGsU7NjF
-         w9IZk+5j2il9hOSi3jxXhHWKh4GQxRgS4Ur0tD3bWjGxEVwUXoTMos7WGBbjTXHt+a3p
-         95hNcafJcZjPMFaAdAPEJQcIAbi7XVm+HMfDz4Kk/vqCKzvto/2LgLACXjtX0Wjm80+L
-         IkdRCk7WaFJYGW5hfls5nG0y+eJzT/7zb02CjKhtmSq9Vel0iFd0njQyC+ZhUNr6ceoS
-         CH+dT40U4TnIvQPiziqFFJyIKCAA0gQPl2P/1B9wiqJWLc2kg5sDJ1DDHEUGGeVN0cmW
-         xNog==
+        bh=5rl0Indxe4Sbsgj0FtQ8anmUKrW1lYu0eqzAFnE3Y04=;
+        b=e5ar6qP/hyHSoSOoGmtqtl06cPXLlEiq8tO8yzGw6v2xoL6OK4UE34ALcaMkVo3oXu
+         +88UbthCbmA2GSmj6VI6mLZJnZH8SGZvnemvfSR+lgVsw/ReucGmm5tUoJOZfjHDAati
+         HarOMPWDblXMjmiiT90OoppezKwNxr10YP6oe/R4ouoEFhFlV/tVIHJ51Te1nEBNg4Gg
+         jrCxHcDN4gaYJcdIee2v2xbu/fqWfJQAP0Vgsoro8bEbUo93uw4tEvb1TxMRr7fltjLu
+         3ek7FdjcykV+e9C1gVkbli/nRSHtYep2uAgYml7vR1eDHmvKxyyeIuWzVJTSWVHVWpv4
+         zvpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8l9J7M9lSiv6oD3DEdxpI6o+oIlf9hNDjG7nPDYwTRE=;
-        b=fSbUqXbWS4T5BwRCamDCrIJSSAWdxTzN2+lHGBMnYYRW5lbiU8hrw93gsGvM7M4mjc
-         Jfo7Wysdii6xF0kKuzmNkBDJSs4I0/DtEZp3OrYmlhQti5AW1kSQIAw3z4VB9JVAoFwl
-         +8xeQN+AQEIa2AKve+0V+FMgr5/PK+4Bp9valSIqG2yTYDf573guWBW+OMHnHb95TFT8
-         +/y7peF0rYN5RVyTAsQ8cahb+HRepXLHUfKOL9OTLXk6NtrYoCI18FXfvDIA9a9Pqb9W
-         ZHbWevE0JjEbBD8sCFHNNPYWB33Mvph1wFWRGWjRgaizb8WSwtjNIVkAGT+ufvpLYvN2
-         uVGQ==
-X-Gm-Message-State: AODbwcCLbpgoMOk+Hsjwl/iWt0t5osJUI7ZFVawjDMWSu4KDN4dN3m5v
-        5Ymh+L5E4A4Wb46BJ3E=
-X-Received: by 10.80.169.193 with SMTP id n59mr7668816edc.127.1494494367016;
-        Thu, 11 May 2017 02:19:27 -0700 (PDT)
+        bh=5rl0Indxe4Sbsgj0FtQ8anmUKrW1lYu0eqzAFnE3Y04=;
+        b=FUgoGUaSQM6PorUybqaP7QZ5o7GFMQKcEDU5s+bBsBLQvZnWZPOHj0cdKakGpqM7rb
+         dhXoCZZzrB3CitI/xDa7M2yVBjUIYh2pPSfJtvW7XBvb6ZT7v4/cjUghse4IrCdYaKwj
+         WlDUl0r5S5vnn1yeRyjHwTbxgsYhRlKnFZlwS98amm48Nir4y00Q74za+kPAay4ZkwzD
+         DfNOrrTJTxvwiENdJWh5ApSpPaP3ed0ZkpfBv+42zunkR6MYd/tT+sU2z1xskt/T+Ygm
+         WJpSCbYFXRKQ1lPs9TjD4prKWiep0DzPqExtQqtOGz83y4guZIljVYi7+L1xgBFfeiCx
+         dPvg==
+X-Gm-Message-State: AODbwcDEgmW05YRRXVmZ+W+GQ+T0L5lfOQoz+/ACZjHirpHa9GsIpInC
+        zkW7Cm7en09FXQ==
+X-Received: by 10.80.174.131 with SMTP id e3mr21080edd.166.1494494370392;
+        Thu, 11 May 2017 02:19:30 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.25
+        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 02:19:26 -0700 (PDT)
+        Thu, 11 May 2017 02:19:29 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/29] grep: add tests to fix blind spots with \0 patterns
-Date:   Thu, 11 May 2017 09:18:13 +0000
-Message-Id: <20170511091829.5634-14-avarab@gmail.com>
+Subject: [PATCH 14/29] perf: add a GIT_PERF_MAKE_COMMAND for when *_MAKE_OPTS won't do
+Date:   Thu, 11 May 2017 09:18:14 +0000
+Message-Id: <20170511091829.5634-15-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511091829.5634-1-avarab@gmail.com>
 References: <20170511091829.5634-1-avarab@gmail.com>
@@ -75,117 +75,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Address a big blind spot in the tests for patterns containing \0. The
-is_fixed() function considers any string that contains \0 fixed, even
-if it contains regular expression metacharacters, those patterns are
-currently matched with kwset.
+Add a git GIT_PERF_MAKE_COMMAND variable to compliment the existing
+GIT_PERF_MAKE_OPTS facility. This allows specifying an arbitrary shell
+command to execute instead of 'make'.
 
-Before this change removing that memchr(s, 0, len) check from
-is_fixed() wouldn't change the result of any of the tests, since
-regcomp() will happily match the part before the \0.
+This is useful e.g. in cases where the name, semantics or defaults of
+a Makefile flag have changed over time. It can even be used to change
+the contents of the tree, useful for monkeypatching ancient versions
+of git to get them to build.
 
-Furthermore, the kwset path is dependent on whether the the -i flag is
-on, and whether the pattern has any non-ASCII characters, but none of
-this was tested for.
+This opens Pandora's box in some ways, it's now possible to
+"jailbreak" the perf environment and e.g. modify the source tree via
+this arbitrary instead of just issuing a custom "make" command, such a
+command has to be re-entrant in the sense that subsequent perf runs
+will re-use the possibly modified tree.
 
-See the a previous commit in this series ("grep: add tests to fix
-blind spots with \0 patterns", 2017-04-21) for further details &
-rationale.
+It would be pointless to try to mitigate or work around that caveat in
+a tool purely aimed at Git developers, so this change makes no attempt
+to do so.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7008-grep-binary.sh | 71 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 71 insertions(+)
+ Makefile      |  3 +++
+ t/perf/README | 19 +++++++++++++++++--
+ t/perf/run    | 11 +++++++++--
+ 3 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-index 1afba6cee9..ba3db06501 100755
---- a/t/t7008-grep-binary.sh
-+++ b/t/t7008-grep-binary.sh
-@@ -22,6 +22,18 @@ nul_match() {
- 			printf '$pattern' | q_to_nul >f &&
- 			test_must_fail git grep -f f $flags a
- 		"
-+	elif test $status = "T1"
-+	then
-+		test_expect_failure "git grep -f f $flags '$pattern_human' a" "
-+			printf '$pattern' | q_to_nul >f &&
-+			git grep -f f $flags a
-+		"
-+	elif test $status = "T0"
-+	then
-+		test_expect_failure "git grep -f f $flags '$pattern_human' a" "
-+			printf '$pattern' | q_to_nul >f &&
-+			test_must_fail git grep -f f $flags a
-+		"
- 	else
- 		test_expect_success "PANIC: Test framework error. Unknown status $status" 'false'
- 	fi
-@@ -98,6 +110,65 @@ nul_match 1 '-Fi' 'YQf'
- nul_match 0 '-Fi' 'YQx'
- nul_match 1 '' 'yQf'
- nul_match 0 '' 'yQx'
-+nul_match 1 '' 'æQð'
-+nul_match 1 '-F' 'eQm[*]c'
-+nul_match 1 '-Fi' 'EQM[*]C'
-+
-+# Regex patterns that would match but shouldn't with -F
-+nul_match 0 '-F' 'yQ[f]'
-+nul_match 0 '-F' '[y]Qf'
-+nul_match 0 '-Fi' 'YQ[F]'
-+nul_match 0 '-Fi' '[Y]QF'
-+nul_match 0 '-F' 'æQ[ð]'
-+nul_match 0 '-F' '[æ]Qð'
-+nul_match 0 '-Fi' 'ÆQ[Ð]'
-+nul_match 0 '-Fi' '[Æ]QÐ'
-+
-+# kwset is disabled on -i & non-ASCII. No way to match non-ASCII \0
-+# patterns case-insensitively.
-+nul_match T1 '-i' 'ÆQÐ'
-+
-+# \0 implicitly disables regexes. This is an undocumented internal
-+# limitation.
-+nul_match T1 '' 'yQ[f]'
-+nul_match T1 '' '[y]Qf'
-+nul_match T1 '-i' 'YQ[F]'
-+nul_match T1 '-i' '[Y]Qf'
-+nul_match T1 '' 'æQ[ð]'
-+nul_match T1 '' '[æ]Qð'
-+nul_match T1 '-i' 'ÆQ[Ð]'
-+
-+# ... because of \0 implicitly disabling regexes regexes that
-+# should/shouldn't match don't do the right thing.
-+nul_match T1 '' 'eQm.*cQ'
-+nul_match T1 '-i' 'EQM.*cQ'
-+nul_match T0 '' 'eQm[*]c'
-+nul_match T0 '-i' 'EQM[*]C'
-+
-+# Due to the REG_STARTEND extension when kwset() is disabled on -i &
-+# non-ASCII the string will be matched in its entirety, but the
-+# pattern will be cut off at the first \0.
-+nul_match 0 '-i' 'NOMATCHQð'
-+nul_match T0 '-i' '[Æ]QNOMATCH'
-+nul_match T0 '-i' '[æ]QNOMATCH'
-+# Matches, but for the wrong reasons, just stops at [æ]
-+nul_match 1 '-i' '[Æ]Qð'
-+nul_match 1 '-i' '[æ]Qð'
-+
-+# Ensure that the matcher doesn't regress to something that stops at
-+# \0
-+nul_match 0 '-F' 'yQ[f]'
-+nul_match 0 '-Fi' 'YQ[F]'
-+nul_match 0 '' 'yQNOMATCH'
-+nul_match 0 '' 'QNOMATCH'
-+nul_match 0 '-i' 'YQNOMATCH'
-+nul_match 0 '-i' 'QNOMATCH'
-+nul_match 0 '-F' 'æQ[ð]'
-+nul_match 0 '-Fi' 'ÆQ[Ð]'
-+nul_match 0 '' 'yQNÓMATCH'
-+nul_match 0 '' 'QNÓMATCH'
-+nul_match 0 '-i' 'YQNÓMATCH'
-+nul_match 0 '-i' 'QNÓMATCH'
+diff --git a/Makefile b/Makefile
+index eedadb8056..d1587452f1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2272,6 +2272,9 @@ endif
+ ifdef GIT_PERF_MAKE_OPTS
+ 	@echo GIT_PERF_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_OPTS)))'\' >>$@+
+ endif
++ifdef GIT_PERF_MAKE_COMMAND
++	@echo GIT_PERF_MAKE_COMMAND=\''$(subst ','\'',$(subst ','\'',$(GIT_PERF_MAKE_COMMAND)))'\' >>$@+
++endif
+ ifdef GIT_INTEROP_MAKE_OPTS
+ 	@echo GIT_INTEROP_MAKE_OPTS=\''$(subst ','\'',$(subst ','\'',$(GIT_INTEROP_MAKE_OPTS)))'\' >>$@+
+ endif
+diff --git a/t/perf/README b/t/perf/README
+index 49ea4349be..b3d95042a8 100644
+--- a/t/perf/README
++++ b/t/perf/README
+@@ -60,8 +60,23 @@ You can set the following variables (also in your config.mak):
  
- test_expect_success 'grep respects binary diff attribute' '
- 	echo text >t &&
+     GIT_PERF_MAKE_OPTS
+ 	Options to use when automatically building a git tree for
+-	performance testing.  E.g., -j6 would be useful.
+-
++	performance testing. E.g., -j6 would be useful. Passed
++	directly to make as "make $GIT_PERF_MAKE_OPTS".
++
++    GIT_PERF_MAKE_COMMAND
++	An arbitrary command that'll be run in place of the make
++	command, if set the GIT_PERF_MAKE_OPTS variable is
++	ignored. Useful in cases where source tree changes might
++	require issuing a different make command to different
++	revisions.
++
++	This can be (ab)used to monkeypatch or otherwise change the
++	tree about to be built. Note that the build directory can be
++	re-used for subsequent runs so the make command might get
++	executed multiple times on the same tree, but don't count on
++	any of that, that's an implementation detail that might change
++	in the future.
++ 
+     GIT_PERF_REPO
+     GIT_PERF_LARGE_REPO
+ 	Repositories to copy for the performance tests.  The normal
+diff --git a/t/perf/run b/t/perf/run
+index c788d713ae..b61024a830 100755
+--- a/t/perf/run
++++ b/t/perf/run
+@@ -37,8 +37,15 @@ build_git_rev () {
+ 			cp "../../$config" "build/$rev/"
+ 		fi
+ 	done
+-	(cd build/$rev && make $GIT_PERF_MAKE_OPTS) ||
+-	die "failed to build revision '$mydir'"
++	(
++		cd build/$rev &&
++		if test -n "$GIT_PERF_MAKE_COMMAND"
++		then
++			sh -c "$GIT_PERF_MAKE_COMMAND"
++		else
++			make $GIT_PERF_MAKE_OPTS
++		fi
++	) || die "failed to build revision '$mydir'"
+ }
+ 
+ run_dirs_helper () {
 -- 
 2.11.0
 
