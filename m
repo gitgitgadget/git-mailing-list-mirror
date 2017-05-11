@@ -2,84 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 942891FF34
-	for <e@80x24.org>; Thu, 11 May 2017 06:42:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E0A181FF34
+	for <e@80x24.org>; Thu, 11 May 2017 06:47:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754784AbdEKGmt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 02:42:49 -0400
-Received: from mail-pg0-f54.google.com ([74.125.83.54]:36786 "EHLO
-        mail-pg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1750917AbdEKGms (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 02:42:48 -0400
-Received: by mail-pg0-f54.google.com with SMTP id 64so9705534pgb.3
-        for <git@vger.kernel.org>; Wed, 10 May 2017 23:42:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Zbr2dz7AshgPKg5TpA165UmJwuq9CK4RRWbDSiZTQXs=;
-        b=HwR8/qVm1LsI3897F/47ogdx6GKB9mqq911S6/3XMxwE5YgF0lO9oQsp6Kkt6qhRex
-         7/cS5S7M5F+QsB8t4S+UjQdCH3W4I67dsgdk+sTEoEi1D5dkvqN9xALSe34U4b6x/xzQ
-         bh9atFQsoL/11/nlI0UrTIN7nNoLANToCYfgikwXYfKP6Y0Qv/ZyeW35Xv33gpkI8cDd
-         4dIj4vx+n/1w9hAUUzj9Hur0ua7X0QnuAnY6GzMumn8j5Wdha1mN7DVcfNJmHh7FeAeB
-         x362bTRw7xrsnIR7D1W86GFESXp9gISS8wAARaReWB/zXvdzfenlmdRGiFh6E6oSDuty
-         yEwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Zbr2dz7AshgPKg5TpA165UmJwuq9CK4RRWbDSiZTQXs=;
-        b=rBZAb5rXyFtbjw+7kgjA/oiQTMaPSP5j8H/Gc77t6ZQy6nFX8ngZG3flUKRwDdmoWk
-         BRmKIR0q6QYTylIDDAXoe1h31gZ9inDMBCS/atdeOTwF9wCE7PyeI9bHa6Y7KH55WQLs
-         Azwg4kE6h7UFEBOiEkiRCYT1wBePeV42DnJHuscW3Hvp+Yml2xEy2jQvF1je8gGKUqHR
-         jkQtA5BymKpafBGrISxd+17fVL4FjgNs/W2I9X4oaLXXm8A+sFeJ1X7sx2ytFoWFpXQH
-         YPFA6eYOXR1dkFCgg6Xr/ujfMb6Lpkzn1sktJt4TaoUbH/KRC8r8WMmzWJknnb+QeaOX
-         Z4dw==
-X-Gm-Message-State: AODbwcARZWVLgWkdDqAFwMdluFwBKssRkzEuqUZ4hJPFEXZSJJVXzhe4
-        FqdNQ6Kpw/lihfg40HQ=
-X-Received: by 10.84.233.131 with SMTP id l3mr13645829plk.18.1494484967598;
-        Wed, 10 May 2017 23:42:47 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:91c4:5195:150f:b3e6])
-        by smtp.gmail.com with ESMTPSA id r21sm1860942pfg.95.2017.05.10.23.42.46
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 10 May 2017 23:42:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Nazri Ramliy <ayiehere@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Should "git submodule update" accepts --init?
-References: <CAEY4ZpMJbS+-xDKcwbOHCWxAdjOVuTN9DFJNHVqHw0r06CwKJg@mail.gmail.com>
-Date:   Wed, 10 May 2017 23:42:46 -0700
-In-Reply-To: <CAEY4ZpMJbS+-xDKcwbOHCWxAdjOVuTN9DFJNHVqHw0r06CwKJg@mail.gmail.com>
-        (Nazri Ramliy's message of "Thu, 11 May 2017 14:11:02 +0800")
-Message-ID: <xmqqk25nc2s9.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        id S1754783AbdEKGrd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 02:47:33 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49148 "EHLO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1751208AbdEKGrd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 02:47:33 -0400
+Received: (qmail 23824 invoked by uid 109); 11 May 2017 06:47:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 06:47:29 +0000
+Received: (qmail 9521 invoked by uid 111); 11 May 2017 06:48:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 02:48:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 May 2017 02:47:28 -0400
+Date:   Thu, 11 May 2017 02:47:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     Samuel Lijin <sxlijin@gmail.com>
+Cc:     Jonny Gilchrist <jonnygilchrist@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git log --follow after subtree merge
+Message-ID: <20170511064728.xvawwkmc26ld5jce@sigill.intra.peff.net>
+References: <CA+qhfwO4=1X9fNCW2PeKSgqUHV-z26qhvr_yXfz1QGApJ_roRQ@mail.gmail.com>
+ <CAJZjrdX-oAP7GFcPJ_FVNCMuErF7DNkq97KhjwgBX_G5tGXoFg@mail.gmail.com>
+ <20170511063549.fniwyggsj7wffgf5@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20170511063549.fniwyggsj7wffgf5@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nazri Ramliy <ayiehere@gmail.com> writes:
+On Thu, May 11, 2017 at 02:35:49AM -0400, Jeff King wrote:
 
-> Otherwise it seems like I'll have to do "git submodule update" twice
-> in order to update an already initialized submodule whose upstream
-> repo url has been updated in .gitmodules to point to somewhere new,
+> > > After doing a subtree merge, using 'git log' and 'git log --follow' on
+> > > files in the subtree show only the merge commit in which they were
+> > > added.
+> > >
+> > > After reading around I understand that the issue is that git log
+> > > --follow doesn't track renames that occur during a merge.
+> > 
+> > Try git log --follow -M. (You may also want to combine this with -l and/or -C).
+> 
+> You shouldn't need to specify "-M" with --follow, as the diff done by
+> try_to_follow_renames() turns on rename (and copy) detection explicitly.
+> I suspect the problem is that git-log does not do merge diffs at all by
+> default, and you'd need "-c" or "--cc" (or maybe even "-m") to turn them
+> on.
+> 
+> I wouldn't be surprised if there are other problems where that code path
+> isn't quite ready to handle merge commits, though.
 
-I am not a heavy submodule user so what I think may not count, but I
-think the "upstream" changing the URL of the submodule should be a
-rare and notable event.  Making it easy to automatically run "sync"
-without thinking would be a huge mistake---it will make it likely
-for users to blindly follow what the upstream has in .gitmodules
-without checking if the new URL is sensible.
+Hmm. It does seem to work out of the box in a simple example:
 
-Also doesn't "submodule sync" blindly overwrite URL, even the ones
-that you tweaked in your configuration to override to point at a
-mirror that is closer to you than the one suggested in .gitmodules?
-If that is the case, sucn a change to make it easier to run "sync"
-without thinking is doubly bad, I would think.
+  git init repo
+  cd repo
+  
+  seq 100 >one
+  git add one
+  git commit -m base
+  
+  echo foo >unrelated
+  git add unrelated
+  git commit -m unrelated
+  
+  git checkout -b side HEAD^
+  git mv one two
+  git commit -m rename
+  
+  git checkout master
+  git merge --no-edit side
+  
+  git log --oneline --raw --follow two
+
+And it does not seem to need any special diff options like "-c" to
+trigger it.
+
+It may be that more complex cases fool it (perhaps history
+simplification has an effect, or perhaps it's the old issue that
+--follow has a single global idea of the "current" filename, even though
+it may be traversing down multiple lines of history).
+
+Jonny, is it possible for you to share the repo that shows the problem?
+
+If not, it might be possible to demonstrate the problem with
+"fast-export --anonymize", though I think that won't work if the rename
+is accompanied by a change in the same commit (because it anonymizes
+away the relationship between two almost-identical files).
+
+-Peff
