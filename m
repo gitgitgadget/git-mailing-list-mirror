@@ -2,78 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 053D3201A0
-	for <e@80x24.org>; Thu, 11 May 2017 21:32:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96F6C201A0
+	for <e@80x24.org>; Thu, 11 May 2017 21:35:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755815AbdEKVcv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 17:32:51 -0400
-Received: from smtp74.iad3a.emailsrvr.com ([173.203.187.74]:49473 "EHLO
-        smtp74.iad3a.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1755796AbdEKVcu (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 11 May 2017 17:32:50 -0400
-Received: from smtp10.relay.iad3a.emailsrvr.com (localhost [127.0.0.1])
-        by smtp10.relay.iad3a.emailsrvr.com (SMTP Server) with ESMTP id C674A65A1;
-        Thu, 11 May 2017 17:32:49 -0400 (EDT)
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp10.relay.iad3a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C74266542;
-        Thu, 11 May 2017 17:31:45 -0400 (EDT)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher DHE-RSA-AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Thu, 11 May 2017 17:31:45 -0400
-Subject: Re: What's cooking in git.git (May 2017, #03; Wed, 10)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqinl9xpb8.fsf@gitster.mtv.corp.google.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Message-ID: <ac2f1563-735e-9a07-e762-5dda0630304e@xiplink.com>
-Date:   Thu, 11 May 2017 17:31:45 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+        id S1755856AbdEKVfu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 17:35:50 -0400
+Received: from mail-pf0-f194.google.com ([209.85.192.194]:36179 "EHLO
+        mail-pf0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755040AbdEKVfo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 17:35:44 -0400
+Received: by mail-pf0-f194.google.com with SMTP id n23so3488259pfb.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 14:35:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CirP1zQPqpoZx0XQECSQRBDtOpCgFJJlgS2r40WIUfg=;
+        b=pduHGX14IOAR8yfjHzkqYgqjxhwJduUsCFVEyuhRGril88y1wpue0PWl98+L5vNc1s
+         KzatJqs6F+IR4d26jmHrCOti26PvZKD8rCHI/9zp+yLUkbPPBvBJISUzIn4ytK8syDhz
+         v4HRTbNFBx4RMqlwtJT1bbMYCqlnmvP0XKq2jlT0FbvNo4cfJWUzWP4Ads0x0qojf4RD
+         vdvRMAdGOnh3TkOULv9nOTcqLWsy9nML9ki9iMweEnL5SvXkPU20MT/79COiBjGPLQih
+         A9Y4O19g3yVdYP0i6jD/r8UyXAuIO2HQTXx6/d4nu15voq7rBX3YmRveHHr+koWfzTdT
+         BK3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CirP1zQPqpoZx0XQECSQRBDtOpCgFJJlgS2r40WIUfg=;
+        b=quAiNnv+zqxiuhij/s5FB13yDLvyJ7fxpqxEVb5anL+2nA71rFC3Z5+xqMZRgiZrHL
+         M7fMzE4Oa2UQHJ5APMVnNplYKP6M0hOKRg+yhYuve9fZCR3/KQU/6blY9TyqS9f4ATmu
+         HYW56uC/BnVsj+IAr2Jn3Rylgu2QmbOvsXOpSS+vdfOiqAmlxzHRbd5Z5v3aFgr8tp8y
+         E1YkMQINvdA7RdVc4h7VhYE34UhMJN4Pgws3mKPpS8NSrCANdicnM8PQNLePA6+Y4B2K
+         yfGMgQO7VurCCkJC0yOH2BI/JOw/NtqpOQdfArPyFKwKc55qSK9C3PxhayYQM3D6wsQQ
+         qu0g==
+X-Gm-Message-State: AODbwcAGNAGc4eUwyayBwKsD2OVVrS4L94l1gitSAfgu4fnfF2Tc5f6z
+        rtI/x9EmxMdNnQ==
+X-Received: by 10.98.139.21 with SMTP id j21mr649832pfe.5.1494538543735;
+        Thu, 11 May 2017 14:35:43 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:ac23:a158:2bd3:569b])
+        by smtp.gmail.com with ESMTPSA id c83sm1688512pfd.113.2017.05.11.14.35.42
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 11 May 2017 14:35:42 -0700 (PDT)
+Date:   Thu, 11 May 2017 14:35:17 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v4] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170511213517.GA21723@aiede.svl.corp.google.com>
+References: <20170509182042.28389-1-jonathantanmy@google.com>
+ <20170511211403.5252-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqinl9xpb8.fsf@gitster.mtv.corp.google.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170511211403.5252-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2017-05-10 01:18 AM, Junio C Hamano wrote:
+Hi,
+
+Jonathan Tan wrote:
+
+> Thanks, peff. I've incorporated your suggestions - I don't feel very
+> strongly about this, but I guess it's worthwhile to avoid the quadratic
+> behavior if we can.
 >
-> * mb/diff-default-to-indent-heuristics (2017-05-09) 4 commits
->  - add--interactive: drop diff.indentHeuristic handling
->  - diff: enable indent heuristic by default
->  - diff: have the diff-* builtins configure diff before initializing revisions
->  - diff: make the indent heuristic part of diff's basic configuration
->
->  Make the "indent" heuristics the default in "diff" and diff.indentHeuristics
->  configuration variable an escape hatch for those who do no want it.
+> Also incorporated Jonathan Nieder's suggestion about the placement of
+> the last line. The relevant function is also factored out (following
+> peff's suggestion).
 
-Typo fixes:
-	s/heuristics/heuristic/  (both places)
-	s/do no want/do not want/
+Thanks.  The structure still seems more complicated than it needs to
+be.  More details below.
 
->  Kicked out of next; it seems it is still getting review suggestions?
+[...]
+> +++ b/fetch-pack.c
+[...]
+> @@ -592,13 +593,22 @@ static void mark_recent_complete_commits(struct fetch_pack_args *args,
+>  	}
+>  }
+>  
+> +static void add_refs_to_oidset(struct oidset *oids, const struct ref *refs)
+> +{
+> +	for (; refs; refs = refs->next)
+> +		oidset_insert(oids, &refs->old_oid);
 
-I believe v4 of this one is ready to cook.
+Makes sense.
 
-The most salient aspect of the review discussion was about where to go 
-after this topic is applied.  We also concluded that the topic deserves 
-a release note about breaking patch ID backwards-compatibility.  I think 
-such a note should mention rerere, so I would suggest the following:
+[...]
+>  	/* Append unmatched requests to the list */
+>  	for (i = 0; i < nr_sought; i++) {
+>  		unsigned char sha1[20];
+> +		int can_append = 0;
+>  
+>  		ref = sought[i];
+>  		if (ref->match_status != REF_NOT_MATCHED)
+> @@ -649,6 +661,21 @@ static void filter_refs(struct fetch_pack_args *args,
+>  
+>  		if ((allow_unadvertised_object_request &
+>  		    (ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1))) {
+> +			can_append = 1;
+> +		} else {
+> +			if (!tip_oids_initialized) {
+> +				/*
+> +				 * Check all refs, including those already
+> +				 * matched
+> +				 */
+> +				add_refs_to_oidset(&tip_oids, unmatched);
+> +				add_refs_to_oidset(&tip_oids, newlist);
+> +				tip_oids_initialized = 1;
+> +			}
+> +			can_append = oidset_contains(&tip_oids, &ref->old_oid);
+> +		}
+> +
+> +		if (can_append) {
 
-The diff "indent" heuristic is now enabled by default.  This changes the 
-patch IDs calculated by git-patch-id (and used by git-rerere and 
-git-cherry), which could affect workflows that rely on 
-previously-computed patch IDs.  The heuristic can be disabled by setting 
-diff.indentHeuristic to false.
+This structure could be simplified by putting the lazy-initializing
+tip_oids lookup in a separate function.  For example:
 
-		M.
+	int tip_oids_contain(struct oidset *tip_oids,
+		struct ref *unmatched, struct ref *newlist,
+		const struct oid *id)
+	{
+		if (oidset_is_empty(tip_oids)) {
+			add_refs_to_oidset(tip_oids, unmatched);
+			add_refs_to_oidset(tip_oids, newlist);
+		}
+		return oidset_contains(tip_oids, id);
+	}
 
+That way, the caller could be kept simple (eliminating can_append
+and the repeated if).
+
+Thanks,
+Jonathan
