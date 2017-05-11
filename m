@@ -2,246 +2,248 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2836D2018D
-	for <e@80x24.org>; Thu, 11 May 2017 17:52:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C51C2018D
+	for <e@80x24.org>; Thu, 11 May 2017 18:13:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933394AbdEKRwQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 13:52:16 -0400
-Received: from mail-qt0-f170.google.com ([209.85.216.170]:36598 "EHLO
-        mail-qt0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933309AbdEKRv7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 13:51:59 -0400
-Received: by mail-qt0-f170.google.com with SMTP id m91so23526104qte.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 10:51:58 -0700 (PDT)
+        id S933836AbdEKSMy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 14:12:54 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:36112 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S933826AbdEKSMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 14:12:53 -0400
+Received: by mail-pg0-f43.google.com with SMTP id 64so18337129pgb.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 11:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=iqATgKwEwJAFqUkfz3nzxjfgels64NJXWBUSeW2tX8I=;
-        b=oep05kUIxQLpW103q6OKSppJGVqLLeN5FwR5+UVc4QwIHNaljbgjkmWx65dWeDoByk
-         HWNCx/8IOuRsLnSdd2+jzuFdOtylOXoFKZN96XxprExrEbGXSSwxr2TeJQ6kUwvg4ukG
-         UqikevKOrQw9PQvsuXhB6czJLewbe3w2nfePq2/Tc6kCyWlHXb3Jw5HqoPpLCQvDfIMO
-         iTf+MixQ3fy2lCepCRZzvCbimegA7abJoEn4WwHsL5/2yO40xcja5/geVkx0/H5JQUz4
-         LkURRwlLYsVgjI8AFD5BvB1HcdJcC9+zvYkPwl9Zhp+pAk+C5bhk6R++HPJcQhhPLlj+
-         2hIw==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=YDXlmWGlGA99/TLZOEH62AgEOF367KUy5ZAuODsrTyg=;
+        b=bSrcA0lMLt5KjIxJV2MFi2L10/NIThmly6lKA8/XjxtWA3ShCW994T2riMSwxkWOJZ
+         6UwcO73dHQ2SrGJRlQwOGGjtCQd35pBX7ETNisJzWHu+Yk5tW3/VaqVbFsulhdpWCND7
+         q8/bWNYAGsu+2MAlUVoaYj6bR/8FjIIhYqDDuPQ1aCtUwkRYJT5rpx9YoiosJiiWZs0e
+         cMYlwWD0dd5D2IhqHkCl+WWyOYNYbsKsb52uxwd0GWTL4jK2lvmIegzyz19eZb5O+q2X
+         rOErYVfLPb0lxpqWR1KHQhq87aVaujMcw/sUD5JZ8aS0zv00cCqLqHrzS9jTIiTQV3Fs
+         lzaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=iqATgKwEwJAFqUkfz3nzxjfgels64NJXWBUSeW2tX8I=;
-        b=VXzBe19Wgq+NSATWwE1hciFwOmxwyrwBUZ+t19pgdIgRc6kgvm3H5DXrxuw9uyFFkw
-         6rK04D4o9zK3DVQUwVTJEBg3trO6zL9mA+Xb1jUakNTgOqiKSdu2c1hR08NZcDHiYvDQ
-         scvc4vI7//p4Fv4MnWAUe+64+vpnxwrwtPNcnRwwzrklRLAKg5oRhSRna/Oy+2X1ZNXh
-         laHDt2ZalYtJtex4lH6wSl+9h+0xX4sIKAYhP5YMDt1+Atus9V/tSQoBBXD5ChKTfi4r
-         QyUAK72ekwMTLfDCYjUTdWeJJrlIXAGC6K6btSc7vgMPjBfMHOY/jlnmMKCfk5Fj3Ssj
-         SjZA==
-X-Gm-Message-State: AODbwcDYRnF7LRNBLv4iHcXKQi1Arjro8sIIoA5lUSJKWe5ChqGpKXtj
-        Jd4anLXgR6C4McmsajVw2A==
-X-Received: by 10.200.45.17 with SMTP id n17mr42358qta.250.1494525117835;
-        Thu, 11 May 2017 10:51:57 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id g3sm561483qte.66.2017.05.11.10.51.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 10:51:56 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH/RFC 5/6] grep: support regex patterns containing \0 via PCRE v2
-Date:   Thu, 11 May 2017 17:51:14 +0000
-Message-Id: <20170511175115.648-6-avarab@gmail.com>
-X-Mailer: git-send-email 2.11.0
-In-Reply-To: <20170511175115.648-1-avarab@gmail.com>
-References: <20170511175115.648-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=YDXlmWGlGA99/TLZOEH62AgEOF367KUy5ZAuODsrTyg=;
+        b=IN8borMcU0FuDQbjdwSnkr6AYn7HNesxPw/W/XSI/89I68o8EC/+PpkqDyWPv5crJa
+         x6PN9vGxtioxQ5aVe4OaJQyx4iYHaGGrZlbnXj03cd1IQVHbW5Ahl1xmLrdT0rp7rNWM
+         2c2+TcA4BAbExzEYFZ9Z7TRUdbGS28RRzhc1tBhwIcUK5IhazgN73ZPQD1HNVbbijMl6
+         lIqDUWf8YNba574YOa0KTZl2ioLsyD9Z9sW/Koucyhr4976DjOD+mXpMkQMrS3YxtumF
+         evH09347gMMHK8kt/2/vz5DD4WXaL/UNsL/ICO8ETV2DzJHpMNyd1OwHQX6n+VyNdIwL
+         ilPQ==
+X-Gm-Message-State: AODbwcBQdjM6GYBCdFAwxZ1/upC36OagTm+kKOmzsXHxIWiPJ++0NsRM
+        E5f2JFa12+D133eb8u0//Jp6ZkUxSFeAQA5rCA==
+X-Received: by 10.84.248.73 with SMTP id e9mr151027pln.76.1494526372866; Thu,
+ 11 May 2017 11:12:52 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 10.100.170.200 with HTTP; Thu, 11 May 2017 11:12:52 -0700 (PDT)
+In-Reply-To: <20170511172437.96878-1-bmwill@google.com>
+References: <20170511172437.96878-1-bmwill@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 11 May 2017 11:12:52 -0700
+Message-ID: <CAGZ79kYYX_AMZm7Di8cUA_eiDS+SSAGnJyrDLcC5U7POk7WdSw@mail.gmail.com>
+Subject: Re: [PATCH] pull: optionally rebase submodules
+To:     Brandon Williams <bmwill@google.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Support regex patterns with embedded \0's, as an earlier commit[1]
-notes this was previously impossible due to an internal limitation.
+On Thu, May 11, 2017 at 10:24 AM, Brandon Williams <bmwill@google.com> wrote:
+> Teach pull to optionally update submodules when '--recurse-submodules'
+> is provided.  This will teach pull to run 'submodule update --rebase'
+> when the '--recurse-submodules' and '--rebase' flags are given.
+>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> ---
+>
+> Pull is already a shortcut for running fetch followed by a merge/rebase, so why
+> not have it be a shortcut for running 'submodule update --rebase' when the
+> recurse flag is given!
 
-Before this change any regex metacharacters in patterns containing \0
-were silently ignored and the pattern matched as if it were a
---fixed-strings pattern.
+I have not thought about the implications of this shortcut, as opposed to
+actually implementing it in C (which presumably would contain more checks).
+Will do.
 
-Now these patterns will be matched with PCRE instead, which supports
-combining regex metacharacters with patterns containing \0.
+>
+>  builtin/pull.c            | 30 ++++++++++++++-
+>  t/t5572-pull-submodule.sh | 97 +++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 125 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index dd1a4a94e..d73d654e6 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -77,6 +77,7 @@ static const char * const pull_usage[] = {
+>  /* Shared options */
+>  static int opt_verbosity;
+>  static char *opt_progress;
+> +static int recurse_submodules;
+>
+>  /* Options passed to git-merge or git-rebase */
+>  static enum rebase_type opt_rebase = -1;
+> @@ -532,6 +533,17 @@ static int pull_into_void(const struct object_id *merge_head,
+>         return 0;
+>  }
+>
+> +static int  update_submodules(void)
 
-A side-effect of this change is that these patterns which previously
-would be considered --fixed-strings patterns regardless of the engine
-requested now all implicitly become --perl-regexp instead.
+Maybe s/update_submodules/rebase_submodules/ ?
 
-A subsequent change introduces a POSIX to PCRE syntax converter, and
-could be used to be 100% truthful to our documentation by using POSIX
-basic syntax (which we haven't been in quite some time with kwset).
+> +{
+> +       struct child_process cp = CHILD_PROCESS_INIT;
+> +       cp.git_cmd = 1;
+> +
+> +       argv_array_pushl(&cp.args, "submodule", "update", "--recursive", NULL);
+> +       argv_array_push(&cp.args, "--rebase");
 
-But due to a chicken & egg issue with this change being easier to
-implement stand-alone first, the subsequent change depending on a SVN
-trunk version of PCRE, but most importantly I don't think anyone will
-mind this change, so I'm leaving it as it is.
+The --rebase could be part of the _pushl ?
+Also we could set
+    no_stdin = 1
+we do need stdout/err though.
 
-This implementation is faster than the previous kwset implementation,
-but I haven't bothered to come up with a \0-specific fixed-string
-performance test.
 
-See the next change in this series for a change which optionally
-expands the PCRE v2 use to use it for all fixed-string patterns, the
-performance tests for those will be applicable to these patterns as
-well, since PCRE matches \0 like any other character.
+> +
+> +       return run_command(&cp);
+> +}
+> +
+>  /**
+>   * Runs git-merge, returning its exit status.
+>   */
+> @@ -816,6 +828,14 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+>                         oidclr(&rebase_fork_point);
+>         }
+>
+> +       if (opt_recurse_submodules &&
+> +           !strcmp(opt_recurse_submodules, "--recurse-submodules")) {
 
-1. ("grep: factor test for \0 in grep patterns into a function",
-   2017-05-08)
+So this checks if we pass --recurse-submodules to fetch and if it is not
+a on-demand/no.
+Maybe we'd want to use the same infrastructure as fetch does, such that
+parse_fetch_recurse makes the decision. (Then "--recurse-submodules=TrUe"
+would work as well, IIUC)
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+
+> +               recurse_submodules = 1;
+> +
+> +               if (!opt_rebase)
+> +                       die(_("--recurse-submodules is only valid with --rebase"));
+
+I wonder if there are existing users of "git pull --recurse --merge";
+as of now this would fetch the submodules (on-demand) and merge
+in the local commits of the superprojects. It sounds like a useful workflow
+which we'd be blocking here? Maybe just do nothing in case of !opt_rebase,
+i.e. make it part of the first condition added in this hunk?
+
+> +               ret = run_rebase(&curr_head, merge_heads.oid, &rebase_fork_point);
+> +
+> +               if (!ret && recurse_submodules)
+> +                       ret = update_submodules();
+
+Instead of doing the rebase of submodules here, we may just want to pass
+'recurse_submodules' into run_rebase, which can do it, too. (It already has
+a 'ret' value, so the main cmd is not as cluttered.
+
 ---
- grep.c                 | 24 ++++++++++++++++
- t/t7008-grep-binary.sh | 74 ++++++++++++++++++++++++++++++++++----------------
- 2 files changed, 75 insertions(+), 23 deletions(-)
+Before reviewing the tests, let's step a bit back and talk about the design
+and what is useful to the user. From reading the code, we
+  1) perform a fetch in the superproject
+  2) rebase the superproject (not rewriting any submodule pointers,
+    but that may be ok for now)
+  3) sequentially:
+  3a) fetch each submodule on demand
+  3b) run rebase inside of it.
 
-diff --git a/grep.c b/grep.c
-index 2ff4e253ff..5db614cf80 100644
---- a/grep.c
-+++ b/grep.c
-@@ -613,6 +613,30 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
- 	icase	       = opt->regflags & REG_ICASE || p->ignore_case;
- 	ascii_only     = !has_non_ascii(p->pattern);
- 
-+#ifdef USE_LIBPCRE2
-+	if (has_null(p->pattern, p->patternlen)) {
-+		struct strbuf sb = STRBUF_INIT;
-+		if (icase)
-+			strbuf_add(&sb, "(?i)", 4);
-+		if (opt->fixed)
-+			strbuf_add(&sb, "\\Q", 2);		
-+		strbuf_add(&sb, p->pattern, p->patternlen);
-+		if (opt->fixed)
-+			strbuf_add(&sb, "\\E", 2);
-+
-+		p->pattern = sb.buf;
-+		p->patternlen = sb.len;
-+
-+		/* FIXME: Check in compile_pcre2_pattern() that we're
-+		 * using basic rx using !opt->pcre2 && <something>
-+		 */
-+		opt->pcre2 = 1;
-+
-+		compile_pcre2_pattern(p, opt);
-+		return;
-+	}
-+#endif
-+
- 	/*
- 	 * Even when -F (fixed) asks us to do a non-regexp search, we
- 	 * may not be able to correctly case-fold when -i
-diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-index ba3db06501..fc86ed5fce 100755
---- a/t/t7008-grep-binary.sh
-+++ b/t/t7008-grep-binary.sh
-@@ -124,35 +124,63 @@ nul_match 0 '-F' '[æ]Qð'
- nul_match 0 '-Fi' 'ÆQ[Ð]'
- nul_match 0 '-Fi' '[Æ]QÐ'
- 
--# kwset is disabled on -i & non-ASCII. No way to match non-ASCII \0
--# patterns case-insensitively.
--nul_match T1 '-i' 'ÆQÐ'
--
--# \0 implicitly disables regexes. This is an undocumented internal
--# limitation.
--nul_match T1 '' 'yQ[f]'
--nul_match T1 '' '[y]Qf'
--nul_match T1 '-i' 'YQ[F]'
--nul_match T1 '-i' '[Y]Qf'
--nul_match T1 '' 'æQ[ð]'
--nul_match T1 '' '[æ]Qð'
--nul_match T1 '-i' 'ÆQ[Ð]'
--
--# ... because of \0 implicitly disabling regexes regexes that
--# should/shouldn't match don't do the right thing.
--nul_match T1 '' 'eQm.*cQ'
--nul_match T1 '-i' 'EQM.*cQ'
--nul_match T0 '' 'eQm[*]c'
--nul_match T0 '-i' 'EQM[*]C'
-+if test_have_prereq LIBPCRE2
-+then
-+	# Regex patterns that should match without -F
-+	nul_match 1 '' 'yQ[f]'
-+	nul_match 1 '' '[y]Qf'
-+	nul_match 1 '-i' 'YQ[F]'
-+	nul_match 1 '-i' '[Y]Qf'
-+	nul_match 1 '' 'æQ[ð]'
-+	nul_match 1 '' '[æ]Qð'
-+	nul_match 0 '-i' '[Æ]Qð'
-+	nul_match 1 '' 'eQm.*cQ'
-+	nul_match 1 '-i' 'EQM.*cQ'
-+	nul_match 0 '' 'eQm[*]c'
-+	nul_match 0 '-i' 'EQM[*]C'
-+
-+	# These should also match, but don't due to some heisenbug,
-+	# they succeed when run manually!
-+	nul_match T1 '-i' 'ÆQÐ'
-+	nul_match T1 '-i' 'ÆQ[Ð]'
-+else
-+	# \0 implicitly disables regexes. This is an undocumented
-+	# internal limitation.
-+	nul_match T1 '' 'yQ[f]'
-+	nul_match T1 '' '[y]Qf'
-+	nul_match T1 '-i' 'YQ[F]'
-+	nul_match T1 '-i' '[Y]Qf'
-+	nul_match T1 '' 'æQ[ð]'
-+	nul_match T1 '' '[æ]Qð'
-+	nul_match T1 '-i' 'ÆQ[Ð]'
-+
-+	# ... because of \0 implicitly disabling regexes regexes that
-+	# should/shouldn't match don't do the right thing.
-+	nul_match T1 '' 'eQm.*cQ'
-+	nul_match T1 '-i' 'EQM.*cQ'
-+	nul_match T0 '' 'eQm[*]c'
-+	nul_match T0 '-i' 'EQM[*]C'
-+fi
- 
- # Due to the REG_STARTEND extension when kwset() is disabled on -i &
- # non-ASCII the string will be matched in its entirety, but the
- # pattern will be cut off at the first \0.
- nul_match 0 '-i' 'NOMATCHQð'
--nul_match T0 '-i' '[Æ]QNOMATCH'
--nul_match T0 '-i' '[æ]QNOMATCH'
-+if test_have_prereq LIBPCRE2
-+then
-+	nul_match 0 '-i' '[Æ]QNOMATCH'
-+	nul_match 0 '-i' '[æ]QNOMATCH'
-+else
-+	nul_match T0 '-i' '[Æ]QNOMATCH'
-+	nul_match T0 '-i' '[æ]QNOMATCH'
-+fi
- # Matches, but for the wrong reasons, just stops at [æ]
--nul_match 1 '-i' '[Æ]Qð'
-+if test_have_prereq LIBPCRE2
-+then
-+	nul_match T1 '-i' '[Æ]Qð'
-+else
-+	nul_match 1 '-i' '[Æ]Qð'
-+fi
- nul_match 1 '-i' '[æ]Qð'
- 
- # Ensure that the matcher doesn't regress to something that stops at
--- 
-2.11.0
 
+(A) On the sequence:
+If in a normal pull --rebase we have a failure, we can fixup the failure
+and then continue via "git rebase --continue"; now if we have a failure
+in 3), we would need to fixup the submodule ourselves and then as
+we lost all progress in the superproject, rerun "pull --rebase --recurse"?
+
+(B)
+As discussed offline this produces bad results if we have a non-ff
+operation in the superproject, that also has submodule pointer updates.
+So additionally we would need to walk the superprojects local commits
+and check if any submodule is touched.
+
+
+>
+> +test_expect_success 'pull --recurse-submodule setup' '
+> +       git init child &&
+
+test_create_repo child
+
+> +       (
+> +               cd child &&
+> +               echo "bar" >file &&
+> +               git add file &&
+> +               git commit -m "initial commit"
+
+test_create_commit -C child
+
+> +       ) &&
+> +       git init parent &&
+> +       (
+> +               cd parent &&
+> +               echo "foo" >file &&
+> +               git add file &&
+> +               git commit -m "Initial commit" &&
+> +               git submodule add ../child sub &&
+> +               git commit -m "add submodule"
+> +       ) &&
+
+Same setup comment as for the child
+
+
+> +       git clone --recurse-submodule parent super &&
+> +       git -C super/sub checkout master
+
+I wonder if we want to keep these two commands in each test
+as I noticed some test scripts are horribly messy others have
+a pattern to cleanup after themselves:
+
+test_expect_....
+    test_when_finished "rm -rf super-clone" &&
+    git clone ... into super-clone
+
+
+
+> +'
+> +
+> +test_expect_success 'pull recursive fails without --rebase' '
+> +       test_must_fail git -C super pull --recurse-submodules 2>actual &&
+> +       test_i18ngrep "recurse-submodules is only valid with --rebase" actual
+> +'
+
+Side note: another place to add tests could be t5520 or t740*.
+
+> +test_expect_success 'pull rebase recursing fails with conflicts' '
+> +       git -C super/sub reset --hard HEAD^^ &&
+> +       git -C super reset --hard HEAD^ &&
+> +       (
+> +               cd super/sub &&
+> +               echo "b" >file &&
+> +               git add file &&
+> +               git commit -m "update file"
+> +       ) &&
+> +       test_must_fail git -C super pull --rebase --recurse-submodules
+
+As discussed above: We'd also want to have a reasonable state here,
+or some advice to the user telling them how to recover. Maybe in a
+first approach we can tell them to re-run "submodule update --rebase"
+after fixing the conflict?
+
+Thanks,
+Stefan
