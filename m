@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AACB2201A0
-	for <e@80x24.org>; Thu, 11 May 2017 22:04:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D223C201A0
+	for <e@80x24.org>; Thu, 11 May 2017 22:04:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756232AbdEKWEk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 18:04:40 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:34504 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1751574AbdEKWEi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 18:04:38 -0400
-Received: by mail-pg0-f45.google.com with SMTP id u28so20780573pgn.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 15:04:38 -0700 (PDT)
+        id S1756234AbdEKWEl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 18:04:41 -0400
+Received: from mail-pf0-f177.google.com ([209.85.192.177]:35099 "EHLO
+        mail-pf0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751890AbdEKWEg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 18:04:36 -0400
+Received: by mail-pf0-f177.google.com with SMTP id n23so15183490pfb.2
+        for <git@vger.kernel.org>; Thu, 11 May 2017 15:04:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FJALVxUIusVtIYM7OHsgkbS+dqdt3mFusgxe8lqSPBo=;
-        b=cbwYUMTBfcho/xuGGeyQ5TFDJK595a9/BDu5tqV0ipg7aG2DV54BDMJGF4UVb0C48J
-         lyr+fp63hdCUAgYyJUvFFGi5NjYRO9/ADseArVpbg4bbIw149sma+S93flIFzrBawf5k
-         nDADqDC0yluR7SoaPz3GyzTPZzFWzdPnpFS86tYMRgnp9iwA0Eb+5+5PSBdY5rgytYsv
-         mdriaAtwHWOdn1Zv1dwM/E9sqVUAzkF0l7Vuhrx5E7o/32mPaw3n0XgkWyaFU1V3EOZI
-         Rdk3hbmhBWU2cTyjRlOmdCayhBYyjOf0kHY3al+FdkiWfLQRuVYxKPXz47yi2aWhkBmF
-         KxKA==
+        bh=79L0rIdFZdpF1Ggv6A0WsDEhHBOIDW891yqIQgIQNu0=;
+        b=dokK8tg+9pZkHMpKxgafnISnahJdCP7gzAeuhVoD2eEAoU5L3wiF/i5Xv72h2gWll4
+         5kVcs9pg2VY0tamO2ht8UyREa+ZW0aG7YXaU6lvc7rieVQCvCKmSvCTmBEC1EQiFuqPz
+         OXD6brWDbhfU8Wuz7wOtUGsD7wpdW5nPe2qBYKrUTovmy7opnghuZwNr8WeVc4Yuvsfv
+         +gfyh3mVYzPOUAb8yptLytoBet1IHgMmMa00S9tKiKTszAOvtcSjH2xh35VdC32avFoH
+         e4SwijFLz0S1IqfwoTGMu0zJONJAuf0ThsvYypbtZpUfFVbG5ROvvZSa/f4Iy8tvkHK4
+         1zFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FJALVxUIusVtIYM7OHsgkbS+dqdt3mFusgxe8lqSPBo=;
-        b=np8pm38KKKawemGrFY3S5lOEV1NjpI9sLi5T1gN59DZlKOSjTqSetdNqMVCMyeYyAh
-         jSICBdDiPPBSXftvfvI+KQSZssjVdXUudbTX5Cfi5SLielRptWHd7BW1aIxvA70nezKI
-         fpU93+4aubch38s3LfNQ8blcb1wxMfWsE5GeGZfxFkUiGZG9zFh0wRYDHnPf6KVeacOh
-         ZJPcW0r+g0CFmVdvQvjfsC8MdX3SKYXFccLtrRi0iAlebXdRhXpZKDa8I9e0gqgoE4Xg
-         FDiFsr29lzaljeq/CRDVQHl9bFD+x9AOLu6PbKjj5zAzvZcMamYcMwSrP3xirv/+l55z
-         e02Q==
-X-Gm-Message-State: AODbwcB7KFz8MIzGeoj39gvXti0Onq2imOSS7CazbQBmQC6Y7+ah0deQ
-        IDkSYVX50Ld+HmpF
-X-Received: by 10.99.137.194 with SMTP id v185mr715837pgd.206.1494540277325;
-        Thu, 11 May 2017 15:04:37 -0700 (PDT)
+        bh=79L0rIdFZdpF1Ggv6A0WsDEhHBOIDW891yqIQgIQNu0=;
+        b=TuRA/NNpuDnVKl7T9Uqq+6EM8i3zJ//cYAfZT3CEn+ierpg5VX/iBrM/b+eJToB7Iq
+         X+t6Nkni3sxzxtWKQ4oI9oKmyAsiyWQxE3R6t+xe2ex2xrdWg8vVlVL/Zt3yvWDVcDpz
+         DZ4mFse6dHeLb68da7vT5XzbtZxh9+7iemkM4ZlzUZ9ELvtJTPfuijKwE7tMZdUJHAe+
+         Og9hiLIOFvdbm+h47CRAPFjY+AdbPBA8XgSvgyy6HIOBefUL0FarZWAi2cW2474CJ9Op
+         ZON1T0QwKC09MOnBkjHhuVecoUjpKki06DIymfHuWD4f5bL2Ty55YwOYi+SQ10dQo2iy
+         hMqw==
+X-Gm-Message-State: AODbwcAXmIBCxnNoiPvKCaXJR2H4JZeDSrRG+jub5GDP1GMwr0xecYj9
+        R5jKVhcj1/MR2Tll
+X-Received: by 10.99.66.5 with SMTP id p5mr706795pga.107.1494540275777;
+        Thu, 11 May 2017 15:04:35 -0700 (PDT)
 Received: from roshar.svl.corp.google.com ([100.96.218.30])
-        by smtp.gmail.com with ESMTPSA id s68sm1873335pgc.5.2017.05.11.15.04.35
+        by smtp.gmail.com with ESMTPSA id s68sm1873335pgc.5.2017.05.11.15.04.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 11 May 2017 15:04:36 -0700 (PDT)
+        Thu, 11 May 2017 15:04:34 -0700 (PDT)
 From:   Brandon Williams <bmwill@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, j6t@kdbg.org,
         Brandon Williams <bmwill@google.com>
-Subject: [PATCH v2 4/6] ls-files: prevent prune_cache from overeagerly pruning submodules
-Date:   Thu, 11 May 2017 15:04:25 -0700
-Message-Id: <20170511220427.192627-5-bmwill@google.com>
+Subject: [PATCH v2 3/6] pathspec: remove PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag
+Date:   Thu, 11 May 2017 15:04:24 -0700
+Message-Id: <20170511220427.192627-4-bmwill@google.com>
 X-Mailer: git-send-email 2.13.0.rc2.291.g57267f2277-goog
 In-Reply-To: <20170511220427.192627-1-bmwill@google.com>
 References: <20170509191805.176266-1-bmwill@google.com>
@@ -67,101 +67,200 @@ match_pathspec_item()) the path matching logic has been able to cope
 with submodules without needing to strip off a trailing slash if a path
 refers to a submodule.
 
-ls-files is the only caller of 'parse_pathspec()' which relies on the
-behavior of the PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag because it
-uses the result to construct a common prefix of all provided pathspecs
-which is then used to prune the index of all entries which don't have
-that prefix.  Since submodules entries in the index don't have a
-trailing slash 'prune_cache()' will be overeager and prune a submodule
-'sub' if the common prefix is 'sub/'.  To correct this behavior, only
-prune entries which don't match up to, but not including, a trailing
-slash of the common prefix.
-
-This is in preparation to remove the
-PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP flag in a later patch.
+Since the stripping the trailing slash is no longer necessary, remove
+the PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE flag.  In addition, factor
+out the logic which dies if a path decends into a submodule so that it
+can still be used as a check after a pathspec struct has been
+initialized.
 
 Signed-off-by: Brandon Williams <bmwill@google.com>
 ---
- builtin/ls-files.c | 31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ builtin/add.c          |  5 +++--
+ builtin/check-ignore.c |  4 +++-
+ pathspec.c             | 29 -----------------------------
+ pathspec.h             | 14 +++-----------
+ submodule.c            | 33 +++++++++++++++++++++++++++++++++
+ submodule.h            |  2 ++
+ 6 files changed, 44 insertions(+), 43 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index a6c70dbe9..1f3d47844 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -97,7 +97,7 @@ static void show_dir_entry(const char *tag, struct dir_entry *ent)
- {
- 	int len = max_prefix_len;
- 
--	if (len >= ent->len)
-+	if (len > ent->len)
- 		die("git ls-files: internal error - directory entry not superset of prefix");
- 
- 	if (!dir_path_match(ent, &pathspec, len, ps_matched))
-@@ -238,7 +238,7 @@ static void show_ce_entry(const char *tag, const struct cache_entry *ce)
- 		strbuf_addstr(&name, super_prefix);
- 	strbuf_addstr(&name, ce->name);
- 
--	if (len >= ce_namelen(ce))
-+	if (len > ce_namelen(ce))
- 		die("git ls-files: internal error - cache entry not superset of prefix");
- 
- 	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
-@@ -403,6 +403,25 @@ static void prune_cache(const char *prefix, size_t prefixlen)
- 	active_nr = last - pos;
- }
- 
-+static int get_common_prefix_len(const char *common_prefix)
-+{
-+	int common_prefix_len;
-+
-+	if (!common_prefix)
-+		return 0;
-+
-+	common_prefix_len = strlen(common_prefix);
-+
-+	/*
-+	 * If the prefix has a trailing slash, strip it so that submodules wont
-+	 * be pruned from the index.
-+	 */
-+	if (common_prefix[common_prefix_len - 1] == '/')
-+		common_prefix_len--;
-+
-+	return common_prefix_len;
-+}
-+
- /*
-  * Read the tree specified with --with-tree option
-  * (typically, HEAD) into stage #1 and then
-@@ -624,8 +643,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		    "--error-unmatch");
- 
+diff --git a/builtin/add.c b/builtin/add.c
+index ec58e3679..86770d6af 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -388,10 +388,11 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	 */
  	parse_pathspec(&pathspec, 0,
--		       PATHSPEC_PREFER_CWD |
--		       PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP,
-+		       PATHSPEC_PREFER_CWD,
+ 		       PATHSPEC_PREFER_FULL |
+-		       PATHSPEC_SYMLINK_LEADING_PATH |
+-		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE,
++		       PATHSPEC_SYMLINK_LEADING_PATH,
  		       prefix, argv);
  
- 	/*
-@@ -637,7 +655,9 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		max_prefix = NULL;
- 	else
- 		max_prefix = common_prefix(&pathspec);
--	max_prefix_len = max_prefix ? strlen(max_prefix) : 0;
-+	max_prefix_len = get_common_prefix_len(max_prefix);
++	die_path_inside_submodule(&the_index, &pathspec);
 +
-+	prune_cache(max_prefix, max_prefix_len);
+ 	if (add_new_files) {
+ 		int baselen;
  
- 	/* Treat unmatching pathspec elements as errors */
- 	if (pathspec.nr && error_unmatch)
-@@ -651,7 +671,6 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 	      show_killed || show_modified || show_resolve_undo))
- 		show_cached = 1;
+diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
+index 1d73d3ca3..91040a4b0 100644
+--- a/builtin/check-ignore.c
++++ b/builtin/check-ignore.c
+@@ -4,6 +4,7 @@
+ #include "quote.h"
+ #include "pathspec.h"
+ #include "parse-options.h"
++#include "submodule.h"
  
--	prune_cache(max_prefix, max_prefix_len);
- 	if (with_tree) {
- 		/*
- 		 * Basic sanity check; show-stages and show-unmerged
+ static int quiet, verbose, stdin_paths, show_non_matching, no_index;
+ static const char * const check_ignore_usage[] = {
+@@ -87,10 +88,11 @@ static int check_ignore(struct dir_struct *dir,
+ 	parse_pathspec(&pathspec,
+ 		       PATHSPEC_ALL_MAGIC & ~PATHSPEC_FROMTOP,
+ 		       PATHSPEC_SYMLINK_LEADING_PATH |
+-		       PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE |
+ 		       PATHSPEC_KEEP_ORDER,
+ 		       prefix, argv);
+ 
++	die_path_inside_submodule(&the_index, &pathspec);
++
+ 	/*
+ 	 * look for pathspecs matching entries in the index, since these
+ 	 * should not be ignored, in order to be consistent with
+diff --git a/pathspec.c b/pathspec.c
+index 9b7634c5a..e42431278 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -398,32 +398,6 @@ static void strip_submodule_slash_cheap(struct pathspec_item *item)
+ 	}
+ }
+ 
+-static void strip_submodule_slash_expensive(struct pathspec_item *item)
+-{
+-	int i;
+-
+-	for (i = 0; i < active_nr; i++) {
+-		struct cache_entry *ce = active_cache[i];
+-		int ce_len = ce_namelen(ce);
+-
+-		if (!S_ISGITLINK(ce->ce_mode))
+-			continue;
+-
+-		if (item->len <= ce_len || item->match[ce_len] != '/' ||
+-		    memcmp(ce->name, item->match, ce_len))
+-			continue;
+-
+-		if (item->len == ce_len + 1) {
+-			/* strip trailing slash */
+-			item->len--;
+-			item->match[item->len] = '\0';
+-		} else {
+-			die(_("Pathspec '%s' is in submodule '%.*s'"),
+-			    item->original, ce_len, ce->name);
+-		}
+-	}
+-}
+-
+ /*
+  * Perform the initialization of a pathspec_item based on a pathspec element.
+  */
+@@ -499,9 +473,6 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
+ 	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP)
+ 		strip_submodule_slash_cheap(item);
+ 
+-	if (flags & PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE)
+-		strip_submodule_slash_expensive(item);
+-
+ 	if (magic & PATHSPEC_LITERAL) {
+ 		item->nowildcard_len = item->len;
+ 	} else {
+diff --git a/pathspec.h b/pathspec.h
+index 55e976972..3729efa85 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -62,23 +62,15 @@ struct pathspec {
+ #define PATHSPEC_STRIP_SUBMODULE_SLASH_CHEAP (1<<3)
+ /* die if a symlink is part of the given path's directory */
+ #define PATHSPEC_SYMLINK_LEADING_PATH (1<<4)
+-/*
+- * This is like a combination of ..LEADING_PATH and .._SLASH_CHEAP
+- * (but not the same): it strips the trailing slash if the given path
+- * is a gitlink but also checks and dies if gitlink is part of the
+- * leading path (i.e. the given path goes beyond a submodule). It's
+- * safer than _SLASH_CHEAP and also more expensive.
+- */
+-#define PATHSPEC_STRIP_SUBMODULE_SLASH_EXPENSIVE (1<<5)
+-#define PATHSPEC_PREFIX_ORIGIN (1<<6)
+-#define PATHSPEC_KEEP_ORDER (1<<7)
++#define PATHSPEC_PREFIX_ORIGIN (1<<5)
++#define PATHSPEC_KEEP_ORDER (1<<6)
+ /*
+  * For the callers that just need pure paths from somewhere else, not
+  * from command line. Global --*-pathspecs options are ignored. No
+  * magic is parsed in each pathspec either. If PATHSPEC_LITERAL is
+  * allowed, then it will automatically set for every pathspec.
+  */
+-#define PATHSPEC_LITERAL_PATH (1<<8)
++#define PATHSPEC_LITERAL_PATH (1<<7)
+ 
+ extern void parse_pathspec(struct pathspec *pathspec,
+ 			   unsigned magic_mask,
+diff --git a/submodule.c b/submodule.c
+index 885663c42..80851d044 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -312,6 +312,39 @@ void die_in_unpopulated_submodule(const struct index_state *istate,
+ 	}
+ }
+ 
++/*
++ * Dies if any paths in the provided pathspec descends into a submodule
++ */
++void die_path_inside_submodule(const struct index_state *istate,
++			       const struct pathspec *ps)
++{
++	int i, j;
++
++	for (i = 0; i < istate->cache_nr; i++) {
++		struct cache_entry *ce = istate->cache[i];
++		int ce_len = ce_namelen(ce);
++
++		if (!S_ISGITLINK(ce->ce_mode))
++			continue;
++
++		for (j = 0; j < ps->nr ; j++) {
++			const struct pathspec_item *item = &ps->items[j];
++
++			if (item->len <= ce_len)
++				continue;
++			if (item->match[ce_len] != '/')
++				continue;
++			if (strncmp(ce->name, item->match, ce_len))
++				continue;
++			if (item->len == ce_len + 1)
++				continue;
++
++			die(_("Pathspec '%s' is in submodule '%.*s'"),
++			    item->original, ce_len, ce->name);
++		}
++	}
++}
++
+ int parse_submodule_update_strategy(const char *value,
+ 		struct submodule_update_strategy *dst)
+ {
+diff --git a/submodule.h b/submodule.h
+index d11b4da40..266d81f1c 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -51,6 +51,8 @@ extern int is_submodule_initialized(const char *path);
+ extern int is_submodule_populated_gently(const char *path, int *return_error_code);
+ extern void die_in_unpopulated_submodule(const struct index_state *istate,
+ 					 const char *prefix);
++extern void die_path_inside_submodule(const struct index_state *istate,
++				      const struct pathspec *ps);
+ extern int parse_submodule_update_strategy(const char *value,
+ 		struct submodule_update_strategy *dst);
+ extern const char *submodule_strategy_to_string(const struct submodule_update_strategy *s);
 -- 
 2.13.0.rc2.291.g57267f2277-goog
 
