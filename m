@@ -2,94 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C89312018D
-	for <e@80x24.org>; Thu, 11 May 2017 05:13:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D455420188
+	for <e@80x24.org>; Thu, 11 May 2017 06:11:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754759AbdEKFNU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 01:13:20 -0400
-Received: from mail-pg0-f68.google.com ([74.125.83.68]:33238 "EHLO
-        mail-pg0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1754028AbdEKFNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 01:13:19 -0400
-Received: by mail-pg0-f68.google.com with SMTP id s62so2124944pgc.0
-        for <git@vger.kernel.org>; Wed, 10 May 2017 22:13:19 -0700 (PDT)
+        id S1753785AbdEKGLE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 02:11:04 -0400
+Received: from mail-pg0-f43.google.com ([74.125.83.43]:35304 "EHLO
+        mail-pg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751743AbdEKGLD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 02:11:03 -0400
+Received: by mail-pg0-f43.google.com with SMTP id o3so9320236pgn.2
+        for <git@vger.kernel.org>; Wed, 10 May 2017 23:11:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uG5B5D7G9r5ffiqW4h7X0KjIGdJ/q7viuPHFUMRdgJA=;
-        b=tU9aUyhdduwFgJN9SjxoNUh54XEhzCYkYQMC1LbXhHfq5ohFwxkK3c/qxd2u8rkxtU
-         NAhjFFkzXq+KM80yQOzdpCILuQ7KZHE1DdAPP2KwkZgDAfaaNVP22AbKlC3m0zZSXu67
-         vMBvc+clrUWp76lQQAw1yaIVRRzKyHT4PoTJ9KEaoVmb4z0yxyc1tbmroFx/OfIcbPcj
-         66VRIbR0ecATGFdlUqY07/rtSQB28ZlhmnXNbTmqIorVura8LeDNCaaLSg7XHSrIjJ6L
-         /rEuA7m/VoERM+rFGP2QfU2mLMtSxfv/PQtDYMt0Aw5wmoFA8kqLn4/VCOb/ZhBXiLpp
-         FgxQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=CY8PElSJJCbwwzrFJ8fbVmY9glHzwh2cOgwlaIsvQwI=;
+        b=DZL756Y/Kg/ZLDNplJGm6o5Fy5dKPDmrKfrsYRNAAXpRIeWgVDHiMmtyTVGsXNXgAI
+         RpxN9aytMv4WoFLQCvGwzXcANgqpltflaQZAeETe8kTMDnXuIdy2lYcWWrHVaz5hCUNQ
+         Hw67AZcNswIi6icNOUmJSJ3e1sPFeJW+ZIdFZSLKaMPAbOXVyFH0nnaGXVrsxa3WA6V8
+         Wr4ON1wD9V1m83pMc5jj/PDGVo4yS9EPKVHgDWVnuHlABGGhpCmtULIpM/0dDp3pBUDF
+         rii+6Gelp5kPPpFMN3UMU/IcdGHggGauzjd0rAnTKS/H0pTpsqD97mIiTxsjyDva/REL
+         KW9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=uG5B5D7G9r5ffiqW4h7X0KjIGdJ/q7viuPHFUMRdgJA=;
-        b=Xg3QaV5x0Mg19lz3M2yuy9IKCKMyyD+HbQStwrj9ipUamhQvLhwulffG7j9XP2l3qt
-         YuU9fN2IoQiYFfmdqDQ12iLVVXnX00r2k3vlay2Z+fbqsTAxR31LgU8HWJZYBHgPHIrA
-         RWM1TJWMaI1tb30LYXFoog8zw1VLsmxw40ZkB6PZb56ansGzx5mJOv0HHSdfxBg6o89w
-         TU2MOVsba4c10SryyJnsBdEjPD326zsfYQsEnK6638du03m7ChnSzMpLffFcsIlGuV3M
-         uq/D7wLcoZYxE8U6T3jtyXoS7AGEoedm2CDvxc1W26rEc6iy2OyEkJRHAgLSu3c0igdL
-         KhxA==
-X-Gm-Message-State: AODbwcC8esd9PCABS8p5tml79XvrMbGDWvJZYTWq6E+UD+t6UQnsl60s
-        Cu8nhuXJjih+Yw==
-X-Received: by 10.99.111.140 with SMTP id k134mr10373092pgc.20.1494479599168;
-        Wed, 10 May 2017 22:13:19 -0700 (PDT)
-Received: from localhost ([2620:0:1000:8622:91c4:5195:150f:b3e6])
-        by smtp.gmail.com with ESMTPSA id 186sm981598pfx.72.2017.05.10.22.13.18
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Wed, 10 May 2017 22:13:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Brandon Williams <bmwill@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH 8/8] pathspec: convert parse_pathspec to take an index
-References: <20170509191805.176266-1-bmwill@google.com>
-        <20170509191805.176266-9-bmwill@google.com>
-        <xmqq1srxxn72.fsf@gitster.mtv.corp.google.com>
-        <20170510170226.GB41649@google.com>
-        <xmqqh90sw4dr.fsf@gitster.mtv.corp.google.com>
-        <dab1beaf-ca8d-2f3f-9fcc-22e6938a868a@kdbg.org>
-Date:   Wed, 10 May 2017 22:13:17 -0700
-In-Reply-To: <dab1beaf-ca8d-2f3f-9fcc-22e6938a868a@kdbg.org> (Johannes Sixt's
-        message of "Thu, 11 May 2017 07:04:46 +0200")
-Message-ID: <xmqqo9v0ascy.fsf@gitster.mtv.corp.google.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=CY8PElSJJCbwwzrFJ8fbVmY9glHzwh2cOgwlaIsvQwI=;
+        b=NPMhL7DWk1yqssxqeLwQ/5V7VWYeMhduVVZgWcHTiVivBwutwFqg0Zk1kW+VKhP1UC
+         wZbnNAGkbscV+8bculzXTlv8y8OeNcsI30Wkm0/R9S/dLiSqvaBgDow8is+7+J9CoD64
+         r5wHvrhcB5A+nKJIHklTeGEAoL8IEwevEbwT26ZUiZ4zJiCHhpfZR8sz6xz84Am1iKJZ
+         EXiorCvzIiTHTEFDJunnk0l8VwUc9vsbrxv6M0n4ZeV3wKWN8WOrobhmzQ+A8IBiWASg
+         oDg0ZTYkN858xENI6Hx4xWe3NLnMIfPOSKhgrt+6hgkKLWzpIy/drBK0WytfxqDbcAK1
+         U5BA==
+X-Gm-Message-State: AODbwcD5iuH6BfeeBAoydhW5VY/jEN11iOAoPDThWc3+4EKlpvDwVNax
+        lQhU/70TuaXelnPy4O4vn8HgYBdus7vMduI=
+X-Received: by 10.99.250.69 with SMTP id g5mr8488776pgk.11.1494483062746; Wed,
+ 10 May 2017 23:11:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 10.100.141.87 with HTTP; Wed, 10 May 2017 23:11:02 -0700 (PDT)
+From:   Nazri Ramliy <ayiehere@gmail.com>
+Date:   Thu, 11 May 2017 14:11:02 +0800
+Message-ID: <CAEY4ZpMJbS+-xDKcwbOHCWxAdjOVuTN9DFJNHVqHw0r06CwKJg@mail.gmail.com>
+Subject: Should "git submodule update" accepts --init?
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Hi,
 
-> Am 11.05.2017 um 03:48 schrieb Junio C Hamano:
->> But perhaps you are right---it may be wrong for the contents of the
->> current index (or any index) to affect how a pathspec element is
->> parsed in the first place.  If the current code (before this series)
->> uses the_index only for error checking, we may want to separate that
->> out of the parse_pathspec() callchain, so that it does not even look
->> at any index (not just the_index).  And that may be a better change
->> overall.
->
-> Just a reminder: if core.ignoreCase is set, the variant of a path in
-> the index takes precedence over the variant found in the working
-> tree. Hence, pathspec must be matched against the index that
-> corresponds to the working tree. I guess that's the_index.
+The command "git submodule update" accepts an "--init" flag to
+initialize an uninitialized submodules.
 
-Yes, but that is what happens after a path from a working tree is
-found to match a pathspec, to coerse its case into the one that is
-in the current index.  The parse_pathspec() thing we are discussing
-would have finished looooong time before that actual "matching" is
-attempted.
+Shouldn't it also accept "--sync" flag in order to sync and unsync'd submodule?
 
-Thanks.
+Otherwise it seems like I'll have to do "git submodule update" twice
+in order to update an already initialized submodule whose upstream
+repo url has been updated in .gitmodules to point to somewhere new,
+like so:
+
+$ cd superproject
+$ git pull
+$ git submodule update --init --recursive
+fatal: reference is not a tree: c21784553dcd15e1534773fe3177f39cbb93be65
+Unable to checkout 'c21784553dcd15e1534773fe3177f39cbb93be65' in
+submodule path 'path/to/submodule'
+Failed to recurse into submodule path 'path/to/submodule'
+$ git submodule sync
+$ git submodule update --init --recursive
+
+If the submodule update subcommand accepts the "--sync" flag then
+above can then be simplified to this:
+
+$ cd superproject
+$ git pull
+$ git submodule update --init --sync --recursive
+
+So the "--init" and "--sync" flags tells git to initialize an
+uninitialized submodule, and syncs any out-of-sync submodules.
+
+nazri
