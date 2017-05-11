@@ -2,129 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 756481FF34
-	for <e@80x24.org>; Thu, 11 May 2017 11:33:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F6AF2018D
+	for <e@80x24.org>; Thu, 11 May 2017 12:06:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754838AbdEKLdn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 07:33:43 -0400
-Received: from mout.gmx.net ([212.227.17.20]:63718 "EHLO mout.gmx.net"
+        id S932507AbdEKMGp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 08:06:45 -0400
+Received: from smtp2-g21.free.fr ([212.27.42.2]:17840 "EHLO smtp2-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754327AbdEKLdm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 07:33:42 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lmazv-1diw2f0brP-00aIPV; Thu, 11
- May 2017 13:33:18 +0200
-Date:   Thu, 11 May 2017 13:33:17 +0200 (CEST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@virtualbox
-To:     Stefan Beller <sbeller@google.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: Automating Coverity, was Re: [PATCH 00/26] Address a couple of
- issues identified by Coverity
-In-Reply-To: <CAGZ79kaAYU3cSRdXZTvukib3VNmx+_GdeSV5NkZ1g_OWt07i9A@mail.gmail.com>
-Message-ID: <alpine.DEB.2.21.1.1705111329140.146734@virtualbox>
-References: <cover.1493237937.git.johannes.schindelin@gmx.de> <CAGZ79kbbHshh4=WC2ymG15=W5oq98b3KTV4zxiTx0LgCLeYwfQ@mail.gmail.com> <alpine.DEB.2.20.1704280010160.3480@virtualbox> <CAGZ79kYOp1deMgcEB3HHXeEcLOKNs4KPjdT_W2CD+4Amduv2Wg@mail.gmail.com>
- <alpine.DEB.2.20.1704282205320.3480@virtualbox> <alpine.DEB.2.21.1.1705052227120.146734@virtualbox> <alpine.DEB.2.21.1.1705101801300.146734@virtualbox> <CAGZ79kaAYU3cSRdXZTvukib3VNmx+_GdeSV5NkZ1g_OWt07i9A@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:XLH7D3ZF/MVEIl8DguBzufGJTZIJFhN/XKm4axm76kdwI5rmj1H
- JGBRE84hGJBn4CamjjRe/1rS055byIzPDhYTHFqtYxaFmjgNmEp/LB/qnErdl4cREdRdN1+
- ySoNyNJeuXuQP5ZfcxwxP5NjAQoZiKctWV4cTVGEYAzclRs9JDxIofrf8RINj0rBet0pAOH
- MsXyZjPf+Z8oTq5y9iJKw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KNQaFFkroH8=:qLTHcPYdLvJIXRaFIm7bBY
- APSdjPM8BfwqhwH241AIdVOR1lYOB/RTEgXrg0ykqGhmyxo1a4KxljCTkuzNxjF6dvlaSvGiL
- XKQCY5o2vTnXCSXxw+a2FYh1NPZKaWNbiNfIOQrPz2SIe3vE3ftZbCavyMMjY41mDQbD1sw0/
- 1pUxNYxa4q9CPPBxHFLSAodq6fTV/VO78LPvzGhQcgjM14dz6I7Jb3G66TTGzNBo56ccVOODE
- cZbfgf2MYGc4q7XEIGYeNnvM/yIliUrmchWixbDWkBsk2MNadiUOIFuMlPcVDduO4xucnB9ch
- gSE0C5h6CodTnikzwGVHokt2xqWWQi6E5h+8gnrVuEDqOolLf8eHeasiNTuwVE9h00Yj8/0tv
- LHS/tlQAf2ycg96b6iOg7tynxvAcXrZMOWRY/NrLs/BOnb8RK2IilN5TlGsh5iGruP18bWX5f
- aYPn8onWpYzfJZV5mIiKVE/y6x4kCU0Iay7E/uPSvuI8pa6EPmnrQPz1Woyfe8mt4z3agqumm
- rNqE+wuKHmGBepGPZa8X7TRxj7FVgbstzSMLg/JJBbSVObPdHIhfRe63Wa0saxxP9tHNN4KfD
- gKbDqjiBF5ky2dHLWppmk4fUNbHwVDjhTiQCzlbWqC8CR9kfPPArcrWnUGAukdWoIEypXfueB
- LDU5yxpDyxCG5/jDfgQthd+2LkpqB3hzKggGkD7nUSia8jB+keWrwREHH07PBsOBjJSaXH8yG
- W0ysRD3iQOkCZ8ufGvc3ANuEiFFo/LTbvwg7Lsc+Le85fPimUFqUqkV8z2GyJTNsi+bR09NzB
- 5AEKMiP
+        id S1755463AbdEKMGn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 08:06:43 -0400
+Received: from localhost.localdomain (unknown [IPv6:2a01:e35:2ef1:f910:5006:1621:c385:7777])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id E5DA82003CE;
+        Thu, 11 May 2017 14:06:40 +0200 (CEST)
+From:   Jean-Noel Avila <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Cc:     Jean-Noel Avila <jn.avila@free.fr>
+Subject: [PATCH v3 1/3] usability: don't ask questions if no reply is required
+Date:   Thu, 11 May 2017 14:06:32 +0200
+Message-Id: <20170511120634.17683-1-jn.avila@free.fr>
+X-Mailer: git-send-email 2.13.0
+In-Reply-To: <20170503162931.30721-1-jn.avila@free.fr>
+References: <20170503162931.30721-1-jn.avila@free.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+There has been a bug report by a corporate user that stated that
+"spelling mistake of stash followed by a yes prints character 'y'
+infinite times."
 
-On Wed, 10 May 2017, Stefan Beller wrote:
+This analysis was false. When the spelling of a command contains
+errors, the git program tries to help the user by providing candidates
+which are close to the unexisting command. E.g Git prints the
+following:
 
-> On Wed, May 10, 2017 at 12:48 PM, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Fri, 5 May 2017, Johannes Schindelin wrote:
-> >
-> >> On Fri, 28 Apr 2017, Johannes Schindelin wrote:
-> >>
-> >> > On Fri, 28 Apr 2017, Stefan Beller wrote:
-> >> >
-> >> > > On Thu, Apr 27, 2017 at 3:50 PM, Johannes Schindelin
-> >> > > <Johannes.Schindelin@gmx.de> wrote:
-> >> > >
-> >> > > > I still have to find the time to figure out one more detail: how
-> >> > > > to download and extract the Coverity tool (the .zip archive has a
-> >> > > > variable name for the top-level directory), and doing that only
-> >> > > > every once in a while, say, only when there is no previously
-> >> > > > unpacked tool, or it is already 4 weeks old.
-> >> > >
-> >> > > That is an interesting problem, which I ignored as the older
-> >> > > versions of their tools still works once they release new versions.
-> >> > > So I just manually check every once in a while if they have new
-> >> > > versions out there.
-> >> > >
-> >> > > So if you find a nice solution to that problem, let me know, please.
-> >> >
-> >> > I think I have a working idea (jotting it down in the editor,
-> >> > untested):
-> >> >
-> >> > [... totally untested snippet ...]
-> >>
-> >> And now I edited it and tested it. The code is now part of the script I
-> >> use for pretty much all administrative (i.e. recurring and boring) tasks
-> >> in the Git for Windows project:
-> >>
-> >>       https://github.com/git-for-windows/build-extra/commit/05b5342128
-> >
-> > Oh, I completely forgot to mention that I tried to set the FLEX_ARRAY
-> > constant to something quite large (I used 64k), but apparently that does
-> > not work as expected, Coverity still insists on complaining about strbufs.
-> >
-> > On a second thought, it is actually quite obvious why it does not fix
-> > those reports: STRBUF_INIT has nothing to do with FLEX_ARRAY. D'oh.
-> 
-> D'oh. I must have been living in an alternate universe for quite some time
-> as I seemed to have confused different things here.
-> 
-> Checkout this commit,
-> https://github.com/stefanbeller/git/commit/977f81d6dec4461a1a12da2df6c5c919b41129b4
-> that is cherry-picked for the coverity build. That fixes it.
+        git: 'stahs' is not a git command. See 'git --help'.
+        Did you mean this?
 
-I saw that patch, and since Junio did not pick it up, I figured that it
-won't make it into git.git's source code. That's why I went with the `sed`
-approach, as the #ifndef __COVERITY__ guard is not even necessary if I
-have to patch the code before running the Coverity tool anyway.
+        stash
 
-> That is about the only patch I apply before sending it off to coverity.
-> I am still contemplating a nice solution for FLEX_ARRAYs in other cases.
+and then exits.
 
-For FLEX_ARRAYs, I use this:
+The problem with this hint is that it is not formally indicated as an
+hint and the user is in fact encouraged to reply to the question,
+whereas the Git command is already finished.
 
-	cov-build --dir cov-int \
-                make -j15 DEVELOPER=1 CPPFLAGS=-DFLEX_ARRAY=65536
+The user was unlucky enough that it was the command he was looking
+for, and replied "yes" on the command line, effectively launching the
+`yes` program.
 
-I have not had time to go over more than half a dozen CIDs, but I *think*
-it helps.
+The initial error is that the Git programs, when launched in
+command-line mode (without interaction) must not ask questions,
+because these questions would normally require a user input as a reply
+that they won't handle indeed. That's a source of confusion on UX
+level.
 
-Ciao,
-Dscho
+To improve the general usability of the Git suite, the following rule
+was applied:
+
+if the sentence
+ * appears in a non-interactive session
+ * is printed last before exit
+ * is a question addressing the user ("you")
+
+the sentence is turned into affirmative and proposes the option.
+
+The basic rewording of the question sentences has been extended to
+other spots found in the source.
+
+Requested at https://github.com/git/git-scm.com/issues/999 by rpai1
+
+Signed-off-by: Jean-Noel Avila <jn.avila@free.fr>
+---
+ builtin/am.c       | 5 +++--
+ builtin/checkout.c | 5 ++---
+ help.c             | 4 ++--
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/builtin/am.c b/builtin/am.c
+index a95dd8b4e..dd60fad1e 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1312,7 +1312,7 @@ static int parse_mail(struct am_state *state, const char *mail)
+ 	}
+ 
+ 	if (is_empty_file(am_path(state, "patch"))) {
+-		printf_ln(_("Patch is empty. Was it split wrong?"));
++		printf_ln(_("Patch is empty."));
+ 		die_user_resolve(state);
+ 	}
+ 
+@@ -1940,7 +1940,8 @@ static void am_resolve(struct am_state *state)
+ 
+ 	if (unmerged_cache()) {
+ 		printf_ln(_("You still have unmerged paths in your index.\n"
+-			"Did you forget to use 'git add'?"));
++			"You should 'git add' each file with resolved conflicts to mark them as such.\n"
++			"You might run `git rm` on a file to accept \"deleted by them\" for it."));
+ 		die_user_resolve(state);
+ 	}
+ 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index bfa5419f3..85c04d252 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1286,9 +1286,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		 * new_branch && argc > 1 will be caught later.
+ 		 */
+ 		if (opts.new_branch && argc == 1)
+-			die(_("Cannot update paths and switch to branch '%s' at the same time.\n"
+-			      "Did you intend to checkout '%s' which can not be resolved as commit?"),
+-			    opts.new_branch, argv[0]);
++			die(_("'%s' is not a commit and a branch '%s' cannot be created from it"),
++				argv[0], opts.new_branch);
+ 
+ 		if (opts.force_detach)
+ 			die(_("git checkout: --detach does not take a path argument '%s'"),
+diff --git a/help.c b/help.c
+index bc6cd19cf..a07f01e6f 100644
+--- a/help.c
++++ b/help.c
+@@ -411,8 +411,8 @@ const char *help_unknown_cmd(const char *cmd)
+ 
+ 	if (SIMILAR_ENOUGH(best_similarity)) {
+ 		fprintf_ln(stderr,
+-			   Q_("\nDid you mean this?",
+-			      "\nDid you mean one of these?",
++			   Q_("\nThe most similar command is",
++			      "\nThe most similar commands are",
+ 			   n));
+ 
+ 		for (i = 0; i < n; i++)
+-- 
+2.13.0
+
