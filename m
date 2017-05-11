@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 863E22018D
-	for <e@80x24.org>; Thu, 11 May 2017 17:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8EC2018D
+	for <e@80x24.org>; Thu, 11 May 2017 17:02:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933109AbdEKRCd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 13:02:33 -0400
-Received: from mail-qk0-f177.google.com ([209.85.220.177]:36537 "EHLO
-        mail-qk0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932405AbdEKRCa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 13:02:30 -0400
-Received: by mail-qk0-f177.google.com with SMTP id u75so27695762qka.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 10:02:30 -0700 (PDT)
+        id S933127AbdEKRCi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 13:02:38 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:34345 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932405AbdEKRCe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 13:02:34 -0400
+Received: by mail-qt0-f194.google.com with SMTP id l39so3619087qtb.1
+        for <git@vger.kernel.org>; Thu, 11 May 2017 10:02:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TAI1V9UH4DWrDVv5W8TMUX1lQHXJTyw7YPLFUZaJU8Y=;
-        b=VWB1RWlMsg4Whss17kozgDUnhUWIK1b92ThxKdg014PKqnV4fCWR3PtY+mi634o2LM
-         PcT7PEF+Nhuakq2XXEAxIyLq1adAKLMxXyDLRq33y1YpvDHgMJwl1fb++Q4HI1yzr0yb
-         B/s/jQksKnmr0de9OTdpbwnXwCSyKQlf83BwuIJT4TBTJqHJYRWV2Sxpji3RSD73otNN
-         8W6uAPClM8TWbyNLLLwxmRZkGZPBd1E9g16lyG/v+K7pGV5xA/DIl/IpzA/IFkqibyNd
-         WCLPJqBAuww3TX1f5D6ZvXoJFr8VLkGg9r+NrSuKbVeCYL6zP2zDyTKdVUqIhuElOM8A
-         sOgg==
+        bh=Zm/VmHPHSjlATD1Du548itSjvJFcOQMHLGAh073DaHA=;
+        b=TaADpAZvC14r3dOiYfmWWfDOsReiMkQlNoHElCC2XpwItPoy82J9hcDGX7sPAXygjb
+         y3k/WKg7ZRjYUkEPUInZDA51nUIc9En09TPRkfUqPLOjK1shecWNrE8yD+lhViZ5ItjS
+         X1m3gOdRUIJ7qsgXGHoFmx8JWK29qn2AqVvreA8MJ7ZB1KqwrU3AZWwa2mhsvxDMJ2o1
+         l64CL5VJnFHZIU0Q7x/EQawaXrykv9heo/vOnp5WmFtf20S74m9YB9E9N+eRkplVeK1B
+         pJw9C6++Ekh3SB4zAR/dHrXDowlYw9bjdKrE3eForjypuM4RPc7yBUM6NydYDTtpzv13
+         ZS7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TAI1V9UH4DWrDVv5W8TMUX1lQHXJTyw7YPLFUZaJU8Y=;
-        b=hbeTSJPhjsUxqEtw1QbrWh/6WpDDpo32P1CbrGaIFeXUsP9Oqr8Tup/BwKPWQLUCYu
-         7z/QVPHHt2dwzXgF1ah2DOB1l9ft5iBS2q6hD0jkb45pf+9e/3lJI4rIjQO9g2cMGphU
-         HqtTF7wmsaYTI94rS/FfvufwHCj+6EgmZvOHd1gg73isaV3JSMLnLrMIyOmfOH14JjdG
-         owW2ta6mZGn+47oH8M/k2Z4Ct1OtJsbSS/2HPon8KQ3zF4DCQGWRncB4eFrY1qDzmPoX
-         /GYzDDxWtLPcY/MVCjZNmqwffqcQbGXXFt/oIzrr38Mc1nxVNN2FYdbWhaJyO+YtKGDC
-         03Jg==
-X-Gm-Message-State: AODbwcBl7df6w81gJsj3dp9PLdXIRY3yKjWdvWEWuUmWwpWQMtKZ62Be
-        Z4J+Db9VbFh99w==
-X-Received: by 10.55.187.1 with SMTP id l1mr183613qkf.36.1494522149656;
-        Thu, 11 May 2017 10:02:29 -0700 (PDT)
+        bh=Zm/VmHPHSjlATD1Du548itSjvJFcOQMHLGAh073DaHA=;
+        b=AoILEGnqgrzNQ83Txu/JG56KXHQboTe4a7hSb8o0Qqp5yfCQa/WB/pxC3nqUHI1X4P
+         5guVoCp9cSFxdPmlfo9VRQf5P8WCFa6xauFEnv+iwC1Y3uQ6B2pNRVMbI8xW2ju0Ofqr
+         9m38TdoOJsqo35KZ5KpkN/cNWT5w/kgWuocijGn9UruKYklu+BOSu72kwXszw0WJt9ZQ
+         LckEfMzBIuJ6X1odTHAWBzV8+ihQrNMNOLAVBeF8SCt6QYOVikidup9YVKwmtgK3Mb2E
+         HZs2som0AKdFsV2BrfxSElgXwIcGl4rwEUBRNXx1tVEADvkEGVZrJTnQ8JLVNALfBMQG
+         zzFg==
+X-Gm-Message-State: AODbwcAnd4ZvTSqlWRcZES8+WSjWal7XEox7la+I4dWuOzCFetNw3D91
+        RKY7K5ems0J+1A==
+X-Received: by 10.200.2.159 with SMTP id p31mr133759qtg.55.1494522153012;
+        Thu, 11 May 2017 10:02:33 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l10sm480407qte.15.2017.05.11.10.02.27
+        by smtp.gmail.com with ESMTPSA id l10sm480407qte.15.2017.05.11.10.02.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 10:02:28 -0700 (PDT)
+        Thu, 11 May 2017 10:02:32 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 4/7] grep: add support for the PCRE v1 JIT API
-Date:   Thu, 11 May 2017 17:01:39 +0000
-Message-Id: <20170511170142.15934-5-avarab@gmail.com>
+Subject: [PATCH 5/7] grep: un-break building with PCRE < 8.32
+Date:   Thu, 11 May 2017 17:01:40 +0000
+Message-Id: <20170511170142.15934-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511170142.15934-1-avarab@gmail.com>
 References: <20170511170142.15934-1-avarab@gmail.com>
@@ -75,152 +75,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the grep PCRE v1 code to use JIT when available. When PCRE
-support was initially added in commit 63e7e9d8b6 ("git-grep: Learn
-PCRE", 2011-05-09) PCRE had no JIT support, it was integrated into
-8.20 released on 2011-10-21.
+Amend my change earlier in this series ("grep: add support for the
+PCRE v1 JIT API", 2017-04-11) to un-break the build on PCRE v1
+versions earlier than 8.32.
 
-Enabling JIT support usually improves performance by more than
-40%. The pattern compilation times are relatively slower, but those
-relative numbers are tiny, and are easily made back in all but the
-most trivial cases of grep. Detailed benchmarks & overview of
-compilation times is at: http://sljit.sourceforge.net/pcre.html
+The JIT support was added in version 8.20 released on 2011-10-21, but
+it wasn't until 8.32 released on 2012-11-30 that the fast code path to
+use the JIT via pcre_jit_exec() was added[1] (see also [2]).
 
-With this change the difference in a t/perf/p7820-grep-engines.sh run
-is, with just the /perl/ tests shown:
+This means that versions 8.20 through 8.31 could still use the JIT,
+but supporting it on those versions would add to the already verbose
+macro soup around JIT support it, and I don't expect that the use-case
+of compiling a brand new git against a 5 year old PCRE is particularly
+common, and if someone does that they can just get the existing
+pre-JIT slow codepath.
 
-    $ GIT_PERF_REPEAT_COUNT=30 GIT_PERF_LARGE_REPO=~/g/linux GIT_PERF_MAKE_OPTS='-j8 USE_LIBPCRE=YesPlease CC=~/perl5/installed/bin/gcc NO_R_TO_GCC_LINKER=YesPlease CFLAGS=-O3 LIBPCREDIR=/home/avar/g/pcre/inst LDFLAGS=-Wl,-rpath,/home/avar/g/pcre/inst/lib' ./run HEAD~ HEAD p7820-grep-engines.sh
-    Test                                           HEAD~             HEAD
-    ---------------------------------------------------------------------------------------
-    7820.3: perl grep how.to                       0.31(1.11+0.44)   0.20(0.35+0.57) -35.5%
-    7820.7: perl grep ^how to                      0.57(2.66+0.38)   0.23(0.65+0.46) -59.6%
-    7820.11: perl grep [how] to                    0.55(2.54+0.43)   0.29(0.86+0.52) -47.3%
-    7820.15: perl grep (e.t[^ ]*|v.ry) rare        1.05(5.54+0.33)   0.30(1.10+0.44) -71.4%
-    7820.19: perl grep m(ú|u)ult.b(æ|y)te          0.37(1.53+0.43)   0.24(0.70+0.47) -35.1%
+So just take the easy way out and disable the JIT on any version older
+than 8.32.
 
-The conditional support for JIT is implemented as suggested in the
-pcrejit(3) man page. E.g. defining PCRE_STUDY_JIT_COMPILE to 0 if it's
-not present.
+The reason this change isn't part of the initial change PCRE JIT
+support is because possibly slightly annoying someone who's bisecting
+with an ancient PCRE is worth it to have a cleaner history showing
+which parts of the implementation are only used for ancient PCRE
+versions. This also makes it easier to revert this change if we ever
+decide to stop supporting those old versions.
 
-The implementation is relatively verbose because even if
-PCRE_CONFIG_JIT is defined only a call to pcre_config() can determine
-if the JIT is available, and if so the faster pcre_jit_exec() function
-should be called instead of pcre_exec(), and a different (but not
-complimentary!) function needs to be called to free pcre1_extra_info.
-
-There's no graceful fallback if pcre_jit_stack_alloc() fails under
-PCRE_CONFIG_JIT, instead the program will simply abort. I don't think
-this is worth handling gracefully, it'll only fail in cases where
-malloc() doesn't work, in which case we're screwed anyway.
+1. http://www.pcre.org/original/changelog.txt ("28. Introducing a
+   native interface for JIT. Through this interface, the
+   compiled[...]")
+2. https://bugs.exim.org/show_bug.cgi?id=2121
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- grep.c | 37 ++++++++++++++++++++++++++++++++++++-
- grep.h |  6 ++++++
- 2 files changed, 42 insertions(+), 1 deletion(-)
+ grep.c | 8 ++++----
+ grep.h | 5 +++++
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
 diff --git a/grep.c b/grep.c
-index 5c808f8971..593e72f92a 100644
+index 593e72f92a..9ba9aab1a9 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -350,6 +350,9 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
+@@ -350,7 +350,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
  	const char *error;
  	int erroffset;
  	int options = PCRE_MULTILINE;
-+#ifdef PCRE_CONFIG_JIT
-+	int canjit;
-+#endif
+-#ifdef PCRE_CONFIG_JIT
++#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
+ 	int canjit;
+ #endif
  
- 	if (opt->ignore_case) {
- 		if (has_non_ascii(p->pattern))
-@@ -364,9 +367,20 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
- 	if (!p->pcre1_regexp)
- 		compile_regexp_failed(p, error);
- 
--	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, 0, &error);
-+	p->pcre1_extra_info = pcre_study(p->pcre1_regexp, PCRE_STUDY_JIT_COMPILE, &error);
+@@ -371,7 +371,7 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
  	if (!p->pcre1_extra_info && error)
  		die("%s", error);
-+
-+#ifdef PCRE_CONFIG_JIT
-+	pcre_config(PCRE_CONFIG_JIT, &canjit);
-+	if (canjit == 1) {
-+		p->pcre1_jit_stack = pcre_jit_stack_alloc(1, 1024 * 1024);
-+		if (!p->pcre1_jit_stack)
-+			die("BUG: Couldn't allocate PCRE JIT stack");
-+		pcre_assign_jit_stack(p->pcre1_extra_info, NULL, p->pcre1_jit_stack);
-+		p->pcre1_jit_on = 1;
-+	}
-+#endif
- }
  
- static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
-@@ -377,8 +391,20 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+-#ifdef PCRE_CONFIG_JIT
++#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
+ 	pcre_config(PCRE_CONFIG_JIT, &canjit);
+ 	if (canjit == 1) {
+ 		p->pcre1_jit_stack = pcre_jit_stack_alloc(1, 1024 * 1024);
+@@ -391,7 +391,7 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
  	if (eflags & REG_NOTBOL)
  		flags |= PCRE_NOTBOL;
  
-+#ifdef PCRE_CONFIG_JIT
-+	if (p->pcre1_jit_on)
-+		ret = pcre_jit_exec(p->pcre1_regexp, p->pcre1_extra_info, line,
-+				    eol - line, 0, flags, ovector,
-+				    ARRAY_SIZE(ovector), p->pcre1_jit_stack);
-+	else
-+		ret = pcre_exec(p->pcre1_regexp, p->pcre1_extra_info, line,
-+				eol - line, 0, flags, ovector,
-+				ARRAY_SIZE(ovector));
-+#else
- 	ret = pcre_exec(p->pcre1_regexp, p->pcre1_extra_info, line, eol - line,
- 			0, flags, ovector, ARRAY_SIZE(ovector));
-+#endif
-+
- 	if (ret < 0 && ret != PCRE_ERROR_NOMATCH)
- 		die("pcre_exec failed with error code %d", ret);
- 	if (ret > 0) {
-@@ -393,7 +419,16 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
+-#ifdef PCRE_CONFIG_JIT
++#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
+ 	if (p->pcre1_jit_on)
+ 		ret = pcre_jit_exec(p->pcre1_regexp, p->pcre1_extra_info, line,
+ 				    eol - line, 0, flags, ovector,
+@@ -419,7 +419,7 @@ static int pcre1match(struct grep_pat *p, const char *line, const char *eol,
  static void free_pcre1_regexp(struct grep_pat *p)
  {
  	pcre_free(p->pcre1_regexp);
-+#ifdef PCRE_CONFIG_JIT
-+	if (p->pcre1_jit_on) {
-+		pcre_free_study(p->pcre1_extra_info);
-+		pcre_jit_stack_free(p->pcre1_jit_stack);
-+	} else {
-+		pcre_free(p->pcre1_extra_info);
-+	}
-+#else
- 	pcre_free(p->pcre1_extra_info);
-+#endif
- 	pcre_free((void *)p->pcre1_tables);
- }
- #else /* !USE_LIBPCRE1 */
+-#ifdef PCRE_CONFIG_JIT
++#ifdef GIT_PCRE1_CAN_DO_MODERN_JIT
+ 	if (p->pcre1_jit_on) {
+ 		pcre_free_study(p->pcre1_extra_info);
+ 		pcre_jit_stack_free(p->pcre1_jit_stack);
 diff --git a/grep.h b/grep.h
-index 38ac82b638..14f47189f9 100644
+index 14f47189f9..73ef0ef8ec 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -3,9 +3,13 @@
+@@ -3,6 +3,11 @@
  #include "color.h"
  #ifdef USE_LIBPCRE1
  #include <pcre.h>
-+#ifndef PCRE_STUDY_JIT_COMPILE
-+#define PCRE_STUDY_JIT_COMPILE 0
++#ifdef PCRE_CONFIG_JIT
++#if PCRE_MAJOR >= 8 && PCRE_MINOR >= 32
++#define GIT_PCRE1_CAN_DO_MODERN_JIT
 +#endif
- #else
- typedef int pcre;
- typedef int pcre_extra;
-+typedef int pcre_jit_stack;
++#endif
+ #ifndef PCRE_STUDY_JIT_COMPILE
+ #define PCRE_STUDY_JIT_COMPILE 0
  #endif
- #include "kwset.h"
- #include "thread-utils.h"
-@@ -48,7 +52,9 @@ struct grep_pat {
- 	regex_t regexp;
- 	pcre *pcre1_regexp;
- 	pcre_extra *pcre1_extra_info;
-+	pcre_jit_stack *pcre1_jit_stack;
- 	const unsigned char *pcre1_tables;
-+	int pcre1_jit_on;
- 	kwset_t kws;
- 	unsigned fixed:1;
- 	unsigned ignore_case:1;
 -- 
 2.11.0
 
