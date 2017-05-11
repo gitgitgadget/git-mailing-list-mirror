@@ -2,152 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RCVD_IN_SORBS_SPAM,RP_MATCHES_RCVD shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8B9201A0
-	for <e@80x24.org>; Thu, 11 May 2017 20:17:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA9A6201A0
+	for <e@80x24.org>; Thu, 11 May 2017 20:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932761AbdEKURq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 16:17:46 -0400
-Received: from mail-pf0-f180.google.com ([209.85.192.180]:34281 "EHLO
-        mail-pf0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932366AbdEKURp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 16:17:45 -0400
-Received: by mail-pf0-f180.google.com with SMTP id e64so19041188pfd.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 13:17:45 -0700 (PDT)
+        id S932635AbdEKUUW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 16:20:22 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:36414 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932432AbdEKUUV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 16:20:21 -0400
+Received: by mail-io0-f195.google.com with SMTP id f102so4066813ioi.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 13:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=Giva6qtKnYkUnQsvgyEDTuVgO4SEGsDE9mQJE8b+Y8Q=;
-        b=QisxFlEOz78W6uZtfOI7W56r0yGSie/U8ZDIV3+0N5rwX4Q/L61rM+oFX6OhRSuixx
-         aw//62YVKr2KuvICT/Ky+I1GhaEq46tMWci3N0eVVc7/V7a03R08zkoCSqKm+904tLtZ
-         EnJInq5ZyVQeaVx/h628XIMhq8ErSUdh8jbj7dMmwInThCnOUozHf4pF6QwdA0YpfGfq
-         Y+blcISOCt+c7e7HKIcP7xTdHTctTtmkSLwFJgz8Bn86D/NcAVf+LXYHm7Yu0JdBY42u
-         hI5XIX+rh89c6n0NwCBvW7THLQGYPbFODEDdYecSNkZC5vfiGYsM0/nBkPi05su5HzEJ
-         zX2A==
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Q4vL2GKxEWcaaLS0BOB/8sW2CdJ2QIO2Z8wX+JL271U=;
+        b=RNy1jIPPHPv12Ld/Q3v+Fp68dy17h5VnlHOen4ZSo/MpBB1Qe3zE4JKuvul8/9J/Gd
+         kbKW0ndl+HV4sZoyTLgCGd4kBWwH71h1JqlAxAEo5QYq56rHprowgPGSWlvXSHqAbxZf
+         3fqWvehRz84emX/rcB+7iZB3CY8m7zmfnaMlqglmWyAzivwBJWnmie4xxd5id8qd9QLl
+         X8RoGDPodSvbtEx4DG0nC6+VzCa1qD3cbnFS4rv8ZdRzPBkDJpKOxNABAitCtNriuJqv
+         Ds7FgoP3qoZymmL2BEmwfX+jT/+uZQwlehFwILH3ZAwjtWWUR9OJusGZRkOfq2IoN7Yw
+         6L9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=Giva6qtKnYkUnQsvgyEDTuVgO4SEGsDE9mQJE8b+Y8Q=;
-        b=g6A6BxK8cpY1UX2fBYlDVSp0KnUnVo8RcxcGE4ZSItna/qTIaYOQ98wKuEsv1C3VKk
-         F7iddSXl2DSFHY5Uhio5IiJNdaeU534uWrYBTJCmmTfUAhW/cAnlXAp7s1qEVyVsdLWH
-         /u2ONsujV6zVm78LwKyLMUPGvIfa+VGy5Dy0XoNe4NsEoTX2uAaz1lrYajH6MkCjyHsX
-         D5Gx6lNXknhLAa1/AhwXEfR2mypm79AzbArra3z0A90BumnERAh5kEq8RAU671mPZmZr
-         7xG2MrbjF47eLp9sEoFzLRdLnOoQLT3A3UuMbaZ/h0xEVk4dJuVrrca0SC589ZGLMgu5
-         Ne+A==
-X-Gm-Message-State: AODbwcAM+h37LA2Lqk0sG8ORjfG1CQrjpLk/OhInpxzgTQJ5HR8xNMYJ
-        iIrY1RH8R9qRJx60
-X-Received: by 10.99.140.93 with SMTP id q29mr295128pgn.237.1494533864487;
-        Thu, 11 May 2017 13:17:44 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:938:3d1d:44aa:d816])
-        by smtp.gmail.com with ESMTPSA id l186sm1541372pgd.42.2017.05.11.13.17.43
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 13:17:43 -0700 (PDT)
-Date:   Thu, 11 May 2017 13:17:42 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Q4vL2GKxEWcaaLS0BOB/8sW2CdJ2QIO2Z8wX+JL271U=;
+        b=Qmj10NBX/I7aodTH/AweVloeznZ3FH7UP8JwMbsA3bR30YGjoWmbYAHSRKbSIy16Cu
+         JJOMUKDM35iKcr46OsLJvJUyWgyLI3r/pKw6NCdUCGYiqnB+nvS3GMows3edyebikQfR
+         3k6eLx9q4dHV/O8P0BkCgeFLvoXpSo84S/GqpKLfiS0LkubRqDEJa96VWy9yg0xT13qd
+         xQfWDwD1427ifC56aBN6hjq+ELyAYFSZjbKnUV71CCtLbWT8onzk6mbOjIG1VWc5eGMy
+         V2MClNpu5Jl6RXxCE0+UOW1BVfVMumrAtU9D+fz512RWAyM6PQ2Tg0hWa3NhNGlppM3y
+         BmiQ==
+X-Gm-Message-State: AODbwcBX453ANc9lLwohGxKsFzZaDPl93kdclfw5UnIfoLPo/v+oJ7XN
+        nfn/vrscvN+3u8Xf16+ZtVw3CWhzfg==
+X-Received: by 10.107.138.21 with SMTP id m21mr392149iod.80.1494534020934;
+ Thu, 11 May 2017 13:20:20 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 10.107.8.220 with HTTP; Thu, 11 May 2017 13:20:00 -0700 (PDT)
+In-Reply-To: <20170511201404.GH83655@google.com>
+References: <20170511091829.5634-1-avarab@gmail.com> <20170511091829.5634-25-avarab@gmail.com>
+ <20170511201404.GH83655@google.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 11 May 2017 22:20:00 +0200
+Message-ID: <CACBZZX4FqGzPn_knPMekP3fMChd_UJihYLmNcm-L-T_mPk4KMg@mail.gmail.com>
+Subject: Re: [PATCH 24/29] grep: move two functions to avoid forward declaration
+To:     Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
-        =?utf-8?Q?Micha=C5=82?= Kiedrowicz <michal.kiedrowicz@gmail.com>,
+        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
         J Smith <dark.panda@gmail.com>,
         Victor Leschuk <vleschuk@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Fredrik Kuivinen <frekui@gmail.com>
-Subject: Re: [PATCH 26/29] pack-objects & index-pack: add test for --threads
- warning
-Message-ID: <20170511201742.GJ83655@google.com>
-References: <20170511091829.5634-1-avarab@gmail.com>
- <20170511091829.5634-27-avarab@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20170511091829.5634-27-avarab@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/11, Ævar Arnfjörð Bjarmason wrote:
-> Add a test for the warning that's emitted when --threads or
-> pack.threads is provided under NO_PTHREADS=YesPlease. This uses the
-> new PTHREADS prerequisite.
-> 
-> The assertion for C_LOCALE_OUTPUT in the latter test is currently
-> redundant, since unlike index-pack the pack-objects warnings aren't
-> i18n'd. However they might be changed to be i18n'd in the future, and
-> there's no harm in future-proofing the test.
-> 
-> There's an existing bug in the implementation of pack-objects which
-> this test currently tests for as-is. Details about the bug & the fix
-> are included in a follow-up change.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  t/t5300-pack-object.sh | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
-> 
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> index 43a672c345..1629fa80b0 100755
-> --- a/t/t5300-pack-object.sh
-> +++ b/t/t5300-pack-object.sh
-> @@ -421,6 +421,40 @@ test_expect_success 'index-pack <pack> works in non-repo' '
->  	test_path_is_file foo.idx
->  '
->  
-> +test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'index-pack --threads=N or pack.threads=N warns when no pthreads' '
-> +	test_must_fail git index-pack --threads=2 2>err &&
-> +	grep ^warning: err >warnings &&
-> +	test_line_count = 1 warnings &&
-> +	grep -F "no threads support, ignoring --threads=2" err &&
-> +	test_must_fail git -c pack.threads=2 index-pack 2>err &&
-> +	grep ^warning: err >warnings &&
-> +	test_line_count = 1 warnings &&
-> +	grep -F "no threads support, ignoring pack.threads" err &&
-> +	test_must_fail git -c pack.threads=2 index-pack --threads=4 2>err &&
-> +	grep ^warning: err >warnings &&
-> +	test_line_count = 2 warnings &&
-> +	grep -F "no threads support, ignoring --threads=4" err &&
-> +	grep -F "no threads support, ignoring pack.threads" err
-> +'
-> +
-> +test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=N or pack.threads=N warns when no pthreads' '
-> +	git pack-objects --threads=2 --stdout --all </dev/null >/dev/null 2>err &&
-> +	grep ^warning: err >warnings &&
-> +	test_line_count = 1 warnings &&
-> +	grep -F "no threads support, ignoring --threads" err &&
-> +	git -c pack.threads=2 pack-objects --stdout --all </dev/null >/dev/null 2>err &&
-> +	cat err &&
-> +	grep ^warning: err >warnings &&
-> +	test_line_count = 2 warnings &&
-> +	grep -F "no threads support, ignoring --threads" err &&
-> +	grep -F "no threads support, ignoring pack.threads" err &&
-> +	git -c pack.threads=2 pack-objects --threads=4 --stdout --all </dev/null >/dev/null 2>err &&
-> +	grep ^warning: err >warnings &&
-> +	test_line_count = 2 warnings &&
-> +	grep -F "no threads support, ignoring --threads" err &&
-> +	grep -F "no threads support, ignoring pack.threads" err
-> +'
-> +
-
-Some of these tests you might want to rewrite using test_i18ncmp to
-ensure that the messages match in other languages.  That is assuming
-this error message is translated (which it should be).
-
->  #
->  # WARNING!
->  #
-> -- 
-> 2.11.0
-> 
-
--- 
-Brandon Williams
+On Thu, May 11, 2017 at 10:14 PM, Brandon Williams <bmwill@google.com> wrot=
+e:
+> On 05/11, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> Move the is_fixed() and has_null() functions which are currently only
+>> used in compile_regexp() earlier so they can be used in the PCRE
+>> family of functions in a later change.
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>  grep.c | 46 +++++++++++++++++++++++-----------------------
+>>  1 file changed, 23 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/grep.c b/grep.c
+>> index 4507765811..5c808f8971 100644
+>> --- a/grep.c
+>> +++ b/grep.c
+>> @@ -321,6 +321,29 @@ static NORETURN void compile_regexp_failed(const st=
+ruct grep_pat *p,
+>>       die("%s'%s': %s", where, p->pattern, error);
+>>  }
+>>
+>> +static int is_fixed(const char *s, size_t len)
+>> +{
+>> +     size_t i;
+>> +
+>> +     for (i =3D 0; i < len; i++) {
+>> +             if (is_regex_special(s[i]))
+>> +                     return 0;
+>> +     }
+>> +
+>> +     return 1;
+>> +}
+>> +
+>> +static int has_null(const char *s, size_t len)
+>> +{
+>> +     /* regcomp cannot accept patterns with NULs so when using it
+>> +      * we consider any pattern containing a NUL fixed.
+>> +      */
+>
+> Since you're already moving these functions, mind cleaning up the
+> comment to conform to our style guide?
+Willdo.
+>> +     if (memchr(s, 0, len))
+>> +             return 1;
+>> +
+>> +     return 0;
+>> +}
+>> +
+>>  #ifdef USE_LIBPCRE1
+>>  static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_=
+opt *opt)
+>>  {
+>> @@ -390,29 +413,6 @@ static void free_pcre1_regexp(struct grep_pat *p)
+>>  }
+>>  #endif /* !USE_LIBPCRE1 */
+>>
+>> -static int is_fixed(const char *s, size_t len)
+>> -{
+>> -     size_t i;
+>> -
+>> -     for (i =3D 0; i < len; i++) {
+>> -             if (is_regex_special(s[i]))
+>> -                     return 0;
+>> -     }
+>> -
+>> -     return 1;
+>> -}
+>> -
+>> -static int has_null(const char *s, size_t len)
+>> -{
+>> -     /* regcomp cannot accept patterns with NULs so when using it
+>> -      * we consider any pattern containing a NUL fixed.
+>> -      */
+>> -     if (memchr(s, 0, len))
+>> -             return 1;
+>> -
+>> -     return 0;
+>> -}
+>> -
+>>  static void compile_fixed_regexp(struct grep_pat *p, struct grep_opt *o=
+pt)
+>>  {
+>>       struct strbuf sb =3D STRBUF_INIT;
+>> --
+>> 2.11.0
+>>
+>
+> --
+> Brandon Williams
