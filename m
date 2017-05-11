@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9127C1FF34
-	for <e@80x24.org>; Thu, 11 May 2017 09:19:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC2B11FF34
+	for <e@80x24.org>; Thu, 11 May 2017 09:19:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755192AbdEKJTW (ORCPT <rfc822;e@80x24.org>);
+        id S1755204AbdEKJTZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 05:19:25 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33682 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755165AbdEKJTW (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 11 May 2017 05:19:22 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:34093 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1755129AbdEKJTS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:19:18 -0400
-Received: by mail-wm0-f65.google.com with SMTP id d127so5503743wmf.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:17 -0700 (PDT)
+Received: by mail-wm0-f66.google.com with SMTP id y10so5502156wmh.0
+        for <git@vger.kernel.org>; Thu, 11 May 2017 02:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=CcKirEDw/BK8THeqRiSpRy2Ya5BeiKnvFgH33Fz9iK4=;
-        b=rkvJn2ic7Aq8Uh/Hplwdf5MR5NWiQMFO+4quDCmxNwiXY5u94uMIPNzXNGdMWNq6Cr
-         jpK7UPdO6IQwSIAJnhpSQo5LAwTUW1HRDzjc/mT913YG9eFs8te0JM1ej1hRKqWxFwXg
-         szdi50b9rN7atLKRBNrCqQBMF8rvrG3WTmWdx9DGt3YMwmtM8PG8PaTRObjGAsJJUsAL
-         t9ZF6SjK9SUZbjXu83jxXnUOQzilQXIt3AJ/zBjnqBVlY2R9v5g7pBgU5te37ALiH1hk
-         NZ9cdoOBqbZt3lwkt+C0/mfhDVjymxzwFyI9rgm9Z07Dh1KjwBcAedfGJYfwXEIZb5zp
-         R1Mw==
+        bh=VUFWKtGTkvuyVDwDO9tW91ONRVXBud0CZDopLHeAz1Y=;
+        b=dohpiFA9lY3hQwcbubkmphYjoY9eD1ZABb2o46Kg19Yl8ZjLWuL14Twvpr+9SIMcdy
+         4c7LZf1jTalZgjOlCTsYfItMf4fwKDxj5MDj+bEsihFNqui71LSJ4RM1IRJ6IJg/aVR4
+         G4PtmEgXGR8oUpydpm63FFHw/bPn7Z0HKinSIYJBAgpOHW+QmDojTLhkTqurk+bIOkM5
+         4p68N8Nw0Q9g0aSdCLmKPxLt7hXAvNRHK6pJWlg3rZE8SStTO02GgvdiUly38XO8dy01
+         wN/YkYNdPJ4qt4PcRIgMzhFXAKDAeFRervV+fr2TCN4KNNbiNURD1Ou6OxA6Nk6bL2eO
+         INAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CcKirEDw/BK8THeqRiSpRy2Ya5BeiKnvFgH33Fz9iK4=;
-        b=sZYwY8GpLZmk6ROxqlN8DskKEdEsFtLqs2op+J08p9AXeLw5QqBM8gxzBXpxuz1JZA
-         qSasjr+deW8xw8X+LtXmXFiKWZV3TUDlEkkoSZf+DtTy3zaFbSlPZGe7EGf13xFweE1S
-         9q4oovkOZCJjoOwi4CkMFSg2fIJvJ4k5p49aSKN70txiexG8anZXe0buxBl5i4Ff3SdH
-         MmptLOfWlK4w1u3hXT7VnaRTJCO78ZHdqW/pV74Ba4XdyW+ktGIK2l1TZthQGUmKg37w
-         xC3gS03CbixqvMgEWJv9t1nFg53DTe3KxHfn88hlDmz5QuVZsdaoDZXFHHPPaju8AaRH
-         syiA==
-X-Gm-Message-State: AODbwcCvx8s0Be/SEPZmXjXVlIjId4Jv+MBvEJsgcSO6OBupvh2fWxRu
-        +8C5f2zJcxurpQ==
-X-Received: by 10.80.132.70 with SMTP id 64mr7486941edp.181.1494494357059;
-        Thu, 11 May 2017 02:19:17 -0700 (PDT)
+        bh=VUFWKtGTkvuyVDwDO9tW91ONRVXBud0CZDopLHeAz1Y=;
+        b=QrLfhKLyxNNa5UYCWkB+fpo2SbOiUWyWBhngp580kThJJJUGAHakGCoC7pHLT+cwA5
+         v/cAme4UjUbEWk2g/Yd52yp7FrhkrARqLD9OZ0eTrWcE+2hQDWQsgZNMmsZJ/NcI1Pt1
+         hpp1eWRnkHo+FdnDGsmFy+DXTN6pjLGxNUcskL0YX2ALPE6e5kyVE8VokKQBq0iFsYnY
+         SuTEmsli8eyhVCZbWdOyw+h2GNZGEDy0J7G1/iQXKfuQ87/d3SGbpYYNWpWL0RjPD0II
+         4Ofb6JGRDoXYtl+79oYbhqXBzQpAcq8ijvnFqbs2Ch495H/51Flq8Rrp1WTHD1Ev8CDp
+         4P2Q==
+X-Gm-Message-State: AODbwcBmxi6yyu46i1u+PulazUQztPgZsaMj68/g6FZKsJj/oCIPeaAG
+        9NufsXmA8U5amA==
+X-Received: by 10.80.205.212 with SMTP id h20mr42485edj.58.1494494349937;
+        Thu, 11 May 2017 02:19:09 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.15
+        by smtp.gmail.com with ESMTPSA id b3sm8341ede.9.2017.05.11.02.19.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 11 May 2017 02:19:16 -0700 (PDT)
+        Thu, 11 May 2017 02:19:09 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bmwill@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 10/29] grep: add tests for grep pattern types being passed to submodules
-Date:   Thu, 11 May 2017 09:18:10 +0000
-Message-Id: <20170511091829.5634-11-avarab@gmail.com>
+Subject: [PATCH 07/29] grep: change non-ASCII -i test to stop using --debug
+Date:   Thu, 11 May 2017 09:18:07 +0000
+Message-Id: <20170511091829.5634-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.11.0
 In-Reply-To: <20170511091829.5634-1-avarab@gmail.com>
 References: <20170511091829.5634-1-avarab@gmail.com>
@@ -75,75 +75,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add testing for grep pattern types being correctly passed to
-submodules. The pattern "(.|.)[\d]" matches differently under
-fixed (not at all), and then matches different lines under
-basic/extended & perl regular expressions, so this change asserts that
-the pattern type is passed along correctly.
+Change a non-ASCII case-insensitive test case to stop using --debug,
+and instead simply test for the expected results.
+
+The test coverage remains the same with this change, but the test
+won't break due to internal refactoring.
+
+This test was added in commit 793dc676e0 ("grep/icase: avoid kwsset
+when -F is specified", 2016-06-25). It was asserting that the regex
+must be compiled with compile_fixed_regexp(), instead test for the
+expected results, allowing the underlying implementation to change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t7814-grep-recurse-submodules.sh | 49 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ t/t7812-grep-icase-non-ascii.sh | 25 +++++--------------------
+ 1 file changed, 5 insertions(+), 20 deletions(-)
 
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 3c580b38ba..ef658b7899 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -313,4 +313,53 @@ test_incompatible_with_recurse_submodules ()
- test_incompatible_with_recurse_submodules --untracked
- test_incompatible_with_recurse_submodules --no-index
+diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
+index 04a61cb8e0..969e7c0dda 100755
+--- a/t/t7812-grep-icase-non-ascii.sh
++++ b/t/t7812-grep-icase-non-ascii.sh
+@@ -36,29 +36,14 @@ test_expect_success GETTEXT_LOCALE,PCRE 'grep pcre utf-8 string with "+"' '
+ '
  
-+test_expect_success 'grep --recurse-submodules should pass the pattern type along' '
-+	# Fixed
-+	test_must_fail git grep -F --recurse-submodules -e "(.|.)[\d]" &&
-+	test_must_fail git -c grep.patternType=fixed grep --recurse-submodules -e "(.|.)[\d]" &&
-+
-+	# Basic
-+	git grep -G --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	cat >expect <<-\EOF &&
-+	a:(1|2)d(3|4)
-+	submodule/a:(1|2)d(3|4)
-+	submodule/sub/a:(1|2)d(3|4)
-+	EOF
-+	test_cmp expect actual &&
-+	git -c grep.patternType=basic grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	test_cmp expect actual &&
-+
-+	# Extended
-+	git grep -E --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	cat >expect <<-\EOF &&
-+	.gitmodules:[submodule "submodule"]
-+	.gitmodules:	path = submodule
-+	.gitmodules:	url = ./submodule
-+	a:(1|2)d(3|4)
-+	submodule/.gitmodules:[submodule "sub"]
-+	submodule/a:(1|2)d(3|4)
-+	submodule/sub/a:(1|2)d(3|4)
-+	EOF
-+	test_cmp expect actual &&
-+	git -c grep.patternType=extended grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	test_cmp expect actual &&
-+	git -c grep.extendedRegexp=true grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+	test_cmp expect actual &&
-+
-+	# Perl
-+	if test_have_prereq PCRE
-+	then
-+		git grep -P --recurse-submodules -e "(.|.)[\d]" >actual &&
-+		cat >expect <<-\EOF &&
-+		a:(1|2)d(3|4)
-+		b/b:(3|4)
-+		submodule/a:(1|2)d(3|4)
-+		submodule/sub/a:(1|2)d(3|4)
-+		EOF
-+		test_cmp expect actual &&
-+		git -c grep.patternType=perl grep --recurse-submodules -e "(.|.)[\d]" >actual &&
-+		test_cmp expect actual
-+	fi
-+'
-+
- test_done
+ test_expect_success REGEX_LOCALE 'grep literal string, with -F' '
+-	git grep --debug -i -F "TILRAUN: Halló Heimur!"  2>&1 >/dev/null |
+-		 grep fixed >debug1 &&
+-	test_write_lines "fixed TILRAUN: Halló Heimur!" >expect1 &&
+-	test_cmp expect1 debug1 &&
+-
+-	git grep --debug -i -F "TILRAUN: HALLÓ HEIMUR!"  2>&1 >/dev/null |
+-		 grep fixed >debug2 &&
+-	test_write_lines "fixed TILRAUN: HALLÓ HEIMUR!" >expect2 &&
+-	test_cmp expect2 debug2
++	git grep -i -F "TILRAUN: Halló Heimur!" &&
++	git grep -i -F "TILRAUN: HALLÓ HEIMUR!"
+ '
+ 
+ test_expect_success REGEX_LOCALE 'grep string with regex, with -F' '
+-	test_write_lines "^*TILR^AUN:.* \\Halló \$He[]imur!\$" >file &&
+-
+-	git grep --debug -i -F "^*TILR^AUN:.* \\Halló \$He[]imur!\$" 2>&1 >/dev/null |
+-		 grep fixed >debug1 &&
+-	test_write_lines "fixed \\^*TILR^AUN:\\.\\* \\\\Halló \$He\\[]imur!\\\$" >expect1 &&
+-	test_cmp expect1 debug1 &&
+-
+-	git grep --debug -i -F "^*TILR^AUN:.* \\HALLÓ \$HE[]IMUR!\$"  2>&1 >/dev/null |
+-		 grep fixed >debug2 &&
+-	test_write_lines "fixed \\^*TILR^AUN:\\.\\* \\\\HALLÓ \$HE\\[]IMUR!\\\$" >expect2 &&
+-	test_cmp expect2 debug2
++	test_write_lines "TILRAUN: Halló Heimur [abc]!" >file3 &&
++	git add file3 &&
++	git grep --debug -i -F "TILRAUN: Halló Heimur [abc]!" file3
+ '
+ 
+ test_expect_success REGEX_LOCALE 'pickaxe -i on non-ascii' '
 -- 
 2.11.0
 
