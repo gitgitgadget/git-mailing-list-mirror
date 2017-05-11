@@ -2,79 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01E671FF34
-	for <e@80x24.org>; Thu, 11 May 2017 07:56:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A32681FF34
+	for <e@80x24.org>; Thu, 11 May 2017 07:59:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755137AbdEKH41 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 03:56:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49191 "EHLO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1754536AbdEKH40 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 03:56:26 -0400
-Received: (qmail 28573 invoked by uid 109); 11 May 2017 07:56:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 07:56:26 +0000
-Received: (qmail 9974 invoked by uid 111); 11 May 2017 07:56:57 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 03:56:57 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 May 2017 03:56:24 -0400
-Date:   Thu, 11 May 2017 03:56:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Sebastian Schuberth <sschuberth@gmail.com>,
-        Raphael Stolt <raphael.stolt@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: Possible bug in includeIf / conditional includes
-Message-ID: <20170511075624.572rujfaedzihpn4@sigill.intra.peff.net>
-References: <C1ACB28C-F1B4-42A1-8135-797DEFD9F03C@gmail.com>
- <b80c68fa-fe1e-3cf8-3c7e-527a4d941108@gmail.com>
- <CACBZZX7CgeW1OK+g9Mbir62MMaCx4sHFZngUuWz_H241Sb355g@mail.gmail.com>
- <20170511062616.f7rg6f5cgrqeh7gf@sigill.intra.peff.net>
- <20170511062924.6euaynsbyocjcw3q@sigill.intra.peff.net>
- <CACBZZX4ob04fG9ZZtvbdcqrYOKijoZohVdUCNyeayHZtdtNyxQ@mail.gmail.com>
- <20170511074257.xueofze3dv3xwrql@sigill.intra.peff.net>
- <xmqqbmqzbzh0.fsf@gitster.mtv.corp.google.com>
+        id S1755317AbdEKH7h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 03:59:37 -0400
+Received: from mail-pg0-f45.google.com ([74.125.83.45]:36825 "EHLO
+        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1755279AbdEKH7g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 03:59:36 -0400
+Received: by mail-pg0-f45.google.com with SMTP id 64so10701073pgb.3
+        for <git@vger.kernel.org>; Thu, 11 May 2017 00:59:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Em0Rqjat2zN7b/NGllohPulohMZudxdRJl6Eq0qWpWI=;
+        b=hLuoHAnDeMuAt2+RHFEMz6zy3OlM0t3FiCKd8erqwLQJtN5kazjdJR7eg8vncSeQ3T
+         sYJxDKToV37Q0ljX1LNLpwDz+FhL0a1kKlse/1iiXSd+ISzRchbO2K7BzrUtrApjTOzW
+         K0dHYR1AwcvlT7qRIT4lZBGW0GyWvDyMMG6pmUw/yAAxwBxE2wI+6USBV4b0tcVnOQRz
+         j650aX6bAt2YaAHDr4T6AzFBgjvp4QBWkJ3aT+bn7Nbc/4pUlrfnzL0E7oIgsqABsSXD
+         BwW8XEk8hoQWvivUJ77MZgSunW+IWjV7MFvH7pXWd2ztkO9V7Zv7ZG85wJ4hn4cskDLL
+         7Fgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Em0Rqjat2zN7b/NGllohPulohMZudxdRJl6Eq0qWpWI=;
+        b=ol2gIxlZQtOrJLe8BCn6/p3nCOUr9NY3t2Qk30qgw50AtCLzk7eaDcmKArBmpPD54c
+         NM0gJQ+Tl6Bt9GAKIgUciY25EVKzqsmXK5mb+JYOxLm07Nv6+o8NG9XnOBG8LSUpOLRx
+         aIg3u4aerOK9oJJbAEg05YZUmV3JKIC/YL60fS6UghcgD5CnBDQ+WecwD3A9RX/7rERO
+         BT+8PwHryFSQnfJ03pk2AQRycG82R0VdDkuwngYQcOL9uVI1mKKQWzCLQRWGP0hOudql
+         dS0iczwBathKh91MIq9CYUoa71+XXDJoUCSezIG3i9bPVmPYsfm2ZL0cgi1gjzDZakgC
+         Yvow==
+X-Gm-Message-State: AODbwcA1Nco7d+cs7Oywgb6dbgTl0XXjTF50lmHZ0ESLVnz78GogIZ0D
+        Y1g3Hnkljn4bVl1lESJmGCTgOtCCSw==
+X-Received: by 10.99.250.69 with SMTP id g5mr8869235pgk.11.1494489575449; Thu,
+ 11 May 2017 00:59:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqbmqzbzh0.fsf@gitster.mtv.corp.google.com>
+Received: by 10.100.141.87 with HTTP; Thu, 11 May 2017 00:59:34 -0700 (PDT)
+In-Reply-To: <xmqqk25nc2s9.fsf@gitster.mtv.corp.google.com>
+References: <CAEY4ZpMJbS+-xDKcwbOHCWxAdjOVuTN9DFJNHVqHw0r06CwKJg@mail.gmail.com>
+ <xmqqk25nc2s9.fsf@gitster.mtv.corp.google.com>
+From:   Nazri Ramliy <ayiehere@gmail.com>
+Date:   Thu, 11 May 2017 15:59:34 +0800
+Message-ID: <CAEY4ZpO108t=2TxmzeFrzHxeXzJ3V_MGv+fy2gH-ZtOXfP8zUw@mail.gmail.com>
+Subject: Re: Should "git submodule update" accepts --init?
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 12:54:19AM -0700, Junio C Hamano wrote:
+On Thu, May 11, 2017 at 2:42 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I am not a heavy submodule user so what I think may not count, but I
+> think the "upstream" changing the URL of the submodule should be a
+> rare and notable event.  Making it easy to automatically run "sync"
+> without thinking would be a huge mistake---it will make it likely
+> for users to blindly follow what the upstream has in .gitmodules
+> without checking if the new URL is sensible.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Thu, May 11, 2017 at 09:19:50AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> >
-> >> 1. It says "The included file is expanded immediately, as if its
-> >> contents had been found at the location of the include directive.". At
-> >> first I thought this referred to glob expansion, not
-> >> s/expanded/interpolated/, the example section uses "expand" in the
-> >> context of pathnames, which caused the confusion.
-> >
-> > Perhaps it should say "The contents of the included file are expanded
-> > immediately, as if they had been found at..."?
-> 
-> Or s/expanded/inserted/, perhaps?  The word "expand" does not quite
-> click to me in this context.  Just like Ævar, I associate the word
-> with an act of replacing some template-with-blank with the result of
-> blanks-in-the-template-filled.
+Yes that would be a mistake for the case when we don't trust upstream.
+But for the case that we do trust upstream, I would argue that we should
+always follow what upstream told us to use when it comes to getting the
+content of the submodule.
 
-Yeah, that is much better. I think "expand" here originally meant "read
-the contents of", but when we talk about the contents already there is
-nothing left to expand.
+> Also doesn't "submodule sync" blindly overwrite URL, even the ones
+> that you tweaked in your configuration to override to point at a
+> mirror that is closer to you than the one suggested in .gitmodules?
+> If that is the case, sucn a change to make it easier to run "sync"
+> without thinking is doubly bad, I would think.
 
-I agree "inserted" is probably the right word (or even just "read" or
-"parsed" or something).
+For such use cases I would suggest using url.<pattern>.insteadOf, instead
+of changing what submodule.<name>.url.
 
--Peff
+My recent use case that prompted this question (I just realized that I typo'ed
+the mail subject s/--init/--sync/) is this:
+
+We are using git submodule for vendoring our Go dependencies. We've been using
+it since 2015 and it has been great for this role. There comes a time when we
+have to patch the vendored version so we do what is normally done - we fork the
+code at github and made a pull request. This pull request may get rejected, or
+accepted. For the latter case it may take some time for the acceptance to
+happen - upstream owner may be away, or there are some cosmetic changes needed
+etc, while on our side we need the changes in place for our build (and on
+developer machines) to succeed so that it can be used in production (after
+testing it in our staging). It is during this time that we want to switch the
+submodule url (upstream github repo) to point to another submodule url (our
+github repo)
+
+Hmm after writing all of the above I wonder if we can't just use
+url.<pattern>.insteadOf
+to achieve this. But then url.<pattern>.insteadOf feels less official than
+submodule.name.<url> so that's another point to think about.
+
+nazri
