@@ -2,190 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D7512018D
-	for <e@80x24.org>; Thu, 11 May 2017 13:48:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A1312018D
+	for <e@80x24.org>; Thu, 11 May 2017 13:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932949AbdEKNsT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 09:48:19 -0400
-Received: from mout.gmx.net ([212.227.17.20]:60134 "EHLO mout.gmx.net"
+        id S1756132AbdEKNsp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 09:48:45 -0400
+Received: from mout.gmx.net ([212.227.17.21]:49163 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932181AbdEKNrt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 09:47:49 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MF9WR-1dGCww1tIB-00GI1H; Thu, 11
- May 2017 15:47:41 +0200
-Date:   Thu, 11 May 2017 15:47:40 +0200 (CEST)
+        id S1756123AbdEKNsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 09:48:40 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LnPnu-1dfPNs1O5G-00hghS; Thu, 11
+ May 2017 15:48:26 +0200
+Date:   Thu, 11 May 2017 15:48:24 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 02/11] Documentation: really deprecate .git/remotes/ and
- .git/branches/
+Subject: [PATCH 10/11] PREVIEW: t0060: stop testing support for .git/remotes/
+ and .git/branches/
 In-Reply-To: <cover.1494509599.git.johannes.schindelin@gmx.de>
-Message-ID: <9856edc5dd10c716eba6a00111478a5589cade8f.1494509599.git.johannes.schindelin@gmx.de>
+Message-ID: <41310d8aac9a58c8c419676a1e9c971b2b4648aa.1494509599.git.johannes.schindelin@gmx.de>
 References: <cover.1494509599.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:ylugx+p+0T7xeP5nHy6h3wwvU9OGhwJ9hdCwtl0gakK9F+7c0h4
- ToUS6bYH1uX1heniwqJhbReBG91hJSwciVW6w9YMOgIdFxsacWzElryqWKX2AqhtUkzgdxS
- /YYjOqQLABiZdWeaT/9YC80vjjv6JnqXi41E2I4dkWR7XjTXb20slnkXcbItB6y1xtLaEQr
- lJbxmQsioQyEIKLBA0K5A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:V5fMHel5nA0=:fdUFx1FMmNZrvAHOMrKmYP
- LodTRsdacbf2CBcHF/7nM8X0z/MudjQnHRChuaPs0OrHFl3ZoW8WDTeCeML11QnH3l73iZXBI
- BGCt/JbMfSA7I1sU3F5X8J/CJt6b3swD/37HJBLhzUBqK7U4vvH6aMnyebEnUGOzaysABY626
- 9DpGsXxZapIzP4FJyDKWUg3YKfgtRLHzMsQhAuNWRRs8XqluX7nj5hzoR9j7/nAmwhwbuv53W
- ix+yWBF3PGjT21T0Re7cq/lTCr/rq+65hhWSAIHhMYsVdbWjxmxX9qmBNagAtZXMzSFI47fG5
- kHO8hxXw2vPS/DG5GVl7S42+78hRpulMQ1cFOJgndggpgyS3ecYTgOwxXv0Do8nF3Jr458+HZ
- W8njNe+aGgnnrxeFuWd+T7ex60xgz6aHwnirks06sdkrFTcn+ij+ztjxCvLXemghf8Dk1b4MH
- BuKH7yDjIbyOsySco04cpcFRP0I9ITWOY1xdPZHaMBENhDNN24MPh4L+ETslDgUFGw102k8Hp
- GY5GYBfDQ14xbR6Q3SUuOxvuPV6nH7Ud54lnRbQMT3yzoBGZImt5x6zDyWxfL908yBO2sdsKn
- gqaDYm4pszSASZtTXzyvXOPJ43lir+qjhLi4JGIoln4pFYnYo9/KbWc20B7DyLBXp9h+Ff2Hx
- Zju9AFSi4vpdT9ZDtUQJOwOKq38d43rObo3+fNKp/v2G2jKZ2ek/WEyw+aRB8CAXg2KejNh+W
- 9ZJ2KLZiXE/8un5VJKtGS50rRnFtpwrisHnO1nJ1a5RqcfQhiHCPTWMR+/W+PRNp8Q5Q6yq6v
- 9q85Ssp
+X-Provags-ID: V03:K0:aS4RkP265hSMIZTlAjRZWR0Q1vpTY55EaHAZMT76HzAYelmj3dh
+ 0NDpZbxrfjrM44bE/ANSYaZGBnQrQApJ2WFrk+NOQLgV3m5T64IMUk3H6hJ+COaWX6WrLi0
+ +rCPGOgmcuaPrqQ6nr4n4N2hujbrlAlB6a5fumCXj5MIuKQnZ7O3smcjbIt6CJ1O34KKl46
+ KGG4OCENUCssQnuxNF/+A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:g16nGbjvYFs=:22qauD5FzDAe0uHjRpoJRD
+ FN1nBP0yH+9JxiNIh4HbnhCo2BrV+T6jz4zf26oV34VzbRoshifoYnguTvl1gmZMPh3kv19he
+ Nwba0nfVoTBMbmknp6Q0J5l/iClHkrEuTdlVp5Pj3OUM1u3praurVfzWHNYgg9rbUwN0wTo0S
+ ma2P2M44xRDvCh0hnju7EYG2I29qgK6Y7lupaQ6+X9BNhnomaUiVlCM0FIKymXDrcScvkAKUz
+ QOO7tY+6MdeVB6klxNheUnYnFFLpjWfcTUWhs1cEJO9IAHYdDtaRwvaLRh9/IA9gSTcXrHftB
+ YV3i4LGl283p/CIj67EBQeTgi7m1P1IXH+ejchZ/MVD0IlSkg/r16OyBqMzEDpztApf+Cdjjq
+ LY+gMJkr5Lyss03qAz8zXBWXTu53tWTT+4gASOXOXoqHOGQ62mSF6T9EA4WgzIcbDx7qAMgt1
+ Vj2HxhwtzvisAXco1KPPvXMkDFdy24xVqNTvZy6wccNJVfrlnejXOAU2zKGlGCpc3JZolRqVC
+ a420pWxs1lX0Pkb4i4wfiRZqlB1AoCdAiVPbtOhrdEUd+aWZC/bjVjwNgLb39YQHgs2j9qPjx
+ Tayn0EXgWYW8f8FvKuV7T99YaqeRXZ420nfnnC+cL0o5DUar1O7fCaqi2b/APbcIATMr3relm
+ QHAwO2832JSb1iZeHDP9mlUae4oRAmwripHvJD9eldZiSTpbDlFKJDtVhGhvA23YEJRBV9Uxn
+ RSu/5ntrMmt20xtMnPDm6veEki3ncx/wdSNuA17zb4SU1oE+LgQ4ggbra6605oylobbsp3ALk
+ 1A1tKhQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation did not make it quite clear just how deprecated these
-directories are.
+We are about to remove that feature for good.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/gitrepository-layout.txt | 19 +++++-----
- Documentation/urls-remotes.txt         | 65 ++--------------------------------
- 2 files changed, 11 insertions(+), 73 deletions(-)
+ t/t0060-path-utils.sh | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-index f51ed4e37cd..9f2275f06d5 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -144,12 +144,11 @@ config::
- 	used instead.
- 
- branches::
--	A slightly deprecated way to store shorthands to be used
-+	A highly deprecated way to store shorthands to be used
- 	to specify a URL to 'git fetch', 'git pull' and 'git push'.
- 	A file can be stored as `branches/<name>` and then
- 	'name' can be given to these commands in place of
--	'repository' argument.  See the REMOTES section in
--	linkgit:git-fetch[1] for details.  This mechanism is legacy
-+	'repository' argument.  This mechanism is legacy
- 	and not likely to be found in modern repositories. This
- 	directory is ignored if $GIT_COMMON_DIR is set and
- 	"$GIT_COMMON_DIR/branches" will be used instead.
-@@ -213,13 +212,13 @@ info/sparse-checkout::
- 	See also: linkgit:git-read-tree[1].
- 
- remotes::
--	Stores shorthands for URL and default refnames for use
--	when interacting with remote repositories via 'git fetch',
--	'git pull' and 'git push' commands.  See the REMOTES section
--	in linkgit:git-fetch[1] for details.  This mechanism is legacy
--	and not likely to be found in modern repositories. This
--	directory is ignored if $GIT_COMMON_DIR is set and
--	"$GIT_COMMON_DIR/remotes" will be used instead.
-+	A highly deprecated location to store shorthands for URL and
-+	default refnames for use when interacting with remote
-+	repositories via 'git fetch', 'git pull' and 'git push'
-+	commands.  This mechanism is legacy and not likely to be
-+	found in modern repositories. This directory is ignored if
-+	$GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/remotes" will
-+	be used instead.
- 
- logs::
- 	Records of changes made to refs are stored in this directory.
-diff --git a/Documentation/urls-remotes.txt b/Documentation/urls-remotes.txt
-index bd184cd6539..a7214a9cae5 100644
---- a/Documentation/urls-remotes.txt
-+++ b/Documentation/urls-remotes.txt
-@@ -3,15 +3,8 @@ include::urls.txt[]
- REMOTES[[REMOTES]]
- ------------------
- 
--The name of one of the following can be used instead
--of a URL as `<repository>` argument:
--
--* a remote in the Git configuration file: `$GIT_DIR/config`,
--* a file in the `$GIT_DIR/remotes` directory, or
--* a file in the `$GIT_DIR/branches` directory.
--
--All of these also allow you to omit the refspec from the command line
--because they each contain a refspec which git will use by default.
-+The name of a remote in the Git configuration file: `$GIT_DIR/config`
-+can be used instead of a URL as `<repository>` argument.
- 
- Named remote in configuration file
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-@@ -35,60 +28,6 @@ config file would appear like this:
- The `<pushurl>` is used for pushes only. It is optional and defaults
- to `<url>`.
- 
--Named file in `$GIT_DIR/remotes`
--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--
--You can choose to provide the name of a
--file in `$GIT_DIR/remotes`.  The URL
--in this file will be used to access the repository.  The refspec
--in this file will be used as default when you do not
--provide a refspec on the command line.  This file should have the
--following format:
--
--------------
--	URL: one of the above URL format
--	Push: <refspec>
--	Pull: <refspec>
--
--------------
--
--`Push:` lines are used by 'git push' and
--`Pull:` lines are used by 'git pull' and 'git fetch'.
--Multiple `Push:` and `Pull:` lines may
--be specified for additional branch mappings.
--
--Named file in `$GIT_DIR/branches`
--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--
--You can choose to provide the name of a
--file in `$GIT_DIR/branches`.
--The URL in this file will be used to access the repository.
--This file should have the following format:
--
--
--------------
--	<url>#<head>
--------------
--
--`<url>` is required; `#<head>` is optional.
--
--Depending on the operation, git will use one of the following
--refspecs, if you don't provide one on the command line.
--`<branch>` is the name of this file in `$GIT_DIR/branches` and
--`<head>` defaults to `master`.
--
--git fetch uses:
--
--------------
--	refs/heads/<head>:refs/heads/<branch>
--------------
--
--git push uses:
--
--------------
--	HEAD:refs/heads/<head>
--------------
--
- 
- 
- 
+diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+index 444b5a4df80..162c9a5a2f7 100755
+--- a/t/t0060-path-utils.sh
++++ b/t/t0060-path-utils.sh
+@@ -295,8 +295,6 @@ test_git_path GIT_COMMON_DIR=bar info/exclude             bar/info/exclude
+ test_git_path GIT_COMMON_DIR=bar info/grafts              bar/info/grafts
+ test_git_path GIT_COMMON_DIR=bar info/sparse-checkout     .git/info/sparse-checkout
+ test_git_path GIT_COMMON_DIR=bar info//sparse-checkout    .git/info//sparse-checkout
+-test_git_path GIT_COMMON_DIR=bar remotes/bar              bar/remotes/bar
+-test_git_path GIT_COMMON_DIR=bar branches/bar             bar/branches/bar
+ test_git_path GIT_COMMON_DIR=bar logs/refs/heads/master   bar/logs/refs/heads/master
+ test_git_path GIT_COMMON_DIR=bar refs/heads/master        bar/refs/heads/master
+ test_git_path GIT_COMMON_DIR=bar refs/bisect/foo          .git/refs/bisect/foo
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
