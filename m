@@ -7,144 +7,191 @@ X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61ECA2018D
-	for <e@80x24.org>; Thu, 11 May 2017 13:49:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 046622018D
+	for <e@80x24.org>; Thu, 11 May 2017 13:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932883AbdEKNsP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 09:48:15 -0400
-Received: from mout.gmx.net ([212.227.15.15]:56407 "EHLO mout.gmx.net"
+        id S932814AbdEKNsO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 09:48:14 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50882 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S932769AbdEKNsC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 09:48:02 -0400
-Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LlDb4-1dhbEQ4Axq-00b30a; Thu, 11
- May 2017 15:47:57 +0200
-Date:   Thu, 11 May 2017 15:47:56 +0200 (CEST)
+        id S932773AbdEKNsD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 09:48:03 -0400
+Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LanoO-1dt6Up2Toe-00kLI4; Thu, 11
+ May 2017 15:47:59 +0200
+Date:   Thu, 11 May 2017 15:47:59 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 07/11] PREVIEW: t5516: stop testing .git/branches/
- functionality
+Subject: [PATCH 08/11] PREVIEW: remote: remove support for migrating ancient
+ remotes
 In-Reply-To: <cover.1494509599.git.johannes.schindelin@gmx.de>
-Message-ID: <6211d3073605233299c48719d9f0feeb618217a2.1494509599.git.johannes.schindelin@gmx.de>
+Message-ID: <86474db5654befa3880a33c10eb62075c6e2a5e0.1494509599.git.johannes.schindelin@gmx.de>
 References: <cover.1494509599.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:vRjzSIdWA0CF4six0pnuQDAGNF60Ug+b0no5ieEK8RnUnvpQ6u5
- 5yR95oNdOP+zdN4xFQtnM9/Kpk9CgfTc6sh6CrZygjnN0OB45+KcWzaMQx5HIlj7flLbrA+
- O935JBhEwi82bjSD2Q39FyNFjr7NyICuK9METpho7t3FXkJ2grJPr9xq+nXnnWWkpAm1Jp1
- Yf3g64WbhhxTcfH0m1hBA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:TqnEi3wQG4U=:9ODWE1MRREqz86a6Z6FjuJ
- w4BvDRwYkXSLNf4m2I1TSy6otC0w3ycOxe+Juc8EUvHMKPvKHDq9JWEqmfvtLYZAdAH4u3Q2N
- TSIDG0MTeaP0dv1028tFERGgKpimsPF0wtj55dBzwUOTf2D/o4picV0Vhl1QsAzTAc6NCdVW7
- /+94MLZtUwWCci2GgM3NHdosjF2R0og/OUgzE/0xsbBN5dsK/MrQh1MN9WcZK/eQt0WdOz+xQ
- p6HBIWNi7+I40GCojkGUIi9NambCi+ldQb1Me2MFMo80PzEb1A11BARC7KtvUbDnmhN8sPe9c
- fPHtovBXvNbr+LozNvX33tYUR6/aFTia19HKyqQ/fQlG8DyFhuHjYCwTRdZxCG9++owHDjDOS
- uMkk/2Cq2zEPAT3gyRB5AI8ZYQLrLM/wtlMRz7CsRQTQvzND8qWTzagqSSCSEynnSZlGmY9pG
- 1VpRQlBY/aYLdrCcrdGZV7rqjuMuWBGNvyM9l3tutjZH4ojTtfQkN7jima1TytAXF86Pfzril
- W809jplZJyp17oTRKWHzS875fIb4AIkR4Ct7JAd9wqOAx5NZ01aWWLkTDbEcrrbI5dbL6uOHO
- jRnT7km/ZssB/a9Q7S0opXDGyujNWRTYKCRSLJehtvLbP4cp0hofXDHwQw0gOCv46OczIsUqh
- IKwX7OxgnQI22apZFuI+Xr/dUawio5q1A3SD2VXa/qG3iD3KgJlkeyl4b8hWU/JpZLBcxEwtJ
- lREd2KrB8oooRUtr22jUxENciBUJajKLxwF5FQLUh1CF9G0H/VbpfIP5N63WW1U8hlQ6XPMdH
- azWiIF/
+X-Provags-ID: V03:K0:+ILZKZ6dw7E3lEWayDfmL9s4P1zsQIP4y/VKWIvm3irvbceNAfU
+ /ODCtaStwGrl1lSSRt2aQ38i0H/0IE89vh2vrk11Sf8ZHQq9aRDOsnv7MwfIlYfLqYIAKY9
+ 9dniDGxENferYR4dWJ2FWY9qODWgtzqrAirR5+unss2hidZUrtsgn163DavsjNoo7SHIX/B
+ QFVAEscKlbG3Lb9EGADcg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ir6btlFHNok=:oL/zxDamD1vg0pQmZlOrqa
+ EHI19WHMHBV5ZSzkiaOkL7J+/LGcj7VwWZCXf+IT1t4VzzpWQUSAK7aZJIZGGMYbOLc0YhjAh
+ CBan60Lh4GjeBiUFUgoCdr16OtGGqPwiGKE218UL/+49yYa32TiYs2/o/IHliP9v8KNKg6Jw/
+ 2nLvLZe+g1GNFTA17I5BnwgV6CYb4yBFUPQoD+JMqoSsjH3gXp1GMhHZRmfUITb0c+ibajnAw
+ qF+jOQs0O4Qx5OlnU8zLUyGvzY5gho00uUoVJ9dAM5oY+6F8yDl3zpY5fNfuCke2q65derpTq
+ 12Fk42MeZ8tiIGce6kOWmgQK+IbhiV8zjs26vxbEjEsAwemxJmiQkpIvFoCAjas6/Bsm0pe9Z
+ a1wulWakRISvyEItK4TSVOj23TTwKhZQMrrzMDI57h1T4s8qVZPvoHorYsx6TYyi4+tuX2N3L
+ 6W+fca2hh6pooUumB65MSkQxDPChklQ+9aqrARgmU9/pTHWrmcqLA3jFwttOMvqZfFyyozsZr
+ CZsD/Zmi1x4pJ6xCZcmULxDUwpmDOi3oKT7gNVrZxEkm4sglqwdq/zWl9fbJhqOxgqyc412iW
+ ppmQIfLkKrPkpAmTuOF3IEnxmIettQk3t2+iMi7b1pBibA9Qj1WdLrLJKH/sNGIZwBLb9spKC
+ glK0/nrnzX7LQnuaRAGj9H6wUzRymMhGt4DGmDGKA7as5w2swj2P3OhgIQk7rNWL2uy+eWtqc
+ XOBkUvuzl6kpHt9Taeu9dvOvvDYiBgbafHNhccmrxsYK1uki5G1USZhvFPeIftdH5kTCKrPuu
+ MrhELZ1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We are about to remove support for .git/remotes/ and .git/branches/, at
-long last. In preparation for this move, let's remove the corresponding
-regression tests from t5516-fetch-push.
-
-Note: the `push --prune` test case (and another test case after that)
-relied on the side effect where a branch with the name `second` was
-created earlier. We simply move that branch creation into that test
-case.
+By now, everybody will have moved on... no need to burden ourselves with
+now-obsolete code.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t5516-fetch-push.sh | 59 +--------------------------------------------------
- 1 file changed, 1 insertion(+), 58 deletions(-)
+ Documentation/git-remote.txt |  4 ----
+ builtin/remote.c             | 27 ---------------------
+ t/t5505-remote.sh            | 57 --------------------------------------------
+ 3 files changed, 88 deletions(-)
 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 457f648ad91..c8ba7b67f67 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -862,64 +862,6 @@ test_expect_success 'allow push to HEAD of non-bare repository (config)' '
- 	! grep "warning: updating the current branch" stderr
- '
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 577b969c1bd..746fdd27ced 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -84,10 +84,6 @@ will always behave as if `--mirror` was passed.
  
--test_expect_success 'fetch with branches' '
--	mk_empty testrepo &&
--	git branch second $the_first_commit &&
--	git checkout second &&
--	mkdir -p testrepo/.git/branches &&
--	echo ".." > testrepo/.git/branches/branch1 &&
--	(
--		cd testrepo &&
--		git fetch branch1 &&
--		echo "$the_commit commit	refs/heads/branch1" >expect &&
--		git for-each-ref refs/heads >actual &&
--		test_cmp expect actual
--	) &&
--	git checkout master
--'
+ Rename the remote named <old> to <new>. All remote-tracking branches and
+ configuration settings for the remote are updated.
+-+
+-In case <old> and <new> are the same, and <old> is a file under
+-`$GIT_DIR/remotes` or `$GIT_DIR/branches`, the remote is converted to
+-the configuration file format.
+ 
+ 'remove'::
+ 'rm'::
+diff --git a/builtin/remote.c b/builtin/remote.c
+index addf97ad293..c3502f24223 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -574,30 +574,6 @@ static int read_remote_branches(const char *refname,
+ 	return 0;
+ }
+ 
+-static int migrate_file(struct remote *remote)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	int i;
 -
--test_expect_success 'fetch with branches containing #' '
--	mk_empty testrepo &&
--	mkdir -p testrepo/.git/branches &&
--	echo "..#second" > testrepo/.git/branches/branch2 &&
--	(
--		cd testrepo &&
--		git fetch branch2 &&
--		echo "$the_first_commit commit	refs/heads/branch2" >expect &&
--		git for-each-ref refs/heads >actual &&
--		test_cmp expect actual
--	) &&
--	git checkout master
--'
+-	strbuf_addf(&buf, "remote.%s.url", remote->name);
+-	for (i = 0; i < remote->url_nr; i++)
+-		git_config_set_multivar(buf.buf, remote->url[i], "^$", 0);
+-	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "remote.%s.push", remote->name);
+-	for (i = 0; i < remote->push_refspec_nr; i++)
+-		git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", 0);
+-	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
+-	for (i = 0; i < remote->fetch_refspec_nr; i++)
+-		git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$", 0);
+-	if (remote->origin == REMOTE_REMOTES)
+-		unlink_or_warn(git_path("remotes/%s", remote->name));
+-	else if (remote->origin == REMOTE_BRANCHES)
+-		unlink_or_warn(git_path("branches/%s", remote->name));
 -
--test_expect_success 'push with branches' '
--	mk_empty testrepo &&
--	git checkout second &&
--	mkdir -p .git/branches &&
--	echo "testrepo" > .git/branches/branch1 &&
--	git push branch1 &&
+-	return 0;
+-}
+-
+ static int mv(int argc, const char **argv)
+ {
+ 	struct option options[] = {
+@@ -621,9 +597,6 @@ static int mv(int argc, const char **argv)
+ 	if (!remote_is_configured(oldremote, 1))
+ 		die(_("No such remote: %s"), rename.old);
+ 
+-	if (!strcmp(rename.old, rename.new) && oldremote->origin != REMOTE_CONFIG)
+-		return migrate_file(oldremote);
+-
+ 	newremote = remote_get(rename.new);
+ 	if (remote_is_configured(newremote, 1))
+ 		die(_("remote %s already exists."), rename.new);
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 4fd66760c75..857950ac8ee 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -798,63 +798,6 @@ Pull: refs/heads/master:refs/heads/origin
+ Pull: refs/heads/next:refs/heads/origin2
+ EOF
+ 
+-test_expect_success 'migrate a remote from named file in $GIT_DIR/remotes' '
+-	git clone one five &&
+-	origin_url=$(pwd)/one &&
 -	(
--		cd testrepo &&
--		echo "$the_first_commit commit	refs/heads/master" >expect &&
--		git for-each-ref refs/heads >actual &&
--		test_cmp expect actual
+-		cd five &&
+-		git remote remove origin &&
+-		mkdir -p .git/remotes &&
+-		cat ../remotes_origin >.git/remotes/origin &&
+-		git remote rename origin origin &&
+-		test_path_is_missing .git/remotes/origin &&
+-		test "$(git config remote.origin.url)" = "$origin_url" &&
+-		cat >push_expected <<-\EOF &&
+-		refs/heads/master:refs/heads/upstream
+-		refs/heads/next:refs/heads/upstream2
+-		EOF
+-		cat >fetch_expected <<-\EOF &&
+-		refs/heads/master:refs/heads/origin
+-		refs/heads/next:refs/heads/origin2
+-		EOF
+-		git config --get-all remote.origin.push >push_actual &&
+-		git config --get-all remote.origin.fetch >fetch_actual &&
+-		test_cmp push_expected push_actual &&
+-		test_cmp fetch_expected fetch_actual
 -	)
 -'
 -
--test_expect_success 'push with branches containing #' '
--	mk_empty testrepo &&
--	mkdir -p .git/branches &&
--	echo "testrepo#branch3" > .git/branches/branch2 &&
--	git push branch2 &&
+-test_expect_success 'migrate a remote from named file in $GIT_DIR/branches' '
+-	git clone one six &&
+-	origin_url=$(pwd)/one &&
 -	(
--		cd testrepo &&
--		echo "$the_first_commit commit	refs/heads/branch3" >expect &&
--		git for-each-ref refs/heads >actual &&
--		test_cmp expect actual
--	) &&
--	git checkout master
+-		cd six &&
+-		git remote rm origin &&
+-		mkdir -p .git/branches &&
+-		echo "$origin_url" >.git/branches/origin &&
+-		git remote rename origin origin &&
+-		test_path_is_missing .git/branches/origin &&
+-		test "$(git config remote.origin.url)" = "$origin_url" &&
+-		test "$(git config remote.origin.fetch)" = "refs/heads/master:refs/heads/origin" &&
+-		test "$(git config remote.origin.push)" = "HEAD:refs/heads/master"
+-	)
 -'
 -
- test_expect_success 'push into aliased refs (consistent)' '
- 	mk_test testrepo heads/master &&
- 	mk_child testrepo child1 &&
-@@ -1042,6 +984,7 @@ test_expect_success 'push --porcelain --dry-run rejected' '
- 
- test_expect_success 'push --prune' '
- 	mk_test testrepo heads/master heads/second heads/foo heads/bar &&
-+	git branch second $the_first_commit &&
- 	git push --prune testrepo : &&
- 	check_push_result testrepo $the_commit heads/master &&
- 	check_push_result testrepo $the_first_commit heads/second &&
+-test_expect_success 'migrate a remote from named file in $GIT_DIR/branches (2)' '
+-	git clone one seven &&
+-	(
+-		cd seven &&
+-		git remote rm origin &&
+-		mkdir .git/branches &&
+-		echo "quux#foom" > .git/branches/origin &&
+-		git remote rename origin origin &&
+-		test_path_is_missing .git/branches/origin &&
+-		test "$(git config remote.origin.url)" = "quux" &&
+-		test "$(git config remote.origin.fetch)" = "refs/heads/foom:refs/heads/origin"
+-		test "$(git config remote.origin.push)" = "HEAD:refs/heads/foom"
+-	)
+-'
+-
+ test_expect_success 'remote prune to cause a dangling symref' '
+ 	git clone one eight &&
+ 	(
 -- 
 2.12.2.windows.2.800.gede8f145e06
 
