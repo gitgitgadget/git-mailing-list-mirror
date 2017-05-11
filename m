@@ -2,113 +2,225 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C16B20196
-	for <e@80x24.org>; Thu, 11 May 2017 17:36:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7C542018D
+	for <e@80x24.org>; Thu, 11 May 2017 17:51:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S933394AbdEKRgJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 13:36:09 -0400
-Received: from mail-pg0-f45.google.com ([74.125.83.45]:35022 "EHLO
-        mail-pg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S933348AbdEKRgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 13:36:08 -0400
-Received: by mail-pg0-f45.google.com with SMTP id f131so3228374pgc.2
-        for <git@vger.kernel.org>; Thu, 11 May 2017 10:36:08 -0700 (PDT)
+        id S932376AbdEKRva (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 13:51:30 -0400
+Received: from mail-qt0-f176.google.com ([209.85.216.176]:35043 "EHLO
+        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S932136AbdEKRv2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 13:51:28 -0400
+Received: by mail-qt0-f176.google.com with SMTP id v27so11137837qtg.2
+        for <git@vger.kernel.org>; Thu, 11 May 2017 10:51:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VxdD5HcjYdGeqAmfCq2d3lSn1qmdPDEcoNDHyvExJTA=;
-        b=GWRyzqqQbB9Wa4B57GfXz4r7y10jPyt27ooom+KUmVALJh5CtRdBppOoECJNkj/XA3
-         ENV1xSPCRQoqw5T+DrMGe5SJZXsbXA5A6z2o/8YkEHiNKowB0cgnX0yyMi2EMbk5xMjC
-         2M8e+lXMWp15fjkqic5luQs+OHH3corQdvpYc3EBMYA0y2dgECAdi5joXlB77cddaHtr
-         RS2WQfbUDq5iZmx29FaqiFD+QBfbOk23GgGojGAqj0jkCoXD0uji41J/N6A7mIuMWmzP
-         VtGqjqrxcPyx8ixc0WpzYoJOLFyaGIV+GcCuUWI05u/+pJsoRS0ceABzD3+oxH9ErH1E
-         g7Rg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=slpiI+IuToVhI0jekZo6HenaLvAMQjmHWxftIBmjGL8=;
+        b=RGuDoXS1r3Fyl5t+X/YiidkpwvVTo7YYqhlBboiGWbe34d7zEWJGLOzN+Cwz/NrwED
+         GEsKVSWSsJATMYHw6uAvA2ZSuFIYlHdMVTq5LZ5sxeaHpDfV3V/7ZeahbKng5u3vLeau
+         OLR11U2jWx99blOLFugUvNoJib1hCnCdJWejMXbuzy2X1uGBKSc8+DSQLJR0t+jseJ9V
+         9B9e6pI1dD690zr6QVFFNbqTbI7pHiQwNBzIEdLnYB61oawxCQXo/kNgBXj3FHjn9eCu
+         E7Abb9g0YV9Yw1fFAkCs4yJm3Ea8cIJAHs4gNHMuEAw6q/KM/uZhD4aSm6YBpVUzpojE
+         xKIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VxdD5HcjYdGeqAmfCq2d3lSn1qmdPDEcoNDHyvExJTA=;
-        b=JezP/XN2J8wA9nYGXjpLtC6tFOhlg2jNAZn3S6nbF/dMMkUf29NEouaHIM6L6Ja8Es
-         EdZ0JrmIIJc0Uh5Fo3DPKirJo9EZDuZpdN0fWFgIHXky4KoNa+a9prCW9I7OC+wR5Dnt
-         Xdg4PS8Un/GFfobGiCaZdoGZd+Zhh6XneOIyL1wCWAix+8T2sUvJ0lBYs1UqK7sKzqWW
-         4F1evMmMFo2xxL2k7VkcQlbVBBfyYRAorBuLz56k76Rmqco3Z0ebrYU+R8aQwJYhlara
-         7tiTQZV8FpdJG3tNJaxGN+0t3chZNmmsotsaBgPf2o1Jgv11STtmzR0Rokc1E8lEKjne
-         evww==
-X-Gm-Message-State: AODbwcCoEtYsTlMcb3/L/2LAPtsMJKBBUpF7tlF2aW9hkBt9Tc7Br15+
-        r964hE82LJNkT5o1LZe9hQ==
-X-Received: by 10.84.178.131 with SMTP id z3mr291394plb.175.1494524168095;
-        Thu, 11 May 2017 10:36:08 -0700 (PDT)
-Received: from google.com ([2620:0:100e:422:938:3d1d:44aa:d816])
-        by smtp.gmail.com with ESMTPSA id n5sm1242077pfa.78.2017.05.11.10.36.06
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Thu, 11 May 2017 10:36:07 -0700 (PDT)
-Date:   Thu, 11 May 2017 10:36:05 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 8/8] pathspec: convert parse_pathspec to take an index
-Message-ID: <20170511173605.GB83655@google.com>
-References: <20170509191805.176266-1-bmwill@google.com>
- <20170509191805.176266-9-bmwill@google.com>
- <xmqq1srxxn72.fsf@gitster.mtv.corp.google.com>
- <20170510170226.GB41649@google.com>
- <xmqqh90sw4dr.fsf@gitster.mtv.corp.google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=slpiI+IuToVhI0jekZo6HenaLvAMQjmHWxftIBmjGL8=;
+        b=QqRd3TLgsgUbKIvCR08w8JEK5lukRBJB4S5Xj3HdarojBopW2YaiLpNbbMxzRbAkyR
+         3DmFE9dTgDZ+rvPEXDObEEa6kC2IxUsI+QarDXRd8AcSLSF9VjUmsjs1ZsOzsh3GqZCd
+         +9sNfDELKwaqek88ayN3TEaI+/4MW2CBkezfgxC5VnDcVfpdfOspc8CxQsiaQ9h89rZ9
+         lfzUxV0DX22eKS5Ewvz18lkgQDqMZCOhUTw2T/VAUJnSv24DNtxiDpa5a8QUPFhNv4Y1
+         UbOHwrpL80LQ528ZLJbo8FtpzJGzsGBViaKikJPUM54YzMRWgw4l2SdTkyr3OK5i2kZ7
+         auNw==
+X-Gm-Message-State: AODbwcDjlv6ubgQiMFaK0cTXql7Gjo63pno8g+vSVzVFd5ZAGArRxa9E
+        MI7o+x3z0TtCrQ==
+X-Received: by 10.200.3.103 with SMTP id w39mr43206qtg.230.1494525087010;
+        Thu, 11 May 2017 10:51:27 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id g3sm561483qte.66.2017.05.11.10.51.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 May 2017 10:51:25 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jeffrey Walton <noloader@gmail.com>,
+        =?UTF-8?q?Micha=C5=82=20Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
+        J Smith <dark.panda@gmail.com>,
+        Victor Leschuk <vleschuk@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH/RFC 0/6] Speed up git-grep by using PCRE v2 as a backend
+Date:   Thu, 11 May 2017 17:51:09 +0000
+Message-Id: <20170511175115.648-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh90sw4dr.fsf@gitster.mtv.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/11, Junio C Hamano wrote:
-> Brandon Williams <bmwill@google.com> writes:
-> 
-> > ls-files is the only command (that I know of) which does cache pruning
-> > based on the common prefix of all pathspecs given.  If there is a
-> > submodule named 'sub' and you provided a pathspec 'sub/', the matching
-> > logic can handle this but the cache pruning logic would prune all
-> > entries from the index which don't have a leading 'sub/' which is the
-> > common prefix of all pathspecs (if you didn't strip off the slash).
-> > Meaning you'd prune the submodule 'sub' when  you really didn't want to.
-> > This could probably be fixed to have the cache pruning logic to prune by
-> > ignoring the trailing slash always.
-> >
-> > So there's another option here if you don't feel quite right about
-> > piping through an index into parse_pathspec just yet.
-> 
-> Oh, don't get me wrong---I do not think passing an index_state
-> instance throughout the callchain (and perhaps later we may pass an
-> instance of "repository" instead) is a wrong move in the longer term
-> for various APIs.  I was just wondering if we have callers that can
-> benefit from this change immediately---manipulators like "commit" do
-> already use multiple instances of index_state structure.
+Thought I'd send this to the list too. This is first of my WIP
+post-PCRE v2 inclusion series's.
 
-I didn't get the feeling you thought it was a bad change.  I really
-appreciate your thoughts since they are things which I also was
-wondering about.
+In addition to the huge speed improvements for grep -P noted in the
+culmination of that series[1], this speeds up all other types of grep
+invocations (fixed string & POSIX basic/extended) by using an
+experimental PCRE API to translate those patterns to PCRE syntax.
 
-> But perhaps you are right---it may be wrong for the contents of the
-> current index (or any index) to affect how a pathspec element is
-> parsed in the first place.  If the current code (before this series)
-> uses the_index only for error checking, we may want to separate that
-> out of the parse_pathspec() callchain, so that it does not even look
-> at any index (not just the_index).  And that may be a better change
-> overall.
+Fixed string grep is sped up by ~15-50%, and any greps containing
+regexes by 40-70%, with 50% seeming to be the average for most normal
+patterns.
 
-I'll polish up the other version of the series which does the processing
-(using an index) outside of parse_pathspec() and let you see how you
-feel about those changes.  Note that if we go with the route to not pass
-in an index now, it doesn't necessarily mean that down the line we won't
-have to pass a 'repository' instance into parse_pathspec().  Just food
-for thought.
+It isn't ready for the reasons noted in the last patch in the series,
+and currently brings most of PCRE into git in compat/pcre2 since it
+uses an experimental API.
+
+The 5/6 patch is pretty much ready though and works on stock PCRE, it
+fixes TODO tests for patterns that contain a \0, and enables regex
+metacharacters in such patterns (right now they're all implicitly
+fixed strings), see the discussion in that patch for some of the
+caveats.
+
+That patch will most likely be dropped by the list, it can be
+retrieved from https://github.com/avar/git
+avar/grep-and-pcre-and-more, or the whole series viewed at
+https://github.com/git/git/compare/master...avar:avar/grep-and-pcre-and-more.
+
+1. <20170511170142.15934-8-avarab@gmail.com>
+   (https://public-inbox.org/git/20170511170142.15934-8-avarab@gmail.com/)
+
+Ævar Arnfjörð Bjarmason (6):
+  Makefile & compat/pcre2: add ability to build an embedded PCRE
+  Makefile & compat/pcre2: add dependency on pcre2_convert.c
+  compat/pcre2: import pcre2 from svn trunk
+  test-lib: add LIBPCRE1 & LIBPCRE2 prerequisites
+  grep: support regex patterns containing \0 via PCRE v2
+  grep: use PCRE v2 under the hood for -G & -E for amazing speedup
+
+ Makefile                                           |    53 +
+ compat/pcre2/get-pcre2.sh                          |    68 +
+ compat/pcre2/src/pcre2.h                           |   832 ++
+ compat/pcre2/src/pcre2_auto_possess.c              |  1291 ++
+ compat/pcre2/src/pcre2_chartables.c                |     1 +
+ compat/pcre2/src/pcre2_chartables.c.dist           |   198 +
+ compat/pcre2/src/pcre2_compile.c                   |  9626 +++++++++++++++
+ compat/pcre2/src/pcre2_config.c                    |   222 +
+ compat/pcre2/src/pcre2_context.c                   |   450 +
+ compat/pcre2/src/pcre2_convert.c                   |   724 ++
+ compat/pcre2/src/pcre2_error.c                     |   327 +
+ compat/pcre2/src/pcre2_find_bracket.c              |   218 +
+ compat/pcre2/src/pcre2_internal.h                  |  1967 +++
+ compat/pcre2/src/pcre2_intmodedep.h                |   884 ++
+ compat/pcre2/src/pcre2_jit_compile.c               | 12307 +++++++++++++++++++
+ compat/pcre2/src/pcre2_jit_match.c                 |   189 +
+ compat/pcre2/src/pcre2_jit_misc.c                  |   227 +
+ compat/pcre2/src/pcre2_maketables.c                |   157 +
+ compat/pcre2/src/pcre2_match.c                     |  6826 ++++++++++
+ compat/pcre2/src/pcre2_match_data.c                |   147 +
+ compat/pcre2/src/pcre2_newline.c                   |   243 +
+ compat/pcre2/src/pcre2_ord2utf.c                   |   120 +
+ compat/pcre2/src/pcre2_string_utils.c              |   201 +
+ compat/pcre2/src/pcre2_study.c                     |  1624 +++
+ compat/pcre2/src/pcre2_tables.c                    |   765 ++
+ compat/pcre2/src/pcre2_ucd.c                       |  3761 ++++++
+ compat/pcre2/src/pcre2_ucp.h                       |   268 +
+ compat/pcre2/src/pcre2_valid_utf.c                 |   398 +
+ compat/pcre2/src/pcre2_xclass.c                    |   271 +
+ compat/pcre2/src/sljit/sljitConfig.h               |   145 +
+ compat/pcre2/src/sljit/sljitConfigInternal.h       |   725 ++
+ compat/pcre2/src/sljit/sljitExecAllocator.c        |   312 +
+ compat/pcre2/src/sljit/sljitLir.c                  |  2224 ++++
+ compat/pcre2/src/sljit/sljitLir.h                  |  1392 +++
+ compat/pcre2/src/sljit/sljitNativeARM_32.c         |  2326 ++++
+ compat/pcre2/src/sljit/sljitNativeARM_64.c         |  2104 ++++
+ compat/pcre2/src/sljit/sljitNativeARM_T2_32.c      |  1987 +++
+ compat/pcre2/src/sljit/sljitNativeMIPS_32.c        |   437 +
+ compat/pcre2/src/sljit/sljitNativeMIPS_64.c        |   539 +
+ compat/pcre2/src/sljit/sljitNativeMIPS_common.c    |  2110 ++++
+ compat/pcre2/src/sljit/sljitNativePPC_32.c         |   276 +
+ compat/pcre2/src/sljit/sljitNativePPC_64.c         |   447 +
+ compat/pcre2/src/sljit/sljitNativePPC_common.c     |  2421 ++++
+ compat/pcre2/src/sljit/sljitNativeSPARC_32.c       |   165 +
+ compat/pcre2/src/sljit/sljitNativeSPARC_common.c   |  1471 +++
+ compat/pcre2/src/sljit/sljitNativeTILEGX-encoder.c | 10159 +++++++++++++++
+ compat/pcre2/src/sljit/sljitNativeTILEGX_64.c      |  2555 ++++
+ compat/pcre2/src/sljit/sljitNativeX86_32.c         |   602 +
+ compat/pcre2/src/sljit/sljitNativeX86_64.c         |   742 ++
+ compat/pcre2/src/sljit/sljitNativeX86_common.c     |  2921 +++++
+ compat/pcre2/src/sljit/sljitProtExecAllocator.c    |   421 +
+ compat/pcre2/src/sljit/sljitUtils.c                |   334 +
+ grep.c                                             |    73 +-
+ grep.h                                             |     5 +
+ t/README                                           |    18 +
+ t/t7008-grep-binary.sh                             |    87 +-
+ t/test-lib.sh                                      |     3 +
+ 57 files changed, 81335 insertions(+), 31 deletions(-)
+ create mode 100755 compat/pcre2/get-pcre2.sh
+ create mode 100644 compat/pcre2/src/pcre2.h
+ create mode 100644 compat/pcre2/src/pcre2_auto_possess.c
+ create mode 120000 compat/pcre2/src/pcre2_chartables.c
+ create mode 100644 compat/pcre2/src/pcre2_chartables.c.dist
+ create mode 100644 compat/pcre2/src/pcre2_compile.c
+ create mode 100644 compat/pcre2/src/pcre2_config.c
+ create mode 100644 compat/pcre2/src/pcre2_context.c
+ create mode 100644 compat/pcre2/src/pcre2_convert.c
+ create mode 100644 compat/pcre2/src/pcre2_error.c
+ create mode 100644 compat/pcre2/src/pcre2_find_bracket.c
+ create mode 100644 compat/pcre2/src/pcre2_internal.h
+ create mode 100644 compat/pcre2/src/pcre2_intmodedep.h
+ create mode 100644 compat/pcre2/src/pcre2_jit_compile.c
+ create mode 100644 compat/pcre2/src/pcre2_jit_match.c
+ create mode 100644 compat/pcre2/src/pcre2_jit_misc.c
+ create mode 100644 compat/pcre2/src/pcre2_maketables.c
+ create mode 100644 compat/pcre2/src/pcre2_match.c
+ create mode 100644 compat/pcre2/src/pcre2_match_data.c
+ create mode 100644 compat/pcre2/src/pcre2_newline.c
+ create mode 100644 compat/pcre2/src/pcre2_ord2utf.c
+ create mode 100644 compat/pcre2/src/pcre2_string_utils.c
+ create mode 100644 compat/pcre2/src/pcre2_study.c
+ create mode 100644 compat/pcre2/src/pcre2_tables.c
+ create mode 100644 compat/pcre2/src/pcre2_ucd.c
+ create mode 100644 compat/pcre2/src/pcre2_ucp.h
+ create mode 100644 compat/pcre2/src/pcre2_valid_utf.c
+ create mode 100644 compat/pcre2/src/pcre2_xclass.c
+ create mode 100644 compat/pcre2/src/sljit/sljitConfig.h
+ create mode 100644 compat/pcre2/src/sljit/sljitConfigInternal.h
+ create mode 100644 compat/pcre2/src/sljit/sljitExecAllocator.c
+ create mode 100644 compat/pcre2/src/sljit/sljitLir.c
+ create mode 100644 compat/pcre2/src/sljit/sljitLir.h
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeARM_32.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeARM_64.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeARM_T2_32.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeMIPS_32.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeMIPS_64.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeMIPS_common.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativePPC_32.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativePPC_64.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativePPC_common.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeSPARC_32.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeSPARC_common.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeTILEGX-encoder.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeTILEGX_64.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeX86_32.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeX86_64.c
+ create mode 100644 compat/pcre2/src/sljit/sljitNativeX86_common.c
+ create mode 100644 compat/pcre2/src/sljit/sljitProtExecAllocator.c
+ create mode 100644 compat/pcre2/src/sljit/sljitUtils.c
 
 -- 
-Brandon Williams
+2.11.0
+
