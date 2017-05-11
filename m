@@ -7,219 +7,87 @@ X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,RCVD_IN_SORBS_WEB,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC212018D
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FE622018D
 	for <e@80x24.org>; Thu, 11 May 2017 13:48:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1756150AbdEKNsx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 09:48:53 -0400
-Received: from mout.gmx.net ([212.227.15.18]:65535 "EHLO mout.gmx.net"
+        id S932897AbdEKNsR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 09:48:17 -0400
+Received: from mout.gmx.net ([212.227.15.18]:63779 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1756133AbdEKNss (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 09:48:48 -0400
+        id S932730AbdEKNr4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 09:47:56 -0400
 Received: from virtualbox ([37.201.192.198]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0y47-1e1axm1zah-00vAwl; Thu, 11
- May 2017 15:48:29 +0200
-Date:   Thu, 11 May 2017 15:48:28 +0200 (CEST)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEFIm-1dFO1x34Po-00FQU8; Thu, 11
+ May 2017 15:47:53 +0200
+Date:   Thu, 11 May 2017 15:47:53 +0200 (CEST)
 From:   Johannes Schindelin <johannes.schindelin@gmx.de>
 X-X-Sender: virtualbox@virtualbox
 To:     git@vger.kernel.org
 cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 11/11] PREVIEW: remove support for .git/remotes/ and
- .git/branches/
+Subject: [PATCH 06/11] PREVIEW: t5510: convert .git/remotes/ test to use a
+ regular remote
 In-Reply-To: <cover.1494509599.git.johannes.schindelin@gmx.de>
-Message-ID: <c73881261cc3021410695126989c6f1596f638b0.1494509599.git.johannes.schindelin@gmx.de>
+Message-ID: <1fd886af939e1fdb9a7e3a250f0b0fae56f716fb.1494509599.git.johannes.schindelin@gmx.de>
 References: <cover.1494509599.git.johannes.schindelin@gmx.de>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K0:1n0V7lsTvt8bzS1oU7io8jaaeRRkr6ua8SFSrqORgpv/9KWhMX3
- oLlU3AtZI+pgmYhYa1YEeyxvMGXg6QGVEqsMqOHzt2xxi6xrsJU1gLZrbQEqWwyri4vWDsA
- 16ZlkWK1n5vj+zvVtZMtQv82L3OyGMnZlPL9fLyeo/uojmVsX6lLvCR+le4XyJL0iqNlgsH
- xsO+Tq5H/Tw8MPISL8Dxg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FzsMcYq6j1A=:pM9Ez2PKZQBsN3UfJvm0M8
- /xO3w7Q0GkKjMYhzB1Rk6UFHQmthYytaeVAFbPNyhW4Th0DYdPd7HjAwA7NyFfBhjqc/rNdhx
- bSJ/ifB7XRIuFQ4SJY2CJhdZv0b7JizYMOwlMMYdhxAThnq0Okze9TkUdlyK0Z9oiQgDDpIjO
- 5WQxAyH3qZKGDe6bv2qFmaw/NlMb31UrUVyk+0Mtui8JVmKDR+bPN02pjfbk4iUZmvaxZR/rO
- NHxs33nunJFwD8YQjUFhA5YRSqPf/f/CLJuTA3tA2fHSmyY4SNUOZVhidDLgknwpYgnZULVPe
- 653huMGVdoBIPrjyfMgGTBJzQqAQohEBp7vKAKYhNdsfPXW/DLaIy0phSZ7zChV7k7NJIzkZw
- dUIq4vypcgfq0xpLLhaQzrKil8ziYEgihQg3Uk4Pv9d5K/DwdksjsBBHrfb4BSAozpIAicX8j
- YKjLD/bBtHCt5Ds5M/NbzHJtVP5U6RBXrJSaNy9LAE1vnHCGCUgM3ruZ7zdhd1NXgsH3sqxPb
- 4hCfC/LXVHYBBPXS2j5EhxyVfm92294EexHr6aQbetKFJkBnBnUCAveZjJyA4nPr5jo/rDfjx
- 7LEciuEseAm88fdE2SgGtT/psckf+Qiyp8/r+w28YtfvMhGa78BzLyKiRNb1P2BCrdSsOWpOS
- rH2915pQcaAN3O3Y/QnyCBPYu/Utp10IJO3DTz4b37OK6qOIOPFYIvjJIfK201QKWHsHnbQUs
- ZbZ/grVvQEJ3gwbiBu0WKsFThbnX+JyonSq7oCWU+bdt9cIacYwVFF9uVhTPVvtCoteL2M79m
- cqnn44h
+X-Provags-ID: V03:K0:vcTEd4QXe9KZxiRWfw4eDzyrWQtzkgCGcgll5t2TXXnDHDKo/RP
+ 19oCIphVvTqqmK+Ns0jks9g7lY54Uov3KABuOq5T08gw+T/IJg8I5nqXWLw9qyyKIUo+Fno
+ mDZAGo6+kRvXcCYqOfuq7w6RxFn7i7wIM1okgdh/LNtEhBhyvj5CTuZwTmGAZ8xzZD8Hkrb
+ fBYlXSCnyDLv9NNKH0JRw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EOQU+ot6He8=:SRwGTWHieOgT2MtHrknv2O
+ P7U/Lor2wwSC8DjrFV+pdvQTvRyT/BwGJQQOcBcdeDzR+gfWbYKM5bVStSr1rsw8TLDVbE5JR
+ JyeaEwH+/LbdBEdbQo6qqjUV9zvFtUBy1Y/DH7M6IEuuElf558xZrZItOBNMayXx9iIpxtizg
+ ARe5X+c96lWJ+s1rTJcAYg1XS6Zpd644cZMGzUgLW2UEPEjLy92hT7Sk2BmIr7+MFeyW4xixV
+ WhznBw/VO0R7DgaApiEo5I5Z6Xt48XWdikVt/qCT0xrgFHcng6xJJZiqpGpKkm2e2JLBFcY7F
+ VJgyMWL0YkN05T59kMdq1xWLNqHgzPJjWvgSKHFpZO49SEjotz2+YG25ikD5lYVGbB/IYu7cs
+ ymhnr6u/Y2P53VzIfhVkzMr1vEIDdV0BS89pS1aGQJsDE2paVXFpOQW6SiPYhS4P/X4SCoU5d
+ VZwA2R9Gbt+vry+Sa7lKDQG+bZdu6PpEIfRLVIUjZvRmuf/ktM6yZ7hsRKcuAlv72yeZbwQ3b
+ K06qxK3DNP6oTK1SZSQHmx/plE/gQmxQR08pScy1aJDgxewlPh5FMnLstGIm9hCj108L2mMxm
+ FfZkap/9fDzWxQVBVx0EvvUCtiQRcY1fSmKfh3iyF5TLRg+zMJ0rKLJS4WS+mSffwqlLkaVSU
+ vx7ccqbWuo+ZBdT3ONl9CvK6AUUaKIMlCWh+Eg34dcDCeeQFuYdkqeg4LGBDRk1PIzc2RMD6Q
+ ckOwf8+dF2jERMt12znlBBUVIAzhfCuk0bSqCuhfSWHIypalr854KCkmihTBa8UzCtMmxctgL
+ HVCnItN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At long last, after a cycle or three of warning users who *still* use
-the ancient feature of .git/remotes/ and .git/branches/, it is time to
-retire the code.
+We are about to stop supporting the .git/remotes/ and .git/branches/
+feature. In preparation, t5510-fetch is adjusted *not* to verify that
+.git/remotes/ works.
+
+As the tests are entangled, we do not simply remove the test repository
+with such a remote, but convert it to use a regular remote instead.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- path.c   |  2 --
- remote.c | 96 ----------------------------------------------------------------
- remote.h |  4 +--
- 3 files changed, 1 insertion(+), 101 deletions(-)
+ t/t5510-fetch.sh | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/path.c b/path.c
-index c1cb1cf6273..ee709bb2337 100644
---- a/path.c
-+++ b/path.c
-@@ -104,7 +104,6 @@ struct common_dir {
- };
- 
- static struct common_dir common_list[] = {
--	{ 0, 1, 0, "branches" },
- 	{ 0, 1, 0, "hooks" },
- 	{ 0, 1, 0, "info" },
- 	{ 0, 0, 1, "info/sparse-checkout" },
-@@ -115,7 +114,6 @@ static struct common_dir common_list[] = {
- 	{ 0, 1, 0, "objects" },
- 	{ 0, 1, 0, "refs" },
- 	{ 0, 1, 1, "refs/bisect" },
--	{ 0, 1, 0, "remotes" },
- 	{ 0, 1, 0, "worktrees" },
- 	{ 0, 1, 0, "rr-cache" },
- 	{ 0, 1, 0, "svn" },
-diff --git a/remote.c b/remote.c
-index b2ae168035e..914ff74c0d2 100644
---- a/remote.c
-+++ b/remote.c
-@@ -241,89 +241,6 @@ static void add_instead_of(struct rewrite *rewrite, const char *instead_of)
- 	rewrite->instead_of_nr++;
- }
- 
--static const char *skip_spaces(const char *s)
--{
--	while (isspace(*s))
--		s++;
--	return s;
--}
--
--static void read_remotes_file(struct remote *remote)
--{
--	struct strbuf buf = STRBUF_INIT;
--	FILE *f = fopen(git_path("remotes/%s", remote->name), "r");
--
--	if (!f)
--		return;
--
--	warning(_("the remote '%s' uses the long-deprecated '%s' file"),
--		remote->name, git_path("branches/%s", remote->name));
--
--	remote->configured_in_repo = 1;
--	remote->origin = REMOTE_REMOTES;
--	while (strbuf_getline(&buf, f) != EOF) {
--		const char *v;
--
--		strbuf_rtrim(&buf);
--
--		if (skip_prefix(buf.buf, "URL:", &v))
--			add_url_alias(remote, xstrdup(skip_spaces(v)));
--		else if (skip_prefix(buf.buf, "Push:", &v))
--			add_push_refspec(remote, xstrdup(skip_spaces(v)));
--		else if (skip_prefix(buf.buf, "Pull:", &v))
--			add_fetch_refspec(remote, xstrdup(skip_spaces(v)));
--	}
--	strbuf_release(&buf);
--	fclose(f);
--}
--
--static void read_branches_file(struct remote *remote)
--{
--	char *frag;
--	struct strbuf buf = STRBUF_INIT;
--	FILE *f = fopen(git_path("branches/%s", remote->name), "r");
--
--	if (!f)
--		return;
--
--	strbuf_getline_lf(&buf, f);
--	fclose(f);
--	strbuf_trim(&buf);
--	if (!buf.len) {
--		strbuf_release(&buf);
--		return;
--	}
--
--	warning(_("the branch '%s' uses the long-deprecated '%s' file"),
--		remote->name, git_path("branches/%s", remote->name));
--
--	remote->configured_in_repo = 1;
--	remote->origin = REMOTE_BRANCHES;
--
--	/*
--	 * The branches file would have URL and optionally
--	 * #branch specified.  The "master" (or specified) branch is
--	 * fetched and stored in the local branch matching the
--	 * remote name.
--	 */
--	frag = strchr(buf.buf, '#');
--	if (frag)
--		*(frag++) = '\0';
--	else
--		frag = "master";
--
--	add_url_alias(remote, strbuf_detach(&buf, NULL));
--	add_fetch_refspec(remote, xstrfmt("refs/heads/%s:refs/heads/%s",
--					  frag, remote->name));
--
--	/*
--	 * Cogito compatible push: push current HEAD to remote #branch
--	 * (master if missing)
--	 */
--	add_push_refspec(remote, xstrfmt("HEAD:refs/heads/%s", frag));
--	remote->fetch_tags = 1; /* always auto-follow */
--}
--
- static int handle_config(const char *key, const char *value, void *cb)
- {
- 	const char *name;
-@@ -652,13 +569,6 @@ void free_refspec(int nr_refspec, struct refspec *refspec)
- 	free(refspec);
- }
- 
--static int valid_remote_nick(const char *name)
--{
--	if (!name[0] || is_dot_or_dotdot(name))
--		return 0;
--	return !strchr(name, '/'); /* no slash */
--}
--
- const char *remote_for_branch(struct branch *branch, int *explicit)
- {
- 	if (branch && branch->remote_name) {
-@@ -700,12 +610,6 @@ static struct remote *remote_get_1(const char *name,
- 		name = get_default(current_branch, &name_given);
- 
- 	ret = make_remote(name, 0);
--	if (valid_remote_nick(name) && have_git_dir()) {
--		if (!valid_remote(ret))
--			read_remotes_file(ret);
--		if (!valid_remote(ret))
--			read_branches_file(ret);
--	}
- 	if (name_given && !valid_remote(ret))
- 		add_url_alias(ret, name);
- 	if (!valid_remote(ret))
-diff --git a/remote.h b/remote.h
-index 6c28cd3e4bf..921b3d43356 100644
---- a/remote.h
-+++ b/remote.h
-@@ -6,9 +6,7 @@
- 
- enum {
- 	REMOTE_UNCONFIGURED = 0,
--	REMOTE_CONFIG,
--	REMOTE_REMOTES,
--	REMOTE_BRANCHES
-+	REMOTE_CONFIG
- };
- 
- struct remote {
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 668c54be41e..f51b3360348 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -46,12 +46,10 @@ test_expect_success "clone and setup child repos" '
+ 		cd three &&
+ 		git config branch.master.remote two &&
+ 		git config branch.master.merge refs/heads/one &&
+-		mkdir -p .git/remotes &&
+-		{
+-			echo "URL: ../two/.git/"
+-			echo "Pull: refs/heads/master:refs/heads/two"
+-			echo "Pull: refs/heads/one:refs/heads/one"
+-		} >.git/remotes/two
++		git config remote.two.url ../two/.git/ &&
++		git config remote.two.fetch refs/heads/master:refs/heads/two &&
++		git config --add remote.two.fetch \
++			refs/heads/one:refs/heads/one
+ 	) &&
+ 	git clone . bundle &&
+ 	git clone . seven
 -- 
 2.12.2.windows.2.800.gede8f145e06
+
+
