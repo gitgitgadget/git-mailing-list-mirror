@@ -7,110 +7,82 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
 	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA6301FF34
-	for <e@80x24.org>; Thu, 11 May 2017 09:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F100D1FF34
+	for <e@80x24.org>; Thu, 11 May 2017 09:41:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754972AbdEKJ3h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 05:29:37 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:38296 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1752639AbdEKJ3g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:29:36 -0400
-Received: by mail-it0-f43.google.com with SMTP id e65so16378349ita.1
-        for <git@vger.kernel.org>; Thu, 11 May 2017 02:29:36 -0700 (PDT)
+        id S932206AbdEKJlV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 05:41:21 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:34310 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751208AbdEKJlU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 05:41:20 -0400
+Received: by mail-wm0-f68.google.com with SMTP id d127so5642233wmf.1
+        for <git@vger.kernel.org>; Thu, 11 May 2017 02:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mEePqZD9Mj/g32BKZaQa2hP/4t0vwuJguhJLAAdbYdA=;
-        b=chGRqN6uU2tUCA7Jsda2nr9g+DBYlox46a9XND0fnD2bxrLoqnNlAihwijFIbbxGHA
-         HB6AWSaSkm0PWdT0Rx1nl23KR+/j7z8Z2iMKnSEN4nymiBZdTDNyvxxlLTtXLBF+vLEe
-         vtRHmsGJCNUzW0GbOyZJ4xnIkq5lN8guOtFNFUD3RAmMviCHWAHxQE6WkxthzQJVxcsv
-         o8yKeiJxnHzu0bA/wVc8dUszjGN5XLbv11/FR7ra82B4nX/xhog6SIerX0zD7brbFsr9
-         tFWWhmcNWiMA/z4ChnMIZcLzHExZRIhrucGzXL6yMqhNsYsVpl60wZYA5c61wORGrcsc
-         LeTg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ILSr1V6JCDaIZO2Pz9WxseRFZMeHidpoF/4wxhYcNC8=;
+        b=QikID7uVUoFCXiTGcxVXAL4tAA/cbwvXUt29yo9pUbrzWh+y0mu5AsBsTPUerly61a
+         w5EbamewyxHcXxc3bnQhRc4azWLnABKXCSy51p9BBfKEyivJE9XBlBT2xAhVjDvkvl5z
+         zSlTi0k/c8VXIv91n/ir/+1ZPAXNUtSFLxQeqOMbwWvR4pePuvXU9ECtNq0j+efFcqyA
+         viy/3MhavqphuC5AzaO+S7dGLSFSt4jHEzwZX5HoKCQyuvw7G9klpZ7HypfZpqL/3LAp
+         2VALRPb7Gal3UoHrYhm9lPaSFFHBXdbYtthPBU50K10/GvvNiAeAURlYtsYiC6gZk3cB
+         /86Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mEePqZD9Mj/g32BKZaQa2hP/4t0vwuJguhJLAAdbYdA=;
-        b=aR8lgc19zN/f4/x+faWv1RAVcwD11l2SMq78TEJ9+N/1CyHi4VbvL5iY6tPO1mScP5
-         EtCV76Y0hk2sFMkEhfDKTRDN1NAFmW6bUC5byI8MfBKsn8pi4nAJB752rWxrmeW7VtwU
-         hkAL5mLr2++uuS/LzGiXbHcrvCxbbesDIazhk4Wy4McVC5fhNUnKXCmry0IrqzkenvPJ
-         R9H9BmoD19px6gNVmu8K3pofaTBAQ+glJtQTjH2/oEDQf88OoClEK4pMYUqi++FQLWXV
-         mKzGFks06hvoQl8umH66hcX5Xdmkri6U6dosoD9AAnNwOc+UgcWTPzCHdxC6E6d24bzY
-         nEUQ==
-X-Gm-Message-State: AODbwcCCaDqwr1i5jh5bCBxdDR1/fjMQDlz32ryw3P8fbzTnyTRmo6dL
-        sEHSD52cPOW9yWIWyg35pAOChYLqkA==
-X-Received: by 10.36.166.4 with SMTP id q4mr56915ite.66.1494494976091; Thu, 11
- May 2017 02:29:36 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ILSr1V6JCDaIZO2Pz9WxseRFZMeHidpoF/4wxhYcNC8=;
+        b=JPt2eNvGAAFLK2TO5hPq898UjCkdiKZG8wKIM5p6u8epCqRU0xS/MwEBoLbM2iCVOo
+         5n8E+7vbQG9JovkJAWBZC6ytQN7AzvbZqcoP6Uo7eTd/AvNRxtw/VmdaVioI3LCOUn2r
+         MTkoPm5Wr5uQpuI229YFFGxs0GzZMnYiKeBXThLzMYrRZXidLHm9RRxAPXLX2iogeHAf
+         B1P+NitNhskURH+XvyHSuUzv8+Xj5dM28iI8wK/KhagBugTUZolwvMNikPYlFkdPFjE2
+         RiU/8jZ5+ZW3gxmU1nPbVfHWa8KSFEwNIgbpUiIZ10dE/g6CowzbK+aeqoWJHK2WFnBS
+         zZKQ==
+X-Gm-Message-State: AODbwcAv6TWyhM6D6cSHJojMyq+T4i0KDSSoJKchuYvplWXaLjtvnnx6
+        ZpYQcnYoZyqVPw==
+X-Received: by 10.80.172.122 with SMTP id w55mr103454edc.120.1494495679490;
+        Thu, 11 May 2017 02:41:19 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id h46sm16386ede.56.2017.05.11.02.41.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 11 May 2017 02:41:18 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 0/2] perf: show that wildmatch() regressed for pathological cases in v2.0
+Date:   Thu, 11 May 2017 09:41:06 +0000
+Message-Id: <20170511094108.8756-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.11.0
+In-Reply-To: <20170511074354.11336-1-avarab@gmail.com>
+References: <20170511074354.11336-1-avarab@gmail.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 11 May 2017 02:29:15 -0700 (PDT)
-In-Reply-To: <20170511090905.tvkb4bk2ddjzjip4@sigill.intra.peff.net>
-References: <C1ACB28C-F1B4-42A1-8135-797DEFD9F03C@gmail.com>
- <b80c68fa-fe1e-3cf8-3c7e-527a4d941108@gmail.com> <CACBZZX7CgeW1OK+g9Mbir62MMaCx4sHFZngUuWz_H241Sb355g@mail.gmail.com>
- <20170511062616.f7rg6f5cgrqeh7gf@sigill.intra.peff.net> <20170511062924.6euaynsbyocjcw3q@sigill.intra.peff.net>
- <CACBZZX4ob04fG9ZZtvbdcqrYOKijoZohVdUCNyeayHZtdtNyxQ@mail.gmail.com>
- <20170511074257.xueofze3dv3xwrql@sigill.intra.peff.net> <CACBZZX6hpL0=Zw0kvB-Ww95uGvuJ8129MTwkmv7DOEE1i66a_Q@mail.gmail.com>
- <20170511075437.yjxs6oit7ibe7rkq@sigill.intra.peff.net> <20170511090905.tvkb4bk2ddjzjip4@sigill.intra.peff.net>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 11 May 2017 11:29:15 +0200
-Message-ID: <CACBZZX4BEOO+DeO-OzJzHT88Y2k7_ZmFRPJKJ9e6HMb9eMonZA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] doc improvements for config includes
-To:     Jeff King <peff@peff.net>
-Cc:     Sebastian Schuberth <sschuberth@gmail.com>,
-        Raphael Stolt <raphael.stolt@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 11:09 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, May 11, 2017 at 03:54:37AM -0400, Jeff King wrote:
->
->> On Thu, May 11, 2017 at 09:49:09AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 B=
-jarmason wrote:
->>
->> > > I don't like this because it copies the rules for _one_ property to =
-the
->> > > conditional section. What happens when you're looking for some other
->> > > property of include.path?
->> >
->> > Yeah, as I said once I wrote it up I found it wasn't really any
->> > better, but just wanted to send an explanation for why I didn't find
->> > it while I remembered, as a sort of case study.
->> > [...]
->> > > I suspect that whole paragraph under Includes could be reworded to m=
-ake
->> > > it clear that anything it is saying applies equally to include.$key =
-and
->> > > includeIf.*.$key, and then that would future-proof us for other
->> > > modifications.
->>
->> What about this:
->
-> I think this is the right path, but I actually ended up with an
-> introductory paragraph about the two sections. I hope it makes the same
-> point but is a bit less clunky.
->
-> Here's a series that I think covers all the bits discussed here, and a
-> few others.
->
->   [1/4]: docs/config: clarify include/includeIf relationship
->   [2/4]: docs/config: give a relative includeIf example
->   [3/4]: docs/config: avoid the term "expand" for includes
->   [4/4]: docs/config: consistify include.path examples
+Fixes a brainfart in v3. I thought I'd fixed that subshell cd issue,
+but turns out I didn't, actually fix that.
 
-This whole thing looks great to me. Thanks!
+Ævar Arnfjörð Bjarmason (2):
+  perf: add function to setup a fresh test repo
+  perf: add test showing exponential growth in path globbing
 
-Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+ t/perf/README            |  1 +
+ t/perf/p0100-globbing.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ t/perf/perf-lib.sh       | 19 +++++++++++++++----
+ 3 files changed, 59 insertions(+), 4 deletions(-)
+ create mode 100755 t/perf/p0100-globbing.sh
 
->  Documentation/config.txt | 31 +++++++++++++++++++++----------
->  1 file changed, 21 insertions(+), 10 deletions(-)
->
-> -Peff
+-- 
+2.11.0
+
