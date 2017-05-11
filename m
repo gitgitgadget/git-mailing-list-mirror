@@ -6,98 +6,76 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E51DD1FF34
-	for <e@80x24.org>; Thu, 11 May 2017 09:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FC221FF34
+	for <e@80x24.org>; Thu, 11 May 2017 10:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1755418AbdEKJ7f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 05:59:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49423 "EHLO cloud.peff.net"
+        id S1755154AbdEKKF5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 06:05:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49428 "EHLO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1755402AbdEKJ73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 05:59:29 -0400
-Received: (qmail 4895 invoked by uid 109); 11 May 2017 09:59:27 -0000
+        id S1754975AbdEKKF4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 06:05:56 -0400
+Received: (qmail 5327 invoked by uid 109); 11 May 2017 10:05:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
-    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 09:59:27 +0000
-Received: (qmail 12236 invoked by uid 111); 11 May 2017 09:59:58 -0000
+    by cloud.peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 10:05:56 +0000
+Received: (qmail 12277 invoked by uid 111); 11 May 2017 10:06:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 05:59:58 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 May 2017 05:59:25 -0400
-Date:   Thu, 11 May 2017 05:59:25 -0400
+    by peff.net (qpsmtpd/0.84) with SMTP; Thu, 11 May 2017 06:06:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 May 2017 06:05:54 -0400
+Date:   Thu, 11 May 2017 06:05:54 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Shawn Pearce <spearce@spearce.org>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH] fetch-pack: always allow fetching of literal SHA1s
-Message-ID: <20170511095925.grmyagv4hesxqprj@sigill.intra.peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, spearce@spearce.org
+Subject: Re: [PATCH v3] fetch-pack: always allow fetching of literal SHA1s
+Message-ID: <20170511100553.ptyazchujgdfxotl@sigill.intra.peff.net>
 References: <20170509182042.28389-1-jonathantanmy@google.com>
- <20170509221629.3z35qcz36oiix3kh@sigill.intra.peff.net>
- <CAJo=hJvAg2WqpiuykpbHcB5vgQiHJ74CZ8Y4qudkYqZrmd30zg@mail.gmail.com>
- <20170510043343.mgb7heqzu2etcgvf@sigill.intra.peff.net>
- <20170510170044.GX28740@aiede.svl.corp.google.com>
+ <20170510221157.8971-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20170510170044.GX28740@aiede.svl.corp.google.com>
+In-Reply-To: <20170510221157.8971-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, May 10, 2017 at 10:00:44AM -0700, Jonathan Nieder wrote:
+On Wed, May 10, 2017 at 03:11:57PM -0700, Jonathan Tan wrote:
 
-> > Right, makes sense.  I wondered if GitHub should be turning on
-> > allowTipSHA1InWant, but it really doesn't make sense to. We _do_ hide
-> > some internal refs[1], and they're things that users wouldn't want to
-> > fetch. The problem for your case really is just on the client side, and
-> > this patch fixes it.
-> [...]
-> > [1] The reachability checks from upload-pack don't actually do much on
-> >     GitHub, because you can generally access the objects via the API or
-> >     the web site anyway. So I'm not really opposed to turning on
-> >     allowTipSHA1InWant if it would be useful for users, but after
-> >     Jonathan's patch I don't see how it would be.
+> fetch-pack, when fetching a literal SHA-1 from a server that is not
+> configured with uploadpack.allowtipsha1inwant (or similar), always
+> returns an error message of the form "Server does not allow request for
+> unadvertised object %s". However, it is sometimes the case that such
+> object is advertised. This situation would occur, for example, if a user
+> or a script was provided a SHA-1 instead of a branch or tag name for
+> fetching, and wanted to invoke "git fetch" or "git fetch-pack" using
+> that SHA-1.
 > 
-> Given that, what would make me really happy is if github enables
-> uploadpack.allowAnySHA1InWant.  That would be useful for me, at least.
+> Teach fetch-pack to also check the SHA-1s of the refs in the received
+> ref advertisement if a literal SHA-1 was given by the user.
 
-One of my hesitations is that we've actually considered moving in the
-opposite direction. The object storage for all of the repositories in a
-network is shared, so I can fork git.git, push up malicious crap, and
-then point people to:
+Stepping back a bit, what does this mean for a world where we implement
+protocol extensions to let the client specify a set of refspecs to limit
+the advertisement?
 
-  https://github.com/git/git/commit/$sha1
+If we give the server our usual set of fetch refspecs, then we might
+fail to fulfill a request that would have been advertised outside of
+that set. And the behavior is confusing and non-transparent to the user.
+I don't think that really makes sense, though; the advertisement we ask
+for from the server should include only the bits we're interested in for
+_this_ fetch.
 
-and it resolves. Obviously there's a social-engineering component to any
-such attack, but it's not great. And even without security in mind, it's
-potentially confusing. So we've looked at enforcing reachability from
-the refs of git/git for a case like that. There's some collateral
-damage, though (e.g., people might actually want to look at unreferenced
-objects after a force-push). And there are complications around things
-like refs/pull (which could still come from another fork, but which you
-might reasonably want to reference as part of a PR in the context of
-git/git).
+If we tell the server "we are interested in abcd1234", then it's not
+going to find any matching ref by name, obviously. So should servers
+then treat 40-hex names in the incoming refspecs as a request to show
+any names which have a matching sha1? That works against any server-side
+optimizations to avoid looking at the complete set of refs, but it would
+only have to kick in when the user actually specified a single SHA-1
+(and even then only when allowAnySHA1 isn't on). So that's probably
+workable.
 
-Turning on allowAnySHA1InWant brings that confusion to "git fetch", too.
-To some degree it's already there for refs/pull, but with the current
-client you at least know that you're fetching PR refs (and they're not
-even fetched by default). Whereas after Jonathan Tan's patch, you can
-social-engineer somebody into:
-
-  git fetch https://github.com/git/git $sha1
-
-if you open a PR that points to some malicious $sha1. I don't think
-that's a reason not to take his patch, though.
-
-Arguably refs/pull/ is an abomination that mixes up ownership and should
-be destroyed. There really isn't a great alternative, though, short of
-representing it as a completely separate repository (which would mean
-anybody fetching those refs would have to make a separate fetch
-request).
-
-But even leaving all the refs/pull stuff aside, allowAnySHA1InWant does
-seem to increase that confusion, and I don't see a way around it short
-of never sharing objects between repositories at all. So I think at most
-we'd do allowReachableSHA1InWant.
+None of this is your problem now either way; the advertisement-limiting
+extension is still vaporware, albeit one we've discussed a lot. I just
+wanted to make sure we weren't painting ourselves into any corners. And
+I think this case could probably be handled.
 
 -Peff
