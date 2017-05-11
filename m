@@ -3,91 +3,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+	RP_MATCHES_RCVD,T_DKIM_INVALID shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DB2E20188
-	for <e@80x24.org>; Thu, 11 May 2017 00:00:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5388220188
+	for <e@80x24.org>; Thu, 11 May 2017 00:21:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1754170AbdEKAAf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 10 May 2017 20:00:35 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:35075 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1753885AbdEKAAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 10 May 2017 20:00:34 -0400
-Received: by mail-io0-f173.google.com with SMTP id f102so11782816ioi.2
-        for <git@vger.kernel.org>; Wed, 10 May 2017 17:00:33 -0700 (PDT)
+        id S1753485AbdEKAVo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 10 May 2017 20:21:44 -0400
+Received: from mail-pg0-f66.google.com ([74.125.83.66]:36309 "EHLO
+        mail-pg0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1751820AbdEKAVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 10 May 2017 20:21:43 -0400
+Received: by mail-pg0-f66.google.com with SMTP id 64so1330300pgb.3
+        for <git@vger.kernel.org>; Wed, 10 May 2017 17:21:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DGu7yMbwuPFsVnXFy7pkYzhbBbN4Zk8dbivnx/6Lg6A=;
-        b=pXoPJBHoTo4ynjoUbUUszYpyA8j5ACAyBcK9lIs10EpivnslCKorb9zDIPa62cl2pM
-         y5DOcH79Gv9xoH2Et5+v4HqXUP33qS6+gUgxuS+zd4XEQez+xRFh7o2hqyDoQzN05Q09
-         5CmGQUa5bYTsAUfRuzRnCXkEK/skAp/JDcdqQ8dIkK7/MlAec1JvAe0Z//nD47W0QyWA
-         89yuaKAAb5oLFv3koB2yrj60pvlNZG3gAI4JgqP/SrxS7iWUHf70pUAw8X4coleFveRw
-         fgbOFqmBkYolmL4ueZ9CBs5hEib3XQXj6+fOr21Fo4FZfFDDAE6z8BMCrs8FU11egbxI
-         C7ew==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=o+vWTCIK0Ky5zZo3wF3LjL7WL60/u4bB6rguMfLrOro=;
+        b=m/+C2c5/byUIki76ptXe7TgAXxVos1UgFY6PZGIrw2cBslOvHX5vGhFNTwJETMd67q
+         hpBVH0lNxWfKE8omCDsTEPRnL92M9JpH4C6RSl1i5d1EaI+HyG/fWq4tH/M1mYT5za+D
+         hR1BZqMlfKcK9hGdPAJKAM09q2bVBjX0Ef3VkETQvWWiHB9jMck/T5APEeFu00RPqMdF
+         d7mBPOKhSvExaV48W1906+/+Ase+gmoQlOdumJWJuLSmGjcQHRuVwF2fNgkBvgk5GJKF
+         3DnaCxwcB5A8LjuahIgZKO7QfXGaRNJ2wB/+jSkTVNBmCUhWfKubcMlug8+0/rlk5RRi
+         194A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DGu7yMbwuPFsVnXFy7pkYzhbBbN4Zk8dbivnx/6Lg6A=;
-        b=hyV12sfi3rvIaZQoTg1TU4NHpQrPEDEVhCIsnyno07gAYFJtvO8oionLAqGjabPyI3
-         m4kc6VS7+jElv+v0s2DoebPOSDgN6/kXzrcfVlbK0El1OgA2il9ALiVnlbzg+/wdVSSL
-         /eKXUJvgKRmWQjmNkYYQ/g0kzcCjt4AIOF5+Lpu7qGBDp7JvCurZM8t4mTS6UB7QtwN9
-         mAjAKDJtO4hWRmI+HsckA/XtAr5dK/EHanQF22zuxG6By7dDe+TNBCMjEsaejjIeJeeW
-         U1ZFm99yMUJFY7aI0BgbCwACqFL9GySvHDWhKW2YNSSSf1F4Syiw4xE8VACMLz7QlVar
-         jHig==
-X-Gm-Message-State: AODbwcD8/YheBjjYccsHgynpHrzMN3yMSK+KqRrc5KY6iO2Vxks+7D8C
-        vTGkgM1YZ3Sxz2M1QI2Q5mgs75+mwOYU
-X-Received: by 10.107.138.21 with SMTP id m21mr6017616iod.80.1494460833326;
- Wed, 10 May 2017 17:00:33 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=o+vWTCIK0Ky5zZo3wF3LjL7WL60/u4bB6rguMfLrOro=;
+        b=FMN6J0gHKdHxGTikrF6yLg8zFEXyx7pXrziGM4z+RgqJhCjm0e+1TesoSyWGf4ksXG
+         dxjpQX01mJLjMLy0KkIItAA5mKsXuYtiOv9TvpvHB5IYBsUi9K+fbkxq3pt58z1sfXTb
+         NatqDmTy+GgMd2LtEIuBEHLQMZiAnw/J36yaJVP4v/UZbRfXf5efty9GZHnePlC/QR+0
+         GAWN7tpew+J96xUkYOus9iReEYTPZh+Cay3tX15D38glZxXKpQaoqe+7jf30ZR872wcr
+         DbvSreuzp/F/sGw4ci3hn5aTv1D/x2rwuY+86OF1ufg4YI1lmgNxGKPfGZhir/jcm0y1
+         pjdA==
+X-Gm-Message-State: AODbwcB7rT6CGREKPFH9kAX9laM+or8OY4uUlzawTqOLoHQPonN1JXox
+        +Z0+4mkZfsKUeA==
+X-Received: by 10.98.193.129 with SMTP id i123mr9124594pfg.203.1494462102528;
+        Wed, 10 May 2017 17:21:42 -0700 (PDT)
+Received: from localhost ([2620:0:1000:8622:4994:7ba7:e883:c475])
+        by smtp.gmail.com with ESMTPSA id g20sm100139pfk.21.2017.05.10.17.21.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Wed, 10 May 2017 17:21:41 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: t6134 test failure in 'pu'
+References: <361a3331-4d48-9ad3-42d4-3bf4b97dca22@ramsayjones.plus.com>
+Date:   Thu, 11 May 2017 09:21:40 +0900
+In-Reply-To: <361a3331-4d48-9ad3-42d4-3bf4b97dca22@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Wed, 10 May 2017 17:14:32 +0100")
+Message-ID: <xmqqwp9ow8dn.fsf@gitster.mtv.corp.google.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (gnu/linux)
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Wed, 10 May 2017 17:00:12 -0700 (PDT)
-In-Reply-To: <20170510233032.GD28740@aiede.svl.corp.google.com>
-References: <20170510225316.31680-1-avarab@gmail.com> <20170510225316.31680-2-avarab@gmail.com>
- <20170510233032.GD28740@aiede.svl.corp.google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 11 May 2017 02:00:12 +0200
-Message-ID: <CACBZZX50-0uzMyYJo5Z92nRH0m-Q70=P4Wr-LwBqH71nXdsmcA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] perf: add function to setup a fresh test repo
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 1:30 AM, Jonathan Nieder <jrnieder@gmail.com> wrote=
-:
-> Hi,
->
-> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason wrote:
->
-> [...]
->>  # call at least one of these to establish an appropriately-sized reposi=
-tory
->> +test_perf_fresh_repo () {
->> +     repo=3D"${1:-$TRASH_DIRECTORY}"
->> +     "$MODERN_GIT" init -q "$repo" &&
->> +     cd "$repo" &&
->> +     test_perf_do_repo_symlink_config_
->> +}
->
-> Unlike the other two variants, wouldn't this leave the cwd inside the
-> new repo?
->
-> In other words, I wonder if the commands starting with the 'cd' should
-> be in a subshell.
->
-> Thanks and hope that helps,
+Thanks for a quick report.  Yes, that was a stupid mismerge.
 
-Yup, I'll fix that. Thanks for the review & also on the other patch.
-Will send a v3 with these issues fixed.
+Will correct in my rerere database X-<.
