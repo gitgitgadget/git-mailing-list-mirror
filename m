@@ -2,159 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RCVD_IN_SORBS_SPAM,
-	RP_MATCHES_RCVD shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,
+	RP_MATCHES_RCVD shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADA46201A0
-	for <e@80x24.org>; Thu, 11 May 2017 20:34:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B27AD201A0
+	for <e@80x24.org>; Thu, 11 May 2017 20:40:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S932761AbdEKUeb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 11 May 2017 16:34:31 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:36729 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S932594AbdEKUea (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 11 May 2017 16:34:30 -0400
-Received: by mail-io0-f194.google.com with SMTP id f102so4098555ioi.3
-        for <git@vger.kernel.org>; Thu, 11 May 2017 13:34:29 -0700 (PDT)
+        id S932153AbdEKUj7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 11 May 2017 16:39:59 -0400
+Received: from mail-pf0-f178.google.com ([209.85.192.178]:33439 "EHLO
+        mail-pf0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1756889AbdEKUj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 11 May 2017 16:39:58 -0400
+Received: by mail-pf0-f178.google.com with SMTP id e193so19254026pfh.0
+        for <git@vger.kernel.org>; Thu, 11 May 2017 13:39:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=8JQR44taMia7oxA0uKwndbeARQCSTzm52W2IuqW+a2Q=;
-        b=ah2wTTBIySL3HgHRmZNsSQ5EB6eii4xLVcO8vynrFBnfnqP8OGxRuyohhs58XIZxZD
-         NWdSDa0F3Pv70aZ2etr0rfi6IAJmm641MlRUKQrg8EFgdDOOtTZz9rsGnCiwik7k0Yw1
-         ucJneiT9vS2l/JFBRZAwMkzEFDfI+9ylxvXKL635lQ5CaSTbxXWb6Ec10bfx2zM7QVIl
-         w2NO18VDtV5sOqX9Kw30QGFa74jIdspXE9MIWm709c7IQ5viUsxNbQZ3SQbE1fN/1NPz
-         MXFVO6n460PvJg5+RHRclUdhv+wN2ZKY0IGFRcU7Aux9CRUIjfef7RwSpg3UPeLcIrUQ
-         gs9w==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=16qUw8DoVwnLaffufMB1S8G1Bcv1/PGJgNo2V7HWpqE=;
+        b=jV+GerCDVXjFEHxITdh3H+4K9wrO9hdNZub6REK2zQA7dqQO5YeBskradpmPJF6FKX
+         5oicBnDtk/1/Q8Zkk1PVOJYnB0LzaUf5fz45wu5tM/OnIJZuaPewlOHWq295lz5ptsQm
+         drflGa1jN2BdV7sA+XiSRoUUKQoYfwCmIUpwxYqiSs0Nqetvt1TxVOr+71TSYm+k+sMV
+         yzoU0eVQMhGmu5W3q7YLZdXDJDzugvIGrQO6ZkbhkCkOJgPkYzmjPTB8H2vnnzd+47xK
+         RIT3LW+YZsfD/pve3L5vrAZi0VviVGmXxCKK5bVUHiMA+QuRsvpFuTQM0tnqtPAh6ZdX
+         JAPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8JQR44taMia7oxA0uKwndbeARQCSTzm52W2IuqW+a2Q=;
-        b=bOpcOv0GXjQ0rrnyRdnurErRI4bFX2bGwj9OiIGKaNgST7JtUstgMhJ+drxxeRWbaE
-         oqBj7+9LypMKPfv0pTU4jhKPlY3AZKBqUZAG9w+yTGgxWLr34rYR3XebH523XCq462nB
-         xHXxfGDndBgiuckKWC1gqaOWamUAN7oyND4c4bYQnq7LH7BgQVSiiDT+F/8z6gbZCfNj
-         9OJ55cxAP47wFhIjQeBL0JIYLOrvfqSVweN8SadD0vEcsOSG5fB+11NvfvOCoYT9ICn2
-         aik8oZGdurljCXV3BLA17amiw9zcgapheOM83R+oRWtpDL2jpnUuwn/eSR8GREfKOTx9
-         luXg==
-X-Gm-Message-State: AODbwcBaJV4ZgO+WDPD80UJOi0HwTEpgVMSUL0GksvBLREtrxrzOg3/q
-        LGDOxbVpe8Hu3nGywWT8waJsX97Uug==
-X-Received: by 10.107.201.131 with SMTP id z125mr417111iof.160.1494534869245;
- Thu, 11 May 2017 13:34:29 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=16qUw8DoVwnLaffufMB1S8G1Bcv1/PGJgNo2V7HWpqE=;
+        b=i53dkLk1Kj7ootx++/ed9HAkL1PA/ut9qjZ29FCGsJa6zpWG2hoQBX790uW7M9ijpN
+         rKy6bu7OEJgDvkXQXc25X8TnNISdv9frvhlcHXE3NrZMDwTRKfiEAQoB7Z5GCk097Vx3
+         EK5CvzDYYGyLa3tWZny3lg/FUIgaH0L4mKNcz9ZdYioR2TxXntNq7ZeImRZz3EPuZxfm
+         oq1Mb0/KYC04MEsrdIgV+pMfpUGZ1x9oOTCLd0q7lYCmsLS6OvM2w9lXcmwcEckXSpIO
+         BIqsnQNCpO7pQxteHFq9j+RG0uWowgxZeC3nfmQWGJon1tppKfnCPRD0BErZWnOEIJ6K
+         i2wQ==
+X-Gm-Message-State: AODbwcA3a8hqxmLrXSFyOJMNT42N16XysupzXWT0YrUqcRK2IF8Xf+EX
+        Xfvrqb1LOZc04BdJN6XX8g==
+X-Received: by 10.99.127.70 with SMTP id p6mr410616pgn.169.1494535197562;
+        Thu, 11 May 2017 13:39:57 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:938:3d1d:44aa:d816])
+        by smtp.gmail.com with ESMTPSA id a16sm2501400pgd.22.2017.05.11.13.39.56
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Thu, 11 May 2017 13:39:56 -0700 (PDT)
+Date:   Thu, 11 May 2017 13:39:55 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] send-email: support validate hook
+Message-ID: <20170511203955.GL83655@google.com>
+References: <20170511193753.19594-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Received: by 10.107.8.220 with HTTP; Thu, 11 May 2017 13:34:08 -0700 (PDT)
-In-Reply-To: <20170511201742.GJ83655@google.com>
-References: <20170511091829.5634-1-avarab@gmail.com> <20170511091829.5634-27-avarab@gmail.com>
- <20170511201742.GJ83655@google.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 11 May 2017 22:34:08 +0200
-Message-ID: <CACBZZX5CPyo0yLUU+bGJyMNn1Ei2+B_MV8OxmVfa+=F=xdtGhQ@mail.gmail.com>
-Subject: Re: [PATCH 26/29] pack-objects & index-pack: add test for --threads warning
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Jeffrey Walton <noloader@gmail.com>,
-        =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <michal.kiedrowicz@gmail.com>,
-        J Smith <dark.panda@gmail.com>,
-        Victor Leschuk <vleschuk@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Fredrik Kuivinen <frekui@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20170511193753.19594-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, May 11, 2017 at 10:17 PM, Brandon Williams <bmwill@google.com> wrot=
-e:
-> On 05/11, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Add a test for the warning that's emitted when --threads or
->> pack.threads is provided under NO_PTHREADS=3DYesPlease. This uses the
->> new PTHREADS prerequisite.
->>
->> The assertion for C_LOCALE_OUTPUT in the latter test is currently
->> redundant, since unlike index-pack the pack-objects warnings aren't
->> i18n'd. However they might be changed to be i18n'd in the future, and
->> there's no harm in future-proofing the test.
->>
->> There's an existing bug in the implementation of pack-objects which
->> this test currently tests for as-is. Details about the bug & the fix
->> are included in a follow-up change.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  t/t5300-pack-object.sh | 34 ++++++++++++++++++++++++++++++++++
->>  1 file changed, 34 insertions(+)
->>
->> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
->> index 43a672c345..1629fa80b0 100755
->> --- a/t/t5300-pack-object.sh
->> +++ b/t/t5300-pack-object.sh
->> @@ -421,6 +421,40 @@ test_expect_success 'index-pack <pack> works in non=
--repo' '
->>       test_path_is_file foo.idx
->>  '
->>
->> +test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'index-pack --threads=3DN=
- or pack.threads=3DN warns when no pthreads' '
->> +     test_must_fail git index-pack --threads=3D2 2>err &&
->> +     grep ^warning: err >warnings &&
->> +     test_line_count =3D 1 warnings &&
->> +     grep -F "no threads support, ignoring --threads=3D2" err &&
->> +     test_must_fail git -c pack.threads=3D2 index-pack 2>err &&
->> +     grep ^warning: err >warnings &&
->> +     test_line_count =3D 1 warnings &&
->> +     grep -F "no threads support, ignoring pack.threads" err &&
->> +     test_must_fail git -c pack.threads=3D2 index-pack --threads=3D4 2>=
-err &&
->> +     grep ^warning: err >warnings &&
->> +     test_line_count =3D 2 warnings &&
->> +     grep -F "no threads support, ignoring --threads=3D4" err &&
->> +     grep -F "no threads support, ignoring pack.threads" err
->> +'
->> +
->> +test_expect_success !PTHREADS,C_LOCALE_OUTPUT 'pack-objects --threads=
-=3DN or pack.threads=3DN warns when no pthreads' '
->> +     git pack-objects --threads=3D2 --stdout --all </dev/null >/dev/nul=
-l 2>err &&
->> +     grep ^warning: err >warnings &&
->> +     test_line_count =3D 1 warnings &&
->> +     grep -F "no threads support, ignoring --threads" err &&
->> +     git -c pack.threads=3D2 pack-objects --stdout --all </dev/null >/d=
-ev/null 2>err &&
->> +     cat err &&
->> +     grep ^warning: err >warnings &&
->> +     test_line_count =3D 2 warnings &&
->> +     grep -F "no threads support, ignoring --threads" err &&
->> +     grep -F "no threads support, ignoring pack.threads" err &&
->> +     git -c pack.threads=3D2 pack-objects --threads=3D4 --stdout --all =
-</dev/null >/dev/null 2>err &&
->> +     grep ^warning: err >warnings &&
->> +     test_line_count =3D 2 warnings &&
->> +     grep -F "no threads support, ignoring --threads" err &&
->> +     grep -F "no threads support, ignoring pack.threads" err
->> +'
->> +
->
-> Some of these tests you might want to rewrite using test_i18ncmp to
-> ensure that the messages match in other languages.  That is assuming
-> this error message is translated (which it should be).
+On 05/11, Jonathan Tan wrote:
+> Currently, send-email has support for rudimentary e-mail validation.
+> Allow the user to add support for more validation by providing a
+> sendemail-validate hook.
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> 
+> This is motivated by situations in which we discuss a work in progress
+> using Gerrit (which requires Change-Id trailers in patches), and then,
+> forgetting to remove the Change-Id trailers, send them to the Git
+> mailing list (which does not want such trailers). I can envision such
+> functionality being useful in other situations, hence this patch
+> submission.
+> 
+> I'm not very familiar with Perl, and "There Is More Than One Way To Do
+> It", so advice on Perl style is appreciated.
 
-[Mostly for my own notes so I see I covered this]
+I can't attest to the Perl code itself (I prefer to not touch it :D) but
+I've tested this and it works for my purposes!
 
-Covered in a side-thread, the test is guarded by C_LOCALE_OUTPUT which
-does the same thing.
+> ---
+>  Documentation/git-send-email.txt |  1 +
+>  Documentation/githooks.txt       |  8 ++++++++
+>  git-send-email.perl              | 18 +++++++++++++++++-
+>  t/t9001-send-email.sh            | 40 ++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 66 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+> index 9d66166f6..bb23b02ca 100644
+> --- a/Documentation/git-send-email.txt
+> +++ b/Documentation/git-send-email.txt
+> @@ -377,6 +377,7 @@ have been specified, in which case default to 'compose'.
+>  	Currently, validation means the following:
+>  +
+>  --
+> +		*	Invoke the sendemail-validate hook if present (see linkgit:githooks[5]).
+>  		*	Warn of patches that contain lines longer than 998 characters; this
+>  			is due to SMTP limits as described by http://www.ietf.org/rfc/rfc2821.txt.
+>  --
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 706091a56..b2514f4d4 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -447,6 +447,14 @@ rebase::
+>  The commits are guaranteed to be listed in the order that they were
+>  processed by rebase.
+>  
+> +sendemail-validate
+> +~~~~~~~~~~~~~~~~~~
+> +
+> +This hook is invoked by 'git send-email'.  It takes a single parameter,
+> +the name of the file that holds the e-mail to be sent.  Exiting with a
+> +non-zero status causes 'git send-email' to abort before sending any
+> +e-mails.
+> +
+>  
+>  GIT
+>  ---
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index eea0a517f..7de91ca7c 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -27,6 +27,7 @@ use Term::ANSIColor;
+>  use File::Temp qw/ tempdir tempfile /;
+>  use File::Spec::Functions qw(catfile);
+>  use Error qw(:try);
+> +use Cwd qw(abs_path cwd);
+>  use Git;
+>  use Git::I18N;
+>  
+> @@ -628,9 +629,24 @@ if (@rev_list_opts) {
+>  @files = handle_backup_files(@files);
+>  
+>  if ($validate) {
+> +	my @hook = ($repo->repo_path().'/hooks/sendemail-validate', '');
+> +	my $use_hook = -x $hook[0];
+> +	if ($use_hook) {
+> +		# The hook needs a correct GIT_DIR.
+> +		$ENV{"GIT_DIR"} = $repo->repo_path();
+> +	}
+>  	foreach my $f (@files) {
+>  		unless (-p $f) {
+> -			my $error = validate_patch($f);
+> +			my $error;
+> +			if ($use_hook) {
+> +				$hook[1] = abs_path($f);
+> +				my $cwd_save = cwd();
+> +				chdir($repo->wc_path() or $repo->repo_path());
+> +				$error = "rejected by sendemail-validate hook"
+> +					unless system(@hook) == 0;
+> +				chdir($cwd_save);
+> +			}
+> +			$error = validate_patch($f) unless $error;
+>  			$error and die sprintf(__("fatal: %s: %s\nwarning: no patches were sent\n"),
+>  						  $f, $error);
+>  		}
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 60a80f60b..f3f238d40 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -1913,4 +1913,44 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
+>  	test_cmp expected-list actual-list
+>  '
+>  
+> +test_expect_success $PREREQ 'invoke hook' '
+> +	mkdir -p .git/hooks &&
+> +
+> +	write_script .git/hooks/sendemail-validate <<-\EOF &&
+> +		# test that we have the correct environment variable, pwd, and
+> +		# argument
+> +		case "$GIT_DIR" in
+> +			*.git)
+> +				true
+> +				;;
+> +			*)
+> +				false
+> +				;;
+> +		esac &&
+> +		test -e 0001-add-master.patch &&
+> +		grep "add master" "$1"
+> +	EOF
+> +
+> +	mkdir subdir &&
+> +	(
+> +		# Test that it works even if we are not at the root of the
+> +		# working tree
+> +		cd subdir &&
+> +		git send-email \
+> +			--from="Example <nobody@example.com>" \
+> +			--to=nobody@example.com \
+> +			--smtp-server="$(pwd)/../fake.sendmail" \
+> +			../0001-add-master.patch &&
+> +
+> +		# Verify error message when a patch is rejected by the hook
+> +		sed -e "s/add master/x/" ../0001-add-master.patch >../another.patch &&
+> +		git send-email \
+> +			--from="Example <nobody@example.com>" \
+> +			--to=nobody@example.com \
+> +			--smtp-server="$(pwd)/../fake.sendmail" \
+> +			../another.patch 2>err
+> +		test_i18ngrep "rejected by sendemail-validate hook" err
+> +	)
+> +'
+> +
+>  test_done
+> -- 
+> 2.13.0.rc2.291.g57267f2277-goog
+> 
 
->>  #
->>  # WARNING!
->>  #
->> --
->> 2.11.0
->>
->
-> --
-> Brandon Williams
+-- 
+Brandon Williams
